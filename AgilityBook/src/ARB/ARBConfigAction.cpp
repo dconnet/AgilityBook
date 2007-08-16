@@ -1230,22 +1230,25 @@ bool ARBConfigActionDeleteEvent::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigActionList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
 	ARBString verb;
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_ACTION_VERB, verb)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_ACTION_VERB, verb)
 	|| 0 == verb.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_VERB));
 		return false;
 	}
 	ARBString venue, div, oldName, newName;
-	inTree.GetAttrib(ATTRIB_ACTION_VENUE, venue);
-	inTree.GetAttrib(ATTRIB_ACTION_DIVISION, div);
-	inTree.GetAttrib(ATTRIB_ACTION_OLDNAME, oldName);
-	inTree.GetAttrib(ATTRIB_ACTION_NEWNAME, newName);
+	inTree->GetAttrib(ATTRIB_ACTION_VENUE, venue);
+	inTree->GetAttrib(ATTRIB_ACTION_DIVISION, div);
+	inTree->GetAttrib(ATTRIB_ACTION_OLDNAME, oldName);
+	inTree->GetAttrib(ATTRIB_ACTION_NEWNAME, newName);
 
 	ARBConfigActionPtr item;
 	if (ACTION_VERB_DELETE_TITLE == verb)

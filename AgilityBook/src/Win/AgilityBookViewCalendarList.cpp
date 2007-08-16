@@ -1337,7 +1337,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 		}
 
 		ARBostringstream iCal;
-		Element tree(CLIPDATA);
+		ElementNodePtr tree(ElementNode::New(CLIPDATA));
 
 		// Now all the data.
 		int nWarning = CAgilityBookOptions::CalendarOpeningNear();
@@ -1364,7 +1364,8 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 
 		clpData.SetData(eFormatCalendar, tree);
 		clpData.SetData(data);
-		clpData.SetData(eFormatiCalendar, iCal.str());
+		ARBString s = iCal.str();
+		clpData.SetData(eFormatiCalendar, s);
 	}
 }
 
@@ -1379,16 +1380,18 @@ void CAgilityBookViewCalendarList::OnUpdateEditPaste(CCmdUI* pCmdUI)
 void CAgilityBookViewCalendarList::OnEditPaste()
 {
 	bool bLoaded = false;
-	Element tree;
+	ElementNodePtr tree(ElementNode::New());
 	CClipboardDataReader clpData;
 	if (clpData.GetData(eFormatCalendar, tree))
 	{
-		if (CLIPDATA == tree.GetName())
+		if (CLIPDATA == tree->GetName())
 		{
-			for (int i = 0; i < tree.GetElementCount(); ++i)
+			for (int i = 0; i < tree->GetElementCount(); ++i)
 			{
-				Element const& element = tree.GetElement(i);
-				if (element.GetName() == TREE_CALENDAR)
+				ElementNodePtr element = tree->GetElementNode(i);
+				if (!element)
+					continue;
+				if (element->GetName() == TREE_CALENDAR)
 				{
 					ARBCalendarPtr pCal(ARBCalendar::New());
 					CErrorCallback err;

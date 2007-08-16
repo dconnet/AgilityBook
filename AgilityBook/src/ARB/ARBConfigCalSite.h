@@ -64,7 +64,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -73,7 +73,7 @@ public:
 	 * @param ioTree Parent element.
 	 * @return Success
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Get the formatted URL to use to request data.

@@ -113,16 +113,19 @@ ARBString ARBConfigLifetimePoints::GetGenericName() const
 }
 
 bool ARBConfigLifetimePoints::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_POINTS));
 		return false;
 	}
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_FAULTS));
 		return false;
@@ -130,18 +133,21 @@ bool ARBConfigLifetimePoints::Load(
 	return true;
 }
 
-bool ARBConfigLifetimePoints::Save(Element& ioTree) const
+bool ARBConfigLifetimePoints::Save(ElementNodePtr ioTree) const
 {
-	Element& life = ioTree.AddElement(TREE_LIFETIME_POINTS);
-	life.AddAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points, 0);
-	life.AddAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults, 0);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr life = ioTree->AddElementNode(TREE_LIFETIME_POINTS);
+	life->AddAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points, 0);
+	life->AddAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults, 0);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLifetimePointsList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

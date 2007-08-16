@@ -226,40 +226,43 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 
 bool ARBConfigScoring::Load(
 		ARBConfigDivisionList const& inDivisions,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))
-		inTree.GetAttrib(_T("Date"), m_ValidFrom);
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
+		inTree->GetAttrib(_T("Date"), m_ValidFrom);
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
+		inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str()));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
 	{
 		ARBString attrib;
-		inTree.GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
+		inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg.c_str()));
 		return false;
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_DIVISION));
 		return false;
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_LEVEL, m_Level)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_LEVEL));
@@ -276,7 +279,7 @@ bool ARBConfigScoring::Load(
 	}
 
 	ARBString attrib;
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_SCORING_TYPE, attrib)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_TYPE));
@@ -307,34 +310,34 @@ bool ARBConfigScoring::Load(
 	// This attribute came in in version 4, but go ahead and read it even if
 	// the current doc is earlier. This will allow someone to hand-edit it in.
 	// Not advisable, but it doesn't hurt anything either.
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, VALID_VALUES_BOOL));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, VALID_VALUES_BOOL));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_UNDER, VALID_VALUES_BOOL));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, VALID_VALUES_BOOL));
 		return false;
 	}
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, VALID_VALUES_BOOL));
 		return false;
 	}
-	inTree.GetAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
+	inTree->GetAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, VALID_VALUES_BOOL));
 		return false;
@@ -342,20 +345,20 @@ bool ARBConfigScoring::Load(
 
 	if (inVersion < ARBVersion(11, 0))
 	{
-		if (Element::eInvalidValue == inTree.GetAttrib(_T("doubleQ"), m_bDoubleQ))
+		if (ElementNode::eInvalidValue == inTree->GetAttrib(_T("doubleQ"), m_bDoubleQ))
 		{
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, _T("doubleQ"), VALID_VALUES_BOOL));
 			return false;
 		}
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SPEEDPTS, VALID_VALUES_BOOL));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_BONUSPTS, VALID_VALUES_BOOL));
 		return false;
@@ -366,7 +369,7 @@ bool ARBConfigScoring::Load(
 	{
 		if (inVersion < ARBVersion(10, 1))
 		{
-			if (Element::eInvalidValue == inTree.GetAttrib(_T("machPts"), m_bSpeedPts))
+			if (ElementNode::eInvalidValue == inTree->GetAttrib(_T("machPts"), m_bSpeedPts))
 			{
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, _T("machPts"), VALID_VALUES_BOOL));
 				return false;
@@ -377,24 +380,26 @@ bool ARBConfigScoring::Load(
 			m_PlaceInfo.AddPlaceInfo(1, 2.0);
 			m_PlaceInfo.AddPlaceInfo(2, 1.5);
 		}
-		inTree.GetAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
-		inTree.GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
-		for (int i = 0; i < inTree.GetElementCount(); ++i)
+		inTree->GetAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
+		inTree->GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
+		for (int i = 0; i < inTree->GetElementCount(); ++i)
 		{
-			Element const& element = inTree.GetElement(i);
-			if (element.GetName() == TREE_NOTE)
-				m_Note = element.GetValue();
-			else if (element.GetName() == TREE_PLACE_INFO)
+			ElementNodePtr element = inTree->GetElementNode(i);
+			if (!element)
+				continue;
+			if (element->GetName() == TREE_NOTE)
+				m_Note = element->GetValue();
+			else if (element->GetName() == TREE_PLACE_INFO)
 			{
 				if (!m_PlaceInfo.Load(element, inVersion, ioCallback))
 					return false;
 			}
-			else if (element.GetName() == TREE_TITLE_POINTS)
+			else if (element->GetName() == TREE_TITLE_POINTS)
 			{
 				if (!m_TitlePoints.Load(element, inVersion, ioCallback, m_LifePoints))
 					return false;
 			}
-			else if (element.GetName() == TREE_LIFETIME_POINTS)
+			else if (element->GetName() == TREE_LIFETIME_POINTS)
 			{
 				if (bVer10orMore)
 				{
@@ -402,12 +407,12 @@ bool ARBConfigScoring::Load(
 						return false;
 				}
 			}
-			else if (element.GetName() == TREE_PLACEMENTS)
+			else if (element->GetName() == TREE_PLACEMENTS)
 			{
-				for (int iPlace = 0; iPlace < element.GetElementCount(); ++iPlace)
+				for (int iPlace = 0; iPlace < element->GetElementCount(); ++iPlace)
 				{
-					Element const& place = element.GetElement(iPlace);
-					if (place.GetName() == TREE_PLACE_INFO)
+					ElementNodePtr place = element->GetElementNode(iPlace);
+					if (place && place->GetName() == TREE_PLACE_INFO)
 						if (!m_Placements.Load(place, inVersion, ioCallback))
 							return false;
 				}
@@ -422,7 +427,7 @@ bool ARBConfigScoring::Load(
 	else
 	{
 		short ptsWhenClean = 0;
-		if (Element::eFound != inTree.GetAttrib(_T("Clean"), ptsWhenClean))
+		if (ElementNode::eFound != inTree->GetAttrib(_T("Clean"), ptsWhenClean))
 		{
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, _T("Clean")));
 			return false;
@@ -434,29 +439,32 @@ bool ARBConfigScoring::Load(
 
 		short faultsAllowed = 0;
 		short ptsWhenNotClean = 0;
-		inTree.GetAttrib(_T("FaultsAllowed"), faultsAllowed);
-		inTree.GetAttrib(_T("WithFaults"), ptsWhenNotClean);
+		inTree->GetAttrib(_T("FaultsAllowed"), faultsAllowed);
+		inTree->GetAttrib(_T("WithFaults"), ptsWhenNotClean);
 		if (0 < faultsAllowed && 0 < ptsWhenNotClean)
 		{
 			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed);
 		}
 
 		if (inVersion >= ARBVersion(3,0))
-			m_Note = inTree.GetValue();
+			m_Note = inTree->GetValue();
 	}
 
 	return true;
 }
 
-bool ARBConfigScoring::Save(Element& ioTree) const
+bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 {
-	Element& scoring = ioTree.AddElement(TREE_SCORING);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr scoring = ioTree->AddElementNode(TREE_SCORING);
 	if (m_ValidFrom.IsValid())
-		scoring.AddAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom);
+		scoring->AddAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom);
 	if (m_ValidTo.IsValid())
-		scoring.AddAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo);
-	scoring.AddAttrib(ATTRIB_SCORING_DIVISION, m_Division);
-	scoring.AddAttrib(ATTRIB_SCORING_LEVEL, m_Level);
+		scoring->AddAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo);
+	scoring->AddAttrib(ATTRIB_SCORING_DIVISION, m_Division);
+	scoring->AddAttrib(ATTRIB_SCORING_LEVEL, m_Level);
 	switch (m_Style)
 	{
 	default:
@@ -466,51 +474,51 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 #endif
 		return false;
 	case eFaultsThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("FaultsThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("FaultsThenTime"));
 		break;
 	case eFaults100ThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults100ThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults100ThenTime"));
 		break;
 	case eFaults200ThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults200ThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults200ThenTime"));
 		break;
 	case eOCScoreThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("OCScoreThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("OCScoreThenTime"));
 		break;
 	case eScoreThenTime:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("ScoreThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("ScoreThenTime"));
 		break;
 	case eTimePlusFaults:
-		scoring.AddAttrib(ATTRIB_SCORING_TYPE, _T("TimePlusFaults"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("TimePlusFaults"));
 		break;
 	}
 	if (m_bDropFractions)
-		scoring.AddAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions);
+		scoring->AddAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions);
 	if (m_bCleanQ)
-		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ);
+		scoring->AddAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ);
 	if (m_bTimeFaultsUnder)
-		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder);
+		scoring->AddAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder);
 	if (m_bTimeFaultsOver)
-		scoring.AddAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver);
+		scoring->AddAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver);
 	if (m_bSubtractTimeFaults)
-		scoring.AddAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults);
+		scoring->AddAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults);
 	if (1 < m_TimeFaultMultiplier)
-		scoring.AddAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
+		scoring->AddAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 	if (0 < m_Note.length())
 	{
-		Element& note = scoring.AddElement(TREE_NOTE);
-		note.SetValue(m_Note);
+		ElementNodePtr note = scoring->AddElementNode(TREE_NOTE);
+		note->SetValue(m_Note);
 	}
 	if (0 < m_OpeningPts)
-		scoring.AddAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
+		scoring->AddAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
 	if (0 < m_ClosingPts)
-		scoring.AddAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
+		scoring->AddAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);
 	if (m_bSuperQ)
-		scoring.AddAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ);
+		scoring->AddAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ);
 	if (m_bSpeedPts)
-		scoring.AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
+		scoring->AddAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts);
 	if (m_bBonusPts)
-		scoring.AddAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts);
+		scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts);
 	if (m_bSpeedPts)
 	{
 		if (!m_PlaceInfo.Save(scoring))
@@ -522,7 +530,7 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 		return false;
 	if (0 < m_Placements.size())
 	{
-		Element& place = scoring.AddElement(TREE_PLACEMENTS);
+		ElementNodePtr place = scoring->AddElementNode(TREE_PLACEMENTS);
 		if (!m_Placements.Save(place))
 			return false;
 	}
@@ -533,7 +541,7 @@ bool ARBConfigScoring::Save(Element& ioTree) const
 
 bool ARBConfigScoringList::Load(
 		ARBConfigDivisionList const& inDivisions,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

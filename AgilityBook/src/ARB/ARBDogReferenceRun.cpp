@@ -152,13 +152,17 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<ARBString>& ioStrings) cons
 
 bool ARBDogReferenceRun::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+
 	ARBString attrib;
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_REF_RUN_Q, attrib))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
 		return false;
@@ -169,61 +173,67 @@ bool ARBDogReferenceRun::Load(
 		return false;
 	}
 
-	inTree.GetAttrib(ATTRIB_REF_RUN_TIME, m_Time);
-	inTree.GetAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
-	inTree.GetAttrib(ATTRIB_REF_RUN_HEIGHT, m_Height);
+	inTree->GetAttrib(ATTRIB_REF_RUN_TIME, m_Time);
+	inTree->GetAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
+	inTree->GetAttrib(ATTRIB_REF_RUN_HEIGHT, m_Height);
 
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_REF_NAME)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_REF_NAME)
 		{
-			m_Name = element.GetValue();
+			m_Name = element->GetValue();
 		}
-		else if (element.GetName() == TREE_REF_BREED)
+		else if (element->GetName() == TREE_REF_BREED)
 		{
-			m_Breed = element.GetValue();
+			m_Breed = element->GetValue();
 		}
-		else if (element.GetName() == TREE_REF_SCORE)
+		else if (element->GetName() == TREE_REF_SCORE)
 		{
-			m_Score = element.GetValue();
+			m_Score = element->GetValue();
 		}
-		else if (element.GetName() == TREE_REF_NOTE)
+		else if (element->GetName() == TREE_REF_NOTE)
 		{
-			m_Note = element.GetValue();
+			m_Note = element->GetValue();
 		}
 	}
 
 	return true;
 }
 
-bool ARBDogReferenceRun::Save(Element& ioTree) const
+bool ARBDogReferenceRun::Save(ElementNodePtr ioTree) const
 {
-	Element& refRun = ioTree.AddElement(TREE_REF_RUN);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr refRun = ioTree->AddElementNode(TREE_REF_RUN);
 	m_Q.Save(refRun, ATTRIB_REF_RUN_Q);
-	refRun.AddAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
+	refRun->AddAttrib(ATTRIB_REF_RUN_PLACE, m_Place);
 	if (0 < m_Height.length())
-		refRun.AddAttrib(ATTRIB_REF_RUN_HEIGHT, m_Height);
+		refRun->AddAttrib(ATTRIB_REF_RUN_HEIGHT, m_Height);
 
+	if (0 < m_Name.length())
 	{
-		Element& element = refRun.AddElement(TREE_REF_NAME);
-		element.SetValue(m_Name);
+		ElementNodePtr element = refRun->AddElementNode(TREE_REF_NAME);
+		element->SetValue(m_Name);
 	}
 	if (0 < m_Breed.length())
 	{
-		Element& element = refRun.AddElement(TREE_REF_BREED);
-		element.SetValue(m_Breed);
+		ElementNodePtr element = refRun->AddElementNode(TREE_REF_BREED);
+		element->SetValue(m_Breed);
 	}
 	if (0 < m_Score.length())
 	{
-		Element& element = refRun.AddElement(TREE_REF_SCORE);
-		element.SetValue(m_Score);
+		ElementNodePtr element = refRun->AddElementNode(TREE_REF_SCORE);
+		element->SetValue(m_Score);
 	}
-	refRun.AddAttrib(ATTRIB_REF_RUN_TIME, m_Time);
+	refRun->AddAttrib(ATTRIB_REF_RUN_TIME, m_Time);
 	if (0 < m_Note.length())
 	{
-		Element& element = refRun.AddElement(TREE_REF_NOTE);
-		element.SetValue(m_Note);
+		ElementNodePtr element = refRun->AddElementNode(TREE_REF_NOTE);
+		element->SetValue(m_Note);
 	}
 	return true;
 }
@@ -232,7 +242,7 @@ bool ARBDogReferenceRun::Save(Element& ioTree) const
 
 bool ARBDogReferenceRunList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

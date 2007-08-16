@@ -390,9 +390,9 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					ARBString errMsg;
-					Element tree;
+					ElementNodePtr tree(ElementNode::New());
 					CStringA fileName(file.GetPathName());
-					if (!tree.LoadXMLFile(fileName, errMsg))
+					if (!tree->LoadXMLFile(fileName, errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -421,9 +421,9 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					ARBString errMsg;
-					Element tree;
+					ElementNodePtr tree(ElementNode::New());
 					CStringA fileName(file.GetPathName());
-					if (!tree.LoadXMLFile(fileName, errMsg))
+					if (!tree->LoadXMLFile(fileName, errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -453,11 +453,11 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
-					Element tree;
+					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, true, false, false, false, false))
 					{
 						CStringA filename(file.GetFileName());
-						tree.SaveXML(filename);
+						tree->SaveXML(filename);
 					}
 					bOk = true;
 				}
@@ -527,9 +527,9 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					ARBString errMsg;
-					Element tree;
+					ElementNodePtr tree(ElementNode::New());
 					CStringA fileName(file.GetPathName());
-					if (!tree.LoadXMLFile(fileName, errMsg))
+					if (!tree->LoadXMLFile(fileName, errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -559,11 +559,11 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
-					Element tree;
+					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, false, true, false, false, false))
 					{
 						CStringA filename(file.GetFileName());
-						tree.SaveXML(filename);
+						tree->SaveXML(filename);
 					}
 					bOk = true;
 				}
@@ -589,11 +589,11 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
-					Element tree;
+					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, false, false, true, false, false))
 					{
 						CStringA filename(file.GetFileName());
-						tree.SaveXML(filename);
+						tree->SaveXML(filename);
 					}
 					bOk = true;
 				}
@@ -610,10 +610,14 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					CStdioFile output(file.GetFileName(), CFile::modeCreate | CFile::modeWrite | CFile::typeBinary);
-					ARBString dtd = ARBConfig::GetDTD(false);
-					output.WriteString(dtd.c_str());
-					output.Close();
+					CStringA filename(file.GetFileName());
+					std::ofstream output(filename, std::ios::out | std::ios::binary);
+					output.exceptions(std::ios_base::badbit);
+					if (output.is_open())
+					{
+						output << ARBConfig::GetDTD(false);
+						output.close();
+					}
 					bOk = true;
 				}
 			}
@@ -636,12 +640,12 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					CVersionNum ver;
 					ARBString verstr = (LPCTSTR)ver.GetVersionString();
-					Element tree;
+					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, true, true, true, true, true))
 					{
 						CStringA filename(file.GetFileName());
-						ARBString dtd = ARBConfig::GetDTD();
-						tree.SaveXML(filename, &dtd);
+						std::string dtd = ARBConfig::GetDTD();
+						tree->SaveXML(filename, &dtd);
 					}
 					bOk = true;
 				}

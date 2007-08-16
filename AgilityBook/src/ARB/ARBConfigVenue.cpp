@@ -151,32 +151,37 @@ void ARBConfigVenue::clear()
 
 bool ARBConfigVenue::Load(
 		ARBConfig& ioConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
 	// Get the venue name.
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_VENUE_NAME, m_Name)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_VENUE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME));
 		return false;
 	}
 	// Long name added in v10.1
-	inTree.GetAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
+	inTree->GetAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	// URL added in v12.3
-	inTree.GetAttrib(ATTRIB_VENUE_URL, m_URL);
+	inTree->GetAttrib(ATTRIB_VENUE_URL, m_URL);
 	// Icon index added in 12.5
-	inTree.GetAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	inTree->GetAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		ARBString const& name = element.GetName();
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		ARBString const& name = element->GetName();
 		if (name == TREE_VENUE_DESC)
 		{
-			m_Desc = element.GetValue();
+			m_Desc = element->GetValue();
 		}
-		else if (element.GetName() == TREE_TITLES)
+		else if (element->GetName() == TREE_TITLES)
 		{
 			// Ignore any errors...
 			m_Titles.Load(element, inVersion, ioCallback);
@@ -253,19 +258,22 @@ bool ARBConfigVenue::Load(
 	return true;
 }
 
-bool ARBConfigVenue::Save(Element& ioTree) const
+bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
 {
-	Element& venue = ioTree.AddElement(TREE_VENUE);
-	venue.AddAttrib(ATTRIB_VENUE_NAME, m_Name);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr venue = ioTree->AddElementNode(TREE_VENUE);
+	venue->AddAttrib(ATTRIB_VENUE_NAME, m_Name);
 	if (0 < m_LongName.length())
-		venue.AddAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
+		venue->AddAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	if (0 < m_URL.length())
-		venue.AddAttrib(ATTRIB_VENUE_URL, m_URL);
-	venue.AddAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
+		venue->AddAttrib(ATTRIB_VENUE_URL, m_URL);
+	venue->AddAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
 	if (0 < m_Desc.length())
 	{
-		Element& desc = venue.AddElement(TREE_VENUE_DESC);
-		desc.SetValue(m_Desc);
+		ElementNodePtr desc = venue->AddElementNode(TREE_VENUE_DESC);
+		desc->SetValue(m_Desc);
 	}
 	if (!m_Titles.Save(venue))
 		return false;
@@ -496,7 +504,7 @@ bool ARBConfigVenue::Update(
 
 bool ARBConfigVenueList::Load(
 		ARBConfig& ioConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

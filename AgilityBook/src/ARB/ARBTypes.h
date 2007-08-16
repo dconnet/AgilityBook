@@ -44,57 +44,67 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
 // Forward references
 class ARBConfig;
-class Element;
 #define ARB_TYPEDEF(name) \
+	class name;\
+	typedef boost::shared_ptr<name> name##Ptr;
+#define ARB_TYPEDEF2(name) \
+	class name;\
+	typedef boost::weak_ptr<name> name##WPtr;\
+	typedef boost::shared_ptr<name> name##Ptr;
+#define ARB_TYPEDEF_LIST(name) \
 	class name;\
 	class name##List;\
 	typedef boost::shared_ptr<name> name##Ptr;
-ARB_TYPEDEF(ARBCalendar)
-ARB_TYPEDEF(ARBConfigAction)
-ARB_TYPEDEF(ARBConfigActionDeleteDivision)
-ARB_TYPEDEF(ARBConfigActionDeleteEvent)
-ARB_TYPEDEF(ARBConfigActionDeleteLevel)
-ARB_TYPEDEF(ARBConfigActionDeleteMultiQ)
-ARB_TYPEDEF(ARBConfigActionDeleteOtherPoints)
-ARB_TYPEDEF(ARBConfigActionDeleteTitle)
-ARB_TYPEDEF(ARBConfigActionDeleteVenue)
-ARB_TYPEDEF(ARBConfigActionRenameDivision)
-ARB_TYPEDEF(ARBConfigActionRenameEvent)
-ARB_TYPEDEF(ARBConfigActionRenameLevel)
-ARB_TYPEDEF(ARBConfigActionRenameMultiQ)
-ARB_TYPEDEF(ARBConfigActionRenameOtherPoints)
-ARB_TYPEDEF(ARBConfigActionRenameTitle)
-ARB_TYPEDEF(ARBConfigActionRenameVenue)
-ARB_TYPEDEF(ARBConfigDivision)
-ARB_TYPEDEF(ARBConfigEvent)
-ARB_TYPEDEF(ARBConfigFault)
-ARB_TYPEDEF(ARBConfigLevel)
-ARB_TYPEDEF(ARBConfigLifetimePoints)
-ARB_TYPEDEF(ARBConfigMultiQ)
-ARB_TYPEDEF(ARBConfigOtherPoints)
-ARB_TYPEDEF(ARBConfigPlaceInfo)
-ARB_TYPEDEF(ARBConfigScoring)
-ARB_TYPEDEF(ARBConfigSubLevel)
-ARB_TYPEDEF(ARBConfigTitle)
-ARB_TYPEDEF(ARBConfigTitlePoints)
-ARB_TYPEDEF(ARBConfigVenue)
-ARB_TYPEDEF(ARBDog)
-ARB_TYPEDEF(ARBDogClub)
-ARB_TYPEDEF(ARBDogExistingPoints)
-ARB_TYPEDEF(ARBDogReferenceRun)
-ARB_TYPEDEF(ARBDogRegNum)
-ARB_TYPEDEF(ARBDogRun)
-ARB_TYPEDEF(ARBDogRunOtherPoints)
-ARB_TYPEDEF(ARBDogRunPartner)
-ARB_TYPEDEF(ARBDogRunScoring)
-ARB_TYPEDEF(ARBDogTitle)
-ARB_TYPEDEF(ARBDogTrial)
-ARB_TYPEDEF(ARBInfoItem)
-ARB_TYPEDEF(ARBTraining)
+ARB_TYPEDEF(Element)
+ARB_TYPEDEF2(ElementNode)
+ARB_TYPEDEF2(ElementText)
+ARB_TYPEDEF_LIST(ARBCalendar)
+ARB_TYPEDEF_LIST(ARBConfigAction)
+ARB_TYPEDEF_LIST(ARBConfigActionDeleteDivision)
+ARB_TYPEDEF_LIST(ARBConfigActionDeleteEvent)
+ARB_TYPEDEF_LIST(ARBConfigActionDeleteLevel)
+ARB_TYPEDEF_LIST(ARBConfigActionDeleteMultiQ)
+ARB_TYPEDEF_LIST(ARBConfigActionDeleteOtherPoints)
+ARB_TYPEDEF_LIST(ARBConfigActionDeleteTitle)
+ARB_TYPEDEF_LIST(ARBConfigActionDeleteVenue)
+ARB_TYPEDEF_LIST(ARBConfigActionRenameDivision)
+ARB_TYPEDEF_LIST(ARBConfigActionRenameEvent)
+ARB_TYPEDEF_LIST(ARBConfigActionRenameLevel)
+ARB_TYPEDEF_LIST(ARBConfigActionRenameMultiQ)
+ARB_TYPEDEF_LIST(ARBConfigActionRenameOtherPoints)
+ARB_TYPEDEF_LIST(ARBConfigActionRenameTitle)
+ARB_TYPEDEF_LIST(ARBConfigActionRenameVenue)
+ARB_TYPEDEF_LIST(ARBConfigDivision)
+ARB_TYPEDEF_LIST(ARBConfigEvent)
+ARB_TYPEDEF_LIST(ARBConfigFault)
+ARB_TYPEDEF_LIST(ARBConfigLevel)
+ARB_TYPEDEF_LIST(ARBConfigLifetimePoints)
+ARB_TYPEDEF_LIST(ARBConfigMultiQ)
+ARB_TYPEDEF_LIST(ARBConfigOtherPoints)
+ARB_TYPEDEF_LIST(ARBConfigPlaceInfo)
+ARB_TYPEDEF_LIST(ARBConfigScoring)
+ARB_TYPEDEF_LIST(ARBConfigSubLevel)
+ARB_TYPEDEF_LIST(ARBConfigTitle)
+ARB_TYPEDEF_LIST(ARBConfigTitlePoints)
+ARB_TYPEDEF_LIST(ARBConfigVenue)
+ARB_TYPEDEF_LIST(ARBDog)
+ARB_TYPEDEF_LIST(ARBDogClub)
+ARB_TYPEDEF_LIST(ARBDogExistingPoints)
+ARB_TYPEDEF_LIST(ARBDogReferenceRun)
+ARB_TYPEDEF_LIST(ARBDogRegNum)
+ARB_TYPEDEF_LIST(ARBDogRun)
+ARB_TYPEDEF_LIST(ARBDogRunOtherPoints)
+ARB_TYPEDEF_LIST(ARBDogRunPartner)
+ARB_TYPEDEF_LIST(ARBDogRunScoring)
+ARB_TYPEDEF_LIST(ARBDogTitle)
+ARB_TYPEDEF_LIST(ARBDogTrial)
+ARB_TYPEDEF_LIST(ARBInfoItem)
+ARB_TYPEDEF_LIST(ARBTraining)
 
 // Note, for non-Windows systems, see stdafx.h for additional requirements.
 typedef std::basic_ostringstream<TCHAR> ARBostringstream;
@@ -110,7 +120,6 @@ typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > ARBofstream;
 ARBString SanitizeStringForHTML(
 		ARBString const& inRawData,
 		bool bConvertCR = true);
-
 
 /////////////////////////////////////////////////////////////////////////////
 /**
@@ -219,7 +228,7 @@ public:
 	 * @return Success
 	 * @post The T element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const
+	bool Save(ElementNodePtr ioTree) const
 	{
 		for (const_iterator iter = begin(); iter != end(); ++iter)
 		{
@@ -468,7 +477,7 @@ public:
 	 * @post The ARB_Q attribute will be added to ioTree.
 	 */
 	bool Save(
-			Element& ioTree,
+			ElementNodePtr ioTree,
 			TCHAR const* const inAttribName) const;
 
 private:

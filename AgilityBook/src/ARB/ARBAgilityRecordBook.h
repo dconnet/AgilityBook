@@ -231,7 +231,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -245,7 +245,7 @@ public:
 	 * @param ioCallback Error processing callback
 	 * @return Success
 	 */
-	bool Load(Element const& inTree, ARBErrorCallback& ioCallback)
+	bool Load(ElementNodePtr inTree, ARBErrorCallback& ioCallback)
 	{
 		return Load(inTree, true, true, true, true, true, ioCallback);
 	}
@@ -262,7 +262,7 @@ public:
 	 * @return Success
 	 */
 	bool Save(
-		Element& outTree,
+		ElementNodePtr outTree,
 		ARBString const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,

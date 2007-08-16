@@ -1771,7 +1771,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		Element tree(CLIPDATA);
+		ElementNodePtr tree(ElementNode::New(CLIPDATA));
 
 		// Now all the data.
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)

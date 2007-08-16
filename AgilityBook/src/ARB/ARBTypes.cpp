@@ -194,7 +194,7 @@ bool ARB_Q::Load(
 }
 
 bool ARB_Q::Save(
-		Element& ioTree,
+		ElementNodePtr ioTree,
 		TCHAR const* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
@@ -210,7 +210,7 @@ bool ARB_Q::Save(
 			bOk = true;
 		}
 	}
-	ioTree.AddAttrib(inAttribName, q);
+	ioTree->AddAttrib(inAttribName, q);
 	return bOk;
 }
 

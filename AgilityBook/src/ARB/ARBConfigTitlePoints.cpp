@@ -118,17 +118,20 @@ ARBString ARBConfigTitlePoints::GetGenericName() const
 }
 
 bool ARBConfigTitlePoints::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS));
 		return false;
 	}
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
 		return false;
@@ -136,7 +139,7 @@ bool ARBConfigTitlePoints::Load(
 	if (inVersion < ARBVersion(10,0))
 	{
 		bool bLifetime;
-		if (Element::eFound == inTree.GetAttrib(_T("LifeTime"), bLifetime))
+		if (ElementNode::eFound == inTree->GetAttrib(_T("LifeTime"), bLifetime))
 		{
 			if (bLifetime)
 			{
@@ -147,18 +150,21 @@ bool ARBConfigTitlePoints::Load(
 	return true;
 }
 
-bool ARBConfigTitlePoints::Save(Element& ioTree) const
+bool ARBConfigTitlePoints::Save(ElementNodePtr ioTree) const
 {
-	Element& title = ioTree.AddElement(TREE_TITLE_POINTS);
-	title.AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points, 0);
-	title.AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults, 0);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr title = ioTree->AddElementNode(TREE_TITLE_POINTS);
+	title->AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points, 0);
+	title->AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults, 0);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigTitlePointsList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		ARBConfigLifetimePointsList& ioLifetimePoints)

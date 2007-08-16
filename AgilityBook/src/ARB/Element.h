@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-08-15 DRC Modified to support mixed text/nodes.
  * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
  * @li 2003-11-26 DRC Changed version number to a complex value.
  * @li 2003-10-22 DRC Added a DTD parameter to SaveXML.
@@ -39,6 +40,8 @@
 
 #include <map>
 #include <vector>
+#include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <xercesc/sax/InputSource.hpp>
 #include "ARBTypes.h"
 class ARBDate;
@@ -55,12 +58,12 @@ class ARBDate;
  * Reminder, attributes are not ordered and are unique by name.
  * Elements are ordered and the same name may be repeated.
  * (Hence the different access methods.)
- *
- * @attention An element may not have both elements and a value. While XML
- * allows this, we do not. This greatly simplifies data representation.
  */
 class Element
 {
+protected:
+	Element();
+
 public:
 	/**
 	 * Call once (at program startup) to initialize XML subsystem.
@@ -74,6 +77,87 @@ public:
 	 */
 	static void Terminate();
 
+	virtual ~Element() = 0;
+
+	/**
+	 * Dump the element tree for debugging purposes.
+	 * @param inLevel Indent level.
+	 */
+	virtual void Dump(int inLevel = 0) const = 0;
+
+	typedef enum
+	{
+		Element_Node,
+		Element_Text
+	} ElementType;
+	virtual ElementType GetType() const = 0;
+
+	/**
+	 * Get the name of this element.
+	 */
+	virtual ARBString const& GetName() const = 0;
+
+	/**
+	 * Set the name of this element.
+	 * @param inName New name for this element.
+	 */
+	virtual void SetName(ARBString const& inName) = 0;
+
+	/**
+	 * Get the value of this element. This will concatenate all text nodes.
+	 */
+	virtual ARBString GetValue() const = 0;
+
+	/**
+	 * Set the value of this element. If this element has text nodes, they
+	 * will all be consolidated into one.
+	 * @pre GetElementCount() must be 0.
+	 * @param inValue New value for this element.
+	 */
+	virtual void SetValue(ARBString const& inValue) = 0;
+	virtual void SetValue(TCHAR const* const inValue) = 0;
+	virtual void SetValue(short inValue) = 0;
+	virtual void SetValue(long inValue) = 0;
+
+	/**
+	 * Set the value of this element.
+	 * @pre GetElementCount() must be 0.
+	 * @param inValue New value for this element.
+	 * @param inPrec Precision, trailing zeros are trimmed unless prec=2, then they are only trimmed if all zero.
+	 */
+	virtual void SetValue(
+			double inValue,
+			int inPrec = 2) = 0;
+};
+
+class ElementNode : public Element
+{
+private:
+	ElementNode();
+	ElementNode(ARBString const& inName);
+	ElementNode(ElementNode const&); // Not implemented
+	ElementNode& operator=(ElementNode const&); // Not implemented
+
+public:
+	static ElementNodePtr New();
+	static ElementNodePtr New(ARBString const& inName);
+
+	virtual void Dump(int inLevel = 0) const;
+	virtual Element::ElementType GetType() const;
+	virtual ARBString const& GetName() const;
+	virtual void SetName(ARBString const& inName);
+	virtual ARBString GetValue() const;
+	virtual void SetValue(ARBString const& inValue);
+	virtual void SetValue(TCHAR const* const inValue);
+	virtual void SetValue(short inValue);
+	virtual void SetValue(long inValue);
+	virtual void SetValue(double inValue, int inPrec = 2);
+
+	/**
+	 * Clear the name, value, attributes, and subelements (everything!).
+	 */
+	void clear();
+
 	/**
 	 * Result of getting an attribute.
 	 */
@@ -83,59 +167,6 @@ public:
 		eInvalidValue,	///< Attribute's value is not valid for data type.
 		eFound			///< Attribute was found.
 	} AttribLookup;
-
-	Element();
-	Element(ARBString const& inName);
-	Element(Element const& rhs);
-	Element& operator=(Element const& rhs);
-	~Element();
-
-	/**
-	 * Dump the element tree for debugging purposes.
-	 * @param inLevel Indent level.
-	 */
-	void Dump(int inLevel = 0) const;
-
-	/**
-	 * Clear the name, value, attributes, and subelements (everything!).
-	 */
-	void clear();
-
-	/**
-	 * Get the name of this element.
-	 */
-	ARBString const& GetName() const;
-
-	/**
-	 * Set the name of this element.
-	 * @param inName New name for this element.
-	 */
-	void SetName(ARBString const& inName);
-
-	/**
-	 * Get the value of this element.
-	 */
-	ARBString const& GetValue() const;
-
-	/**
-	 * Set the value of this element.
-	 * @pre GetElementCount() must be 0.
-	 * @param inValue New value for this element.
-	 */
-	void SetValue(ARBString const& inValue);
-	void SetValue(TCHAR const* const inValue);
-	void SetValue(short inValue);
-	void SetValue(long inValue);
-
-	/**
-	 * Set the value of this element.
-	 * @pre GetElementCount() must be 0.
-	 * @param inValue New value for this element.
-	 * @param inPrec Precision, trailing zeros are trimmed unless prec=2, then they are only trimmed if all zero.
-	 */
-	void SetValue(
-			double inValue,
-			int inPrec = 2);
 
 	/**
 	 * The number of attributes. This should only be used when iterating over
@@ -246,18 +277,26 @@ public:
 	int GetElementCount() const;
 
 	/**
-	 * Get the specified element.
-	 * @param inIndex Index of element to be obtained.
-	 * @return The element.
+	 * Does this node have any text? (a value)
 	 */
-	Element const& GetElement(int inIndex) const;
+	bool HasTextNodes() const;
 
 	/**
 	 * Get the specified element.
 	 * @param inIndex Index of element to be obtained.
 	 * @return The element.
 	 */
-	Element& GetElement(int inIndex);
+	ElementPtr GetElement(int inIndex) const;
+
+	/**
+	 * Get the specified element.
+	 * @param inIndex Index of element to be obtained.
+	 * @return The element.
+	 */
+	ElementPtr GetElement(int inIndex);
+
+	ElementNodePtr GetElementNode(int inIndex) const;
+	ElementNodePtr GetElementNode(int inIndex);
 
 	/**
 	 * Add an element.
@@ -268,8 +307,21 @@ public:
 	 * @param inAt Add the new element at the specified location.
 	 * @return The new element.
 	 */
-	Element& AddElement(
+	ElementNodePtr AddElementNode(
 			ARBString const& inName,
+			int inAt = -1);
+
+	/**
+	 * Add an element.
+	 * If inAt is less than zero or greater than the number of items,
+	 * the item will be appended.
+	 * @pre GetValue() must be empty.
+	 * @param inName Name of new element.
+	 * @param inAt Add the new element at the specified location.
+	 * @return The new element.
+	 */
+	ElementTextPtr AddElementText(
+			ARBString const& inText,
 			int inAt = -1);
 
 	/**
@@ -325,7 +377,7 @@ public:
 	 */
 	bool SaveXML(
 			std::ostream& outStream,
-			ARBString const* inDTD = NULL) const;
+			std::string const* inDTD = NULL) const;
 
 	/**
 	 * Save this element to the given file.
@@ -336,13 +388,43 @@ public:
 	 */
 	bool SaveXML(
 			char const* outFile,
-			ARBString const* inDTD = NULL) const;
+			std::string const* inDTD = NULL) const;
 
-private:
-	bool LoadXML(XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource, ARBString& ioErrMsg);
-	typedef std::map<ARBString, ARBString> MyAttributes;
+protected:
+	void RemoveAllTextNodes();
+
+	ElementNodeWPtr m_Me;
 	ARBString m_Name;
+	typedef std::map<ARBString, ARBString> MyAttributes;
 	ARBString m_Value;
 	MyAttributes m_Attribs;
-	std::vector<Element> m_Elements;
+	std::vector<ElementPtr> m_Elements;
+};
+
+class ElementText : public Element
+{
+private:
+	ElementText();
+	ElementText(ARBString const& inText);
+	ElementText(ElementText const&); // Not implemented
+	ElementText& operator=(ElementText const&); // Not implemented
+
+public:
+	static ElementTextPtr New();
+	static ElementTextPtr New(ARBString const& inText);
+
+	virtual void Dump(int inLevel = 0) const;
+	virtual Element::ElementType GetType() const;
+	virtual ARBString const& GetName() const;
+	virtual void SetName(ARBString const& inName);
+	virtual ARBString GetValue() const;
+	virtual void SetValue(ARBString const& inValue);
+	virtual void SetValue(TCHAR const* const inValue);
+	virtual void SetValue(short inValue);
+	virtual void SetValue(long inValue);
+	virtual void SetValue(double inValue, int inPrec = 2);
+
+protected:
+	ElementTextWPtr m_Me;
+	ARBString m_Value;
 };

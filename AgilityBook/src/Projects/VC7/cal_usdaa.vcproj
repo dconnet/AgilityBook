@@ -16,18 +16,18 @@
 			OutputDirectory="..\..\..\bin\VC7\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC7\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="TRUE"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
@@ -77,17 +77,17 @@
 			OutputDirectory="..\..\..\bin\VC7\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC7\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			CharacterSet="2"
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="TRUE"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
@@ -188,6 +188,40 @@
 			</File>
 			<File
 				RelativePath="..\..\cal_usdaa\res\cal_usdaa.rc2">
+			</File>
+		</Filter>
+		<Filter
+			Name="ARB Files"
+			Filter="">
+			<File
+				RelativePath="..\..\ARB\ARBDate.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBDate.h">
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBTypes.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBTypes.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAuthenticate.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAuthenticate.h">
+			</File>
+			<File
+				RelativePath="..\..\ARB\Element.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\Element.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\ReadHttp.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\ReadHttp.h">
 			</File>
 		</Filter>
 	</Files>

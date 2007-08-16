@@ -132,69 +132,80 @@ size_t ARBDogNotes::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 bool ARBDogNotes::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_FAULTS)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_FAULTS)
 		{
-			m_Faults.push_back(element.GetValue());
+			m_Faults.push_back(element->GetValue());
 		}
-		else if (element.GetName() == TREE_CRCD)
+		else if (element->GetName() == TREE_CRCD)
 		{
-			m_CRCD = element.GetValue();
+			m_CRCD = element->GetValue();
 		}
-		else if (element.GetName() == TREE_CRCD_META2)
+		else if (element->GetName() == TREE_CRCD_META2)
 		{
-			m_CRCDMeta = element.GetValue();
+			m_CRCDMeta = element->GetValue();
 		}
-		else if (element.GetName() == TREE_CRCD_META)
+		else if (element->GetName() == TREE_CRCD_META)
 		{
-			ARBString tmp = element.GetValue();
+			ARBString tmp = element->GetValue();
 			char* data;
 			size_t bytes;
 			ARBBase64::Decode(tmp, data, bytes);
 			BinaryData::Encode(data, bytes, m_CRCDMeta);
 			ARBBase64::Release(data);
 		}
-		else if (element.GetName() == TREE_OTHER)
+		else if (element->GetName() == TREE_OTHER)
 		{
-			m_Note = element.GetValue();
+			m_Note = element->GetValue();
 		}
 	}
 	return true;
 }
 
-bool ARBDogNotes::Save(Element& ioTree) const
+bool ARBDogNotes::Save(ElementNodePtr ioTree) const
 {
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
 	if (0 < m_Faults.size()
 	|| 0 < m_CRCD.length()
 	|| 0 < m_CRCDMeta.length()
 	|| 0 < m_Note.length())
 	{
-		Element& notes = ioTree.AddElement(TREE_NOTES);
+		ElementNodePtr notes = ioTree->AddElementNode(TREE_NOTES);
 		for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
 		{
-			Element& element = notes.AddElement(TREE_FAULTS);
-			element.SetValue((*iter));
+			if (0 < (*iter).length())
+			{
+				ElementNodePtr element = notes->AddElementNode(TREE_FAULTS);
+				element->SetValue((*iter));
+			}
 		}
 		if (0 < m_CRCD.length())
 		{
-			Element& element = notes.AddElement(TREE_CRCD);
-			element.SetValue(m_CRCD);
+			ElementNodePtr element = notes->AddElementNode(TREE_CRCD);
+			element->SetValue(m_CRCD);
 		}
 		if (0 < m_CRCDMeta.length())
 		{
-			Element& element = notes.AddElement(TREE_CRCD_META2);
-			element.SetValue(m_CRCDMeta);
+			ElementNodePtr element = notes->AddElementNode(TREE_CRCD_META2);
+			element->SetValue(m_CRCDMeta);
 		}
 		if (0 < m_Note.length())
 		{
-			Element& element = notes.AddElement(TREE_OTHER);
-			element.SetValue(m_Note);
+			ElementNodePtr element = notes->AddElementNode(TREE_OTHER);
+			element->SetValue(m_Note);
 		}
 	}
 	return true;

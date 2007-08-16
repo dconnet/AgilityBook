@@ -125,11 +125,14 @@ bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 
 bool ARBConfigEvent::Load(
 		ARBConfigDivisionList const& inDivisions,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_EVENT_NAME, m_Name)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EVENT_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EVENT, ATTRIB_EVENT_NAME));
@@ -137,36 +140,38 @@ bool ARBConfigEvent::Load(
 	}
 
 	// Introduced in file version 8.6.
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HAS_TABLE, VALID_VALUES_BOOL));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL));
 		return false;
 	}
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EVENT, ATTRIB_EVENT_HASPARTNER, VALID_VALUES_BOOL));
 		return false;
 	}
 
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_EVENT_DESC)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_EVENT_DESC)
 		{
-			m_Desc = element.GetValue();
+			m_Desc = element->GetValue();
 		}
-		else if (element.GetName() == TREE_EVENT_SUBNAME)
+		else if (element->GetName() == TREE_EVENT_SUBNAME)
 		{
-			m_SubNames.insert(element.GetValue());
+			m_SubNames.insert(element->GetValue());
 		}
-		else if (element.GetName() == TREE_SCORING)
+		else if (element->GetName() == TREE_SCORING)
 		{
 			// Ignore any errors...
 			m_Scoring.Load(inDivisions, element, inVersion, ioCallback);
@@ -175,29 +180,35 @@ bool ARBConfigEvent::Load(
 	return true;
 }
 
-bool ARBConfigEvent::Save(Element& ioTree) const
+bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
 {
-	Element& evtTree = ioTree.AddElement(TREE_EVENT);
-	evtTree.AddAttrib(ATTRIB_EVENT_NAME, m_Name);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr evtTree = ioTree->AddElementNode(TREE_EVENT);
+	evtTree->AddAttrib(ATTRIB_EVENT_NAME, m_Name);
 	if (0 < m_Desc.length())
 	{
-		Element& desc = evtTree.AddElement(TREE_EVENT_DESC);
-		desc.SetValue(m_Desc);
+		ElementNodePtr desc = evtTree->AddElementNode(TREE_EVENT_DESC);
+		desc->SetValue(m_Desc);
 	}
 	// No need to write if not set.
 	if (m_bTable)
-		evtTree.AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
+		evtTree->AddAttrib(ATTRIB_EVENT_HAS_TABLE, m_bTable);
 	if (m_bHasPartner)
-		evtTree.AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
+		evtTree->AddAttrib(ATTRIB_EVENT_HASPARTNER, m_bHasPartner);
 	if (m_bHasSubNames)
 	{
-		evtTree.AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
+		evtTree->AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
 		for (std::set<ARBString>::const_iterator iter = m_SubNames.begin();
 			iter != m_SubNames.end();
 			++iter)
 		{
-			Element& name = evtTree.AddElement(TREE_EVENT_SUBNAME);
-			name.SetValue(*iter);
+			if (0 < (*iter).length())
+			{
+				ElementNodePtr name = evtTree->AddElementNode(TREE_EVENT_SUBNAME);
+				name->SetValue(*iter);
+			}
 		}
 	}
 	if (!m_Scoring.Save(evtTree))
@@ -324,7 +335,7 @@ void ARBConfigEvent::SetSubNames(std::set<ARBString> const& inNames)
 
 bool ARBConfigEventList::Load(
 		ARBConfigDivisionList const& inDivisions,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

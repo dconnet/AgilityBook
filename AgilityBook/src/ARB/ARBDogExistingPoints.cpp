@@ -161,22 +161,26 @@ bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 
 bool ARBDogExistingPoints::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+
 	ARBString attrib;
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
-		inTree.GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
+		inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
 		ARBString msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str()));
 		return false;
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE));
@@ -223,7 +227,7 @@ bool ARBDogExistingPoints::Load(
 
 	if (eOtherPoints == m_Type)
 	{
-		if (Element::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other)
+		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other)
 		&& 0 < m_Other.length())
 		{
 			if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
@@ -241,7 +245,7 @@ bool ARBDogExistingPoints::Load(
 		}
 	}
 
-	if (Element::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
+	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue)
 	&& 0 < m_Venue.length())
 	{
 		if (!inConfig.GetVenues().VerifyVenue(m_Venue))
@@ -294,7 +298,7 @@ bool ARBDogExistingPoints::Load(
 		}
 		else
 		{
-			if (Element::eFound == inTree.GetAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ)
+			if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ)
 			&& 0 < m_MultiQ.length())
 			{
 				if (!inConfig.GetVenues().VerifyMultiQ(m_Venue, m_MultiQ))
@@ -317,14 +321,14 @@ bool ARBDogExistingPoints::Load(
 
 	else
 	{
-		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
+		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
 		|| 0 == m_Div.length())
 		{
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV));
 			return false;
 		}
 
-		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
+		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
 		|| 0 == m_Level.length())
 		{
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL));
@@ -341,7 +345,7 @@ bool ARBDogExistingPoints::Load(
 	case eOtherPoints:
 	case eRuns:
 	case eSQ:
-		if (Element::eFound != inTree.GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
+		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
 		|| 0 == m_Event.length())
 		{
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT));
@@ -361,7 +365,7 @@ bool ARBDogExistingPoints::Load(
 			return false;
 		}
 		// Only used in eRuns.
-		inTree.GetAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
+		inTree->GetAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
 		break;
 	default:
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
@@ -378,60 +382,63 @@ bool ARBDogExistingPoints::Load(
 		break;
 	}
 
-	inTree.GetAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);
+	inTree->GetAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);
 
-	m_Comment = inTree.GetValue();
+	m_Comment = inTree->GetValue();
 
 	return true;
 }
 
-bool ARBDogExistingPoints::Save(Element& ioTree) const
+bool ARBDogExistingPoints::Save(ElementNodePtr ioTree) const
 {
-	Element& title = ioTree.AddElement(TREE_EXISTING_PTS);
-	title.AddAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr title = ioTree->AddElementNode(TREE_EXISTING_PTS);
+	title->AddAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date);
 	switch (m_Type)
 	{
 	default:
 		ASSERT(0);
 		break;
 	case eOtherPoints:
-		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_OTHER);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_OTHER);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_OTHER, m_Other);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
 		break;
 	case eRuns:
-		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_RUNS);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_RUNS);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_SUBNAME, m_SubName);
 		break;
 	case eSpeed:
-		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SPEED);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SPEED);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
 		break;
 	case eMQ:
-		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_MQ);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_MQ);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_MULTIQ, m_MultiQ);
 		break;
 	case eSQ:
-		title.AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SQ);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
-		title.AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_SQ);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_VENUE, m_Venue);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level);
+		title->AddAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event);
 		break;
 	}
-	title.AddAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);
+	title->AddAttrib(ATTRIB_EXISTING_PTS_POINTS, m_Points);
 	if (0 < m_Comment.length())
-		title.SetValue(m_Comment);
+		title->SetValue(m_Comment);
 	return true;
 }
 
@@ -439,7 +446,7 @@ bool ARBDogExistingPoints::Save(Element& ioTree) const
 
 bool ARBDogExistingPointsList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

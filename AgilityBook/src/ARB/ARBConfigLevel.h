@@ -98,7 +98,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -108,7 +108,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigLevel element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Update this configuration from inLevelNew.
@@ -164,7 +164,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 

@@ -118,11 +118,14 @@ size_t ARBDogRegNum::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 bool ARBDogRegNum::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE));
@@ -131,7 +134,7 @@ bool ARBDogRegNum::Load(
 
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (Element::eFound != inTree.GetAttrib(_T("Number"), m_Number)
+		if (ElementNode::eFound != inTree->GetAttrib(_T("Number"), m_Number)
 		|| 0 == m_Number.length())
 		{
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, _T("Number")));
@@ -139,22 +142,22 @@ bool ARBDogRegNum::Load(
 		}
 	}
 	else if (inVersion < ARBVersion(9,0))
-		m_Number = inTree.GetValue();
+		m_Number = inTree->GetValue();
 	else
 	{
-		if (Element::eFound != inTree.GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
+		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
 		|| 0 == m_Number.length())
 		{
 			ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER));
 			return false;
 		}
 
-		m_Note = inTree.GetValue();
+		m_Note = inTree->GetValue();
 	}
 
-	inTree.GetAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
+	inTree->GetAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
 
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL));
 		return false;
@@ -171,16 +174,20 @@ bool ARBDogRegNum::Load(
 	return true;
 }
 
-bool ARBDogRegNum::Save(Element& ioTree) const
+bool ARBDogRegNum::Save(ElementNodePtr ioTree) const
 {
-	Element& title = ioTree.AddElement(TREE_REG_NUM);
-	title.AddAttrib(ATTRIB_REG_NUM_VENUE, m_Venue);
-	title.AddAttrib(ATTRIB_REG_NUM_NUMBER, m_Number);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr title = ioTree->AddElementNode(TREE_REG_NUM);
+	title->AddAttrib(ATTRIB_REG_NUM_VENUE, m_Venue);
+	title->AddAttrib(ATTRIB_REG_NUM_NUMBER, m_Number);
 	if (0 < m_Height.length())
-		title.AddAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
+		title->AddAttrib(ATTRIB_REG_NUM_HEIGHT, m_Height);
 	if (m_bReceived)
-		title.AddAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived);
-	title.SetValue(m_Note);
+		title->AddAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived);
+	if (0 < m_Note.length())
+		title->SetValue(m_Note);
 	return true;
 }
 
@@ -188,7 +195,7 @@ bool ARBDogRegNum::Save(Element& ioTree) const
 
 bool ARBDogRegNumList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

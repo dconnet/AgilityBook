@@ -113,27 +113,34 @@ size_t ARBInfoItem::GetSearchStrings(std::set<ARBString>& ioStrings) const
 }
 
 bool ARBInfoItem::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
 		ARBString const& inItemName)
 {
-	if (Element::eNotFound == inTree.GetAttrib(ATTRIB_INFO_NAME, m_Name))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME));
 		return false;
 	}
-	m_Comment = inTree.GetValue();
+	m_Comment = inTree->GetValue();
 	return true;
 }
 
 bool ARBInfoItem::Save(
-		Element& ioTree,
+		ElementNodePtr ioTree,
 		ARBString const& inItemName) const
 {
-	Element& info = ioTree.AddElement(inItemName);
-	info.AddAttrib(ATTRIB_INFO_NAME, m_Name);
-	info.SetValue(m_Comment);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr info = ioTree->AddElementNode(inItemName);
+	info->AddAttrib(ATTRIB_INFO_NAME, m_Name);
+	if (0 < m_Comment.length())
+		info->SetValue(m_Comment);
 	return true;
 }
 
@@ -161,7 +168,7 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 }
 
 bool ARBInfoItemList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -172,8 +179,11 @@ bool ARBInfoItemList::Load(
 	return true;
 }
 
-bool ARBInfoItemList::Save(Element& ioTree) const
+bool ARBInfoItemList::Save(ElementNodePtr ioTree) const
 {
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (!(*iter)->Save(ioTree, m_ItemName))

@@ -104,20 +104,25 @@ void ARBConfigLevel::clear()
 }
 
 bool ARBConfigLevel::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_LEVEL_NAME, m_Name)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LEVEL_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME));
 		return false;
 	}
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_SUBLEVEL)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_SUBLEVEL)
 		{
 			// Ignore any errors...
 			m_SubLevels.Load(element, inVersion, ioCallback);
@@ -126,10 +131,13 @@ bool ARBConfigLevel::Load(
 	return true;
 }
 
-bool ARBConfigLevel::Save(Element& ioTree) const
+bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
 {
-	Element& level = ioTree.AddElement(TREE_LEVEL);
-	level.AddAttrib(ATTRIB_LEVEL_NAME, m_Name);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr level = ioTree->AddElementNode(TREE_LEVEL);
+	level->AddAttrib(ATTRIB_LEVEL_NAME, m_Name);
 	if (!m_SubLevels.Save(level))
 		return false;
 	return true;
@@ -183,7 +191,7 @@ bool ARBConfigLevel::Update(
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigLevelList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

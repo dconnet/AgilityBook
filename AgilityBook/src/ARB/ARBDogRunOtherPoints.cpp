@@ -102,17 +102,20 @@ size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<ARBString>& ioStrings) co
 
 bool ARBDogRunOtherPoints::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_NAME));
 		return false;
 	}
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_POINTS, m_Points))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_POINTS, m_Points))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACEMENT_OTHERPOINTS, ATTRIB_PLACEMENT_OTHERPOINTS_POINTS));
 		return false;
@@ -120,11 +123,14 @@ bool ARBDogRunOtherPoints::Load(
 	return true;
 }
 
-bool ARBDogRunOtherPoints::Save(Element& ioTree) const
+bool ARBDogRunOtherPoints::Save(ElementNodePtr ioTree) const
 {
-	Element& other = ioTree.AddElement(TREE_PLACEMENT_OTHERPOINTS);
-	other.AddAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name);
-	other.AddAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_POINTS, m_Points);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr other = ioTree->AddElementNode(TREE_PLACEMENT_OTHERPOINTS);
+	other->AddAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name);
+	other->AddAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_POINTS, m_Points);
 	return true;
 }
 
@@ -132,7 +138,7 @@ bool ARBDogRunOtherPoints::Save(Element& ioTree) const
 
 bool ARBDogRunOtherPointsList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

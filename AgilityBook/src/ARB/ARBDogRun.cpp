@@ -263,19 +263,22 @@ size_t ARBDogRun::GetSearchStrings(std::set<ARBString>& ioStrings) const
 bool ARBDogRun::Load(
 		ARBConfig const& inConfig,
 		ARBDogClubList const& inClubs,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	switch (inTree.GetAttrib(ATTRIB_RUN_DATE, m_Date))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	switch (inTree->GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
-	case Element::eNotFound:
+	case ElementNode::eNotFound:
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
 		return false;
-	case Element::eInvalidValue:
+	case ElementNode::eInvalidValue:
 		{
 			ARBString attrib;
-			inTree.GetAttrib(ATTRIB_RUN_DATE, attrib);
+			inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
 			ARBString msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
@@ -283,14 +286,14 @@ bool ARBDogRun::Load(
 		}
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION));
 		return false;
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL));
@@ -298,16 +301,16 @@ bool ARBDogRun::Load(
 	}
 
 	// Height is no longer a required attribute (doc ver 8.1)
-	inTree.GetAttrib(ATTRIB_RUN_HEIGHT, m_Height);
+	inTree->GetAttrib(ATTRIB_RUN_HEIGHT, m_Height);
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_RUN_EVENT, m_Event)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
 		return false;
 	}
 
-	inTree.GetAttrib(ATTRIB_RUN_SUBNAME, m_SubName);
+	inTree->GetAttrib(ATTRIB_RUN_SUBNAME, m_SubName);
 
 	// This will get the first scoring style to match. So the order of
 	// the clubs is critical as we'll search the venues by club order.
@@ -316,21 +319,23 @@ bool ARBDogRun::Load(
 	if (!inClubs.FindEvent(inConfig, m_Event, m_Division, m_Level, m_Date, ioCallback, &pEvent, &pScoring))
 		return false;
 
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		ARBString const& name = element.GetName();
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		ARBString const& name = element->GetName();
 		if (name == TREE_CONDITIONS)
 		{
-			m_Conditions = element.GetValue();
+			m_Conditions = element->GetValue();
 		}
 		else if (name == TREE_JUDGE)
 		{
-			m_Judge = element.GetValue();
+			m_Judge = element->GetValue();
 		}
 		else if (name == TREE_HANDLER)
 		{
-			m_Handler = element.GetValue();
+			m_Handler = element->GetValue();
 		}
 		else if (name == TREE_PARTNER)
 		{
@@ -347,7 +352,7 @@ bool ARBDogRun::Load(
 		else if (name == TREE_PLACEMENT)
 		{
 			ARBString attrib;
-			if (Element::eFound != element.GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
+			if (ElementNode::eFound != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
 				ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
@@ -360,13 +365,15 @@ bool ARBDogRun::Load(
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
 				return false;
 			}
-			element.GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
-			element.GetAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
-			element.GetAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
-			for (int idx = 0; idx < element.GetElementCount(); ++idx)
+			element->GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
+			element->GetAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
+			element->GetAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
+			for (int idx = 0; idx < element->GetElementCount(); ++idx)
 			{
-				Element const& subElement = element.GetElement(idx);
-				if (subElement.GetName() == TREE_PLACEMENT_OTHERPOINTS)
+				ElementNodePtr subElement = element->GetElementNode(idx);
+				if (!subElement)
+					continue;
+				if (subElement->GetName() == TREE_PLACEMENT_OTHERPOINTS)
 				{
 					m_OtherPoints.Load(inConfig, subElement, inVersion, ioCallback);
 				}
@@ -384,43 +391,47 @@ bool ARBDogRun::Load(
 		}
 		else if (name == TREE_RUN_LINK)
 		{
-			m_Links.insert(element.GetValue());
+			m_Links.insert(element->GetValue());
 		}
 	}
 	return true;
 }
 
-bool ARBDogRun::Save(Element& ioTree) const
+bool ARBDogRun::Save(ElementNodePtr ioTree) const
 {
-	Element& run = ioTree.AddElement(TREE_RUN);
-	run.AddAttrib(ATTRIB_RUN_DATE, m_Date);
-	run.AddAttrib(ATTRIB_RUN_DIVISION, m_Division);
-	run.AddAttrib(ATTRIB_RUN_LEVEL, m_Level);
-	run.AddAttrib(ATTRIB_RUN_HEIGHT, m_Height);
-	run.AddAttrib(ATTRIB_RUN_EVENT, m_Event);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr run = ioTree->AddElementNode(TREE_RUN);
+	run->AddAttrib(ATTRIB_RUN_DATE, m_Date);
+	run->AddAttrib(ATTRIB_RUN_DIVISION, m_Division);
+	run->AddAttrib(ATTRIB_RUN_LEVEL, m_Level);
+	run->AddAttrib(ATTRIB_RUN_HEIGHT, m_Height);
+	run->AddAttrib(ATTRIB_RUN_EVENT, m_Event);
 	if (0 < m_SubName.length())
-		run.AddAttrib(ATTRIB_RUN_SUBNAME, m_SubName);
+		run->AddAttrib(ATTRIB_RUN_SUBNAME, m_SubName);
 	if (0 < m_Conditions.length())
 	{
-		Element& element = run.AddElement(TREE_CONDITIONS);
-		element.SetValue(m_Conditions);
+		ElementNodePtr element = run->AddElementNode(TREE_CONDITIONS);
+		element->SetValue(m_Conditions);
 	}
-	run.AddElement(TREE_JUDGE).SetValue(m_Judge);
+	if (0 < m_Judge.length())
+		run->AddElementNode(TREE_JUDGE)->SetValue(m_Judge);
 	if (0 < m_Handler.length())
-		run.AddElement(TREE_HANDLER).SetValue(m_Handler);
+		run->AddElementNode(TREE_HANDLER)->SetValue(m_Handler);
 	if (!m_Partners.Save(run))
 		return false;
 	if (!m_Scoring.Save(run))
 		return false;
 	if (0 < m_Place || ARB_Q::eQ_NA != m_Q)
 	{
-		Element& element = run.AddElement(TREE_PLACEMENT);
+		ElementNodePtr element = run->AddElementNode(TREE_PLACEMENT);
 		m_Q.Save(element, ATTRIB_PLACEMENT_Q);
-		element.AddAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
+		element->AddAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
 		if (0 < m_InClass)
-			element.AddAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
+			element->AddAttrib(ATTRIB_PLACEMENT_INCLASS, m_InClass);
 		if (0 <= m_DogsQd)
-			element.AddAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
+			element->AddAttrib(ATTRIB_PLACEMENT_DOGSQD, m_DogsQd);
 		if (!m_OtherPoints.Save(element))
 			return false;
 	}
@@ -432,8 +443,11 @@ bool ARBDogRun::Save(Element& ioTree) const
 		iterLink != m_Links.end();
 		++iterLink)
 	{
-		Element& element = run.AddElement(TREE_RUN_LINK);
-		element.SetValue(*iterLink);
+		if (0 < (*iterLink).length())
+		{
+			ElementNodePtr element = run->AddElementNode(TREE_RUN_LINK);
+			element->SetValue(*iterLink);
+		}
 	}
 	return true;
 }
@@ -687,7 +701,7 @@ void ARBDogRun::RemoveLink(ARBString const& inLink)
 bool ARBDogRunList::Load(
 		ARBConfig const& inConfig,
 		ARBDogClubList const& inClubs,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

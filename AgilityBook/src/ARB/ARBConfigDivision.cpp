@@ -109,25 +109,30 @@ void ARBConfigDivision::clear()
 
 bool ARBConfigDivision::Load(
 		ARBConfigVenue& ioVenue,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME));
 		return false;
 	}
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_LEVEL)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_LEVEL)
 		{
 			// Ignore any errors...
 			m_Levels.Load(element, inVersion, ioCallback);
 		}
-		else if (element.GetName() == TREE_TITLES)
+		else if (element->GetName() == TREE_TITLES)
 		{
 			if (inVersion < ARBVersion(12,0))
 			{
@@ -138,10 +143,13 @@ bool ARBConfigDivision::Load(
 	return true;
 }
 
-bool ARBConfigDivision::Save(Element& ioTree) const
+bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 {
-	Element& division = ioTree.AddElement(TREE_DIVISION);
-	division.AddAttrib(ATTRIB_DIVISION_NAME, m_Name);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr division = ioTree->AddElementNode(TREE_DIVISION);
+	division->AddAttrib(ATTRIB_DIVISION_NAME, m_Name);
 	if (!m_Levels.Save(division))
 		return false;
 	return true;
@@ -213,7 +221,7 @@ bool ARBConfigDivision::Update(
 
 bool ARBConfigDivisionList::Load(
 		ARBConfigVenue& ioVenue,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

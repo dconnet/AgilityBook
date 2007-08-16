@@ -156,27 +156,32 @@ size_t ARBDogTrial::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 bool ARBDogTrial::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eInvalidValue == inTree.GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, VALID_VALUES_BOOL));
 		return false;
 	}
-	for (int i = 0; i < inTree.GetElementCount(); ++i)
+	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{
-		Element const& element = inTree.GetElement(i);
-		if (element.GetName() == TREE_LOCATION)
+		ElementNodePtr element = inTree->GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == TREE_LOCATION)
 		{
-			m_Location = element.GetValue();
+			m_Location = element->GetValue();
 		}
-		else if (element.GetName() == TREE_NOTE)
+		else if (element->GetName() == TREE_NOTE)
 		{
-			m_Note = element.GetValue();
+			m_Note = element->GetValue();
 		}
-		else if (element.GetName() == TREE_CLUB)
+		else if (element->GetName() == TREE_CLUB)
 		{
 			// Ignore any errors...
 			m_Clubs.Load(inConfig, element, inVersion, ioCallback);
@@ -184,7 +189,7 @@ bool ARBDogTrial::Load(
 		// Clubs should all be loaded first. We're not going to validate that
 		// though. If it's not true, someone has been messing with the file
 		// directly and the ARBRunList::Load will fail.
-		else if (element.GetName() == TREE_RUN)
+		else if (element->GetName() == TREE_RUN)
 		{
 			// Ignore any errors...
 			m_Runs.Load(inConfig, m_Clubs, element, inVersion, ioCallback);
@@ -195,20 +200,23 @@ bool ARBDogTrial::Load(
 	return true;
 }
 
-bool ARBDogTrial::Save(Element& ioTree) const
+bool ARBDogTrial::Save(ElementNodePtr ioTree) const
 {
-	Element& trial = ioTree.AddElement(TREE_TRIAL);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr trial = ioTree->AddElementNode(TREE_TRIAL);
 	if (m_Verified) // Default is no
-		trial.AddAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified);
+		trial->AddAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified);
 	if (0 < m_Location.length())
 	{
-		Element& element = trial.AddElement(TREE_LOCATION);
-		element.SetValue(m_Location);
+		ElementNodePtr element = trial->AddElementNode(TREE_LOCATION);
+		element->SetValue(m_Location);
 	}
 	if (0 < m_Note.length())
 	{
-		Element& element = trial.AddElement(TREE_NOTE);
-		element.SetValue(m_Note);
+		ElementNodePtr element = trial->AddElementNode(TREE_NOTE);
+		element->SetValue(m_Note);
 	}
 	if (!m_Clubs.Save(trial))
 		return false;
@@ -324,7 +332,7 @@ bool ARBDogTrial::HasVenue(ARBString const& inVenue) const
 
 bool ARBDogTrialList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

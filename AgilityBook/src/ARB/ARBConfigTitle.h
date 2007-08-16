@@ -102,7 +102,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -112,7 +112,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfigTitle element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Determine if this method is valid on the given date.
@@ -243,7 +243,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback,
 			bool inCheckDups = false);

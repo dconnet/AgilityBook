@@ -173,9 +173,9 @@ public:
 	void SortDates();
 	void ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
-	bool ImportARBRunData(Element const& inTree, CWnd* pParent);
-	bool ImportARBCalData(Element const& inTree, CWnd* pParent);
-	bool ImportARBLogData(Element const& inTree, CWnd* pParent);
+	bool ImportARBRunData(ElementNodePtr inTree, CWnd* pParent);
+	bool ImportARBCalData(ElementNodePtr inTree, CWnd* pParent);
+	bool ImportARBLogData(ElementNodePtr inTree, CWnd* pParent);
 
 	/**
 	 * Reset the visibility of all objects.

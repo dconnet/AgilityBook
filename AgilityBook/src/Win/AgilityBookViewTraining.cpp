@@ -822,7 +822,7 @@ void CAgilityBookViewTraining::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		Element tree(CLIPDATA);
+		ElementNodePtr tree(ElementNode::New(CLIPDATA));
 
 		// Now all the data.
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
@@ -857,16 +857,18 @@ void CAgilityBookViewTraining::OnUpdateEditPaste(CCmdUI* pCmdUI)
 void CAgilityBookViewTraining::OnEditPaste()
 {
 	bool bLoaded = false;
-	Element tree;
+	ElementNodePtr tree(ElementNode::New());
 	CClipboardDataReader clpData;
 	if (clpData.GetData(eFormatLog, tree))
 	{
-		if (CLIPDATA == tree.GetName())
+		if (CLIPDATA == tree->GetName())
 		{
-			for (int i = 0; i < tree.GetElementCount(); ++i)
+			for (int i = 0; i < tree->GetElementCount(); ++i)
 			{
-				Element const& element = tree.GetElement(i);
-				if (element.GetName() == TREE_TRAINING)
+				ElementNodePtr element = tree->GetElementNode(i);
+				if (!element)
+					continue;
+				if (element->GetName() == TREE_TRAINING)
 				{
 					ARBTrainingPtr pLog(ARBTraining::New());
 					CErrorCallback err;

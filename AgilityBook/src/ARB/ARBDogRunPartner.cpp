@@ -127,36 +127,42 @@ size_t ARBDogRunPartner::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 bool ARBDogRunPartner::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
 	|| 0 == m_Handler.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_HANDLER));
 		return false;
 	}
 
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_PARTNER_DOG, m_Dog)
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PARTNER_DOG, m_Dog)
 	|| 0 == m_Dog.length())
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_DOG));
 		return false;
 	}
 
-	inTree.GetAttrib(ATTRIB_PARTNER_REGNUM, m_RegNum);
+	inTree->GetAttrib(ATTRIB_PARTNER_REGNUM, m_RegNum);
 
 	return true;
 }
 
-bool ARBDogRunPartner::Save(Element& ioTree) const
+bool ARBDogRunPartner::Save(ElementNodePtr ioTree) const
 {
-	Element& partner = ioTree.AddElement(TREE_PARTNER);
-	partner.AddAttrib(ATTRIB_PARTNER_HANDLER, m_Handler);
-	partner.AddAttrib(ATTRIB_PARTNER_DOG, m_Dog);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr partner = ioTree->AddElementNode(TREE_PARTNER);
+	partner->AddAttrib(ATTRIB_PARTNER_HANDLER, m_Handler);
+	partner->AddAttrib(ATTRIB_PARTNER_DOG, m_Dog);
 	if (0 < m_RegNum.length())
-		partner.AddAttrib(ATTRIB_PARTNER_REGNUM, m_RegNum);
+		partner->AddAttrib(ATTRIB_PARTNER_REGNUM, m_RegNum);
 	return true;
 }
 
@@ -164,7 +170,7 @@ bool ARBDogRunPartner::Save(Element& ioTree) const
 
 bool ARBDogRunPartnerList::Load(
 		ARBConfig const& inConfig,
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

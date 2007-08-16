@@ -82,7 +82,7 @@ public:
 	 * @return Success
 	 */
 	bool LoadFault(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -97,7 +97,7 @@ public:
 	 * @return Success
 	 */
 	bool LoadOtherPoints(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -110,7 +110,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -120,7 +120,7 @@ public:
 	 * @return Success
 	 * @post The ARBConfig element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Set the configuration to the default (DefaultConfig.xml)
@@ -130,7 +130,7 @@ public:
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
 	 */
-	static ARBString GetDTD(bool bNormalizeCRNL = true);
+	static std::string GetDTD(bool bNormalizeCRNL = true);
 
 	/**
 	 * Convenience function to get the nice name of a title.

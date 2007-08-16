@@ -267,7 +267,7 @@ ARBAgilityRecordBook::~ARBAgilityRecordBook()
 // @todo: Relax strictness when reading data and handle errors better.
 //  - note, we actually have relaxed some things...
 bool ARBAgilityRecordBook::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -278,16 +278,20 @@ bool ARBAgilityRecordBook::Load(
 	// Get the records ready.
 	clear();
 
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+
 	// Make sure the input looks okay.
 	// The root must be TREE_BOOK.
-	if (inTree.GetName() != TREE_BOOK)
+	if (inTree->GetName() != TREE_BOOK)
 	{
 		ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_ROOT));
 		return false;
 	}
 	// The version of the document must be something we understand.
 	ARBVersion version;
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_BOOK_VERSION, version))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION));
 		return false;
@@ -313,10 +317,12 @@ bool ARBAgilityRecordBook::Load(
 	if (inCalendar)
 	{
 		bLoaded = true;
-		for (int i = 0; i < inTree.GetElementCount(); ++i)
+		for (int i = 0; i < inTree->GetElementCount(); ++i)
 		{
-			Element const& element = inTree.GetElement(i);
-			if (element.GetName() == TREE_CALENDAR)
+			ElementNodePtr element = inTree->GetElementNode(i);
+			if (!element)
+				continue;
+			if (element->GetName() == TREE_CALENDAR)
 			{
 				// Ignore any errors...
 				m_Calendar.Load(element, version, ioCallback);
@@ -329,10 +335,12 @@ bool ARBAgilityRecordBook::Load(
 	if (inTraining)
 	{
 		bLoaded = true;
-		for (int i = 0; i < inTree.GetElementCount(); ++i)
+		for (int i = 0; i < inTree->GetElementCount(); ++i)
 		{
-			Element const& element = inTree.GetElement(i);
-			if (element.GetName() == TREE_TRAINING)
+			ElementNodePtr element = inTree->GetElementNode(i);
+			if (!element)
+				continue;
+			if (element->GetName() == TREE_TRAINING)
 			{
 				// Ignore any errors...
 				m_Training.Load(element, version, ioCallback);
@@ -348,9 +356,12 @@ bool ARBAgilityRecordBook::Load(
 		int i;
 		int nConfig = -1;
 		// Find a configuration.
-		for (i = 0; i < inTree.GetElementCount(); ++i)
+		for (i = 0; i < inTree->GetElementCount(); ++i)
 		{
-			if (inTree.GetElement(i).GetName() == TREE_CONFIG)
+			ElementNodePtr element = inTree->GetElementNode(i);
+			if (!element)
+				continue;
+			if (element->GetName() == TREE_CONFIG)
 			{
 				// Make sure there's only one.
 				if (-1 != nConfig)
@@ -368,7 +379,7 @@ bool ARBAgilityRecordBook::Load(
 			return false;
 		}
 		// Load the config.
-		else if (!m_Config.Load(inTree.GetElement(nConfig), version, ioCallback))
+		else if (!m_Config.Load(inTree->GetElementNode(nConfig), version, ioCallback))
 		{
 			// Error message was printed within.
 			return false;
@@ -378,10 +389,12 @@ bool ARBAgilityRecordBook::Load(
 		if (inDogs)
 		{
 			// Now load the rest
-			for (i = 0; i < inTree.GetElementCount(); ++i)
+			for (i = 0; i < inTree->GetElementCount(); ++i)
 			{
-				Element const& element = inTree.GetElement(i);
-				if (element.GetName() == TREE_DOG)
+				ElementNodePtr element = inTree->GetElementNode(i);
+				if (!element)
+					continue;
+				if (element->GetName() == TREE_DOG)
 				{
 					// If this fails, keep going.
 					// We'll try to load whatever we can.
@@ -395,11 +408,11 @@ bool ARBAgilityRecordBook::Load(
 	if (inInfo)
 	{
 		bLoaded = true;
-		int i = inTree.FindElement(TREE_INFO);
+		int i = inTree->FindElement(TREE_INFO);
 		if (0 <= i)
 		{
 			// Ignore any errors...
-			m_Info.Load(inTree.GetElement(i), version, ioCallback);
+			m_Info.Load(inTree->GetElementNode(i), version, ioCallback);
 		}
 	}
 
@@ -419,7 +432,7 @@ static ARBString GetTimeStamp()
 #endif
 }
 
-bool ARBAgilityRecordBook::Save(Element& outTree,
+bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 		ARBString const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
@@ -427,11 +440,14 @@ bool ARBAgilityRecordBook::Save(Element& outTree,
 		bool inInfo,
 		bool inDogs) const
 {
-	outTree.clear();
-	outTree.SetName(TREE_BOOK);
-	outTree.AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
-	outTree.AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
-	outTree.AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
+	ASSERT(outTree);
+	if (!outTree)
+		return false;
+	outTree->clear();
+	outTree->SetName(TREE_BOOK);
+	outTree->AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
+	outTree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
+	outTree->AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
 	if (inCalendar)
 	{
 		if (!m_Calendar.Save(outTree))

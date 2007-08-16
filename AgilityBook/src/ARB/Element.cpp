@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces.
  *
  * Revision History
+ * @li 2007-08-15 DRC Modified to support mixed text/nodes.
  * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
  * @li 2007-03-37 DRC Fixed a problem releasing transcoded data.
  * @li 2005-06-09 DRC Numbers were being stored/shown in scientific notation.
@@ -157,6 +158,14 @@ bool Element::Initialize(ARBString& outMsg)
 void Element::Terminate()
 {
 	XMLPlatformUtils::Terminate();
+}
+
+Element::Element()
+{
+}
+
+Element::~Element()
+{
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -616,7 +625,7 @@ typedef std::wstring StringDOM;
 class SAXImportHandlers : public DefaultHandler
 {
 public:
-	SAXImportHandlers(Element& outTree, StringDOM& outMsg)
+	SAXImportHandlers(ElementNodePtr outTree, StringDOM& outMsg)
 		: m_Tree(outTree)
 		, m_Msg(outMsg)
 		, m_Warnings(0)
@@ -657,12 +666,12 @@ public:
 	void fatalError(SAXParseException const& exception);
 
 private:
-	Element& m_Tree; ///< Parsed XML data
+	ElementNodePtr m_Tree; ///< Parsed XML data
 	StringDOM& m_Msg; ///< Any messages generated in ErrorHandler interface
 	int m_Warnings;
 	int m_Errors;
 	int m_FatalErrors;
-	std::list<Element*> m_Parents; ///< Keeps track of where we are.
+	std::list<ElementNodePtr> m_Parents; ///< Keeps track of where we are.
 	StringDOM m_CurrentName; ///< Name of the element currently being parsed.
 	XMLstring m_CurrentData; ///< Data of the element currently being parsed.
 	class CurrentAttrib
@@ -695,16 +704,15 @@ void SAXImportHandlers::startElement(
 		Attributes const& attrs)
 {
 	// If the name is non-zero, we're caching an element. This startElement is
-	// starting inside the current element. Since we don't allow mixing data
-	// and elements, we don't need to worry about m_CurrentData.
+	// starting inside the current element.
 	if (0 < m_CurrentName.length())
 	{
 		// Since we're caching the element, we need to flush it so we can
 		// start processing this incoming element.
-		Element* pParent = NULL;
+		ElementNodePtr pParent;
 		if (0 == m_Parents.size())
 		{
-			pParent = &m_Tree;
+			pParent = m_Tree;
 			m_Parents.push_front(pParent);
 			pParent->SetName(m_CurrentName);
 		}
@@ -712,8 +720,7 @@ void SAXImportHandlers::startElement(
 		{
 			pParent = m_Parents.front();
 			ASSERT(pParent);
-			Element& element = pParent->AddElement(m_CurrentName);
-			pParent = &element;
+			pParent = pParent->AddElementNode(m_CurrentName);
 			m_Parents.push_front(pParent);
 		}
 		for (std::list<CurrentAttrib>::iterator iter = m_CurrentAttribs.begin(); m_CurrentAttribs.end() != iter; ++iter)
@@ -723,8 +730,16 @@ void SAXImportHandlers::startElement(
 		m_CurrentAttribs.clear();
 		// The parent element is now flushed, we can safely work on this element.
 	}
+	if (0 < m_CurrentData.length())
+	{
+		ASSERT(0 < m_Parents.size());
+		// Get the most current node.
+		ElementNodePtr pParent = m_Parents.front();
+		StringDOM data(m_CurrentData.c_str());
+		m_CurrentData.erase();
+		pParent->AddElementText(data);
+	}
 	// Cache the data...
-	m_CurrentData.erase();
 #ifdef UNICODE
 	m_CurrentName = localname;
 #else
@@ -746,39 +761,44 @@ void SAXImportHandlers::endElement(
 		XMLCh const* const /*localname*/,
 		XMLCh const* const /*qname*/)
 {
+	ElementNodePtr pDataElement;
 	// Insert the element.
 	if (0 < m_CurrentName.length())
 	{
-		Element* pParent = NULL;
+		ElementNodePtr pParent;
 		if (0 < m_Parents.size())
 			pParent = m_Parents.front();
-		Element* pElement = NULL;
+		ElementNodePtr pElement;
 		// It's the root element
 		if (!pParent)
 		{
-			pElement = &m_Tree;
+			pElement = m_Tree;
 			pElement->SetName(m_CurrentName);
 		}
 		else
 		{
-			Element& element = pParent->AddElement(m_CurrentName);
-			pElement = &element;
+			pElement = pParent->AddElementNode(m_CurrentName);
 		}
 		for (std::list<CurrentAttrib>::iterator iter = m_CurrentAttribs.begin(); m_CurrentAttribs.end() != iter; ++iter)
 		{
 			pElement->AddAttrib((*iter).m_Name, (*iter).m_Value);
 		}
 		if (0 < m_CurrentData.length())
-		{
-			StringDOM data(m_CurrentData.c_str());
-			pElement->SetValue(data);
-		}
+			pDataElement = pElement;
 	}
 	// If the property has already been inserted, nothing to do.
 	else
+	{
+		pDataElement = m_Parents.front();
 		m_Parents.pop_front();
+	}
+	if (pDataElement && 0 < m_CurrentData.length())
+	{
+		StringDOM data(m_CurrentData.c_str());
+		m_CurrentData.erase();
+		pDataElement->AddElementText(data);
+	}
 	m_CurrentName.erase();
-	m_CurrentData.erase();
 	m_CurrentAttribs.clear();
 }
 
@@ -899,20 +919,38 @@ XMLFormatter& operator<<(
 	return strm;
 }
 
+static std::list<bool> s_ProcessingText;
+
 static void Indent(
 		std::ostream& target,
 		int indentLevel)
 {
-	if (0 < indentLevel)
+	if (0 == s_ProcessingText.size() || !s_ProcessingText.front())
 	{
-		for (int i = 0; i < indentLevel; ++i)
-			target << '\t';
+		if (0 < indentLevel)
+		{
+			for (int i = 0; i < indentLevel; ++i)
+				target << '\t';
+		}
 	}
 }
 
 std::ostream& operator<<(
 		std::ostream& target,
-		Element const& toWrite)
+		ElementText const& toWrite)
+{
+	XMLstring value(toWrite.GetValue().c_str());
+	if (0 < value.length())
+	{
+		// Output content.
+		gFormatter->formatBuf(value.c_str(), static_cast<int>(value.length()), XMLFormatter::CharEscapes);
+	}
+	return target;
+}
+
+std::ostream& operator<<(
+		std::ostream& target,
+		ElementNode const& toWrite)
 {
 	Indent(target, gIndentLevel);
 	XMLstring nodeName(toWrite.GetName().c_str());
@@ -945,74 +983,81 @@ std::ostream& operator<<(
 	{
 		// Close start-tag.
 		*gFormatter << XMLFormatter::NoEscapes << chCloseAngle;
-		target << std::endl;
+		bool bHasText = toWrite.HasTextNodes();
+		s_ProcessingText.push_front(bHasText);
+		if (!bHasText)
+			target << std::endl;
 		// Output children.
 		// No escapes are legal here
 		++gIndentLevel;
 		for (i = 0; i < count; ++i)
-			target << (toWrite.GetElement(i));
+		{
+			ElementPtr element = toWrite.GetElement(i);
+			switch (element->GetType())
+			{
+			case Element::Element_Node:
+				target << *(dynamic_cast<ElementNode*>(element.get()));
+				break;
+			case Element::Element_Text:
+				target << *(dynamic_cast<ElementText*>(element.get()));
+				break;
+			}
+		}
 		--gIndentLevel;
 		// Write end-tag.
 		Indent(target, gIndentLevel);
+		s_ProcessingText.pop_front();
 		*gFormatter << XMLFormatter::NoEscapes << gEndElement << nodeName << chCloseAngle;
 	}
-	// If there are no children, see if there is any data to write.
+	// If there are no children, just close.
 	else
 	{
-		XMLstring value(toWrite.GetValue().c_str());
-		if (0 < value.length())
-		{
-			// Close start-tag.
-			*gFormatter << XMLFormatter::NoEscapes << chCloseAngle;
-			// Output content.
-			gFormatter->formatBuf(value.c_str(), static_cast<int>(value.length()), XMLFormatter::CharEscapes);
-			// Write end-tag.
-			*gFormatter << XMLFormatter::NoEscapes << gEndElement << nodeName << chCloseAngle;
-		}
-		else
-			*gFormatter << XMLFormatter::NoEscapes << chForwardSlash << chCloseAngle;
+		*gFormatter << XMLFormatter::NoEscapes << chForwardSlash << chCloseAngle;
 	}
-	target << std::endl;
+	if (0 == s_ProcessingText.size() || !s_ProcessingText.front())
+		target << std::endl;
 	return target;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-Element::Element()
+ElementNodePtr ElementNode::New()
+{
+	ElementNodePtr pNode(new ElementNode());
+	pNode->m_Me = pNode;
+	return pNode;
+}
+
+ElementNodePtr ElementNode::New(ARBString const& inText)
+{
+	ElementNodePtr pNode(new ElementNode(inText));
+	pNode->m_Me = pNode;
+	return pNode;
+}
+
+ElementNode::ElementNode()
 {
 }
 
-Element::Element(ARBString const& inName)
+ElementNode::ElementNode(ARBString const& inName)
 	: m_Name(inName)
-	, m_Value(_T(""))
 {
 }
 
-Element::Element(Element const& rhs)
-	: m_Name(rhs.m_Name)
-	, m_Value(rhs.m_Value)
+void ElementNode::RemoveAllTextNodes()
 {
-	m_Attribs = rhs.m_Attribs;
-	m_Elements = rhs.m_Elements;
-}
-
-Element& Element::operator=(Element const& rhs)
-{
-	if (this != &rhs)
+	for (std::vector<ElementPtr>::iterator i = m_Elements.begin();
+		i != m_Elements.end();
+		)
 	{
-		m_Name = rhs.m_Name;
-		m_Value = rhs.m_Value;
-		m_Attribs = rhs.m_Attribs;
-		m_Elements = rhs.m_Elements;
+		if (Element::Element_Text == (*i)->GetType())
+			i = m_Elements.erase(i);
+		else
+			++i;
 	}
-	return *this;
 }
 
-Element::~Element()
-{
-}
-
-void Element::Dump(int inLevel) const
+void ElementNode::Dump(int inLevel) const
 {
 	int i;
 	ARBostringstream msg;
@@ -1028,11 +1073,6 @@ void Element::Dump(int inLevel) const
 			<< value
 			<< _T("\"");
 	}
-	if (0 < m_Value.length())
-	{
-		msg << _T(": ")
-			<< m_Value;
-	}
 #ifdef ERRORS_TO_CERR
 	cerr << msg.str() << endl;
 #else
@@ -1040,78 +1080,89 @@ void Element::Dump(int inLevel) const
 #endif
 	for (i = 0; i < GetElementCount(); ++i)
 	{
-		GetElement(i).Dump(inLevel+1);
+		GetElement(i)->Dump(inLevel+1);
 	}
 }
 
-void Element::clear()
+Element::ElementType ElementNode::GetType() const
 {
-	m_Name.erase();
-	m_Value.erase();
-	m_Attribs.clear();
-	m_Elements.clear();
+	return Element::Element_Node;
 }
 
-ARBString const& Element::GetName() const
+ARBString const& ElementNode::GetName() const
 {
 	return m_Name;
 }
 
-void Element::SetName(ARBString const& inName)
+void ElementNode::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
 
-ARBString const& Element::GetValue() const
+ARBString ElementNode::GetValue() const
 {
-	return m_Value;
+	ARBString value;
+	for (int i = 0; i < GetElementCount(); ++i)
+	{
+		if (Element::Element_Text == GetElement(i)->GetType())
+			value += GetElement(i)->GetValue();
+	}
+	return value;
 }
 
-void Element::SetValue(ARBString const& inValue)
+void ElementNode::SetValue(ARBString const& inValue)
 {
-	ASSERT(0 == m_Elements.size());
-	m_Value = inValue;
+	RemoveAllTextNodes();
+	ElementTextPtr pText = ElementText::New();
+	pText->SetValue(inValue);
+	m_Elements.push_back(pText);
 }
 
-void Element::SetValue(TCHAR const* const inValue)
+void ElementNode::SetValue(TCHAR const* const inValue)
 {
-	ASSERT(0 == m_Elements.size());
-	if (inValue)
-		m_Value = inValue;
-	else
-		m_Value.erase();
+	RemoveAllTextNodes();
+	ElementTextPtr pText = ElementText::New();
+	pText->SetValue(inValue);
+	m_Elements.push_back(pText);
 }
 
-void Element::SetValue(short inValue)
+void ElementNode::SetValue(short inValue)
 {
-	ASSERT(0 == m_Elements.size());
-	ARBostringstream str;
-	str << inValue;
-	m_Value = str.str();
+	RemoveAllTextNodes();
+	ElementTextPtr pText = ElementText::New();
+	pText->SetValue(inValue);
+	m_Elements.push_back(pText);
 }
 
-void Element::SetValue(long inValue)
+void ElementNode::SetValue(long inValue)
 {
-	ASSERT(0 == m_Elements.size());
-	ARBostringstream str;
-	str << inValue;
-	m_Value = str.str();
+	RemoveAllTextNodes();
+	ElementTextPtr pText = ElementText::New();
+	pText->SetValue(inValue);
+	m_Elements.push_back(pText);
 }
 
-void Element::SetValue(
-		double inValue,
-		int inPrec)
+void ElementNode::SetValue(double inValue, int inPrec)
 {
-	ASSERT(0 == m_Elements.size());
-	m_Value = ARBDouble::str(inValue, inPrec);
+	RemoveAllTextNodes();
+	ElementTextPtr pText = ElementText::New();
+	pText->SetValue(inValue, inPrec);
+	m_Elements.push_back(pText);
 }
 
-int Element::GetAttribCount() const
+void ElementNode::clear()
+{
+	m_Name.erase();
+	m_Attribs.clear();
+	m_Elements.clear();
+}
+
+int ElementNode::GetAttribCount() const
 {
 	return static_cast<int>(m_Attribs.size());
 }
 
-Element::AttribLookup Element::GetNthAttrib(
+ElementNode::AttribLookup ElementNode::GetNthAttrib(
 		int inIndex,
 		ARBString& outName,
 		ARBString& outValue) const
@@ -1132,7 +1183,7 @@ Element::AttribLookup Element::GetNthAttrib(
 		return eNotFound;
 }
 
-Element::AttribLookup Element::GetAttrib(
+ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		ARBString& outValue) const
 {
@@ -1146,7 +1197,7 @@ Element::AttribLookup Element::GetAttrib(
 		return eNotFound;
 }
 
-Element::AttribLookup Element::GetAttrib(
+ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		ARBVersion& outValue) const
 {
@@ -1172,7 +1223,7 @@ Element::AttribLookup Element::GetAttrib(
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(
+ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		ARBDate& outValue) const
 {
@@ -1189,7 +1240,7 @@ Element::AttribLookup Element::GetAttrib(
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(
+ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		bool& outValue) const
 {
@@ -1207,7 +1258,7 @@ Element::AttribLookup Element::GetAttrib(
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(
+ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		short& outValue) const
 {
@@ -1223,7 +1274,7 @@ Element::AttribLookup Element::GetAttrib(
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(
+ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		long& outValue) const
 {
@@ -1239,7 +1290,7 @@ Element::AttribLookup Element::GetAttrib(
 	return rc;
 }
 
-Element::AttribLookup Element::GetAttrib(
+ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		double& outValue) const
 {
@@ -1255,7 +1306,7 @@ Element::AttribLookup Element::GetAttrib(
 	return rc;
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		ARBString const& inValue)
 {
@@ -1263,7 +1314,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		TCHAR const* const inValue)
 {
@@ -1274,14 +1325,14 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.str());
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		ARBDate const& inValue)
 {
@@ -1290,7 +1341,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		bool inValue)
 {
@@ -1301,7 +1352,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		short inValue)
 {
@@ -1311,7 +1362,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		long inValue)
 {
@@ -1321,7 +1372,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::AddAttrib(
+bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		double inValue,
 		int inPrec)
@@ -1330,7 +1381,7 @@ bool Element::AddAttrib(
 	return true;
 }
 
-bool Element::RemoveAttrib(ARBString const& inName)
+bool ElementNode::RemoveAttrib(ARBString const& inName)
 {
 	MyAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1342,33 +1393,54 @@ bool Element::RemoveAttrib(ARBString const& inName)
 		return false;
 }
 
-void Element::RemoveAllAttribs()
+void ElementNode::RemoveAllAttribs()
 {
 	m_Attribs.clear();
 }
 
-int Element::GetElementCount() const
+int ElementNode::GetElementCount() const
 {
 	return static_cast<int>(m_Elements.size());
 }
 
-Element const& Element::GetElement(int inIndex) const
+bool ElementNode::HasTextNodes() const
+{
+	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin();
+		iter != m_Elements.end();
+		++iter)
+	{
+		if (Element::Element_Text == (*iter)->GetType())
+			return true;
+	}
+	return false;
+}
+
+ElementPtr ElementNode::GetElement(int inIndex) const
 {
 	return m_Elements[inIndex];
 }
 
-Element& Element::GetElement(int inIndex)
+ElementPtr ElementNode::GetElement(int inIndex)
 {
 	return m_Elements[inIndex];
 }
 
-Element& Element::AddElement(
+ElementNodePtr ElementNode::GetElementNode(int inIndex) const
+{
+	return boost::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
+}
+
+ElementNodePtr ElementNode::GetElementNode(int inIndex)
+{
+	return boost::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
+}
+
+ElementNodePtr ElementNode::AddElementNode(
 		ARBString const& inName,
 		int inAt)
 {
-	ASSERT(0 == m_Value.length());
 	size_t index;
-	std::vector<Element>::iterator iter = m_Elements.begin();
+	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
 	if (0 < inAt)
 	{
 		index = 0;
@@ -1380,16 +1452,40 @@ Element& Element::AddElement(
 		index = m_Elements.size();
 		iter = m_Elements.end();
 	}
-	m_Elements.insert(iter, Element(inName));
-	return m_Elements[index];
+	ElementNodePtr pNode = ElementNode::New(inName);
+	m_Elements.insert(iter, pNode);
+	return pNode;
 }
 
-bool Element::RemoveElement(int inIndex)
+ElementTextPtr ElementNode::AddElementText(
+		ARBString const& inText,
+		int inAt)
+{
+	ASSERT(0 == m_Value.length());
+	size_t index;
+	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
+	if (0 < inAt)
+	{
+		index = 0;
+		for (; 0 < inAt && iter != m_Elements.end(); ++index, ++iter, --inAt)
+			;
+	}
+	else
+	{
+		index = m_Elements.size();
+		iter = m_Elements.end();
+	}
+	ElementTextPtr pText = ElementText::New(inText);
+	m_Elements.insert(iter, pText);
+	return pText;
+}
+
+bool ElementNode::RemoveElement(int inIndex)
 {
 	bool bOk = false;
 	if (0 <= inIndex && inIndex < static_cast<int>(m_Elements.size()))
 	{
-		std::vector<Element>::iterator iter = m_Elements.begin();
+		std::vector<ElementPtr>::iterator iter = m_Elements.begin();
 		iter += inIndex;
 		m_Elements.erase(iter);
 		bOk = true;
@@ -1397,12 +1493,12 @@ bool Element::RemoveElement(int inIndex)
 	return bOk;
 }
 
-void Element::RemoveAllElements()
+void ElementNode::RemoveAllElements()
 {
 	m_Elements.clear();
 }
 
-int Element::FindElement(
+int ElementNode::FindElement(
 		ARBString const& inName,
 		int inStartFrom) const
 {
@@ -1410,18 +1506,18 @@ int Element::FindElement(
 		inStartFrom = 0;
 	for (; inStartFrom < static_cast<int>(m_Elements.size()); ++inStartFrom)
 	{
-		if (m_Elements[inStartFrom].GetName() == inName)
+		if (m_Elements[inStartFrom]->GetName() == inName)
 			return inStartFrom;
 	}
 	return -1;
 }
 
-//private
-bool Element::LoadXML(
+static bool LoadXML(
+		ElementNodePtr node,
 		XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
 		ARBString& ioErrMsg)
 {
-	clear();
+	node->clear();
 	bool bOk = false;
 
 	SAX2XMLReader* parser = XMLReaderFactory::createXMLReader();
@@ -1430,7 +1526,7 @@ bool Element::LoadXML(
 	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://xml.org/sax/features/validation"), true);
 	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://apache.org/xml/features/validation/dynamic"), true);
 	StringDOM eMsg;
-	SAXImportHandlers handler(*this, eMsg);
+	SAXImportHandlers handler(node, eMsg);
 	parser->setContentHandler(&handler);
 	parser->setErrorHandler(&handler);
 
@@ -1467,27 +1563,27 @@ bool Element::LoadXML(
 	return bOk;
 }
 
-bool Element::LoadXMLBuffer(
+bool ElementNode::LoadXMLBuffer(
 		char const* inData,
 		unsigned int nData,
 		ARBString& ioErrMsg)
 {
 	MemBufInputSource source(reinterpret_cast<XMLByte const*>(inData), nData, "buffer");
-	return LoadXML(source, ioErrMsg);
+	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
 
-bool Element::LoadXMLFile(
+bool ElementNode::LoadXMLFile(
 		char const* inFileName,
 		ARBString& ioErrMsg)
 {
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
-	return LoadXML(source, ioErrMsg);
+	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
 
-bool Element::SaveXML(
+bool ElementNode::SaveXML(
 		std::ostream& outOutput,
-		ARBString const* inDTD) const
+		std::string const* inDTD) const
 {
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"UTF-8");
@@ -1508,9 +1604,9 @@ bool Element::SaveXML(
 	return true;
 }
 
-bool Element::SaveXML(
+bool ElementNode::SaveXML(
 		char const* outFile,
-		ARBString const* inDTD) const
+		std::string const* inDTD) const
 {
 	bool bOk = false;
 	if (!outFile)
@@ -1523,4 +1619,101 @@ bool Element::SaveXML(
 		output.close();
 	}
 	return bOk;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+ElementTextPtr ElementText::New()
+{
+	ElementTextPtr pText(new ElementText());
+	pText->m_Me = pText;
+	return pText;
+}
+
+ElementTextPtr ElementText::New(ARBString const& inText)
+{
+	ElementTextPtr pText(new ElementText(inText));
+	pText->m_Me = pText;
+	return pText;
+}
+
+ElementText::ElementText()
+	: m_Value()
+{
+}
+
+ElementText::ElementText(ARBString const& inText)
+	: m_Value(inText)
+{
+}
+
+void ElementText::Dump(int inLevel) const
+{
+	ARBostringstream msg;
+	msg.width(inLevel);
+	msg << _T(" ") << GetName();
+	if (0 < m_Value.length())
+	{
+		msg << _T(": ")
+			<< m_Value;
+	}
+#ifdef ERRORS_TO_CERR
+	cerr << msg.str() << endl;
+#else
+	TRACE(_T("%s\n"), msg.str().c_str());
+#endif
+}
+
+Element::ElementType ElementText::GetType() const
+{
+	return Element::Element_Text;
+}
+
+ARBString const& ElementText::GetName() const
+{
+	static const ARBString name(_T("#text"));
+	return name;
+}
+
+void ElementText::SetName(ARBString const& inName)
+{
+}
+
+ARBString ElementText::GetValue() const
+{
+	return m_Value;
+}
+
+void ElementText::SetValue(ARBString const& inValue)
+{
+	m_Value = inValue;
+}
+
+void ElementText::SetValue(TCHAR const* const inValue)
+{
+	if (inValue)
+		m_Value = inValue;
+	else
+		m_Value.erase();
+}
+
+void ElementText::SetValue(short inValue)
+{
+	ARBostringstream str;
+	str << inValue;
+	m_Value = str.str();
+}
+
+void ElementText::SetValue(long inValue)
+{
+	ARBostringstream str;
+	str << inValue;
+	m_Value = str.str();
+}
+
+void ElementText::SetValue(
+		double inValue,
+		int inPrec)
+{
+	m_Value = ARBDouble::str(inValue, inPrec);
 }

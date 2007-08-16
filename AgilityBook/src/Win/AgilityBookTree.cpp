@@ -66,6 +66,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgDog.h"
 #include "DlgFind.h"
+#include "Element.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "Splash.h"
@@ -717,17 +718,17 @@ HTREEITEM CAgilityBookTree::InsertRun(
 
 bool CAgilityBookTree::PasteDog(bool& bLoaded)
 {
-	Element tree;
+	ElementNodePtr tree(ElementNode::New());
 	CClipboardDataReader clpData;
 	if (clpData.GetData(eFormatDog, tree))
 	{
-		if (CLIPDATA == tree.GetName())
+		if (CLIPDATA == tree->GetName())
 		{
 			ARBDogPtr pDog(ARBDog::New());
 			if (pDog)
 			{
 				CErrorCallback err;
-				if (pDog->Load(GetDocument()->GetConfig(), tree.GetElement(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				if (pDog->Load(GetDocument()->GetConfig(), tree->GetElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());

@@ -110,16 +110,19 @@ ARBString ARBConfigPlaceInfo::GetGenericName() const
 }
 
 bool ARBConfigPlaceInfo::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place))
+	ASSERT(inTree);
+	if (!inTree)
+		return false;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_PLACE));
 		return false;
 	}
-	if (Element::eFound != inTree.GetAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value))
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_VALUE));
 		return false;
@@ -127,18 +130,21 @@ bool ARBConfigPlaceInfo::Load(
 	return true;
 }
 
-bool ARBConfigPlaceInfo::Save(Element& ioTree) const
+bool ARBConfigPlaceInfo::Save(ElementNodePtr ioTree) const
 {
-	Element& title = ioTree.AddElement(TREE_PLACE_INFO);
-	title.AddAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place);
-	title.AddAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value, 0);
+	ASSERT(ioTree);
+	if (!ioTree)
+		return false;
+	ElementNodePtr title = ioTree->AddElementNode(TREE_PLACE_INFO);
+	title->AddAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place);
+	title->AddAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value, 0);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool ARBConfigPlaceInfoList::Load(
-		Element const& inTree,
+		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {

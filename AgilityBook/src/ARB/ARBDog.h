@@ -100,7 +100,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -110,7 +110,7 @@ public:
 	 * @return Success
 	 * @post The ARBDog element will be created in ioTree.
 	 */
-	bool Save(Element& ioTree) const;
+	bool Save(ElementNodePtr ioTree) const;
 
 	/**
 	 * Rename a venue.
@@ -269,7 +269,7 @@ public:
 	 */
 	bool Load(
 			ARBConfig const& inConfig,
-			Element const& inTree,
+			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
