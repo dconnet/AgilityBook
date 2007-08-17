@@ -225,8 +225,13 @@ public:
 			ARBDate::DateFormat inFormat);
 	static bool ShowHtmlPoints(bool* outIEInstalled = NULL);
 	static void SetShowHtmlPoints(bool bSet);
+	// Internet things
+	// -username/pw for accessing URLs thru ReadHTTP.cpp
 	static CString GetUserName(CString const& hint);
 	static void SetUserName(CString const& hint, CString const& userName);
+	// -CalSite suppression options
+	static bool IsCalSiteVisible(CString const& filename);
+	static void SuppressCalSite(CString const& filename, bool bSuppress);
 
 protected:
 	friend class CDlgAssignColumns;

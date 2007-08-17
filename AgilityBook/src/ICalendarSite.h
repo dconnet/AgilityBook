@@ -49,16 +49,22 @@ class ICalendarSite
 public:
 	/**
 	 * Release object.
+	 * @note Implementers will typically do a 'delete this'.
 	 */
 	virtual void Release() = 0;
 
 	/**
 	 * Release a string returned from GetDescription or Process.
 	 * This must be done because the objects may have been allocated on
-	 * different heaps. Kind of sucks, would be much easier to just return
-	 * an STL string.
+	 * different heaps. If would be easier to just return an STL string,
+	 * but again, different heaps will corrupt memory.
 	 */
 	virtual void releaseBuffer(char* pData) const = 0;
+
+	/**
+	 * Get a short name of the site this parses.
+	 */
+	virtual char* GetName() const = 0;
 
 	/**
 	 * Get a description of the site this parses.
@@ -69,6 +75,8 @@ public:
 	 * Get the processed data. The returned data should be in the form of
 	 * a valid ARB file. If this were to be saved as a file, we could then
 	 * directly import it in ARB.
+	 * @note If NULL is returned, this module will be removed from future
+	 * updates (during the executable's current session)
 	 */
 	virtual char* Process() const = 0;
 };

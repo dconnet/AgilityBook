@@ -38,9 +38,11 @@
 #include "AgilityBook.h"
 #include "CalendarSites.h"
 
+#include <boost/shared_ptr.hpp>
 #include <map>
 #include <vector>
 #include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "Element.h"
@@ -54,6 +56,182 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+class CalSiteData
+{
+private:
+	// Copy semantics don't work well with our cleanup code!
+	CalSiteData(CalSiteData const&);
+	CalSiteData& operator=(CalSiteData const&);
+public:
+	CalSiteData(CString const& pathname, CString const& filename);
+	~CalSiteData();
+
+	void Connect(CString const& pathname);
+
+	bool isValid() const					{return NULL != m_pSite;}
+	void Unload(bool bPermanently = false);
+
+	CStringA GetName();
+	CStringA GetDescription();
+	CStringA Process();
+
+private:
+	CString m_FileName;
+	HINSTANCE m_hDllInst;
+	ICalendarSite* m_pSite;
+};
+typedef boost::shared_ptr<CalSiteData> CalSiteDataPtr;
+
+CalSiteData::CalSiteData(CString const& pathname, CString const& filename)
+	: m_FileName(filename)
+	, m_hDllInst(NULL)
+	, m_pSite(NULL)
+{
+	Connect(pathname);
+}
+
+CalSiteData::~CalSiteData()
+{
+	Unload();
+}
+
+void CalSiteData::Connect(CString const& pathname)
+{
+	if (isValid())
+		return;
+	// Load the library.
+	if (CAgilityBookOptions::IsCalSiteVisible(m_FileName))
+	{
+		if (!m_hDllInst)
+		{
+			CString path(pathname);
+			path += m_FileName;
+			m_hDllInst = LoadLibrary(path);
+		}
+		if (m_hDllInst)
+		{
+			// Get the exported interface
+			GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(GetProcAddress(m_hDllInst, "GetCalendarInterface"));
+			if (pApi)
+			{
+				// And call it.
+				m_pSite = pApi();
+				// We now have an object that must be released later.
+			}
+		}
+	}
+}
+
+void CalSiteData::Unload(bool bPermanently)
+{
+	if (m_pSite)
+	{
+		try
+		{
+			m_pSite->Release();
+		}
+		catch(...)
+		{
+		}
+		m_pSite = NULL;
+	}
+	if (m_hDllInst)
+	{
+		FreeLibrary(m_hDllInst);
+		m_hDllInst = NULL;
+	}
+	if (bPermanently)
+	{
+		CAgilityBookOptions::SuppressCalSite(m_FileName, true);
+	}
+}
+
+CStringA CalSiteData::GetName()
+{
+	CStringA data;
+	if (m_pSite)
+	{
+		char* pData = NULL;
+		try
+		{
+			pData = m_pSite->GetName();
+		}
+		catch (...)
+		{
+			Unload(true);
+		}
+		if (pData)
+			data = CStringA(pData);
+		try
+		{
+			m_pSite->releaseBuffer(pData);
+		}
+		catch (...)
+		{
+			Unload(true);
+		}
+	}
+	return data;
+}
+
+CStringA CalSiteData::GetDescription()
+{
+	CStringA data;
+	if (m_pSite)
+	{
+		char* pData = NULL;
+		try
+		{
+			pData = m_pSite->GetDescription();
+		}
+		catch (...)
+		{
+			Unload(true);
+		}
+		if (pData)
+			data = CStringA(pData);
+		try
+		{
+			m_pSite->releaseBuffer(pData);
+		}
+		catch (...)
+		{
+			Unload(true);
+		}
+	}
+	return data;
+}
+
+CStringA CalSiteData::Process()
+{
+	CStringA data;
+	if (m_pSite)
+	{
+		char* pData = NULL;
+		try
+		{
+			pData = m_pSite->Process();
+		}
+		catch (...)
+		{
+			Unload(true);
+		}
+		if (pData)
+			data = CStringA(pData);
+		try
+		{
+			m_pSite->releaseBuffer(pData);
+		}
+		catch (...)
+		{
+			Unload(true);
+		}
+	}
+	return data;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 class CCalendarSitesImpl
 {
 public:
@@ -62,15 +240,13 @@ public:
 
 	bool hasActiveSites() const;
 
-	void clear();
-	bool Update(ARBConfig const& inConfig);
-
+	void ManageSites(ARBConfig const& inConfig);
+	bool UpdateSites(ARBConfig const& inConfig);
 	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent);
 
 private:
 	CString m_PathName;
-	typedef std::pair<HINSTANCE, ICalendarSite*> AccessData;
-	std::map<CString, AccessData> m_DirectAccess;
+	std::map<CString, CalSiteDataPtr> m_DirectAccess;
 };
 
 CCalendarSitesImpl::CCalendarSitesImpl()
@@ -82,38 +258,38 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 	exeName.ReleaseBuffer();
 	int iLastSlash = exeName.ReverseFind('\\');
 	if (0 < iLastSlash)
-		m_PathName = exeName.Left(iLastSlash) + _T("\\cal_*.dll");
+		m_PathName = exeName.Left(iLastSlash + 1);
 }
 
 CCalendarSitesImpl::~CCalendarSitesImpl()
 {
-	for (std::map<CString, AccessData>::iterator i = m_DirectAccess.begin();
-		i != m_DirectAccess.end();
-		++i)
-	{
-		(*i).second.second->Release();
-		FreeLibrary((*i).second.first);
-	}
 	m_DirectAccess.clear();
 }
 
 bool CCalendarSitesImpl::hasActiveSites() const
 {
-	return 0 < m_DirectAccess.size() /* || ARBConfigCalSite-stuff */;
+	for (std::map<CString, CalSiteDataPtr>::const_iterator i = m_DirectAccess.begin();
+		i != m_DirectAccess.end();
+		++i)
+	{
+		if ((*i).second->isValid())
+			return true;
+	}
+	return false;
 }
 
-void CCalendarSitesImpl::clear()
+void CCalendarSitesImpl::ManageSites(ARBConfig const& inConfig)
 {
-	// Don't clear m_DirectAccess
+	AfxMessageBox(_T("TODO: Manage CalSite data"));
 }
 
-bool CCalendarSitesImpl::Update(ARBConfig const& inConfig)
+bool CCalendarSitesImpl::UpdateSites(ARBConfig const& inConfig)
 {
 	// Load auxilary DLLs from the path where the EXE lives.
 	if (!m_PathName.IsEmpty())
 	{
 		WIN32_FIND_DATA data;
-		HANDLE hFind = FindFirstFile(m_PathName, &data);
+		HANDLE hFind = FindFirstFile(m_PathName + _T("cal_*.dll"), &data);
 		if (INVALID_HANDLE_VALUE != hFind)
 		{
 			do
@@ -124,23 +300,11 @@ bool CCalendarSitesImpl::Update(ARBConfig const& inConfig)
 				// api pointer)
 				if (m_DirectAccess.end() == m_DirectAccess.find(filename))
 				{
-					// Load the library.
-					HINSTANCE hInst = LoadLibrary(filename);
-					if (hInst)
-					{
-						// Now get the exported interface
-						GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(GetProcAddress(hInst, "GetCalendarInterface"));
-						if (pApi)
-						{
-							// And call it.
-							ICalendarSite* pSite = pApi();
-							if (pSite)
-							{
-								// We now have an object that must be released later.
-								m_DirectAccess[filename] = AccessData(hInst, pSite);
-							}
-						}
-					}
+					m_DirectAccess[filename] = CalSiteDataPtr(new CalSiteData(m_PathName, filename));
+				}
+				else
+				{
+					m_DirectAccess[filename]->Connect(m_PathName);
 				}
 			}
 			while (FindNextFile(hFind, &data));
@@ -153,31 +317,103 @@ bool CCalendarSitesImpl::Update(ARBConfig const& inConfig)
 bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {
 	//TODO: Add a UI if there is more than 1 entry so user can select which sites
-AfxMessageBox(_T("TODO"));
+
 	CWaitCursor wait;
-	for (std::map<CString, AccessData>::iterator i = m_DirectAccess.begin();
+	std::map<CString, std::list<ARBCalendarPtr> > newEntries;
+	for (std::map<CString, CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
 		i != m_DirectAccess.end();
 		++i)
 	{
-		ICalendarSite* pSite = (*i).second.second;
-		char* data = pSite->Process();
-		if (data)
+		if (!(*i).second->isValid())
+			continue;
+		CStringA n = (*i).second->GetName();
+		CStringA d = (*i).second->GetDescription();
+		CStringA data = (*i).second->Process();
+		ElementNodePtr tree(ElementNode::New());
+		ARBString errMsg;
+		bool bOk = false;
+		if (!data.IsEmpty())
 		{
-			ElementNodePtr tree(ElementNode::New());
-			ARBString errMsg;
-			if (!tree->LoadXMLBuffer(data, static_cast<unsigned int>(strlen(data)), errMsg))
+			bOk = tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg);
+			data.Empty();
+		}
+		if (bOk)
+		{
+			CErrorCallback err;
+			ARBAgilityRecordBook book;
+			bOk = book.Load(tree, true, false, false, false, false, err);
+			tree.reset();
+			if (bOk)
 			{
-				if (0 < errMsg.length())
-					AfxMessageBox(errMsg.c_str(), MB_ICONWARNING);
+				if (0 < err.m_ErrMsg.length())
+				{
+					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+					wait.Restore();
+				}
+				for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
+				{
+					newEntries[(*i).first].push_back(*iter);
+				}
 			}
-			else
+		}
+		else
+		{
+			CStringA name = (*i).second->GetName();
+			CString err(_T("Error parsing "));
+			err += name;
+			err += _T(" data");
+			if (!errMsg.empty())
 			{
-				pDoc->ImportARBCalData(tree, pParent);
+				err += ":\n\t";
+				err += errMsg.c_str();
 			}
-			pSite->releaseBuffer(data);
+			err += "\n\nDo you want to continue using this plugin?";
+			if (IDNO == AfxMessageBox(err, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
+				(*i).second->Unload(true);
+			wait.Restore();
 		}
 	}
-	return false;
+	if (0 < newEntries.size())
+	{
+		// TODO: include UI that will allow me to select which entries to add
+		int nAdded = 0;
+		int nUpdated = 0;
+		for (std::map<CString, std::list<ARBCalendarPtr> >::iterator iEntries = newEntries.begin();
+			iEntries != newEntries.end();
+			++iEntries)
+		{
+			for (std::list<ARBCalendarPtr>::iterator iCal = (*iEntries).second.begin();
+				iCal != (*iEntries).second.end();
+				++iCal)
+			{
+				ARBCalendarPtr cal = *iCal;
+				ARBCalendarPtr calFound;
+				if (!pDoc->GetCalendar().FindCalendar(cal, false, &calFound))
+				{
+					if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
+					{
+						pDoc->GetCalendar().AddCalendar(cal);
+						++nAdded;
+					}
+				}
+				else
+				{
+					if (calFound->Update(cal))
+						++nUpdated;
+				}
+			}
+		}
+		if (0 < nAdded + nUpdated)
+		{
+			pDoc->GetCalendar().sort();
+			pDoc->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
+			pDoc->SetModifiedFlag();
+		}
+		CString str;
+		str.FormatMessage(IDS_UPDATED_CAL_ITEMS, nAdded, nUpdated);
+		AfxMessageBox(str, MB_ICONINFORMATION);
+	}
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -197,14 +433,14 @@ bool CCalendarSites::hasActiveSites() const
 	return m_Impl->hasActiveSites();
 }
 
-void CCalendarSites::clear()
+void CCalendarSites::ManageSites(ARBConfig const& inConfig)
 {
-	m_Impl->clear();
+	m_Impl->ManageSites(inConfig);
 }
 
-bool CCalendarSites::Update(ARBConfig const& inConfig)
+bool CCalendarSites::UpdateSites(ARBConfig const& inConfig)
 {
-	return m_Impl->Update(inConfig);
+	return m_Impl->UpdateSites(inConfig);
 }
 
 bool CCalendarSites::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)

@@ -51,9 +51,8 @@ public:
 
 	bool hasActiveSites() const;
 
-	void clear();
-	bool Update(ARBConfig const& inConfig);
-
+	void ManageSites(ARBConfig const& inConfig);
+	bool UpdateSites(ARBConfig const& inConfig);
 	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent = NULL);
 
 private:
