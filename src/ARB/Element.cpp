@@ -1403,6 +1403,19 @@ int ElementNode::GetElementCount() const
 	return static_cast<int>(m_Elements.size());
 }
 
+int ElementNode::GetNodeCount(ElementType type) const
+{
+	int nCount = 0;
+	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin();
+		iter != m_Elements.end();
+		++iter)
+	{
+		if (type == (*iter)->GetType())
+			++nCount;
+	}
+	return nCount;
+}
+
 bool ElementNode::HasTextNodes() const
 {
 	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin();
@@ -1510,6 +1523,31 @@ int ElementNode::FindElement(
 			return inStartFrom;
 	}
 	return -1;
+}
+
+bool ElementNode::FindElementDeep(
+		ElementNodePtr& outParentNode,
+		int& outElementIndex,
+		ARBString const& inName,
+		ARBString const* inValue) const
+{
+	int nCount = GetElementCount();
+	for (int i = 0; i < nCount; ++i)
+	{
+		ElementNodePtr element = GetElementNode(i);
+		if (!element)
+			continue;
+		if (element->GetName() == inName &&
+		(!inValue || (inValue && element->GetValue() == *inValue)))
+		{
+			outParentNode = m_Me.lock();
+			outElementIndex = i;
+			return true;
+		}
+		else if (element->FindElementDeep(outParentNode, outElementIndex, inName, inValue))
+			return true;
+	}
+	return false;
 }
 
 static bool LoadXML(

@@ -105,6 +105,8 @@ Calendar
 	Obsolete DW PrintFontTextBold
 	Obsolete(1.7.6.12) DW EntrySize.cx
 	Obsolete(1.7.6.12) DW EntrySize.cy
+CalSites
+	DW (DLL names in EXE directory)
 Columns
 	ST col[n]
 Common
@@ -1154,6 +1156,8 @@ void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
 	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("showHtml"), bSet ? 1 : 0);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+
 CString CAgilityBookOptions::GetUserName(CString const& hint)
 {
 	return AfxGetApp()->GetProfileString(_T("UserNames"), hint, _T(""));
@@ -1164,4 +1168,18 @@ void CAgilityBookOptions::SetUserName(
 		CString const& userName)
 {
 	AfxGetApp()->WriteProfileString(_T("UserNames"), hint, userName);
+}
+
+bool CAgilityBookOptions::IsCalSiteVisible(CString const& filename)
+{
+	if (filename.IsEmpty())
+		return true;
+	return AfxGetApp()->GetProfileInt(_T("CalSites"), filename, 1) == 1;
+}
+
+void CAgilityBookOptions::SuppressCalSite(CString const& filename, bool bSuppress)
+{
+	if (filename.IsEmpty())
+		return;
+	AfxGetApp()->WriteProfileInt(_T("CalSites"), filename, bSuppress ? 0 : 1);
 }

@@ -277,6 +277,12 @@ public:
 	int GetElementCount() const;
 
 	/**
+	 * Get the number of typed elements.
+	 * @param type Type to count.
+	 */
+	int GetNodeCount(ElementType type) const;
+
+	/**
 	 * Does this node have any text? (a value)
 	 */
 	bool HasTextNodes() const;
@@ -345,6 +351,21 @@ public:
 	int FindElement(
 			ARBString const& inName,
 			int inStartFrom = 0) const;
+
+	/**
+	 * Search for the specified element, depth.
+	 * @param outParentNode Pointer to parent of found node
+	 * @param outElementIndex Index of found element.
+	 * @param inName Name of the element to find.
+	 * @param inValue Optionally search for node's content also
+	 * @return whether node was found
+	 * @note This will not test the calling element, only it's children.
+	 */
+	bool FindElementDeep(
+			ElementNodePtr& outParentNode,
+			int& outElementIndex,
+			ARBString const& inName,
+			ARBString const* inValue = NULL) const;
 
 	/**
 	 * Populate this element from the given buffer.

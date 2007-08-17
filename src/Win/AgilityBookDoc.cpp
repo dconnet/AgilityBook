@@ -369,7 +369,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	CConfigActionCallback callback;
 	if (m_Records.Update(0, update, info, callback))
 	{
-		m_CalSites.Update(m_Records.GetConfig());
+		m_CalSites.UpdateSites(m_Records.GetConfig());
 		CDlgMessage dlg(info.str().c_str(), 0);
 		dlg.DoModal();
 		SetModifiedFlag();
@@ -995,7 +995,6 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 void CAgilityBookDoc::DeleteContents()
 {
 	m_Records.clear();
-	m_CalSites.clear();
 	CDocument::DeleteContents();
 	SetModifiedFlag(FALSE);
 }
@@ -1010,7 +1009,6 @@ BOOL CAgilityBookDoc::OnNewDocument()
 	AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 	m_Records.Default();
 	m_Records.GetConfig().GetActions().clear();
-	m_CalSites.clear();
 
 	if (0 == GetDogs().size())
 	{
@@ -1122,7 +1120,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		ASSERT(pApp);
 		pApp->UpdateInfo().AutoCheckConfiguration(this);
 	}
-	m_CalSites.Update(m_Records.GetConfig());
+	m_CalSites.UpdateSites(m_Records.GetConfig());
 
 	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{
@@ -1317,7 +1315,7 @@ void CAgilityBookDoc::OnEditConfiguration()
 {
 	CDlgConfigure config(this, m_Records);
 	config.DoModal();
-	m_CalSites.Update(m_Records.GetConfig());
+	// Don't need to update calsite info - done during OnOK.
 }
 
 void CAgilityBookDoc::OnAgilityNewDog()
