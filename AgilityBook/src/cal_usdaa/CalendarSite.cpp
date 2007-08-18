@@ -42,7 +42,9 @@
 #include "../Win/ReadHttp.h"
 #include "../tidy/include/tidy.h"
 #include <sstream>
+#ifdef _DEBUG
 #include <fstream>
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -156,16 +158,16 @@ static ElementNodePtr ReadData(char const* address)
 	CString username, errMsg;
 //	if (http.ReadHttpFile(username, errMsg))
 	{
+#ifdef _DEBUG
 //{
 //std::ofstream raw("c:\\events-raw.xml", std::ios::out);
 //raw << (LPCSTR)data;
 //raw.close();
 //}
+#endif
 		TidyDoc tdoc = tidyCreate();
 		tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
 		tidyOptSetBool(tdoc, TidyNumEntities, yes);
-		tidyOptSetBool(tdoc, TidyUpperCaseTags, yes);
-		tidyOptSetBool(tdoc, TidyUpperCaseAttrs, yes);
 		if (0 > tidyParseString(tdoc, (LPCSTR)data))
 		{
 			tidyRelease(tdoc);
@@ -195,6 +197,7 @@ static ElementNodePtr ReadData(char const* address)
 		// truncate the buffer when releasing. CString may have allocated
 		// more memory then we asked for.
 		data.ReleaseBuffer(len);
+#ifdef _DEBUG
 {
 std::string out(address);
 out += ".out";
@@ -202,6 +205,7 @@ std::ofstream raw(out.c_str(), std::ios::out);
 raw << (LPCSTR)data;
 raw.close();
 }
+#endif
 
 		ARBString err;
 		tree = ElementNode::New();
@@ -211,6 +215,8 @@ raw.close();
 			AfxMessageBox(err.c_str());
 		}
 		else
+		{
+#ifdef _DEBUG
 {
 std::string out(address);
 out += ".tree";
@@ -218,6 +224,8 @@ std::ofstream raw(out.c_str(), std::ios::out);
 tree->SaveXML(raw);
 raw.close();
 }
+#endif
+		}
 	}
 	return tree;
 }
@@ -238,11 +246,11 @@ char* CCalendarSite::Process() const
 	// The data we want is then contained in the 'table' tag that follows.
 	ElementNodePtr parentElement;
 	int idxEventCalH4tag = -1;
-	static const ARBString tag(_T("H4"));
+	static const ARBString tag(_T("h4"));
 	static const ARBString name(_T("Event Calendar"));
 	if (tree->FindElementDeep(parentElement, idxEventCalH4tag, tag, &name))
 	{
-		int idxTable = parentElement->FindElement(_T("TABLE"), idxEventCalH4tag);
+		int idxTable = parentElement->FindElement(_T("table"), idxEventCalH4tag+1);
 		if (0 <= idxTable)
 		{
 			ElementNodePtr table = parentElement->GetElementNode(idxTable);
@@ -270,11 +278,11 @@ char* CCalendarSite::Process() const
 							break;
 						case 1:
 							{
-								int idxA = tr->GetElementNode(td)->FindElement(_T("A"));
+								int idxA = tr->GetElementNode(td)->FindElement(_T("a"));
 								if (0 <= idxA)
 								{
 									club = tr->GetElementNode(td)->GetElement(idxA)->GetValue();
-									tr->GetElementNode(td)->GetElementNode(idxA)->GetAttrib(_T("HREF"), detail);
+									tr->GetElementNode(td)->GetElementNode(idxA)->GetAttrib(_T("href"), detail);
 								}
 								else
 									club = tr->GetElement(td)->GetValue();
@@ -307,15 +315,16 @@ char* CCalendarSite::Process() const
 					ElementNodePtr treeDetail = ReadData("c:\\detail-raw.xml");
 					if (treeDetail)
 					{
-						static const ARBString tag2(_T("H3"));
+						static const ARBString tag2(_T("h3"));
 						static const ARBString name2(_T("General Event Information"));
 						ElementNodePtr parent;
 						int idxEventCalH3tag = -1;
-						if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag, &name))
+						if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
 						{
-							int idxTable = parent->FindElement(_T("TABLE"), idxEventCalH3tag);
+							int idxTable = parent->FindElement(_T("table"), idxEventCalH3tag+1);
 							if (0 <= idxTable)
 							{
+								ElementNodePtr table = parent->GetElementNode(idxTable);
 								if (6 <= table->GetNodeCount(Element::Element_Node))
 								{
 									int idx = 0;
@@ -345,9 +354,9 @@ char* CCalendarSite::Process() const
 											//   <td><b>Closing Date</b></td>
 											//   <td>mm/dd/yyyy</td>
 											{
-												int iTD = table->GetElementNode(i)->FindElement(_T("TD"), 0);
-												iTD = table->GetElementNode(i)->FindElement(_T("TD"), iTD);
-												if (iTD <= 0)
+												int iTD = table->GetElementNode(i)->FindElement(_T("td"), 0);
+												iTD = table->GetElementNode(i)->FindElement(_T("td"), iTD+1);
+												if (0 <= iTD)
 												{
 													ARBString date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
 													cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
@@ -364,16 +373,16 @@ char* CCalendarSite::Process() const
 											//   <td><b>Event Secretary</b></td>
 											//   <td><a href="mailto...">name</a><br/>addr<br/></td>
 											{
-												int iTD = table->GetElementNode(i)->FindElement(_T("TD"), 0);
-												iTD = table->GetElementNode(i)->FindElement(_T("TD"), iTD);
+												int iTD = table->GetElementNode(i)->FindElement(_T("td"), 0);
+												iTD = table->GetElementNode(i)->FindElement(_T("td"), iTD+1);
 												ElementNodePtr td = table->GetElementNode(i)->GetElementNode(iTD);
 												if (td)
 												{
-													iTD = td->FindElement(_T("A"));
+													iTD = td->FindElement(_T("a"));
 													if (0 <= iTD)
 													{
 														ARBString email;
-														td->GetElementNode(iTD)->GetAttrib(_T("HREF"), email);
+														td->GetElementNode(iTD)->GetAttrib(_T("href"), email);
 														cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 													}
 												}
@@ -386,20 +395,19 @@ char* CCalendarSite::Process() const
 							}
 						}
 					}
-//ATTRIB_CAL_OPENING ATTRIB_CAL_DRAW 
-//ATTRIB_CAL_MAYBE(y/n) ATTRIB_CAL_ENTERED(E/P/N) ATTRIB_CAL_ACCOMMODATION(N/T/C) ATTRIB_CAL_CONFIRMATION
-//ATTRIB_CAL_PREMIUMURL ATTRIB_CAL_ONLINEURL
 				}
 			}
 		}
 	}
 	if (bOk)
 	{
+#ifdef _DEBUG
 {
 std::ofstream raw("c:\\events-caltree.xml", std::ios::out);
 calTree->SaveXML(raw);
 raw.close();
 }
+#endif
 		std::ostringstream s;
 		calTree->SaveXML(s);
 		return Allocate(s.str());
