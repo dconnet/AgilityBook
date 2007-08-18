@@ -115,7 +115,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../tidy/src"
+				AdditionalIncludeDirectories="../../tidy/include;../../tidy/src"
 				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -255,7 +255,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../../tidy/src"
+				AdditionalIncludeDirectories="../../tidy/include;../../tidy/src"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;SUPPORT_UTF16_ENCODINGS;SUPPORT_ASIAN_ENCODINGS;SUPPORT_ACCESSIBILITY_CHECKS"
 				StringPooling="true"
 				RuntimeLibrary="0"
