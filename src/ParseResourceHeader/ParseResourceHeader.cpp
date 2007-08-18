@@ -114,10 +114,10 @@ static bool parse_define(string line, string& outDefine, unsigned long& outValue
 		{
 			if (pOutIDD)
 			{
-				CString str(line.substr(pos + 2).c_str());
+				CStringA str(line.substr(pos + 2).c_str());
 				str.TrimLeft();
 				str.TrimRight();
-				*pOutIDD = (LPCTSTR)str;
+				*pOutIDD = (LPCSTR)str;
 			}
 			line = line.substr(0, pos);
 		}
@@ -151,7 +151,7 @@ static bool parse_define(string line, string& outDefine, unsigned long& outValue
 	return bParsed;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, char* argv[])
 {
 	if (6 != argc)
 	{
@@ -278,12 +278,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		string::size_type pos = line.find(".topic");
 		if (0 == pos)
 		{
-			CString str(line.substr(6).c_str());
+			CStringA str(line.substr(6).c_str());
 			str.TrimRight();
 			str.TrimLeft();
 			if (!str.IsEmpty())
 			{
-				string s((LPCTSTR)str);
+				string s((LPCSTR)str);
 				set<string>::iterator i = existingHelpIds.find(s);
 				if (existingHelpIds.end() == i)
 					cerr << "Warning: " << s << " is defined in " << agilitybookTXT << " but has no definition in " << resourceHM << endl;
