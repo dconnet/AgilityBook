@@ -50,6 +50,7 @@ public:
 	{
 	}
 	virtual ~CDlgConfigureData()			{}
+	virtual CString OnNeedText() const = 0;
 	virtual CString OnNeedText(int iColumn) const = 0;
 };
 
@@ -60,6 +61,7 @@ class CDlgConfigureDataVenue : public CDlgConfigureData
 public:
 	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
 	~CDlgConfigureDataVenue();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigVenuePtr GetVenue() const		{return m_Venue;}
 protected:
@@ -73,6 +75,7 @@ class CDlgConfigureDataFault : public CDlgConfigureData
 public:
 	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
 	~CDlgConfigureDataFault();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigFaultPtr GetFault() const		{return m_Fault;}
 protected:
@@ -86,6 +89,7 @@ class CDlgConfigureDataOtherPoints : public CDlgConfigureData
 public:
 	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
 	~CDlgConfigureDataOtherPoints();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
 protected:
@@ -99,6 +103,7 @@ class CDlgConfigureDataDivision : public CDlgConfigureData
 public:
 	CDlgConfigureDataDivision(ARBConfigDivisionPtr div);
 	~CDlgConfigureDataDivision();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
 protected:
@@ -114,6 +119,7 @@ public:
 			ARBConfigDivisionPtr div,
 			ARBConfigLevelPtr level);
 	~CDlgConfigureDataLevel();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const		{return m_Level;}
@@ -132,6 +138,7 @@ public:
 			ARBConfigLevelPtr level,
 			ARBConfigSubLevelPtr subLevel);
 	~CDlgConfigureDataSubLevel();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
@@ -150,6 +157,7 @@ public:
 	CDlgConfigureDataTitle(
 			ARBConfigTitlePtr title);
 	~CDlgConfigureDataTitle();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigTitlePtr GetTitle() const		{return m_Title;}
 protected:
@@ -163,6 +171,7 @@ class CDlgConfigureDataEvent : public CDlgConfigureData
 public:
 	CDlgConfigureDataEvent(ARBConfigEventPtr inEvent);
 	~CDlgConfigureDataEvent();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigEventPtr GetEvent() const		{return m_Event;}
 protected:
@@ -176,6 +185,7 @@ class CDlgConfigureDataMultiQ : public CDlgConfigureData
 public:
 	CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq);
 	~CDlgConfigureDataMultiQ();
+	virtual CString OnNeedText() const;
 	virtual CString OnNeedText(int iColumn) const;
 	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
 protected:

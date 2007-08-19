@@ -126,14 +126,11 @@
 #define IDC_LIST_MOVE_UP                1026
 #define IDC_LIST_MOVE_DOWN              1027
 #define IDC_LIST_TRIAL                  1028
-#define IDC_CONFIG_VENUES               1030
+#define IDC_CONFIG_ITEMS                1030
 #define IDC_CONFIG_NEW                  1031
 #define IDC_CONFIG_EDIT                 1032
 #define IDC_CONFIG_DELETE               1033
 #define IDC_CONFIG_COPY                 1034
-#define IDC_CONFIG_COMMENTS             1035
-#define IDC_CONFIG_FAULTS               1036
-#define IDC_CONFIG_OTHERPOINTS          1037
 #define IDC_CONFIG_UPDATE               1038
 #define IDC_CONFIG_VENUE                1040
 #define IDC_CONFIG_VENUE_DESC           1041

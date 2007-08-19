@@ -385,20 +385,14 @@ Delete the selected item.
 .topic HIDC_CONFIG_EDIT
 Edit the selected item.
 
-.topic HIDC_CONFIG_FAULTS
-List of currently configured Faults.
-
 .topic HIDC_CONFIG_NEW
 Create a new item.
-
-.topic HIDC_CONFIG_OTHERPOINTS
-List of currently configured Other Points.
 
 .topic HIDC_CONFIG_UPDATE
 Update the configuration.
 
-.topic HIDC_CONFIG_VENUES
-List of currently configured Venues.
+.topic HIDC_CONFIG_ITEMS
+List of currently configured items.
 
 .topic HIDC_DOGNUM_DELETE
 Delete the selected registration number.
