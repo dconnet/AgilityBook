@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-08-19 DRC Simplified UI layout into a single tree.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
@@ -59,26 +60,25 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgConfigure)
 	enum { IDD = IDD_CONFIGURE };
-	CListCtrl2	m_ctrlVenues;
-	CListCtrl2	m_ctrlFaults;
-	CListCtrl2	m_ctrlOthers;
+	CTreeCtrl	m_ctrlItems;
 	CButton	m_ctrlNew;
 	CButton	m_ctrlDelete;
 	CButton	m_ctrlEdit;
 	CButton	m_ctrlCopy;
-	CStatic	m_ctrlComments;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook& m_Book;
 	ARBConfig m_Config;
+	HTREEITEM m_hItemVenues;
+	HTREEITEM m_hItemFaults;
+	HTREEITEM m_hItemOtherPts;
 	typedef enum
 	{
-		eNone,
+		eNone = 0,
 		eVenues,
 		eFaults,
 		eOtherPoints
 	} eAction;
-	eAction m_Action;
 
 	//{{AFX_VIRTUAL(CDlgConfigure)
 protected:
@@ -86,33 +86,28 @@ protected:
 	//}}AFX_VIRTUAL
 
 private:
-	void SetAction(eAction inAction);
-	bool GetActionData(
-			CListCtrl2*& pCtrl,
-			int& index,
-			CDlgConfigureData*& pData);
+	eAction GetAction() const;
+	CDlgConfigureData* GetData(HTREEITEM hItem) const;
 	void UpdateButtons();
-	void LoadData();
-	int FindCurrentVenue(
+	void LoadData(eAction dataToLoad);
+	HTREEITEM FindCurrentVenue(
 			ARBConfigVenuePtr pVenue,
 			bool bSet);
-	int FindCurrentFault(
+	HTREEITEM FindCurrentFault(
 			ARBConfigFaultPtr pFault,
 			bool bSet);
-	int FindCurrentOtherPoints(
+	HTREEITEM FindCurrentOtherPoints(
 			ARBConfigOtherPointsPtr pOther,
 			bool bSet);
 
 protected:
 	//{{AFX_MSG(CDlgConfigure)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusVenues(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusFaults(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusOtherpoints(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNew();
 	afx_msg void OnDelete();
 	afx_msg void OnEdit();

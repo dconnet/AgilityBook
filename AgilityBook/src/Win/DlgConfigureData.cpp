@@ -77,6 +77,20 @@ CDlgConfigureDataVenue::~CDlgConfigureDataVenue()
 {
 }
 
+CString CDlgConfigureDataVenue::OnNeedText() const
+{
+	CString str(OnNeedText(0));
+	for (int i = 1; i <= 2; ++i)
+	{
+		CString s(OnNeedText(i));
+		if (!s.IsEmpty())
+		{
+			str += _T("  ") + s;
+		}
+	}
+	return str;
+}
+
 CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 {
 	CString str;
@@ -108,6 +122,11 @@ CDlgConfigureDataFault::~CDlgConfigureDataFault()
 {
 }
 
+CString CDlgConfigureDataFault::OnNeedText() const
+{
+	return OnNeedText(0);
+}
+
 CString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 {
 	return m_Fault->GetName().c_str();
@@ -125,6 +144,11 @@ CDlgConfigureDataOtherPoints::~CDlgConfigureDataOtherPoints()
 {
 }
 
+CString CDlgConfigureDataOtherPoints::OnNeedText() const
+{
+	return OnNeedText(0);
+}
+
 CString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 {
 	return m_OtherPoints->GetName().c_str();
@@ -140,6 +164,11 @@ CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivisionPtr div)
 
 CDlgConfigureDataDivision::~CDlgConfigureDataDivision()
 {
+}
+
+CString CDlgConfigureDataDivision::OnNeedText() const
+{
+	return OnNeedText(0);
 }
 
 CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
@@ -160,6 +189,11 @@ CDlgConfigureDataLevel::CDlgConfigureDataLevel(
 
 CDlgConfigureDataLevel::~CDlgConfigureDataLevel()
 {
+}
+
+CString CDlgConfigureDataLevel::OnNeedText() const
+{
+	return OnNeedText(0);
 }
 
 CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
@@ -184,6 +218,11 @@ CDlgConfigureDataSubLevel::~CDlgConfigureDataSubLevel()
 {
 }
 
+CString CDlgConfigureDataSubLevel::OnNeedText() const
+{
+	return OnNeedText(0);
+}
+
 CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 {
 	return m_SubLevel->GetName().c_str();
@@ -200,6 +239,11 @@ CDlgConfigureDataTitle::CDlgConfigureDataTitle(
 
 CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
 {
+}
+
+CString CDlgConfigureDataTitle::OnNeedText() const
+{
+	return OnNeedText(0);
 }
 
 CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
@@ -219,6 +263,11 @@ CDlgConfigureDataEvent::~CDlgConfigureDataEvent()
 {
 }
 
+CString CDlgConfigureDataEvent::OnNeedText() const
+{
+	return OnNeedText(0);
+}
+
 CString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 {
 	return m_Event->GetName().c_str();
@@ -234,6 +283,11 @@ CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq)
 
 CDlgConfigureDataMultiQ::~CDlgConfigureDataMultiQ()
 {
+}
+
+CString CDlgConfigureDataMultiQ::OnNeedText() const
+{
+	return OnNeedText(0);
 }
 
 CString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const

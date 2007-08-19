@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-08-19 DRC Simplified UI layout into a single tree.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent' action.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -92,17 +93,6 @@ void CDetails::OnDetails(CWnd* pParent)
 	dlg.DoModal();
 }
 
-int CALLBACK CompareItems(
-		LPARAM lParam1,
-		LPARAM lParam2,
-		LPARAM lParamSort)
-{
-	CDlgConfigureData* item1 = reinterpret_cast<CDlgConfigureData*>(lParam1);
-	CDlgConfigureData* item2 = reinterpret_cast<CDlgConfigureData*>(lParam2);
-	int iColumn = static_cast<int>(lParamSort);
-	return item1->OnNeedText(iColumn) > item2->OnNeedText(iColumn);
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CDlgConfigure dialog
 
@@ -110,13 +100,13 @@ CDlgConfigure::CDlgConfigure(
 		CAgilityBookDoc* pDoc,
 		ARBAgilityRecordBook& book)
 	: CDlgBaseDialog(CDlgConfigure::IDD)
-	, m_ctrlVenues(true)
-	, m_ctrlFaults(true)
-	, m_ctrlOthers(true)
+	, m_ctrlItems()
 	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(m_Book.GetConfig())
-	, m_Action(eNone)
+	, m_hItemVenues(NULL)
+	, m_hItemFaults(NULL)
+	, m_hItemOtherPts(NULL)
 {
 	ASSERT(m_pDoc);
 	//{{AFX_DATA_INIT(CDlgConfigure)
@@ -131,100 +121,53 @@ void CDlgConfigure::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgConfigure)
-	DDX_Control(pDX, IDC_CONFIG_VENUES, m_ctrlVenues);
-	DDX_Control(pDX, IDC_CONFIG_FAULTS, m_ctrlFaults);
-	DDX_Control(pDX, IDC_CONFIG_OTHERPOINTS, m_ctrlOthers);
+	DDX_Control(pDX, IDC_CONFIG_ITEMS, m_ctrlItems);
 	DDX_Control(pDX, IDC_CONFIG_NEW, m_ctrlNew);
 	DDX_Control(pDX, IDC_CONFIG_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_CONFIG_EDIT, m_ctrlEdit);
 	DDX_Control(pDX, IDC_CONFIG_COPY, m_ctrlCopy);
-	DDX_Control(pDX, IDC_CONFIG_COMMENTS, m_ctrlComments);
 	//}}AFX_DATA_MAP
 }
 
 BEGIN_MESSAGE_MAP(CDlgConfigure, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigure)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUES, OnGetdispinfo)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUES, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_VENUES, OnKeydown)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUES, OnItemchanged)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUES, OnSetfocusVenues)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_FAULTS, OnSetfocusFaults)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_OTHERPOINTS, OnSetfocusOtherpoints)
+	ON_NOTIFY(TVN_DELETEITEM, IDC_CONFIG_ITEMS, OnDeleteitem)
+	ON_NOTIFY(TVN_GETDISPINFO, IDC_CONFIG_ITEMS, OnGetdispinfo)
+	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_ITEMS, OnDblclk)
+	ON_NOTIFY(TVN_KEYDOWN, IDC_CONFIG_ITEMS, OnKeydown)
+	ON_NOTIFY(TVN_SELCHANGED, IDC_CONFIG_ITEMS, OnSelchanged)
 	ON_BN_CLICKED(IDC_CONFIG_NEW, OnNew)
 	ON_BN_CLICKED(IDC_CONFIG_DELETE, OnDelete)
 	ON_BN_CLICKED(IDC_CONFIG_EDIT, OnEdit)
 	ON_BN_CLICKED(IDC_CONFIG_COPY, OnCopy)
 	ON_BN_CLICKED(IDC_CONFIG_UPDATE, OnUpdate)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_FAULTS, OnGetdispinfo)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_OTHERPOINTS, OnGetdispinfo)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_FAULTS, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_FAULTS, OnKeydown)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_OTHERPOINTS, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_OTHERPOINTS, OnKeydown)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_FAULTS, OnItemchanged)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_OTHERPOINTS, OnItemchanged)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CDlgConfigure::SetAction(eAction inAction)
+CDlgConfigure::eAction CDlgConfigure::GetAction() const
 {
-	if (m_Action != inAction)
+	HTREEITEM hItem = m_ctrlItems.GetSelectedItem();
+	if (hItem)
 	{
-		m_Action = inAction;
-		CString str("");
-		switch (m_Action)
-		{
-		default:
-			break;
-		case eVenues:
-			str.LoadString(IDS_BUTTONS_VENUES);
-			break;
-		case eFaults:
-			str.LoadString(IDS_BUTTONS_FAULTS);
-			break;
-		case eOtherPoints:
-			str.LoadString(IDS_BUTTONS_OTHERPOINTS);
-			break;
-		}
-		m_ctrlComments.SetWindowText(str);
+		HTREEITEM hParent = m_ctrlItems.GetParentItem(hItem);
+		if (!hParent)
+			hParent = hItem;
+		return static_cast<eAction>(m_ctrlItems.GetItemData(hParent));
 	}
-	UpdateButtons();
+	return eNone;
 }
 
-bool CDlgConfigure::GetActionData(
-		CListCtrl2*& pCtrl,
-		int& index,
-		CDlgConfigureData*& pData)
+CDlgConfigureData* CDlgConfigure::GetData(HTREEITEM hItem) const
 {
-	bool bOk = false;
-	pCtrl = NULL;
-	index = -1;
-	pData = NULL;
-	switch (m_Action)
+	if (hItem)
 	{
-	case eVenues:
-		pCtrl = &m_ctrlVenues;
-		break;
-	case eFaults:
-		pCtrl = &m_ctrlFaults;
-		break;
-	case eOtherPoints:
-		pCtrl = &m_ctrlOthers;
-		break;
+		HTREEITEM hParent = m_ctrlItems.GetParentItem(hItem);
+		if (hParent)
+			return reinterpret_cast<CDlgConfigureData*>(m_ctrlItems.GetItemData(hItem));
 	}
-	if (pCtrl)
-	{
-		bOk = true;
-		index = pCtrl->GetSelection();
-		if (0 <= index)
-		{
-			pData = dynamic_cast<CDlgConfigureData*>(pCtrl->GetData(index));
-		}
-	}
-	return bOk;
+	return NULL;
 }
 
 void CDlgConfigure::UpdateButtons()
@@ -233,14 +176,11 @@ void CDlgConfigure::UpdateButtons()
 	BOOL bDelete = FALSE;
 	BOOL bEdit = FALSE;
 	BOOL bCopy = FALSE;
-	CListCtrl2* pCtrl;
-	int index;
-	CDlgConfigureData* pData;
-	if (GetActionData(pCtrl, index, pData))
-	{
+	if (eNone != GetAction())
 		bNew = TRUE;
-		if (pData)
-			bDelete = bEdit = bCopy = TRUE;
+	if (GetData(m_ctrlItems.GetSelectedItem()))	
+	{
+		bDelete = bEdit = bCopy = TRUE;
 	}
 	m_ctrlNew.EnableWindow(bNew);
 	m_ctrlDelete.EnableWindow(bDelete);
@@ -248,115 +188,138 @@ void CDlgConfigure::UpdateButtons()
 	m_ctrlCopy.EnableWindow(bCopy);
 }
 
-void CDlgConfigure::LoadData()
+void CDlgConfigure::LoadData(eAction dataToLoad)
 {
-	m_ctrlVenues.DeleteAllItems();
-	m_ctrlFaults.DeleteAllItems();
-	m_ctrlOthers.DeleteAllItems();
-
-	for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin(); iterVenue != m_Config.GetVenues().end(); ++iterVenue)
+	HTREEITEM hParent = NULL;
+	switch (dataToLoad)
 	{
-		m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
-			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataVenue(*iterVenue))));
+	case eVenues:
+		hParent = m_hItemVenues;
+		break;
+	case eFaults:
+		hParent = m_hItemFaults;
+		break;
+	case eOtherPoints:
+		hParent = m_hItemOtherPts;
+		break;
 	}
-	m_ctrlVenues.SortItems(CompareItems, 0);
-	m_ctrlVenues.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlVenues.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlVenues.SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
+	if (!hParent)
+		return;
+	while (m_ctrlItems.ItemHasChildren(hParent))
+		m_ctrlItems.DeleteItem(m_ctrlItems.GetNextItem(hParent, TVGN_CHILD));
 
-	for (ARBConfigFaultList::iterator iterFault = m_Config.GetFaults().begin(); iterFault != m_Config.GetFaults().end(); ++iterFault)
+	switch (dataToLoad)
 	{
-		m_ctrlFaults.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
-			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataFault(*iterFault))));
+	case eVenues:
+		for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin(); iterVenue != m_Config.GetVenues().end(); ++iterVenue)
+		{
+			m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+				0, 0, 0, 0,
+				reinterpret_cast<LPARAM>(
+					static_cast<CDlgConfigureData*>(
+						new CDlgConfigureDataVenue(*iterVenue))),
+				hParent, TVI_LAST);
+		}
+		break;
+	case eFaults:
+		for (ARBConfigFaultList::iterator iterFault = m_Config.GetFaults().begin(); iterFault != m_Config.GetFaults().end(); ++iterFault)
+		{
+			m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+				0, 0, 0, 0,
+				reinterpret_cast<LPARAM>(
+					static_cast<CDlgConfigureData*>(
+						new CDlgConfigureDataFault(*iterFault))),
+				hParent, TVI_LAST);
+		}
+		break;
+	case eOtherPoints:
+		for (ARBConfigOtherPointsList::iterator iterOther = m_Config.GetOtherPoints().begin(); iterOther != m_Config.GetOtherPoints().end(); ++iterOther)
+		{
+			m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+				0, 0, 0, 0,
+				reinterpret_cast<LPARAM>(
+					static_cast<CDlgConfigureData*>(
+						new CDlgConfigureDataOtherPoints(*iterOther))),
+				hParent, TVI_LAST);
+		}
+		break;
 	}
-	m_ctrlFaults.SortItems(CompareItems, 0);
-	m_ctrlFaults.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-
-	for (ARBConfigOtherPointsList::iterator iterOther = m_Config.GetOtherPoints().begin(); iterOther != m_Config.GetOtherPoints().end(); ++iterOther)
-	{
-		m_ctrlOthers.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
-			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataOtherPoints(*iterOther))));
-	}
-	m_ctrlOthers.SortItems(CompareItems, 0);
-	m_ctrlOthers.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlItems.SortChildren(hParent);
 }
 
-int CDlgConfigure::FindCurrentVenue(
+HTREEITEM CDlgConfigure::FindCurrentVenue(
 		ARBConfigVenuePtr pVenue,
 		bool bSet)
 {
-	int idxCurrent = -1;
-	for (int index = 0; index < m_ctrlVenues.GetItemCount(); ++index)
+	HTREEITEM hCurrent = NULL;
+	for (HTREEITEM item = m_ctrlItems.GetNextItem(m_hItemVenues, TVGN_CHILD);
+		item != NULL;
+		item = m_ctrlItems.GetNextSiblingItem(item))
 	{
-		CDlgConfigureDataVenue* pData = dynamic_cast<CDlgConfigureDataVenue*>(m_ctrlVenues.GetData(index));
-		if (pData->GetVenue() == pVenue)
+		CDlgConfigureDataVenue* pData = dynamic_cast<CDlgConfigureDataVenue*>(GetData(item));
+		if (pData && pData->GetVenue() == pVenue)
 		{
-			idxCurrent = index;
+			hCurrent = item;
 			break;
 		}
 	}
 	if (bSet)
 	{
-		m_ctrlVenues.SetSelection(idxCurrent);
-		if (0 < idxCurrent)
-			m_ctrlVenues.EnsureVisible(idxCurrent, FALSE);
+		m_ctrlItems.SelectItem(hCurrent);
+		if (hCurrent)
+			m_ctrlItems.EnsureVisible(hCurrent);
 	}
-	return idxCurrent;
+	return hCurrent;
 }
 
-int CDlgConfigure::FindCurrentFault(
+HTREEITEM CDlgConfigure::FindCurrentFault(
 		ARBConfigFaultPtr pFault,
 		bool bSet)
 {
-	int idxCurrent = -1;
-	for (int index = 0; index < m_ctrlFaults.GetItemCount(); ++index)
+	HTREEITEM hCurrent = NULL;
+	for (HTREEITEM item = m_ctrlItems.GetNextItem(m_hItemFaults, TVGN_CHILD);
+		item != NULL;
+		item = m_ctrlItems.GetNextSiblingItem(item))
 	{
-		CDlgConfigureDataFault* pData = dynamic_cast<CDlgConfigureDataFault*>(m_ctrlFaults.GetData(index));
-		if (pData->GetFault() == pFault)
+		CDlgConfigureDataFault* pData = dynamic_cast<CDlgConfigureDataFault*>(GetData(item));
+		if (pData && pData->GetFault() == pFault)
 		{
-			idxCurrent = index;
+			hCurrent = item;
 			break;
 		}
 	}
 	if (bSet)
 	{
-		m_ctrlFaults.SetSelection(idxCurrent);
-		if (0 < idxCurrent)
-			m_ctrlFaults.EnsureVisible(idxCurrent, FALSE);
+		m_ctrlItems.SelectItem(hCurrent);
+		if (hCurrent)
+			m_ctrlItems.EnsureVisible(hCurrent);
 	}
-	return idxCurrent;
+	return hCurrent;
 }
 
-int CDlgConfigure::FindCurrentOtherPoints(
+HTREEITEM CDlgConfigure::FindCurrentOtherPoints(
 		ARBConfigOtherPointsPtr pOther,
 		bool bSet)
 {
-	int idxCurrent = -1;
-	for (int index = 0; index < m_ctrlOthers.GetItemCount(); ++index)
+	HTREEITEM  hCurrent = NULL;
+	for (HTREEITEM item = m_ctrlItems.GetNextItem(m_hItemOtherPts, TVGN_CHILD);
+		item != NULL;
+		item = m_ctrlItems.GetNextSiblingItem(item))
 	{
-		CDlgConfigureDataOtherPoints* pData = dynamic_cast<CDlgConfigureDataOtherPoints*>(m_ctrlOthers.GetData(index));
-		if (pData->GetOtherPoints() == pOther)
+		CDlgConfigureDataOtherPoints* pData = dynamic_cast<CDlgConfigureDataOtherPoints*>(GetData(item));
+		if (pData && pData->GetOtherPoints() == pOther)
 		{
-			idxCurrent = index;
+			hCurrent = item;
 			break;
 		}
 	}
 	if (bSet)
 	{
-		m_ctrlOthers.SetSelection(idxCurrent);
-		if (0 < idxCurrent)
-			m_ctrlOthers.EnsureVisible(idxCurrent, FALSE);
+		m_ctrlItems.SelectItem(hCurrent);
+		if (hCurrent)
+			m_ctrlItems.EnsureVisible(hCurrent);
 	}
-	return idxCurrent;
+	return hCurrent;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -365,43 +328,52 @@ int CDlgConfigure::FindCurrentOtherPoints(
 BOOL CDlgConfigure::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
-	m_ctrlVenues.SetExtendedStyle(m_ctrlVenues.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlFaults.SetExtendedStyle(m_ctrlFaults.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlOthers.SetExtendedStyle(m_ctrlOthers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	CString col;
 	col.LoadString(IDS_COL_VENUES);
-	m_ctrlVenues.InsertColumn(0, col);
-	col.LoadString(IDS_COL_URL);
-	m_ctrlVenues.InsertColumn(1, col);
-	col.LoadString(IDS_COL_DESCRIPTION);
-	m_ctrlVenues.InsertColumn(2, col);
+	m_hItemVenues = m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, (LPCTSTR)col, 0,0,0,0, eVenues, TVI_ROOT, TVI_LAST);
+	LoadData(eVenues);
+	m_ctrlItems.Expand(m_hItemVenues, TVE_EXPAND);
 
 	col.LoadString(IDS_COL_FAULTS);
-	m_ctrlFaults.InsertColumn(0, col);
+	m_hItemFaults = m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, (LPCTSTR)col, 0,0,0,0, eFaults, TVI_ROOT, TVI_LAST);
+	LoadData(eFaults);
 
 	col.LoadString(IDS_OTHERPOINTS);
-	m_ctrlOthers.InsertColumn(0, col);
+	m_hItemOtherPts = m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, (LPCTSTR)col, 0,0,0,0, eOtherPoints, TVI_ROOT, TVI_LAST);
+	LoadData(eOtherPoints);
 
-	LoadData();
-	SetAction(eVenues);
+	m_ctrlItems.SelectItem(m_hItemVenues);
+	m_ctrlItems.EnsureVisible(m_hItemVenues);
+	UpdateButtons();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
+}
+
+void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
+	if (NULL != m_ctrlItems.GetParentItem(pNMTreeView->itemOld.hItem))
+	{
+		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(pNMTreeView->itemOld.lParam);
+		delete pData;
+		pNMTreeView->itemOld.lParam = 0;
+	}
+	*pResult = 0;
 }
 
 void CDlgConfigure::OnGetdispinfo(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
 {
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	if (pDispInfo->item.mask & LVIF_TEXT)
+	TV_DISPINFO* pDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
+	if (pDispInfo->item.mask & TVIF_TEXT)
 	{
-		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-		CDlgConfigureData* pData = dynamic_cast<CDlgConfigureData*>(pRawData);
+		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(pDispInfo->item.lParam);
 		if (pData)
 		{
-			CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			CString str = pData->OnNeedText();
 			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
 			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}
@@ -421,8 +393,8 @@ void CDlgConfigure::OnKeydown(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
 {
-	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
-	switch (pLVKeyDown->wVKey)
+	TV_KEYDOWN* pTVKeyDown = reinterpret_cast<TV_KEYDOWN*>(pNMHDR);
+	switch (pTVKeyDown->wVKey)
 	{
 	default:
 		break;
@@ -433,7 +405,7 @@ void CDlgConfigure::OnKeydown(
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnItemchanged(
+void CDlgConfigure::OnSelchanged(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
 {
@@ -441,33 +413,9 @@ void CDlgConfigure::OnItemchanged(
 	*pResult = 0;
 }
 
-void CDlgConfigure::OnSetfocusVenues(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	SetAction(eVenues);
-	*pResult = 0;
-}
-
-void CDlgConfigure::OnSetfocusFaults(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	SetAction(eFaults);
-	*pResult = 0;
-}
-
-void CDlgConfigure::OnSetfocusOtherpoints(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	SetAction(eOtherPoints);
-	*pResult = 0;
-}
-
 void CDlgConfigure::OnNew() 
 {
-	switch (m_Action)
+	switch (GetAction())
 	{
 	case eVenues:
 		{
@@ -478,12 +426,13 @@ void CDlgConfigure::OnNew()
 				if (m_Config.GetVenues().AddVenue(pVenue))
 				{
 					dlg.GetFixups(m_Config.GetActions());
-					m_ctrlVenues.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlVenues.GetItemCount(),
-						LPSTR_TEXTCALLBACK, 0, 0, 0,
+					m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+						0, 0, 0, 0,
 						reinterpret_cast<LPARAM>(
-							static_cast<CListData*>(
-								new CDlgConfigureDataVenue(pVenue))));
-					m_ctrlVenues.SortItems(CompareItems, 0);
+							static_cast<CDlgConfigureData*>(
+								new CDlgConfigureDataVenue(pVenue))),
+						m_hItemVenues, TVI_LAST);
+					m_ctrlItems.SortChildren(m_hItemVenues);
 					FindCurrentVenue(pVenue, true);
 				}
 			}
@@ -504,12 +453,13 @@ void CDlgConfigure::OnNew()
 					ARBConfigFaultPtr pNewFault;
 					if (m_Config.GetFaults().AddFault(name, &pNewFault))
 					{
-						m_ctrlFaults.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlFaults.GetItemCount(),
-							LPSTR_TEXTCALLBACK, 0, 0, 0,
+						m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+							0, 0, 0, 0,
 							reinterpret_cast<LPARAM>(
-								static_cast<CListData*>(
-									new CDlgConfigureDataFault(pNewFault))));
-						m_ctrlFaults.SortItems(CompareItems, 0);
+								static_cast<CDlgConfigureData*>(
+									new CDlgConfigureDataFault(pNewFault))),
+							m_hItemFaults, TVI_LAST);
+						m_ctrlItems.SortChildren(m_hItemFaults);
 						FindCurrentFault(pNewFault, true);
 					}
 				}
@@ -526,12 +476,13 @@ void CDlgConfigure::OnNew()
 			{
 				if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 				{
-					m_ctrlOthers.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlOthers.GetItemCount(),
-						LPSTR_TEXTCALLBACK, 0, 0, 0,
+					m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+						0, 0, 0, 0,
 						reinterpret_cast<LPARAM>(
-							static_cast<CListData*>(
-								new CDlgConfigureDataOtherPoints(pOther))));
-					m_ctrlOthers.SortItems(CompareItems, 0);
+							static_cast<CDlgConfigureData*>(
+								new CDlgConfigureDataOtherPoints(pOther))),
+						m_hItemOtherPts, TVI_LAST);
+					m_ctrlItems.SortChildren(m_hItemOtherPts);
 					FindCurrentOtherPoints(pOther, true);
 				}
 			}
@@ -542,13 +493,12 @@ void CDlgConfigure::OnNew()
 
 void CDlgConfigure::OnDelete() 
 {
-	CListCtrl2* pCtrl;
-	int index;
-	CDlgConfigureData* pData;
-	if (!GetActionData(pCtrl, index, pData) || !pData)
+	HTREEITEM current = m_ctrlItems.GetSelectedItem();
+	CDlgConfigureData* pData = GetData(current);
+	if (!pData)
 		return;
 
-	switch (m_Action)
+	switch (GetAction())
 	{
 	case eVenues:
 		{
@@ -558,7 +508,7 @@ void CDlgConfigure::OnDelete()
 			if (m_Config.GetVenues().DeleteVenue(venue))
 			{
 				m_Config.GetActions().push_back(ARBConfigActionDeleteVenue::New(venue));
-				pCtrl->DeleteItem(index);
+				m_ctrlItems.DeleteItem(current);
 			}
 		}
 		break;
@@ -568,7 +518,7 @@ void CDlgConfigure::OnDelete()
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			if (m_Config.GetFaults().DeleteFault(pFaultData->GetFault()->GetName()))
 			{
-				pCtrl->DeleteItem(index);
+				m_ctrlItems.DeleteItem(current);
 				// No fixup necessary for faults.
 			}
 		}
@@ -581,25 +531,22 @@ void CDlgConfigure::OnDelete()
 			if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
 			{
 				m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(otherPoints));
-				pCtrl->DeleteItem(index);
+				m_ctrlItems.DeleteItem(current);
 			}
 		}
 		break;
 	}
-	pCtrl->SortItems(CompareItems, 0);
 }
 
 void CDlgConfigure::OnEdit() 
 {
-	CListCtrl2* pCtrl;
-	int index;
-	CDlgConfigureData* pData;
-	if (!GetActionData(pCtrl, index, pData) || !pData)
+	HTREEITEM current = m_ctrlItems.GetSelectedItem();
+	CDlgConfigureData* pData = GetData(current);
+	if (!pData)
 		return;
 
-	switch (m_Action)
+	switch (GetAction())
 	{
-
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
@@ -607,8 +554,8 @@ void CDlgConfigure::OnEdit()
 			if (IDOK == dlg.DoModal())
 			{
 				dlg.GetFixups(m_Config.GetActions());
-				m_ctrlVenues.Invalidate();
-				m_ctrlVenues.SortItems(CompareItems, 0);
+				m_ctrlItems.Invalidate();
+				m_ctrlItems.SortChildren(m_hItemVenues);
 			}
 		}
 		break;
@@ -636,8 +583,8 @@ void CDlgConfigure::OnEdit()
 						}
 						pFaultData->GetFault()->SetName(name);
 						// No fixup necessary for faults.
-						m_ctrlFaults.Invalidate();
-						m_ctrlFaults.SortItems(CompareItems, 0);
+						m_ctrlItems.Invalidate();
+						m_ctrlItems.SortChildren(m_hItemFaults);
 					}
 				}
 			}
@@ -655,8 +602,8 @@ void CDlgConfigure::OnEdit()
 				{
 					// Other things may have changed, but we only care about the name for fixup.
 					m_Config.GetActions().push_back(ARBConfigActionRenameOtherPoints::New(oldName, pOtherData->GetOtherPoints()->GetName()));
-					m_ctrlOthers.Invalidate();
-					m_ctrlOthers.SortItems(CompareItems, 0);
+					m_ctrlItems.Invalidate();
+					m_ctrlItems.SortChildren(m_hItemOtherPts);
 				}
 			}
 		}
@@ -666,21 +613,18 @@ void CDlgConfigure::OnEdit()
 
 void CDlgConfigure::OnCopy() 
 {
-	CListCtrl2* pCtrl;
-	int index;
-	CDlgConfigureData* pData;
-	if (!GetActionData(pCtrl, index, pData) || !pData)
+	HTREEITEM current = m_ctrlItems.GetSelectedItem();
+	CDlgConfigureData* pData = GetData(current);
+	if (!pData)
 		return;
 
-	int nColumns = 0;
-	CDlgConfigureData* pNewData = NULL;
 	CString copyOf;
 	copyOf.LoadString(IDS_COPYOF);
-	switch (m_Action)
+
+	switch (GetAction())
 	{
 	case eVenues:
 		{
-			nColumns = 2;
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
 			ARBString name(pVenueData->GetVenue()->GetName());
 			while (m_Config.GetVenues().FindVenue(name))
@@ -692,12 +636,13 @@ void CDlgConfigure::OnCopy()
 			{
 				*pNewVenue = *pVenueData->GetVenue();
 				pNewVenue->SetName(name); // Put the name back.
-				pNewData = new CDlgConfigureDataVenue(pNewVenue);
-				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
-					LPSTR_TEXTCALLBACK, 0, 0, 0,
+				CDlgConfigureData* pNewData = new CDlgConfigureDataVenue(pNewVenue);
+				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+					0, 0, 0, 0,
 					reinterpret_cast<LPARAM>(
-						static_cast<CListData*>(pNewData)));
-				pCtrl->SortItems(CompareItems, 0);
+						static_cast<CDlgConfigureData*>(pNewData)),
+					m_hItemVenues, TVI_LAST);
+				m_ctrlItems.SortChildren(m_hItemVenues);
 				FindCurrentVenue(pNewVenue, true);
 			}
 		}
@@ -705,18 +650,18 @@ void CDlgConfigure::OnCopy()
 
 	case eFaults:
 		{
-			nColumns = 1;
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			ARBString name(pFaultData->GetFault()->GetName());
 			ARBConfigFaultPtr pNewFault;
 			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
-				pNewData = new CDlgConfigureDataFault(pNewFault);
-				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
-					LPSTR_TEXTCALLBACK, 0, 0, 0,
+				CDlgConfigureData* pNewData = new CDlgConfigureDataFault(pNewFault);
+				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+					0, 0, 0, 0,
 					reinterpret_cast<LPARAM>(
-						static_cast<CListData*>(pNewData)));
-				pCtrl->SortItems(CompareItems, 0);
+						static_cast<CDlgConfigureData*>(pNewData)),
+					m_hItemFaults, TVI_LAST);
+				m_ctrlItems.SortChildren(m_hItemFaults);
 				FindCurrentFault(pNewFault, true);
 			}
 		}
@@ -724,7 +669,6 @@ void CDlgConfigure::OnCopy()
 
 	case eOtherPoints:
 		{
-			nColumns = 1;
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
 			ARBString name(pOtherData->GetOtherPoints()->GetName());
 			while (m_Config.GetOtherPoints().FindOtherPoints(name))
@@ -735,20 +679,18 @@ void CDlgConfigure::OnCopy()
 			pOther->SetName(name);
 			if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 			{
-				pNewData = new CDlgConfigureDataOtherPoints(pOther);
-				pCtrl->InsertItem(LVIF_TEXT | LVIF_PARAM, pCtrl->GetItemCount(),
-					LPSTR_TEXTCALLBACK, 0, 0, 0,
+				CDlgConfigureData* pNewData = new CDlgConfigureDataOtherPoints(pOther);
+				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+					0, 0, 0, 0,
 					reinterpret_cast<LPARAM>(
-						static_cast<CListData*>(pData)));
-				pCtrl->SortItems(CompareItems, 0);
+						static_cast<CDlgConfigureData*>(pNewData)),
+					m_hItemOtherPts, TVI_LAST);
+				m_ctrlItems.SortChildren(m_hItemOtherPts);
 				FindCurrentOtherPoints(pOther, true);
 			}
 		}
 		break;
 	}
-	
-	for (int i = 0; i < nColumns; ++i)
-		pCtrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 }
 
 // During import here, we do nothing.
@@ -782,7 +724,9 @@ void CDlgConfigure::OnUpdate()
 		{
 			CDlgMessage dlgMsg(info.str().c_str(), 0, this);
 			dlgMsg.DoModal();
-			LoadData();
+			LoadData(eVenues);
+			LoadData(eFaults);
+			LoadData(eOtherPoints);
 		}
 		else
 			AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
