@@ -45,14 +45,140 @@
 #include "AgilityBookOptions.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
+#include "DlgProgress.h"
 #include "Element.h"
 #include "ICalendarSite.h"
+#include "IProgressMeter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CProgressMeter : public IProgressMeter
+{
+public:
+	CProgressMeter(int nEntries, CWnd* pParent);
+	~CProgressMeter();
+
+	void SetForegroundWindow();
+	void Dismiss();
+	void StepMe();
+
+	virtual void SetMessage(char const* pMessage);
+	virtual void SetRange(int inLower, int inUpper);
+	virtual void SetStep(int inStep);
+	virtual void StepIt();
+	virtual void SetPos(int pos);
+	virtual int GetPos();
+
+private:
+	int m_nEntries;
+	IDlgProgress* m_pProgress;
+};
+
+CProgressMeter::CProgressMeter(int nEntries, CWnd* pParent)
+	: m_nEntries(nEntries)
+	, m_pProgress(NULL)
+{
+	m_pProgress = IDlgProgress::CreateProgress(pParent);
+	if (1 < m_nEntries)
+	{
+		m_pProgress->SetNumProgressBars(2);
+		m_pProgress->SetRange(1, 0, m_nEntries);
+	}
+	else
+		m_pProgress->SetNumProgressBars(1);
+	m_pProgress->Show();
+}
+
+CProgressMeter::~CProgressMeter()
+{
+	if (m_pProgress)
+		m_pProgress->Dismiss();
+}
+
+void CProgressMeter::SetForegroundWindow()
+{
+	if (m_pProgress)
+		m_pProgress->SetForegroundWindow();
+}
+
+void CProgressMeter::Dismiss()
+{
+	if (m_pProgress)
+	{
+		m_pProgress->Dismiss();
+		m_pProgress = NULL;
+	}
+}
+
+void CProgressMeter::StepMe()
+{
+	if (1 < m_nEntries)
+		m_pProgress->StepIt(1);
+}
+
+void CProgressMeter::SetMessage(char const* pMessage)
+{
+	if (m_pProgress)
+	{
+		CString msg;
+		if (pMessage)
+			msg = pMessage;
+		m_pProgress->SetMessage((LPCTSTR)msg);
+	}
+}
+
+void CProgressMeter::SetRange(int inLower, int inUpper)
+{
+	if (m_pProgress)
+	{
+		short nBar = 1 < m_nEntries ? 2 : 1;
+		m_pProgress->SetRange(nBar, inLower, inUpper);
+	}
+}
+
+void CProgressMeter::SetStep(int inStep)
+{
+	if (m_pProgress)
+	{
+		short nBar = 1 < m_nEntries ? 2 : 1;
+		m_pProgress->SetStep(nBar, inStep);
+	}
+}
+
+void CProgressMeter::StepIt()
+{
+	if (m_pProgress)
+	{
+		short nBar = 1 < m_nEntries ? 2 : 1;
+		m_pProgress->StepIt(nBar);
+	}
+}
+
+void CProgressMeter::SetPos(int pos)
+{
+	if (m_pProgress)
+	{
+		short nBar = 1 < m_nEntries ? 2 : 1;
+		m_pProgress->SetPos(nBar, pos);
+	}
+}
+
+int CProgressMeter::GetPos()
+{
+	int pos = -1;
+	if (m_pProgress)
+	{
+		short nBar = 1 < m_nEntries ? 2 : 1;
+		m_pProgress->GetPos(nBar, pos);
+	}	
+	return pos;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -73,7 +199,7 @@ public:
 
 	CStringA GetName();
 	CStringA GetDescription();
-	CStringA Process();
+	CStringA Process(IProgressMeter *progress);
 
 private:
 	CString m_FileName;
@@ -202,7 +328,7 @@ CStringA CalSiteData::GetDescription()
 	return data;
 }
 
-CStringA CalSiteData::Process()
+CStringA CalSiteData::Process(IProgressMeter *progress)
 {
 	CStringA data;
 	if (m_pSite)
@@ -210,7 +336,7 @@ CStringA CalSiteData::Process()
 		char* pData = NULL;
 		try
 		{
-			pData = m_pSite->Process();
+			pData = m_pSite->Process(progress);
 		}
 		catch (...)
 		{
@@ -316,7 +442,19 @@ bool CCalendarSitesImpl::UpdateSites(ARBConfig const& inConfig)
 
 bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {
+	int nEntries = 0;
+	for (std::map<CString, CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
+		i != m_DirectAccess.end();
+		++i)
+	{
+		if ((*i).second->isValid())
+			++nEntries;
+	}
+	if (0 == nEntries)
+		return false;
+
 	//TODO: Add a UI if there is more than 1 entry so user can select which sites
+	CProgressMeter progress(nEntries, pParent);
 
 	CWaitCursor wait;
 	std::map<CString, std::list<ARBCalendarPtr> > newEntries;
@@ -324,11 +462,12 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 		i != m_DirectAccess.end();
 		++i)
 	{
+		progress.StepMe();
 		if (!(*i).second->isValid())
 			continue;
 		CStringA n = (*i).second->GetName();
 		CStringA d = (*i).second->GetDescription();
-		CStringA data = (*i).second->Process();
+		CStringA data = (*i).second->Process(&progress);
 		ElementNodePtr tree(ElementNode::New());
 		ARBString errMsg;
 		bool bOk = false;
@@ -348,6 +487,7 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 				if (0 < err.m_ErrMsg.length())
 				{
 					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+					progress.SetForegroundWindow();
 					wait.Restore();
 				}
 				for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -370,9 +510,12 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 			err += "\n\nDo you want to continue using this plugin?";
 			if (IDNO == AfxMessageBox(err, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
 				(*i).second->Unload(true);
+			progress.SetForegroundWindow();
 			wait.Restore();
 		}
 	}
+	progress.Dismiss();
+
 	if (0 < newEntries.size())
 	{
 		// TODO: include UI that will allow me to select which entries to add

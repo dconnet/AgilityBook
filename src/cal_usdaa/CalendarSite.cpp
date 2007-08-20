@@ -37,6 +37,7 @@
 #include "stdafx.h"
 
 #include "ICalendarSite.h"
+#include "IProgressMeter.h"
 #include "../ARB/ARBStructure.h"
 #include "../ARB/Element.h"
 #include "../Win/ReadHttp.h"
@@ -106,7 +107,7 @@ public:
 	virtual void releaseBuffer(char* pData) const;
 	virtual char* GetName() const;
 	virtual char* GetDescription() const;
-	virtual char* Process() const;
+	virtual char* Process(IProgressMeter* progress) const;
 };
 
 CCalendarSite::CCalendarSite()
@@ -139,24 +140,25 @@ char* CCalendarSite::GetDescription() const
 	return Allocate(desc);
 }
 
-static ElementNodePtr ReadData(char const* address)
+static ElementNodePtr ReadData(CString const& inAddress)
 {
 	ElementNodePtr tree;
 
 	CStringA data;
-//	CReadHttp http(address, data);
-	FILE* fp = fopen(address, "r");
-	char buffer[1001];
-	size_t sz;
-	while (0 < (sz = fread(buffer, 1, 1000, fp)))
-	{
-		buffer[sz] = 0;
-		data += buffer;
-	}
-	fclose(fp);
+	CReadHttp http(inAddress, data);
+//	CStringA address(inAddress);
+//	FILE* fp = fopen(inAddress, "r");
+//	char buffer[1001];
+//	size_t sz;
+//	while (0 < (sz = fread(buffer, 1, 1000, fp)))
+//	{
+//		buffer[sz] = 0;
+//		data += buffer;
+//	}
+//	fclose(fp);
 
 	CString username, errMsg;
-//	if (http.ReadHttpFile(username, errMsg))
+	if (http.ReadHttpFile(username, errMsg))
 	{
 #ifdef _DEBUG
 //{
@@ -199,11 +201,11 @@ static ElementNodePtr ReadData(char const* address)
 		data.ReleaseBuffer(len);
 #ifdef _DEBUG
 {
-std::string out(address);
-out += ".out";
-std::ofstream raw(out.c_str(), std::ios::out);
-raw << (LPCSTR)data;
-raw.close();
+//std::string out(address);
+//out += ".out";
+//std::ofstream raw(out.c_str(), std::ios::out);
+//raw << (LPCSTR)data;
+//raw.close();
 }
 #endif
 
@@ -218,11 +220,11 @@ raw.close();
 		{
 #ifdef _DEBUG
 {
-std::string out(address);
-out += ".tree";
-std::ofstream raw(out.c_str(), std::ios::out);
-tree->SaveXML(raw);
-raw.close();
+//std::string out(address);
+//out += ".tree";
+//std::ofstream raw(out.c_str(), std::ios::out);
+//tree->SaveXML(raw);
+//raw.close();
 }
 #endif
 		}
@@ -230,12 +232,18 @@ raw.close();
 	return tree;
 }
 
-char* CCalendarSite::Process() const
+char* CCalendarSite::Process(IProgressMeter* progress) const
 {
-	//ElementNodePtr tree = ReadData(_T("http://www.usdaa.com/events.cfm"));
-	ElementNodePtr tree = ReadData("c:\\events-raw.xml");
+	if (progress)
+		progress->SetMessage("Reading http://www.usdaa.com/events.cfm");
+
+	ElementNodePtr tree = ReadData(_T("http://www.usdaa.com/events.cfm"));
+//	ElementNodePtr tree = ReadData("c:\\events-raw.xml");
 	if (!tree)
 		return NULL;
+
+	if (progress)
+		progress->SetMessage("Finding entries...");
 
 	bool bOk = false;
 	ElementNodePtr calTree(ElementNode::New(TREE_BOOK));
@@ -244,6 +252,7 @@ char* CCalendarSite::Process() const
 	// Ok, now we get to parse the raw html from USDAA. As of Aug 2007,
 	// we want to look for a Level4 Header containing "Event Calendar"
 	// The data we want is then contained in the 'table' tag that follows.
+	int nEntries = 0;
 	ElementNodePtr parentElement;
 	int idxEventCalH4tag = -1;
 	static const ARBString tag(_T("h4"));
@@ -311,88 +320,112 @@ char* CCalendarSite::Process() const
 					cal->AddAttrib(ATTRIB_CAL_CLUB, club);
 					cal->AddAttrib(ATTRIB_CAL_LOCATION, location);
 					cal->SetValue(detail);
-					//ElementNodePtr treeDetail = ReadData(_T("http://www.usdaa.com/") + detail);
-					ElementNodePtr treeDetail = ReadData("c:\\detail-raw.xml");
-					if (treeDetail)
+					++nEntries;
+				}
+			}
+		}
+	}
+
+	if (progress)
+		progress->SetRange(0, nEntries);
+
+	int idxCal = -1;
+	while (0 <= (idxCal = calTree->FindElement(TREE_CALENDAR, idxCal+1)))
+	{
+		if (progress)
+			progress->StepIt();
+		ElementNodePtr cal = calTree->GetElementNode(idxCal);
+		ARBString detail = cal->GetValue();
+		if (detail.empty())
+			continue;
+		cal->SetValue(_T(""));
+		CString address(_T("http://www.usdaa.com/"));
+		address += detail.c_str();
+		if (progress)
+		{
+			CStringA msg("Getting detail from ");
+			msg += address;
+			progress->SetMessage((LPCSTR)msg);
+		}
+		ElementNodePtr treeDetail = ReadData(address);
+//		ElementNodePtr treeDetail = ReadData("c:\\detail-raw.xml");
+		if (treeDetail)
+		{
+			static const ARBString tag2(_T("h3"));
+			static const ARBString name2(_T("General Event Information"));
+			ElementNodePtr parent;
+			int idxEventCalH3tag = -1;
+			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
+			{
+				int idxTable = parent->FindElement(_T("table"), idxEventCalH3tag+1);
+				if (0 <= idxTable)
+				{
+					ElementNodePtr table = parent->GetElementNode(idxTable);
+					if (6 <= table->GetNodeCount(Element::Element_Node))
 					{
-						static const ARBString tag2(_T("h3"));
-						static const ARBString name2(_T("General Event Information"));
-						ElementNodePtr parent;
-						int idxEventCalH3tag = -1;
-						if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
+						int idx = 0;
+						for (int i = 0; i < table->GetElementCount(); ++i)
 						{
-							int idxTable = parent->FindElement(_T("table"), idxEventCalH3tag+1);
-							if (0 <= idxTable)
+							if (Element::Element_Node != table->GetElement(i)->GetType())
+								continue;
+							switch (idx)
 							{
-								ElementNodePtr table = parent->GetElementNode(idxTable);
-								if (6 <= table->GetNodeCount(Element::Element_Node))
+							case 0:
+								// <tr>
+								//   <td><b>Event Date</b></td>
+								//   <td>mm/dd/yyyy - mm/dd/yyyy</td>
+								break;
+							case 1:
+								// <tr>
+								//   <td><b>Club Name</b></td>
+								//   <td>name</td>
+								break;
+							case 2:
+								// <tr>
+								//   <td><b>Location</b></td>
+								//   <td>text<br/>test<br/>text</td>
+								break;
+							case 3:
+								// <tr>
+								//   <td><b>Closing Date</b></td>
+								//   <td>mm/dd/yyyy</td>
 								{
-									int idx = 0;
-									for (int i = 0; i < table->GetElementCount(); ++i)
+									int iTD = table->GetElementNode(i)->FindElement(_T("td"), 0);
+									iTD = table->GetElementNode(i)->FindElement(_T("td"), iTD+1);
+									if (0 <= iTD)
 									{
-										if (Element::Element_Node != table->GetElement(i)->GetType())
-											continue;
-										switch (idx)
-										{
-										case 0:
-											// <tr>
-											//   <td><b>Event Date</b></td>
-											//   <td>mm/dd/yyyy - mm/dd/yyyy</td>
-											break;
-										case 1:
-											// <tr>
-											//   <td><b>Club Name</b></td>
-											//   <td>name</td>
-											break;
-										case 2:
-											// <tr>
-											//   <td><b>Location</b></td>
-											//   <td>text<br/>test<br/>text</td>
-											break;
-										case 3:
-											// <tr>
-											//   <td><b>Closing Date</b></td>
-											//   <td>mm/dd/yyyy</td>
-											{
-												int iTD = table->GetElementNode(i)->FindElement(_T("td"), 0);
-												iTD = table->GetElementNode(i)->FindElement(_T("td"), iTD+1);
-												if (0 <= iTD)
-												{
-													ARBString date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
-													cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
-												}
-											}
-											break;
-										case 4:
-											// <tr>
-											//   <td><b>2<sup>nd</sup> Closing Date</b></td>
-											//   <td>mm/dd/yyyy</td>
-											break;
-										case 5:
-											// <tr>
-											//   <td><b>Event Secretary</b></td>
-											//   <td><a href="mailto...">name</a><br/>addr<br/></td>
-											{
-												int iTD = table->GetElementNode(i)->FindElement(_T("td"), 0);
-												iTD = table->GetElementNode(i)->FindElement(_T("td"), iTD+1);
-												ElementNodePtr td = table->GetElementNode(i)->GetElementNode(iTD);
-												if (td)
-												{
-													iTD = td->FindElement(_T("a"));
-													if (0 <= iTD)
-													{
-														ARBString email;
-														td->GetElementNode(iTD)->GetAttrib(_T("href"), email);
-														cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
-													}
-												}
-											}
-											break;
-										}
-										++idx;
+										ARBString date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
+										cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
 									}
 								}
+								break;
+							case 4:
+								// <tr>
+								//   <td><b>2<sup>nd</sup> Closing Date</b></td>
+								//   <td>mm/dd/yyyy</td>
+								break;
+							case 5:
+								// <tr>
+								//   <td><b>Event Secretary</b></td>
+								//   <td><a href="mailto...">name</a><br/>addr<br/></td>
+								{
+									int iTD = table->GetElementNode(i)->FindElement(_T("td"), 0);
+									iTD = table->GetElementNode(i)->FindElement(_T("td"), iTD+1);
+									ElementNodePtr td = table->GetElementNode(i)->GetElementNode(iTD);
+									if (td)
+									{
+										iTD = td->FindElement(_T("a"));
+										if (0 <= iTD)
+										{
+											ARBString email;
+											td->GetElementNode(iTD)->GetAttrib(_T("href"), email);
+											cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
+										}
+									}
+								}
+								break;
 							}
+							++idx;
 						}
 					}
 				}
