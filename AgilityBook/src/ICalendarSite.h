@@ -40,9 +40,14 @@
  * All extension DLLs should be named 'cal_<yourname>.dll' and placed in the
  * same directory as the executable.
  *
+ * If you multithread your DLL, you MUST call the IProgressMeter on the original
+ * thread since this will be directly modifying UI elements.
+ *
  * Revision History
  * @li 2007-08-12 DRC Created
  */
+
+class IProgressMeter;
 
 class ICalendarSite
 {
@@ -63,11 +68,13 @@ public:
 
 	/**
 	 * Get a short name of the site this parses.
+	 * @return Name of plugin, must release with releaseBuffer()
 	 */
 	virtual char* GetName() const = 0;
 
 	/**
 	 * Get a description of the site this parses.
+	 * @return Description of plugin, must release with releaseBuffer()
 	 */
 	virtual char* GetDescription() const = 0;
 
@@ -75,10 +82,12 @@ public:
 	 * Get the processed data. The returned data should be in the form of
 	 * a valid ARB file. If this were to be saved as a file, we could then
 	 * directly import it in ARB.
+	 * @param progress Allow the plugin to update the progress
+	 * @return Data to be processed, must release with releaseBuffer()
 	 * @note If NULL is returned, this module will be removed from future
 	 * updates (during the executable's current session)
 	 */
-	virtual char* Process() const = 0;
+	virtual char* Process(IProgressMeter* progress) const = 0;
 };
 
 typedef ICalendarSite* (*GETCALENDARINTERFACE)();

@@ -215,6 +215,7 @@ bool CDlgProgress::StepIt(short inBar)
 	if (pBar)
 	{
 		pBar->StepIt();
+		pBar->UpdateWindow();
 		bOk = true;
 	}
 	return bOk;
@@ -243,6 +244,7 @@ bool CDlgProgress::SetPos(
 	if (pBar)
 	{
 		pBar->SetPos(inPos);
+		pBar->UpdateWindow();
 		bOk = true;
 	}
 	return bOk;

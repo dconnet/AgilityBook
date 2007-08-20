@@ -106,7 +106,6 @@ protected:
 	afx_msg void OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNew();
 	afx_msg void OnDelete();

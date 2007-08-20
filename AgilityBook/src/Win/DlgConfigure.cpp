@@ -134,7 +134,6 @@ BEGIN_MESSAGE_MAP(CDlgConfigure, CDlgBaseDialog)
 	ON_NOTIFY(TVN_DELETEITEM, IDC_CONFIG_ITEMS, OnDeleteitem)
 	ON_NOTIFY(TVN_GETDISPINFO, IDC_CONFIG_ITEMS, OnGetdispinfo)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_ITEMS, OnDblclk)
-	ON_NOTIFY(TVN_KEYDOWN, IDC_CONFIG_ITEMS, OnKeydown)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_CONFIG_ITEMS, OnSelchanged)
 	ON_BN_CLICKED(IDC_CONFIG_NEW, OnNew)
 	ON_BN_CLICKED(IDC_CONFIG_DELETE, OnDelete)
@@ -386,22 +385,6 @@ void CDlgConfigure::OnDblclk(
 		LRESULT* pResult) 
 {
 	OnEdit();
-	*pResult = 0;
-}
-
-void CDlgConfigure::OnKeydown(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	TV_KEYDOWN* pTVKeyDown = reinterpret_cast<TV_KEYDOWN*>(pNMHDR);
-	switch (pTVKeyDown->wVKey)
-	{
-	default:
-		break;
-	case VK_SPACE:
-		OnEdit();
-		break;
-	}
 	*pResult = 0;
 }
 
