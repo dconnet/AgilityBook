@@ -110,6 +110,7 @@ ARBBase64::ARBBase64()
 {
 }
 
+
 bool ARBBase64::Decode(
 		ARBString const& inBase64,
 		char*& outBinData,
@@ -197,11 +198,13 @@ bool ARBBase64::Decode(
 	return true;
 }
 
+
 void ARBBase64::Release(char*& inBinData)
 {
 	delete [] inBinData;
 	inBinData = NULL;
 }
+
 
 bool ARBBase64::Encode(
 		char const* inBinData,

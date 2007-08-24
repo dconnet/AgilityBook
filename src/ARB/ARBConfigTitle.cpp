@@ -59,6 +59,7 @@ ARBConfigTitlePtr ARBConfigTitle::New()
 	return ARBConfigTitlePtr(new ARBConfigTitle());
 }
 
+
 ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
@@ -69,6 +70,7 @@ ARBConfigTitle::ARBConfigTitle()
 	, m_Desc()
 {
 }
+
 
 ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
@@ -81,14 +83,17 @@ ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 {
 }
 
+
 ARBConfigTitle::~ARBConfigTitle()
 {
 }
+
 
 ARBConfigTitlePtr ARBConfigTitle::Clone() const
 {
 	return ARBConfigTitlePtr(new ARBConfigTitle(*this));
 }
+
 
 ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 {
@@ -105,6 +110,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 {
 	return m_Name == rhs.m_Name
@@ -116,6 +122,7 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 		&& m_Desc == rhs.m_Desc;
 }
 
+
 void ARBConfigTitle::clear()
 {
 	m_Name.erase();
@@ -126,6 +133,7 @@ void ARBConfigTitle::clear()
 	m_ValidTo.clear();
 	m_Desc.erase();
 }
+
 
 bool ARBConfigTitle::Load(
 		ElementNodePtr inTree,
@@ -173,6 +181,7 @@ bool ARBConfigTitle::Load(
 	return true;
 }
 
+
 bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -194,6 +203,7 @@ bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 		title->SetValue(m_Desc);
 	return true;
 }
+
 
 ARBString ARBConfigTitle::GetCompleteName(
 		short inInstance,
@@ -268,6 +278,7 @@ bool ARBConfigTitleList::Load(
 	return true;
 }
 
+
 bool ARBConfigTitleList::FindTitleCompleteName(
 		ARBString const& inName,
 		short inInstance,
@@ -289,6 +300,7 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 	return false;
 }
 
+
 bool ARBConfigTitleList::FindTitle(
 		ARBString const& inName,
 		ARBConfigTitlePtr* outTitle) const
@@ -306,6 +318,7 @@ bool ARBConfigTitleList::FindTitle(
 	}
 	return false;
 }
+
 
 bool ARBConfigTitleList::AddTitle(
 		ARBString const& inName,
@@ -325,6 +338,7 @@ bool ARBConfigTitleList::AddTitle(
 	return true;
 }
 
+
 bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr inTitle)
 {
 	if (!inTitle || 0 == inTitle->GetName().length())
@@ -334,6 +348,7 @@ bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr inTitle)
 	push_back(inTitle);
 	return true;
 }
+
 
 bool ARBConfigTitleList::DeleteTitle(ARBString const& inName)
 {

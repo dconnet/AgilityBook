@@ -62,6 +62,7 @@ IConfigActionCallback::IConfigActionCallback()
 {
 }
 
+
 IConfigActionCallback::~IConfigActionCallback()
 {
 }
@@ -71,6 +72,7 @@ IConfigActionCallback::~IConfigActionCallback()
 ARBConfigAction::ARBConfigAction()
 {
 }
+
 
 ARBConfigAction::~ARBConfigAction()
 {
@@ -87,6 +89,7 @@ ARBConfigActionPtr ARBConfigActionRenameOtherPoints::New(
 		inNewName));
 }
 
+
 ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(
 		ARBString const& inOldName,
 		ARBString const& inNewName)
@@ -95,16 +98,19 @@ ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(
 {
 }
 
+
 ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(ARBConfigActionRenameOtherPoints const& rhs)
 	: m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameOtherPoints(m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionRenameOtherPoints::Apply(
 		ARBConfig& ioConfig,
@@ -149,21 +155,25 @@ ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(
 	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(inName));
 }
 
+
 ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(
 		ARBString const& inName)
 	: m_Name(inName)
 {
 }
 
+
 ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(ARBConfigActionDeleteOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(m_Name));
 }
+
 
 bool ARBConfigActionDeleteOtherPoints::Apply(
 		ARBConfig& ioConfig,
@@ -212,6 +222,7 @@ ARBConfigActionPtr ARBConfigActionRenameVenue::New(
 	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(inOldName, inNewName));
 }
 
+
 ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(
 		ARBString const& inOldName,
 		ARBString const& inNewName)
@@ -220,16 +231,19 @@ ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(
 {
 }
 
+
 ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(ARBConfigActionRenameVenue const& rhs)
 	: m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameVenue::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionRenameVenue::Apply(
 		ARBConfig& ioConfig,
@@ -279,21 +293,25 @@ ARBConfigActionPtr ARBConfigActionDeleteVenue::New(
 	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(inName));
 }
 
+
 ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(
 		ARBString const& inName)
 	: m_Name(inName)
 {
 }
 
+
 ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenue const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteVenue::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(m_Name));
 }
+
 
 bool ARBConfigActionDeleteVenue::Apply(
 		ARBConfig& ioConfig,
@@ -347,6 +365,7 @@ ARBConfigActionPtr ARBConfigActionRenameMultiQ::New(
 	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(inVenue, inOldName, inNewName));
 }
 
+
 ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(
 		ARBString const& inVenue,
 		ARBString const& inOldName,
@@ -357,6 +376,7 @@ ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(
 {
 }
 
+
 ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(ARBConfigActionRenameMultiQ const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
@@ -364,10 +384,12 @@ ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(ARBConfigActionRenameMu
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(m_Venue, m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionRenameMultiQ::Apply(
 		ARBConfig& ioConfig,
@@ -419,6 +441,7 @@ ARBConfigActionPtr ARBConfigActionDeleteMultiQ::New(
 	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(inVenue, inName));
 }
 
+
 ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(
 		ARBString const& inVenue,
 		ARBString const& inName)
@@ -427,16 +450,19 @@ ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(
 {
 }
 
+
 ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(m_Venue, m_Name));
 }
+
 
 bool ARBConfigActionDeleteMultiQ::Apply(
 		ARBConfig& ioConfig,
@@ -495,6 +521,7 @@ ARBConfigActionPtr ARBConfigActionRenameDivision::New(
 		inNewName));
 }
 
+
 ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(
 		ARBString const& inVenue,
 		ARBString const& inOldName,
@@ -505,6 +532,7 @@ ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(
 {
 }
 
+
 ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(ARBConfigActionRenameDivision const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
@@ -512,10 +540,12 @@ ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(ARBConfigActionRena
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameDivision::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameDivision(m_Venue, m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionRenameDivision::Apply(
 		ARBConfig& ioConfig,
@@ -571,6 +601,7 @@ ARBConfigActionPtr ARBConfigActionDeleteDivision::New(
 	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(inVenue, inName));
 }
 
+
 ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(
 		ARBString const& inVenue,
 		ARBString const& inName)
@@ -579,16 +610,19 @@ ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(
 {
 }
 
+
 ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteDivision::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(m_Venue, m_Name));
 }
+
 
 bool ARBConfigActionDeleteDivision::Apply(
 		ARBConfig& ioConfig,
@@ -651,6 +685,7 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
 	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(inVenue, inDiv, ARBString(), inOldName, inNewName));
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
 		ARBString const& inVenue,
 		ARBString const& inDiv,
@@ -660,6 +695,7 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(inVenue, inDiv, inLevel, inOldName, inNewName));
 }
+
 
 ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(
 		ARBString const& inVenue,
@@ -674,6 +710,7 @@ ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(
 {
 }
 
+
 ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(ARBConfigActionRenameLevel const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Div(rhs.m_Div)
@@ -683,10 +720,12 @@ ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(ARBConfigActionRenameLeve
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameLevel::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(m_Venue, m_Div, m_Level, m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionRenameLevel::Apply(
 		ARBConfig& ioConfig,
@@ -757,6 +796,7 @@ ARBConfigActionPtr ARBConfigActionDeleteLevel::NewLevel(
 	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(inVenue, inDiv, ARBString(), inName));
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
 		ARBString const& inVenue,
 		ARBString const& inDiv,
@@ -765,6 +805,7 @@ ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(inVenue, inDiv, inLevel, inName));
 }
+
 
 ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(
 		ARBString const& inVenue,
@@ -778,6 +819,7 @@ ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(
 {
 }
 
+
 ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(ARBConfigActionDeleteLevel const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Div(rhs.m_Div)
@@ -786,10 +828,12 @@ ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(ARBConfigActionDeleteLeve
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteLevel::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(m_Venue, m_Div, m_Level, m_Name));
 }
+
 
 bool ARBConfigActionDeleteLevel::Apply(
 		ARBConfig& ioConfig,
@@ -900,6 +944,7 @@ ARBConfigActionPtr ARBConfigActionRenameTitle::New(
 	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(inVenue, inOldName, inNewName));
 }
 
+
 ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(
 		ARBString const& inVenue,
 		ARBString const& inOldName,
@@ -910,6 +955,7 @@ ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(
 {
 }
 
+
 ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(ARBConfigActionRenameTitle const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
@@ -917,10 +963,12 @@ ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(ARBConfigActionRenameTitl
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameTitle::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(m_Venue, m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionRenameTitle::Apply(
 		ARBConfig& ioConfig,
@@ -983,6 +1031,7 @@ ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
 	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(inVenue, inDiv, inOldName, inNewName));
 }
 
+
 ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(
 		ARBString const& inVenue,
 		ARBString const& inDiv,
@@ -995,6 +1044,7 @@ ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(
 {
 }
 
+
 ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitle const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Div(rhs.m_Div)
@@ -1003,10 +1053,12 @@ ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitl
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteTitle::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(m_Venue, m_Div, m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionDeleteTitle::Apply(
 		ARBConfig& ioConfig,
@@ -1086,6 +1138,7 @@ ARBConfigActionPtr ARBConfigActionRenameEvent::New(
 	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(inVenue, inOldName, inNewName));
 }
 
+
 ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(
 		ARBString const& inVenue,
 		ARBString const& inOldName,
@@ -1096,6 +1149,7 @@ ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(
 {
 }
 
+
 ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(ARBConfigActionRenameEvent const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
@@ -1103,10 +1157,12 @@ ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(ARBConfigActionRenameEven
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionRenameEvent::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(m_Venue, m_OldName, m_NewName));
 }
+
 
 bool ARBConfigActionRenameEvent::Apply(
 		ARBConfig& ioConfig,
@@ -1161,6 +1217,7 @@ ARBConfigActionPtr ARBConfigActionDeleteEvent::New(
 	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(inVenue, inName));
 }
 
+
 ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(
 		ARBString const& inVenue,
 		ARBString const& inName)
@@ -1169,16 +1226,19 @@ ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(
 {
 }
 
+
 ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs)
 	: m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
 {
 }
 
+
 ARBConfigActionPtr ARBConfigActionDeleteEvent::Clone() const
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(m_Venue, m_Name));
 }
+
 
 bool ARBConfigActionDeleteEvent::Apply(
 		ARBConfig& ioConfig,
@@ -1279,6 +1339,7 @@ bool ARBConfigActionList::Load(
 	}
 	return bOk;
 }
+
 
 int ARBConfigActionList::Apply(
 		ARBConfig& ioConfig,

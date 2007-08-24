@@ -215,6 +215,7 @@ ARBString ErrorInvalidDocStructure(TCHAR const* const inMsg)
 	return str.str();
 }
 
+
 ARBString ErrorMissingAttribute(
 		TCHAR const* const inElement,
 		TCHAR const* const inAttrib,
@@ -230,6 +231,7 @@ ARBString ErrorMissingAttribute(
 		str << " " << inMsg << std::endl;
 	return str.str();
 }
+
 
 ARBString ErrorInvalidAttributeValue(
 		TCHAR const* const inElement,
@@ -253,10 +255,12 @@ ARBAgilityRecordBook::ARBAgilityRecordBook()
 {
 }
 
+
 ARBAgilityRecordBook::~ARBAgilityRecordBook()
 {
 	clear();
 }
+
 
 // In general, we're very strict about our data. If anything is bad, we abort.
 // This could be relaxed in many areas and either ignore it or set it to some
@@ -419,6 +423,7 @@ bool ARBAgilityRecordBook::Load(
 	return bLoaded;
 }
 
+
 static ARBString GetTimeStamp()
 {
 #ifdef _WINDOWS
@@ -431,6 +436,7 @@ static ARBString GetTimeStamp()
 	return ARBDate::Today().GetString(ARBDate::eDashYYYYMMDD);
 #endif
 }
+
 
 bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 		ARBString const& inPgmVer,
@@ -476,6 +482,7 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	return true;
 }
 
+
 void ARBAgilityRecordBook::clear()
 {
 	m_Calendar.clear();
@@ -485,11 +492,13 @@ void ARBAgilityRecordBook::clear()
 	m_Dogs.clear();
 }
 
+
 void ARBAgilityRecordBook::Default()
 {
 	clear();
 	m_Config.Default();
 }
+
 
 bool ARBAgilityRecordBook::Update(
 		int indent,
@@ -665,6 +674,7 @@ bool ARBAgilityRecordBook::Update(
 	return bChanges;
 }
 
+
 size_t ARBAgilityRecordBook::GetAllClubNames(
 		std::set<ARBString>& outClubs,
 		bool bInfo) const
@@ -703,6 +713,7 @@ size_t ARBAgilityRecordBook::GetAllClubNames(
 	return outClubs.size();
 }
 
+
 size_t ARBAgilityRecordBook::GetAllTrialLocations(
 		std::set<ARBString>& outLocations,
 		bool bInfo) const
@@ -734,6 +745,7 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 	}
 	return outLocations.size();
 }
+
 
 size_t ARBAgilityRecordBook::GetAllEventSubNames(
 		ARBString const& inVenue,
@@ -773,6 +785,7 @@ size_t ARBAgilityRecordBook::GetAllEventSubNames(
 	return outNames.size();
 }
 
+
 size_t ARBAgilityRecordBook::GetAllHeights(std::set<ARBString>& outHeights) const
 {
 	outHeights.clear();
@@ -807,6 +820,7 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<ARBString>& outHeights) cons
 	return outHeights.size();
 }
 
+
 size_t ARBAgilityRecordBook::GetAllCallNames(std::set<ARBString>& outNames) const
 {
 	outNames.clear();
@@ -839,6 +853,7 @@ size_t ARBAgilityRecordBook::GetAllCallNames(std::set<ARBString>& outNames) cons
 	}
 	return outNames.size();
 }
+
 
 size_t ARBAgilityRecordBook::GetAllBreeds(std::set<ARBString>& outBreeds) const
 {
@@ -874,6 +889,7 @@ size_t ARBAgilityRecordBook::GetAllBreeds(std::set<ARBString>& outBreeds) const
 	return outBreeds.size();
 }
 
+
 size_t ARBAgilityRecordBook::GetAllJudges(
 		std::set<ARBString>& outJudges,
 		bool bInfo) const
@@ -904,6 +920,7 @@ size_t ARBAgilityRecordBook::GetAllJudges(
 	return outJudges.size();
 }
 
+
 size_t ARBAgilityRecordBook::GetAllHandlers(std::set<ARBString>& outHandlers) const
 {
 	outHandlers.clear();
@@ -929,6 +946,7 @@ size_t ARBAgilityRecordBook::GetAllHandlers(std::set<ARBString>& outHandlers) co
 	}
 	return outHandlers.size();
 }
+
 
 void ARBAgilityRecordBook::GetAllPartners(
 		std::set<ARBString>& outPartners,
@@ -965,6 +983,7 @@ void ARBAgilityRecordBook::GetAllPartners(
 		}
 	}
 }
+
 
 size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<ARBString>& outFaults) const
 {
@@ -1005,50 +1024,60 @@ size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<ARBString>& outFaults) co
 	return outFaults.size();
 }
 
+
 ARBCalendarList const& ARBAgilityRecordBook::GetCalendar() const
 {
 	return m_Calendar;
 }
+
 
 ARBCalendarList& ARBAgilityRecordBook::GetCalendar()
 {
 	return m_Calendar;
 }
 
+
 ARBTrainingList const& ARBAgilityRecordBook::GetTraining() const
 {
 	return m_Training;
 }
+
 
 ARBTrainingList& ARBAgilityRecordBook::GetTraining()
 {
 	return m_Training;
 }
 
+
 ARBConfig const& ARBAgilityRecordBook::GetConfig() const
 {
 	return m_Config;
 }
+
 
 ARBConfig& ARBAgilityRecordBook::GetConfig()
 {
 	return m_Config;
 }
 
+
 ARBInfo const& ARBAgilityRecordBook::GetInfo() const
 {
 	return m_Info;
 }
+
 
 ARBInfo& ARBAgilityRecordBook::GetInfo()
 {
 	return m_Info;
 }
 
+
 ARBDogList const& ARBAgilityRecordBook::GetDogs() const
 {
 	return m_Dogs;
 }
+
 
 ARBDogList& ARBAgilityRecordBook::GetDogs()
 {

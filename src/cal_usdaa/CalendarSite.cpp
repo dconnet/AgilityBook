@@ -65,6 +65,7 @@ static char* Allocate(std::string const& inStr)
 	return pData;
 }
 
+
 static ARBString mdy2ymd(ARBString const& inDate)
 {
 	ARBString date;
@@ -84,6 +85,7 @@ static ARBString mdy2ymd(ARBString const& inDate)
 	}
 	return date;
 }
+
 
 static void StripNewlines(ARBString& inStr)
 {
@@ -110,23 +112,28 @@ public:
 	virtual char* Process(IProgressMeter* progress) const;
 };
 
+
 CCalendarSite::CCalendarSite()
 {
 }
 
+
 CCalendarSite::~CCalendarSite()
 {
 }
+
 
 void CCalendarSite::Release()
 {
 	delete this;
 }
 
+
 void CCalendarSite::releaseBuffer(char* pData) const
 {
 	delete [] pData;
 }
+
 
 char* CCalendarSite::GetName() const
 {
@@ -134,11 +141,13 @@ char* CCalendarSite::GetName() const
 	return Allocate(name);
 }
 
+
 char* CCalendarSite::GetDescription() const
 {
 	static const std::string desc("Get all the events from USDAA. This will parse the HTML returned from http://www.usdaa.com/events.cfm.");
 	return Allocate(desc);
 }
+
 
 static ElementNodePtr ReadData(CString const& inAddress)
 {
@@ -231,6 +240,7 @@ static ElementNodePtr ReadData(CString const& inAddress)
 	}
 	return tree;
 }
+
 
 char* CCalendarSite::Process(IProgressMeter* progress) const
 {

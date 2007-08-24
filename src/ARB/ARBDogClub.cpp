@@ -60,11 +60,13 @@ ARBDogClubPtr ARBDogClub::New()
 	return ARBDogClubPtr(new ARBDogClub());
 }
 
+
 ARBDogClub::ARBDogClub()
 	: m_Name()
 	, m_Venue()
 {
 }
+
 
 ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 	: m_Name(rhs.m_Name)
@@ -72,14 +74,17 @@ ARBDogClub::ARBDogClub(ARBDogClub const& rhs)
 {
 }
 
+
 ARBDogClub::~ARBDogClub()
 {
 }
+
 
 ARBDogClubPtr ARBDogClub::Clone() const
 {
 	return ARBDogClubPtr(new ARBDogClub(*this));
 }
+
 
 ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 {
@@ -91,11 +96,13 @@ ARBDogClub& ARBDogClub::operator=(ARBDogClub const& rhs)
 	return *this;
 }
 
+
 bool ARBDogClub::operator==(ARBDogClub const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Venue == rhs.m_Venue;
 }
+
 
 size_t ARBDogClub::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -115,6 +122,7 @@ size_t ARBDogClub::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBDogClub::Load(
 		ARBConfig const& inConfig,
@@ -155,6 +163,7 @@ bool ARBDogClub::Load(
 	return true;
 }
 
+
 bool ARBDogClub::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -182,6 +191,7 @@ bool ARBDogClubList::Load(
 	return true;
 }
 
+
 bool ARBDogClubList::GetPrimaryClub(ARBDogClubPtr* outClub) const
 {
 	if (outClub)
@@ -197,6 +207,7 @@ bool ARBDogClubList::GetPrimaryClub(ARBDogClubPtr* outClub) const
 		return false;
 }
 
+
 ARBString ARBDogClubList::GetPrimaryClubName() const
 {
 	if (0 < size())
@@ -208,6 +219,7 @@ ARBString ARBDogClubList::GetPrimaryClubName() const
 		return _T("");
 }
 
+
 ARBString ARBDogClubList::GetPrimaryClubVenue() const
 {
 	if (0 < size())
@@ -218,6 +230,7 @@ ARBString ARBDogClubList::GetPrimaryClubVenue() const
 	else
 		return _T("");
 }
+
 
 bool ARBDogClubList::FindEvent(
 		ARBConfig const& inConfig,
@@ -270,6 +283,7 @@ bool ARBDogClubList::FindEvent(
 	return bFound;
 }
 
+
 bool ARBDogClubList::FindVenue(
 		ARBString const& inVenue,
 		ARBDogClubPtr* outClub) const
@@ -288,6 +302,7 @@ bool ARBDogClubList::FindVenue(
 	return false;
 }
 
+
 bool ARBDogClubList::AddClub(
 		ARBString const& inName,
 		ARBString const& inVenue,
@@ -301,6 +316,7 @@ bool ARBDogClubList::AddClub(
 		*outClub = pClub;
 	return true;
 }
+
 
 bool ARBDogClubList::DeleteClub(
 		ARBString const& inName,

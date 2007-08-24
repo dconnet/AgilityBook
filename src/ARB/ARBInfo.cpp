@@ -57,6 +57,7 @@ ARBInfo::ARBInfo()
 {
 }
 
+
 ARBInfo::ARBInfo(ARBInfo const& rhs)
 	: m_ClubInfo(TREE_CLUBINFO)
 	, m_JudgeInfo(TREE_JUDGEINFO)
@@ -67,10 +68,12 @@ ARBInfo::ARBInfo(ARBInfo const& rhs)
 	rhs.m_LocationInfo.Clone(m_LocationInfo);
 }
 
+
 ARBInfo::~ARBInfo()
 {
 	clear();
 }
+
 
 ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 {
@@ -83,6 +86,7 @@ ARBInfo& ARBInfo::operator=(ARBInfo const& rhs)
 	return *this;
 }
 
+
 bool ARBInfo::operator==(ARBInfo const& rhs) const
 {
 	return m_ClubInfo == rhs.m_ClubInfo
@@ -90,12 +94,14 @@ bool ARBInfo::operator==(ARBInfo const& rhs) const
 		&& m_LocationInfo == rhs.m_LocationInfo;
 }
 
+
 void ARBInfo::clear()
 {
 	m_ClubInfo.clear();
 	m_JudgeInfo.clear();
 	m_LocationInfo.clear();
 }
+
 
 bool ARBInfo::Load(
 		ElementNodePtr inTree,
@@ -129,6 +135,7 @@ bool ARBInfo::Load(
 	}
 	return true;
 }
+
 
 bool ARBInfo::Save(ElementNodePtr ioTree) const
 {

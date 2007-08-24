@@ -62,6 +62,7 @@ ARBTrainingPtr ARBTraining::New()
 	return ARBTrainingPtr(new ARBTraining());
 }
 
+
 ARBTraining::ARBTraining()
 	: m_Date()
 	, m_Name()
@@ -69,6 +70,7 @@ ARBTraining::ARBTraining()
 	, m_Note()
 {
 }
+
 
 ARBTraining::ARBTraining(ARBTraining const& rhs)
 	: m_Date(rhs.m_Date)
@@ -78,14 +80,17 @@ ARBTraining::ARBTraining(ARBTraining const& rhs)
 {
 }
 
+
 ARBTraining::~ARBTraining()
 {
 }
+
 
 ARBTrainingPtr ARBTraining::Clone() const
 {
 	return ARBTrainingPtr(new ARBTraining(*this));
 }
+
 
 ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)
 {
@@ -99,6 +104,7 @@ ARBTraining& ARBTraining::operator=(ARBTraining const& rhs)
 	return *this;
 }
 
+
 bool ARBTraining::operator==(ARBTraining const& rhs) const
 {
 	return m_Date == rhs.m_Date
@@ -106,6 +112,7 @@ bool ARBTraining::operator==(ARBTraining const& rhs) const
 		&& m_SubName == rhs.m_SubName
 		&& m_Note == rhs.m_Note;
 }
+
 
 size_t ARBTraining::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -134,6 +141,7 @@ size_t ARBTraining::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBTraining::Load(
 		ElementNodePtr inTree,
@@ -166,6 +174,7 @@ bool ARBTraining::Load(
 	return true;
 }
 
+
 bool ARBTraining::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -196,6 +205,7 @@ bool ARBTrainingList::Load(
 	return true;
 }
 
+
 class SortTraining
 {
 public:
@@ -206,12 +216,14 @@ public:
 	}
 };
 
+
 void ARBTrainingList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortTraining());
 }
+
 
 size_t ARBTrainingList::GetAllNames(std::set<ARBString>& outNames) const
 {
@@ -225,6 +237,7 @@ size_t ARBTrainingList::GetAllNames(std::set<ARBString>& outNames) const
 	return outNames.size();
 }
 
+
 size_t ARBTrainingList::GetAllSubNames(std::set<ARBString>& outSubNames) const
 {
 	outSubNames.clear();
@@ -236,6 +249,7 @@ size_t ARBTrainingList::GetAllSubNames(std::set<ARBString>& outSubNames) const
 	}
 	return outSubNames.size();
 }
+
 
 bool ARBTrainingList::FindTraining(ARBTrainingPtr inTraining) const
 {
@@ -250,6 +264,7 @@ bool ARBTrainingList::FindTraining(ARBTrainingPtr inTraining) const
 	return false;
 }
 
+
 bool ARBTrainingList::AddTraining(ARBTrainingPtr inTraining)
 {
 	bool bAdded = false;
@@ -260,6 +275,7 @@ bool ARBTrainingList::AddTraining(ARBTrainingPtr inTraining)
 	}
 	return bAdded;
 }
+
 
 bool ARBTrainingList::DeleteTraining(ARBTrainingPtr inTraining)
 {

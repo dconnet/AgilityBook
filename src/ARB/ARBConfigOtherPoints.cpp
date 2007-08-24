@@ -56,6 +56,7 @@ ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
 	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
 }
 
+
 ARBConfigOtherPoints::ARBConfigOtherPoints()
 	: m_Name()
 	, m_Tally(ARBConfigOtherPoints::eTallyAll)
@@ -63,6 +64,7 @@ ARBConfigOtherPoints::ARBConfigOtherPoints()
 	, m_Default(0)
 {
 }
+
 
 ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
@@ -72,14 +74,17 @@ ARBConfigOtherPoints::ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs)
 {
 }
 
+
 ARBConfigOtherPoints::~ARBConfigOtherPoints()
 {
 }
+
 
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::Clone() const
 {
 	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints(*this));
 }
+
 
 ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const& rhs)
 {
@@ -93,6 +98,7 @@ ARBConfigOtherPoints& ARBConfigOtherPoints::operator=(ARBConfigOtherPoints const
 	return *this;
 }
 
+
 bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
@@ -101,6 +107,7 @@ bool ARBConfigOtherPoints::operator==(ARBConfigOtherPoints const& rhs) const
 		&& m_Default == rhs.m_Default;
 }
 
+
 void ARBConfigOtherPoints::clear()
 {
 	m_Name.erase();
@@ -108,6 +115,7 @@ void ARBConfigOtherPoints::clear()
 	m_Desc.erase();
 	m_Default = 0;
 }
+
 
 bool ARBConfigOtherPoints::Load(
 		ElementNodePtr inTree,
@@ -152,6 +160,7 @@ bool ARBConfigOtherPoints::Load(
 	return true;
 }
 
+
 bool ARBConfigOtherPoints::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -195,6 +204,7 @@ bool ARBConfigOtherPointsList::Load(
 	return true;
 }
 
+
 bool ARBConfigOtherPointsList::VerifyOtherPoints(ARBString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -204,6 +214,7 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(ARBString const& inName) const
 	}
 	return false;
 }
+
 
 bool ARBConfigOtherPointsList::FindOtherPoints(
 		ARBString const& inName,
@@ -223,6 +234,7 @@ bool ARBConfigOtherPointsList::FindOtherPoints(
 	return false;
 }
 
+
 bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr inOther)
 {
 	// Global uniqueness must be ensured by the calling function.
@@ -234,6 +246,7 @@ bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr inOther)
 	}
 	return bAdded;
 }
+
 
 bool ARBConfigOtherPointsList::DeleteOtherPoints(ARBString const& inName)
 {

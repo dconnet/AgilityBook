@@ -55,6 +55,7 @@ ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New()
 	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints());
 }
 
+
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
 		double inPoints,
 		double inFaults)
@@ -62,11 +63,13 @@ ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::New(
 	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(inPoints, inFaults));
 }
 
+
 ARBConfigLifetimePoints::ARBConfigLifetimePoints()
 	: m_Points(0.0)
 	, m_Faults(0.0)
 {
 }
+
 
 ARBConfigLifetimePoints::ARBConfigLifetimePoints(
 		double inPoints,
@@ -76,20 +79,24 @@ ARBConfigLifetimePoints::ARBConfigLifetimePoints(
 {
 }
 
+
 ARBConfigLifetimePoints::ARBConfigLifetimePoints(ARBConfigLifetimePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
 {
 }
 
+
 ARBConfigLifetimePoints::~ARBConfigLifetimePoints()
 {
 }
+
 
 ARBConfigLifetimePointsPtr ARBConfigLifetimePoints::Clone() const
 {
 	return ARBConfigLifetimePointsPtr(new ARBConfigLifetimePoints(*this));
 }
+
 
 ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(ARBConfigLifetimePoints const& rhs)
 {
@@ -101,16 +108,19 @@ ARBConfigLifetimePoints& ARBConfigLifetimePoints::operator=(ARBConfigLifetimePoi
 	return *this;
 }
 
+
 bool ARBConfigLifetimePoints::operator==(ARBConfigLifetimePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
 		&& m_Faults == rhs.m_Faults;
 }
 
+
 ARBString ARBConfigLifetimePoints::GetGenericName() const
 {
 	return LIFETIME_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }
+
 
 bool ARBConfigLifetimePoints::Load(
 		ElementNodePtr inTree,
@@ -132,6 +142,7 @@ bool ARBConfigLifetimePoints::Load(
 	}
 	return true;
 }
+
 
 bool ARBConfigLifetimePoints::Save(ElementNodePtr ioTree) const
 {
@@ -158,6 +169,7 @@ bool ARBConfigLifetimePointsList::Load(
 	return true;
 }
 
+
 class SortConfigLifetimePoints
 {
 public:
@@ -168,12 +180,14 @@ public:
 	}
 };
 
+
 void ARBConfigLifetimePointsList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortConfigLifetimePoints());
 }
+
 
 double ARBConfigLifetimePointsList::GetLifetimePoints(double inFaults) const
 {
@@ -185,6 +199,7 @@ double ARBConfigLifetimePointsList::GetLifetimePoints(double inFaults) const
 	}
 	return 0.0;
 }
+
 
 bool ARBConfigLifetimePointsList::FindLifetimePoints(
 		double inFaults,
@@ -204,6 +219,7 @@ bool ARBConfigLifetimePointsList::FindLifetimePoints(
 	return false;
 }
 
+
 bool ARBConfigLifetimePointsList::AddLifetimePoints(
 		double inPoints,
 		double inFaults,
@@ -220,6 +236,7 @@ bool ARBConfigLifetimePointsList::AddLifetimePoints(
 		*outPoints = pLife;
 	return true;
 }
+
 
 bool ARBConfigLifetimePointsList::DeleteLifetimePoints(double inFaults)
 {

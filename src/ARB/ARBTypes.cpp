@@ -125,6 +125,7 @@ static struct Q2Enum
 }; ///< This is a list of the various types of "Q"s we support.
 static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 
+
 ARBString ARB_Q::GetValidTypes()
 {
 	ARBString types;
@@ -137,6 +138,7 @@ ARBString ARB_Q::GetValidTypes()
 	return types;
 }
 
+
 void ARB_Q::GetValidTypes(std::vector<ARBString>& outTypes)
 {
 	outTypes.clear();
@@ -146,10 +148,12 @@ void ARB_Q::GetValidTypes(std::vector<ARBString>& outTypes)
 	}
 }
 
+
 int ARB_Q::GetNumValidTypes()
 {
 	return sc_nQs;
 }
+
 
 ARB_Q ARB_Q::GetValidType(int inIndex)
 {
@@ -160,6 +164,7 @@ ARB_Q ARB_Q::GetValidType(int inIndex)
 	}
 	return q;
 }
+
 
 ARBString ARB_Q::str() const
 {
@@ -174,6 +179,7 @@ ARBString ARB_Q::str() const
 	}
 	return s;
 }
+
 
 bool ARB_Q::Load(
 		ARBString const& inAttrib,
@@ -192,6 +198,7 @@ bool ARB_Q::Load(
 	m_Q = eQ_NA;
 	return false;
 }
+
 
 bool ARB_Q::Save(
 		ElementNodePtr ioTree,
@@ -258,6 +265,7 @@ ARBString ARBDouble::str(
 	}
 	return retVal;
 }
+
 
 // http://groups.google.com/group/comp.lang.c++.moderated/msg/518274ddc6fb8541?hl=en&
 bool ARBDouble::equal(

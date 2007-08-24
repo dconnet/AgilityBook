@@ -61,11 +61,13 @@ ARBMetaDataPtr ARBMetaData::MetaData()
 	return ARBMetaDataPtr(new ARBMetaData());
 }
 
+
 ARBMetaData::ARBMetaData()
 	: m_Bytes(0)
 	, m_Data(NULL)
 {
 }
+
 
 ARBMetaData::~ARBMetaData()
 {
@@ -82,6 +84,7 @@ ARBDogNotes::ARBDogNotes()
 {
 }
 
+
 ARBDogNotes::ARBDogNotes(ARBDogNotes const& rhs)
 	: m_Faults(rhs.m_Faults)
 	, m_CRCD(rhs.m_CRCD)
@@ -90,9 +93,11 @@ ARBDogNotes::ARBDogNotes(ARBDogNotes const& rhs)
 {
 }
 
+
 ARBDogNotes::~ARBDogNotes()
 {
 }
+
 
 ARBDogNotes& ARBDogNotes::operator=(ARBDogNotes const& rhs)
 {
@@ -106,6 +111,7 @@ ARBDogNotes& ARBDogNotes::operator=(ARBDogNotes const& rhs)
 	return *this;
 }
 
+
 bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 {
 	return m_Faults == rhs.m_Faults
@@ -113,6 +119,7 @@ bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 		&& m_CRCDMeta == rhs.m_CRCDMeta
 		&& m_Note == rhs.m_Note;
 }
+
 
 size_t ARBDogNotes::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -129,6 +136,7 @@ size_t ARBDogNotes::GetSearchStrings(std::set<ARBString>& ioStrings) const
 	}
 	return nItems;
 }
+
 
 bool ARBDogNotes::Load(
 		ARBConfig const& inConfig,
@@ -173,6 +181,7 @@ bool ARBDogNotes::Load(
 	return true;
 }
 
+
 bool ARBDogNotes::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -211,12 +220,14 @@ bool ARBDogNotes::Save(ElementNodePtr ioTree) const
 	return true;
 }
 
+
 ARBMetaDataPtr ARBDogNotes::GetCRCDMetaData() const
 {
 	ARBMetaDataPtr data = ARBMetaData::MetaData();
 	BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes);
 	return data;
 }
+
 
 void ARBDogNotes::SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes)
 {

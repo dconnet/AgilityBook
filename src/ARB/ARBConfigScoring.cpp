@@ -98,10 +98,12 @@ ARBString ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 	return style;
 }
 
+
 ARBConfigScoringPtr ARBConfigScoring::New()
 {
 	return ARBConfigScoringPtr(new ARBConfigScoring());
 }
+
 
 ARBConfigScoring::ARBConfigScoring()
 	: m_ValidFrom()
@@ -128,6 +130,7 @@ ARBConfigScoring::ARBConfigScoring()
 	, m_Placements()
 {
 }
+
 
 ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	: m_ValidFrom(rhs.m_ValidFrom)
@@ -159,14 +162,17 @@ ARBConfigScoring::ARBConfigScoring(ARBConfigScoring const& rhs)
 	rhs.m_Placements.Clone(m_Placements);
 }
 
+
 ARBConfigScoring::~ARBConfigScoring()
 {
 }
+
 
 ARBConfigScoringPtr ARBConfigScoring::Clone() const
 {
 	return ARBConfigScoringPtr(new ARBConfigScoring(*this));
 }
+
 
 ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 {
@@ -198,6 +204,7 @@ ARBConfigScoring& ARBConfigScoring::operator=(ARBConfigScoring const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 {
 	return m_ValidFrom == rhs.m_ValidFrom
@@ -223,6 +230,7 @@ bool ARBConfigScoring::operator==(ARBConfigScoring const& rhs) const
 		&& m_LifePoints == rhs.m_LifePoints
 		&& m_Placements == rhs.m_Placements;
 }
+
 
 bool ARBConfigScoring::Load(
 		ARBConfigDivisionList const& inDivisions,
@@ -453,6 +461,7 @@ bool ARBConfigScoring::Load(
 	return true;
 }
 
+
 bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -552,6 +561,7 @@ bool ARBConfigScoringList::Load(
 	return true;
 }
 
+
 size_t ARBConfigScoringList::FindAllEvents(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
@@ -633,6 +643,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 	return outList.size();
 }
 
+
 bool ARBConfigScoringList::FindEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
@@ -679,6 +690,7 @@ bool ARBConfigScoringList::FindEvent(
 		return false;
 }
 
+
 bool ARBConfigScoringList::VerifyEvent(
 		ARBString const& inDivision,
 		ARBString const& inLevel,
@@ -688,6 +700,7 @@ bool ARBConfigScoringList::VerifyEvent(
 	FindAllEvents(inDivision, inLevel, inDate, false, items);
 	return (0 < items.size());
 }
+
 
 ARBConfigScoringPtr ARBConfigScoringList::AddScoring()
 {

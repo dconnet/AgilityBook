@@ -60,6 +60,7 @@ ARBDogRegNumPtr ARBDogRegNum::New()
 	return ARBDogRegNumPtr(new ARBDogRegNum());
 }
 
+
 ARBDogRegNum::ARBDogRegNum()
 	: m_Venue()
 	, m_Number()
@@ -68,6 +69,7 @@ ARBDogRegNum::ARBDogRegNum()
 	, m_Note()
 {
 }
+
 
 ARBDogRegNum::ARBDogRegNum(ARBDogRegNum const& rhs)
 	: m_Venue(rhs.m_Venue)
@@ -78,14 +80,17 @@ ARBDogRegNum::ARBDogRegNum(ARBDogRegNum const& rhs)
 {
 }
 
+
 ARBDogRegNum::~ARBDogRegNum()
 {
 }
+
 
 ARBDogRegNumPtr ARBDogRegNum::Clone() const
 {
 	return ARBDogRegNumPtr(new ARBDogRegNum(*this));
 }
+
 
 ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum const& rhs)
 {
@@ -100,6 +105,7 @@ ARBDogRegNum& ARBDogRegNum::operator=(ARBDogRegNum const& rhs)
 	return *this;
 }
 
+
 bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 {
 	return m_Venue == rhs.m_Venue
@@ -109,12 +115,14 @@ bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 		&& m_Note == rhs.m_Note;
 }
 
+
 size_t ARBDogRegNum::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	ioStrings.insert(GetGenericName());
 	ioStrings.insert(GetNote());
 	return 1;
 }
+
 
 bool ARBDogRegNum::Load(
 		ARBConfig const& inConfig,
@@ -174,6 +182,7 @@ bool ARBDogRegNum::Load(
 	return true;
 }
 
+
 bool ARBDogRegNum::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -206,6 +215,7 @@ bool ARBDogRegNumList::Load(
 	return true;
 }
 
+
 class SortRegNum
 {
 public:
@@ -216,12 +226,14 @@ public:
 	}
 };
 
+
 void ARBDogRegNumList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortRegNum());
 }
+
 
 int ARBDogRegNumList::NumRegNumsInVenue(ARBString const& inVenue) const
 {
@@ -233,6 +245,7 @@ int ARBDogRegNumList::NumRegNumsInVenue(ARBString const& inVenue) const
 	}
 	return count;
 }
+
 
 int ARBDogRegNumList::RenameVenue(
 		ARBString const& inOldVenue,
@@ -250,6 +263,7 @@ int ARBDogRegNumList::RenameVenue(
 	return count;
 }
 
+
 int ARBDogRegNumList::DeleteVenue(ARBString const& inVenue)
 {
 	ARBString venue(inVenue);
@@ -266,6 +280,7 @@ int ARBDogRegNumList::DeleteVenue(ARBString const& inVenue)
 	}
 	return count;
 }
+
 
 bool ARBDogRegNumList::FindRegNum(
 		ARBString const& inVenue,
@@ -285,6 +300,7 @@ bool ARBDogRegNumList::FindRegNum(
 	return false;
 }
 
+
 bool ARBDogRegNumList::AddRegNum(
 		ARBString const& inVenue,
 		ARBString const& inNumber,
@@ -299,6 +315,7 @@ bool ARBDogRegNumList::AddRegNum(
 	return true;
 }
 
+
 bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr inRegNum)
 {
 	bool bAdded = false;
@@ -309,6 +326,7 @@ bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr inRegNum)
 	}
 	return bAdded;
 }
+
 
 int ARBDogRegNumList::DeleteRegNum(
 		ARBString const& inVenue,

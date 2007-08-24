@@ -67,6 +67,7 @@ ARBConfigVenuePtr ARBConfigVenue::New()
 	return ARBConfigVenuePtr(new ARBConfigVenue());
 }
 
+
 ARBConfigVenue::ARBConfigVenue()
 	: m_Name()
 	, m_LongName()
@@ -79,6 +80,7 @@ ARBConfigVenue::ARBConfigVenue()
 	, m_MultiQs()
 {
 }
+
 
 ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	: m_Name(rhs.m_Name)
@@ -97,14 +99,17 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	rhs.m_MultiQs.Clone(m_MultiQs);
 }
 
+
 ARBConfigVenue::~ARBConfigVenue()
 {
 }
+
 
 ARBConfigVenuePtr ARBConfigVenue::Clone() const
 {
 	return ARBConfigVenuePtr(new ARBConfigVenue(*this));
 }
+
 
 ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 {
@@ -123,6 +128,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 {
 	return m_Name == rhs.m_Name
@@ -136,6 +142,7 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_MultiQs == rhs.m_MultiQs;
 }
 
+
 void ARBConfigVenue::clear()
 {
 	m_Name.erase();
@@ -148,6 +155,7 @@ void ARBConfigVenue::clear()
 	m_Events.clear();
 	m_MultiQs.clear();
 }
+
 
 bool ARBConfigVenue::Load(
 		ARBConfig& ioConfig,
@@ -258,6 +266,7 @@ bool ARBConfigVenue::Load(
 	return true;
 }
 
+
 bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -285,6 +294,7 @@ bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
 		return false;
 	return true;
 }
+
 
 bool ARBConfigVenue::Update(
 		int indent,
@@ -515,6 +525,7 @@ bool ARBConfigVenueList::Load(
 	return true;
 }
 
+
 class SortConfigVenue
 {
 public:
@@ -525,12 +536,14 @@ public:
 	}
 };
 
+
 void ARBConfigVenueList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortConfigVenue());
 }
+
 
 bool ARBConfigVenueList::VerifyMultiQ(
 		ARBString const& inVenue,
@@ -543,6 +556,7 @@ bool ARBConfigVenueList::VerifyMultiQ(
 	return false;
 }
 
+
 bool ARBConfigVenueList::VerifyLevel(
 		ARBString const& inVenue,
 		ARBString const& inDivision,
@@ -553,6 +567,7 @@ bool ARBConfigVenueList::VerifyLevel(
 		return pVenue->GetDivisions().VerifyLevel(inDivision, inLevel);
 	return false;
 }
+
 
 bool ARBConfigVenueList::VerifyEvent(
 		ARBString const& inVenue,
@@ -579,6 +594,7 @@ bool ARBConfigVenueList::VerifyEvent(
 	return bFound;
 }
 
+
 bool ARBConfigVenueList::FindTitleCompleteName(
 		ARBString const& inVenue,
 		ARBString const& inName,
@@ -603,6 +619,7 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 	return bFound;
 }
 
+
 bool ARBConfigVenueList::FindTitle(
 		ARBString const& inVenue,
 		ARBString const& inTitle,
@@ -615,6 +632,7 @@ bool ARBConfigVenueList::FindTitle(
 		return pVenue->GetTitles().FindTitle(inTitle, outTitle);
 	return false;
 }
+
 
 bool ARBConfigVenueList::DeleteTitle(ARBString const& inTitle)
 {
@@ -629,6 +647,7 @@ bool ARBConfigVenueList::DeleteTitle(ARBString const& inTitle)
 	}
 	return bDeleted;
 }
+
 
 bool ARBConfigVenueList::FindVenue(
 		ARBString const& inVenue,
@@ -647,6 +666,7 @@ bool ARBConfigVenueList::FindVenue(
 	}
 	return false;
 }
+
 
 bool ARBConfigVenueList::AddVenue(
 		ARBString const& inVenue,
@@ -667,6 +687,7 @@ bool ARBConfigVenueList::AddVenue(
 	return true;
 }
 
+
 bool ARBConfigVenueList::AddVenue(ARBConfigVenuePtr inVenue)
 {
 	if (!inVenue)
@@ -677,6 +698,7 @@ bool ARBConfigVenueList::AddVenue(ARBConfigVenuePtr inVenue)
 	sort();
 	return true;
 }
+
 
 int ARBConfigVenueList::DeleteVenue(ARBString const& inVenue)
 {
@@ -691,6 +713,7 @@ int ARBConfigVenueList::DeleteVenue(ARBString const& inVenue)
 	}
 	return 0;
 }
+
 
 // inLevel is the true (ie: sub) level.
 // This is the only 'FindEvent' that takes a true level. All others take

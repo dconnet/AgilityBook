@@ -64,6 +64,7 @@ ARBDogTitlePtr ARBDogTitle::New()
 	return ARBDogTitlePtr(new ARBDogTitle());
 }
 
+
 ARBDogTitle::ARBDogTitle()
 	: m_Date()
 	, m_Venue()
@@ -74,6 +75,7 @@ ARBDogTitle::ARBDogTitle()
 	, m_bHidden(false)
 {
 }
+
 
 ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 	: m_Date(rhs.m_Date)
@@ -86,14 +88,17 @@ ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 {
 }
 
+
 ARBDogTitle::~ARBDogTitle()
 {
 }
+
 
 ARBDogTitlePtr ARBDogTitle::Clone() const
 {
 	return ARBDogTitlePtr(new ARBDogTitle(*this));
 }
+
 
 ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 {
@@ -110,6 +115,7 @@ ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 	return *this;
 }
 
+
 bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 {
 	return m_Date == rhs.m_Date
@@ -120,6 +126,7 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 		&& m_bReceived == rhs.m_bReceived
 		&& m_bHidden == rhs.m_bHidden;
 }
+
 
 ARBString ARBDogTitle::GetGenericName() const
 {
@@ -134,6 +141,7 @@ ARBString ARBDogTitle::GetGenericName() const
 	}
 	return name;
 }
+
 
 size_t ARBDogTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -150,6 +158,7 @@ size_t ARBDogTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBDogTitle::Load(
 		ARBConfig const& inConfig,
@@ -244,6 +253,7 @@ bool ARBDogTitle::Load(
 	return true;
 }
 
+
 bool ARBDogTitle::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -287,6 +297,7 @@ bool ARBDogTitleList::Load(
 	return true;
 }
 
+
 class SortTitle
 {
 public:
@@ -305,12 +316,14 @@ public:
 	}
 };
 
+
 void ARBDogTitleList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortTitle());
 }
+
 
 int ARBDogTitleList::NumTitlesInVenue(ARBString const& inVenue) const
 {
@@ -322,6 +335,7 @@ int ARBDogTitleList::NumTitlesInVenue(ARBString const& inVenue) const
 	}
 	return count;
 }
+
 
 bool ARBDogTitleList::FindTitle(
 		ARBString const& inVenue,
@@ -349,6 +363,7 @@ bool ARBDogTitleList::FindTitle(
 	return -1 < maxInstance;
 }
 
+
 short ARBDogTitleList::FindMaxInstance(
 		ARBString const& inVenue,
 		ARBString const& inTitle) const
@@ -366,6 +381,7 @@ short ARBDogTitleList::FindMaxInstance(
 	return inst;
 }
 
+
 int ARBDogTitleList::RenameVenue(
 		ARBString const& inOldVenue,
 		ARBString const& inNewVenue)
@@ -381,6 +397,7 @@ int ARBDogTitleList::RenameVenue(
 	}
 	return count;
 }
+
 
 int ARBDogTitleList::DeleteVenue(ARBString const& inVenue)
 {
@@ -399,6 +416,7 @@ int ARBDogTitleList::DeleteVenue(ARBString const& inVenue)
 	return count;
 }
 
+
 int ARBDogTitleList::NumTitlesInUse(
 		ARBString const& inVenue,
 		ARBString const& inTitle) const
@@ -411,6 +429,7 @@ int ARBDogTitleList::NumTitlesInUse(
 	}
 	return count;
 }
+
 
 int ARBDogTitleList::RenameTitle(
 		ARBString const& inVenue,
@@ -429,6 +448,7 @@ int ARBDogTitleList::RenameTitle(
 	return count;
 }
 
+
 bool ARBDogTitleList::AddTitle(ARBDogTitlePtr inTitle)
 {
 	bool bAdded = false;
@@ -440,6 +460,7 @@ bool ARBDogTitleList::AddTitle(ARBDogTitlePtr inTitle)
 	}
 	return bAdded;
 }
+
 
 bool ARBDogTitleList::DeleteTitle(ARBDogTitlePtr inTitle)
 {

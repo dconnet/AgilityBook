@@ -69,6 +69,7 @@ ARBDogPtr ARBDog::New()
 	return ARBDogPtr(new ARBDog());
 }
 
+
 ARBDog::ARBDog()
 	: m_CallName()
 	, m_DOB()
@@ -82,6 +83,7 @@ ARBDog::ARBDog()
 	, m_Trials()
 {
 }
+
 
 ARBDog::ARBDog(ARBDog const& rhs)
 	: m_CallName(rhs.m_CallName)
@@ -101,14 +103,17 @@ ARBDog::ARBDog(ARBDog const& rhs)
 	rhs.m_Trials.Clone(m_Trials);
 }
 
+
 ARBDog::~ARBDog()
 {
 }
+
 
 ARBDogPtr ARBDog::Clone() const
 {
 	return ARBDogPtr(new ARBDog(*this));
 }
+
 
 ARBDog& ARBDog::operator=(ARBDog const& rhs)
 {
@@ -128,6 +133,7 @@ ARBDog& ARBDog::operator=(ARBDog const& rhs)
 	return *this;
 }
 
+
 bool ARBDog::operator==(ARBDog const& rhs) const
 {
 	return m_CallName == rhs.m_CallName
@@ -141,6 +147,7 @@ bool ARBDog::operator==(ARBDog const& rhs) const
 		&& m_Titles == rhs.m_Titles
 		&& m_Trials == rhs.m_Trials;
 }
+
 
 size_t ARBDog::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -187,6 +194,7 @@ size_t ARBDog::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBDog::Load(
 		ARBConfig const& inConfig,
@@ -269,6 +277,7 @@ bool ARBDog::Load(
 	return true;
 }
 
+
 bool ARBDog::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -305,6 +314,7 @@ bool ARBDog::Save(ElementNodePtr ioTree) const
 	return true;
 }
 
+
 int ARBDog::RenameVenue(
 		ARBString const& inOldVenue,
 		ARBString const& inNewVenue)
@@ -316,6 +326,7 @@ int ARBDog::RenameVenue(
 	return count;
 }
 
+
 int ARBDog::DeleteVenue(ARBString const& inVenue)
 {
 	int count = m_ExistingPoints.DeleteVenue(inVenue);
@@ -324,6 +335,7 @@ int ARBDog::DeleteVenue(ARBString const& inVenue)
 	count += m_Trials.DeleteVenue(inVenue);
 	return count;
 }
+
 
 int ARBDog::RenameDivision(
 		ARBConfigVenuePtr inVenue,
@@ -334,6 +346,7 @@ int ARBDog::RenameDivision(
 	count += m_Trials.RenameDivision(inVenue, inOldDiv, inNewDiv);
 	return count;
 }
+
 
 int ARBDog::DeleteDivision(
 		ARBConfig const& inConfig,
@@ -360,6 +373,7 @@ bool ARBDogList::Load(
 	return true;
 }
 
+
 void ARBDogList::SetMultiQs(ARBConfig const& inConfig)
 {
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -373,6 +387,7 @@ void ARBDogList::SetMultiQs(ARBConfig const& inConfig)
 	}
 }
 
+
 int ARBDogList::NumExistingPointsInVenue(ARBString const& inVenue) const
 {
 	int count = 0;
@@ -380,6 +395,7 @@ int ARBDogList::NumExistingPointsInVenue(ARBString const& inVenue) const
 		count += (*iter)->GetExistingPoints().NumExistingPointsInVenue(inVenue);
 	return count;
 }
+
 
 int ARBDogList::NumRegNumsInVenue(ARBString const& inVenue) const
 {
@@ -389,6 +405,7 @@ int ARBDogList::NumRegNumsInVenue(ARBString const& inVenue) const
 	return count;
 }
 
+
 int ARBDogList::NumTitlesInVenue(ARBString const& inVenue) const
 {
 	int count = 0;
@@ -397,6 +414,7 @@ int ARBDogList::NumTitlesInVenue(ARBString const& inVenue) const
 	return count;
 }
 
+
 int ARBDogList::NumTrialsInVenue(ARBString const& inVenue) const
 {
 	int count = 0;
@@ -404,6 +422,7 @@ int ARBDogList::NumTrialsInVenue(ARBString const& inVenue) const
 		count += (*iter)->GetTrials().NumTrialsInVenue(inVenue);
 	return count;
 }
+
 
 int ARBDogList::RenameVenue(
 		ARBString const& inOldVenue,
@@ -418,6 +437,7 @@ int ARBDogList::RenameVenue(
 	return count;
 }
 
+
 int ARBDogList::DeleteVenue(ARBString const& inVenue)
 {
 	int count = 0;
@@ -429,6 +449,7 @@ int ARBDogList::DeleteVenue(ARBString const& inVenue)
 	return count;
 }
 
+
 int ARBDogList::NumOtherPointsInUse(ARBString const& inOther) const
 {
 	int count = 0;
@@ -439,6 +460,7 @@ int ARBDogList::NumOtherPointsInUse(ARBString const& inOther) const
 	}
 	return count;
 }
+
 
 int ARBDogList::RenameOtherPoints(
 		ARBString const& inOldOther,
@@ -453,6 +475,7 @@ int ARBDogList::RenameOtherPoints(
 	return count;
 }
 
+
 int ARBDogList::DeleteOtherPoints(ARBString const& inOther)
 {
 	int count = 0;
@@ -463,6 +486,7 @@ int ARBDogList::DeleteOtherPoints(ARBString const& inOther)
 	}
 	return count;
 }
+
 
 int ARBDogList::NumMultiQsInUse(
 		ARBString const& inVenue,
@@ -475,6 +499,7 @@ int ARBDogList::NumMultiQsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogList::RenameMultiQs(
 		ARBString const& inVenue,
@@ -489,6 +514,7 @@ int ARBDogList::RenameMultiQs(
 	return count;
 }
 
+
 int ARBDogList::DeleteMultiQs(
 		ARBConfig const& inConfig,
 		ARBString const& inVenue)
@@ -501,6 +527,7 @@ int ARBDogList::DeleteMultiQs(
 	return count;
 }
 
+
 int ARBDogList::NumMultiHostedTrialsInDivision(
 		ARBConfig const& inConfig,
 		ARBString const& inVenue,
@@ -512,6 +539,7 @@ int ARBDogList::NumMultiHostedTrialsInDivision(
 	return count;
 }
 
+
 int ARBDogList::NumExistingPointsInDivision(
 		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
@@ -522,6 +550,7 @@ int ARBDogList::NumExistingPointsInDivision(
 	return count;
 }
 
+
 int ARBDogList::NumRunsInDivision(
 		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
@@ -531,6 +560,7 @@ int ARBDogList::NumRunsInDivision(
 		count += (*iter)->GetTrials().NumRunsInDivision(inVenue, inDiv);
 	return count;
 }
+
 
 int ARBDogList::RenameDivision(
 		ARBConfigVenuePtr inVenue,
@@ -543,6 +573,7 @@ int ARBDogList::RenameDivision(
 	return count;
 }
 
+
 int ARBDogList::DeleteDivision(
 		ARBConfig const& inConfig,
 		ARBString const& inVenue,
@@ -553,6 +584,7 @@ int ARBDogList::DeleteDivision(
 		count += (*iter)->DeleteDivision(inConfig, inVenue, inDiv);
 	return count;
 }
+
 
 int ARBDogList::NumLevelsInUse(
 		ARBString const& inVenue,
@@ -567,6 +599,7 @@ int ARBDogList::NumLevelsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogList::RenameLevel(
 		ARBString const& inVenue,
@@ -583,6 +616,7 @@ int ARBDogList::RenameLevel(
 	return count;
 }
 
+
 int ARBDogList::DeleteLevel(
 		ARBString const& inVenue,
 		ARBString const& inDiv,
@@ -597,6 +631,7 @@ int ARBDogList::DeleteLevel(
 	return count;
 }
 
+
 int ARBDogList::NumTitlesInUse(
 		ARBString const& inVenue,
 		ARBString const& inTitle) const
@@ -606,6 +641,7 @@ int ARBDogList::NumTitlesInUse(
 		count += (*iter)->GetTitles().NumTitlesInUse(inVenue, inTitle);
 	return count;
 }
+
 
 int ARBDogList::RenameTitle(
 		ARBString const& inVenue,
@@ -617,6 +653,7 @@ int ARBDogList::RenameTitle(
 		count += (*iter)->GetTitles().RenameTitle(inVenue, inOldTitle, inNewTitle);
 	return count;
 }
+
 
 int ARBDogList::DeleteTitle(
 		ARBString const& inVenue,
@@ -637,6 +674,7 @@ int ARBDogList::DeleteTitle(
 	return count;
 }
 
+
 int ARBDogList::NumEventsInUse(
 		ARBString const& inVenue,
 		ARBString const& inEvent) const
@@ -649,6 +687,7 @@ int ARBDogList::NumEventsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogList::RenameEvent(
 		ARBString const& inVenue,
@@ -664,6 +703,7 @@ int ARBDogList::RenameEvent(
 	return count;
 }
 
+
 int ARBDogList::DeleteEvent(
 		ARBString const& inVenue,
 		ARBString const& inEvent)
@@ -677,6 +717,7 @@ int ARBDogList::DeleteEvent(
 	return count;
 }
 
+
 bool ARBDogList::AddDog(ARBDogPtr inDog)
 {
 	bool bAdded = false;
@@ -687,6 +728,7 @@ bool ARBDogList::AddDog(ARBDogPtr inDog)
 	}
 	return bAdded;
 }
+
 
 bool ARBDogList::DeleteDog(ARBDogPtr inDog)
 {

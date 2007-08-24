@@ -63,11 +63,13 @@ ARBConfigDivisionPtr ARBConfigDivision::New()
 	return ARBConfigDivisionPtr(new ARBConfigDivision());
 }
 
+
 ARBConfigDivision::ARBConfigDivision()
 	: m_Name()
 	, m_Levels()
 {
 }
+
 
 ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 	: m_Name(rhs.m_Name)
@@ -76,14 +78,17 @@ ARBConfigDivision::ARBConfigDivision(ARBConfigDivision const& rhs)
 	rhs.m_Levels.Clone(m_Levels);
 }
 
+
 ARBConfigDivision::~ARBConfigDivision()
 {
 }
+
 
 ARBConfigDivisionPtr ARBConfigDivision::Clone() const
 {
 	return ARBConfigDivisionPtr(new ARBConfigDivision(*this));
 }
+
 
 ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 {
@@ -95,17 +100,20 @@ ARBConfigDivision& ARBConfigDivision::operator=(ARBConfigDivision const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigDivision::operator==(ARBConfigDivision const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Levels == rhs.m_Levels;
 }
 
+
 void ARBConfigDivision::clear()
 {
 	m_Name.erase();
 	m_Levels.clear();
 }
+
 
 bool ARBConfigDivision::Load(
 		ARBConfigVenue& ioVenue,
@@ -143,6 +151,7 @@ bool ARBConfigDivision::Load(
 	return true;
 }
 
+
 bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -154,6 +163,7 @@ bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 		return false;
 	return true;
 }
+
 
 bool ARBConfigDivision::Update(
 		int indent,
@@ -232,6 +242,7 @@ bool ARBConfigDivisionList::Load(
 	return true;
 }
 
+
 bool ARBConfigDivisionList::VerifyLevel(
 		ARBString const& inDiv,
 		ARBString const& inLevel) const
@@ -251,6 +262,7 @@ bool ARBConfigDivisionList::VerifyLevel(
 	return false;
 }
 
+
 bool ARBConfigDivisionList::FindDivision(
 		ARBString const& inDiv,
 		ARBConfigDivisionPtr* outDiv) const
@@ -268,6 +280,7 @@ bool ARBConfigDivisionList::FindDivision(
 	}
 	return false;
 }
+
 
 bool ARBConfigDivisionList::AddDivision(
 		ARBString const& inDiv,
@@ -287,6 +300,7 @@ bool ARBConfigDivisionList::AddDivision(
 	return true;
 }
 
+
 bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr inDiv)
 {
 	if (!inDiv
@@ -296,6 +310,7 @@ bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr inDiv)
 	push_back(inDiv);
 	return true;
 }
+
 
 int ARBConfigDivisionList::DeleteDivision(
 		ARBString const& inDiv,

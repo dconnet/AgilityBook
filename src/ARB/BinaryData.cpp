@@ -50,6 +50,7 @@ BinaryData::BinaryData()
 {
 }
 
+
 bool BinaryData::Decode(
 		ARBString const& inBase64,
 		char*& outBinData,
@@ -117,10 +118,12 @@ bool BinaryData::Decode(
 	return true;
 }
 
+
 void BinaryData::Release(char* inBinData)
 {
 	delete [] inBinData;
 }
+
 
 bool BinaryData::Encode(
 		char const* inBinData,
@@ -171,6 +174,7 @@ bool BinaryData::Encode(
 
 	return bOk;
 }
+
 
 bool BinaryData::Encode(
 		FILE* inData,
@@ -233,6 +237,7 @@ bool BinaryData::Encode(
 	return bOk;
 }
 
+
 bool BinaryData::DecodeString(
 		ARBString const& inBase64,
 		ARBString& outData)
@@ -251,6 +256,7 @@ bool BinaryData::DecodeString(
 	Release(data);
 	return true;
 }
+
 
 bool BinaryData::EncodeString(
 		ARBString const& inData,

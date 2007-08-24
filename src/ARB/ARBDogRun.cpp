@@ -73,6 +73,7 @@ ARBDogRunPtr ARBDogRun::New()
 	return ARBDogRunPtr(new ARBDogRun());
 }
 
+
 ARBDogRun::ARBDogRun()
 	: m_pMultiQ()
 	, m_Date()
@@ -96,6 +97,7 @@ ARBDogRun::ARBDogRun()
 	, m_Links()
 {
 }
+
 
 ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	: m_pMultiQ()
@@ -124,14 +126,17 @@ ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
 	rhs.m_RefRuns.Clone(m_RefRuns);
 }
 
+
 ARBDogRun::~ARBDogRun()
 {
 }
+
 
 ARBDogRunPtr ARBDogRun::Clone() const
 {
 	return ARBDogRunPtr(new ARBDogRun(*this));
 }
+
 
 ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 {
@@ -160,6 +165,7 @@ ARBDogRun& ARBDogRun::operator=(ARBDogRun const& rhs)
 	return *this;
 }
 
+
 bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 {
 	return m_Date == rhs.m_Date
@@ -183,6 +189,7 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 		&& m_Links == rhs.m_Links;
 }
 
+
 ARBString ARBDogRun::GetGenericName() const
 {
 	ARBString name = m_Date.GetString(ARBDate::eDashYMD) + _T(' ');
@@ -193,6 +200,7 @@ ARBString ARBDogRun::GetGenericName() const
 	}
 	return name;
 }
+
 
 size_t ARBDogRun::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -259,6 +267,7 @@ size_t ARBDogRun::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBDogRun::Load(
 		ARBConfig const& inConfig,
@@ -397,6 +406,7 @@ bool ARBDogRun::Load(
 	return true;
 }
 
+
 bool ARBDogRun::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -452,6 +462,7 @@ bool ARBDogRun::Save(ElementNodePtr ioTree) const
 	return true;
 }
 
+
 int ARBDogRun::NumOtherPointsInUse(ARBString const& inOther) const
 {
 	int count = 0;
@@ -462,6 +473,7 @@ int ARBDogRun::NumOtherPointsInUse(ARBString const& inOther) const
 	}
 	return count;
 }
+
 
 int ARBDogRun::RenameOtherPoints(
 		ARBString const& inOldName,
@@ -479,6 +491,7 @@ int ARBDogRun::RenameOtherPoints(
 	return count;
 }
 
+
 int ARBDogRun::DeleteOtherPoints(ARBString const& inName)
 {
 	ARBString name(inName);
@@ -495,6 +508,7 @@ int ARBDogRun::DeleteOtherPoints(ARBString const& inName)
 	}
 	return count;
 }
+
 
 short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 {
@@ -531,6 +545,7 @@ short ARBDogRun::GetSpeedPoints(ARBConfigScoringPtr inScoring) const
 	}
 	return pts;
 }
+
 
 double ARBDogRun::GetTitlePoints(
 		ARBConfigScoringPtr inScoring,
@@ -641,6 +656,7 @@ double ARBDogRun::GetTitlePoints(
 	return pts;
 }
 
+
 double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 {
 	double pts = 0.0;
@@ -672,6 +688,7 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 	return pts;
 }
 
+
 size_t ARBDogRun::GetLinks(std::set<ARBString>& outLinks) const
 {
 	outLinks.clear();
@@ -679,15 +696,18 @@ size_t ARBDogRun::GetLinks(std::set<ARBString>& outLinks) const
 	return outLinks.size();
 }
 
+
 bool ARBDogRun::HasLink(ARBString const& inLink) const
 {
 	return m_Links.find(inLink) != m_Links.end();
 }
 
+
 void ARBDogRun::AddLink(ARBString const& inLink)
 {
 	m_Links.insert(inLink);
 }
+
 
 void ARBDogRun::RemoveLink(ARBString const& inLink)
 {
@@ -712,6 +732,7 @@ bool ARBDogRunList::Load(
 	return true;
 }
 
+
 class SortRun
 {
 public:
@@ -722,12 +743,14 @@ public:
 	}
 };
 
+
 void ARBDogRunList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortRun());
 }
+
 
 ARBDate ARBDogRunList::GetStartDate() const
 {
@@ -741,6 +764,7 @@ ARBDate ARBDogRunList::GetStartDate() const
 	return date;
 }
 
+
 ARBDate ARBDogRunList::GetEndDate() const
 {
 	ARBDate date;
@@ -753,6 +777,7 @@ ARBDate ARBDogRunList::GetEndDate() const
 	return date;
 }
 
+
 bool ARBDogRunList::AddRun(ARBDogRunPtr inRun)
 {
 	bool bAdded = false;
@@ -763,6 +788,7 @@ bool ARBDogRunList::AddRun(ARBDogRunPtr inRun)
 	}
 	return bAdded;
 }
+
 
 bool ARBDogRunList::DeleteRun(ARBDogRunPtr inRun)
 {

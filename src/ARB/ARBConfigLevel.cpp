@@ -59,11 +59,13 @@ ARBConfigLevelPtr ARBConfigLevel::New()
 	return ARBConfigLevelPtr(new ARBConfigLevel());
 }
 
+
 ARBConfigLevel::ARBConfigLevel()
 	: m_Name()
 	, m_SubLevels()
 {
 }
+
 
 ARBConfigLevel::ARBConfigLevel(ARBConfigLevel const& rhs)
 	: m_Name(rhs.m_Name)
@@ -72,14 +74,17 @@ ARBConfigLevel::ARBConfigLevel(ARBConfigLevel const& rhs)
 	rhs.m_SubLevels.Clone(m_SubLevels);
 }
 
+
 ARBConfigLevel::~ARBConfigLevel()
 {
 }
+
 
 ARBConfigLevelPtr ARBConfigLevel::Clone() const
 {
 	return ARBConfigLevelPtr(new ARBConfigLevel(*this));
 }
+
 
 ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 {
@@ -91,17 +96,20 @@ ARBConfigLevel& ARBConfigLevel::operator=(ARBConfigLevel const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigLevel::operator==(ARBConfigLevel const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_SubLevels == rhs.m_SubLevels;
 }
 
+
 void ARBConfigLevel::clear()
 {
 	m_Name.erase();
 	m_SubLevels.clear();
 }
+
 
 bool ARBConfigLevel::Load(
 		ElementNodePtr inTree,
@@ -131,6 +139,7 @@ bool ARBConfigLevel::Load(
 	return true;
 }
 
+
 bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -142,6 +151,7 @@ bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
 		return false;
 	return true;
 }
+
 
 bool ARBConfigLevel::Update(
 		int indent,
@@ -202,6 +212,7 @@ bool ARBConfigLevelList::Load(
 	return true;
 }
 
+
 bool ARBConfigLevelList::VerifyLevel(
 		ARBString const& inName,
 		bool inAllowWildCard) const
@@ -216,6 +227,7 @@ bool ARBConfigLevelList::VerifyLevel(
 	}
 	return false;
 }
+
 
 bool ARBConfigLevelList::FindLevel(
 		ARBString const& inName,
@@ -234,6 +246,7 @@ bool ARBConfigLevelList::FindLevel(
 	}
 	return false;
 }
+
 
 bool ARBConfigLevelList::FindSubLevel(
 		ARBString const& inName,
@@ -265,6 +278,7 @@ bool ARBConfigLevelList::FindSubLevel(
 	return false;
 }
 
+
 bool ARBConfigLevelList::AddLevel(
 		ARBString const& inName,
 		ARBConfigLevelPtr* outLevel)
@@ -283,6 +297,7 @@ bool ARBConfigLevelList::AddLevel(
 	return true;
 }
 
+
 bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr inLevel)
 {
 	if (!inLevel || 0 == inLevel->GetName().length())
@@ -292,6 +307,7 @@ bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr inLevel)
 	push_back(inLevel);
 	return true;
 }
+
 
 bool ARBConfigLevelList::DeleteLevel(
 		ARBString const& inName,
@@ -311,6 +327,7 @@ bool ARBConfigLevelList::DeleteLevel(
 	}
 	return false;
 }
+
 
 bool ARBConfigLevelList::DeleteSubLevel(
 		ARBString const& inName,

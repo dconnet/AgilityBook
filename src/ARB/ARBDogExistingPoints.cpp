@@ -86,6 +86,7 @@ ARBDogExistingPointsPtr ARBDogExistingPoints::New()
 	return ARBDogExistingPointsPtr(new ARBDogExistingPoints());
 }
 
+
 ARBDogExistingPoints::ARBDogExistingPoints()
 	: m_Date()
 	, m_Comment()
@@ -100,6 +101,7 @@ ARBDogExistingPoints::ARBDogExistingPoints()
 	, m_Points(0)
 {
 }
+
 
 ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 	: m_Date(rhs.m_Date)
@@ -116,14 +118,17 @@ ARBDogExistingPoints::ARBDogExistingPoints(ARBDogExistingPoints const& rhs)
 {
 }
 
+
 ARBDogExistingPoints::~ARBDogExistingPoints()
 {
 }
+
 
 ARBDogExistingPointsPtr ARBDogExistingPoints::Clone() const
 {
 	return ARBDogExistingPointsPtr(new ARBDogExistingPoints(*this));
 }
+
 
 ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const& rhs)
 {
@@ -144,6 +149,7 @@ ARBDogExistingPoints& ARBDogExistingPoints::operator=(ARBDogExistingPoints const
 	return *this;
 }
 
+
 bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 {
 	return m_Date == rhs.m_Date
@@ -158,6 +164,7 @@ bool ARBDogExistingPoints::operator==(ARBDogExistingPoints const& rhs) const
 		&& m_SubName == rhs.m_SubName
 		&& m_Points == rhs.m_Points;
 }
+
 
 bool ARBDogExistingPoints::Load(
 		ARBConfig const& inConfig,
@@ -389,6 +396,7 @@ bool ARBDogExistingPoints::Load(
 	return true;
 }
 
+
 bool ARBDogExistingPoints::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -457,6 +465,7 @@ bool ARBDogExistingPointsList::Load(
 	return true;
 }
 
+
 class SortExistingPoints
 {
 public:
@@ -490,12 +499,14 @@ public:
 	}
 };
 
+
 void ARBDogExistingPointsList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortExistingPoints());
 }
+
 
 bool ARBDogExistingPointsList::HasPoints(ARBString const& inVenue) const
 {
@@ -507,6 +518,7 @@ bool ARBDogExistingPointsList::HasPoints(ARBString const& inVenue) const
 	}
 	return false;
 }
+
 
 bool ARBDogExistingPointsList::HasPoints(
 		ARBConfigVenuePtr inVenue,
@@ -554,6 +566,7 @@ bool ARBDogExistingPointsList::HasPoints(
 	return false;
 }
 
+
 double ARBDogExistingPointsList::ExistingPoints(
 		ARBDogExistingPoints::PointType inType,
 		ARBConfigVenuePtr inVenue,
@@ -590,6 +603,7 @@ double ARBDogExistingPointsList::ExistingPoints(
 	return pts;
 }
 
+
 int ARBDogExistingPointsList::NumExistingPointsInVenue(ARBString const& inVenue) const
 {
 	int count = 0;
@@ -600,6 +614,7 @@ int ARBDogExistingPointsList::NumExistingPointsInVenue(ARBString const& inVenue)
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::RenameVenue(
 		ARBString const& inOldVenue,
@@ -616,6 +631,7 @@ int ARBDogExistingPointsList::RenameVenue(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::DeleteVenue(ARBString const& inVenue)
 {
@@ -634,6 +650,7 @@ int ARBDogExistingPointsList::DeleteVenue(ARBString const& inVenue)
 	return count;
 }
 
+
 int ARBDogExistingPointsList::NumExistingPointsInDivision(
 		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
@@ -647,6 +664,7 @@ int ARBDogExistingPointsList::NumExistingPointsInDivision(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::RenameDivision(
 		ARBString const& inVenue,
@@ -664,6 +682,7 @@ int ARBDogExistingPointsList::RenameDivision(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::DeleteDivision(
 		ARBString const& inVenue,
@@ -683,6 +702,7 @@ int ARBDogExistingPointsList::DeleteDivision(
 	return count;
 }
 
+
 int ARBDogExistingPointsList::NumLevelsInUse(
 		ARBString const& inVenue,
 		ARBString const& inDiv,
@@ -698,6 +718,7 @@ int ARBDogExistingPointsList::NumLevelsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::RenameLevel(
 		ARBString const& inVenue,
@@ -718,6 +739,7 @@ int ARBDogExistingPointsList::RenameLevel(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::DeleteLevel(
 		ARBString const& inVenue,
@@ -740,6 +762,7 @@ int ARBDogExistingPointsList::DeleteLevel(
 	return count;
 }
 
+
 int ARBDogExistingPointsList::NumEventsInUse(
 		ARBString const& inVenue,
 		ARBString const& inEvent) const
@@ -753,6 +776,7 @@ int ARBDogExistingPointsList::NumEventsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::RenameEvent(
 		ARBString const& inVenue,
@@ -771,6 +795,7 @@ int ARBDogExistingPointsList::RenameEvent(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::DeleteEvent(
 		ARBString const& inVenue,
@@ -791,6 +816,7 @@ int ARBDogExistingPointsList::DeleteEvent(
 	return count;
 }
 
+
 int ARBDogExistingPointsList::NumOtherPointsInUse(ARBString const& inOther) const
 {
 	int count = 0;
@@ -802,6 +828,7 @@ int ARBDogExistingPointsList::NumOtherPointsInUse(ARBString const& inOther) cons
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::RenameOtherPoints(
 		ARBString const& inOldOther,
@@ -820,6 +847,7 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 	return count;
 }
 
+
 int ARBDogExistingPointsList::DeleteOtherPoints(ARBString const& inOther)
 {
 	int count = 0;
@@ -837,6 +865,7 @@ int ARBDogExistingPointsList::DeleteOtherPoints(ARBString const& inOther)
 	return count;
 }
 
+
 int ARBDogExistingPointsList::NumMultiQsInUse(
 		ARBString const& inVenue,
 		ARBString const& inMultiQ) const
@@ -851,6 +880,7 @@ int ARBDogExistingPointsList::NumMultiQsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::RenameMultiQs(
 		ARBString const& inVenue,
@@ -870,6 +900,7 @@ int ARBDogExistingPointsList::RenameMultiQs(
 	}
 	return count;
 }
+
 
 int ARBDogExistingPointsList::DeleteMultiQs(
 		ARBConfig const& inConfig,
@@ -894,6 +925,7 @@ int ARBDogExistingPointsList::DeleteMultiQs(
 	return count;
 }
 
+
 bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints)
 {
 	bool bAdded = false;
@@ -904,6 +936,7 @@ bool ARBDogExistingPointsList::AddExistingPoints(ARBDogExistingPointsPtr inExist
 	}
 	return bAdded;
 }
+
 
 bool ARBDogExistingPointsList::DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints)
 {

@@ -59,11 +59,13 @@ ARBInfoItemPtr ARBInfoItem::New()
 	return ARBInfoItemPtr(new ARBInfoItem());
 }
 
+
 ARBInfoItem::ARBInfoItem()
 	: m_Name()
 	, m_Comment()
 {
 }
+
 
 ARBInfoItem::ARBInfoItem(ARBInfoItem const& rhs)
 	: m_Name(rhs.m_Name)
@@ -71,14 +73,17 @@ ARBInfoItem::ARBInfoItem(ARBInfoItem const& rhs)
 {
 }
 
+
 ARBInfoItem::~ARBInfoItem()
 {
 }
+
 
 ARBInfoItemPtr ARBInfoItem::Clone() const
 {
 	return ARBInfoItemPtr(new ARBInfoItem(*this));
 }
+
 
 ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 {
@@ -90,11 +95,13 @@ ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 	return *this;
 }
 
+
 bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Comment == rhs.m_Comment;
 }
+
 
 size_t ARBInfoItem::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -111,6 +118,7 @@ size_t ARBInfoItem::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBInfoItem::Load(
 		ElementNodePtr inTree,
@@ -129,6 +137,7 @@ bool ARBInfoItem::Load(
 	m_Comment = inTree->GetValue();
 	return true;
 }
+
 
 bool ARBInfoItem::Save(
 		ElementNodePtr ioTree,
@@ -151,11 +160,13 @@ ARBInfoItemList::ARBInfoItemList(ARBString const& inItemName)
 {
 }
 
+
 ARBInfoItemList::ARBInfoItemList(ARBInfoItemList const& rhs)
 	: ARBVector<ARBInfoItemPtr>(rhs)
 	, m_ItemName(rhs.m_ItemName)
 {
 }
+
 
 ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 {
@@ -166,6 +177,7 @@ ARBInfoItemList& ARBInfoItemList::operator=(ARBInfoItemList const& rhs)
 	}
 	return *this;
 }
+
 
 bool ARBInfoItemList::Load(
 		ElementNodePtr inTree,
@@ -178,6 +190,7 @@ bool ARBInfoItemList::Load(
 	push_back(item);
 	return true;
 }
+
 
 bool ARBInfoItemList::Save(ElementNodePtr ioTree) const
 {
@@ -192,6 +205,7 @@ bool ARBInfoItemList::Save(ElementNodePtr ioTree) const
 	return true;
 }
 
+
 class SortInfoItem
 {
 public:
@@ -202,12 +216,14 @@ public:
 	}
 };
 
+
 void ARBInfoItemList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortInfoItem());
 }
+
 
 size_t ARBInfoItemList::GetAllItems(std::set<ARBString>& outNames) const
 {
@@ -219,6 +235,7 @@ size_t ARBInfoItemList::GetAllItems(std::set<ARBString>& outNames) const
 	}
 	return outNames.size();
 }
+
 
 void ARBInfoItemList::CondenseContent(std::set<ARBString> const& inNamesInUse)
 {
@@ -239,6 +256,7 @@ void ARBInfoItemList::CondenseContent(std::set<ARBString> const& inNamesInUse)
 	}
 }
 
+
 bool ARBInfoItemList::FindItem(
 		ARBString const& inName,
 		ARBInfoItemPtr* outItem) const
@@ -257,6 +275,7 @@ bool ARBInfoItemList::FindItem(
 	}
 	return false;
 }
+
 
 bool ARBInfoItemList::AddItem(
 		ARBString const& inItem,
@@ -279,6 +298,7 @@ bool ARBInfoItemList::AddItem(
 	return false;
 }
 
+
 bool ARBInfoItemList::AddItem(ARBInfoItemPtr inItem)
 {
 	bool bAdded = false;
@@ -289,6 +309,7 @@ bool ARBInfoItemList::AddItem(ARBInfoItemPtr inItem)
 	}
 	return bAdded;
 }
+
 
 bool ARBInfoItemList::DeleteItem(ARBInfoItemPtr inItem)
 {

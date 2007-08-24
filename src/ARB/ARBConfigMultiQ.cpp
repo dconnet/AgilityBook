@@ -55,6 +55,7 @@ ARBConfigMultiQPtr ARBConfigMultiQ::New()
 	return ARBConfigMultiQPtr(new ARBConfigMultiQ());
 }
 
+
 ARBConfigMultiQ::ARBConfigMultiQ()
 	: m_Name()
 	, m_ShortName()
@@ -63,6 +64,7 @@ ARBConfigMultiQ::ARBConfigMultiQ()
 	, m_Items()
 {
 }
+
 
 ARBConfigMultiQ::ARBConfigMultiQ(ARBConfigMultiQ const& rhs)
 	: m_Name(rhs.m_Name)
@@ -73,14 +75,17 @@ ARBConfigMultiQ::ARBConfigMultiQ(ARBConfigMultiQ const& rhs)
 {
 }
 
+
 ARBConfigMultiQ::~ARBConfigMultiQ()
 {
 }
+
 
 ARBConfigMultiQPtr ARBConfigMultiQ::Clone() const
 {
 	return ARBConfigMultiQPtr(new ARBConfigMultiQ(*this));
 }
+
 
 ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ const& rhs)
 {
@@ -95,6 +100,7 @@ ARBConfigMultiQ& ARBConfigMultiQ::operator=(ARBConfigMultiQ const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigMultiQ::operator==(ARBConfigMultiQ const& rhs) const
 {
 	return m_Name == rhs.m_Name
@@ -103,6 +109,7 @@ bool ARBConfigMultiQ::operator==(ARBConfigMultiQ const& rhs) const
 		&& m_ValidTo == rhs.m_ValidTo
 		&& m_Items == rhs.m_Items;
 }
+
 
 bool ARBConfigMultiQ::Load(
 		ARBConfigVenue const& inVenue,
@@ -215,6 +222,7 @@ bool ARBConfigMultiQ::Load(
 	return true;
 }
 
+
 bool ARBConfigMultiQ::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -236,6 +244,7 @@ bool ARBConfigMultiQ::Save(ElementNodePtr ioTree) const
 	}
 	return true;
 }
+
 
 // Note, this is only called from ARBDogTrial
 bool ARBConfigMultiQ::Match(
@@ -305,6 +314,7 @@ bool ARBConfigMultiQ::Match(
 	return bOk;
 }
 
+
 int ARBConfigMultiQ::RenameDivision(
 		ARBString const& inOldDiv,
 		ARBString const& inNewDiv)
@@ -329,6 +339,7 @@ int ARBConfigMultiQ::RenameDivision(
 	return count;
 }
 
+
 int ARBConfigMultiQ::DeleteDivision(ARBString const& inDiv)
 {
 	int count = 0;
@@ -344,6 +355,7 @@ int ARBConfigMultiQ::DeleteDivision(ARBString const& inDiv)
 	}
 	return count;
 }
+
 
 int ARBConfigMultiQ::RenameLevel(
 		ARBString const& inDiv,
@@ -369,6 +381,7 @@ int ARBConfigMultiQ::RenameLevel(
 	return count;
 }
 
+
 int ARBConfigMultiQ::DeleteLevel(ARBString const& inLevel)
 {
 	int count = 0;
@@ -384,6 +397,7 @@ int ARBConfigMultiQ::DeleteLevel(ARBString const& inLevel)
 	}
 	return count;
 }
+
 
 int ARBConfigMultiQ::RenameEvent(
 		ARBString const& inOldEvent,
@@ -407,6 +421,7 @@ int ARBConfigMultiQ::RenameEvent(
 	return count;
 }
 
+
 int ARBConfigMultiQ::DeleteEvent(ARBString const& inEvent)
 {
 	int count = 0;
@@ -422,6 +437,7 @@ int ARBConfigMultiQ::DeleteEvent(ARBString const& inEvent)
 	}
 	return count;
 }
+
 
 bool ARBConfigMultiQ::AddItem(
 		ARBString const& inDiv,
@@ -439,6 +455,7 @@ bool ARBConfigMultiQ::AddItem(
 	}
 	return bInserted;
 }
+
 
 bool ARBConfigMultiQ::RemoveItem(
 		ARBString const& inDiv,
@@ -462,6 +479,7 @@ bool ARBConfigMultiQ::RemoveItem(
 	return bRemoved;
 }
 
+
 bool ARBConfigMultiQ::RemoveAllItems()
 {
 	if (0 < m_Items.size())
@@ -472,6 +490,7 @@ bool ARBConfigMultiQ::RemoveAllItems()
 	else
 		return false;
 }
+
 
 bool ARBConfigMultiQ::GetItem(
 		size_t inIndex,
@@ -508,6 +527,7 @@ bool ARBConfigMultiQList::Load(
 	return true;
 }
 
+
 bool ARBConfigMultiQList::FindMultiQ(
 		ARBString const& inName,
 		bool inUseShortName,
@@ -528,6 +548,7 @@ bool ARBConfigMultiQList::FindMultiQ(
 	return false;
 }
 
+
 bool ARBConfigMultiQList::FindMultiQ(
 	ARBConfigMultiQ const& inMultiQ,
 	ARBConfigMultiQPtr* outMultiQ) const
@@ -546,6 +567,7 @@ bool ARBConfigMultiQList::FindMultiQ(
 	return false;
 }
 
+
 int ARBConfigMultiQList::RenameDivision(
 		ARBString const& inOldDiv,
 		ARBString const& inNewDiv)
@@ -560,6 +582,7 @@ int ARBConfigMultiQList::RenameDivision(
 	return count;
 }
 
+
 int ARBConfigMultiQList::DeleteDivision(ARBString const& inDiv)
 {
 	int count = 0;
@@ -569,6 +592,7 @@ int ARBConfigMultiQList::DeleteDivision(ARBString const& inDiv)
 	}
 	return count;
 }
+
 
 int ARBConfigMultiQList::RenameLevel(
 		ARBString const& inDiv,
@@ -585,6 +609,7 @@ int ARBConfigMultiQList::RenameLevel(
 	return count;
 }
 
+
 int ARBConfigMultiQList::DeleteLevel(ARBString const& inLevel)
 {
 	int count = 0;
@@ -594,6 +619,7 @@ int ARBConfigMultiQList::DeleteLevel(ARBString const& inLevel)
 	}
 	return count;
 }
+
 
 int ARBConfigMultiQList::RenameEvent(
 		ARBString const& inOldEvent,
@@ -609,6 +635,7 @@ int ARBConfigMultiQList::RenameEvent(
 	return count;
 }
 
+
 int ARBConfigMultiQList::DeleteEvent(ARBString const& inEvent)
 {
 	int count = 0;
@@ -619,6 +646,7 @@ int ARBConfigMultiQList::DeleteEvent(ARBString const& inEvent)
 	return count;
 }
 
+
 bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
 {
 	if (!inMultiQ
@@ -627,6 +655,7 @@ bool ARBConfigMultiQList::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
 	push_back(inMultiQ);
 	return true;
 }
+
 
 bool ARBConfigMultiQList::DeleteMultiQ(ARBConfigMultiQPtr inMultiQ)
 {

@@ -60,6 +60,7 @@ ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
 }
 
+
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(
 		double inPoints,
 		double inFaults)
@@ -67,11 +68,13 @@ ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(
 	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
 }
 
+
 ARBConfigTitlePoints::ARBConfigTitlePoints()
 	: m_Points(0.0)
 	, m_Faults(0.0)
 {
 }
+
 
 ARBConfigTitlePoints::ARBConfigTitlePoints(
 		double inPoints,
@@ -81,20 +84,24 @@ ARBConfigTitlePoints::ARBConfigTitlePoints(
 {
 }
 
+
 ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
 {
 }
 
+
 ARBConfigTitlePoints::~ARBConfigTitlePoints()
 {
 }
+
 
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::Clone() const
 {
 	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(*this));
 }
+
 
 ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const& rhs)
 {
@@ -106,16 +113,19 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 	return *this;
 }
 
+
 bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
 		&& m_Faults == rhs.m_Faults;
 }
 
+
 ARBString ARBConfigTitlePoints::GetGenericName() const
 {
 	return TITLE_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }
+
 
 bool ARBConfigTitlePoints::Load(
 		ElementNodePtr inTree,
@@ -150,6 +160,7 @@ bool ARBConfigTitlePoints::Load(
 	return true;
 }
 
+
 bool ARBConfigTitlePoints::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -176,6 +187,7 @@ bool ARBConfigTitlePointsList::Load(
 	return true;
 }
 
+
 class SortConfigTitlePoints
 {
 public:
@@ -186,12 +198,14 @@ public:
 	}
 };
 
+
 void ARBConfigTitlePointsList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortConfigTitlePoints());
 }
+
 
 double ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 {
@@ -203,6 +217,7 @@ double ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
 	}
 	return 0;
 }
+
 
 bool ARBConfigTitlePointsList::FindTitlePoints(
 		double inFaults,
@@ -222,6 +237,7 @@ bool ARBConfigTitlePointsList::FindTitlePoints(
 	return false;
 }
 
+
 bool ARBConfigTitlePointsList::AddTitlePoints(
 		double inPoints,
 		double inFaults,
@@ -238,6 +254,7 @@ bool ARBConfigTitlePointsList::AddTitlePoints(
 		*outTitle = pTitle;
 	return true;
 }
+
 
 bool ARBConfigTitlePointsList::DeleteTitlePoints(double inFaults)
 {
