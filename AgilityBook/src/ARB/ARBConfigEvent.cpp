@@ -65,6 +65,7 @@ ARBConfigEventPtr ARBConfigEvent::New()
 	return ARBConfigEventPtr(new ARBConfigEvent());
 }
 
+
 ARBConfigEvent::ARBConfigEvent()
 	: m_Name()
 	, m_Desc()
@@ -75,6 +76,7 @@ ARBConfigEvent::ARBConfigEvent()
 	, m_Scoring()
 {
 }
+
 
 ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	: m_Name(rhs.m_Name)
@@ -88,14 +90,17 @@ ARBConfigEvent::ARBConfigEvent(ARBConfigEvent const& rhs)
 	rhs.m_Scoring.Clone(m_Scoring);
 }
 
+
 ARBConfigEvent::~ARBConfigEvent()
 {
 }
+
 
 ARBConfigEventPtr ARBConfigEvent::Clone() const
 {
 	return ARBConfigEventPtr(new ARBConfigEvent(*this));
 }
+
 
 ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 {
@@ -112,6 +117,7 @@ ARBConfigEvent& ARBConfigEvent::operator=(ARBConfigEvent const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 {
 	return m_Name == rhs.m_Name
@@ -122,6 +128,7 @@ bool ARBConfigEvent::operator==(ARBConfigEvent const& rhs) const
 		&& m_SubNames == rhs.m_SubNames
 		&& m_Scoring == rhs.m_Scoring;
 }
+
 
 bool ARBConfigEvent::Load(
 		ARBConfigDivisionList const& inDivisions,
@@ -180,6 +187,7 @@ bool ARBConfigEvent::Load(
 	return true;
 }
 
+
 bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -215,6 +223,7 @@ bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
 		return false;
 	return true;
 }
+
 
 bool ARBConfigEvent::Update(
 		int indent,
@@ -318,12 +327,14 @@ bool ARBConfigEvent::Update(
 	return bChanges;
 }
 
+
 size_t ARBConfigEvent::GetSubNames(std::set<ARBString>& outNames) const
 {
 	outNames.clear();
 	outNames = m_SubNames;
 	return outNames.size();
 }
+
 
 void ARBConfigEvent::SetSubNames(std::set<ARBString> const& inNames)
 {
@@ -346,6 +357,7 @@ bool ARBConfigEventList::Load(
 	return true;
 }
 
+
 bool ARBConfigEventList::VerifyEvent(
 		ARBString const& inEvent,
 		ARBString const& inDivision,
@@ -359,6 +371,7 @@ bool ARBConfigEventList::VerifyEvent(
 	}
 	return false;
 }
+
 
 bool ARBConfigEventList::FindEvent(
 		ARBString const& inEvent,
@@ -385,6 +398,7 @@ bool ARBConfigEventList::FindEvent(
 	return false;
 }
 
+
 int ARBConfigEventList::RenameDivision(
 		ARBString const& inOldDiv,
 		ARBString const& inNewDiv)
@@ -404,6 +418,7 @@ int ARBConfigEventList::RenameDivision(
 	}
 	return count;
 }
+
 
 int ARBConfigEventList::DeleteDivision(ARBString const& inDiv)
 {
@@ -426,6 +441,7 @@ int ARBConfigEventList::DeleteDivision(ARBString const& inDiv)
 	return count;
 }
 
+
 int ARBConfigEventList::RenameLevel(
 		ARBString const& inOldLevel,
 		ARBString const& inNewLevel)
@@ -445,6 +461,7 @@ int ARBConfigEventList::RenameLevel(
 	}
 	return count;
 }
+
 
 int ARBConfigEventList::DeleteLevel(ARBString const& inLevel)
 {
@@ -467,6 +484,7 @@ int ARBConfigEventList::DeleteLevel(ARBString const& inLevel)
 	return count;
 }
 
+
 bool ARBConfigEventList::FindEvent(
 		ARBString const& inEvent,
 		ARBConfigEventPtr* outEvent) const
@@ -485,6 +503,7 @@ bool ARBConfigEventList::FindEvent(
 	return false;
 }
 
+
 bool ARBConfigEventList::AddEvent(ARBConfigEventPtr inEvent)
 {
 	if (!inEvent
@@ -494,6 +513,7 @@ bool ARBConfigEventList::AddEvent(ARBConfigEventPtr inEvent)
 	push_back(inEvent);
 	return true;
 }
+
 
 bool ARBConfigEventList::DeleteEvent(ARBString const& inEvent)
 {

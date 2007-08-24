@@ -57,11 +57,13 @@ ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::New()
 	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints());
 }
 
+
 ARBDogRunOtherPoints::ARBDogRunOtherPoints()
 	: m_Name()
 	, m_Points(0)
 {
 }
+
 
 ARBDogRunOtherPoints::ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs)
 	: m_Name(rhs.m_Name)
@@ -69,14 +71,17 @@ ARBDogRunOtherPoints::ARBDogRunOtherPoints(ARBDogRunOtherPoints const& rhs)
 {
 }
 
+
 ARBDogRunOtherPoints::~ARBDogRunOtherPoints()
 {
 }
+
 
 ARBDogRunOtherPointsPtr ARBDogRunOtherPoints::Clone() const
 {
 	return ARBDogRunOtherPointsPtr(new ARBDogRunOtherPoints(*this));
 }
+
 
 ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const& rhs)
 {
@@ -88,17 +93,20 @@ ARBDogRunOtherPoints& ARBDogRunOtherPoints::operator=(ARBDogRunOtherPoints const
 	return *this;
 }
 
+
 bool ARBDogRunOtherPoints::operator==(ARBDogRunOtherPoints const& rhs) const
 {
 	return m_Name == rhs.m_Name
 		&& m_Points == rhs.m_Points;
 }
 
+
 size_t ARBDogRunOtherPoints::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
 	ioStrings.insert(m_Name);
 	return 1;
 }
+
 
 bool ARBDogRunOtherPoints::Load(
 		ARBConfig const& inConfig,
@@ -122,6 +130,7 @@ bool ARBDogRunOtherPoints::Load(
 	}
 	return true;
 }
+
 
 bool ARBDogRunOtherPoints::Save(ElementNodePtr ioTree) const
 {
@@ -148,6 +157,7 @@ bool ARBDogRunOtherPointsList::Load(
 	push_back(thing);
 	return true;
 }
+
 
 bool ARBDogRunOtherPointsList::AddOtherPoints(ARBDogRunOtherPointsPtr inOther)
 {

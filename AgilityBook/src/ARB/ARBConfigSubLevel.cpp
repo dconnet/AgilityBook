@@ -56,24 +56,29 @@ ARBConfigSubLevelPtr ARBConfigSubLevel::New()
 	return ARBConfigSubLevelPtr(new ARBConfigSubLevel());
 }
 
+
 ARBConfigSubLevel::ARBConfigSubLevel()
 	: m_Name()
 {
 }
+
 
 ARBConfigSubLevel::ARBConfigSubLevel(ARBConfigSubLevel const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
 
+
 ARBConfigSubLevel::~ARBConfigSubLevel()
 {
 }
+
 
 ARBConfigSubLevelPtr ARBConfigSubLevel::Clone() const
 {
 	return ARBConfigSubLevelPtr(new ARBConfigSubLevel(*this));
 }
+
 
 ARBConfigSubLevel& ARBConfigSubLevel::operator=(ARBConfigSubLevel const& rhs)
 {
@@ -82,10 +87,12 @@ ARBConfigSubLevel& ARBConfigSubLevel::operator=(ARBConfigSubLevel const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigSubLevel::operator==(ARBConfigSubLevel const& rhs) const
 {
 	return m_Name == rhs.m_Name;
 }
+
 
 bool ARBConfigSubLevel::Load(
 		ElementNodePtr inTree,
@@ -103,6 +110,7 @@ bool ARBConfigSubLevel::Load(
 	}
 	return true;
 }
+
 
 bool ARBConfigSubLevel::Save(ElementNodePtr ioTree) const
 {
@@ -128,6 +136,7 @@ bool ARBConfigSubLevelList::Load(
 	return true;
 }
 
+
 bool ARBConfigSubLevelList::FindSubLevel(ARBString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -137,6 +146,7 @@ bool ARBConfigSubLevelList::FindSubLevel(ARBString const& inName) const
 	}
 	return false;
 }
+
 
 bool ARBConfigSubLevelList::AddSubLevel(
 		ARBString const& inName,
@@ -154,6 +164,7 @@ bool ARBConfigSubLevelList::AddSubLevel(
 		*outLevel = pLevel;
 	return true;
 }
+
 
 bool ARBConfigSubLevelList::DeleteSubLevel(ARBString const& inName)
 {

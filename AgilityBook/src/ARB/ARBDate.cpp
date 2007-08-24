@@ -124,6 +124,7 @@ static void SdnToGregorian(
 	*pDay = day;
 }
 
+
 static long int GregorianToSdn(
 		int inputYear,
 		int inputMonth,
@@ -181,6 +182,7 @@ ARBDate ARBDate::Today()
 	return today;
 }
 
+
 static int ParseFields(
 		ARBString inDate,
 		char sep,
@@ -207,6 +209,7 @@ static int ParseFields(
 	}
 	return nVals;
 }
+
 
 // static
 ARBDate ARBDate::FromString(
@@ -264,6 +267,7 @@ ARBDate ARBDate::FromString(
 	return date;
 }
 
+
 // static
 ARBString ARBDate::GetValidDateString(
 		ARBDate const& inFrom,
@@ -288,6 +292,7 @@ ARBString ARBDate::GetValidDateString(
 	return str;
 }
 
+
 ARBDate::ARBDate(time_t inTime)
 	: m_Julian(0)
 {
@@ -307,6 +312,7 @@ ARBDate::ARBDate(time_t inTime)
 	}
 }
 
+
 #if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
 ARBDate::ARBDate(__time64_t inTime)
 	: m_Julian(0)
@@ -321,6 +327,7 @@ ARBDate::ARBDate(__time64_t inTime)
 	}
 }
 #endif
+
 
 void ARBDate::SetToday()
 {
@@ -338,6 +345,7 @@ void ARBDate::SetToday()
 		pTime->tm_mon + 1,
 		pTime->tm_mday);
 }
+
 
 bool ARBDate::SetDate(
 		int inYr,
@@ -359,6 +367,7 @@ bool ARBDate::SetDate(
 		m_Julian = julian;
 	return bOk;
 }
+
 
 ARBString ARBDate::GetString(
 	DateFormat inFormat,
@@ -462,6 +471,7 @@ ARBString ARBDate::GetString(
 	return date;
 }
 
+
 time_t ARBDate::GetDate() const
 {
 	time_t t = 0;
@@ -484,6 +494,7 @@ time_t ARBDate::GetDate() const
 	return t;
 }
 
+
 void ARBDate::GetDate(
 		int& outYr,
 		int& outMon,
@@ -492,6 +503,7 @@ void ARBDate::GetDate(
 	SdnToGregorian(m_Julian, &outYr, &outMon, &outDay);
 }
 
+
 int ARBDate::GetDay() const
 {
 	int yr, mon, day;
@@ -499,12 +511,14 @@ int ARBDate::GetDay() const
 	return day;
 }
 
+
 int ARBDate::GetMonth() const
 {
 	int yr, mon, day;
 	SdnToGregorian(m_Julian, &yr, &mon, &day);
 	return mon;
 }
+
 
 int ARBDate::GetYear() const
 {

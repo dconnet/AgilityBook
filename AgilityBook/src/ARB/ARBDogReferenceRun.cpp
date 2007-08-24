@@ -58,6 +58,7 @@ ARBDogReferenceRunPtr ARBDogReferenceRun::New()
 	return ARBDogReferenceRunPtr(new ARBDogReferenceRun());
 }
 
+
 ARBDogReferenceRun::ARBDogReferenceRun()
 	: m_Q()
 	, m_Place(0)
@@ -69,6 +70,7 @@ ARBDogReferenceRun::ARBDogReferenceRun()
 	, m_Note()
 {
 }
+
 
 ARBDogReferenceRun::ARBDogReferenceRun(ARBDogReferenceRun const& rhs)
 	: m_Q(rhs.m_Q)
@@ -82,14 +84,17 @@ ARBDogReferenceRun::ARBDogReferenceRun(ARBDogReferenceRun const& rhs)
 {
 }
 
+
 ARBDogReferenceRun::~ARBDogReferenceRun()
 {
 }
+
 
 ARBDogReferenceRunPtr ARBDogReferenceRun::Clone() const
 {
 	return ARBDogReferenceRunPtr(new ARBDogReferenceRun(*this));
 }
+
 
 ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)
 {
@@ -107,6 +112,7 @@ ARBDogReferenceRun& ARBDogReferenceRun::operator=(ARBDogReferenceRun const& rhs)
 	return *this;
 }
 
+
 bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 {
 	return m_Q == rhs.m_Q
@@ -118,6 +124,7 @@ bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 		&& m_Score == rhs.m_Score
 		&& m_Note == rhs.m_Note;
 }
+
 
 size_t ARBDogReferenceRun::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -149,6 +156,7 @@ size_t ARBDogReferenceRun::GetSearchStrings(std::set<ARBString>& ioStrings) cons
 
 	return nItems;
 }
+
 
 bool ARBDogReferenceRun::Load(
 		ARBConfig const& inConfig,
@@ -203,6 +211,7 @@ bool ARBDogReferenceRun::Load(
 	return true;
 }
 
+
 bool ARBDogReferenceRun::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -253,6 +262,7 @@ bool ARBDogReferenceRunList::Load(
 	return true;
 }
 
+
 bool ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRunPtr inRef)
 {
 	bool bAdded = false;
@@ -263,6 +273,7 @@ bool ARBDogReferenceRunList::AddReferenceRun(ARBDogReferenceRunPtr inRef)
 	}
 	return bAdded;
 }
+
 
 bool ARBDogReferenceRunList::DeleteReferenceRun(ARBDogReferenceRunPtr inRef)
 {

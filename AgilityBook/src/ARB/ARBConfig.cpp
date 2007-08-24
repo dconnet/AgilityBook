@@ -71,6 +71,7 @@ ARBConfig::ARBConfig()
 {
 }
 
+
 ARBConfig::ARBConfig(ARBConfig const& rhs)
 	: m_bUpdate(rhs.m_bUpdate)
 	, m_Version(rhs.m_Version)
@@ -86,10 +87,12 @@ ARBConfig::ARBConfig(ARBConfig const& rhs)
 	rhs.m_OtherPoints.Clone(m_OtherPoints);
 }
 
+
 ARBConfig::~ARBConfig()
 {
 	clear();
 }
+
 
 /*
 ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
@@ -107,6 +110,7 @@ ARBConfig& ARBConfig::operator=(ARBConfig const& rhs)
 }
 */
 
+
 bool ARBConfig::operator==(ARBConfig const& rhs) const
 {
 	// Equality does not include actions or the update flag
@@ -116,6 +120,7 @@ bool ARBConfig::operator==(ARBConfig const& rhs) const
 		&& m_FaultTypes == rhs.m_FaultTypes
 		&& m_OtherPoints == rhs.m_OtherPoints;
 }
+
 
 void ARBConfig::clear()
 {
@@ -127,6 +132,7 @@ void ARBConfig::clear()
 	m_FaultTypes.clear();
 	m_OtherPoints.clear();
 }
+
 
 /**
  * FileVersion 3 moved faults from the venue to the config.
@@ -147,6 +153,7 @@ bool ARBConfig::LoadFault(
 		return false;
 }
 
+
 /**
  * FileVersion 3 moved otherpoints from the venue to the config.
  * This function allows the venue to migrate old file formats.
@@ -165,6 +172,7 @@ bool ARBConfig::LoadOtherPoints(
 	else
 		return false;
 }
+
 
 bool ARBConfig::Load(
 		ElementNodePtr inTree,
@@ -219,6 +227,7 @@ bool ARBConfig::Load(
 	return true;
 }
 
+
 bool ARBConfig::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -245,6 +254,7 @@ bool ARBConfig::Save(ElementNodePtr ioTree) const
 		return false;
 	return true;
 }
+
 
 // Add a few known configurations.
 void ARBConfig::Default()
@@ -288,6 +298,7 @@ void ARBConfig::Default()
 	}
 }
 
+
 /* static */
 std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 {
@@ -315,6 +326,7 @@ std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 	return dtd;
 }
 
+
 ARBString ARBConfig::GetTitleNiceName(
 		ARBString const& inVenue,
 		ARBString const& inTitle) const
@@ -329,6 +341,7 @@ ARBString ARBConfig::GetTitleNiceName(
 		return inTitle;
 }
 
+
 ARBString ARBConfig::GetTitleCompleteName(
 		ARBDogTitlePtr inTitle,
 		bool bAbbrevFirst) const
@@ -341,6 +354,7 @@ ARBString ARBConfig::GetTitleCompleteName(
 	else
 		return inTitle->GetGenericName();
 }
+
 
 bool ARBConfig::Update(
 		int indent,

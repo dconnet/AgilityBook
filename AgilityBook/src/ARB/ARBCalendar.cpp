@@ -169,6 +169,7 @@ private:
 	int m_Version;
 };
 
+
 ARBiCal::ARBiCal(
 		ARBostream& ioStream,
 		int inVersion)
@@ -190,6 +191,7 @@ ARBiCal::ARBiCal(
 		break;
 	}
 }
+
 
 void ARBiCal::Write(
 			char const* const inVal,
@@ -219,6 +221,7 @@ void ARBiCal::Write(
 	if (inVal)
 		m_ioStream << "\r\n";
 }
+
 
 void ARBiCal::WriteSafeChar(std::string const& inText)
 {
@@ -251,6 +254,7 @@ void ARBiCal::WriteSafeChar(std::string const& inText)
 			m_ioStream << '?';
 	}
 }
+
 
 void ARBiCal::WriteText(
 		char const* const inToken,
@@ -286,6 +290,7 @@ void ARBiCal::WriteText(
 	}
 }
 
+
 void ARBiCal::DoDTSTAMP()
 {
 	if (1 < m_Version)
@@ -317,13 +322,16 @@ void ARBiCal::DoDTSTAMP()
 	}
 }
 
+
 ICalendar::ICalendar()
 {
 }
 
+
 ICalendar::~ICalendar()
 {
 }
+
 
 ICalendar* ICalendar::iCalendarBegin(
 		ARBostream& ioStream,
@@ -341,6 +349,7 @@ ARBCalendarPtr ARBCalendar::New()
 {
 	return ARBCalendarPtr(new ARBCalendar());
 }
+
 
 ARBCalendar::ARBCalendar()
 	: m_DateStart()
@@ -362,6 +371,7 @@ ARBCalendar::ARBCalendar()
 {
 }
 
+
 ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 	: m_DateStart(rhs.m_DateStart)
 	, m_DateEnd(rhs.m_DateEnd)
@@ -382,14 +392,17 @@ ARBCalendar::ARBCalendar(ARBCalendar const& rhs)
 {
 }
 
+
 ARBCalendar::~ARBCalendar()
 {
 }
+
 
 ARBCalendarPtr ARBCalendar::Clone() const
 {
 	return ARBCalendarPtr(new ARBCalendar(*this));
 }
+
 
 ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 {
@@ -415,6 +428,7 @@ ARBCalendar& ARBCalendar::operator=(ARBCalendar const& rhs)
 	return *this;
 }
 
+
 bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 {
 	return m_DateStart == rhs.m_DateStart
@@ -434,6 +448,7 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 		&& m_OnlineURL == rhs.m_OnlineURL
 		&& m_Note == rhs.m_Note;
 }
+
 
 ARBString ARBCalendar::GetUID(eUidType inType) const
 {
@@ -458,6 +473,7 @@ ARBString ARBCalendar::GetUID(eUidType inType) const
 	str << m_DateClosing.GetString(ARBDate::eYYYYMMDD, true);
 	return str.str();
 }
+
 
 size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -537,6 +553,7 @@ size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBCalendar::Load(
 		ElementNodePtr inTree,
@@ -672,6 +689,7 @@ bool ARBCalendar::Load(
 	return true;
 }
 
+
 bool ARBCalendar::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -724,6 +742,7 @@ bool ARBCalendar::Save(ElementNodePtr ioTree) const
 		cal->SetValue(m_Note);
 	return true;
 }
+
 
 void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 {
@@ -780,6 +799,7 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	ioStream->EndEvent();
 }
 
+
 bool ARBCalendar::IsMatch(ARBCalendarPtr inCal, bool inMatchExact) const
 {
 	if (!inCal)
@@ -794,6 +814,7 @@ bool ARBCalendar::IsMatch(ARBCalendarPtr inCal, bool inMatchExact) const
 			&& m_Club == inCal->GetClub();
 	}
 }
+
 
 bool ARBCalendar::Update(ARBCalendarPtr inCal)
 {
@@ -882,6 +903,7 @@ bool ARBCalendarList::Load(
 	return true;
 }
 
+
 class SortCalendar
 {
 public:
@@ -892,12 +914,14 @@ public:
 	}
 };
 
+
 void ARBCalendarList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortCalendar());
 }
+
 
 size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendarPtr>& outEntered) const
 {
@@ -910,6 +934,7 @@ size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendarPtr>& outEntered) c
 	}
 	return outEntered.size();
 }
+
 
 int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 {
@@ -930,6 +955,7 @@ int ARBCalendarList::TrimEntries(ARBDate const& inDate)
 	}
 	return trimmed;
 }
+
 
 bool ARBCalendarList::FindCalendar(
 		ARBCalendarPtr inCal,
@@ -953,6 +979,7 @@ bool ARBCalendarList::FindCalendar(
 	return false;
 }
 
+
 bool ARBCalendarList::AddCalendar(ARBCalendarPtr inCal)
 {
 	bool bAdded = false;
@@ -963,6 +990,7 @@ bool ARBCalendarList::AddCalendar(ARBCalendarPtr inCal)
 	}
 	return bAdded;
 }
+
 
 bool ARBCalendarList::DeleteCalendar(ARBCalendarPtr inCal)
 {

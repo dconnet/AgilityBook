@@ -155,18 +155,22 @@ bool Element::Initialize(ARBString& outMsg)
 	return true;
 }
 
+
 void Element::Terminate()
 {
 	XMLPlatformUtils::Terminate();
 }
 
+
 Element::Element()
 {
 }
 
+
 Element::~Element()
 {
 }
+
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -423,6 +427,7 @@ public:
 	}
 };
 
+
 #ifndef UNICODE
 
 /**
@@ -563,6 +568,7 @@ public:
 	}
 };
 
+
 /**
  * @brief Transcoding optimizer
  *
@@ -598,6 +604,7 @@ public:
 	char const* TranscodeElement(XMLCh const* const xmlStr);
 };
 
+
 char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
 {
 	XMLstring str(xmlStr);
@@ -609,10 +616,12 @@ char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
 	return (*iter).second;
 }
 
+
 #else
 typedef std::wstring StringDOM;
 
 #endif
+
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -697,6 +706,7 @@ private:
 #endif
 };
 
+
 void SAXImportHandlers::startElement(
 		XMLCh const* const /*uri*/,
 		XMLCh const* const localname,
@@ -756,6 +766,7 @@ void SAXImportHandlers::startElement(
 	}
 }
 
+
 void SAXImportHandlers::endElement(
 		XMLCh const* const /*uri*/,
 		XMLCh const* const /*localname*/,
@@ -802,6 +813,7 @@ void SAXImportHandlers::endElement(
 	m_CurrentAttribs.clear();
 }
 
+
 void SAXImportHandlers::characters(
 		XMLCh const* const chars,
 		unsigned int const length)
@@ -809,12 +821,14 @@ void SAXImportHandlers::characters(
 	m_CurrentData.append(chars, length);
 }
 
+
 void SAXImportHandlers::resetDocument()
 {
 	m_Warnings = 0;
 	m_Errors = 0;
 	m_FatalErrors = 0;
 }
+
 
 void SAXImportHandlers::warning(SAXParseException const& toCatch)
 {
@@ -832,6 +846,7 @@ void SAXImportHandlers::warning(SAXParseException const& toCatch)
 	m_Msg += tmp.str();
 }
 
+
 void SAXImportHandlers::error(SAXParseException const& toCatch)
 {
 	++m_Errors;
@@ -847,6 +862,7 @@ void SAXImportHandlers::error(SAXParseException const& toCatch)
 		<< std::endl;
 	m_Msg += tmp.str();
 }
+
 
 void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 {
@@ -870,6 +886,7 @@ void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 static int gIndentLevel = 0;
 /// Formatting object so XML is generated properly.
 static XMLFormatter* gFormatter = NULL;
+
 
 /**
  * XMLFormatTarget object to write to an ostream.
@@ -896,6 +913,7 @@ private:
 	CXMLFormatTarget(CXMLFormatTarget const& other); ///< Unimplemented method.
 };
 
+
 XMLFormatter& operator<<(
 		XMLFormatter& strm,
 		XMLstring const& s)
@@ -919,7 +937,9 @@ XMLFormatter& operator<<(
 	return strm;
 }
 
+
 static std::list<bool> s_ProcessingText;
+
 
 static void Indent(
 		std::ostream& target,
@@ -935,6 +955,7 @@ static void Indent(
 	}
 }
 
+
 std::ostream& operator<<(
 		std::ostream& target,
 		ElementText const& toWrite)
@@ -947,6 +968,7 @@ std::ostream& operator<<(
 	}
 	return target;
 }
+
 
 std::ostream& operator<<(
 		std::ostream& target,
@@ -1028,6 +1050,7 @@ ElementNodePtr ElementNode::New()
 	return pNode;
 }
 
+
 ElementNodePtr ElementNode::New(ARBString const& inText)
 {
 	ElementNodePtr pNode(new ElementNode(inText));
@@ -1035,14 +1058,17 @@ ElementNodePtr ElementNode::New(ARBString const& inText)
 	return pNode;
 }
 
+
 ElementNode::ElementNode()
 {
 }
+
 
 ElementNode::ElementNode(ARBString const& inName)
 	: m_Name(inName)
 {
 }
+
 
 void ElementNode::RemoveAllTextNodes()
 {
@@ -1056,6 +1082,7 @@ void ElementNode::RemoveAllTextNodes()
 			++i;
 	}
 }
+
 
 void ElementNode::Dump(int inLevel) const
 {
@@ -1084,20 +1111,24 @@ void ElementNode::Dump(int inLevel) const
 	}
 }
 
+
 Element::ElementType ElementNode::GetType() const
 {
 	return Element::Element_Node;
 }
+
 
 ARBString const& ElementNode::GetName() const
 {
 	return m_Name;
 }
 
+
 void ElementNode::SetName(ARBString const& inName)
 {
 	m_Name = inName;
 }
+
 
 ARBString ElementNode::GetValue() const
 {
@@ -1110,6 +1141,7 @@ ARBString ElementNode::GetValue() const
 	return value;
 }
 
+
 void ElementNode::SetValue(ARBString const& inValue)
 {
 	RemoveAllTextNodes();
@@ -1117,6 +1149,7 @@ void ElementNode::SetValue(ARBString const& inValue)
 	pText->SetValue(inValue);
 	m_Elements.push_back(pText);
 }
+
 
 void ElementNode::SetValue(TCHAR const* const inValue)
 {
@@ -1126,6 +1159,7 @@ void ElementNode::SetValue(TCHAR const* const inValue)
 	m_Elements.push_back(pText);
 }
 
+
 void ElementNode::SetValue(short inValue)
 {
 	RemoveAllTextNodes();
@@ -1133,6 +1167,7 @@ void ElementNode::SetValue(short inValue)
 	pText->SetValue(inValue);
 	m_Elements.push_back(pText);
 }
+
 
 void ElementNode::SetValue(long inValue)
 {
@@ -1142,6 +1177,7 @@ void ElementNode::SetValue(long inValue)
 	m_Elements.push_back(pText);
 }
 
+
 void ElementNode::SetValue(double inValue, int inPrec)
 {
 	RemoveAllTextNodes();
@@ -1150,6 +1186,7 @@ void ElementNode::SetValue(double inValue, int inPrec)
 	m_Elements.push_back(pText);
 }
 
+
 void ElementNode::clear()
 {
 	m_Name.erase();
@@ -1157,10 +1194,12 @@ void ElementNode::clear()
 	m_Elements.clear();
 }
 
+
 int ElementNode::GetAttribCount() const
 {
 	return static_cast<int>(m_Attribs.size());
 }
+
 
 ElementNode::AttribLookup ElementNode::GetNthAttrib(
 		int inIndex,
@@ -1183,6 +1222,7 @@ ElementNode::AttribLookup ElementNode::GetNthAttrib(
 		return eNotFound;
 }
 
+
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		ARBString& outValue) const
@@ -1196,6 +1236,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	else
 		return eNotFound;
 }
+
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
@@ -1223,6 +1264,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	return rc;
 }
 
+
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		ARBDate& outValue) const
@@ -1239,6 +1281,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	}
 	return rc;
 }
+
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
@@ -1258,6 +1301,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	return rc;
 }
 
+
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		short& outValue) const
@@ -1273,6 +1317,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	}
 	return rc;
 }
+
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
@@ -1290,6 +1335,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	return rc;
 }
 
+
 ElementNode::AttribLookup ElementNode::GetAttrib(
 		ARBString const& inName,
 		double& outValue) const
@@ -1306,6 +1352,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	return rc;
 }
 
+
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		ARBString const& inValue)
@@ -1313,6 +1360,7 @@ bool ElementNode::AddAttrib(
 	m_Attribs[inName] = inValue;
 	return true;
 }
+
 
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
@@ -1325,12 +1373,14 @@ bool ElementNode::AddAttrib(
 	return true;
 }
 
+
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.str());
 }
+
 
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
@@ -1340,6 +1390,7 @@ bool ElementNode::AddAttrib(
 		AddAttrib(inName, inValue.GetString(ARBDate::eDashYMD));
 	return true;
 }
+
 
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
@@ -1352,6 +1403,7 @@ bool ElementNode::AddAttrib(
 	return true;
 }
 
+
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		short inValue)
@@ -1361,6 +1413,7 @@ bool ElementNode::AddAttrib(
 	m_Attribs[inName] = str.str();
 	return true;
 }
+
 
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
@@ -1372,6 +1425,7 @@ bool ElementNode::AddAttrib(
 	return true;
 }
 
+
 bool ElementNode::AddAttrib(
 		ARBString const& inName,
 		double inValue,
@@ -1380,6 +1434,7 @@ bool ElementNode::AddAttrib(
 	m_Attribs[inName] = ARBDouble::str(inValue, inPrec);
 	return true;
 }
+
 
 bool ElementNode::RemoveAttrib(ARBString const& inName)
 {
@@ -1393,15 +1448,18 @@ bool ElementNode::RemoveAttrib(ARBString const& inName)
 		return false;
 }
 
+
 void ElementNode::RemoveAllAttribs()
 {
 	m_Attribs.clear();
 }
 
+
 int ElementNode::GetElementCount() const
 {
 	return static_cast<int>(m_Elements.size());
 }
+
 
 int ElementNode::GetNodeCount(ElementType type) const
 {
@@ -1416,6 +1474,7 @@ int ElementNode::GetNodeCount(ElementType type) const
 	return nCount;
 }
 
+
 bool ElementNode::HasTextNodes() const
 {
 	for (std::vector<ElementPtr>::const_iterator iter = m_Elements.begin();
@@ -1428,25 +1487,30 @@ bool ElementNode::HasTextNodes() const
 	return false;
 }
 
+
 ElementPtr ElementNode::GetElement(int inIndex) const
 {
 	return m_Elements[inIndex];
 }
+
 
 ElementPtr ElementNode::GetElement(int inIndex)
 {
 	return m_Elements[inIndex];
 }
 
+
 ElementNodePtr ElementNode::GetElementNode(int inIndex) const
 {
 	return boost::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
 }
 
+
 ElementNodePtr ElementNode::GetElementNode(int inIndex)
 {
 	return boost::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
 }
+
 
 ElementNodePtr ElementNode::AddElementNode(
 		ARBString const& inName,
@@ -1469,6 +1533,7 @@ ElementNodePtr ElementNode::AddElementNode(
 	m_Elements.insert(iter, pNode);
 	return pNode;
 }
+
 
 ElementTextPtr ElementNode::AddElementText(
 		ARBString const& inText,
@@ -1493,6 +1558,7 @@ ElementTextPtr ElementNode::AddElementText(
 	return pText;
 }
 
+
 bool ElementNode::RemoveElement(int inIndex)
 {
 	bool bOk = false;
@@ -1506,10 +1572,12 @@ bool ElementNode::RemoveElement(int inIndex)
 	return bOk;
 }
 
+
 void ElementNode::RemoveAllElements()
 {
 	m_Elements.clear();
 }
+
 
 int ElementNode::FindElement(
 		ARBString const& inName,
@@ -1524,6 +1592,7 @@ int ElementNode::FindElement(
 	}
 	return -1;
 }
+
 
 bool ElementNode::FindElementDeep(
 		ElementNodePtr& outParentNode,
@@ -1549,6 +1618,7 @@ bool ElementNode::FindElementDeep(
 	}
 	return false;
 }
+
 
 static bool LoadXML(
 		ElementNodePtr node,
@@ -1601,6 +1671,7 @@ static bool LoadXML(
 	return bOk;
 }
 
+
 bool ElementNode::LoadXMLBuffer(
 		char const* inData,
 		unsigned int nData,
@@ -1610,6 +1681,7 @@ bool ElementNode::LoadXMLBuffer(
 	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
 
+
 bool ElementNode::LoadXMLFile(
 		char const* inFileName,
 		ARBString& ioErrMsg)
@@ -1618,6 +1690,7 @@ bool ElementNode::LoadXMLFile(
 	LocalFileInputSource source(fileName.c_str());
 	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
+
 
 bool ElementNode::SaveXML(
 		std::ostream& outOutput,
@@ -1641,6 +1714,7 @@ bool ElementNode::SaveXML(
 	gFormatter = NULL;
 	return true;
 }
+
 
 bool ElementNode::SaveXML(
 		char const* outFile,
@@ -1668,6 +1742,7 @@ ElementTextPtr ElementText::New()
 	return pText;
 }
 
+
 ElementTextPtr ElementText::New(ARBString const& inText)
 {
 	ElementTextPtr pText(new ElementText(inText));
@@ -1675,15 +1750,18 @@ ElementTextPtr ElementText::New(ARBString const& inText)
 	return pText;
 }
 
+
 ElementText::ElementText()
 	: m_Value()
 {
 }
 
+
 ElementText::ElementText(ARBString const& inText)
 	: m_Value(inText)
 {
 }
+
 
 void ElementText::Dump(int inLevel) const
 {
@@ -1702,10 +1780,12 @@ void ElementText::Dump(int inLevel) const
 #endif
 }
 
+
 Element::ElementType ElementText::GetType() const
 {
 	return Element::Element_Text;
 }
+
 
 ARBString const& ElementText::GetName() const
 {
@@ -1713,19 +1793,23 @@ ARBString const& ElementText::GetName() const
 	return name;
 }
 
+
 void ElementText::SetName(ARBString const& inName)
 {
 }
+
 
 ARBString ElementText::GetValue() const
 {
 	return m_Value;
 }
 
+
 void ElementText::SetValue(ARBString const& inValue)
 {
 	m_Value = inValue;
 }
+
 
 void ElementText::SetValue(TCHAR const* const inValue)
 {
@@ -1735,6 +1819,7 @@ void ElementText::SetValue(TCHAR const* const inValue)
 		m_Value.erase();
 }
 
+
 void ElementText::SetValue(short inValue)
 {
 	ARBostringstream str;
@@ -1742,12 +1827,14 @@ void ElementText::SetValue(short inValue)
 	m_Value = str.str();
 }
 
+
 void ElementText::SetValue(long inValue)
 {
 	ARBostringstream str;
 	str << inValue;
 	m_Value = str.str();
 }
+
 
 void ElementText::SetValue(
 		double inValue,

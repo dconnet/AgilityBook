@@ -56,24 +56,29 @@ ARBConfigFaultPtr ARBConfigFault::New()
 	return ARBConfigFaultPtr(new ARBConfigFault());
 }
 
+
 ARBConfigFault::ARBConfigFault()
 	: m_Name()
 {
 }
+
 
 ARBConfigFault::ARBConfigFault(ARBConfigFault const& rhs)
 	: m_Name(rhs.m_Name)
 {
 }
 
+
 ARBConfigFault::~ARBConfigFault()
 {
 }
+
 
 ARBConfigFaultPtr ARBConfigFault::Clone() const
 {
 	return ARBConfigFaultPtr(new ARBConfigFault(*this));
 }
+
 
 ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 {
@@ -82,10 +87,12 @@ ARBConfigFault& ARBConfigFault::operator=(ARBConfigFault const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigFault::operator==(ARBConfigFault const& rhs) const
 {
 	return m_Name == rhs.m_Name;
 }
+
 
 bool ARBConfigFault::Load(
 		ElementNodePtr inTree,
@@ -108,6 +115,7 @@ bool ARBConfigFault::Load(
 		m_Name = inTree->GetValue();
 	return true;
 }
+
 
 bool ARBConfigFault::Save(ElementNodePtr ioTree) const
 {
@@ -134,6 +142,7 @@ bool ARBConfigFaultList::Load(
 	return true;
 }
 
+
 bool ARBConfigFaultList::FindFault(
 		ARBString const& inName,
 		ARBConfigFaultPtr* outFault) const
@@ -152,6 +161,7 @@ bool ARBConfigFaultList::FindFault(
 	return false;
 }
 
+
 bool ARBConfigFaultList::AddFault(
 		ARBString const& inName,
 		ARBConfigFaultPtr* outFault)
@@ -167,6 +177,7 @@ bool ARBConfigFaultList::AddFault(
 		*outFault = pFault;
 	return true;
 }
+
 
 bool ARBConfigFaultList::DeleteFault(ARBString const& inName)
 {

@@ -56,6 +56,7 @@ ARBConfigCalSite::ARBConfigCalSite()
 {
 }
 
+
 ARBConfigCalSite::ARBConfigCalSite(ARBConfigCalSite const& rhs)
 	: m_urlSearch(rhs.m_urlSearch)
 	, m_urlHelp(rhs.m_urlHelp)
@@ -64,9 +65,11 @@ ARBConfigCalSite::ARBConfigCalSite(ARBConfigCalSite const& rhs)
 {
 }
 
+
 ARBConfigCalSite::~ARBConfigCalSite()
 {
 }
+
 
 ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite const& rhs)
 {
@@ -80,6 +83,7 @@ ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 {
 	return m_urlSearch == rhs.m_urlSearch
@@ -87,6 +91,7 @@ bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 		&& m_Locations == rhs.m_Locations
 		&& m_Venues == rhs.m_Venues;
 }
+
 
 bool ARBConfigCalSite::Load(
 		ElementNodePtr inTree,
@@ -141,6 +146,7 @@ bool ARBConfigCalSite::Load(
 	return true;
 }
 
+
 bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -166,6 +172,7 @@ bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
 	}
 	return true;
 }
+
 
 ARBString ARBConfigCalSite::GetFormattedURL(
 		std::vector<ARBString> const& inLocCodes,
@@ -203,10 +210,12 @@ ARBString ARBConfigCalSite::GetFormattedURL(
 	return url;
 }
 
+
 bool ARBConfigCalSite::HasLocationCode(ARBString const& inCode) const
 {
 	return m_Locations.end() != m_Locations.find(inCode);
 }
+
 
 bool ARBConfigCalSite::AddLocationCode(ARBString const& inCode, ARBString const& inName)
 {
@@ -215,6 +224,7 @@ bool ARBConfigCalSite::AddLocationCode(ARBString const& inCode, ARBString const&
 	m_Locations[inCode] = inName;
 	return true;
 }
+
 
 bool ARBConfigCalSite::RemoveLocationCode(ARBString const& inCode)
 {
@@ -228,6 +238,7 @@ bool ARBConfigCalSite::RemoveLocationCode(ARBString const& inCode)
 	return bOk;
 }
 
+
 bool ARBConfigCalSite::RemoveAllLocationCodes()
 {
 	bool bOk = false;
@@ -239,10 +250,12 @@ bool ARBConfigCalSite::RemoveAllLocationCodes()
 	return bOk;
 }
 
+
 bool ARBConfigCalSite::HasVenueCode(ARBString const& inCode) const
 {
 	return m_Venues.end() != m_Venues.find(inCode);
 }
+
 
 bool ARBConfigCalSite::AddVenueCode(ARBString const& inCode, ARBString const& inVenue)
 {
@@ -251,6 +264,7 @@ bool ARBConfigCalSite::AddVenueCode(ARBString const& inCode, ARBString const& in
 	m_Venues[inCode] = inVenue;
 	return true;
 }
+
 
 bool ARBConfigCalSite::RemoveVenueCode(ARBString const& inCode)
 {
@@ -263,6 +277,7 @@ bool ARBConfigCalSite::RemoveVenueCode(ARBString const& inCode)
 	}
 	return bOk;
 }
+
 
 bool ARBConfigCalSite::RemoveAllVenueCodes()
 {

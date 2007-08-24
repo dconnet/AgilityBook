@@ -67,10 +67,12 @@ ARBDogTrialPtr ARBDogTrial::New()
 	return ARBDogTrialPtr(new ARBDogTrial());
 }
 
+
 ARBDogTrialPtr ARBDogTrial::New(ARBCalendar const& inCal)
 {
 	return ARBDogTrialPtr(new ARBDogTrial(inCal));
 }
+
 
 ARBDogTrial::ARBDogTrial()
 	: m_Location()
@@ -81,6 +83,7 @@ ARBDogTrial::ARBDogTrial()
 {
 }
 
+
 ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
 	: m_Location(inCal.GetLocation())
 	, m_Note(inCal.GetNote())
@@ -90,6 +93,7 @@ ARBDogTrial::ARBDogTrial(ARBCalendar const& inCal)
 {	
 	m_Clubs.AddClub(inCal.GetClub(), inCal.GetVenue());
 }
+
 
 ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
 	: m_Location(rhs.m_Location)
@@ -102,14 +106,17 @@ ARBDogTrial::ARBDogTrial(ARBDogTrial const& rhs)
 	rhs.m_Runs.Clone(m_Runs);
 }
 
+
 ARBDogTrial::~ARBDogTrial()
 {
 }
+
 
 ARBDogTrialPtr ARBDogTrial::Clone() const
 {
 	return ARBDogTrialPtr(new ARBDogTrial(*this));
 }
+
 
 ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 {
@@ -124,6 +131,7 @@ ARBDogTrial& ARBDogTrial::operator=(ARBDogTrial const& rhs)
 	return *this;
 }
 
+
 bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 {
 	return m_Location == rhs.m_Location
@@ -132,6 +140,7 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 		&& m_Clubs == rhs.m_Clubs
 		&& m_Runs == rhs.m_Runs;
 }
+
 
 size_t ARBDogTrial::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -153,6 +162,7 @@ size_t ARBDogTrial::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBDogTrial::Load(
 		ARBConfig const& inConfig,
@@ -200,6 +210,7 @@ bool ARBDogTrial::Load(
 	return true;
 }
 
+
 bool ARBDogTrial::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -224,6 +235,7 @@ bool ARBDogTrial::Save(ElementNodePtr ioTree) const
 		return false;
 	return true;
 }
+
 
 void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 {
@@ -287,6 +299,7 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 	}
 }
 
+
 short ARBDogTrial::GetSpeedPoints(
 		ARBConfig const& inConfig,
 		ARBString const& inDiv,
@@ -318,6 +331,7 @@ short ARBDogTrial::GetSpeedPoints(
 	return speed;
 }
 
+
 bool ARBDogTrial::HasVenue(ARBString const& inVenue) const
 {
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)
@@ -342,6 +356,7 @@ bool ARBDogTrialList::Load(
 	push_back(thing);
 	return true;
 }
+
 
 class SortTrials
 {
@@ -396,12 +411,14 @@ private:
 	bool m_bDescending;
 };
 
+
 void ARBDogTrialList::sort(bool inDescending)
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortTrials(inDescending));
 }
+
 
 int ARBDogTrialList::NumTrialsInVenue(ARBString const& inVenue) const
 {
@@ -421,6 +438,7 @@ int ARBDogTrialList::NumTrialsInVenue(ARBString const& inVenue) const
 	return count;
 }
 
+
 int ARBDogTrialList::RenameVenue(
 		ARBString const& inOldVenue,
 		ARBString const& inNewVenue)
@@ -439,6 +457,7 @@ int ARBDogTrialList::RenameVenue(
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::DeleteVenue(ARBString const& inVenue)
 {
@@ -464,6 +483,7 @@ int ARBDogTrialList::DeleteVenue(ARBString const& inVenue)
 	return count;
 }
 
+
 int ARBDogTrialList::NumOtherPointsInUse(ARBString const& inOther) const
 {
 	int count = 0;
@@ -476,6 +496,7 @@ int ARBDogTrialList::NumOtherPointsInUse(ARBString const& inOther) const
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::RenameOtherPoints(
 		ARBString const& inOldOther,
@@ -492,6 +513,7 @@ int ARBDogTrialList::RenameOtherPoints(
 	return count;
 }
 
+
 int ARBDogTrialList::DeleteOtherPoints(ARBString const& inOther)
 {
 	int count = 0;
@@ -504,6 +526,7 @@ int ARBDogTrialList::DeleteOtherPoints(ARBString const& inOther)
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 		ARBConfig const& inConfig,
@@ -533,6 +556,7 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 	return count;
 }
 
+
 int ARBDogTrialList::NumRunsInDivision(
 		ARBConfigVenuePtr inVenue,
 		ARBString const& inDiv) const
@@ -551,6 +575,7 @@ int ARBDogTrialList::NumRunsInDivision(
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::RenameDivision(
 		ARBConfigVenuePtr inVenue,
@@ -574,6 +599,7 @@ int ARBDogTrialList::RenameDivision(
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::DeleteDivision(
 		ARBConfig const& inConfig,
@@ -623,6 +649,7 @@ int ARBDogTrialList::DeleteDivision(
 	return count;
 }
 
+
 int ARBDogTrialList::NumLevelsInUse(
 		ARBString const& inVenue,
 		ARBString const& inDiv,
@@ -643,6 +670,7 @@ int ARBDogTrialList::NumLevelsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::RenameLevel(
 		ARBString const& inVenue,
@@ -668,6 +696,7 @@ int ARBDogTrialList::RenameLevel(
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::DeleteLevel(
 		ARBString const& inVenue,
@@ -702,6 +731,7 @@ int ARBDogTrialList::DeleteLevel(
 	return count;
 }
 
+
 int ARBDogTrialList::NumEventsInUse(
 		ARBString const& inVenue,
 		ARBString const& inEvent) const
@@ -720,6 +750,7 @@ int ARBDogTrialList::NumEventsInUse(
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::RenameEvent(
 		ARBString const& inVenue,
@@ -743,6 +774,7 @@ int ARBDogTrialList::RenameEvent(
 	}
 	return count;
 }
+
 
 int ARBDogTrialList::DeleteEvent(
 		ARBString const& inVenue,
@@ -774,6 +806,7 @@ int ARBDogTrialList::DeleteEvent(
 	return count;
 }
 
+
 bool ARBDogTrialList::AddTrial(ARBDogTrialPtr inTrial)
 {
 	bool bAdded = false;
@@ -784,6 +817,7 @@ bool ARBDogTrialList::AddTrial(ARBDogTrialPtr inTrial)
 	}
 	return bAdded;
 }
+
 
 bool ARBDogTrialList::DeleteTrial(ARBDogTrialPtr inTrial)
 {

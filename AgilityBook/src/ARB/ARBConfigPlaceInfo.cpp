@@ -54,16 +54,19 @@ ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New()
 	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo());
 }
 
+
 ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(short inPlace, double inValue)
 {
 	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(inPlace, inValue));
 }
+
 
 ARBConfigPlaceInfo::ARBConfigPlaceInfo()
 	: m_Place(0)
 	, m_Value(0.0)
 {
 }
+
 
 ARBConfigPlaceInfo::ARBConfigPlaceInfo(
 		short inPlace,
@@ -73,20 +76,24 @@ ARBConfigPlaceInfo::ARBConfigPlaceInfo(
 {
 }
 
+
 ARBConfigPlaceInfo::ARBConfigPlaceInfo(ARBConfigPlaceInfo const& rhs)
 	: m_Place(rhs.m_Place)
 	, m_Value(rhs.m_Value)
 {
 }
 
+
 ARBConfigPlaceInfo::~ARBConfigPlaceInfo()
 {
 }
+
 
 ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::Clone() const
 {
 	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(*this));
 }
+
 
 ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo const& rhs)
 {
@@ -98,16 +105,19 @@ ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo const& rhs)
 	return *this;
 }
 
+
 bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 {
 	return m_Place == rhs.m_Place
 		&& m_Value == rhs.m_Value;
 }
 
+
 ARBString ARBConfigPlaceInfo::GetGenericName() const
 {
 	return PLACEMENT_POINTS_NAME_FORMAT(m_Value, m_Place);
 }
+
 
 bool ARBConfigPlaceInfo::Load(
 		ElementNodePtr inTree,
@@ -129,6 +139,7 @@ bool ARBConfigPlaceInfo::Load(
 	}
 	return true;
 }
+
 
 bool ARBConfigPlaceInfo::Save(ElementNodePtr ioTree) const
 {
@@ -155,6 +166,7 @@ bool ARBConfigPlaceInfoList::Load(
 	return true;
 }
 
+
 class SortConfigPlaceInfo
 {
 public:
@@ -165,12 +177,14 @@ public:
 	}
 };
 
+
 void ARBConfigPlaceInfoList::sort()
 {
 	if (2 > size())
 		return;
 	std::stable_sort(begin(), end(), SortConfigPlaceInfo());
 }
+
 
 bool ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace, double &outValue) const
 {
@@ -182,6 +196,7 @@ bool ARBConfigPlaceInfoList::GetPlaceInfo(short inPlace, double &outValue) const
 	}
 	return bOk;
 }
+
 
 bool ARBConfigPlaceInfoList::FindPlaceInfo(
 		short inPlace,
@@ -201,6 +216,7 @@ bool ARBConfigPlaceInfoList::FindPlaceInfo(
 	return false;
 }
 
+
 bool ARBConfigPlaceInfoList::AddPlaceInfo(
 		short inPlace,
 		double inValue,
@@ -217,6 +233,7 @@ bool ARBConfigPlaceInfoList::AddPlaceInfo(
 		*outPlace = pPlace;
 	return true;
 }
+
 
 bool ARBConfigPlaceInfoList::DeletePlaceInfo(short inPlace)
 {

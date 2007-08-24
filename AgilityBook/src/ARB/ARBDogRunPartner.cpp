@@ -59,12 +59,14 @@ ARBDogRunPartnerPtr ARBDogRunPartner::New()
 	return ARBDogRunPartnerPtr(new ARBDogRunPartner());
 }
 
+
 ARBDogRunPartner::ARBDogRunPartner()
 	: m_Handler()
 	, m_Dog()
 	, m_RegNum()
 {
 }
+
 
 ARBDogRunPartner::ARBDogRunPartner(ARBDogRunPartner const& rhs)
 	: m_Handler(rhs.m_Handler)
@@ -73,14 +75,17 @@ ARBDogRunPartner::ARBDogRunPartner(ARBDogRunPartner const& rhs)
 {
 }
 
+
 ARBDogRunPartner::~ARBDogRunPartner()
 {
 }
+
 
 ARBDogRunPartnerPtr ARBDogRunPartner::Clone() const
 {
 	return ARBDogRunPartnerPtr(new ARBDogRunPartner(*this));
 }
+
 
 ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
 {
@@ -93,12 +98,14 @@ ARBDogRunPartner& ARBDogRunPartner::operator=(ARBDogRunPartner const& rhs)
 	return *this;
 }
 
+
 bool ARBDogRunPartner::operator==(ARBDogRunPartner const& rhs) const
 {
 	return m_Handler == rhs.m_Handler
 		&& m_Dog == rhs.m_Dog
 		&& m_RegNum == rhs.m_RegNum;
 }
+
 
 size_t ARBDogRunPartner::GetSearchStrings(std::set<ARBString>& ioStrings) const
 {
@@ -124,6 +131,7 @@ size_t ARBDogRunPartner::GetSearchStrings(std::set<ARBString>& ioStrings) const
 
 	return nItems;
 }
+
 
 bool ARBDogRunPartner::Load(
 		ARBConfig const& inConfig,
@@ -153,6 +161,7 @@ bool ARBDogRunPartner::Load(
 	return true;
 }
 
+
 bool ARBDogRunPartner::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -180,6 +189,7 @@ bool ARBDogRunPartnerList::Load(
 	push_back(thing);
 	return true;
 }
+
 
 bool ARBDogRunPartnerList::AddPartner(ARBDogRunPartnerPtr inPartner)
 {

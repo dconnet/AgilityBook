@@ -53,6 +53,7 @@ ARBBase::ARBBase()
 		m_bFiltered[i] = false;
 }
 
+
 ARBBase::~ARBBase()
 {
 }

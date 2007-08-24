@@ -78,9 +78,10 @@ CcalusdaaApp::CcalusdaaApp()
 {
 }
 
-// The one and only CcalusdaaApp object
 
+// The one and only CcalusdaaApp object
 CcalusdaaApp theApp;
+
 
 BOOL CcalusdaaApp::InitInstance()
 {
@@ -89,6 +90,7 @@ BOOL CcalusdaaApp::InitInstance()
 	Element::Initialize(err);
 	return TRUE;
 }
+
 
 int CcalusdaaApp::ExitInstance()
 {

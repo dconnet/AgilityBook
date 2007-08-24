@@ -100,6 +100,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 {
 }
 
+
 ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	: m_type(rhs.m_type)
 	, m_bRoundTimeFaults(rhs.m_bRoundTimeFaults)
@@ -118,9 +119,11 @@ ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 {
 }
 
+
 ARBDogRunScoring::~ARBDogRunScoring()
 {
 }
+
 
 ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 {
@@ -143,6 +146,7 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 	return *this;
 }
 
+
 bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 {
 	return m_type == rhs.m_type
@@ -159,6 +163,7 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 		&& m_ClosePts == rhs.m_ClosePts
 		&& m_BonusPts == rhs.m_BonusPts;
 }
+
 
 bool ARBDogRunScoring::Load(
 		short inConfigVersion,
@@ -270,6 +275,7 @@ bool ARBDogRunScoring::Load(
 	return false;
 }
 
+
 bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 {
 	ASSERT(ioTree);
@@ -325,6 +331,7 @@ bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 	return false;
 }
 
+
 bool ARBDogRunScoring::GetMinYPS(
 		bool inTableInYPS,
 		double& outYPS) const
@@ -342,6 +349,7 @@ bool ARBDogRunScoring::GetMinYPS(
 	return bOk;
 }
 
+
 bool ARBDogRunScoring::GetYPS(
 		bool inTableInYPS,
 		double& outYPS) const
@@ -358,6 +366,7 @@ bool ARBDogRunScoring::GetYPS(
 	}
 	return bOk;
 }
+
 
 double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr inScoring) const
 {
