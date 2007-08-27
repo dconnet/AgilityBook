@@ -48,12 +48,14 @@
 
 IMPLEMENT_DYNAMIC(CNoteButton, CButton)
 
+
 CNoteButton::CNoteButton()
 	: CButton()
 	, m_idxNormal(-1)
 {
 	Load(IDI_NOTEBTN);
 }
+
 
 CNoteButton::CNoteButton(UINT idIcon)
 	: CButton()
@@ -62,9 +64,11 @@ CNoteButton::CNoteButton(UINT idIcon)
 	Load(idIcon);
 }
 
+
 CNoteButton::~CNoteButton()
 {
 }
+
 
 void CNoteButton::Load(UINT idIcon)
 {
@@ -72,12 +76,14 @@ void CNoteButton::Load(UINT idIcon)
 	VERIFY(0 <= (m_idxNormal = m_ImageList.Add(AfxGetApp()->LoadIcon(idIcon))));
 }
 
+
 BEGIN_MESSAGE_MAP(CNoteButton, CButton)
 	ON_WM_CREATE()
 	ON_WM_SETFOCUS()
 	ON_WM_KILLFOCUS()
 	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
+
 
 void CNoteButton::PreSubclassWindow()
 {
@@ -88,6 +94,7 @@ void CNoteButton::PreSubclassWindow()
 		SMICON_CY + 2*BUTTON_MARGIN,
 		SWP_NOMOVE|SWP_NOZORDER|SWP_NOREDRAW|SWP_NOACTIVATE));
 }
+
 
 int CNoteButton::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -101,6 +108,7 @@ int CNoteButton::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+
 void CNoteButton::OnSetFocus(CWnd* pOldWnd)
 {
 	CButton::OnSetFocus(pOldWnd);
@@ -108,12 +116,14 @@ void CNoteButton::OnSetFocus(CWnd* pOldWnd)
 	UpdateWindow();
 }
 
+
 void CNoteButton::OnKillFocus(CWnd* pNewWnd)
 {
 	CButton::OnKillFocus(pNewWnd);
 	Invalidate();
 	UpdateWindow();
 }
+
 
 BOOL CNoteButton::OnEraseBkgnd(CDC* pDC)
 {
@@ -124,6 +134,7 @@ BOOL CNoteButton::OnEraseBkgnd(CDC* pDC)
 	pDC->SetBkColor(crOld);
 	return TRUE;
 }
+
 
 void CNoteButton::DrawItem(LPDRAWITEMSTRUCT lpDIS)
 {

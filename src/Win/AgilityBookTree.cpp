@@ -95,6 +95,7 @@ void CFindTree::FillTree(HTREEITEM hItem) const
 	}
 }
 
+
 HTREEITEM CFindTree::GetNextItem() const
 {
 	HTREEITEM hItem = NULL;
@@ -118,6 +119,7 @@ HTREEITEM CFindTree::GetNextItem() const
 	}
 	return hItem;
 }
+
 
 bool CFindTree::Search(CDlgFind* pDlg) const
 {
@@ -263,7 +265,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookTree, CTreeView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
-// CAgilityBookTree construction/destruction
 
 #pragma warning (push)
 #pragma warning ( disable : 4355 )
@@ -284,9 +285,11 @@ CAgilityBookTree::CAgilityBookTree()
 }
 #pragma warning (pop)
 
+
 CAgilityBookTree::~CAgilityBookTree()
 {
 }
+
 
 LRESULT CAgilityBookTree::OnCommandHelp(WPARAM, LPARAM)
 {
@@ -294,10 +297,12 @@ LRESULT CAgilityBookTree::OnCommandHelp(WPARAM, LPARAM)
 	return 1;
 }
 
+
 void CAgilityBookTree::OnDestroy()
 {
 	CTreeView::OnDestroy();
 }
+
 
 void CAgilityBookTree::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
@@ -305,11 +310,13 @@ void CAgilityBookTree::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSys
 	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
 }
 
+
 BOOL CAgilityBookTree::PreCreateWindow(CREATESTRUCT& cs)
 {
 	cs.style |= TVS_FULLROWSELECT | TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS;
 	return CTreeView::PreCreateWindow(cs);
 }
+
 
 void CAgilityBookTree::OnInitialUpdate()
 {
@@ -321,6 +328,7 @@ void CAgilityBookTree::OnInitialUpdate()
 	if (0 == GetDocument()->GetDogs().size())
 		PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 }
+
 
 void CAgilityBookTree::OnActivateView(
 		BOOL bActivate,
@@ -337,6 +345,7 @@ void CAgilityBookTree::OnActivateView(
 			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
 	}
 }
+
 
 void CAgilityBookTree::OnUpdate(
 		CView* pSender,
@@ -368,6 +377,7 @@ CString CAgilityBookTree::GetPrintLine(HTREEITEM hItem) const
 	return GetTreeCtrl().GetItemText(hItem);
 }
 
+
 typedef std::pair<int, CString> Items;
 struct CTreePrintData
 {
@@ -379,6 +389,7 @@ struct CTreePrintData
 	int nLinesPerPage;
 	int nPages;
 };
+
 
 BOOL CAgilityBookTree::OnPreparePrinting(CPrintInfo* pInfo)
 {
@@ -392,6 +403,7 @@ BOOL CAgilityBookTree::OnPreparePrinting(CPrintInfo* pInfo)
 	pInfo->m_pPD->m_pd.Flags |= PD_NOSELECTION;
 	return DoPreparePrinting(pInfo);
 }
+
 
 void CAgilityBookTree::PrintLine(
 		CDC* pDC,
@@ -467,6 +479,7 @@ void CAgilityBookTree::OnBeginPrinting(
 	pInfo->SetMaxPage(pData->nPages);
 }
 
+
 void CAgilityBookTree::OnEndPrinting(
 		CDC* /*pDC*/,
 		CPrintInfo* pInfo)
@@ -474,6 +487,7 @@ void CAgilityBookTree::OnEndPrinting(
 	CTreePrintData* pData = reinterpret_cast<CTreePrintData*>(pInfo->m_lpUserData);
 	delete pData;
 }
+
 
 void CAgilityBookTree::OnPrint(
 		CDC* pDC,
@@ -501,6 +515,7 @@ void CAgilityBookTree::OnPrint(
 	}
 }
 
+
 #ifdef _DEBUG
 // CAgilityBookTree diagnostics
 void CAgilityBookTree::AssertValid() const
@@ -508,10 +523,12 @@ void CAgilityBookTree::AssertValid() const
 	CTreeView::AssertValid();
 }
 
+
 void CAgilityBookTree::Dump(CDumpContext& dc) const
 {
 	CTreeView::Dump(dc);
 }
+
 
 CAgilityBookDoc* CAgilityBookTree::GetDocument() const // non-debug version is inline
 {
@@ -520,10 +537,12 @@ CAgilityBookDoc* CAgilityBookTree::GetDocument() const // non-debug version is i
 }
 #endif //_DEBUG
 
+
 CAgilityBookTreeData* CAgilityBookTree::GetCurrentTreeItem() const
 {
 	return GetItemData(GetTreeCtrl().GetSelectedItem());
 }
+
 
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
@@ -549,6 +568,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 	}
 	return pData;
 }
+
 
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
@@ -577,6 +597,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 	return pData;
 }
 
+
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
 		ARBDogTrialPtr pTrial) const
@@ -602,6 +623,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 	return pData;
 }
 
+
 CAgilityBookTreeData* CAgilityBookTree::FindData(
 		HTREEITEM hItem,
 		ARBDogRunPtr pRun) const
@@ -626,6 +648,7 @@ CAgilityBookTreeData* CAgilityBookTree::FindData(
 	}
 	return pData;
 }
+
 
 HTREEITEM CAgilityBookTree::InsertDog(
 		ARBDogPtr pDog,
@@ -661,6 +684,7 @@ HTREEITEM CAgilityBookTree::InsertDog(
 	return hItem;
 }
 
+
 HTREEITEM CAgilityBookTree::InsertTrial(
 		ARBDogTrialPtr pTrial,
 		HTREEITEM hParent)
@@ -692,6 +716,7 @@ HTREEITEM CAgilityBookTree::InsertTrial(
 	return hTrial;
 }
 
+
 HTREEITEM CAgilityBookTree::InsertRun(
 		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
@@ -715,6 +740,7 @@ HTREEITEM CAgilityBookTree::InsertRun(
 	pDataRun->SetHTreeItem(hRun);
 	return hRun;
 }
+
 
 bool CAgilityBookTree::PasteDog(bool& bLoaded)
 {
@@ -759,16 +785,19 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 	return false;
 }
 
+
 bool CAgilityBookTree::IsFiltered() const
 {
 	return CFilterOptions::Options().IsFilterEnabled();
 }
+
 
 bool CAgilityBookTree::GetMessage(CString& msg) const
 {
 	msg.Empty();
 	return false;
 }
+
 
 bool CAgilityBookTree::GetMessage2(CString& msg) const
 {
@@ -783,6 +812,7 @@ bool CAgilityBookTree::GetMessage2(CString& msg) const
 		return false;
 	}
 }
+
 
 void CAgilityBookTree::LoadData()
 {
@@ -847,6 +877,7 @@ void CAgilityBookTree::LoadData()
 	m_bSuppressSelect = false;
 }
 
+
 CAgilityBookTreeData* CAgilityBookTree::GetItemData(HTREEITEM hItem) const
 {
 	CAgilityBookTreeData* pData = NULL;
@@ -873,6 +904,7 @@ LRESULT CAgilityBookTree::OnDelayedMessage(
 	return 0;
 }
 
+
 void CAgilityBookTree::OnRclick(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -881,6 +913,7 @@ void CAgilityBookTree::OnRclick(
 	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
+
 
 void CAgilityBookTree::OnContextMenu(
 		CWnd* pWnd,
@@ -930,6 +963,7 @@ void CAgilityBookTree::OnContextMenu(
 		GetTreeCtrl().SelectItem(hCurItem);
 }
 
+
 void CAgilityBookTree::OnDeleteitem(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -943,6 +977,7 @@ void CAgilityBookTree::OnDeleteitem(
 	}
 	*pResult = 0;
 }
+
 
 void CAgilityBookTree::OnGetdispinfo(
 		NMHDR* pNMHDR,
@@ -961,6 +996,7 @@ void CAgilityBookTree::OnGetdispinfo(
 	}
 	*pResult = 0;
 }
+
 
 void CAgilityBookTree::OnSelchanged(
 		NMHDR* pNMHDR,
@@ -985,6 +1021,7 @@ void CAgilityBookTree::OnSelchanged(
 	*pResult = 0;
 }
 
+
 void CAgilityBookTree::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -994,6 +1031,7 @@ void CAgilityBookTree::OnDblclk(
 		pData->Properties();
 	*pResult = 1;
 }
+
 
 void CAgilityBookTree::OnKeydown(
 		NMHDR* pNMHDR,
@@ -1016,6 +1054,7 @@ void CAgilityBookTree::OnKeydown(
 	*pResult = 0;
 }
 
+
 void CAgilityBookTree::OnUpdateDogCmd(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1036,6 +1075,7 @@ void CAgilityBookTree::OnUpdateDogCmd(CCmdUI* pCmdUI)
 	}
 	pCmdUI->Enable(bEnable);
 }
+
 
 BOOL CAgilityBookTree::OnDogCmd(UINT id)
 {
@@ -1074,11 +1114,13 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 	return bHandled;
 }
 
+
 void CAgilityBookTree::OnEditFind()
 {
 	CDlgFind dlg(m_Callback, this);
 	dlg.DoModal();
 }
+
 
 void CAgilityBookTree::OnEditFindNext()
 {
@@ -1089,6 +1131,7 @@ void CAgilityBookTree::OnEditFindNext()
 		m_Callback.Search(NULL);
 }
 
+
 void CAgilityBookTree::OnEditFindPrevious()
 {
 	m_Callback.SearchDown(false);
@@ -1097,6 +1140,7 @@ void CAgilityBookTree::OnEditFindPrevious()
 	else
 		m_Callback.Search(NULL);
 }
+
 
 void CAgilityBookTree::OnUpdateExpand(CCmdUI* pCmdUI)
 {
@@ -1110,12 +1154,14 @@ void CAgilityBookTree::OnUpdateExpand(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookTree::OnExpand()
 {
 	HTREEITEM hItem = GetTreeCtrl().GetSelectedItem();
 	GetTreeCtrl().Expand(hItem, TVE_EXPAND);
 	GetTreeCtrl().EnsureVisible(hItem);
 }
+
 
 void CAgilityBookTree::OnUpdateExpandAll(CCmdUI* pCmdUI)
 {
@@ -1126,12 +1172,14 @@ void CAgilityBookTree::OnUpdateExpandAll(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookTree::OnExpandAll()
 {
 	HTREEITEM hItem = GetTreeCtrl().GetSelectedItem();
 	ExpandAll(GetTreeCtrl(), hItem, TVE_EXPAND);
 	GetTreeCtrl().EnsureVisible(hItem);
 }
+
 
 void CAgilityBookTree::OnUpdateCollapse(CCmdUI* pCmdUI)
 {
@@ -1145,12 +1193,14 @@ void CAgilityBookTree::OnUpdateCollapse(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookTree::OnCollapse()
 {
 	HTREEITEM hItem = GetTreeCtrl().GetSelectedItem();
 	GetTreeCtrl().Expand(hItem, TVE_COLLAPSE);
 	GetTreeCtrl().EnsureVisible(hItem);
 }
+
 
 void CAgilityBookTree::OnUpdateCollapseAll(CCmdUI* pCmdUI)
 {
@@ -1161,12 +1211,14 @@ void CAgilityBookTree::OnUpdateCollapseAll(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookTree::OnCollapseAll()
 {
 	HTREEITEM hItem = GetTreeCtrl().GetSelectedItem();
 	ExpandAll(GetTreeCtrl(), hItem, TVE_COLLAPSE);
 	GetTreeCtrl().EnsureVisible(hItem);
 }
+
 
 void CAgilityBookTree::OnViewCustomize()
 {
@@ -1180,6 +1232,7 @@ void CAgilityBookTree::OnViewCustomize()
 	}
 }
 
+
 void CAgilityBookTree::OnViewSortruns()
 {
 	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
@@ -1187,11 +1240,13 @@ void CAgilityBookTree::OnViewSortruns()
 	LoadData();
 }
 
+
 void CAgilityBookTree::OnViewRunsByTrial()
 {
 	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
 	LoadData();
 }
+
 
 void CAgilityBookTree::OnViewTableInYPS()
 {

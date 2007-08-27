@@ -100,9 +100,11 @@ CDlgEventSelect::CDlgEventSelect(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgEventSelect::~CDlgEventSelect()
 {
 }
+
 
 void CDlgEventSelect::DoDataExchange(CDataExchange* pDX)
 {
@@ -118,6 +120,7 @@ void CDlgEventSelect::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgEventSelect, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgEventSelect)
 	ON_CBN_SELCHANGE(IDC_EVENT_SELECT_DIVISION, OnSelchangeDivision)
@@ -125,6 +128,7 @@ BEGIN_MESSAGE_MAP(CDlgEventSelect, CDlgBaseDialog)
 	ON_CBN_SELCHANGE(IDC_EVENT_SELECT_EVENT, OnSelchangeEvent)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 void CDlgEventSelect::UpdateControls()
 {
@@ -137,6 +141,7 @@ void CDlgEventSelect::UpdateControls()
 	}
 	m_ctrlOk.EnableWindow(bEnable);
 }
+
 
 void CDlgEventSelect::FillLevels()
 {
@@ -190,6 +195,7 @@ void CDlgEventSelect::FillLevels()
 	}
 	FillEvents();
 }
+
 
 void CDlgEventSelect::FillEvents()
 {
@@ -262,20 +268,24 @@ BOOL CDlgEventSelect::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgEventSelect::OnSelchangeDivision()
 {
 	FillLevels();
 }
+
 
 void CDlgEventSelect::OnSelchangeLevel()
 {
 	FillEvents();
 }
 
+
 void CDlgEventSelect::OnSelchangeEvent()
 {
 	UpdateControls();
 }
+
 
 void CDlgEventSelect::OnOK()
 {
@@ -293,6 +303,7 @@ void CDlgEventSelect::OnOK()
 	m_ctrlLevels.ResetContent();
 	CDlgBaseDialog::OnOK();
 }
+
 
 void CDlgEventSelect::OnCancel()
 {

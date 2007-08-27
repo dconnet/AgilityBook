@@ -88,6 +88,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
 }
 
+
 void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -105,6 +106,7 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_REFRUN_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgReferenceRun, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgReferenceRun)
@@ -145,6 +147,7 @@ BOOL CDlgReferenceRun::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgReferenceRun::OnOK() 
 {

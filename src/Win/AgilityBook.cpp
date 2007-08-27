@@ -85,6 +85,7 @@ void InitMenuPopup(CCmdTarget* pTarget, CMenu* pPopupMenu, UINT nIndex, BOOL bSy
 	}
 }
 
+
 bool ShowContextHelp(HELPINFO* pHelpInfo)
 {
 	bool bOk = false;
@@ -122,6 +123,7 @@ bool ShowContextHelp(HELPINFO* pHelpInfo)
 	}
 	return bOk;
 }
+
 
 void RunCommand(TCHAR const* const pCmd)
 {
@@ -200,6 +202,7 @@ void RunCommand(TCHAR const* const pCmd)
 	}
 }
 
+
 void ExpandAll(
 		CTreeCtrl& ctrl,
 		HTREEITEM hItem,
@@ -216,6 +219,7 @@ void ExpandAll(
 		hChildItem = ctrl.GetNextItem(hChildItem, TVGN_NEXT);
 	}
 }
+
 
 // Copy of CFile::GetStatus, changes are commented below.
 // For some reason the timestamp on files can be totally messed up.
@@ -372,14 +376,15 @@ BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
 	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
-// CAgilityBookApp construction
 
 CAgilityBookApp::CAgilityBookApp()
 {
 }
 
+
 // The one and only CAgilityBookApp object
 CAgilityBookApp theApp;
+
 
 // CAgilityBookApp initialization
 BOOL CAgilityBookApp::InitInstance()
@@ -553,6 +558,7 @@ BOOL CAgilityBookApp::InitInstance()
 	return TRUE;
 }
 
+
 int CAgilityBookApp::ExitInstance()
 {
 	// Close any open HTML Help windows
@@ -561,6 +567,7 @@ int CAgilityBookApp::ExitInstance()
 	CleanupCrashHandler();
 	return CWinApp::ExitInstance();
 }
+
 
 void CAgilityBookApp::WinHelp(
 		DWORD_PTR dwData,
@@ -573,6 +580,7 @@ void CAgilityBookApp::WinHelp(
 #endif
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookApp message handlers
 
 void CAgilityBookApp::OnHelpContents()
@@ -580,10 +588,12 @@ void CAgilityBookApp::OnHelpContents()
 	WinHelp(0, HH_DISPLAY_TOC);
 }
 
+
 void CAgilityBookApp::OnHelpIndex()
 {
 	WinHelp(0, HH_DISPLAY_INDEX);
 }
+
 
 void CAgilityBookApp::OnHelpSplash()
 {
@@ -593,6 +603,7 @@ void CAgilityBookApp::OnHelpSplash()
 	CSplashWnd::EnableSplashScreen(bEnabled);
 }
 
+
 BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)
 {
 	// The following lines were added by the Splash Screen component.
@@ -600,6 +611,7 @@ BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)
 		return TRUE;
 	return CWinApp::PreTranslateMessage(pMsg);
 }
+
 
 void CAgilityBookApp::OnHelpSysinfo()
 {
@@ -706,6 +718,7 @@ void CAgilityBookApp::OnHelpSysinfo()
 	CDlgMessage dlg(msg);
 	dlg.DoModal();
 }
+
 
 void CAgilityBookApp::OnPrintBlankRuns()
 {

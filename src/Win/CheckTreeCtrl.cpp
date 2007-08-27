@@ -66,9 +66,11 @@ CCheckTreeCtrl::CCheckTreeCtrl()
 	m_stateChecked = m_stateList.Add(AfxGetApp()->LoadIcon(IDI_CHECKED));
 }
 
+
 CCheckTreeCtrl::~CCheckTreeCtrl()
 {
 }
+
 
 BEGIN_MESSAGE_MAP(CCheckTreeCtrl, CTreeCtrl)
 	//{{AFX_MSG_MAP(CCheckTreeCtrl)
@@ -96,17 +98,20 @@ void CCheckTreeCtrl::ShowCheckbox(
 	}
 }
 
+
 bool CCheckTreeCtrl::IsCheckVisible(HTREEITEM hItem) const
 {
 	UINT state = GetItemState(hItem, TVIS_STATEIMAGEMASK) >> 12;
 	return 0 != state;
 }
 
+
 bool CCheckTreeCtrl::GetChecked(HTREEITEM hItem) const
 {
 	UINT state = GetItemState(hItem, TVIS_STATEIMAGEMASK) >> 12;
 	return m_stateChecked == state;
 }
+
 
 bool CCheckTreeCtrl::SetChecked(
 		HTREEITEM hItem,
@@ -136,6 +141,7 @@ bool CCheckTreeCtrl::SetChecked(
 		return false;
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // Private
 
 // When we check a child, make sure the parent chain is checked.
@@ -153,6 +159,7 @@ void CCheckTreeCtrl::CheckParentCheck(HTREEITEM hItem)
 		}
 	}
 }
+
 
 // Cascade to children (don't do hItem)
 int CCheckTreeCtrl::Cascade(
@@ -178,6 +185,7 @@ int CCheckTreeCtrl::Cascade(
 	}
 	return nChanged;
 }
+
 
 void CCheckTreeCtrl::SendDispInfo(HTREEITEM hItem)
 {
@@ -211,6 +219,7 @@ void CCheckTreeCtrl::PreSubclassWindow()
 	SetImageList(&m_stateList, TVSIL_STATE);
 }
 
+
 int CCheckTreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CTreeCtrl::OnCreate(lpCreateStruct) == -1)
@@ -219,6 +228,7 @@ int CCheckTreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetImageList(&m_stateList, TVSIL_STATE);
 	return 0;
 }
+
 
 void CCheckTreeCtrl::OnLButtonDown(
 		UINT nFlags,
@@ -234,6 +244,7 @@ void CCheckTreeCtrl::OnLButtonDown(
 	}
 	CTreeCtrl::OnLButtonDown(nFlags, point);
 }
+
 
 BOOL CCheckTreeCtrl::OnKeyDown(
 		NMHDR* pNMHDR,

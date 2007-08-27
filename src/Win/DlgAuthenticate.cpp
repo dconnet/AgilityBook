@@ -51,6 +51,7 @@ IMPLEMENT_DYNAMIC(CDlgAuthenticate, CDialog)
 
 CString CDlgAuthenticate::m_Password; // So we remember the password for the life of the program
 
+
 CDlgAuthenticate::CDlgAuthenticate(CString& userName, CWnd* pParent)
 	: CDialog(CDlgAuthenticate::IDD, pParent)
 	, m_userName(userName)
@@ -58,6 +59,7 @@ CDlgAuthenticate::CDlgAuthenticate(CString& userName, CWnd* pParent)
 	//{{AFX_DATA_INIT(CDlgAuthenticate)
 	//}}AFX_DATA_INIT
 }
+
 
 void CDlgAuthenticate::DoDataExchange(CDataExchange* pDX)
 {
@@ -68,10 +70,12 @@ void CDlgAuthenticate::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgAuthenticate, CDialog)
 	//{{AFX_MSG_MAP(CDlgAuthenticate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 void CDlgAuthenticate::OnOK()
 {

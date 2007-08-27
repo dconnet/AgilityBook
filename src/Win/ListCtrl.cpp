@@ -74,6 +74,7 @@ static size_t GetSelection(
 	return indices.size();
 }
 
+
 static void SetSelection(
 		CListCtrl& list,
 		std::vector<int>& indices,
@@ -98,6 +99,7 @@ static void SetSelection(
 		}
 	}
 }
+
 
 static void GetPrintLineImp(
 		CListCtrl& list,
@@ -133,6 +135,7 @@ BEGIN_MESSAGE_MAP(CHeaderCtrl2, CHeaderCtrl)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 CHeaderCtrl2::CHeaderCtrl2()
 	: fBufferSize(300)
 	, fpBuffer(NULL)
@@ -144,10 +147,12 @@ CHeaderCtrl2::CHeaderCtrl2()
 	fpBuffer = new TCHAR[fBufferSize];
 }
 
+
 CHeaderCtrl2::~CHeaderCtrl2()
 {
 	delete [] fpBuffer;
 }
+
 
 void CHeaderCtrl2::PreSubclassWindow()
 {
@@ -161,11 +166,13 @@ void CHeaderCtrl2::PreSubclassWindow()
 	m_ToolTip.SetMargin(&rMargin);
 }
 
+
 BOOL CHeaderCtrl2::PreTranslateMessage(MSG* pMsg)
 {
 	m_ToolTip.RelayEvent(pMsg);
 	return CHeaderCtrl::PreTranslateMessage(pMsg);
 }
+
 
 void CHeaderCtrl2::OnDestroy()
 {
@@ -173,11 +180,13 @@ void CHeaderCtrl2::OnDestroy()
 	m_ToolTip.DestroyWindow();
 }
 
+
 void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
 {
 	CHeaderCtrl::OnSize(nType, cx, cy);
 	FixTooltips();
 }
+
 
 BOOL CHeaderCtrl2::OnHdnItemChanged(
 		NMHDR* pNMHDR,
@@ -192,6 +201,7 @@ BOOL CHeaderCtrl2::OnHdnItemChanged(
 	*pResult = 0;
 	return FALSE; // Allow parent to handle also
 }
+
 
 void CHeaderCtrl2::FixTooltips()
 {
@@ -261,6 +271,7 @@ void CHeaderCtrl2::FixTooltips()
 	dc.SelectObject(pOldFont);
 }
 
+
 CHeaderCtrl2::SortOrder CHeaderCtrl2::GetSortOrder(int iCol) const
 {
 	if (0 > iCol || iCol >= GetItemCount())
@@ -277,6 +288,7 @@ CHeaderCtrl2::SortOrder CHeaderCtrl2::GetSortOrder(int iCol) const
 	}
 	return eNoSort;
 }
+
 
 void CHeaderCtrl2::Sort(
 		int iCol,
@@ -315,15 +327,18 @@ BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 CListCtrl2::CListCtrl2(bool bAutoDelete)
 	: m_SortHeader()
 	, m_bAutoDelete(bAutoDelete)
 {
 }
 
+
 CListCtrl2::~CListCtrl2()
 {
 }
+
 
 /// Returns whether we ran the initialization.
 bool CListCtrl2::Init()
@@ -338,11 +353,13 @@ bool CListCtrl2::Init()
 	return false;
 }
 
+
 void CListCtrl2::FixTooltips()
 {
 	if (!Init())
 		m_SortHeader.FixTooltips();
 }
+
 
 int CListCtrl2::HeaderItemCount()
 {
@@ -350,11 +367,13 @@ int CListCtrl2::HeaderItemCount()
 	return m_SortHeader.GetItemCount();
 }
 
+
 CHeaderCtrl2::SortOrder CListCtrl2::HeaderSortOrder(int iCol) const
 {
 	const_cast<CListCtrl2*>(this)->Init();
 	return m_SortHeader.GetSortOrder(iCol);
 }
+
 
 void CListCtrl2::HeaderSort(
 		int iCol,
@@ -363,6 +382,7 @@ void CListCtrl2::HeaderSort(
 	Init();
 	m_SortHeader.Sort(iCol, eOrder);
 }
+
 
 int CListCtrl2::InsertColumn(
 		int nCol,
@@ -373,6 +393,7 @@ int CListCtrl2::InsertColumn(
 		m_SortHeader.FixTooltips();
 	return rc;
 }
+
 
 int CListCtrl2::InsertColumn(
 		int nCol,
@@ -387,6 +408,7 @@ int CListCtrl2::InsertColumn(
 	return rc;
 }
 
+
 BOOL CListCtrl2::SetColumnWidth(
 		int nCol,
 		int cx)
@@ -397,6 +419,7 @@ BOOL CListCtrl2::SetColumnWidth(
 	return rc;
 }
 
+
 BOOL CListCtrl2::DeleteColumn(int nCol)
 {
 	BOOL rc = CListCtrl::DeleteColumn(nCol);
@@ -405,12 +428,14 @@ BOOL CListCtrl2::DeleteColumn(int nCol)
 	return rc;
 }
 
+
 CListData* CListCtrl2::GetData(int index) const
 {
 	if (0 <= index && index < GetItemCount() && m_bAutoDelete)
 		return reinterpret_cast<CListData*>(GetItemData(index));
 	return NULL;
 }
+
 
 void CListCtrl2::SetData(int index, CListData* inData)
 {
@@ -422,6 +447,7 @@ void CListCtrl2::SetData(int index, CListData* inData)
 		SetItemData(index, reinterpret_cast<LPARAM>(inData));
 	}
 }
+
 
 int CListCtrl2::GetSelection(bool bRestricted)
 {
@@ -435,10 +461,12 @@ int CListCtrl2::GetSelection(bool bRestricted)
 		return -1;
 }
 
+
 size_t CListCtrl2::GetSelection(std::vector<int>& indices)
 {
 	return ::GetSelection(*this, indices);
 }
+
 
 void CListCtrl2::SetSelection(
 		int index,
@@ -449,12 +477,14 @@ void CListCtrl2::SetSelection(
 	::SetSelection(*this, indices, bEnsureVisible);
 }
 
+
 void CListCtrl2::SetSelection(
 		std::vector<int>& indices,
 		bool bEnsureVisible)
 {
 	::SetSelection(*this, indices, bEnsureVisible);
 }
+
 
 // This allows a derived class to print a subset of columns if it wants.
 void CListCtrl2::GetPrintLine(
@@ -472,6 +502,7 @@ void CListCtrl2::OnDestroy()
 	DeleteAllItems();
 	CListCtrl::OnDestroy();
 }
+
 
 BOOL CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
@@ -492,6 +523,7 @@ BOOL CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 
 IMPLEMENT_DYNCREATE(CListView2, CListView)
 
+
 BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
 	ON_WM_DESTROY()
@@ -511,15 +543,18 @@ BEGIN_MESSAGE_MAP(CListView2, CListView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, CView::OnFilePrintPreview)
 END_MESSAGE_MAP()
 
+
 CListView2::CListView2()
 	: m_SortHeader()
 	, m_bAutoDelete(true)
 {
 }
 
+
 CListView2::~CListView2()
 {
 }
+
 
 bool CListView2::Init()
 {
@@ -533,11 +568,13 @@ bool CListView2::Init()
 	return false;
 }
 
+
 void CListView2::FixTooltips()
 {
 	if (!Init())
 		m_SortHeader.FixTooltips();
 }
+
 
 int CListView2::HeaderItemCount()
 {
@@ -545,11 +582,13 @@ int CListView2::HeaderItemCount()
 	return m_SortHeader.GetItemCount();
 }
 
+
 CHeaderCtrl2::SortOrder CListView2::HeaderSortOrder(int iCol) const
 {
 	const_cast<CListView2*>(this)->Init();
 	return m_SortHeader.GetSortOrder(iCol);
 }
+
 
 void CListView2::HeaderSort(
 		int iCol,
@@ -558,6 +597,7 @@ void CListView2::HeaderSort(
 	Init();
 	m_SortHeader.Sort(iCol, eOrder);
 }
+
 
 int CListView2::InsertColumn(
 		int nCol,
@@ -568,6 +608,7 @@ int CListView2::InsertColumn(
 		m_SortHeader.FixTooltips();
 	return rc;
 }
+
 
 int CListView2::InsertColumn(
 		int nCol,
@@ -582,6 +623,7 @@ int CListView2::InsertColumn(
 	return rc;
 }
 
+
 BOOL CListView2::SetColumnWidth(
 		int nCol,
 		int cx)
@@ -592,6 +634,7 @@ BOOL CListView2::SetColumnWidth(
 	return rc;
 }
 
+
 BOOL CListView2::DeleteColumn(int nCol)
 {
 	BOOL rc = GetListCtrl().DeleteColumn(nCol);
@@ -600,12 +643,14 @@ BOOL CListView2::DeleteColumn(int nCol)
 	return rc;
 }
 
+
 CListData* CListView2::GetData(int index) const
 {
 	if (0 <= index && index < GetListCtrl().GetItemCount() && m_bAutoDelete)
 		return reinterpret_cast<CListData*>(GetListCtrl().GetItemData(index));
 	return NULL;
 }
+
 
 void CListView2::SetData(int index, CListData* inData)
 {
@@ -617,6 +662,7 @@ void CListView2::SetData(int index, CListData* inData)
 		GetListCtrl().SetItemData(index, reinterpret_cast<LPARAM>(inData));
 	}
 }
+
 
 int CListView2::GetSelection(bool bRestricted)
 {
@@ -630,10 +676,12 @@ int CListView2::GetSelection(bool bRestricted)
 		return -1;
 }
 
+
 size_t CListView2::GetSelection(std::vector<int>& indices)
 {
 	return ::GetSelection(GetListCtrl(), indices);
 }
+
 
 void CListView2::SetSelection(
 		int index,
@@ -644,12 +692,14 @@ void CListView2::SetSelection(
 	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
 }
 
+
 void CListView2::SetSelection(
 		std::vector<int>& indices,
 		bool bEnsureVisible)
 {
 	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
 }
+
 
 // This allows a derived class to print a subset of columns if it wants.
 void CListView2::GetPrintLine(
@@ -668,11 +718,13 @@ void CListView2::OnDestroy()
 	CListView::OnDestroy();
 }
 
+
 void CListView2::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CListView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
 }
+
 
 BOOL CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
@@ -686,6 +738,7 @@ BOOL CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 	return FALSE; // Allow parent to handle also
 }
 
+
 struct CListPrintData
 {
 	CRect r;
@@ -694,6 +747,7 @@ struct CListPrintData
 	int nPages;
 	std::vector<int> nMaxWidth;
 };
+
 
 BOOL CListView2::OnPreparePrinting(CPrintInfo* pInfo)
 {
@@ -707,6 +761,7 @@ BOOL CListView2::OnPreparePrinting(CPrintInfo* pInfo)
 	pInfo->m_pPD->m_pd.Flags |= PD_NOSELECTION;
 	return DoPreparePrinting(pInfo);
 }
+
 
 void CListView2::OnBeginPrinting(
 		CDC* pDC,
@@ -770,6 +825,7 @@ void CListView2::OnBeginPrinting(
 	pInfo->SetMaxPage(pData->nPages);
 }
 
+
 void CListView2::OnEndPrinting(
 		CDC* pDC,
 		CPrintInfo* pInfo)
@@ -777,6 +833,7 @@ void CListView2::OnEndPrinting(
 	CListPrintData* pData = reinterpret_cast<CListPrintData*>(pInfo->m_lpUserData);
 	delete pData;
 }
+
 
 void CListView2::OnPrint(
 		CDC* pDC,
@@ -811,6 +868,7 @@ void CListView2::OnPrint(
 	}
 }
 
+
 void CListView2::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -818,6 +876,7 @@ void CListView2::OnUpdateEditCopy(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CListView2::OnEditCopy()
 {
@@ -863,6 +922,7 @@ void CListView2::OnEditCopy()
 	}
 }
 
+
 void CListView2::OnUpdateEditSelectAll(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -870,6 +930,7 @@ void CListView2::OnUpdateEditSelectAll(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CListView2::OnEditSelectAll()
 {
@@ -883,6 +944,7 @@ void CListView2::OnEditSelectAll()
 		SetSelection(indices, false);
 	}
 }
+
 
 void CListView2::OnUpdateNotSupported(CCmdUI* pCmdUI)
 {

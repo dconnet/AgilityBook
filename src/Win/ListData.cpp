@@ -50,6 +50,7 @@ CListData::CListData()
 {
 }
 
+
 CListData::~CListData()
 {
 }

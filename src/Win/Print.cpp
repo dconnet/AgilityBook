@@ -57,6 +57,7 @@ static char THIS_FILE[] = __FILE__;
 
 static bool s_bUserAbort = false;
 
+
 class CPrintingDialog2 : public CDialog
 {
 public:
@@ -74,6 +75,7 @@ public:
 	virtual void OnCancel();
 };
 
+
 BOOL CPrintingDialog2::OnInitDialog()
 {
 	SetWindowText(AfxGetAppName());
@@ -81,11 +83,13 @@ BOOL CPrintingDialog2::OnInitDialog()
 	return CDialog::OnInitDialog();
 }
 
+
 void CPrintingDialog2::OnCancel()
 {
 	s_bUserAbort = true;  // flag that user aborted print
 	CDialog::OnCancel();
 }
+
 
 BOOL CALLBACK AbortProc(HDC, int)
 {
@@ -134,6 +138,7 @@ private:
 	size_t m_cur;
 };
 
+
 BOOL CPrintRuns::DoPreparePrinting(CPrintInfo* pInfo)
 {
 	if (pInfo->m_pPD->m_pd.nMinPage > pInfo->m_pPD->m_pd.nMaxPage)
@@ -152,6 +157,7 @@ BOOL CPrintRuns::DoPreparePrinting(CPrintInfo* pInfo)
 	return TRUE;
 }
 
+
 BOOL CPrintRuns::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	pInfo->SetMinPage(1);
@@ -162,9 +168,11 @@ BOOL CPrintRuns::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
+
 void CPrintRuns::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
 {
 }
+
 
 void CPrintRuns::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
@@ -192,9 +200,11 @@ void CPrintRuns::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	}
 }
 
+
 void CPrintRuns::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 {
 }
+
 
 #define CODE_DOG		0
 #define CODE_DATE		1
@@ -361,6 +371,7 @@ static const struct
 };
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
+
 static void RefRunHelper(ARBostringstream& text, ARBDogReferenceRunPtr ref, int code)
 {
 	switch (code)
@@ -413,6 +424,7 @@ static void RefRunHelper(ARBostringstream& text, ARBDogReferenceRunPtr ref, int 
 		break;
 	}
 }
+
 
 void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 {
@@ -742,6 +754,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 	pDC->SelectObject(pOldFont);
 	pDC->SelectObject(pOldPen);
 }
+
 
 void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 {

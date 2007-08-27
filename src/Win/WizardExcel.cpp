@@ -63,9 +63,11 @@ IWizardExporter::~IWizardExporter()
 {
 }
 
+
 IWizardImporter::~IWizardImporter()
 {
 }
+
 
 IWizardSpreadSheet::~IWizardSpreadSheet()
 {
@@ -111,6 +113,7 @@ protected:
 	CComVariant covOptional;
 };
 
+
 bool CWizardBaseExport::CreateArray(
 		long inRows,
 		long inCols)
@@ -136,6 +139,7 @@ bool CWizardBaseExport::CreateArray(
 	m_Array.Create(VT_BSTR, 2, numElements);
 	return true;
 }
+
 
 bool CWizardBaseExport::InsertArrayData(
 		long inRow,
@@ -197,6 +201,7 @@ private:
 	mutable Excel8::_Application m_App;
 };
 
+
 class CWizardExcelExport : public CWizardBaseExport
 {
 protected:
@@ -247,6 +252,7 @@ private:
 	Excel8::_Worksheet m_Worksheet;
 };
 
+
 class CWizardExcelImport : public CWizardBaseImport
 {
 protected:
@@ -275,6 +281,7 @@ public:
 	static CWizardCalc* Create();
 };
 
+
 #else
 
 class CWizardCalc : public IWizardSpreadSheet
@@ -291,6 +298,7 @@ public:
 private:
 	mutable ooCalc::CComManagerDriver m_Manager;
 };
+
 
 class CWizardCalcExport : public CWizardBaseExport
 {
@@ -347,6 +355,7 @@ private:
 	ooCalc::ooXSpreadsheet m_Worksheet;
 };
 
+
 class CWizardCalcImport : public CWizardBaseImport
 {
 protected:
@@ -395,6 +404,7 @@ CWizardExcel* CWizardExcel::Create()
 	return pExcel;
 }
 
+
 CWizardExcel::CWizardExcel()
 {
 	// Get the ClassID from the ProgID.
@@ -423,14 +433,17 @@ CWizardExcel::CWizardExcel()
 	}
 }
 
+
 CWizardExcel::~CWizardExcel()
 {
 }
+
 
 IWizardExporterPtr CWizardExcel::GetExporter() const
 {
 	return IWizardExporterPtr(CWizardExcelExport::Create(m_App));
 }
+
 
 IWizardImporterPtr CWizardExcel::GetImporter() const
 {
@@ -443,6 +456,7 @@ CWizardExcelExport* CWizardExcelExport::Create(Excel8::_Application& ioApp)
 {
 	return new CWizardExcelExport(ioApp);
 }
+
 
 CWizardExcelExport::CWizardExcelExport(Excel8::_Application& ioApp)
 	: CWizardBaseExport(false)
@@ -463,6 +477,7 @@ CWizardExcelExport::CWizardExcelExport(Excel8::_Application& ioApp)
 	}
 }
 
+
 CWizardExcelExport::~CWizardExcelExport()
 {
 	try
@@ -475,6 +490,7 @@ CWizardExcelExport::~CWizardExcelExport()
 		ex->Delete();
 	}
 }
+
 
 bool CWizardExcelExport::ExportDataArray(
 		long inRowTop,
@@ -511,6 +527,7 @@ bool CWizardExcelExport::ExportDataArray(
 	return false;
 }
 
+
 bool CWizardExcelExport::AllowAccess(bool bAllow)
 {
 	try
@@ -530,6 +547,7 @@ bool CWizardExcelExport::AllowAccess(bool bAllow)
 	}
 	return false;
 }
+
 
 bool CWizardExcelExport::SetTextColor(
 		long inRow,
@@ -553,6 +571,7 @@ bool CWizardExcelExport::SetTextColor(
 	return false;
 }
 
+
 bool CWizardExcelExport::SetBackColor(
 		long inRow,
 		long inCol,
@@ -574,6 +593,7 @@ bool CWizardExcelExport::SetBackColor(
 	}
 	return false;
 }
+
 
 bool CWizardExcelExport::SetItalic(
 		long inRow,
@@ -597,6 +617,7 @@ bool CWizardExcelExport::SetItalic(
 	return false;
 }
 
+
 bool CWizardExcelExport::SetBold(
 		long inRow,
 		long inCol,
@@ -619,6 +640,7 @@ bool CWizardExcelExport::SetBold(
 	return false;
 }
 
+
 bool CWizardExcelExport::InsertData(
 		long inRow,
 		long inCol,
@@ -639,6 +661,7 @@ bool CWizardExcelExport::InsertData(
 	}
 	return false;
 }
+
 
 bool CWizardExcelExport::InsertData(
 		long inRow,
@@ -666,6 +689,7 @@ bool CWizardExcelExport::InsertData(
 	}
 	return false;
 }
+
 
 bool CWizardExcelExport::AutoFit(
 		long inColFrom,
@@ -697,10 +721,12 @@ CWizardExcelImport* CWizardExcelImport::Create(Excel8::_Application& ioApp)
 	return new CWizardExcelImport(ioApp);
 }
 
+
 CWizardExcelImport::CWizardExcelImport(Excel8::_Application& ioApp)
 	: m_App(ioApp)
 {
 }
+
 
 CWizardExcelImport::~CWizardExcelImport()
 {
@@ -714,6 +740,7 @@ CWizardExcelImport::~CWizardExcelImport()
 		ex->Delete();
 	}
 }
+
 
 bool CWizardExcelImport::OpenFile(CString const& inFilename)
 {
@@ -738,6 +765,7 @@ bool CWizardExcelImport::OpenFile(CString const& inFilename)
 	}
 	return NULL != m_Worksheet.m_lpDispatch;
 }
+
 
 bool CWizardExcelImport::GetData(
 		std::vector< std::vector<CString> >& outData,
@@ -839,6 +867,7 @@ CWizardCalc* CWizardCalc::Create()
 #endif
 }
 
+
 #if _MSC_VER >= 1300
 
 CWizardCalc::CWizardCalc()
@@ -847,14 +876,17 @@ CWizardCalc::CWizardCalc()
 		m_Manager.Release();
 }
 
+
 CWizardCalc::~CWizardCalc()
 {
 }
+
 
 IWizardExporterPtr CWizardCalc::GetExporter() const
 {
 	return IWizardExporterPtr(CWizardCalcExport::Create(m_Manager));
 }
+
 
 IWizardImporterPtr CWizardCalc::GetImporter() const
 {
@@ -873,6 +905,7 @@ CWizardCalcExport* CWizardCalcExport::Create(
 	return new CWizardCalcExport(ioManager);
 }
 
+
 CWizardCalcExport::CWizardCalcExport(
 		ooCalc::CComManagerDriver& ioManager)
 	: CWizardBaseExport(true)
@@ -880,9 +913,11 @@ CWizardCalcExport::CWizardCalcExport(
 {
 }
 
+
 CWizardCalcExport::~CWizardCalcExport()
 {
 }
+
 
 ooCalc::ooXSpreadsheet CWizardCalcExport::GetWorksheet()
 {
@@ -897,6 +932,7 @@ ooCalc::ooXSpreadsheet CWizardCalcExport::GetWorksheet()
 	}
 	return m_Worksheet;
 }
+
 
 bool CWizardCalcExport::ExportDataArray(
 		long inRowTop,
@@ -928,11 +964,13 @@ bool CWizardCalcExport::ExportDataArray(
 	return true;
 }
 
+
 bool CWizardCalcExport::AllowAccess(bool bAllow)
 {
 	// TODO
 	return false;
 }
+
 
 bool CWizardCalcExport::SetTextColor(
 		long inRow,
@@ -943,6 +981,7 @@ bool CWizardCalcExport::SetTextColor(
 	return false;
 }
 
+
 bool CWizardCalcExport::SetBackColor(
 		long inRow,
 		long inCol,
@@ -951,6 +990,7 @@ bool CWizardCalcExport::SetBackColor(
 	// TODO
 	return false;
 }
+
 
 bool CWizardCalcExport::SetItalic(
 		long inRow,
@@ -961,6 +1001,7 @@ bool CWizardCalcExport::SetItalic(
 	return false;
 }
 
+
 bool CWizardCalcExport::SetBold(
 		long inRow,
 		long inCol,
@@ -969,6 +1010,7 @@ bool CWizardCalcExport::SetBold(
 	// TODO
 	return false;
 }
+
 
 bool CWizardCalcExport::InsertData(
 		long inRow,
@@ -984,6 +1026,7 @@ bool CWizardCalcExport::InsertData(
 	return cell.setValue(inData);
 }
 
+
 bool CWizardCalcExport::InsertData(
 		long inRow,
 		long inCol,
@@ -997,6 +1040,7 @@ bool CWizardCalcExport::InsertData(
 		return false;
 	return cell.setFormula(inData);
 }
+
 
 bool CWizardCalcExport::AutoFit(
 		long inColFrom,
@@ -1025,16 +1069,19 @@ CWizardCalcImport* CWizardCalcImport::Create(
 	return new CWizardCalcImport(ioManager);
 }
 
+
 CWizardCalcImport::CWizardCalcImport(
 		ooCalc::CComManagerDriver& ioManager)
 	: m_Manager(ioManager)
 {
 }
 
+
 CWizardCalcImport::~CWizardCalcImport()
 {
 	m_Document.dispose();
 }
+
 
 bool CWizardCalcImport::OpenFile(CString const& inFilename)
 {
@@ -1053,6 +1100,7 @@ bool CWizardCalcImport::OpenFile(CString const& inFilename)
 	m_FileName = inFilename;
 	return true;
 }
+
 
 bool CWizardCalcImport::GetData(
 		std::vector< std::vector<CString> >& outData,
@@ -1163,15 +1211,20 @@ IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
 	return pInterface;
 }
 
+
 // static helper functions
 long IWizardSpreadSheet::GetMaxRows()
 {
 	return 65536;
 }
+
+
 long IWizardSpreadSheet::GetMaxCols()
 {
 	return 256;
 }
+
+
 bool IWizardSpreadSheet::GetRowCol(
 		long inRow,
 		long inCol,

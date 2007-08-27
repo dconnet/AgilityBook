@@ -61,6 +61,7 @@ CDlgReorder::CDlgReorder(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgReorder::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -70,6 +71,7 @@ void CDlgReorder::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_REORDER_MOVE_DOWN, m_ctrlDown);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgReorder, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgReorder)
@@ -88,6 +90,7 @@ void CDlgReorder::LoadData()
 		m_ctrlList.AddString(m_Items[i]->GetGenericName().c_str());
 	EnableControls();
 }
+
 
 void CDlgReorder::EnableControls()
 {
@@ -119,10 +122,12 @@ BOOL CDlgReorder::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgReorder::OnSelchangeList() 
 {
 	EnableControls();	
 }
+
 
 void CDlgReorder::OnMoveUp() 
 {
@@ -142,6 +147,7 @@ void CDlgReorder::OnMoveUp()
 	}
 }
 
+
 void CDlgReorder::OnMoveDown() 
 {
 	int index = m_ctrlList.GetCurSel();
@@ -159,6 +165,7 @@ void CDlgReorder::OnMoveDown()
 		}
 	}
 }
+
 
 void CDlgReorder::OnOK() 
 {

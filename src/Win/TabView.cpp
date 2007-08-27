@@ -90,6 +90,7 @@ BEGIN_MESSAGE_MAP(CTabView, CCtrlView)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 CTabView::CTabView()
 	: CCtrlView(_T("SysTabControl32"), AFX_WS_DEFAULT_VIEW)
 	, m_pLastFocusRuns(NULL)
@@ -97,9 +98,11 @@ CTabView::CTabView()
 {
 }
 
+
 CTabView::~CTabView()
 {
 }
+
 
 void CTabView::OnDestroy()
 {
@@ -119,12 +122,14 @@ void CTabView::OnDestroy()
 	CCtrlView::OnDestroy();
 }
 
+
 BOOL CTabView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// FYI: FOCUSNEVER doesn't seem to work properly...
 	cs.style |= TCS_TABS | TCS_FOCUSNEVER;
 	return CCtrlView::PreCreateWindow(cs);
 }
+
 
 // This should only be called when the view already exists.
 bool CTabView::ShowPointsAs(bool bHtml)
@@ -193,6 +198,7 @@ bool CTabView::ShowPointsAs(bool bHtml)
 	return bCreatedAsAsked;
 }
 
+
 bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 {
 	bool bCreateList = !bHtml;
@@ -224,6 +230,7 @@ bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 	// Returns whether we created the view we asked for.
 	return bCreateList == !bHtml;
 }
+
 
 void CTabView::OnInitialUpdate()
 {
@@ -294,12 +301,14 @@ void CTabView::OnInitialUpdate()
 	SetCurSel(nSel);
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CTabView drawing
 
 void CTabView::OnDraw(CDC* pDC)
 {
 //	CDocument* pDoc = GetDocument();
 }
+
 
 // CTabView diagnostics
 #ifdef _DEBUG
@@ -308,10 +317,12 @@ void CTabView::AssertValid() const
 	CCtrlView::AssertValid();
 }
 
+
 void CTabView::Dump(CDumpContext& dc) const
 {
 	CCtrlView::Dump(dc);
 }
+
 
 CAgilityBookDoc* CTabView::GetDocument() const // non-debug version is inline
 {
@@ -319,6 +330,7 @@ CAgilityBookDoc* CTabView::GetDocument() const // non-debug version is inline
 	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
+
 
 void CTabView::SetCurSel(int index)
 {
@@ -331,6 +343,7 @@ void CTabView::SetCurSel(int index)
 	hdr.code = TCN_SELCHANGE;
 	SendMessage(WM_NOTIFY, 0, reinterpret_cast<LPARAM>(&hdr));
 }
+
 
 void CTabView::SetActiveView()
 {
@@ -398,6 +411,7 @@ void CTabView::OnSize(
 	}
 }
 
+
 void CTabView::OnSetFocus(CWnd* pOldWnd)
 {
 	int nIndex = GetTabCtrl().GetCurSel();
@@ -416,6 +430,7 @@ void CTabView::OnSetFocus(CWnd* pOldWnd)
 	SetActiveView();
 	//CCtrlView::OnSetFocus(pOldWnd);
 }
+
 
 void CTabView::OnSelChanging(
 		NMHDR* pNMHDR,
@@ -444,6 +459,7 @@ void CTabView::OnSelChanging(
 	m_Panes[nIndex]->EnableWindow(FALSE);
 	*pResult = 0;
 }
+
 
 void CTabView::OnSelChange(
 		NMHDR* /*pNMHDR*/,

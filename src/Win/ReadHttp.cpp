@@ -62,10 +62,12 @@ CReadHttp::CReadHttp(
 {
 }
 
+
 CReadHttp::~CReadHttp()
 {
 	Close();
 }
+
 
 void CReadHttp::CloseFiles()
 {
@@ -83,6 +85,7 @@ void CReadHttp::CloseFiles()
 	}
 }
 
+
 void CReadHttp::Close()
 {
 	CloseFiles();
@@ -93,8 +96,10 @@ void CReadHttp::Close()
 	}
 }
 
+
 static DWORD dwHttpRequestFlags = INTERNET_FLAG_EXISTING_CONNECT | INTERNET_FLAG_NO_AUTO_REDIRECT;
 static const TCHAR szHeaders[] = _T("Accept: text\r\n");
+
 
 DWORD CReadHttp::Connect(CString& userName, CString& outErrMsg, CWnd* pParent)
 {
@@ -127,6 +132,7 @@ DWORD CReadHttp::Connect(CString& userName, CString& outErrMsg, CWnd* pParent)
 	}
 	return dwRet;
 }
+
 
 bool CReadHttp::ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParent)
 {

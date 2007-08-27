@@ -74,6 +74,7 @@ protected:
 	double m_Value;
 };
 
+
 CString CDlgConfigureDataPlacement::OnNeedText(int iColumn) const
 {
 	ARBostringstream str;
@@ -90,6 +91,7 @@ CString CDlgConfigureDataPlacement::OnNeedText(int iColumn) const
 	}
 	return str.str().c_str();
 }
+
 
 int CALLBACK ComparePlacement(
 		LPARAM lParam1,
@@ -139,6 +141,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgConfigEventMethod::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -183,6 +186,7 @@ void CDlgConfigEventMethod::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgConfigEventMethod, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEventMethod)
 	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_DIVISION, OnCbnSelchangeDivision)
@@ -218,6 +222,7 @@ void CDlgConfigEventMethod::UpdateButtons()
 	m_ctrlPlacementDelete.ShowWindow(m_SpeedPts ? SW_SHOW : SW_HIDE);
 }
 
+
 void CDlgConfigEventMethod::FillDivisionList()
 {
 	m_ctrlDivision.ResetContent();
@@ -238,6 +243,7 @@ void CDlgConfigEventMethod::FillDivisionList()
 			m_ctrlDivision.SetCurSel(index);
 	}
 }
+
 
 void CDlgConfigEventMethod::FillLevelList()
 {
@@ -382,10 +388,12 @@ BOOL CDlgConfigEventMethod::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgConfigEventMethod::OnCbnSelchangeDivision()
 {
 	FillLevelList();
 }
+
 
 void CDlgConfigEventMethod::OnValidFrom() 
 {
@@ -395,6 +403,7 @@ void CDlgConfigEventMethod::OnValidFrom()
 	m_ctrlDateFrom.EnableWindow(bEnable);
 }
 
+
 void CDlgConfigEventMethod::OnValidTo() 
 {
 	BOOL bEnable = FALSE;
@@ -402,6 +411,7 @@ void CDlgConfigEventMethod::OnValidTo()
 		bEnable = TRUE;
 	m_ctrlDateTo.EnableWindow(bEnable);
 }
+
 
 void CDlgConfigEventMethod::OnSelchangeType() 
 {
@@ -497,6 +507,7 @@ void CDlgConfigEventMethod::OnSelchangeType()
 	}
 }
 
+
 void CDlgConfigEventMethod::OnSpeedPoints()
 {
 	UpdateData(TRUE);
@@ -506,6 +517,7 @@ void CDlgConfigEventMethod::OnSpeedPoints()
 	m_ctrlPlacementEdit.ShowWindow(m_SpeedPts ? SW_SHOW : SW_HIDE);
 	m_ctrlPlacementDelete.ShowWindow(m_SpeedPts ? SW_SHOW : SW_HIDE);
 }
+
 
 void CDlgConfigEventMethod::OnGetdispinfoPlacement(NMHDR* pNMHDR, LRESULT* pResult)
 {
@@ -524,11 +536,13 @@ void CDlgConfigEventMethod::OnGetdispinfoPlacement(NMHDR* pNMHDR, LRESULT* pResu
 	*pResult = 0;
 }
 
+
 void CDlgConfigEventMethod::OnDblclkPlacement(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	OnPlacementEdit();
 	*pResult = 0;
 }
+
 
 void CDlgConfigEventMethod::OnKeydownPlacement(NMHDR* pNMHDR, LRESULT* pResult)
 {
@@ -544,11 +558,13 @@ void CDlgConfigEventMethod::OnKeydownPlacement(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+
 void CDlgConfigEventMethod::OnItemchangedPlacement(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	UpdateButtons();
 	*pResult = 0;
 }
+
 
 void CDlgConfigEventMethod::OnPlacementNew()
 {
@@ -575,6 +591,7 @@ void CDlgConfigEventMethod::OnPlacementNew()
 	}
 }
 
+
 void CDlgConfigEventMethod::OnPlacementEdit()
 {
 	int idx = m_ctrlPlacement.GetSelection();
@@ -600,6 +617,7 @@ void CDlgConfigEventMethod::OnPlacementEdit()
 	}
 }
 
+
 void CDlgConfigEventMethod::OnPlacementDelete()
 {
 	int idx = m_ctrlPlacement.GetSelection();
@@ -608,6 +626,7 @@ void CDlgConfigEventMethod::OnPlacementDelete()
 	m_ctrlPlacement.DeleteItem(idx);
 	UpdateButtons();
 }
+
 
 void CDlgConfigEventMethod::OnOK()
 {

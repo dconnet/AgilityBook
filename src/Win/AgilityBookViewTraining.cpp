@@ -104,6 +104,7 @@ private:
 	ARBTrainingPtr m_pTraining;
 };
 
+
 CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 {
 	CString str;
@@ -138,6 +139,7 @@ CAgilityBookViewTraining::CSortColumn::CSortColumn(std::vector<int>& inColumns)
 {
 }
 
+
 void CAgilityBookViewTraining::CSortColumn::Initialize()
 {
 	int realCol = IO_LOG_DATE;
@@ -153,6 +155,7 @@ void CAgilityBookViewTraining::CSortColumn::Initialize()
 		col = LookupColumn(IO_LOG_DATE);
 	m_iCol = col * neg;
 }
+
 
 void CAgilityBookViewTraining::CSortColumn::SetColumn(int iCol)
 {
@@ -170,6 +173,7 @@ void CAgilityBookViewTraining::CSortColumn::SetColumn(int iCol)
 	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Training"), realCol);
 }
 
+
 int CAgilityBookViewTraining::CSortColumn::LookupColumn(int iCol) const
 {
 	size_t n = m_Columns.size();
@@ -183,11 +187,13 @@ int CAgilityBookViewTraining::CSortColumn::LookupColumn(int iCol) const
 	return -1;
 }
 
+
 struct SORT_TRAINING_INFO
 {
 	CAgilityBookViewTraining* pThis;
 	int nCol;
 };
+
 
 int CALLBACK CompareTraining(
 		LPARAM lParam1,
@@ -330,7 +336,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-// CAgilityBookViewTraining construction/destruction
 
 #pragma warning (push)
 #pragma warning ( disable : 4355 )
@@ -342,9 +347,11 @@ CAgilityBookViewTraining::CAgilityBookViewTraining()
 }
 #pragma warning (pop)
 
+
 CAgilityBookViewTraining::~CAgilityBookViewTraining()
 {
 }
+
 
 BOOL CAgilityBookViewTraining::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -353,11 +360,13 @@ BOOL CAgilityBookViewTraining::PreCreateWindow(CREATESTRUCT& cs)
 	return CListView2::PreCreateWindow(cs);
 }
 
+
 LRESULT CAgilityBookViewTraining::OnCommandHelp(WPARAM, LPARAM)
 {
 	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_TRAINING, HH_HELP_CONTEXT);
 	return 1;
 }
+
 
 int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
@@ -367,11 +376,13 @@ int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+
 void CAgilityBookViewTraining::OnInitialUpdate()
 {
 	SetupColumns();
 	CListView2::OnInitialUpdate();
 }
+
 
 void CAgilityBookViewTraining::OnActivateView(
 		BOOL bActivate,
@@ -389,6 +400,7 @@ void CAgilityBookViewTraining::OnActivateView(
 	}
 }
 
+
 void CAgilityBookViewTraining::OnUpdate(
 		CView* pSender,
 		LPARAM lHint,
@@ -398,6 +410,7 @@ void CAgilityBookViewTraining::OnUpdate(
 		LoadData();
 }
 
+
 #ifdef _DEBUG
 // CAgilityBookViewTraining diagnostics
 void CAgilityBookViewTraining::AssertValid() const
@@ -405,10 +418,12 @@ void CAgilityBookViewTraining::AssertValid() const
 	CListView2::AssertValid();
 }
 
+
 void CAgilityBookViewTraining::Dump(CDumpContext& dc) const
 {
 	CListView2::Dump(dc);
 }
+
 
 CAgilityBookDoc* CAgilityBookViewTraining::GetDocument() const // non-debug version is inline
 {
@@ -445,6 +460,7 @@ void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 	GetListCtrl().EnsureVisible(index, FALSE);
 }
 
+
 bool CAgilityBookViewTraining::IsFiltered() const
 {
 	if (CFilterOptions::Options().GetViewAllDates()
@@ -454,11 +470,13 @@ bool CAgilityBookViewTraining::IsFiltered() const
 		return true;
 }
 
+
 bool CAgilityBookViewTraining::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_TRAINING, GetListCtrl().GetItemCount());
 	return true;
 }
+
 
 bool CAgilityBookViewTraining::GetMessage2(CString& msg) const
 {
@@ -466,10 +484,12 @@ bool CAgilityBookViewTraining::GetMessage2(CString& msg) const
 	return true;
 }
 
+
 CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemData(int index) const
 {
 	return dynamic_cast<CAgilityBookViewTrainingData*>(GetData(index));
 }
+
 
 void CAgilityBookViewTraining::SetupColumns()
 {
@@ -492,6 +512,7 @@ void CAgilityBookViewTraining::SetupColumns()
 		m_SortColumn.Initialize();
 	}
 }
+
 
 void CAgilityBookViewTraining::LoadData()
 {
@@ -569,6 +590,7 @@ void CAgilityBookViewTraining::LoadData()
 	GetListCtrl().Invalidate();
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewTraining message handlers
 
 void CAgilityBookViewTraining::OnRclick(
@@ -579,6 +601,7 @@ void CAgilityBookViewTraining::OnRclick(
 	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
+
 
 void CAgilityBookViewTraining::OnContextMenu(
 		CWnd* pWnd,
@@ -609,6 +632,7 @@ void CAgilityBookViewTraining::OnContextMenu(
 	}
 }
 
+
 void CAgilityBookViewTraining::OnColumnclick(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -628,6 +652,7 @@ void CAgilityBookViewTraining::OnColumnclick(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewTraining::OnGetdispinfo(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -644,6 +669,7 @@ void CAgilityBookViewTraining::OnGetdispinfo(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewTraining::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -651,6 +677,7 @@ void CAgilityBookViewTraining::OnDblclk(
 	OnTrainingEdit();
 	*pResult = 0;
 }
+
 
 void CAgilityBookViewTraining::OnKeydown(
 		NMHDR* pNMHDR,
@@ -669,11 +696,13 @@ void CAgilityBookViewTraining::OnKeydown(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewTraining::OnEditFind()
 {
 	CDlgFind dlg(m_Callback, this);
 	dlg.DoModal();
 }
+
 
 void CAgilityBookViewTraining::OnEditFindNext()
 {
@@ -684,6 +713,7 @@ void CAgilityBookViewTraining::OnEditFindNext()
 		m_Callback.Search(NULL);
 }
 
+
 void CAgilityBookViewTraining::OnEditFindPrevious()
 {
 	m_Callback.SearchDown(false);
@@ -693,6 +723,7 @@ void CAgilityBookViewTraining::OnEditFindPrevious()
 		m_Callback.Search(NULL);
 }
 
+
 void CAgilityBookViewTraining::OnUpdateTrainingEdit(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -700,6 +731,7 @@ void CAgilityBookViewTraining::OnUpdateTrainingEdit(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewTraining::OnTrainingEdit()
 {
@@ -720,6 +752,7 @@ void CAgilityBookViewTraining::OnTrainingEdit()
 	}
 }
 
+
 void CAgilityBookViewTraining::OnTrainingNew()
 {
 	ARBTrainingPtr training(ARBTraining::New());
@@ -737,6 +770,7 @@ void CAgilityBookViewTraining::OnTrainingNew()
 	}
 }
 
+
 void CAgilityBookViewTraining::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -744,6 +778,7 @@ void CAgilityBookViewTraining::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewTraining::OnEditDuplicate()
 {
@@ -777,16 +812,19 @@ void CAgilityBookViewTraining::OnEditDuplicate()
 	}
 }
 
+
 void CAgilityBookViewTraining::OnUpdateEditCut(CCmdUI* pCmdUI)
 {
 	OnUpdateEditCopy(pCmdUI);
 }
+
 
 void CAgilityBookViewTraining::OnEditCut()
 {
 	OnEditCopy();
 	OnTrainingDelete();
 }
+
 
 void CAgilityBookViewTraining::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
@@ -795,6 +833,7 @@ void CAgilityBookViewTraining::OnUpdateEditCopy(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewTraining::OnEditCopy()
 {
@@ -846,6 +885,7 @@ void CAgilityBookViewTraining::OnEditCopy()
 	}
 }
 
+
 void CAgilityBookViewTraining::OnUpdateEditPaste(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -853,6 +893,7 @@ void CAgilityBookViewTraining::OnUpdateEditPaste(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewTraining::OnEditPaste()
 {
@@ -891,6 +932,7 @@ void CAgilityBookViewTraining::OnEditPaste()
 	}
 }
 
+
 void CAgilityBookViewTraining::OnUpdateTrainingDelete(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -898,6 +940,7 @@ void CAgilityBookViewTraining::OnUpdateTrainingDelete(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewTraining::OnTrainingDelete()
 {
@@ -915,6 +958,7 @@ void CAgilityBookViewTraining::OnTrainingDelete()
 		LoadData();
 	}
 }
+
 
 void CAgilityBookViewTraining::OnViewCustomize()
 {

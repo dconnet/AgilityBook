@@ -60,6 +60,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgRun, CDlgBaseSheet)
 
+
 CDlgRun::CDlgRun(
 		CAgilityBookDoc* pDoc,
 		ARBDogTrialPtr pTrial,
@@ -98,6 +99,7 @@ CDlgRun::CDlgRun(
 	AddPage(m_pageLink);
 }
 
+
 CDlgRun::~CDlgRun()
 {
 	delete m_pageScore;
@@ -106,6 +108,7 @@ CDlgRun::~CDlgRun()
 	delete m_pageCRCD;
 	delete m_pageLink;
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgRun, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CDlgRun)

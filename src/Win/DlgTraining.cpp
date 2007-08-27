@@ -73,6 +73,7 @@ CDlgTraining::CDlgTraining(
 	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
+
 void CDlgTraining::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -85,6 +86,7 @@ void CDlgTraining::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TRAINING_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgTraining, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTraining)
@@ -118,6 +120,7 @@ BOOL CDlgTraining::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgTraining::OnOK() 
 {

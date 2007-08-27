@@ -61,6 +61,7 @@ CDlgFind::CDlgFind(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgFind::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -72,6 +73,7 @@ void CDlgFind::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDOK, m_ctrlFind);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgFind, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgFind)
@@ -106,6 +108,7 @@ BOOL CDlgFind::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgFind::OnChangeName() 
 {
 	UpdateData(TRUE);
@@ -114,6 +117,7 @@ void CDlgFind::OnChangeName()
 	else
 		m_ctrlFind.EnableWindow(FALSE);
 }
+
 
 void CDlgFind::OnOK() 
 {

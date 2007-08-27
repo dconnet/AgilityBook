@@ -51,6 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CDlgOptionsProgram, CDlgBasePropertyPage)
 
+
 CDlgOptionsProgram::CDlgOptionsProgram()
 	: CDlgBasePropertyPage(CDlgOptionsProgram::IDD)
 	, m_bAutoCheck(TRUE)
@@ -63,9 +64,11 @@ CDlgOptionsProgram::CDlgOptionsProgram()
 {
 }
 
+
 CDlgOptionsProgram::~CDlgOptionsProgram()
 {
 }
+
 
 void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
 {
@@ -79,6 +82,7 @@ void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_OPT_PGM_SHOWHTML, m_bShowHtml);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgOptionsProgram, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsProgram)
@@ -107,11 +111,13 @@ BOOL CDlgOptionsProgram::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgOptionsProgram::OnShowSplash()
 {
 	UpdateData(TRUE);
 	UpdateButtons();
 }
+
 
 void CDlgOptionsProgram::OnBrowse()
 {

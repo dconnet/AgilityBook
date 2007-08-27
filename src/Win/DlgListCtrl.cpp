@@ -112,6 +112,7 @@ private:
 	ARBCalendarPtr m_pCal;
 };
 
+
 ARBString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 {
 	ARBString str;
@@ -143,6 +144,7 @@ ARBString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 	return str;
 }
 
+
 bool CDlgListCtrlDataCalendar::OnEdit()
 {
 	CDlgCalendar dlg(m_pCal, m_pDoc);
@@ -153,6 +155,7 @@ bool CDlgListCtrlDataCalendar::OnEdit()
 	}
 	return false;
 }
+
 
 void CDlgListCtrlDataCalendar::Apply()
 {
@@ -193,6 +196,7 @@ private:
 	ARBString m_Fault;
 };
 
+
 void CDlgListCtrlDataFaults::GetAllFaults(
 		CListCtrl& ctrl,
 		CAgilityBookDoc* pDoc,
@@ -217,6 +221,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 	}
 }
 
+
 bool CDlgListCtrlDataFaults::OnEdit()
 {
 	std::set<ARBString> faults;
@@ -233,6 +238,7 @@ bool CDlgListCtrlDataFaults::OnEdit()
 	else
 		return false;
 }
+
 
 void CDlgListCtrlDataFaults::Apply()
 {
@@ -269,6 +275,7 @@ private:
 	ARBDogRunOtherPointsPtr m_Other;
 };
 
+
 ARBString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
 {
 	ARBString str;
@@ -289,6 +296,7 @@ ARBString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
 	return str;
 }
 
+
 bool CDlgListCtrlDataOtherPoints::OnEdit()
 {
 	CDlgOtherPoint dlg(m_pConfig, m_Other);
@@ -297,6 +305,7 @@ bool CDlgListCtrlDataOtherPoints::OnEdit()
 	else
 		return false;
 }
+
 
 void CDlgListCtrlDataOtherPoints::Apply()
 {
@@ -332,6 +341,7 @@ private:
 	ARBDogRunPartnerPtr m_Partner;
 };
 
+
 ARBString CDlgListCtrlDataPartners::OnNeedText(int iCol)
 {
 	ARBString str;
@@ -351,6 +361,7 @@ ARBString CDlgListCtrlDataPartners::OnNeedText(int iCol)
 	return str;
 }
 
+
 bool CDlgListCtrlDataPartners::OnEdit()
 {
 	std::set<ARBString> handlers, dogs;
@@ -361,6 +372,7 @@ bool CDlgListCtrlDataPartners::OnEdit()
 	else
 		return false;
 }
+
 
 void CDlgListCtrlDataPartners::Apply()
 {
@@ -403,6 +415,7 @@ CDlgListCtrl::CDlgListCtrl(
 	//}}AFX_DATA_INIT
 }
 
+
 // Faults/Partners
 CDlgListCtrl::CDlgListCtrl(
 		CDlgListCtrl::WhatToList inType,
@@ -432,6 +445,7 @@ CDlgListCtrl::CDlgListCtrl(
 	ASSERT(m_What == eFaults || m_What == ePartners);
 }
 
+
 // OtherPoints
 CDlgListCtrl::CDlgListCtrl(
 		ARBConfig& pConfig,
@@ -459,6 +473,7 @@ CDlgListCtrl::CDlgListCtrl(
 {
 }
 
+
 void CDlgListCtrl::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -474,6 +489,7 @@ void CDlgListCtrl::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDCANCEL, m_ctrlCancel);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgListCtrl, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListCtrl)
@@ -534,6 +550,7 @@ void CDlgListCtrl::UpdateControls()
 	m_ctrlDown.EnableWindow(bEnableDown);
 }
 
+
 void CDlgListCtrl::SwapEntries(
 		int oldIndex,
 		int newIndex)
@@ -546,6 +563,7 @@ void CDlgListCtrl::SwapEntries(
 	m_ctrlList.Invalidate();
 	UpdateControls();
 }
+
 
 void CDlgListCtrl::GetAllPartners(
 		std::set<ARBString>& ioPartners,
@@ -713,12 +731,14 @@ BOOL CDlgListCtrl::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgListCtrl::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
 	lpMMI->ptMinTrackSize.x = m_rWin.Width();
 	lpMMI->ptMinTrackSize.y = m_rWin.Height();
 	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
+
 
 void CDlgListCtrl::OnSize(UINT nType, int cx, int cy)
 {
@@ -755,6 +775,7 @@ void CDlgListCtrl::OnSize(UINT nType, int cx, int cy)
 			0, 0, SWP_NOZORDER | SWP_NOSIZE);
 	}
 }
+
 
 void CDlgListCtrl::OnGetdispinfoList(
 		NMHDR* pNMHDR,
@@ -800,6 +821,7 @@ void CDlgListCtrl::OnGetdispinfoList(
 	*pResult = 0;
 }
 
+
 void CDlgListCtrl::OnItemchangedList(
 		NMHDR* /*pNMHDR*/,
 		LRESULT* pResult) 
@@ -809,6 +831,7 @@ void CDlgListCtrl::OnItemchangedList(
 	*pResult = 0;
 }
 
+
 void CDlgListCtrl::OnDblclkList(
 		NMHDR* /*pNMHDR*/,
 		LRESULT* pResult) 
@@ -816,6 +839,7 @@ void CDlgListCtrl::OnDblclkList(
 	OnEdit();
 	*pResult = 0;
 }
+
 
 void CDlgListCtrl::OnKeydownList(
 		NMHDR* pNMHDR,
@@ -832,6 +856,7 @@ void CDlgListCtrl::OnKeydownList(
 	}
 	*pResult = 0;
 }
+
 
 void CDlgListCtrl::OnNew() 
 {
@@ -950,6 +975,7 @@ void CDlgListCtrl::OnNew()
 	UpdateControls();
 }
 
+
 void CDlgListCtrl::OnEdit() 
 {
 	int nItem = m_ctrlList.GetSelection();
@@ -965,6 +991,7 @@ void CDlgListCtrl::OnEdit()
 	}
 }
 
+
 void CDlgListCtrl::OnDelete() 
 {
 	int nItem = m_ctrlList.GetSelection();
@@ -979,6 +1006,7 @@ void CDlgListCtrl::OnDelete()
 	}
 }
 
+
 void CDlgListCtrl::OnMoveUp() 
 {
 	int nItem = m_ctrlList.GetSelection();
@@ -992,6 +1020,7 @@ void CDlgListCtrl::OnMoveUp()
 	}
 }
 
+
 void CDlgListCtrl::OnMoveDown() 
 {
 	int nItem = m_ctrlList.GetSelection();
@@ -1002,6 +1031,7 @@ void CDlgListCtrl::OnMoveDown()
 			SwapEntries(nItem, newIndex);
 	}
 }
+
 
 void CDlgListCtrl::OnCreateTrial() 
 {
@@ -1021,6 +1051,7 @@ void CDlgListCtrl::OnCreateTrial()
 		}
 	}
 }
+
 
 void CDlgListCtrl::OnOK() 
 {

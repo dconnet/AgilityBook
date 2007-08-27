@@ -107,8 +107,8 @@ public:
 	{
 	}
 
-	bool CanEdit() const		{return true;}
-	bool CanDelete() const		{return true;}
+	bool CanEdit() const			{return true;}
+	bool CanDelete() const			{return true;}
 
 	ARBCalendarPtr GetCalendar()	{return m_pCal;}
 	CString OnNeedText(int iCol) const;
@@ -130,6 +130,7 @@ private:
 	CAgilityBookViewCalendarList* m_pView;
 	ARBCalendarPtr m_pCal;
 };
+
 
 CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 {
@@ -175,6 +176,7 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 	return str;
 }
 
+
 int CAgilityBookViewCalendarData::GetIcon() const
 {
 	int idxImage = -1;
@@ -202,6 +204,7 @@ int CAgilityBookViewCalendarData::GetIcon() const
 	return idxImage;
 }
 
+
 int CAgilityBookViewCalendarData::GetStateIcon() const
 {
 	int idxImage = -1;
@@ -223,6 +226,7 @@ int CAgilityBookViewCalendarData::GetStateIcon() const
 	return idxImage;
 }
 
+
 COLORREF CAgilityBookViewCalendarData::GetTextColor(
 		int iCol,
 		bool bSelected,
@@ -243,6 +247,7 @@ COLORREF CAgilityBookViewCalendarData::GetTextColor(
 		return ::GetSysColor(COLOR_WINDOWTEXT);
 }
 
+
 COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(
 		int iCol,
 		bool bSelected,
@@ -261,6 +266,7 @@ COLORREF CAgilityBookViewCalendarData::GetBackgroundColor(
 	else
 		return ::GetSysColor(COLOR_WINDOW);
 }
+
 
 bool CAgilityBookViewCalendarData::HighlightOpeningNear(int iCol) const
 {
@@ -284,6 +290,7 @@ bool CAgilityBookViewCalendarData::HighlightOpeningNear(int iCol) const
 	}
 	return bHighlight;
 }
+
 
 bool CAgilityBookViewCalendarData::HighlightClosingNear(int iCol) const
 {
@@ -312,6 +319,7 @@ CAgilityBookViewCalendarList::CSortColumn::CSortColumn(std::vector<int>& inColum
 {
 }
 
+
 void CAgilityBookViewCalendarList::CSortColumn::Initialize()
 {
 	int realCol = IO_CAL_START_DATE;
@@ -327,6 +335,7 @@ void CAgilityBookViewCalendarList::CSortColumn::Initialize()
 		col = LookupColumn(IO_CAL_START_DATE);
 	m_iCol = col * neg;
 }
+
 
 void CAgilityBookViewCalendarList::CSortColumn::SetColumn(int iCol)
 {
@@ -344,6 +353,7 @@ void CAgilityBookViewCalendarList::CSortColumn::SetColumn(int iCol)
 	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Calendar"), realCol);
 }
 
+
 int CAgilityBookViewCalendarList::CSortColumn::LookupColumn(int iCol) const
 {
 	size_t n = m_Columns.size();
@@ -357,11 +367,13 @@ int CAgilityBookViewCalendarList::CSortColumn::LookupColumn(int iCol) const
 	return -1;
 }
 
+
 struct SORT_CAL_INFO
 {
 	CAgilityBookViewCalendarList* pThis;
 	int nCol;
 };
+
 
 int CALLBACK CompareCalendar(
 		LPARAM lParam1,
@@ -555,7 +567,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-// CAgilityBookViewCalendarList construction/destruction
 
 #pragma warning (push)
 #pragma warning ( disable : 4355 )
@@ -581,9 +592,11 @@ CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 }
 #pragma warning (pop)
 
+
 CAgilityBookViewCalendarList::~CAgilityBookViewCalendarList()
 {
 }
+
 
 BOOL CAgilityBookViewCalendarList::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -591,11 +604,13 @@ BOOL CAgilityBookViewCalendarList::PreCreateWindow(CREATESTRUCT& cs)
 	return CListView2::PreCreateWindow(cs);
 }
 
+
 LRESULT CAgilityBookViewCalendarList::OnCommandHelp(WPARAM, LPARAM)
 {
 	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_CALENDAR, HH_HELP_CONTEXT);
 	return 1;
 }
+
 
 int CAgilityBookViewCalendarList::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
@@ -607,11 +622,13 @@ int CAgilityBookViewCalendarList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+
 void CAgilityBookViewCalendarList::OnDestroy() 
 {
 	GetListCtrl().DeleteAllItems();
 	CListView2::OnDestroy();
 }
+
 
 DWORD CAgilityBookViewCalendarList::GetFormatFlags(int iCol) const
 {
@@ -639,6 +656,7 @@ DWORD CAgilityBookViewCalendarList::GetFormatFlags(int iCol) const
 	}
 	return dwFlags | dwFormat;
 }
+
 
 void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
@@ -748,11 +766,13 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	dc.Detach();
 }
 
+
 void CAgilityBookViewCalendarList::OnInitialUpdate()
 {
 	SetupColumns();
 	CListView2::OnInitialUpdate();
 }
+
 
 void CAgilityBookViewCalendarList::OnActivateView(
 		BOOL bActivate,
@@ -770,6 +790,7 @@ void CAgilityBookViewCalendarList::OnActivateView(
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdate(
 		CView* pSender,
 		LPARAM lHint,
@@ -779,6 +800,7 @@ void CAgilityBookViewCalendarList::OnUpdate(
 		LoadData();
 }
 
+
 #ifdef _DEBUG
 // CAgilityBookViewCalendarList diagnostics
 void CAgilityBookViewCalendarList::AssertValid() const
@@ -786,10 +808,12 @@ void CAgilityBookViewCalendarList::AssertValid() const
 	CListView2::AssertValid();
 }
 
+
 void CAgilityBookViewCalendarList::Dump(CDumpContext& dc) const
 {
 	CListView2::Dump(dc);
 }
+
 
 CAgilityBookDoc* CAgilityBookViewCalendarList::GetDocument() const // non-debug version is inline
 {
@@ -820,11 +844,13 @@ bool CAgilityBookViewCalendarList::IsFiltered() const
 	return filter.IsFiltered();
 }
 
+
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
 {
 	msg.FormatMessage(IDS_NUM_EVENTS, GetListCtrl().GetItemCount());
 	return true;
 }
+
 
 bool CAgilityBookViewCalendarList::GetMessage2(CString& msg) const
 {
@@ -832,10 +858,12 @@ bool CAgilityBookViewCalendarList::GetMessage2(CString& msg) const
 	return true;
 }
 
+
 CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int index) const
 {
 	return dynamic_cast<CAgilityBookViewCalendarData*>(GetData(index));
 }
+
 
 void CAgilityBookViewCalendarList::SetupColumns()
 {
@@ -858,6 +886,7 @@ void CAgilityBookViewCalendarList::SetupColumns()
 		m_SortColumn.Initialize();
 	}
 }
+
 
 void CAgilityBookViewCalendarList::LoadData()
 {
@@ -978,6 +1007,7 @@ void CAgilityBookViewCalendarList::LoadData()
 	m_bSuppressSelect = false;
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewCalendarList message handlers
 
 void CAgilityBookViewCalendarList::OnRclick(
@@ -988,6 +1018,7 @@ void CAgilityBookViewCalendarList::OnRclick(
 	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
+
 
 void CAgilityBookViewCalendarList::OnContextMenu(
 		CWnd* pWnd,
@@ -1018,6 +1049,7 @@ void CAgilityBookViewCalendarList::OnContextMenu(
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnColumnclick(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -1036,6 +1068,7 @@ void CAgilityBookViewCalendarList::OnColumnclick(
 		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	*pResult = 0;
 }
+
 
 void CAgilityBookViewCalendarList::OnGetdispinfo(
 		NMHDR* pNMHDR,
@@ -1057,6 +1090,7 @@ void CAgilityBookViewCalendarList::OnGetdispinfo(
 	}
 	*pResult = 0;
 }
+
 
 void CAgilityBookViewCalendarList::OnItemChanged(
 		NMHDR* pNMHDR,
@@ -1082,6 +1116,7 @@ void CAgilityBookViewCalendarList::OnItemChanged(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewCalendarList::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -1089,6 +1124,7 @@ void CAgilityBookViewCalendarList::OnDblclk(
 	OnCalendarEdit();
 	*pResult = 0;
 }
+
 
 void CAgilityBookViewCalendarList::OnKeydown(
 		NMHDR* pNMHDR,
@@ -1107,11 +1143,13 @@ void CAgilityBookViewCalendarList::OnKeydown(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewCalendarList::OnEditFind()
 {
 	CDlgFind dlg(m_Callback, this);
 	dlg.DoModal();
 }
+
 
 void CAgilityBookViewCalendarList::OnEditFindNext()
 {
@@ -1122,6 +1160,7 @@ void CAgilityBookViewCalendarList::OnEditFindNext()
 		m_Callback.Search(NULL);
 }
 
+
 void CAgilityBookViewCalendarList::OnEditFindPrevious()
 {
 	m_Callback.SearchDown(false);
@@ -1131,6 +1170,7 @@ void CAgilityBookViewCalendarList::OnEditFindPrevious()
 		m_Callback.Search(NULL);
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1139,6 +1179,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 {
@@ -1155,6 +1196,7 @@ void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdateCalendarExport(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1162,6 +1204,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarExport(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewCalendarList::OnCalendarExport()
 {
@@ -1186,6 +1229,7 @@ void CAgilityBookViewCalendarList::OnCalendarExport()
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdateCalendarEdit(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1194,6 +1238,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarEdit(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewCalendarList::OnCalendarEdit()
 {
@@ -1226,6 +1271,7 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnCalendarNew()
 {
 	ARBCalendarPtr cal(ARBCalendar::New());
@@ -1243,6 +1289,7 @@ void CAgilityBookViewCalendarList::OnCalendarNew()
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1250,6 +1297,7 @@ void CAgilityBookViewCalendarList::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewCalendarList::OnEditDuplicate()
 {
@@ -1291,16 +1339,19 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdateEditCut(CCmdUI* pCmdUI)
 {
 	OnUpdateEditCopy(pCmdUI);
 }
+
 
 void CAgilityBookViewCalendarList::OnEditCut()
 {
 	OnEditCopy();
 	OnCalendarDelete();
 }
+
 
 void CAgilityBookViewCalendarList::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
@@ -1309,6 +1360,7 @@ void CAgilityBookViewCalendarList::OnUpdateEditCopy(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewCalendarList::OnEditCopy()
 {
@@ -1369,6 +1421,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdateEditPaste(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1376,6 +1429,7 @@ void CAgilityBookViewCalendarList::OnUpdateEditPaste(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewCalendarList::OnEditPaste()
 {
@@ -1414,6 +1468,7 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 	}
 }
 
+
 void CAgilityBookViewCalendarList::OnUpdateCalendarDelete(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1432,6 +1487,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarDelete(CCmdUI* pCmdUI)
 	}
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewCalendarList::OnCalendarDelete()
 {
@@ -1462,6 +1518,7 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 		}
 	}
 }
+
 
 void CAgilityBookViewCalendarList::OnViewCustomize()
 {

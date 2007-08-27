@@ -62,6 +62,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(CWnd* pParent)
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgConfigUpdate::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -72,6 +73,7 @@ void CDlgConfigUpdate::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_UPDATE_NAME, m_ctrlFileName);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgConfigUpdate, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigUpdate)
@@ -148,17 +150,20 @@ BOOL CDlgConfigUpdate::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgConfigUpdate::OnUpdateDefault() 
 {
 	UpdateData(TRUE);
 	EnableControls();
 }
 
+
 void CDlgConfigUpdate::OnUpdateExisting() 
 {
 	UpdateData(TRUE);
 	EnableControls();
 }
+
 
 void CDlgConfigUpdate::OnName() 
 {
@@ -173,6 +178,7 @@ void CDlgConfigUpdate::OnName()
 		UpdateData(FALSE);
 	}
 }
+
 
 void CDlgConfigUpdate::OnOK() 
 {

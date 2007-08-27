@@ -153,6 +153,7 @@ CVersionNum::CVersionNum(
 	m_Valid = true;
 }
 
+
 // This ctor is for reading the version number from the web.
 CVersionNum::CVersionNum(CString inVer)
 	: m_Valid(false)
@@ -187,6 +188,7 @@ CVersionNum::CVersionNum(CString inVer)
 	}
 }
 
+
 bool CVersionNum::operator==(CVersionNum const& rhs) const
 {
 	return m_Version.part1 == rhs.m_Version.part1
@@ -194,6 +196,7 @@ bool CVersionNum::operator==(CVersionNum const& rhs) const
 		&& m_Version.part3 == rhs.m_Version.part3
 		&& m_Version.part4 == rhs.m_Version.part4;
 }
+
 
 bool CVersionNum::operator<(CVersionNum const& rhs) const
 {
@@ -213,6 +216,7 @@ bool CVersionNum::operator<(CVersionNum const& rhs) const
 	return false;
 }
 
+
 bool CVersionNum::operator>(CVersionNum const& rhs) const
 {
 	if (m_Version.part1 > rhs.m_Version.part1
@@ -231,6 +235,7 @@ bool CVersionNum::operator>(CVersionNum const& rhs) const
 	return false;
 }
 
+
 void CVersionNum::clear()
 {
 	m_Valid = false;
@@ -238,6 +243,7 @@ void CVersionNum::clear()
 	m_ProdName.Empty();
 	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
 }
+
 
 CString CVersionNum::GetVersionString() const
 {
@@ -248,6 +254,7 @@ CString CVersionNum::GetVersionString() const
 		<< '.' << m_Version.part4;
 	return str.str().c_str();
 }
+
 
 void CVersionNum::GetVersion(VERSION_NUMBER& outVer) const
 {

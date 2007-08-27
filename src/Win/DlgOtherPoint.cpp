@@ -67,6 +67,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgOtherPoint::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -76,6 +77,7 @@ void CDlgOtherPoint::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_OTHER_POINTS, m_Points);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgOtherPoint, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgOtherPoint)
@@ -122,6 +124,7 @@ BOOL CDlgOtherPoint::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgOtherPoint::OnSelchangeOtherpoints() 
 {
 	int index = m_ctrlOtherPoints.GetCurSel();
@@ -137,6 +140,7 @@ void CDlgOtherPoint::OnSelchangeOtherpoints()
 	}
 }
 
+
 void CDlgOtherPoint::OnBnClickedOtherNew()
 {
 	ARBConfigOtherPointsPtr pOther(ARBConfigOtherPoints::New());
@@ -149,6 +153,7 @@ void CDlgOtherPoint::OnBnClickedOtherNew()
 		}
 	}
 }
+
 
 void CDlgOtherPoint::OnOK() 
 {

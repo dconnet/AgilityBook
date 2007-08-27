@@ -68,6 +68,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CWizardImport, CDlgBasePropertyPage)
 
+
 CWizardImport::CWizardImport(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
@@ -96,9 +97,11 @@ CWizardImport::CWizardImport(
 	}
 }
 
+
 CWizardImport::~CWizardImport()
 {
 }
+
 
 void CWizardImport::ResetData()
 {
@@ -106,6 +109,7 @@ void CWizardImport::ResetData()
 	m_FileData.RemoveAll();
 	m_ExcelData.clear();
 }
+
 
 void CWizardImport::DoDataExchange(CDataExchange* pDX)
 {
@@ -123,6 +127,7 @@ void CWizardImport::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_WIZARD_IMPORT_PREVIEW, m_ctrlPreview);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CWizardImport, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CWizardImport)
@@ -155,6 +160,7 @@ CAgilityBookOptions::ColumnOrder CWizardImport::GetColumnInfo() const
 	return order;
 }
 
+
 CString CWizardImport::GetDelim() const
 {
 	CString delim;
@@ -170,6 +176,7 @@ CString CWizardImport::GetDelim() const
 	}
 	return delim;
 }
+
 
 void CWizardImport::UpdateButtons()
 {
@@ -215,6 +222,7 @@ void CWizardImport::UpdateButtons()
 	dwWiz |= (bOk ? PSWIZB_FINISH : PSWIZB_DISABLEDFINISH);
 	m_pSheet->SetWizardButtons(dwWiz);
 }
+
 
 static bool GetField(
 		const CString& delim,
@@ -272,6 +280,7 @@ static bool GetField(
 		ioStr.Empty();
 	return true;
 }
+
 
 void CWizardImport::UpdatePreview()
 {
@@ -438,6 +447,7 @@ BOOL CWizardImport::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 BOOL CWizardImport::OnSetActive() 
 {
 	UpdateButtons();
@@ -447,10 +457,12 @@ BOOL CWizardImport::OnSetActive()
 	return rc;
 }
 
+
 LRESULT CWizardImport::OnWizardBack()
 {
 	return IDD_WIZARD_START;
 }
+
 
 static ARBDogRunPtr CreateRun(
 		ARBDogRunPtr pRun,
@@ -465,6 +477,7 @@ static ARBDogRunPtr CreateRun(
 	return pRun;
 }
 
+
 static ARBString GetPrimaryVenue(ARBString const& venues)
 {
 	ARBString venue;
@@ -475,6 +488,7 @@ static ARBString GetPrimaryVenue(ARBString const& venues)
 		venue = venues;
 	return venue;
 }
+
 
 static void BreakLine(
 		char inSep,
@@ -492,6 +506,7 @@ static void BreakLine(
 	outFields.push_back(inStr);
 }
 
+
 static ARBCalendarPtr CreateCal(ARBCalendarPtr pCal)
 {
 	if (!pCal)
@@ -500,6 +515,7 @@ static ARBCalendarPtr CreateCal(ARBCalendarPtr pCal)
 	}
 	return pCal;
 }
+
 
 static ARBTrainingPtr CreateLog(ARBTrainingPtr pLog)
 {
@@ -510,6 +526,7 @@ static ARBTrainingPtr CreateLog(ARBTrainingPtr pLog)
 	}
 	return pLog;
 }
+
 
 BOOL CWizardImport::OnWizardFinish() 
 {
@@ -1209,6 +1226,7 @@ BOOL CWizardImport::OnWizardFinish()
 	return CDlgBasePropertyPage::OnWizardFinish();
 }
 
+
 void CWizardImport::OnImportKillFocus()
 {
 	if (!UpdateData(TRUE))
@@ -1217,6 +1235,7 @@ void CWizardImport::OnImportKillFocus()
 	if (row != m_Row)
 		UpdatePreview();
 }
+
 
 void CWizardImport::OnDeltaposImportRowSpin(
 		NMHDR* pNMHDR,
@@ -1234,6 +1253,7 @@ void CWizardImport::OnDeltaposImportRowSpin(
 	*pResult = 0;
 }
 
+
 void CWizardImport::OnImportDelim() 
 {
 	if (!UpdateData(TRUE))
@@ -1241,6 +1261,7 @@ void CWizardImport::OnImportDelim()
 	UpdateButtons();
 	UpdatePreview();
 }
+
 
 void CWizardImport::OnImportAssign() 
 {
@@ -1257,6 +1278,7 @@ void CWizardImport::OnImportAssign()
 		}
 	}
 }
+
 
 void CWizardImport::OnImportFile() 
 {

@@ -54,6 +54,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CWizard, CDlgBaseSheet)
 
+
 #pragma warning( push )
 // Disable "warning C4355: 'this' : used in base member initializer list"
 #pragma warning( disable : 4355 )
@@ -86,6 +87,7 @@ CWizard::CWizard(
 }
 #pragma warning( pop )
 
+
 CWizard::~CWizard()
 {
 	delete m_pageStart;
@@ -93,10 +95,12 @@ CWizard::~CWizard()
 	delete m_pageExport;
 }
 
+
 BEGIN_MESSAGE_MAP(CWizard, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CWizard)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 void CWizard::ResetData()
 {

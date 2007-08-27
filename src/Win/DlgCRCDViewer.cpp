@@ -62,6 +62,7 @@ CDlgCRCDViewer::CDlgCRCDViewer(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgCRCDViewer::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -70,6 +71,7 @@ void CDlgCRCDViewer::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDOK, m_ctrlOK);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgCRCDViewer, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCRCDViewer)
@@ -139,6 +141,7 @@ BOOL CDlgCRCDViewer::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 HBRUSH CDlgCRCDViewer::OnCtlColor(
 		CDC* pDC,
 		CWnd* pWnd,
@@ -152,12 +155,14 @@ HBRUSH CDlgCRCDViewer::OnCtlColor(
 	return hbr;
 }
 
+
 void CDlgCRCDViewer::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
 	lpMMI->ptMinTrackSize.x = m_rWin.Width();
 	lpMMI->ptMinTrackSize.y = m_rWin.Height();
 	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
+
 
 void CDlgCRCDViewer::OnSize(
 		UINT nType,

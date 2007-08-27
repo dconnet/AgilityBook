@@ -52,9 +52,11 @@ CRichEditCtrl2::CRichEditCtrl2()
 {
 }
 
+
 BEGIN_MESSAGE_MAP(CRichEditCtrl2, CRichEditCtrl)
 	ON_NOTIFY_REFLECT(EN_LINK, OnEnLink)
 END_MESSAGE_MAP()
+
 
 BOOL CRichEditCtrl2::Create(
 		DWORD dwStyle,
@@ -67,6 +69,7 @@ BOOL CRichEditCtrl2::Create(
 	Setup();
 	return TRUE;
 }
+
 
 #if _MSC_VER >= 1300
 BOOL CRichEditCtrl2::CreateEx(
@@ -83,11 +86,13 @@ BOOL CRichEditCtrl2::CreateEx(
 }
 #endif
 
+
 void CRichEditCtrl2::PreSubclassWindow()
 {
 	CRichEditCtrl::PreSubclassWindow();
 	Setup();
 }
+
 
 void CRichEditCtrl2::Setup()
 {
@@ -102,6 +107,7 @@ void CRichEditCtrl2::Setup()
 	SetAutoURLDetect(TRUE);
 #endif
 }
+
 
 void CRichEditCtrl2::OnEnLink(
 		NMHDR* pNMHDR,

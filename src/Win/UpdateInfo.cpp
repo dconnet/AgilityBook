@@ -101,6 +101,7 @@ CUpdateInfo::CUpdateInfo()
 {
 }
 
+
 /**
  * This will read the version.txt file and cache it.
  * In addition, it will ask to update if a newer version is found.
@@ -224,6 +225,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	return true;
 }
 
+
 /**
  * Check the version against the web.
  */
@@ -276,6 +278,7 @@ bool CUpdateInfo::CheckProgram()
 	return bNeedsUpdating;
 }
 
+
 /**
  * Check the version against the web.
  */
@@ -291,6 +294,7 @@ bool CUpdateInfo::IsOutOfDate()
 	else
 		return false;
 }
+
 
 void CUpdateInfo::CheckConfig(
 		CAgilityBookDoc* pDoc,
@@ -372,11 +376,13 @@ void CUpdateInfo::CheckConfig(
 	}
 }
 
+
 void CUpdateInfo::AutoUpdateProgram()
 {
 	if (ReadVersionFile(false))
 		CheckProgram();
 }
+
 
 void CUpdateInfo::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 {
@@ -388,6 +394,7 @@ void CUpdateInfo::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 		return;
 	CheckConfig(pDoc, false);
 }
+
 
 void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc)
 {

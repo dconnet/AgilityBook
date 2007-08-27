@@ -50,15 +50,18 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CListBox2, CListBox)
 
+
 CListBox2::CListBox2(bool bAutoDelete)
 	: m_bAutoDelete(bAutoDelete)
 	, m_HorzExtent(0)
 {
 }
 
+
 CListBox2::~CListBox2()
 {
 }
+
 
 CListData* CListBox2::GetData(int index) const
 {
@@ -67,6 +70,7 @@ CListData* CListBox2::GetData(int index) const
 	else
 		return NULL;
 }
+
 
 void CListBox2::SetData(int index, CListData* inData)
 {
@@ -79,11 +83,13 @@ void CListBox2::SetData(int index, CListData* inData)
 	}
 }
 
+
 BOOL CListBox2::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	cs.style |= WS_HSCROLL;
 	return CListBox::PreCreateWindow(cs);
 }
+
 
 BEGIN_MESSAGE_MAP(CListBox2, CListBox)
 	//{{AFX_MSG_MAP(CListBox2)
@@ -132,6 +138,7 @@ void CListBox2::OnDestroy()
 	CListBox::OnDestroy();
 }
 
+
 LRESULT CListBox2::OnSetFont(WPARAM, LPARAM)
 {
 	Default();
@@ -149,6 +156,7 @@ LRESULT CListBox2::OnSetFont(WPARAM, LPARAM)
 	return 0;
 }
 
+
 LRESULT CListBox2::OnAddString(WPARAM, LPARAM lParam)
 {
 	LPCTSTR str = reinterpret_cast<LPCTSTR>(lParam);
@@ -156,12 +164,14 @@ LRESULT CListBox2::OnAddString(WPARAM, LPARAM lParam)
 	return Default();
 }
 
+
 LRESULT CListBox2::OnInsertString(WPARAM, LPARAM lParam)
 {
 	LPCTSTR str = reinterpret_cast<LPCTSTR>(lParam);
 	ComputeExtent(str);
 	return Default();
 }
+
 
 LRESULT CListBox2::OnResetContent(WPARAM, LPARAM)
 {
@@ -176,6 +186,7 @@ LRESULT CListBox2::OnResetContent(WPARAM, LPARAM)
 	}
 	return Default();
 }
+
 
 LRESULT CListBox2::OnDeleteString(WPARAM wParam, LPARAM)
 {
@@ -194,15 +205,18 @@ LRESULT CListBox2::OnDeleteString(WPARAM wParam, LPARAM)
 
 IMPLEMENT_DYNAMIC(CCheckListBox2, CCheckListBox)
 
+
 CCheckListBox2::CCheckListBox2(bool bAutoDelete)
 	: m_bAutoDelete(bAutoDelete)
 	, m_HorzExtent(0)
 {
 }
 
+
 CCheckListBox2::~CCheckListBox2()
 {
 }
+
 
 CListData* CCheckListBox2::GetData(int index) const
 {
@@ -211,6 +225,7 @@ CListData* CCheckListBox2::GetData(int index) const
 	else
 		return NULL;
 }
+
 
 void CCheckListBox2::SetData(int index, CListData* inData)
 {
@@ -223,11 +238,13 @@ void CCheckListBox2::SetData(int index, CListData* inData)
 	}
 }
 
+
 BOOL CCheckListBox2::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	cs.style |= WS_HSCROLL;
 	return CCheckListBox::PreCreateWindow(cs);
 }
+
 
 BEGIN_MESSAGE_MAP(CCheckListBox2, CCheckListBox)
 	//{{AFX_MSG_MAP(CCheckListBox2)
@@ -276,6 +293,7 @@ void CCheckListBox2::OnDestroy()
 	CCheckListBox::OnDestroy();
 }
 
+
 LRESULT CCheckListBox2::OnSetFont(WPARAM, LPARAM)
 {
 	Default();
@@ -293,6 +311,7 @@ LRESULT CCheckListBox2::OnSetFont(WPARAM, LPARAM)
 	return 0;
 }
 
+
 LRESULT CCheckListBox2::OnAddString(WPARAM, LPARAM lParam)
 {
 	LPCTSTR str = reinterpret_cast<LPCTSTR>(lParam);
@@ -300,12 +319,14 @@ LRESULT CCheckListBox2::OnAddString(WPARAM, LPARAM lParam)
 	return Default();
 }
 
+
 LRESULT CCheckListBox2::OnInsertString(WPARAM, LPARAM lParam)
 {
 	LPCTSTR str = reinterpret_cast<LPCTSTR>(lParam);
 	ComputeExtent(str);
 	return Default();
 }
+
 
 LRESULT CCheckListBox2::OnResetContent(WPARAM, LPARAM)
 {
@@ -320,6 +341,7 @@ LRESULT CCheckListBox2::OnResetContent(WPARAM, LPARAM)
 	}
 	return Default();
 }
+
 
 LRESULT CCheckListBox2::OnDeleteString(WPARAM wParam, LPARAM)
 {

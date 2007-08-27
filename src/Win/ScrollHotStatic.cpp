@@ -35,9 +35,11 @@ END_MESSAGE_MAP()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constructor sets default colors = blue/purple.
 //
+
 #ifdef GLOBAL_VISITED_INFORMATION
 BOOL CScrollHotStatic::m_bVisited = FALSE;
 #endif
+
 
 CScrollHotStatic::CScrollHotStatic()
 	: m_colorUnvisited(UNVISITED_COLOR)
@@ -57,9 +59,11 @@ CScrollHotStatic::CScrollHotStatic()
 	::SetCursor(m_hArrowCursor);
 }
 
+
 CScrollHotStatic::~CScrollHotStatic()
 {
 }
+
 
 void CScrollHotStatic::AddText(
 		LPCTSTR lpStrText,
@@ -81,7 +85,7 @@ void CScrollHotStatic::AddText(
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Handle mouse click: open URL/file.
-//
+
 void CScrollHotStatic::OnClicked()
 {
 	int j = m_ItemVector.size();
@@ -104,6 +108,7 @@ void CScrollHotStatic::OnClicked()
 		TRACE(_T("*** WARNING: CScrollHotStatic: unable to execute file %s\n"), (LPCTSTR)m_ItemVector[0].m_strLink);
 	}
 }
+
 
 void CScrollHotStatic::OnMouseMove(
 		UINT nFlags,
@@ -146,6 +151,7 @@ void CScrollHotStatic::OnMouseMove(
 	}
 }
 
+
 LPARAM CScrollHotStatic::OnMouseLeave(
 		WPARAM wp,
 		LPARAM lp)
@@ -158,6 +164,7 @@ LPARAM CScrollHotStatic::OnMouseLeave(
 
 	return 0;
 }
+
 
 void CScrollHotStatic::OnPaint()
 {
@@ -225,6 +232,7 @@ void CScrollHotStatic::OnPaint()
 	}
 }
 
+
 void CScrollHotStatic::OnTimer(UINT nIDEvent)
 {
 	if (nIDEvent == m_nRedrawTimer)
@@ -234,6 +242,7 @@ void CScrollHotStatic::OnTimer(UINT nIDEvent)
 	}
 	CStatic::OnTimer(nIDEvent);
 }
+
 
 void CScrollHotStatic::OnDestroy()
 {
@@ -245,10 +254,12 @@ void CScrollHotStatic::OnDestroy()
 	CStatic::OnDestroy();
 }
 
+
 BOOL CScrollHotStatic::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
+
 
 BOOL CScrollHotStatic::OnSetCursor(
 		CWnd* /*pWnd*/,

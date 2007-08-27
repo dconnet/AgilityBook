@@ -56,9 +56,11 @@ CComboBox2::CComboBox2(bool bAutoDelete)
 {
 }
 
+
 CComboBox2::~CComboBox2()
 {
 }
+
 
 CListData* CComboBox2::GetData(int index) const
 {
@@ -67,6 +69,7 @@ CListData* CComboBox2::GetData(int index) const
 	else
 		return NULL;
 }
+
 
 void CComboBox2::SetData(int index, CListData* inData)
 {
@@ -78,6 +81,7 @@ void CComboBox2::SetData(int index, CListData* inData)
 		SetItemDataPtr(index, inData);
 	}
 }
+
 
 BEGIN_MESSAGE_MAP(CComboBox2, CComboBox)
 	//{{AFX_MSG_MAP(CComboBox2)
@@ -96,6 +100,7 @@ void CComboBox2::OnDestroy()
 	CComboBox::OnDestroy();
 }
 
+
 LRESULT CComboBox2::OnResetContent(WPARAM, LPARAM)
 {
 	if (m_bAutoDelete)
@@ -109,6 +114,7 @@ LRESULT CComboBox2::OnResetContent(WPARAM, LPARAM)
 	}
 	return Default();
 }
+
 
 LRESULT CComboBox2::OnDeleteString(WPARAM wParam, LPARAM)
 {

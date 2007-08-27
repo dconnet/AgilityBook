@@ -80,6 +80,7 @@ private:
 	IDlgProgress* m_pProgress;
 };
 
+
 CProgressMeter::CProgressMeter(int nEntries, CWnd* pParent)
 	: m_nEntries(nEntries)
 	, m_pProgress(NULL)
@@ -95,17 +96,20 @@ CProgressMeter::CProgressMeter(int nEntries, CWnd* pParent)
 	m_pProgress->Show();
 }
 
+
 CProgressMeter::~CProgressMeter()
 {
 	if (m_pProgress)
 		m_pProgress->Dismiss();
 }
 
+
 void CProgressMeter::SetForegroundWindow()
 {
 	if (m_pProgress)
 		m_pProgress->SetForegroundWindow();
 }
+
 
 void CProgressMeter::Dismiss()
 {
@@ -116,11 +120,13 @@ void CProgressMeter::Dismiss()
 	}
 }
 
+
 void CProgressMeter::StepMe()
 {
 	if (1 < m_nEntries)
 		m_pProgress->StepIt(1);
 }
+
 
 void CProgressMeter::SetMessage(char const* pMessage)
 {
@@ -133,6 +139,7 @@ void CProgressMeter::SetMessage(char const* pMessage)
 	}
 }
 
+
 void CProgressMeter::SetRange(int inLower, int inUpper)
 {
 	if (m_pProgress)
@@ -141,6 +148,7 @@ void CProgressMeter::SetRange(int inLower, int inUpper)
 		m_pProgress->SetRange(nBar, inLower, inUpper);
 	}
 }
+
 
 void CProgressMeter::SetStep(int inStep)
 {
@@ -151,6 +159,7 @@ void CProgressMeter::SetStep(int inStep)
 	}
 }
 
+
 void CProgressMeter::StepIt()
 {
 	if (m_pProgress)
@@ -160,6 +169,7 @@ void CProgressMeter::StepIt()
 	}
 }
 
+
 void CProgressMeter::SetPos(int pos)
 {
 	if (m_pProgress)
@@ -168,6 +178,7 @@ void CProgressMeter::SetPos(int pos)
 		m_pProgress->SetPos(nBar, pos);
 	}
 }
+
 
 int CProgressMeter::GetPos()
 {
@@ -206,7 +217,10 @@ private:
 	HINSTANCE m_hDllInst;
 	ICalendarSite* m_pSite;
 };
+
+
 typedef boost::shared_ptr<CalSiteData> CalSiteDataPtr;
+
 
 CalSiteData::CalSiteData(CString const& pathname, CString const& filename)
 	: m_FileName(filename)
@@ -216,10 +230,12 @@ CalSiteData::CalSiteData(CString const& pathname, CString const& filename)
 	Connect(pathname);
 }
 
+
 CalSiteData::~CalSiteData()
 {
 	Unload();
 }
+
 
 void CalSiteData::Connect(CString const& pathname)
 {
@@ -248,6 +264,7 @@ void CalSiteData::Connect(CString const& pathname)
 	}
 }
 
+
 void CalSiteData::Unload(bool bPermanently)
 {
 	if (m_pSite)
@@ -271,6 +288,7 @@ void CalSiteData::Unload(bool bPermanently)
 		CAgilityBookOptions::SuppressCalSite(m_FileName, true);
 	}
 }
+
 
 CStringA CalSiteData::GetName()
 {
@@ -300,6 +318,7 @@ CStringA CalSiteData::GetName()
 	return data;
 }
 
+
 CStringA CalSiteData::GetDescription()
 {
 	CStringA data;
@@ -327,6 +346,7 @@ CStringA CalSiteData::GetDescription()
 	}
 	return data;
 }
+
 
 CStringA CalSiteData::Process(IProgressMeter *progress)
 {
@@ -375,6 +395,7 @@ private:
 	std::map<CString, CalSiteDataPtr> m_DirectAccess;
 };
 
+
 CCalendarSitesImpl::CCalendarSitesImpl()
 	: m_PathName()
 {
@@ -387,10 +408,12 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 		m_PathName = exeName.Left(iLastSlash + 1);
 }
 
+
 CCalendarSitesImpl::~CCalendarSitesImpl()
 {
 	m_DirectAccess.clear();
 }
+
 
 bool CCalendarSitesImpl::hasActiveSites() const
 {
@@ -404,10 +427,12 @@ bool CCalendarSitesImpl::hasActiveSites() const
 	return false;
 }
 
+
 void CCalendarSitesImpl::ManageSites(ARBConfig const& inConfig)
 {
 	AfxMessageBox(_T("TODO: Manage CalSite data"));
 }
+
 
 bool CCalendarSitesImpl::UpdateSites(ARBConfig const& inConfig)
 {
@@ -439,6 +464,7 @@ bool CCalendarSitesImpl::UpdateSites(ARBConfig const& inConfig)
 	}
 	return false;
 }
+
 
 bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {
@@ -566,25 +592,30 @@ CCalendarSites::CCalendarSites()
 {
 }
 
+
 CCalendarSites::~CCalendarSites()
 {
 	delete m_Impl;
 }
+
 
 bool CCalendarSites::hasActiveSites() const
 {
 	return m_Impl->hasActiveSites();
 }
 
+
 void CCalendarSites::ManageSites(ARBConfig const& inConfig)
 {
 	m_Impl->ManageSites(inConfig);
 }
 
+
 bool CCalendarSites::UpdateSites(ARBConfig const& inConfig)
 {
 	return m_Impl->UpdateSites(inConfig);
 }
+
 
 bool CCalendarSites::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {

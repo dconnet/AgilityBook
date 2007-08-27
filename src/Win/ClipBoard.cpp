@@ -91,10 +91,12 @@ CClipboardData::CClipboardData(bool bAutoOpen)
 		Open();
 }
 
+
 CClipboardData::~CClipboardData()
 {
 	Close();
 }
+
 
 bool CClipboardData::Open()
 {
@@ -105,6 +107,7 @@ bool CClipboardData::Open()
 	}
 	return m_bOkay;
 }
+
 
 void CClipboardData::Close()
 {
@@ -122,10 +125,12 @@ CClipboardDataReader::CClipboardDataReader()
 {
 }
 
+
 BOOL CClipboardDataReader::IsFormatAvailable(eClipFormat clpFmt)
 {
 	return ::IsClipboardFormatAvailable(GetClipboardFormat(clpFmt));
 }
+
 
 bool CClipboardDataReader::GetData(
 		eClipFormat clpFmt,
@@ -150,10 +155,12 @@ bool CClipboardDataReader::GetData(
 	return bOk;
 }
 
+
 bool CClipboardDataReader::GetData(CStringA& outData)
 {
 	return GetData(CF_TEXT, outData);
 }
+
 
 #if _MSC_VER >= 1300
 bool CClipboardDataReader::GetData(CStringW& outData)
@@ -175,6 +182,7 @@ bool CClipboardDataReader::GetData(CStringW& outData)
 	return bOk;
 }
 #endif
+
 
 /**
  * Internal function for reading ascii text.
@@ -213,6 +221,7 @@ CClipboardDataWriter::CClipboardDataWriter()
 	}
 }
 
+
 bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		ElementNodePtr inTree)
@@ -225,12 +234,14 @@ bool CClipboardDataWriter::SetData(
 	return SetData(clpFmt, out.str());
 }
 
+
 bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		std::string const& inData)
 {
 	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
 }
+
 
 bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
@@ -239,12 +250,14 @@ bool CClipboardDataWriter::SetData(
 	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
 }
 
+
 bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		CStringA const& inData)
 {
 	return SetData(GetClipboardFormat(clpFmt), (LPCSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
 }
+
 
 #if _MSC_VER >= 1300
 bool CClipboardDataWriter::SetData(
@@ -255,21 +268,25 @@ bool CClipboardDataWriter::SetData(
 }
 #endif
 
+
 // Note, when setting text, the OS will auto-populate the other formats too.
 bool CClipboardDataWriter::SetData(std::string const& inData)
 {
 	return SetData(CF_TEXT, inData.c_str(), inData.length());
 }
 
+
 bool CClipboardDataWriter::SetData(std::wstring const& inData)
 {
 	return SetData(CF_UNICODETEXT, inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
 }
 
+
 bool CClipboardDataWriter::SetData(CStringA const& inData)
 {
 	return SetData(CF_TEXT, (LPCSTR)inData, inData.GetLength());
 }
+
 
 #if _MSC_VER >= 1300
 bool CClipboardDataWriter::SetData(CStringW const& inData)
@@ -277,6 +294,7 @@ bool CClipboardDataWriter::SetData(CStringW const& inData)
 	return SetData(CF_UNICODETEXT, (LPCWSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
 }
 #endif
+
 
 bool CClipboardDataWriter::SetData(
 		UINT uFormat,

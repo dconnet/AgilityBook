@@ -64,6 +64,7 @@ CDlgMessage::CDlgMessage(
 	m_Message.Replace(_T("\n"), _T("\r\n"));
 }
 
+
 void CDlgMessage::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -74,6 +75,7 @@ void CDlgMessage::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgMessage, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgMessage)
 	ON_WM_GETMINMAXINFO()
@@ -81,6 +83,7 @@ BEGIN_MESSAGE_MAP(CDlgMessage, CDlgBaseDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/////////////////////////////////////////////////////////////////////////////
 // CDlgMessage message handlers
 
 BOOL CDlgMessage::OnInitDialog()
@@ -107,12 +110,14 @@ BOOL CDlgMessage::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgMessage::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
 	lpMMI->ptMinTrackSize.x = m_rWin.Width();
 	lpMMI->ptMinTrackSize.y = m_rWin.Height();
 	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
+
 
 void CDlgMessage::OnSize(UINT nType, int cx, int cy)
 {

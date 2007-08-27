@@ -124,14 +124,17 @@ CDlgOptions::CDlgOptions(
 	ASSERT(3 == GetPrintPage());
 }
 
+
 CDlgOptions::~CDlgOptions()
 {
 }
+
 
 BOOL CDlgOptions::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	return CDlgBaseSheet::PreCreateWindow(cs);
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgOptions, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CDlgOptions)

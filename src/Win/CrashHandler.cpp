@@ -146,6 +146,7 @@ static DWORD GetModuleBaseNameA(
 	return g_pGetModuleBaseName(hProcess, hModule, lpBaseName, nSize);
 }
 
+
 static bool IsNT()
 {
 	static bool bHasVersion = false;
@@ -170,6 +171,7 @@ static bool IsNT()
 	bHasVersion = true;
 	return bIsNT;
 }
+
 
 static DWORD BSUGetModuleBaseName(
 		HANDLE hProcess,
@@ -228,6 +230,7 @@ static DWORD BSUGetModuleBaseName(
 	}
 }
 
+
 static LPCTSTR ConvertSimpleException(DWORD dwExcept)
 {
 	switch (dwExcept)
@@ -282,6 +285,7 @@ static LPCTSTR ConvertSimpleException(DWORD dwExcept)
 	}
 }
 
+
 static BOOL InternalSymGetLineFromAddr(
 		HANDLE hProcess,
 		DWORD64 dwAddr,
@@ -313,6 +317,7 @@ static BOOL InternalSymGetLineFromAddr(
 	}
 	return FALSE;
 }
+
 
 static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 {
@@ -489,6 +494,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 	}
 	return szRet;
 }
+
 
 static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 {
@@ -680,6 +686,7 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 	return szRet;
 }
 
+
 static LPCTSTR GetFirstStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
 {
 	// All of the error checking is in the InternalGetStackTraceString
@@ -717,6 +724,7 @@ static LPCTSTR GetFirstStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
 	return InternalGetStackTraceString(pExPtrs);
 }
 
+
 static LPCTSTR GetNextStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
 {
 	// All error checking is in InternalGetStackTraceString.
@@ -725,7 +733,9 @@ static LPCTSTR GetNextStackTraceString(LPEXCEPTION_POINTERS pExPtrs)
 	return InternalGetStackTraceString(pExPtrs);
 }
 
+
 #define PRINT_INDENT	for (int indent = 0; indent < inIndent; ++indent) fputc(' ', output);
+
 
 // This function does put a bit of data on the stack and heap.
 // Hopefully it won't cause more trouble... So we log this data last.
@@ -852,6 +862,7 @@ static void QueryKey(
 	}
 }
 
+
 /**
  * This function is passed to SetUnhandledExceptionFilter().
  * Note, this function will NOT be called if you are running under a debugger.
@@ -936,6 +947,7 @@ LONG WINAPI CrashHandler(LPEXCEPTION_POINTERS pExPtrs)
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
+
 bool InitCrashHandler(HKEY hAppKey)
 {
 	if (!g_bSymEngInit)
@@ -971,6 +983,7 @@ bool InitCrashHandler(HKEY hAppKey)
 	return true;
 }
 
+
 bool CleanupCrashHandler()
 {
 	if (g_hAppKey != NULL)
@@ -980,6 +993,7 @@ bool CleanupCrashHandler()
 	}
 	return true;
 }
+
 
 #else
 bool InitCrashHandler(HKEY hAppKey)

@@ -73,11 +73,13 @@ static struct
 };
 static int const scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
 
+
 typedef struct
 {
 	CDlgRunReference* pThis;
 	CColumnOrder* pCols;
 } SORTINFO;
+
 
 int CALLBACK CompareRefRuns(
 		LPARAM lParam1,
@@ -172,14 +174,15 @@ CDlgRunReference::CDlgRunReference(
 {
 	ASSERT(NULL != m_Venue.get());
 	m_sortRefRuns.Initialize(scNumColumns);
-
 	//{{AFX_DATA_INIT(CDlgRunReference)
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgRunReference::~CDlgRunReference()
 {
 }
+
 
 void CDlgRunReference::DoDataExchange(CDataExchange* pDX)
 {
@@ -192,6 +195,7 @@ void CDlgRunReference::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNREF_DELETE, m_ctrlDelete);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgRunReference, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunReference)
@@ -215,6 +219,7 @@ CListPtrData<ARBDogReferenceRunPtr>* CDlgRunReference::GetReferenceData(int inde
 	return dynamic_cast<CListPtrData<ARBDogReferenceRunPtr>*>(pData);
 }
 
+
 bool CDlgRunReference::IsRefRunMe()
 {
 	if (m_pRefRunMe)
@@ -231,6 +236,7 @@ bool CDlgRunReference::IsRefRunMe()
 	}
 	return false;
 }
+
 
 void CDlgRunReference::CreateRefRunMe()
 {
@@ -274,6 +280,7 @@ void CDlgRunReference::CreateRefRunMe()
 	}
 }
 
+
 void CDlgRunReference::UpdateButtons()
 {
 	m_ctrlAdd.EnableWindow(IsRefRunMe() ? FALSE : TRUE);
@@ -288,6 +295,7 @@ void CDlgRunReference::UpdateButtons()
 		m_ctrlDelete.EnableWindow(FALSE);
 	}
 }
+
 
 void CDlgRunReference::SetColumnHeaders()
 {
@@ -307,6 +315,7 @@ void CDlgRunReference::SetColumnHeaders()
 		order.ReleaseBuffer();
 	}
 }
+
 
 void CDlgRunReference::ListRuns()
 {
@@ -358,6 +367,7 @@ void CDlgRunReference::ListRuns()
 	UpdateButtons();
 }
 
+
 void CDlgRunReference::GetAllHeights(std::set<ARBString>& outNames)
 {
 	m_pDoc->GetAllHeights(outNames);
@@ -373,6 +383,7 @@ void CDlgRunReference::GetAllHeights(std::set<ARBString>& outNames)
 	}
 }
 
+
 void CDlgRunReference::GetAllCallNames(std::set<ARBString>& outNames)
 {
 	m_pDoc->GetAllCallNames(outNames);
@@ -387,6 +398,7 @@ void CDlgRunReference::GetAllCallNames(std::set<ARBString>& outNames)
 		}
 	}
 }
+
 
 void CDlgRunReference::GetAllBreeds(std::set<ARBString>& outNames)
 {
@@ -433,12 +445,14 @@ BOOL CDlgRunReference::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 BOOL CDlgRunReference::OnSetActive()
 {
 	CreateRefRunMe();
 	UpdateButtons();
 	return CDlgBasePropertyPage::OnSetActive();
 }
+
 
 void CDlgRunReference::OnGetdispinfoRefRuns(
 		NMHDR* pNMHDR,
@@ -490,6 +504,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 	*pResult = 0;
 }
 
+
 void CDlgRunReference::OnColumnclickRefRuns(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -505,6 +520,7 @@ void CDlgRunReference::OnColumnclickRefRuns(
 	*pResult = 0;
 }
 
+
 void CDlgRunReference::OnItemchangedRefRuns(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -514,6 +530,7 @@ void CDlgRunReference::OnItemchangedRefRuns(
 	*pResult = 0;
 }
 
+
 void CDlgRunReference::OnDblclkRefRuns(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -521,6 +538,7 @@ void CDlgRunReference::OnDblclkRefRuns(
 	OnRefRunEdit();
 	*pResult = 0;
 }
+
 
 void CDlgRunReference::OnKeydownRefRuns(
 		NMHDR* pNMHDR,
@@ -537,6 +555,7 @@ void CDlgRunReference::OnKeydownRefRuns(
 	}
 	*pResult = 0;
 }
+
 
 void CDlgRunReference::OnRefRunAdd()
 {
@@ -558,6 +577,7 @@ void CDlgRunReference::OnRefRunAdd()
 		}
 	}
 }
+
 
 void CDlgRunReference::OnRefRunNew() 
 {
@@ -615,6 +635,7 @@ void CDlgRunReference::OnRefRunNew()
 	}
 }
 
+
 void CDlgRunReference::OnRefRunEdit() 
 {
 	int nItem = m_ctrlRefRuns.GetSelection();
@@ -630,6 +651,7 @@ void CDlgRunReference::OnRefRunEdit()
 			ListRuns();
 	}
 }
+
 
 void CDlgRunReference::OnRefRunDelete() 
 {

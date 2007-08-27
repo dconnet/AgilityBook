@@ -58,14 +58,17 @@ BEGIN_MESSAGE_MAP(CSplitter, CSplitterWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 CSplitter::CSplitter()
 {
 }
+
 
 CSplitter::~CSplitter()
 {
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CSplitter message handlers
 
 // Route messages into ALL child views, not just the active one.

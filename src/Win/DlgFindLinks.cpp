@@ -68,6 +68,7 @@ CDlgFindLinks::CDlgFindLinksData::CDlgFindLinksData(
 {
 }
 
+
 CDlgFindLinks::CDlgFindLinksData::~CDlgFindLinksData()
 {
 }
@@ -88,11 +89,13 @@ static struct
 };
 static int const nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
 
+
 typedef struct
 {
 	CDlgFindLinks* pThis;
 	CColumnOrder* pCols;
 } SORTINFO;
+
 
 int CALLBACK CompareLinks(
 		LPARAM lParam1,
@@ -189,9 +192,11 @@ CDlgFindLinks::CDlgFindLinks(
 	}
 }
 
+
 CDlgFindLinks::~CDlgFindLinks()
 {
 }
+
 
 void CDlgFindLinks::DoDataExchange(CDataExchange* pDX)
 {
@@ -202,6 +207,7 @@ void CDlgFindLinks::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FINDLINKS_OPEN, m_ctrlOpen);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgFindLinks, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgFindLinks)
@@ -232,6 +238,7 @@ int CDlgFindLinks::GetImageIndex(ARBString const& inLink)
 	return img;
 }
 
+
 void CDlgFindLinks::SetColumnHeaders()
 {
 	LV_COLUMN col;
@@ -254,6 +261,7 @@ void CDlgFindLinks::SetColumnHeaders()
 		order.ReleaseBuffer();
 	}
 }
+
 
 void CDlgFindLinks::UpdateButtons()
 {
@@ -310,6 +318,7 @@ BOOL CDlgFindLinks::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgFindLinks::OnColumnclickList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -324,6 +333,7 @@ void CDlgFindLinks::OnColumnclickList(
 	m_sortLinks.Save();
 	*pResult = 0;
 }
+
 
 void CDlgFindLinks::OnGetdispinfoList(
 		NMHDR* pNMHDR,
@@ -355,6 +365,7 @@ void CDlgFindLinks::OnGetdispinfoList(
 	*pResult = 0;
 }
 
+
 void CDlgFindLinks::OnDblclkList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -362,6 +373,7 @@ void CDlgFindLinks::OnDblclkList(
 	OnEdit();
 	*pResult = 0;
 }
+
 
 void CDlgFindLinks::OnKeydownList(
 		NMHDR* pNMHDR,
@@ -379,6 +391,7 @@ void CDlgFindLinks::OnKeydownList(
 	*pResult = 0;
 }
 
+
 void CDlgFindLinks::OnItemchangedList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -387,6 +400,7 @@ void CDlgFindLinks::OnItemchangedList(
 	UpdateButtons();
 	*pResult = 0;
 }
+
 
 void CDlgFindLinks::OnCopy()
 {
@@ -406,6 +420,7 @@ void CDlgFindLinks::OnCopy()
 		clpData.SetData(data);
 	}
 }
+
 
 void CDlgFindLinks::OnEdit()
 {
@@ -433,6 +448,7 @@ void CDlgFindLinks::OnEdit()
 	}
 }
 
+
 void CDlgFindLinks::OnOpen()
 {
 	int nItem = m_ctrlLinks.GetSelection();
@@ -442,6 +458,7 @@ void CDlgFindLinks::OnOpen()
 		RunCommand(m_Data[index].m_Link.c_str());
 	}
 }
+
 
 void CDlgFindLinks::OnOK()
 {

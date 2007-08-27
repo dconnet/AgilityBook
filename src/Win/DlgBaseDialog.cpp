@@ -59,6 +59,7 @@ CDlgBaseDialog::CDlgBaseDialog(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgBaseDialog::CDlgBaseDialog(
 		UINT nIDTemplate,
 		CWnd* pParentWnd)
@@ -66,12 +67,14 @@ CDlgBaseDialog::CDlgBaseDialog(
 {
 }
 
+
 void CDlgBaseDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgBaseDialog)
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgBaseDialog, CDialog)
 	//{{AFX_MSG_MAP(CDlgBaseDialog)
@@ -90,12 +93,14 @@ BOOL CDlgBaseDialog::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 BOOL CDlgBaseDialog::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	if (!ShowContextHelp(pHelpInfo))
 		OnHelp();
 	return TRUE;
 }
+
 
 void CDlgBaseDialog::OnHelp()
 {

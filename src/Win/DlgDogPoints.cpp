@@ -76,6 +76,7 @@ static struct
 };
 static int const nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
 
+
 typedef struct
 {
 	CDlgDogPoints* pThis;
@@ -197,6 +198,7 @@ CDlgDogPoints::CDlgDogPoints(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgDogPoints::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
@@ -207,6 +209,7 @@ void CDlgDogPoints::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DOGPTS_SELECTED_PTS, m_ctrlSelectedPts);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgDogPoints, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogPoints)
@@ -229,6 +232,7 @@ CListPtrData<ARBDogExistingPointsPtr>* CDlgDogPoints::GetPointData(int index) co
 	return dynamic_cast<CListPtrData<ARBDogExistingPointsPtr>*>(pData);
 }
 
+
 void CDlgDogPoints::SetColumnHeaders()
 {
 	LV_COLUMN col;
@@ -247,6 +251,7 @@ void CDlgDogPoints::SetColumnHeaders()
 		order.ReleaseBuffer();
 	}
 }
+
 
 void CDlgDogPoints::ListExistingPoints()
 {
@@ -295,6 +300,7 @@ void CDlgDogPoints::ListExistingPoints()
 		}
 	}
 }
+
 
 void CDlgDogPoints::UpdateButtons()
 {
@@ -362,6 +368,7 @@ BOOL CDlgDogPoints::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgDogPoints::OnColumnclickExistingPoints(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -377,6 +384,7 @@ void CDlgDogPoints::OnColumnclickExistingPoints(
 	*pResult = 0;
 }
 
+
 void CDlgDogPoints::OnDblclkExistingPoints(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -384,6 +392,7 @@ void CDlgDogPoints::OnDblclkExistingPoints(
 	OnEdit();
 	*pResult = 0;
 }
+
 
 void CDlgDogPoints::OnKeydownExistingPoints(
 		NMHDR* pNMHDR,
@@ -400,6 +409,7 @@ void CDlgDogPoints::OnKeydownExistingPoints(
 	}
 	*pResult = 0;
 }
+
 
 void CDlgDogPoints::OnGetdispinfoExistingPoints(
 		NMHDR* pNMHDR,
@@ -458,6 +468,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(
 	*pResult = 0;
 }
 
+
 void CDlgDogPoints::OnItemchangedExistingPoints(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -467,12 +478,14 @@ void CDlgDogPoints::OnItemchangedExistingPoints(
 	*pResult = 0;
 }
 
+
 void CDlgDogPoints::OnNew()
 {
 	CDlgExistingPoints dlg(m_pDoc, m_ExistingPoints, ARBDogExistingPointsPtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListExistingPoints();
 }
+
 
 void CDlgDogPoints::OnEdit()
 {
@@ -488,6 +501,7 @@ void CDlgDogPoints::OnEdit()
 			ListExistingPoints();
 	}
 }
+
 
 void CDlgDogPoints::OnDelete()
 {

@@ -59,6 +59,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgOptionsFilter, CDlgBasePropertyPage)
 
+
 CDlgOptionsFilter::CDlgOptionsFilter(CAgilityBookDoc* pDoc)
 	: CDlgBasePropertyPage(CDlgOptionsFilter::IDD)
 	, m_pDoc(pDoc)
@@ -79,9 +80,11 @@ CDlgOptionsFilter::CDlgOptionsFilter(CAgilityBookDoc* pDoc)
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgOptionsFilter::~CDlgOptionsFilter()
 {
 }
+
 
 void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 {
@@ -158,6 +161,7 @@ void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsFilter)
 	ON_WM_HELPINFO()
@@ -177,6 +181,7 @@ BEGIN_MESSAGE_MAP(CDlgOptionsFilter, CDlgBasePropertyPage)
 	ON_BN_CLICKED(IDC_OPT_FILTER_NAMES_DELETE, OnBnClickedOptFilterNamesDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 void CDlgOptionsFilter::FillControls()
 {
@@ -349,6 +354,7 @@ void CDlgOptionsFilter::FillControls()
 	UpdateControls();
 }
 
+
 void CDlgOptionsFilter::FillFilter(
 		HTREEITEM hItem,
 		CString path,
@@ -408,6 +414,7 @@ void CDlgOptionsFilter::FillFilter(
 	}
 }
 
+
 void CDlgOptionsFilter::UpdateControls()
 {
 	if (0 == m_ViewDates)
@@ -445,11 +452,13 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 BOOL CDlgOptionsFilter::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	ShowContextHelp(pHelpInfo);
 	return TRUE;
 }
+
 
 void CDlgOptionsFilter::OnSetdispinfoNames(
 		NMHDR* pNMHDR,
@@ -474,6 +483,7 @@ void CDlgOptionsFilter::OnSetdispinfoNames(
 	*pResult = 0;
 }
 
+
 void CDlgOptionsFilter::OnSetdispinfoVenues(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -487,11 +497,13 @@ void CDlgOptionsFilter::OnSetdispinfoVenues(
 	*pResult = 0;
 }
 
+
 void CDlgOptionsFilter::OnUpdateFilters()
 {
 	UpdateData(TRUE);
 	UpdateControls();
 }
+
 
 void CDlgOptionsFilter::OnSelchangeFilterNames()
 {
@@ -507,6 +519,7 @@ void CDlgOptionsFilter::OnSelchangeFilterNames()
 		MessageBeep(0);
 }
 
+
 void CDlgOptionsFilter::OnBnClickedOptFilterNamesSave()
 {
 	if (!UpdateData(TRUE))
@@ -519,6 +532,7 @@ void CDlgOptionsFilter::OnBnClickedOptFilterNamesSave()
 	else
 		AfxMessageBox(IDS_NAME_FILTER, MB_ICONEXCLAMATION);
 }
+
 
 void CDlgOptionsFilter::OnBnClickedOptFilterNamesDelete()
 {

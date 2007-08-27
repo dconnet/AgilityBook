@@ -94,6 +94,7 @@ CDlgTrial::CDlgTrial(
 	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
+
 void CDlgTrial::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -111,6 +112,7 @@ void CDlgTrial::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TRIAL_CLUB_INFO, m_ctrlClubInfo);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgTrial, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTrial)
@@ -134,6 +136,7 @@ ARBDogClubPtr CDlgTrial::GetClubData(int index) const
 	CListData* pData = m_ctrlClubs.GetData(index);
 	return dynamic_cast<CListPtrData<ARBDogClubPtr>*>(pData)->GetData();
 }
+
 
 void CDlgTrial::UpdateNotes(
 		bool bLocation,
@@ -170,6 +173,7 @@ void CDlgTrial::UpdateNotes(
 		m_ctrlClubInfo.SetWindowText(str);
 	}
 }
+
 
 void CDlgTrial::ListClubs()
 {
@@ -228,6 +232,7 @@ BOOL CDlgTrial::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgTrial::OnSelchangeLocation()
 {
 	// This message is sent when the combo is about to change.
@@ -239,11 +244,13 @@ void CDlgTrial::OnSelchangeLocation()
 	UpdateNotes(true, false);
 }
 
+
 void CDlgTrial::OnKillfocusLocation()
 {
 	UpdateData(TRUE);
 	UpdateNotes(true, false);
 }
+
 
 void CDlgTrial::OnItemchangedClubs(
 		NMHDR* pNMHDR,
@@ -268,6 +275,7 @@ void CDlgTrial::OnItemchangedClubs(
 	*pResult = 0;
 }
 
+
 void CDlgTrial::OnDblclkClubs(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -275,6 +283,7 @@ void CDlgTrial::OnDblclkClubs(
 	OnClubEdit();
 	*pResult = 0;
 }
+
 
 void CDlgTrial::OnKeydownClubs(
 		NMHDR* pNMHDR,
@@ -292,6 +301,7 @@ void CDlgTrial::OnKeydownClubs(
 	*pResult = 0;
 }
 
+
 void CDlgTrial::OnLocationNotes()
 {
 	UpdateData(TRUE);
@@ -303,6 +313,7 @@ void CDlgTrial::OnLocationNotes()
 		UpdateNotes(true, false);
 	}
 }
+
 
 void CDlgTrial::OnClubNotes()
 {
@@ -319,12 +330,14 @@ void CDlgTrial::OnClubNotes()
 	}
 }
 
+
 void CDlgTrial::OnClubNew()
 {
 	CDlgClub dlg(m_pDoc, m_Clubs, ARBDogClubPtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListClubs();
 }
+
 
 void CDlgTrial::OnClubEdit()
 {
@@ -338,6 +351,7 @@ void CDlgTrial::OnClubEdit()
 	}
 }
 
+
 void CDlgTrial::OnClubDelete()
 {
 	int index = m_ctrlClubs.GetSelection();
@@ -348,6 +362,7 @@ void CDlgTrial::OnClubDelete()
 		m_ctrlClubs.DeleteItem(index);
 	}
 }
+
 
 void CDlgTrial::OnOK()
 {

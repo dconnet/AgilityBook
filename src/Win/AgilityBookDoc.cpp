@@ -136,6 +136,7 @@ CErrorCallback::CErrorCallback()
 {
 }
 
+
 bool CErrorCallback::OnError(TCHAR const* const pMsg)
 {
 	CSplashWnd::HideSplashScreen();
@@ -173,15 +174,18 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 CAgilityBookDoc::CAgilityBookDoc()
 	: m_SuppressUpdates(false)
 	, m_CalSites()
 {
 }
 
+
 CAgilityBookDoc::~CAgilityBookDoc()
 {
 }
+
 
 /**
  * Return the dog associated with the currently selected item in the tree.
@@ -194,6 +198,7 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog()
 		pDog = pTree->GetCurrentTreeItem()->GetDog();
 	return pDog;
 }
+
 
 /**
  * Return the trial associated with the currently selected item in the tree.
@@ -208,6 +213,7 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial()
 	return pTrial;
 }
 
+
 /**
  * Return the run associated with the currently selected item in the tree.
  */
@@ -220,6 +226,7 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun()
 		pRun = pTree->GetCurrentTreeItem()->GetRun();
 	return pRun;
 }
+
 
 /**
  * Called from the Runs view. Since the run is visible in that view and visible
@@ -239,6 +246,7 @@ void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 	}
 }
 
+
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
@@ -251,6 +259,7 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 			SetModifiedFlag(TRUE);
 	}
 }
+
 
 void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
@@ -265,6 +274,7 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 	}
 }
 
+
 void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
@@ -278,6 +288,7 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 	}
 }
 
+
 void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
@@ -290,6 +301,7 @@ void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 			SetModifiedFlag(TRUE);
 	}
 }
+
 
 bool CAgilityBookDoc::CreateTrialFromCalendar(
 		ARBCalendar const& cal,
@@ -328,6 +340,7 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 	return bCreated;
 }
 
+
 void CAgilityBookDoc::SortDates()
 {
 	bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
@@ -338,6 +351,7 @@ void CAgilityBookDoc::SortDates()
 	}
 }
 
+
 class CConfigActionCallback : public IConfigActionCallback
 {
 public:
@@ -345,6 +359,7 @@ public:
 	virtual void PreDelete(ARBString const& inMsg);
 	virtual void PostDelete(ARBString const& inMsg) const;
 };
+
 
 void CConfigActionCallback::PreDelete(ARBString const& inMsg)
 {
@@ -358,10 +373,12 @@ void CConfigActionCallback::PreDelete(ARBString const& inMsg)
 	}
 }
 
+
 void CConfigActionCallback::PostDelete(ARBString const& msg) const
 {
 	AfxMessageBox(msg.c_str(), MB_ICONWARNING);
 }
+
 
 void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
@@ -378,6 +395,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	else
 		AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
 }
+
 
 bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 {
@@ -402,6 +420,7 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 	}
 	return bOk;
 }
+
 
 bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 {
@@ -721,6 +740,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 	return bOk;
 }
 
+
 bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, CWnd* pParent)
 {
 	bool bOk = false;
@@ -766,6 +786,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, CWnd* pParent)
 	return bOk;
 }
 
+
 bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, CWnd* pParent)
 {
 	bool bOk = false;
@@ -801,6 +822,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, CWnd* pParent)
 	return bOk;
 }
 
+
 void CAgilityBookDoc::ResetVisibility()
 {
 	std::vector<CVenueFilter> venues;
@@ -829,6 +851,7 @@ void CAgilityBookDoc::ResetVisibility()
 		UpdateAllViews(NULL, UPDATE_OPTIONS);
 }
 
+
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
 		ARBDogPtr pDog)
@@ -839,6 +862,7 @@ void CAgilityBookDoc::ResetVisibility(
 	for (ARBDogTitleList::iterator iterTitle = pDog->GetTitles().begin(); iterTitle != pDog->GetTitles().end(); ++iterTitle)
 		ResetVisibility(venues, *iterTitle);
 }
+
 
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
@@ -857,6 +881,7 @@ void CAgilityBookDoc::ResetVisibility(
 		pTrial->SetFiltered(true);
 }
 
+
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
 		ARBDogTrialPtr pTrial,
@@ -867,6 +892,7 @@ void CAgilityBookDoc::ResetVisibility(
 	pRun->SetFiltered(ARBBase::eIgnoreQ, (nVisRun & (0x1 << ARBBase::eIgnoreQ)) ? false : true);
 }
 
+
 void CAgilityBookDoc::ResetVisibility(
 		std::vector<CVenueFilter>& venues,
 		ARBDogTitlePtr pTitle)
@@ -875,6 +901,7 @@ void CAgilityBookDoc::ResetVisibility(
 	pTitle->SetFiltered(!bVisTitle);
 }
 
+
 void CAgilityBookDoc::ResetVisibility(
 		std::set<ARBString>& names,
 		ARBTrainingPtr pTraining)
@@ -882,6 +909,7 @@ void CAgilityBookDoc::ResetVisibility(
 	bool bVisTraining = CFilterOptions::Options().IsTrainingLogVisible(names, pTraining);
 	pTraining->SetFiltered(!bVisTraining);
 }
+
 
 /**
  * Function to get the tree view. This is used internally and by the runs view.
@@ -898,6 +926,7 @@ CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
 	}
 	return NULL;
 }
+
 
 /**
  * Function to get the calendar list view. This is used by the calendar view
@@ -917,6 +946,7 @@ CAgilityBookViewCalendarList* CAgilityBookDoc::GetCalendarListView() const
 	return NULL;
 }
 
+
 /**
  * Function to get the calendar view. This is used by the calendar list view.
  */
@@ -933,6 +963,7 @@ CAgilityBookViewCalendar* CAgilityBookDoc::GetCalendarView() const
 	ASSERT(0);
 	return NULL;
 }
+
 
 /**
  * Function to get the trainging view. This is used by the export wizard.
@@ -989,6 +1020,7 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 	}
 }
 
+
 /**
  * MFC method to delete contents of current document.
  */
@@ -998,6 +1030,7 @@ void CAgilityBookDoc::DeleteContents()
 	CDocument::DeleteContents();
 	SetModifiedFlag(FALSE);
 }
+
 
 /**
  * MFC method to create a new empty document.
@@ -1017,6 +1050,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 	}
 	return TRUE;
 }
+
 
 /**
  * Since we are not using the CArchive serialization (via Serialize()), we
@@ -1130,6 +1164,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return TRUE;
 }
 
+
 /**
  * MFC method to close a document (will call DeleteContents thru base class)
  */
@@ -1142,6 +1177,7 @@ void CAgilityBookDoc::OnCloseDocument()
 		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastDog"), _T(""));
 	CDocument::OnCloseDocument();
 }
+
 
 /**
  * MFC method to save a document.
@@ -1182,6 +1218,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	return bOk;
 }
 
+
 #ifdef _DEBUG
 // CAgilityBookDoc diagnostics
 void CAgilityBookDoc::AssertValid() const
@@ -1189,12 +1226,14 @@ void CAgilityBookDoc::AssertValid() const
 	CDocument::AssertValid();
 }
 
+
 void CAgilityBookDoc::Dump(CDumpContext& dc) const
 {
 	CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookDoc commands
 
 void CAgilityBookDoc::OnAppAbout()
@@ -1203,6 +1242,7 @@ void CAgilityBookDoc::OnAppAbout()
 	aboutDlg.DoModal();
 }
 
+
 void CAgilityBookDoc::OnHelpUpdate()
 {
 	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
@@ -1210,11 +1250,13 @@ void CAgilityBookDoc::OnHelpUpdate()
 	pApp->UpdateInfo().UpdateConfiguration(this);
 }
 
+
 void CAgilityBookDoc::OnFileExportWizard()
 {
 	CWizard wiz(this);
 	wiz.DoModal();
 }
+
 
 void CAgilityBookDoc::OnFileLinked()
 {
@@ -1228,6 +1270,7 @@ void CAgilityBookDoc::OnFileLinked()
 
 }
 
+
 void CAgilityBookDoc::OnUpdateCopyTitles(CCmdUI* pCmdUI)
 {
 	// As long as a dog is current, enable. This means the copy may have
@@ -1238,6 +1281,7 @@ void CAgilityBookDoc::OnUpdateCopyTitles(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookDoc::OnCopyTitles()
 {
@@ -1311,12 +1355,14 @@ void CAgilityBookDoc::OnCopyTitles()
 	}
 }
 
+
 void CAgilityBookDoc::OnEditConfiguration()
 {
 	CDlgConfigure config(this, m_Records);
 	config.DoModal();
 	// Don't need to update calsite info - done during OnOK.
 }
+
 
 void CAgilityBookDoc::OnAgilityNewDog()
 {
@@ -1346,6 +1392,7 @@ void CAgilityBookDoc::OnAgilityNewDog()
 	}
 }
 
+
 void CAgilityBookDoc::OnAgilityNewCalendar()
 {
 	ARBCalendarPtr cal(ARBCalendar::New());
@@ -1374,6 +1421,7 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 	}
 }
 
+
 void CAgilityBookDoc::OnUpdateAgilityUpdateCalendar(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1382,10 +1430,12 @@ void CAgilityBookDoc::OnUpdateAgilityUpdateCalendar(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookDoc::OnAgilityUpdateCalendar()
 {
 	m_CalSites.FindEntries(this, m_Records.GetCalendar());
 }
+
 
 void CAgilityBookDoc::OnAgilityNewTraining()
 {
@@ -1412,6 +1462,7 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 	}
 }
 
+
 void CAgilityBookDoc::OnNotesClubs()
 {
 	ARBString select;
@@ -1421,6 +1472,7 @@ void CAgilityBookDoc::OnNotesClubs()
 	CDlgInfoJudge dlg(this, ARBInfo::eClubInfo, select);
 	dlg.DoModal();
 }
+
 
 void CAgilityBookDoc::OnNotesJudges()
 {
@@ -1432,6 +1484,7 @@ void CAgilityBookDoc::OnNotesJudges()
 	dlg.DoModal();
 }
 
+
 void CAgilityBookDoc::OnNotesLocations()
 {
 	ARBString select;
@@ -1441,6 +1494,7 @@ void CAgilityBookDoc::OnNotesLocations()
 	CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo, select);
 	dlg.DoModal();
 }
+
 
 class CFindInfo : public IFindCallback
 {
@@ -1463,6 +1517,7 @@ private:
 			std::set<ARBString> const& inUse,
 			ARBInfo const& info) const;
 };
+
 
 bool CFindInfo::Search(CDlgFind* pDlg) const
 {
@@ -1491,6 +1546,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 		return false;
 	}
 }
+
 
 void CFindInfo::Search(
 		CString const& search,
@@ -1551,6 +1607,7 @@ void CFindInfo::Search(
 	}
 }
 
+
 void CAgilityBookDoc::OnNotesSearch()
 {
 	CFindInfo callback(this);
@@ -1563,6 +1620,7 @@ void CAgilityBookDoc::OnNotesSearch()
 		dlgList.DoModal();
 	}
 }
+
 
 void CAgilityBookDoc::OnViewOptions()
 {
@@ -1588,20 +1646,24 @@ void CAgilityBookDoc::OnViewOptions()
 	options.DoModal();
 }
 
+
 void CAgilityBookDoc::OnUpdateViewSortruns(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);
 }
+
 
 void CAgilityBookDoc::OnUpdateViewRunsByTrial(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
 }
 
+
 void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
 }
+
 
 void CAgilityBookDoc::OnUpdateViewTableInYPS(CCmdUI* pCmdUI)
 {

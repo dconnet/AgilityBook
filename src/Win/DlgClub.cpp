@@ -70,6 +70,7 @@ CDlgClub::CDlgClub(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgClub::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -79,6 +80,7 @@ void CDlgClub::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CLUB_VENUES, m_ctrlVenues);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgClub, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgClub)
@@ -119,6 +121,7 @@ BOOL CDlgClub::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgClub::OnOK()
 {

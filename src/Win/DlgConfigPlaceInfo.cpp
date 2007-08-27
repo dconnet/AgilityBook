@@ -63,6 +63,7 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgConfigPlaceInfo::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -71,6 +72,7 @@ void CDlgConfigPlaceInfo::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CONFIG_PLACEINFO_VALUE, m_Value);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgConfigPlaceInfo, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigPlaceInfo)

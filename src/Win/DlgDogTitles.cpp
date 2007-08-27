@@ -75,6 +75,7 @@ static struct
 };
 static int const nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
+
 typedef struct
 {
 	CAgilityBookDoc* pDoc;
@@ -177,6 +178,7 @@ CDlgDogTitles::CDlgDogTitles(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgDogTitles::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
@@ -187,6 +189,7 @@ void CDlgDogTitles::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DOG_TITLE_HIDDEN, m_ctrlHidden);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgDogTitles, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogTitles)
@@ -208,6 +211,7 @@ CListPtrData<ARBDogTitlePtr>* CDlgDogTitles::GetTitleData(int index) const
 	CListData* pData = m_ctrlTitles.GetData(index);
 	return dynamic_cast<CListPtrData<ARBDogTitlePtr>*>(pData);
 }
+
 
 void CDlgDogTitles::SetColumnTitleHeaders()
 {
@@ -231,6 +235,7 @@ void CDlgDogTitles::SetColumnTitleHeaders()
 		order.ReleaseBuffer();
 	}
 }
+
 
 void CDlgDogTitles::ListTitles()
 {
@@ -309,6 +314,7 @@ void CDlgDogTitles::ListTitles()
 	}
 }
 
+
 void CDlgDogTitles::UpdateButtons()
 {
 	UINT selected = m_ctrlTitles.GetSelectedCount();
@@ -356,6 +362,7 @@ BOOL CDlgDogTitles::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgDogTitles::OnColumnclickTitles(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -371,6 +378,7 @@ void CDlgDogTitles::OnColumnclickTitles(
 	*pResult = 0;
 }
 
+
 void CDlgDogTitles::OnDblclkTitles(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -378,6 +386,7 @@ void CDlgDogTitles::OnDblclkTitles(
 	OnTitleEdit();
 	*pResult = 0;
 }
+
 
 void CDlgDogTitles::OnKeydownTitles(
 		NMHDR* pNMHDR,
@@ -395,6 +404,7 @@ void CDlgDogTitles::OnKeydownTitles(
 	*pResult = 0;
 }
 
+
 void CDlgDogTitles::OnItemchangedTitles(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -404,12 +414,14 @@ void CDlgDogTitles::OnItemchangedTitles(
 	*pResult = 0;
 }
 
+
 void CDlgDogTitles::OnTitleNew()
 {
 	CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, ARBDogTitlePtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListTitles();
 }
+
 
 void CDlgDogTitles::OnTitleEdit()
 {
@@ -423,6 +435,7 @@ void CDlgDogTitles::OnTitleEdit()
 	}
 }
 
+
 void CDlgDogTitles::OnTitleDelete()
 {
 	int i = m_ctrlTitles.GetSelection();
@@ -433,6 +446,7 @@ void CDlgDogTitles::OnTitleDelete()
 		m_ctrlTitles.DeleteItem(i);
 	}
 }
+
 
 void CDlgDogTitles::OnBnClickedHidden()
 {

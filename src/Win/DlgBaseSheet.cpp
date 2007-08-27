@@ -59,6 +59,7 @@ CDlgBaseSheet::CDlgBaseSheet(
 	m_psh.dwFlags |= PSH_HASHELP;
 }
 
+
 CDlgBaseSheet::CDlgBaseSheet(
 		LPCTSTR pszCaption,
 		CWnd* pParentWnd,
@@ -68,9 +69,11 @@ CDlgBaseSheet::CDlgBaseSheet(
 	m_psh.dwFlags |= PSH_HASHELP;
 }
 
+
 CDlgBaseSheet::~CDlgBaseSheet()
 {
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgBaseSheet, CPropertySheet)
 	//{{AFX_MSG_MAP(CDlgBaseSheet)
@@ -88,6 +91,7 @@ BOOL CDlgBaseSheet::OnHelpInfo(HELPINFO* pHelpInfo)
 		OnHelp();
 	return TRUE;
 }
+
 
 void CDlgBaseSheet::OnHelp()
 {

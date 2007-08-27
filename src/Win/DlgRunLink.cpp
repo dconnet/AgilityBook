@@ -71,9 +71,11 @@ CDlgRunLink::CDlgRunLink(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgRunLink::~CDlgRunLink()
 {
 }
+
 
 void CDlgRunLink::DoDataExchange(CDataExchange* pDX)
 {
@@ -86,6 +88,7 @@ void CDlgRunLink::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNLINK_OPEN, m_ctrlOpen);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgRunLink, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunLink)
@@ -111,6 +114,7 @@ void CDlgRunLink::UpdateButtons()
 	m_ctrlOpen.EnableWindow(bEnable);
 }
 
+
 void CDlgRunLink::ListFiles(TCHAR const* pItem)
 {
 	CWaitCursor wait;
@@ -129,6 +133,7 @@ void CDlgRunLink::ListFiles(TCHAR const* pItem)
 	m_ctrlLinks.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	UpdateButtons();
 }
+
 
 int CDlgRunLink::GetImageIndex(ARBString const& inLink)
 {
@@ -158,6 +163,7 @@ BOOL CDlgRunLink::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgRunLink::OnDblclkList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -165,6 +171,7 @@ void CDlgRunLink::OnDblclkList(
 	OnEdit();
 	*pResult = 0;
 }
+
 
 void CDlgRunLink::OnKeydownList(
 		NMHDR* pNMHDR,
@@ -182,6 +189,7 @@ void CDlgRunLink::OnKeydownList(
 	*pResult = 0;
 }
 
+
 void CDlgRunLink::OnItemchangedList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -190,6 +198,7 @@ void CDlgRunLink::OnItemchangedList(
 	UpdateButtons();
 	*pResult = 0;
 }
+
 
 void CDlgRunLink::OnNew() 
 {
@@ -204,6 +213,7 @@ void CDlgRunLink::OnNew()
 		}
 	}
 }
+
 
 void CDlgRunLink::OnEdit() 
 {
@@ -226,6 +236,7 @@ void CDlgRunLink::OnEdit()
 	}
 }
 
+
 void CDlgRunLink::OnDelete() 
 {
 	int nItem = m_ctrlLinks.GetSelection();
@@ -236,6 +247,7 @@ void CDlgRunLink::OnDelete()
 		ListFiles(NULL);
 	}
 }
+
 
 void CDlgRunLink::OnOpen()
 {

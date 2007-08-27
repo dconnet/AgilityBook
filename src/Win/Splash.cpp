@@ -67,15 +67,18 @@ CSplashWnd* CSplashWnd::c_pSplashWnd = NULL;
 // the destruction of the window, that seems to have solved the problem.
 static CCriticalSection s_Crit;
 
+
 BOOL CSplashWnd::IsSplashScreenEnabled()
 {
 	return c_bShowSplashWnd;
 }
 
+
 void CSplashWnd::EnableSplashScreen(BOOL bEnable)
 {
 	c_bShowSplashWnd = bEnable;
 }
+
 
 void CSplashWnd::ShowSplashScreen(
 		CWnd* pParentWnd,
@@ -93,6 +96,7 @@ void CSplashWnd::ShowSplashScreen(
 		c_pSplashWnd->UpdateWindow();
 }
 
+
 void CSplashWnd::HideSplashScreen()
 {
 	CSingleLock singleLock(&s_Crit);
@@ -100,6 +104,7 @@ void CSplashWnd::HideSplashScreen()
 	if (c_pSplashWnd)
 		c_pSplashWnd->HideSplashScreenImpl();
 }
+
 
 BOOL CSplashWnd::PreTranslateAppMessage(MSG* pMsg)
 {
@@ -135,12 +140,14 @@ CSplashWnd::CSplashWnd(bool bTimed)
 {
 }
 
+
 CSplashWnd::~CSplashWnd()
 {
 	// Clear the static window pointer.
 	ASSERT(c_pSplashWnd == this);
 	c_pSplashWnd = NULL;
 }
+
 
 BEGIN_MESSAGE_MAP(CSplashWnd, CWnd)
 	//{{AFX_MSG_MAP(CSplashWnd)
@@ -149,6 +156,7 @@ BEGIN_MESSAGE_MAP(CSplashWnd, CWnd)
 	ON_WM_TIMER()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 {
@@ -223,16 +231,19 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 		pParentWnd->GetSafeHwnd(), NULL);
 }
 
+
 void CSplashWnd::HideSplashScreenImpl()
 {
 	DestroyWindow();
 }
+
 
 void CSplashWnd::PostNcDestroy()
 {
 	// Free the C++ class.
 	delete this;
 }
+
 
 int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -248,6 +259,7 @@ int CSplashWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	return 0;
 }
+
 
 void CSplashWnd::OnPaint()
 {
@@ -333,6 +345,7 @@ void CSplashWnd::OnPaint()
 		dc.SelectObject(pOldFont);
 	}
 }
+
 
 void CSplashWnd::OnTimer(UINT_PTR nIDEvent)
 {

@@ -109,6 +109,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	}
 }
 
+
 void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -142,6 +143,7 @@ void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgExistingPoints, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgExistingPoints)
 	ON_CBN_SELCHANGE(IDC_EXISTING_TYPE, OnSelchangeType)
@@ -160,11 +162,13 @@ CListPtrData<ARBConfigVenuePtr>* CDlgExistingPoints::GetVenueData(int index) con
 	return dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pData);
 }
 
+
 CListPtrData<ARBConfigDivisionPtr>* CDlgExistingPoints::GetDivisionData(int index) const
 {
 	CListData* pData = m_ctrlDivisions.GetData(index);
 	return dynamic_cast<CListPtrData<ARBConfigDivisionPtr>*>(pData);
 }
+
 
 CListPtrData<ARBConfigEventPtr>* CDlgExistingPoints::GetEventData(int index) const
 {
@@ -172,11 +176,13 @@ CListPtrData<ARBConfigEventPtr>* CDlgExistingPoints::GetEventData(int index) con
 	return dynamic_cast<CListPtrData<ARBConfigEventPtr>*>(pData);
 }
 
+
 CDlgPointsDataLevel* CDlgExistingPoints::GetLevelData(int index) const
 {
 	CListData* pData = m_ctrlLevels.GetData(index);
 	return dynamic_cast<CDlgPointsDataLevel*>(pData);
 }
+
 
 CListPtrData<ARBConfigOtherPointsPtr>* CDlgExistingPoints::GetOtherPointData(int index) const
 {
@@ -184,11 +190,13 @@ CListPtrData<ARBConfigOtherPointsPtr>* CDlgExistingPoints::GetOtherPointData(int
 	return dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData);
 }
 
+
 CListPtrData<ARBConfigMultiQPtr>* CDlgExistingPoints::GetMultiQData(int index) const
 {
 	CListData* pData = m_ctrlMultiQ.GetData(index);
 	return dynamic_cast<CListPtrData<ARBConfigMultiQPtr>*>(pData);
 }
+
 
 // Control order
 //  OtherPoints
@@ -400,6 +408,7 @@ void CDlgExistingPoints::GetEnableLists(
 	}
 }
 
+
 void CDlgExistingPoints::UpdateControls()
 {
 	int index = m_ctrlType.GetCurSel();
@@ -416,6 +425,7 @@ void CDlgExistingPoints::UpdateControls()
 	GetEnableLists(index, bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName, true);
 	m_ctrlOk.EnableWindow(bOk);
 }
+
 
 void CDlgExistingPoints::FillVenues()
 {
@@ -452,6 +462,7 @@ void CDlgExistingPoints::FillVenues()
 	}
 	FillFromVenue();
 }
+
 
 void CDlgExistingPoints::FillFromVenue()
 {
@@ -511,6 +522,7 @@ void CDlgExistingPoints::FillFromVenue()
 	FillLevels();
 }
 
+
 void CDlgExistingPoints::FillLevels()
 {
 	CString str;
@@ -561,6 +573,7 @@ void CDlgExistingPoints::FillLevels()
 	FillEvents();
 }
 
+
 void CDlgExistingPoints::FillEvents()
 {
 	CString str;
@@ -607,6 +620,7 @@ void CDlgExistingPoints::FillEvents()
 	FillSubNames();
 	UpdateControls();
 }
+
 
 void CDlgExistingPoints::FillSubNames()
 {
@@ -741,30 +755,36 @@ BOOL CDlgExistingPoints::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgExistingPoints::OnSelchangeType() 
 {
 	FillVenues();
 }
+
 
 void CDlgExistingPoints::OnSelchangeVenues() 
 {
 	FillFromVenue();
 }
 
+
 void CDlgExistingPoints::OnSelchangeDivision() 
 {
 	FillLevels();
 }
+
 
 void CDlgExistingPoints::OnSelchangeLevel() 
 {
 	FillEvents();
 }
 
+
 void CDlgExistingPoints::OnSelchangeEvent() 
 {
 	FillSubNames();
 }
+
 
 void CDlgExistingPoints::OnOK()
 {

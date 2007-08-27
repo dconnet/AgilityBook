@@ -57,6 +57,8 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
+
+
 CDlgBasePropertyPage::CDlgBasePropertyPage(
 		LPCTSTR lpszTemplateName,
 		UINT nIDCaption)
@@ -64,6 +66,7 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
+
 
 #else
 CDlgBasePropertyPage::CDlgBasePropertyPage(
@@ -76,6 +79,8 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 	//{{AFX_DATA_INIT(CDlgBasePropertyPage)
 	//}}AFX_DATA_INIT
 }
+
+
 CDlgBasePropertyPage::CDlgBasePropertyPage(
 		LPCTSTR lpszTemplateName,
 		UINT nIDCaption,
@@ -84,6 +89,8 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
+
+
 CDlgBasePropertyPage::CDlgBasePropertyPage(
 		UINT nIDTemplate,
 		UINT nIDCaption,
@@ -94,6 +101,8 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 {
 	m_psp.dwFlags |= PSP_HASHELP;
 }
+
+
 CDlgBasePropertyPage::CDlgBasePropertyPage(
 		LPCTSTR lpszTemplateName,
 		UINT nIDCaption,
@@ -106,9 +115,11 @@ CDlgBasePropertyPage::CDlgBasePropertyPage(
 }
 #endif
 
+
 CDlgBasePropertyPage::~CDlgBasePropertyPage()
 {
 }
+
 
 void CDlgBasePropertyPage::DoDataExchange(CDataExchange* pDX)
 {
@@ -116,6 +127,7 @@ void CDlgBasePropertyPage::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CDlgBasePropertyPage)
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgBasePropertyPage, CPropertyPage)
 	//{{AFX_MSG_MAP(CDlgBasePropertyPage)
@@ -133,6 +145,7 @@ BOOL CDlgBasePropertyPage::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 BOOL CDlgBasePropertyPage::OnHelpInfo(HELPINFO* pHelpInfo)
 {

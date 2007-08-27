@@ -96,6 +96,8 @@ static char THIS_FILE[] = __FILE__;
 #define COL_ITEM_TYPE			0
 #define COL_ITEM_NAME			1
 #define COL_ITEM_COMMENT		2
+
+
 class CDlgListViewerDataColumns
 {
 public:
@@ -201,6 +203,7 @@ private:
 	ARBDogExistingPointsPtr m_Existing;
 };
 
+
 ARBString CDlgListViewerDataExisting::OnNeedText(int iCol) const
 {
 	ARBString str;
@@ -287,6 +290,7 @@ private:
 	ARBConfigScoringPtr m_Scoring;
 	ScoringRunInfo::eScoringDetail m_ScoringDetail;
 };
+
 
 ARBString CDlgListViewerDataRun::OnNeedText(int iCol) const
 {
@@ -416,6 +420,7 @@ private:
 	ARBDate m_Date;
 	ARBDogTrialPtr m_Trial;
 };
+
 
 ARBString CDlgListViewerDataMultiQ::OnNeedText(int iCol) const
 {
@@ -670,6 +675,7 @@ int CDlgListViewerDataRun::Compare(
 		return 0;
 }
 
+
 int CDlgListViewerDataMultiQ::Compare(
 		CDlgListViewerData const* pRow2,
 		int inCol) const
@@ -741,6 +747,7 @@ private:
 	LifeTimePointInfo m_info;
 };
 
+
 ARBString CDlgListViewerDataLifetime::OnNeedText(int iCol) const
 {
 	ARBostringstream str;
@@ -761,6 +768,7 @@ ARBString CDlgListViewerDataLifetime::OnNeedText(int iCol) const
 	}
 	return str.str();
 }
+
 
 int CDlgListViewerDataLifetime::Compare(
 		CDlgListViewerData const* pRow2,
@@ -826,6 +834,7 @@ private:
 	OtherPtInfo m_info;
 };
 
+
 ARBString CDlgListViewerDataOther::OnNeedText(int iCol) const
 {
 	ARBostringstream str;
@@ -865,6 +874,7 @@ ARBString CDlgListViewerDataOther::OnNeedText(int iCol) const
 	}
 	return str.str();
 }
+
 
 int CDlgListViewerDataOther::Compare(
 		CDlgListViewerData const* pRow2,
@@ -972,6 +982,7 @@ private:
 	CFindItemInfo m_info;
 };
 
+
 ARBString CDlgListViewerDataItem::OnNeedText(int iCol) const
 {
 	ARBString str;
@@ -1007,6 +1018,7 @@ ARBString CDlgListViewerDataItem::OnNeedText(int iCol) const
 	}
 	return str;
 }
+
 
 int CDlgListViewerDataItem::Compare(
 		CDlgListViewerData const* pRow2,
@@ -1078,6 +1090,7 @@ struct SORT_COL_INFO
 	int nCol;
 };
 
+
 int CALLBACK CompareRows(
 		LPARAM lParam1,
 		LPARAM lParam2,
@@ -1101,6 +1114,7 @@ int CALLBACK CompareRows(
 
 /////////////////////////////////////////////////////////////////////////////
 // Viewing runs
+
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
@@ -1130,6 +1144,7 @@ CDlgListViewer::CDlgListViewer(
 	//}}AFX_DATA_INIT
 }
 
+
 // Viewing runs affected by configuration changes
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
@@ -1156,6 +1171,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_SortColumn(1)
 {
 }
+
 
 // Viewing multi-Qs
 CDlgListViewer::CDlgListViewer(
@@ -1185,6 +1201,7 @@ CDlgListViewer::CDlgListViewer(
 {
 }
 
+
 // Viewing lifetime data
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
@@ -1211,6 +1228,7 @@ CDlgListViewer::CDlgListViewer(
 	, m_SortColumn(1)
 {
 }
+
 
 // Viewing other points
 CDlgListViewer::CDlgListViewer(
@@ -1239,6 +1257,7 @@ CDlgListViewer::CDlgListViewer(
 {
 }
 
+
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
 		CString const& inCaption,
@@ -1265,6 +1284,7 @@ CDlgListViewer::CDlgListViewer(
 {
 }
 
+
 void CDlgListViewer::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -1274,6 +1294,7 @@ void CDlgListViewer::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDOK, m_ctrlClose);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgListViewer, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListViewer)
@@ -1326,6 +1347,7 @@ static void InsertRun(
 			new CDlgListViewerDataRun(pColData, pDog, pTrial, pRun, pScoring, scoringDetail)));
 	ctrlList.InsertItem(&item);
 }
+
 
 BOOL CDlgListViewer::OnInitDialog() 
 {
@@ -1637,6 +1659,7 @@ BOOL CDlgListViewer::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgListViewer::OnGetdispinfoList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -1658,6 +1681,7 @@ void CDlgListViewer::OnGetdispinfoList(
 	*pResult = 0;
 }
 
+
 void CDlgListViewer::OnColumnclickList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -1677,12 +1701,14 @@ void CDlgListViewer::OnColumnclickList(
 	*pResult = 0;
 }
 
+
 void CDlgListViewer::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
 	lpMMI->ptMinTrackSize.x = m_rWin.Width();
 	lpMMI->ptMinTrackSize.y = m_rWin.Height();
 	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
 }
+
 
 void CDlgListViewer::OnSize(
 		UINT nType,
@@ -1704,6 +1730,7 @@ void CDlgListViewer::OnSize(
 			SWP_NOZORDER | SWP_NOMOVE);
 	}
 }
+
 
 void CDlgListViewer::OnBnClickedListCopy()
 {
