@@ -139,6 +139,7 @@ CDlgCalendar::CDlgCalendar(
 	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
+
 void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -178,6 +179,7 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CAL_NOTES, m_Notes);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendar)
@@ -222,6 +224,7 @@ void CDlgCalendar::UpdateLocationInfo(TCHAR const* pLocation)
 	}
 	m_ctrlLocationInfo.SetWindowText(str);
 }
+
 
 void CDlgCalendar::UpdateClubInfo(TCHAR const* pClub)
 {
@@ -303,6 +306,7 @@ BOOL CDlgCalendar::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgCalendar::OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
@@ -318,6 +322,7 @@ void CDlgCalendar::OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+
 void CDlgCalendar::OnDateOpensUnknown() 
 {
 	UpdateData(TRUE);
@@ -326,6 +331,7 @@ void CDlgCalendar::OnDateOpensUnknown()
 	else
 		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(TRUE);
 }
+
 
 void CDlgCalendar::OnDateDrawsUnknown() 
 {
@@ -336,6 +342,7 @@ void CDlgCalendar::OnDateDrawsUnknown()
 		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(TRUE);
 }
 
+
 void CDlgCalendar::OnDateClosesUnknown() 
 {
 	UpdateData(TRUE);
@@ -345,6 +352,7 @@ void CDlgCalendar::OnDateClosesUnknown()
 		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
 }
 
+
 void CDlgCalendar::OnCalEntry()
 {
 	UpdateData(TRUE);
@@ -353,6 +361,7 @@ void CDlgCalendar::OnCalEntry()
 	else
 		m_ctrlOnlineUrlEntry.EnableWindow(TRUE);
 }
+
 
 void CDlgCalendar::OnEnChangeCalOnlineUrl()
 {
@@ -364,11 +373,13 @@ void CDlgCalendar::OnEnChangeCalOnlineUrl()
 		m_ctrlOnlineUrlEntry.EnableWindow(TRUE);
 }
 
+
 void CDlgCalendar::OnOnlineEntry()
 {
 	UpdateData(TRUE);
 	RunCommand(m_OnlineUrl);
 }
+
 
 void CDlgCalendar::OnEnChangeCalPremiumUrl()
 {
@@ -380,11 +391,13 @@ void CDlgCalendar::OnEnChangeCalPremiumUrl()
 		m_ctrlPremiumEntry.EnableWindow(TRUE);
 }
 
+
 void CDlgCalendar::OnPremiumEntry()
 {
 	UpdateData(TRUE);
 	RunCommand(m_PremiumUrl);
 }
+
 
 void CDlgCalendar::OnEnChangeCalEmailSecAddr()
 {
@@ -396,6 +409,7 @@ void CDlgCalendar::OnEnChangeCalEmailSecAddr()
 		m_ctrlEMailSec.EnableWindow(TRUE);
 }
 
+
 void CDlgCalendar::OnEmailSec()
 {
 	UpdateData(TRUE);
@@ -405,11 +419,13 @@ void CDlgCalendar::OnEmailSec()
 	RunCommand(s);
 }
 
+
 void CDlgCalendar::OnAccommodation()
 {
 	UpdateData(TRUE);
 	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
 }
+
 
 void CDlgCalendar::OnSelchangeClub()
 {
@@ -420,11 +436,13 @@ void CDlgCalendar::OnSelchangeClub()
 	UpdateClubInfo((LPCTSTR)str);
 }
 
+
 void CDlgCalendar::OnKillfocusClub()
 {
 	UpdateData(TRUE);
 	UpdateClubInfo((LPCTSTR)m_Club);
 }
+
 
 void CDlgCalendar::OnClubNotes()
 {
@@ -438,6 +456,7 @@ void CDlgCalendar::OnClubNotes()
 	}
 }
 
+
 void CDlgCalendar::OnSelchangeLocation()
 {
 	int idx = m_ctrlLocation.GetCurSel();
@@ -447,11 +466,13 @@ void CDlgCalendar::OnSelchangeLocation()
 	UpdateLocationInfo((LPCTSTR)str);
 }
 
+
 void CDlgCalendar::OnKillfocusLocation()
 {
 	UpdateData(TRUE);
 	UpdateLocationInfo((LPCTSTR)m_Location);
 }
+
 
 void CDlgCalendar::OnLocationNotes()
 {
@@ -464,6 +485,7 @@ void CDlgCalendar::OnLocationNotes()
 		UpdateLocationInfo((LPCTSTR)m_Location);
 	}
 }
+
 
 void CDlgCalendar::OnOK()
 {

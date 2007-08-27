@@ -80,7 +80,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewHtml, CHtmlView)
 	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
 END_MESSAGE_MAP()
 
-// CAgilityBookViewHtml construction/destruction
 
 CAgilityBookViewHtml::CAgilityBookViewHtml()
 	: m_DocAsControl(NULL)
@@ -88,17 +87,20 @@ CAgilityBookViewHtml::CAgilityBookViewHtml()
 {
 }
 
+
 CAgilityBookViewHtml::CAgilityBookViewHtml(CAgilityBookDoc* inDocAsControl)
 	: m_DocAsControl(inDocAsControl)
 	, m_Items(new CPointsDataItems())
 {
 }
 
+
 CAgilityBookViewHtml::~CAgilityBookViewHtml()
 {
 	m_Items->clear();
 	delete m_Items;
 }
+
 
 CAgilityBookDoc* CAgilityBookViewHtml::GetDocument() const
 {
@@ -107,6 +109,7 @@ CAgilityBookDoc* CAgilityBookViewHtml::GetDocument() const
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
 	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
+
 
 BOOL CAgilityBookViewHtml::CreateFromStatic(UINT nID, CWnd* pParent)
 {
@@ -135,6 +138,7 @@ BOOL CAgilityBookViewHtml::CreateFromStatic(UINT nID, CWnd* pParent)
 
 	return bOk;
 }
+
 
 bool CAgilityBookViewHtml::SetHTML(ARBString const& csHTML)
 {
@@ -208,16 +212,19 @@ bool CAgilityBookViewHtml::SetHTML(ARBString const& csHTML)
 	return bOk;
 }
 
+
 bool CAgilityBookViewHtml::IsFiltered() const
 {
 	return CFilterOptions::Options().IsFilterEnabled();
 }
+
 
 bool CAgilityBookViewHtml::GetMessage(CString& msg) const
 {
 	msg.LoadString(IDS_INDICATOR_BLANK);
 	return true;
 }
+
 
 bool CAgilityBookViewHtml::GetMessage2(CString& msg) const
 {
@@ -232,6 +239,7 @@ bool CAgilityBookViewHtml::GetMessage2(CString& msg) const
 		return false;
 	}
 }
+
 
 void CAgilityBookViewHtml::LoadData()
 {
@@ -269,6 +277,7 @@ void CAgilityBookViewHtml::LoadData()
 	SetHTML(data.str());
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewHtml diagnostics
 
 #ifdef _DEBUG
@@ -276,6 +285,7 @@ void CAgilityBookViewHtml::AssertValid() const
 {
 	CHtmlView::AssertValid();
 }
+
 
 void CAgilityBookViewHtml::Dump(CDumpContext& dc) const
 {
@@ -298,6 +308,7 @@ CString CAgilityBookViewHtml::GetFullName() const
 	return retVal;
 }
 
+
 CString CAgilityBookViewHtml::GetType() const
 {
 	ASSERT(m_pBrowserApp != NULL);
@@ -307,6 +318,7 @@ CString CAgilityBookViewHtml::GetType() const
 	SysFreeString(bstr); // Added this line to prevent leak.
 	return retVal;
 }
+
 
 CString CAgilityBookViewHtml::GetLocationName() const
 {
@@ -318,6 +330,7 @@ CString CAgilityBookViewHtml::GetLocationName() const
 	return retVal;
 }
 
+
 CString CAgilityBookViewHtml::GetLocationURL() const
 {
 	ASSERT(m_pBrowserApp != NULL);
@@ -327,6 +340,7 @@ CString CAgilityBookViewHtml::GetLocationURL() const
 	SysFreeString(bstr); // Added this line to prevent leak.
 	return retVal;
 }
+
 
 void CAgilityBookViewHtml::Navigate(
 		LPCTSTR lpszURL,
@@ -353,6 +367,7 @@ void CAgilityBookViewHtml::Navigate(
 	SysFreeString(bstrURL); // Added this line to prevent leak.
 }
 
+
 BOOL CAgilityBookViewHtml::LoadFromResource(LPCTSTR lpszResource)
 {
 	HINSTANCE hInstance = AfxGetResourceHandle();
@@ -370,6 +385,7 @@ BOOL CAgilityBookViewHtml::LoadFromResource(LPCTSTR lpszResource)
 	delete [] lpszModule;
 	return bRetVal;
 }
+
 
 BOOL CAgilityBookViewHtml::LoadFromResource(UINT nRes)
 {
@@ -399,6 +415,7 @@ BOOL CAgilityBookViewHtml::PreCreateWindow(CREATESTRUCT& cs)
 	return CHtmlView::PreCreateWindow(cs);
 }
 
+
 void CAgilityBookViewHtml::OnActivateView(
 		BOOL bActivate,
 		CView* pActivateView,
@@ -415,6 +432,7 @@ void CAgilityBookViewHtml::OnActivateView(
 	}
 }
 
+
 void CAgilityBookViewHtml::OnUpdate(
 		CView* pSender,
 		LPARAM lHint,
@@ -427,6 +445,7 @@ void CAgilityBookViewHtml::OnUpdate(
 		LoadData();
 }
 
+
 void CAgilityBookViewHtml::PostNcDestroy()
 {
 	//m_Items->clear();
@@ -436,10 +455,12 @@ void CAgilityBookViewHtml::PostNcDestroy()
 		m_pBrowserApp = NULL;
 }
 
+
 void CAgilityBookViewHtml::OnInitialUpdate()
 {
 	LoadData();
 }
+
 
 void CAgilityBookViewHtml::OnBeforeNavigate2(
 		LPCTSTR lpszURL,
@@ -513,13 +534,14 @@ LRESULT CAgilityBookViewHtml::OnCommandHelp(WPARAM, LPARAM)
 	return 1;
 }
 
+
 int CAgilityBookViewHtml::OnCreate(LPCREATESTRUCT lpcs)
 {
 	if (-1 == CHtmlView::OnCreate(lpcs))
 		return -1;
-
 	return 0;
 }
+
 
 void CAgilityBookViewHtml::OnDestroy()
 {
@@ -529,6 +551,7 @@ void CAgilityBookViewHtml::OnDestroy()
 		CWnd::OnDestroy();
 }
 
+
 int CAgilityBookViewHtml::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT msg)
 {
 	if (!m_DocAsControl)
@@ -536,6 +559,7 @@ int CAgilityBookViewHtml::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT
 	else
 		return CWnd::OnMouseActivate(pDesktopWnd, nHitTest, msg);
 }
+
 
 void CAgilityBookViewHtml::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 {
@@ -545,6 +569,7 @@ void CAgilityBookViewHtml::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewHtml::OnAgilityNewTitle()
 {
@@ -558,12 +583,14 @@ void CAgilityBookViewHtml::OnAgilityNewTitle()
 	}
 }
 
+
 void CAgilityBookViewHtml::OnViewPointsViewSort()
 {
 	CDlgPointsViewSort dlg(this);
 	if (IDOK == dlg.DoModal())
 		LoadData();
 }
+
 
 void CAgilityBookViewHtml::OnViewHiddenTitles()
 {

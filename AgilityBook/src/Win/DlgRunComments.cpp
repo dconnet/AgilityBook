@@ -64,9 +64,11 @@ CDlgRunComments::CDlgRunComments(
 	m_Comments.Replace(_T("\n"), _T("\r\n"));
 }
 
+
 CDlgRunComments::~CDlgRunComments()
 {
 }
+
 
 void CDlgRunComments::DoDataExchange(CDataExchange* pDX)
 {
@@ -86,6 +88,7 @@ void CDlgRunComments::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetNote((LPCTSTR)tmp);
 	}
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgRunComments, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunComments)
@@ -117,6 +120,7 @@ BOOL CDlgRunComments::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgRunComments::OnCommentsFaults()
 {

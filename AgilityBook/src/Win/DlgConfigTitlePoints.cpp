@@ -62,6 +62,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -78,6 +79,7 @@ void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 		m_Type = (ETitlePointType)m_ctrlType.GetItemData(idx);
 	}
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgConfigTitlePoints, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigTitlePoints)
@@ -133,6 +135,7 @@ BOOL CDlgConfigTitlePoints::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgConfigTitlePoints::OnCbnSelchangeTitlePoints()
 {

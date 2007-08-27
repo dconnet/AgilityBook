@@ -74,9 +74,11 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgConfigMultiQ::~CDlgConfigMultiQ()
 {
 }
+
 
 void CDlgConfigMultiQ::DoDataExchange(CDataExchange* pDX)
 {
@@ -102,6 +104,7 @@ void CDlgConfigMultiQ::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgConfigMultiQ, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigMultiQ)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_MULTIQ_ITEMS, OnNMDblclk)
@@ -114,6 +117,7 @@ BEGIN_MESSAGE_MAP(CDlgConfigMultiQ, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_DELETE, OnRemove)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 void CDlgConfigMultiQ::UpdateControls()
 {
@@ -179,6 +183,7 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgConfigMultiQ::OnNMDblclk(
 		NMHDR* /*pNMHDR*/,
 		LRESULT* pResult)
@@ -186,6 +191,7 @@ void CDlgConfigMultiQ::OnNMDblclk(
 	OnEdit();
 	*pResult = 0;
 }
+
 
 void CDlgConfigMultiQ::OnKeydown(
 		NMHDR* pNMHDR,
@@ -203,6 +209,7 @@ void CDlgConfigMultiQ::OnKeydown(
 	*pResult = 0;
 }
 
+
 void CDlgConfigMultiQ::OnItemchanged(
 		NMHDR* /*pNMHDR*/,
 		LRESULT* pResult)
@@ -212,6 +219,7 @@ void CDlgConfigMultiQ::OnItemchanged(
 	*pResult = 0;
 }
 
+
 void CDlgConfigMultiQ::OnClickFrom()
 {
 	if (!UpdateData(TRUE))
@@ -219,12 +227,14 @@ void CDlgConfigMultiQ::OnClickFrom()
 	UpdateControls();
 }
 
+
 void CDlgConfigMultiQ::OnClickTo()
 {
 	if (!UpdateData(TRUE))
 		return;
 	UpdateControls();
 }
+
 
 void CDlgConfigMultiQ::OnAdd()
 {
@@ -251,6 +261,7 @@ void CDlgConfigMultiQ::OnAdd()
 			MessageBeep(MB_ICONEXCLAMATION);
 	}
 }
+
 
 void CDlgConfigMultiQ::OnEdit()
 {
@@ -287,12 +298,14 @@ void CDlgConfigMultiQ::OnEdit()
 	}
 }
 
+
 void CDlgConfigMultiQ::OnRemove()
 {
 	int idx = m_ctrlItems.GetSelection();
 	if (0 <= idx)
 		m_ctrlItems.DeleteItem(idx);
 }
+
 
 void CDlgConfigMultiQ::OnOK()
 {

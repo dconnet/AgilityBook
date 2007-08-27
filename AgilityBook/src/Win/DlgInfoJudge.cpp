@@ -71,6 +71,7 @@ CDlgInfoJudge::NameInfo::NameInfo()
 {
 }
 
+
 CDlgInfoJudge::NameInfo::NameInfo(ARBString const& inName)
 	: m_Name(inName)
 	, m_eInUse(eNotInUse)
@@ -78,12 +79,14 @@ CDlgInfoJudge::NameInfo::NameInfo(ARBString const& inName)
 {
 }
 
+
 CDlgInfoJudge::NameInfo::NameInfo(NameInfo const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_eInUse(rhs.m_eInUse)
 	, m_bHasData(rhs.m_bHasData)
 {
 }
+
 
 bool CDlgInfoJudge::NameInfo::operator==(NameInfo const& rhs)
 {
@@ -122,6 +125,7 @@ CDlgInfoJudge::CDlgInfoJudge(
 	m_InfoOrig.Clone(m_Info);
 }
 
+
 void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -131,6 +135,7 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_JUDGE_COMMENTS, m_ctrlComment);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgInfoJudge)
@@ -209,6 +214,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 int CDlgInfoJudge::OnCompareItem(
 		int nIDCtl,
 		LPCOMPAREITEMSTRUCT lpCompareItemStruct)
@@ -221,6 +227,7 @@ int CDlgInfoJudge::OnCompareItem(
 	CString str2 = m_Names[lpCompareItemStruct->itemData2].m_Name.c_str();
 	return str1.CollateNoCase(str2);
 }
+
 
 void CDlgInfoJudge::OnDrawItem(
 		int nIDCtl,
@@ -276,6 +283,7 @@ void CDlgInfoJudge::OnDrawItem(
 	dc.Detach();
 }
 
+
 void CDlgInfoJudge::OnSelchangeName()
 {
 	BOOL bEnable = FALSE;
@@ -297,6 +305,7 @@ void CDlgInfoJudge::OnSelchangeName()
 	m_ctrlDelete.EnableWindow(bEnable);
 }
 
+
 void CDlgInfoJudge::OnKillfocusComments()
 {
 	int index = m_ctrlNames.GetCurSel();
@@ -317,6 +326,7 @@ void CDlgInfoJudge::OnKillfocusComments()
 		m_ctrlNames.Invalidate();
 	}
 }
+
 
 void CDlgInfoJudge::OnNew()
 {
@@ -358,6 +368,7 @@ void CDlgInfoJudge::OnNew()
 	}
 }
 
+
 void CDlgInfoJudge::OnDelete()
 {
 	int index = m_ctrlNames.GetCurSel();
@@ -388,6 +399,7 @@ void CDlgInfoJudge::OnDelete()
 			MessageBeep(0);
 	}
 }
+
 
 void CDlgInfoJudge::OnOK()
 {

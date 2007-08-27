@@ -120,6 +120,7 @@ protected:
 	ARBDogRunPtr m_pRun;
 };
 
+
 ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 {
 	short val;
@@ -430,6 +431,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 	return str.str();
 }
 
+
 int CAgilityBookViewRunsData::OnNeedIcon() const
 {
 	int iImage = -1;
@@ -452,6 +454,7 @@ CAgilityBookViewRuns::CSortColumn::CSortColumn(std::vector<int>& inColumns)
 {
 }
 
+
 void CAgilityBookViewRuns::CSortColumn::Initialize()
 {
 	int realCol = IO_RUNS_DATE;
@@ -467,6 +470,7 @@ void CAgilityBookViewRuns::CSortColumn::Initialize()
 		col = LookupColumn(IO_RUNS_DATE);
 	m_iCol = col * neg;
 }
+
 
 void CAgilityBookViewRuns::CSortColumn::SetColumn(int iCol)
 {
@@ -484,6 +488,7 @@ void CAgilityBookViewRuns::CSortColumn::SetColumn(int iCol)
 	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Runs"), realCol);
 }
 
+
 int CAgilityBookViewRuns::CSortColumn::LookupColumn(int iCol) const
 {
 	size_t n = m_Columns.size();
@@ -497,11 +502,13 @@ int CAgilityBookViewRuns::CSortColumn::LookupColumn(int iCol) const
 	return -1;
 }
 
+
 struct SORT_RUN_INFO
 {
 	CAgilityBookViewRuns* pThis;
 	int nCol;
 };
+
 
 int CALLBACK CompareRuns(
 		LPARAM lParam1,
@@ -1185,7 +1192,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-// CAgilityBookViewRuns construction/destruction
 
 #pragma warning (push)
 #pragma warning ( disable : 4355 )
@@ -1202,9 +1208,11 @@ CAgilityBookViewRuns::CAgilityBookViewRuns()
 }
 #pragma warning (pop)
 
+
 CAgilityBookViewRuns::~CAgilityBookViewRuns()
 {
 }
+
 
 BOOL CAgilityBookViewRuns::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -1212,11 +1220,13 @@ BOOL CAgilityBookViewRuns::PreCreateWindow(CREATESTRUCT& cs)
 	return CListView2::PreCreateWindow(cs);
 }
 
+
 LRESULT CAgilityBookViewRuns::OnCommandHelp(WPARAM, LPARAM)
 {
 	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_RUN, HH_HELP_CONTEXT);
 	return 1;
 }
+
 
 int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
@@ -1227,11 +1237,13 @@ int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+
 void CAgilityBookViewRuns::OnInitialUpdate()
 {
 	SetupColumns();
 	CListView2::OnInitialUpdate();
 }
+
 
 void CAgilityBookViewRuns::OnActivateView(
 		BOOL bActivate,
@@ -1249,6 +1261,7 @@ void CAgilityBookViewRuns::OnActivateView(
 	}
 }
 
+
 void CAgilityBookViewRuns::OnUpdate(
 		CView* pSender,
 		LPARAM lHint,
@@ -1258,6 +1271,7 @@ void CAgilityBookViewRuns::OnUpdate(
 		LoadData();
 }
 
+
 #ifdef _DEBUG
 // CAgilityBookViewRuns diagnostics
 void CAgilityBookViewRuns::AssertValid() const
@@ -1265,10 +1279,12 @@ void CAgilityBookViewRuns::AssertValid() const
 	CListView2::AssertValid();
 }
 
+
 void CAgilityBookViewRuns::Dump(CDumpContext& dc) const
 {
 	CListView2::Dump(dc);
 }
+
 
 CAgilityBookDoc* CAgilityBookViewRuns::GetDocument() const // non-debug version is inline
 {
@@ -1294,6 +1310,7 @@ bool CAgilityBookViewRuns::IsFiltered() const
 	return CFilterOptions::Options().IsFilterEnabled();
 }
 
+
 bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 {
 	int nQs = 0;
@@ -1306,6 +1323,7 @@ bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 	msg.FormatMessage(IDS_NUM_RUNS_QS, GetListCtrl().GetItemCount(), nQs);
 	return true;
 }
+
 
 bool CAgilityBookViewRuns::GetMessage2(CString& msg) const
 {
@@ -1321,10 +1339,12 @@ bool CAgilityBookViewRuns::GetMessage2(CString& msg) const
 	}
 }
 
+
 CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
 {
 	return dynamic_cast<CAgilityBookViewRunsData*>(GetData(index));
 }
+
 
 void CAgilityBookViewRuns::SetupColumns()
 {
@@ -1351,6 +1371,7 @@ void CAgilityBookViewRuns::SetupColumns()
 		m_SortColumn.Initialize();
 	}
 }
+
 
 void CAgilityBookViewRuns::LoadData()
 {
@@ -1468,6 +1489,7 @@ void CAgilityBookViewRuns::OnRclick(
 	*pResult = 1;
 }
 
+
 void CAgilityBookViewRuns::OnContextMenu(
 		CWnd* pWnd,
 		CPoint point)
@@ -1497,6 +1519,7 @@ void CAgilityBookViewRuns::OnContextMenu(
 	}
 }
 
+
 void CAgilityBookViewRuns::OnColumnclick(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -1519,6 +1542,7 @@ void CAgilityBookViewRuns::OnColumnclick(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewRuns::OnGetdispinfo(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -1538,6 +1562,7 @@ void CAgilityBookViewRuns::OnGetdispinfo(
 	}
 	*pResult = 0;
 }
+
 
 void CAgilityBookViewRuns::OnItemchanged(
 		NMHDR* pNMHDR,
@@ -1569,6 +1594,7 @@ void CAgilityBookViewRuns::OnItemchanged(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewRuns::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -1580,6 +1606,7 @@ void CAgilityBookViewRuns::OnDblclk(
 		MessageBeep(0);
 	*pResult = 0;
 }
+
 
 void CAgilityBookViewRuns::OnKeydown(
 		NMHDR* pNMHDR,
@@ -1602,11 +1629,13 @@ void CAgilityBookViewRuns::OnKeydown(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewRuns::OnEditFind()
 {
 	CDlgFind dlg(m_Callback, this);
 	dlg.DoModal();
 }
+
 
 void CAgilityBookViewRuns::OnEditFindNext()
 {
@@ -1617,6 +1646,7 @@ void CAgilityBookViewRuns::OnEditFindNext()
 		m_Callback.Search(NULL);
 }
 
+
 void CAgilityBookViewRuns::OnEditFindPrevious()
 {
 	m_Callback.SearchDown(false);
@@ -1625,6 +1655,7 @@ void CAgilityBookViewRuns::OnEditFindPrevious()
 	else
 		m_Callback.Search(NULL);
 }
+
 
 void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI) 
 {
@@ -1635,12 +1666,14 @@ void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookViewRuns::OnAgilityEditRun() 
 {
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->EditRun(pData->GetRun());
 }
+
 
 void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 {
@@ -1651,12 +1684,14 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookViewRuns::OnAgilityNewTitle()
 {
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddTitle(pData->GetRun());
 }
+
 
 void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
 {
@@ -1667,12 +1702,14 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookViewRuns::OnAgilityNewTrial()
 {
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddTrial(pData->GetRun());
 }
+
 
 void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
 {
@@ -1683,12 +1720,14 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookViewRuns::OnAgilityNewRun()
 {
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddRun(pData->GetRun());
 }
+
 
 void CAgilityBookViewRuns::OnUpdateAgilityPrintRuns(CCmdUI* pCmdUI)
 {
@@ -1697,6 +1736,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityPrintRuns(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewRuns::OnAgilityPrintRuns()
 {
@@ -1718,6 +1758,7 @@ void CAgilityBookViewRuns::OnAgilityPrintRuns()
 	}
 }
 
+
 void CAgilityBookViewRuns::OnUpdateEditCut(CCmdUI* pCmdUI)
 {
 	if (1 == GetListCtrl().GetSelectedCount())
@@ -1725,6 +1766,7 @@ void CAgilityBookViewRuns::OnUpdateEditCut(CCmdUI* pCmdUI)
 	else
 		pCmdUI->Enable(FALSE);
 }
+
 
 void CAgilityBookViewRuns::OnEditCut()
 {
@@ -1737,6 +1779,7 @@ void CAgilityBookViewRuns::OnEditCut()
 		MessageBeep(0);
 }
 
+
 void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
@@ -1744,6 +1787,7 @@ void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewRuns::OnEditCopy()
 {
@@ -1795,6 +1839,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 	}
 }
 
+
 void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI) 
 {
 	BOOL bEnable = FALSE;
@@ -1804,12 +1849,14 @@ void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookViewRuns::OnAgilityDeleteRun() 
 {
 	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		GetDocument()->DeleteRun(pData->GetRun());
 }
+
 
 void CAgilityBookViewRuns::OnViewCustomize()
 {
@@ -1821,6 +1868,7 @@ void CAgilityBookViewRuns::OnViewCustomize()
 	}
 }
 
+
 void CAgilityBookViewRuns::OnViewSortruns() 
 {
 	CAgilityBookOptions::SetNewestDatesFirst(!CAgilityBookOptions::GetNewestDatesFirst());
@@ -1829,11 +1877,13 @@ void CAgilityBookViewRuns::OnViewSortruns()
 	GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW);
 }
 
+
 void CAgilityBookViewRuns::OnViewRunsByTrial()
 {
 	CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
 	LoadData();
 }
+
 
 void CAgilityBookViewRuns::OnViewTableInYPS()
 {

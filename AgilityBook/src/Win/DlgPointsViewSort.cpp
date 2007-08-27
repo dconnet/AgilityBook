@@ -60,6 +60,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(CWnd* pParent)
 	CAgilityBookOptions::GetPointsViewSort(m_Primary, m_Secondary, m_Tertiary);
 }
 
+
 void CDlgPointsViewSort::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -69,6 +70,7 @@ void CDlgPointsViewSort::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_POINTS_VIEW_SORT_C3, m_ctrlTertiary);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgPointsViewSort, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgPointsViewSort)
@@ -107,6 +109,7 @@ static int AddItem(CComboBox2& ctrl, CAgilityBookOptions::PointsViewSort item, C
 	return idx;
 }
 
+
 void CDlgPointsViewSort::FillPrimary()
 {
 	m_ctrlPrimary.ResetContent();
@@ -115,6 +118,7 @@ void CDlgPointsViewSort::FillPrimary()
 	AddItem(m_ctrlPrimary, CAgilityBookOptions::ePointsViewSortEvent, m_Primary);
 	FillSecondary();
 }
+
 
 void CDlgPointsViewSort::FillSecondary()
 {
@@ -127,6 +131,7 @@ void CDlgPointsViewSort::FillSecondary()
 		AddItem(m_ctrlSecondary, CAgilityBookOptions::ePointsViewSortEvent, m_Secondary);
 	FillTertiary();
 }
+
 
 void CDlgPointsViewSort::FillTertiary()
 {
@@ -153,6 +158,7 @@ BOOL CDlgPointsViewSort::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgPointsViewSort::OnCbnSelchangePrimary()
 {
 	int idx = m_ctrlPrimary.GetCurSel();
@@ -162,6 +168,7 @@ void CDlgPointsViewSort::OnCbnSelchangePrimary()
 		m_Primary = static_cast<CAgilityBookOptions::PointsViewSort>(m_ctrlPrimary.GetItemData(idx));
 	FillSecondary();
 }
+
 
 void CDlgPointsViewSort::OnCbnSelchangeSecondary()
 {
@@ -173,6 +180,7 @@ void CDlgPointsViewSort::OnCbnSelchangeSecondary()
 	FillTertiary();
 }
 
+
 void CDlgPointsViewSort::OnCbnSelchangeTertiary()
 {
 	int idx = m_ctrlTertiary.GetCurSel();
@@ -181,6 +189,7 @@ void CDlgPointsViewSort::OnCbnSelchangeTertiary()
 	else
 		m_Tertiary = static_cast<CAgilityBookOptions::PointsViewSort>(m_ctrlTertiary.GetItemData(idx));
 }
+
 
 void CDlgPointsViewSort::OnOK()
 {

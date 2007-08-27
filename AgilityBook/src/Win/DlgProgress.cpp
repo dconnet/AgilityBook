@@ -119,6 +119,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
+
 CDlgProgress::CDlgProgress(CWnd* pParent)
 	: CDialog(CDlgProgress::IDD, pParent)
 {
@@ -127,11 +128,13 @@ CDlgProgress::CDlgProgress(CWnd* pParent)
 	CDialog::Create(CDlgProgress::IDD, pParent);
 }
 
+
 CDlgProgress::~CDlgProgress()
 {
 	if (m_hWnd && ::IsWindow(m_hWnd))
 		DestroyWindow();
 }
+
 
 void CDlgProgress::DoDataExchange(CDataExchange* pDX)
 {
@@ -143,15 +146,18 @@ void CDlgProgress::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgProgress, CDialog)
 	//{{AFX_MSG_MAP(CDlgProgress)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 void CDlgProgress::SetCaption(LPCTSTR inCaption)
 {
 	SetWindowText(inCaption);
 }
+
 
 void CDlgProgress::SetMessage(LPCTSTR inMessage)
 {
@@ -159,6 +165,7 @@ void CDlgProgress::SetMessage(LPCTSTR inMessage)
 	m_ctrlMessage.UpdateWindow();
 	UpdateWindow();
 }
+
 
 bool CDlgProgress::SetNumProgressBars(short nBars)
 {
@@ -179,6 +186,7 @@ bool CDlgProgress::SetNumProgressBars(short nBars)
 	return true;
 }
 
+
 bool CDlgProgress::SetRange(
 		short inBar,
 		int inLower,
@@ -194,6 +202,7 @@ bool CDlgProgress::SetRange(
 	return bOk;
 }
 
+
 bool CDlgProgress::SetStep(
 		short inBar,
 		int inStep)
@@ -208,6 +217,7 @@ bool CDlgProgress::SetStep(
 	return bOk;
 }
 
+
 bool CDlgProgress::StepIt(short inBar)
 {
 	bool bOk = false;
@@ -220,6 +230,7 @@ bool CDlgProgress::StepIt(short inBar)
 	}
 	return bOk;
 }
+
 
 bool CDlgProgress::OffsetPos(
 		short inBar,
@@ -234,6 +245,7 @@ bool CDlgProgress::OffsetPos(
 	}
 	return bOk;
 }
+
 
 bool CDlgProgress::SetPos(
 		short inBar,
@@ -250,6 +262,7 @@ bool CDlgProgress::SetPos(
 	return bOk;
 }
 
+
 bool CDlgProgress::GetPos(
 		short inBar,
 		int& outPos)
@@ -264,16 +277,19 @@ bool CDlgProgress::GetPos(
 	return bOk;
 }
 
+
 void CDlgProgress::Show(bool bShow)
 {
 	ShowWindow(bShow ? SW_SHOW : SW_HIDE);
 }
+
 
 void CDlgProgress::SetForegroundWindow()
 {
 	CDialog::SetForegroundWindow();
 	UpdateWindow();
 }
+
 
 void CDlgProgress::Dismiss()
 {
@@ -304,6 +320,7 @@ IDlgProgress* IDlgProgress::CreateProgress(CWnd* pParent)
 {
 	return new CDlgProgress(pParent);
 }
+
 
 IDlgProgress::~IDlgProgress()
 {

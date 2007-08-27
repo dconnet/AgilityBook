@@ -85,6 +85,7 @@ protected:
 	std::list<ScoringRunInfo> const& m_ScoringRuns;
 };
 
+
 void CDetails::OnDetails(CWnd* pParent)
 {
 	CString str;
@@ -113,9 +114,11 @@ CDlgConfigure::CDlgConfigure(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgConfigure::~CDlgConfigure()
 {
 }
+
 
 void CDlgConfigure::DoDataExchange(CDataExchange* pDX)
 {
@@ -128,6 +131,7 @@ void CDlgConfigure::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_COPY, m_ctrlCopy);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgConfigure, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigure)
@@ -158,6 +162,7 @@ CDlgConfigure::eAction CDlgConfigure::GetAction() const
 	return eNone;
 }
 
+
 CDlgConfigureData* CDlgConfigure::GetData(HTREEITEM hItem) const
 {
 	if (hItem)
@@ -168,6 +173,7 @@ CDlgConfigureData* CDlgConfigure::GetData(HTREEITEM hItem) const
 	}
 	return NULL;
 }
+
 
 void CDlgConfigure::UpdateButtons()
 {
@@ -186,6 +192,7 @@ void CDlgConfigure::UpdateButtons()
 	m_ctrlEdit.EnableWindow(bEdit);
 	m_ctrlCopy.EnableWindow(bCopy);
 }
+
 
 void CDlgConfigure::LoadData(eAction dataToLoad)
 {
@@ -246,6 +253,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 	m_ctrlItems.SortChildren(hParent);
 }
 
+
 HTREEITEM CDlgConfigure::FindCurrentVenue(
 		ARBConfigVenuePtr pVenue,
 		bool bSet)
@@ -271,6 +279,7 @@ HTREEITEM CDlgConfigure::FindCurrentVenue(
 	return hCurrent;
 }
 
+
 HTREEITEM CDlgConfigure::FindCurrentFault(
 		ARBConfigFaultPtr pFault,
 		bool bSet)
@@ -295,6 +304,7 @@ HTREEITEM CDlgConfigure::FindCurrentFault(
 	}
 	return hCurrent;
 }
+
 
 HTREEITEM CDlgConfigure::FindCurrentOtherPoints(
 		ARBConfigOtherPointsPtr pOther,
@@ -350,6 +360,7 @@ BOOL CDlgConfigure::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
@@ -361,6 +372,7 @@ void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	*pResult = 0;
 }
+
 
 void CDlgConfigure::OnGetdispinfo(
 		NMHDR* pNMHDR,
@@ -380,6 +392,7 @@ void CDlgConfigure::OnGetdispinfo(
 	*pResult = 0;
 }
 
+
 void CDlgConfigure::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -388,6 +401,7 @@ void CDlgConfigure::OnDblclk(
 	*pResult = 0;
 }
 
+
 void CDlgConfigure::OnSelchanged(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -395,6 +409,7 @@ void CDlgConfigure::OnSelchanged(
 	UpdateButtons();
 	*pResult = 0;
 }
+
 
 void CDlgConfigure::OnNew() 
 {
@@ -474,6 +489,7 @@ void CDlgConfigure::OnNew()
 	}
 }
 
+
 void CDlgConfigure::OnDelete() 
 {
 	HTREEITEM current = m_ctrlItems.GetSelectedItem();
@@ -520,6 +536,7 @@ void CDlgConfigure::OnDelete()
 		break;
 	}
 }
+
 
 void CDlgConfigure::OnEdit() 
 {
@@ -593,6 +610,7 @@ void CDlgConfigure::OnEdit()
 		break;
 	}
 }
+
 
 void CDlgConfigure::OnCopy() 
 {
@@ -676,6 +694,7 @@ void CDlgConfigure::OnCopy()
 	}
 }
 
+
 // During import here, we do nothing.
 class CDlgConfigCallback : public IConfigActionCallback
 {
@@ -684,6 +703,7 @@ public:
 	virtual void PreDelete(ARBString const& inMsg) {}
 	void PostDelete(ARBString const& inMsg) const {}
 };
+
 
 // Updating a configuration is mainly an additive procedure.
 void CDlgConfigure::OnUpdate() 
@@ -715,6 +735,7 @@ void CDlgConfigure::OnUpdate()
 			AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
 	}
 } 
+
 
 void CDlgConfigure::OnOK()
 {

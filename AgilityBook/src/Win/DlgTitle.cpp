@@ -74,6 +74,7 @@ CDlgTitle::CDlgTitle(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -87,6 +88,7 @@ void CDlgTitle::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TITLE_DESC, m_ctrlDesc);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTitle)
@@ -105,11 +107,13 @@ ARBConfigVenuePtr CDlgTitle::GetVenueData(int index) const
 	return dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pData)->GetData();
 }
 
+
 ARBConfigTitlePtr CDlgTitle::GetTitleData(int index) const
 {
 	CListData* pData = m_ctrlTitles.GetData(index);
 	return dynamic_cast<CListPtrData<ARBConfigTitlePtr>*>(pData)->GetData();
 }
+
 
 ARBDate CDlgTitle::GetDate()
 {
@@ -122,6 +126,7 @@ ARBDate CDlgTitle::GetDate()
 	}
 	return date;
 }
+
 
 void CDlgTitle::FillTitles()
 {
@@ -162,6 +167,7 @@ void CDlgTitle::FillTitles()
 		}
 	}
 }
+
 
 void CDlgTitle::FillTitleInfo()
 {
@@ -228,12 +234,14 @@ BOOL CDlgTitle::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgTitle::OnDtnDatetimechangeTitleDate(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	//LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
 	FillTitles();
 	*pResult = 0;
 }
+
 
 void CDlgTitle::OnBnClickedEarned()
 {
@@ -250,15 +258,18 @@ void CDlgTitle::OnBnClickedEarned()
 	FillTitles();
 }
 
+
 void CDlgTitle::OnSelchangeVenues()
 {
 	FillTitles();
 }
 
+
 void CDlgTitle::OnSelchangeTitles() 
 {
 	FillTitleInfo();
 }
+
 
 void CDlgTitle::OnOK()
 {

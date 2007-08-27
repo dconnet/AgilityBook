@@ -108,16 +108,19 @@ CDlgConfigEvent::CDlgConfigEvent(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgConfigEvent::~CDlgConfigEvent()
 {
 	ClearFixups();
 }
+
 
 void CDlgConfigEvent::GetFixups(std::vector<ARBConfigActionPtr>& ioFixups)
 {
 	ioFixups.insert(ioFixups.end(), m_DlgFixup.begin(), m_DlgFixup.end());
 	m_DlgFixup.clear();
 }
+
 
 void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 {
@@ -148,6 +151,7 @@ void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigEvent)
@@ -180,6 +184,7 @@ void CDlgConfigEvent::ClearFixups()
 	m_DlgFixup.clear();
 }
 
+
 void CDlgConfigEvent::FillSubNames(bool bInit)
 {
 	if (m_bHasSubNames)
@@ -210,11 +215,13 @@ void CDlgConfigEvent::FillSubNames(bool bInit)
 	}
 }
 
+
 CListPtrData<ARBConfigScoringPtr>* CDlgConfigEvent::GetScoringData(int index) const
 {
 	CListData* pData = m_ctrlMethods.GetData(index);
 	return dynamic_cast<CListPtrData<ARBConfigScoringPtr>*>(pData);
 }
+
 
 CListPtrData<ARBConfigTitlePointsPtr>* CDlgConfigEvent::GetTitleData(int index) const
 {
@@ -222,17 +229,20 @@ CListPtrData<ARBConfigTitlePointsPtr>* CDlgConfigEvent::GetTitleData(int index) 
 	return dynamic_cast<CListPtrData<ARBConfigTitlePointsPtr>*>(pData);
 }
 
+
 CListPtrData<ARBConfigLifetimePointsPtr>* CDlgConfigEvent::GetLifetimeData(int index) const
 {
 	CListData* pData = m_ctrlPointsList.GetData(index);
 	return dynamic_cast<CListPtrData<ARBConfigLifetimePointsPtr>*>(pData);
 }
 
+
 CListPtrData<ARBConfigPlaceInfoPtr>* CDlgConfigEvent::GetPlacementData(int index) const
 {
 	CListData* pData = m_ctrlPointsList.GetData(index);
 	return dynamic_cast<CListPtrData<ARBConfigPlaceInfoPtr>*>(pData);
 }
+
 
 CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 {
@@ -256,6 +266,7 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 	}
 	return str;
 }
+
 
 void CDlgConfigEvent::FillControls()
 {
@@ -418,6 +429,7 @@ void CDlgConfigEvent::FillControls()
 	m_ctrlNote.EnableWindow(bEnable);
 }
 
+
 void CDlgConfigEvent::FillMethodList()
 {
 	m_idxMethod = m_ctrlMethods.GetCurSel();
@@ -454,6 +466,7 @@ void CDlgConfigEvent::FillMethodList()
 		}
 	}
 }
+
 
 void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 {
@@ -526,6 +539,7 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 	m_ctrlPointsDelete.EnableWindow(FALSE);
 }
 
+
 bool CDlgConfigEvent::SaveControls()
 {
 	// Save the last selected method.
@@ -558,12 +572,14 @@ BOOL CDlgConfigEvent::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgConfigEvent::OnBnClickedSubNames()
 {
 	UpdateData(TRUE);
 	FillSubNames();
 	OnLbnSelchangeSubnames();
 }
+
 
 void CDlgConfigEvent::OnLbnSelchangeSubnames()
 {
@@ -573,6 +589,7 @@ void CDlgConfigEvent::OnLbnSelchangeSubnames()
 	m_ctrlSubNamesEdit.EnableWindow(bEnable);
 	m_ctrlSubNamesDelete.EnableWindow(bEnable);
 }
+
 
 void CDlgConfigEvent::OnBnClickedSubNamesNew()
 {
@@ -584,6 +601,7 @@ void CDlgConfigEvent::OnBnClickedSubNamesNew()
 		OnLbnSelchangeSubnames();
 	}
 }
+
 
 void CDlgConfigEvent::OnBnClickedSubNamesEdit()
 {
@@ -603,6 +621,7 @@ void CDlgConfigEvent::OnBnClickedSubNamesEdit()
 	}
 }
 
+
 void CDlgConfigEvent::OnBnClickedSubNamesDelete()
 {
 	int idx = m_ctrlSubNames.GetCurSel();
@@ -614,10 +633,12 @@ void CDlgConfigEvent::OnBnClickedSubNamesDelete()
 	}
 }
 
+
 void CDlgConfigEvent::OnLbnDblclkMethods()
 {
 	OnBnClickedEdit();
 }
+
 
 void CDlgConfigEvent::OnLbnSelchangeMethods()
 {
@@ -626,6 +647,7 @@ void CDlgConfigEvent::OnLbnSelchangeMethods()
 	m_idxMethod = m_ctrlMethods.GetCurSel();
 	FillControls();
 }
+
 
 void CDlgConfigEvent::OnBnClickedNew()
 {
@@ -639,6 +661,7 @@ void CDlgConfigEvent::OnBnClickedNew()
 	FillMethodList();
 	FillControls();
 }
+
 
 void CDlgConfigEvent::OnBnClickedEdit()
 {
@@ -655,6 +678,7 @@ void CDlgConfigEvent::OnBnClickedEdit()
 		}
 	}
 }
+
 
 void CDlgConfigEvent::OnBnClickedDelete()
 {
@@ -684,6 +708,7 @@ void CDlgConfigEvent::OnBnClickedDelete()
 	}
 }
 
+
 void CDlgConfigEvent::OnBnClickedCopy()
 {
 	UpdateData(TRUE);
@@ -702,6 +727,7 @@ void CDlgConfigEvent::OnBnClickedCopy()
 		FillControls();
 	}
 }
+
 
 void CDlgConfigEvent::OnBnClickedUp()
 {
@@ -729,6 +755,7 @@ void CDlgConfigEvent::OnBnClickedUp()
 	}
 }
 
+
 void CDlgConfigEvent::OnBnClickedDown()
 {
 	UpdateData(TRUE);
@@ -755,10 +782,12 @@ void CDlgConfigEvent::OnBnClickedDown()
 	}
 }
 
+
 void CDlgConfigEvent::OnDblclickConfigInfo()
 {
 	OnBnClickedEdit();
 }
+
 
 void CDlgConfigEvent::OnSelchangePoints()
 {
@@ -770,10 +799,12 @@ void CDlgConfigEvent::OnSelchangePoints()
 	m_ctrlPointsDelete.EnableWindow(bEnable);
 }
 
+
 void CDlgConfigEvent::OnDblclkPoints()
 {
 	OnPointsEdit();
 }
+
 
 void CDlgConfigEvent::OnPointsNew()
 {
@@ -812,6 +843,7 @@ void CDlgConfigEvent::OnPointsNew()
 		}
 	}
 }
+
 
 void CDlgConfigEvent::OnPointsEdit()
 {
@@ -922,6 +954,7 @@ void CDlgConfigEvent::OnPointsEdit()
 	}
 }
 
+
 void CDlgConfigEvent::OnPointsDelete()
 {
 	UpdateData(TRUE);
@@ -956,6 +989,7 @@ void CDlgConfigEvent::OnPointsDelete()
 		}
 	}
 }
+
 
 void CDlgConfigEvent::OnOK()
 {

@@ -168,6 +168,7 @@ static struct
 	// Note: Remember to update sc_Fields when adding a type.
 };
 
+
 // This simply defines the fields and what those fields are valid for.
 // sc_Fields defines what fields will be shown (and the order)
 // NOTE: Currently, the fields must be in index order - so any new fields must
@@ -530,6 +531,7 @@ static struct
 		true, LVCFMT_LEFT, IDS_COL_DRAWS},
 };
 
+
 UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
 {
 	UINT fmt = 0;
@@ -538,6 +540,7 @@ UINT CDlgAssignColumns::GetFormatFromColumnID(int column)
 	return fmt;
 }
 
+
 CString CDlgAssignColumns::GetNameFromColumnID(int column)
 {
 	CString name;
@@ -545,6 +548,7 @@ CString CDlgAssignColumns::GetNameFromColumnID(int column)
 		name.LoadString(sc_FieldNames[column].name);
 	return name;
 }
+
 
 bool CDlgAssignColumns::GetColumnOrder(
 		CAgilityBookOptions::ColumnOrder eOrder,
@@ -563,6 +567,7 @@ bool CDlgAssignColumns::GetColumnOrder(
 	return bOk;
 }
 
+
 bool CDlgAssignColumns::SetColumnOrder(
 		CAgilityBookOptions::ColumnOrder eOrder,
 		size_t idxColumn,
@@ -579,6 +584,7 @@ bool CDlgAssignColumns::SetColumnOrder(
 	}
 	return bOk;
 }
+
 
 static int const idxRunsFaultsTime[] = {
 	IO_RUNS_REG_NAME,		IO_RUNS_CALL_NAME,		IO_RUNS_DATE,
@@ -699,6 +705,7 @@ static int const idxViewCalendar[] = {
 	IO_CAL_LOCATION,	IO_CAL_CLUB,	IO_CAL_VENUE,	IO_CAL_NOTES,
 -1};
 
+
 static int const* sc_Fields[IO_TYPE_MAX] =
 {
 	idxRunsFaultsTime,
@@ -750,6 +757,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	}
 }
 
+
 void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -763,6 +771,7 @@ void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ASSIGN_MOVE_DOWN, m_ctrlDown);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgAssignColumns)
@@ -839,6 +848,7 @@ void CDlgAssignColumns::FillColumns()
 	UpdateButtons();
 }
 
+
 void CDlgAssignColumns::UpdateColumnVector()
 {
 	int index = m_ctrlType.GetSelection();
@@ -855,6 +865,7 @@ void CDlgAssignColumns::UpdateColumnVector()
 		}
 	}
 }
+
 
 void CDlgAssignColumns::UpdateButtons()
 {
@@ -908,21 +919,25 @@ BOOL CDlgAssignColumns::OnInitDialog()
 					// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgAssignColumns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	FillColumns();
 	*pResult = 0;
 }
 
+
 void CDlgAssignColumns::OnSelchangeAvailable() 
 {
 	UpdateButtons();
 }
 
+
 void CDlgAssignColumns::OnSelchangeColumns() 
 {
 	UpdateButtons();
 }
+
 
 void CDlgAssignColumns::OnAdd() 
 {
@@ -949,6 +964,7 @@ void CDlgAssignColumns::OnAdd()
 		UpdateButtons();
 	}
 }
+
 
 void CDlgAssignColumns::OnRemove() 
 {
@@ -999,6 +1015,7 @@ void CDlgAssignColumns::OnRemove()
 	}
 }
 
+
 void CDlgAssignColumns::OnMoveUp() 
 {
 	int idxCol = m_ctrlColumns.GetCurSel();
@@ -1016,6 +1033,7 @@ void CDlgAssignColumns::OnMoveUp()
 	}
 }
 
+
 void CDlgAssignColumns::OnMoveDown() 
 {
 	int idxCol = m_ctrlColumns.GetCurSel();
@@ -1032,6 +1050,7 @@ void CDlgAssignColumns::OnMoveDown()
 		UpdateButtons();
 	}
 }
+
 
 void CDlgAssignColumns::OnOK() 
 {

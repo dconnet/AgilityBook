@@ -68,6 +68,7 @@ CAboutDlg::CAboutDlg(CAgilityBookDoc* pDoc)
 	//}}AFX_DATA_INIT
 }
 
+
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -79,6 +80,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_ABOUT_LINK4, m_ctrlLink4);
 	//}}AFX_DATA_MAP
 }
+
 
 BOOL CAboutDlg::OnInitDialog()
 {
@@ -234,6 +236,7 @@ BOOL CAboutDlg::OnInitDialog()
 	return FALSE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CAboutDlg::OnBnClickedUpdate()
 {

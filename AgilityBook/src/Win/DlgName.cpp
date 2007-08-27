@@ -59,6 +59,7 @@ CDlgName::CDlgName(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgName::CDlgName(
 		LPCTSTR name,
 		LPCTSTR pCaption,
@@ -69,9 +70,11 @@ CDlgName::CDlgName(
 {
 }
 
+
 CDlgName::~CDlgName()
 {
 }
+
 
 void CDlgName::DoDataExchange(CDataExchange* pDX)
 {
@@ -81,11 +84,13 @@ void CDlgName::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgName, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgName)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/////////////////////////////////////////////////////////////////////////////
 // CDlgName message handlers
 
 BOOL CDlgName::OnInitDialog()
@@ -98,6 +103,7 @@ BOOL CDlgName::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgName::OnOK()
 {

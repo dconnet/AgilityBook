@@ -92,6 +92,7 @@ static LONG GetRegKey(
 	return retval;
 }
 
+
 bool CHyperLink::GotoURL(CString const& url)
 {
 	CWaitCursor wait;
@@ -226,6 +227,7 @@ CHyperLink::CHyperLink()
 {
 }
 
+
 CHyperLink::~CHyperLink()
 {
 }
@@ -239,11 +241,13 @@ BOOL CHyperLink::PreTranslateMessage(MSG* pMsg)
 	return CStatic::PreTranslateMessage(pMsg);
 }
 
+
 BOOL CHyperLink::DestroyWindow()
 {
 	KillTimer(m_nTimerID);
 	return CStatic::DestroyWindow();
 }
+
 
 void CHyperLink::PreSubclassWindow()
 {
@@ -299,6 +303,7 @@ void CHyperLink::PreSubclassWindow()
 	CStatic::PreSubclassWindow();
 }
 
+
 BEGIN_MESSAGE_MAP(CHyperLink, CStatic)
 	//{{AFX_MSG_MAP(CHyperLink)
 	ON_WM_GETDLGCODE()
@@ -322,6 +327,7 @@ UINT CHyperLink::OnGetDlgCode()
 	return DLGC_WANTCHARS;
 }
 
+
 HBRUSH CHyperLink::CtlColor(
 		CDC* pDC,
 		UINT nCtlColor)
@@ -339,6 +345,7 @@ HBRUSH CHyperLink::CtlColor(
 	return reinterpret_cast<HBRUSH>(GetStockObject(NULL_BRUSH));
 }
 
+
 BOOL CHyperLink::OnEraseBkgnd(CDC* pDC)
 {
 	CRect rect;
@@ -349,15 +356,18 @@ BOOL CHyperLink::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
+
 void CHyperLink::OnSetFocus(CWnd* /*pOldWnd*/)
 {
 	DrawFocusRect();
 }
 
+
 void CHyperLink::OnKillFocus(CWnd* /*pNewWnd*/)
 {
 	DrawFocusRect();
 }
+
 
 void CHyperLink::OnMouseMove(
 		UINT nFlags,
@@ -373,6 +383,7 @@ void CHyperLink::OnMouseMove(
 	}
 	CStatic::OnMouseMove(nFlags, point);
 }
+
 
 void CHyperLink::OnTimer(UINT_PTR nIDEvent)
 {
@@ -392,6 +403,7 @@ void CHyperLink::OnTimer(UINT_PTR nIDEvent)
 	CStatic::OnTimer(nIDEvent);
 }
 
+
 BOOL CHyperLink::OnSetCursor(
 		CWnd* /*pWnd*/,
 		UINT /*nHitTest*/,
@@ -404,6 +416,7 @@ BOOL CHyperLink::OnSetCursor(
 	}
 	return FALSE;
 }
+
 
 void CHyperLink::OnChar(
 		UINT nChar,
@@ -418,13 +431,14 @@ void CHyperLink::OnChar(
 	else
 		CStatic::OnChar(nChar, nRepCnt, nFlags);
 }
+
+
 void CHyperLink::OnClicked()
 {
 	m_bOverControl = false;
 	if (GotoURL(m_strURL))
 		SetVisited();	// Repaint to show visited colour
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CHyperLink operations
@@ -438,6 +452,7 @@ void CHyperLink::SetURL(CString const& strURL)
 		m_ToolTip.UpdateTipText(strURL, this, TOOLTIP_ID);
 	}
 }
+
 
 void CHyperLink::SetColors(
 		COLORREF crLinkColor,
@@ -454,6 +469,7 @@ void CHyperLink::SetColors(
 		Invalidate();
 }
 
+
 void CHyperLink::SetVisited(bool bVisited)
 {
 	m_bVisited = bVisited;
@@ -461,12 +477,14 @@ void CHyperLink::SetVisited(bool bVisited)
 		Invalidate();
 }
 
+
 void CHyperLink::SetLinkCursor(HCURSOR hCursor)
 {
 	m_hLinkCursor = hCursor;
 	if (m_hLinkCursor == NULL)
 		SetDefaultCursor();
 }
+
 
 void CHyperLink::SetUnderline(UnderLineOptions nUnderline)
 {
@@ -484,12 +502,14 @@ void CHyperLink::SetUnderline(UnderLineOptions nUnderline)
 	m_nUnderline = nUnderline;
 }
 
+
 void CHyperLink::SetAutoSize(bool bAutoSize)
 {
 	m_bAdjustToFit = bAutoSize;
 	if (::IsWindow(GetSafeHwnd()))
 		PositionWindow();
 }
+
 
 void CHyperLink::DrawFocusRect()
 {
@@ -502,6 +522,7 @@ void CHyperLink::DrawFocusRect()
 	CClientDC dc(pParent);
 	dc.DrawFocusRect(&r);
 }
+
 
 // Move and resize the window so that the window is the same size
 // as the hyperlink text. This stops the hyperlink cursor being active

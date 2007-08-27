@@ -180,16 +180,17 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-// CAgilityBookViewPoints construction/destruction
 
 CAgilityBookViewPoints::CAgilityBookViewPoints()
 {
 	SetAutoDelete(true);
 }
 
+
 CAgilityBookViewPoints::~CAgilityBookViewPoints()
 {
 }
+
 
 BOOL CAgilityBookViewPoints::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -198,11 +199,13 @@ BOOL CAgilityBookViewPoints::PreCreateWindow(CREATESTRUCT& cs)
 	return CListView2::PreCreateWindow(cs);
 }
 
+
 LRESULT CAgilityBookViewPoints::OnCommandHelp(WPARAM, LPARAM)
 {
 	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_POINTS, HH_HELP_CONTEXT);
 	return 1;
 }
+
 
 int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
@@ -227,6 +230,7 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+
 void CAgilityBookViewPoints::OnRclick(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -235,6 +239,7 @@ void CAgilityBookViewPoints::OnRclick(
 	SendMessage(WM_CONTEXTMENU, reinterpret_cast<WPARAM>(m_hWnd), GetMessagePos());
 	*pResult = 1;
 }
+
 
 void CAgilityBookViewPoints::OnContextMenu(
 		CWnd* pWnd,
@@ -265,6 +270,7 @@ void CAgilityBookViewPoints::OnContextMenu(
 	}
 }
 
+
 void CAgilityBookViewPoints::OnNMDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -276,6 +282,7 @@ void CAgilityBookViewPoints::OnNMDblclk(
 		MessageBeep(0);
 	*pResult = 0;
 }
+
 
 void CAgilityBookViewPoints::OnKeydown(
 		NMHDR* pNMHDR,
@@ -300,6 +307,7 @@ void CAgilityBookViewPoints::OnKeydown(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewPoints::OnLvnGetdispinfo(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -321,6 +329,7 @@ void CAgilityBookViewPoints::OnLvnGetdispinfo(
 	*pResult = 0;
 }
 
+
 void CAgilityBookViewPoints::OnActivateView(
 		BOOL bActivate,
 		CView* pActivateView,
@@ -337,6 +346,7 @@ void CAgilityBookViewPoints::OnActivateView(
 	}
 }
 
+
 void CAgilityBookViewPoints::OnUpdate(
 		CView* pSender,
 		LPARAM lHint,
@@ -349,6 +359,7 @@ void CAgilityBookViewPoints::OnUpdate(
 		LoadData();
 }
 
+
 #ifdef _DEBUG
 // CAgilityBookViewPoints diagnostics
 void CAgilityBookViewPoints::AssertValid() const
@@ -356,10 +367,12 @@ void CAgilityBookViewPoints::AssertValid() const
 	CListView2::AssertValid();
 }
 
+
 void CAgilityBookViewPoints::Dump(CDumpContext& dc) const
 {
 	CListView2::Dump(dc);
 }
+
 
 CAgilityBookDoc* CAgilityBookViewPoints::GetDocument() const // non-debug version is inline
 {
@@ -385,11 +398,13 @@ bool CAgilityBookViewPoints::IsFiltered() const
 	return CFilterOptions::Options().IsFilterEnabled();
 }
 
+
 bool CAgilityBookViewPoints::GetMessage(CString& msg) const
 {
 	msg.LoadString(IDS_INDICATOR_BLANK);
 	return true;
 }
+
 
 bool CAgilityBookViewPoints::GetMessage2(CString& msg) const
 {
@@ -405,10 +420,12 @@ bool CAgilityBookViewPoints::GetMessage2(CString& msg) const
 	}
 }
 
+
 PointsData* CAgilityBookViewPoints::GetItemData(int index) const
 {
 	return dynamic_cast<PointsData*>(GetData(index));
 }
+
 
 void CAgilityBookViewPoints::LoadData()
 {
@@ -481,6 +498,7 @@ void CAgilityBookViewPoints::LoadData()
 	GetListCtrl().Invalidate();
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewPoints message handlers
 
 void CAgilityBookViewPoints::OnUpdateDetails(CCmdUI* pCmdUI)
@@ -492,12 +510,14 @@ void CAgilityBookViewPoints::OnUpdateDetails(CCmdUI* pCmdUI)
 	pCmdUI->Enable(bEnable);
 }
 
+
 void CAgilityBookViewPoints::OnDetails()
 {
 	PointsData* pData = GetItemData(GetSelection(true));
 	if (pData)
 		pData->Details();
 }
+
 
 void CAgilityBookViewPoints::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 {
@@ -507,6 +527,7 @@ void CAgilityBookViewPoints::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
+
 
 void CAgilityBookViewPoints::OnAgilityNewTitle()
 {
@@ -520,12 +541,14 @@ void CAgilityBookViewPoints::OnAgilityNewTitle()
 	}
 }
 
+
 void CAgilityBookViewPoints::OnViewPointsViewSort()
 {
 	CDlgPointsViewSort dlg(this);
 	if (IDOK == dlg.DoModal())
 		LoadData();
 }
+
 
 void CAgilityBookViewPoints::OnViewHiddenTitles()
 {

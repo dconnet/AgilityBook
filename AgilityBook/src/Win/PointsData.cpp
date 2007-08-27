@@ -103,6 +103,7 @@ OtherPtInfo::OtherPtInfo(
 	}
 }
 
+
 OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr pExisting)
 	: m_pTrial()
 	, m_pRun()
@@ -114,6 +115,7 @@ OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr pExisting)
 	, m_Score(pExisting->GetPoints())
 {
 }
+
 
 OtherPtInfo::~OtherPtInfo()
 {
@@ -128,6 +130,7 @@ CPointsDataBase::CPointsDataBase(
 	, m_pDoc(pDoc)
 {
 }
+
 
 CPointsDataBase::~CPointsDataBase()
 {
@@ -161,6 +164,7 @@ CPointsDataText::CPointsDataText(
 	ASSERT(NULL != inCol2);
 }
 
+
 ARBString CPointsDataText::OnNeedText(size_t inCol) const
 {
 	switch (inCol)
@@ -174,6 +178,7 @@ ARBString CPointsDataText::OnNeedText(size_t inCol) const
 	}
 }
 
+
 ARBString CPointsDataText::GetHtml(size_t /*nCurLine*/) const
 {
 	ARBostringstream data;
@@ -185,6 +190,7 @@ ARBString CPointsDataText::GetHtml(size_t /*nCurLine*/) const
 	}
 	return data.str();
 }
+
 
 bool CPointsDataText::IsEqual(CPointsDataBasePtr /*inData*/)
 {
@@ -201,6 +207,7 @@ CPointsDataDog::CPointsDataDog(
 	, m_pDog(pDog)
 {
 }
+
 
 ARBString CPointsDataDog::OnNeedText(size_t inCol) const
 {
@@ -222,6 +229,7 @@ ARBString CPointsDataDog::OnNeedText(size_t inCol) const
 	}
 	return str;
 }
+
 
 ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 {
@@ -252,6 +260,7 @@ ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataDog::Details() const
 {
 	// CDlgDog will cause an update msg to occur which will delete us.
@@ -264,6 +273,7 @@ void CPointsDataDog::Details() const
 		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
 	}
 }
+
 
 bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
 {
@@ -286,6 +296,7 @@ CPointsDataVenue::CPointsDataVenue(
 	, m_pVenue(pVenue)
 {
 }
+
 
 ARBString CPointsDataVenue::OnNeedText(size_t inCol) const
 {
@@ -311,6 +322,7 @@ ARBString CPointsDataVenue::OnNeedText(size_t inCol) const
 	}
 	return str;
 }
+
 
 ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 {
@@ -350,6 +362,7 @@ ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataVenue::Details() const
 {
 	if (m_pDog && m_pVenue)
@@ -374,6 +387,7 @@ void CPointsDataVenue::Details() const
 		MessageBeep(0);
 }
 
+
 bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
 {
 	CPointsDataVenuePtr inVenue = boost::shared_dynamic_cast<CPointsDataVenue, CPointsDataBase>(inData);
@@ -396,6 +410,7 @@ CPointsDataTitle::CPointsDataTitle(
 {
 }
 
+
 ARBString CPointsDataTitle::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -416,6 +431,7 @@ ARBString CPointsDataTitle::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataTitle::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -435,6 +451,7 @@ ARBString CPointsDataTitle::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataTitle::Details() const
 {
 	CDlgTitle dlg(m_pDoc->GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pParent);
@@ -447,6 +464,7 @@ void CPointsDataTitle::Details() const
 		m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
 	}
 }
+
 
 bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
 {
@@ -495,6 +513,7 @@ CPointsDataEvent::CPointsDataEvent(
 {
 }
 
+
 ARBString CPointsDataEvent::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -531,6 +550,7 @@ ARBString CPointsDataEvent::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataEvent::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -553,6 +573,7 @@ ARBString CPointsDataEvent::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataEvent::Details() const
 {
 	CString runs;
@@ -568,6 +589,7 @@ void CPointsDataEvent::Details() const
 	CDlgListViewer dlg(m_pDoc, str.str().c_str(), m_Dog ? &data : NULL, m_Matching, m_pParent);
 	dlg.DoModal();
 }
+
 
 bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 {
@@ -596,6 +618,7 @@ CPointsDataLifetime::CPointsDataLifetime(
 {
 }
 
+
 void CPointsDataLifetime::AddLifetimeInfo(
 		ARBString const& inDiv,
 		ARBString const& inLevel,
@@ -606,6 +629,7 @@ void CPointsDataLifetime::AddLifetimeInfo(
 	m_Lifetime += inLifetime;
 	m_Filtered += inFiltered;
 }
+
 
 ARBString CPointsDataLifetime::OnNeedText(size_t inCol) const
 {
@@ -639,6 +663,7 @@ ARBString CPointsDataLifetime::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataLifetime::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -656,6 +681,7 @@ ARBString CPointsDataLifetime::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataLifetime::Details() const
 {
 	CString caption(m_Venue);
@@ -668,6 +694,7 @@ void CPointsDataLifetime::Details() const
 	CDlgListViewer dlg(m_pDoc, caption, m_Data, m_pParent);
 	dlg.DoModal();
 }
+
 
 bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 {
@@ -691,6 +718,7 @@ CPointsDataLifetimeDiv::CPointsDataLifetimeDiv(
 {
 }
 
+
 void CPointsDataLifetimeDiv::AddLifetimeInfo(
 		ARBString const& inDiv,
 		ARBString const& inLevel,
@@ -704,6 +732,7 @@ void CPointsDataLifetimeDiv::AddLifetimeInfo(
 		m_Filtered += inFiltered;
 	}
 }
+
 
 ARBString CPointsDataLifetimeDiv::OnNeedText(size_t inCol) const
 {
@@ -725,6 +754,7 @@ ARBString CPointsDataLifetimeDiv::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataLifetimeDiv::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -734,6 +764,7 @@ ARBString CPointsDataLifetimeDiv::GetHtml(size_t nCurLine) const
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
+
 
 bool CPointsDataLifetimeDiv::IsEqual(CPointsDataBasePtr inData)
 {
@@ -774,6 +805,7 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 		ARBConfigDivisionPtr(), ARBConfigLevelPtr(), ARBConfigEventPtr(), dateFrom, dateTo);
 }
 
+
 ARBString CPointsDataMultiQs::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -785,6 +817,7 @@ ARBString CPointsDataMultiQs::OnNeedText(size_t inCol) const
 	}
 	return str;
 }
+
 
 ARBString CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 {
@@ -803,12 +836,14 @@ ARBString CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataMultiQs::Details() const
 {
 	MultiQInfoData data(m_Dog, m_Venue, m_MultiQ);
 	CDlgListViewer dlg(m_pDoc, m_MultiQ->GetName().c_str(), &data, m_MQs, m_pParent);
 	dlg.DoModal();
 }
+
 
 bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 {
@@ -833,6 +868,7 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 {
 }
 
+
 ARBString CPointsDataSpeedPts::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -845,6 +881,7 @@ ARBString CPointsDataSpeedPts::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -854,6 +891,7 @@ ARBString CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 		<< _T("</tr>") << std::endl;
 	return data.str();
 }
+
 
 bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr inData)
 {
@@ -894,6 +932,7 @@ CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
 {
 }
 
+
 ARBString CPointsDataOtherPointsTallyAll::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -913,6 +952,7 @@ ARBString CPointsDataOtherPointsTallyAll::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -930,6 +970,7 @@ ARBString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataOtherPointsTallyAll::Details() const
 {
 	CString str;
@@ -937,6 +978,7 @@ void CPointsDataOtherPointsTallyAll::Details() const
 	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
+
 
 bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 {
@@ -959,6 +1001,7 @@ CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 {
 }
 
+
 ARBString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -978,6 +1021,7 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -996,6 +1040,7 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataOtherPointsTallyAllByEvent::Details() const
 {
 	CString str;
@@ -1003,6 +1048,7 @@ void CPointsDataOtherPointsTallyAllByEvent::Details() const
 	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
+
 
 bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 {
@@ -1025,6 +1071,7 @@ CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 {
 }
 
+
 ARBString CPointsDataOtherPointsTallyLevel::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -1044,6 +1091,7 @@ ARBString CPointsDataOtherPointsTallyLevel::OnNeedText(size_t inCol) const
 	return str;
 }
 
+
 ARBString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -1062,6 +1110,7 @@ ARBString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 	return data.str();
 }
 
+
 void CPointsDataOtherPointsTallyLevel::Details() const
 {
 	CString str;
@@ -1069,6 +1118,7 @@ void CPointsDataOtherPointsTallyLevel::Details() const
 	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
+
 
 bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 {
@@ -1093,6 +1143,7 @@ CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent
 {
 }
 
+
 ARBString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t inCol) const
 {
 	ARBString str;
@@ -1115,6 +1166,7 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t inCol) cons
 	return str;
 }
 
+
 ARBString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
 {
 	ARBostringstream data;
@@ -1134,6 +1186,7 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) cons
 	return data.str();
 }
 
+
 void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 {
 	CString str;
@@ -1141,6 +1194,7 @@ void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
 	dlg.DoModal();
 }
+
 
 bool CPointsDataOtherPointsTallyLevelByEvent::IsEqual(CPointsDataBasePtr inData)
 {
@@ -1158,9 +1212,11 @@ CPointsDataItems::CPointsDataItems()
 {
 }
 
+
 CPointsDataItems::~CPointsDataItems()
 {
 }
+
 
 class SortPointItems
 {
@@ -1201,6 +1257,7 @@ private:
 	CAgilityBookOptions::PointsViewSort m_Order[3];
 };
 
+
 void CPointsDataItems::InsertVenueHeader(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
@@ -1210,6 +1267,7 @@ void CPointsDataItems::InsertVenueHeader(
 	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, false)));
 	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataVenue(pParent, pDoc, inDog, pVenue)));
 }
+
 
 void CPointsDataItems::LoadData(
 		CWnd* pParent,
@@ -1872,15 +1930,18 @@ void CPointsDataItems::LoadData(
 	}
 }
 
+
 void CPointsDataItems::clear()
 {
 	m_Lines.clear();
 }
 
+
 size_t CPointsDataItems::NumLines() const
 {
 	return m_Lines.size();
 }
+
 
 CPointsDataBasePtr CPointsDataItems::GetLine(size_t nLine) const
 {

@@ -73,9 +73,11 @@ CDlgDogProperties::CDlgDogProperties(
 	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
+
 CDlgDogProperties::~CDlgDogProperties()
 {
 }
+
 
 void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 {
@@ -122,6 +124,7 @@ void CDlgDogProperties::DoDataExchange(CDataExchange* pDX)
 			m_Deceased.clear();
 	}
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgDogProperties, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogProperties)
@@ -173,6 +176,7 @@ BOOL CDlgDogProperties::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgDogProperties::OnDatetimechange(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -180,6 +184,7 @@ void CDlgDogProperties::OnDatetimechange(
 	UpdateAge();
 	*pResult = 0;
 }
+
 
 void CDlgDogProperties::OnIsDeceased()
 {

@@ -68,6 +68,7 @@ CDlgSelectDog::CDlgSelectDog(
 	//}}AFX_DATA_INIT
 }
 
+
 DOMODAL_RETVAL CDlgSelectDog::DoModal() 
 {
 	m_Dogs.clear();
@@ -80,6 +81,7 @@ DOMODAL_RETVAL CDlgSelectDog::DoModal()
 		return CDlgBaseDialog::DoModal();
 }
 
+
 void CDlgSelectDog::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -87,6 +89,7 @@ void CDlgSelectDog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PICK_NAME, m_ctrlList);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgSelectDog, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgSelectDog)
@@ -125,6 +128,7 @@ BOOL CDlgSelectDog::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgSelectDog::OnOK() 
 {

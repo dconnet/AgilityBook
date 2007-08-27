@@ -72,6 +72,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CWizardExport, CDlgBasePropertyPage)
 
+
 CWizardExport::CWizardExport(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
@@ -99,9 +100,11 @@ CWizardExport::CWizardExport(
 	}
 }
 
+
 CWizardExport::~CWizardExport()
 {
 }
+
 
 void CWizardExport::DoDataExchange(CDataExchange* pDX)
 {
@@ -115,6 +118,7 @@ void CWizardExport::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_WIZARD_EXPORT_PREVIEW, m_ctrlPreview);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CWizardExport, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CWizardExport)
@@ -157,6 +161,7 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 	return order;
 }
 
+
 CString CWizardExport::GetDelim() const
 {
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
@@ -176,6 +181,7 @@ CString CWizardExport::GetDelim() const
 	return delim;
 }
 
+
 CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
 {
 	CString delim = GetDelim();
@@ -194,6 +200,7 @@ CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
 	}
 	return fld;
 }
+
 
 void CWizardExport::UpdateButtons()
 {
@@ -260,6 +267,7 @@ void CWizardExport::UpdateButtons()
 	m_pSheet->SetWizardButtons(dwWiz);
 }
 
+
 CString CWizardExport::AddPreviewData(
 		int inLine,
 		int inCol,
@@ -284,6 +292,7 @@ CString CWizardExport::AddPreviewData(
 	}
 	return data;
 }
+
 
 void CWizardExport::UpdatePreview()
 {
@@ -1140,6 +1149,7 @@ BOOL CWizardExport::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 BOOL CWizardExport::OnSetActive() 
 {
 	UpdateButtons();
@@ -1147,10 +1157,12 @@ BOOL CWizardExport::OnSetActive()
 	return CDlgBasePropertyPage::OnSetActive();
 }
 
+
 LRESULT CWizardExport::OnWizardBack()
 {
 	return IDD_WIZARD_START;
 }
+
 
 BOOL CWizardExport::OnWizardFinish() 
 {
@@ -1280,12 +1292,14 @@ BOOL CWizardExport::OnWizardFinish()
 	}
 }
 
+
 void CWizardExport::OnExportDelim() 
 {
 	UpdateData(TRUE);
 	UpdateButtons();
 	UpdatePreview();
 }
+
 
 void CWizardExport::OnExportAssign() 
 {
@@ -1321,6 +1335,7 @@ void CWizardExport::OnExportAssign()
 		}
 	}
 }
+
 
 void CWizardExport::OnSelchangeDate() 
 {

@@ -150,6 +150,7 @@ CDlgMessageBox::CDlgMessageBox(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgMessageBox::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -163,6 +164,7 @@ void CDlgMessageBox::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MESSAGE_BOX_DETAILS, m_ctrlButton[3]);
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgMessageBox, CDialog)
 	//{{AFX_MSG_MAP(CDlgMessageBox)
 	ON_COMMAND(IDC_MESSAGE_BOX_DETAILS, OnDetails)
@@ -175,6 +177,7 @@ BEGIN_MESSAGE_MAP(CDlgMessageBox, CDialog)
 	ON_COMMAND_EX(IDRETRY, OnCmd)
 	ON_COMMAND_EX(IDYES, OnCmd)
 END_MESSAGE_MAP()
+
 
 BOOL CDlgMessageBox::OnInitDialog() 
 {
@@ -420,11 +423,13 @@ BOOL CDlgMessageBox::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgMessageBox::OnDetails()
 {
 	if (m_Callback)
 		m_Callback->OnDetails(this);
 }
+
 
 BOOL CDlgMessageBox::OnCmd(UINT id)
 {
@@ -445,6 +450,7 @@ int AfxMessageBox2(
 	str.LoadString(inIDText);
 	return AfxMessageBox2(str, inType, inCallback, inParent);
 }
+
 
 int AfxMessageBox2(
 		CString const& inText,

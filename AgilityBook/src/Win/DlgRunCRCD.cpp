@@ -66,10 +66,12 @@ CDlgRunCRCD::CDlgRunCRCD(ARBDogRunPtr pRun)
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgRunCRCD::~CDlgRunCRCD()
 {
 	DeleteMetaFile();
 }
+
 
 void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
 {
@@ -83,6 +85,7 @@ void CDlgRunCRCD::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNCRCD_CRCD, m_ctrlCRCD);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgRunCRCD, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunCRCD)
@@ -107,6 +110,7 @@ void CDlgRunCRCD::DeleteMetaFile()
 		m_metaFileBack = NULL;
 	}
 }
+
 
 void CDlgRunCRCD::AdjustCRCD()
 {
@@ -135,6 +139,7 @@ void CDlgRunCRCD::AdjustCRCD()
 		m_ctrlCRCD.SetWindowPos(NULL, 0, 0, r.Width()+x, r.Height()+y, SWP_NOZORDER | SWP_NOMOVE);
 	}
 }
+
 
 void CDlgRunCRCD::SetView()
 {
@@ -174,6 +179,7 @@ void CDlgRunCRCD::SetView()
 		m_ctrlView.EnableWindow(FALSE);
 	}
 }
+
 
 void CDlgRunCRCD::SetCRCDData()
 {
@@ -230,6 +236,7 @@ BOOL CDlgRunCRCD::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 HBRUSH CDlgRunCRCD::OnCtlColor(
 		CDC* pDC,
 		CWnd* pWnd,
@@ -243,6 +250,7 @@ HBRUSH CDlgRunCRCD::OnCtlColor(
 	return hbr;
 }
 
+
 void CDlgRunCRCD::OnEdit()
 {
 	if (m_metaFile)
@@ -252,11 +260,13 @@ void CDlgRunCRCD::OnEdit()
 	}
 }
 
+
 void CDlgRunCRCD::OnView()
 {
 	m_ViewText = !m_ViewText;
 	SetView();
 }
+
 
 void CDlgRunCRCD::OnCopy()
 {
@@ -323,6 +333,7 @@ void CDlgRunCRCD::OnCopy()
 		SetView();
 	}
 }
+
 
 void CDlgRunCRCD::OnImage()
 {

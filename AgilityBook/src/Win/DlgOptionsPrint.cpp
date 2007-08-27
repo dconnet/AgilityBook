@@ -49,6 +49,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CDlgOptionsPrint, CDlgBasePropertyPage)
 
+
 CDlgOptionsPrint::CDlgOptionsPrint()
 	: CDlgBasePropertyPage(CDlgOptionsPrint::IDD)
 	, m_Left(0)
@@ -57,9 +58,11 @@ CDlgOptionsPrint::CDlgOptionsPrint()
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgOptionsPrint::~CDlgOptionsPrint()
 {
 }
+
 
 void CDlgOptionsPrint::DoDataExchange(CDataExchange* pDX)
 {
@@ -72,6 +75,7 @@ void CDlgOptionsPrint::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_OPT_PRINT_MARGIN_B, m_Bottom);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgOptionsPrint, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsPrint)
@@ -90,6 +94,7 @@ BOOL CDlgOptionsPrint::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgOptionsPrint::OnFontPrint()
 {

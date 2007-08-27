@@ -59,11 +59,13 @@ CColumnOrder::CColumnOrder(LPCTSTR pItem)
 {
 }
 
+
 CColumnOrder::~CColumnOrder()
 {
 	delete [] m_order;
 	delete [] m_bDescending;
 }
+
 
 bool CColumnOrder::Initialize(int nColumns)
 {
@@ -111,6 +113,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	return rc;
 }
 
+
 void CColumnOrder::Save()
 {
 	{
@@ -135,6 +138,7 @@ void CColumnOrder::Save()
 	}
 }
 
+
 int CColumnOrder::FindColumnOrder(int column) const
 {
 	for (int i = 0; i < m_nColumns; ++i)
@@ -142,6 +146,7 @@ int CColumnOrder::FindColumnOrder(int column) const
 			return i;
 	return -1;
 }
+
 
 bool CColumnOrder::SetColumnOrder(int nNewFirstColumn)
 {

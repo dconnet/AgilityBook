@@ -57,9 +57,11 @@ CDlgSelectURL::CDlgSelectURL(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgSelectURL::~CDlgSelectURL()
 {
 }
+
 
 void CDlgSelectURL::DoDataExchange(CDataExchange* pDX)
 {
@@ -69,21 +71,23 @@ void CDlgSelectURL::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgSelectURL, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgSelectURL)
 	ON_BN_CLICKED(IDC_SELECTURL_FILENAME, OnBnClickedFilename)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/////////////////////////////////////////////////////////////////////////////
 // CDlgSelectURL message handlers
 
 BOOL CDlgSelectURL::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
-
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgSelectURL::OnBnClickedFilename()
 {
@@ -97,6 +101,7 @@ void CDlgSelectURL::OnBnClickedFilename()
 		UpdateData(FALSE);
 	}
 }
+
 
 void CDlgSelectURL::OnOK()
 {

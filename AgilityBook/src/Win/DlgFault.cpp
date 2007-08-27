@@ -67,6 +67,7 @@ CDlgFault::CDlgFault(
 		m_Faults = pFault;
 }
 
+
 void CDlgFault::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -75,6 +76,7 @@ void CDlgFault::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_FAULTS, m_Faults);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgFault, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgFault)
@@ -97,6 +99,7 @@ BOOL CDlgFault::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgFault::OnOK() 
 {

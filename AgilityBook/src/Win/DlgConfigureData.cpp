@@ -73,9 +73,11 @@ CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
 {
 }
 
+
 CDlgConfigureDataVenue::~CDlgConfigureDataVenue()
 {
 }
+
 
 CString CDlgConfigureDataVenue::OnNeedText() const
 {
@@ -90,6 +92,7 @@ CString CDlgConfigureDataVenue::OnNeedText() const
 	}
 	return str;
 }
+
 
 CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 {
@@ -118,14 +121,17 @@ CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
 {
 }
 
+
 CDlgConfigureDataFault::~CDlgConfigureDataFault()
 {
 }
+
 
 CString CDlgConfigureDataFault::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 {
@@ -140,14 +146,17 @@ CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsP
 {
 }
 
+
 CDlgConfigureDataOtherPoints::~CDlgConfigureDataOtherPoints()
 {
 }
+
 
 CString CDlgConfigureDataOtherPoints::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 {
@@ -162,14 +171,17 @@ CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivisionPtr div)
 {
 }
 
+
 CDlgConfigureDataDivision::~CDlgConfigureDataDivision()
 {
 }
+
 
 CString CDlgConfigureDataDivision::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 {
@@ -187,14 +199,17 @@ CDlgConfigureDataLevel::CDlgConfigureDataLevel(
 {
 }
 
+
 CDlgConfigureDataLevel::~CDlgConfigureDataLevel()
 {
 }
+
 
 CString CDlgConfigureDataLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 {
@@ -214,14 +229,17 @@ CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
 {
 }
 
+
 CDlgConfigureDataSubLevel::~CDlgConfigureDataSubLevel()
 {
 }
+
 
 CString CDlgConfigureDataSubLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 {
@@ -237,14 +255,17 @@ CDlgConfigureDataTitle::CDlgConfigureDataTitle(
 {
 }
 
+
 CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
 {
 }
+
 
 CString CDlgConfigureDataTitle::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
@@ -259,14 +280,17 @@ CDlgConfigureDataEvent::CDlgConfigureDataEvent(ARBConfigEventPtr inEvent)
 {
 }
 
+
 CDlgConfigureDataEvent::~CDlgConfigureDataEvent()
 {
 }
+
 
 CString CDlgConfigureDataEvent::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 {
@@ -281,14 +305,17 @@ CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq)
 {
 }
 
+
 CDlgConfigureDataMultiQ::~CDlgConfigureDataMultiQ()
 {
 }
+
 
 CString CDlgConfigureDataMultiQ::OnNeedText() const
 {
 	return OnNeedText(0);
 }
+
 
 CString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
 {

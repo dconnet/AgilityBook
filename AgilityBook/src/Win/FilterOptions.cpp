@@ -99,6 +99,7 @@ static void FilterVenue(
 	}
 }
 
+
 static CString FilterVenue(std::vector<CVenueFilter> const& venues)
 {
 	CString venue;
@@ -117,6 +118,7 @@ static CString FilterVenue(std::vector<CVenueFilter> const& venues)
 	return venue;
 }
 
+
 static void TrainingNames(CString inNames, std::set<ARBString>& outNames)
 {
 	if (!inNames.IsEmpty())
@@ -130,6 +132,7 @@ static void TrainingNames(CString inNames, std::set<ARBString>& outNames)
 		outNames.insert((LPCTSTR)inNames);
 	}
 }
+
 
 static CString TrainingNames(std::set<ARBString> const& inNames)
 {
@@ -151,10 +154,12 @@ CFilterOptions& CFilterOptions::Options()
 	return options;
 }
 
+
 CFilterOptions::CFilterOptions()
 {
 	Load();
 }
+
 
 void CFilterOptions::Load()
 {
@@ -192,6 +197,7 @@ void CFilterOptions::Load()
 		m_filters.push_back(idx);
 	}
 }
+
 
 void CFilterOptions::Save()
 {
@@ -261,6 +267,7 @@ void CFilterOptions::Save()
 	pApp->WriteProfileInt(_T("Common"), _T("numFilters"), m_nFilters);
 }
 
+
 std::vector<CFilterOptions::CFilterOptionData>::iterator
 CFilterOptions::FindFilter(ARBString const& inName)
 {
@@ -273,6 +280,7 @@ CFilterOptions::FindFilter(ARBString const& inName)
 	}
 	return m_filters.end();
 }
+
 
 size_t CFilterOptions::GetAllFilterNames(std::vector<ARBString>& outNames) const
 {
@@ -289,6 +297,7 @@ size_t CFilterOptions::GetAllFilterNames(std::vector<ARBString>& outNames) const
 	}
 	return outNames.size();
 }
+
 
 bool CFilterOptions::SetCurrentFilter(ARBString const& inName)
 {
@@ -313,6 +322,7 @@ bool CFilterOptions::SetCurrentFilter(ARBString const& inName)
 		return false;
 }
 
+
 void CFilterOptions::AddFilter(ARBString const& inName)
 {
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
@@ -335,6 +345,7 @@ void CFilterOptions::AddFilter(ARBString const& inName)
 	(*iter).bViewAllNames = m_bViewAllNames;
 	(*iter).nameFilter = m_nameFilter;
 }
+
 
 bool CFilterOptions::DeleteFilter(ARBString const& inName)
 {
@@ -363,6 +374,7 @@ bool CFilterOptions::IsFilterEnabled()
 		return true;
 }
 
+
 bool CFilterOptions::IsDateVisible(
 		ARBDate const& startDate,
 		ARBDate const& endDate)
@@ -377,6 +389,7 @@ bool CFilterOptions::IsDateVisible(
 	return true;
 }
 
+
 bool CFilterOptions::IsTitleVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTitlePtr pTitle)
@@ -388,6 +401,7 @@ bool CFilterOptions::IsTitleVisible(
 		return false;
 	return IsVenueVisible(venues, pTitle->GetVenue());
 }
+
 
 bool CFilterOptions::IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
@@ -406,6 +420,7 @@ bool CFilterOptions::IsVenueVisible(
 	}
 	return true;
 }
+
 
 bool CFilterOptions::IsVenueDivisionVisible(
 		std::vector<CVenueFilter> const& venues,
@@ -426,6 +441,7 @@ bool CFilterOptions::IsVenueDivisionVisible(
 	}
 	return true;
 }
+
 
 bool CFilterOptions::IsVenueLevelVisible(
 		std::vector<CVenueFilter> const& venues,
@@ -449,6 +465,7 @@ bool CFilterOptions::IsVenueLevelVisible(
 	return true;
 }
 
+
 bool CFilterOptions::IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTrialPtr pTrial)
@@ -469,6 +486,7 @@ bool CFilterOptions::IsTrialVisible(
 	}
 	return true;
 }
+
 
 // Return type should be the same as ARBBase::m_nFiltered
 unsigned short CFilterOptions::IsRunVisible(
@@ -528,6 +546,7 @@ unsigned short CFilterOptions::IsRunVisible(
 	return nVisible;
 }
 
+
 // This function is used in conjunction with the above. We only need to be
 // concerned with trials with more than 1 club. This is used to filter a
 // run in the points view - for instance, if you have an ASCA/NADAC trial and
@@ -561,6 +580,7 @@ bool CFilterOptions::IsRunVisible(
 	}
 	return bVisible;
 }
+
 
 bool CFilterOptions::IsCalendarVisible(
 		std::vector<CVenueFilter> const& venues,
@@ -597,6 +617,7 @@ bool CFilterOptions::IsCalendarVisible(
 	return bVisible;
 }
 
+
 bool CFilterOptions::IsTrainingLogVisible(
 		std::set<ARBString> const& names,
 		ARBTrainingPtr pTraining)
@@ -632,6 +653,7 @@ bool CFilterOptions::IsTrainingLogVisible(
 	return bVisible;
 }
 
+
 bool CFilterOptions::FilterExists(
 		ARBString const& inVenue,
 		ARBString const& inDiv,
@@ -666,6 +688,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData()
 		, nameFilter()
 {
 }
+
 
 CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 		: filterName()
@@ -703,6 +726,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 	TrainingNames(names, nameFilter);
 }
 
+
 CFilterOptions::CFilterOptionData::CFilterOptionData(
 		CFilterOptions::CFilterOptionData const& rhs)
 	: filterName(rhs.filterName)
@@ -719,6 +743,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(
 	, nameFilter(rhs.nameFilter)
 {
 }
+
 
 CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 		CFilterOptions::CFilterOptionData const& rhs)
@@ -740,6 +765,7 @@ CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 	}
 	return *this;
 }
+
 
 bool CFilterOptions::CFilterOptionData::Save(int index)
 {

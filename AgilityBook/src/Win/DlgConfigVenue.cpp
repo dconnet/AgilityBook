@@ -111,16 +111,19 @@ CDlgConfigVenue::CDlgConfigVenue(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgConfigVenue::~CDlgConfigVenue()
 {
 	m_DlgFixup.clear();
 }
+
 
 void CDlgConfigVenue::GetFixups(ARBConfigActionList& ioFixups)
 {
 	ioFixups.insert(ioFixups.end(), m_DlgFixup.begin(), m_DlgFixup.end());
 	m_DlgFixup.clear();
 }
+
 
 void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 {
@@ -144,6 +147,7 @@ void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_VENUE_COMMENTS, m_ctrlComments);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigVenue)
@@ -213,6 +217,7 @@ void CDlgConfigVenue::SetAction(eAction inAction)
 	}
 	UpdateButtons();
 }
+
 
 void CDlgConfigVenue::UpdateButtons()
 {
@@ -325,6 +330,7 @@ void CDlgConfigVenue::UpdateButtons()
 	m_ctrlMoveDown.EnableWindow(bMoveDown);
 }
 
+
 void CDlgConfigVenue::LoadDivisionData()
 {
 	ARBConfigDivisionPtr pDiv;
@@ -344,6 +350,7 @@ void CDlgConfigVenue::LoadDivisionData()
 	FindCurrentDivision(pDiv, true);
 	LoadLevelData();
 }
+
 
 void CDlgConfigVenue::LoadLevelData()
 {
@@ -398,6 +405,7 @@ void CDlgConfigVenue::LoadLevelData()
 	}
 }
 
+
 void CDlgConfigVenue::LoadTitleData()
 {
 	ARBConfigTitlePtr pTitle;
@@ -419,6 +427,7 @@ void CDlgConfigVenue::LoadTitleData()
 	FindCurrentTitle(pTitle, true);
 }
 
+
 void CDlgConfigVenue::LoadEventData()
 {
 	ARBConfigEventPtr pOldEvent;
@@ -437,6 +446,7 @@ void CDlgConfigVenue::LoadEventData()
 	m_ctrlEvents.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	FindCurrentEvent(pOldEvent, true);
 }
+
 
 void CDlgConfigVenue::LoadMultiQData()
 {
@@ -458,6 +468,7 @@ void CDlgConfigVenue::LoadMultiQData()
 	m_ctrlMultiQ.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	FindCurrentMultiQ(pOldMultiQ, true);
 }
+
 
 int CDlgConfigVenue::FindCurrentDivision(
 		ARBConfigDivisionPtr pDiv,
@@ -484,6 +495,7 @@ int CDlgConfigVenue::FindCurrentDivision(
 	}
 	return idxCurrent;
 }
+
 
 HTREEITEM CDlgConfigVenue::FindCurrentLevel(
 		ARBConfigLevelPtr pLevel,
@@ -514,6 +526,7 @@ HTREEITEM CDlgConfigVenue::FindCurrentLevel(
 	}
 	return hCurrent;
 }
+
 
 HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(
 		ARBConfigSubLevelPtr pSubLevel,
@@ -553,6 +566,7 @@ HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(
 	return hCurrent;
 }
 
+
 int CDlgConfigVenue::FindCurrentTitle(
 		ARBConfigTitlePtr pTitle,
 		bool bSet)
@@ -579,6 +593,7 @@ int CDlgConfigVenue::FindCurrentTitle(
 	}
 	return idxCurrent;
 }
+
 
 int CDlgConfigVenue::FindCurrentEvent(
 		ARBConfigEventPtr pEvent,
@@ -607,6 +622,7 @@ int CDlgConfigVenue::FindCurrentEvent(
 	return idxCurrent;
 }
 
+
 int CDlgConfigVenue::FindCurrentMultiQ(
 		ARBConfigMultiQPtr pMultiQ,
 		bool bSet)
@@ -634,6 +650,7 @@ int CDlgConfigVenue::FindCurrentMultiQ(
 	return idxCurrent;
 }
 
+
 CDlgConfigureDataDivision* CDlgConfigVenue::GetCurrentDivisionData()
 {
 	int index = m_ctrlDivisions.GetSelection();
@@ -642,6 +659,7 @@ CDlgConfigureDataDivision* CDlgConfigVenue::GetCurrentDivisionData()
 	else
 		return NULL;
 }
+
 
 CDlgConfigureDataLevel* CDlgConfigVenue::GetCurrentLevelData()
 {
@@ -655,6 +673,7 @@ CDlgConfigureDataLevel* CDlgConfigVenue::GetCurrentLevelData()
 		return NULL;
 }
 
+
 CDlgConfigureDataSubLevel* CDlgConfigVenue::GetCurrentSubLevelData()
 {
 	HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
@@ -667,6 +686,7 @@ CDlgConfigureDataSubLevel* CDlgConfigVenue::GetCurrentSubLevelData()
 		return NULL;
 }
 
+
 CDlgConfigureDataTitle* CDlgConfigVenue::GetCurrentTitleData()
 {
 	int index = m_ctrlTitles.GetSelection();
@@ -676,6 +696,7 @@ CDlgConfigureDataTitle* CDlgConfigVenue::GetCurrentTitleData()
 		return NULL;
 }
 
+
 CDlgConfigureDataEvent* CDlgConfigVenue::GetCurrentEventData()
 {
 	int index = m_ctrlEvents.GetSelection();
@@ -684,6 +705,7 @@ CDlgConfigureDataEvent* CDlgConfigVenue::GetCurrentEventData()
 	else
 		return NULL;
 }
+
 
 CDlgConfigureDataMultiQ* CDlgConfigVenue::GetCurrentMultiQData()
 {
@@ -731,11 +753,13 @@ BOOL CDlgConfigVenue::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgConfigVenue::OnDestroy() 
 {
 	m_ctrlLevels.DeleteAllItems();
 	CDlgBaseDialog::OnDestroy();
 }
+
 
 void CDlgConfigVenue::OnGetdispinfoList(
 		NMHDR* pNMHDR,
@@ -756,6 +780,7 @@ void CDlgConfigVenue::OnGetdispinfoList(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnGetdispinfoTree(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -775,6 +800,7 @@ void CDlgConfigVenue::OnGetdispinfoTree(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnDeleteitemTree(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -786,6 +812,7 @@ void CDlgConfigVenue::OnDeleteitemTree(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -793,6 +820,7 @@ void CDlgConfigVenue::OnDblclk(
 	OnEdit();
 	*pResult = 0;
 }
+
 
 void CDlgConfigVenue::OnKeydown(
 		NMHDR* pNMHDR,
@@ -810,6 +838,7 @@ void CDlgConfigVenue::OnKeydown(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnItemchangedDivision(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -819,6 +848,7 @@ void CDlgConfigVenue::OnItemchangedDivision(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnItemchangedList(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -826,6 +856,7 @@ void CDlgConfigVenue::OnItemchangedList(
 	UpdateButtons();
 	*pResult = 0;
 }
+
 
 void CDlgConfigVenue::OnItemchanged(
 		NMHDR* pNMHDR,
@@ -835,6 +866,7 @@ void CDlgConfigVenue::OnItemchanged(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnSetfocusDivision(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -842,6 +874,7 @@ void CDlgConfigVenue::OnSetfocusDivision(
 	SetAction(eDivisions);
 	*pResult = 0;
 }
+
 
 void CDlgConfigVenue::OnSetfocusLevel(
 		NMHDR* pNMHDR,
@@ -851,6 +884,7 @@ void CDlgConfigVenue::OnSetfocusLevel(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnSetfocusTitles(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -858,6 +892,7 @@ void CDlgConfigVenue::OnSetfocusTitles(
 	SetAction(eTitles);
 	*pResult = 0;
 }
+
 
 void CDlgConfigVenue::OnSetfocusEvent(
 		NMHDR* pNMHDR,
@@ -867,6 +902,7 @@ void CDlgConfigVenue::OnSetfocusEvent(
 	*pResult = 0;
 }
 
+
 void CDlgConfigVenue::OnSetfocusMultiQ(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -874,6 +910,7 @@ void CDlgConfigVenue::OnSetfocusMultiQ(
 	SetAction(eMultiQ);
 	*pResult = 0;
 }
+
 
 void CDlgConfigVenue::OnNew() 
 {
@@ -1063,6 +1100,7 @@ void CDlgConfigVenue::OnNew()
 	}
 }
 
+
 void CDlgConfigVenue::OnDelete() 
 {
 	switch (m_Action)
@@ -1182,6 +1220,7 @@ void CDlgConfigVenue::OnDelete()
 		break;
 	}
 }
+
 
 void CDlgConfigVenue::OnEdit() 
 {
@@ -1438,6 +1477,7 @@ void CDlgConfigVenue::OnEdit()
 	}
 }
 
+
 void CDlgConfigVenue::OnCopy() 
 {
 	switch (m_Action)
@@ -1526,6 +1566,7 @@ void CDlgConfigVenue::OnCopy()
 		break;
 	}
 }
+
 
 void CDlgConfigVenue::OnMoveUp() 
 {
@@ -1624,6 +1665,7 @@ void CDlgConfigVenue::OnMoveUp()
 	}
 }
 
+
 void CDlgConfigVenue::OnMoveDown() 
 {
 	switch (m_Action)
@@ -1720,6 +1762,7 @@ void CDlgConfigVenue::OnMoveDown()
 		break;
 	}
 }
+
 
 void CDlgConfigVenue::OnOK()
 {

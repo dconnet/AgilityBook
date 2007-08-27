@@ -63,6 +63,7 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
+
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
@@ -75,6 +76,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 static UINT indicators[] =
 {
 	ID_SEPARATOR,           // status line indicator
@@ -85,16 +87,17 @@ static UINT indicators[] =
 	ID_INDICATOR_NUM,
 };
 
-// CMainFrame construction/destruction
 
 CMainFrame::CMainFrame()
 	: m_pView(NULL)
 {
 }
 
+
 CMainFrame::~CMainFrame()
 {
 }
+
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -126,6 +129,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CSplashWnd::ShowSplashScreen(this);
 	return 0;
 }
+
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -206,6 +210,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	return CFrameWnd::PreCreateWindow(cs);
 }
 
+
 #ifdef _DEBUG
 // CMainFrame diagnostics
 void CMainFrame::AssertValid() const
@@ -213,11 +218,13 @@ void CMainFrame::AssertValid() const
 	CFrameWnd::AssertValid();
 }
 
+
 void CMainFrame::Dump(CDumpContext& dc) const
 {
 	CFrameWnd::Dump(dc);
 }
 #endif //_DEBUG
+
 
 void CMainFrame::SetStatusText(
 		CString const& msg,
@@ -242,6 +249,7 @@ void CMainFrame::SetStatusText(
 	m_wndStatusBar.SetPaneText(index, filtered);
 }
 
+
 void CMainFrame::SetStatusText2(CString const& msg)
 {
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_DOG);
@@ -256,21 +264,25 @@ void CMainFrame::SetStatusText2(CString const& msg)
 	m_wndStatusBar.SetPaneText(index, msg);
 }
 
+
 void CMainFrame::SetCurTab(int tab)
 {
 	m_pView->SetCurSel(tab);
 }
+
 
 int CMainFrame::GetCurTab() const
 {
 	return m_pView->GetCurSel();
 }
 
+
 bool CMainFrame::ShowPointsAs(bool bHtml)
 {
 	return m_pView->ShowPointsAs(bHtml);
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CMainFrame message handlers
 
 void CMainFrame::OnClose() 
@@ -303,10 +315,12 @@ void CMainFrame::OnClose()
 	CFrameWnd::OnClose();
 }
 
+
 void CMainFrame::OnUpdatePane(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable();
 }
+
 
 void CMainFrame::OnNextTab()
 {
@@ -319,6 +333,7 @@ void CMainFrame::OnNextTab()
 		m_pView->SetCurSel(idx);
 	}
 }
+
 
 void CMainFrame::OnPrevTab()
 {

@@ -165,9 +165,11 @@ CDlgRunScore::CDlgRunScore(
 	m_Conditions.Replace(_T("\n"), _T("\r\n"));
 }
 
+
 CDlgRunScore::~CDlgRunScore()
 {
 }
+
 
 void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 {
@@ -411,6 +413,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgRunScore, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgRunScore)
 	ON_WM_DESTROY()
@@ -445,11 +448,13 @@ CListPtrData<ARBConfigDivisionPtr>* CDlgRunScore::GetDivisionData(int index) con
 	return dynamic_cast<CListPtrData<ARBConfigDivisionPtr>*>(pData);
 }
 
+
 CDlgRunDataLevel* CDlgRunScore::GetLevelData(int index) const
 {
 	CListData* pData = m_ctrlLevels.GetData(index);
 	return dynamic_cast<CDlgRunDataLevel*>(pData);
 }
+
 
 // Helper functions to avoid UpdateData. Used during KillFocus events.
 bool CDlgRunScore::GetText(
@@ -463,6 +468,8 @@ bool CDlgRunScore::GetText(
 	val = static_cast<short>(_tstol((LPCTSTR)str));
 	return true;
 }
+
+
 bool CDlgRunScore::GetText(
 		CEdit* pEdit,
 		double& val) const
@@ -474,6 +481,7 @@ bool CDlgRunScore::GetText(
 	val = _tcstod((LPCTSTR)str, NULL);
 	return true;
 }
+
 
 bool CDlgRunScore::GetEvent(ARBConfigEventPtr* outEvent) const
 {
@@ -489,6 +497,7 @@ bool CDlgRunScore::GetEvent(ARBConfigEventPtr* outEvent) const
 	ARBString evt = (LPCTSTR)str;
 	return m_pVenue->GetEvents().FindEvent(evt, outEvent);
 }
+
 
 bool CDlgRunScore::GetScoring(ARBConfigScoringPtr* outScoring) const
 {
@@ -521,6 +530,7 @@ bool CDlgRunScore::GetScoring(ARBConfigScoringPtr* outScoring) const
 	}
 	return bFound;
 }
+
 
 void CDlgRunScore::FillDivisions()
 {
@@ -582,6 +592,7 @@ void CDlgRunScore::FillDivisions()
 	}
 	FillLevels();
 }
+
 
 void CDlgRunScore::FillLevels()
 {
@@ -658,6 +669,7 @@ void CDlgRunScore::FillLevels()
 	SetTitlePoints();
 }
 
+
 void CDlgRunScore::FillEvents()
 {
 	CString str;
@@ -700,6 +712,7 @@ void CDlgRunScore::FillEvents()
 	UpdateControls();
 }
 
+
 void CDlgRunScore::FillSubNames()
 {
 	ARBConfigEventPtr pEvent;
@@ -732,6 +745,7 @@ void CDlgRunScore::FillSubNames()
 	}
 }
 
+
 void CDlgRunScore::SetEventDesc(ARBConfigEventPtr inEvent)
 {
 	CString desc;
@@ -748,6 +762,7 @@ void CDlgRunScore::SetEventDesc(ARBConfigEventPtr inEvent)
 	desc.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlDesc.SetWindowText(desc);
 }
+
 
 void CDlgRunScore::SetPartnerText()
 {
@@ -770,6 +785,7 @@ void CDlgRunScore::SetPartnerText()
 	m_ctrlPartner.SetWindowText(partners);
 }
 
+
 void CDlgRunScore::SetMinYPS()
 {
 	CString str;
@@ -781,6 +797,7 @@ void CDlgRunScore::SetMinYPS()
 	m_ctrlMinYPS.SetWindowText(str);
 }
 
+
 void CDlgRunScore::SetYPS()
 {
 	CString str;
@@ -791,6 +808,7 @@ void CDlgRunScore::SetYPS()
 	}
 	m_ctrlYPS.SetWindowText(str);
 }
+
 
 void CDlgRunScore::SetTotalFaults()
 {
@@ -804,6 +822,7 @@ void CDlgRunScore::SetTotalFaults()
 	}
 	m_ctrlTotalFaults.SetWindowText(total);
 }
+
 
 void CDlgRunScore::FillQ(ARBConfigScoringPtr inScoring)
 {
@@ -826,6 +845,7 @@ void CDlgRunScore::FillQ(ARBConfigScoringPtr inScoring)
 	if (0 < m_ctrlQ.GetCount())
 		m_ctrlQ.EnableWindow(TRUE);
 }
+
 
 void CDlgRunScore::SetTitlePoints()
 {
@@ -878,6 +898,7 @@ void CDlgRunScore::SetTitlePoints()
 	m_ctrlTitlePoints.SetWindowText(strTitle);
 	m_ctrlScore.SetWindowText(strScore);
 }
+
 
 void CDlgRunScore::UpdateControls(bool bOnEventChange)
 {
@@ -1183,11 +1204,13 @@ BOOL CDlgRunScore::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgRunScore::OnDestroy() 
 {
 	m_ctrlLevels.ResetContent();
 	CDlgBasePropertyPage::OnDestroy();
 }
+
 
 void CDlgRunScore::OnDatetimechangeDate(
 		NMHDR* pNMHDR,
@@ -1201,15 +1224,18 @@ void CDlgRunScore::OnDatetimechangeDate(
 	*pResult = 0;
 }
 
+
 void CDlgRunScore::OnSelchangeDivision()
 {
 	FillLevels();
 }
 
+
 void CDlgRunScore::OnSelchangeLevel()
 {
 	FillEvents();
 }
+
 
 void CDlgRunScore::OnSelchangeEvent()
 {
@@ -1220,6 +1246,7 @@ void CDlgRunScore::OnSelchangeEvent()
 	SetEventDesc(pEvent);
 }
 
+
 void CDlgRunScore::OnJudgeNotes()
 {
 	UpdateData(TRUE);
@@ -1229,6 +1256,7 @@ void CDlgRunScore::OnJudgeNotes()
 	dlg.DoModal();
 }
 
+
 void CDlgRunScore::OnPartnersEdit() 
 {
 	CDlgListCtrl dlg(CDlgListCtrl::ePartners, m_pDoc, m_Run, this);
@@ -1236,11 +1264,13 @@ void CDlgRunScore::OnPartnersEdit()
 		SetPartnerText();
 }
 
+
 void CDlgRunScore::OnOtherpoints() 
 {
 	CDlgListCtrl dlg(m_pDoc->GetConfig(), m_Run, this);
 	dlg.DoModal();
 }
+
 
 // In all of the killfocus routines, do not call updatedata.
 // Clicking on the cancel button causes killfocus, which if we're
@@ -1254,6 +1284,7 @@ void CDlgRunScore::OnKillfocusFaults()
 	SetTitlePoints();
 }
 
+
 void CDlgRunScore::OnKillfocusTime() 
 {
 	GetText(&m_ctrlTime, m_Time);
@@ -1262,6 +1293,7 @@ void CDlgRunScore::OnKillfocusTime()
 	SetTotalFaults();
 	SetTitlePoints();
 }
+
 
 void CDlgRunScore::OnKillfocusYards()
 {
@@ -1272,6 +1304,7 @@ void CDlgRunScore::OnKillfocusYards()
 	SetTotalFaults();
 }
 
+
 void CDlgRunScore::OnKillfocusSct() 
 {
 	GetText(&m_ctrlSCT, m_SCT);
@@ -1281,11 +1314,13 @@ void CDlgRunScore::OnKillfocusSct()
 	SetTitlePoints();
 }
 
+
 void CDlgRunScore::OnKillfocusSct2() 
 {
 	GetText(&m_ctrlSCT2, m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
 }
+
 
 void CDlgRunScore::OnKillfocusOpening()
 {
@@ -1294,12 +1329,14 @@ void CDlgRunScore::OnKillfocusOpening()
 	SetTitlePoints();
 }
 
+
 void CDlgRunScore::OnKillfocusClosing()
 {
 	GetText(&m_ctrlClosing, m_Closing);
 	m_Run->GetScoring().SetNeedClosePts(m_Closing);
 	SetTitlePoints();
 }
+
 
 void CDlgRunScore::OnKillfocusOpen()
 {
@@ -1308,12 +1345,14 @@ void CDlgRunScore::OnKillfocusOpen()
 	SetTitlePoints();
 }
 
+
 void CDlgRunScore::OnKillfocusClose()
 {
 	GetText(&m_ctrlClose, m_Close);
 	m_Run->GetScoring().SetClosePts(m_Close);
 	SetTitlePoints();
 }
+
 
 void CDlgRunScore::OnKillfocusPlace()
 {
@@ -1322,12 +1361,14 @@ void CDlgRunScore::OnKillfocusPlace()
 	SetTitlePoints();
 }
 
+
 void CDlgRunScore::OnKillfocusBonus()
 {
 	GetText(&m_ctrlBonusPts, m_BonusPts);
 	m_Run->GetScoring().SetBonusPts(m_BonusPts);
 	SetTitlePoints();
 }
+
 
 void CDlgRunScore::OnBnClickedTableYps()
 {
@@ -1338,6 +1379,7 @@ void CDlgRunScore::OnBnClickedTableYps()
 	SetMinYPS();
 	SetYPS();
 }
+
 
 void CDlgRunScore::OnSelchangeQ()
 {

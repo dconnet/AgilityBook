@@ -72,6 +72,7 @@ static const int sc_CalItemsCount = sizeof(sc_CalItems) / sizeof(sc_CalItems[0])
 
 IMPLEMENT_DYNAMIC(CDlgOptionsCalendar, CDlgBasePropertyPage)
 
+
 CDlgOptionsCalendar::CDlgOptionsCalendar()
 	: CDlgBasePropertyPage(CDlgOptionsCalendar::IDD)
 	, m_ctrlCalEntries(false)
@@ -91,9 +92,11 @@ CDlgOptionsCalendar::CDlgOptionsCalendar()
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgOptionsCalendar::~CDlgOptionsCalendar()
 {
 }
+
 
 void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 {
@@ -122,6 +125,7 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgOptionsCalendar)
 	ON_WM_DRAWITEM()
@@ -134,6 +138,7 @@ BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CDlgBasePropertyPage)
 	ON_BN_CLICKED(IDC_OPT_CAL_FONT, OnFontCalView)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
+
 
 void CDlgOptionsCalendar::UpdateControls()
 {
@@ -177,6 +182,7 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgOptionsCalendar::OnDrawItem(
 		int nIDCtl,
@@ -246,6 +252,7 @@ void CDlgOptionsCalendar::OnDrawItem(
 	}
 }
 
+
 void CDlgOptionsCalendar::OnSelchangeCalEntries()
 {
 	UpdateData(TRUE);
@@ -253,11 +260,13 @@ void CDlgOptionsCalendar::OnSelchangeCalEntries()
 	m_ctrlCalView.Invalidate();
 }
 
+
 void CDlgOptionsCalendar::OnCalNear()
 {
 	UpdateData(TRUE);
 	UpdateControls();
 }
+
 
 void CDlgOptionsCalendar::OnCalColorOpeningNear()
 {
@@ -270,6 +279,7 @@ void CDlgOptionsCalendar::OnCalColorOpeningNear()
 	}
 }
 
+
 void CDlgOptionsCalendar::OnCalColorClosingNear()
 {
 	UpdateData(TRUE);
@@ -280,6 +290,7 @@ void CDlgOptionsCalendar::OnCalColorClosingNear()
 		m_ctrlClosingNearColor.Invalidate();
 	}
 }
+
 
 void CDlgOptionsCalendar::OnCalColors()
 {
@@ -296,6 +307,7 @@ void CDlgOptionsCalendar::OnCalColors()
 		m_ctrlCalView.Invalidate();
 	}
 }
+
 
 void CDlgOptionsCalendar::OnFontCalView()
 {

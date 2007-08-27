@@ -68,6 +68,7 @@ static char THIS_FILE[] = __FILE__;
 #define LAST_STYLE			_T("WizStyle")
 #define LAST_STYLEITEM		_T("WizSubStyle") // A number will be appended
 
+
 // Note: For this to work, the IDC_WIZARD_START_* radio buttons should be in
 // sequential order. If not, then the logic below must be fudged. The WIZARD_
 // codes are written to the registry, so we can't change them. But as items
@@ -95,6 +96,7 @@ static int TransWizardToDlg(int wizCode)
 	}
 }
 
+
 static int TransDlgToWizard(int radioBtn)
 {
 	switch (radioBtn + IDC_WIZARD_START_EXCEL)
@@ -118,6 +120,7 @@ static int TransDlgToWizard(int radioBtn)
 
 IMPLEMENT_DYNAMIC(CWizardStart, CDlgBasePropertyPage)
 
+
 CWizardStart::CWizardStart(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
@@ -137,9 +140,11 @@ CWizardStart::CWizardStart(
 		m_Style = TransWizardToDlg(WIZARD_RADIO_SPREADSHEET);
 }
 
+
 CWizardStart::~CWizardStart()
 {
 }
+
 
 void CWizardStart::DoDataExchange(CDataExchange* pDX)
 {
@@ -150,6 +155,7 @@ void CWizardStart::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_WIZARD_START_DESCRIPTION, m_ctrlDesc);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CWizardStart, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CWizardStart)
@@ -286,6 +292,7 @@ static struct
 };
 static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
+
 void CWizardStart::UpdateList()
 {
 	m_ctrlList.ResetContent();
@@ -320,6 +327,7 @@ void CWizardStart::UpdateList()
 	UpdateButtons();
 }
 
+
 void CWizardStart::UpdateButtons()
 {
 	DWORD dwWiz = 0;
@@ -347,11 +355,13 @@ BOOL CWizardStart::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 BOOL CWizardStart::OnSetActive() 
 {
 	UpdateButtons();
 	return CDlgBasePropertyPage::OnSetActive();
 }
+
 
 LRESULT CWizardStart::OnWizardNext() 
 {
@@ -365,6 +375,7 @@ LRESULT CWizardStart::OnWizardNext()
 	}
 	return nextPage;
 }
+
 
 BOOL CWizardStart::OnWizardFinish() 
 {
@@ -659,6 +670,7 @@ BOOL CWizardStart::OnWizardFinish()
 		return FALSE;
 }
 
+
 void CWizardStart::OnWizardStyle() 
 {
 	UpdateData(TRUE);
@@ -666,6 +678,7 @@ void CWizardStart::OnWizardStyle()
 	m_pSheet->ResetData();
 	UpdateList();
 }
+
 
 void CWizardStart::OnSelchangeExportList() 
 {
@@ -681,6 +694,7 @@ void CWizardStart::OnSelchangeExportList()
 	AfxGetApp()->WriteProfileInt(LAST_SECTION, str.str().c_str(), index);
 	UpdateButtons();
 }
+
 
 void CWizardStart::OnDblclkExportList() 
 {

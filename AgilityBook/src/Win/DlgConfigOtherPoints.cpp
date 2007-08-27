@@ -84,9 +84,11 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgConfigOtherPoints::~CDlgConfigOtherPoints()
 {
 }
+
 
 void CDlgConfigOtherPoints::DoDataExchange(CDataExchange* pDX)
 {
@@ -99,11 +101,13 @@ void CDlgConfigOtherPoints::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgConfigOtherPoints, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigOtherPoints)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+/////////////////////////////////////////////////////////////////////////////
 // CDlgConfigOtherPoints message handlers
 
 BOOL CDlgConfigOtherPoints::OnInitDialog()
@@ -123,6 +127,7 @@ BOOL CDlgConfigOtherPoints::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgConfigOtherPoints::OnOK()
 {

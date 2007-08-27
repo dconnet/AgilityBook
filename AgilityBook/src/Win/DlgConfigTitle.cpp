@@ -71,9 +71,11 @@ CDlgConfigTitle::CDlgConfigTitle(
 	//}}AFX_DATA_INIT
 }
 
+
 CDlgConfigTitle::~CDlgConfigTitle()
 {
 }
+
 
 void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 {
@@ -93,6 +95,7 @@ void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+
 BEGIN_MESSAGE_MAP(CDlgConfigTitle, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigTitle)
 	ON_BN_CLICKED(IDC_CONFIG_TITLE_ALLOW_MULTIPLE, OnAllowMultiple)
@@ -101,12 +104,14 @@ BEGIN_MESSAGE_MAP(CDlgConfigTitle, CDlgBaseDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
 void CDlgConfigTitle::UpdateButtons()
 {
 	m_ctrlDateFrom.EnableWindow(m_DateFrom);
 	m_ctrlDateTo.EnableWindow(m_DateTo);
 }
 
+/////////////////////////////////////////////////////////////////////////////
 // CDlgConfigTitle message handlers
 
 BOOL CDlgConfigTitle::OnInitDialog()
@@ -133,6 +138,7 @@ BOOL CDlgConfigTitle::OnInitDialog()
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgConfigTitle::OnAllowMultiple()
 {
 	if (!UpdateData(TRUE))
@@ -145,11 +151,13 @@ void CDlgConfigTitle::OnAllowMultiple()
 	m_ctrlMultiple.EnableWindow(m_AllowMany);
 }
 
+
 void CDlgConfigTitle::OnCheck()
 {
 	UpdateData(TRUE);
 	UpdateButtons();
 }
+
 
 void CDlgConfigTitle::OnOK()
 {

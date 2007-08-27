@@ -134,6 +134,7 @@ static bool EditDog(
 	return bOk;
 }
 
+
 static bool EditTrial(
 		CAgilityBookTreeDataDog* pDogData,
 		CAgilityBookTreeDataTrial* pTrialData,
@@ -203,6 +204,7 @@ static bool EditTrial(
 	}
 	return bOk;
 }
+
 
 static bool EditRun(
 		CAgilityBookTreeDataDog* pDogData,
@@ -286,6 +288,7 @@ static bool EditRun(
 	return bOk;
 }
 
+
 static bool ReOrderDogs(
 		ARBDogList& dogs,
 		CAgilityBookTree* pTree)
@@ -313,6 +316,7 @@ static bool ReOrderDogs(
 	}
 	return bOk;
 }
+
 
 static bool ReOrderTrial(
 		ARBDogTrialPtr pTrial,
@@ -349,6 +353,7 @@ static bool ReOrderTrial(
 	return bOk;
 }
 
+
 static bool AddTitle(
 		CAgilityBookTreeDataDog* pDogData,
 		CAgilityBookTree* pTree)
@@ -381,6 +386,7 @@ bool CAgilityBookTreeData::CanPaste() const
 		bEnable = true;
 	return bEnable;
 }
+
 
 bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 {
@@ -520,15 +526,18 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 	return bLoaded;
 }
 
+
 std::vector<int> const& CAgilityBookTreeData::GetDogColumns() const
 {
 	return m_pTree->m_Columns[0];
 }
 
+
 std::vector<int> const& CAgilityBookTreeData::GetTrialColumns() const
 {
 	return m_pTree->m_Columns[1];
 }
+
 
 std::vector<int> const& CAgilityBookTreeData::GetRunColumns() const
 {
@@ -545,9 +554,11 @@ CAgilityBookTreeDataDog::CAgilityBookTreeDataDog(
 {
 }
 
+
 CAgilityBookTreeDataDog::~CAgilityBookTreeDataDog()
 {
 }
+
 
 bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 {
@@ -597,6 +608,7 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 	}
 	return bEnable;
 }
+
 
 bool CAgilityBookTreeDataDog::OnCmd(
 		UINT id,
@@ -718,6 +730,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 	return bModified;
 }
 
+
 CString CAgilityBookTreeDataDog::OnNeedText() const
 {
 	CString str;
@@ -760,10 +773,12 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 	return str;
 }
 
+
 int CAgilityBookTreeDataDog::GetIcon() const
 {
 	return m_pTree->GetImageList().Dog();
 }
+
 
 void CAgilityBookTreeDataDog::Properties()
 {
@@ -799,9 +814,11 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 	}
 }
 
+
 CAgilityBookTreeDataTrial::~CAgilityBookTreeDataTrial()
 {
 }
+
 
 ARBDogPtr CAgilityBookTreeDataTrial::GetDog() const
 {
@@ -810,12 +827,14 @@ ARBDogPtr CAgilityBookTreeDataTrial::GetDog() const
 	return pDog->GetDog();
 }
 
+
 ARBDogPtr CAgilityBookTreeDataTrial::GetDog()
 {
 	CAgilityBookTreeDataDog* pDog = GetDataDog();
 	ASSERT(pDog);
 	return pDog->GetDog();
 }
+
 
 CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
 {
@@ -828,6 +847,7 @@ CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
 	return pDog;
 }
 
+
 CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 {
 	if (!m_hItem)
@@ -838,6 +858,7 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 	ASSERT(pDog);
 	return pDog;
 }
+
 
 bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id) const
 {
@@ -878,6 +899,7 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id) const
 	}
 	return bEnable;
 }
+
 
 bool CAgilityBookTreeDataTrial::OnCmd(
 		UINT id,
@@ -983,6 +1005,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	return bModified;
 }
 
+
 CString CAgilityBookTreeDataTrial::OnNeedText() const
 {
 	CString str;
@@ -1079,10 +1102,12 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 	return str;
 }
 
+
 int CAgilityBookTreeDataTrial::GetIcon() const
 {
 	return m_idxIcon;
 }
+
 
 void CAgilityBookTreeDataTrial::Properties()
 {
@@ -1102,9 +1127,11 @@ CAgilityBookTreeDataRun::CAgilityBookTreeDataRun(
 {
 }
 
+
 CAgilityBookTreeDataRun::~CAgilityBookTreeDataRun()
 {
 }
+
 
 ARBDogPtr CAgilityBookTreeDataRun::GetDog() const
 {
@@ -1113,12 +1140,14 @@ ARBDogPtr CAgilityBookTreeDataRun::GetDog() const
 	return pDog->GetDog();
 }
 
+
 ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial() const
 {
 	CAgilityBookTreeDataTrial const* pTrial = GetDataTrial();
 	ASSERT(pTrial);
 	return pTrial->GetTrial();
 }
+
 
 ARBDogPtr CAgilityBookTreeDataRun::GetDog()
 {
@@ -1127,12 +1156,14 @@ ARBDogPtr CAgilityBookTreeDataRun::GetDog()
 	return pDog->GetDog();
 }
 
+
 ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial()
 {
 	CAgilityBookTreeDataTrial* pTrial = GetDataTrial();
 	ASSERT(pTrial);
 	return pTrial->GetTrial();
 }
+
 
 CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
 {
@@ -1145,6 +1176,7 @@ CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
 	return pTrial->GetDataDog();
 }
 
+
 CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
 {
 	if (!m_hItem)
@@ -1155,6 +1187,7 @@ CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
 	ASSERT(pTrial);
 	return pTrial;
 }
+
 
 CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
 {
@@ -1167,6 +1200,7 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
 	return pTrial->GetDataDog();
 }
 
+
 CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 {
 	if (!m_hItem)
@@ -1177,6 +1211,7 @@ CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 	ASSERT(pTrial);
 	return pTrial;
 }
+
 
 bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 {
@@ -1216,6 +1251,7 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id) const
 	}
 	return bEnable;
 }
+
 
 bool CAgilityBookTreeDataRun::OnCmd(
 		UINT id,
@@ -1316,6 +1352,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	return bModified;
 }
 
+
 CString CAgilityBookTreeDataRun::OnNeedText() const
 {
 	CString str;
@@ -1371,10 +1408,12 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 	return str;
 }
 
+
 int CAgilityBookTreeDataRun::GetIcon() const
 {
 	return m_pTree->GetImageList().Run();
 }
+
 
 void CAgilityBookTreeDataRun::Properties()
 {

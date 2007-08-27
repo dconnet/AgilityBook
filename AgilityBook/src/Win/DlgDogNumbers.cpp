@@ -68,6 +68,7 @@ static struct
 };
 static int const nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
 
+
 typedef struct
 {
 	CDlgDogNumbers* pThis;
@@ -152,6 +153,7 @@ CDlgDogNumbers::CDlgDogNumbers(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgDogNumbers::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
@@ -161,6 +163,7 @@ void CDlgDogNumbers::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DOGNUM_REG_NUMS, m_ctrlRegNums);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgDogNumbers, CDlgBasePropertyPage)
 	//{{AFX_MSG_MAP(CDlgDogNumbers)
@@ -182,6 +185,7 @@ CListPtrData<ARBDogRegNumPtr>* CDlgDogNumbers::GetRegNumData(int index) const
 	return dynamic_cast<CListPtrData<ARBDogRegNumPtr>*>(pData);
 }
 
+
 void CDlgDogNumbers::SetColumnRegNumHeaders()
 {
 	LV_COLUMN col;
@@ -200,6 +204,7 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 		order.ReleaseBuffer();
 	}
 }
+
 
 void CDlgDogNumbers::ListRegNums()
 {
@@ -250,6 +255,7 @@ void CDlgDogNumbers::ListRegNums()
 	}
 }
 
+
 void CDlgDogNumbers::UpdateButtons()
 {
 	UINT selected = m_ctrlRegNums.GetSelectedCount();
@@ -295,6 +301,7 @@ BOOL CDlgDogNumbers::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+
 void CDlgDogNumbers::OnColumnclickRegNums(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -310,6 +317,7 @@ void CDlgDogNumbers::OnColumnclickRegNums(
 	*pResult = 0;
 }
 
+
 void CDlgDogNumbers::OnDblclkRegNums(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -317,6 +325,7 @@ void CDlgDogNumbers::OnDblclkRegNums(
 	OnRegEdit();
 	*pResult = 0;
 }
+
 
 void CDlgDogNumbers::OnKeydownRegNums(
 		NMHDR* pNMHDR,
@@ -334,6 +343,7 @@ void CDlgDogNumbers::OnKeydownRegNums(
 	*pResult = 0;
 }
 
+
 void CDlgDogNumbers::OnItemchangedRegNums(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -343,12 +353,14 @@ void CDlgDogNumbers::OnItemchangedRegNums(
 	*pResult = 0;
 }
 
+
 void CDlgDogNumbers::OnRegNew()
 {
 	CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, ARBDogRegNumPtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListRegNums();
 }
+
 
 void CDlgDogNumbers::OnRegEdit()
 {
@@ -364,6 +376,7 @@ void CDlgDogNumbers::OnRegEdit()
 			ListRegNums();
 	}
 }
+
 
 void CDlgDogNumbers::OnRegDelete()
 {

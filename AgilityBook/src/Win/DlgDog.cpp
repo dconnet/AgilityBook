@@ -89,6 +89,7 @@ CDlgDog::CDlgDog(
 	AddPage(m_pagePoints);
 }
 
+
 CDlgDog::~CDlgDog()
 {
 	if (m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
@@ -106,6 +107,7 @@ CDlgDog::~CDlgDog()
 	delete m_pageRegNums;
 	delete m_pagePoints;
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgDog, CDlgBaseSheet)
 	//{{AFX_MSG_MAP(CDlgDog)

@@ -69,6 +69,7 @@ CDlgPartner::CDlgPartner(
 	//}}AFX_DATA_INIT
 }
 
+
 void CDlgPartner::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBaseDialog::DoDataExchange(pDX);
@@ -80,6 +81,7 @@ void CDlgPartner::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_PARTNER_REG_NUM, m_RegNum);
 	//}}AFX_DATA_MAP
 }
+
 
 BEGIN_MESSAGE_MAP(CDlgPartner, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgPartner)
@@ -106,6 +108,7 @@ BOOL CDlgPartner::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
+
 
 void CDlgPartner::OnOK() 
 {
