@@ -163,8 +163,9 @@ BOOL CPrintRuns::OnPreparePrinting(CPrintInfo* pInfo)
 	pInfo->SetMinPage(1);
 	if (0 == m_runs.size())
 		pInfo->SetMaxPage(2);
-	// Don't bother computing max page - we don't know
-	// the paper orientation.
+	// Don't bother computing max page - we won't know
+	// the paper orientation until DoPrepare returns.
+	// And that's where we need it!
 	return DoPreparePrinting(pInfo);
 }
 
@@ -182,7 +183,11 @@ void CPrintRuns::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 		// Correct the max page based on paper orientation.
 		UINT nRuns = static_cast<UINT>(m_runs.size());
 		UINT nPages = 1;
-		CRect r(pInfo->m_rectDraw);
+		// pInfo->m_rectDraw is not set yet.
+		CRect r(0, 0,
+			pDC->GetDeviceCaps(HORZRES),
+			pDC->GetDeviceCaps(VERTRES));
+		pDC->DPtoLP(&r);
 		if (abs(r.Width()) > abs(r.Height()))
 		{
 			nPages = nRuns / 4;
@@ -317,56 +322,56 @@ static const struct
 	UINT fmt;
 } sc_lines[] =
 {
-	{FOR_BOTH, 0, 0, 2, 1, CODE_DOG,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 0, 2, 2, 1, CODE_DATE,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 0, 4, 2, 1, CODE_VENUE,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 0, 6, 2, 1, CODE_LOCATION,	DT_LEFT | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 1, 0, 3, 1, CODE_DIV,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 1, 3, 1, 1, CODE_HEIGHT,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 0, 0, 2, 1, CODE_DOG,		DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 0, 2, 2, 1, CODE_DATE,		DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 0, 4, 2, 1, CODE_VENUE,		DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 0, 6, 2, 1, CODE_LOCATION,	DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 1, 0, 3, 1, CODE_DIV,		DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 1, 3, 1, 1, CODE_HEIGHT,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
 	{FOR_BOTH, 1, 4, 4, 2, CODE_CLUB,		DT_LEFT | DT_WORDBREAK},
 	{FOR_BOTH, 2, 4, 4, 1, -1, 0},
-	{FOR_BOTH, 2, 0, 2, 1, CODE_JUDGE,		DT_LEFT | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 2, 2, 2, 1, CODE_HANDLER,	DT_LEFT | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 2, 0, 2, 1, CODE_JUDGE,		DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 2, 2, 2, 1, CODE_HANDLER,	DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
 	{FOR_BOTH, 3, 0, 8, 1, CODE_CONDITIONS,	DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 4, 0, 1, 1, CODE_Q,			DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 4, 1, 1, 1, CODE_SCT,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_TIME, 4, 2, 1, 1, CODE_YARDS,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_PTS,  4, 2, 1, 1, CODE_OPEN,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 4, 3, 1, 1, CODE_TIME,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_TIME, 4, 4, 1, 1, CODE_FAULTS,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_PTS,  4, 4, 1, 1, CODE_SCORE,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 4, 5, 1, 1, CODE_PLACE,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 4, 6, 1, 1, CODE_INCLASS,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 4, 7, 1, 1, CODE_QD,			DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 4, 0, 1, 1, CODE_Q,			DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 4, 1, 1, 1, CODE_SCT,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_TIME, 4, 2, 1, 1, CODE_YARDS,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_PTS,  4, 2, 1, 1, CODE_OPEN,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 4, 3, 1, 1, CODE_TIME,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_TIME, 4, 4, 1, 1, CODE_FAULTS,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_PTS,  4, 4, 1, 1, CODE_SCORE,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 4, 5, 1, 1, CODE_PLACE,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 4, 6, 1, 1, CODE_INCLASS,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 4, 7, 1, 1, CODE_QD,			DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
 	{FOR_BOTH, 5, 0, 8, 5, CODE_COMMENTS,	DT_LEFT | DT_WORDBREAK},
 	{FOR_BOTH, 6, 0, 8, 4, -1, 0},
 	{FOR_BOTH, 7, 0, 8, 3, -1, 0},
 	{FOR_BOTH, 8, 0, 8, 2, -1, 0},
 	{FOR_BOTH, 9, 0, 6, 1, -1, 0},
 	{FOR_BOTH, 9, 6, 2, 1, CODE_OTHER,		DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 10, 0, 1, 1, CODE_REFPLACE1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 10, 1, 1, 1, CODE_REFQ1,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 10, 2, 1, 1, CODE_REFTIME1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 10, 3, 1, 1, CODE_REFSCORE1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 10, 4, 1, 1, CODE_REFHT1,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 10, 0, 1, 1, CODE_REFPLACE1,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 10, 1, 1, 1, CODE_REFQ1,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 10, 2, 1, 1, CODE_REFTIME1,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 10, 3, 1, 1, CODE_REFSCORE1,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 10, 4, 1, 1, CODE_REFHT1,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
 	{FOR_BOTH, 10, 5, 3, 1, CODE_REF1,		DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 11, 0, 1, 1, CODE_REFPLACE2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 11, 1, 1, 1, CODE_REFQ2,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 11, 2, 1, 1, CODE_REFTIME2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 11, 3, 1, 1, CODE_REFSCORE2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 11, 4, 1, 1, CODE_REFHT2,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 11, 0, 1, 1, CODE_REFPLACE2,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 11, 1, 1, 1, CODE_REFQ2,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 11, 2, 1, 1, CODE_REFTIME2,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 11, 3, 1, 1, CODE_REFSCORE2,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 11, 4, 1, 1, CODE_REFHT2,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
 	{FOR_BOTH, 11, 5, 3, 1, CODE_REF2,		DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 12, 0, 1, 1, CODE_REFPLACE3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 12, 1, 1, 1, CODE_REFQ3,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 12, 2, 1, 1, CODE_REFTIME3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 12, 3, 1, 1, CODE_REFSCORE3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 12, 4, 1, 1, CODE_REFHT3,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 12, 0, 1, 1, CODE_REFPLACE3,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 12, 1, 1, 1, CODE_REFQ3,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 12, 2, 1, 1, CODE_REFTIME3,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 12, 3, 1, 1, CODE_REFSCORE3,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 12, 4, 1, 1, CODE_REFHT3,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
 	{FOR_BOTH, 12, 5, 3, 1, CODE_REF3,		DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 13, 0, 1, 1, CODE_REFPLACE4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 13, 1, 1, 1, CODE_REFQ4,		DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 13, 2, 1, 1, CODE_REFTIME4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 13, 3, 1, 1, CODE_REFSCORE4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
-	{FOR_BOTH, 13, 4, 1, 1, CODE_REFHT4,	DT_CENTER | DT_SINGLELINE | DT_VCENTER},
+	{FOR_BOTH, 13, 0, 1, 1, CODE_REFPLACE4,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 13, 1, 1, 1, CODE_REFQ4,		DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 13, 2, 1, 1, CODE_REFTIME4,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 13, 3, 1, 1, CODE_REFSCORE4,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
+	{FOR_BOTH, 13, 4, 1, 1, CODE_REFHT4,	DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
 	{FOR_BOTH, 13, 5, 3, 1, CODE_REF4,		DT_LEFT | DT_WORDBREAK},
 };
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
@@ -756,22 +761,72 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 }
 
 
+static enum RingBinder
+{
+	eSmall3Ring,
+	eLarge3Ring,
+	eLarge4Ring
+};
+
+static void PrintMark(CDC* pDC, int x, int y)
+{
+	pDC->MoveTo(x - 5, y - 5);
+	pDC->LineTo(x + 5, y + 5);
+	pDC->MoveTo(x + 5, y - 5);
+	pDC->LineTo(x - 5, y + 5);
+}
+
+// Binder rings (based on US 8.5x11 paper)
+// Rings are inset 3/8 inch
+// sm 3ring: 2.75
+// lg 3ring: 4.25
+// lg 4ring: 1.375/4.25/1.375
+static void PrintBinderMarkings(
+		RingBinder style,
+		CDC* pDC,
+		CRect rPrinted,
+		int margin)
+{
+	int x = rPrinted.left - margin + 38;
+	int y = rPrinted.top + rPrinted.Height() / 2; // centered
+	switch (style)
+	{
+	default:
+	case eSmall3Ring:
+		PrintMark(pDC, x, y);
+		PrintMark(pDC, x, y - 275);
+		PrintMark(pDC, x, y + 275);
+		break;
+	case eLarge3Ring:
+		PrintMark(pDC, x, y);
+		PrintMark(pDC, x, y - 425);
+		PrintMark(pDC, x, y + 425);
+		break;
+	case eLarge4Ring:
+		PrintMark(pDC, x, y - 325); // 1 1/8 + 2 1/8
+		PrintMark(pDC, x, y - 238);
+		PrintMark(pDC, x, y + 238);
+		PrintMark(pDC, x, y + 325);
+		break;
+	}
+}
+
+
 void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 {
+	int saveDC = pDC->SaveDC();
+
 	// Units are .01 inches.
 	pDC->SetMapMode(MM_LOENGLISH);
 
 	// Drawing area. Note, located at 0,0.
 	CRect r(pInfo->m_rectDraw);
 	pDC->DPtoLP(r);
-	// Physical size of page, larger than printing area.
-	CSize szPhysical(pDC->GetDeviceCaps(PHYSICALWIDTH), pDC->GetDeviceCaps(PHYSICALHEIGHT));
-	pDC->DPtoLP(&szPhysical);
-	// Top/Left offset to printable area.
-	CSize szOffset(pDC->GetDeviceCaps(PHYSICALOFFSETX), pDC->GetDeviceCaps(PHYSICALOFFSETY));
-	pDC->DPtoLP(&szOffset);
-	// Bottom/right to printable
-	CSize szInset(szPhysical.cx - r.Width() - szOffset.cx, szPhysical.cy + r.Height() - szOffset.cy);
+	// Note, we could get the physical size of the page and try and get our
+	// margin at exactly 1/2 inch. But observation has revealed that what the
+	// printer reports as the offset, isn't what the printer prints as the
+	// offset. So pretent the drawing area and physical area are the same.
+	// (if printing to a pdf "printer", they are!)
 
 	// Indent 1/2 inch
 	int margin = 50;
@@ -784,29 +839,36 @@ void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 	{
 		//510x817
 		CRect r1(r);
-		r1.left += margin - szOffset.cx;
-		r1.top -= margin - szOffset.cy;
+		r1.left += margin;
+		r1.top -= margin;
 		r1.right = r.left + r.Width() / 2 - margin;
-		r1.bottom += margin - szInset.cy;
+		r1.bottom += margin;
 		PrintPage(pInfo->m_nCurPage, pDC, r1);
+		// 3ring small
+		PrintBinderMarkings(eSmall3Ring, pDC, r1, margin);
 
 		r1.left = r1.right + margin;
 		pDC->MoveTo(r1.TopLeft());
 		pDC->LineTo(r1.left, r1.bottom);
 		r1.left += margin;
-		r1.right = r.right - (margin - szInset.cx);
+		r1.right = r.right - margin;
 		PrintPage(pInfo->m_nCurPage, pDC, r1);
+		PrintBinderMarkings(eSmall3Ring, pDC, r1, margin);
 	}
 	// Portrait
 	else
 	{
 		CRect r1(r);
-		r1.left += margin - szOffset.cx;
-		r1.top -= margin - szOffset.cy;
-		r1.right -= margin - szInset.cx;
-		r1.bottom += margin - szInset.cy;
+		r1.left += margin;
+		r1.top -= margin;
+		r1.right -= margin;
+		r1.bottom += margin;
 		PrintPage(pInfo->m_nCurPage, pDC, r1);
+		PrintBinderMarkings(eLarge3Ring, pDC, r1, margin);
+		PrintBinderMarkings(eLarge4Ring, pDC, r1, margin);
 	}
+
+	pDC->RestoreDC(saveDC);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -818,6 +880,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 	// Style the printing after CView (code is based on CView::OnFilePrint)
 
 	CPrintInfo printInfo;
+	printInfo.m_rectDraw.SetRectEmpty();
 	ASSERT(printInfo.m_pPD != NULL);    // must be set
 	if (!runs.OnPreparePrinting(&printInfo))
 		return false;
@@ -825,7 +888,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 	ASSERT(printInfo.m_pPD->m_pd.hDC != NULL);
 
 	CString strTitle;
-	strTitle = "Runs";
+	strTitle = _T("Runs");
 
 	DOCINFO docInfo;
 	memset(&docInfo, 0, sizeof(DOCINFO));
