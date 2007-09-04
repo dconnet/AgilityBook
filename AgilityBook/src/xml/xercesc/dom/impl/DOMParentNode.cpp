@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DOMParentNode.cpp 176377 2005-04-07 15:08:57Z amassari $
+ * $Id: DOMParentNode.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #include <xercesc/util/XercesDefs.hpp>
@@ -349,6 +350,49 @@ DOMNode *DOMParentNode::replaceChild(DOMNode *newChild, DOMNode *oldChild)
     return removeChild(oldChild);
 }
 
+
+DOMNode * DOMParentNode::appendChildFast(DOMNode *newChild)
+{
+    // This function makes the following assumptions:
+    //
+    // - newChild != 0
+    // - newChild is not read-only
+    // - newChild is not a document fragment
+    // - owner documents of this node and newChild are the same
+    // - appending newChild to this node cannot result in a cycle
+    // - DOMDocumentImpl::isKidOK (this, newChild) return true (that is,
+    //   appending newChild to this node results in a valid structure)
+    // - newChild->getParentNode() is 0
+    // - there are no ranges set for this document
+    //
+
+    // Attach up
+    castToNodeImpl(newChild)->fOwnerNode = castToNode(this);
+    castToNodeImpl(newChild)->isOwned(true);
+
+    // Attach before and after
+    // Note: fFirstChild.previousSibling == lastChild!!
+    if (fFirstChild != 0)
+    {
+        DOMNode *lastChild = castToChildImpl(fFirstChild)->previousSibling;
+        castToChildImpl(lastChild)->nextSibling = newChild;
+        castToChildImpl(newChild)->previousSibling = lastChild;
+        castToChildImpl(fFirstChild)->previousSibling = newChild;
+    }
+    else
+    {
+        // this our first and only child
+        fFirstChild = newChild;
+        castToNodeImpl(newChild)->isFirstChild(true);
+        // castToChildImpl(newChild)->previousSibling = newChild;
+        DOMChildNode *newChild_ci = castToChildImpl(newChild);
+        newChild_ci->previousSibling = newChild;
+    }
+
+    changed();
+
+    return newChild;
+}
 
 
 //Introduced in DOM Level 2

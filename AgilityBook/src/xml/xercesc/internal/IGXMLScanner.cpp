@@ -1,9 +1,10 @@
 /*
- * Copyright 2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: IGXMLScanner.cpp 191707 2005-06-21 19:01:55Z cargilld $
+ * $Id: IGXMLScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -260,6 +261,7 @@ void IGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -267,6 +269,7 @@ void IGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -274,6 +277,7 @@ void IGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -443,6 +447,7 @@ bool IGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -450,6 +455,7 @@ bool IGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -457,6 +463,7 @@ bool IGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -954,11 +961,11 @@ void IGXMLScanner::scanEndTag(bool& gotData)
     if(fGrammarType == Grammar::SchemaGrammarType)
     {
         elemName = fElemStack.getCurrentSchemaElemName();
-        topElem = fElemStack.popTop();         
+        topElem = fElemStack.topElement();         
     }
     else
     {
-        topElem = fElemStack.popTop();         
+        topElem = fElemStack.topElement();         
         elemName = topElem->fThisElement->getFullName();
     }
     if (!fReaderMgr.skippedString(elemName))
@@ -969,11 +976,9 @@ void IGXMLScanner::scanEndTag(bool& gotData)
             , elemName
         );
         fReaderMgr.skipPastChar(chCloseAngle);
+        fElemStack.popTop();
         return;
-    }
-
-    // See if it was the root element, to avoid multiple calls below
-    const bool isRoot = fElemStack.isEmpty();
+    }   
 
     // Make sure we are back on the same reader as where we started
     if (topElem->fReaderNum != fReaderMgr.getCurrentReaderNum())
@@ -1073,7 +1078,6 @@ void IGXMLScanner::scanEndTag(bool& gotData)
                , topElem->fThisElement->getFullName()
                );
        }
-       
         int res = fValidator->checkContent
         (
             topElem->fThisElement
@@ -1116,7 +1120,7 @@ void IGXMLScanner::scanEndTag(bool& gotData)
         }
 
 
-        if (fGrammarType == Grammar::SchemaGrammarType) {
+        if (fGrammarType == Grammar::SchemaGrammarType) {          
             if (((SchemaValidator*) fValidator)->getErrorOccurred())
                 fPSVIElemContext.fErrorOccurred = true;
             else if (fPSVIElemContext.fCurrentDV && fPSVIElemContext.fCurrentDV->getType() == DatatypeValidator::Union)
@@ -1141,6 +1145,12 @@ void IGXMLScanner::scanEndTag(bool& gotData)
 
         }
     }
+
+    // QName dv needed topElem to resolve URIs on the checkContent 
+    fElemStack.popTop(); 
+    
+    // See if it was the root element, to avoid multiple calls below
+    const bool isRoot = fElemStack.isEmpty();
 
     if (fGrammarType == Grammar::SchemaGrammarType)
     {
@@ -2299,10 +2309,14 @@ bool IGXMLScanner::scanStartTagNS(bool& gotData)
                     if (switchGrammar(getURIText(uriId))) {
                         checkTopLevel = true;
                     }
-                    else {
-                        fValidator->emitError(
-                            XMLValid::GrammarNotFound, getURIText(uriId)
-                        );
+                    else {        
+                        // the laxElementValidation routine (called above) will
+                        // set fValidate to false for a "skipped" element
+                        if (!laxThisOne && fValidate) {
+                            fValidator->emitError(
+                                XMLValid::GrammarNotFound, getURIText(uriId)
+                            );
+                        }
                         checkTopLevel = false;
                     }
                 }
@@ -2335,6 +2349,7 @@ bool IGXMLScanner::scanStartTagNS(bool& gotData)
                     // go to original Grammar again to see if element needs
                     // to be fully qualified.
                     else if (uriId == fEmptyNamespaceId) {
+                        
                         if (switchGrammar(original_uriStr)) {
                             elemDecl = fGrammar->getElemDecl(
                                 orgGrammarUri, nameRawBuf, qnameRawBuf, currentScope
@@ -2345,7 +2360,7 @@ bool IGXMLScanner::scanStartTagNS(bool& gotData)
                                 );
                             }
                         }
-                        else {
+                        else if (!laxThisOne && fValidate) {
                             fValidator->emitError(
                                 XMLValid::GrammarNotFound,original_uriStr
                             );
@@ -2508,8 +2523,10 @@ bool IGXMLScanner::scanStartTagNS(bool& gotData)
 
             // switch grammar if the typeinfo has a different grammar (happens when there is xsi:type)
             XMLCh* typeName = typeinfo->getTypeName();
-            const XMLCh poundStr[] = {chPound, chNull};
-            if (!XMLString::startsWith(typeName, poundStr)) {
+            //anonymous used to have a name starting with #
+            //const XMLCh poundStr[] = {chPound, chNull};
+            //if (!XMLString::startsWith(typeName, poundStr)) {
+            if (!typeinfo->getAnonymous()) {            
                 const int comma = XMLString::indexOf(typeName, chComma);
                 if (comma > 0) {
                     XMLBuffer prefixBuf(comma+1, fMemoryManager);
@@ -2523,6 +2540,17 @@ bool IGXMLScanner::scanStartTagNS(bool& gotData)
                         (
                             XMLValid::GrammarNotFound
                             , prefixBuf.getRawBuffer()
+                        );                        
+                    }
+                }
+                else if (comma == 0) {
+                    bool errorCondition = !switchGrammar(XMLUni::fgZeroLenString) && fValidate;
+                    if (errorCondition && !laxThisOne)
+                    {
+                        fValidator->emitError
+                        (
+                            XMLValid::GrammarNotFound
+                            , XMLUni::fgZeroLenString
                         );                        
                     }
                 }
@@ -2709,6 +2737,9 @@ bool IGXMLScanner::scanStartTagNS(bool& gotData)
                 }
 
             }
+        }
+        else if (fGrammarType == Grammar::SchemaGrammarType) {
+            ((SchemaValidator*)fValidator)->setNillable(false);
         }
 
         if (fGrammarType == Grammar::SchemaGrammarType)
@@ -2994,12 +3025,14 @@ Grammar* IGXMLScanner::loadGrammar(const   InputSource& src
                 emitError
                 (
                     XMLErrs::DisplayErrorMessage
+                    , excToCatch.getCode()
                     , excToCatch.getMessage()
                 );
             else if (excToCatch.getErrorType() >= XMLErrorReporter::ErrType_Fatal)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -3007,6 +3040,7 @@ Grammar* IGXMLScanner::loadGrammar(const   InputSource& src
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -3177,6 +3211,10 @@ void IGXMLScanner::processSchemaLocation(XMLCh* const schemaLoc)
     while (*locStr)
     {
         do {
+            // Do we have an escaped character ?
+            if (*locStr == 0xFFFF)
+                continue;
+
             if (!curReader->isWhitespace(*locStr))
                break;
 
@@ -3188,6 +3226,9 @@ void IGXMLScanner::processSchemaLocation(XMLCh* const schemaLoc)
             fLocationPairs->addElement(locStr);
 
             while (*++locStr) {
+                // Do we have an escaped character ?
+                if (*locStr == 0xFFFF)
+                    continue;
                 if (curReader->isWhitespace(*locStr))
                     break;
             }

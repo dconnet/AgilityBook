@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DatatypeValidatorFactory.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: DatatypeValidatorFactory.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -337,8 +338,12 @@ void DatatypeValidatorFactory::expandRegistryToFullSchemaSet()
                                 getDatatypeValidator(SchemaSymbols::fgDT_TOKEN),facets, 0, false, 0, false);
 
                 // Create 'NMTOKENS' datatype validator
+                facets = new RefHashTableOf<KVStringPair>(2);
+                facets->put((void*) SchemaSymbols::fgELT_MINLENGTH,
+                            new KVStringPair(SchemaSymbols::fgELT_MINLENGTH, XMLUni::fgValueOne));
+
                 createDatatypeValidator(XMLUni::fgNmTokensString,
-        	                     getDatatypeValidator(XMLUni::fgNmTokenString), 0, 0, true, 0, false);
+        	                     getDatatypeValidator(XMLUni::fgNmTokenString), facets, 0, true, 0, false);
 
                 // Create 'language' datatype validator
                 facets = new RefHashTableOf<KVStringPair>(3);
@@ -504,24 +509,33 @@ void DatatypeValidatorFactory::expandRegistryToFullSchemaSet()
                 dv->setTypeName(XMLUni::fgEntityString, SchemaSymbols::fgURI_SCHEMAFORSCHEMA);
                 fBuiltInRegistry->put((void*) XMLUni::fgEntityString, dv);
 
+                facets = new RefHashTableOf<KVStringPair>(2);
+                facets->put((void*) SchemaSymbols::fgELT_MINLENGTH,
+                            new KVStringPair(SchemaSymbols::fgELT_MINLENGTH, XMLUni::fgValueOne));
+
                 // Create 'IDREFS' datatype validator
                 createDatatypeValidator
                 (
                     XMLUni::fgIDRefsString
                   , getDatatypeValidator(XMLUni::fgIDRefString)
-                  , 0
+                  , facets
                   , 0
                   , true
                   , 0
                   , false
                 );
 
+                facets = new RefHashTableOf<KVStringPair>(2);
+
+                facets->put((void*) SchemaSymbols::fgELT_MINLENGTH,
+                            new KVStringPair(SchemaSymbols::fgELT_MINLENGTH, XMLUni::fgValueOne));
+
                // Create 'ENTITIES' datatype validator
                createDatatypeValidator
                (
                    XMLUni::fgEntitiesString
                  , getDatatypeValidator(XMLUni::fgEntityString)
-                 , 0
+                 , facets
                  , 0
                  , true
                  , 0

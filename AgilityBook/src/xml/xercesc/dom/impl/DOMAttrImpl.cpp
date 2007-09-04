@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DOMAttrImpl.cpp 176280 2005-01-07 15:32:34Z amassari $
+ * $Id: DOMAttrImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #include <xercesc/dom/DOMDocument.hpp>
@@ -114,7 +115,7 @@ const XMLCh * DOMAttrImpl::getValue() const
     }
 
     //
-    // Complicated case whre attribute value is a DOM tree
+    // Complicated case where attribute value is a DOM tree
     //
     // According to the spec, the child nodes of the Attr node may be either
     // Text or EntityReference nodes.
@@ -125,7 +126,8 @@ const XMLCh * DOMAttrImpl::getValue() const
     //
 
     XMLBuffer buf(1023, ((DOMDocumentImpl *)this->getOwnerDocument())->getMemoryManager());
-    getTextValue(fParent.fFirstChild, buf);
+    for (node = fParent.fFirstChild; node != 0; node = castToChildImpl(node)->nextSibling)
+        getTextValue(node, buf);
 
     return (XMLCh*) ((DOMDocumentImpl *)this->getOwnerDocument())->getPooledString(buf.getRawBuffer());
 }
@@ -297,11 +299,22 @@ void DOMAttrImpl::setTypeInfo(const DOMTypeInfoImpl* typeInfo)
     fSchemaType = typeInfo;
 }
 
+bool DOMAttrImpl::isSupported(const XMLCh *feature, const XMLCh *version) const
+{
+    // check for '+DOMPSVITypeInfo'
+    if(feature && *feature=='+' && XMLString::equals(feature+1, XMLUni::fgXercescInterfacePSVITypeInfo))
+        return true;
+    return fNode.isSupported (feature, version);
+}
 
 DOMNode * DOMAttrImpl::getInterface(const XMLCh* feature)
 {
     if(XMLString::equals(feature, XMLUni::fgXercescInterfacePSVITypeInfo))
-        return (DOMNode*)(DOMPSVITypeInfo*)fSchemaType;
+    {
+        // go through a temp variable, as gcc 4.0.x computes the wrong offset if presented with two consecutive casts
+        const DOMPSVITypeInfo* pTmp=fSchemaType;
+        return (DOMNode*)pTmp;
+    }
     return fNode.getInterface(feature); 
 }
 
@@ -324,8 +337,6 @@ DOMNode * DOMAttrImpl::getInterface(const XMLCh* feature)
            DOMNode*         DOMAttrImpl::removeChild(DOMNode *oldChild)          {return fParent.removeChild (oldChild); }
            DOMNode*         DOMAttrImpl::replaceChild(DOMNode *newChild, DOMNode *oldChild)
                                                                                  {return fParent.replaceChild (newChild, oldChild); }
-           bool             DOMAttrImpl::isSupported(const XMLCh *feature, const XMLCh *version) const
-                                                                                 {return fNode.isSupported (feature, version); }
            void             DOMAttrImpl::setPrefix(const XMLCh  *prefix)         {fNode.setPrefix(prefix); }
            bool             DOMAttrImpl::hasAttributes() const                   {return fNode.hasAttributes(); }
            bool             DOMAttrImpl::isSameNode(const DOMNode* other) const  {return fNode.isSameNode(other); }

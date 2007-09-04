@@ -1,9 +1,10 @@
 /*
- * Copyright 2002, 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: IGXMLScanner2.cpp 240237 2005-08-26 13:14:19Z cargilld $
+ * $Id: IGXMLScanner2.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -53,6 +54,7 @@
 #include <xercesc/validators/schema/SubstitutionGroupComparator.hpp>
 #include <xercesc/validators/schema/XSDDOMParser.hpp>
 #include <xercesc/validators/schema/identity/IdentityConstraintHandler.hpp>
+#include <xercesc/util/XMLStringTokenizer.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -189,7 +191,142 @@ IGXMLScanner::buildAttList(const  RefVectorOf<KVStringPair>&  providedAttrs
         XMLAttDef::AttTypes attType;
         DatatypeValidator *attrValidator = 0;
         PSVIAttribute *psviAttr = 0;
-        if (!isNSAttr || fGrammarType == Grammar::DTDGrammarType)
+        bool otherXSI = false;
+
+        if (isNSAttr && fGrammarType == Grammar::SchemaGrammarType)
+        {
+            if(fUndeclaredAttrRegistryNS->containsKey(suffPtr, uriId))
+            {
+                emitError
+                ( 
+                    XMLErrs::AttrAlreadyUsedInSTag
+                    , namePtr
+                    , elemDecl->getFullName()
+                );
+                fPSVIElemContext.fErrorOccurred = true;
+            }
+            else
+            {
+                bool ValueValidate = false;
+                bool tokenizeBuffer = false;
+
+                if (uriId == fXMLNSNamespaceId)
+                {
+                    attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
+                }
+                else if (XMLString::equals(getURIText(uriId), SchemaSymbols::fgURI_XSI))
+                {
+                    if (XMLString::equals(suffPtr, SchemaSymbols::fgATT_NILL))
+                    {
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_BOOLEAN);
+
+                        ValueValidate = true;
+                    }
+                    else if (XMLString::equals(suffPtr, SchemaSymbols::fgXSI_SCHEMALOCACTION))
+                    {
+                        // use anyURI as the validator
+                        // tokenize the data and use the anyURI data for each piece
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
+                        //We should validate each value in the schema location however
+                        //this lead to a performance degradation of around 4%.  Since
+                        //the first value of each pair needs to match what is in the
+                        //schema document and the second value needs to be valid in
+                        //order to open the document we won't validate it.  Need to
+                        //do performance analysis of the anyuri datatype.
+                        //ValueValidate = true;
+                        ValueValidate = false;
+                        tokenizeBuffer = true;
+                    }
+                    else if (XMLString::equals(suffPtr, SchemaSymbols::fgXSI_NONAMESPACESCHEMALOCACTION))
+                    {
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
+                        //We should validate this value however
+                        //this lead to a performance degradation of around 4%.  Since
+                        //the value needs to be valid in
+                        //order to open the document we won't validate it.  Need to
+                        //do performance analysis of the anyuri datatype.
+                        //ValueValidate = true;
+                        ValueValidate = false;
+                    }
+                    else if (XMLString::equals(suffPtr, SchemaSymbols::fgXSI_TYPE))
+                    {
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_QNAME);
+
+                        ValueValidate = true;
+                    }
+                    else {
+                        otherXSI = true;                       
+                    }
+                }
+
+                if (!otherXSI) {
+                    fUndeclaredAttrRegistryNS->put((void *)suffPtr, uriId, 0);
+
+                    // Just normalize as CDATA
+                    attType = XMLAttDef::CData;
+                    normalizeAttRawValue
+                    (
+                        namePtr
+                        , curPair->getValue()
+                        , normBuf
+                    );                    
+
+                    if (fValidate && attrValidator && ValueValidate)
+                    {
+                        ValidationContext* const    theContext =
+                            getValidationContext();
+
+                        if (theContext)
+                        {
+                            try
+                            {
+                                if (tokenizeBuffer) {
+                                    XMLStringTokenizer tokenizer(normBuf.getRawBuffer(), fMemoryManager);                                    
+                                    while (tokenizer.hasMoreTokens()) {                                       
+                                        attrValidator->validate(
+                                            tokenizer.nextToken(),
+                                            theContext,
+                                            fMemoryManager);
+                                    }                                  
+                                }
+                                else {
+                                    attrValidator->validate(
+                                        normBuf.getRawBuffer(),
+                                        theContext,
+                                        fMemoryManager);
+                                }
+                            }
+                            catch (const XMLException& idve)
+                            {
+                                fValidator->emitError (XMLValid::DatatypeError, idve.getCode(), idve.getType(), idve.getMessage());
+                            }
+                        }
+                    }
+
+                    if(getPSVIHandler())
+                    {
+	                    psviAttr = fPSVIAttrList->getPSVIAttributeToFill(suffPtr, fURIStringPool->getValueForId(uriId)); 
+	                    XSSimpleTypeDefinition *validatingType = (attrValidator)
+                            ? (XSSimpleTypeDefinition *)fModel->getXSObject(attrValidator)
+                            : 0;
+                        // no attribute declarations for these...
+	                    psviAttr->reset(
+	                        fRootElemName
+	                        , PSVIItem::VALIDITY_NOTKNOWN
+	                        , PSVIItem::VALIDATION_NONE
+	                        , validatingType
+	                        , 0
+	                        , 0
+                            , false
+	                        , 0
+                            , attrValidator
+                            );
+                    }
+                }
+            }
+        }
+        
+        if (!isNSAttr || fGrammarType == Grammar::DTDGrammarType || otherXSI)
         {
             // Some checking for attribute wild card first (for schema)
             bool laxThisOne = false;
@@ -207,6 +344,7 @@ IGXMLScanner::buildAttList(const  RefVectorOf<KVStringPair>&  providedAttrs
                     attWildCard = currType->getAttWildCard();
                 }
                 else if (!currDV) { // check explicitly-set wildcard
+                    attDef = ((SchemaElementDecl*)elemDecl)->getAttDef(suffPtr, uriId);
                     attWildCard = ((SchemaElementDecl*)elemDecl)->getAttWildCard();
                 }
 
@@ -563,39 +701,6 @@ IGXMLScanner::buildAttList(const  RefVectorOf<KVStringPair>&  providedAttrs
                 }
 	        }
 	    }
-        else
-        {
-            // Just normalize as CDATA
-            attType = XMLAttDef::CData;
-            normalizeAttRawValue
-            (
-                namePtr
-                , curPair->getValue()
-                , normBuf
-            );
-            if((uriId == fXMLNSNamespaceId)
-                  || XMLString::equals(getURIText(uriId), SchemaSymbols::fgURI_XSI))
-                attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
-            if(getPSVIHandler() && fGrammarType == Grammar::SchemaGrammarType)
-            {
-	            psviAttr = fPSVIAttrList->getPSVIAttributeToFill(suffPtr, fURIStringPool->getValueForId(uriId)); 
-	            XSSimpleTypeDefinition *validatingType = (attrValidator)
-                            ? (XSSimpleTypeDefinition *)fModel->getXSObject(attrValidator)
-                            : 0;
-                // no attribute declarations for these...
-	            psviAttr->reset(
-	                fRootElemName
-	                , PSVIItem::VALIDITY_NOTKNOWN
-	                , PSVIItem::VALIDATION_NONE
-	                , validatingType
-	                , 0
-	                , 0
-                    , false
-	                , 0
-                    , attrValidator
-                );
-            }
-        }
 
         //  Add this attribute to the attribute list that we use to pass them
         //  to the handler. We reuse its existing elements but expand it as
@@ -1795,7 +1900,7 @@ void IGXMLScanner::resolveSchemaGrammar(const XMLCh* const loc, const XMLCh* con
                         }
                     }
 
-                    grammar = new (fGrammarPoolMemoryManager) SchemaGrammar(fGrammarPoolMemoryManager);
+                    SchemaGrammar* grammar = new (fGrammarPoolMemoryManager) SchemaGrammar(fGrammarPoolMemoryManager);
                     XMLSchemaDescription* gramDesc = (XMLSchemaDescription*) grammar->getGrammarDescription();
                     gramDesc->setContextType(XMLSchemaDescription::CONTEXT_PREPARSE);
                     gramDesc->setLocationHints(srcToFill->getSystemId());
@@ -1804,7 +1909,7 @@ void IGXMLScanner::resolveSchemaGrammar(const XMLCh* const loc, const XMLCh* con
                     (
                         root
                         , fURIStringPool
-                        , (SchemaGrammar*) grammar
+                        , grammar
                         , fGrammarResolver
                         , this
                         , srcToFill->getSystemId()
@@ -1992,7 +2097,7 @@ Grammar* IGXMLScanner::loadXMLSchemaGrammar(const InputSource& src,
             (
                 root
                 , fURIStringPool
-                , (SchemaGrammar*) grammar
+                , grammar
                 , fGrammarResolver
                 , this
                 , src.getSystemId()

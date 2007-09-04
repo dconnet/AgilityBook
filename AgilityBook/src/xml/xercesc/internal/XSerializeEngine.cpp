@@ -1,9 +1,10 @@
 /*
- * Copyright 2003-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XSerializeEngine.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: XSerializeEngine.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -902,13 +903,13 @@ void XSerializeEngine::fillBuffer()
      ***/
     TEST_THROW_ARG2( (bytesRead < (int)fBufSize)
                , bytesRead
-               , fBufSize
+               , (int)fBufSize
                , XMLExcepts::XSer_InStream_Read_LT_Req
                )
 
     TEST_THROW_ARG2( (bytesRead > (int)fBufSize)
                , bytesRead
-               , fBufSize
+               , (int)fBufSize
                , XMLExcepts::XSer_InStream_Read_OverFlow
                )
 
@@ -1110,20 +1111,20 @@ MemoryManager* XSerializeEngine::getMemoryManager() const
 // Based on the current position (fBufCur), calculated the needed size
 // to read/write
 //
-inline size_t XSerializeEngine::alignAdjust(size_t size) const
+inline XMLSize_t XSerializeEngine::alignAdjust(XMLSize_t size) const
 {
-    size_t remainder = (size_t) fBufCur % size;
+    XMLSize_t remainder = (XMLSize_t) fBufCur % size;
     return (remainder == 0) ? 0 : (size - remainder);
 }
 
 // Adjust the fBufCur
-inline void XSerializeEngine::alignBufCur(size_t size)
+inline void XSerializeEngine::alignBufCur(XMLSize_t size)
 {
     fBufCur+=alignAdjust(size);
-    assert(((size_t) fBufCur % size)==0);
+    assert(((XMLSize_t) fBufCur % size)==0);
 }
 
-inline size_t XSerializeEngine::calBytesNeeded(size_t size) const
+inline XMLSize_t XSerializeEngine::calBytesNeeded(XMLSize_t size) const
 {
     return (alignAdjust(size) + size);
 }

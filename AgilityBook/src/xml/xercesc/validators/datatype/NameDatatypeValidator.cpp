@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: NameDatatypeValidator.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: NameDatatypeValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -23,6 +24,7 @@
 // ---------------------------------------------------------------------------
 #include <xercesc/validators/datatype/NameDatatypeValidator.hpp>
 #include <xercesc/validators/datatype/InvalidDatatypeValueException.hpp>
+#include <xercesc/util/XMLChar.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -97,11 +99,12 @@ void NameDatatypeValidator::checkValueSpace(const XMLCh* const content
     //
     // 3.3.6 check must: "Name"
     //
-    if ( !XMLString::isValidName(content))
+    if ( !XMLChar1_0::isValidName(content))
     {
-        ThrowXMLwithMemMgr1(InvalidDatatypeValueException
+        ThrowXMLwithMemMgr2(InvalidDatatypeValueException
                 , XMLExcepts::VALUE_Invalid_Name
                 , content
+                , SchemaSymbols::fgDT_NAME
                 , manager);
     }
 

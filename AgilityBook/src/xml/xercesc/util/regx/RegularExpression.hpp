@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: RegularExpression.hpp 225473 2005-07-27 07:09:16Z dbertoni $
+ * $Id: RegularExpression.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(REGULAREXPRESSION_HPP)
@@ -158,8 +159,10 @@ private:
     {
         public :
             Context(MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager);
+            Context(Context* src);
             ~Context();
 
+            Context& operator= (const Context& other);
             inline const XMLCh* getString() const { return fString; }
             void reset(const XMLCh* const string, const int stringLen,
                        const int start, const int limit, const int noClosures);
@@ -546,24 +549,6 @@ private:
       }
 
       return ret;
-  }
-
-  inline int RegularExpression::matchUnion(Context* const context,
-                                           const Op* const op, int offset,
-                                           const short direction)
-  {
-      unsigned int opSize = op->getSize();
-      int ret = -1;
-
-      for (unsigned int i=0; i < opSize; i++) {
-
-          ret = match(context, op->elementAt(i), offset, direction);
-
-          if (ret >= 0 && ret <= context->fLimit)
-              return ret;
-      }
-
-      return -1;
   }
 
   inline int RegularExpression::matchModifier(Context* const context,

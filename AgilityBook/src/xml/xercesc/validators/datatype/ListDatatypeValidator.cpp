@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ListDatatypeValidator.cpp 191694 2005-06-21 17:53:28Z cargilld $
+ * $Id: ListDatatypeValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -150,18 +151,6 @@ void ListDatatypeValidator::checkContent(       BaseRefVectorOf<XMLCh>*       to
     // we check pattern first
     if ( (thisFacetsDefined & DatatypeValidator::FACET_PATTERN ) != 0 )
     {
-        // lazy construction
-        if (getRegex() == 0)
-        {
-            try {
-                setRegex(new (fMemoryManager) RegularExpression(getPattern(), SchemaSymbols::fgRegEx_XOption, fMemoryManager));            	
-            }
-            catch (XMLException &e)
-            {
-                ThrowXMLwithMemMgr1(InvalidDatatypeValueException, XMLExcepts::RethrowError, e.getMessage(), manager);
-            }
-        }
-
         //check every item in the list as a whole
         if (getRegex()->matches(content, manager) == false)
         {
@@ -346,9 +335,11 @@ void ListDatatypeValidator::inspectFacetBase(MemoryManager* const manager)
 
                         throw;
                     }
-
+#if 0
+// spec says that only base has to checkContent                    
                     // enum shall pass this->checkContent() as well.
                     checkContent(getEnumeration()->elementAt(i), (ValidationContext*)0, false, manager);
+#endif
                 }
             }
 
@@ -432,7 +423,7 @@ const XMLCh* ListDatatypeValidator::getCanonicalRepresentation(const XMLCh*     
             }
 
             XMLString::catString(retBufPtr, itemCanRep);
-            retBufPtr = retBufPtr + itemLen + 1;
+            retBufPtr = retBufPtr + itemLen;
             *(retBufPtr++) = chSpace;
             *(retBufPtr) = chNull;
             toUse->deallocate(itemCanRep);

@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLUni.cpp 176382 2005-04-21 09:05:57Z cargilld $
+ * $Id: XMLUni.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -353,6 +354,11 @@ const XMLCh XMLUni::fgUCS4EncodingString2[] =
 const XMLCh XMLUni::fgUCS4EncodingString3[] =
 {
     chLatin_U, chLatin_C, chLatin_S, chUnderscore, chDigit_4, chNull
+};
+
+const XMLCh XMLUni::fgUCS4EncodingString4[] =
+{
+    chLatin_U, chLatin_T, chLatin_F, chDash, chDigit_3, chDigit_2, chNull
 };
 
 const XMLCh XMLUni::fgUCS4BEncodingString[] =
@@ -1654,7 +1660,7 @@ const XMLCh XMLUni::fgLangPattern[] =
     chCloseCurly,  chCloseParen, chAsterisk, chNull
 };
 
-const XMLCh XMLUni::fgBooleanValueSpace[][32] =
+const XMLCh XMLUni::fgBooleanValueSpace[][8] =
 {
     { chLatin_f, chLatin_a, chLatin_l, chLatin_s, chLatin_e, chNull },
     { chLatin_t, chLatin_r, chLatin_u, chLatin_e, chNull },
@@ -1662,7 +1668,7 @@ const XMLCh XMLUni::fgBooleanValueSpace[][32] =
     { chDigit_1, chNull }
 };
 
-const unsigned int XMLUni::fgBooleanValueSpaceArraySize = sizeof XMLUni::fgBooleanValueSpace / sizeof (XMLCh*);
+const unsigned int XMLUni::fgBooleanValueSpaceArraySize = sizeof XMLUni::fgBooleanValueSpace / sizeof (XMLUni::fgBooleanValueSpace[0]);
 
 XERCES_CPP_NAMESPACE_END
 

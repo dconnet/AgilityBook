@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /**
- * $Id: XMLFormatter.cpp 176026 2004-09-08 13:57:07Z peiyongz $
+ * $Id: XMLFormatter.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -74,13 +75,13 @@ static const XMLCh  gQuoteRef[] =
     chAmpersand, chLatin_q, chLatin_u, chLatin_o, chLatin_t, chSemiColon, chNull
 };
 
-static const unsigned int kEscapeCount = 6;
+static const unsigned int kEscapeCount = 7;
 static const XMLCh gEscapeChars[XMLFormatter::EscapeFlags_Count][kEscapeCount] =
 {
-        { chNull      , chNull       , chNull        , chNull       , chNull        , chNull }
-    ,   { chAmpersand , chCloseAngle , chDoubleQuote , chOpenAngle  , chSingleQuote , chNull }
-    ,   { chAmpersand , chOpenAngle  , chDoubleQuote , chLF         , chNull        , chNull }
-    ,   { chAmpersand , chOpenAngle  , chCloseAngle  , chNull       , chNull        , chNull }
+        { chNull      , chNull       , chNull        , chNull       , chNull        , chNull    , chNull }
+    ,   { chAmpersand , chCloseAngle , chDoubleQuote , chOpenAngle  , chSingleQuote , chNull    , chNull }
+    ,   { chAmpersand , chOpenAngle  , chDoubleQuote , chLF         , chCR          , chHTab    , chNull }
+    ,   { chAmpersand , chOpenAngle  , chCloseAngle  , chNull       , chNull        , chNull    , chNull }
 };
 
 // ---------------------------------------------------------------------------

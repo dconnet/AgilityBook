@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLURL.cpp 231102 2005-08-09 20:19:06Z dbertoni $
+ * $Id: XMLURL.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -87,15 +88,21 @@ static const XMLCh gHTTPString[] =
         chLatin_h, chLatin_t, chLatin_t, chLatin_p, chNull
 };
 
+static const XMLCh gHTTPSString[] =
+{
+        chLatin_h, chLatin_t, chLatin_t, chLatin_p, chLatin_s, chNull
+};
+
 static ProtoEntry gProtoList[XMLURL::Protocols_Count] =
 {
         { XMLURL::File     , gFileString    , 0  }
     ,   { XMLURL::HTTP     , gHTTPString    , 80 }
     ,   { XMLURL::FTP      , gFTPString     , 21 }
+    ,   { XMLURL::HTTPS    , gHTTPSString   , 443 }
 };
 
 // !!! Keep these up to date with list above!
-static const unsigned int gMaxProtoLen = 4;
+static const unsigned int gMaxProtoLen = 5;
 
 static const XMLCh gListOne[]    = { chColon, chForwardSlash, chNull };
 static const XMLCh gListTwo[]    = { chAt, chNull };

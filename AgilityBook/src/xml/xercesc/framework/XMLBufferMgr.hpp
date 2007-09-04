@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -13,11 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * $Id: XMLBufferMgr.hpp 191054 2005-06-17 02:56:35Z jberry $
- */
-
 
 #if !defined(XMLBUFFERMGR_HPP)
 #define XMLBUFFERMGR_HPP
@@ -60,6 +56,11 @@ public :
     XMLBuffer& bidOnBuffer();
     void releaseBuffer(XMLBuffer& toRelease);
 
+	// -----------------------------------------------------------------------
+    //  Getter methods
+    // -----------------------------------------------------------------------
+    unsigned int getBufferCount() const;
+    unsigned int getAvailableBufferCount() const;
 
 private :
     // -----------------------------------------------------------------------
@@ -82,6 +83,22 @@ private :
     MemoryManager*  fMemoryManager;
     XMLBuffer**     fBufList;
 };
+
+inline unsigned int XMLBufferMgr::getBufferCount() const
+{
+    return fBufCount;
+}
+
+inline unsigned int XMLBufferMgr::getAvailableBufferCount() const
+{
+    unsigned available = fBufCount;
+    for (unsigned int index = 0; index < fBufCount && fBufList[index]; index++)
+    {
+        if (fBufList[index]->getInUse())
+            --available;
+    }
+    return available;
+}
 
 
 /**

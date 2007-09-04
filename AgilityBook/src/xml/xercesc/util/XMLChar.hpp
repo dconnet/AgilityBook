@@ -1,9 +1,10 @@
 /*
- * Copyright 2002-2005 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLChar.hpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: XMLChar.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(XMLCHAR_HPP)
@@ -69,6 +70,11 @@ public:
     (
         const   XMLCh* const    toCheck
         , const unsigned int    count
+    );
+
+    static bool isValidName
+    (
+        const   XMLCh* const    toCheck
     );
 
     static bool isValidNCName
@@ -270,6 +276,11 @@ public:
     (
         const   XMLCh* const    toCheck
         , const unsigned int    count
+    );
+
+    static bool isValidName
+    (
+        const   XMLCh* const    toCheck
     );
 
     static bool isValidNCName

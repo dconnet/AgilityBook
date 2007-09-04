@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,13 +16,13 @@
  */
 
 /*
- * $Id: XMLReaderFactory.hpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: XMLReaderFactory.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #ifndef XMLREADERFACTORY_HPP
 #define XMLREADERFACTORY_HPP
 
-#include <xercesc/parsers/SAX2XMLReaderImpl.hpp>
+#include <xercesc/sax2/SAX2XMLReader.hpp>
 #include <xercesc/sax/SAXException.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
@@ -45,10 +46,9 @@ protected:                // really should be private, but that causes compiler 
 	~XMLReaderFactory() ;
 
 public:
-	static SAX2XMLReader * createXMLReader( 
-                                               MemoryManager* const  manager = XMLPlatformUtils::fgMemoryManager
-                                             , XMLGrammarPool* const gramPool = 0
-                                               ) ;
+	static SAX2XMLReader * createXMLReader(  MemoryManager* const  manager = XMLPlatformUtils::fgMemoryManager
+                                           , XMLGrammarPool* const gramPool = 0
+                                          ) ;
 	static SAX2XMLReader * createXMLReader(const XMLCh* className)  ;
 
 private:
@@ -58,13 +58,6 @@ private:
     XMLReaderFactory(const XMLReaderFactory&);
     XMLReaderFactory& operator=(const XMLReaderFactory&);
 };
-
-
-inline SAX2XMLReader * XMLReaderFactory::createXMLReader(MemoryManager* const  manager
-                                                       , XMLGrammarPool* const gramPool)
-{
-	return (SAX2XMLReader*)(new (manager) SAX2XMLReaderImpl(manager, gramPool));
-}
 
 inline SAX2XMLReader * XMLReaderFactory::createXMLReader(const XMLCh *)
 {	

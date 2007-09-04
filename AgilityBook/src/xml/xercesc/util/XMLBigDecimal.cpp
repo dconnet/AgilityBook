@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLBigDecimal.cpp 191689 2005-06-21 17:15:46Z cargilld $
+ * $Id: XMLBigDecimal.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -231,10 +232,18 @@ void  XMLBigDecimal::parseDecimal(const XMLCh* const toParse
     {
         sign = -1;
         startPtr++;
+        if (startPtr == endPtr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, manager);
+        }
     }
     else if (*startPtr == chPlus)
     {
-        startPtr++;
+        startPtr++;         
+        if (startPtr == endPtr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, manager);
+        }
     }
 
     // Strip leading zeros
@@ -280,7 +289,7 @@ void  XMLBigDecimal::parseDecimal(const XMLCh* const toParse
     /***
     E2-44 totalDigits
 
-     ... by restricting it to numbers that are expressible as i × 10^-n
+     ... by restricting it to numbers that are expressible as i x 10^-n
      where i and n are integers such that |i| < 10^totalDigits and 0 <= n <= totalDigits. 
 
         normalization: remove all trailing zero after the '.'
@@ -292,6 +301,9 @@ void  XMLBigDecimal::parseDecimal(const XMLCh* const toParse
         fractDigits--;
         totalDigits--;
     }
+    // 0.0 got past the check for zero because of the decimal point, so we need to double check it here
+    if(totalDigits==0)
+        sign = 0;
 
     *retPtr = chNull;   //terminated
     return;
@@ -321,10 +333,18 @@ void  XMLBigDecimal::parseDecimal(const XMLCh*         const toParse
     if (*startPtr == chDash)
     {
         startPtr++;
+        if (startPtr == endPtr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, manager);
+        }
     }
     else if (*startPtr == chPlus)
     {
         startPtr++;
+        if (startPtr == endPtr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, manager);
+        }
     }
 
     // Strip leading zeros

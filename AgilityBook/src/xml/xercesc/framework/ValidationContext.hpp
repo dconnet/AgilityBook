@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ValidationContext.hpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: ValidationContext.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(VALIDATION_CONTEXT_HPP)
@@ -31,6 +32,7 @@ XERCES_CPP_NAMESPACE_BEGIN
 class XMLRefInfo;
 class DTDEntityDecl;
 class DatatypeValidator;
+class ElemStack;
 
 class XMLPARSER_EXPORT ValidationContext : public XMemory
 {
@@ -86,6 +88,12 @@ public :
     virtual DatatypeValidator * getValidatingMemberType() const = 0 ;
     virtual void setValidatingMemberType(DatatypeValidator * validatingMemberType) = 0 ;
 
+    /**
+      * QName datatype handling
+      * Create default implementations for source code compatibility
+      */
+    virtual bool isPrefixUnknown(XMLCh* /* prefix */) { return true; };
+    virtual void setElemStack(ElemStack* /* elemStack */) {};
     //@}
 
    

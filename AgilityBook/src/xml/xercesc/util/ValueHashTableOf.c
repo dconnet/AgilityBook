@@ -1,9 +1,10 @@
 /*
- * Copyright 2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ValueHashTableOf.c 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: ValueHashTableOf.c 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -73,8 +74,7 @@ template <class TVal> void ValueHashTableOf<TVal>::initialize(const unsigned int
     (
         fHashModulus * sizeof(ValueHashTableBucketElem<TVal>*)
     ); //new ValueHashTableBucketElem<TVal>*[fHashModulus];
-    for (unsigned int index = 0; index < fHashModulus; index++)
-        fBucketList[index] = 0;
+    memset(fBucketList, 0, sizeof(fBucketList[0]) * fHashModulus);
 }
 
 template <class TVal> ValueHashTableOf<TVal>::~ValueHashTableOf()

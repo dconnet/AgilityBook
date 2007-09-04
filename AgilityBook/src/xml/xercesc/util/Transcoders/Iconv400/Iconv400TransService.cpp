@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -19,7 +20,7 @@
  * @02A           V5R2M0    200419   jrhansen : support lowercase function
  * @03A D93234.1  V1R1M0    102804   JRHansen :fix transcode overflow 
  * @04A D93234.3  V1R1M0    022505   JRHansen :fix transcode error check 
- * $Id: Iconv400TransService.cpp 176407 2005-05-18 13:44:44Z cargilld $
+ * $Id: Iconv400TransService.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------

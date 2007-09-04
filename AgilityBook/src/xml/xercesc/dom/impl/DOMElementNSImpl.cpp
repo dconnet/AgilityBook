@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DOMElementNSImpl.cpp 231069 2005-08-09 17:48:47Z amassari $
+ * $Id: DOMElementNSImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #include <xercesc/util/XMLUniDefs.hpp>
@@ -254,10 +255,22 @@ void DOMElementNSImpl::setTypeInfo(const DOMTypeInfoImpl* typeInfo)
     fSchemaType = typeInfo;
 }
 
+bool DOMElementNSImpl::isSupported(const XMLCh *feature, const XMLCh *version) const
+{
+    // check for '+DOMPSVITypeInfo'
+    if(feature && *feature=='+' && XMLString::equals(feature+1, XMLUni::fgXercescInterfacePSVITypeInfo))
+        return true;
+    return fNode.isSupported (feature, version);
+}
+
 DOMNode * DOMElementNSImpl::getInterface(const XMLCh* feature)
 {
     if(XMLString::equals(feature, XMLUni::fgXercescInterfacePSVITypeInfo))
-        return (DOMNode*)(DOMPSVITypeInfo*)fSchemaType;
+    {
+        // go through a temp variable, as gcc 4.0.x computes the wrong offset if presented with two consecutive casts
+        const DOMPSVITypeInfo* pTmp=fSchemaType;
+        return (DOMNode*)pTmp;
+    }
     return DOMElementImpl::getInterface(feature);
 }
 

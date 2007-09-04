@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: SchemaInfo.hpp 176114 2004-09-29 20:58:10Z knoaman $
+ * $Id: SchemaInfo.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(SCHEMAINFO_HPP)
@@ -40,6 +41,7 @@
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/util/RefVectorOf.hpp>
 #include <xercesc/util/ValueVectorOf.hpp>
+#include <xercesc/util/RefHashTableOf.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -169,7 +171,8 @@ private:
     ValueVectorOf<int>*               fImportedNSList;
     ValueVectorOf<const DOMElement*>* fRecursingAnonTypes;
     ValueVectorOf<const XMLCh*>*      fRecursingTypeNames;
-    ValueVectorOf<DOMElement*>*       fTopLevelComponents[C_Count];
+    RefHashTableOf<DOMElement>*       fTopLevelComponents[C_Count];
+    DOMElement*                       fLastTopLevelComponent[C_Count];
     ValueVectorOf<DOMNode*>*          fNonXSAttList;
     ValidationContext*                fValidationContext;
     MemoryManager*                    fMemoryManager;
@@ -421,6 +424,7 @@ inline void SchemaInfo::clearTopLevelComponents() {
 
         delete fTopLevelComponents[i];
         fTopLevelComponents[i] = 0;
+        fLastTopLevelComponent[i] = 0;
     }
 }
 

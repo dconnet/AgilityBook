@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: BinFileInputStream.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: BinFileInputStream.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -36,25 +37,17 @@ XERCES_CPP_NAMESPACE_BEGIN
 BinFileInputStream::BinFileInputStream(const XMLCh* const fileName
                                        , MemoryManager* const manager) :
 
-    fSource(0)
+    fSource(XMLPlatformUtils::openFile(fileName, manager))
   , fMemoryManager(manager)
 {
-    // Try to open the file
-    fSource = XMLPlatformUtils::openFile(fileName, manager);
 }
 
 BinFileInputStream::BinFileInputStream(const char* const fileName,
                                        MemoryManager* const manager) :
 
-    fSource(0)
+    fSource(XMLPlatformUtils::openFile(fileName, manager))
   , fMemoryManager(manager)
 {
-    // Transcode the file name and put a janitor on the temp buffer
-    XMLCh* realName = XMLString::transcode(fileName, manager);
-    ArrayJanitor<XMLCh> janName(realName, manager);
-
-    // Try to open the file
-    fSource = XMLPlatformUtils::openFile(realName, manager);
 }
 
 BinFileInputStream::BinFileInputStream(const FileHandle toAdopt
@@ -67,7 +60,7 @@ BinFileInputStream::BinFileInputStream(const FileHandle toAdopt
 
 BinFileInputStream::~BinFileInputStream()
 {
-    if (fSource)
+    if (getIsOpen())
         XMLPlatformUtils::closeFile(fSource, fMemoryManager);
 }
 

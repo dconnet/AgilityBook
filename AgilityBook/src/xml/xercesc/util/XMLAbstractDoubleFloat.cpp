@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLAbstractDoubleFloat.cpp 191689 2005-06-21 17:15:46Z cargilld $
+ * $Id: XMLAbstractDoubleFloat.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -105,9 +106,29 @@ void XMLAbstractDoubleFloat::init(const XMLCh* const strValue)
         // work.
         static const unsigned int  maxStackSize = 100;
 
-        const unsigned int  lenTempStrValue =
-            XMLString::stringLen(tmpStrValue);
+        unsigned int  lenTempStrValue = 0;
 
+        
+        // Need to check that the string only contains valid schema characters
+        // since the call to strtod may allow other values.  For example, AIX
+        // allows "infinity" and "+INF"
+        XMLCh curChar;
+        while (curChar = tmpStrValue[lenTempStrValue]) {            
+            if (!((curChar >= chDigit_0 &&
+                   curChar <= chDigit_9) ||
+                  curChar == chPeriod  ||
+                  curChar == chDash    ||
+                  curChar == chPlus    ||
+                  curChar == chLatin_E ||
+                  curChar == chLatin_e)) {                
+                ThrowXMLwithMemMgr(
+                    NumberFormatException,
+                    XMLExcepts::XMLNUM_Inv_chars,
+                    getMemoryManager());
+            }            
+            lenTempStrValue++;
+        }
+       
         if (lenTempStrValue < maxStackSize)
         {
             char    buffer[maxStackSize + 1];
@@ -350,20 +371,38 @@ void XMLAbstractDoubleFloat::normalizeZero(XMLCh* const inData)
 
     XMLCh*   srcStr = inData;
 	bool     minusSeen = false;
+    bool     dotSeen = false;
 
 	// process sign if any
 	if (*srcStr == chDash)
 	{
 		minusSeen = true;
 		srcStr++;
+        if (!*srcStr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, getMemoryManager());
+        }
 	}
 	else if (*srcStr == chPlus)
 	{
 		srcStr++;
+        if (!*srcStr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, getMemoryManager());
+        }
 	}
+    else if (*srcStr == chPeriod)
+    {
+        dotSeen = true;
+        srcStr++;
+        if (!*srcStr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, getMemoryManager());
+        }
+    }
 
 	// scan the string
-	bool  dotSeen = false;
+	
 	bool  isValidStr = true;
     XMLCh theChar;
 	while ((theChar=*srcStr++) && isValidStr)

@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DTDValidator.cpp 176145 2004-10-19 15:08:53Z knoaman $
+ * $Id: DTDValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -327,12 +328,14 @@ DTDValidator::validateAttrValue(const   XMLAttDef*      attDef
                 }
             }
         }
-         else if ((type == XMLAttDef::Entity) || (type == XMLAttDef::Entities))
+         else if (!preValidation && ((type == XMLAttDef::Entity) || (type == XMLAttDef::Entities)))
         {
             //
             //  If its refering to a entity, then look up the name in the
             //  general entity pool. If not there, then its an error. If its
             //  not an external unparsed entity, then its an error.
+            //
+            //  In case of pre-validation, the above errors should be ignored.
             //
             const XMLEntityDecl* decl = fDTDGrammar->getEntityDecl(pszTmpVal);
             if (decl)

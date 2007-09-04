@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLUni.hpp 176382 2005-04-21 09:05:57Z cargilld $
+ * $Id: XMLUni.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -104,6 +105,7 @@ public :
     static const XMLCh fgUCS4EncodingString[];
     static const XMLCh fgUCS4EncodingString2[];
     static const XMLCh fgUCS4EncodingString3[];
+    static const XMLCh fgUCS4EncodingString4[];
     static const XMLCh fgUCS4BEncodingString[];
     static const XMLCh fgUCS4BEncodingString2[];
     static const XMLCh fgUCS4LEncodingString[];
@@ -293,7 +295,7 @@ public :
     static const XMLCh fgUByteMaxInc[];
     static const XMLCh fgLangPattern[];
 
-    static const XMLCh fgBooleanValueSpace[][32];
+    static const XMLCh fgBooleanValueSpace[][8];
     static const unsigned int fgBooleanValueSpaceArraySize;
         
 private:

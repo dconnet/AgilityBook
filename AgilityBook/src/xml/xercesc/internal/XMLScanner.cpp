@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLScanner.cpp 231514 2005-08-11 20:53:29Z amassari $
+ * $Id: XMLScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -378,6 +379,7 @@ void XMLScanner::scanDocument(  const   XMLCh* const    systemId)
                     emitError
                     (
                         XMLErrs::XMLException_Fatal
+                        , e.getCode()
                         , e.getType()
                         , e.getMessage()
                     );
@@ -392,6 +394,7 @@ void XMLScanner::scanDocument(  const   XMLCh* const    systemId)
                     emitError
                     (
                         XMLErrs::XMLException_Fatal
+                        , e.getCode()
                         , e.getType()
                         , e.getMessage()
                     );
@@ -413,6 +416,7 @@ void XMLScanner::scanDocument(  const   XMLCh* const    systemId)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , e.getCode()
                     , e.getType()
                     , e.getMessage()
                 );
@@ -429,6 +433,7 @@ void XMLScanner::scanDocument(  const   XMLCh* const    systemId)
             emitError
             (
                 XMLErrs::XMLException_Warning
+                , excToCatch.getCode()
                 , excToCatch.getType()
                 , excToCatch.getMessage()
             );
@@ -436,6 +441,7 @@ void XMLScanner::scanDocument(  const   XMLCh* const    systemId)
             emitError
             (
                 XMLErrs::XMLException_Fatal
+                , excToCatch.getCode()
                 , excToCatch.getType()
                 , excToCatch.getMessage()
             );
@@ -443,6 +449,7 @@ void XMLScanner::scanDocument(  const   XMLCh* const    systemId)
             emitError
             (
                 XMLErrs::XMLException_Error
+                , excToCatch.getCode()
                 , excToCatch.getType()
                 , excToCatch.getMessage()
             );
@@ -491,6 +498,7 @@ bool XMLScanner::scanFirst( const   XMLCh* const    systemId
                     emitError
                     (
                         XMLErrs::XMLException_Fatal
+                        , e.getCode()
                         , e.getType()
                         , e.getMessage()
                     );
@@ -505,6 +513,7 @@ bool XMLScanner::scanFirst( const   XMLCh* const    systemId
                     emitError
                     (
                         XMLErrs::XMLException_Fatal
+                        , e.getCode()
                         , e.getType()
                         , e.getMessage()
                     );
@@ -525,6 +534,7 @@ bool XMLScanner::scanFirst( const   XMLCh* const    systemId
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , e.getCode()
                     , e.getType()
                     , e.getMessage()
                 );
@@ -541,6 +551,7 @@ bool XMLScanner::scanFirst( const   XMLCh* const    systemId
             emitError
             (
                 XMLErrs::XMLException_Warning
+                , excToCatch.getCode()
                 , excToCatch.getType()
                 , excToCatch.getMessage()
             );
@@ -548,6 +559,7 @@ bool XMLScanner::scanFirst( const   XMLCh* const    systemId
             emitError
             (
                 XMLErrs::XMLException_Fatal
+                , excToCatch.getCode()
                 , excToCatch.getType()
                 , excToCatch.getMessage()
             );
@@ -555,6 +567,7 @@ bool XMLScanner::scanFirst( const   XMLCh* const    systemId
             emitError
             (
                 XMLErrs::XMLException_Error
+                , excToCatch.getCode()
                 , excToCatch.getType()
                 , excToCatch.getMessage()
             );
@@ -632,6 +645,7 @@ bool XMLScanner::scanFirst( const   InputSource&    src
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -639,6 +653,7 @@ bool XMLScanner::scanFirst( const   InputSource&    src
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -646,6 +661,7 @@ bool XMLScanner::scanFirst( const   InputSource&    src
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -750,15 +766,16 @@ void XMLScanner::commonInit()
     //  Create the id ref list. This is used to enforce XML 1.0 ID ref
     //  semantics, i.e. all id refs must refer to elements that exist
     fValidationContext = new (fMemoryManager) ValidationContextImpl(fMemoryManager);
+    fValidationContext->setElemStack(&fElemStack);
 
     //  Create the GrammarResolver
     //fGrammarResolver = new GrammarResolver();
 
     // create initial, 64-element, fUIntPool
     fUIntPool = (unsigned int **)fMemoryManager->allocate(sizeof(unsigned int *) *fUIntPoolRowTotal);
+    memset(fUIntPool, 0, sizeof(unsigned int *) * fUIntPoolRowTotal);
     fUIntPool[0] = (unsigned int *)fMemoryManager->allocate(sizeof(unsigned int) << 6);
-    memset(fUIntPool[0], 0, sizeof(unsigned int) << 6);
-    fUIntPool[1] = 0;
+    memset(fUIntPool[0], 0, sizeof(unsigned int) << 6);    
 
     // Register self as handler for XMLBufferFull events on the CDATA buffer
     fCDataBuf.setFullHandler(this, fBufferSize);
@@ -778,11 +795,14 @@ void XMLScanner::cleanUp()
     fMemoryManager->deallocate(fExternalSchemaLocation);//delete [] fExternalSchemaLocation;
     fMemoryManager->deallocate(fExternalNoNamespaceSchemaLocation);//delete [] fExternalNoNamespaceSchemaLocation;
     // delete fUIntPool
-    for (unsigned int i=0; i<=fUIntPoolRow; i++)
-    {
-        fMemoryManager->deallocate(fUIntPool[i]);
+    if (fUIntPool)
+    {    
+        for (unsigned int i=0; i<=fUIntPoolRow; i++)
+        {
+            fMemoryManager->deallocate(fUIntPool[i]);
+        }
+        fMemoryManager->deallocate(fUIntPool);
     }
-    fMemoryManager->deallocate(fUIntPool);
 }
 
 void XMLScanner::initValidator(XMLValidator* theValidator) {
@@ -943,6 +963,53 @@ void XMLScanner::emitError( const   XMLErrs::Codes    toEmit
         throw toEmit;
 }
 
+void XMLScanner::emitError( const   XMLErrs::Codes      toEmit
+                            , const XMLExcepts::Codes   originalExceptCode
+                            , const XMLCh* const        text1
+                            , const XMLCh* const        text2
+                            , const XMLCh* const        text3
+                            , const XMLCh* const        text4)
+{
+    // Bump the error count if it is not a warning
+    if (XMLErrs::errorType(toEmit) != XMLErrorReporter::ErrType_Warning)
+        incrementErrorCount();
+
+    if (fErrorReporter)
+    {
+        //  Load the message into alocal and replace any tokens found in
+        //  the text.
+        const unsigned int maxChars = 2047;
+        XMLCh errText[maxChars + 1];
+
+        if (!gScannerMsgLoader().loadMsg(toEmit, errText, maxChars, text1, text2, text3, text4, fMemoryManager))
+        {
+                // <TBD> Should probably load a default message here
+        }
+
+        //  Create a LastExtEntityInfo structure and get the reader manager
+        //  to fill it in for us. This will give us the information about
+        //  the last reader on the stack that was an external entity of some
+        //  sort (i.e. it will ignore internal entities.
+        ReaderMgr::LastExtEntityInfo lastInfo;
+        fReaderMgr.getLastExtEntityInfo(lastInfo);
+
+        fErrorReporter->error
+        (
+            originalExceptCode
+            , XMLUni::fgExceptDomain    //fgXMLErrDomain
+            , XMLErrs::errorType(toEmit)
+            , errText
+            , lastInfo.systemId
+            , lastInfo.publicId
+            , lastInfo.lineNumber
+            , lastInfo.colNumber
+        );
+    }
+
+    // Bail out if its fatal an we are to give up on the first fatal error
+    if (emitErrorWillThrowException(toEmit))
+        throw toEmit;
+}
 
 // ---------------------------------------------------------------------------
 //  XMLScanner: Getter methods
@@ -1225,6 +1292,7 @@ void XMLScanner::scanPI()
 //  the opening < of the root element.
 void XMLScanner::scanProlog()
 {
+    bool sawDocTypeDecl = false;
     // Get a buffer for whitespace processing
     XMLBufBid bbCData(&fBufMgr);
 
@@ -1266,7 +1334,11 @@ void XMLScanner::scanProlog()
                 }
                  else if (fReaderMgr.skippedString(XMLUni::fgDocTypeString))
                 {
+                    if (sawDocTypeDecl) {
+                        emitError(XMLErrs::DuplicateDocTypeDecl);
+                    }
                     scanDocTypeDecl();
+                    sawDocTypeDecl = true;
 
                     // if reusing grammar, this has been validated already in first scan
                     // skip for performance
@@ -1607,16 +1679,16 @@ bool XMLScanner::checkXMLDecl(bool startWithAngle) {
             {
                 return true;
             }
-            else if (fReaderMgr.skippedString(XMLUni::fgXMLDeclStringSpaceU)
-               || fReaderMgr.skippedString(XMLUni::fgXMLDeclStringHTabU)
-               || fReaderMgr.skippedString(XMLUni::fgXMLDeclStringLFU)
-               || fReaderMgr.skippedString(XMLUni::fgXMLDeclStringCRU))
-            {
-                //  Just in case, check for upper case. If found, issue
-                //  an error, but keep going.
-                emitError(XMLErrs::XMLDeclMustBeLowerCase);
-                return true;
-            }
+        }
+        else if (fReaderMgr.skippedString(XMLUni::fgXMLDeclStringSpaceU)
+           || fReaderMgr.skippedString(XMLUni::fgXMLDeclStringHTabU)
+           || fReaderMgr.skippedString(XMLUni::fgXMLDeclStringLFU)
+           || fReaderMgr.skippedString(XMLUni::fgXMLDeclStringCRU))
+        {
+            //  Just in case, check for upper case. If found, issue
+            //  an error, but keep going.
+            emitError(XMLErrs::XMLDeclMustBeLowerCase);
+            return true;
         }
     }
     else {
@@ -1628,16 +1700,16 @@ bool XMLScanner::checkXMLDecl(bool startWithAngle) {
             {
                 return true;
             }
-            else if (fReaderMgr.skippedString(XMLUni::fgXMLStringSpaceU)
-               || fReaderMgr.skippedString(XMLUni::fgXMLStringHTabU)
-               || fReaderMgr.skippedString(XMLUni::fgXMLStringLFU)
-               || fReaderMgr.skippedString(XMLUni::fgXMLStringCRU))
-            {
-                //  Just in case, check for upper case. If found, issue
-                //  an error, but keep going.
-                emitError(XMLErrs::XMLDeclMustBeLowerCase);
-                return true;
-            }
+        }
+        else if (fReaderMgr.skippedString(XMLUni::fgXMLStringSpaceU)
+           || fReaderMgr.skippedString(XMLUni::fgXMLStringHTabU)
+           || fReaderMgr.skippedString(XMLUni::fgXMLStringLFU)
+           || fReaderMgr.skippedString(XMLUni::fgXMLStringCRU))
+        {
+            //  Just in case, check for upper case. If found, issue
+            //  an error, but keep going.
+            emitError(XMLErrs::XMLDeclMustBeLowerCase);
+            return true;
         }
     }
 
@@ -1690,6 +1762,7 @@ Grammar* XMLScanner::loadGrammar(const   XMLCh* const systemId
                         emitError
                         (
                             XMLErrs::XMLException_Fatal
+                            , e.getCode()
                             , e.getType()
                             , e.getMessage()
                         );
@@ -1704,6 +1777,7 @@ Grammar* XMLScanner::loadGrammar(const   XMLCh* const systemId
                         emitError
                         (
                             XMLErrs::XMLException_Fatal
+                            , e.getCode()
                             , e.getType()
                             , e.getMessage()
                         );
@@ -1725,6 +1799,7 @@ Grammar* XMLScanner::loadGrammar(const   XMLCh* const systemId
                     emitError
                     (
                         XMLErrs::XMLException_Fatal
+                        , e.getCode()
                         , e.getType()
                         , e.getMessage()
                     );
@@ -1741,6 +1816,7 @@ Grammar* XMLScanner::loadGrammar(const   XMLCh* const systemId
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -1748,6 +1824,7 @@ Grammar* XMLScanner::loadGrammar(const   XMLCh* const systemId
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -1755,6 +1832,7 @@ Grammar* XMLScanner::loadGrammar(const   XMLCh* const systemId
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -1868,6 +1946,11 @@ XMLScanner::XMLTokens XMLScanner::senseNextToken(unsigned int& orgReader)
     //  in order to catch the scenario where the current entity ended at
     //  the > of some markup.
     XMLCh nextCh;
+
+    // avoid setting up the ThrowEOEJanitor if we know that we have data in the current reader
+    if(fReaderMgr.getCurrentReader() && fReaderMgr.getCurrentReader()->charsLeftInBuffer()>0)
+        nextCh = fReaderMgr.peekNextChar();
+    else
     {
         ThrowEOEJanitor janMgr(&fReaderMgr, true);
         nextCh = fReaderMgr.peekNextChar();

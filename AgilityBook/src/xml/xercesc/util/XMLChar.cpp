@@ -1,9 +1,10 @@
 /*
- * Copyright 2002-2005 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLChar.cpp 179992 2005-06-04 14:20:58Z jberry $
+ * $Id: XMLChar.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -114,6 +115,25 @@ bool XMLChar1_0::isValidName(const   XMLCh* const    toCheck
             return false;
     }
     return true;
+}
+
+bool XMLChar1_0::isValidName(const   XMLCh* const    toCheck)
+{
+    const XMLCh* curCh = toCheck;
+
+    if ((fgCharCharsTable1_0[*curCh++] & gFirstNameCharMask))
+	{
+		while ((fgCharCharsTable1_0[*curCh] & gNameCharMask))
+		{
+			curCh++;
+		}
+
+		if (*curCh == 0)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 /**
@@ -4523,6 +4543,76 @@ bool XMLChar1_1::isValidName(const   XMLCh* const    toCheck
                 }
             }
             gotLeadingSurrogate = false;
+        }
+    }
+    return true;
+}
+
+bool XMLChar1_1::isValidName(const   XMLCh* const    toCheck)
+{
+    const XMLCh* curCh = toCheck;
+
+    XMLCh nextCh = *curCh++;
+    if ((nextCh >= 0xD800) && (nextCh <= 0xDB7F))
+	{
+        nextCh = *curCh++;
+        if ((nextCh < 0xDC00) || (nextCh > 0xDFFF))
+		{
+            return false;
+		}
+    }
+    else if (!(fgCharCharsTable1_1[nextCh] & gFirstNameCharMask))
+	{
+            return false;
+	}
+
+    bool    gotLeadingSurrogate = false;
+
+    while (*curCh != 0)
+    {
+        nextCh = *curCh++;
+
+        // Deal with surrogate pairs
+        if ((nextCh >= 0xD800) && (nextCh <= 0xDBFF))
+        {
+            //  Its a leading surrogate. If we already got one, then
+            //  issue an error, else set leading flag to make sure that
+            //  we look for a trailing next time.
+            if (nextCh > 0xDB7F || gotLeadingSurrogate)
+            {
+                return false;
+            }
+            else
+			{
+                gotLeadingSurrogate = true;
+			}
+        }
+        else
+        {
+            //  If its a trailing surrogate, make sure that we are
+            //  prepared for that. Else, its just a regular char so make
+            //  sure that we were not expected a trailing surrogate.
+           if ((nextCh >= 0xDC00) && (nextCh <= 0xDFFF))
+           {
+                // Its trailing, so make sure we were expecting it
+                if (!gotLeadingSurrogate)
+                    return false;
+            }
+            else
+            {
+                //  Its just a char, so make sure we were not expecting a
+                //  trailing surrogate.
+                if (gotLeadingSurrogate)
+				{
+                    return false;
+                }
+                // Its got to at least be a valid XML character
+                else if (!(fgCharCharsTable1_1[nextCh] & gNameCharMask))
+                {
+                    return false;
+                }
+            }
+           gotLeadingSurrogate = false;
         }
     }
     return true;

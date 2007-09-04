@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ReaderMgr.cpp 231514 2005-08-11 20:53:29Z amassari $
+ * $Id: ReaderMgr.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -467,7 +468,8 @@ XMLReader* ReaderMgr::createReader( const   XMLCh* const        sysId
 {
     //Normalize sysId 
     XMLBuffer normalizedSysId(1023, fMemoryManager);
-    XMLString::removeChar(sysId, 0xFFFF, normalizedSysId);
+    if(sysId)
+        XMLString::removeChar(sysId, 0xFFFF, normalizedSysId);
     const XMLCh* normalizedURI = normalizedSysId.getRawBuffer();
 
     // Create a buffer for expanding the system id
@@ -619,7 +621,8 @@ XMLReader* ReaderMgr::createReader( const   XMLCh* const        baseURI
 {
     //Normalize sysId 
     XMLBuffer normalizedSysId(1023, fMemoryManager);
-    XMLString::removeChar(sysId, 0xFFFF, normalizedSysId);
+    if(sysId)
+        XMLString::removeChar(sysId, 0xFFFF, normalizedSysId);
     const XMLCh* normalizedURI = normalizedSysId.getRawBuffer();
 
     // Create a buffer for expanding the system id

@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLSchemaDescriptionImpl.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: XMLSchemaDescriptionImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -111,9 +112,11 @@ void XMLSchemaDescriptionImpl::setContextType(ContextType type)
 
 void XMLSchemaDescriptionImpl::setTargetNamespace(const XMLCh* const newNamespace)
 {  
-    if (fNamespace)
+    if (fNamespace) {
         XMLGrammarDescription::getMemoryManager()->deallocate((void*)fNamespace);
-                                
+        fNamespace = 0;
+    }
+    
     fNamespace = XMLString::replicate(newNamespace, XMLGrammarDescription::getMemoryManager()); 
 }
 
@@ -124,18 +127,22 @@ void XMLSchemaDescriptionImpl::setLocationHints(const XMLCh* const hint)
 
 void XMLSchemaDescriptionImpl::setTriggeringComponent(QName* const trigComponent)
 { 
-    if ( fTriggeringComponent)
+    if ( fTriggeringComponent) {
         delete fTriggeringComponent;
-                                
+        fTriggeringComponent = 0;
+    }
+    
     fTriggeringComponent = new (trigComponent->getMemoryManager()) QName(*trigComponent); 
 
 }
 
 void XMLSchemaDescriptionImpl::setEnclosingElementName(QName* const encElement)
 { 
-    if (fEnclosingElementName)
+    if (fEnclosingElementName) {
         delete fEnclosingElementName;
-                                 
+        fEnclosingElementName = 0; 
+    }
+
     fEnclosingElementName = new (encElement->getMemoryManager()) QName(*encElement); 
 
 }

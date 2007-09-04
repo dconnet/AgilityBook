@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: SAX2XMLReaderImpl.cpp 191671 2005-06-21 15:48:06Z cargilld $
+ * $Id: SAX2XMLReaderImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #include <xercesc/util/IOException.hpp>
@@ -25,6 +26,7 @@
 #include <xercesc/sax2/ContentHandler.hpp>
 #include <xercesc/sax2/LexicalHandler.hpp>
 #include <xercesc/sax2/DeclHandler.hpp>
+#include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/sax/DTDHandler.hpp>
 #include <xercesc/sax/ErrorHandler.hpp>
 #include <xercesc/sax/EntityResolver.hpp>
@@ -40,6 +42,14 @@
 #include <string.h>
 
 XERCES_CPP_NAMESPACE_BEGIN
+
+
+SAX2XMLReader * XMLReaderFactory::createXMLReader(  MemoryManager* const  manager
+                                                  , XMLGrammarPool* const gramPool)
+{
+    SAX2XMLReaderImpl* pImpl=new (manager) SAX2XMLReaderImpl(manager, gramPool);
+	return pImpl;
+}
 
 
 const XMLCh gDTDEntityStr[] =
@@ -58,7 +68,7 @@ SAX2XMLReaderImpl::SAX2XMLReaderImpl(MemoryManager* const  manager
 
     fNamespacePrefix(false)
     , fAutoValidation(false)
-    , fValidation(true)
+    , fValidation(false)
     , fParseInProgress(false)
     , fHasExternalSubset(false)
     , fElemDepth(0)
@@ -685,8 +695,21 @@ startElement(   const   XMLElementDecl&         elemDecl
 
     if (fDocHandler)
     {
-        const XMLCh* const elemQName =
-            elemDecl.getFullName();
+        ArrayJanitor<XMLCh> janElemName(NULL);
+        XMLCh* elemQName = NULL;
+        if(elemPrefix==0 || *elemPrefix==0)
+            elemQName=(XMLCh*)elemDecl.getBaseName();
+        else if(XMLString::equals(elemPrefix, elemDecl.getElementName()->getPrefix()))
+            elemQName=(XMLCh*)elemDecl.getElementName()->getRawName();
+        else
+        {
+            unsigned int prefixLen=XMLString::stringLen(elemPrefix);
+            elemQName=(XMLCh*)fMemoryManager->allocate((prefixLen+1+XMLString::stringLen(elemDecl.getBaseName())+1)*sizeof(XMLCh));
+            XMLString::moveChars(elemQName, elemPrefix, prefixLen);
+            elemQName[prefixLen] = chColon;
+            XMLString::copyString(&elemQName[prefixLen+1], elemDecl.getBaseName());
+            janElemName.reset(elemQName, fMemoryManager);
+        }
 
         if (getDoNamespaces())
         {
@@ -808,17 +831,32 @@ void SAX2XMLReaderImpl::endElement( const   XMLElementDecl& elemDecl
     // Just map to the SAX document handler
     if (fDocHandler)
     {
+        ArrayJanitor<XMLCh> janElemName(NULL);
+        XMLCh* elemQName = NULL;
+        if(elemPrefix==0 || *elemPrefix==0)
+            elemQName=(XMLCh*)elemDecl.getBaseName();
+        else if(XMLString::equals(elemPrefix, elemDecl.getElementName()->getPrefix()))
+            elemQName=(XMLCh*)elemDecl.getElementName()->getRawName();
+        else
+        {
+            unsigned int prefixLen=XMLString::stringLen(elemPrefix);
+            elemQName=(XMLCh*)fMemoryManager->allocate((prefixLen+1+XMLString::stringLen(elemDecl.getBaseName())+1)*sizeof(XMLCh));
+            XMLString::moveChars(elemQName, elemPrefix, prefixLen);
+            elemQName[prefixLen] = chColon;
+            XMLString::copyString(&elemQName[prefixLen+1], elemDecl.getBaseName());
+            janElemName.reset(elemQName, fMemoryManager);
+        }
 
-        // get the prefixes back so that we can call endPrefixMapping()
         if (getDoNamespaces())
         {
             fDocHandler->endElement
             (
                 fScanner->getURIText(uriId)
                 , elemDecl.getBaseName()
-                , elemDecl.getFullName()
+                , elemQName
             );
 
+            // get the prefixes back so that we can call endPrefixMapping()
             unsigned int numPrefix = fPrefixCounts->pop();
             for (unsigned int i = 0; i < numPrefix; i++)
             {
@@ -828,9 +866,12 @@ void SAX2XMLReaderImpl::endElement( const   XMLElementDecl& elemDecl
         }
         else
         {
-            fDocHandler->endElement(XMLUni::fgZeroLenString,
-            elemDecl.getBaseName(),
-            elemDecl.getFullName() );
+            fDocHandler->endElement
+            (
+                XMLUni::fgZeroLenString,
+                elemDecl.getBaseName(),
+                elemQName 
+            );
         }
     }
 

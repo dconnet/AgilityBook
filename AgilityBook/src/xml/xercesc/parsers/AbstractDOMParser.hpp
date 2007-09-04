@@ -1,9 +1,10 @@
 /*
- * Copyright 2002, 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: AbstractDOMParser.hpp 191708 2005-06-21 19:02:15Z cargilld $
+ * $Id: AbstractDOMParser.hpp 568078 2007-08-21 11:43:25Z amassari $
  *
  */
 #if !defined(ABSTRACTDOMPARSER_HPP)
@@ -596,7 +597,7 @@ public :
       * <br>  Val_Auto   - turn on validation if any internal/external
       *                  DTD subset have been seen
       *
-      * <p>The parser's default state is: Val_Auto.</p>
+      * <p>The parser's default state is: Val_Never.</p>
       *
       * @param newScheme The new validation scheme to use.
       *

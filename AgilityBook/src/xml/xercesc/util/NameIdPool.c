@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: NameIdPool.c 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: NameIdPool.c 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -73,8 +74,7 @@ NameIdPool<TElem>::NameIdPool( const unsigned int hashModulus
     (
         fHashModulus * sizeof(NameIdPoolBucketElem<TElem>*)
     ); //new NameIdPoolBucketElem<TElem>*[fHashModulus];
-    for (unsigned int index = 0; index < fHashModulus; index++)
-        fBucketList[index] = 0;
+    memset(fBucketList, 0, sizeof(fBucketList[0]) * fHashModulus);
 
     //
     //  Allocate the initial id pointers array. We don't have to zero them
@@ -118,6 +118,8 @@ NameIdPool<TElem>::containsKey(const XMLCh* const key) const
 
 template <class TElem> void NameIdPool<TElem>::removeAll()
 {
+    if (fIdCounter == 0) return;
+
     // Clean up the buckets first
     for (unsigned int buckInd = 0; buckInd < fHashModulus; buckInd++)
     {

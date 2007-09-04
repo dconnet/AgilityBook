@@ -1,9 +1,10 @@
 /*
- * Copyright 2004,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,83 +16,7 @@
  */
 
 /*
- * $Log$
- * Revision 1.24  2005/05/05 09:46:11  cargilld
- * Update XSValue to handle float and double the same way the main library does, converting values to infinityr or zero, as the C ranges for float and double are less than the schema ranges.
- *
- * Revision 1.23  2005/04/22 20:02:34  cargilld
- * Use isspace instead of isSpace as data is char not xmlch.
- *
- * Revision 1.22  2005/04/05 20:26:48  cargilld
- * Update XSValue to handle leading and trailing whitespace.
- *
- * Revision 1.21  2004/12/23 16:11:21  cargilld
- * Various XSValue updates: use ulong for postiveInteger; reset date fields to zero; modifty XSValueTest to test the returned value from getActualValue.
- *
- * Revision 1.20  2004/12/10 10:37:55  cargilld
- * Fix problem with hexbin::decode and use XMLByte instead of XMLCh for output of decoding.
- *
- * Revision 1.19  2004/12/01 16:18:47  cargilld
- * Fix for bug xercesc-1304.
- *
- * Revision 1.18  2004/11/24 02:34:08  cargilld
- * Various bug fixes and code cleanup for XSValue.
- *
- * Revision 1.17  2004/11/14 19:01:22  peiyongz
- * st_InvalidRange removed
- * getActVal return double only for dt_decimal
- * error status re-specified for numeric data types
- *
- * Revision 1.16  2004/10/27 21:52:04  peiyongz
- * Set status for invalid data -- patch from David Bertoni
- *
- * Revision 1.15  2004/10/20 15:18:20  knoaman
- * Allow option of initializing static data in XMLPlatformUtils::Initialize
- *
- * Revision 1.14  2004/10/13 19:23:34  peiyongz
- * using ValueHashTableOf to reduce footprint
- *
- * Revision 1.13  2004/09/28 08:54:34  amassari
- * Silence a warning about missing final "return"
- *
- * Revision 1.12  2004/09/23 21:22:47  peiyongz
- * Documentation
- * st_noContent added
- * unused parameter removed
- *
- * Revision 1.11  2004/09/13 21:24:20  peiyongz
- * 1. returned data to contain datatype in addition to value
- * 2. registry to map type name (in string) to type name enum
- *
- * Revision 1.10  2004/09/09 20:08:31  peiyongz
- * Using new error code
- *
- * Revision 1.9  2004/09/08 19:56:05  peiyongz
- * Remove parameter toValidate from validation interface
- *
- * Revision 1.8  2004/09/08 13:56:09  peiyongz
- * Apache License Version 2.0
- *
- * Revision 1.7  2004/08/31 20:52:25  peiyongz
- * Return additional double value for decimal
- * remove tz_hh/tz_mm
- *
- * Revision 1.6  2004/08/31 15:14:47  peiyongz
- * remove XSValueContext
- *
- * Revision 1.5  2004/08/24 15:59:20  peiyongz
- * using SCHAR_MIN/SCHAR_MAX
- *
- * Revision 1.4  2004/08/17 21:11:41  peiyongz
- * no more Unrepresentable
- *
- * Revision 1.3  2004/08/13 21:29:21  peiyongz
- * fMemAllocated
- *
- * Revision 1.2  2004/08/11 17:06:44  peiyongz
- * Do not panic if can't create RegEx
- *
- * $Id: XSValue.cpp 225119 2005-07-25 13:41:01Z cargilld $
+ * $Id: XSValue.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #include <limits.h>
@@ -512,7 +437,7 @@ XSValue* XSValue::getActualValue(const XMLCh*         const content
 
     switch (inGroup[datatype]) {
     case XSValue::dg_numerics:
-        return getActValNumerics(content, datatype,  status, manager);
+        return getActValNumerics(content, datatype,  status, toValidate, manager);
         break;
     case XSValue::dg_datetimes:
         return getActValDateTimes(content, datatype,  status, manager);
@@ -710,10 +635,6 @@ XSValue::validateNumerics(const XMLCh*         const content
         } // end switch
         return true;  //both valid chars and within boundary
     }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
-    }
     catch (const NumberFormatException&)
     {
         //getActValue()/getCanonical() need to know the failure details
@@ -776,10 +697,6 @@ bool XSValue::validateDateTimes(const XMLCh*         const input_content
         status = checkTimeZoneError(datatype, e)? XSValue::st_FODT0003 : st_FOCA0002;
         return false;
     }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
-    }
     catch (const NumberFormatException&)
     {
         //getActValue()/getCanonical() need to know the failure details
@@ -797,9 +714,7 @@ bool XSValue::validateStrings(const XMLCh*         const content
 {
     bool isValid = true;
     
-    try
-    {
-        switch (datatype) { 
+    switch (datatype) { 
         case XSValue::dt_boolean:
             {
                 unsigned int i = 0;
@@ -1033,8 +948,8 @@ bool XSValue::validateStrings(const XMLCh*         const content
             }            
         case XSValue::dt_Name:
             isValid = (version == ver_10) ? 
-                XMLChar1_0::isValidName(content, XMLString::stringLen(content)) :
-                XMLChar1_1::isValidName(content, XMLString::stringLen(content));
+                XMLChar1_0::isValidName(content) :
+                XMLChar1_1::isValidName(content);
             break;
         case XSValue::dt_NCName:
         case XSValue::dt_ID:
@@ -1074,13 +989,7 @@ bool XSValue::validateStrings(const XMLCh*         const content
         default:
             status = st_NotSupported;
             isValid = false;        
-            break;
-        }
-
-    }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
+            break;        
     }
 
     if (isValid == false && status == st_Init) {
@@ -1106,7 +1015,7 @@ XMLCh* XSValue::getCanRepNumerics(const XMLCh*         const content
         if (toValidate && !validateNumerics(content, datatype, status, manager))
             return 0;
 
-        XMLCh* retVal;
+        XMLCh* retVal = 0;
 
         if (datatype == XSValue::dt_decimal)
         {
@@ -1120,11 +1029,46 @@ XMLCh* XSValue::getCanRepNumerics(const XMLCh*         const content
         }
         else if (datatype == XSValue::dt_float || datatype == XSValue::dt_double  )
         {
-            retVal = XMLAbstractDoubleFloat::getCanonicalRepresentation(content, manager);
-
-            if (!retVal)
+            // In XML4C, no float or double is treated as out of range
+            // it gets converted to INF, -INF or zero.
+            // The getCanonical method should treat double & float the
+            // same way as the rest of XML4C for consistentcy so need
+            // to getActualValue and see if it was converted.
+            XSValue* xsval = getActValNumerics(content, datatype, status, false, manager);
+            if (!xsval) {
                 status = st_FOCA0002;
+                return retVal;
+            }
 
+            DoubleFloatType enumVal;
+            if (datatype == XSValue::dt_float) {
+                enumVal = xsval->fData.fValue.f_floatType.f_floatEnum;
+            }
+            else {
+                enumVal = xsval->fData.fValue.f_doubleType.f_doubleEnum;
+            }
+            delete xsval;
+            
+            switch(enumVal) {
+            case DoubleFloatType_NegINF:
+                retVal = XMLString::replicate(XMLUni::fgNegINFString, manager);        
+                break;
+            case DoubleFloatType_PosINF:
+                retVal = XMLString::replicate(XMLUni::fgPosINFString, manager);        
+                break;
+            case DoubleFloatType_NaN:
+                retVal = XMLString::replicate(XMLUni::fgNaNString, manager);        
+                break;
+            case DoubleFloatType_Zero:
+                retVal = XMLString::replicate(XMLUni::fgPosZeroString, manager);
+                break;
+            default: //DoubleFloatType_Normal         
+                retVal = XMLAbstractDoubleFloat::getCanonicalRepresentation(content, manager);
+
+                if (!retVal)
+                    status = st_FOCA0002;
+                break;
+            }
             return retVal;
         }  
         else 
@@ -1136,10 +1080,6 @@ XMLCh* XSValue::getCanRepNumerics(const XMLCh*         const content
 
             return retVal;
         }
-    }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
     }
     catch (const NumberFormatException&)
     {
@@ -1200,17 +1140,11 @@ XMLCh* XSValue::getCanRepDateTimes(const XMLCh*         const input_content
 
     catch (SchemaDateTimeException &e)
     {
-        status = checkTimeZoneError(datatype, e)? XSValue::st_FODT0003 : st_FOCA0002;
-        return 0;
-    }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
+        status = checkTimeZoneError(datatype, e)? XSValue::st_FODT0003 : st_FOCA0002;       
     }
     catch (const NumberFormatException&)
     {
-        status = st_FOCA0002;
-        return 0;
+        status = st_FOCA0002;        
     }
     return 0;
 }
@@ -1222,9 +1156,7 @@ XMLCh* XSValue::getCanRepStrings(const XMLCh*         const content
                                ,       bool                 toValidate
                                ,       MemoryManager* const manager)
 {
-    try
-    {
-        switch (datatype) {        
+    switch (datatype) {        
         case XSValue::dt_boolean:
             {
             XMLCh* tmpStrValue = XMLString::replicate(content, manager);
@@ -1297,21 +1229,17 @@ XMLCh* XSValue::getCanRepStrings(const XMLCh*         const content
             break;
         default:
             return 0;
-            break;
-        }
-    }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
+            break;        
     }
 
     return 0;
 }
 
-XSValue*
+XSValue*  
 XSValue::getActValNumerics(const XMLCh*         const content    
                          ,       DataType             datatype
-                         ,       Status&              status                         
+                         ,       Status&              status
+                         ,       bool                 toValidate
                          ,       MemoryManager* const manager)
 {
 
@@ -1320,6 +1248,9 @@ XSValue::getActValNumerics(const XMLCh*         const content
         switch (datatype) {
         case XSValue::dt_decimal:
         {
+            if (toValidate) {
+                XMLBigDecimal::parseDecimal(content, manager);
+            }
             //Prepare the double value
             XMLDouble  data(content, manager);
             if (data.isDataConverted())
@@ -1483,18 +1414,13 @@ XSValue::getActValNumerics(const XMLCh*         const content
             break;        
         } // end switch
     }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
-    }
     catch (const NumberFormatException&)
     {
-        status = st_FOCA0002;
-        return 0; 
+        status = st_FOCA0002;        
     }
     return 0; 
 }
-
+             
 XSValue*  
 XSValue::getActValDateTimes(const XMLCh*         const input_content    
                           ,       DataType             datatype
@@ -1578,22 +1504,15 @@ XSValue::getActValDateTimes(const XMLCh*         const input_content
 
         return retVal;
     }
-
     catch (SchemaDateTimeException const &e)
     {
-        status = checkTimeZoneError(datatype, e)? XSValue::st_FODT0003 : st_FOCA0002;
-        return 0;
-    }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
+        status = checkTimeZoneError(datatype, e)? XSValue::st_FODT0003 : st_FOCA0002;        
     }
     catch (const NumberFormatException&)
     {
-        status = st_FOCA0002;
-        return 0; 
+        status = st_FOCA0002;         
     }
-
+    return 0;
 }
 
 XSValue*  
@@ -1604,9 +1523,7 @@ XSValue::getActValStrings(const XMLCh*         const content
                         ,       bool                 toValidate
                         ,       MemoryManager* const manager)
 {
-    try
-    {
-        switch (datatype) { 
+    switch (datatype) { 
         case XSValue::dt_boolean: 
             {
             XMLCh* tmpStrValue = XMLString::replicate(content, manager);
@@ -1696,12 +1613,7 @@ XSValue::getActValStrings(const XMLCh*         const content
             break;
         default:
             return 0;
-            break;
-        }
-    }
-    catch(const OutOfMemoryException&)
-    {
-        throw;
+            break;        
     }
 
     return 0; 
@@ -1717,8 +1629,7 @@ bool XSValue::getActualNumericValue(const XMLCh*  const content
                            ,       DataType             datatype)
 {
     char *nptr = XMLString::transcode(content, manager);
-    ArrayJanitor<char> jan(nptr, manager);
-    int   strLen = strlen(nptr);
+    ArrayJanitor<char> jan(nptr, manager);    
     char *endptr = 0;
     errno = 0;
 

@@ -1,9 +1,10 @@
 /*
- * Copyright 2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -13,11 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * $Id: XSDErrorReporter.cpp 191054 2005-06-17 02:56:35Z jberry $
- */
-
 
 // ---------------------------------------------------------------------------
 //  Includes
@@ -228,6 +224,29 @@ void XSDErrorReporter::emitError(const unsigned int toEmit,
     // Bail out if its fatal an we are to give up on the first fatal error
     if (errType == XMLErrorReporter::ErrType_Fatal && fExitOnFirstFatal)
         throw (XMLErrs::Codes) toEmit;
+}
+
+void XSDErrorReporter::emitError(const XMLException&  except,
+                                 const Locator* const aLocator)
+{
+    const XMLCh* const  errText = except.getMessage();
+    const unsigned int  toEmit = except.getCode();
+    //Before the code was modified to call this routine it used to use
+    //the XMLErrs::DisplayErrorMessage error message, which is just {'0'}
+    //and that error message has errType of Error.  So to be consistent
+    //with previous behaviour set the errType to be Error instead of
+    //getting the error type off of the exception.
+    //XMLErrorReporter::ErrTypes errType = XMLErrs::errorType((XMLErrs::Codes) toEmit);
+    XMLErrorReporter::ErrTypes errType = XMLErrorReporter::ErrType_Error;
+
+    if (fErrorReporter)
+        fErrorReporter->error(toEmit, XMLUni::fgExceptDomain, errType, errText, aLocator->getSystemId(),
+                              aLocator->getPublicId(), aLocator->getLineNumber(),
+                              aLocator->getColumnNumber());
+
+    // Bail out if its fatal an we are to give up on the first fatal error
+    //if (errType == XMLErrorReporter::ErrType_Fatal && fExitOnFirstFatal)
+    //    throw (XMLErrs::Codes) toEmit;
 }
 
 XERCES_CPP_NAMESPACE_END

@@ -110,8 +110,8 @@ $set 1
 111  Derivation by extension or restriction is forbidden by either the base type '{0}' or the schema
 112  The {item type definition} must have {variety} of atomic or union (where all member types must be atomic)
 113  The {member type definitions} must all have {variety} of atomic or list
-114  The group:'0' must contain (all | choice | sequence)
-115  The attributeGroup:'0' must match (annotation?. ((attribute | attributeGroup)*, anyAttribute?))
+114  The group:'{0}' must contain (all | choice | sequence)
+115  The attributeGroup:'{0}' must match (annotation?. ((attribute | attributeGroup)*, anyAttribute?))
 116  The child of a model group definition must not specify either the minOccurs or maxOccurs attribute.
 117  The {0} -'{1}:{2}'- not found in the schema
 118  A group whose content is 'all' must only appear as the content type of a complex type definition.
@@ -305,6 +305,7 @@ $set 1
 308  Element qname beginning with '{0}' invalid
 309  Attribute qname beginning with '{0}' invalid
 310  Entity qname for reference beginning '{0}' invalid
+311  Already seen doctype
 
 
 $set 2
@@ -345,7 +346,7 @@ $set 2
 36  {0} not allowed if the order is all.
 37  Datatype qualifiers can only be used if you specify a type attribute.
 38  The datatype qualifier {0} is not supported.
-39  '{0}' is not allowed for the content of a 'choice' model group.  Only element, group, choice, sequence and any are allowed.
+39  '{0}' is not allowed for the content of a '{1}' model group.  Only element, group, choice, sequence and any are allowed.
 40  Unknown base type {0} for type {1}.
 41  Can only have one of type and ref attributes.
 42  A <{0}> declaration that has a ref attribute, cannot have child content.
@@ -673,7 +674,7 @@ $set 3
 251  Value '{0}' is not whitespace replaced 
 252  Value '{0}' is not a whitespace collapsed 
 253  Value '{0}' is not valid NCName 
-254  Value '{0}' is not valid Name 
+254  Value '{0}' is not valid '{1}' 
 255  ID '{0}' is not unique 
 256  Value '{0}' is not valid ENTITY 
 257  Value '{0}' is not valid QName 
@@ -737,7 +738,7 @@ $set 3
 315  Not allowed to select the root of an xpath
 316  Empty xpath expression
 317  The xpath expression cannot end with '|'
-318  Invalid character following '.' in xpath
+318  Invalid character '{0}' in xpath
 319  XPath token not supported
 320  Find a solution!
 321  buffer not initialized yet!
@@ -820,6 +821,7 @@ $set 3
 398  Grammar Pool is NOT empty
 399  String Pool is NOT empty
 400  Storer Level '{0}' is newer than Loader Level'{1}' 
+401  Value '{0}' is not valid QName because the prefix is not defined
 
 
 $set 4

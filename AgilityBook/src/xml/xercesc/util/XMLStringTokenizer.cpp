@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLStringTokenizer.cpp 191689 2005-06-21 17:15:46Z cargilld $
+ * $Id: XMLStringTokenizer.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -47,7 +48,7 @@ XMLStringTokenizer::XMLStringTokenizer( const XMLCh* const srcStr
     : fOffset(0)
     , fStringLen(XMLString::stringLen(srcStr))
     , fString(XMLString::replicate(srcStr, manager))
-    , fDelimeters(XMLString::replicate(fgDelimeters, manager))
+    , fDelimeters(fgDelimeters)
     , fTokens(0)
     , fMemoryManager(manager)
 {
@@ -101,6 +102,18 @@ XMLStringTokenizer::XMLStringTokenizer(const XMLCh* const srcStr,
 XMLStringTokenizer::~XMLStringTokenizer()
 {
 	cleanUp();
+}
+
+// ---------------------------------------------------------------------------
+//  XMLStringTokenizer: CleanUp methods
+// ---------------------------------------------------------------------------
+void XMLStringTokenizer::cleanUp() {
+
+	fMemoryManager->deallocate(fString);//delete [] fString;
+    if (fDelimeters != fgDelimeters) {
+        fMemoryManager->deallocate((void*)fDelimeters);//delete [] fDelimeters;
+    }
+    delete fTokens;
 }
 
 

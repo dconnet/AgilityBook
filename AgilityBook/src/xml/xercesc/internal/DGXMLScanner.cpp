@@ -1,9 +1,10 @@
 /*
- * Copyright 2002, 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DGXMLScanner.cpp 231514 2005-08-11 20:53:29Z amassari $
+ * $Id: DGXMLScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -223,6 +224,7 @@ void DGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -230,6 +232,7 @@ void DGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -237,6 +240,7 @@ void DGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -400,6 +404,7 @@ bool DGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -407,6 +412,7 @@ bool DGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -414,6 +420,7 @@ bool DGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -1366,6 +1373,17 @@ bool DGXMLScanner::scanStartTag(bool& gotData)
 
                 // NOTE: duplicate attribute check will be done, when we map
                 //       namespaces to all attributes
+                if (attDef) {
+                    unsigned int *curCountPtr = fAttDefRegistry->get(attDef);
+                    if (!curCountPtr) {
+                        curCountPtr = getNewUIntPtr();
+                        *curCountPtr = fElemCount;
+                        fAttDefRegistry->put(attDef, curCountPtr);
+                   }
+                    else if (*curCountPtr < fElemCount) {
+                        *curCountPtr = fElemCount;
+                    }
+                }
             }
             else {
                 curAtt->set(
@@ -1517,7 +1535,7 @@ bool DGXMLScanner::scanStartTag(bool& gotData)
             , (fDoNamespaces) ? elemDecl->getElementName()->getPrefix() : 0
             , *fAttrList
             , attCount
-            , false
+            , isEmpty
             , isRoot
         );
     }
@@ -1540,19 +1558,6 @@ bool DGXMLScanner::scanStartTag(bool& gotData)
                     , elemDecl->getFormattedContentModel()
                 );
             }
-        }
-
-        // If we have a doc handler, tell it about the end tag
-        if (fDocHandler)
-        {
-            fDocHandler->endElement
-            (
-                *elemDecl
-                , uriId
-                , isRoot
-                , (fDoNamespaces) ? elemDecl->getElementName()->getPrefix()
-                                  : XMLUni::fgZeroLenString
-            );
         }
 
         // Pop the element stack back off since it'll never be used now
@@ -1677,12 +1682,14 @@ Grammar* DGXMLScanner::loadGrammar(const   InputSource& src
                 emitError
                 (
                     XMLErrs::DisplayErrorMessage
+                    , excToCatch.getCode()
                     , excToCatch.getMessage()
                 );
             else if (excToCatch.getErrorType() >= XMLErrorReporter::ErrType_Fatal)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -1690,6 +1697,7 @@ Grammar* DGXMLScanner::loadGrammar(const   InputSource& src
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -2514,11 +2522,6 @@ bool DGXMLScanner::scanAttValue(  const   XMLAttDef* const    attDef
                     gotLeadingSurrogate = false;
                     continue;
                 }
-                else
-                {
-                    if (escaped && !fElemStack.isEmpty())
-                        fElemStack.setReferenceEscaped();
-                }
             }
             else if ((nextCh >= 0xD800) && (nextCh <= 0xDBFF))
             {
@@ -2884,6 +2887,11 @@ void DGXMLScanner::scanCharData(XMLBuffer& toUse)
                     {
                         gotLeadingSurrogate = false;
                         continue;
+                    }
+                    else
+                    {
+                        if (escaped && !fElemStack.isEmpty())
+                            fElemStack.setReferenceEscaped();
                     }
                 }
                 else if ((nextCh >= 0xD800) && (nextCh <= 0xDBFF))

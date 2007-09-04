@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /**
- * $Id: XMLUTF8Transcoder.cpp 176240 2004-12-13 16:35:21Z cargilld $
+ * $Id: XMLUTF8Transcoder.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -154,9 +155,9 @@ XMLUTF8Transcoder::transcodeFrom(const  XMLByte* const          srcData
             do
             {
                 *outPtr++ = XMLCh(*srcPtr++);
-            } while (*srcPtr <= 127    &&
-                      srcPtr != srcEnd &&
-                      outPtr != outEnd );
+            } while ( srcPtr != srcEnd &&
+                      outPtr != outEnd &&
+                      *srcPtr <= 127 );
             memset(sizePtr,1,srcPtr - srcPtr_save);
             sizePtr += srcPtr - srcPtr_save;
             if (srcPtr == srcEnd || outPtr == outEnd)
