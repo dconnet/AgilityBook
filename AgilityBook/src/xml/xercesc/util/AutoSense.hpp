@@ -90,6 +90,9 @@
     #ifndef WIN32
       #define WIN32
     #endif
+	#if defined(_WIN64) && !defined(WIN64)
+      #define WIN64
+    #endif
 #elif defined(__WINDOWS__)
 
     // IBM VisualAge special handling
