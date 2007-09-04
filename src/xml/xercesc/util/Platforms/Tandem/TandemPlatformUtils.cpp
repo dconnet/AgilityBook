@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: TandemPlatformUtils.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: TandemPlatformUtils.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -184,9 +185,10 @@ XMLCh* XMLPlatformUtils::getFullPath(const XMLCh* const srcPath,
     //  in native format, and goes out as Unicode always
     //
     char* newSrc = XMLString::transcode(srcPath, fgMemoryManager);
+    ArrayJanitor<char> newSrcJanitor(newSrc, fgMemoryManager);
 
     // Use a local buffer that is big enough for the largest legal path
-     char* tmpPath = dirname((char*)newSrc);
+    char* tmpPath = dirname((char*)newSrc);
     if (!tmpPath)
     {
         throw XMLPlatformUtilsException("XMLPlatformUtils::resetFile - Could not get the base path name");
@@ -198,7 +200,7 @@ XMLCh* XMLPlatformUtils::getFullPath(const XMLCh* const srcPath,
     );//new char [strlen(tmpPath) +1];
     ArrayJanitor<char> newJanitor(newXMLString, fgMemoryManager);
     strcpy(newXMLString, tmpPath);
-        strcat(newXMLString , "/");
+    strcat(newXMLString , "/");
     // Return a copy of the path, in Unicode format
     return XMLString::transcode(newXMLString, manager);
 }

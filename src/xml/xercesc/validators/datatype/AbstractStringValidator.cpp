@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: AbstractStringValidator.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: AbstractStringValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -456,8 +457,11 @@ void AbstractStringValidator::inspectFacetBase(MemoryManager* const manager)
         {
             // ask parent do a complete check
             pBaseValidator->checkContent(getEnumeration()->elementAt(i), (ValidationContext*)0, false, manager);
+#if 0
+// spec says that only base has to checkContent          
             // enum shall pass this->checkContent() as well.
             checkContent(getEnumeration()->elementAt(i), (ValidationContext*)0, false, manager);
+#endif
         }
     }
 
@@ -565,18 +569,6 @@ void AbstractStringValidator::checkContent( const XMLCh*             const conte
     // we check pattern first
     if ( (thisFacetsDefined & DatatypeValidator::FACET_PATTERN ) != 0 )
     {
-        // lazy construction
-        if (getRegex() ==0) {
-            try {
-                // REVISIT: cargillmem fMemoryManager or manager?
-                setRegex(new (fMemoryManager) RegularExpression(getPattern(), SchemaSymbols::fgRegEx_XOption, fMemoryManager));                
-            }
-            catch (XMLException &e)
-            {
-                ThrowXMLwithMemMgr1(InvalidDatatypeValueException, XMLExcepts::RethrowError, e.getMessage(), fMemoryManager);
-            }
-        }
-
         if (getRegex()->matches(content, manager) ==false)
         {
             ThrowXMLwithMemMgr2(InvalidDatatypeValueException
@@ -653,10 +645,39 @@ const RefArrayVectorOf<XMLCh>* AbstractStringValidator::getEnumString() const
 	return getEnumeration();
 }
 
-void AbstractStringValidator::normalizeEnumeration(MemoryManager* const)
+void AbstractStringValidator::normalizeEnumeration(MemoryManager* const manager)
 {
-    // default implementation: do nothing
-    return;
+    AbstractStringValidator *pBaseValidator = (AbstractStringValidator*) getBaseValidator();    
+
+    if (!fEnumeration || !pBaseValidator) 
+        return;
+
+    int baseFacetsDefined = pBaseValidator->getFacetsDefined();
+    if ((baseFacetsDefined & DatatypeValidator::FACET_WHITESPACE) == 0)
+        return;    
+    
+    short whiteSpace = pBaseValidator->getWSFacet();   
+            
+    if ( whiteSpace == DatatypeValidator::PRESERVE )
+    {
+        return;
+    }
+    else if ( whiteSpace == DatatypeValidator::REPLACE )
+    {
+        int enumLength = getEnumeration()->size();
+        for ( int i=0; i < enumLength; i++)
+        {
+            XMLString::replaceWS(getEnumeration()->elementAt(i), manager);
+        }
+    }
+    else if ( whiteSpace == DatatypeValidator::COLLAPSE )
+    {
+        int enumLength = getEnumeration()->size();
+        for ( int i=0; i < enumLength; i++)
+        {
+            XMLString::collapseWS(getEnumeration()->elementAt(i), manager);
+        }                
+    }   
 }
 
 void AbstractStringValidator::normalizeContent(XMLCh* const, MemoryManager* const) const

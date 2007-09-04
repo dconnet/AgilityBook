@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -12,273 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-
-/*
- * $Log$
- * Revision 1.60  2005/04/26 17:51:01  cargilld
- * Schema updates to match spec: both the default value and the canonical representation of that value have to fit the pattern and it is an error for NOTATION to be used directly in a schema.
- *
- * Revision 1.59  2004/11/25 15:16:04  knoaman
- * PSVI: fix for getIsSchemaSpecified on empty elements with default values.
- *
- * Revision 1.58  2004/09/30 13:14:28  amassari
- * Fix jira#1280 - Borland leaks memory if break or continue are used inside a catch block
- *
- * Revision 1.57  2004/09/27 20:13:59  knoaman
- * Reset datatype validator.
- *
- * Revision 1.56  2004/09/20 15:00:50  amassari
- * Added a setCreateSchemaInfo method to the DOM parsers, to store PSVI informations in element and attribute nodes
- *
- * Revision 1.55  2004/09/08 13:56:57  peiyongz
- * Apache License Version 2.0
- *
- * Revision 1.54  2004/07/27 02:09:41  amassari
- * reset() was not resetting the stack of types (jira#1245)
- *
- * Revision 1.53  2004/03/01 21:06:38  knoaman
- * Fix for UPA checking
- *
- * Revision 1.52  2004/01/29 11:52:31  cargilld
- * Code cleanup changes to get rid of various compiler diagnostic messages.
- *
- * Revision 1.51  2003/12/30 06:01:20  neilg
- * fix segfault when validation of a union type fails
- *
- * Revision 1.50  2003/12/24 15:24:16  cargilld
- * More updates to memory management so that the static memory manager.
- *
- * Revision 1.49  2003/12/17 05:16:59  neilg
- * ensure all uses of ArrayJanitor use a memory manager
- *
- * Revision 1.48  2003/12/17 00:18:40  cargilld
- * Update to memory management so that the static memory manager (one used to call Initialize) is only for static data.
- *
- * Revision 1.47  2003/12/03 20:00:27  neilg
- * PSVI fix:  cannot allow validator to reset its element content buffer before exposing it to the application
- *
- * Revision 1.46  2003/11/27 22:52:37  knoaman
- * PSVIElement implementation
- *
- * Revision 1.45  2003/11/27 06:10:31  neilg
- * PSVIAttribute implementation
- *
- * Revision 1.44  2003/11/24 05:13:20  neilg
- * expose validator that actually validated attribute.  Clean up union handling
- *
- * Revision 1.43  2003/11/20 18:12:20  knoaman
- * Use a bitwise operation to check the node type.
- *
- * Revision 1.42  2003/11/12 20:35:31  peiyongz
- * Stateless Grammar: ValidationContext
- *
- * Revision 1.41  2003/11/10 21:56:54  neilg
- * make internal code use the new, stateless, method of traversing attribute lists
- *
- * Revision 1.40  2003/11/07 17:08:12  knoaman
- * For PSVI support, distinguish wildcard elements with namespace lists.
- *
- * Revision 1.39  2003/10/05 02:09:37  neilg
- * the validator now keeps track of the current complex and simple type (including if this is an xsi:type).  This allows both the validator and the scanner to know what the current type is, without the need to modify the element declaration each time an xsi:type is seen
- *
- * Revision 1.38  2003/10/01 16:32:42  neilg
- * improve handling of out of memory conditions, bug #23415.  Thanks to David Cargill.
- *
- * Revision 1.37  2003/10/01 01:09:35  knoaman
- * Refactoring of some code to improve performance.
- *
- * Revision 1.36  2003/08/14 03:01:04  knoaman
- * Code refactoring to improve performance of validation.
- *
- * Revision 1.35  2003/07/31 17:14:27  peiyongz
- * Grammar embed grammar description
- *
- * Revision 1.34  2003/06/25 22:38:18  peiyongz
- * to use new GrammarResolver::getGrammar()
- *
- * Revision 1.33  2003/06/20 19:03:03  peiyongz
- * Stateless Grammar Pool :: Part I
- *
- * Revision 1.32  2003/05/18 14:02:08  knoaman
- * Memory manager implementation: pass per instance manager.
- *
- * Revision 1.31  2003/05/16 21:43:21  knoaman
- * Memory manager implementation: Modify constructors to pass in the memory manager.
- *
- * Revision 1.30  2003/05/16 03:15:51  knoaman
- * Partial implementation of the configurable memory manager.
- *
- * Revision 1.29  2003/05/15 18:57:27  knoaman
- * Partial implementation of the configurable memory manager.
- *
- * Revision 1.28  2003/02/06 13:51:55  gareth
- * fixed bug with multiple attributes being validated by the same union type.
- *
- * Revision 1.27  2003/01/29 20:01:20  gareth
- * We now detect when elements/attributes are validated and the result of the validation is stored.
- *
- * Revision 1.26  2003/01/20 19:04:48  knoaman
- * Fix for particle derivation checking.
- *
- * Revision 1.25  2003/01/13 20:16:51  knoaman
- * [Bug 16024] SchemaSymbols.hpp conflicts C++ Builder 6 dir.h
- *
- * Revision 1.24  2002/12/20 22:10:47  tng
- * XML 1.1
- *
- * Revision 1.23  2002/12/12 20:53:28  knoaman
- * Schema Errata E1-15.
- *
- * Revision 1.22  2002/12/04 02:47:26  knoaman
- * scanner re-organization.
- *
- * Revision 1.21  2002/11/27 22:15:42  peiyongz
- * Schema Errat E2-24 Duration 'T': allow to catch SchemaDateTimeException
- *
- * Revision 1.20  2002/11/27 21:27:14  peiyongz
- * Schema Errat E2-24 Duration 'T': allow to catch SchemaDateTimeException
- *
- * Revision 1.19  2002/11/26 21:20:09  tng
- * Schema Fix: List can have Union, and Union can have List.  So need to check its items for ID/IDREF/Entity.
- *
- * Revision 1.18  2002/11/07 21:57:37  tng
- * Fix the following Schema Test Failures:
- * 1. Typo when comparing miscFlags with FIXED
- * 2. If xsi:type is specified, need to validate using that xsitype validator even if the type was any
- * 3. Need to check ID/IDREFs for element value
- * 4. Need to duplicate attribute id for wildcard scenario.
- *
- * Revision 1.17  2002/11/04 14:49:42  tng
- * C++ Namespace Support.
- *
- * Revision 1.16  2002/09/24 20:12:48  tng
- * Performance: use XMLString::equals instead of XMLString::compareString
- *
- * Revision 1.15  2002/09/16 20:37:08  tng
- * Infinite loop for malformed xml (e.g. simple has "XXXX") w/ setexitonfirstfatal(false).
- *
- * Revision 1.14  2002/09/04 18:17:41  tng
- * Do not set IDREF to used during prevalidation.
- *
- * Revision 1.13  2002/07/11 18:55:44  knoaman
- * Add a flag to the preContentValidation method to indicate whether to validate
- * default/fixed attributes or not.
- *
- * Revision 1.12  2002/06/17 18:53:58  tng
- * DOM L3: support "datatype-normalization"
- *
- * Revision 1.11  2002/06/17 18:09:29  tng
- * DOM L3: support "datatype-normalization"
- *
- * Revision 1.10  2002/05/23 21:27:21  knoaman
- * Fix "Array Bound Read" problem reported by Purify.
- *
- * Revision 1.9  2002/04/19 13:33:23  knoaman
- * Fix for bug 8236.
- *
- * Revision 1.8  2002/04/01 20:17:55  peiyongz
- * Bug#7551: Exceptions are caught by value, rather than by reference
- *
- * Revision 1.7  2002/04/01 15:47:06  knoaman
- * Move Element Consistency checking (ref to global declarations) to SchemaValidator.
- *
- * Revision 1.6  2002/03/25 20:25:32  knoaman
- * Move particle derivation checking from TraverseSchema to SchemaValidator.
- *
- * Revision 1.5  2002/02/26 14:26:10  tng
- * [Bug 6672] SAXValidator results in an access violation when validating against schema with empty element that has default value.
- *
- * Revision 1.4  2002/02/25 21:24:31  tng
- * Schema Fix: Ensure no invalid uri index for UPA checking.
- *
- * Revision 1.3  2002/02/25 21:18:18  tng
- * Schema Fix: Ensure no invalid uri index for UPA checking.
- *
- * Revision 1.2  2002/02/07 16:41:29  knoaman
- * Fix for xsi:type.
- *
- * Revision 1.1.1.1  2002/02/01 22:22:47  peiyongz
- * sane_include
- *
- * Revision 1.26  2001/11/21 18:05:09  tng
- * Schema Fix: Check both XMLAttDef::Fixed and XMLAttDef::Required_And_Fixed for default values.
- *
- * Revision 1.25  2001/11/21 14:30:13  knoaman
- * Fix for UPA checking.
- *
- * Revision 1.24  2001/11/20 20:32:52  knoaman
- * Bypass validating element's simple content if it's empty and element is nillable.
- *
- * Revision 1.23  2001/11/13 13:25:08  tng
- * Deprecate function XMLValidator::checkRootElement.
- *
- * Revision 1.22  2001/11/09 18:10:58  tng
- * Schema Fix: should concatenate all characters for validation.
- *
- * Revision 1.21  2001/10/23 13:35:36  tng
- * Schema fix: Resolve notation prefix to an URI.
- *
- * Revision 1.20  2001/10/12 20:44:01  tng
- * Schema Fix: Notation Uri Binding.
- *
- * Revision 1.19  2001/10/04 15:08:56  knoaman
- * Add support for circular import.
- *
- * Revision 1.18  2001/09/10 14:06:22  tng
- * Schema: AnyAttribute support in Scanner and Validator.
- *
- * Revision 1.17  2001/09/05 20:49:11  knoaman
- * Fix for complexTypes with mixed content model.
- *
- * Revision 1.16  2001/08/30 15:47:46  tng
- * Schema: xsi:type fixes
- *
- * Revision 1.15  2001/08/29 20:52:35  tng
- * Schema: xsi:type support
- *
- * Revision 1.14  2001/08/28 19:20:54  tng
- * Schema: xsi:type support
- *
- * Revision 1.13  2001/08/21 16:06:11  tng
- * Schema: Unique Particle Attribution Constraint Checking.
- *
- * Revision 1.12  2001/08/09 15:23:16  knoaman
- * add support for <anyAttribute> declaration.
- *
- * Revision 1.11  2001/07/26 17:04:11  tng
- * Schema: Process should stop after fatal error, and user throws need to be rethrown.
- *
- * Revision 1.10  2001/07/24 21:23:40  tng
- * Schema: Use DatatypeValidator for ID/IDREF/ENTITY/ENTITIES/NOTATION.
- *
- * Revision 1.9  2001/07/11 21:39:58  peiyongz
- * fix to normalizeWhiteSpace: synchronize fDatatypeBuffer with toFill.
- *
- * Revision 1.8  2001/05/17 18:14:32  tng
- * Schema Fix: if nillable, it's an error to have default value
- *
- * Revision 1.7  2001/05/11 15:17:46  tng
- * Schema: Nillable fixes.
- *
- * Revision 1.6  2001/05/11 13:27:37  tng
- * Copyright update.
- *
- * Revision 1.5  2001/05/10 17:49:42  tng
- * Schema: SchemaValidator fixes
- *
- * Revision 1.4  2001/05/03 20:34:44  tng
- * Schema: SchemaValidator update
- *
- * Revision 1.3  2001/04/19 18:17:39  tng
- * Schema: SchemaValidator update, and use QName in Content Model
- *
- * Revision 1.2  2001/03/30 16:35:19  tng
- * Schema: Whitespace normalization.
- *
- * Revision 1.1  2001/03/21 21:56:33  tng
- * Schema: Add Schema Grammar, Schema Validator, and split the DTDValidator into DTDValidator, DTDScanner, and DTDGrammar.
- *
  */
 
 // ---------------------------------------------------------------------------
@@ -522,7 +256,7 @@ int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
                         }
                         catch (XMLException& idve)
                         {
-                            emitError (XMLValid::DatatypeError, idve.getType(), idve.getMessage());
+                            emitError (XMLValid::DatatypeError, idve.getCode(), idve.getType(), idve.getMessage());
                             fErrorOccurred = true;
                         }
                         catch(const OutOfMemoryException&) {
@@ -695,7 +429,7 @@ void SchemaValidator::validateAttrValue (const XMLAttDef*      attDef
         }
         catch (XMLException& idve) {
             fErrorOccurred = true;
-            emitError (XMLValid::DatatypeError, idve.getType(), idve.getMessage());       
+            emitError (XMLValid::DatatypeError, idve.getCode(), idve.getType(), idve.getMessage());       
         }
         catch(const OutOfMemoryException&)
         {
@@ -1171,7 +905,7 @@ void SchemaValidator::preContentValidation(bool,
                                                   baseGroup->getContentSpec(), baseGroup->getScope());
                     }
                     catch (const XMLException& excep) {
-                        fSchemaErrorReporter.emitError(XMLErrs::DisplayErrorMessage, XMLUni::fgXMLErrDomain, curGroup.getLocator(), excep.getMessage(), 0, 0, 0, fMemoryManager);
+                        fSchemaErrorReporter.emitError(excep, curGroup.getLocator());
 					}
                 }
 
@@ -1227,8 +961,11 @@ void SchemaValidator::normalizeWhiteSpace(DatatypeValidator* dV, const XMLCh* co
     const XMLCh* srcPtr = value;
     XMLReader* fCurReader = getReaderMgr()->getCurrentReader();
 
-    if ((wsFacet==DatatypeValidator::COLLAPSE) && fTrailing)
+    if ((wsFacet==DatatypeValidator::COLLAPSE) && fTrailing) {
+        nextCh = *srcPtr;
+        if (!fCurReader->isWhitespace(nextCh))
         toFill.append(chSpace);
+    }
 
     while (*srcPtr)
     {
@@ -1355,7 +1092,7 @@ void SchemaValidator::checkParticleDerivation(SchemaGrammar* const currentGramma
                                       baseTypeInfo->getScopeDefined(), baseTypeInfo);
         }
         catch (const XMLException& excep) {
-            fSchemaErrorReporter.emitError(XMLErrs::DisplayErrorMessage, XMLUni::fgXMLErrDomain, curTypeInfo->getLocator(), excep.getMessage(), 0, 0, 0, fMemoryManager);
+            fSchemaErrorReporter.emitError(excep, curTypeInfo->getLocator());
         }
     }
 }
@@ -1682,23 +1419,14 @@ SchemaValidator::checkNameAndTypeOK(SchemaGrammar* const currentGrammar,
                                     const int baseScope,
                                     const ComplexTypeInfo* const baseInfo) {
 
+    if (derivedSpecNode->getMaxOccurs() == 0)
+        return;
+
     unsigned int derivedURI = derivedSpecNode->getElement()->getURI();
-    unsigned int baseURI = baseSpecNode->getElement()->getURI();
-    const XMLCh* derivedName = derivedSpecNode->getElement()->getLocalPart();
-    const XMLCh* baseName = baseSpecNode->getElement()->getLocalPart();
 
-    if (!XMLString::equals(derivedName, baseName) || derivedURI != baseURI) {
-        ThrowXMLwithMemMgr(RuntimeException, XMLExcepts::PD_NameTypeOK1, fMemoryManager);
-    }
-
-	// case of mixed complex types with attributes only
+    // case of mixed complex types with attributes only
     if (derivedURI == XMLElementDecl::fgPCDataElemId) {
         return;
-    }
-
-    if (!isOccurrenceRangeOK(derivedSpecNode->getMinOccurs(), derivedSpecNode->getMaxOccurs(),
-                             baseSpecNode->getMinOccurs(), baseSpecNode->getMaxOccurs())) {
-        ThrowXMLwithMemMgr1(RuntimeException, XMLExcepts::PD_OccurRangeE, derivedName, fMemoryManager);
     }
 
     SchemaGrammar* aGrammar = currentGrammar;
@@ -1711,11 +1439,40 @@ SchemaValidator::checkNameAndTypeOK(SchemaGrammar* const currentGrammar,
     if (!aGrammar) { //something is wrong
         return;
     }
+   
+    const XMLCh* derivedName = derivedSpecNode->getElement()->getLocalPart();    
 
     SchemaElementDecl* derivedElemDecl = findElement(derivedScope, derivedURI, derivedName, aGrammar);
 
     if (!derivedElemDecl) {
         return;
+    }
+
+	const XMLCh* baseName = baseSpecNode->getElement()->getLocalPart();
+	unsigned int baseURI = baseSpecNode->getElement()->getURI();
+    bool subsGroup = false;
+
+    if (!XMLString::equals(derivedName, baseName) || derivedURI != baseURI) {
+        // Check if derived is substitutable for base.
+        //
+        SchemaElementDecl* e = derivedElemDecl->getSubstitutionGroupElem ();
+
+        for (; e != 0; e = e->getSubstitutionGroupElem ()) {
+            if (XMLString::equals(e->getBaseName (), baseName) && e->getURI () == baseURI) {
+                break;
+            }
+        }
+
+        if (e == 0) {
+            ThrowXMLwithMemMgr(RuntimeException, XMLExcepts::PD_NameTypeOK1, fMemoryManager);
+        }
+
+        subsGroup = true;
+    } 
+
+    if (!isOccurrenceRangeOK(derivedSpecNode->getMinOccurs(), derivedSpecNode->getMaxOccurs(),
+                             baseSpecNode->getMinOccurs(), baseSpecNode->getMaxOccurs())) {
+        ThrowXMLwithMemMgr1(RuntimeException, XMLExcepts::PD_OccurRangeE, derivedName, fMemoryManager);
     }
 
     SchemaElementDecl* baseElemDecl =
@@ -1753,7 +1510,8 @@ SchemaValidator::checkNameAndTypeOK(SchemaGrammar* const currentGrammar,
     checkICRestriction(derivedElemDecl, baseElemDecl, derivedName, baseName);
 
     // check that the derived element's type is derived from the base's.
-    checkTypesOK(derivedElemDecl, baseElemDecl, derivedName);
+    if (!subsGroup)
+        checkTypesOK(derivedElemDecl, baseElemDecl, derivedName);
 }
 
 SchemaElementDecl*
@@ -1877,28 +1635,85 @@ SchemaValidator::checkTypesOK(const SchemaElementDecl* const derivedElemDecl,
 
 void
 SchemaValidator::checkRecurseAsIfGroup(SchemaGrammar* const currentGrammar,
-                                       ContentSpecNode* const derivedSpecNode,
+                                       ContentSpecNode* const derivedSpecNodeIn,
                                        const int derivedScope,
                                        const ContentSpecNode* const baseSpecNode,
                                        const int baseScope,
                                        ValueVectorOf<ContentSpecNode*>* const baseNodes,
                                        const ComplexTypeInfo* const baseInfo) {
 
-    ContentSpecNode::NodeTypes baseType = baseSpecNode->getType();
-    ValueVectorOf<ContentSpecNode*> derivedNodes(1, fMemoryManager);
+    ContentSpecNode::NodeTypes baseType = baseSpecNode->getType();    
     bool toLax = false;
 
     //Treat the element as if it were in a group of the same variety as base
-    ContentSpecNode derivedGroupNode(baseType, derivedSpecNode, 0, false, true, fMemoryManager);
-
-    derivedNodes.addElement(derivedSpecNode);
-
+    ContentSpecNode derivedGroupNode(baseType, derivedSpecNodeIn, 0, false, true, fMemoryManager);
+    const ContentSpecNode* const derivedSpecNode = &derivedGroupNode;
+    
     if ((baseSpecNode->getType() & 0x0f) == ContentSpecNode::Choice) {
         toLax = true;
     }
 
-    checkRecurse(currentGrammar, &derivedGroupNode, derivedScope, &derivedNodes,
-                 baseSpecNode, baseScope, baseNodes, baseInfo, toLax);
+    // Instead of calling this routine, inline it
+    // checkRecurse(currentGrammar, &derivedGroupNode, derivedScope, &derivedNodes,
+    //             baseSpecNode, baseScope, baseNodes, baseInfo, toLax);
+ 
+    if (!isOccurrenceRangeOK(derivedSpecNode->getMinOccurs(), derivedSpecNode->getMaxOccurs(),
+                             baseSpecNode->getMinOccurs(), baseSpecNode->getMaxOccurs())) {
+        ThrowXMLwithMemMgr(RuntimeException, XMLExcepts::PD_Recurse1, fMemoryManager);
+    }
+
+    // check for mapping of children
+    XMLExcepts::Codes codeToThrow = XMLExcepts::NoError;   
+    unsigned int count2= baseNodes->size();
+    unsigned int current = 0;    
+
+    {
+        bool matched = false;
+
+        for (unsigned int j = current; j < count2; j++) {
+
+            ContentSpecNode* baseNode = baseNodes->elementAt(j);
+            current++;
+
+            bool bDoBreak=false;    // workaround for Borland bug with 'break' in 'catch'
+            try {
+
+                checkParticleDerivationOk(currentGrammar, derivedSpecNodeIn,
+                                          derivedScope, baseNode, baseScope, baseInfo);
+                matched = true;
+                break;
+            }
+            catch(const XMLException&) {
+                if (!toLax && baseNode->getMinTotalRange()) {
+                    bDoBreak=true;
+                }
+            }
+            if(bDoBreak)
+                break;
+        }
+
+        // did not find a match
+        if (!matched) {
+            codeToThrow = XMLExcepts::PD_Recurse2;            
+        }
+    }
+
+    // Now, see if there are some elements in the base we didn't match up
+    // in case of Sequence or All
+    if (!toLax && codeToThrow == XMLExcepts::NoError &&
+        (true || (baseType & 0x0f) == ContentSpecNode::All || 
+         derivedSpecNodeIn->getElement()->getURI() != XMLElementDecl::fgPCDataElemId)) {
+        for (unsigned int j = current; j < count2; j++) {
+            if (baseNodes->elementAt(j)->getMinTotalRange() * baseSpecNode->getMinOccurs()) { //!emptiable
+                codeToThrow =  XMLExcepts::PD_Recurse2;                
+                break;
+            }
+        }
+    }
+
+    if (codeToThrow != XMLExcepts::NoError) {
+        ThrowXMLwithMemMgr(RuntimeException, codeToThrow, fMemoryManager);
+    }
 }
 
 void
@@ -1921,7 +1736,7 @@ SchemaValidator::checkRecurse(SchemaGrammar* const currentGrammar,
     XMLExcepts::Codes codeToThrow = XMLExcepts::NoError;
     unsigned int count1= derivedNodes->size();
     unsigned int count2= baseNodes->size();
-    unsigned int current = 0;
+    unsigned int current = 0;    
 
     for (unsigned int i=0; i<count1; i++) {
 
@@ -1961,9 +1776,8 @@ SchemaValidator::checkRecurse(SchemaGrammar* const currentGrammar,
     // in case of Sequence or All
     if (!toLax && codeToThrow == XMLExcepts::NoError) {
         for (unsigned int j = current; j < count2; j++) {
-            if (baseNodes->elementAt(j)->getMinTotalRange()) { //!emptiable
-
-                codeToThrow =  XMLExcepts::PD_Recurse2;
+            if (baseNodes->elementAt(j)->getMinTotalRange()) { //!emptiable                
+                codeToThrow =  XMLExcepts::PD_Recurse2;                
                 break;
             }
         }

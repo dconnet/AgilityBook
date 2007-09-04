@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ValidationContextImpl.hpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: ValidationContextImpl.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(VALIDATION_CONTEXTIMPL_HPP)
@@ -24,6 +25,7 @@
 #include <xercesc/framework/ValidationContext.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
+class ElemStack;
 
 class XMLPARSER_EXPORT ValidationContextImpl : public ValidationContext
 {
@@ -83,6 +85,13 @@ public :
     virtual DatatypeValidator * getValidatingMemberType() const;
     virtual void setValidatingMemberType(DatatypeValidator * validatingMemberType) ;
 
+    /**
+      * QName datatype handling
+      * Create default implementations for source code compatibility
+      */
+    virtual bool isPrefixUnknown(XMLCh* prefix);
+    virtual void setElemStack(ElemStack* elemStack);
+
     //@}
   
 private:
@@ -113,12 +122,15 @@ private:
     //      own this object, and the value of getValidatingMemberType
     //      will not be accurate unless the type of the most recently-validated
     //      element/attribute is in fact a union datatype.
+    //  fElemStack
+    //      Need access to elemstack to look up URI's that are inscope.
     // -----------------------------------------------------------------------
 
     RefHashTableOf<XMLRefInfo>*         fIdRefList;
     const NameIdPool<DTDEntityDecl>*    fEntityDeclPool;
     bool                                fToCheckIdRefList;
-    DatatypeValidator *                 fValidatingMemberType;
+    DatatypeValidator *                 fValidatingMemberType;    
+    ElemStack*      fElemStack;
 
 };
 
@@ -132,6 +144,10 @@ inline DatatypeValidator * ValidationContextImpl::getValidatingMemberType() cons
 inline void ValidationContextImpl::setValidatingMemberType(DatatypeValidator * validatingMemberType) 
 {
     fValidatingMemberType = validatingMemberType;
+}
+
+inline void ValidationContextImpl::setElemStack(ElemStack* elemStack) {
+    fElemStack = elemStack;
 }
 
 XERCES_CPP_NAMESPACE_END

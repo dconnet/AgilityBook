@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2005 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLReader.cpp 176382 2005-04-21 09:05:57Z cargilld $
+ * $Id: XMLReader.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -218,6 +219,49 @@ XMLReader::XMLReader(const  XMLCh* const          pubId
     //  which tells us to create a transcoder based reader.
     //
     fEncoding = XMLRecognizer::encodingForName(fEncodingStr);
+
+    //  test the presence of the BOM and remove it from the source
+    switch(fEncoding)
+    {
+        case XMLRecognizer::UCS_4B :
+        case XMLRecognizer::UCS_4L :
+        {
+            if (fRawBytesAvail > 4 &&
+                ((fRawByteBuf[0] == 0x00) && (fRawByteBuf[1] == 0x00) && (fRawByteBuf[2] == 0xFE) && (fRawByteBuf[3] == 0xFF)) ||
+                ((fRawByteBuf[0] == 0xFF) && (fRawByteBuf[1] == 0xFE) && (fRawByteBuf[2] == 0x00) && (fRawByteBuf[3] == 0x00))  )
+            {
+                fRawBufIndex += 4;
+            }
+            break;
+        }
+        case XMLRecognizer::UTF_8 :
+        {
+            // Look at the raw buffer as short chars
+            const char* asChars = (const char*)fRawByteBuf;
+
+            if (fRawBytesAvail > XMLRecognizer::fgUTF8BOMLen &&
+                XMLString::compareNString(  asChars
+                                            , XMLRecognizer::fgUTF8BOM
+                                            , XMLRecognizer::fgUTF8BOMLen) == 0)
+            {
+                fRawBufIndex += XMLRecognizer::fgUTF8BOMLen;
+            }
+            break;
+        }
+        case XMLRecognizer::UTF_16B :
+        case XMLRecognizer::UTF_16L :
+        {
+            if (fRawBytesAvail < 2)
+                break;
+
+            const UTF16Ch* asUTF16 = (const UTF16Ch*)&fRawByteBuf[fRawBufIndex];
+            if ((*asUTF16 == chUnicodeMarker) || (*asUTF16 == chSwappedUnicodeMarker))
+            {
+                fRawBufIndex += sizeof(UTF16Ch);
+            }
+            break;
+        }
+    }
 
     // Check whether the fSwapped flag should be set or not
     checkForSwapped();
@@ -522,39 +566,6 @@ bool XMLReader::refreshCharBuffer()
         fCharBuf[0] = chSpace;
         fCharsAvail = 1;
         fSentTrailingSpace = true;
-    }
-
-    //
-    //  If we are on our first block of chars and the encoding is one of the
-    //  UTF-16 formats, then check the first char for the BOM and skip over
-    //  it manually.
-    //
-    if (fCharsAvail)
-    {
-        if ((fCurLine == 1) && (fCurCol == 1))
-        {
-            if (((fEncoding == XMLRecognizer::UTF_16L)
-            ||   (fEncoding == XMLRecognizer::UTF_16B))
-            &&  !startInd)
-            {
-                if ((fCharBuf[startInd] == chUnicodeMarker)
-                ||  (fCharBuf[startInd] == chSwappedUnicodeMarker))
-                {
-                    fCharIndex++;
-                }
-            }
-            // If there's a utf-8 BOM  (0xEF 0xBB 0xBF), skip past it.
-            else {
-                const char* asChars = (const char*)fRawByteBuf;
-                if ((fRawBytesAvail > XMLRecognizer::fgUTF8BOMLen )&&
-                    (XMLString::compareNString(  asChars
-                    , XMLRecognizer::fgUTF8BOM
-                    , XMLRecognizer::fgUTF8BOMLen) == 0) && !startInd)
-                {
-                    fCharIndex += XMLRecognizer::fgUTF8BOMLen;
-                }
-            }
-        }
     }
 
     //
@@ -1083,46 +1094,76 @@ bool XMLReader::skippedString(const XMLCh* const toSkip)
 {
     // Get the length of the string to skip
     const unsigned int srcLen = XMLString::stringLen(toSkip);
-
-    //
-    //  See if the current reader has enough chars to test against this
-    //  string. If not, then ask it to reload its buffer. If that does not
-    //  get us enough, then it cannot match.
-    //
-    //  NOTE: This works because strings never have to cross a reader! And
-    //  a string to skip will never have a new line in it, so we will never
-    //  miss adjusting the current line.
-    //
     unsigned int charsLeft = charsLeftInBuffer();
-    while (charsLeft < srcLen)
-    {
-         refreshCharBuffer();
-         unsigned int t = charsLeftInBuffer();
-         if (t == charsLeft)   // if the refreshCharBuf() did not add anything new
-             return false;     //   give up and return.
-         charsLeft = t;
-	}
 
+    if (srcLen <= fCharsAvail) {    
+        //
+        //  See if the current reader has enough chars to test against this
+        //  string. If not, then ask it to reload its buffer. If that does not
+        //  get us enough, then it cannot match.
+        //
+        //  NOTE: This works because strings never have to cross a reader! And
+        //  a string to skip will never have a new line in it, so we will never
+        //  miss adjusting the current line.
+        //        
+        while (charsLeft < srcLen)
+        {
+            refreshCharBuffer();
+            unsigned int t = charsLeftInBuffer();
+            if (t == charsLeft)   // if the refreshCharBuf() did not add anything new
+                return false;     //   give up and return.
+            charsLeft = t;
+	    }
 
+        //
+        //  Ok, now we now that the current reader has enough chars in its
+        //  buffer and that its index is back at zero. So we can do a quick and
+        //  dirty comparison straight to its buffer with no requirement to unget
+        //  if it fails.
+        //
+        if (memcmp(&fCharBuf[fCharIndex], toSkip, srcLen*sizeof(XMLCh)))
+            return false;
 
+        //
+        //  And get the character buffer index back right by just adding the
+        //  source len to it.
+        //
+        fCharIndex += srcLen;
+    }    
+    else {
+        if (charsLeft == 0) {
+            refreshCharBuffer();
+            charsLeft = charsLeftInBuffer();
+            if (charsLeft == 0)
+                return false; // error situation
+        }
+        if (memcmp(&fCharBuf[fCharIndex], toSkip, charsLeft*sizeof(XMLCh)))
+            return false;
 
-    //
-    //  Ok, now we now that the current reader has enough chars in its
-    //  buffer and that its index is back at zero. So we can do a quick and
-    //  dirty comparison straight to its buffer with no requirement to unget
-    //  if it fails.
-    //
-    if (XMLString::compareNString(&fCharBuf[fCharIndex], toSkip, srcLen))
-        return false;
+        fCharIndex += charsLeft;
+    
+        unsigned int offset = charsLeft;
+        unsigned int remainingLen = srcLen - charsLeft;
+
+        while (remainingLen > 0) {
+            refreshCharBuffer();
+            charsLeft = charsLeftInBuffer();
+            if (charsLeft == 0)
+                return false; // error situation
+            if (charsLeft > remainingLen)
+                charsLeft = remainingLen;
+            if (memcmp(&fCharBuf[fCharIndex], toSkip+offset, charsLeft*sizeof(XMLCh)))
+                return false;
+            offset += charsLeft;
+            remainingLen -= charsLeft;
+            fCharIndex += charsLeft;
+
+        }
+
+    }
 
     // Add the source length to the current column to get it back right
-    fCurCol += srcLen;
-
-    //
-    //  And get the character buffer index back right by just adding the
-    //  source len to it.
-    //
-    fCharIndex += srcLen;
+    fCurCol += srcLen;   
 
     return true;
 }
@@ -1165,7 +1206,7 @@ bool XMLReader::peekString(const XMLCh* const toPeek)
     //  dirty comparison straight to its buffer with no requirement to unget
     //  if it fails.
     //
-    if (XMLString::compareNString(&fCharBuf[fCharIndex], toPeek, srcLen))
+    if (memcmp(&fCharBuf[fCharIndex], toPeek, srcLen*sizeof(XMLCh)))
         return false;
 
     return true;
@@ -1193,87 +1234,90 @@ bool XMLReader::setEncoding(const XMLCh* const newEncoding)
     XMLCh* inputEncoding = XMLString::replicate(newEncoding, fMemoryManager);
     XMLString::upperCaseASCII(inputEncoding);
 
+    XMLRecognizer::Encodings newBaseEncoding;
     //
-    //  Try to map the string to one of our standard encodings. If its not
-    //  one of them, then it has to be one of the non-intrinsic encodings,
-    //  in which case we have to delete our intrinsic encoder and create a
-    //  new one.
+    //  Check for non-endian specific UTF-16 or UCS-4. If so, and if we
+    //  are already in one of the endian versions of those encodings,
+    //  then just keep it and go on. Otherwise, its not valid.
     //
-    XMLRecognizer::Encodings newBaseEncoding = XMLRecognizer::encodingForName
-    (
-        inputEncoding
-    );
+    if (!XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString)
+    ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString2)
+    ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString3)
+    ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString4)
+    ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString5)
+    ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString6)
+    ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString7))
+    {
+        fMemoryManager->deallocate(inputEncoding);
 
-    //
-    //  If it does not come back as one of the auto-sensed encodings, then we
-    //  have to possibly replace it and at least check a few things.
-    //
-    if (newBaseEncoding == XMLRecognizer::OtherEncoding)
+        if ((fEncoding != XMLRecognizer::UTF_16L)
+        &&  (fEncoding != XMLRecognizer::UTF_16B))
+        {
+            return false;
+        }
+
+        // Override with the original endian specific encoding
+        newBaseEncoding = fEncoding;
+
+        if (fEncoding == XMLRecognizer::UTF_16L) {
+            fMemoryManager->deallocate(fEncodingStr);
+            fEncodingStr = 0;
+            fEncodingStr = XMLString::replicate(XMLUni::fgUTF16LEncodingString, fMemoryManager);
+        }
+        else {
+            fMemoryManager->deallocate(fEncodingStr);
+            fEncodingStr = 0;
+            fEncodingStr = XMLString::replicate(XMLUni::fgUTF16BEncodingString, fMemoryManager);
+        }
+    }
+    else if (!XMLString::compareString(inputEncoding, XMLUni::fgUCS4EncodingString)
+         ||  !XMLString::compareString(inputEncoding, XMLUni::fgUCS4EncodingString2)
+         ||  !XMLString::compareString(inputEncoding, XMLUni::fgUCS4EncodingString3)
+         ||  !XMLString::compareString(inputEncoding, XMLUni::fgUCS4EncodingString4))
+    {
+        fMemoryManager->deallocate(inputEncoding);
+
+        if ((fEncoding != XMLRecognizer::UCS_4L)
+        &&  (fEncoding != XMLRecognizer::UCS_4B))
+        {
+            return false;
+        }
+
+        // Override with the original endian specific encoding
+        newBaseEncoding = fEncoding;
+
+        if (fEncoding == XMLRecognizer::UCS_4L) {
+
+            fMemoryManager->deallocate(fEncodingStr);
+            fEncodingStr = 0;
+            fEncodingStr = XMLString::replicate(XMLUni::fgUCS4LEncodingString, fMemoryManager);
+        }
+        else {
+
+            fMemoryManager->deallocate(fEncodingStr);
+            fEncodingStr = 0;
+            fEncodingStr = XMLString::replicate(XMLUni::fgUCS4BEncodingString, fMemoryManager);
+        }
+    }
+    else
     {
         //
-        //  Check for non-endian specific UTF-16 or UCS-4. If so, and if we
-        //  are already in one of the endian versions of those encodings,
-        //  then just keep it and go on. Otherwise, its not valid.
+        //  Try to map the string to one of our standard encodings. If its not
+        //  one of them, then it has to be one of the non-intrinsic encodings,
+        //  in which case we have to delete our intrinsic encoder and create a
+        //  new one.
         //
-        if (!XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString)
-        ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString2)
-        ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString3)
-        ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString4)
-        ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString5)
-        ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString6)
-        ||  !XMLString::compareString(inputEncoding, XMLUni::fgUTF16EncodingString7))
-        {
-            fMemoryManager->deallocate(inputEncoding);
+        newBaseEncoding = XMLRecognizer::encodingForName(inputEncoding);
 
-            if ((fEncoding != XMLRecognizer::UTF_16L)
-            &&  (fEncoding != XMLRecognizer::UTF_16B))
-            {
-                return false;
-            }
-
-            // Override with the original endian specific encoding
-            newBaseEncoding = fEncoding;
-
-            if (fEncoding == XMLRecognizer::UTF_16L) {
-                fMemoryManager->deallocate(fEncodingStr);
-                fEncodingStr = XMLString::replicate(XMLUni::fgUTF16LEncodingString, fMemoryManager);
-            }
-            else {
-                fMemoryManager->deallocate(fEncodingStr);
-                fEncodingStr = XMLString::replicate(XMLUni::fgUTF16BEncodingString, fMemoryManager);
-            }
-        }
-        else if (!XMLString::compareString(inputEncoding, XMLUni::fgUCS4EncodingString)
-             ||  !XMLString::compareString(inputEncoding, XMLUni::fgUCS4EncodingString2)
-             ||  !XMLString::compareString(inputEncoding, XMLUni::fgUCS4EncodingString3))
-        {
-            fMemoryManager->deallocate(inputEncoding);
-
-            if ((fEncoding != XMLRecognizer::UCS_4L)
-            &&  (fEncoding != XMLRecognizer::UCS_4B))
-            {
-                return false;
-            }
-
-            // Override with the original endian specific encoding
-            newBaseEncoding = fEncoding;
-
-            if (fEncoding == XMLRecognizer::UCS_4L) {
-
-                fMemoryManager->deallocate(fEncodingStr);
-                fEncodingStr = XMLString::replicate(XMLUni::fgUCS4LEncodingString, fMemoryManager);
-            }
-            else {
-
-                fMemoryManager->deallocate(fEncodingStr);
-                fEncodingStr = XMLString::replicate(XMLUni::fgUCS4BEncodingString, fMemoryManager);
-            }
-        }
-         else
+        //
+        //  If it does not come back as one of the auto-sensed encodings, then we
+        //  have to possibly replace it and at least check a few things.
+        //
+        if (newBaseEncoding == XMLRecognizer::OtherEncoding)
         {
             //
-            // None of those special cases, so just replicate the new name
-            // and use it directly to create the transcoder
+            // We already know it's none of those non-endian special cases, 
+            // so just replicate the new name and use it directly to create the transcoder
             //
             fMemoryManager->deallocate(fEncodingStr);
             fEncodingStr = inputEncoding;
@@ -1287,12 +1331,12 @@ bool XMLReader::setEncoding(const XMLCh* const newEncoding)
                 , fMemoryManager
             );
         }
-    }
-     else
-    {
-        // Store the new encoding string since it is just an intrinsic
-        fMemoryManager->deallocate(fEncodingStr);
-        fEncodingStr = inputEncoding;
+        else
+        {
+            // Store the new encoding string since it is just an intrinsic
+            fMemoryManager->deallocate(fEncodingStr);
+            fEncodingStr = inputEncoding;
+        }
     }
 
     if (!fTranscoder) {
@@ -1805,8 +1849,6 @@ void XMLReader::handleEOL(XMLCh& curCh, bool inDecl)
     {
         fCurCol++;
     }
-
-    return;
 }
 
 XERCES_CPP_NAMESPACE_END

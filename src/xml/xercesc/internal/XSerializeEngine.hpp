@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XSerializeEngine.hpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: XSerializeEngine.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(XSERIALIZE_ENGINE_HPP)
@@ -558,16 +559,16 @@ public:
       *
       ***/
     inline 
-    unsigned long   getBufSize()    const; 
+    XMLSize_t   getBufSize()    const;
 
     inline 
-    unsigned long   getBufCur()     const; 
+    XMLSize_t   getBufCur()     const;
 
     inline 
-    unsigned long   getBufCurAccumulated()     const; 
+    XMLSize_t   getBufCurAccumulated()     const;
 
     inline 
-    unsigned long   getBufCount()    const; 
+    XMLSize_t   getBufCount()    const;
 
     void                  trace(char*)     const;
 
@@ -633,11 +634,11 @@ private:
                                 , const XMLExcepts::Codes toThrow)  const;
 
 
-    inline size_t          calBytesNeeded(size_t)  const;
+    inline XMLSize_t          calBytesNeeded(XMLSize_t)  const;
 
-    inline size_t          alignAdjust(size_t)     const;
+    inline XMLSize_t          alignAdjust(XMLSize_t)     const;
 
-    inline void            alignBufCur(size_t);
+    inline void            alignBufCur(XMLSize_t);
 
     // Make XTemplateSerializer friend of XSerializeEngine so that
     // we can call lookupStorePool and lookupLoadPool in the case of
@@ -699,10 +700,10 @@ private:
     BinInputStream*  const                 fInputStream;
     BinOutputStream* const                 fOutputStream;
 
-    unsigned long                          fBufCount;
+    XMLSize_t                              fBufCount;
 
     //buffer
-    const unsigned long                    fBufSize;
+    const XMLSize_t                        fBufSize;
 	XMLByte* const                         fBufStart;
 	XMLByte* const                         fBufEnd; 
     XMLByte*                               fBufCur;
@@ -807,25 +808,25 @@ inline void XSerializeEngine::readString(XMLByte*&      toRead)
 }
 
 inline 
-unsigned long XSerializeEngine::getBufSize() const
+XMLSize_t XSerializeEngine::getBufSize() const
 {
     return fBufSize;
 }
 
 inline 
-unsigned long XSerializeEngine::getBufCur() const
+XMLSize_t XSerializeEngine::getBufCur() const
 {
-    return (fBufCur-fBufStart);
+    return XMLSize_t (fBufCur-fBufStart);
 }
 
 inline 
-unsigned long XSerializeEngine::getBufCurAccumulated() const
+XMLSize_t XSerializeEngine::getBufCurAccumulated() const
 {
     return (fBufCount - (isStoring() ? 0: 1)) * fBufSize + (fBufCur-fBufStart);
 }
 
 inline 
-unsigned long XSerializeEngine::getBufCount() const
+XMLSize_t XSerializeEngine::getBufCount() const
 {
     return fBufCount;
 }

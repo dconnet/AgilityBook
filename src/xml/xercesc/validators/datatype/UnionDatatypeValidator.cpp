@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: UnionDatatypeValidator.cpp 191694 2005-06-21 17:53:28Z cargilld $
+ * $Id: UnionDatatypeValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -285,18 +286,6 @@ void UnionDatatypeValidator::checkContent(const XMLCh*             const content
     // 1) and 2). we check pattern first
     if ( (getFacetsDefined() & DatatypeValidator::FACET_PATTERN ) != 0 )
     {
-        // lazy construction
-        if (getRegex() == 0)
-        {
-            try {
-                setRegex(new (fMemoryManager) RegularExpression(getPattern(), SchemaSymbols::fgRegEx_XOption, fMemoryManager));            	
-            }
-            catch (XMLException &e)
-            {
-                ThrowXMLwithMemMgr1(InvalidDatatypeValueException, XMLExcepts::RethrowError, e.getMessage(), manager);
-            }
-        }
-
         if (getRegex()->matches(content, manager) == false)
         {
             ThrowXMLwithMemMgr2(InvalidDatatypeValueException

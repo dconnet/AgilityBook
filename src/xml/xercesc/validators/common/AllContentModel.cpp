@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,13 +16,14 @@
  */
 
 /*
- * $Id: AllContentModel.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: AllContentModel.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
 // ---------------------------------------------------------------------------
 //  Includes
 // ---------------------------------------------------------------------------
+#include <xercesc/util/Janitor.hpp>
 #include <xercesc/util/RuntimeException.hpp>
 #include <xercesc/framework/XMLElementDecl.hpp>
 #include <xercesc/framework/XMLValidator.hpp>
@@ -112,57 +114,60 @@ AllContentModel::validateContent( QName** const         children
     if (childCount == 0 && (fHasOptionalContent || !fNumRequired))
         return -1;
 
-    // Check for duplicate element
-    bool* elementSeen = (bool*) fMemoryManager->allocate(fCount*sizeof(bool)); //new bool[fCount];
-
-    // initialize the array
-    for (unsigned int i = 0; i < fCount; i++)
-        elementSeen[i] = false;
-
     // keep track of the required element seen
     unsigned int numRequiredSeen = 0;
 
-    for (unsigned int outIndex = 0; outIndex < childCount; outIndex++) {
-        // Get the current child out of the source index
-        const QName* curChild = children[outIndex];
+    if(childCount > 0)
+    {
+        MemoryManager* const localMemoryManager = children[0]->getMemoryManager();
 
-        // If its PCDATA, then we just accept that
-        if (fIsMixed && curChild->getURI() == XMLElementDecl::fgPCDataElemId)
-            continue;
+        // Check for duplicate element
+        bool* elementSeen = (bool*) localMemoryManager->allocate(fCount*sizeof(bool)); //new bool[fCount];
 
-        // And try to find it in our list
-        unsigned int inIndex = 0;
-        for (; inIndex < fCount; inIndex++)
-        {
-            const QName* inChild = fChildren[inIndex];
-            if ((inChild->getURI() == curChild->getURI()) &&
-                (XMLString::equals(inChild->getLocalPart(), curChild->getLocalPart()))) {
-                // found it
-                // If this element was seen already, indicate an error was
-                // found at the duplicate index.
-                if (elementSeen[inIndex]) {
-                    fMemoryManager->deallocate(elementSeen); //delete [] elementSeen;
-                    return outIndex;
+        const ArrayJanitor<bool> jan(elementSeen, localMemoryManager);
+
+        // initialize the array
+        for (unsigned int i = 0; i < fCount; i++)
+            elementSeen[i] = false;
+
+        for (unsigned int outIndex = 0; outIndex < childCount; outIndex++) {
+            // Get the current child out of the source index
+            const QName* curChild = children[outIndex];
+
+            // If it's PCDATA, then we just accept that
+            if (fIsMixed && curChild->getURI() == XMLElementDecl::fgPCDataElemId)
+                continue;
+
+            // And try to find it in our list
+            unsigned int inIndex = 0;
+            for (; inIndex < fCount; inIndex++)
+            {
+                const QName* inChild = fChildren[inIndex];
+                if ((inChild->getURI() == curChild->getURI()) &&
+                    (XMLString::equals(inChild->getLocalPart(), curChild->getLocalPart()))) {
+                    // found it
+                    // If this element was seen already, indicate an error was
+                    // found at the duplicate index.
+                    if (elementSeen[inIndex]) {
+                        return outIndex;
+                    }
+                    else
+                        elementSeen[inIndex] = true;
+
+                    if (!fChildOptional[inIndex])
+                        numRequiredSeen++;
+
+                    break;
                 }
-                else
-                    elementSeen[inIndex] = true;
-
-                if (!fChildOptional[inIndex])
-                    numRequiredSeen++;
-
-                break;
             }
-        }
 
-        // We did not find this one, so the validation failed
-        if (inIndex == fCount) {
-            fMemoryManager->deallocate(elementSeen); //delete [] elementSeen;
-            return outIndex;
-        }
+            // We did not find this one, so the validation failed
+            if (inIndex == fCount) {
+                return outIndex;
+            }
 
+        }
     }
-
-    fMemoryManager->deallocate(elementSeen); //delete [] elementSeen;
 
     // Were all the required elements of the <all> encountered?
     if (numRequiredSeen != fNumRequired) {
@@ -170,7 +175,6 @@ AllContentModel::validateContent( QName** const         children
     }
 
     // Everything seems to be ok, so return success
-    // success
     return -1;
 }
 
@@ -181,64 +185,66 @@ int AllContentModel::validateContentSpecial(QName** const           children
                                           , GrammarResolver*  const pGrammarResolver
                                           , XMLStringPool*    const pStringPool) const
 {
-
-    SubstitutionGroupComparator comparator(pGrammarResolver, pStringPool);
-
     // If <all> had minOccurs of zero and there are
     // no children to validate, trivially validate
     if (childCount == 0 && (fHasOptionalContent || !fNumRequired))
         return -1;
 
-    // Check for duplicate element
-    bool* elementSeen = (bool*) fMemoryManager->allocate(fCount*sizeof(bool)); //new bool[fCount];
-
-    // initialize the array
-    for (unsigned int i = 0; i < fCount; i++)
-        elementSeen[i] = false;
-
     // keep track of the required element seen
     unsigned int numRequiredSeen = 0;
 
-    for (unsigned int outIndex = 0; outIndex < childCount; outIndex++) {
-        // Get the current child out of the source index
-        QName* const curChild = children[outIndex];
+    if(childCount > 0)
+    {
+        SubstitutionGroupComparator comparator(pGrammarResolver, pStringPool);
 
-        // If its PCDATA, then we just accept that
-        if (fIsMixed && curChild->getURI() == XMLElementDecl::fgPCDataElemId)
-            continue;
+        MemoryManager* const localMemoryManager = children[0]->getMemoryManager();
 
-        // And try to find it in our list
-        unsigned int inIndex = 0;
-        for (; inIndex < fCount; inIndex++)
-        {
-            QName* const inChild = fChildren[inIndex];
-            if ( comparator.isEquivalentTo(curChild, inChild)) {
-                // match
-                // If this element was seen already, indicate an error was
-                // found at the duplicate index.
-                if (elementSeen[inIndex]) {
-                    fMemoryManager->deallocate(elementSeen); //delete [] elementSeen;
-                    return outIndex;
+        // Check for duplicate element
+        bool* elementSeen = (bool*) localMemoryManager->allocate(fCount*sizeof(bool)); //new bool[fCount];
+
+        const ArrayJanitor<bool> jan(elementSeen, localMemoryManager);
+
+        // initialize the array
+        for (unsigned int i = 0; i < fCount; i++)
+            elementSeen[i] = false;
+
+        for (unsigned int outIndex = 0; outIndex < childCount; outIndex++) {
+            // Get the current child out of the source index
+            QName* const curChild = children[outIndex];
+
+            // If it's PCDATA, then we just accept that
+            if (fIsMixed && curChild->getURI() == XMLElementDecl::fgPCDataElemId)
+                continue;
+
+            // And try to find it in our list
+            unsigned int inIndex = 0;
+            for (; inIndex < fCount; inIndex++)
+            {
+                QName* const inChild = fChildren[inIndex];
+                if ( comparator.isEquivalentTo(curChild, inChild)) {
+                    // match
+                    // If this element was seen already, indicate an error was
+                    // found at the duplicate index.
+                    if (elementSeen[inIndex]) {
+                        return outIndex;
+                    }
+                    else
+                        elementSeen[inIndex] = true;
+
+                    if (!fChildOptional[inIndex])
+                        numRequiredSeen++;
+
+                    break;
                 }
-                else
-                    elementSeen[inIndex] = true;
-
-                if (!fChildOptional[inIndex])
-                    numRequiredSeen++;
-
-                break;
             }
-        }
 
-        // We did not find this one, so the validation failed
-        if (inIndex == fCount) {
-            fMemoryManager->deallocate(elementSeen); //delete [] elementSeen;
-            return outIndex;
-        }
+            // We did not find this one, so the validation failed
+            if (inIndex == fCount) {
+                return outIndex;
+            }
 
+        }
     }
-
-    fMemoryManager->deallocate(elementSeen); //delete [] elementSeen;
 
     // Were all the required elements of the <all> encountered?
     if (numRequiredSeen != fNumRequired) {
@@ -246,7 +252,6 @@ int AllContentModel::validateContentSpecial(QName** const           children
     }
 
     // Everything seems to be ok, so return success
-    // success
     return -1;
 
 }

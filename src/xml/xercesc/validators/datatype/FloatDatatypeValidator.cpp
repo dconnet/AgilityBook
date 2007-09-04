@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: FloatDatatypeValidator.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: FloatDatatypeValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -149,7 +150,8 @@ void  FloatDatatypeValidator::setEnumeration(MemoryManager* const manager)
 
         }
     }
-
+#if 0
+// spec says that only base has to checkContent          
     // We put the this->checkContent in a separate loop
     // to not block original message with in that method.
     //
@@ -157,6 +159,7 @@ void  FloatDatatypeValidator::setEnumeration(MemoryManager* const manager)
     {
         checkContent(fStrEnumeration->elementAt(i), (ValidationContext*)0, false, manager);
     }
+#endif    
 
     fEnumeration = new (fMemoryManager) RefVectorOf<XMLNumber>(enumLength, true,  fMemoryManager);
     fEnumerationInherited = false;
@@ -184,17 +187,6 @@ void FloatDatatypeValidator::checkContent(const XMLCh*             const content
     // we check pattern first
     if ( (getFacetsDefined() & DatatypeValidator::FACET_PATTERN ) != 0 )
     {
-        // lazy construction
-        if (getRegex() ==0) {
-            try {
-                setRegex(new (fMemoryManager) RegularExpression(getPattern(), SchemaSymbols::fgRegEx_XOption, fMemoryManager));
-            }
-            catch (XMLException &e)
-            {
-                ThrowXMLwithMemMgr1(InvalidDatatypeValueException, XMLExcepts::RethrowError, e.getMessage(), fMemoryManager);
-            }
-        }
-
         if (getRegex()->matches(content, manager) ==false)
         {
             ThrowXMLwithMemMgr2(InvalidDatatypeValueException
@@ -210,31 +202,24 @@ void FloatDatatypeValidator::checkContent(const XMLCh*             const content
     if (asBase)
         return;
 
-    try {
-        XMLFloat theValue(content, manager);
-        XMLFloat *theData = &theValue;
+    XMLFloat theValue(content, manager);
+    XMLFloat *theData = &theValue;
 
-        if (getEnumeration() != 0)
+    if (getEnumeration() != 0)
+    {
+        int i=0;
+        int enumLength = getEnumeration()->size();
+        for ( ; i < enumLength; i++)
         {
-            int i=0;
-            int enumLength = getEnumeration()->size();
-            for ( ; i < enumLength; i++)
-            {
-                if (compareValues(theData, (XMLFloat*) getEnumeration()->elementAt(i))==0)
-                    break;
-            }
-
-            if (i == enumLength)
-                ThrowXMLwithMemMgr1(InvalidDatatypeValueException, XMLExcepts::VALUE_NotIn_Enumeration, content, manager);
+            if (compareValues(theData, (XMLFloat*) getEnumeration()->elementAt(i))==0)
+                break;
         }
 
-        boundsCheck(theData, manager);
-    }
-    catch (XMLException &e)
-    {
-       ThrowXMLwithMemMgr1(InvalidDatatypeFacetException, XMLExcepts::RethrowError, e.getMessage(), manager);
+        if (i == enumLength)
+            ThrowXMLwithMemMgr1(InvalidDatatypeValueException, XMLExcepts::VALUE_NotIn_Enumeration, content, manager);
     }
 
+    boundsCheck(theData, manager);
 }
 
 /***

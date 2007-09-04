@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -19,7 +20,7 @@
 *  handler with the scanner. In these handler methods, appropriate DOM nodes
 *  are created and added to the DOM tree.
 *
-* $Id: XercesDOMParser.cpp 191708 2005-06-21 19:02:15Z cargilld $
+* $Id: XercesDOMParser.cpp 568078 2007-08-21 11:43:25Z amassari $
 *
 */
 
@@ -332,9 +333,6 @@ Grammar* XercesDOMParser::loadGrammar(const InputSource& source,
         if (grammarType == Grammar::DTDGrammarType) 
             getScanner()->setDocTypeHandler(0);
         grammar = getScanner()->loadGrammar(source, grammarType, toCache);
-        if (grammarType == Grammar::DTDGrammarType) 
-            getScanner()->setDocTypeHandler(this);
-        setParseInProgress(false);
     }
     catch(const OutOfMemoryException&)
     {

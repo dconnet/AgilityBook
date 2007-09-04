@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2000,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ICUMsgLoader.cpp 231519 2005-08-11 21:07:26Z amassari $
+ * $Id: ICUMsgLoader.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -52,9 +53,9 @@ XERCES_CPP_NAMESPACE_BEGIN
  */
 
 #if defined(_WIN32) || defined(WIN32)
-extern "C" void U_IMPORT *XercesMessages2_7_dat;
+extern "C" void U_IMPORT *XercesMessages2_8_dat;
 #else
-extern "C" void U_IMPORT *XercesMessages2_7_0_dat;
+extern "C" void U_IMPORT *XercesMessages2_8_0_dat;
 #endif
 
 /* 
@@ -76,9 +77,9 @@ static void setAppData()
         setAppDataDone = true;
         UErrorCode err = U_ZERO_ERROR;
 #if defined(_WIN32) || defined(WIN32)
-        udata_setAppData("XercesMessages2_7", &XercesMessages2_7_dat, &err);
+        udata_setAppData("XercesMessages2_8", &XercesMessages2_8_dat, &err);
 #else
-        udata_setAppData("XercesMessages2_7_0", &XercesMessages2_7_0_dat, &err);
+        udata_setAppData("XercesMessages2_8_0", &XercesMessages2_8_0_dat, &err);
 #endif        
         if (U_SUCCESS(err))
         {
@@ -167,9 +168,9 @@ ICUMsgLoader::ICUMsgLoader(const XMLCh* const  msgDomain)
 	Open the locale-specific resource bundle
     ***/
 #if defined(_WIN32) || defined(WIN32)
-    strcat(locationBuf, "XercesMessages2_7");
+    strcat(locationBuf, "XercesMessages2_8");
 #else
-    strcat(locationBuf, "XercesMessages2_7_0");
+    strcat(locationBuf, "XercesMessages2_8_0");
 #endif
     UErrorCode err = U_ZERO_ERROR;
     uloc_setDefault("en_US", &err);   // in case user-specified locale unavailable
@@ -183,17 +184,17 @@ ICUMsgLoader::ICUMsgLoader(const XMLCh* const  msgDomain)
         ***/
 
 #if defined(_WIN32) || defined(WIN32)
-        if (strcmp(locationBuf, "XercesMessages2_7") !=0 )
+        if (strcmp(locationBuf, "XercesMessages2_8") !=0 )
 #else
-        if (strcmp(locationBuf, "XercesMessages2_7_0") !=0 )
+        if (strcmp(locationBuf, "XercesMessages2_8_0") !=0 )
 #endif        
         {    	     	   
             setAppData();        	
             err = U_ZERO_ERROR;
 #if defined(_WIN32) || defined(WIN32)            
-            fLocaleBundle = ures_open("XercesMessages2_7", XMLMsgLoader::getLocale(), &err);
+            fLocaleBundle = ures_open("XercesMessages2_8", XMLMsgLoader::getLocale(), &err);
 #else
-            fLocaleBundle = ures_open("XercesMessages2_7_0", XMLMsgLoader::getLocale(), &err);
+            fLocaleBundle = ures_open("XercesMessages2_8_0", XMLMsgLoader::getLocale(), &err);
 #endif            
             if (!U_SUCCESS(err) || fLocaleBundle == NULL)
             {

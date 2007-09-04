@@ -1,9 +1,10 @@
 /*
- * Copyright 2002,2004,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -19,7 +20,7 @@
 *  handler with the scanner. In these handler methods, appropriate DOM nodes
 *  are created and added to the DOM tree.
 *
-* $Id: AbstractDOMParser.cpp 191708 2005-06-21 19:02:15Z cargilld $
+* $Id: AbstractDOMParser.cpp 568078 2007-08-21 11:43:25Z amassari $
 *
 */
 
@@ -58,6 +59,7 @@
 #include <xercesc/dom/DOMProcessingInstruction.hpp>
 #include <xercesc/dom/impl/DOMProcessingInstructionImpl.hpp>
 #include <xercesc/dom/impl/DOMNodeIDMap.hpp>
+#include <xercesc/dom/impl/DOMCasts.hpp>
 #include <xercesc/validators/common/ContentSpecNode.hpp>
 #include <xercesc/validators/common/GrammarResolver.hpp>
 #include <xercesc/validators/schema/SchemaSymbols.hpp>
@@ -752,7 +754,7 @@ void AbstractDOMParser::docCharacters(  const   XMLCh* const    chars
     if (cdataSection == true)
     {
         DOMCDATASection *node = fDocument->createCDATASection(chars);
-        fCurrentParent->appendChild(node);
+        castToParentImpl (fCurrentParent)->appendChildFast (node);
         fCurrentNode = node;
     }
     else
@@ -765,7 +767,7 @@ void AbstractDOMParser::docCharacters(  const   XMLCh* const    chars
         else
         {
             DOMText *node = fDocument->createTextNode(chars);
-            fCurrentParent->appendChild(node);
+            castToParentImpl (fCurrentParent)->appendChildFast (node);
             fCurrentNode = node;
         }
     }
@@ -778,7 +780,7 @@ void AbstractDOMParser::docComment(const XMLCh* const comment)
 {
     if (fCreateCommentNodes) {
         DOMComment *dcom = fDocument->createComment(comment);
-        fCurrentParent->appendChild(dcom);
+        castToParentImpl (fCurrentParent)->appendChildFast (dcom);
         fCurrentNode = dcom;
     }
 }
@@ -792,7 +794,7 @@ void AbstractDOMParser::docPI(  const   XMLCh* const    target
         target
         , data
         );
-    fCurrentParent->appendChild(pi);
+    castToParentImpl (fCurrentParent)->appendChildFast (pi);
     fCurrentNode = pi;
 }
 
@@ -856,7 +858,7 @@ void AbstractDOMParser::ignorableWhitespace(  const XMLCh* const    chars
     {
         DOMTextImpl *node = (DOMTextImpl *)fDocument->createTextNode(chars);
         node->setIgnorableWhitespace(true);
-        fCurrentParent->appendChild(node);
+        castToParentImpl (fCurrentParent)->appendChildFast (node);
 
         fCurrentNode = node;
     }
@@ -1093,8 +1095,10 @@ void AbstractDOMParser::startElement(const  XMLElementDecl&         elemDecl
         }
     }
 
-
-    fCurrentParent->appendChild(elem);
+    if (fCurrentParent != fDocument)
+      castToParentImpl (fCurrentParent)->appendChildFast (elem);
+    else
+      fCurrentParent->appendChild (elem);
 
     fNodeStack->push(fCurrentParent);
     fCurrentParent = elem;
@@ -1127,7 +1131,7 @@ void AbstractDOMParser::startEntityReference(const XMLEntityDecl& entDecl)
         DOMEntityReferenceImpl *erImpl = (DOMEntityReferenceImpl *) er;
         erImpl->setReadOnly(false, true);
 
-        fCurrentParent->appendChild(er);
+        castToParentImpl (fCurrentParent)->appendChildFast (er);
 
         fNodeStack->push(fCurrentParent);
         fCurrentParent = er;

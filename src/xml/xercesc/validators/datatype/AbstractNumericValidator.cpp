@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: AbstractNumericValidator.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: AbstractNumericValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -67,66 +68,57 @@ void AbstractNumericValidator::boundsCheck(const XMLNumber*         const theDat
     if (thisFacetsDefined == 0)
         return;
 
-    try
+    // must be < MaxExclusive
+    if ( (thisFacetsDefined & DatatypeValidator::FACET_MAXEXCLUSIVE) != 0 )
     {
-
-        // must be < MaxExclusive
-        if ( (thisFacetsDefined & DatatypeValidator::FACET_MAXEXCLUSIVE) != 0 )
+        result = compareValues(theData, getMaxExclusive());
+        if ( result != -1)
         {
-            result = compareValues(theData, getMaxExclusive());
-            if ( result != -1)
-            {
-                REPORT_VALUE_ERROR(theData
+            REPORT_VALUE_ERROR(theData
                                  , getMaxExclusive()
                                  , XMLExcepts::VALUE_exceed_maxExcl
                                  , manager)
-            }
-        } 	
-
-        // must be <= MaxInclusive
-        if ( (thisFacetsDefined & DatatypeValidator::FACET_MAXINCLUSIVE) != 0 )
-        {
-            result = compareValues(theData, getMaxInclusive());
-            if (result == 1)
-            {
-                REPORT_VALUE_ERROR(theData
-                                 , getMaxInclusive()
-                                 , XMLExcepts::VALUE_exceed_maxIncl
-                                 , manager)
-            }
         }
+    } 	
 
-        // must be >= MinInclusive
-        if ( (thisFacetsDefined & DatatypeValidator::FACET_MININCLUSIVE) != 0 )
-        {
-            result = compareValues(theData, getMinInclusive());
-            if (result == -1)
-            {
-                REPORT_VALUE_ERROR(theData
-                                 , getMinInclusive()
-                                 , XMLExcepts::VALUE_exceed_minIncl
-                                 , manager)
-            }
-        }
-
-        // must be > MinExclusive
-        if ( (thisFacetsDefined & DatatypeValidator::FACET_MINEXCLUSIVE) != 0 )
-        {
-            result = compareValues(theData, getMinExclusive());
-            if (result != 1)
-            {
-                REPORT_VALUE_ERROR(theData
-                                 , getMinExclusive()
-                                 , XMLExcepts::VALUE_exceed_minExcl
-                                 , manager)
-            }
-        }
-    }
-    catch (XMLException &e)
+    // must be <= MaxInclusive
+    if ( (thisFacetsDefined & DatatypeValidator::FACET_MAXINCLUSIVE) != 0 )
     {
-       ThrowXMLwithMemMgr1(InvalidDatatypeValueException, XMLExcepts::RethrowError, e.getMessage(), manager);
+        result = compareValues(theData, getMaxInclusive());
+        if (result == 1)
+        {
+            REPORT_VALUE_ERROR(theData
+                             , getMaxInclusive()
+                             , XMLExcepts::VALUE_exceed_maxIncl
+                             , manager)
+        }
     }
 
+    // must be >= MinInclusive
+    if ( (thisFacetsDefined & DatatypeValidator::FACET_MININCLUSIVE) != 0 )
+    {
+        result = compareValues(theData, getMinInclusive());
+        if (result == -1)
+        {
+            REPORT_VALUE_ERROR(theData
+                             , getMinInclusive()
+                             , XMLExcepts::VALUE_exceed_minIncl
+                             , manager)
+        }
+    }
+
+    // must be > MinExclusive
+    if ( (thisFacetsDefined & DatatypeValidator::FACET_MINEXCLUSIVE) != 0 )
+    {
+        result = compareValues(theData, getMinExclusive());
+        if (result != 1)
+        {
+            REPORT_VALUE_ERROR(theData
+                             , getMinExclusive()
+                             , XMLExcepts::VALUE_exceed_minExcl
+                             , manager)
+        }
+    }
 }
 
 const XMLCh* AbstractNumericValidator::getCanonicalRepresentation(const XMLCh*         const rawData

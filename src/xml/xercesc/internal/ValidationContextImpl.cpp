@@ -1,9 +1,10 @@
 /*
- * Copyright 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ValidationContextImpl.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: ValidationContextImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -26,12 +27,14 @@
 #include <xercesc/framework/XMLRefInfo.hpp>
 #include <xercesc/validators/DTD/DTDEntityDecl.hpp>
 #include <xercesc/validators/datatype/InvalidDatatypeValueException.hpp>
+#include <xercesc/internal/ElemStack.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
 // ---------------------------------------------------------------------------
 //  Constructor and Destructor
 // ---------------------------------------------------------------------------
+
 ValidationContextImpl::~ValidationContextImpl()
 {
     if (fIdRefList)
@@ -44,6 +47,7 @@ ValidationContextImpl::ValidationContextImpl(MemoryManager* const manager)
 ,fEntityDeclPool(0)
 ,fToCheckIdRefList(true)
 ,fValidatingMemberType(0)
+,fElemStack(0)
 {
     fIdRefList = new (fMemoryManager) RefHashTableOf<XMLRefInfo>(109, fMemoryManager);
 }
@@ -172,6 +176,19 @@ void ValidationContextImpl::checkEntity(const XMLCh * const content) const
         );
     }
 
+}
+
+/* QName 
+ */
+bool ValidationContextImpl::isPrefixUnknown(XMLCh* prefix) {     
+    bool unknown = false;
+    if (XMLString::equals(prefix, XMLUni::fgXMLNSString)) {
+        return true;                
+    }            
+    else if (!XMLString::equals(prefix, XMLUni::fgXMLString)) {
+        unsigned int uriId = fElemStack->mapPrefixToURI(prefix, (ElemStack::MapModes) ElemStack::Mode_Element, unknown);                
+    }                
+    return unknown;
 }
 
 XERCES_CPP_NAMESPACE_END

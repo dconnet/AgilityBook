@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DOMDocumentTypeImpl.cpp 176257 2004-12-28 17:31:19Z amassari $
+ * $Id: DOMDocumentTypeImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #include "DOMDocumentTypeImpl.hpp"
@@ -147,7 +148,7 @@ DOMDocumentTypeImpl::DOMDocumentTypeImpl(DOMDocument *ownerDoc,
         }
         else {
             // document is not there yet, so assume XML 1.0
-            if (!XMLChar1_0::isValidName(newName, index) || !XMLChar1_0::isValidName(qualifiedName+index+1, XMLString::stringLen(qualifiedName)-index-1))
+            if (!XMLChar1_0::isValidName(newName) || !XMLChar1_0::isValidName(qualifiedName+index+1))
                 throw DOMException(DOMException::NAMESPACE_ERR, 0, GetDOMNodeMemoryManager);
         }
 
@@ -424,8 +425,6 @@ void DOMDocumentTypeImpl::release()
            DOMNode*         DOMDocumentTypeImpl::removeChild(DOMNode *oldChild)          {return fParent.removeChild (oldChild); }
            DOMNode*         DOMDocumentTypeImpl::replaceChild(DOMNode *newChild, DOMNode *oldChild)
                                                                                          {return fParent.replaceChild (newChild, oldChild); }
-           bool             DOMDocumentTypeImpl::isSupported(const XMLCh *feature, const XMLCh *version) const
-                                                                                         {return fNode.isSupported (feature, version); }
            void             DOMDocumentTypeImpl::setPrefix(const XMLCh  *prefix)         {fNode.setPrefix(prefix); }
            bool             DOMDocumentTypeImpl::hasAttributes() const                   {return fNode.hasAttributes(); }
            bool             DOMDocumentTypeImpl::isSameNode(const DOMNode* other) const  {return fNode.isSameNode(other); }
@@ -531,6 +530,18 @@ bool DOMDocumentTypeImpl::isEqualNode(const DOMNode* arg) const
     }
 
     return fParent.isEqualNode(arg);
+}
+
+bool DOMDocumentTypeImpl::isSupported(const XMLCh *feature, const XMLCh *version) const
+{
+    // check for 'DOMDocumentTypeImpl' or '+DOMDocumentTypeImpl'
+    if(feature && *feature)
+    {
+        if((*feature==chPlus && XMLString::equals(feature+1, XMLUni::fgXercescInterfaceDOMDocumentTypeImpl)) ||
+           XMLString::equals(feature, XMLUni::fgXercescInterfaceDOMDocumentTypeImpl))
+            return true;
+    }
+    return fNode.isSupported (feature, version);
 }
 
 DOMNode * DOMDocumentTypeImpl::getInterface(const XMLCh* feature)

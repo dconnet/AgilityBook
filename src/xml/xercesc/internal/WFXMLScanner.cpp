@@ -1,9 +1,10 @@
 /*
- * Copyright 2002,2003-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
-  * $Id: WFXMLScanner.cpp 191707 2005-06-21 19:01:55Z cargilld $
+  * $Id: WFXMLScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -198,6 +199,7 @@ void WFXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -205,6 +207,7 @@ void WFXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -212,6 +215,7 @@ void WFXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -366,6 +370,7 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -373,6 +378,7 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -380,6 +386,7 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -1508,7 +1515,7 @@ bool WFXMLScanner::scanStartTagNS(bool& gotData)
             , elemDecl->getElementName()->getPrefix()
             , *fAttrList
             , attCount
-            , false
+            , isEmpty
             , isRoot
         );
     }
@@ -1520,18 +1527,6 @@ bool WFXMLScanner::scanStartTagNS(bool& gotData)
     {
         // Pop the element stack back off since it'll never be used now
         fElemStack.popTop();
-
-        // If we have a doc handler, tell it about the end tag
-        if (fDocHandler)
-        {
-            fDocHandler->endElement
-            (
-                *elemDecl
-                , uriId
-                , isRoot
-                , elemDecl->getElementName()->getPrefix()
-            );
-        }
 
         // If the elem stack is empty, then it was an empty root
         if (isRoot)

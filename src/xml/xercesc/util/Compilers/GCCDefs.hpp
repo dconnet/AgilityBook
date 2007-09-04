@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: GCCDefs.hpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: GCCDefs.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(GCCDEFS_HPP)
@@ -33,7 +34,7 @@
 //  These defines provide the platform specific keywords that they need
 //  to do this.
 // ---------------------------------------------------------------------------
-#if defined(__MINGW32__)
+#if defined(__MINGW32__) && !defined (XML_LIBRARY)
 #define PLATFORM_EXPORT __declspec(dllexport)
 #define PLATFORM_IMPORT __declspec(dllimport)
 #else
@@ -64,7 +65,11 @@
 // ---------------------------------------------------------------------------
 //  Define our version of the XML character
 // ---------------------------------------------------------------------------
-typedef unsigned short XMLCh;
+#if defined(__MINGW32__) && defined(_WCHAR_T_DEFINED)
+typedef wchar_t         XMLCh;
+#else
+typedef unsigned short  XMLCh;
+#endif
 
 // ---------------------------------------------------------------------------
 //  Define unsigned 16 and 32 bits integers

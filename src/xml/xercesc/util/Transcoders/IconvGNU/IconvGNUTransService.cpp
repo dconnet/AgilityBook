@@ -1,9 +1,10 @@
 /*
- * Copyright 2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: IconvGNUTransService.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: IconvGNUTransService.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -446,9 +447,26 @@ IconvGNUTransService::IconvGNUTransService()
     }
 #endif
 
-    // Try to obtain local (host) characterset through the environment
-    char*    fLocalCP = setlocale (LC_CTYPE, "");
-    if (fLocalCP == NULL)
+    // Try to obtain local (host) characterset from the setlocale
+    // and through the environment. Do not call setlocale(LC_*, "")!
+    // Using an empty string instead of NULL, will modify the libc
+    // behavior.
+    //
+    char* fLocalCP = setlocale (LC_CTYPE, NULL);
+    if (fLocalCP == NULL || *fLocalCP == 0 ||
+        strcmp (fLocalCP, "C") == 0 ||
+        strcmp (fLocalCP, "POSIX") == 0) {
+      fLocalCP = getenv ("LC_ALL");
+      if (fLocalCP == NULL) {
+        fLocalCP = getenv ("LC_CTYPE");
+        if (fLocalCP == NULL)
+          fLocalCP = getenv ("LANG");
+      }
+    }
+
+    if (fLocalCP == NULL || *fLocalCP == 0 ||
+        strcmp (fLocalCP, "C") == 0 ||
+        strcmp (fLocalCP, "POSIX") == 0)
         fLocalCP = "iso-8859-1";    // fallback locale
     else {
         char    *ptr = strchr (fLocalCP, '.');

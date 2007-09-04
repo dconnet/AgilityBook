@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DatatypeValidator.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: DatatypeValidator.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -285,7 +286,7 @@ void DatatypeValidator::serialize(XSerializeEngine& serEng)
          *
          ***/
         XTemplateSerializer::loadObject(&fFacets, 29, true, serEng);
-        serEng.readString(fPattern);
+        serEng.readString(fPattern);       
 
         /***
          *   Recreate through setTypeName()
@@ -323,7 +324,7 @@ void DatatypeValidator::serialize(XSerializeEngine& serEng)
         /***
          * don't serialize fRegex
          ***/
-        fRegex = 0;
+        fRegex = new (fMemoryManager) RegularExpression(fPattern, SchemaSymbols::fgRegEx_XOption, fMemoryManager);
 
     }
 

@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: ValueStore.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: ValueStore.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -159,25 +160,10 @@ void ValueStore::endValueScope() {
     // do we have enough values?
     if ((fValuesCount != fIdentityConstraint->getFieldCount()) && fDoReportError) {
 
-        switch (fIdentityConstraint->getType()) {
-        case IdentityConstraint::UNIQUE:
-            {
-				fScanner->getValidator()->emitError(XMLValid::IC_UniqueNotEnoughValues,
-                    fIdentityConstraint->getElementName());
-                break;
-            }
-        case IdentityConstraint::KEY:
-            {
-				fScanner->getValidator()->emitError(XMLValid::IC_KeyNotEnoughValues,
-                    fIdentityConstraint->getElementName(), fIdentityConstraint->getIdentityConstraintName());
-                break;
-            }
-        case IdentityConstraint::KEYREF:
-            {
-				fScanner->getValidator()->emitError(XMLValid::IC_KeyRefNotEnoughValues,
-                    fIdentityConstraint->getElementName(), fIdentityConstraint->getIdentityConstraintName());
-                break;
-            }
+        if(fIdentityConstraint->getType()==IdentityConstraint::KEY)
+        {
+			fScanner->getValidator()->emitError(XMLValid::IC_KeyNotEnoughValues,
+                fIdentityConstraint->getElementName(), fIdentityConstraint->getIdentityConstraintName());
         }
     }
 }
@@ -223,10 +209,10 @@ bool ValueStore::isDuplicateOf(DatatypeValidator* const dv1, const XMLCh* const 
         return (XMLString::equals(val1, val2));
     }
 
-    unsigned int val1Len = XMLString::stringLen(val1);
-    unsigned int val2Len = XMLString::stringLen(val2);
+    bool val1IsEmpty = (val1==0 || *val1==0);
+    bool val2IsEmpty = (val2==0 || *val2==0);
 
-    if (!val1Len && !val2Len) {
+    if (val1IsEmpty && val2IsEmpty) {
 
         if (dv1 == dv2) {
             return true;
@@ -235,38 +221,28 @@ bool ValueStore::isDuplicateOf(DatatypeValidator* const dv1, const XMLCh* const 
         return false;
     }
 
-    if (!val1Len || !val2Len) {
+    if (val1IsEmpty || val2IsEmpty) {
         return false;
     }
 
-    // are the validators equal?
-    // As always we are obliged to compare by reference...
-    if (dv1 == dv2) {
-        return ((dv1->compare(val1, val2, fMemoryManager)) == 0);
+    // find the common ancestor, if there is one
+    DatatypeValidator* tempVal1 = dv1;
+    while(tempVal1)
+    {
+        DatatypeValidator* tempVal2 = dv2;
+        for(; tempVal2 != NULL && tempVal2 != tempVal1; tempVal2 = tempVal2->getBaseValidator()) ;
+        if (tempVal2) 
+            return ((tempVal2->compare(val1, val2, fMemoryManager)) == 0);
+        tempVal1=tempVal1->getBaseValidator();
     }
 
-    // see if this.fValidator is derived from value.fValidator:
-    DatatypeValidator* tempVal = dv1;
-    for(; !tempVal || tempVal == dv2; tempVal = tempVal->getBaseValidator()) ;
-
-    if (tempVal) { // was derived!
-        return ((dv2->compare(val1, val2, fMemoryManager)) == 0);
-    }
-
-    // see if value.fValidator is derived from this.fValidator:
-    for(tempVal = dv2; !tempVal || tempVal == dv1; tempVal = tempVal->getBaseValidator()) ;
-
-    if(tempVal) { // was derived!
-        return ((dv1->compare(val1, val2, fMemoryManager)) == 0);
-    }
-
-    // if we're here it means the types weren't related.  Must fall back to strings:
-    return (XMLString::equals(val1, val2));
+    // if we're here it means the types weren't related. They are different:
+    return false;
 }
 
 
 // ---------------------------------------------------------------------------
-//  ValueStore: Docuement handling methods
+//  ValueStore: Document handling methods
 // ---------------------------------------------------------------------------
 void ValueStore::endDcocumentFragment(ValueStoreCache* const valueStoreCache) {
 

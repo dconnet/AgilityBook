@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: RegularExpression.cpp 225473 2005-07-27 07:09:16Z dbertoni $
+ * $Id: RegularExpression.cpp 570396 2007-08-28 12:16:49Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -133,6 +134,62 @@ RegularExpression::Context::Context(MemoryManager* const manager) :
 	, fString(0)
     , fMemoryManager(manager)
 {
+}
+
+RegularExpression::Context::Context(Context* src) :
+	fAdoptMatch(false)
+    , fStart(src->fStart)
+	, fLimit(src->fLimit)
+	, fLength(src->fLength)
+	, fSize(src->fSize)
+    , fStringMaxLen(src->fStringMaxLen)
+	, fOffsets(0)
+	, fMatch(0)
+	, fString(src->fString)
+    , fMemoryManager(src->fMemoryManager)
+{
+	if(src->fOffsets)
+    {
+		fOffsets = (int*) fMemoryManager->allocate(fSize* sizeof(int));
+	    for (int i = 0; i< fSize; i++)
+		    fOffsets[i] = src->fOffsets[i];
+    }
+    if(src->fMatch)
+    {
+        fMatch=new Match(*src->fMatch);
+        fAdoptMatch=true;
+    }
+}
+
+RegularExpression::Context& RegularExpression::Context::operator= (const RegularExpression::Context& other)
+{
+    fStart=other.fStart;
+	fLimit=other.fLimit;
+	fLength=other.fLength;
+	fSize=other.fSize;
+    fStringMaxLen=other.fStringMaxLen;
+	fString=other.fString;
+    if (fOffsets)
+        fMemoryManager->deallocate(fOffsets);//delete [] fOffsets;
+    fOffsets=0;
+	if (fAdoptMatch)
+		delete fMatch;
+    fMatch=0;
+	fAdoptMatch=false;
+
+    fMemoryManager=other.fMemoryManager;
+	if(other.fOffsets)
+    {
+		fOffsets = (int*) fMemoryManager->allocate(fSize* sizeof(int));
+	    for (int i = 0; i< fSize; i++)
+		    fOffsets[i] = other.fOffsets[i];
+    }
+    if(other.fMatch)
+    {
+        fMatch=new Match(*other.fMatch);
+        fAdoptMatch=true;
+    }
+    return *this;
 }
 
 RegularExpression::Context::~Context()
@@ -697,7 +754,7 @@ RefArrayVectorOf<XMLCh>* RegularExpression::tokenize(const XMLCh* const expressi
  	    }
 
       if (subEx){
-        subEx->addElement(lMatch);
+        subEx->addElement(context.fMatch);
         lMatch = new (fMemoryManager) Match(*(context.fMatch));
         adoptMatch = true;
         
@@ -1330,6 +1387,32 @@ int RegularExpression::matchCapture(Context* const context, const Op* const op,
 	return ret;
 }
 
+int RegularExpression::matchUnion(Context* const context,
+                                   const Op* const op, int offset,
+                                   const short direction)
+{
+    unsigned int opSize = op->getSize();
+
+    Context bestResultContext;
+    int bestResult=-1;
+    for(unsigned int i=0; i < opSize; i++) {
+        Context tmpContext(context);
+        int ret = match(&tmpContext, op->elementAt(i), offset, direction);
+        if (ret >= 0 && ret <= context->fLimit && ret>bestResult)
+        {
+            bestResult=ret;
+            bestResultContext=tmpContext;
+            // exit early, if we reached the end of the string
+            if(ret == context->fLimit)
+                break;
+        }
+    }
+    if(bestResult!=-1)
+        *context=bestResultContext;
+    return bestResult;
+}
+
+
 bool RegularExpression::matchCondition(Context* const context,
                                               const Op* const op, int offset,
                                               const short direction)
@@ -1540,7 +1623,8 @@ void RegularExpression::prepare() {
 
 	if (fOperations != 0 && fOperations->getNextOp() == 0 &&
 		(fOperations->getOpType() == Op::O_STRING ||
-		 fOperations->getOpType() == Op::O_CHAR) )			 {
+         fOperations->getOpType() == Op::O_CHAR) &&
+         !isSet(fOptions, IGNORE_CASE) )                      {
 
 		fFixedStringOnly = true;
 
@@ -1569,8 +1653,9 @@ void RegularExpression::prepare() {
 		fBMPattern = new (fMemoryManager) BMPattern(fFixedString, 256,
 								  isSet(fOptions, IGNORE_CASE), fMemoryManager);
 	}
-	else if (!isSet(fOptions, XMLSCHEMA_MODE) &&
-			 !isSet(fOptions, PROHIBIT_FIXED_STRING_OPTIMIZATION)) {
+	else if (!isSet(fOptions, XMLSCHEMA_MODE) &&		
+             !isSet(fOptions, PROHIBIT_FIXED_STRING_OPTIMIZATION) &&
+             !isSet(fOptions, IGNORE_CASE)) {
 
 		int fixedOpts = 0;
 		Token* tok = fTokenTree->findFixedString(fOptions, fixedOpts);

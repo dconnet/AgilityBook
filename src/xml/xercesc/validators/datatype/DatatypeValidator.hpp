@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DatatypeValidator.hpp 176169 2004-10-28 20:21:06Z peiyongz $
+ * $Id: DatatypeValidator.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(DATATYPEVALIDATOR_HPP)
@@ -667,9 +668,12 @@ inline void DatatypeValidator::setFixed(int fixed)
 
 inline void DatatypeValidator::setPattern(const XMLCh* pattern)
 {
-    if (fPattern)
+    if (fPattern) {
         fMemoryManager->deallocate(fPattern);//delete [] fPattern;
+        delete fRegex;
+    }
     fPattern = XMLString::replicate(pattern, fMemoryManager);
+    fRegex = new (fMemoryManager) RegularExpression(fPattern, SchemaSymbols::fgRegEx_XOption, fMemoryManager);
 }
 
 inline void DatatypeValidator::setRegex(RegularExpression* const regex)

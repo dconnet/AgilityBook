@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DOMDocumentImpl.cpp 176280 2005-01-07 15:32:34Z amassari $
+ * $Id: DOMDocumentImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 #include "DOMDocumentImpl.hpp"
 #include "DOMCasts.hpp"
@@ -40,6 +41,7 @@
 #include "DOMNodeIteratorImpl.hpp"
 #include "DOMNodeIDMap.hpp"
 #include "DOMRangeImpl.hpp"
+#include "DOMTypeInfoImpl.hpp"
 
 #include <xercesc/dom/DOMImplementation.hpp>
 #include <xercesc/util/XMLChar.hpp>
@@ -47,6 +49,13 @@
 #include <xercesc/util/OutOfMemoryException.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
+
+// The chunk size to allocate from the system allocator.
+static const XMLSize_t kInitialHeapAllocSize =  0x4000;
+static const XMLSize_t kMaxHeapAllocSize     = 0x20000;
+static const XMLSize_t kMaxSubAllocationSize =  0x1000;  // Any request for more bytes
+                                                         // than this will be handled by
+                                                         // allocating directly with system.
 
 
 //
@@ -74,6 +83,7 @@ DOMDocumentImpl::DOMDocumentImpl(MemoryManager* const manager)
       fCurrentBlock(0),      
       fFreePtr(0),
       fFreeBytesRemaining(0),
+      fHeapAllocSize(kInitialHeapAllocSize),
       fRecycleNodePtr(0),
       fRecycleBufferPtr(0),
       fNodeListPool(0),
@@ -110,6 +120,7 @@ DOMDocumentImpl::DOMDocumentImpl(const XMLCh *fNamespaceURI,
       fCurrentBlock(0),      
       fFreePtr(0),
       fFreeBytesRemaining(0),
+      fHeapAllocSize(kInitialHeapAllocSize),
       fRecycleNodePtr(0),
       fRecycleBufferPtr(0),
       fNodeListPool(0),
@@ -526,9 +537,9 @@ DOMNode* DOMDocumentImpl::replaceChild(DOMNode *newChild, DOMNode *oldChild) {
 bool DOMDocumentImpl::isXMLName(const XMLCh *s)
 {
     if (XMLString::equals(fVersion, XMLUni::fgVersion1_1))
-        return XMLChar1_1::isValidName(s, XMLString::stringLen(s));
+        return XMLChar1_1::isValidName(s);
     else
-        return XMLChar1_0::isValidName(s, XMLString::stringLen(s));
+        return XMLChar1_0::isValidName(s);
 }
 
 
@@ -713,7 +724,12 @@ bool DOMDocumentImpl::isKidOK(DOMNode *parent, DOMNode *child)
       }
       int p=parent->getNodeType();
       int ch = child->getNodeType();
-      return (kidOK[p] & 1<<ch) != 0;
+      return ((kidOK[p] & 1<<ch) != 0) || 
+             (p==DOMNode::DOCUMENT_NODE && ch==DOMNode::TEXT_NODE && 
+              ((XMLString::equals(((DOMDocument*)parent)->getVersion(), XMLUni::fgVersion1_1))?
+                    XMLChar1_1::isAllSpaces(child->getNodeValue(), XMLString::stringLen(child->getNodeValue())):
+                    XMLChar1_0::isAllSpaces(child->getNodeValue(), XMLString::stringLen(child->getNodeValue())))
+             );
 }
 
 void            DOMDocumentImpl::changed()
@@ -792,13 +808,6 @@ const XMLCh *  DOMDocumentImpl::getPooledString(const XMLCh *src)
     else return this->fNamePool->getPooledString(src);
 }
 
-static const int kHeapAllocSize = 0x10000;    // The chunk size to allocate from the
-                                              //   system allocator.
-
-static const size_t kMaxSubAllocationSize = 4096;  // Any request for more bytes
-                                                   //  than this will be handled by
-                                                   //  allocating directly with system.
-
 void *         DOMDocumentImpl::allocate(size_t amount)
 {	
 	//	Align the request size so that suballocated blocks
@@ -847,12 +856,15 @@ void *         DOMDocumentImpl::allocate(size_t amount)
 
         // Get a new block from the system allocator.
         void* newBlock;
-        newBlock = fMemoryManager->allocate(kHeapAllocSize * sizeof(char)); //new char[kHeapAllocSize];
+        newBlock = fMemoryManager->allocate(fHeapAllocSize * sizeof(char)); //new char[kHeapAllocSize];
         
         *(void **)newBlock = fCurrentBlock;
         fCurrentBlock = newBlock;
         fFreePtr = (char *)newBlock + sizeOfHeader;
-        fFreeBytesRemaining = kHeapAllocSize - sizeOfHeader;
+        fFreeBytesRemaining = fHeapAllocSize - sizeOfHeader;
+
+        if(fHeapAllocSize<kMaxHeapAllocSize)
+            fHeapAllocSize*=2;
     }
 
 	//	Subdivide the request off current block
@@ -1008,16 +1020,31 @@ DOMNode *DOMDocumentImpl::importNode(DOMNode *source, bool deep, bool cloningDoc
             if (source->getLocalName() == 0)
                 newelement = createElement(source->getNodeName());
             else
-                newelement = createElementNS(source->getNamespaceURI(),
-
-            source->getNodeName());
+            {
+                DOMElementNSImpl* nsElem = (DOMElementNSImpl*)createElementNS(source->getNamespaceURI(), source->getNodeName());
+                DOMTypeInfoImpl* clonedTypeInfo=NULL;
+                // if the source has type informations, copy them
+                DOMPSVITypeInfo* sourcePSVI=(DOMPSVITypeInfo*)source->getInterface(XMLUni::fgXercescInterfacePSVITypeInfo);
+                if(sourcePSVI && sourcePSVI->getNumericProperty(DOMPSVITypeInfo::PSVI_Schema_Specified))
+                    clonedTypeInfo=new (this) DOMTypeInfoImpl(this, sourcePSVI);
+                else
+                {
+                    const DOMTypeInfo * typeInfo=((DOMElement*)source)->getTypeInfo();
+                    // copy it only if it has valid data
+                    if(typeInfo && typeInfo->getName()!=NULL)
+                        clonedTypeInfo=new (this) DOMTypeInfoImpl(typeInfo->getNamespace(), typeInfo->getName());
+                }
+                if(clonedTypeInfo)
+                    nsElem->setTypeInfo(clonedTypeInfo);
+                newelement=nsElem;
+            }
             DOMNamedNodeMap *srcattr=source->getAttributes();
             if(srcattr!=0)
                 for(XMLSize_t i=0;i<srcattr->getLength();++i)
                 {
                     DOMAttr *attr = (DOMAttr *) srcattr->item(i);
                     if (attr -> getSpecified() || cloningDoc) { // not a default attribute or we are in the process of cloning the elements from inside a DOMDocumentType
-                        DOMAttr *nattr = (DOMAttr *) importNode(attr, true, false);
+                        DOMAttr *nattr = (DOMAttr *) importNode(attr, true, cloningDoc);
                         if (attr -> getLocalName() == 0)
                             newelement->setAttributeNode(nattr);
                         else
@@ -1037,11 +1064,28 @@ DOMNode *DOMDocumentImpl::importNode(DOMNode *source, bool deep, bool cloningDoc
         }
         break;
     case DOMNode::ATTRIBUTE_NODE :
-        if (source->getLocalName() == 0)
-            newnode = createAttribute(source->getNodeName());
-        else
-            newnode = createAttributeNS(source->getNamespaceURI(),
-            source->getNodeName());
+        {
+            DOMAttrImpl* newattr=NULL;
+            if (source->getLocalName() == 0)
+                newattr = (DOMAttrImpl*)createAttribute(source->getNodeName());
+            else
+                newattr = (DOMAttrImpl*)createAttributeNS(source->getNamespaceURI(), source->getNodeName());
+            DOMTypeInfoImpl* clonedTypeInfo=NULL;
+            // if the source has type informations, copy them
+            DOMPSVITypeInfo* sourcePSVI=(DOMPSVITypeInfo*)source->getInterface(XMLUni::fgXercescInterfacePSVITypeInfo);
+            if(sourcePSVI && sourcePSVI->getNumericProperty(DOMPSVITypeInfo::PSVI_Schema_Specified))
+                clonedTypeInfo=new (this) DOMTypeInfoImpl(this, sourcePSVI);
+            else
+            {
+                const DOMTypeInfo * typeInfo=((DOMAttr*)source)->getTypeInfo();
+                // copy it only if it has valid data
+                if(typeInfo && typeInfo->getName()!=NULL)
+                    clonedTypeInfo=new (this) DOMTypeInfoImpl(typeInfo->getNamespace(), typeInfo->getName());
+            }
+            if(clonedTypeInfo)
+                newattr->setTypeInfo(clonedTypeInfo);
+            newnode=newattr;
+        }
         deep = true;
         // Kids carry value
 
@@ -1096,14 +1140,14 @@ DOMNode *DOMDocumentImpl::importNode(DOMNode *source, bool deep, bool cloningDoc
             DOMNamedNodeMap *tmap = newdoctype->getEntities();
             if(smap != 0) {
                 for(XMLSize_t i = 0; i < smap->getLength(); i++) {
-                    tmap->setNamedItem(importNode(smap->item(i), true, false));
+                    tmap->setNamedItem(importNode(smap->item(i), true, cloningDoc));
                 }
             }
             smap = srcdoctype->getNotations();
             tmap = newdoctype->getNotations();
             if (smap != 0) {
                 for(XMLSize_t i = 0; i < smap->getLength(); i++) {
-                    tmap->setNamedItem(importNode(smap->item(i), true, false));
+                    tmap->setNamedItem(importNode(smap->item(i), true, cloningDoc));
                 }
             }
             const XMLCh* intSubset=srcdoctype->getInternalSubset();
@@ -1121,7 +1165,7 @@ DOMNode *DOMDocumentImpl::importNode(DOMNode *source, bool deep, bool cloningDoc
                     tmap = ((DOMDocumentTypeImpl *)newdoctype)->getElements();
                     if (smap != 0) {
                         for(XMLSize_t i = 0; i < smap->getLength(); i++) {
-                            tmap->setNamedItem(importNode(smap->item(i), true, true));
+                            tmap->setNamedItem(importNode(smap->item(i), true, cloningDoc));
                         }
                     }
                 }
@@ -1158,7 +1202,7 @@ DOMNode *DOMDocumentImpl::importNode(DOMNode *source, bool deep, bool cloningDoc
              srckid != 0;
              srckid = srckid->getNextSibling())
         {
-            newnode->appendChild(importNode(srckid, true, false));
+            newnode->appendChild(importNode(srckid, true, cloningDoc));
         }
 
     if (newnode->getNodeType() == DOMNode::ENTITY_REFERENCE_NODE
@@ -1167,7 +1211,13 @@ DOMNode *DOMDocumentImpl::importNode(DOMNode *source, bool deep, bool cloningDoc
         errorChecking = oldErrorCheckingFlag;
     }
 
-    if (!cloningDoc)
+    if (cloningDoc)
+    {
+        // we know for sure that the source node is a DOMNodeImpl, as cloningDoc is set to true when
+        // a DOMDocumentImpl is cloned
+        castToNodeImpl(source)->callUserDataHandlers(DOMUserDataHandler::NODE_CLONED, source, newnode);
+    }
+    else
         fNode.callUserDataHandlers(DOMUserDataHandler::NODE_IMPORTED, source, newnode);
 
     return newnode;
@@ -1233,11 +1283,20 @@ void DOMDocumentImpl::callUserDataHandlers(const DOMNodeImpl* n, DOMUserDataHand
     if (fUserDataTable) {
         RefHash2KeysTableOfEnumerator<DOMUserDataRecord> userDataEnum(fUserDataTable, false, fMemoryManager);
         userDataEnum.setPrimaryKey(n);
+        // Create a snapshot of the handlers to be called, as the "handle" callback could be invalidating the enumerator by calling
+        // setUserData on the dst node
+        ValueVectorOf< int > snapshot(3, fMemoryManager);
         while (userDataEnum.hasMoreElements()) {
             // get the key
             void* key;
             int key2;
             userDataEnum.nextElementKey(key,key2);
+            snapshot.addElement(key2);
+        }
+        ValueVectorEnumerator< int > snapshotEnum(&snapshot);
+        while(snapshotEnum.hasMoreElements())
+        {
+            int key2=snapshotEnum.nextElement();
 
             // get the DOMUserDataRecord
             DOMUserDataRecord* userDataRecord = fUserDataTable->get((void*)n,key2);

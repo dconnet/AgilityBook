@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: DTDScanner.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: DTDScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -1752,15 +1753,30 @@ void DTDScanner::scanEntityDecl()
         fScanner->emitError(XMLErrs::ExpectedWhitespace);
     else
         fReaderMgr->skipPastSpaces();
-    const bool isPEDecl = fReaderMgr->skippedChar(chPercent);
+    bool isPEDecl = fReaderMgr->skippedChar(chPercent);
 
     //
-    //  If a PE decl, then eat the percent and check for spaces or a
-    //  PE ref on the other side of it. At least spaces are required.
+    //  If a PE decl, then check if it is followed by a space; if it is so, 
+    //  eat the percent and check for spaces or a PE ref on the other side of it. 
+    //  Otherwise, it has to be an entity reference for a general entity.
     //
     if (isPEDecl)
     {
-        if (!checkForPERef(false, true))
+        if(!fReaderMgr->getCurrentReader()->isWhitespace(fReaderMgr->peekNextChar()))
+        {
+            isPEDecl=false;
+            while (true)
+            {
+               if (!expandPERef(false, false, true, false))
+                  fScanner->emitError(XMLErrs::ExpectedEntityRefName);
+               // And skip any more spaces in the expanded value
+               if (fReaderMgr->skippedSpace())
+                  fReaderMgr->skipPastSpaces();
+               if (!fReaderMgr->skippedChar(chPercent))
+                  break;
+            }
+        }
+        else if (!checkForPERef(false, true))
             fScanner->emitError(XMLErrs::ExpectedWhitespace);
     }
 

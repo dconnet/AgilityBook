@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /**
- *  $Id: XMLRecognizer.cpp 176070 2004-09-23 00:50:49Z cargilld $
+ *  $Id: XMLRecognizer.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -232,6 +233,14 @@ XMLRecognizer::encodingForName(const XMLCh* const encName)
     {
         return XMLRecognizer::UTF_16B;
     }
+    else if (!XMLString::compareString(encName, XMLUni::fgUTF16EncodingString))
+    {
+    #if defined(ENDIANMODE_LITTLE)
+        return XMLRecognizer::UTF_16L;
+    #elif defined(ENDIANMODE_BIG)
+		return XMLRecognizer::UTF_16B;
+    #endif
+    }
      else if (!XMLString::compareString(encName, XMLUni::fgUCS4LEncodingString)
           ||  !XMLString::compareString(encName, XMLUni::fgUCS4LEncodingString2))
     {
@@ -241,6 +250,14 @@ XMLRecognizer::encodingForName(const XMLCh* const encName)
           ||  !XMLString::compareString(encName, XMLUni::fgUCS4BEncodingString2))
     {
         return XMLRecognizer::UCS_4B;
+    }
+    else if (!XMLString::compareString(encName, XMLUni::fgUCS4EncodingString))
+    {
+    #if defined(ENDIANMODE_LITTLE)
+        return XMLRecognizer::UCS_4L;
+    #elif defined(ENDIANMODE_BIG)
+		return XMLRecognizer::UCS_4B;
+    #endif
     }
 
     // Return 'other' since we don't recognizer it

@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: RefHash3KeysIdPool.c 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: RefHash3KeysIdPool.c 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -142,8 +143,7 @@ template <class TVal> void RefHash3KeysIdPool<TVal>::initialize(const unsigned i
     (
         fHashModulus * sizeof(RefHash3KeysTableBucketElem<TVal>*)
     ); //new RefHash3KeysTableBucketElem<TVal>*[fHashModulus];
-    for (unsigned int index = 0; index < fHashModulus; index++)
-        fBucketList[index] = 0;
+    memset(fBucketList, 0, sizeof(fBucketList[0]) * fHashModulus);
 }
 
 template <class TVal> RefHash3KeysIdPool<TVal>::~RefHash3KeysIdPool()
@@ -181,6 +181,8 @@ containsKey(const void* const key1, const int key2, const int key3) const
 
 template <class TVal> void RefHash3KeysIdPool<TVal>::removeAll()
 {
+    if (fIdCounter == 0) return;
+
     // Clean up the buckets first
     for (unsigned int buckInd = 0; buckInd < fHashModulus; buckInd++)
     {

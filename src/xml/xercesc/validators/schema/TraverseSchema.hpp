@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -12,10 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-
-/*
- * $Id: TraverseSchema.hpp 176347 2005-03-17 08:18:49Z amassari $
  */
 
 #if !defined(TRAVERSESCHEMA_HPP)
@@ -227,6 +224,8 @@ private:
                            const XMLCh* const text2 = 0,
                            const XMLCh* const text3 = 0,
                            const XMLCh* const text4 = 0);
+    void reportSchemaError(const DOMElement* const elem,
+                           const XMLException&     except);
 
     // -----------------------------------------------------------------------
     //  Private Helper methods
@@ -252,6 +251,8 @@ private:
       *   rootElem - top element for a given type declaration
       *   contentElem - content must be annotation? or some other simple content
       *   isEmpty: - true if (annotation?, smth_else), false if (annotation?)
+      *   processAnnot - default is true, false if reprocessing a complex type
+      *                  since we have already processed the annotation.
       *
       * Check for Annotation if it is present, traverse it. If a sibling is
       * found and it is not an annotation return it, otherwise return 0.
@@ -259,7 +260,7 @@ private:
       */
     DOMElement* checkContent(const DOMElement* const rootElem,
                                DOMElement* const contentElem,
-                               const bool isEmpty);
+                               const bool isEmpty, bool processAnnot = true);
 
     /**
       * Parameters:

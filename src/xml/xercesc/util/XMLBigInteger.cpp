@@ -1,9 +1,10 @@
 /*
- * Copyright 2001,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLBigInteger.cpp 225499 2005-07-27 12:34:14Z cargilld $
+ * $Id: XMLBigInteger.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -135,12 +136,21 @@ void XMLBigInteger::parseBigInteger(const XMLCh* const toConvert
     {
         signValue = -1;
         startPtr++;
+        if (startPtr == endPtr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, manager);
+        }
     }
     else if (*startPtr == chPlus)
     {
         // skip the '+'
         startPtr++;
+        if (startPtr == endPtr)
+        {
+            ThrowXMLwithMemMgr(NumberFormatException, XMLExcepts::XMLNUM_Inv_chars, manager);
+        }
     }
+
 
     // Scan past any leading zero.
     while (*startPtr == chDigit_0)

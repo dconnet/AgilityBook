@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: Win32TransService.cpp 176273 2005-01-06 21:39:44Z amassari $
+ * $Id: Win32TransService.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -31,6 +32,7 @@
 #include <xercesc/util/RefHashTableOf.hpp>
 #include "Win32TransService.hpp"
 #include <windows.h>
+#include <ctype.h>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -275,6 +277,9 @@ Win32TransService::Win32TransService()
             //  interested in. There should be a code page entry and an
             //  IE entry.
             //
+            //  The Codepage entry is the default code page for a computer using that charset
+            //  while the InternetEncoding holds the code page that represents that charset
+            //
             unsigned long theType;
             unsigned int CPId;
             unsigned int IEId;
@@ -365,11 +370,9 @@ Win32TransService::Win32TransService()
         if (isAlias(encodingKey, aliasBuf, nameBufSz))
         {
             const unsigned int srcLen = strlen(aliasBuf);
-            const unsigned charLen = ::mblen(aliasBuf, MB_CUR_MAX);
-
-            if (charLen != -1) {
-                const unsigned int targetLen = srcLen/charLen;
-
+            size_t targetLen=::mbstowcs(NULL, aliasBuf, srcLen);
+            if(targetLen!=-1)
+            {
                 XMLCh* uniAlias = (XMLCh*) XMLPlatformUtils::fgMemoryManager->allocate
                 (
                     (targetLen + 1) * sizeof(XMLCh)
@@ -383,29 +386,30 @@ Win32TransService::Win32TransService()
                 if (aliasedEntry)
                 {
                     const unsigned int srcLen = strlen(nameBuf);
-                    const unsigned charLen = ::mblen(nameBuf, MB_CUR_MAX);
-                    const unsigned int targetLen = srcLen/charLen;
-                    
-                    XMLCh* uniName = (XMLCh*) XMLPlatformUtils::fgMemoryManager->allocate
-                    (
-                        (targetLen + 1) * sizeof(XMLCh)
-                    );//new XMLCh[targetLen + 1];
-                    ::mbstowcs(uniName, nameBuf, srcLen);
-                    uniName[targetLen] = 0;
-                    _wcsupr(uniName);
-
-                    //
-                    //  If the name is actually different, then take it.
-                    //  Otherwise, don't take it. They map aliases that are
-                    //  just different case.
-                    //
-                    if (::wcscmp(uniName, aliasedEntry->getEncodingName()))
+                    size_t targetLen=::mbstowcs(NULL, nameBuf, srcLen);
+                    if(targetLen!=-1)
                     {
-                        CPMapEntry* newEntry = new CPMapEntry(uniName, aliasedEntry->getWinCP(), aliasedEntry->getIEEncoding());
-                        fCPMap->put((void*)newEntry->getEncodingName(), newEntry);
-                    }
+                        XMLCh* uniName = (XMLCh*) XMLPlatformUtils::fgMemoryManager->allocate
+                        (
+                            (targetLen + 1) * sizeof(XMLCh)
+                        );//new XMLCh[targetLen + 1];
+                        ::mbstowcs(uniName, nameBuf, srcLen);
+                        uniName[targetLen] = 0;
+                        _wcsupr(uniName);
 
-                    XMLPlatformUtils::fgMemoryManager->deallocate(uniName);//delete [] uniName;
+                        //
+                        //  If the name is actually different, then take it.
+                        //  Otherwise, don't take it. They map aliases that are
+                        //  just different case.
+                        //
+                        if (::wcscmp(uniName, aliasedEntry->getEncodingName()))
+                        {
+                            CPMapEntry* newEntry = new CPMapEntry(uniName, aliasedEntry->getWinCP(), aliasedEntry->getIEEncoding());
+                            fCPMap->put((void*)newEntry->getEncodingName(), newEntry);
+                        }
+
+                        XMLPlatformUtils::fgMemoryManager->deallocate(uniName);//delete [] uniName;
+                    }
                 }
                 XMLPlatformUtils::fgMemoryManager->deallocate(uniAlias);//delete [] uniAlias;
             }
@@ -605,7 +609,7 @@ Win32Transcoder::transcodeFrom( const   XMLByte* const      srcData
         //  If we are looking at a leading byte of a multibyte sequence,
         //  then we are going to eat 2 bytes, else 1.
         //
-        unsigned char toEat = ::IsDBCSLeadByteEx(fWinCP, *inPtr) ?
+        unsigned char toEat = ::IsDBCSLeadByteEx(fIECP, *inPtr) ?
                                     2 : 1;
 
         // Make sure a whol char is in the source
@@ -615,7 +619,7 @@ Win32Transcoder::transcodeFrom( const   XMLByte* const      srcData
         // Try to translate this next char and check for an error
         const unsigned int converted = ::MultiByteToWideChar
         (
-            fWinCP
+            fIECP
             , MB_PRECOMPOSED | MB_ERR_INVALID_CHARS
             , (const char*)inPtr
             , toEat
@@ -689,7 +693,7 @@ Win32Transcoder::transcodeTo(const  XMLCh* const    srcData
         //  Do one char and see if it made it.
         const unsigned int bytesStored = ::WideCharToMultiByte
         (
-            fWinCP
+            fIECP
             , WC_COMPOSITECHECK | WC_SEPCHARS
             , srcPtr
             , 1
@@ -762,7 +766,7 @@ bool Win32Transcoder::canTranscodeTo(const unsigned int toCheck) const
     BOOL usedDef;
     const unsigned int bytesStored = ::WideCharToMultiByte
     (
-        fWinCP
+        fIECP
         , WC_COMPOSITECHECK | WC_SEPCHARS
         , srcBuf
         , srcCount

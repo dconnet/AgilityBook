@@ -65,8 +65,8 @@ be called which uses WiX to generate the .msi install files.
 
 Xerces-C: http://xml.apache.org/dist/xerces-c/.
 This used to be an external package, but has now been moved into ARBs
-codeline as of v1.9.2.12.
-This program has been tested with 2.2 and 2.7.
+codeline as of v1.9.2.12. Xerces will now be upgraded as needed.
+This program has been tested with 2.2 and 2.7 dlls.
   - AgilityBook.cpp issues some warnings/comments about the version that
     is currently in use during compilation.
 Note: To compile for x64, (Xerces)/src/xercesc/util/AutoSense.hpp needs

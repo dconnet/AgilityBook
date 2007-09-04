@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: XMLScanner.hpp 191668 2005-06-21 15:34:32Z cargilld $
+ * $Id: XMLScanner.hpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 #if !defined(XMLSCANNER_HPP)
@@ -166,6 +167,15 @@ public :
         , const char* const         text2 = 0
         , const char* const         text3 = 0
         , const char* const         text4 = 0
+    );
+    void emitError
+    (
+        const   XMLErrs::Codes    toEmit
+        , const XMLExcepts::Codes   originalErrorCode
+        , const XMLCh* const        text1 = 0
+        , const XMLCh* const        text2 = 0
+        , const XMLCh* const        text3 = 0
+        , const XMLCh* const        text4 = 0
     );
 
     // -----------------------------------------------------------------------
@@ -1289,7 +1299,7 @@ inline void XMLScanner::setValidateAnnotations(const bool newValue)
 inline void XMLScanner::setInputBufferSize(const size_t bufferSize)
 {
     fBufferSize = bufferSize;
-    fCDataBuf.setFullHandler(this, fBufferSize);
+    fCDataBuf.setFullHandler(this, (unsigned int)fBufferSize);
 }
 
 inline void XMLScanner::setIgnoredCachedDTD(const bool newValue)

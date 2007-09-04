@@ -1,9 +1,10 @@
 /*
- * Copyright 2002, 2003,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: SGXMLScanner.cpp 240237 2005-08-26 13:14:19Z cargilld $
+ * $Id: SGXMLScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 
@@ -46,6 +47,7 @@
 #include <xercesc/validators/schema/identity/IC_Selector.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
 #include <xercesc/util/HashPtr.hpp>
+#include <xercesc/util/XMLStringTokenizer.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -251,6 +253,7 @@ void SGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -258,6 +261,7 @@ void SGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -265,6 +269,7 @@ void SGXMLScanner::scanDocument(const InputSource& src)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -431,6 +436,7 @@ bool SGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Warning
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -438,6 +444,7 @@ bool SGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -445,6 +452,7 @@ bool SGXMLScanner::scanNext(XMLPScanToken& token)
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -852,7 +860,7 @@ void SGXMLScanner::scanEndTag(bool& gotData)
 
     // Make sure that its the end of the element that we expect
     const XMLCh *elemName = fElemStack.getCurrentSchemaElemName();
-    const ElemStack::StackElem* topElem = fElemStack.popTop(); 
+    const ElemStack::StackElem* topElem = fElemStack.topElement();
     if (!fReaderMgr.skippedString(elemName))
     {
         emitError
@@ -861,11 +869,9 @@ void SGXMLScanner::scanEndTag(bool& gotData)
             , elemName
         );
         fReaderMgr.skipPastChar(chCloseAngle);
+        fElemStack.popTop(); 
         return;
     }
-
-    // See if it was the root element, to avoid multiple calls below
-    const bool isRoot = fElemStack.isEmpty();
 
     fPSVIElemContext.fErrorOccurred = fErrorStack->pop();
 
@@ -979,6 +985,13 @@ void SGXMLScanner::scanEndTag(bool& gotData)
         }
 
     }
+
+    // QName dv needed topElem to resolve URIs on the checkContent 
+    fElemStack.popTop(); 
+
+    // See if it was the root element, to avoid multiple calls below
+    const bool isRoot = fElemStack.isEmpty();
+
     if (fPSVIHandler)
     {
         endElementPSVI
@@ -1506,8 +1519,10 @@ bool SGXMLScanner::scanStartTag(bool& gotData)
 
         // switch grammar if the typeinfo has a different grammar (happens when there is xsi:type)
         XMLCh* typeName = typeinfo->getTypeName();
-        const XMLCh poundStr[] = {chPound, chNull};
-        if (!XMLString::startsWith(typeName, poundStr)) {
+        //anonymous used to have a name starting with #
+        //const XMLCh poundStr[] = {chPound, chNull};
+        //if (!XMLString::startsWith(typeName, poundStr)) {
+        if (!typeinfo->getAnonymous()) {        
             const int comma = XMLString::indexOf(typeName, chComma);
             if (comma > 0) {
                 XMLBuffer prefixBuf(comma+1, fMemoryManager);
@@ -1521,6 +1536,17 @@ bool SGXMLScanner::scanStartTag(bool& gotData)
                     (
                         XMLValid::GrammarNotFound
                         , prefixBuf.getRawBuffer()
+                    );
+                }
+            }
+            else if (comma == 0) {
+                bool errorCondition = !switchGrammar(XMLUni::fgZeroLenString) && fValidate;
+                if (errorCondition && !laxThisOne)
+                {
+                    fValidator->emitError
+                    (
+                        XMLValid::GrammarNotFound
+                        , XMLUni::fgZeroLenString
                     );
                 }
             }
@@ -1697,6 +1723,9 @@ bool SGXMLScanner::scanStartTag(bool& gotData)
                        );                
             }
 
+        }
+        else if (fGrammarType == Grammar::SchemaGrammarType) {
+            ((SchemaValidator*)fValidator)->setNillable(false);
         }
 
         if (fPSVIHandler)
@@ -1920,12 +1949,14 @@ Grammar* SGXMLScanner::loadGrammar(const   InputSource& src
                 emitError
                 (
                     XMLErrs::DisplayErrorMessage
+                    , excToCatch.getCode()
                     , excToCatch.getMessage()
                 );
             else if (excToCatch.getErrorType() >= XMLErrorReporter::ErrType_Fatal)
                 emitError
                 (
                     XMLErrs::XMLException_Fatal
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -1933,6 +1964,7 @@ Grammar* SGXMLScanner::loadGrammar(const   InputSource& src
                 emitError
                 (
                     XMLErrs::XMLException_Error
+                    , excToCatch.getCode()
                     , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
@@ -2192,7 +2224,142 @@ SGXMLScanner::buildAttList(const  RefVectorOf<KVStringPair>&  providedAttrs
         XMLAttDef::AttTypes attType;
         DatatypeValidator *attrValidator = 0;
         PSVIAttribute *psviAttr = 0;
-        if (!isNSAttr)
+        bool otherXSI = false;
+
+        if (isNSAttr)
+        {
+            if(fUndeclaredAttrRegistryNS->containsKey(suffPtr, uriId))
+            {
+                emitError
+                ( 
+                    XMLErrs::AttrAlreadyUsedInSTag
+                    , namePtr
+                    , elemDecl->getFullName()
+                );
+                fPSVIElemContext.fErrorOccurred = true;
+            }
+            else
+            {
+                bool ValueValidate = false;
+                bool tokenizeBuffer = false;
+
+                if (uriId == fXMLNSNamespaceId)
+                {
+                    attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
+                }
+                else if (XMLString::equals(getURIText(uriId), SchemaSymbols::fgURI_XSI))
+                {
+                    if (XMLString::equals(suffPtr, SchemaSymbols::fgATT_NILL))
+                    {
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_BOOLEAN);
+
+                        ValueValidate = true;
+                    }
+                    else if (XMLString::equals(suffPtr, SchemaSymbols::fgXSI_SCHEMALOCACTION))
+                    {
+                        // use anyURI as the validator
+                        // tokenize the data and use the anyURI data for each piece
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
+                        //We should validate each value in the schema location however
+                        //this lead to a performance degradation of around 4%.  Since
+                        //the first value of each pair needs to match what is in the
+                        //schema document and the second value needs to be valid in
+                        //order to open the document we won't validate it.  Need to
+                        //do performance analysis of the anyuri datatype.
+                        //ValueValidate = true;
+                        ValueValidate = false;
+                        tokenizeBuffer = true;                        
+                    }
+                    else if (XMLString::equals(suffPtr, SchemaSymbols::fgXSI_NONAMESPACESCHEMALOCACTION))
+                    {
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
+                        //We should validate this value however
+                        //this lead to a performance degradation of around 4%.  Since
+                        //the value needs to be valid in
+                        //order to open the document we won't validate it.  Need to
+                        //do performance analysis of the anyuri datatype.
+                        //ValueValidate = true;
+                        ValueValidate = false;
+                    }
+                    else if (XMLString::equals(suffPtr, SchemaSymbols::fgXSI_TYPE))
+                    {
+                        attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_QNAME);
+
+                        ValueValidate = true;
+                    }
+                    else {
+                        otherXSI = true;                       
+                    }
+                }
+
+                if (!otherXSI) {
+                    fUndeclaredAttrRegistryNS->put((void *)suffPtr, uriId, 0);
+
+                    // Just normalize as CDATA
+                    attType = XMLAttDef::CData;
+                    normalizeAttRawValue
+                    (
+                        namePtr
+                        , curPair->getValue()
+                        , normBuf
+                    );                    
+
+                    if (fValidate && attrValidator && ValueValidate)
+                    {
+                        ValidationContext* const    theContext =
+                            getValidationContext();
+
+                        if (theContext)
+                        {
+                            try
+                            {
+                                if (tokenizeBuffer) {
+                                    XMLStringTokenizer tokenizer(normBuf.getRawBuffer(), fMemoryManager);                                    
+                                    while (tokenizer.hasMoreTokens()) {                                       
+                                        attrValidator->validate(
+                                            tokenizer.nextToken(),
+                                            theContext,
+                                            fMemoryManager);
+                                    }                                  
+                                }
+                                else {
+                                    attrValidator->validate(
+                                        normBuf.getRawBuffer(),
+                                        theContext,
+                                        fMemoryManager);
+                                }
+                            }
+                            catch (const XMLException& idve)
+                            {
+                                fValidator->emitError (XMLValid::DatatypeError, idve.getCode(), idve.getType(), idve.getMessage());
+                            }
+                        }
+                    }
+
+                    if(getPSVIHandler() && fGrammarType == Grammar::SchemaGrammarType)
+                    {
+	                    psviAttr = fPSVIAttrList->getPSVIAttributeToFill(suffPtr, fURIStringPool->getValueForId(uriId)); 
+	                    XSSimpleTypeDefinition *validatingType = (attrValidator)
+                            ? (XSSimpleTypeDefinition *)fModel->getXSObject(attrValidator)
+                            : 0;
+                        // no attribute declarations for these...
+	                    psviAttr->reset(
+	                        fRootElemName
+	                        , PSVIItem::VALIDITY_NOTKNOWN
+	                        , PSVIItem::VALIDATION_NONE
+	                        , validatingType
+	                        , 0
+	                        , 0
+                            , false
+	                        , 0
+                            , attrValidator
+                        );
+                    }
+                }
+            }
+        }
+
+        if (!isNSAttr || otherXSI)        
         {
             // Some checking for attribute wild card first (for schema)
             bool laxThisOne = false;
@@ -2522,39 +2689,6 @@ SGXMLScanner::buildAttList(const  RefVectorOf<KVStringPair>&  providedAttrs
 	                );
                 }
 	        }
-        }
-        else
-        {
-            // Just normalize as CDATA
-            attType = XMLAttDef::CData;
-            normalizeAttRawValue
-            (
-                namePtr
-                , curPair->getValue()
-                , normBuf
-            );
-            if((uriId == fXMLNSNamespaceId)
-                  || XMLString::equals(getURIText(uriId), SchemaSymbols::fgURI_XSI))
-                attrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYURI);
-            if(getPSVIHandler())
-            {
-                psviAttr = fPSVIAttrList->getPSVIAttributeToFill(suffPtr, fURIStringPool->getValueForId(uriId));
-                XSSimpleTypeDefinition *validatingType = 0;
-                if (attrValidator && fModel)
-                    validatingType = (XSSimpleTypeDefinition *)fModel->getXSObject(attrValidator);
-                // no attribute declarations for these...
-	            psviAttr->reset(
-	                fRootElemName
-	                , PSVIItem::VALIDITY_NOTKNOWN
-	                , PSVIItem::VALIDATION_NONE
-	                , validatingType
-	                , 0
-	                , 0
-                    , false
-	                , 0
-                    , attrValidator
-                );
-            }
         }
 
         //  Add this attribute to the attribute list that we use to pass them
@@ -3435,23 +3569,29 @@ void SGXMLScanner::scanRawAttrListforNameSpaces(int attCount)
         XMLBufBid bbXsi(&fBufMgr);
         XMLBuffer& fXsiType = bbXsi.getBuffer();
 
-        QName attName(fMemoryManager);
-
         for (index = 0; index < attCount; index++)
         {
             // each attribute has the prefix:suffix="value"
             const KVStringPair* curPair = fRawAttrList->elementAt(index);
             const XMLCh* rawPtr = curPair->getKey();
+            const XMLCh* prefPtr;
 
-            attName.setName(rawPtr, fEmptyNamespaceId);
-            const XMLCh* prefPtr = attName.getPrefix();
+            int   colonInd = fRawAttrColonList[index];
+
+            if (colonInd != -1) {
+                fURIBuf.set(rawPtr, colonInd);
+                prefPtr = fURIBuf.getRawBuffer();
+            }
+            else {
+                prefPtr = XMLUni::fgZeroLenString;
+            }            
 
             // if schema URI has been seen, scan for the schema location and uri
             // and resolve the schema grammar; or scan for schema type
             if (resolvePrefix(prefPtr, ElemStack::Mode_Attribute) == fSchemaNamespaceId) {
 
                 const XMLCh* valuePtr = curPair->getValue();
-                const XMLCh* suffPtr = attName.getLocalPart();
+                const XMLCh*  suffPtr = &rawPtr[colonInd + 1];
 
                 if (XMLString::equals(suffPtr, SchemaSymbols::fgXSI_SCHEMALOCACTION))
                     parseSchemaLocation(valuePtr);

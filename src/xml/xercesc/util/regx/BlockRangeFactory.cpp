@@ -1,9 +1,10 @@
 /*
- * Copyright 2001-2002,2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: BlockRangeFactory.cpp 191054 2005-06-17 02:56:35Z jberry $
+ * $Id: BlockRangeFactory.cpp 568078 2007-08-21 11:43:25Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -39,7 +40,7 @@ const int   BLOCKNAMESIZE = 93;
 // only define Specials as FEFF..FEFF, missing Specials as FFF0..FFFD, add manually
 // only define private use as E000..F8FF,
 //    missing 2 private use (F0000..FFFFD and 100000..10FFFD), add manually
-const XMLCh fgBlockNames[][BLOCKNAMESIZE] =
+const XMLCh fgBlockNames[][50] =
 {
     { chLatin_I, chLatin_s, chLatin_B, chLatin_a, chLatin_s, chLatin_i, chLatin_c, chLatin_L, chLatin_a,
       chLatin_t, chLatin_i, chLatin_n,  chNull },

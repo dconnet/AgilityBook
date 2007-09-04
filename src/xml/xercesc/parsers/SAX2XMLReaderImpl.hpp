@@ -1,9 +1,10 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  * 
  *      http://www.apache.org/licenses/LICENSE-2.0
  * 
@@ -15,7 +16,7 @@
  */
 
 /*
- * $Id: SAX2XMLReaderImpl.hpp 191671 2005-06-21 15:48:06Z cargilld $
+ * $Id: SAX2XMLReaderImpl.hpp 569031 2007-08-23 15:05:28Z amassari $
  */
 
 #if !defined(SAX2XMLReaderImpl_HPP)
@@ -150,7 +151,7 @@ public :
      * is deleted, callers need to copy and store the returned information
      * somewhere else; otherwise you may get unexpected result.  Since the returned
      * pointer is a generic void pointer, see
-     * http://xml.apache.org/xerces-c/program-sax2.html#SAX2Properties to learn
+     * http://xerces.apache.org/xerces-c/program-sax2.html#SAX2Properties to learn
      * exactly what type of property value each property returns for replication.
      *
      * @param name The unique identifier (URI) of the property being set.
@@ -268,9 +269,9 @@ public :
   /**
     * Set the state of any feature in a SAX2 XMLReader.
     * Supported features in SAX2 for xerces-c are:
-    * <br>(See http://xml.apache.org/xerces-c/program-sax2.html#SAX2Features for detail description).
+    * <br>(See http://xerces.apache.org/xerces-c/program-sax2.html#SAX2Features for detail description).
     *
-    * <br>http://xml.org/sax/features/validation (default: true)
+    * <br>http://xml.org/sax/features/validation (default: false)
     * <br>http://xml.org/sax/features/namespaces (default: true)
     * <br>http://xml.org/sax/features/namespace-prefixes (default: false)
     * <br>http://apache.org/xml/features/validation/dynamic (default: false)
@@ -293,20 +294,20 @@ public :
   /**
     * Set the value of any property in a SAX2 XMLReader.
     * Supported properties in SAX2 for xerces-c are:
-    * <br>(See http://xml.apache.org/xerces-c/program-sax2.html#SAX2Properties for detail description).
+    * <br>(See http://xerces.apache.org/xerces-c/program-sax2.html#SAX2Properties for detail description).
     *
     * <br>http://apache.org/xml/properties/schema/external-schemaLocation
     * <br>http://apache.org/xml/properties/schema/external-noNamespaceSchemaLocation.
     *
     * It takes a void pointer as the property value.  Application is required to initialize this void
-    * pointer to a correct type.  See http://xml.apache.org/xerces-c/program-sax2.html#SAX2Properties
+    * pointer to a correct type.  See http://xerces.apache.org/xerces-c/program-sax2.html#SAX2Properties
     * to learn exactly what type of property value each property expects for processing.
     * Passing a void pointer that was initialized with a wrong type will lead to unexpected result.
     * If the same property is set more than once, the last one takes effect.
     *
     * @param name The unique identifier (URI) of the property being set.
     * @param value The requested value for the property.  See
-    *            http://xml.apache.org/xerces-c/program-sax2.html#SAX2Properties to learn
+    *            http://xerces.apache.org/xerces-c/program-sax2.html#SAX2Properties to learn
     *            exactly what type of property value each property expects for processing.
     *            Passing a void pointer that was initialized with a wrong type will lead
     *            to unexpected result.
