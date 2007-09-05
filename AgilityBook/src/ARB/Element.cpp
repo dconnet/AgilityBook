@@ -85,7 +85,7 @@
 #if defined(_MSC_VER)
 #if _XERCES_VERSION < 20200
 #error Minimum version of Xerces is 2.2.
-#elif _XERCES_VERSION > 20700
+#elif _XERCES_VERSION > 20800
 #pragma message ( "Warning: Untested version of Xerces" )
 #endif
 #pragma message ( "Compiling with Xerces " XERCES_FULLVERSIONDOT )
