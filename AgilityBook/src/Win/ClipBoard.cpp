@@ -239,7 +239,7 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		std::string const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
+	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(char)*(inData.length()+1));
 }
 
 
@@ -247,7 +247,7 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		std::wstring const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
+	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(wchar_t)*(inData.length()+1));
 }
 
 
@@ -255,7 +255,7 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		CStringA const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), (LPCSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
+	return SetData(GetClipboardFormat(clpFmt), (LPCSTR)inData, sizeof(char)*(inData.GetLength()+1));
 }
 
 
@@ -264,7 +264,7 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		CStringW const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), (LPCWSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
+	return SetData(GetClipboardFormat(clpFmt), (LPCWSTR)inData, sizeof(wchar_t)*(inData.GetLength()+1));
 }
 #endif
 
@@ -278,7 +278,7 @@ bool CClipboardDataWriter::SetData(std::string const& inData)
 
 bool CClipboardDataWriter::SetData(std::wstring const& inData)
 {
-	return SetData(CF_UNICODETEXT, inData.c_str(), sizeof(TCHAR)*(inData.length()+1));
+	return SetData(CF_UNICODETEXT, inData.c_str(), sizeof(wchar_t)*(inData.length()+1));
 }
 
 
@@ -291,7 +291,7 @@ bool CClipboardDataWriter::SetData(CStringA const& inData)
 #if _MSC_VER >= 1300
 bool CClipboardDataWriter::SetData(CStringW const& inData)
 {
-	return SetData(CF_UNICODETEXT, (LPCWSTR)inData, sizeof(TCHAR)*(inData.GetLength()+1));
+	return SetData(CF_UNICODETEXT, (LPCWSTR)inData, sizeof(wchar_t)*(inData.GetLength()+1));
 }
 #endif
 
