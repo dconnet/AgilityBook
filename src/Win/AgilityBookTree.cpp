@@ -754,7 +754,7 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 			if (pDog)
 			{
 				CErrorCallback err;
-				if (pDog->Load(GetDocument()->GetConfig(), tree->GetElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				if (pDog->Load(GetDocument()->GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());

@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces.
  *
  * Revision History
+ * @li 2007-09-06 DRC Added GetNthElementNode
  * @li 2007-08-15 DRC Modified to support mixed text/nodes.
  * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
  * @li 2007-03-37 DRC Fixed a problem releasing transcoded data.
@@ -621,7 +622,6 @@ char const* StringTranscode::TranscodeElement(XMLCh const* const xmlStr)
 typedef std::wstring StringDOM;
 
 #endif
-
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1509,6 +1509,29 @@ ElementNodePtr ElementNode::GetElementNode(int inIndex) const
 ElementNodePtr ElementNode::GetElementNode(int inIndex)
 {
 	return boost::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
+}
+
+
+ElementNodePtr ElementNode::GetNthElementNode(int inIndex) const
+{
+	return const_cast<ElementNode*>(this)->GetNthElementNode(inIndex);
+}
+
+
+ElementNodePtr ElementNode::GetNthElementNode(int inIndex)
+{
+	int index = -1;
+	int nElements = static_cast<int>(m_Elements.size());
+	for (int iElement = 0; iElement < nElements; ++iElement)
+	{
+		if (Element::Element_Node == m_Elements[iElement]->GetType())
+		{
+			++index;
+			if (index == inIndex)
+				return GetElementNode(iElement);
+		}
+	}
+	return ElementNodePtr();
 }
 
 

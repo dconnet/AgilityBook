@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-09-06 DRC Added GetNthElementNode
  * @li 2007-08-15 DRC Modified to support mixed text/nodes.
  * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
  * @li 2003-11-26 DRC Changed version number to a complex value.
@@ -303,6 +304,13 @@ public:
 
 	ElementNodePtr GetElementNode(int inIndex) const;
 	ElementNodePtr GetElementNode(int inIndex);
+
+	/**
+	 * Get the specified element node. This will not return the Nth item,
+	 * rather it will get the Nth node, skipping text nodes.
+	 */
+	ElementNodePtr GetNthElementNode(int inIndex) const;
+	ElementNodePtr GetNthElementNode(int inIndex);
 
 	/**
 	 * Add an element.

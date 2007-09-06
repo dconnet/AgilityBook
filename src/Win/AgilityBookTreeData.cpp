@@ -409,10 +409,13 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 			std::vector<ARBDogRunPtr> runs;
 			for (int iRun = 0; iRun < tree->GetElementCount(); ++iRun)
 			{
+				ElementNodePtr element = tree->GetElementNode(iRun);
+				if (!element)
+					continue;
 				ARBDogRunPtr pRun(ARBDogRun::New());
 				if (pRun)
 				{
-					if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), tree->GetElementNode(iRun), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+					if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 						runs.push_back(pRun);
 				}
 			}
@@ -481,7 +484,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 			if (pNewTrial)
 			{
 				CErrorCallback err;
-				if (pNewTrial->Load(m_pTree->GetDocument()->GetConfig(), tree->GetElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				if (pNewTrial->Load(m_pTree->GetDocument()->GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
