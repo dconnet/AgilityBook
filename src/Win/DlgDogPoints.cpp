@@ -241,7 +241,7 @@ void CDlgDogPoints::SetColumnHeaders()
 	{
 		CString str;
 		str.LoadString(colExistingPointsInfo[i].idText);
-		ARBostringstream tmp;
+		otstringstream tmp;
 		tmp << (LPCTSTR)str << _T(" (") << m_sortPoints.FindColumnOrder(i) + 1 <<')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
@@ -332,7 +332,7 @@ void CDlgDogPoints::UpdateButtons()
 			if (pData)
 				total += pData->GetData()->GetPoints();
 		}
-		ARBostringstream tmp;
+		otstringstream tmp;
 		tmp << total;
 		str = tmp.str().c_str();
 	}
@@ -431,7 +431,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(
 			break;
 		case 2: // Points
 			{
-				ARBostringstream tmp;
+				otstringstream tmp;
 				tmp << pData->GetPoints();
 				str = tmp.str().c_str();
 			}

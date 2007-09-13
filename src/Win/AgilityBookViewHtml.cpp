@@ -140,7 +140,7 @@ BOOL CAgilityBookViewHtml::CreateFromStatic(UINT nID, CWnd* pParent)
 }
 
 
-bool CAgilityBookViewHtml::SetHTML(ARBString const& csHTML)
+bool CAgilityBookViewHtml::SetHTML(tstring const& csHTML)
 {
 	// Make sure we're initialized.
 	LPDISPATCH lpDispatch = GetHtmlDocument();
@@ -248,7 +248,7 @@ void CAgilityBookViewHtml::LoadData()
 	m_Items->LoadData(this, GetDocument(), GetDocument()->GetCurrentDog());
 
 	ARBDate today(ARBDate::Today());
-	ARBostringstream data;
+	otstringstream data;
 
 	CString title;
 	title.LoadString(IDS_TITLING_POINTS);
@@ -488,7 +488,7 @@ void CAgilityBookViewHtml::OnBeforeNavigate2(
 		// Remember, spaces are now %20. Other special chars may
 		// need fixing too. Just don't use those in our links.
 		bool bDidIt = false;
-		ARBString url(lpszURL+lenApp);
+		tstring url(lpszURL+lenApp);
 		if (!url.empty())
 		{
 			size_t nItem = _ttol(url.c_str());

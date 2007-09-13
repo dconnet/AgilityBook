@@ -76,7 +76,7 @@ public:
 	/**
 	 * Translate the enum to a string.
 	 */
-	static ARBString GetScoringStyleStr(ScoringStyle inStyle);
+	static tstring GetScoringStyleStr(ScoringStyle inStyle);
 
 protected:
 	ARBConfigScoring();
@@ -99,7 +99,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Division + _T(" ") + m_Level;
 	}
@@ -109,7 +109,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -171,19 +171,19 @@ public:
 	{
 		m_ValidTo = inDate;
 	}
-	ARBString const& GetDivision() const
+	tstring const& GetDivision() const
 	{
 		return m_Division;
 	}
-	void SetDivision(ARBString const& inDiv)
+	void SetDivision(tstring const& inDiv)
 	{
 		m_Division = inDiv;
 	}
-	ARBString const& GetLevel() const
+	tstring const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(ARBString const& inLevel)
+	void SetLevel(tstring const& inLevel)
 	{
 		m_Level = inLevel;
 	}
@@ -191,7 +191,7 @@ public:
 	{
 		return m_Style;
 	}
-	ARBString GetScoringStyleStr() const
+	tstring GetScoringStyleStr() const
 	{
 		return GetScoringStyleStr(m_Style);
 	}
@@ -267,11 +267,11 @@ public:
 	{
 		m_ClosingPts = inPoints;
 	}
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -344,8 +344,8 @@ public:
 private:
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
-	ARBString m_Division;
-	ARBString m_Level;
+	tstring m_Division;
+	tstring m_Level;
 	ScoringStyle m_Style;
 	bool m_bDropFractions;
 	bool m_bCleanQ;
@@ -353,7 +353,7 @@ private:
 	bool m_bTimeFaultsOver;
 	bool m_bSubtractTimeFaults;
 	short m_TimeFaultMultiplier;
-	ARBString m_Note;
+	tstring m_Note;
 	short m_OpeningPts;
 	short m_ClosingPts;
 	bool m_bSuperQ;
@@ -399,8 +399,8 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoringPtr>& outList) const;
@@ -414,8 +414,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigScoringPtr* outEvent = NULL) const;
 
@@ -427,8 +427,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate) const;
 
 	/**

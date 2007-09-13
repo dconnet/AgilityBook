@@ -35,7 +35,7 @@
  *  http://www.codeproject.com/string/ammimeutils.asp
  *  AMMimeUtils, posted 3/23/2001 by Anders Molin
  *
- * Note, we are using ARBString's mainly for consistency.
+ * Note, we are using tstring's mainly for consistency.
  * The actual contained data is still 8bit chars.
  *
  * Revision History
@@ -57,7 +57,7 @@ public:
 	 * @note User must call Release() on outBinData
 	 */
 	static bool Decode(
-			ARBString const& inBase64,
+			tstring const& inBase64,
 			char*& outBinData,
 			size_t& outBytes);
 
@@ -77,5 +77,5 @@ public:
 	static bool Encode(
 			char const* inBinData,
 			size_t inBytes,
-			ARBString& outData);
+			tstring& outData);
 };

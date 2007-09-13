@@ -138,9 +138,9 @@ public:
 	 * @param inTitle Name of title.
 	 * @return Nice name (longname) of a title.
 	 */
-	ARBString GetTitleNiceName(
-			ARBString const& inVenue,
-			ARBString const& inTitle) const;
+	tstring GetTitleNiceName(
+			tstring const& inVenue,
+			tstring const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -148,7 +148,7 @@ public:
 	 * @param bAbbrevFirst List Name before or after Longname.
 	 * @return Complete name of title (name + longname).
 	 */
-	ARBString GetTitleCompleteName(
+	tstring GetTitleCompleteName(
 			ARBDogTitlePtr inTitle,
 			bool bAbbrevFirst = true) const;
 
@@ -162,7 +162,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			ARBostringstream& ioInfo);
+			otstringstream& ioInfo);
 
 	/*
 	 * Getters.

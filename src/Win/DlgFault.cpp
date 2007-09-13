@@ -53,7 +53,7 @@ static char THIS_FILE[] = __FILE__;
 // CDlgFault dialog
 
 CDlgFault::CDlgFault(
-		std::set<ARBString>& faults,
+		std::set<tstring>& faults,
 		LPCTSTR pFault,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgFault::IDD, pParent)
@@ -90,7 +90,7 @@ BOOL CDlgFault::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 	
-	for (std::set<ARBString>::const_iterator iter = m_setFaults.begin(); iter != m_setFaults.end(); ++iter)
+	for (std::set<tstring>::const_iterator iter = m_setFaults.begin(); iter != m_setFaults.end(); ++iter)
 	{
 		int index = m_ctrlFaults.AddString((*iter).c_str());
 		if (m_Faults == (*iter).c_str())

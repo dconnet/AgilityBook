@@ -129,13 +129,13 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 }
 
 
-ARBString ARBDogTitle::GetGenericName() const
+tstring ARBDogTitle::GetGenericName() const
 {
-	ARBString name;
+	tstring name;
 	name = m_Name;
 	if (m_bShowInstanceOne || 1 < m_Instance)
 	{
-		ARBostringstream buffer;
+		otstringstream buffer;
 		// Keep sync'd with ARBConfigTitle
 		buffer << m_Instance;
 		name += buffer.str();
@@ -144,7 +144,7 @@ ARBString ARBDogTitle::GetGenericName() const
 }
 
 
-size_t ARBDogTitle::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBDogTitle::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -178,7 +178,7 @@ bool ARBDogTitle::Load(
 	}
 	if (!inConfig.GetVenues().FindVenue(m_Venue))
 	{
-		ARBString msg(INVALID_VENUE_NAME);
+		tstring msg(INVALID_VENUE_NAME);
 		msg += m_Venue;
 		msg += _T("'");
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
@@ -209,9 +209,9 @@ bool ARBDogTitle::Load(
 		break;
 	case ElementNode::eInvalidValue:
 		{
-			ARBString attrib;
+			tstring attrib;
 			inTree->GetAttrib(ATTRIB_TITLE_DATE, attrib);
-			ARBString msg(INVALID_DATE);
+			tstring msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
 			return false;
@@ -242,7 +242,7 @@ bool ARBDogTitle::Load(
 		}
 		else
 		{
-			ARBString msg(INVALID_TITLE);
+			tstring msg(INVALID_TITLE);
 			msg += m_Venue;
 			msg += _T("/");
 			msg += m_Name;
@@ -326,7 +326,7 @@ void ARBDogTitleList::sort()
 }
 
 
-int ARBDogTitleList::NumTitlesInVenue(ARBString const& inVenue) const
+int ARBDogTitleList::NumTitlesInVenue(tstring const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -339,8 +339,8 @@ int ARBDogTitleList::NumTitlesInVenue(ARBString const& inVenue) const
 
 
 bool ARBDogTitleList::FindTitle(
-		ARBString const& inVenue,
-		ARBString const& inTitle,
+		tstring const& inVenue,
+		tstring const& inTitle,
 		ARBDogTitlePtr* outTitle) const
 {
 	if (outTitle)
@@ -366,8 +366,8 @@ bool ARBDogTitleList::FindTitle(
 
 
 short ARBDogTitleList::FindMaxInstance(
-		ARBString const& inVenue,
-		ARBString const& inTitle) const
+		tstring const& inVenue,
+		tstring const& inTitle) const
 {
 	short inst = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -384,8 +384,8 @@ short ARBDogTitleList::FindMaxInstance(
 
 
 int ARBDogTitleList::RenameVenue(
-		ARBString const& inOldVenue,
-		ARBString const& inNewVenue)
+		tstring const& inOldVenue,
+		tstring const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -400,9 +400,9 @@ int ARBDogTitleList::RenameVenue(
 }
 
 
-int ARBDogTitleList::DeleteVenue(ARBString const& inVenue)
+int ARBDogTitleList::DeleteVenue(tstring const& inVenue)
 {
-	ARBString venue(inVenue);
+	tstring venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -419,8 +419,8 @@ int ARBDogTitleList::DeleteVenue(ARBString const& inVenue)
 
 
 int ARBDogTitleList::NumTitlesInUse(
-		ARBString const& inVenue,
-		ARBString const& inTitle) const
+		tstring const& inVenue,
+		tstring const& inTitle) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -433,9 +433,9 @@ int ARBDogTitleList::NumTitlesInUse(
 
 
 int ARBDogTitleList::RenameTitle(
-		ARBString const& inVenue,
-		ARBString const& inOldTitle,
-		ARBString const& inNewTitle)
+		tstring const& inVenue,
+		tstring const& inOldTitle,
+		tstring const& inNewTitle)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)

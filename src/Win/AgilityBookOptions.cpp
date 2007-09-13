@@ -796,7 +796,7 @@ void CAgilityBookOptions::GetColumnOrder(
 		std::vector<int>& outValues)
 {
 	outValues.clear();
-	ARBostringstream item;
+	otstringstream item;
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 	item << _T("col") << static_cast<UINT>(idxColumn);
 #else
@@ -1077,14 +1077,14 @@ void CAgilityBookOptions::SetColumnOrder(
 		size_t idxColumn,
 		std::vector<int> const& inValues)
 {
-	ARBostringstream data;
+	otstringstream data;
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
 		if (0 < i)
 			data << _T(",");
 		data << inValues[i];
 	}
-	ARBostringstream item;
+	otstringstream item;
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 	item << _T("col") << static_cast<UINT>(idxColumn);
 #else
@@ -1161,7 +1161,7 @@ void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 
 ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 {
-	ARBostringstream section;
+	otstringstream section;
 	section << _T("dateFormat") << static_cast<int>(inItem);
 	ARBDate::DateFormat def;
 	switch (inItem)
@@ -1183,7 +1183,7 @@ void CAgilityBookOptions::SetDateFormat(
 		FormattedDate inItem,
 		ARBDate::DateFormat inFormat)
 {
-	ARBostringstream section;
+	otstringstream section;
 	section << _T("dateFormat") << static_cast<int>(inItem);
 	AfxGetApp()->WriteProfileInt(_T("Settings"), section.str().c_str(), static_cast<int>(inFormat));
 }

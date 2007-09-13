@@ -264,7 +264,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		std::set<ARBString> strings;
+		std::set<tstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewTrainingData* pData = m_pView->GetItemData(index);
@@ -279,7 +279,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())

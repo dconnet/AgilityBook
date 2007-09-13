@@ -138,7 +138,7 @@ bool ARBConfigSubLevelList::Load(
 }
 
 
-bool ARBConfigSubLevelList::FindSubLevel(ARBString const& inName) const
+bool ARBConfigSubLevelList::FindSubLevel(tstring const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -150,7 +150,7 @@ bool ARBConfigSubLevelList::FindSubLevel(ARBString const& inName) const
 
 
 bool ARBConfigSubLevelList::AddSubLevel(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigSubLevelPtr* outLevel)
 {
 	if (outLevel)
@@ -167,9 +167,9 @@ bool ARBConfigSubLevelList::AddSubLevel(
 }
 
 
-bool ARBConfigSubLevelList::DeleteSubLevel(ARBString const& inName)
+bool ARBConfigSubLevelList::DeleteSubLevel(tstring const& inName)
 {
-	ARBString name(inName);
+	tstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

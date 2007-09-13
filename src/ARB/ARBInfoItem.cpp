@@ -104,7 +104,7 @@ bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 }
 
 
-size_t ARBInfoItem::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBInfoItem::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -125,7 +125,7 @@ bool ARBInfoItem::Load(
 		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
-		ARBString const& inItemName)
+		tstring const& inItemName)
 {
 	ASSERT(inTree);
 	if (!inTree)
@@ -142,7 +142,7 @@ bool ARBInfoItem::Load(
 
 bool ARBInfoItem::Save(
 		ElementNodePtr ioTree,
-		ARBString const& inItemName) const
+		tstring const& inItemName) const
 {
 	ASSERT(ioTree);
 	if (!ioTree)
@@ -156,7 +156,7 @@ bool ARBInfoItem::Save(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBInfoItemList::ARBInfoItemList(ARBString const& inItemName)
+ARBInfoItemList::ARBInfoItemList(tstring const& inItemName)
 	: m_ItemName(inItemName)
 {
 }
@@ -226,7 +226,7 @@ void ARBInfoItemList::sort()
 }
 
 
-size_t ARBInfoItemList::GetAllItems(std::set<ARBString>& outNames) const
+size_t ARBInfoItemList::GetAllItems(std::set<tstring>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -238,7 +238,7 @@ size_t ARBInfoItemList::GetAllItems(std::set<ARBString>& outNames) const
 }
 
 
-void ARBInfoItemList::CondenseContent(std::set<ARBString> const& inNamesInUse)
+void ARBInfoItemList::CondenseContent(std::set<tstring> const& inNamesInUse)
 {
 	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
@@ -259,7 +259,7 @@ void ARBInfoItemList::CondenseContent(std::set<ARBString> const& inNamesInUse)
 
 
 bool ARBInfoItemList::FindItem(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBInfoItemPtr* outItem) const
 {
 	if (outItem)
@@ -279,7 +279,7 @@ bool ARBInfoItemList::FindItem(
 
 
 bool ARBInfoItemList::AddItem(
-		ARBString const& inItem,
+		tstring const& inItem,
 		ARBInfoItemPtr* outItem)
 {
 	if (outItem)

@@ -1268,7 +1268,7 @@ bool IWizardSpreadSheet::GetRowCol(
 	};
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
-		ARBostringstream str;
+		otstringstream str;
 		str << sc_ColumnNames[inCol] << inRow + 1;
 		outCell = str.str().c_str();
 		return true;

@@ -71,7 +71,7 @@ class ARBiCal : public ICalendar
 {
 public:
 	ARBiCal(
-			ARBostream& ioStream,
+			otstream& ioStream,
 			int inVersion);
 	virtual ~ARBiCal()
 	{
@@ -166,13 +166,13 @@ private:
 			std::string const& inText,
 			bool bQuotedPrint);
 
-	ARBostream& m_ioStream;
+	otstream& m_ioStream;
 	int m_Version;
 };
 
 
 ARBiCal::ARBiCal(
-		ARBostream& ioStream,
+		otstream& ioStream,
 		int inVersion)
 	: m_ioStream(ioStream)
 	, m_Version(inVersion)
@@ -305,7 +305,7 @@ void ARBiCal::DoDTSTAMP()
 		_localtime64_s(&l, &t);
 		struct tm* pTime = &l;
 #endif
-		ARBostringstream str;
+		otstringstream str;
 		str.fill(_T('0'));
 		str.width(4);
 		str << pTime->tm_year + 1900;
@@ -335,7 +335,7 @@ ICalendar::~ICalendar()
 
 
 ICalendar* ICalendar::iCalendarBegin(
-		ARBostream& ioStream,
+		otstream& ioStream,
 		int inVersion)
 {
 	ICalendar* pCal = NULL;
@@ -451,9 +451,9 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 }
 
 
-ARBString ARBCalendar::GetUID(eUidType inType) const
+tstring ARBCalendar::GetUID(eUidType inType) const
 {
-	ARBostringstream str;
+	otstringstream str;
 	switch (inType)
 	{
 	default:
@@ -476,7 +476,7 @@ ARBString ARBCalendar::GetUID(eUidType inType) const
 }
 
 
-size_t ARBCalendar::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBCalendar::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -571,9 +571,9 @@ bool ARBCalendar::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			ARBString attrib;
+			tstring attrib;
 			inTree->GetAttrib(ATTRIB_CAL_START, attrib);
-			ARBString msg(INVALID_DATE);
+			tstring msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
 		}
@@ -587,9 +587,9 @@ bool ARBCalendar::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			ARBString attrib;
+			tstring attrib;
 			inTree->GetAttrib(ATTRIB_CAL_END, attrib);
-			ARBString msg(INVALID_DATE);
+			tstring msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
 			return false;
@@ -598,9 +598,9 @@ bool ARBCalendar::Load(
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
 	{
-		ARBString attrib;
+		tstring attrib;
 		inTree->GetAttrib(ATTRIB_CAL_OPENING, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
 		return false;
@@ -608,9 +608,9 @@ bool ARBCalendar::Load(
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_DRAW, m_DateDraw))
 	{
-		ARBString attrib;
+		tstring attrib;
 		inTree->GetAttrib(ATTRIB_CAL_DRAW, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_DRAW, msg.c_str()));
 		return false;
@@ -618,9 +618,9 @@ bool ARBCalendar::Load(
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
 	{
-		ARBString attrib;
+		tstring attrib;
 		inTree->GetAttrib(ATTRIB_CAL_CLOSING, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
 		return false;
@@ -638,7 +638,7 @@ bool ARBCalendar::Load(
 
 	if (inVersion == ARBVersion(1,0))
 	{
-		ARBString attrib;
+		tstring attrib;
 		if (ElementNode::eFound == inTree->GetAttrib(_T("PlanOn"), attrib))
 		{
 			if (attrib == _T("y"))
@@ -649,7 +649,7 @@ bool ARBCalendar::Load(
 	}
 	else if (inVersion >= ARBVersion(2,0))
 	{
-		ARBString attrib;
+		tstring attrib;
 		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_CAL_ENTERED, attrib))
 		{
 			if (attrib == _T("E"))
@@ -756,7 +756,7 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	ioStream->DoSUMMARY(GetGenericName());
 	ioStream->DoLOCATION(m_Location);
 	{
-		ARBostringstream str;
+		otstringstream str;
 		if (IsTentative())
 			str << CALENDAR_TENTATIVE << _T(" ");
 		switch (GetEntered())

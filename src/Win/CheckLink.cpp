@@ -51,7 +51,7 @@ static char THIS_FILE[] = __FILE__;
 
 bool CheckLink(
 		CInternetSession& inSession,
-		ARBString const& inLink)
+		tstring const& inLink)
 {
 	bool bOk = false;
 	if (0 < inLink.length())

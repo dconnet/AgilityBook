@@ -209,7 +209,7 @@ bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
 	if (m_bHasSubNames)
 	{
 		evtTree->AddAttrib(ATTRIB_EVENT_HASSUBNAMES, m_bHasSubNames);
-		for (std::set<ARBString>::const_iterator iter = m_SubNames.begin();
+		for (std::set<tstring>::const_iterator iter = m_SubNames.begin();
 			iter != m_SubNames.end();
 			++iter)
 		{
@@ -229,11 +229,11 @@ bool ARBConfigEvent::Save(ElementNodePtr ioTree) const
 bool ARBConfigEvent::Update(
 		int indent,
 		ARBConfigEventPtr inEventNew,
-		ARBString& ioInfo)
+		tstring& ioInfo)
 {
-	ARBString info;
+	tstring info;
 
-	ARBString indentBuffer, indentName;
+	tstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
 		indentName += _T("   ");
 	indentBuffer = indentName + _T("   ");
@@ -255,7 +255,7 @@ bool ARBConfigEvent::Update(
 		bChanges = true;
 		SetHasSubNames(inEventNew->HasSubNames());
 	}
-	std::set<ARBString> oldNames, newNames;
+	std::set<tstring> oldNames, newNames;
 	GetSubNames(oldNames);
 	inEventNew->GetSubNames(newNames);
 	if (oldNames != newNames)
@@ -329,7 +329,7 @@ bool ARBConfigEvent::Update(
 }
 
 
-size_t ARBConfigEvent::GetSubNames(std::set<ARBString>& outNames) const
+size_t ARBConfigEvent::GetSubNames(std::set<tstring>& outNames) const
 {
 	outNames.clear();
 	outNames = m_SubNames;
@@ -337,7 +337,7 @@ size_t ARBConfigEvent::GetSubNames(std::set<ARBString>& outNames) const
 }
 
 
-void ARBConfigEvent::SetSubNames(std::set<ARBString> const& inNames)
+void ARBConfigEvent::SetSubNames(std::set<tstring> const& inNames)
 {
 	m_SubNames.clear();
 	m_SubNames = inNames;
@@ -360,9 +360,9 @@ bool ARBConfigEventList::Load(
 
 
 bool ARBConfigEventList::VerifyEvent(
-		ARBString const& inEvent,
-		ARBString const& inDivision,
-		ARBString const& inLevel,
+		tstring const& inEvent,
+		tstring const& inDivision,
+		tstring const& inLevel,
 		ARBDate const& inDate) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -375,9 +375,9 @@ bool ARBConfigEventList::VerifyEvent(
 
 
 bool ARBConfigEventList::FindEvent(
-		ARBString const& inEvent,
-		ARBString const& inDivision,
-		ARBString const& inLevel,
+		tstring const& inEvent,
+		tstring const& inDivision,
+		tstring const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigEventPtr* outEvent,
 		ARBConfigScoringPtr* outScoring) const
@@ -401,8 +401,8 @@ bool ARBConfigEventList::FindEvent(
 
 
 int ARBConfigEventList::RenameDivision(
-		ARBString const& inOldDiv,
-		ARBString const& inNewDiv)
+		tstring const& inOldDiv,
+		tstring const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -421,9 +421,9 @@ int ARBConfigEventList::RenameDivision(
 }
 
 
-int ARBConfigEventList::DeleteDivision(ARBString const& inDiv)
+int ARBConfigEventList::DeleteDivision(tstring const& inDiv)
 {
-	ARBString div(inDiv);
+	tstring div(inDiv);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -444,8 +444,8 @@ int ARBConfigEventList::DeleteDivision(ARBString const& inDiv)
 
 
 int ARBConfigEventList::RenameLevel(
-		ARBString const& inOldLevel,
-		ARBString const& inNewLevel)
+		tstring const& inOldLevel,
+		tstring const& inNewLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -464,9 +464,9 @@ int ARBConfigEventList::RenameLevel(
 }
 
 
-int ARBConfigEventList::DeleteLevel(ARBString const& inLevel)
+int ARBConfigEventList::DeleteLevel(tstring const& inLevel)
 {
-	ARBString level(inLevel);
+	tstring level(inLevel);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -487,7 +487,7 @@ int ARBConfigEventList::DeleteLevel(ARBString const& inLevel)
 
 
 bool ARBConfigEventList::FindEvent(
-		ARBString const& inEvent,
+		tstring const& inEvent,
 		ARBConfigEventPtr* outEvent) const
 {
 	if (outEvent)
@@ -516,9 +516,9 @@ bool ARBConfigEventList::AddEvent(ARBConfigEventPtr inEvent)
 }
 
 
-bool ARBConfigEventList::DeleteEvent(ARBString const& inEvent)
+bool ARBConfigEventList::DeleteEvent(tstring const& inEvent)
 {
-	ARBString pEvent(inEvent);
+	tstring pEvent(inEvent);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == pEvent)

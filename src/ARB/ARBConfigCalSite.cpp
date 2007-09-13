@@ -114,16 +114,16 @@ bool ARBConfigCalSite::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		ARBString const& name = element->GetName();
+		tstring const& name = element->GetName();
 		if (name == TREE_LOCCODE)
 		{
 			// Ignore any errors...
-			ARBString code;
+			tstring code;
 			if (ElementNode::eNotFound != element->GetAttrib(ATTRIB_LOCCODE_CODE, code))
 			{
 				if (!code.empty())
 				{
-					ARBString name;
+					tstring name;
 					element->GetAttrib(ATTRIB_LOCCODE_NAME, name);
 					m_Locations[code] = name;
 				}
@@ -132,12 +132,12 @@ bool ARBConfigCalSite::Load(
 		else if (name == TREE_VENUECODE)
 		{
 			// Ignore any errors...
-			ARBString code;
+			tstring code;
 			if (ElementNode::eNotFound != element->GetAttrib(ATTRIB_VENUECODE_CODE, code))
 			{
 				if (!code.empty())
 				{
-					ARBString venue;
+					tstring venue;
 					element->GetAttrib(ATTRIB_VENUECODE_VENUE, venue);
 					m_Locations[code] = venue;
 				}
@@ -157,7 +157,7 @@ bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
 	calsite->AddAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch);
 	if (!m_urlHelp.empty())
 		calsite->AddAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
-	std::map<ARBString, ARBString>::const_iterator i;
+	std::map<tstring, tstring>::const_iterator i;
 	for (i = m_Locations.begin(); i != m_Locations.end(); ++i)
 	{
 		ElementNodePtr loc = calsite->AddElementNode(TREE_LOCCODE);
@@ -175,16 +175,16 @@ bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
 }
 
 
-ARBString ARBConfigCalSite::GetFormattedURL(
-		std::vector<ARBString> const& inLocCodes,
-		std::vector<ARBString> const& inVenueCodes) const
+tstring ARBConfigCalSite::GetFormattedURL(
+		std::vector<tstring> const& inLocCodes,
+		std::vector<tstring> const& inVenueCodes) const
 {
-	ARBString url(m_urlSearch);
-	ARBString::size_type pos = url.find(_T("!L!"));
-	if (pos != ARBString::npos)
+	tstring url(m_urlSearch);
+	tstring::size_type pos = url.find(_T("!L!"));
+	if (pos != tstring::npos)
 	{
-		ARBString codes;
-		for (std::vector<ARBString>::const_iterator i = inLocCodes.begin();
+		tstring codes;
+		for (std::vector<tstring>::const_iterator i = inLocCodes.begin();
 			i != inLocCodes.end();
 			++i)
 		{
@@ -195,10 +195,10 @@ ARBString ARBConfigCalSite::GetFormattedURL(
 		url.replace(pos, 3, codes);
 	}
 	pos = url.find(_T("!V!"));
-	if (pos != ARBString::npos)
+	if (pos != tstring::npos)
 	{
-		ARBString codes;
-		for (std::vector<ARBString>::const_iterator i = inVenueCodes.begin();
+		tstring codes;
+		for (std::vector<tstring>::const_iterator i = inVenueCodes.begin();
 			i != inVenueCodes.end();
 			++i)
 		{
@@ -212,13 +212,13 @@ ARBString ARBConfigCalSite::GetFormattedURL(
 }
 
 
-bool ARBConfigCalSite::HasLocationCode(ARBString const& inCode) const
+bool ARBConfigCalSite::HasLocationCode(tstring const& inCode) const
 {
 	return m_Locations.end() != m_Locations.find(inCode);
 }
 
 
-bool ARBConfigCalSite::AddLocationCode(ARBString const& inCode, ARBString const& inName)
+bool ARBConfigCalSite::AddLocationCode(tstring const& inCode, tstring const& inName)
 {
 	if (HasLocationCode(inCode))
 		return false;
@@ -227,10 +227,10 @@ bool ARBConfigCalSite::AddLocationCode(ARBString const& inCode, ARBString const&
 }
 
 
-bool ARBConfigCalSite::RemoveLocationCode(ARBString const& inCode)
+bool ARBConfigCalSite::RemoveLocationCode(tstring const& inCode)
 {
 	bool bOk = false;
-	std::map<ARBString, ARBString>::iterator i = m_Locations.find(inCode);
+	std::map<tstring, tstring>::iterator i = m_Locations.find(inCode);
 	if (m_Locations.end() != i)
 	{
 		bOk = true;
@@ -252,13 +252,13 @@ bool ARBConfigCalSite::RemoveAllLocationCodes()
 }
 
 
-bool ARBConfigCalSite::HasVenueCode(ARBString const& inCode) const
+bool ARBConfigCalSite::HasVenueCode(tstring const& inCode) const
 {
 	return m_Venues.end() != m_Venues.find(inCode);
 }
 
 
-bool ARBConfigCalSite::AddVenueCode(ARBString const& inCode, ARBString const& inVenue)
+bool ARBConfigCalSite::AddVenueCode(tstring const& inCode, tstring const& inVenue)
 {
 	if (HasVenueCode(inCode))
 		return false;
@@ -267,10 +267,10 @@ bool ARBConfigCalSite::AddVenueCode(ARBString const& inCode, ARBString const& in
 }
 
 
-bool ARBConfigCalSite::RemoveVenueCode(ARBString const& inCode)
+bool ARBConfigCalSite::RemoveVenueCode(tstring const& inCode)
 {
 	bool bOk = false;
-	std::map<ARBString, ARBString>::iterator i = m_Venues.find(inCode);
+	std::map<tstring, tstring>::iterator i = m_Venues.find(inCode);
 	if (m_Venues.end() != i)
 	{
 		bOk = true;

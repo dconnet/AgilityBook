@@ -85,7 +85,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return GetName();
 	}
@@ -95,7 +95,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -124,19 +124,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
-	ARBString const& GetDescription() const
+	tstring const& GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(ARBString const& inDesc)
+	void SetDescription(tstring const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -158,9 +158,9 @@ public:
 	}
 
 private:
-	ARBString m_Name;
+	tstring m_Name;
 	eOtherPointsTally m_Tally;
-	ARBString m_Desc;
+	tstring m_Desc;
 	short m_Default;
 };
 
@@ -190,7 +190,7 @@ public:
 	 * @param inName Name to verify.
 	 * @return Whether the OtherPoints exists.
 	 */
-	bool VerifyOtherPoints(ARBString const& inName) const;
+	bool VerifyOtherPoints(tstring const& inName) const;
 
 	/**
 	 * Find an otherpoints object.
@@ -199,7 +199,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindOtherPoints(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigOtherPointsPtr* outPoints = NULL) const;
 
 	/**
@@ -214,5 +214,5 @@ public:
 	 * @param inName Name of object to delete.
 	 * @return Whether the object was deleted or not.
 	 */
-	bool DeleteOtherPoints(ARBString const& inName);
+	bool DeleteOtherPoints(tstring const& inName);
 };

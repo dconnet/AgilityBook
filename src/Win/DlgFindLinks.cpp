@@ -59,7 +59,7 @@ CDlgFindLinks::CDlgFindLinksData::CDlgFindLinksData(
 		ARBDogPtr pDog,
 		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
-		ARBString const& inLink)
+		tstring const& inLink)
 	: m_pDog(pDog)
 	, m_pTrial(pTrial)
 	, m_pRun(pRun)
@@ -109,7 +109,7 @@ int CALLBACK CompareLinks(
 
 	for (int i = 0; i < psi->pCols->GetSize(); ++i)
 	{
-		ARBString str1, str2;
+		tstring str1, str2;
 		int col = psi->pCols->GetColumnAt(i);
 		switch (col)
 		{
@@ -179,9 +179,9 @@ CDlgFindLinks::CDlgFindLinks(
 				++iterRun)
 			{
 				ARBDogRunPtr pRun = *iterRun;
-				std::set<ARBString> links;
+				std::set<tstring> links;
 				pRun->GetLinks(links);
-				for (std::set<ARBString>::iterator iter = links.begin();
+				for (std::set<tstring>::iterator iter = links.begin();
 					iter != links.end();
 					++iter)
 				{
@@ -224,7 +224,7 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-int CDlgFindLinks::GetImageIndex(ARBString const& inLink)
+int CDlgFindLinks::GetImageIndex(tstring const& inLink)
 {
 	CWaitCursor wait;
 	int img = m_imgEmpty;
@@ -251,7 +251,7 @@ void CDlgFindLinks::SetColumnHeaders()
 			str.LoadString(colLinkInfo[i].idText);
 			str += ' ';
 		}
-		ARBostringstream tmp;
+		otstringstream tmp;
 		tmp << (LPCTSTR)str << '(' << m_sortLinks.FindColumnOrder(i) + 1 << ')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
@@ -410,7 +410,7 @@ void CDlgFindLinks::OnCopy()
 		if (!clpData.isOkay())
 			return;
 
-		ARBString data;
+		tstring data;
 		for (size_t i = 0; i < m_Data.size(); ++i)
 		{
 			data += m_Data[i].m_OldLink;
@@ -431,7 +431,7 @@ void CDlgFindLinks::OnEdit()
 		CDlgSelectURL dlg(m_Data[index].m_Link.c_str(), this);
 		if (IDOK == dlg.DoModal())
 		{
-			ARBString newName = dlg.GetName();
+			tstring newName = dlg.GetName();
 			if (m_Data[index].m_Link != newName)
 			{
 				m_Data[index].m_Link = newName;

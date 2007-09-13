@@ -115,7 +115,7 @@ bool ARBTraining::operator==(ARBTraining const& rhs) const
 }
 
 
-size_t ARBTraining::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBTraining::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -159,9 +159,9 @@ bool ARBTraining::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			ARBString attrib;
+			tstring attrib;
 			inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);
-			ARBString msg(INVALID_DATE);
+			tstring msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
 		}
@@ -226,7 +226,7 @@ void ARBTrainingList::sort()
 }
 
 
-size_t ARBTrainingList::GetAllNames(std::set<ARBString>& outNames) const
+size_t ARBTrainingList::GetAllNames(std::set<tstring>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -239,7 +239,7 @@ size_t ARBTrainingList::GetAllNames(std::set<ARBString>& outNames) const
 }
 
 
-size_t ARBTrainingList::GetAllSubNames(std::set<ARBString>& outSubNames) const
+size_t ARBTrainingList::GetAllSubNames(std::set<tstring>& outSubNames) const
 {
 	outSubNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)

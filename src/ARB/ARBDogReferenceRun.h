@@ -68,7 +68,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -78,7 +78,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -122,27 +122,27 @@ public:
 	{
 		m_Place = inPlace;
 	}
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
-	ARBString const& GetHeight() const
+	tstring const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(ARBString const& inHeight)
+	void SetHeight(tstring const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	ARBString const& GetBreed() const
+	tstring const& GetBreed() const
 	{
 		return m_Breed;
 	}
-	void SetBreed(ARBString const& inBreed)
+	void SetBreed(tstring const& inBreed)
 	{
 		m_Breed = inBreed;
 	}
@@ -154,19 +154,19 @@ public:
 	{
 		m_Time = inTime;
 	}
-	ARBString const& GetScore() const
+	tstring const& GetScore() const
 	{
 		return m_Score;
 	}
-	void SetScore(ARBString const& inScore)
+	void SetScore(tstring const& inScore)
 	{
 		m_Score = inScore;
 	}
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -174,12 +174,12 @@ public:
 private:
 	ARB_Q m_Q;
 	short m_Place;
-	ARBString m_Name;
-	ARBString m_Height;
-	ARBString m_Breed;
+	tstring m_Name;
+	tstring m_Height;
+	tstring m_Breed;
 	double m_Time;
-	ARBString m_Score;
-	ARBString m_Note;
+	tstring m_Score;
+	tstring m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////

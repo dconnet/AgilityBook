@@ -137,7 +137,7 @@ bool CHyperLink::GotoURL(CString const& url)
 	{
 		CString str;
 		str.LoadString(IDS_UNABLE_TO_OPEN);
-		ARBostringstream msg;
+		otstringstream msg;
 			msg << (LPCTSTR)str
 				<< (LPCTSTR)url
 				<< _T("\n");

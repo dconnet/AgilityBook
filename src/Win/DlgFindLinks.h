@@ -76,13 +76,13 @@ private:
 				ARBDogPtr pDog,
 				ARBDogTrialPtr pTrial,
 				ARBDogRunPtr pRun,
-				ARBString const& inLink);
+				tstring const& inLink);
 		~CDlgFindLinksData();
 		ARBDogPtr m_pDog;
 		ARBDogTrialPtr m_pTrial;
 		ARBDogRunPtr m_pRun;
-		ARBString m_OldLink;
-		ARBString m_Link;
+		tstring m_OldLink;
+		tstring m_Link;
 	};
 	std::vector<CDlgFindLinksData> m_Data;
 
@@ -92,7 +92,7 @@ protected:
 	//}}AFX_VIRTUAL
 
 protected:
-	int GetImageIndex(ARBString const& inLink);
+	int GetImageIndex(tstring const& inLink);
 	void SetColumnHeaders();
 	void UpdateButtons();
 

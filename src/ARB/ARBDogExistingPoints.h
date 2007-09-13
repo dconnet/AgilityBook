@@ -69,9 +69,9 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
-		ARBString name;
+		tstring name;
 		if (0 < m_Other.length())
 			name = m_Other;
 		else
@@ -84,7 +84,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -128,7 +128,7 @@ public:
 	/**
 	 * Translate the enum to a string.
 	 */
-	static ARBString GetPointTypeName(PointType inType);
+	static tstring GetPointTypeName(PointType inType);
 
 	/*
 	 * Getters/setters.
@@ -149,67 +149,67 @@ public:
 	{
 		m_Date = inDate;
 	}
-	ARBString const& GetComment() const
+	tstring const& GetComment() const
 	{
 		return m_Comment;
 	}
-	void SetComment(ARBString const& inComment)
+	void SetComment(tstring const& inComment)
 	{
 		m_Comment = inComment;
 	}
-	ARBString const& GetOtherPoints() const
+	tstring const& GetOtherPoints() const
 	{
 		return m_Other;
 	}
-	void SetOtherPoints(ARBString const& inOther)
+	void SetOtherPoints(tstring const& inOther)
 	{
 		m_Other = inOther;
 	}
-	ARBString const& GetVenue() const
+	tstring const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(ARBString const& inVenue)
+	void SetVenue(tstring const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
-	ARBString const& GetMultiQ() const
+	tstring const& GetMultiQ() const
 	{
 		return m_MultiQ;
 	}
-	void SetMultiQ(ARBString const& inMultiQ)
+	void SetMultiQ(tstring const& inMultiQ)
 	{
 		m_MultiQ = inMultiQ;
 	}
-	ARBString const& GetDivision() const
+	tstring const& GetDivision() const
 	{
 		return m_Div;
 	}
-	void SetDivision(ARBString const& inDiv)
+	void SetDivision(tstring const& inDiv)
 	{
 		m_Div = inDiv;
 	}
-	ARBString const& GetLevel() const
+	tstring const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(ARBString const& inLevel)
+	void SetLevel(tstring const& inLevel)
 	{
 		m_Level = inLevel;
 	}
-	ARBString const& GetEvent() const
+	tstring const& GetEvent() const
 	{
 		return m_Event;
 	}
-	void SetEvent(ARBString const& inEvent)
+	void SetEvent(tstring const& inEvent)
 	{
 		m_Event = inEvent;
 	}
-	ARBString const& GetSubName() const
+	tstring const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(ARBString const& inSubName)
+	void SetSubName(tstring const& inSubName)
 	{
 		m_SubName = inSubName;
 	}
@@ -224,15 +224,15 @@ public:
 
 private:
 	ARBDate m_Date;
-	ARBString m_Comment;
+	tstring m_Comment;
 	PointType m_Type;
-	ARBString m_Other;
-	ARBString m_Venue;
-	ARBString m_MultiQ;
-	ARBString m_Div;
-	ARBString m_Level;
-	ARBString m_Event;
-	ARBString m_SubName;
+	tstring m_Other;
+	tstring m_Venue;
+	tstring m_MultiQ;
+	tstring m_Div;
+	tstring m_Level;
+	tstring m_Event;
+	tstring m_SubName;
 	double m_Points;
 };
 
@@ -269,7 +269,7 @@ public:
 	 * @param inVenue Venue to search for.
 	 * @return Whether any existing points exist.
 	 */
-	bool HasPoints(ARBString const& inVenue) const;
+	bool HasPoints(tstring const& inVenue) const;
 
 	/**
 	 * Are there any existing points?
@@ -318,7 +318,7 @@ public:
 	 * @param inVenue Venue to search for.
 	 * @return Number of objects, not points.
 	 */
-	int NumExistingPointsInVenue(ARBString const& inVenue) const;
+	int NumExistingPointsInVenue(tstring const& inVenue) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -327,15 +327,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			ARBString const& inOldVenue,
-			ARBString const& inNewVenue);
+			tstring const& inOldVenue,
+			tstring const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(ARBString const& inVenue);
+	int DeleteVenue(tstring const& inVenue);
 
 	/**
 	 * Get the number of existing point entries in a division.
@@ -346,7 +346,7 @@ public:
 	 */
 	int NumExistingPointsInDivision(
 			ARBConfigVenuePtr inVenue,
-			ARBString const& inDiv) const;
+			tstring const& inDiv) const;
 
 	/**
 	 * Rename a division.
@@ -356,9 +356,9 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameDivision(
-			ARBString const& inVenue,
-			ARBString const& inOldDiv,
-			ARBString const& inNewDiv);
+			tstring const& inVenue,
+			tstring const& inOldDiv,
+			tstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -367,8 +367,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteDivision(
-			ARBString const& inVenue,
-			ARBString const& inDiv);
+			tstring const& inVenue,
+			tstring const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -379,9 +379,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
-			ARBString const& inVenue,
-			ARBString const& inDiv,
-			ARBString const& inLevel) const;
+			tstring const& inVenue,
+			tstring const& inDiv,
+			tstring const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -392,10 +392,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-			ARBString const& inVenue,
-			ARBString const& inDiv,
-			ARBString const& inOldLevel,
-			ARBString const& inNewLevel);
+			tstring const& inVenue,
+			tstring const& inDiv,
+			tstring const& inOldLevel,
+			tstring const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -405,9 +405,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(
-			ARBString const& inVenue,
-			ARBString const& inDiv,
-			ARBString const& inLevel);
+			tstring const& inVenue,
+			tstring const& inDiv,
+			tstring const& inLevel);
 
 	/**
 	 * Number of events in use.
@@ -417,8 +417,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumEventsInUse(
-			ARBString const& inVenue,
-			ARBString const& inEvent) const;
+			tstring const& inVenue,
+			tstring const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -428,9 +428,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameEvent(
-			ARBString const& inVenue,
-			ARBString const& inOldEvent,
-			ARBString const& inNewEvent);
+			tstring const& inVenue,
+			tstring const& inOldEvent,
+			tstring const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -439,8 +439,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteEvent(
-			ARBString const& inVenue,
-			ARBString const& inEvent);
+			tstring const& inVenue,
+			tstring const& inEvent);
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -448,7 +448,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(ARBString const& inOther) const;
+	int NumOtherPointsInUse(tstring const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -457,15 +457,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			ARBString const& inOldOther,
-			ARBString const& inNewOther);
+			tstring const& inOldOther,
+			tstring const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inOther OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(ARBString const& inOther);
+	int DeleteOtherPoints(tstring const& inOther);
 
 	/**
 	 * Number of MultiQ objects in use.
@@ -475,8 +475,8 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumMultiQsInUse(
-			ARBString const& inVenue,
-			ARBString const& inMultiQ) const;
+			tstring const& inVenue,
+			tstring const& inMultiQ) const;
 
 	/**
 	 * Rename a MultiQ, rename any dependent objects.
@@ -486,9 +486,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameMultiQs(
-			ARBString const& inVenue,
-			ARBString const& inOldMultiQ,
-			ARBString const& inNewMultiQ);
+			tstring const& inVenue,
+			tstring const& inOldMultiQ,
+			tstring const& inNewMultiQ);
 
 	/**
 	 * Delete any MultiQs no longer in venue.
@@ -498,7 +498,7 @@ public:
 	 */
 	int DeleteMultiQs(
 			ARBConfig const& inConfig,
-			ARBString const& inVenue);
+			tstring const& inVenue);
 
 	/**
 	 * Add an existing point object.

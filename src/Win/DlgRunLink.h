@@ -78,7 +78,7 @@ protected:
 protected:
 	void UpdateButtons();
 	void ListFiles(TCHAR const* pItem);
-	int GetImageIndex(ARBString const& inLink);
+	int GetImageIndex(tstring const& inLink);
 
 	//{{AFX_MSG(CDlgRunLink)
 	virtual BOOL OnInitDialog();

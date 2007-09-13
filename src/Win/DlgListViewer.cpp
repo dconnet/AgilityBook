@@ -166,7 +166,7 @@ public:
 	CDlgListViewerData() {}
 	virtual ~CDlgListViewerData() {}
 
-	virtual ARBString OnNeedText(int iCol) const = 0;
+	virtual tstring OnNeedText(int iCol) const = 0;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const = 0;
@@ -194,7 +194,7 @@ public:
 		if (m_ColData)
 			m_ColData->Release();
 	}
-	virtual ARBString OnNeedText(int iCol) const;
+	virtual tstring OnNeedText(int iCol) const;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -204,9 +204,9 @@ private:
 };
 
 
-ARBString CDlgListViewerDataExisting::OnNeedText(int iCol) const
+tstring CDlgListViewerDataExisting::OnNeedText(int iCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -214,7 +214,7 @@ ARBString CDlgListViewerDataExisting::OnNeedText(int iCol) const
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
 		{
-			ARBostringstream tmp;
+			otstringstream tmp;
 			tmp << m_Existing->GetPoints();
 			str = tmp.str();
 		}
@@ -278,7 +278,7 @@ public:
 		if (m_ColData)
 			m_ColData->Release();
 	}
-	virtual ARBString OnNeedText(int iCol) const;
+	virtual tstring OnNeedText(int iCol) const;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -292,9 +292,9 @@ private:
 };
 
 
-ARBString CDlgListViewerDataRun::OnNeedText(int iCol) const
+tstring CDlgListViewerDataRun::OnNeedText(int iCol) const
 {
-	ARBostringstream str;
+	otstringstream str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -411,7 +411,7 @@ public:
 		if (m_ColData)
 			m_ColData->Release();
 	}
-	virtual ARBString OnNeedText(int iCol) const;
+	virtual tstring OnNeedText(int iCol) const;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -422,9 +422,9 @@ private:
 };
 
 
-ARBString CDlgListViewerDataMultiQ::OnNeedText(int iCol) const
+tstring CDlgListViewerDataMultiQ::OnNeedText(int iCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -455,7 +455,7 @@ int CDlgListViewerDataExisting::Compare(
 	CDlgListViewerDataMultiQ const* pDataMultiQ = dynamic_cast<CDlgListViewerDataMultiQ const*>(pRow2);
 	if (!pDataExisting && !pDataRun && !pDataMultiQ)
 		return 0;
-	ARBString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -539,7 +539,7 @@ int CDlgListViewerDataRun::Compare(
 	CDlgListViewerDataRun const* pDataRun = dynamic_cast<CDlgListViewerDataRun const*>(pRow2);
 	if (!pDataExisting && !pDataRun)
 		return 0;
-	ARBString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -684,7 +684,7 @@ int CDlgListViewerDataMultiQ::Compare(
 	CDlgListViewerDataMultiQ const* pData = dynamic_cast<CDlgListViewerDataMultiQ const*>(pRow2);
 	if (!pDataExisting && !pData)
 		return 0;
-	ARBString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -738,7 +738,7 @@ public:
 		if (m_ColData)
 			m_ColData->Release();
 	}
-	virtual ARBString OnNeedText(int iCol) const;
+	virtual tstring OnNeedText(int iCol) const;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -748,9 +748,9 @@ private:
 };
 
 
-ARBString CDlgListViewerDataLifetime::OnNeedText(int iCol) const
+tstring CDlgListViewerDataLifetime::OnNeedText(int iCol) const
 {
-	ARBostringstream str;
+	otstringstream str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_OTHER_DIV:
@@ -777,7 +777,7 @@ int CDlgListViewerDataLifetime::Compare(
 	CDlgListViewerDataLifetime const* pData = dynamic_cast<CDlgListViewerDataLifetime const*>(pRow2);
 	if (!pData)
 		return 0;
-	ARBString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -825,7 +825,7 @@ public:
 		if (m_ColData)
 			m_ColData->Release();
 	}
-	virtual ARBString OnNeedText(int iCol) const;
+	virtual tstring OnNeedText(int iCol) const;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -835,9 +835,9 @@ private:
 };
 
 
-ARBString CDlgListViewerDataOther::OnNeedText(int iCol) const
+tstring CDlgListViewerDataOther::OnNeedText(int iCol) const
 {
-	ARBostringstream str;
+	otstringstream str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_OTHER_DATE:
@@ -883,7 +883,7 @@ int CDlgListViewerDataOther::Compare(
 	CDlgListViewerDataOther const* pData = dynamic_cast<CDlgListViewerDataOther const*>(pRow2);
 	if (!pData)
 		return 0;
-	ARBString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -973,7 +973,7 @@ public:
 		if (m_ColData)
 			m_ColData->Release();
 	}
-	virtual ARBString OnNeedText(int iCol) const;
+	virtual tstring OnNeedText(int iCol) const;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -983,9 +983,9 @@ private:
 };
 
 
-ARBString CDlgListViewerDataItem::OnNeedText(int iCol) const
+tstring CDlgListViewerDataItem::OnNeedText(int iCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_ITEM_TYPE:
@@ -1028,7 +1028,7 @@ int CDlgListViewerDataItem::Compare(
 	if (!pData)
 		return 0;
 	CString str;
-	ARBString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -1370,7 +1370,7 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	SetWindowText(m_Caption);
 
-	std::set<ARBString> subNames;
+	std::set<tstring> subNames;
 	std::vector<ARBDogExistingPointsPtr> existingRuns;
 	if (m_Runs || m_ScoringRuns)
 	{
@@ -1671,7 +1671,7 @@ void CDlgListViewer::OnGetdispinfoList(
 		CDlgListViewerData* pData = dynamic_cast<CDlgListViewerData*>(pRawData);
 		if (pData)
 		{
-			ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
 			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}

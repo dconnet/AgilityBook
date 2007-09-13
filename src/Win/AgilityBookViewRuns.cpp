@@ -110,7 +110,7 @@ public:
 	ARBDogPtr GetDog() const		{return m_pDog;}
 	ARBDogTrialPtr GetTrial() const	{return m_pTrial;}
 	ARBDogRunPtr GetRun() const		{return m_pRun;}
-	ARBString OnNeedText(int iCol) const;
+	tstring OnNeedText(int iCol) const;
 	int OnNeedIcon() const;
 
 protected:
@@ -121,10 +121,10 @@ protected:
 };
 
 
-ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
+tstring CAgilityBookViewRunsData::OnNeedText(int iCol) const
 {
 	short val;
-	ARBostringstream str;
+	otstringstream str;
 	if (0 < iCol && m_pRun)
 	{
 		// Col 0 is special: it has the icons. Instead of saving it,
@@ -315,7 +315,7 @@ ARBString CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				bool bSet = false;
 				if (m_pRun->GetQ().Qualified())
 				{
-					ARBString q;
+					tstring q;
 					if (m_pRun->GetMultiQ())
 					{
 						q = m_pRun->GetMultiQ()->GetShortName();
@@ -551,7 +551,7 @@ int CALLBACK CompareRuns(
 		break;
 	case IO_RUNS_VENUE:
 		{
-			ARBString str1, str2;
+			tstring str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->m_pTrial->GetClubs().begin();
@@ -578,7 +578,7 @@ int CALLBACK CompareRuns(
 		break;
 	case IO_RUNS_CLUB:
 		{
-			ARBString str1, str2;
+			tstring str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->m_pTrial->GetClubs().begin();
@@ -1022,7 +1022,7 @@ int CALLBACK CompareRuns(
 		break;
 	case IO_RUNS_FAULTS:
 		{
-			ARBString str1, str2;
+			tstring str1, str2;
 			ARBDogFaultList::const_iterator iter;
 			int i = 0;
 			for (iter = pRun1->m_pRun->GetFaults().begin();
@@ -1113,7 +1113,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		std::set<ARBString> strings;
+		std::set<tstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewRunsData* pData = m_pView->GetItemData(index);
@@ -1128,7 +1128,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())
@@ -1552,7 +1552,7 @@ void CAgilityBookViewRuns::OnGetdispinfo(
 	CAgilityBookViewRunsData* pData = dynamic_cast<CAgilityBookViewRunsData*>(pRawData);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
+		tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}

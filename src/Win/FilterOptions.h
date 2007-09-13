@@ -43,9 +43,9 @@
 
 struct CVenueFilter
 {
-	ARBString venue;
-	ARBString division;
-	ARBString level;
+	tstring venue;
+	tstring division;
+	tstring level;
 	bool operator==(CVenueFilter const& rhs) const
 	{
 		return venue == rhs.venue
@@ -136,7 +136,7 @@ public:
 		CFilterOptionData& operator=(CFilterOptionData const& rhs);
 		bool Save(int index);
 
-		ARBString filterName;
+		tstring filterName;
 		CCalendarViewFilter calView;
 		bool bAllDates;
 		bool bStartDate;
@@ -147,7 +147,7 @@ public:
 		std::vector<CVenueFilter> venueFilter;
 		eViewRuns eRuns;
 		bool bViewAllNames;
-		std::set<ARBString> nameFilter;
+		std::set<tstring> nameFilter;
 	};
 
 private:
@@ -161,27 +161,27 @@ private:
 	std::vector<CVenueFilter> m_venueFilter;
 	eViewRuns m_eRuns;
 	bool m_bViewAllNames;
-	std::set<ARBString> m_nameFilter;
+	std::set<tstring> m_nameFilter;
 
-	ARBString m_curFilter;
+	tstring m_curFilter;
 	int m_nFilters;
 	std::vector<CFilterOptionData> m_filters;
 
-	std::vector<CFilterOptionData>::iterator FindFilter(ARBString const& inName);
+	std::vector<CFilterOptionData>::iterator FindFilter(tstring const& inName);
 
 public:
 	static CFilterOptions& Options();
 	CFilterOptions(); ///< Should only be used in options dialog
 	void Load();
 	void Save();
-	ARBString GetCurrentFilter() const
+	tstring GetCurrentFilter() const
 	{
 		return m_curFilter;
 	}
-	size_t GetAllFilterNames(std::vector<ARBString>& outNames) const;
-	bool SetCurrentFilter(ARBString const& inName);
-	void AddFilter(ARBString const& inName);
-	bool DeleteFilter(ARBString const& inName);
+	size_t GetAllFilterNames(std::vector<tstring>& outNames) const;
+	bool SetCurrentFilter(tstring const& inName);
+	void AddFilter(tstring const& inName);
+	bool DeleteFilter(tstring const& inName);
 
 	// Helper functions
 	bool IsFilterEnabled();
@@ -193,16 +193,16 @@ public:
 			ARBDogTitlePtr pTitle);
 	bool IsVenueVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBString const& venue);
+			tstring const& venue);
 	bool IsVenueDivisionVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBString const& venue,
-			ARBString const& div);
+			tstring const& venue,
+			tstring const& div);
 	bool IsVenueLevelVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBString const& venue,
-			ARBString const& div,
-			ARBString const& level);
+			tstring const& venue,
+			tstring const& div,
+			tstring const& level);
 	bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBDogTrialPtr pTrial);
@@ -219,7 +219,7 @@ public:
 			std::vector<CVenueFilter> const& venues,
 			ARBCalendarPtr pCal);
 	bool IsTrainingLogVisible(
-			std::set<ARBString> const& names,
+			std::set<tstring> const& names,
 			ARBTrainingPtr pTraining);
 
 	// Filtering: Calendar
@@ -292,9 +292,9 @@ public:
 		m_venueFilter = venues;
 	}
 	bool FilterExists(
-			ARBString const& inVenue,
-			ARBString const& inDiv,
-			ARBString const& inLevel) const;
+			tstring const& inVenue,
+			tstring const& inDiv,
+			tstring const& inLevel) const;
 
 	eViewRuns GetViewRuns() const
 	{
@@ -314,11 +314,11 @@ public:
 	{
 		m_bViewAllNames = bViewAll;
 	}
-	void GetTrainingFilterNames(std::set<ARBString>& outNames) const
+	void GetTrainingFilterNames(std::set<tstring>& outNames) const
 	{
 		outNames = m_nameFilter;
 	}
-	void SetTrainingFilterNames(std::set<ARBString> const& inNames)
+	void SetTrainingFilterNames(std::set<tstring> const& inNames)
 	{
 		m_nameFilter = inNames;
 	}

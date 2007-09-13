@@ -43,7 +43,7 @@
 #include <vector>
 #include "ARBTypes.h"
 
-typedef std::vector<ARBString> ARBDogFaultList;
+typedef std::vector<tstring> ARBDogFaultList;
 
 class ARBMetaData;
 typedef boost::shared_ptr<ARBMetaData> ARBMetaDataPtr;
@@ -84,7 +84,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -120,32 +120,32 @@ public:
 	{
 		return m_Faults;
 	}
-	ARBString const& GetCRCD() const
+	tstring const& GetCRCD() const
 	{
 		return m_CRCD;
 	}
-	void SetCRCD(ARBString const& inCRCD)
+	void SetCRCD(tstring const& inCRCD)
 	{
 		m_CRCD = inCRCD;
 	}
-	ARBString const& GetCRCDRawMetaData() const
+	tstring const& GetCRCDRawMetaData() const
 	{
 		return m_CRCDMeta;
 	}
 	ARBMetaDataPtr GetCRCDMetaData() const;
 	void SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes);
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
 	ARBDogFaultList m_Faults;
-	ARBString m_CRCD;
-	ARBString m_CRCDMeta;
-	ARBString m_Note;
+	tstring m_CRCD;
+	tstring m_CRCDMeta;
+	tstring m_Note;
 };

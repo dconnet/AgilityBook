@@ -146,7 +146,7 @@ void CDlgEventSelect::UpdateControls()
 void CDlgEventSelect::FillLevels()
 {
 	CString str;
-	ARBString level;
+	tstring level;
 	int index = m_ctrlLevels.GetCurSel();
 	if (CB_ERR != index)
 	{
@@ -200,7 +200,7 @@ void CDlgEventSelect::FillLevels()
 void CDlgEventSelect::FillEvents()
 {
 	CString str;
-	ARBString evt;
+	tstring evt;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR != index)
 	{

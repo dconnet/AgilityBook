@@ -76,7 +76,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -86,7 +86,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -124,16 +124,16 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigDivisionPtr inDivNew,
-			ARBString& ioInfo);
+			tstring& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
@@ -147,7 +147,7 @@ public:
 	}
 
 private:
-	ARBString m_Name;
+	tstring m_Name;
 	ARBConfigLevelList m_Levels;
 };
 
@@ -181,8 +181,8 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-			ARBString const& inDiv,
-			ARBString const& inLevel) const;
+			tstring const& inDiv,
+			tstring const& inLevel) const;
 
 	/**
 	 * Find the named division.
@@ -191,7 +191,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindDivision(
-			ARBString const& inDiv,
+			tstring const& inDiv,
 			ARBConfigDivisionPtr* outDiv = NULL) const;
 
 	/**
@@ -201,7 +201,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddDivision(
-			ARBString const& inDiv,
+			tstring const& inDiv,
 			ARBConfigDivisionPtr* outDiv = NULL);
 
 	/**
@@ -218,6 +218,6 @@ public:
 	 * @return Number of divisions deleted (0 or 1).
 	 */
 	int DeleteDivision(
-			ARBString const& inDiv,
+			tstring const& inDiv,
 			ARBConfigEventList& ioEvents);
 };

@@ -72,7 +72,7 @@ CDlgInfoJudge::NameInfo::NameInfo()
 }
 
 
-CDlgInfoJudge::NameInfo::NameInfo(ARBString const& inName)
+CDlgInfoJudge::NameInfo::NameInfo(tstring const& inName)
 	: m_Name(inName)
 	, m_eInUse(eNotInUse)
 	, m_bHasData(false)
@@ -99,7 +99,7 @@ bool CDlgInfoJudge::NameInfo::operator==(NameInfo const& rhs)
 CDlgInfoJudge::CDlgInfoJudge(
 		CAgilityBookDoc* pDoc,
 		ARBInfo::eInfoType inType,
-		ARBString const& inSelect,
+		tstring const& inSelect,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgInfoJudge::IDD, pParent)
 	, m_ctrlNames(false)
@@ -157,7 +157,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	ASSERT(m_ctrlNames.GetStyle() & CBS_OWNERDRAWFIXED);
 
 	CString caption;
-	std::set<ARBString> names;
+	std::set<tstring> names;
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
@@ -176,7 +176,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	SetWindowText(caption);
 
 	m_Names.reserve(names.size());
-	for (std::set<ARBString>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	for (std::set<tstring>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
@@ -334,7 +334,7 @@ void CDlgInfoJudge::OnNew()
 	if (IDOK == dlg.DoModal())
 	{
 		m_Select.erase();
-		ARBString name = (LPCTSTR)dlg.GetName();
+		tstring name = (LPCTSTR)dlg.GetName();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
 		if (iter != m_Names.end())

@@ -429,7 +429,7 @@ void CDlgExistingPoints::UpdateControls()
 
 void CDlgExistingPoints::FillVenues()
 {
-	ARBString venue;
+	tstring venue;
 	int index = m_ctrlVenues.GetCurSel();
 	if (CB_ERR != index)
 	{
@@ -466,7 +466,7 @@ void CDlgExistingPoints::FillVenues()
 
 void CDlgExistingPoints::FillFromVenue()
 {
-	ARBString multiQ;
+	tstring multiQ;
 	int index = m_ctrlMultiQ.GetCurSel();
 	if (CB_ERR != index)
 	{
@@ -478,7 +478,7 @@ void CDlgExistingPoints::FillFromVenue()
 		multiQ = m_pExistingPoints->GetMultiQ();
 	m_ctrlMultiQ.ResetContent();
 
-	ARBString div;
+	tstring div;
 	index = m_ctrlDivisions.GetCurSel();
 	if (CB_ERR != index)
 	{
@@ -526,7 +526,7 @@ void CDlgExistingPoints::FillFromVenue()
 void CDlgExistingPoints::FillLevels()
 {
 	CString str;
-	ARBString level;
+	tstring level;
 	int index = m_ctrlLevels.GetCurSel();
 	if (CB_ERR != index)
 	{
@@ -577,7 +577,7 @@ void CDlgExistingPoints::FillLevels()
 void CDlgExistingPoints::FillEvents()
 {
 	CString str;
-	ARBString evt;
+	tstring evt;
 	int index = m_ctrlEvents.GetCurSel();
 	if (CB_ERR != index)
 	{
@@ -636,9 +636,9 @@ void CDlgExistingPoints::FillSubNames()
 		return;
 	ARBConfigEventPtr pEvent = GetEventData(index)->GetData();
 
-	std::set<ARBString> names;
+	std::set<tstring> names;
 	m_pDoc->GetAllEventSubNames(pVenue->GetName(), pEvent, names);
-	for (std::set<ARBString>::const_iterator iter = names.begin();
+	for (std::set<tstring>::const_iterator iter = names.begin();
 		iter != names.end();
 		++iter)
 	{
@@ -802,7 +802,7 @@ void CDlgExistingPoints::OnOK()
 	BOOL bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName;
 	GetEnableLists(index, bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName, false);
 
-	ARBString other;
+	tstring other;
 	if (bOther)
 	{
 		index = m_ctrlOther.GetCurSel();
@@ -815,7 +815,7 @@ void CDlgExistingPoints::OnOK()
 		other = pOther->GetName();
 	}
 
-	ARBString venue;
+	tstring venue;
 	if (bVenue)
 	{
 		index = m_ctrlVenues.GetCurSel();
@@ -828,7 +828,7 @@ void CDlgExistingPoints::OnOK()
 		venue = pVenue->GetName();
 	}
 
-	ARBString multiQ;
+	tstring multiQ;
 	if (bMQ)
 	{
 		index = m_ctrlMultiQ.GetCurSel();
@@ -841,7 +841,7 @@ void CDlgExistingPoints::OnOK()
 		multiQ = pMultiQ->GetName();
 	}
 
-	ARBString div;
+	tstring div;
 	if (bDiv)
 	{
 		index = m_ctrlDivisions.GetCurSel();
@@ -854,7 +854,7 @@ void CDlgExistingPoints::OnOK()
 		div = pDiv->GetName();
 	}
 
-	ARBString level;
+	tstring level;
 	if (bLevel)
 	{
 		index = m_ctrlLevels.GetCurSel();
@@ -869,7 +869,7 @@ void CDlgExistingPoints::OnOK()
 			level = pData->m_pSubLevel->GetName();
 	}
 
-	ARBString evt;
+	tstring evt;
 	if (bEvent)
 	{
 		index = m_ctrlEvents.GetCurSel();
@@ -882,7 +882,7 @@ void CDlgExistingPoints::OnOK()
 		evt = pEvent->GetName();
 	}
 
-	ARBString subName;
+	tstring subName;
 	if (bSubName)
 	{
 		m_SubName.TrimRight();

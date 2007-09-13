@@ -83,7 +83,7 @@ class CErrorCallback : public ARBErrorCallback
 public:
 	CErrorCallback();
 	virtual bool OnError(TCHAR const* const pMsg);
-	ARBString m_ErrMsg;
+	tstring m_ErrMsg;
 };
 
 class CAgilityBookDoc : public CDocument
@@ -105,57 +105,57 @@ public:
 	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
 
 	size_t GetAllClubNames(
-			std::set<ARBString>& outClubs,
+			std::set<tstring>& outClubs,
 			bool bInfo = true) const
 	{
 		return m_Records.GetAllClubNames(outClubs, bInfo);
 	}
 	size_t GetAllTrialLocations(
-			std::set<ARBString>& outLocations,
+			std::set<tstring>& outLocations,
 			bool bInfo = true) const
 	{
 		return m_Records.GetAllTrialLocations(outLocations, bInfo);
 	}
 	size_t GetAllEventSubNames(
-			ARBString const& inVenue,
+			tstring const& inVenue,
 			ARBConfigEventPtr inEvent,
-			std::set<ARBString>& outNames) const
+			std::set<tstring>& outNames) const
 	{
 		return m_Records.GetAllEventSubNames(inVenue, inEvent, outNames);
 	}
-	size_t GetAllHeights(std::set<ARBString>& ouHeights) const
+	size_t GetAllHeights(std::set<tstring>& ouHeights) const
 	{
 		return m_Records.GetAllHeights(ouHeights);
 	}
-	size_t GetAllCallNames(std::set<ARBString>& outNames) const
+	size_t GetAllCallNames(std::set<tstring>& outNames) const
 	{
 		return m_Records.GetAllCallNames(outNames);
 	}
-	size_t GetAllBreeds(std::set<ARBString>& outBreeds) const
+	size_t GetAllBreeds(std::set<tstring>& outBreeds) const
 	{
 		return m_Records.GetAllBreeds(outBreeds);
 	}
 	size_t GetAllJudges(
-			std::set<ARBString>& outJudges,
+			std::set<tstring>& outJudges,
 			bool bInfo = true) const
 	{
 		return m_Records.GetAllJudges(outJudges, bInfo);
 	}
-	size_t GetAllHandlers(std::set<ARBString>& outHandlers) const
+	size_t GetAllHandlers(std::set<tstring>& outHandlers) const
 	{
 		return m_Records.GetAllHandlers(outHandlers);
 	}
 	void GetAllPartners(
-			std::set<ARBString>& outPartners,
-			std::set<ARBString>& outDogs) const
+			std::set<tstring>& outPartners,
+			std::set<tstring>& outDogs) const
 	{
 		m_Records.GetAllPartners(outPartners, outDogs);
 	}
-	size_t GetAllFaultTypes(std::set<ARBString>& outFaults) const
+	size_t GetAllFaultTypes(std::set<tstring>& outFaults) const
 	{
 		return m_Records.GetAllFaultTypes(outFaults);
 	}
-	size_t GetAllTrainingLogNames(std::set<ARBString>& outNames) const
+	size_t GetAllTrainingLogNames(std::set<tstring>& outNames) const
 	{
 		return m_Records.GetTraining().GetAllNames(outNames);
 	}
@@ -198,7 +198,7 @@ public:
 			std::vector<CVenueFilter>& venues,
 			ARBDogTitlePtr pTitle);
 	void ResetVisibility(
-			std::set<ARBString>& names,
+			std::set<tstring>& names,
 			ARBTrainingPtr pTraining);
 
 	CAgilityBookTree* GetTreeView() const;

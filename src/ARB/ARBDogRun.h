@@ -77,14 +77,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual tstring GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load a run.
@@ -117,7 +117,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(ARBString const& inOther) const;
+	int NumOtherPointsInUse(tstring const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -126,15 +126,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			ARBString const& inOldName,
-			ARBString const& inNewName);
+			tstring const& inOldName,
+			tstring const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inName OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(ARBString const& inName);
+	int DeleteOtherPoints(tstring const& inName);
 
 	/**
 	 * Get the number of Speed points earned in this run.
@@ -183,67 +183,67 @@ public:
 	{
 		m_Date = inDate;
 	}
-	ARBString const& GetDivision() const
+	tstring const& GetDivision() const
 	{
 		return m_Division;
 	}
-	void SetDivision(ARBString const& inDiv)
+	void SetDivision(tstring const& inDiv)
 	{
 		m_Division = inDiv;
 	}
-	ARBString const& GetLevel() const
+	tstring const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(ARBString const& inLevel)
+	void SetLevel(tstring const& inLevel)
 	{
 		m_Level = inLevel;
 	}
-	ARBString const& GetEvent() const
+	tstring const& GetEvent() const
 	{
 		return m_Event;
 	}
-	void SetEvent(ARBString const& inEvent)
+	void SetEvent(tstring const& inEvent)
 	{
 		m_Event = inEvent;
 	}
-	ARBString const& GetSubName() const
+	tstring const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(ARBString const& inSubName)
+	void SetSubName(tstring const& inSubName)
 	{
 		m_SubName = inSubName;
 	}
-	ARBString const& GetHeight() const
+	tstring const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(ARBString const& inHeight)
+	void SetHeight(tstring const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	ARBString const& GetConditions() const
+	tstring const& GetConditions() const
 	{
 		return m_Conditions;
 	}
-	void SetConditions(ARBString const& inConditions)
+	void SetConditions(tstring const& inConditions)
 	{
 		m_Conditions = inConditions;
 	}
-	ARBString const& GetJudge() const
+	tstring const& GetJudge() const
 	{
 		return m_Judge;
 	}
-	void SetJudge(ARBString const& inJudge)
+	void SetJudge(tstring const& inJudge)
 	{
 		m_Judge = inJudge;
 	}
-	ARBString const& GetHandler() const
+	tstring const& GetHandler() const
 	{
 		return m_Handler;
 	}
-	void SetHandler(ARBString const& inHandler)
+	void SetHandler(tstring const& inHandler)
 	{
 		m_Handler = inHandler;
 	}
@@ -303,15 +303,15 @@ public:
 	{
 		return m_Notes.GetFaults();
 	}
-	ARBString const& GetCRCD() const
+	tstring const& GetCRCD() const
 	{
 		return m_Notes.GetCRCD();
 	}
-	void SetCRCD(ARBString const& inCRCD)
+	void SetCRCD(tstring const& inCRCD)
 	{
 		m_Notes.SetCRCD(inCRCD);
 	}
-	ARBString const& GetCRCDRawMetaData() const
+	tstring const& GetCRCDRawMetaData() const
 	{
 		return m_Notes.GetCRCDRawMetaData();
 	}
@@ -323,11 +323,11 @@ public:
 	{
 		m_Notes.SetCRCDMetaData(inCRCDMeta, inBytes);
 	}
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Notes.GetNote();
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Notes.SetNote(inNote);
 	}
@@ -351,22 +351,22 @@ public:
 	{
 		return m_Links.size();
 	}
-	size_t GetLinks(std::set<ARBString>& outLinks) const;
-	bool HasLink(ARBString const& inLink) const;
-	void AddLink(ARBString const& inLink);
-	void RemoveLink(ARBString const& inLink);
+	size_t GetLinks(std::set<tstring>& outLinks) const;
+	bool HasLink(tstring const& inLink) const;
+	void AddLink(tstring const& inLink);
+	void RemoveLink(tstring const& inLink);
 
 private:
 	boost::weak_ptr<ARBConfigMultiQ> m_pMultiQ; //< Not persisted.
 	ARBDate m_Date;
-	ARBString m_Division;
-	ARBString m_Level;
-	ARBString m_Height;
-	ARBString m_Event;
-	ARBString m_SubName; //< Only used if the config supports it.
-	ARBString m_Conditions;
-	ARBString m_Judge;
-	ARBString m_Handler;
+	tstring m_Division;
+	tstring m_Level;
+	tstring m_Height;
+	tstring m_Event;
+	tstring m_SubName; //< Only used if the config supports it.
+	tstring m_Conditions;
+	tstring m_Judge;
+	tstring m_Handler;
 	ARBDogRunPartnerList m_Partners;
 	ARBDogRunScoring m_Scoring;
 	ARB_Q m_Q;
@@ -376,7 +376,7 @@ private:
 	ARBDogRunOtherPointsList m_OtherPoints;
 	ARBDogNotes m_Notes;
 	ARBDogReferenceRunList m_RefRuns;
-	typedef std::set<ARBString> ARBDogRunLinks;
+	typedef std::set<tstring> ARBDogRunLinks;
 	ARBDogRunLinks m_Links;
 };
 

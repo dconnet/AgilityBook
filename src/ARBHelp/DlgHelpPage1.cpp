@@ -60,7 +60,7 @@ static TCHAR g_szBuff2[BUFF_SIZE];
 static void DumpRegistry(
 	HKEY hKey,
 	int inIndent,
-	ARBostringstream& outData)
+	otstringstream& outData)
 {
 	if (!hKey)
 		return;
@@ -496,7 +496,7 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 		CString regInfo;
 		for (int index = 0; sc_Reg[index].hRegKey; ++index)
 		{
-			ARBostringstream data;
+			otstringstream data;
 			HKEY hSubKey;
 			if (ERROR_SUCCESS == RegOpenKeyEx(sc_Reg[index].hRegKey, sc_Reg[index].pRegPath, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
 			{

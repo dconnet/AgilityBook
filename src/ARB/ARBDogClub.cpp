@@ -105,7 +105,7 @@ bool ARBDogClub::operator==(ARBDogClub const& rhs) const
 }
 
 
-size_t ARBDogClub::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBDogClub::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -155,7 +155,7 @@ bool ARBDogClub::Load(
 
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
-		ARBString msg(INVALID_VENUE_NAME);
+		tstring msg(INVALID_VENUE_NAME);
 		msg += m_Venue;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_VENUE, msg.c_str()));
 		return false;
@@ -209,7 +209,7 @@ bool ARBDogClubList::GetPrimaryClub(ARBDogClubPtr* outClub) const
 }
 
 
-ARBString ARBDogClubList::GetPrimaryClubName() const
+tstring ARBDogClubList::GetPrimaryClubName() const
 {
 	if (0 < size())
 	{
@@ -221,7 +221,7 @@ ARBString ARBDogClubList::GetPrimaryClubName() const
 }
 
 
-ARBString ARBDogClubList::GetPrimaryClubVenue() const
+tstring ARBDogClubList::GetPrimaryClubVenue() const
 {
 	if (0 < size())
 	{
@@ -235,9 +235,9 @@ ARBString ARBDogClubList::GetPrimaryClubVenue() const
 
 bool ARBDogClubList::FindEvent(
 		ARBConfig const& inConfig,
-		ARBString const& inEvent,
-		ARBString const& inDivision,
-		ARBString const& inLevel,
+		tstring const& inEvent,
+		tstring const& inDivision,
+		tstring const& inLevel,
 		ARBDate const& inDate,
 		ARBErrorCallback& ioCallback,
 		ARBConfigEventPtr* outEvent,
@@ -264,7 +264,7 @@ bool ARBDogClubList::FindEvent(
 	}
 	else
 	{
-		ARBString msg(INVALID_EVENT);
+		tstring msg(INVALID_EVENT);
 		msg += inEvent;
 		msg += _T(" (");
 		msg += inDivision;
@@ -286,7 +286,7 @@ bool ARBDogClubList::FindEvent(
 
 
 bool ARBDogClubList::FindVenue(
-		ARBString const& inVenue,
+		tstring const& inVenue,
 		ARBDogClubPtr* outClub) const
 {
 	if (outClub)
@@ -305,8 +305,8 @@ bool ARBDogClubList::FindVenue(
 
 
 bool ARBDogClubList::AddClub(
-		ARBString const& inName,
-		ARBString const& inVenue,
+		tstring const& inName,
+		tstring const& inVenue,
 		ARBDogClubPtr* outClub)
 {
 	ARBDogClubPtr pClub(ARBDogClub::New());
@@ -320,11 +320,11 @@ bool ARBDogClubList::AddClub(
 
 
 bool ARBDogClubList::DeleteClub(
-		ARBString const& inName,
-		ARBString const& inVenue)
+		tstring const& inName,
+		tstring const& inVenue)
 {
-	ARBString name(inName);
-	ARBString venue(inVenue);
+	tstring name(inName);
+	tstring venue(inVenue);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name && (*iter)->GetVenue() == venue)

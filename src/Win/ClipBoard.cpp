@@ -145,7 +145,7 @@ bool CClipboardDataReader::GetData(
 		OutputDebugStringA((LPCSTR)data);
 		OutputDebugStringA("\n");
 #endif
-		ARBString err;
+		tstring err;
 		bOk = outTree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), err);
 		if (!bOk && 0 < err.length())
 		{

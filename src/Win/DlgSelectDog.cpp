@@ -104,11 +104,11 @@ BOOL CDlgSelectDog::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 
 	CWinApp* pApp = AfxGetApp();
-	std::set<ARBString> selection;
+	std::set<tstring> selection;
 	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		ARBostringstream item;
+		otstringstream item;
 		item << _T("Dog") << iDog;
 		CString dog = pApp->GetProfileString(_T("Selection"), item.str().c_str(), _T(""));
 		if (!dog.IsEmpty())
@@ -137,7 +137,7 @@ void CDlgSelectDog::OnOK()
 	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		ARBostringstream item;
+		otstringstream item;
 		item << _T("Dog") << iDog;
 		pApp->WriteProfileString(_T("Selection"), item.str().c_str(), NULL);
 	}
@@ -151,7 +151,7 @@ void CDlgSelectDog::OnOK()
 			ARBDogPtr pDog = reinterpret_cast<CListPtrData<ARBDogPtr>*>(m_ctrlList.GetItemDataPtr(index))->GetData();
 			m_Dogs.push_back(pDog);
 			++nDogs;
-			ARBostringstream item;
+			otstringstream item;
 			item << _T("Dog") << nDogs;
 			pApp->WriteProfileString(_T("Selection"), item.str().c_str(), pDog->GetCallName().c_str());
 		}

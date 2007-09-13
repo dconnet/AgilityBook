@@ -544,7 +544,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_COURSE_FAULTS:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											str << pRun->GetScoring().GetCourseFaults();
 											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
@@ -587,49 +587,49 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_REQ_OPENING:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											str << pRun->GetScoring().GetNeedOpenPts();
 											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_REQ_CLOSING:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											str << pRun->GetScoring().GetNeedClosePts();
 											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_OPENING:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											str << pRun->GetScoring().GetOpenPts();
 											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_CLOSING:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											str << pRun->GetScoring().GetClosePts();
 											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_REQ_POINTS:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											str << pRun->GetScoring().GetNeedOpenPts();
 											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_POINTS:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											str << pRun->GetScoring().GetOpenPts();
 											data += AddPreviewData(iLine, idx, str.str().c_str());
 										}
 										break;
 									case IO_RUNS_PLACE:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											short place = pRun->GetPlace();
 											if (0 > place)
 												str << '?';
@@ -642,7 +642,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_IN_CLASS:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											short inClass = pRun->GetInClass();
 											if (0 >= inClass)
 												str << '?';
@@ -653,7 +653,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_DOGSQD:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											short qd = pRun->GetDogsQd();
 											if (0 > qd)
 												str << '?';
@@ -693,7 +693,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_TITLE_POINTS:
 										{
-											ARBostringstream str;
+											otstringstream str;
 											double pts = 0.0;
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);

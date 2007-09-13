@@ -74,7 +74,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -84,7 +84,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -120,16 +120,16 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigLevelPtr inLevelNew,
-			ARBString& ioInfo);
+			tstring& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
@@ -143,7 +143,7 @@ public:
 	}
 
 private:
-	ARBString m_Name;
+	tstring m_Name;
 	ARBConfigSubLevelList m_SubLevels;
 };
 
@@ -176,7 +176,7 @@ public:
 	 * @return Whether there is a level that matches.
 	 */
 	bool VerifyLevel(
-			ARBString const& inName,
+			tstring const& inName,
 			bool inAllowWildCard = true) const;
 
 	/**
@@ -186,7 +186,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLevel(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigLevelPtr* outLevel = NULL);
 
 	/**
@@ -197,7 +197,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindSubLevel(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigLevelPtr* outLevel = NULL) const;
 
 	/**
@@ -207,7 +207,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLevel(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigLevelPtr* outLevel = NULL);
 
 	/**
@@ -224,7 +224,7 @@ public:
 	 * @return Whether level was deleted or not.
 	 */
 	bool DeleteLevel(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigEventList& ioEvents);
 
 	/**
@@ -235,6 +235,6 @@ public:
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
 	bool DeleteSubLevel(
-			ARBString const& inName,
+			tstring const& inName,
 			bool& outLevelModified);
 };

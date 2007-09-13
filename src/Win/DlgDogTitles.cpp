@@ -124,8 +124,8 @@ int CALLBACK CompareTitles(
 			break;
 		case 3: // name
 			{
-				ARBString n1 = pTitle1->GetGenericName();
-				ARBString n2 = pTitle2->GetGenericName();
+				tstring n1 = pTitle1->GetGenericName();
+				tstring n2 = pTitle2->GetGenericName();
 				if (n1 < n2)
 					rc = -1;
 				else if (n1 > n2)
@@ -134,8 +134,8 @@ int CALLBACK CompareTitles(
 			break;
 		case 4: // nice name
 			{
-				ARBString name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-				ARBString name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
+				tstring name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+				tstring name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -225,7 +225,7 @@ void CDlgDogTitles::SetColumnTitleHeaders()
 			str.LoadString(colTitleInfo[i].idText);
 			str += ' ';
 		}
-		ARBostringstream tmp;
+		otstringstream tmp;
 		tmp << (LPCTSTR)str << '(' << m_sortTitles.FindColumnOrder(i) + 1 << ')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);

@@ -52,7 +52,7 @@ BinaryData::BinaryData()
 
 
 bool BinaryData::Decode(
-		ARBString const& inBase64,
+		tstring const& inBase64,
 		char*& outBinData,
 		size_t& outBytes)
 {
@@ -128,7 +128,7 @@ void BinaryData::Release(char* inBinData)
 bool BinaryData::Encode(
 		char const* inBinData,
 		size_t inBytes,
-		ARBString& outBase64)
+		tstring& outBase64)
 {
 	outBase64.empty();
 
@@ -178,7 +178,7 @@ bool BinaryData::Encode(
 
 bool BinaryData::Encode(
 		FILE* inData,
-		ARBString& outBase64)
+		tstring& outBase64)
 {
 	outBase64.empty();
 
@@ -239,8 +239,8 @@ bool BinaryData::Encode(
 
 
 bool BinaryData::DecodeString(
-		ARBString const& inBase64,
-		ARBString& outData)
+		tstring const& inBase64,
+		tstring& outData)
 {
 	char* data;
 	size_t len;
@@ -251,7 +251,7 @@ bool BinaryData::DecodeString(
 	CString tmp(data, (int)len);
 	outData = (LPCTSTR)tmp;
 #else
-	outData = ARBString(data, len);
+	outData = tstring(data, len);
 #endif
 	Release(data);
 	return true;
@@ -259,8 +259,8 @@ bool BinaryData::DecodeString(
 
 
 bool BinaryData::EncodeString(
-		ARBString const& inData,
-		ARBString& outBase64)
+		tstring const& inData,
+		tstring& outBase64)
 {
 	outBase64.empty();
 	if (inData.empty())

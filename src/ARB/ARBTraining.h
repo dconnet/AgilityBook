@@ -88,7 +88,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Date.GetString(ARBDate::eSlashMDY);
 	}
@@ -98,7 +98,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load a training entry
@@ -132,36 +132,36 @@ public:
 	{
 		m_Date = inDate;
 	}
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
-	ARBString const& GetSubName() const
+	tstring const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(ARBString const& inName)
+	void SetSubName(tstring const& inName)
 	{
 		m_SubName = inName;
 	}
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
 	ARBDate m_Date;
-	ARBString m_Name;
-	ARBString m_SubName;
-	ARBString m_Note;
+	tstring m_Name;
+	tstring m_SubName;
+	tstring m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -195,14 +195,14 @@ public:
 	 * @param outNames A list of the unique training names.
 	 * @return Number of unique names.
 	 */
-	size_t GetAllNames(std::set<ARBString>& outNames) const;
+	size_t GetAllNames(std::set<tstring>& outNames) const;
 
 	/**
 	 * Get a list of all the different sub-names in the list.
 	 * @param outSubNames A list of the unique training sub-names.
 	 * @return Number of unique sub-names.
 	 */
-	size_t GetAllSubNames(std::set<ARBString>& outSubNames) const;
+	size_t GetAllSubNames(std::set<tstring>& outSubNames) const;
 
 	/**
 	 * Find a training object.

@@ -67,7 +67,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_ShortName;
 	}
@@ -77,7 +77,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -122,15 +122,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameDivision(
-			ARBString const& inOldDiv,
-			ARBString const& inNewDiv);
+			tstring const& inOldDiv,
+			tstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(ARBString const& inDiv);
+	int DeleteDivision(tstring const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -140,16 +140,16 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
-			ARBString const& inDiv,
-			ARBString const& inOldLevel,
-			ARBString const& inNewLevel);
+			tstring const& inDiv,
+			tstring const& inOldLevel,
+			tstring const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(ARBString const& inLevel);
+	int DeleteLevel(tstring const& inLevel);
 
 	/**
 	 * Rename an event.
@@ -158,15 +158,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameEvent(
-			ARBString const& inOldEvent,
-			ARBString const& inNewEvent);
+			tstring const& inOldEvent,
+			tstring const& inNewEvent);
 
 	/**
 	 * Delete an event.
 	 * @param inEvent Event name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteEvent(ARBString const& inEvent);
+	int DeleteEvent(tstring const& inEvent);
 
 	/**
 	 * Add an item.
@@ -176,9 +176,9 @@ public:
 	 * @return Whether object was added.
 	 */
 	bool AddItem(
-			ARBString const& inDiv,
-			ARBString const& inLevel,
-			ARBString const& inEvent);
+			tstring const& inDiv,
+			tstring const& inLevel,
+			tstring const& inEvent);
 
 	/**
 	 * Remove an item.
@@ -188,9 +188,9 @@ public:
 	 * @return Whether object was removed.
 	 */
 	bool RemoveItem(
-			ARBString const& inDiv,
-			ARBString const& inLevel,
-			ARBString const& inEvent);
+			tstring const& inDiv,
+			tstring const& inLevel,
+			tstring const& inEvent);
 
 	/**
 	 * Remove all configuration items.
@@ -200,19 +200,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString GetName() const
+	tstring GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
-	ARBString GetShortName() const
+	tstring GetShortName() const
 	{
 		return m_ShortName;
 	}
-	void SetShortName(ARBString const& inName)
+	void SetShortName(tstring const& inName)
 	{
 		m_ShortName = inName;
 	}
@@ -238,16 +238,16 @@ public:
 	}
 	bool GetItem(
 			size_t inIndex,
-			ARBString& outDivision,
-			ARBString& outLevel,
-			ARBString& outEvent) const;
+			tstring& outDivision,
+			tstring& outLevel,
+			tstring& outEvent) const;
 
 private:
 	struct MultiQItem
 	{
-		ARBString m_Div;
-		ARBString m_Level;
-		ARBString m_Event;
+		tstring m_Div;
+		tstring m_Level;
+		tstring m_Event;
 		bool operator<(MultiQItem const& rhs) const
 		{
 			if (m_Div < rhs.m_Div)
@@ -264,8 +264,8 @@ private:
 		}
 	};
 
-	ARBString m_Name;
-	ARBString m_ShortName;
+	tstring m_Name;
+	tstring m_ShortName;
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
 	std::set<MultiQItem> m_Items;
@@ -301,7 +301,7 @@ public:
 	 * @param outMultiQ Pointer to object, NULL if not found.
 	 */
 	bool FindMultiQ(
-			ARBString const& inName,
+			tstring const& inName,
 			bool inUseShortName = false,
 			ARBConfigMultiQPtr* outMultiQ = NULL) const;
 
@@ -321,15 +321,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameDivision(
-			ARBString const& inOldDiv,
-			ARBString const& inNewDiv);
+			tstring const& inOldDiv,
+			tstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(ARBString const& inDiv);
+	int DeleteDivision(tstring const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -339,16 +339,16 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
-			ARBString const& inDiv,
-			ARBString const& inOldLevel,
-			ARBString const& inNewLevel);
+			tstring const& inDiv,
+			tstring const& inOldLevel,
+			tstring const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(ARBString const& inLevel);
+	int DeleteLevel(tstring const& inLevel);
 
 	/**
 	 * Rename an event.
@@ -357,15 +357,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameEvent(
-			ARBString const& inOldEvent,
-			ARBString const& inNewEvent);
+			tstring const& inOldEvent,
+			tstring const& inNewEvent);
 
 	/**
 	 * Delete an event.
 	 * @param inEvent Event name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteEvent(ARBString const& inEvent);
+	int DeleteEvent(tstring const& inEvent);
 
 	/**
 	 * Add a MultiQ.

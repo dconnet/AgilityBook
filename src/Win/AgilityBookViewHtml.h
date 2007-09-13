@@ -57,7 +57,7 @@ public:
 
 	BOOL CreateFromStatic(UINT nID, CWnd* pParent);
 
-	bool SetHTML(ARBString const& csHTML);
+	bool SetHTML(tstring const& csHTML);
 
 	// ICommonView interface
 	virtual bool IsFiltered() const;

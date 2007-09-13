@@ -138,7 +138,7 @@ public:
 	 */
 	bool Save(
 		ElementNodePtr outTree,
-		ARBString const& inPgmVer,
+		tstring const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -164,7 +164,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			ARBostringstream& ioInfo,
+			otstringstream& ioInfo,
 			IConfigActionCallback& ioCallBack);
 
 	//
@@ -178,7 +178,7 @@ public:
 	 * @return Number of clubs.
 	 */
 	size_t GetAllClubNames(
-			std::set<ARBString>& outClubs,
+			std::set<tstring>& outClubs,
 			bool bInfo = true) const;
 
 	/**
@@ -188,7 +188,7 @@ public:
 	 * @return Number of locations.
 	 */
 	size_t GetAllTrialLocations(
-			std::set<ARBString>& outLocations,
+			std::set<tstring>& outLocations,
 			bool bInfo = true) const;
 
 	/**
@@ -199,30 +199,30 @@ public:
 	 * @return Number of subnames.
 	 */
 	size_t GetAllEventSubNames(
-			ARBString const& inVenue,
+			tstring const& inVenue,
 			ARBConfigEventPtr inEvent,
-			std::set<ARBString>& outNames) const;
+			std::set<tstring>& outNames) const;
 
 	/**
 	 * Get all heights in use from existing runs.
 	 * @param outHeights List of heights.
 	 * @return Number of heights.
 	 */
-	size_t GetAllHeights(std::set<ARBString>& outHeights) const;
+	size_t GetAllHeights(std::set<tstring>& outHeights) const;
 
 	/**
 	 * Get all callnames in use from existing runs.
 	 * @param outNames List of names.
 	 * @return Number of names.
 	 */
-	size_t GetAllCallNames(std::set<ARBString>& outNames) const;
+	size_t GetAllCallNames(std::set<tstring>& outNames) const;
 
 	/**
 	 * Get all breeds in use from existing runs.
 	 * @param outBreeds List of breeds.
 	 * @return Number of breeds.
 	 */
-	size_t GetAllBreeds(std::set<ARBString>& outBreeds) const;
+	size_t GetAllBreeds(std::set<tstring>& outBreeds) const;
 
 	/**
 	 * Get all judges in use from existing runs and Judges information.
@@ -231,7 +231,7 @@ public:
 	 * @return Number of judges.
 	 */
 	size_t GetAllJudges(
-			std::set<ARBString>& outJudges,
+			std::set<tstring>& outJudges,
 			bool bInfo = true) const;
 
 	/**
@@ -239,7 +239,7 @@ public:
 	 * @param outHandlers List of handlers.
 	 * @return Number of handlers.
 	 */
-	size_t GetAllHandlers(std::set<ARBString>& outHandlers) const;
+	size_t GetAllHandlers(std::set<tstring>& outHandlers) const;
 
 	/**
 	 * Get all pairs partners in use from existing runs.
@@ -247,15 +247,15 @@ public:
 	 * @param outDogs List of dogs.
 	 */
 	void GetAllPartners(
-			std::set<ARBString>& outPartners,
-			std::set<ARBString>& outDogs) const;
+			std::set<tstring>& outPartners,
+			std::set<tstring>& outDogs) const;
 
 	/**
 	 * Get all fault types in use from existing runs and configuration.
 	 * @param outFaults List of faults.
 	 * @return Number of faults.
 	 */
-	size_t GetAllFaultTypes(std::set<ARBString>& outFaults) const;
+	size_t GetAllFaultTypes(std::set<tstring>& outFaults) const;
 
 	/*
 	 * Getters.

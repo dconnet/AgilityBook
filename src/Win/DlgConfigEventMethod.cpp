@@ -77,7 +77,7 @@ protected:
 
 CString CDlgConfigureDataPlacement::OnNeedText(int iColumn) const
 {
-	ARBostringstream str;
+	otstringstream str;
 	switch (iColumn)
 	{
 	default:
@@ -314,7 +314,7 @@ BOOL CDlgConfigEventMethod::OnInitDialog()
 	int index;
 	for (index = 0; index < nStyles; ++index)
 	{
-		ARBString str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
+		tstring str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
 		int idx = m_ctrlType.AddString(str.c_str());
 		m_ctrlType.SetItemData(idx, Styles[index]);
 	}

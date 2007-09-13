@@ -86,7 +86,7 @@ CcalusdaaApp theApp;
 BOOL CcalusdaaApp::InitInstance()
 {
 	CWinApp::InitInstance();
-	ARBString err;
+	tstring err;
 	Element::Initialize(err);
 	return TRUE;
 }

@@ -114,7 +114,7 @@ bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 }
 
 
-ARBString ARBConfigPlaceInfo::GetGenericName() const
+tstring ARBConfigPlaceInfo::GetGenericName() const
 {
 	return PLACEMENT_POINTS_NAME_FORMAT(m_Value, m_Place);
 }

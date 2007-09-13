@@ -77,7 +77,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_CallName;
 	}
@@ -87,7 +87,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load a dog.
@@ -119,15 +119,15 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameVenue(
-			ARBString const& inOldVenue,
-			ARBString const& inNewVenue);
+			tstring const& inOldVenue,
+			tstring const& inNewVenue);
 
 	/**
 	 * Delete a venue.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(ARBString const& inVenue);
+	int DeleteVenue(tstring const& inVenue);
 
 	/**
 	 * Rename a division.
@@ -138,8 +138,8 @@ public:
 	 */
 	int RenameDivision(
 			ARBConfigVenuePtr inVenue,
-			ARBString const& inOldDiv,
-			ARBString const& inNewDiv);
+			tstring const& inOldDiv,
+			tstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
@@ -150,17 +150,17 @@ public:
 	 */
 	int DeleteDivision(
 			ARBConfig const& inConfig,
-			ARBString const& inVenue,
-			ARBString const& inDiv);
+			tstring const& inVenue,
+			tstring const& inDiv);
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetCallName() const
+	tstring const& GetCallName() const
 	{
 		return m_CallName;
 	}
-	void SetCallName(ARBString const& inName)
+	void SetCallName(tstring const& inName)
 	{
 		m_CallName = inName;
 	}
@@ -180,27 +180,27 @@ public:
 	{
 		m_Deceased = inDeceased;
 	}
-	ARBString const& GetRegisteredName() const
+	tstring const& GetRegisteredName() const
 	{
 		return m_RegName;
 	}
-	void SetRegisteredName(ARBString const& inName)
+	void SetRegisteredName(tstring const& inName)
 	{
 		m_RegName = inName;
 	}
-	ARBString const& GetBreed() const
+	tstring const& GetBreed() const
 	{
 		return m_Breed;
 	}
-	void SetBreed(ARBString const& inBreed)
+	void SetBreed(tstring const& inBreed)
 	{
 		m_Breed = inBreed;
 	}
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -238,12 +238,12 @@ public:
 	}
 
 private:
-	ARBString m_CallName;
+	tstring m_CallName;
 	ARBDate m_DOB;
 	ARBDate m_Deceased;
-	ARBString m_RegName;
-	ARBString m_Breed;
-	ARBString m_Note;
+	tstring m_RegName;
+	tstring m_Breed;
+	tstring m_Note;
 	ARBDogExistingPointsList m_ExistingPoints;
 	ARBDogRegNumList m_RegNums;
 	ARBDogTitleList m_Titles;
@@ -286,7 +286,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects, not points.
 	 */
-	int NumExistingPointsInVenue(ARBString const& inVenue) const;
+	int NumExistingPointsInVenue(tstring const& inVenue) const;
 
 	/**
 	 * Get the number of registration numbers in a venue.
@@ -294,7 +294,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumRegNumsInVenue(ARBString const& inVenue) const;
+	int NumRegNumsInVenue(tstring const& inVenue) const;
 
 	/**
 	 * Get the number of titles in a venue.
@@ -302,7 +302,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTitlesInVenue(ARBString const& inVenue) const;
+	int NumTitlesInVenue(tstring const& inVenue) const;
 
 	/**
 	 * Get the number of trials in a venue.
@@ -310,7 +310,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTrialsInVenue(ARBString const& inVenue) const;
+	int NumTrialsInVenue(tstring const& inVenue) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -319,15 +319,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			ARBString const& inOldVenue,
-			ARBString const& inNewVenue);
+			tstring const& inOldVenue,
+			tstring const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(ARBString const& inVenue);
+	int DeleteVenue(tstring const& inVenue);
 
 	/**
 	 * Number of OtherPoint objects in use.
@@ -335,7 +335,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(ARBString const& inOther) const;
+	int NumOtherPointsInUse(tstring const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -344,15 +344,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			ARBString const& inOldOther,
-			ARBString const& inNewOther);
+			tstring const& inOldOther,
+			tstring const& inNewOther);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inOther OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(ARBString const& inOther);
+	int DeleteOtherPoints(tstring const& inOther);
 
 	/**
 	 * Number of MultiQ objects in use.
@@ -362,8 +362,8 @@ public:
 	 * @return Number of objects, not points.
 	 */
 	int NumMultiQsInUse(
-			ARBString const& inVenue,
-			ARBString const& inMultiQ) const;
+			tstring const& inVenue,
+			tstring const& inMultiQ) const;
 
 	/**
 	 * Rename a MultiQ, rename any dependent objects.
@@ -373,9 +373,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameMultiQs(
-			ARBString const& inVenue,
-			ARBString const& inOldMultiQ,
-			ARBString const& inNewMultiQ);
+			tstring const& inVenue,
+			tstring const& inOldMultiQ,
+			tstring const& inNewMultiQ);
 
 	/**
 	 * Delete any MultiQs no longer in venue.
@@ -385,7 +385,7 @@ public:
 	 */
 	int DeleteMultiQs(
 			ARBConfig const& inConfig,
-			ARBString const& inVenue);
+			tstring const& inVenue);
 
 	/**
 	 * Number of multiple hosted trials in a division.
@@ -397,8 +397,8 @@ public:
 	 */
 	int NumMultiHostedTrialsInDivision(
 			ARBConfig const& inConfig,
-			ARBString const& inVenue,
-			ARBString const& inDiv) const;
+			tstring const& inVenue,
+			tstring const& inDiv) const;
 
 	/**
 	 * Get the number of existing point entries in a division.
@@ -409,7 +409,7 @@ public:
 	 */
 	int NumExistingPointsInDivision(
 			ARBConfigVenuePtr inVenue,
-			ARBString const& inDiv) const;
+			tstring const& inDiv) const;
 
 	/**
 	 * Get the number of runs in a division.
@@ -420,7 +420,7 @@ public:
 	 */
 	int NumRunsInDivision(
 			ARBConfigVenuePtr inVenue,
-			ARBString const& inDiv) const;
+			tstring const& inDiv) const;
 
 	/**
 	 * Rename a division, rename any dependent objects.
@@ -431,8 +431,8 @@ public:
 	 */
 	int RenameDivision(
 			ARBConfigVenuePtr inVenue,
-			ARBString const& inOldDiv,
-			ARBString const& inNewDiv);
+			tstring const& inOldDiv,
+			tstring const& inNewDiv);
 
 	/**
 	 * Delete a division, remove any dependent objects.
@@ -443,8 +443,8 @@ public:
 	 */
 	int DeleteDivision(
 			ARBConfig const& inConfig,
-			ARBString const& inVenue,
-			ARBString const& inDiv);
+			tstring const& inVenue,
+			tstring const& inDiv);
 
 	/**
 	 * Number of levels in use.
@@ -455,9 +455,9 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumLevelsInUse(
-			ARBString const& inVenue,
-			ARBString const& inDiv,
-			ARBString const& inLevel) const;
+			tstring const& inVenue,
+			tstring const& inDiv,
+			tstring const& inLevel) const;
 
 	/**
 	 * Rename a level, rename any dependent objects.
@@ -468,10 +468,10 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameLevel(
-			ARBString const& inVenue,
-			ARBString const& inDiv,
-			ARBString const& inOldLevel,
-			ARBString const& inNewLevel);
+			tstring const& inVenue,
+			tstring const& inDiv,
+			tstring const& inOldLevel,
+			tstring const& inNewLevel);
 
 	/**
 	 * Delete a level, remove any dependent objects.
@@ -481,9 +481,9 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteLevel(
-			ARBString const& inVenue,
-			ARBString const& inDiv,
-			ARBString const& inLevel);
+			tstring const& inVenue,
+			tstring const& inDiv,
+			tstring const& inLevel);
 
 	/**
 	 * Number of titles in use.
@@ -493,8 +493,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInUse(
-			ARBString const& inVenue,
-			ARBString const& inTitle) const;
+			tstring const& inVenue,
+			tstring const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -504,9 +504,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameTitle(
-			ARBString const& inVenue,
-			ARBString const& inOldTitle,
-			ARBString const& inNewTitle);
+			tstring const& inVenue,
+			tstring const& inOldTitle,
+			tstring const& inNewTitle);
 
 	/**
 	 * Delete a title, remove any dependent objects.
@@ -515,8 +515,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteTitle(
-			ARBString const& inVenue,
-			ARBString const& inTitle);
+			tstring const& inVenue,
+			tstring const& inTitle);
 
 	/**
 	 * Number of events in use.
@@ -526,8 +526,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumEventsInUse(
-			ARBString const& inVenue,
-			ARBString const& inEvent) const;
+			tstring const& inVenue,
+			tstring const& inEvent) const;
 
 	/**
 	 * Rename an event, rename any dependent objects.
@@ -537,9 +537,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameEvent(
-			ARBString const& inVenue,
-			ARBString const& inOldEvent,
-			ARBString const& inNewEvent);
+			tstring const& inVenue,
+			tstring const& inOldEvent,
+			tstring const& inNewEvent);
 
 	/**
 	 * Delete an event, remove any dependent objects.
@@ -548,8 +548,8 @@ public:
 	 * @return Number of items removed.
 	 */
 	int DeleteEvent(
-			ARBString const& inVenue,
-			ARBString const& inEvent);
+			tstring const& inVenue,
+			tstring const& inEvent);
 
 	/**
 	 * Add a dog.

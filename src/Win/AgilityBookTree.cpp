@@ -154,7 +154,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	while (!bFound && NULL != hItem)
 	{
-		std::set<ARBString> strings;
+		std::set<tstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTreeData* pData = m_pView->GetItemData(hItem);
@@ -165,7 +165,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		{
 			strings.insert((LPCTSTR)m_pView->GetTreeCtrl().GetItemText(hItem));
 		}
-		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())
@@ -822,7 +822,7 @@ void CAgilityBookTree::LoadData()
 
 	CWaitCursor wait;
 	// Remember the currently selected item.
-	ARBString strCallName;
+	tstring strCallName;
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
 	if (!pData)
 	{

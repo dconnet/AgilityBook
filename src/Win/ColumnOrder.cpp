@@ -117,7 +117,7 @@ bool CColumnOrder::Initialize(int nColumns)
 void CColumnOrder::Save()
 {
 	{
-		ARBostringstream str;
+		otstringstream str;
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
@@ -127,7 +127,7 @@ void CColumnOrder::Save()
 		AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Order"), str.str().c_str());
 	}
 	{
-		ARBostringstream str;
+		otstringstream str;
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)

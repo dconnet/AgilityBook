@@ -78,7 +78,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -88,7 +88,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load a items entry
@@ -103,7 +103,7 @@ public:
 			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback,
-			ARBString const& inItemName);
+			tstring const& inItemName);
 
 	/**
 	 * Save a items entry
@@ -112,7 +112,7 @@ public:
 	 */
 	bool ARBInfoItem::Save(
 			ElementNodePtr ioTree,
-			ARBString const& inItemName) const;
+			tstring const& inItemName) const;
 
 	/**
 	 * Save a document.
@@ -125,26 +125,26 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
-	ARBString const& GetComment() const
+	tstring const& GetComment() const
 	{
 		return m_Comment;
 	}
-	void SetComment(ARBString const& inComment)
+	void SetComment(tstring const& inComment)
 	{
 		m_Comment = inComment;
 	}
 
 private:
-	ARBString m_Name;
-	ARBString m_Comment;
+	tstring m_Name;
+	tstring m_Comment;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -159,11 +159,11 @@ public:
 	 * Construct a club/judge/location info object.
 	 * @param inItemName Name of elements to be loaded.
 	 */
-	ARBInfoItemList(ARBString const& inItemName);
+	ARBInfoItemList(tstring const& inItemName);
 	ARBInfoItemList(ARBInfoItemList const& rhs);
 	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
 
-	ARBString const& GetItemName() const
+	tstring const& GetItemName() const
 	{
 		return m_ItemName;
 	}
@@ -197,13 +197,13 @@ public:
 	 * @param outNames All the names.
 	 * @return Number of items in list.
 	 */
-	size_t GetAllItems(std::set<ARBString>& outNames) const;
+	size_t GetAllItems(std::set<tstring>& outNames) const;
 
 	/**
 	 * Remove entries from list that are in use but have no associated comments.
 	 * @param inNamesInUse Names of items from runs.
 	 */
-	void CondenseContent(std::set<ARBString> const& inNamesInUse);
+	void CondenseContent(std::set<tstring> const& inNamesInUse);
 
 	/**
 	 * Find a item.
@@ -212,7 +212,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindItem(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBInfoItemPtr* outItem = NULL) const;
 
 	/**
@@ -222,7 +222,7 @@ public:
 	 * @return Whether object was added.
 	 */
 	bool AddItem(
-			ARBString const& inItem,
+			tstring const& inItem,
 			ARBInfoItemPtr* outItem = NULL);
 
 	/**
@@ -240,5 +240,5 @@ public:
 	bool DeleteItem(ARBInfoItemPtr inItem);
 
 private:
-	ARBString m_ItemName;
+	tstring m_ItemName;
 };

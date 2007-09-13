@@ -178,10 +178,10 @@ bool ARBDogRunScoring::Load(
 	if (!inTree)
 		return false;
 
-	ARBString attrib;
+	tstring attrib;
 
 	m_bRoundTimeFaults = inEventScoring->DropFractions();
-	ARBString const& name = inTree->GetName();
+	tstring const& name = inTree->GetName();
 	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);

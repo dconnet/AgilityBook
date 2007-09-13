@@ -184,21 +184,21 @@ ARBDate ARBDate::Today()
 
 
 static int ParseFields(
-		ARBString inDate,
+		tstring inDate,
 		char sep,
 		int& val1,
 		int& val2,
 		int& val3)
 {
 	int nVals = 0;
-	ARBString::size_type pos = inDate.find(sep);
-	if (ARBString::npos != pos)
+	tstring::size_type pos = inDate.find(sep);
+	if (tstring::npos != pos)
 	{
 		val1 = static_cast<short>(_tstol(inDate.c_str()));
 		++nVals;
 		inDate = inDate.substr(pos+1);
 		pos = inDate.find(sep);
-		if (ARBString::npos != pos)
+		if (tstring::npos != pos)
 		{
 			val2 = static_cast<short>(_tstol(inDate.c_str()));
 			++nVals;
@@ -213,11 +213,11 @@ static int ParseFields(
 
 // static
 ARBDate ARBDate::FromString(
-		ARBString const& inDate,
+		tstring const& inDate,
 		ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
-	ARBString value(inDate);
+	tstring value(inDate);
 	if (0 < inDate.length())
 	{
 		int val1 = 0, val2 = 0, val3 = 0;
@@ -269,12 +269,12 @@ ARBDate ARBDate::FromString(
 
 
 // static
-ARBString ARBDate::GetValidDateString(
+tstring ARBDate::GetValidDateString(
 		ARBDate const& inFrom,
 		ARBDate const& inTo,
 		DateFormat inFormat)
 {
-	ARBString str;
+	tstring str;
 	if (inFrom.IsValid() || inTo.IsValid())
 	{
 		str += _T("[");
@@ -369,19 +369,19 @@ bool ARBDate::SetDate(
 }
 
 
-ARBString ARBDate::GetString(
+tstring ARBDate::GetString(
 	DateFormat inFormat,
 	bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
 		return _T("");
-	ARBString date;
+	tstring date;
 	int yr = 0;
 	int mon = 0;
 	int day = 0;
 	if (IsValid())
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
-	ARBostringstream str;
+	otstringstream str;
 	switch (inFormat)
 	{
 	case eDashMMDDYYYY:		///< MM-DD-YYYY

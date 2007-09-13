@@ -107,18 +107,18 @@ ARB_TYPEDEF_LIST(ARBInfoItem)
 ARB_TYPEDEF_LIST(ARBTraining)
 
 // Note, for non-Windows systems, see stdafx.h for additional requirements.
-typedef std::basic_ostringstream<TCHAR> ARBostringstream;
-typedef std::basic_string<TCHAR> ARBString;
-typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > ARBostream;
-typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > ARBofstream;
+typedef std::basic_ostringstream<TCHAR> otstringstream;
+typedef std::basic_string<TCHAR> tstring;
+typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > otstream;
+typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > oftstream;
 
 /**
  * Make a string safe for HTML viewing.
  * @param inRawData String to sanitize
  * @param bConvertCR Convert \n to html-breaks.
  */
-ARBString SanitizeStringForHTML(
-		ARBString const& inRawData,
+tstring SanitizeStringForHTML(
+		tstring const& inRawData,
 		bool bConvertCR = true);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -177,7 +177,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		size_t nItems = 0;
 		for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -246,7 +246,7 @@ public:
 class ARBErrorCallback
 {
 public:
-	ARBErrorCallback(ARBString& ioErrMsg)
+	ARBErrorCallback(tstring& ioErrMsg)
 		: m_ErrMsg(ioErrMsg)
 	{
 	}
@@ -265,13 +265,13 @@ public:
 	/**
 	 * Log an error message.
 	 */
-	virtual void LogMessage(ARBString const& inMsg)
+	virtual void LogMessage(tstring const& inMsg)
 	{
 		m_ErrMsg += inMsg;
 	}
 
 protected:
-	ARBString& m_ErrMsg;
+	tstring& m_ErrMsg;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -341,7 +341,7 @@ public:
 	{
 		return static_cast<unsigned short>(m_Version & 0xff);
 	}
-	ARBString str() const;
+	tstring str() const;
 
 private:
 	unsigned long m_Version;
@@ -374,12 +374,12 @@ public:
 	/**
 	 * Get a single string listing all valid types.
 	 */
-	static ARBString GetValidTypes();
+	static tstring GetValidTypes();
 
 	/**
 	 * Get a list of all valid types.
 	 */
-	static void GetValidTypes(std::vector<ARBString>& outTypes);
+	static void GetValidTypes(std::vector<tstring>& outTypes);
 
 	/**
 	 * Get the number of valid types.
@@ -455,7 +455,7 @@ public:
 	/**
 	 * Translate the enum value to a string
 	 */
-	ARBString str() const;
+	tstring str() const;
 
 	/**
 	 * Load a Q
@@ -465,7 +465,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			ARBString const& inAttrib,
+			tstring const& inAttrib,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -493,7 +493,7 @@ class ARBDouble
 	ARBDouble();
 	~ARBDouble();
 public:
-	static ARBString str(
+	static tstring str(
 			double inValue,
 			int inPrec = 2);
 

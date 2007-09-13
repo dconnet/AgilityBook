@@ -56,9 +56,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 // static
-ARBString ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
+tstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
 {
-	ARBString str;
+	tstring str;
 	switch (inType)
 	{
 	case eOtherPoints:
@@ -177,12 +177,12 @@ bool ARBDogExistingPoints::Load(
 	if (!inTree)
 		return false;
 
-	ARBString attrib;
+	tstring attrib;
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
 		inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str()));
 		return false;
@@ -216,7 +216,7 @@ bool ARBDogExistingPoints::Load(
 	}
 	else
 	{
-		ARBString msg(INVALID_VALUE);
+		tstring msg(INVALID_VALUE);
 		msg += attrib;
 		msg += _T("\n");
 		msg += VALID_VALUES;
@@ -240,7 +240,7 @@ bool ARBDogExistingPoints::Load(
 		{
 			if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
 			{
-				ARBString msg(INVALID_OTHER_PTS_NAME);
+				tstring msg(INVALID_OTHER_PTS_NAME);
 				msg += m_Other;
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str()));
 				return false;
@@ -258,7 +258,7 @@ bool ARBDogExistingPoints::Load(
 	{
 		if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 		{
-			ARBString msg(INVALID_VENUE_NAME);
+			tstring msg(INVALID_VENUE_NAME);
 			msg += m_Venue;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
@@ -311,7 +311,7 @@ bool ARBDogExistingPoints::Load(
 			{
 				if (!inConfig.GetVenues().VerifyMultiQ(m_Venue, m_MultiQ))
 				{
-					ARBString msg(INVALID_MULTIQ_NAME);
+					tstring msg(INVALID_MULTIQ_NAME);
 					msg += m_Venue;
 					msg += _T("/");
 					msg += m_MultiQ;
@@ -361,7 +361,7 @@ bool ARBDogExistingPoints::Load(
 		}
 		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event, m_Date))
 		{
-			ARBString msg(INVALID_EVENT_NAME);
+			tstring msg(INVALID_EVENT_NAME);
 			msg += m_Venue;
 			msg += _T("/");
 			msg += m_Div;
@@ -378,7 +378,7 @@ bool ARBDogExistingPoints::Load(
 	default:
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
 		{
-			ARBString msg(INVALID_VENUE_NAME);
+			tstring msg(INVALID_VENUE_NAME);
 			msg += m_Venue;
 			msg += _T("/");
 			msg += m_Div;
@@ -509,7 +509,7 @@ void ARBDogExistingPointsList::sort()
 }
 
 
-bool ARBDogExistingPointsList::HasPoints(ARBString const& inVenue) const
+bool ARBDogExistingPointsList::HasPoints(tstring const& inVenue) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -605,7 +605,7 @@ double ARBDogExistingPointsList::ExistingPoints(
 }
 
 
-int ARBDogExistingPointsList::NumExistingPointsInVenue(ARBString const& inVenue) const
+int ARBDogExistingPointsList::NumExistingPointsInVenue(tstring const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -618,8 +618,8 @@ int ARBDogExistingPointsList::NumExistingPointsInVenue(ARBString const& inVenue)
 
 
 int ARBDogExistingPointsList::RenameVenue(
-		ARBString const& inOldVenue,
-		ARBString const& inNewVenue)
+		tstring const& inOldVenue,
+		tstring const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -634,9 +634,9 @@ int ARBDogExistingPointsList::RenameVenue(
 }
 
 
-int ARBDogExistingPointsList::DeleteVenue(ARBString const& inVenue)
+int ARBDogExistingPointsList::DeleteVenue(tstring const& inVenue)
 {
-	ARBString venue(inVenue);
+	tstring venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -654,7 +654,7 @@ int ARBDogExistingPointsList::DeleteVenue(ARBString const& inVenue)
 
 int ARBDogExistingPointsList::NumExistingPointsInDivision(
 		ARBConfigVenuePtr inVenue,
-		ARBString const& inDiv) const
+		tstring const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -668,9 +668,9 @@ int ARBDogExistingPointsList::NumExistingPointsInDivision(
 
 
 int ARBDogExistingPointsList::RenameDivision(
-		ARBString const& inVenue,
-		ARBString const& inOldDiv,
-		ARBString const& inNewDiv)
+		tstring const& inVenue,
+		tstring const& inOldDiv,
+		tstring const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -686,8 +686,8 @@ int ARBDogExistingPointsList::RenameDivision(
 
 
 int ARBDogExistingPointsList::DeleteDivision(
-		ARBString const& inVenue,
-		ARBString const& inDiv)
+		tstring const& inVenue,
+		tstring const& inDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -705,9 +705,9 @@ int ARBDogExistingPointsList::DeleteDivision(
 
 
 int ARBDogExistingPointsList::NumLevelsInUse(
-		ARBString const& inVenue,
-		ARBString const& inDiv,
-		ARBString const& inLevel) const
+		tstring const& inVenue,
+		tstring const& inDiv,
+		tstring const& inLevel) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -722,10 +722,10 @@ int ARBDogExistingPointsList::NumLevelsInUse(
 
 
 int ARBDogExistingPointsList::RenameLevel(
-		ARBString const& inVenue,
-		ARBString const& inDiv,
-		ARBString const& inOldLevel,
-		ARBString const& inNewLevel)
+		tstring const& inVenue,
+		tstring const& inDiv,
+		tstring const& inOldLevel,
+		tstring const& inNewLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -743,9 +743,9 @@ int ARBDogExistingPointsList::RenameLevel(
 
 
 int ARBDogExistingPointsList::DeleteLevel(
-		ARBString const& inVenue,
-		ARBString const& inDiv,
-		ARBString const& inLevel)
+		tstring const& inVenue,
+		tstring const& inDiv,
+		tstring const& inLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -765,8 +765,8 @@ int ARBDogExistingPointsList::DeleteLevel(
 
 
 int ARBDogExistingPointsList::NumEventsInUse(
-		ARBString const& inVenue,
-		ARBString const& inEvent) const
+		tstring const& inVenue,
+		tstring const& inEvent) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -780,9 +780,9 @@ int ARBDogExistingPointsList::NumEventsInUse(
 
 
 int ARBDogExistingPointsList::RenameEvent(
-		ARBString const& inVenue,
-		ARBString const& inOldEvent,
-		ARBString const& inNewEvent)
+		tstring const& inVenue,
+		tstring const& inOldEvent,
+		tstring const& inNewEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -799,8 +799,8 @@ int ARBDogExistingPointsList::RenameEvent(
 
 
 int ARBDogExistingPointsList::DeleteEvent(
-		ARBString const& inVenue,
-		ARBString const& inEvent)
+		tstring const& inVenue,
+		tstring const& inEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -818,7 +818,7 @@ int ARBDogExistingPointsList::DeleteEvent(
 }
 
 
-int ARBDogExistingPointsList::NumOtherPointsInUse(ARBString const& inOther) const
+int ARBDogExistingPointsList::NumOtherPointsInUse(tstring const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -832,8 +832,8 @@ int ARBDogExistingPointsList::NumOtherPointsInUse(ARBString const& inOther) cons
 
 
 int ARBDogExistingPointsList::RenameOtherPoints(
-		ARBString const& inOldOther,
-		ARBString const& inNewOther)
+		tstring const& inOldOther,
+		tstring const& inNewOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -849,7 +849,7 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 }
 
 
-int ARBDogExistingPointsList::DeleteOtherPoints(ARBString const& inOther)
+int ARBDogExistingPointsList::DeleteOtherPoints(tstring const& inOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -868,8 +868,8 @@ int ARBDogExistingPointsList::DeleteOtherPoints(ARBString const& inOther)
 
 
 int ARBDogExistingPointsList::NumMultiQsInUse(
-		ARBString const& inVenue,
-		ARBString const& inMultiQ) const
+		tstring const& inVenue,
+		tstring const& inMultiQ) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -884,9 +884,9 @@ int ARBDogExistingPointsList::NumMultiQsInUse(
 
 
 int ARBDogExistingPointsList::RenameMultiQs(
-		ARBString const& inVenue,
-		ARBString const& inOldMultiQ,
-		ARBString const& inNewMultiQ)
+		tstring const& inVenue,
+		tstring const& inOldMultiQ,
+		tstring const& inNewMultiQ)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -905,7 +905,7 @@ int ARBDogExistingPointsList::RenameMultiQs(
 
 int ARBDogExistingPointsList::DeleteMultiQs(
 		ARBConfig const& inConfig,
-		ARBString const& inVenue)
+		tstring const& inVenue)
 {
 	int count = 0;
 	ARBConfigVenuePtr pVenue;

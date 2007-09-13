@@ -116,7 +116,7 @@ bool ARBInfo::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		ARBString const& name = element->GetName();
+		tstring const& name = element->GetName();
 		if (name == TREE_CLUBINFO)
 		{
 			// Ignore any errors.

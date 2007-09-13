@@ -196,9 +196,9 @@ void CDlgConfigEvent::FillSubNames(bool bInit)
 		if (bInit)
 		{
 			m_ctrlSubNames.ResetContent();
-			std::set<ARBString> subNames;
+			std::set<tstring> subNames;
 			m_pEvent->GetSubNames(subNames);
-			for (std::set<ARBString>::const_iterator iter = subNames.begin();
+			for (std::set<tstring>::const_iterator iter = subNames.begin();
 				iter != subNames.end();
 				++iter)
 			{
@@ -258,7 +258,7 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 		str += all;
 	else
 		str += pScoring->GetLevel().c_str();
-	ARBString validStr = ARBDate::GetValidDateString(pScoring->GetValidFrom(), pScoring->GetValidTo());
+	tstring validStr = ARBDate::GetValidDateString(pScoring->GetValidFrom(), pScoring->GetValidTo());
 	if (0 < validStr.length())
 	{
 		str += ' ';
@@ -285,7 +285,7 @@ void CDlgConfigEvent::FillControls()
 			// Get info
 			{
 				CString str1, str2;
-				ARBostringstream info;
+				otstringstream info;
 				ARBConfigScoring::ScoringStyle style = pScoring->GetScoringStyle();
 				str1.LoadString(IDS_CONFIGEVENT_STYLE);
 				info << (LPCTSTR)str1 << _T(": ")
@@ -1107,7 +1107,7 @@ void CDlgConfigEvent::OnOK()
 	m_pEvent->SetHasSubNames(m_bHasSubNames == TRUE ? true : false);
 	if (m_bHasSubNames)
 	{
-		std::set<ARBString> subNames;
+		std::set<tstring> subNames;
 		int nCount = m_ctrlSubNames.GetCount();
 		for (int i = 0; i < nCount; ++i)
 		{

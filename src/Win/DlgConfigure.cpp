@@ -448,7 +448,7 @@ void CDlgConfigure::OnNew()
 			CDlgName dlg(_T(""), IDS_FAULT_TYPE_NAME, this);
 			if (IDOK == dlg.DoModal())
 			{
-				ARBString name = dlg.GetName();
+				tstring name = dlg.GetName();
 				// We could check for uniqueness, but if the user wants 2
 				// strings the same, why argue! Afterall, these strings
 				// are only "helper" items to fill in other data.
@@ -508,7 +508,7 @@ void CDlgConfigure::OnDelete()
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			ARBString venue = pVenueData->GetVenue()->GetName();
+			tstring venue = pVenueData->GetVenue()->GetName();
 			// If we were able to delete it...
 			if (m_Config.GetVenues().DeleteVenue(venue))
 			{
@@ -532,7 +532,7 @@ void CDlgConfigure::OnDelete()
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			ARBString otherPoints = pOtherData->GetOtherPoints()->GetName();
+			tstring otherPoints = pOtherData->GetOtherPoints()->GetName();
 			if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
 			{
 				m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(otherPoints));
@@ -570,8 +570,8 @@ void CDlgConfigure::OnEdit()
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			bool done = false;
-			ARBString oldName = pFaultData->GetFault()->GetName();
-			ARBString name(oldName);
+			tstring oldName = pFaultData->GetFault()->GetName();
+			tstring name(oldName);
 			while (!done)
 			{
 				done = true;
@@ -600,7 +600,7 @@ void CDlgConfigure::OnEdit()
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			ARBString oldName = pOtherData->GetOtherPoints()->GetName();
+			tstring oldName = pOtherData->GetOtherPoints()->GetName();
 			CDlgConfigOtherPoints dlg(m_Config, pOtherData->GetOtherPoints(), this);
 			if (IDOK == dlg.DoModal())
 			{
@@ -633,7 +633,7 @@ void CDlgConfigure::OnCopy()
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			ARBString name(pVenueData->GetVenue()->GetName());
+			tstring name(pVenueData->GetVenue()->GetName());
 			while (m_Config.GetVenues().FindVenue(name))
 			{
 				name = (LPCTSTR)copyOf + name;
@@ -658,7 +658,7 @@ void CDlgConfigure::OnCopy()
 	case eFaults:
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
-			ARBString name(pFaultData->GetFault()->GetName());
+			tstring name(pFaultData->GetFault()->GetName());
 			ARBConfigFaultPtr pNewFault;
 			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
@@ -677,7 +677,7 @@ void CDlgConfigure::OnCopy()
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			ARBString name(pOtherData->GetOtherPoints()->GetName());
+			tstring name(pOtherData->GetOtherPoints()->GetName());
 			while (m_Config.GetOtherPoints().FindOtherPoints(name))
 			{
 				name = (LPCTSTR)copyOf + name;
@@ -706,8 +706,8 @@ class CDlgConfigCallback : public IConfigActionCallback
 {
 public:
 	CDlgConfigCallback() {}
-	virtual void PreDelete(ARBString const& inMsg) {}
-	void PostDelete(ARBString const& inMsg) const {}
+	virtual void PreDelete(tstring const& inMsg) {}
+	void PostDelete(tstring const& inMsg) const {}
 };
 
 
@@ -719,7 +719,7 @@ void CDlgConfigure::OnUpdate()
 	{
 		ARBConfig& update = dlg.GetConfig();
 		// Update our current config (not runs, later)
-		ARBostringstream info;
+		otstringstream info;
 		CDlgConfigCallback callback;
 		if (0 < update.GetActions().Apply(m_Config, NULL, info, callback))
 		{

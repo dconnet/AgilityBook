@@ -248,9 +248,9 @@ BOOL CDlgCalendar::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	set<ARBString> locations;
+	set<tstring> locations;
 	m_pDoc->GetAllTrialLocations(locations);
-	set<ARBString>::const_iterator iter;
+	set<tstring>::const_iterator iter;
 	for (iter = locations.begin(); iter != locations.end(); ++iter)
 	{
 		int index = m_ctrlLocation.AddString((*iter).c_str());
@@ -269,7 +269,7 @@ BOOL CDlgCalendar::OnInitDialog()
 		if (pVenue->GetName() == m_pCal->GetVenue())
 			m_ctrlVenue.SetCurSel(index);
 	}
-	set<ARBString> clubs;
+	set<tstring> clubs;
 	m_pDoc->GetAllClubNames(clubs);
 	for (iter = clubs.begin(); iter != clubs.end(); ++iter)
 	{

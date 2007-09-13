@@ -137,7 +137,7 @@ public:
 		: m_Data(inData)
 	{
 	}
-	virtual ARBString OnNeedText(size_t index) const
+	virtual tstring OnNeedText(size_t index) const
 	{
 		return m_Data->OnNeedText(index);
 	}
@@ -319,7 +319,7 @@ void CAgilityBookViewPoints::OnLvnGetdispinfo(
 		PointsData* pData = dynamic_cast<PointsData*>(pRawData);
 		if (pData)
 		{
-			ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
 			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}

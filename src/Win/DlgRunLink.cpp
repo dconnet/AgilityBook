@@ -119,10 +119,10 @@ void CDlgRunLink::ListFiles(TCHAR const* pItem)
 {
 	CWaitCursor wait;
 	m_ctrlLinks.DeleteAllItems();
-	std::set<ARBString> links;
+	std::set<tstring> links;
 	m_Run->GetLinks(links);
 	int i = 0;
-	for (std::set<ARBString>::iterator iter = links.begin();
+	for (std::set<tstring>::iterator iter = links.begin();
 		iter != links.end();
 		++iter)
 	{
@@ -135,7 +135,7 @@ void CDlgRunLink::ListFiles(TCHAR const* pItem)
 }
 
 
-int CDlgRunLink::GetImageIndex(ARBString const& inLink)
+int CDlgRunLink::GetImageIndex(tstring const& inLink)
 {
 	CWaitCursor wait;
 	int img = m_imgEmpty;
@@ -205,7 +205,7 @@ void CDlgRunLink::OnNew()
 	CDlgSelectURL dlg(_T(""), this);
 	if (IDOK == dlg.DoModal())
 	{
-		ARBString newName = dlg.GetName();
+		tstring newName = dlg.GetName();
 		if (0 < newName.length())
 		{
 			m_Run->AddLink(newName);
@@ -220,11 +220,11 @@ void CDlgRunLink::OnEdit()
 	int nItem = m_ctrlLinks.GetSelection();
 	if (0 <= nItem)
 	{
-		ARBString name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
+		tstring name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
 		CDlgSelectURL dlg(name.c_str(), this);
 		if (IDOK == dlg.DoModal())
 		{
-			ARBString newName = dlg.GetName();
+			tstring newName = dlg.GetName();
 			if (name != newName)
 			{
 				m_Run->RemoveLink(name);
@@ -242,7 +242,7 @@ void CDlgRunLink::OnDelete()
 	int nItem = m_ctrlLinks.GetSelection();
 	if (0 <= nItem)
 	{
-		ARBString name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
+		tstring name = (LPCTSTR)m_ctrlLinks.GetItemText(nItem, 0);
 		m_Run->RemoveLink(name);
 		ListFiles(NULL);
 	}

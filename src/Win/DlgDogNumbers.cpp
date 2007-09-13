@@ -194,7 +194,7 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 	{
 		CString str;
 		str.LoadString(colRegNumInfo[i].idText);
-		ARBostringstream tmp;
+		otstringstream tmp;
 		tmp << (LPCTSTR)str << _T(" (") << m_sortRegNums.FindColumnOrder(i) + 1 << ')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
