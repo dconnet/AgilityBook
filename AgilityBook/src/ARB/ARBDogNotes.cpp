@@ -121,7 +121,7 @@ bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 }
 
 
-size_t ARBDogNotes::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBDogNotes::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 	for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
@@ -166,7 +166,7 @@ bool ARBDogNotes::Load(
 		}
 		else if (element->GetName() == TREE_CRCD_META)
 		{
-			ARBString tmp = element->GetValue();
+			tstring tmp = element->GetValue();
 			char* data;
 			size_t bytes;
 			ARBBase64::Decode(tmp, data, bytes);

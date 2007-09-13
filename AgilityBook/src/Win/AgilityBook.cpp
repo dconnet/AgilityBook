@@ -134,7 +134,7 @@ void RunCommand(TCHAR const* const pCmd)
 		{
 			CString str;
 			str.LoadString(IDS_UNABLE_TO_OPEN);
-			ARBostringstream msg;
+			otstringstream msg;
 			msg << (LPCTSTR)str
 				<< pCmd
 				<< _T("\n");
@@ -429,7 +429,7 @@ BOOL CAgilityBookApp::InitInstance()
 		return FALSE;
 	}
 
-	ARBString errMsg;
+	tstring errMsg;
 	if (!Element::Initialize(errMsg))
 	{
 		AfxMessageBox(errMsg.c_str(), MB_ICONSTOP);
@@ -615,7 +615,7 @@ BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)
 
 void CAgilityBookApp::OnHelpSysinfo()
 {
-	ARBostringstream info;
+	otstringstream info;
 
 	// Windows version
 	OSVERSIONINFO os;

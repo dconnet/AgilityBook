@@ -1280,7 +1280,7 @@ void CAgilityBookViewCalendar::OnEditCopy()
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr cal = *iter;
-		ARBString items[scNumColumns];
+		tstring items[scNumColumns];
 		items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
 		items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
 		items[COL_LOCATION] = cal->GetLocation();

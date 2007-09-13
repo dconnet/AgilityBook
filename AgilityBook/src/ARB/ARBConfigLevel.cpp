@@ -157,13 +157,13 @@ bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
 bool ARBConfigLevel::Update(
 		int indent,
 		ARBConfigLevelPtr inLevelNew,
-		ARBString& ioInfo)
+		tstring& ioInfo)
 {
-	ARBString info;
+	tstring info;
 	if (GetName() != inLevelNew->GetName())
 		return false;
 
-	ARBString indentBuffer, indentName;
+	tstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
 		indentName += _T("   ");
 	indentBuffer = indentName + _T("   ");
@@ -215,7 +215,7 @@ bool ARBConfigLevelList::Load(
 
 
 bool ARBConfigLevelList::VerifyLevel(
-		ARBString const& inName,
+		tstring const& inName,
 		bool inAllowWildCard) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
@@ -231,7 +231,7 @@ bool ARBConfigLevelList::VerifyLevel(
 
 
 bool ARBConfigLevelList::FindLevel(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigLevelPtr* outLevel)
 {
 	if (outLevel)
@@ -250,7 +250,7 @@ bool ARBConfigLevelList::FindLevel(
 
 
 bool ARBConfigLevelList::FindSubLevel(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigLevelPtr* outLevel) const
 {
 	if (outLevel)
@@ -281,7 +281,7 @@ bool ARBConfigLevelList::FindSubLevel(
 
 
 bool ARBConfigLevelList::AddLevel(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigLevelPtr* outLevel)
 {
 	if (outLevel)
@@ -311,10 +311,10 @@ bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr inLevel)
 
 
 bool ARBConfigLevelList::DeleteLevel(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigEventList& ioEvents)
 {
-	ARBString name(inName);
+	tstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)
@@ -331,10 +331,10 @@ bool ARBConfigLevelList::DeleteLevel(
 
 
 bool ARBConfigLevelList::DeleteSubLevel(
-		ARBString const& inName,
+		tstring const& inName,
 		bool& outLevelModified)
 {
-	ARBString name(inName);
+	tstring name(inName);
 	outLevelModified = false;
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -359,7 +359,7 @@ bool ARBConfigLevelList::DeleteSubLevel(
 					// So, before deleting the node, search for a leaf of the
 					// level that is about to become a leaf - if we find one,
 					// we'll get creative and auto-rename.
-					ARBString newName = (*iter)->GetName();
+					tstring newName = (*iter)->GetName();
 					while (FindSubLevel(newName))
 					{
 						outLevelModified = true;

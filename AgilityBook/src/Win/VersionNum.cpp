@@ -247,7 +247,7 @@ void CVersionNum::clear()
 
 CString CVersionNum::GetVersionString() const
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << m_Version.part1
 		<< '.' << m_Version.part2
 		<< '.' << m_Version.part3

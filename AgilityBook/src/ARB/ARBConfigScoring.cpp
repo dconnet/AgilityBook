@@ -68,9 +68,9 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBString ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
+tstring ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 {
-	ARBString style;
+	tstring style;
 	switch (inStyle)
 	{
 	default:
@@ -247,18 +247,18 @@ bool ARBConfigScoring::Load(
 		inTree->GetAttrib(_T("Date"), m_ValidFrom);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
-		ARBString attrib;
+		tstring attrib;
 		inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
 	{
-		ARBString attrib;
+		tstring attrib;
 		inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg.c_str()));
 		return false;
@@ -279,7 +279,7 @@ bool ARBConfigScoring::Load(
 	}
 	if (!inDivisions.VerifyLevel(m_Division, m_Level))
 	{
-		ARBString msg(INVALID_DIV_LEVEL);
+		tstring msg(INVALID_DIV_LEVEL);
 		msg += m_Division;
 		msg += _T("/");
 		msg += m_Level;
@@ -287,7 +287,7 @@ bool ARBConfigScoring::Load(
 		return false;
 	}
 
-	ARBString attrib;
+	tstring attrib;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
@@ -564,8 +564,8 @@ bool ARBConfigScoringList::Load(
 
 
 size_t ARBConfigScoringList::FindAllEvents(
-		ARBString const& inDivision,
-		ARBString const& inLevel,
+		tstring const& inDivision,
+		tstring const& inLevel,
 		ARBDate const& inDate,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoringPtr>& outList) const
@@ -646,8 +646,8 @@ size_t ARBConfigScoringList::FindAllEvents(
 
 
 bool ARBConfigScoringList::FindEvent(
-		ARBString const& inDivision,
-		ARBString const& inLevel,
+		tstring const& inDivision,
+		tstring const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigScoringPtr* outEvent) const
 {
@@ -693,8 +693,8 @@ bool ARBConfigScoringList::FindEvent(
 
 
 bool ARBConfigScoringList::VerifyEvent(
-		ARBString const& inDivision,
-		ARBString const& inLevel,
+		tstring const& inDivision,
+		tstring const& inLevel,
 		ARBDate const& inDate) const
 {
 	ARBVector<ARBConfigScoringPtr> items;

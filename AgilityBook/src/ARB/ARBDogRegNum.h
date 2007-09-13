@@ -69,7 +69,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return GetVenue() + _T(" ") + GetNumber();
 	}
@@ -79,7 +79,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -107,27 +107,27 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetVenue() const
+	tstring const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(ARBString const& inVenue)
+	void SetVenue(tstring const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
-	ARBString const& GetNumber() const
+	tstring const& GetNumber() const
 	{
 		return m_Number;
 	}
-	void SetNumber(ARBString const& inNumber)
+	void SetNumber(tstring const& inNumber)
 	{
 		m_Number = inNumber;
 	}
-	ARBString const& GetHeight() const
+	tstring const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(ARBString const& inHeight)
+	void SetHeight(tstring const& inHeight)
 	{
 		m_Height = inHeight;
 	}
@@ -139,21 +139,21 @@ public:
 	{
 		m_bReceived = inReceived;
 	}
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
-	ARBString m_Venue;
-	ARBString m_Number;
-	ARBString m_Height;
+	tstring m_Venue;
+	tstring m_Number;
+	tstring m_Height;
 	bool m_bReceived;
-	ARBString m_Note;
+	tstring m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -189,7 +189,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of registration numbers found.
 	 */
-	int NumRegNumsInVenue(ARBString const& inVenue) const;
+	int NumRegNumsInVenue(tstring const& inVenue) const;
 
 	/**
 	 * Rename a venue.
@@ -198,15 +198,15 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameVenue(
-			ARBString const& inOldVenue,
-			ARBString const& inNewVenue);
+			tstring const& inOldVenue,
+			tstring const& inNewVenue);
 
 	/**
 	 * Delete a venue.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(ARBString const& inVenue);
+	int DeleteVenue(tstring const& inVenue);
 
 	/**
 	 * Find a registration number.
@@ -215,7 +215,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindRegNum(
-			ARBString const& inVenue,
+			tstring const& inVenue,
 			ARBDogRegNumPtr* outRegNum = NULL) const;
 
 	/**
@@ -226,8 +226,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddRegNum(
-			ARBString const& inVenue,
-			ARBString const& inNumber,
+			tstring const& inVenue,
+			tstring const& inNumber,
 			ARBDogRegNumPtr* outRegNum = NULL);
 
 	/**
@@ -244,6 +244,6 @@ public:
 	 * @return Number of objects deleted.
 	 */
 	int DeleteRegNum(
-			ARBString const& inVenue,
-			ARBString const& inNumber);
+			tstring const& inVenue,
+			tstring const& inNumber);
 };

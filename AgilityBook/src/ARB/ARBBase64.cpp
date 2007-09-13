@@ -112,7 +112,7 @@ ARBBase64::ARBBase64()
 
 
 bool ARBBase64::Decode(
-		ARBString const& inBase64,
+		tstring const& inBase64,
 		char*& outBinData,
 		size_t& outBytes)
 {
@@ -209,7 +209,7 @@ void ARBBase64::Release(char*& inBinData)
 bool ARBBase64::Encode(
 		char const* inBinData,
 		size_t inBytes,
-		ARBString& outData)
+		tstring& outData)
 {
 	char* encoded = NULL;
 	if (inBinData != NULL && 0 < inBytes)

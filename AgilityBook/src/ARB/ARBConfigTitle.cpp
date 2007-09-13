@@ -161,18 +161,18 @@ bool ARBConfigTitle::Load(
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
 	{
-		ARBString attrib;
+		tstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
 	{
-		ARBString attrib;
+		tstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
-		ARBString msg(INVALID_DATE);
+		tstring msg(INVALID_DATE);
 		msg += attrib;
 		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
 		return false;
@@ -206,28 +206,28 @@ bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 }
 
 
-ARBString ARBConfigTitle::GetCompleteName(
+tstring ARBConfigTitle::GetCompleteName(
 		short inInstance,
 		bool bShowInstance,
 		bool bAbbrevFirst,
 		bool bAddDates) const
 {
-	ARBString buffer;
+	tstring buffer;
 	if (bShowInstance || 1 < inInstance)
 	{
 		// Keep sync'd with ARBDogTitle
-		ARBostringstream str;
+		otstringstream str;
 		str << inInstance;
 		buffer = str.str();
 	}
 	// Special formatting used in configuration dialogs.
 	else if (0 > inInstance && 0 < m_Multiple)
 	{
-		ARBostringstream str;
+		otstringstream str;
 		str << _T("+");
 		buffer = str.str();
 	}
-	ARBostringstream name;
+	otstringstream name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
@@ -254,7 +254,7 @@ ARBString ARBConfigTitle::GetCompleteName(
 	}
 	if (bAddDates)
 	{
-		ARBString dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
+		tstring dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
 		if (!dates.empty())
 			name << _T(" ") << dates;
 	}
@@ -281,7 +281,7 @@ bool ARBConfigTitleList::Load(
 
 
 bool ARBConfigTitleList::FindTitleCompleteName(
-		ARBString const& inName,
+		tstring const& inName,
 		short inInstance,
 		bool bShowInstance,
 		bool bAbbrevFirst,
@@ -303,7 +303,7 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 
 
 bool ARBConfigTitleList::FindTitle(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
@@ -322,7 +322,7 @@ bool ARBConfigTitleList::FindTitle(
 
 
 bool ARBConfigTitleList::AddTitle(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigTitlePtr* outTitle)
 {
 	if (outTitle)
@@ -351,9 +351,9 @@ bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr inTitle)
 }
 
 
-bool ARBConfigTitleList::DeleteTitle(ARBString const& inName)
+bool ARBConfigTitleList::DeleteTitle(tstring const& inName)
 {
-	ARBString name(inName);
+	tstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

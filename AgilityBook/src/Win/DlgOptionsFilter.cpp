@@ -185,7 +185,7 @@ END_MESSAGE_MAP()
 
 void CDlgOptionsFilter::FillControls()
 {
-	std::set<ARBString> allLogNames;
+	std::set<tstring> allLogNames;
 	m_pDoc->GetAllTrainingLogNames(allLogNames);
 
 	m_ViewDates = m_FilterOptions.GetViewAllDates() ? 0 : 1;
@@ -202,10 +202,10 @@ void CDlgOptionsFilter::FillControls()
 
 	m_ViewNames = m_FilterOptions.GetTrainingViewAllNames() ? 0 : 1;
 	m_ctrlNames.DeleteAllItems();
-	std::set<ARBString> names;
+	std::set<tstring> names;
 	m_FilterOptions.GetTrainingFilterNames(names);
 	bool bFix = false;
-	for (std::set<ARBString>::iterator iter = names.begin();
+	for (std::set<tstring>::iterator iter = names.begin();
 		iter != names.end(); )
 	{
 		if (allLogNames.end() == allLogNames.find((*iter)))
@@ -225,7 +225,7 @@ void CDlgOptionsFilter::FillControls()
 	}
 	else
 	{
-		for (std::set<ARBString>::iterator iter = allLogNames.begin();
+		for (std::set<tstring>::iterator iter = allLogNames.begin();
 			iter != allLogNames.end();
 			++iter)
 		{
@@ -337,9 +337,9 @@ void CDlgOptionsFilter::FillControls()
 	}
 
 	m_ctrlFilters.ResetContent();
-	std::vector<ARBString> filterNames;
+	std::vector<tstring> filterNames;
 	m_FilterOptions.GetAllFilterNames(filterNames);
-	for (std::vector<ARBString>::iterator iterName = filterNames.begin();
+	for (std::vector<tstring>::iterator iterName = filterNames.begin();
 		iterName != filterNames.end();
 		++iterName)
 	{
@@ -464,7 +464,7 @@ void CDlgOptionsFilter::OnSetdispinfoNames(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
 {
-	std::set<ARBString> names;
+	std::set<tstring> names;
 	HTREEITEM hItem = m_ctrlNames.GetRootItem();
 	while (NULL != hItem)
 	{
@@ -543,7 +543,7 @@ void CDlgOptionsFilter::OnBnClickedOptFilterNamesDelete()
 		int idx = m_ctrlFilters.FindStringExact(-1, m_FilterName);
 		if (0 <= idx)
 		{
-			ARBString name = (LPCTSTR)m_FilterName;
+			tstring name = (LPCTSTR)m_FilterName;
 			m_FilterOptions.DeleteFilter(name);
 			m_ctrlFilters.DeleteString(idx);
 			m_FilterName.Empty();

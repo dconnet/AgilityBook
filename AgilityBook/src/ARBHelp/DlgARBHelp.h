@@ -28,7 +28,7 @@ protected:
 	CDlgHelpPage2 m_pagePage2;
 	CDlgHelpPage3 m_pagePage3;
 	CDlgHelpPageEdit m_pageEdit;
-	ARBString m_RegInfo;
+	tstring m_RegInfo;
 	FileMap m_IncFile;
 
 	// Generated message map functions

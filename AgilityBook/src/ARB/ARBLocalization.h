@@ -87,23 +87,23 @@
 
 // Strings for formatting the information returned when updating configurations.
 // - Changed to functions in order to remove sprintf style formatting.
-extern ARBString UPDATE_FORMAT_FAULTS(int nNew, int nSkipped);
-extern ARBString UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped);
-extern ARBString UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped);
-extern ARBString UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped);
-extern ARBString UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped);
-extern ARBString UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped);
-extern ARBString UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped);
-extern ARBString UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped);
-extern ARBString UPDATE_FORMAT_SUBLEVELS(int nAdded);
-extern ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped);
-extern ARBString WARN_DELETED_RUNS(int nRuns, ARBString const& inRunsMsg);
-extern ARBString UPDATE_TABLE_RUNS(int nRuns);
+extern tstring UPDATE_FORMAT_FAULTS(int nNew, int nSkipped);
+extern tstring UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped);
+extern tstring UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped);
+extern tstring UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped);
+extern tstring UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped);
+extern tstring UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped);
+extern tstring UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped);
+extern tstring UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped);
+extern tstring UPDATE_FORMAT_SUBLEVELS(int nAdded);
+extern tstring UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped);
+extern tstring WARN_DELETED_RUNS(int nRuns, tstring const& inRunsMsg);
+extern tstring UPDATE_TABLE_RUNS(int nRuns);
 
 // Used in ARBConfigTitlePoints.cpp
-extern ARBString TITLE_POINTS_NAME_FORMAT(double points, double faults);
-extern ARBString LIFETIME_POINTS_NAME_FORMAT(double points, double faults);
-extern ARBString PLACEMENT_POINTS_NAME_FORMAT(double points, short place);
+extern tstring TITLE_POINTS_NAME_FORMAT(double points, double faults);
+extern tstring LIFETIME_POINTS_NAME_FORMAT(double points, double faults);
+extern tstring PLACEMENT_POINTS_NAME_FORMAT(double points, short place);
 
 // Used in ARBConfigScoring.cpp
 #define SCORE_STYLE_UNKNOWN			_T("Unknown")
@@ -137,7 +137,7 @@ extern ARBString PLACEMENT_POINTS_NAME_FORMAT(double points, short place);
  * @param inMsg Additional error information.
  * @return Message with newline.
  */
-extern ARBString ErrorInvalidDocStructure(TCHAR const* const inMsg);
+extern tstring ErrorInvalidDocStructure(TCHAR const* const inMsg);
 
 /**
  * Return an error message about a missing required attribute.
@@ -147,7 +147,7 @@ extern ARBString ErrorInvalidDocStructure(TCHAR const* const inMsg);
  * @param inMsg Additional error information.
  * @return Message with newline.
  */
-extern ARBString ErrorMissingAttribute(
+extern tstring ErrorMissingAttribute(
 	TCHAR const* const inElement,
 	TCHAR const* const inAttrib,
 	TCHAR const* const inMsg = NULL);
@@ -160,7 +160,7 @@ extern ARBString ErrorMissingAttribute(
  * @param inMsg Additional error information.
  * @return Message with newline.
  */
-extern ARBString ErrorInvalidAttributeValue(
+extern tstring ErrorInvalidAttributeValue(
 	TCHAR const* const inElement,
 	TCHAR const* const inAttrib,
 	TCHAR const* const inMsg = NULL);

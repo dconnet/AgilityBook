@@ -145,7 +145,7 @@ bool ARBConfigFaultList::Load(
 
 
 bool ARBConfigFaultList::FindFault(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigFaultPtr* outFault) const
 {
 	if (outFault)
@@ -164,7 +164,7 @@ bool ARBConfigFaultList::FindFault(
 
 
 bool ARBConfigFaultList::AddFault(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigFaultPtr* outFault)
 {
 	if (outFault)
@@ -180,9 +180,9 @@ bool ARBConfigFaultList::AddFault(
 }
 
 
-bool ARBConfigFaultList::DeleteFault(ARBString const& inName)
+bool ARBConfigFaultList::DeleteFault(tstring const& inName)
 {
-	ARBString name(inName);
+	tstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

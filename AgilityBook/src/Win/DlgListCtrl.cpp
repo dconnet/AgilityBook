@@ -76,7 +76,7 @@ public:
 	}
 	virtual ~CDlgListCtrlData() {}
 	virtual bool HasIcon() const				{return false;}
-	virtual ARBString OnNeedText(int iCol) = 0;
+	virtual tstring OnNeedText(int iCol) = 0;
 	virtual bool OnEdit() = 0;
 	virtual void Apply() = 0;
 	virtual ARBCalendarPtr GetCalendar() const	{return ARBCalendarPtr();}
@@ -99,7 +99,7 @@ public:
 	{
 	}
 	virtual bool HasIcon() const				{return true;}
-	virtual ARBString OnNeedText(int iCol);
+	virtual tstring OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
 	virtual ARBCalendarPtr GetCalendar() const	{return m_pCal;}
@@ -113,9 +113,9 @@ private:
 };
 
 
-ARBString CDlgListCtrlDataCalendar::OnNeedText(int iCol)
+tstring CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 {
-	ARBString str;
+	tstring str;
 	switch (iCol)
 	{
 	case 1: // Start Date
@@ -171,19 +171,19 @@ public:
 			CListCtrl& ctrl,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
-			std::set<ARBString>& faults);
+			std::set<tstring>& faults);
 	CDlgListCtrlDataFaults(
 			CListCtrl& list,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
-			ARBString fault)
+			tstring fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pRun(pRun)
 		, m_Fault(fault)
 	{
 	}
-	virtual ARBString OnNeedText(int iCol)	{return m_Fault;}
+	virtual tstring OnNeedText(int iCol)	{return m_Fault;}
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -193,7 +193,7 @@ protected:
 private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogRunPtr m_pRun;
-	ARBString m_Fault;
+	tstring m_Fault;
 };
 
 
@@ -201,7 +201,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		CListCtrl& ctrl,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr pRun,
-		std::set<ARBString>& faults)
+		std::set<tstring>& faults)
 {
 	faults.clear();
 	pDoc->GetAllFaultTypes(faults);
@@ -224,7 +224,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 
 bool CDlgListCtrlDataFaults::OnEdit()
 {
-	std::set<ARBString> faults;
+	std::set<tstring> faults;
 	CDlgListCtrlDataFaults::GetAllFaults(m_List, m_pDoc, m_pRun, faults);
 	CDlgFault dlg(faults, m_Fault.c_str());
 	if (IDOK == dlg.DoModal())
@@ -262,7 +262,7 @@ public:
 		, m_Other(pOther)
 	{
 	}
-	virtual ARBString OnNeedText(int iCol);
+	virtual tstring OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -276,9 +276,9 @@ private:
 };
 
 
-ARBString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
+tstring CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
 {
-	ARBString str;
+	tstring str;
 	switch (iCol)
 	{
 	default:
@@ -287,7 +287,7 @@ ARBString CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
 		break;
 	case 1:
 		{
-			ARBostringstream tmp;
+			otstringstream tmp;
 			tmp << m_Other->GetPoints();
 			str = tmp.str();
 		}
@@ -328,7 +328,7 @@ public:
 		, m_Partner(pPartner)
 	{
 	}
-	virtual ARBString OnNeedText(int iCol);
+	virtual tstring OnNeedText(int iCol);
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -342,9 +342,9 @@ private:
 };
 
 
-ARBString CDlgListCtrlDataPartners::OnNeedText(int iCol)
+tstring CDlgListCtrlDataPartners::OnNeedText(int iCol)
 {
-	ARBString str;
+	tstring str;
 	switch (iCol)
 	{
 	default:
@@ -364,7 +364,7 @@ ARBString CDlgListCtrlDataPartners::OnNeedText(int iCol)
 
 bool CDlgListCtrlDataPartners::OnEdit()
 {
-	std::set<ARBString> handlers, dogs;
+	std::set<tstring> handlers, dogs;
 	m_pDlg->GetAllPartners(handlers, dogs);
 	CDlgPartner dlg(m_Partner, handlers, dogs);
 	if (IDOK == dlg.DoModal())
@@ -566,8 +566,8 @@ void CDlgListCtrl::SwapEntries(
 
 
 void CDlgListCtrl::GetAllPartners(
-		std::set<ARBString>& ioPartners,
-		std::set<ARBString>& ioDogs) const
+		std::set<tstring>& ioPartners,
+		std::set<tstring>& ioDogs) const
 {
 	if (m_pDoc)
 	{
@@ -786,7 +786,7 @@ void CDlgListCtrl::OnGetdispinfoList(
 	CDlgListCtrlData* pData = dynamic_cast<CDlgListCtrlData*>(pRawData);
 	if (pDispInfo->item.mask & LVIF_TEXT)
 	{
-		ARBString str = pData->OnNeedText(pDispInfo->item.iSubItem);
+		tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
 		::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 	}
@@ -896,7 +896,7 @@ void CDlgListCtrl::OnNew()
 
 	case eFaults:
 		{
-			std::set<ARBString> faults;
+			std::set<tstring> faults;
 			CDlgListCtrlDataFaults::GetAllFaults(m_ctrlList, m_pDoc, m_pRun, faults);
 			CDlgFault dlg(faults, NULL, this);
 			if (IDOK == dlg.DoModal())
@@ -944,7 +944,7 @@ void CDlgListCtrl::OnNew()
 	case ePartners:
 		{
 			ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
-			std::set<ARBString> handlers, dogs;
+			std::set<tstring> handlers, dogs;
 			GetAllPartners(handlers, dogs);
 			CDlgPartner dlg(partner, handlers, dogs);
 			if (IDOK == dlg.DoModal())

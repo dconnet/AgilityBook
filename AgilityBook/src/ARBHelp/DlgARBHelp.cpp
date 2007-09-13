@@ -144,12 +144,12 @@ void CDlgARBHelp::SetARBFileStatus(CString const& inFileName, bool bInclude)
 void CDlgARBHelp::SendIt()
 {
 	// Scoping done to minimize memory usage.
-	ARBString arbData;
+	tstring arbData;
 	{
-		ARBostringstream clp;
+		otstringstream clp;
 
 		{
-			ARBString data;
+			tstring data;
 			BinaryData::EncodeString(m_RegInfo, data);
 			clp << _T("\r\n") << STREAM_REGISTRY_BEGIN << _T("\r\n")
 				<< data
@@ -169,7 +169,7 @@ void CDlgARBHelp::SendIt()
 #endif
 				if (file)
 				{
-					ARBString data;
+					tstring data;
 					BinaryData::Encode(file, data);
 					fclose(file);
 					clp << _T("\r\n") << STREAM_FILE_BEGIN << _T("\r\n")
@@ -189,9 +189,9 @@ void CDlgARBHelp::SendIt()
 	}
 	CString clpData;
 	{
-		ARBString data;
+		tstring data;
 		BinaryData::EncodeString(arbData, data);
-		ARBostringstream clp;
+		otstringstream clp;
 		clp << _T("\r\n") << STREAM_DATA_BEGIN << _T("\r\n")
 			<< data
 			<< _T("\r\n") << STREAM_DATA_END << _T("\r\n");

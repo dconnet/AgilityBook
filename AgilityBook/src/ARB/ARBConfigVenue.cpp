@@ -185,7 +185,7 @@ bool ARBConfigVenue::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		ARBString const& name = element->GetName();
+		tstring const& name = element->GetName();
 		if (name == TREE_VENUE_DESC)
 		{
 			m_Desc = element->GetValue();
@@ -300,13 +300,13 @@ bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
 bool ARBConfigVenue::Update(
 		int indent,
 		ARBConfigVenuePtr inVenueNew,
-		ARBString& ioInfo)
+		tstring& ioInfo)
 {
-	ARBString info;
+	tstring info;
 	if (GetName() != inVenueNew->GetName())
 		return false;
 
-	ARBString indentBuffer, indentName;
+	tstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
 		indentName += _T("   ");
 	indentBuffer = indentName + _T("   ");
@@ -379,7 +379,7 @@ bool ARBConfigVenue::Update(
 	// If the order is different, we will fall into this...
 	if (GetDivisions() != inVenueNew->GetDivisions())
 	{
-		ARBString info2;
+		tstring info2;
 		int nChanged, nAdded, nSkipped;
 		nChanged = nAdded = nSkipped = 0;
 		for (ARBConfigDivisionList::const_iterator iterDiv = inVenueNew->GetDivisions().begin();
@@ -419,7 +419,7 @@ bool ARBConfigVenue::Update(
 	// If the order is different, we will fall into this...
 	if (GetEvents() != inVenueNew->GetEvents())
 	{
-		ARBString info2;
+		tstring info2;
 		int nChanged, nAdded, nSkipped;
 		nChanged = nAdded = nSkipped = 0;
 		for (ARBConfigEventList::const_iterator iterEvent = inVenueNew->GetEvents().begin();
@@ -547,8 +547,8 @@ void ARBConfigVenueList::sort()
 
 
 bool ARBConfigVenueList::VerifyMultiQ(
-		ARBString const& inVenue,
-		ARBString const& inMultiQ,
+		tstring const& inVenue,
+		tstring const& inMultiQ,
 		bool inUseShortName) const
 {
 	ARBConfigVenuePtr pVenue;
@@ -559,9 +559,9 @@ bool ARBConfigVenueList::VerifyMultiQ(
 
 
 bool ARBConfigVenueList::VerifyLevel(
-		ARBString const& inVenue,
-		ARBString const& inDivision,
-		ARBString const& inLevel) const
+		tstring const& inVenue,
+		tstring const& inDivision,
+		tstring const& inLevel) const
 {
 	ARBConfigVenuePtr pVenue;
 	if (FindVenue(inVenue, &pVenue))
@@ -571,10 +571,10 @@ bool ARBConfigVenueList::VerifyLevel(
 
 
 bool ARBConfigVenueList::VerifyEvent(
-		ARBString const& inVenue,
-		ARBString const& inDivision,
-		ARBString const& inLevel,
-		ARBString const& inEvent,
+		tstring const& inVenue,
+		tstring const& inDivision,
+		tstring const& inLevel,
+		tstring const& inEvent,
 		ARBDate const& inDate) const
 {
 	ARBConfigVenuePtr pVenue;
@@ -597,8 +597,8 @@ bool ARBConfigVenueList::VerifyEvent(
 
 
 bool ARBConfigVenueList::FindTitleCompleteName(
-		ARBString const& inVenue,
-		ARBString const& inName,
+		tstring const& inVenue,
+		tstring const& inName,
 		bool bShowInstance,
 		bool bAbbrevFirst,
 		ARBConfigTitlePtr* outTitle) const
@@ -622,8 +622,8 @@ bool ARBConfigVenueList::FindTitleCompleteName(
 
 
 bool ARBConfigVenueList::FindTitle(
-		ARBString const& inVenue,
-		ARBString const& inTitle,
+		tstring const& inVenue,
+		tstring const& inTitle,
 		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
@@ -635,7 +635,7 @@ bool ARBConfigVenueList::FindTitle(
 }
 
 
-bool ARBConfigVenueList::DeleteTitle(ARBString const& inTitle)
+bool ARBConfigVenueList::DeleteTitle(tstring const& inTitle)
 {
 	bool bDeleted = false;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -651,7 +651,7 @@ bool ARBConfigVenueList::DeleteTitle(ARBString const& inTitle)
 
 
 bool ARBConfigVenueList::FindVenue(
-		ARBString const& inVenue,
+		tstring const& inVenue,
 		ARBConfigVenuePtr* outVenue) const
 {
 	if (outVenue)
@@ -670,7 +670,7 @@ bool ARBConfigVenueList::FindVenue(
 
 
 bool ARBConfigVenueList::AddVenue(
-		ARBString const& inVenue,
+		tstring const& inVenue,
 		ARBConfigVenuePtr* outVenue)
 {
 	if (outVenue)
@@ -701,9 +701,9 @@ bool ARBConfigVenueList::AddVenue(ARBConfigVenuePtr inVenue)
 }
 
 
-int ARBConfigVenueList::DeleteVenue(ARBString const& inVenue)
+int ARBConfigVenueList::DeleteVenue(tstring const& inVenue)
 {
-	ARBString venue(inVenue);
+	tstring venue(inVenue);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == venue)
@@ -720,10 +720,10 @@ int ARBConfigVenueList::DeleteVenue(ARBString const& inVenue)
 // This is the only 'FindEvent' that takes a true level. All others take
 // a ARBConfigLevel.
 bool ARBConfigVenueList::FindEvent(
-		ARBString const& inVenue,
-		ARBString const& inEvent,
-		ARBString const& inDivision,
-		ARBString const& inLevel,
+		tstring const& inVenue,
+		tstring const& inEvent,
+		tstring const& inDivision,
+		tstring const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigEventPtr* outEvent,
 		ARBConfigScoringPtr* outScoring) const

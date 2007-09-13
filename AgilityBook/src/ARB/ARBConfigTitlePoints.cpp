@@ -122,7 +122,7 @@ bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 }
 
 
-ARBString ARBConfigTitlePoints::GetGenericName() const
+tstring ARBConfigTitlePoints::GetGenericName() const
 {
 	return TITLE_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }

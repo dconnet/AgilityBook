@@ -356,12 +356,12 @@ class CConfigActionCallback : public IConfigActionCallback
 {
 public:
 	CConfigActionCallback() {}
-	virtual void PreDelete(ARBString const& inMsg);
-	virtual void PostDelete(ARBString const& inMsg) const;
+	virtual void PreDelete(tstring const& inMsg);
+	virtual void PostDelete(tstring const& inMsg) const;
 };
 
 
-void CConfigActionCallback::PreDelete(ARBString const& inMsg)
+void CConfigActionCallback::PreDelete(tstring const& inMsg)
 {
 	CString msg(inMsg.c_str());
 	CString check;
@@ -374,7 +374,7 @@ void CConfigActionCallback::PreDelete(ARBString const& inMsg)
 }
 
 
-void CConfigActionCallback::PostDelete(ARBString const& msg) const
+void CConfigActionCallback::PostDelete(tstring const& msg) const
 {
 	AfxMessageBox(msg.c_str(), MB_ICONWARNING);
 }
@@ -382,7 +382,7 @@ void CConfigActionCallback::PostDelete(ARBString const& msg) const
 
 void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
-	ARBostringstream info;
+	otstringstream info;
 	CConfigActionCallback callback;
 	if (m_Records.Update(0, update, info, callback))
 	{
@@ -608,19 +608,19 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 		}
 		if (0 < countClubs)
 		{
-			std::set<ARBString> namesInUse;
+			std::set<tstring> namesInUse;
 			GetAllClubNames(namesInUse, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eClubInfo).CondenseContent(namesInUse);
 		}
 		if (0 < countJudges)
 		{
-			std::set<ARBString> namesInUse;
+			std::set<tstring> namesInUse;
 			GetAllJudges(namesInUse, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eJudgeInfo).CondenseContent(namesInUse);
 		}
 		if (0 < countLocations)
 		{
-			std::set<ARBString> namesInUse;
+			std::set<tstring> namesInUse;
 			GetAllTrialLocations(namesInUse, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 		}
@@ -827,7 +827,7 @@ void CAgilityBookDoc::ResetVisibility()
 {
 	std::vector<CVenueFilter> venues;
 	CFilterOptions::Options().GetFilterVenue(venues);
-	std::set<ARBString> names;
+	std::set<tstring> names;
 	CFilterOptions::Options().GetTrainingFilterNames(names);
 
 	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
@@ -903,7 +903,7 @@ void CAgilityBookDoc::ResetVisibility(
 
 
 void CAgilityBookDoc::ResetVisibility(
-		std::set<ARBString>& names,
+		std::set<tstring>& names,
 		ARBTrainingPtr pTraining)
 {
 	bool bVisTraining = CFilterOptions::Options().IsTrainingLogVisible(names, pTraining);
@@ -993,7 +993,7 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 		int i;
 		for (i = 1; i <= nBackups; ++i)
 		{
-			ARBostringstream backup;
+			otstringstream backup;
 			backup << lpszPathName << _T(".bck") << i;
 			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(backup.str().c_str()))
 			{
@@ -1006,15 +1006,15 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 		// Then shift all the files into the hole.
 		for (i = nHole; i > 1; --i)
 		{
-			ARBostringstream backup;
+			otstringstream backup;
 			backup << lpszPathName << _T(".bck") << i;
 			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(backup.str().c_str()))
 				DeleteFile(backup.str().c_str());
-			ARBostringstream filename;
+			otstringstream filename;
 			filename << lpszPathName << _T(".bck") << i-1;
 			MoveFile(filename.str().c_str(), backup.str().c_str());
 		}
-		ARBostringstream backup;
+		otstringstream backup;
 		backup << lpszPathName << _T(".bck1");
 		CopyFile(lpszPathName, backup.str().c_str(), FALSE);
 	}
@@ -1078,7 +1078,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	DeleteContents();
 
 	CStringA source(lpszPathName);
-	ARBString err;
+	tstring err;
 	ElementNodePtr tree(ElementNode::New());
 	// Translate the XML to a tree form.
 	if (!tree->LoadXMLFile(source, err))
@@ -1187,7 +1187,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	CWaitCursor wait;
 
 	CVersionNum ver;
-	ARBString verstr = (LPCTSTR)ver.GetVersionString();
+	tstring verstr = (LPCTSTR)ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	BOOL bOk = FALSE;
 	ElementNodePtr tree(ElementNode::New());
@@ -1291,14 +1291,14 @@ void CAgilityBookDoc::OnCopyTitles()
 		std::vector<CVenueFilter> venues;
 		CFilterOptions::Options().GetFilterVenue(venues);
 
-		ARBString preTitles, postTitles;
+		tstring preTitles, postTitles;
 		for (ARBConfigVenueList::const_iterator iVenue = GetConfig().GetVenues().begin();
 			iVenue != GetConfig().GetVenues().end();
 			++iVenue)
 		{
 			if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
 				continue;
-			ARBString preTitles2, postTitles2;
+			tstring preTitles2, postTitles2;
 			for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
 				iTitle != (*iVenue)->GetTitles().end();
 				++iTitle)
@@ -1465,7 +1465,7 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 
 void CAgilityBookDoc::OnNotesClubs()
 {
-	ARBString select;
+	tstring select;
 	ARBDogTrialPtr pTrial = GetCurrentTrial();
 	if (pTrial)
 		select = pTrial->GetClubs().GetPrimaryClubName();
@@ -1476,7 +1476,7 @@ void CAgilityBookDoc::OnNotesClubs()
 
 void CAgilityBookDoc::OnNotesJudges()
 {
-	ARBString select;
+	tstring select;
 	ARBDogRunPtr pRun = GetCurrentRun();
 	if (pRun)
 		select = pRun->GetJudge();
@@ -1487,7 +1487,7 @@ void CAgilityBookDoc::OnNotesJudges()
 
 void CAgilityBookDoc::OnNotesLocations()
 {
-	ARBString select;
+	tstring select;
 	ARBDogTrialPtr pTrial = GetCurrentTrial();
 	if (pTrial)
 		select = pTrial->GetLocation();
@@ -1514,7 +1514,7 @@ private:
 	void Search(
 			CString const& search,
 			ARBInfo::eInfoType inType,
-			std::set<ARBString> const& inUse,
+			std::set<tstring> const& inUse,
 			ARBInfo const& info) const;
 };
 
@@ -1526,7 +1526,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	if (!MatchCase())
 		search.MakeLower();
 	ARBInfo& info = m_pDoc->GetInfo();
-	std::set<ARBString> inUse;
+	std::set<tstring> inUse;
 	m_pDoc->GetAllClubNames(inUse, false);
 	Search(search, ARBInfo::eClubInfo, inUse, info);
 	m_pDoc->GetAllJudges(inUse, false);
@@ -1551,10 +1551,10 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 void CFindInfo::Search(
 		CString const& search,
 		ARBInfo::eInfoType inType,
-		std::set<ARBString> const& inUse,
+		std::set<tstring> const& inUse,
 		ARBInfo const& info) const
 {
-	for (std::set<ARBString>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
+	for (std::set<tstring>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
 	{
 		CString str((*iter).c_str());
 		if (!MatchCase())
@@ -1573,10 +1573,10 @@ void CFindInfo::Search(
 		iterItem != info.GetInfo(inType).end();
 		++iterItem)
 	{
-		std::set<ARBString> strings;
+		std::set<tstring> strings;
 		if (0 < (*iterItem)->GetSearchStrings(strings))
 		{
-			for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+			for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 			{
 				CString str((*iter).c_str());
 				if (!MatchCase())

@@ -61,7 +61,7 @@ public:
 	 * @param inVersion Either 1 (vCal) or 2 (iCal).
 	 */
 	static ICalendar* iCalendarBegin(
-			ARBostream& ioStream,
+			otstream& ioStream,
 			int inVersion);
 
 	/**
@@ -145,13 +145,13 @@ public:
 	 * Get a UID. Used when generating iCalendar entries.
 	 * @param inType UID type to generate.
 	 */
-	ARBString GetUID(eUidType inType) const;
+	tstring GetUID(eUidType inType) const;
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Venue + _T(" ") + m_Club + _T(" ") + m_Location;
 	}
@@ -161,7 +161,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load a calendar entry
@@ -300,27 +300,27 @@ public:
 	{
 		m_bTentative = inTentative;
 	}
-	ARBString const& GetLocation() const
+	tstring const& GetLocation() const
 	{
 		return m_Location;
 	}
-	void SetLocation(ARBString const& inLocation)
+	void SetLocation(tstring const& inLocation)
 	{
 		m_Location = inLocation;
 	}
-	ARBString const& GetClub() const
+	tstring const& GetClub() const
 	{
 		return m_Club;
 	}
-	void SetClub(ARBString const& inClub)
+	void SetClub(tstring const& inClub)
 	{
 		m_Club = inClub;
 	}
-	ARBString const& GetVenue() const
+	tstring const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(ARBString const& inVenue)
+	void SetVenue(tstring const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
@@ -340,43 +340,43 @@ public:
 	{
 		m_eAccommodations = inAccom;
 	}
-	ARBString const& GetConfirmation() const
+	tstring const& GetConfirmation() const
 	{
 		return m_Confirmation;
 	}
-	void SetConfirmation(ARBString const& inConfirmation)
+	void SetConfirmation(tstring const& inConfirmation)
 	{
 		m_Confirmation = inConfirmation;
 	}
-	ARBString const& GetSecEmail() const
+	tstring const& GetSecEmail() const
 	{
 		return m_SecEmail;
 	}
-	void SetSecEmail(ARBString const& inAddr)
+	void SetSecEmail(tstring const& inAddr)
 	{
 		m_SecEmail = inAddr;
 	}
-	ARBString const& GetPremiumURL() const
+	tstring const& GetPremiumURL() const
 	{
 		return m_PremiumURL;
 	}
-	void SetPremiumURL(ARBString const& inURL)
+	void SetPremiumURL(tstring const& inURL)
 	{
 		m_PremiumURL = inURL;
 	}
-	ARBString const& GetOnlineURL() const
+	tstring const& GetOnlineURL() const
 	{
 		return m_OnlineURL;
 	}
-	void SetOnlineURL(ARBString const& inURL)
+	void SetOnlineURL(tstring const& inURL)
 	{
 		m_OnlineURL = inURL;
 	}
-	ARBString const& GetNote() const
+	tstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(ARBString const& inNote)
+	void SetNote(tstring const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -388,16 +388,16 @@ private:
 	ARBDate m_DateDraw;
 	ARBDate m_DateClosing;
 	bool m_bTentative;
-	ARBString m_Location;
-	ARBString m_Club;
-	ARBString m_Venue;
+	tstring m_Location;
+	tstring m_Club;
+	tstring m_Venue;
 	eEntry m_eEntered;
 	eAccommodations m_eAccommodations;
-	ARBString m_Confirmation;
-	ARBString m_SecEmail;
-	ARBString m_PremiumURL;
-	ARBString m_OnlineURL;
-	ARBString m_Note;
+	tstring m_Confirmation;
+	tstring m_SecEmail;
+	tstring m_PremiumURL;
+	tstring m_OnlineURL;
+	tstring m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////

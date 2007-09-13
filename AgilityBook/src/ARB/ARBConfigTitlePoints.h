@@ -74,14 +74,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual tstring GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}

@@ -217,9 +217,9 @@ BOOL CDlgTrial::OnInitDialog()
 	m_ctrlClubNotes.EnableWindow(FALSE);
 	m_ctrlDelete.EnableWindow(FALSE);
 
-	set<ARBString> locations;
+	set<tstring> locations;
 	m_pDoc->GetAllTrialLocations(locations);
-	for (set<ARBString>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
+	for (set<tstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
 	{
 		int index = m_ctrlLocation.AddString((*iter).c_str());
 		if ((*iter) == m_pTrial->GetLocation())
@@ -385,8 +385,8 @@ void CDlgTrial::OnOK()
 	m_bRunsDeleted = false;
 	if (0 < m_pTrial->GetRuns().size())
 	{
-		std::set<ARBString> oldVenues;
-		std::set<ARBString> newVenues;
+		std::set<tstring> oldVenues;
+		std::set<tstring> newVenues;
 		ARBDogClubList::iterator iterClub;
 		for (iterClub = m_pTrial->GetClubs().begin(); iterClub != m_pTrial->GetClubs().end(); ++iterClub)
 		{
@@ -399,7 +399,7 @@ void CDlgTrial::OnOK()
 			newVenues.insert(pClub->GetVenue());
 		}
 		bool bAllThere = true;
-		for (std::set<ARBString>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
+		for (std::set<tstring>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
 		{
 			if (newVenues.end() == newVenues.find((*iterVenues)))
 			{
@@ -416,7 +416,7 @@ void CDlgTrial::OnOK()
 			{
 				ARBDogRunPtr pRun = *iterRun;
 				bool bFound = false;
-				for (std::set<ARBString>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
+				for (std::set<tstring>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
 				{
 					if (m_pDoc->GetConfig().GetVenues().FindEvent(
 						(*iterVenues),

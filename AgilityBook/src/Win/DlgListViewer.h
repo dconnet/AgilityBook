@@ -126,7 +126,7 @@ public:
 struct CFindItemInfo
 {
 	ARBInfo::eInfoType type;
-	ARBString name;
+	tstring name;
 	ARBInfoItemPtr pItem;
 };
 

@@ -100,9 +100,9 @@ BOOL CDlgTraining::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	std::set<ARBString> names;
+	std::set<tstring> names;
 	m_pDoc->GetTraining().GetAllNames(names);
-	std::set<ARBString>::iterator iter;
+	std::set<tstring>::iterator iter;
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		int index = m_ctrlNames.AddString((*iter).c_str());

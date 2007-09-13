@@ -165,7 +165,7 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
 	{
-		ARBString div, level, evt;
+		tstring div, level, evt;
 		if (m_pMultiQ->GetItem(i, div, level, evt))
 		{
 			int idx = m_ctrlItems.InsertItem(static_cast<int>(i), div.c_str());

@@ -55,9 +55,9 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
-		std::set<ARBString> const& inHeights,
-		std::set<ARBString> const& inNames,
-		std::set<ARBString> const& inBreeds,
+		std::set<tstring> const& inHeights,
+		std::set<tstring> const& inNames,
+		std::set<tstring> const& inBreeds,
 		ARBDogReferenceRunPtr ref,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
@@ -129,7 +129,7 @@ BOOL CDlgReferenceRun::OnInitDialog()
 			m_ctrlQ.SetCurSel(idx);
 	}
 
-	std::set<ARBString>::const_iterator iter;
+	std::set<tstring>::const_iterator iter;
 
 	for (iter = m_Heights.begin(); iter != m_Heights.end(); ++iter)
 	{

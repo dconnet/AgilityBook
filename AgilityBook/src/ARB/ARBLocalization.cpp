@@ -48,9 +48,9 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBString ErrorInvalidDocStructure(TCHAR const* const inMsg)
+tstring ErrorInvalidDocStructure(TCHAR const* const inMsg)
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << INVALID_DOC_STRUCTURE;
 	if (inMsg)
 		str << ": " << inMsg << std::endl;
@@ -58,12 +58,12 @@ ARBString ErrorInvalidDocStructure(TCHAR const* const inMsg)
 }
 
 
-ARBString ErrorMissingAttribute(
+tstring ErrorMissingAttribute(
 		TCHAR const* const inElement,
 		TCHAR const* const inAttrib,
 		TCHAR const* const inMsg)
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << INVALID_FILE_FORMAT
 		<< inElement
 		<< INVALID_FILE_MISSING_ATTRIB
@@ -75,12 +75,12 @@ ARBString ErrorMissingAttribute(
 }
 
 
-ARBString ErrorInvalidAttributeValue(
+tstring ErrorInvalidAttributeValue(
 		TCHAR const* const inElement,
 		TCHAR const* const inAttrib,
 		TCHAR const* const inMsg)
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << INVALID_FILE_FORMAT
 		<< inElement
 		<< INVALID_FILE_BAD_ATTRIB
@@ -93,121 +93,121 @@ ARBString ErrorInvalidAttributeValue(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBString UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
+tstring UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Faults: ") << nNew << _T(" added, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped)
+tstring UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Other Points: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped)
+tstring UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Venues: ") << nNew << _T(" added, ") << nUpdated << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
+tstring UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Divisions: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
+tstring UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Events: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
+tstring UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("MultiQs: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)
+tstring UPDATE_FORMAT_LEVELS(int nAdded, int nChanged, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Levels: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
+tstring UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Titles: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_SUBLEVELS(int nAdded)
+tstring UPDATE_FORMAT_SUBLEVELS(int nAdded)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << nAdded << _T(" new sub-levels");
 	return buffer.str();
 }
 
 
-ARBString UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped)
+tstring UPDATE_FORMAT_RULES(int nAdded, int nDeleted, int nChanged, int nSkipped)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T(" rules: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
 }
 
 
-ARBString TITLE_POINTS_NAME_FORMAT(double points, double faults)
+tstring TITLE_POINTS_NAME_FORMAT(double points, double faults)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << points << _T(" points with ") << faults << _T(" faults");
 	return buffer.str();
 }
 
 
-ARBString LIFETIME_POINTS_NAME_FORMAT(double points, double faults)
+tstring LIFETIME_POINTS_NAME_FORMAT(double points, double faults)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << points << _T(" lifetime points with ") << faults << _T(" faults");
 	return buffer.str();
 }
 
 
-ARBString PLACEMENT_POINTS_NAME_FORMAT(double points, short place)
+tstring PLACEMENT_POINTS_NAME_FORMAT(double points, short place)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << points << _T(" points with place of ") << place;
 	return buffer.str();
 }
 
 
-ARBString WARN_DELETED_RUNS(int nRuns, ARBString const& inRunsMsg)
+tstring WARN_DELETED_RUNS(int nRuns, tstring const& inRunsMsg)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("WARNING: ") << nRuns << _T(" run(s) deleted due to configuration changes.\n") << inRunsMsg;
 	return buffer.str();
 }
 
 
-ARBString UPDATE_TABLE_RUNS(int nRuns)
+tstring UPDATE_TABLE_RUNS(int nRuns)
 {
-	ARBostringstream buffer;
+	otstringstream buffer;
 	buffer << _T("Table setting updated in ") << nRuns << _T(" runs.");
 	return buffer.str();
 }

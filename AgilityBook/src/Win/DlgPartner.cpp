@@ -51,8 +51,8 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgPartner::CDlgPartner(
 		ARBDogRunPartnerPtr partner,
-		std::set<ARBString> const& inHandlers,
-		std::set<ARBString> const& inDogs,
+		std::set<tstring> const& inHandlers,
+		std::set<tstring> const& inDogs,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgPartner::IDD, pParent)
 	, m_ctrlHandler(false)
@@ -95,7 +95,7 @@ BOOL CDlgPartner::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	std::set<ARBString>::const_iterator iter;
+	std::set<tstring>::const_iterator iter;
 	for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
 	{
 		m_ctrlHandler.AddString((*iter).c_str());

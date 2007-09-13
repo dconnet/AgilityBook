@@ -108,7 +108,7 @@ bool CDlgConfigUpdate::LoadConfig(TCHAR const* pFile)
 		m_Book.GetConfig().Default();
 	else
 	{
-		ARBString errMsg;
+		tstring errMsg;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
 		CStringA fileName(pFile);

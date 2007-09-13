@@ -143,7 +143,7 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 }
 
 
-size_t ARBDogTrial::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBDogTrial::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -303,8 +303,8 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 
 short ARBDogTrial::GetSpeedPoints(
 		ARBConfig const& inConfig,
-		ARBString const& inDiv,
-		ARBString const& inLevel) const
+		tstring const& inDiv,
+		tstring const& inLevel) const
 {
 	if (!GetClubs().GetPrimaryClub())
 		return 0;
@@ -333,7 +333,7 @@ short ARBDogTrial::GetSpeedPoints(
 }
 
 
-bool ARBDogTrial::HasVenue(ARBString const& inVenue) const
+bool ARBDogTrial::HasVenue(tstring const& inVenue) const
 {
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++iter)
 	{
@@ -421,7 +421,7 @@ void ARBDogTrialList::sort(bool inDescending)
 }
 
 
-int ARBDogTrialList::NumTrialsInVenue(ARBString const& inVenue) const
+int ARBDogTrialList::NumTrialsInVenue(tstring const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -441,8 +441,8 @@ int ARBDogTrialList::NumTrialsInVenue(ARBString const& inVenue) const
 
 
 int ARBDogTrialList::RenameVenue(
-		ARBString const& inOldVenue,
-		ARBString const& inNewVenue)
+		tstring const& inOldVenue,
+		tstring const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -460,9 +460,9 @@ int ARBDogTrialList::RenameVenue(
 }
 
 
-int ARBDogTrialList::DeleteVenue(ARBString const& inVenue)
+int ARBDogTrialList::DeleteVenue(tstring const& inVenue)
 {
-	ARBString venue(inVenue);
+	tstring venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -485,7 +485,7 @@ int ARBDogTrialList::DeleteVenue(ARBString const& inVenue)
 }
 
 
-int ARBDogTrialList::NumOtherPointsInUse(ARBString const& inOther) const
+int ARBDogTrialList::NumOtherPointsInUse(tstring const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -500,8 +500,8 @@ int ARBDogTrialList::NumOtherPointsInUse(ARBString const& inOther) const
 
 
 int ARBDogTrialList::RenameOtherPoints(
-		ARBString const& inOldOther,
-		ARBString const& inNewOther)
+		tstring const& inOldOther,
+		tstring const& inNewOther)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -515,7 +515,7 @@ int ARBDogTrialList::RenameOtherPoints(
 }
 
 
-int ARBDogTrialList::DeleteOtherPoints(ARBString const& inOther)
+int ARBDogTrialList::DeleteOtherPoints(tstring const& inOther)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -531,8 +531,8 @@ int ARBDogTrialList::DeleteOtherPoints(ARBString const& inOther)
 
 int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 		ARBConfig const& inConfig,
-		ARBString const& inVenue,
-		ARBString const& inDiv) const
+		tstring const& inVenue,
+		tstring const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -560,7 +560,7 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 
 int ARBDogTrialList::NumRunsInDivision(
 		ARBConfigVenuePtr inVenue,
-		ARBString const& inDiv) const
+		tstring const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -580,8 +580,8 @@ int ARBDogTrialList::NumRunsInDivision(
 
 int ARBDogTrialList::RenameDivision(
 		ARBConfigVenuePtr inVenue,
-		ARBString const& inOldDiv,
-		ARBString const& inNewDiv)
+		tstring const& inOldDiv,
+		tstring const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -604,11 +604,11 @@ int ARBDogTrialList::RenameDivision(
 
 int ARBDogTrialList::DeleteDivision(
 		ARBConfig const& inConfig,
-		ARBString const& inVenue,
-		ARBString const& inDiv)
+		tstring const& inVenue,
+		tstring const& inDiv)
 {
-	ARBString venue(inVenue);
-	ARBString div(inDiv);
+	tstring venue(inVenue);
+	tstring div(inDiv);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -652,9 +652,9 @@ int ARBDogTrialList::DeleteDivision(
 
 
 int ARBDogTrialList::NumLevelsInUse(
-		ARBString const& inVenue,
-		ARBString const& inDiv,
-		ARBString const& inLevel) const
+		tstring const& inVenue,
+		tstring const& inDiv,
+		tstring const& inLevel) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -674,10 +674,10 @@ int ARBDogTrialList::NumLevelsInUse(
 
 
 int ARBDogTrialList::RenameLevel(
-		ARBString const& inVenue,
-		ARBString const& inDiv,
-		ARBString const& inOldLevel,
-		ARBString const& inNewLevel)
+		tstring const& inVenue,
+		tstring const& inDiv,
+		tstring const& inOldLevel,
+		tstring const& inNewLevel)
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -700,13 +700,13 @@ int ARBDogTrialList::RenameLevel(
 
 
 int ARBDogTrialList::DeleteLevel(
-		ARBString const& inVenue,
-		ARBString const& inDiv,
-		ARBString const& inLevel)
+		tstring const& inVenue,
+		tstring const& inDiv,
+		tstring const& inLevel)
 {
-	ARBString venue(inVenue);
-	ARBString div(inDiv);
-	ARBString level(inLevel);
+	tstring venue(inVenue);
+	tstring div(inDiv);
+	tstring level(inLevel);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -734,8 +734,8 @@ int ARBDogTrialList::DeleteLevel(
 
 
 int ARBDogTrialList::NumEventsInUse(
-		ARBString const& inVenue,
-		ARBString const& inEvent) const
+		tstring const& inVenue,
+		tstring const& inEvent) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -754,9 +754,9 @@ int ARBDogTrialList::NumEventsInUse(
 
 
 int ARBDogTrialList::RenameEvent(
-		ARBString const& inVenue,
-		ARBString const& inOldEvent,
-		ARBString const& inNewEvent)
+		tstring const& inVenue,
+		tstring const& inOldEvent,
+		tstring const& inNewEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -778,11 +778,11 @@ int ARBDogTrialList::RenameEvent(
 
 
 int ARBDogTrialList::DeleteEvent(
-		ARBString const& inVenue,
-		ARBString const& inEvent)
+		tstring const& inVenue,
+		tstring const& inEvent)
 {
-	ARBString venue(inVenue);
-	ARBString pEvent(inEvent);
+	tstring venue(inVenue);
+	tstring pEvent(inEvent);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{

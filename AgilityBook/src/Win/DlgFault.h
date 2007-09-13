@@ -45,7 +45,7 @@ class CDlgFault : public CDlgBaseDialog
 {
 public:
 	CDlgFault(
-			std::set<ARBString>& faults,
+			std::set<tstring>& faults,
 			LPCTSTR pFault,
 			CWnd* pParent = NULL);
 	CString GetFault() const		{return m_Faults;}
@@ -57,7 +57,7 @@ private:
 	CComboBox2	m_ctrlFaults;
 	CString	m_Faults;
 	//}}AFX_DATA
-	std::set<ARBString>& m_setFaults;
+	std::set<tstring>& m_setFaults;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgFault)

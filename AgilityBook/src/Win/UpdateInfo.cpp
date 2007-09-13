@@ -184,7 +184,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		//   <Download>url</Download>
 		//     (if not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD)
 		// </Data>
-		ARBString errMsg2;
+		tstring errMsg2;
 		ElementNodePtr tree(ElementNode::New());
 		if (!tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg2))
 		{
@@ -333,7 +333,7 @@ void CUpdateInfo::CheckConfig(
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				file.Close();
 				ElementNodePtr tree(ElementNode::New());
-				ARBString errMsg2;
+				tstring errMsg2;
 				if (!tree->LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg2))
 				{
 					msg.FormatMessage(IDS_LOAD_FAILED, (LPCTSTR)url);

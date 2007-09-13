@@ -319,7 +319,7 @@ void CWizardStart::UpdateList()
 		if (LB_ERR != index)
 			m_ctrlList.SetItemData(index, i);
 	}
-	ARBostringstream str;
+	otstringstream str;
 	str << LAST_STYLEITEM << m_Style;
 	int idx = AfxGetApp()->GetProfileInt(LAST_SECTION, str.str().c_str(), -1);
 	m_ctrlList.SetCurSel(idx);
@@ -400,7 +400,7 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					ARBString errMsg;
+					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					CStringA fileName(file.GetPathName());
 					if (!tree->LoadXMLFile(fileName, errMsg))
@@ -431,7 +431,7 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					ARBString errMsg;
+					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					CStringA fileName(file.GetPathName());
 					if (!tree->LoadXMLFile(fileName, errMsg))
@@ -463,7 +463,7 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver;
-					ARBString verstr = (LPCTSTR)ver.GetVersionString();
+					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, true, false, false, false, false))
 					{
@@ -507,7 +507,7 @@ BOOL CWizardStart::OnWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					ARBofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+					oftstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 					output.exceptions(std::ios_base::badbit);
 					if (output.is_open())
 					{
@@ -537,7 +537,7 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					ARBString errMsg;
+					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					CStringA fileName(file.GetPathName());
 					if (!tree->LoadXMLFile(fileName, errMsg))
@@ -569,7 +569,7 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver;
-					ARBString verstr = (LPCTSTR)ver.GetVersionString();
+					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, false, true, false, false, false))
 					{
@@ -599,7 +599,7 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver;
-					ARBString verstr = (LPCTSTR)ver.GetVersionString();
+					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, false, false, true, false, false))
 					{
@@ -650,7 +650,7 @@ BOOL CWizardStart::OnWizardFinish()
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver;
-					ARBString verstr = (LPCTSTR)ver.GetVersionString();
+					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, true, true, true, true, true))
 					{
@@ -689,7 +689,7 @@ void CWizardStart::OnSelchangeExportList()
 		msg.LoadString(sc_Items[m_ctrlList.GetItemData(index)].data[m_Style].desc);
 	}
 	m_ctrlDesc.SetWindowText(msg);
-	ARBostringstream str;
+	otstringstream str;
 	str << LAST_STYLEITEM << m_Style;
 	AfxGetApp()->WriteProfileInt(LAST_SECTION, str.str().c_str(), index);
 	UpdateButtons();

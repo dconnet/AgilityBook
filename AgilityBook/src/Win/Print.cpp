@@ -377,7 +377,7 @@ static const struct
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
 
-static void RefRunHelper(ARBostringstream& text, ARBDogReferenceRunPtr ref, int code)
+static void RefRunHelper(otstringstream& text, ARBDogReferenceRunPtr ref, int code)
 {
 	switch (code)
 	{
@@ -537,7 +537,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 				}
 				if (run)
 				{
-					ARBostringstream text;
+					otstringstream text;
 					switch (sc_lines[j].code)
 					{
 					default:
@@ -739,7 +739,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 							RefRunHelper(text, run->GetReferenceRuns()[3], sc_lines[j].code);
 						break;
 					}
-					ARBString str = text.str();
+					tstring str = text.str();
 					if (!str.empty())
 					{
 						if (1 < sc_lines[j].rowspan)

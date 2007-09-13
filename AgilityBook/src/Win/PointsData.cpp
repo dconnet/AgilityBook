@@ -69,8 +69,8 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 LifeTimePointInfo::LifeTimePointInfo(
-		ARBString const& inDiv,
-		ARBString const& inLevel,
+		tstring const& inDiv,
+		tstring const& inLevel,
 		double inPoints,
 		double inFiltered)
 	: div(inDiv)
@@ -141,7 +141,7 @@ CPointsDataBase::~CPointsDataBase()
 CPointsDataSeparator::CPointsDataSeparator(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
-		ARBString const& inHtml)
+		tstring const& inHtml)
 	: CPointsDataBase(pParent, pDoc)
 	, m_Html(inHtml)
 {
@@ -165,7 +165,7 @@ CPointsDataText::CPointsDataText(
 }
 
 
-ARBString CPointsDataText::OnNeedText(size_t inCol) const
+tstring CPointsDataText::OnNeedText(size_t inCol) const
 {
 	switch (inCol)
 	{
@@ -179,9 +179,9 @@ ARBString CPointsDataText::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataText::GetHtml(size_t /*nCurLine*/) const
+tstring CPointsDataText::GetHtml(size_t /*nCurLine*/) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	if (m_UseInHtml)
 	{
 		data << _T("<tr>") << std::endl
@@ -209,9 +209,9 @@ CPointsDataDog::CPointsDataDog(
 }
 
 
-ARBString CPointsDataDog::OnNeedText(size_t inCol) const
+tstring CPointsDataDog::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	if (m_pDog)
 	{
 		switch (inCol)
@@ -231,9 +231,9 @@ ARBString CPointsDataDog::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataDog::GetHtml(size_t nCurLine) const
+tstring CPointsDataDog::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	if (m_pDog)
 	{
 		CString title;
@@ -298,9 +298,9 @@ CPointsDataVenue::CPointsDataVenue(
 }
 
 
-ARBString CPointsDataVenue::OnNeedText(size_t inCol) const
+tstring CPointsDataVenue::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	if (m_pVenue)
 	{
 		switch (inCol)
@@ -324,9 +324,9 @@ ARBString CPointsDataVenue::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataVenue::GetHtml(size_t nCurLine) const
+tstring CPointsDataVenue::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	if (m_pVenue)
 	{
 		data << _T("<h2>");
@@ -411,9 +411,9 @@ CPointsDataTitle::CPointsDataTitle(
 }
 
 
-ARBString CPointsDataTitle::OnNeedText(size_t inCol) const
+tstring CPointsDataTitle::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	if (m_pTitle)
 	{
 		switch (inCol)
@@ -432,9 +432,9 @@ ARBString CPointsDataTitle::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataTitle::GetHtml(size_t nCurLine) const
+tstring CPointsDataTitle::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	if (m_pTitle)
 	{
 		data << _T("<tr>") << std::endl
@@ -490,11 +490,11 @@ CPointsDataEvent::CPointsDataEvent(
 		int inLevelIdx,
 		ARBConfigEventPtr inEvent,
 		int inEventIdx,
-		ARBString const& inRunCount,
-		ARBString const& inQcount,
-		ARBString const& inPts,
-		ARBString const& inSuperQ,
-		ARBString const& inSpeed)
+		tstring const& inRunCount,
+		tstring const& inQcount,
+		tstring const& inPts,
+		tstring const& inSuperQ,
+		tstring const& inSpeed)
 	: CPointsDataBase(pParent, pDoc)
 	, m_Dog(inDog)
 	, m_Matching(inMatching)
@@ -514,9 +514,9 @@ CPointsDataEvent::CPointsDataEvent(
 }
 
 
-ARBString CPointsDataEvent::OnNeedText(size_t inCol) const
+tstring CPointsDataEvent::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (inCol)
 	{
 	case 1: // Division
@@ -551,9 +551,9 @@ ARBString CPointsDataEvent::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataEvent::GetHtml(size_t nCurLine) const
+tstring CPointsDataEvent::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
@@ -578,7 +578,7 @@ void CPointsDataEvent::Details() const
 {
 	CString runs;
 	runs.LoadString(IDS_RUNS);
-	ARBostringstream str;
+	otstringstream str;
 	str << (LPCTSTR)runs << _T(": ")
 		<< m_Div->GetName()
 		<< _T("/")
@@ -609,7 +609,7 @@ CPointsDataLifetime::CPointsDataLifetime(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
-		ARBString const& inVenue)
+		tstring const& inVenue)
 	: CPointsDataBase(pParent, pDoc)
 	, m_bLifetime(bLifetime)
 	, m_Venue(inVenue.c_str())
@@ -620,8 +620,8 @@ CPointsDataLifetime::CPointsDataLifetime(
 
 
 void CPointsDataLifetime::AddLifetimeInfo(
-		ARBString const& inDiv,
-		ARBString const& inLevel,
+		tstring const& inDiv,
+		tstring const& inLevel,
 		double inLifetime,
 		double inFiltered)
 {
@@ -631,9 +631,9 @@ void CPointsDataLifetime::AddLifetimeInfo(
 }
 
 
-ARBString CPointsDataLifetime::OnNeedText(size_t inCol) const
+tstring CPointsDataLifetime::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (inCol)
 	{
 	case 1:
@@ -650,7 +650,7 @@ ARBString CPointsDataLifetime::OnNeedText(size_t inCol) const
 		{
 			CString total;
 			total.LoadString(IDS_TOTAL);
-			ARBostringstream str2;
+			otstringstream str2;
 			str2 << (LPCTSTR)total << _T(": ");
 			if (0 < m_Filtered)
 				str2 << m_Lifetime - m_Filtered << _T(" (") << m_Lifetime << ')';
@@ -664,9 +664,9 @@ ARBString CPointsDataLifetime::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataLifetime::GetHtml(size_t nCurLine) const
+tstring CPointsDataLifetime::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr><td>&nbsp;</td</tr>") << std::endl
 		<< _T("<tr>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
@@ -711,8 +711,8 @@ CPointsDataLifetimeDiv::CPointsDataLifetimeDiv(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
-		ARBString const& inVenue,
-		ARBString const& inDiv)
+		tstring const& inVenue,
+		tstring const& inDiv)
 	: CPointsDataLifetime(pParent, pDoc, bLifetime, inVenue)
 	, m_Div(inDiv)
 {
@@ -720,8 +720,8 @@ CPointsDataLifetimeDiv::CPointsDataLifetimeDiv(
 
 
 void CPointsDataLifetimeDiv::AddLifetimeInfo(
-		ARBString const& inDiv,
-		ARBString const& inLevel,
+		tstring const& inDiv,
+		tstring const& inLevel,
 		double inLifetime,
 		double inFiltered)
 {
@@ -734,14 +734,14 @@ void CPointsDataLifetimeDiv::AddLifetimeInfo(
 }
 
 
-ARBString CPointsDataLifetimeDiv::OnNeedText(size_t inCol) const
+tstring CPointsDataLifetimeDiv::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (inCol)
 	{
 	case 2:
 		{
-			ARBostringstream str2;
+			otstringstream str2;
 			str2 << m_Div << _T(": ");
 			if (0 < m_Filtered)
 				str2 << m_Lifetime - m_Filtered << _T(" (") << m_Lifetime << ')';
@@ -755,9 +755,9 @@ ARBString CPointsDataLifetimeDiv::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataLifetimeDiv::GetHtml(size_t nCurLine) const
+tstring CPointsDataLifetimeDiv::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
 		<< _T("<td align=\"right\">") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
@@ -806,12 +806,12 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 }
 
 
-ARBString CPointsDataMultiQs::OnNeedText(size_t inCol) const
+tstring CPointsDataMultiQs::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	if (7 == inCol)
 	{
-		ARBostringstream str2;
+		otstringstream str2;
 		str2 << m_ExistingDblQs + m_MQs.size() << ' ' << m_MultiQ->GetShortName();
 		str = str2.str();
 	}
@@ -819,9 +819,9 @@ ARBString CPointsDataMultiQs::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataMultiQs::GetHtml(size_t nCurLine) const
+tstring CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td colspan=\"6\"/>") << std::endl
 		<< _T("<td><a href=\"") << ARB_PROTOCOL
@@ -869,9 +869,9 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 }
 
 
-ARBString CPointsDataSpeedPts::OnNeedText(size_t inCol) const
+tstring CPointsDataSpeedPts::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	if (7 == inCol)
 	{
 		CString str2;
@@ -882,9 +882,9 @@ ARBString CPointsDataSpeedPts::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
+tstring CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td colspan=\"6\"/>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(7)) << _T("</td>") << std::endl
@@ -925,7 +925,7 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
-		ARBString const& inName,
+		tstring const& inName,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Name(inName)
@@ -933,9 +933,9 @@ CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
 }
 
 
-ARBString CPointsDataOtherPointsTallyAll::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyAll::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (inCol)
 	{
 	case 1:
@@ -943,7 +943,7 @@ ARBString CPointsDataOtherPointsTallyAll::OnNeedText(size_t inCol) const
 		break;
 	case 2:
 		{
-			ARBostringstream str2;
+			otstringstream str2;
 			str2<< m_Score;
 			str = str2.str();
 		}
@@ -953,9 +953,9 @@ ARBString CPointsDataOtherPointsTallyAll::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
+tstring CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
 		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
@@ -994,7 +994,7 @@ bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
-		ARBString const& inEvent,
+		tstring const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Event(inEvent)
@@ -1002,9 +1002,9 @@ CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 }
 
 
-ARBString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (inCol)
 	{
 	case 2: // Event
@@ -1012,7 +1012,7 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t inCol) const
 		break;
 	case 3:
 		{
-			ARBostringstream str2;
+			otstringstream str2;
 			str2 << m_Score;
 			str = str2.str();
 		}
@@ -1022,9 +1022,9 @@ ARBString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
+tstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
@@ -1064,7 +1064,7 @@ bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
-		ARBString const& inLevel,
+		tstring const& inLevel,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Level(inLevel)
@@ -1072,9 +1072,9 @@ CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 }
 
 
-ARBString CPointsDataOtherPointsTallyLevel::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyLevel::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (inCol)
 	{
 	case 2: // Level
@@ -1082,7 +1082,7 @@ ARBString CPointsDataOtherPointsTallyLevel::OnNeedText(size_t inCol) const
 		break;
 	case 3:
 		{
-			ARBostringstream str2;
+			otstringstream str2;
 			str2 << m_Score;
 			str = str2.str();
 		}
@@ -1092,9 +1092,9 @@ ARBString CPointsDataOtherPointsTallyLevel::OnNeedText(size_t inCol) const
 }
 
 
-ARBString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
+tstring CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
@@ -1134,8 +1134,8 @@ bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
-		ARBString const& inLevel,
-		ARBString const& inEvent,
+		tstring const& inLevel,
+		tstring const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
 	, m_Level(inLevel)
@@ -1144,9 +1144,9 @@ CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent
 }
 
 
-ARBString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t inCol) const
 {
-	ARBString str;
+	tstring str;
 	switch (inCol)
 	{
 	case 2: // Level
@@ -1157,7 +1157,7 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t inCol) cons
 		break;
 	case 4:
 		{
-			ARBostringstream str2;
+			otstringstream str2;
 			str2 << m_Score;
 			str = str2.str();
 		}
@@ -1167,9 +1167,9 @@ ARBString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t inCol) cons
 }
 
 
-ARBString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
+tstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
 {
-	ARBostringstream data;
+	otstringstream data;
 	data << _T("<tr>") << std::endl
 		<< _T("<td/>") << std::endl
 		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
@@ -1311,7 +1311,7 @@ void CPointsDataItems::LoadData(
 					InsertVenueHeader(pParent, pDoc, inDog, pVenue);
 					CString str;
 					str.LoadString(IDS_TITLES);
-					ARBString data(_T("<h3>"));
+					tstring data(_T("<h3>"));
 					data += (LPCTSTR)str;
 					data += _T("</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
 					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
@@ -1350,7 +1350,7 @@ void CPointsDataItems::LoadData(
 			bRunsInserted = true;
 			CString str;
 			str.LoadString(IDS_RUNS);
-			ARBString data(_T("<h3>"));
+			tstring data(_T("<h3>"));
 			data += (LPCTSTR)str;
 			data += _T("</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
 			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
@@ -1403,10 +1403,10 @@ void CPointsDataItems::LoadData(
 						double nExistingPts = 0;
 						int nExistingSQ = 0;
 						std::list<RunInfo> allmatching;
-						std::set<ARBString> judges;
-						std::set<ARBString> judgesQ;
-						std::set<ARBString> partners;
-						std::set<ARBString> partnersQ;
+						std::set<tstring> judges;
+						std::set<tstring> judgesQ;
+						std::set<tstring> partners;
+						std::set<tstring> partnersQ;
 						for (ARBVector<ARBConfigScoringPtr>::iterator iterScoring = scoringItems.begin();
 							iterScoring != scoringItems.end();
 							++iterScoring)
@@ -1473,7 +1473,7 @@ void CPointsDataItems::LoadData(
 												iterPartner != pRun->GetPartners().end();
 												++iterPartner)
 											{
-												ARBString p = (*iterPartner)->GetDog();
+												tstring p = (*iterPartner)->GetDog();
 												p += (*iterPartner)->GetRegNum();
 												partners.insert(p);
 												if (pRun->GetQ().Qualified())
@@ -1580,7 +1580,7 @@ void CPointsDataItems::LoadData(
 								str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
 								strQcount += str2;
 							}
-							ARBostringstream strPts;
+							otstringstream strPts;
 							CString strSuperQ;
 							strPts << points + nExistingSQ;
 							if (hasSQs)
@@ -1672,7 +1672,7 @@ void CPointsDataItems::LoadData(
 			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, true, pVenue->GetName());
 			double pts = 0;
 			double ptFiltered = 0;
-			typedef std::map<ARBString, CPointsDataLifetimeDiv*> DivLifetime;
+			typedef std::map<tstring, CPointsDataLifetimeDiv*> DivLifetime;
 			DivLifetime divs;
 			for (LifeTimePointsList::iterator iter = lifetime.begin();
 				iter != lifetime.end();
@@ -1726,7 +1726,7 @@ void CPointsDataItems::LoadData(
 			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, false, pVenue->GetName());
 			double pts = 0;
 			double ptFiltered = 0;
-			typedef std::map<ARBString, CPointsDataLifetimeDiv*> DivLifetime;
+			typedef std::map<tstring, CPointsDataLifetimeDiv*> DivLifetime;
 			DivLifetime divs;
 			for (LifeTimePointsList::iterator iter = placement.begin();
 				iter != placement.end();
@@ -1785,7 +1785,7 @@ void CPointsDataItems::LoadData(
 	{
 		CString str;
 		str.LoadString(IDS_OTHERPOINTS);
-		ARBString table;
+		tstring table;
 		table = _T("<h2>");
 		table += (LPCTSTR)str;
 		table += _T("</h2><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
@@ -1854,13 +1854,13 @@ void CPointsDataItems::LoadData(
 			case ARBConfigOtherPoints::eTallyAllByEvent:
 				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, _T(""), pOther->GetName().c_str())));
 				{
-					std::set<ARBString> tally;
+					std::set<tstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						tally.insert((*iter).m_Event);
 					}
-					for (std::set<ARBString>::iterator iterTally = tally.begin();
+					for (std::set<tstring>::iterator iterTally = tally.begin();
 						iterTally != tally.end();
 						++iterTally)
 					{
@@ -1878,13 +1878,13 @@ void CPointsDataItems::LoadData(
 			case ARBConfigOtherPoints::eTallyLevel:
 				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, _T(""), pOther->GetName().c_str())));
 				{
-					std::set<ARBString> tally;
+					std::set<tstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						tally.insert((*iter).m_Level);
 					}
-					for (std::set<ARBString>::iterator iterTally = tally.begin();
+					for (std::set<tstring>::iterator iterTally = tally.begin();
 						iterTally != tally.end();
 						++iterTally)
 					{
@@ -1902,7 +1902,7 @@ void CPointsDataItems::LoadData(
 			case ARBConfigOtherPoints::eTallyLevelByEvent:
 				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, _T(""), pOther->GetName().c_str())));
 				{
-					typedef std::pair<ARBString, ARBString> LevelEvent;
+					typedef std::pair<tstring, tstring> LevelEvent;
 					std::set<LevelEvent> tally;
 					std::list<OtherPtInfo>::iterator iter;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)

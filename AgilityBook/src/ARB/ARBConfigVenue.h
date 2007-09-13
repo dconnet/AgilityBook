@@ -81,7 +81,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -91,7 +91,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -129,40 +129,40 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigVenuePtr inVenueNew,
-			ARBString& ioInfo);
+			tstring& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
-	ARBString const& GetLongName() const
+	tstring const& GetLongName() const
 	{
 		return m_LongName;
 	}
-	void SetLongName(ARBString const& inName)
+	void SetLongName(tstring const& inName)
 	{
 		m_LongName = inName;
 	}
-	ARBString const& GetURL() const
+	tstring const& GetURL() const
 	{
 		return m_URL;
 	}
-	void SetURL(ARBString const& inURL)
+	void SetURL(tstring const& inURL)
 	{
 		m_URL = inURL;
 	}
-	ARBString const& GetDesc() const
+	tstring const& GetDesc() const
 	{
 		return m_Desc;
 	}
-	void SetDesc(ARBString const& inDesc)
+	void SetDesc(tstring const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -208,10 +208,10 @@ public:
 	}
 
 private:
-	ARBString m_Name;
-	ARBString m_LongName;
-	ARBString m_URL;
-	ARBString m_Desc;
+	tstring m_Name;
+	tstring m_LongName;
+	tstring m_URL;
+	tstring m_Desc;
 	short m_idxIcon;
 	ARBConfigTitleList m_Titles;
 	ARBConfigDivisionList m_Divisions;
@@ -252,7 +252,7 @@ public:
 	 * @param inVenue Venue to verify.
 	 * @return Venue exists.
 	 */
-	bool VerifyVenue(ARBString const& inVenue) const
+	bool VerifyVenue(tstring const& inVenue) const
 	{
 		return FindVenue(inVenue);
 	}
@@ -265,8 +265,8 @@ public:
 	 * @return MultiQ exists.
 	 */
 	bool VerifyMultiQ(
-			ARBString const& inVenue,
-			ARBString const& inMultiQ,
+			tstring const& inVenue,
+			tstring const& inMultiQ,
 			bool inUseShortName = false) const;
 
 	/**
@@ -277,9 +277,9 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-			ARBString const& inVenue,
-			ARBString const& inDivision,
-			ARBString const& inLevel) const;
+			tstring const& inVenue,
+			tstring const& inDivision,
+			tstring const& inLevel) const;
 
 	/**
 	 * Verify an event exists.
@@ -291,10 +291,10 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-			ARBString const& inVenue,
-			ARBString const& inDivision,
-			ARBString const& inLevel,
-			ARBString const& inEvent,
+			tstring const& inVenue,
+			tstring const& inDivision,
+			tstring const& inLevel,
+			tstring const& inEvent,
 			ARBDate const& inDate) const;
 
 	/**
@@ -308,8 +308,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			ARBString const& inVenue,
-			ARBString const& inName,
+			tstring const& inVenue,
+			tstring const& inName,
 			bool bShowInstance,
 			bool bAbbrevFirst = true,
 			ARBConfigTitlePtr* outTitle = NULL) const;
@@ -322,8 +322,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-			ARBString const& inVenue,
-			ARBString const& inTitle,
+			tstring const& inVenue,
+			tstring const& inTitle,
 			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
@@ -331,7 +331,7 @@ public:
 	 * @param inTitle Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(ARBString const& inTitle);
+	bool DeleteTitle(tstring const& inTitle);
 
 	/**
 	 * Find the named venue.
@@ -340,7 +340,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindVenue(
-			ARBString const& inVenue,
+			tstring const& inVenue,
 			ARBConfigVenuePtr* outVenue = NULL) const;
 
 	/**
@@ -350,7 +350,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddVenue(
-			ARBString const& inVenue,
+			tstring const& inVenue,
 			ARBConfigVenuePtr* outVenue = NULL);
 
 	/**
@@ -365,7 +365,7 @@ public:
 	 * @param inVenue Name of venue to delete.
 	 * @return Number of venues deleted (0 or 1).
 	 */
-	int DeleteVenue(ARBString const& inVenue);
+	int DeleteVenue(tstring const& inVenue);
 
 	/**
 	 * Find an event.
@@ -379,10 +379,10 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			ARBString const& inVenue,
-			ARBString const& inEvent,
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inVenue,
+			tstring const& inEvent,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigEventPtr* outEvent = NULL,
 			ARBConfigScoringPtr* outScoring = NULL) const;

@@ -127,8 +127,8 @@ protected:
 			int newIndex);
 public:
 	void GetAllPartners(
-			std::set<ARBString>& ioPartners,
-			std::set<ARBString>& ioDogs) const;
+			std::set<tstring>& ioPartners,
+			std::set<tstring>& ioDogs) const;
 
 // Implementation
 protected:

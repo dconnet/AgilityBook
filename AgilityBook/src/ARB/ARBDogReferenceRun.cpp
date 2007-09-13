@@ -127,7 +127,7 @@ bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 }
 
 
-size_t ARBDogReferenceRun::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBDogReferenceRun::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -169,7 +169,7 @@ bool ARBDogReferenceRun::Load(
 	if (!inTree)
 		return false;
 
-	ARBString attrib;
+	tstring attrib;
 
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{

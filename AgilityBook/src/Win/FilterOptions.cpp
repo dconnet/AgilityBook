@@ -119,7 +119,7 @@ static CString FilterVenue(std::vector<CVenueFilter> const& venues)
 }
 
 
-static void TrainingNames(CString inNames, std::set<ARBString>& outNames)
+static void TrainingNames(CString inNames, std::set<tstring>& outNames)
 {
 	if (!inNames.IsEmpty())
 	{
@@ -134,10 +134,10 @@ static void TrainingNames(CString inNames, std::set<ARBString>& outNames)
 }
 
 
-static CString TrainingNames(std::set<ARBString> const& inNames)
+static CString TrainingNames(std::set<tstring> const& inNames)
 {
 	CString names;
-	for (std::set<ARBString>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	for (std::set<tstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
 		if (!names.IsEmpty())
 			names += ':';
@@ -269,7 +269,7 @@ void CFilterOptions::Save()
 
 
 std::vector<CFilterOptions::CFilterOptionData>::iterator
-CFilterOptions::FindFilter(ARBString const& inName)
+CFilterOptions::FindFilter(tstring const& inName)
 {
 	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin();
 		i != m_filters.end();
@@ -282,7 +282,7 @@ CFilterOptions::FindFilter(ARBString const& inName)
 }
 
 
-size_t CFilterOptions::GetAllFilterNames(std::vector<ARBString>& outNames) const
+size_t CFilterOptions::GetAllFilterNames(std::vector<tstring>& outNames) const
 {
 	outNames.clear();
 	if (0 < m_filters.size())
@@ -299,7 +299,7 @@ size_t CFilterOptions::GetAllFilterNames(std::vector<ARBString>& outNames) const
 }
 
 
-bool CFilterOptions::SetCurrentFilter(ARBString const& inName)
+bool CFilterOptions::SetCurrentFilter(tstring const& inName)
 {
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter != m_filters.end())
@@ -323,7 +323,7 @@ bool CFilterOptions::SetCurrentFilter(ARBString const& inName)
 }
 
 
-void CFilterOptions::AddFilter(ARBString const& inName)
+void CFilterOptions::AddFilter(tstring const& inName)
 {
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter == m_filters.end())
@@ -347,7 +347,7 @@ void CFilterOptions::AddFilter(ARBString const& inName)
 }
 
 
-bool CFilterOptions::DeleteFilter(ARBString const& inName)
+bool CFilterOptions::DeleteFilter(tstring const& inName)
 {
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter != m_filters.end())
@@ -405,7 +405,7 @@ bool CFilterOptions::IsTitleVisible(
 
 bool CFilterOptions::IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBString const& venue)
+		tstring const& venue)
 {
 	if (!m_bViewAllVenues)
 	{
@@ -424,8 +424,8 @@ bool CFilterOptions::IsVenueVisible(
 
 bool CFilterOptions::IsVenueDivisionVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBString const& venue,
-		ARBString const& div)
+		tstring const& venue,
+		tstring const& div)
 {
 	if (!m_bViewAllVenues)
 	{
@@ -445,9 +445,9 @@ bool CFilterOptions::IsVenueDivisionVisible(
 
 bool CFilterOptions::IsVenueLevelVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBString const& venue,
-		ARBString const& div,
-		ARBString const& level)
+		tstring const& venue,
+		tstring const& div,
+		tstring const& level)
 {
 	if (!m_bViewAllVenues)
 	{
@@ -619,7 +619,7 @@ bool CFilterOptions::IsCalendarVisible(
 
 
 bool CFilterOptions::IsTrainingLogVisible(
-		std::set<ARBString> const& names,
+		std::set<tstring> const& names,
 		ARBTrainingPtr pTraining)
 {
 	if (!m_bAllDates)
@@ -639,7 +639,7 @@ bool CFilterOptions::IsTrainingLogVisible(
 	if (!m_bViewAllNames)
 	{
 		bVisible = false;
-		for (std::set<ARBString>::const_iterator iter = names.begin();
+		for (std::set<tstring>::const_iterator iter = names.begin();
 			iter != names.end();
 			++iter)
 		{
@@ -655,9 +655,9 @@ bool CFilterOptions::IsTrainingLogVisible(
 
 
 bool CFilterOptions::FilterExists(
-		ARBString const& inVenue,
-		ARBString const& inDiv,
-		ARBString const& inLevel) const
+		tstring const& inVenue,
+		tstring const& inDiv,
+		tstring const& inLevel) const
 {
 	for (std::vector<CVenueFilter>::const_iterator iter = m_venueFilter.begin();
 		iter != m_venueFilter.end();

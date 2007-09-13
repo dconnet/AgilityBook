@@ -73,14 +73,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const;
+	virtual tstring GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load a title.
@@ -122,15 +122,15 @@ public:
 		if (!m_Date.IsValid())
 			m_bHidden = true;
 	}
-	ARBString const& GetVenue() const
+	tstring const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(ARBString const& inVenue)
+	void SetVenue(tstring const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
-	ARBString const& GetRawName() const
+	tstring const& GetRawName() const
 	{
 		return m_Name;
 	}
@@ -143,7 +143,7 @@ public:
 		return m_Instance;
 	}
 	void SetName(
-			ARBString const& inName,
+			tstring const& inName,
 			short inInstance,
 			bool bShowInstance)
 	{
@@ -175,8 +175,8 @@ public:
 
 private:
 	ARBDate m_Date;
-	ARBString m_Venue;
-	ARBString m_Name;
+	tstring m_Venue;
+	tstring m_Name;
 	bool m_bShowInstanceOne;
 	short m_Instance;
 	bool m_bReceived;
@@ -217,7 +217,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTitlesInVenue(ARBString const& inVenue) const;
+	int NumTitlesInVenue(tstring const& inVenue) const;
 
 	/**
 	 * Find a title
@@ -226,8 +226,8 @@ public:
 	 * @param outTitle Pointer to found title.
 	 */
 	bool FindTitle(
-			ARBString const& inVenue,
-			ARBString const& inTitle,
+			tstring const& inVenue,
+			tstring const& inTitle,
 			ARBDogTitlePtr* outTitle = NULL) const;
 
 	/**
@@ -236,8 +236,8 @@ public:
 	 * @param inTitle Name of title.
 	 */
 	short FindMaxInstance(
-			ARBString const& inVenue,
-			ARBString const& inTitle) const;
+			tstring const& inVenue,
+			tstring const& inTitle) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -246,15 +246,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			ARBString const& inOldVenue,
-			ARBString const& inNewVenue);
+			tstring const& inOldVenue,
+			tstring const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(ARBString const& inVenue);
+	int DeleteVenue(tstring const& inVenue);
 
 	/**
 	 * Number of titles in use.
@@ -264,8 +264,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInUse(
-			ARBString const& inVenue,
-			ARBString const& inTitle) const;
+			tstring const& inVenue,
+			tstring const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -275,9 +275,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameTitle(
-			ARBString const& inVenue,
-			ARBString const& inOldTitle,
-			ARBString const& inNewTitle);
+			tstring const& inVenue,
+			tstring const& inOldTitle,
+			tstring const& inNewTitle);
 
 	/**
 	 * Add a title.

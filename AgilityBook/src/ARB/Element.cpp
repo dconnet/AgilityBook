@@ -134,7 +134,7 @@ static char THIS_FILE[] = __FILE__;
 
 ////////////////////////////////////////////////////////////////////////////
 
-bool Element::Initialize(ARBString& outMsg)
+bool Element::Initialize(tstring& outMsg)
 {
 	outMsg.erase();
 	try
@@ -692,12 +692,12 @@ private:
 		{
 		}
 		CurrentAttrib(
-				ARBString const& name,
+				tstring const& name,
 				XMLCh const* const value)
 			: m_Name(name)
 			, m_Value(value)
 		{}
-		ARBString m_Name;
+		tstring m_Name;
 		StringDOM m_Value;
 	};
 	std::list<CurrentAttrib> m_CurrentAttribs; ///< Attributes of the element currently being parsed.
@@ -833,7 +833,7 @@ void SAXImportHandlers::resetDocument()
 void SAXImportHandlers::warning(SAXParseException const& toCatch)
 {
 	++m_Warnings;
-	ARBostringstream tmp;
+	otstringstream tmp;
 	tmp << _T("Warning in file '")
 		<< StringDOM(toCatch.getSystemId())
 		<< _T("', line ")
@@ -850,7 +850,7 @@ void SAXImportHandlers::warning(SAXParseException const& toCatch)
 void SAXImportHandlers::error(SAXParseException const& toCatch)
 {
 	++m_Errors;
-	ARBostringstream tmp;
+	otstringstream tmp;
 	tmp << _T("Error in file '")
 		<< StringDOM(toCatch.getSystemId())
 		<< _T("', line ")
@@ -867,7 +867,7 @@ void SAXImportHandlers::error(SAXParseException const& toCatch)
 void SAXImportHandlers::fatalError(SAXParseException const& toCatch)
 {
 	++m_FatalErrors;
-	ARBostringstream tmp;
+	otstringstream tmp;
 	tmp << _T("Fatal Error in file '")
 		<< StringDOM(toCatch.getSystemId())
 		<< _T("', line ")
@@ -983,7 +983,7 @@ std::ostream& operator<<(
 	// Output any attributes on this element
 	for (i = 0; i < toWrite.GetAttribCount(); ++i)
 	{
-		ARBString name, value;
+		tstring name, value;
 		toWrite.GetNthAttrib(i, name, value);
 		XMLstring attribName(name);
 		XMLstring attribValue(value);
@@ -1051,7 +1051,7 @@ ElementNodePtr ElementNode::New()
 }
 
 
-ElementNodePtr ElementNode::New(ARBString const& inText)
+ElementNodePtr ElementNode::New(tstring const& inText)
 {
 	ElementNodePtr pNode(new ElementNode(inText));
 	pNode->m_Me = pNode;
@@ -1064,7 +1064,7 @@ ElementNode::ElementNode()
 }
 
 
-ElementNode::ElementNode(ARBString const& inName)
+ElementNode::ElementNode(tstring const& inName)
 	: m_Name(inName)
 {
 }
@@ -1087,12 +1087,12 @@ void ElementNode::RemoveAllTextNodes()
 void ElementNode::Dump(int inLevel) const
 {
 	int i;
-	ARBostringstream msg;
+	otstringstream msg;
 	msg.width(inLevel);
 	msg << _T(" ") << m_Name;
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
-		ARBString name, value;
+		tstring name, value;
 		GetNthAttrib(i, name, value);
 		msg << _T(" ")
 			<< name
@@ -1118,21 +1118,21 @@ Element::ElementType ElementNode::GetType() const
 }
 
 
-ARBString const& ElementNode::GetName() const
+tstring const& ElementNode::GetName() const
 {
 	return m_Name;
 }
 
 
-void ElementNode::SetName(ARBString const& inName)
+void ElementNode::SetName(tstring const& inName)
 {
 	m_Name = inName;
 }
 
 
-ARBString ElementNode::GetValue() const
+tstring ElementNode::GetValue() const
 {
-	ARBString value;
+	tstring value;
 	for (int i = 0; i < GetElementCount(); ++i)
 	{
 		if (Element::Element_Text == GetElement(i)->GetType())
@@ -1142,7 +1142,7 @@ ARBString ElementNode::GetValue() const
 }
 
 
-void ElementNode::SetValue(ARBString const& inValue)
+void ElementNode::SetValue(tstring const& inValue)
 {
 	RemoveAllTextNodes();
 	ElementTextPtr pText = ElementText::New();
@@ -1203,8 +1203,8 @@ int ElementNode::GetAttribCount() const
 
 ElementNode::AttribLookup ElementNode::GetNthAttrib(
 		int inIndex,
-		ARBString& outName,
-		ARBString& outValue) const
+		tstring& outName,
+		tstring& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.begin();
 	while (0 < inIndex)
@@ -1224,8 +1224,8 @@ ElementNode::AttribLookup ElementNode::GetNthAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		ARBString const& inName,
-		ARBString& outValue) const
+		tstring const& inName,
+		tstring& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1239,17 +1239,17 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBVersion& outValue) const
 {
-	ARBString value;
+	tstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
 		unsigned short major = 0;
 		unsigned short minor = 0;
-		ARBString::size_type pos = value.find('.');
-		if (ARBString::npos != pos)
+		tstring::size_type pos = value.find('.');
+		if (tstring::npos != pos)
 		{
 			major = static_cast<unsigned short>(_tstol(value.c_str()));
 			value = value.substr(pos+1);
@@ -1266,10 +1266,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBDate& outValue) const
 {
-	ARBString value;
+	tstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -1284,10 +1284,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		bool& outValue) const
 {
-	ARBString value;
+	tstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -1303,10 +1303,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		short& outValue) const
 {
-	ARBString value;
+	tstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -1320,10 +1320,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		long& outValue) const
 {
-	ARBString value;
+	tstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -1337,10 +1337,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		double& outValue) const
 {
-	ARBString value;
+	tstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -1354,8 +1354,8 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
-		ARBString const& inValue)
+		tstring const& inName,
+		tstring const& inValue)
 {
 	m_Attribs[inName] = inValue;
 	return true;
@@ -1363,7 +1363,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		TCHAR const* const inValue)
 {
 	if (inValue)
@@ -1375,7 +1375,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.str());
@@ -1383,7 +1383,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBDate const& inValue)
 {
 	if (inValue.IsValid())
@@ -1393,7 +1393,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		bool inValue)
 {
 	if (inValue)
@@ -1405,10 +1405,10 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		short inValue)
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << inValue;
 	m_Attribs[inName] = str.str();
 	return true;
@@ -1416,10 +1416,10 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		long inValue)
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << inValue;
 	m_Attribs[inName] = str.str();
 	return true;
@@ -1427,7 +1427,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		ARBString const& inName,
+		tstring const& inName,
 		double inValue,
 		int inPrec)
 {
@@ -1436,7 +1436,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::RemoveAttrib(ARBString const& inName)
+bool ElementNode::RemoveAttrib(tstring const& inName)
 {
 	MyAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -1536,7 +1536,7 @@ ElementNodePtr ElementNode::GetNthElementNode(int inIndex)
 
 
 ElementNodePtr ElementNode::AddElementNode(
-		ARBString const& inName,
+		tstring const& inName,
 		int inAt)
 {
 	size_t index;
@@ -1559,7 +1559,7 @@ ElementNodePtr ElementNode::AddElementNode(
 
 
 ElementTextPtr ElementNode::AddElementText(
-		ARBString const& inText,
+		tstring const& inText,
 		int inAt)
 {
 	ASSERT(0 == m_Value.length());
@@ -1603,7 +1603,7 @@ void ElementNode::RemoveAllElements()
 
 
 int ElementNode::FindElement(
-		ARBString const& inName,
+		tstring const& inName,
 		int inStartFrom) const
 {
 	if (0 > inStartFrom)
@@ -1620,8 +1620,8 @@ int ElementNode::FindElement(
 bool ElementNode::FindElementDeep(
 		ElementNodePtr& outParentNode,
 		int& outElementIndex,
-		ARBString const& inName,
-		ARBString const* inValue) const
+		tstring const& inName,
+		tstring const* inValue) const
 {
 	int nCount = GetElementCount();
 	for (int i = 0; i < nCount; ++i)
@@ -1646,7 +1646,7 @@ bool ElementNode::FindElementDeep(
 static bool LoadXML(
 		ElementNodePtr node,
 		XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
-		ARBString& ioErrMsg)
+		tstring& ioErrMsg)
 {
 	node->clear();
 	bool bOk = false;
@@ -1698,7 +1698,7 @@ static bool LoadXML(
 bool ElementNode::LoadXMLBuffer(
 		char const* inData,
 		unsigned int nData,
-		ARBString& ioErrMsg)
+		tstring& ioErrMsg)
 {
 	MemBufInputSource source(reinterpret_cast<XMLByte const*>(inData), nData, "buffer");
 	return LoadXML(m_Me.lock(), source, ioErrMsg);
@@ -1707,7 +1707,7 @@ bool ElementNode::LoadXMLBuffer(
 
 bool ElementNode::LoadXMLFile(
 		char const* inFileName,
-		ARBString& ioErrMsg)
+		tstring& ioErrMsg)
 {
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
@@ -1766,7 +1766,7 @@ ElementTextPtr ElementText::New()
 }
 
 
-ElementTextPtr ElementText::New(ARBString const& inText)
+ElementTextPtr ElementText::New(tstring const& inText)
 {
 	ElementTextPtr pText(new ElementText(inText));
 	pText->m_Me = pText;
@@ -1780,7 +1780,7 @@ ElementText::ElementText()
 }
 
 
-ElementText::ElementText(ARBString const& inText)
+ElementText::ElementText(tstring const& inText)
 	: m_Value(inText)
 {
 }
@@ -1788,7 +1788,7 @@ ElementText::ElementText(ARBString const& inText)
 
 void ElementText::Dump(int inLevel) const
 {
-	ARBostringstream msg;
+	otstringstream msg;
 	msg.width(inLevel);
 	msg << _T(" ") << GetName();
 	if (0 < m_Value.length())
@@ -1810,25 +1810,25 @@ Element::ElementType ElementText::GetType() const
 }
 
 
-ARBString const& ElementText::GetName() const
+tstring const& ElementText::GetName() const
 {
-	static const ARBString name(_T("#text"));
+	static const tstring name(_T("#text"));
 	return name;
 }
 
 
-void ElementText::SetName(ARBString const& inName)
+void ElementText::SetName(tstring const& /*inName*/)
 {
 }
 
 
-ARBString ElementText::GetValue() const
+tstring ElementText::GetValue() const
 {
 	return m_Value;
 }
 
 
-void ElementText::SetValue(ARBString const& inValue)
+void ElementText::SetValue(tstring const& inValue)
 {
 	m_Value = inValue;
 }
@@ -1845,7 +1845,7 @@ void ElementText::SetValue(TCHAR const* const inValue)
 
 void ElementText::SetValue(short inValue)
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << inValue;
 	m_Value = str.str();
 }
@@ -1853,7 +1853,7 @@ void ElementText::SetValue(short inValue)
 
 void ElementText::SetValue(long inValue)
 {
-	ARBostringstream str;
+	otstringstream str;
 	str << inValue;
 	m_Value = str.str();
 }

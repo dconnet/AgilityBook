@@ -110,9 +110,9 @@ BOOL CDlgHelpPageEdit::OnInitDialog()
 			data.TrimLeft();
 			data.TrimRight();
 
-			ARBString dataIn((LPCTSTR)data);
+			tstring dataIn((LPCTSTR)data);
 			data.Empty();
-			ARBString dataOut;
+			tstring dataOut;
 			BinaryData::DecodeString(dataIn, dataOut);
 			dataIn.clear();
 			data = dataOut.c_str();
@@ -120,7 +120,7 @@ BOOL CDlgHelpPageEdit::OnInitDialog()
 			data.TrimLeft();
 			data.TrimRight();
 
-			ARBostringstream editData;
+			otstringstream editData;
 			editData << _T("Any temporary files created will be deleted upon closing this window.\r\n\r\n");
 
 			pos = data.Find(STREAM_REGISTRY_BEGIN);

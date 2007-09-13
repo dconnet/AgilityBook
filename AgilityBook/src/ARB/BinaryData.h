@@ -31,7 +31,7 @@
  * @brief Base64/zlib encoding/decoding class.
  * @author David Connet
  *
- * Note, we are using ARBString's mainly for consistency.
+ * Note, we are using tstring's mainly for consistency.
  * The actual contained data is still 8bit chars.
  *
  * Revision History
@@ -52,7 +52,7 @@ public:
 	 * @post outBinData must be deallocated using Release()
 	 */
 	static bool Decode(
-			ARBString const& inBase64,
+			tstring const& inBase64,
 			char*& outBinData,
 			size_t& outBytes);
 
@@ -71,15 +71,15 @@ public:
 	static bool Encode(
 			char const* inBinData,
 			size_t inBytes,
-			ARBString& outBase64);
+			tstring& outBase64);
 	static bool Encode(
 			FILE* inData,
-			ARBString& outBase64);
+			tstring& outBase64);
 
 	static bool DecodeString(
-			ARBString const& inBase64,
-			ARBString& outData);
+			tstring const& inBase64,
+			tstring& outData);
 	static bool EncodeString(
-			ARBString const& inData,
-			ARBString& outBase64);
+			tstring const& inData,
+			tstring& outBase64);
 };

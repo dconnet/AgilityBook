@@ -70,12 +70,12 @@ private:
 #endif
 public:
 	LifeTimePointInfo(
-			ARBString const& inDiv,
-			ARBString const& inLevel,
+			tstring const& inDiv,
+			tstring const& inLevel,
 			double inPoints,
 			double inFiltered);
-	ARBString div;
-	ARBString level;
+	tstring div;
+	tstring level;
 	double points;
 	double filtered;
 };
@@ -99,10 +99,10 @@ public:
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
 	ARBDogExistingPointsPtr m_pExisting;
-	ARBString m_Venue;
-	ARBString m_Div;
-	ARBString m_Level;
-	ARBString m_Event;
+	tstring m_Venue;
+	tstring m_Div;
+	tstring m_Level;
+	tstring m_Event;
 	double m_Score;
 };
 
@@ -119,9 +119,9 @@ public:
 	virtual ~CPointsDataBase();
 
 	/// Get a particular column of text (used for listctrl)
-	virtual ARBString OnNeedText(size_t inCol) const = 0;
+	virtual tstring OnNeedText(size_t inCol) const = 0;
 	/// Get html for a line
-	virtual ARBString GetHtml(size_t nCurLine) const = 0;
+	virtual tstring GetHtml(size_t nCurLine) const = 0;
 	/// Is this entry visible? (used for special html processing)
 	virtual bool IsVisible() const	{return true;}
 	/// This entry has details (dbl-click works)
@@ -143,15 +143,15 @@ public:
 	CPointsDataSeparator(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
-			ARBString const& inHtml);
+			tstring const& inHtml);
 
-	virtual ARBString OnNeedText(size_t inCol) const	{return _T("");}
-	virtual ARBString GetHtml(size_t nCurLine) const	{return m_Html;}
+	virtual tstring OnNeedText(size_t inCol) const	{return _T("");}
+	virtual tstring GetHtml(size_t nCurLine) const	{return m_Html;}
 	virtual bool IsVisible() const						{return false;}
 	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
 
 protected:
-	ARBString m_Html;
+	tstring m_Html;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -166,14 +166,14 @@ public:
 			LPCTSTR inCol1 = _T(""),
 			LPCTSTR inCol2 = _T(""));
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 private:
 	bool m_UseInHtml;
-	ARBString m_Col1;
-	ARBString m_Col2;
+	tstring m_Col1;
+	tstring m_Col2;
 };
 typedef boost::shared_ptr<CPointsDataText> CPointsDataTextPtr;
 
@@ -190,8 +190,8 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -215,8 +215,8 @@ public:
 			ARBDogPtr pDog,
 			ARBConfigVenuePtr pVenue);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -241,8 +241,8 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTitlePtr pTitle);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -274,14 +274,14 @@ public:
 			int inLevelIdx,
 			ARBConfigEventPtr inEvent,
 			int inEventIdx,
-			ARBString const& inRunCount,
-			ARBString const& inQcount,
-			ARBString const& inPts,
-			ARBString const& inSuperQ,
-			ARBString const& inSpeed);
+			tstring const& inRunCount,
+			tstring const& inQcount,
+			tstring const& inPts,
+			tstring const& inSuperQ,
+			tstring const& inSpeed);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -296,11 +296,11 @@ protected:
 	int m_LevelIdx;
 	ARBConfigEventPtr m_Event;
 	int m_EventIdx;
-	ARBString m_RunCount;
-	ARBString m_Qcount;
-	ARBString m_Pts;
-	ARBString m_SuperQ;
-	ARBString m_Speed;
+	tstring m_RunCount;
+	tstring m_Qcount;
+	tstring m_Pts;
+	tstring m_SuperQ;
+	tstring m_Speed;
 };
 typedef boost::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 
@@ -316,15 +316,15 @@ public:
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bLifetime, ///< Lifetime or Placement?
-			ARBString const& inVenue);
+			tstring const& inVenue);
 	void AddLifetimeInfo(
-			ARBString const& inDiv,
-			ARBString const& inLevel,
+			tstring const& inDiv,
+			tstring const& inLevel,
 			double inLifetime,
 			double inFiltered);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -348,21 +348,21 @@ public:
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bLifetime,
-			ARBString const& inVenue,
-			ARBString const& inDiv);
+			tstring const& inVenue,
+			tstring const& inDiv);
 
 	void AddLifetimeInfo(
-			ARBString const& inDiv,
-			ARBString const& inLevel,
+			tstring const& inDiv,
+			tstring const& inLevel,
 			double inLifetime,
 			double inFiltered);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	ARBString m_Div;
+	tstring m_Div;
 };
 typedef boost::shared_ptr<CPointsDataLifetimeDiv> CPointsDataLifetimeDivPtr;
 
@@ -382,8 +382,8 @@ public:
 			ARBConfigMultiQPtr inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -411,8 +411,8 @@ public:
 			ARBConfigVenuePtr inVenue,
 			int inPts);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
@@ -446,17 +446,17 @@ public:
 	CPointsDataOtherPointsTallyAll(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
-			ARBString const& inName,
+			tstring const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	ARBString m_Name;
+	tstring m_Name;
 };
 typedef boost::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
 
@@ -466,17 +466,17 @@ public:
 	CPointsDataOtherPointsTallyAllByEvent(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
-			ARBString const& inEvent,
+			tstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	ARBString m_Event;
+	tstring m_Event;
 };
 typedef boost::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
 
@@ -486,17 +486,17 @@ public:
 	CPointsDataOtherPointsTallyLevel(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
-			ARBString const& inLevel,
+			tstring const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	ARBString m_Level;
+	tstring m_Level;
 };
 typedef boost::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
 
@@ -506,19 +506,19 @@ public:
 	CPointsDataOtherPointsTallyLevelByEvent(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
-			ARBString const& inLevel,
-			ARBString const& inEvent,
+			tstring const& inLevel,
+			tstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual ARBString OnNeedText(size_t inCol) const;
-	virtual ARBString GetHtml(size_t nCurLine) const;
+	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	ARBString m_Level;
-	ARBString m_Event;
+	tstring m_Level;
+	tstring m_Event;
 };
 typedef boost::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
 
@@ -542,7 +542,7 @@ public:
 private:
 	struct LifeTimePoint
 	{
-		ARBString eventName;
+		tstring eventName;
 		double points;
 		bool bFiltered;
 		LifeTimePoint()
@@ -552,7 +552,7 @@ private:
 		{
 		}
 		LifeTimePoint(
-				const ARBString inEvent,
+				const tstring inEvent,
 				double inPoints,
 				bool inFiltered)
 			: eventName(inEvent)

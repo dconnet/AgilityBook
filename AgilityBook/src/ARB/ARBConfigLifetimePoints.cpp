@@ -117,7 +117,7 @@ bool ARBConfigLifetimePoints::operator==(ARBConfigLifetimePoints const& rhs) con
 }
 
 
-ARBString ARBConfigLifetimePoints::GetGenericName() const
+tstring ARBConfigLifetimePoints::GetGenericName() const
 {
 	return LIFETIME_POINTS_NAME_FORMAT(m_Points, m_Faults);
 }

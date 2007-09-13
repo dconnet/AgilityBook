@@ -480,11 +480,11 @@ static ARBDogRunPtr CreateRun(
 }
 
 
-static ARBString GetPrimaryVenue(ARBString const& venues)
+static tstring GetPrimaryVenue(tstring const& venues)
 {
-	ARBString venue;
-	ARBString::size_type pos = venues.find('/');
-	if (ARBString::npos != pos)
+	tstring venue;
+	tstring::size_type pos = venues.find('/');
+	if (tstring::npos != pos)
 		venue = venues.substr(0, pos);
 	else
 		venue = venues;
@@ -494,12 +494,12 @@ static ARBString GetPrimaryVenue(ARBString const& venues)
 
 static void BreakLine(
 		char inSep,
-		ARBString inStr,
-		std::vector<ARBString>& outFields)
+		tstring inStr,
+		std::vector<tstring>& outFields)
 {
 	outFields.clear();
-	ARBString::size_type pos = inStr.find(inSep);
-	while (ARBString::npos != pos)
+	tstring::size_type pos = inStr.find(inSep);
+	while (tstring::npos != pos)
 	{
 		outFields.push_back(inStr.substr(0, pos));
 		inStr = inStr.substr(pos+1);
@@ -570,7 +570,7 @@ BOOL CWizardImport::OnWizardFinish()
 		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
 	}
 	CString loadstr;
-	ARBostringstream errLog;
+	otstringstream errLog;
 	int nAdded = 0;
 	int nUpdated = 0;
 	int nDuplicate = 0;
@@ -578,7 +578,7 @@ BOOL CWizardImport::OnWizardFinish()
 	int nColumns = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
 	for (int nItem = 0; nItem < m_ctrlPreview.GetItemCount(); ++nItem)
 	{
-		std::vector<ARBString> entry;
+		std::vector<tstring> entry;
 		entry.reserve(nColumns);
 		for (int i = 0; i < nColumns; ++i)
 		{
@@ -673,8 +673,8 @@ BOOL CWizardImport::OnWizardFinish()
 				}
 				ASSERT(0 <= i);
 
-				ARBString nameReg, nameCall;
-				ARBString trialVenue, trialClub, trialLocation, trialNotes;
+				tstring nameReg, nameCall;
+				tstring trialVenue, trialClub, trialLocation, trialNotes;
 				ARBDogRunPtr pRun;
 				for (iCol = 0; iCol < entry.size() && iCol < columns[i].size(); ++iCol)
 				{
@@ -828,7 +828,7 @@ BOOL CWizardImport::OnWizardFinish()
 					case IO_RUNS_FAULTS:
 						{
 							pRun = CreateRun(pRun, pScoring);
-							ARBString str = pRun->GetNote();
+							tstring str = pRun->GetNote();
 							if (0 < str.length())
 								str += _T("\n");
 							str += entry[iCol];
@@ -917,8 +917,8 @@ BOOL CWizardImport::OnWizardFinish()
 					ASSERT(pDog);
 
 					// Find the trial
-					std::vector<ARBString> venues;
-					std::vector<ARBString> clubs;
+					std::vector<tstring> venues;
+					std::vector<tstring> clubs;
 					if (0 < trialVenue.length())
 						BreakLine('/', trialVenue, venues);
 					if (0 < trialClub.length())

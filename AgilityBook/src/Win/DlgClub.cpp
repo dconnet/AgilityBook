@@ -94,9 +94,9 @@ BOOL CDlgClub::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	set<ARBString> clubs;
+	set<tstring> clubs;
 	m_pDoc->GetAllClubNames(clubs);
-	for (set<ARBString>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
+	for (set<tstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
 	{
 		m_ctrlClubs.AddString((*iter).c_str());
 	}

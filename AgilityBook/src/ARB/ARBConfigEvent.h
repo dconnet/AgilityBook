@@ -76,7 +76,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -86,7 +86,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -124,7 +124,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigEventPtr inEventNew,
-			ARBString& ioInfo);
+			tstring& ioInfo);
 
 	/**
 	 * Find all the scoring methods that match.
@@ -136,8 +136,8 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoringPtr>& outList) const
@@ -153,8 +153,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate) const
 	{
 		return m_Scoring.VerifyEvent(inDivision, inLevel, inDate);
@@ -169,8 +169,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigScoringPtr* outScoring = NULL) const
 	{
@@ -180,19 +180,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
-	ARBString const& GetDesc() const
+	tstring const& GetDesc() const
 	{
 		return m_Desc;
 	}
-	void SetDesc(ARBString const& inDesc)
+	void SetDesc(tstring const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -220,8 +220,8 @@ public:
 	{
 		m_bHasSubNames = inHas;
 	}
-	size_t GetSubNames(std::set<ARBString>& outNames) const;
-	void SetSubNames(std::set<ARBString> const& inNames);
+	size_t GetSubNames(std::set<tstring>& outNames) const;
+	void SetSubNames(std::set<tstring> const& inNames);
 	ARBConfigScoringList const& GetScorings() const
 	{
 		return m_Scoring;
@@ -232,12 +232,12 @@ public:
 	}
 
 private:
-	ARBString m_Name;
-	ARBString m_Desc;
+	tstring m_Name;
+	tstring m_Desc;
 	bool m_bTable;
 	bool m_bHasPartner;
 	bool m_bHasSubNames;
-	std::set<ARBString> m_SubNames;
+	std::set<tstring> m_SubNames;
 	ARBConfigScoringList m_Scoring;
 };
 
@@ -273,9 +273,9 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-			ARBString const& inEvent,
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inEvent,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate) const;
 
 	/**
@@ -289,9 +289,9 @@ public:
 	 * @return Whether the event was found.
 	 */
 	 bool FindEvent(
-			ARBString const& inEvent,
-			ARBString const& inDivision,
-			ARBString const& inLevel,
+			tstring const& inEvent,
+			tstring const& inDivision,
+			tstring const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigEventPtr* outEvent = NULL,
 			ARBConfigScoringPtr* outScoring = NULL) const;
@@ -303,15 +303,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameDivision(
-			ARBString const& inOldDiv,
-			ARBString const& inNewDiv);
+			tstring const& inOldDiv,
+			tstring const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(ARBString const& inDiv);
+	int DeleteDivision(tstring const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -320,15 +320,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
-			ARBString const& inOldLevel,
-			ARBString const& inNewLevel);
+			tstring const& inOldLevel,
+			tstring const& inNewLevel);
 
 	/**
 	 * Delete a level.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(ARBString const& inLevel);
+	int DeleteLevel(tstring const& inLevel);
 
 	/**
 	 * Find an event.
@@ -337,7 +337,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			ARBString const& inEvent,
+			tstring const& inEvent,
 			ARBConfigEventPtr* outEvent = NULL) const;
 
 	/**
@@ -352,5 +352,5 @@ public:
 	 * @param inEvent Name of event to delete.
 	 * @return Whether event was deleted or not.
 	 */
-	bool DeleteEvent(ARBString const& inEvent);
+	bool DeleteEvent(tstring const& inEvent);
 };

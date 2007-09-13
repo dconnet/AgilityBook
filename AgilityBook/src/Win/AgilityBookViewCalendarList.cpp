@@ -490,7 +490,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
 	{
-		std::set<ARBString> strings;
+		std::set<tstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookViewCalendarData* pData = m_pView->GetItemData(index);
@@ -505,7 +505,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
 			}
 		}
-		for (std::set<ARBString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
 			CString str((*iter).c_str());
 			if (!MatchCase())
@@ -1388,7 +1388,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		ARBostringstream iCal;
+		otstringstream iCal;
 		ElementNodePtr tree(ElementNode::New(CLIPDATA));
 
 		// Now all the data.
@@ -1416,7 +1416,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 
 		clpData.SetData(eFormatCalendar, tree);
 		clpData.SetData(data);
-		ARBString s = iCal.str();
+		tstring s = iCal.str();
 		clpData.SetData(eFormatiCalendar, s);
 	}
 }

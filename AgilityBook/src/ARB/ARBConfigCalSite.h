@@ -78,42 +78,42 @@ public:
 	/**
 	 * Get the formatted URL to use to request data.
 	 */
-	ARBString GetFormattedURL(
-			std::vector<ARBString> const& inLocCodes,
-			std::vector<ARBString> const& inVenueCodes) const;
+	tstring GetFormattedURL(
+			std::vector<tstring> const& inLocCodes,
+			std::vector<tstring> const& inVenueCodes) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	ARBString GetSearchURL() const
+	tstring GetSearchURL() const
 	{
 		return m_urlSearch;
 	}
-	void SetSearchURL(ARBString const& inURL)
+	void SetSearchURL(tstring const& inURL)
 	{
 		m_urlSearch = inURL;
 	}
-	ARBString GetHelpURL() const
+	tstring GetHelpURL() const
 	{
 		return m_urlHelp;
 	}
-	void SetHelpURL(ARBString const& inURL)
+	void SetHelpURL(tstring const& inURL)
 	{
 		m_urlHelp = inURL;
 	}
 
-	bool HasLocationCode(ARBString const& inCode) const;
-	bool AddLocationCode(ARBString const& inCode, ARBString const& inName);
-	bool RemoveLocationCode(ARBString const& inCode);
+	bool HasLocationCode(tstring const& inCode) const;
+	bool AddLocationCode(tstring const& inCode, tstring const& inName);
+	bool RemoveLocationCode(tstring const& inCode);
 	bool RemoveAllLocationCodes();
-	bool HasVenueCode(ARBString const& inCode) const;
-	bool AddVenueCode(ARBString const& inCode, ARBString const& inVenue);
-	bool RemoveVenueCode(ARBString const& inCode);
+	bool HasVenueCode(tstring const& inCode) const;
+	bool AddVenueCode(tstring const& inCode, tstring const& inVenue);
+	bool RemoveVenueCode(tstring const& inCode);
 	bool RemoveAllVenueCodes();
 
 private:
-	ARBString m_urlSearch;
-	ARBString m_urlHelp;
-	std::map<ARBString, ARBString> m_Locations;
-	std::map<ARBString, ARBString> m_Venues;
+	tstring m_urlSearch;
+	tstring m_urlHelp;
+	std::map<tstring, tstring> m_Locations;
+	std::map<tstring, tstring> m_Venues;
 };

@@ -133,7 +133,7 @@ bool ARBConfigOtherPoints::Load(
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
-	ARBString attrib;
+	tstring attrib;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
@@ -150,7 +150,7 @@ bool ARBConfigOtherPoints::Load(
 		m_Tally = eTallyLevelByEvent;
 	else
 	{
-		ARBString msg(INVALID_VALUE);
+		tstring msg(INVALID_VALUE);
 		msg += attrib;
 		msg += _T("\n");
 		msg += VALID_VALUES_OTHERPT;
@@ -206,7 +206,7 @@ bool ARBConfigOtherPointsList::Load(
 }
 
 
-bool ARBConfigOtherPointsList::VerifyOtherPoints(ARBString const& inName) const
+bool ARBConfigOtherPointsList::VerifyOtherPoints(tstring const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -218,7 +218,7 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(ARBString const& inName) const
 
 
 bool ARBConfigOtherPointsList::FindOtherPoints(
-		ARBString const& inName,
+		tstring const& inName,
 		ARBConfigOtherPointsPtr* outPoints) const
 {
 	if (outPoints)
@@ -249,9 +249,9 @@ bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr inOther)
 }
 
 
-bool ARBConfigOtherPointsList::DeleteOtherPoints(ARBString const& inName)
+bool ARBConfigOtherPointsList::DeleteOtherPoints(tstring const& inName)
 {
-	ARBString name(inName);
+	tstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

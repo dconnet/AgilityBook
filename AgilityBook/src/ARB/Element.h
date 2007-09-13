@@ -71,7 +71,7 @@ public:
 	 * @param outMsg In case of failure, error message.
 	 * @return Initialization success.
 	 */
-	static bool Initialize(ARBString& outMsg);
+	static bool Initialize(tstring& outMsg);
 
 	/**
 	 * Call once (at program termination) to cleanup XML subsystem.
@@ -96,18 +96,18 @@ public:
 	/**
 	 * Get the name of this element.
 	 */
-	virtual ARBString const& GetName() const = 0;
+	virtual tstring const& GetName() const = 0;
 
 	/**
 	 * Set the name of this element.
 	 * @param inName New name for this element.
 	 */
-	virtual void SetName(ARBString const& inName) = 0;
+	virtual void SetName(tstring const& inName) = 0;
 
 	/**
 	 * Get the value of this element. This will concatenate all text nodes.
 	 */
-	virtual ARBString GetValue() const = 0;
+	virtual tstring GetValue() const = 0;
 
 	/**
 	 * Set the value of this element. If this element has text nodes, they
@@ -115,7 +115,7 @@ public:
 	 * @pre GetElementCount() must be 0.
 	 * @param inValue New value for this element.
 	 */
-	virtual void SetValue(ARBString const& inValue) = 0;
+	virtual void SetValue(tstring const& inValue) = 0;
 	virtual void SetValue(TCHAR const* const inValue) = 0;
 	virtual void SetValue(short inValue) = 0;
 	virtual void SetValue(long inValue) = 0;
@@ -135,20 +135,20 @@ class ElementNode : public Element
 {
 private:
 	ElementNode();
-	ElementNode(ARBString const& inName);
+	ElementNode(tstring const& inName);
 	ElementNode(ElementNode const&); // Not implemented
 	ElementNode& operator=(ElementNode const&); // Not implemented
 
 public:
 	static ElementNodePtr New();
-	static ElementNodePtr New(ARBString const& inName);
+	static ElementNodePtr New(tstring const& inName);
 
 	virtual void Dump(int inLevel = 0) const;
 	virtual Element::ElementType GetType() const;
-	virtual ARBString const& GetName() const;
-	virtual void SetName(ARBString const& inName);
-	virtual ARBString GetValue() const;
-	virtual void SetValue(ARBString const& inValue);
+	virtual tstring const& GetName() const;
+	virtual void SetName(tstring const& inName);
+	virtual tstring GetValue() const;
+	virtual void SetValue(tstring const& inValue);
 	virtual void SetValue(TCHAR const* const inValue);
 	virtual void SetValue(short inValue);
 	virtual void SetValue(long inValue);
@@ -186,8 +186,8 @@ public:
 	 */
 	AttribLookup GetNthAttrib(
 			int inIndex,
-			ARBString& outName,
-			ARBString& outValue) const;
+			tstring& outName,
+			tstring& outValue) const;
 
 	/**
 	 * Get the value of an attribute.
@@ -196,25 +196,25 @@ public:
 	 * @return Result of lookup.
 	 */
 	AttribLookup GetAttrib(
-			ARBString const& inName,
-			ARBString& outValue) const;
+			tstring const& inName,
+			tstring& outValue) const;
 	AttribLookup GetAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBVersion& outValue) const;
 	AttribLookup GetAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBDate& outValue) const;
 	AttribLookup GetAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			bool& outValue) const;
 	AttribLookup GetAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			short& outValue) const;
 	AttribLookup GetAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			long& outValue) const;
 	AttribLookup GetAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			double& outValue) const;
 
 	/**
@@ -225,25 +225,25 @@ public:
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(
-			ARBString const& inName,
-			ARBString const& inValue);
+			tstring const& inName,
+			tstring const& inValue);
 	bool AddAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			TCHAR const* const inValue);
 	bool AddAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBVersion const& inValue);
 	bool AddAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBDate const& inValue);
 	bool AddAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			bool inValue);
 	bool AddAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			short inValue);
 	bool AddAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			long inValue);
 
 	/**
@@ -255,7 +255,7 @@ public:
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(
-			ARBString const& inName,
+			tstring const& inName,
 			double inValue,
 			int inPrec = 2);
 
@@ -264,7 +264,7 @@ public:
 	 * @param inName Attribute to remove
 	 * @return Whether or not the attribute was removed.
 	 */
-	bool RemoveAttrib(ARBString const& inName);
+	bool RemoveAttrib(tstring const& inName);
 
 	/**
 	 * Remove all attributes.
@@ -322,7 +322,7 @@ public:
 	 * @return The new element.
 	 */
 	ElementNodePtr AddElementNode(
-			ARBString const& inName,
+			tstring const& inName,
 			int inAt = -1);
 
 	/**
@@ -335,7 +335,7 @@ public:
 	 * @return The new element.
 	 */
 	ElementTextPtr AddElementText(
-			ARBString const& inText,
+			tstring const& inText,
 			int inAt = -1);
 
 	/**
@@ -357,7 +357,7 @@ public:
 	 * @return Index of the first element to match the search.
 	 */
 	int FindElement(
-			ARBString const& inName,
+			tstring const& inName,
 			int inStartFrom = 0) const;
 
 	/**
@@ -372,8 +372,8 @@ public:
 	bool FindElementDeep(
 			ElementNodePtr& outParentNode,
 			int& outElementIndex,
-			ARBString const& inName,
-			ARBString const* inValue = NULL) const;
+			tstring const& inName,
+			tstring const* inValue = NULL) const;
 
 	/**
 	 * Populate this element from the given buffer.
@@ -385,7 +385,7 @@ public:
 	bool LoadXMLBuffer(
 			char const* inData,
 			unsigned int nData,
-			ARBString& ioErrMsg);
+			tstring& ioErrMsg);
 
 	/**
 	 * Populate this element from the given file.
@@ -395,7 +395,7 @@ public:
 	 */
 	bool LoadXMLFile(
 			char const* inFileName,
-			ARBString& ioErrMsg);
+			tstring& ioErrMsg);
 
 	/**
 	 * Save this element to the given output stream.
@@ -423,9 +423,9 @@ protected:
 	void RemoveAllTextNodes();
 
 	ElementNodeWPtr m_Me;
-	ARBString m_Name;
-	typedef std::map<ARBString, ARBString> MyAttributes;
-	ARBString m_Value;
+	tstring m_Name;
+	typedef std::map<tstring, tstring> MyAttributes;
+	tstring m_Value;
 	MyAttributes m_Attribs;
 	std::vector<ElementPtr> m_Elements;
 };
@@ -434,20 +434,20 @@ class ElementText : public Element
 {
 private:
 	ElementText();
-	ElementText(ARBString const& inText);
+	ElementText(tstring const& inText);
 	ElementText(ElementText const&); // Not implemented
 	ElementText& operator=(ElementText const&); // Not implemented
 
 public:
 	static ElementTextPtr New();
-	static ElementTextPtr New(ARBString const& inText);
+	static ElementTextPtr New(tstring const& inText);
 
 	virtual void Dump(int inLevel = 0) const;
 	virtual Element::ElementType GetType() const;
-	virtual ARBString const& GetName() const;
-	virtual void SetName(ARBString const& inName);
-	virtual ARBString GetValue() const;
-	virtual void SetValue(ARBString const& inValue);
+	virtual tstring const& GetName() const;
+	virtual void SetName(tstring const& inName);
+	virtual tstring GetValue() const;
+	virtual void SetValue(tstring const& inValue);
 	virtual void SetValue(TCHAR const* const inValue);
 	virtual void SetValue(short inValue);
 	virtual void SetValue(long inValue);
@@ -455,5 +455,5 @@ public:
 
 protected:
 	ElementTextWPtr m_Me;
-	ARBString m_Value;
+	tstring m_Value;
 };

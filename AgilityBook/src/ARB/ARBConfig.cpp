@@ -194,7 +194,7 @@ bool ARBConfig::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		ARBString const& name = element->GetName();
+		tstring const& name = element->GetName();
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
@@ -265,7 +265,7 @@ void ARBConfig::Default()
 	// advantage of Win32 resources and stashing the default config inside
 	// the program.
 	bool bOk = false;
-	ARBString errMsg;
+	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 #ifdef _WINDOWS
@@ -328,14 +328,14 @@ std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 }
 
 
-ARBString ARBConfig::GetTitleNiceName(
-		ARBString const& inVenue,
-		ARBString const& inTitle) const
+tstring ARBConfig::GetTitleNiceName(
+		tstring const& inVenue,
+		tstring const& inTitle) const
 {
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
 	{
-		ARBString name = pTitle->GetNiceName();
+		tstring name = pTitle->GetNiceName();
 		return name;
 	}
 	else
@@ -343,7 +343,7 @@ ARBString ARBConfig::GetTitleNiceName(
 }
 
 
-ARBString ARBConfig::GetTitleCompleteName(
+tstring ARBConfig::GetTitleCompleteName(
 		ARBDogTitlePtr inTitle,
 		bool bAbbrevFirst) const
 {
@@ -360,7 +360,7 @@ ARBString ARBConfig::GetTitleCompleteName(
 bool ARBConfig::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		ARBostringstream& ioInfo)
+		otstringstream& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update Faults.
@@ -424,7 +424,7 @@ bool ARBConfig::Update(
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;
-	ARBString venueInfo;
+	tstring venueInfo;
 	for (ARBConfigVenueList::const_iterator iterVenue = inConfigNew.GetVenues().begin();
 	iterVenue != inConfigNew.GetVenues().end();
 	++iterVenue)

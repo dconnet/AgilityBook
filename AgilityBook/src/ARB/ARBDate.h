@@ -84,7 +84,7 @@ public:
 	 * @return Parsed date, if parse fails, date is invalid.
 	 */
 	static ARBDate FromString(
-			ARBString const& inDate,
+			tstring const& inDate,
 			DateFormat inFormat);
 
 	/**
@@ -94,7 +94,7 @@ public:
 	 * @param inFormat Date format.
 	 * @return Date range string
 	 */
-	static ARBString GetValidDateString(
+	static tstring GetValidDateString(
 			ARBDate const& inFrom,
 			ARBDate const& inTo,
 			DateFormat inFormat = eDashYMD);
@@ -285,7 +285,7 @@ public:
 	 * @param inForceOutput Always return a string, even if the date is not valid.
 	 * @return Date in the format defined by inFormat.
 	 */
-	ARBString GetString(
+	tstring GetString(
 			DateFormat inFormat,
 			bool inForceOutput = false) const;
 

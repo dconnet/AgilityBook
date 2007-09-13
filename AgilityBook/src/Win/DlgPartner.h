@@ -44,8 +44,8 @@ class CDlgPartner : public CDlgBaseDialog
 public:
 	CDlgPartner(
 			ARBDogRunPartnerPtr partner,
-			std::set<ARBString> const& inHandlers,
-			std::set<ARBString> const& inDogs,
+			std::set<tstring> const& inHandlers,
+			std::set<tstring> const& inDogs,
 			CWnd* pParent = NULL);
 
 private:
@@ -59,8 +59,8 @@ private:
 	CString m_RegNum;
 	//}}AFX_DATA
 	ARBDogRunPartnerPtr m_Partner;
-	std::set<ARBString> const& m_Handlers;
-	std::set<ARBString> const& m_Dogs;
+	std::set<tstring> const& m_Handlers;
+	std::set<tstring> const& m_Dogs;
 
 	//{{AFX_VIRTUAL(CDlgPartner)
 protected:

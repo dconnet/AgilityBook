@@ -69,7 +69,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Dog;
 	}
@@ -79,7 +79,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
 
 	/**
 	 * Load a partner.
@@ -107,35 +107,35 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetHandler() const
+	tstring const& GetHandler() const
 	{
 		return m_Handler;
 	}
-	void SetHandler(ARBString const& inHandler)
+	void SetHandler(tstring const& inHandler)
 	{
 		m_Handler = inHandler;
 	}
-	ARBString const& GetDog() const
+	tstring const& GetDog() const
 	{
 		return m_Dog;
 	}
-	void SetDog(ARBString const& inDog)
+	void SetDog(tstring const& inDog)
 	{
 		m_Dog = inDog;
 	}
-	ARBString const& GetRegNum() const
+	tstring const& GetRegNum() const
 	{
 		return m_RegNum;
 	}
-	void SetRegNum(ARBString const& inRegNum)
+	void SetRegNum(tstring const& inRegNum)
 	{
 		m_RegNum = inRegNum;
 	}
 
 private:
-	ARBString m_Handler;
-	ARBString m_Dog;
-	ARBString m_RegNum;
+	tstring m_Handler;
+	tstring m_Dog;
+	tstring m_RegNum;
 };
 
 /////////////////////////////////////////////////////////////////////////////

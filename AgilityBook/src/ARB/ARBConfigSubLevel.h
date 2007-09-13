@@ -68,7 +68,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -78,7 +78,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -107,17 +107,17 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
 
 private:
-	ARBString m_Name;
+	tstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -146,7 +146,7 @@ public:
 	 * @param inName Name of sublevel to find.
 	 * @return Whether name exists.
 	 */
-	bool FindSubLevel(ARBString const& inName) const;
+	bool FindSubLevel(tstring const& inName) const;
 
 	/**
 	 * Find a sublevel.
@@ -155,7 +155,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddSubLevel(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigSubLevelPtr* outLevel = NULL);
 
 	/**
@@ -163,5 +163,5 @@ public:
 	 * @param inName Name of sublevel to delete.
 	 * @return Whether sublevel was deleted or not.
 	 */
-	bool DeleteSubLevel(ARBString const& inName);
+	bool DeleteSubLevel(tstring const& inName);
 };

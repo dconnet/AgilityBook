@@ -67,10 +67,10 @@ static char* Allocate(std::string const& inStr)
 }
 
 
-static ARBString mdy2ymd(ARBString const& inDate)
+static tstring mdy2ymd(tstring const& inDate)
 {
-	ARBString date;
-	ARBString::size_type pos = 0;
+	tstring date;
+	tstring::size_type pos = 0;
 	while (pos < inDate.length() && inDate[pos] == ' ')
 		++pos;
 	if (pos + 10 <= inDate.length())
@@ -88,10 +88,10 @@ static ARBString mdy2ymd(ARBString const& inDate)
 }
 
 
-static void StripNewlines(ARBString& inStr)
+static void StripNewlines(tstring& inStr)
 {
-	ARBString::size_type pos = inStr.find_first_of(_T("\n"));
-	while (ARBString::npos != pos)
+	tstring::size_type pos = inStr.find_first_of(_T("\n"));
+	while (tstring::npos != pos)
 	{
 		inStr.replace(pos, 1, 1, ' ');
 		pos = inStr.find_first_of(_T("\n"));
@@ -221,7 +221,7 @@ static ElementNodePtr ReadData(CString const& inAddress)
 }
 #endif
 
-		ARBString err;
+		tstring err;
 		tree = ElementNode::New();
 		if (!tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), err))
 		{
@@ -272,8 +272,8 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 	int nEntries = 0;
 	ElementNodePtr parentElement;
 	int idxEventCalH4tag = -1;
-	static const ARBString tag(_T("h4"));
-	static const ARBString name(_T("Event Calendar"));
+	static const tstring tag(_T("h4"));
+	static const tstring name(_T("Event Calendar"));
 	if (tree->FindElementDeep(parentElement, idxEventCalH4tag, tag, &name))
 	{
 		int idxTable = parentElement->FindElement(_T("table"), idxEventCalH4tag+1);
@@ -291,7 +291,7 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 					continue;
 				if (4 <= tr->GetNodeCount(Element::Element_Node))
 				{
-					ARBString dates, club, detail, location;
+					tstring dates, club, detail, location;
 					int idx = 0;
 					for (int td = 0; td < tr->GetElementCount(); ++td)
 					{
@@ -326,8 +326,8 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 						}
 						++idx;
 					}
-					ARBString::size_type pos = dates.find(_T("-"));
-					if (ARBString::npos == pos)
+					tstring::size_type pos = dates.find(_T("-"));
+					if (tstring::npos == pos)
 						continue;
 					bOk = true;
 					ElementNodePtr cal = calTree->AddElementNode(TREE_CALENDAR);
@@ -352,7 +352,7 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 		if (progress)
 			progress->StepIt();
 		ElementNodePtr cal = calTree->GetElementNode(idxCal);
-		ARBString detail = cal->GetValue();
+		tstring detail = cal->GetValue();
 		if (detail.empty())
 			continue;
 		cal->SetValue(_T(""));
@@ -369,8 +369,8 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 //		ElementNodePtr treeDetail = ReadData("c:\\detail-raw.xml");
 		if (treeDetail)
 		{
-			static const ARBString tag2(_T("h3"));
-			static const ARBString name2(_T("General Event Information"));
+			static const tstring tag2(_T("h3"));
+			static const tstring name2(_T("General Event Information"));
 			ElementNodePtr parent;
 			int idxEventCalH3tag = -1;
 			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
@@ -412,7 +412,7 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 									iTD = table->GetElementNode(i)->FindElement(_T("td"), iTD+1);
 									if (0 <= iTD)
 									{
-										ARBString date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
+										tstring date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
 										cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
 									}
 								}
@@ -435,7 +435,7 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 										iTD = td->FindElement(_T("a"));
 										if (0 <= iTD)
 										{
-											ARBString email;
+											tstring email;
 											td->GetElementNode(iTD)->GetAttrib(_T("href"), email);
 											cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 										}

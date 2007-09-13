@@ -191,9 +191,9 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 }
 
 
-ARBString ARBDogRun::GetGenericName() const
+tstring ARBDogRun::GetGenericName() const
 {
-	ARBString name = m_Date.GetString(ARBDate::eDashYMD) + _T(' ');
+	tstring name = m_Date.GetString(ARBDate::eDashYMD) + _T(' ');
 	name += m_Division + _T(' ') + m_Level + _T(' ') + m_Event;
 	if (0 < m_SubName.length())
 	{
@@ -203,7 +203,7 @@ ARBString ARBDogRun::GetGenericName() const
 }
 
 
-size_t ARBDogRun::GetSearchStrings(std::set<ARBString>& ioStrings) const
+size_t ARBDogRun::GetSearchStrings(std::set<tstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -287,9 +287,9 @@ bool ARBDogRun::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			ARBString attrib;
+			tstring attrib;
 			inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
-			ARBString msg(INVALID_DATE);
+			tstring msg(INVALID_DATE);
 			msg += attrib;
 			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
 			return false;
@@ -334,7 +334,7 @@ bool ARBDogRun::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		ARBString const& name = element->GetName();
+		tstring const& name = element->GetName();
 		if (name == TREE_CONDITIONS)
 		{
 			m_Conditions = element->GetValue();
@@ -361,7 +361,7 @@ bool ARBDogRun::Load(
 		}
 		else if (name == TREE_PLACEMENT)
 		{
-			ARBString attrib;
+			tstring attrib;
 			if (ElementNode::eFound != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
@@ -370,7 +370,7 @@ bool ARBDogRun::Load(
 			}
 			if (!m_Q.Load(attrib, inVersion, ioCallback))
 			{
-				ARBString msg(VALID_VALUES);
+				tstring msg(VALID_VALUES);
 				msg += ARB_Q::GetValidTypes();
 				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
 				return false;
@@ -464,7 +464,7 @@ bool ARBDogRun::Save(ElementNodePtr ioTree) const
 }
 
 
-int ARBDogRun::NumOtherPointsInUse(ARBString const& inOther) const
+int ARBDogRun::NumOtherPointsInUse(tstring const& inOther) const
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::const_iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -477,8 +477,8 @@ int ARBDogRun::NumOtherPointsInUse(ARBString const& inOther) const
 
 
 int ARBDogRun::RenameOtherPoints(
-		ARBString const& inOldName,
-		ARBString const& inNewName)
+		tstring const& inOldName,
+		tstring const& inNewName)
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -493,9 +493,9 @@ int ARBDogRun::RenameOtherPoints(
 }
 
 
-int ARBDogRun::DeleteOtherPoints(ARBString const& inName)
+int ARBDogRun::DeleteOtherPoints(tstring const& inName)
 {
-	ARBString name(inName);
+	tstring name(inName);
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); )
 	{
@@ -690,7 +690,7 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 }
 
 
-size_t ARBDogRun::GetLinks(std::set<ARBString>& outLinks) const
+size_t ARBDogRun::GetLinks(std::set<tstring>& outLinks) const
 {
 	outLinks.clear();
 	outLinks = m_Links;
@@ -698,19 +698,19 @@ size_t ARBDogRun::GetLinks(std::set<ARBString>& outLinks) const
 }
 
 
-bool ARBDogRun::HasLink(ARBString const& inLink) const
+bool ARBDogRun::HasLink(tstring const& inLink) const
 {
 	return m_Links.find(inLink) != m_Links.end();
 }
 
 
-void ARBDogRun::AddLink(ARBString const& inLink)
+void ARBDogRun::AddLink(tstring const& inLink)
 {
 	m_Links.insert(inLink);
 }
 
 
-void ARBDogRun::RemoveLink(ARBString const& inLink)
+void ARBDogRun::RemoveLink(tstring const& inLink)
 {
 	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
 	if (iter != m_Links.end())

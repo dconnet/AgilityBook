@@ -51,7 +51,7 @@ public:
 	CDlgInfoJudge(
 			CAgilityBookDoc* pDoc,
 			ARBInfo::eInfoType inType,
-			ARBString const& inSelect,
+			tstring const& inSelect,
 			CWnd* pParent = NULL);
 
 private:
@@ -64,8 +64,8 @@ private:
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBInfo::eInfoType m_Type;
-	ARBString m_Select;
-	std::set<ARBString> m_NamesInUse;
+	tstring m_Select;
+	std::set<tstring> m_NamesInUse;
 	ARBInfoItemList const& m_InfoOrig;
 	ARBInfoItemList m_Info;
 	class NameInfo
@@ -78,10 +78,10 @@ private:
 			eDeleted
 		} eUsage;
 		NameInfo();
-		NameInfo(ARBString const& inName);
+		NameInfo(tstring const& inName);
 		NameInfo(NameInfo const& rhs);
 		bool operator==(NameInfo const& rhs);
-		ARBString m_Name;
+		tstring m_Name;
 		eUsage m_eInUse;
 		bool m_bHasData;
 	};

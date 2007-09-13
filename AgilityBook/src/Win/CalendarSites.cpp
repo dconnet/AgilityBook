@@ -492,7 +492,7 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 		CStringA d = (*i).second->GetDescription();
 		CStringA data = (*i).second->Process(&progress);
 		ElementNodePtr tree(ElementNode::New());
-		ARBString errMsg;
+		tstring errMsg;
 		bool bOk = false;
 		if (!data.IsEmpty())
 		{

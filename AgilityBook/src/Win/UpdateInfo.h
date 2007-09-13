@@ -93,8 +93,8 @@ public:
 private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
-	ARBString m_FileName;
-	ARBString m_InfoMsg;
+	tstring m_FileName;
+	tstring m_InfoMsg;
 	CString m_UpdateDownload;
 	CString m_usernameHint;
 };

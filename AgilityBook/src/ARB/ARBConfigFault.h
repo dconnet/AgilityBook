@@ -68,7 +68,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual ARBString GetGenericName() const
+	virtual tstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -78,7 +78,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<ARBString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -107,17 +107,17 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBString const& GetName() const
+	tstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(ARBString const& inName)
+	void SetName(tstring const& inName)
 	{
 		m_Name = inName;
 	}
 
 private:
-	ARBString m_Name;
+	tstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindFault(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigFaultPtr* outFault = NULL) const;
 
 	/**
@@ -158,7 +158,7 @@ public:
 	 * @return Whether the fault was added.
 	 */
 	bool AddFault(
-			ARBString const& inName,
+			tstring const& inName,
 			ARBConfigFaultPtr* outFault = NULL);
 
 	/**
@@ -166,5 +166,5 @@ public:
 	 * @param inName Name of fault to delete.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteFault(ARBString const& inName);
+	bool DeleteFault(tstring const& inName);
 };

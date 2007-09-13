@@ -305,7 +305,7 @@ void CDlgRunReference::SetColumnHeaders()
 	{
 		CString str;
 		str.LoadString(scColumns[i].idText);
-		ARBostringstream tmp;
+		otstringstream tmp;
 		tmp << (LPCTSTR)str << _T(" (" << m_sortRefRuns.FindColumnOrder(i) + 1) << ')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
@@ -368,7 +368,7 @@ void CDlgRunReference::ListRuns()
 }
 
 
-void CDlgRunReference::GetAllHeights(std::set<ARBString>& outNames)
+void CDlgRunReference::GetAllHeights(std::set<tstring>& outNames)
 {
 	m_pDoc->GetAllHeights(outNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
@@ -376,7 +376,7 @@ void CDlgRunReference::GetAllHeights(std::set<ARBString>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			ARBString const& ht = pRefRun->GetHeight();
+			tstring const& ht = pRefRun->GetHeight();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -384,7 +384,7 @@ void CDlgRunReference::GetAllHeights(std::set<ARBString>& outNames)
 }
 
 
-void CDlgRunReference::GetAllCallNames(std::set<ARBString>& outNames)
+void CDlgRunReference::GetAllCallNames(std::set<tstring>& outNames)
 {
 	m_pDoc->GetAllCallNames(outNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
@@ -392,7 +392,7 @@ void CDlgRunReference::GetAllCallNames(std::set<ARBString>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			ARBString const& ht = pRefRun->GetName();
+			tstring const& ht = pRefRun->GetName();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -400,7 +400,7 @@ void CDlgRunReference::GetAllCallNames(std::set<ARBString>& outNames)
 }
 
 
-void CDlgRunReference::GetAllBreeds(std::set<ARBString>& outNames)
+void CDlgRunReference::GetAllBreeds(std::set<tstring>& outNames)
 {
 	m_pDoc->GetAllBreeds(outNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
@@ -408,7 +408,7 @@ void CDlgRunReference::GetAllBreeds(std::set<ARBString>& outNames)
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
 		if (pRefRun)
 		{
-			ARBString const& ht = pRefRun->GetBreed();
+			tstring const& ht = pRefRun->GetBreed();
 			if (0 < ht.length())
 				outNames.insert(ht);
 		}
@@ -473,7 +473,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 			break;
 		case 1: // Place
 			{
-				ARBostringstream tmp;
+				otstringstream tmp;
 				tmp << pRef->GetPlace();
 				str = tmp.str().c_str();
 			}
@@ -594,7 +594,7 @@ void CDlgRunReference::OnRefRunNew()
 			NULL,
 			&pScoring))
 		{
-			ARBString nScore;
+			tstring nScore;
 			switch (pScoring->GetScoringStyle())
 			{
 			default:
@@ -611,7 +611,7 @@ void CDlgRunReference::OnRefRunNew()
 		}
 	}
 	ref->SetQ(ARB_Q::eQ_Q);
-	std::set<ARBString> heights, names, breeds;
+	std::set<tstring> heights, names, breeds;
 	GetAllHeights(heights);
 	GetAllCallNames(names);
 	GetAllBreeds(breeds);
@@ -641,7 +641,7 @@ void CDlgRunReference::OnRefRunEdit()
 	int nItem = m_ctrlRefRuns.GetSelection();
 	if (0 <= nItem)
 	{
-		std::set<ARBString> heights, names, breeds;
+		std::set<tstring> heights, names, breeds;
 		GetAllHeights(heights);
 		GetAllCallNames(names);
 		GetAllBreeds(breeds);

@@ -41,4 +41,4 @@ class CInternetSession;
 
 extern bool CheckLink(
 		CInternetSession& inSession,
-		ARBString const& inLink);
+		tstring const& inLink);
