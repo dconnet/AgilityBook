@@ -421,23 +421,25 @@ BOOL CWizardImport::OnInitDialog()
 	m_ctrlSpin.SetRange(100, 1);
 	static struct
 	{
-		TCHAR const* pFormat;
+		UINT uFormat;
 		ARBDate::DateFormat format;
 	} const sc_Dates[] =
 	{
-		{_T("MM-DD-YYYY"), ARBDate::eDashMMDDYYYY},
-		{_T("MM/DD/YYYY"), ARBDate::eSlashMMDDYYYY},
-		{_T("YYYY-MM-DD"), ARBDate::eDashYYYYMMDD},
-		{_T("YYYY/MM/DD"), ARBDate::eSlashYYYYMMDD},
-		{_T("DD-MM-YYYY"), ARBDate::eDashDDMMYYYY},
-		{_T("DD/MM/YYYY"), ARBDate::eSlashDDMMYYYY},
+		{IDS_DATEFORMAT_DASH_MMDDYYYY, ARBDate::eDashMMDDYYYY},
+		{IDS_DATEFORMAT_SLASH_MMDDYYYY, ARBDate::eSlashMMDDYYYY},
+		{IDS_DATEFORMAT_DASH_YYYYMMDD, ARBDate::eDashYYYYMMDD},
+		{IDS_DATEFORMAT_SLASH_YYYYMMDD, ARBDate::eSlashYYYYMMDD},
+		{IDS_DATEFORMAT_DASH_DDMMYYYY, ARBDate::eDashDDMMYYYY},
+		{IDS_DATEFORMAT_SLASH_DDMMYYYY, ARBDate::eSlashDDMMYYYY},
 	};
 	ARBDate::DateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
 	static int const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
 	for (int i = 0; i < sc_nDates; ++i)
 	{
-		int index = m_ctrlDateFormat.AddString(sc_Dates[i].pFormat);
+		CString tmp;
+		tmp.LoadString(sc_Dates[i].uFormat);
+		int index = m_ctrlDateFormat.AddString(tmp);
 		m_ctrlDateFormat.SetItemData(index, static_cast<DWORD>(sc_Dates[i].format));
 		if (sc_Dates[i].format == format)
 			m_ctrlDateFormat.SetCurSel(index);

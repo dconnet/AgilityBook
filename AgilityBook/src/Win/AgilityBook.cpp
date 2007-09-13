@@ -391,7 +391,7 @@ BOOL CAgilityBookApp::InitInstance()
 {
 	if (!AfxOleInit())
 	{
-		AfxMessageBox(_T("ERROR: Cannot initialize COM"), MB_ICONSTOP);
+		AfxMessageBox(IDS_ERR_COM_FAILED, MB_ICONSTOP);
 		return FALSE;
 	}
 
@@ -403,7 +403,7 @@ BOOL CAgilityBookApp::InitInstance()
 	icc.dwICC = ICC_DATE_CLASSES | ICC_WIN95_CLASSES;
 	if (!InitCommonControlsEx(&icc))
 	{
-		AfxMessageBox(_T("ERROR: Unable to initialize the common controls."), MB_ICONSTOP);
+		AfxMessageBox(IDS_ERR_COMCTRL, MB_ICONSTOP);
 		return FALSE;
 	}
 
@@ -417,7 +417,7 @@ BOOL CAgilityBookApp::InitInstance()
 	// VC6
 	if (!AfxInitRichEdit())
 	{
-		AfxMessageBox(_T("ERROR: Unable to initialize RICHED32.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."), MB_ICONSTOP);
+		AfxMessageBox(IDS_ERR_RICHED32, MB_ICONSTOP);
 		return FALSE;
 	}
 	if (NULL == LoadLibrary(_T("RICHED20.DLL")))
@@ -425,7 +425,7 @@ BOOL CAgilityBookApp::InitInstance()
 	if (!AfxInitRichEdit2())
 #endif
 	{
-		AfxMessageBox(_T("ERROR: Unable to initialize RICHED20.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."), MB_ICONSTOP);
+		AfxMessageBox(IDS_ERR_RICHED32, MB_ICONSTOP);
 		return FALSE;
 	}
 

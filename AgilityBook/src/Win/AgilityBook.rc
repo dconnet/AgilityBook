@@ -2379,6 +2379,18 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_DATEFORMAT_DASH_MDY       "M-D-Y"
+    IDS_DATEFORMAT_SLASH_MDY      "M/D/Y"
+    IDS_DATEFORMAT_DASH_YMD       "Y-M-D"
+    IDS_DATEFORMAT_SLASH_YMD      "Y/M/D"
+    IDS_DATEFORMAT_DASH_DMY       "D-M-Y"
+    IDS_DATEFORMAT_SLASH_DMY      "D/M/Y"
+    IDS_DATEFORMAT_DASH_MMDDYYYY  "MM-DD-YYYY"
+    IDS_DATEFORMAT_SLASH_MMDDYYYY "MM/DD/YYYY"
+    IDS_DATEFORMAT_DASH_YYYYMMDD  "YYYY-MM-DD"
+    IDS_DATEFORMAT_SLASH_YYYYMMDD "YYYY/MM/DD"
+    IDS_DATEFORMAT_DASH_DDMMYYYY  "DD-MM-YYYY"
+    IDS_DATEFORMAT_SLASH_DDMMYYYY "DD/MM/YYYY"
     IDS_SYSERR_MEMORY       "The operating system is out of memory or resources."
     IDS_SYSERR_SE_ERR_PNF   "The specified path was not found."
     IDS_SYSERR_SE_ERR_FNF   "The specified file was not found."
@@ -2404,6 +2416,17 @@ BEGIN
     IDS_SYSERR_SE_ERR_OOM   "There was not enough memory to complete the operation."
     IDS_SYSERR_SE_ERR_SHARE "A sharing violation occurred. "
     IDS_SYSERR_UNKNOWN      "Unknown Error (%1!ld!) occurred."
+    IDS_ERR_COM_FAILED      "ERROR: Cannot initialize COM"
+    IDS_ERR_COMCTRL         "ERROR: Unable to initialize the common controls."
+    IDS_ERR_RICHED32        "ERROR: Unable to initialize RICHED32.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."
+    IDS_HTTP_ACCESS_DENIED  "Access denied"
+    IDS_HTTP_INVALID_HEADER_QUERY "Invalid Header query"
+    IDS_HTTP_URL_REDIRECTION "URL Redirection"
+    IDS_HTTP_INVALID_URL    "Invalid URL"
+    IDS_HTTP_INVALID_URL_ERR "Invalid URL [err %1!ld!]"
+    IDS_HTTP_INVALID_URL2   "Invalid URL (2nd redirection)"
+    IDS_ERR_PARSING_DATA    "Error parsing %1 data"
+    IDS_USE_PLUGIN          "Do you want to continue using this plugin?"
 END
 
 STRINGTABLE 

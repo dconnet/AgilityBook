@@ -54,6 +54,7 @@
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
+#include "ARBLocalization.h"
 #include "DlgAssignColumns.h"
 #include "DlgProgress.h"
 #include "Wizard.h"
@@ -1124,23 +1125,25 @@ BOOL CWizardExport::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	static struct
 	{
-		TCHAR const* pFormat;
+		UINT uFormat;
 		ARBDate::DateFormat format;
 	} const sc_Dates[] =
 	{
-		{_T("M-D-Y"), ARBDate::eDashMDY},
-		{_T("M/D/Y"), ARBDate::eSlashMDY},
-		{_T("Y-M-D"), ARBDate::eDashYMD},
-		{_T("Y/M/D"), ARBDate::eSlashYMD},
-		{_T("D-M-Y"), ARBDate::eDashDMY},
-		{_T("D/M/Y"), ARBDate::eSlashDMY},
+		{IDS_DATEFORMAT_DASH_MDY, ARBDate::eDashMDY},
+		{IDS_DATEFORMAT_SLASH_MDY, ARBDate::eSlashMDY},
+		{IDS_DATEFORMAT_DASH_YMD, ARBDate::eDashYMD},
+		{IDS_DATEFORMAT_SLASH_YMD, ARBDate::eSlashYMD},
+		{IDS_DATEFORMAT_DASH_DMY, ARBDate::eDashDMY},
+		{IDS_DATEFORMAT_SLASH_DMY, ARBDate::eSlashDMY},
 	};
 	ARBDate::DateFormat format;
 	CAgilityBookOptions::GetImportExportDateFormat(true, format);
 	static int const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
 	for (int i = 0; i < sc_nDates; ++i)
 	{
-		int index = m_ctrlDateFormat.AddString(sc_Dates[i].pFormat);
+		CString tmp;
+		tmp.LoadString(sc_Dates[i].uFormat);
+		int index = m_ctrlDateFormat.AddString(tmp);
 		m_ctrlDateFormat.SetItemData(index, static_cast<DWORD>(sc_Dates[i].format));
 		if (sc_Dates[i].format == format)
 			m_ctrlDateFormat.SetCurSel(index);

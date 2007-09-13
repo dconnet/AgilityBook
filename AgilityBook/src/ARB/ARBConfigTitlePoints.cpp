@@ -45,6 +45,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigLifetimePoints.h"
+#include "ARBLocalization.h"
 #include "Element.h"
 
 #ifdef _DEBUG

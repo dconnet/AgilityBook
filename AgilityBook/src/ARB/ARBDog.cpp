@@ -54,6 +54,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
+#include "ARBLocalization.h"
 #include "Element.h"
 
 #ifdef _DEBUG

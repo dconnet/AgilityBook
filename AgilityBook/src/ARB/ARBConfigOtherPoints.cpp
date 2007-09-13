@@ -41,6 +41,7 @@
 #include "ARBConfigOtherPoints.h"
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBLocalization.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -139,13 +140,13 @@ bool ARBConfigOtherPoints::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
 		return false;
 	}
-	if (attrib == _T("All"))
+	if (attrib == OTHERPTS_COUNT_ALL)
 		m_Tally = eTallyAll;
-	else if (attrib == _T("AllByEvent"))
+	else if (attrib == OTHERPTS_COUNT_ALLBYEVENT)
 		m_Tally = eTallyAllByEvent;
-	else if (attrib == _T("Level"))
+	else if (attrib == OTHERPTS_COUNT_LEVEL)
 		m_Tally = eTallyLevel;
-	else if (attrib == _T("LevelByEvent"))
+	else if (attrib == OTHERPTS_COUNT_LEVELBYEVENT)
 		m_Tally = eTallyLevelByEvent;
 	else
 	{
@@ -173,16 +174,16 @@ bool ARBConfigOtherPoints::Save(ElementNodePtr ioTree) const
 	{
 	default:
 	case eTallyAll:
-		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("All"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_ALL);
 		break;
 	case eTallyAllByEvent:
-		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("AllByEvent"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_ALLBYEVENT);
 		break;
 	case eTallyLevel:
-		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("Level"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_LEVEL);
 		break;
 	case eTallyLevelByEvent:
-		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("LevelByEvent"));
+		other->AddAttrib(ATTRIB_OTHERPTS_COUNT, OTHERPTS_COUNT_LEVELBYEVENT);
 		break;
 	}
 	if (0 < m_Desc.length())

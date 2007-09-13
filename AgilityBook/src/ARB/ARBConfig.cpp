@@ -50,6 +50,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBDogTitle.h"
+#include "ARBLocalization.h"
 #include "Element.h"
 
 #ifdef _DEBUG

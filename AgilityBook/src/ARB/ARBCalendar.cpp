@@ -52,6 +52,7 @@
 #include <algorithm>
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBLocalization.h"
 #include "ARBTypes.h"
 #include "Element.h"
 

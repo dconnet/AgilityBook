@@ -127,7 +127,7 @@ DWORD CReadHttp::Connect(CString& userName, CString& outErrMsg, CWnd* pParent)
 		}
 		else
 		{
-			outErrMsg = _T("Access denied");
+			outErrMsg.LoadString(IDS_HTTP_ACCESS_DENIED);
 		}
 	}
 	return dwRet;
@@ -162,7 +162,9 @@ bool CReadHttp::ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParen
 				int nPlace = strNewLocation.Find(_T("Location: "));
 				if (-1 == nPlace)
 				{
-					outErrMsg += _T("\nInvalid Header query: ") + strNewLocation;
+					CString tmp;
+					tmp.LoadString(IDS_HTTP_INVALID_HEADER_QUERY);
+					outErrMsg += _T("\n") + tmp + _T(": ") + strNewLocation;
 					strNewLocation.Empty();
 				}
 				else
@@ -187,28 +189,33 @@ bool CReadHttp::ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParen
 					|| dwRet == HTTP_STATUS_REDIRECT
 					|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
 					{
-						outErrMsg += _T("\nURL Redirection: ") + m_URL;
-						outErrMsg += _T("\nInvalid URL (2nd redirection): ") + strNewLocation;
+						CString tmp;
+						tmp.LoadString(IDS_HTTP_URL_REDIRECTION);
+						outErrMsg += _T("\n") + tmp + _T(": ") + m_URL;
+						tmp.LoadString(IDS_HTTP_INVALID_URL2);
+						outErrMsg += _T("\n") + tmp + _T(": ") + strNewLocation;
 						CloseFiles();
 					}
 					else if (dwRet != HTTP_STATUS_OK)
 					{
 						CString msg;
-						msg.Format(_T("\nInvalid URL [err %ld]: "), dwRet);
-						outErrMsg += msg + strNewLocation;
+						msg.FormatMessage(IDS_HTTP_INVALID_URL_ERR, dwRet);
+						outErrMsg += _T("\n") + msg + _T(": ") + strNewLocation;
 						CloseFiles();
 					}
 				}
 				else
 				{
-					outErrMsg += _T("\nInvalid URL: ") + strNewLocation;
+					CString tmp;
+					tmp.LoadString(IDS_HTTP_INVALID_URL);
+					outErrMsg += _T("\n") + tmp + _T(": ") + strNewLocation;
 				}
 			}
 			else if (dwRet != HTTP_STATUS_OK)
 			{
 				CString msg;
-				msg.Format(_T("\nInvalid URL [err %ld]: "), dwRet);
-				outErrMsg += msg + m_URL;
+				msg.FormatMessage(IDS_HTTP_INVALID_URL_ERR, dwRet);
+				outErrMsg += _T("\n") + msg + _T(": ") + m_URL;
 				CloseFiles();
 			}
 			if (m_pFile)
@@ -226,7 +233,9 @@ bool CReadHttp::ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParen
 		}
 		else
 		{
-			outErrMsg += _T("\nInvalid URL: ") + m_URL;
+			CString tmp;
+			tmp.LoadString(IDS_HTTP_INVALID_URL);
+			outErrMsg += _T("\n") + tmp + _T(": ") + m_URL;
 		}
 	}
 	catch (CInternetException* ex)

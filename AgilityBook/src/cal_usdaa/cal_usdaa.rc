@@ -113,6 +113,19 @@ BEGIN
     END
 END
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+
+STRINGTABLE 
+BEGIN
+	IDS_DESCRIPTION         "Get all the events from USDAA. This will parse the HTML returned from http://www.usdaa.com/events.cfm."
+    IDS_FINDING_ENTRIES     "Finding entries..."
+    IDS_GETTING_DETAIL      "Getting detail from %1"
+END
+
 #endif
 #ifndef APSTUDIO_INVOKED
 

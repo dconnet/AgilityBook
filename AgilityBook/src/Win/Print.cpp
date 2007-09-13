@@ -888,7 +888,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 	ASSERT(printInfo.m_pPD->m_pd.hDC != NULL);
 
 	CString strTitle;
-	strTitle = _T("Runs");
+	strTitle.LoadString(IDS_RUNS);
 
 	DOCINFO docInfo;
 	memset(&docInfo, 0, sizeof(DOCINFO));

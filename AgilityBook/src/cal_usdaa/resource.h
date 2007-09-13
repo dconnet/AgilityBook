@@ -5,6 +5,9 @@
 #define IDD_AUTHENTICATE                200
 #define IDC_AUTH_USERNAME               1000
 #define IDC_AUTH_PASSWORD               1001
+#define IDS_DESCRIPTION                 5000
+#define IDS_FINDING_ENTRIES             5010
+#define IDS_GETTING_DETAIL              5011
 
 // Next default values for new objects
 // 

@@ -217,36 +217,42 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 	switch (dataToLoad)
 	{
 	case eVenues:
-		for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin(); iterVenue != m_Config.GetVenues().end(); ++iterVenue)
-		{
-			m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-				0, 0, 0, 0,
-				reinterpret_cast<LPARAM>(
-					static_cast<CDlgConfigureData*>(
-						new CDlgConfigureDataVenue(*iterVenue))),
-				hParent, TVI_LAST);
+		{ // Scoped because of VC6's scoping of for-variables.
+			for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin(); iterVenue != m_Config.GetVenues().end(); ++iterVenue)
+			{
+				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+					0, 0, 0, 0,
+					reinterpret_cast<LPARAM>(
+						static_cast<CDlgConfigureData*>(
+							new CDlgConfigureDataVenue(*iterVenue))),
+					hParent, TVI_LAST);
+			}
 		}
 		break;
 	case eFaults:
-		for (ARBConfigFaultList::iterator iterFault = m_Config.GetFaults().begin(); iterFault != m_Config.GetFaults().end(); ++iterFault)
 		{
-			m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-				0, 0, 0, 0,
-				reinterpret_cast<LPARAM>(
-					static_cast<CDlgConfigureData*>(
-						new CDlgConfigureDataFault(*iterFault))),
-				hParent, TVI_LAST);
+			for (ARBConfigFaultList::iterator iterFault = m_Config.GetFaults().begin(); iterFault != m_Config.GetFaults().end(); ++iterFault)
+			{
+				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+					0, 0, 0, 0,
+					reinterpret_cast<LPARAM>(
+						static_cast<CDlgConfigureData*>(
+							new CDlgConfigureDataFault(*iterFault))),
+					hParent, TVI_LAST);
+			}
 		}
 		break;
 	case eOtherPoints:
-		for (ARBConfigOtherPointsList::iterator iterOther = m_Config.GetOtherPoints().begin(); iterOther != m_Config.GetOtherPoints().end(); ++iterOther)
 		{
-			m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-				0, 0, 0, 0,
-				reinterpret_cast<LPARAM>(
-					static_cast<CDlgConfigureData*>(
-						new CDlgConfigureDataOtherPoints(*iterOther))),
-				hParent, TVI_LAST);
+			for (ARBConfigOtherPointsList::iterator iterOther = m_Config.GetOtherPoints().begin(); iterOther != m_Config.GetOtherPoints().end(); ++iterOther)
+			{
+				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
+					0, 0, 0, 0,
+					reinterpret_cast<LPARAM>(
+						static_cast<CDlgConfigureData*>(
+							new CDlgConfigureDataOtherPoints(*iterOther))),
+					hParent, TVI_LAST);
+			}
 		}
 		break;
 	}

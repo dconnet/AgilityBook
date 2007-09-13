@@ -218,6 +218,6 @@ void CDlgARBHelp::SendIt()
 	}
 	else
 	{
-		AfxMessageBox(_T("Unable to open clipboard"), MB_ICONSTOP);
+		AfxMessageBox(IDS_CLIPBOARD_FAILED, MB_ICONSTOP);
 	}
 }

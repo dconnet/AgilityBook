@@ -20,6 +20,9 @@
 #define IDS_FILES_FOUND                 5006
 #define IDS_MAIL_ADDRESS                5007
 #define IDS_DECODE                      5008
+#define IDS_CLIPBOARD_FAILED            5009
+#define IDS_ERR_BUFFER_TOO_SMALL        5010
+#define IDS_CANNOT_READ                 5011
 
 // Next default values for new objects
 // 
