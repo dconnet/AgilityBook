@@ -35,6 +35,7 @@
  */
 
 #include "stdafx.h"
+#include "resource.h"
 
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
@@ -144,7 +145,9 @@ char* CCalendarSite::GetName() const
 
 char* CCalendarSite::GetDescription() const
 {
-	static const std::string desc("Get all the events from USDAA. This will parse the HTML returned from http://www.usdaa.com/events.cfm.");
+	CStringA tmp;
+	tmp.LoadString(IDS_DESCRIPTION);
+	std::string desc((LPCSTR)tmp);
 	return Allocate(desc);
 }
 
@@ -253,7 +256,11 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 		return NULL;
 
 	if (progress)
-		progress->SetMessage("Finding entries...");
+	{
+		CStringA msg;
+		msg.LoadString(IDS_FINDING_ENTRIES);
+		progress->SetMessage(msg);
+	}
 
 	bool bOk = false;
 	ElementNodePtr calTree(ElementNode::New(TREE_BOOK));
@@ -353,8 +360,9 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 		address += detail.c_str();
 		if (progress)
 		{
-			CStringA msg("Getting detail from ");
-			msg += address;
+			CString tmp;
+			tmp.FormatMessage(IDS_GETTING_DETAIL, (LPCTSTR)address);
+			CStringA msg(tmp);
 			progress->SetMessage((LPCSTR)msg);
 		}
 		ElementNodePtr treeDetail = ReadData(address);

@@ -469,9 +469,8 @@ bool CCalendarSitesImpl::UpdateSites(ARBConfig const& inConfig)
 bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {
 	int nEntries = 0;
-	for (std::map<CString, CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
-		i != m_DirectAccess.end();
-		++i)
+	std::map<CString, CalSiteDataPtr>::iterator i;
+	for (i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
 	{
 		if ((*i).second->isValid())
 			++nEntries;
@@ -484,9 +483,7 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 
 	CWaitCursor wait;
 	std::map<CString, std::list<ARBCalendarPtr> > newEntries;
-	for (std::map<CString, CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
-		i != m_DirectAccess.end();
-		++i)
+	for (i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
 	{
 		progress.StepMe();
 		if (!(*i).second->isValid())
@@ -524,16 +521,17 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 		}
 		else
 		{
-			CStringA name = (*i).second->GetName();
-			CString err(_T("Error parsing "));
-			err += name;
-			err += _T(" data");
+			CString str((*i).second->GetName());
+			CString err;
+			err.FormatMessage(IDS_ERR_PARSING_DATA, (LPCTSTR)str);
 			if (!errMsg.empty())
 			{
 				err += ":\n\t";
 				err += errMsg.c_str();
 			}
-			err += "\n\nDo you want to continue using this plugin?";
+			err += "\n\n";
+			str.LoadString(IDS_USE_PLUGIN);
+			err += str;
 			if (IDNO == AfxMessageBox(err, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
 				(*i).second->Unload(true);
 			progress.SetForegroundWindow();

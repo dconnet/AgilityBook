@@ -40,6 +40,7 @@
 
 #include <algorithm>
 #include "ARBAgilityRecordBook.h"
+#include "ARBLocalization.h"
 #include "Element.h"
 
 #ifdef _DEBUG

@@ -57,6 +57,7 @@
 #include "ARBConfigScoring.h"
 
 #include "ARBAgilityRecordBook.h"
+#include "ARBLocalization.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -293,21 +294,21 @@ bool ARBConfigScoring::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_SCORING, ATTRIB_SCORING_TYPE));
 		return false;
 	}
-	if (attrib == _T("FaultsThenTime"))
+	if (attrib == SCORING_TYPE_FT)
 		m_Style = eFaultsThenTime;
-	else if (attrib == _T("Faults100ThenTime"))
+	else if (attrib == SCORING_TYPE_FT100)
 	{
 		m_Style = eFaults100ThenTime;
 		if (inVersion <= ARBVersion(3,0))
 			m_bDropFractions = true;
 	}
-	else if (attrib == _T("Faults200ThenTime")) // Version5.
+	else if (attrib == SCORING_TYPE_FT200) // Version5.
 		m_Style = eFaults200ThenTime;
-	else if (attrib == _T("OCScoreThenTime"))
+	else if (attrib == SCORING_TYPE_OCT)
 		m_Style = eOCScoreThenTime;
-	else if (attrib == _T("ScoreThenTime"))
+	else if (attrib == SCORING_TYPE_ST)
 		m_Style = eScoreThenTime;
-	else if (attrib == _T("TimePlusFaults"))
+	else if (attrib == SCORING_TYPE_TF)
 		m_Style = eTimePlusFaults;
 	else
 	{
@@ -483,22 +484,22 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 #endif
 		return false;
 	case eFaultsThenTime:
-		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("FaultsThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_FT);
 		break;
 	case eFaults100ThenTime:
-		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults100ThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_FT100);
 		break;
 	case eFaults200ThenTime:
-		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("Faults200ThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_FT200);
 		break;
 	case eOCScoreThenTime:
-		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("OCScoreThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_OCT);
 		break;
 	case eScoreThenTime:
-		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("ScoreThenTime"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_ST);
 		break;
 	case eTimePlusFaults:
-		scoring->AddAttrib(ATTRIB_SCORING_TYPE, _T("TimePlusFaults"));
+		scoring->AddAttrib(ATTRIB_SCORING_TYPE, SCORING_TYPE_TF);
 		break;
 	}
 	if (m_bDropFractions)

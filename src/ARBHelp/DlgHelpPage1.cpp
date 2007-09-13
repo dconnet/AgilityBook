@@ -514,7 +514,11 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 						{
 							PRINT_INDENT(1, data)
 							if (ERROR_MORE_DATA == dwRet)
-								data << _T("Buffer too small to process path");
+							{
+								CString tmp;
+								tmp.LoadString(IDS_ERR_BUFFER_TOO_SMALL);
+								data << (LPCTSTR)tmp;
+							}
 							else
 							{
 								CString path(g_szBuff2);
@@ -548,7 +552,11 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 				RegCloseKey(hSubKey);
 			}
 			else
-				data << _T("Cannot read ") << sc_Reg[index].pRegPath << _T("\r\n");
+			{
+				CString msg;
+				msg.FormatMessage(IDS_CANNOT_READ, sc_Reg[index].pRegPath);
+				data << (LPCTSTR)msg << _T("\r\n");
+			}
 			regInfo += data.str().c_str();
 		}
 		m_Parent->AddRegistryInfo(regInfo);

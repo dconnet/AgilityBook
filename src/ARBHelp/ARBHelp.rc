@@ -207,6 +207,9 @@ END
 STRINGTABLE 
 BEGIN
     IDS_DECODE              "In order to decode the gathered information, first select all the text from '%1' to '%2' and copy it to the clipboard. Make sure to include those strings! Then press 'Next'."
+    IDS_CLIPBOARD_FAILED    "Unable to open clipboard"
+    IDS_ERR_BUFFER_TOO_SMALL "Buffer too small to process path"
+    IDS_CANNOT_READ         "Cannot read %1"
 END
 
 #endif    // English (U.S.) resources
