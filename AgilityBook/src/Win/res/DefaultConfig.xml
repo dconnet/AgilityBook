@@ -144,7 +144,6 @@ UNKNOWN-24 DRC Configuration version 20.
 		<Action NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
 		<Action OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
 		<Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
-			<Desc>Post-ATChC titles are listed under the Regular division.</Desc>
 			<Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
 			<Titles LongName="Starters Games Dog of Canada" Name="SGDC">1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
 			<Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
