@@ -386,8 +386,8 @@ bool ARBConfigScoring::Load(
 		}
 		if (m_bSpeedPts && inVersion < ARBVersion(12, 3))
 		{
-			m_PlaceInfo.AddPlaceInfo(1, 2.0);
-			m_PlaceInfo.AddPlaceInfo(2, 1.5);
+			m_PlaceInfo.AddPlaceInfo(1, 2.0, true);
+			m_PlaceInfo.AddPlaceInfo(2, 1.5, true);
 		}
 		inTree->GetAttrib(ATTRIB_SCORING_OPENINGPTS, m_OpeningPts);
 		inTree->GetAttrib(ATTRIB_SCORING_CLOSINGPTS, m_ClosingPts);

@@ -198,6 +198,7 @@
 #define ATTRIB_SCORING_BONUSPTS				_T("bonusPts")
 #define ATTRIB_PLACE_INFO_PLACE				_T("Place")
 #define ATTRIB_PLACE_INFO_VALUE				_T("Value")
+#define ATTRIB_PLACE_INFO_MUSTQ				_T("MustQ")
 #define ATTRIB_TITLE_POINTS_POINTS			_T("Points")
 #define ATTRIB_TITLE_POINTS_FAULTS			_T("Faults")
 #define ATTRIB_LIFETIME_POINTS_POINTS		_T("Points")

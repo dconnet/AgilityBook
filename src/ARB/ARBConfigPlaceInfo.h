@@ -42,18 +42,19 @@
  * This class is used for 2 purposes:
  * - Speed point multiplier (AKC MACH)
  * - Points (Sweepstakes champion points)
+ * - Placements (FCI, Level 2 placements)
  */
 class ARBConfigPlaceInfo : public ARBBase
 {
 protected:
 	ARBConfigPlaceInfo();
-	ARBConfigPlaceInfo(short inPlace, double inValue);
+	ARBConfigPlaceInfo(short inPlace, double inValue, bool bMustQ);
 	ARBConfigPlaceInfo(ARBConfigPlaceInfo const& rhs);
 
 public:
 	~ARBConfigPlaceInfo();
 	static ARBConfigPlaceInfoPtr New();
-	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue);
+	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue, bool bMustQ);
 	ARBConfigPlaceInfoPtr Clone() const;
 
 	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo const& rhs);
@@ -108,6 +109,7 @@ public:
 	{
 		return m_Place;
 	}
+	// There is no SetPlace since this needs to be a unique key in the list.
 	double GetValue() const
 	{
 		return m_Value;
@@ -116,11 +118,19 @@ public:
 	{
 		m_Value = inValue;
 	}
-	// There is no SetPlace since this needs to be a unique key in the list.
+	bool MustQ() const
+	{
+		return m_MustQ;
+	}
+	void SetMustQ(bool inValue)
+	{
+		m_MustQ = inValue;
+	}
 
 private:
 	short m_Place;
 	double m_Value;
+	bool m_MustQ;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,12 +181,14 @@ public:
 	 * Add an object.
 	 * @param inPlace Placement.
 	 * @param inValue Value.
+	 * @param inMustQ Whether the run must Q in order to earn placement points.
 	 * @param outPlace Pointer to new object, NULL if it already exists.
 	 * @return Whether the object was added.
 	 */
 	bool AddPlaceInfo(
 			short inPlace,
 			double inValue,
+			bool inMustQ,
 			ARBConfigPlaceInfoPtr* outPlace = NULL);
 
 	/**

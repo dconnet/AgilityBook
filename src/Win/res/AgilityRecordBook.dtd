@@ -381,6 +381,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 	<!ATTLIST PlaceInfo
 		Place CDATA #REQUIRED
 		Value CDATA #REQUIRED
+		MustQ (y|n) 'y'
 		>
 <!ELEMENT TitlePoints EMPTY >
 	<!ATTLIST TitlePoints

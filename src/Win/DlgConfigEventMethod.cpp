@@ -721,7 +721,7 @@ void CDlgConfigEventMethod::OnOK()
 		for (int index = 0; index < count; ++index)
 		{
 			CDlgConfigureDataPlacement* pData = dynamic_cast<CDlgConfigureDataPlacement*>(m_ctrlPlacement.GetData(index));
-			m_PlaceInfo.AddPlaceInfo(pData->Place(), pData->Value());
+			m_PlaceInfo.AddPlaceInfo(pData->Place(), pData->Value(), true);
 		}
 		m_pScoring->GetPlaceInfo() = m_PlaceInfo;
 	}

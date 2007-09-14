@@ -360,10 +360,10 @@ private:
 	bool m_bDoubleQ;
 	bool m_bSpeedPts;
 	bool m_bBonusPts;
-	ARBConfigPlaceInfoList m_PlaceInfo;
+	ARBConfigPlaceInfoList m_PlaceInfo;		///< Used for speed points
 	ARBConfigTitlePointsList m_TitlePoints;
 	ARBConfigLifetimePointsList m_LifePoints;
-	ARBConfigPlaceInfoList m_Placements;
+	ARBConfigPlaceInfoList m_Placements;	///< Used for place points
 };
 
 /////////////////////////////////////////////////////////////////////////////
