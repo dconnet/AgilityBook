@@ -56,24 +56,30 @@ ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New()
 }
 
 
-ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(short inPlace, double inValue)
+ARBConfigPlaceInfoPtr ARBConfigPlaceInfo::New(
+		short inPlace,
+		double inValue,
+		bool bMustQ)
 {
-	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(inPlace, inValue));
+	return ARBConfigPlaceInfoPtr(new ARBConfigPlaceInfo(inPlace, inValue, bMustQ));
 }
 
 
 ARBConfigPlaceInfo::ARBConfigPlaceInfo()
 	: m_Place(0)
 	, m_Value(0.0)
+	, m_MustQ(true)
 {
 }
 
 
 ARBConfigPlaceInfo::ARBConfigPlaceInfo(
 		short inPlace,
-		double inValue)
+		double inValue,
+		bool bMustQ)
 	: m_Place(inPlace)
 	, m_Value(inValue)
+	, m_MustQ(bMustQ)
 {
 }
 
@@ -81,6 +87,7 @@ ARBConfigPlaceInfo::ARBConfigPlaceInfo(
 ARBConfigPlaceInfo::ARBConfigPlaceInfo(ARBConfigPlaceInfo const& rhs)
 	: m_Place(rhs.m_Place)
 	, m_Value(rhs.m_Value)
+	, m_MustQ(rhs.m_MustQ)
 {
 }
 
@@ -102,6 +109,7 @@ ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo const& rhs)
 	{
 		m_Place = rhs.m_Place;
 		m_Value = rhs.m_Value;
+		m_MustQ = rhs.m_MustQ;
 	}
 	return *this;
 }
@@ -110,7 +118,8 @@ ARBConfigPlaceInfo& ARBConfigPlaceInfo::operator=(ARBConfigPlaceInfo const& rhs)
 bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 {
 	return m_Place == rhs.m_Place
-		&& m_Value == rhs.m_Value;
+		&& m_Value == rhs.m_Value
+		&& m_MustQ == rhs.m_MustQ;
 }
 
 
@@ -138,6 +147,11 @@ bool ARBConfigPlaceInfo::Load(
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_VALUE));
 		return false;
 	}
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ))
+	{
+		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_MUSTQ, VALID_VALUES_BOOL));
+		return false;
+	}
 	return true;
 }
 
@@ -150,6 +164,8 @@ bool ARBConfigPlaceInfo::Save(ElementNodePtr ioTree) const
 	ElementNodePtr title = ioTree->AddElementNode(TREE_PLACE_INFO);
 	title->AddAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place);
 	title->AddAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value, 0);
+	if (!m_MustQ)
+		title->AddAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ);
 	return true;
 }
 
@@ -221,13 +237,14 @@ bool ARBConfigPlaceInfoList::FindPlaceInfo(
 bool ARBConfigPlaceInfoList::AddPlaceInfo(
 		short inPlace,
 		double inValue,
+		bool inMustQ,
 		ARBConfigPlaceInfoPtr* outPlace)
 {
 	if (outPlace)
 		outPlace->reset();
 	if (FindPlaceInfo(inPlace))
 		return false;
-	ARBConfigPlaceInfoPtr pPlace(ARBConfigPlaceInfo::New(inPlace, inValue));
+	ARBConfigPlaceInfoPtr pPlace(ARBConfigPlaceInfo::New(inPlace, inValue, inMustQ));
 	push_back(pPlace);
 	sort();
 	if (outPlace)

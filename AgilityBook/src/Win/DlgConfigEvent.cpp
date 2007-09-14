@@ -833,7 +833,7 @@ void CDlgConfigEvent::OnPointsNew()
 						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
 					break;
 				case CDlgConfigTitlePoints::eTitlePlacement:
-					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points()))
+					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
 						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
 					break;
 				}
@@ -923,7 +923,7 @@ void CDlgConfigEvent::OnPointsEdit()
 							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitlePlacement:
-						bOk = pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points());
+						bOk = pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true);
 						if (!bOk)
 							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
 						break;
