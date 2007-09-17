@@ -789,10 +789,10 @@
 				RelativePath="..\..\Win\res\AgilityBook.ico">
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBook.rc">
+				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc">
 			</File>
 			<File
-				RelativePath="..\..\Win\res\AgilityBook.rc2">
+				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc2">
 			</File>
 			<File
 				RelativePath="..\..\Win\res\AgilityBookDoc.ico">
@@ -1178,6 +1178,6 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="\AgilityBook\src\AgilityBook\src\Win\AgilityBook.rc"/>
+			Value="\AgilityBook\src\AgilityBook\src\Win\res\l.enu\AgilityBook.rc"/>
 	</Globals>
 </VisualStudioProject>

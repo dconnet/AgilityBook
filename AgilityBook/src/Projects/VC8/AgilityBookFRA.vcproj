@@ -2,10 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="cal_usdaa"
-	ProjectGUID="{1FB92846-A297-4773-BC46-90733251A689}"
-	RootNamespace="cal_usdaa"
-	Keyword="MFCDLLProj"
+	Name="AgilityBookFRA"
+	ProjectGUID="{89B8DC67-70AB-4E15-ACF1-EB82C1DC9B07}"
+	RootNamespace="AgilityBookFRA"
 	>
 	<Platforms>
 		<Platform
@@ -22,7 +21,6 @@
 			Name="Debug|Win32"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="2"
 			>
 			<Tool
@@ -42,22 +40,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -88,7 +85,6 @@
 			Name="Debug|x64"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="2"
 			>
 			<Tool
@@ -108,22 +104,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -154,7 +149,6 @@
 			Name="Unicode Debug|Win32"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -174,22 +168,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -220,7 +213,6 @@
 			Name="Unicode Debug|x64"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -240,22 +232,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -286,9 +277,7 @@
 			Name="Release|Win32"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="2"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -307,22 +296,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -353,9 +341,7 @@
 			Name="Release|x64"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="2"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -374,22 +360,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -420,9 +405,7 @@
 			Name="Unicode Release|Win32"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -441,22 +424,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -487,9 +469,7 @@
 			Name="Unicode Release|x64"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -508,22 +488,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
+				GenerateManifest="false"
+				ResourceOnlyDLL="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -559,86 +538,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\..\cal_usdaa\cal_usdaa.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\cal_usdaa\cal_usdaa.def"
-				>
-			</File>
-			<File
-				RelativePath="..\..\cal_usdaa\CalendarSite.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\stdafx.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -646,15 +545,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\cal_usdaa\cal_usdaa.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\cal_usdaa\resource.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\stdafx.h"
+				RelativePath="..\..\Win\resource.h"
 				>
 			</File>
 		</Filter>
@@ -664,127 +555,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="..\..\cal_usdaa\cal_usdaa.rc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\cal_usdaa\res\cal_usdaa.rc2"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="ARB Files"
-			>
-			<File
-				RelativePath="..\..\ARB\ARBDate.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBTypes.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBTypes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgAuthenticate.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgAuthenticate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\Element.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\Element.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ReadHttp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ReadHttp.h"
+				RelativePath="..\..\Win\res\l.fra\AgilityBookFRA.rc"
 				>
 			</File>
 		</Filter>

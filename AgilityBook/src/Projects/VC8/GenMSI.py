@@ -71,10 +71,10 @@ def genmsi(productId, version, code, tidy):
 	baseDir = ""
 	if code32 == code:
 		outputFile = "AgilityBook"
-		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "\\Unicode Release\\"
+		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "Win32\\Unicode Release\\"
 	elif code98 == code:
 		outputFile = "AgilityBook-w98"
-		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "\\Release\\"
+		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "Win32\\Release\\"
 	elif code64 == code:
 		outputFile = "AgilityBook-x64"
 		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "x64\\Unicode Release\\"
