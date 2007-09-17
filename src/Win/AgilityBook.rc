@@ -1,10 +1,10 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "..\..\resource.h"
+#include "resource.h"
 
 // Generated Help ID header file
 #define APSTUDIO_HIDDEN_SYMBOLS
-#include "..\..\resource.hm"
+#include "resource.hm"
 #undef APSTUDIO_HIDDEN_SYMBOLS
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -34,7 +34,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 1 TEXTINCLUDE 
 BEGIN
-    "..\\..\\resource.h\0"
+    "resource.h\0"
 END
 
 2 TEXTINCLUDE 
@@ -50,12 +50,12 @@ BEGIN
     "#define _AFX_NO_TRACKER_RESOURCES\r\n"
     "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
     "\r\n"
-    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)\r\n"
-    "LANGUAGE 12, 1\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
     "#pragma code_page(1252)\r\n"
-    "#include ""AgilityBook.rc2""    // non-Microsoft Visual C++ edited resources\r\n"
-    "#include ""l.fra\\afxres.rc""   // Standard components\r\n"
-    "#include ""l.fra\\afxprint.rc"" // Standard components\r\n"
+    "#include ""res\\l.enu\\AgilityBook.rc2"" // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""          // Standard components\r\n"
+    "#include ""afxprint.rc""        // Standard components\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -75,9 +75,9 @@ IDI_AGILITYBOOKDOC      ICON                    "res\\AgilityBook.ico"
 IDI_EMPTY               ICON                    "res\\CalEmpty.ico"
 IDI_QUESTIONMARK        ICON                    "res\\CalTentative.ico"
 IDI_CHECKMARK           ICON                    "res\\CalPlan.ico"
-IDI_CALENDAR_PLAN_TENTATIVE ICON                "res\\CalPlanTentative.ico"
+IDI_CALENDAR_PLAN_TENTATIVE ICON                    "res\\CalPlanTentative.ico"
 IDI_CALENDAR_ENTERED    ICON                    "res\\CalEntered.ico"
-IDI_CALENDAR_ENTERED_TENTATIVE ICON             "res\\CalEnteredTentative.ico"
+IDI_CALENDAR_ENTERED_TENTATIVE ICON                    "res\\CalEnteredTentative.ico"
 IDI_CHECKED             ICON                    "res\\checked.ico"
 IDI_UNCHECKED           ICON                    "res\\unchecked.ico"
 IDI_CRCD                ICON                    "res\\crcd.ico"
@@ -104,7 +104,7 @@ IDI_VENUE_UKC           ICON                    "res\\venue-ukc.ico"
 IDI_VENUE_USDAA         ICON                    "res\\venue-usdaa.ico"
 IDI_ACCOMMODATION_NONE  ICON                    "res\\AccNone.ico"
 IDI_ACCOMMODATION_TODO  ICON                    "res\\AccTodo.ico"
-IDI_ACCOMMODATION_CONFIRMED ICON                "res\\AccConfirm.ico"
+IDI_ACCOMMODATION_CONFIRMED ICON                    "res\\AccConfirm.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -153,7 +153,7 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
-        MENUITEM "&French!\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
         MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
         MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
         MENUITEM "Save &As...\tF12",            ID_FILE_SAVE_AS
@@ -2904,8 +2904,16 @@ END
 
 STRINGTABLE 
 BEGIN
+    ID_AGILITY_DELETE_CALENDAR 
+                            "Delete an upcoming Calendar entry\nDelete Calendar"
+    ID_AGILITY_UPDATE_CALENDAR 
+                            "Update Calendar entries from Online sources\nUpdate Calendar"
+    ID_AGILITY_EXPORT_CALENDAR "Export Calendar entries\nExport"
+    ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
     ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
     ID_AGILITY_EDIT_TRAINING "Edit a Training Log entry\nEdit Training Log"
+    ID_AGILITY_DELETE_TRAINING 
+                            "Delete a Training Log entry\nDelete Training Log"
 END
 
 STRINGTABLE 
@@ -2916,18 +2924,6 @@ BEGIN
     ID_AGILITY_NEW_TRIAL    "Create a new Trial\nNew Trial"
     ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"
     ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
-END
-
-STRINGTABLE 
-BEGIN
-    ID_AGILITY_DELETE_CALENDAR 
-                            "Delete an upcoming Calendar entry\nDelete Calendar"
-    ID_AGILITY_UPDATE_CALENDAR 
-                            "Update Calendar entries from Online sources\nUpdate Calendar"
-    ID_AGILITY_EXPORT_CALENDAR "Export Calendar entries\nExport"
-    ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
-    ID_AGILITY_DELETE_TRAINING 
-                            "Delete a Training Log entry\nDelete Training Log"
 END
 
 STRINGTABLE 
@@ -2972,7 +2968,7 @@ BEGIN
     IDS_BAD_DRAWDATE        "The draw date must be after the opening date and before the closing date."
 END
 
-#endif    // French (France) resources
+#endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -2987,12 +2983,12 @@ END
 #define _AFX_NO_TRACKER_RESOURCES
 #define _AFX_NO_PROPERTY_RESOURCES
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
-LANGUAGE 12, 1
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
 #pragma code_page(1252)
-#include "AgilityBook.rc2"    // non-Microsoft Visual C++ edited resources
-#include "l.fra\afxres.rc"   // Standard components
-#include "l.fra\afxprint.rc" // Standard components
+#include "res\l.enu\AgilityBook.rc2" // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"          // Standard components
+#include "afxprint.rc"        // Standard components
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

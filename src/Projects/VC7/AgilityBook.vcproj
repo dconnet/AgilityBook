@@ -61,7 +61,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="../../Win;$(IntDir)"/>
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -122,7 +122,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="../../Win;$(IntDir)"/>
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -789,7 +789,7 @@
 				RelativePath="..\..\Win\res\AgilityBook.ico">
 			</File>
 			<File
-				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc">
+				RelativePath="..\..\Win\AgilityBook.rc">
 			</File>
 			<File
 				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc2">
@@ -1178,6 +1178,6 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="\AgilityBook\src\AgilityBook\src\Win\res\l.enu\AgilityBook.rc"/>
+			Value="\AgilityBook\src\AgilityBook\src\Win\AgilityBook.rc"/>
 	</Globals>
 </VisualStudioProject>
