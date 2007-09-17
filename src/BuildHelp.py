@@ -11,7 +11,7 @@
 # 2004-05-20 DRC Created
 
 """BuildHelp configuration compiler
-compiler: VC8, VC8x64
+compiler: VC8Win32, VC8x64
 configuration: Release, Debug, Unicode Release, Unicode Debug
 """
 
@@ -38,7 +38,7 @@ def main():
 		return
 
 	bin = ""
-	if sys.argv[2] == "VC8":
+	if sys.argv[2] == "VC8Win32":
 		bin = "..\\bin\\" + sys.argv[2]
 	# 64bit Parse header won't work on a 32bit os!
 	# TODO: autodetect os to allow compiling on 64bit os
