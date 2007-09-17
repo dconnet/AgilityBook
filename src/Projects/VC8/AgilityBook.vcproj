@@ -51,7 +51,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -185,7 +185,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -252,7 +252,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -319,7 +319,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -386,7 +386,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -453,7 +453,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -520,7 +520,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../../src/Win"
+				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
