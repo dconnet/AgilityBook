@@ -6,11 +6,12 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
 UNKNOWN-24 DRC Configuration version 20.
-			   Fixed AKC FAST titles.
-               Added Hoopers to NADAC, updated titles.
+               Fixed AKC FAST titles.
+               Added Hoopers/Gaters to NADAC, updated titles.
+               Added PR[123] titles to USDAA
 2007-06-24 DRC Configuration version 19.
                Updated NADAC to correct points in Skilled categories.
-			   Corrected Long name on 2 NATCH titles.
+               Corrected Long name on 2 NATCH titles.
 2007-04-22 DRC Added 'icon' to 'Venue'. (v18)
 2007-02-27 DRC Configuration version 18.
                Added 'defValue' to 'OtherPts'. Minor wording change in AAC/AGDC
@@ -2497,6 +2498,16 @@ Was called Wild Card briefly.</Desc>
 					<LifeTime Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
+			<Event Name="Gaters">
+				<Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
+					<TitlePoints Faults="0" Points="10"/>
+					<LifeTime Faults="0" Points="10"/>
+				</Scoring>
+			</Event>
 		</Venue>
 		<Venue LongName="Sweepstakes Agility" Name="Sweepstakes" URL="http://www.sweepstakesagility.com/" icon="10">
 			<Titles LongName="Starter Sweepstakes" Name="SSw">50 points</Titles>
@@ -2729,18 +2740,21 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			<Titles LongName="Performance Jumpers I" Name="PJ1">3 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Gamblers I" Name="PG1">3 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Snooker I" Name="PK1">3 qualifying scores earned under at least 2 different judges.</Titles>
+			<Titles LongName="Performance Relay I" Name="PR1">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Dog II" Name="PD2">Performance Standard II title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
 			<Titles LongName="Performance Standard II" Name="PS2">3 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Gamblers II" Name="PG2">3 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Jumpers II" Name="PJ2">3 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Snooker II" Name="PK2">3 qualifying scores earned under at least 2 different judges.</Titles>
+			<Titles LongName="Performance Relay II" Name="PR2">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Dog III" Name="PD3">3 qualifying scores in the Performance III Standard class plus 1 qualifying score in each of the 3 Performance III nonstandard classes.
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
 			<Titles LongName="Performance Standard III" Name="PS3">5 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Gambler III" Name="PG3">5 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Jumper III" Name="PJ3">5 qualifying scores earned under at least 2 different judges.</Titles>
 			<Titles LongName="Performance Snooker III" Name="PK3">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
+			<Titles LongName="Performance Relay III" Name="PR3">5 qualifying scores with 5 different partners under at least 2 different judges.</Titles>
 			<Titles LongName="Accomplished Performance Dog" Name="APD" Prefix="y">PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament
 [Earned PD3 before 1/1/2005] PD3, PG3, PJ3, PK3, plus 2 Standard Qs
 [Earned PD3 before 1/1/2000] PD3</Titles>

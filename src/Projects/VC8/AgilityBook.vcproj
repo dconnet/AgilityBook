@@ -20,9 +20,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="2"
 			>
@@ -40,34 +39,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;XML_LIBRARY"
-				StringPooling="true"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -75,10 +59,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -107,9 +87,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="2"
 			>
@@ -127,35 +106,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG;XML_LIBRARY"
-				StringPooling="true"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -163,10 +126,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -195,9 +154,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug|Win32"
-			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
 			>
@@ -215,34 +173,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;XML_LIBRARY"
-				StringPooling="true"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -250,10 +193,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -282,9 +221,8 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug|x64"
-			OutputDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
 			>
@@ -302,35 +240,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG;XML_LIBRARY"
-				StringPooling="true"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -338,10 +260,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -370,12 +288,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="2"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -391,31 +307,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;XML_LIBRARY"
-				StringPooling="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -423,11 +327,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -456,12 +355,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="2"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -477,32 +374,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN64;_WINDOWS;NDEBUG;XML_LIBRARY"
-				StringPooling="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -510,11 +394,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -543,12 +422,10 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release|Win32"
-			OutputDirectory="..\..\..\bin\VC8\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -564,31 +441,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;XML_LIBRARY"
-				StringPooling="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -596,11 +461,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -629,12 +489,10 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Release|x64"
-			OutputDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)"
-			IntermediateDirectory="..\..\..\bin\VC8x64\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -650,32 +508,19 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="3"
-				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN64;_WINDOWS;NDEBUG;XML_LIBRARY"
-				StringPooling="true"
+				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
-				WarningLevel="4"
-				WarnAsError="true"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
+				AdditionalIncludeDirectories="../../../src/Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -683,11 +528,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib htmlhelp.lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -1168,11 +1008,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBook.rc"
+				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\res\AgilityBook.rc2"
+				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc2"
 				>
 			</File>
 			<File
@@ -2165,7 +2005,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="\AgilityBook\src\AgilityBook\src\Win\AgilityBook.rc"
+			Value="\AgilityBook\src\AgilityBook\src\Win\res\l.enu\AgilityBook.rc"
 		/>
 	</Globals>
 </VisualStudioProject>

@@ -1,7 +1,7 @@
 cd ..\..\..\bin
 rd /q/s VC6
 rd /q/s VC7
-rd /q/s VC8
+rd /q/s VC8Win32
 rd /q/s VC8x64
 cd ..\src\Projects\VC8
 

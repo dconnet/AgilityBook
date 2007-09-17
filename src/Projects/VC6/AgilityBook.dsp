@@ -102,7 +102,7 @@ SOURCE=..\..\Win\AgilityBook.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\AgilityBook.rc
+SOURCE=..\..\Win\res\l.enu\AgilityBook.rc
 # End Source File
 # Begin Source File
 
@@ -1263,7 +1263,7 @@ SOURCE=..\..\Win\res\AgilityBook.ico
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\res\AgilityBook.rc2
+SOURCE=..\..\Win\res\l.enu\AgilityBook.rc2
 # End Source File
 # Begin Source File
 

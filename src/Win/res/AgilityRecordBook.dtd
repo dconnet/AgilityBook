@@ -82,7 +82,7 @@ Revision History:
  Book is a simple integer in versions 1 thru 7.
  It then changes to a more complex value ("major.minor"), starting with "8.0"
  ver: Version of program that created file. Used for debugging purposes.
- timestamp: time stamp when file was written. For tracking purposes.
+ timestamp: time stamp when file was written. For debugging purposes.
 -->
 <!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
 	<!ATTLIST AgilityBook
@@ -107,8 +107,8 @@ This section defines the rules for the calendar cribsheet.
 		Club CDATA #REQUIRED
 		Venue CDATA #REQUIRED
 		Entered (E|P|N) 'N'
-		Accom (N|T|C) 'N'
-		Confirm CDATA #REQUIRED
+		Acc (N|T|C) 'N'
+		Confirm CDATA #IMPLIED
 		SecEmail CDATA #IMPLIED
 		PremiumURL CDATA #IMPLIED
 		OnlineURL CDATA #IMPLIED
@@ -584,12 +584,14 @@ Notes on a dogs run.
  Faults: Simple string, for generating reports in the future
  CRCD: Text copy of CRCD course
  CRCDMeta: Enhanced Metafile of course
+ CRCDMeta2: Compressed CRCDMeta
  Other: Generic comments
 -->
-<!ELEMENT Notes (Faults*, CRCD?, CRCDMeta?, Other?) >
+<!ELEMENT Notes (Faults*, CRCD?, (CRCDMeta | CRCDMeta2)?, Other?) >
 <!ELEMENT Faults (#PCDATA) >
 <!ELEMENT CRCD (#PCDATA) >
 <!ELEMENT CRCDMeta (#PCDATA) >
+<!ELEMENT CRCDMeta2 (#PCDATA) >
 <!ELEMENT Other (#PCDATA) >
 
 <!--
