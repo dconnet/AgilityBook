@@ -51,7 +51,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -118,7 +117,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -185,7 +183,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -252,7 +249,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -319,7 +315,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -386,7 +381,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -453,7 +447,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -520,7 +513,6 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="../../Win"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -1008,7 +1000,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc"
+				RelativePath="..\..\Win\AgilityBook.rc"
 				>
 			</File>
 			<File
@@ -2005,7 +1997,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="\AgilityBook\src\AgilityBook\src\Win\res\l.enu\AgilityBook.rc"
+			Value="\AgilityBook\src\AgilityBook\src\Win\AgilityBook.rc"
 		/>
 	</Globals>
 </VisualStudioProject>
