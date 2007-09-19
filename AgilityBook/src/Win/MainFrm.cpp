@@ -165,16 +165,14 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 	if (bCompute)
 	{
-		CRect rWorkSpace;
-#if _WIN32_WINNT > 0x0400
-		HMONITOR hMon = MonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
+		// The xMonitor functions are defined in MultiMon.h. They are designed
+		// to provide multi monitor support when the compilation target is
+		// still targeting systems that don't have multimon support (NT4).
+		HMONITOR hMon = xMonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
 		MONITORINFO mi;
 		mi.cbSize = sizeof(mi);
-		GetMonitorInfo(hMon, &mi);
-		rWorkSpace = mi.rcWork;
-#else
-		SystemParametersInfo(SPI_GETWORKAREA, 0, &rWorkSpace, 0);
-#endif
+		xGetMonitorInfo(hMon, &mi);
+		CRect rWorkSpace(mi.rcWork);
 		CRect rect(curPt, curSize);
 		// Make sure window is not bigger.
 		if (rect.Width() > rWorkSpace.Width())

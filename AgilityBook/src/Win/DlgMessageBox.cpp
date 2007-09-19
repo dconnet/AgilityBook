@@ -327,10 +327,14 @@ BOOL CDlgMessageBox::OnInitDialog()
 	dc->DrawText(m_Text, &newRect, DT_CALCRECT | DT_NOPREFIX | DT_LEFT);
 
 	// Define the max width to be 80% of the screen.
-	CRect rWorkArea(0,0,0,0);
-	// TODO: Use the monitor functions and get the size of the monitor
-	// under the cursor.
-	SystemParametersInfo(SPI_GETWORKAREA, 0, &rWorkArea, 0);
+	CPoint curPt;
+	GetCursorPos(&curPt);
+	HMONITOR hMon = xMonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
+	MONITORINFO mi;
+	mi.cbSize = sizeof(mi);
+	xGetMonitorInfo(hMon, &mi);
+	CRect rWorkArea(mi.rcWork);
+
 	int maxDlgWidth = (4 * rWorkArea.Width()) / 5;
 
 	// If the calculated space is too big, recalc for height.
