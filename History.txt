@@ -1,4 +1,4 @@
-9/16/2007: v1.10.0.12 <in development>
+9/19/2007: v1.10.0.12 <in development>
 - Bumped file version to 12.6, Configuration v20:
   - Added 'timestamp' to 'AgilityBook'.
   - Added 'CalSite' to config.
@@ -11,6 +11,7 @@
   - Add "book" pages from printing, allow printing runs using same.
   - Added feature to import calendar entries automatically.
   - Changed compilation options to remove DLLs (zlib/xml included directly)
+  - Support multiple monitors when remembering window position.
 - Bug fixes
   - Fixed a problem where the Table flag on a run didn't get cleared when
     modifying the run into an event without a table (eg: Standard->JWW).
