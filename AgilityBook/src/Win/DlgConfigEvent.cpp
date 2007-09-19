@@ -628,6 +628,9 @@ void CDlgConfigEvent::OnBnClickedSubNamesDelete()
 	if (LB_ERR != idx)
 	{
 		m_ctrlSubNames.DeleteString(idx);
+		if (idx == m_ctrlSubNames.GetCount())
+			--idx;
+		m_ctrlSubNames.SetCurSel(idx);
 		m_ctrlSubNamesEdit.EnableWindow(FALSE);
 		m_ctrlSubNamesDelete.EnableWindow(FALSE);
 	}
@@ -985,6 +988,9 @@ void CDlgConfigEvent::OnPointsDelete()
 			else
 				pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
 			m_ctrlPointsList.DeleteString(idx);
+			if (idx == m_ctrlPointsList.GetCount())
+				--idx;
+			m_ctrlPointsList.SetCurSel(idx);
 			OnSelchangePoints(); // To update buttons
 		}
 	}
