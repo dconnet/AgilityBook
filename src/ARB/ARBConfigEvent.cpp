@@ -359,6 +359,26 @@ bool ARBConfigEventList::Load(
 }
 
 
+void ARBConfigEventList::ReorderBy(ARBConfigEventList const& inList)
+{
+	if (*this != inList)
+	{
+		ASSERT(inList.size() == size());
+		ARBConfigEventList tmp;
+		tmp.reserve(size());
+		for (ARBConfigEventList::const_iterator i = inList.begin();
+			i != inList.end();
+			++i)
+		{
+			ARBConfigEventPtr event;
+			FindEvent((*i)->GetName(), &event);
+			tmp.push_back(event);
+		}
+		std::swap(tmp, *this);
+	}
+}
+
+
 bool ARBConfigEventList::VerifyEvent(
 		tstring const& inEvent,
 		tstring const& inDivision,

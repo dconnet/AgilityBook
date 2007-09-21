@@ -249,6 +249,12 @@ public:
 			bool inCheckDups = false);
 
 	/**
+	 * Reorder the list based on 'inList'
+	 * @param inList List we want to match order on.
+	 */
+	void ReorderBy(ARBConfigTitleList const& inList);
+
+	/**
 	 * Find a title by the complete name.
 	 * This api is used to fix a problem introduced in v1.0.0.8.
 	 * @param inName Complete name of title to find.

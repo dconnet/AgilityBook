@@ -368,12 +368,15 @@ bool ARBConfigVenue::Update(
 				GetTitles().AddTitle((*iterTitle));
 			}
 		}
+		GetTitles().ReorderBy(inVenueNew->GetTitles());
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
 			info += indentBuffer;
 			info += UPDATE_FORMAT_TITLES(nAdded, nChanged, nSkipped);
 		}
+		else
+			info += UPDATE_FORMAT_TITLES_REORDERED();
 	}
 
 	// If the order is different, we will fall into this...
@@ -407,6 +410,7 @@ bool ARBConfigVenue::Update(
 				info2 += _T("\n");
 			}
 		}
+		GetDivisions().ReorderBy(inVenueNew->GetDivisions());
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
@@ -414,6 +418,8 @@ bool ARBConfigVenue::Update(
 			info += UPDATE_FORMAT_DIVISIONS(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
+		else
+			info += UPDATE_FORMAT_DIVISIONS_REORDERED();
 	}
 
 	// If the order is different, we will fall into this...
@@ -447,6 +453,7 @@ bool ARBConfigVenue::Update(
 				info2 += _T("\n");
 			}
 		}
+		GetEvents().ReorderBy(inVenueNew->GetEvents());
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
@@ -454,6 +461,8 @@ bool ARBConfigVenue::Update(
 			info += UPDATE_FORMAT_EVENTS(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
+		else
+			info += UPDATE_FORMAT_EVENTS_REORDERED();
 	}
 
 	// If the order is different, we will fall into this...
@@ -501,6 +510,8 @@ bool ARBConfigVenue::Update(
 			info += GetName();
 			info += UPDATE_FORMAT_MULTIQS(nAdded, nDeleted, nSkipped);
 		}
+		else
+			info += UPDATE_FORMAT_MULTIQS_REORDERED();
 	}
 
 	if (0 < info.length())

@@ -1,4 +1,4 @@
-9/19/2007: v1.10.0.12 <in development>
+9/21/2007: v1.10.0.12 <in development>
 - Bumped file version to 12.6, Configuration v20:
   - Added 'timestamp' to 'AgilityBook'.
   - Added 'CalSite' to config.
@@ -16,6 +16,8 @@
   - Fixed a problem where the Table flag on a run didn't get cleared when
     modifying the run into an event without a table (eg: Standard->JWW).
   - Fixed DTD (missing some elements)
+  - Renaming an existing event (in config dlg) actually created a new event.
+  - Remember order when items in a venue are rearranged.
 
 6/24/2007: v1.9.1.12
 - Bumped Configuration v19:

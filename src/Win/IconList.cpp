@@ -69,7 +69,9 @@ CIconList::CIconList()
 		{&m_idxVenueSweep,		IDI_VENUE_SWEEP},
 		{&m_idxVenueTDAA,		IDI_VENUE_TDAA},
 		{&m_idxVenueUKC,		IDI_VENUE_UKC},
-		{&m_idxVenueUSDAA,		IDI_VENUE_USDAA}
+		{&m_idxVenueUSDAA,		IDI_VENUE_USDAA},
+		{&m_idxVenueFCI,		IDI_VENUE_FCI},
+		{&m_idxVenueSCC,		IDI_VENUE_SCC},
 	};
 	int nIcons = sizeof(icons) / sizeof(icons[0]);
 	CWinApp* app = AfxGetApp();

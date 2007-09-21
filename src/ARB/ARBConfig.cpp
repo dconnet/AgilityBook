@@ -364,6 +364,7 @@ bool ARBConfig::Update(
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update Faults.
+	// UI maintains a sorted order, so we don't need to worry about list order.
 	// Simply merge new ones.
 	int nNew = 0;
 	int nUpdated = 0;
@@ -387,6 +388,7 @@ bool ARBConfig::Update(
 	}
 
 	// Update OtherPoints.
+	// UI maintains a sorted order, so we don't need to worry about list order.
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;
@@ -421,6 +423,7 @@ bool ARBConfig::Update(
 	}
 
 	// Update Venues.
+	// UI maintains a sorted order, so we don't need to worry about list order.
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;

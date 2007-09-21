@@ -55,6 +55,8 @@ public:
 	int TDAA() const		{return m_idxVenueTDAA;}
 	int UKC() const			{return m_idxVenueUKC;}
 	int USDAA() const		{return m_idxVenueUSDAA;}
+	int FCI() const			{return m_idxVenueFCI;}
+	int SCC() const			{return m_idxVenueSCC;}
 
 protected:
 	int m_idxDog;
@@ -71,4 +73,6 @@ protected:
 	int m_idxVenueTDAA;
 	int m_idxVenueUKC;
 	int m_idxVenueUSDAA;
+	int m_idxVenueFCI;
+	int m_idxVenueSCC;
 };
