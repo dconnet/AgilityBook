@@ -125,6 +125,12 @@ tstring UPDATE_FORMAT_DIVISIONS(int nAdded, int nChanged, int nSkipped)
 }
 
 
+tstring UPDATE_FORMAT_DIVISIONS_REORDERED()
+{
+	return _T("Divisions: Reordered");
+}
+
+
 tstring UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
 {
 	otstringstream buffer;
@@ -133,11 +139,23 @@ tstring UPDATE_FORMAT_EVENTS(int nAdded, int nChanged, int nSkipped)
 }
 
 
+tstring UPDATE_FORMAT_EVENTS_REORDERED()
+{
+	return _T("Events: Reordered");
+}
+
+
 tstring UPDATE_FORMAT_MULTIQS(int nAdded, int nDeleted, int nSkipped)
 {
 	otstringstream buffer;
 	buffer << _T("MultiQs: ") << nAdded << _T(" added, ") << nDeleted << _T(" deleted, ") << nSkipped << _T(" identical");
 	return buffer.str();
+}
+
+
+tstring UPDATE_FORMAT_MULTIQS_REORDERED()
+{
+	return _T("MultiQs: Reordered");
 }
 
 
@@ -154,6 +172,12 @@ tstring UPDATE_FORMAT_TITLES(int nAdded, int nChanged, int nSkipped)
 	otstringstream buffer;
 	buffer << _T("Titles: ") << nAdded << _T(" added, ") << nChanged << _T(" updated, ") << nSkipped << _T(" identical");
 	return buffer.str();
+}
+
+
+tstring UPDATE_FORMAT_TITLES_REORDERED()
+{
+	return _T("Titles: Reordered");
 }
 
 

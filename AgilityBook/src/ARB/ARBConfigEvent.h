@@ -265,6 +265,12 @@ public:
 			ARBErrorCallback& ioCallback);
 
 	/**
+	 * Reorder the list based on 'inList'
+	 * @param inList List we want to match order on.
+	 */
+	void ReorderBy(ARBConfigEventList const& inList);
+
+	/**
 	 * Verify an event exists.
 	 * @param inEvent Event to verify.
 	 * @param inDivision Division event exists in.

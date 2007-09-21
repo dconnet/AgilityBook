@@ -52,6 +52,13 @@
 #include "Splash.h"
 #include "TabView.h"
 
+#if WINVER < 0x0500
+#if _MSC_VER < 1400
+#define COMPILE_MULTIMON_STUBS
+#endif
+#include <MultiMon.h>
+#endif
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -165,13 +172,10 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 	if (bCompute)
 	{
-		// The xMonitor functions are defined in MultiMon.h. They are designed
-		// to provide multi monitor support when the compilation target is
-		// still targeting systems that don't have multimon support (NT4).
-		HMONITOR hMon = xMonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
+		HMONITOR hMon = MonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
 		MONITORINFO mi;
 		mi.cbSize = sizeof(mi);
-		xGetMonitorInfo(hMon, &mi);
+		GetMonitorInfo(hMon, &mi);
 		CRect rWorkSpace(mi.rcWork);
 		CRect rect(curPt, curSize);
 		// Make sure window is not bigger.

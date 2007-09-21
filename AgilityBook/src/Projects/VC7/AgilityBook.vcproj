@@ -897,7 +897,13 @@
 				RelativePath="..\..\Win\res\venue-docna.ico">
 			</File>
 			<File
+				RelativePath="..\..\Win\res\venue-fci.ico">
+			</File>
+			<File
 				RelativePath="..\..\Win\res\venue-nadac.ico">
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-scc.ico">
 			</File>
 			<File
 				RelativePath="..\..\Win\res\venue-sweep.ico">

@@ -126,9 +126,6 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxdlgs.h>
 
-// Allow use of multi-monitor apis even tho we're still targeting nt4
-#include <MultiMon.h>
-
 // Some minor tweaks to allow VC6 support while using new features.
 #if _MSC_VER < 1300
 #define CStringA CString

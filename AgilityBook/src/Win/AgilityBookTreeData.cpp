@@ -810,7 +810,7 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 			if (pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 			{
 				short idx = pVenue->GetIcon();
-				if (0 <= idx)
+				if (0 <= idx && idx < m_pTree->GetImageList().GetImageCount())
 					m_idxIcon = idx;
 			}
 		}

@@ -244,6 +244,26 @@ bool ARBConfigDivisionList::Load(
 }
 
 
+void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
+{
+	if (*this != inList)
+	{
+		ASSERT(inList.size() == size());
+		ARBConfigDivisionList tmp;
+		tmp.reserve(size());
+		for (ARBConfigDivisionList::const_iterator i = inList.begin();
+			i != inList.end();
+			++i)
+		{
+			ARBConfigDivisionPtr div;
+			FindDivision((*i)->GetName(), &div);
+			tmp.push_back(div);
+		}
+		std::swap(tmp, *this);
+	}
+}
+
+
 bool ARBConfigDivisionList::VerifyLevel(
 		tstring const& inDiv,
 		tstring const& inLevel) const

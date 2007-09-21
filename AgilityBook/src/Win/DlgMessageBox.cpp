@@ -38,6 +38,10 @@
 #include "resource.h"
 #include "DlgMessageBox.h"
 
+#if WINVER < 0x0500
+#include <MultiMon.h>
+#endif
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -329,10 +333,10 @@ BOOL CDlgMessageBox::OnInitDialog()
 	// Define the max width to be 80% of the screen.
 	CPoint curPt;
 	GetCursorPos(&curPt);
-	HMONITOR hMon = xMonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
+	HMONITOR hMon = MonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
 	MONITORINFO mi;
 	mi.cbSize = sizeof(mi);
-	xGetMonitorInfo(hMon, &mi);
+	GetMonitorInfo(hMon, &mi);
 	CRect rWorkArea(mi.rcWork);
 
 	int maxDlgWidth = (4 * rWorkArea.Width()) / 5;

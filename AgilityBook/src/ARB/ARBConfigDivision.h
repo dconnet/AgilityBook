@@ -175,6 +175,12 @@ public:
 			ARBErrorCallback& ioCallback);
 
 	/**
+	 * Reorder the list based on 'inList'
+	 * @param inList List we want to match order on.
+	 */
+	void ReorderBy(ARBConfigDivisionList const& inList);
+
+	/**
 	 * Verify a level exists.
 	 * @param inDiv Division level exists in.
 	 * @param inLevel Level to verify.

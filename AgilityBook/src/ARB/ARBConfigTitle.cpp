@@ -280,6 +280,26 @@ bool ARBConfigTitleList::Load(
 }
 
 
+void ARBConfigTitleList::ReorderBy(ARBConfigTitleList const& inList)
+{
+	if (*this != inList)
+	{
+		ASSERT(inList.size() == size());
+		ARBConfigTitleList tmp;
+		tmp.reserve(size());
+		for (ARBConfigTitleList::const_iterator i = inList.begin();
+			i != inList.end();
+			++i)
+		{
+			ARBConfigTitlePtr title;
+			FindTitle((*i)->GetName(), &title);
+			tmp.push_back(title);
+		}
+		std::swap(tmp, *this);
+	}
+}
+
+
 bool ARBConfigTitleList::FindTitleCompleteName(
 		tstring const& inName,
 		short inInstance,
