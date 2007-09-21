@@ -1,4 +1,9 @@
-Last Updated: 4/22/2006
+Last Updated: 9/21/2007
+
+- Moving a division up/down in configuration doesn't stick.
+  It's flagged as no change.
+
+- Renaming an event actually creates a new event and leaves the old one behind.
 
 - Add a way to set the icon for a venue.
   Currently, it's handcoded in the configuration.
