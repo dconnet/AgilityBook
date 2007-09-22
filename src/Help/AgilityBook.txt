@@ -207,7 +207,7 @@ Edit the currently selected Speed Point Multiplier.
 Add a new Speed Point Multiplier. Placements must be unique.
 
 .topic HIDC_CONFIG_EVENT_POINTS
-List of titling and/or lifetime points, based on the number of faults.
+List of titling and/or lifetime points, based on the number of faulted points.
 
 .topic HIDC_CONFIG_EVENT_POINTS_DELETE
 Delete the selected titling point item.
@@ -308,7 +308,7 @@ Date this title is valid until.
 Title abbreviation.
 
 .topic HIDC_CONFIG_TITLEPTS_VALUE
-Number of faults allowed for Normal and Lifetime points.
+Number of faulted points allowed for Normal and Lifetime points.
 Place that earns the points for Placement points.
 
 .topic HIDC_CONFIG_TITLEPTS_POINTS
@@ -728,7 +728,7 @@ If this is empty, a Level has not yet been selected.
 This selection will control what fields are enabled on this dialog.
 
 .topic HIDC_RUNSCORE_FAULTS
-Number of faults in this run.
+Number of faulted points in this run.
 
 .topic HIDC_RUNSCORE_HANDLER
 Who handled the dog? This may be blank.
