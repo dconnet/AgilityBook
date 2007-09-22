@@ -456,8 +456,6 @@
 #define IDC_OPT_CAL_COLOR_CLOSENEAR_SET 1496
 #define IDC_OPT_CAL_CLOSENEAR           1497
 #define IDC_OPT_CAL_DAY_OF_WEEK         1498
-#define IDC_OPT_CAL_SIZE_X              1499
-#define IDC_OPT_CAL_SIZE_Y              1500
 #define IDC_OPT_CAL_AUTO_DELETE         1501
 #define IDC_OPT_CAL_HIDE_OLD            1502
 #define IDC_OPT_CAL_OLD_ENTRY_DAYS      1503
@@ -812,12 +810,9 @@
 #define IDS_BLANK_COLUMN                5012
 #define IDS_BUTTONS_DIVISIONS           5013
 #define IDS_BUTTONS_EVENTS              5014
-#define IDS_BUTTONS_FAULTS              5015
 #define IDS_BUTTONS_LEVELS              5016
 #define IDS_BUTTONS_MULTIQS             5017
-#define IDS_BUTTONS_OTHERPOINTS         5018
 #define IDS_BUTTONS_TITLES              5019
-#define IDS_BUTTONS_VENUES              5020
 #define IDS_CHANGED                     5021
 #define IDS_CONFIGURE                   5023
 #define IDS_CRCD_BTN_CLEARCOURSE        5024
