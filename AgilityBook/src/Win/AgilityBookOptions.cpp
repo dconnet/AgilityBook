@@ -191,6 +191,7 @@ Last
 Settings:
 	DW autoCheck
 	DW BackupFiles
+	DW Lang
 	DW ShowSplash
 	ST Splash
 	DW autoShowTitle

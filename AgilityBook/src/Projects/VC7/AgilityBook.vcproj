@@ -289,6 +289,9 @@
 				RelativePath="..\..\Win\DlgInfoJudge.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgLanguage.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgListCtrl.cpp">
 			</File>
 			<File
@@ -383,6 +386,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\IconList.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\LanguageManager.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\ListBox.cpp">
@@ -611,6 +617,9 @@
 				RelativePath="..\..\Win\DlgInfoJudge.h">
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgLanguage.h">
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgListCtrl.h">
 			</File>
 			<File
@@ -702,6 +711,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\IconList.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\LanguageManager.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\ListBox.h">

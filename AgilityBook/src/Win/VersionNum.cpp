@@ -110,7 +110,7 @@ CVersionNum::CVersionNum(
 	// the correct format.
 	//  Hi-order: IBM code page
 	//  Lo-order: Microsoft language id
-	WORD wLangID = LOWORD(dwData);
+	m_wLangID = LOWORD(dwData);
 	WORD wCodePage = HIWORD(dwData);
 
 	// Cache the fixed info.
@@ -138,7 +138,7 @@ CVersionNum::CVersionNum(
 
 	// Get the real name.
 	TCHAR subBlockName[255];
-	wsprintf(subBlockName, _T("\\StringFileInfo\\%04hx%04hx\\ProductName"), wLangID, wCodePage);
+	wsprintf(subBlockName, _T("\\StringFileInfo\\%04hx%04hx\\ProductName"), m_wLangID, wCodePage);
 	void* pValue = NULL;
 	UINT vSize;
 	::VerQueryValue(pFVData, subBlockName, &pValue, &vSize);

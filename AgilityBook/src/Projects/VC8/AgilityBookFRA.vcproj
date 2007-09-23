@@ -548,6 +548,10 @@
 				RelativePath="..\..\Win\resource.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Win\resource.hm"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -687,7 +691,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\res\venue-fci.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\res\venue-nadac.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\res\venue-scc.ico"
 				>
 			</File>
 			<File

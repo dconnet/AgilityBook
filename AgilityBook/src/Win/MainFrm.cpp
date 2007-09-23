@@ -49,6 +49,8 @@
 #include "AgilityBookViewCalendarList.h"
 #include "AgilityBookViewPoints.h"
 #include "AgilityBookViewRuns.h"
+#include "CommonView.h"
+#include "FilterOptions.h"
 #include "Splash.h"
 #include "TabView.h"
 
@@ -74,12 +76,15 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
+	ON_WM_DESTROY()
+	ON_WM_CLOSE()
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_STATUS, OnUpdatePane)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_FILTERED, OnUpdatePane)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_DOG, OnUpdatePane)
 	ON_COMMAND(ID_NEXT_TAB, OnNextTab)
 	ON_COMMAND(ID_PREV_TAB, OnPrevTab)
-	ON_WM_CLOSE()
+	ON_UPDATE_COMMAND_UI(ID_FILE_CHOOSELANGUAGE, OnUpdateChooseFileLanguage)
+	ON_COMMAND(ID_FILE_CHOOSELANGUAGE, OnFileChooseLanguage)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -97,44 +102,14 @@ static UINT indicators[] =
 
 CMainFrame::CMainFrame()
 	: m_pView(NULL)
+	, m_pLangMgr(NULL)
+	, m_pNewMenu(NULL)
 {
 }
 
 
 CMainFrame::~CMainFrame()
 {
-}
-
-
-int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
-	{
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
-	}
-
-	if (!m_wndStatusBar.Create(this) ||
-		!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT)))
-	{
-		TRACE0("Failed to create status bar\n");
-		return -1;      // fail to create
-	}
-	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
-	m_wndStatusBar.SetPaneText(index, _T(""));
-
-	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	EnableDocking(CBRS_ALIGN_ANY);
-	DockControlBar(&m_wndToolBar);
-
-	CSplashWnd::ShowSplashScreen(this);
-	return 0;
 }
 
 
@@ -228,6 +203,12 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 
+void CMainFrame::InitLangMgr(CLanguageManager* pLangMgr)
+{
+	m_pLangMgr = pLangMgr;
+}
+
+
 void CMainFrame::SetStatusText(
 		CString const& msg,
 		bool bFiltered)
@@ -286,6 +267,46 @@ bool CMainFrame::ShowPointsAs(bool bHtml)
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame message handlers
+
+int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
+		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
+		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
+	{
+		TRACE0("Failed to create toolbar\n");
+		return -1;      // fail to create
+	}
+
+	if (!m_wndStatusBar.Create(this) ||
+		!m_wndStatusBar.SetIndicators(indicators,
+		  sizeof(indicators)/sizeof(UINT)))
+	{
+		TRACE0("Failed to create status bar\n");
+		return -1;      // fail to create
+	}
+	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
+	m_wndStatusBar.SetPaneText(index, _T(""));
+
+	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	EnableDocking(CBRS_ALIGN_ANY);
+	DockControlBar(&m_wndToolBar);
+
+	CSplashWnd::ShowSplashScreen(this);
+	return 0;
+}
+
+
+void CMainFrame::OnDestroy()
+{
+	__super::OnDestroy();
+	delete m_pNewMenu;
+	m_pNewMenu = NULL;
+}
+
 
 void CMainFrame::OnClose() 
 {
@@ -346,5 +367,50 @@ void CMainFrame::OnPrevTab()
 		if (idx == -1)
 			idx = m_pView->GetItemCount() - 1;
 		m_pView->SetCurSel(idx);
+	}
+}
+
+
+void CMainFrame::OnUpdateChooseFileLanguage(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+	if (m_pLangMgr && 0 < m_pLangMgr->NumLanguages())
+		bEnable = TRUE;
+	pCmdUI->Enable(bEnable);
+}
+
+
+void CMainFrame::OnFileChooseLanguage()
+{
+	if (m_pLangMgr && m_pLangMgr->SelectLanguage())
+	{
+		// Reset frame menu...
+		CMenu* pCurrentMenu = GetMenu();
+		if (pCurrentMenu->m_hMenu != m_hMenuDefault)
+		{
+			pCurrentMenu->DestroyMenu();
+			delete pCurrentMenu;
+		}
+		m_pNewMenu = new CMenu;
+		m_pNewMenu->LoadMenu(IDR_MAINFRAME);
+		SetMenu(m_pNewMenu);
+		// ...accelerators...
+		m_hAccelTable = NULL;
+		LoadAccelTable(MAKEINTRESOURCE(IDR_MAINFRAME));
+		// ...and status bar...
+		// ...my stuff
+		ICommonView* pView = dynamic_cast<ICommonView*>(GetActiveView());
+		CString msg;
+		bool bFiltered = false;
+		if (pView && pView->GetMessage(msg))
+			bFiltered = pView->IsFiltered();
+		else
+			msg.Empty();
+		SetStatusText(msg, false);
+		if (!pView || !pView->GetMessage2(msg))
+			msg.Empty();
+		SetStatusText2(msg);
+		// ...'Ready' message
+		SendMessage(WM_POPMESSAGESTRING, AFX_IDS_IDLEMESSAGE);
 	}
 }
