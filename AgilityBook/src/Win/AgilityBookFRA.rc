@@ -2076,6 +2076,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 48
     END
+
+    IDD_LANGUAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 38
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -2648,7 +2656,6 @@ BEGIN
     IDS_BUTTONS_MULTIQS     "Buttons: MultiQs"
     IDS_BUTTONS_TITLES      "Buttons: Titles"
     IDS_CHANGED             "Changed"
-    IDS_CONFIGURE           "Configure"
 END
 
 STRINGTABLE 
@@ -2659,7 +2666,6 @@ BEGIN
     IDS_CRCD_BTN_VIEWTEXT   "View Text"
     IDS_DELETED             "Deleted"
     IDS_DIVISION_NAME       "Division Name"
-    IDS_EVENT_NAME          "Event Name"
     IDS_EXISTING_POINTS     "Existing Points"
     IDS_FAULT_TYPE_NAME     "Fault Name"
     IDS_FAULT_TYPES         "Fault Types"
@@ -2674,9 +2680,7 @@ BEGIN
     IDS_INVALID_NAME        "Invalid name"
     IDS_LEVEL_NAME          "Level"
     IDS_LIFETIME_POINTS     "LifeTime Points"
-    IDS_NEW                 "<New>"
     IDS_OTHERPOINTS         "Other Points"
-    IDS_OTHERPOINTS_NAME    "Other Points Name"
     IDS_OTHERPTS_ALL        "All Events"
     IDS_OTHERPTS_EVENT      "Tally by Event"
     IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
@@ -2689,13 +2693,11 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_SCORING             "Scoring Methods"
     IDS_SCORING_REQUIRED_POINTS "Required Points"
     IDS_SEARCH_NOTES        "Search Notes"
     IDS_SPEEDPTS            "SpeedPts"
     IDS_SQ                  "SQ"
     IDS_SUBLEVEL_NAME       "SubLevel"
-    IDS_SUPER_Q             "SuperQ"
     IDS_TITLEPOINT_LIFETIME "Lifetime"
     IDS_TITLEPOINT_NORMAL   "Normal"
     IDS_TITLEPOINT_PLACEMENT "Placement"
@@ -2704,7 +2706,6 @@ BEGIN
     IDS_TOTAL               "Total"
     IDS_UNEARNED            "<Unearned>"
     IDS_UPDATED             "Updated "
-    IDS_VIEWING_FILTERS     "Filters"
 END
 
 STRINGTABLE 
@@ -2716,7 +2717,6 @@ END
 STRINGTABLE 
 BEGIN
     IDS_AFFECTED_RUNS       "Runs affected by configuration changes"
-    IDS_ARE_YOU_SURE        "Are you sure you want to do this?"
     IDS_ARE_YOU_SURE_CONTINUE "Are you sure you want to continue?"
     IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
 END
@@ -2740,7 +2740,7 @@ BEGIN
     IDS_CONFIGEVENT_OVERLAPDATES 
                             "Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?"
     IDS_CONFIGEVENT_PLACEMENT0 
-                            "In order to use a placement of 0, you must specify places that have values. OTherwise, turn off Speed Points."
+                            "In order to use a placement of 0, you must specify places that have values. Otherwise, turn off Speed Points."
     IDS_CONFIGEVENT_REQCLOSE "Required Closing"
 END
 
@@ -2754,7 +2754,7 @@ BEGIN
     IDS_CONFIGEVENT_TF_OVER "Compute time faults over SCT"
     IDS_CONFIGEVENT_TF_UNDER "Compute time faults under SCT"
     IDS_CONFIGEVENT_TIMEFAULTMULT "Time Fault Multiplier"
-    IDS_COPYOF              "Copy of "
+    IDS_COPYOF              "Copy of %1"
     IDS_CREATE_LEVEL        "Would you like to create a Level? (Answer 'No' to create a sub-level)"
     IDS_CREATEDOG_FAILED    "Error: Failed to create dog."
     IDS_CREATERUN_FAILED    "Error: Failed to create run."
@@ -2762,13 +2762,10 @@ BEGIN
     IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
     IDS_CREATETRIAL_FILTERED 
                             "Warning: The trial you have just created cannot be shown due to filter options."
-    IDS_DELETE_ALL_OTHERPOINTS 
-                            "Deleting all Other Points will cause any points listed on a dog to be deleted also. Are you sure you want to continue?"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_DELETE_ALL_TITLES   "Deleting all Titles will cause any titles listed on a dog to be deleted also. Are you sure you want to continue?"
     IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
     IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
@@ -2782,7 +2779,6 @@ BEGIN
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_NEW_DOG             "Would you like to create a dog now?"
     IDS_NO_LINKED_FILES     "No linked files found."
-    IDS_NOCONFIGDATA_FOUND  "No configuration data found."
     IDS_NONFATAL_MSGS       "Warning: Some non-fatal messages were generated while loading the file:\n\n"
 END
 
@@ -2795,7 +2791,6 @@ BEGIN
     IDS_SELECT_Q            "Please select a 'Q'."
     IDS_SELECT_STYLE        "Please select a Style."
     IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
-    IDS_UNKNOWN_DOCUMENT_VERSION "Unknown document version."
     IDS_UNABLE_TO_OPEN      "Unable to open "
     IDS_BAD_VERSION         "Unable to determine version information"
     IDS_NO_DELIM_SPECIFIED  "No delimiter specified. Unable to preview data."
@@ -2821,15 +2816,10 @@ BEGIN
     IDS_CANNOT_FIND         "Cannot find ""%1"""
     IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
     IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_CONFIG_TITLEPTS     "%1!hd! Title points with %2!hd! faults"
-    IDS_DELETE_ALL          "Are you sure you want to delete all ""%1""?"
-    IDS_DELETE_EVENT_SCORING 
-                            "Warning: Event scoring methods are currently in use for the following events/venues:\n%1\nThis will delete %2!d! run(s) and possibly lose scoring information in %3!d! run(s)."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_DELETE_EVENT_SCORING_INFO "\t%1 in %2\n"
     IDS_FILE_PREVIEW        "Preview of %1."
     IDS_LOAD_FAILED         "Failed to load '%1'."
     IDS_NOT_VISIBLE         "Warning: %1!d! new entries are not visible due to your viewing options."
@@ -2850,7 +2840,6 @@ END
 STRINGTABLE 
 BEGIN
     IDS_READING_ROWSCOLS    "Reading %1!d! rows and %2!d! columns"
-    IDS_SCORING_NAME        "Division: %1 / Level: %2 (%3)"
     IDS_TRIAL_DATES         "Trial dates: %1 to %2"
     IDS_VENUE_CONFIG_MISSING 
                             "Unable to locate configuration information for the venue '%1'."

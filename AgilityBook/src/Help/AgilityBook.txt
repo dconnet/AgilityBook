@@ -542,6 +542,9 @@ only the comments will be deleted.
 .topic HIDC_JUDGE_NEW
 Create a new club, judge or location.
 
+.topic HIDC_LANGUAGE
+Select a language to use.
+
 .topic HIDC_LIST_VIEWER
 List of entries.
 

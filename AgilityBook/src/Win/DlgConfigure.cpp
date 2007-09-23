@@ -625,9 +625,6 @@ void CDlgConfigure::OnCopy()
 	if (!pData)
 		return;
 
-	CString copyOf;
-	copyOf.LoadString(IDS_COPYOF);
-
 	switch (GetAction())
 	{
 	case eVenues:
@@ -636,7 +633,9 @@ void CDlgConfigure::OnCopy()
 			tstring name(pVenueData->GetVenue()->GetName());
 			while (m_Config.GetVenues().FindVenue(name))
 			{
-				name = (LPCTSTR)copyOf + name;
+				CString copyOf;
+				copyOf.FormatMessage(IDS_COPYOF, name.c_str());
+				name = (LPCTSTR)copyOf;
 			}
 			ARBConfigVenuePtr pNewVenue;
 			if (m_Config.GetVenues().AddVenue(name, &pNewVenue))
@@ -680,7 +679,9 @@ void CDlgConfigure::OnCopy()
 			tstring name(pOtherData->GetOtherPoints()->GetName());
 			while (m_Config.GetOtherPoints().FindOtherPoints(name))
 			{
-				name = (LPCTSTR)copyOf + name;
+				CString copyOf;
+				copyOf.FormatMessage(IDS_COPYOF, name.c_str());
+				name = (LPCTSTR)copyOf;
 			}
 			ARBConfigOtherPointsPtr pOther = pOtherData->GetOtherPoints()->Clone();
 			pOther->SetName(name);
