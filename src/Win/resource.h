@@ -816,14 +816,12 @@
 #define IDS_BUTTONS_MULTIQS             5017
 #define IDS_BUTTONS_TITLES              5019
 #define IDS_CHANGED                     5021
-#define IDS_CONFIGURE                   5023
 #define IDS_CRCD_BTN_CLEARCOURSE        5024
 #define IDS_CRCD_BTN_INSERTCOURSE       5025
 #define IDS_CRCD_BTN_VIEWIMAGE          5026
 #define IDS_CRCD_BTN_VIEWTEXT           5027
 #define IDS_DELETED                     5028
 #define IDS_DIVISION_NAME               5029
-#define IDS_EVENT_NAME                  5031
 #define IDS_EXISTING_POINTS             5033
 #define IDS_FAULT_TYPE_NAME             5034
 #define IDS_FAULT_TYPES                 5035
@@ -834,9 +832,7 @@
 #define IDS_INVALID_NAME                5040
 #define IDS_LEVEL_NAME                  5041
 #define IDS_LIFETIME_POINTS             5043
-#define IDS_NEW                         5044
 #define IDS_OTHERPOINTS                 5045
-#define IDS_OTHERPOINTS_NAME            5046
 #define IDS_OTHERPTS_ALL                5047
 #define IDS_OTHERPTS_EVENT              5048
 #define IDS_OTHERPTS_EVENT_LEVEL        5049
@@ -845,13 +841,11 @@
 #define IDS_PLACEMENT_POINTS            5052
 #define IDS_Q                           5054
 #define IDS_RUN_PROPERTIES              5055
-#define IDS_SCORING                     5056
 #define IDS_SCORING_REQUIRED_POINTS     5057
 #define IDS_SEARCH_NOTES                5058
 #define IDS_SPEEDPTS                    5059
 #define IDS_SQ                          5060
 #define IDS_SUBLEVEL_NAME               5061
-#define IDS_SUPER_Q                     5062
 #define IDS_TITLEPOINT_LIFETIME         5063
 #define IDS_TITLEPOINT_NORMAL           5064
 #define IDS_TITLEPOINT_PLACEMENT        5065
@@ -860,11 +854,9 @@
 #define IDS_TOTAL                       5068
 #define IDS_UNEARNED                    5069
 #define IDS_UPDATED                     5070
-#define IDS_VIEWING_FILTERS             5071
 #define IDS_VIEWING_OPTIONS             5072
 #define IDS_EXPORTING                   5073
 #define IDS_AFFECTED_RUNS               5100
-#define IDS_ARE_YOU_SURE                5101
 #define IDS_ARE_YOU_SURE_CONTINUE       5102
 #define IDS_AUTODELETE_CAL              5103
 #define IDS_BAD_EVENT                   5104
@@ -898,8 +890,6 @@
 #define IDS_CREATERUN_FILTERED          5132
 #define IDS_CREATETRIAL_FAILED          5133
 #define IDS_CREATETRIAL_FILTERED        5134
-#define IDS_DELETE_ALL_OTHERPOINTS      5135
-#define IDS_DELETE_ALL_TITLES           5136
 #define IDS_DELETE_DOG_DATA             5137
 #define IDS_DELETE_EVENT_DATA           5138
 #define IDS_DELETE_TRIAL_DATA           5139
@@ -913,7 +903,6 @@
 #define IDS_NEED_CLUB                   5147
 #define IDS_NEW_DOG                     5148
 #define IDS_NO_LINKED_FILES             5149
-#define IDS_NOCONFIGDATA_FOUND          5150
 #define IDS_NONFATAL_MSGS               5151
 #define IDS_SELECT_DIVISION             5152
 #define IDS_SELECT_EVENT                5153
@@ -922,7 +911,6 @@
 #define IDS_SELECT_Q                    5156
 #define IDS_SELECT_STYLE                5157
 #define IDS_TITLEPTS_EXISTS             5158
-#define IDS_UNKNOWN_DOCUMENT_VERSION    5159
 #define IDS_UNABLE_TO_OPEN              5161
 #define IDS_BAD_VERSION                 5162
 #define IDS_NO_DELIM_SPECIFIED          5163
@@ -944,10 +932,6 @@
 #define IDS_CANNOT_FIND                 5210
 #define IDS_CANNOT_OPEN                 5211
 #define IDS_CONFIG_DELETE_RUNS          5212
-#define IDS_CONFIG_TITLEPTS             5213
-#define IDS_DELETE_ALL                  5214
-#define IDS_DELETE_EVENT_SCORING        5215
-#define IDS_DELETE_EVENT_SCORING_INFO   5216
 #define IDS_FILE_PREVIEW                5217
 #define IDS_LOAD_FAILED                 5218
 #define IDS_NOT_VISIBLE                 5219
@@ -964,7 +948,6 @@
 #define IDS_POINTS_SQS                  5230
 #define IDS_READING_ROWS                5231
 #define IDS_READING_ROWSCOLS            5232
-#define IDS_SCORING_NAME                5233
 #define IDS_TRIAL_DATES                 5234
 #define IDS_VENUE_CONFIG_MISSING        5235
 #define IDS_YEARS                       5236

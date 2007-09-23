@@ -1494,14 +1494,15 @@ void CDlgConfigVenue::OnCopy()
 			{
 				// Since index is valid, I know pData will be too.
 				CDlgConfigureDataTitle* pData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-				CString copyOf;
-				copyOf.LoadString(IDS_COPYOF);
 				tstring name(pData->GetTitle()->GetName());
 				tstring longname(pData->GetTitle()->GetLongName());
 				while (m_pVenue->GetTitles().FindTitle(name))
 				{
-					name = (LPCTSTR)copyOf + name;
-					longname = (LPCTSTR)copyOf + longname;
+					CString copyOf;
+					copyOf.FormatMessage(IDS_COPYOF, name.c_str());
+					name = (LPCTSTR)copyOf;
+					copyOf.FormatMessage(IDS_COPYOF, longname.c_str());
+					longname = (LPCTSTR)copyOf;
 				}
 				ARBConfigTitlePtr title = pData->GetTitle()->Clone();
 				title->SetName(name);
@@ -1522,12 +1523,12 @@ void CDlgConfigVenue::OnCopy()
 			{
 				// Since index is valid, I know pEventData will be too.
 				CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-				CString copyOf;
-				copyOf.LoadString(IDS_COPYOF);
 				tstring name(pEventData->GetEvent()->GetName());
 				while (m_pVenue->GetEvents().FindEvent(name))
 				{
-					name = (LPCTSTR)copyOf + name;
+					CString copyOf;
+					copyOf.FormatMessage(IDS_COPYOF, name.c_str());
+					name = (LPCTSTR)copyOf;
 				}
 				ARBConfigEventPtr pEvent = pEventData->GetEvent()->Clone();
 				pEvent->SetName(name);
@@ -1547,12 +1548,12 @@ void CDlgConfigVenue::OnCopy()
 			{
 				// Since index is valid, I know pData will be too.
 				CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
-				CString copyOf;
-				copyOf.LoadString(IDS_COPYOF);
 				tstring name(pData->GetMultiQ()->GetName());
 				while (m_pVenue->GetMultiQs().FindMultiQ(name))
 				{
-					name = (LPCTSTR)copyOf + name;
+					CString copyOf;
+					copyOf.FormatMessage(IDS_COPYOF, name.c_str());
+					name = (LPCTSTR)copyOf;
 				}
 				ARBConfigMultiQPtr multiq = pData->GetMultiQ()->Clone();
 				multiq->SetName(name);
