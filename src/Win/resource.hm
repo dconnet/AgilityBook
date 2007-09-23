@@ -1,399 +1,400 @@
 // Microsoft Visual C++ generated Help ID include file.
-// Used by AgilityBook.rc
+// Used by AgilityBookFRA.rc
 //
-#define HIDC_ABOUT_UPDATE               0x80c803ee    // IDD_ABOUTBOX
-#define HIDC_ASSIGN_ADD                 0x80f70638    // IDD_ASSIGN_COLUMNS
-#define HIDC_ASSIGN_AVAILABLE           0x80f70637    // IDD_ASSIGN_COLUMNS
-#define HIDC_ASSIGN_COLUMNS             0x80f7063c    // IDD_ASSIGN_COLUMNS
-#define HIDC_ASSIGN_DELETE              0x80f70639    // IDD_ASSIGN_COLUMNS
-#define HIDC_ASSIGN_MOVE_DOWN           0x80f7063b    // IDD_ASSIGN_COLUMNS
-#define HIDC_ASSIGN_MOVE_UP             0x80f7063a    // IDD_ASSIGN_COLUMNS
-#define HIDC_ASSIGN_TYPE                0x80f70636    // IDD_ASSIGN_COLUMNS
-#define HIDC_CAL_ACCOM_CONFIRMATION     0x80d4049f    // IDD_CALENDAR
-#define HIDC_CAL_ACCOM_MADE             0x80d4049e    // IDD_CALENDAR
-#define HIDC_CAL_ACCOM_NEEDED           0x80d4049d    // IDD_CALENDAR
-#define HIDC_CAL_ACCOM_NONE             0x80d4049c    // IDD_CALENDAR
-#define HIDC_CAL_CLUB                   0x80d4048f    // IDD_CALENDAR
-#define HIDC_CAL_CLUB_NOTE              0x80d40497    // IDD_CALENDAR
-#define HIDC_CAL_CLUB_NOTES             0x80d40499    // IDD_CALENDAR
-#define HIDC_CAL_DATE_CLOSES            0x80d40493    // IDD_CALENDAR
-#define HIDC_CAL_DATE_CLOSES_UNKNOWN    0x80d40494    // IDD_CALENDAR
-#define HIDC_CAL_DATE_DRAWS             0x80d4049a    // IDD_CALENDAR
-#define HIDC_CAL_DATE_DRAWS_UNKNOWN     0x80d4049b    // IDD_CALENDAR
-#define HIDC_CAL_DATE_END               0x80d40489    // IDD_CALENDAR
-#define HIDC_CAL_DATE_OPENS             0x80d40491    // IDD_CALENDAR
-#define HIDC_CAL_DATE_OPENS_UNKNOWN     0x80d40492    // IDD_CALENDAR
-#define HIDC_CAL_DATE_START             0x80d40488    // IDD_CALENDAR
-#define HIDC_CAL_EMAIL_SEC              0x80d404a3    // IDD_CALENDAR
-#define HIDC_CAL_EMAIL_SEC_ADDR         0x80d404a2    // IDD_CALENDAR
-#define HIDC_CAL_ENTER_ENTERED          0x80d4048d    // IDD_CALENDAR
-#define HIDC_CAL_ENTER_NOT              0x80d4048b    // IDD_CALENDAR
-#define HIDC_CAL_ENTER_PLANNING         0x80d4048c    // IDD_CALENDAR
-#define HIDC_CAL_LOCATION               0x80d4048e    // IDD_CALENDAR
-#define HIDC_CAL_LOCATION_NOTE          0x80d40496    // IDD_CALENDAR
-#define HIDC_CAL_LOCATION_NOTES         0x80d40498    // IDD_CALENDAR
-#define HIDC_CAL_NOTES                  0x80d40495    // IDD_CALENDAR
-#define HIDC_CAL_ONLINE_ENTRY           0x80d404a1    // IDD_CALENDAR
-#define HIDC_CAL_ONLINE_URL             0x80d404a0    // IDD_CALENDAR
-#define HIDC_CAL_PREMIUM_ENTRY          0x80d404a5    // IDD_CALENDAR
-#define HIDC_CAL_PREMIUM_URL            0x80d404a4    // IDD_CALENDAR
-#define HIDC_CAL_TENTATIVE              0x80d4048a    // IDD_CALENDAR
-#define HIDC_CAL_VENUE                  0x80d40490    // IDD_CALENDAR
-#define HIDC_CLUB_CLUBS                 0x80e0050a    // IDD_CLUB
-#define HIDC_CLUB_VENUES                0x80e0050b    // IDD_CLUB
-#define HIDC_CONFIG_COPY                0x80ce040a    // IDD_CONFIGURE
-#define HIDC_CONFIG_DELETE              0x80ce0409    // IDD_CONFIGURE
-#define HIDC_CONFIG_EDIT                0x80ce0408    // IDD_CONFIGURE
-#define HIDC_CONFIG_EVENT               0x80d00424    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_BONUS         0x80f0044a    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_CLOSING_PTS   0x80f0045b    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_COPY          0x80d00432    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_DATE_END      0x80f00447    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_DATE_START    0x80f00445    // IDD_CONFIG_EVENT_METHOD
+#define HIDC_ABOUT_UPDATE               0x80c803ee    // IDD_ABOUTBOX [French (France)]
+#define HIDC_ASSIGN_ADD                 0x80f70638    // IDD_ASSIGN_COLUMNS [French (France)]
+#define HIDC_ASSIGN_AVAILABLE           0x80f70637    // IDD_ASSIGN_COLUMNS [French (France)]
+#define HIDC_ASSIGN_COLUMNS             0x80f7063c    // IDD_ASSIGN_COLUMNS [French (France)]
+#define HIDC_ASSIGN_DELETE              0x80f70639    // IDD_ASSIGN_COLUMNS [French (France)]
+#define HIDC_ASSIGN_MOVE_DOWN           0x80f7063b    // IDD_ASSIGN_COLUMNS [French (France)]
+#define HIDC_ASSIGN_MOVE_UP             0x80f7063a    // IDD_ASSIGN_COLUMNS [French (France)]
+#define HIDC_ASSIGN_TYPE                0x80f70636    // IDD_ASSIGN_COLUMNS [French (France)]
+#define HIDC_CAL_ACCOM_CONFIRMATION     0x80d4049f    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ACCOM_MADE             0x80d4049e    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ACCOM_NEEDED           0x80d4049d    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ACCOM_NONE             0x80d4049c    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_CLUB                   0x80d4048f    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_CLUB_NOTE              0x80d40497    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_CLUB_NOTES             0x80d40499    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_CLOSES            0x80d40493    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_CLOSES_UNKNOWN    0x80d40494    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_DRAWS             0x80d4049a    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_DRAWS_UNKNOWN     0x80d4049b    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_END               0x80d40489    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_OPENS             0x80d40491    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_OPENS_UNKNOWN     0x80d40492    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_DATE_START             0x80d40488    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_EMAIL_SEC              0x80d404a3    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_EMAIL_SEC_ADDR         0x80d404a2    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ENTER_ENTERED          0x80d4048d    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ENTER_NOT              0x80d4048b    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ENTER_PLANNING         0x80d4048c    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_LOCATION               0x80d4048e    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_LOCATION_NOTE          0x80d40496    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_LOCATION_NOTES         0x80d40498    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_NOTES                  0x80d40495    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ONLINE_ENTRY           0x80d404a1    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_ONLINE_URL             0x80d404a0    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_PREMIUM_ENTRY          0x80d404a5    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_PREMIUM_URL            0x80d404a4    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_TENTATIVE              0x80d4048a    // IDD_CALENDAR [French (France)]
+#define HIDC_CAL_VENUE                  0x80d40490    // IDD_CALENDAR [French (France)]
+#define HIDC_CLUB_CLUBS                 0x80e0050a    // IDD_CLUB [French (France)]
+#define HIDC_CLUB_VENUES                0x80e0050b    // IDD_CLUB [French (France)]
+#define HIDC_CONFIG_COPY                0x80ce040a    // IDD_CONFIGURE [French (France)]
+#define HIDC_CONFIG_DELETE              0x80ce0409    // IDD_CONFIGURE [French (France)]
+#define HIDC_CONFIG_EDIT                0x80ce0408    // IDD_CONFIGURE [French (France)]
+#define HIDC_CONFIG_EVENT               0x80d00424    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_BONUS         0x80f0044a    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_CLOSING_PTS   0x80f0045b    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_COPY          0x80d00432    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_DATE_END      0x80f00447    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_DATE_START    0x80f00445    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_DATE_VALID_FROM \
-                                        0x80f00444    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00444    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_DATE_VALID_TO \
-                                        0x80f00446    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_DELETE        0x80d00431    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_DESC          0x80d0042c    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_DIVISION      0x80f00442    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00446    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_DELETE        0x80d00431    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_DESC          0x80d0042c    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_DIVISION      0x80f00442    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_DROP_FRACTIONS \
-                                        0x80f00449    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_EDIT          0x80d00430    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_HAS_SUBNAMES  0x80d00427    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_INFO          0x80d0043a    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_LEVEL         0x80f00443    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_METHODS       0x80d0042d    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_MOVE_DOWN     0x80d00434    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_MOVE_UP       0x80d00433    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_NEW           0x80d0042f    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_NOTES         0x80d00439    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_OPENING_PTS   0x80f00459    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_PARTNER       0x80d00426    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_PLACEMENT     0x80f00450    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00449    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_EDIT          0x80d00430    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_HAS_SUBNAMES  0x80d00427    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_INFO          0x80d0043a    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_LEVEL         0x80f00443    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_METHODS       0x80d0042d    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_MOVE_DOWN     0x80d00434    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_MOVE_UP       0x80d00433    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_NEW           0x80d0042f    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_NOTES         0x80d00439    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_OPENING_PTS   0x80f00459    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_PARTNER       0x80d00426    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_PLACEMENT     0x80f00450    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_PLACEMENT_DELETE \
-                                        0x80f00453    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00453    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_PLACEMENT_EDIT \
-                                        0x80f00452    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00452    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_PLACEMENT_NEW \
-                                        0x80f00451    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_POINTS        0x80d00435    // IDD_CONFIG_EVENT
+                                        0x80f00451    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_POINTS        0x80d00435    // IDD_CONFIG_EVENT [French (France)]
 #define HIDC_CONFIG_EVENT_POINTS_DELETE \
-                                        0x80d00438    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_POINTS_EDIT   0x80d00437    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_POINTS_NEW    0x80d00436    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_SPEED         0x80f0044c    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_SUBNAMES      0x80d00428    // IDD_CONFIG_EVENT
+                                        0x80d00438    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_POINTS_EDIT   0x80d00437    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_POINTS_NEW    0x80d00436    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_SPEED         0x80f0044c    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_SUBNAMES      0x80d00428    // IDD_CONFIG_EVENT [French (France)]
 #define HIDC_CONFIG_EVENT_SUBNAMES_DELETE \
-                                        0x80d0042b    // IDD_CONFIG_EVENT
+                                        0x80d0042b    // IDD_CONFIG_EVENT [French (France)]
 #define HIDC_CONFIG_EVENT_SUBNAMES_EDIT \
-                                        0x80d0042a    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_SUBNAMES_NEW  0x80d00429    // IDD_CONFIG_EVENT
+                                        0x80d0042a    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_SUBNAMES_NEW  0x80d00429    // IDD_CONFIG_EVENT [French (France)]
 #define HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS \
-                                        0x80f00457    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_SUPERQ        0x80f0044b    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_TABLE         0x80d00425    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_EVENT_TF_MULTIPLY   0x80f0044e    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00457    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_SUPERQ        0x80f0044b    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_TABLE         0x80d00425    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_EVENT_TF_MULTIPLY   0x80f0044e    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ \
-                                        0x80f00454    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00454    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_TIME_FAULTS_OVER \
-                                        0x80f00456    // IDD_CONFIG_EVENT_METHOD
+                                        0x80f00456    // IDD_CONFIG_EVENT_METHOD [French (France)]
 #define HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER \
-                                        0x80f00455    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_TYPE          0x80f00448    // IDD_CONFIG_EVENT_METHOD
-#define HIDC_CONFIG_EVENT_UNUSED        0x80d0042e    // IDD_CONFIG_EVENT
-#define HIDC_CONFIG_ITEMS               0x80ce0406    // IDD_CONFIGURE
-#define HIDC_CONFIG_MULTIQ_ADD          0x80fb0665    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_MULTIQ_DATE_END     0x80fb0663    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_MULTIQ_DATE_START   0x80fb0661    // IDD_CONFIG_MULTI_Q
+                                        0x80f00455    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_TYPE          0x80f00448    // IDD_CONFIG_EVENT_METHOD [French (France)]
+#define HIDC_CONFIG_EVENT_UNUSED        0x80d0042e    // IDD_CONFIG_EVENT [French (France)]
+#define HIDC_CONFIG_ITEMS               0x80ce0406    // IDD_CONFIGURE [French (France)]
+#define HIDC_CONFIG_MULTIQ_ADD          0x80fb0665    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_MULTIQ_DATE_END     0x80fb0663    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_MULTIQ_DATE_START   0x80fb0661    // IDD_CONFIG_MULTI_Q [French (France)]
 #define HIDC_CONFIG_MULTIQ_DATE_VALID_FROM \
-                                        0x80fb0660    // IDD_CONFIG_MULTI_Q
+                                        0x80fb0660    // IDD_CONFIG_MULTI_Q [French (France)]
 #define HIDC_CONFIG_MULTIQ_DATE_VALID_TO \
-                                        0x80fb0662    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_MULTIQ_DELETE       0x80fb0667    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_MULTIQ_EDIT         0x80fb0666    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_MULTIQ_ITEMS        0x80fb0664    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_MULTIQ_NAME         0x80fb065f    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_MULTIQ_SHORTNAME    0x80fb065e    // IDD_CONFIG_MULTI_Q
-#define HIDC_CONFIG_NEW                 0x80ce0407    // IDD_CONFIGURE
-#define HIDC_CONFIG_OTHER_DEFAULT       0x80d1046d    // IDD_CONFIG_OTHERPOINTS
-#define HIDC_CONFIG_OTHER_DESC          0x80d1046c    // IDD_CONFIG_OTHERPOINTS
-#define HIDC_CONFIG_OTHER_NAME          0x80d1046a    // IDD_CONFIG_OTHERPOINTS
-#define HIDC_CONFIG_OTHER_TALLY         0x80d1046b    // IDD_CONFIG_OTHERPOINTS
-#define HIDC_CONFIG_TITLEPTS_POINTS     0x80ea0598    // IDD_CONFIG_TITLE_POINTS
+                                        0x80fb0662    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_MULTIQ_DELETE       0x80fb0667    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_MULTIQ_EDIT         0x80fb0666    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_MULTIQ_ITEMS        0x80fb0664    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_MULTIQ_NAME         0x80fb065f    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_MULTIQ_SHORTNAME    0x80fb065e    // IDD_CONFIG_MULTI_Q [French (France)]
+#define HIDC_CONFIG_NEW                 0x80ce0407    // IDD_CONFIGURE [French (France)]
+#define HIDC_CONFIG_OTHER_DEFAULT       0x80d1046d    // IDD_CONFIG_OTHERPOINTS [French (France)]
+#define HIDC_CONFIG_OTHER_DESC          0x80d1046c    // IDD_CONFIG_OTHERPOINTS [French (France)]
+#define HIDC_CONFIG_OTHER_NAME          0x80d1046a    // IDD_CONFIG_OTHERPOINTS [French (France)]
+#define HIDC_CONFIG_OTHER_TALLY         0x80d1046b    // IDD_CONFIG_OTHERPOINTS [French (France)]
+#define HIDC_CONFIG_TITLEPTS_POINTS     0x80ea0598    // IDD_CONFIG_TITLE_POINTS [French (France)]
 #define HIDC_CONFIG_TITLEPTS_TITLE_POINTS \
-                                        0x80ea0599    // IDD_CONFIG_TITLE_POINTS
-#define HIDC_CONFIG_TITLEPTS_VALUE      0x80ea0597    // IDD_CONFIG_TITLE_POINTS
+                                        0x80ea0599    // IDD_CONFIG_TITLE_POINTS [French (France)]
+#define HIDC_CONFIG_TITLEPTS_VALUE      0x80ea0597    // IDD_CONFIG_TITLE_POINTS [French (France)]
 #define HIDC_CONFIG_TITLE_ALLOW_MULTIPLE \
-                                        0x80d20477    // IDD_CONFIG_TITLE
-#define HIDC_CONFIG_TITLE_DESC          0x80d20476    // IDD_CONFIG_TITLE
-#define HIDC_CONFIG_TITLE_LONG_NAME     0x80d20475    // IDD_CONFIG_TITLE
-#define HIDC_CONFIG_TITLE_NAME          0x80d20474    // IDD_CONFIG_TITLE
-#define HIDC_CONFIG_TITLE_PREFIX        0x80d20479    // IDD_CONFIG_TITLE
-#define HIDC_CONFIG_TITLE_VALID_FROM    0x80d2047a    // IDD_CONFIG_TITLE
+                                        0x80d20477    // IDD_CONFIG_TITLE [French (France)]
+#define HIDC_CONFIG_TITLE_DESC          0x80d20476    // IDD_CONFIG_TITLE [French (France)]
+#define HIDC_CONFIG_TITLE_LONG_NAME     0x80d20475    // IDD_CONFIG_TITLE [French (France)]
+#define HIDC_CONFIG_TITLE_NAME          0x80d20474    // IDD_CONFIG_TITLE [French (France)]
+#define HIDC_CONFIG_TITLE_PREFIX        0x80d20479    // IDD_CONFIG_TITLE [French (France)]
+#define HIDC_CONFIG_TITLE_VALID_FROM    0x80d2047a    // IDD_CONFIG_TITLE [French (France)]
 #define HIDC_CONFIG_TITLE_VALID_FROM_DATE \
-                                        0x80d2047b    // IDD_CONFIG_TITLE
-#define HIDC_CONFIG_TITLE_VALID_TO      0x80d2047c    // IDD_CONFIG_TITLE
+                                        0x80d2047b    // IDD_CONFIG_TITLE [French (France)]
+#define HIDC_CONFIG_TITLE_VALID_TO      0x80d2047c    // IDD_CONFIG_TITLE [French (France)]
 #define HIDC_CONFIG_TITLE_VALID_TO_DATE \
-                                        0x80d2047d    // IDD_CONFIG_TITLE
-#define HIDC_CONFIG_UPDATE              0x80ce040e    // IDD_CONFIGURE
-#define HIDC_CONFIG_UPDATE_DEFAULT      0x80d3047e    // IDD_CONFIG_UPDATE
-#define HIDC_CONFIG_UPDATE_EXISTING     0x80d3047f    // IDD_CONFIG_UPDATE
-#define HIDC_CONFIG_UPDATE_FILENAME     0x80d30481    // IDD_CONFIG_UPDATE
-#define HIDC_CONFIG_UPDATE_NAME         0x80d30480    // IDD_CONFIG_UPDATE
-#define HIDC_CONFIG_VENUE               0x80cf0410    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_COPY          0x80cf0417    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_DELETE        0x80cf0415    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_DESC          0x80cf0411    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_DIVISION      0x80cf0412    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_EDIT          0x80cf0416    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_EVENT         0x80cf041b    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_LEVEL         0x80cf0413    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_LONGNAME      0x80cf041d    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_MOVE_DOWN     0x80cf0419    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_MOVE_UP       0x80cf0418    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_MULTIQ        0x80cf041e    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_NEW           0x80cf0414    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_TITLES        0x80cf041c    // IDD_CONFIG_VENUE
-#define HIDC_CONFIG_VENUE_URL           0x80cf041f    // IDD_CONFIG_VENUE
-#define HIDC_DOGNUM_DELETE              0x80db04db    // IDD_DOG_NUMBERS
-#define HIDC_DOGNUM_EDIT                0x80db04da    // IDD_DOG_NUMBERS
-#define HIDC_DOGNUM_NEW                 0x80db04d9    // IDD_DOG_NUMBERS
-#define HIDC_DOGNUM_REG_NUMS            0x80db04d8    // IDD_DOG_NUMBERS
-#define HIDC_DOGPTS_DELETE              0x80d804bd    // IDD_DOG_POINTS
-#define HIDC_DOGPTS_EDIT                0x80d804bc    // IDD_DOG_POINTS
-#define HIDC_DOGPTS_NEW                 0x80d804bb    // IDD_DOG_POINTS
-#define HIDC_DOGPTS_POINTS              0x80d804ba    // IDD_DOG_POINTS
-#define HIDC_DOG_BREED                  0x80d904c5    // IDD_DOG_PROP
-#define HIDC_DOG_CALLNAME               0x80d904c4    // IDD_DOG_PROP
-#define HIDC_DOG_DECEASED               0x80d904cb    // IDD_DOG_PROP
-#define HIDC_DOG_DOB                    0x80d904c8    // IDD_DOG_PROP
-#define HIDC_DOG_IS_DECEASED            0x80d904c9    // IDD_DOG_PROP
-#define HIDC_DOG_NOTES                  0x80d904cc    // IDD_DOG_PROP
-#define HIDC_DOG_REG_NAME               0x80d904c6    // IDD_DOG_PROP
-#define HIDC_DOG_TITLE_DELETE           0x80da04d1    // IDD_DOG_TITLES
-#define HIDC_DOG_TITLE_EDIT             0x80da04d0    // IDD_DOG_TITLES
-#define HIDC_DOG_TITLE_HIDDEN           0x80da04d2    // IDD_DOG_TITLES
-#define HIDC_DOG_TITLE_NEW              0x80da04cf    // IDD_DOG_TITLES
-#define HIDC_DOG_TITLE_TITLES           0x80da04ce    // IDD_DOG_TITLES
-#define HIDC_EVENT_SELECT_DIVISION      0x80fc0668    // IDD_EVENT_SELECT
-#define HIDC_EVENT_SELECT_EVENT         0x80fc066a    // IDD_EVENT_SELECT
-#define HIDC_EVENT_SELECT_LEVEL         0x80fc0669    // IDD_EVENT_SELECT
-#define HIDC_EXISTING_COMMENTS          0x80de04fd    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_DATE              0x80de04ec    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_DIVISION          0x80de04f6    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_EVENT             0x80de04fa    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_LEVEL             0x80de04f8    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_MULTIQ            0x80de04f4    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_OTHERPOINTS       0x80de04f0    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_POINTS            0x80de04ee    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_SUBNAME           0x80de04fc    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_TYPE              0x80de04ed    // IDD_EXISTING_POINTS
-#define HIDC_EXISTING_VENUES            0x80de04f2    // IDD_EXISTING_POINTS
-#define HIDC_FAULTS                     0x80e9058c    // IDD_FAULT
-#define HIDC_FINDLINKS_COPY             0x80f80641    // IDD_FIND_LINKS
-#define HIDC_FINDLINKS_EDIT             0x80f80642    // IDD_FIND_LINKS
-#define HIDC_FINDLINKS_LIST             0x80f80640    // IDD_FIND_LINKS
-#define HIDC_FINDLINKS_OPEN             0x80f80643    // IDD_FIND_LINKS
-#define HIDC_FIND_ALL                   0x80cd03f6    // IDD_FIND
-#define HIDC_FIND_CASE                  0x80cd03f5    // IDD_FIND
-#define HIDC_FIND_DOWN                  0x80cd03f9    // IDD_FIND
-#define HIDC_FIND_NAME                  0x80cd03f4    // IDD_FIND
-#define HIDC_FIND_UP                    0x80cd03f8    // IDD_FIND
-#define HIDC_FIND_VISIBLE               0x80cd03f7    // IDD_FIND
-#define HIDC_JUDGE                      0x80d604b1    // IDD_JUDGE_INFO
-#define HIDC_JUDGE_COMMENTS             0x80d604b4    // IDD_JUDGE_INFO
-#define HIDC_JUDGE_DELETE               0x80d604b3    // IDD_JUDGE_INFO
-#define HIDC_JUDGE_NEW                  0x80d604b2    // IDD_JUDGE_INFO
-#define HIDC_LIST                       0x80cb03fe    // IDD_LISTCTRL
-#define HIDC_LIST_COPY                  0x80ca03fd    // IDD_LIST_VIEWER
-#define HIDC_LIST_DELETE                0x80cb0401    // IDD_LISTCTRL
-#define HIDC_LIST_EDIT                  0x80cb0400    // IDD_LISTCTRL
-#define HIDC_LIST_MOVE_DOWN             0x80cb0403    // IDD_LISTCTRL
-#define HIDC_LIST_MOVE_UP               0x80cb0402    // IDD_LISTCTRL
-#define HIDC_LIST_NEW                   0x80cb03ff    // IDD_LISTCTRL
-#define HIDC_LIST_TRIAL                 0x80cb0404    // IDD_LISTCTRL
-#define HIDC_LIST_VIEWER                0x80ca03fc    // IDD_LIST_VIEWER
-#define HIDC_NAME                       0x80c903f2    // IDD_NAME
-#define HIDC_OPT_CAL_AUTO_DELETE        0x80ef05dd    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_CLOSENEAR          0x80ef05d9    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_CLOSING            0x80ef05e2    // IDD_VIEW_OPTIONS_CALENDAR
+                                        0x80d2047d    // IDD_CONFIG_TITLE [French (France)]
+#define HIDC_CONFIG_UPDATE              0x80ce040e    // IDD_CONFIGURE [French (France)]
+#define HIDC_CONFIG_UPDATE_DEFAULT      0x80d3047e    // IDD_CONFIG_UPDATE [French (France)]
+#define HIDC_CONFIG_UPDATE_EXISTING     0x80d3047f    // IDD_CONFIG_UPDATE [French (France)]
+#define HIDC_CONFIG_UPDATE_FILENAME     0x80d30481    // IDD_CONFIG_UPDATE [French (France)]
+#define HIDC_CONFIG_UPDATE_NAME         0x80d30480    // IDD_CONFIG_UPDATE [French (France)]
+#define HIDC_CONFIG_VENUE               0x80cf0410    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_COPY          0x80cf0417    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_DELETE        0x80cf0415    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_DESC          0x80cf0411    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_DIVISION      0x80cf0412    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_EDIT          0x80cf0416    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_EVENT         0x80cf041b    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_LEVEL         0x80cf0413    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_LONGNAME      0x80cf041d    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_MOVE_DOWN     0x80cf0419    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_MOVE_UP       0x80cf0418    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_MULTIQ        0x80cf041e    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_NEW           0x80cf0414    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_TITLES        0x80cf041c    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_CONFIG_VENUE_URL           0x80cf041f    // IDD_CONFIG_VENUE [French (France)]
+#define HIDC_DOGNUM_DELETE              0x80db04db    // IDD_DOG_NUMBERS [French (France)]
+#define HIDC_DOGNUM_EDIT                0x80db04da    // IDD_DOG_NUMBERS [French (France)]
+#define HIDC_DOGNUM_NEW                 0x80db04d9    // IDD_DOG_NUMBERS [French (France)]
+#define HIDC_DOGNUM_REG_NUMS            0x80db04d8    // IDD_DOG_NUMBERS [French (France)]
+#define HIDC_DOGPTS_DELETE              0x80d804bd    // IDD_DOG_POINTS [French (France)]
+#define HIDC_DOGPTS_EDIT                0x80d804bc    // IDD_DOG_POINTS [French (France)]
+#define HIDC_DOGPTS_NEW                 0x80d804bb    // IDD_DOG_POINTS [French (France)]
+#define HIDC_DOGPTS_POINTS              0x80d804ba    // IDD_DOG_POINTS [French (France)]
+#define HIDC_DOG_BREED                  0x80d904c5    // IDD_DOG_PROP [French (France)]
+#define HIDC_DOG_CALLNAME               0x80d904c4    // IDD_DOG_PROP [French (France)]
+#define HIDC_DOG_DECEASED               0x80d904cb    // IDD_DOG_PROP [French (France)]
+#define HIDC_DOG_DOB                    0x80d904c8    // IDD_DOG_PROP [French (France)]
+#define HIDC_DOG_IS_DECEASED            0x80d904c9    // IDD_DOG_PROP [French (France)]
+#define HIDC_DOG_NOTES                  0x80d904cc    // IDD_DOG_PROP [French (France)]
+#define HIDC_DOG_REG_NAME               0x80d904c6    // IDD_DOG_PROP [French (France)]
+#define HIDC_DOG_TITLE_DELETE           0x80da04d1    // IDD_DOG_TITLES [French (France)]
+#define HIDC_DOG_TITLE_EDIT             0x80da04d0    // IDD_DOG_TITLES [French (France)]
+#define HIDC_DOG_TITLE_HIDDEN           0x80da04d2    // IDD_DOG_TITLES [French (France)]
+#define HIDC_DOG_TITLE_NEW              0x80da04cf    // IDD_DOG_TITLES [French (France)]
+#define HIDC_DOG_TITLE_TITLES           0x80da04ce    // IDD_DOG_TITLES [French (France)]
+#define HIDC_EVENT_SELECT_DIVISION      0x80fc0668    // IDD_EVENT_SELECT [French (France)]
+#define HIDC_EVENT_SELECT_EVENT         0x80fc066a    // IDD_EVENT_SELECT [French (France)]
+#define HIDC_EVENT_SELECT_LEVEL         0x80fc0669    // IDD_EVENT_SELECT [French (France)]
+#define HIDC_EXISTING_COMMENTS          0x80de04fd    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_DATE              0x80de04ec    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_DIVISION          0x80de04f6    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_EVENT             0x80de04fa    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_LEVEL             0x80de04f8    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_MULTIQ            0x80de04f4    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_OTHERPOINTS       0x80de04f0    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_POINTS            0x80de04ee    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_SUBNAME           0x80de04fc    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_TYPE              0x80de04ed    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_EXISTING_VENUES            0x80de04f2    // IDD_EXISTING_POINTS [French (France)]
+#define HIDC_FAULTS                     0x80e9058c    // IDD_FAULT [French (France)]
+#define HIDC_FINDLINKS_COPY             0x80f80641    // IDD_FIND_LINKS [French (France)]
+#define HIDC_FINDLINKS_EDIT             0x80f80642    // IDD_FIND_LINKS [French (France)]
+#define HIDC_FINDLINKS_LIST             0x80f80640    // IDD_FIND_LINKS [French (France)]
+#define HIDC_FINDLINKS_OPEN             0x80f80643    // IDD_FIND_LINKS [French (France)]
+#define HIDC_FIND_ALL                   0x80cd03f6    // IDD_FIND [French (France)]
+#define HIDC_FIND_CASE                  0x80cd03f5    // IDD_FIND [French (France)]
+#define HIDC_FIND_DOWN                  0x80cd03f9    // IDD_FIND [French (France)]
+#define HIDC_FIND_NAME                  0x80cd03f4    // IDD_FIND [French (France)]
+#define HIDC_FIND_UP                    0x80cd03f8    // IDD_FIND [French (France)]
+#define HIDC_FIND_VISIBLE               0x80cd03f7    // IDD_FIND [French (France)]
+#define HIDC_JUDGE                      0x80d604b1    // IDD_JUDGE_INFO [French (France)]
+#define HIDC_JUDGE_COMMENTS             0x80d604b4    // IDD_JUDGE_INFO [French (France)]
+#define HIDC_JUDGE_DELETE               0x80d604b3    // IDD_JUDGE_INFO [French (France)]
+#define HIDC_JUDGE_NEW                  0x80d604b2    // IDD_JUDGE_INFO [French (France)]
+#define HIDC_LANGUAGE                   0x80ff0688    // IDD_LANGUAGE [French (France)]
+#define HIDC_LIST                       0x80cb03fe    // IDD_LISTCTRL [French (France)]
+#define HIDC_LIST_COPY                  0x80ca03fd    // IDD_LIST_VIEWER [French (France)]
+#define HIDC_LIST_DELETE                0x80cb0401    // IDD_LISTCTRL [French (France)]
+#define HIDC_LIST_EDIT                  0x80cb0400    // IDD_LISTCTRL [French (France)]
+#define HIDC_LIST_MOVE_DOWN             0x80cb0403    // IDD_LISTCTRL [French (France)]
+#define HIDC_LIST_MOVE_UP               0x80cb0402    // IDD_LISTCTRL [French (France)]
+#define HIDC_LIST_NEW                   0x80cb03ff    // IDD_LISTCTRL [French (France)]
+#define HIDC_LIST_TRIAL                 0x80cb0404    // IDD_LISTCTRL [French (France)]
+#define HIDC_LIST_VIEWER                0x80ca03fc    // IDD_LIST_VIEWER [French (France)]
+#define HIDC_NAME                       0x80c903f2    // IDD_NAME [French (France)]
+#define HIDC_OPT_CAL_AUTO_DELETE        0x80ef05dd    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_CLOSENEAR          0x80ef05d9    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_CLOSING            0x80ef05e2    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
 #define HIDC_OPT_CAL_COLOR_CLOSENEAR_SET \
-                                        0x80ef05d8    // IDD_VIEW_OPTIONS_CALENDAR
+                                        0x80ef05d8    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
 #define HIDC_OPT_CAL_COLOR_OPENNEAR_SET \
-                                        0x80ef05d4    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_COLOR_SET          0x80ef05e5    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_DAY_OF_WEEK        0x80ef05da    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_ENTRIES            0x80ef05e3    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_FONT               0x80ef05e7    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_HIDE_OLD           0x80ef05de    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_HIDE_OVERLAP       0x80ef05e0    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_OLD_ENTRY_DAYS     0x80ef05df    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_OPENING            0x80ef05e1    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_OPENNEAR           0x80ef05d5    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_WARN_CLOSENEAR     0x80ef05d6    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_CAL_WARN_OPENNEAR      0x80ef05d2    // IDD_VIEW_OPTIONS_CALENDAR
-#define HIDC_OPT_FILTER_CAL_ENTERED     0x80ee05bf    // IDD_VIEW_OPTIONS_FILTER
+                                        0x80ef05d4    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_COLOR_SET          0x80ef05e5    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_DAY_OF_WEEK        0x80ef05da    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_ENTRIES            0x80ef05e3    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_FONT               0x80ef05e7    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_HIDE_OLD           0x80ef05de    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_HIDE_OVERLAP       0x80ef05e0    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_OLD_ENTRY_DAYS     0x80ef05df    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_OPENING            0x80ef05e1    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_OPENNEAR           0x80ef05d5    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_WARN_CLOSENEAR     0x80ef05d6    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_CAL_WARN_OPENNEAR      0x80ef05d2    // IDD_VIEW_OPTIONS_CALENDAR [French (France)]
+#define HIDC_OPT_FILTER_CAL_ENTERED     0x80ee05bf    // IDD_VIEW_OPTIONS_FILTER [French (France)]
 #define HIDC_OPT_FILTER_CAL_NOT_ENTERED \
-                                        0x80ee05bd    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_CAL_PLANNING    0x80ee05be    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_DATE_ALL        0x80ee05b4    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_DATE_END        0x80ee05b9    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_DATE_END_CHECK  0x80ee05b8    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_DATE_RANGE      0x80ee05b5    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_DATE_START      0x80ee05b7    // IDD_VIEW_OPTIONS_FILTER
+                                        0x80ee05bd    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_CAL_PLANNING    0x80ee05be    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_DATE_ALL        0x80ee05b4    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_DATE_END        0x80ee05b9    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_DATE_END_CHECK  0x80ee05b8    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_DATE_RANGE      0x80ee05b5    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_DATE_START      0x80ee05b7    // IDD_VIEW_OPTIONS_FILTER [French (France)]
 #define HIDC_OPT_FILTER_DATE_START_CHECK \
-                                        0x80ee05b6    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_LOG_NAME        0x80ee05bc    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_LOG_NAME_ALL    0x80ee05ba    // IDD_VIEW_OPTIONS_FILTER
+                                        0x80ee05b6    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_LOG_NAME        0x80ee05bc    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_LOG_NAME_ALL    0x80ee05ba    // IDD_VIEW_OPTIONS_FILTER [French (France)]
 #define HIDC_OPT_FILTER_LOG_NAME_SELECTED \
-                                        0x80ee05bb    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_NAMES           0x80ee05c6    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_NAMES_DELETE    0x80ee05c7    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_NAMES_SAVE      0x80ee05c8    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_RUN_RUNS_ALL    0x80ee05c3    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_RUN_RUNS_NON_Q  0x80ee05c5    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_RUN_RUNS_Q      0x80ee05c4    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_RUN_VENUES      0x80ee05c2    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_FILTER_RUN_VENUES_ALL  0x80ee05c0    // IDD_VIEW_OPTIONS_FILTER
+                                        0x80ee05bb    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_NAMES           0x80ee05c6    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_NAMES_DELETE    0x80ee05c7    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_NAMES_SAVE      0x80ee05c8    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_RUN_RUNS_ALL    0x80ee05c3    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_RUN_RUNS_NON_Q  0x80ee05c5    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_RUN_RUNS_Q      0x80ee05c4    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_RUN_VENUES      0x80ee05c2    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_FILTER_RUN_VENUES_ALL  0x80ee05c0    // IDD_VIEW_OPTIONS_FILTER [French (France)]
 #define HIDC_OPT_FILTER_RUN_VENUES_SELECTED \
-                                        0x80ee05c1    // IDD_VIEW_OPTIONS_FILTER
-#define HIDC_OPT_PGM_AUTOSHOW           0x80ed05ac    // IDD_VIEW_OPTIONS_PROGRAM
-#define HIDC_OPT_PGM_AUTO_CHECK         0x80ed05aa    // IDD_VIEW_OPTIONS_PROGRAM
-#define HIDC_OPT_PGM_BROWSE             0x80ed05af    // IDD_VIEW_OPTIONS_PROGRAM
-#define HIDC_OPT_PGM_EDIT               0x80ed05ab    // IDD_VIEW_OPTIONS_PROGRAM
-#define HIDC_OPT_PGM_FILENAME           0x80ed05ae    // IDD_VIEW_OPTIONS_PROGRAM
-#define HIDC_OPT_PGM_SHOWHTML           0x80ed05b0    // IDD_VIEW_OPTIONS_PROGRAM
-#define HIDC_OPT_PGM_SHOW_SPLASH        0x80ed05ad    // IDD_VIEW_OPTIONS_PROGRAM
-#define HIDC_OPT_PRINT_FONT             0x80f205f1    // IDD_VIEW_OPTIONS_PRINTING
-#define HIDC_OPT_PRINT_MARGIN_B         0x80f205f5    // IDD_VIEW_OPTIONS_PRINTING
-#define HIDC_OPT_PRINT_MARGIN_L         0x80f205f2    // IDD_VIEW_OPTIONS_PRINTING
-#define HIDC_OPT_PRINT_MARGIN_R         0x80f205f4    // IDD_VIEW_OPTIONS_PRINTING
-#define HIDC_OPT_PRINT_MARGIN_T         0x80f205f3    // IDD_VIEW_OPTIONS_PRINTING
-#define HIDC_OTHER_DESC                 0x80e80583    // IDD_OTHER_POINT
-#define HIDC_OTHER_NEW                  0x80e80585    // IDD_OTHER_POINT
-#define HIDC_OTHER_OTHERPOINTS          0x80e80582    // IDD_OTHER_POINT
-#define HIDC_OTHER_POINTS               0x80e80584    // IDD_OTHER_POINT
-#define HIDC_PARTNER_CALLNAME           0x80e70579    // IDD_PARTNER
-#define HIDC_PARTNER_NAME               0x80e70578    // IDD_PARTNER
-#define HIDC_PARTNER_REG_NUM            0x80e7057a    // IDD_PARTNER
-#define HIDC_PICK_NAME                  0x80d704b9    // IDD_DOG_PICKER
-#define HIDC_POINTS_VIEW_SORT_C1        0x80fe067c    // IDD_POINTS_VIEW_SORT
-#define HIDC_POINTS_VIEW_SORT_C2        0x80fe067d    // IDD_POINTS_VIEW_SORT
-#define HIDC_POINTS_VIEW_SORT_C3        0x80fe067e    // IDD_POINTS_VIEW_SORT
-#define HIDC_REFRUN_BREED               0x80e60573    // IDD_REF_RUN
-#define HIDC_REFRUN_HEIGHT              0x80e60570    // IDD_REF_RUN
-#define HIDC_REFRUN_NAME                0x80e60572    // IDD_REF_RUN
-#define HIDC_REFRUN_NOTES               0x80e60574    // IDD_REF_RUN
-#define HIDC_REFRUN_PLACE               0x80e6056e    // IDD_REF_RUN
-#define HIDC_REFRUN_POINTS              0x80e60575    // IDD_REF_RUN
-#define HIDC_REFRUN_Q                   0x80e6056f    // IDD_REF_RUN
-#define HIDC_REFRUN_TIME                0x80e60571    // IDD_REF_RUN
-#define HIDC_REGNUM_HEIGHT              0x80dc04df    // IDD_REG_NUM
-#define HIDC_REGNUM_NOTE                0x80dc04dc    // IDD_REG_NUM
-#define HIDC_REGNUM_RECEIVED            0x80dc04e0    // IDD_REG_NUM
-#define HIDC_REGNUM_REG_NUM             0x80dc04de    // IDD_REG_NUM
-#define HIDC_REGNUM_VENUES              0x80dc04dd    // IDD_REG_NUM
-#define HIDC_REORDER_LIST               0x80f305fa    // IDD_REORDER
-#define HIDC_REORDER_MOVE_DOWN          0x80f305fc    // IDD_REORDER
-#define HIDC_REORDER_MOVE_UP            0x80f305fb    // IDD_REORDER
-#define HIDC_RUNCOMMENT_COMMENTS        0x80e20550    // IDD_RUN_COMMENTS
+                                        0x80ee05c1    // IDD_VIEW_OPTIONS_FILTER [French (France)]
+#define HIDC_OPT_PGM_AUTOSHOW           0x80ed05ac    // IDD_VIEW_OPTIONS_PROGRAM [French (France)]
+#define HIDC_OPT_PGM_AUTO_CHECK         0x80ed05aa    // IDD_VIEW_OPTIONS_PROGRAM [French (France)]
+#define HIDC_OPT_PGM_BROWSE             0x80ed05af    // IDD_VIEW_OPTIONS_PROGRAM [French (France)]
+#define HIDC_OPT_PGM_EDIT               0x80ed05ab    // IDD_VIEW_OPTIONS_PROGRAM [French (France)]
+#define HIDC_OPT_PGM_FILENAME           0x80ed05ae    // IDD_VIEW_OPTIONS_PROGRAM [French (France)]
+#define HIDC_OPT_PGM_SHOWHTML           0x80ed05b0    // IDD_VIEW_OPTIONS_PROGRAM [French (France)]
+#define HIDC_OPT_PGM_SHOW_SPLASH        0x80ed05ad    // IDD_VIEW_OPTIONS_PROGRAM [French (France)]
+#define HIDC_OPT_PRINT_FONT             0x80f205f1    // IDD_VIEW_OPTIONS_PRINTING [French (France)]
+#define HIDC_OPT_PRINT_MARGIN_B         0x80f205f5    // IDD_VIEW_OPTIONS_PRINTING [French (France)]
+#define HIDC_OPT_PRINT_MARGIN_L         0x80f205f2    // IDD_VIEW_OPTIONS_PRINTING [French (France)]
+#define HIDC_OPT_PRINT_MARGIN_R         0x80f205f4    // IDD_VIEW_OPTIONS_PRINTING [French (France)]
+#define HIDC_OPT_PRINT_MARGIN_T         0x80f205f3    // IDD_VIEW_OPTIONS_PRINTING [French (France)]
+#define HIDC_OTHER_DESC                 0x80e80583    // IDD_OTHER_POINT [French (France)]
+#define HIDC_OTHER_NEW                  0x80e80585    // IDD_OTHER_POINT [French (France)]
+#define HIDC_OTHER_OTHERPOINTS          0x80e80582    // IDD_OTHER_POINT [French (France)]
+#define HIDC_OTHER_POINTS               0x80e80584    // IDD_OTHER_POINT [French (France)]
+#define HIDC_PARTNER_CALLNAME           0x80e70579    // IDD_PARTNER [French (France)]
+#define HIDC_PARTNER_NAME               0x80e70578    // IDD_PARTNER [French (France)]
+#define HIDC_PARTNER_REG_NUM            0x80e7057a    // IDD_PARTNER [French (France)]
+#define HIDC_PICK_NAME                  0x80d704b9    // IDD_DOG_PICKER [French (France)]
+#define HIDC_POINTS_VIEW_SORT_C1        0x80fe067c    // IDD_POINTS_VIEW_SORT [French (France)]
+#define HIDC_POINTS_VIEW_SORT_C2        0x80fe067d    // IDD_POINTS_VIEW_SORT [French (France)]
+#define HIDC_POINTS_VIEW_SORT_C3        0x80fe067e    // IDD_POINTS_VIEW_SORT [French (France)]
+#define HIDC_REFRUN_BREED               0x80e60573    // IDD_REF_RUN [French (France)]
+#define HIDC_REFRUN_HEIGHT              0x80e60570    // IDD_REF_RUN [French (France)]
+#define HIDC_REFRUN_NAME                0x80e60572    // IDD_REF_RUN [French (France)]
+#define HIDC_REFRUN_NOTES               0x80e60574    // IDD_REF_RUN [French (France)]
+#define HIDC_REFRUN_PLACE               0x80e6056e    // IDD_REF_RUN [French (France)]
+#define HIDC_REFRUN_POINTS              0x80e60575    // IDD_REF_RUN [French (France)]
+#define HIDC_REFRUN_Q                   0x80e6056f    // IDD_REF_RUN [French (France)]
+#define HIDC_REFRUN_TIME                0x80e60571    // IDD_REF_RUN [French (France)]
+#define HIDC_REGNUM_HEIGHT              0x80dc04df    // IDD_REG_NUM [French (France)]
+#define HIDC_REGNUM_NOTE                0x80dc04dc    // IDD_REG_NUM [French (France)]
+#define HIDC_REGNUM_RECEIVED            0x80dc04e0    // IDD_REG_NUM [French (France)]
+#define HIDC_REGNUM_REG_NUM             0x80dc04de    // IDD_REG_NUM [French (France)]
+#define HIDC_REGNUM_VENUES              0x80dc04dd    // IDD_REG_NUM [French (France)]
+#define HIDC_REORDER_LIST               0x80f305fa    // IDD_REORDER [French (France)]
+#define HIDC_REORDER_MOVE_DOWN          0x80f305fc    // IDD_REORDER [French (France)]
+#define HIDC_REORDER_MOVE_UP            0x80f305fb    // IDD_REORDER [French (France)]
+#define HIDC_RUNCOMMENT_COMMENTS        0x80e20550    // IDD_RUN_COMMENTS [French (France)]
 #define HIDC_RUNCOMMENT_COMMENTS_FAULTS \
-                                        0x80e20552    // IDD_RUN_COMMENTS
-#define HIDC_RUNCOMMENT_FAULTS_LIST     0x80e20551    // IDD_RUN_COMMENTS
-#define HIDC_RUNCRCD_COPY               0x80e4055d    // IDD_RUN_CRCD
-#define HIDC_RUNCRCD_CRCD               0x80e4055e    // IDD_RUN_CRCD
-#define HIDC_RUNCRCD_DESC               0x80e4055f    // IDD_RUN_CRCD
-#define HIDC_RUNCRCD_EDIT               0x80e4055b    // IDD_RUN_CRCD
-#define HIDC_RUNCRCD_IMAGE              0x80e40560    // IDD_RUN_CRCD
-#define HIDC_RUNCRCD_VIEW               0x80e4055c    // IDD_RUN_CRCD
-#define HIDC_RUNLINK_DELETE             0x80e50567    // IDD_RUN_LINK
-#define HIDC_RUNLINK_EDIT               0x80e50566    // IDD_RUN_LINK
-#define HIDC_RUNLINK_LIST               0x80e50564    // IDD_RUN_LINK
-#define HIDC_RUNLINK_NEW                0x80e50565    // IDD_RUN_LINK
-#define HIDC_RUNLINK_OPEN               0x80e50568    // IDD_RUN_LINK
-#define HIDC_RUNREF_ADDDOG              0x80e3055a    // IDD_RUN_REFERENCE
-#define HIDC_RUNREF_DELETE              0x80e30559    // IDD_RUN_REFERENCE
-#define HIDC_RUNREF_EDIT                0x80e30558    // IDD_RUN_REFERENCE
-#define HIDC_RUNREF_NEW                 0x80e30557    // IDD_RUN_REFERENCE
-#define HIDC_RUNREF_REF_RUNS            0x80e30556    // IDD_RUN_REFERENCE
-#define HIDC_RUNSCORE_BONUSPTS          0x80e10554    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_CLOSE_PTS         0x80e1052e    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_CLOSING_PTS       0x80e1052a    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_CONDITIONS        0x80e1051f    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_DATE              0x80e10514    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_DESC              0x80e1051b    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_DIVISION          0x80e10518    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_DOGS_QD           0x80e1053d    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_EVENT             0x80e1051a    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_FAULTS            0x80e10523    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_HANDLER           0x80e1051e    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_HEIGHT            0x80e1051c    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_IN_CLASS          0x80e1053c    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_JUDGE             0x80e1051d    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_JUDGE_NOTES       0x80e10555    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_LEVEL             0x80e10519    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_OPENING_PTS       0x80e10528    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_OPEN_PTS          0x80e1052c    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_OTHERPOINTS       0x80e10544    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_PARTNER           0x80e10521    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_PARTNERS_EDIT     0x80e10520    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_PLACE             0x80e1053b    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_Q                 0x80e1053e    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_SCT               0x80e10536    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_SCT2              0x80e10538    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_SUBNAME           0x80e10546    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_TABLE             0x80e10526    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_TIME              0x80e10525    // IDD_RUN_SCORE
-#define HIDC_RUNSCORE_YARDS             0x80e10530    // IDD_RUN_SCORE
-#define HIDC_SELECTURL_FILENAME         0x80ec05a2    // IDD_SELECT_URL
-#define HIDC_SELECTURL_NAME             0x80ec05a1    // IDD_SELECT_URL
-#define HIDC_TITLE_DATE                 0x80dd04e3    // IDD_TITLE
-#define HIDC_TITLE_DESC                 0x80dd04e8    // IDD_TITLE
-#define HIDC_TITLE_EARNED               0x80dd04e2    // IDD_TITLE
-#define HIDC_TITLE_HIDDEN               0x80dd04e4    // IDD_TITLE
-#define HIDC_TITLE_RECEIVED             0x80dd04e7    // IDD_TITLE
-#define HIDC_TITLE_TITLES               0x80dd04e6    // IDD_TITLE
-#define HIDC_TITLE_VENUES               0x80dd04e5    // IDD_TITLE
-#define HIDC_TRAINING_DATE              0x80d504b5    // IDD_TRAINING
-#define HIDC_TRAINING_NAME              0x80d504b6    // IDD_TRAINING
-#define HIDC_TRAINING_NOTES             0x80d504b7    // IDD_TRAINING
-#define HIDC_TRAINING_SUBNAME           0x80d504b8    // IDD_TRAINING
-#define HIDC_TRIAL_CLUBS                0x80df0505    // IDD_TRIAL
-#define HIDC_TRIAL_CLUB_DELETE          0x80df0504    // IDD_TRIAL
-#define HIDC_TRIAL_CLUB_EDIT            0x80df0503    // IDD_TRIAL
-#define HIDC_TRIAL_CLUB_INFO            0x80df0508    // IDD_TRIAL
-#define HIDC_TRIAL_CLUB_NEW             0x80df0502    // IDD_TRIAL
-#define HIDC_TRIAL_CLUB_NOTES           0x80df04ff    // IDD_TRIAL
-#define HIDC_TRIAL_LOCATION             0x80df0500    // IDD_TRIAL
-#define HIDC_TRIAL_LOCATION_INFO        0x80df0507    // IDD_TRIAL
-#define HIDC_TRIAL_LOCATION_NOTES       0x80df04fe    // IDD_TRIAL
-#define HIDC_TRIAL_NOTES                0x80df0501    // IDD_TRIAL
-#define HIDC_TRIAL_VERIFIED             0x80df0506    // IDD_TRIAL
-#define HIDC_WIZARD_EXPORT_ASSIGN       0x80f6062b    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DATE         0x80f6062a    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DELIM        0x80f60629    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DELIM_COLON  0x80f60625    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DELIM_COMMA  0x80f60627    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DELIM_OTHER  0x80f60628    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DELIM_SEMI   0x80f60626    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DELIM_SPACE  0x80f60624    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_DELIM_TAB    0x80f60623    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_EXPORT_PREVIEW      0x80f6062c    // IDD_WIZARD_EXPORT
-#define HIDC_WIZARD_IMPORT_ASSIGN       0x80f50619    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DATE         0x80f50618    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DELIM        0x80f50617    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DELIM_COLON  0x80f50613    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DELIM_COMMA  0x80f50615    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DELIM_OTHER  0x80f50616    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DELIM_SEMI   0x80f50614    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DELIM_SPACE  0x80f50612    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_DELIM_TAB    0x80f50611    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_FILE         0x80f5061a    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_PREVIEW      0x80f5061c    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_ROW          0x80f5060e    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_IMPORT_ROW_SPIN     0x80f5060f    // IDD_WIZARD_IMPORT
-#define HIDC_WIZARD_START_ARB           0x80f40607    // IDD_WIZARD_START
-#define HIDC_WIZARD_START_EXCEL         0x80f40604    // IDD_WIZARD_START
-#define HIDC_WIZARD_START_LIST          0x80f40608    // IDD_WIZARD_START
-#define HIDC_WIZARD_START_SPREADSHEET   0x80f40606    // IDD_WIZARD_START
+                                        0x80e20552    // IDD_RUN_COMMENTS [French (France)]
+#define HIDC_RUNCOMMENT_FAULTS_LIST     0x80e20551    // IDD_RUN_COMMENTS [French (France)]
+#define HIDC_RUNCRCD_COPY               0x80e4055d    // IDD_RUN_CRCD [French (France)]
+#define HIDC_RUNCRCD_CRCD               0x80e4055e    // IDD_RUN_CRCD [French (France)]
+#define HIDC_RUNCRCD_DESC               0x80e4055f    // IDD_RUN_CRCD [French (France)]
+#define HIDC_RUNCRCD_EDIT               0x80e4055b    // IDD_RUN_CRCD [French (France)]
+#define HIDC_RUNCRCD_IMAGE              0x80e40560    // IDD_RUN_CRCD [French (France)]
+#define HIDC_RUNCRCD_VIEW               0x80e4055c    // IDD_RUN_CRCD [French (France)]
+#define HIDC_RUNLINK_DELETE             0x80e50567    // IDD_RUN_LINK [French (France)]
+#define HIDC_RUNLINK_EDIT               0x80e50566    // IDD_RUN_LINK [French (France)]
+#define HIDC_RUNLINK_LIST               0x80e50564    // IDD_RUN_LINK [French (France)]
+#define HIDC_RUNLINK_NEW                0x80e50565    // IDD_RUN_LINK [French (France)]
+#define HIDC_RUNLINK_OPEN               0x80e50568    // IDD_RUN_LINK [French (France)]
+#define HIDC_RUNREF_ADDDOG              0x80e3055a    // IDD_RUN_REFERENCE [French (France)]
+#define HIDC_RUNREF_DELETE              0x80e30559    // IDD_RUN_REFERENCE [French (France)]
+#define HIDC_RUNREF_EDIT                0x80e30558    // IDD_RUN_REFERENCE [French (France)]
+#define HIDC_RUNREF_NEW                 0x80e30557    // IDD_RUN_REFERENCE [French (France)]
+#define HIDC_RUNREF_REF_RUNS            0x80e30556    // IDD_RUN_REFERENCE [French (France)]
+#define HIDC_RUNSCORE_BONUSPTS          0x80e10554    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_CLOSE_PTS         0x80e1052e    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_CLOSING_PTS       0x80e1052a    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_CONDITIONS        0x80e1051f    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_DATE              0x80e10514    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_DESC              0x80e1051b    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_DIVISION          0x80e10518    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_DOGS_QD           0x80e1053d    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_EVENT             0x80e1051a    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_FAULTS            0x80e10523    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_HANDLER           0x80e1051e    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_HEIGHT            0x80e1051c    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_IN_CLASS          0x80e1053c    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_JUDGE             0x80e1051d    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_JUDGE_NOTES       0x80e10555    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_LEVEL             0x80e10519    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_OPENING_PTS       0x80e10528    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_OPEN_PTS          0x80e1052c    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_OTHERPOINTS       0x80e10544    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_PARTNER           0x80e10521    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_PARTNERS_EDIT     0x80e10520    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_PLACE             0x80e1053b    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_Q                 0x80e1053e    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_SCT               0x80e10536    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_SCT2              0x80e10538    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_SUBNAME           0x80e10546    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_TABLE             0x80e10526    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_TIME              0x80e10525    // IDD_RUN_SCORE [French (France)]
+#define HIDC_RUNSCORE_YARDS             0x80e10530    // IDD_RUN_SCORE [French (France)]
+#define HIDC_SELECTURL_FILENAME         0x80ec05a2    // IDD_SELECT_URL [French (France)]
+#define HIDC_SELECTURL_NAME             0x80ec05a1    // IDD_SELECT_URL [French (France)]
+#define HIDC_TITLE_DATE                 0x80dd04e3    // IDD_TITLE [French (France)]
+#define HIDC_TITLE_DESC                 0x80dd04e8    // IDD_TITLE [French (France)]
+#define HIDC_TITLE_EARNED               0x80dd04e2    // IDD_TITLE [French (France)]
+#define HIDC_TITLE_HIDDEN               0x80dd04e4    // IDD_TITLE [French (France)]
+#define HIDC_TITLE_RECEIVED             0x80dd04e7    // IDD_TITLE [French (France)]
+#define HIDC_TITLE_TITLES               0x80dd04e6    // IDD_TITLE [French (France)]
+#define HIDC_TITLE_VENUES               0x80dd04e5    // IDD_TITLE [French (France)]
+#define HIDC_TRAINING_DATE              0x80d504b5    // IDD_TRAINING [French (France)]
+#define HIDC_TRAINING_NAME              0x80d504b6    // IDD_TRAINING [French (France)]
+#define HIDC_TRAINING_NOTES             0x80d504b7    // IDD_TRAINING [French (France)]
+#define HIDC_TRAINING_SUBNAME           0x80d504b8    // IDD_TRAINING [French (France)]
+#define HIDC_TRIAL_CLUBS                0x80df0505    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_CLUB_DELETE          0x80df0504    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_CLUB_EDIT            0x80df0503    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_CLUB_INFO            0x80df0508    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_CLUB_NEW             0x80df0502    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_CLUB_NOTES           0x80df04ff    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_LOCATION             0x80df0500    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_LOCATION_INFO        0x80df0507    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_LOCATION_NOTES       0x80df04fe    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_NOTES                0x80df0501    // IDD_TRIAL [French (France)]
+#define HIDC_TRIAL_VERIFIED             0x80df0506    // IDD_TRIAL [French (France)]
+#define HIDC_WIZARD_EXPORT_ASSIGN       0x80f6062b    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DATE         0x80f6062a    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DELIM        0x80f60629    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DELIM_COLON  0x80f60625    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DELIM_COMMA  0x80f60627    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DELIM_OTHER  0x80f60628    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DELIM_SEMI   0x80f60626    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DELIM_SPACE  0x80f60624    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_DELIM_TAB    0x80f60623    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_EXPORT_PREVIEW      0x80f6062c    // IDD_WIZARD_EXPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_ASSIGN       0x80f50619    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DATE         0x80f50618    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DELIM        0x80f50617    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DELIM_COLON  0x80f50613    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DELIM_COMMA  0x80f50615    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DELIM_OTHER  0x80f50616    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DELIM_SEMI   0x80f50614    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DELIM_SPACE  0x80f50612    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_DELIM_TAB    0x80f50611    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_FILE         0x80f5061a    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_PREVIEW      0x80f5061c    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_ROW          0x80f5060e    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_IMPORT_ROW_SPIN     0x80f5060f    // IDD_WIZARD_IMPORT [French (France)]
+#define HIDC_WIZARD_START_ARB           0x80f40607    // IDD_WIZARD_START [French (France)]
+#define HIDC_WIZARD_START_EXCEL         0x80f40604    // IDD_WIZARD_START [French (France)]
+#define HIDC_WIZARD_START_LIST          0x80f40608    // IDD_WIZARD_START [French (France)]
+#define HIDC_WIZARD_START_SPREADSHEET   0x80f40606    // IDD_WIZARD_START [French (France)]

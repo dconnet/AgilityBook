@@ -36,6 +36,7 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+class CLanguageManager;
 class CTabView;
 
 class CMainFrame : public CFrameWnd
@@ -54,6 +55,7 @@ public:
 // Implementation
 public:
 	virtual ~CMainFrame();
+	void InitLangMgr(CLanguageManager* pLangMgr);
 	void SetStatusText(
 			CString const& msg,
 			bool bFiltered);
@@ -73,6 +75,8 @@ protected:  // control bar embedded members
 			int row,
 			int col);
 	CTabView*	m_pView;
+	CLanguageManager*	m_pLangMgr;
+	CMenu*		m_pNewMenu;
 	CStatusBar  m_wndStatusBar;
 	CToolBar    m_wndToolBar;
 
@@ -80,10 +84,13 @@ protected:  // control bar embedded members
 protected:
 	//{{AFX_MSG(CMainFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 	afx_msg void OnClose();
 	afx_msg void OnUpdatePane(CCmdUI* pCmdUI);
 	afx_msg void OnNextTab();
 	afx_msg void OnPrevTab();
+	afx_msg void OnUpdateChooseFileLanguage(CCmdUI* pCmdUI);
+	afx_msg void OnFileChooseLanguage();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

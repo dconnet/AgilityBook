@@ -294,6 +294,10 @@ SOURCE=..\..\Win\DlgInfoJudge.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgLanguage.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgListCtrl.cpp
 # End Source File
 # Begin Source File
@@ -415,6 +419,10 @@ SOURCE=..\..\Win\HyperLink.cpp
 # Begin Source File
 
 SOURCE=..\..\Win\IconList.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\LanguageManager.cpp
 # End Source File
 # Begin Source File
 
@@ -703,6 +711,10 @@ SOURCE=..\..\Win\DlgInfoJudge.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgLanguage.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgListCtrl.h
 # End Source File
 # Begin Source File
@@ -828,6 +840,10 @@ SOURCE=..\..\Win\HyperLink.h
 # Begin Source File
 
 SOURCE=..\..\Win\IconList.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\LanguageManager.h
 # End Source File
 # Begin Source File
 

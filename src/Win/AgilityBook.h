@@ -42,6 +42,7 @@
 #endif
 
 #include "resource.h"       // main symbols
+#include "LanguageManager.h"
 #include "UpdateInfo.h"
 
 class CAgilityBookApp : public CWinApp
@@ -65,6 +66,7 @@ public:
 
 private:
 	CUpdateInfo m_UpdateInfo;
+	CLanguageManager m_LangMgr;
 
 // Overrides
 	//{{AFX_VIRTUAL(CAgilityBookApp)

@@ -60,6 +60,7 @@
 #include "AgilityBookViewTraining.h"
 #include "DlgMessage.h"
 #include "Element.h"
+#include "LanguageManager.h"
 #include "Splash.h"
 #include "TabView.h"
 
@@ -389,6 +390,8 @@ CAgilityBookApp theApp;
 // CAgilityBookApp initialization
 BOOL CAgilityBookApp::InitInstance()
 {
+	m_LangMgr.SetInitialLanguage();
+
 	if (!AfxOleInit())
 	{
 		AfxMessageBox(IDS_ERR_COM_FAILED, MB_ICONSTOP);
@@ -459,6 +462,7 @@ BOOL CAgilityBookApp::InitInstance()
 
 	// Change the registry key under which our settings are stored
 	SetRegistryKey(_T("dcon Software"));
+	m_LangMgr.SetDefaultLanguage();
 	InitCrashHandler(GetAppRegistryKey());
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 
@@ -541,6 +545,7 @@ BOOL CAgilityBookApp::InitInstance()
 	//  In an SDI app, this should occur after ProcessShellCommand
 	// Enable drag/drop open
 	m_pMainWnd->DragAcceptFiles();
+	reinterpret_cast<CMainFrame*>(m_pMainWnd)->InitLangMgr(&m_LangMgr);
 
 	// Check for updates every 30 days.
 	if (AfxGetApp()->GetProfileInt(_T("Settings"), _T("autoCheck"), 1))

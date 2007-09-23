@@ -66,10 +66,12 @@ public:
 	CString GetProductName() const			{return m_ProdName;}
 	CString GetVersionString() const;
 	void GetVersion(VERSION_NUMBER& outVer) const; 
+	LANGID GetLangID() const				{return m_wLangID;}
 
 private:
 	bool m_Valid;
 	CString m_FileName;
 	CString m_ProdName;
 	VERSION_NUMBER m_Version;
+	WORD m_wLangID;
 };
