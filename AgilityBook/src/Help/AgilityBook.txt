@@ -319,6 +319,13 @@ Select the type of titling points: Normal (points awarded per run),
 Lifetime (points accumulated towards lifetime, normally the same as Normal),
 Placement (points accumulated based on placement, treated like lifetime)
 
+.topic HIDC_CONFIG_PLACEINFO_PLACE
+Enter the place that has a multiplier.
+The multiplier will increase title points earned based on the dog's placement.
+
+.topic HIDC_CONFIG_PLACEINFO_VALUE
+Enter the multiplier value for the specified placement.
+
 .topic HIDC_CONFIG_UPDATE_DEFAULT
 Merge in the configuration defined in this program.
 
@@ -1101,11 +1108,14 @@ Start the import at the specified row. This allows skipping of header data.
 .topic HIDC_WIZARD_IMPORT_ROW_SPIN
 Use this to scroll the starting row.
 
-.topic HIDC_WIZARD_START_EXCEL
-Import data directly from or export data directly to Microsoft Excel.
-
 .topic HIDC_WIZARD_START_ARB
 Import data from or export data to another Agility Record Book file.
+
+.topic HIDC_WIZARD_START_CALC
+Import data directly from or export data directly to Open Office Calc.
+
+.topic HIDC_WIZARD_START_EXCEL
+Import data directly from or export data directly to Microsoft Excel.
 
 .topic HIDC_WIZARD_START_LIST
 Things that can be imported or exported. Selecting an item will display some
