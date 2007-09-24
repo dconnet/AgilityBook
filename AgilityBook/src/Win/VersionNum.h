@@ -56,6 +56,9 @@ public:
 	 */
 	explicit CVersionNum(CString inVer);
 
+	/**
+	 * Equality is based solely on the version number, not any language aspects.
+	 */
 	bool operator==(CVersionNum const& rhs) const;
 	bool operator<(CVersionNum const& rhs) const;
 	bool operator>(CVersionNum const& rhs) const;

@@ -65,6 +65,8 @@ typedef LANGINFO *PLANGINFO;
 
 CLanguageManager::CLanguageManager()
 	: m_hInstance(NULL)
+	, m_pszHelpFilePath(NULL)
+	, m_InitHelpFilePath()
 	, m_LangID(0)
 	, m_Langs()
 	, m_CurLang(0)
@@ -216,28 +218,59 @@ bool CLanguageManager::SetLanguage(LANGID langId)
 			bSet = true;
 			AfxSetResourceHandle(hInst);
 			m_CurLang = langId;
+			SetHelpFile();
 		}
 	}
 	return bSet;
 }
 
 
-void CLanguageManager::SetInitialLanguage()
+#define MAX_LANGUAGE 80
+void CLanguageManager::SetHelpFile()
+{
+	if (m_pszHelpFilePath && 0 != m_CurLang)
+	{
+		TCHAR langName[MAX_LANGUAGE];
+		GetLocaleInfo(m_CurLang, LOCALE_SABBREVLANGNAME, langName, MAX_LANGUAGE);
+
+		if (*m_pszHelpFilePath)
+			free((void*)(*m_pszHelpFilePath));
+		CString chmFile(m_InitHelpFilePath.Left(m_InitHelpFilePath.GetLength()-4));
+		if (m_CurLang != m_LangID)
+			chmFile + langName;
+		chmFile += _T(".chm");
+		*m_pszHelpFilePath = _tcsdup((LPCTSTR)chmFile);
+	}
+}
+
+
+void CLanguageManager::SetInitialLanguage(LPCTSTR* pszHelpFilePath)
 {
 	if (!m_hInstance)
 	{
+		ASSERT(pszHelpFilePath);
+		m_pszHelpFilePath = pszHelpFilePath;
+		if (m_InitHelpFilePath.IsEmpty())
+			m_InitHelpFilePath = *m_pszHelpFilePath;
+
 		// Don't use AfxGetResourceHandle as a satelite resource may have
 		// been auto-mapped into our space, if the OS supports it. Since
 		// we still target OSs that don't (pre-w2k), we need to test.
 		m_hInstance = AfxGetInstanceHandle();
-		{
-			CVersionNum ver(m_hInstance);
-			m_LangID = ver.GetLangID();
-		}
+		CVersionNum verExe(m_hInstance);
+		m_LangID = verExe.GetLangID();
 		{
 			CVersionNum ver(AfxGetResourceHandle());
-			m_CurLang = ver.GetLangID();
+			// If OS auto-loaded a version mismatch, fix it!
+			if (ver == verExe)
+				m_CurLang = ver.GetLangID();
+			else
+			{
+				m_CurLang = m_LangID;
+				AfxSetResourceHandle(m_hInstance);
+			}
 		}
+		SetHelpFile();
 		// Load resource DLLs
 		CString exeName;
 		TCHAR* pName = exeName.GetBuffer(MAX_PATH);
@@ -255,8 +288,11 @@ void CLanguageManager::SetInitialLanguage()
 				if (hInst)
 				{
 					CVersionNum ver(hInst);
-					LANGID id = ver.GetLangID();
-					m_Langs[id] = hInst;
+					if (ver == verExe)
+					{
+						LANGID id = ver.GetLangID();
+						m_Langs[id] = hInst;
+					}
 				}
 			}
 			while (FindNextFile(hFind, &data));

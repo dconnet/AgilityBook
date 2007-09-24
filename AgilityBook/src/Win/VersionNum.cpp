@@ -189,6 +189,7 @@ CVersionNum::CVersionNum(CString inVer)
 }
 
 
+// Equality is based solely on the version number, not any language aspects.
 bool CVersionNum::operator==(CVersionNum const& rhs) const
 {
 	return m_Version.part1 == rhs.m_Version.part1

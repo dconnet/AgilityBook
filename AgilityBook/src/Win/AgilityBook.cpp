@@ -390,7 +390,7 @@ CAgilityBookApp theApp;
 // CAgilityBookApp initialization
 BOOL CAgilityBookApp::InitInstance()
 {
-	m_LangMgr.SetInitialLanguage();
+	m_LangMgr.SetInitialLanguage(&m_pszHelpFilePath);
 
 	if (!AfxOleInit())
 	{
@@ -489,9 +489,6 @@ BOOL CAgilityBookApp::InitInstance()
 #if _MSC_VER >= 1300
 	EnableHtmlHelp();
 #endif
-	TCHAR* chmFile = _tcsdup(m_pszHelpFilePath);
-	lstrcpy(&chmFile[lstrlen(chmFile)-3], _T("chm"));
-	m_pszHelpFilePath = chmFile;
 
 	// Should we open the last open file?
 	bool bOpeningLast = false;

@@ -44,7 +44,7 @@ public:
 	CLanguageManager();
 	~CLanguageManager();
 
-	void SetInitialLanguage();
+	void SetInitialLanguage(LPCTSTR* pszHelpFilePath);
 	void SetDefaultLanguage(); ///< Do not call until after SetRegistryKey.
 	size_t NumLanguages();
 	bool SelectLanguage();
@@ -57,8 +57,11 @@ public:
 private:
 	LANGID DetectLanguage() const;
 	bool SetLanguage(LANGID langId);
+	void SetHelpFile();
 
 	HINSTANCE m_hInstance;
+	CString m_InitHelpFilePath;
+	LPCTSTR* m_pszHelpFilePath;
 	LANGID m_LangID;
 	LangResources m_Langs;
 	LANGID m_CurLang;
