@@ -38,20 +38,56 @@
 
 #include <map>
 
+/**
+ * Class to manage resource-only language DLLs.
+ * This class is meant to work closely with CWinApp.
+ */
 class CLanguageManager
 {
 public:
 	CLanguageManager();
 	~CLanguageManager();
 
+	/**
+	 * Set the initial language in the app based on system settings.
+	 * This is normally called once as the first thing in InitInstance
+	 */
 	void SetInitialLanguage(LPCTSTR* pszHelpFilePath);
-	void SetDefaultLanguage(); ///< Do not call until after SetRegistryKey.
+
+	/**
+	 * Set the default language. When run the first time, this will call
+	 * SelectLanguage(). Subsequent calls will load the last selected language.
+	 * @note Do not call until after SetRegistryKey as it needs to access
+	 * the registry to retrieve the last selected language.
+	 */
+	void SetDefaultLanguage();
+
+	/**
+	 * How many languages are we managing - Number of AgilityBook*.dll files
+	 * found in the executables directory that have the same version number as
+	 * the executable.
+	 */
 	size_t NumLanguages();
+
+	/**
+	 * Display a user interface to select a language.
+	 */
 	bool SelectLanguage();
 
+	/**
+	 * Executables language (embedded resources)
+	 */
 	LANGID ExeLanguage() const				{return m_LangID;}
+
 	typedef std::map<LANGID, HINSTANCE> LangResources;
+	/**
+	 * Mapping of language ids to loaded resource instance.
+	 */
 	LangResources const& Languages() const	{return m_Langs;}
+
+	/**
+	 * Currectly selected language.
+	 */
 	LANGID CurrentLanguage() const			{return m_CurLang;}
 
 private:
