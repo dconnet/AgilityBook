@@ -49,7 +49,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDlgLanguage dialog
 
-// If pClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgLanguage::CDlgLanguage(CLanguageManager& langMgr, CWnd* pParent)
 	: CDlgBaseDialog(CDlgLanguage::IDD, pParent)
 	, m_LangMgr(langMgr)
