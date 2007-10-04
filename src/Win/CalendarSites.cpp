@@ -38,19 +38,20 @@
 #include "AgilityBook.h"
 #include "CalendarSites.h"
 
-#include <boost/shared_ptr.hpp>
-#include <map>
-#include <vector>
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "CheckTreeCtrl.h"
+#include "DlgAssignColumns.h"
 #include "DlgBaseDialog.h"
 #include "DlgProgress.h"
 #include "Element.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
+#include <boost/shared_ptr.hpp>
+#include <map>
+#include <vector>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -128,9 +129,10 @@ private:
 	//{{AFX_DATA(CDlgCalendarPlugins)
 	enum { IDD = IDD_CALENDAR_PLUGINS };
 	CCheckTreeCtrl	m_ctrlPlugins;
-	CStatic	m_ctrlDetails;
+	CEdit	m_ctrlDetails;
 	CButton	m_ctrlRead;
 	CButton	m_ctrlAdd;
+	CButton	m_ctrlEnable;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	std::map<CString, CalSiteDataPtr>& m_DirectAccess;
@@ -148,8 +150,11 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnTvnDeleteitemPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTvnSetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTvnGetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnPluginRead();
 	afx_msg void OnPluginAdd();
+	afx_msg void OnPluginEnable();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -541,8 +546,8 @@ public:
 		m_hItem = hItem;
 	}
 
-	virtual CStringA GetName() const = 0;
-	virtual CStringA GetDesc() const = 0;
+	virtual CString GetName() const = 0;
+	virtual CString GetDesc() const = 0;
 
 private:
 	HTREEITEM m_hItem;
@@ -556,39 +561,64 @@ public:
 		: m_Filename(filename)
 		, m_CalData(calData)
 	{
-		if (m_CalData && m_CalData->isValid())
+		ASSERT(m_CalData);
+		SetNameDesc();
+	}
+
+	virtual CString GetName() const	{return m_Name;}
+	virtual CString GetDesc() const	{return m_Desc;}
+
+	CStringA Process(IProgressMeter *progress)
+	{
+		return m_CalData->Process(progress);
+	}
+
+	bool isValid() const		{return m_CalData->isValid();}
+	bool Enable()
+	{
+		bool bStatusChange = false;
+		if (!m_CalData->isValid())
+		{
+			CAgilityBookOptions::SuppressCalSite(m_Filename, false);
+			m_CalData->Connect();
+			if (m_CalData->isValid())
+			{
+				bStatusChange = true;
+				SetNameDesc();
+			}
+		}
+		return bStatusChange;
+	}
+
+	void Disable()
+	{
+		m_CalData->Unload(true);
+		CString disabled;
+		disabled.LoadString(IDS_DISABLED);
+		m_Name.Format(_T("%s [%s]"), (LPCTSTR)m_Filename, (LPCTSTR)disabled);
+	}
+
+private:
+	void SetNameDesc()
+	{
+		if (m_CalData->isValid())
 		{
 			m_Name = m_CalData->GetName();
 			m_Desc = m_CalData->GetDescription();
 		}
 		else
 		{
-			m_Name = m_Filename;
-			m_Desc = "";
+			CString disabled;
+			disabled.LoadString(IDS_DISABLED);
+			m_Name.Format(_T("%s [%s]"), (LPCTSTR)m_Filename, (LPCTSTR)disabled);
+			m_Desc = _T("");
 		}
 	}
 
-	virtual CStringA GetName() const	{return m_Name;}
-	virtual CStringA GetDesc() const	{return m_Desc;}
-
-	CStringA Process(IProgressMeter *progress)
-	{
-		if (m_CalData)
-			return m_CalData->Process(progress);
-		return "";
-	}
-
-	void Unload(bool bPermanent)
-	{
-		if (m_CalData)
-			m_CalData->Unload(bPermanent);
-	}
-
-private:
 	CString m_Filename;
 	CalSiteDataPtr m_CalData;
-	CStringA m_Name;
-	CStringA m_Desc;
+	CString m_Name;
+	CString m_Desc;
 };
 
 class CPluginCalData : public CPluginData
@@ -597,18 +627,56 @@ public:
 	CPluginCalData(ARBCalendarPtr cal)
 		: m_Cal(cal)
 	{
-		m_Name = m_Cal->GetGenericName().c_str();
-		m_Desc = m_Cal->GetNote().c_str();
+		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
+		otstringstream name;
+		name << m_Cal->GetStartDate().GetString(dFmt)
+			<< ' '
+			<< m_Cal->GetEndDate().GetString(dFmt)
+			<< ": "
+			<< m_Cal->GetVenue()
+			<< ' '
+			<< m_Cal->GetLocation()
+			<< ' '
+			<< m_Cal->GetClub();
+		m_Name = name.str().c_str();
+		otstringstream desc;
+		desc << m_Cal->GetSecEmail() << '\n';
+		if (m_Cal->GetOpeningDate().IsValid())
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
+			desc << (LPCTSTR)str
+				<< ' '
+				<< m_Cal->GetOpeningDate().GetString(dFmt)
+				<< '\n';
+		}
+		if (m_Cal->GetDrawDate().IsValid())
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
+			desc << (LPCTSTR)str
+				<< ' '
+				<< m_Cal->GetDrawDate().GetString(dFmt)
+				<< '\n';
+		}
+		if (m_Cal->GetClosingDate().IsValid())
+		{
+			CString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
+			desc << (LPCTSTR)str
+				<< ' '
+				<< m_Cal->GetClosingDate().GetString(dFmt)
+				<< '\n';
+		}
+		m_Desc = desc.str().c_str();
+		m_Desc.Replace(_T("\n"), _T("\r\n"));
 	}
 
-	virtual CStringA GetName() const	{return m_Name;}
-	virtual CStringA GetDesc() const	{return m_Desc;}
-	ARBCalendarPtr CalEntry() const		{return m_Cal;}
+	virtual CString GetName() const	{return m_Name;}
+	virtual CString GetDesc() const	{return m_Desc;}
+	ARBCalendarPtr CalEntry() const	{return m_Cal;}
 
 private:
 	ARBCalendarPtr m_Cal;
-	CStringA m_Name;
-	CStringA m_Desc;
+	CString m_Name;
+	CString m_Desc;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -634,6 +702,7 @@ void CDlgCalendarPlugins::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PLUGIN_DETAILS, m_ctrlDetails);
 	DDX_Control(pDX, IDC_PLUGIN_READ, m_ctrlRead);
 	DDX_Control(pDX, IDC_PLUGIN_ADD, m_ctrlAdd);
+	DDX_Control(pDX, IDC_PLUGIN_ENABLE, m_ctrlEnable);
 	//}}AFX_DATA_MAP
 }
 
@@ -642,8 +711,11 @@ BEGIN_MESSAGE_MAP(CDlgCalendarPlugins, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendarPlugins)
 	ON_NOTIFY(TVN_DELETEITEM, IDC_PLUGIN_TREE, OnTvnDeleteitemPluginTree)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_PLUGIN_TREE, OnTvnSelchangedPluginTree)
+	ON_NOTIFY(TVN_SETDISPINFO, IDC_PLUGIN_TREE, OnTvnSetdispinfoPluginTree)
+	ON_NOTIFY(TVN_GETDISPINFO, IDC_PLUGIN_TREE, OnTvnGetdispinfoPluginTree)
 	ON_BN_CLICKED(IDC_PLUGIN_READ, OnPluginRead)
 	ON_BN_CLICKED(IDC_PLUGIN_ADD, OnPluginAdd)
+	ON_BN_CLICKED(IDC_PLUGIN_ENABLE, OnPluginEnable)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -668,6 +740,14 @@ void CDlgCalendarPlugins::UpdateControls()
 	}
 	m_ctrlRead.EnableWindow(0 < nChecked);
 	m_ctrlAdd.EnableWindow(0 < nCalItems);
+	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
+	CPluginDllData* pData = NULL;
+	if (hItem)
+	{
+		CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
+		pData = dynamic_cast<CPluginDllData*>(pRawData);
+	}
+	m_ctrlEnable.EnableWindow(pData != NULL && !pData->isValid());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -681,9 +761,8 @@ BOOL CDlgCalendarPlugins::OnInitDialog()
 	for (i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
 	{
 		CPluginDllData* pData = new CPluginDllData((*i).first, (*i).second);
-		CString name = CString(pData->GetName());
 		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
-			name,
+			LPSTR_TEXTCALLBACK,
 			0, 0,
 			0, 0,
 			reinterpret_cast<LPARAM>(static_cast<CPluginData*>(pData)),
@@ -722,6 +801,36 @@ void CDlgCalendarPlugins::OnTvnSelchangedPluginTree(NMHDR *pNMHDR, LRESULT *pRes
 	if (pData)
 		desc = pData->GetDesc();
 	m_ctrlDetails.SetWindowText(desc);
+	UpdateControls();
+	*pResult = 0;
+}
+
+
+void CDlgCalendarPlugins::OnTvnSetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NMTVDISPINFO* pTvdi = reinterpret_cast<NMTVDISPINFO*>(pNMHDR);
+	if (pTvdi->item.stateMask & TVIS_STATEIMAGEMASK)
+	{
+		// Check state of a button just changed.
+		UpdateControls();
+	}
+	*pResult = 0;
+}
+
+
+void CDlgCalendarPlugins::OnTvnGetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	TV_DISPINFO* pDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
+	CPluginData* pData = reinterpret_cast<CPluginData*>(pDispInfo->item.lParam);
+	if (pDispInfo->item.mask & TVIF_TEXT)
+	{
+		if (pData)
+		{
+			CString str = pData->GetName();
+			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
+		}
+	}
 	*pResult = 0;
 }
 
@@ -779,9 +888,8 @@ void CDlgCalendarPlugins::OnPluginRead()
 						for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
 						{
 							CPluginCalData* pCalData = new CPluginCalData(*iter);
-							CString name(pCalData->GetName());
 							HTREEITEM hCalItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
-								name,
+								LPSTR_TEXTCALLBACK,
 								0, 0,
 								0, 0,
 								reinterpret_cast<LPARAM>(static_cast<CPluginData*>(pCalData)),
@@ -806,7 +914,7 @@ void CDlgCalendarPlugins::OnPluginRead()
 					str.LoadString(IDS_USE_PLUGIN);
 					err += str;
 					if (IDNO == AfxMessageBox(err, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
-						pData->Unload(true);
+						pData->Disable();
 					progress.SetForegroundWindow();
 					wait.Restore();
 				}
@@ -835,7 +943,7 @@ void CDlgCalendarPlugins::OnPluginAdd()
 		{
 			if (m_ctrlPlugins.GetChecked(hCal))
 			{
-				CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
+				CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hCal));
 				CPluginCalData* pData = dynamic_cast<CPluginCalData*>(pRawData);
 				if (pData)
 				{
@@ -868,7 +976,31 @@ void CDlgCalendarPlugins::OnPluginAdd()
 	CString str;
 	str.FormatMessage(IDS_UPDATED_CAL_ITEMS, nAdded, nUpdated);
 	AfxMessageBox(str, MB_ICONINFORMATION);
-	OnOK();
+	UpdateControls();
+}
+
+
+void CDlgCalendarPlugins::OnPluginEnable()
+{
+	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
+	if (hItem)
+	{
+		CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
+		CPluginDllData* pData = dynamic_cast<CPluginDllData*>(pRawData);
+		if (pData)
+		{
+			if (pData->Enable())
+			{
+				CRect rect;
+				m_ctrlPlugins.GetItemRect(pData->GetHTreeItem(), &rect, TRUE);
+				m_ctrlPlugins.InvalidateRect(rect);
+				m_ctrlPlugins.ShowCheckbox(pData->GetHTreeItem(), true);
+				CString desc(pData->GetDesc());
+				m_ctrlDetails.SetWindowText(desc);
+				UpdateControls();
+			}
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

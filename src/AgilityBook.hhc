@@ -337,10 +337,16 @@
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Calendar Plugins">
+					<param name="Local" value="Help\html\DlgCalendarPlugins.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="CRCD Viewer">
 					<param name="Local" value="Help\html\DlgCRCDViewer.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
+
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Dog Picker">
 					<param name="Local" value="Help\html\DlgDogPicker.html">
@@ -369,6 +375,11 @@
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Find Links">
 					<param name="Local" value="Help\html\DlgFindLinks.html">
+					<param name="ImageNumber" value="11">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Language Selection">
+					<param name="Local" value="Help\html\DlgLanguage.html">
 					<param name="ImageNumber" value="11">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
