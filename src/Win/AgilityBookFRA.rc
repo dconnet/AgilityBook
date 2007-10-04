@@ -160,7 +160,7 @@ BEGIN
         MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
         MENUITEM "Save &As...\tF12",            ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        MENUITEM "&Choose Language...",         ID_FILE_CHOOSELANGUAGE
+        MENUITEM "&Choose Language...",         ID_FILE_LANGUAGE_CHOOSE
         MENUITEM SEPARATOR
         MENUITEM "&Import and Export...\tCtrl+E", ID_FILE_EXPORT_WIZARD
         MENUITEM "&Find all linked files...",   ID_FILE_LINKED
@@ -1605,6 +1605,19 @@ BEGIN
     PUSHBUTTON      "Annuler",IDCANCEL,148,24,50,14
 END
 
+IDD_CALENDAR_PLUGINS DIALOGEX 0, 0, 345, 258
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Calendar Plugins"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_PLUGIN_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,7,7,270,200,0,HIDC_PLUGIN_TREE
+    LTEXT           "Details",IDC_PLUGIN_DETAILS,7,210,270,42,SS_SUNKEN
+    PUSHBUTTON      "&Read Entries",IDC_PLUGIN_READ,288,7,50,14,0,0,HIDC_PLUGIN_READ
+    PUSHBUTTON      "&Add Entries",IDC_PLUGIN_ADD,288,24,50,14,0,0,HIDC_PLUGIN_ADD
+    PUSHBUTTON      "Annuler",IDCANCEL,288,41,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2089,6 +2102,14 @@ BEGIN
         RIGHTMARGIN, 198
         TOPMARGIN, 7
         BOTTOMMARGIN, 38
+    END
+
+    IDD_CALENDAR_PLUGINS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 133
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2874,7 +2895,7 @@ BEGIN
     ID_FILE_LINKED          "Find all linked files\nFind Links"
     ID_FILE_PRINT_BLANK_RUNS 
                             "Print blank sheets for recording runs\nPrint Blank"
-    ID_FILE_CHOOSELANGUAGE  "Choose a language\nLanguage"
+    ID_FILE_LANGUAGE_CHOOSE "Choose a language\nLanguage"
     ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
     ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
     ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"

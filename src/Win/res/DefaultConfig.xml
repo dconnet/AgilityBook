@@ -9,6 +9,7 @@ UNKNOWN-24 DRC Configuration version 20.
                Fixed AKC FAST titles.
                Added Hoopers/Gaters to NADAC, updated titles.
                Added PR[123] titles to USDAA
+               Added FCI/SCC venues.
 2007-06-24 DRC Configuration version 19.
                Updated NADAC to correct points in Skilled categories.
                Corrected Long name on 2 NATCH titles.
@@ -2112,6 +2113,68 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
+		<Venue LongName="Fédération Cynologique Internationale" Name="FCI" URL="http://www.fci.be" icon="14">
+			<Titles LongName="Agility Certificate" Name="Agility Certificate">Qualified 'Excellent' 3 times, with clear rounds, under 2 different judges in Agility 1 competitions</Titles>
+			<Division Name="Standard">
+				<Level Name="Level 1"/>
+				<Level Name="Level 2"/>
+				<Level Name="Level 3"/>
+			</Division>
+			<Event Name="Agility" hasTable="y">
+				<Scoring Division="*" Level="Level 2" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+					<Placements>
+						<PlaceInfo Place="1" Value="1"/>
+						<PlaceInfo Place="2" Value="1"/>
+						<PlaceInfo Place="3" Value="1"/>
+					</Placements>
+				</Scoring>
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+				</Scoring>
+			</Event>
+			<Event Name="Jumping">
+				<Scoring Division="*" Level="Level 2" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+					<Placements>
+						<PlaceInfo Place="1" Value="1"/>
+						<PlaceInfo Place="2" Value="1"/>
+						<PlaceInfo Place="3" Value="1"/>
+					</Placements>
+				</Scoring>
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+				</Scoring>
+			</Event>
+		</Venue>
 		<Venue LongName="North American Dog Agility Council" Name="NADAC" URL="http://www.nadac.com/" icon="9">
 			<Desc>Note: As of 12/10/2005, NADAC no longer tracks points in different divisions. All of the -V and -JH titles are gone. For simplicity, the new Categories are being treated as Divisions.</Desc>
 			<Titles LongName="Novice Agility Certificate" Name="NAC">30 points</Titles>
@@ -2509,6 +2572,100 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
+		<Venue LongName="Société Centrale Canine" Name="SCC" URL="http://www.france-agility.com/agility/reglts.htm" icon="15">
+			<Titles LongName="Agility Certificate" Name="Agility Certificate">Qualified 'Excellent' 3 times, with clear rounds, under 2 different judges in Agility 1 competitions</Titles>
+			<Division Name="Senior">
+				<Level Name="No Level"/>
+				<Level Name="Level 1"/>
+				<Level Name="Level 2"/>
+				<Level Name="Level 3"/>
+			</Division>
+			<Division Name="Junior">
+				<Level Name="No Level"/>
+				<Level Name="Level 1"/>
+				<Level Name="Level 2"/>
+				<Level Name="Level 3"/>
+			</Division>
+			<Division Name="Poussin">
+				<Level Name="No Level"/>
+				<Level Name="Level 1"/>
+				<Level Name="Level 2"/>
+				<Level Name="Level 3"/>
+			</Division>
+			<Event Name="Agility" hasTable="y">
+				<Scoring Division="*" Level="Level 1" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+				</Scoring>
+				<Scoring Division="*" Level="Level 2" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+					<Placements>
+						<PlaceInfo Place="1" Value="1"/>
+						<PlaceInfo Place="2" Value="1"/>
+						<PlaceInfo Place="3" Value="1"/>
+					</Placements>
+				</Scoring>
+				<Scoring Division="*" Level="Level 3" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+				</Scoring>
+			</Event>
+			<Event Name="Jumping">
+				<Scoring Division="*" Level="No Level" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="Level 2" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+					<Placements>
+						<PlaceInfo Place="1" Value="1"/>
+						<PlaceInfo Place="2" Value="1"/>
+						<PlaceInfo Place="3" Value="1"/>
+					</Placements>
+				</Scoring>
+				<Scoring Division="*" Level="*" type="FaultsThenTime">
+					<Note>0 - 5.99 fauts = Excellent
+6 - 15.99 faults = Very Good
+16 - 25.99 faults = Good
+26 or more = Not Classified</Note>
+					<TitlePoints Faults="0" Points="1"/>
+					<TitlePoints Faults="5.99" Points="0"/>
+					<TitlePoints Faults="15.99" Points="0"/>
+					<TitlePoints Faults="25.99" Points="0"/>
+				</Scoring>
+			</Event>
+			<Event Name="Open Royal Canin" hasTable="y">
+				<Scoring Division="*" Level="No Level" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
+			</Event>
+			<Event Name="Grand Prix France" hasTable="y">
+				<Scoring Division="*" Level="No Level" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
+			</Event>
+		</Venue>
 		<Venue LongName="Sweepstakes Agility" Name="Sweepstakes" URL="http://www.sweepstakesagility.com/" icon="10">
 			<Titles LongName="Starter Sweepstakes" Name="SSw">50 points</Titles>
 			<Titles LongName="Novice Sweepstakes" Name="NSw">100 points</Titles>
@@ -2611,7 +2768,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 			<Titles LongName="United Agility I" Name="UAGI">3 Qs in either A or B.</Titles>
 			<Titles LongName="United Agility II" Name="UAGII">3 Qs in either A or B.</Titles>
 			<Titles LongName="United Agility Champion" Name="UACH">100 pts from B, 40 must be from AgI, 40 must be from AgII</Titles>
-			<Titles LongName="United Agility Champion Excellent" Name="UACHX">5 Qs</Titles>
+			<Titles LongName="United Agility Champion Excellent" Name="UACHX">5 Qs from AGIII under at least 3 different judges</Titles>
 			<Titles LongName="United Grand Agility Champion" Name="UGRACH">5 triple-Qs with a combined score of 588 or higher, 2 of the combined wins must be under at least 2 different judges.</Titles>
 			<Division Name="Standard">
 				<Level Name="Agility I">
@@ -2624,12 +2781,25 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				</Level>
 				<Level Name="Agility III"/>
 			</Division>
+			<Division Name="UAGI">
+				<Level Name="A"/>
+				<Level Name="B"/>
+			</Division>
+			<Division Name="UAGII">
+				<Level Name="A"/>
+				<Level Name="B"/>
+			</Division>
+			<Division Name="UACH">
+				<Level Name="B"/>
+			</Division>
+			<Division Name="UACHX">
+				<Level Name="B"/>
+			</Division>
+			<Division Name="UGRACH">
+				<Level Name="B"/>
+			</Division>
 			<Event Name="Agility I">
 				<Scoring Division="*" Level="Agility I" type="Faults200ThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="1" Points="6"/>
-					<TitlePoints Faults="2" Points="4"/>
-					<TitlePoints Faults="3" Points="2"/>
 					<TitlePoints Faults="30" Points="1"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="1" Points="6"/>
@@ -2637,13 +2807,8 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 					<LifeTime Faults="3" Points="2"/>
 					<LifeTime Faults="4" Points="1"/>
 				</Scoring>
-			</Event>
-			<Event Name="Agility II">
-				<Scoring Division="*" Level="Agility II" type="Faults200ThenTime">
-					<TitlePoints Faults="0" Points="10"/>
-					<TitlePoints Faults="1" Points="6"/>
-					<TitlePoints Faults="2" Points="4"/>
-					<TitlePoints Faults="3" Points="2"/>
+				<Scoring Division="UAGI" Level="*" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that are working towards their UAGI title.</Note>
 					<TitlePoints Faults="30" Points="1"/>
 					<LifeTime Faults="0" Points="10"/>
 					<LifeTime Faults="1" Points="6"/>
@@ -2651,9 +2816,8 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 					<LifeTime Faults="3" Points="2"/>
 					<LifeTime Faults="4" Points="1"/>
 				</Scoring>
-			</Event>
-			<Event Name="Agility III">
-				<Scoring Division="*" Level="Agility III" dropFractions="y" type="Faults200ThenTime">
+				<Scoring Division="UACH" Level="B" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that have earned both their UAGI and UAGII titles.</Note>
 					<TitlePoints Faults="0" Points="10"/>
 					<TitlePoints Faults="1" Points="6"/>
 					<TitlePoints Faults="2" Points="4"/>
@@ -2665,8 +2829,91 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 					<LifeTime Faults="3" Points="2"/>
 					<LifeTime Faults="4" Points="1"/>
 				</Scoring>
+				<Scoring Division="UGRACH" Level="B" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that have earned their UACHX title.</Note>
+					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Agility II">
+				<Scoring Division="*" Level="Agility II" type="Faults200ThenTime">
+					<TitlePoints Faults="30" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+				<Scoring Division="UAGII" Level="*" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that are working towards their UAGII title.</Note>
+					<TitlePoints Faults="30" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+				<Scoring Division="UACH" Level="*" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that have earned both their UAGI and UAGII titles.</Note>
+					<TitlePoints Faults="0" Points="10"/>
+					<TitlePoints Faults="1" Points="6"/>
+					<TitlePoints Faults="2" Points="4"/>
+					<TitlePoints Faults="3" Points="2"/>
+					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+				<Scoring Division="UGRACH" Level="*" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that have earned their UACHX title.</Note>
+					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+			</Event>
+			<Event Name="Agility III">
+				<Scoring Division="*" Level="Agility III" dropFractions="y" type="Faults200ThenTime">
+					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+				<Scoring Division="UACHX" Level="B" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that have earned their UACH title.</Note>
+					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
+				<Scoring Division="UGRACH" Level="B" dropFractions="y" type="Faults200ThenTime">
+					<Note>This division/level is for dogs that have earned their UACHX title.</Note>
+					<TitlePoints Faults="4" Points="1"/>
+					<LifeTime Faults="0" Points="10"/>
+					<LifeTime Faults="1" Points="6"/>
+					<LifeTime Faults="2" Points="4"/>
+					<LifeTime Faults="3" Points="2"/>
+					<LifeTime Faults="4" Points="1"/>
+				</Scoring>
 			</Event>
 			<MultiQ Name="Triple Q" SName="QQQ">
+				<MultiQItem Div="UGRACH" Event="Agility I" Level="B"/>
+				<MultiQItem Div="UGRACH" Event="Agility II" Level="B"/>
+				<MultiQItem Div="UGRACH" Event="Agility III" Level="B"/>
+			</MultiQ>
+			<MultiQ Name="Triple Q (old)" SName="QQQ">
 				<MultiQItem Div="Standard" Event="Agility I" Level="Agility I B"/>
 				<MultiQItem Div="Standard" Event="Agility II" Level="Agility II B"/>
 				<MultiQItem Div="Standard" Event="Agility III" Level="Agility III"/>

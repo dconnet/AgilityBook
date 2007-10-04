@@ -6,6 +6,7 @@
   - Added Hoopers to NADAC. Updated Platinum/Purple title names.
     (Still need to update Hoopers titles properly)
   - Added PR1/2/3 to USDAA titles.
+  - Added FCI/SCC venues.
 - New features / Enhancements:
   - Add support for repeating titles starting from '1'.
   - Add "book" pages from printing, allow printing runs using same.

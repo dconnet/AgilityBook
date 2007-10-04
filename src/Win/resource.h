@@ -105,6 +105,7 @@
 #define IDD_AUTHENTICATE                253
 #define IDD_POINTS_VIEW_SORT            254
 #define IDD_LANGUAGE                    255
+#define IDD_CALENDAR_PLUGINS            256
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -548,6 +549,10 @@
 #define IDC_AUTH_USERNAME               1670
 #define IDC_AUTH_PASSWORD               1671
 #define IDC_LANGUAGE                    1672
+#define IDC_PLUGIN_TREE                 1680
+#define IDC_PLUGIN_DETAILS              1681
+#define IDC_PLUGIN_READ                 1682
+#define IDC_PLUGIN_ADD                  1683
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -964,7 +969,8 @@
 #define ID_FILE_EXPORT_WIZARD           32772
 #define ID_FILE_LINKED                  32774
 #define ID_FILE_PRINT_BLANK_RUNS        32775
-#define ID_FILE_CHOOSELANGUAGE          32776
+#define ID_FILE_LANGUAGE_CHOOSE         32776
+#define ID_FILE_LANGUAGE_MANAGE         32777
 #define ID_EDIT_FIND_NEXT               32780
 #define ID_EDIT_FIND_PREVIOUS           32781
 #define ID_EDIT_CONFIGURATION           32782
@@ -1024,9 +1030,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        256
+#define _APS_NEXT_RESOURCE_VALUE        257
 #define _APS_NEXT_COMMAND_VALUE         32900
-#define _APS_NEXT_CONTROL_VALUE         1680
+#define _APS_NEXT_CONTROL_VALUE         1690
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

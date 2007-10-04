@@ -45,6 +45,8 @@
 #include "AgilityBookOptions.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
+#include "CheckTreeCtrl.h"
+#include "DlgBaseDialog.h"
 #include "DlgProgress.h"
 #include "Element.h"
 #include "ICalendarSite.h"
@@ -80,6 +82,79 @@ private:
 	IDlgProgress* m_pProgress;
 };
 
+/////////////////////////////////////////////////////////////////////////////
+
+class CalSiteData
+{
+private:
+	// Copy semantics don't work well with our cleanup code!
+	CalSiteData(CalSiteData const&);
+	CalSiteData& operator=(CalSiteData const&);
+public:
+	CalSiteData(CString const& pathname, CString const& filename);
+	~CalSiteData();
+
+	void Connect();
+
+	bool isValid() const					{return NULL != m_pSite;}
+	void Unload(bool bPermanently = false);
+
+	CStringA GetName();
+	CStringA GetDescription();
+	CStringA Process(IProgressMeter *progress);
+
+private:
+	CString m_Pathname;
+	CString m_FileName;
+	HINSTANCE m_hDllInst;
+	ICalendarSite* m_pSite;
+};
+
+
+typedef boost::shared_ptr<CalSiteData> CalSiteDataPtr;
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgCalendarPlugins : public CDlgBaseDialog
+{
+public:
+	CDlgCalendarPlugins(
+			CAgilityBookDoc* pDoc,
+			std::map<CString, CalSiteDataPtr>& directAccess,
+			CWnd* pParent = NULL);
+
+private:
+// Dialog Data
+	//{{AFX_DATA(CDlgCalendarPlugins)
+	enum { IDD = IDD_CALENDAR_PLUGINS };
+	CCheckTreeCtrl	m_ctrlPlugins;
+	CStatic	m_ctrlDetails;
+	CButton	m_ctrlRead;
+	CButton	m_ctrlAdd;
+	//}}AFX_DATA
+	CAgilityBookDoc* m_pDoc;
+	std::map<CString, CalSiteDataPtr>& m_DirectAccess;
+
+	//{{AFX_VIRTUAL(CDlgCalendarPlugins)
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	//}}AFX_VIRTUAL
+
+// Implementation
+protected:
+	void UpdateControls();
+
+	//{{AFX_MSG(CDlgCalendarPlugins)
+	virtual BOOL OnInitDialog();
+	afx_msg void OnTvnDeleteitemPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTvnSelchangedPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnPluginRead();
+	afx_msg void OnPluginAdd();
+	//}}AFX_MSG
+	DECLARE_MESSAGE_MAP()
+};
+
+/////////////////////////////////////////////////////////////////////////////
 
 CProgressMeter::CProgressMeter(int nEntries, CWnd* pParent)
 	: m_nEntries(nEntries)
@@ -187,47 +262,19 @@ int CProgressMeter::GetPos()
 	{
 		short nBar = 1 < m_nEntries ? 2 : 1;
 		m_pProgress->GetPos(nBar, pos);
-	}	
+	}
 	return pos;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CalSiteData
-{
-private:
-	// Copy semantics don't work well with our cleanup code!
-	CalSiteData(CalSiteData const&);
-	CalSiteData& operator=(CalSiteData const&);
-public:
-	CalSiteData(CString const& pathname, CString const& filename);
-	~CalSiteData();
-
-	void Connect(CString const& pathname);
-
-	bool isValid() const					{return NULL != m_pSite;}
-	void Unload(bool bPermanently = false);
-
-	CStringA GetName();
-	CStringA GetDescription();
-	CStringA Process(IProgressMeter *progress);
-
-private:
-	CString m_FileName;
-	HINSTANCE m_hDllInst;
-	ICalendarSite* m_pSite;
-};
-
-
-typedef boost::shared_ptr<CalSiteData> CalSiteDataPtr;
-
-
 CalSiteData::CalSiteData(CString const& pathname, CString const& filename)
-	: m_FileName(filename)
+	: m_Pathname(pathname)
+	, m_FileName(filename)
 	, m_hDllInst(NULL)
 	, m_pSite(NULL)
 {
-	Connect(pathname);
+	Connect();
 }
 
 
@@ -237,7 +284,7 @@ CalSiteData::~CalSiteData()
 }
 
 
-void CalSiteData::Connect(CString const& pathname)
+void CalSiteData::Connect()
 {
 	if (isValid())
 		return;
@@ -246,7 +293,7 @@ void CalSiteData::Connect(CString const& pathname)
 	{
 		if (!m_hDllInst)
 		{
-			CString path(pathname);
+			CString path(m_Pathname);
 			path += m_FileName;
 			m_hDllInst = LoadLibrary(path);
 		}
@@ -386,12 +433,11 @@ public:
 
 	bool hasActiveSites() const;
 
-	void ManageSites(ARBConfig const& inConfig);
-	bool UpdateSites(ARBConfig const& inConfig);
 	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent);
 
 private:
 	CString m_PathName;
+	// Map of filenames to site pointers
 	std::map<CString, CalSiteDataPtr> m_DirectAccess;
 };
 
@@ -406,6 +452,33 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 	int iLastSlash = exeName.ReverseFind('\\');
 	if (0 < iLastSlash)
 		m_PathName = exeName.Left(iLastSlash + 1);
+
+	// Load auxilary DLLs from the path where the EXE lives.
+	if (!m_PathName.IsEmpty())
+	{
+		WIN32_FIND_DATA data;
+		HANDLE hFind = FindFirstFile(m_PathName + _T("cal_*.dll"), &data);
+		if (INVALID_HANDLE_VALUE != hFind)
+		{
+			do
+			{
+				CString filename(data.cFileName);
+				// Only load the library if we haven't already loaded it.
+				// (Otherwise we get a memory leak because we overwrite the
+				// api pointer)
+				if (m_DirectAccess.end() == m_DirectAccess.find(filename))
+				{
+					m_DirectAccess[filename] = CalSiteDataPtr(new CalSiteData(m_PathName, filename));
+				}
+				else
+				{
+					m_DirectAccess[filename]->Connect();
+				}
+			}
+			while (FindNextFile(hFind, &data));
+			FindClose(hFind);
+		}
+	}
 }
 
 
@@ -428,44 +501,6 @@ bool CCalendarSitesImpl::hasActiveSites() const
 }
 
 
-void CCalendarSitesImpl::ManageSites(ARBConfig const& inConfig)
-{
-	AfxMessageBox(_T("TODO: Manage CalSite data"));
-}
-
-
-bool CCalendarSitesImpl::UpdateSites(ARBConfig const& inConfig)
-{
-	// Load auxilary DLLs from the path where the EXE lives.
-	if (!m_PathName.IsEmpty())
-	{
-		WIN32_FIND_DATA data;
-		HANDLE hFind = FindFirstFile(m_PathName + _T("cal_*.dll"), &data);
-		if (INVALID_HANDLE_VALUE != hFind)
-		{
-			do
-			{
-				CString filename(data.cFileName);
-				// Only load the library if we haven't already loaded it.
-				// (Otherwise we get a memory leak because we overwrite the
-				// api pointer)
-				if (m_DirectAccess.end() == m_DirectAccess.find(filename))
-				{
-					m_DirectAccess[filename] = CalSiteDataPtr(new CalSiteData(m_PathName, filename));
-				}
-				else
-				{
-					m_DirectAccess[filename]->Connect(m_PathName);
-				}
-			}
-			while (FindNextFile(hFind, &data));
-			FindClose(hFind);
-		}
-	}
-	return false;
-}
-
-
 bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {
 	int nEntries = 0;
@@ -478,109 +513,362 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 	if (0 == nEntries)
 		return false;
 
-	//TODO: Add a UI if there is more than 1 entry so user can select which sites
-	CProgressMeter progress(nEntries, pParent);
+	CDlgCalendarPlugins dlg(pDoc, m_DirectAccess, pParent);
+	if (IDOK != dlg.DoModal())
+		return false;
+	return true;
+}
 
-	CWaitCursor wait;
-	std::map<CString, std::list<ARBCalendarPtr> > newEntries;
-	for (i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
+/////////////////////////////////////////////////////////////////////////////
+
+class CPluginData
+{
+public:
+	CPluginData()
+		: m_hItem(NULL)
 	{
-		progress.StepMe();
-		if (!(*i).second->isValid())
-			continue;
-		CStringA n = (*i).second->GetName();
-		CStringA d = (*i).second->GetDescription();
-		CStringA data = (*i).second->Process(&progress);
-		ElementNodePtr tree(ElementNode::New());
-		tstring errMsg;
-		bool bOk = false;
-		if (!data.IsEmpty())
+	}
+
+	virtual ~CPluginData() {}
+
+	HTREEITEM GetHTreeItem() const
+	{
+		return m_hItem;
+	}
+
+	void SetHTreeItem(HTREEITEM hItem)
+	{
+		m_hItem = hItem;
+	}
+
+	virtual CStringA GetName() const = 0;
+	virtual CStringA GetDesc() const = 0;
+
+private:
+	HTREEITEM m_hItem;
+};
+
+
+class CPluginDllData : public CPluginData
+{
+public:
+	CPluginDllData(CString const& filename, CalSiteDataPtr calData)
+		: m_Filename(filename)
+		, m_CalData(calData)
+	{
+		if (m_CalData && m_CalData->isValid())
 		{
-			bOk = tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg);
-			data.Empty();
-		}
-		if (bOk)
-		{
-			CErrorCallback err;
-			ARBAgilityRecordBook book;
-			bOk = book.Load(tree, true, false, false, false, false, err);
-			tree.reset();
-			if (bOk)
-			{
-				if (0 < err.m_ErrMsg.length())
-				{
-					AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
-					progress.SetForegroundWindow();
-					wait.Restore();
-				}
-				for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
-				{
-					newEntries[(*i).first].push_back(*iter);
-				}
-			}
+			m_Name = m_CalData->GetName();
+			m_Desc = m_CalData->GetDescription();
 		}
 		else
 		{
-			CString str((*i).second->GetName());
-			CString err;
-			err.FormatMessage(IDS_ERR_PARSING_DATA, (LPCTSTR)str);
-			if (!errMsg.empty())
-			{
-				err += ":\n\t";
-				err += errMsg.c_str();
-			}
-			err += "\n\n";
-			str.LoadString(IDS_USE_PLUGIN);
-			err += str;
-			if (IDNO == AfxMessageBox(err, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
-				(*i).second->Unload(true);
-			progress.SetForegroundWindow();
-			wait.Restore();
+			m_Name = m_Filename;
+			m_Desc = "";
 		}
 	}
-	progress.Dismiss();
 
-	if (0 < newEntries.size())
+	virtual CStringA GetName() const	{return m_Name;}
+	virtual CStringA GetDesc() const	{return m_Desc;}
+
+	CStringA Process(IProgressMeter *progress)
 	{
-		// TODO: include UI that will allow me to select which entries to add
-		int nAdded = 0;
-		int nUpdated = 0;
-		for (std::map<CString, std::list<ARBCalendarPtr> >::iterator iEntries = newEntries.begin();
-			iEntries != newEntries.end();
-			++iEntries)
+		if (m_CalData)
+			return m_CalData->Process(progress);
+		return "";
+	}
+
+	void Unload(bool bPermanent)
+	{
+		if (m_CalData)
+			m_CalData->Unload(bPermanent);
+	}
+
+private:
+	CString m_Filename;
+	CalSiteDataPtr m_CalData;
+	CStringA m_Name;
+	CStringA m_Desc;
+};
+
+class CPluginCalData : public CPluginData
+{
+public:
+	CPluginCalData(ARBCalendarPtr cal)
+		: m_Cal(cal)
+	{
+		m_Name = m_Cal->GetGenericName().c_str();
+		m_Desc = m_Cal->GetNote().c_str();
+	}
+
+	virtual CStringA GetName() const	{return m_Name;}
+	virtual CStringA GetDesc() const	{return m_Desc;}
+	ARBCalendarPtr CalEntry() const		{return m_Cal;}
+
+private:
+	ARBCalendarPtr m_Cal;
+	CStringA m_Name;
+	CStringA m_Desc;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+CDlgCalendarPlugins::CDlgCalendarPlugins(
+		CAgilityBookDoc* pDoc,
+		std::map<CString, CalSiteDataPtr>& directAccess,
+		CWnd* pParent)
+	: CDlgBaseDialog(CDlgCalendarPlugins::IDD, pParent)
+	, m_pDoc(pDoc)
+	, m_DirectAccess(directAccess)
+{
+	//{{AFX_DATA_INIT(CDlgCalendarPlugins)
+	//}}AFX_DATA_INIT
+}
+
+
+void CDlgCalendarPlugins::DoDataExchange(CDataExchange* pDX)
+{
+	CDlgBaseDialog::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CDlgCalendarPlugins)
+	DDX_Control(pDX, IDC_PLUGIN_TREE, m_ctrlPlugins);
+	DDX_Control(pDX, IDC_PLUGIN_DETAILS, m_ctrlDetails);
+	DDX_Control(pDX, IDC_PLUGIN_READ, m_ctrlRead);
+	DDX_Control(pDX, IDC_PLUGIN_ADD, m_ctrlAdd);
+	//}}AFX_DATA_MAP
+}
+
+
+BEGIN_MESSAGE_MAP(CDlgCalendarPlugins, CDlgBaseDialog)
+	//{{AFX_MSG_MAP(CDlgCalendarPlugins)
+	ON_NOTIFY(TVN_DELETEITEM, IDC_PLUGIN_TREE, OnTvnDeleteitemPluginTree)
+	ON_NOTIFY(TVN_SELCHANGED, IDC_PLUGIN_TREE, OnTvnSelchangedPluginTree)
+	ON_BN_CLICKED(IDC_PLUGIN_READ, OnPluginRead)
+	ON_BN_CLICKED(IDC_PLUGIN_ADD, OnPluginAdd)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+
+void CDlgCalendarPlugins::UpdateControls()
+{
+	int nChecked = 0;
+	int nCalItems = 0;
+	for (HTREEITEM hItem = m_ctrlPlugins.GetRootItem();
+		hItem != NULL;
+		hItem = m_ctrlPlugins.GetNextSiblingItem(hItem))
+	{
+		if (m_ctrlPlugins.GetChecked(hItem))
+			++nChecked;
+		for (HTREEITEM hCal = m_ctrlPlugins.GetChildItem(hItem);
+			hCal != NULL;
+			hCal = m_ctrlPlugins.GetNextSiblingItem(hCal))
 		{
-			for (std::list<ARBCalendarPtr>::iterator iCal = (*iEntries).second.begin();
-				iCal != (*iEntries).second.end();
-				++iCal)
+			if (m_ctrlPlugins.GetChecked(hCal))
+				++nCalItems;
+		}
+	}
+	m_ctrlRead.EnableWindow(0 < nChecked);
+	m_ctrlAdd.EnableWindow(0 < nCalItems);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CDlgCalendarPlugins message handlers
+
+BOOL CDlgCalendarPlugins::OnInitDialog()
+{
+	CDlgBaseDialog::OnInitDialog();
+
+	std::map<CString, CalSiteDataPtr>::iterator i;
+	for (i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
+	{
+		CPluginDllData* pData = new CPluginDllData((*i).first, (*i).second);
+		CString name = CString(pData->GetName());
+		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
+			name,
+			0, 0,
+			0, 0,
+			reinterpret_cast<LPARAM>(static_cast<CPluginData*>(pData)),
+			TVI_ROOT, TVI_LAST);
+		pData->SetHTreeItem(hItem);
+		m_ctrlPlugins.ShowCheckbox(hItem, (*i).second->isValid());
+		if ((*i).second->isValid())
+			m_ctrlPlugins.SetChecked(hItem, true, false);
+	}
+
+	UpdateControls();
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+
+void CDlgCalendarPlugins::OnTvnDeleteitemPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+	CPluginData* pData = reinterpret_cast<CPluginData*>(pNMTreeView->itemOld.lParam);
+	delete pData;
+	pNMTreeView->itemOld.lParam = 0;
+	*pResult = 0;
+}
+
+
+void CDlgCalendarPlugins::OnTvnSelchangedPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+	CPluginData* pData = NULL;
+	HTREEITEM hItem = pNMTreeView->itemNew.hItem;
+	if (NULL != hItem)
+		pData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
+	CString desc;
+	if (pData)
+		desc = pData->GetDesc();
+	m_ctrlDetails.SetWindowText(desc);
+	*pResult = 0;
+}
+
+
+void CDlgCalendarPlugins::OnPluginRead()
+{
+	HTREEITEM hItem;
+	int nEntries = 0;
+	for (hItem = m_ctrlPlugins.GetChildItem(m_ctrlPlugins.GetRootItem());
+		hItem != NULL;
+		hItem = m_ctrlPlugins.GetNextSiblingItem(hItem))
+	{
+		if (m_ctrlPlugins.GetChecked(hItem))
+			++nEntries;
+	}
+
+	CProgressMeter progress(nEntries, this);
+
+	CWaitCursor wait;
+	for (hItem = m_ctrlPlugins.GetRootItem();
+		hItem != NULL;
+		hItem = m_ctrlPlugins.GetNextSiblingItem(hItem))
+	{
+		if (m_ctrlPlugins.GetChecked(hItem))
+		{
+			progress.StepMe();
+			CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
+			CPluginDllData* pData = dynamic_cast<CPluginDllData*>(pRawData);
+			if (pData)
 			{
-				ARBCalendarPtr cal = *iCal;
-				ARBCalendarPtr calFound;
-				if (!pDoc->GetCalendar().FindCalendar(cal, false, &calFound))
+				int nInserted = 0;
+				CStringA data = pData->Process(&progress);
+				ElementNodePtr tree(ElementNode::New());
+				tstring errMsg;
+				bool bOk = false;
+				if (!data.IsEmpty())
 				{
-					if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
+					bOk = tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg);
+					data.Empty();
+				}
+				if (bOk)
+				{
+					CErrorCallback err;
+					ARBAgilityRecordBook book;
+					bOk = book.Load(tree, true, false, false, false, false, err);
+					tree.reset();
+					if (bOk)
 					{
-						pDoc->GetCalendar().AddCalendar(cal);
-						++nAdded;
+						if (0 < err.m_ErrMsg.length())
+						{
+							AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+							progress.SetForegroundWindow();
+							wait.Restore();
+						}
+						for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
+						{
+							CPluginCalData* pCalData = new CPluginCalData(*iter);
+							CString name(pCalData->GetName());
+							HTREEITEM hCalItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
+								name,
+								0, 0,
+								0, 0,
+								reinterpret_cast<LPARAM>(static_cast<CPluginData*>(pCalData)),
+								pData->GetHTreeItem(), TVI_LAST);
+							pCalData->SetHTreeItem(hCalItem);
+							m_ctrlPlugins.ShowCheckbox(hCalItem, true);
+							++nInserted;
+						}
 					}
 				}
 				else
 				{
-					if (calFound->Update(cal))
-						++nUpdated;
+					CString str(pData->GetName());
+					CString err;
+					err.FormatMessage(IDS_ERR_PARSING_DATA, (LPCTSTR)str);
+					if (!errMsg.empty())
+					{
+						err += ":\n\t";
+						err += errMsg.c_str();
+					}
+					err += "\n\n";
+					str.LoadString(IDS_USE_PLUGIN);
+					err += str;
+					if (IDNO == AfxMessageBox(err, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
+						pData->Unload(true);
+					progress.SetForegroundWindow();
+					wait.Restore();
+				}
+				m_ctrlPlugins.ShowCheckbox(hItem, false);
+				if (0 < nInserted)
+					m_ctrlPlugins.Expand(hItem, TVE_EXPAND);
+			}
+		}
+	}
+	progress.Dismiss();
+	UpdateControls();
+}
+
+
+void CDlgCalendarPlugins::OnPluginAdd()
+{
+	int nAdded = 0;
+	int nUpdated = 0;
+	for (HTREEITEM hItem = m_ctrlPlugins.GetRootItem();
+		hItem != NULL;
+		hItem = m_ctrlPlugins.GetNextSiblingItem(hItem))
+	{
+		for (HTREEITEM hCal = m_ctrlPlugins.GetChildItem(hItem);
+			hCal != NULL;
+			hCal = m_ctrlPlugins.GetNextSiblingItem(hCal))
+		{
+			if (m_ctrlPlugins.GetChecked(hCal))
+			{
+				CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
+				CPluginCalData* pData = dynamic_cast<CPluginCalData*>(pRawData);
+				if (pData)
+				{
+					ARBCalendarPtr cal = pData->CalEntry();
+					ARBCalendarPtr calFound;
+					if (!m_pDoc->GetCalendar().FindCalendar(cal, false, &calFound))
+					{
+						if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
+						{
+							m_pDoc->GetCalendar().AddCalendar(cal);
+							++nAdded;
+						}
+					}
+					else
+					{
+						if (calFound->Update(cal))
+							++nUpdated;
+					}
+					m_ctrlPlugins.ShowCheckbox(hCal, false);
 				}
 			}
 		}
-		if (0 < nAdded + nUpdated)
-		{
-			pDoc->GetCalendar().sort();
-			pDoc->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
-			pDoc->SetModifiedFlag();
-		}
-		CString str;
-		str.FormatMessage(IDS_UPDATED_CAL_ITEMS, nAdded, nUpdated);
-		AfxMessageBox(str, MB_ICONINFORMATION);
 	}
-	return true;
+	if (0 < nAdded + nUpdated)
+	{
+		m_pDoc->GetCalendar().sort();
+		m_pDoc->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
+		m_pDoc->SetModifiedFlag();
+	}
+	CString str;
+	str.FormatMessage(IDS_UPDATED_CAL_ITEMS, nAdded, nUpdated);
+	AfxMessageBox(str, MB_ICONINFORMATION);
+	OnOK();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -600,18 +888,6 @@ CCalendarSites::~CCalendarSites()
 bool CCalendarSites::hasActiveSites() const
 {
 	return m_Impl->hasActiveSites();
-}
-
-
-void CCalendarSites::ManageSites(ARBConfig const& inConfig)
-{
-	m_Impl->ManageSites(inConfig);
-}
-
-
-bool CCalendarSites::UpdateSites(ARBConfig const& inConfig)
-{
-	return m_Impl->UpdateSites(inConfig);
 }
 
 

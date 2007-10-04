@@ -177,7 +177,6 @@ END_MESSAGE_MAP()
 
 CAgilityBookDoc::CAgilityBookDoc()
 	: m_SuppressUpdates(false)
-	, m_CalSites()
 {
 }
 
@@ -386,7 +385,6 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	CConfigActionCallback callback;
 	if (m_Records.Update(0, update, info, callback))
 	{
-		m_CalSites.UpdateSites(m_Records.GetConfig());
 		CDlgMessage dlg(info.str().c_str(), 0);
 		dlg.DoModal();
 		SetModifiedFlag();
@@ -1154,7 +1152,6 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		ASSERT(pApp);
 		pApp->UpdateInfo().AutoCheckConfiguration(this);
 	}
-	m_CalSites.UpdateSites(m_Records.GetConfig());
 
 	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{

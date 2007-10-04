@@ -89,8 +89,8 @@ protected:
 	afx_msg void OnUpdatePane(CCmdUI* pCmdUI);
 	afx_msg void OnNextTab();
 	afx_msg void OnPrevTab();
-	afx_msg void OnUpdateChooseFileLanguage(CCmdUI* pCmdUI);
-	afx_msg void OnFileChooseLanguage();
+	afx_msg void OnUpdateFileLanguageChoose(CCmdUI* pCmdUI);
+	afx_msg void OnFileLanguageChoose();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

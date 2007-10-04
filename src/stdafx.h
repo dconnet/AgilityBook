@@ -130,6 +130,7 @@
 #if _MSC_VER < 1300
 #define CStringA CString
 typedef DWORD DWORD_PTR;
+typedef long LONG_PTR;
 #define _tstol _ttol
 #endif
 
