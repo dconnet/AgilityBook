@@ -36,6 +36,11 @@
 		<param name="Local" value="Help\html\PropCal.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Calendar Plugins">
+		<param name="Name" value="Calendar Plugins">
+		<param name="Local" value="Help\html\DlgCalendarPlugins.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Calendar View">
 		<param name="Name" value="Calendar View">
 		<param name="Local" value="Help\html\TabCalendar.html">
@@ -109,14 +114,19 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Context Menus">
-		<param name="Name" value="Dog">
-		<param name="Local" value="Help\html\MenuDog.html">
+		<param name="Name" value="Menus">
+		<param name="Local" value="Help\html\Menus.html">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Calendar">
 			<param name="Name" value="Calendar">
 			<param name="Local" value="Help\html\MenuCalendar.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Dog">
+			<param name="Name" value="Dog">
+			<param name="Local" value="Help\html\MenuDog.html">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Run">
@@ -353,6 +363,11 @@
 		<param name="Name" value="Keyboard shortcuts">
 		<param name="Name" value="Keyboard shortcuts">
 		<param name="Local" value="Help\html\Keyboard.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Language Selection">
+		<param name="Name" value="Language Selection">
+		<param name="Local" value="Help\html\DlgLanguage.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Main Program Menu">

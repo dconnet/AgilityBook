@@ -553,6 +553,7 @@
 #define IDC_PLUGIN_DETAILS              1681
 #define IDC_PLUGIN_READ                 1682
 #define IDC_PLUGIN_ADD                  1683
+#define IDC_PLUGIN_ENABLE               1684
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -827,6 +828,7 @@
 #define IDS_CRCD_BTN_VIEWTEXT           5027
 #define IDS_DELETED                     5028
 #define IDS_DIVISION_NAME               5029
+#define IDS_DISABLED                    5030
 #define IDS_EXISTING_POINTS             5033
 #define IDS_FAULT_TYPE_NAME             5034
 #define IDS_FAULT_TYPES                 5035

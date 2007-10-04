@@ -28,6 +28,7 @@ Help\html\DialogsProp.html
 Help\html\DialogsWizard.html
 Help\html\DlgAbout.html
 Help\html\DlgAssignCol.html
+Help\html\DlgCalendarPlugins.html
 Help\html\DlgConfig.html
 Help\html\DlgConfigEvent.html
 Help\html\DlgConfigVenue.html
@@ -38,6 +39,7 @@ Help\html\DlgFault.html
 Help\html\DlgFind.html
 Help\html\DlgFindLinks.html
 Help\html\DlgJudgeInfo.html
+Help\html\DlgLanguage.html
 Help\html\DlgListctrl.html
 Help\html\DlgListViewer.html
 Help\html\DlgMessages.html
@@ -88,11 +90,14 @@ Help\html\Toolbar.html
 [ALIAS]
 HIDD_ABOUTBOX=Help\html\DlgAbout.html
 HIDD_ASSIGN_COLUMNS=Help\html\DlgAssignCol.html
+HIDD_CALENDAR_PLUGINS=Help\html\DlgCalendarPlugins.html
 HIDD_CALENDAR=Help\html\PropCal.html
 HIDD_CLUB=Help\html\PropTrial.html
+HIDD_CONFIG_EVENT_METHOD=Help\html\DlgConfigEvent.html
 HIDD_CONFIG_EVENT=Help\html\DlgConfigEvent.html
 HIDD_CONFIG_MULTI_Q=Help\html\DlgConfigVenue.html
 HIDD_CONFIG_OTHERPOINTS=Help\html\DlgConfig.html
+HIDD_CONFIG_PLACEINFO=Help\html\DlgConfigEvent.html
 HIDD_CONFIG_TITLE_POINTS=Help\html\DlgConfigEvent.html
 HIDD_CONFIG_TITLE=Help\html\DlgConfigVenue.html
 HIDD_CONFIG_UPDATE=Help\html\DlgConfig.html
@@ -110,6 +115,7 @@ HIDD_FAULT=Help\html\DlgFault.html
 HIDD_FIND_LINKS=Help\html\DlgFindLinks.html
 HIDD_FIND=Help\html\DlgFind.html
 HIDD_JUDGE_INFO=Help\html\DlgJudgeInfo.html
+HIDD_LANGUAGE=Help\html\DlgLanguage.html
 HIDD_LIST_VIEWER=Help\html\DlgListViewer.html
 HIDD_LISTCTRL=Help\html\DlgListctrl.html
 HIDD_MESSAGE_BOX=Help\html\DlgMessages.html
