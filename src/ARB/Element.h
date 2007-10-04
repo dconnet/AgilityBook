@@ -330,7 +330,7 @@ public:
 	 * If inAt is less than zero or greater than the number of items,
 	 * the item will be appended.
 	 * @pre GetValue() must be empty.
-	 * @param inName Name of new element.
+	 * @param inText Text of new text element.
 	 * @param inAt Add the new element at the specified location.
 	 * @return The new element.
 	 */
