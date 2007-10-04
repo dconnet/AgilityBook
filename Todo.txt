@@ -1,4 +1,6 @@
-Last Updated: 9/21/2007
+Last Updated: 10/4/2007
+
+- Add a way to re-enable calendar plugin module that has been disabled
 
 - Add a way to "label" lifetime points (All Star in UKC)
 
