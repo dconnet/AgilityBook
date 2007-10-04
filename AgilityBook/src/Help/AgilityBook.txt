@@ -1171,3 +1171,12 @@ Set the secondary sort key for viewing events in the Points view.
 
 .topic HIDC_POINTS_VIEW_SORT_C3
 Set the tertiary sort key for viewing events in the Points view.
+
+.topic HIDC_PLUGIN_TREE
+List of available calendar plugins and their calendar entries.
+
+.topic HIDC_PLUGIN_READ
+Read the calendar entries from the selected plugins.
+
+.topic HIDC_PLUGIN_ADD
+Add the selected calendar entries into the program.

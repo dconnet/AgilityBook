@@ -83,8 +83,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_DOG, OnUpdatePane)
 	ON_COMMAND(ID_NEXT_TAB, OnNextTab)
 	ON_COMMAND(ID_PREV_TAB, OnPrevTab)
-	ON_UPDATE_COMMAND_UI(ID_FILE_CHOOSELANGUAGE, OnUpdateChooseFileLanguage)
-	ON_COMMAND(ID_FILE_CHOOSELANGUAGE, OnFileChooseLanguage)
+	ON_UPDATE_COMMAND_UI(ID_FILE_LANGUAGE_CHOOSE, OnUpdateFileLanguageChoose)
+	ON_COMMAND(ID_FILE_LANGUAGE_CHOOSE, OnFileLanguageChoose)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -302,7 +302,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CMainFrame::OnDestroy()
 {
-	__super::OnDestroy();
+	CFrameWnd::OnDestroy();
 	delete m_pNewMenu;
 	m_pNewMenu = NULL;
 }
@@ -371,7 +371,7 @@ void CMainFrame::OnPrevTab()
 }
 
 
-void CMainFrame::OnUpdateChooseFileLanguage(CCmdUI* pCmdUI)
+void CMainFrame::OnUpdateFileLanguageChoose(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
 	if (m_pLangMgr && 0 < m_pLangMgr->NumLanguages())
@@ -380,7 +380,7 @@ void CMainFrame::OnUpdateChooseFileLanguage(CCmdUI* pCmdUI)
 }
 
 
-void CMainFrame::OnFileChooseLanguage()
+void CMainFrame::OnFileLanguageChoose()
 {
 	if (m_pLangMgr && m_pLangMgr->SelectLanguage())
 	{
