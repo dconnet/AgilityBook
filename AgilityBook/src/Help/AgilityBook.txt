@@ -1192,3 +1192,12 @@ been obtained.
 
 .topic HIDC_PLUGIN_QUERYDETAILS
 Edit detailed query information for the selected plugin, if available.
+
+.topic HIDC_QUERY_LOCATIONS
+List of location codes and names that a plugin can specifically query. The code
+is used in the actual query and the name is displayed.
+
+.topic HIDC_QUERY_VENUES
+List of venue codes and names that a plugin can specifically query. The code
+is used in the actual query and the venue name is one of Agility Record Book's
+venue names.

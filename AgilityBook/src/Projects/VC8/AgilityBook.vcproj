@@ -659,6 +659,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgCalendarQueryDetail.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgClub.h"
 				>
 			</File>
@@ -1622,6 +1626,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgCalendar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgCalendarQueryDetail.cpp"
 				>
 			</File>
 			<File

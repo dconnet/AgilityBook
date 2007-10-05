@@ -198,6 +198,10 @@ SOURCE=..\..\Win\DlgCalendar.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgCalendarQueryDetail.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgClub.cpp
 # End Source File
 # Begin Source File
@@ -612,6 +616,10 @@ SOURCE=..\..\Win\DlgBaseSheet.h
 # Begin Source File
 
 SOURCE=..\..\Win\DlgCalendar.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\DlgCalendarQueryDetail.h
 # End Source File
 # Begin Source File
 
