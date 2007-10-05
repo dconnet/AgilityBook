@@ -50,7 +50,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigCalSite::ARBConfigCalSite()
-	: m_urlSearch()
+	: m_Name()
+	, m_Desc()
+	, m_urlSearch()
 	, m_urlHelp()
 	, m_Locations()
 	, m_Venues()
@@ -59,7 +61,9 @@ ARBConfigCalSite::ARBConfigCalSite()
 
 
 ARBConfigCalSite::ARBConfigCalSite(ARBConfigCalSite const& rhs)
-	: m_urlSearch(rhs.m_urlSearch)
+	: m_Name(rhs.m_Name)
+	, m_Desc(rhs.m_Desc)
+	, m_urlSearch(rhs.m_urlSearch)
 	, m_urlHelp(rhs.m_urlHelp)
 	, m_Locations(rhs.m_Locations)
 	, m_Venues(rhs.m_Venues)
@@ -76,6 +80,8 @@ ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite const& rhs)
 {
 	if (this != &rhs)
 	{
+		m_Name = rhs.m_Name;
+		m_Desc = rhs.m_Desc;
 		m_urlSearch = rhs.m_urlSearch;
 		m_urlHelp = rhs.m_urlHelp;
 		m_Locations = rhs.m_Locations;
@@ -87,7 +93,9 @@ ARBConfigCalSite& ARBConfigCalSite::operator=(ARBConfigCalSite const& rhs)
 
 bool ARBConfigCalSite::operator==(ARBConfigCalSite const& rhs) const
 {
-	return m_urlSearch == rhs.m_urlSearch
+	return m_Name == rhs.m_Name
+		&& m_Desc == rhs.m_Desc
+		&& m_urlSearch == rhs.m_urlSearch
 		&& m_urlHelp == rhs.m_urlHelp
 		&& m_Locations == rhs.m_Locations
 		&& m_Venues == rhs.m_Venues;
@@ -102,6 +110,11 @@ bool ARBConfigCalSite::Load(
 	ASSERT(inTree);
 	if (!inTree)
 		return false;
+	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_NAME, m_Name))
+	{
+		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_NAME));
+		return false;
+	}
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch))
 	{
 		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_SEARCH));
@@ -115,7 +128,11 @@ bool ARBConfigCalSite::Load(
 		if (!element)
 			continue;
 		tstring const& name = element->GetName();
-		if (name == TREE_LOCCODE)
+		if (name == TREE_CALSITE_DESC)
+		{
+			m_Desc = element->GetValue();
+		}
+		else if (name == TREE_LOCCODE)
 		{
 			// Ignore any errors...
 			tstring code;
@@ -154,9 +171,15 @@ bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
 	if (!ioTree)
 		return false;
 	ElementNodePtr calsite = ioTree->AddElementNode(TREE_CALSITE);
+	calsite->AddAttrib(ATTRIB_CALSITE_NAME, m_Name);
 	calsite->AddAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch);
 	if (!m_urlHelp.empty())
 		calsite->AddAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);
+	if (!m_Desc.empty())
+	{
+		ElementNodePtr desc = calsite->AddElementNode(TREE_CALSITE_DESC);
+		desc->SetValue(m_Desc);
+	}
 	std::map<tstring, tstring>::const_iterator i;
 	for (i = m_Locations.begin(); i != m_Locations.end(); ++i)
 	{

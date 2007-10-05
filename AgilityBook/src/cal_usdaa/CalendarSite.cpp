@@ -44,7 +44,15 @@
 #include "../Win/ReadHttp.h"
 #include "../tidy/include/tidy.h"
 #include <sstream>
-#ifdef _DEBUG
+
+#define GENERATE_TESTDATA	0
+#define USE_TESTDATA 		1
+#define TESTDATANAME		"c:\\AgilityBook\\testdata\\usdaa-raw"
+#if GENERATE_TESTDATA && USE_TESTDATA
+#error "Choose one!"
+#endif
+
+#if GENERATE_TESTDATA || USE_TESTDATA
 #include <fstream>
 #endif
 
@@ -110,7 +118,12 @@ public:
 	virtual void releaseBuffer(char* pData) const;
 	virtual char* GetName() const;
 	virtual char* GetDescription() const;
-	virtual char* Process(IProgressMeter* progress) const;
+	virtual char* GetLocationCodes() const;
+	virtual char* GetVenueCodes() const;
+	virtual char* Process(
+			char const* inLocCodes,
+			char const* inVenueCodes,
+			IProgressMeter* progress) const;
 };
 
 
@@ -152,32 +165,57 @@ char* CCalendarSite::GetDescription() const
 }
 
 
-static ElementNodePtr ReadData(CString const& inAddress)
+char* CCalendarSite::GetLocationCodes() const
+{
+	return NULL;
+}
+
+
+char* CCalendarSite::GetVenueCodes() const
+{
+	return Allocate("USDAA:USDAA");
+}
+
+
+static ElementNodePtr ReadData(
+#if USE_TESTDATA
+		CStringA const& inAddress
+#else
+		CString const& inAddress
+#endif
+#if GENERATE_TESTDATA
+		, CStringA const& outTestData
+#endif
+		)
 {
 	ElementNodePtr tree;
 
 	CStringA data;
+#if USE_TESTDATA
+	FILE* fp = fopen(inAddress, "r");
+	char buffer[1001];
+	size_t sz;
+	while (0 < (sz = fread(buffer, 1, 1000, fp)))
+	{
+		buffer[sz] = 0;
+		data += buffer;
+	}
+	fclose(fp);
+#else
 	CReadHttp http(inAddress, data);
-//	CStringA address(inAddress);
-//	FILE* fp = fopen(inAddress, "r");
-//	char buffer[1001];
-//	size_t sz;
-//	while (0 < (sz = fread(buffer, 1, 1000, fp)))
-//	{
-//		buffer[sz] = 0;
-//		data += buffer;
-//	}
-//	fclose(fp);
+#endif
 
 	CString username, errMsg;
+#if !USE_TESTDATA
 	if (http.ReadHttpFile(username, errMsg))
+#endif
 	{
-#ifdef _DEBUG
-//{
-//std::ofstream raw("c:\\events-raw.xml", std::ios::out);
-//raw << (LPCSTR)data;
-//raw.close();
-//}
+#if GENERATE_TESTDATA
+{
+std::ofstream raw(outTestData, std::ios::out);
+raw << (LPCSTR)data;
+raw.close();
+}
 #endif
 		TidyDoc tdoc = tidyCreate();
 		tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
@@ -212,13 +250,14 @@ static ElementNodePtr ReadData(CString const& inAddress)
 		// more memory then we asked for.
 		data.ReleaseBuffer(len);
 #ifdef _DEBUG
-{
-//std::string out(address);
+//Test code to look at 'tidy'd data
+//{
+//CStringA out(inAddress);
 //out += ".out";
-//std::ofstream raw(out.c_str(), std::ios::out);
+//std::ofstream raw(out, std::ios::out);
 //raw << (LPCSTR)data;
 //raw.close();
-}
+//}
 #endif
 
 		tstring err;
@@ -231,13 +270,14 @@ static ElementNodePtr ReadData(CString const& inAddress)
 		else
 		{
 #ifdef _DEBUG
-{
-//std::string out(address);
+//Test code to look at xml data
+//{
+//CStringA out(inAddress);
 //out += ".tree";
-//std::ofstream raw(out.c_str(), std::ios::out);
+//std::ofstream raw(out, std::ios::out);
 //tree->SaveXML(raw);
 //raw.close();
-}
+//}
 #endif
 		}
 	}
@@ -245,13 +285,27 @@ static ElementNodePtr ReadData(CString const& inAddress)
 }
 
 
-char* CCalendarSite::Process(IProgressMeter* progress) const
+// The only filtering of calendar events the website has is by type
+// (titling/tourny/etc). So just ignore any supplied codes.
+char* CCalendarSite::Process(
+		char const* /*inLocCodes*/,
+		char const* /*inVenueCodes*/,
+		IProgressMeter* progress) const
 {
 	if (progress)
 		progress->SetMessage("Reading http://www.usdaa.com/events.cfm");
 
+#if USE_TESTDATA || GENERATE_TESTDATA
+	CStringA testData(TESTDATANAME);
+	testData += ".xml";
+#if USE_TESTDATA
+	ElementNodePtr tree = ReadData(testData);
+#else
+	ElementNodePtr tree = ReadData(_T("http://www.usdaa.com/events.cfm"), testData);
+#endif
+#else
 	ElementNodePtr tree = ReadData(_T("http://www.usdaa.com/events.cfm"));
-//	ElementNodePtr tree = ReadData("c:\\events-raw.xml");
+#endif
 	if (!tree)
 		return NULL;
 
@@ -365,8 +419,19 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 			CStringA msg(tmp);
 			progress->SetMessage((LPCSTR)msg);
 		}
+#if GENERATE_TESTDATA || USE_TESTDATA
+		CStringA testData(TESTDATANAME);
+		int idx = address.Find('=');
+		testData += address.Mid(idx+1);
+		testData += ".xml";
+#if USE_TESTDATA
+		ElementNodePtr treeDetail = ReadData(testData);
+#else
+		ElementNodePtr treeDetail = ReadData(address, testData);
+#endif
+#else
 		ElementNodePtr treeDetail = ReadData(address);
-//		ElementNodePtr treeDetail = ReadData("c:\\detail-raw.xml");
+#endif
 		if (treeDetail)
 		{
 			static const tstring tag2(_T("h3"));
@@ -453,11 +518,12 @@ char* CCalendarSite::Process(IProgressMeter* progress) const
 	if (bOk)
 	{
 #ifdef _DEBUG
-{
-std::ofstream raw("c:\\events-caltree.xml", std::ios::out);
-calTree->SaveXML(raw);
-raw.close();
-}
+//Test code to look at generated calendar data
+//{
+//std::ofstream raw("c:\\events-caltree.xml", std::ios::out);
+//calTree->SaveXML(raw);
+//raw.close();
+//}
 #endif
 		std::ostringstream s;
 		calTree->SaveXML(s);

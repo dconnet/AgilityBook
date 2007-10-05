@@ -100,15 +100,26 @@ public:
 	bool isValid() const					{return NULL != m_pSite;}
 	void Unload(bool bPermanently = false);
 
-	CStringA GetName();
-	CStringA GetDescription();
-	CStringA Process(IProgressMeter *progress);
+	CString GetName() const							{return m_Name;}
+	CString GetDescription() const					{return m_Desc;}
+	std::map<tstring, tstring> const& LocationCodes()	{return m_LocCodes;}
+	std::map<tstring, tstring> const& VenueCodes()	{return m_VenueCodes;}
+	CStringA Process(
+			char const* inLocCodes,
+			char const* inVenueCodes,
+			IProgressMeter *progress);
 
 private:
+	void Clear();
+
 	CString m_Pathname;
 	CString m_FileName;
 	HINSTANCE m_hDllInst;
 	ICalendarSite* m_pSite;
+	CString m_Name;
+	CString m_Desc;
+	std::map<tstring, tstring> m_LocCodes;
+	std::map<tstring, tstring> m_VenueCodes;
 };
 
 
@@ -133,6 +144,7 @@ private:
 	CButton	m_ctrlRead;
 	CButton	m_ctrlAdd;
 	CButton	m_ctrlEnable;
+	CButton	m_ctrlQuery;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	std::map<CString, CalSiteDataPtr>& m_DirectAccess;
@@ -155,6 +167,7 @@ protected:
 	afx_msg void OnPluginRead();
 	afx_msg void OnPluginAdd();
 	afx_msg void OnPluginEnable();
+	afx_msg void OnPluginQueryDetails();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -278,6 +291,10 @@ CalSiteData::CalSiteData(CString const& pathname, CString const& filename)
 	, m_FileName(filename)
 	, m_hDllInst(NULL)
 	, m_pSite(NULL)
+	, m_Name()
+	, m_Desc()
+	, m_LocCodes()
+	, m_VenueCodes()
 {
 	Connect();
 }
@@ -289,10 +306,20 @@ CalSiteData::~CalSiteData()
 }
 
 
+void CalSiteData::Clear()
+{
+	m_Name.Empty();
+	m_Desc.Empty();
+	m_LocCodes.clear();
+	m_VenueCodes.clear();
+}
+
+
 void CalSiteData::Connect()
 {
 	if (isValid())
 		return;
+	Clear();
 	// Load the library.
 	if (CAgilityBookOptions::IsCalSiteVisible(m_FileName))
 	{
@@ -311,6 +338,137 @@ void CalSiteData::Connect()
 				// And call it.
 				m_pSite = pApi();
 				// We now have an object that must be released later.
+				char* pData = NULL;
+				try
+				{
+					pData = m_pSite->GetName();
+				}
+				catch (...)
+				{
+					pData = NULL;
+					Unload(true);
+				}
+				if (pData)
+				{
+					m_Name = CStringA(pData);
+					try
+					{
+						m_pSite->releaseBuffer(pData);
+					}
+					catch (...)
+					{
+						Unload(true);
+					}
+				}
+				if (m_pSite)
+				{
+					try
+					{
+						pData = m_pSite->GetDescription();
+					}
+					catch (...)
+					{
+						pData = NULL;
+						Unload(true);
+					}
+					if (pData)
+					{
+						m_Desc = CStringA(pData);
+						try
+						{
+							m_pSite->releaseBuffer(pData);
+						}
+						catch (...)
+						{
+							Unload(true);
+						}
+					}
+				}
+				if (m_pSite)
+				{
+					try
+					{
+						pData = m_pSite->GetLocationCodes();
+					}
+					catch (...)
+					{
+						Unload(true);
+						pData = NULL;
+					}
+					if (pData)
+					{
+						CString data1(pData); // For ansi/unicode translation
+						tstring data((LPCTSTR)data1);
+						data1.Empty();
+						std::vector<tstring> fields;
+						if (0 < BreakLine('\n', data, fields))
+						{
+							for (std::vector<tstring>::iterator i = fields.begin();
+								i != fields.end();
+								++i)
+							{
+								std::vector<tstring> subfields;
+								if (2 == BreakLine(':', *i, subfields))
+								{
+									m_LocCodes[subfields[0]] = subfields[1];
+								}
+							}
+						}
+						try
+						{
+							m_pSite->releaseBuffer(pData);
+						}
+						catch (...)
+						{
+							Unload(true);
+						}
+					}
+				}
+				if (m_pSite)
+				{
+					try
+					{
+						pData = m_pSite->GetVenueCodes();
+					}
+					catch (...)
+					{
+						Unload(true);
+						pData = NULL;
+					}
+					if (pData)
+					{
+						CString data1(pData);
+						tstring data((LPCTSTR)data1);
+						data1.Empty();
+						std::vector<tstring> fields;
+						if (0 < BreakLine('\n', data, fields))
+						{
+							for (std::vector<tstring>::iterator i = fields.begin();
+								i != fields.end();
+								++i)
+							{
+								std::vector<tstring> subfields;
+								switch (BreakLine(':', *i, subfields))
+								{
+								case 1:
+									m_VenueCodes[subfields[0]] = subfields[0];
+									break;
+								case 2:
+									m_VenueCodes[subfields[0]] = subfields[1];
+									break;
+								}
+							}
+						}
+						try
+						{
+							m_pSite->releaseBuffer(pData);
+						}
+						catch (...)
+						{
+							Unload(true);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -342,7 +500,10 @@ void CalSiteData::Unload(bool bPermanently)
 }
 
 
-CStringA CalSiteData::GetName()
+CStringA CalSiteData::Process(
+		char const* inLocCodes,
+		char const* inVenueCodes,
+		IProgressMeter *progress)
 {
 	CStringA data;
 	if (m_pSite)
@@ -350,65 +511,7 @@ CStringA CalSiteData::GetName()
 		char* pData = NULL;
 		try
 		{
-			pData = m_pSite->GetName();
-		}
-		catch (...)
-		{
-			Unload(true);
-		}
-		if (pData)
-			data = CStringA(pData);
-		try
-		{
-			m_pSite->releaseBuffer(pData);
-		}
-		catch (...)
-		{
-			Unload(true);
-		}
-	}
-	return data;
-}
-
-
-CStringA CalSiteData::GetDescription()
-{
-	CStringA data;
-	if (m_pSite)
-	{
-		char* pData = NULL;
-		try
-		{
-			pData = m_pSite->GetDescription();
-		}
-		catch (...)
-		{
-			Unload(true);
-		}
-		if (pData)
-			data = CStringA(pData);
-		try
-		{
-			m_pSite->releaseBuffer(pData);
-		}
-		catch (...)
-		{
-			Unload(true);
-		}
-	}
-	return data;
-}
-
-
-CStringA CalSiteData::Process(IProgressMeter *progress)
-{
-	CStringA data;
-	if (m_pSite)
-	{
-		char* pData = NULL;
-		try
-		{
-			pData = m_pSite->Process(progress);
+			pData = m_pSite->Process(inLocCodes, inVenueCodes, progress);
 		}
 		catch (...)
 		{
@@ -526,31 +629,86 @@ bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inC
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CPluginData
+class CPluginBase
 {
 public:
-	CPluginData()
-		: m_hItem(NULL)
-	{
-	}
+	CPluginBase() : m_hItem(NULL) {}
+	virtual ~CPluginBase() {}
 
-	virtual ~CPluginData() {}
-
-	HTREEITEM GetHTreeItem() const
-	{
-		return m_hItem;
-	}
-
-	void SetHTreeItem(HTREEITEM hItem)
-	{
-		m_hItem = hItem;
-	}
+	HTREEITEM GetHTreeItem() const		{return m_hItem;}
+	void SetHTreeItem(HTREEITEM hItem)	{m_hItem = hItem;}
 
 	virtual CString GetName() const = 0;
 	virtual CString GetDesc() const = 0;
 
 private:
 	HTREEITEM m_hItem;
+};
+
+
+class CPluginData : public CPluginBase
+{
+public:
+	CPluginData() {}
+	virtual CString GetName() const	{return m_Name;}
+	virtual CString GetDesc() const	{return m_Desc;}
+	virtual CStringA Process(
+			char const* inLocCodes,
+			char const* inVenueCodes,
+			IProgressMeter *progress) = 0;
+	virtual bool HasQueryDetails() const = 0;
+	virtual bool isValid() const = 0;
+	virtual bool Enable() = 0;
+	virtual void Disable() = 0;
+protected:
+	CString m_Name;
+	CString m_Desc;
+};
+
+
+class CPluginConfigData : public CPluginData
+{
+public:
+	CPluginConfigData(ARBConfigCalSite const& inSite)
+		: m_Site(inSite)
+		, m_Enabled(true)
+	{
+		m_Name = m_Site.GetName().c_str();
+		m_Desc = m_Site.GetDescription().c_str();
+	}
+
+	virtual CStringA Process(
+			char const* inLocCodes,
+			char const* inVenueCodes,
+			IProgressMeter *progress)
+	{
+		return "";
+	}
+
+	virtual bool HasQueryDetails() const
+	{
+		return 1 < m_Site.LocationCodes().size() || 1 < m_Site.VenueCodes().size();
+	}
+
+	virtual bool isValid() const
+	{
+		return m_Enabled;
+	}
+
+	virtual bool Enable()
+	{
+		m_Enabled = true;
+		return true;
+	}
+
+	virtual void Disable()
+	{
+		m_Enabled = false;
+	}
+
+private:
+	ARBConfigCalSite m_Site;
+	bool m_Enabled;
 };
 
 
@@ -565,16 +723,22 @@ public:
 		SetNameDesc();
 	}
 
-	virtual CString GetName() const	{return m_Name;}
-	virtual CString GetDesc() const	{return m_Desc;}
-
-	CStringA Process(IProgressMeter *progress)
+	virtual CStringA Process(
+			char const* inLocCodes,
+			char const* inVenueCodes,
+			IProgressMeter *progress)
 	{
-		return m_CalData->Process(progress);
+		return m_CalData->Process(inLocCodes, inVenueCodes, progress);
 	}
 
-	bool isValid() const		{return m_CalData->isValid();}
-	bool Enable()
+	virtual bool HasQueryDetails() const
+	{
+		return 1 < m_CalData->LocationCodes().size() || 1 < m_CalData->VenueCodes().size();
+	}
+
+	virtual bool isValid() const		{return m_CalData->isValid();}
+
+	virtual bool Enable()
 	{
 		bool bStatusChange = false;
 		if (!m_CalData->isValid())
@@ -590,7 +754,7 @@ public:
 		return bStatusChange;
 	}
 
-	void Disable()
+	virtual void Disable()
 	{
 		m_CalData->Unload(true);
 		CString disabled;
@@ -617,11 +781,10 @@ private:
 
 	CString m_Filename;
 	CalSiteDataPtr m_CalData;
-	CString m_Name;
-	CString m_Desc;
 };
 
-class CPluginCalData : public CPluginData
+
+class CPluginCalData : public CPluginBase
 {
 public:
 	CPluginCalData(ARBCalendarPtr cal)
@@ -703,6 +866,7 @@ void CDlgCalendarPlugins::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PLUGIN_READ, m_ctrlRead);
 	DDX_Control(pDX, IDC_PLUGIN_ADD, m_ctrlAdd);
 	DDX_Control(pDX, IDC_PLUGIN_ENABLE, m_ctrlEnable);
+	DDX_Control(pDX, IDC_PLUGIN_QUERYDETAILS, m_ctrlQuery);
 	//}}AFX_DATA_MAP
 }
 
@@ -716,6 +880,7 @@ BEGIN_MESSAGE_MAP(CDlgCalendarPlugins, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_PLUGIN_READ, OnPluginRead)
 	ON_BN_CLICKED(IDC_PLUGIN_ADD, OnPluginAdd)
 	ON_BN_CLICKED(IDC_PLUGIN_ENABLE, OnPluginEnable)
+	ON_BN_CLICKED(IDC_PLUGIN_QUERYDETAILS, OnPluginQueryDetails)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -741,13 +906,14 @@ void CDlgCalendarPlugins::UpdateControls()
 	m_ctrlRead.EnableWindow(0 < nChecked);
 	m_ctrlAdd.EnableWindow(0 < nCalItems);
 	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
-	CPluginDllData* pData = NULL;
+	CPluginData* pData = NULL;
 	if (hItem)
 	{
-		CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
-		pData = dynamic_cast<CPluginDllData*>(pRawData);
+		CPluginBase* pRawData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hItem));
+		pData = dynamic_cast<CPluginData*>(pRawData);
 	}
 	m_ctrlEnable.EnableWindow(pData != NULL && !pData->isValid());
+	m_ctrlQuery.EnableWindow(pData != NULL && pData->HasQueryDetails());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -757,15 +923,32 @@ BOOL CDlgCalendarPlugins::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	std::map<CString, CalSiteDataPtr>::iterator i;
-	for (i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
+	for (std::vector<ARBConfigCalSite>::const_iterator iConfig = m_pDoc->GetConfig().GetCalSites().begin();
+		iConfig != m_pDoc->GetConfig().GetCalSites().end();
+		++iConfig)
+	{
+		CPluginConfigData* pData = new CPluginConfigData(*iConfig);
+		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
+			LPSTR_TEXTCALLBACK,
+			0, 0,
+			0, 0,
+			reinterpret_cast<LPARAM>(static_cast<CPluginBase*>(pData)),
+			TVI_ROOT, TVI_LAST);
+		pData->SetHTreeItem(hItem);
+		m_ctrlPlugins.ShowCheckbox(hItem, true);
+		m_ctrlPlugins.SetChecked(hItem, true, false);
+	}
+
+	for (std::map<CString, CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
+		i != m_DirectAccess.end();
+		++i)
 	{
 		CPluginDllData* pData = new CPluginDllData((*i).first, (*i).second);
 		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
 			LPSTR_TEXTCALLBACK,
 			0, 0,
 			0, 0,
-			reinterpret_cast<LPARAM>(static_cast<CPluginData*>(pData)),
+			reinterpret_cast<LPARAM>(static_cast<CPluginBase*>(pData)),
 			TVI_ROOT, TVI_LAST);
 		pData->SetHTreeItem(hItem);
 		m_ctrlPlugins.ShowCheckbox(hItem, (*i).second->isValid());
@@ -783,7 +966,7 @@ BOOL CDlgCalendarPlugins::OnInitDialog()
 void CDlgCalendarPlugins::OnTvnDeleteitemPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	CPluginData* pData = reinterpret_cast<CPluginData*>(pNMTreeView->itemOld.lParam);
+	CPluginBase* pData = reinterpret_cast<CPluginBase*>(pNMTreeView->itemOld.lParam);
 	delete pData;
 	pNMTreeView->itemOld.lParam = 0;
 	*pResult = 0;
@@ -793,10 +976,10 @@ void CDlgCalendarPlugins::OnTvnDeleteitemPluginTree(NMHDR *pNMHDR, LRESULT *pRes
 void CDlgCalendarPlugins::OnTvnSelchangedPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	CPluginData* pData = NULL;
+	CPluginBase* pData = NULL;
 	HTREEITEM hItem = pNMTreeView->itemNew.hItem;
 	if (NULL != hItem)
-		pData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
+		pData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hItem));
 	CString desc;
 	if (pData)
 		desc = pData->GetDesc();
@@ -821,7 +1004,7 @@ void CDlgCalendarPlugins::OnTvnSetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pRe
 void CDlgCalendarPlugins::OnTvnGetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	TV_DISPINFO* pDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
-	CPluginData* pData = reinterpret_cast<CPluginData*>(pDispInfo->item.lParam);
+	CPluginBase* pData = reinterpret_cast<CPluginBase*>(pDispInfo->item.lParam);
 	if (pDispInfo->item.mask & TVIF_TEXT)
 	{
 		if (pData)
@@ -857,12 +1040,13 @@ void CDlgCalendarPlugins::OnPluginRead()
 		if (m_ctrlPlugins.GetChecked(hItem))
 		{
 			progress.StepMe();
-			CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
-			CPluginDllData* pData = dynamic_cast<CPluginDllData*>(pRawData);
+			CPluginBase* pRawData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hItem));
+			CPluginData* pData = dynamic_cast<CPluginData*>(pRawData);
 			if (pData)
 			{
 				int nInserted = 0;
-				CStringA data = pData->Process(&progress);
+				//TODO: add loccodes/venuecodes
+				CStringA data = pData->Process(NULL, NULL, &progress);
 				ElementNodePtr tree(ElementNode::New());
 				tstring errMsg;
 				bool bOk = false;
@@ -892,7 +1076,7 @@ void CDlgCalendarPlugins::OnPluginRead()
 								LPSTR_TEXTCALLBACK,
 								0, 0,
 								0, 0,
-								reinterpret_cast<LPARAM>(static_cast<CPluginData*>(pCalData)),
+								reinterpret_cast<LPARAM>(static_cast<CPluginBase*>(pCalData)),
 								pData->GetHTreeItem(), TVI_LAST);
 							pCalData->SetHTreeItem(hCalItem);
 							m_ctrlPlugins.ShowCheckbox(hCalItem, true);
@@ -943,7 +1127,7 @@ void CDlgCalendarPlugins::OnPluginAdd()
 		{
 			if (m_ctrlPlugins.GetChecked(hCal))
 			{
-				CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hCal));
+				CPluginBase* pRawData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hCal));
 				CPluginCalData* pData = dynamic_cast<CPluginCalData*>(pRawData);
 				if (pData)
 				{
@@ -985,8 +1169,8 @@ void CDlgCalendarPlugins::OnPluginEnable()
 	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
 	if (hItem)
 	{
-		CPluginData* pRawData = reinterpret_cast<CPluginData*>(m_ctrlPlugins.GetItemData(hItem));
-		CPluginDllData* pData = dynamic_cast<CPluginDllData*>(pRawData);
+		CPluginBase* pRawData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hItem));
+		CPluginData* pData = dynamic_cast<CPluginData*>(pRawData);
 		if (pData)
 		{
 			if (pData->Enable())
@@ -999,6 +1183,21 @@ void CDlgCalendarPlugins::OnPluginEnable()
 				m_ctrlDetails.SetWindowText(desc);
 				UpdateControls();
 			}
+		}
+	}
+}
+
+
+void CDlgCalendarPlugins::OnPluginQueryDetails()
+{
+	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
+	if (hItem)
+	{
+		CPluginBase* pRawData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hItem));
+		CPluginData* pData = dynamic_cast<CPluginData*>(pRawData);
+		if (pData && pData->HasQueryDetails())
+		{
+			AfxMessageBox(_T("TODO"));
 		}
 	}
 }
