@@ -106,6 +106,7 @@
 #define IDD_POINTS_VIEW_SORT            254
 #define IDD_LANGUAGE                    255
 #define IDD_CALENDAR_PLUGINS            256
+#define IDD_CALENDAR_QUERY_DETAIL       257
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -555,6 +556,8 @@
 #define IDC_PLUGIN_ADD                  1683
 #define IDC_PLUGIN_ENABLE               1684
 #define IDC_PLUGIN_QUERYDETAILS         1685
+#define IDC_QUERY_LOCATIONS             1690
+#define IDC_QUERY_VENUES                1691
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -1033,9 +1036,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        257
+#define _APS_NEXT_RESOURCE_VALUE        258
 #define _APS_NEXT_COMMAND_VALUE         32900
-#define _APS_NEXT_CONTROL_VALUE         1690
+#define _APS_NEXT_CONTROL_VALUE         1700
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

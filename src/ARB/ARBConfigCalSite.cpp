@@ -156,7 +156,7 @@ bool ARBConfigCalSite::Load(
 				{
 					tstring venue;
 					element->GetAttrib(ATTRIB_VENUECODE_VENUE, venue);
-					m_Locations[code] = venue;
+					m_Venues[code] = venue;
 				}
 			}
 		}

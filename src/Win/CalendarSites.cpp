@@ -45,6 +45,7 @@
 #include "CheckTreeCtrl.h"
 #include "DlgAssignColumns.h"
 #include "DlgBaseDialog.h"
+#include "DlgCalendarQueryDetail.h"
 #include "DlgProgress.h"
 #include "Element.h"
 #include "ICalendarSite.h"
@@ -102,8 +103,8 @@ public:
 
 	CString GetName() const							{return m_Name;}
 	CString GetDescription() const					{return m_Desc;}
-	std::map<tstring, tstring> const& LocationCodes()	{return m_LocCodes;}
-	std::map<tstring, tstring> const& VenueCodes()	{return m_VenueCodes;}
+	std::map<tstring, tstring> const& LocationCodes() const	{return m_LocCodes;}
+	std::map<tstring, tstring> const& VenueCodes() const	{return m_VenueCodes;}
 	CStringA Process(
 			char const* inLocCodes,
 			char const* inVenueCodes,
@@ -657,6 +658,8 @@ public:
 			char const* inVenueCodes,
 			IProgressMeter *progress) = 0;
 	virtual bool HasQueryDetails() const = 0;
+	virtual std::map<tstring, tstring> const& LocationCodes() const = 0;
+	virtual std::map<tstring, tstring> const& VenueCodes() const = 0;
 	virtual bool isValid() const = 0;
 	virtual bool Enable() = 0;
 	virtual void Disable() = 0;
@@ -688,6 +691,16 @@ public:
 	virtual bool HasQueryDetails() const
 	{
 		return 1 < m_Site.LocationCodes().size() || 1 < m_Site.VenueCodes().size();
+	}
+
+	virtual std::map<tstring, tstring> const& LocationCodes() const
+	{
+		return m_Site.LocationCodes();
+	}
+
+	virtual std::map<tstring, tstring> const& VenueCodes() const
+	{
+		return m_Site.VenueCodes();
 	}
 
 	virtual bool isValid() const
@@ -734,6 +747,16 @@ public:
 	virtual bool HasQueryDetails() const
 	{
 		return 1 < m_CalData->LocationCodes().size() || 1 < m_CalData->VenueCodes().size();
+	}
+
+	virtual std::map<tstring, tstring> const& LocationCodes() const
+	{
+		return m_CalData->LocationCodes();
+	}
+
+	virtual std::map<tstring, tstring> const& VenueCodes() const
+	{
+		return m_CalData->VenueCodes();
 	}
 
 	virtual bool isValid() const		{return m_CalData->isValid();}
@@ -1197,7 +1220,14 @@ void CDlgCalendarPlugins::OnPluginQueryDetails()
 		CPluginData* pData = dynamic_cast<CPluginData*>(pRawData);
 		if (pData && pData->HasQueryDetails())
 		{
-			AfxMessageBox(_T("TODO"));
+			CDlgCalendarQueryDetail dlg(pData->LocationCodes(), pData->VenueCodes(), this);
+			if (IDOK == dlg.DoModal())
+			{
+				AfxMessageBox(_T("TODO: Sorry, not yet completed"));
+				//TODO: finish
+				//std::vector<tstring> const& l = dlg.GetSelectedLocations();
+				//std::vector<tstring> const& v = dlg.GetSelectionVenues();
+			}
 		}
 	}
 }
