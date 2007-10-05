@@ -79,15 +79,37 @@ public:
 	virtual char* GetDescription() const = 0;
 
 	/**
+	 * Get a list of location codes.
+	 * @return '\n' separated list of ':' separated pairs of code/name
+	 * @note This may return NULL. 'code' is the value that will be passed
+	 * in the query. 'name' is a pretty name.
+	 */
+	virtual char* GetLocationCodes() const = 0;
+
+	/**
+	 * Get a list of venue codes.
+	 * @return '\n' separated list of ':' separated pairs of code/venue
+	 * @note 'code' is the value that will be passed in the query. 'venue'
+	 * is the mapping to ARBs venue code. If the same, the 'venue' part is
+	 * optional.
+	 */
+	virtual char* GetVenueCodes() const = 0;
+
+	/**
 	 * Get the processed data. The returned data should be in the form of
 	 * a valid ARB file. If this were to be saved as a file, we could then
 	 * directly import it in ARB.
+	 * @param inLocCodes ':' separated list of location codes, may be NULL.
+	 * @param inVenueCodes ':' separated list of venue codes, may be NULL.
 	 * @param progress Allow the plugin to update the progress
 	 * @return Data to be processed, must release with releaseBuffer()
 	 * @note If NULL is returned, this module will be removed from future
 	 * updates (during the executable's current session)
 	 */
-	virtual char* Process(IProgressMeter* progress) const = 0;
+	virtual char* Process(
+			char const* inLocCodes,
+			char const* inVenueCodes,
+			IProgressMeter* progress) const = 0;
 };
 
 typedef ICalendarSite* (*GETCALENDARINTERFACE)();

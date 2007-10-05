@@ -85,6 +85,22 @@ public:
 	/*
 	 * Getters/setters.
 	 */
+	tstring GetName() const
+	{
+		return m_Name;
+	}
+	void SetName(tstring const& inName)
+	{
+		m_Name = inName;
+	}
+	tstring GetDescription() const
+	{
+		return m_Desc;
+	}
+	void SetDescription(tstring const& inDesc)
+	{
+		m_Desc = inDesc;
+	}
 	tstring GetSearchURL() const
 	{
 		return m_urlSearch;
@@ -101,6 +117,14 @@ public:
 	{
 		m_urlHelp = inURL;
 	}
+	std::map<tstring, tstring> const& LocationCodes() const
+	{
+		return m_Locations;
+	}
+	std::map<tstring, tstring> const& VenueCodes() const
+	{
+		return m_Venues;
+	}
 
 	bool HasLocationCode(tstring const& inCode) const;
 	bool AddLocationCode(tstring const& inCode, tstring const& inName);
@@ -112,6 +136,8 @@ public:
 	bool RemoveAllVenueCodes();
 
 private:
+	tstring m_Name;
+	tstring m_Desc;
 	tstring m_urlSearch;
 	tstring m_urlHelp;
 	std::map<tstring, tstring> m_Locations;

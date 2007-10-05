@@ -1189,3 +1189,6 @@ Enable the selected plugin. Plugins may be disabled because the format of the
 html that was expected has changed, causing the parsing algorithm to fail.
 Normally, a plugin should only be enabled if a new version of the plugin has
 been obtained.
+
+.topic HIDC_PLUGIN_QUERYDETAILS
+Edit detailed query information for the selected plugin, if available.

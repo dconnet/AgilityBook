@@ -186,6 +186,7 @@ for renaming titles.
 
 <!--
 Define a calendar source site.
+ name: Name displayed in plugin dialog
  search: Url to request data from with special formatting
       "!L!": Add selected LocCodes (code1+code2...)
       "!V!": Add selected venues (v1+v2...)
@@ -196,11 +197,16 @@ This means that the URL query can be specified with no locations or venues.
 Depending on the server, this could mean 'return all'. When processing returned
 data, no assumptions are made based on the query we started with.
 -->
-<!ELEMENT CalSite (LocCode*, VenueCode*) >
+<!ELEMENT CalSite (Desc?, LocCode*, VenueCode*) >
 	<!ATTLIST CalSite
+		name CDATA #REQUIRED
 		search CDATA #REQUIRED
 		help CDATA #IMPLIED
 		>
+<!--
+Description of source, displayed in plugin dialog.
+-->
+<!ELEMENT Desc (#PCDATA) >
 <!--
 List of locations we can select from.
  code: Transmitted to url

@@ -492,23 +492,6 @@ static tstring GetPrimaryVenue(tstring const& venues)
 }
 
 
-static void BreakLine(
-		char inSep,
-		tstring inStr,
-		std::vector<tstring>& outFields)
-{
-	outFields.clear();
-	tstring::size_type pos = inStr.find(inSep);
-	while (tstring::npos != pos)
-	{
-		outFields.push_back(inStr.substr(0, pos));
-		inStr = inStr.substr(pos+1);
-		pos = inStr.find(inSep);
-	}
-	outFields.push_back(inStr);
-}
-
-
 static ARBCalendarPtr CreateCal(ARBCalendarPtr pCal)
 {
 	if (!pCal)

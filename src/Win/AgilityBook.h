@@ -149,3 +149,16 @@ extern bool PrintRuns(
 		ARBConfig const* inConfig,
 		ARBDogPtr inDog,
 		std::vector<RunInfo> const& inRuns);
+
+
+/**
+ * Separate a line into substrings. Very simply routine that has no escape chars
+ * @param inSep Separator character
+ * @param inStr String to separate
+ * @param outFields Separated pieces
+ * @return Number of fields
+ */
+extern size_t BreakLine(
+		char inSep,
+		tstring inStr,
+		std::vector<tstring>& outFields);
