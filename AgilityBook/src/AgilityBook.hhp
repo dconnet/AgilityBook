@@ -91,6 +91,7 @@ Help\html\Toolbar.html
 HIDD_ABOUTBOX=Help\html\DlgAbout.html
 HIDD_ASSIGN_COLUMNS=Help\html\DlgAssignCol.html
 HIDD_CALENDAR_PLUGINS=Help\html\DlgCalendarPlugins.html
+HIDD_CALENDAR_QUERY_DETAIL=Help\html\DlgCalendarPlugins.html
 HIDD_CALENDAR=Help\html\PropCal.html
 HIDD_CLUB=Help\html\PropTrial.html
 HIDD_CONFIG_EVENT_METHOD=Help\html\DlgConfigEvent.html
