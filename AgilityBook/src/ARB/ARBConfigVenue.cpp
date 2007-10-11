@@ -370,12 +370,12 @@ bool ARBConfigVenue::Update(
 				else
 				{
 					++nChanged;
+					pTitle->SetLongName((*iterTitle)->GetLongName());
 					pTitle->SetMultiple((*iterTitle)->GetMultiple());
 					pTitle->SetPrefix((*iterTitle)->GetPrefix());
-					pTitle->SetLongName((*iterTitle)->GetLongName());
-					pTitle->SetDescription((*iterTitle)->GetDescription());
 					pTitle->SetValidFrom((*iterTitle)->GetValidFrom());
 					pTitle->SetValidTo((*iterTitle)->GetValidTo());
+					pTitle->SetDescription((*iterTitle)->GetDescription());
 				}
 			}
 			else

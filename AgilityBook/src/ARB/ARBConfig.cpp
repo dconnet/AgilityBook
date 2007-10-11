@@ -363,12 +363,58 @@ bool ARBConfig::Update(
 		otstringstream& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
-	// Update Faults.
-	// UI maintains a sorted order, so we don't need to worry about list order.
-	// Simply merge new ones.
+	// Update CalSites.
 	int nNew = 0;
 	int nUpdated = 0;
 	int nSkipped = 0;
+	{
+		int nDeleted = 0;
+		std::vector<ARBConfigCalSite>::iterator iter1;
+		std::vector<ARBConfigCalSite>::const_iterator iter2;
+		// Look for items that will be removed.
+		for (iter1 = m_CalSites.begin(); iter1 != m_CalSites.end(); ++iter1)
+		{
+			bool bFound = false;
+			for (iter2 = inConfigNew.GetCalSites().begin(); iter2 != inConfigNew.GetCalSites().end(); ++iter2)
+			{
+				if (*iter1 == *iter2)
+				{
+					bFound = true;
+					++nSkipped;
+					break;
+				}
+			}
+			if (!bFound)
+				++nDeleted;
+		}
+		// Now look for items that will be added.
+		for (iter2 = inConfigNew.GetCalSites().begin(); iter2 != inConfigNew.GetCalSites().end(); ++iter2)
+		{
+			bool bFound = false;
+			for (iter1 = m_CalSites.begin(); iter1 != m_CalSites.end(); ++iter1)
+			{
+				if (*iter1 == *iter2)
+				{
+					bFound = true;
+					break;
+				}
+			}
+			if (!bFound)
+				++nNew;
+		}
+		m_CalSites = inConfigNew.GetCalSites();
+		if (0 < nNew || 0 < nDeleted)
+		{
+			ioInfo << UPDATE_FORMAT_CALSITES(nNew, nDeleted, nSkipped) << _T("\n");
+		}
+	}
+
+	// Update Faults.
+	// UI maintains a sorted order, so we don't need to worry about list order.
+	// Simply merge new ones.
+	nNew = 0;
+	nUpdated = 0;
+	nSkipped = 0;
 	for (ARBConfigFaultList::const_iterator iterFaults = inConfigNew.GetFaults().begin();
 	iterFaults != inConfigNew.GetFaults().end();
 	++iterFaults)
@@ -384,7 +430,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << UPDATE_FORMAT_FAULTS(nNew, nSkipped);
+		ioInfo << UPDATE_FORMAT_FAULTS(nNew, nSkipped) << _T("\n");
 	}
 
 	// Update OtherPoints.
@@ -419,7 +465,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << UPDATE_FORMAT_OTHERPTS(nNew, nUpdated, nSkipped);
+		ioInfo << UPDATE_FORMAT_OTHERPTS(nNew, nUpdated, nSkipped) << _T("\n");
 	}
 
 	// Update Venues.
@@ -458,11 +504,10 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << UPDATE_FORMAT_VENUES(nNew, nUpdated, nSkipped);
+		ioInfo << UPDATE_FORMAT_VENUES(nNew, nUpdated, nSkipped) << _T("\n");
 	}
 	if (0 < venueInfo.length())
 	{
-		ioInfo << _T("\n");
 		ioInfo << venueInfo;
 	}
 	// Even if there are no changes, update the version number so we don't
