@@ -819,7 +819,7 @@ void CDlgConfigEvent::OnPointsNew()
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		if (pScoring)
 		{
-			CDlgConfigTitlePoints dlg(0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, this);
+			CDlgConfigTitlePoints dlg(m_pVenue, 0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, this);
 			if (IDOK == dlg.DoModal())
 			{
 				// The only reason this fails is if the faults entry exists.
@@ -892,7 +892,7 @@ void CDlgConfigEvent::OnPointsEdit()
 				points = pPlace->GetValue();
 				type = CDlgConfigTitlePoints::eTitlePlacement;
 			}
-			CDlgConfigTitlePoints dlg(value, points, type);
+			CDlgConfigTitlePoints dlg(m_pVenue, value, points, type);
 			if (IDOK == dlg.DoModal())
 			{
 				if (type != dlg.Type()

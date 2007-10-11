@@ -51,6 +51,7 @@ public:
 	};
 
 	CDlgConfigTitlePoints(
+			ARBConfigVenuePtr inVenue,
 			double inValue, // Faults or Place
 			double inPoints,
 			ETitlePointType inType,
@@ -70,6 +71,7 @@ private:
 	double	m_Points;
 	CComboBox m_ctrlType;
 	//}}AFX_DATA
+	ARBConfigVenuePtr m_Venue;
 	ETitlePointType m_Type;
 	CString m_FaultText;
 	CString m_PlaceText;
