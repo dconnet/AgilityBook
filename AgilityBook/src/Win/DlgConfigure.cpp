@@ -720,17 +720,19 @@ void CDlgConfigure::OnUpdate()
 	{
 		ARBConfig& update = dlg.GetConfig();
 		// Update our current config (not runs, later)
+		bool bUpdated = false;
 		otstringstream info;
 		CDlgConfigCallback callback;
 		if (0 < update.GetActions().Apply(m_Config, NULL, info, callback))
 		{
+			bUpdated = true;
 			// Now move the actions into our config so we can fully apply them.
 			m_Config.GetActions().insert(m_Config.GetActions().end(), update.GetActions().begin(), update.GetActions().end());
 			update.GetActions().clear();
 		}
 
 		// Update the config.
-		if (m_Config.Update(0, update, info))
+		if (m_Config.Update(0, update, info) || bUpdated)
 		{
 			CDlgMessage dlgMsg(info.str().c_str(), 0, this);
 			dlgMsg.DoModal();

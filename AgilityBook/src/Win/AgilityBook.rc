@@ -2186,7 +2186,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
     ID_INDICATOR_STATUS     "status"
     ID_INDICATOR_FILTERED   "Filtered"
-    ID_INDICATOR_DOG        "Dog"
+    ID_INDICATOR_DOG        "          "
 END
 
 STRINGTABLE 

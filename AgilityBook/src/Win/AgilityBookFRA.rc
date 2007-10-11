@@ -2190,7 +2190,7 @@ BEGIN
     ID_INDICATOR_REC        "ENR"
     ID_INDICATOR_STATUS     "statut"
     ID_INDICATOR_FILTERED   "Filtré"
-    ID_INDICATOR_DOG        "Chien"
+    ID_INDICATOR_DOG        "          "
 END
 
 STRINGTABLE 
