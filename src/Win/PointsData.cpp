@@ -609,10 +609,10 @@ CPointsDataLifetime::CPointsDataLifetime(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
-		tstring const& inVenue)
+		ARBConfigVenuePtr inVenue)
 	: CPointsDataBase(pParent, pDoc)
 	, m_bLifetime(bLifetime)
-	, m_Venue(inVenue.c_str())
+	, m_Venue(inVenue)
 	, m_Lifetime(0.0)
 	, m_Filtered(0.0)
 {
@@ -640,7 +640,14 @@ tstring CPointsDataLifetime::OnNeedText(size_t inCol) const
 		{
 			CString str2;
 			if (m_bLifetime)
-				str2.LoadString(IDS_LIFETIME_POINTS);
+			{
+				CString lifetime;
+				if (m_Venue->HasLifetimeName())
+					lifetime = m_Venue->GetLifetimeName().c_str();
+				else
+					lifetime.LoadString(IDS_TITLEPOINT_LIFETIME);
+				str2.FormatMessage(IDS_LIFETIME_POINTS, (LPCTSTR)lifetime);
+			}
 			else
 				str2.LoadString(IDS_PLACEMENT_POINTS);
 			str = (LPCTSTR)str2;
@@ -684,10 +691,17 @@ tstring CPointsDataLifetime::GetHtml(size_t nCurLine) const
 
 void CPointsDataLifetime::Details() const
 {
-	CString caption(m_Venue);
+	CString caption(m_Venue->GetName().c_str());
 	CString str;
 	if (m_bLifetime)
-		str.LoadString(IDS_LIFETIME_POINTS);
+	{
+		CString lifetime;
+		if (m_Venue->HasLifetimeName())
+			lifetime = m_Venue->GetLifetimeName().c_str();
+		else
+			lifetime.LoadString(IDS_TITLEPOINT_LIFETIME);
+		str.FormatMessage(IDS_LIFETIME_POINTS, (LPCTSTR)lifetime);
+	}
 	else
 		str.LoadString(IDS_PLACEMENT_POINTS);
 	caption += _T(" ") + str;
@@ -711,7 +725,7 @@ CPointsDataLifetimeDiv::CPointsDataLifetimeDiv(
 		CWnd* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
-		tstring const& inVenue,
+		ARBConfigVenuePtr inVenue,
 		tstring const& inDiv)
 	: CPointsDataLifetime(pParent, pDoc, bLifetime, inVenue)
 	, m_Div(inDiv)
@@ -1669,7 +1683,7 @@ void CPointsDataItems::LoadData(
 		// Next comes lifetime points.
 		if (0 < lifetime.size())
 		{
-			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, true, pVenue->GetName());
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, true, pVenue);
 			double pts = 0;
 			double ptFiltered = 0;
 			typedef std::map<tstring, CPointsDataLifetimeDiv*> DivLifetime;
@@ -1686,7 +1700,7 @@ void CPointsDataItems::LoadData(
 				}
 				else
 				{
-					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, true, pVenue->GetName(), iter->pDiv->GetName());
+					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, true, pVenue, iter->pDiv->GetName());
 					divs.insert(DivLifetime::value_type(iter->pDiv->GetName(), pDivData));
 				}
 
@@ -1723,7 +1737,7 @@ void CPointsDataItems::LoadData(
 		}
 		if (0 < placement.size())
 		{
-			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, false, pVenue->GetName());
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, false, pVenue);
 			double pts = 0;
 			double ptFiltered = 0;
 			typedef std::map<tstring, CPointsDataLifetimeDiv*> DivLifetime;
@@ -1740,7 +1754,7 @@ void CPointsDataItems::LoadData(
 				}
 				else
 				{
-					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, false, pVenue->GetName(), iter->pDiv->GetName());
+					pDivData = new CPointsDataLifetimeDiv(pParent, pDoc, false, pVenue, iter->pDiv->GetName());
 					divs.insert(DivLifetime::value_type(iter->pDiv->GetName(), pDivData));
 				}
 

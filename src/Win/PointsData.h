@@ -316,7 +316,7 @@ public:
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bLifetime, ///< Lifetime or Placement?
-			tstring const& inVenue);
+			ARBConfigVenuePtr inVenue);
 	void AddLifetimeInfo(
 			tstring const& inDiv,
 			tstring const& inLevel,
@@ -331,7 +331,7 @@ public:
 
 protected:
 	bool m_bLifetime;	///< Lifetime or Placement?
-	CString m_Venue;
+	ARBConfigVenuePtr m_Venue;
 	std::list<LifeTimePointInfo> m_Data;
 	double m_Lifetime;	//< Total lifetime points.
 	double m_Filtered;	//< Points that are filtered out.
@@ -348,7 +348,7 @@ public:
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bLifetime,
-			tstring const& inVenue,
+			ARBConfigVenuePtr inVenue,
 			tstring const& inDiv);
 
 	void AddLifetimeInfo(

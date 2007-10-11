@@ -11,9 +11,10 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2007-08-02 DRC File version 12.6
+2007-08-10 DRC File version 12.6
                Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
                Added 'CalSite' to config, 'SecEmail'/etc to 'Calendar'
+               Added 'LifetimeName' to 'Venue'
 2007-04-22 DRC File version 12.5
                Added 'defValue' to 'OtherPts'.
                Added reservations to calendar.
@@ -173,6 +174,11 @@ for renaming titles.
     Div: Unused
     OldName: Division to be renamed.
     NewName: New name.
+  'RenameVenue': To change 'Sweepstakes' to 'SSA'
+    Venue: Unused
+    Div: Unused
+    OldName: Venue to be renamed.
+    NewName: New name.
  pcdata: currently unused, defined to allow future expansion.
 -->
 <!ELEMENT Action (#PCDATA) >
@@ -257,6 +263,7 @@ top-ten points. The 'Count' value is how they are accumulated
 		LongName CDATA #IMPLIED
 		URL CDATA #IMPLIED
 		icon CDATA #IMPLIED
+		LifetimeName CDATA #IMPLIED
 		>
 <!ELEMENT Desc (#PCDATA) >
 

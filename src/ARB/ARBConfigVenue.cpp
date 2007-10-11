@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-10-10 DRC Added 'LifetimeName'
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-01-01 DRC Added a long name to the venue.
@@ -74,6 +75,7 @@ ARBConfigVenue::ARBConfigVenue()
 	, m_LongName()
 	, m_URL()
 	, m_Desc()
+	, m_LifetimeName()
 	, m_idxIcon(-1)
 	, m_Titles()
 	, m_Divisions()
@@ -88,6 +90,7 @@ ARBConfigVenue::ARBConfigVenue(ARBConfigVenue const& rhs)
 	, m_LongName(rhs.m_LongName)
 	, m_URL(rhs.m_URL)
 	, m_Desc(rhs.m_Desc)
+	, m_LifetimeName(rhs.m_LifetimeName)
 	, m_idxIcon(rhs.m_idxIcon)
 	, m_Titles()
 	, m_Divisions()
@@ -120,6 +123,7 @@ ARBConfigVenue& ARBConfigVenue::operator=(ARBConfigVenue const& rhs)
 		m_LongName = rhs.m_LongName;
 		m_URL = rhs.m_URL;
 		m_Desc = rhs.m_Desc;
+		m_LifetimeName = rhs.m_LifetimeName;
 		m_idxIcon = rhs.m_idxIcon;
 		rhs.m_Titles.Clone(m_Titles);
 		rhs.m_Divisions.Clone(m_Divisions);
@@ -136,6 +140,7 @@ bool ARBConfigVenue::operator==(ARBConfigVenue const& rhs) const
 		&& m_LongName == rhs.m_LongName
 		&& m_URL == rhs.m_URL
 		&& m_Desc == rhs.m_Desc
+		&& m_LifetimeName == rhs.m_LifetimeName
 		&& m_idxIcon == rhs.m_idxIcon
 		&& m_Titles == rhs.m_Titles
 		&& m_Divisions == rhs.m_Divisions
@@ -150,6 +155,7 @@ void ARBConfigVenue::clear()
 	m_LongName.erase();
 	m_URL.erase();
 	m_Desc.erase();
+	m_LifetimeName.erase();
 	m_idxIcon = -1;
 	m_Titles.clear();
 	m_Divisions.clear();
@@ -178,6 +184,8 @@ bool ARBConfigVenue::Load(
 	inTree->GetAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	// URL added in v12.3
 	inTree->GetAttrib(ATTRIB_VENUE_URL, m_URL);
+	// LifetimeName added in v12.6
+	inTree->GetAttrib(ATTRIB_VENUE_LIFETIME_NAME, m_LifetimeName);
 	// Icon index added in 12.5
 	inTree->GetAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
@@ -279,6 +287,8 @@ bool ARBConfigVenue::Save(ElementNodePtr ioTree) const
 		venue->AddAttrib(ATTRIB_VENUE_LONGNAME, m_LongName);
 	if (0 < m_URL.length())
 		venue->AddAttrib(ATTRIB_VENUE_URL, m_URL);
+	if (0 < m_LifetimeName.length())
+		venue->AddAttrib(ATTRIB_VENUE_LIFETIME_NAME, m_LifetimeName);
 	venue->AddAttrib(ATTRIB_VENUE_ICON, m_idxIcon);
 	if (0 < m_Desc.length())
 	{
