@@ -2727,7 +2727,7 @@ STRINGTABLE
 BEGIN
     IDS_INVALID_NAME        "Invalid name"
     IDS_LEVEL_NAME          "Level"
-    IDS_LIFETIME_POINTS     "LifeTime Points"
+    IDS_LIFETIME_POINTS     "%1 Points"
     IDS_OTHERPOINTS         "Other Points"
     IDS_OTHERPTS_ALL        "All Events"
     IDS_OTHERPTS_EVENT      "Tally by Event"

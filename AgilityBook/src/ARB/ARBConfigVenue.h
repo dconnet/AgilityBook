@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-10-10 DRC Added 'LifetimeName'
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -166,6 +167,18 @@ public:
 	{
 		m_Desc = inDesc;
 	}
+	bool HasLifetimeName() const
+	{
+		return !m_LifetimeName.empty();
+	}
+	tstring GetLifetimeName() const
+	{
+		return m_LifetimeName;
+	}
+	void SetLifetimeName(tstring const& name)
+	{
+		m_LifetimeName = name;
+	}
 	short GetIcon() const
 	{
 		return m_idxIcon;
@@ -212,6 +225,7 @@ private:
 	tstring m_LongName;
 	tstring m_URL;
 	tstring m_Desc;
+	tstring m_LifetimeName;
 	short m_idxIcon;
 	ARBConfigTitleList m_Titles;
 	ARBConfigDivisionList m_Divisions;

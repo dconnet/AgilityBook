@@ -1332,6 +1332,10 @@ bool ARBConfigActionList::Load(
 	{
 		item = ARBConfigActionRenameDivision::New(venue, oldName, newName);
 	}
+	else if (ACTION_VERB_RENAME_VENUE == verb)
+	{
+		item = ARBConfigActionRenameVenue::New(oldName, newName);
+	}
 	bool bOk = false;
 	if (item)
 	{

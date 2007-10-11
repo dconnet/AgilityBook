@@ -1,6 +1,4 @@
-Last Updated: 10/4/2007
-
-- Add a way to "label" lifetime points (All Star in UKC)
+Last Updated: 10/10/2007
 
 - Be able to select yards or meters (this is really just a visual thing, since
   the program won't do anything differently)

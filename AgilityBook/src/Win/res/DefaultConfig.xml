@@ -66,6 +66,7 @@ UNKNOWN-24 DRC Configuration version 20.
 -->
 
 	<Configuration version="20">
+		<Action NewName="SSA" OldName="Sweepstakes" Verb="RenameVenue"/>
 		<Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
 		<Action NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
 		<Action NewName="ATCH-OP" OldName="V-ATCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
@@ -2666,7 +2667,7 @@ Was called Wild Card briefly.</Desc>
 				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
 			</Event>
 		</Venue>
-		<Venue LongName="Sweepstakes Agility" Name="Sweepstakes" URL="http://www.sweepstakesagility.com/" icon="10">
+		<Venue LongName="Sweepstakes Agility" Name="SSA" URL="http://www.sweepstakesagility.com/" icon="10">
 			<Titles LongName="Starter Sweepstakes" Name="SSw">50 points</Titles>
 			<Titles LongName="Novice Sweepstakes" Name="NSw">100 points</Titles>
 			<Titles LongName="Open Sweepstakes" Name="OSw">200 points</Titles>
@@ -2764,7 +2765,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins
 				</Scoring>
 			</Event>
 		</Venue>
-		<Venue LongName="United Kennel Club" Name="UKC" URL="http://www.ukcdogs.com/" icon="12">
+		<Venue LifetimeName="All Star" LongName="United Kennel Club" Name="UKC" URL="http://www.ukcdogs.com/" icon="12">
 			<Titles LongName="United Agility I" Name="UAGI">3 Qs in either A or B.</Titles>
 			<Titles LongName="United Agility II" Name="UAGII">3 Qs in either A or B.</Titles>
 			<Titles LongName="United Agility Champion" Name="UACH">100 pts from B, 40 must be from AgI, 40 must be from AgII</Titles>
