@@ -39,6 +39,8 @@
 #include "AgilityBook.h"
 #include "DlgConfigTitlePoints.h"
 
+#include "ARBConfigVenue.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -49,11 +51,13 @@ static char THIS_FILE[] = __FILE__;
 // CDlgConfigTitlePoints dialog
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
+		ARBConfigVenuePtr inVenue,
 		double inValue, // Faults or Place
 		double inPoints,
 		ETitlePointType inType,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgConfigTitlePoints::IDD, pParent)
+	, m_Venue(inVenue)
 	, m_Value(inValue)
 	, m_Points(inPoints)
 	, m_Type(inType)
@@ -116,7 +120,10 @@ BOOL CDlgConfigTitlePoints::OnInitDialog()
 	for (int index = 0; index < 3; ++index)
 	{
 		CString str;
-		str.LoadString(sc_Types[index].iText);
+		if (IDS_TITLEPOINT_LIFETIME == sc_Types[index].iText && m_Venue->HasLifetimeName())
+			str = m_Venue->GetLifetimeName().c_str();
+		else
+			str.LoadString(sc_Types[index].iText);
 		int idx = m_ctrlType.AddString(str);
 		m_ctrlType.SetItemData(idx, sc_Types[index].eType);
 		if (m_Type == sc_Types[index].eType)
