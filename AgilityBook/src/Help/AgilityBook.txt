@@ -383,6 +383,10 @@ Configure Multi-Q events (i.e.: AKC QQs and UKC QQQs).
 .topic HIDC_CONFIG_VENUE_URL
 URL for the venue.
 
+.topic HIDC_CONFIG_VENUE_LIFETIME_NAME
+Name to use when displaying lifetime points.
+If this is not set, 'Lifetime' is used.
+
 .topic HIDC_CONFIG_COPY
 Copy the selected item.
 
