@@ -128,7 +128,7 @@ bool ARBConfigDivision::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_DIVISION, ATTRIB_DIVISION_NAME));
 		return false;
 	}
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
@@ -214,7 +214,7 @@ bool ARBConfigDivision::Update(
 		if (0 < nAdded || 0 < nChanged)
 		{
 			info += indentBuffer;
-			info += UPDATE_FORMAT_LEVELS(nAdded, nChanged, nSkipped);
+			info += Localization()->UpdateLevels(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
 	}

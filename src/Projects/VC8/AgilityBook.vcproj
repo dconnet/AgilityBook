@@ -911,6 +911,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\Localization.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\MainFrm.h"
 				>
 			</File>
@@ -1870,6 +1874,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ListData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\Localization.cpp"
 				>
 			</File>
 			<File

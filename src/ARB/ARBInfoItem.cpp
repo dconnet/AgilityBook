@@ -132,7 +132,7 @@ bool ARBInfoItem::Load(
 		return false;
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME));
 		return false;
 	}
 	m_Comment = inTree->GetValue();

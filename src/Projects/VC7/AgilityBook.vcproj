@@ -403,6 +403,9 @@
 				RelativePath="..\..\Win\ListData.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\Localization.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\MainFrm.cpp">
 			</File>
 			<File
@@ -729,6 +732,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ListData.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\Localization.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\MainFrm.h">

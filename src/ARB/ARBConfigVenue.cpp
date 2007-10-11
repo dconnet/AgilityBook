@@ -177,7 +177,7 @@ bool ARBConfigVenue::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_VENUE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_VENUE, ATTRIB_VENUE_NAME));
 		return false;
 	}
 	// Long name added in v10.1
@@ -207,7 +207,7 @@ bool ARBConfigVenue::Load(
 		{
 			if (0 < m_Events.size())
 			{
-				ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_VENUE_CONFIG));
+				ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidVenueConfig().c_str()));
 				return false;
 			}
 			// Ignore any errors...
@@ -389,10 +389,10 @@ bool ARBConfigVenue::Update(
 		if (0 < nAdded || 0 < nChanged)
 		{
 			info += indentBuffer;
-			info += UPDATE_FORMAT_TITLES(nAdded, nChanged, nSkipped);
+			info += Localization()->UpdateTitles(nAdded, nChanged, nSkipped);
 		}
 		else
-			info += UPDATE_FORMAT_TITLES_REORDERED();
+			info += Localization()->UpdateTitlesReordered();
 	}
 
 	// If the order is different, we will fall into this...
@@ -431,11 +431,11 @@ bool ARBConfigVenue::Update(
 		if (0 < nAdded || 0 < nChanged)
 		{
 			info += indentBuffer;
-			info += UPDATE_FORMAT_DIVISIONS(nAdded, nChanged, nSkipped);
+			info += Localization()->UpdateDivisions(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
 		else
-			info += UPDATE_FORMAT_DIVISIONS_REORDERED();
+			info += Localization()->UpdateDivisionsReordered();
 	}
 
 	// If the order is different, we will fall into this...
@@ -474,11 +474,11 @@ bool ARBConfigVenue::Update(
 		if (0 < nAdded || 0 < nChanged)
 		{
 			info += indentBuffer;
-			info += UPDATE_FORMAT_EVENTS(nAdded, nChanged, nSkipped);
+			info += Localization()->UpdateEvents(nAdded, nChanged, nSkipped);
 			info += info2;
 		}
 		else
-			info += UPDATE_FORMAT_EVENTS_REORDERED();
+			info += Localization()->UpdateEventsReordered();
 	}
 
 	// If the order is different, we will fall into this...
@@ -524,10 +524,10 @@ bool ARBConfigVenue::Update(
 		{
 			info += indentBuffer;
 			info += GetName();
-			info += UPDATE_FORMAT_MULTIQS(nAdded, nDeleted, nSkipped);
+			info += Localization()->UpdateMultiqs(nAdded, nDeleted, nSkipped);
 		}
 		else
-			info += UPDATE_FORMAT_MULTIQS_REORDERED();
+			info += Localization()->UpdateMultiqsReordered();
 	}
 
 	if (0 < info.length())

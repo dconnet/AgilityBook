@@ -185,7 +185,7 @@ bool ARBConfig::Load(
 		return false;
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
@@ -405,7 +405,7 @@ bool ARBConfig::Update(
 		m_CalSites = inConfigNew.GetCalSites();
 		if (0 < nNew || 0 < nDeleted)
 		{
-			ioInfo << UPDATE_FORMAT_CALSITES(nNew, nDeleted, nSkipped) << _T("\n");
+			ioInfo << Localization()->UpdateCalSites(nNew, nDeleted, nSkipped) << _T("\n");
 		}
 	}
 
@@ -430,7 +430,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << UPDATE_FORMAT_FAULTS(nNew, nSkipped) << _T("\n");
+		ioInfo << Localization()->UpdateFaults(nNew, nSkipped) << _T("\n");
 	}
 
 	// Update OtherPoints.
@@ -465,7 +465,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << UPDATE_FORMAT_OTHERPTS(nNew, nUpdated, nSkipped) << _T("\n");
+		ioInfo << Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped) << _T("\n");
 	}
 
 	// Update Venues.
@@ -504,7 +504,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << UPDATE_FORMAT_VENUES(nNew, nUpdated, nSkipped) << _T("\n");
+		ioInfo << Localization()->UpdateVenues(nNew, nUpdated, nSkipped) << _T("\n");
 	}
 	if (0 < venueInfo.length())
 	{

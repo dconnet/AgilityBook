@@ -137,7 +137,7 @@ bool ARBDogRegNum::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE));
 		return false;
 	}
 
@@ -146,7 +146,7 @@ bool ARBDogRegNum::Load(
 		if (ElementNode::eFound != inTree->GetAttrib(_T("Number"), m_Number)
 		|| 0 == m_Number.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, _T("Number")));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, _T("Number")));
 			return false;
 		}
 	}
@@ -157,7 +157,7 @@ bool ARBDogRegNum::Load(
 		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REG_NUM_NUMBER, m_Number)
 		|| 0 == m_Number.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, ATTRIB_REG_NUM_NUMBER));
 			return false;
 		}
 
@@ -168,15 +168,15 @@ bool ARBDogRegNum::Load(
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
-		tstring msg(INVALID_VENUE_NAME);
+		tstring msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str()));
 		return false;
 	}
 

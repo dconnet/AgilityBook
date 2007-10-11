@@ -129,7 +129,7 @@ bool ARBConfigOtherPoints::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_NAME));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
@@ -137,7 +137,7 @@ bool ARBConfigOtherPoints::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT));
 		return false;
 	}
 	if (attrib == OTHERPTS_COUNT_ALL)
@@ -150,11 +150,11 @@ bool ARBConfigOtherPoints::Load(
 		m_Tally = eTallyLevelByEvent;
 	else
 	{
-		tstring msg(INVALID_VALUE);
+		tstring msg(Localization()->InvalidValue());
 		msg += attrib;
 		msg += _T("\n");
-		msg += VALID_VALUES_OTHERPT;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
+		msg += Localization()->ValidValuesOtherPt();
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
 		return false;
 	}
 	m_Desc = inTree->GetValue();

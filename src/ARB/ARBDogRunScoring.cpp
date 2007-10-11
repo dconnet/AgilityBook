@@ -219,7 +219,7 @@ bool ARBDogRunScoring::Load(
 			{
 				if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
 				{
-					ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, VALID_VALUES_BOOL));
+					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool().c_str()));
 					// Report the error, but keep going.
 					m_Table = false;
 				}

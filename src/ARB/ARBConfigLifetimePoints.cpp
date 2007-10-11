@@ -119,7 +119,7 @@ bool ARBConfigLifetimePoints::operator==(ARBConfigLifetimePoints const& rhs) con
 
 tstring ARBConfigLifetimePoints::GetGenericName() const
 {
-	return LIFETIME_POINTS_NAME_FORMAT(m_Points, m_Faults);
+	return Localization()->LifetimePointsNameFormat(m_Points, m_Faults);
 }
 
 
@@ -133,12 +133,12 @@ bool ARBConfigLifetimePoints::Load(
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_POINTS));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_POINTS));
 		return false;
 	}
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_FAULTS, m_Faults))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_FAULTS));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LIFETIME_POINTS, ATTRIB_LIFETIME_POINTS_FAULTS));
 		return false;
 	}
 	return true;

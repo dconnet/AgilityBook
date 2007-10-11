@@ -567,15 +567,15 @@ bool ARBCalendar::Load(
 	switch (inTree->GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{
 	case ElementNode::eNotFound:
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_START));
 		return false;
 	case ElementNode::eInvalidValue:
 		{
 			tstring attrib;
 			inTree->GetAttrib(ATTRIB_CAL_START, attrib);
-			tstring msg(INVALID_DATE);
+			tstring msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
 		}
 		return false;
 	}
@@ -583,15 +583,15 @@ bool ARBCalendar::Load(
 	switch (inTree->GetAttrib(ATTRIB_CAL_END, m_DateEnd))
 	{
 	case ElementNode::eNotFound:
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALENDAR, ATTRIB_CAL_END));
 		return false;
 	case ElementNode::eInvalidValue:
 		{
 			tstring attrib;
 			inTree->GetAttrib(ATTRIB_CAL_END, attrib);
-			tstring msg(INVALID_DATE);
+			tstring msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
 			return false;
 		}
 	}
@@ -600,9 +600,9 @@ bool ARBCalendar::Load(
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_CAL_OPENING, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
 		return false;
 	}
 
@@ -610,9 +610,9 @@ bool ARBCalendar::Load(
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_CAL_DRAW, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_DRAW, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_DRAW, msg.c_str()));
 		return false;
 	}
 
@@ -620,15 +620,15 @@ bool ARBCalendar::Load(
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_CAL_CLOSING, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
 		return false;
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -660,7 +660,7 @@ bool ARBCalendar::Load(
 				m_eEntered = eNot;
 			else
 			{
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, VALID_VALUES_ENTRY));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, Localization()->ValidValuesEntry().c_str()));
 				return false;
 			}
 		}
@@ -675,7 +675,7 @@ bool ARBCalendar::Load(
 				m_eAccommodations = eAccomConfirmed;
 			else
 			{
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, VALID_VALUES_ACCOM));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, Localization()->ValidValuesAccom().c_str()));
 				return false;
 			}
 		}
@@ -758,35 +758,35 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	{
 		otstringstream str;
 		if (IsTentative())
-			str << CALENDAR_TENTATIVE << _T(" ");
+			str << Localization()->CalendarTentative() << _T(" ");
 		switch (GetEntered())
 		{
 		default:
 		case ARBCalendar::eNot:
-			str << CALENDAR_STATUS_N << _T(" ");
+			str << Localization()->CalendarStatusN() << _T(" ");
 			break;
 		case ARBCalendar::eEntered:
-			str << CALENDAR_STATUS_E << _T(" ");
+			str << Localization()->CalendarStatusE() << _T(" ");
 			break;
 		case ARBCalendar::ePlanning:
-			str << CALENDAR_STATUS_P << _T(" ");
+			str << Localization()->CalendarStatusP() << _T(" ");
 			break;
 		}
 		if (m_DateOpening.IsValid())
 		{
-			str << CALENDAR_OPENS
+			str << Localization()->CalendarOpens()
 				<< m_DateOpening.GetString(ARBDate::eDefault)
 				<< _T(" ");
 		}
 		if (m_DateDraw.IsValid())
 		{
-			str << CALENDAR_DRAW
+			str << Localization()->CalendarDraw()
 				<< m_DateDraw.GetString(ARBDate::eDefault)
 				<< _T(" ");
 		}
 		if (m_DateClosing.IsValid())
 		{
-			str << CALENDAR_CLOSES
+			str << Localization()->CalendarCloses()
 				<< m_DateClosing.GetString(ARBDate::eDefault)
 				<< _T(" ");
 		}

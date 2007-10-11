@@ -124,7 +124,7 @@ bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 
 tstring ARBConfigTitlePoints::GetGenericName() const
 {
-	return TITLE_POINTS_NAME_FORMAT(m_Points, m_Faults);
+	return Localization()->TitlePointsNameFormat(m_Points, m_Faults);
 }
 
 
@@ -139,12 +139,12 @@ bool ARBConfigTitlePoints::Load(
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS));
 		return false;
 	}
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
 		return false;
 	}
 	if (inVersion < ARBVersion(10,0))

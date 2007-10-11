@@ -155,15 +155,15 @@ bool ARBTraining::Load(
 	switch (inTree->GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{
 	case ElementNode::eNotFound:
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TRAINING, ATTRIB_TRAINING_DATE));
 		return false;
 	case ElementNode::eInvalidValue:
 		{
 			tstring attrib;
 			inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);
-			tstring msg(INVALID_DATE);
+			tstring msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
 		}
 		return false;
 	}

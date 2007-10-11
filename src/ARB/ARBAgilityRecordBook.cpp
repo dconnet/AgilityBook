@@ -153,26 +153,26 @@ bool ARBAgilityRecordBook::Load(
 	// The root must be TREE_BOOK.
 	if (inTree->GetName() != TREE_BOOK)
 	{
-		ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_ROOT));
+		ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidRoot().c_str()));
 		return false;
 	}
 	// The version of the document must be something we understand.
 	ARBVersion version;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_BOOK_VERSION, version))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_BOOK, ATTRIB_BOOK_VERSION));
 		return false;
 	}
 	if (version < ARBVersion(1,0) || version > GetCurrentDocVersion())
 	{
 		if (version.Major() == GetCurrentDocVersion().Major())
 		{
-			if (!ioCallback.OnError(WARNING_NEWER_DOC))
+			if (!ioCallback.OnError(Localization()->WarningNewerDoc().c_str()))
 				return false;
 		}
 		else
 		{
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, UNKNOWN_VERSION));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, Localization()->UnknownVersion().c_str()));
 			return false;
 		}
 	}
@@ -233,7 +233,7 @@ bool ARBAgilityRecordBook::Load(
 				// Make sure there's only one.
 				if (-1 != nConfig)
 				{
-					ioCallback.LogMessage(ErrorInvalidDocStructure(INVALID_CONFIG));
+					ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidConfig().c_str()));
 					return false;
 				}
 				nConfig = i;
@@ -242,7 +242,7 @@ bool ARBAgilityRecordBook::Load(
 		// Oops. No config.
 		if (0 > nConfig)
 		{
-			ioCallback.LogMessage(ErrorInvalidDocStructure(MISSING_CONFIG));
+			ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->MissingConfig().c_str()));
 			return false;
 		}
 		// Load the config.
@@ -459,7 +459,7 @@ bool ARBAgilityRecordBook::Update(
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
-		tstring msg = WARN_DELETED_RUNS(nDeletedRuns, msgDelRuns.str());
+		tstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, msgDelRuns.str());
 		ioCallBack.PostDelete(msg);
 		ioInfo << _T("\n") << msg << _T("\n");
 	}
@@ -523,7 +523,7 @@ bool ARBAgilityRecordBook::Update(
 		if (0 < nUpdated)
 		{
 			nChanges += nUpdated;
-			ioInfo << UPDATE_TABLE_RUNS(nUpdated)
+			ioInfo << Localization()->UpdateTableRuns(nUpdated)
 				<< _T("\n");
 		}
 	}

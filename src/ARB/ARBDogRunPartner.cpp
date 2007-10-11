@@ -146,14 +146,14 @@ bool ARBDogRunPartner::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
 	|| 0 == m_Handler.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_HANDLER));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_HANDLER));
 		return false;
 	}
 
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PARTNER_DOG, m_Dog)
 	|| 0 == m_Dog.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_DOG));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PARTNER, ATTRIB_PARTNER_DOG));
 		return false;
 	}
 

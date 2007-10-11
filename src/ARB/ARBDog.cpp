@@ -209,7 +209,7 @@ bool ARBDog::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_DOG, ATTRIB_DOG_CALLNAME));
 		return false;
 	}
 
@@ -217,9 +217,9 @@ bool ARBDog::Load(
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_DOG_DOB, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DOB, msg.c_str()));
 		return false;
 	}
 
@@ -227,9 +227,9 @@ bool ARBDog::Load(
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_DOG_DECEASED, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_DOG, ATTRIB_DOG_DECEASED, msg.c_str()));
 		return false;
 	}
 

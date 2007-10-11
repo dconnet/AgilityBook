@@ -125,7 +125,7 @@ bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 
 tstring ARBConfigPlaceInfo::GetGenericName() const
 {
-	return PLACEMENT_POINTS_NAME_FORMAT(m_Value, m_Place);
+	return Localization()->PlacementPointsNameFormat(m_Value, m_Place);
 }
 
 
@@ -139,17 +139,17 @@ bool ARBConfigPlaceInfo::Load(
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_PLACE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_PLACE));
 		return false;
 	}
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_VALUE, m_Value))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_VALUE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_VALUE));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_MUSTQ, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_MUSTQ, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	return true;

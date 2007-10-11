@@ -108,7 +108,7 @@ bool ARBConfigFault::Load(
 		if (ElementNode::eFound != inTree->GetAttrib(_T("Name"), m_Name)
 		|| 0 == m_Name.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_FAULTTYPE, _T("Name")));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_FAULTTYPE, _T("Name")));
 			return false;
 		}
 	}

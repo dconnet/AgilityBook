@@ -761,10 +761,10 @@ void CWizardExport::UpdatePreview()
 						case ARBCalendar::eNot:
 							break;
 						case ARBCalendar::eEntered:
-							data += AddPreviewData(iLine, idx, CALENDAR_ENTERED);
+							data += AddPreviewData(iLine, idx, Localization()->CalendarEntered().c_str());
 							break;
 						case ARBCalendar::ePlanning:
-							data += AddPreviewData(iLine, idx, CALENDAR_PLANNING);
+							data += AddPreviewData(iLine, idx, Localization()->CalendarPlanning().c_str());
 							break;
 						}
 						break;
@@ -872,29 +872,29 @@ void CWizardExport::UpdatePreview()
 							CString tmp;
 							if (pCal->IsTentative())
 							{
-								tmp += CALENDAR_TENTATIVE;
+								tmp += Localization()->CalendarTentative().c_str();
 								tmp += _T(" ");
 							}
 							switch (pCal->GetEntered())
 							{
 							default:
 							case ARBCalendar::eNot:
-								tmp += CALENDAR_STATUS_N;
+								tmp += Localization()->CalendarStatusN().c_str();
 								tmp += _T(" ");
 								break;
 							case ARBCalendar::eEntered:
-								tmp += CALENDAR_STATUS_E;
+								tmp += Localization()->CalendarStatusE().c_str();
 								tmp += _T(" ");
 								break;
 							case ARBCalendar::ePlanning:
-								tmp += CALENDAR_STATUS_P;
+								tmp += Localization()->CalendarStatusP().c_str();
 								tmp += _T(" ");
 								break;
 							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
-								tmp += CALENDAR_OPENS;
+								tmp += Localization()->CalendarOpens().c_str();
 								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");
@@ -902,7 +902,7 @@ void CWizardExport::UpdatePreview()
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
-								tmp += CALENDAR_CLOSES;
+								tmp += Localization()->CalendarCloses().c_str();
 								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");
@@ -1022,13 +1022,13 @@ void CWizardExport::UpdatePreview()
 							CString tmp;
 							if (pCal->IsTentative())
 							{
-								tmp += CALENDAR_TENTATIVE;
+								tmp += Localization()->CalendarTentative().c_str();
 								tmp += _T(" ");
 							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
-								tmp += CALENDAR_OPENS;
+								tmp += Localization()->CalendarOpens().c_str();
 								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");
@@ -1036,7 +1036,7 @@ void CWizardExport::UpdatePreview()
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
-								tmp += CALENDAR_CLOSES;
+								tmp += Localization()->CalendarCloses().c_str();
 								tmp += _T(" ");
 								tmp += date.GetString(format).c_str();
 								tmp += _T(" ");

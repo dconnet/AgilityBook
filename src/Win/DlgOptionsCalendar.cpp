@@ -53,22 +53,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-static const struct
-{
-	CAgilityBookOptions::CalendarColorItem item;
-	LPCTSTR text;
-} sc_CalItems[] =
-{
-	{CAgilityBookOptions::eCalColorNotEntered, CALENDAR_NOTENTERED},
-	{CAgilityBookOptions::eCalColorPlanning,   CALENDAR_PLANNING},
-	{CAgilityBookOptions::eCalColorOpening,    _T("  Opening")},
-	{CAgilityBookOptions::eCalColorClosing,    _T("  Closing")},
-	{CAgilityBookOptions::eCalColorEntered,    CALENDAR_ENTERED},
-};
-static const int sc_CalItemsCount = sizeof(sc_CalItems) / sizeof(sc_CalItems[0]);
-
-/////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsCalendar property page
 
 IMPLEMENT_DYNAMIC(CDlgOptionsCalendar, CDlgBasePropertyPage)
@@ -173,11 +157,23 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	m_fontCalViewInfo.CreateFont(m_fontCalView);
 	m_ctrlCalView.SetFont(&m_fontCalView);
-	for (int i = 0; i < sc_CalItemsCount; ++i)
-	{
-		int idx = m_ctrlCalEntries.AddString(sc_CalItems[i].text);
-		m_ctrlCalEntries.SetItemData(idx, sc_CalItems[i].item);
-	}
+
+	int idx = m_ctrlCalEntries.AddString(Localization()->CalendarNotEntered().c_str());
+	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorNotEntered);
+	idx = m_ctrlCalEntries.AddString(Localization()->CalendarPlanning().c_str());
+	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorPlanning);
+	CString data;
+	data.LoadString(IDS_COL_OPENING);
+	data = _T("  ") + data;
+	idx = m_ctrlCalEntries.AddString(data);
+	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorOpening);
+	data.LoadString(IDS_COL_CLOSING);
+	data = _T("  ") + data;
+	idx = m_ctrlCalEntries.AddString(data);
+	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorClosing);
+	idx = m_ctrlCalEntries.AddString(Localization()->CalendarEntered().c_str());
+	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorEntered);
+
 	m_ctrlCalEntries.SetCurSel(0);
 	UpdateControls();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -228,24 +224,35 @@ void CDlgOptionsCalendar::OnDrawItem(
 			TEXTMETRIC tm;
 			pDC->GetTextMetrics(&tm);
 
+			CString data;
+			data = Localization()->CalendarNotEntered().c_str();
+			data += _T(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered));
-			pDC->DrawText(CALENDAR_NOTENTERED _T(" Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
+			data = Localization()->CalendarPlanning().c_str();
+			data += _T(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning));
-			pDC->DrawText(CALENDAR_PLANNING _T(" Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
+			data.LoadString(IDS_COL_OPENING);
+			data += _T(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening));
-			pDC->DrawText(_T("Opening Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
+			data.LoadString(IDS_COL_CLOSING);
+			data += _T(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorClosing));
-			pDC->DrawText(_T("Closing Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
+			data = Localization()->CalendarEntered().c_str();
+			data += _T(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered));
-			pDC->DrawText(CALENDAR_ENTERED _T(" Text"), r, DT_NOPREFIX|DT_TOP);
+			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			pDC->SelectObject(pOldFont);
 		}

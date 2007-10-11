@@ -112,12 +112,12 @@ bool ARBConfigCalSite::Load(
 		return false;
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_NAME, m_Name))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_NAME));
 		return false;
 	}
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_SEARCH, m_urlSearch))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_SEARCH));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CALSITE, ATTRIB_CALSITE_SEARCH));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_CALSITE_HELP, m_urlHelp);

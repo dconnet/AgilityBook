@@ -37,6 +37,7 @@
  */
 
 #include <map>
+#include "Localization.h"
 
 /**
  * Class to manage resource-only language DLLs.
@@ -101,4 +102,5 @@ private:
 	LANGID m_LangID;
 	LangResources m_Langs;
 	LANGID m_CurLang;
+	CLocalization m_Localization;
 };

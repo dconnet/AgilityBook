@@ -173,22 +173,22 @@ bool ARBDogTitle::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_VENUE));
 		return false;
 	}
 	if (!inConfig.GetVenues().FindVenue(m_Venue))
 	{
-		tstring msg(INVALID_VENUE_NAME);
+		tstring msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
 		msg += _T("'");
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
 		return false;
 	}
 
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_NAME));
 		return false;
 	}
 
@@ -202,7 +202,7 @@ bool ARBDogTitle::Load(
 		// that we're hiding.
 		if (inVersion < ARBVersion(8, 5))
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE, ATTRIB_TITLE_DATE));
 			return false;
 		}
 		m_bHidden = true;
@@ -211,9 +211,9 @@ bool ARBDogTitle::Load(
 		{
 			tstring attrib;
 			inTree->GetAttrib(ATTRIB_TITLE_DATE, attrib);
-			tstring msg(INVALID_DATE);
+			tstring msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_DATE, msg.c_str()));
 			return false;
 		}
 	}
@@ -225,7 +225,7 @@ bool ARBDogTitle::Load(
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_RECEIVED, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -242,11 +242,11 @@ bool ARBDogTitle::Load(
 		}
 		else
 		{
-			tstring msg(INVALID_TITLE);
+			tstring msg(Localization()->InvalidTitle());
 			msg += m_Venue;
 			msg += _T("/");
 			msg += m_Name;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
 			return false;
 		}
 	}
