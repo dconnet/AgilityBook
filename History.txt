@@ -1,4 +1,4 @@
-9/23/2007: v1.10.0.12 <in development>
+10/10/2007: v1.10.0.12 <in development>
 - Bumped file version to 12.6, Configuration v20:
   - Added 'timestamp' to 'AgilityBook'.
   - Added 'CalSite' to config.
@@ -21,6 +21,11 @@
   - Fixed DTD (missing some elements)
   - Renaming an existing event (in config dlg) actually created a new event.
   - Remember order when items in a venue are rearranged.
+  - When updating the configuration and the only changes are in the action
+    list, the configuration incorrectly reported that nothing was changed.
+    If you Ok'd everything, the actions are actually correctly applied.
+  - When creating a new file, the name of the last dog viewed remained in
+    the status bar (visual bug only).
 
 6/24/2007: v1.9.1.12
 - Bumped Configuration v19:

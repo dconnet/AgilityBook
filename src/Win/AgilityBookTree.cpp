@@ -321,6 +321,7 @@ BOOL CAgilityBookTree::PreCreateWindow(CREATESTRUCT& cs)
 void CAgilityBookTree::OnInitialUpdate()
 {
 	m_bSuppressSelect = true;
+	m_pDog.reset();
 	CTreeView::OnInitialUpdate();
 	GetTreeCtrl().SetImageList(&m_ImageList, TVSIL_NORMAL);
 	GetTreeCtrl().SetImageList(&m_ImageListStates, TVSIL_STATE);

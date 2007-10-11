@@ -1024,6 +1024,13 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
  */
 void CAgilityBookDoc::DeleteContents()
 {
+	if (IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
+	{
+		CString msg;
+		msg.LoadString(IDS_INDICATOR_BLANK);
+		reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, CFilterOptions::Options().IsFilterEnabled());
+		reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
+	}
 	m_Records.clear();
 	CDocument::DeleteContents();
 	SetModifiedFlag(FALSE);

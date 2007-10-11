@@ -341,6 +341,12 @@ bool ARBConfigVenue::Update(
 		SetDesc(inVenueNew->GetDesc());
 	}
 
+	if (GetLifetimeName() != inVenueNew->GetLifetimeName())
+	{
+		bChanges = true;
+		SetLifetimeName(inVenueNew->GetLifetimeName());
+	}
+
 	if (GetIcon() != inVenueNew->GetIcon())
 	{
 		bChanges = true;
