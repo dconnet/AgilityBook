@@ -62,19 +62,19 @@ tstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType i
 	switch (inType)
 	{
 	case eOtherPoints:
-		str = EXISTING_POINTS_OTHER;
+		str = Localization()->ExistingPointsOther();
 		break;
 	case eRuns:
-		str = EXISTING_POINTS_RUN;
+		str = Localization()->ExistingPointsRun();
 		break;
 	case eSpeed:
-		str = EXISTING_POINTS_SPEED;
+		str = Localization()->ExistingPointsSpeed();
 		break;
 	case eMQ:
-		str = EXISTING_POINTS_MQ;
+		str = Localization()->ExistingPointsMQ();
 		break;
 	case eSQ:
-		str = EXISTING_POINTS_SQ;
+		str = Localization()->ExistingPointsSQ();
 		break;
 	}
 	return str;
@@ -182,16 +182,16 @@ bool ARBDogExistingPoints::Load(
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
 		inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str()));
 		return false;
 	}
 
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE));
 		return false;
 	}
 	bool bConvertedQQ = false;
@@ -216,10 +216,10 @@ bool ARBDogExistingPoints::Load(
 	}
 	else
 	{
-		tstring msg(INVALID_VALUE);
+		tstring msg(Localization()->InvalidValue());
 		msg += attrib;
 		msg += _T("\n");
-		msg += VALID_VALUES;
+		msg += Localization()->ValidValues();
 		msg += EXISTING_PTS_TYPE_OTHER;
 		msg += _T(", ");
 		msg += EXISTING_PTS_TYPE_RUNS;
@@ -229,7 +229,7 @@ bool ARBDogExistingPoints::Load(
 		msg += EXISTING_PTS_TYPE_MQ;
 		msg += _T(", ");
 		msg += EXISTING_PTS_TYPE_SQ;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str()));
 		return false;
 	}
 
@@ -240,15 +240,15 @@ bool ARBDogExistingPoints::Load(
 		{
 			if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
 			{
-				tstring msg(INVALID_OTHER_PTS_NAME);
+				tstring msg(Localization()->InvalidOtherPtsName());
 				msg += m_Other;
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str()));
 				return false;
 			}
 		}
 		else
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER));
 			return false;
 		}
 	}
@@ -258,15 +258,15 @@ bool ARBDogExistingPoints::Load(
 	{
 		if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 		{
-			tstring msg(INVALID_VENUE_NAME);
+			tstring msg(Localization()->InvalidVenueName());
 			msg += m_Venue;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
 		}
 	}
 	else
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE));
 		return false;
 	}
 
@@ -300,7 +300,7 @@ bool ARBDogExistingPoints::Load(
 			}
 			if (!bConvertedQQ)
 			{
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, INVALID_MULTIQ_CONVERSION));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, Localization()->InvalidMultiqConversion().c_str()));
 				return false;
 			}
 		}
@@ -311,17 +311,17 @@ bool ARBDogExistingPoints::Load(
 			{
 				if (!inConfig.GetVenues().VerifyMultiQ(m_Venue, m_MultiQ))
 				{
-					tstring msg(INVALID_MULTIQ_NAME);
+					tstring msg(Localization()->InvalidMultiqName());
 					msg += m_Venue;
 					msg += _T("/");
 					msg += m_MultiQ;
-					ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, msg.c_str()));
+					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, msg.c_str()));
 					return false;
 				}
 			}
 			else
 			{
-				ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ));
+				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ));
 				return false;
 			}
 		}
@@ -332,14 +332,14 @@ bool ARBDogExistingPoints::Load(
 		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_DIV, m_Div)
 		|| 0 == m_Div.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DIV));
 			return false;
 		}
 
 		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_LEVEL, m_Level)
 		|| 0 == m_Level.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_LEVEL));
 			return false;
 		}
 	}
@@ -356,12 +356,12 @@ bool ARBDogExistingPoints::Load(
 		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_EXISTING_PTS_EVENT, m_Event)
 		|| 0 == m_Event.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT));
 			return false;
 		}
 		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event, m_Date))
 		{
-			tstring msg(INVALID_EVENT_NAME);
+			tstring msg(Localization()->InvalidEventName());
 			msg += m_Venue;
 			msg += _T("/");
 			msg += m_Div;
@@ -369,7 +369,7 @@ bool ARBDogExistingPoints::Load(
 			msg += m_Level;
 			msg += _T("/");
 			msg += m_Event;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT, msg.c_str()));
 			return false;
 		}
 		// Only used in eRuns.
@@ -378,13 +378,13 @@ bool ARBDogExistingPoints::Load(
 	default:
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
 		{
-			tstring msg(INVALID_VENUE_NAME);
+			tstring msg(Localization()->InvalidVenueName());
 			msg += m_Venue;
 			msg += _T("/");
 			msg += m_Div;
 			msg += _T("/");
 			msg += m_Level;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
 		}
 		break;

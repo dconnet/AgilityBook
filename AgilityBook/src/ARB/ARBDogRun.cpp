@@ -283,15 +283,15 @@ bool ARBDogRun::Load(
 	switch (inTree->GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{
 	case ElementNode::eNotFound:
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DATE));
 		return false;
 	case ElementNode::eInvalidValue:
 		{
 			tstring attrib;
 			inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
-			tstring msg(INVALID_DATE);
+			tstring msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
 			return false;
 		}
 	}
@@ -299,14 +299,14 @@ bool ARBDogRun::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_DIVISION, m_Division)
 	|| 0 == m_Division.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_DIVISION));
 		return false;
 	}
 
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_LEVEL, m_Level)
 	|| 0 == m_Level.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_LEVEL));
 		return false;
 	}
 
@@ -316,7 +316,7 @@ bool ARBDogRun::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_RUN_EVENT, m_Event)
 	|| 0 == m_Event.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_RUN, ATTRIB_RUN_EVENT));
 		return false;
 	}
 
@@ -365,14 +365,14 @@ bool ARBDogRun::Load(
 			if (ElementNode::eFound != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
-				ioCallback.LogMessage(ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
+				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q));
 				return false;
 			}
 			if (!m_Q.Load(attrib, inVersion, ioCallback))
 			{
-				tstring msg(VALID_VALUES);
+				tstring msg(Localization()->ValidValues());
 				msg += ARB_Q::GetValidTypes();
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
 				return false;
 			}
 			element->GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);

@@ -176,7 +176,7 @@ bool ARBDogTrial::Load(
 		return false;
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRIAL, ATTRIB_TRIAL_VERIFIED, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	for (int i = 0; i < inTree->GetElementCount(); ++i)

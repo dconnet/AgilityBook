@@ -123,7 +123,7 @@ bool ARBConfigLevel::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LEVEL_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_LEVEL, ATTRIB_LEVEL_NAME));
 		return false;
 	}
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
@@ -187,7 +187,7 @@ bool ARBConfigLevel::Update(
 		if (0 < nAdded)
 		{
 			info += indentBuffer;
-			info += UPDATE_FORMAT_SUBLEVELS(nAdded);
+			info += Localization()->UpdateSubLevels(nAdded);
 		}
 	}
 	bool bChanges = false;

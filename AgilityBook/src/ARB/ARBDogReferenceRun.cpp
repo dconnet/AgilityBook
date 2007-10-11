@@ -173,12 +173,12 @@ bool ARBDogReferenceRun::Load(
 
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
 		return false;
 	}
 	if (!m_Q.Load(attrib, inVersion, ioCallback))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REF_RUN, ATTRIB_REF_RUN_Q));
 		return false;
 	}
 

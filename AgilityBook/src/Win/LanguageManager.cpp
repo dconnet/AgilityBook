@@ -70,12 +70,15 @@ CLanguageManager::CLanguageManager()
 	, m_LangID(0)
 	, m_Langs()
 	, m_CurLang(0)
+	, m_Localization()
 {
+	IARBLocalization::Init(&m_Localization);
 }
 
 
 CLanguageManager::~CLanguageManager()
 {
+	IARBLocalization::Init(NULL);
 	for (LangResources::iterator iLang = m_Langs.begin();
 		iLang != m_Langs.end();
 		++iLang)
@@ -217,6 +220,7 @@ bool CLanguageManager::SetLanguage(LANGID langId)
 		{
 			bSet = true;
 			AfxSetResourceHandle(hInst);
+			m_Localization.Load();
 			m_CurLang = langId;
 			SetHelpFile();
 		}
@@ -269,6 +273,7 @@ void CLanguageManager::SetInitialLanguage(LPCTSTR* pszHelpFilePath)
 				m_CurLang = m_LangID;
 				AfxSetResourceHandle(m_hInstance);
 			}
+			m_Localization.Load();
 		}
 		SetHelpFile();
 		// Load resource DLLs

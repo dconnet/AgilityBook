@@ -442,6 +442,10 @@ SOURCE=..\..\Win\ListData.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\Localization.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\MainFrm.cpp
 # End Source File
 # Begin Source File
@@ -864,6 +868,10 @@ SOURCE=..\..\Win\ListCtrl.h
 # Begin Source File
 
 SOURCE=..\..\Win\ListData.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\Localization.h
 # End Source File
 # Begin Source File
 

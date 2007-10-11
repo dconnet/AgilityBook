@@ -123,30 +123,30 @@ bool ARBConfigMultiQ::Load(
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_MULTIQ_NAME, m_Name))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_NAME));
 		return false;
 	}
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_MULTIQ_SHORTNAME, m_ShortName))
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_SHORTNAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_SHORTNAME));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, m_ValidFrom))
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_FROM, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_FROM, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_FROM, msg.c_str()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, m_ValidTo))
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_MULTIQ_VALID_TO, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_TO, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ, ATTRIB_MULTIQ_VALID_TO, msg.c_str()));
 		return false;
 	}
 
@@ -162,19 +162,19 @@ bool ARBConfigMultiQ::Load(
 			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_DIV, item.m_Div)
 			|| 0 == item.m_Div.length())
 			{
-				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV));
+				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV));
 				return false;
 			}
 			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_LEVEL, item.m_Level)
 			|| 0 == item.m_Level.length())
 			{
-				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL));
+				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL));
 				return false;
 			}
 			if (ElementNode::eFound != element->GetAttrib(ATTRIB_MULTIQ_ITEM_EVENT, item.m_Event)
 			|| 0 == item.m_Event.length())
 			{
-				ioCallback.LogMessage(ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT));
+				ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT));
 				return false;
 			}
 
@@ -182,9 +182,9 @@ bool ARBConfigMultiQ::Load(
 			ARBConfigDivisionPtr pDiv;
 			if (!inVenue.GetDivisions().FindDivision(item.m_Div, &pDiv))
 			{
-				tstring msg(INVALID_DIV_NAME);
+				tstring msg(Localization()->InvalidDivName());
 				msg += item.m_Div;
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_DIV, msg.c_str()));
 				return false;
 			}
 
@@ -192,11 +192,11 @@ bool ARBConfigMultiQ::Load(
 			ARBConfigLevelPtr pLevel;
 			if (!pDiv->GetLevels().FindSubLevel(item.m_Level, &pLevel))
 			{
-				tstring msg(INVALID_DIV_LEVEL);
+				tstring msg(Localization()->InvalidDivLevel());
 				msg += item.m_Div;
 				msg += _T("/");
 				msg += item.m_Level;
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL, msg.c_str()));
 				return false;
 			}
 			pDiv.reset();
@@ -206,13 +206,13 @@ bool ARBConfigMultiQ::Load(
 			// Now we can verify the event.
 			if (!inVenue.GetEvents().VerifyEvent(item.m_Event, item.m_Div, level, ARBDate()))
 			{
-				tstring msg(INVALID_EVENT_NAME);
+				tstring msg(Localization()->InvalidEventName());
 				msg += item.m_Div;
 				msg += _T("/");
 				msg += item.m_Level;
 				msg += _T("/");
 				msg += item.m_Event;
-				ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT, msg.c_str()));
 				return false;
 			}
 

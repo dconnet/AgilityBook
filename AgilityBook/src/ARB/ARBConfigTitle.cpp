@@ -147,7 +147,7 @@ bool ARBConfigTitle::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLES_NAME, m_Name)
 	|| 0 == m_Name.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLES, ATTRIB_TITLES_NAME));
 		return false;
 	}
 
@@ -155,7 +155,7 @@ bool ARBConfigTitle::Load(
 	inTree->GetAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
 	{
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, VALID_VALUES_BOOL));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 
@@ -163,18 +163,18 @@ bool ARBConfigTitle::Load(
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
 	{
 		tstring attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
-		tstring msg(INVALID_DATE);
+		tstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
 		return false;
 	}
 

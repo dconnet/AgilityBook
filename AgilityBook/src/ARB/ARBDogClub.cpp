@@ -139,7 +139,7 @@ bool ARBDogClub::Load(
 		if (ElementNode::eFound != inTree->GetAttrib(_T("Name"), m_Name)
 		|| 0 == m_Name.length())
 		{
-			ioCallback.LogMessage(ErrorMissingAttribute(TREE_CLUB, _T("Name")));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CLUB, _T("Name")));
 			return false;
 		}
 	}
@@ -149,15 +149,15 @@ bool ARBDogClub::Load(
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_CLUB_VENUE, m_Venue)
 	|| 0 == m_Venue.length())
 	{
-		ioCallback.LogMessage(ErrorMissingAttribute(TREE_CLUB, ATTRIB_CLUB_VENUE));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CLUB, ATTRIB_CLUB_VENUE));
 		return false;
 	}
 
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
-		tstring msg(INVALID_VENUE_NAME);
+		tstring msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_VENUE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CLUB, ATTRIB_CLUB_VENUE, msg.c_str()));
 		return false;
 	}
 
@@ -264,7 +264,7 @@ bool ARBDogClubList::FindEvent(
 	}
 	else
 	{
-		tstring msg(INVALID_EVENT);
+		tstring msg(Localization()->InvalidEvent());
 		msg += inEvent;
 		msg += _T(" (");
 		msg += inDivision;
@@ -279,7 +279,7 @@ bool ARBDogClubList::FindEvent(
 			msg += (*iter)->GetVenue();
 			msg += _T("]");
 		}
-		ioCallback.LogMessage(ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg.c_str()));
 	}
 	return bFound;
 }
