@@ -87,6 +87,7 @@
 
 // Strings for formatting the information returned when updating configurations.
 // - Changed to functions in order to remove sprintf style formatting.
+extern tstring UPDATE_FORMAT_CALSITES(int nNew, int nUpdated, int nSkipped);
 extern tstring UPDATE_FORMAT_FAULTS(int nNew, int nSkipped);
 extern tstring UPDATE_FORMAT_OTHERPTS(int nNew, int nUpdated, int nSkipped);
 extern tstring UPDATE_FORMAT_VENUES(int nNew, int nUpdated, int nSkipped);

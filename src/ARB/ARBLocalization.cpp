@@ -93,6 +93,13 @@ tstring ErrorInvalidAttributeValue(
 
 /////////////////////////////////////////////////////////////////////////////
 
+tstring UPDATE_FORMAT_CALSITES(int nNew, int nDeleted, int nSkipped)
+{
+	otstringstream buffer;
+	buffer << _T("Calendar Sites: ") << nNew << _T(" added, ") << nDeleted << _T(" deleted, ") << nSkipped << _T(" identical");
+	return buffer.str();
+}
+
 tstring UPDATE_FORMAT_FAULTS(int nNew, int nSkipped)
 {
 	otstringstream buffer;

@@ -245,11 +245,17 @@ bool ARBConfigEvent::Update(
 		bChanges = true;
 		SetDesc(inEventNew->GetDesc());
 	}
+	if (HasTable() != inEventNew->HasTable())
+	{
+		bChanges = true;
+		SetHasTable(inEventNew->HasTable());
+	}
 	if (HasPartner() != inEventNew->HasPartner())
 	{
 		bChanges = true;
 		SetHasPartner(inEventNew->HasPartner());
 	}
+
 	if (HasSubNames() != inEventNew->HasSubNames())
 	{
 		bChanges = true;
@@ -263,11 +269,7 @@ bool ARBConfigEvent::Update(
 		bChanges = true;
 		SetSubNames(newNames);
 	}
-	if (HasTable() != inEventNew->HasTable())
-	{
-		bChanges = true;
-		SetHasTable(inEventNew->HasTable());
-	}
+
 	// If the order is different, we will fall into this...
 	if (GetScorings() != inEventNew->GetScorings())
 	{

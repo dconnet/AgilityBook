@@ -219,8 +219,8 @@ public:
 private:
 	bool m_bUpdate;
 	short m_Version;
-	std::vector<ARBConfigCalSite> m_CalSites;
 	ARBConfigActionList m_Actions;
+	std::vector<ARBConfigCalSite> m_CalSites;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;
