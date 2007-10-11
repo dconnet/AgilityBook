@@ -15,6 +15,7 @@
   - Changed compilation options to remove DLLs (zlib/xml included directly)
   - Support multiple monitors when remembering window position.
   - Add support for switching languages on-the-fly.
+  - Add ability to rename Lifetime Points (UKC's All Star Points)
 - Bug fixes
   - Fixed a problem where the Table flag on a run didn't get cleared when
     modifying the run into an event without a table (eg: Standard->JWW).

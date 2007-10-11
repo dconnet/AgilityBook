@@ -116,6 +116,7 @@ void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_VENUE_LONGNAME, m_ctrlLongName);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_URL, m_ctrlURL);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_DESC, m_ctrlDesc);
+	DDX_Control(pDX, IDC_CONFIG_VENUE_LIFETIME_NAME, m_ctrlLifetimeName);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_DIVISION, m_ctrlDivisions);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_LEVEL, m_ctrlLevels);
 	DDX_Control(pDX, IDC_CONFIG_VENUE_TITLES, m_ctrlTitles);
@@ -725,6 +726,7 @@ BOOL CDlgConfigVenue::OnInitDialog()
 	CString str(m_pVenue->GetDesc().c_str());
 	str.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlDesc.SetWindowText(str);
+	m_ctrlLifetimeName.SetWindowText(m_pVenue->GetLifetimeName().c_str());
 
 	LoadDivisionData();
 	LoadEventData();
@@ -1792,6 +1794,11 @@ void CDlgConfigVenue::OnOK()
 	str.TrimRight();
 	str.Replace(_T("\r\n"), _T("\n"));
 	m_pVenue->SetDesc((LPCTSTR)str);
+
+	m_ctrlLifetimeName.GetWindowText(str);
+	str.TrimRight();
+	m_pVenue->SetLifetimeName((LPCTSTR)str);
+
 	if (oldName != name)
 		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(oldName, name));
 

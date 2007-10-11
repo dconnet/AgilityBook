@@ -69,6 +69,7 @@ private:
 	CEdit	m_ctrlLongName;
 	CEdit	m_ctrlURL;
 	CEdit	m_ctrlDesc;
+	CEdit	m_ctrlLifetimeName;
 	CListCtrl2	m_ctrlDivisions;
 	CTreeCtrl	m_ctrlLevels;
 	CListCtrl2	m_ctrlEvents;
