@@ -38,23 +38,6 @@
  * If the file is hand-edited, it could... But just how paranoid do we get?!
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
- * There is some internal problem that happens when editing this via a specific
- * series of events:
- *  Using NADAC, dbl-click on Gamblers. Then 'OK' to close. Then 'OK' to close
- *  this. Somewhere in the final sequence, the program will die in the debugger
- *  with a msg that the pgm has modified memory that was deleted. (USDAA/snooker
- *  also triggers the problem)
- *   HEAP[AgilityBook.exe]: HEAP: Free Heap block 170830 modified at 170acc after it was freed
- *   Unhandled exception at 0x77f75a58 in AgilityBook.exe: User breakpoint.
- *  The block number and memory address both vary. Simply twitching the mouse
- *  over the event tree control is enough to trigger it. SmartHeap was useless.
- *  Happens in both VC6 and 7. Commenting out ALL of my deletes does not solve
- *  it - it's something windows is accessing. By not adding the scoring events
- *  under the events in the tree, that seems to make the problem go away - so
- *  I have modified the dialog to only display the event name, not scoring
- *  methods. Hopefully this actually solves things and doesn't just move it.
- *  The scoringmethod vector in the event dialog did seem to show up alot.
- *
  * Revision History
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
