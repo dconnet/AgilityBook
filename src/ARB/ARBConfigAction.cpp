@@ -58,6 +58,15 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+#define ACTION_VERB_DELETE_TITLE	_T("DeleteTitle")
+#define ACTION_VERB_RENAME_TITLE	_T("RenameTitle")
+#define ACTION_VERB_DELETE_EVENT	_T("DeleteEvent")
+#define ACTION_VERB_RENAME_EVENT	_T("RenameEvent")
+#define ACTION_VERB_RENAME_DIV		_T("RenameDivision")
+#define ACTION_VERB_RENAME_VENUE	_T("RenameVenue")
+
+/////////////////////////////////////////////////////////////////////////////
+
 IConfigActionCallback::IConfigActionCallback()
 	: m_bContinue(true)
 {
@@ -455,7 +464,7 @@ bool ARBConfigActionDeleteMultiQ::Apply(
 				ioInfo << msg << _T("\n");
 			}
 			bChanged = true;
-			ioInfo << Localization()->ActionDeleteMultiQ(m_Name) << _T("\n");
+			ioInfo << Localization()->ActionDeleteMultiQ(m_Venue, m_Name) << _T("\n");
 			venue->GetMultiQs().DeleteMultiQ(oldMultiQ);
 			// Note: The multiQs in the dogs will be fixed at the very end
 			// in ARBAgiltyRecordBook::Update
@@ -1011,7 +1020,7 @@ bool ARBConfigActionDeleteTitle::Apply(
 				}
 			}
 			bChanged = true;
-			ioInfo << Localization()->ActionDeleteTitle(m_OldName) << _T("\n");
+			ioInfo << Localization()->ActionDeleteTitle(m_Venue, m_OldName) << _T("\n");
 			venue->GetTitles().DeleteTitle(m_OldName);
 		}
 	}
@@ -1151,7 +1160,7 @@ bool ARBConfigActionDeleteEvent::Apply(
 				ioInfo << msg << _T("\n");
 				ioDogs->DeleteEvent(m_Venue, m_Name);
 			}
-			ioInfo << Localization()->ActionDeleteEvent(m_Name) << _T("\n");
+			ioInfo << Localization()->ActionDeleteEvent(m_Venue, m_Name) << _T("\n");
 			venue->GetMultiQs().DeleteEvent(m_Name);
 			venue->GetEvents().DeleteEvent(m_Name);
 		}
@@ -1207,6 +1216,22 @@ bool ARBConfigActionList::Load(
 	else if (ACTION_VERB_RENAME_VENUE == verb)
 	{
 		item = ARBConfigActionRenameVenue::New(oldName, newName);
+	}
+	else
+	{
+		tstring msg(Localization()->ValidValues());
+		msg += ACTION_VERB_DELETE_TITLE;
+		msg += _T(", ");
+		msg += ACTION_VERB_RENAME_TITLE;
+		msg += _T(", ");
+		msg += ACTION_VERB_DELETE_EVENT;
+		msg += _T(", ");
+		msg += ACTION_VERB_RENAME_EVENT;
+		msg += _T(", ");
+		msg += ACTION_VERB_RENAME_DIV;
+		msg += _T(", ");
+		msg += ACTION_VERB_RENAME_VENUE;
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_ACTION, ATTRIB_ACTION_VERB, msg.c_str()));
 	}
 	bool bOk = false;
 	if (item)

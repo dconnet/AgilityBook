@@ -52,6 +52,22 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+#define OTHERPTS_COUNT_ALL			_T("All")
+#define OTHERPTS_COUNT_ALLBYEVENT	_T("AllByEvent")
+#define OTHERPTS_COUNT_LEVEL		_T("Level")
+#define OTHERPTS_COUNT_LEVELBYEVENT	_T("LevelByEvent")
+
+void ARBConfigOtherPoints::GetTallyValidValues(std::vector<tstring>& outValues)
+{
+	outValues.clear();
+	outValues.push_back(OTHERPTS_COUNT_ALL);
+	outValues.push_back(OTHERPTS_COUNT_ALLBYEVENT);
+	outValues.push_back(OTHERPTS_COUNT_LEVEL);
+	outValues.push_back(OTHERPTS_COUNT_LEVELBYEVENT);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 ARBConfigOtherPointsPtr ARBConfigOtherPoints::New()
 {
 	return ARBConfigOtherPointsPtr(new ARBConfigOtherPoints());
@@ -150,10 +166,14 @@ bool ARBConfigOtherPoints::Load(
 		m_Tally = eTallyLevelByEvent;
 	else
 	{
-		tstring msg(Localization()->InvalidValue());
-		msg += attrib;
-		msg += _T("\n");
-		msg += Localization()->ValidValuesOtherPt();
+		tstring msg(Localization()->ValidValues());
+		msg += OTHERPTS_COUNT_ALL;
+		msg += _T(", ");
+		msg += OTHERPTS_COUNT_ALLBYEVENT;
+		msg += _T(", ");
+		msg += OTHERPTS_COUNT_LEVEL;
+		msg += _T(", ");
+		msg += OTHERPTS_COUNT_LEVELBYEVENT;
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
 		return false;
 	}

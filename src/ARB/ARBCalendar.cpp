@@ -63,6 +63,16 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+
+#define ENTRY_NOT		_T("N")
+#define ENTRY_ENTERED	_T("E")
+#define ENTRY_PLANNING	_T("P")
+
+#define ACCOM_NONE		_T("N")
+#define ACCOM_TODO		_T("T")
+#define ACCOM_CONFIRMED	_T("C")
+
+/////////////////////////////////////////////////////////////////////////////
 // Static functions (for iCalendar/vCalender)
 // See RFC2445.
 // Note: EOL sequence is defined as "\r\n"
@@ -652,30 +662,42 @@ bool ARBCalendar::Load(
 		tstring attrib;
 		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_CAL_ENTERED, attrib))
 		{
-			if (attrib == _T("E"))
+			if (attrib == ENTRY_ENTERED)
 				m_eEntered = eEntered;
-			else if (attrib == _T("P"))
+			else if (attrib == ENTRY_PLANNING)
 				m_eEntered = ePlanning;
-			else if (attrib == _T("N"))
+			else if (attrib == ENTRY_NOT)
 				m_eEntered = eNot;
 			else
 			{
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, Localization()->ValidValuesEntry().c_str()));
+				tstring msg(Localization()->ValidValues());
+				msg += ENTRY_ENTERED;
+				msg += _T(", ");
+				msg += ENTRY_PLANNING;
+				msg += _T(", ");
+				msg += ENTRY_NOT;
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, msg.c_str()));
 				return false;
 			}
 		}
 
 		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_CAL_ACCOMMODATION, attrib))
 		{
-			if (attrib == _T("N"))
+			if (attrib == ACCOM_NONE)
 				m_eAccommodations = eAccomNone;
-			else if (attrib == _T("T"))
+			else if (attrib == ACCOM_TODO)
 				m_eAccommodations = eAccomTodo;
-			else if (attrib == _T("C"))
+			else if (attrib == ACCOM_CONFIRMED)
 				m_eAccommodations = eAccomConfirmed;
 			else
 			{
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, Localization()->ValidValuesAccom().c_str()));
+				tstring msg(Localization()->ValidValues());
+				msg += ACCOM_NONE;
+				msg += _T(", ");
+				msg += ACCOM_TODO;
+				msg += _T(", ");
+				msg += ACCOM_CONFIRMED;
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, msg.c_str()));
 				return false;
 			}
 		}
@@ -710,25 +732,25 @@ bool ARBCalendar::Save(ElementNodePtr ioTree) const
 	switch (m_eEntered)
 	{
 	default:
-		cal->AddAttrib(ATTRIB_CAL_ENTERED, _T("N"));
+		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_NOT);
 		break;
 	case eEntered:
-		cal->AddAttrib(ATTRIB_CAL_ENTERED, _T("E"));
+		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_ENTERED);
 		break;
 	case ePlanning:
-		cal->AddAttrib(ATTRIB_CAL_ENTERED, _T("P"));
+		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_PLANNING);
 		break;
 	}
 	switch (m_eAccommodations)
 	{
 	default:
-		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("N"));
+		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, ACCOM_NONE);
 		break;
 	case eAccomTodo:
-		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("T"));
+		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, ACCOM_TODO);
 		break;
 	case eAccomConfirmed:
-		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, _T("C"));
+		cal->AddAttrib(ATTRIB_CAL_ACCOMMODATION, ACCOM_CONFIRMED);
 		break;
 	}
 	if (0 < m_Confirmation.length())

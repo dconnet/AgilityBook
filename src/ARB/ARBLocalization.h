@@ -60,7 +60,6 @@ public:
 	virtual tstring InvalidFileMissingAttrib() const = 0;
 	virtual tstring InvalidFileBadAttrib() const = 0;
 	virtual tstring InvalidDate() const = 0;
-	virtual tstring InvalidValue() const = 0;
 	virtual tstring InvalidDivLevel() const = 0;
 	virtual tstring InvalidEventName() const = 0;
 	virtual tstring InvalidRoot() const = 0;
@@ -76,10 +75,6 @@ public:
 	virtual tstring InvalidTitle() const = 0;
 	virtual tstring ValidValues() const = 0;
 	virtual tstring ValidValuesBool() const = 0;
-	virtual tstring ValidValuesEntry() const = 0;
-	virtual tstring ValidValuesAccom() const = 0;
-	virtual tstring ValidValuesOtherPt() const = 0;
-	virtual tstring ValidValuesScore() const = 0;
 	virtual tstring CalendarTentative() const = 0;
 	virtual tstring CalendarNotEntered() const = 0;
 	virtual tstring CalendarEntered() const	 = 0;
@@ -136,7 +131,9 @@ public:
 			tstring const& venue,
 			tstring const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteMultiQ(tstring const& name) const = 0;
+	virtual tstring ActionDeleteMultiQ(
+			tstring const& venue,
+			tstring const& name) const = 0;
 	virtual tstring ActionRenameDivision(
 			tstring const& venue,
 			tstring const& oldName,
@@ -170,7 +167,9 @@ public:
 			tstring const& venue,
 			tstring const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteTitle(tstring const& name) const = 0;
+	virtual tstring ActionDeleteTitle(
+			tstring const& venue,
+			tstring const& name) const = 0;
 	virtual tstring ActionRenameEvent(
 			tstring const& venue,
 			tstring const& oldName,
@@ -180,7 +179,9 @@ public:
 			tstring const& venue,
 			tstring const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteEvent(tstring const& name) const = 0;
+	virtual tstring ActionDeleteEvent(
+			tstring const& venue,
+			tstring const& name) const = 0;
 
 	// Used in ARBConfigTitlePoints.cpp
 	virtual tstring TitlePointsNameFormat(double points, double faults) const = 0;
