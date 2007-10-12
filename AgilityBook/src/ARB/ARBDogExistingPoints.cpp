@@ -54,8 +54,14 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
 // static
+
+#define EXISTING_PTS_TYPE_OTHER	_T("Other")
+#define EXISTING_PTS_TYPE_RUNS	_T("Run")
+#define EXISTING_PTS_TYPE_SPEED	_T("Speed")
+#define EXISTING_PTS_TYPE_MQ	_T("MQ")
+#define EXISTING_PTS_TYPE_SQ	_T("SQ")
+
 tstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
 {
 	tstring str;
@@ -216,10 +222,7 @@ bool ARBDogExistingPoints::Load(
 	}
 	else
 	{
-		tstring msg(Localization()->InvalidValue());
-		msg += attrib;
-		msg += _T("\n");
-		msg += Localization()->ValidValues();
+		tstring msg(Localization()->ValidValues());
 		msg += EXISTING_PTS_TYPE_OTHER;
 		msg += _T(", ");
 		msg += EXISTING_PTS_TYPE_RUNS;

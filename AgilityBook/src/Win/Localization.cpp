@@ -70,8 +70,6 @@ void CLocalization::Load()
 	m_InvalidFileBadAttrib = (LPCTSTR)data;
 	data.LoadString(IDS_INVALID_DATE);
 	m_InvalidDate = (LPCTSTR)data;
-	data.LoadString(IDS_INVALID_VALUE);
-	m_InvalidValue = (LPCTSTR)data;
 	data.LoadString(IDS_INVALID_DIV_LEVEL);
 	m_InvalidDivLevel = (LPCTSTR)data;
 	data.LoadString(IDS_INVALID_EVENT_NAME);
@@ -82,7 +80,7 @@ void CLocalization::Load()
 	m_MissingConfig = (LPCTSTR)data;
 	data.FormatMessage(IDS_INVALID_CONFIG, TREE_CONFIG);
 	m_InvalidConfig = (LPCTSTR)data;
-	data.FormatMessage(IDS_INVALID_VENUE_CONFIG, TREE_DIVISION, TREE_EVENT );
+	data.FormatMessage(IDS_INVALID_VENUE_CONFIG, TREE_DIVISION, TREE_EVENT);
 	m_InvalidVenueConfig = (LPCTSTR)data;
 	data.LoadString(IDS_INVALID_DIV_NAME);
 	m_InvalidDivName = (LPCTSTR)data;
@@ -100,11 +98,10 @@ void CLocalization::Load()
 	m_InvalidTitle = (LPCTSTR)data;
 	data.LoadString(IDS_VALID_VALUES);
 	m_ValidValues = (LPCTSTR)data;
+
+	// These values are fixed in Element.cpp
 	m_ValidValuesBool = m_ValidValues + _T("'y', 'n'");
-	m_ValidValuesEntry = m_ValidValues + _T("'E', 'P', 'N'");
-	m_ValidValuesAccom = m_ValidValues + _T("'N', 'T', 'C'");
-	m_ValidValuesOtherPt = m_ValidValues + _T("'All', 'AllByEvent', 'Level', 'LevelByEvent'");
-	m_ValidValuesScore = m_ValidValues + _T("'FaultsThenTime', 'Faults100ThenTime', 'Faults200ThenTime', 'OCScoreThenTime', 'ScoreThenTime', 'TimePlusFaults'");
+
 	data.LoadString(IDS_CALENDAR_TENTATIVE);
 	m_CalendarTentative = (LPCTSTR)data;
 	data.LoadString(IDS_CALENDAR_NOTENTERED);
@@ -374,14 +371,13 @@ tstring CLocalization::ActionRenameOtherPoints(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming OtherPoints [")
-		<< oldName
-		<< _T("] to [")
-		<< newName
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_RENAME_OTHERPTS, oldName.c_str(), newName.c_str());
+	buffer << (LPCTSTR)data;
 	if (0 < nChanges)
 	{
-		buffer << _T(", updating ") << nChanges << _T(" OtherPoints");
+		data.FormatMessage(IDS_ACTION_RENAME_OTHERPTS2, nChanges);
+		buffer << (LPCTSTR)data;
 	}
 	return buffer.str();
 }
@@ -392,11 +388,9 @@ tstring CLocalization::ActionPreDeleteOtherPoints(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: OtherPoints [")
-		<< name
-		<< _T("] ")
-		<< nChanges
-		<< _T(" item(s)");
+	CString data;
+	data.FormatMessage(IDS_ACTION_PREDELETE_OTHERPTS, name.c_str(), nChanges);
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -404,9 +398,9 @@ tstring CLocalization::ActionPreDeleteOtherPoints(
 tstring CLocalization::ActionDeleteOtherPoints(tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting OtherPoints [")
-		<< name
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_OTHERPTS, name.c_str());
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -417,13 +411,14 @@ tstring CLocalization::ActionRenameVenue(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming Venue [")
-		<< oldName
-		<< _T("] to [")
-		<< newName
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_RENAME_VENUE, oldName.c_str(), newName.c_str());
+	buffer << (LPCTSTR)data;
 	if (0 < nChanges)
-		buffer << _T(", updating ") << nChanges << _T(" related item(s)");
+	{
+		data.FormatMessage(IDS_ACTION_RENAME_VENUE2, nChanges);
+		buffer << (LPCTSTR)data;
+	}
 	return buffer.str();
 }
 
@@ -433,11 +428,9 @@ tstring CLocalization::ActionPreDeleteVenue(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: Venue [")
-		<< name
-		<< _T("] ")
-		<< nChanges
-		<< _T(" item(s)");
+	CString data;
+	data.FormatMessage(IDS_ACTION_PREDELETE_VENUE, name.c_str(), nChanges);
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -445,9 +438,9 @@ tstring CLocalization::ActionPreDeleteVenue(
 tstring CLocalization::ActionDeleteVenue(tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting Venue [")
-		<< name
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_VENUE, name.c_str());
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -459,15 +452,14 @@ tstring CLocalization::ActionRenameMultiQ(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ")
-		<< venue
-		<< _T(" MultiQ [")
-		<< oldName
-		<< _T("] to [")
-		<< newName
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_RENAME_MULTIQ, venue.c_str(), oldName.c_str(), newName.c_str());
+	buffer << (LPCTSTR)data;
 	if (0 < nChanges)
-		buffer << _T(", updating ") << nChanges << _T(" MultiQ(s)");
+	{
+		data.FormatMessage(IDS_ACTION_RENAME_MULTIQ2, nChanges);
+		buffer << (LPCTSTR)data;
+	}
 	return buffer.str();
 }
 
@@ -478,23 +470,21 @@ tstring CLocalization::ActionPreDeleteMultiQ(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ")
-		<< venue
-		<< _T(" MultiQ [")
-		<< name
-		<< _T("] ")
-		<< nChanges
-		<< _T(" item(s)");
+	CString data;
+	data.FormatMessage(IDS_ACTION_PREDELETE_MULTIQ, venue.c_str(), name.c_str(), nChanges);
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
 
-tstring CLocalization::ActionDeleteMultiQ(tstring const& name) const
+tstring CLocalization::ActionDeleteMultiQ(
+		tstring const& venue,
+		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting MultiQ [")
-		<< name
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_MULTIQ, venue.c_str(), name.c_str());
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -506,15 +496,14 @@ tstring CLocalization::ActionRenameDivision(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ")
-		<< venue
-		<< _T(" Division [")
-		<< oldName
-		<< _T("] to [")
-		<< newName
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_RENAME_DIV, venue.c_str(), oldName.c_str(), newName.c_str());
+	buffer << (LPCTSTR)data;
 	if (0 < nChanges)
-		buffer << _T(", updating ") << nChanges << _T(" runs");
+	{
+		data.FormatMessage(IDS_ACTION_RENAME_DIV2, nChanges);
+		buffer << (LPCTSTR)data;
+	}
 	return buffer.str();
 }
 
@@ -525,13 +514,9 @@ tstring CLocalization::ActionPreDeleteDivision(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ")
-		<< venue
-		<< _T(" Division [")
-		<< name
-		<< _T("] ")
-		<< nChanges
-		<< _T(" runs and existing points");
+	CString data;
+	data.FormatMessage(IDS_ACTION_PREDELETE_DIV, venue.c_str(), name.c_str(), nChanges);
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -541,11 +526,9 @@ tstring CLocalization::ActionDeleteDivision(
 		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting ")
-		<< venue
-		<< _T(" Division [")
-		<< name
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_DIV, venue.c_str(), name.c_str());
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -557,15 +540,14 @@ tstring CLocalization::ActionRenameLevel(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ")
-		<< venue
-		<< _T(" Level [")
-		<< oldName
-		<< _T("] to [")
-		<< newName
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_RENAME_LEVEL, venue.c_str(), oldName.c_str(), newName.c_str());
+	buffer << (LPCTSTR)data;
 	if (0 < nChanges)
-		buffer << _T(", updating ") << nChanges << _T(" runs");
+	{
+		data.FormatMessage(IDS_ACTION_RENAME_LEVEL2, nChanges);
+		buffer << (LPCTSTR)data;
+	}
 	return buffer.str();
 }
 
@@ -576,13 +558,9 @@ tstring CLocalization::ActionPreDeleteLevel(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ")
-		<< venue
-		<< _T(" Level [")
-		<< name
-		<< _T("] ")
-		<< nChanges
-		<< _T(" runs");
+	CString data;
+	data.FormatMessage(IDS_ACTION_PREDELETE_LEVEL, venue.c_str(), name.c_str(), nChanges);
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -592,11 +570,9 @@ tstring CLocalization::ActionDeleteLevel(
 		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting ")
-		<< venue
-		<< _T(" Level [")
-		<< name
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_LEVEL, venue.c_str(), name.c_str());
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -608,15 +584,14 @@ tstring CLocalization::ActionRenameTitle(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ")
-		<< venue
-		<< _T(" Title [")
-		<< oldName
-		<< _T("] to [")
-		<< newName
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_RENAME_TITLE, venue.c_str(), oldName.c_str(), newName.c_str());
+	buffer << (LPCTSTR)data;
 	if (0 < nChanges)
-		buffer << _T(", updating ") << nChanges << _T(" titles");
+	{
+		data.FormatMessage(IDS_ACTION_RENAME_TITLE2, nChanges);
+		buffer << (LPCTSTR)data;
+	}
 	return buffer.str();
 }
 
@@ -627,23 +602,21 @@ tstring CLocalization::ActionPreDeleteTitle(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ")
-		<< venue
-		<< _T(" Title [")
-		<< name
-		<< _T("] ")
-		<< nChanges
-		<< _T(" titles");
+	CString data;
+	data.FormatMessage(IDS_ACTION_PREDELETE_TITLE, venue.c_str(), name.c_str(), nChanges);
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
 
-tstring CLocalization::ActionDeleteTitle(tstring const& name) const
+tstring CLocalization::ActionDeleteTitle(
+		tstring const& venue,
+		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting Title [")
-		<< name
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_TITLE, venue.c_str(), name.c_str());
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
@@ -655,15 +628,14 @@ tstring CLocalization::ActionRenameEvent(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ")
-		<< venue
-		<< _T(" Event [")
-		<< oldName
-		<< _T("] to [")
-		<< newName
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_RENAME_EVENT, venue.c_str(), oldName.c_str(), newName.c_str());
+	buffer << (LPCTSTR)data;
 	if (0 < nChanges)
-		buffer << _T(", updating ") << nChanges << _T(" events");
+	{
+		data.FormatMessage(IDS_ACTION_RENAME_EVENT2, nChanges);
+		buffer << (LPCTSTR)data;
+	}
 	return buffer.str();
 }
 
@@ -674,23 +646,21 @@ tstring CLocalization::ActionPreDeleteEvent(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ")
-		<< venue
-		<< _T(" Event [")
-		<< name
-		<< _T("] ")
-		<< nChanges
-		<< _T(" event(s)");
+	CString data;
+	data.FormatMessage(IDS_ACTION_PREDELETE_EVENT, venue.c_str(), name.c_str(), nChanges);
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 
 
-tstring CLocalization::ActionDeleteEvent(tstring const& name) const
+tstring CLocalization::ActionDeleteEvent(
+		tstring const& venue,
+		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting Event [")
-		<< name
-		<< _T("]");
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_EVENT, venue.c_str(), name.c_str());
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 

@@ -67,6 +67,14 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
+// static
+
+#define SCORING_TYPE_FT		_T("FaultsThenTime")
+#define SCORING_TYPE_FT100	_T("Faults100ThenTime")
+#define SCORING_TYPE_FT200	_T("Faults200ThenTime")
+#define SCORING_TYPE_OCT	_T("OCScoreThenTime")
+#define SCORING_TYPE_ST		_T("ScoreThenTime")
+#define SCORING_TYPE_TF		_T("TimePlusFaults")
 
 tstring ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 {
@@ -99,6 +107,7 @@ tstring ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 	return style;
 }
 
+/////////////////////////////////////////////////////////////////////////////
 
 ARBConfigScoringPtr ARBConfigScoring::New()
 {
@@ -312,7 +321,19 @@ bool ARBConfigScoring::Load(
 		m_Style = eTimePlusFaults;
 	else
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, Localization()->ValidValuesScore().c_str()));
+		tstring msg(Localization()->ValidValues());
+		msg += SCORING_TYPE_FT;
+		msg += _T(", ");
+		msg += SCORING_TYPE_FT100;
+		msg += _T(", ");
+		msg += SCORING_TYPE_FT200;
+		msg += _T(", ");
+		msg += SCORING_TYPE_OCT;
+		msg += _T(", ");
+		msg += SCORING_TYPE_ST;
+		msg += _T(", ");
+		msg += SCORING_TYPE_TF;
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, msg.c_str()));
 		return false;
 	}
 

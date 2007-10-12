@@ -59,6 +59,8 @@ public:
 		eTallyLevelByEvent	///< Separate runs by event and level.
 	} eOtherPointsTally;
 
+	static void GetTallyValidValues(std::vector<tstring>& outValues);
+
 protected:
 	ARBConfigOtherPoints();
 	ARBConfigOtherPoints(ARBConfigOtherPoints const& rhs);

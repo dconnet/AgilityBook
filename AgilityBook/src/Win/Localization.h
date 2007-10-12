@@ -51,7 +51,6 @@ public:
 	tstring InvalidFileMissingAttrib() const	{return m_InvalidFileMissingAttrib;}
 	tstring InvalidFileBadAttrib() const		{return m_InvalidFileBadAttrib;}
 	tstring InvalidDate() const					{return m_InvalidDate;}
-	tstring InvalidValue() const				{return m_InvalidValue;}
 	tstring InvalidDivLevel() const				{return m_InvalidDivLevel;}
 	tstring InvalidEventName() const			{return m_InvalidEventName;}
 	tstring InvalidRoot() const					{return m_InvalidRoot;}
@@ -67,10 +66,6 @@ public:
 	tstring InvalidTitle() const				{return m_InvalidTitle;}
 	tstring ValidValues() const					{return m_ValidValues;}
 	tstring ValidValuesBool() const				{return m_ValidValuesBool;}
-	tstring ValidValuesEntry() const			{return m_ValidValuesEntry;}
-	tstring ValidValuesAccom() const			{return m_ValidValuesAccom;}
-	tstring ValidValuesOtherPt() const			{return m_ValidValuesOtherPt;}
-	tstring ValidValuesScore() const			{return m_ValidValuesScore;}
 	tstring CalendarTentative() const			{return m_CalendarTentative;}
 	tstring CalendarNotEntered() const			{return m_CalendarNotEntered;}
 	tstring CalendarEntered() const				{return m_CalendarEntered;}
@@ -125,7 +120,9 @@ public:
 			tstring const& venue,
 			tstring const& name,
 			int nChanges) const;
-	tstring ActionDeleteMultiQ(tstring const& name) const;
+	tstring ActionDeleteMultiQ(
+			tstring const& venue,
+			tstring const& name) const;
 	tstring ActionRenameDivision(
 			tstring const& venue,
 			tstring const& oldName,
@@ -159,7 +156,9 @@ public:
 			tstring const& venue,
 			tstring const& name,
 			int nChanges) const;
-	tstring ActionDeleteTitle(tstring const& name) const;
+	tstring ActionDeleteTitle(
+			tstring const& venue,
+			tstring const& name) const;
 	tstring ActionRenameEvent(
 			tstring const& venue,
 			tstring const& oldName,
@@ -169,7 +168,9 @@ public:
 			tstring const& venue,
 			tstring const& name,
 			int nChanges) const;
-	tstring ActionDeleteEvent(tstring const& name) const;
+	tstring ActionDeleteEvent(
+			tstring const& venue,
+			tstring const& name) const;
 
 	tstring TitlePointsNameFormat(double points, double faults) const;
 	tstring LifetimePointsNameFormat(double points, double faults) const;
@@ -207,7 +208,6 @@ private:
 	tstring m_InvalidFileMissingAttrib;
 	tstring m_InvalidFileBadAttrib;
 	tstring m_InvalidDate;
-	tstring m_InvalidValue;
 	tstring m_InvalidDivLevel;
 	tstring m_InvalidEventName;
 	tstring m_InvalidRoot;
@@ -223,10 +223,6 @@ private:
 	tstring m_InvalidTitle;
 	tstring m_ValidValues;
 	tstring m_ValidValuesBool;
-	tstring m_ValidValuesEntry;
-	tstring m_ValidValuesAccom;
-	tstring m_ValidValuesOtherPt;
-	tstring m_ValidValuesScore;
 	tstring m_CalendarTentative;
 	tstring m_CalendarNotEntered;
 	tstring m_CalendarEntered;
