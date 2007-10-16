@@ -140,9 +140,9 @@ bool ARBConfigCalSite::Load(
 			{
 				if (!code.empty())
 				{
-					tstring name;
-					element->GetAttrib(ATTRIB_LOCCODE_NAME, name);
-					m_Locations[code] = name;
+					tstring locname;
+					element->GetAttrib(ATTRIB_LOCCODE_NAME, locname);
+					m_Locations[code] = locname;
 				}
 			}
 		}

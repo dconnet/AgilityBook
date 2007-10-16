@@ -127,8 +127,7 @@ bool CHyperLink::GotoURL(CString const& url)
 				lstrcat(pos, _T(" "));
 				lstrcat(pos, url);
 
-				USES_CONVERSION;
-				result = WinExec(T2A(key), SW_SHOW);
+				result = WinExec(CStringA(key), SW_SHOW);
 			}
 		}
 	}
@@ -277,18 +276,22 @@ void CHyperLink::PreSubclassWindow()
 	{
 		HFONT hFont = reinterpret_cast<HFONT>(GetStockObject(DEFAULT_GUI_FONT));
 		if (hFont == NULL)
-			hFont = (HFONT) GetStockObject(ANSI_VAR_FONT);
+			hFont = (HFONT)GetStockObject(ANSI_VAR_FONT);
 		if (hFont)
 			pFont = CFont::FromHandle(hFont);
 	}
-	ASSERT(pFont->GetSafeHandle());
+	ASSERT(pFont);
+	if (pFont)
+	{
+		ASSERT(pFont->GetSafeHandle());
 
-	// Create the underline font
-	LOGFONT lf;
-	pFont->GetLogFont(&lf);
-	m_StdFont.CreateFontIndirect(&lf);
-	lf.lfUnderline = static_cast<BYTE>(TRUE);
-	m_UnderlineFont.CreateFontIndirect(&lf);
+		// Create the underline font
+		LOGFONT lf;
+		pFont->GetLogFont(&lf);
+		m_StdFont.CreateFontIndirect(&lf);
+		lf.lfUnderline = static_cast<BYTE>(TRUE);
+		m_UnderlineFont.CreateFontIndirect(&lf);
+	}
 
 	// Create the tooltip - must do this before calling PositionWindow!
 	CRect rect;

@@ -193,14 +193,17 @@ static ElementNodePtr ReadData(
 	CStringA data;
 #if USE_TESTDATA
 	FILE* fp = fopen(inAddress, "r");
-	char buffer[1001];
-	size_t sz;
-	while (0 < (sz = fread(buffer, 1, 1000, fp)))
+	if (fp)
 	{
-		buffer[sz] = 0;
-		data += buffer;
+		char buffer[1001];
+		size_t sz;
+		while (0 < (sz = fread(buffer, 1, 1000, fp)))
+		{
+			buffer[sz] = 0;
+			data += buffer;
+		}
+		fclose(fp);
 	}
-	fclose(fp);
 #else
 	CReadHttp http(inAddress, data);
 #endif
@@ -420,9 +423,9 @@ char* CCalendarSite::Process(
 			progress->SetMessage((LPCSTR)msg);
 		}
 #if GENERATE_TESTDATA || USE_TESTDATA
-		CStringA testData(TESTDATANAME);
-		int idx = address.Find('=');
-		testData += address.Mid(idx+1);
+		testData = TESTDATANAME;
+		int idxAddr = address.Find('=');
+		testData += address.Mid(idxAddr+1);
 		testData += ".xml";
 #if USE_TESTDATA
 		ElementNodePtr treeDetail = ReadData(testData);

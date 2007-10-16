@@ -515,7 +515,6 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 							PRINT_INDENT(1, data)
 							if (ERROR_MORE_DATA == dwRet)
 							{
-								CString tmp;
 								tmp.LoadString(IDS_ERR_BUFFER_TOO_SMALL);
 								data << (LPCTSTR)tmp;
 							}
@@ -553,9 +552,8 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 			}
 			else
 			{
-				CString msg;
-				msg.FormatMessage(IDS_CANNOT_READ, sc_Reg[index].pRegPath);
-				data << (LPCTSTR)msg << _T("\r\n");
+				tmp.FormatMessage(IDS_CANNOT_READ, sc_Reg[index].pRegPath);
+				data << (LPCTSTR)tmp << _T("\r\n");
 			}
 			regInfo += data.str().c_str();
 		}

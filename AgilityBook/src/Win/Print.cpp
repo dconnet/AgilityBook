@@ -182,7 +182,7 @@ void CPrintRuns::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
 	{
 		// Correct the max page based on paper orientation.
 		UINT nRuns = static_cast<UINT>(m_runs.size());
-		UINT nPages = 1;
+		nPages = 1;
 		// pInfo->m_rectDraw is not set yet.
 		CRect r(0, 0,
 			pDC->GetDeviceCaps(HORZRES),
@@ -460,7 +460,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 	r[0].bottom = r[0].top + h * 14;
 	r[1].top = r[1].bottom - h * 14;
 
-	for (int i = 0; i < 2; ++i, ++m_cur)
+	for (int iItem = 0; iItem < 2; ++iItem, ++m_cur)
 	{
 		ARBDogTrialPtr trial;
 		ARBDogRunPtr run;
@@ -491,7 +491,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 			}
 		}
 		// Frame the whole thing
-		pDC->Rectangle(r[i]);
+		pDC->Rectangle(r[iItem]);
 		// Now go thru each box.
 		for (int j = 0; j < sc_nLines; ++j)
 		{
@@ -499,11 +499,11 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 			|| (!bPoints && (sc_lines[j].type & FOR_TIME)))
 			{
 				CRect rect;
-				rect.left = r[i].left + w * sc_lines[j].box;
+				rect.left = r[iItem].left + w * sc_lines[j].box;
 				rect.right = rect.left + w * sc_lines[j].colspan + 1;
 				if (8 == sc_lines[j].box + sc_lines[j].colspan)
-					rect.right = r[i].right;
-				rect.top = r[i].top + h * sc_lines[j].line;
+					rect.right = r[iItem].right;
+				rect.top = r[iItem].top + h * sc_lines[j].line;
 				rect.bottom = rect.top + h;
 				// Draw vertical separator lines (on left)
 				if (0 < sc_lines[j].box)

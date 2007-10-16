@@ -7,10 +7,6 @@
 	IntermediateDirectory="$(SolutionDir)\..\..\..\bin\VC8$(PlatformName)\$(ConfigurationName)\$(ProjectName)"
 	>
 	<Tool
-		Name="VCMIDLTool"
-		MkTypLibCompatible="false"
-	/>
-	<Tool
 		Name="VCCLCompilerTool"
 		AdditionalIncludeDirectories="../../zlib;../../xml;../../../../boost"
 		PreprocessorDefinitions="XML_LIBRARY"
@@ -19,11 +15,16 @@
 		WarningLevel="4"
 		WarnAsError="true"
 		Detect64BitPortabilityProblems="true"
+		DisableSpecificWarnings="6031"
 	/>
 	<Tool
 		Name="VCLinkerTool"
 		AdditionalLibraryDirectories="$(OutDir)"
 		SubSystem="2"
+	/>
+	<Tool
+		Name="VCMIDLTool"
+		MkTypLibCompatible="false"
 	/>
 	<Tool
 		Name="VCResourceCompilerTool"

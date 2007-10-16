@@ -1013,9 +1013,13 @@ void CAgilityBookTree::OnSelchanged(
 			pData = reinterpret_cast<CAgilityBookTreeData*>(GetTreeCtrl().GetItemData(hItem));
 		}
 		LPARAM lHint = UPDATE_RUNS_VIEW;
-		ARBDogPtr pDog = pData->GetDog();
-		if (!m_pDog || !pDog || m_pDog != pDog)
-			lHint |= UPDATE_POINTS_VIEW;
+		ARBDogPtr pDog;
+		if (pData)
+		{
+			pDog = pData->GetDog();
+			if (!m_pDog || !pDog || m_pDog != pDog)
+				lHint |= UPDATE_POINTS_VIEW;
+		}
 		m_pDog = pDog;
 		GetDocument()->UpdateAllViews(this, lHint);
 	}

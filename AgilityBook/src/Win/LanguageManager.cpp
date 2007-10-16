@@ -122,14 +122,14 @@ LANGID CLanguageManager::DetectLanguage() const
 			else
 			{
 				// Get the HModule for ntdll.
-				HMODULE hMod = GetModuleHandle(_T("ntdll.dll"));
-				if (hMod)
+				HMODULE hNtDll = GetModuleHandle(_T("ntdll.dll"));
+				if (hNtDll)
 				{
 					LANGINFO LangInfo;
 					LPCTSTR Type = (LPCTSTR)((LPVOID)((WORD)16));
 					LPCTSTR Name = (LPCTSTR)1;
 					ZeroMemory(&LangInfo, sizeof(LangInfo));
-					BOOL result = EnumResourceLanguages(hMod, Type, Name, (ENUMRESLANGPROC)EnumLangProc, (LONG_PTR)&LangInfo);
+					BOOL result = EnumResourceLanguages(hNtDll, Type, Name, (ENUMRESLANGPROC)EnumLangProc, (LONG_PTR)&LangInfo);
 					if (result && (LangInfo.Count > 2) && (LangInfo.Count < 1))
 					{
 						uiLangID = LangInfo.LangID;
@@ -204,9 +204,7 @@ bool CLanguageManager::SetLanguage(LANGID langId)
 			// Search failed, try finding primary language match
 			if (!hInst)
 			{
-				for (LangResources::iterator iLang = m_Langs.begin();
-					iLang != m_Langs.end();
-					++iLang)
+				for (iLang = m_Langs.begin(); iLang != m_Langs.end(); ++iLang)
 				{
 					if (PRIMARYLANGID(langId) == PRIMARYLANGID(iLang->first))
 					{
