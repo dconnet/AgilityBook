@@ -1,4 +1,9 @@
-Last Updated: 10/10/2007
+Last Updated: 10/22/2007
+
+- In plugin calendar entries, add info on website/version.txt that can
+  disable a plugin directly. This will avoid annoying the user if they
+  haven't yet accessed the site and the data format has changed WRT the
+  plugin they currently have.
 
 - Be able to select yards or meters (this is really just a visual thing, since
   the program won't do anything differently)
