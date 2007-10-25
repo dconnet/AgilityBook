@@ -2634,7 +2634,7 @@ BEGIN
     IDS_TITLEPOINTSNAME     "%1 points with %2 faults"
     IDS_LIFETITLEPOINTSNAME "%1 lifetime points with %2 faults"
     IDS_PLACEMENTPOINTSNAME "%1 points with place of %2!d!"
-    IDS_WARN_DELETED_RUNS   "WARNING: %1!d! run(s) deleted due to configuration changes."
+    IDS_WARN_DELETED_RUNS   "WARNING: %1!d! run(s) deleted due to configuration changes.\n(Date, Venue, Event, Division/Level)"
     IDS_UPDATE_TABLE_RUNS   "Table setting updated in %1!d! runs."
     IDS_ACTION_RENAME_OTHERPTS "Action: Renaming OtherPoints [%1] to [%2]"
     IDS_ACTION_RENAME_OTHERPTS2 ", updating %1!d! OtherPoints"

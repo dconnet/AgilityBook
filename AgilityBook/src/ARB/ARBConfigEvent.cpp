@@ -320,6 +320,7 @@ bool ARBConfigEvent::Update(
 			info += indentBuffer;
 			info += GetName();
 			info += Localization()->UpdateRules(nAdded, nDeleted, nChanged, nSkipped);
+			info += _T("\n");
 		}
 	}
 	if (0 < info.length())

@@ -215,6 +215,7 @@ bool ARBConfigDivision::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateLevels(nAdded, nChanged, nSkipped);
+			info += _T("\n");
 			info += info2;
 		}
 	}

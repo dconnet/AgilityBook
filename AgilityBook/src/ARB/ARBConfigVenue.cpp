@@ -390,9 +390,13 @@ bool ARBConfigVenue::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateTitles(nAdded, nChanged, nSkipped);
+			info += _T("\n");
 		}
 		else
+		{
 			info += Localization()->UpdateTitlesReordered();
+			info += _T("\n");
+		}
 	}
 
 	// If the order is different, we will fall into this...
@@ -432,10 +436,14 @@ bool ARBConfigVenue::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateDivisions(nAdded, nChanged, nSkipped);
+			info += _T("\n");
 			info += info2;
 		}
 		else
+		{
 			info += Localization()->UpdateDivisionsReordered();
+			info += _T("\n");
+		}
 	}
 
 	// If the order is different, we will fall into this...
@@ -475,10 +483,14 @@ bool ARBConfigVenue::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateEvents(nAdded, nChanged, nSkipped);
+			info += _T("\n");
 			info += info2;
 		}
 		else
+		{
 			info += Localization()->UpdateEventsReordered();
+			info += _T("\n");
+		}
 	}
 
 	// If the order is different, we will fall into this...
@@ -525,9 +537,13 @@ bool ARBConfigVenue::Update(
 			info += indentBuffer;
 			info += GetName();
 			info += Localization()->UpdateMultiqs(nAdded, nDeleted, nSkipped);
+			info += _T("\n");
 		}
 		else
+		{
 			info += Localization()->UpdateMultiqsReordered();
+			info += _T("\n");
+		}
 	}
 
 	if (0 < info.length())

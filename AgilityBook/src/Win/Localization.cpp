@@ -705,7 +705,7 @@ tstring CLocalization::WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) cons
 	otstringstream buffer;
 	CString data;
 	data.FormatMessage(IDS_WARN_DELETED_RUNS, nRuns);
-	buffer << (LPCTSTR)data << _T(".\n") << inRunsMsg;
+	buffer << (LPCTSTR)data << _T("\n") << inRunsMsg;
 	return buffer.str();
 }
 

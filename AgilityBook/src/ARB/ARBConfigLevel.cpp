@@ -188,6 +188,7 @@ bool ARBConfigLevel::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateSubLevels(nAdded);
+			info += _T("\n");
 		}
 	}
 	bool bChanges = false;
