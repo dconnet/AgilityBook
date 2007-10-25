@@ -92,7 +92,7 @@ bool CUpdateInfo::UpdateConfig(
 /////////////////////////////////////////////////////////////////////////////
 
 CUpdateInfo::CUpdateInfo()
-	: m_VersionNum(_T(""))
+	: m_VersionNum()
 	, m_VerConfig(0)
 	, m_FileName()
 	, m_InfoMsg()
@@ -154,12 +154,15 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	file.Close();
 
 	// Now parse it into the object.
-#ifdef UNICODE
 	CString tmp(data);
-	m_VersionNum = CVersionNum(tmp);
-#else
-	m_VersionNum = CVersionNum(data);
-#endif
+	// This is a static string in "version.txt"
+	static CString const idStr(_T("ARB Version "));
+	if (0 == tmp.Find(idStr))
+	{
+		tmp = tmp.Mid(idStr.GetLength());
+		m_VersionNum.Parse(_T("version.txt"), tmp);
+	}
+
 	if (!m_VersionNum.Valid())
 	{
 		if (bVerbose)
@@ -181,8 +184,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		// The rest of the file is xml:
 		// <Data>
 		//   <Config ver="1" file="file">data</Config>
-		//   <Download>url</Download>
-		//     (if not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD)
+		//   <Download>url</Download> <!-- if not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD -->
+		//   <DisableCalPlugin file="filename" ver="n.n.n.n" enable="1"/>
 		// </Data>
 		tstring errMsg2;
 		ElementNodePtr tree(ElementNode::New());
@@ -205,19 +208,34 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		}
 		else if (tree->GetName() == _T("Data"))
 		{
-			int nIndex = tree->FindElement(_T("Config"));
-			if (0 <= nIndex)
+			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
 			{
-				ElementNodePtr config = tree->GetElementNode(nIndex);
-				config->GetAttrib(_T("ver"), m_VerConfig);
-				config->GetAttrib(_T("file"), m_FileName);
-				m_InfoMsg = config->GetValue();
-			}
-			nIndex = tree->FindElement(_T("Download"));
-			if (0 <= nIndex)
-			{
-				ElementNodePtr download = tree->GetElementNode(nIndex);
-				m_UpdateDownload = download->GetValue().c_str();
+				ElementNodePtr node = tree->GetElementNode(nIndex);
+				if (node->GetName() == _T("Config"))
+				{
+					node->GetAttrib(_T("ver"), m_VerConfig);
+					node->GetAttrib(_T("file"), m_FileName);
+					m_InfoMsg = node->GetValue();
+				}
+				else if (node->GetName() == _T("Download"))
+				{
+					m_UpdateDownload = node->GetValue().c_str();
+				}
+				else if (node->GetName() == _T("DisableCalPlugin"))
+				{
+					tstring file, ver;
+					node->GetAttrib(_T("file"), file);
+					node->GetAttrib(_T("ver"), ver);
+					// The 'enable' attribute is in case we prematurely disable
+					bool bEnable = false;
+					node->GetAttrib(_T("enable"), bEnable);
+					CVersionNum vernum;
+					vernum.Parse(file.c_str(), ver.c_str());
+					if (vernum.Valid())
+					{
+						CAgilityBookOptions::SuppressCalSitePermanently(file.c_str(), vernum, !bEnable);
+					}
+				}
 			}
 		}
 	}
@@ -287,7 +305,7 @@ bool CUpdateInfo::IsOutOfDate()
 	// If we haven't parsed the internet file yet, assume we're out-of-date.
 	if (!m_VersionNum.Valid())
 		return true;
-	CVersionNum verThis; // This auto-loads the versioninfo.
+	CVersionNum verThis(NULL); // This auto-loads the versioninfo.
 	ASSERT(verThis.Valid());
 	if (verThis < m_VersionNum)
 		return true;

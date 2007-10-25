@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-10-24 DRC Changed ctor and added <= operators
  * @li 2006-12-10 DRC Fixed operator< and operator>.
  * @li 2004-03-04 DRC Created
  */
@@ -48,11 +49,24 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+CVersionNum::CVersionNum()
+	: m_Valid(false)
+	, m_FileName()
+	, m_ProdName()
+	, m_Version()
+	, m_wLangID(0)
+{
+}
+
 CVersionNum::CVersionNum(
 		HMODULE inModule,
 		WORD inwLangID,
 		WORD inwCharSet)
 	: m_Valid(false)
+	, m_FileName()
+	, m_ProdName()
+	, m_Version()
+	, m_wLangID(0)
 {
 	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
 
@@ -154,38 +168,54 @@ CVersionNum::CVersionNum(
 }
 
 
-// This ctor is for reading the version number from the web.
-CVersionNum::CVersionNum(CString inVer)
-	: m_Valid(false)
+CVersionNum::CVersionNum(CVersionNum const& rhs)
+	: m_Valid(rhs.m_Valid)
+	, m_FileName(rhs.m_FileName)
+	, m_ProdName(rhs.m_ProdName)
+	, m_Version(rhs.m_Version)
+	, m_wLangID(rhs.m_wLangID)
 {
-	m_FileName.Empty();
-	m_ProdName.Empty();
-	// This is a static string in "version.txt"
-	static CString const idStr(_T("ARB Version "));
-	if (0 == inVer.Find(idStr))
+}
+
+
+CVersionNum& CVersionNum::operator=(CVersionNum const& rhs)
+{
+	if (this != &rhs)
 	{
-		inVer = inVer.Mid(idStr.GetLength());
-		int pos = inVer.Find('.');
+		m_Valid = rhs.m_Valid;
+		m_FileName = rhs.m_FileName;
+		m_ProdName = rhs.m_ProdName;
+		m_Version = rhs.m_Version;
+		m_wLangID = rhs.m_wLangID;
+	}
+	return *this;
+}
+
+
+bool CVersionNum::Parse(CString inFileName, CString inVer)
+{
+	clear();
+	int pos = inVer.Find('.');
+	if (0 <= pos)
+	{
+		m_Version.part1 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
+		inVer = inVer.Mid(pos+1);
+		pos = inVer.Find('.');
 		if (0 <= pos)
 		{
-			m_Version.part1 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
+			m_Version.part2 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 			inVer = inVer.Mid(pos+1);
 			pos = inVer.Find('.');
 			if (0 <= pos)
 			{
-				m_Version.part2 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
+				m_Version.part3 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
 				inVer = inVer.Mid(pos+1);
-				pos = inVer.Find('.');
-				if (0 <= pos)
-				{
-					m_Version.part3 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
-					inVer = inVer.Mid(pos+1);
-					m_Version.part4 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
-					m_Valid = true;
-				}
+				m_Version.part4 = static_cast<WORD>(_tstol((LPCTSTR)inVer));
+				m_Valid = true;
 			}
 		}
 	}
+	return m_Valid;
 }
 
 
@@ -218,6 +248,12 @@ bool CVersionNum::operator<(CVersionNum const& rhs) const
 }
 
 
+bool CVersionNum::operator<=(CVersionNum const& rhs) const
+{
+	return operator==(rhs) || rhs.operator>(*this);
+}
+
+
 bool CVersionNum::operator>(CVersionNum const& rhs) const
 {
 	if (m_Version.part1 > rhs.m_Version.part1
@@ -237,12 +273,19 @@ bool CVersionNum::operator>(CVersionNum const& rhs) const
 }
 
 
+bool CVersionNum::operator>=(CVersionNum const& rhs) const
+{
+	return operator==(rhs) || rhs.operator<(*this);
+}
+
+
 void CVersionNum::clear()
 {
 	m_Valid = false;
 	m_FileName.Empty();
 	m_ProdName.Empty();
 	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
+	m_wLangID = 0;
 }
 
 

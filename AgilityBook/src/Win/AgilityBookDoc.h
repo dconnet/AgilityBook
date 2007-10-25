@@ -242,7 +242,6 @@ protected:
 	afx_msg void OnEditConfiguration();
 	afx_msg void OnAgilityNewDog();
 	afx_msg void OnAgilityNewCalendar();
-	afx_msg void OnUpdateAgilityUpdateCalendar(CCmdUI* pCmdUI);
 	afx_msg void OnAgilityUpdateCalendar();
 	afx_msg void OnAgilityNewTraining();
 	afx_msg void OnNotesClubs();

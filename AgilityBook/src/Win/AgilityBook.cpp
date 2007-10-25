@@ -692,7 +692,7 @@ void CAgilityBookApp::OnHelpSysinfo()
 
 	// Me.
 	{
-		CVersionNum ver;
+		CVersionNum ver(NULL);
 		info << (LPCTSTR)ver.GetFileName();
 		info << ": ";
 		if (ver.Valid())

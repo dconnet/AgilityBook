@@ -462,7 +462,7 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					CVersionNum ver;
+					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, true, false, false, false, false))
@@ -568,7 +568,7 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					CVersionNum ver;
+					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, false, true, false, false, false))
@@ -598,7 +598,7 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					CVersionNum ver;
+					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, false, false, true, false, false))
@@ -649,7 +649,7 @@ BOOL CWizardStart::OnWizardFinish()
 				{
 					AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
-					CVersionNum ver;
+					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->GetARB().Save(tree, verstr, true, true, true, true, true))

@@ -159,7 +159,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
 	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
 	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
-	ON_UPDATE_COMMAND_UI(ID_AGILITY_UPDATE_CALENDAR, OnUpdateAgilityUpdateCalendar)
 	ON_COMMAND(ID_AGILITY_UPDATE_CALENDAR, OnAgilityUpdateCalendar)
 	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnAgilityNewTraining)
 	ON_COMMAND(ID_NOTES_CLUBS, OnNotesClubs)
@@ -1064,11 +1063,14 @@ BOOL CAgilityBookDoc::OnNewDocument()
  */
 BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
+	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
+	ASSERT(pApp);
+
 	CFileStatus status;
 	if (!GetLocalStatus(lpszPathName, status))
 	{
 		CSplashWnd::HideSplashScreen();
-		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+		pApp->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
 		return FALSE;
 	}
@@ -1088,7 +1090,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Translate the XML to a tree form.
 	if (!tree->LoadXMLFile(source, err))
 	{
-		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+		pApp->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
 		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 		if (0 < err.length())
@@ -1104,7 +1106,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	CErrorCallback callback;
 	if (!m_Records.Load(tree, callback))
 	{
-		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+		pApp->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
 		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 		if (0 < callback.m_ErrMsg.length())
@@ -1140,7 +1142,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 			SetModifiedFlag(TRUE);
 	}
 
-	AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
+	pApp->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
 
 	// Check our internal config.
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
@@ -1155,10 +1157,9 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Then check the external config.
 	else
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
-		ASSERT(pApp);
 		pApp->UpdateInfo().AutoCheckConfiguration(this);
 	}
+	m_CalSites.Update(this);
 
 	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{
@@ -1190,7 +1191,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	CWaitCursor wait;
 
-	CVersionNum ver;
+	CVersionNum ver(NULL);
 	tstring verstr = (LPCTSTR)ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	BOOL bOk = FALSE;
@@ -1252,6 +1253,7 @@ void CAgilityBookDoc::OnHelpUpdate()
 	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 	ASSERT(pApp);
 	pApp->UpdateInfo().UpdateConfiguration(this);
+	m_CalSites.Update(this);
 }
 
 
@@ -1423,15 +1425,6 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 			}
 		}
 	}
-}
-
-
-void CAgilityBookDoc::OnUpdateAgilityUpdateCalendar(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	if (m_CalSites.hasActiveSites())
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
 }
 
 

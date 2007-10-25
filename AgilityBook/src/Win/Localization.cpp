@@ -667,9 +667,11 @@ tstring CLocalization::ActionDeleteEvent(
 
 tstring CLocalization::TitlePointsNameFormat(double points, double faults) const
 {
-	otstringstream buffer;
+	otstringstream buffer, dbl1, dbl2;
+	dbl1 << points;
+	dbl2 << faults;
 	CString data;
-	data.FormatMessage(IDS_TITLEPOINTSNAME, points, faults);
+	data.FormatMessage(IDS_TITLEPOINTSNAME, dbl1.str().c_str(), dbl2.str().c_str());
 	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
@@ -677,9 +679,11 @@ tstring CLocalization::TitlePointsNameFormat(double points, double faults) const
 
 tstring CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
-	otstringstream buffer;
+	otstringstream buffer, dbl1, dbl2;
+	dbl1 << points;
+	dbl2 << faults;
 	CString data;
-	data.FormatMessage(IDS_LIFETITLEPOINTSNAME, points, faults);
+	data.FormatMessage(IDS_LIFETITLEPOINTSNAME, dbl1.str().c_str(), dbl2.str().c_str());
 	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
@@ -687,9 +691,10 @@ tstring CLocalization::LifetimePointsNameFormat(double points, double faults) co
 
 tstring CLocalization::PlacementPointsNameFormat(double points, short place) const
 {
-	otstringstream buffer;
+	otstringstream buffer, dbl1;
+	dbl1 << points;
 	CString data;
-	data.FormatMessage(IDS_PLACEMENTPOINTSNAME, points, (int)place);
+	data.FormatMessage(IDS_PLACEMENTPOINTSNAME, dbl1.str().c_str(), (int)place);
 	buffer << (LPCTSTR)data;
 	return buffer.str();
 }

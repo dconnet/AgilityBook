@@ -60,6 +60,7 @@
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
 #include "DlgAssignColumns.h"
+#include "VersionNum.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -107,6 +108,8 @@ Calendar
 	Obsolete(1.7.6.12) DW EntrySize.cy
 CalSites
 	DW (DLL names in EXE directory)
+CalSites2 - used for permanently disabling a version
+	ST (DLL names in EXE directory)
 Columns
 	ST col[n]
 Common
@@ -1247,17 +1250,58 @@ void CAgilityBookOptions::SetUserName(
 }
 
 
-bool CAgilityBookOptions::IsCalSiteVisible(CString const& filename)
+bool CAgilityBookOptions::IsCalSiteVisible(
+		CString const& filename,
+		CVersionNum const& inVer)
 {
+	ASSERT(inVer.Valid());
 	if (filename.IsEmpty())
 		return true;
-	return AfxGetApp()->GetProfileInt(_T("CalSites"), filename, 1) == 1;
+	bool bVisible = true;
+	if (1 == AfxGetApp()->GetProfileInt(_T("CalSites"), filename, 1))
+	{
+		CVersionNum ver = GetCalSitePermanentStatus(filename);
+		if (ver.Valid() && inVer <= ver)
+			bVisible = false;
+	}
+	else
+		bVisible = false;
+	return bVisible;
 }
 
 
-void CAgilityBookOptions::SuppressCalSite(CString const& filename, bool bSuppress)
+void CAgilityBookOptions::SuppressCalSite(
+		CString const& filename,
+		bool bSuppress)
 {
 	if (filename.IsEmpty())
 		return;
 	AfxGetApp()->WriteProfileInt(_T("CalSites"), filename, bSuppress ? 0 : 1);
+}
+
+
+CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(CString const& filename)
+{
+	CVersionNum ver;
+	if (!filename.IsEmpty())
+	{
+		CString str = AfxGetApp()->GetProfileString(_T("CalSites2"), filename, NULL);
+		if (!str.IsEmpty())
+			ver.Parse(filename, str);
+	}
+	return ver;
+}
+
+
+void CAgilityBookOptions::SuppressCalSitePermanently(
+		CString const& filename,
+		CVersionNum const& inVer,
+		bool bSuppress)
+{
+	if (filename.IsEmpty())
+		return;
+	if (bSuppress)
+		AfxGetApp()->WriteProfileString(_T("CalSites2"), filename, inVer.GetVersionString());
+	else
+		AfxGetApp()->WriteProfileString(_T("CalSites2"), filename, NULL);
 }
