@@ -547,8 +547,6 @@ public:
 	CCalendarSitesImpl();
 	~CCalendarSitesImpl();
 
-	void Update(CAgilityBookDoc* pDoc);
-
 	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent);
 
 private:
@@ -601,12 +599,6 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 CCalendarSitesImpl::~CCalendarSitesImpl()
 {
 	m_DirectAccess.clear();
-}
-
-
-void CCalendarSitesImpl::Update(CAgilityBookDoc* pDoc)
-{
-	//TODO
 }
 
 
@@ -1233,12 +1225,6 @@ CCalendarSites::CCalendarSites()
 CCalendarSites::~CCalendarSites()
 {
 	delete m_Impl;
-}
-
-
-void CCalendarSites::Update(CAgilityBookDoc* pDoc)
-{
-	m_Impl->Update(pDoc);
 }
 
 

@@ -97,4 +97,5 @@ private:
 	tstring m_InfoMsg;
 	CString m_UpdateDownload;
 	CString m_usernameHint;
+	std::vector<CVersionNum> m_CalSiteSuppression;
 };

@@ -1159,7 +1159,6 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	{
 		pApp->UpdateInfo().AutoCheckConfiguration(this);
 	}
-	m_CalSites.Update(this);
 
 	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{
@@ -1253,7 +1252,6 @@ void CAgilityBookDoc::OnHelpUpdate()
 	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 	ASSERT(pApp);
 	pApp->UpdateInfo().UpdateConfiguration(this);
-	m_CalSites.Update(this);
 }
 
 
