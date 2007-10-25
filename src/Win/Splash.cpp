@@ -219,7 +219,7 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 	dcSrc.SelectObject(pOldSrc);
 	dcDst.SelectObject(pOldDst);
 
-	CVersionNum ver;
+	CVersionNum ver(NULL);
 	if (ver.Valid())
 		m_Version.FormatMessage(IDS_ABOUT_VERSION, (LPCTSTR)ver.GetVersionString());
 

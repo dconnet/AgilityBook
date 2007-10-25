@@ -52,6 +52,7 @@
 #include <vector>
 #include "ARBDate.h"
 #include "ARBTypes.h"
+class CVersionNum;
 
 struct CFontInfo
 {
@@ -230,8 +231,17 @@ public:
 	static CString GetUserName(CString const& hint);
 	static void SetUserName(CString const& hint, CString const& userName);
 	// -CalSite suppression options
-	static bool IsCalSiteVisible(CString const& filename);
-	static void SuppressCalSite(CString const& filename, bool bSuppress);
+	static bool IsCalSiteVisible(
+			CString const& filename,
+			CVersionNum const& inVer); // Version number of current calsite
+	static void SuppressCalSite(
+			CString const& filename,
+			bool bSuppress);
+	static CVersionNum GetCalSitePermanentStatus(CString const& filename);
+	static void SuppressCalSitePermanently(
+			CString const& filename,
+			CVersionNum const& inVer,
+			bool bSuppress = true);
 
 protected:
 	friend class CDlgAssignColumns;

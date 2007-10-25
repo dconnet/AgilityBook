@@ -89,7 +89,7 @@ BOOL CAboutDlg::OnInitDialog()
 	// Generate the about text.
 	CString version;
 	CString info(_T("?"));
-	CVersionNum ver;
+	CVersionNum ver(NULL);
 	if (ver.Valid())
 	{
 		version = ver.GetVersionString();

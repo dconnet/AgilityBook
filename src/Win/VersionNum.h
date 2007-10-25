@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-10-24 DRC Changed ctor and added <= operators
  * @li 2004-03-04 DRC Created
  */
 
@@ -47,21 +48,27 @@ public:
 		WORD part4;
 	} VERSION_NUMBER;
 
+	CVersionNum();
 	CVersionNum(
-			HMODULE inModule = NULL,
+			HMODULE inModule,
 			WORD inwLangID = 0,
 			WORD inwCharSet = 0);
+	CVersionNum(CVersionNum const& rhs);
+	CVersionNum& operator=(CVersionNum const& rhs);
+
 	/**
-	 * Used to translate the "version.txt" on www.agilityrecordbook.com
+	 * Parse a version number, must be in form "n.n.n.n".
 	 */
-	explicit CVersionNum(CString inVer);
+	bool Parse(CString inFileName, CString inVer);
 
 	/**
 	 * Equality is based solely on the version number, not any language aspects.
 	 */
 	bool operator==(CVersionNum const& rhs) const;
 	bool operator<(CVersionNum const& rhs) const;
+	bool operator<=(CVersionNum const& rhs) const;
 	bool operator>(CVersionNum const& rhs) const;
+	bool operator>=(CVersionNum const& rhs) const;
 
 	void clear();
 	bool Valid() const						{return m_Valid;}

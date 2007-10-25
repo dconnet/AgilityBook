@@ -116,6 +116,7 @@ private:
 	CString m_Pathname;
 	CString m_FileName;
 	HINSTANCE m_hDllInst;
+	CVersionNum m_Version;
 	ICalendarSite* m_pSite;
 	CString m_Name;
 	CString m_Desc;
@@ -291,6 +292,7 @@ CalSiteData::CalSiteData(CString const& pathname, CString const& filename)
 	: m_Pathname(pathname)
 	, m_FileName(filename)
 	, m_hDllInst(NULL)
+	, m_Version()
 	, m_pSite(NULL)
 	, m_Name()
 	, m_Desc()
@@ -319,30 +321,59 @@ void CalSiteData::Clear()
 void CalSiteData::Connect()
 {
 	if (isValid())
+	{
+		// Conditions may have changed.
+		if (!CAgilityBookOptions::IsCalSiteVisible(m_FileName, m_Version))
+		{
+			Unload(true);
+		}
 		return;
+	}
 	Clear();
 	// Load the library.
-	if (CAgilityBookOptions::IsCalSiteVisible(m_FileName))
+	if (!m_hDllInst)
 	{
-		if (!m_hDllInst)
+		CString path(m_Pathname);
+		path += m_FileName;
+		m_hDllInst = LoadLibrary(path);
+		m_Version = CVersionNum(m_hDllInst);
+	}
+	if (m_hDllInst && CAgilityBookOptions::IsCalSiteVisible(m_FileName, m_Version))
+	{
+		// Get the exported interface
+		GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(GetProcAddress(m_hDllInst, "GetCalendarInterface"));
+		if (pApi)
 		{
-			CString path(m_Pathname);
-			path += m_FileName;
-			m_hDllInst = LoadLibrary(path);
-		}
-		if (m_hDllInst)
-		{
-			// Get the exported interface
-			GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(GetProcAddress(m_hDllInst, "GetCalendarInterface"));
-			if (pApi)
+			// And call it.
+			m_pSite = pApi();
+			// We now have an object that must be released later.
+			char* pData = NULL;
+			try
 			{
-				// And call it.
-				m_pSite = pApi();
-				// We now have an object that must be released later.
-				char* pData = NULL;
+				pData = m_pSite->GetName();
+			}
+			catch (...)
+			{
+				pData = NULL;
+				Unload(true);
+			}
+			if (pData)
+			{
+				m_Name = CStringA(pData);
 				try
 				{
-					pData = m_pSite->GetName();
+					m_pSite->releaseBuffer(pData);
+				}
+				catch (...)
+				{
+					Unload(true);
+				}
+			}
+			if (m_pSite)
+			{
+				try
+				{
+					pData = m_pSite->GetDescription();
 				}
 				catch (...)
 				{
@@ -351,7 +382,7 @@ void CalSiteData::Connect()
 				}
 				if (pData)
 				{
-					m_Name = CStringA(pData);
+					m_Desc = CStringA(pData);
 					try
 					{
 						m_pSite->releaseBuffer(pData);
@@ -361,113 +392,89 @@ void CalSiteData::Connect()
 						Unload(true);
 					}
 				}
-				if (m_pSite)
+			}
+			if (m_pSite)
+			{
+				try
 				{
-					try
-					{
-						pData = m_pSite->GetDescription();
-					}
-					catch (...)
-					{
-						pData = NULL;
-						Unload(true);
-					}
-					if (pData)
-					{
-						m_Desc = CStringA(pData);
-						try
-						{
-							m_pSite->releaseBuffer(pData);
-						}
-						catch (...)
-						{
-							Unload(true);
-						}
-					}
+					pData = m_pSite->GetLocationCodes();
 				}
-				if (m_pSite)
+				catch (...)
 				{
-					try
+					Unload(true);
+					pData = NULL;
+				}
+				if (pData)
+				{
+					CString data1(pData); // For ansi/unicode translation
+					tstring data((LPCTSTR)data1);
+					data1.Empty();
+					std::vector<tstring> fields;
+					if (0 < BreakLine('\n', data, fields))
 					{
-						pData = m_pSite->GetLocationCodes();
-					}
-					catch (...)
-					{
-						Unload(true);
-						pData = NULL;
-					}
-					if (pData)
-					{
-						CString data1(pData); // For ansi/unicode translation
-						tstring data((LPCTSTR)data1);
-						data1.Empty();
-						std::vector<tstring> fields;
-						if (0 < BreakLine('\n', data, fields))
+						for (std::vector<tstring>::iterator i = fields.begin();
+							i != fields.end();
+							++i)
 						{
-							for (std::vector<tstring>::iterator i = fields.begin();
-								i != fields.end();
-								++i)
+							std::vector<tstring> subfields;
+							if (2 == BreakLine(':', *i, subfields))
 							{
-								std::vector<tstring> subfields;
-								if (2 == BreakLine(':', *i, subfields))
-								{
-									m_LocCodes[subfields[0]] = subfields[1];
-								}
+								m_LocCodes[subfields[0]] = subfields[1];
 							}
 						}
-						try
-						{
-							m_pSite->releaseBuffer(pData);
-						}
-						catch (...)
-						{
-							Unload(true);
-						}
 					}
-				}
-				if (m_pSite)
-				{
 					try
 					{
-						pData = m_pSite->GetVenueCodes();
+						m_pSite->releaseBuffer(pData);
 					}
 					catch (...)
 					{
 						Unload(true);
-						pData = NULL;
 					}
-					if (pData)
+				}
+			}
+			if (m_pSite)
+			{
+				try
+				{
+					pData = m_pSite->GetVenueCodes();
+				}
+				catch (...)
+				{
+					Unload(true);
+					pData = NULL;
+				}
+				if (pData)
+				{
+					CString data1(pData);
+					tstring data((LPCTSTR)data1);
+					data1.Empty();
+					std::vector<tstring> fields;
+					if (0 < BreakLine('\n', data, fields))
 					{
-						CString data1(pData);
-						tstring data((LPCTSTR)data1);
-						data1.Empty();
-						std::vector<tstring> fields;
-						if (0 < BreakLine('\n', data, fields))
+						for (std::vector<tstring>::iterator i = fields.begin();
+							i != fields.end();
+							++i)
 						{
-							for (std::vector<tstring>::iterator i = fields.begin();
-								i != fields.end();
-								++i)
+							std::vector<tstring> subfields;
+							switch (BreakLine(':', *i, subfields))
 							{
-								std::vector<tstring> subfields;
-								switch (BreakLine(':', *i, subfields))
-								{
-								case 1:
-									m_VenueCodes[subfields[0]] = subfields[0];
-									break;
-								case 2:
-									m_VenueCodes[subfields[0]] = subfields[1];
-									break;
-								}
+							case 1:
+								m_VenueCodes[subfields[0]] = subfields[0];
+								break;
+							case 2:
+								m_VenueCodes[subfields[0]] = subfields[1];
+								break;
 							}
 						}
-						try
-						{
-							m_pSite->releaseBuffer(pData);
-						}
-						catch (...)
-						{
-							Unload(true);
-						}
+					}
+					try
+					{
+						m_pSite->releaseBuffer(pData);
+					}
+					catch (...)
+					{
+						Unload(true);
 					}
 				}
 			}
@@ -540,7 +547,7 @@ public:
 	CCalendarSitesImpl();
 	~CCalendarSitesImpl();
 
-	bool hasActiveSites() const;
+	void Update(CAgilityBookDoc* pDoc);
 
 	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent);
 
@@ -597,31 +604,14 @@ CCalendarSitesImpl::~CCalendarSitesImpl()
 }
 
 
-bool CCalendarSitesImpl::hasActiveSites() const
+void CCalendarSitesImpl::Update(CAgilityBookDoc* pDoc)
 {
-	for (std::map<CString, CalSiteDataPtr>::const_iterator i = m_DirectAccess.begin();
-		i != m_DirectAccess.end();
-		++i)
-	{
-		if ((*i).second->isValid())
-			return true;
-	}
-	return false;
+	//TODO
 }
 
 
 bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {
-	int nEntries = 0;
-	std::map<CString, CalSiteDataPtr>::iterator i;
-	for (i = m_DirectAccess.begin(); i != m_DirectAccess.end(); ++i)
-	{
-		if ((*i).second->isValid())
-			++nEntries;
-	}
-	if (0 == nEntries)
-		return false;
-
 	CDlgCalendarPlugins dlg(pDoc, m_DirectAccess, pParent);
 	if (IDOK != dlg.DoModal())
 		return false;
@@ -1246,9 +1236,9 @@ CCalendarSites::~CCalendarSites()
 }
 
 
-bool CCalendarSites::hasActiveSites() const
+void CCalendarSites::Update(CAgilityBookDoc* pDoc)
 {
-	return m_Impl->hasActiveSites();
+	m_Impl->Update(pDoc);
 }
 
 
