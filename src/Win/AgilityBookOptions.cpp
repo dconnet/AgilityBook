@@ -1303,5 +1303,13 @@ void CAgilityBookOptions::SuppressCalSitePermanently(
 	if (bSuppress)
 		AfxGetApp()->WriteProfileString(_T("CalSites2"), filename, inVer.GetVersionString());
 	else
-		AfxGetApp()->WriteProfileString(_T("CalSites2"), filename, NULL);
+	{
+		// If we're clearing one, make sure we haven't written a different version
+		CVersionNum ver;
+		CString str = AfxGetApp()->GetProfileString(_T("CalSites2"), filename, NULL);
+		if (!str.IsEmpty())
+			ver.Parse(filename, str);
+		if (ver == inVer)
+			AfxGetApp()->WriteProfileString(_T("CalSites2"), filename, NULL);
+	}
 }
