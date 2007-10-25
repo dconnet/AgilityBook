@@ -50,11 +50,6 @@ public:
 	~CCalendarSites();
 
 	/**
-	 * Update active plugins from ARB/version.txt. This may force some inactive.
-	 */
-	void Update(CAgilityBookDoc* pDoc);
-
-	/**
 	 * Iterate through all the active sites and add the desired entries.
 	 */
 	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent = NULL);

@@ -98,6 +98,7 @@ CUpdateInfo::CUpdateInfo()
 	, m_InfoMsg()
 	, m_UpdateDownload()
 	, m_usernameHint(_T("default"))
+	, m_CalSiteSuppression()
 {
 }
 
@@ -114,6 +115,9 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_VerConfig = 0;
 	m_FileName.erase();
 	m_InfoMsg.erase();
+	m_UpdateDownload.Empty();
+	m_usernameHint = _T("default");
+	m_CalSiteSuppression.clear();
 
 	// Set the default values.
 	m_UpdateDownload.LoadString(IDS_ABOUT_LINK_ARB_DOWNLOAD);
