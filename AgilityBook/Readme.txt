@@ -14,8 +14,6 @@ Once the above software is unpacked, the directory structure should look like:
     - ...
   - boost/
       - ...(Boost structure)
-  - wix/
-      - ...(WiX structure)
 
 --------------------
 
@@ -42,31 +40,19 @@ to avoid problems in the project files.
 
 --------------------
 
-Windows Installer XML toolset: http://wix.sourceforge.net/
-Currently using Version 2.0 (as of ARB v1.8.3.12).
-- wix-2.0.4820.0-binaries.zip
-- wix-2.0.4820.0-sources.zip
-Unzip both of these into the 'wix' directory. In order to have the installer
-work the way we want (don't display a license agreement), there are some
-modifications needed.
-- Copy ...\AgilityBook\Misc\Installation\*.bmp to ...\wix\Bitmaps\
-- Copy ...\AgilityBook\Misc\Installation\WixUI_InstallDir.wxs to
-  ...\wix\src\ui\wixui\installdir\
-- Add ...\wix to your PATH, cd to wix
-- "cd src\ui\wixui"
-- "candle installdir\WixUI_InstallDir.wxs *.wxs"
-- "lit -out ..\..\..\arbwixui.wixlib *.wixobj"
-- "del *.wixobj"
-Now, during our release process of running BuildAll.bat, GenMSI.py will
-be called which uses WiX to generate the .msi install files.
+Inno Setup: http://www.jrsoftware.org/isdl.php
+Currently using Version 5.2.2, also ISTool addon.
+During our release process of running BuildAll.bat, GenMSI.py will
+be called which uses Inno to generate the install files.
 (In ...\AgilityBook\src\Projects\VC8)
 
 --------------------
 
 Xerces-C: http://xml.apache.org/dist/xerces-c/.
 This used to be an external package, but has now been moved into ARBs
-codeline as of v1.9.2.12. Xerces will now be upgraded as needed.
+codeline as of v1.9.2.12. Xerces will now be upgraded as needed. [current 2.8]
 
+[old comments]
 This program has been tested with 2.2 and 2.7 dlls.
   - AgilityBook.cpp issues some warnings/comments about the version that
     is currently in use during compilation.
