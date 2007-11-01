@@ -15,7 +15,19 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_09D9118CC04D491895505BFD08C08F8C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_7BEF7C73815446D5969656AC0532DBD9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_89408347B8B7461A90CFCF35B20E4B14"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,7 +63,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\..\\..\\bin\\VC8\\Unicode Release\\Setup\\AgilityBook.msi"
+        "OutputFilename" = "8:..\\..\\..\\bin\\VC8Win32\\Unicode Release\\Setup\\AgilityBook.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -98,10 +110,50 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_09D9118CC04D491895505BFD08C08F8C"
+            {
+            "SourcePath" = "8:..\\..\\..\\bin\\VC8Win32\\Unicode Release\\AgilityBookFRA.dll"
+            "TargetName" = "8:AgilityBookFRA.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_153E3A976B9E4B81B9D1D08BE5E9EB9D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7BEF7C73815446D5969656AC0532DBD9"
             {
-            "SourcePath" = "8:..\\..\\..\\bin\\VC8\\Unicode Release\\AgilityBook.exe"
+            "SourcePath" = "8:..\\..\\..\\bin\\VC8Win32\\Unicode Release\\AgilityBook.exe"
             "TargetName" = "8:AgilityBook.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_153E3A976B9E4B81B9D1D08BE5E9EB9D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_89408347B8B7461A90CFCF35B20E4B14"
+            {
+            "SourcePath" = "8:..\\..\\..\\bin\\VC8Win32\\Unicode Release\\cal_usdaa.dll"
+            "TargetName" = "8:cal_usdaa.dll"
             "Tag" = "8:"
             "Folder" = "8:_153E3A976B9E4B81B9D1D08BE5E9EB9D"
             "Condition" = "8:"
@@ -160,7 +212,7 @@
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CD2F095EF9CE453A8D2684F5530D8FBE"
             {
-            "SourcePath" = "8:..\\..\\..\\bin\\VC8\\Unicode Release\\AgilityBook.chm"
+            "SourcePath" = "8:..\\..\\..\\bin\\VC8Win32\\Unicode Release\\AgilityBook.chm"
             "TargetName" = "8:AgilityBook.chm"
             "Tag" = "8:"
             "Folder" = "8:_153E3A976B9E4B81B9D1D08BE5E9EB9D"
