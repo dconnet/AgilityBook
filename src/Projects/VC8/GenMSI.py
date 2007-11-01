@@ -1,6 +1,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
 """GenMSI.py [/32] [/64] [/w98] [/all] [/notidy]
@@ -8,7 +9,7 @@
 64: Create 64bit Unicode msi
 w98: Create 32bit MBCS msi
 all: Create all of them (default)
-notidy: Do not clean up .wxs and .wixobj files
+notidy: Do not clean up .iss files
 """
 
 import datetime
@@ -123,8 +124,8 @@ def genmsi(version, code, tidy):
 	setup.close()
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
-		# TODO: Must specify full path or istool won't work with relative paths in iss file properly
-		runcmd("istool -compile \\agilitybook\\src\\agilitybook\\src\\projects\\vc8\\" + outputFile + ".iss")
+		fullpath = os.getcwd() + '\\' + outputFile + '.iss'
+		runcmd('istool -compile ' + fullpath)
 		if tidy:
 			if os.access(outputFile + ".iss", os.F_OK):
 				os.remove(outputFile + ".iss")
