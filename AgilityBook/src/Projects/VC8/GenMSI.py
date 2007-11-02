@@ -121,6 +121,7 @@ def genmsi(version, code, tidy):
 	print >>setup, 'Name: {group}\{#ARBName} Help; Filename: {app}\AgilityBook.chm'
 	print >>setup, 'Name: {group}\{#ARBName} Web Site; Filename: http://www.agilityrecordbook.com/'
 	print >>setup, 'Name: {group}\Yahoo Discussion Group; Filename: http://groups.yahoo.com/group/AgilityRecordBook/'
+	print >>setup, 'Name: "{group}\{cm:UninstallProgram,{#ARBName}}"; Filename: "{uninstallexe}"'
 	setup.close()
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
