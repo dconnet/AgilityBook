@@ -64,6 +64,11 @@ public:
 			DWORD_PTR dwData,
 			UINT nCmd = HELP_CONTEXT);
 
+	void SetStatusText(
+			CString const& msg,
+			bool bFiltered);
+	void SetStatusText2(CString const& msg);
+
 private:
 	CUpdateInfo m_UpdateInfo;
 	CLanguageManager m_LangMgr;

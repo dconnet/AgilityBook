@@ -329,9 +329,9 @@ bool CLanguageManager::SelectLanguage()
 	if (IDOK == dlg.DoModal())
 	{
 		LANGID id = dlg.GetSelectedLanguage();
+		AfxGetApp()->WriteProfileInt(_T("Settings"), _T("Lang"), static_cast<DWORD>(id));
 		if (m_CurLang != id)
 		{
-			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("Lang"), static_cast<DWORD>(id));
 			SetLanguage(id);
 			return true;
 		}

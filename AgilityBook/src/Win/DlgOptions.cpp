@@ -204,8 +204,9 @@ void CDlgOptions::OnOK()
 
 		if (bResetHtmlView)
 		{
-			CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
-			pFrame->ShowPointsAs(CAgilityBookOptions::ShowHtmlPoints());
+			CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
+			if (pFrame)
+				pFrame->ShowPointsAs(CAgilityBookOptions::ShowHtmlPoints());
 		}
 
 		EndDialog(IDOK);

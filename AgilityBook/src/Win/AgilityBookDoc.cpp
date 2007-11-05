@@ -1023,13 +1023,11 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
  */
 void CAgilityBookDoc::DeleteContents()
 {
-	if (IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
-	{
-		CString msg;
-		msg.LoadString(IDS_INDICATOR_BLANK);
-		reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, CFilterOptions::Options().IsFilterEnabled());
-		reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
-	}
+	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
+	CString msg;
+	msg.LoadString(IDS_INDICATOR_BLANK);
+	pApp->SetStatusText(msg, CFilterOptions::Options().IsFilterEnabled());
+	pApp->SetStatusText2(msg);
 	m_Records.clear();
 	CDocument::DeleteContents();
 	SetModifiedFlag(FALSE);
@@ -1049,7 +1047,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 
 	if (0 == GetDogs().size())
 	{
-		if (IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
+		if (AfxGetMainWnd() && IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 	}
 	return TRUE;
@@ -1387,8 +1385,9 @@ void CAgilityBookDoc::OnAgilityNewDog()
 		}
 		if (pTree)
 		{
-			CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
-			pFrame->SetCurTab(0);
+			CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
+			if (pFrame)
+				pFrame->SetCurTab(0);
 			SetModifiedFlag();
 			if (!GetDogs().AddDog(dog))
 				pTree->InsertDog(dog, true);
@@ -1405,8 +1404,9 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 	{
 		if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 		{
-			CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
-			pFrame->SetCurTab(2);
+			CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
+			if (pFrame)
+				pFrame->SetCurTab(2);
 			GetCalendar().AddCalendar(cal);
 			GetCalendar().sort();
 			SetModifiedFlag();
@@ -1438,8 +1438,9 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 	CDlgTraining dlg(training, this);
 	if (IDOK == dlg.DoModal())
 	{
-		CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
-		pFrame->SetCurTab(3);
+		CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
+		if (pFrame)
+			pFrame->SetCurTab(3);
 		GetTraining().AddTraining(training);
 		GetTraining().sort();
 		SetModifiedFlag();
@@ -1620,7 +1621,9 @@ void CAgilityBookDoc::OnNotesSearch()
 void CAgilityBookDoc::OnViewOptions()
 {
 	int nPage;
-	CMainFrame* pFrame = reinterpret_cast<CMainFrame*>(AfxGetMainWnd());
+	CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
+	if (!pFrame)
+		return;
 	switch (pFrame->GetCurTab())
 	{
 	default:
@@ -1637,7 +1640,7 @@ void CAgilityBookDoc::OnViewOptions()
 		nPage = CDlgOptions::GetFilterPage();
 		break;
 	}
-	CDlgOptions options(this, AfxGetMainWnd(), nPage);
+	CDlgOptions options(this, pFrame, nPage);
 	options.DoModal();
 }
 

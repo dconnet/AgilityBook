@@ -377,6 +377,42 @@ size_t BreakLine(
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+class CAgilityBookCmdLine : public CCommandLineInfo
+{
+public:
+	CAgilityBookCmdLine()
+		: m_bRegister(false)
+		, m_bUnregister(false)
+	{
+	}
+	virtual void ParseParam( 
+		const TCHAR* pszParam,  
+		BOOL bFlag, 
+		BOOL bLast);
+	bool m_bRegister;
+	bool m_bUnregister;
+};
+
+
+void CAgilityBookCmdLine::ParseParam( 
+		const TCHAR* pszParam,  
+		BOOL bFlag, 
+		BOOL bLast)
+{
+	// override register/unregister to all auto-reg of filetype handling
+	if (0 == lstrcmpi(pszParam, _T("register")))
+	{
+		m_bRegister = true;
+	}
+	else if (0 == lstrcmpi(pszParam, _T("unregister")))
+	{
+		m_bUnregister = true;
+	}
+	CCommandLineInfo::ParseParam(pszParam, bFlag, bLast);
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CAgilityBookApp
 
 BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
@@ -480,14 +516,12 @@ BOOL CAgilityBookApp::InitInstance()
 
 	// Change the registry key under which our settings are stored
 	SetRegistryKey(_T("dcon Software"));
-	m_LangMgr.SetDefaultLanguage();
 	InitCrashHandler(GetAppRegistryKey());
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 
 	// Parse command line for standard shell commands, DDE, file open
-	CCommandLineInfo cmdInfo;
+	CAgilityBookCmdLine cmdInfo;
 	ParseCommandLine(cmdInfo);
-	CSplashWnd::EnableSplashScreen(cmdInfo.m_bShowSplash && CAgilityBookOptions::AutoShowSplashScreen());
 
 	// Register the application's document templates.  Document templates
 	//  serve as the connection between documents, frame windows and views
@@ -499,9 +533,25 @@ BOOL CAgilityBookApp::InitInstance()
 		RUNTIME_CLASS(CTabView));
 	AddDocTemplate(pDocTemplate);
 
+	if (cmdInfo.m_bUnregister)
+	{
+		// unregister and exit
+		UnregisterShellFileTypes();
+		return FALSE;
+	}
+
 	// Enable DDE Execute open
 	EnableShellOpen();
 	RegisterShellFileTypes(FALSE);
+	if (cmdInfo.m_bRegister)
+	{
+		// We're done registering - byebye!
+		return FALSE;
+	}
+
+	// Don't do language until after cmdline checks
+	m_LangMgr.SetDefaultLanguage();
+	CSplashWnd::EnableSplashScreen(cmdInfo.m_bShowSplash && CAgilityBookOptions::AutoShowSplashScreen());
 
 	// Enable Html help
 #if _MSC_VER >= 1300
@@ -599,6 +649,35 @@ void CAgilityBookApp::WinHelp(
 	HtmlHelp(dwData, nCmd);
 #endif
 }
+
+
+// These functions were moved here to centralize mainwnd checking.
+// AfxGetApp _will_ always return what we expect. AfxGetMainWnd may not.
+void CAgilityBookApp::SetStatusText(
+		CString const& msg,
+		bool bFiltered)
+{
+	// Calling AfxGetMainWnd is actually dangerous. When the splash screen
+	// is created, it becomes the main window until the mainframe is up.
+	// Calling "IsWindow(pWnd->GetSafeWnd())" when pWnd is NULL, does NOT
+	// crash - it returns false. But for real safety, check!
+	CWnd* pWnd = AfxGetMainWnd();
+	if (pWnd && IsWindow(pWnd->GetSafeHwnd()) && dynamic_cast<CMainFrame*>(pWnd))
+	{
+		reinterpret_cast<CMainFrame*>(pWnd)->SetStatusText(msg, bFiltered);
+	}
+}
+
+
+void CAgilityBookApp::SetStatusText2(CString const& msg)
+{
+	CWnd* pWnd = AfxGetMainWnd();
+	if (pWnd && IsWindow(pWnd->GetSafeHwnd()) && dynamic_cast<CMainFrame*>(pWnd))
+	{
+		reinterpret_cast<CMainFrame*>(pWnd)->SetStatusText2(msg);
+	}
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookApp message handlers
