@@ -383,9 +383,9 @@ void CTabView::SetActiveView()
 	{
 		CString msg;
 		if (pCommon->GetMessage(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, pCommon->IsFiltered());
+			reinterpret_cast<CMainFrame*>(GetParentFrame())->SetStatusText(msg, pCommon->IsFiltered());
 		if (pCommon->GetMessage2(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
+			reinterpret_cast<CMainFrame*>(GetParentFrame())->SetStatusText2(msg);
 	}
 }
 

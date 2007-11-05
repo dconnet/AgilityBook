@@ -102,7 +102,7 @@ bool CClipboardData::Open()
 {
 	if (!m_bOkay)
 	{
-		if (AfxGetMainWnd()->OpenClipboard())
+		if (AfxGetMainWnd() && AfxGetMainWnd()->OpenClipboard())
 			m_bOkay = true;
 	}
 	return m_bOkay;

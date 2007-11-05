@@ -398,7 +398,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
@@ -429,7 +430,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
@@ -460,7 +462,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
@@ -494,7 +497,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					std::vector<ARBCalendarPtr> allEntries;
 					std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
@@ -535,7 +539,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
@@ -566,7 +571,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
@@ -596,7 +602,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, fname, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
@@ -619,7 +626,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, _T("AgilityRecordBook.dtd"), OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CStringA filename(file.GetFileName());
 					std::ofstream output(filename, std::ios::out | std::ios::binary);
@@ -647,7 +655,8 @@ BOOL CWizardStart::OnWizardFinish()
 				CFileDialog file(FALSE, def, name, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
 				if (IDOK == file.DoModal())
 				{
-					AfxGetMainWnd()->UpdateWindow();
+					if (AfxGetMainWnd())
+						AfxGetMainWnd()->UpdateWindow();
 					CWaitCursor wait;
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();

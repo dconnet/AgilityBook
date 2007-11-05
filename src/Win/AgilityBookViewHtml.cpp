@@ -424,11 +424,12 @@ void CAgilityBookViewHtml::OnActivateView(
 	CHtmlView::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
 	{
+		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		CString msg;
 		if (GetMessage(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			pApp->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
+			pApp->SetStatusText2(msg);
 	}
 }
 

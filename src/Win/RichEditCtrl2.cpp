@@ -130,7 +130,8 @@ void CRichEditCtrl2::OnEnLink(
 			ZeroMemory(&sei, sizeof(sei));
 			sei.cbSize = sizeof(SHELLEXECUTEINFO);
 			sei.fMask = SEE_MASK_FLAG_DDEWAIT;
-			sei.hwnd = AfxGetMainWnd()->GetSafeHwnd();
+			if (AfxGetMainWnd()->GetSafeHwnd())
+				sei.hwnd = AfxGetMainWnd()->GetSafeHwnd();
 			//sei.lpVerb = NULL;
 			//sei.lpVerb = _T("opennew");
 			sei.lpVerb = _T("open");

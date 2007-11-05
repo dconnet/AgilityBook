@@ -213,7 +213,11 @@ void CMainFrame::SetStatusText(
 		CString const& msg,
 		bool bFiltered)
 {
+	if (!::IsWindow(m_wndStatusBar.GetSafeHwnd()))
+		return;
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
+	if (0 > index)
+		return;
 	UINT nId, nStyle;
 	int cxWidth;
 	m_wndStatusBar.GetPaneInfo(index, nId, nStyle, cxWidth);
@@ -235,7 +239,11 @@ void CMainFrame::SetStatusText(
 
 void CMainFrame::SetStatusText2(CString const& msg)
 {
+	if (!::IsWindow(m_wndStatusBar.GetSafeHwnd()))
+		return;
 	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_DOG);
+	if (0 > index)
+		return;
 	UINT nId, nStyle;
 	int cxWidth;
 	m_wndStatusBar.GetPaneInfo(index, nId, nStyle, cxWidth);

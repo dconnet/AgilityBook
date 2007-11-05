@@ -906,6 +906,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 	dcPrint.SetAbortProc(AbortProc);
 
 	CWnd* hwndTemp = AfxGetMainWnd();
+	ASSERT(hwndTemp);
 	hwndTemp->EnableWindow(FALSE);
 	CPrintingDialog2 dlgPrintStatus(AfxGetMainWnd());
 

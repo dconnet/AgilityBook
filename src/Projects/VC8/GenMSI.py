@@ -122,6 +122,12 @@ def genmsi(version, code, tidy):
 	print >>setup, 'Name: {group}\{#ARBName} Web Site; Filename: http://www.agilityrecordbook.com/'
 	print >>setup, 'Name: {group}\Yahoo Discussion Group; Filename: http://groups.yahoo.com/group/AgilityRecordBook/'
 	print >>setup, 'Name: "{group}\{cm:UninstallProgram,{#ARBName}}"; Filename: "{uninstallexe}"'
+	print >>setup, ''
+	print >>setup, '[Run]'
+	print >>setup, 'Filename: "{app}\AgilityBook.exe"; Parameters: "/register"; StatusMsg: "Registering File Associations..."'
+	print >>setup, ''
+	print >>setup, '[UninstallRun]'
+	print >>setup, 'Filename: "{app}\AgilityBook.exe"; Parameters: "/unregister"; RunOnceId: "RemoveARBAssoc"'
 	setup.close()
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):

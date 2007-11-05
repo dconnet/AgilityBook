@@ -782,11 +782,12 @@ void CAgilityBookViewCalendarList::OnActivateView(
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
 	{
+		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		CString msg;
 		if (GetMessage(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			pApp->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
+			pApp->SetStatusText2(msg);
 	}
 }
 
@@ -986,10 +987,11 @@ void CAgilityBookViewCalendarList::LoadData()
 	CString msg;
 	if (IsWindowVisible())
 	{
+		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		if (GetMessage(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText(msg, IsFiltered());
+			pApp->SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			reinterpret_cast<CMainFrame*>(AfxGetMainWnd())->SetStatusText2(msg);
+			pApp->SetStatusText2(msg);
 	}
 
 	SORT_CAL_INFO info;
