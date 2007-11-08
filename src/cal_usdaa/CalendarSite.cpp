@@ -46,7 +46,7 @@
 #include <sstream>
 
 #define GENERATE_TESTDATA	0
-#define USE_TESTDATA 		1
+#define USE_TESTDATA 		0
 #define TESTDATANAME		"c:\\AgilityBook\\testdata\\usdaa-raw"
 #if GENERATE_TESTDATA && USE_TESTDATA
 #error "Choose one!"
