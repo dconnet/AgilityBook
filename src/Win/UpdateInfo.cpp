@@ -114,7 +114,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_VersionNum.clear();
 	m_VerConfig = 0;
 	m_FileName.erase();
-	m_InfoMsg.erase();
+	m_InfoMsg.clear();
 	m_UpdateDownload.Empty();
 	m_usernameHint = _T("default");
 	m_CalSiteSuppression.clear();
@@ -186,11 +186,52 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	if (!data.IsEmpty())
 	{
 		// The rest of the file is xml:
-		// <Data>
-		//   <Config ver="1" file="file">data</Config>
-		//   <Download>url</Download> <!-- if not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD -->
-		//   <DisableCalPlugin file="filename" ver="n.n.n.n" enable="1"/>
-		// </Data>
+		/*
+		<!ELEMENT Data (Config, Download*, DisableCalPlugin*) >
+
+		<!--
+		pcdata is a message that can be displayed to the user explaining
+		the changes. This is only used when doing a config update, not a
+		version update. [version update is 1st line in file]
+		Note: 'Config' is maintained only for back-compatibility with older
+		versions of the program. 'Config2' is used to support languages.
+		-->
+		<!ELEMENT Config (#PCDATA) >
+		  <!ATTLIST Config
+		    ver CDATA #REQUIRED
+		    file CDATA #REQUIRED
+		    >
+		<!ELEMENT Config2 (Lang+) >
+		  <!ATTLIST Config2
+		    ver CDATA #REQUIRED
+		    file CDATA #REQUIRED
+		    >
+		<!--
+		'id' specified the LANGID of the plugin language DLL, '0' is used
+		for the program default.
+		-->
+		<!ELEMENT Lang (#PCDATA) >
+		  <!ATTLIST Lang id CDATA #REQUIRED >
+
+		<!--
+		if Download is not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD,
+		which is http://www.agilityrecordbook.com/download.php
+		-->
+		<!ELEMENT Download (#PCDATA) >
+
+		<!--
+		When we know a calendar plugin is obsolete due to website changes,
+		use this to force the plugin to disable. Only disables the specified
+		version. If we prematurely disabled the plugin, the 'enable' flag
+		will reenable. [disabling info is stored in the registry]
+		-->
+		<!ELEMENT DisableCalPlugin EMPTY >
+		  <!ATTLIST DisableCalPlugin
+		    file CDATA #REQUIRED
+		    ver CDATA #REQUIRED
+		    enable (0|1) '1'
+		    >
+		*/
 		tstring errMsg2;
 		ElementNodePtr tree(ElementNode::New());
 		if (!tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg2))
@@ -215,11 +256,22 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
 			{
 				ElementNodePtr node = tree->GetElementNode(nIndex);
-				if (node->GetName() == _T("Config"))
+				// Ignore 'Config'
+				if (node->GetName() == _T("Config2"))
 				{
 					node->GetAttrib(_T("ver"), m_VerConfig);
 					node->GetAttrib(_T("file"), m_FileName);
-					m_InfoMsg = node->GetValue();
+					for (int nLang = 0; nLang < node->GetElementCount(); ++nLang)
+					{
+						ElementNodePtr lang = node->GetElementNode(nLang);
+						if (lang->GetName() == _T("Lang"))
+						{
+							tstring langIdStr;
+							node->GetAttrib(_T("id"), langIdStr);
+							LANGID langId = static_cast<LANGID>(_tcstol(langIdStr.c_str(), NULL, 16));
+							m_InfoMsg[langId] = lang->GetValue();
+						}
+					}
 				}
 				else if (node->GetName() == _T("Download"))
 				{
@@ -320,6 +372,7 @@ bool CUpdateInfo::IsOutOfDate()
 
 void CUpdateInfo::CheckConfig(
 		CAgilityBookDoc* pDoc,
+		CLanguageManager const& langMgr,
 		bool bVerbose)
 {
 	// If the parse was successful, check for the posted config version.
@@ -329,15 +382,21 @@ void CUpdateInfo::CheckConfig(
 	{
 		bUpToDate = false;
 		CString msg;
-		if (0 < m_InfoMsg.length())
+		if (0 < m_InfoMsg.size())
 		{
-			// If the info contains a note, append it.
-			// A note will often give a brief description of things
-			// the user must do. For instance, from v4->5, USDAA
-			// titling pts were removed from Tournament Jumpers and
-			// Snooker to allow for non-titling runs. In case the
-			// user saved some that way, we need to warn them.
-			msg += m_InfoMsg.c_str();
+			std::map<LANGID, tstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
+			if (iMsg == m_InfoMsg.end())
+				iMsg = m_InfoMsg.find(0);
+			if (iMsg != m_InfoMsg.end() && 0 < iMsg->second.length())
+			{
+				// If the info contains a note, append it.
+				// A note will often give a brief description of things
+				// the user must do. For instance, from v4->5, USDAA
+				// titling pts were removed from Tournament Jumpers and
+				// Snooker to allow for non-titling runs. In case the
+				// user saved some that way, we need to warn them.
+				msg += iMsg->second.c_str();
+			}
 		}
 		if (UpdateConfig(pDoc, msg))
 		{
@@ -406,7 +465,9 @@ void CUpdateInfo::AutoUpdateProgram()
 }
 
 
-void CUpdateInfo::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
+void CUpdateInfo::AutoCheckConfiguration(
+		CAgilityBookDoc* pDoc,
+		CLanguageManager const& langMgr)
 {
 	// If we're opening a doc and we've checked the internet
 	// and there is a more current version, do not continue
@@ -414,11 +475,13 @@ void CUpdateInfo::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 	// uses a newer file version.
 	if (IsOutOfDate())
 		return;
-	CheckConfig(pDoc, false);
+	CheckConfig(pDoc, langMgr, false);
 }
 
 
-void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc)
+void CUpdateInfo::UpdateConfiguration(
+		CAgilityBookDoc* pDoc,
+		CLanguageManager const& langMgr)
 {
 	// Only continue if we parsed the version.txt file
 	// AND the version is up-to-date.
@@ -426,5 +489,5 @@ void CUpdateInfo::UpdateConfiguration(CAgilityBookDoc* pDoc)
 		return;
 	if (CheckProgram())
 		return;
-	CheckConfig(pDoc, true);
+	CheckConfig(pDoc, langMgr, true);
 }

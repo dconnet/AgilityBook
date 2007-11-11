@@ -51,7 +51,8 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	CAgilityBookApp();
 
-	CUpdateInfo& UpdateInfo()		{return m_UpdateInfo;}
+	CUpdateInfo& UpdateInfo()						{return m_UpdateInfo;}
+	CLanguageManager const& LanguageManager() const	{return m_LangMgr;}
 
 	/**
 	 * Override the WinHelp api so we can map it to HtmlHelp.

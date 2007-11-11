@@ -41,6 +41,7 @@
 #include "ARBTypes.h"
 #include "VersionNum.h"
 class CAgilityBookDoc;
+class CLanguageManager;
 
 /**
  * This class manages checking to see if there are newer versions of the
@@ -57,6 +58,7 @@ protected:
 	bool CheckProgram();
 	void CheckConfig(
 			CAgilityBookDoc* pDoc,
+			CLanguageManager const& langMgr,
 			bool bVerbose);
 
 public:
@@ -81,20 +83,27 @@ public:
 	 * Called when opening a document. This will not load anything
 	 * from the internet, it only uses cached data. If it knows the
 	 * program needs updating, it will not update the config.
+	 * @param langMgr Language Manager
+	 * @param pDoc Document to check configuration against.
 	 */
-	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
+	void AutoCheckConfiguration(
+			CAgilityBookDoc* pDoc,
+			CLanguageManager const& langMgr);
 
 	/**
 	 * Check the configuration. This will also check the program version.
 	 * @param pDoc Document to check configuration against.
+	 * @param langMgr Language Manager
 	 */
-	void UpdateConfiguration(CAgilityBookDoc* pDoc);
+	void UpdateConfiguration(
+			CAgilityBookDoc* pDoc,
+			CLanguageManager const& langMgr);
 
 private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
 	tstring m_FileName;
-	tstring m_InfoMsg;
+	std::map<LANGID, tstring> m_InfoMsg;
 	CString m_UpdateDownload;
 	CString m_usernameHint;
 	std::vector<CVersionNum> m_CalSiteSuppression;

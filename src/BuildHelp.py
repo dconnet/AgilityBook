@@ -11,8 +11,8 @@
 # 2004-05-20 DRC Created
 
 """BuildHelp configuration compiler
-compiler: VC8Win32, VC8x64
 configuration: Release, Debug, Unicode Release, Unicode Debug
+compiler: VC8Win32, VC8x64
 """
 
 hhc = "c:\\Program Files\\HTML Help Workshop\\hhc.exe"
