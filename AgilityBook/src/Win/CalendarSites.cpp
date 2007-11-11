@@ -894,7 +894,8 @@ void CDlgCalendarPlugins::UpdateControls()
 {
 	int nChecked = 0;
 	int nCalItems = 0;
-	for (HTREEITEM hItem = m_ctrlPlugins.GetRootItem();
+	HTREEITEM hItem;
+	for (hItem = m_ctrlPlugins.GetRootItem();
 		hItem != NULL;
 		hItem = m_ctrlPlugins.GetNextSiblingItem(hItem))
 	{
@@ -910,7 +911,7 @@ void CDlgCalendarPlugins::UpdateControls()
 	}
 	m_ctrlRead.EnableWindow(0 < nChecked);
 	m_ctrlAdd.EnableWindow(0 < nCalItems);
-	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
+	hItem = m_ctrlPlugins.GetSelectedItem();
 	CPluginData* pData = NULL;
 	if (hItem)
 	{
