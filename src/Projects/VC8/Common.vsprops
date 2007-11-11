@@ -9,7 +9,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		AdditionalIncludeDirectories="../../zlib;../../xml;../../../../boost"
-		PreprocessorDefinitions="XML_LIBRARY"
+		PreprocessorDefinitions="XML_LIBRARY;_SECURE_SCL=1;_SECURE_SCL_THROWS=1"
 		StringPooling="true"
 		UsePrecompiledHeader="2"
 		WarningLevel="4"
