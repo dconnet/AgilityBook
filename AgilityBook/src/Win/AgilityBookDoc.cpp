@@ -1155,7 +1155,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Then check the external config.
 	else
 	{
-		pApp->UpdateInfo().AutoCheckConfiguration(this);
+		pApp->UpdateInfo().AutoCheckConfiguration(this, pApp->LanguageManager());
 	}
 
 	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
@@ -1249,7 +1249,7 @@ void CAgilityBookDoc::OnHelpUpdate()
 {
 	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 	ASSERT(pApp);
-	pApp->UpdateInfo().UpdateConfiguration(this);
+	pApp->UpdateInfo().UpdateConfiguration(this, pApp->LanguageManager());
 }
 
 
@@ -1264,12 +1264,9 @@ void CAgilityBookDoc::OnFileLinked()
 {
 	CDlgFindLinks dlg(GetDogs());
 	if (0 == dlg.GetNumLinks())
-	{
 		AfxMessageBox(IDS_NO_LINKED_FILES, MB_ICONINFORMATION);
-	}
 	else
 		dlg.DoModal();
-
 }
 
 

@@ -242,5 +242,5 @@ void CAboutDlg::OnBnClickedUpdate()
 {
 	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 	ASSERT(pApp);
-	pApp->UpdateInfo().UpdateConfiguration(m_pDoc);
+	pApp->UpdateInfo().UpdateConfiguration(m_pDoc, pApp->LanguageManager());
 }
