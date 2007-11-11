@@ -193,16 +193,12 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		pcdata is a message that can be displayed to the user explaining
 		the changes. This is only used when doing a config update, not a
 		version update. [version update is 1st line in file]
-		Note: 'Config' is maintained only for back-compatibility with older
-		versions of the program. 'Config2' is used to support languages.
+		Note: Prior to v1.10, Config had PCDATA. We can change the format
+		of the file since this data is never accessed when there's a pgm
+		version change.
 		-->
-		<!ELEMENT Config (#PCDATA) >
+		<!ELEMENT Config (Lang+) >
 		  <!ATTLIST Config
-		    ver CDATA #REQUIRED
-		    file CDATA #REQUIRED
-		    >
-		<!ELEMENT Config2 (Lang+) >
-		  <!ATTLIST Config2
 		    ver CDATA #REQUIRED
 		    file CDATA #REQUIRED
 		    >
@@ -256,11 +252,12 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
 			{
 				ElementNodePtr node = tree->GetElementNode(nIndex);
-				// Ignore 'Config'
-				if (node->GetName() == _T("Config2"))
+				if (node->GetName() == _T("Config"))
 				{
 					node->GetAttrib(_T("ver"), m_VerConfig);
 					node->GetAttrib(_T("file"), m_FileName);
+					// Note, before v1.10, we did "m_InfoMsg = node->GetValue();"
+					// In 1.10, we changed the format of version.txt.
 					for (int nLang = 0; nLang < node->GetElementCount(); ++nLang)
 					{
 						ElementNodePtr lang = node->GetElementNode(nLang);
