@@ -44,13 +44,15 @@ class CDlgCalendarQueryDetail : public CDlgBaseDialog
 public:
 	CDlgCalendarQueryDetail(
 			std::map<tstring, tstring> const& inLocCodes,
+			std::vector<tstring> const& inSelectedLocCodes,
 			std::map<tstring, tstring> const& inVenueCodes,
+			std::vector<tstring> const& inSelectedVenueCodes,
 			CWnd* pParent = NULL);
-	std::vector<tstring> const& GetSelectedLocations() const
+	std::vector<tstring> const& GetSelectedLocationCodes() const
 	{
 		return m_Locations;
 	}
-	std::vector<tstring> const& GetSelectionVenues() const
+	std::vector<tstring> const& GetSelectedVenueCodes() const
 	{
 		return m_Venues;
 	}

@@ -50,6 +50,7 @@
 #include "Element.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
+#include "ReadHttp.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
 #include <vector>
@@ -59,6 +60,35 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+static tstring TranslateCodeMap(std::vector<tstring> const& inCodes)
+{
+	otstringstream codes;
+	for (size_t i = 0; i < inCodes.size(); ++i)
+	{
+		if (0 < i)
+			codes << ':';
+		codes << inCodes[i];
+	}
+	return codes.str();
+}
+
+
+static size_t TranslateCodeMap(
+		std::map<tstring, tstring> const& inMap,
+		std::vector<tstring>& outKeys)
+{
+	outKeys.clear();
+	for (std::map<tstring, tstring>::const_iterator iMap = inMap.begin();
+		iMap != inMap.end();
+		++iMap)
+	{
+		outKeys.push_back(iMap->first);
+	}
+	return outKeys.size();
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -103,12 +133,13 @@ public:
 
 	CString GetName() const							{return m_Name;}
 	CString GetDescription() const					{return m_Desc;}
-	std::map<tstring, tstring> const& LocationCodes() const	{return m_LocCodes;}
-	std::map<tstring, tstring> const& VenueCodes() const	{return m_VenueCodes;}
-	CStringA Process(
-			char const* inLocCodes,
-			char const* inVenueCodes,
-			IProgressMeter *progress);
+	std::map<tstring, tstring> const& QueryLocationCodes() const
+		{return m_LocCodes;}
+	std::map<tstring, tstring> const& QueryVenueCodes() const
+		{return m_VenueCodes;}
+	CStringA Process(IProgressMeter *progress,
+			std::vector<tstring> const& inLocationCodes,
+			std::vector<tstring> const& inVenueCodes);
 
 private:
 	void Clear();
@@ -508,18 +539,25 @@ void CalSiteData::Unload(bool bPermanently)
 }
 
 
-CStringA CalSiteData::Process(
-		char const* inLocCodes,
-		char const* inVenueCodes,
-		IProgressMeter *progress)
+CStringA CalSiteData::Process(IProgressMeter *progress,
+		std::vector<tstring> const& inLocationCodes,
+		std::vector<tstring> const& inVenueCodes)
 {
 	CStringA data;
 	if (m_pSite)
 	{
+		CStringA locCodes(TranslateCodeMap(inLocationCodes).c_str());
+		CStringA venueCodes(TranslateCodeMap(inVenueCodes).c_str());
 		char* pData = NULL;
 		try
 		{
-			pData = m_pSite->Process(inLocCodes, inVenueCodes, progress);
+			const char* pLocCodes = NULL;
+			if (!locCodes.IsEmpty())
+				pLocCodes = locCodes;
+			const char* pVenueCodes = NULL;
+			if (!venueCodes.IsEmpty())
+				pVenueCodes = venueCodes;
+			pData = m_pSite->Process(pLocCodes, pVenueCodes, progress);
 		}
 		catch (...)
 		{
@@ -635,19 +673,20 @@ public:
 	CPluginData() {}
 	virtual CString GetName() const	{return m_Name;}
 	virtual CString GetDesc() const	{return m_Desc;}
-	virtual CStringA Process(
-			char const* inLocCodes,
-			char const* inVenueCodes,
-			IProgressMeter *progress) = 0;
+	virtual CStringA Process(IProgressMeter *progress) = 0;
 	virtual bool HasQueryDetails() const = 0;
-	virtual std::map<tstring, tstring> const& LocationCodes() const = 0;
-	virtual std::map<tstring, tstring> const& VenueCodes() const = 0;
+	virtual std::map<tstring, tstring> const& QueryLocationCodes() const = 0;
+	virtual std::map<tstring, tstring> const& QueryVenueCodes() const = 0;
+	virtual std::vector<tstring>& LocationCodes()	{return m_LocationCodes;}
+	virtual std::vector<tstring>& VenueCodes()		{return m_VenueCodes;}
 	virtual bool isValid() const = 0;
 	virtual bool Enable() = 0;
 	virtual void Disable() = 0;
 protected:
 	CString m_Name;
 	CString m_Desc;
+	std::vector<tstring> m_LocationCodes;
+	std::vector<tstring> m_VenueCodes;
 };
 
 
@@ -660,27 +699,23 @@ public:
 	{
 		m_Name = m_Site.GetName().c_str();
 		m_Desc = m_Site.GetDescription().c_str();
+		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
+		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	virtual CStringA Process(
-			char const* inLocCodes,
-			char const* inVenueCodes,
-			IProgressMeter *progress)
-	{
-		return "";
-	}
+	virtual CStringA Process(IProgressMeter *progress);
 
 	virtual bool HasQueryDetails() const
 	{
 		return 1 < m_Site.LocationCodes().size() || 1 < m_Site.VenueCodes().size();
 	}
 
-	virtual std::map<tstring, tstring> const& LocationCodes() const
+	virtual std::map<tstring, tstring> const& QueryLocationCodes() const
 	{
 		return m_Site.LocationCodes();
 	}
 
-	virtual std::map<tstring, tstring> const& VenueCodes() const
+	virtual std::map<tstring, tstring> const& QueryVenueCodes() const
 	{
 		return m_Site.VenueCodes();
 	}
@@ -707,6 +742,21 @@ private:
 };
 
 
+CStringA CPluginConfigData::Process(IProgressMeter *progress)
+{
+	CWaitCursor wait;
+	tstring url = m_Site.GetFormattedURL(m_LocationCodes, m_VenueCodes);
+	CStringA data(url.c_str());
+	progress->SetMessage(data);
+	data.Empty();
+	CReadHttp http(url.c_str(), data);
+	CString username, errMsg;
+	if (!http.ReadHttpFile(username, errMsg))
+		data.Empty();
+	return data;
+}
+
+
 class CPluginDllData : public CPluginData
 {
 public:
@@ -716,29 +766,28 @@ public:
 	{
 		ASSERT(m_CalData);
 		SetNameDesc();
+		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
+		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
 
-	virtual CStringA Process(
-			char const* inLocCodes,
-			char const* inVenueCodes,
-			IProgressMeter *progress)
+	virtual CStringA Process(IProgressMeter *progress)
 	{
-		return m_CalData->Process(inLocCodes, inVenueCodes, progress);
+		return m_CalData->Process(progress, m_LocationCodes, m_VenueCodes);
 	}
 
 	virtual bool HasQueryDetails() const
 	{
-		return 1 < m_CalData->LocationCodes().size() || 1 < m_CalData->VenueCodes().size();
+		return 1 < m_CalData->QueryLocationCodes().size() || 1 < m_CalData->QueryVenueCodes().size();
 	}
 
-	virtual std::map<tstring, tstring> const& LocationCodes() const
+	virtual std::map<tstring, tstring> const& QueryLocationCodes() const
 	{
-		return m_CalData->LocationCodes();
+		return m_CalData->QueryLocationCodes();
 	}
 
-	virtual std::map<tstring, tstring> const& VenueCodes() const
+	virtual std::map<tstring, tstring> const& QueryVenueCodes() const
 	{
-		return m_CalData->VenueCodes();
+		return m_CalData->QueryVenueCodes();
 	}
 
 	virtual bool isValid() const		{return m_CalData->isValid();}
@@ -1051,8 +1100,9 @@ void CDlgCalendarPlugins::OnPluginRead()
 			if (pData)
 			{
 				int nInserted = 0;
-				//TODO: add loccodes/venuecodes
-				CStringA data = pData->Process(NULL, NULL, &progress);
+				CStringA data = pData->Process(&progress);
+				progress.SetForegroundWindow();
+				wait.Restore();
 				ElementNodePtr tree(ElementNode::New());
 				tstring errMsg;
 				bool bOk = false;
@@ -1150,7 +1200,11 @@ void CDlgCalendarPlugins::OnPluginAdd()
 					else
 					{
 						if (calFound->Update(cal))
+						{
+							if (calFound->IsTentative())
+								calFound->SetIsTentative(false);
 							++nUpdated;
+						}
 					}
 					m_ctrlPlugins.ShowCheckbox(hCal, false);
 				}
@@ -1203,13 +1257,14 @@ void CDlgCalendarPlugins::OnPluginQueryDetails()
 		CPluginData* pData = dynamic_cast<CPluginData*>(pRawData);
 		if (pData && pData->HasQueryDetails())
 		{
-			CDlgCalendarQueryDetail dlg(pData->LocationCodes(), pData->VenueCodes(), this);
+			CDlgCalendarQueryDetail dlg(
+				pData->QueryLocationCodes(), pData->LocationCodes(),
+				pData->QueryVenueCodes(), pData->VenueCodes(),
+				this);
 			if (IDOK == dlg.DoModal())
 			{
-				AfxMessageBox(_T("TODO: Sorry, not yet completed"));
-				//TODO: finish
-				//std::vector<tstring> const& l = dlg.GetSelectedLocations();
-				//std::vector<tstring> const& v = dlg.GetSelectionVenues();
+				pData->LocationCodes() = dlg.GetSelectedLocationCodes();
+				pData->VenueCodes() = dlg.GetSelectedVenueCodes();
 			}
 		}
 	}
