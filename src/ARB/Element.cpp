@@ -1725,7 +1725,14 @@ bool ElementNode::SaveXML(
 	outOutput << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	if (inDTD && 0 < inDTD->length())
 	{
-		outOutput << "<!DOCTYPE " << TREE_BOOK << " [\n";
+		const char* treeBook = "AgilityBook";
+#ifdef _DEBUG
+		// I'm keeping MFC stuff out of this layer - this is just an
+		// integrity check.
+		CStringA test(TREE_BOOK);
+		ASSERT(test == treeBook);
+#endif
+		outOutput << "<!DOCTYPE " << treeBook << " [\n";
 		outOutput << *inDTD;
 		outOutput << "\n]>\n";
 	}

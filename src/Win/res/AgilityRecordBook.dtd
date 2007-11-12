@@ -265,7 +265,6 @@ top-ten points. The 'Count' value is how they are accumulated
 		icon CDATA #IMPLIED
 		LifetimeName CDATA #IMPLIED
 		>
-<!ELEMENT Desc (#PCDATA) >
 
 <!ELEMENT Titles (#PCDATA) >
 	<!ATTLIST Titles
