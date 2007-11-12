@@ -4,7 +4,6 @@
 	Version="8.00"
 	Name="Release Settings"
 	InheritedPropertySheets="$(SolutionDir)/Common.vsprops"
-	WholeProgramOptimization="1"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
