@@ -681,6 +681,7 @@ public:
 	virtual std::vector<tstring>& VenueCodes()		{return m_VenueCodes;}
 	virtual bool isValid() const = 0;
 	virtual bool Enable() = 0;
+	virtual bool CanDisable() const = 0;
 	virtual void Disable() = 0;
 protected:
 	CString m_Name;
@@ -729,6 +730,11 @@ public:
 	{
 		m_Enabled = true;
 		return true;
+	}
+
+	virtual bool CanDisable() const
+	{
+		return false;
 	}
 
 	virtual void Disable()
@@ -806,6 +812,11 @@ public:
 			}
 		}
 		return bStatusChange;
+	}
+
+	virtual bool CanDisable() const
+	{
+		return true;
 	}
 
 	virtual void Disable()
@@ -1150,10 +1161,15 @@ void CDlgCalendarPlugins::OnPluginRead()
 						err += ":\n\t";
 						err += errMsg.c_str();
 					}
-					err += "\n\n";
-					str.LoadString(IDS_USE_PLUGIN);
-					err += str;
-					if (IDNO == AfxMessageBox(err, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
+					UINT flags = MB_ICONWARNING;
+					if (pData->CanDisable())
+					{
+						flags |= MB_YESNO | MB_DEFBUTTON2;
+						err += "\n\n";
+						str.LoadString(IDS_USE_PLUGIN);
+						err += str;
+					}
+					if (IDNO == AfxMessageBox(err, flags))
 						pData->Disable();
 					progress.SetForegroundWindow();
 					wait.Restore();
