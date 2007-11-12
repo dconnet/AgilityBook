@@ -137,7 +137,7 @@ This section defines the rules of each venue (the Configuration).
  to upgrade. The user can merge the configuration any number of times.
  If 'update' is set to 'n', this file will no longer prompt to update the config
 -->
-<!ELEMENT Configuration (Action*, Venue*, CalSite*, FaultType*, OtherPts*) >
+<!ELEMENT Configuration (Action*, CalSite*, Venue*, FaultType*, OtherPts*) >
 	<!ATTLIST Configuration
 		version CDATA #IMPLIED
 		update (y|n) 'y'
