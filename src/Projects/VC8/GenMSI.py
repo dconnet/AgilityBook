@@ -1,6 +1,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2007-11-14 DRC Wix works! (it's now the default)
 # 2007-11-05 DRC Add WiX back (addition)
 #            Note, WiX doesn't work yet, that's why I added Inno
 # 2007-10-31 DRC Changed from WiX to InnoSetup
@@ -23,7 +24,7 @@ import sys
 
 AgilityBookDir = "..\\..\\.."
 
-WiXdir = AgilityBookDir + "\\..\\wix"
+WiXdir = r"c:\Program Files\Windows Installer XML\wix2"
 ISTool = "c:\\Program Files\\ISTool"
 
 WinSrcDir = AgilityBookDir + "\\src\\Win"
@@ -37,8 +38,10 @@ UpgradeCode = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
 
 def getversion(numParts):
 	ver = "0"
+	ver2 = "0"
 	for i in range(1, numParts):
 		ver = ver + ".0"
+		ver2 = ver2 + "_0"
 	res = open(WinSrcDir + "\\AgilityBook.rc", "r")
 	while (1):
 		line = res.readline()
@@ -50,12 +53,14 @@ def getversion(numParts):
 				line = line.split(' ')
 				line = line[1].split(',')
 				ver = line[0]
+				ver2 = line[0]
 				for i in range(1, numParts):
 					ver = ver + '.' + line[i]
+					ver2 = ver2 + '_' + line[i]
 				break
 		else:
 			break
-	return ver
+	return ver, ver2
 
 
 def genuuid():
@@ -68,17 +73,17 @@ def genuuid():
 
 
 # returns baseDir, outputFile
-def getoutputvars(code):
+def getoutputvars(code, version):
 	outputFile = ""
 	baseDir = ""
 	if code32 == code:
-		outputFile = "AgilityBook"
+		outputFile = "AgilityBook_" + version
 		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "Win32\\Unicode Release\\"
 	elif code98 == code:
-		outputFile = "AgilityBook-w98"
+		outputFile = "AgilityBook-w98_" + version
 		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "Win32\\Release\\"
 	elif code64 == code:
-		outputFile = "AgilityBook-x64"
+		outputFile = "AgilityBook-x64_" + version
 		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "x64\\Unicode Release\\"
 	else:
 		raise Exception, "Invalid code"
@@ -86,6 +91,7 @@ def getoutputvars(code):
 
 
 def runcmd(command):
+	print command
 	(childin, childout) = os.popen4(command)
 	childin.close()
 	while (1):
@@ -100,175 +106,135 @@ def runcmd(command):
 #  1: Win32/Unicode
 #  2: Win32/MBCS
 #  3: Win64/Unicode
-def genWiX(productId, version, code, tidy):
-	baseDir, outputFile = getoutputvars(code)
+def genWiX(productId, version, version2, code, tidy):
+	baseDir, outputFile = getoutputvars(code, version2)
 	if tidy and not os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 		return 0
 
 	setup = open(outputFile + ".wxs", "w")
-	print >>setup, "<?xml version='1.0'?>"
-	#Generate guids: "uuidgen -c"
-	#Candle cmd: candle AgilityBook.wxs
-	#Light cmd: light -b \AgilityBook\src\wix -out AgilityBook.msi
-	#			AgilityBook.wixobj \AgilityBook\src\wix\arbwixui.wixlib -loc
-	#			\AgilityBook\src\wix\WixUI_en-us.wxl
-	#	(uses custom wixui)
-	print >>setup, "<Wix xmlns='http://schemas.microsoft.com/wix/2003/01/wi'>"
-	print >>setup, "\t<Product Id='" + productId + "'"
-	print >>setup, "\t\t\tUpgradeCode='" + UpgradeCode + "'"
-	print >>setup, "\t\t\tName='Agility Record Book'"
-	print >>setup, "\t\t\tManufacturer='dcon Software'"
-	print >>setup, "\t\t\tLanguage='1033' Version='" + version + "' >"
-	print >>setup, "\t\t<Package Id='????????-????-????-????-????????????'"
-	print >>setup, "\t\t\t\tComments='Track all your agility records in one convenient place.'"
-	print >>setup, "\t\t\t\tDescription='Agility Record Book'"
-	print >>setup, "\t\t\t\tManufacturer='dcon Software'"
-	print >>setup, "\t\t\t\tInstallerVersion='200' Compressed='yes' />"
-	print >>setup, ""
-	print >>setup, "\t\t<Property Id='ARPHELPLINK'>http://www.agilityrecordbook.com</Property>"
-	print >>setup, "\t\t<Property Id='ARPCONTACT'>David Connet</Property>"
-	print >>setup, "\t\t<Property Id='ARPCOMMENTS'>Track all your agility records in one convenient place.</Property>"
-	print >>setup, "\t\t<Property Id='ARPURLINFOABOUT'>http://www.agilityrecordbook.com</Property>"
-	print >>setup, "\t\t<Property Id='ALLUSERS'>2</Property>"
-	print >>setup, "\t\t<Property Id='ARPPRODUCTICON'>AgilBook.ico</Property>"
-	print >>setup, ""
+	print >>setup, r'<?xml version="1.0" encoding="UTF-8"?>'
+	print >>setup, r'<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">'
+	print >>setup, r'  <Product Id="' + productId + r'"'
+	print >>setup, r'      UpgradeCode="' + UpgradeCode + r'"'
+	print >>setup, r'      Name="Agility Record Book ' + version + '"'
+	print >>setup, r'      Language="1033"'
+	print >>setup, r'      Version="' + version + '"'
+	print >>setup, r'      Manufacturer="dcon Software">'
+	print >>setup, r'    <Package Id="????????-????-????-????-????????????"'
+	print >>setup, r'        Description="Agility Record Book"'
+	print >>setup, r'        Comments="Track all your agility records in one convenient place."'
+	print >>setup, r'        InstallerVersion="200"'
+	print >>setup, r'        Compressed="yes"/>'
+	print >>setup, r''
+	print >>setup, r'    <Property Id="INSTALLLEVEL">100</Property>'
+	print >>setup, r''
+	print >>setup, r'    <Property Id="ARPCOMMENTS">Track all your agility records in one convenient place.</Property>'
+	print >>setup, r'    <Property Id="ARPCONTACT">David Connet</Property>'
+	print >>setup, r'    <Property Id="ARPHELPLINK">http://www.agilityrecordbook.com</Property>'
+	print >>setup, r'    <Property Id="ARPURLINFOABOUT">http://www.agilityrecordbook.com</Property>'
+	print >>setup, r'    <Property Id="ALLUSERS">2</Property>'
+	print >>setup, r''
 	if code32 == code:
-		print >>setup, "\t\t<Condition Message='This application only runs on Windows NT and above'>VersionNT</Condition>"
+		print >>setup, r'    <Condition Message="This application only runs on Windows NT and above">VersionNT</Condition>'
 	elif code98 == code:
-		print >>setup, "\t\t<Condition Message='This application only runs on Windows ME and above'>Version9X&gt;=490 OR VersionNT</Condition>"
+		print >>setup, r'    <Condition Message="This application only runs on Windows ME and above">Version9X&gt;=490 OR VersionNT</Condition>'
 	elif code64 == code:
-		print >>setup, "\t\t<Condition Message='This application only runs on 64bit Windows systems'>VersionNT64</Condition>"
-	print >>setup, ""
-	print >>setup, "\t\t<InstallExecuteSequence>"
-	print >>setup, "\t\t\t<RemoveExistingProducts After='InstallValidate' />"
-	print >>setup, "\t\t\t<Custom Action='NewVersionError' After='FindRelatedProducts'>NEWERVERSIONFOUND</Custom>"
-	print >>setup, "\t\t</InstallExecuteSequence>"
-	print >>setup, ""
-	print >>setup, "\t\t<Upgrade Id='" + UpgradeCode + "'>"
-	print >>setup, "\t\t\t<UpgradeVersion Property='OLDVERSIONFOUND'"
-	print >>setup, "\t\t\t\t\tOnlyDetect='no' Minimum='0.0.0.0' IncludeMinimum='yes' />"
-	print >>setup, "\t\t\t<UpgradeVersion Property='NEWERVERSIONFOUND'"
-	print >>setup, "\t\t\t\t\tOnlyDetect='yes' Minimum='" + version + "' IncludeMinimum='yes' />"
-	print >>setup, "\t\t</Upgrade>"
-	print >>setup, ""
-	print >>setup, "\t\t<CustomAction Id='NewVersionError' Error='A newer version of [ProductName] is already installed! Cannot continue installation.' />"
-	print >>setup, ""
-	print >>setup, "\t\t<Media Id='1' Cabinet='Product.cab' EmbedCab='yes' />"
-	print >>setup, ""
-	print >>setup, "\t\t<Directory Id='TARGETDIR' Name='SourceDir'>"
-	print >>setup, "\t\t\t<Directory Id='ProgramFilesFolder' Name='PFiles'>"
-	print >>setup, "\t\t\t\t<Directory Id='dconSoft' Name='dconSoft'"
-	print >>setup, "\t\t\t\t\t\tLongName='dcon Software'>"
-	print >>setup, "\t\t\t\t<Directory Id='INSTALLDIR' Name='ARB'"
-	print >>setup, "\t\t\t\t\t\tLongName='Agility Record Book'>"
-	print >>setup, ""
-	print >>setup, "\t\t\t\t\t<Component Id='FilesMain'"
-	print >>setup, "\t\t\t\t\t\t\tGuid='C65F9350-B7D5-4A1B-8C28-333D8928D8AA'>"
-	print >>setup, "\t\t\t\t\t\t<File DiskId='1' Id='AgilityBookEXE'"
-	print >>setup, "\t\t\t\t\t\t\t\tVital='yes'"
-	print >>setup, "\t\t\t\t\t\t\t\tName='AgilBook.exe'"
-	print >>setup, "\t\t\t\t\t\t\t\tLongName='AgilityBook.exe'"
-	print >>setup, "\t\t\t\t\t\t\t\tsrc='" + baseDir + "AgilityBook.exe'>"
-	print >>setup, "\t\t\t\t\t\t\t<Shortcut Id='PgmShortcut'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tDirectory='ProgramMenuDir'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tName='AgilBook'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tLongName='Agility Record Book'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tWorkingDirectory='INSTALLDIR'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilBook.exe'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIconIndex='0'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tAdvertise='yes'/>"
-	print >>setup, "\t\t\t\t\t\t\t<Shortcut Id='DesktopShortcut'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tDirectory='DesktopFolder'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tName='AgilBook'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tLongName='Agility Record Book'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tWorkingDirectory='INSTALLDIR'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilBook.exe'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIconIndex='0'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tAdvertise='yes'/>"
-	print >>setup, "\t\t\t\t\t\t</File>"
-	print >>setup, "\t\t\t\t\t\t<File DiskId='1' Id='HelpFile'"
-	print >>setup, "\t\t\t\t\t\t\t\tName='AgilBook.chm'"
-	print >>setup, "\t\t\t\t\t\t\t\tLongName='AgilityBook.chm'"
-	print >>setup, "\t\t\t\t\t\t\t\tsrc='" + baseDir + "AgilityBook.chm'>"
-	print >>setup, "\t\t\t\t\t\t\t<Shortcut Id='HelpShortcut'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tDirectory='ProgramMenuDir'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tName='Help'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tLongName='Agility Record Book Help'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tWorkingDirectory='INSTALLDIR'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIcon='AgilBook.chm'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tIconIndex='0'"
-	print >>setup, "\t\t\t\t\t\t\t\t\tAdvertise='yes'/>"
-	print >>setup, "\t\t\t\t\t\t</File>"
-	print >>setup, "\t\t\t\t\t\t<ProgId Id='AgilityBook.Document'"
-	print >>setup, "\t\t\t\t\t\t\t\tDescription='Agility Record Book data file'>"
-	print >>setup, "\t\t\t\t\t\t\t<Extension Id='arb'>"
-	print >>setup, "\t\t\t\t\t\t\t\t<Verb Id='open' Sequence='1' Command='Open' Target='[!AgilityBook]' Argument='\"%1\"' />"
-	print >>setup, "\t\t\t\t\t\t\t</Extension>"
-	print >>setup, "\t\t\t\t\t\t</ProgId>"
-	print >>setup, "\t\t\t\t\t\t<Registry Id='ArbIcon1' Root='HKCR'"
-	print >>setup, "\t\t\t\t\t\t\t\tKey='.arb'"
-	print >>setup, "\t\t\t\t\t\t\t\tAction='write' Type='string'"
-	print >>setup, "\t\t\t\t\t\t\t\tValue='AgilityBook.Document' />"
-	print >>setup, "\t\t\t\t\t\t<Registry Id='ArbIcon2' Root='HKCR'"
-	print >>setup, "\t\t\t\t\t\t\t\tKey='AgilityBook.Document'"
-	print >>setup, "\t\t\t\t\t\t\t\tAction='write' Type='string'"
-	print >>setup, "\t\t\t\t\t\t\t\tValue='Agility Record Book data file' />"
-	print >>setup, "\t\t\t\t\t\t<Registry Id='ArbIcon3' Root='HKCR'"
-	print >>setup, "\t\t\t\t\t\t\t\tKey='AgilityBook.Document\\DefaultIcon'"
-	print >>setup, "\t\t\t\t\t\t\t\tAction='write' Type='string'"
-	print >>setup, "\t\t\t\t\t\t\t\tValue='[!AgilityBook],0' />"
-	print >>setup, "\t\t\t\t\t</Component>"
-	print >>setup, ""
-	print >>setup, "\t\t\t\t\t<Component Id='FilesDLL'"
-	print >>setup, "\t\t\t\t\t\t\tGuid='C65F9350-B7D5-4A1B-8C28-333D8928D8AA'>"
-	print >>setup, "\t\t\t\t\t\t<File DiskId='1' Id='fra'"
-	print >>setup, "\t\t\t\t\t\t\t\tVital='yes'"
-	print >>setup, "\t\t\t\t\t\t\t\tName='ARBFRA.dll'"
-	print >>setup, "\t\t\t\t\t\t\t\tLongName='AgilityBookFRA.dll'"
-	print >>setup, "\t\t\t\t\t\t\t\tsrc='" + baseDir + "AgilityBookFRA.dll'>"
-	print >>setup, "\t\t\t\t\t\t</File>"
-	print >>setup, "\t\t\t\t\t\t<File DiskId='1' Id='usdaa'"
-	print >>setup, "\t\t\t\t\t\t\t\tVital='yes'"
-	print >>setup, "\t\t\t\t\t\t\t\tName='cal_usdaa.dll'"
-	print >>setup, "\t\t\t\t\t\t\t\tsrc='" + baseDir + "cal_usdaa.dll'>"
-	print >>setup, "\t\t\t\t\t\t</File>"
-	print >>setup, "\t\t\t\t\t</Component>"
-	print >>setup, ""
-	print >>setup, "\t\t\t\t</Directory>"
-	print >>setup, "\t\t\t\t</Directory>"
-	print >>setup, "\t\t\t</Directory>"
-	print >>setup, ""
-	print >>setup, "\t\t\t<Directory Id='ProgramMenuFolder' Name='PMenu'>"
-	print >>setup, "\t\t\t\t<Directory Id='ProgramMenuDir' Name='ARB' LongName='Agility Record Book' />"
-	print >>setup, "\t\t\t</Directory>"
-	print >>setup, ""
-	print >>setup, "\t\t\t<Directory Id='DesktopFolder' Name='Desktop' />"
-	print >>setup, ""
-	print >>setup, "\t\t</Directory>"
-	print >>setup, ""
-	print >>setup, "\t\t<Feature Id='Complete' Level='1' Display='expand'"
-	print >>setup, "\t\t\t\tTitle='Agility Record Book Setup'"
-	print >>setup, "\t\t\t\tDescription='Track all your agility records in one convenient place.'"
-	print >>setup, "\t\t\t\tConfigurableDirectory='INSTALLDIR'>"
-	print >>setup, "\t\t\t<ComponentRef Id='FilesMain' />"
-	print >>setup, "\t\t\t<ComponentRef Id='FilesDLL' />"
-	print >>setup, "\t\t</Feature>"
-	print >>setup, ""
-	print >>setup, "\t\t<Property Id='WIXUI_INSTALLDIR' Value='INSTALLDIR' />"
-	print >>setup, "\t\t<UIRef Id='WixUI_InstallDir' />"
-	print >>setup, "\t\t<UIRef Id='WixUI_ErrorProgressText' />"
-	print >>setup, ""
-	print >>setup, "\t\t<Icon Id='AgilBook.exe' SourceFile='..\\..\\Win\\res\\AgilityBook.ico' />"
-	print >>setup, "\t\t<Icon Id='AgilBook.ico' SourceFile='..\\..\\Win\\res\\AgilityBook.ico' />"
-	print >>setup, "\t\t<Icon Id='AgilBook.chm' SourceFile='..\\..\\Win\\res\\AgilityBook.ico' />"
-	print >>setup, "\t</Product>"
-	print >>setup, "</Wix>"
+		print >>setup, r'    <Condition Message="This application only runs on 64bit Windows systems">VersionNT64</Condition>'
+	print >>setup, r''
+	print >>setup, r'    <Upgrade Id="' + UpgradeCode + '">'
+	print >>setup, r'      <UpgradeVersion OnlyDetect="no" Property="OLDVERSIONFOUND"'
+	print >>setup, r'          IncludeMinimum="yes" Minimum="0.0.0"/>'
+	print >>setup, r'    </Upgrade>'
+	print >>setup, r''
+	print >>setup, r'    <Media Id="1" Cabinet="AgilityRecordBook.cab" EmbedCab="yes"/>'
+	print >>setup, r'    <Directory Id="TARGETDIR" Name="SourceDir">'
+	print >>setup, r'      <Directory Id="DesktopFolder"/>'
+	print >>setup, r'      <Directory Id="ProgramMenuFolder">'
+	print >>setup, r'        <Directory Id="ARBMenuFolder" Name="ARB" LongName="Agility Record Book"/>'
+	print >>setup, r'      </Directory>'
+	print >>setup, r'      <Directory Id="ProgramFilesFolder">'
+	print >>setup, r'        <Directory Id="CompanyFolder" Name="dconSoft" LongName="dcon Software">'
+	print >>setup, r'          <Directory Id="INSTALLDIR" Name="ARB" LongName="Agility Record Book">'
+	print >>setup, r''
+	print >>setup, r'            <Component Id="ApplicationCore" Guid="F8886313-42A0-4B12-B2EE-C40FB614101F">'
+	print >>setup, r'              <File Id="App" Name="ARBexe" LongName="AgilityBook.exe"'
+	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.exe"'
+	print >>setup, r'                    Vital="yes" DiskId="1">'
+	print >>setup, r'                <Shortcut Id="AppDesktop" Name="ARB" LongName="Agility Record Book" Directory="DesktopFolder" />'
+	print >>setup, r'                <Shortcut Id="AppMenu" Name="ARB" LongName="Agility Record Book" Directory="ARBMenuFolder" />'
+	print >>setup, r'              </File>'
+	print >>setup, r'              <File Id="Help" Name="ARBchm" LongName="AgilityBook.chm"'
+	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.chm"'
+	print >>setup, r'                    Vital="yes" DiskId="1">'
+	print >>setup, r'                <Shortcut Id="ChmShortcut" Name="Help" LongName="Help" Directory="ARBMenuFolder" />'
+	print >>setup, r'              </File>'
+	print >>setup, r'              <!-- The description is the same since MFC will set it to that -->'
+	print >>setup, r'              <ProgId Id="AgilityBook.Document" Description="AgilityBook.Document">'
+	print >>setup, r'                <Extension Id="arb">'
+	print >>setup, r'                  <Verb Id="open" Sequence="1" Command="Open" Target="[!App]" Argument=' + "'\"%1\"'/>"
+	print >>setup, r'                </Extension>'
+	print >>setup, r'              </ProgId>'
+	print >>setup, r'              <Registry Id="AppIcon1" Root="HKCR" Key="AgilityBook.Document\DefaultIcon" Action="write"'
+	print >>setup, r'                        Type="string" Value="[INSTALLDIR]AgilityBook.exe,0" />'
+	print >>setup, r'            </Component>'
+	print >>setup, r'            <Component Id="Languages" Guid="BC52AC1B-B3CD-49E1-BD21-6F9955AB31D6">'
+	print >>setup, r'              <File Id="fra" Name="fradll" LongName="AgilityBookFRA.dll"'
+	print >>setup, r'                    Source="' + baseDir + r'AgilityBookFRA.dll"'
+	print >>setup, r'                    Vital="no" DiskId="1" />'
+	print >>setup, r'            </Component>'
+	print >>setup, r'            <Component Id="CALusdaa" Guid="DA49BBD9-D16D-4B03-80F2-524553F76FFF">'
+	print >>setup, r'              <File Id="usdaa" Name="CALusdaa" LongName="cal_usdaa.dll"'
+	print >>setup, r'                    Source="' + baseDir + r'cal_usdaa.dll"'
+	print >>setup, r'                    Vital="no" DiskId="1" />'
+	print >>setup, r'            </Component>'
+	print >>setup, r''
+	print >>setup, r'            <Component Id="empty" Guid="74004007-0948-46E6-9250-5733CC0D4607"/>'
+	print >>setup, r''
+	print >>setup, r'          </Directory>'
+	print >>setup, r'        </Directory>'
+	print >>setup, r'      </Directory>'
+	print >>setup, r'    </Directory>'
+	print >>setup, r''
+	print >>setup, r'    <Feature Id="Complete" Display="expand" Level="1"'
+	print >>setup, r'             AllowAdvertise="no"'
+	print >>setup, r'             Title="Agility Record Book" Description="Main Agility Record Book files" ConfigurableDirectory="INSTALLDIR">'
+	print >>setup, r'      <ComponentRef Id="ApplicationCore"/>'
+	print >>setup, r'      <ComponentRef Id="Languages"/>'
+	print >>setup, r'      <Feature Id="Plugins" Display="expand" Level="100"'
+	print >>setup, r'               AllowAdvertise="no"'
+	print >>setup, r'               Title="Calendar Addins" Description="Addins to download Calendar data directly from a website">'
+	# Need an empty component to work around a bug with features (to suppress advertising)
+	print >>setup, r'        <ComponentRef Id="empty"/>'
+	print >>setup, r'        <Feature Id="Calendar" Level="100"'
+	print >>setup, r'                 AllowAdvertise="no"'
+	print >>setup, r'                 Title="USDAA" Description="Download Calendar entries from usdaa.com">'
+	print >>setup, r'          <ComponentRef Id="CALusdaa"/>'
+	print >>setup, r'        </Feature>'
+	print >>setup, r'      </Feature>'
+	print >>setup, r'    </Feature>'
+	print >>setup, r''
+	# Just FYI of how to do this.
+	#print >>setup, r'    <CustomAction Id="LaunchFile" FileKey="App" ExeCommand="/register" Return="ignore"/>'
+	print >>setup, r''
+	print >>setup, r'    <InstallExecuteSequence>'
+	print >>setup, r'      <RemoveExistingProducts After="InstallValidate"/>'
+	# FYI
+	#print >>setup, r'      <Custom Action="LaunchFile" After="InstallFinalize">NOT Installed</Custom>'
+	print >>setup, r'    </InstallExecuteSequence>'
+	print >>setup, r''
+	print >>setup, r'    <UIRef Id="WixUI_FeatureTree"/>'
+	print >>setup, r'    <UIRef Id="WixUI_ErrorProgressText"/>'
+	print >>setup, r''
+	print >>setup, r'    <Icon Id="AgilityBook.exe" SourceFile="..\..\..\src\win\res\AgilityBook.ico"/>'
+	print >>setup, r'  </Product>'
+	print >>setup, r'</Wix>'
+
 	setup.close()
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
-		runcmd("candle -nologo " + outputFile + ".wxs")
-		runcmd("light -nologo -b " + WiXdir + " -out \"" + baseDir + outputFile + ".msi\" " + outputFile + ".wixobj " + WiXdir + "\\arbwixui.wixlib -loc " + WiXdir + "\\WixUI_en-us.wxl")
+		runcmd('candle -nologo ' + outputFile + '.wxs')
+		runcmd('light -nologo -b "' + WiXdir + '" -out "' + baseDir + outputFile + '.msi" ' + outputFile + '.wixobj "' + WiXdir + r'\wixui.wixlib" -loc "' + WiXdir + r'\WixUI_en-us.wxl"')
 		if tidy:
 			if os.access(outputFile + ".wxs", os.F_OK):
 				os.remove(outputFile + ".wxs")
@@ -277,8 +243,8 @@ def genWiX(productId, version, code, tidy):
 	return 1
 
 
-def genInno(version, code, tidy):
-	baseDir, outputFile = getoutputvars(code)
+def genInno(version, version2, code, tidy):
+	baseDir, outputFile = getoutputvars(code, version2)
 	if tidy and not os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 		return 0
@@ -339,13 +305,14 @@ def genInno(version, code, tidy):
 
 
 def main():
-	doWiX = 0
-	doInno = 1
+	doWiX = 1
+	doInno = 0
 	tidy = 1
 	b32 = 0
 	b64 = 0
 	b98 = 0
-	for o in sys.argv:
+	for i in range(1, len(sys.argv)):
+		o = sys.argv[i]
 		if o == "/32":
 			b32 = 1
 		elif o == "/64":
@@ -364,6 +331,9 @@ def main():
 		elif o == "/inno":
 			doWiX = 0
 			doInno = 1
+		else:
+			print "Usage:", __doc__
+			return
 
 	if b32 + b64 + b98 == 0:
 		b32 = 1
@@ -377,16 +347,16 @@ def main():
 	# Wix
 	if doWiX:
 		productId = genuuid()
-		version = getversion(3)
+		version, version2 = getversion(3)
 		os.environ['PATH'] += ';' + WiXdir
 		if b32:
-			if genWiX(productId, version, code32, tidy):
+			if genWiX(productId, version, version2, code32, tidy):
 				b32ok = 1
 		if b64:
-			if genWiX(productId, version, code64, tidy):
+			if genWiX(productId, version, version2, code64, tidy):
 				b64ok = 1
 		if b98:
-			if genWiX(productId, version, code98, tidy):
+			if genWiX(productId, version, version2, code98, tidy):
 				b98ok = 1
 		if b32ok or b64ok or b98ok:
 			d = datetime.datetime.now().isoformat(' ')
@@ -402,16 +372,16 @@ def main():
 
 	# Inno
 	if doInno:
-		version = getversion(4)
+		version, version2 = getversion(4)
 		os.environ['PATH'] += ';' + ISTool
 		if b32:
-			if genInno(version, code32, tidy):
+			if genInno(version, version2, code32, tidy):
 				b32ok = 1
 		if b64:
-			if genInno(version, code64, tidy):
+			if genInno(version, version2, code64, tidy):
 				b64ok = 1
 		if b98:
-			if genInno(version, code98, tidy):
+			if genInno(version, version2, code98, tidy):
 				b98ok = 1
 
 main()
