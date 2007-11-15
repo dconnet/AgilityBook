@@ -7,14 +7,15 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/32] [/64] [/w98] [/all] [/notidy] [/wix | /inno]
-32: Create 32bit Unicode msi
-64: Create 64bit Unicode msi
-w98: Create 32bit MBCS msi
-all: Create all of them (default)
-notidy: Do not clean up generated files
-wix: Use WiX installer
-inno: Use Inno installer (default)
+"""GenMSI.py [/32] [/64] [/w98] [/all] [/notidy] [/wix | /inno] /test
+	32: Create 32bit Unicode msi
+	64: Create 64bit Unicode msi
+	w98: Create 32bit MBCS msi
+	all: Create all of them (default)
+	notidy: Do not clean up generated files
+	wix: Use WiX installer (default)
+	inno: Use Inno installer
+	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
 """
 
 import datetime
@@ -305,12 +306,13 @@ def genInno(version, version2, code, tidy):
 
 
 def main():
-	doWiX = 1
-	doInno = 0
-	tidy = 1
 	b32 = 0
 	b64 = 0
 	b98 = 0
+	tidy = 1
+	doWiX = 1
+	doInno = 0
+	bTesting = 0
 	for i in range(1, len(sys.argv)):
 		o = sys.argv[i]
 		if o == "/32":
@@ -331,6 +333,8 @@ def main():
 		elif o == "/inno":
 			doWiX = 0
 			doInno = 1
+		elif o == "/test":
+			bTesting = 1
 		else:
 			print "Usage:", __doc__
 			return
@@ -358,9 +362,9 @@ def main():
 		if b98:
 			if genWiX(productId, version, version2, code98, tidy):
 				b98ok = 1
-		if b32ok or b64ok or b98ok:
+		if not bTesting and (b32ok or b64ok or b98ok):
 			d = datetime.datetime.now().isoformat(' ')
-			codes = open(AgilityBookDir + "\\Misc\\Installation\\InstallGUIDs.csv", "a")
+			codes = open(AgilityBookDir + r"\Misc\Installation\InstallGUIDs.csv", "a")
 			installs = ""
 			if b32ok:
 				installs = installs + ",win32"
