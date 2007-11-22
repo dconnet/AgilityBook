@@ -29,7 +29,6 @@ WiXdir = r"c:\Program Files\Windows Installer XML\wix2"
 ISTool = "c:\\Program Files\\ISTool"
 
 WinSrcDir = AgilityBookDir + "\\src\\Win"
-Compiler = "VC8"
 ResString = "FILEVERSION "
 code32 = 1
 code64 = 3
@@ -79,13 +78,13 @@ def getoutputvars(code, version):
 	baseDir = ""
 	if code32 == code:
 		outputFile = "AgilityBook_" + version
-		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "Win32\\Unicode Release\\"
+		baseDir = AgilityBookDir + "\\bin\\VC9Win32\\Release\\"
 	elif code98 == code:
 		outputFile = "AgilityBook-w98_" + version
-		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "Win32\\Release\\"
+		baseDir = AgilityBookDir + "\\bin\\VC8Win32\\Release\\"
 	elif code64 == code:
 		outputFile = "AgilityBook-x64_" + version
-		baseDir = AgilityBookDir + "\\bin\\" + Compiler + "x64\\Unicode Release\\"
+		baseDir = AgilityBookDir + "\\bin\\VC9x64\\Release\\"
 	else:
 		raise Exception, "Invalid code"
 	return baseDir, outputFile
@@ -235,7 +234,7 @@ def genWiX(productId, version, version2, code, tidy):
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		runcmd('candle -nologo ' + outputFile + '.wxs')
-		runcmd('light -nologo -b "' + WiXdir + '" -out "' + baseDir + outputFile + '.msi" ' + outputFile + '.wixobj "' + WiXdir + r'\wixui.wixlib" -loc "' + WiXdir + r'\WixUI_en-us.wxl"')
+		runcmd('light -nologo -b "' + WiXdir + '" -out "' + outputFile + '.msi" ' + outputFile + '.wixobj "' + WiXdir + r'\wixui.wixlib" -loc "' + WiXdir + r'\WixUI_en-us.wxl"')
 		if tidy:
 			if os.access(outputFile + ".wxs", os.F_OK):
 				os.remove(outputFile + ".wxs")
@@ -251,49 +250,49 @@ def genInno(version, version2, code, tidy):
 		return 0
 
 	setup = open(outputFile + ".iss", "w")
-	print >>setup, '#define ARBName "Agility Record Book"'
-	print >>setup, '#define ARBVersion "' + version + '"'
-	print >>setup, ''
-	print >>setup, '[Setup]'
-	print >>setup, 'AppName={#ARBName}'
-	print >>setup, 'AppId={#ARBName} Setup'
-	print >>setup, 'AppVersion={#ARBVersion}'
-	print >>setup, 'AppVerName={#ARBName} {#ARBVersion}'
-	print >>setup, 'AppPublisher=David Connet'
-	print >>setup, 'AppPublisherURL=http://www.agilityrecordbook.com/'
-	print >>setup, 'AppSupportURL=http://www.agilityrecordbook.com/'
-	print >>setup, 'AppUpdatesURL=http://www.agilityrecordbook.com/'
-	print >>setup, 'DefaultDirName={pf}\dcon Software\{#ARBName}'
-	print >>setup, 'DefaultGroupName={#ARBName}'
-	print >>setup, 'Compression=lzma/ultra'
-	print >>setup, 'InternalCompressLevel=ultra'
-	print >>setup, 'SolidCompression=true'
-	print >>setup, 'UninstallDisplayIcon={app}\AgilityBook.exe'
-	print >>setup, 'SetupIconFile=..\\..\\win\\res\\AgilityBook.ico'
-	print >>setup, 'MinVersion=4.90.3000,4.0.1381'
-	print >>setup, 'PrivilegesRequired=none'
-	print >>setup, 'OutputBaseFilename=ARBSetup_{#ARBVersion}'
-	print >>setup, 'OutputDir=' + baseDir + 'Setup'
-	print >>setup, ''
-	print >>setup, '[Files]'
-	print >>setup, 'Source: ' + baseDir + 'AgilityBook.exe; DestDir: {app}'
-	print >>setup, 'Source: ' + baseDir + 'AgilityBook.chm; DestDir: {app}'
-	print >>setup, 'Source: ' + baseDir + 'AgilityBookFRA.dll; DestDir: {app}'
-	print >>setup, 'Source: ' + baseDir + 'cal_usdaa.dll; DestDir: {app}'
-	print >>setup, ''
-	print >>setup, '[Icons]'
-	print >>setup, 'Name: {commondesktop}\{#ARBName}; Filename: {app}\AgilityBook.exe'
-	print >>setup, 'Name: {group}\{#ARBName}; Filename: {app}\AgilityBook.exe; IconFilename: {app}\AgilityBook.exe; IconIndex: 0'
-	print >>setup, 'Name: {group}\{#ARBName} Help; Filename: {app}\AgilityBook.chm'
-	print >>setup, 'Name: {group}\{#ARBName} Web Site; Filename: http://www.agilityrecordbook.com/'
-	print >>setup, 'Name: {group}\Yahoo Discussion Group; Filename: http://groups.yahoo.com/group/AgilityRecordBook/'
-	print >>setup, 'Name: "{group}\{cm:UninstallProgram,{#ARBName}}"; Filename: "{uninstallexe}"'
-	print >>setup, ''
-	print >>setup, '[Run]'
-	print >>setup, 'Filename: "{app}\AgilityBook.exe"; Parameters: "/register"; StatusMsg: "Registering File Associations..."'
-	print >>setup, ''
-	print >>setup, '[UninstallRun]'
-	print >>setup, 'Filename: "{app}\AgilityBook.exe"; Parameters: "/unregister"; RunOnceId: "RemoveARBAssoc"'
+	print >>setup, r'#define ARBName "Agility Record Book"'
+	print >>setup, r'#define ARBVersion "' + version + '"'
+	print >>setup, r''
+	print >>setup, r'[Setup]'
+	print >>setup, r'AppName={#ARBName}'
+	print >>setup, r'AppId={#ARBName} Setup'
+	print >>setup, r'AppVersion={#ARBVersion}'
+	print >>setup, r'AppVerName={#ARBName} {#ARBVersion}'
+	print >>setup, r'AppPublisher=David Connet'
+	print >>setup, r'AppPublisherURL=http://www.agilityrecordbook.com/'
+	print >>setup, r'AppSupportURL=http://www.agilityrecordbook.com/'
+	print >>setup, r'AppUpdatesURL=http://www.agilityrecordbook.com/'
+	print >>setup, r'DefaultDirName={pf}\dcon Software\{#ARBName}'
+	print >>setup, r'DefaultGroupName={#ARBName}'
+	print >>setup, r'Compression=lzma/ultra'
+	print >>setup, r'InternalCompressLevel=ultra'
+	print >>setup, r'SolidCompression=true'
+	print >>setup, r'UninstallDisplayIcon={app}\AgilityBook.exe'
+	print >>setup, r'SetupIconFile=..\..\win\res\AgilityBook.ico'
+	print >>setup, r'MinVersion=4.90.3000,4.0.1381'
+	print >>setup, r'PrivilegesRequired=none'
+	print >>setup, r'OutputBaseFilename=ARBSetup_{#ARBVersion}'
+	print >>setup, r'OutputDir=InnoSetup'
+	print >>setup, r''
+	print >>setup, r'[Files]'
+	print >>setup, r'Source: ' + baseDir + r'AgilityBook.exe; DestDir: {app}'
+	print >>setup, r'Source: ' + baseDir + r'AgilityBook.chm; DestDir: {app}'
+	print >>setup, r'Source: ' + baseDir + r'AgilityBookFRA.dll; DestDir: {app}'
+	print >>setup, r'Source: ' + baseDir + r'cal_usdaa.dll; DestDir: {app}'
+	print >>setup, r''
+	print >>setup, r'[Icons]'
+	print >>setup, r'Name: {commondesktop}\{#ARBName}; Filename: {app}\AgilityBook.exe'
+	print >>setup, r'Name: {group}\{#ARBName}; Filename: {app}\AgilityBook.exe; IconFilename: {app}\AgilityBook.exe; IconIndex: 0'
+	print >>setup, r'Name: {group}\{#ARBName} Help; Filename: {app}\AgilityBook.chm'
+	print >>setup, r'Name: {group}\{#ARBName} Web Site; Filename: http://www.agilityrecordbook.com/'
+	print >>setup, r'Name: {group}\Yahoo Discussion Group; Filename: http://groups.yahoo.com/group/AgilityRecordBook/'
+	print >>setup, r'Name: "{group}\{cm:UninstallProgram,{#ARBName}}"; Filename: "{uninstallexe}"'
+	print >>setup, r''
+	print >>setup, r'[Run]'
+	print >>setup, r'Filename: "{app}\AgilityBook.exe"; Parameters: "/register"; StatusMsg: "Registering File Associations..."'
+	print >>setup, r''
+	print >>setup, r'[UninstallRun]'
+	print >>setup, r'Filename: "{app}\AgilityBook.exe"; Parameters: "/unregister"; RunOnceId: "RemoveARBAssoc"'
 	setup.close()
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
@@ -364,15 +363,15 @@ def main():
 				b98ok = 1
 		if not bTesting and (b32ok or b64ok or b98ok):
 			d = datetime.datetime.now().isoformat(' ')
-			codes = open(AgilityBookDir + r"\Misc\Installation\InstallGUIDs.csv", "a")
+			codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "a")
 			installs = ""
 			if b32ok:
-				installs = installs + ",win32"
+				installs = "VC9,win32"
 			if b64ok:
-				installs = installs + ",x64"
+				installs = "VC9,x64"
 			if b98ok:
-				installs = installs + ",win98"
-			print >>codes, "v" + version + "," + d + "," + productId + "," + UpgradeCode + "," + Compiler + installs
+				installs = "VC8,win98"
+			print >>codes, "v" + version + "," + d + "," + productId + "," + UpgradeCode + "," + installs
 
 	# Inno
 	if doInno:

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Common Settings"
+	OutputDirectory="$(SolutionDir)\..\..\..\bin\VC9$(PlatformName)\$(ConfigurationName)"
+	IntermediateDirectory="$(SolutionDir)\..\..\..\bin\VC9$(PlatformName)\$(ConfigurationName)\$(ProjectName)"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="../../zlib;../../xml;../../../../boost"
+		PreprocessorDefinitions="XML_LIBRARY;_SECURE_SCL=1;_SECURE_SCL_THROWS=1"
+		StringPooling="true"
+		UsePrecompiledHeader="2"
+		WarningLevel="4"
+		WarnAsError="true"
+		DisableSpecificWarnings="4100;6031"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="$(OutDir)"
+		SubSystem="2"
+	/>
+	<Tool
+		Name="VCMIDLTool"
+		MkTypLibCompatible="false"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		Culture="1033"
+		AdditionalIncludeDirectories="$(IntDir)"
+	/>
+</VisualStudioPropertySheet>
