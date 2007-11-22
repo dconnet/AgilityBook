@@ -56,9 +56,25 @@
 #pragma warning ( disable : 4702 )	// unreachable code (generated during link from STL code)
 
 // VC8
-#elif _MSC_VER >= 1400
+#elif _MSC_VER >= 1400 && _MSC_VER < 1500
 #pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
+
+// VC9
+#elif _MSC_VER >= 1500
+#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
+// Minimum system, XP
+#ifndef WINVER
+#define WINVER 0x0500
+#elif WINVER < 0x0500
+#error VC9 minimum version is 0x0500
 #endif
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0500
+#elif _WIN32_WINNT < 0x0500
+#error VC9 minimum version is 0x0500
+#endif
+
+#endif // End VC-elifs
 
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN		/// Exclude rarely-used stuff from Windows headers

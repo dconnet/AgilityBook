@@ -5,6 +5,8 @@
 # project is defined in.
 #
 # Revision History
+# 2007-11-21 DRC Add VC9 support. VC9 is Unicode-only, for win98 (non-unicode)
+#                builds, use VC8. VC9 config no longer has 'unicode' in name
 # 2006-12-15 DRC Translated BuildHelp.bat to python, add Unicode support.
 # 2005-06-24 DRC Add better support for multiple compilers
 # 2005-01-23 DRC Added History.html creation from a template.
@@ -12,7 +14,7 @@
 
 """BuildHelp configuration compiler
 configuration: Release, Debug, Unicode Release, Unicode Debug
-compiler: VC8Win32, VC8x64
+compiler: VC8Win32, VC8x64, VC9Win32, VC9x64
 """
 
 hhc = "c:\\Program Files\\HTML Help Workshop\\hhc.exe"
@@ -39,6 +41,8 @@ def main():
 
 	bin = ""
 	if sys.argv[2] == "VC8Win32":
+		bin = "..\\bin\\" + sys.argv[2]
+	elif sys.argv[2] == "VC9Win32":
 		bin = "..\\bin\\" + sys.argv[2]
 	# 64bit Parse header won't work on a 32bit os!
 	# TODO: autodetect os to allow compiling on 64bit os
@@ -82,14 +86,8 @@ def main():
 	print
 	print "Copying chm file to build output directories"
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC6\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC6\\Debug\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC7\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC7\\Debug\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8Win32\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8Win32\\Debug\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8Win32\\Unicode Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8Win32\\Unicode Debug\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8x64\\Unicode Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8x64\\Unicode Debug\\\"")
+	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC9Win32\\Release\\\"")
 
 main()

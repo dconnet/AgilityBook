@@ -13,11 +13,19 @@
 #endif
 
 #ifndef WINVER
+#if _MSC_VER >= 1500
+#define WINVER 0x0500
+#else
 #define WINVER 0x0400
+#endif
 #endif
 
 #ifndef _WIN32_WINNT
+#if _MSC_VER >= 1500
+#define _WIN32_WINNT 0x0500
+#else
 #define _WIN32_WINNT 0x0400
+#endif
 #endif
 
 #ifndef _WIN32_WINDOWS

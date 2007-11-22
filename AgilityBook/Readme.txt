@@ -111,3 +111,9 @@ Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
    Note - zlib/xerces are checked in using VC8+SP1
+
+Microsoft Visual Studio .NET 2008 (VC9)
+=======================================
+   Boost: boost/config/compilers/visualc.hpp: Change 1400 to 1500 on last
+   known version check (bottom of file). Also create a BOOST_COMPILER_VERSION
+   macro above that.
