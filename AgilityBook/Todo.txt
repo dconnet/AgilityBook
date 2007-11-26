@@ -26,8 +26,6 @@ Last Updated: 11/11/2007
 - Fix printing so it wraps multi-line text.
   Possibly have printed columns managed separately from viewed columns.
 
-- Create a printable form for data input (that can be put in a notebook)
-
 - Import/Export data formats (formats, etc)
   - Calendar export: Generate a listing like Karey's
     <http://www.bayteam.org/docs/KareysCalendar.html>
