@@ -1,4 +1,4 @@
-11/22/2007: v1.10.0.12 <in development>
+11/27/2007: v1.10.0.12 <in development>
 - Bumped file version to 12.6, Configuration v20:
   - Added 'timestamp' to 'AgilityBook'.
   - Added 'CalSite' to config.
@@ -29,6 +29,8 @@
     If you Ok'd everything, the actions are actually correctly applied.
   - When creating a new file, the name of the last dog viewed remained in
     the status bar (visual bug only).
+  - Fix a problem where the IE dll is properly identified, but IWebBrowser2
+    doesn't exist. Auto-flip the Points View back to a list in this case.
 
 6/24/2007: v1.9.1.12
 - Bumped Configuration v19:
