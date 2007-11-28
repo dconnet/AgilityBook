@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-11-27 DRC Check that the html view was actually created.
  * @li 2004-06-24 DRC Removed sending initialupdate messages (redundant)
  * @li 2003-12-07 DRC Fixed a crash when opening a bad ARB file version.
  * @li 2003-09-21 DRC Added training log.
@@ -212,9 +213,18 @@ bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 			m_Panes[IDX_PANE_POINTS] = html;
 			context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
 			DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-			html->Create(NULL, NULL,
+			if (!html->Create(NULL, NULL,
 				dwStyle,
-				CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
+				CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context))
+			{
+				// If it failed, we may think IE is installed, but it isn't.
+				// This may happen when running under CrossOver on the Mac.
+				// The version check we do passes, but IE wasn't installed with
+				// Crossover. So if we fail to create IWebBrowser2, we will
+				// now flip back to the list control.
+				bCreateList = true;
+				delete html;
+			}
 		}
 	}
 	if (bCreateList)
