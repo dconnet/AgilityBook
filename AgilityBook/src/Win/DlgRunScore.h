@@ -169,6 +169,7 @@ private:
 	void FillLevels();
 	void FillEvents();
 	void FillSubNames();
+	void FillJudges();
 	void SetEventDesc(ARBConfigEventPtr inEvent);
 	void SetPartnerText();
 	void SetMinYPS();

@@ -36,6 +36,8 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2007-12-03 DRC SelectString was still used in OnNew.
+ *                    Fix a drawing problem in the drop list.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC SelectString doesn't work in ownerdraw combo. Changed
  *                    ctor interface for more versatility.
@@ -243,19 +245,26 @@ void CDlgInfoJudge::OnDrawItem(
 	// Save these value to restore them when done drawing.
 	COLORREF crOldTextColor = dc.GetTextColor();
 	COLORREF crOldBkColor = dc.GetBkColor();
+	COLORREF crBk = crOldBkColor;
 
-	// If this item is selected, set the background color 
-	// and the text color to appropriate values. Erase
-	// the rect by filling it with the background color.
-	if ((lpDrawItemStruct->itemAction & ODA_SELECT)
-	&& (lpDrawItemStruct->itemState & ODS_SELECTED))
+	// The background/text colors are properly selected in the edit field.
+	if (!(lpDrawItemStruct->itemState & ODS_COMBOBOXEDIT))
 	{
-		dc.SetTextColor(::GetSysColor(COLOR_HIGHLIGHTTEXT));
-		dc.SetBkColor(::GetSysColor(COLOR_HIGHLIGHT));
-		dc.FillSolidRect(&lpDrawItemStruct->rcItem, ::GetSysColor(COLOR_HIGHLIGHT));
+		if ((lpDrawItemStruct->itemAction & ODA_FOCUS)
+		|| (lpDrawItemStruct->itemState & ODS_SELECTED))
+		{
+			dc.SetTextColor(::GetSysColor(COLOR_HIGHLIGHTTEXT));
+			crBk = ::GetSysColor(COLOR_HIGHLIGHT);
+			dc.SetBkColor(crBk);
+		}
+		else
+		{
+			dc.SetTextColor(::GetSysColor(COLOR_WINDOWTEXT));
+			crBk = ::GetSysColor(COLOR_WINDOW);
+			dc.SetBkColor(crBk);
+		}
 	}
-	else
-		dc.FillSolidRect(&lpDrawItemStruct->rcItem, crOldBkColor);
+	dc.FillSolidRect(&lpDrawItemStruct->rcItem, crBk);
 
 	// Draw the text.
 	TEXTMETRIC tm;
@@ -333,6 +342,7 @@ void CDlgInfoJudge::OnNew()
 	CDlgName dlg(m_Select.c_str(), _T(""), this);
 	if (IDOK == dlg.DoModal())
 	{
+		int index = -1;
 		m_Select.erase();
 		tstring name = (LPCTSTR)dlg.GetName();
 		// First, check if the item exists.
@@ -346,10 +356,12 @@ void CDlgInfoJudge::OnNew()
 			{
 				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
 				++m_nAdded;
-				m_ctrlNames.AddString((LPCTSTR)idx);
+				index = m_ctrlNames.AddString((LPCTSTR)idx);
 				m_ctrlComment.SetWindowText(_T(""));
 				m_Info.AddItem(m_Names[idx].m_Name);
 			}
+			else
+				index = static_cast<int>(idx);
 		}
 		else
 		{
@@ -358,12 +370,12 @@ void CDlgInfoJudge::OnNew()
 			m_Names.push_back(data);
 			size_t idx = m_Names.size() - 1;
 			++m_nAdded;
-			m_ctrlNames.AddString((LPCTSTR)idx);
+			index = m_ctrlNames.AddString((LPCTSTR)idx);
 			m_ctrlComment.SetWindowText(_T(""));
 			m_Info.AddItem(m_Names[idx].m_Name);
 		}
 		m_ctrlNames.Invalidate();
-		m_ctrlNames.SelectString(-1, name.c_str());
+		m_ctrlNames.SetCurSel(index);
 		OnSelchangeName();
 	}
 }

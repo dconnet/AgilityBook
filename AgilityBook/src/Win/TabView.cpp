@@ -207,7 +207,10 @@ bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 	{
 		CAgilityBookViewHtml* html = reinterpret_cast<CAgilityBookViewHtml*>(RUNTIME_CLASS(CAgilityBookViewHtml)->CreateObject());
 		if (!html)
+		{
+			CAgilityBookOptions::SetShowHtmlPoints(false);
 			bCreateList = true;
+		}
 		else
 		{
 			m_Panes[IDX_PANE_POINTS] = html;
@@ -222,6 +225,7 @@ bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 				// The version check we do passes, but IE wasn't installed with
 				// Crossover. So if we fail to create IWebBrowser2, we will
 				// now flip back to the list control.
+				CAgilityBookOptions::SetShowHtmlPoints(false);
 				bCreateList = true;
 				delete html;
 			}

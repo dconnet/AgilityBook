@@ -89,5 +89,6 @@ def main():
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC7\\Release\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8Win32\\Release\\\"")
 	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC9Win32\\Release\\\"")
+	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC9Win32\\Debug\\\"")
 
 main()
