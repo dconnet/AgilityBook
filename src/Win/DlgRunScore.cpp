@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-12-03 DRC Refresh judge list after invoking 'notes' button.
  * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
  * @li 2006-11-05 DRC Trim Divisions/Levels if no events are available on date.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -746,6 +747,19 @@ void CDlgRunScore::FillSubNames()
 }
 
 
+void CDlgRunScore::FillJudges()
+{
+	set<tstring> names;
+	m_pDoc->GetAllJudges(names);
+	m_ctrlJudge.ResetContent();
+	for (set<tstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
+	{
+		m_ctrlJudge.AddString((*iter).c_str());
+	}
+	m_ctrlJudge.SetWindowText(m_Judge);
+}
+
+
 void CDlgRunScore::SetEventDesc(ARBConfigEventPtr inEvent)
 {
 	CString desc;
@@ -1132,11 +1146,6 @@ BOOL CDlgRunScore::OnInitDialog()
 			m_Height = last;
 	}
 
-	m_pDoc->GetAllJudges(names);
-	for (iter = names.begin(); iter != names.end(); ++iter)
-	{
-		m_ctrlJudge.AddString((*iter).c_str());
-	}
 	m_Judge = m_Run->GetJudge().c_str();
 	if (m_Judge.IsEmpty())
 	{
@@ -1144,6 +1153,7 @@ BOOL CDlgRunScore::OnInitDialog()
 		if (!last.IsEmpty())
 			m_Judge = last;
 	}
+	FillJudges();
 
 	m_pDoc->GetAllHandlers(names);
 	for (iter = names.begin(); iter != names.end(); ++iter)
@@ -1253,7 +1263,8 @@ void CDlgRunScore::OnJudgeNotes()
 	m_Judge.TrimRight();
 	m_Judge.TrimLeft();
 	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eJudgeInfo, (LPCTSTR)m_Judge, this);
-	dlg.DoModal();
+	if (IDOK == dlg.DoModal())
+		FillJudges();
 }
 
 

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-12-03 DRC Refresh location list after invoking 'notes' button.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -175,6 +176,23 @@ void CDlgTrial::UpdateNotes(
 }
 
 
+void CDlgTrial::ListLocations()
+{
+	set<tstring> locations;
+	m_pDoc->GetAllTrialLocations(locations);
+	tstring loc((LPCTSTR)m_Location);
+	if (m_Location.IsEmpty())
+		loc = m_pTrial->GetLocation();
+	m_ctrlLocation.ResetContent();
+	for (set<tstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
+	{
+		int index = m_ctrlLocation.AddString((*iter).c_str());
+		if ((*iter) == loc)
+			m_ctrlLocation.SetCurSel(index);
+	}
+}
+
+
 void CDlgTrial::ListClubs()
 {
 	m_ctrlClubs.DeleteAllItems();
@@ -217,14 +235,7 @@ BOOL CDlgTrial::OnInitDialog()
 	m_ctrlClubNotes.EnableWindow(FALSE);
 	m_ctrlDelete.EnableWindow(FALSE);
 
-	set<tstring> locations;
-	m_pDoc->GetAllTrialLocations(locations);
-	for (set<tstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
-	{
-		int index = m_ctrlLocation.AddString((*iter).c_str());
-		if ((*iter) == m_pTrial->GetLocation())
-			m_ctrlLocation.SetCurSel(index);
-	}
+	ListLocations();
 	ListClubs();
 	UpdateNotes(true, true);
 
@@ -310,6 +321,7 @@ void CDlgTrial::OnLocationNotes()
 	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
 	if (IDOK == dlg.DoModal())
 	{
+		ListLocations();
 		UpdateNotes(true, false);
 	}
 }

@@ -102,7 +102,9 @@ protected:
 // Implementation
 protected:
 	void UpdateLocationInfo(TCHAR const* pLocation);
+	void ListLocations();
 	void UpdateClubInfo(TCHAR const* pClub);
+	void ListClubs();
 	//{{AFX_MSG(CDlgCalendar)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult);

@@ -86,6 +86,7 @@ private:
 	void UpdateNotes(
 			bool bLocation,
 			bool bClub);
+	void ListLocations();
 	void ListClubs();
 
 // Implementation
