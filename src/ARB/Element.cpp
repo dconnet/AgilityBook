@@ -627,9 +627,6 @@ typedef std::wstring StringDOM;
 
 /**
  * @brief SAX callback class
- *
- * @attention We assume no element may contain both text and elements.
- * Because of the XML structure we have defined, this is not an issue.
  */
 class SAXImportHandlers : public DefaultHandler
 {
