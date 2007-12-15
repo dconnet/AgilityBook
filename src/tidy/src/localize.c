@@ -10,8 +10,8 @@
   CVS Info :
 
     $Author: arnaud02 $ 
-    $Date: 2007/09/19 12:51:24 $ 
-    $Revision: 1.175 $ 
+    $Date: 2007/11/06 11:59:14 $ 
+    $Revision: 1.177 $ 
 
 */
 
@@ -752,6 +752,8 @@ static const TidyOptionDoc option_docs[] =
    "encodings e.g. ISO-2022-JP. For mac and win1252, Tidy will accept vendor "
    "specific character values, but will use entities for all characters whose "
    "value &gt; 127. "
+   "For unsupported encodings, use an external utility to convert to and from "
+   "UTF-8. "
    ,TidyCharEncodingLinks
   },
   {TidyInCharEncoding,
@@ -1772,7 +1774,8 @@ void TY_(NeedsAuthorIntervention)( TidyDocImpl* doc )
 void TY_(GeneralInfo)( TidyDocImpl* doc )
 {
     tidy_out(doc, "To learn more about HTML Tidy see http://tidy.sourceforge.net\n");
-    tidy_out(doc, "Please send bug reports to html-tidy@w3.org\n");
+    tidy_out(doc, "Please fill bug reports and queries using the \"tracker\" on the Tidy web site.\n");
+    tidy_out(doc, "Additionally, questions can be sent to html-tidy@w3.org\n");
     tidy_out(doc, "HTML and CSS specifications are available from http://www.w3.org/\n");
     tidy_out(doc, "Lobby your company to join W3C, see http://www.w3.org/Consortium\n");
 }
