@@ -92,8 +92,8 @@ BOOL CDlgMessage::OnInitDialog()
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
-	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
-	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
+	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
+	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
 
 	if (!m_Caption.IsEmpty())
 		SetWindowText(m_Caption);

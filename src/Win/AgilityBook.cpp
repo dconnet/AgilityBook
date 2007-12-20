@@ -87,7 +87,7 @@ void InitMenuPopup(CCmdTarget* pTarget, CMenu* pPopupMenu, UINT nIndex, BOOL bSy
 }
 
 
-bool ShowContextHelp(HELPINFO* pHelpInfo)
+bool ShowContextHelp(CLanguageManager const& langMgr, HELPINFO* pHelpInfo)
 {
 	bool bOk = false;
 	if (pHelpInfo->dwContextId > 0)
@@ -118,8 +118,8 @@ bool ShowContextHelp(HELPINFO* pHelpInfo)
 		popup.rcMargins.bottom = -1;
 		popup.pszFont = _T("Arial, 8, ascii, , , ");
 
-		CString name(AfxGetApp()->m_pszHelpFilePath);
-		name += _T("::/Help/AgilityBook.txt");
+		CString name(theApp.m_pszHelpFilePath);
+		name += langMgr.ContextHelpFile();
 		::HtmlHelp(hwnd, name, HH_DISPLAY_TEXT_POPUP, (DWORD_PTR)&popup);
 	}
 	return bOk;
@@ -613,9 +613,9 @@ BOOL CAgilityBookApp::InitInstance()
 	reinterpret_cast<CMainFrame*>(m_pMainWnd)->InitLangMgr(&m_LangMgr);
 
 	// Check for updates every 30 days.
-	if (AfxGetApp()->GetProfileInt(_T("Settings"), _T("autoCheck"), 1))
+	if (theApp.GetProfileInt(_T("Settings"), _T("autoCheck"), 1))
 	{
-		CString ver = AfxGetApp()->GetProfileString(_T("Settings"), _T("lastVerCheck"), _T(""));
+		CString ver = theApp.GetProfileString(_T("Settings"), _T("lastVerCheck"), _T(""));
 		ARBDate date = ARBDate::FromString((LPCTSTR)ver, ARBDate::eDashYYYYMMDD);
 		if (date.IsValid())
 		{

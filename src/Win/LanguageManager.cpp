@@ -35,11 +35,11 @@
  */
 
 #include "stdafx.h"
+#include "AgilityBook.h"
 #include "LanguageManager.h"
 #include <imm.h>
 #include <winnls.h>
 
-#include "resource.h"
 #include "DlgLanguage.h"
 #include "VersionNum.h"
 
@@ -65,8 +65,10 @@ typedef LANGINFO *PLANGINFO;
 
 CLanguageManager::CLanguageManager()
 	: m_hInstance(NULL)
-	, m_pszHelpFilePath(NULL)
 	, m_InitHelpFilePath()
+	, m_InitContextHelp(_T("::/Help/AgilityBook"))
+	, m_pszHelpFilePath(NULL)
+	, m_ContextHelp()
 	, m_LangID(0)
 	, m_Langs()
 	, m_CurLang(0)
@@ -90,8 +92,8 @@ CLanguageManager::~CLanguageManager()
 
 BOOL CALLBACK EnumLangProc(HANDLE, LPCTSTR, LPCTSTR, WORD wIDLanguage, LONG_PTR lParam)
 {
-    PLANGINFO LangInfo;
-    LangInfo = reinterpret_cast<PLANGINFO>(lParam);
+    PLANGINFO LangInfo = reinterpret_cast<PLANGINFO>(lParam);
+	ASSERT(LangInfo);
     ++LangInfo->Count;
     LangInfo->LangID = wIDLanguage;
     return TRUE; // continue enumeration
@@ -129,8 +131,9 @@ LANGID CLanguageManager::DetectLanguage() const
 					LPCTSTR Type = (LPCTSTR)((LPVOID)((WORD)16));
 					LPCTSTR Name = (LPCTSTR)1;
 					ZeroMemory(&LangInfo, sizeof(LangInfo));
-					BOOL result = EnumResourceLanguages(hNtDll, Type, Name, (ENUMRESLANGPROC)EnumLangProc, (LONG_PTR)&LangInfo);
-					if (result && (LangInfo.Count > 2) && (LangInfo.Count < 1))
+					// We count the langids and just remember the last one
+					BOOL result = EnumResourceLanguages(hNtDll, Type, Name, (ENUMRESLANGPROC)EnumLangProc, reinterpret_cast<LONG_PTR>(&LangInfo));
+					if (result && LangInfo.Count > 0)
 					{
 						uiLangID = LangInfo.LangID;
 					}
@@ -169,7 +172,7 @@ LANGID CLanguageManager::DetectLanguage() const
 						DWORD BuffLen = sizeof(langKeyValue)/sizeof(langKeyValue[0]);
 						if (ERROR_SUCCESS == RegQueryValueEx(hKey, NULL, NULL, &Type, (LPBYTE)langKeyValue, &BuffLen))
 						{
-							uiLangID = (LANGID)_ttoi(langKeyValue);
+							uiLangID = static_cast<LANGID>(_ttoi(langKeyValue));
 						}
 					}
 					RegCloseKey(hKey);
@@ -238,9 +241,14 @@ void CLanguageManager::SetHelpFile()
 		if (*m_pszHelpFilePath)
 			free((void*)(*m_pszHelpFilePath));
 		CString chmFile(m_InitHelpFilePath.Left(m_InitHelpFilePath.GetLength()-4));
+		m_ContextHelp = m_InitContextHelp;
 		if (m_CurLang != m_LangID)
-			chmFile + langName;
+		{
+			chmFile += langName;
+			m_ContextHelp += langName;
+		}
 		chmFile += _T(".chm");
+		m_ContextHelp += _T(".txt");
 		*m_pszHelpFilePath = _tcsdup((LPCTSTR)chmFile);
 	}
 }
@@ -252,6 +260,7 @@ void CLanguageManager::SetInitialLanguage(LPCTSTR* pszHelpFilePath)
 	{
 		ASSERT(pszHelpFilePath);
 		m_pszHelpFilePath = pszHelpFilePath;
+		m_ContextHelp = m_InitContextHelp + _T(".txt");
 		if (m_InitHelpFilePath.IsEmpty())
 			m_InitHelpFilePath = *m_pszHelpFilePath;
 
@@ -309,7 +318,7 @@ void CLanguageManager::SetInitialLanguage(LPCTSTR* pszHelpFilePath)
 
 void CLanguageManager::SetDefaultLanguage()
 {
-	LANGID id = static_cast<LANGID>(AfxGetApp()->GetProfileInt(_T("Settings"), _T("Lang"), 0));
+	LANGID id = static_cast<LANGID>(theApp.GetProfileInt(_T("Settings"), _T("Lang"), 0));
 	if (0 == id)
 		SelectLanguage();
 	else
@@ -329,7 +338,7 @@ bool CLanguageManager::SelectLanguage()
 	if (IDOK == dlg.DoModal())
 	{
 		LANGID id = dlg.GetSelectedLanguage();
-		AfxGetApp()->WriteProfileInt(_T("Settings"), _T("Lang"), static_cast<DWORD>(id));
+		theApp.WriteProfileInt(_T("Settings"), _T("Lang"), static_cast<DWORD>(id));
 		if (m_CurLang != id)
 		{
 			SetLanguage(id);

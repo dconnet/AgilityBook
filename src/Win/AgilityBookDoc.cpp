@@ -1023,11 +1023,10 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
  */
 void CAgilityBookDoc::DeleteContents()
 {
-	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 	CString msg;
 	msg.LoadString(IDS_INDICATOR_BLANK);
-	pApp->SetStatusText(msg, CFilterOptions::Options().IsFilterEnabled());
-	pApp->SetStatusText2(msg);
+	theApp.SetStatusText(msg, CFilterOptions::Options().IsFilterEnabled());
+	theApp.SetStatusText2(msg);
 	m_Records.clear();
 	CDocument::DeleteContents();
 	SetModifiedFlag(FALSE);
@@ -1041,7 +1040,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
-	AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+	theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 	m_Records.Default();
 	m_Records.GetConfig().GetActions().clear();
 
@@ -1061,14 +1060,11 @@ BOOL CAgilityBookDoc::OnNewDocument()
  */
 BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
-	ASSERT(pApp);
-
 	CFileStatus status;
 	if (!GetLocalStatus(lpszPathName, status))
 	{
 		CSplashWnd::HideSplashScreen();
-		pApp->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+		theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
 		return FALSE;
 	}
@@ -1088,7 +1084,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Translate the XML to a tree form.
 	if (!tree->LoadXMLFile(source, err))
 	{
-		pApp->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+		theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
 		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 		if (0 < err.length())
@@ -1104,7 +1100,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	CErrorCallback callback;
 	if (!m_Records.Load(tree, callback))
 	{
-		pApp->WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+		theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;
 		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
 		if (0 < callback.m_ErrMsg.length())
@@ -1140,7 +1136,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 			SetModifiedFlag(TRUE);
 	}
 
-	pApp->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
+	theApp.WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
 
 	// Check our internal config.
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
@@ -1155,7 +1151,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// Then check the external config.
 	else
 	{
-		pApp->UpdateInfo().AutoCheckConfiguration(this, pApp->LanguageManager());
+		theApp.UpdateInfo().AutoCheckConfiguration(this, theApp.LanguageManager());
 	}
 
 	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
@@ -1174,9 +1170,9 @@ void CAgilityBookDoc::OnCloseDocument()
 {
 	ARBDogPtr pDog = GetCurrentDog();
 	if (pDog)
-		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastDog"), pDog->GetCallName().c_str());
+		theApp.WriteProfileString(_T("Settings"), _T("LastDog"), pDog->GetCallName().c_str());
 	else
-		AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastDog"), _T(""));
+		theApp.WriteProfileString(_T("Settings"), _T("LastDog"), _T(""));
 	CDocument::OnCloseDocument();
 }
 
@@ -1201,7 +1197,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		CStringA filename(lpszPathName);
 		if (tree->SaveXML(filename))
 		{
-			AfxGetApp()->WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
+			theApp.WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
 			bOk = TRUE;
 			SetModifiedFlag(FALSE);
 		}
@@ -1247,9 +1243,7 @@ void CAgilityBookDoc::OnAppAbout()
 
 void CAgilityBookDoc::OnHelpUpdate()
 {
-	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
-	ASSERT(pApp);
-	pApp->UpdateInfo().UpdateConfiguration(this, pApp->LanguageManager());
+	theApp.UpdateInfo().UpdateConfiguration(this, theApp.LanguageManager());
 }
 
 

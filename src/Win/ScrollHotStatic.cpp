@@ -54,7 +54,7 @@ CScrollHotStatic::CScrollHotStatic()
 	, m_bVisited(FALSE)
 #endif
 {
-	m_hHandCursor = AfxGetApp()->LoadCursor(MAKEINTRESOURCE(IDC_CROSS /*IDC_HAND*/));
+	m_hHandCursor = theApp.LoadCursor(MAKEINTRESOURCE(IDC_CROSS /*IDC_HAND*/));
 	m_hArrowCursor = ::LoadCursor(NULL, IDC_ARROW);
 	::SetCursor(m_hArrowCursor);
 }

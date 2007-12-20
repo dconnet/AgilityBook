@@ -113,9 +113,10 @@ extern void InitMenuPopup(
 
 /**
  * Show context help.
+ * @param langMgr Language Manager
  * @param pHelpInfo OnHelpInfo parameter.
  */
-extern bool ShowContextHelp(HELPINFO* pHelpInfo);
+extern bool ShowContextHelp(CLanguageManager const& langMgr, HELPINFO* pHelpInfo);
 
 /**
  * Use ShellExecute to start a program.

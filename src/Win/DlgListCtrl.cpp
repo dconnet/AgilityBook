@@ -595,18 +595,17 @@ BOOL CDlgListCtrl::OnInitDialog()
 	m_ctrlCreateTrial.ShowWindow(SW_HIDE);
 
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 6, 0);
-	CWinApp* app = AfxGetApp();
-	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_EMPTY));
-	m_imgTentative = m_ImageList.Add(app->LoadIcon(IDI_QUESTIONMARK));
-	m_imgPlan = m_ImageList.Add(app->LoadIcon(IDI_CHECKMARK));
-	m_imgPlanTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_PLAN_TENTATIVE));
-	m_imgEntered = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED));
-	m_imgEnteredTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
+	m_imgEmpty = m_ImageList.Add(theApp.LoadIcon(IDI_EMPTY));
+	m_imgTentative = m_ImageList.Add(theApp.LoadIcon(IDI_QUESTIONMARK));
+	m_imgPlan = m_ImageList.Add(theApp.LoadIcon(IDI_CHECKMARK));
+	m_imgPlanTentative = m_ImageList.Add(theApp.LoadIcon(IDI_CALENDAR_PLAN_TENTATIVE));
+	m_imgEntered = m_ImageList.Add(theApp.LoadIcon(IDI_CALENDAR_ENTERED));
+	m_imgEnteredTentative = m_ImageList.Add(theApp.LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
-	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
-	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
+	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
+	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
 
 	GetWindowRect(m_rWin);
 	GetClientRect(m_rDlg);

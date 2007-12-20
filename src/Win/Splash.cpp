@@ -37,8 +37,8 @@
  */
 
 #include "stdafx.h"
-#include "afxmt.h"
-#include "resource.h"
+#include <afxmt.h>
+#include "AgilityBook.h"
 #include "Splash.h"
 
 #include "AgilityBookOptions.h"
@@ -224,7 +224,7 @@ BOOL CSplashWnd::Create(CWnd* pParentWnd /*= NULL*/)
 		m_Version.FormatMessage(IDS_ABOUT_VERSION, (LPCTSTR)ver.GetVersionString());
 
 	return CreateEx(0,
-		AfxRegisterWndClass(0, AfxGetApp()->LoadStandardCursor(IDC_ARROW)),
+		AfxRegisterWndClass(0, theApp.LoadStandardCursor(IDC_ARROW)),
 		NULL, WS_POPUP | WS_VISIBLE,
 		0, 0,
 		m_szBitmap.cx + 2 * BORDER, m_szBitmap.cy + 2 * BORDER,

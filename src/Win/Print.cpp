@@ -99,7 +99,7 @@ BOOL CALLBACK AbortProc(HDC, int)
 #if _MSC_VER >= 1300
 		if (!AfxPumpMessage())
 #else
-		if (!AfxGetApp()->PumpMessage())
+		if (!theApp.PumpMessage())
 #endif
 			return FALSE;   // terminate if WM_QUIT received
 	}
@@ -143,16 +143,15 @@ BOOL CPrintRuns::DoPreparePrinting(CPrintInfo* pInfo)
 {
 	if (pInfo->m_pPD->m_pd.nMinPage > pInfo->m_pPD->m_pd.nMaxPage)
 		pInfo->m_pPD->m_pd.nMaxPage = pInfo->m_pPD->m_pd.nMinPage;
-	CWinApp* pApp = AfxGetApp();
 	pInfo->m_pPD->m_pd.nFromPage = (WORD)pInfo->GetMinPage();
 	pInfo->m_pPD->m_pd.nToPage = (WORD)pInfo->GetMaxPage();
-	if (pApp->DoPrintDialog(pInfo->m_pPD) != IDOK)
+	if (theApp.DoPrintDialog(pInfo->m_pPD) != IDOK)
 		return FALSE;
 	ASSERT(pInfo->m_pPD != NULL);
 	ASSERT(pInfo->m_pPD->m_pd.hDC != NULL);
 	if (pInfo->m_pPD->m_pd.hDC == NULL)
 		return FALSE;
-	pInfo->m_nNumPreviewPages = pApp->m_nNumPreviewPages;
+	pInfo->m_nNumPreviewPages = theApp.m_nNumPreviewPages;
 	pInfo->m_strPageDesc.LoadString(AFX_IDS_PREVIEWPAGEDESC);
 	return TRUE;
 }

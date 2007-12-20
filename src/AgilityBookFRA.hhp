@@ -10,7 +10,7 @@ Error log file=Help\AgilityBookFRA.log
 Full text search stop list file=Help\stoplist.stp
 Full-text search=Yes
 Index file=Index.hhk
-Language=0x409 English (United States)
+Language=0x40c French (France)
 Title=Agility Record Book
 
 [WINDOWS]

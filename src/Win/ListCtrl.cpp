@@ -45,10 +45,9 @@
  */
 
 #include "stdafx.h"
-#include "resource.h"
+#include "AgilityBook.h"
 #include "ListCtrl.h"
 
-#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "ClipBoard.h"
 #include "ListData.h"
@@ -141,9 +140,8 @@ CHeaderCtrl2::CHeaderCtrl2()
 	, fpBuffer(NULL)
 {
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
-	CWinApp* app = AfxGetApp();
-	m_sortAscending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_UP));
-	m_sortDescending = m_ImageList.Add(app->LoadIcon(IDI_HEADER_DOWN));
+	m_sortAscending = m_ImageList.Add(theApp.LoadIcon(IDI_HEADER_UP));
+	m_sortDescending = m_ImageList.Add(theApp.LoadIcon(IDI_HEADER_DOWN));
 	fpBuffer = new TCHAR[fBufferSize];
 }
 

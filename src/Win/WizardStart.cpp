@@ -132,7 +132,7 @@ CWizardStart::CWizardStart(
 	//{{AFX_DATA_INIT(CWizardStart)
 	m_Style = TransWizardToDlg(WIZARD_RADIO_EXCEL);
 	//}}AFX_DATA_INIT
-	int wiz = AfxGetApp()->GetProfileInt(LAST_SECTION, LAST_STYLE, m_Style);
+	int wiz = theApp.GetProfileInt(LAST_SECTION, LAST_STYLE, m_Style);
 	m_Style = TransWizardToDlg(wiz);
 	if (WIZARD_RADIO_EXCEL == wiz && !m_pSheet->ExcelHelper())
 		m_Style = TransWizardToDlg(WIZARD_RADIO_SPREADSHEET);
@@ -321,7 +321,7 @@ void CWizardStart::UpdateList()
 	}
 	otstringstream str;
 	str << LAST_STYLEITEM << m_Style;
-	int idx = AfxGetApp()->GetProfileInt(LAST_SECTION, str.str().c_str(), -1);
+	int idx = theApp.GetProfileInt(LAST_SECTION, str.str().c_str(), -1);
 	m_ctrlList.SetCurSel(idx);
 	OnSelchangeExportList();
 	UpdateButtons();
@@ -683,7 +683,7 @@ BOOL CWizardStart::OnWizardFinish()
 void CWizardStart::OnWizardStyle() 
 {
 	UpdateData(TRUE);
-	AfxGetApp()->WriteProfileInt(LAST_SECTION, LAST_STYLE, TransDlgToWizard(m_Style));
+	theApp.WriteProfileInt(LAST_SECTION, LAST_STYLE, TransDlgToWizard(m_Style));
 	m_pSheet->ResetData();
 	UpdateList();
 }
@@ -700,7 +700,7 @@ void CWizardStart::OnSelchangeExportList()
 	m_ctrlDesc.SetWindowText(msg);
 	otstringstream str;
 	str << LAST_STYLEITEM << m_Style;
-	AfxGetApp()->WriteProfileInt(LAST_SECTION, str.str().c_str(), index);
+	theApp.WriteProfileInt(LAST_SECTION, str.str().c_str(), index);
 	UpdateButtons();
 }
 

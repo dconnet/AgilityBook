@@ -87,7 +87,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgBaseSheet::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	if (!ShowContextHelp(pHelpInfo))
+	if (!ShowContextHelp(theApp.LanguageManager(), pHelpInfo))
 		OnHelp();
 	return TRUE;
 }

@@ -103,14 +103,13 @@ BOOL CDlgSelectDog::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	CWinApp* pApp = AfxGetApp();
 	std::set<tstring> selection;
-	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
+	int nDogs = theApp.GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
 		otstringstream item;
 		item << _T("Dog") << iDog;
-		CString dog = pApp->GetProfileString(_T("Selection"), item.str().c_str(), _T(""));
+		CString dog = theApp.GetProfileString(_T("Selection"), item.str().c_str(), _T(""));
 		if (!dog.IsEmpty())
 			selection.insert((LPCTSTR)dog);
 	}
@@ -133,13 +132,12 @@ BOOL CDlgSelectDog::OnInitDialog()
 void CDlgSelectDog::OnOK() 
 {
 	// Erase existing.
-	CWinApp* pApp = AfxGetApp();
-	int nDogs = pApp->GetProfileInt(_T("Selection"), _T("nDogs"), 0);
+	int nDogs = theApp.GetProfileInt(_T("Selection"), _T("nDogs"), 0);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
 		otstringstream item;
 		item << _T("Dog") << iDog;
-		pApp->WriteProfileString(_T("Selection"), item.str().c_str(), NULL);
+		theApp.WriteProfileString(_T("Selection"), item.str().c_str(), NULL);
 	}
 	// Now commit the selection.
 	nDogs = 0;
@@ -153,9 +151,9 @@ void CDlgSelectDog::OnOK()
 			++nDogs;
 			otstringstream item;
 			item << _T("Dog") << nDogs;
-			pApp->WriteProfileString(_T("Selection"), item.str().c_str(), pDog->GetCallName().c_str());
+			theApp.WriteProfileString(_T("Selection"), item.str().c_str(), pDog->GetCallName().c_str());
 		}
 	}
-	pApp->WriteProfileInt(_T("Selection"), _T("nDogs"), nDogs);
+	theApp.WriteProfileInt(_T("Selection"), _T("nDogs"), nDogs);
 	CDlgBaseDialog::OnOK();
 }

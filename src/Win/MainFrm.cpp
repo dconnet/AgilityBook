@@ -115,10 +115,10 @@ CMainFrame::~CMainFrame()
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	int x = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastXpos"), cs.x);
-	int y = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastYpos"), cs.y);
-	int cx = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastCX"), cs.cx);
-	int cy = AfxGetApp()->GetProfileInt(_T("Settings"), _T("lastCY"), cs.cy);
+	int x = theApp.GetProfileInt(_T("Settings"), _T("lastXpos"), cs.x);
+	int y = theApp.GetProfileInt(_T("Settings"), _T("lastYpos"), cs.y);
+	int cx = theApp.GetProfileInt(_T("Settings"), _T("lastCX"), cs.cx);
+	int cy = theApp.GetProfileInt(_T("Settings"), _T("lastCY"), cs.cy);
 
 	bool bCompute = false;
 	CPoint curPt;
@@ -328,10 +328,10 @@ void CMainFrame::OnClose()
 		{
 			CRect r;
 			GetWindowRect(&r);
-			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastXpos"), r.left);
-			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastYpos"), r.top);
-			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastCX"), r.Width());
-			AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastCY"), r.Height());
+			theApp.WriteProfileInt(_T("Settings"), _T("lastXpos"), r.left);
+			theApp.WriteProfileInt(_T("Settings"), _T("lastYpos"), r.top);
+			theApp.WriteProfileInt(_T("Settings"), _T("lastCX"), r.Width());
+			theApp.WriteProfileInt(_T("Settings"), _T("lastCY"), r.Height());
 		}
 		break;
 	case SW_SHOWMINIMIZED:
@@ -341,7 +341,7 @@ void CMainFrame::OnClose()
 		state = 1;
 		break;
 	}
-	AfxGetApp()->WriteProfileInt(_T("Settings"), _T("lastState"), state);
+	theApp.WriteProfileInt(_T("Settings"), _T("lastState"), state);
 
 	CFrameWnd::OnClose();
 }

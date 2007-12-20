@@ -91,6 +91,11 @@ public:
 	 */
 	LANGID CurrentLanguage() const			{return m_CurLang;}
 
+	/**
+	 *
+	 */
+	CString ContextHelpFile() const			{return m_ContextHelp;}
+
 private:
 	LANGID DetectLanguage() const;
 	bool SetLanguage(LANGID langId);
@@ -98,7 +103,9 @@ private:
 
 	HINSTANCE m_hInstance;
 	CString m_InitHelpFilePath;
+	CString m_InitContextHelp;
 	LPCTSTR* m_pszHelpFilePath;
+	CString m_ContextHelp;
 	LANGID m_LangID;
 	LangResources m_Langs;
 	LANGID m_CurLang;
