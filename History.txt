@@ -1,4 +1,4 @@
-12/3/2007: v1.10.0.12 <in development>
+12/19/2007: v1.10.0.12 <in development>
 - Bumped file version to 12.6, Configuration v20:
   - Added 'timestamp' to 'AgilityBook'.
   - Added 'CalSite' to config.
@@ -8,6 +8,7 @@
   - Added PR1/2/3 to USDAA titles.
   - Added FCI/SCC venues.
   - Renamed 'Sweepstakes' to 'SSA'
+  - Updated ASCA Gamblers (time, points)
 - New features / Enhancements:
   - Add support for repeating titles starting from '1'.
   - Add "book" pages from printing, allow printing runs using same.

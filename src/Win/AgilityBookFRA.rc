@@ -153,146 +153,146 @@ END
 
 IDR_MAINFRAME MENU 
 BEGIN
-    POPUP "&French"
+    POPUP "&Fichier"
     BEGIN
-        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-        MENUITEM "Save &As...\tF12",            ID_FILE_SAVE_AS
+        MENUITEM "&Nouveau\tCtrl+N",            ID_FILE_NEW
+        MENUITEM "&Ouvrir...\tCtrl+O",          ID_FILE_OPEN
+        MENUITEM "&Enregistrer\tCtrl+S",        ID_FILE_SAVE
+        MENUITEM "Enregistrer &Sous...\tF12",   ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        MENUITEM "&Choose Language...",         ID_FILE_LANGUAGE_CHOOSE
+        MENUITEM "&Choisir langue...",          ID_FILE_LANGUAGE_CHOOSE
         MENUITEM SEPARATOR
-        MENUITEM "&Import and Export...\tCtrl+E", ID_FILE_EXPORT_WIZARD
-        MENUITEM "&Find all linked files...",   ID_FILE_LINKED
+        MENUITEM "Importer et &Exporter...\tCtrl+E", ID_FILE_EXPORT_WIZARD
+        MENUITEM "&Trouver tous fichiers liés...", ID_FILE_LINKED
         MENUITEM SEPARATOR
-        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
-        MENUITEM "Print &Blank Runs...",        ID_FILE_PRINT_BLANK_RUNS
-        MENUITEM "Print Pre&view\tCtrl+Alt+P",  ID_FILE_PRINT_PREVIEW
-        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Imprimer...\tCtrl+P",        ID_FILE_PRINT
+        MENUITEM "Imprimer Parcours &Vierges...", ID_FILE_PRINT_BLANK_RUNS
+        MENUITEM "&Aperçu avant Impression\tCtrl+Alt+P", ID_FILE_PRINT_PREVIEW
+        MENUITEM "&Mise en page...",            ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM "Fichier Récent",              ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_APP_EXIT
+        MENUITEM "&Quitter",                    ID_APP_EXIT
     END
-    POPUP "&Edit"
+    POPUP "&Édition"
     BEGIN
-        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM "&Annuler\tCtrl+Z",            ID_EDIT_UNDO
         MENUITEM SEPARATOR
-        MENUITEM "&Duplicate",                  ID_EDIT_DUPLICATE
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM "&Dupliquer",                  ID_EDIT_DUPLICATE
+        MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
+        MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
+        MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
         MENUITEM SEPARATOR
-        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "&Sélectionner Tout\tCtrl+A",  ID_EDIT_SELECT_ALL
         MENUITEM SEPARATOR
-        MENUITEM "Cop&y Titles",                ID_COPY_TITLES_LIST
-        MENUITEM "&Reorder...",                 ID_REORDER
+        MENUITEM "Co&pier Titres",              ID_COPY_TITLES_LIST
+        MENUITEM "&Réorganiser...",             ID_REORDER
         MENUITEM SEPARATOR
-        MENUITEM "&Find...\tCtrl+F",            ID_EDIT_FIND
-        MENUITEM "Find Next\tF3",               ID_EDIT_FIND_NEXT
-        MENUITEM "Find Previous\tShift+F3",     ID_EDIT_FIND_PREVIOUS
+        MENUITEM "Rechercher...\tCtrl+F",       ID_EDIT_FIND
+        MENUITEM "Rechercher Suivant\tF3",      ID_EDIT_FIND_NEXT
+        MENUITEM "Rechercher Précédent\tMAJ+F3", ID_EDIT_FIND_PREVIOUS
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguration...",           ID_EDIT_CONFIGURATION
+        MENUITEM "Co&nfigurer...",              ID_EDIT_CONFIGURATION
     END
     POPUP "&Agility"
     BEGIN
-        POPUP "&Dog"
+        POPUP "&Chien"
         BEGIN
-            MENUITEM "&Properties...",              ID_AGILITY_EDIT_DOG
+            MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_DOG
             MENUITEM SEPARATOR
-            MENUITEM "&New...",                     ID_AGILITY_NEW_DOG
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
+            MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_DOG
+            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_DOG
         END
-        POPUP "&Title"
+        POPUP "&Récompense"
         BEGIN
-            MENUITEM "&Properties...",              ID_AGILITY_EDIT_TITLE
+            MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_TITLE
             MENUITEM SEPARATOR
-            MENUITEM "&New...",                     ID_AGILITY_NEW_TITLE
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TITLE
+            MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_TITLE
+            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TITLE
         END
-        POPUP "Tr&ial"
+        POPUP "C&oncours"
         BEGIN
-            MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRIAL
+            MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_TRIAL
             MENUITEM SEPARATOR
-            MENUITEM "&New...",                     ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
+            MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_TRIAL
+            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRIAL
             MENUITEM SEPARATOR
-            MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_TRIAL
+            MENUITEM "&Imprimer Parcours...",       ID_AGILITY_PRINT_TRIAL
         END
-        POPUP "&Run"
+        POPUP "&Parcours"
         BEGIN
-            MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
+            MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_RUN
             MENUITEM SEPARATOR
-            MENUITEM "&New...\tCtrl+R",             ID_AGILITY_NEW_RUN
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+            MENUITEM "&Nouveau...\tCtrl+R",         ID_AGILITY_NEW_RUN
+            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_RUN
             MENUITEM SEPARATOR
-            MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_RUNS
+            MENUITEM "&Imprimer Parcours...",       ID_AGILITY_PRINT_RUNS
         END
         MENUITEM SEPARATOR
-        POPUP "&Calendar"
+        POPUP "C&alendrier"
         BEGIN
-            MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
+            MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_CALENDAR
             MENUITEM SEPARATOR
-            MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_CALENDAR
+            MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_CALENDAR
+            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_CALENDAR
             MENUITEM SEPARATOR
-            MENUITEM "&Update...",                  ID_AGILITY_UPDATE_CALENDAR
-            MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
+            MENUITEM "&Mise à jour...",             ID_AGILITY_UPDATE_CALENDAR
+            MENUITEM "E&xporter...",                ID_AGILITY_EXPORT_CALENDAR
             MENUITEM SEPARATOR
-            MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
+            MENUITEM "Créer &Entrée Concours...",   ID_AGILITY_CREATEENTRY_CALENDAR
         END
-        POPUP "Tr&aining"
+        POPUP "&Entrainement"
         BEGIN
-            MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
+            MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_TRAINING
             MENUITEM SEPARATOR
-            MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRAINING
+            MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_TRAINING
+            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRAINING
         END
     END
     POPUP "&Notes"
     BEGIN
         MENUITEM "&Clubs...",                   ID_NOTES_CLUBS
-        MENUITEM "&Judges...\tCtrl+J",          ID_NOTES_JUDGES
-        MENUITEM "&Locations",                  ID_NOTES_LOCATIONS
+        MENUITEM "&Juges...\tCtrl+J",           ID_NOTES_JUDGES
+        MENUITEM "&Endroits",                   ID_NOTES_LOCATIONS
         MENUITEM SEPARATOR
-        MENUITEM "&Search Notes...",            ID_NOTES_SEARCH
+        MENUITEM "&Recherche Notes...",         ID_NOTES_SEARCH
     END
-    POPUP "&View"
+    POPUP "&Affichage"
     BEGIN
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
-        MENUITEM "&Customize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Customiser...",              ID_VIEW_CUSTOMIZE
         MENUITEM SEPARATOR
-        MENUITEM "Show &Newest Trials First",   ID_VIEW_SORTRUNS
-        MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
-        MENUITEM "Sort &Points View...",        ID_VIEW_POINTS_VIEW_SORT
-        MENUITEM "Show &Hidden Titles",         ID_VIEW_HIDDEN
-        MENUITEM "Include Table in &YPS",       ID_VIEW_TABLE_IN_YPS
+        MENUITEM "Montrer &Dernier Concours en premier",ID_VIEW_SORTRUNS
+        MENUITEM "Montrer &Parcours par Concours", ID_VIEW_RUNS_BY_TRIAL
+        MENUITEM "Trier &Affichage Points...",  ID_VIEW_POINTS_VIEW_SORT
+        MENUITEM "&Montrer Récompenses Cachées",ID_VIEW_HIDDEN
+        MENUITEM "Inclure Table en &TPS",       ID_VIEW_TABLE_IN_YPS
         MENUITEM SEPARATOR
-        MENUITEM "&Expand",                     ID_EXPAND
-        MENUITEM "Co&llapse",                   ID_COLLAPSE
-        MENUITEM "E&xpand All",                 ID_EXPAND_ALL
-        MENUITEM "Collapse &All",               ID_COLLAPSE_ALL
+        MENUITEM "Dé&velopper",                 ID_EXPAND
+        MENUITEM "&Réduire",                    ID_COLLAPSE
+        MENUITEM "Développer Tout",             ID_EXPAND_ALL
+        MENUITEM "Réduire Tout",                ID_COLLAPSE_ALL
         MENUITEM SEPARATOR
-        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
-        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "&Bar d'outils",               ID_VIEW_TOOLBAR
+        MENUITEM "Bar d'&état",                 ID_VIEW_STATUS_BAR
     END
-    POPUP "&Window"
+    POPUP "&Fenêtre"
     BEGIN
-        MENUITEM "Adjust &Splitter",            ID_WINDOW_SPLIT
+        MENUITEM "Ajuster &Fractionnement",     ID_WINDOW_SPLIT
         MENUITEM SEPARATOR
-        MENUITEM "&Next Pane\tF6",              ID_NEXT_PANE
-        MENUITEM "&Previous Pane\tShift+F6",    ID_PREV_PANE
+        MENUITEM "Onglet &suivant\tF6",         ID_NEXT_PANE
+        MENUITEM "Onglet &précédent\tMAJ+F6",   ID_PREV_PANE
     END
-    POPUP "&Help"
+    POPUP "&Aide"
     BEGIN
-        MENUITEM "&Contents",                   ID_HELP_CONTENTS
+        MENUITEM "&Contenu",                    ID_HELP_CONTENTS
         MENUITEM "&Index",                      ID_HELP_INDEX
         MENUITEM SEPARATOR
-        MENUITEM "Check for &Updates...",       ID_HELP_UPDATE
-        MENUITEM "&System Information...",      ID_HELP_SYSINFO
+        MENUITEM "Recherche de &Mise à jour...", ID_HELP_UPDATE
+        MENUITEM "Information &Système...",     ID_HELP_SYSINFO
         MENUITEM SEPARATOR
-        MENUITEM "S&how Splash Screen...",      ID_HELP_SPLASH
-        MENUITEM "&About Agility Record Book...", ID_APP_ABOUT
+        MENUITEM "Montrer &Écran Introduction...", ID_HELP_SPLASH
+        MENUITEM "&A propos de Agility Record Book...", ID_APP_ABOUT
     END
 END
 
@@ -300,28 +300,28 @@ IDR_DOG MENU
 BEGIN
     POPUP "Dog"
     BEGIN
-        MENUITEM "&Properties...",              ID_AGILITY_EDIT_DOG
+        MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_DOG
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
-        POPUP "&New"
+        POPUP "&Nouveau"
         BEGIN
-            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
-            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
+            MENUITEM "&Chien...",                   ID_AGILITY_NEW_DOG
+            MENUITEM "&Récompense...",              ID_AGILITY_NEW_TITLE
             MENUITEM SEPARATOR
-            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
+            MENUITEM "C&oncours...",                ID_AGILITY_NEW_TRIAL
         END
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
+        MENUITEM "&Dupliquer",                  ID_EDIT_DUPLICATE
+        MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
+        MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
+        MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
+        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_DOG
         MENUITEM SEPARATOR
-        MENUITEM "&Reorder...",                 ID_REORDER
+        MENUITEM "&Réorganiser...",             ID_REORDER
         MENUITEM SEPARATOR
-        MENUITEM "Expand",                      ID_EXPAND
-        MENUITEM "Collapse",                    ID_COLLAPSE
-        MENUITEM "Expand All",                  ID_EXPAND_ALL
-        MENUITEM "Collapse All",                ID_COLLAPSE_ALL
+        MENUITEM "Développer",                  ID_EXPAND
+        MENUITEM "Réduire",                     ID_COLLAPSE
+        MENUITEM "Développer Tout",             ID_EXPAND_ALL
+        MENUITEM "Réduire Tout",                ID_COLLAPSE_ALL
     END
 END
 
@@ -329,29 +329,29 @@ IDR_TRIAL MENU
 BEGIN
     POPUP "Trial"
     BEGIN
-        MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRIAL
+        MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_TRIAL
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
-        POPUP "&New"
+        POPUP "&Nouveau"
         BEGIN
-            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
-            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
+            MENUITEM "&Chien...",                   ID_AGILITY_NEW_DOG
+            MENUITEM "&Récompense...",              ID_AGILITY_NEW_TITLE
             MENUITEM SEPARATOR
-            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
+            MENUITEM "C&oncours...",                ID_AGILITY_NEW_TRIAL
+            MENUITEM "&Parcours...\tCtrl+R",        ID_AGILITY_NEW_RUN
         END
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
+        MENUITEM "&Dupliquer",                  ID_EDIT_DUPLICATE
+        MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
+        MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
+        MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
+        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRIAL
         MENUITEM SEPARATOR
-        MENUITEM "Reorder...",                  ID_REORDER
+        MENUITEM "&Réorganiser...",             ID_REORDER
         MENUITEM SEPARATOR
-        MENUITEM "Expand",                      ID_EXPAND
-        MENUITEM "Collapse",                    ID_COLLAPSE
+        MENUITEM "Développer",                  ID_EXPAND
+        MENUITEM "Réduire",                     ID_COLLAPSE
         MENUITEM SEPARATOR
-        MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_TRIAL
+        MENUITEM "&Imprimer Parcours...",       ID_AGILITY_PRINT_TRIAL
     END
 END
 
@@ -359,26 +359,26 @@ IDR_RUN MENU
 BEGIN
     POPUP "Run"
     BEGIN
-        MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
+        MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_RUN
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
-        POPUP "&New"
+        POPUP "&Nouveau"
         BEGIN
-            MENUITEM "&Dog...",                     ID_AGILITY_NEW_DOG
-            MENUITEM "&Title...",                   ID_AGILITY_NEW_TITLE
+            MENUITEM "&Chien...",                   ID_AGILITY_NEW_DOG
+            MENUITEM "&Récompense...",              ID_AGILITY_NEW_TITLE
             MENUITEM SEPARATOR
-            MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
+            MENUITEM "C&oncours...",                ID_AGILITY_NEW_TRIAL
+            MENUITEM "&Parcours...\tCtrl+R",        ID_AGILITY_NEW_RUN
         END
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+        MENUITEM "&Dupliquer",                  ID_EDIT_DUPLICATE
+        MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
+        MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
+        MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
+        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_RUN
         MENUITEM SEPARATOR
-        MENUITEM "&Reorder...",                 ID_REORDER
+        MENUITEM "&Réorganiser...",             ID_REORDER
         MENUITEM SEPARATOR
-        MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_RUNS
+        MENUITEM "&Imprimer Parcours...",       ID_AGILITY_PRINT_RUNS
     END
 END
 
@@ -386,13 +386,13 @@ IDR_POINTS MENU
 BEGIN
     POPUP "Points"
     BEGIN
-        MENUITEM "&Details...",                 ID_DETAILS
+        MENUITEM "&Détails...",                 ID_DETAILS
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
-        MENUITEM "&Copy Selection\tCtrl+C",     ID_EDIT_COPY
-        MENUITEM "Copy &Titles",                ID_COPY_TITLES_LIST
+        MENUITEM "&Copier la sélection\tCtrl+C",ID_EDIT_COPY
+        MENUITEM "Copier &Récompenses",         ID_COPY_TITLES_LIST
         MENUITEM SEPARATOR
-        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "Sélectionner &Tout\tCtrl+A",  ID_EDIT_SELECT_ALL
     END
 END
 
@@ -400,20 +400,20 @@ IDR_CALENDAR MENU
 BEGIN
     POPUP "Calendar"
     BEGIN
-        MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
+        MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_CALENDAR
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
-        MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete...",                  ID_AGILITY_DELETE_CALENDAR
+        MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_CALENDAR
+        MENUITEM "&Dupliquer",                  ID_EDIT_DUPLICATE
+        MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
+        MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
+        MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
+        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_CALENDAR
         MENUITEM SEPARATOR
-        MENUITEM "&Update...",                  ID_AGILITY_UPDATE_CALENDAR
-        MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
+        MENUITEM "&Mise à jour...",             ID_AGILITY_UPDATE_CALENDAR
+        MENUITEM "E&xporter...",                ID_AGILITY_EXPORT_CALENDAR
         MENUITEM SEPARATOR
-        MENUITEM "&Create Trial Entry...",      ID_AGILITY_CREATEENTRY_CALENDAR
+        MENUITEM "Créer &Entrée Concours...",   ID_AGILITY_CREATEENTRY_CALENDAR
     END
 END
 
@@ -421,15 +421,15 @@ IDR_TRAINING MENU
 BEGIN
     POPUP "Training"
     BEGIN
-        MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
+        MENUITEM "&Propriétés...",               ID_AGILITY_EDIT_TRAINING
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
-        MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete...",                  ID_AGILITY_DELETE_TRAINING
+        MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_TRAINING
+        MENUITEM "&Dupliquer",                  ID_EDIT_DUPLICATE
+        MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
+        MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
+        MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
+        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRAINING
     END
 END
 
@@ -489,7 +489,7 @@ BEGIN
     LTEXT           "Liens utiles:",IDC_ABOUT_TEXT2,40,70,185,8
     LTEXT           "Link3",IDC_ABOUT_LINK3,55,80,170,8,SS_NOPREFIX | WS_TABSTOP
     LTEXT           "Link4",IDC_ABOUT_LINK4,55,89,170,8,SS_NOPREFIX | WS_TABSTOP
-    PUSHBUTTON      "Chercher des mis à jours...",IDC_ABOUT_UPDATE,191,64,92,14,0,0,HIDC_ABOUT_UPDATE
+    PUSHBUTTON      "Chercher des mises à jours...",IDC_ABOUT_UPDATE,191,64,92,14,0,0,HIDC_ABOUT_UPDATE
 END
 
 IDD_NAME DIALOGEX 0, 0, 186, 46
@@ -509,7 +509,8 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List1",IDC_LIST_VIEWER,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,320,100,0,HIDC_LIST_VIEWER
     PUSHBUTTON      "Copier",IDC_LIST_COPY,220,113,50,14,0,0,HIDC_LIST_COPY
-    DEFPUSHBUTTON   "Fermer",IDOK,277,113,50,14
+    DEFPUSHBUTTON   "Quitter",IDOK,277,113,50,14
+
 END
 
 IDD_LISTCTRL DIALOGEX 0, 0, 298, 118
@@ -517,12 +518,12 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYS
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List1",IDC_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,7,225,82,0,HIDC_LIST
-    PUSHBUTTON      "Nouveau",IDC_LIST_NEW,7,97,50,14,0,0,HIDC_LIST_NEW
-    PUSHBUTTON      "Edition",IDC_LIST_EDIT,67,97,50,14,0,0,HIDC_LIST_EDIT
-    PUSHBUTTON      "Supprimer",IDC_LIST_DELETE,127,97,50,14,0,0,HIDC_LIST_DELETE
-    PUSHBUTTON      "Monter",IDC_LIST_MOVE_UP,241,51,50,14,0,0,HIDC_LIST_MOVE_UP
-    PUSHBUTTON      "Descendre",IDC_LIST_MOVE_DOWN,241,68,50,14,0,0,HIDC_LIST_MOVE_DOWN
-    PUSHBUTTON      "Créer concours...",IDC_LIST_TRIAL,229,97,62,14,NOT WS_VISIBLE,0,HIDC_LIST_TRIAL
+    PUSHBUTTON      "&Nouveau",IDC_LIST_NEW,7,97,50,14,0,0,HIDC_LIST_NEW
+    PUSHBUTTON      "&Édition",IDC_LIST_EDIT,67,97,50,14,0,0,HIDC_LIST_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_LIST_DELETE,127,97,50,14,0,0,HIDC_LIST_DELETE
+    PUSHBUTTON      "&Monter",IDC_LIST_MOVE_UP,241,51,50,14,0,0,HIDC_LIST_MOVE_UP
+    PUSHBUTTON      "&Descendre",IDC_LIST_MOVE_DOWN,241,68,50,14,0,0,HIDC_LIST_MOVE_DOWN
+    PUSHBUTTON      "&Créer concours...",IDC_LIST_TRIAL,229,97,62,14,NOT WS_VISIBLE,0,HIDC_LIST_TRIAL
     DEFPUSHBUTTON   "Accepter",IDOK,241,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,241,24,50,14
 END
@@ -533,7 +534,7 @@ CAPTION "Message"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     EDITTEXT        IDC_MESSAGE,7,7,260,140,ES_MULTILINE | ES_READONLY | WS_VSCROLL | WS_HSCROLL
-    DEFPUSHBUTTON   "Fermer",IDOK,217,153,50,14
+    DEFPUSHBUTTON   "Quitter",IDOK,217,153,50,14
 END
 
 IDD_FIND DIALOGEX 0, 0, 225, 93
@@ -544,14 +545,14 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     LTEXT           "Chercher:",IDC_STATIC,7,9,33,8
     EDITTEXT        IDC_FIND_NAME,45,7,100,12,ES_AUTOHSCROLL,0,HIDC_FIND_NAME
-    CONTROL         "Respecter la casse",IDC_FIND_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,25,76,10,0,HIDC_FIND_CASE
-    GROUPBOX        "Champs a rechercher",IDC_STATIC,7,41,65,45
-    CONTROL         "Tous",IDC_FIND_ALL,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,53,31,10,0,HIDC_FIND_ALL
-    CONTROL         "Visible",IDC_FIND_VISIBLE,"Button",BS_AUTORADIOBUTTON,15,68,35,10,0,HIDC_FIND_VISIBLE
+    CONTROL         "Respecter la &casse",IDC_FIND_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,25,76,10,0,HIDC_FIND_CASE
+    GROUPBOX        "Champs à rechercher",IDC_STATIC,7,41,65,45
+    CONTROL         "&Tous",IDC_FIND_ALL,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,53,31,10,0,HIDC_FIND_ALL
+    CONTROL         "&Visible",IDC_FIND_VISIBLE,"Button",BS_AUTORADIOBUTTON,15,68,35,10,0,HIDC_FIND_VISIBLE
     GROUPBOX        "Direction",IDC_STATIC,80,41,65,45,WS_GROUP
-    CONTROL         "Monter",IDC_FIND_UP,"Button",BS_AUTORADIOBUTTON | WS_GROUP,88,53,39,10,0,HIDC_FIND_UP
-    CONTROL         "Descendre",IDC_FIND_DOWN,"Button",BS_AUTORADIOBUTTON,88,68,50,10,0,HIDC_FIND_DOWN
-    DEFPUSHBUTTON   "Chercher suivant",IDOK,156,7,62,14,WS_GROUP
+    CONTROL         "&Monter",IDC_FIND_UP,"Button",BS_AUTORADIOBUTTON | WS_GROUP,88,53,39,10,0,HIDC_FIND_UP
+    CONTROL         "&Descendre",IDC_FIND_DOWN,"Button",BS_AUTORADIOBUTTON,88,68,50,10,0,HIDC_FIND_DOWN
+    DEFPUSHBUTTON   "Chercher &suivant",IDOK,156,7,62,14,WS_GROUP
     PUSHBUTTON      "Annuler",IDCANCEL,156,24,62,14
 END
 
@@ -562,11 +563,11 @@ CAPTION "Paramètres"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "Tree1",IDC_CONFIG_ITEMS,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | WS_TABSTOP,7,7,250,256,0,HIDC_CONFIG_ITEMS
-    PUSHBUTTON      "Nouveau...",IDC_CONFIG_NEW,7,269,45,14,0,0,HIDC_CONFIG_NEW
-    PUSHBUTTON      "Edition...",IDC_CONFIG_EDIT,57,269,45,14,0,0,HIDC_CONFIG_EDIT
-    PUSHBUTTON      "Supprimer",IDC_CONFIG_DELETE,107,269,45,14,0,0,HIDC_CONFIG_DELETE
-    PUSHBUTTON      "Copier...",IDC_CONFIG_COPY,157,269,45,14,0,0,HIDC_CONFIG_COPY
-    PUSHBUTTON      "Renouveller paramètres...",IDC_CONFIG_UPDATE,227,269,90,14,0,0,HIDC_CONFIG_UPDATE
+    PUSHBUTTON      "&Nouveau...",IDC_CONFIG_NEW,7,269,45,14,0,0,HIDC_CONFIG_NEW
+    PUSHBUTTON      "&Édition...",IDC_CONFIG_EDIT,57,269,45,14,0,0,HIDC_CONFIG_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_CONFIG_DELETE,107,269,45,14,0,0,HIDC_CONFIG_DELETE
+    PUSHBUTTON      "&Copier...",IDC_CONFIG_COPY,157,269,45,14,0,0,HIDC_CONFIG_COPY
+    PUSHBUTTON      "&Mettre à jour paramètres...",IDC_CONFIG_UPDATE,227,269,90,14,0,0,HIDC_CONFIG_UPDATE
     DEFPUSHBUTTON   "Accepter",IDOK,267,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,267,24,50,14
 END
@@ -577,32 +578,32 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Paramètres du concours"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nom",IDC_STATIC,7,9,15,8
+    LTEXT           "N&om",IDC_STATIC,7,9,15,8
     EDITTEXT        IDC_CONFIG_VENUE,30,7,80,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_VENUE
     LTEXT           "Nom complet",IDC_STATIC,7,22,42,8
     EDITTEXT        IDC_CONFIG_VENUE_LONGNAME,7,32,125,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_VENUE_LONGNAME
-    LTEXT           "Site web",IDC_STATIC,7,46,28,8
+    LTEXT           "Site &web",IDC_STATIC,7,46,28,8
     EDITTEXT        IDC_CONFIG_VENUE_URL,7,56,125,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_VENUE_URL
-    LTEXT           "Description",IDC_STATIC,7,70,36,8
+    LTEXT           "De&scription",IDC_STATIC,7,70,36,8
     EDITTEXT        IDC_CONFIG_VENUE_DESC,7,80,125,46,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_VENUE_DESC
-    LTEXT           "Lifetime Points Name",IDC_STATIC,7,128,67,8
+    LTEXT           "Nom points cumulatifs",IDC_STATIC,7,128,67,8
     EDITTEXT        IDC_CONFIG_VENUE_LIFETIME_NAME,7,138,125,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_VENUE_LIFETIME_NAME
-    LTEXT           "Epreuves",IDC_STATIC,7,152,31,8
+    LTEXT           "É&preuves",IDC_STATIC,7,152,31,8
     CONTROL         "List2",IDC_CONFIG_VENUE_EVENT,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,7,162,125,70,0,HIDC_CONFIG_VENUE_EVENT
-    LTEXT           "Plusieurs épreuves qualifiantes",IDC_STATIC,7,234,100,8
+    LTEXT           "Plusieurs épreuves &qualifiantes",IDC_STATIC,7,234,100,8
     CONTROL         "",IDC_CONFIG_VENUE_MULTIQ,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,7,244,125,59,0,HIDC_CONFIG_VENUE_MULTIQ
-    LTEXT           "Niveaux conducteur",IDC_STATIC,140,7,65,8
+    LTEXT           "Niveaux conducteurs",IDC_STATIC,140,7,65,8
     CONTROL         "List1",IDC_CONFIG_VENUE_DIVISION,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,140,17,80,60,0,HIDC_CONFIG_VENUE_DIVISION
-    LTEXT           "Degrés",IDC_STATIC,225,7,24,8
+    LTEXT           "&Degrés",IDC_STATIC,225,7,24,8
     CONTROL         "Tree1",IDC_CONFIG_VENUE_LEVEL,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | WS_TABSTOP,225,17,105,60,0,HIDC_CONFIG_VENUE_LEVEL
-    PUSHBUTTON      "Nouveau...",IDC_CONFIG_VENUE_NEW,185,83,45,14,0,0,HIDC_CONFIG_VENUE_NEW
-    PUSHBUTTON      "Supprimer",IDC_CONFIG_VENUE_DELETE,185,99,45,14,0,0,HIDC_CONFIG_VENUE_DELETE
-    PUSHBUTTON      "Edition...",IDC_CONFIG_VENUE_EDIT,235,83,45,14,0,0,HIDC_CONFIG_VENUE_EDIT
-    PUSHBUTTON      "Copier...",IDC_CONFIG_VENUE_COPY,235,99,45,14,0,0,HIDC_CONFIG_VENUE_COPY
-    PUSHBUTTON      "Monter",IDC_CONFIG_VENUE_MOVE_UP,285,83,45,14,0,0,HIDC_CONFIG_VENUE_MOVE_UP
-    PUSHBUTTON      "Descendre",IDC_CONFIG_VENUE_MOVE_DOWN,285,99,45,14,0,0,HIDC_CONFIG_VENUE_MOVE_DOWN
+    PUSHBUTTON      "&Nouveau...",IDC_CONFIG_VENUE_NEW,185,83,45,14,0,0,HIDC_CONFIG_VENUE_NEW
+    PUSHBUTTON      "&Supprimer",IDC_CONFIG_VENUE_DELETE,185,99,45,14,0,0,HIDC_CONFIG_VENUE_DELETE
+    PUSHBUTTON      "&Édition...",IDC_CONFIG_VENUE_EDIT,235,83,45,14,0,0,HIDC_CONFIG_VENUE_EDIT
+    PUSHBUTTON      "&Copier...",IDC_CONFIG_VENUE_COPY,235,99,45,14,0,0,HIDC_CONFIG_VENUE_COPY
+    PUSHBUTTON      "&Monter",IDC_CONFIG_VENUE_MOVE_UP,285,83,45,14,0,0,HIDC_CONFIG_VENUE_MOVE_UP
+    PUSHBUTTON      "&Descendre",IDC_CONFIG_VENUE_MOVE_DOWN,285,99,45,14,0,0,HIDC_CONFIG_VENUE_MOVE_DOWN
     CTEXT           "",IDC_CONFIG_VENUE_COMMENTS,185,117,145,8
-    LTEXT           "Distinction",IDC_STATIC,140,125,34,8
+    LTEXT           "Récompense",IDC_STATIC,140,125,34,8
     CONTROL         "List3",IDC_CONFIG_VENUE_TITLES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,140,135,190,168,0,HIDC_CONFIG_VENUE_TITLES
     PUSHBUTTON      "Accepter",IDOK,343,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,343,24,50,14
@@ -614,36 +615,36 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Parametres de l'épreuve"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nom",IDC_STATIC,7,9,20,8
+    LTEXT           "&Nom",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_CONFIG_EVENT,30,7,80,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_EVENT
-    CONTROL         "Table?",IDC_CONFIG_EVENT_TABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,8,37,10,0,HIDC_CONFIG_EVENT_TABLE
-    CONTROL         "Accompagnents?",IDC_CONFIG_EVENT_PARTNER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,166,8,70,10,0,HIDC_CONFIG_EVENT_PARTNER
+    CONTROL         "&Table?",IDC_CONFIG_EVENT_TABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,8,37,10,0,HIDC_CONFIG_EVENT_TABLE
+    CONTROL         "&Partenaires?",IDC_CONFIG_EVENT_PARTNER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,166,8,70,10,0,HIDC_CONFIG_EVENT_PARTNER
     CONTROL         "Sous-titres?",IDC_CONFIG_EVENT_HAS_SUBNAMES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,240,8,54,10,0,HIDC_CONFIG_EVENT_HAS_SUBNAMES
     LISTBOX         IDC_CONFIG_EVENT_SUBNAMES,240,22,49,40,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_SUBNAMES
     PUSHBUTTON      "Nouveau...",IDC_CONFIG_EVENT_SUBNAMES_NEW,293,22,40,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_NEW
-    PUSHBUTTON      "Edition",IDC_CONFIG_EVENT_SUBNAMES_EDIT,293,36,40,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_EDIT
+    PUSHBUTTON      "Édition",IDC_CONFIG_EVENT_SUBNAMES_EDIT,293,36,40,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_EDIT
     PUSHBUTTON      "Supprimer",IDC_CONFIG_EVENT_SUBNAMES_DELETE,293,50,40,12,0,0,HIDC_CONFIG_EVENT_SUBNAMES_DELETE
-    LTEXT           "Notes",IDC_STATIC,7,22,22,16
+    LTEXT           "Notes &épreuve",IDC_STATIC,7,22,22,16
     EDITTEXT        IDC_CONFIG_EVENT_DESC,30,22,205,40,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_DESC
-    GROUPBOX        "Méthodes de comptage",IDC_STATIC,7,66,380,222
-    LTEXT           "Niveaux conducteur/degrés définis",IDC_STATIC,15,76,112,8
+    GROUPBOX        "Méthodes comptage",IDC_STATIC,7,66,380,222
+    LTEXT           "Niveaux &conducteur/degrés définis",IDC_STATIC,15,76,112,8
     LISTBOX         IDC_CONFIG_EVENT_METHODS,15,86,150,94,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_METHODS
     LTEXT           "Niveaux conducteur/degrés non définis",IDC_STATIC,229,76,126,8
     LISTBOX         IDC_CONFIG_EVENT_UNUSED,229,86,150,94,LBS_NOINTEGRALHEIGHT | WS_DISABLED | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_UNUSED
     PUSHBUTTON      "Nouveau",IDC_CONFIG_EVENT_NEW,174,86,45,14,0,0,HIDC_CONFIG_EVENT_NEW
-    PUSHBUTTON      "Edition",IDC_CONFIG_EVENT_EDIT,174,102,45,14,0,0,HIDC_CONFIG_EVENT_EDIT
+    PUSHBUTTON      "Édition",IDC_CONFIG_EVENT_EDIT,174,102,45,14,0,0,HIDC_CONFIG_EVENT_EDIT
     PUSHBUTTON      "Supprimer",IDC_CONFIG_EVENT_DELETE,174,118,45,14,0,0,HIDC_CONFIG_EVENT_DELETE
     PUSHBUTTON      "Copier",IDC_CONFIG_EVENT_COPY,174,134,45,14,0,0,HIDC_CONFIG_EVENT_COPY
     PUSHBUTTON      "Monter",IDC_CONFIG_EVENT_MOVE_UP,174,150,45,14,0,0,HIDC_CONFIG_EVENT_MOVE_UP
     PUSHBUTTON      "Descendre",IDC_CONFIG_EVENT_MOVE_DOWN,174,166,45,14,0,0,HIDC_CONFIG_EVENT_MOVE_DOWN
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,186,380,1
     LTEXT           "",IDC_CONFIG_EVENT_INFO,15,192,364,26,SS_NOTIFY | SS_SUNKEN,0,HIDC_CONFIG_EVENT_INFO
-    LTEXT           "Distinction et pénalités",IDC_STATIC,15,228,36,24
+    LTEXT           "Points &Récompense ",IDC_STATIC,15,228,36,24
     LISTBOX         IDC_CONFIG_EVENT_POINTS,51,228,102,52,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_POINTS
     PUSHBUTTON      "Nouveau...",IDC_CONFIG_EVENT_POINTS_NEW,158,228,40,12,0,0,HIDC_CONFIG_EVENT_POINTS_NEW
-    PUSHBUTTON      "Edition...",IDC_CONFIG_EVENT_POINTS_EDIT,158,242,40,12,0,0,HIDC_CONFIG_EVENT_POINTS_EDIT
+    PUSHBUTTON      "Édition...",IDC_CONFIG_EVENT_POINTS_EDIT,158,242,40,12,0,0,HIDC_CONFIG_EVENT_POINTS_EDIT
     PUSHBUTTON      "Supprimer",IDC_CONFIG_EVENT_POINTS_DELETE,158,256,40,12,0,0,HIDC_CONFIG_EVENT_POINTS_DELETE
-    LTEXT           "Notes sur méthode",IDC_STATIC,205,228,28,24
+    LTEXT           "Notes sur &méthode",IDC_STATIC,205,228,28,24
     EDITTEXT        IDC_CONFIG_EVENT_NOTES,236,228,143,52,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_EVENT_NOTES
     DEFPUSHBUTTON   "Accepter",IDOK,337,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,337,24,50,14
@@ -652,20 +653,20 @@ END
 IDD_CONFIG_EVENT_METHOD DIALOGEX 0, 0, 345, 199
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Paramètres du méthode"
+CAPTION "Paramètres de la méthode"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Niveau conducteur",IDC_STATIC,7,9,61,8
+    LTEXT           "Niveau &conducteur",IDC_STATIC,7,9,61,8
     COMBOBOX        IDC_CONFIG_EVENT_DIVISION,69,7,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_DIVISION
-    RTEXT           "Degré",IDC_STATIC,7,24,59,8
+    RTEXT           "&Degré",IDC_STATIC,7,24,59,8
     COMBOBOX        IDC_CONFIG_EVENT_LEVEL,69,22,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_LEVEL
-    CONTROL         "Valide du",IDC_CONFIG_EVENT_DATE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,8,45,10,0,HIDC_CONFIG_EVENT_DATE_VALID_FROM
+    CONTROL         "&Valide du",IDC_CONFIG_EVENT_DATE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,8,45,10,0,HIDC_CONFIG_EVENT_DATE_VALID_FROM
     CONTROL         "DateTimePicker1",IDC_CONFIG_EVENT_DATE_START,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,218,7,60,12,0,HIDC_CONFIG_EVENT_DATE_START
-    CONTROL         "Valide jusqu'au",IDC_CONFIG_EVENT_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,23,63,10,0,HIDC_CONFIG_EVENT_DATE_VALID_TO
+    CONTROL         "Valide &jusqu'au",IDC_CONFIG_EVENT_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,23,63,10,0,HIDC_CONFIG_EVENT_DATE_VALID_TO
     CONTROL         "DateTimePicker1",IDC_CONFIG_EVENT_DATE_END,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,218,22,60,12,0,HIDC_CONFIG_EVENT_DATE_END
-    LTEXT           "Style de Comptage",IDC_STATIC,7,47,62,8
+    LTEXT           "&Style de Comptage",IDC_STATIC,7,47,62,8
     COMBOBOX        IDC_CONFIG_EVENT_TYPE,70,45,125,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_EVENT_TYPE
     CONTROL         "Compter les secondes entières pour les pénalités",IDC_CONFIG_EVENT_DROP_FRACTIONS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,65,172,10,0,HIDC_CONFIG_EVENT_DROP_FRACTIONS
@@ -674,10 +675,10 @@ BEGIN
     CONTROL         "Points vitesse?",IDC_CONFIG_EVENT_SPEED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,101,63,10,0,HIDC_CONFIG_EVENT_SPEED
     RTEXT           "Multiplicateur pour pénalités temps",IDC_CONFIG_EVENT_TF_MULTIPLY_TEXT,7,116,112,8
     EDITTEXT        IDC_CONFIG_EVENT_TF_MULTIPLY,121,114,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_TF_MULTIPLY
-    LTEXT           "Multiplicateur pour points de vitesse et de Rangs",IDC_CONFIG_EVENT_PLACEMENT_TEXT,7,130,156,8
+    LTEXT           "Multiplicateur pour points de vitesse et de Classements",IDC_CONFIG_EVENT_PLACEMENT_TEXT,7,130,156,8
     CONTROL         "List2",IDC_CONFIG_EVENT_PLACEMENT,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,140,106,52,0,HIDC_CONFIG_EVENT_PLACEMENT
-    PUSHBUTTON      "Nouveay...",IDC_CONFIG_EVENT_PLACEMENT_NEW,118,140,40,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_NEW
-    PUSHBUTTON      "Edition...",IDC_CONFIG_EVENT_PLACEMENT_EDIT,118,154,40,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_EDIT
+    PUSHBUTTON      "Nouveau...",IDC_CONFIG_EVENT_PLACEMENT_NEW,118,140,40,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_NEW
+    PUSHBUTTON      "Édition...",IDC_CONFIG_EVENT_PLACEMENT_EDIT,118,154,40,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_EDIT
     PUSHBUTTON      "Supprimer",IDC_CONFIG_EVENT_PLACEMENT_DELETE,118,168,40,12,0,0,HIDC_CONFIG_EVENT_PLACEMENT_DELETE
     CONTROL         "Zéro fautes seul qualifiants",IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,180,65,103,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ
@@ -685,7 +686,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,180,77,124,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER
     CONTROL         "Calculer penalités temps au-dessus TPS",IDC_CONFIG_EVENT_TIME_FAULTS_OVER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,180,89,142,10,0,HIDC_CONFIG_EVENT_TIME_FAULTS_OVER
-    CONTROL         "Deduire pénalités temps du resultat",IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS,
+    CONTROL         "Déduire pénalités temps du résultat",IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,180,101,129,10,0,HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS
     RTEXT           "Exigé pour débuter",IDC_CONFIG_EVENT_OPENING_PTS_TEXT,165,117,70,8
     EDITTEXT        IDC_CONFIG_EVENT_OPENING_PTS,238,115,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_CONFIG_EVENT_OPENING_PTS
@@ -701,13 +702,13 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Paramètres autres points"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nom",IDC_STATIC,7,9,20,8
+    LTEXT           "&Nom",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_CONFIG_OTHER_NAME,30,7,155,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_OTHER_NAME
-    LTEXT           "Points Correspondance",IDC_STATIC,7,26,75,8
+    LTEXT           "Points &Correspondance",IDC_STATIC,7,26,75,8
     COMBOBOX        IDC_CONFIG_OTHER_TALLY,85,24,100,130,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_OTHER_TALLY
-    LTEXT           "Points par défaut",IDC_STATIC,7,43,56,8
+    LTEXT           "&Points par défaut",IDC_STATIC,7,43,56,8
     EDITTEXT        IDC_CONFIG_OTHER_DEFAULT,85,41,25,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_OTHER_DEFAULT
-    LTEXT           "Description",IDC_STATIC,7,57,36,8
+    LTEXT           "&Description",IDC_STATIC,7,57,36,8
     EDITTEXT        IDC_CONFIG_OTHER_DESC,7,66,178,68,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_OTHER_DESC
     DEFPUSHBUTTON   "Accepter",IDOK,193,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,193,24,50,14
@@ -716,24 +717,24 @@ END
 IDD_CONFIG_TITLE DIALOGEX 0, 0, 320, 177
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Paramètres Distinction"
+CAPTION "Paramètres Récompense"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nom",IDC_STATIC,7,9,15,8
+    LTEXT           "&Nom",IDC_STATIC,7,9,15,8
     EDITTEXT        IDC_CONFIG_TITLE_NAME,30,7,75,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_TITLE_NAME
-    CONTROL         "Préfixe?",IDC_CONFIG_TITLE_PREFIX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,8,42,10,0,HIDC_CONFIG_TITLE_PREFIX
-    LTEXT           "Nom complet",IDC_STATIC,7,33,42,8
+    CONTROL         "&Préfixe?",IDC_CONFIG_TITLE_PREFIX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,8,42,10,0,HIDC_CONFIG_TITLE_PREFIX
+    LTEXT           "Nom &complet",IDC_STATIC,7,33,42,8
     EDITTEXT        IDC_CONFIG_TITLE_LONG_NAME,7,43,306,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_TITLE_LONG_NAME
-    LTEXT           "Description",IDC_STATIC,7,57,36,8
+    LTEXT           "&Description",IDC_STATIC,7,57,36,8
     EDITTEXT        IDC_CONFIG_TITLE_DESC,7,67,306,70,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CONFIG_TITLE_DESC
-    CONTROL         "Copies multiples autorisées",IDC_CONFIG_TITLE_ALLOW_MULTIPLE,
+    CONTROL         "Copies &multiples autorisées",IDC_CONFIG_TITLE_ALLOW_MULTIPLE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,142,102,10,0,HIDC_CONFIG_TITLE_ALLOW_MULTIPLE
-    LTEXT           "Commencer par:",IDC_STATIC,19,155,54,8
+    LTEXT           "&Commencer par:",IDC_STATIC,19,155,54,8
     EDITTEXT        IDC_CONFIG_TITLE_MULTIPLE,74,153,25,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Valide du",IDC_CONFIG_TITLE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,143,45,10,0,HIDC_CONFIG_TITLE_VALID_FROM
+    CONTROL         "&Valide du",IDC_CONFIG_TITLE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,143,45,10,0,HIDC_CONFIG_TITLE_VALID_FROM
     CONTROL         "DateTimePicker1",IDC_CONFIG_TITLE_VALID_FROM_DATE,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,253,142,60,12,0,HIDC_CONFIG_TITLE_VALID_FROM_DATE
-    CONTROL         "Valide jusqu'au",IDC_CONFIG_TITLE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,158,63,10,0,HIDC_CONFIG_TITLE_VALID_TO
+    CONTROL         "Valide &jusqu'au",IDC_CONFIG_TITLE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,190,158,63,10,0,HIDC_CONFIG_TITLE_VALID_TO
     CONTROL         "DateTimePicker1",IDC_CONFIG_TITLE_VALID_TO_DATE,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,253,157,60,12,0,HIDC_CONFIG_TITLE_VALID_TO_DATE
     DEFPUSHBUTTON   "Accepter",IDOK,263,7,50,14
@@ -746,11 +747,11 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Mettre à jour la configuration"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    CONTROL         "Utiliser configuration par défaut",IDC_CONFIG_UPDATE_DEFAULT,
+    CONTROL         "Utiliser configuration par &défaut",IDC_CONFIG_UPDATE_DEFAULT,
                     "Button",BS_AUTORADIOBUTTON | WS_GROUP,7,10,117,10,0,HIDC_CONFIG_UPDATE_DEFAULT
-    CONTROL         "Utiliser configuration existante",IDC_CONFIG_UPDATE_EXISTING,
+    CONTROL         "Utiliser configuration &existante",IDC_CONFIG_UPDATE_EXISTING,
                     "Button",BS_AUTORADIOBUTTON,7,26,113,10,0,HIDC_CONFIG_UPDATE_EXISTING
-    PUSHBUTTON      "Choisir fichier",IDC_CONFIG_UPDATE_NAME,123,24,50,14,WS_GROUP,0,HIDC_CONFIG_UPDATE_NAME
+    PUSHBUTTON      "&Choisir fichier",IDC_CONFIG_UPDATE_NAME,123,24,50,14,WS_GROUP,0,HIDC_CONFIG_UPDATE_NAME
     EDITTEXT        IDC_CONFIG_UPDATE_FILENAME,20,42,213,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_UPDATE_FILENAME
     DEFPUSHBUTTON   "Accepter",IDOK,183,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,183,24,50,14
@@ -762,11 +763,11 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Calendrier"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    RTEXT           "Date Début:",IDC_STATIC,7,9,40,8
+    RTEXT           "&Date Début:",IDC_STATIC,7,9,40,8
     CONTROL         "DateTimePicker1",IDC_CAL_DATE_START,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,53,7,60,12,0,HIDC_CAL_DATE_START
-    RTEXT           "Date Fin:",IDC_STATIC,7,24,40,8
+    RTEXT           "Date &Fin:",IDC_STATIC,7,24,40,8
     CONTROL         "DateTimePicker2",IDC_CAL_DATE_END,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,53,22,60,12,0,HIDC_CAL_DATE_END
-    CONTROL         "Date provisoire",IDC_CAL_TENTATIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,38,101,10,0,HIDC_CAL_TENTATIVE
+    CONTROL         "Date &provisoire",IDC_CAL_TENTATIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,38,101,10,0,HIDC_CAL_TENTATIVE
     RTEXT           "Concours Début",IDC_STATIC,120,9,52,8
     CONTROL         "DateTimePicker1",IDC_CAL_DATE_OPENS,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,177,7,60,12,0,HIDC_CAL_DATE_OPENS
     CONTROL         "Inconnu",IDC_CAL_DATE_OPENS_UNKNOWN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,241,8,42,10,0,HIDC_CAL_DATE_OPENS_UNKNOWN
@@ -777,9 +778,9 @@ BEGIN
     CONTROL         "DateTimePicker2",IDC_CAL_DATE_CLOSES,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,177,37,60,12,0,HIDC_CAL_DATE_CLOSES
     CONTROL         "Inconnu",IDC_CAL_DATE_CLOSES_UNKNOWN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,241,38,42,10,0,HIDC_CAL_DATE_CLOSES_UNKNOWN
     GROUPBOX        "Inscription",IDC_STATIC,7,55,200,70
-    CONTROL         "Pas actuellement",IDC_CAL_ENTER_NOT,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,67,70,10,0,HIDC_CAL_ENTER_NOT
-    CONTROL         "Prévision",IDC_CAL_ENTER_PLANNING,"Button",BS_AUTORADIOBUTTON,15,80,45,10,0,HIDC_CAL_ENTER_PLANNING
-    CONTROL         "Inscrit",IDC_CAL_ENTER_ENTERED,"Button",BS_AUTORADIOBUTTON,15,108,36,10,0,HIDC_CAL_ENTER_ENTERED
+    CONTROL         "Pas &actuellement",IDC_CAL_ENTER_NOT,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,67,70,10,0,HIDC_CAL_ENTER_NOT
+    CONTROL         "P&révision",IDC_CAL_ENTER_PLANNING,"Button",BS_AUTORADIOBUTTON,15,80,45,10,0,HIDC_CAL_ENTER_PLANNING
+    CONTROL         "&Inscrit",IDC_CAL_ENTER_ENTERED,"Button",BS_AUTORADIOBUTTON,15,108,36,10,0,HIDC_CAL_ENTER_ENTERED
     PUSHBUTTON      "Inscription en ligne",IDC_CAL_ONLINE_ENTRY,19,92,65,14,WS_GROUP,0,HIDC_CAL_ONLINE_ENTRY
     EDITTEXT        IDC_CAL_ONLINE_URL,88,92,112,12,ES_AUTOHSCROLL,0,HIDC_CAL_ONLINE_URL
     GROUPBOX        "Hébergement",IDC_STATIC,215,55,133,55
@@ -791,17 +792,17 @@ BEGIN
     EDITTEXT        IDC_CAL_PREMIUM_URL,60,130,147,12,ES_AUTOHSCROLL,0,HIDC_CAL_PREMIUM_URL
     PUSHBUTTON      "Email",IDC_CAL_EMAIL_SEC,7,145,45,12,WS_GROUP,0,HIDC_CAL_EMAIL_SEC
     EDITTEXT        IDC_CAL_EMAIL_SEC_ADDR,60,145,147,12,ES_AUTOHSCROLL,0,HIDC_CAL_EMAIL_SEC_ADDR
-    LTEXT           "Organisation:",IDC_STATIC,7,164,44,8
+    LTEXT           "&Organisation:",IDC_STATIC,7,164,44,8
     COMBOBOX        IDC_CAL_VENUE,53,162,60,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_CAL_VENUE
-    LTEXT           "Club:",IDC_STATIC,7,179,17,8
+    LTEXT           "&Club:",IDC_STATIC,7,179,17,8
     COMBOBOX        IDC_CAL_CLUB,53,177,115,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_CAL_CLUB
     CONTROL         "",IDC_CAL_CLUB_NOTES,"Button",BS_OWNERDRAW | WS_TABSTOP,171,177,12,12,0,HIDC_CAL_CLUB_NOTES
     CONTROL         "",IDC_CAL_CLUB_NOTE,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_BORDER | WS_VSCROLL,7,192,200,42,0,HIDC_CAL_CLUB_NOTE
-    LTEXT           "Localité:",IDC_STATIC,215,135,28,8
+    LTEXT           "&Endroit:",IDC_STATIC,215,135,28,8
     COMBOBOX        IDC_CAL_LOCATION,215,145,115,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_CAL_LOCATION
     CONTROL         "",IDC_CAL_LOCATION_NOTES,"Button",BS_OWNERDRAW | WS_TABSTOP,335,145,12,12,0,HIDC_CAL_LOCATION_NOTES
     CONTROL         "",IDC_CAL_LOCATION_NOTE,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_BORDER | WS_VSCROLL,215,162,133,72,0,HIDC_CAL_LOCATION_NOTE
-    LTEXT           "Notes",IDC_STATIC,7,237,20,8
+    LTEXT           "&Notes",IDC_STATIC,7,237,20,8
     EDITTEXT        IDC_CAL_NOTES,7,247,341,75,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_CAL_NOTES
     DEFPUSHBUTTON   "Accepter",IDOK,298,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,298,24,50,14
@@ -810,14 +811,14 @@ END
 IDD_TRAINING DIALOGEX 0, 0, 300, 201
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Journal Entrainement"
+CAPTION "Journal Entraînement"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Date:",IDC_STATIC,7,9,18,8
+    LTEXT           "&Date:",IDC_STATIC,7,9,18,8
     CONTROL         "DateTimePicker1",IDC_TRAINING_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,30,7,60,12,0,HIDC_TRAINING_DATE
-    LTEXT           "Nom",IDC_STATIC,7,27,15,8
+    LTEXT           "&Nom",IDC_STATIC,7,27,15,8
     COMBOBOX        IDC_TRAINING_NAME,30,25,150,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_TRAINING_NAME
-    LTEXT           "Info",IDC_STATIC,7,46,14,8
+    LTEXT           "&Sous-titre",IDC_STATIC,7,46,14,8
     COMBOBOX        IDC_TRAINING_SUBNAME,30,43,150,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_TRAINING_SUBNAME
     EDITTEXT        IDC_TRAINING_NOTES,7,65,286,129,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_TRAINING_NOTES
     DEFPUSHBUTTON   "Accepter",IDOK,243,7,50,14
@@ -831,8 +832,8 @@ CAPTION "Information"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     COMBOBOX        IDC_JUDGE,7,7,115,130,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_JUDGE
-    PUSHBUTTON      "Nouveax",IDC_JUDGE_NEW,129,7,35,12,0,0,HIDC_JUDGE_NEW
-    PUSHBUTTON      "Supprimer",IDC_JUDGE_DELETE,167,7,37,12,0,0,HIDC_JUDGE_DELETE
+    PUSHBUTTON      "&Nouveax",IDC_JUDGE_NEW,129,7,35,12,0,0,HIDC_JUDGE_NEW
+    PUSHBUTTON      "&Supprimer",IDC_JUDGE_DELETE,167,7,37,12,0,0,HIDC_JUDGE_DELETE
     EDITTEXT        IDC_JUDGE_COMMENTS,7,24,198,64,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_JUDGE_COMMENTS
     DEFPUSHBUTTON   "Accepter",IDOK,213,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,213,24,50,14
@@ -841,7 +842,7 @@ END
 IDD_DOG_PICKER DIALOGEX 0, 0, 186, 95
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Choisir chiens"
+CAPTION "Choisir chien(s)"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     LISTBOX         IDC_PICK_NAME,7,7,110,81,LBS_SORT | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP,0,HIDC_PICK_NAME
@@ -852,13 +853,13 @@ END
 IDD_DOG_POINTS DIALOGEX 0, 0, 350, 180
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Points acquis"
+CAPTION "Points existants"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List2",IDC_DOGPTS_POINTS,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,3,3,344,155,0,HIDC_DOGPTS_POINTS
-    PUSHBUTTON      "Nouveau...",IDC_DOGPTS_NEW,3,163,45,14,0,0,HIDC_DOGPTS_NEW
-    PUSHBUTTON      "Edition...",IDC_DOGPTS_EDIT,53,163,45,14,0,0,HIDC_DOGPTS_EDIT
-    PUSHBUTTON      "Supprimer",IDC_DOGPTS_DELETE,103,163,45,14,0,0,HIDC_DOGPTS_DELETE
+    PUSHBUTTON      "&Nouveau...",IDC_DOGPTS_NEW,3,163,45,14,0,0,HIDC_DOGPTS_NEW
+    PUSHBUTTON      "&Édition...",IDC_DOGPTS_EDIT,53,163,45,14,0,0,HIDC_DOGPTS_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_DOGPTS_DELETE,103,163,45,14,0,0,HIDC_DOGPTS_DELETE
     LTEXT           "Points selectionés",IDC_STATIC,267,166,58,8
     CTEXT           "",IDC_DOGPTS_SELECTED_PTS,327,165,20,10,SS_NOPREFIX | SS_SUNKEN
 END
@@ -869,32 +870,32 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Paramètres"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nom",IDC_STATIC,3,5,15,8
+    LTEXT           "&Nom",IDC_STATIC,3,5,15,8
     EDITTEXT        IDC_DOG_CALLNAME,22,3,110,12,ES_AUTOHSCROLL,0,HIDC_DOG_CALLNAME
-    LTEXT           "Race",IDC_STATIC,145,5,17,8
+    LTEXT           "&Race",IDC_STATIC,145,5,17,8
     EDITTEXT        IDC_DOG_BREED,165,3,182,12,ES_AUTOHSCROLL,0,HIDC_DOG_BREED
-    LTEXT           "Nom complet",IDC_STATIC,3,21,42,8
+    LTEXT           "Nom &complet",IDC_STATIC,3,21,42,8
     EDITTEXT        IDC_DOG_REG_NAME,50,19,297,12,ES_AUTOHSCROLL,0,HIDC_DOG_REG_NAME
     LTEXT           "Age (années)",IDC_STATIC,3,36,44,8
     CTEXT           "",IDC_DOG_AGE_TEXT,48,36,36,10,SS_NOPREFIX | SS_SUNKEN
-    RTEXT           "Anniversaire",IDC_STATIC,92,37,41,8
+    RTEXT           "&Anniversaire",IDC_STATIC,92,37,41,8
     CONTROL         "DateTimePicker1",IDC_DOG_DOB,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,138,35,60,12,0,HIDC_DOG_DOB
-    CONTROL         "Décédé",IDC_DOG_IS_DECEASED,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,213,36,40,10,0,HIDC_DOG_IS_DECEASED
+    CONTROL         "&Décédé",IDC_DOG_IS_DECEASED,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,213,36,40,10,0,HIDC_DOG_IS_DECEASED
     CONTROL         "DateTimePicker1",IDC_DOG_DECEASED,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,255,35,60,12,0,HIDC_DOG_DECEASED
-    LTEXT           "Notes",IDC_STATIC,3,50,20,8
+    LTEXT           "N&otes",IDC_STATIC,3,50,20,8
     EDITTEXT        IDC_DOG_NOTES,3,60,344,117,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_DOG_NOTES
 END
 
 IDD_DOG_TITLES DIALOGEX 0, 0, 350, 180
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Distinction"
+CAPTION "Récompense"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List1",IDC_DOG_TITLE_TITLES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,3,3,344,155,0,HIDC_DOG_TITLE_TITLES
-    PUSHBUTTON      "Nouveau...",IDC_DOG_TITLE_NEW,3,163,45,14,0,0,HIDC_DOG_TITLE_NEW
-    PUSHBUTTON      "Edition...",IDC_DOG_TITLE_EDIT,53,163,45,14,0,0,HIDC_DOG_TITLE_EDIT
-    PUSHBUTTON      "Supprimer",IDC_DOG_TITLE_DELETE,103,163,45,14,0,0,HIDC_DOG_TITLE_DELETE
+    PUSHBUTTON      "&Nouveau...",IDC_DOG_TITLE_NEW,3,163,45,14,0,0,HIDC_DOG_TITLE_NEW
+    PUSHBUTTON      "&Édition...",IDC_DOG_TITLE_EDIT,53,163,45,14,0,0,HIDC_DOG_TITLE_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_DOG_TITLE_DELETE,103,163,45,14,0,0,HIDC_DOG_TITLE_DELETE
     CONTROL         "Voir cachés",IDC_DOG_TITLE_HIDDEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,295,165,52,10,0,HIDC_DOG_TITLE_HIDDEN
 END
 
@@ -905,24 +906,24 @@ CAPTION "Numéro inscription"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List2",IDC_DOGNUM_REG_NUMS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,3,3,344,155,0,HIDC_DOGNUM_REG_NUMS
-    PUSHBUTTON      "Nouveau...",IDC_DOGNUM_NEW,3,163,45,14,0,0,HIDC_DOGNUM_NEW
-    PUSHBUTTON      "Edition...",IDC_DOGNUM_EDIT,53,163,45,14,0,0,HIDC_DOGNUM_EDIT
-    PUSHBUTTON      "Supprimer",IDC_DOGNUM_DELETE,103,163,45,14,0,0,HIDC_DOGNUM_DELETE
+    PUSHBUTTON      "&Nouveau...",IDC_DOGNUM_NEW,3,163,45,14,0,0,HIDC_DOGNUM_NEW
+    PUSHBUTTON      "&Édition...",IDC_DOGNUM_EDIT,53,163,45,14,0,0,HIDC_DOGNUM_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_DOGNUM_DELETE,103,163,45,14,0,0,HIDC_DOGNUM_DELETE
 END
 
 IDD_REG_NUM DIALOGEX 0, 0, 250, 140
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Numero inscription"
+CAPTION "Numéro inscription"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Organisation",IDC_STATIC,7,9,42,8
+    LTEXT           "&Organisation",IDC_STATIC,7,9,42,8
     COMBOBOX        IDC_REGNUM_VENUES,53,7,75,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_REGNUM_VENUES
-    LTEXT           "Numéro inscription",IDC_STATIC,7,27,60,8
+    LTEXT           "&Numéro inscription",IDC_STATIC,7,27,60,8
     EDITTEXT        IDC_REGNUM_REG_NUM,80,25,100,12,ES_AUTOHSCROLL,0,HIDC_REGNUM_REG_NUM
-    LTEXT           "Hauteur au garot",IDC_STATIC,7,42,56,8
+    LTEXT           "&Hauteur au garot",IDC_STATIC,7,42,56,8
     EDITTEXT        IDC_REGNUM_HEIGHT,80,40,100,12,ES_AUTOHSCROLL,0,HIDC_REGNUM_HEIGHT
-    CONTROL         "Carte hauteur reçu",IDC_REGNUM_RECEIVED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,55,77,10,0,HIDC_REGNUM_RECEIVED
+    CONTROL         "Carte hauteur &reçu",IDC_REGNUM_RECEIVED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,55,77,10,0,HIDC_REGNUM_RECEIVED
     EDITTEXT        IDC_REGNUM_NOTE,7,71,236,62,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_REGNUM_NOTE
     DEFPUSHBUTTON   "Accepter",IDOK,193,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,193,24,50,14
@@ -931,16 +932,16 @@ END
 IDD_TITLE DIALOGEX 0, 0, 340, 138
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Distinction"
+CAPTION "Récompense"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    CONTROL         "Gagné",IDC_TITLE_EARNED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,8,37,10,0,HIDC_TITLE_EARNED
+    CONTROL         "&Gagné",IDC_TITLE_EARNED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,8,37,10,0,HIDC_TITLE_EARNED
     CONTROL         "DateTimePicker1",IDC_TITLE_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,53,7,60,12,0,HIDC_TITLE_DATE
-    CONTROL         "Cacher cette distinction",IDC_TITLE_HIDDEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,140,8,91,10,0,HIDC_TITLE_HIDDEN
-    CONTROL         "Reçu",IDC_TITLE_RECEIVED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,140,20,32,10,0,HIDC_TITLE_RECEIVED
-    LTEXT           "Organisation",IDC_STATIC,7,27,42,8
+    CONTROL         "&Cacher cette distinction",IDC_TITLE_HIDDEN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,140,8,91,10,0,HIDC_TITLE_HIDDEN
+    CONTROL         "&Reçu",IDC_TITLE_RECEIVED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,140,20,32,10,0,HIDC_TITLE_RECEIVED
+    LTEXT           "&Organisation",IDC_STATIC,7,27,42,8
     COMBOBOX        IDC_TITLE_VENUES,53,25,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_TITLE_VENUES
-    LTEXT           "Distinction",IDC_STATIC,7,45,34,8
+    LTEXT           "R&écompense",IDC_STATIC,7,45,34,8
     COMBOBOX        IDC_TITLE_TITLES,53,43,280,175,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_TITLE_TITLES
     CONTROL         "",IDC_TITLE_DESC,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_BORDER | WS_VSCROLL,7,62,326,70,0,HIDC_TITLE_DESC
     DEFPUSHBUTTON   "Accepter",IDOK,283,7,50,14
@@ -953,28 +954,28 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Points acquis"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Points acquis au:",IDC_STATIC,7,9,55,8
+    LTEXT           "&Points acquis au:",IDC_STATIC,7,9,55,8
     CONTROL         "DateTimePicker1",IDC_EXISTING_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,65,7,60,12,0,HIDC_EXISTING_DATE
-    LTEXT           "Type",IDC_STATIC,7,26,17,8
+    LTEXT           "&Type",IDC_STATIC,7,26,17,8
     COMBOBOX        IDC_EXISTING_TYPE,30,24,95,129,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_TYPE
-    LTEXT           "Points",IDC_STATIC,135,9,20,8
+    LTEXT           "Po&ints",IDC_STATIC,135,9,20,8
     EDITTEXT        IDC_EXISTING_POINTS,160,7,30,12,ES_AUTOHSCROLL,0,HIDC_EXISTING_POINTS
     GROUPBOX        "Lieu d'Acquisition des points",IDC_STATIC,7,45,193,99
-    LTEXT           "Autres points",IDC_EXISTING_OTHERPOINTS_TEXT,14,61,44,8
+    LTEXT           "&Autres points",IDC_EXISTING_OTHERPOINTS_TEXT,14,61,44,8
     COMBOBOX        IDC_EXISTING_OTHERPOINTS,110,59,80,100,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_OTHERPOINTS
-    LTEXT           "Organisation",IDC_EXISTING_VENUES_TEXT,14,77,42,8
+    LTEXT           "&Organisation",IDC_EXISTING_VENUES_TEXT,14,77,42,8
     COMBOBOX        IDC_EXISTING_VENUES,110,75,80,100,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_VENUES
-    LTEXT           "Plusieurs parcours qualifiants",IDC_EXISTING_MULTIQ_TEXT,14,77,94,8
+    LTEXT           "&MultiQ",IDC_EXISTING_MULTIQ_TEXT,14,77,94,8
     COMBOBOX        IDC_EXISTING_MULTIQ,110,75,80,100,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_MULTIQ
-    LTEXT           "Niveau conducteur",IDC_EXISTING_DIVISION_TEXT,14,93,61,8
+    LTEXT           "Niveau &conducteur",IDC_EXISTING_DIVISION_TEXT,14,93,61,8
     COMBOBOX        IDC_EXISTING_DIVISION,110,91,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_DIVISION
-    LTEXT           "Degré",IDC_EXISTING_LEVEL_TEXT,14,109,20,8
+    LTEXT           "&Degré",IDC_EXISTING_LEVEL_TEXT,14,109,20,8
     COMBOBOX        IDC_EXISTING_LEVEL,110,107,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_LEVEL
-    LTEXT           "Epreuve",IDC_EXISTING_EVENT_TEXT,14,125,28,8
+    LTEXT           "&Epreuve",IDC_EXISTING_EVENT_TEXT,14,125,28,8
     COMBOBOX        IDC_EXISTING_EVENT,110,123,80,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_EVENT
-    LTEXT           "Sous-titre",IDC_EXISTING_SUBNAME_TEXT,14,125,32,8
+    LTEXT           "&Sous-titre",IDC_EXISTING_SUBNAME_TEXT,14,125,32,8
     COMBOBOX        IDC_EXISTING_SUBNAME,110,123,80,100,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP,0,HIDC_EXISTING_SUBNAME
-    LTEXT           "Notes",IDC_STATIC,208,45,20,8
+    LTEXT           "&Notes",IDC_STATIC,208,45,20,8
     EDITTEXT        IDC_EXISTING_COMMENTS,208,55,145,89,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_EXISTING_COMMENTS
     DEFPUSHBUTTON   "Accepter",IDOK,303,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,303,24,50,14
@@ -986,18 +987,18 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Paramètres concours"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Localité",IDC_STATIC,7,9,25,8
+    LTEXT           "&Endroit",IDC_STATIC,7,9,25,8
     COMBOBOX        IDC_TRIAL_LOCATION,40,7,142,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_TRIAL_LOCATION
-    CONTROL         "Confirmé",IDC_TRIAL_VERIFIED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,189,8,45,10,0,HIDC_TRIAL_VERIFIED
-    LTEXT           "Notes:",IDC_STATIC,7,23,22,8
+    CONTROL         "C&onfirmé",IDC_TRIAL_VERIFIED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,189,8,45,10,0,HIDC_TRIAL_VERIFIED
+    LTEXT           "N&otes:",IDC_STATIC,7,23,22,8
     EDITTEXT        IDC_TRIAL_NOTES,7,33,175,42,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_TRIAL_NOTES
     CONTROL         "",IDC_TRIAL_LOCATION_NOTES,"Button",BS_OWNERDRAW | WS_TABSTOP,189,20,12,12,0,HIDC_TRIAL_LOCATION_NOTES
-    LTEXT           "Notes Localité",IDC_STATIC,205,23,46,8
+    LTEXT           "Notes Endroit",IDC_STATIC,205,23,46,8
     CONTROL         "",IDC_TRIAL_LOCATION_INFO,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_BORDER | WS_VSCROLL,189,33,110,42,0,HIDC_TRIAL_LOCATION_INFO
-    LTEXT           "Club:",IDC_STATIC,7,87,17,8
-    PUSHBUTTON      "Nouveau...",IDC_TRIAL_CLUB_NEW,55,82,40,12,0,0,HIDC_TRIAL_CLUB_NEW
-    PUSHBUTTON      "Edition...",IDC_TRIAL_CLUB_EDIT,98,82,40,12,0,0,HIDC_TRIAL_CLUB_EDIT
-    PUSHBUTTON      "Supprimer",IDC_TRIAL_CLUB_DELETE,141,82,40,12,0,0,HIDC_TRIAL_CLUB_DELETE
+    LTEXT           "&Club:",IDC_STATIC,7,87,17,8
+    PUSHBUTTON      "&Nouveau...",IDC_TRIAL_CLUB_NEW,55,82,40,12,0,0,HIDC_TRIAL_CLUB_NEW
+    PUSHBUTTON      "&Édition...",IDC_TRIAL_CLUB_EDIT,98,82,40,12,0,0,HIDC_TRIAL_CLUB_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_TRIAL_CLUB_DELETE,141,82,40,12,0,0,HIDC_TRIAL_CLUB_DELETE
     CONTROL         "List1",IDC_TRIAL_CLUBS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,97,175,50,0,HIDC_TRIAL_CLUBS
     CONTROL         "",IDC_TRIAL_CLUB_NOTES,"Button",BS_OWNERDRAW | WS_TABSTOP,189,84,12,12,0,HIDC_TRIAL_CLUB_NOTES
     LTEXT           "Notes club",IDC_STATIC,205,87,34,8
@@ -1012,9 +1013,9 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Club"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nom",IDC_STATIC,7,9,15,8
+    LTEXT           "&Nom",IDC_STATIC,7,9,15,8
     COMBOBOX        IDC_CLUB_CLUBS,28,7,115,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_CLUB_CLUBS
-    LTEXT           "Organisation",IDC_STATIC,7,27,42,8
+    LTEXT           "&Organisation",IDC_STATIC,7,27,42,8
     COMBOBOX        IDC_CLUB_VENUES,52,25,60,130,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_CLUB_VENUES
     DEFPUSHBUTTON   "Accepter",IDOK,158,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,158,24,50,14
@@ -1026,31 +1027,31 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Résultat"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Date",IDC_STATIC,3,5,16,8
+    LTEXT           "&Date",IDC_STATIC,3,5,16,8
     CONTROL         "DateTimePicker1",IDC_RUNSCORE_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,25,3,60,12,0,HIDC_RUNSCORE_DATE
     LTEXT           "Venue",IDC_RUNSCORE_VENUE,97,5,50,10,SS_SUNKEN
     LTEXT           "Club",IDC_RUNSCORE_CLUB,160,5,105,10,SS_SUNKEN
     LTEXT           "Location",IDC_RUNSCORE_LOCATION,278,5,119,10,SS_SUNKEN
-    LTEXT           "Niveau conducteur",IDC_STATIC,3,22,61,8
+    LTEXT           "&Niveau conducteur",IDC_STATIC,3,22,61,8
     COMBOBOX        IDC_RUNSCORE_DIVISION,37,20,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_DIVISION
-    LTEXT           "Degré",IDC_STATIC,3,39,20,8
+    LTEXT           "De&gré",IDC_STATIC,3,39,20,8
     COMBOBOX        IDC_RUNSCORE_LEVEL,37,37,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_LEVEL
-    LTEXT           "Epreuve",IDC_STATIC,3,56,28,8
+    LTEXT           "&Épreuve",IDC_STATIC,3,56,28,8
     COMBOBOX        IDC_RUNSCORE_EVENT,37,54,80,131,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_EVENT
-    LTEXT           "Sous-titre",IDC_RUNSCORE_SUBNAME_TEXT,3,73,32,8
+    LTEXT           "&Sous-titre",IDC_RUNSCORE_SUBNAME_TEXT,3,73,32,8
     COMBOBOX        IDC_RUNSCORE_SUBNAME,37,71,80,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_SUBNAME
-    CONTROL         "Table?",IDC_RUNSCORE_TABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,89,37,10,0,HIDC_RUNSCORE_TABLE
-    LTEXT           "Hauteur",IDC_STATIC,132,22,27,8
+    CONTROL         "&Table?",IDC_RUNSCORE_TABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,89,37,10,0,HIDC_RUNSCORE_TABLE
+    LTEXT           "&Hauteur",IDC_STATIC,132,22,27,8
     COMBOBOX        IDC_RUNSCORE_HEIGHT,162,20,30,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_HEIGHT
-    LTEXT           "Juge",IDC_STATIC,200,22,16,8
+    LTEXT           "&Juge",IDC_STATIC,200,22,16,8
     COMBOBOX        IDC_RUNSCORE_JUDGE,220,20,65,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_JUDGE
     CONTROL         "",IDC_RUNSCORE_JUDGE_NOTES,"Button",BS_OWNERDRAW | WS_TABSTOP,286,20,12,12,0,HIDC_RUNSCORE_JUDGE_NOTES
-    LTEXT           "Conducteur",IDC_STATIC,304,22,38,8
+    LTEXT           "C&onducteur",IDC_STATIC,304,22,38,8
     COMBOBOX        IDC_RUNSCORE_HANDLER,332,20,65,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_HANDLER
-    RTEXT           "Conditions",IDC_STATIC,123,37,34,8
+    RTEXT           "&Conditions",IDC_STATIC,123,37,34,8
     EDITTEXT        IDC_RUNSCORE_CONDITIONS,162,37,235,31,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_RUNSCORE_CONDITIONS
     CONTROL         "",IDC_RUNSCORE_DESC,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_BORDER | WS_VSCROLL,122,75,130,42,0,HIDC_RUNSCORE_DESC
-    PUSHBUTTON      "Accompagnents...",IDC_RUNSCORE_PARTNERS_EDIT,257,75,64,14,0,0,HIDC_RUNSCORE_PARTNERS_EDIT
+    PUSHBUTTON      "&Accompagnant...",IDC_RUNSCORE_PARTNERS_EDIT,257,75,64,14,0,0,HIDC_RUNSCORE_PARTNERS_EDIT
     EDITTEXT        IDC_RUNSCORE_PARTNER,257,92,140,12,ES_AUTOHSCROLL | ES_READONLY,0,HIDC_RUNSCORE_PARTNER
     RTEXT           "Temps standard (TSP)",IDC_RUNSCORE_SCT_TEXT,3,126,88,8
     EDITTEXT        IDC_RUNSCORE_SCT,93,124,30,12,ES_AUTOHSCROLL,0,HIDC_RUNSCORE_SCT
@@ -1076,13 +1077,13 @@ BEGIN
     EDITTEXT        IDC_RUNSCORE_CLOSE_PTS,195,173,25,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_RUNSCORE_CLOSE_PTS
     RTEXT           "Fautes totales",IDC_RUNSCORE_TOTAL_FAULTS_TEXT,129,175,64,8
     CTEXT           "",IDC_RUNSCORE_TOTAL_FAULTS,195,174,30,10,SS_SUNKEN
-    RTEXT           "Rang",IDC_STATIC,237,126,19,8
+    RTEXT           "Classement",IDC_STATIC,237,126,19,8
     EDITTEXT        IDC_RUNSCORE_PLACE,261,124,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_RUNSCORE_PLACE
     CTEXT           "de",IDC_STATIC,283,126,8,8
     EDITTEXT        IDC_RUNSCORE_IN_CLASS,293,124,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_RUNSCORE_IN_CLASS
     LTEXT           "Chien qualifiés",IDC_STATIC,245,142,47,8
     EDITTEXT        IDC_RUNSCORE_DOGS_QD,293,140,20,12,ES_AUTOHSCROLL,0,HIDC_RUNSCORE_DOGS_QD
-    LTEXT           "Qualifié?",IDC_STATIC,254,158,28,8
+    LTEXT           "&Qualifié?",IDC_STATIC,254,158,28,8
     COMBOBOX        IDC_RUNSCORE_Q,283,156,30,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_RUNSCORE_Q
     LTEXT           "Résultat",IDC_STATIC,256,175,28,8
     CTEXT           "",IDC_RUNSCORE_SCORE,287,174,25,10,SS_SUNKEN
@@ -1090,9 +1091,9 @@ BEGIN
     EDITTEXT        IDC_RUNSCORE_BONUSPTS,374,124,20,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_RUNSCORE_BONUSPTS
     RTEXT           "Points vitesse",IDC_RUNSCORE_SPEEDPTS_TEXT,325,142,45,8
     CTEXT           "",IDC_RUNSCORE_SPEEDPTS,374,141,20,10,SS_SUNKEN
-    RTEXT           "Points Distinction",IDC_RUNSCORE_TITLE_POINTS_TEXT,316,158,55,8
+    RTEXT           "Points Récompense",IDC_RUNSCORE_TITLE_POINTS_TEXT,316,158,55,8
     CTEXT           "",IDC_RUNSCORE_TITLE_POINTS,374,157,20,10,SS_SUNKEN
-    PUSHBUTTON      "Autres points...",IDC_RUNSCORE_OTHERPOINTS,340,174,56,14,0,0,HIDC_RUNSCORE_OTHERPOINTS
+    PUSHBUTTON      "Autres &points...",IDC_RUNSCORE_OTHERPOINTS,340,174,56,14,0,0,HIDC_RUNSCORE_OTHERPOINTS
 END
 
 IDD_RUN_COMMENTS DIALOGEX 0, 0, 400, 191
@@ -1103,31 +1104,31 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     EDITTEXT        IDC_RUNCOMMENT_COMMENTS,3,3,258,185,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_RUNCOMMENT_COMMENTS
     EDITTEXT        IDC_RUNCOMMENT_FAULTS_LIST,270,3,127,163,ES_MULTILINE | ES_READONLY | WS_VSCROLL | WS_HSCROLL,0,HIDC_RUNCOMMENT_FAULTS_LIST
-    PUSHBUTTON      "Fautes...",IDC_RUNCOMMENT_COMMENTS_FAULTS,270,174,50,14,0,0,HIDC_RUNCOMMENT_COMMENTS_FAULTS
+    PUSHBUTTON      "&Fautes...",IDC_RUNCOMMENT_COMMENTS_FAULTS,270,174,50,14,0,0,HIDC_RUNCOMMENT_COMMENTS_FAULTS
 END
 
 IDD_RUN_REFERENCE DIALOGEX 0, 0, 400, 191
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Epreuves références"
+CAPTION "Épreuves de référence"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List1",IDC_RUNREF_REF_RUNS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,3,3,394,165,0,HIDC_RUNREF_REF_RUNS
-    PUSHBUTTON      "Nouveau...",IDC_RUNREF_NEW,3,174,50,14,0,0,HIDC_RUNREF_NEW
-    PUSHBUTTON      "Ajouter moi",IDC_RUNREF_ADDDOG,58,174,50,14,0,0,HIDC_RUNREF_ADDDOG
-    PUSHBUTTON      "Edition...",IDC_RUNREF_EDIT,113,174,50,14,0,0,HIDC_RUNREF_EDIT
-    PUSHBUTTON      "Supprimer",IDC_RUNREF_DELETE,168,174,50,14,0,0,HIDC_RUNREF_DELETE
+    PUSHBUTTON      "&Nouveau...",IDC_RUNREF_NEW,3,174,50,14,0,0,HIDC_RUNREF_NEW
+    PUSHBUTTON      "&Ajouter moi",IDC_RUNREF_ADDDOG,58,174,50,14,0,0,HIDC_RUNREF_ADDDOG
+    PUSHBUTTON      "&Édition...",IDC_RUNREF_EDIT,113,174,50,14,0,0,HIDC_RUNREF_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_RUNREF_DELETE,168,174,50,14,0,0,HIDC_RUNREF_DELETE
 END
 
 IDD_RUN_CRCD DIALOGEX 0, 0, 400, 191
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "CRCD"
+CAPTION "CRCD (logiciel pour créer des parcours)"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Créer un parcours avec CRCD et faites un copier-coller depuis CRCD ici. Pour modifier le parcours, copiez-collez le texte dans CRCD.",IDC_STATIC,3,3,255,16
-    PUSHBUTTON      "Visualisateur de Parcours",IDC_RUNCRCD_EDIT,312,3,85,14,0,0,HIDC_RUNCRCD_EDIT
-    PUSHBUTTON      "Voir",IDC_RUNCRCD_VIEW,337,21,60,14,0,0,HIDC_RUNCRCD_VIEW
+    LTEXT           "Créer un parcours avec CRCD et faites un copier-coller depuis CRCD. Pour modifier le parcours, copiez-collez le texte dans CRCD.",IDC_STATIC,3,3,255,16
+    PUSHBUTTON      "Afficheur de Parcours",IDC_RUNCRCD_EDIT,312,3,85,14,0,0,HIDC_RUNCRCD_EDIT
+    PUSHBUTTON      "Affichage",IDC_RUNCRCD_VIEW,337,21,60,14,0,0,HIDC_RUNCRCD_VIEW
     PUSHBUTTON      "Coller le parcours",IDC_RUNCRCD_COPY,337,50,60,14,0,0,HIDC_RUNCRCD_COPY
     CONTROL         "Inclure l'image",IDC_RUNCRCD_IMAGE,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,347,65,50,20,0,HIDC_RUNCRCD_IMAGE
     LTEXT           "NB: Avec l'image le fichier sera beaucoup plus important.",IDC_STATIC,347,85,50,45
@@ -1142,10 +1143,10 @@ CAPTION "Liens"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List1",IDC_RUNLINK_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,3,3,394,165,0,HIDC_RUNLINK_LIST
-    PUSHBUTTON      "Nouveau...",IDC_RUNLINK_NEW,3,174,50,14,0,0,HIDC_RUNLINK_NEW
-    PUSHBUTTON      "Edition...",IDC_RUNLINK_EDIT,58,174,50,14,0,0,HIDC_RUNLINK_EDIT
-    PUSHBUTTON      "Supprimer",IDC_RUNLINK_DELETE,113,174,50,14,0,0,HIDC_RUNLINK_DELETE
-    PUSHBUTTON      "Ouvrir",IDC_RUNLINK_OPEN,347,174,50,14,0,0,HIDC_RUNLINK_OPEN
+    PUSHBUTTON      "&Nouveau...",IDC_RUNLINK_NEW,3,174,50,14,0,0,HIDC_RUNLINK_NEW
+    PUSHBUTTON      "&Édition...",IDC_RUNLINK_EDIT,58,174,50,14,0,0,HIDC_RUNLINK_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_RUNLINK_DELETE,113,174,50,14,0,0,HIDC_RUNLINK_DELETE
+    PUSHBUTTON      "&Ouvrir",IDC_RUNLINK_OPEN,347,174,50,14,0,0,HIDC_RUNLINK_OPEN
 END
 
 IDD_REF_RUN DIALOGEX 0, 0, 324, 130
@@ -1154,21 +1155,21 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Parcours de référence"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Rang",IDC_STATIC,7,9,18,8
+    LTEXT           "&Classement",IDC_STATIC,7,9,18,8
     EDITTEXT        IDC_REFRUN_PLACE,30,7,25,12,ES_AUTOHSCROLL | ES_NUMBER,0,HIDC_REFRUN_PLACE
-    LTEXT           "Qualifiant?",IDC_STATIC,59,9,35,8
+    LTEXT           "&Qualifiant?",IDC_STATIC,59,9,35,8
     COMBOBOX        IDC_REFRUN_Q,95,7,30,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_REFRUN_Q
-    LTEXT           "Temps",IDC_STATIC,129,9,22,8
+    LTEXT           "&Temps",IDC_STATIC,129,9,22,8
     EDITTEXT        IDC_REFRUN_TIME,152,7,30,12,ES_AUTOHSCROLL,0,HIDC_REFRUN_TIME
-    LTEXT           "Résultat",IDC_STATIC,187,9,28,8
+    LTEXT           "&Résultat",IDC_STATIC,187,9,28,8
     EDITTEXT        IDC_REFRUN_POINTS,217,7,25,12,ES_AUTOHSCROLL,0,HIDC_REFRUN_POINTS
-    LTEXT           "Hauteur",IDC_STATIC,248,9,27,8
+    LTEXT           "&Hauteur",IDC_STATIC,248,9,27,8
     COMBOBOX        IDC_REFRUN_HEIGHT,277,7,40,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_REFRUN_HEIGHT
-    LTEXT           "Nom",IDC_STATIC,7,24,15,8
+    LTEXT           "&Nom",IDC_STATIC,7,24,15,8
     COMBOBOX        IDC_REFRUN_NAME,30,22,287,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_REFRUN_NAME
-    LTEXT           "Race",IDC_STATIC,7,39,17,8
+    LTEXT           "R&ace",IDC_STATIC,7,39,17,8
     COMBOBOX        IDC_REFRUN_BREED,30,37,287,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_REFRUN_BREED
-    LTEXT           "Notes",IDC_STATIC,7,54,20,8
+    LTEXT           "N&otes",IDC_STATIC,7,54,20,8
     EDITTEXT        IDC_REFRUN_NOTES,30,52,287,44,ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL,0,HIDC_REFRUN_NOTES
     DEFPUSHBUTTON   "Accepter",IDOK,104,109,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,170,109,50,14
@@ -1180,11 +1181,11 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Accompagnent"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Conducteur",IDC_STATIC,7,9,38,8
+    LTEXT           "&Conducteur",IDC_STATIC,7,9,38,8
     COMBOBOX        IDC_PARTNER_NAME,48,7,87,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_PARTNER_NAME
-    LTEXT           "Chien",IDC_STATIC,7,27,19,8
+    LTEXT           "C&hien",IDC_STATIC,7,27,19,8
     COMBOBOX        IDC_PARTNER_CALLNAME,48,25,87,130,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_PARTNER_CALLNAME
-    LTEXT           "Numéro",IDC_STATIC,7,47,26,8
+    LTEXT           "&Numéro",IDC_STATIC,7,47,26,8
     EDITTEXT        IDC_PARTNER_REG_NUM,48,45,87,12,ES_AUTOHSCROLL,0,HIDC_PARTNER_REG_NUM
     DEFPUSHBUTTON   "Accepter",IDOK,148,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,148,24,50,14
@@ -1198,7 +1199,7 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     COMBOBOX        IDC_OTHER_OTHERPOINTS,7,7,140,130,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_OTHER_OTHERPOINTS
     CONTROL         "",IDC_OTHER_DESC,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_BORDER | WS_VSCROLL,7,23,140,55,0,HIDC_OTHER_DESC
-    LTEXT           "Points",IDC_STATIC,7,83,20,8
+    LTEXT           "&Points",IDC_STATIC,7,83,20,8
     EDITTEXT        IDC_OTHER_POINTS,30,81,30,12,ES_AUTOHSCROLL,0,HIDC_OTHER_POINTS
     DEFPUSHBUTTON   "Accepter",IDOK,158,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,158,24,50,14
@@ -1219,12 +1220,12 @@ END
 IDD_CONFIG_TITLE_POINTS DIALOGEX 0, 0, 205, 61
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Points Distinction"
+CAPTION "Points Récompense"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nombre de fautes permises\nRang",IDC_CONFIG_TITLEPTS_VALUE_TEXT,7,9,112,8
+    LTEXT           "&Nombre de fautes permises\n&Classement",IDC_CONFIG_TITLEPTS_VALUE_TEXT,7,9,112,8
     EDITTEXT        IDC_CONFIG_TITLEPTS_VALUE,98,7,40,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_TITLEPTS_VALUE
-    LTEXT           "Points gagnés",IDC_STATIC,7,25,46,8
+    LTEXT           "Points &gagnés",IDC_STATIC,7,25,46,8
     EDITTEXT        IDC_CONFIG_TITLEPTS_POINTS,98,23,40,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_TITLEPTS_POINTS
     COMBOBOX        IDC_CONFIG_TITLEPTS_TITLE_POINTS,7,42,90,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_CONFIG_TITLEPTS_TITLE_POINTS
     DEFPUSHBUTTON   "Accepter",IDOK,148,7,50,14
@@ -1234,13 +1235,13 @@ END
 IDD_CONFIG_PLACEINFO DIALOGEX 0, 0, 190, 74
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Multiplicateurs de Rang"
+CAPTION "Multiplicateurs de Classement"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Zéro utilisera le Multiplicateur pour toutes les rangs listés.",IDC_STATIC,7,7,115,24
-    LTEXT           "Rang",IDC_STATIC,7,40,18,8
+    LTEXT           "Note: Zéro attribuera le Multiplicateur pour tous les Classements non spécifiquement listés.",IDC_STATIC,7,7,115,24
+    LTEXT           "&Classement",IDC_STATIC,7,40,18,8
     EDITTEXT        IDC_CONFIG_PLACEINFO_PLACE,35,38,40,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_PLACEINFO_PLACE
-    LTEXT           "Valeur",IDC_STATIC,7,56,21,8
+    LTEXT           "&Valeur",IDC_STATIC,7,56,21,8
     EDITTEXT        IDC_CONFIG_PLACEINFO_VALUE,35,54,40,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_PLACEINFO_VALUE
     DEFPUSHBUTTON   "Accepter",IDOK,133,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,133,24,50,14
@@ -1248,10 +1249,10 @@ END
 
 IDD_CRCD_VIEWER DIALOGEX 0, 0, 272, 190
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
-CAPTION "Visualisateur CRCD"
+CAPTION "Afficheur CRCD"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "Fermer",IDOK,215,7,50,14
+    DEFPUSHBUTTON   "Quitter",IDOK,215,7,50,14
     CONTROL         "",IDC_VIEWER_CRCD,"Static",SS_ENHMETAFILE | WS_BORDER,7,7,200,176
 END
 
@@ -1273,17 +1274,17 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Programme"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    CONTROL         "Vérife automatiquement les mises à jour",IDC_OPT_PGM_AUTO_CHECK,
+    CONTROL         "Vérifie automatiquement les mises à jour",IDC_OPT_PGM_AUTO_CHECK,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,3,143,10,0,HIDC_OPT_PGM_AUTO_CHECK
-    LTEXT           "NB: Cette fonction vérifie si des mises-à-jour existent. Elle ne les télécharge pas.",IDC_STATIC,15,13,260,16
+    LTEXT           "NB: Cette fonction vérifie si des mises à jour existent. Elle ne les télécharge pas.",IDC_STATIC,15,13,260,16
     LTEXT           "Nombre des copies de sauvegarde",IDC_STATIC,3,42,111,8
     EDITTEXT        IDC_OPT_PGM_EDIT,116,40,20,12,ES_AUTOHSCROLL,0,HIDC_OPT_PGM_EDIT
-    LTEXT           "Chaque fois qu'un fichier est sauvegardé, un copie est faite. Mettez 0 pour éviter cela.",IDC_STATIC,180,38,167,16
-    CONTROL         "Voir paramètres du chien après l'ajout d'une distinction",IDC_OPT_PGM_AUTOSHOW,
+    LTEXT           "Chaque fois qu'un fichier est sauvegardé, une copie est faite. Mettez 0 pour éviter cela.",IDC_STATIC,180,38,167,16
+    CONTROL         "Affichage paramètres du chien après l'ajout d'une Récompense",IDC_OPT_PGM_AUTOSHOW,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,65,190,10,0,HIDC_OPT_PGM_AUTOSHOW
-    CONTROL         "Voir fenêtre de lancement au démarrage",IDC_OPT_PGM_SHOW_SPLASH,
+    CONTROL         "Afficher écran de lancement au démarrage",IDC_OPT_PGM_SHOW_SPLASH,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,3,85,145,10,0,HIDC_OPT_PGM_SHOW_SPLASH
-    LTEXT           "Choisir l'image pour la fenêtre de démarrage (rien pour defaut)",IDC_STATIC,15,96,202,8
+    LTEXT           "Choisir l'image pour la fenêtre de démarrage (rien pour défaut)",IDC_STATIC,15,96,202,8
     EDITTEXT        IDC_OPT_PGM_FILENAME,15,106,180,12,ES_AUTOHSCROLL,0,HIDC_OPT_PGM_FILENAME
     PUSHBUTTON      "Chercher...",IDC_OPT_PGM_BROWSE,200,106,45,12,0,0,HIDC_OPT_PGM_BROWSE
     CONTROL         "Utiliser HTML dans la vue Points",IDC_OPT_PGM_SHOWHTML,
@@ -1296,7 +1297,7 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Filtres"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    GROUPBOX        "Filtres nommés",IDC_STATIC,3,3,168,52,WS_GROUP
+    GROUPBOX        "&Filtres nommés",IDC_STATIC,3,3,168,52,WS_GROUP
     COMBOBOX        IDC_OPT_FILTER_NAMES,11,17,152,100,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP,0,HIDC_OPT_FILTER_NAMES
     PUSHBUTTON      "Sauvegarder",IDC_OPT_FILTER_NAMES_SAVE,64,35,45,12,0,0,HIDC_OPT_FILTER_NAMES_SAVE
     PUSHBUTTON      "Supprimer",IDC_OPT_FILTER_NAMES_DELETE,118,35,45,12,0,0,HIDC_OPT_FILTER_NAMES_DELETE
@@ -1304,10 +1305,10 @@ BEGIN
     CONTROL         "Voir toutes les dates",IDC_OPT_FILTER_DATE_ALL,"Button",BS_AUTORADIOBUTTON | WS_GROUP,11,72,81,10,0,HIDC_OPT_FILTER_DATE_ALL
     CONTROL         "Voir dates entre (inclus):",IDC_OPT_FILTER_DATE_RANGE,
                     "Button",BS_AUTORADIOBUTTON,11,84,95,10,0,HIDC_OPT_FILTER_DATE_RANGE
-    CONTROL         "Après",IDC_OPT_FILTER_DATE_START_CHECK,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,23,97,35,10,0,HIDC_OPT_FILTER_DATE_START_CHECK
+    CONTROL         "&Après",IDC_OPT_FILTER_DATE_START_CHECK,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,23,97,35,10,0,HIDC_OPT_FILTER_DATE_START_CHECK
     CONTROL         "DateTimePicker2",IDC_OPT_FILTER_DATE_START,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,63,96,60,12,0,HIDC_OPT_FILTER_DATE_START
-    CONTROL         "Avant",IDC_OPT_FILTER_DATE_END_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,23,112,35,10,0,HIDC_OPT_FILTER_DATE_END_CHECK
+    CONTROL         "A&vant",IDC_OPT_FILTER_DATE_END_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,23,112,35,10,0,HIDC_OPT_FILTER_DATE_END_CHECK
     CONTROL         "DateTimePicker2",IDC_OPT_FILTER_DATE_END,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,63,111,60,12,0,HIDC_OPT_FILTER_DATE_END
     GROUPBOX        "Entrées du Calendrier",IDC_STATIC,3,134,168,52,WS_GROUP
@@ -1316,21 +1317,21 @@ BEGIN
     CONTROL         "Voir planning",IDC_OPT_FILTER_CAL_PLANNING,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,11,159,57,10,0,HIDC_OPT_FILTER_CAL_PLANNING
     CONTROL         "Voir inscrits",IDC_OPT_FILTER_CAL_ENTERED,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,11,171,52,10,0,HIDC_OPT_FILTER_CAL_ENTERED
     GROUPBOX        "Journal des entrainements",IDC_STATIC,3,190,168,96,WS_GROUP
-    CONTROL         "Voir tous les noms",IDC_OPT_FILTER_LOG_NAME_ALL,"Button",BS_AUTORADIOBUTTON | WS_GROUP,11,203,73,10,0,HIDC_OPT_FILTER_LOG_NAME_ALL
-    CONTROL         "Voir seulement:",IDC_OPT_FILTER_LOG_NAME_SELECTED,
+    CONTROL         "Voir tous les no&ms",IDC_OPT_FILTER_LOG_NAME_ALL,"Button",BS_AUTORADIOBUTTON | WS_GROUP,11,203,73,10,0,HIDC_OPT_FILTER_LOG_NAME_ALL
+    CONTROL         "Voir se&ulement:",IDC_OPT_FILTER_LOG_NAME_SELECTED,
                     "Button",BS_AUTORADIOBUTTON,11,215,65,10,0,HIDC_OPT_FILTER_LOG_NAME_SELECTED
     CONTROL         "",IDC_OPT_FILTER_LOG_NAME,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,11,228,151,50,0,HIDC_OPT_FILTER_LOG_NAME
-    GROUPBOX        "Qualifiants pour brevet",IDC_STATIC,179,3,168,52,WS_GROUP
-    CONTROL         "Voir toutes épreuves",IDC_OPT_FILTER_RUN_RUNS_ALL,
+    GROUPBOX        "Qualifiants",IDC_STATIC,179,3,168,52,WS_GROUP
+    CONTROL         "Voir toutes &épreuves",IDC_OPT_FILTER_RUN_RUNS_ALL,
                     "Button",BS_AUTORADIOBUTTON | WS_GROUP,187,16,83,10,0,HIDC_OPT_FILTER_RUN_RUNS_ALL
-    CONTROL         "Voir épreuves qualifiantes",IDC_OPT_FILTER_RUN_RUNS_Q,
+    CONTROL         "Voir épreuves &qualifiantes",IDC_OPT_FILTER_RUN_RUNS_Q,
                     "Button",BS_AUTORADIOBUTTON,187,28,99,10,0,HIDC_OPT_FILTER_RUN_RUNS_Q
-    CONTROL         "Voir épreuves non-qualifiantes",IDC_OPT_FILTER_RUN_RUNS_NON_Q,
+    CONTROL         "Voir épreuves &non qualifiantes",IDC_OPT_FILTER_RUN_RUNS_NON_Q,
                     "Button",BS_AUTORADIOBUTTON,187,40,113,10,0,HIDC_OPT_FILTER_RUN_RUNS_NON_Q
-    GROUPBOX        "Organisation",IDC_STATIC,179,59,168,227,WS_GROUP
-    CONTROL         "Voir toutes organisations",IDC_OPT_FILTER_RUN_VENUES_ALL,
+    GROUPBOX        "Organisation/Degrés",IDC_STATIC,179,59,168,227,WS_GROUP
+    CONTROL         "Voir toutes &organisations",IDC_OPT_FILTER_RUN_VENUES_ALL,
                     "Button",BS_AUTORADIOBUTTON | WS_GROUP,187,72,95,10,0,HIDC_OPT_FILTER_RUN_VENUES_ALL
-    CONTROL         "Voir seulement:",IDC_OPT_FILTER_RUN_VENUES_SELECTED,
+    CONTROL         "Voir &seulement:",IDC_OPT_FILTER_RUN_VENUES_SELECTED,
                     "Button",BS_AUTORADIOBUTTON,187,84,65,10,0,HIDC_OPT_FILTER_RUN_VENUES_SELECTED
     CONTROL         "",IDC_OPT_FILTER_RUN_VENUES,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,187,97,151,181,0,HIDC_OPT_FILTER_RUN_VENUES
 END
@@ -1371,6 +1372,7 @@ BEGIN
     PUSHBUTTON      "Choisir couleur...",IDC_OPT_CAL_COLOR_SET,281,108,60,12,0,0,HIDC_OPT_CAL_COLOR_SET
     CONTROL         "",IDC_OPT_CAL_VIEW,"Static",SS_OWNERDRAW | SS_SUNKEN,190,125,147,82
     PUSHBUTTON      "Choisir Police...",IDC_OPT_CAL_FONT,233,212,60,14,0,0,HIDC_OPT_CAL_FONT
+
 END
 
 IDD_VIEW_OPTIONS_PRINTING DIALOGEX 0, 0, 350, 289
@@ -1383,13 +1385,13 @@ BEGIN
     CTEXT           "Example de Police",IDC_OPT_PRINT_FONT_TEXT,15,18,75,35,SS_NOPREFIX | SS_CENTERIMAGE | SS_SUNKEN
     PUSHBUTTON      "Choisir Police...",IDC_OPT_PRINT_FONT,22,58,60,14,0,0,HIDC_OPT_PRINT_FONT
     GROUPBOX        "Marges",IDC_STATIC,3,84,152,57
-    LTEXT           "Gauche:",IDC_STATIC,15,101,28,8
+    LTEXT           "&Gauche:",IDC_STATIC,15,101,28,8
     EDITTEXT        IDC_OPT_PRINT_MARGIN_L,45,99,30,12,ES_AUTOHSCROLL,0,HIDC_OPT_PRINT_MARGIN_L
-    LTEXT           "Droite:",IDC_STATIC,85,101,23,8
+    LTEXT           "&Droite:",IDC_STATIC,85,101,23,8
     EDITTEXT        IDC_OPT_PRINT_MARGIN_R,112,99,30,12,ES_AUTOHSCROLL,0,HIDC_OPT_PRINT_MARGIN_R
-    LTEXT           "Haute:",IDC_STATIC,15,121,23,8
+    LTEXT           "&Haute:",IDC_STATIC,15,121,23,8
     EDITTEXT        IDC_OPT_PRINT_MARGIN_T,45,119,30,12,ES_AUTOHSCROLL,0,HIDC_OPT_PRINT_MARGIN_T
-    LTEXT           "Basse:",IDC_STATIC,85,121,22,8
+    LTEXT           "&Basse:",IDC_STATIC,85,121,22,8
     EDITTEXT        IDC_OPT_PRINT_MARGIN_B,112,119,30,12,ES_AUTOHSCROLL,0,HIDC_OPT_PRINT_MARGIN_B
 END
 
@@ -1400,8 +1402,8 @@ CAPTION "Changer l'ordre"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     LISTBOX         IDC_REORDER_LIST,7,7,220,93,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,HIDC_REORDER_LIST
-    PUSHBUTTON      "Monter",IDC_REORDER_MOVE_UP,240,69,50,14,0,0,HIDC_REORDER_MOVE_UP
-    PUSHBUTTON      "Descendre",IDC_REORDER_MOVE_DOWN,240,85,50,14,0,0,HIDC_REORDER_MOVE_DOWN
+    PUSHBUTTON      "&Monter",IDC_REORDER_MOVE_UP,240,69,50,14,0,0,HIDC_REORDER_MOVE_UP
+    PUSHBUTTON      "&Descendre",IDC_REORDER_MOVE_DOWN,240,85,50,14,0,0,HIDC_REORDER_MOVE_DOWN
     DEFPUSHBUTTON   "Accepter",IDOK,240,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,240,24,50,14
 END
@@ -1477,13 +1479,13 @@ CAPTION "Attribuer Colonnes"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "List2",IDC_ASSIGN_TYPE,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,270,50,0,HIDC_ASSIGN_TYPE
-    LTEXT           "Champs Disponibles:",IDC_STATIC,7,62,66,8
+    LTEXT           "&Champs Disponibles:",IDC_STATIC,7,62,66,8
     LISTBOX         IDC_ASSIGN_AVAILABLE,7,72,105,221,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP,0,HIDC_ASSIGN_AVAILABLE
-    PUSHBUTTON      "Ajouter ->",IDC_ASSIGN_ADD,117,72,50,14,0,0,HIDC_ASSIGN_ADD
-    PUSHBUTTON      "<- Supprimer",IDC_ASSIGN_DELETE,117,89,50,14,0,0,HIDC_ASSIGN_DELETE
-    PUSHBUTTON      "Monter",IDC_ASSIGN_MOVE_UP,117,106,50,14,0,0,HIDC_ASSIGN_MOVE_UP
-    PUSHBUTTON      "Descendre",IDC_ASSIGN_MOVE_DOWN,117,123,50,14,0,0,HIDC_ASSIGN_MOVE_DOWN
-    LTEXT           "Ordre des Champs:",IDC_STATIC,172,62,63,8
+    PUSHBUTTON      "&Ajouter ->",IDC_ASSIGN_ADD,117,72,50,14,0,0,HIDC_ASSIGN_ADD
+    PUSHBUTTON      "<- &Supprimer",IDC_ASSIGN_DELETE,117,89,50,14,0,0,HIDC_ASSIGN_DELETE
+    PUSHBUTTON      "&Monter",IDC_ASSIGN_MOVE_UP,117,106,50,14,0,0,HIDC_ASSIGN_MOVE_UP
+    PUSHBUTTON      "&Descendre",IDC_ASSIGN_MOVE_DOWN,117,123,50,14,0,0,HIDC_ASSIGN_MOVE_DOWN
+    LTEXT           "&Ordre des Champs:",IDC_STATIC,172,62,63,8
     LISTBOX         IDC_ASSIGN_COLUMNS,172,72,105,221,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP,0,HIDC_ASSIGN_COLUMNS
     DEFPUSHBUTTON   "Accepter",IDOK,293,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,293,24,50,14
@@ -1498,9 +1500,9 @@ BEGIN
     CONTROL         "",IDC_FINDLINKS_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,245,107,0,HIDC_FINDLINKS_LIST
     DEFPUSHBUTTON   "Accepter",IDOK,258,7,55,14
     PUSHBUTTON      "Annuler",IDCANCEL,258,24,55,14
-    PUSHBUTTON      "Copier adresse",IDC_FINDLINKS_COPY,258,66,55,14,0,0,HIDC_FINDLINKS_COPY
-    PUSHBUTTON      "Edition",IDC_FINDLINKS_EDIT,258,83,55,14,0,0,HIDC_FINDLINKS_EDIT
-    PUSHBUTTON      "Ouvrir",IDC_FINDLINKS_OPEN,258,100,55,14,0,0,HIDC_FINDLINKS_OPEN
+    PUSHBUTTON      "&Copier adresse",IDC_FINDLINKS_COPY,258,66,55,14,0,0,HIDC_FINDLINKS_COPY
+    PUSHBUTTON      "&Édition",IDC_FINDLINKS_EDIT,258,83,55,14,0,0,HIDC_FINDLINKS_EDIT
+    PUSHBUTTON      "&Ouvrir",IDC_FINDLINKS_OPEN,258,100,55,14,0,0,HIDC_FINDLINKS_OPEN
 END
 
 IDD_MESSAGE_BOX DIALOGEX 0, 0, 260, 70
@@ -1511,8 +1513,8 @@ BEGIN
     LTEXT           "",IDC_MESSAGE_BOX_TEXT,35,7,218,32,SS_NOPREFIX
     DEFPUSHBUTTON   "Accepter",IDC_MESSAGE_BOX_BUTTON1,12,49,50,14
     PUSHBUTTON      "Annuler",IDC_MESSAGE_BOX_BUTTON2,74,49,50,14
-    PUSHBUTTON      "Re-essayer",IDC_MESSAGE_BOX_BUTTON3,136,49,50,14
-    PUSHBUTTON      "Details...",IDC_MESSAGE_BOX_DETAILS,198,49,50,14
+    PUSHBUTTON      "Réessayer",IDC_MESSAGE_BOX_BUTTON3,136,49,50,14
+    PUSHBUTTON      "Détails...",IDC_MESSAGE_BOX_DETAILS,198,49,50,14
 END
 
 IDD_PROGRESS_DLG DIALOGEX 0, 0, 220, 63
@@ -1528,23 +1530,23 @@ END
 IDD_CONFIG_MULTI_Q DIALOGEX 0, 0, 214, 156
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Configuration du 'multiple Q'"
+CAPTION "Configuration du 'multiple Q' (pour AKC et UKC)"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Nom",IDC_STATIC,7,9,20,8
+    LTEXT           "&Nom",IDC_STATIC,7,9,20,8
     EDITTEXT        IDC_CONFIG_MULTIQ_NAME,30,7,100,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_MULTIQ_NAME
-    LTEXT           "Abbréviation",IDC_STATIC,7,25,42,8
+    LTEXT           "A&bbréviation",IDC_STATIC,7,25,42,8
     EDITTEXT        IDC_CONFIG_MULTIQ_SHORTNAME,53,23,30,12,ES_AUTOHSCROLL,0,HIDC_CONFIG_MULTIQ_SHORTNAME
-    CONTROL         "Valide du",IDC_CONFIG_MULTIQ_DATE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,40,45,10,0,HIDC_CONFIG_MULTIQ_DATE_VALID_FROM
+    CONTROL         "Valide &du",IDC_CONFIG_MULTIQ_DATE_VALID_FROM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,40,45,10,0,HIDC_CONFIG_MULTIQ_DATE_VALID_FROM
     CONTROL         "DateTimePicker1",IDC_CONFIG_MULTIQ_DATE_START,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,69,40,60,12,0,HIDC_CONFIG_MULTIQ_DATE_START
-    CONTROL         "Valide jusqu'au",IDC_CONFIG_MULTIQ_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,56,63,10,0,HIDC_CONFIG_MULTIQ_DATE_VALID_TO
+    CONTROL         "Valide &jusqu'au",IDC_CONFIG_MULTIQ_DATE_VALID_TO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,56,63,10,0,HIDC_CONFIG_MULTIQ_DATE_VALID_TO
     CONTROL         "DateTimePicker1",IDC_CONFIG_MULTIQ_DATE_END,
                     "SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,69,55,60,12,0,HIDC_CONFIG_MULTIQ_DATE_END
     CONTROL         "",IDC_CONFIG_MULTIQ_ITEMS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,72,200,60,0,HIDC_CONFIG_MULTIQ_ITEMS
-    PUSHBUTTON      "Ajouter",IDC_CONFIG_MULTIQ_ADD,7,135,50,14,0,0,HIDC_CONFIG_MULTIQ_ADD
-    PUSHBUTTON      "Edition",IDC_CONFIG_MULTIQ_EDIT,62,135,50,14,0,0,HIDC_CONFIG_MULTIQ_EDIT
-    PUSHBUTTON      "Supprimer",IDC_CONFIG_MULTIQ_DELETE,117,135,50,14,0,0,HIDC_CONFIG_MULTIQ_DELETE
+    PUSHBUTTON      "&Ajouter",IDC_CONFIG_MULTIQ_ADD,7,135,50,14,0,0,HIDC_CONFIG_MULTIQ_ADD
+    PUSHBUTTON      "&Édition",IDC_CONFIG_MULTIQ_EDIT,62,135,50,14,0,0,HIDC_CONFIG_MULTIQ_EDIT
+    PUSHBUTTON      "&Supprimer",IDC_CONFIG_MULTIQ_DELETE,117,135,50,14,0,0,HIDC_CONFIG_MULTIQ_DELETE
     DEFPUSHBUTTON   "Accepter",IDOK,157,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,157,24,50,14
 END
@@ -1552,14 +1554,14 @@ END
 IDD_EVENT_SELECT DIALOGEX 0, 0, 220, 55
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Selection épreuve"
+CAPTION "Sélection épreuve"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Niveau conducteur",IDC_STATIC,7,9,61,8
+    LTEXT           "&Niveau conducteur",IDC_STATIC,7,9,61,8
     COMBOBOX        IDC_EVENT_SELECT_DIVISION,70,7,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_EVENT_SELECT_DIVISION
-    LTEXT           "Degré",IDC_STATIC,7,24,20,8
+    LTEXT           "&Degré",IDC_STATIC,7,24,20,8
     COMBOBOX        IDC_EVENT_SELECT_LEVEL,70,22,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_EVENT_SELECT_LEVEL
-    LTEXT           "Epreuve",IDC_STATIC,8,39,28,8
+    LTEXT           "&Épreuve",IDC_STATIC,8,39,28,8
     COMBOBOX        IDC_EVENT_SELECT_EVENT,70,36,80,131,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_EVENT_SELECT_EVENT
     DEFPUSHBUTTON   "Accepter",IDOK,163,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,163,24,50,14
@@ -1585,11 +1587,11 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Ordre des points"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "1er Niveau",IDC_STATIC,7,9,36,8
+    LTEXT           "&1er Niveau",IDC_STATIC,7,9,36,8
     COMBOBOX        IDC_POINTS_VIEW_SORT_C1,53,7,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_POINTS_VIEW_SORT_C1
-    LTEXT           "2ème Niveau",IDC_STATIC,7,24,42,8
+    LTEXT           "&2ème Niveau",IDC_STATIC,7,24,42,8
     COMBOBOX        IDC_POINTS_VIEW_SORT_C2,53,22,80,130,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_POINTS_VIEW_SORT_C2
-    LTEXT           "3ème Niveau",IDC_STATIC,8,39,42,8
+    LTEXT           "&3ème Niveau",IDC_STATIC,8,39,42,8
     COMBOBOX        IDC_POINTS_VIEW_SORT_C3,53,36,80,131,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP,0,HIDC_POINTS_VIEW_SORT_C3
     DEFPUSHBUTTON   "Accepter",IDOK,143,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,143,24,50,14
@@ -1598,7 +1600,7 @@ END
 IDD_LANGUAGE DIALOGEX 0, 0, 205, 46
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
-CAPTION "Choix de la Langue"
+CAPTION "Choisir la Langue"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     LTEXT           "Choisir la Langue:",IDC_STATIC,7,7,58,8
@@ -1615,12 +1617,12 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
     CONTROL         "",IDC_PLUGIN_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,7,7,270,200,0,HIDC_PLUGIN_TREE
     EDITTEXT        IDC_PLUGIN_DETAILS,7,210,270,42,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL,0,HIDC_PLUGIN_DETAILS
-    PUSHBUTTON      "&Read Entries",IDC_PLUGIN_READ,288,7,50,14,0,0,HIDC_PLUGIN_READ
-    PUSHBUTTON      "&Add Entries",IDC_PLUGIN_ADD,288,24,50,14,0,0,HIDC_PLUGIN_ADD
+    PUSHBUTTON      "&Lire Entrées",IDC_PLUGIN_READ,288,7,50,14,0,0,HIDC_PLUGIN_READ
+    PUSHBUTTON      "&Rajouter Entrées",IDC_PLUGIN_ADD,288,24,50,14,0,0,HIDC_PLUGIN_ADD
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,286,42,55,1
-    PUSHBUTTON      "&Enable",IDC_PLUGIN_ENABLE,288,47,50,14,0,0,HIDC_PLUGIN_ENABLE
-    PUSHBUTTON      "&Details...",IDC_PLUGIN_QUERYDETAILS,288,64,50,14,0,0,HIDC_PLUGIN_QUERYDETAILS
-    DEFPUSHBUTTON   "Close",IDCANCEL,288,237,50,14
+    PUSHBUTTON      "&Activer",IDC_PLUGIN_ENABLE,288,47,50,14,0,0,HIDC_PLUGIN_ENABLE
+    PUSHBUTTON      "&Détails...",IDC_PLUGIN_QUERYDETAILS,288,64,50,14,0,0,HIDC_PLUGIN_QUERYDETAILS
+    DEFPUSHBUTTON   "Quitter",IDCANCEL,288,237,50,14
 END
 
 IDD_CALENDAR_QUERY_DETAIL DIALOGEX 0, 0, 275, 202
@@ -1629,9 +1631,9 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Query Detail"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
 BEGIN
-    LTEXT           "Location Codes",IDC_STATIC,7,7,50,8
+    LTEXT           "Codes Endroit",IDC_STATIC,7,7,50,8
     CONTROL         "",IDC_QUERY_LOCATIONS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,17,200,80,0,HIDC_QUERY_LOCATIONS
-    LTEXT           "Venue Codes",IDC_STATIC,7,105,43,8
+    LTEXT           "Codes Organisation",IDC_STATIC,7,105,43,8
     CONTROL         "",IDC_QUERY_VENUES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,7,115,200,80,0,HIDC_QUERY_VENUES
     DEFPUSHBUTTON   "Accepter",IDOK,218,7,50,14
     PUSHBUTTON      "Annuler",IDCANCEL,218,24,50,14
@@ -2198,924 +2200,924 @@ END
 
 STRINGTABLE 
 BEGIN
-    ID_FILE_NEW             "Crée un nouveau document\nNouveau"
-    ID_FILE_OPEN            "Ouvre un document existant\nOuvrir"
-    ID_FILE_CLOSE           "Ferme le document actif\nFermer"
-    ID_FILE_SAVE            "Enregistre le document actif\nEnregistrer"
-    ID_FILE_SAVE_AS         "Enregistre le document actif sous un nouveau nom\nEnregistrer sous"
-    ID_FILE_PRINT           "Imprime le document actif\nImprimer"
-    ID_FILE_PRINT_PREVIEW   "Affiche des pages entières\nAperçu avant impression"
+    ID_FILE_NEW             "Créer un nouveau document\nNouveau"
+    ID_FILE_OPEN            "Ouvrir un document existant\nOuvrir"
+    ID_FILE_CLOSE           "Fermer le document actif\nFermer"
+    ID_FILE_SAVE            "Enregistrer le document actif\nEnregistrer"
+    ID_FILE_SAVE_AS         "Enregistrer le document actif sous un nouveau nom\nEnregistrer sous"
+    ID_FILE_PRINT           "Imprimer le document actif\nImprimer"
+    ID_FILE_PRINT_PREVIEW   "Afficher des pages entières\nAperçu avant impression"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_APP_ABOUT            "Affiche des informations sur le programme, le numéro de version et le copyright\nA propos de"
-    ID_APP_EXIT             "Ferme l'application ; propose d'enregistrer les documents\nQuitter"
+    ID_APP_ABOUT            "Afficher info sur le programme, version et copyright\nA propos de"
+    ID_APP_EXIT             "Fermer l'application; propose d'enregistrer les documents\nQuitter"
     ID_HELP_INDEX           "Liste les rubriques de l'aide\nSommaire de l'aide"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_FILE_MRU_FILE1       "Ouvre ce document"
-    ID_FILE_MRU_FILE2       "Ouvre ce document"
-    ID_FILE_MRU_FILE3       "Ouvre ce document"
-    ID_FILE_MRU_FILE4       "Ouvre ce document"
-    ID_FILE_MRU_FILE5       "Ouvre ce document"
-    ID_FILE_MRU_FILE6       "Ouvre ce document"
-    ID_FILE_MRU_FILE7       "Ouvre ce document"
-    ID_FILE_MRU_FILE8       "Ouvre ce document"
-    ID_FILE_MRU_FILE9       "Ouvre ce document"
-    ID_FILE_MRU_FILE10      "Ouvre ce document"
-    ID_FILE_MRU_FILE11      "Ouvre ce document"
-    ID_FILE_MRU_FILE12      "Ouvre ce document"
-    ID_FILE_MRU_FILE13      "Ouvre ce document"
-    ID_FILE_MRU_FILE14      "Ouvre ce document"
-    ID_FILE_MRU_FILE15      "Ouvre ce document"
-    ID_FILE_MRU_FILE16      "Ouvre ce document"
+    ID_FILE_MRU_FILE1       "Ouvrir ce document"
+    ID_FILE_MRU_FILE2       "Ouvrir ce document"
+    ID_FILE_MRU_FILE3       "Ouvrir ce document"
+    ID_FILE_MRU_FILE4       "Ouvrir ce document"
+    ID_FILE_MRU_FILE5       "Ouvrir ce document"
+    ID_FILE_MRU_FILE6       "Ouvrir ce document"
+    ID_FILE_MRU_FILE7       "Ouvrir ce document"
+    ID_FILE_MRU_FILE8       "Ouvrir ce document"
+    ID_FILE_MRU_FILE9       "Ouvrir ce document"
+    ID_FILE_MRU_FILE10      "Ouvrir ce document"
+    ID_FILE_MRU_FILE11      "Ouvrir ce document"
+    ID_FILE_MRU_FILE12      "Ouvrir ce document"
+    ID_FILE_MRU_FILE13      "Ouvrir ce document"
+    ID_FILE_MRU_FILE14      "Ouvrir ce document"
+    ID_FILE_MRU_FILE15      "Ouvrir ce document"
+    ID_FILE_MRU_FILE16      "Ouvrir ce document"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_NEXT_PANE            "Passe au volet de fenêtre suivant\nVolet suivant"
-    ID_PREV_PANE            "Revient au volet précédent\nVolet précédent"
+    ID_NEXT_PANE            "Passer au fenêtre suivant\nFenêtre suivant"
+    ID_PREV_PANE            "Revenir au fenêtre précédent\nFenêtre précédent"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_WINDOW_SPLIT         "Fractionne la fenêtre active en deux volets\nFractionner"
+    ID_WINDOW_SPLIT         "Fractionner la fenêtre active en deux volets\nFractionner"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_EDIT_COPY            "Copie la sélection et la place dans le Presse-papiers\nCopier"
-    ID_EDIT_CUT             "Supprime la sélection et la place dans le Presse-papiers\nCopier"
-    ID_EDIT_FIND            "Recherche le texte spécifié\nRechercher"
-    ID_EDIT_PASTE           "Insère le contenu du Presse-papiers\nColler"
-    ID_EDIT_SELECT_ALL      "Sélectionne le document entier\nSélectionner tout"
+    ID_EDIT_COPY            "Copier la sélection\nCopier"
+    ID_EDIT_CUT             "Couper la sélection\nCouper"
+    ID_EDIT_FIND            "Rechercher le texte spécifié\nRechercher"
+    ID_EDIT_PASTE           "Coller\nColler"
+    ID_EDIT_SELECT_ALL      "Sélectionner le document entier\nSélectionner tout"
     ID_EDIT_UNDO            "Annule la dernière action\nAnnuler"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_VIEW_TOOLBAR         "Affiche ou masque la barre d'outils\nBarre d'outils"
-    ID_VIEW_STATUS_BAR      "Affiche ou masque la barre d'état\nBarre d'état"
+    ID_VIEW_TOOLBAR         "Afficher ou masquer la barre d'outils\nBarre d'outils"
+    ID_VIEW_STATUS_BAR      "Afficher ou masquer la barre d'état\nBarre d'état"
 END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_SCSIZE          "Change la taille de la fenêtre"
-    AFX_IDS_SCMOVE          "Change la position de la fenêtre"
-    AFX_IDS_SCMINIMIZE      "Réduit la fenêtre en icône"
-    AFX_IDS_SCMAXIMIZE      "Agrandit la fenêtre au format de l'écran"
-    AFX_IDS_SCNEXTWINDOW    "Passe à la fenêtre de document suivante"
-    AFX_IDS_SCPREVWINDOW    "Passe à la fenêtre de document précédente"
-    AFX_IDS_SCCLOSE         "Ferme la fenêtre active et propose l'enregistrement des documents"
+    AFX_IDS_SCSIZE          "Changer la taille de la fenêtre"
+    AFX_IDS_SCMOVE          "Changer la position de la fenêtre"
+    AFX_IDS_SCMINIMIZE      "Réduire la fenêtre en icône"
+    AFX_IDS_SCMAXIMIZE      "Agrandir la fenêtre au format de l'écran"
+    AFX_IDS_SCNEXTWINDOW    "Passer à la fenêtre de document suivante"
+    AFX_IDS_SCPREVWINDOW    "Passer à la fenêtre de document précédente"
+    AFX_IDS_SCCLOSE         "Fermer la fenêtre active et proposer l'enregistrement des documents"
 END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_SCRESTORE       "Restaure la fenêtre à sa taille d'origine"
-    AFX_IDS_SCTASKLIST      "Active la liste des tâches"
+    AFX_IDS_SCRESTORE       "Restaurer la fenêtre à sa taille d'origine"
+    AFX_IDS_SCTASKLIST      "Activer la liste des tâches"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_BUTTON_OK           "OK"
-    IDS_BUTTON_CANCEL       "Cancel"
-    IDS_BUTTON_YES          "Yes"
-    IDS_BUTTON_NO           "No"
-    IDS_BUTTON_ABORT        "Abort"
-    IDS_BUTTON_IGNORE       "Ignore"
-    IDS_BUTTON_RETRY        "Retry"
-    IDS_COL_ACTUAL_WORK     "Actual Work"
+    IDS_BUTTON_OK           "Accepter"
+    IDS_BUTTON_CANCEL       "Annuler"
+    IDS_BUTTON_YES          "Oui"
+    IDS_BUTTON_NO           "Non"
+    IDS_BUTTON_ABORT        "Arret"
+    IDS_BUTTON_IGNORE       "Ignorer"
+    IDS_BUTTON_RETRY        "Re-essayer"
+    IDS_COL_ACTUAL_WORK     "Travail actuel"
     IDS_COL_AGE             "Age"
-    IDS_COL_ALL_DAY_EVENT   "All day event"
+    IDS_COL_ALL_DAY_EVENT   "Toute la journée"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_BILLING         "Billing Information"
-    IDS_COL_BREED           "Breed"
-    IDS_COL_CALLNAME        "Call Name"
-    IDS_COL_CATEGORIES      "Categories"
-    IDS_COL_CLOSES          "Closes"
-    IDS_COL_CLOSING         "Closing"
+    IDS_COL_BILLING         "Info facturation"
+    IDS_COL_BREED           "Race"
+    IDS_COL_CALLNAME        "Nom"
+    IDS_COL_CATEGORIES      "Cathegories"
+    IDS_COL_CLOSES          "Fermeture"
+    IDS_COL_CLOSING         "Fermeture"
     IDS_COL_CLUB            "Club"
-    IDS_COL_COMMENTS        "Comments"
-    IDS_COL_COMPANIES       "Companies"
-    IDS_COL_COMPLETE        "% Complete"
-    IDS_COL_COMPLETED_DATE  "Date Completed"
+    IDS_COL_COMMENTS        "Notes"
+    IDS_COL_COMPANIES       "Enterprices"
+    IDS_COL_COMPLETE        "% Complet"
+    IDS_COL_COMPLETED_DATE  "Date de fin"
     IDS_COL_CONDITIONS      "Conditions"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_COL_CONTACTS        "Contacts"
-    IDS_COL_COURSEFAULTS    "Course Faults"
+    IDS_COL_COURSEFAULTS    "Fauts parcours"
     IDS_COL_DATE            "Date"
     IDS_COL_DESCRIPTION     "Description"
-    IDS_COL_DIVISION        "Division"
-    IDS_COL_DIVISIONS       "Divisions"
-    IDS_COL_DOB             "Birthday"
-    IDS_COL_DOG             "Dog"
-    IDS_COL_DUE_DATE        "Due Date"
+    IDS_COL_DIVISION        "Niveau conducteur"
+    IDS_COL_DIVISIONS       "Niveaux conducteurs"
+    IDS_COL_DOB             "Anniversaire"
+    IDS_COL_DOG             "Chien"
+    IDS_COL_DUE_DATE        "Date limite"
     IDS_COL_DRAWS           "Draws"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_END_DATE        "End Date"
-    IDS_COL_END_TIME        "End Time"
-    IDS_COL_ENTERED         "Entered"
-    IDS_COL_EVENT           "Event"
-    IDS_COL_EVENTS          "Events"
-    IDS_COL_FAULT           "Fault"
-    IDS_COL_FAULTS          "Faults"
+    IDS_COL_END_DATE        "Dernier date"
+    IDS_COL_END_TIME        "Dernier heure"
+    IDS_COL_ENTERED         "Nombre chiens inscrit"
+    IDS_COL_EVENT           "Epreuve"
+    IDS_COL_EVENTS          "Epreuves"
+    IDS_COL_FAULT           "Faut"
+    IDS_COL_FAULTS          "Fauts"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_HANDLER         "Handler"
-    IDS_COL_HEIGHT          "Height"
-    IDS_COL_IN_CLASS        "In Class"
-    IDS_COL_JUDGE           "Judge"
+    IDS_COL_HANDLER         "Conducteur"
+    IDS_COL_HEIGHT          "Hauteur"
+    IDS_COL_IN_CLASS        "Chiens en cathégorie"
+    IDS_COL_JUDGE           "Juge"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_LEVEL           "Level"
-    IDS_COL_LOCATION        "Location"
+    IDS_COL_LEVEL           "Degré"
+    IDS_COL_LOCATION        "Degrés"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_LEVELS          "Levels"
-    IDS_COL_MILEAGE         "Mileage"
-    IDS_COL_MIN_YPS         "MinYPS"
-    IDS_COL_MULTIPLIER      "Multiplier"
+    IDS_COL_LEVELS          "Endroit"
+    IDS_COL_MILEAGE         "Distance"
+    IDS_COL_MIN_YPS         "Min TSP"
+    IDS_COL_MULTIPLIER      "Multiplicateur"
     IDS_COL_MULTIQ          "MultiQ"
     IDS_COL_MULTIQS         "MultiQs"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_NAME            "Name"
+    IDS_COL_NAME            "Nom"
     IDS_COL_NOTE            "Note"
     IDS_COL_NOTES           "Notes"
-    IDS_COL_NUMBER          "Number"
-    IDS_COL_OPENING         "Opening"
-    IDS_COL_OPENS           "Opens"
-    IDS_COL_OPT_ATTENDEES   "Optional Attendees"
-    IDS_COL_ORGANIZER       "Meeting Organizer"
+    IDS_COL_NUMBER          "Numéro inscription"
+    IDS_COL_OPENING         "Points ouverture"
+    IDS_COL_OPENS           "Ouverture"
+    IDS_COL_OPT_ATTENDEES   "Participants optionels"
+    IDS_COL_ORGANIZER       "Organisateur"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_PLACE           "Place"
+    IDS_COL_PLACE           "Rang"
     IDS_COL_POINTS          "Points"
-    IDS_COL_PRIORITY        "Priority"
-    IDS_COL_PRIVATE         "Private"
+    IDS_COL_PRIORITY        "Priorité"
+    IDS_COL_PRIVATE         "Privé"
     IDS_COL_PTS             "Pts"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_COL_Q               "Q"
-    IDS_COL_Q_D             "Q'd"
-    IDS_COL_RECEIVED        "Received"
-    IDS_COL_REG_NAME        "Registered Name"
-    IDS_COL_REMINDER        "Reminder on/off"
-    IDS_COL_REMINDER_DATE   "Reminder Date"
-    IDS_COL_REMINDER_TIME   "Reminder Time"
-    IDS_COL_REQ_ATTENDEES   "Required Attendees"
-    IDS_COL_REQ_CLOSING     "Required Closing"
-    IDS_COL_REQ_OPENING     "Required Opening"
-    IDS_COL_REQ_POINTS      "Required Points"
-    IDS_COL_RESOURCES       "Meeting Resources"
+    IDS_COL_Q_D             "Nombres Q"
+    IDS_COL_RECEIVED        "Papiers recu"
+    IDS_COL_REG_NAME        "Nom complet"
+    IDS_COL_REMINDER        "Notification"
+    IDS_COL_REMINDER_DATE   "Date notification"
+    IDS_COL_REMINDER_TIME   "Heure notification"
+    IDS_COL_REQ_ATTENDEES   "Participants necessaire"
+    IDS_COL_REQ_CLOSING     "Points exigé pour finir"
+    IDS_COL_REQ_OPENING     "Points exigé pour participer"
+    IDS_COL_REQ_POINTS      "Points exigé"
+    IDS_COL_RESOURCES       "Resources rendez-vous"
     IDS_COL_ROLE            "Role"
-    IDS_COL_RUNTYPE         "Run Type"
+    IDS_COL_RUNTYPE         "Type parcours"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_SCH_PRIORITY    "Schedule+ Priority"
-    IDS_COL_SCORE           "Score"
-    IDS_COL_SCT             "SCT"
-    IDS_COL_SENSITIVITY     "Sensitivity"
-    IDS_COL_SHOW_TIME_AS    "Show time as"
-    IDS_COL_SPEED           "Speed"
-    IDS_COL_START_DATE      "Start Date"
-    IDS_COL_START_TIME      "Start Time"
-    IDS_COL_STATUS          "Status"
-    IDS_COL_SUBJECT         "Subject"
-    IDS_COL_SUBNAME         "SubName"
-    IDS_COL_TENTATIVE       "Tentative"
+    IDS_COL_SCH_PRIORITY    "Horaires+priorité"
+    IDS_COL_SCORE           "Resultats"
+    IDS_COL_SCT             "TPS"
+    IDS_COL_SENSITIVITY     "Sensitivité"
+    IDS_COL_SHOW_TIME_AS    "Montrer l'heure comme"
+    IDS_COL_SPEED           "Vitesse"
+    IDS_COL_START_DATE      "Date commencement"
+    IDS_COL_START_TIME      "Heure commencement"
+    IDS_COL_STATUS          "Etats"
+    IDS_COL_SUBJECT         "Sujet"
+    IDS_COL_SUBNAME         "Sous-titre"
+    IDS_COL_TENTATIVE       "Preliminaire"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_TIME            "Time"
-    IDS_COL_TITLE           "Title"
-    IDS_COL_TITLE_PTS       "Title Points"
-    IDS_COL_TITLES          "Titles"
-    IDS_COL_TOTAL_FAULTS    "Total Faults"
-    IDS_COL_TOTAL_WORK      "Total Work"
-    IDS_COL_TRIAL           "Trial"
-    IDS_COL_TRIAL_EXISTPTS  "Trial / Existing Pts"
-    IDS_COL_TRIALNOTES      "Trial Notes"
+    IDS_COL_TIME            "Heure"
+    IDS_COL_TITLE           "Distinction"
+    IDS_COL_TITLE_PTS       "Points Distinction"
+    IDS_COL_TITLES          "Distinctions"
+    IDS_COL_TOTAL_FAULTS    "Fauts total"
+    IDS_COL_TOTAL_WORK      "Travail total"
+    IDS_COL_TRIAL           "Concours"
+    IDS_COL_TRIAL_EXISTPTS  "Concours / Points acquis"
+    IDS_COL_TRIALNOTES      "Notes concours"
     IDS_COL_TYPE            "Type"
-    IDS_COL_URL             "URL"
+    IDS_COL_URL             "Site web"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_VENUE           "Venue"
-    IDS_COL_VENUES          "Venues"
-    IDS_COL_YARDS           "Yards"
-    IDS_COL_YPS             "YPS"
-    IDS_COL_OTHERPOINTS     "Other Points"
-    IDS_COL_DIV_LVL_EVT     "Division/Level/Event"
+    IDS_COL_VENUE           "Organisation"
+    IDS_COL_VENUES          "Organisations"
+    IDS_COL_YARDS           "Metres"
+    IDS_COL_YPS             "m/s"
+    IDS_COL_OTHERPOINTS     "Autres points"
+    IDS_COL_DIV_LVL_EVT     "Niveau conducteur/Degré/Epreuve"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_COL_OPEN_CLOSE      "Open/Close"
-    IDS_COL_NAME_BREED_NOTE "Name/Breed/Notes"
+    IDS_COL_OPEN_CLOSE      "Ouverture/Fermeture"
+    IDS_COL_NAME_BREED_NOTE "Nom/Race/Notes"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_DATEFORMAT_DASH_MDY "M-D-Y"
-    IDS_DATEFORMAT_SLASH_MDY "M/D/Y"
-    IDS_DATEFORMAT_DASH_YMD "Y-M-D"
-    IDS_DATEFORMAT_SLASH_YMD "Y/M/D"
-    IDS_DATEFORMAT_DASH_DMY "D-M-Y"
-    IDS_DATEFORMAT_SLASH_DMY "D/M/Y"
-    IDS_DATEFORMAT_DASH_MMDDYYYY "MM-DD-YYYY"
-    IDS_DATEFORMAT_SLASH_MMDDYYYY "MM/DD/YYYY"
+    IDS_DATEFORMAT_DASH_MDY "M-J-A"
+    IDS_DATEFORMAT_SLASH_MDY "M/J/A"
+    IDS_DATEFORMAT_DASH_YMD "A-M-J"
+    IDS_DATEFORMAT_SLASH_YMD "A/M/J"
+    IDS_DATEFORMAT_DASH_DMY "J-M-A"
+    IDS_DATEFORMAT_SLASH_DMY "J/M/A"
+    IDS_DATEFORMAT_DASH_MMDDYYYY "MM-JJ-AAAA"
+    IDS_DATEFORMAT_SLASH_MMDDYYYY "MM/JJ/AAAA"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_DATEFORMAT_DASH_YYYYMMDD "YYYY-MM-DD"
-    IDS_DATEFORMAT_SLASH_YYYYMMDD "YYYY/MM/DD"
-    IDS_DATEFORMAT_DASH_DDMMYYYY "DD-MM-YYYY"
-    IDS_DATEFORMAT_SLASH_DDMMYYYY "DD/MM/YYYY"
-    IDS_SYSERR_MEMORY       "The operating system is out of memory or resources."
-    IDS_SYSERR_SE_ERR_PNF   "The specified path was not found."
-    IDS_SYSERR_SE_ERR_FNF   "The specified file was not found."
+    IDS_DATEFORMAT_DASH_YYYYMMDD "AAAA-MM-JJ"
+    IDS_DATEFORMAT_SLASH_YYYYMMDD "AAAA/MM/JJ"
+    IDS_DATEFORMAT_DASH_DDMMYYYY "JJ-MM-AAAA"
+    IDS_DATEFORMAT_SLASH_DDMMYYYY "JJ/MM/AAAA"
+    IDS_SYSERR_MEMORY       "Memoire insufficant"
+    IDS_SYSERR_SE_ERR_PNF   "Route ne pas trouvé"
+    IDS_SYSERR_SE_ERR_FNF   "Fichier ne pas trouvé"
     IDS_SYSERR_ERROR_BAD_FORMAT 
-                            "The .EXE file is invalid (non-Win32 .EXE or error in .EXE image)."
+                            "Fichier .EXE invalid"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_SYSERR_SE_ERR_ACCESSDENIED 
-                            "The operating system denied access to the specified file."
+                            "Fichier inaccesible par le system"
     IDS_SYSERR_SE_ERR_ASSOCINCOMPLETE 
-                            "The filename association is incomplete or invalid."
+                            "Association fichier pas complet ou invalid"
     IDS_SYSERR_SE_ERR_DDEBUSY 
-                            "The DDE transaction could not be completed because other DDE transactions were being processed."
-    IDS_SYSERR_SE_ERR_DDEFAIL "The DDE transaction failed."
+                            "Transaction DDE interrompé par des autres transactions DDE"
+    IDS_SYSERR_SE_ERR_DDEFAIL "DDE transaction pas reussi"
     IDS_SYSERR_SE_ERR_DDETIMEOUT 
-                            "The DDE transaction could not be completed because the request timed out."
+                            "DDE transaction pas reussi avant delai depassé"
     IDS_SYSERR_SE_ERR_DLLNOTFOUND 
-                            "The specified dynamic-link library was not found."
+                            "La librarie lien dynamic pas trouvé"
     IDS_SYSERR_SE_ERR_NOASSOC 
-                            "There is no application associated with the given filename extension."
-    IDS_SYSERR_SE_ERR_OOM   "There was not enough memory to complete the operation."
-    IDS_SYSERR_SE_ERR_SHARE "A sharing violation occurred. "
-    IDS_SYSERR_UNKNOWN      "Unknown Error (%1!ld!) occurred."
+                            "Application pour ce type de fichier ne pas trové"
+    IDS_SYSERR_SE_ERR_OOM   "Memoire insufficant pour finir action"
+    IDS_SYSERR_SE_ERR_SHARE "Violation partage"
+    IDS_SYSERR_UNKNOWN      "Erreur inconnu (%1!ld!)"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_COM_FAILED      "ERROR: Cannot initialize COM"
-    IDS_ERR_COMCTRL         "ERROR: Unable to initialize the common controls."
-    IDS_ERR_RICHED32        "ERROR: Unable to initialize RICHED32.DLL. Please see 'http://support.microsoft.com/default.aspx?scid=kb;en-us;218838' This may address the problem."
+    IDS_ERR_COM_FAILED      "Erreur: ne peux pas initier COM"
+    IDS_ERR_COMCTRL         "Erreur: ne peux pas initier controls commun"
+    IDS_ERR_RICHED32        "Erreur: ne pas pu initié RICHED32.DLL. Veillez voir 'http://support.microsoft.com/defaut.aspx?scid=kb;en-us;218838'"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_HTTP_ACCESS_DENIED  "Access denied"
-    IDS_HTTP_INVALID_HEADER_QUERY "Invalid Header query"
+    IDS_HTTP_ACCESS_DENIED  "Acces refus"
+    IDS_HTTP_INVALID_HEADER_QUERY "Header query invalide"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_HTTP_URL_REDIRECTION "URL Redirection"
-    IDS_HTTP_INVALID_URL    "Invalid URL"
-    IDS_HTTP_INVALID_URL_ERR "Invalid URL [err %1!ld!]"
-    IDS_HTTP_INVALID_URL2   "Invalid URL (2nd redirection)"
+    IDS_HTTP_URL_REDIRECTION "Deviation URL"
+    IDS_HTTP_INVALID_URL    "URL invalide"
+    IDS_HTTP_INVALID_URL_ERR "URL invalide  [err %1!ld!]"
+    IDS_HTTP_INVALID_URL2   "URL invalide (2me deviation)"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ERR_PARSING_DATA    "Error parsing %1 data"
-    IDS_USE_PLUGIN          "Do you want to continue using this plugin?"
+    IDS_ERR_PARSING_DATA    "Erreur parsing %1 data"
+    IDS_USE_PLUGIN          "Voulez-vous continuer d'utiliser ce plugin?"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_FILEEXT_DEF_ARB     "arb"
     IDS_FILEEXT_FNAME_ARB   "*.arb"
-    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_ARB  "Agility Record Book (*.arb)|*.arb|Tous fichiers (*.*)|*.*||"
     IDS_FILEEXT_DEF_DTD     "dtd"
     IDS_FILEEXT_FNAME_DTD   "*.dtd"
-    IDS_FILEEXT_FILTER_DTD  "DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_DTD  "Fichiers DTD (*.dtd)|*.dtd|Tous fichiers (*.*)|*.*||"
     IDS_FILEEXT_DEF_XML     "xml"
     IDS_FILEEXT_FNAME_XML   "*.xml"
-    IDS_FILEEXT_FILTER_XML  "XML Files (*.xml)|*.xml|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_XML  "Fichiers XML (*.xml)|*.xml|Touts fichiers (*.*)|*.*||"
     IDS_FILEEXT_DEF_VCS     "vcs"
     IDS_FILEEXT_FNAME_VCS   "*.vcs"
-    IDS_FILEEXT_FILTER_VCS  "vCalendar (*.vcs)|*.vcs|All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_VCS  "vCalendar (*.vcs)|*.vcs|Touts fichiers (*.*)|*.*||"
     IDS_FILEEXT_DEF_ICS     "ics"
     IDS_FILEEXT_FNAME_ICS   "*.ics"
-    IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|All Files (*.*)|*.*||"
-    IDS_FILEEXT_FILTER_ALL  "All Files (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_ICS  "iCalendar (*.ics)|*.ics|Touts fichiers (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_ALL  "Tous fichiers (*.*)|*.*||"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_FILEEXT_FILTER_BMP  "Bitmap Files (*.bmp)|*.bmp||"
+    IDS_FILEEXT_FILTER_BMP  "Fichiers Bitmap (*.bmp)|*.bmp||"
     IDS_FILEEXT_FILTER_TXTCSV 
-                            "Text Files (*.txt; *.csv)|*.txt;*.csv|All Files (*.*)|*.*||"
+                            "Fichiers Texte (*.txt; *.csv)|*.txt;*.csv|Tous fichiers (*.*)|*.*||"
     IDS_FILEEXT_FILTER_MSEXCEL 
-                            "Excel Files (*.xls)|*.xls|All Files (*.*)|*.*||"
-    IDS_FILEEXT_FILTER_OOCALC "Calc Files (*.ods)|*.ods|All Files (*.*)|*.*||"
+                            "Fichiers Excel (*.xls)|*.xls|Tous fichiers (*.*)|*.*||"
+    IDS_FILEEXT_FILTER_OOCALC "Fichiers Calc (*.ods)|*.ods|Tous fichiers (*.*)|*.*||"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ABOUT_TEXT          "Version %1\n\n%2 is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n\nPlease send any bug reports or suggestions to:"
-    IDS_ABOUT_LINK_YAHOO    "Yahoo Discussion Group\thttp://groups.yahoo.com/group/AgilityRecordBook/"
+    IDS_ABOUT_TEXT          "Version %1\n\n%2 est Open Source et gratuite a utiliser; nous demandons seulement que vous faites une donne de 10 euros ou plus a la SPA ou semblable organisation.\n\n SVP envoyez vos rapport d'erreur et suggestions a:"
+    IDS_ABOUT_LINK_YAHOO    "Forum Yahoo\thttp://groups.yahoo.com/group/AgilityRecordBook/"
     IDS_ABOUT_LINK_EMAILHELP 
-                            "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
-    IDS_ABOUT_LINK_ARB      "Agility Record Book Home Page\thttp://www.agilityrecordbook.com"
+                            "help@agilityrecordbook.com\tmailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=SVP decrivez la problème, et si possible, comment c'est arrivé.0d%0a%0d%0aIf une fichier particulé a causé cette problème; SVP attachez une copie au me"
+    IDS_ABOUT_LINK_ARB      "Site d'internet Agility Record Book\thttp://www.agilityrecordbook.com"
     IDS_ABOUT_LINK_ARB_DOWNLOAD 
-                            "Agility Record Book Downloads\thttp://www.agilityrecordbook.com/download.php"
-    IDS_UPDATED_CONFIG      "The configuration has been updated. Would you like to merge the new one with your data?"
-    IDS_INTERNET_EXCEPTION  "Error: Is your internet connection active?"
+                            "Telecharger Agility Record Book\thttp://www.agilityrecordbook.com/download.php"
+    IDS_UPDATED_CONFIG      "La configuration a etais mise a jour. Voulez-vous introduire vos data?"
+    IDS_INTERNET_EXCEPTION  "Erreur: Est-ce que la connection internet est active?"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_ABOUT_VERSION       "Version %1"
     IDS_HELP_UPDATE         "http://www.agilityrecordbook.com"
-    IDS_UPDATE_CURRENT      "No updates are available at this time."
-    IDS_UPDATE_UNKNOWN      "Unable to determine current released version."
-    IDS_VERSION_AVAILABLE   "Version %1 is available. Would you like to download it?"
-    IDS_CONFIG_NO_UPDATE    "No updates were performed. The configurations are the same."
+    IDS_UPDATE_CURRENT      "Pas des mises a jour."
+    IDS_UPDATE_UNKNOWN      "Version current pas determinable."
+    IDS_VERSION_AVAILABLE   "Version %1 accesible. Voulez-vous le telecharger? "
+    IDS_CONFIG_NO_UPDATE    "Pas mis a jour; configurations pas changé."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ARB_UNKNOWN_VERSION "Unknown document version"
-    IDS_WARNING_NEWER_DOC   "Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?"
-    IDS_INVALID_DOC_STRUCTURE "Invalid document structure"
-    IDS_INVALID_FILE_FORMAT "Invalid file format: '"
-    IDS_INVALID_FILE_MISSING_ATTRIB "' is missing required attribute '"
-    IDS_INVALID_FILE_BAD_ATTRIB "' has an invalid value for the attribute '"
-    IDS_INVALID_DATE        "Invalid date: "
-    IDS_INVALID_DIV_LEVEL   "Division/level pair has not been defined: "
-    IDS_INVALID_EVENT_NAME  "Event has not been defined: "
-    IDS_INVALID_ROOT        "'%1' must be the root element."
-    IDS_MISSING_CONFIG      "Missing '%1' section."
-    IDS_INVALID_CONFIG      "Only one '%1' section is allowed."
+    IDS_ARB_UNKNOWN_VERSION "Version document inconnu"
+    IDS_WARNING_NEWER_DOC   "Attention: Ce fichier a etais crée avec un version Agility Databook plus recent. Si vous le sauvegarde avec ce version, des data serais perdu.\n\n Voulez-vous continuer?"
+    IDS_INVALID_DOC_STRUCTURE "Structure document invalide"
+    IDS_INVALID_FILE_FORMAT "Format fichier invalide: '"
+    IDS_INVALID_FILE_MISSING_ATTRIB "' manque attribut necessaire '"
+    IDS_INVALID_FILE_BAD_ATTRIB "' a un valeur invalide pour attribut '"
+    IDS_INVALID_DATE        "Invalide date: "
+    IDS_INVALID_DIV_LEVEL   "Niveau conducteur/degré pas definé"
+    IDS_INVALID_EVENT_NAME  "Epreuve pas definé: "
+    IDS_INVALID_ROOT        "%1' doit etre root element."
+    IDS_MISSING_CONFIG      "Section '%1' manquant."
+    IDS_INVALID_CONFIG      "Seulement un section '%1' permet."
     IDS_INVALID_VENUE_CONFIG 
-                            "All '%1' elements must come before '%2' elements."
-    IDS_INVALID_DIV_NAME    "Invalid division name: "
+                            "Tous elements '%1' avant les elements '%2'."
+    IDS_INVALID_DIV_NAME    "Niveau conducteur invalide: "
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_INVALID_VENUE_NAME  "Invalid venue name: "
-    IDS_INVALID_OTHER_PTS_NAME "Invalid Other Points name: "
-    IDS_INVALID_MULTIQ_NAME "Invalid Multiple Q name: "
-    IDS_INVALID_MULTIQ_CONVERSION "Unable to convert Existing QQ Points"
-    IDS_INVALID_EVENT       "Unable to locate an event description in any of the venues of the affiliated clubs: "
-    IDS_INVALID_TITLE       "Title is not defined in the Venue description: "
-    IDS_VALID_VALUES        "Valid values: "
-    IDS_CALENDAR_TENTATIVE  "Information is tentative."
-    IDS_CALENDAR_NOTENTERED "Not entered"
-    IDS_CALENDAR_ENTERED    "Entered"
-    IDS_CALENDAR_PLANNING   "Planning"
+    IDS_INVALID_VENUE_NAME  "Nom epreuve invalide: "
+    IDS_INVALID_OTHER_PTS_NAME "Autres points invalide: "
+    IDS_INVALID_MULTIQ_NAME "Nom multiQ invalide: "
+    IDS_INVALID_MULTIQ_CONVERSION "Impossible de converter points QQ existant"
+    IDS_INVALID_EVENT       "Impossible de trouver un description epreuve dans les organisations pour les clubs associés: "
+    IDS_INVALID_TITLE       "Distinction pas definié pour l´epreuve: "
+    IDS_VALID_VALUES        "Valeurs valides: "
+    IDS_CALENDAR_TENTATIVE  "Information est tentative."
+    IDS_CALENDAR_NOTENTERED "Pas inscrit"
+    IDS_CALENDAR_ENTERED    "Inscrit"
+    IDS_CALENDAR_PLANNING   "Prevue"
     IDS_CALENDAR_STATUS     "Status: "
-    IDS_CALENDAR_OPENS      "Trial opens: "
+    IDS_CALENDAR_OPENS      "Ouverture concours: "
     IDS_CALENDAR_DRAW       "Trial draws: "
-    IDS_CALENDAR_CLOSES     "Trial closes: "
-    IDS_SCORE_STYLE_UNKNOWN "Unknown"
+    IDS_CALENDAR_CLOSES     "Fermeture concours: "
+    IDS_SCORE_STYLE_UNKNOWN "Inconnu"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_SCORE_STYLE_FAULTS_TIME "Faults Then Time"
-    IDS_SCORE_STYLE_FAULTS100_TIME "100 Minus Faults Then Time"
-    IDS_SCORE_STYLE_FAULTS200_TIME "200 Minus Faults Then Time"
-    IDS_SCORE_STYLE_OCSCORE_TIME "Opening/Closing Points Then Time"
-    IDS_SCORE_STYLE_SCORE_TIME "Points Then Time"
-    IDS_SCORE_STYLE_TIME_PLUS_FAULTS "Time Plus Faults"
-    IDS_EXISTING_POINTS_OTHER "OtherPoints"
-    IDS_EXISTING_POINTS_RUN "Run"
-    IDS_EXISTING_POINTS_SPEED "Speed"
+    IDS_SCORE_STYLE_FAULTS_TIME "Fauts puis temps"
+    IDS_SCORE_STYLE_FAULTS100_TIME "100 moins fauts puis temps"
+    IDS_SCORE_STYLE_FAULTS200_TIME "200 moins fauts puis temps"
+    IDS_SCORE_STYLE_OCSCORE_TIME "Points ouverture/fermeture puis temps"
+    IDS_SCORE_STYLE_SCORE_TIME "Points puis temps"
+    IDS_SCORE_STYLE_TIME_PLUS_FAULTS "Temps plus fauts"
+    IDS_EXISTING_POINTS_OTHER "Autres points"
+    IDS_EXISTING_POINTS_RUN "Parcours"
+    IDS_EXISTING_POINTS_SPEED "Vitesse"
     IDS_EXISTING_POINTS_MQ  "Multiple Q"
-    IDS_EXISTING_POINTS_SQ  "SuperQ"
+    IDS_EXISTING_POINTS_SQ  "Super Q"
     IDS_REORDERED           "Reordered"
-    IDS_UPDATE_CALSITES     "Calendar Sites"
-    IDS_UPDATE_RULES        "rules"
-    IDS_UPDATE_NEWSUBLEVELS "%1!d! new sub-levels"
-    IDS_UPDATE_ADDED        "%1!d! added"
+    IDS_UPDATE_CALSITES     "Sites calendrier"
+    IDS_UPDATE_RULES        "regles"
+    IDS_UPDATE_NEWSUBLEVELS "%1!d! nouveaux sous-niveaux"
+    IDS_UPDATE_ADDED        "%1!d! rajouté"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_UPDATE_UPDATED      "%1!d! updated"
-    IDS_UPDATE_DELETED      "%1!d! deleted"
-    IDS_UPDATE_IDENTICAL    "%1!d! identical"
-    IDS_TITLEPOINTSNAME     "%1 points with %2 faults"
-    IDS_LIFETITLEPOINTSNAME "%1 lifetime points with %2 faults"
-    IDS_PLACEMENTPOINTSNAME "%1 points with place of %2!d!"
-    IDS_WARN_DELETED_RUNS   "WARNING: %1!d! run(s) deleted due to configuration changes.\n(Date, Venue, Event, Division/Level)"
-    IDS_UPDATE_TABLE_RUNS   "Table setting updated in %1!d! runs."
-    IDS_ACTION_RENAME_OTHERPTS "Action: Renaming OtherPoints [%1] to [%2]"
-    IDS_ACTION_RENAME_OTHERPTS2 ", updating %1!d! OtherPoints"
-    IDS_ACTION_PREDELETE_OTHERPTS "DELETING: OtherPoints [%1] %2!d! items"
-    IDS_ACTION_DELETE_OTHERPTS "Action: Deleting OtherPoints [%1]"
-    IDS_ACTION_RENAME_VENUE "Action: Renaming Venue [%1] to [%2]"
-    IDS_ACTION_RENAME_VENUE2 ", updating %1!d! related items"
-    IDS_ACTION_PREDELETE_VENUE "DELETING: Venue [%1] %2!d! items"
-    IDS_ACTION_DELETE_VENUE "Action: Deleting Venue [%1]"
+    IDS_UPDATE_UPDATED      "%1!d! mis a jours"
+    IDS_UPDATE_DELETED      "%1!d! supprimé"
+    IDS_UPDATE_IDENTICAL    "%1!d! identique"
+    IDS_TITLEPOINTSNAME     "%1!g! points avec %2!g! fauts"
+    IDS_LIFETITLEPOINTSNAME "%1!g! points  pour la vie avec %2!g! fauts"
+    IDS_PLACEMENTPOINTSNAME "%1!g! points avec rang %2!d!"
+    IDS_WARN_DELETED_RUNS   "ATTENTION: %1!d! parcour(s) suprimmé a cause de changement configuration."
+    IDS_UPDATE_TABLE_RUNS   "Parametre table changé pour %1!d! parcours."
+    IDS_ACTION_RENAME_OTHERPTS "Action: Changer nom autres points [%1] pour [%2]"
+    IDS_ACTION_RENAME_OTHERPTS2 ", mise à jours %1!d! Autres points"
+    IDS_ACTION_PREDELETE_OTHERPTS "SUPPRESSION: Autres points [%1] %2!d! Objets"
+    IDS_ACTION_DELETE_OTHERPTS "Action: Suppression Autres points [%1]"
+    IDS_ACTION_RENAME_VENUE "Action: Changer nom organisaton [%1] pour [%2]"
+    IDS_ACTION_RENAME_VENUE2 ", mise à jours %1!d! objects associés"
+    IDS_ACTION_PREDELETE_VENUE "SUPPRESSION: Organisation [%1] %2!d! objets"
+    IDS_ACTION_DELETE_VENUE "Action: Suppression organisation [%1]"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ACTION_RENAME_MULTIQ "Action: Renaming %1 MultiQ [%2] to [%3]"
-    IDS_ACTION_RENAME_MULTIQ2 ", updating %1!d! MultiQs"
-    IDS_ACTION_PREDELETE_MULTIQ "DELETING: %1 MultiQ [%2] %3!d! items"
-    IDS_ACTION_DELETE_MULTIQ "Action: Deleting %1 MultiQ [%2]"
-    IDS_ACTION_RENAME_DIV   "Action: Renaming %1 Division [%2] to [%3]"
-    IDS_ACTION_RENAME_DIV2  ", updating %1!d! runs"
+    IDS_ACTION_RENAME_MULTIQ "Action: Changer nom %1 MultiQ [%2]pour [%3]"
+    IDS_ACTION_RENAME_MULTIQ2 ", mise à jours %1!d! MultiQs"
+    IDS_ACTION_PREDELETE_MULTIQ "SUPPRESSION: %1 MultiQ [%2] %3!d! Objets"
+    IDS_ACTION_DELETE_MULTIQ "Action: Suppression %1 MultiQ [%2]"
+    IDS_ACTION_RENAME_DIV   "Action: Changement nom niveau conducteur %1 [%2] pour [%3]"
+    IDS_ACTION_RENAME_DIV2  ", mise à jours %1!d! parcours"
     IDS_ACTION_PREDELETE_DIV 
-                            "DELETING: %1 Division [%2] %3!d! runs and existing points"
-    IDS_ACTION_DELETE_DIV   "Action: Deleting %1 Division [%2]"
-    IDS_ACTION_RENAME_LEVEL "Action: Renaming %1 Level [%2] to [%3]"
-    IDS_ACTION_RENAME_LEVEL2 ", updating %1!d! runs"
-    IDS_ACTION_PREDELETE_LEVEL "DELETING: %1 Level [%2] %3!d! runs"
-    IDS_ACTION_DELETE_LEVEL "Action: Deleting %1 Level [%2]"
-    IDS_ACTION_RENAME_TITLE "Action: Renaming %1 Title [%2] to [%3]"
-    IDS_ACTION_RENAME_TITLE2 ", updating %1!d! titles"
-    IDS_ACTION_PREDELETE_TITLE "DELETING: %1 Title [%2] %3!d! titles"
-    IDS_ACTION_DELETE_TITLE "Action: Deleting %1 Title [%2]"
+                            "SUPPRESSION: %1 Niveau conducteur [%2] %3!d! parcours et points existant"
+    IDS_ACTION_DELETE_DIV   "Action: Suppression %1 Niveau conducteur [%2]"
+    IDS_ACTION_RENAME_LEVEL "Action: Changement de noms %1 Degré [%2] pour [%3]"
+    IDS_ACTION_RENAME_LEVEL2 ", mise a jour %1!d! parcours"
+    IDS_ACTION_PREDELETE_LEVEL "SUPPRESSION: %1 Degré [%2] %3!d! parcours"
+    IDS_ACTION_DELETE_LEVEL "Action: Suppression %1 Degré [%2]"
+    IDS_ACTION_RENAME_TITLE "Action: Changement de noms %1 Distinction [%2] pour [%3]"
+    IDS_ACTION_RENAME_TITLE2 ", mise à jours %1!d! Distinction"
+    IDS_ACTION_PREDELETE_TITLE "SUPPRESSION: %1 Distinction [%2] %3!d! distinctions"
+    IDS_ACTION_DELETE_TITLE "Action: Suppression %1 Distinction [%2]"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ACTION_RENAME_EVENT "Action: Renaming %1 Event [%2] to [%3]"
-    IDS_ACTION_RENAME_EVENT2 ", updating %1!d! events"
-    IDS_ACTION_PREDELETE_EVENT "DELETING: %1 Event [%2] %3!d! events"
-    IDS_ACTION_DELETE_EVENT "Action: Deleting %1 Event [%2]"
+    IDS_ACTION_RENAME_EVENT "Action: Changement de noms %1 Epreuve [%2] pour [%3]"
+    IDS_ACTION_RENAME_EVENT2 ", mise à jours %1!d! epreuves"
+    IDS_ACTION_PREDELETE_EVENT "SUPPRESSION: %1 Epreuve [%2] %3!d! epreuves"
+    IDS_ACTION_DELETE_EVENT "Action: Suppression %1 Epreuve [%2]"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ASSCOL_RUNS_FAULTS_TIME "Faults Then Time"
-    IDS_ASSCOL_RUNS_FAULTS_TIME_DESC "Runs like Standard and Jumpers"
-    IDS_ASSCOL_RUNS_TIME_FAULTS "Time Plus Faults"
-    IDS_ASSCOL_RUNS_TIME_FAULTS_DESC "Runs like Steeplechase"
-    IDS_ASSCOL_RUNS_OPEN_CLOSE "Opening/Closing Points Then Time"
-    IDS_ASSCOL_RUNS_OPEN_CLOSE_DESC "Runs like Gamblers and Jackpot"
-    IDS_ASSCOL_RUNS_POINTS  "Points Then Time"
-    IDS_ASSCOL_RUNS_POINTS_DESC "Runs like Snooker"
-    IDS_ASSCOL_CALENDAR     "Calendar"
-    IDS_ASSCOL_CALENDAR_DESC "Importing and exporting Calendar entries"
-    IDS_ASSCOL_TRAINING     "Training Log"
-    IDS_ASSCOL_TRAINING_DESC "Importing and exporting Training entries"
+    IDS_ASSCOL_RUNS_FAULTS_TIME "Fauts puis Temps"
+    IDS_ASSCOL_RUNS_FAULTS_TIME_DESC "Des parcours comme agility et jumping"
+    IDS_ASSCOL_RUNS_TIME_FAULTS "Temps Plus Fauts"
+    IDS_ASSCOL_RUNS_TIME_FAULTS_DESC "Des parcours comme Steeplechase"
+    IDS_ASSCOL_RUNS_OPEN_CLOSE "Ouverture/Fermeture puis Temps"
+    IDS_ASSCOL_RUNS_OPEN_CLOSE_DESC "Des parcours comme Gamblers et Jackpot"
+    IDS_ASSCOL_RUNS_POINTS  "Points puis Temps"
+    IDS_ASSCOL_RUNS_POINTS_DESC "Des parcours comme Snooker"
+    IDS_ASSCOL_CALENDAR     "Calendrier"
+    IDS_ASSCOL_CALENDAR_DESC "Importer et Exporter des entrés Calendrier"
+    IDS_ASSCOL_TRAINING     "Log Entraînement"
+    IDS_ASSCOL_TRAINING_DESC "Importer and Exporter des entrés Log Entraînement"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ASSCOL_VIEW_TREE_DOG "Tree - Dog"
-    IDS_ASSCOL_VIEW_TREE_DOG_DESC "Display of dogs in the Runs tree"
-    IDS_ASSCOL_VIEW_TREE_TRIAL "Tree - Trial"
-    IDS_ASSCOL_VIEW_TREE_TRIAL_DESC "Display of trials in the Runs tree"
-    IDS_ASSCOL_VIEW_TREE_RUN "Tree - Run"
-    IDS_ASSCOL_VIEW_TREE_RUN_DESC "Display of runs in the Runs tree"
-    IDS_ASSCOL_VIEW_RUNS_LIST "Runs"
-    IDS_ASSCOL_VIEW_RUNS_LIST_DESC "Display of runs in the Runs view"
-    IDS_ASSCOL_VIEW_CALENDAR_LIST "Calendar List"
+    IDS_ASSCOL_VIEW_TREE_DOG "Tree - Chien"
+    IDS_ASSCOL_VIEW_TREE_DOG_DESC "List de Chiens dans le tree Parcours"
+    IDS_ASSCOL_VIEW_TREE_TRIAL "Arborescence - Concours"
+    IDS_ASSCOL_VIEW_TREE_TRIAL_DESC "List de Concours dans le tree Parcours"
+    IDS_ASSCOL_VIEW_TREE_RUN "Tree - Parcours"
+    IDS_ASSCOL_VIEW_TREE_RUN_DESC "List de Parcours dans le tree Parcours"
+    IDS_ASSCOL_VIEW_RUNS_LIST "Parcours"
+    IDS_ASSCOL_VIEW_RUNS_LIST_DESC "List de parcours dans l'affichage Parcours"
+    IDS_ASSCOL_VIEW_CALENDAR_LIST "List Calendrier"
     IDS_ASSCOL_VIEW_CALENDAR_LIST_DESC 
-                            "Display of entries in the Calendar List view"
-    IDS_ASSCOL_VIEW_TRAINING_LIST "Training Log"
+                            "List de entrés dans le view liste Calendrier"
+    IDS_ASSCOL_VIEW_TRAINING_LIST "Log Entraînement"
     IDS_ASSCOL_VIEW_TRAINING_LIST_DESC 
-                            "Display of entries in the Training Log"
-    IDS_ASSCOL_CALENDAR_APPT "Calendar (MS Outlook Appointment)"
+                            "List de entrés dans le Log Entraînement"
+    IDS_ASSCOL_CALENDAR_APPT "Calendrier (MS Outlook Appointment)"
     IDS_ASSCOL_CALENDAR_APPT_DESC 
-                            "Exporting Calendar entries for importing into MS Outlook as Appointments"
-    IDS_ASSCOL_CALENDAR_TASK "Calendar (MS Outlook Task)"
+                            "Exporter des entrés Calendrier a MS Outlook comme Rendez-vous"
+    IDS_ASSCOL_CALENDAR_TASK "Calendrier (MS Outlook Task)"
     IDS_ASSCOL_CALENDAR_TASK_DESC 
-                            "Exporting Calendar entries for importing into MS Outlook as Tasks"
+                            "Exporter des entrés Calendrier a MS Outlook comme Tache"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ASSCOL_VIEW_CALENDAR "Calendar"
-    IDS_ASSCOL_VIEW_CALENDAR_DESC "Display of entries in the Calendar view"
-    IDS_WIZ_IMPORT_RUNS     "Import Trials and Runs"
+    IDS_ASSCOL_VIEW_CALENDAR "Calendrier"
+    IDS_ASSCOL_VIEW_CALENDAR_DESC "List d'entrés dans le view Calendrier"
+    IDS_WIZ_IMPORT_RUNS     "Importer Concours and Parcours"
     IDS_WIZ_IMPORT_RUNS_EXCEL 
-                            "Import trial and run information from Microsoft Excel.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+                            "Importer information de Concours and Parcours de Microsoft Excel.\n\n Chaque Parcours devrais avoir des valeur valide pour Organisation, Epreuve, Niveau conducteur et Categorie comme definié dans le configuration. En plus, si l'Epreuve est double sanction"
     IDS_WIZ_IMPORT_RUNS_CALC 
-                            "Import trial and run information from OpenOffice Calc.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+                            "Importer information de Concours and Parcours de OpenOffice Calc.\n\n Chaque Parcours devrais avoir des valeur valide pour Organisation, Epreuve, Niveau conducteur et Categorie comme definié dans le configuration. En plus, si l'Epreuve est double sanction"
     IDS_WIZ_IMPORT_RUNS_SPREAD 
-                            "Import trial and run information from a spreadsheet. Data must be in a text format.\n\nWhen importing, each run must have a valid (as defined in the Configuration) Venue, Event, Division and Level. Also, if a trial is dual-sanctioned, the '/' character is assumed to separate the list of venue names and club names."
+                            "Importer information de Concours and Parcours d'un tableur. Data dois etre en format texte.\n\nChaque Parcours devrais avoir des valeur valide pour Organisation, Epreuve, Niveau conducteur et Categorie comme definié dans le configuration. En plus, si l'Ep"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_WIZ_IMPORT_RUNS_PLUS "Import Dogs, Trials, Runs and Judges"
-    IDS_WIZ_IMPORT_RUNS_ARB "Import dog, trial, run and judge information from Agility Record Book."
-    IDS_WIZ_EXPORT_RUNS     "Export Runs"
+    IDS_WIZ_IMPORT_RUNS_PLUS "Importer Chiens, Concours, Parcours and Juges"
+    IDS_WIZ_IMPORT_RUNS_ARB "Importer infromation sur Chien, Concours, Parcours and Juge de Agility Record Book."
+    IDS_WIZ_EXPORT_RUNS     "Exporter Parcours"
     IDS_WIZ_EXPORT_RUNS_EXCEL 
-                            "Export trial and run information to Microsoft Excel."
+                            "Exporter infromation sur concours and parcours a Microsoft Excel."
     IDS_WIZ_EXPORT_RUNS_CALC 
-                            "Export trial and run information to OpenOffice Calc."
+                            "Exporter infromation sur concours and parcours a OpenOffice Calc."
     IDS_WIZ_EXPORT_RUNS_SPREAD 
-                            "Export trial and run information so it can be imported into a spreadsheet."
-    IDS_WIZ_IMPORT_CAL      "Import Calendar"
-    IDS_WIZ_IMPORT_CAL_EXCEL "Import a calendar listing from Microsoft Excel."
-    IDS_WIZ_IMPORT_CAL_CALC "Import a calendar listing from OpenOffice Calc."
-    IDS_WIZ_IMPORT_CAL_SPREAD "Import a calendar listing from a spreadsheet."
-    IDS_WIZ_IMPORT_CAL_ARB  "Import a calendar listing that was exported from Agility Record Book."
-    IDS_WIZ_EXPORT_CAL      "Export Calendar"
+                            "Exporter infromation sur concours and parcours pour etre importé a un tableur."
+    IDS_WIZ_IMPORT_CAL      "Importer Calendrier"
+    IDS_WIZ_IMPORT_CAL_EXCEL "Importer une entré Calendrier de Microsoft Excel."
+    IDS_WIZ_IMPORT_CAL_CALC "Importer une entré Calendrier de OpenOffice Calc."
+    IDS_WIZ_IMPORT_CAL_SPREAD "Importer une entré Calendrier d'un tableur."
+    IDS_WIZ_IMPORT_CAL_ARB  "Importer une entré Calendrier qu'etais exporté d'Agility Record Book."
+    IDS_WIZ_EXPORT_CAL      "Exporter Calendrier"
     IDS_WIZ_EXPORT_CAL_EXCEL 
-                            "Export your calendar listing to Microsoft Excel."
-    IDS_WIZ_EXPORT_CAL_CALC "Export your calendar listing to OpenOffice Calc."
-    IDS_WIZ_EXPORT_CAL_SPREAD "Export your calendar listing to a spreadsheet."
-    IDS_WIZ_EXPORT_CAL_ARB  "Export your calendar listing so it can be imported into Agility Record Book."
+                            "Exporter un entré Calendrier a Microsoft Excel."
+    IDS_WIZ_EXPORT_CAL_CALC "Exporter un entré Calendrier a OpenOffice Calc."
+    IDS_WIZ_EXPORT_CAL_SPREAD "Exporter un entré Calendrier a un tableur."
+    IDS_WIZ_EXPORT_CAL_ARB  "Exporter un entré Calendrier pour etre importé a Agility Record Book."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_WIZ_EXPORT_CAL_VCAL "Export Calendar (vCalendar)"
+    IDS_WIZ_EXPORT_CAL_VCAL "Exporter Calendrier (vCalendar)"
     IDS_WIZ_EXPORT_CAL_VCAL_SPREAD 
-                            "Export calendar entries in vCalendar (.vcs) format so they can be imported into other programs."
-    IDS_WIZ_EXPORT_CAL_ICAL "Export Calendar (iCalendar)"
+                            "Exporter entrés Calendrier en format vCalendrier (.vcs) pour etre importé par des autres logiciel."
+    IDS_WIZ_EXPORT_CAL_ICAL "Exporter Calendrier (iCalendar)"
     IDS_WIZ_EXPORT_CAL_ICAL_SPREAD 
-                            "Export calendar entries in iCalendar (.ics) format so they can be imported into other programs."
-    IDS_WIZ_EXPORT_CAL_APPT "Export Calendar (MS Outlook Appointment)"
+                            "Exporter entrés Calendrier en format iCalendrier (.ics) pour etre importé par des autres logiciel."
+    IDS_WIZ_EXPORT_CAL_APPT "Exporter Calendrier (MS Outlook Appointment)"
     IDS_WIZ_EXPORT_CAL_APPT_EXCEL 
-                            "Export calendar entries to Excel so they can be imported into Microsoft Outlook as Appointments."
+                            "Exporter des entrés Calendrier a Excel pour etre importé a Microsoft Outlook comme des rendez-vous."
     IDS_WIZ_EXPORT_CAL_APPT_SPREAD 
-                            "Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Appointments."
-    IDS_WIZ_EXPORT_CAL_TASK "Export Calendar (MS Outlook Task)"
+                            "Exporter des entrés Calendrier a un tableur pour etre importé a Microsoft Outlook comme des rendez-vous."
+    IDS_WIZ_EXPORT_CAL_TASK "Exporter Calendrier (MS Outlook Task)"
     IDS_WIZ_EXPORT_CAL_TASK_EXCEL 
-                            "Export calendar entries to Excel so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
+                            "Exporter des entrés Calendrier a Excel pour etre importé a Microsoft Outlook comme des task. Seulement des entrés marqué comme 'Prevue' vont etre exporté."
     IDS_WIZ_EXPORT_CAL_TASK_SPREAD 
-                            "Export calendar entries to a spreadsheet so they can be imported into Microsoft Outlook as Tasks. Only Calendar entries that at marked as 'Planning' will be exported."
-    IDS_WIZ_IMPORT_LOG      "Import Training Log"
-    IDS_WIZ_IMPORT_LOG_EXCEL "Import a Training Log from Microsoft Excel."
-    IDS_WIZ_IMPORT_LOG_CALC "Import a Training Log from OpenOffice Calc."
-    IDS_WIZ_IMPORT_LOG_SPREAD "Import a Training Log from a spreadsheet."
-    IDS_WIZ_IMPORT_LOG_ARB  "Import a Training Log that was exported from Agility Record Book."
-    IDS_WIZ_EXPORT_LOG      "Export Training Log"
+                            "Exporter des entrés Calendrier a un tableur pour etre importé a Microsoft Outlook comme des task. Seulement des entrés marqué comme 'Prevue' vont etre exporté."
+    IDS_WIZ_IMPORT_LOG      "Importer Log Entraînement"
+    IDS_WIZ_IMPORT_LOG_EXCEL "Importer un Log Entraînement de Microsoft Excel."
+    IDS_WIZ_IMPORT_LOG_CALC "Importer un Log Entraînement de OpenOffice Calc."
+    IDS_WIZ_IMPORT_LOG_SPREAD "Importer un Log Entraînement d'un tableur."
+    IDS_WIZ_IMPORT_LOG_ARB  "Importer un Log Entraînement qu'etais exporté d'Agility Record Book."
+    IDS_WIZ_EXPORT_LOG      "Exporter Log Entraînement"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_WIZ_EXPORT_LOG_EXCEL "Export your Training Log to Microsoft Excel."
-    IDS_WIZ_EXPORT_LOG_CALC "Export your Training Log to OpenOffice Calc."
-    IDS_WIZ_EXPORT_LOG_SPREAD "Export your Training Log to a spreadsheet."
-    IDS_WIZ_EXPORT_LOG_ARB  "Export your Training Log so it can be imported into Agility Record Book."
-    IDS_WIZ_IMPORT_CONFIG   "Import Configuration"
+    IDS_WIZ_EXPORT_LOG_EXCEL "Exporter le Log Entraînement a Microsoft Excel."
+    IDS_WIZ_EXPORT_LOG_CALC "Exporter le Log Entraînement a OpenOffice Calc."
+    IDS_WIZ_EXPORT_LOG_SPREAD "Exporter le Log Entraînement a un tableur."
+    IDS_WIZ_EXPORT_LOG_ARB  "Exporter le Log Entraînement pour etre importé a Agility Record Book."
+    IDS_WIZ_IMPORT_CONFIG   "Importer Configuration"
     IDS_WIZ_IMPORT_CONFIG_ARB 
-                            "Update your configuration to support new and/or updated venues."
-    IDS_WIZ_EXPORT_CONFIG   "Export Configuration"
+                            "Mettre a jour votre configuration pour supporter des organisations nouveaux ou changé. "
+    IDS_WIZ_EXPORT_CONFIG   "Exporter Configuration"
     IDS_WIZ_EXPORT_CONFIG_ARB 
-                            "Export your configuration so it can be imported into Agility Record Book."
-    IDS_WIZ_EXPORT_DTD      "Export DTD"
-    IDS_WIZ_EXPORT_DTD_ARB  "Export the Document Type Definition. This data describes the XML format of the data file."
-    IDS_WIZ_EXPORT_XML      "Export File as XML"
-    IDS_WIZ_EXPORT_XML_ARB  "Export your data file as an XML file. The DTD will be contained within this file."
+                            "Exporter votre configuration pour etre importé a Agility Record Book."
+    IDS_WIZ_EXPORT_DTD      "Exporter DTD"
+    IDS_WIZ_EXPORT_DTD_ARB  "Exporter la definition Type Document. Ces data decrire le format XML du fichier data. "
+    IDS_WIZ_EXPORT_XML      "Exporter Fichier comme XML"
+    IDS_WIZ_EXPORT_XML_ARB  "Exporter votre fichier data comme fichier XML. Le DTD serais contenu dans ce fichier."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_RUNS                "Runs"
+    IDS_RUNS                "Parcours"
     IDS_POINTS              "Points"
-    IDS_CALENDAR            "Calendar"
-    IDS_TRAINING            "Training Log"
+    IDS_CALENDAR            "Calendrier"
+    IDS_TRAINING            "Log Entraînement"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ADDED               "Added "
-    IDS_ALL                 "<All>"
-    IDS_BLANK_COLUMN        "<Blank Column>"
-    IDS_BUTTONS_DIVISIONS   "Buttons: Divisions"
-    IDS_BUTTONS_EVENTS      "Buttons: Events"
-    IDS_BUTTONS_LEVELS      "Buttons: Levels"
-    IDS_BUTTONS_MULTIQS     "Buttons: MultiQs"
-    IDS_BUTTONS_TITLES      "Buttons: Titles"
-    IDS_CHANGED             "Changed"
+    IDS_ADDED               "Ajouté "
+    IDS_ALL                 "<Tous>"
+    IDS_BLANK_COLUMN        "<Colonne vierge>"
+    IDS_BUTTONS_DIVISIONS   "Boutons: Niveaux conducteur"
+    IDS_BUTTONS_EVENTS      "Boutons: Epreuves"
+    IDS_BUTTONS_LEVELS      "Boutons: Degrés"
+    IDS_BUTTONS_MULTIQS     "Boutons: MultiQs"
+    IDS_BUTTONS_TITLES      "Boutons: Distinctions"
+    IDS_CHANGED             "Changé"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_CRCD_BTN_CLEARCOURSE "Clear Course"
-    IDS_CRCD_BTN_INSERTCOURSE "Insert Course"
-    IDS_CRCD_BTN_VIEWIMAGE  "View Image"
-    IDS_CRCD_BTN_VIEWTEXT   "View Text"
-    IDS_DELETED             "Deleted"
-    IDS_DIVISION_NAME       "Division Name"
-    IDS_DISABLED            "Disabled"
-    IDS_EXISTING_POINTS     "Existing Points"
-    IDS_FAULT_TYPE_NAME     "Fault Name"
-    IDS_FAULT_TYPES         "Fault Types"
+    IDS_CRCD_BTN_CLEARCOURSE "Vider Parcours"
+    IDS_CRCD_BTN_INSERTCOURSE "Inserer Parcours"
+    IDS_CRCD_BTN_VIEWIMAGE  "Voir Image"
+    IDS_CRCD_BTN_VIEWTEXT   "Voir Text"
+    IDS_DELETED             "Supprimé"
+    IDS_DIVISION_NAME       "Nom Niveau conducteur"
+    IDS_DISABLED            "Eteindre"
+    IDS_EXISTING_POINTS     "Points existant"
+    IDS_FAULT_TYPE_NAME     "Nom Faut"
+    IDS_FAULT_TYPES         "Types Fauts"
     IDS_INDICATOR_BLANK     "          "
-    IDS_INFO_CLUB           "Club's Information"
-    IDS_INFO_JUDGE          "Judge's Information"
-    IDS_INFO_LOCATION       "Location Information"
+    IDS_INFO_CLUB           "Information Club"
+    IDS_INFO_JUDGE          "Information Juge"
+    IDS_INFO_LOCATION       "Information Endroit"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_INVALID_NAME        "Invalid name"
-    IDS_LEVEL_NAME          "Level"
+    IDS_INVALID_NAME        "Nom invalide"
+    IDS_LEVEL_NAME          "Degré"
     IDS_LIFETIME_POINTS     "%1 Points"
-    IDS_OTHERPOINTS         "Other Points"
-    IDS_OTHERPTS_ALL        "All Events"
-    IDS_OTHERPTS_EVENT      "Tally by Event"
-    IDS_OTHERPTS_EVENT_LEVEL "Tally by Level and Event"
-    IDS_OTHERPTS_LEVEL      "Tally by Level"
+    IDS_OTHERPOINTS         "Autres Points"
+    IDS_OTHERPTS_ALL        "Tous epreuves"
+    IDS_OTHERPTS_EVENT      "Trié par Epreuve"
+    IDS_OTHERPTS_EVENT_LEVEL "Organisé par Degré et Epreuve"
+    IDS_OTHERPTS_LEVEL      "Organisé par Degré"
     IDS_PARTNERS            "Partners"
-    IDS_PLACEMENT_POINTS    "Placement Points"
+    IDS_PLACEMENT_POINTS    "Rang Points"
     IDS_Q                   "Q"
-    IDS_RUN_PROPERTIES      "Run Properties"
+    IDS_RUN_PROPERTIES      "Propriétés Parcours "
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_SCORING_REQUIRED_POINTS "Required Points"
-    IDS_SEARCH_NOTES        "Search Notes"
-    IDS_SPEEDPTS            "SpeedPts"
+    IDS_SCORING_REQUIRED_POINTS "Points Necessaire"
+    IDS_SEARCH_NOTES        "Notes Recherche"
+    IDS_SPEEDPTS            "Points vitesse"
     IDS_SQ                  "SQ"
-    IDS_SUBLEVEL_NAME       "SubLevel"
+    IDS_SUBLEVEL_NAME       "SousDegré"
     IDS_TITLEPOINT_LIFETIME "Lifetime"
     IDS_TITLEPOINT_NORMAL   "Normal"
-    IDS_TITLEPOINT_PLACEMENT "Placement"
-    IDS_TITLES              "Titles"
-    IDS_TITLING_POINTS      "Titling Points"
+    IDS_TITLEPOINT_PLACEMENT "Rang"
+    IDS_TITLES              "Distinctions"
+    IDS_TITLING_POINTS      "Points Distinction"
     IDS_TOTAL               "Total"
-    IDS_UNEARNED            "<Unearned>"
-    IDS_UPDATED             "Updated "
+    IDS_UNEARNED            "<Pas gagné>"
+    IDS_UPDATED             "Mis a jour "
 END
 
 STRINGTABLE 
 BEGIN
     IDS_VIEWING_OPTIONS     "Options"
-    IDS_EXPORTING           "Exporting..."
+    IDS_EXPORTING           "Exporter..."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_AFFECTED_RUNS       "Runs affected by configuration changes"
-    IDS_ARE_YOU_SURE_CONTINUE "Are you sure you want to continue?"
-    IDS_AUTODELETE_CAL      "Warning: The date you have entered will cause this entry to automatically be deleted. Are you sure you want to continue?"
+    IDS_AFFECTED_RUNS       "Parcours effectué par changement configuration"
+    IDS_ARE_YOU_SURE_CONTINUE "Vous etes sur de continuer?"
+    IDS_AUTODELETE_CAL      "Attention: Le date entré va causé le suppression automatique de cette entré. Etes-vous sur de continuer?"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_BAD_EVENT           "Unable to locate the specified event in the configuration."
-    IDS_BAD_SCORINGMETHOD   "Unable to locate the specified scoring method (event/division/level) in the configuration."
-    IDS_BLANK_CALLNAME      "Callname may not be left blank."
-    IDS_CHANGEDIV_ISSUES    "Warning: Changing this division name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same division names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
-    IDS_CHANGELEVEL_ISSUES  "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
+    IDS_BAD_EVENT           "Impossible de trouver l'epreuve specifié dans le configuration."
+    IDS_BAD_SCORINGMETHOD   "Impossible de trouver le method pour calculer les points (epreuve/degré/niveau conducteur) specifié dans le configuration."
+    IDS_BLANK_CALLNAME      "Nom du chien necessaire."
+    IDS_CHANGEDIV_ISSUES    "Attention: Changer le nom du cathegorie peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les categories ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n\nEtes-vous sur de continuer?"
+    IDS_CHANGELEVEL_ISSUES  "Attention: Changer le nom du degré peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les degrés ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n\nEtes-vous sur de continuer?"
     IDS_CHANGESUBLEVEL_ISSUES 
-                            "Warning: Changing this level name may have some unforseen consequences due to several co-hosted trials. If the venues of the co-hosting clubs currently have the same level names, changing the name could cause trial results to be incorrectly listed.\n\nAre you sure you want to continue?"
-    IDS_CONFIG_CHECK_VALUE  "Value is too small. Please enter a value greater than or equal to zero. (Note, entering zero will erase any speed points for the run.)"
-    IDS_CONFIG_PLACE_TOOSMALL "Place must be greater than zero."
-    IDS_CONFIG_PLACE_UNIQUE "Place must be unique."
-    IDS_CONFIGEVENT_BONUS   "Has Bonus Points"
-    IDS_CONFIGEVENT_CLEANQ  "Runs must be clean to Q"
-    IDS_CONFIGEVENT_DATEORDER "Valid From date is before the Valid To date"
-    IDS_CONFIGEVENT_DROPFRAC "Drop time fractions for faults"
+                            "Attention: Changer le nom du degré peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les degrés ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n\nEtes-vous sur de continuer?"
+    IDS_CONFIG_CHECK_VALUE  "Le valeur est trop petit. Entrez zero ou un valeur plus grand que zero. (Attention: zero supprime des point vitesse pour ce parcours.)"
+    IDS_CONFIG_PLACE_TOOSMALL "Endroit doit etre plus grand que zero."
+    IDS_CONFIG_PLACE_UNIQUE "Endroit doit etre unique."
+    IDS_CONFIGEVENT_BONUS   "Points Bonus existent"
+    IDS_CONFIGEVENT_CLEANQ  "Parcours doit etre sans fauts pour Q."
+    IDS_CONFIGEVENT_DATEORDER "Date commencement doit etre avant date fermeture."
+    IDS_CONFIGEVENT_DROPFRAC "Supprimer fraction temps pour fauts"
     IDS_CONFIGEVENT_OVERLAPDATES 
-                            "Warning: Scoring methods have overlapping from/to dates. When searching for the scoring method for a particular run, the first method found will be returned, ignoring the others.\n\nAre you sure you want to save this?"
+                            "Attention: Il y a plusieurs methods pour calculer les points pour les meme dates. Seulement le premiere method trouvé par le systeme va etre utilisé.\n\nEtes-vous sur de enregistrer?"
     IDS_CONFIGEVENT_PLACEMENT0 
-                            "In order to use a placement of 0, you must specify places that have values. Otherwise, turn off Speed Points."
-    IDS_CONFIGEVENT_REQCLOSE "Required Closing"
+                            "Pour une rang de 0, il faut des endroits specifiés ou que les points vitesses sont etteint."
+    IDS_CONFIGEVENT_REQCLOSE "Fermeture necessaire"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_CONFIGEVENT_REQOPEN "Required Opening"
-    IDS_CONFIGEVENT_SPEEDPTS "Has Speed Points"
-    IDS_CONFIGEVENT_STYLE   "Scoring Style"
-    IDS_CONFIGEVENT_SUPERQ  "Has Super Qs"
-    IDS_CONFIGEVENT_TF_FROMSCORE "Subtract time faults from score"
-    IDS_CONFIGEVENT_TF_OVER "Compute time faults over SCT"
-    IDS_CONFIGEVENT_TF_UNDER "Compute time faults under SCT"
-    IDS_CONFIGEVENT_TIMEFAULTMULT "Time Fault Multiplier"
-    IDS_COPYOF              "Copy of %1"
-    IDS_CREATE_LEVEL        "Would you like to create a Level? (Answer 'No' to create a sub-level)"
-    IDS_CREATEDOG_FAILED    "Error: Failed to create dog."
-    IDS_CREATERUN_FAILED    "Error: Failed to create run."
-    IDS_CREATERUN_FILTERED  "Warning: The run you have just created cannot be shown due to filter options."
-    IDS_CREATETRIAL_FAILED  "Error: Failed to create trial."
+    IDS_CONFIGEVENT_REQOPEN "Ouverture necessaire"
+    IDS_CONFIGEVENT_SPEEDPTS "Points vitesse existent"
+    IDS_CONFIGEVENT_STYLE   "Method pour calculer les resultats"
+    IDS_CONFIGEVENT_SUPERQ  "Super Qs existant"
+    IDS_CONFIGEVENT_TF_FROMSCORE "Soustraire Fauts temps de resultat"
+    IDS_CONFIGEVENT_TF_OVER "Calculer Fauts Temps sous TPS"
+    IDS_CONFIGEVENT_TF_UNDER "Calculer Fauts Temps sur TPS"
+    IDS_CONFIGEVENT_TIMEFAULTMULT "Temps Faut Multiplicateur"
+    IDS_COPYOF              "Copie de %1"
+    IDS_CREATE_LEVEL        "Créer une Degré? (Repondez 'No' pour créer un sous-degré)"
+    IDS_CREATEDOG_FAILED    "Erreur: Impossible de créer chien."
+    IDS_CREATERUN_FAILED    "Erreur: Impossible de créer parcours."
+    IDS_CREATERUN_FILTERED  "Attention: Le parcours juste creé ne peut pas etre montré a cause des filtres choisis."
+    IDS_CREATETRIAL_FAILED  "Erreur: Impossible de creer concours."
     IDS_CREATETRIAL_FILTERED 
-                            "Warning: The trial you have just created cannot be shown due to filter options."
+                            "Attention: Le concours juste creé ne peut pas etre montré a cause des filtres choisis."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_DELETE_DOG_DATA     "Warning: Deleting a Dog will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_DELETE_EVENT_DATA   "Warning: Deleting an event cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_DELETE_TRIAL_DATA   "Warning: Deleting a Trial will also delete all associated data. This action cannot be un-done.\n\nAre you sure you want to continue?"
-    IDS_ENTER_NAME          "Please enter a name."
-    IDS_ENTER_SHORTNAME     "Please enter a short name."
-    IDS_INTERNAL_ERROR      "Internal error: File not saved."
-    IDS_MIN_RESOLUTION      "This program requires a screen resolution of at least 800x600. Some dialogs may not be fully visible. Do you want to continue?"
-    IDS_NAME_FILTER         "You must name a filter in order to save it."
-    IDS_NAME_IN_USE         "Name is already in use."
-    IDS_NAME_IN_USE_MERGE   "This name is currently in use. Do you want to merge your data into this existing name?"
-    IDS_NEED_CLUB           "You must create a hosting club before creating any events."
-    IDS_NEW_DOG             "Would you like to create a dog now?"
-    IDS_NO_LINKED_FILES     "No linked files found."
-    IDS_NONFATAL_MSGS       "Warning: Some non-fatal messages were generated while loading the file:\n\n"
+    IDS_DELETE_DOG_DATA     "Attention: Le suppression d'un Chien supprime aussi tous les data assoicié, ca que ne peut pas etre defait.\n\nEtes-vous sur de continuer?"
+    IDS_DELETE_EVENT_DATA   "Attention: La suppression d'un epreuve ne peut pas etre defait.\n\nEtes-vous sur de continuer?"
+    IDS_DELETE_TRIAL_DATA   "Attention: Le suppression d'un concours supprime aussi tous les data assoicié, ca que ne peut pas etre defait.\n\nEtes-vous sur de continuer?"
+    IDS_ENTER_NAME          "Entrez un nom."
+    IDS_ENTER_SHORTNAME     "Entrez un nom court."
+    IDS_INTERNAL_ERROR      "Erreur interne: Fichier pas enregistré."
+    IDS_MIN_RESOLUTION      "Ce logiciel demand un resolution ecran a au moins 800x600 ou quelqes dialogue ne vont pas etre visible. Voulez-vous continuer?"
+    IDS_NAME_FILTER         "Il faut donner un nom pour enregistrer le filtre."
+    IDS_NAME_IN_USE         "Ce nom existe deja."
+    IDS_NAME_IN_USE_MERGE   "Ce nom est utilisé. Voulez-vous mellanger vos data avec le nom existant?"
+    IDS_NEED_CLUB           "Il faut créer un club organisateur avant créer des epreuves."
+    IDS_NEW_DOG             "Voulez-vous créer un chien maintenant?"
+    IDS_NO_LINKED_FILES     "Aucun fichier associé trouvé."
+    IDS_NONFATAL_MSGS       "Attention: Des messages pas fatal ont etais crée en chargent le fichier:\n\n"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_SELECT_DIVISION     "Please select a Division."
-    IDS_SELECT_EVENT        "Please select an Event."
-    IDS_SELECT_JUDGE        "Please select a Judge."
-    IDS_SELECT_LEVEL        "Please select a Level."
-    IDS_SELECT_Q            "Please select a 'Q'."
-    IDS_SELECT_STYLE        "Please select a Style."
-    IDS_TITLEPTS_EXISTS     "An entry already exists for the specified faults"
-    IDS_UNABLE_TO_OPEN      "Unable to open "
-    IDS_BAD_VERSION         "Unable to determine version information"
-    IDS_NO_DELIM_SPECIFIED  "No delimiter specified. Unable to preview data."
-    IDS_SPECIFY_DATEFORMAT  "Please specify a date format."
+    IDS_SELECT_DIVISION     "Choisissez un nouveau conducteur."
+    IDS_SELECT_EVENT        "Choisissez un epreuve."
+    IDS_SELECT_JUDGE        "Choisissez un juge."
+    IDS_SELECT_LEVEL        "Choisissez un degré."
+    IDS_SELECT_Q            "Choisissez un 'Q'."
+    IDS_SELECT_STYLE        "Choisissez une méthode calculation points"
+    IDS_TITLEPTS_EXISTS     "Il y a deja un entré pour ces fauts"
+    IDS_UNABLE_TO_OPEN      "Impossible de ouvrir "
+    IDS_BAD_VERSION         "Impossible de determiner information version"
+    IDS_NO_DELIM_SPECIFIED  "Aucun délimiteur specifié. Impossible de prevoir data."
+    IDS_SPECIFY_DATEFORMAT  "SVP specifiez un format date."
     IDS_ERRORS_DURING_EXPORT 
-                            "Errors were encountered during export. Data may not be complete."
-    IDS_EXPORT_FAILED       "Failed to export data."
-    IDS_IMPORT_FAILED       "Failed to read data."
+                            "Il avait des erreurs pendant l'export; il c'est peut que data n'est pas complet."
+    IDS_EXPORT_FAILED       "Impossible d'exporter data."
+    IDS_IMPORT_FAILED       "Impossible de lire data."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_BAD_DRAWDATE        "The draw date must be after the opening date and before the closing date."
+    IDS_BAD_DRAWDATE        "Le date tirage doit etre apres le date ouverture et avant le fermeture."
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_UPDATED_CAL_ITEMS   "Added %1!d! new calendar items, %2!d! updated items."
+    IDS_UPDATED_CAL_ITEMS   "%1!d! nouveaux entrés calendrier rajouté, %2!d! entrés mis a jour."
     IDS_ADDED_CLUBS         "%1!d! clubs"
-    IDS_ADDED_DOGS          "%1!d! dogs"
-    IDS_ADDED_EXISTINGPTS   "%1!d! existing points"
-    IDS_ADDED_JUDGES        "%1!d! judges"
-    IDS_ADDED_LOCATIONS     "%1!d! locations"
-    IDS_ADDED_REGNUMS       "%1!d! registration numbers"
-    IDS_ADDED_TITLES        "%1!d! titles"
-    IDS_ADDED_TRAINING_ITEMS "Added %1!d! new Training Log items."
-    IDS_ADDED_TRIALS        "%1!d! trials"
-    IDS_CANNOT_FIND         "Cannot find ""%1"""
-    IDS_CANNOT_OPEN         "Unable to open file '%1' for writing."
-    IDS_CONFIG_DELETE_RUNS  "Warning!!!\n\nApplying these changes will delete the %1!d! runs listed. This action cannot be un-done.\n\nAre you sure you want to continue?"
+    IDS_ADDED_DOGS          "%1!d! chiens"
+    IDS_ADDED_EXISTINGPTS   "%1!d! points existant"
+    IDS_ADDED_JUDGES        "%1!d! juges"
+    IDS_ADDED_LOCATIONS     "%1!d! endroits"
+    IDS_ADDED_REGNUMS       "%1!d! numeros d'enregistrement"
+    IDS_ADDED_TITLES        "%1!d! distinctions"
+    IDS_ADDED_TRAINING_ITEMS "%1!d! nouveaux entrés Log Entraînement rajoutés."
+    IDS_ADDED_TRIALS        "%1!d! epreuves"
+    IDS_CANNOT_FIND         "Ne peut pas trouver '%1'"
+    IDS_CANNOT_OPEN         "Impossible d'ouvrir fichier '%1' pour ecriture."
+    IDS_CONFIG_DELETE_RUNS  "Attention!!!\n\nCes changements vont supprimer les %1!d! parcours dans la liste; ca que ne peut pas etre defait.\n\nEtes-vous sur de continuer?"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_FILE_PREVIEW        "Preview of %1."
-    IDS_LOAD_FAILED         "Failed to load '%1'."
-    IDS_NOT_VISIBLE         "Warning: %1!d! new entries are not visible due to your viewing options."
-    IDS_NUM_EVENTS          "%1!d! events"
-    IDS_NUM_RUNS_QS         "%1!d! runs, %2!d! Qs"
-    IDS_NUM_TRAINING        "%1!d! entries"
-    IDS_POINTS_CLEAN        ", (%1!d! clean)"
-    IDS_POINTS_JUDGES       ", %1!d! judges"
+    IDS_FILE_PREVIEW        "Prevue de %1."
+    IDS_LOAD_FAILED         "Impossible de charger '%1'."
+    IDS_NOT_VISIBLE         "Attention: %1!d! nouveaux entrés ne sont pas visible a cause de votre filtrage choisi."
+    IDS_NUM_EVENTS          "%1!d! epreuves"
+    IDS_NUM_RUNS_QS         "%1!d! parcours, %2!d! Qs"
+    IDS_NUM_TRAINING        "%1!d! entrés"
+    IDS_POINTS_CLEAN        ", (%1!d! sans fauts)"
+    IDS_POINTS_JUDGES       ", %1!d! juges"
     IDS_POINTS_PARTNERS     ", %1!d! partners"
     IDS_POINTS_QS           "%1!d! Qs (%2!d!%%)"
-    IDS_POINTS_RUNS_JUDGES  "%1!d! runs, %2!d! judges"
-    IDS_POINTS_SPEED        "%1!d! Speed"
-    IDS_POINTS_SPEED_SUBTOTAL "[%1!d! speed]"
+    IDS_POINTS_RUNS_JUDGES  "%1!d! parcours, %2!d! juges"
+    IDS_POINTS_SPEED        "%1!d! vitesse"
+    IDS_POINTS_SPEED_SUBTOTAL "[%1!d! vitesse]"
     IDS_POINTS_SQS          "[%1!d! SQ]"
-    IDS_READING_ROWS        "Reading %1!d! rows"
+    IDS_READING_ROWS        "Lire %1!d! lignes"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_READING_ROWSCOLS    "Reading %1!d! rows and %2!d! columns"
-    IDS_TRIAL_DATES         "Trial dates: %1 to %2"
+    IDS_READING_ROWSCOLS    "Lire %1!d! lignes and %2!d! colonnes"
+    IDS_TRIAL_DATES         "Dates concours: %1 a %3"
     IDS_VENUE_CONFIG_MISSING 
-                            "Unable to locate configuration information for the venue '%1'."
-    IDS_YEARS               "%1 yrs"
+                            "Impossible de localiser information configuration pour organisation '%1'."
+    IDS_YEARS               "%1 ans"
     IDS_IMPORT_SKIP_NOCONFIG 
-                            "Warning: Line %1!d!: Skipped entry, unable to find a valid configuration entry\n"
-    IDS_IMPORT_BAD_DATE_RUN "ERROR: Line %1!d!, Column %2!d!: Invalid run date: %3\n"
-    IDS_IMPORT_BAD_VENUE    "Warning: Line %1!d!: Skipped entry, invalid venue name: %2\n"
+                            "Attention: Ligne %1!d!: Entré passé, impossible de trouver un entré configuration valide\n"
+    IDS_IMPORT_BAD_DATE_RUN "ERREUR: Ligne %1!d!, Colonne %2!d!: Date parcours invalide: %3\n"
+    IDS_IMPORT_BAD_VENUE    "Attention: Ligne %1!d!: Entré passé, nom organisation invalide: %2\n"
     IDS_IMPORT_BAD_DATE_CALSTART 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar start date: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date commencement calendrier invalide: %3\n"
     IDS_IMPORT_BAD_DATE_CALEND 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar end date: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date fermeture calendrier invalide: %3\n"
     IDS_IMPORT_BAD_DATE_CALOPEN 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar opening date: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date ouverture calendrier invalide: %3\n"
     IDS_IMPORT_BAD_DATE_CALCLOSE 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar closing date: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date fermeture calendrier invalide: %3\n"
     IDS_IMPORT_BAD_CAL_VALUE 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar Entered value: %3 (valid: N, P or E)\n"
-    IDS_IMPORT_BAD_DATE_LOG "ERROR: Line %1!d!, Column %2!d!: Invalid training log date: %3\n"
-    IDS_IMPORT_STATS        "%1!d! entries added\n%2!d! entries updated\n%3!d! duplicates (not added)\n%4!d! entries skipped"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Invalide entré calendrier: %3 (valide: N, P ou E)\n"
+    IDS_IMPORT_BAD_DATE_LOG "ERREUR: Ligne %1!d!, colonne %2!d!: Date log entraînement invalide: %3\n"
+    IDS_IMPORT_STATS        "%1!d! entrés rajoutés\n%2!d! entrés mis a jour\n%3!d! duplicats (pas rajoutés)\n%4!d! entrés passés"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_FILE_EXPORT_WIZARD   "Import and Export Wizard\nImport/Export"
-    ID_FILE_LINKED          "Find all linked files\nFind Links"
+    ID_FILE_EXPORT_WIZARD   "Guide Import et Export\nImport/Export"
+    ID_FILE_LINKED          "Trouver tous fichiers associés\nTrouver liens"
     ID_FILE_PRINT_BLANK_RUNS 
-                            "Print blank sheets for recording runs\nPrint Blank"
-    ID_FILE_LANGUAGE_CHOOSE "Choose a language\nLanguage"
-    ID_EDIT_FIND_NEXT       "Find the next specified text\nFind Next"
-    ID_EDIT_FIND_PREVIOUS   "Find the previous specified text\nFind Previous"
-    ID_EDIT_CONFIGURATION   "Edit Venue configurations\nConfigure"
+                            "Emprimer page vierge pour enregistrer parcours\nEmprimer page vierge"
+    ID_FILE_LANGUAGE_CHOOSE "Choisir une langue\nLangue"
+    ID_EDIT_FIND_NEXT       "Trouver prochaine texte specifié\nTrouver prochaine"
+    ID_EDIT_FIND_PREVIOUS   "Trouver texte specifié precedent\nTrouver precedent"
+    ID_EDIT_CONFIGURATION   "Editer configurations organisation\nConfigurer"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_EDIT_DUPLICATE       "Duplicate the current selection\nDuplicate"
-    ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"
-    ID_AGILITY_EDIT_DOG     "Edit a Dog's information\\Edit Dog"
-    ID_AGILITY_DELETE_DOG   "Delete a Dog and all its information\nDelete Dog"
+    ID_EDIT_DUPLICATE       "Duplicer selection courant\nDuplicer"
+    ID_AGILITY_NEW_DOG      "Creer nouveau chien\nNouveau chien"
+    ID_AGILITY_EDIT_DOG     "Editer information sur chien\\Editer chien"
+    ID_AGILITY_DELETE_DOG   "Supprimer chien et tous information associé\nSupprimer chien"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_AGILITY_NEW_RUN      "Create a new Run\nNew Run"
-    ID_AGILITY_EDIT_RUN     "Edit a Run's information\nEdit Run"
-    ID_AGILITY_DELETE_RUN   "Delete a Run\nDelete Run"
-    ID_AGILITY_NEW_CALENDAR "Create an upcoming Calendar entry\nNew Calendar Entry"
-    ID_AGILITY_EDIT_CALENDAR "Edit an upcoming Calendar entry\nEdit Calendar"
+    ID_AGILITY_NEW_RUN      "Creer nouveau parcours\nNouveau parcours"
+    ID_AGILITY_EDIT_RUN     "Editer information parcours\nEditer parcours"
+    ID_AGILITY_DELETE_RUN   "Supprimer a Parcours\nSupprimer Parcours"
+    ID_AGILITY_NEW_CALENDAR "Creer futur entré calendrier\nNouveau entré calendrier"
+    ID_AGILITY_EDIT_CALENDAR "Editer futur entré calendrier\nEditer calendrier"
 END
 
 STRINGTABLE 
 BEGIN
     ID_AGILITY_DELETE_CALENDAR 
-                            "Delete an upcoming Calendar entry\nDelete Calendar"
+                            "Supprimer futur entré calendrier\nSupprimer calendrier"
     ID_AGILITY_UPDATE_CALENDAR 
-                            "Update Calendar entries from Online sources\nUpdate Calendar"
-    ID_AGILITY_EXPORT_CALENDAR "Export Calendar entries\nExport"
-    ID_AGILITY_CREATEENTRY_CALENDAR "Create a Trial entry\nNew Trial"
-    ID_AGILITY_NEW_TRAINING "Create a new Training Log entry\nNew Training Log"
-    ID_AGILITY_EDIT_TRAINING "Edit a Training Log entry\nEdit Training Log"
+                            "Mettre a jour des entrés calendrier d'un source online\nMettre a jour calendrier"
+    ID_AGILITY_EXPORT_CALENDAR "Exporter des entrés calendrier\nExport"
+    ID_AGILITY_CREATEENTRY_CALENDAR "Creer un entré concours\nNouveau concours"
+    ID_AGILITY_NEW_TRAINING "Creer un nouveau entré Log Entraînement\nNouveau Log Entraînement"
+    ID_AGILITY_EDIT_TRAINING "Editer entré Log Entraînement\nEditer Log Entraînement"
     ID_AGILITY_DELETE_TRAINING 
-                            "Delete a Training Log entry\nDelete Training Log"
+                            "Supprimer un entré Log Entraînement\nSupprimer Log Entraînement"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_AGILITY_NEW_TITLE    "Create a new Title\nNew Title"
-    ID_AGILITY_EDIT_TITLE   "Edit a Title's information\\Edit Title"
-    ID_AGILITY_DELETE_TITLE "Delete a Title\nDelete Title"
-    ID_AGILITY_NEW_TRIAL    "Create a new Trial\nNew Trial"
-    ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"
-    ID_AGILITY_DELETE_TRIAL "Delete a Trial\nDelete Trial"
+    ID_AGILITY_NEW_TITLE    "Creer nouveau distinction\nNouveau distinction"
+    ID_AGILITY_EDIT_TITLE   "Editer information sur distinction\\Editer distinction"
+    ID_AGILITY_DELETE_TITLE "Supprimer distinction\nSupprimer distinction"
+    ID_AGILITY_NEW_TRIAL    "Creer nouveau concours\nNouveau concours"
+    ID_AGILITY_EDIT_TRIAL   "Editer l'information sur concours\nEditer concours"
+    ID_AGILITY_DELETE_TRIAL "Supprimer concours\nSupprimer concours"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_NOTES_CLUBS          "Edit club information\nClubs"
-    ID_NOTES_JUDGES         "Edit judge information\nJudges"
-    ID_NOTES_LOCATIONS      "Edit location information\nLocations"
-    ID_NOTES_SEARCH         "Search Note Information\nSearch"
-    ID_AGILITY_PRINT_TRIAL  "Print all the runs for the selected trial\nPrint Runs"
-    ID_AGILITY_PRINT_RUNS   "Print all the selected runs\nPrint Runs"
-    ID_VIEW_OPTIONS         "Change viewing options\nOptions"
-    ID_VIEW_CUSTOMIZE       "Customize column layouts\nCustomize"
-    ID_VIEW_SORTRUNS        "Sort newest trials first\nSort runs"
-    ID_VIEW_RUNS_BY_TRIAL   "Show runs by selected trial\nRuns by trial"
+    ID_NOTES_CLUBS          "Editer information sur club\nClubs"
+    ID_NOTES_JUDGES         "Editer information sur juge\nJuges"
+    ID_NOTES_LOCATIONS      "Editer information sur endroit\nEndroits"
+    ID_NOTES_SEARCH         "Recherche information note\nRecherche"
+    ID_AGILITY_PRINT_TRIAL  "Emprimer tous parcours pour concours selectionné\nEmprimer parcours"
+    ID_AGILITY_PRINT_RUNS   "Emprimer tous parcours selectionnés\nEmprimer parcours"
+    ID_VIEW_OPTIONS         "Changer option affichage\nOptions"
+    ID_VIEW_CUSTOMIZE       "Personalliser presentation colonnes\nPersonliser"
+    ID_VIEW_SORTRUNS        "Trier avec plus recent concours au debut\nOrganiser parcours"
+    ID_VIEW_RUNS_BY_TRIAL   "Montrer parcours par concours selectioné\nParcours par concours"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_VIEW_HIDDEN          "Show Titles that have been hidden\nHidden Titles"
-    ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS\nTable YPS"
+    ID_VIEW_HIDDEN          "Montrer distinction cachés\nDistinction cachés"
+    ID_VIEW_TABLE_IN_YPS    "Inclure temps table dans m/s\nTable m/s"
     ID_VIEW_POINTS_VIEW_SORT 
-                            "Sort the Points View by the specified order\nSort Points View"
-    ID_HELP_CONTENTS        "Display the Contents tab of the help file\nContents"
-    ID_HELP_UPDATE          "Check for Updates\nUpdates"
-    ID_HELP_SPLASH          "Show the initial splash screen\nSplash"
-    ID_HELP_SYSINFO         "Display information about the system\nSysInfo"
+                            "Trier points par ordre selectionné\nTrier affichage points"
+    ID_HELP_CONTENTS        "Montrer onglet contenu d'aide\nContenu"
+    ID_HELP_UPDATE          "Cherche mise a jour\nMis a jour"
+    ID_HELP_SPLASH          "Montrer ecran introduction\nEcran introduction"
+    ID_HELP_SYSINFO         "Montrer information sur system\nSysInfo"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_REORDER              "Reorder items\nReorder"
-    ID_DETAILS              "Display details\nDetails"
+    ID_REORDER              "Re-organiser objets\nRe-organiser"
+    ID_DETAILS              "Montrer details\nDetails"
 END
 
 STRINGTABLE 
 BEGIN
-    ID_COPY_TITLES_LIST     "Copy titles\nCopy Titles"
+    ID_COPY_TITLES_LIST     "Copier distinctions\nCopier distinctions"
 END
 
 #endif    // French (France) resources

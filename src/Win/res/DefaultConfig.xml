@@ -540,22 +540,52 @@ Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
 				</Scoring>
 			</Event>
 			<Event Name="Gamblers">
-				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="21" ValidFrom="2008-1-1" type="OCScoreThenTime">
+					<Note>Opening time: 30 seconds</Note>
 					<TitlePoints Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="18" ValidFrom="2008-1-1" type="OCScoreThenTime">
+					<Note>Opening time: 30 seconds</Note>
 					<TitlePoints Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="15" ValidFrom="2008-1-1" type="OCScoreThenTime">
+					<Note>Opening time: 30 seconds</Note>
 					<TitlePoints Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="21" ValidFrom="2008-1-1" type="OCScoreThenTime">
+					<Note>Opening time: 30 seconds</Note>
 					<TitlePoints Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="18" ValidFrom="2008-1-1" type="OCScoreThenTime">
+					<Note>Opening time: 30 seconds</Note>
 					<TitlePoints Faults="0" Points="10"/>
 				</Scoring>
-				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" type="OCScoreThenTime">
+				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="15" ValidFrom="2008-1-1" type="OCScoreThenTime">
+					<Note>Opening time: 30 seconds</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Standard" Level="Elite" OpeningPts="28" ValidTo="2007-12-31" type="OCScoreThenTime">
+					<Note>Opening time: 40 seconds</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Standard" Level="Open" OpeningPts="24" ValidTo="2007-12-31" type="OCScoreThenTime">
+					<Note>Opening time: 40 seconds</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Standard" Level="Novice" OpeningPts="20" ValidTo="2007-12-31" type="OCScoreThenTime">
+					<Note>Opening time: 40 seconds</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Veterans" Level="Elite" OpeningPts="28" ValidTo="2007-12-31" type="OCScoreThenTime">
+					<Note>Opening time: 40 seconds</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Veterans" Level="Open" OpeningPts="24" ValidTo="2007-12-31" type="OCScoreThenTime">
+					<Note>Opening time: 40 seconds</Note>
+					<TitlePoints Faults="0" Points="10"/>
+				</Scoring>
+				<Scoring ClosingPts="20" Division="Veterans" Level="Novice" OpeningPts="20" ValidTo="2007-12-31" type="OCScoreThenTime">
+					<Note>Opening time: 40 seconds</Note>
 					<TitlePoints Faults="0" Points="10"/>
 				</Scoring>
 			</Event>
