@@ -74,21 +74,23 @@ def main():
 
 	# Generate the context header files from the windows code
 	RunCommand("\"" + parseHeader + "\" Win\\resource.h Win\\resource.hm Help\\AgilityBook.txt Help\\AgilityBook.h Help\\contextid.h")
+	RunCommand("\"" + parseHeader + "\" Win\\resource.h Win\\resource.hm Help\\AgilityBookFRA.txt Help\\AgilityBook.h Help\\contextid.h")
 
 	# Generate History.html
 	RunCommand("UpdateHistory.py -h")
 
 	# Now generate the chm file
 	RunCommand("\"" + hhc + "\" AgilityBook.hhp")
+	RunCommand("\"" + hhc + "\" AgilityBookFRA.hhp")
 
 	# Finally, copy the chm file into various locations.
 	# /r:overwrite readonly, /q: don't show copied filename, /y:no prompt
 	print
 	print "Copying chm file to build output directories"
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC6\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC7\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC8Win32\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC9Win32\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\AgilityBook.chm \"..\\bin\\VC9Win32\\Debug\\\"")
+	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC6\\Release\\\"")
+	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC7\\Release\\\"")
+	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC8Win32\\Release\\\"")
+	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9Win32\\Release\\\"")
+	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9Win32\\Debug\\\"")
 
 main()

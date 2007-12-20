@@ -16,10 +16,10 @@ Remove the selected field from the field order. This will place the field back
 into the available fields.
 
 .topic HIDC_ASSIGN_MOVE_DOWN
-Move the selected field up in the order.
+Move the selected field down in the order.
 
 .topic HIDC_ASSIGN_MOVE_UP
-Move the selected field down in the order.
+Move the selected field up in the order.
 
 .topic HIDC_ASSIGN_TYPE
 Run type (scoring style) these fields are being assigned for.
