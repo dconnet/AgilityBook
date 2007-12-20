@@ -101,7 +101,7 @@ static UINT indicators[] =
 
 
 CMainFrame::CMainFrame()
-	: m_pView(NULL)
+	: m_pTabView(NULL)
 	, m_pLangMgr(NULL)
 	, m_pNewMenu(NULL)
 {
@@ -258,19 +258,19 @@ void CMainFrame::SetStatusText2(CString const& msg)
 
 void CMainFrame::SetCurTab(int tab)
 {
-	m_pView->SetCurSel(tab);
+	m_pTabView->SetCurSel(tab);
 }
 
 
 int CMainFrame::GetCurTab() const
 {
-	return m_pView->GetCurSel();
+	return m_pTabView->GetCurSel();
 }
 
 
 bool CMainFrame::ShowPointsAs(bool bHtml)
 {
-	return m_pView->ShowPointsAs(bHtml);
+	return m_pTabView->ShowPointsAs(bHtml);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -355,26 +355,26 @@ void CMainFrame::OnUpdatePane(CCmdUI* pCmdUI)
 
 void CMainFrame::OnNextTab()
 {
-	if (m_pView)
+	if (m_pTabView)
 	{
-		int idx = m_pView->GetCurSel();
+		int idx = m_pTabView->GetCurSel();
 		++idx;
-		if (idx == m_pView->GetItemCount())
+		if (idx == m_pTabView->GetItemCount())
 			idx = 0;
-		m_pView->SetCurSel(idx);
+		m_pTabView->SetCurSel(idx);
 	}
 }
 
 
 void CMainFrame::OnPrevTab()
 {
-	if (m_pView)
+	if (m_pTabView)
 	{
-		int idx = m_pView->GetCurSel();
+		int idx = m_pTabView->GetCurSel();
 		--idx;
 		if (idx == -1)
-			idx = m_pView->GetItemCount() - 1;
-		m_pView->SetCurSel(idx);
+			idx = m_pTabView->GetItemCount() - 1;
+		m_pTabView->SetCurSel(idx);
 	}
 }
 
@@ -420,5 +420,12 @@ void CMainFrame::OnFileLanguageChoose()
 		SetStatusText2(msg);
 		// ...'Ready' message
 		SendMessage(WM_POPMESSAGESTRING, AFX_IDS_IDLEMESSAGE);
+		// Tell all the views (we're SDI, so only need active doc)
+		CDocument* pDoc = GetActiveDocument();
+		if (pDoc)
+			pDoc->UpdateAllViews(NULL, UPDATE_LANG_CHANGE);
+		// And finally, fix the tabview
+		if (m_pTabView)
+			m_pTabView->UpdateLanguage();
 	}
 }

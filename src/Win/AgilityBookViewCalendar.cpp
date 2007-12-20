@@ -573,8 +573,13 @@ void CAgilityBookViewCalendar::OnUpdate(
 		LPARAM lHint,
 		CObject* pHint)
 {
-	if (0 == lHint || (UPDATE_CALENDAR_VIEW & lHint) || (UPDATE_OPTIONS & lHint))
+	if (0 == lHint
+	|| ((UPDATE_CALENDAR_VIEW | UPDATE_OPTIONS) & lHint))
 		LoadData();
+	else if (UPDATE_LANG_CHANGE & lHint)
+	{
+		// Nothing needs localizing (months/etc come from OS)
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

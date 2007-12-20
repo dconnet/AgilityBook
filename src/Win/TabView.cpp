@@ -105,6 +105,22 @@ CTabView::~CTabView()
 }
 
 
+void CTabView::UpdateLanguage()
+{
+	CString str;
+	for (int nPane = 0; nPane < sc_nPanes; ++nPane)
+	{
+		ASSERT(sc_Panes[nPane].idxPane == nPane);
+		str.LoadString(sc_Panes[nPane].idPane);
+		TCITEM item;
+		item.mask = TCIF_TEXT;
+		item.pszText = str.GetBuffer(0);
+		GetTabCtrl().SetItem(nPane, &item);
+		str.ReleaseBuffer();
+	}
+}
+
+
 void CTabView::OnDestroy()
 {
 	m_Panes.clear();
@@ -253,7 +269,7 @@ void CTabView::OnInitialUpdate()
 	if (0 != GetTabCtrl().GetItemCount())
 		return;
 
-	reinterpret_cast<CMainFrame*>(GetParentFrame())->m_pView = this;
+	reinterpret_cast<CMainFrame*>(GetParentFrame())->m_pTabView = this;
 
 	CString str;
 	for (int nPane = 0; nPane < sc_nPanes; ++nPane)

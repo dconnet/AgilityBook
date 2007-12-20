@@ -1266,8 +1266,14 @@ void CAgilityBookViewRuns::OnUpdate(
 		LPARAM lHint,
 		CObject* pHint)
 {
-	if (0 == lHint || (UPDATE_RUNS_VIEW & lHint) || (UPDATE_OPTIONS & lHint) || (UPDATE_CONFIG & lHint))
+	if (0 == lHint
+	|| ((UPDATE_RUNS_VIEW | UPDATE_OPTIONS | UPDATE_CONFIG) & lHint))
 		LoadData();
+	else if (UPDATE_LANG_CHANGE & lHint)
+	{
+		SetupColumns();
+		LoadData();
+	}
 }
 
 

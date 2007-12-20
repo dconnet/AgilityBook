@@ -41,6 +41,13 @@
 	#error include 'stdafx.h' before including this file for PCH
 #endif
 
+// These are needed in order to generate a decent pragma message
+#define STRING2(x) #x
+#define STRING(x) STRING2(x)
+//#pragma message ( __FILE__ "(" STRING(__LINE__) ") : message" )
+#define PRAGMA_MESSAGE(x) ( __FILE__ "(" STRING(__LINE__) ") : " x )
+
+
 #include "resource.h"       // main symbols
 #include "LanguageManager.h"
 #include "UpdateInfo.h"

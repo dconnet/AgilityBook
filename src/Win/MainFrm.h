@@ -41,7 +41,7 @@ class CTabView;
 
 class CMainFrame : public CFrameWnd
 {
-	friend class CTabView; // So it can set m_pView.
+	friend class CTabView; // So it can set m_pTabView.
 protected: // create from serialization only
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
@@ -74,7 +74,7 @@ protected:  // control bar embedded members
 			CRuntimeClass* pViewClass,
 			int row,
 			int col);
-	CTabView*	m_pView;
+	CTabView*	m_pTabView;
 	CLanguageManager*	m_pLangMgr;
 	CMenu*		m_pNewMenu;
 	CStatusBar  m_wndStatusBar;

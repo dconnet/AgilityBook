@@ -353,8 +353,15 @@ void CAgilityBookTree::OnUpdate(
 		LPARAM lHint,
 		CObject* pHint)
 {
-	if (0 == lHint || ((UPDATE_TREE_VIEW|UPDATE_OPTIONS|UPDATE_CONFIG) & lHint))
+	if (0 == lHint
+	|| ((UPDATE_TREE_VIEW | UPDATE_OPTIONS | UPDATE_CONFIG) & lHint))
+	{
 		LoadData();
+	}
+	else if (UPDATE_LANG_CHANGE & lHint)
+	{
+		// Nothing localized in tree
+	}
 	else if (UPDATE_NEW_TRIAL & lHint)
 	{
 		LoadData();
