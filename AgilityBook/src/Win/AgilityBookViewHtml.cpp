@@ -439,9 +439,7 @@ void CAgilityBookViewHtml::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| (UPDATE_POINTS_VIEW & lHint)
-	|| (UPDATE_OPTIONS & lHint)
-	|| (UPDATE_CONFIG & lHint))
+	|| ((UPDATE_POINTS_VIEW | UPDATE_OPTIONS | UPDATE_CONFIG | UPDATE_LANG_CHANGE) & lHint))
 		LoadData();
 }
 

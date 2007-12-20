@@ -51,6 +51,8 @@ public:
 	CTabView();
 	virtual ~CTabView();
 
+	void UpdateLanguage();
+
 	CAgilityBookDoc* GetDocument() const;
 	CTabCtrl const& GetTabCtrl() const	{return *reinterpret_cast<CTabCtrl const*>(this);}
 	CTabCtrl& GetTabCtrl()				{return *reinterpret_cast<CTabCtrl*>(this);}

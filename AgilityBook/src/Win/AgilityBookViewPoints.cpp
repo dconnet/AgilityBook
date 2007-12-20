@@ -213,19 +213,7 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < MAX_COLUMNS; ++i)
-	{
-		CString title("");
-		col.fmt = LVCFMT_LEFT;
-		if (1 == i)
-			title.LoadString(IDS_TITLING_POINTS);
-		col.pszText = title.GetBuffer(0);
-		col.iSubItem = i;
-		InsertColumn(i, &col);
-		title.ReleaseBuffer();
-	}
+	SetupColumns();
 
 	return 0;
 }
@@ -353,10 +341,13 @@ void CAgilityBookViewPoints::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| (UPDATE_POINTS_VIEW & lHint)
-	|| (UPDATE_OPTIONS & lHint)
-	|| (UPDATE_CONFIG & lHint))
+	|| ((UPDATE_POINTS_VIEW | UPDATE_OPTIONS | UPDATE_CONFIG) & lHint))
 		LoadData();
+	else if (UPDATE_LANG_CHANGE & lHint)
+	{
+		SetupColumns();
+		LoadData();
+	}
 }
 
 
@@ -424,6 +415,27 @@ bool CAgilityBookViewPoints::GetMessage2(CString& msg) const
 PointsData* CAgilityBookViewPoints::GetItemData(int index) const
 {
 	return dynamic_cast<PointsData*>(GetData(index));
+}
+
+
+void CAgilityBookViewPoints::SetupColumns()
+{
+	int nColumnCount = HeaderItemCount();
+	for (int i = 0; i < nColumnCount; ++i)
+		DeleteColumn(0);
+	LV_COLUMN col;
+	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
+	for (int i = 0; i < MAX_COLUMNS; ++i)
+	{
+		CString title("");
+		col.fmt = LVCFMT_LEFT;
+		if (1 == i)
+			title.LoadString(IDS_TITLING_POINTS);
+		col.pszText = title.GetBuffer(0);
+		col.iSubItem = i;
+		InsertColumn(i, &col);
+		title.ReleaseBuffer();
+	}
 }
 
 

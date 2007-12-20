@@ -67,6 +67,7 @@ public:
 
 private:
 	PointsData* GetItemData(int index) const;
+	void SetupColumns();
 	void LoadData();
 
 protected:
