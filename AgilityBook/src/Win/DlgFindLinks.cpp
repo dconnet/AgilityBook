@@ -157,10 +157,9 @@ CDlgFindLinks::CDlgFindLinks(
 {
 	m_sortLinks.Initialize(nColLinkInfo);
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
-	CWinApp* app = AfxGetApp();
-	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_EMPTY));
-	m_imgOk = m_ImageList.Add(app->LoadIcon(IDI_CHECKMARK));
-	m_imgMissing = m_ImageList.Add(app->LoadIcon(IDI_QUESTIONMARK));
+	m_imgEmpty = m_ImageList.Add(theApp.LoadIcon(IDI_EMPTY));
+	m_imgOk = m_ImageList.Add(theApp.LoadIcon(IDI_CHECKMARK));
+	m_imgMissing = m_ImageList.Add(theApp.LoadIcon(IDI_QUESTIONMARK));
 	//{{AFX_DATA_INIT(CDlgFindLinks)
 	//}}AFX_DATA_INIT
 

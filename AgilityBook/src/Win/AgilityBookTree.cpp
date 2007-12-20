@@ -276,9 +276,9 @@ CAgilityBookTree::CAgilityBookTree()
 {
 	m_ImageListStates.Create(16, 16, ILC_MASK | ILC_COLOR32, 3, 1);
 	// Note: Position 0 cannot be used.
-	m_ImageListStates.Add(AfxGetApp()->LoadIcon(IDI_EMPTY));
-	m_idxEmpty = m_ImageListStates.Add(AfxGetApp()->LoadIcon(IDI_EMPTY));
-	m_idxChecked = m_ImageListStates.Add(AfxGetApp()->LoadIcon(IDI_CHECKMARK));
+	m_ImageListStates.Add(theApp.LoadIcon(IDI_EMPTY));
+	m_idxEmpty = m_ImageListStates.Add(theApp.LoadIcon(IDI_EMPTY));
+	m_idxChecked = m_ImageListStates.Add(theApp.LoadIcon(IDI_CHECKMARK));
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
@@ -293,7 +293,7 @@ CAgilityBookTree::~CAgilityBookTree()
 
 LRESULT CAgilityBookTree::OnCommandHelp(WPARAM, LPARAM)
 {
-	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_RUN, HH_HELP_CONTEXT);
+	theApp.WinHelp(HID_BASE_RESOURCE+IDR_RUN, HH_HELP_CONTEXT);
 	return 1;
 }
 
@@ -340,11 +340,10 @@ void CAgilityBookTree::OnActivateView(
 	if (pActivateView)
 	{
 		CString msg;
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 }
 
@@ -828,7 +827,7 @@ void CAgilityBookTree::LoadData()
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
 	if (!pData)
 	{
-		strCallName = AfxGetApp()->GetProfileString(_T("Settings"), _T("LastDog"), _T(""));
+		strCallName = theApp.GetProfileString(_T("Settings"), _T("LastDog"), _T(""));
 	}
 	std::list<ARBBasePtr> baseItems;
 	while (pData)

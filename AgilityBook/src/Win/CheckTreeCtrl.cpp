@@ -45,7 +45,7 @@
  */
 
 #include "stdafx.h"
-#include "resource.h"
+#include "AgilityBook.h"
 #include "CheckTreeCtrl.h"
 
 #ifdef _DEBUG
@@ -61,9 +61,9 @@ CCheckTreeCtrl::CCheckTreeCtrl()
 	: CTreeCtrl()
 {
 	m_stateList.Create(16, 16, ILC_MASK | ILC_COLOR32, 3, 0);
-	m_stateList.Add(AfxGetApp()->LoadIcon(IDI_UNCHECKED)); // Index 0 is ignored.
-	m_stateUnChecked = m_stateList.Add(AfxGetApp()->LoadIcon(IDI_UNCHECKED));
-	m_stateChecked = m_stateList.Add(AfxGetApp()->LoadIcon(IDI_CHECKED));
+	m_stateList.Add(theApp.LoadIcon(IDI_UNCHECKED)); // Index 0 is ignored.
+	m_stateUnChecked = m_stateList.Add(theApp.LoadIcon(IDI_UNCHECKED));
+	m_stateChecked = m_stateList.Add(theApp.LoadIcon(IDI_CHECKED));
 }
 
 

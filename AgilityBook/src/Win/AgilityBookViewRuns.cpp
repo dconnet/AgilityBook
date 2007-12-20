@@ -458,7 +458,7 @@ CAgilityBookViewRuns::CSortColumn::CSortColumn(std::vector<int>& inColumns)
 void CAgilityBookViewRuns::CSortColumn::Initialize()
 {
 	int realCol = IO_RUNS_DATE;
-	realCol = AfxGetApp()->GetProfileInt(_T("Sorting"), _T("Runs"), realCol);
+	realCol = theApp.GetProfileInt(_T("Sorting"), _T("Runs"), realCol);
 	int neg = 1;
 	if (0 > realCol)
 	{
@@ -485,7 +485,7 @@ void CAgilityBookViewRuns::CSortColumn::SetColumn(int iCol)
 		col = iCol * -1;
 	}
 	int realCol = m_Columns[col-1] * neg;
-	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Runs"), realCol);
+	theApp.WriteProfileInt(_T("Sorting"), _T("Runs"), realCol);
 }
 
 
@@ -1202,9 +1202,8 @@ CAgilityBookViewRuns::CAgilityBookViewRuns()
 {
 	SetAutoDelete(true);
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
-	CWinApp* app = AfxGetApp();
-	m_imgCourse = m_ImageList.Add(app->LoadIcon(IDI_AGILITYBOOKDOC));
-	m_imgMap = m_ImageList.Add(app->LoadIcon(IDI_CRCD));
+	m_imgCourse = m_ImageList.Add(theApp.LoadIcon(IDI_AGILITYBOOKDOC));
+	m_imgMap = m_ImageList.Add(theApp.LoadIcon(IDI_CRCD));
 }
 #pragma warning (pop)
 
@@ -1223,7 +1222,7 @@ BOOL CAgilityBookViewRuns::PreCreateWindow(CREATESTRUCT& cs)
 
 LRESULT CAgilityBookViewRuns::OnCommandHelp(WPARAM, LPARAM)
 {
-	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_RUN, HH_HELP_CONTEXT);
+	theApp.WinHelp(HID_BASE_RESOURCE+IDR_RUN, HH_HELP_CONTEXT);
 	return 1;
 }
 
@@ -1253,12 +1252,11 @@ void CAgilityBookViewRuns::OnActivateView(
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		CString msg;
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 }
 
@@ -1453,11 +1451,10 @@ void CAgilityBookViewRuns::LoadData()
 	CString msg;
 	if (IsWindowVisible())
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 
 	SORT_RUN_INFO info;

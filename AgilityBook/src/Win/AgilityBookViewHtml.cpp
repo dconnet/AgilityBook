@@ -424,12 +424,11 @@ void CAgilityBookViewHtml::OnActivateView(
 	CHtmlView::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		CString msg;
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 }
 
@@ -531,7 +530,7 @@ void CAgilityBookViewHtml::OnBeforeNavigate2(
 
 LRESULT CAgilityBookViewHtml::OnCommandHelp(WPARAM, LPARAM)
 {
-	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_POINTS, HH_HELP_CONTEXT);
+	theApp.WinHelp(HID_BASE_RESOURCE+IDR_POINTS, HH_HELP_CONTEXT);
 	return 1;
 }
 

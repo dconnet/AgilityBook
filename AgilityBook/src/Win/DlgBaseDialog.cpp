@@ -96,7 +96,7 @@ BOOL CDlgBaseDialog::OnInitDialog()
 
 BOOL CDlgBaseDialog::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	if (!ShowContextHelp(pHelpInfo))
+	if (!ShowContextHelp(theApp.LanguageManager(), pHelpInfo))
 		OnHelp();
 	return TRUE;
 }

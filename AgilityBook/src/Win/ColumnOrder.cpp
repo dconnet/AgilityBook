@@ -34,6 +34,7 @@
  */
 
 #include "stdafx.h"
+#include "AgilityBook.h"
 #include "ColumnOrder.h"
 
 #include "ARBTypes.h"
@@ -87,7 +88,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	}
 	bool rc = false;
 	// Load last settings.
-	CString str = AfxGetApp()->GetProfileString(_T("Sorting"), m_Item + _T("Order"), _T(""));
+	CString str = theApp.GetProfileString(_T("Sorting"), m_Item + _T("Order"), _T(""));
 	int i;
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
@@ -99,7 +100,7 @@ bool CColumnOrder::Initialize(int nColumns)
 		else
 			str.Empty();
 	}
-	str = AfxGetApp()->GetProfileString(_T("Sorting"), m_Item + _T("Sort"), _T(""));
+	str = theApp.GetProfileString(_T("Sorting"), m_Item + _T("Sort"), _T(""));
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
@@ -124,7 +125,7 @@ void CColumnOrder::Save()
 				str << ',';
 			str << m_order[i];
 		}
-		AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Order"), str.str().c_str());
+		theApp.WriteProfileString(_T("Sorting"), m_Item + _T("Order"), str.str().c_str());
 	}
 	{
 		otstringstream str;
@@ -134,7 +135,7 @@ void CColumnOrder::Save()
 				str << ',';
 			str << static_cast<int>(m_bDescending[i]);
 		}
-		AfxGetApp()->WriteProfileString(_T("Sorting"), m_Item + _T("Sort"), str.str().c_str());
+		theApp.WriteProfileString(_T("Sorting"), m_Item + _T("Sort"), str.str().c_str());
 	}
 }
 

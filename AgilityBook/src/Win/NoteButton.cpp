@@ -73,7 +73,7 @@ CNoteButton::~CNoteButton()
 void CNoteButton::Load(UINT idIcon)
 {
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 1, 0);
-	VERIFY(0 <= (m_idxNormal = m_ImageList.Add(AfxGetApp()->LoadIcon(idIcon))));
+	VERIFY(0 <= (m_idxNormal = m_ImageList.Add(theApp.LoadIcon(idIcon))));
 }
 
 

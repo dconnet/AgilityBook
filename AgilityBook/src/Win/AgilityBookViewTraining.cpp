@@ -143,7 +143,7 @@ CAgilityBookViewTraining::CSortColumn::CSortColumn(std::vector<int>& inColumns)
 void CAgilityBookViewTraining::CSortColumn::Initialize()
 {
 	int realCol = IO_LOG_DATE;
-	realCol = AfxGetApp()->GetProfileInt(_T("Sorting"), _T("Training"), realCol);
+	realCol = theApp.GetProfileInt(_T("Sorting"), _T("Training"), realCol);
 	int neg = 1;
 	if (0 > realCol)
 	{
@@ -170,7 +170,7 @@ void CAgilityBookViewTraining::CSortColumn::SetColumn(int iCol)
 		col = iCol * -1;
 	}
 	int realCol = m_Columns[col-1] * neg;
-	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Training"), realCol);
+	theApp.WriteProfileInt(_T("Sorting"), _T("Training"), realCol);
 }
 
 
@@ -363,7 +363,7 @@ BOOL CAgilityBookViewTraining::PreCreateWindow(CREATESTRUCT& cs)
 
 LRESULT CAgilityBookViewTraining::OnCommandHelp(WPARAM, LPARAM)
 {
-	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_TRAINING, HH_HELP_CONTEXT);
+	theApp.WinHelp(HID_BASE_RESOURCE+IDR_TRAINING, HH_HELP_CONTEXT);
 	return 1;
 }
 
@@ -392,12 +392,11 @@ void CAgilityBookViewTraining::OnActivateView(
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		CString msg;
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 }
 
@@ -571,11 +570,10 @@ void CAgilityBookViewTraining::LoadData()
 	CString msg;
 	if (IsWindowVisible())
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 
 	SORT_TRAINING_INFO info;

@@ -164,32 +164,31 @@ CFilterOptions::CFilterOptions()
 void CFilterOptions::Load()
 {
 	CString val;
-	CWinApp* pApp = AfxGetApp();
 
-	m_calView.m_Filter = static_cast<unsigned short>(pApp->GetProfileInt(_T("Calendar"), _T("Filter"), CCalendarViewFilter::eViewNormal));
+	m_calView.m_Filter = static_cast<unsigned short>(theApp.GetProfileInt(_T("Calendar"), _T("Filter"), CCalendarViewFilter::eViewNormal));
 
-	m_bAllDates = pApp->GetProfileInt(_T("Common"), _T("ViewAllDates"), 1) == 1;
-	m_bStartDate = pApp->GetProfileInt(_T("Common"), _T("StartFilter"), 0) == 1;
+	m_bAllDates = theApp.GetProfileInt(_T("Common"), _T("ViewAllDates"), 1) == 1;
+	m_bStartDate = theApp.GetProfileInt(_T("Common"), _T("StartFilter"), 0) == 1;
 	m_dateStartDate = ARBDate::Today();
-	m_dateStartDate.SetJulianDay(pApp->GetProfileInt(_T("Common"), _T("StartFilterJDay"), m_dateStartDate.GetJulianDay()));
-	m_bEndDate = pApp->GetProfileInt(_T("Common"), _T("EndFilter"), 0) == 1;
+	m_dateStartDate.SetJulianDay(theApp.GetProfileInt(_T("Common"), _T("StartFilterJDay"), m_dateStartDate.GetJulianDay()));
+	m_bEndDate = theApp.GetProfileInt(_T("Common"), _T("EndFilter"), 0) == 1;
 	m_dateEndDate = ARBDate::Today();
-	m_dateEndDate.SetJulianDay(pApp->GetProfileInt(_T("Common"), _T("EndFilterJDay"), m_dateEndDate.GetJulianDay()));
+	m_dateEndDate.SetJulianDay(theApp.GetProfileInt(_T("Common"), _T("EndFilterJDay"), m_dateEndDate.GetJulianDay()));
 
-	m_bViewAllVenues = pApp->GetProfileInt(_T("Common"), _T("ViewAllVenues"), 1) == 1;
-	val = pApp->GetProfileString(_T("Common"), _T("FilterVenue"), _T(""));
+	m_bViewAllVenues = theApp.GetProfileInt(_T("Common"), _T("ViewAllVenues"), 1) == 1;
+	val = theApp.GetProfileString(_T("Common"), _T("FilterVenue"), _T(""));
 	m_venueFilter.clear();
 	FilterVenue(val, m_venueFilter);
 
-	m_eRuns = static_cast<eViewRuns>(pApp->GetProfileInt(_T("Common"), _T("ViewRuns"), 0));
+	m_eRuns = static_cast<eViewRuns>(theApp.GetProfileInt(_T("Common"), _T("ViewRuns"), 0));
 
-	m_bViewAllNames = pApp->GetProfileInt(_T("Common"), _T("ViewAllNames"), 1) == 1;
-	val = pApp->GetProfileString(_T("Common"), _T("FilterTrainingNames"), _T(""));
+	m_bViewAllNames = theApp.GetProfileInt(_T("Common"), _T("ViewAllNames"), 1) == 1;
+	val = theApp.GetProfileString(_T("Common"), _T("FilterTrainingNames"), _T(""));
 	m_nameFilter.clear();
 	TrainingNames(val, m_nameFilter);
 
-	m_curFilter = (LPCTSTR)pApp->GetProfileString(_T("Common"), _T("CurrentFilter"), _T(""));
-	m_nFilters = pApp->GetProfileInt(_T("Common"), _T("numFilters"), 0);
+	m_curFilter = (LPCTSTR)theApp.GetProfileString(_T("Common"), _T("CurrentFilter"), _T(""));
+	m_nFilters = theApp.GetProfileInt(_T("Common"), _T("numFilters"), 0);
 	m_filters.clear();
 	for (int idx = 0; idx < m_nFilters; ++idx)
 	{
@@ -202,7 +201,6 @@ void CFilterOptions::Load()
 void CFilterOptions::Save()
 {
 	CString val;
-	CWinApp* pApp = AfxGetApp();
 
 	if (!m_curFilter.empty())
 	{
@@ -227,25 +225,25 @@ void CFilterOptions::Save()
 		}
 	}
 
-	pApp->WriteProfileInt(_T("Calendar"), _T("Filter"), m_calView.m_Filter);
+	theApp.WriteProfileInt(_T("Calendar"), _T("Filter"), m_calView.m_Filter);
 
-	pApp->WriteProfileInt(_T("Common"), _T("ViewAllDates"), m_bAllDates ? 1 : 0);
-	pApp->WriteProfileInt(_T("Common"), _T("StartFilter"), m_bStartDate ? 1 : 0);
-	pApp->WriteProfileInt(_T("Common"), _T("StartFilterJDay"), m_dateStartDate.GetJulianDay());
-	pApp->WriteProfileInt(_T("Common"), _T("EndFilter"), m_bEndDate ? 1 : 0);
-	pApp->WriteProfileInt(_T("Common"), _T("EndFilterJDay"), m_dateEndDate.GetJulianDay());
+	theApp.WriteProfileInt(_T("Common"), _T("ViewAllDates"), m_bAllDates ? 1 : 0);
+	theApp.WriteProfileInt(_T("Common"), _T("StartFilter"), m_bStartDate ? 1 : 0);
+	theApp.WriteProfileInt(_T("Common"), _T("StartFilterJDay"), m_dateStartDate.GetJulianDay());
+	theApp.WriteProfileInt(_T("Common"), _T("EndFilter"), m_bEndDate ? 1 : 0);
+	theApp.WriteProfileInt(_T("Common"), _T("EndFilterJDay"), m_dateEndDate.GetJulianDay());
 
-	pApp->WriteProfileInt(_T("Common"), _T("ViewAllVenues"), m_bViewAllVenues ? 1 : 0);
+	theApp.WriteProfileInt(_T("Common"), _T("ViewAllVenues"), m_bViewAllVenues ? 1 : 0);
 	val = FilterVenue(m_venueFilter);
-	pApp->WriteProfileString(_T("Common"), _T("FilterVenue"), val);
+	theApp.WriteProfileString(_T("Common"), _T("FilterVenue"), val);
 
-	pApp->WriteProfileInt(_T("Common"), _T("ViewRuns"), static_cast<int>(m_eRuns));
+	theApp.WriteProfileInt(_T("Common"), _T("ViewRuns"), static_cast<int>(m_eRuns));
 
-	pApp->WriteProfileInt(_T("Common"), _T("ViewAllNames"), m_bViewAllNames ? 1 : 0);
+	theApp.WriteProfileInt(_T("Common"), _T("ViewAllNames"), m_bViewAllNames ? 1 : 0);
 	val = TrainingNames(m_nameFilter);
-	pApp->WriteProfileString(_T("Common"), _T("FilterTrainingNames"), val);
+	theApp.WriteProfileString(_T("Common"), _T("FilterTrainingNames"), val);
 
-	pApp->WriteProfileString(_T("Common"), _T("CurrentFilter"), m_curFilter.c_str());
+	theApp.WriteProfileString(_T("Common"), _T("CurrentFilter"), m_curFilter.c_str());
 
 	int nFilters = static_cast<int>(m_filters.size());
 	if (nFilters < m_nFilters)
@@ -253,7 +251,7 @@ void CFilterOptions::Save()
 		for (int n = nFilters; n < m_nFilters; ++n)
 		{
 			val.Format(_T("Filter%d"), n);
-			pApp->WriteProfileString(val, NULL, NULL);
+			theApp.WriteProfileString(val, NULL, NULL);
 		}
 	}
 	int index = 0;
@@ -264,7 +262,7 @@ void CFilterOptions::Save()
 		(*i).Save(index);
 	}
 	m_nFilters = nFilters;
-	pApp->WriteProfileInt(_T("Common"), _T("numFilters"), m_nFilters);
+	theApp.WriteProfileInt(_T("Common"), _T("numFilters"), m_nFilters);
 }
 
 
@@ -705,23 +703,22 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 		, nameFilter()
 {
 	CString section;
-	CWinApp* pApp = AfxGetApp();
 
 	section.Format(_T("Filter%d"), index);
-	filterName = (LPCTSTR)pApp->GetProfileString(section, _T("Name"), filterName.c_str());
-	calView.m_Filter = static_cast<unsigned short>(pApp->GetProfileInt(section, _T("Cal"), calView.m_Filter));
-	bAllDates = pApp->GetProfileInt(section, _T("AllDates"), bAllDates ? 1 : 0) == 1;
-	bStartDate = pApp->GetProfileInt(section, _T("Start"), bStartDate ? 1 : 0) == 1;
-	dateStartDate.SetJulianDay(pApp->GetProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay()));
-	bEndDate = pApp->GetProfileInt(section, _T("End"), bEndDate ? 1 : 0) == 1;
-	dateEndDate.SetJulianDay(pApp->GetProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay()));
-	bViewAllVenues = pApp->GetProfileInt(section, _T("AllVenues"), bViewAllVenues ? 1 : 0) == 1;
-	CString names = pApp->GetProfileString(section, _T("FilterVenue"), _T(""));
+	filterName = (LPCTSTR)theApp.GetProfileString(section, _T("Name"), filterName.c_str());
+	calView.m_Filter = static_cast<unsigned short>(theApp.GetProfileInt(section, _T("Cal"), calView.m_Filter));
+	bAllDates = theApp.GetProfileInt(section, _T("AllDates"), bAllDates ? 1 : 0) == 1;
+	bStartDate = theApp.GetProfileInt(section, _T("Start"), bStartDate ? 1 : 0) == 1;
+	dateStartDate.SetJulianDay(theApp.GetProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay()));
+	bEndDate = theApp.GetProfileInt(section, _T("End"), bEndDate ? 1 : 0) == 1;
+	dateEndDate.SetJulianDay(theApp.GetProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay()));
+	bViewAllVenues = theApp.GetProfileInt(section, _T("AllVenues"), bViewAllVenues ? 1 : 0) == 1;
+	CString names = theApp.GetProfileString(section, _T("FilterVenue"), _T(""));
 	venueFilter.clear();
 	FilterVenue(names, venueFilter);
-	eRuns = static_cast<CFilterOptions::eViewRuns>(pApp->GetProfileInt(section, _T("ViewRuns"), eRuns));
-	bViewAllNames = pApp->GetProfileInt(section, _T("AllNames"), bViewAllNames ? 1 : 0) == 1;
-	names = pApp->GetProfileString(section, _T("FilterNames"), _T(""));
+	eRuns = static_cast<CFilterOptions::eViewRuns>(theApp.GetProfileInt(section, _T("ViewRuns"), eRuns));
+	bViewAllNames = theApp.GetProfileInt(section, _T("AllNames"), bViewAllNames ? 1 : 0) == 1;
+	names = theApp.GetProfileString(section, _T("FilterNames"), _T(""));
 	nameFilter.clear();
 	TrainingNames(names, nameFilter);
 }
@@ -769,23 +766,22 @@ CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 
 bool CFilterOptions::CFilterOptionData::Save(int index)
 {
-	CWinApp* pApp = AfxGetApp();
 	CString section;
 	section.Format(_T("Filter%d"), index);
 
-	pApp->WriteProfileString(section, _T("Name"), filterName.c_str());
-	pApp->WriteProfileInt(section, _T("Cal"), calView.m_Filter);
-	pApp->WriteProfileInt(section, _T("AllDates"), bAllDates ? 1 : 0);
-	pApp->WriteProfileInt(section, _T("Start"), bStartDate ? 1 : 0);
-	pApp->WriteProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay());
-	pApp->WriteProfileInt(section, _T("End"), bEndDate ? 1 : 0);
-	pApp->WriteProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay());
-	pApp->WriteProfileInt(section, _T("AllVenues"), bViewAllVenues ? 1 : 0);
+	theApp.WriteProfileString(section, _T("Name"), filterName.c_str());
+	theApp.WriteProfileInt(section, _T("Cal"), calView.m_Filter);
+	theApp.WriteProfileInt(section, _T("AllDates"), bAllDates ? 1 : 0);
+	theApp.WriteProfileInt(section, _T("Start"), bStartDate ? 1 : 0);
+	theApp.WriteProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay());
+	theApp.WriteProfileInt(section, _T("End"), bEndDate ? 1 : 0);
+	theApp.WriteProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay());
+	theApp.WriteProfileInt(section, _T("AllVenues"), bViewAllVenues ? 1 : 0);
 	CString name = FilterVenue(venueFilter);
-	pApp->WriteProfileString(section, _T("FilterVenue"), name);
-	pApp->WriteProfileInt(section, _T("ViewRuns"), static_cast<int>(eRuns));
-	pApp->WriteProfileInt(section, _T("AllNames"), bViewAllNames ? 1 : 0);
+	theApp.WriteProfileString(section, _T("FilterVenue"), name);
+	theApp.WriteProfileInt(section, _T("ViewRuns"), static_cast<int>(eRuns));
+	theApp.WriteProfileInt(section, _T("AllNames"), bViewAllNames ? 1 : 0);
 	name = TrainingNames(nameFilter);
-	pApp->WriteProfileString(section, _T("FilterNames"), name);
+	theApp.WriteProfileString(section, _T("FilterNames"), name);
 	return true;
 }

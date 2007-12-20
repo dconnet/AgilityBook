@@ -240,7 +240,5 @@ BOOL CAboutDlg::OnInitDialog()
 
 void CAboutDlg::OnBnClickedUpdate()
 {
-	CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
-	ASSERT(pApp);
-	pApp->UpdateInfo().UpdateConfiguration(m_pDoc, pApp->LanguageManager());
+	theApp.UpdateInfo().UpdateConfiguration(m_pDoc, theApp.LanguageManager());
 }

@@ -35,7 +35,7 @@
  */
 
 #include "stdafx.h"
-#include "resource.h"
+#include "AgilityBook.h"
 #include "IconList.h"
 
 #ifdef _DEBUG
@@ -74,10 +74,9 @@ CIconList::CIconList()
 		{&m_idxVenueSCC,		IDI_VENUE_SCC},
 	};
 	int nIcons = sizeof(icons) / sizeof(icons[0]);
-	CWinApp* app = AfxGetApp();
 	Create(16, 16, ILC_MASK | ILC_COLOR32, nIcons, 1);
 	for (int idx = 0; idx < nIcons; ++idx)
 	{
-		*icons[idx].index = Add(app->LoadIcon(icons[idx].resId));
+		*icons[idx].index = Add(theApp.LoadIcon(icons[idx].resId));
 	}
 }

@@ -323,7 +323,7 @@ CAgilityBookViewCalendarList::CSortColumn::CSortColumn(std::vector<int>& inColum
 void CAgilityBookViewCalendarList::CSortColumn::Initialize()
 {
 	int realCol = IO_CAL_START_DATE;
-	realCol = AfxGetApp()->GetProfileInt(_T("Sorting"), _T("Calendar"), realCol);
+	realCol = theApp.GetProfileInt(_T("Sorting"), _T("Calendar"), realCol);
 	int neg = 1;
 	if (0 > realCol)
 	{
@@ -350,7 +350,7 @@ void CAgilityBookViewCalendarList::CSortColumn::SetColumn(int iCol)
 		col = iCol * -1;
 	}
 	int realCol = m_Columns[col-1] * neg;
-	AfxGetApp()->WriteProfileInt(_T("Sorting"), _T("Calendar"), realCol);
+	theApp.WriteProfileInt(_T("Sorting"), _T("Calendar"), realCol);
 }
 
 
@@ -577,18 +577,17 @@ CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 {
 	SetAutoDelete(true);
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 6, 0);
-	CWinApp* app = AfxGetApp();
-	m_imgEmpty = m_ImageList.Add(app->LoadIcon(IDI_EMPTY));
-	m_imgTentative = m_ImageList.Add(app->LoadIcon(IDI_QUESTIONMARK));
-	m_imgPlan = m_ImageList.Add(app->LoadIcon(IDI_CHECKMARK));
-	m_imgPlanTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_PLAN_TENTATIVE));
-	m_imgEntered = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED));
-	m_imgEnteredTentative = m_ImageList.Add(app->LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
+	m_imgEmpty = m_ImageList.Add(theApp.LoadIcon(IDI_EMPTY));
+	m_imgTentative = m_ImageList.Add(theApp.LoadIcon(IDI_QUESTIONMARK));
+	m_imgPlan = m_ImageList.Add(theApp.LoadIcon(IDI_CHECKMARK));
+	m_imgPlanTentative = m_ImageList.Add(theApp.LoadIcon(IDI_CALENDAR_PLAN_TENTATIVE));
+	m_imgEntered = m_ImageList.Add(theApp.LoadIcon(IDI_CALENDAR_ENTERED));
+	m_imgEnteredTentative = m_ImageList.Add(theApp.LoadIcon(IDI_CALENDAR_ENTERED_TENTATIVE));
 	m_ImageStateList.Create(16, 16, ILC_MASK | ILC_COLOR32, 4, 0);
-	m_imgStateEmpty = m_ImageStateList.Add(app->LoadIcon(IDI_EMPTY));
-	m_imgStateNone = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_NONE));
-	m_imgStateTodo = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_TODO));
-	m_imgStateConfirm = m_ImageStateList.Add(app->LoadIcon(IDI_ACCOMMODATION_CONFIRMED));
+	m_imgStateEmpty = m_ImageStateList.Add(theApp.LoadIcon(IDI_EMPTY));
+	m_imgStateNone = m_ImageStateList.Add(theApp.LoadIcon(IDI_ACCOMMODATION_NONE));
+	m_imgStateTodo = m_ImageStateList.Add(theApp.LoadIcon(IDI_ACCOMMODATION_TODO));
+	m_imgStateConfirm = m_ImageStateList.Add(theApp.LoadIcon(IDI_ACCOMMODATION_CONFIRMED));
 }
 #pragma warning (pop)
 
@@ -607,7 +606,7 @@ BOOL CAgilityBookViewCalendarList::PreCreateWindow(CREATESTRUCT& cs)
 
 LRESULT CAgilityBookViewCalendarList::OnCommandHelp(WPARAM, LPARAM)
 {
-	AfxGetApp()->WinHelp(HID_BASE_RESOURCE+IDR_CALENDAR, HH_HELP_CONTEXT);
+	theApp.WinHelp(HID_BASE_RESOURCE+IDR_CALENDAR, HH_HELP_CONTEXT);
 	return 1;
 }
 
@@ -782,12 +781,11 @@ void CAgilityBookViewCalendarList::OnActivateView(
 	CListView2::OnActivateView(bActivate, pActivateView, pDeactiveView);
 	if (pActivateView)
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		CString msg;
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 }
 
@@ -987,11 +985,10 @@ void CAgilityBookViewCalendarList::LoadData()
 	CString msg;
 	if (IsWindowVisible())
 	{
-		CAgilityBookApp* pApp = dynamic_cast<CAgilityBookApp*>(AfxGetApp());
 		if (GetMessage(msg))
-			pApp->SetStatusText(msg, IsFiltered());
+			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))
-			pApp->SetStatusText2(msg);
+			theApp.SetStatusText2(msg);
 	}
 
 	SORT_CAL_INFO info;

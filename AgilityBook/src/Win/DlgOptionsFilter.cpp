@@ -455,7 +455,7 @@ BOOL CDlgOptionsFilter::OnInitDialog()
 
 BOOL CDlgOptionsFilter::OnHelpInfo(HELPINFO* pHelpInfo)
 {
-	ShowContextHelp(pHelpInfo);
+	ShowContextHelp(theApp.LanguageManager(), pHelpInfo);
 	return TRUE;
 }
 

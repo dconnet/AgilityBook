@@ -1356,8 +1356,8 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
-	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
-	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
+	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
+	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
 
 	GetWindowRect(m_rWin);
 	GetClientRect(m_rDlg);

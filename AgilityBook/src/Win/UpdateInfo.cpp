@@ -308,7 +308,7 @@ bool CUpdateInfo::CheckProgram()
 	{
 		bNeedsUpdating = true;
 		CSplashWnd::HideSplashScreen();
-		AfxGetApp()->WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
+		theApp.WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
 		CString msg;
 		msg.FormatMessage(IDS_VERSION_AVAILABLE, (LPCTSTR)m_VersionNum.GetVersionString());
 		if (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO))
@@ -345,7 +345,7 @@ bool CUpdateInfo::CheckProgram()
 		}
 	}
 	else
-		AfxGetApp()->WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
+		theApp.WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
 	return bNeedsUpdating;
 }
 
