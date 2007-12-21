@@ -421,11 +421,12 @@ PointsData* CAgilityBookViewPoints::GetItemData(int index) const
 void CAgilityBookViewPoints::SetupColumns()
 {
 	int nColumnCount = HeaderItemCount();
-	for (int i = 0; i < nColumnCount; ++i)
+	int i;
+	for (i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
-	for (int i = 0; i < MAX_COLUMNS; ++i)
+	for (i = 0; i < MAX_COLUMNS; ++i)
 	{
 		CString title("");
 		col.fmt = LVCFMT_LEFT;

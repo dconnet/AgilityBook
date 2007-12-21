@@ -92,5 +92,6 @@ def main():
 	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC8Win32\\Release\\\"")
 	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9Win32\\Release\\\"")
 	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9Win32\\Debug\\\"")
+	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9x64\\Release\\\"")
 
 main()
