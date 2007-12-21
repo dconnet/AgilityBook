@@ -2603,28 +2603,29 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
+
 		<Venue LongName="SociÃ©tÃ© Centrale Canine" Name="SCC" URL="http://www.france-agility.com/agility/reglts.htm" icon="15">
 			<Titles LongName="Agility Certificate" Name="Agility Certificate">Qualified 'Excellent' 3 times, with clear rounds, under 2 different judges in Agility 1 competitions</Titles>
 			<Division Name="Senior">
-				<Level Name="No Level"/>
-				<Level Name="Level 1"/>
-				<Level Name="Level 2"/>
-				<Level Name="Level 3"/>
+				<Level Name="Pas de degré"/>
+				<Level Name="1er degré"/>
+				<Level Name="2ème degré"/>
+				<Level Name="3ème degré"/>
 			</Division>
 			<Division Name="Junior">
-				<Level Name="No Level"/>
-				<Level Name="Level 1"/>
-				<Level Name="Level 2"/>
-				<Level Name="Level 3"/>
+				<Level Name="Pas de degré"/>
+				<Level Name="1er degré"/>
+				<Level Name="2ème degré"/>
+				<Level Name="3ème degré"/>
 			</Division>
 			<Division Name="Poussin">
-				<Level Name="No Level"/>
-				<Level Name="Level 1"/>
-				<Level Name="Level 2"/>
-				<Level Name="Level 3"/>
+				<Level Name="Level"/>
+				<Level Name="1er degré"/>
+				<Level Name="2ème degré"/>
+				<Level Name="3ème degré"/>
 			</Division>
 			<Event Name="Agility" hasTable="y">
-				<Scoring Division="*" Level="Level 1" type="FaultsThenTime">
+				<Scoring Division="*" Level="1er degré" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2634,7 +2635,7 @@ Was called Wild Card briefly.</Desc>
 					<TitlePoints Faults="15.99" Points="0"/>
 					<TitlePoints Faults="25.99" Points="0"/>
 				</Scoring>
-				<Scoring Division="*" Level="Level 2" type="FaultsThenTime">
+				<Scoring Division="*" Level="2ème degré" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2649,7 +2650,7 @@ Was called Wild Card briefly.</Desc>
 						<PlaceInfo Place="3" Value="1"/>
 					</Placements>
 				</Scoring>
-				<Scoring Division="*" Level="Level 3" type="FaultsThenTime">
+				<Scoring Division="*" Level="3ème degré" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2661,8 +2662,8 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Jumping">
-				<Scoring Division="*" Level="No Level" type="FaultsThenTime"/>
-				<Scoring Division="*" Level="Level 2" type="FaultsThenTime">
+				<Scoring Division="*" Level="Pas de degré" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="2ème degré" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2689,14 +2690,15 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Open Royal Canin" hasTable="y">
-				<Scoring Division="*" Level="No Level" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="Pas de degré" type="FaultsThenTime"/>
 				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
 			</Event>
 			<Event Name="Grand Prix France" hasTable="y">
-				<Scoring Division="*" Level="No Level" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="Pas de degré" type="FaultsThenTime"/>
 				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
 			</Event>
 		</Venue>
+
 		<Venue LongName="Sweepstakes Agility" Name="SSA" URL="http://www.sweepstakesagility.com/" icon="10">
 			<Titles LongName="Starter Sweepstakes" Name="SSw">50 points</Titles>
 			<Titles LongName="Novice Sweepstakes" Name="NSw">100 points</Titles>
@@ -3341,19 +3343,6 @@ Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Not
 				<Scoring Division="Performance" Level="Nationals" overTF="y" type="TimePlusFaults" underTF="y"/>
 			</Event>
 		</Venue>
-		<FaultType>Elimination</FaultType>
-		<FaultType>Excused</FaultType>
-		<FaultType>Failure</FaultType>
-		<FaultType>Flyoff</FaultType>
-		<FaultType>Knocked Bar</FaultType>
-		<FaultType>Missed AFrame Contact</FaultType>
-		<FaultType>Missed Dogwalk Contact</FaultType>
-		<FaultType>Missed Teeter Contact</FaultType>
-		<FaultType>Missed Weave Entrance</FaultType>
-		<FaultType>Missed Weave Pole</FaultType>
-		<FaultType>Off Course</FaultType>
-		<FaultType>Refusal</FaultType>
-		<FaultType>Run out</FaultType>
 		<OtherPts Count="LevelByEvent" Name="ASCA Merit" defValue="1">ASCA Merit Points</OtherPts>
 		<OtherPts Count="All" Name="NADAC Bonus Runs" defValue="1">NADAC Bonus Point Runs
 Use this to accumulate runs with bonus points. This is a count of runs, not points.</OtherPts>

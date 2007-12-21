@@ -10,6 +10,7 @@
   - Added FCI/SCC venues.
   - Renamed 'Sweepstakes' to 'SSA'
   - Updated ASCA Gamblers (time, points)
+  - Removed default FaultTypes due to translation issues.
 - New features / Enhancements:
   - Add support for repeating titles starting from '1'.
   - Add "book" pages from printing, allow printing runs using same.
