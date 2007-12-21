@@ -15,7 +15,7 @@
 		WarningLevel="4"
 		WarnAsError="true"
 		Detect64BitPortabilityProblems="true"
-		DisableSpecificWarnings="6031"
+		DisableSpecificWarnings="4100;6031"
 	/>
 	<Tool
 		Name="VCLinkerTool"
