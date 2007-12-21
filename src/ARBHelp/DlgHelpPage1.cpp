@@ -598,8 +598,7 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 			msg += tmp;
 			CProcessARBs search(m_Parent, m_ctrlText, msg, m_ctrlText2);
 			m_ctrlText.SetWindowText(msg);
-			//SearchFor(*i, search);
-			SearchFor("C:\\AgilityBook", search);
+			SearchFor(*i, search);
 		}
 		m_ctrlText2.SetWindowText(_T(""));
 	}
