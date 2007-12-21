@@ -2441,6 +2441,29 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_MONTH_JAN           "January"
+    IDS_MONTH_FEB           "February"
+    IDS_MONTH_MAR           "March"
+    IDS_MONTH_APR           "April"
+    IDS_MONTH_MAY           "May"
+    IDS_MONTH_JUN           "June"
+    IDS_MONTH_JUL           "July"
+    IDS_MONTH_AUG           "August"
+    IDS_MONTH_SEP           "September"
+    IDS_MONTH_OCT           "October"
+    IDS_MONTH_NOV           "November"
+    IDS_MONTH_DEC           "December"
+    IDS_WEEKDAY_SUN         "Sunday"
+    IDS_WEEKDAY_MON         "Monday"
+    IDS_WEEKDAY_TUE         "Tuesday"
+    IDS_WEEKDAY_WED         "Wednesday"
+    IDS_WEEKDAY_THU         "Thursday"
+    IDS_WEEKDAY_FRI         "Friday"
+    IDS_WEEKDAY_SAT         "Saturday"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_DATEFORMAT_DASH_MDY "M-D-Y"
     IDS_DATEFORMAT_SLASH_MDY "M/D/Y"
     IDS_DATEFORMAT_DASH_YMD "Y-M-D"

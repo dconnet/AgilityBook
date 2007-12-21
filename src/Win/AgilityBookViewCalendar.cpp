@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2007-12-21 DRC Localize months/days (because of static link CRT)
  * @li 2007-01-13 DRC Fixed a problem with scroll bar not appearing.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-31 DRC Make F1 invoke context help.
@@ -622,8 +623,11 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			pos = GetScrollPos(SB_VERT);
 		ARBDate curMonth = FirstDayOfMonth(pos);
 		curMonth = LastDayOfWeek(curMonth);
-		CTime t(curMonth.GetDate());
-		CString str = t.Format(_T("%B %Y"));
+		CString str, strFmt;
+		// Note: The IDS_MONTH* strings MUST be in numerical order.
+		str.LoadString(IDS_MONTH_JAN + curMonth.GetMonth() - 1);
+		strFmt.Format(_T(" %4d"), curMonth.GetYear());
+		str += strFmt;
 
 		// Total working space.
 		CRect rClient(0, 0, pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
@@ -679,8 +683,8 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		int iDay;
 		for (iDay = 0; iDay < 7; ++iDay)
 		{
-			t = CTime((weekStart + iDay).GetDate());
-			str = t.Format(_T("%A"));
+			// Note: The IDS_WEEKDAY* strings MUST be in numerical order.
+			str.LoadString(IDS_WEEKDAY_SUN + (weekStart + iDay).GetDayOfWeek());
 			pDC->DrawText(str, rect, DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER|DT_CENTER);
 
 			pDC->SelectObject(&penShadow);
