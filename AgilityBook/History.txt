@@ -1,4 +1,6 @@
-12/20/2007: v1.10.1.12 <in development>
+12/23/2007: v1.10.3.12 <in development>
+- 12/23/2007: v1.10.2.12 <released for beta testing>
+- 12/21/2007: v1.10.1.12 <released for beta testing>
 - 12/20/2007: v1.10.0.12 <released for beta testing>
 - Bumped file version to 12.6, Configuration v20:
   - Added 'timestamp' to 'AgilityBook'.
@@ -26,6 +28,8 @@
     modifying the run into an event without a table (eg: Standard->JWW).
   - Fixed DTD (missing some elements)
   - Renaming an existing event (in config dlg) actually created a new event.
+  - Renaming an existing level (in config dlg) actually created a new level.
+    It also had some other nasty side effects where too many things were renamed
   - Remember order when items in a venue are rearranged.
   - When updating the configuration and the only changes are in the action
     list, the configuration incorrectly reported that nothing was changed.

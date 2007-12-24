@@ -219,11 +219,13 @@ public:
 
 	/**
 	 * Delete a level.
+	 * @param inDiv Name of parent division (must be name of parent Division).
 	 * @param inName Name of level to delete.
 	 * @param ioEvents List of events to be updated.
 	 * @return Whether level was deleted or not.
 	 */
 	bool DeleteLevel(
+			tstring const& inDiv,
 			tstring const& inName,
 			ARBConfigEventList& ioEvents);
 
