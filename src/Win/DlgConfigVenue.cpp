@@ -1120,7 +1120,7 @@ void CDlgConfigVenue::OnDelete()
 				if (pLevelData)
 				{
 					tstring level = pLevelData->GetLevel()->GetName();
-					if (pLevelData->GetDivision()->GetLevels().DeleteLevel(level, m_pVenue->GetEvents()))
+					if (pLevelData->GetDivision()->GetLevels().DeleteLevel(pLevelData->GetDivision()->GetName(), level, m_pVenue->GetEvents()))
 					{
 						m_pVenue->GetMultiQs().DeleteLevel(level);
 						m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewLevel(
@@ -1299,7 +1299,9 @@ void CDlgConfigVenue::OnEdit()
 							pLevelData->GetLevel()->SetName(name);
 							if (0 == pLevelData->GetLevel()->GetSubLevels().size())
 							{
-								m_pVenue->GetEvents().RenameLevel(oldName, name);
+								m_pVenue->GetEvents().RenameLevel(
+									pLevelData->GetDivision()->GetName(),
+									oldName, name);
 								m_pVenue->GetMultiQs().RenameLevel(
 									pLevelData->GetDivision()->GetName(),
 									oldName, name);

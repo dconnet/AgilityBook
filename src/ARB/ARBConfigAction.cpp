@@ -685,19 +685,19 @@ bool ARBConfigActionRenameLevel::Apply(
 		ARBConfigDivisionPtr div;
 		if (venue->GetDivisions().FindDivision(m_Div, &div))
 		{
-			ARBConfigLevelPtr level;
+			ARBConfigLevelPtr oldLevel;
 			bool bLeaf = false;
 			bool bOk = false;
 			// If level is not empty, we're dealing with a sublevel
 			if (m_Level.empty())
 			{
-				bOk = div->GetLevels().FindLevel(m_OldName, &level);
+				bOk = div->GetLevels().FindLevel(m_OldName, &oldLevel);
 				if (bOk)
-					bLeaf = (0 == level->GetSubLevels().size());
+					bLeaf = (0 == oldLevel->GetSubLevels().size());
 			}
 			else
 			{
-				bOk = div->GetLevels().FindLevel(m_Level, &level);
+				bOk = div->GetLevels().FindLevel(m_Level, &oldLevel);
 				bLeaf = true;
 			}
 			if (bOk)
@@ -713,10 +713,24 @@ bool ARBConfigActionRenameLevel::Apply(
 				ioInfo << Localization()->ActionRenameLevel(m_Venue, m_OldName, m_NewName, nRuns) << _T("\n");
 				// Only update when the actual level (not sublevel) changes
 				if (m_Level.empty())
-					venue->GetEvents().RenameLevel(m_OldName, m_NewName);
+					venue->GetEvents().RenameLevel(m_Div, m_OldName, m_NewName);
 				// Only update on leafs
 				if (bLeaf)
 					venue->GetMultiQs().RenameLevel(m_Div, m_OldName, m_NewName);
+				// If the new level exists, just delete the old.
+				// Otherwise, rename the old to new.
+				if (div->GetLevels().FindLevel(m_NewName))
+				{
+					if (m_Level.empty())
+						div->GetLevels().DeleteLevel(div->GetName(), m_OldName, venue->GetEvents());
+					else
+					{
+						bool bModified;
+						div->GetLevels().DeleteSubLevel(m_OldName, bModified);
+					}
+				}
+				else
+					oldLevel->SetName(m_NewName);
 			}
 		}
 	}
@@ -839,7 +853,7 @@ bool ARBConfigActionDeleteLevel::Apply(
 			// Deleting level
 			if (m_Level.empty())
 			{
-				if (div->GetLevels().DeleteLevel(m_Name, venue->GetEvents()))
+				if (div->GetLevels().DeleteLevel(div->GetName(), m_Name, venue->GetEvents()))
 					venue->GetMultiQs().DeleteLevel(m_Name);
 			}
 			// Deleting sublevel

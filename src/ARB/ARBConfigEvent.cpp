@@ -467,6 +467,7 @@ int ARBConfigEventList::DeleteDivision(tstring const& inDiv)
 
 
 int ARBConfigEventList::RenameLevel(
+		tstring const& inOldDiv,
 		tstring const& inOldLevel,
 		tstring const& inNewLevel)
 {
@@ -476,7 +477,9 @@ int ARBConfigEventList::RenameLevel(
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
 			iterScore != (*iter)->GetScorings().end(); ++iterScore)
 		{
-			if ((*iterScore)->GetLevel() == inOldLevel)
+			if ((*iterScore)->GetLevel() == inOldLevel
+			&& ((*iterScore)->GetDivision() == WILDCARD_DIVISION
+			|| (*iterScore)->GetDivision() == inOldDiv))
 			{
 				++count;
 				(*iterScore)->SetLevel(inNewLevel);
@@ -487,7 +490,9 @@ int ARBConfigEventList::RenameLevel(
 }
 
 
-int ARBConfigEventList::DeleteLevel(tstring const& inLevel)
+int ARBConfigEventList::DeleteLevel(
+		tstring const& inDiv,
+		tstring const& inLevel)
 {
 	tstring level(inLevel);
 	int count = 0;
@@ -496,7 +501,9 @@ int ARBConfigEventList::DeleteLevel(tstring const& inLevel)
 		for (ARBConfigScoringList::iterator iterScore = (*iter)->GetScorings().begin();
 			iterScore != (*iter)->GetScorings().end(); )
 		{
-			if ((*iterScore)->GetLevel() == level)
+			if ((*iterScore)->GetLevel() == level
+			&& ((*iterScore)->GetDivision() == WILDCARD_DIVISION
+			|| (*iterScore)->GetDivision() == inDiv))
 			{
 				++count;
 				iterScore = (*iter)->GetScorings().erase(iterScore);

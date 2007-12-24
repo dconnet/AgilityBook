@@ -321,20 +321,25 @@ public:
 
 	/**
 	 * Rename a level.
+	 * @param inOldDiv Division of old level.
 	 * @param inOldLevel Level name being renamed.
 	 * @param inNewLevel New level name.
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
+			tstring const& inOldDiv,
 			tstring const& inOldLevel,
 			tstring const& inNewLevel);
 
 	/**
 	 * Delete a level.
+	 * @param inDiv Division of level being deleted.
 	 * @param inLevel Level name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteLevel(tstring const& inLevel);
+	int DeleteLevel(
+			tstring const& inDiv,
+			tstring const& inLevel);
 
 	/**
 	 * Find an event.

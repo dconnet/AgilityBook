@@ -312,6 +312,7 @@ bool ARBConfigLevelList::AddLevel(ARBConfigLevelPtr inLevel)
 
 
 bool ARBConfigLevelList::DeleteLevel(
+		tstring const& inDiv,
 		tstring const& inName,
 		ARBConfigEventList& ioEvents)
 {
@@ -322,7 +323,7 @@ bool ARBConfigLevelList::DeleteLevel(
 		{
 			// Remember, we don't need to worry about the sublevel names here.
 			// Events only use level names.
-			ioEvents.DeleteLevel(name);
+			ioEvents.DeleteLevel(inDiv, name);
 			erase(iter);
 			return true;
 		}

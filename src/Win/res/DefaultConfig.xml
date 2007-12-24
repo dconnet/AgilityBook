@@ -2603,29 +2603,28 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 		</Venue>
-
 		<Venue LongName="SociÃ©tÃ© Centrale Canine" Name="SCC" URL="http://www.france-agility.com/agility/reglts.htm" icon="15">
 			<Titles LongName="Agility Certificate" Name="Agility Certificate">Qualified 'Excellent' 3 times, with clear rounds, under 2 different judges in Agility 1 competitions</Titles>
 			<Division Name="Senior">
-				<Level Name="Pas de degré"/>
-				<Level Name="1er degré"/>
-				<Level Name="2ème degré"/>
-				<Level Name="3ème degré"/>
+				<Level Name="Pas de degrÃ©"/>
+				<Level Name="1er degrÃ©"/>
+				<Level Name="2Ã¨me degrÃ©"/>
+				<Level Name="3Ã¨me degrÃ©"/>
 			</Division>
 			<Division Name="Junior">
-				<Level Name="Pas de degré"/>
-				<Level Name="1er degré"/>
-				<Level Name="2ème degré"/>
-				<Level Name="3ème degré"/>
+				<Level Name="Pas de degrÃ©"/>
+				<Level Name="1er degrÃ©"/>
+				<Level Name="2Ã¨me degrÃ©"/>
+				<Level Name="3Ã¨me degrÃ©"/>
 			</Division>
 			<Division Name="Poussin">
-				<Level Name="Level"/>
-				<Level Name="1er degré"/>
-				<Level Name="2ème degré"/>
-				<Level Name="3ème degré"/>
+				<Level Name="Pas de degrÃ©"/>
+				<Level Name="1er degrÃ©"/>
+				<Level Name="2Ã¨me degrÃ©"/>
+				<Level Name="3Ã¨me degrÃ©"/>
 			</Division>
 			<Event Name="Agility" hasTable="y">
-				<Scoring Division="*" Level="1er degré" type="FaultsThenTime">
+				<Scoring Division="*" Level="1er degrÃ©" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2635,7 +2634,7 @@ Was called Wild Card briefly.</Desc>
 					<TitlePoints Faults="15.99" Points="0"/>
 					<TitlePoints Faults="25.99" Points="0"/>
 				</Scoring>
-				<Scoring Division="*" Level="2ème degré" type="FaultsThenTime">
+				<Scoring Division="*" Level="2Ã¨me degrÃ©" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2650,7 +2649,7 @@ Was called Wild Card briefly.</Desc>
 						<PlaceInfo Place="3" Value="1"/>
 					</Placements>
 				</Scoring>
-				<Scoring Division="*" Level="3ème degré" type="FaultsThenTime">
+				<Scoring Division="*" Level="3Ã¨me degrÃ©" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2662,8 +2661,8 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Jumping">
-				<Scoring Division="*" Level="Pas de degré" type="FaultsThenTime"/>
-				<Scoring Division="*" Level="2ème degré" type="FaultsThenTime">
+				<Scoring Division="*" Level="Pas de degrÃ©" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="2Ã¨me degrÃ©" type="FaultsThenTime">
 					<Note>0 - 5.99 fauts = Excellent
 6 - 15.99 faults = Very Good
 16 - 25.99 faults = Good
@@ -2690,15 +2689,14 @@ Was called Wild Card briefly.</Desc>
 				</Scoring>
 			</Event>
 			<Event Name="Open Royal Canin" hasTable="y">
-				<Scoring Division="*" Level="Pas de degré" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="Pas de degrÃ©" type="FaultsThenTime"/>
 				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
 			</Event>
 			<Event Name="Grand Prix France" hasTable="y">
-				<Scoring Division="*" Level="Pas de degré" type="FaultsThenTime"/>
+				<Scoring Division="*" Level="Pas de degrÃ©" type="FaultsThenTime"/>
 				<Scoring Division="*" Level="*" type="FaultsThenTime"/>
 			</Event>
 		</Venue>
-
 		<Venue LongName="Sweepstakes Agility" Name="SSA" URL="http://www.sweepstakesagility.com/" icon="10">
 			<Titles LongName="Starter Sweepstakes" Name="SSw">50 points</Titles>
 			<Titles LongName="Novice Sweepstakes" Name="NSw">100 points</Titles>
