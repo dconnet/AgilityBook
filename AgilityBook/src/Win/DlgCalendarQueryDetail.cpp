@@ -105,6 +105,8 @@ void CDlgCalendarQueryDetail::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgCalendarQueryDetail, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendarQueryDetail)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_QUERY_LOCATIONS, OnLvnItemchangedQueryLocations)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_QUERY_VENUES, OnLvnItemchangedQueryVenues)
 	ON_BN_CLICKED(IDC_QUERY_LOCCODE_NEW, OnNewLocationCode)
 	ON_BN_CLICKED(IDC_QUERY_LOCCODE_EDIT, OnEditLocationCode)
 	ON_BN_CLICKED(IDC_QUERY_LOCCODE_DELETE, OnDeleteLocationCode)
@@ -112,8 +114,6 @@ BEGIN_MESSAGE_MAP(CDlgCalendarQueryDetail, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_QUERY_VENUE_EDIT, OnEditVenueCode)
 	ON_BN_CLICKED(IDC_QUERY_VENUE_DELETE, OnDeleteVenueCode)
 	//}}AFX_MSG_MAP
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_QUERY_LOCATIONS, &CDlgCalendarQueryDetail::OnLvnItemchangedQueryLocations)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_QUERY_VENUES, &CDlgCalendarQueryDetail::OnLvnItemchangedQueryVenues)
 END_MESSAGE_MAP()
 
 

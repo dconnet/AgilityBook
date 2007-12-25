@@ -123,7 +123,7 @@ void CDlgQueryDetail::OnOK()
 		if (m_Name.empty())
 			m_Name = m_Code;
 		if (m_Config->GetVenues().FindVenue(m_Code))
-			m_Name.clear();
+			m_Name.erase();
 		else if (!m_Config->GetVenues().FindVenue(m_Name))
 		{
 			CString str;
