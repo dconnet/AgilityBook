@@ -37,17 +37,36 @@
  */
 
 #include "DlgBaseDialog.h"
+#include "ListCtrl.h"
 #include <map>
+class ARBConfig;
 
 class CDlgCalendarQueryDetail : public CDlgBaseDialog
 {
 public:
+	// For configuring what codes are available
 	CDlgCalendarQueryDetail(
+			ARBConfig const& inConfig,
+			std::map<tstring, tstring> const& inLocCodes,
+			std::map<tstring, tstring> const& inVenueCodes,
+			CWnd* pParent = NULL);
+	// For selecting from available list
+	CDlgCalendarQueryDetail(
+			ARBConfig const& inConfig,
 			std::map<tstring, tstring> const& inLocCodes,
 			std::vector<tstring> const& inSelectedLocCodes,
 			std::map<tstring, tstring> const& inVenueCodes,
 			std::vector<tstring> const& inSelectedVenueCodes,
 			CWnd* pParent = NULL);
+
+	std::map<tstring, tstring> const& GetLocationCodes() const
+	{
+		return m_LocCodes;
+	}
+	std::map<tstring, tstring> const& GetVenueCodes() const
+	{
+		return m_VenueCodes;
+	}
 	std::vector<tstring> const& GetSelectedLocationCodes() const
 	{
 		return m_Locations;
@@ -61,13 +80,23 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgCalendarQueryDetail)
 	enum { IDD = IDD_CALENDAR_QUERY_DETAIL };
-	CListCtrl	m_ctrlLocations;
-	CListCtrl	m_ctrlVenues;
+	CListCtrl2	m_ctrlLocations;
+	CListCtrl2	m_ctrlVenues;
+	CButton	m_ctrlNewLoc;
+	CButton	m_ctrlEditLoc;
+	CButton	m_ctrlDeleteLoc;
+	CButton	m_ctrlNewVenue;
+	CButton	m_ctrlEditVenue;
+	CButton	m_ctrlDeleteVenue;
 	//}}AFX_DATA
-	std::map<tstring, tstring> const& m_LocCodes;
-	std::map<tstring, tstring> const& m_VenueCodes;
+	bool m_EditCodes;
+	ARBConfig const& m_Config;
+	std::map<tstring, tstring> m_LocCodes;
+	std::map<tstring, tstring> m_VenueCodes;
 	std::vector<tstring> m_Locations;
 	std::vector<tstring> m_Venues;
+
+	void UpdateButtons();
 
 	//{{AFX_VIRTUAL(CDlgCalendarQueryDetail)
 protected:
@@ -78,6 +107,14 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgCalendarQueryDetail)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnLvnItemchangedQueryLocations(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnItemchangedQueryVenues(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNewLocationCode();
+	afx_msg void OnEditLocationCode();
+	afx_msg void OnDeleteLocationCode();
+	afx_msg void OnNewVenueCode();
+	afx_msg void OnEditVenueCode();
+	afx_msg void OnDeleteVenueCode();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

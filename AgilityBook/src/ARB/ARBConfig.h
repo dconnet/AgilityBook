@@ -183,6 +183,10 @@ public:
 	{
 		return m_CalSites;
 	}
+	std::vector<ARBConfigCalSite>& GetCalSites()
+	{
+		return m_CalSites;
+	}
 	ARBConfigActionList const& GetActions() const
 	{
 		return m_Actions;

@@ -545,11 +545,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgPluginDetails.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgPointsViewSort.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgProgress.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgQueryDetail.h"
 				>
 			</File>
 			<File
@@ -1519,11 +1527,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgPluginDetails.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgPointsViewSort.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgProgress.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgQueryDetail.cpp"
 				>
 			</File>
 			<File
@@ -1649,22 +1665,6 @@
 			<File
 				RelativePath="..\..\stdafx.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>

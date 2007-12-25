@@ -197,6 +197,11 @@ Define a calendar source site.
       "!L!": Add selected LocCodes (code1+code2...)
       "!V!": Add selected venues (v1+v2...)
  help: Url to page describing what you get (for instance if data is limited)
+       (Note, not currently used. The idea is this would eventually be used
+       at a site where they provide limited data, but if you pay, you get more.
+       This would be a link to a page describing the differences and trying to
+       convince the user to subscribe. I haven't figured out where to put this
+       in the UI yet)
 Note: The requested data will be returned using with the venue code. We'll
 run a 'fixup' routine before actually importing the Calendar data.
 This means that the URL query can be specified with no locations or venues.

@@ -90,6 +90,7 @@ Help\html\Toolbar.html
 [ALIAS]
 HIDD_ABOUTBOX=Help\html\DlgAbout.html
 HIDD_ASSIGN_COLUMNS=Help\html\DlgAssignCol.html
+HIDD_CALENDAR_PLUGIN_DETAIL=Help\html\DlgCalendarPlugins.html
 HIDD_CALENDAR_PLUGINS=Help\html\DlgCalendarPlugins.html
 HIDD_CALENDAR_QUERY_DETAIL=Help\html\DlgCalendarPlugins.html
 HIDD_CALENDAR=Help\html\PropCal.html
