@@ -350,11 +350,19 @@ SOURCE=..\..\Win\DlgPartner.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgPluginDetails.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgPointsViewSort.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\Win\DlgProgress.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\DlgQueryDetail.cpp
 # End Source File
 # Begin Source File
 
@@ -775,11 +783,19 @@ SOURCE=..\..\Win\DlgPartner.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\DlgPluginDetails.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\DlgPointsViewSort.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\Win\DlgProgress.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\DlgQueryDetail.h
 # End Source File
 # Begin Source File
 

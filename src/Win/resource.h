@@ -107,6 +107,8 @@
 #define IDD_LANGUAGE                    255
 #define IDD_CALENDAR_PLUGINS            256
 #define IDD_CALENDAR_QUERY_DETAIL       257
+#define IDD_CALENDAR_PLUGIN_DETAIL      258
+#define IDD_QUERY_DETAIL                259
 #define IDC_ABOUT_TEXT                  1000
 #define IDC_ABOUT_TEXT2                 1001
 #define IDC_ABOUT_LINK1                 1002
@@ -557,8 +559,26 @@
 #define IDC_PLUGIN_ADD                  1683
 #define IDC_PLUGIN_ENABLE               1684
 #define IDC_PLUGIN_QUERYDETAILS         1685
+#define IDC_PLUGIN_NEW                  1686
+#define IDC_PLUGIN_EDIT                 1687
+#define IDC_PLUGIN_DELETE               1688
 #define IDC_QUERY_LOCATIONS             1690
 #define IDC_QUERY_VENUES                1691
+#define IDC_QUERY_LOCCODE_NEW           1692
+#define IDC_QUERY_LOCCODE_EDIT          1693
+#define IDC_QUERY_LOCCODE_DELETE        1694
+#define IDC_QUERY_VENUE_NEW             1695
+#define IDC_QUERY_VENUE_EDIT            1696
+#define IDC_QUERY_VENUE_DELETE          1697
+#define IDC_PLUGINDETAIL_NAME           1700
+#define IDC_PLUGINDETAIL_SEARCH         1701
+#define IDC_PLUGINDETAIL_HELP           1702
+#define IDC_PLUGINDETAIL_DESC           1703
+#define IDC_PLUGINDETAIL_CODES          1704
+#define IDC_PLUGINDETAIL_CODES_TEXT     1705
+#define IDC_QUERYDETAIL_CODE            1710
+#define IDC_QUERYDETAIL_NAME_TEXT       1711
+#define IDC_QUERYDETAIL_NAME            1712
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -583,6 +603,7 @@
 #define IDS_COL_CONDITIONS              4031
 #define IDS_COL_CONTACTS                4032
 #define IDS_COL_COURSEFAULTS            4033
+#define IDS_COL_CODE                    4034
 #define IDS_COL_DATE                    4040
 #define IDS_COL_DESCRIPTION             4041
 #define IDS_COL_DIVISION                4042
@@ -1140,9 +1161,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        258
+#define _APS_NEXT_RESOURCE_VALUE        260
 #define _APS_NEXT_COMMAND_VALUE         32900
-#define _APS_NEXT_CONTROL_VALUE         1700
+#define _APS_NEXT_CONTROL_VALUE         1720
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

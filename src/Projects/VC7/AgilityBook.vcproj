@@ -331,13 +331,16 @@
 				RelativePath="..\..\Win\DlgPartner.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgPluginDetails.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgPointsViewSort.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgProgress.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgProgress.h">
+				RelativePath="..\..\Win\DlgQueryDetail.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgReferenceRun.cpp">
@@ -665,7 +668,16 @@
 				RelativePath="..\..\Win\DlgPartner.h">
 			</File>
 			<File
+				RelativePath="..\..\Win\DlgPluginDetails.h">
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgPointsViewSort.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgProgress.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgQueryDetail.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgReferenceRun.h">

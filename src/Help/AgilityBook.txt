@@ -1197,11 +1197,65 @@ been obtained.
 .topic HIDC_PLUGIN_QUERYDETAILS
 Edit detailed query information for the selected plugin, if available.
 
+.topic HIDC_PLUGIN_NEW
+Add a new Calendar plugin to the current configuration.
+
+.topic HIDC_PLUGIN_EDIT
+Edit the selected Calendar plugin (only applicable to plugs in the configuration)
+
+.topic HIDC_PLUGIN_DELETE
+Delete the selected Calendar plugin (only applicable to plugs in the configuration)
+
 .topic HIDC_QUERY_LOCATIONS
 List of location codes and names that a plugin can specifically query. The code
 is used in the actual query and the name is displayed.
+
+.topic HIDC_QUERY_LOCCODE_NEW
+Create a new Location code entry.
+
+.topic HIDC_QUERY_LOCCODE_EDIT
+Edit the selected Location code entry.
+
+.topic HIDC_QUERY_LOCCODE_DELETE
+Delete the selected Location code entry.
 
 .topic HIDC_QUERY_VENUES
 List of venue codes and names that a plugin can specifically query. The code
 is used in the actual query and the venue name is one of Agility Record Book's
 venue names.
+
+.topic HIDC_QUERY_VENUE_NEW
+Create a new Venue code entry.
+
+.topic HIDC_QUERY_VENUE_EDIT
+Edit the selected Venue code entry.
+
+.topic HIDC_QUERY_VENUE_DELETE
+Delete the selected Venue code entry.
+
+.topic HIDC_PLUGINDETAIL_NAME
+Name of the plugin.
+
+.topic HIDC_PLUGINDETAIL_DESC
+Description of plugin.
+
+.topic HIDC_PLUGINDETAIL_SEARCH
+This URL is used to read data from the Internet.
+The "!L!" and "!V!" strings are replaced with the location and venue codes a
+user selects.
+Multiple codes are assembled using the '+' character between the codes.
+
+.topic HIDC_PLUGINDETAIL_HELP
+Special URL that will guide the user to an external web site for additional
+details. This will typically be used by a supplier of Calendar data that
+limits what is available to the general public and sells additional data for
+a fee. This URL would be used to describe how to get that additional data.
+
+.topic HIDC_PLUGINDETAIL_CODES
+Configure the Location and Venue codes that are supported.
+
+.topic HIDC_QUERYDETAIL_CODE
+This is the code that will be transmitted to the web site as part of the query URL.
+
+.topic HIDC_QUERYDETAIL_NAME
+This is the pretty name displayed to the user to select a code.

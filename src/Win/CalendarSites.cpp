@@ -46,6 +46,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgBaseDialog.h"
 #include "DlgCalendarQueryDetail.h"
+#include "DlgPluginDetails.h"
 #include "DlgProgress.h"
 #include "Element.h"
 #include "ICalendarSite.h"
@@ -178,6 +179,8 @@ private:
 	CButton	m_ctrlAdd;
 	CButton	m_ctrlEnable;
 	CButton	m_ctrlQuery;
+	CButton	m_ctrlEdit;
+	CButton	m_ctrlDelete;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	std::map<CString, CalSiteDataPtr>& m_DirectAccess;
@@ -194,6 +197,7 @@ protected:
 	//{{AFX_MSG(CDlgCalendarPlugins)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnTvnDeleteitemPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnGetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
@@ -201,6 +205,9 @@ protected:
 	afx_msg void OnPluginAdd();
 	afx_msg void OnPluginEnable();
 	afx_msg void OnPluginQueryDetails();
+	afx_msg void OnPluginNew();
+	afx_msg void OnPluginEdit();
+	afx_msg void OnPluginDelete();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -675,6 +682,10 @@ public:
 	virtual CString GetDesc() const	{return m_Desc;}
 	virtual CStringA Process(IProgressMeter *progress) = 0;
 	virtual bool HasQueryDetails() const = 0;
+	virtual bool CanEdit() const					{return false;}
+	virtual bool Edit(CWnd* pParent)				{return false;}
+	virtual bool CanDelete() const					{return false;}
+	virtual bool Delete()							{return false;}
 	virtual std::map<tstring, tstring> const& QueryLocationCodes() const = 0;
 	virtual std::map<tstring, tstring> const& QueryVenueCodes() const = 0;
 	virtual std::vector<tstring>& LocationCodes()	{return m_LocationCodes;}
@@ -694,8 +705,10 @@ protected:
 class CPluginConfigData : public CPluginData
 {
 public:
-	CPluginConfigData(ARBConfigCalSite const& inSite)
-		: m_Site(inSite)
+	CPluginConfigData(CAgilityBookDoc* pDoc, ARBConfigCalSite const& inSite)
+		: m_pDoc(pDoc)
+		, m_OrigSite(inSite)
+		, m_Site(inSite)
 		, m_Enabled(true)
 	{
 		m_Name = m_Site.GetName().c_str();
@@ -710,6 +723,11 @@ public:
 	{
 		return 1 < m_Site.LocationCodes().size() || 1 < m_Site.VenueCodes().size();
 	}
+
+	virtual bool CanEdit() const		{return true;}
+	virtual bool Edit(CWnd* pParent);
+	virtual bool CanDelete() const		{return true;}
+	virtual bool Delete();
 
 	virtual std::map<tstring, tstring> const& QueryLocationCodes() const
 	{
@@ -743,6 +761,8 @@ public:
 	}
 
 private:
+	CAgilityBookDoc* m_pDoc;
+	ARBConfigCalSite m_OrigSite;
 	ARBConfigCalSite m_Site;
 	bool m_Enabled;
 };
@@ -760,6 +780,41 @@ CStringA CPluginConfigData::Process(IProgressMeter *progress)
 	if (!http.ReadHttpFile(username, errMsg))
 		data.Empty();
 	return data;
+}
+
+
+bool CPluginConfigData::Edit(CWnd* pParent)
+{
+	CDlgPluginDetails dlg(m_pDoc->GetConfig(), m_Site, pParent);
+	if (IDOK == dlg.DoModal())
+	{
+		m_Name = m_Site.GetName().c_str();
+		m_Desc = m_Site.GetDescription().c_str();
+		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
+		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
+		std::vector<ARBConfigCalSite>::iterator iFound = std::find(m_pDoc->GetConfig().GetCalSites().begin(), m_pDoc->GetConfig().GetCalSites().end(), m_OrigSite);
+		if (iFound != m_pDoc->GetConfig().GetCalSites().end())
+		{
+			*iFound = m_Site;
+		}
+		m_pDoc->SetModifiedFlag(TRUE);
+		return true;
+	}
+	else
+		return false;
+}
+
+
+bool CPluginConfigData::Delete()
+{
+	std::vector<ARBConfigCalSite>::iterator iFound = std::find(m_pDoc->GetConfig().GetCalSites().begin(), m_pDoc->GetConfig().GetCalSites().end(), m_OrigSite);
+	if (iFound != m_pDoc->GetConfig().GetCalSites().end())
+	{
+		m_pDoc->GetConfig().GetCalSites().erase(iFound);
+		m_pDoc->SetModifiedFlag(TRUE);
+		return true;
+	}
+	return false;
 }
 
 
@@ -932,6 +987,8 @@ void CDlgCalendarPlugins::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PLUGIN_ADD, m_ctrlAdd);
 	DDX_Control(pDX, IDC_PLUGIN_ENABLE, m_ctrlEnable);
 	DDX_Control(pDX, IDC_PLUGIN_QUERYDETAILS, m_ctrlQuery);
+	DDX_Control(pDX, IDC_PLUGIN_EDIT, m_ctrlEdit);
+	DDX_Control(pDX, IDC_PLUGIN_DELETE, m_ctrlDelete);
 	//}}AFX_DATA_MAP
 }
 
@@ -939,6 +996,7 @@ void CDlgCalendarPlugins::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgCalendarPlugins, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendarPlugins)
 	ON_NOTIFY(TVN_DELETEITEM, IDC_PLUGIN_TREE, OnTvnDeleteitemPluginTree)
+	ON_NOTIFY(NM_DBLCLK, IDC_PLUGIN_TREE, OnNMDblclkPluginTree)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_PLUGIN_TREE, OnTvnSelchangedPluginTree)
 	ON_NOTIFY(TVN_SETDISPINFO, IDC_PLUGIN_TREE, OnTvnSetdispinfoPluginTree)
 	ON_NOTIFY(TVN_GETDISPINFO, IDC_PLUGIN_TREE, OnTvnGetdispinfoPluginTree)
@@ -946,6 +1004,9 @@ BEGIN_MESSAGE_MAP(CDlgCalendarPlugins, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_PLUGIN_ADD, OnPluginAdd)
 	ON_BN_CLICKED(IDC_PLUGIN_ENABLE, OnPluginEnable)
 	ON_BN_CLICKED(IDC_PLUGIN_QUERYDETAILS, OnPluginQueryDetails)
+	ON_BN_CLICKED(IDC_PLUGIN_NEW, OnPluginNew)
+	ON_BN_CLICKED(IDC_PLUGIN_EDIT, OnPluginEdit)
+	ON_BN_CLICKED(IDC_PLUGIN_DELETE, OnPluginDelete)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -980,6 +1041,8 @@ void CDlgCalendarPlugins::UpdateControls()
 	}
 	m_ctrlEnable.EnableWindow(pData != NULL && !pData->isValid());
 	m_ctrlQuery.EnableWindow(pData != NULL && pData->HasQueryDetails());
+	m_ctrlEdit.EnableWindow(pData != NULL && pData->CanEdit());
+	m_ctrlDelete.EnableWindow(pData != NULL && pData->CanDelete());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -993,7 +1056,7 @@ BOOL CDlgCalendarPlugins::OnInitDialog()
 		iConfig != m_pDoc->GetConfig().GetCalSites().end();
 		++iConfig)
 	{
-		CPluginConfigData* pData = new CPluginConfigData(*iConfig);
+		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, *iConfig);
 		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
 			LPSTR_TEXTCALLBACK,
 			0, 0,
@@ -1035,6 +1098,13 @@ void CDlgCalendarPlugins::OnTvnDeleteitemPluginTree(NMHDR *pNMHDR, LRESULT *pRes
 	CPluginBase* pData = reinterpret_cast<CPluginBase*>(pNMTreeView->itemOld.lParam);
 	delete pData;
 	pNMTreeView->itemOld.lParam = 0;
+	*pResult = 0;
+}
+
+
+void CDlgCalendarPlugins::OnNMDblclkPluginTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	OnPluginEdit();
 	*pResult = 0;
 }
 
@@ -1274,6 +1344,7 @@ void CDlgCalendarPlugins::OnPluginQueryDetails()
 		if (pData && pData->HasQueryDetails())
 		{
 			CDlgCalendarQueryDetail dlg(
+				m_pDoc->GetConfig(),
 				pData->QueryLocationCodes(), pData->LocationCodes(),
 				pData->QueryVenueCodes(), pData->VenueCodes(),
 				this);
@@ -1282,6 +1353,65 @@ void CDlgCalendarPlugins::OnPluginQueryDetails()
 				pData->LocationCodes() = dlg.GetSelectedLocationCodes();
 				pData->VenueCodes() = dlg.GetSelectedVenueCodes();
 			}
+		}
+	}
+}
+
+
+void CDlgCalendarPlugins::OnPluginNew()
+{
+	ARBConfigCalSite site;
+	CDlgPluginDetails dlg(m_pDoc->GetConfig(), site, this);
+	if (IDOK == dlg.DoModal())
+	{
+		m_pDoc->GetConfig().GetCalSites().push_back(site);
+		m_pDoc->SetModifiedFlag(TRUE);
+		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, site);
+		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
+			LPSTR_TEXTCALLBACK,
+			0, 0,
+			0, 0,
+			reinterpret_cast<LPARAM>(static_cast<CPluginBase*>(pData)),
+			TVI_ROOT, TVI_LAST);
+		pData->SetHTreeItem(hItem);
+		m_ctrlPlugins.ShowCheckbox(hItem, true);
+		m_ctrlPlugins.SetChecked(hItem, true, false);
+		m_ctrlPlugins.SelectItem(hItem);
+		UpdateControls();
+	}
+}
+
+
+void CDlgCalendarPlugins::OnPluginEdit()
+{
+	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
+	if (hItem)
+	{
+		CPluginBase* pRawData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hItem));
+		CPluginData* pData = dynamic_cast<CPluginData*>(pRawData);
+		if (pData && pData->Edit(this))
+		{
+			m_ctrlPlugins.Invalidate();
+			CString desc;
+			if (pData)
+				desc = pData->GetDesc();
+			m_ctrlDetails.SetWindowText(desc);
+			UpdateControls();
+		}
+	}
+}
+
+
+void CDlgCalendarPlugins::OnPluginDelete()
+{
+	HTREEITEM hItem = m_ctrlPlugins.GetSelectedItem();
+	if (hItem)
+	{
+		CPluginBase* pRawData = reinterpret_cast<CPluginBase*>(m_ctrlPlugins.GetItemData(hItem));
+		CPluginData* pData = dynamic_cast<CPluginData*>(pRawData);
+		if (pData && pData->Delete())
+		{
+			m_ctrlPlugins.DeleteItem(hItem);
 		}
 	}
 }

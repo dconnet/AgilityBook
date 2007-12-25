@@ -1,8 +1,6 @@
-Last Updated: 11/11/2007
+Last Updated: 12/24/2007
 
 - Add persistence to CalSite location/venue selection data.
-
-- Add editing to configuration for CalSite data.
 
 - Be able to select yards or meters (this is really just a visual thing, since
   the program won't do anything differently)
