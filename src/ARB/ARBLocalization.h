@@ -106,6 +106,7 @@ public:
 	virtual tstring UpdateTableRuns(int nRuns) const = 0;
 
 	// Used in ARBConfigAction.cpp
+	virtual tstring ActionDeleteCalPlugin(tstring const& name) const = 0;
 	virtual tstring ActionRenameOtherPoints(
 			tstring const& oldName,
 			tstring const& newName,

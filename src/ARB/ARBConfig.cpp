@@ -363,49 +363,42 @@ bool ARBConfig::Update(
 		otstringstream& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
-	// Update CalSites.
+	// Update CalSites. (existing ones are never removed except by an action)
 	int nNew = 0;
 	int nUpdated = 0;
 	int nSkipped = 0;
 	{
-		int nDeleted = 0;
-		std::vector<ARBConfigCalSite>::iterator iter1;
-		std::vector<ARBConfigCalSite>::const_iterator iter2;
-		// Look for items that will be removed.
-		for (iter1 = m_CalSites.begin(); iter1 != m_CalSites.end(); ++iter1)
+		for (std::vector<ARBConfigCalSite>::const_iterator iterCalSite = inConfigNew.GetCalSites().begin();
+			iterCalSite != inConfigNew.GetCalSites().end();
+			++iterCalSite)
 		{
 			bool bFound = false;
-			for (iter2 = inConfigNew.GetCalSites().begin(); iter2 != inConfigNew.GetCalSites().end(); ++iter2)
+			for (std::vector<ARBConfigCalSite>::iterator iter = m_CalSites.begin();
+				iter != m_CalSites.end();
+				++iter)
 			{
-				if (*iter1 == *iter2)
+				if ((*iterCalSite).GetName() == (*iter).GetName())
 				{
 					bFound = true;
-					++nSkipped;
+					if (*iterCalSite != *iter)
+					{
+						++nUpdated;
+						*iter = *iterCalSite;
+					}
+					else
+						++nSkipped;
 					break;
 				}
 			}
 			if (!bFound)
-				++nDeleted;
-		}
-		// Now look for items that will be added.
-		for (iter2 = inConfigNew.GetCalSites().begin(); iter2 != inConfigNew.GetCalSites().end(); ++iter2)
-		{
-			bool bFound = false;
-			for (iter1 = m_CalSites.begin(); iter1 != m_CalSites.end(); ++iter1)
 			{
-				if (*iter1 == *iter2)
-				{
-					bFound = true;
-					break;
-				}
-			}
-			if (!bFound)
 				++nNew;
+				m_CalSites.push_back(*iterCalSite);
+			}
 		}
-		m_CalSites = inConfigNew.GetCalSites();
-		if (0 < nNew || 0 < nDeleted)
+		if (0 < nNew || 0 < nUpdated)
 		{
-			ioInfo << Localization()->UpdateCalSites(nNew, nDeleted, nSkipped) << _T("\n");
+			ioInfo << Localization()->UpdateCalSites(nNew, nUpdated, nSkipped) << _T("\n");
 		}
 	}
 

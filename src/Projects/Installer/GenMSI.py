@@ -29,7 +29,6 @@ WiXdir = r"c:\Program Files\Windows Installer XML\wix2"
 ISTool = "c:\\Program Files\\ISTool"
 
 WinSrcDir = AgilityBookDir + "\\src\\Win"
-ResString = "FILEVERSION "
 code32 = 1
 code64 = 3
 code98 = 2
@@ -42,16 +41,16 @@ def getversion(numParts):
 	for i in range(1, numParts):
 		ver = ver + ".0"
 		ver2 = ver2 + "_0"
-	res = open(WinSrcDir + "\\AgilityBook.rc", "r")
+	res = open(WinSrcDir + "\\VersionNumber.h", "r")
 	while (1):
 		line = res.readline()
 		if line:
 			line = string.strip(line)
+			ResString = "#define ARB_VERSION"
 			pos = line.find(ResString)
-			#FILEVERSION 1,9,0,12
 			if 0 == pos:
-				line = line.split(' ')
-				line = line[1].split(',')
+				line = string.strip(line[pos+len(ResString):])
+				line = line.split(',')
 				ver = line[0]
 				ver2 = line[0]
 				for i in range(1, numParts):

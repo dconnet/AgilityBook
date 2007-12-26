@@ -95,6 +95,7 @@ public:
 	tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const;
 	tstring UpdateTableRuns(int nRuns) const;
 
+	tstring ActionDeleteCalPlugin(tstring const& name) const;
 	tstring ActionRenameOtherPoints(
 			tstring const& oldName,
 			tstring const& newName,

@@ -1265,26 +1265,26 @@ version de ce plugin a été téléchargée.
 Éditer l'information détaillée pour le plugin choisi, si disponible.
 
 .topic HIDC_PLUGIN_NEW
-Add a new Calendar plugin to the current configuration.
+Rajouter un nouveau plugin Calendrier à la configuration actuelle.
 
 .topic HIDC_PLUGIN_EDIT
-Edit the selected Calendar plugin (only applicable to plugs in the configuration)
+Éditer le plugin Calendrier sélectionné. (S’applique seulement aux plugins dans la configuration.)
 
 .topic HIDC_PLUGIN_DELETE
-Delete the selected Calendar plugin (only applicable to plugs in the configuration)
+Supprimer le plugin Calendrier sélectionné. (S’applique seulement aux plugins dans la configuration.)
 
 .topic HIDC_QUERY_LOCATIONS
 Liste des codes d'endroit et noms qu'un plugin peit demander.
 Le code est utilisé et le nom est affiché.
 
 .topic HIDC_QUERY_LOCCODE_NEW
-Create a new Location code entry.
+Créer une nouvelle entrée code Endroit. 
 
 .topic HIDC_QUERY_LOCCODE_EDIT
-Edit the selected Location code entry.
+Éditer l’entrée code Endroit sélectionné.
 
 .topic HIDC_QUERY_LOCCODE_DELETE
-Delete the selected Location code entry.
+Supprimer l’entrée code Endroit sélectionné.
 
 .topic HIDC_QUERY_VENUES
 Liste des codes d'organisation et noms qu'un plugin peut demander.
@@ -1292,37 +1292,37 @@ Le code est utilisé et le nom d’organisation est un des organisation
 dans Agility Record Book.
 
 .topic HIDC_QUERY_VENUE_NEW
-Create a new Venue code entry.
+Créer une nouvelle entrée code Organisation.
 
 .topic HIDC_QUERY_VENUE_EDIT
-Edit the selected Venue code entry.
+Éditer l’entrée code Organisation sélectionné.
 
 .topic HIDC_QUERY_VENUE_DELETE
-Delete the selected Venue code entry.
+Supprimer l’entrée code Organisation sélectionné.
 
 .topic HIDC_PLUGINDETAIL_NAME
-Name of the plugin.
+Nom du plugin.
 
 .topic HIDC_PLUGINDETAIL_DESC
-Description of plugin.
+Description du plugin.
 
 .topic HIDC_PLUGINDETAIL_SEARCH
-This URL is used to read data from the Internet.
-The "!L!" and "!V!" strings are replaced with the location and venue codes a
-user selects.
-Multiple codes are assembled using the '+' character between the codes.
+Cet adresse URL est utilisée pour lire des données de l’Internet.
+Les textes ”!L!” et ”!V!” seront remplacés avec les codes d’endroit
+et d’organisation sélectionnés par l’utilisateur.
+Plusieurs codes seront assemblés en utilisant le caractère ‘+’ entre les codes.
 
 .topic HIDC_PLUGINDETAIL_HELP
-Special URL that will guide the user to an external web site for additional
-details. This will typically be used by a supplier of Calendar data that
-limits what is available to the general public and sells additional data for
-a fee. This URL would be used to describe how to get that additional data.
+URL spécial pour diriger l’utilisateur vers un site Internet externe pour
+plus de détails.
+Typiquement utilisé par un fournisseur de données calendrier qui limite les
+données accessibles gratuites et vend des données supplémentaires de ce site.
 
 .topic HIDC_PLUGINDETAIL_CODES
-Configure the Location and Venue codes that are supported.
+Configurer les codes Endroit et Organisation qui sont permis.
 
 .topic HIDC_QUERYDETAIL_CODE
-This is the code that will be transmitted to the web site as part of the query URL.
+Ceci est le code qui va être transmis au site web faisant parti de la query URL.
 
 .topic HIDC_QUERYDETAIL_NAME
-This is the pretty name displayed to the user to select a code.
+Ceci est le nom qui va être affiché à l’utilisateur pour sélectionner un code.
