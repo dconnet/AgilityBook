@@ -718,7 +718,7 @@ bool ARBConfigVenueList::AddVenue(
 {
 	if (outVenue)
 		outVenue->reset();
-	if (0 == inVenue.length())
+	if (inVenue.empty())
 		return false;
 	if (FindVenue(inVenue))
 		return false;

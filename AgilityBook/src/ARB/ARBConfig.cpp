@@ -202,9 +202,8 @@ bool ARBConfig::Load(
 		}
 		else if (name == TREE_CALSITE)
 		{
-			ARBConfigCalSite site;
-			if (site.Load(element, inVersion, ioCallback))
-				m_CalSites.push_back(site);
+			// Ignore any errors...
+			m_CalSites.Load(element, inVersion, ioCallback);
 		}
 		else if (name == TREE_VENUE)
 		{
@@ -238,15 +237,10 @@ bool ARBConfig::Save(ElementNodePtr ioTree) const
 	if (!m_bUpdate)
 		config->AddAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate);
 	config->AddAttrib(ATTRIB_CONFIG_VERSION, m_Version);
-	for (std::vector<ARBConfigCalSite>::const_iterator i = m_CalSites.begin();
-		i != m_CalSites.end();
-		++i)
-	{
-		if (!(*i).Save(config))
-			return false;
-	}
 	// Do not save actions - Actions are done only when loading/merging a
 	// configuration. Keeping them around could cause possible future problems.
+	if (!m_CalSites.Save(config))
+		return false;
 	if (!m_Venues.Save(config))
 		return false;
 	if (!m_FaultTypes.Save(config))
@@ -368,32 +362,25 @@ bool ARBConfig::Update(
 	int nUpdated = 0;
 	int nSkipped = 0;
 	{
-		for (std::vector<ARBConfigCalSite>::const_iterator iterCalSite = inConfigNew.GetCalSites().begin();
+		for (ARBConfigCalSiteList::const_iterator iterCalSite = inConfigNew.GetCalSites().begin();
 			iterCalSite != inConfigNew.GetCalSites().end();
 			++iterCalSite)
 		{
-			bool bFound = false;
-			for (std::vector<ARBConfigCalSite>::iterator iter = m_CalSites.begin();
-				iter != m_CalSites.end();
-				++iter)
+			ARBConfigCalSitePtr site;
+			if (m_CalSites.FindSite((*iterCalSite)->GetName(), &site))
 			{
-				if ((*iterCalSite).GetName() == (*iter).GetName())
+				if (*site != *(*iterCalSite))
 				{
-					bFound = true;
-					if (*iterCalSite != *iter)
-					{
-						++nUpdated;
-						*iter = *iterCalSite;
-					}
-					else
-						++nSkipped;
-					break;
+					++nUpdated;
+					*site = *(*iterCalSite);
 				}
+				else
+					++nSkipped;
 			}
-			if (!bFound)
+			else
 			{
 				++nNew;
-				m_CalSites.push_back(*iterCalSite);
+				m_CalSites.push_back((*iterCalSite)->Clone());
 			}
 		}
 		if (0 < nNew || 0 < nUpdated)

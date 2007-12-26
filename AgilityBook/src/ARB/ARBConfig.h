@@ -179,11 +179,11 @@ public:
 	{
 		return m_Version;
 	}
-	std::vector<ARBConfigCalSite> const& GetCalSites() const
+	ARBConfigCalSiteList const& GetCalSites() const
 	{
 		return m_CalSites;
 	}
-	std::vector<ARBConfigCalSite>& GetCalSites()
+	ARBConfigCalSiteList& GetCalSites()
 	{
 		return m_CalSites;
 	}
@@ -224,7 +224,7 @@ private:
 	bool m_bUpdate;
 	short m_Version;
 	ARBConfigActionList m_Actions;
-	std::vector<ARBConfigCalSite> m_CalSites;
+	ARBConfigCalSiteList m_CalSites;
 	ARBConfigVenueList m_Venues;
 	ARBConfigFaultList m_FaultTypes;
 	ARBConfigOtherPointsList m_OtherPoints;

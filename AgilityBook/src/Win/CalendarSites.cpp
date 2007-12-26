@@ -193,6 +193,7 @@ protected:
 // Implementation
 protected:
 	void UpdateControls();
+	void SortPlugins();
 
 	//{{AFX_MSG(CDlgCalendarPlugins)
 	virtual BOOL OnInitDialog();
@@ -202,7 +203,7 @@ protected:
 	afx_msg void OnTvnSetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnGetdispinfoPluginTree(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnPluginRead();
-	afx_msg void OnPluginAdd();
+	afx_msg void OnPluginAddCalEntry();
 	afx_msg void OnPluginEnable();
 	afx_msg void OnPluginQueryDetails();
 	afx_msg void OnPluginNew();
@@ -678,8 +679,9 @@ class CPluginData : public CPluginBase
 {
 public:
 	CPluginData() {}
-	virtual CString GetName() const	{return m_Name;}
-	virtual CString GetDesc() const	{return m_Desc;}
+	virtual CString GetSortName() const = 0;
+	virtual CString GetName() const					{return m_Name;}
+	virtual CString GetDesc() const					{return m_Desc;}
 	virtual CStringA Process(IProgressMeter *progress) = 0;
 	virtual bool HasQueryDetails() const = 0;
 	virtual bool CanEdit() const					{return false;}
@@ -705,23 +707,25 @@ protected:
 class CPluginConfigData : public CPluginData
 {
 public:
-	CPluginConfigData(CAgilityBookDoc* pDoc, ARBConfigCalSite const& inSite)
+	CPluginConfigData(CAgilityBookDoc* pDoc, ARBConfigCalSitePtr inSite)
 		: m_pDoc(pDoc)
 		, m_OrigSite(inSite)
-		, m_Site(inSite)
+		, m_Site(inSite->Clone())
 		, m_Enabled(true)
 	{
-		m_Name = m_Site.GetName().c_str();
-		m_Desc = m_Site.GetDescription().c_str();
+		m_Name = m_Site->GetName().c_str();
+		m_Desc = m_Site->GetDescription().c_str();
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
+
+	virtual CString GetSortName() const				{return _T("C") + m_Name;}
 
 	virtual CStringA Process(IProgressMeter *progress);
 
 	virtual bool HasQueryDetails() const
 	{
-		return 1 < m_Site.LocationCodes().size() || 1 < m_Site.VenueCodes().size();
+		return 1 < m_Site->LocationCodes().size() || 1 < m_Site->VenueCodes().size();
 	}
 
 	virtual bool CanEdit() const		{return true;}
@@ -731,12 +735,12 @@ public:
 
 	virtual std::map<tstring, tstring> const& QueryLocationCodes() const
 	{
-		return m_Site.LocationCodes();
+		return m_Site->LocationCodes();
 	}
 
 	virtual std::map<tstring, tstring> const& QueryVenueCodes() const
 	{
-		return m_Site.VenueCodes();
+		return m_Site->VenueCodes();
 	}
 
 	virtual bool isValid() const
@@ -762,8 +766,8 @@ public:
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	ARBConfigCalSite m_OrigSite;
-	ARBConfigCalSite m_Site;
+	ARBConfigCalSitePtr m_OrigSite;
+	ARBConfigCalSitePtr m_Site;
 	bool m_Enabled;
 };
 
@@ -771,7 +775,7 @@ private:
 CStringA CPluginConfigData::Process(IProgressMeter *progress)
 {
 	CWaitCursor wait;
-	tstring url = m_Site.GetFormattedURL(m_LocationCodes, m_VenueCodes);
+	tstring url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
 	CStringA data(url.c_str());
 	progress->SetMessage(data);
 	data.Empty();
@@ -788,15 +792,11 @@ bool CPluginConfigData::Edit(CWnd* pParent)
 	CDlgPluginDetails dlg(m_pDoc->GetConfig(), m_Site, pParent);
 	if (IDOK == dlg.DoModal())
 	{
-		m_Name = m_Site.GetName().c_str();
-		m_Desc = m_Site.GetDescription().c_str();
+		m_Name = m_Site->GetName().c_str();
+		m_Desc = m_Site->GetDescription().c_str();
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
-		std::vector<ARBConfigCalSite>::iterator iFound = std::find(m_pDoc->GetConfig().GetCalSites().begin(), m_pDoc->GetConfig().GetCalSites().end(), m_OrigSite);
-		if (iFound != m_pDoc->GetConfig().GetCalSites().end())
-		{
-			*iFound = m_Site;
-		}
+		*m_OrigSite = *m_Site;
 		m_pDoc->SetModifiedFlag(TRUE);
 		return true;
 	}
@@ -807,11 +807,10 @@ bool CPluginConfigData::Edit(CWnd* pParent)
 
 bool CPluginConfigData::Delete()
 {
-	std::vector<ARBConfigCalSite>::iterator iFound = std::find(m_pDoc->GetConfig().GetCalSites().begin(), m_pDoc->GetConfig().GetCalSites().end(), m_OrigSite);
-	if (iFound != m_pDoc->GetConfig().GetCalSites().end())
+	if (m_pDoc->GetConfig().GetCalSites().DeleteSite(m_OrigSite->GetName()))
 	{
-		m_pDoc->GetConfig().GetCalSites().erase(iFound);
 		m_pDoc->SetModifiedFlag(TRUE);
+		m_OrigSite.reset();
 		return true;
 	}
 	return false;
@@ -830,6 +829,8 @@ public:
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
+
+	virtual CString GetSortName() const				{return _T("D") + m_Name;}
 
 	virtual CStringA Process(IProgressMeter *progress)
 	{
@@ -1001,7 +1002,7 @@ BEGIN_MESSAGE_MAP(CDlgCalendarPlugins, CDlgBaseDialog)
 	ON_NOTIFY(TVN_SETDISPINFO, IDC_PLUGIN_TREE, OnTvnSetdispinfoPluginTree)
 	ON_NOTIFY(TVN_GETDISPINFO, IDC_PLUGIN_TREE, OnTvnGetdispinfoPluginTree)
 	ON_BN_CLICKED(IDC_PLUGIN_READ, OnPluginRead)
-	ON_BN_CLICKED(IDC_PLUGIN_ADD, OnPluginAdd)
+	ON_BN_CLICKED(IDC_PLUGIN_ADD, OnPluginAddCalEntry)
 	ON_BN_CLICKED(IDC_PLUGIN_ENABLE, OnPluginEnable)
 	ON_BN_CLICKED(IDC_PLUGIN_QUERYDETAILS, OnPluginQueryDetails)
 	ON_BN_CLICKED(IDC_PLUGIN_NEW, OnPluginNew)
@@ -1045,6 +1046,30 @@ void CDlgCalendarPlugins::UpdateControls()
 	m_ctrlDelete.EnableWindow(pData != NULL && pData->CanDelete());
 }
 
+
+int CALLBACK SortPluginsProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+{
+	CPluginBase* pRawData1 = reinterpret_cast<CPluginBase*>(lParam1);
+	CPluginBase* pRawData2 = reinterpret_cast<CPluginBase*>(lParam2);
+	CPluginData* pData1 = dynamic_cast<CPluginData*>(pRawData1);
+	CPluginData* pData2 = dynamic_cast<CPluginData*>(pRawData2);
+	// The root level that we're sorting should never contain CPluginCalData
+	ASSERT(pData1 && pData2);
+	if (!pData1 || !pData2)
+		return 0;
+	return pData1->GetSortName().Compare(pData2->GetSortName());
+}
+
+
+void CDlgCalendarPlugins::SortPlugins()
+{
+	TVSORTCB tvs;
+	tvs.hParent = TVI_ROOT;
+	tvs.lpfnCompare = SortPluginsProc;
+	tvs.lParam = 0;
+	m_ctrlPlugins.SortChildrenCB(&tvs);
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDlgCalendarPlugins message handlers
 
@@ -1052,7 +1077,7 @@ BOOL CDlgCalendarPlugins::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	for (std::vector<ARBConfigCalSite>::const_iterator iConfig = m_pDoc->GetConfig().GetCalSites().begin();
+	for (ARBConfigCalSiteList::const_iterator iConfig = m_pDoc->GetConfig().GetCalSites().begin();
 		iConfig != m_pDoc->GetConfig().GetCalSites().end();
 		++iConfig)
 	{
@@ -1255,7 +1280,7 @@ void CDlgCalendarPlugins::OnPluginRead()
 }
 
 
-void CDlgCalendarPlugins::OnPluginAdd()
+void CDlgCalendarPlugins::OnPluginAddCalEntry()
 {
 	int nAdded = 0;
 	int nUpdated = 0;
@@ -1360,11 +1385,11 @@ void CDlgCalendarPlugins::OnPluginQueryDetails()
 
 void CDlgCalendarPlugins::OnPluginNew()
 {
-	ARBConfigCalSite site;
+	ARBConfigCalSitePtr site = ARBConfigCalSite::New();
 	CDlgPluginDetails dlg(m_pDoc->GetConfig(), site, this);
 	if (IDOK == dlg.DoModal())
 	{
-		m_pDoc->GetConfig().GetCalSites().push_back(site);
+		m_pDoc->GetConfig().GetCalSites().AddSite(site);
 		m_pDoc->SetModifiedFlag(TRUE);
 		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, site);
 		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
@@ -1377,6 +1402,7 @@ void CDlgCalendarPlugins::OnPluginNew()
 		m_ctrlPlugins.ShowCheckbox(hItem, true);
 		m_ctrlPlugins.SetChecked(hItem, true, false);
 		m_ctrlPlugins.SelectItem(hItem);
+		SortPlugins();
 		UpdateControls();
 	}
 }
@@ -1396,6 +1422,7 @@ void CDlgCalendarPlugins::OnPluginEdit()
 			if (pData)
 				desc = pData->GetDesc();
 			m_ctrlDetails.SetWindowText(desc);
+			SortPlugins();
 			UpdateControls();
 		}
 	}
