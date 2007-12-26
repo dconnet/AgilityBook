@@ -125,7 +125,7 @@ bool ARBConfigActionDeleteCalPlugin::Apply(
 {
 	bool bChanged = false;
 	for (std::vector<ARBConfigCalSite>::iterator iter = ioConfig.GetCalSites().begin();
-		iter != ioConfig.GetCalSites().begin();
+		iter != ioConfig.GetCalSites().end();
 		)
 	{
 		if ((*iter).GetName() == m_Name)
