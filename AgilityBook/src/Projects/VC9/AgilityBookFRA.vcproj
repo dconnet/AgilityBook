@@ -293,6 +293,10 @@
 				RelativePath="..\..\Win\resource.hm"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Win\VersionNumber.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

@@ -147,7 +147,7 @@ void CLocalization::Load()
 }
 
 
-tstring CLocalization::UpdateCalSites(int nNew, int nDeleted, int nSkipped) const
+tstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
 	CString data;
@@ -155,7 +155,7 @@ tstring CLocalization::UpdateCalSites(int nNew, int nDeleted, int nSkipped) cons
 	buffer << (LPCTSTR)data << _T(": ");
 	data.FormatMessage(IDS_UPDATE_ADDED, nNew);
 	buffer << (LPCTSTR)data << _T(", ");
-	data.FormatMessage(IDS_UPDATE_DELETED, nDeleted);
+	data.FormatMessage(IDS_UPDATE_UPDATED, nUpdated);
 	buffer << (LPCTSTR)data << _T(", ");
 	data.FormatMessage(IDS_UPDATE_IDENTICAL, nSkipped);
 	buffer << (LPCTSTR)data << _T(", ");
@@ -360,6 +360,16 @@ tstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, int n
 	data.FormatMessage(IDS_UPDATE_UPDATED, nUpdated);
 	buffer << (LPCTSTR)data << _T(", ");
 	data.FormatMessage(IDS_UPDATE_IDENTICAL, nSkipped);
+	buffer << (LPCTSTR)data;
+	return buffer.str();
+}
+
+
+tstring CLocalization::ActionDeleteCalPlugin(tstring const& name) const
+{
+	otstringstream buffer;
+	CString data;
+	data.FormatMessage(IDS_ACTION_DELETE_CALPLUGIN, name.c_str());
 	buffer << (LPCTSTR)data;
 	return buffer.str();
 }

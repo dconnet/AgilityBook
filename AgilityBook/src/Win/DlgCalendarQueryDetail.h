@@ -107,7 +107,9 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgCalendarQueryDetail)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnNMDblclkQueryLocations(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnItemchangedQueryLocations(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkQueryVenues(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnItemchangedQueryVenues(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNewLocationCode();
 	afx_msg void OnEditLocationCode();

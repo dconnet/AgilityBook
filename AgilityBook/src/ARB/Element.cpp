@@ -51,7 +51,6 @@
 #include <list>
 #include <map>
 
-#include "ARBAgilityRecordBook.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
 

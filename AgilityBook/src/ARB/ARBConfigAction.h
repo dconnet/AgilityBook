@@ -128,6 +128,31 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
+class ARBConfigActionDeleteCalPlugin : public ARBConfigAction
+{ 
+protected:
+	ARBConfigActionDeleteCalPlugin(
+			tstring const& inName);
+	ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs);
+
+public:
+	static ARBConfigActionPtr New(
+			tstring const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
+
+	virtual bool Apply(
+			ARBConfig& ioConfig,
+			ARBDogList* ioDogs,
+			otstringstream& ioInfo,
+			IConfigActionCallback& ioCallBack) const;
+
+protected:
+	tstring m_Name;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
 class ARBConfigActionRenameOtherPoints : public ARBConfigAction
 { 
 protected:

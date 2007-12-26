@@ -105,7 +105,9 @@ void CDlgCalendarQueryDetail::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgCalendarQueryDetail, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgCalendarQueryDetail)
+	ON_NOTIFY(NM_DBLCLK, IDC_QUERY_LOCATIONS, OnNMDblclkQueryLocations)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_QUERY_LOCATIONS, OnLvnItemchangedQueryLocations)
+	ON_NOTIFY(NM_DBLCLK, IDC_QUERY_VENUES, OnNMDblclkQueryVenues)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_QUERY_VENUES, OnLvnItemchangedQueryVenues)
 	ON_BN_CLICKED(IDC_QUERY_LOCCODE_NEW, OnNewLocationCode)
 	ON_BN_CLICKED(IDC_QUERY_LOCCODE_EDIT, OnEditLocationCode)
@@ -190,10 +192,26 @@ BOOL CDlgCalendarQueryDetail::OnInitDialog()
 }
 
 
+void CDlgCalendarQueryDetail::OnNMDblclkQueryLocations(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	//LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<NMITEMACTIVATE>(pNMHDR);
+	OnEditLocationCode();
+	*pResult = 0;
+}
+
+
 void CDlgCalendarQueryDetail::OnLvnItemchangedQueryLocations(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	//LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	UpdateButtons();
+	*pResult = 0;
+}
+
+
+void CDlgCalendarQueryDetail::OnNMDblclkQueryVenues(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	//LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<NMITEMACTIVATE>(pNMHDR);
+	OnEditVenueCode();
 	*pResult = 0;
 }
 

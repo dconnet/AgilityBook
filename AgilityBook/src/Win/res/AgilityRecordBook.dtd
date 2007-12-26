@@ -148,6 +148,11 @@ This is a special element that is applied to the old configuration before
 we import the new one (where this resides). Currently, it is used only
 for renaming titles.
  Verb: Supported actions (determines usage of other attributes):
+  'DeleteCalPlugin':
+    Venue: Unused
+    Div: Unused
+    OldName: Plugin to be renamed.
+    NewName: Unused
   'RenameTitle':
     Venue: Venue that contains title
     Div: Unused

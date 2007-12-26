@@ -42,7 +42,6 @@
 #include <math.h>
 #include <time.h>
 
-#include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 #include "Element.h"
 

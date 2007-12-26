@@ -58,12 +58,13 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define ACTION_VERB_DELETE_TITLE	_T("DeleteTitle")
-#define ACTION_VERB_RENAME_TITLE	_T("RenameTitle")
-#define ACTION_VERB_DELETE_EVENT	_T("DeleteEvent")
-#define ACTION_VERB_RENAME_EVENT	_T("RenameEvent")
-#define ACTION_VERB_RENAME_DIV		_T("RenameDivision")
-#define ACTION_VERB_RENAME_VENUE	_T("RenameVenue")
+#define ACTION_VERB_DELETE_CALPLUGIN	_T("DeleteCalPlugin")
+#define ACTION_VERB_DELETE_TITLE		_T("DeleteTitle")
+#define ACTION_VERB_RENAME_TITLE		_T("RenameTitle")
+#define ACTION_VERB_DELETE_EVENT		_T("DeleteEvent")
+#define ACTION_VERB_RENAME_EVENT		_T("RenameEvent")
+#define ACTION_VERB_RENAME_DIV			_T("RenameDivision")
+#define ACTION_VERB_RENAME_VENUE		_T("RenameVenue")
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -86,6 +87,58 @@ ARBConfigAction::ARBConfigAction()
 
 ARBConfigAction::~ARBConfigAction()
 {
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(
+		tstring const& inName)
+{
+	return ARBConfigActionPtr(new ARBConfigActionDeleteCalPlugin(inName));
+}
+
+
+ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(
+		tstring const& inName)
+	: m_Name(inName)
+{
+}
+
+
+ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs)
+	: m_Name(rhs.m_Name)
+{
+}
+
+
+ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::Clone() const
+{
+	return ARBConfigActionPtr(new ARBConfigActionDeleteCalPlugin(m_Name));
+}
+
+
+bool ARBConfigActionDeleteCalPlugin::Apply(
+		ARBConfig& ioConfig,
+		ARBDogList* ioDogs,
+		otstringstream& ioInfo,
+		IConfigActionCallback& ioCallBack) const
+{
+	bool bChanged = false;
+	for (std::vector<ARBConfigCalSite>::iterator iter = ioConfig.GetCalSites().begin();
+		iter != ioConfig.GetCalSites().begin();
+		)
+	{
+		if ((*iter).GetName() == m_Name)
+		{
+			bChanged = true;
+			iter = ioConfig.GetCalSites().erase(iter);
+		}
+		else
+			++iter;
+	}
+	if (bChanged)
+		ioInfo << Localization()->ActionDeleteCalPlugin(m_Name) << _T("\n");
+	return bChanged;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1207,7 +1260,11 @@ bool ARBConfigActionList::Load(
 	inTree->GetAttrib(ATTRIB_ACTION_NEWNAME, newName);
 
 	ARBConfigActionPtr item;
-	if (ACTION_VERB_DELETE_TITLE == verb)
+	if (ACTION_VERB_DELETE_CALPLUGIN == verb)
+	{
+		item = ARBConfigActionDeleteCalPlugin::New(oldName);
+	}
+	else if (ACTION_VERB_DELETE_TITLE == verb)
 	{
 		item = ARBConfigActionDeleteTitle::New(venue, div, oldName, newName);
 	}
@@ -1234,6 +1291,8 @@ bool ARBConfigActionList::Load(
 	else
 	{
 		tstring msg(Localization()->ValidValues());
+		msg += ACTION_VERB_DELETE_CALPLUGIN;
+		msg += _T(", ");
 		msg += ACTION_VERB_DELETE_TITLE;
 		msg += _T(", ");
 		msg += ACTION_VERB_RENAME_TITLE;
