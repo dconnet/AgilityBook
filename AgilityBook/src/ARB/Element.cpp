@@ -52,6 +52,7 @@
 #include <map>
 
 #include "ARBDate.h"
+#include "ARBStructure.h"
 #include "ARBTypes.h"
 
 #if _MSC_VER >= 1300
