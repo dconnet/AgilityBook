@@ -45,7 +45,7 @@ class CDlgPluginDetails : public CDlgBaseDialog
 	DECLARE_DYNAMIC(CDlgPluginDetails)
 
 public:
-	CDlgPluginDetails(ARBConfig const& inConfig, ARBConfigCalSite& calSite, CWnd* pParent = NULL);
+	CDlgPluginDetails(ARBConfig& inConfig, ARBConfigCalSitePtr calSite, CWnd* pParent = NULL);
 	virtual ~CDlgPluginDetails();
 
 private:
@@ -56,9 +56,9 @@ private:
 	CString m_strSearch;
 	CString m_strHelp;
 	CStatic m_ctrlCodes;
-	ARBConfig const& m_Config;
-	ARBConfigCalSite& m_OrigCalSite;
-	ARBConfigCalSite m_CalSite;
+	ARBConfig& m_Config;
+	ARBConfigCalSitePtr m_OrigCalSite;
+	ARBConfigCalSitePtr m_CalSite;
 	CString m_strCodes;
 
 	void SetCodeText();

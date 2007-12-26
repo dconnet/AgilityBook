@@ -38,6 +38,8 @@
 #include "AgilityBook.h"
 #include "DlgPluginDetails.h"
 
+#include "ARBConfig.h"
+#include "ARBConfigCalSite.h"
 #include "DlgCalendarQueryDetail.h"
 
 #ifdef _DEBUG
@@ -52,18 +54,28 @@ IMPLEMENT_DYNAMIC(CDlgPluginDetails, CDlgBaseDialog)
 
 
 CDlgPluginDetails::CDlgPluginDetails(
-		ARBConfig const& inConfig,
-		ARBConfigCalSite& calSite,
+		ARBConfig& inConfig,
+		ARBConfigCalSitePtr calSite,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgPluginDetails::IDD, pParent)
 	, m_Config(inConfig)
 	, m_OrigCalSite(calSite)
-	, m_CalSite(calSite)
-	, m_strName(calSite.GetName().c_str())
-	, m_strDesc(calSite.GetDescription().c_str())
-	, m_strSearch(calSite.GetSearchURL().c_str())
-	, m_strHelp(calSite.GetHelpURL().c_str())
+	, m_CalSite()
+	, m_strName()
+	, m_strDesc()
+	, m_strSearch()
+	, m_strHelp()
 {
+	if (calSite)
+	{
+		m_CalSite = calSite->Clone();
+		m_strName = calSite->GetName().c_str();
+		m_strDesc = calSite->GetDescription().c_str();
+		m_strSearch = calSite->GetSearchURL().c_str();
+		m_strHelp = calSite->GetHelpURL().c_str();
+	}
+	else
+		m_CalSite = ARBConfigCalSite::New();
 }
 
 
@@ -91,7 +103,7 @@ END_MESSAGE_MAP()
 void CDlgPluginDetails::SetCodeText()
 {
 	CString str;
-	str.FormatMessage(m_strCodes, static_cast<int>(m_CalSite.LocationCodes().size()), static_cast<int>(m_CalSite.VenueCodes().size()));
+	str.FormatMessage(m_strCodes, static_cast<int>(m_CalSite->LocationCodes().size()), static_cast<int>(m_CalSite->VenueCodes().size()));
 	m_ctrlCodes.SetWindowText(str);
 }
 
@@ -109,19 +121,19 @@ BOOL CDlgPluginDetails::OnInitDialog()
 
 void CDlgPluginDetails::OnPluginDetailCodes()
 {
-	CDlgCalendarQueryDetail dlg(m_Config, m_CalSite.LocationCodes(), m_CalSite.VenueCodes(), this);
+	CDlgCalendarQueryDetail dlg(m_Config, m_CalSite->LocationCodes(), m_CalSite->VenueCodes(), this);
 	if (IDOK == dlg.DoModal())
 	{
-		m_CalSite.RemoveAllLocationCodes();
+		m_CalSite->RemoveAllLocationCodes();
 		std::map<tstring, tstring>::const_iterator i;
 		for (i = dlg.GetLocationCodes().begin(); i != dlg.GetLocationCodes().end(); ++i)
 		{
-			m_CalSite.AddLocationCode(i->first, i->second);
+			m_CalSite->AddLocationCode(i->first, i->second);
 		}
-		m_CalSite.RemoveAllVenueCodes();
+		m_CalSite->RemoveAllVenueCodes();
 		for (i = dlg.GetVenueCodes().begin(); i != dlg.GetVenueCodes().end(); ++i)
 		{
-			m_CalSite.AddVenueCode(i->first, i->second);
+			m_CalSite->AddVenueCode(i->first, i->second);
 		}
 		SetCodeText();
 	}
@@ -132,10 +144,22 @@ void CDlgPluginDetails::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
-	m_CalSite.SetName((LPCTSTR)m_strName);
-	m_CalSite.SetDescription((LPCTSTR)m_strDesc);
-	m_CalSite.SetSearchURL((LPCTSTR)m_strSearch);
-	m_CalSite.SetHelpURL((LPCTSTR)m_strHelp);
-	m_OrigCalSite = m_CalSite;
+	m_CalSite->SetName((LPCTSTR)m_strName);
+	m_CalSite->SetDescription((LPCTSTR)m_strDesc);
+	m_CalSite->SetSearchURL((LPCTSTR)m_strSearch);
+	m_CalSite->SetHelpURL((LPCTSTR)m_strHelp);
+
+	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName())
+	&& m_Config.GetCalSites().FindSite(m_CalSite->GetName()))
+	{
+		AfxMessageBox(IDS_NAME_IN_USE, MB_ICONWARNING);
+		GotoDlgCtrl(GetDlgItem(IDC_PLUGINDETAIL_NAME));
+		return;
+	}
+
+	if (m_OrigCalSite)
+		*m_OrigCalSite = *m_CalSite;
+	else
+		m_Config.GetCalSites().AddSite(m_CalSite);
 	CDlgBaseDialog::OnOK();
 }

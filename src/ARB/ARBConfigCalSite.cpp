@@ -49,6 +49,12 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+ARBConfigCalSitePtr ARBConfigCalSite::New()
+{
+	return ARBConfigCalSitePtr(new ARBConfigCalSite());
+}
+
+
 ARBConfigCalSite::ARBConfigCalSite()
 	: m_Name()
 	, m_Desc()
@@ -73,6 +79,12 @@ ARBConfigCalSite::ARBConfigCalSite(ARBConfigCalSite const& rhs)
 
 ARBConfigCalSite::~ARBConfigCalSite()
 {
+}
+
+
+ARBConfigCalSitePtr ARBConfigCalSite::Clone() const
+{
+	return ARBConfigCalSitePtr(new ARBConfigCalSite(*this));
 }
 
 
@@ -312,4 +324,103 @@ bool ARBConfigCalSite::RemoveAllVenueCodes()
 		m_Venues.clear();
 	}
 	return bOk;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+bool ARBConfigCalSiteList::Load(
+		ElementNodePtr inTree,
+		ARBVersion const& inVersion,
+		ARBErrorCallback& ioCallback)
+{
+	ARBConfigCalSitePtr thing(ARBConfigCalSite::New());
+	if (!thing->Load(inTree, inVersion, ioCallback))
+		return false;
+	push_back(thing);
+	return true;
+}
+
+
+class SortConfigCalSite
+{
+public:
+	SortConfigCalSite() {}
+	bool operator()(ARBConfigCalSitePtr one, ARBConfigCalSitePtr two) const
+	{
+		return one->GetName() < two->GetName();
+	}
+};
+
+
+void ARBConfigCalSiteList::sort()
+{
+	if (2 > size())
+		return;
+	std::stable_sort(begin(), end(), SortConfigCalSite());
+}
+
+
+bool ARBConfigCalSiteList::FindSite(
+		tstring const& inSite,
+		ARBConfigCalSitePtr* outSite) const
+{
+	if (outSite)
+		outSite->reset();
+	for (const_iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetName() == inSite)
+		{
+			if (outSite)
+				*outSite = *iter;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ARBConfigCalSiteList::AddSite(
+		tstring const& inSite,
+		ARBConfigCalSitePtr* outSite)
+{
+	if (outSite)
+		outSite->reset();
+	if (inSite.empty())
+		return false;
+	if (FindSite(inSite))
+		return false;
+	ARBConfigCalSitePtr pSite(ARBConfigCalSite::New());
+	pSite->SetName(inSite);
+	push_back(pSite);
+	sort();
+	if (outSite)
+		*outSite = pSite;
+	return true;
+}
+
+
+bool ARBConfigCalSiteList::AddSite(ARBConfigCalSitePtr inSite)
+{
+	if (!inSite)
+		return false;
+	if (FindSite(inSite->GetName()))
+		return false;
+	push_back(inSite);
+	sort();
+	return true;
+}
+
+
+int ARBConfigCalSiteList::DeleteSite(tstring const& inSite)
+{
+	tstring site(inSite);
+	for (iterator iter = begin(); iter != end(); ++iter)
+	{
+		if ((*iter)->GetName() == site)
+		{
+			erase(iter);
+			return 1; // Names are unique, no need to continue.
+		}
+	}
+	return 0;
 }

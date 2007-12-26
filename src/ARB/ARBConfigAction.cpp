@@ -124,20 +124,11 @@ bool ARBConfigActionDeleteCalPlugin::Apply(
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
-	for (std::vector<ARBConfigCalSite>::iterator iter = ioConfig.GetCalSites().begin();
-		iter != ioConfig.GetCalSites().end();
-		)
+	if (ioConfig.GetCalSites().DeleteSite(m_Name))
 	{
-		if ((*iter).GetName() == m_Name)
-		{
-			bChanged = true;
-			iter = ioConfig.GetCalSites().erase(iter);
-		}
-		else
-			++iter;
-	}
-	if (bChanged)
+		bChanged = true;
 		ioInfo << Localization()->ActionDeleteCalPlugin(m_Name) << _T("\n");
+	}
 	return bChanged;
 }
 

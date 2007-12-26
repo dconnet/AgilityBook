@@ -44,10 +44,15 @@
  */
 class ARBConfigCalSite
 {
-public:
+protected:
 	ARBConfigCalSite();
-	~ARBConfigCalSite();
 	ARBConfigCalSite(ARBConfigCalSite const& rhs);
+
+public:
+	~ARBConfigCalSite();
+	static ARBConfigCalSitePtr New();
+	ARBConfigCalSitePtr Clone() const;
+
 	ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
 	bool operator==(ARBConfigCalSite const& rhs) const;
 	bool operator!=(ARBConfigCalSite const& rhs) const
@@ -142,4 +147,65 @@ private:
 	tstring m_urlHelp;
 	std::map<tstring, tstring> m_Locations;
 	std::map<tstring, tstring> m_Venues;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+/**
+ * List of ARBConfigCalSite objects.
+ */
+class ARBConfigCalSiteList : public ARBVector<ARBConfigCalSitePtr>
+{
+public:
+	/**
+	 * Load the information from XML (the tree).
+	 * @pre inTree is the actual T element.
+	 * @param inTree XML structure to convert into ARB.
+	 * @param inVersion Version of the document being read.
+	 * @param ioCallback Error processing callback.
+	 * @return Success
+	 */
+	bool Load(
+			ElementNodePtr inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+
+	/**
+	 * Sort the list by name.
+	 */
+	void sort();
+
+	/**
+	 * Find the named Calendar Site.
+	 * @param inSite Site to find.
+	 * @param outSite Object that was found.
+	 * @return Whether the object was found.
+	 */
+	bool FindSite(
+			tstring const& inSite,
+			ARBConfigCalSitePtr* outSite = NULL) const;
+
+	/**
+	 * Add a site.
+	 * @param inSite Name of site to add.
+	 * @param outSite Pointer to new object, NULL if name already exists or is empty.
+	 * @return Whether the object was added.
+	 */
+	bool AddSite(
+			tstring const& inSite,
+			ARBConfigCalSitePtr* outSite = NULL);
+
+	/**
+	 * Add a site.
+	 * @param inSite Site to add.
+	 * @return Whether the object was added.
+	 */
+	bool AddSite(ARBConfigCalSitePtr inSite);
+
+	/**
+	 * Delete a site.
+	 * @param inSite Name of site to delete.
+	 * @return Number of sites deleted (0 or 1).
+	 */
+	int DeleteSite(tstring const& inSite);
 };
