@@ -41,6 +41,8 @@ devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "AgilityB
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
 devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"
 
+cd ..\Installer
+
 set PATH=%OLDPATH%
 set INCLUDE=%OLDINCLUDE%
 set LIB=%OLDLIB%

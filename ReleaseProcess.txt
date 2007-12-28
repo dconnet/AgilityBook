@@ -23,17 +23,10 @@ Run Doxygen and fix any warnings/errors it reports.
   - doxygen AgilityBook.dox
 
 Do a full rebuild and verify it.
-- cd src\Projects\VC8
-- BuildAll.bat
-  - Note: Ignore errors from ParseResourceHeader during x64 build. It
-    obviously won't run on a 32bit system.
-  - Create AgilityBook_n_n_n_n-win.zip from files in bin\VC8\Unicode Release\Setup
-  - Create AgilityBook_n_n_n_n-win98.zip from files in bin\VC8\Release\Setup
-  - Create AgilityBook_n_n_n_n-x64.zip from files in bin\VC8x64\Unicode Release\Setup
-  - Edit Misc\Installations\InstallGUIDs.csv to note actual release
-    (GenMSI.py will auto-update it)
-    - Note: WiX isn't generating shortcuts properly yet. So the guid needs
-      to be copied from the vdproj files [no auto-update]
+- cd src\Projects\Installer
+- BuildAll.bat [runs VC9 and VC8 compiles]
+  - Run 'GenMSI.py /all' to create w32/x64/w98 installers and auto-update
+    Misc\Installations\InstallGUIDs.csv
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
 Tag SubVersion repository
@@ -41,8 +34,8 @@ Tag SubVersion repository
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup of AgilityBook.exe to \AgilityBook\test\[vc6/vc7/vc8/vc8x64]
-  Currently, I only archive vc8/x64 - the exe's that are released to the wild.
+- Copy a backup of AgilityBook.exe to \AgilityBook\test\[vc6/vc7/vc8/vc9/vc9x64]
+  Currently, I only archive vc8/vc9/x64 - the exe's that are released to the wild.
   [if support DLLs change, see readme.txt in 'test' directory]
 - Copy AgilityBook_n_n_n_n-*.zip (setup files) to distrib\vN.N.N.N\
 - Create AgilityBook_n_n_n_n-ALT.zip (VC8 AgilityBook.exe/.chm/arbzlib.dll)
@@ -76,6 +69,9 @@ Web Site:
 - Upload zip files (not src) to files/
 - Delete old zip files.
 - Update "$fileversion" and "$fileVerNo" in func.php
+  - Login to php(mysql) http://agilityrecordbook.com/phpAdmin/main.php
+  - Export columns as 'Excel 2000'
+  - Delete old rows (so query returns actual number of downloads for current version)
 - Update version.txt
   - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).
