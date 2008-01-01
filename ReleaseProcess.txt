@@ -72,6 +72,7 @@ Web Site:
   - Login to php(mysql) http://agilityrecordbook.com/phpAdmin/main.php
   - Export columns as 'Excel 2000'
   - Delete old rows (so query returns actual number of downloads for current version)
+    - note, leave last item so next download auto-increments id
 - Update version.txt
   - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).

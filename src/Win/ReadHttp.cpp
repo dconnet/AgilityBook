@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-01-01 DRC Fix closing the connection - Close didn't reset null.
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  */
 
@@ -93,6 +94,7 @@ void CReadHttp::Close()
 	{
 		m_session->Close();
 		delete m_session;
+		m_session = NULL;
 	}
 }
 
