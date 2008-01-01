@@ -1,4 +1,10 @@
-12/30/2007: v1.10.4.12 <in development>
+1/1/2008: v1.10.5.12 <in development>
+- Bug fixes
+  - Translate days-of-week in Calendar options.
+
+1/1/2008: v1.10.4.12
+- Bug fixes
+  - Fix crash when parsing version.txt.
 
 12/28/2007: v1.10.3.12
 - 12/23/2007: v1.10.2.12 <released for beta testing>
