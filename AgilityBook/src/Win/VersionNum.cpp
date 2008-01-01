@@ -37,9 +37,9 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
-
 #include "VersionNum.h"
+
+#include "ARBTypes.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
