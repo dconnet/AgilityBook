@@ -442,9 +442,13 @@ bool ARBConfigScoring::Load(
 				for (int iPlace = 0; iPlace < element->GetElementCount(); ++iPlace)
 				{
 					ElementNodePtr place = element->GetElementNode(iPlace);
-					if (place && place->GetName() == TREE_PLACE_INFO)
+					if (!place)
+						continue;
+					if (place->GetName() == TREE_PLACE_INFO)
+					{
 						if (!m_Placements.Load(place, inVersion, ioCallback))
 							return false;
+					}
 				}
 			}
 		}

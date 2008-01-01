@@ -36,6 +36,7 @@
  * line 2-n: xml (see below)
  *
  * Revision History
+ * @li 2008-01-01 DRC Fix a bug parsing Element data (GetElementNode may return null)
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-09-09 DRC Modified URL parsing to handle redirection.
@@ -252,6 +253,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
 			{
 				ElementNodePtr node = tree->GetElementNode(nIndex);
+				if (!node)
+					continue;
 				if (node->GetName() == _T("Config"))
 				{
 					node->GetAttrib(_T("ver"), m_VerConfig);
@@ -261,6 +264,8 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					for (int nLang = 0; nLang < node->GetElementCount(); ++nLang)
 					{
 						ElementNodePtr lang = node->GetElementNode(nLang);
+						if (!lang)
+							continue;
 						if (lang->GetName() == _T("Lang"))
 						{
 							tstring langIdStr;
