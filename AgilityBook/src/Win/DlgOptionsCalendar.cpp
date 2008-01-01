@@ -60,6 +60,7 @@ IMPLEMENT_DYNAMIC(CDlgOptionsCalendar, CDlgBasePropertyPage)
 
 CDlgOptionsCalendar::CDlgOptionsCalendar()
 	: CDlgBasePropertyPage(CDlgOptionsCalendar::IDD)
+	, m_ctrlDayOfWeek(false)
 	, m_ctrlCalEntries(false)
 {
 	//{{AFX_DATA_INIT(CDlgOptionsCalendar)
@@ -97,6 +98,7 @@ void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_OPT_CAL_CLOSENEAR, m_nClosingNear);
 	DDX_Control(pDX, IDC_OPT_CAL_COLOR_CLOSENEAR, m_ctrlClosingNearColor);
 	DDX_Control(pDX, IDC_OPT_CAL_COLOR_CLOSENEAR_SET, m_ctrlClosingNearSet);
+	DDX_Control(pDX, IDC_OPT_CAL_DAY_OF_WEEK, m_ctrlDayOfWeek);
 	DDX_CBIndex(pDX, IDC_OPT_CAL_DAY_OF_WEEK, m_DayOfWeek);
 	DDX_Check(pDX, IDC_OPT_CAL_AUTO_DELETE, m_bAutoDelete);
 	DDX_Check(pDX, IDC_OPT_CAL_HIDE_OLD, m_bHideOld);
@@ -158,7 +160,18 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 	m_fontCalViewInfo.CreateFont(m_fontCalView);
 	m_ctrlCalView.SetFont(&m_fontCalView);
 
-	int idx = m_ctrlCalEntries.AddString(Localization()->CalendarNotEntered().c_str());
+	int idx;
+	ASSERT(ARBDate::eSunday == 0);
+	// String table entries MUST be contiguous, starting at Sunday
+	for (idx = IDS_WEEKDAY_SUN; idx <= IDS_WEEKDAY_SAT; ++idx)
+	{
+		CString str;
+		str.LoadString(idx);
+		m_ctrlDayOfWeek.AddString(str);
+	}
+	m_ctrlDayOfWeek.SetCurSel(m_DayOfWeek);
+
+	idx = m_ctrlCalEntries.AddString(Localization()->CalendarNotEntered().c_str());
 	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorNotEntered);
 	idx = m_ctrlCalEntries.AddString(Localization()->CalendarPlanning().c_str());
 	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorPlanning);

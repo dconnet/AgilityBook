@@ -65,6 +65,7 @@ private:
 	int		m_nClosingNear;
 	CStatic	m_ctrlClosingNearColor;
 	CButton	m_ctrlClosingNearSet;
+	CComboBox2	m_ctrlDayOfWeek;
 	int		m_DayOfWeek;
 	BOOL	m_bAutoDelete;
 	BOOL	m_bHideOld;
