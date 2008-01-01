@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2007 David Connet. All Rights Reserved.
+ * Copyright © 2002-2008 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -37,10 +37,10 @@
  */
 
 
-#define ARB_VERSION						1,10,3,12
-#define ARB_VERSION_STRING				"1.10.3.12"
+#define ARB_VERSION						1,10,4,12
+#define ARB_VERSION_STRING				"1.10.4.12"
 
 #define ARB_VERSION_CompanyName			"dcon Software"
 #define ARB_VERSION_FileDescription		"Agility Record Book"
-#define ARB_VERSION_LegalCopyright		"Copyright © 2002-2007 David Connet. All Rights Reserved."
+#define ARB_VERSION_LegalCopyright		"Copyright © 2002-2008 David Connet. All Rights Reserved."
 #define ARB_VERSION_ProductName			"Agility Record Book"
