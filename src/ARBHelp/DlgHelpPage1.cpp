@@ -42,6 +42,7 @@
 #include "ARBHelp.h"
 #include "ARBTypes.h"
 #include "DlgARBHelp.h"
+#include "..\Win\VersionNum.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,7 +53,12 @@ static TCHAR THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // Dump registry information
 
-#define PRINT_INDENT(inIndent, outData)	for (int indent = 0; indent < inIndent; ++indent) outData << ' ';
+static void PrintIndent(int inIndent, otstringstream& outData)
+{
+	for (int indent = 0; indent < inIndent; ++indent)
+		outData << ' ';
+}
+
 #define BUFF_SIZE 1024
 static TCHAR g_szBuff[BUFF_SIZE];
 static TCHAR g_szBuff2[BUFF_SIZE];
@@ -77,7 +83,7 @@ static void DumpRegistry(
 		HKEY hSubKey;
 		if (ERROR_SUCCESS == RegOpenKeyEx(hKey, g_szBuff, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
 		{
-			PRINT_INDENT(inIndent, outData)
+			PrintIndent(inIndent, outData);
 			outData << g_szBuff << _T("\r\n");
 			DumpRegistry(hSubKey, inIndent + 1, outData);
 			RegCloseKey(hSubKey);
@@ -118,11 +124,11 @@ static void DumpRegistry(
 				{
 					bOk = true;
 					TCHAR* pBuffer = g_szBuff2;
-					PRINT_INDENT(inIndent, outData)
+					PrintIndent(inIndent, outData);
 					outData << g_szBuff << '(' << pType << _T(")\r\n");
 					while (pBuffer && *pBuffer)
 					{
-						PRINT_INDENT(inIndent+1, outData)
+						PrintIndent(inIndent+1, outData);
 						outData << pBuffer << _T("\r\n");
 						pBuffer += lstrlen(pBuffer) + 1;
 					}
@@ -146,7 +152,7 @@ static void DumpRegistry(
 				if (ERROR_SUCCESS == RegQueryValueEx(hKey, g_szBuff, NULL, &type, (LPBYTE)&dwVal, &dwLen))
 				{
 					bOk = true;
-					PRINT_INDENT(inIndent, outData)
+					PrintIndent(inIndent, outData);
 					outData << g_szBuff << '(' << pType << _T("): ") << dwVal << _T("\r\n");
 				}
 			}
@@ -163,7 +169,7 @@ static void DumpRegistry(
 				if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
 				{
 					bOk = true;
-					PRINT_INDENT(inIndent, outData)
+					PrintIndent(inIndent, outData);
 					outData << g_szBuff << '(' << pType << _T("): ") << g_szBuff2;
 					if (ERROR_MORE_DATA == dwRet)
 						outData << _T("...");
@@ -174,7 +180,7 @@ static void DumpRegistry(
 		}
 		if (!bOk)
 		{
-			PRINT_INDENT(inIndent, outData)
+			PrintIndent(inIndent, outData);
 			outData << g_szBuff << '(' << pType << _T(")\r\n");
 		}
 	}
@@ -355,6 +361,82 @@ static void SearchFor(CString const& inFullPath, CProcessFile& inCallback)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+static void DumpFileStatus(
+	CString path,
+	int inIndent,
+	otstringstream& outData)
+{
+	PrintIndent(inIndent, outData);
+	outData << _T("Files in ") << (LPCTSTR)path << _T("\r\n");
+
+	path += _T("\\");
+	CString tmp(path);
+	tmp += _T("*.*");
+	WIN32_FIND_DATA find;
+	HANDLE hFile = FindFirstFile(tmp, &find);
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		TRACE(_T("FindFirstFile failed on '%s'\n"), (LPCTSTR)tmp);
+		return;
+	}
+
+	CFileStatus status;
+	do
+	{
+		if (0 == lstrcmp(find.cFileName, _T("."))
+		|| 0 == lstrcmp(find.cFileName, _T("..")))
+			continue;
+		tmp = path;
+		tmp += find.cFileName;
+		if (GetLocalStatus(tmp, status))
+		{
+			PrintIndent(inIndent, outData);
+			// It's a directory.
+			if (CFile::directory & status.m_attribute)
+			{
+				outData
+					<< _T("Directory [ignored]: ")
+					<< (LPCTSTR)tmp
+					<< _T("\r\n");
+			}
+			else
+			{
+				outData
+					<< _T("File: ")
+					<< (LPCTSTR)tmp
+					<< _T("\r\n");
+				HINSTANCE inst = LoadLibrary(tmp);
+				if (inst)
+				{
+					CVersionNum ver(inst);
+					if (ver.Valid())
+					{
+						PrintIndent(inIndent+1, outData);
+						outData << _T("FileName: ")
+							<< (LPCTSTR)ver.GetFileName()
+							<< _T("\r\n");
+						PrintIndent(inIndent+1, outData);
+						outData << _T("ProductName: ")
+							<< (LPCTSTR)ver.GetProductName()
+							<< _T("\r\n");
+						PrintIndent(inIndent+1, outData);
+						outData << _T("Version: ")
+							<< (LPCTSTR)ver.GetVersionString()
+							<< _T("\r\n");
+						PrintIndent(inIndent+1, outData);
+						outData << _T("LangID: ")
+							<< ver.GetLangID()
+							<< _T("\r\n");
+					}
+				}
+			}
+		}
+	} while (FindNextFile(hFile, &find));
+	FindClose(hFile);
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CDlgHelpPage1 property page
 
 IMPLEMENT_DYNAMIC(CDlgHelpPage1, CPropertyPage)
@@ -489,8 +571,8 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 			{HKEY_CURRENT_USER, false, _T("HKCU\\"), _T("Software\\dcon Software\\Agility Record Book")},
 			{HKEY_CLASSES_ROOT, false, _T("HKCR\\"), _T(".arb")},
 			{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("AgilityBook.Document")},
+			{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AGILIT~1.EXE")},
 			{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AgilityBook.exe")},
-			{HKEY_LOCAL_MACHINE, false, _T("HKLM\\"), _T("Software\\dcon Software\\Agility Record Book")},
 			{NULL, NULL}
 		};
 		CString regInfo;
@@ -512,11 +594,11 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 						DWORD dwRet = RegQueryValueEx(hOpenKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
 						if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
 						{
-							PRINT_INDENT(1, data)
 							if (ERROR_MORE_DATA == dwRet)
 							{
 								tmp.LoadString(IDS_ERR_BUFFER_TOO_SMALL);
-								data << (LPCTSTR)tmp;
+								PrintIndent(1, data);
+								data << (LPCTSTR)tmp << _T("\r\n");
 							}
 							else
 							{
@@ -539,10 +621,8 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 								{
 									path = path.Left(pos);
 								}
-								// TODO: Read file listing in 'path'
-								data << _T("TODO: Read files in ") << (LPCTSTR)path;
+								DumpFileStatus(path, 1, data);
 							}
-							data << _T("\r\n");
 						}
 						// read default
 						RegCloseKey(hOpenKey);

@@ -59,6 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -189,6 +190,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -375,11 +377,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARBTypes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARB\BinaryData.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\ARB\BinaryData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\VersionNum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\VersionNum.h"
 				>
 			</File>
 		</Filter>
