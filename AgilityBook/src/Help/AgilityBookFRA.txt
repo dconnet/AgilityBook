@@ -584,7 +584,7 @@ Seule les notes seront supprimées.
 Créer un nouveau club, un juge ou un endroit.
 
 .topic HIDC_JUDGE_VISIBLE
-Show or hide this item in various selection lists.
+Afficher ou cacher cet article dans des listes sélection.
 
 .topic HIDC_LANGUAGE
 Choisir une langue.
