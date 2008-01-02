@@ -175,21 +175,25 @@ public:
 	 * Get all club names in use from existing trials and calendar entries.
 	 * @param outClubs List of clubs.
 	 * @param bInfo Include clubs from the ARBInfo.
+	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of clubs.
 	 */
 	size_t GetAllClubNames(
 			std::set<tstring>& outClubs,
-			bool bInfo = true) const;
+			bool bInfo,
+			bool bVisibleOnly) const;
 
 	/**
 	 * Get all trial locations in use from existing trials and calendar entries.
 	 * @param outLocations List of locations.
 	 * @param bInfo Include locations from the ARBInfo.
+	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of locations.
 	 */
 	size_t GetAllTrialLocations(
 			std::set<tstring>& outLocations,
-			bool bInfo = true) const;
+			bool bInfo,
+			bool bVisibleOnly) const;
 
 	/**
 	 * Get all the subnames in use for the given event.
@@ -228,11 +232,13 @@ public:
 	 * Get all judges in use from existing runs and Judges information.
 	 * @param outJudges List of judges.
 	 * @param bInfo Include judges from the ARBInfo.
+	 * @param bVisibleOnly When including ARBInfo, only get visible items.
 	 * @return Number of judges.
 	 */
 	size_t GetAllJudges(
 			std::set<tstring>& outJudges,
-			bool bInfo = true) const;
+			bool bInfo,
+			bool bVisibleOnly) const;
 
 	/**
 	 * Get all handlers in use from existing runs.

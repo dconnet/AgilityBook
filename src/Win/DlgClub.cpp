@@ -95,7 +95,9 @@ BOOL CDlgClub::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 
 	set<tstring> clubs;
-	m_pDoc->GetAllClubNames(clubs);
+	m_pDoc->GetAllClubNames(clubs, true, true);
+	if (m_pClub && !m_pClub->GetName().empty())
+		clubs.insert(m_pClub->GetName());
 	for (set<tstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
 	{
 		m_ctrlClubs.AddString((*iter).c_str());

@@ -45,7 +45,6 @@
  * General information to be tracked.
  *
  * This class is contained in ARBAgilityRecordBook.
- * Currently the only stuff here is judge info.
  */
 class ARBInfo
 {

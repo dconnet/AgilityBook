@@ -192,6 +192,7 @@
 #define ATTRIB_LIFETIME_POINTS_POINTS		_T("Points")
 #define ATTRIB_LIFETIME_POINTS_FAULTS		_T("Faults")
 #define ATTRIB_INFO_NAME					_T("Name")
+#define ATTRIB_INFO_VISIBLE					_T("Visible")
 #define ATTRIB_DOG_CALLNAME					_T("CallName")
 #define ATTRIB_DOG_DOB						_T("DOB")
 #define ATTRIB_DOG_DECEASED					_T("Deceased")

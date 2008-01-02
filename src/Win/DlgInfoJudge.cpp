@@ -36,6 +36,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2008-01-01 DRC Added visible flag.
  * @li 2007-12-03 DRC SelectString was still used in OnNew.
  *                    Fix a drawing problem in the drop list.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -134,6 +135,7 @@ void CDlgInfoJudge::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CDlgInfoJudge)
 	DDX_Control(pDX, IDC_JUDGE_DELETE, m_ctrlDelete);
 	DDX_Control(pDX, IDC_JUDGE, m_ctrlNames);
+	DDX_Control(pDX, IDC_JUDGE_VISIBLE, m_ctrlVisible);
 	DDX_Control(pDX, IDC_JUDGE_COMMENTS, m_ctrlComment);
 	//}}AFX_DATA_MAP
 }
@@ -144,6 +146,7 @@ BEGIN_MESSAGE_MAP(CDlgInfoJudge, CDlgBaseDialog)
 	ON_WM_COMPAREITEM()
 	ON_WM_DRAWITEM()
 	ON_CBN_SELCHANGE(IDC_JUDGE, OnSelchangeName)
+	ON_BN_CLICKED(IDC_JUDGE_VISIBLE, OnBnClickedJudgeVisible)
 	ON_EN_KILLFOCUS(IDC_JUDGE_COMMENTS, OnKillfocusComments)
 	ON_BN_CLICKED(IDC_JUDGE_NEW, OnNew)
 	ON_BN_CLICKED(IDC_JUDGE_DELETE, OnDelete)
@@ -184,7 +187,7 @@ BOOL CDlgInfoJudge::OnInitDialog()
 		ARBInfoItemPtr item;
 		if (m_Info.FindItem(data.m_Name, &item))
 		{
-			if (0 < item->GetComment().length())
+			if (!item->GetComment().empty() || !item->IsVisible())
 				data.m_bHasData = true;
 		}
 		if (m_NamesInUse.end() != std::find(m_NamesInUse.begin(), m_NamesInUse.end(), data.m_Name))
@@ -297,6 +300,7 @@ void CDlgInfoJudge::OnSelchangeName()
 {
 	BOOL bEnable = FALSE;
 	CString data;
+	bool checked = true;
 	int index = m_ctrlNames.GetCurSel();
 	if (CB_ERR != index)
 	{
@@ -304,14 +308,34 @@ void CDlgInfoJudge::OnSelchangeName()
 		ARBInfoItemPtr item;
 		if (m_Info.FindItem(m_Names[idx].m_Name, &item))
 		{
+			checked = item->IsVisible();
 			data = item->GetComment().c_str();
 		}
 		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 			bEnable = TRUE;
 	}
 	data.Replace(_T("\n"), _T("\r\n"));
+	m_ctrlVisible.SetCheck(checked ? 1 : 0);
 	m_ctrlComment.SetWindowText(data);
 	m_ctrlDelete.EnableWindow(bEnable);
+}
+
+
+void CDlgInfoJudge::OnBnClickedJudgeVisible()
+{
+	int index = m_ctrlNames.GetCurSel();
+	if (CB_ERR != index)
+	{
+		size_t idx = static_cast<size_t>(m_ctrlNames.GetItemData(index));
+		ARBInfoItemPtr item;
+		if (!m_Info.FindItem(m_Names[idx].m_Name, &item))
+			m_Info.AddItem(m_Names[idx].m_Name, &item);
+		if (!item)
+			return;
+		item->SetIsVisible(m_ctrlVisible.GetCheck() ? true : false);
+		m_Names[idx].m_bHasData = (!item->GetComment().empty() || !item->IsVisible());
+		m_ctrlNames.Invalidate();
+	}
 }
 
 
@@ -331,7 +355,7 @@ void CDlgInfoJudge::OnKillfocusComments()
 		if (!item)
 			return;
 		item->SetComment((LPCTSTR)data);
-		m_Names[idx].m_bHasData = (0 < data.GetLength());
+		m_Names[idx].m_bHasData = (!item->GetComment().empty() || !item->IsVisible());
 		m_ctrlNames.Invalidate();
 	}
 }
@@ -357,6 +381,7 @@ void CDlgInfoJudge::OnNew()
 				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
 				++m_nAdded;
 				index = m_ctrlNames.AddString((LPCTSTR)idx);
+				m_ctrlVisible.SetCheck(1);
 				m_ctrlComment.SetWindowText(_T(""));
 				m_Info.AddItem(m_Names[idx].m_Name);
 			}
@@ -371,6 +396,7 @@ void CDlgInfoJudge::OnNew()
 			size_t idx = m_Names.size() - 1;
 			++m_nAdded;
 			index = m_ctrlNames.AddString((LPCTSTR)idx);
+			m_ctrlVisible.SetCheck(1);
 			m_ctrlComment.SetWindowText(_T(""));
 			m_Info.AddItem(m_Names[idx].m_Name);
 		}

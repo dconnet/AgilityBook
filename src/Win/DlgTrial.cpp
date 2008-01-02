@@ -179,7 +179,9 @@ void CDlgTrial::UpdateNotes(
 void CDlgTrial::ListLocations()
 {
 	set<tstring> locations;
-	m_pDoc->GetAllTrialLocations(locations);
+	m_pDoc->GetAllTrialLocations(locations, true, true);
+	if (!m_pTrial->GetLocation().empty())
+		locations.insert(m_pTrial->GetLocation());
 	tstring loc((LPCTSTR)m_Location);
 	if (m_Location.IsEmpty())
 		loc = m_pTrial->GetLocation();

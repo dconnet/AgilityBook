@@ -141,10 +141,19 @@ public:
 	{
 		m_Comment = inComment;
 	}
+	bool IsVisible() const
+	{
+		return m_Visible;
+	}
+	void SetIsVisible(bool bVisible)
+	{
+		m_Visible = bVisible;
+	}
 
 private:
 	tstring m_Name;
 	tstring m_Comment;
+	bool m_Visible;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -195,9 +204,10 @@ public:
 	/**
 	 * Get the names of all the items.
 	 * @param outNames All the names.
+	 * @param inVisibleOnly Only get the visible names.
 	 * @return Number of items in list.
 	 */
-	size_t GetAllItems(std::set<tstring>& outNames) const;
+	size_t GetAllItems(std::set<tstring>& outNames, bool inVisibleOnly) const;
 
 	/**
 	 * Remove entries from list that are in use but have no associated comments.
