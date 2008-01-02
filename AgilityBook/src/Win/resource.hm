@@ -209,6 +209,7 @@
 #define HIDC_JUDGE_COMMENTS             0x80d604b4    // IDD_JUDGE_INFO
 #define HIDC_JUDGE_DELETE               0x80d604b3    // IDD_JUDGE_INFO
 #define HIDC_JUDGE_NEW                  0x80d604b2    // IDD_JUDGE_INFO
+#define HIDC_JUDGE_VISIBLE              0x80d604bf    // IDD_JUDGE_INFO
 #define HIDC_LANGUAGE                   0x80ff0688    // IDD_LANGUAGE
 #define HIDC_LIST                       0x80cb03fe    // IDD_LISTCTRL
 #define HIDC_LIST_COPY                  0x80ca03fd    // IDD_LIST_VIEWER

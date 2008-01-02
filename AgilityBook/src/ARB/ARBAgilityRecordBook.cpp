@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2008-01-01 DRC File version 12.7. Added 'Visible' to InfoItem,
  * @li 2007-07-03 DRC File version 12.6. Added 'show' to 'Title',
  *                    'timestamp' to 'AgilityBook'
  * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'
@@ -108,7 +109,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(12, 6);
+	static ARBVersion const curVersion(12, 7);
 	return curVersion;
 }
 
@@ -540,11 +541,10 @@ bool ARBAgilityRecordBook::Update(
 
 size_t ARBAgilityRecordBook::GetAllClubNames(
 		std::set<tstring>& outClubs,
-		bool bInfo) const
+		bool bInfo,
+		bool bVisibleOnly) const
 {
 	outClubs.clear();
-	if (bInfo)
-		m_Info.GetInfo(ARBInfo::eClubInfo).GetAllItems(outClubs);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)
@@ -573,17 +573,18 @@ size_t ARBAgilityRecordBook::GetAllClubNames(
 		if (0 < pCal->GetClub().length())
 			outClubs.insert(pCal->GetClub());
 	}
+	if (bInfo)
+		m_Info.GetInfo(ARBInfo::eClubInfo).GetAllItems(outClubs, bVisibleOnly);
 	return outClubs.size();
 }
 
 
 size_t ARBAgilityRecordBook::GetAllTrialLocations(
 		std::set<tstring>& outLocations,
-		bool bInfo) const
+		bool bInfo,
+		bool bVisibleOnly) const
 {
 	outLocations.clear();
-	if (bInfo)
-		m_Info.GetInfo(ARBInfo::eLocationInfo).GetAllItems(outLocations);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)
@@ -606,6 +607,8 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 		if (0 < pCal->GetLocation().length())
 			outLocations.insert(pCal->GetLocation());
 	}
+	if (bInfo)
+		m_Info.GetInfo(ARBInfo::eLocationInfo).GetAllItems(outLocations, bVisibleOnly);
 	return outLocations.size();
 }
 
@@ -755,11 +758,10 @@ size_t ARBAgilityRecordBook::GetAllBreeds(std::set<tstring>& outBreeds) const
 
 size_t ARBAgilityRecordBook::GetAllJudges(
 		std::set<tstring>& outJudges,
-		bool bInfo) const
+		bool bInfo,
+		bool bVisibleOnly) const
 {
 	outJudges.clear();
-	if (bInfo)
-		m_Info.GetInfo(ARBInfo::eJudgeInfo).GetAllItems(outJudges);
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
 		++iterDog)
@@ -780,6 +782,8 @@ size_t ARBAgilityRecordBook::GetAllJudges(
 			}
 		}
 	}
+	if (bInfo)
+		m_Info.GetInfo(ARBInfo::eJudgeInfo).GetAllItems(outJudges, bVisibleOnly);
 	return outJudges.size();
 }
 

@@ -269,6 +269,7 @@
 #define IDC_DOGPTS_EDIT                 1212
 #define IDC_DOGPTS_DELETE               1213
 #define IDC_DOGPTS_SELECTED_PTS         1214
+#define IDC_JUDGE_VISIBLE               1215
 #define IDC_DOG_CALLNAME                1220
 #define IDC_DOG_BREED                   1221
 #define IDC_DOG_REG_NAME                1222

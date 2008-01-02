@@ -4,8 +4,6 @@ Last Updated: 1/1/2008
 
 - Make the trial properties dialog easier to add a club.
 
-- Add a 'hide' option on Note items so they don't appear in pull down lists.
-
 - Add persistence to CalSite location/venue selection data.
 
 - Add persistence to selected CalSites.

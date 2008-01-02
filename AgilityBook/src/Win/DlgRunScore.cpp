@@ -750,7 +750,9 @@ void CDlgRunScore::FillSubNames()
 void CDlgRunScore::FillJudges()
 {
 	set<tstring> names;
-	m_pDoc->GetAllJudges(names);
+	m_pDoc->GetAllJudges(names, true, true);
+	if (!m_Run->GetJudge().empty())
+		names.insert(m_Run->GetJudge());
 	m_ctrlJudge.ResetContent();
 	for (set<tstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
 	{

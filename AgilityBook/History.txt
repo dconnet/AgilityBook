@@ -1,4 +1,6 @@
 1/1/2008: v1.10.5.12 <in development>
+- Bumped file version to 12.7:
+  - Added 'Visible' to Note items.
 - Bug fixes
   - Translate days-of-week in Calendar options.
 

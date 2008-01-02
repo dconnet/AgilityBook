@@ -64,6 +64,7 @@ ARBInfoItemPtr ARBInfoItem::New()
 ARBInfoItem::ARBInfoItem()
 	: m_Name()
 	, m_Comment()
+	, m_Visible(true)
 {
 }
 
@@ -71,6 +72,7 @@ ARBInfoItem::ARBInfoItem()
 ARBInfoItem::ARBInfoItem(ARBInfoItem const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_Comment(rhs.m_Comment)
+	, m_Visible(rhs.m_Visible)
 {
 }
 
@@ -92,6 +94,7 @@ ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 	{
 		m_Name = rhs.m_Name;
 		m_Comment = rhs.m_Comment;
+		m_Visible = rhs.m_Visible;
 	}
 	return *this;
 }
@@ -100,7 +103,8 @@ ARBInfoItem& ARBInfoItem::operator=(ARBInfoItem const& rhs)
 bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 {
 	return m_Name == rhs.m_Name
-		&& m_Comment == rhs.m_Comment;
+		&& m_Comment == rhs.m_Comment
+		&& m_Visible == rhs.m_Visible;
 }
 
 
@@ -135,6 +139,11 @@ bool ARBInfoItem::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME));
 		return false;
 	}
+	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_INFO_VISIBLE, m_Visible))
+	{
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(inItemName.c_str(), ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool().c_str()));
+		return false;
+	}
 	m_Comment = inTree->GetValue();
 	return true;
 }
@@ -149,6 +158,8 @@ bool ARBInfoItem::Save(
 		return false;
 	ElementNodePtr info = ioTree->AddElementNode(inItemName);
 	info->AddAttrib(ATTRIB_INFO_NAME, m_Name);
+	if (!m_Visible)
+		info->AddAttrib(ATTRIB_INFO_VISIBLE, m_Visible);
 	if (0 < m_Comment.length())
 		info->SetValue(m_Comment);
 	return true;
@@ -226,13 +237,21 @@ void ARBInfoItemList::sort()
 }
 
 
-size_t ARBInfoItemList::GetAllItems(std::set<tstring>& outNames) const
+size_t ARBInfoItemList::GetAllItems(
+		std::set<tstring>& outNames,
+		bool inVisibleOnly) const
 {
-	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		ARBInfoItemPtr info = *iter;
-		outNames.insert(info->GetName());
+		if (!inVisibleOnly || (inVisibleOnly && info->IsVisible()))
+			outNames.insert(info->GetName());
+		else if (inVisibleOnly && !info->IsVisible())
+		{
+			std::set<tstring>::iterator i = outNames.find(info->GetName());
+			if (i != outNames.end())
+				outNames.erase(i);
+		}
 	}
 	return outNames.size();
 }
@@ -245,7 +264,7 @@ void ARBInfoItemList::CondenseContent(std::set<tstring> const& inNamesInUse)
 	for (iterator iter = begin(); iter != end(); )
 	{
 		ARBInfoItemPtr item = *iter;
-		if (0 == item->GetComment().length())
+		if (item->GetComment().empty() && item->IsVisible())
 		{
 			if (inNamesInUse.end() == inNamesInUse.find(item->GetName()))
 				++iter;

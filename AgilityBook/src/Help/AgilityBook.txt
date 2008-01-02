@@ -553,6 +553,9 @@ only the comments will be deleted.
 .topic HIDC_JUDGE_NEW
 Create a new club, judge or location.
 
+.topic HIDC_JUDGE_VISIBLE
+Show or hide this item in various selection lists.
+
 .topic HIDC_LANGUAGE
 Select a language to use.
 

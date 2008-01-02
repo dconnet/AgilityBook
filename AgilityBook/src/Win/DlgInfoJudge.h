@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-01-01 DRC Added visible flag.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-07 DRC Created
  */
@@ -60,6 +61,7 @@ private:
 	enum { IDD = IDD_JUDGE_INFO };
 	CButton	m_ctrlDelete;
 	CComboBox2	m_ctrlNames;
+	CButton		m_ctrlVisible;
 	CEdit		m_ctrlComment;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
@@ -101,6 +103,7 @@ protected:
 	afx_msg int OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
 	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnSelchangeName();
+	afx_msg void OnBnClickedJudgeVisible();
 	afx_msg void OnKillfocusComments();
 	afx_msg void OnNew();
 	afx_msg void OnDelete();

@@ -107,15 +107,17 @@ public:
 
 	size_t GetAllClubNames(
 			std::set<tstring>& outClubs,
-			bool bInfo = true) const
+			bool bInfo = true,
+			bool bVisibleOnly = false) const
 	{
-		return m_Records.GetAllClubNames(outClubs, bInfo);
+		return m_Records.GetAllClubNames(outClubs, bInfo, bVisibleOnly);
 	}
 	size_t GetAllTrialLocations(
 			std::set<tstring>& outLocations,
-			bool bInfo = true) const
+			bool bInfo = true,
+			bool bVisibleOnly = false) const
 	{
-		return m_Records.GetAllTrialLocations(outLocations, bInfo);
+		return m_Records.GetAllTrialLocations(outLocations, bInfo, bVisibleOnly);
 	}
 	size_t GetAllEventSubNames(
 			tstring const& inVenue,
@@ -138,9 +140,10 @@ public:
 	}
 	size_t GetAllJudges(
 			std::set<tstring>& outJudges,
-			bool bInfo = true) const
+			bool bInfo = true,
+			bool bVisibleOnly = false) const
 	{
-		return m_Records.GetAllJudges(outJudges, bInfo);
+		return m_Records.GetAllJudges(outJudges, bInfo, bVisibleOnly);
 	}
 	size_t GetAllHandlers(std::set<tstring>& outHandlers) const
 	{

@@ -424,18 +424,21 @@ This section adds optional data.
 -->
 
 <!ELEMENT Info (ClubInfo*, JudgeInfo*, LocationInfo*) >
-<!-- The pcdata is the comment about the judge -->
+<!-- The pcdata is the comment about the judge(etc) -->
 <!ELEMENT ClubInfo (#PCDATA) >
 	<!ATTLIST ClubInfo
 		Name CDATA #REQUIRED
+		Visible (y|n) 'y'
 		>
 <!ELEMENT JudgeInfo (#PCDATA) >
 	<!ATTLIST JudgeInfo
 		Name CDATA #REQUIRED
+		Visible (y|n) 'y'
 		>
 <!ELEMENT LocationInfo (#PCDATA) >
 	<!ATTLIST LocationInfo
 		Name CDATA #REQUIRED
+		Visible (y|n) 'y'
 		>
 
 <!-- End of Info -->
