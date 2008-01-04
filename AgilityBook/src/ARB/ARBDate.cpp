@@ -495,6 +495,26 @@ time_t ARBDate::GetDate() const
 }
 
 
+bool ARBDate::GetDate(SYSTEMTIME& outTime) const
+{
+	if (0 < m_Julian)
+	{
+		int yr, mon, day;
+		SdnToGregorian(m_Julian, &yr, &mon, &day);
+		outTime.wYear = static_cast<WORD>(yr);
+		outTime.wMonth = static_cast<WORD>(mon);
+		outTime.wDayOfWeek = static_cast<WORD>(GetDayOfWeek());
+		outTime.wDay = static_cast<WORD>(day);
+		outTime.wHour = 0;
+		outTime.wMinute = 0;
+		outTime.wSecond = 0;
+		outTime.wMilliseconds = 0;
+		return true;
+	}
+	return false;
+}
+
+
 void ARBDate::GetDate(
 		int& outYr,
 		int& outMon,
