@@ -623,11 +623,12 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 			pos = GetScrollPos(SB_VERT);
 		ARBDate curMonth = FirstDayOfMonth(pos);
 		curMonth = LastDayOfWeek(curMonth);
-		CString str, strFmt;
-		// Note: The IDS_MONTH* strings MUST be in numerical order.
-		str.LoadString(IDS_MONTH_JAN + curMonth.GetMonth() - 1);
-		strFmt.Format(_T(" %4d"), curMonth.GetYear());
-		str += strFmt;
+		CString str;
+		LCID lcid = MAKELCID(theApp.LanguageManager().CurrentLanguage(), SORT_DEFAULT);
+		SYSTEMTIME time;
+		curMonth.GetDate(time);
+		GetDateFormat(lcid, 0, &time, _T("MMMM yyyy"), str.GetBuffer(100), 100);
+		str.ReleaseBuffer();
 
 		// Total working space.
 		CRect rClient(0, 0, pDC->GetDeviceCaps(HORZRES), pDC->GetDeviceCaps(VERTRES));
@@ -683,8 +684,9 @@ void CAgilityBookViewCalendar::OnDraw(CDC* pDC)
 		int iDay;
 		for (iDay = 0; iDay < 7; ++iDay)
 		{
-			// Note: The IDS_WEEKDAY* strings MUST be in numerical order.
-			str.LoadString(IDS_WEEKDAY_SUN + (weekStart + iDay).GetDayOfWeek());
+			(weekStart + iDay).GetDate(time);
+			GetDateFormat(lcid, 0, &time, _T("dddd"), str.GetBuffer(100), 100);
+			str.ReleaseBuffer();
 			pDC->DrawText(str, rect, DT_NOPREFIX|DT_SINGLELINE|DT_VCENTER|DT_CENTER);
 
 			pDC->SelectObject(&penShadow);

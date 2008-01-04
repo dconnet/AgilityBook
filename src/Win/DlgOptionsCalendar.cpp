@@ -162,11 +162,21 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 
 	int idx;
 	ASSERT(ARBDate::eSunday == 0);
-	// String table entries MUST be contiguous, starting at Sunday
-	for (idx = IDS_WEEKDAY_SUN; idx <= IDS_WEEKDAY_SAT; ++idx)
+	LCTYPE days[] = {
+		LOCALE_SDAYNAME7, // Start with sunday
+		LOCALE_SDAYNAME1,
+		LOCALE_SDAYNAME2,
+		LOCALE_SDAYNAME3,
+		LOCALE_SDAYNAME4,
+		LOCALE_SDAYNAME5,
+		LOCALE_SDAYNAME6
+	};
+	LANGID id = theApp.LanguageManager().CurrentLanguage();
+	for (idx = 0; idx <= 7; ++idx)
 	{
 		CString str;
-		str.LoadString(idx);
+		GetLocaleInfo(id, days[idx], str.GetBuffer(80), 80);
+		str.ReleaseBuffer();
 		m_ctrlDayOfWeek.AddString(str);
 	}
 	m_ctrlDayOfWeek.SetCurSel(m_DayOfWeek);

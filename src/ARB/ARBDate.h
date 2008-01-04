@@ -298,6 +298,11 @@ public:
 	time_t GetDate() const;
 
 	/**
+	 * Convert the date to a time.
+	 */
+	bool GetDate(SYSTEMTIME& outTime) const;
+
+	/**
 	 * Get the current date.
 	 * @param outYr Current year.
 	 * @param outMon Current month.
