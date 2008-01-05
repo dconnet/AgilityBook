@@ -33,12 +33,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-01-05 DRC Added CVenueComboBox
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-12 DRC Created
  */
 
+#include "ARBTypes.h"
 class CListData;
 
+
+/// Combobox that cleans up cached data objects.
 class CComboBox2 : public CComboBox
 {
 	DECLARE_DYNAMIC(CComboBox2)
@@ -66,5 +70,32 @@ protected:
 	LRESULT OnDeleteString(WPARAM, LPARAM);
 	//}}AFX_MSG
 
+	DECLARE_MESSAGE_MAP()
+};
+
+
+/// Combobox specifically for listing venues
+class CVenueComboBox : public CComboBox2
+{
+	DECLARE_DYNAMIC(CVenueComboBox)
+public:
+	CVenueComboBox(bool bAutoDelete);
+	virtual ~CVenueComboBox();
+
+	/**
+	 * If autodelete is set, the ARBConfigVenuePtr will be cached as data
+	 * as CListPtrData<ARBConfigVenuePtr>.
+	 * @param List of venues to add
+	 * @param inSelectVenue Name of venue to initially select
+	 * @param useLongName Show the long name
+	 * @return Whether selection was set.
+	 * @note This does not clear the existing contents.
+	 */
+	bool Initialize(
+			ARBConfigVenueList const& venues,
+			tstring const& inSelectVenue,
+			bool useLongName = false);
+
+protected:
 	DECLARE_MESSAGE_MAP()
 };

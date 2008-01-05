@@ -1262,3 +1262,6 @@ This is the code that will be transmitted to the web site as part of the query U
 
 .topic HIDC_QUERYDETAIL_NAME
 This is the pretty name displayed to the user to select a code.
+
+.topic HIDC_QUERYDETAIL_COMBO
+This is the pretty name displayed to the user to select a code.

@@ -57,7 +57,7 @@ private:
 	CButton	m_ctrlEarned;
 	CDateTimeCtrl	m_ctrlDate;
 	CButton	m_ctrlHidden;
-	CComboBox2	m_ctrlVenues;
+	CVenueComboBox	m_ctrlVenues;
 	CComboBox2	m_ctrlTitles;
 	CButton	m_ctrlReceived;
 	CRichEditCtrl2	m_ctrlDesc;

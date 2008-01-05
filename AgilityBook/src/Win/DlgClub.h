@@ -55,7 +55,7 @@ private:
 	enum { IDD = IDD_CLUB };
 	CComboBox2	m_ctrlClubs;
 	CString	m_Club;
-	CComboBox2	m_ctrlVenues;
+	CVenueComboBox	m_ctrlVenues;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogClubList& m_Clubs;

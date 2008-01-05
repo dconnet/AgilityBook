@@ -188,21 +188,12 @@ void CDlgTitle::FillTitleInfo()
 BOOL CDlgTitle::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
+
 	m_bInit = true;
-	for (ARBConfigVenueList::const_iterator iter = m_Config.GetVenues().begin();
-		iter != m_Config.GetVenues().end();
-		++iter)
-	{
-		ARBConfigVenuePtr pVenue = (*iter);
-		int index = m_ctrlVenues.AddString(pVenue->GetName().c_str());
-		m_ctrlVenues.SetData(index,
-			new CListPtrData<ARBConfigVenuePtr>(pVenue));
-		if (m_pTitle && m_pTitle->GetVenue() == pVenue->GetName())
-		{
-			m_ctrlVenues.SetCurSel(index);
-			FillTitles();
-		}
-	}
+
+	m_ctrlVenues.Initialize(m_Config.GetVenues(), m_pTitle ? m_pTitle->GetVenue() : tstring());
+	FillTitles();
+
 	int nEarned = 1;
 	int nHidden = 0;
 	int nReceived = 0;

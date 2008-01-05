@@ -104,12 +104,7 @@ BOOL CDlgClub::OnInitDialog()
 	}
 	m_ctrlClubs.SetCurSel(-1);
 
-	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->GetConfig().GetVenues().begin();
-	iterVenue != m_pDoc->GetConfig().GetVenues().end();
-	++iterVenue)
-	{
-		m_ctrlVenues.AddString((*iterVenue)->GetName().c_str());
-	}
+	m_ctrlVenues.Initialize(m_pDoc->GetConfig().GetVenues(), tstring());
 	m_ctrlVenues.SetCurSel(-1);
 	if (m_pClub)
 	{

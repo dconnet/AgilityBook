@@ -53,7 +53,7 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgRegNum)
 	enum { IDD = IDD_REG_NUM };
-	CComboBox2	m_ctrlVenues;
+	CVenueComboBox	m_ctrlVenues;
 	CString	m_RegNum;
 	CString	m_Height;
 	BOOL	m_bReceived;

@@ -294,15 +294,7 @@ BOOL CDlgCalendar::OnInitDialog()
 
 	ListLocations();
 
-	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->GetConfig().GetVenues().begin();
-		iterVenue != m_pDoc->GetConfig().GetVenues().end();
-		++iterVenue)
-	{
-		ARBConfigVenuePtr pVenue = (*iterVenue);
-		int index = m_ctrlVenue.AddString(pVenue->GetName().c_str());
-		if (pVenue->GetName() == m_pCal->GetVenue())
-			m_ctrlVenue.SetCurSel(index);
-	}
+	m_ctrlVenue.Initialize(m_pDoc->GetConfig().GetVenues(), m_pCal->GetVenue());
 
 	ListClubs();
 

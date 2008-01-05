@@ -92,10 +92,10 @@ void CDlgCalendarQueryDetail::DoDataExchange(CDataExchange* pDX)
 	CDlgBaseDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDlgCalendarQueryDetail)
 	DDX_Control(pDX, IDC_QUERY_LOCATIONS, m_ctrlLocations);
-	DDX_Control(pDX, IDC_QUERY_VENUES, m_ctrlVenues);
 	DDX_Control(pDX, IDC_QUERY_LOCCODE_NEW, m_ctrlNewLoc);
 	DDX_Control(pDX, IDC_QUERY_LOCCODE_EDIT, m_ctrlEditLoc);
 	DDX_Control(pDX, IDC_QUERY_LOCCODE_DELETE, m_ctrlDeleteLoc);
+	DDX_Control(pDX, IDC_QUERY_VENUES, m_ctrlVenues);
 	DDX_Control(pDX, IDC_QUERY_VENUE_NEW, m_ctrlNewVenue);
 	DDX_Control(pDX, IDC_QUERY_VENUE_EDIT, m_ctrlEditVenue);
 	DDX_Control(pDX, IDC_QUERY_VENUE_DELETE, m_ctrlDeleteVenue);
@@ -226,7 +226,7 @@ void CDlgCalendarQueryDetail::OnLvnItemchangedQueryVenues(NMHDR *pNMHDR, LRESULT
 
 void CDlgCalendarQueryDetail::OnNewLocationCode()
 {
-	CDlgQueryDetail dlg(NULL, _T(""), _T(""), this);
+	CDlgQueryDetail dlg(_T(""), _T(""), this);
 	if (IDOK == dlg.DoModal())
 	{
 		int idx = m_ctrlLocations.InsertItem(m_ctrlLocations.GetItemCount(), dlg.GetCode().c_str());
@@ -241,7 +241,7 @@ void CDlgCalendarQueryDetail::OnEditLocationCode()
 	int idx = m_ctrlLocations.GetSelection();
 	if (0 <= idx)
 	{
-		CDlgQueryDetail dlg(NULL, m_ctrlLocations.GetItemText(idx, 0), m_ctrlLocations.GetItemText(idx, 1), this);
+		CDlgQueryDetail dlg(m_ctrlLocations.GetItemText(idx, 0), m_ctrlLocations.GetItemText(idx, 1), this);
 		if (IDOK == dlg.DoModal())
 		{
 			m_ctrlLocations.SetItemText(idx, 0, dlg.GetCode().c_str());
@@ -265,7 +265,7 @@ void CDlgCalendarQueryDetail::OnDeleteLocationCode()
 
 void CDlgCalendarQueryDetail::OnNewVenueCode()
 {
-	CDlgQueryDetail dlg(&m_Config, _T(""), _T(""), this);
+	CDlgQueryDetail dlg(_T(""), _T(""), this, &m_Config);
 	if (IDOK == dlg.DoModal())
 	{
 		tstring code = dlg.GetCode();
@@ -285,7 +285,7 @@ void CDlgCalendarQueryDetail::OnEditVenueCode()
 	int idx = m_ctrlVenues.GetSelection();
 	if (0 <= idx)
 	{
-		CDlgQueryDetail dlg(&m_Config, m_ctrlVenues.GetItemText(idx, 0), m_ctrlVenues.GetItemText(idx, 1), this);
+		CDlgQueryDetail dlg(m_ctrlVenues.GetItemText(idx, 0), m_ctrlVenues.GetItemText(idx, 1), this, &m_Config);
 		if (IDOK == dlg.DoModal())
 		{
 			m_ctrlVenues.SetItemText(idx, 0, dlg.GetCode().c_str());

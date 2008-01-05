@@ -1329,3 +1329,6 @@ Ceci est le code qui va être transmis au site web faisant parti de la query URL.
 
 .topic HIDC_QUERYDETAIL_NAME
 Ceci est le nom qui va être affiché à l’utilisateur pour sélectionner un code.
+
+.topic HIDC_QUERYDETAIL_COMBO
+Ceci est le nom qui va être affiché à l’utilisateur pour sélectionner un code.

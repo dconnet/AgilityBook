@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-01-05 DRC Added CVenueComboBox
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-12 DRC Created
  */
@@ -38,6 +39,7 @@
 #include "stdafx.h"
 #include "ComboBox.h"
 
+#include "ARBConfigVenue.h"
 #include "ListData.h"
 
 #ifdef _DEBUG
@@ -127,3 +129,56 @@ LRESULT CComboBox2::OnDeleteString(WPARAM wParam, LPARAM)
 	}
 	return Default();
 }
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CVenueComboBox
+
+IMPLEMENT_DYNAMIC(CVenueComboBox, CComboBox2)
+
+CVenueComboBox::CVenueComboBox(bool bAutoDelete)
+	: CComboBox2(bAutoDelete)
+{
+}
+
+
+CVenueComboBox::~CVenueComboBox()
+{
+}
+
+
+bool CVenueComboBox::Initialize(
+		ARBConfigVenueList const& venues,
+		tstring const& inSelectVenue,
+		bool useLongName)
+{
+	bool bSelectionSet = false;
+	for (ARBConfigVenueList::const_iterator iterVenue = venues.begin();
+		iterVenue != venues.end();
+		++iterVenue)
+	{
+		ARBConfigVenuePtr pVenue = (*iterVenue);
+		int index;
+		if (useLongName)
+			index = AddString(pVenue->GetLongName().c_str());
+		else
+			index = AddString(pVenue->GetName().c_str());
+		if (m_bAutoDelete)
+			SetData(index, new CListPtrData<ARBConfigVenuePtr>(pVenue));
+		if (pVenue->GetName() == inSelectVenue)
+		{
+			bSelectionSet = true;
+			SetCurSel(index);
+		}
+	}
+	return bSelectionSet;
+}
+
+
+BEGIN_MESSAGE_MAP(CVenueComboBox, CComboBox2)
+	//{{AFX_MSG_MAP(CVenueComboBox)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CVenueComboBox message handlers
