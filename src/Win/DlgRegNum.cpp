@@ -97,13 +97,7 @@ END_MESSAGE_MAP()
 BOOL CDlgRegNum::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
-	for (ARBConfigVenueList::const_iterator iter = m_Config.GetVenues().begin();
-		iter != m_Config.GetVenues().end();
-		++iter)
-	{
-		ARBConfigVenuePtr pVenue = (*iter);
-		m_ctrlVenues.AddString(pVenue->GetName().c_str());
-	}
+	m_ctrlVenues.Initialize(m_Config.GetVenues(), tstring());
 	if (m_pRegNum)
 	{
 		m_RegNum = m_pRegNum->GetNumber().c_str();

@@ -580,6 +580,7 @@
 #define IDC_QUERYDETAIL_CODE            1710
 #define IDC_QUERYDETAIL_NAME_TEXT       1711
 #define IDC_QUERYDETAIL_NAME            1712
+#define IDC_QUERYDETAIL_COMBO           1713
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002

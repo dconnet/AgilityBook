@@ -36,6 +36,7 @@
  * @li 2007-12-24 DRC Created
  */
 
+#include "ComboBox.h"
 #include "DlgBaseDialog.h"
 #include <map>
 
@@ -43,10 +44,10 @@ class CDlgQueryDetail : public CDlgBaseDialog
 {
 public:
 	CDlgQueryDetail(
-			ARBConfig const* inConfig,
 			const TCHAR* inCode,
 			const TCHAR* inName,
-			CWnd* pParent = NULL);
+			CWnd* pParent = NULL,
+			ARBConfig const* inConfig = NULL); // Only set when using venues
 
 	tstring const& GetCode() const		{return m_Code;}
 	tstring const& GetName() const		{return m_Name;}
@@ -55,9 +56,13 @@ private:
 // Dialog Data
 	//{{AFX_DATA(CDlgQueryDetail)
 	enum { IDD = IDD_QUERY_DETAIL };
+	CEdit m_ctrlCode;
 	CString m_strCode;
-	CStatic m_ctrlName;
+	CStatic m_ctrlNameText;
+	CEdit m_ctrlName;
 	CString m_strName;
+	CVenueComboBox m_ctrlVenues;
+	CString m_strVenue;
 	//}}AFX_DATA
 	ARBConfig const* m_Config;
 	tstring m_Code;
@@ -72,6 +77,7 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgQueryDetail)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnCbnSelchangeQuerydetailCombo();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
