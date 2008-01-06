@@ -68,13 +68,23 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-LifeTimePointInfo::LifeTimePointInfo(
-		tstring const& inDiv,
-		tstring const& inLevel,
+LifeTimePointInfoPtr LifeTimePointInfo::New(
+		tstring const& inSort1,
+		tstring const& inSort2,
 		double inPoints,
 		double inFiltered)
-	: div(inDiv)
-	, level(inLevel)
+{
+	return LifeTimePointInfoPtr(new LifeTimePointInfo(inSort1, inSort2, inPoints, inFiltered));
+}
+
+
+LifeTimePointInfo::LifeTimePointInfo(
+		tstring const& inSort1,
+		tstring const& inSort2,
+		double inPoints,
+		double inFiltered)
+	: sort1(inSort1)
+	, sort2(inSort2)
 	, points(inPoints)
 	, filtered(inFiltered)
 {
@@ -625,7 +635,7 @@ void CPointsDataLifetime::AddLifetimeInfo(
 		double inLifetime,
 		double inFiltered)
 {
-	m_Data.push_back(LifeTimePointInfo(inDiv, inLevel, inLifetime, inFiltered));
+	m_Data.push_back(LifeTimePointInfo::New(inDiv, inLevel, inLifetime, inFiltered));
 	m_Lifetime += inLifetime;
 	m_Filtered += inFiltered;
 }
@@ -741,7 +751,7 @@ void CPointsDataLifetimeDiv::AddLifetimeInfo(
 {
 	if (inDiv == m_Div)
 	{
-		m_Data.push_back(LifeTimePointInfo(inDiv, inLevel, inLifetime, inFiltered));
+		m_Data.push_back(LifeTimePointInfo::New(inDiv, inLevel, inLifetime, inFiltered));
 		m_Lifetime += inLifetime;
 		m_Filtered += inFiltered;
 	}

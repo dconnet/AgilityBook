@@ -24,7 +24,7 @@
 			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -53,6 +53,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -90,7 +91,7 @@
 			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -118,12 +119,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -154,7 +157,7 @@
 			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -184,6 +187,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -221,7 +225,7 @@
 			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -250,12 +254,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -319,7 +325,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\stdafx.cpp"
+				RelativePath="..\..\stdafx.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -439,7 +445,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\stdafx.h"
+				RelativePath="..\..\stdafx.h"
 				>
 			</File>
 		</Filter>

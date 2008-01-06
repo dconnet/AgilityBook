@@ -42,7 +42,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
@@ -51,6 +51,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -108,7 +109,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
@@ -117,6 +118,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -174,7 +176,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
@@ -183,6 +185,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -240,7 +243,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
@@ -249,6 +252,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -307,7 +311,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
@@ -316,6 +320,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -373,7 +378,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
@@ -382,6 +387,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -440,7 +446,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
@@ -449,6 +455,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -506,7 +513,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
@@ -515,6 +522,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"

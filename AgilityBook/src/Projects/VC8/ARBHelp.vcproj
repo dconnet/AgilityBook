@@ -52,6 +52,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -118,12 +119,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -185,6 +188,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -252,12 +256,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="version.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -302,6 +308,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\ARBHelp\DlgPageDecode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARBHelp\DlgPageEncode.cpp"
 				>
 			</File>
@@ -314,15 +328,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARBHelp\stdafx.cpp"
+				RelativePath="..\..\stdafx.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -418,6 +424,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\ARBHelp\DlgPageDecode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARBHelp\DlgPageEncode.h"
 				>
 			</File>
@@ -430,19 +444,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\ARBHelp\resource.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\stdafx.h"
+				RelativePath="..\..\stdafx.h"
 				>
 			</File>
 		</Filter>

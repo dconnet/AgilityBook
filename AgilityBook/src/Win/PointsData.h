@@ -62,20 +62,24 @@ typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 /**
  * Used to accumulate lifetime info. Also for Placement totals.
  */
+class LifeTimePointInfo;
+typedef boost::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
 class LifeTimePointInfo
 {
-#if _MSC_VER >= 1400
 private:
-	LifeTimePointInfo(); // Not implemented, needed for <list>
-#endif
-public:
 	LifeTimePointInfo(
-			tstring const& inDiv,
-			tstring const& inLevel,
+			tstring const& inSort1,
+			tstring const& inSort2,
 			double inPoints,
 			double inFiltered);
-	tstring div;
-	tstring level;
+public:
+	static LifeTimePointInfoPtr New(
+			tstring const& inSort1, // Division or event
+			tstring const& inSort2, // Level or empty
+			double inPoints,
+			double inFiltered);
+	tstring sort1;
+	tstring sort2;
 	double points;
 	double filtered;
 };
@@ -332,7 +336,7 @@ public:
 protected:
 	bool m_bLifetime;	///< Lifetime or Placement?
 	ARBConfigVenuePtr m_Venue;
-	std::list<LifeTimePointInfo> m_Data;
+	std::list<LifeTimePointInfoPtr> m_Data;
 	double m_Lifetime;	//< Total lifetime points.
 	double m_Filtered;	//< Points that are filtered out.
 };

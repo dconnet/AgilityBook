@@ -47,6 +47,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -111,6 +112,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -175,6 +177,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -239,6 +242,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -303,6 +307,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -367,6 +372,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -431,6 +437,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -495,6 +502,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				Culture="1036"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
