@@ -29,14 +29,7 @@ del bldWin32.txt bldWin64.txt
 REM Unicode
 
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64
-REM There's a problem with x64 dependencies - they don't build.
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "LibZlib"
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "LibTidy"
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "LibXerces"
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "ARBHelp"
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "cal_usdaa"
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "AgilityBookFRA"
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64" /project "AgilityBook"
+devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"
 
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
 devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"

@@ -3,8 +3,10 @@
   - Added 'Visible' to Note items.
 - New features / Enhancements:
   - Added a list of existing venues into calendar query detail dialog.
+  - Added a 'hide' option on Note items so they don't appear in lists.
 - Bug fixes:
   - Translate days-of-week in Calendar options.
+  - Several dialogs had text that was truncated.
 
 1/1/2008: v1.10.4.12
 - Bug fixes

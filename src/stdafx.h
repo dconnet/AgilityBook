@@ -41,43 +41,42 @@
 
 #ifdef _WINDOWS
 
+// _MSCVER
+// 1200: VC6.0
+// 1300: VC7.0
+// 1310: VC7.1
+// 1400: VC8.0
+// 1500: VC9.0
+// _M_IX86: Defined for x86 (value specifies processor)
+// _M_X64: Defined for x64 processors
+// _M_IA64: Defined for Itanium processor family
+
 // VC6
 #if _MSC_VER < 1300
-#if defined(UNICODE) || defined(_UNICODE)
-	#error In order to compile with UNICODE in VC6, the code needs a lot of work!
-#endif
-// Turn off some warnings in vc6.
-#pragma warning ( disable : 4786 )	// identifier was truncated to '255' characters in the debug information
-//#pragma warning( disable : 4503 )
+	#if defined(UNICODE) || defined(_UNICODE)
+		#error In order to compile with UNICODE in VC6, the code needs a lot of work!
+	#endif
+	// Turn off some warnings in vc6.
+	#pragma warning ( disable : 4786 )	// identifier was truncated to '255' characters in the debug information
+	//#pragma warning( disable : 4503 )
 
 // VC7
 #elif _MSC_VER >= 1300 && _MSC_VER < 1400
-#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
-#pragma warning ( disable : 4702 )	// unreachable code (generated during link from STL code)
+	#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
+	#pragma warning ( disable : 4702 )	// unreachable code (generated during link from STL code)
 
 // VC8
 #elif _MSC_VER >= 1400 && _MSC_VER < 1500
-#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
+	#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
 
 // VC9
 #elif _MSC_VER >= 1500
-#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
-// Minimum system, XP
-#ifndef WINVER
-#define WINVER 0x0500
-#elif WINVER < 0x0500
-#error VC9 minimum version is 0x0500
-#endif
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0500
-#elif _WIN32_WINNT < 0x0500
-#error VC9 minimum version is 0x0500
-#endif
+	#pragma warning ( disable : 4100 )	// 'identifier' : unreferenced formal parameter
 
 #endif // End VC-elifs
 
 #ifndef VC_EXTRALEAN
-#define VC_EXTRALEAN		/// Exclude rarely-used stuff from Windows headers
+	#define VC_EXTRALEAN		/// Exclude rarely-used stuff from Windows headers
 #endif
 
 // Modify the following defines if you have to target a platform prior to the ones specified below.
@@ -103,29 +102,54 @@
 // IE4.0             _WIN32_IE >= 0x0400
 // IE3.0, 3.01, 3.02 _WIN32_IE >= 0x0300
 
-#ifndef WINVER				/// Allow use of features specific to Windows 95 and Windows NT 4 or later.
-#ifdef WIN64
-#define WINVER 0x0501
-#else
-#define WINVER 0x0400
-#endif
+#ifndef _WIN32_IE
+	#define _WIN32_IE 0x0500	/// Minimum IE, 5.0
 #endif
 
-#ifndef _WIN32_WINNT		/// Allow use of features specific to Windows NT 4 or later.
-#ifdef WIN64
-#define _WIN32_WINNT 0x0501	/// Minimum system, XP
-#else
-#define _WIN32_WINNT 0x0400	/// Minimum system, NT4.0
+#ifndef WINVER
+	#if defined(_M_IA64)
+		#define WINVER	0x0502
+	#elif defined(_M_X64)
+		#define WINVER	0x0501
+	#else //x86
+		#if _MSC_VER >= 1500
+			#define WINVER	0x0500
+		#else
+			#define WINVER	0x0400
+		#endif
+	#endif
 #endif
+
+#ifndef _WIN32_WINNT
+	#define _WIN32_WINNT	WINVER
+#endif
+
+#if WINVER != _WIN32_WINNT
+	#error WINVER is different than _WIN32_WINNT
 #endif
 
 // Note VC6 hard-codes this define to ME. So we'll follow suit...
+// (unset if VC9+)
 #ifndef _WIN32_WINDOWS
-#define _WIN32_WINDOWS 0x0500
+	#if _MSC_VER < 1500 && !defined(UNICODE)
+		#define _WIN32_WINDOWS	0x0500
+	#else
+		#undef _WIN32_WINDOWS
+	#endif
 #endif
 
-#ifndef _WIN32_IE
-#define _WIN32_IE 0x0500	/// Minimum IE, 5.0
+// Error checking
+// Minimum system: x86 - Win2000, x64 - XP, Itanium - Server 2003
+#if _MSC_VER >= 1500 && WINVER < 0x0500
+	#error VC9 minimum version is 0x0500
+#elif defined(_M_IA64) && WINVER < 0x0502
+	#error Itanium minimum version is 0x0502
+#elif defined(_M_X64) && WINVER < 0x0501
+	#error Itanium minimum version is 0x0501
+#endif
+
+#if defined(_WIN32_WINDOWS) && defined(UNICODE)
+	#error We do not support UNICODE builds for Win98
 #endif
 
 // This is new as of vc7
@@ -150,7 +174,7 @@ typedef long LONG_PTR;
 #define _tstol _ttol
 #endif
 
-#else
+#else // _WINDOWS
 
 // Include other platform common files here. This way we can continue to
 // include 'stdafx.h' as the first header in all .cpp files so win32

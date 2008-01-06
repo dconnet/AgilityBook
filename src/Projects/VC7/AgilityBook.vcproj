@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;PROJ_SAX2;PROJ_XMLPARSER;PROJ_XMLUTIL;PROJ_PARSERS;PROJ_SAX4C;PROJ_DOM;PROJ_VALIDATORS;XML_USE_WIN32_TRANSCODER;XML_USE_INMEM_MESSAGELOADER;XML_USE_NETACCESSOR_WINSOCK;XML_LIBRARY"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -61,7 +61,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories="../../Include"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -85,7 +85,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;PROJ_SAX2;PROJ_XMLPARSER;PROJ_XMLUTIL;PROJ_PARSERS;PROJ_SAX4C;PROJ_DOM;PROJ_VALIDATORS;XML_USE_WIN32_TRANSCODER;XML_USE_INMEM_MESSAGELOADER;XML_USE_NETACCESSOR_WINSOCK;XML_LIBRARY"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -122,7 +122,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories="../../Include"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool

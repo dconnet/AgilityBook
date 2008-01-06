@@ -195,11 +195,12 @@ void CDlgARBHelp::SendIt()
 			clp << _T("\r\n") << (LPCTSTR)(*iFile).first;
 			if ((*iFile).second)
 			{
+				CStringA filename((*iFile).first);
 #if _MSC_VER >= 1400
 				FILE* file;
-				fopen_s(&file, (LPCTSTR)(*iFile).first, "rb");
+				fopen_s(&file, (LPCSTR)filename, "rb");
 #else
-				FILE* file = fopen((LPCTSTR)(*iFile).first, "rb");
+				FILE* file = fopen((LPCSTR)filename, "rb");
 #endif
 				if (file)
 				{

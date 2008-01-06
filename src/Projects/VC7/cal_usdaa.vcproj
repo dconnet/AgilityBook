@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../Include;../../cal_usdaa;../../xml;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -60,7 +60,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -84,7 +84,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa;../../xml;../../../../boost"
+				AdditionalIncludeDirectories="../..;../../Include;../../cal_usdaa;../../xml;../../../../boost"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;XML_LIBRARY"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -120,7 +120,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				AdditionalIncludeDirectories=""/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool

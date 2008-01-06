@@ -178,7 +178,7 @@ BOOL CDlgPageDecodeFinish::OnInitDialog()
 					GetTempFileName(tempdir, _T("arb"), 0, pFile);
 					tempname.ReleaseBuffer();
 					m_TmpFiles.push_back(tempname);
-					std::ofstream output((LPCTSTR)tempname, std::ios::out | std::ios::binary);
+					oftstream output((LPCTSTR)tempname, std::ios::out | std::ios::binary);
 					output.exceptions(std::ios_base::badbit);
 					if ((output.rdstate() & std::ios::failbit))
 					{

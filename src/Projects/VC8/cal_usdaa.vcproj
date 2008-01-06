@@ -42,7 +42,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="1"
 			/>
@@ -108,7 +108,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="1"
 			/>
@@ -174,7 +174,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="1"
 			/>
@@ -240,7 +240,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="1"
 			/>
@@ -307,7 +307,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="0"
 			/>
@@ -374,7 +374,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="0"
 			/>
@@ -441,7 +441,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="0"
 			/>
@@ -508,7 +508,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../..;../../cal_usdaa"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="0"
 			/>

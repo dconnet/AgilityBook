@@ -194,7 +194,7 @@ static void DumpRegistry(
 // Defined in "Microsoft Visual Studio 8\VC\atlmfc\src\mfc\afximpl.h"
 BOOL AFXAPI AfxFullPath(__out_z LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
 
-BOOL GetLocalStatus(LPCSTR lpszFileName, CFileStatus& rStatus)
+BOOL GetLocalStatus(LPCTSTR lpszFileName, CFileStatus& rStatus)
 {
 	ASSERT( lpszFileName != NULL );
 
@@ -217,7 +217,7 @@ BOOL GetLocalStatus(LPCSTR lpszFileName, CFileStatus& rStatus)
 	}
 
 	WIN32_FIND_DATA findFileData;
-	HANDLE hFind = FindFirstFile((LPSTR)lpszFileName, &findFileData);
+	HANDLE hFind = FindFirstFile((LPTSTR)lpszFileName, &findFileData);
 	if (hFind == INVALID_HANDLE_VALUE)
 		return FALSE;
 	VERIFY(FindClose(hFind));

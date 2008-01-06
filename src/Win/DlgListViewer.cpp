@@ -725,7 +725,7 @@ class CDlgListViewerDataLifetime : public CDlgListViewerData
 public:
 	CDlgListViewerDataLifetime(
 			CDlgListViewerDataColumns* inColData,
-			LifeTimePointInfo const& info)
+			LifeTimePointInfoPtr const& info)
 		: m_ColData(inColData)
 		, m_info(info)
 	{
@@ -744,27 +744,30 @@ public:
 			int inCol) const;
 private:
 	CDlgListViewerDataColumns* m_ColData;
-	LifeTimePointInfo m_info;
+	LifeTimePointInfoPtr m_info;
 };
 
 
 tstring CDlgListViewerDataLifetime::OnNeedText(int iCol) const
 {
 	otstringstream str;
-	switch (m_ColData->GetIndex(iCol))
+	if (m_info)
 	{
-	case COL_OTHER_DIV:
-		str << m_info.div;
-		break;
-	case COL_OTHER_LEVEL:
-		str << m_info.level;
-		break;
-	case COL_OTHER_PTS:
-		if (0 < m_info.filtered)
-			str << m_info.points - m_info.filtered << _T(" (") << m_info.points << ')';
-		else
-			str << m_info.points;
-		break;
+		switch (m_ColData->GetIndex(iCol))
+		{
+		case COL_OTHER_DIV:
+			str << m_info->sort1;
+			break;
+		case COL_OTHER_LEVEL:
+			str << m_info->sort2;
+			break;
+		case COL_OTHER_PTS:
+			if (0 < m_info->filtered)
+				str << m_info->points - m_info->filtered << _T(" (") << m_info->points << ')';
+			else
+				str << m_info->points;
+			break;
+		}
 	}
 	return str.str();
 }
@@ -782,17 +785,17 @@ int CDlgListViewerDataLifetime::Compare(
 	{
 	default:
 	case COL_OTHER_DIV:
-		str1 = m_info.div;
-		str2 = pData->m_info.div;
+		str1 = m_info->sort1;
+		str2 = pData->m_info->sort1;
 		break;
 	case COL_OTHER_LEVEL:
-		str1 = m_info.level;
-		str2 = pData->m_info.level;
+		str1 = m_info->sort2;
+		str2 = pData->m_info->sort2;
 		break;
 	case COL_OTHER_PTS:
-		if (m_info.points < pData->m_info.points)
+		if (m_info->points < pData->m_info->points)
 			return -1;
-		else if (m_info.points > pData->m_info.points)
+		else if (m_info->points > pData->m_info->points)
 			return 1;
 		else
 			return 0;
@@ -1206,7 +1209,7 @@ CDlgListViewer::CDlgListViewer(
 CDlgListViewer::CDlgListViewer(
 		CAgilityBookDoc* inDoc,
 	CString const& inCaption,
-	std::list<LifeTimePointInfo> const& inLifetime,
+	std::list<LifeTimePointInfoPtr> const& inLifetime,
 	CWnd* pParent)
 	: CDlgBaseDialog(CDlgListViewer::IDD, pParent)
 	, m_ctrlList(true)
@@ -1570,11 +1573,10 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, IDS_COL_LEVEL);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, IDS_COL_POINTS);
 		int iItem = 0;
-		for (std::list<LifeTimePointInfo>::const_iterator iter = m_Lifetime->begin();
+		for (std::list<LifeTimePointInfoPtr>::const_iterator iter = m_Lifetime->begin();
 			iter != m_Lifetime->end();
 			++iter)
 		{
-			LifeTimePointInfo const& info = *iter;
 			LVITEM item;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.iItem = iItem++;
@@ -1582,7 +1584,7 @@ BOOL CDlgListViewer::OnInitDialog()
 			item.pszText = LPSTR_TEXTCALLBACK;
 			item.lParam = reinterpret_cast<LPARAM>(
 				static_cast<CListData*>(
-					new CDlgListViewerDataLifetime(pColData, info)));
+					new CDlgListViewerDataLifetime(pColData, *iter)));
 			m_ctrlList.InsertItem(&item);
 		}
 		pColData->SetColumnWidths(m_ctrlList);
