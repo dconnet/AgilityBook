@@ -83,8 +83,8 @@ void CDlgQueryDetail::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgQueryDetail, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgQueryDetail)
+	ON_CBN_SELCHANGE(IDC_QUERYDETAIL_COMBO, OnCbnSelchangeQuerydetailCombo)
 	//}}AFX_MSG_MAP
-	ON_CBN_SELCHANGE(IDC_QUERYDETAIL_COMBO, &CDlgQueryDetail::OnCbnSelchangeQuerydetailCombo)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
