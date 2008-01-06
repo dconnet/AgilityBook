@@ -42,6 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="_WINDOWS;_CRT_SECURE_NO_WARNINGS"
+				SmallerTypeCheck="false"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -101,6 +102,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="_WINDOWS;_CRT_SECURE_NO_WARNINGS"
+				SmallerTypeCheck="false"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
