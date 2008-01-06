@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief interface of the CDlgHelpPage2 class
+ * @brief interface of the CDlgPageEncodeFiles class
  * @author David Connet
  *
  * Revision History
@@ -39,17 +39,17 @@
 #include "resource.h"
 class CDlgARBHelp;
 
-class CDlgHelpPage2 : public CPropertyPage
+class CDlgPageEncodeFiles : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgHelpPage2)
+	DECLARE_DYNAMIC(CDlgPageEncodeFiles)
 public:
-	CDlgHelpPage2(CDlgARBHelp* pParent);
-	~CDlgHelpPage2();
+	CDlgPageEncodeFiles(CDlgARBHelp* pParent);
+	~CDlgPageEncodeFiles();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgHelpPage2)
-	enum { IDD = IDD_HELP_PAGE2 };
+	//{{AFX_DATA(CDlgPageEncodeFiles)
+	enum { IDD = IDD_PAGE_ENCODE_FILES };
 	CStatic	m_ctrlText;
 	CCheckListBox	m_ctrlList;
 	//}}AFX_DATA
@@ -57,7 +57,7 @@ private:
 	CString m_Text;
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgHelpPage2)
+	//{{AFX_VIRTUAL(CDlgPageEncodeFiles)
 public:
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardNext();
@@ -68,7 +68,7 @@ protected:
 // Implementation
 protected:
 	void UpdateText();
-	//{{AFX_MSG(CDlgHelpPage2)
+	//{{AFX_MSG(CDlgPageEncodeFiles)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnCheckChange();
 	//}}AFX_MSG

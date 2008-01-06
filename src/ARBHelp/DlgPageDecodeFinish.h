@@ -29,46 +29,45 @@
 /**
  * @file
  *
- * @brief interface of the CDlgHelpPage1 class
+ * @brief interface of the CDlgPageDecodeFinish class
  * @author David Connet
  *
  * Revision History
- * @li 2007-01-02 DRC Created
+ * @li 2007-02-08 DRC Created
  */
 
 #include "resource.h"
-class CDlgARBHelp;
+#include <vector>
 
-class CDlgHelpPage1 : public CPropertyPage
+class CDlgPageDecodeFinish : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgHelpPage1)
+	DECLARE_DYNAMIC(CDlgPageDecodeFinish)
 public:
-	CDlgHelpPage1(CDlgARBHelp* pParent, bool decode);
-	~CDlgHelpPage1();
+	CDlgPageDecodeFinish();
+	~CDlgPageDecodeFinish();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgHelpPage1)
-	enum { IDD = IDD_HELP_PAGE1 };
-	CStatic m_ctrlText;
-	CStatic m_ctrlText2;
+	//{{AFX_DATA(CDlgPageDecodeFinish)
+	enum { IDD = IDD_PAGE_DECODE_FINISH };
+	CEdit	m_ctrlEdit;
 	//}}AFX_DATA
-	CDlgARBHelp* m_Parent;
-	bool m_Decode;
+	std::vector<CString> m_TmpFiles;
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgHelpPage1)
+	//{{AFX_VIRTUAL(CDlgPageDecodeFinish)
 public:
 	virtual BOOL OnSetActive();
-	virtual LRESULT OnWizardNext();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgHelpPage1)
+	void UpdateText();
+	//{{AFX_MSG(CDlgPageDecodeFinish)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnDestroy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief interface of the CDlgHelpPage3 class
+ * @brief interface of the CDlgPageEncodeFinish class
  * @author David Connet
  *
  * Revision History
@@ -39,22 +39,22 @@
 #include "resource.h"
 class CDlgARBHelp;
 
-class CDlgHelpPage3 : public CPropertyPage
+class CDlgPageEncodeFinish : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgHelpPage3)
+	DECLARE_DYNAMIC(CDlgPageEncodeFinish)
 public:
-	CDlgHelpPage3(CDlgARBHelp* pParent);
-	~CDlgHelpPage3();
+	CDlgPageEncodeFinish(CDlgARBHelp* pParent);
+	~CDlgPageEncodeFinish();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgHelpPage3)
-	enum { IDD = IDD_HELP_PAGE3 };
+	//{{AFX_DATA(CDlgPageEncodeFinish)
+	enum { IDD = IDD_PAGE_ENCODE_FINISH };
 	//}}AFX_DATA
 	CDlgARBHelp* m_Parent;
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgHelpPage3)
+	//{{AFX_VIRTUAL(CDlgPageEncodeFinish)
 public:
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardBack();
@@ -65,7 +65,7 @@ protected:
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDlgHelpPage3)
+	//{{AFX_MSG(CDlgPageEncodeFinish)
 	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

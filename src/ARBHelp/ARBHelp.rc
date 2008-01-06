@@ -70,7 +70,7 @@ IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
 // Dialog
 //
 
-IDD_HELP_PAGE1 DIALOGEX 0, 0, 320, 200
+IDD_PAGE_ENCODE DIALOGEX 0, 0, 320, 200
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Agility Record Book Helper"
 FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
@@ -79,7 +79,7 @@ BEGIN
     LTEXT           "",IDC_TEXT2,3,189,314,8
 END
 
-IDD_HELP_PAGE2 DIALOGEX 0, 0, 320, 200
+IDD_PAGE_ENCODE_FILES DIALOGEX 0, 0, 320, 200
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Agility Record Book Helper"
 FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
@@ -88,7 +88,7 @@ BEGIN
     LISTBOX         IDC_LIST,3,12,314,185,LBS_SORT | LBS_OWNERDRAWFIXED | LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | LBS_EXTENDEDSEL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
 END
 
-IDD_HELP_PAGE3 DIALOGEX 0, 0, 320, 200
+IDD_PAGE_ENCODE_FINISH DIALOGEX 0, 0, 320, 200
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Agility Record Book Helper"
 FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
@@ -96,7 +96,15 @@ BEGIN
     LTEXT           "Now that the information is gathered, press Finish to copy the information to the clipboard and start an email.\n\nOnce the email is started, paste the copied data into the message and send it. This will help diagnose the problem.",IDC_STATIC,3,3,314,194
 END
 
-IDD_HELP_PAGE4 DIALOGEX 0, 0, 320, 200
+IDD_PAGE_DECODE DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Agility Record Book Decoder"
+FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    LTEXT           "",IDC_TEXT,3,3,314,183
+END
+
+IDD_PAGE_DECODE_FINISH DIALOGEX 0, 0, 320, 200
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Agility Record Book Decoder"
 FONT 10, "Microsoft Sans Serif", 400, 0, 0x0
@@ -160,7 +168,7 @@ BEGIN
         BOTTOMMARGIN, 197
     END
 
-    IDD_HELP_PAGE2, DIALOG
+    IDD_PAGE_FILES, DIALOG
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 317
@@ -168,7 +176,7 @@ BEGIN
         BOTTOMMARGIN, 197
     END
 
-    IDD_HELP_PAGE3, DIALOG
+    IDD_PAGE_ENCODE_FINISH, DIALOG
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 317
@@ -176,7 +184,7 @@ BEGIN
         BOTTOMMARGIN, 197
     END
 
-    IDD_HELP_PAGE4, DIALOG
+    IDD_PAGE_DECODE, DIALOG
     BEGIN
         LEFTMARGIN, 3
         RIGHTMARGIN, 317
@@ -206,10 +214,10 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_DECODE              "In order to decode the gathered information, first select all the text from '%1' to '%2' and copy it to the clipboard. Make sure to include those strings! Then press 'Next'."
     IDS_CLIPBOARD_FAILED    "Unable to open clipboard"
     IDS_ERR_BUFFER_TOO_SMALL "Buffer too small to process path"
     IDS_CANNOT_READ         "Cannot read %1"
+    IDS_DECODE              "In order to decode the gathered information, first select all the text from '%1' to '%2' and copy it to the clipboard. Make sure to include those strings! Then press 'Next'."
 END
 
 #endif    // English (U.S.) resources

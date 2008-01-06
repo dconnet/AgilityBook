@@ -35,7 +35,7 @@
  */
 
 #include "stdafx.h"
-#include "DlgHelpPage1.h"
+#include "DlgPageEncode.h"
 
 #include <set>
 #include <sstream>
@@ -441,10 +441,9 @@ static void DumpFileStatus(
 
 IMPLEMENT_DYNAMIC(CDlgHelpPage1, CPropertyPage)
 
-CDlgHelpPage1::CDlgHelpPage1(CDlgARBHelp* pParent, bool decode)
+CDlgHelpPage1::CDlgHelpPage1(CDlgARBHelp* pParent)
 	: CPropertyPage(CDlgHelpPage1::IDD)
 	, m_Parent(pParent)
-	, m_Decode(decode)
 {
 	//{{AFX_DATA_INIT(CDlgHelpPage1)
 	//}}AFX_DATA_INIT
@@ -476,20 +475,13 @@ BOOL CDlgHelpPage1::OnInitDialog()
 	CPropertyPage::OnInitDialog();
 
 	CString msg;
-	if (m_Decode)
+	UINT ids[3] = {IDS_INTRODUCTION, IDS_GATHER, IDS_WHATNEXT};
+	for (int i = 0; i < 3; ++i)
 	{
-		msg.FormatMessage(IDS_DECODE, STREAM_DATA_BEGIN, STREAM_DATA_END);
-	}
-	else
-	{
-		UINT ids[3] = {IDS_INTRODUCTION, IDS_GATHER, IDS_WHATNEXT};
-		for (int i = 0; i < 3; ++i)
-		{
-			CString tmp;
-			tmp.LoadString(ids[i]);
-			msg += tmp;
-			msg += _T("\r\n\r\n");
-		}
+		CString tmp;
+		tmp.LoadString(ids[i]);
+		msg += tmp;
+		msg += _T("\r\n\r\n");
 	}
 	m_ctrlText.SetWindowText(msg);
 
@@ -549,142 +541,136 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 	// SetWizardButtons does a postmessage. I need it updated now! (lparam is buttons)
 	psheet->SendMessage(PSM_SETWIZBUTTONS, 0, 0);
 
-	if (m_Decode)
-	{
-	}
-	else
-	{
-		CString msg, tmp;
+	CString msg, tmp;
 
-		// Read registry settings
-		tmp.LoadString(IDS_TASK_REGISTRY);
-		msg += tmp;
-		m_ctrlText.SetWindowText(msg);
-		static struct
+	// Read registry settings
+	tmp.LoadString(IDS_TASK_REGISTRY);
+	msg += tmp;
+	m_ctrlText.SetWindowText(msg);
+	static struct
+	{
+		HKEY hRegKey;
+		bool bProcessOpenCmd;
+		LPCTSTR pRootString;
+		LPCTSTR pRegPath;
+	} const sc_Reg[] =
+	{
+		{HKEY_CURRENT_USER, false, _T("HKCU\\"), _T("Software\\dcon Software\\Agility Record Book")},
+		{HKEY_CLASSES_ROOT, false, _T("HKCR\\"), _T(".arb")},
+		{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("AgilityBook.Document")},
+		{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AGILIT~1.EXE")},
+		{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AgilityBook.exe")},
+		{NULL, NULL}
+	};
+	CString regInfo;
+	for (int index = 0; sc_Reg[index].hRegKey; ++index)
+	{
+		otstringstream data;
+		HKEY hSubKey;
+		if (ERROR_SUCCESS == RegOpenKeyEx(sc_Reg[index].hRegKey, sc_Reg[index].pRegPath, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
 		{
-			HKEY hRegKey;
-			bool bProcessOpenCmd;
-			LPCTSTR pRootString;
-			LPCTSTR pRegPath;
-		} const sc_Reg[] =
-		{
-			{HKEY_CURRENT_USER, false, _T("HKCU\\"), _T("Software\\dcon Software\\Agility Record Book")},
-			{HKEY_CLASSES_ROOT, false, _T("HKCR\\"), _T(".arb")},
-			{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("AgilityBook.Document")},
-			{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AGILIT~1.EXE")},
-			{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AgilityBook.exe")},
-			{NULL, NULL}
-		};
-		CString regInfo;
-		for (int index = 0; sc_Reg[index].hRegKey; ++index)
-		{
-			otstringstream data;
-			HKEY hSubKey;
-			if (ERROR_SUCCESS == RegOpenKeyEx(sc_Reg[index].hRegKey, sc_Reg[index].pRegPath, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
+			data << sc_Reg[index].pRootString << sc_Reg[index].pRegPath << _T("\r\n");
+			DumpRegistry(hSubKey, 1, data);
+			HKEY hOpenKey;
+			if (sc_Reg[index].bProcessOpenCmd)
 			{
-				data << sc_Reg[index].pRootString << sc_Reg[index].pRegPath << _T("\r\n");
-				DumpRegistry(hSubKey, 1, data);
-				HKEY hOpenKey;
-				if (sc_Reg[index].bProcessOpenCmd)
+				if (ERROR_SUCCESS == RegOpenKeyEx(hSubKey, _T("shell\\open\\command"), 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hOpenKey))
 				{
-					if (ERROR_SUCCESS == RegOpenKeyEx(hSubKey, _T("shell\\open\\command"), 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hOpenKey))
+					DWORD type = REG_SZ;
+					DWORD dwLen = BUFF_SIZE;
+					DWORD dwRet = RegQueryValueEx(hOpenKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
+					if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
 					{
-						DWORD type = REG_SZ;
-						DWORD dwLen = BUFF_SIZE;
-						DWORD dwRet = RegQueryValueEx(hOpenKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
-						if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
+						if (ERROR_MORE_DATA == dwRet)
 						{
-							if (ERROR_MORE_DATA == dwRet)
+							tmp.LoadString(IDS_ERR_BUFFER_TOO_SMALL);
+							PrintIndent(1, data);
+							data << (LPCTSTR)tmp << _T("\r\n");
+						}
+						else
+						{
+							CString path(g_szBuff2);
+							if (path[0] == '"')
 							{
-								tmp.LoadString(IDS_ERR_BUFFER_TOO_SMALL);
-								PrintIndent(1, data);
-								data << (LPCTSTR)tmp << _T("\r\n");
+								path = path.Mid(1);
+								int pos = path.Find('"');
+								if (0 < pos)
+									path = path.Left(pos);
 							}
 							else
 							{
-								CString path(g_szBuff2);
-								if (path[0] == '"')
-								{
-									path = path.Mid(1);
-									int pos = path.Find('"');
-									if (0 < pos)
-										path = path.Left(pos);
-								}
-								else
-								{
-									int pos = path.Find(' ');
-									if (0 < pos)
-										path = path.Left(pos);
-								}
-								int pos = path.ReverseFind('\\');
+								int pos = path.Find(' ');
 								if (0 < pos)
-								{
 									path = path.Left(pos);
-								}
-								DumpFileStatus(path, 1, data);
 							}
+							int pos = path.ReverseFind('\\');
+							if (0 < pos)
+							{
+								path = path.Left(pos);
+							}
+							DumpFileStatus(path, 1, data);
 						}
-						// read default
-						RegCloseKey(hOpenKey);
 					}
+					// read default
+					RegCloseKey(hOpenKey);
+				}
+			}
+			RegCloseKey(hSubKey);
+		}
+		else
+		{
+			tmp.FormatMessage(IDS_CANNOT_READ, sc_Reg[index].pRegPath);
+			data << (LPCTSTR)tmp << _T("\r\n");
+		}
+		regInfo += data.str().c_str();
+	}
+	m_Parent->AddRegistryInfo(regInfo);
+
+	tmp.LoadString(IDS_TASK_FILES);
+	msg += _T("\r\n\r\n");
+	msg += tmp;
+	m_ctrlText.SetWindowText(msg);
+	std::set<CString> drives;
+	drives.insert(_T("C:")); // Search C:
+	HKEY hRecent;
+	// Also add any drives that are in the MRU list.
+	if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, _T("Software\\dcon Software\\Agility Record Book\\Recent File List"), 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hRecent))
+	{
+		DWORD i;
+		// Enumerate the subkeys, recursively.
+		for (i = 0; ; ++i)
+		{
+			DWORD dwLen = BUFF_SIZE;
+			// A key name max size is 255.
+			if (ERROR_SUCCESS != RegEnumKeyEx(hRecent, i, g_szBuff, &dwLen, NULL, NULL, NULL, NULL))
+				break;
+			HKEY hSubKey;
+			if (ERROR_SUCCESS == RegOpenKeyEx(hRecent, g_szBuff, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
+			{
+				if (g_szBuff[1] == ':')
+				{
+					g_szBuff[1] = NULL;
+					CString tmpBuff(g_szBuff);
+					tmpBuff.MakeUpper();
+					drives.insert(tmpBuff);
 				}
 				RegCloseKey(hSubKey);
 			}
-			else
-			{
-				tmp.FormatMessage(IDS_CANNOT_READ, sc_Reg[index].pRegPath);
-				data << (LPCTSTR)tmp << _T("\r\n");
-			}
-			regInfo += data.str().c_str();
 		}
-		m_Parent->AddRegistryInfo(regInfo);
-
-		tmp.LoadString(IDS_TASK_FILES);
-		msg += _T("\r\n\r\n");
-		msg += tmp;
-		m_ctrlText.SetWindowText(msg);
-		std::set<CString> drives;
-		drives.insert(_T("C:")); // Search C:
-		HKEY hRecent;
-		// Also add any drives that are in the MRU list.
-		if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, _T("Software\\dcon Software\\Agility Record Book\\Recent File List"), 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hRecent))
-		{
-			DWORD i;
-			// Enumerate the subkeys, recursively.
-			for (i = 0; ; ++i)
-			{
-				DWORD dwLen = BUFF_SIZE;
-				// A key name max size is 255.
-				if (ERROR_SUCCESS != RegEnumKeyEx(hRecent, i, g_szBuff, &dwLen, NULL, NULL, NULL, NULL))
-					break;
-				HKEY hSubKey;
-				if (ERROR_SUCCESS == RegOpenKeyEx(hRecent, g_szBuff, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
-				{
-					if (g_szBuff[1] == ':')
-					{
-						g_szBuff[1] = NULL;
-						CString tmpBuff(g_szBuff);
-						tmpBuff.MakeUpper();
-						drives.insert(tmpBuff);
-					}
-					RegCloseKey(hSubKey);
-				}
-			}
-			RegCloseKey(hRecent);
-		}
-		for (std::set<CString>::iterator i = drives.begin(); i != drives.end(); ++i)
-		{
-			tmp.FormatMessage(IDS_SEARCHINGDRIVE, (*i)[0]);
-			msg += tmp;
-			CProcessARBs search(m_Parent, m_ctrlText, msg, m_ctrlText2);
-			m_ctrlText.SetWindowText(msg);
-			SearchFor(*i, search);
-		}
-		m_ctrlText2.SetWindowText(_T(""));
+		RegCloseKey(hRecent);
 	}
+	for (std::set<CString>::iterator i = drives.begin(); i != drives.end(); ++i)
+	{
+		tmp.FormatMessage(IDS_SEARCHINGDRIVE, (*i)[0]);
+		msg += tmp;
+		CProcessARBs search(m_Parent, m_ctrlText, msg, m_ctrlText2);
+		m_ctrlText.SetWindowText(msg);
+		SearchFor(*i, search);
+	}
+	m_ctrlText2.SetWindowText(_T(""));
 
-	if (!m_Decode && 0 == m_Parent->GetARBFiles().size())
-		return IDD_HELP_PAGE3;
+	if (0 == m_Parent->GetARBFiles().size())
+		return IDD_PAGE_ENCODE_FINISH;
 	else
 		return 0;
 }

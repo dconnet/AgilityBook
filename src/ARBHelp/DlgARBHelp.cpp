@@ -121,23 +121,25 @@ IMPLEMENT_DYNAMIC(CDlgARBHelp, CPropertySheet)
 CDlgARBHelp::CDlgARBHelp(bool decode)
 	: CPropertySheet(_T(""), NULL, 0)
 	, m_Decode(decode)
-	, m_pagePage1(this, decode)
-	, m_pagePage2(this)
-	, m_pagePage3(this)
-	, m_pageEdit()
+	, m_pageEncode(this)
+	, m_pageFiles(this)
+	, m_pageEncodeFinish(this)
+	, m_pageDecode()
+	, m_pageDecodeFinish()
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	SetWizardMode();
 
-	AddPage(&m_pagePage1);
 	if (m_Decode)
 	{
-		AddPage(&m_pageEdit);
+		AddPage(&m_pageDecode);
+		AddPage(&m_pageDecodeFinish);
 	}
 	else
 	{
-		AddPage(&m_pagePage2);
-		AddPage(&m_pagePage3);
+		AddPage(&m_pageEncode);
+		AddPage(&m_pageFiles);
+		AddPage(&m_pageEncodeFinish);
 	}
 }
 #pragma warning ( pop )
@@ -172,7 +174,7 @@ void CDlgARBHelp::SetARBFileStatus(CString const& inFileName, bool bInclude)
 }
 
 // Make sure this is synchronized (order of encoding) with
-// DlgHelpPageEdit (decoder)
+// DlgPageDecode (decoder)
 void CDlgARBHelp::SendIt()
 {
 	// Scoping done to minimize memory usage.

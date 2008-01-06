@@ -27,7 +27,7 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgHelpPage2 class
+ * @brief implementation of the CDlgPageEncodeFiles class
  * @author David Connet
  *
  * Revision History
@@ -35,7 +35,7 @@
  */
 
 #include "stdafx.h"
-#include "DlgHelpPage2.h"
+#include "DlgPageEncodeFiles.h"
 
 #include "DlgARBHelp.h"
 
@@ -46,40 +46,40 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgHelpPage2 property page
+// CDlgPageEncodeFiles property page
 
-IMPLEMENT_DYNAMIC(CDlgHelpPage2, CPropertyPage)
+IMPLEMENT_DYNAMIC(CDlgPageEncodeFiles, CPropertyPage)
 
-CDlgHelpPage2::CDlgHelpPage2(CDlgARBHelp* pParent)
-	: CPropertyPage(CDlgHelpPage2::IDD)
+CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
+	: CPropertyPage(CDlgPageEncodeFiles::IDD)
 	, m_Parent(pParent)
 {
-	//{{AFX_DATA_INIT(CDlgHelpPage2)
+	//{{AFX_DATA_INIT(CDlgPageEncodeFiles)
 	//}}AFX_DATA_INIT
 }
 
-CDlgHelpPage2::~CDlgHelpPage2()
+CDlgPageEncodeFiles::~CDlgPageEncodeFiles()
 {
 }
 
-void CDlgHelpPage2::DoDataExchange(CDataExchange* pDX)
+void CDlgPageEncodeFiles::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgHelpPage2)
+	//{{AFX_DATA_MAP(CDlgPageEncodeFiles)
 	DDX_Control(pDX, IDC_TEXT, m_ctrlText);
 	DDX_Control(pDX, IDC_LIST, m_ctrlList);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgHelpPage2, CPropertyPage)
-	//{{AFX_MSG_MAP(CDlgHelpPage2)
+BEGIN_MESSAGE_MAP(CDlgPageEncodeFiles, CPropertyPage)
+	//{{AFX_MSG_MAP(CDlgPageEncodeFiles)
 	ON_CLBN_CHKCHANGE(IDC_LIST, OnCheckChange)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CDlgHelpPage2::UpdateText()
+void CDlgPageEncodeFiles::UpdateText()
 {
 	int nChecked = 0;
 	for (int i = 0; i < m_ctrlList.GetCount(); ++i)
@@ -93,9 +93,9 @@ void CDlgHelpPage2::UpdateText()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgHelpPage2 message handlers
+// CDlgPageEncodeFiles message handlers
 
-BOOL CDlgHelpPage2::OnInitDialog()
+BOOL CDlgPageEncodeFiles::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	m_ctrlText.GetWindowText(m_Text);
@@ -112,19 +112,19 @@ BOOL CDlgHelpPage2::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CDlgHelpPage2::OnCheckChange()
+void CDlgPageEncodeFiles::OnCheckChange()
 {
 	UpdateText();
 }
 
-BOOL CDlgHelpPage2::OnSetActive()
+BOOL CDlgPageEncodeFiles::OnSetActive()
 {
 	CPropertySheet* psheet = (CPropertySheet*)GetParent();
 	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_NEXT);
 	return __super::OnSetActive();
 }
 
-LRESULT CDlgHelpPage2::OnWizardNext()
+LRESULT CDlgPageEncodeFiles::OnWizardNext()
 {
 	for (int i = 0; i < m_ctrlList.GetCount(); ++i)
 	{

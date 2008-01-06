@@ -299,19 +299,23 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPage1.cpp"
+				RelativePath="..\..\ARBHelp\DlgPageDecode.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPage2.cpp"
+				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPage3.cpp"
+				RelativePath="..\..\ARBHelp\DlgPageEncode.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPageEdit.cpp"
+				RelativePath="..\..\ARBHelp\DlgPageEncodeFiles.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARBHelp\DlgPageEncodeFinish.cpp"
 				>
 			</File>
 			<File
@@ -411,19 +415,23 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPage1.h"
+				RelativePath="..\..\ARBHelp\DlgPageDecode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPage2.h"
+				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPage3.h"
+				RelativePath="..\..\ARBHelp\DlgPageEncode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgHelpPageEdit.h"
+				RelativePath="..\..\ARBHelp\DlgPageEncodeFiles.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARBHelp\DlgPageEncodeFinish.h"
 				>
 			</File>
 			<File
