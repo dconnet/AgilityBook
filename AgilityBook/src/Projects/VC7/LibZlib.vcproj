@@ -26,7 +26,6 @@
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="TRUE"
 				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
