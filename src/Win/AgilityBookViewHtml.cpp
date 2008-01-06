@@ -54,7 +54,6 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookTreeData.h"
-#include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"

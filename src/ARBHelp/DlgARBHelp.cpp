@@ -243,7 +243,11 @@ void CDlgARBHelp::SendIt()
 			memcpy(pData, (LPCTSTR)clpData, sizeof(TCHAR)*(clpData.GetLength()+1));
 			GlobalUnlock(temp);
 			// send data to clipbard
+#ifdef UNICODE
+			SetClipboardData(CF_UNICODETEXT, temp);
+#else
 			SetClipboardData(CF_TEXT, temp);
+#endif
 		}
 		CloseClipboard();
 
