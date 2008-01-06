@@ -27,7 +27,7 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgHelpPageEdit class
+ * @brief Read clipboard and decode data.
  * @author David Connet
  *
  * Revision History
@@ -35,7 +35,7 @@
  */
 
 #include "stdafx.h"
-#include "DlgHelpPageEdit.h"
+#include "DlgPageDecodeFinish.h"
 
 #include <fstream>
 #include <ios>
@@ -50,39 +50,39 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgHelpPageEdit property page
+// CDlgPageDecodeFinish property page
 
-IMPLEMENT_DYNAMIC(CDlgHelpPageEdit, CPropertyPage)
+IMPLEMENT_DYNAMIC(CDlgPageDecodeFinish, CPropertyPage)
 
-CDlgHelpPageEdit::CDlgHelpPageEdit()
-	: CPropertyPage(CDlgHelpPageEdit::IDD)
+CDlgPageDecodeFinish::CDlgPageDecodeFinish()
+	: CPropertyPage(CDlgPageDecodeFinish::IDD)
 {
-	//{{AFX_DATA_INIT(CDlgHelpPageEdit)
+	//{{AFX_DATA_INIT(CDlgPageDecodeFinish)
 	//}}AFX_DATA_INIT
 }
 
-CDlgHelpPageEdit::~CDlgHelpPageEdit()
+CDlgPageDecodeFinish::~CDlgPageDecodeFinish()
 {
 }
 
-void CDlgHelpPageEdit::DoDataExchange(CDataExchange* pDX)
+void CDlgPageDecodeFinish::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgHelpPageEdit)
+	//{{AFX_DATA_MAP(CDlgPageDecodeFinish)
 	DDX_Control(pDX, IDC_EDIT, m_ctrlEdit);
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgHelpPageEdit, CPropertyPage)
-	//{{AFX_MSG_MAP(CDlgHelpPageEdit)
+BEGIN_MESSAGE_MAP(CDlgPageDecodeFinish, CPropertyPage)
+	//{{AFX_MSG_MAP(CDlgPageDecodeFinish)
 	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgHelpPageEdit message handlers
+// CDlgPageDecodeFinish message handlers
 
-BOOL CDlgHelpPageEdit::OnInitDialog()
+BOOL CDlgPageDecodeFinish::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
@@ -205,7 +205,7 @@ BOOL CDlgHelpPageEdit::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-BOOL CDlgHelpPageEdit::OnSetActive()
+BOOL CDlgPageDecodeFinish::OnSetActive()
 {
 	CPropertySheet* psheet = (CPropertySheet*)GetParent();
 	psheet->SetWizardButtons(PSWIZB_FINISH);
@@ -217,7 +217,7 @@ static void ClearFile(CString const& inFile)
 	DeleteFile(inFile);
 }
 
-void CDlgHelpPageEdit::OnDestroy()
+void CDlgPageDecodeFinish::OnDestroy()
 {
 	CPropertyPage::OnDestroy();
 

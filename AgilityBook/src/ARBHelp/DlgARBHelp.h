@@ -38,10 +38,11 @@
 #include <map>
 #include "resource.h"
 #include "ARBTypes.h"
-#include "DlgHelpPage1.h"
-#include "DlgHelpPage2.h"
-#include "DlgHelpPage3.h"
-#include "DlgHelpPageEdit.h"
+#include "DlgPageEncode.h"
+#include "DlgPageEncodeFiles.h"
+#include "DlgPageEncodeFinish.h"
+#include "DlgPageDecode.h"
+#include "DlgPageDecodeFinish.h"
 
 class CDlgARBHelp : public CPropertySheet
 {
@@ -59,10 +60,11 @@ public:
 protected:
 	HICON m_hIcon;
 	bool m_Decode;
-	CDlgHelpPage1 m_pagePage1;
-	CDlgHelpPage2 m_pagePage2;
-	CDlgHelpPage3 m_pagePage3;
-	CDlgHelpPageEdit m_pageEdit;
+	CDlgHelpPage1 m_pageEncode;
+	CDlgPageEncodeFiles m_pageFiles;
+	CDlgPageEncodeFinish m_pageEncodeFinish;
+	CDlgPageDecode m_pageDecode;
+	CDlgPageDecodeFinish m_pageDecodeFinish;
 	tstring m_RegInfo;
 	FileMap m_IncFile;
 

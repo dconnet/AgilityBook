@@ -3,10 +3,11 @@
 // Used by ARBHelp.rc
 //
 #define IDR_MAINFRAME                   128
-#define IDD_HELP_PAGE1                  200
-#define IDD_HELP_PAGE2                  201
-#define IDD_HELP_PAGE3                  202
-#define IDD_HELP_PAGE4                  203
+#define IDD_PAGE_ENCODE                 200
+#define IDD_PAGE_ENCODE_FILES           201
+#define IDD_PAGE_ENCODE_FINISH          202
+#define IDD_PAGE_DECODE                 203
+#define IDD_PAGE_DECODE_FINISH          204
 #define IDC_TEXT                        1000
 #define IDC_TEXT2                       1001
 #define IDC_LIST                        1002

@@ -29,45 +29,45 @@
 /**
  * @file
  *
- * @brief interface of the CDlgHelpPageEdit class
+ * @brief interface of the CDlgHelpPage1 class
  * @author David Connet
  *
  * Revision History
- * @li 2007-02-08 DRC Created
+ * @li 2007-01-02 DRC Created
  */
 
 #include "resource.h"
-#include <vector>
+class CDlgARBHelp;
 
-class CDlgHelpPageEdit : public CPropertyPage
+class CDlgHelpPage1 : public CPropertyPage
 {
-	DECLARE_DYNAMIC(CDlgHelpPageEdit)
+	DECLARE_DYNAMIC(CDlgHelpPage1)
 public:
-	CDlgHelpPageEdit();
-	~CDlgHelpPageEdit();
+	CDlgHelpPage1(CDlgARBHelp* pParent);
+	~CDlgHelpPage1();
 
 private:
 // Dialog Data
-	//{{AFX_DATA(CDlgHelpPageEdit)
-	enum { IDD = IDD_HELP_PAGE4 };
-	CEdit	m_ctrlEdit;
+	//{{AFX_DATA(CDlgHelpPage1)
+	enum { IDD = IDD_PAGE_ENCODE };
+	CStatic m_ctrlText;
+	CStatic m_ctrlText2;
 	//}}AFX_DATA
-	std::vector<CString> m_TmpFiles;
+	CDlgARBHelp* m_Parent;
 
 // Overrides
-	//{{AFX_VIRTUAL(CDlgHelpPageEdit)
+	//{{AFX_VIRTUAL(CDlgHelpPage1)
 public:
 	virtual BOOL OnSetActive();
+	virtual LRESULT OnWizardNext();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	void UpdateText();
-	//{{AFX_MSG(CDlgHelpPageEdit)
+	//{{AFX_MSG(CDlgHelpPage1)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnDestroy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

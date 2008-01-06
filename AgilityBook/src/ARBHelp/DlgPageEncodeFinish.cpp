@@ -27,7 +27,7 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgHelpPage3 class
+ * @brief implementation of the CDlgPageEncodeFinish class
  * @author David Connet
  *
  * Revision History
@@ -35,7 +35,7 @@
  */
 
 #include "stdafx.h"
-#include "DlgHelpPage3.h"
+#include "DlgPageEncodeFinish.h"
 
 #include "DlgARBHelp.h"
 
@@ -46,60 +46,60 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgHelpPage3 property page
+// CDlgPageEncodeFinish property page
 
-IMPLEMENT_DYNAMIC(CDlgHelpPage3, CPropertyPage)
+IMPLEMENT_DYNAMIC(CDlgPageEncodeFinish, CPropertyPage)
 
-CDlgHelpPage3::CDlgHelpPage3(CDlgARBHelp* pParent)
-	: CPropertyPage(CDlgHelpPage3::IDD)
+CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
+	: CPropertyPage(CDlgPageEncodeFinish::IDD)
 	, m_Parent(pParent)
 {
-	//{{AFX_DATA_INIT(CDlgHelpPage3)
+	//{{AFX_DATA_INIT(CDlgPageEncodeFinish)
 	//}}AFX_DATA_INIT
 }
 
-CDlgHelpPage3::~CDlgHelpPage3()
+CDlgPageEncodeFinish::~CDlgPageEncodeFinish()
 {
 }
 
-void CDlgHelpPage3::DoDataExchange(CDataExchange* pDX)
+void CDlgPageEncodeFinish::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgHelpPage3)
+	//{{AFX_DATA_MAP(CDlgPageEncodeFinish)
 	//}}AFX_DATA_MAP
 }
 
-BEGIN_MESSAGE_MAP(CDlgHelpPage3, CPropertyPage)
-	//{{AFX_MSG_MAP(CDlgHelpPage3)
+BEGIN_MESSAGE_MAP(CDlgPageEncodeFinish, CPropertyPage)
+	//{{AFX_MSG_MAP(CDlgPageEncodeFinish)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgHelpPage3 message handlers
+// CDlgPageEncodeFinish message handlers
 
-BOOL CDlgHelpPage3::OnInitDialog()
+BOOL CDlgPageEncodeFinish::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-BOOL CDlgHelpPage3::OnSetActive()
+BOOL CDlgPageEncodeFinish::OnSetActive()
 {
 	CPropertySheet* psheet = (CPropertySheet*)GetParent();
 	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_FINISH);
 	return __super::OnSetActive();
 }
 
-LRESULT CDlgHelpPage3::OnWizardBack()
+LRESULT CDlgPageEncodeFinish::OnWizardBack()
 {
 	if (0 == m_Parent->GetARBFiles().size())
-		return IDD_HELP_PAGE1;
+		return IDD_PAGE_ENCODE;
 	else
 		return 0;
 }
 
-BOOL CDlgHelpPage3::OnWizardFinish()
+BOOL CDlgPageEncodeFinish::OnWizardFinish()
 {
 	CWaitCursor wait;
 	CPropertySheet* psheet = (CPropertySheet*) GetParent();
