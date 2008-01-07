@@ -270,7 +270,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Trier &Affichage Points...",  ID_VIEW_POINTS_VIEW_SORT
         MENUITEM "&Montrer Récompenses Cachées", ID_VIEW_HIDDEN
-        MENUITEM "&Lifetime Points by Event",   ID_VIEW_LIFETIME_EVENTS
+        MENUITEM "Points c&umulatifs par épreuve", ID_VIEW_LIFETIME_EVENTS
         MENUITEM SEPARATOR
         MENUITEM "Développer",                  ID_EXPAND
         MENUITEM "Réduire",                     ID_COLLAPSE
@@ -3120,7 +3120,7 @@ BEGIN
     ID_VIEW_TABLE_IN_YPS    "Inclure temps table dans m/s\nTable m/s"
     ID_VIEW_POINTS_VIEW_SORT 
                             "Trier points par ordre selectionné\nTrier affichage points"
-    ID_VIEW_LIFETIME_EVENTS "View Lifetime Point details by Level or Event\nLifetime Events"
+    ID_VIEW_LIFETIME_EVENTS "Afficher points cumulatifs triés par degré ou épreuve\nCumulatif"
     ID_HELP_CONTENTS        "Montrer onglet contenu d'aide\nContenu"
     ID_HELP_UPDATE          "Cherche mise a jour\nMis a jour"
     ID_HELP_SPLASH          "Montrer ecran introduction\nEcran introduction"
