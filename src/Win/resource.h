@@ -1124,6 +1124,7 @@
 #define ID_VIEW_HIDDEN                  32864
 #define ID_VIEW_TABLE_IN_YPS            32865
 #define ID_VIEW_POINTS_VIEW_SORT        32866
+#define ID_VIEW_LIFETIME_EVENTS         32867
 #define ID_HELP_CONTENTS                32870
 #define ID_HELP_UPDATE                  32871
 #define ID_HELP_SPLASH                  32872

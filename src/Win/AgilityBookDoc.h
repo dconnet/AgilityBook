@@ -257,6 +257,7 @@ protected:
 	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewHiddenTitles(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewTableInYPS(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateViewLifetimeEvents(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

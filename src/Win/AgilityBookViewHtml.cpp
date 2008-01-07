@@ -77,6 +77,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewHtml, CHtmlView)
 	ON_COMMAND(ID_AGILITY_NEW_TITLE, OnAgilityNewTitle)
 	ON_COMMAND(ID_VIEW_POINTS_VIEW_SORT, OnViewPointsViewSort)
 	ON_COMMAND(ID_VIEW_HIDDEN, OnViewHiddenTitles)
+	ON_COMMAND(ID_VIEW_LIFETIME_EVENTS, OnViewLifetimePointsByEvent)
 END_MESSAGE_MAP()
 
 
@@ -605,5 +606,12 @@ void CAgilityBookViewHtml::OnViewHiddenTitles()
 			GetDocument()->ResetVisibility(venues, *iterTitle);
 		}
 	}
+	LoadData();
+}
+
+
+void CAgilityBookViewHtml::OnViewLifetimePointsByEvent()
+{
+	CAgilityBookOptions::SetViewLifetimePointsByEvent(!CAgilityBookOptions::GetViewLifetimePointsByEvent());
 	LoadData();
 }

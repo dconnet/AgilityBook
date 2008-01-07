@@ -1569,8 +1569,15 @@ BOOL CDlgListViewer::OnInitDialog()
 	else if (m_Lifetime)
 	{
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, IDS_COL_DIVISION);
-		pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, IDS_COL_LEVEL);
+		if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
+		{
+			pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, IDS_COL_EVENT);
+		}
+		else
+		{
+			pColData->InsertColumn(m_ctrlList, COL_OTHER_DIV, IDS_COL_DIVISION);
+			pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, IDS_COL_LEVEL);
+		}
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, IDS_COL_POINTS);
 		int iItem = 0;
 		for (std::list<LifeTimePointInfoPtr>::const_iterator iter = m_Lifetime->begin();

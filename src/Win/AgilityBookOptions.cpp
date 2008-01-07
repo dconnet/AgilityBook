@@ -129,6 +129,7 @@ Common
 	DW ViewRunsByTrial
 	DW ViewNewestFirst
 	DW ViewHiddenTitles
+	DW ViewLifetimeEvents
 	DW TableInYPS
 	DW CRCDImage
 	ST PrintFontListName
@@ -516,6 +517,19 @@ bool CAgilityBookOptions::GetViewHiddenTitles()
 void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
 {
 	theApp.WriteProfileInt(_T("Common"), _T("ViewHiddenTitles"), bSet ? 1 : 0);
+}
+
+
+bool CAgilityBookOptions::GetViewLifetimePointsByEvent()
+{
+	int val = theApp.GetProfileInt(_T("Common"), _T("ViewLifetimeEvents"), 0);
+	return val == 1 ? true : false;
+}
+
+
+void CAgilityBookOptions::SetViewLifetimePointsByEvent(bool bSet)
+{
+	theApp.WriteProfileInt(_T("Common"), _T("ViewLifetimeEvents"), bSet ? 1 : 0);
 }
 
 
