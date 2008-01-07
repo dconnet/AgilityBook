@@ -128,5 +128,6 @@ protected:
 	afx_msg void OnAgilityNewTitle();
 	afx_msg void OnViewPointsViewSort();
 	afx_msg void OnViewHiddenTitles();
+	afx_msg void OnViewLifetimePointsByEvent();
 	DECLARE_MESSAGE_MAP()
 };

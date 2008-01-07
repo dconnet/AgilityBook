@@ -170,6 +170,7 @@ BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDDEN, OnUpdateViewHiddenTitles)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TABLE_IN_YPS, OnUpdateViewTableInYPS)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_LIFETIME_EVENTS, OnUpdateViewLifetimeEvents)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -1657,4 +1658,10 @@ void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
 void CAgilityBookDoc::OnUpdateViewTableInYPS(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(CAgilityBookOptions::GetTableInYPS() ? 1 : 0);
+}
+
+
+void CAgilityBookDoc::OnUpdateViewLifetimeEvents(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(CAgilityBookOptions::GetViewLifetimePointsByEvent() ? 1 : 0);
 }

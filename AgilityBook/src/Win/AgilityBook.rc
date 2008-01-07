@@ -266,14 +266,16 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Show &Newest Trials First",   ID_VIEW_SORTRUNS
         MENUITEM "Show &Runs By Trial",         ID_VIEW_RUNS_BY_TRIAL
-        MENUITEM "Sort &Points View...",        ID_VIEW_POINTS_VIEW_SORT
-        MENUITEM "Show &Hidden Titles",         ID_VIEW_HIDDEN
         MENUITEM "Include Table in &YPS",       ID_VIEW_TABLE_IN_YPS
         MENUITEM SEPARATOR
-        MENUITEM "&Expand",                     ID_EXPAND
-        MENUITEM "Co&llapse",                   ID_COLLAPSE
-        MENUITEM "E&xpand All",                 ID_EXPAND_ALL
-        MENUITEM "Collapse &All",               ID_COLLAPSE_ALL
+        MENUITEM "Sort &Points View...",        ID_VIEW_POINTS_VIEW_SORT
+        MENUITEM "Show &Hidden Titles",         ID_VIEW_HIDDEN
+        MENUITEM "&Lifetime Points by Event",   ID_VIEW_LIFETIME_EVENTS
+        MENUITEM SEPARATOR
+        MENUITEM "Expand",                      ID_EXPAND
+        MENUITEM "Collapse",                    ID_COLLAPSE
+        MENUITEM "Expand All",                  ID_EXPAND_ALL
+        MENUITEM "Collapse All",                ID_COLLAPSE_ALL
         MENUITEM SEPARATOR
         MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
@@ -3102,6 +3104,7 @@ BEGIN
     ID_VIEW_TABLE_IN_YPS    "Include the table in the YPS\nTable YPS"
     ID_VIEW_POINTS_VIEW_SORT 
                             "Sort the Points View by the specified order\nSort Points View"
+    ID_VIEW_LIFETIME_EVENTS "View Lifetime Point details by Level or Event\nLifetime Events"
     ID_HELP_CONTENTS        "Display the Contents tab of the help file\nContents"
     ID_HELP_UPDATE          "Check for Updates\nUpdates"
     ID_HELP_SPLASH          "Show the initial splash screen\nSplash"

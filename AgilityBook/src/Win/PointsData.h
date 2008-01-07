@@ -345,19 +345,20 @@ typedef boost::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
 /**
  * Subtotal lifetime points by division.
  */
-class CPointsDataLifetimeDiv : public CPointsDataLifetime
+class CPointsDataLifetimeByName : public CPointsDataLifetime
 {
 public:
-	CPointsDataLifetimeDiv(
+	CPointsDataLifetimeByName(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bLifetime,
 			ARBConfigVenuePtr inVenue,
-			tstring const& inDiv);
+			tstring const& inName);
 
+	// Adds are limited by inSort1 == m_Name
 	void AddLifetimeInfo(
-			tstring const& inDiv,
-			tstring const& inLevel,
+			tstring const& inSort1,
+			tstring const& inSort2,
 			double inLifetime,
 			double inFiltered);
 
@@ -366,9 +367,9 @@ public:
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
-	tstring m_Div;
+	tstring m_Name;
 };
-typedef boost::shared_ptr<CPointsDataLifetimeDiv> CPointsDataLifetimeDivPtr;
+typedef boost::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 

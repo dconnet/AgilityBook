@@ -133,6 +133,8 @@ public:
 			PointsViewSort inTertiary);
 	static bool GetViewHiddenTitles();
 	static void SetViewHiddenTitles(bool bSet);
+	static bool GetViewLifetimePointsByEvent();
+	static void SetViewLifetimePointsByEvent(bool bSet);
 	static bool GetTableInYPS();
 	static void SetTableInYPS(bool bSet);
 	static bool GetIncludeCRCDImage();
