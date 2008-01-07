@@ -384,6 +384,7 @@ static struct
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
 		IO_LOG_SUBNAME,
 		true, LVCFMT_LEFT, IDS_COL_SUBNAME},
+	{0, IO_RESERVED, false, 0, 0},
 	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
 		IO_RUNS_SPEED,
 		false, LVCFMT_LEFT, IDS_COL_SPEED},
