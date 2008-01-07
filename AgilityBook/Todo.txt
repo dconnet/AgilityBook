@@ -1,7 +1,5 @@
 Last Updated: 1/6/2008
 
-- Make it possible to view lifetime points by level or event (program option)
-
 - Remember secretary info so you can easily select into a calendar entry
 
 - Make the trial properties dialog easier to add a club.
