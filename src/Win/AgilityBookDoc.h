@@ -67,17 +67,20 @@ struct CVenueFilter;
 	#define	CREATE_NEWDOG				1 // LPARAM unused
 
 
-// UpdateAllViews() hints
-#define UPDATE_CONFIG			0x0001
-#define UPDATE_CALENDAR_VIEW	0x0010
-#define UPDATE_TRAINING_VIEW	0x0020
-#define UPDATE_POINTS_VIEW		0x0040
-#define UPDATE_RUNS_VIEW		0x0080
-#define UPDATE_TREE_VIEW		0x0100
+// UpdateAllViews() hints: Only the view bits can be or'd. Each item is
+// considered a single event (consider all views as one)
+#define UPDATE_VIEW_MASK		0x00ff
+#define UPDATE_CALENDAR_VIEW	0x0001
+#define UPDATE_TRAINING_VIEW	0x0002
+#define UPDATE_POINTS_VIEW		0x0004
+#define UPDATE_RUNS_VIEW		0x0008
+#define UPDATE_TREE_VIEW		0x0010
 #define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
-#define UPDATE_OPTIONS			0x1000
-#define UPDATE_NEW_TRIAL		0x2000
-#define UPDATE_LANG_CHANGE		0x4000
+#define UPDATE_CONFIG			0x0100
+#define UPDATE_OPTIONS			0x0200
+#define UPDATE_NEW_TRIAL		0x0300
+#define UPDATE_LANG_CHANGE		0x0400
+#define UPDATE_CUSTOMIZE		0x0500
 
 class CErrorCallback : public ARBErrorCallback
 {

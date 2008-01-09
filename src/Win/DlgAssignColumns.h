@@ -184,6 +184,8 @@
 #define IO_CAL_DRAWS				112
 #define IO_MAX						113
 
+class CAgilityBookDoc;
+
 class CDlgAssignColumns : public CDlgBaseDialog
 {
 // Construction
@@ -201,7 +203,9 @@ public:
 
 	CDlgAssignColumns(
 			CAgilityBookOptions::ColumnOrder eOrder,
-			CWnd* pParent = NULL);
+			CWnd* pParent = NULL,
+			CAgilityBookDoc* pDoc = NULL,
+			int initSelection = 0); // IO_TYPE list to initially select (if multiple)
 
 private:
 // Dialog Data
@@ -215,7 +219,9 @@ private:
 	CButton	m_ctrlUp;
 	CButton	m_ctrlDown;
 	//}}AFX_DATA
+	CAgilityBookDoc* m_pDoc;
 	CAgilityBookOptions::ColumnOrder m_eOrder;
+	int m_initSelection;
 	bool m_bIncludeBlank;
 	std::vector<int> m_Columns[IO_TYPE_MAX];
 

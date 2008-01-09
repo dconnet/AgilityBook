@@ -1,10 +1,12 @@
-1/6/2008: v1.10.5.12 <in development>
+1/9/2008: v1.10.5.12 <in development>
 - Bumped file version to 12.7:
   - Added 'Visible' to Note items.
 - New features / Enhancements:
   - Added a list of existing venues into calendar query detail dialog.
   - Added a 'hide' option on Note items so they don't appear in lists.
   - Make Lifetime points viewable by either level or event
+  - Make customizing view columns dialog apply to all views
+    (no longer context based)
 - Bug fixes:
   - Translate days-of-week in Calendar options.
   - Several dialogs had text that was truncated.

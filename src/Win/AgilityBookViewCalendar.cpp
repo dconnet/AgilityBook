@@ -274,7 +274,7 @@ void CAgilityBookViewCalendar::LoadData()
 	m_Last = ARBDate::Today();
 	m_First = ARBDate::Today();
 
-	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR, m_Columns);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_CALENDAR, m_Columns);
 
 	ARBDate today(ARBDate::Today());
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
@@ -575,11 +575,17 @@ void CAgilityBookViewCalendar::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| ((UPDATE_CALENDAR_VIEW | UPDATE_OPTIONS) & lHint))
+	|| (UPDATE_CALENDAR_VIEW & lHint)
+	|| UPDATE_OPTIONS == lHint)
 		LoadData();
-	else if (UPDATE_LANG_CHANGE & lHint)
+	else if (UPDATE_LANG_CHANGE == lHint)
 	{
 		// Nothing needs localizing (months/etc come from OS)
+	}
+	else if (UPDATE_CUSTOMIZE == lHint)
+	{
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_CALENDAR, m_Columns);
+		Invalidate();
 	}
 }
 
@@ -1441,10 +1447,6 @@ void CAgilityBookViewCalendar::OnUpdateNotHandled(CCmdUI* pCmdUI)
 
 void CAgilityBookViewCalendar::OnViewCustomize()
 {
-	CDlgAssignColumns dlg(CAgilityBookOptions::eViewCal);
-	if (IDOK == dlg.DoModal())
-	{
-		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCal, IO_TYPE_VIEW_CALENDAR, m_Columns);
-		Invalidate();
-	}
+	CDlgAssignColumns dlg(CAgilityBookOptions::eView, this, GetDocument(), IO_TYPE_VIEW_CALENDAR);
+	dlg.DoModal();
 }

@@ -1267,9 +1267,11 @@ void CAgilityBookViewRuns::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| ((UPDATE_RUNS_VIEW | UPDATE_OPTIONS | UPDATE_CONFIG) & lHint))
+	|| (UPDATE_RUNS_VIEW & lHint)
+	|| UPDATE_CONFIG == lHint
+	|| UPDATE_OPTIONS == lHint)
 		LoadData();
-	else if (UPDATE_LANG_CHANGE & lHint)
+	else if (UPDATE_LANG_CHANGE == lHint || UPDATE_CUSTOMIZE == lHint)
 	{
 		SetupColumns();
 		LoadData();
@@ -1356,7 +1358,7 @@ void CAgilityBookViewRuns::SetupColumns()
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
-	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewRuns, IO_TYPE_VIEW_RUNS_LIST, m_Columns))
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_RUNS_LIST, m_Columns))
 	{
 		LV_COLUMN col;
 		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
@@ -1865,12 +1867,8 @@ void CAgilityBookViewRuns::OnAgilityDeleteRun()
 
 void CAgilityBookViewRuns::OnViewCustomize()
 {
-	CDlgAssignColumns dlg(CAgilityBookOptions::eViewRuns);
-	if (IDOK == dlg.DoModal())
-	{
-		SetupColumns();
-		LoadData();
-	}
+	CDlgAssignColumns dlg(CAgilityBookOptions::eView, this, GetDocument(), IO_TYPE_VIEW_RUNS_LIST);
+	dlg.DoModal();
 }
 
 

@@ -280,7 +280,7 @@ void CPointsDataDog::Details() const
 	if (IDOK == dlg.DoModal())
 	{
 		pDoc->SetModifiedFlag();
-		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
 	}
 }
 
@@ -387,7 +387,7 @@ void CPointsDataVenue::Details() const
 			if (IDOK == dlg.DoModal())
 			{
 				pDoc->SetModifiedFlag();
-				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
 			}
 		}
 		else

@@ -407,9 +407,10 @@ void CAgilityBookViewTraining::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| ((UPDATE_TRAINING_VIEW | UPDATE_OPTIONS) & lHint))
+	|| (UPDATE_TRAINING_VIEW & lHint)
+	|| UPDATE_OPTIONS == lHint)
 		LoadData();
-	else if (UPDATE_LANG_CHANGE & lHint)
+	else if (UPDATE_LANG_CHANGE == lHint || UPDATE_CUSTOMIZE == lHint)
 	{
 		SetupColumns();
 		LoadData();
@@ -502,7 +503,7 @@ void CAgilityBookViewTraining::SetupColumns()
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
-	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewLog, IO_TYPE_VIEW_TRAINING_LIST, m_Columns))
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TRAINING_LIST, m_Columns))
 	{
 		LV_COLUMN col;
 		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
@@ -968,10 +969,6 @@ void CAgilityBookViewTraining::OnTrainingDelete()
 
 void CAgilityBookViewTraining::OnViewCustomize()
 {
-	CDlgAssignColumns dlg(CAgilityBookOptions::eViewLog);
-	if (IDOK == dlg.DoModal())
-	{
-		SetupColumns();
-		LoadData();
-	}
+	CDlgAssignColumns dlg(CAgilityBookOptions::eView, this, GetDocument(), IO_TYPE_VIEW_TRAINING_LIST);
+	dlg.DoModal();
 }
