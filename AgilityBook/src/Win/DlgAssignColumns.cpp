@@ -102,6 +102,7 @@ Training Log:
 #include "AgilityBook.h"
 #include "DlgAssignColumns.h"
 
+#include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 
 #ifdef _DEBUG
@@ -116,54 +117,55 @@ static struct
 {
 	WORD bValid;
 	int index;
+	int sortOrder; // only used for view types
 	UINT name;
 	UINT desc;
 } const sc_Types[] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_FAULTS_TIME,
+		IO_TYPE_RUNS_FAULTS_TIME, 0,
 		IDS_ASSCOL_RUNS_FAULTS_TIME, IDS_ASSCOL_RUNS_FAULTS_TIME_DESC},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_TIME_FAULTS,
+		IO_TYPE_RUNS_TIME_FAULTS, 0,
 		IDS_ASSCOL_RUNS_TIME_FAULTS, IDS_ASSCOL_RUNS_TIME_FAULTS_DESC},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_OPEN_CLOSE,
+		IO_TYPE_RUNS_OPEN_CLOSE, 0,
 		IDS_ASSCOL_RUNS_OPEN_CLOSE, IDS_ASSCOL_RUNS_OPEN_CLOSE_DESC},
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
-		IO_TYPE_RUNS_POINTS,
+		IO_TYPE_RUNS_POINTS, 0,
 		IDS_ASSCOL_RUNS_POINTS, IDS_ASSCOL_RUNS_POINTS_DESC},
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
-		IO_TYPE_CALENDAR,
+		IO_TYPE_CALENDAR, 0,
 		IDS_ASSCOL_CALENDAR, IDS_ASSCOL_CALENDAR_DESC},
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport,
-		IO_TYPE_TRAINING,
+		IO_TYPE_TRAINING, 0,
 		IDS_ASSCOL_TRAINING, IDS_ASSCOL_TRAINING_DESC},
-	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_DOG,
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_DOG, 1,
 		IDS_ASSCOL_VIEW_TREE_DOG, IDS_ASSCOL_VIEW_TREE_DOG_DESC},
-	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_TRIAL,
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_TRIAL, 2,
 		IDS_ASSCOL_VIEW_TREE_TRIAL, IDS_ASSCOL_VIEW_TREE_TRIAL_DESC},
-	{CAgilityBookOptions::eViewTree,
-		IO_TYPE_VIEW_TREE_RUN,
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TREE_RUN, 3,
 		IDS_ASSCOL_VIEW_TREE_RUN, IDS_ASSCOL_VIEW_TREE_RUN_DESC},
-	{CAgilityBookOptions::eViewRuns,
-		IO_TYPE_VIEW_RUNS_LIST,
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_RUNS_LIST, 4,
 		IDS_ASSCOL_VIEW_RUNS_LIST, IDS_ASSCOL_VIEW_RUNS_LIST_DESC},
-	{CAgilityBookOptions::eViewCalList,
-		IO_TYPE_VIEW_CALENDAR_LIST,
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_CALENDAR_LIST, 5,
 		IDS_ASSCOL_VIEW_CALENDAR_LIST, IDS_ASSCOL_VIEW_CALENDAR_LIST_DESC},
-	{CAgilityBookOptions::eViewLog,
-		IO_TYPE_VIEW_TRAINING_LIST,
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_TRAINING_LIST, 7,
 		IDS_ASSCOL_VIEW_TRAINING_LIST, IDS_ASSCOL_VIEW_TRAINING_LIST_DESC},
 	{CAgilityBookOptions::eCalExportAppt,
-		IO_TYPE_CALENDAR_APPT,
+		IO_TYPE_CALENDAR_APPT, 0,
 		IDS_ASSCOL_CALENDAR_APPT, IDS_ASSCOL_CALENDAR_APPT_DESC},
 	{CAgilityBookOptions::eCalExportTask,
-		IO_TYPE_CALENDAR_TASK,
+		IO_TYPE_CALENDAR_TASK, 0,
 		IDS_ASSCOL_CALENDAR_TASK, IDS_ASSCOL_CALENDAR_TASK_DESC},
-	{CAgilityBookOptions::eViewCal,
-		IO_TYPE_VIEW_CALENDAR,
+	{CAgilityBookOptions::eView,
+		IO_TYPE_VIEW_CALENDAR, 6,
 		IDS_ASSCOL_VIEW_CALENDAR, IDS_ASSCOL_VIEW_CALENDAR_DESC},
 	// Note: Remember to update sc_Fields when adding a type.
 };
@@ -179,117 +181,117 @@ static struct
 	WORD bValid;
 	int index;
 	bool bImportable;
-	UINT fmt; // Only applicable to eView* items
+	UINT fmt; // Only applicable to eView items
 	UINT name;
 } const sc_FieldNames[IO_MAX] =
 {
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_REG_NAME,
 		true, LVCFMT_LEFT, IDS_COL_REG_NAME},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_CALL_NAME,
 		true, LVCFMT_LEFT, IDS_COL_CALLNAME},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_DATE,
 		true, LVCFMT_LEFT, IDS_COL_DATE},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_VENUE,
 		true, LVCFMT_LEFT, IDS_COL_VENUE},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_CLUB,
 		true, LVCFMT_LEFT, IDS_COL_CLUB},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_LOCATION,
 		true, LVCFMT_LEFT, IDS_COL_LOCATION},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_TRIAL_NOTES,
 		true, LVCFMT_LEFT, IDS_COL_TRIALNOTES},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_DIVISION,
 		true, LVCFMT_LEFT, IDS_COL_DIVISION},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_LEVEL,
 		true, LVCFMT_LEFT, IDS_COL_LEVEL},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_EVENT,
 		true, LVCFMT_LEFT, IDS_COL_EVENT},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_HEIGHT,
 		true, LVCFMT_LEFT, IDS_COL_HEIGHT},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_JUDGE,
 		true, LVCFMT_LEFT, IDS_COL_JUDGE},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_HANDLER,
 		true, LVCFMT_LEFT, IDS_COL_HANDLER},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_CONDITIONS,
 		true, LVCFMT_LEFT, IDS_COL_CONDITIONS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_COURSE_FAULTS,
 		true, LVCFMT_RIGHT, IDS_COL_COURSEFAULTS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_TIME,
 		true, LVCFMT_RIGHT, IDS_COL_TIME},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_YARDS,
 		true, LVCFMT_RIGHT, IDS_COL_YARDS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_YPS,
 		false, LVCFMT_RIGHT, IDS_COL_YPS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_SCT,
 		true, LVCFMT_RIGHT, IDS_COL_SCT},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_TOTAL_FAULTS,
 		false, LVCFMT_RIGHT, IDS_COL_TOTAL_FAULTS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_REQ_OPENING,
 		true, LVCFMT_RIGHT, IDS_COL_REQ_OPENING},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_REQ_CLOSING,
 		true, LVCFMT_RIGHT, IDS_COL_REQ_CLOSING},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_OPENING,
 		true, LVCFMT_RIGHT, IDS_COL_OPENING},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_CLOSING,
 		true, LVCFMT_RIGHT, IDS_COL_CLOSING},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_REQ_POINTS,
 		true, LVCFMT_RIGHT, IDS_COL_REQ_POINTS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_POINTS,
 		true, LVCFMT_RIGHT, IDS_COL_POINTS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_PLACE,
 		true, LVCFMT_CENTER, IDS_COL_PLACE},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_IN_CLASS,
 		true, LVCFMT_CENTER, IDS_COL_IN_CLASS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_DOGSQD,
 		true, LVCFMT_CENTER, IDS_COL_Q_D},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_Q,
 		true, LVCFMT_CENTER, IDS_COL_Q},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_SCORE,
 		false, LVCFMT_RIGHT, IDS_COL_SCORE},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_TITLE_POINTS,
 		false, LVCFMT_RIGHT, IDS_COL_TITLE_PTS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_COMMENTS,
 		true, LVCFMT_LEFT, IDS_COL_COMMENTS},
-	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_FAULTS,
 		true, LVCFMT_LEFT, IDS_COL_FAULTS},
 
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_START_DATE,
 		true, LVCFMT_LEFT, IDS_COL_START_DATE},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_END_DATE,
 		true, LVCFMT_LEFT, IDS_COL_END_DATE},
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
@@ -298,94 +300,94 @@ static struct
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport,
 		IO_CAL_ENTERED,
 		true, 0, IDS_COL_ENTERED},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_LOCATION,
 		true, LVCFMT_LEFT, IDS_COL_LOCATION},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_CLUB,
 		true, LVCFMT_LEFT, IDS_COL_CLUB},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_VENUE,
 		true, LVCFMT_LEFT, IDS_COL_VENUE},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_OPENS,
 		true, LVCFMT_LEFT, IDS_COL_OPENS},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_CLOSES,
 		true, LVCFMT_LEFT, IDS_COL_CLOSES},
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList | CAgilityBookOptions::eViewCal,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_NOTES,
 		true, LVCFMT_LEFT, IDS_COL_NOTES},
 
-	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eView,
 		IO_LOG_DATE,
 		true, LVCFMT_LEFT, IDS_COL_DATE},
-	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eView,
 		IO_LOG_NAME,
 		true, LVCFMT_LEFT, IDS_COL_NAME},
-	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eView,
 		IO_LOG_NOTES,
 		true, LVCFMT_LEFT, IDS_COL_NOTES},
 
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_DOG_REGNAME,
 		false, 0, IDS_COL_REG_NAME},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_DOG_CALLNAME,
 		false, 0, IDS_COL_CALLNAME},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_DOG_BREED,
 		false, 0, IDS_COL_BREED},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_DOG_DOB,
 		false, 0, IDS_COL_DOB},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_DOG_AGE,
 		false, 0, IDS_COL_AGE},
 
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_TRIAL_START,
 		false, 0, IDS_COL_START_DATE},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_TRIAL_END,
 		false, 0, IDS_COL_END_DATE},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_TRIAL_CLUB,
 		false, 0, IDS_COL_CLUB},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_TRIAL_VENUE,
 		false, 0, IDS_COL_VENUE},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_TRIAL_LOCATION,
 		false, 0, IDS_COL_LOCATION},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_TRIAL_NOTES,
 		false, 0, IDS_COL_NOTES},
 
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_RUN_DATE,
 		false, 0, IDS_COL_DATE},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_RUN_Q,
 		false, 0, IDS_COL_Q},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_RUN_EVENT,
 		false, 0, IDS_COL_EVENT},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_RUN_DIVISION,
 		false, 0, IDS_COL_DIVISION},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_RUN_LEVEL,
 		false, 0, IDS_COL_LEVEL},
-	{CAgilityBookOptions::eViewTree,
+	{CAgilityBookOptions::eView,
 		IO_TREE_RUN_HEIGHT,
 		false, 0, IDS_COL_HEIGHT},
 
-	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eViewLog,
+	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eView,
 		IO_LOG_SUBNAME,
 		true, LVCFMT_LEFT, IDS_COL_SUBNAME},
 	{0, IO_RESERVED, false, 0, 0},
-	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_SPEED,
 		false, LVCFMT_LEFT, IDS_COL_SPEED},
 
@@ -523,11 +525,11 @@ static struct
 		IO_CAL_TASK_STATUS,
 		false, 0, IDS_COL_STATUS},
 
-	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eViewRuns,
+	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_MIN_YPS,
 		false, LVCFMT_RIGHT, IDS_COL_MIN_YPS},
 
-	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eViewCalList,
+	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_DRAWS,
 		true, LVCFMT_LEFT, IDS_COL_DRAWS},
 };
@@ -731,12 +733,16 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 
 CDlgAssignColumns::CDlgAssignColumns(
 		CAgilityBookOptions::ColumnOrder eOrder,
-		CWnd* pParent)
+		CWnd* pParent,
+		CAgilityBookDoc* pDoc,
+		int initSelection)
 	: CDlgBaseDialog(CDlgAssignColumns::IDD, pParent)
 	, m_ctrlType(false)
 	, m_ctrlAvailable(false)
 	, m_ctrlColumns(false)
+	, m_pDoc(pDoc)
 	, m_eOrder(eOrder)
+	, m_initSelection(initSelection)
 	, m_bIncludeBlank(false)
 {
 	//{{AFX_DATA_INIT(CDlgAssignColumns)
@@ -878,6 +884,20 @@ void CDlgAssignColumns::UpdateButtons()
 	m_ctrlDown.EnableWindow(idxCol != LB_ERR && 1 < m_ctrlColumns.GetCount() && m_ctrlColumns.GetCount()-1 != idxCol);
 }
 
+
+int CALLBACK CompareTypes(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
+{
+	if (lParam1 >= 0 && lParam1 < IO_TYPE_MAX
+	&& lParam2 >= 0 && lParam2 < IO_TYPE_MAX)
+	{
+		if (sc_Types[lParam1].sortOrder < sc_Types[lParam2].sortOrder)
+			return -1;
+		else if (sc_Types[lParam1].sortOrder > sc_Types[lParam2].sortOrder)
+			return 1;
+	}
+	return 0;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns message handlers
 
@@ -897,6 +917,7 @@ BOOL CDlgAssignColumns::OnInitDialog()
 		ASSERT(sc_FieldNames[index].index == index);
 	}
 #endif
+	int idxSelect = 0;
 	for (index = 0; index < IO_TYPE_MAX; ++index)
 	{
 		ASSERT(sc_Types[index].index == index);
@@ -910,11 +931,16 @@ BOOL CDlgAssignColumns::OnInitDialog()
 			str.LoadString(sc_Types[index].desc);
 			m_ctrlType.SetItemText(idx, 1, str);
 			m_ctrlType.SetItemData(idx, index);
+			if (m_initSelection == index)
+				idxSelect = idx;
 		}
 	}
 	m_ctrlType.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	m_ctrlType.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlType.SetSelection(0);
+	m_ctrlType.SetSelection(idxSelect);
+	if (m_eOrder == CAgilityBookOptions::eView)
+		m_ctrlType.SortItems(CompareTypes, 0);
+	m_ctrlType.EnsureVisible(idxSelect, FALSE);
 	//FillColumns();
 	return TRUE;	// return TRUE unless you set the focus to a control
 					// EXCEPTION: OCX Property Pages should return FALSE
@@ -1057,5 +1083,7 @@ void CDlgAssignColumns::OnOK()
 {
 	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		SetColumnOrder(m_eOrder, i, m_Columns[i]);
+	if (m_pDoc && CAgilityBookOptions::eView == m_eOrder)
+		m_pDoc->UpdateAllViews(NULL, UPDATE_CUSTOMIZE);
 	CDlgBaseDialog::OnOK();
 }

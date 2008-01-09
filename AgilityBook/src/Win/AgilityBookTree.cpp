@@ -279,9 +279,9 @@ CAgilityBookTree::CAgilityBookTree()
 	m_ImageListStates.Add(theApp.LoadIcon(IDI_EMPTY));
 	m_idxEmpty = m_ImageListStates.Add(theApp.LoadIcon(IDI_EMPTY));
 	m_idxChecked = m_ImageListStates.Add(theApp.LoadIcon(IDI_CHECKMARK));
-	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
-	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
-	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
+	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
 }
 #pragma warning (pop)
 
@@ -354,15 +354,13 @@ void CAgilityBookTree::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| ((UPDATE_TREE_VIEW | UPDATE_OPTIONS | UPDATE_CONFIG) & lHint))
+	|| (UPDATE_TREE_VIEW & lHint)
+	|| UPDATE_CONFIG == lHint
+	|| UPDATE_OPTIONS == lHint)
 	{
 		LoadData();
 	}
-	else if (UPDATE_LANG_CHANGE & lHint)
-	{
-		// Nothing localized in tree
-	}
-	else if (UPDATE_NEW_TRIAL & lHint)
+	else if (UPDATE_NEW_TRIAL == lHint)
 	{
 		LoadData();
 		// This is pure evil - casting CObject* to a ARBDogTrialPtr.
@@ -374,6 +372,17 @@ void CAgilityBookTree::OnUpdate(
 		ASSERT(pData);
 		GetTreeCtrl().Select(pData->GetHTreeItem(), TVGN_CARET);
 		GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+	}
+	else if (UPDATE_LANG_CHANGE == lHint)
+	{
+		// Nothing localized in tree
+	}
+	else if (UPDATE_CUSTOMIZE == lHint)
+	{
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
+		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
+		Invalidate();
 	}
 }
 
@@ -1234,14 +1243,8 @@ void CAgilityBookTree::OnCollapseAll()
 
 void CAgilityBookTree::OnViewCustomize()
 {
-	CDlgAssignColumns dlg(CAgilityBookOptions::eViewTree);
-	if (IDOK == dlg.DoModal())
-	{
-		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
-		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
-		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewTree, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
-		Invalidate();
-	}
+	CDlgAssignColumns dlg(CAgilityBookOptions::eView, this, GetDocument(), IO_TYPE_VIEW_TREE_DOG);
+	dlg.DoModal();
 }
 
 

@@ -796,9 +796,10 @@ void CAgilityBookViewCalendarList::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| ((UPDATE_CALENDAR_VIEW | UPDATE_OPTIONS) & lHint))
+	|| (UPDATE_CALENDAR_VIEW & lHint)
+	|| UPDATE_OPTIONS == lHint)
 		LoadData();
-	else if (UPDATE_LANG_CHANGE & lHint)
+	else if (UPDATE_LANG_CHANGE == lHint || UPDATE_CUSTOMIZE == lHint)
 	{
 		SetupColumns();
 		LoadData();
@@ -875,7 +876,7 @@ void CAgilityBookViewCalendarList::SetupColumns()
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
-	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eViewCalList, IO_TYPE_VIEW_CALENDAR_LIST, m_Columns))
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_CALENDAR_LIST, m_Columns))
 	{
 		LV_COLUMN col;
 		col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
@@ -1527,10 +1528,6 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 
 void CAgilityBookViewCalendarList::OnViewCustomize()
 {
-	CDlgAssignColumns dlg(CAgilityBookOptions::eViewCalList);
-	if (IDOK == dlg.DoModal())
-	{
-		SetupColumns();
-		LoadData();
-	}
+	CDlgAssignColumns dlg(CAgilityBookOptions::eView, this, GetDocument(), IO_TYPE_VIEW_CALENDAR_LIST);
+	dlg.DoModal();
 }

@@ -129,7 +129,7 @@ static bool EditDog(
 		// adding a new dog is all set and editing an existing one doesn't
 		// change any ordering.
 		if (bOk)
-			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+			pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
 	}
 	return bOk;
 }
@@ -312,7 +312,7 @@ static bool ReOrderDogs(
 		}
 		CAgilityBookDoc* pDoc = pTree->GetDocument();
 		pDoc->SetModifiedFlag(TRUE);
-		pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
+		pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
 	}
 	return bOk;
 }
@@ -347,7 +347,7 @@ static bool ReOrderTrial(
 			pTrial->GetRuns().sort();
 			CAgilityBookDoc* pDoc = pTree->GetDocument();
 			pDoc->SetModifiedFlag(TRUE);
-			pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW);
+			pDoc->UpdateAllViews(NULL, UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
 		}
 	}
 	return bOk;
@@ -635,7 +635,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 			ARBDogPtr pDog = GetDog()->Clone();
 			m_pTree->GetDocument()->GetDogs().AddDog(pDog);
 			bModified = true;
-			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
+			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
 		}
 		break;
 	case ID_EDIT_CUT:
@@ -688,7 +688,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 				// DeleteItem will cause this object to be deleted.
 				m_pTree->GetTreeCtrl().DeleteItem(m_hItem);
 				bModified = true;
-				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
 			}
 		}
 		break;
@@ -928,7 +928,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
 			GetDog()->GetTrials().sort(bDescending);
 			bModified = true;
-			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
+			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
 		}
 		break;
 	case ID_EDIT_CUT:
@@ -986,7 +986,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 				// DeleteItem will cause this object to be deleted.
 				m_pTree->GetTreeCtrl().DeleteItem(m_hItem);
 				bModified = true;
-				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
 			}
 		}
 		break;
@@ -1279,7 +1279,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			GetTrial()->GetRuns().AddRun(pRun);
 			GetTrial()->GetRuns().sort();
 			bModified = true;
-			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW|UPDATE_RUNS_VIEW|UPDATE_POINTS_VIEW);
+			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
 		}
 		break;
 	case ID_EDIT_CUT:
@@ -1337,7 +1337,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 				// DeleteItem will cause this object to be deleted.
 				m_pTree->GetTreeCtrl().DeleteItem(m_hItem);
 				bModified = true;
-				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW);
+				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
 			}
 		}
 		break;

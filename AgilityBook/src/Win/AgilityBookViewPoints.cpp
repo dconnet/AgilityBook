@@ -342,9 +342,11 @@ void CAgilityBookViewPoints::OnUpdate(
 		CObject* pHint)
 {
 	if (0 == lHint
-	|| ((UPDATE_POINTS_VIEW | UPDATE_OPTIONS | UPDATE_CONFIG) & lHint))
+	|| (UPDATE_POINTS_VIEW & lHint)
+	|| UPDATE_CONFIG == lHint
+	|| UPDATE_OPTIONS == lHint)
 		LoadData();
-	else if (UPDATE_LANG_CHANGE & lHint)
+	else if (UPDATE_LANG_CHANGE == lHint)
 	{
 		SetupColumns();
 		LoadData();

@@ -798,11 +798,7 @@ static TCHAR const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 		return _T("ImportLog");
 	case CAgilityBookOptions::eLogExport:
 		return _T("ExportLog");
-	case CAgilityBookOptions::eViewTree:
-	case CAgilityBookOptions::eViewRuns:
-	case CAgilityBookOptions::eViewCalList:
-	case CAgilityBookOptions::eViewLog:
-	case CAgilityBookOptions::eViewCal:
+	case CAgilityBookOptions::eView:
 		return _T("Columns");
 	}
 }
@@ -1017,7 +1013,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_LOG_NOTES);
 			}
 			break;
-		case eViewTree:
+		case eView:
 			switch (idxColumn)
 			{
 			case IO_TYPE_VIEW_TREE_DOG:
@@ -1033,11 +1029,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_TREE_RUN_DATE);
 				outValues.push_back(IO_TREE_RUN_EVENT);
 				break;
-			}
-			break;
-		case eViewRuns:
-			if (IO_TYPE_VIEW_RUNS_LIST == idxColumn)
-			{
+			case IO_TYPE_VIEW_RUNS_LIST:
 				outValues.push_back(IO_RUNS_Q);
 				outValues.push_back(IO_RUNS_TITLE_POINTS);
 				outValues.push_back(IO_RUNS_SCORE);
@@ -1054,11 +1046,8 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_RUNS_IN_CLASS);
 				outValues.push_back(IO_RUNS_DOGSQD);
 				outValues.push_back(IO_RUNS_COMMENTS);
-			}
-			break;
-		case eViewCalList:
-			if (IO_TYPE_VIEW_CALENDAR_LIST == idxColumn)
-			{
+				break;
+			case IO_TYPE_VIEW_CALENDAR_LIST:
 				outValues.push_back(IO_CAL_START_DATE);
 				outValues.push_back(IO_CAL_VENUE);
 				outValues.push_back(IO_CAL_LOCATION);
@@ -1067,22 +1056,17 @@ void CAgilityBookOptions::GetColumnOrder(
 				outValues.push_back(IO_CAL_OPENS);
 				outValues.push_back(IO_CAL_DRAWS);
 				outValues.push_back(IO_CAL_NOTES);
-			}
-			break;
-		case eViewLog:
-			if (IO_TYPE_VIEW_TRAINING_LIST == idxColumn)
-			{
+				break;
+			case IO_TYPE_VIEW_TRAINING_LIST:
 				outValues.push_back(IO_LOG_DATE);
 				outValues.push_back(IO_LOG_NAME);
 				outValues.push_back(IO_LOG_SUBNAME);
 				outValues.push_back(IO_LOG_NOTES);
-			}
-			break;
-		case eViewCal:
-			if (IO_TYPE_VIEW_CALENDAR == idxColumn)
-			{
+				break;
+			case IO_TYPE_VIEW_CALENDAR:
 				outValues.push_back(IO_CAL_VENUE);
 				outValues.push_back(IO_CAL_LOCATION);
+				break;
 			}
 			break;
 		}
