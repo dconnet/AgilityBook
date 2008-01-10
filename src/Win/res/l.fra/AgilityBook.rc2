@@ -6,6 +6,8 @@
 #error this file is not editable by Microsoft Visual C++
 #endif //APSTUDIO_INVOKED
 
+#include "VersionNumber.h"
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version

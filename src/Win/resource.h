@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by AgilityBook.rc
+// Used by AgilityBookFRA.rc
 //
 #define IDB_LOGO                        101
 #define IDB_SPLASH                      102

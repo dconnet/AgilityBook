@@ -13,7 +13,6 @@
 // Generated from the TEXTINCLUDE 2 resource.
 //
 #include "afxres.h"
-#include "VersionNumber.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -40,9 +39,7 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""afxres.h""\r\n"
-    "#include ""VersionNumber.h""\r\n"
-    "\0"
+    "#include ""afxres.h""\r\0"
 END
 
 3 TEXTINCLUDE 
@@ -58,8 +55,7 @@ BEGIN
     "#include ""res\\l.fra\\AgilityBook.rc2"" // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""l.fra\\afxres.rc""   // Standard components\r\n"
     "#include ""l.fra\\afxprint.rc"" // Standard components\r\n"
-    "#endif\r\n"
-    "\0"
+    "#endif\r\0"
 END
 
 #endif    // APSTUDIO_INVOKED
