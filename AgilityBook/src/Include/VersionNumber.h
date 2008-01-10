@@ -32,7 +32,19 @@
  * @brief EXE/DLL version number
  * @author David Connet
  *
+ * @note To use this in VERSIONINFO, the VERSIONINFO resource must be moved
+ * into the .rc2 file (non-editable resources). In addition, the vcproj files
+ * need to have "../../Include" set on the project resource section (that path
+ * is relative to the vcproj file). DO NOT include this file in the main .rc
+ * as an include in the TEXTINCLUDE2 section. Otherwise you will have a
+ * problem opening the resources in the resource editor as that needs a path
+ * relative to the .rc file. (Ok, you could do this if you _also_ add
+ * "../Include" to the vcproj resource path, but that just seems weird).
+ * Since this file is only used in the rc2 file, just include it there.
+ * This keeps all editors/compilers happy.
+ *
  * Revision History
+ * @li 2008-01-10 DRC Added note
  * @li 2007-12-25 DRC Created
  */
 
