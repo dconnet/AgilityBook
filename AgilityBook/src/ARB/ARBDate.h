@@ -270,6 +270,8 @@ public:
 			ARBDate const& inDate1,
 			ARBDate const& inDate2) const
 	{
+		if (inDate1 > inDate2)
+			return isBetween(inDate2, inDate1);
 		return m_Julian >= inDate1.m_Julian && m_Julian <= inDate2.m_Julian;
 	}
 
