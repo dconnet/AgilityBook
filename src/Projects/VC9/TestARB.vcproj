@@ -43,7 +43,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB;../../TestARB;../../TestARB/WinUnit"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="1"
 			/>
@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="../../TestARB/WinUnit"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -83,7 +83,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running WinUnit"
-				CommandLine="c:\dcon\bin\winunit &quot;$(TargetPath)&quot;"
+				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -110,7 +110,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB;../../TestARB;../../TestARB/WinUnit"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="1"
 			/>
@@ -125,7 +125,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="../../TestARB/WinUnit"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -149,8 +149,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Running WinUnit"
-				CommandLine="c:\dcon\bin\winunit &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -178,7 +177,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB;../../TestARB;../../TestARB/WinUnit"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="0"
 			/>
@@ -193,7 +192,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="../../TestARB/WinUnit"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -218,7 +217,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running WinUnit"
-				CommandLine="c:\dcon\bin\winunit &quot;$(TargetPath)&quot;"
+				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -246,7 +245,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB;../../TestARB;../../TestARB/WinUnit"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_WINDOWS;_USRDLL"
 				RuntimeLibrary="0"
 			/>
@@ -261,7 +260,75 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="../../TestARB/WinUnit"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug - No Unicode|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			UseOfMFC="1"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				RuntimeLibrary="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 			/>
@@ -286,7 +353,218 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running WinUnit"
-				CommandLine="c:\dcon\bin\winunit &quot;$(TargetPath)&quot;"
+				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug - No Unicode|x64"
+			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			UseOfMFC="1"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				RuntimeLibrary="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release - No Unicode|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
+			UseOfMFC="1"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				RuntimeLibrary="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Running WinUnit"
+				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release - No Unicode|x64"
+			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
+			UseOfMFC="1"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="/Tools/WinUnit/Include;../../Include;../../ARB;../../TestARB"
+				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				RuntimeLibrary="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="/Tools/WinUnit/bin/$(PlatformName)/$(ConfigurationName)"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
@@ -327,6 +605,38 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug - No Unicode|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug - No Unicode|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release - No Unicode|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release - No Unicode|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -766,6 +1076,42 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug - No Unicode|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug - No Unicode|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release - No Unicode|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release - No Unicode|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
