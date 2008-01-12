@@ -27,10 +27,11 @@
 /**
  * @file
  *
- * @brief implementation of the CDlgHelpPage1 class
+ * @brief implementation of the CDlgPageEncode class
  * @author David Connet
  *
  * Revision History
+ * @li 2008-01-12 DRC Dump reg data in .reg format
  * @li 2007-01-02 DRC Created
  */
 
@@ -44,6 +45,9 @@
 #include "DlgARBHelp.h"
 #include "..\Win\VersionNum.h"
 
+// When debugging locally, set to 0 so we don't look for .arb files
+#define SEARCH_FOR_FILES	1
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -53,26 +57,237 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // Dump registry information
 
+// .reg format (http://support.microsoft.com/kb/310516)
+//
+// RegistryEditorVersion
+// Blank line
+// [RegistryPath1]
+// "DataItemName1"=DataType1:DataValue1
+// DataItemName2=DataType2:DataValue2
+// Blank line
+// [RegistryPath2]
+// "DataItemName3"="DataType3:DataValue3"
+// "DataItemName4"="DataValue4"
+// Blank line
+//
+// Difference between "REGEDIT4" and "Windows Registry Editor Version 5.00"
+// - v5 supports unicode
+//
+// DataType (REG_SZ assumed unless DataType specified):
+//  REG_BINARY		hex
+//  REG_DWORD		dword
+//  REG_EXPAND_SZ	hex(2)
+//  REG_MULTI_SZ	hex(7)
+//
+// examples:
+// "SetupType"=dword:00000000
+// "CmdLine"="setup -newsetup"
+// "SystemPrefix"=hex:c5,0b,00,00,00,40,36,02
+// ; "String1\0String2" [in v5 (unicode) form, don't know how they look in v4]
+// "Test"=hex(7):53,00,74,00,72,00,69,00,6e,00,67,00,20,00,31,00,00,00,53,00,74,\
+//   00,72,00,69,00,6e,00,67,00,20,00,32,00,00,00,00,00
+// ; %TMP%
+// "Expand"=hex(2):25,00,54,00,4d,00,50,00,25,00,00,00
+//
+// To delete an item (hyphen in front of key):
+// [-RegistryPath2]
+// To delete a value (hyphen after '=' ):
+// "DataItemName4"=-
+
+
 static void PrintIndent(int inIndent, otstringstream& outData)
 {
+	outData << _T("; ");
 	for (int indent = 0; indent < inIndent; ++indent)
 		outData << ' ';
 }
 
+
+static void PrintItemName(otstringstream& outData, TCHAR buff[])
+{
+	if (!buff[0])
+		outData << _T("@=");
+	else
+		outData << _T('"') << buff << _T("\"=");
+}
+
+
+// I'm lazy...
+static void PrintQuotedData(otstringstream& outData, TCHAR buff[])
+{
+	size_t n = _tcslen(buff);
+	for (size_t i = 0; i < n; ++i)
+	{
+		if (buff[i] == '"')
+			outData << _T("\\\"");
+		else
+			outData << buff[i];
+	}
+}
+
+
+// Buffers are limited - we really don't care about _all_ the data
+// This is enough to understand what is going on. To do it properly,
+// we'd respond to ERROR_MORE_DATA and allocate a big enough buffer.
 #define BUFF_SIZE 1024
 static TCHAR g_szBuff[BUFF_SIZE];
 static TCHAR g_szBuff2[BUFF_SIZE];
 
 static void DumpRegistry(
-	HKEY hKey,
-	int inIndent,
-	otstringstream& outData)
+		CString const& keyPath,
+		HKEY hKey,
+		int inIndent,
+		otstringstream& outData)
 {
 	if (!hKey)
 		return;
 
 	DWORD i;
 	DWORD dwLen;
+
+	// Enumerate the key values. (must do before subkeys)
+	for (i = 0; ; ++i)
+	{
+		dwLen = BUFF_SIZE;
+		DWORD type;
+		if (ERROR_SUCCESS != RegEnumValue(hKey, i, g_szBuff, &dwLen, NULL, &type, NULL, NULL))
+		{
+			break;
+		}
+		switch (type)
+		{
+		default:
+			PrintIndent(inIndent, outData);
+			PrintItemName(outData, g_szBuff);
+			outData << _T("(??):\r\n");
+			break;
+		case REG_BINARY:
+			PrintIndent(inIndent, outData);
+			PrintItemName(outData, g_szBuff);
+			outData << _T("(REG_BINARY):\r\n");
+			break;
+		//REG_DWORD_LITTLE_ENDIAN == REG_DWORD
+		case REG_DWORD_BIG_ENDIAN:
+			PrintIndent(inIndent, outData);
+			PrintItemName(outData, g_szBuff);
+			outData << _T("(REG_DWORD_BIG_ENDIAN):\r\n");
+			break;
+		case REG_LINK:
+			PrintIndent(inIndent, outData);
+			PrintItemName(outData, g_szBuff);
+			outData << _T("(REG_LINK):\r\n");
+			break;
+		case REG_MULTI_SZ:
+			{
+				dwLen = BUFF_SIZE;
+				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
+				if (ERROR_SUCCESS == dwRet)
+				{
+					TCHAR* pBuffer = g_szBuff2;
+					// TODO: Translate this into 'hex(7)'
+					PrintIndent(inIndent, outData);
+					PrintItemName(outData, g_szBuff);
+					outData << _T("(REG_MULTI_SZ):\r\n");
+					while (pBuffer && *pBuffer)
+					{
+						PrintIndent(inIndent+1, outData);
+						outData << pBuffer << _T("\r\n");
+						pBuffer += lstrlen(pBuffer) + 1;
+					}
+				}
+				else
+				{
+					PrintIndent(inIndent, outData);
+					PrintItemName(outData, g_szBuff);
+					outData << _T("(REG_MULTI_SZ):\r\n");
+				}
+			}
+			break;
+		case REG_NONE:
+			PrintIndent(inIndent, outData);
+			PrintItemName(outData, g_szBuff);
+			outData << _T("(REG_NONE):\r\n");
+			break;
+#if _MSC_VER >= 1300
+		case REG_QWORD:
+		//REG_QWORD_LITTLE_ENDIAN == REG_QWORD
+			PrintIndent(inIndent, outData);
+			PrintItemName(outData, g_szBuff);
+			outData << _T("(REG_QWORD):\r\n");
+			break;
+#endif
+		case REG_DWORD:
+			{
+				DWORD dwVal;
+				dwLen = sizeof(dwVal);
+				if (ERROR_SUCCESS == RegQueryValueEx(hKey, g_szBuff, NULL, &type, (LPBYTE)&dwVal, &dwLen))
+				{
+					PrintItemName(outData, g_szBuff);
+					outData << _T("=dword:");
+					outData.fill('0');
+					outData.width(8);
+					outData << dwVal << _T("\r\n");
+				}
+				else
+				{
+					PrintIndent(inIndent, outData);
+					PrintItemName(outData, g_szBuff);
+					outData << _T("=dword:\r\n");
+				}
+			}
+			break;
+		case REG_EXPAND_SZ:
+			{
+				dwLen = BUFF_SIZE;
+				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
+				if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
+				{
+					// TODO: Translate this into 'hex(2)'
+					PrintIndent(inIndent, outData);
+					PrintItemName(outData, g_szBuff);
+					outData << _T("(REG_EXPAND_SZ):\"");
+					PrintQuotedData(outData, g_szBuff2);
+					if (ERROR_MORE_DATA == dwRet)
+						outData << _T("\"...\r\n");
+					else
+						outData << _T("\"\r\n");
+				}
+				else
+				{
+					PrintIndent(inIndent, outData);
+					PrintItemName(outData, g_szBuff);
+					outData << _T("(REG_EXPAND_SZ):\r\n");
+				}
+			}
+			break;
+
+		case REG_SZ:
+			{
+				dwLen = BUFF_SIZE;
+				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
+				if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
+				{
+					if (ERROR_MORE_DATA == dwRet)
+						PrintIndent(inIndent, outData);
+					PrintItemName(outData, g_szBuff);
+					outData << _T('"');
+					PrintQuotedData(outData, g_szBuff2);
+					if (ERROR_MORE_DATA == dwRet)
+						outData << _T("\"...\r\n");
+					else
+						outData << _T("\"\r\n");
+				}
+				else
+				{
+					PrintIndent(inIndent, outData);
+					PrintItemName(outData, g_szBuff);
+					outData << _T("(REG_SZ):\r\n");
+				}
+			}
+			break;
+		}
+	}
+
 	// Enumerate the subkeys, recursively.
 	for (i = 0; ; ++i)
 	{
@@ -83,105 +298,12 @@ static void DumpRegistry(
 		HKEY hSubKey;
 		if (ERROR_SUCCESS == RegOpenKeyEx(hKey, g_szBuff, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
 		{
-			PrintIndent(inIndent, outData);
-			outData << g_szBuff << _T("\r\n");
-			DumpRegistry(hSubKey, inIndent + 1, outData);
+			CString subPath(keyPath);
+			subPath += _T("\\");
+			subPath += g_szBuff;
+			outData << _T("\r\n[") << (LPCTSTR)subPath << _T("]\r\n");
+			DumpRegistry(subPath, hSubKey, inIndent + 1, outData);
 			RegCloseKey(hSubKey);
-		}
-	}
-
-	// Enumerate the key values.
-	for (i = 0; ; ++i)
-	{
-		dwLen = BUFF_SIZE;
-		DWORD type;
-		if (ERROR_SUCCESS != RegEnumValue(hKey, i, g_szBuff, &dwLen, NULL, &type, NULL, NULL))
-		{
-			break;
-		}
-		bool bOk = false;
-		TCHAR* pType = _T("??");
-		switch (type)
-		{
-		default:
-			break;
-		case REG_BINARY:
-			pType = _T("BINARY");
-			break;
-		//REG_DWORD_LITTLE_ENDIAN == REG_DWORD
-		case REG_DWORD_BIG_ENDIAN:
-			pType = _T("DWORD_BIG_ENDIAN");
-			break;
-		case REG_LINK:
-			pType = _T("LINK");
-			break;
-		case REG_MULTI_SZ:
-			pType = _T("MULTI_SZ");
-			{
-				dwLen = BUFF_SIZE;
-				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
-				if (ERROR_SUCCESS == dwRet)
-				{
-					bOk = true;
-					TCHAR* pBuffer = g_szBuff2;
-					PrintIndent(inIndent, outData);
-					outData << g_szBuff << '(' << pType << _T(")\r\n");
-					while (pBuffer && *pBuffer)
-					{
-						PrintIndent(inIndent+1, outData);
-						outData << pBuffer << _T("\r\n");
-						pBuffer += lstrlen(pBuffer) + 1;
-					}
-				}
-			}
-			break;
-		case REG_NONE:
-			pType = _T("NONE");
-			break;
-#if _MSC_VER >= 1300
-		case REG_QWORD:
-		//REG_QWORD_LITTLE_ENDIAN == REG_QWORD
-			pType = _T("QWORD");
-			break;
-#endif
-		case REG_DWORD:
-			pType = _T("DWORD");
-			{
-				DWORD dwVal;
-				dwLen = sizeof(dwVal);
-				if (ERROR_SUCCESS == RegQueryValueEx(hKey, g_szBuff, NULL, &type, (LPBYTE)&dwVal, &dwLen))
-				{
-					bOk = true;
-					PrintIndent(inIndent, outData);
-					outData << g_szBuff << '(' << pType << _T("): ") << dwVal << _T("\r\n");
-				}
-			}
-			break;
-		case REG_EXPAND_SZ:
-		case REG_SZ:
-			if (REG_EXPAND_SZ == type)
-				pType = _T("EXPAND_SZ");
-			else
-				pType = _T("SZ");
-			{
-				dwLen = BUFF_SIZE;
-				DWORD dwRet = RegQueryValueEx(hKey, g_szBuff, NULL, &type, reinterpret_cast<LPBYTE>(g_szBuff2), &dwLen);
-				if (ERROR_SUCCESS == dwRet || ERROR_MORE_DATA == dwRet)
-				{
-					bOk = true;
-					PrintIndent(inIndent, outData);
-					outData << g_szBuff << '(' << pType << _T("): ") << g_szBuff2;
-					if (ERROR_MORE_DATA == dwRet)
-						outData << _T("...");
-					outData << _T("\r\n");
-				}
-			}
-			break;
-		}
-		if (!bOk)
-		{
-			PrintIndent(inIndent, outData);
-			outData << g_szBuff << '(' << pType << _T(")\r\n");
 		}
 	}
 }
@@ -554,13 +676,12 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 		LPCTSTR pRegPath;
 	} const sc_Reg[] =
 	{
-		{HKEY_CURRENT_USER, false, _T("HKCU\\"), _T("Software\\dcon Software\\Agility Record Book")},
-		{HKEY_CLASSES_ROOT, false, _T("HKCR\\"), _T(".arb")},
-		{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("AgilityBook.Document")},
-		{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AGILIT~1.EXE")},
-		{HKEY_CLASSES_ROOT, true, _T("HKCR\\"), _T("Applications\\AgilityBook.exe")},
+		{HKEY_CURRENT_USER, false, _T("HKEY_CURRENT_USER\\"), _T("Software\\dcon Software\\Agility Record Book")},
+		{HKEY_CLASSES_ROOT, false, _T("HKEY_CLASSES_ROOT\\"), _T(".arb")},
+		{HKEY_CLASSES_ROOT, true, _T("HKEY_CLASSES_ROOT\\"), _T("AgilityBook.Document")},
 		{NULL, NULL}
 	};
+	bool bRegEditHeaderWritten = false;
 	CString regInfo;
 	for (int index = 0; sc_Reg[index].hRegKey; ++index)
 	{
@@ -568,8 +689,15 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 		HKEY hSubKey;
 		if (ERROR_SUCCESS == RegOpenKeyEx(sc_Reg[index].hRegKey, sc_Reg[index].pRegPath, 0, KEY_ENUMERATE_SUB_KEYS | KEY_READ, &hSubKey))
 		{
-			data << sc_Reg[index].pRootString << sc_Reg[index].pRegPath << _T("\r\n");
-			DumpRegistry(hSubKey, 1, data);
+			CString keyStr(sc_Reg[index].pRootString);
+			keyStr += sc_Reg[index].pRegPath;
+			if (!bRegEditHeaderWritten)
+			{
+				bRegEditHeaderWritten = true;
+				data << _T("REGEDIT4\r\n");
+			}
+			data << _T("\r\n[") << (LPCTSTR)keyStr << _T("]\r\n");
+			DumpRegistry(keyStr, hSubKey, 1, data);
 			HKEY hOpenKey;
 			if (sc_Reg[index].bProcessOpenCmd)
 			{
@@ -619,7 +747,7 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 		else
 		{
 			tmp.FormatMessage(IDS_CANNOT_READ, sc_Reg[index].pRegPath);
-			data << (LPCTSTR)tmp << _T("\r\n");
+			data << _T("; ") << (LPCTSTR)tmp << _T("\r\n");
 		}
 		regInfo += data.str().c_str();
 	}
@@ -630,6 +758,7 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 	msg += tmp;
 	m_ctrlText.SetWindowText(msg);
 	std::set<CString> drives;
+#if SEARCH_FOR_FILES
 	drives.insert(_T("C:")); // Search C:
 	HKEY hRecent;
 	// Also add any drives that are in the MRU list.
@@ -658,6 +787,7 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 		}
 		RegCloseKey(hRecent);
 	}
+#endif
 	for (std::set<CString>::iterator i = drives.begin(); i != drives.end(); ++i)
 	{
 		tmp.FormatMessage(IDS_SEARCHINGDRIVE, (*i)[0]);
