@@ -1354,6 +1354,8 @@ bool ElementNode::AddAttrib(
 		tstring const& inName,
 		tstring const& inValue)
 {
+	if (inName.empty())
+		return false;
 	m_Attribs[inName] = inValue;
 	return true;
 }
@@ -1363,6 +1365,8 @@ bool ElementNode::AddAttrib(
 		tstring const& inName,
 		TCHAR const* const inValue)
 {
+	if (inName.empty())
+		return false;
 	if (inValue)
 		m_Attribs[inName] = inValue;
 	else
@@ -1385,7 +1389,7 @@ bool ElementNode::AddAttrib(
 {
 	if (inValue.IsValid())
 		AddAttrib(inName, inValue.GetString(ARBDate::eDashYMD));
-	return true;
+	return false;
 }
 
 
@@ -1393,6 +1397,8 @@ bool ElementNode::AddAttrib(
 		tstring const& inName,
 		bool inValue)
 {
+	if (inName.empty())
+		return false;
 	if (inValue)
 		m_Attribs[inName] = _T("y");
 	else
@@ -1405,6 +1411,8 @@ bool ElementNode::AddAttrib(
 		tstring const& inName,
 		short inValue)
 {
+	if (inName.empty())
+		return false;
 	otstringstream str;
 	str << inValue;
 	m_Attribs[inName] = str.str();
@@ -1416,6 +1424,8 @@ bool ElementNode::AddAttrib(
 		tstring const& inName,
 		long inValue)
 {
+	if (inName.empty())
+		return false;
 	otstringstream str;
 	str << inValue;
 	m_Attribs[inName] = str.str();
@@ -1428,6 +1438,8 @@ bool ElementNode::AddAttrib(
 		double inValue,
 		int inPrec)
 {
+	if (inName.empty())
+		return false;
 	m_Attribs[inName] = ARBDouble::str(inValue, inPrec);
 	return true;
 }
@@ -1538,7 +1550,7 @@ ElementNodePtr ElementNode::AddElementNode(
 {
 	size_t index;
 	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
-	if (0 < inAt)
+	if (0 <= inAt)
 	{
 		index = 0;
 		for (; 0 < inAt && iter != m_Elements.end(); ++index, ++iter, --inAt)

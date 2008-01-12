@@ -224,15 +224,19 @@ ARBDate ARBDate::FromString(
 		int nDash = ParseFields(inDate, '-', val1, val2, val3);
 		int nSlash = ParseFields(inDate, '/', val1, val2, val3);
 		int yr = 0, mon = 0, day = 0;
-		if (3 == nDash || 3 == nSlash)
+		if (0 == inFormat)
 		{
-			if (0 == inFormat)
-			{
-				if (3 == nDash)
-					inFormat = eDashYYYYMMDD;
-				else if (3 == nSlash)
-					inFormat = eSlashMMDDYYYY;
-			}
+			if (3 == nDash)
+				inFormat = eDashYYYYMMDD;
+			else if (3 == nSlash)
+				inFormat = eSlashMMDDYYYY;
+		}
+		if ((3 == nDash &&
+		(eDashMMDDYYYY == inFormat || eDashYYYYMMDD == inFormat || eDashDDMMYYYY == inFormat))
+		|| (3 == nSlash &&
+		(eSlashMMDDYYYY == inFormat || eSlashYYYYMMDD == inFormat || eSlashDDMMYYYY == inFormat)))
+		{
+
 			switch (inFormat)
 			{
 			case eDashMMDDYYYY:

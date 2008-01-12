@@ -685,11 +685,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestDouble.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestElement.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestMisc.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestQ.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestVersion.cpp"
 				>
 			</File>
 		</Filter>

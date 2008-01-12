@@ -1,7 +1,7 @@
 Setting up the build environment
 ================================
 Additional software packages required (all free):
-- WinUnit (MSDN Feb 2008: http://msdn.microsoft.com/msdnmag/issues/08/02/NativeUnitTesting)
+- WinUnit
 - HTML Help Workshop
 - Boost libraries
 - Windows Installer XML toolset (or Inno Setup)
@@ -18,7 +18,8 @@ Once the above software is unpacked, the directory structure should look like:
 
 --------------------
 
-WinUnit: This is a free download from MSDN (Microsoft)
+WinUnit: http://msdn.microsoft.com/msdnmag/issues/08/02/NativeUnitTesting
+I'm currently using version 1.0.1125.0. [MSDN Feb 2008]
 If you don't want to run the unit tests, this is not required.
 By default, TestARB.vcproj assumes that WinUnit is installed in /Tools/WinUnit.
 All project files have been modified such that:
