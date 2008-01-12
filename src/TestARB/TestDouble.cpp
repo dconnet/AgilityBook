@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright © 2008 David Connet. All Rights Reserved.
  *
@@ -28,30 +26,38 @@
 
 /**
  * @file
- * @brief ARBDate class.
+ * @brief Test ARBDouble functions
  * @author David Connet
  *
  * Revision History
- * @li 2008-01-11 DRC Created
+ * @li 2008-01-12 DRC Created
  */
 
-#include "WinUnit.h"
+#include "stdafx.h"
+#include "TestARB.h"
 
-// Placeholder for any global helper functions
+#include "ARBTypes.h"
 
-/*
-Quick reference for winunit macros:
-WIN_ASSERT_EQUAL(expected, actual, ...)			uses '=='
-WIN_ASSERT_NOT_EQUAL(notExpected, actual, ...)	uses '!='
-WIN_ASSERT_STRING_EQUAL(expected, actual, ...)	case-sensitve string compare
-WIN_ASSERT_ZERO(zeroExpression, ...)			compares to 0, fail if not equal
-WIN_ASSERT_NOT_ZERO(expr, ...)					compares to 0, fail if equal
-WIN_ASSERT_NULL(expr, ...)						compare ptr to NULL
-WIN_ASSERT_NOT_NULL(expr, ...)					compare ptr to NULL
-WIN_ASSERT_FAIL(message, ...)					always fails
-WIN_ASSERT_TRUE(expr, ...)						succeed if true
-WIN_ASSERT_FALSE(expr, ...)						succeed if !expr
-WIN_ASSERT_WINAPI_SUCCESS(expr, ...)			Makes use of GetLastError
-WIN_ASSERT_THROWS(expr, exceptionType, ...)		succeed if expr throws a C++ exception of type
-WIN_TRACE(message, ...)							output info msg for debugging
-*/
+
+BEGIN_TEST(Double_str)
+{
+	double p = 3.14159265358979323846;
+
+	tstring s = ARBDouble::str(p);
+	WIN_ASSERT_STRING_EQUAL(_T("3.14"), s.c_str());
+	s = ARBDouble::str(p, 4);
+	WIN_ASSERT_STRING_EQUAL(_T("3.1416"), s.c_str());
+}
+END_TEST
+
+
+BEGIN_TEST(Double_equal)
+{
+	double p1 = 3.14159265;
+	double p2 = 3.141592;
+	double p3 = 3.141592657;
+	WIN_ASSERT_TRUE(ARBDouble::equal(p1, p2, 0.00001));
+	WIN_ASSERT_FALSE(ARBDouble::equal(p1, p2, 0.00000001));
+	WIN_ASSERT_TRUE(ARBDouble::equal(p1, p3, 0.00000001));
+}
+END_TEST

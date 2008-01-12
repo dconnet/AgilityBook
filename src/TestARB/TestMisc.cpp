@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright © 2008 David Connet. All Rights Reserved.
  *
@@ -28,30 +26,28 @@
 
 /**
  * @file
- * @brief ARBDate class.
+ * @brief Test misc functions
  * @author David Connet
  *
  * Revision History
- * @li 2008-01-11 DRC Created
+ * @li 2008-01-12 DRC Created
  */
 
-#include "WinUnit.h"
+#include "stdafx.h"
+#include "TestARB.h"
 
-// Placeholder for any global helper functions
+#include "ARBTypes.h"
 
-/*
-Quick reference for winunit macros:
-WIN_ASSERT_EQUAL(expected, actual, ...)			uses '=='
-WIN_ASSERT_NOT_EQUAL(notExpected, actual, ...)	uses '!='
-WIN_ASSERT_STRING_EQUAL(expected, actual, ...)	case-sensitve string compare
-WIN_ASSERT_ZERO(zeroExpression, ...)			compares to 0, fail if not equal
-WIN_ASSERT_NOT_ZERO(expr, ...)					compares to 0, fail if equal
-WIN_ASSERT_NULL(expr, ...)						compare ptr to NULL
-WIN_ASSERT_NOT_NULL(expr, ...)					compare ptr to NULL
-WIN_ASSERT_FAIL(message, ...)					always fails
-WIN_ASSERT_TRUE(expr, ...)						succeed if true
-WIN_ASSERT_FALSE(expr, ...)						succeed if !expr
-WIN_ASSERT_WINAPI_SUCCESS(expr, ...)			Makes use of GetLastError
-WIN_ASSERT_THROWS(expr, exceptionType, ...)		succeed if expr throws a C++ exception of type
-WIN_TRACE(message, ...)							output info msg for debugging
-*/
+
+BEGIN_TEST(Html_Sanitize)
+{
+	tstring s(_T("<&amp>"));
+	tstring s2 = SanitizeStringForHTML(s);
+	WIN_ASSERT_STRING_EQUAL(_T("&lt;&amp;amp&gt;"), s2.c_str());
+	s = _T("1\r\n2\n3");
+	s2 = SanitizeStringForHTML(s, true);
+	WIN_ASSERT_STRING_EQUAL(_T("1<br/>2<br/>3"), s2.c_str());
+	s2 = SanitizeStringForHTML(s, false);
+	WIN_ASSERT_STRING_EQUAL(_T("1\r\n2\n3"), s2.c_str());
+}
+END_TEST

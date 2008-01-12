@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright © 2008 David Connet. All Rights Reserved.
  *
@@ -28,30 +26,47 @@
 
 /**
  * @file
- * @brief ARBDate class.
+ * @brief Test ARBVersion class
  * @author David Connet
  *
  * Revision History
- * @li 2008-01-11 DRC Created
+ * @li 2008-01-12 DRC Created
  */
 
-#include "WinUnit.h"
+#include "stdafx.h"
+#include "TestARB.h"
 
-// Placeholder for any global helper functions
+#include "ARBTypes.h"
 
-/*
-Quick reference for winunit macros:
-WIN_ASSERT_EQUAL(expected, actual, ...)			uses '=='
-WIN_ASSERT_NOT_EQUAL(notExpected, actual, ...)	uses '!='
-WIN_ASSERT_STRING_EQUAL(expected, actual, ...)	case-sensitve string compare
-WIN_ASSERT_ZERO(zeroExpression, ...)			compares to 0, fail if not equal
-WIN_ASSERT_NOT_ZERO(expr, ...)					compares to 0, fail if equal
-WIN_ASSERT_NULL(expr, ...)						compare ptr to NULL
-WIN_ASSERT_NOT_NULL(expr, ...)					compare ptr to NULL
-WIN_ASSERT_FAIL(message, ...)					always fails
-WIN_ASSERT_TRUE(expr, ...)						succeed if true
-WIN_ASSERT_FALSE(expr, ...)						succeed if !expr
-WIN_ASSERT_WINAPI_SUCCESS(expr, ...)			Makes use of GetLastError
-WIN_ASSERT_THROWS(expr, exceptionType, ...)		succeed if expr throws a C++ exception of type
-WIN_TRACE(message, ...)							output info msg for debugging
-*/
+
+BEGIN_TEST(Version_ctor)
+{
+	unsigned short maj = 0, minor = 0;
+	ARBVersion v;
+	WIN_ASSERT_EQUAL(maj, v.Major());
+	WIN_ASSERT_EQUAL(minor, v.Minor());
+
+	maj = 1;
+	minor = 2;
+	ARBVersion v2(maj, minor);
+	WIN_ASSERT_EQUAL(maj, v2.Major());
+	WIN_ASSERT_EQUAL(minor, v2.Minor());
+}
+END_TEST
+
+
+BEGIN_TEST(Version_str)
+{
+	ARBVersion v(1, 2);
+	WIN_ASSERT_STRING_EQUAL(_T("1.2"), v.str().c_str());
+}
+END_TEST
+
+
+BEGIN_TEST(Version_Comparison)
+{
+	ARBVersion v1(1, 2);
+	ARBVersion v2(2, 1);
+	WIN_ASSERT_TRUE(v1 < v2);
+}
+END_TEST
