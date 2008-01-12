@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief interface of the CDlgHelpPage1 class
+ * @brief interface of the CDlgPageEncode class
  * @author David Connet
  *
  * Revision History
