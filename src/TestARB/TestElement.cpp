@@ -274,10 +274,24 @@ static void LoadTree(ElementNodePtr tree)
 }
 
 
-BEGIN_TEST(Element_Load)
+FIXTURE(ElementXML)
+
+
+SETUP(ElementXML)
 {
 	tstring errs;
 	WIN_ASSERT_TRUE(Element::Initialize(errs));
+}
+
+
+TEARDOWN(ElementXML)
+{
+	Element::Terminate();
+}
+
+
+BEGIN_TESTF(Element_Load, ElementXML)
+{
 	ElementNodePtr tree(ElementNode::New());
 	LoadTree(tree);
 
@@ -285,16 +299,12 @@ BEGIN_TEST(Element_Load)
 	WIN_ASSERT_EQUAL(1, tree->GetAttribCount());
 	int config = tree->FindElement(TREE_CONFIG);
 	WIN_ASSERT_TRUE(0 <= config);
-
-	Element::Terminate();
 }
-END_TEST
+END_TESTF
 
 
-BEGIN_TEST(Element_Save)
+BEGIN_TESTF(Element_Save, ElementXML)
 {
-	tstring errs;
-	WIN_ASSERT_TRUE(Element::Initialize(errs));
 	ElementNodePtr tree(ElementNode::New());
 	LoadTree(tree);
 
@@ -304,6 +314,7 @@ BEGIN_TEST(Element_Save)
 	WIN_ASSERT_TRUE(tree->SaveXML(tmp1));
 
 	ElementNodePtr tree2(ElementNode::New());
+	tstring errs;
 	WIN_ASSERT_TRUE(tree2->LoadXMLFile(tmpfile, errs));
 
 	DeleteFile(CString(tmpfile));
@@ -312,7 +323,5 @@ BEGIN_TEST(Element_Save)
 	WIN_ASSERT_TRUE(tree2->SaveXML(tmp2));
 
 	WIN_ASSERT_STRING_EQUAL(tmp1.str().c_str(), tmp2.str().c_str());
-
-	Element::Terminate();
 }
-END_TEST
+END_TESTF
