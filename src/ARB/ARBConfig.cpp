@@ -181,7 +181,7 @@ bool ARBConfig::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_CONFIG)
 		return false;
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{

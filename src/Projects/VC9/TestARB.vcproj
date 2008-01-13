@@ -577,6 +577,10 @@
 			UniqueIdentifier="{718D9CED-72EB-4A38-8517-BC03AE844060}"
 			>
 			<File
+				RelativePath="..\..\TestARB\Local.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -681,6 +685,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestBinaryData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestCalendar.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestDate.cpp"
 				>
 			</File>
@@ -693,11 +705,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestErrorCallback.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestInfoItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestMisc.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\TestARB\TestQ.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestTraining.cpp"
 				>
 			</File>
 			<File
@@ -710,6 +734,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{9DF372DE-C31D-44D4-BDB1-28D168BD0C30}"
 			>
+			<File
+				RelativePath="..\..\TestARB\Local.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\TestARB\resource.h"
 				>

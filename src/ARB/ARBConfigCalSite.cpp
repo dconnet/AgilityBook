@@ -120,7 +120,7 @@ bool ARBConfigCalSite::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_CALSITE)
 		return false;
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_NAME, m_Name))
 	{

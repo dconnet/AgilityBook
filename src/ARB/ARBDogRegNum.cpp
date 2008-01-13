@@ -132,7 +132,7 @@ bool ARBDogRegNum::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_REG_NUM)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REG_NUM_VENUE, m_Venue)
 	|| 0 == m_Venue.length())

@@ -135,7 +135,7 @@ bool ARBConfigPlaceInfo::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_PLACE_INFO)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place))
 	{

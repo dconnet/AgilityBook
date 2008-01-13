@@ -278,7 +278,7 @@ bool ARBDogRun::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_RUN)
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_RUN_DATE, m_Date))
 	{

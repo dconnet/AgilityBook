@@ -110,17 +110,9 @@ public:
 	 * @param ioTree Parent element.
 	 * @param inItemName Name of collection being saved.
 	 */
-	bool ARBInfoItem::Save(
+	bool Save(
 			ElementNodePtr ioTree,
 			tstring const& inItemName) const;
-
-	/**
-	 * Save a document.
-	 * @param ioTree Parent element.
-	 * @return Success
-	 * @post The ARBInfoItem element will be created in ioTree.
-	 */
-	bool Save(ElementNodePtr ioTree) const;
 
 	/*
 	 * Getters/setters.

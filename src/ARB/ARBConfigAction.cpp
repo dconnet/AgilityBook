@@ -1235,7 +1235,7 @@ bool ARBConfigActionList::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_ACTION)
 		return false;
 	tstring verb;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_ACTION_VERB, verb)

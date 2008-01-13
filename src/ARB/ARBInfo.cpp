@@ -109,7 +109,7 @@ bool ARBInfo::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_INFO)
 		return false;
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{

@@ -145,7 +145,7 @@ bool ARBDogNotes::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_NOTES)
 		return false;
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
 	{

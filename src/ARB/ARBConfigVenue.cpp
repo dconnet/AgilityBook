@@ -171,7 +171,7 @@ bool ARBConfigVenue::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_VENUE)
 		return false;
 	// Get the venue name.
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_VENUE_NAME, m_Name)

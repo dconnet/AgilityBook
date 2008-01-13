@@ -129,7 +129,7 @@ bool ARBConfigLifetimePoints::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_LIFETIME_POINTS)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LIFETIME_POINTS_POINTS, m_Points))
 	{

@@ -158,7 +158,7 @@ tstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) cons
 	data.FormatMessage(IDS_UPDATE_UPDATED, nUpdated);
 	buffer << (LPCTSTR)data << _T(", ");
 	data.FormatMessage(IDS_UPDATE_IDENTICAL, nSkipped);
-	buffer << (LPCTSTR)data << _T(", ");
+	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
 

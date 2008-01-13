@@ -147,7 +147,7 @@ bool ARBAgilityRecordBook::Load(
 	clear();
 
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_BOOK)
 		return false;
 
 	// Make sure the input looks okay.

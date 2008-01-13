@@ -175,7 +175,9 @@ bool ARBDogRunScoring::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || !(inTree->GetName() == TREE_BY_TIME
+	|| inTree->GetName() == TREE_BY_OPENCLOSE
+	|| inTree->GetName() == TREE_BY_POINTS))
 		return false;
 
 	tstring attrib;

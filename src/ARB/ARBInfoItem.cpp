@@ -132,7 +132,7 @@ bool ARBInfoItem::Load(
 		tstring const& inItemName)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != inItemName)
 		return false;
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{

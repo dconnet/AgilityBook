@@ -166,7 +166,7 @@ bool ARBDogReferenceRun::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_REF_RUN)
 		return false;
 
 	tstring attrib;

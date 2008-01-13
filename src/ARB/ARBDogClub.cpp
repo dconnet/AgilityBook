@@ -132,7 +132,7 @@ bool ARBDogClub::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_CLUB)
 		return false;
 	if (inVersion == ARBVersion(1,0))
 	{
