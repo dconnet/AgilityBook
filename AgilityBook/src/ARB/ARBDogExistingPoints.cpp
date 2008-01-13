@@ -180,7 +180,7 @@ bool ARBDogExistingPoints::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_EXISTING_PTS)
 		return false;
 
 	tstring attrib;

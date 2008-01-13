@@ -172,7 +172,7 @@ bool ARBDogTrial::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_TRIAL)
 		return false;
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TRIAL_VERIFIED, m_Verified))
 	{

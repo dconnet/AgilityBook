@@ -249,7 +249,7 @@ bool ARBConfigScoring::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_SCORING)
 		return false;
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))

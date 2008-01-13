@@ -101,7 +101,7 @@ bool ARBConfigFault::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_FAULTTYPE)
 		return false;
 	if (inVersion == ARBVersion(1,0))
 	{

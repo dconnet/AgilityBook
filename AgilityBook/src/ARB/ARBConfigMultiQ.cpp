@@ -119,7 +119,7 @@ bool ARBConfigMultiQ::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_MULTIQ)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_MULTIQ_NAME, m_Name))
 	{

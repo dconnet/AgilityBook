@@ -150,7 +150,7 @@ bool ARBTraining::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_TRAINING)
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_TRAINING_DATE, m_Date))
 	{

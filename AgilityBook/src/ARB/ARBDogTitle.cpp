@@ -168,7 +168,7 @@ bool ARBDogTitle::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_TITLE)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_VENUE, m_Venue)
 	|| 0 == m_Venue.length())

@@ -204,7 +204,7 @@ bool ARBDog::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_DOG)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
 	|| 0 == m_CallName.length())

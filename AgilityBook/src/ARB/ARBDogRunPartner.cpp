@@ -141,7 +141,7 @@ bool ARBDogRunPartner::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_PARTNER)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PARTNER_HANDLER, m_Handler)
 	|| 0 == m_Handler.length())

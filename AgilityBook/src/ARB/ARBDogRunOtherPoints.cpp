@@ -116,7 +116,7 @@ bool ARBDogRunOtherPoints::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_PLACEMENT_OTHERPOINTS)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACEMENT_OTHERPOINTS_NAME, m_Name)
 	|| 0 == m_Name.length())

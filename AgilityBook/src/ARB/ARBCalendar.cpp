@@ -572,7 +572,7 @@ bool ARBCalendar::Load(
 		ARBErrorCallback& ioCallback)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_CALENDAR)
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_CAL_START, m_DateStart))
 	{

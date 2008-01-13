@@ -135,7 +135,7 @@ bool ARBConfigTitlePoints::Load(
 		ARBConfigLifetimePointsList& ioLifetimePoints)
 {
 	ASSERT(inTree);
-	if (!inTree)
+	if (!inTree || inTree->GetName() != TREE_TITLE_POINTS)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 	{
