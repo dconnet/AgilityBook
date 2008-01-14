@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-01-14 DRC Make ViewLifetimeEvents default to true.
  * @li 2007-08-03 DRC Added UserNames
  * @li 2006-07-16 DRC Added PointsViewSort
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -522,7 +523,7 @@ void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
 
 bool CAgilityBookOptions::GetViewLifetimePointsByEvent()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("ViewLifetimeEvents"), 0);
+	int val = theApp.GetProfileInt(_T("Common"), _T("ViewLifetimeEvents"), 1);
 	return val == 1 ? true : false;
 }
 
