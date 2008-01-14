@@ -1550,13 +1550,13 @@ ElementNodePtr ElementNode::AddElementNode(
 {
 	size_t index;
 	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
-	if (0 <= inAt)
+	if (0 < inAt)
 	{
 		index = 0;
 		for (; 0 < inAt && iter != m_Elements.end(); ++index, ++iter, --inAt)
 			;
 	}
-	else
+	else if (0 > inAt)
 	{
 		index = m_Elements.size();
 		iter = m_Elements.end();
