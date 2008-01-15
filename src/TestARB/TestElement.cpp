@@ -279,14 +279,13 @@ FIXTURE(ElementXML)
 
 SETUP(ElementXML)
 {
-	tstring errs;
-	WIN_ASSERT_TRUE(Element::Initialize(errs));
+	WIN_ASSERT_TRUE(CommonSetup());
 }
 
 
 TEARDOWN(ElementXML)
 {
-	Element::Terminate();
+	WIN_ASSERT_TRUE(CommonTeardown());
 }
 
 

@@ -53,14 +53,14 @@ public:
 	 */
 	static bool Decode(
 			tstring const& inBase64,
-			char*& outBinData,
+			unsigned char*& outBinData,
 			size_t& outBytes);
 
 	/**
 	 * Deallocate memory allocated in Decode()
 	 * @param inBinData Binary data allocated in Decode()
 	 */
-	static void Release(char* inBinData);
+	static void Release(unsigned char* inBinData);
 
 	/**
 	 * Compress and base64 encode a chunk of data.
@@ -69,7 +69,7 @@ public:
 	 * @param outBase64 Base64 encoded string of compressed (zlib) data.
 	 */
 	static bool Encode(
-			char const* inBinData,
+			unsigned char const* inBinData,
 			size_t inBytes,
 			tstring& outBase64);
 	static bool Encode(

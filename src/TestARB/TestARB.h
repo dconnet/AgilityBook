@@ -55,3 +55,6 @@ WIN_ASSERT_WINAPI_SUCCESS(expr, ...)			Makes use of GetLastError
 WIN_ASSERT_THROWS(expr, exceptionType, ...)		succeed if expr throws a C++ exception of type
 WIN_TRACE(message, ...)							output info msg for debugging
 */
+
+extern bool CommonSetup();
+extern bool CommonTeardown();

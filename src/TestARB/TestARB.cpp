@@ -35,7 +35,35 @@
 
 #include "stdafx.h"
 #include "TestARB.h"
+#include "Local.h"
+
+#include "Element.h"
 
 #pragma comment(lib, "WinUnitLib.lib")
 
-// Placeholder for any global helper functions
+
+// In theory, this stuff should only be done once - but the framework doesn't
+// support that, so just provide global functions so it can be implemented in
+// one place. In time, when this is added to WinUnit, we can just make these
+// empty functions - unless there really is something we want to do across all
+// fixture tests.
+
+bool CommonSetup()
+{
+	static CLocalization localization;
+	static bool bInit = false;
+	if (!bInit)
+	{
+		bInit = true;
+		IARBLocalization::Init(&localization);
+	}
+	tstring errs;
+	return Element::Initialize(errs);
+}
+
+
+bool CommonTeardown()
+{
+	Element::Terminate();
+	return true;
+}

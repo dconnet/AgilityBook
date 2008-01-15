@@ -35,7 +35,6 @@
 
 #include "stdafx.h"
 #include "TestARB.h"
-#include "Local.h"
 
 #include "ARBCalendar.h"
 #include "ARBStructure.h"
@@ -46,7 +45,6 @@ FIXTURE(Calendar)
 
 namespace
 {
-	CLocalization localization;
 	ElementNodePtr CalData1; // v1.0
 	ElementNodePtr CalData2; // v2.0+
 	ElementNodePtr CalData1a; // v1.0 with v2 data
@@ -68,14 +66,10 @@ static ElementNodePtr CreateNode()
 
 SETUP(Calendar)
 {
-	IARBLocalization::Init(&localization);
+	WIN_ASSERT_TRUE(CommonSetup());
 
 	CalData1 = CreateNode();
-
-	//CalData1a = CalData1->Clone();
 	CalData1a = CreateNode();
-
-	//CalData2 = CalData1->Clone();
 	CalData2 = CreateNode();
 
 	// Specialize the v1/v2 objs.
@@ -90,9 +84,12 @@ TEARDOWN(Calendar)
 	CalData1.reset();
 	CalData2.reset();
 	CalData1a.reset();
+
+	WIN_ASSERT_TRUE(CommonTeardown());
 }
 
-BEGIN_TEST(Calendar_Ctor)
+
+BEGIN_TEST(Calendar_New)
 {
 	ARBCalendarPtr cal = ARBCalendar::New();
 	WIN_ASSERT_NOT_NULL(cal.get());
@@ -113,6 +110,51 @@ BEGIN_TEST(Calendar_Clone)
 	WIN_ASSERT_EQUAL(cal->GetLocation(), cal2->GetLocation());
 	cal->SetLocation(_T("Here2"));
 	WIN_ASSERT_NOT_EQUAL(cal->GetLocation(), cal2->GetLocation());
+}
+END_TEST
+
+
+BEGIN_TEST(Calendar_OpEqual)
+{
+	ARBCalendarPtr cal1 = ARBCalendar::New();
+	cal1->SetStartDate(ARBDate(2007, 9, 1));
+	cal1->SetLocation(_T("Here"));
+	ARBCalendarPtr cal2 = ARBCalendar::New();
+	WIN_ASSERT_TRUE(*cal1 != *cal2);
+	*cal1 = *cal2;
+	WIN_ASSERT_TRUE(*cal1 == *cal2);
+}
+END_TEST
+
+
+BEGIN_TESTF(Calendar_Compare, Calendar)
+{
+	ARBCalendarPtr cal = ARBCalendar::New();
+	tstring errs;
+	ARBErrorCallback callback(errs);
+    cal->Load(CalData2, ARBVersion(2, 0), callback);
+	ARBCalendarPtr cal2 = cal->Clone();
+	WIN_ASSERT_NOT_EQUAL(cal.get(), cal2.get());
+	WIN_ASSERT_TRUE(*cal == *cal2);
+	ARBDate n = ARBDate::Today();
+	cal2->SetStartDate(n);
+	cal2->SetEndDate(n+1);
+	WIN_ASSERT_TRUE(*cal < *cal2);
+	WIN_ASSERT_TRUE(*cal < cal2->GetStartDate());
+	WIN_ASSERT_FALSE(*cal == *cal2);
+	WIN_ASSERT_FALSE(*cal > *cal2);
+	WIN_ASSERT_FALSE(*cal > cal2->GetStartDate());
+}
+END_TESTF
+
+
+BEGIN_TEST(Calendar_GenName)
+{
+	ARBCalendarPtr cal1 = ARBCalendar::New();
+	cal1->SetClub(_T("Way"));
+	cal1->SetVenue(_T("No"));
+	cal1->SetLocation(_T("There"));
+	WIN_ASSERT_STRING_EQUAL(_T("No Way There"), cal1->GetGenericName().c_str());
 }
 END_TEST
 
@@ -165,67 +207,17 @@ BEGIN_TESTF(Calendar_Save, Calendar)
 END_TESTF
 
 
-BEGIN_TESTF(Calendar_Compare, Calendar)
+BEGIN_TEST(Calendar_IsBefore)
 {
 	ARBCalendarPtr cal = ARBCalendar::New();
-	tstring errs;
-	ARBErrorCallback callback(errs);
-    cal->Load(CalData2, ARBVersion(2, 0), callback);
-	ARBCalendarPtr cal2 = cal->Clone();
-	WIN_ASSERT_NOT_EQUAL(cal.get(), cal2.get());
-	WIN_ASSERT_TRUE(*cal == *cal2);
-	ARBDate n = ARBDate::Today();
-	cal2->SetStartDate(n);
-	cal2->SetEndDate(n+1);
-	WIN_ASSERT_TRUE(*cal < *cal2);
-	WIN_ASSERT_FALSE(*cal == *cal2);
-	WIN_ASSERT_FALSE(*cal > *cal2);
+	cal->SetStartDate(ARBDate(2007, 9, 1));
+	cal->SetEndDate(ARBDate(2007, 9, 3));
+	WIN_ASSERT_FALSE(cal->IsBefore(ARBDate(2007, 8, 31)));
+	WIN_ASSERT_FALSE(cal->IsBefore(cal->GetStartDate()));
+	WIN_ASSERT_FALSE(cal->IsBefore(cal->GetEndDate()));
+	WIN_ASSERT_TRUE(cal->IsBefore(ARBDate(2007, 9, 4)));
 }
-END_TESTF
-
-
-BEGIN_TESTF(Calendar_LoadList, Calendar)
-{
-	ARBCalendarList callist;
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(callist.Load(CalData1, ARBVersion(1, 0), callback));
-	WIN_ASSERT_TRUE(callist.Load(CalData2, ARBVersion(2, 0), callback));
-	ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
-	ele->SetValue(_T("These are some notes"));
-	ele->AddAttrib(ATTRIB_CAL_START, ARBDate(2006, 9, 4));
-	ele->AddAttrib(ATTRIB_CAL_END, ARBDate(2006, 9, 5));
-	ele->AddAttrib(ATTRIB_CAL_LOCATION, _T("Hollister, CA"));
-	ele->AddAttrib(ATTRIB_CAL_CLUB, _T("PASA"));
-	ele->AddAttrib(ATTRIB_CAL_VENUE, _T("ASCA"));
-	ele->AddAttrib(_T("PlanOn"), _T("n"));
-	WIN_ASSERT_FALSE(callist.Load(ele, ARBVersion(2, 0), callback));
-	WIN_ASSERT_EQUAL(2u, callist.size());
-	ele->SetName(TREE_CALENDAR);
-}
-END_TESTF
-
-
-BEGIN_TESTF(Calendar_LoadList2, Calendar)
-{
-	ARBCalendarList callist;
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(callist.Load(CalData1, ARBVersion(1, 0), callback));
-	WIN_ASSERT_TRUE(callist.Load(CalData2, ARBVersion(2, 0), callback));
-	ElementNodePtr ele = ElementNode::New(TREE_CALENDAR);
-	ele->SetValue(_T("These are some notes"));
-	ele->AddAttrib(_T("DateStrt"), ARBDate(2006, 9, 4));
-	ele->AddAttrib(ATTRIB_CAL_END, ARBDate(2006, 9, 5));
-	ele->AddAttrib(ATTRIB_CAL_LOCATION, _T("Hollister, CA"));
-	ele->AddAttrib(ATTRIB_CAL_CLUB, _T("PASA"));
-	ele->AddAttrib(ATTRIB_CAL_VENUE, _T("ASCA"));
-	ele->AddAttrib(_T("PlanOn"), _T("n"));
-	WIN_ASSERT_FALSE(callist.Load(ele, ARBVersion(2, 0), callback));
-	WIN_ASSERT_EQUAL(2u, callist.size());
-	ele->SetName(TREE_CALENDAR);
-}
-END_TESTF
+END_TEST
 
 
 BEGIN_TEST(Calendar_InRange)
@@ -237,19 +229,6 @@ BEGIN_TEST(Calendar_InRange)
 	WIN_ASSERT_TRUE(cal->InRange(cal->GetEndDate()));
 	WIN_ASSERT_TRUE(cal->InRange(ARBDate(2007, 9, 2)));
 	WIN_ASSERT_FALSE(cal->InRange(ARBDate(2007, 9, 4)));
-}
-END_TEST
-
-
-BEGIN_TEST(Calendar_IsBefore)
-{
-	ARBCalendarPtr cal = ARBCalendar::New();
-	cal->SetStartDate(ARBDate(2007, 9, 1));
-	cal->SetEndDate(ARBDate(2007, 9, 3));
-	WIN_ASSERT_FALSE(cal->IsBefore(ARBDate(2007, 8, 31)));
-	WIN_ASSERT_FALSE(cal->IsBefore(cal->GetStartDate()));
-	WIN_ASSERT_FALSE(cal->IsBefore(cal->GetEndDate()));
-	WIN_ASSERT_TRUE(cal->IsBefore(ARBDate(2007, 9, 4)));
 }
 END_TEST
 
@@ -272,7 +251,81 @@ BEGIN_TEST(Calendar_IsRangeOverlapped)
 END_TEST
 
 
-BEGIN_TEST(Calendar_List)
+BEGIN_TEST(Calendar_IsMatch)
+{
+	ARBCalendarPtr cal1 = ARBCalendar::New();
+	cal1->SetStartDate(ARBDate(2007, 9, 1));
+	cal1->SetEndDate(ARBDate(2007, 9, 3));
+	cal1->SetVenue(_T("AKC"));
+	cal1->SetClub(_T("club"));
+	cal1->SetLocation(_T("There"));
+
+	ARBCalendarPtr cal2;
+
+	WIN_ASSERT_FALSE(cal1->IsMatch(cal2, true));
+
+	cal2 = cal1->Clone();
+	cal2->SetLocation(_T("Here"));
+	WIN_ASSERT_FALSE(cal1->IsMatch(cal2, true));
+	WIN_ASSERT_TRUE(cal1->IsMatch(cal2, false));
+	cal2->SetEndDate(cal2->GetEndDate() + 1);
+	WIN_ASSERT_FALSE(cal1->IsMatch(cal2, false));
+}
+END_TEST
+
+
+BEGIN_TEST(Calendar_Update)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write Update test"));
+}
+END_TEST
+
+
+BEGIN_TESTF(CalendarList_Load, Calendar)
+{
+	ARBCalendarList callist;
+	tstring errs;
+	ARBErrorCallback callback(errs);
+	WIN_ASSERT_TRUE(callist.Load(CalData1, ARBVersion(1, 0), callback));
+	WIN_ASSERT_TRUE(callist.Load(CalData2, ARBVersion(2, 0), callback));
+	ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
+	ele->SetValue(_T("These are some notes"));
+	ele->AddAttrib(ATTRIB_CAL_START, ARBDate(2006, 9, 4));
+	ele->AddAttrib(ATTRIB_CAL_END, ARBDate(2006, 9, 5));
+	ele->AddAttrib(ATTRIB_CAL_LOCATION, _T("Hollister, CA"));
+	ele->AddAttrib(ATTRIB_CAL_CLUB, _T("PASA"));
+	ele->AddAttrib(ATTRIB_CAL_VENUE, _T("ASCA"));
+	ele->AddAttrib(_T("PlanOn"), _T("n"));
+	WIN_ASSERT_FALSE(callist.Load(ele, ARBVersion(2, 0), callback));
+	WIN_ASSERT_EQUAL(2u, callist.size());
+	ele->SetName(TREE_CALENDAR);
+}
+END_TESTF
+
+
+BEGIN_TESTF(CalendarList_Load2, Calendar)
+{
+	ARBCalendarList callist;
+	tstring errs;
+	ARBErrorCallback callback(errs);
+	WIN_ASSERT_TRUE(callist.Load(CalData1, ARBVersion(1, 0), callback));
+	WIN_ASSERT_TRUE(callist.Load(CalData2, ARBVersion(2, 0), callback));
+	ElementNodePtr ele = ElementNode::New(TREE_CALENDAR);
+	ele->SetValue(_T("These are some notes"));
+	ele->AddAttrib(_T("DateStrt"), ARBDate(2006, 9, 4));
+	ele->AddAttrib(ATTRIB_CAL_END, ARBDate(2006, 9, 5));
+	ele->AddAttrib(ATTRIB_CAL_LOCATION, _T("Hollister, CA"));
+	ele->AddAttrib(ATTRIB_CAL_CLUB, _T("PASA"));
+	ele->AddAttrib(ATTRIB_CAL_VENUE, _T("ASCA"));
+	ele->AddAttrib(_T("PlanOn"), _T("n"));
+	WIN_ASSERT_FALSE(callist.Load(ele, ARBVersion(2, 0), callback));
+	WIN_ASSERT_EQUAL(2u, callist.size());
+	ele->SetName(TREE_CALENDAR);
+}
+END_TESTF
+
+
+BEGIN_TEST(CalendarList_SortAddDelete)
 {
 	ARBCalendarList callist;
 	ARBCalendarPtr cal1 = ARBCalendar::New();
@@ -311,7 +364,49 @@ BEGIN_TEST(Calendar_List)
 END_TEST
 
 
-BEGIN_TEST(Calendar_ListFind)
+BEGIN_TEST(CalendarList_Entered)
+{
+	ARBCalendarList callist;
+	ARBCalendarPtr cal1 = ARBCalendar::New();
+	cal1->SetStartDate(ARBDate(2005, 3, 26));
+	cal1->SetEndDate(ARBDate(2005, 3, 27));
+	callist.AddCalendar(cal1);
+	ARBCalendarPtr cal2 = ARBCalendar::New();
+	cal2->SetStartDate(ARBDate(2005, 4, 26));
+	cal2->SetEndDate(ARBDate(2005, 4, 27));
+	callist.AddCalendar(cal2);
+	std::vector<ARBCalendarPtr> lst;
+	WIN_ASSERT_EQUAL(0u, callist.GetAllEntered(lst));
+	cal1->SetEntered(ARBCalendar::ePlanning);
+	WIN_ASSERT_EQUAL(0u, callist.GetAllEntered(lst));
+	cal1->SetEntered(ARBCalendar::eEntered);
+	WIN_ASSERT_EQUAL(1u, callist.GetAllEntered(lst));
+}
+END_TEST
+
+
+BEGIN_TEST(CalendarList_Trim)
+{
+	ARBCalendarList callist;
+	ARBCalendarPtr cal1 = ARBCalendar::New();
+	cal1->SetStartDate(ARBDate(2005, 3, 26));
+	cal1->SetEndDate(ARBDate(2005, 3, 27));
+	callist.AddCalendar(cal1);
+	ARBCalendarPtr cal2 = ARBCalendar::New();
+	cal2->SetStartDate(ARBDate(2005, 4, 26));
+	cal2->SetEndDate(ARBDate(2005, 4, 27));
+	callist.AddCalendar(cal2);
+	callist.TrimEntries(ARBDate(2005, 3, 25));
+	WIN_ASSERT_EQUAL(2u, callist.size());
+	callist.TrimEntries(ARBDate(2005, 3, 27));
+	WIN_ASSERT_EQUAL(2u, callist.size());
+	callist.TrimEntries(ARBDate(2005, 3, 28));
+	WIN_ASSERT_EQUAL(1u, callist.size());
+}
+END_TEST
+
+
+BEGIN_TEST(CalendarList_Find)
 {
 	ARBCalendarList callist;
 	ARBCalendarPtr cal1 = ARBCalendar::New();
@@ -334,47 +429,5 @@ BEGIN_TEST(Calendar_ListFind)
 	WIN_ASSERT_TRUE(callist.FindCalendar(clone, true, &found));
 	WIN_ASSERT_NOT_NULL(found.get());
 	WIN_ASSERT_NOT_EQUAL(found.get(), clone.get());
-}
-END_TEST
-
-
-BEGIN_TEST(Calendar_ListEntered)
-{
-	ARBCalendarList callist;
-	ARBCalendarPtr cal1 = ARBCalendar::New();
-	cal1->SetStartDate(ARBDate(2005, 3, 26));
-	cal1->SetEndDate(ARBDate(2005, 3, 27));
-	callist.AddCalendar(cal1);
-	ARBCalendarPtr cal2 = ARBCalendar::New();
-	cal2->SetStartDate(ARBDate(2005, 4, 26));
-	cal2->SetEndDate(ARBDate(2005, 4, 27));
-	callist.AddCalendar(cal2);
-	std::vector<ARBCalendarPtr> lst;
-	WIN_ASSERT_EQUAL(0u, callist.GetAllEntered(lst));
-	cal1->SetEntered(ARBCalendar::ePlanning);
-	WIN_ASSERT_EQUAL(0u, callist.GetAllEntered(lst));
-	cal1->SetEntered(ARBCalendar::eEntered);
-	WIN_ASSERT_EQUAL(1u, callist.GetAllEntered(lst));
-}
-END_TEST
-
-
-BEGIN_TEST(Calendar_ListTrim)
-{
-	ARBCalendarList callist;
-	ARBCalendarPtr cal1 = ARBCalendar::New();
-	cal1->SetStartDate(ARBDate(2005, 3, 26));
-	cal1->SetEndDate(ARBDate(2005, 3, 27));
-	callist.AddCalendar(cal1);
-	ARBCalendarPtr cal2 = ARBCalendar::New();
-	cal2->SetStartDate(ARBDate(2005, 4, 26));
-	cal2->SetEndDate(ARBDate(2005, 4, 27));
-	callist.AddCalendar(cal2);
-	callist.TrimEntries(ARBDate(2005, 3, 25));
-	WIN_ASSERT_EQUAL(2u, callist.size());
-	callist.TrimEntries(ARBDate(2005, 3, 27));
-	WIN_ASSERT_EQUAL(2u, callist.size());
-	callist.TrimEntries(ARBDate(2005, 3, 28));
-	WIN_ASSERT_EQUAL(1u, callist.size());
 }
 END_TEST

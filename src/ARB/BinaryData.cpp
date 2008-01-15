@@ -53,13 +53,13 @@ BinaryData::BinaryData()
 
 bool BinaryData::Decode(
 		tstring const& inBase64,
-		char*& outBinData,
+		unsigned char*& outBinData,
 		size_t& outBytes)
 {
 	outBinData = NULL;
 	outBytes = 0;
 
-	char* pData;
+	unsigned char* pData;
 	size_t len;
 	if (!ARBBase64::Decode(inBase64, pData, len))
 		return false;
@@ -76,7 +76,7 @@ bool BinaryData::Decode(
         return false;
 	}
 
-	boost::scoped_ptr<char> out(new char[CHUNK]);
+	boost::scoped_ptr<unsigned char> out(new unsigned char[CHUNK]);
 	strm.avail_in = static_cast<uInt>(len);
 	strm.next_in = reinterpret_cast<Bytef*>(pData);
 	do
@@ -98,7 +98,7 @@ bool BinaryData::Decode(
         size_t have = CHUNK - strm.avail_out;
 		if (outBinData)
 		{
-			char* tmp = new char[have + outBytes];
+			unsigned char* tmp = new unsigned char[have + outBytes];
 			memcpy(tmp, outBinData, outBytes);
 			memcpy(tmp + outBytes, out.get(), have);
 			outBytes += have;
@@ -107,7 +107,7 @@ bool BinaryData::Decode(
 		}
 		else
 		{
-			outBinData = new char[have];
+			outBinData = new unsigned char[have];
 			outBytes = have;
 			memcpy(outBinData, out.get(), have);
 		}
@@ -119,20 +119,20 @@ bool BinaryData::Decode(
 }
 
 
-void BinaryData::Release(char* inBinData)
+void BinaryData::Release(unsigned char* inBinData)
 {
 	delete [] inBinData;
 }
 
 
 bool BinaryData::Encode(
-		char const* inBinData,
+		unsigned char const* inBinData,
 		size_t inBytes,
 		tstring& outBase64)
 {
 	outBase64.empty();
 
-	boost::scoped_ptr<char> out(new char[CHUNK]);
+	boost::scoped_ptr<unsigned char> out(new unsigned char[CHUNK]);
     z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -141,7 +141,7 @@ bool BinaryData::Encode(
         return false;
 
 	size_t nData = 0;
-	char* pData = NULL;
+	unsigned char* pData = NULL;
     strm.avail_in = (uInt)inBytes;
     strm.next_in = (Bytef*)inBinData;
     do
@@ -153,7 +153,7 @@ bool BinaryData::Encode(
         size_t have = CHUNK - strm.avail_out;
 		if (pData)
 		{
-			char* tmp = new char[have + nData];
+			unsigned char* tmp = new unsigned char[have + nData];
 			memcpy(tmp, pData, nData);
 			memcpy(tmp + nData, out.get(), have);
 			nData += have;
@@ -162,7 +162,7 @@ bool BinaryData::Encode(
 		}
 		else
 		{
-			pData = new char[have];
+			pData = new unsigned char[have];
 			nData = have;
 			memcpy(pData, out.get(), have);
 		}
@@ -182,8 +182,8 @@ bool BinaryData::Encode(
 {
 	outBase64.empty();
 
-	boost::scoped_ptr<char> in(new char[CHUNK]);
-	boost::scoped_ptr<char> out(new char[CHUNK]);
+	boost::scoped_ptr<unsigned char> in(new unsigned char[CHUNK]);
+	boost::scoped_ptr<unsigned char> out(new unsigned char[CHUNK]);
     z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -193,7 +193,7 @@ bool BinaryData::Encode(
 
 	int flush;
 	size_t nData = 0;
-	char* pData = NULL;
+	unsigned char* pData = NULL;
 	do
 	{
 		strm.avail_in = (uInt)fread(in.get(), 1, CHUNK, inData);
@@ -214,7 +214,7 @@ bool BinaryData::Encode(
 			size_t have = CHUNK - strm.avail_out;
 			if (pData)
 			{
-				char* tmp = new char[have + nData];
+				unsigned char* tmp = new unsigned char[have + nData];
 				memcpy(tmp, pData, nData);
 				memcpy(tmp + nData, out.get(), have);
 				nData += have;
@@ -223,7 +223,7 @@ bool BinaryData::Encode(
 			}
 			else
 			{
-				pData = new char[have];
+				pData = new unsigned char[have];
 				nData = have;
 				memcpy(pData, out.get(), have);
 			}
@@ -242,16 +242,16 @@ bool BinaryData::DecodeString(
 		tstring const& inBase64,
 		tstring& outData)
 {
-	char* data;
+	unsigned char* data;
 	size_t len;
 	if (!BinaryData::Decode(inBase64, data, len))
 		return false;
 	// TODO: Better conversion
 #ifdef UNICODE
-	CString tmp(data, (int)len);
+	CString tmp(reinterpret_cast<char*>(data), (int)len);
 	outData = (LPCTSTR)tmp;
 #else
-	outData = tstring(data, len);
+	outData = tstring(reinterpret_cast<char*>(data), len);
 #endif
 	Release(data);
 	return true;
@@ -272,8 +272,8 @@ bool BinaryData::EncodeString(
 	// TODO: Better conversion
 #ifdef UNICODE
 	CStringA tmp(inData.c_str());
-	return BinaryData::Encode((LPCSTR)tmp, len, outBase64);
+	return BinaryData::Encode(reinterpret_cast<unsigned char const*>((LPCSTR)tmp), len, outBase64);
 #else
-	return BinaryData::Encode(inData.c_str(), len, outBase64);
+	return BinaryData::Encode(reinterpret_cast<unsigned char const*>(inData.c_str()), len, outBase64);
 #endif
 }

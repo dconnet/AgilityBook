@@ -55,11 +55,11 @@ public:
 	static ARBMetaDataPtr MetaData();
 	~ARBMetaData();
 
-	size_t length() const		{return m_Bytes;}
-	char const* data() const	{return m_Data;}
+	size_t length() const				{return m_Bytes;}
+	unsigned char const* data() const	{return m_Data;}
 private:
 	size_t m_Bytes;
-	char* m_Data;
+	unsigned char* m_Data;
 };
 
 /**
@@ -133,7 +133,7 @@ public:
 		return m_CRCDMeta;
 	}
 	ARBMetaDataPtr GetCRCDMetaData() const;
-	void SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes);
+	void SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes);
 	tstring const& GetNote() const
 	{
 		return m_Note;
