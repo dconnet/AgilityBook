@@ -24,7 +24,7 @@
 			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="0"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -155,7 +155,7 @@
 			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="0"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"

@@ -250,13 +250,13 @@ public:
 		m_Julian -= inD;
 		return *this;
 	}
-	ARBDate operator+(int inD)
+	ARBDate operator+(int inD) const
 	{
 		ARBDate d;
 		d.SetJulianDay(m_Julian + inD);
 		return d;
 	}
-	ARBDate operator-(int inD)
+	ARBDate operator-(int inD) const
 	{
 		ARBDate d;
 		d.SetJulianDay(m_Julian - inD);

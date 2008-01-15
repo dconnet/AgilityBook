@@ -35,7 +35,6 @@
 
 #include "stdafx.h"
 #include "TestARB.h"
-#include "Local.h"
 
 #include "ARBStructure.h"
 #include "ARBTraining.h"
@@ -47,14 +46,13 @@ FIXTURE(Training)
 
 namespace
 {
-	CLocalization localization;
 	ElementNodePtr TrainingData;
 }
 
 
 SETUP(Training)
 {
-	IARBLocalization::Init(&localization);
+	WIN_ASSERT_TRUE(CommonSetup());
 
 	TrainingData = ElementNode::New(TREE_TRAINING);
 	TrainingData->SetValue(_T("These are some notes"));
@@ -67,10 +65,32 @@ SETUP(Training)
 TEARDOWN(Training)
 {
 	TrainingData.reset();
+	WIN_ASSERT_TRUE(CommonTeardown());
 }
 
 
-BEGIN_TEST(Training_ctor)
+static void CreateTrainingList(ARBTrainingList& trainlist)
+{
+	ARBTrainingPtr train = ARBTraining::New();
+	train->SetDate(ARBDate(2006, 9, 4));
+	train->SetName(_T("Test1"));
+	train->SetSubName(_T("SubN"));
+	trainlist.AddTraining(train);
+	train = ARBTraining::New();
+	train->SetDate(ARBDate(2005, 3, 26));
+	train->SetName(_T("Test2"));
+	train->SetSubName(_T("Sub3N"));
+	trainlist.AddTraining(train);
+	train = ARBTraining::New();
+	train->SetDate(ARBDate(2005, 3, 26));
+	train->SetName(_T("Test2"));
+	train->SetSubName(_T("Sub2N"));
+	trainlist.AddTraining(train);
+	trainlist.sort();
+}
+
+
+BEGIN_TEST(Training_New)
 {
 	ARBTrainingPtr train = ARBTraining::New();
 	WIN_ASSERT_NOT_NULL(train.get());
@@ -87,6 +107,46 @@ BEGIN_TEST(Training_Clone)
 	WIN_ASSERT_NOT_EQUAL(train.get(), train2.get());
 	WIN_ASSERT_TRUE(*train == *train2);
 	WIN_ASSERT_EQUAL(train->GetDate(), train2->GetDate());
+}
+END_TEST
+
+
+BEGIN_TEST(Training_OpEqual)
+{
+	ARBTrainingPtr train1 = ARBTraining::New();
+	train1->SetDate(ARBDate(2007, 9, 1));
+	ARBTrainingPtr train2 = ARBTraining::New();
+	WIN_ASSERT_TRUE(*train1 != *train2);
+	*train1 = *train2;
+	WIN_ASSERT_TRUE(*train1 == *train2);
+}
+END_TEST
+
+
+BEGIN_TESTF(Training_Compare, Training)
+{
+	ARBTrainingPtr train = ARBTraining::New();
+	tstring errs;
+	ARBErrorCallback callback(errs);
+	WIN_ASSERT_TRUE(train->Load(TrainingData, ARBVersion(2, 0), callback));
+	ARBTrainingPtr train2 = train->Clone();
+	WIN_ASSERT_NOT_EQUAL(train.get(), train2.get());
+	WIN_ASSERT_TRUE(*train == *train2);
+	WIN_ASSERT_EQUAL(train->GetDate(), train2->GetDate());
+	ARBDate n = ARBDate::Today();
+	train2->SetDate(n);
+	WIN_ASSERT_TRUE(*train < *train2);
+	WIN_ASSERT_FALSE(*train == *train2);
+	WIN_ASSERT_FALSE(*train > *train2);
+}
+END_TESTF
+
+
+BEGIN_TEST(Training_GenName)
+{
+	ARBTrainingPtr train = ARBTraining::New();
+	train->SetDate(ARBDate(2007, 3, 13));
+	WIN_ASSERT_STRING_EQUAL(_T("3/13/2007"), train->GetGenericName().c_str());
 }
 END_TEST
 
@@ -115,26 +175,7 @@ BEGIN_TESTF(Training_Save, Training)
 END_TESTF
 
 
-BEGIN_TESTF(Training_Compare, Training)
-{
-	ARBTrainingPtr train = ARBTraining::New();
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(train->Load(TrainingData, ARBVersion(2, 0), callback));
-	ARBTrainingPtr train2 = train->Clone();
-	WIN_ASSERT_NOT_EQUAL(train.get(), train2.get());
-	WIN_ASSERT_TRUE(*train == *train2);
-	WIN_ASSERT_EQUAL(train->GetDate(), train2->GetDate());
-	ARBDate n = ARBDate::Today();
-	train2->SetDate(n);
-	WIN_ASSERT_TRUE(*train < *train2);
-	WIN_ASSERT_FALSE(*train == *train2);
-	WIN_ASSERT_FALSE(*train > *train2);
-}
-END_TESTF
-
-
-BEGIN_TESTF(Training_LoadList, Training)
+BEGIN_TESTF(TrainingList_Load, Training)
 {
 	ARBTrainingList train;
 	tstring errs;
@@ -152,7 +193,7 @@ BEGIN_TESTF(Training_LoadList, Training)
 END_TESTF
 
 
-BEGIN_TESTF(Training_LoadList2, Training)
+BEGIN_TESTF(TrainingList_Load2, Training)
 {
 	ElementNodePtr ele = ElementNode::New(TREE_TRAINING);
 	ele->SetValue(_T("These are some notes"));
@@ -169,7 +210,7 @@ BEGIN_TESTF(Training_LoadList2, Training)
 END_TESTF
 
 
-BEGIN_TESTF(Training_TrainingList, Training)
+BEGIN_TEST(TrainingList_SortAddDelete)
 {
 	ARBTrainingList trainlist;
 	ARBTrainingPtr train1 = ARBTraining::New();
@@ -203,4 +244,38 @@ BEGIN_TESTF(Training_TrainingList, Training)
 	WIN_ASSERT_TRUE(trainlist[0].get() != trainlist2[0].get());
 	WIN_ASSERT_TRUE(*trainlist[0] == *trainlist2[0]);
 }
-END_TESTF
+END_TEST
+
+
+BEGIN_TEST(TrainingList_GetAllNames)
+{
+	ARBTrainingList trainlist;
+	CreateTrainingList(trainlist);
+	std::set<tstring> names;
+	WIN_ASSERT_EQUAL(2u, trainlist.GetAllNames(names));
+}
+END_TEST
+
+
+BEGIN_TEST(TrainingList_GetAllSubNames)
+{
+	ARBTrainingList trainlist;
+	CreateTrainingList(trainlist);
+	std::set<tstring> names;
+	WIN_ASSERT_EQUAL(3u, trainlist.GetAllSubNames(names));
+}
+END_TEST
+
+
+BEGIN_TEST(TrainingList_Find)
+{
+	ARBTrainingList trainlist;
+	CreateTrainingList(trainlist);
+
+	ARBTrainingPtr train = trainlist[0]->Clone();
+
+	WIN_ASSERT_TRUE(trainlist.FindTraining(train));
+	train->SetNote(_T("a change"));
+	WIN_ASSERT_FALSE(trainlist.FindTraining(train));
+}
+END_TEST

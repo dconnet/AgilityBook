@@ -113,7 +113,7 @@ ARBBase64::ARBBase64()
 
 bool ARBBase64::Decode(
 		tstring const& inBase64,
-		char*& outBinData,
+		unsigned char*& outBinData,
 		size_t& outBytes)
 {
 	outBinData = NULL;
@@ -122,8 +122,8 @@ bool ARBBase64::Decode(
 		return false;
 
 	size_t bufsize = inBase64.length();
-	outBinData = new char[bufsize];
-	char* result = outBinData;
+	outBinData = new unsigned char[bufsize];
+	unsigned char* result = outBinData;
 
 	int std = 0;
 	size_t count = 1;
@@ -158,14 +158,14 @@ bool ARBBase64::Decode(
 			tmp = std;
 			tmp >>= 16;
 			tmp &= 0xFF;
-			*(result++) = static_cast<char>(tmp);
+			*(result++) = static_cast<unsigned char>(tmp);
 			tmp = std;
 			tmp >>= 8;
 			tmp &= 0xFF;
-			*(result++) = static_cast<char>(tmp);
+			*(result++) = static_cast<unsigned char>(tmp);
 			tmp = std;
 			tmp &= 0xFF;
-			*(result++) = static_cast<char>(tmp);
+			*(result++) = static_cast<unsigned char>(tmp);
 			std = 0; //empty std
 			outBytes += 3;
 		}
@@ -186,20 +186,20 @@ bool ARBBase64::Decode(
 		tmp = std;
 		tmp >>= 16;
 		tmp &= 0xFF;
-		*(result++) = static_cast<char>(tmp);
+		*(result++) = static_cast<unsigned char>(tmp);
 		tmp = std;
 		tmp >>= 8;
 		tmp &= 0xFF;
-		*(result++) = static_cast<char>(tmp);
+		*(result++) = static_cast<unsigned char>(tmp);
 		tmp = std;
 		tmp &= 0xFF;
-		*(result++) = static_cast<char>(tmp);
+		*(result++) = static_cast<unsigned char>(tmp);
 	}
 	return true;
 }
 
 
-void ARBBase64::Release(char*& inBinData)
+void ARBBase64::Release(unsigned char*& inBinData)
 {
 	delete [] inBinData;
 	inBinData = NULL;
@@ -207,19 +207,19 @@ void ARBBase64::Release(char*& inBinData)
 
 
 bool ARBBase64::Encode(
-		char const* inBinData,
+		unsigned char const* inBinData,
 		size_t inBytes,
 		tstring& outData)
 {
-	char* encoded = NULL;
+	unsigned char* encoded = NULL;
 	if (inBinData != NULL && 0 < inBytes)
 	{
 		size_t alsize = (inBytes * 4) / 3;
-		encoded = new char[alsize + ((alsize / 76) * 2) + 10];
+		encoded = new unsigned char[alsize + ((alsize / 76) * 2) + 10];
 		size_t count = 0;
 		size_t LineLen = 0;
-		char* fresult = encoded;
-		char const* s = inBinData;
+		unsigned char* fresult = encoded;
+		unsigned char const* s = inBinData;
 		int tmp = 0;
 		//let's step through the buffer and encode it...
 		if (inBytes > 2) // A really small buffer causes problems with the logic below
@@ -331,7 +331,7 @@ bool ARBBase64::Encode(
 		CString tmp(encoded);
 		outData = (LPCTSTR)tmp;
 #else
-		outData = encoded;
+		outData = reinterpret_cast<char*>(encoded);
 #endif
 		delete [] encoded;
 	}

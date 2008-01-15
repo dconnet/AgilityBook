@@ -319,7 +319,7 @@ public:
 	{
 		return m_Notes.GetCRCDMetaData();
 	}
-	void SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes)
+	void SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes)
 	{
 		m_Notes.SetCRCDMetaData(inCRCDMeta, inBytes);
 	}

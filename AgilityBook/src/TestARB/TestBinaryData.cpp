@@ -65,11 +65,12 @@ namespace
 
 BEGIN_TEST(BinaryData_RawDecode)
 {
-	char* outData;
+	unsigned char* outData = NULL;
 	size_t bytes;
 	WIN_ASSERT_TRUE(BinaryData::Decode(EncodedData, outData, bytes));
+	WIN_ASSERT_NOT_NULL(outData);
 	WIN_ASSERT_EQUAL(RawDataSize, bytes);
-	WIN_ASSERT_TRUE(0 == memcmp(RawData, outData, bytes));
+	WIN_ASSERT_EQUAL(0, memcmp(RawData, outData, bytes));
 	BinaryData::Release(outData);
 }
 END_TEST
@@ -78,10 +79,13 @@ END_TEST
 BEGIN_TEST(BinaryData_RawEncode)
 {
 	tstring str;
-	WIN_ASSERT_TRUE(BinaryData::Encode((const char*)RawData, RawDataSize, str));
+	WIN_ASSERT_TRUE(BinaryData::Encode(RawData, RawDataSize, str));
 	WIN_ASSERT_STRING_EQUAL(EncodedData.c_str(), str.c_str());
 }
 END_TEST
+
+
+//TODO: Test Encode(FILE*, tstring& outdata)
 
 
 BEGIN_TEST(BinaryData_StringDecode)

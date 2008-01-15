@@ -191,7 +191,7 @@ void CDlgRunCRCD::SetCRCDData()
 		LPBYTE bits = new BYTE[nSize+1];
 		GetEnhMetaFileBits(m_metaFile, nSize, bits);
 		ASSERT(sizeof(BYTE) == sizeof(char));
-		m_Run->SetCRCDMetaData(reinterpret_cast<char*>(bits), nSize);
+		m_Run->SetCRCDMetaData(bits, nSize);
 		delete [] bits;
 	}
 	else

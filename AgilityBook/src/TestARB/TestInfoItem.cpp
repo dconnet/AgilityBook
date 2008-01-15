@@ -35,7 +35,6 @@
 
 #include "stdafx.h"
 #include "TestARB.h"
-#include "Local.h"
 
 #include "ARBInfo.h"
 #include "ARBInfoItem.h"
@@ -48,7 +47,6 @@ FIXTURE(InfoItem)
 
 namespace
 {
-	CLocalization localization;
 	ElementNodePtr tree;
 	ElementNodePtr data; // clubinfo
 }
@@ -56,7 +54,7 @@ namespace
 
 SETUP(InfoItem)
 {
-	IARBLocalization::Init(&localization);
+	WIN_ASSERT_TRUE(CommonSetup());
 
 	tree = ElementNode::New(TREE_INFO);
 	data = tree->AddElementNode(TREE_CLUBINFO);
@@ -83,10 +81,11 @@ SETUP(InfoItem)
 TEARDOWN(InfoItem)
 {
 	tree.reset();
+	WIN_ASSERT_TRUE(CommonTeardown());
 }
 
 
-BEGIN_TEST(InfoItem_ctor)
+BEGIN_TEST(InfoItem_New)
 {
 	ARBInfoItemPtr info = ARBInfoItem::New();
 	WIN_ASSERT_NOT_NULL(info.get());
@@ -104,6 +103,39 @@ BEGIN_TEST(InfoItem_Clone)
 	WIN_ASSERT_TRUE(*info == *info2);
 	info->SetName(_T("Test2"));
 	WIN_ASSERT_TRUE(info->GetName() != info2->GetName());
+}
+END_TEST
+
+
+BEGIN_TEST(InfoItem_OpEqual)
+{
+	ARBInfoItemPtr info1 = ARBInfoItem::New();
+	info1->SetName(_T("Testing"));
+	ARBInfoItemPtr info2 = ARBInfoItem::New();
+	WIN_ASSERT_TRUE(*info1 != *info2);
+	*info1 = *info2;
+	WIN_ASSERT_TRUE(*info1 == *info2);
+}
+END_TEST
+
+
+BEGIN_TEST(InfoItem_Compare)
+{
+	ARBInfoItemPtr info1 = ARBInfoItem::New();
+	info1->SetName(_T("A"));
+	ARBInfoItemPtr info2 = ARBInfoItem::New();
+	info2->SetName(_T("B"));
+	WIN_ASSERT_TRUE(*info1 < *info2);
+	WIN_ASSERT_FALSE(*info1 > *info2);
+}
+END_TEST
+
+
+BEGIN_TEST(InfoItem_GenName)
+{
+	ARBInfoItemPtr info1 = ARBInfoItem::New();
+	info1->SetName(_T("A"));
+	WIN_ASSERT_STRING_EQUAL(_T("A"), info1->GetGenericName().c_str());
 }
 END_TEST
 
@@ -132,22 +164,7 @@ BEGIN_TESTF(InfoItem_Save, InfoItem)
 END_TESTF
 
 
-BEGIN_TESTF(InfoItem_Compare, InfoItem)
-{
-	ARBInfoItemPtr info = ARBInfoItem::New();
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info->Load(data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
-	ARBInfoItemPtr info2 = info->Clone();
-	WIN_ASSERT_NOT_EQUAL(info.get(), info2.get());
-	WIN_ASSERT_TRUE(*info == *info2);
-	info2->SetName(_T("A different name"));
-	WIN_ASSERT_FALSE(*info == *info2);
-}
-END_TESTF
-
-
-BEGIN_TESTF(InfoItem_LoadList, InfoItem)
+BEGIN_TESTF(InfoItemList_Load, InfoItem)
 {
 	ARBInfoItemList infolist(TREE_CLUBINFO);
 	tstring errs;
@@ -162,7 +179,7 @@ BEGIN_TESTF(InfoItem_LoadList, InfoItem)
 END_TESTF
 
 
-BEGIN_TESTF(InfoItem_LoadList2, InfoItem)
+BEGIN_TESTF(InfoItemList_Load2, InfoItem)
 {
 	ElementNodePtr ele = ElementNode::New(_T("InfoItem"));
 	ele->SetValue(_T("These are some notes"));
@@ -174,7 +191,7 @@ BEGIN_TESTF(InfoItem_LoadList2, InfoItem)
 END_TESTF
 
 
-BEGIN_TEST(InfoItem_InfoItemList)
+BEGIN_TEST(InfoItemList_SortAddDelete)
 {
 	ARBInfoItemList infolist(TREE_CLUBINFO);
 	ARBInfoItemPtr info1 = ARBInfoItem::New();
@@ -209,20 +226,7 @@ BEGIN_TEST(InfoItem_InfoItemList)
 END_TEST
 
 
-BEGIN_TESTF(InfoItem_Info, InfoItem)
-{
-	ARBInfo info;
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info.Load(tree, ARBVersion(1, 0), callback));
-	WIN_ASSERT_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).size());
-	WIN_ASSERT_EQUAL(2u, info.GetInfo(ARBInfo::eJudgeInfo).size());
-	WIN_ASSERT_EQUAL(1u, info.GetInfo(ARBInfo::eLocationInfo).size());
-}
-END_TESTF
-
-
-BEGIN_TESTF(InfoItem_GetAllItems, InfoItem)
+BEGIN_TESTF(InfoItemList_GetAllItems, InfoItem)
 {
 	ARBInfo info;
 	tstring errs;
@@ -234,7 +238,7 @@ BEGIN_TESTF(InfoItem_GetAllItems, InfoItem)
 END_TESTF
 
 
-BEGIN_TESTF(InfoItem_CondenseContent, InfoItem)
+BEGIN_TESTF(InfoItemList_CondenseContent, InfoItem)
 {
 	ARBInfo info;
 	tstring errs;
@@ -250,7 +254,7 @@ BEGIN_TESTF(InfoItem_CondenseContent, InfoItem)
 END_TESTF
 
 
-BEGIN_TESTF(InfoItem_Find, InfoItem)
+BEGIN_TESTF(InfoItemList_Find, InfoItem)
 {
 	ARBInfo info;
 	tstring errs;
@@ -258,5 +262,23 @@ BEGIN_TESTF(InfoItem_Find, InfoItem)
 	WIN_ASSERT_TRUE(info.Load(tree, ARBVersion(1, 0), callback));
 	WIN_ASSERT_TRUE(info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3")));
 	WIN_ASSERT_FALSE(info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3xc")));
+}
+END_TESTF
+
+
+BEGIN_TESTF(Info_Load, InfoItem)
+{
+	ARBInfo info;
+	tstring errs;
+	ARBErrorCallback callback(errs);
+	WIN_ASSERT_TRUE(info.Load(tree, ARBVersion(1, 0), callback));
+	WIN_ASSERT_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).size());
+	WIN_ASSERT_EQUAL(2u, info.GetInfo(ARBInfo::eJudgeInfo).size());
+	WIN_ASSERT_EQUAL(1u, info.GetInfo(ARBInfo::eLocationInfo).size());
+
+	ARBInfo info2(info);
+	WIN_ASSERT_TRUE(info == info2);
+	WIN_ASSERT_NOT_EQUAL(info.GetInfo(ARBInfo::eClubInfo)[0].get(), info2.GetInfo(ARBInfo::eClubInfo)[0].get());
+	WIN_ASSERT_TRUE(*info.GetInfo(ARBInfo::eClubInfo)[0] == *info2.GetInfo(ARBInfo::eClubInfo)[0]);
 }
 END_TESTF

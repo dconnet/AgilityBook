@@ -83,7 +83,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running WinUnit"
-				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
+				CommandLine="&quot;c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit.exe&quot; &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -217,7 +217,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running WinUnit"
-				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
+				CommandLine="&quot;c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit.exe&quot; &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -294,7 +294,7 @@
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -353,7 +353,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running WinUnit"
-				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
+				CommandLine="&quot;c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit.exe&quot; &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -433,7 +433,7 @@
 			ConfigurationType="2"
 			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -493,7 +493,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running WinUnit"
-				CommandLine="c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit &quot;$(TargetPath)&quot;"
+				CommandLine="&quot;c:\Tools\WinUnit\bin\$(PlatformName)\$(ConfigurationName)\WinUnit.exe&quot; &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration

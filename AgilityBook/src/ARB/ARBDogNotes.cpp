@@ -166,8 +166,9 @@ bool ARBDogNotes::Load(
 		}
 		else if (element->GetName() == TREE_CRCD_META)
 		{
+			// Replaced by TREE_CRCD_META2, this translates.
 			tstring tmp = element->GetValue();
-			char* data;
+			unsigned char* data;
 			size_t bytes;
 			ARBBase64::Decode(tmp, data, bytes);
 			BinaryData::Encode(data, bytes, m_CRCDMeta);
@@ -229,7 +230,7 @@ ARBMetaDataPtr ARBDogNotes::GetCRCDMetaData() const
 }
 
 
-void ARBDogNotes::SetCRCDMetaData(char const* inCRCDMeta, size_t inBytes)
+void ARBDogNotes::SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes)
 {
 	BinaryData::Encode(inCRCDMeta, inBytes, m_CRCDMeta);
 }

@@ -58,14 +58,14 @@ public:
 	 */
 	static bool Decode(
 			tstring const& inBase64,
-			char*& outBinData,
+			unsigned char*& outBinData,
 			size_t& outBytes);
 
 	/**
 	 * Deallocate memory allocated in Decode()
 	 * @param inBinData Binary data allocated in Decode()
 	 */
-	static void Release(char*& inBinData);
+	static void Release(unsigned char*& inBinData);
 
 	/**
 	 * Encode data
@@ -75,7 +75,7 @@ public:
 	 * @return Success
 	 */
 	static bool Encode(
-			char const* inBinData,
+			unsigned char const* inBinData,
 			size_t inBytes,
 			tstring& outData);
 };
