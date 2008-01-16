@@ -10,6 +10,7 @@
 - Bug fixes:
   - Translate days-of-week in Calendar options.
   - Several dialogs had text that was truncated.
+  - Fixed the direction the mouse wheel scrolls the calendar
 
 1/1/2008: v1.10.4.12
 - Bug fixes

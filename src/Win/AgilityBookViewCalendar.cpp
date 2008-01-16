@@ -1017,7 +1017,7 @@ BOOL CAgilityBookViewCalendar::OnMouseWheel(
 		CPoint pt) 
 {
 	int nPos = GetScrollPos(SB_VERT);
-	if (0 > zDelta)
+	if (0 < zDelta)
 		--nPos;
 	else
 		++nPos;
