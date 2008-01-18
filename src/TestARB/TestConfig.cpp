@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright © 2008 David Connet. All Rights Reserved.
  *
@@ -28,39 +26,55 @@
 
 /**
  * @file
- * @brief ARBDate class.
+ * @brief Test ARBConfig class.
  * @author David Connet
  *
  * Revision History
- * @li 2008-01-11 DRC Created
+ * @li 2008-01-18 DRC Created empty file
  */
 
-// These are needed in order to generate a decent pragma message
-#define STRING2(x) #x
-#define STRING(x) STRING2(x)
-//#pragma message ( __FILE__ "(" STRING(__LINE__) ") : message" )
-#define PRAGMA_MESSAGE(x) ( __FILE__ "(" STRING(__LINE__) ") : " x )
+#include "stdafx.h"
+#include "TestARB.h"
 
-#include "WinUnit.h"
+#include "ARBStructure.h"
+#include "ARBConfig.h"
+#include "Element.h"
 
-// Placeholder for any global helper functions
+#if 0
+class ARBConfig
+{
+public:
+	ARBConfig();
+	ARBConfig(ARBConfig const& rhs);
+	bool operator==(ARBConfig const& rhs) const;
+	bool operator!=(ARBConfig const& rhs) const
+	void clear();
+	bool LoadFault(
+			ElementNodePtr inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+	bool LoadOtherPoints(
+			ElementNodePtr inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+	bool Load(
+			ElementNodePtr inTree,
+			ARBVersion const& inVersion,
+			ARBErrorCallback& ioCallback);
+	bool Save(ElementNodePtr ioTree) const;
+	void Default();
+	static std::string GetDTD(bool bNormalizeCRNL = true);
+	tstring GetTitleNiceName(
+			tstring const& inVenue,
+			tstring const& inTitle) const;
+	tstring GetTitleCompleteName(
+			ARBDogTitlePtr inTitle,
+			bool bAbbrevFirst = true) const;
+	bool Update(
+			int indent,
+			ARBConfig const& inConfigNew,
+			otstringstream& ioInfo);
+};
+#endif
 
-/*
-Quick reference for winunit macros:
-WIN_ASSERT_EQUAL(expected, actual, ...)			uses '=='
-WIN_ASSERT_NOT_EQUAL(notExpected, actual, ...)	uses '!='
-WIN_ASSERT_STRING_EQUAL(expected, actual, ...)	case-sensitve string compare
-WIN_ASSERT_ZERO(zeroExpression, ...)			compares to 0, fail if not equal
-WIN_ASSERT_NOT_ZERO(expr, ...)					compares to 0, fail if equal
-WIN_ASSERT_NULL(expr, ...)						compare ptr to NULL
-WIN_ASSERT_NOT_NULL(expr, ...)					compare ptr to NULL
-WIN_ASSERT_FAIL(message, ...)					always fails
-WIN_ASSERT_TRUE(expr, ...)						succeed if true
-WIN_ASSERT_FALSE(expr, ...)						succeed if !expr
-WIN_ASSERT_WINAPI_SUCCESS(expr, ...)			Makes use of GetLastError
-WIN_ASSERT_THROWS(expr, exceptionType, ...)		succeed if expr throws a C++ exception of type
-WIN_TRACE(message, ...)							output info msg for debugging
-*/
-
-extern bool CommonSetup();
-extern bool CommonTeardown();
+#pragma message PRAGMA_MESSAGE("TODO: Implement tests")

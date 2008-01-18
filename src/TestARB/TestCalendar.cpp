@@ -276,7 +276,20 @@ END_TEST
 
 BEGIN_TEST(Calendar_Update)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write Update test"));
+	ARBCalendarPtr cal1 = ARBCalendar::New();
+	cal1->SetStartDate(ARBDate(2006, 9, 4));
+	cal1->SetEndDate(ARBDate(2006, 9, 5));
+	cal1->SetLocation(_T("Hollister"));
+	cal1->SetClub(_T("PASA"));
+	cal1->SetVenue(_T("ASCA"));
+	ARBCalendarPtr cal2 = cal1->Clone();
+	cal1->SetEndDate(ARBDate(2006, 9, 6));
+	cal1->SetLocation(_T("Turlock"));
+	cal1->SetClub(_T("PASA"));
+	cal1->SetVenue(_T("ASCA"));
+	WIN_ASSERT_NOT_EQUAL(*cal1, *cal2);
+	WIN_ASSERT_TRUE(cal1->Update(cal2));
+	WIN_ASSERT_EQUAL(*cal1, *cal2);
 }
 END_TEST
 
