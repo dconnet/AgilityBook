@@ -105,7 +105,7 @@ BEGIN_TEST(Calendar_Clone)
 	ARBCalendarPtr cal2 = cal->Clone();
 	WIN_ASSERT_NOT_NULL(cal2.get());
 	WIN_ASSERT_NOT_EQUAL(cal.get(), cal2.get());
-	WIN_ASSERT_TRUE(*cal.get() == *cal2.get());
+	WIN_ASSERT_EQUAL(*cal, *cal2);
 	WIN_ASSERT_EQUAL(cal->GetStartDate(), cal2->GetStartDate());
 	WIN_ASSERT_EQUAL(cal->GetLocation(), cal2->GetLocation());
 	cal->SetLocation(_T("Here2"));
@@ -120,9 +120,9 @@ BEGIN_TEST(Calendar_OpEqual)
 	cal1->SetStartDate(ARBDate(2007, 9, 1));
 	cal1->SetLocation(_T("Here"));
 	ARBCalendarPtr cal2 = ARBCalendar::New();
-	WIN_ASSERT_TRUE(*cal1 != *cal2);
+	WIN_ASSERT_NOT_EQUAL(*cal1, *cal2);
 	*cal1 = *cal2;
-	WIN_ASSERT_TRUE(*cal1 == *cal2);
+	WIN_ASSERT_EQUAL(*cal1, *cal2);
 }
 END_TEST
 
@@ -135,13 +135,13 @@ BEGIN_TESTF(Calendar_Compare, Calendar)
     cal->Load(CalData2, ARBVersion(2, 0), callback);
 	ARBCalendarPtr cal2 = cal->Clone();
 	WIN_ASSERT_NOT_EQUAL(cal.get(), cal2.get());
-	WIN_ASSERT_TRUE(*cal == *cal2);
+	WIN_ASSERT_EQUAL(*cal, *cal2);
 	ARBDate n = ARBDate::Today();
 	cal2->SetStartDate(n);
 	cal2->SetEndDate(n+1);
 	WIN_ASSERT_TRUE(*cal < *cal2);
 	WIN_ASSERT_TRUE(*cal < cal2->GetStartDate());
-	WIN_ASSERT_FALSE(*cal == *cal2);
+	WIN_ASSERT_NOT_EQUAL(*cal, *cal2);
 	WIN_ASSERT_FALSE(*cal > *cal2);
 	WIN_ASSERT_FALSE(*cal > cal2->GetStartDate());
 }
@@ -298,7 +298,6 @@ BEGIN_TESTF(CalendarList_Load, Calendar)
 	ele->AddAttrib(_T("PlanOn"), _T("n"));
 	WIN_ASSERT_FALSE(callist.Load(ele, ARBVersion(2, 0), callback));
 	WIN_ASSERT_EQUAL(2u, callist.size());
-	ele->SetName(TREE_CALENDAR);
 }
 END_TESTF
 
@@ -320,7 +319,6 @@ BEGIN_TESTF(CalendarList_Load2, Calendar)
 	ele->AddAttrib(_T("PlanOn"), _T("n"));
 	WIN_ASSERT_FALSE(callist.Load(ele, ARBVersion(2, 0), callback));
 	WIN_ASSERT_EQUAL(2u, callist.size());
-	ele->SetName(TREE_CALENDAR);
 }
 END_TESTF
 
@@ -341,9 +339,9 @@ BEGIN_TEST(CalendarList_SortAddDelete)
 	callist.AddCalendar(cal2);
 	callist.sort();
 	ARBCalendarPtr cal3 = callist[0]->Clone();
-	WIN_ASSERT_TRUE(*cal2 == *cal3);
+	WIN_ASSERT_EQUAL(*cal2, *cal3);
 	cal3->SetNote(_T("Test"));
-	WIN_ASSERT_TRUE(*cal2 != *cal3);
+	WIN_ASSERT_NOT_EQUAL(*cal2, *cal3);
 	callist.AddCalendar(cal3);
 	callist.AddCalendar(cal1->Clone());
 	callist.sort();
@@ -354,12 +352,12 @@ BEGIN_TEST(CalendarList_SortAddDelete)
 	WIN_ASSERT_EQUAL(2u, callist.size());
 	WIN_ASSERT_FALSE(callist.DeleteCalendar(cal1));
 	WIN_ASSERT_EQUAL(2u, callist.size());
-	WIN_ASSERT_TRUE(*callist[0] != *callist[1]);
+	WIN_ASSERT_NOT_EQUAL(*callist[0], *callist[1]);
 	ARBCalendarList callist2;
 	callist.Clone(callist2);
-	WIN_ASSERT_TRUE(callist == callist2);
+	WIN_ASSERT_EQUAL(callist, callist2);
 	WIN_ASSERT_NOT_EQUAL(callist[0].get(), callist2[0].get());
-	WIN_ASSERT_TRUE(*callist[0] == *callist2[0]);
+	WIN_ASSERT_EQUAL(*callist[0], *callist2[0]);
 }
 END_TEST
 
@@ -429,5 +427,6 @@ BEGIN_TEST(CalendarList_Find)
 	WIN_ASSERT_TRUE(callist.FindCalendar(clone, true, &found));
 	WIN_ASSERT_NOT_NULL(found.get());
 	WIN_ASSERT_NOT_EQUAL(found.get(), clone.get());
+	WIN_ASSERT_EQUAL(*found, *clone);
 }
 END_TEST

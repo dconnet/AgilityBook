@@ -152,13 +152,13 @@ BEGIN_TEST(Date_FromString)
 	ARBDate d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDashYYYYMMDD);
 	WIN_ASSERT_TRUE(d.IsValid());
 	ARBDate d2(1999, 3, 27);
-	WIN_ASSERT_TRUE(d == d2);
+	WIN_ASSERT_EQUAL(d, d2);
 	d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDefault);
-	WIN_ASSERT_TRUE(d == d2);
+	WIN_ASSERT_EQUAL(d, d2);
 	WIN_ASSERT_TRUE(d.IsValid());
 	d = ARBDate::FromString(_T("3/27/1999"), ARBDate::eDefault);
 	WIN_ASSERT_TRUE(d.IsValid());
-	WIN_ASSERT_TRUE(d == d2);
+	WIN_ASSERT_EQUAL(d, d2);
 	d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
 	WIN_ASSERT_FALSE(d.IsValid());
 	//TODO: Add more complete tests (test each format, bad formats, etc)

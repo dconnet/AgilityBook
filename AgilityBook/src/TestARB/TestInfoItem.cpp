@@ -100,9 +100,9 @@ BEGIN_TEST(InfoItem_Clone)
 	ARBInfoItemPtr info2 = info->Clone();
 	WIN_ASSERT_NOT_NULL(info2.get());
 	WIN_ASSERT_NOT_EQUAL(info.get(), info2.get());
-	WIN_ASSERT_TRUE(*info == *info2);
+	WIN_ASSERT_EQUAL(*info, *info2);
 	info->SetName(_T("Test2"));
-	WIN_ASSERT_TRUE(info->GetName() != info2->GetName());
+	WIN_ASSERT_NOT_EQUAL(info->GetName(), info2->GetName());
 }
 END_TEST
 
@@ -112,9 +112,9 @@ BEGIN_TEST(InfoItem_OpEqual)
 	ARBInfoItemPtr info1 = ARBInfoItem::New();
 	info1->SetName(_T("Testing"));
 	ARBInfoItemPtr info2 = ARBInfoItem::New();
-	WIN_ASSERT_TRUE(*info1 != *info2);
+	WIN_ASSERT_NOT_EQUAL(*info1, *info2);
 	*info1 = *info2;
-	WIN_ASSERT_TRUE(*info1 == *info2);
+	WIN_ASSERT_EQUAL(*info1, *info2);
 }
 END_TEST
 
@@ -203,9 +203,9 @@ BEGIN_TEST(InfoItemList_SortAddDelete)
 	WIN_ASSERT_TRUE(infolist.AddItem(info2));
 	infolist.sort();
 	ARBInfoItemPtr info3 = infolist[0]->Clone();
-	WIN_ASSERT_TRUE(*info2 == *info3);
+	WIN_ASSERT_EQUAL(*info2, *info3);
 	info3->SetComment(_T("Test comments"));
-	WIN_ASSERT_TRUE(*info2 != *info3);
+	WIN_ASSERT_NOT_EQUAL(*info2, *info3);
 	WIN_ASSERT_FALSE(infolist.AddItem(info3));
 	WIN_ASSERT_FALSE(infolist.AddItem(info1->Clone()));
 	info3->SetName(_T("Test3"));
@@ -216,12 +216,12 @@ BEGIN_TEST(InfoItemList_SortAddDelete)
 	WIN_ASSERT_EQUAL(2u, infolist.size());
 	WIN_ASSERT_FALSE(infolist.DeleteItem(info1));
 	WIN_ASSERT_EQUAL(2u, infolist.size());
-	WIN_ASSERT_TRUE(*infolist[0] != *infolist[1]);
+	WIN_ASSERT_NOT_EQUAL(*infolist[0], *infolist[1]);
 	ARBInfoItemList infolist2(TREE_CLUBINFO);
 	infolist.Clone(infolist2);
-	WIN_ASSERT_TRUE(infolist == infolist2);
+	WIN_ASSERT_EQUAL(infolist, infolist2);
 	WIN_ASSERT_NOT_EQUAL(infolist[0].get(), infolist2[0].get());
-	WIN_ASSERT_TRUE(*infolist[0] == *infolist2[0]);
+	WIN_ASSERT_EQUAL(*infolist[0], *infolist2[0]);
 }
 END_TEST
 
@@ -277,8 +277,8 @@ BEGIN_TESTF(Info_Load, InfoItem)
 	WIN_ASSERT_EQUAL(1u, info.GetInfo(ARBInfo::eLocationInfo).size());
 
 	ARBInfo info2(info);
-	WIN_ASSERT_TRUE(info == info2);
+	WIN_ASSERT_EQUAL(info, info2);
 	WIN_ASSERT_NOT_EQUAL(info.GetInfo(ARBInfo::eClubInfo)[0].get(), info2.GetInfo(ARBInfo::eClubInfo)[0].get());
-	WIN_ASSERT_TRUE(*info.GetInfo(ARBInfo::eClubInfo)[0] == *info2.GetInfo(ARBInfo::eClubInfo)[0]);
+	WIN_ASSERT_EQUAL(*info.GetInfo(ARBInfo::eClubInfo)[0], *info2.GetInfo(ARBInfo::eClubInfo)[0]);
 }
 END_TESTF
