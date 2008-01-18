@@ -40,251 +40,501 @@
 #include "ARBConfigAction.h"
 #include "Element.h"
 
-#if 0
-class IConfigActionCallback
+
+//class IConfigActionCallback
+//{
+//	IConfigActionCallback();
+//	virtual void PreDelete(tstring const& inMsg) = 0;
+//	virtual void PostDelete(tstring const& inMsg) const = 0;
+//	virtual bool CanContinue() const
+//};
+
+
+BEGIN_TEST(ConfigActionDeleteCalPlugin_New)
 {
-	IConfigActionCallback();
-	virtual void PreDelete(tstring const& inMsg) = 0;
-	virtual void PostDelete(tstring const& inMsg) const = 0;
-	virtual bool CanContinue() const
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inName);
+}
+END_TEST
 
-class ARBConfigAction : public ARBBase
+
+BEGIN_TEST(ConfigActionDeleteCalPlugin_Clone)
 {
-	virtual ARBConfigActionPtr Clone() const = 0;
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const = 0;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
 
-class ARBConfigActionDeleteCalPlugin : public ARBConfigAction
-{ 
-	static ARBConfigActionPtr New(
-			tstring const& inName);
-	virtual ARBConfigActionPtr Clone() const;
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
 
-class ARBConfigActionRenameOtherPoints : public ARBConfigAction
-{ 
-	static ARBConfigActionPtr New(
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual ARBConfigActionPtr Clone() const;
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
-
-class ARBConfigActionDeleteOtherPoints : public ARBConfigAction
-{ 
-	static ARBConfigActionPtr New(
-			tstring const& inName);
-	virtual ARBConfigActionPtr Clone() const;
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
-
-class ARBConfigActionRenameVenue : public ARBConfigAction
+BEGIN_TEST(ConfigActionDeleteCalPlugin_Apply)
 {
-	static ARBConfigActionPtr New(
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual ARBConfigActionPtr Clone() const;
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
 
-class ARBConfigActionDeleteVenue : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionRenameOtherPoints_New)
 {
-	static ARBConfigActionPtr New(
-			tstring const& inName);
-	virtual ARBConfigActionPtr Clone() const;
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
 
-class ARBConfigActionRenameMultiQ : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionRenameOtherPoints_Clone)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
 
-class ARBConfigActionDeleteMultiQ : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionRenameOtherPoints_Apply)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
 
-class ARBConfigActionRenameDivision : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionDeleteOtherPoints_New)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inName);
+}
+END_TEST
 
-class ARBConfigActionDeleteDivision : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionDeleteOtherPoints_Clone)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
 
-class ARBConfigActionRenameLevel : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionDeleteOtherPoints_Apply)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr NewLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inOldName,
-			tstring const& inNewName);
-	static ARBConfigActionPtr NewSubLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel,
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
 
-class ARBConfigActionDeleteLevel : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionRenameVenue_New)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr NewLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inName);
-	static ARBConfigActionPtr NewSubLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel,
-			tstring const& inName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
 
-class ARBConfigActionRenameTitle : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionRenameVenue_Clone)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
 
-class ARBConfigActionDeleteTitle : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionRenameVenue_Apply)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
 
-class ARBConfigActionRenameEvent : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionDeleteVenue_New)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inName);
+}
+END_TEST
 
-class ARBConfigActionDeleteEvent : public ARBConfigAction
+
+BEGIN_TEST(ConfigActionDeleteVenue_Clone)
 {
-	virtual ARBConfigActionPtr Clone() const;
-	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inName);
-	virtual bool Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
 
-class ARBConfigActionList : public ARBVector<ARBConfigActionPtr>
+
+BEGIN_TEST(ConfigActionDeleteVenue_Apply)
 {
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	int Apply(
-			ARBConfig& ioConfig,
-			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
-			IConfigActionCallback& ioCallBack) const;
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigActionRenameMultiQ_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameMultiQ_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameMultiQ_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteMultiQ_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteMultiQ_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteMultiQ_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameDivision_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameDivision_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameDivision_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteDivision_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteDivision_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteDivision_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameLevel_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr NewLevel(
+	//		tstring const& inVenue,
+	//		tstring const& inDiv,
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+	//static ARBConfigActionPtr NewSubLevel(
+	//		tstring const& inVenue,
+	//		tstring const& inDiv,
+	//		tstring const& inLevel,
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameLevel_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameLevel_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteLevel_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr NewLevel(
+	//		tstring const& inVenue,
+	//		tstring const& inDiv,
+	//		tstring const& inName);
+	//static ARBConfigActionPtr NewSubLevel(
+	//		tstring const& inVenue,
+	//		tstring const& inDiv,
+	//		tstring const& inLevel,
+	//		tstring const& inName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteLevel_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteLevel_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameTitle_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameTitle_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameTitle_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteTitle_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inDiv,
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteTitle_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteTitle_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameEvent_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inOldName,
+	//		tstring const& inNewName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameEvent_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionRenameEvent_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteEvent_New)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigActionPtr New(
+	//		tstring const& inVenue,
+	//		tstring const& inName);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteEvent_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual ARBConfigActionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionDeleteEvent_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//virtual bool Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool Load(
+	//		ElementNodePtr inTree,
+	//		ARBVersion const& inVersion,
+	//		ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigActionList_Apply)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//int Apply(
+	//		ARBConfig& ioConfig,
+	//		ARBDogList* ioDogs,
+	//		otstringstream& ioInfo,
+	//		IConfigActionCallback& ioCallBack) const;
+}
+END_TEST

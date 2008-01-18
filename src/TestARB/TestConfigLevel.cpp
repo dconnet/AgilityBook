@@ -40,55 +40,139 @@
 #include "ARBConfigLevel.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigLevel : public ARBBase
-{
-	static ARBConfigLevelPtr New();
-	ARBConfigLevelPtr Clone() const;
-	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
-	bool operator==(ARBConfigLevel const& rhs) const;
-	bool operator!=(ARBConfigLevel const& rhs) const
-	void clear();
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	bool Update(
-			int indent,
-			ARBConfigLevelPtr inLevelNew,
-			tstring& ioInfo);
-};
 
-class ARBConfigLevelList : public ARBVector<ARBConfigLevelPtr>
+BEGIN_TEST(ConfigLevel_New)
 {
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool VerifyLevel(
-			tstring const& inName,
-			bool inAllowWildCard = true) const;
-	bool FindLevel(
-			tstring const& inName,
-			ARBConfigLevelPtr* outLevel = NULL);
-	bool FindSubLevel(
-			tstring const& inName,
-			ARBConfigLevelPtr* outLevel = NULL) const;
-	bool AddLevel(
-			tstring const& inName,
-			ARBConfigLevelPtr* outLevel = NULL);
-	bool AddLevel(ARBConfigLevelPtr inLevel);
-	bool DeleteLevel(
-			tstring const& inDiv,
-			tstring const& inName,
-			ARBConfigEventList& ioEvents);
-	bool DeleteSubLevel(
-			tstring const& inName,
-			bool& outLevelModified);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBConfigLevelPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigLevel_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigLevelPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevel_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigLevel& operator=(ARBConfigLevel const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevel_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBConfigLevel const& rhs) const;
+//	bool operator!=(ARBConfigLevel const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevel_Clear)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void clear();
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevel_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevel_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevel_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevel_Update)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Update(
+//			int indent,
+//			ARBConfigLevelPtr inLevelNew,
+//			tstring& ioInfo);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevelList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevelList_VerifyLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyLevel(
+//			tstring const& inName,
+//			bool inAllowWildCard = true) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevelList_FindLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindLevel(
+//			tstring const& inName,
+//			ARBConfigLevelPtr* outLevel = NULL);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLevelList_FindSubLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindSubLevel(
+//			tstring const& inName,
+//			ARBConfigLevelPtr* outLevel = NULL) const;
+}
+END_TEST
+
+BEGIN_TEST(ConfigLevelList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddLevel(
+//			tstring const& inName,
+//			ARBConfigLevelPtr* outLevel = NULL);
+//	bool AddLevel(ARBConfigLevelPtr inLevel);
+//	bool DeleteLevel(
+//			tstring const& inDiv,
+//			tstring const& inName,
+//			ARBConfigEventList& ioEvents);
+//	bool DeleteSubLevel(
+//			tstring const& inName,
+//			bool& outLevelModified);
+}
+END_TEST

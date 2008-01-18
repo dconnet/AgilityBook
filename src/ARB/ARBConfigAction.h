@@ -76,6 +76,7 @@ protected:
 	bool m_bContinue;
 };
 
+
 /**
  * Special class that performs actions during ARBConfig::Update.
  *
@@ -179,6 +180,7 @@ protected:
 	tstring m_NewName;
 };
 
+
 class ARBConfigActionDeleteOtherPoints : public ARBConfigAction
 { 
 protected:
@@ -230,6 +232,7 @@ private:
 	tstring m_NewName;
 };
 
+
 class ARBConfigActionDeleteVenue : public ARBConfigAction
 {
 protected:
@@ -265,12 +268,12 @@ protected:
 	ARBConfigActionRenameMultiQ(ARBConfigActionRenameMultiQ const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inOldName,
 			tstring const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -284,6 +287,7 @@ protected:
 	tstring m_NewName;
 };
 
+
 class ARBConfigActionDeleteMultiQ : public ARBConfigAction
 {
 protected:
@@ -293,11 +297,11 @@ protected:
 	ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -322,12 +326,12 @@ protected:
 	ARBConfigActionRenameDivision(ARBConfigActionRenameDivision const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inOldName,
 			tstring const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -341,6 +345,7 @@ protected:
 	tstring m_NewName;
 };
 
+
 class ARBConfigActionDeleteDivision : public ARBConfigAction
 {
 protected:
@@ -350,11 +355,11 @@ protected:
 	ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -381,8 +386,6 @@ protected:
 	ARBConfigActionRenameLevel(ARBConfigActionRenameLevel const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr NewLevel(
 			tstring const& inVenue,
 			tstring const& inDiv,
@@ -395,6 +398,8 @@ public:
 			tstring const& inLevel,
 			tstring const& inOldName,
 			tstring const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -410,6 +415,7 @@ protected:
 	tstring m_NewName;
 };
 
+
 class ARBConfigActionDeleteLevel : public ARBConfigAction
 {
 protected:
@@ -421,8 +427,6 @@ protected:
 	ARBConfigActionDeleteLevel(ARBConfigActionDeleteLevel const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr NewLevel(
 			tstring const& inVenue,
 			tstring const& inDiv,
@@ -433,6 +437,8 @@ public:
 			tstring const& inDiv,
 			tstring const& inLevel,
 			tstring const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -459,12 +465,12 @@ protected:
 	ARBConfigActionRenameTitle(ARBConfigActionRenameTitle const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inOldName,
 			tstring const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -478,6 +484,7 @@ protected:
 	tstring m_NewName;
 };
 
+
 class ARBConfigActionDeleteTitle : public ARBConfigAction
 {
 protected:
@@ -489,13 +496,13 @@ protected:
 	ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitle const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inDiv,
 			tstring const& inOldName,
 			tstring const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -522,12 +529,12 @@ protected:
 	ARBConfigActionRenameEvent(ARBConfigActionRenameEvent const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inOldName,
 			tstring const& inNewName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
@@ -541,6 +548,7 @@ protected:
 	tstring m_NewName;
 };
 
+
 class ARBConfigActionDeleteEvent : public ARBConfigAction
 {
 protected:
@@ -550,11 +558,11 @@ protected:
 	ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs);
 
 public:
-	virtual ARBConfigActionPtr Clone() const;
-
 	static ARBConfigActionPtr New(
 			tstring const& inVenue,
 			tstring const& inName);
+
+	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,

@@ -40,80 +40,207 @@
 #include "ARBConfigEvent.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigEvent : public ARBBase
-{
-	static ARBConfigEventPtr New();
-	ARBConfigEventPtr Clone() const;
-	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
-	bool operator==(ARBConfigEvent const& rhs) const;
-	bool operator!=(ARBConfigEvent const& rhs) const
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	bool Update(
-			int indent,
-			ARBConfigEventPtr inEventNew,
-			tstring& ioInfo);
-	size_t FindAllEvents(
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate,
-			bool inTitlePoints,
-			ARBVector<ARBConfigScoringPtr>& outList) const
-	bool VerifyEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate) const
-	bool FindEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigScoringPtr* outScoring = NULL) const
-};
 
-class ARBConfigEventList : public ARBVector<ARBConfigEventPtr>
+BEGIN_TEST(ConfigEvent_New)
 {
-	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void ReorderBy(ARBConfigEventList const& inList);
-	bool VerifyEvent(
-			tstring const& inEvent,
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate) const;
-	 bool FindEvent(
-			tstring const& inEvent,
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigEventPtr* outEvent = NULL,
-			ARBConfigScoringPtr* outScoring = NULL) const;
-	int RenameDivision(
-			tstring const& inOldDiv,
-			tstring const& inNewDiv);
-	int DeleteDivision(tstring const& inDiv);
-	int RenameLevel(
-			tstring const& inOldDiv,
-			tstring const& inOldLevel,
-			tstring const& inNewLevel);
-	int DeleteLevel(
-			tstring const& inDiv,
-			tstring const& inLevel);
-	bool FindEvent(
-			tstring const& inEvent,
-			ARBConfigEventPtr* outEvent = NULL) const;
-	bool AddEvent(ARBConfigEventPtr inEvent);
-	bool DeleteEvent(tstring const& inEvent);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBConfigEventPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigEvent_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigEventPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigEvent& operator=(ARBConfigEvent const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBConfigEvent const& rhs) const;
+//	bool operator!=(ARBConfigEvent const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfigDivisionList const& inDivisions,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_Update)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Update(
+//			int indent,
+//			ARBConfigEventPtr inEventNew,
+//			tstring& ioInfo);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_FindAllEvents)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	size_t FindAllEvents(
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate,
+//			bool inTitlePoints,
+//			ARBVector<ARBConfigScoringPtr>& outList) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_VerifyEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyEvent(
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEvent_FindEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindEvent(
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate,
+//			ARBConfigScoringPtr* outScoring = NULL) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfigDivisionList const& inDivisions,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_ReorderBy)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void ReorderBy(ARBConfigEventList const& inList);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_VerifyEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyEvent(
+//			tstring const& inEvent,
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_Find)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	 bool FindEvent(
+//			tstring const& inEvent,
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate,
+//			ARBConfigEventPtr* outEvent = NULL,
+//			ARBConfigScoringPtr* outScoring = NULL) const;
+//	bool FindEvent(
+//			tstring const& inEvent,
+//			ARBConfigEventPtr* outEvent = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_RenameDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameDivision(
+//			tstring const& inOldDiv,
+//			tstring const& inNewDiv);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_DeleteDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteDivision(tstring const& inDiv);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_RenameLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameLevel(
+//			tstring const& inOldDiv,
+//			tstring const& inOldLevel,
+//			tstring const& inNewLevel);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_DeleteLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteLevel(
+//			tstring const& inDiv,
+//			tstring const& inLevel);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigEventList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddEvent(ARBConfigEventPtr inEvent);
+//	bool DeleteEvent(tstring const& inEvent);
+}
+END_TEST

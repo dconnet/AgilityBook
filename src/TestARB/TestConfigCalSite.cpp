@@ -40,48 +40,118 @@
 #include "ARBConfigCalSite.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigCalSite
-{
-	static ARBConfigCalSitePtr New();
-	ARBConfigCalSitePtr Clone() const;
-	ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
-	bool operator==(ARBConfigCalSite const& rhs) const;
-	bool operator!=(ARBConfigCalSite const& rhs) const
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	tstring GetFormattedURL(
-			std::vector<tstring> const& inLocCodes,
-			std::vector<tstring> const& inVenueCodes) const;
-	bool HasLocationCode(tstring const& inCode) const;
-	bool AddLocationCode(tstring const& inCode, tstring const& inName);
-	bool RemoveLocationCode(tstring const& inCode);
-	bool RemoveAllLocationCodes();
-	bool HasVenueCode(tstring const& inCode) const;
-	bool AddVenueCode(tstring const& inCode, tstring const& inVenue);
-	bool RemoveVenueCode(tstring const& inCode);
-	bool RemoveAllVenueCodes();
-};
 
-class ARBConfigCalSiteList : public ARBVector<ARBConfigCalSitePtr>
+BEGIN_TEST(ConfigCalSite_New)
 {
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void sort();
-	bool FindSite(
-			tstring const& inSite,
-			ARBConfigCalSitePtr* outSite = NULL) const;
-	bool AddSite(
-			tstring const& inSite,
-			ARBConfigCalSitePtr* outSite = NULL);
-	bool AddSite(ARBConfigCalSitePtr inSite);
-	int DeleteSite(tstring const& inSite);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigCalSitePtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigCalSite_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//ARBConfigCalSitePtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSite_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSite_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool operator==(ARBConfigCalSite const& rhs) const;
+	//bool operator!=(ARBConfigCalSite const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSite_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool Load(
+	//		ElementNodePtr inTree,
+	//		ARBVersion const& inVersion,
+	//		ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSite_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSite_GetFormattedURL)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//tstring GetFormattedURL(
+	//		std::vector<tstring> const& inLocCodes,
+	//		std::vector<tstring> const& inVenueCodes) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSite_LocationCodes)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool HasLocationCode(tstring const& inCode) const;
+	//bool AddLocationCode(tstring const& inCode, tstring const& inName);
+	//bool RemoveLocationCode(tstring const& inCode);
+	//bool RemoveAllLocationCodes();
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSite_VenueCodes)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool HasVenueCode(tstring const& inCode) const;
+	//bool AddVenueCode(tstring const& inCode, tstring const& inVenue);
+	//bool RemoveVenueCode(tstring const& inCode);
+	//bool RemoveAllVenueCodes();
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSiteList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool Load(
+	//		ElementNodePtr inTree,
+	//		ARBVersion const& inVersion,
+	//		ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+BEGIN_TEST(ConfigCalSiteList_SortAddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//void sort();
+	//bool AddSite(
+	//		tstring const& inSite,
+	//		ARBConfigCalSitePtr* outSite = NULL);
+	//bool AddSite(ARBConfigCalSitePtr inSite);
+	//int DeleteSite(tstring const& inSite);
+}
+END_TEST
+
+BEGIN_TEST(ConfigCalSiteList_Find)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool FindSite(
+	//		tstring const& inSite,
+	//		ARBConfigCalSitePtr* outSite = NULL) const;
+}
+END_TEST
