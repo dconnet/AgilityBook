@@ -681,6 +681,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestAgilityRecordBook.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestARB.cpp"
 				>
 			</File>
@@ -693,7 +697,119 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestConfig.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigAction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigCalSite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigDivision.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigFault.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigLevel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigLifetimePoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigMultiQ.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigOtherPoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigPlaceInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigScoring.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigSubLevel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigTitle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigTitlePoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestConfigVenue.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestDate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDog.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogClub.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogExistingPoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogNotes.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogReferenceRun.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogRegNum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogRun.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogRunOtherPoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogRunPartner.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogRunScoring.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogTitle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\TestDogTrial.cpp"
 				>
 			</File>
 			<File
