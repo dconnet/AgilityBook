@@ -345,7 +345,7 @@ BOOL GetLocalStatus(LPCTSTR lpszFileName, CFileStatus& rStatus)
 	VERIFY(FindClose(hFind));
 
 	// strip attribute of NORMAL bit, our API doesn't have a "normal" bit.
-	rStatus.m_attribute = ((findFileData.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL) & 0xFF);
+	rStatus.m_attribute = BYTE((findFileData.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL) & 0xFF);
 
 	// get just the low DWORD of the file size
 	ASSERT(findFileData.nFileSizeHigh == 0);
