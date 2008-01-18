@@ -105,7 +105,7 @@ BEGIN_TEST(Training_Clone)
 	ARBTrainingPtr train2 = train->Clone();
 	WIN_ASSERT_NOT_NULL(train2.get());
 	WIN_ASSERT_NOT_EQUAL(train.get(), train2.get());
-	WIN_ASSERT_TRUE(*train == *train2);
+	WIN_ASSERT_EQUAL(*train, *train2);
 	WIN_ASSERT_EQUAL(train->GetDate(), train2->GetDate());
 }
 END_TEST
@@ -116,9 +116,9 @@ BEGIN_TEST(Training_OpEqual)
 	ARBTrainingPtr train1 = ARBTraining::New();
 	train1->SetDate(ARBDate(2007, 9, 1));
 	ARBTrainingPtr train2 = ARBTraining::New();
-	WIN_ASSERT_TRUE(*train1 != *train2);
+	WIN_ASSERT_NOT_EQUAL(*train1, *train2);
 	*train1 = *train2;
-	WIN_ASSERT_TRUE(*train1 == *train2);
+	WIN_ASSERT_EQUAL(*train1, *train2);
 }
 END_TEST
 
@@ -131,12 +131,12 @@ BEGIN_TESTF(Training_Compare, Training)
 	WIN_ASSERT_TRUE(train->Load(TrainingData, ARBVersion(2, 0), callback));
 	ARBTrainingPtr train2 = train->Clone();
 	WIN_ASSERT_NOT_EQUAL(train.get(), train2.get());
-	WIN_ASSERT_TRUE(*train == *train2);
+	WIN_ASSERT_EQUAL(*train, *train2);
 	WIN_ASSERT_EQUAL(train->GetDate(), train2->GetDate());
 	ARBDate n = ARBDate::Today();
 	train2->SetDate(n);
 	WIN_ASSERT_TRUE(*train < *train2);
-	WIN_ASSERT_FALSE(*train == *train2);
+	WIN_ASSERT_NOT_EQUAL(*train, *train2);
 	WIN_ASSERT_FALSE(*train > *train2);
 }
 END_TESTF
@@ -224,9 +224,9 @@ BEGIN_TEST(TrainingList_SortAddDelete)
 	trainlist.AddTraining(train2);
 	trainlist.sort();
 	ARBTrainingPtr train3 = trainlist[0]->Clone();
-	WIN_ASSERT_TRUE(*train2 == *train3);
+	WIN_ASSERT_EQUAL(*train2, *train3);
 	train3->SetNote(_T("Test"));
-	WIN_ASSERT_TRUE(*train2 != *train3);
+	WIN_ASSERT_NOT_EQUAL(*train2, *train3);
 	trainlist.AddTraining(train3);
 	trainlist.AddTraining(train1->Clone());
 	trainlist.sort();
@@ -237,12 +237,12 @@ BEGIN_TEST(TrainingList_SortAddDelete)
 	WIN_ASSERT_EQUAL(2u, trainlist.size());
 	WIN_ASSERT_FALSE(trainlist.DeleteTraining(train1));
 	WIN_ASSERT_EQUAL(2u, trainlist.size());
-	WIN_ASSERT_TRUE(*trainlist[0] != *trainlist[1]);
+	WIN_ASSERT_NOT_EQUAL(*trainlist[0], *trainlist[1]);
 	ARBTrainingList trainlist2;
 	trainlist.Clone(trainlist2);
-	WIN_ASSERT_TRUE(trainlist == trainlist2);
-	WIN_ASSERT_TRUE(trainlist[0].get() != trainlist2[0].get());
-	WIN_ASSERT_TRUE(*trainlist[0] == *trainlist2[0]);
+	WIN_ASSERT_EQUAL(trainlist, trainlist2);
+	WIN_ASSERT_NOT_EQUAL(trainlist[0].get(), trainlist2[0].get());
+	WIN_ASSERT_EQUAL(*trainlist[0], *trainlist2[0]);
 }
 END_TEST
 
