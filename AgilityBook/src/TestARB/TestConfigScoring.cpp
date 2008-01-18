@@ -40,50 +40,134 @@
 #include "ARBConfigScoring.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigScoring : public ARBBase
+BEGIN_TEST(ConfigScoring_GetScoringStyleStr)
 {
-	static tstring GetScoringStyleStr(ScoringStyle inStyle);
-	static ARBConfigScoringPtr New();
-	ARBConfigScoringPtr Clone() const;
-	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
-	bool operator==(ARBConfigScoring const& rhs) const;
-	bool operator!=(ARBConfigScoring const& rhs) const
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	bool IsValidOn(ARBDate inDate) const
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static tstring GetScoringStyleStr(ScoringStyle inStyle);
+}
+END_TEST
 
-class ARBConfigScoringList : public ARBVector<ARBConfigScoringPtr>
+
+BEGIN_TEST(ConfigScoring_New)
 {
-	bool Load(
-			ARBConfigDivisionList const& inDivisions,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	size_t FindAllEvents(
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate,
-			bool inTitlePoints,
-			ARBVector<ARBConfigScoringPtr>& outList) const;
-	bool FindEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigScoringPtr* outEvent = NULL) const;
-	bool VerifyEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate) const;
-	ARBConfigScoringPtr AddScoring();
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBConfigScoringPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigScoring_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigScoringPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoring_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoring_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBConfigScoring const& rhs) const;
+//	bool operator!=(ARBConfigScoring const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoring_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoring_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfigDivisionList const& inDivisions,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoring_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoring_IsValidOn)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool IsValidOn(ARBDate inDate) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoringList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfigDivisionList const& inDivisions,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoringList_FindAllEvents)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	size_t FindAllEvents(
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate,
+//			bool inTitlePoints,
+//			ARBVector<ARBConfigScoringPtr>& outList) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoringList_FindEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindEvent(
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate,
+//			ARBConfigScoringPtr* outEvent = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoringList_VerifyEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyEvent(
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigScoringList_Add)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigScoringPtr AddScoring();
+}
+END_TEST

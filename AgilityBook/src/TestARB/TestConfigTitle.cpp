@@ -40,54 +40,153 @@
 #include "ARBConfigTitle.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigTitle : public ARBBase
-{
-	static ARBConfigTitlePtr New();
-	ARBConfigTitlePtr Clone() const;
-	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
-	bool operator==(ARBConfigTitle const& rhs) const;
-	bool operator!=(ARBConfigTitle const& rhs) const
-	void clear();
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	bool IsValidOn(ARBDate inDate) const
-	tstring const& GetNiceName() const
-	tstring GetCompleteName(
-			short inInstance = 0,
-			bool bShowInstance = false,
-			bool bAbbrevFirst = true,
-			bool bAddDates = false) const;
-};
 
-class ARBConfigTitleList : public ARBVector<ARBConfigTitlePtr>
+BEGIN_TEST(ConfigTitle_New)
 {
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback,
-			bool inCheckDups = false);
-	void ReorderBy(ARBConfigTitleList const& inList);
-	bool FindTitleCompleteName(
-			tstring const& inName,
-			short inInstance,
-			bool bShowInstance,
-			bool bAbbrevFirst = true,
-			ARBConfigTitlePtr* outTitle = NULL) const;
-	bool FindTitle(
-			tstring const& inName,
-			ARBConfigTitlePtr* outTitle = NULL) const;
-	bool AddTitle(
-			tstring const& inName,
-			ARBConfigTitlePtr* outTitle = NULL);
-	bool AddTitle(ARBConfigTitlePtr inTitle);
-	bool DeleteTitle(tstring const& inName);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBConfigTitlePtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigTitle_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigTitlePtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigTitle& operator=(ARBConfigTitle const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBConfigTitle const& rhs) const;
+//	bool operator!=(ARBConfigTitle const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_Clear)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void clear();
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_IsValidOn)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool IsValidOn(ARBDate inDate) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_GetNiceName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	tstring const& GetNiceName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitle_GetCompleteName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	tstring GetCompleteName(
+//			short inInstance = 0,
+//			bool bShowInstance = false,
+//			bool bAbbrevFirst = true,
+//			bool bAddDates = false) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitleList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback,
+//			bool inCheckDups = false);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitleList_ReorderBy)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void ReorderBy(ARBConfigTitleList const& inList);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitleList_FindTitleCompleteName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindTitleCompleteName(
+//			tstring const& inName,
+//			short inInstance,
+//			bool bShowInstance,
+//			bool bAbbrevFirst = true,
+//			ARBConfigTitlePtr* outTitle = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitleList_Find)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindTitle(
+//			tstring const& inName,
+//			ARBConfigTitlePtr* outTitle = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitleList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddTitle(
+//			tstring const& inName,
+//			ARBConfigTitlePtr* outTitle = NULL);
+//	bool AddTitle(ARBConfigTitlePtr inTitle);
+//	bool DeleteTitle(tstring const& inName);
+}
+END_TEST

@@ -40,38 +40,115 @@
 #include "ARBConfigOtherPoints.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigOtherPoints : public ARBBase
+BEGIN_TEST(ConfigOtherPoints_GetTallyValidValues)
 {
-	static void GetTallyValidValues(std::vector<tstring>& outValues);
-	static ARBConfigOtherPointsPtr New();
-	ARBConfigOtherPointsPtr Clone() const;
-	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
-	bool operator==(ARBConfigOtherPoints const& rhs) const;
-	bool operator!=(ARBConfigOtherPoints const& rhs) const
-	void clear();
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static void GetTallyValidValues(std::vector<tstring>& outValues);
+}
+END_TEST
 
-class ARBConfigOtherPointsList : public ARBVector<ARBConfigOtherPointsPtr>
+
+BEGIN_TEST(ConfigOtherPoints_New)
 {
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool VerifyOtherPoints(tstring const& inName) const;
-	bool FindOtherPoints(
-			tstring const& inName,
-			ARBConfigOtherPointsPtr* outPoints = NULL) const;
-	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
-	bool DeleteOtherPoints(tstring const& inName);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBConfigOtherPointsPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigOtherPoints_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigOtherPointsPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPoints_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigOtherPoints& operator=(ARBConfigOtherPoints const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPoints_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBConfigOtherPoints const& rhs) const;
+//	bool operator!=(ARBConfigOtherPoints const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPoints_Clear)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void clear();
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPoints_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPoints_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPoints_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPointsList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPointsList_VerifyOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyOtherPoints(tstring const& inName) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPointsList_Find)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindOtherPoints(
+//			tstring const& inName,
+//			ARBConfigOtherPointsPtr* outPoints = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigOtherPointsList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
+//	bool DeleteOtherPoints(tstring const& inName);
+}
+END_TEST

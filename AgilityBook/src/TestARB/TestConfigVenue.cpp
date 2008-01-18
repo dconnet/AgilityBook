@@ -40,80 +40,206 @@
 #include "ARBConfigVenue.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigVenue : public ARBBase
+BEGIN_TEST(ConfigVenue_New)
 {
-	static ARBConfigVenuePtr New();
-	ARBConfigVenuePtr Clone() const;
-	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
-	bool operator==(ARBConfigVenue const& rhs) const;
-	bool operator!=(ARBConfigVenue const& rhs) const
-	void clear();
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ARBConfig& ioConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	bool Update(
-			int indent,
-			ARBConfigVenuePtr inVenueNew,
-			tstring& ioInfo);
-};
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBConfigVenuePtr New();
+}
+END_TEST
 
-class ARBConfigVenueList : public ARBVector<ARBConfigVenuePtr>
+
+BEGIN_TEST(ConfigVenue_Clone)
 {
-	bool Load(
-			ARBConfig& ioConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void sort();
-	bool VerifyVenue(tstring const& inVenue) const
-	bool VerifyMultiQ(
-			tstring const& inVenue,
-			tstring const& inMultiQ,
-			bool inUseShortName = false) const;
-	bool VerifyLevel(
-			tstring const& inVenue,
-			tstring const& inDivision,
-			tstring const& inLevel) const;
-	bool VerifyEvent(
-			tstring const& inVenue,
-			tstring const& inDivision,
-			tstring const& inLevel,
-			tstring const& inEvent,
-			ARBDate const& inDate) const;
-	bool FindTitleCompleteName(
-			tstring const& inVenue,
-			tstring const& inName,
-			bool bShowInstance,
-			bool bAbbrevFirst = true,
-			ARBConfigTitlePtr* outTitle = NULL) const;
-	bool FindTitle(
-			tstring const& inVenue,
-			tstring const& inTitle,
-			ARBConfigTitlePtr* outTitle = NULL) const;
-	bool DeleteTitle(tstring const& inTitle);
-	bool FindVenue(
-			tstring const& inVenue,
-			ARBConfigVenuePtr* outVenue = NULL) const;
-	bool AddVenue(
-			tstring const& inVenue,
-			ARBConfigVenuePtr* outVenue = NULL);
-	bool AddVenue(ARBConfigVenuePtr inVenue);
-	int DeleteVenue(tstring const& inVenue);
-	bool FindEvent(
-			tstring const& inVenue,
-			tstring const& inEvent,
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate,
-			ARBConfigEventPtr* outEvent = NULL,
-			ARBConfigScoringPtr* outScoring = NULL) const;
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigVenuePtr Clone() const;
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigVenue_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigVenue& operator=(ARBConfigVenue const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenue_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBConfigVenue const& rhs) const;
+//	bool operator!=(ARBConfigVenue const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenue_Clear)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void clear();
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenue_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenue_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig& ioConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenue_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenue_Update)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Update(
+//			int indent,
+//			ARBConfigVenuePtr inVenueNew,
+//			tstring& ioInfo);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig& ioConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_SortAddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void sort();
+//	bool AddVenue(
+//			tstring const& inVenue,
+//			ARBConfigVenuePtr* outVenue = NULL);
+//	bool AddVenue(ARBConfigVenuePtr inVenue);
+//	int DeleteVenue(tstring const& inVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_VerifyVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyVenue(tstring const& inVenue) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_VerifyMultiQ)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyMultiQ(
+//			tstring const& inVenue,
+//			tstring const& inMultiQ,
+//			bool inUseShortName = false) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_VerifyLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyLevel(
+//			tstring const& inVenue,
+//			tstring const& inDivision,
+//			tstring const& inLevel) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_VerifyEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyEvent(
+//			tstring const& inVenue,
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			tstring const& inEvent,
+//			ARBDate const& inDate) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_FindTitleCompleteName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindTitleCompleteName(
+//			tstring const& inVenue,
+//			tstring const& inName,
+//			bool bShowInstance,
+//			bool bAbbrevFirst = true,
+//			ARBConfigTitlePtr* outTitle = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_FindTitle)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindTitle(
+//			tstring const& inVenue,
+//			tstring const& inTitle,
+//			ARBConfigTitlePtr* outTitle = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_DeleteTitle)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool DeleteTitle(tstring const& inTitle);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_Find)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindVenue(
+//			tstring const& inVenue,
+//			ARBConfigVenuePtr* outVenue = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_FindEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindEvent(
+//			tstring const& inVenue,
+//			tstring const& inEvent,
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate,
+//			ARBConfigEventPtr* outEvent = NULL,
+//			ARBConfigScoringPtr* outScoring = NULL) const;
+}
+END_TEST

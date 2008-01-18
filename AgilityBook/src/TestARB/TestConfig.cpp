@@ -40,41 +40,130 @@
 #include "ARBConfig.h"
 #include "Element.h"
 
-#if 0
-class ARBConfig
-{
-public:
-	ARBConfig();
-	ARBConfig(ARBConfig const& rhs);
-	bool operator==(ARBConfig const& rhs) const;
-	bool operator!=(ARBConfig const& rhs) const
-	void clear();
-	bool LoadFault(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool LoadOtherPoints(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Load(
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	void Default();
-	static std::string GetDTD(bool bNormalizeCRNL = true);
-	tstring GetTitleNiceName(
-			tstring const& inVenue,
-			tstring const& inTitle) const;
-	tstring GetTitleCompleteName(
-			ARBDogTitlePtr inTitle,
-			bool bAbbrevFirst = true) const;
-	bool Update(
-			int indent,
-			ARBConfig const& inConfigNew,
-			otstringstream& ioInfo);
-};
-#endif
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+FIXTURE(Config)
+
+
+SETUP(Config)
+{
+	WIN_ASSERT_TRUE(CommonSetup());
+}
+
+
+TEARDOWN(Config)
+{
+	WIN_ASSERT_TRUE(CommonTeardown());
+}
+
+
+BEGIN_TESTF(Config_Equality, Config)
+{
+	ARBConfig config1, config2;
+	WIN_ASSERT_EQUAL(config1, config2);
+	config1.Default();
+	WIN_ASSERT_NOT_EQUAL(config1, config2);
+	ARBConfig config3(config1);
+	WIN_ASSERT_EQUAL(config1, config3);
+}
+END_TESTF
+
+
+BEGIN_TESTF(Config_Clear, Config)
+{
+	ARBConfig config1, config2;
+	config1.Default();
+	WIN_ASSERT_NOT_EQUAL(config1, config2);
+	config1.clear();
+	WIN_ASSERT_EQUAL(config1, config2);
+}
+END_TESTF
+
+
+BEGIN_TEST(Config_LoadFault)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool LoadFault(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(Config_LoadOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool LoadOtherPoints(
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(Config_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool Load(
+	//		ElementNodePtr inTree,
+	//		ARBVersion const& inVersion,
+	//		ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(Config_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TESTF(Config_Default, Config)
+{
+	ARBConfig config;
+	WIN_ASSERT_EQUAL(0u, config.GetVenues().size());
+	config.Default();
+	WIN_ASSERT_EQUAL(13u, config.GetVenues().size());
+}
+END_TESTF
+
+
+BEGIN_TEST(Config_GetDTD)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static std::string GetDTD(bool bNormalizeCRNL = true);
+}
+END_TEST
+
+
+BEGIN_TEST(Config_GetTitleNiceName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//tstring GetTitleNiceName(
+	//		tstring const& inVenue,
+	//		tstring const& inTitle) const;
+}
+END_TEST
+
+
+BEGIN_TEST(Config_GetTitleCompleteName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//tstring GetTitleCompleteName(
+	//		ARBDogTitlePtr inTitle,
+	//		bool bAbbrevFirst = true) const;
+}
+END_TEST
+
+
+BEGIN_TEST(Config_Update)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool Update(
+	//		int indent,
+	//		ARBConfig const& inConfigNew,
+	//		otstringstream& ioInfo);
+}
+END_TEST

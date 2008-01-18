@@ -40,51 +40,136 @@
 #include "ARBConfigDivision.h"
 #include "Element.h"
 
-#if 0
-class ARBConfigDivision : public ARBBase
-{
-	static ARBConfigDivisionPtr New();
-	ARBConfigDivisionPtr Clone() const;
-	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
-	bool operator==(ARBConfigDivision const& rhs) const;
-	bool operator!=(ARBConfigDivision const& rhs) const
-	void clear();
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ARBConfigVenue& ioVenue,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	bool Update(
-			int indent,
-			ARBConfigDivisionPtr inDivNew,
-			tstring& ioInfo);
-};
 
-class ARBConfigDivisionList : public ARBVector<ARBConfigDivisionPtr>
+BEGIN_TEST(ConfigDivision_New)
 {
-	bool Load(
-			ARBConfigVenue& ioVenue,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void ReorderBy(ARBConfigDivisionList const& inList);
-	bool VerifyLevel(
-			tstring const& inDiv,
-			tstring const& inLevel) const;
-	bool FindDivision(
-			tstring const& inDiv,
-			ARBConfigDivisionPtr* outDiv = NULL) const;
-	bool AddDivision(
-			tstring const& inDiv,
-			ARBConfigDivisionPtr* outDiv = NULL);
-	bool AddDivision(ARBConfigDivisionPtr inDiv);
-	int DeleteDivision(
-			tstring const& inDiv,
-			ARBConfigEventList& ioEvents);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//static ARBConfigDivisionPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(ConfigDivision_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//ARBConfigDivisionPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivision_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivision_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBConfigDivision const& rhs) const;
+//	bool operator!=(ARBConfigDivision const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivision_Clear)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void clear();
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivision_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivision_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfigVenue& ioVenue,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivision_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivision_Update)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Update(
+//			int indent,
+//			ARBConfigDivisionPtr inDivNew,
+//			tstring& ioInfo);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivisionList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfigVenue& ioVenue,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivisionList_Reorder)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void ReorderBy(ARBConfigDivisionList const& inList);
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivisionList_VerifyLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool VerifyLevel(
+//			tstring const& inDiv,
+//			tstring const& inLevel) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivisionList_Find)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindDivision(
+//			tstring const& inDiv,
+//			ARBConfigDivisionPtr* outDiv = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigDivisionList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddDivision(
+//			tstring const& inDiv,
+//			ARBConfigDivisionPtr* outDiv = NULL);
+//	bool AddDivision(ARBConfigDivisionPtr inDiv);
+//	int DeleteDivision(
+//			tstring const& inDiv,
+//			ARBConfigEventList& ioEvents);
+}
+END_TEST
