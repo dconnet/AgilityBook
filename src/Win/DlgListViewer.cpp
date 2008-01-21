@@ -897,7 +897,7 @@ int CDlgListViewerDataOther::Compare(
 				date1 = m_info.m_pExisting->GetDate();
 			else
 				date1 = m_info.m_pRun->GetDate();
-			if (m_info.m_pExisting)
+			if (pData->m_info.m_pExisting)
 				date2 = pData->m_info.m_pExisting->GetDate();
 			else
 				date2 = pData->m_info.m_pRun->GetDate();

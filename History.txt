@@ -1,4 +1,4 @@
-1/9/2008: v1.10.5.12 <in development>
+1/20/2008: v1.10.5.12 <in development>
 - Bumped file version to 12.7:
   - Added 'Visible' to Note items.
 - New features / Enhancements:
@@ -11,6 +11,7 @@
   - Translate days-of-week in Calendar options.
   - Several dialogs had text that was truncated.
   - Fixed the direction the mouse wheel scrolls the calendar
+  - Fixed a crash when viewing details of Other Points.
 
 1/1/2008: v1.10.4.12
 - Bug fixes
