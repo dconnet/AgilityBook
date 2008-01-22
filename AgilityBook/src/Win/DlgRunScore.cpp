@@ -1347,6 +1347,7 @@ void CDlgRunScore::OnKillfocusSct()
 	GetText(&m_ctrlSCT, m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetMinYPS();
+	SetObstacles();
 	SetTotalFaults();
 	SetTitlePoints();
 }
@@ -1356,6 +1357,7 @@ void CDlgRunScore::OnKillfocusSct2()
 {
 	GetText(&m_ctrlSCT2, m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
+	SetObstacles();
 }
 
 

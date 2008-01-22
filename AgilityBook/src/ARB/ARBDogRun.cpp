@@ -709,37 +709,9 @@ void ARBDogRun::ClearMultiQs()
 }
 
 
-bool ARBDogRun::HasMultiQ(ARBConfigMultiQPtr inMultiQ) const
-{
-	for (std::set<boost::weak_ptr<ARBConfigMultiQ> >::const_iterator i = m_pMultiQs.begin();
-		i != m_pMultiQs.end();
-		++i)
-	{
-		if ((*i).lock() == inMultiQ)
-			return true;
-	}
-	return false;
-}
-
-
 void ARBDogRun::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
 {
 	m_pMultiQs.insert(inMultiQ);
-}
-
-
-void ARBDogRun::RemoveMultiQ(ARBConfigMultiQPtr inMultiQ)
-{
-	for (std::set<boost::weak_ptr<ARBConfigMultiQ> >::iterator i = m_pMultiQs.begin();
-		i != m_pMultiQs.end();
-		++i)
-	{
-		if ((*i).lock() == inMultiQ)
-		{
-			m_pMultiQs.erase(i);
-			return;
-		}
-	}
 }
 
 
