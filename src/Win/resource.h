@@ -618,6 +618,7 @@
 #define IDS_COL_DOG                     4045
 #define IDS_COL_DUE_DATE                4046
 #define IDS_COL_DRAWS                   4047
+#define IDS_COL_DIV_LVL_EVT             4048
 #define IDS_COL_END_DATE                4050
 #define IDS_COL_END_TIME                4051
 #define IDS_COL_ENTERED                 4052
@@ -641,10 +642,15 @@
 #define IDS_COL_NOTE                    4131
 #define IDS_COL_NOTES                   4132
 #define IDS_COL_NUMBER                  4133
+#define IDS_COL_NAME_BREED_NOTE         4134
 #define IDS_COL_OPENING                 4140
 #define IDS_COL_OPENS                   4141
 #define IDS_COL_OPT_ATTENDEES           4142
 #define IDS_COL_ORGANIZER               4143
+#define IDS_COL_OTHERPOINTS             4144
+#define IDS_COL_OPEN_CLOSE              4145
+#define IDS_COL_OBSTACLES               4146
+#define IDS_COL_OPS                     4147
 #define IDS_COL_PLACE                   4150
 #define IDS_COL_POINTS                  4151
 #define IDS_COL_PRIORITY                4152
@@ -691,12 +697,6 @@
 #define IDS_COL_VENUES                  4211
 #define IDS_COL_YARDS                   4220
 #define IDS_COL_YPS                     4221
-#define IDS_COL_OTHERPOINTS             4222
-#define IDS_COL_DIV_LVL_EVT             4223
-#define IDS_COL_OPEN_CLOSE              4224
-#define IDS_COL_NAME_BREED_NOTE         4225
-#define IDS_COL_OBSTACLES               4226
-#define IDS_COL_OPS                     4227
 #define IDS_DATEFORMAT_DASH_MDY         4280
 #define IDS_DATEFORMAT_SLASH_MDY        4281
 #define IDS_DATEFORMAT_DASH_YMD         4282
