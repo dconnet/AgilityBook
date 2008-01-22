@@ -393,7 +393,7 @@ bool ARBDogRunScoring::GetObstaclesPS(
 		double t = GetTime();
 		if (eTypeByTime == m_type && HasTable() && 5.0 < t && !inTableInYPS)
 			t -= 5;
-		else if (eTypeByOpenClose == m_type && t > m_SCT)
+		else if (eTypeByOpenClose == m_type && t > m_SCT && m_SCT2 > 0.0)
 			t = m_SCT;
 		outOPS = GetObstacles() / t;
 	}

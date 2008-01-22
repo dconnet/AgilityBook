@@ -169,9 +169,7 @@ public:
 	 */
 	size_t GetMultiQs(std::vector<ARBConfigMultiQPtr>& outMultiQs) const;
 	void ClearMultiQs();
-	bool HasMultiQ(ARBConfigMultiQPtr inMultiQ) const;
 	void AddMultiQ(ARBConfigMultiQPtr inMultiQ);
-	void RemoveMultiQ(ARBConfigMultiQPtr inMultiQ);
 	ARBDate const& GetDate() const
 	{
 		return m_Date;
