@@ -184,6 +184,7 @@
 #define ATTRIB_SCORING_SUPERQ				_T("superQ")
 #define ATTRIB_SCORING_SPEEDPTS				_T("speedPts")
 #define ATTRIB_SCORING_BONUSPTS				_T("bonusPts")
+#define ATTRIB_SCORING_OBSTACLES			_T("obstacles")
 #define ATTRIB_PLACE_INFO_PLACE				_T("Place")
 #define ATTRIB_PLACE_INFO_VALUE				_T("Value")
 #define ATTRIB_PLACE_INFO_MUSTQ				_T("MustQ")

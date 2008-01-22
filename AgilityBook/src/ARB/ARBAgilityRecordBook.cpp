@@ -38,6 +38,7 @@
  *
  * Revision History
  * @li 2008-01-01 DRC File version 12.7. Added 'Visible' to InfoItem,
+ *                    'obstacles' to 'Scoring'
  * @li 2007-07-03 DRC File version 12.6. Added 'show' to 'Title',
  *                    'timestamp' to 'AgilityBook'
  * @li 2007-04-22 DRC Added 'Accom', 'Confirm' to 'Calendar', 'icon' to 'Venue'

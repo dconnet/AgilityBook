@@ -112,15 +112,10 @@ BEGIN_TEST(ConfigLifetimePointsList_)
 END_TEST
 
 
-BEGIN_TEST(ConfigLifetimePointsList_SortAddDelete)
+BEGIN_TEST(ConfigLifetimePointsList_sort)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 //	void sort();
-//	bool AddLifetimePoints(
-//			double inPoints,
-//			double inFaults,
-//			ARBConfigLifetimePointsPtr* outPoints = NULL);
-//	bool DeleteLifetimePoints(double inFaults);
 }
 END_TEST
 
@@ -139,5 +134,17 @@ BEGIN_TEST(ConfigLifetimePointsList_Find)
 //	bool FindLifetimePoints(
 //			double inFaults,
 //			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigLifetimePointsList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddLifetimePoints(
+//			double inPoints,
+//			double inFaults,
+//			ARBConfigLifetimePointsPtr* outPoints = NULL);
+//	bool DeleteLifetimePoints(double inFaults);
 }
 END_TEST

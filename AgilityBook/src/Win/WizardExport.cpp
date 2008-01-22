@@ -573,6 +573,26 @@ void CWizardExport::UpdatePreview()
 											}
 										}
 										break;
+									case IO_RUNS_OBSTACLES:
+										{
+											short ob = pRun->GetScoring().GetObstacles();
+											if (0 < ob)
+											{
+												otstringstream str;
+												str << ob;
+												data += AddPreviewData(iLine, idx, str.str().c_str());
+											}
+										}
+										break;
+									case IO_RUNS_OPS:
+										{
+											double ops;
+											if (pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
+											{
+												data += AddPreviewData(iLine, idx, ARBDouble::str(ops, 3).c_str());
+											}
+										}
+										break;
 									case IO_RUNS_SCT:
 										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetSCT()).c_str());
 										break;
@@ -667,16 +687,23 @@ void CWizardExport::UpdatePreview()
 											CString q;
 											if (pRun->GetQ().Qualified())
 											{
-												if (pRun->GetMultiQ())
-													q += pRun->GetMultiQ()->GetShortName().c_str();
+												std::vector<ARBConfigMultiQPtr> multiQs;
+												if (0 < pRun->GetMultiQs(multiQs))
+												{
+													for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
+													{
+														if (!q.IsEmpty())
+															q += _T('/');
+														q += (*iMultiQ)->GetShortName().c_str();
+													}
+												}
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
 												{
 													CString tmp;
 													tmp.LoadString(IDS_SQ);
 													if (!q.IsEmpty())
-														q = tmp + _T("/") + q;
-													else
-														q = tmp;
+														q += _T('/');
+													q += tmp;
 												}
 											}
 											if (q.IsEmpty())

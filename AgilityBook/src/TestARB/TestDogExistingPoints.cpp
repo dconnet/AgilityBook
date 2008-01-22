@@ -40,107 +40,318 @@
 #include "ARBDogExistingPoints.h"
 #include "Element.h"
 
-#if 0
-class ARBDogExistingPoints : public ARBBase
-{
-	static ARBDogExistingPointsPtr New();
-	ARBDogExistingPointsPtr Clone() const;
-	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
-	bool operator==(ARBDogExistingPoints const& rhs) const;
-	bool operator!=(ARBDogExistingPoints const& rhs) const
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	static tstring GetPointTypeName(PointType inType);
-};
 
-class ARBDogExistingPointsList : public ARBVector<ARBDogExistingPointsPtr>
+BEGIN_TEST(DogExistingPoints_New)
 {
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void sort();
-	bool HasPoints(tstring const& inVenue) const;
-	bool HasPoints(
-			ARBConfigVenuePtr inVenue,
-			ARBConfigDivisionPtr inDiv,
-			ARBConfigLevelPtr inLevel,
-			ARBConfigEventPtr inEvent,
-			ARBDate inDateFrom,
-			ARBDate inDateTo,
-			bool inHasLifetime) const;
-	double ExistingPoints(
-			ARBDogExistingPoints::PointType inType,
-			ARBConfigVenuePtr inVenue,
-			ARBConfigMultiQPtr inMultiQ,
-			ARBConfigDivisionPtr inDiv,
-			ARBConfigLevelPtr inLevel,
-			ARBConfigEventPtr inEvent,
-			ARBDate inDateFrom,
-			ARBDate inDateTo) const;
-	int NumExistingPointsInVenue(tstring const& inVenue) const;
-	int RenameVenue(
-			tstring const& inOldVenue,
-			tstring const& inNewVenue);
-	int DeleteVenue(tstring const& inVenue);
-	int NumExistingPointsInDivision(
-			ARBConfigVenuePtr inVenue,
-			tstring const& inDiv) const;
-	int RenameDivision(
-			tstring const& inVenue,
-			tstring const& inOldDiv,
-			tstring const& inNewDiv);
-	int DeleteDivision(
-			tstring const& inVenue,
-			tstring const& inDiv);
-	int NumLevelsInUse(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel) const;
-	int RenameLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inOldLevel,
-			tstring const& inNewLevel);
-	int DeleteLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel);
-	int NumEventsInUse(
-			tstring const& inVenue,
-			tstring const& inEvent) const;
-	int RenameEvent(
-			tstring const& inVenue,
-			tstring const& inOldEvent,
-			tstring const& inNewEvent);
-	int DeleteEvent(
-			tstring const& inVenue,
-			tstring const& inEvent);
-	int NumOtherPointsInUse(tstring const& inOther) const;
-	int RenameOtherPoints(
-			tstring const& inOldOther,
-			tstring const& inNewOther);
-	int DeleteOtherPoints(tstring const& inOther);
-	int NumMultiQsInUse(
-			tstring const& inVenue,
-			tstring const& inMultiQ) const;
-	int RenameMultiQs(
-			tstring const& inVenue,
-			tstring const& inOldMultiQ,
-			tstring const& inNewMultiQ);
-	int DeleteMultiQs(
-			ARBConfig const& inConfig,
-			tstring const& inVenue);
-	bool AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
-	bool DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogExistingPointsPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(DogExistingPoints_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogExistingPointsPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPoints_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogExistingPoints& operator=(ARBDogExistingPoints const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPoints_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogExistingPoints const& rhs) const;
+//	bool operator!=(ARBDogExistingPoints const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPoints_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPoints_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPoints_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPoints_GetPointTypeName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static tstring GetPointTypeName(PointType inType);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_sort)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void sort();
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_HasPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool HasPoints(tstring const& inVenue) const;
+//	bool HasPoints(
+//			ARBConfigVenuePtr inVenue,
+//			ARBConfigDivisionPtr inDiv,
+//			ARBConfigLevelPtr inLevel,
+//			ARBConfigEventPtr inEvent,
+//			ARBDate inDateFrom,
+//			ARBDate inDateTo,
+//			bool inHasLifetime) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_ExistingPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	double ExistingPoints(
+//			ARBDogExistingPoints::PointType inType,
+//			ARBConfigVenuePtr inVenue,
+//			ARBConfigMultiQPtr inMultiQ,
+//			ARBConfigDivisionPtr inDiv,
+//			ARBConfigLevelPtr inLevel,
+//			ARBConfigEventPtr inEvent,
+//			ARBDate inDateFrom,
+//			ARBDate inDateTo) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_NumExistingPointsInVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumExistingPointsInVenue(tstring const& inVenue) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_RenameVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameVenue(
+//			tstring const& inOldVenue,
+//			tstring const& inNewVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_DeleteVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteVenue(tstring const& inVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_NumExistingPointsInDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumExistingPointsInDivision(
+//			ARBConfigVenuePtr inVenue,
+//			tstring const& inDiv) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_RenameDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameDivision(
+//			tstring const& inVenue,
+//			tstring const& inOldDiv,
+//			tstring const& inNewDiv);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_DeleteDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteDivision(
+//			tstring const& inVenue,
+//			tstring const& inDiv);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_NumLevelsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumLevelsInUse(
+//			tstring const& inVenue,
+//			tstring const& inDiv,
+//			tstring const& inLevel) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_RenameLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameLevel(
+//			tstring const& inVenue,
+//			tstring const& inDiv,
+//			tstring const& inOldLevel,
+//			tstring const& inNewLevel);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_DeleteLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteLevel(
+//			tstring const& inVenue,
+//			tstring const& inDiv,
+//			tstring const& inLevel);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_NumEventsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumEventsInUse(
+//			tstring const& inVenue,
+//			tstring const& inEvent) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_RenameEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameEvent(
+//			tstring const& inVenue,
+//			tstring const& inOldEvent,
+//			tstring const& inNewEvent);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_DeleteEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteEvent(
+//			tstring const& inVenue,
+//			tstring const& inEvent);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_NumOtherPointsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumOtherPointsInUse(tstring const& inOther) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_RenameOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameOtherPoints(
+//			tstring const& inOldOther,
+//			tstring const& inNewOther);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_DeleteOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteOtherPoints(tstring const& inOther);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_NumMultiQsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumMultiQsInUse(
+//			tstring const& inVenue,
+//			tstring const& inMultiQ) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_RenameMultiQs)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameMultiQs(
+//			tstring const& inVenue,
+//			tstring const& inOldMultiQ,
+//			tstring const& inNewMultiQ);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_DeleteMultiQs)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteMultiQs(
+//			ARBConfig const& inConfig,
+//			tstring const& inVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(DogExistingPointsList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
+//	bool DeleteExistingPoints(ARBDogExistingPointsPtr inExistingPoints);
+}
+END_TEST

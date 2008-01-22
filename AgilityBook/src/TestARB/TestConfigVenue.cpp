@@ -132,15 +132,10 @@ BEGIN_TEST(ConfigVenueList_Load)
 END_TEST
 
 
-BEGIN_TEST(ConfigVenueList_SortAddDelete)
+BEGIN_TEST(ConfigVenueList_sort)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 //	void sort();
-//	bool AddVenue(
-//			tstring const& inVenue,
-//			ARBConfigVenuePtr* outVenue = NULL);
-//	bool AddVenue(ARBConfigVenuePtr inVenue);
-//	int DeleteVenue(tstring const& inVenue);
 }
 END_TEST
 
@@ -241,5 +236,17 @@ BEGIN_TEST(ConfigVenueList_FindEvent)
 //			ARBDate const& inDate,
 //			ARBConfigEventPtr* outEvent = NULL,
 //			ARBConfigScoringPtr* outScoring = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigVenueList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddVenue(
+//			tstring const& inVenue,
+//			ARBConfigVenuePtr* outVenue = NULL);
+//	bool AddVenue(ARBConfigVenuePtr inVenue);
+//	int DeleteVenue(tstring const& inVenue);
 }
 END_TEST

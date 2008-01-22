@@ -89,6 +89,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 	, m_SCT(0.0)
 	, m_SCT2(0.0)
 	, m_Yards(0.0)
+	, m_Obstacles(0)
 	, m_Time(0.0)
 	, m_Table(false)
 	, m_ConvertTable(false)
@@ -108,6 +109,7 @@ ARBDogRunScoring::ARBDogRunScoring(ARBDogRunScoring const& rhs)
 	, m_SCT(rhs.m_SCT)
 	, m_SCT2(rhs.m_SCT2)
 	, m_Yards(rhs.m_Yards)
+	, m_Obstacles(rhs.m_Obstacles)
 	, m_Time(rhs.m_Time)
 	, m_Table(rhs.m_Table)
 	, m_ConvertTable(rhs.m_ConvertTable)
@@ -135,6 +137,7 @@ ARBDogRunScoring& ARBDogRunScoring::operator=(ARBDogRunScoring const& rhs)
 		m_SCT = rhs.m_SCT;
 		m_SCT2 = rhs.m_SCT2;
 		m_Yards = rhs.m_Yards;
+		m_Obstacles = rhs.m_Obstacles;
 		m_Time = rhs.m_Time;
 		m_Table = rhs.m_Table;
 		m_CourseFaults = rhs.m_CourseFaults;
@@ -155,6 +158,7 @@ bool ARBDogRunScoring::operator==(ARBDogRunScoring const& rhs) const
 		&& m_SCT == rhs.m_SCT
 		&& m_SCT2 == rhs.m_SCT2
 		&& m_Yards == rhs.m_Yards
+		&& m_Obstacles == rhs.m_Obstacles
 		&& m_Time == rhs.m_Time
 		&& m_Table == rhs.m_Table
 		&& m_CourseFaults == rhs.m_CourseFaults
@@ -187,6 +191,7 @@ bool ARBDogRunScoring::Load(
 	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+	inTree->GetAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 	m_type = ARBDogRunScoring::TranslateConfigScoring(inEventScoring->GetScoringStyle());
 	switch (m_type)
 	{
@@ -298,6 +303,8 @@ bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 			scoring->AddAttrib(ATTRIB_SCORING_SCT, m_SCT);
 			scoring->AddAttrib(ATTRIB_BY_TIME_YARDS, m_Yards);
 			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+			if (0 < m_Obstacles)
+				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
 		return true;
 	case eTypeByOpenClose:
@@ -315,6 +322,8 @@ bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_GOTOPEN, m_OpenPts);
 			scoring->AddAttrib(ATTRIB_BY_OPENCLOSE_GOTCLOSE, m_ClosePts);
 			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+			if (0 < m_Obstacles)
+				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
 		return true;
 	case eTypeByPoints:
@@ -328,6 +337,8 @@ bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 			scoring->AddAttrib(ATTRIB_BY_POINTS_NEED, m_NeedOpenPts);
 			scoring->AddAttrib(ATTRIB_BY_POINTS_GOT, m_OpenPts);
 			scoring->AddAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
+			if (0 < m_Obstacles)
+				scoring->AddAttrib(ATTRIB_SCORING_OBSTACLES, m_Obstacles);
 		}
 		return true;
 	}
@@ -371,12 +382,31 @@ bool ARBDogRunScoring::GetYPS(
 }
 
 
+bool ARBDogRunScoring::GetObstaclesPS(
+		bool inTableInYPS,
+		double& outOPS) const
+{
+	bool bOk = false;
+	if (0 < GetObstacles() && 0.0 < GetTime())
+	{
+		bOk = true;
+		double t = GetTime();
+		if (eTypeByTime == m_type && HasTable() && 5.0 < t && !inTableInYPS)
+			t -= 5;
+		else if (eTypeByOpenClose == m_type && t > m_SCT)
+			t = m_SCT;
+		outOPS = GetObstacles() / t;
+	}
+	return bOk;
+}
+
+
 double ARBDogRunScoring::GetTimeFaults(ARBConfigScoringPtr inScoring) const
 {
 	double timeFaults = 0.0;
-	if (ARBDogRunScoring::eTypeByTime == m_type
-	|| ARBDogRunScoring::eTypeByOpenClose == m_type
-	|| ARBDogRunScoring::eTypeByPoints == m_type)
+	if (eTypeByTime == m_type
+	|| eTypeByOpenClose == m_type
+	|| eTypeByPoints == m_type)
 	{
 		double timeSCT = m_SCT;
 		bool bAddTimeFaultsUnder = false;

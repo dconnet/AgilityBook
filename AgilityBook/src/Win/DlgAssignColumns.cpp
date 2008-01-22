@@ -62,6 +62,7 @@ Runs Available fields:
     YPS           Required Closing  Points
     SCT           Opening
     Total Faults  Closing
+	Obstacles     ObstaclesPerSecond
   Place/of
   DogsQd
   Q?
@@ -532,6 +533,13 @@ static struct
 	{CAgilityBookOptions::eCalImport | CAgilityBookOptions::eCalExport | CAgilityBookOptions::eView,
 		IO_CAL_DRAWS,
 		true, LVCFMT_LEFT, IDS_COL_DRAWS},
+
+	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
+		IO_RUNS_OBSTACLES,
+		false, LVCFMT_RIGHT, IDS_COL_OBSTACLES},
+	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
+		IO_RUNS_OPS,
+		false, LVCFMT_RIGHT, IDS_COL_OPS},
 };
 
 
@@ -596,7 +604,7 @@ static int const idxRunsFaultsTime[] = {
 	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
 	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
 	IO_RUNS_TIME,			IO_RUNS_YARDS,			IO_RUNS_MIN_YPS,
-	IO_RUNS_YPS,
+	IO_RUNS_YPS,            IO_RUNS_OBSTACLES,      IO_RUNS_OPS,
 	IO_RUNS_SCT,			IO_RUNS_TOTAL_FAULTS,	IO_RUNS_PLACE,
 	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
@@ -609,7 +617,7 @@ static int const idxRunsTimeFaults[] = {
 	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
 	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
 	IO_RUNS_TIME,			IO_RUNS_YARDS,			IO_RUNS_MIN_YPS,
-	IO_RUNS_YPS,
+	IO_RUNS_YPS,            IO_RUNS_OBSTACLES,      IO_RUNS_OPS,
 	IO_RUNS_SCT,			IO_RUNS_TOTAL_FAULTS,	IO_RUNS_PLACE,
 	IO_RUNS_IN_CLASS,		IO_RUNS_DOGSQD,			IO_RUNS_Q,
 	IO_RUNS_SCORE,			IO_RUNS_TITLE_POINTS,	IO_RUNS_COMMENTS,
@@ -667,7 +675,7 @@ static int const idxViewRunsList[] = {
 	IO_RUNS_EVENT,			IO_RUNS_HEIGHT,			IO_RUNS_JUDGE,
 	IO_RUNS_HANDLER,		IO_RUNS_CONDITIONS,		IO_RUNS_COURSE_FAULTS,
 	IO_RUNS_TIME,			IO_RUNS_YARDS,			IO_RUNS_MIN_YPS,
-	IO_RUNS_YPS,
+	IO_RUNS_YPS,            IO_RUNS_OBSTACLES,      IO_RUNS_OPS,
 	IO_RUNS_SCT,			IO_RUNS_TOTAL_FAULTS,	IO_RUNS_REQ_OPENING,
 	IO_RUNS_REQ_CLOSING,	IO_RUNS_OPENING,		IO_RUNS_CLOSING,
 	IO_RUNS_REQ_POINTS,		IO_RUNS_POINTS,			IO_RUNS_PLACE,

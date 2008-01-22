@@ -40,54 +40,146 @@
 #include "ARBDogClub.h"
 #include "Element.h"
 
-#if 0
-class ARBDogClub : public ARBBase
-{
-	static ARBDogClubPtr New();
-	ARBDogClubPtr Clone() const;
-	ARBDogClub& operator=(ARBDogClub const& rhs);
-	bool operator==(ARBDogClub const& rhs) const;
-	bool operator!=(ARBDogClub const& rhs) const
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-};
 
-class ARBDogClubList : public ARBVector<ARBDogClubPtr>
+BEGIN_TEST(DogClub_New)
 {
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool GetPrimaryClub(ARBDogClubPtr* outClub = NULL) const;
-	tstring GetPrimaryClubName() const;
-	tstring GetPrimaryClubVenue() const;
-	bool FindEvent(
-			ARBConfig const& inConfig,
-			tstring const& inEvent,
-			tstring const& inDivision,
-			tstring const& inLevel,
-			ARBDate const& inDate,
-			ARBErrorCallback& ioCallback,
-			ARBConfigEventPtr* outEvent = NULL,
-			ARBConfigScoringPtr* outScoring = NULL) const;
-	bool FindVenue(
-			tstring const& inVenue,
-			ARBDogClubPtr* outClub = NULL) const;
-	bool AddClub(
-			tstring const& inName,
-			tstring const& inVenue,
-			ARBDogClubPtr* outClub = NULL);
-	bool DeleteClub(
-			tstring const& inName,
-			tstring const& inVenue);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogClubPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(DogClub_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogClubPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogClub_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogClub& operator=(ARBDogClub const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogClub_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogClub const& rhs) const;
+//	bool operator!=(ARBDogClub const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogClub_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(DogClub_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogClub_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_GetPrimaryClub)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool GetPrimaryClub(ARBDogClubPtr* outClub = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_GetPrimaryClubName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	tstring GetPrimaryClubName() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_GetPrimaryClubVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	tstring GetPrimaryClubVenue() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_FindEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindEvent(
+//			ARBConfig const& inConfig,
+//			tstring const& inEvent,
+//			tstring const& inDivision,
+//			tstring const& inLevel,
+//			ARBDate const& inDate,
+//			ARBErrorCallback& ioCallback,
+//			ARBConfigEventPtr* outEvent = NULL,
+//			ARBConfigScoringPtr* outScoring = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_FindVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindVenue(
+//			tstring const& inVenue,
+//			ARBDogClubPtr* outClub = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogClubList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddClub(
+//			tstring const& inName,
+//			tstring const& inVenue,
+//			ARBDogClubPtr* outClub = NULL);
+//	bool DeleteClub(
+//			tstring const& inName,
+//			tstring const& inVenue);
+}
+END_TEST

@@ -249,18 +249,19 @@ bool ARBConfigMultiQ::Save(ElementNodePtr ioTree) const
 
 // Note, this is only called from ARBDogTrial
 bool ARBConfigMultiQ::Match(
-		std::vector<ARBDogRunPtr>& ioRuns,
+		std::vector<ARBDogRunPtr> const& inRuns,
 		std::vector<ARBDogRunPtr>& outRuns) const
 {
 	outRuns.clear();
-	if (ioRuns.size() < m_Items.size())
+	if (inRuns.size() < m_Items.size())
 		return false;
 	// One assumption we are making is that a given run can only match one
 	// multi-q definition.
 	std::vector<bool> bItems;
+	std::vector<ARBDogRunPtr> runs(inRuns);
 	bItems.insert(bItems.begin(), m_Items.size(), false);
-	for (std::vector<ARBDogRunPtr>::iterator iterR = ioRuns.begin();
-		iterR != ioRuns.end();
+	for (std::vector<ARBDogRunPtr>::iterator iterR = runs.begin();
+		iterR != runs.end();
 		++iterR)
 	{
 		if (m_ValidFrom.IsValid() && (*iterR)->GetDate() < m_ValidFrom)
@@ -286,8 +287,8 @@ bool ARBConfigMultiQ::Match(
 	if (nMatch == m_Items.size())
 	{
 		bOk = true;
-		for (std::vector<ARBDogRunPtr>::iterator iterR = ioRuns.begin();
-			iterR != ioRuns.end();
+		for (std::vector<ARBDogRunPtr>::iterator iterR = runs.begin();
+			iterR != runs.end();
 			)
 		{
 			bool bInc = true;
@@ -304,7 +305,7 @@ bool ARBConfigMultiQ::Match(
 				{
 					bInc = false;
 					outRuns.push_back(*iterR);
-					iterR = ioRuns.erase(iterR);
+					iterR = runs.erase(iterR);
 					break;
 				}
 			}

@@ -107,12 +107,12 @@ public:
 
 	/**
 	 * Does this multi-q configuration match the given set of runs?
-	 * @param ioRuns Runs to check.
-	 * @param outRuns Runs that were removed from ioRuns.
-	 * @return There is a match. Matching runs are removed from the vector.
+	 * @param inRuns Runs to check.
+	 * @param outRuns Runs that were removed from inRuns.
+	 * @return There is a match.
 	 */
 	bool Match(
-			std::vector<ARBDogRunPtr>& ioRuns,
+			std::vector<ARBDogRunPtr> const& inRuns,
 			std::vector<ARBDogRunPtr>& outRuns) const;
 
 	/**

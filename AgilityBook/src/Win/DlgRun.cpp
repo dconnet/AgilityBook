@@ -142,7 +142,7 @@ void CDlgRun::OnOK()
 #endif
 		//End TODO
 		*m_pRealRun = *m_Run;
-		m_pTrial->SetMultiQs(m_pDoc->GetConfig());
+		m_pTrial->SetMultiQs(m_pDoc->GetConfig()); // Note, when adding a new run, this is actually too soon to call - the run isn't in the trial yet
 		CAgilityBookOptions::SetLastEnteredDivision(m_Run->GetDivision().c_str());
 		CAgilityBookOptions::SetLastEnteredLevel(m_Run->GetLevel().c_str());
 		CAgilityBookOptions::SetLastEnteredHeight(m_Run->GetHeight().c_str());

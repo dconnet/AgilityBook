@@ -191,7 +191,7 @@ BEGIN_TESTF(InfoItemList_Load2, InfoItem)
 END_TESTF
 
 
-BEGIN_TEST(InfoItemList_SortAddDelete)
+BEGIN_TEST(InfoItemList_sort)
 {
 	ARBInfoItemList infolist(TREE_CLUBINFO);
 	ARBInfoItemPtr info1 = ARBInfoItem::New();
@@ -201,27 +201,12 @@ BEGIN_TEST(InfoItemList_SortAddDelete)
 	info2->SetName(_T("Test1"));
 	WIN_ASSERT_TRUE(infolist.AddItem(info1));
 	WIN_ASSERT_TRUE(infolist.AddItem(info2));
-	infolist.sort();
-	ARBInfoItemPtr info3 = infolist[0]->Clone();
-	WIN_ASSERT_EQUAL(*info2, *info3);
-	info3->SetComment(_T("Test comments"));
-	WIN_ASSERT_NOT_EQUAL(*info2, *info3);
-	WIN_ASSERT_FALSE(infolist.AddItem(info3));
-	WIN_ASSERT_FALSE(infolist.AddItem(info1->Clone()));
-	info3->SetName(_T("Test3"));
-	WIN_ASSERT_TRUE(infolist.AddItem(info3));
-	infolist.sort();
-	WIN_ASSERT_EQUAL(3u, infolist.size());
-	WIN_ASSERT_TRUE(infolist.DeleteItem(info1));
-	WIN_ASSERT_EQUAL(2u, infolist.size());
-	WIN_ASSERT_FALSE(infolist.DeleteItem(info1));
-	WIN_ASSERT_EQUAL(2u, infolist.size());
-	WIN_ASSERT_NOT_EQUAL(*infolist[0], *infolist[1]);
+
 	ARBInfoItemList infolist2(TREE_CLUBINFO);
 	infolist.Clone(infolist2);
 	WIN_ASSERT_EQUAL(infolist, infolist2);
-	WIN_ASSERT_NOT_EQUAL(infolist[0].get(), infolist2[0].get());
-	WIN_ASSERT_EQUAL(*infolist[0], *infolist2[0]);
+	infolist.sort();
+	WIN_ASSERT_NOT_EQUAL(infolist, infolist2);
 }
 END_TEST
 
@@ -264,6 +249,41 @@ BEGIN_TESTF(InfoItemList_Find, InfoItem)
 	WIN_ASSERT_FALSE(info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3xc")));
 }
 END_TESTF
+
+
+BEGIN_TEST(InfoItemList_AddDelete)
+{
+	ARBInfoItemList infolist(TREE_CLUBINFO);
+	ARBInfoItemPtr info1 = ARBInfoItem::New();
+	info1->SetName(_T("Test2"));
+	info1->SetComment(_T("A note"));
+	ARBInfoItemPtr info2 = info1->Clone();
+	info2->SetName(_T("Test1"));
+	WIN_ASSERT_TRUE(infolist.AddItem(info1));
+	WIN_ASSERT_TRUE(infolist.AddItem(info2));
+	infolist.sort();
+	ARBInfoItemPtr info3 = infolist[0]->Clone();
+	WIN_ASSERT_EQUAL(*info2, *info3);
+	info3->SetComment(_T("Test comments"));
+	WIN_ASSERT_NOT_EQUAL(*info2, *info3);
+	WIN_ASSERT_FALSE(infolist.AddItem(info3));
+	WIN_ASSERT_FALSE(infolist.AddItem(info1->Clone()));
+	info3->SetName(_T("Test3"));
+	WIN_ASSERT_TRUE(infolist.AddItem(info3));
+	infolist.sort();
+	WIN_ASSERT_EQUAL(3u, infolist.size());
+	WIN_ASSERT_TRUE(infolist.DeleteItem(info1));
+	WIN_ASSERT_EQUAL(2u, infolist.size());
+	WIN_ASSERT_FALSE(infolist.DeleteItem(info1));
+	WIN_ASSERT_EQUAL(2u, infolist.size());
+	WIN_ASSERT_NOT_EQUAL(*infolist[0], *infolist[1]);
+	ARBInfoItemList infolist2(TREE_CLUBINFO);
+	infolist.Clone(infolist2);
+	WIN_ASSERT_EQUAL(infolist, infolist2);
+	WIN_ASSERT_NOT_EQUAL(infolist[0].get(), infolist2[0].get());
+	WIN_ASSERT_EQUAL(*infolist[0], *infolist2[0]);
+}
+END_TEST
 
 
 BEGIN_TESTF(Info_Load, InfoItem)

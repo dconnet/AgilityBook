@@ -40,51 +40,178 @@
 #include "ARBDogRun.h"
 #include "Element.h"
 
-#if 0
-class ARBDogRun : public ARBBase
-{
-	static ARBDogRunPtr New();
-	ARBDogRunPtr Clone() const;
-	ARBDogRun& operator=(ARBDogRun const& rhs);
-	bool operator==(ARBDogRun const& rhs) const;
-	bool operator!=(ARBDogRun const& rhs) const
-	virtual tstring GetGenericName() const;
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
-	bool Load(
-			ARBConfig const& inConfig,
-			ARBDogClubList const& inClubs,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	int NumOtherPointsInUse(tstring const& inOther) const;
-	int RenameOtherPoints(
-			tstring const& inOldName,
-			tstring const& inNewName);
-	int DeleteOtherPoints(tstring const& inName);
-	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
-	double GetTitlePoints(
-			ARBConfigScoringPtr inScoring,
-			bool* outClean = NULL,
-			double* outLifeTime = NULL,
-			double* outPlacement = NULL) const;
-	double GetScore(ARBConfigScoringPtr inScoring) const;
-};
 
-class ARBDogRunList : public ARBVector<ARBDogRunPtr>
+BEGIN_TEST(DogRun_New)
 {
-	bool Load(
-			ARBConfig const& inConfig,
-			ARBDogClubList const& inClubs,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void sort();
-	ARBDate GetStartDate() const;
-	ARBDate GetEndDate() const;
-	bool AddRun(ARBDogRunPtr inRun);
-	bool DeleteRun(ARBDogRunPtr inRun);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogRunPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(DogRun_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRunPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRun& operator=(ARBDogRun const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogRun const& rhs) const;
+//	bool operator!=(ARBDogRun const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ARBDogClubList const& inClubs,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_NumOtherPointsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumOtherPointsInUse(tstring const& inOther) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_RenameOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameOtherPoints(
+//			tstring const& inOldName,
+//			tstring const& inNewName);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_DeleteOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteOtherPoints(tstring const& inName);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_GetSpeedPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_GetTitlePoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	double GetTitlePoints(
+//			ARBConfigScoringPtr inScoring,
+//			bool* outClean = NULL,
+//			double* outLifeTime = NULL,
+//			double* outPlacement = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRun_GetScore)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	double GetScore(ARBConfigScoringPtr inScoring) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ARBDogClubList const& inClubs,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunList_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunList_sort)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void sort();
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunList_GetStartDate)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDate GetStartDate() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunList_GetEndDate)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDate GetEndDate() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunList_AddRun)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddRun(ARBDogRunPtr inRun);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunList_DeleteRun)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool DeleteRun(ARBDogRunPtr inRun);
+}
+END_TEST

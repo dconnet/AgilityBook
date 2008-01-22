@@ -135,17 +135,14 @@ BEGIN_TEST(ConfigCalSiteList_Load)
 }
 END_TEST
 
-BEGIN_TEST(ConfigCalSiteList_SortAddDelete)
+
+BEGIN_TEST(ConfigCalSiteList_sort)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 	//void sort();
-	//bool AddSite(
-	//		tstring const& inSite,
-	//		ARBConfigCalSitePtr* outSite = NULL);
-	//bool AddSite(ARBConfigCalSitePtr inSite);
-	//int DeleteSite(tstring const& inSite);
 }
 END_TEST
+
 
 BEGIN_TEST(ConfigCalSiteList_Find)
 {
@@ -153,5 +150,17 @@ BEGIN_TEST(ConfigCalSiteList_Find)
 	//bool FindSite(
 	//		tstring const& inSite,
 	//		ARBConfigCalSitePtr* outSite = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigCalSiteList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+	//bool AddSite(
+	//		tstring const& inSite,
+	//		ARBConfigCalSitePtr* outSite = NULL);
+	//bool AddSite(ARBConfigCalSitePtr inSite);
+	//int DeleteSite(tstring const& inSite);
 }
 END_TEST

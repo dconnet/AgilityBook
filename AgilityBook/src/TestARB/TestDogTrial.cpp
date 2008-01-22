@@ -40,91 +40,294 @@
 #include "ARBDogTrial.h"
 #include "Element.h"
 
-#if 0
-class ARBDogTrial : public ARBBase
-{
-	static ARBDogTrialPtr New();
-	static ARBDogTrialPtr New(ARBCalendar const& inCal);
-	ARBDogTrialPtr Clone() const;
-	ARBDogTrial& operator=(ARBDogTrial const& rhs);
-	bool operator==(ARBDogTrial const& rhs) const;
-	bool operator!=(ARBDogTrial const& rhs) const
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	void SetMultiQs(ARBConfig const& inConfig);
-	short GetSpeedPoints(
-			ARBConfig const& inConfig,
-			tstring const& inDiv,
-			tstring const& inLevel) const;
-	bool HasVenue(tstring const& inVenue) const;
-};
 
-class ARBDogTrialList : public ARBVector<ARBDogTrialPtr>
+BEGIN_TEST(DogTrial_New)
 {
-public:
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void sort(bool inDescending);
-	int NumTrialsInVenue(tstring const& inVenue) const;
-	int RenameVenue(
-			tstring const& inOldVenue,
-			tstring const& inNewVenue);
-	int DeleteVenue(tstring const& inVenue);
-	int NumOtherPointsInUse(tstring const& inOther) const;
-	int RenameOtherPoints(
-			tstring const& inOldOther,
-			tstring const& inNewOther);
-	int DeleteOtherPoints(tstring const& inOther);
-	int NumMultiHostedTrialsInDivision(
-			ARBConfig const& inConfig,
-			tstring const& inVenue,
-			tstring const& inDiv) const;
-	int NumRunsInDivision(
-			ARBConfigVenuePtr inVenue,
-			tstring const& inDiv) const;
-	int RenameDivision(
-			ARBConfigVenuePtr inVenue,
-			tstring const& inOldDiv,
-			tstring const& inNewDiv);
-	int DeleteDivision(
-			ARBConfig const& inConfig,
-			tstring const& inVenue,
-			tstring const& inDiv);
-	int NumLevelsInUse(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel) const;
-	int RenameLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inOldLevel,
-			tstring const& inNewLevel);
-	int DeleteLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel);
-	int NumEventsInUse(
-			tstring const& inVenue,
-			tstring const& inEvent) const;
-	int RenameEvent(
-			tstring const& inVenue,
-			tstring const& inOldEvent,
-			tstring const& inNewEvent);
-	int DeleteEvent(
-			tstring const& inVenue,
-			tstring const& inEvent);
-	bool AddTrial(ARBDogTrialPtr inTrial);
-	bool DeleteTrial(ARBDogTrialPtr inTrial);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogTrialPtr New();
+//	static ARBDogTrialPtr New(ARBCalendar const& inCal);
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(DogTrial_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogTrialPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogTrial& operator=(ARBDogTrial const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogTrial const& rhs) const;
+//	bool operator!=(ARBDogTrial const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_SetMultiQs)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void SetMultiQs(ARBConfig const& inConfig);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_GetSpeedPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	short GetSpeedPoints(
+//			ARBConfig const& inConfig,
+//			tstring const& inDiv,
+//			tstring const& inLevel) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrial_HasVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool HasVenue(tstring const& inVenue) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_sort)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void sort(bool inDescending);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_NumTrialsInVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumTrialsInVenue(tstring const& inVenue) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_RenameVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameVenue(
+//			tstring const& inOldVenue,
+//			tstring const& inNewVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_DeleteVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteVenue(tstring const& inVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_NumOtherPointsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumOtherPointsInUse(tstring const& inOther) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_RenameOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameOtherPoints(
+//			tstring const& inOldOther,
+//			tstring const& inNewOther);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_DeleteOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteOtherPoints(tstring const& inOther);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_NumMultiHostedTrialsInDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumMultiHostedTrialsInDivision(
+//			ARBConfig const& inConfig,
+//			tstring const& inVenue,
+//			tstring const& inDiv) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_NumRunsInDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumRunsInDivision(
+//			ARBConfigVenuePtr inVenue,
+//			tstring const& inDiv) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_RenameDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameDivision(
+//			ARBConfigVenuePtr inVenue,
+//			tstring const& inOldDiv,
+//			tstring const& inNewDiv);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_DeleteDivision)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteDivision(
+//			ARBConfig const& inConfig,
+//			tstring const& inVenue,
+//			tstring const& inDiv);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_NumLevelsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumLevelsInUse(
+//			tstring const& inVenue,
+//			tstring const& inDiv,
+//			tstring const& inLevel) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_RenameLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameLevel(
+//			tstring const& inVenue,
+//			tstring const& inDiv,
+//			tstring const& inOldLevel,
+//			tstring const& inNewLevel);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_DeleteLevel)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteLevel(
+//			tstring const& inVenue,
+//			tstring const& inDiv,
+//			tstring const& inLevel);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_NumEventsInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumEventsInUse(
+//			tstring const& inVenue,
+//			tstring const& inEvent) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_RenameEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameEvent(
+//			tstring const& inVenue,
+//			tstring const& inOldEvent,
+//			tstring const& inNewEvent);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_DeleteEvent)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteEvent(
+//			tstring const& inVenue,
+//			tstring const& inEvent);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_AddTrial)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddTrial(ARBDogTrialPtr inTrial);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTrialList_DeleteTrial)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool DeleteTrial(ARBDogTrialPtr inTrial);
+}
+END_TEST

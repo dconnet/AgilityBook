@@ -248,7 +248,7 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 	{
 		for (ARBDogRunList::iterator iterRun = m_Runs.begin(); iterRun != m_Runs.end(); ++iterRun)
 		{
-			(*iterRun)->SetMultiQ(ARBConfigMultiQPtr());
+			(*iterRun)->ClearMultiQs();
 		}
 	}
 
@@ -292,7 +292,7 @@ void ARBDogTrial::SetMultiQs(ARBConfig const& inConfig)
 						iter != matchedRuns.end();
 						++iter)
 					{
-						(*iter)->SetMultiQ(pMultiQ);
+						(*iter)->AddMultiQ(pMultiQ);
 					}
 				}
 			}

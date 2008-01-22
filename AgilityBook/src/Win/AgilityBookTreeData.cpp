@@ -254,6 +254,10 @@ static bool EditRun(
 			}
 			else
 			{
+				// When adding a new trial, we need to reset the multiQs.
+				// The edit dialog does it in OnOK, but we don't add the run
+				// until after the dialog is done.
+				pTrialData->GetTrial()->SetMultiQs(pTree->GetDocument()->GetConfig());
 				pTrialData->GetTrial()->GetRuns().sort();
 				pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
@@ -1376,16 +1380,23 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 					CString q;
 					if (m_pRun->GetQ().Qualified())
 					{
-						if (m_pRun->GetMultiQ())
-							q += m_pRun->GetMultiQ()->GetShortName().c_str();
+						std::vector<ARBConfigMultiQPtr> multiQs;
+						if (0 < m_pRun->GetMultiQs(multiQs))
+						{
+							for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
+							{
+								if (!q.IsEmpty())
+									q += _T('/');
+								q += (*iMultiQ)->GetShortName().c_str();
+							}
+						}
 						if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 						{
 							CString tmp;
 							tmp.LoadString(IDS_SQ);
 							if (!q.IsEmpty())
-								q = tmp + _T("/") + q;
-							else
-								q = tmp;
+								q += _T('/');
+							q += tmp;
 						}
 					}
 					if (q.IsEmpty())

@@ -121,6 +121,17 @@ public:
 	bool GetYPS(
 			bool inTableInYPS,
 			double& outYPS) const;
+
+	/**
+	 * Get the Obstacles per second for the run.
+	 * @param inTableInYPS Include table in computation.
+	 * @param outOPS OPS for the run.
+	 * @return Indicates whether outOPS is valid (needs obstacle count and time)
+	 */
+	bool GetObstaclesPS(
+			bool inTableInYPS,
+			double& outOPS) const;
+
 	/**
 	 * Compute the number of time faults based on the scoring configuration.
 	 * @param inScoring Configuration to use.
@@ -164,6 +175,14 @@ public:
 	void SetYards(double inYards)
 	{
 		m_Yards = inYards;
+	}
+	short GetObstacles() const
+	{
+		return m_Obstacles;
+	}
+	void SetObstacles(short inNumber)
+	{
+		m_Obstacles = inNumber;
 	}
 	double GetTime() const
 	{
@@ -241,6 +260,7 @@ private:
 	double m_SCT;
 	double m_SCT2;
 	double m_Yards;
+	short m_Obstacles;
 	double m_Time;
 	bool m_Table;
 	bool m_ConvertTable; ///< Used to update table setting when upgrading

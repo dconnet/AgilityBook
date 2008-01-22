@@ -1673,11 +1673,15 @@ void CPointsDataItems::LoadData(
 						++iterR)
 					{
 						ARBDogRunPtr pRun = *iterR;
-						if (pRun->GetMultiQ()
+						std::vector<ARBConfigMultiQPtr> multiQs;
+						if (0 < pRun->GetMultiQs(multiQs)
 						&& !pRun->IsFiltered(ARBBase::eIgnoreQ)
 						&& CFilterOptions::Options().IsRunVisible(venues, pVenue, pTrial, pRun))
 						{
-							MQs[pRun->GetMultiQ()].insert(MultiQdata(pRun->GetDate(), pTrial));
+							for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
+							{
+								MQs[*iMultiQ].insert(MultiQdata(pRun->GetDate(), pTrial));
+							}
 						}
 					}
 				}

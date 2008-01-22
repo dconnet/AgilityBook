@@ -182,7 +182,9 @@
 #define IO_CAL_TASK_STATUS			110
 #define IO_RUNS_MIN_YPS				111
 #define IO_CAL_DRAWS				112
-#define IO_MAX						113
+#define IO_RUNS_OBSTACLES			113
+#define IO_RUNS_OPS					114
+#define IO_MAX						115
 
 class CAgilityBookDoc;
 

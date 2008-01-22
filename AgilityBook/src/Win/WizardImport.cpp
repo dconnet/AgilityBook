@@ -747,6 +747,13 @@ BOOL CWizardImport::OnWizardFinish()
 					case IO_RUNS_YPS:
 						// Computed
 						break;
+					case IO_RUNS_OBSTACLES:
+						pRun = CreateRun(pRun, pScoring);
+						pRun->GetScoring().SetObstacles(static_cast<short>(_tstol(entry[iCol].c_str())));
+						break;
+					case IO_RUNS_OPS:
+						// Computed
+						break;
 					case IO_RUNS_SCT:
 						pRun = CreateRun(pRun, pScoring);
 						pRun->GetScoring().SetSCT(_tcstod(entry[iCol].c_str(), NULL));

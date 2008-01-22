@@ -105,6 +105,9 @@ private:
 	CStatic	m_ctrlClosingText;
 	CEdit	m_ctrlClosing;
 	short	m_Closing;
+	CStatic	m_ctrlObstaclesText;
+	CEdit	m_ctrlObstacles;
+	short	m_Obstacles;
 	CStatic	m_ctrlTimeText;
 	CEdit	m_ctrlTime;
 	double	m_Time;
@@ -123,6 +126,8 @@ private:
 	short	m_Close;
 	CStatic m_ctrlTotalFaultsText;
 	CStatic	m_ctrlTotalFaults;
+	CStatic	m_ctrlObstaclesPSText;
+	CStatic	m_ctrlObstaclesPS;
 	CEdit	m_ctrlPlace;
 	short	m_Place;
 	CEdit	m_ctrlInClass;
@@ -174,6 +179,7 @@ private:
 	void SetPartnerText();
 	void SetMinYPS();
 	void SetYPS();
+	void SetObstacles();
 	void SetTotalFaults();
 	void FillQ(ARBConfigScoringPtr inScoring);
 	void SetTitlePoints();
@@ -198,6 +204,7 @@ protected:
 	afx_msg void OnKillfocusSct2();
 	afx_msg void OnKillfocusOpening();
 	afx_msg void OnKillfocusClosing();
+	afx_msg void OnKillfocusObstacles();
 	afx_msg void OnKillfocusOpen();
 	afx_msg void OnKillfocusClose();
 	afx_msg void OnKillfocusPlace();

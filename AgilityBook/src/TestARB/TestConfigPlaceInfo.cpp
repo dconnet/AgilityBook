@@ -112,16 +112,10 @@ BEGIN_TEST(ConfigPlaceInfoList_Load)
 END_TEST
 
 
-BEGIN_TEST(ConfigPlaceInfoList_SortAddDelete)
+BEGIN_TEST(ConfigPlaceInfoList_sort)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 //	void sort();
-//	bool AddPlaceInfo(
-//			short inPlace,
-//			double inValue,
-//			bool inMustQ,
-//			ARBConfigPlaceInfoPtr* outPlace = NULL);
-//	bool DeletePlaceInfo(short inPlace);
 }
 END_TEST
 
@@ -140,5 +134,18 @@ BEGIN_TEST(ConfigPlaceInfoList_Find)
 //	bool FindPlaceInfo(
 //			short inPlace,
 //			ARBConfigPlaceInfoPtr* outPlace = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigPlaceInfoList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddPlaceInfo(
+//			short inPlace,
+//			double inValue,
+//			bool inMustQ,
+//			ARBConfigPlaceInfoPtr* outPlace = NULL);
+//	bool DeletePlaceInfo(short inPlace);
 }
 END_TEST
