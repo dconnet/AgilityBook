@@ -40,33 +40,90 @@
 #include "ARBDogRunPartner.h"
 #include "Element.h"
 
-#if 0
-class ARBDogRunPartner : public ARBBase
-{
-	static ARBDogRunPartnerPtr New();
-	ARBDogRunPartnerPtr Clone() const;
-	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
-	bool operator==(ARBDogRunPartner const& rhs) const;
-	bool operator!=(ARBDogRunPartner const& rhs) const
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-};
 
-class ARBDogRunPartnerList : public ARBVector<ARBDogRunPartnerPtr>
+BEGIN_TEST(DogRunPartner_New)
 {
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool AddPartner(ARBDogRunPartnerPtr inPartner);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogRunPartnerPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(DogRunPartner_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRunPartnerPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartner_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRunPartner& operator=(ARBDogRunPartner const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartner_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogRunPartner const& rhs) const;
+//	bool operator!=(ARBDogRunPartner const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartner_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartner_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartner_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartnerList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartnerList_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunPartnerList_AddPartner)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddPartner(ARBDogRunPartnerPtr inPartner);
+}
+END_TEST

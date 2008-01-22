@@ -1,17 +1,24 @@
-1/20/2008: v1.10.5.12 <in development>
+1/21/2008: v1.10.5.12 <in development>
 - Bumped file version to 12.7:
   - Added 'Visible' to Note items.
+  - Added 'obstacle' to 'Scoring'
 - New features / Enhancements:
   - Added a list of existing venues into calendar query detail dialog.
   - Added a 'hide' option on Note items so they don't appear in lists.
   - Make Lifetime points viewable by either level or event
   - Make customizing view columns dialog apply to all views
     (no longer context based)
+  - Add '[Existing Points]' in Club name when viewing Other Points details.
+  - Add Obstacles and Obstacles-per-second information.
+  - Support allowing multiple MultiQ associations on a run. This allows for
+    a future QQQ in AKC [no, I don't know if one is coming!].
 - Bug fixes:
   - Translate days-of-week in Calendar options.
   - Several dialogs had text that was truncated.
   - Fixed the direction the mouse wheel scrolls the calendar
   - Fixed a crash when viewing details of Other Points.
+  - When adding a new run, the multiQ status (AKC/QQ, etc) may not be correctly
+    set. This will correct itself later, but is annoying in the meantime.
 
 1/1/2008: v1.10.4.12
 - Bug fixes

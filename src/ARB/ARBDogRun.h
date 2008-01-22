@@ -167,14 +167,11 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	ARBConfigMultiQPtr GetMultiQ() const
-	{
-		return m_pMultiQ.lock();
-	}
-	void SetMultiQ(ARBConfigMultiQPtr inMultiQ)
-	{
-		m_pMultiQ = inMultiQ;
-	}
+	size_t GetMultiQs(std::vector<ARBConfigMultiQPtr>& outMultiQs) const;
+	void ClearMultiQs();
+	bool HasMultiQ(ARBConfigMultiQPtr inMultiQ) const;
+	void AddMultiQ(ARBConfigMultiQPtr inMultiQ);
+	void RemoveMultiQ(ARBConfigMultiQPtr inMultiQ);
 	ARBDate const& GetDate() const
 	{
 		return m_Date;
@@ -357,7 +354,7 @@ public:
 	void RemoveLink(tstring const& inLink);
 
 private:
-	boost::weak_ptr<ARBConfigMultiQ> m_pMultiQ; //< Not persisted.
+	std::set<boost::weak_ptr<ARBConfigMultiQ> > m_pMultiQs; //< Not persisted.
 	ARBDate m_Date;
 	tstring m_Division;
 	tstring m_Level;

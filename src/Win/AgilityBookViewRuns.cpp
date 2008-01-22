@@ -227,6 +227,22 @@ tstring CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				}
 			}
 			break;
+		case IO_RUNS_OBSTACLES:
+			{
+				short obstacles = m_pRun->GetScoring().GetObstacles();
+				if (0 < obstacles)
+					str << obstacles;
+			}
+			break;
+		case IO_RUNS_OPS:
+			{
+				double ops;
+				if (m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
+				{
+					str << ARBDouble::str(ops, 3);
+				}
+			}
+			break;
 		case IO_RUNS_SCT:
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetSCT())
@@ -316,18 +332,24 @@ tstring CAgilityBookViewRunsData::OnNeedText(int iCol) const
 				if (m_pRun->GetQ().Qualified())
 				{
 					tstring q;
-					if (m_pRun->GetMultiQ())
+					std::vector<ARBConfigMultiQPtr> multiQs;
+					if (0 < m_pRun->GetMultiQs(multiQs))
 					{
-						q = m_pRun->GetMultiQ()->GetShortName();
+						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
+						{
+							if (!q.empty())
+								q += _T('/');
+							q += (*iMultiQ)->GetShortName();
+						}
 					}
 					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 					{
 						bSet = true;
 						CString tmp;
 						tmp.LoadString(IDS_SQ);
-						str << (LPCTSTR)tmp;
 						if (!q.empty())
-							str << _T('/') << q;
+							str << q << _T('/');
+						str << (LPCTSTR)tmp;
 					}
 					else
 					{
@@ -716,6 +738,34 @@ int CALLBACK CompareRuns(
 				if (yps1 < yps2)
 					nRet = -1;
 				else if (yps1 > yps2)
+					nRet = 1;
+			}
+			else if (bOk1)
+				nRet = 1;
+			else if (bOk2)
+				nRet = -1;
+		}
+		break;
+	case IO_RUNS_OBSTACLES:
+		{
+			short ob1 = pRun1->m_pRun->GetScoring().GetObstacles();
+			short ob2 = pRun2->m_pRun->GetScoring().GetObstacles();
+			if (ob1 < ob2)
+				nRet = -1;
+			else if (ob1 > ob2)
+				nRet = 1;
+		}
+		break;
+	case IO_RUNS_OPS:
+		{
+			double ops1, ops2;
+			bool bOk1 = pRun1->m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops1);
+			bool bOk2 = pRun2->m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops2);
+			if (bOk1 && bOk2)
+			{
+				if (ops1 < ops2)
+					nRet = -1;
+				else if (ops1 > ops2)
 					nRet = 1;
 			}
 			else if (bOk1)

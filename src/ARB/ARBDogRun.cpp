@@ -76,7 +76,7 @@ ARBDogRunPtr ARBDogRun::New()
 
 
 ARBDogRun::ARBDogRun()
-	: m_pMultiQ()
+	: m_pMultiQs()
 	, m_Date()
 	, m_Division()
 	, m_Level()
@@ -101,7 +101,7 @@ ARBDogRun::ARBDogRun()
 
 
 ARBDogRun::ARBDogRun(ARBDogRun const& rhs)
-	: m_pMultiQ()
+	: m_pMultiQs()
 	, m_Date(rhs.m_Date)
 	, m_Division(rhs.m_Division)
 	, m_Level(rhs.m_Level)
@@ -687,6 +687,59 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 		break;
 	}
 	return pts;
+}
+
+
+size_t ARBDogRun::GetMultiQs(std::vector<ARBConfigMultiQPtr>& outMultiQs) const
+{
+	outMultiQs.clear();
+	for (std::set<boost::weak_ptr<ARBConfigMultiQ> >::const_iterator i = m_pMultiQs.begin();
+		i != m_pMultiQs.end();
+		++i)
+	{
+		outMultiQs.push_back((*i).lock());
+	}
+	return outMultiQs.size();
+}
+
+
+void ARBDogRun::ClearMultiQs()
+{
+	m_pMultiQs.clear();
+}
+
+
+bool ARBDogRun::HasMultiQ(ARBConfigMultiQPtr inMultiQ) const
+{
+	for (std::set<boost::weak_ptr<ARBConfigMultiQ> >::const_iterator i = m_pMultiQs.begin();
+		i != m_pMultiQs.end();
+		++i)
+	{
+		if ((*i).lock() == inMultiQ)
+			return true;
+	}
+	return false;
+}
+
+
+void ARBDogRun::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
+{
+	m_pMultiQs.insert(inMultiQ);
+}
+
+
+void ARBDogRun::RemoveMultiQ(ARBConfigMultiQPtr inMultiQ)
+{
+	for (std::set<boost::weak_ptr<ARBConfigMultiQ> >::iterator i = m_pMultiQs.begin();
+		i != m_pMultiQs.end();
+		++i)
+	{
+		if ((*i).lock() == inMultiQ)
+		{
+			m_pMultiQs.erase(i);
+			return;
+		}
+	}
 }
 
 

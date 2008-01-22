@@ -154,6 +154,7 @@ CDlgRunScore::CDlgRunScore(
 	m_Yards = 0.0;
 	m_SCT2 = 0.0;
 	m_Closing = 0;
+	m_Obstacles = 0;
 	m_Time = 0.0;
 	m_Open = 0;
 	m_Faults = 0;
@@ -214,6 +215,9 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RUNSCORE_CLOSING_PTS_TEXT, m_ctrlClosingText);
 	DDX_Control(pDX, IDC_RUNSCORE_CLOSING_PTS, m_ctrlClosing);
 	DDX_Text(pDX, IDC_RUNSCORE_CLOSING_PTS, m_Closing);
+	DDX_Control(pDX, IDC_RUNSCORE_OBSTACLES_TEXT, m_ctrlObstaclesText);
+	DDX_Control(pDX, IDC_RUNSCORE_OBSTACLES, m_ctrlObstacles);
+	DDX_Text(pDX, IDC_RUNSCORE_OBSTACLES, m_Obstacles);
 	DDX_Control(pDX, IDC_RUNSCORE_TIME_TEXT, m_ctrlTimeText);
 	DDX_Control(pDX, IDC_RUNSCORE_TIME, m_ctrlTime);
 	DDX_Text(pDX, IDC_RUNSCORE_TIME, m_Time);
@@ -232,6 +236,8 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_RUNSCORE_CLOSE_PTS, m_Close);
 	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS_TEXT, m_ctrlTotalFaultsText);
 	DDX_Control(pDX, IDC_RUNSCORE_TOTAL_FAULTS, m_ctrlTotalFaults);
+	DDX_Control(pDX, IDC_RUNSCORE_OBSTACLES_PER_SEC_TEXT, m_ctrlObstaclesPSText);
+	DDX_Control(pDX, IDC_RUNSCORE_OBSTACLES_PER_SEC, m_ctrlObstaclesPS);
 	DDX_Control(pDX, IDC_RUNSCORE_PLACE, m_ctrlPlace);
 	DDX_Text(pDX, IDC_RUNSCORE_PLACE, m_Place);
 	DDX_Control(pDX, IDC_RUNSCORE_IN_CLASS, m_ctrlInClass);
@@ -411,6 +417,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetDogsQd(m_DogsQd);
 		m_Run->SetQ(q);
 		m_Run->GetScoring().SetBonusPts(m_BonusPts);
+		m_Run->GetScoring().SetObstacles(m_Obstacles);
 	}
 }
 
@@ -432,6 +439,7 @@ BEGIN_MESSAGE_MAP(CDlgRunScore, CDlgBasePropertyPage)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_SCT2, OnKillfocusSct2)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_OPENING_PTS, OnKillfocusOpening)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_CLOSING_PTS, OnKillfocusClosing)
+	ON_EN_KILLFOCUS(IDC_RUNSCORE_OBSTACLES, OnKillfocusObstacles)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_OPEN_PTS, OnKillfocusOpen)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_CLOSE_PTS, OnKillfocusClose)
 	ON_EN_KILLFOCUS(IDC_RUNSCORE_PLACE, OnKillfocusPlace)
@@ -826,6 +834,18 @@ void CDlgRunScore::SetYPS()
 }
 
 
+void CDlgRunScore::SetObstacles()
+{
+	CString str;
+	double ops;
+	if (m_Run->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
+	{
+		str = ARBDouble::str(ops, 3).c_str();
+	}
+	m_ctrlObstaclesPS.SetWindowText(str);
+}
+
+
 void CDlgRunScore::SetTotalFaults()
 {
 	CString total;
@@ -992,6 +1012,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 			// Plus, we need to recompute the YPS.
 			SetMinYPS();
 			SetYPS();
+			SetObstacles();
 		}
 	}
 	if (pEvent->HasTable())
@@ -1204,6 +1225,8 @@ BOOL CDlgRunScore::OnInitDialog()
 		break;
 	}
 	m_BonusPts = m_Run->GetScoring().GetBonusPts();
+	m_Obstacles = m_Run->GetScoring().GetObstacles();
+	SetObstacles();
 
 	if (0 < m_pDoc->GetConfig().GetOtherPoints().size())
 		m_ctrlOtherPoints.EnableWindow(TRUE);
@@ -1303,6 +1326,7 @@ void CDlgRunScore::OnKillfocusTime()
 	GetText(&m_ctrlTime, m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
 	SetYPS();
+	SetObstacles();
 	SetTotalFaults();
 	SetTitlePoints();
 }
@@ -1351,6 +1375,14 @@ void CDlgRunScore::OnKillfocusClosing()
 }
 
 
+void CDlgRunScore::OnKillfocusObstacles()
+{
+	GetText(&m_ctrlObstacles, m_Obstacles);
+	m_Run->GetScoring().SetObstacles(m_Obstacles);
+	SetObstacles();
+}
+
+
 void CDlgRunScore::OnKillfocusOpen()
 {
 	GetText(&m_ctrlOpen, m_Open);
@@ -1391,6 +1423,7 @@ void CDlgRunScore::OnBnClickedTableYps()
 	m_Run->GetScoring().SetHasTable(bSetTable);
 	SetMinYPS();
 	SetYPS();
+	SetObstacles();
 }
 
 

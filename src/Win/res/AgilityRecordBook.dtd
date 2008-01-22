@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2008-01-21 DRC File version 12.7
+               Added 'Visible' to InfoItem, 'obstacles' to 'Scoring'
 2007-08-10 DRC File version 12.6
                Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
                Added 'CalSite' to config, 'SecEmail'/etc to 'Calendar'
@@ -355,6 +357,10 @@ faults in ScoreThenTime events (DOCNA Strategic gamble).
 The 'superQ', 'speedPts' and 'bonusPts' attributes enable built-in
 features for an event.
 
+'obstacles' specified the number of obstacles attempted so an obstacles per
+second figure can be computed. On opening/closing time runs (gambles), only
+the opening time is used. Other runs use the dog's time.
+
 'hasTable' specifies that this run might have a table. This is used as the
 default when creating a run.
 
@@ -395,6 +401,7 @@ If there are no 'TitlePoints', then the class is non-titling.
 		superQ (y|n) 'n'
 		speedPts (y|n) 'n'
 		bonusPts (y|n) 'n'
+		obstacles CDATA #IMPLIED
 		timeFault CDATA #IMPLIED
 		OpeningPts CDATA #IMPLIED
 		ClosingPts CDATA #IMPLIED

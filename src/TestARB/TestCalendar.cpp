@@ -336,7 +336,7 @@ BEGIN_TESTF(CalendarList_Load2, Calendar)
 END_TESTF
 
 
-BEGIN_TEST(CalendarList_SortAddDelete)
+BEGIN_TEST(CalendarList_sort)
 {
 	ARBCalendarList callist;
 	ARBCalendarPtr cal1 = ARBCalendar::New();
@@ -350,27 +350,12 @@ BEGIN_TEST(CalendarList_SortAddDelete)
 	cal2->SetEndDate(ARBDate(2005, 3, 27));
 	callist.AddCalendar(cal1);
 	callist.AddCalendar(cal2);
-	callist.sort();
-	ARBCalendarPtr cal3 = callist[0]->Clone();
-	WIN_ASSERT_EQUAL(*cal2, *cal3);
-	cal3->SetNote(_T("Test"));
-	WIN_ASSERT_NOT_EQUAL(*cal2, *cal3);
-	callist.AddCalendar(cal3);
-	callist.AddCalendar(cal1->Clone());
-	callist.sort();
-	WIN_ASSERT_EQUAL(4u, callist.size());
-	WIN_ASSERT_TRUE(callist.DeleteCalendar(cal1));
-	WIN_ASSERT_EQUAL(3u, callist.size());
-	WIN_ASSERT_TRUE(callist.DeleteCalendar(cal1));
-	WIN_ASSERT_EQUAL(2u, callist.size());
-	WIN_ASSERT_FALSE(callist.DeleteCalendar(cal1));
-	WIN_ASSERT_EQUAL(2u, callist.size());
-	WIN_ASSERT_NOT_EQUAL(*callist[0], *callist[1]);
+
 	ARBCalendarList callist2;
 	callist.Clone(callist2);
 	WIN_ASSERT_EQUAL(callist, callist2);
-	WIN_ASSERT_NOT_EQUAL(callist[0].get(), callist2[0].get());
-	WIN_ASSERT_EQUAL(*callist[0], *callist2[0]);
+	callist.sort();
+	WIN_ASSERT_NOT_EQUAL(callist, callist2);
 }
 END_TEST
 
@@ -441,5 +426,44 @@ BEGIN_TEST(CalendarList_Find)
 	WIN_ASSERT_NOT_NULL(found.get());
 	WIN_ASSERT_NOT_EQUAL(found.get(), clone.get());
 	WIN_ASSERT_EQUAL(*found, *clone);
+}
+END_TEST
+
+
+BEGIN_TEST(CalendarList_AddDelete)
+{
+	ARBCalendarList callist;
+	ARBCalendarPtr cal1 = ARBCalendar::New();
+	cal1->SetStartDate(ARBDate(2006, 9, 4));
+	cal1->SetEndDate(ARBDate(2006, 9, 5));
+	cal1->SetLocation(_T("Hollister"));
+	cal1->SetClub(_T("PASA"));
+	cal1->SetVenue(_T("ASCA"));
+	ARBCalendarPtr cal2 = cal1->Clone();
+	cal2->SetStartDate(ARBDate(2005, 3, 26));
+	cal2->SetEndDate(ARBDate(2005, 3, 27));
+	callist.AddCalendar(cal1);
+	callist.AddCalendar(cal2);
+	callist.sort();
+	ARBCalendarPtr cal3 = callist[0]->Clone();
+	WIN_ASSERT_EQUAL(*cal2, *cal3);
+	cal3->SetNote(_T("Test"));
+	WIN_ASSERT_NOT_EQUAL(*cal2, *cal3);
+	callist.AddCalendar(cal3);
+	callist.AddCalendar(cal1->Clone());
+	callist.sort();
+	WIN_ASSERT_EQUAL(4u, callist.size());
+	WIN_ASSERT_TRUE(callist.DeleteCalendar(cal1));
+	WIN_ASSERT_EQUAL(3u, callist.size());
+	WIN_ASSERT_TRUE(callist.DeleteCalendar(cal1));
+	WIN_ASSERT_EQUAL(2u, callist.size());
+	WIN_ASSERT_FALSE(callist.DeleteCalendar(cal1));
+	WIN_ASSERT_EQUAL(2u, callist.size());
+	WIN_ASSERT_NOT_EQUAL(*callist[0], *callist[1]);
+	ARBCalendarList callist2;
+	callist.Clone(callist2);
+	WIN_ASSERT_EQUAL(callist, callist2);
+	WIN_ASSERT_NOT_EQUAL(callist[0].get(), callist2[0].get());
+	WIN_ASSERT_EQUAL(*callist[0], *callist2[0]);
 }
 END_TEST

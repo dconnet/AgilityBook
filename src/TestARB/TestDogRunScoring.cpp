@@ -40,31 +40,94 @@
 #include "ARBDogRunScoring.h"
 #include "Element.h"
 
-#if 0
-class ARBDogRunScoring
-{
-	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
-	ARBDogRunScoring();
-	ARBDogRunScoring(ARBDogRunScoring const& rhs);
-	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
-	bool operator==(ARBDogRunScoring const& rhs) const;
-	bool operator!=(ARBDogRunScoring const& rhs) const
-	bool Load(
-			short inConfigVersion,
-			ARBConfigEventPtr inEvent,
-			ARBConfigScoringPtr inEventScoring,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-	bool GetMinYPS(
-			bool inTableInYPS,
-			double& outYPS) const;
-	bool GetYPS(
-			bool inTableInYPS,
-			double& outYPS) const;
-	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
-};
-#endif
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+BEGIN_TEST(DogRunScoring_TranslateConfigScoring)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_ctor)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRunScoring();
+//	ARBDogRunScoring(ARBDogRunScoring const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogRunScoring const& rhs) const;
+//	bool operator!=(ARBDogRunScoring const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			short inConfigVersion,
+//			ARBConfigEventPtr inEvent,
+//			ARBConfigScoringPtr inEventScoring,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_GetMinYPS)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool GetMinYPS(
+//			bool inTableInYPS,
+//			double& outYPS) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_GetYPS)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool GetYPS(
+//			bool inTableInYPS,
+//			double& outYPS) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_GetObstaclesPS)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool GetObstaclesPS(bool inTableInYPS, double& outOPS) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunScoring_GetTimeFaults)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
+}
+END_TEST

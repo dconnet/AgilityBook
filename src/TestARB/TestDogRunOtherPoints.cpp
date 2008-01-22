@@ -40,33 +40,90 @@
 #include "ARBDogRunOtherPoints.h"
 #include "Element.h"
 
-#if 0
-class ARBDogRunOtherPoints : public ARBBase
-{
-	static ARBDogRunOtherPointsPtr New();
-	ARBDogRunOtherPointsPtr Clone() const;
-	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
-	bool operator==(ARBDogRunOtherPoints const& rhs) const;
-	bool operator!=(ARBDogRunOtherPoints const& rhs) const
-	virtual tstring GetGenericName() const
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-};
 
-class ARBDogRunOtherPointsList : public ARBVector<ARBDogRunOtherPointsPtr>
+BEGIN_TEST(DogRunOtherPoints_New)
 {
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool AddOtherPoints(ARBDogRunOtherPointsPtr inOther);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogRunOtherPointsPtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(DogRunOtherPoints_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRunOtherPointsPtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPoints_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogRunOtherPoints& operator=(ARBDogRunOtherPoints const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPoints_Comparfe)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogRunOtherPoints const& rhs) const;
+//	bool operator!=(ARBDogRunOtherPoints const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPoints_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPoints_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPoints_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPointsList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPointsList_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+}
+END_TEST
+
+
+BEGIN_TEST(DogRunOtherPointsList_AddOtherPoints)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddOtherPoints(ARBDogRunOtherPointsPtr inOther);
+}
+END_TEST

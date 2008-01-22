@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by AgilityBookFRA.rc
+// Used by AgilityBook.rc
 //
 #define IDB_LOGO                        101
 #define IDB_SPLASH                      102
@@ -381,12 +381,16 @@
 #define IDC_RUNSCORE_OTHERPOINTS        1348
 #define IDC_RUNSCORE_SUBNAME_TEXT       1349
 #define IDC_RUNSCORE_SUBNAME            1350
-#define IDC_RUNCOMMENT_COMMENTS         1360
-#define IDC_RUNCOMMENT_FAULTS_LIST      1361
-#define IDC_RUNCOMMENT_COMMENTS_FAULTS  1362
-#define IDC_RUNSCORE_BONUSPTS_TEXT      1363
-#define IDC_RUNSCORE_BONUSPTS           1364
-#define IDC_RUNSCORE_JUDGE_NOTES        1365
+#define IDC_RUNSCORE_BONUSPTS_TEXT      1351
+#define IDC_RUNSCORE_BONUSPTS           1352
+#define IDC_RUNSCORE_JUDGE_NOTES        1353
+#define IDC_RUNSCORE_OBSTACLES          1354
+#define IDC_RUNSCORE_OBSTACLES_TEXT     1355
+#define IDC_RUNSCORE_OBSTACLES_PER_SEC  1356
+#define IDC_RUNSCORE_OBSTACLES_PER_SEC_TEXT 1357
+#define IDC_RUNCOMMENT_COMMENTS         1363
+#define IDC_RUNCOMMENT_FAULTS_LIST      1364
+#define IDC_RUNCOMMENT_COMMENTS_FAULTS  1365
 #define IDC_RUNREF_REF_RUNS             1366
 #define IDC_RUNREF_NEW                  1367
 #define IDC_RUNREF_EDIT                 1368
@@ -691,6 +695,8 @@
 #define IDS_COL_DIV_LVL_EVT             4223
 #define IDS_COL_OPEN_CLOSE              4224
 #define IDS_COL_NAME_BREED_NOTE         4225
+#define IDS_COL_OBSTACLES               4226
+#define IDS_COL_OPS                     4227
 #define IDS_DATEFORMAT_DASH_MDY         4280
 #define IDS_DATEFORMAT_SLASH_MDY        4281
 #define IDS_DATEFORMAT_DASH_YMD         4282

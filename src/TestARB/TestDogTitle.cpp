@@ -40,55 +40,174 @@
 #include "ARBDogTitle.h"
 #include "Element.h"
 
-#if 0
-class ARBDogTitle : public ARBBase
-{
-	static ARBDogTitlePtr New();
-	ARBDogTitlePtr Clone() const;
-	ARBDogTitle& operator=(ARBDogTitle const& rhs);
-	bool operator==(ARBDogTitle const& rhs) const;
-	bool operator!=(ARBDogTitle const& rhs) const
-	virtual tstring GetGenericName() const;
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	bool Save(ElementNodePtr ioTree) const;
-};
 
-class ARBDogTitleList : public ARBVector<ARBDogTitlePtr>
+BEGIN_TEST(DogTitle_New)
 {
-public:
-	bool Load(
-			ARBConfig const& inConfig,
-			ElementNodePtr inTree,
-			ARBVersion const& inVersion,
-			ARBErrorCallback& ioCallback);
-	void sort();
-	int NumTitlesInVenue(tstring const& inVenue) const;
-	bool FindTitle(
-			tstring const& inVenue,
-			tstring const& inTitle,
-			ARBDogTitlePtr* outTitle = NULL) const;
-	short FindMaxInstance(
-			tstring const& inVenue,
-			tstring const& inTitle) const;
-	int RenameVenue(
-			tstring const& inOldVenue,
-			tstring const& inNewVenue);
-	int DeleteVenue(tstring const& inVenue);
-	int NumTitlesInUse(
-			tstring const& inVenue,
-			tstring const& inTitle) const;
-	int RenameTitle(
-			tstring const& inVenue,
-			tstring const& inOldTitle,
-			tstring const& inNewTitle);
-	bool AddTitle(ARBDogTitlePtr inTitle);
-	bool DeleteTitle(ARBDogTitlePtr inTitle);
-};
-#endif
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	static ARBDogTitlePtr New();
+}
+END_TEST
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement tests")
+
+BEGIN_TEST(DogTitle_Clone)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogTitlePtr Clone() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitle_OpEqual)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	ARBDogTitle& operator=(ARBDogTitle const& rhs);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitle_Compare)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool operator==(ARBDogTitle const& rhs) const;
+//	bool operator!=(ARBDogTitle const& rhs) const
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitle_GenName)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	virtual tstring GetGenericName() const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitle_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitle_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Save(ElementNodePtr ioTree) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_Load)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool Load(
+//			ARBConfig const& inConfig,
+//			ElementNodePtr inTree,
+//			ARBVersion const& inVersion,
+//			ARBErrorCallback& ioCallback);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_Save)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_sort)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	void sort();
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_NumTitlesInVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumTitlesInVenue(tstring const& inVenue) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_FindTitle)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool FindTitle(
+//			tstring const& inVenue,
+//			tstring const& inTitle,
+//			ARBDogTitlePtr* outTitle = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_FindMaxInstance)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	short FindMaxInstance(
+//			tstring const& inVenue,
+//			tstring const& inTitle) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_RenameVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameVenue(
+//			tstring const& inOldVenue,
+//			tstring const& inNewVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_DeleteVenue)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int DeleteVenue(tstring const& inVenue);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_NumTitlesInUse)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int NumTitlesInUse(
+//			tstring const& inVenue,
+//			tstring const& inTitle) const;
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_RenameTitle)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	int RenameTitle(
+//			tstring const& inVenue,
+//			tstring const& inOldTitle,
+//			tstring const& inNewTitle);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_AddTitle)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddTitle(ARBDogTitlePtr inTitle);
+}
+END_TEST
+
+
+BEGIN_TEST(DogTitleList_DeleteTitle)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool DeleteTitle(ARBDogTitlePtr inTitle);
+}
+END_TEST

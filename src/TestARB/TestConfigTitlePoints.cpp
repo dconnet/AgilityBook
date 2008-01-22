@@ -115,15 +115,10 @@ BEGIN_TEST(ConfigTitlePointsList_Load)
 END_TEST
 
 
-BEGIN_TEST(ConfigTitlePointsList_SortAddDelete)
+BEGIN_TEST(ConfigTitlePointsList_sort)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 //	void sort();
-//	bool AddTitlePoints(
-//			double inPoints,
-//			double inFaults,
-//			ARBConfigTitlePointsPtr* outPoints = NULL);
-//	bool DeleteTitlePoints(double inFaults);
 }
 END_TEST
 
@@ -142,5 +137,17 @@ BEGIN_TEST(ConfigTitlePointsList_Find)
 //	bool FindTitlePoints(
 //			double inFaults,
 //			ARBConfigTitlePointsPtr* outPoints = NULL) const;
+}
+END_TEST
+
+
+BEGIN_TEST(ConfigTitlePointsList_AddDelete)
+{
+	WIN_ASSERT_FAIL(_T("TODO: Write test"));
+//	bool AddTitlePoints(
+//			double inPoints,
+//			double inFaults,
+//			ARBConfigTitlePointsPtr* outPoints = NULL);
+//	bool DeleteTitlePoints(double inFaults);
 }
 END_TEST

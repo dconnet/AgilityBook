@@ -856,7 +856,13 @@ tstring CDlgListViewerDataOther::OnNeedText(int iCol) const
 			str << m_info.m_pTrial->GetLocation();
 		break;
 	case COL_OTHER_CLUB:
-		if (!m_info.m_pExisting && m_info.m_pTrial->GetClubs().GetPrimaryClub())
+		if (m_info.m_pExisting)
+		{
+			CString str2;
+			str2.LoadString(IDS_EXISTING_POINTS);
+			str << _T('[') << (LPCTSTR)str2 << _T(']');
+		}
+		else if (m_info.m_pTrial->GetClubs().GetPrimaryClub())
 			str << m_info.m_pTrial->GetClubs().GetPrimaryClubName();
 		break;
 	case COL_OTHER_VENUE:
