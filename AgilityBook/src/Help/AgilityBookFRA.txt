@@ -1334,9 +1334,10 @@ Ceci est le nom qui va être affiché à l’utilisateur pour sélectionner un code.
 Ceci est le nom qui va être affiché à l’utilisateur pour sélectionner un code.
 
 .topic HIDC_RUNSCORE_OBSTACLES
-Number of obstacles attempted.
-For runs with an opening and closing time, this is only the number in the opening.
+Nombre d'obstacles tentés. Pour des parcours avec des temps de départ
+et d'arrivée c'est le nombre pour le départ.
 
 .topic HIDC_RUNSCORE_OBSTACLES_PER_SEC
-Number of obstacles per second. For runs with an opening/closing time, only
-the opening time is used. For other runs, the dog's time is used.
+Nombre d'obstacles par seconde. Pour des parcours avec des temps de
+départ et d'arrivée, seulement le temps de départ est utilisé.
+Autrement le temps du chien est utilisé.
