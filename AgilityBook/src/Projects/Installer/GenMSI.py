@@ -25,10 +25,10 @@ import sys
 
 AgilityBookDir = "..\\..\\.."
 
-WiXdir = r"c:\Program Files\Windows Installer XML\wix2"
+WiXdir = r"c:\Tools\wix2"
 ISTool = "c:\\Program Files\\ISTool"
 
-WinSrcDir = AgilityBookDir + "\\src\\Win"
+WinSrcDir = AgilityBookDir + "\\src"
 code32 = 1
 code64 = 3
 code98 = 2
@@ -41,7 +41,7 @@ def getversion(numParts):
 	for i in range(1, numParts):
 		ver = ver + ".0"
 		ver2 = ver2 + "_0"
-	res = open(WinSrcDir + "\\VersionNumber.h", "r")
+	res = open(WinSrcDir + r"\Include\VersionNumber.h", "r")
 	while (1):
 		line = res.readline()
 		if line:
