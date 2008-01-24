@@ -53,9 +53,9 @@ to avoid problems in the project files.
 
 Windows Installer XML toolset: http://wix.sourceforge.net/releases/
 Currently using Version 2.0.5805.0 (as of ARB v1.10.0.12).
-- Install votive
-- Unzip binaries.zip into installed directory as 'wix2'
-  - This will create "C:\Program Files\Windows Installer XML\wix2"
+- Install votive [optional]
+- Unzip binaries.zip into "C:\Tools\wix2'
+  (GenMSI.py assumes WiX is installed here)
 
 Inno Setup: http://www.jrsoftware.org/isdl.php
 Currently using Version 5.2.2, also ISTool addon.
@@ -63,7 +63,7 @@ Currently using Version 5.2.2, also ISTool addon.
 During our release process of running BuildAll.bat,
 GenMSI.py will be called which generates the install files.
 By default, it will create installers using WiX.
-(In ...\AgilityBook\src\Projects\VC8)
+(In ...\AgilityBook\src\Projects\Installer)
 
 --------------------
 
