@@ -5,6 +5,12 @@
 
 #define IDR_DTD_AGILITYRECORDBOOK       129
 #define IDR_XML_DEFAULT_CONFIG          130
+#define IDR_XML_CONFIG08_V10_2          140
+#define IDR_XML_CONFIG09_V11_0          141
+#define IDR_XML_CONFIG12_V12_1          142
+#define IDR_XML_CONFIG14_V12_2          143
+#define IDR_XML_CONFIG19_V12_5          144
+#define IDR_XML_CONFIG20_V12_6          145
 
 // Next default values for new objects
 // 

@@ -28,7 +28,7 @@
 
 /**
  * @file
- * @brief ARBDate class.
+ * @brief Global support functions for testing.
  * @author David Connet
  *
  * Revision History
@@ -40,10 +40,17 @@
 #define STRING(x) STRING2(x)
 //#pragma message ( __FILE__ "(" STRING(__LINE__) ") : message" )
 #define PRAGMA_MESSAGE(x) ( __FILE__ "(" STRING(__LINE__) ") : " x )
+//#pragma PRAGMA_MESSAGE("My message")
 
 #include "WinUnit.h"
+#include "ARBTypes.h"
 
-// Placeholder for any global helper functions
+extern bool CommonSetup();
+extern bool CommonTeardown();
+
+extern ElementNodePtr LoadXMLData(UINT id);
+extern bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config);
+extern ElementNodePtr CreateActionList();
 
 /*
 Quick reference for winunit macros:
@@ -61,6 +68,3 @@ WIN_ASSERT_WINAPI_SUCCESS(expr, ...)			Makes use of GetLastError
 WIN_ASSERT_THROWS(expr, exceptionType, ...)		succeed if expr throws a C++ exception of type
 WIN_TRACE(message, ...)							output info msg for debugging
 */
-
-extern bool CommonSetup();
-extern bool CommonTeardown();

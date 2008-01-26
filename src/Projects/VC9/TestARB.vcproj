@@ -865,6 +865,30 @@
 			UniqueIdentifier="{E1B4C1A5-7666-48C3-AF3F-66FC44216E3B}"
 			>
 			<File
+				RelativePath="..\..\TestARB\res\Config08_v10_2.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config09_v11_0.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config12_v12_1.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config14_v12_2.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config19_v12_5.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config20_v12_6.xml"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestARB.rc"
 				>
 			</File>

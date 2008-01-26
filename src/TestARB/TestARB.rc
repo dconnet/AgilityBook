@@ -64,6 +64,12 @@ IDR_DTD_AGILITYRECORDBOOK DTD                     "..\\Win\\res\\AgilityRecordBo
 //
 
 IDR_XML_DEFAULT_CONFIG  XML                     "..\\Win\\res\\DefaultConfig.xml"
+IDR_XML_CONFIG08_V10_2  XML                     "res\\Config08_v10_2.xml"
+IDR_XML_CONFIG09_V11_0  XML                     "res\\Config09_v11_0.xml"
+IDR_XML_CONFIG12_V12_1  XML                     "res\\Config12_v12_1.xml"
+IDR_XML_CONFIG14_V12_2  XML                     "res\\Config14_v12_2.xml"
+IDR_XML_CONFIG19_V12_5  XML                     "res\\Config19_v12_5.xml"
+IDR_XML_CONFIG20_V12_6  XML                     "res\\Config20_v12_6.xml"
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1
