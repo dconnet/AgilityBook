@@ -144,7 +144,6 @@ bool ARBConfig::LoadFault(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
 	if (!inTree)
 		return false;
 	if (inTree->GetName() == TREE_FAULTTYPE
@@ -164,7 +163,6 @@ bool ARBConfig::LoadOtherPoints(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
 	if (!inTree)
 		return false;
 	if (inTree->GetName() == TREE_OTHERPTS
