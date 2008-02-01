@@ -249,7 +249,6 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 {
 	if (*this != inList)
 	{
-		ASSERT(inList.size() == size());
 		ARBConfigDivisionList tmp;
 		tmp.reserve(size());
 		for (ARBConfigDivisionList::const_iterator i = inList.begin();
@@ -257,9 +256,16 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 			++i)
 		{
 			ARBConfigDivisionPtr div;
-			FindDivision((*i)->GetName(), &div);
-			tmp.push_back(div);
+			if (FindDivision((*i)->GetName(), &div))
+			{
+				tmp.push_back(div);
+				ARBConfigDivisionList::iterator iFound = std::find(begin(), end(), div);
+				ASSERT(iFound != end());
+				erase(iFound);
+			}
 		}
+		if (0 < size())
+			tmp.insert(tmp.end(), begin(), end());
 		std::swap(tmp, *this);
 	}
 }

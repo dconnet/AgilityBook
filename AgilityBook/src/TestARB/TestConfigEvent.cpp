@@ -165,6 +165,7 @@ BEGIN_TEST(ConfigEventList_ReorderBy)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 //	void ReorderBy(ARBConfigEventList const& inList);
+	// Make sure the target config has an event that the source config does not
 }
 END_TEST
 

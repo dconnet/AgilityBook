@@ -153,6 +153,7 @@ BEGIN_TEST(ConfigTitleList_ReorderBy)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 //	void ReorderBy(ARBConfigTitleList const& inList);
+	// Make sure the target config has a title that the source config does not
 }
 END_TEST
 
