@@ -284,7 +284,6 @@ void ARBConfigTitleList::ReorderBy(ARBConfigTitleList const& inList)
 {
 	if (*this != inList)
 	{
-		ASSERT(inList.size() == size());
 		ARBConfigTitleList tmp;
 		tmp.reserve(size());
 		for (ARBConfigTitleList::const_iterator i = inList.begin();
@@ -292,9 +291,16 @@ void ARBConfigTitleList::ReorderBy(ARBConfigTitleList const& inList)
 			++i)
 		{
 			ARBConfigTitlePtr title;
-			FindTitle((*i)->GetName(), &title);
-			tmp.push_back(title);
+			if (FindTitle((*i)->GetName(), &title))
+			{
+				tmp.push_back(title);
+				ARBConfigTitleList::iterator iFound = std::find(begin(), end(), title);
+				ASSERT(iFound != end());
+				erase(iFound);
+			}
 		}
+		if (0 < size())
+			tmp.insert(tmp.end(), begin(), end());
 		std::swap(tmp, *this);
 	}
 }

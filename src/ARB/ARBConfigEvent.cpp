@@ -366,17 +366,23 @@ void ARBConfigEventList::ReorderBy(ARBConfigEventList const& inList)
 {
 	if (*this != inList)
 	{
-		ASSERT(inList.size() == size());
 		ARBConfigEventList tmp;
 		tmp.reserve(size());
 		for (ARBConfigEventList::const_iterator i = inList.begin();
 			i != inList.end();
 			++i)
 		{
-			ARBConfigEventPtr event;
-			FindEvent((*i)->GetName(), &event);
-			tmp.push_back(event);
+			ARBConfigEventPtr evt;
+			if (FindEvent((*i)->GetName(), &evt))
+			{
+				tmp.push_back(evt);
+				ARBConfigEventList::iterator iFound = std::find(begin(), end(), evt);
+				ASSERT(iFound != end());
+				erase(iFound);
+			}
 		}
+		if (0 < size())
+			tmp.insert(tmp.end(), begin(), end());
 		std::swap(tmp, *this);
 	}
 }

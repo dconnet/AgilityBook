@@ -137,6 +137,7 @@ BEGIN_TEST(ConfigDivisionList_Reorder)
 {
 	WIN_ASSERT_FAIL(_T("TODO: Write test"));
 //	void ReorderBy(ARBConfigDivisionList const& inList);
+	// Make sure the target config has a division that the source config does not
 }
 END_TEST
 
