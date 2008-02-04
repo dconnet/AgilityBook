@@ -123,6 +123,18 @@ public:
 			double& outYPS) const;
 
 	/**
+	 * Get the YPS for a run simply given the time (used for RefRun).
+	 * @param inTableInYPS Include table in YPS computation.
+	 * @param inTime Time of run
+	 * @param outYPS YPS for the run.
+	 * @return Indicates whether outYPS is valid, not all runs have YPS.
+	 */
+	bool GetYPS(
+			bool inTableInYPS,
+			double inTime,
+			double& outYPS) const;
+
+	/**
 	 * Get the Obstacles per second for the run.
 	 * @param inTableInYPS Include table in computation.
 	 * @param outOPS OPS for the run.

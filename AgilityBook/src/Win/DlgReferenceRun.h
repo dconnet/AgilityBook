@@ -47,6 +47,7 @@ class CDlgReferenceRun : public CDlgBaseDialog
 public:
 	CDlgReferenceRun(
 			CAgilityBookDoc* pDoc,
+			ARBDogRunPtr inRun,
 			std::set<tstring> const& inHeights,
 			std::set<tstring> const& inNames,
 			std::set<tstring> const& inBreeds,
@@ -61,6 +62,8 @@ private:
 	CComboBox2	m_ctrlQ;
 	CString	m_Points;
 	double	m_Time;
+	CStatic	m_ctrlYPS;
+	CString	m_YPS;
 	CComboBox2	m_ctrlHeight;
 	CString	m_Height;
 	CComboBox2	m_ctrlName;
@@ -70,6 +73,7 @@ private:
 	CString	m_Notes;
 	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
+	ARBDogRunPtr m_Run;
 	ARBDogReferenceRunPtr m_Ref;
 	std::set<tstring> const& m_Heights;
 	std::set<tstring> const& m_Names;
@@ -84,6 +88,7 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgReferenceRun)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnKillfocusRefRunTime();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

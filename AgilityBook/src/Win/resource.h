@@ -415,6 +415,7 @@
 #define IDC_REFRUN_BREED                1395
 #define IDC_REFRUN_NOTES                1396
 #define IDC_REFRUN_POINTS               1397
+#define IDC_REFRUN_YPS                  1398
 #define IDC_PARTNER_NAME                1400
 #define IDC_PARTNER_CALLNAME            1401
 #define IDC_PARTNER_REG_NUM             1402

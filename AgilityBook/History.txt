@@ -1,4 +1,4 @@
-1/31/2008: v1.10.5.12 <in development>
+2/2/2008: v1.10.5.12 <in development>
 - Bumped file version to 12.7:
   - Added 'Visible' to Note items.
   - Added 'obstacle' to 'Scoring'
@@ -12,6 +12,7 @@
   - Add Obstacles and Obstacles-per-second information.
   - Support allowing multiple MultiQ associations on a run. This allows for
     a future QQQ in AKC [no, I don't know if one is coming!].
+  - Added YPS to Reference Run dialog.
 - Bug fixes:
   - User-added data in the configuration may be lost when updating the
     configuration. This will occur if you have added a Division, Event or

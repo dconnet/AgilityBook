@@ -368,12 +368,21 @@ bool ARBDogRunScoring::GetYPS(
 		bool inTableInYPS,
 		double& outYPS) const
 {
+	return GetYPS(inTableInYPS, GetTime(), outYPS);
+}
+
+
+bool ARBDogRunScoring::GetYPS(
+		bool inTableInYPS,
+		double inTime,
+		double& outYPS) const
+{
 	bool bOk = false;
 	if (eTypeByTime == GetType()
-	&& 0 < GetYards() && 0.0 < GetTime())
+	&& 0 < GetYards() && 0.0 < inTime)
 	{
 		bOk = true;
-		double t = GetTime();
+		double t = inTime;
 		if (HasTable() && 5.0 < t && !inTableInYPS)
 			t -= 5;
 		outYPS = GetYards() / t;
