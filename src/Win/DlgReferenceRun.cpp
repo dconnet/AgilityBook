@@ -55,6 +55,7 @@ static char THIS_FILE[] = __FILE__;
 
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
+		ARBDogRunPtr inRun,
 		std::set<tstring> const& inHeights,
 		std::set<tstring> const& inNames,
 		std::set<tstring> const& inBreeds,
@@ -65,6 +66,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_ctrlHeight(false)
 	, m_ctrlName(false)
 	, m_ctrlBreed(false)
+	, m_Run(inRun)
 	, m_pDoc(pDoc)
 	, m_Heights(inHeights)
 	, m_Names(inNames)
@@ -76,6 +78,11 @@ CDlgReferenceRun::CDlgReferenceRun(
 	m_Place = m_Ref->GetPlace();
 	m_Points = m_Ref->GetScore().c_str();
 	m_Time = m_Ref->GetTime();
+	double yps;
+	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
+	{
+		m_YPS = ARBDouble::str(yps, 3).c_str();
+	}
 	m_Name = m_Ref->GetName().c_str();
 	m_Height = m_Ref->GetHeight().c_str();
 	m_Breed = m_Ref->GetBreed().c_str();
@@ -97,6 +104,8 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_REFRUN_Q, m_ctrlQ);
 	DDX_Text(pDX, IDC_REFRUN_POINTS, m_Points);
 	DDX_Text(pDX, IDC_REFRUN_TIME, m_Time);
+	DDX_Control(pDX, IDC_REFRUN_YPS, m_ctrlYPS);
+	DDX_Text(pDX, IDC_REFRUN_YPS, m_YPS);
 	DDX_Control(pDX, IDC_REFRUN_HEIGHT, m_ctrlHeight);
 	DDX_CBString(pDX, IDC_REFRUN_HEIGHT, m_Height);
 	DDX_Control(pDX, IDC_REFRUN_NAME, m_ctrlName);
@@ -110,6 +119,7 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgReferenceRun, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgReferenceRun)
+	ON_EN_KILLFOCUS(IDC_REFRUN_TIME, &CDlgReferenceRun::OnKillfocusRefRunTime)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -146,6 +156,22 @@ BOOL CDlgReferenceRun::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+
+void CDlgReferenceRun::OnKillfocusRefRunTime()
+{
+	UpdateData(TRUE);
+	double yps;
+	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
+	{
+		m_YPS = ARBDouble::str(yps, 3).c_str();
+	}
+	else
+	{
+		m_YPS.Empty();
+	}
+	m_ctrlYPS.SetWindowText(m_YPS);
 }
 
 

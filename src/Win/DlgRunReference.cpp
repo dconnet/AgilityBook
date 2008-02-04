@@ -615,7 +615,7 @@ void CDlgRunReference::OnRefRunNew()
 	GetAllHeights(heights);
 	GetAllCallNames(names);
 	GetAllBreeds(breeds);
-	CDlgReferenceRun dlg(m_pDoc, heights, names, breeds, ref, this);
+	CDlgReferenceRun dlg(m_pDoc, m_Run, heights, names, breeds, ref, this);
 	if (IDOK == dlg.DoModal())
 	{
 		if (m_Run->GetReferenceRuns().AddReferenceRun(ref))
@@ -646,7 +646,7 @@ void CDlgRunReference::OnRefRunEdit()
 		GetAllCallNames(names);
 		GetAllBreeds(breeds);
 		ARBDogReferenceRunPtr pRef = GetReferenceData(nItem)->GetData();
-		CDlgReferenceRun dlg(m_pDoc, heights, names, breeds, pRef, this);
+		CDlgReferenceRun dlg(m_pDoc, m_Run, heights, names, breeds, pRef, this);
 		if (IDOK == dlg.DoModal())
 			ListRuns();
 	}
