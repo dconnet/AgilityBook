@@ -119,7 +119,7 @@ void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgReferenceRun, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgReferenceRun)
-	ON_EN_KILLFOCUS(IDC_REFRUN_TIME, &CDlgReferenceRun::OnKillfocusRefRunTime)
+	ON_EN_KILLFOCUS(IDC_REFRUN_TIME, OnKillfocusRefRunTime)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
