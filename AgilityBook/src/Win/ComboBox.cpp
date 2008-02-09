@@ -148,13 +148,13 @@ CVenueComboBox::~CVenueComboBox()
 
 
 bool CVenueComboBox::Initialize(
-		ARBConfigVenueList const& venues,
+		ARBConfigVenueList const& inVenues,
 		tstring const& inSelectVenue,
 		bool useLongName)
 {
 	bool bSelectionSet = false;
-	for (ARBConfigVenueList::const_iterator iterVenue = venues.begin();
-		iterVenue != venues.end();
+	for (ARBConfigVenueList::const_iterator iterVenue = inVenues.begin();
+		iterVenue != inVenues.end();
 		++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
