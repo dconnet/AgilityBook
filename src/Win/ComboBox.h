@@ -85,14 +85,14 @@ public:
 	/**
 	 * If autodelete is set, the ARBConfigVenuePtr will be cached as data
 	 * as CListPtrData<ARBConfigVenuePtr>.
-	 * @param List of venues to add
+	 * @param inVenues List of venues to add
 	 * @param inSelectVenue Name of venue to initially select
 	 * @param useLongName Show the long name
 	 * @return Whether selection was set.
 	 * @note This does not clear the existing contents.
 	 */
 	bool Initialize(
-			ARBConfigVenueList const& venues,
+			ARBConfigVenueList const& inVenues,
 			tstring const& inSelectVenue,
 			bool useLongName = false);
 
