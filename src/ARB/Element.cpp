@@ -119,18 +119,26 @@ XERCES_CPP_NAMESPACE_USE
 using namespace std;
 #endif
 
-// Write the dump and errors to cerr
-#define ERRORS_TO_CERR
-#if defined(_WINDOWS) && !defined(_CONSOLE)
-// On windows, we'll write the dump to TRACE and errors to AfxMessageBox.
-#undef ERRORS_TO_CERR
-#endif
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+////////////////////////////////////////////////////////////////////////////
+
+static void DumpErrorMessage(tstring const& msg)
+{
+#ifndef _WINDOWS
+#ifdef _UNICODE
+	std::wcerr << msg << std::endl;
+#else
+	std::cerr << msg << std::endl;
+#endif
+#else
+	TRACE(_T("%s\n"), msg.str().c_str());
+#endif
+}
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -1097,11 +1105,7 @@ void ElementNode::Dump(int inLevel) const
 			<< value
 			<< _T("\"");
 	}
-#ifdef ERRORS_TO_CERR
-	cerr << msg.str() << endl;
-#else
-	TRACE(_T("%s\n"), msg.str().c_str());
-#endif
+	DumpErrorMessage(msg.str());
 	for (i = 0; i < GetElementCount(); ++i)
 	{
 		GetElement(i)->Dump(inLevel+1);
@@ -1812,11 +1816,7 @@ void ElementText::Dump(int inLevel) const
 		msg << _T(": ")
 			<< m_Value;
 	}
-#ifdef ERRORS_TO_CERR
-	cerr << msg.str() << endl;
-#else
-	TRACE(_T("%s\n"), msg.str().c_str());
-#endif
+	DumpErrorMessage(msg.str());
 }
 
 
