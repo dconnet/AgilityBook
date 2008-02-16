@@ -4,7 +4,7 @@
 	Version="8.00"
 	Name="Common Settings"
 	OutputDirectory="$(SolutionDir)\..\..\..\bin\VC9$(PlatformName)\$(ConfigurationName)"
-	IntermediateDirectory="$(SolutionDir)\..\..\..\bin\VC9$(PlatformName)\$(ConfigurationName)\$(ProjectName)"
+	IntermediateDirectory="$(OutDir)\$(ProjectName)"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
