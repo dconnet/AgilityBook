@@ -39,7 +39,7 @@
  * @li 2005-10-30 DRC Added static xerces library support.
  */
 
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_CONSOLE)
 
 // _MSCVER
 // 1200: VC6.0
