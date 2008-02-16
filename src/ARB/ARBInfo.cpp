@@ -36,7 +36,7 @@
  * @li 2003-12-07 DRC Created
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBInfo.h"
 
 #include "ARBAgilityRecordBook.h"

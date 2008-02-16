@@ -47,7 +47,7 @@
  * @li 2003-01-23 DRC DocVer 2: Replaced 'PlanOn' attribute and with 'Entered'.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBCalendar.h"
 #include <algorithm>
 

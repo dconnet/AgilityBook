@@ -39,7 +39,7 @@
  * @li 2003-09-08 DRC Changed AddPartner usage.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBDogRunPartner.h"
 
 #include "ARBAgilityRecordBook.h"

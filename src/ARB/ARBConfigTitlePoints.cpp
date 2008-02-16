@@ -39,7 +39,7 @@
  * @li 2003-07-12 DRC Added as part of file version 5.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include <algorithm>
 #include "ARBConfigTitlePoints.h"
 

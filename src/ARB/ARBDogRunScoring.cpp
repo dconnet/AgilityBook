@@ -45,7 +45,7 @@
  * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include <math.h>
 #include "ARBDogRunScoring.h"
 

@@ -35,7 +35,7 @@
  * @li 2005-07-15 DRC Created.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBConfigMultiQ.h"
 
 #include <algorithm>

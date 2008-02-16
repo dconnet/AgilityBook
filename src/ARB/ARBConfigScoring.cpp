@@ -53,7 +53,7 @@
  * @li 2003-06-11 DRC Added dropFractions attribute.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBConfigScoring.h"
 
 #include "ARBAgilityRecordBook.h"

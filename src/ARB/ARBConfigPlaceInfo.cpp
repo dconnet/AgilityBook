@@ -34,7 +34,7 @@
  * @li 2006-11-03 DRC Created
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include <algorithm>
 #include "ARBConfigPlaceInfo.h"
 

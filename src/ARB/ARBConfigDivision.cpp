@@ -44,7 +44,7 @@
  * @li 2003-07-16 DRC Allow the code to keep processing after errors are found.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBConfigDivision.h"
 
 #include "ARBAgilityRecordBook.h"

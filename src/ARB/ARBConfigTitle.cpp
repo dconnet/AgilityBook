@@ -40,7 +40,7 @@
  * @li 2003-11-26 DRC Changed version number to a complex value.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBConfigTitle.h"
 
 #include "ARBAgilityRecordBook.h"

@@ -37,7 +37,7 @@
  * @li 2007-09-12 DRC Moved hardcoded strings out of ARBAgilityRecordBook.h
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBLocalization.h"
 
 #ifdef _DEBUG
