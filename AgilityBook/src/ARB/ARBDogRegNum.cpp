@@ -39,7 +39,7 @@
  * @li 2003-11-22 DRC Added FindRegNum().
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBDogRegNum.h"
 #include <algorithm>
 

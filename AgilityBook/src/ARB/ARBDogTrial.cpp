@@ -44,7 +44,7 @@
  * @li 2003-06-23 DRC Added note field to trials.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBDogTrial.h"
 #include <algorithm>
 

@@ -42,7 +42,7 @@
  * @li 2003-09-21 DRC Created
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBTraining.h"
 #include <algorithm>
 

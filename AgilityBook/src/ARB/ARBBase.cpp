@@ -36,7 +36,7 @@
  *                    prevent constant re-evaluation.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBBase.h"
 
 #ifdef _DEBUG

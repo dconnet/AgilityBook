@@ -38,7 +38,7 @@
  * @li 2003-02-02 DRC Created
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBDogExistingPoints.h"
 #include <algorithm>
 

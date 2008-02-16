@@ -39,7 +39,7 @@
  * @li 2003-09-17 DRC Save would not write data if only CRCD contained info.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBDogNotes.h"
 
 #include "ARBAgilityRecordBook.h"

@@ -88,7 +88,7 @@
  * @li 2003-01-23 DRC Bumped file version to 2: see ARBCalendar.cpp
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBAgilityRecordBook.h"
 
 #include "ARBConfig.h"

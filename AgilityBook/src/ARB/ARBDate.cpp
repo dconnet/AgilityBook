@@ -39,7 +39,7 @@
  * @li 2004-01-04 DRC Added FromString().
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBDate.h"
 #include <time.h>
 

@@ -35,7 +35,7 @@
  * @li 2004-10-06 DRC Added as part of file version 10.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include <algorithm>
 #include "ARBConfigLifetimePoints.h"
 

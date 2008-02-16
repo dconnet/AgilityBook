@@ -52,7 +52,7 @@
  * @li 2003-09-01 DRC Fixed problem with Score and TitlePts in time+faults.
  */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ARBDogRun.h"
 #include <algorithm>
 
