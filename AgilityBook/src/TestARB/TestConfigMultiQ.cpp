@@ -41,233 +41,215 @@
 #include "Element.h"
 
 
-BEGIN_TEST(ConfigMultiQ_New)
+SUITE(TestConfigMultiQ)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBConfigMultiQPtr New();
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBConfigMultiQPtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBConfigMultiQPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBConfigMultiQ const& rhs) const;
+	//	bool operator!=(ARBConfigMultiQ const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfigVenue const& inVenue,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
+
+
+	TEST(Match)
+	{
+		TODO_TEST
+	//	bool Match(
+	//			std::vector<ARBDogRunPtr>& ioRuns,
+	//			std::vector<ARBDogRunPtr>& outRuns) const;
+	}
+
+
+	TEST(RenameDivision)
+	{
+		TODO_TEST
+	//	int RenameDivision(
+	//			tstring const& inOldDiv,
+	//			tstring const& inNewDiv);
+	}
+
+
+	TEST(DeleteDivision)
+	{
+		TODO_TEST
+	//	int DeleteDivision(tstring const& inDiv);
+	}
+
+
+	TEST(RenameLevel)
+	{
+		TODO_TEST
+	//	int RenameLevel(
+	//			tstring const& inDiv,
+	//			tstring const& inOldLevel,
+	//			tstring const& inNewLevel);
+	}
+
+
+	TEST(DeleteLevel)
+	{
+		TODO_TEST
+	//	int DeleteLevel(tstring const& inLevel);
+	}
+
+
+	TEST(RenameEvent)
+	{
+		TODO_TEST
+	//	int RenameEvent(
+	//			tstring const& inOldEvent,
+	//			tstring const& inNewEvent);
+	}
+
+
+	TEST(DeleteEvent)
+	{
+		TODO_TEST
+	//	int DeleteEvent(tstring const& inEvent);
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddItem(
+	//			tstring const& inDiv,
+	//			tstring const& inLevel,
+	//			tstring const& inEvent);
+	//	bool RemoveItem(
+	//			tstring const& inDiv,
+	//			tstring const& inLevel,
+	//			tstring const& inEvent);
+	//	bool RemoveAllItems();
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigMultiQ_Clone)
+SUITE(TestConfigMultiQList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigMultiQPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfigVenue const& inVenue,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Find)
+	{
+		TODO_TEST
+	//	bool FindMultiQ(
+	//			tstring const& inName,
+	//			bool inUseShortName = false,
+	//			ARBConfigMultiQPtr* outMultiQ = NULL) const;
+	//	bool FindMultiQ(
+	//			ARBConfigMultiQ const& inMultiQ,
+	//			ARBConfigMultiQPtr* outMultiQ = NULL) const;
+	}
+
+
+	TEST(RenameDivision)
+	{
+		TODO_TEST
+	//	int RenameDivision(
+	//			tstring const& inOldDiv,
+	//			tstring const& inNewDiv);
+	}
+
+
+	TEST(DeleteDivision)
+	{
+		TODO_TEST
+	//	int DeleteDivision(tstring const& inDiv);
+	}
+
+
+	TEST(RenameLevel)
+	{
+		TODO_TEST
+	//	int RenameLevel(
+	//			tstring const& inDiv,
+	//			tstring const& inOldLevel,
+	//			tstring const& inNewLevel);
+	}
+
+
+	TEST(DeleteLevel)
+	{
+		TODO_TEST
+	//	int DeleteLevel(tstring const& inLevel);
+	}
+
+
+	TEST(RenameEvent)
+	{
+		TODO_TEST
+	//	int RenameEvent(
+	//			tstring const& inOldEvent,
+	//			tstring const& inNewEvent);
+	}
+
+
+	TEST(DeleteEvent)
+	{
+		TODO_TEST
+	//	int DeleteEvent(tstring const& inEvent);
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddMultiQ(ARBConfigMultiQPtr inMultiQ);
+	//	bool DeleteMultiQ(ARBConfigMultiQPtr inMultiQ);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigMultiQ& operator=(ARBConfigMultiQ const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBConfigMultiQ const& rhs) const;
-//	bool operator!=(ARBConfigMultiQ const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfigVenue const& inVenue,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_Match)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Match(
-//			std::vector<ARBDogRunPtr>& ioRuns,
-//			std::vector<ARBDogRunPtr>& outRuns) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_RenameDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameDivision(
-//			tstring const& inOldDiv,
-//			tstring const& inNewDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_DeleteDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteDivision(tstring const& inDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_RenameLevel)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameLevel(
-//			tstring const& inDiv,
-//			tstring const& inOldLevel,
-//			tstring const& inNewLevel);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_DeleteLevel)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteLevel(tstring const& inLevel);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_RenameEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameEvent(
-//			tstring const& inOldEvent,
-//			tstring const& inNewEvent);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_DeleteEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteEvent(tstring const& inEvent);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQ_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddItem(
-//			tstring const& inDiv,
-//			tstring const& inLevel,
-//			tstring const& inEvent);
-//	bool RemoveItem(
-//			tstring const& inDiv,
-//			tstring const& inLevel,
-//			tstring const& inEvent);
-//	bool RemoveAllItems();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfigVenue const& inVenue,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_Find)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindMultiQ(
-//			tstring const& inName,
-//			bool inUseShortName = false,
-//			ARBConfigMultiQPtr* outMultiQ = NULL) const;
-//	bool FindMultiQ(
-//			ARBConfigMultiQ const& inMultiQ,
-//			ARBConfigMultiQPtr* outMultiQ = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_RenameDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameDivision(
-//			tstring const& inOldDiv,
-//			tstring const& inNewDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_DeleteDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteDivision(tstring const& inDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_RenameLevel)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameLevel(
-//			tstring const& inDiv,
-//			tstring const& inOldLevel,
-//			tstring const& inNewLevel);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_DeleteLevel)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteLevel(tstring const& inLevel);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_RenameEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameEvent(
-//			tstring const& inOldEvent,
-//			tstring const& inNewEvent);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_DeleteEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteEvent(tstring const& inEvent);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigMultiQList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddMultiQ(ARBConfigMultiQPtr inMultiQ);
-//	bool DeleteMultiQ(ARBConfigMultiQPtr inMultiQ);
-}
-END_TEST

@@ -39,6 +39,7 @@
 
 #include "stdafx.h"
 #include "ARBTypes.h"
+#include <iostream>
 #include <math.h>
 #include <time.h>
 
@@ -51,7 +52,29 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#ifdef UNICODE
+#define TCERR std::wcerr
+#else
+#define TCERR std::cerr
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
+
+void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine)
+{
+#ifndef _WINDOWS
+	if (bIncNewLine)
+		TCERR << inMsg << std::endl;
+	else
+		TCERR << inMsg;
+#else
+	if (bIncNewLine)
+		TRACE(_T("%s\n"), inMsg.c_str());
+	else
+		TRACE0(inMsg.c_str());
+#endif
+}
+
 
 tstring SanitizeStringForHTML(
 		tstring const& inRawData,

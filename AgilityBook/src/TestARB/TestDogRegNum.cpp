@@ -41,133 +41,125 @@
 #include "Element.h"
 
 
-BEGIN_TEST(DogRegNum_New)
+SUITE(TestDogRegNum)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBDogRegNumPtr New();
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBDogRegNumPtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBDogRegNumPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBDogRegNum const& rhs) const;
+	//	bool operator!=(ARBDogRegNum const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfig const& inConfig,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(DogRegNum_Clone)
+SUITE(TestDogRegNumList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogRegNumPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfig const& inConfig,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(sort)
+	{
+		TODO_TEST
+	//	void sort();
+	}
+
+
+	TEST(NumRegNumsInVenue)
+	{
+		TODO_TEST
+	//	int NumRegNumsInVenue(tstring const& inVenue) const;
+	}
+
+
+	TEST(RenameVenue)
+	{
+		TODO_TEST
+	//	int RenameVenue(
+	//			tstring const& inOldVenue,
+	//			tstring const& inNewVenue);
+	}
+
+
+	TEST(DeleteVenue)
+	{
+		TODO_TEST
+	//	int DeleteVenue(tstring const& inVenue);
+	}
+
+
+	TEST(FindRegNum)
+	{
+		TODO_TEST
+	//	bool FindRegNum(
+	//			tstring const& inVenue,
+	//			ARBDogRegNumPtr* outRegNum = NULL) const;
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddRegNum(
+	//			tstring const& inVenue,
+	//			tstring const& inNumber,
+	//			ARBDogRegNumPtr* outRegNum = NULL);
+	//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
+	//	int DeleteRegNum(
+	//			tstring const& inVenue,
+	//			tstring const& inNumber);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(DogRegNum_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNum_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBDogRegNum const& rhs) const;
-//	bool operator!=(ARBDogRegNum const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNum_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNum_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfig const& inConfig,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNum_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNumList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfig const& inConfig,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNumList_sort)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	void sort();
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNumList_NumRegNumsInVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int NumRegNumsInVenue(tstring const& inVenue) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNumList_RenameVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameVenue(
-//			tstring const& inOldVenue,
-//			tstring const& inNewVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNumList_DeleteVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteVenue(tstring const& inVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNumList_FindRegNum)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindRegNum(
-//			tstring const& inVenue,
-//			ARBDogRegNumPtr* outRegNum = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogRegNumList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddRegNum(
-//			tstring const& inVenue,
-//			tstring const& inNumber,
-//			ARBDogRegNumPtr* outRegNum = NULL);
-//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
-//	int DeleteRegNum(
-//			tstring const& inVenue,
-//			tstring const& inNumber);
-}
-END_TEST

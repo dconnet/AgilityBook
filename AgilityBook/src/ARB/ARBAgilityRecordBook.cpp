@@ -291,7 +291,7 @@ bool ARBAgilityRecordBook::Load(
 
 static tstring GetTimeStamp()
 {
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_CONSOLE)
 	CString s = CTime::GetCurrentTime().Format("%Y-%m-%d %H:%M:%S");
 	return tstring((LPCTSTR)s);
 #else

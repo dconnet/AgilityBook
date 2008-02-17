@@ -41,113 +41,107 @@
 #include "Element.h"
 
 
-BEGIN_TEST(ConfigTitlePoints_New)
+SUITE(TestConfigTitlePoints)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBConfigTitlePointsPtr New();
-//	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults);
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBConfigTitlePointsPtr New();
+	//	static ARBConfigTitlePointsPtr New(double inPoints, double inFaults);
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBConfigTitlePointsPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBConfigTitlePoints const& rhs) const;
+	//	bool operator!=(ARBConfigTitlePoints const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const;
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback,
+	//			ARBConfigLifetimePointsList& ioLifetimePoints);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigTitlePoints_Clone)
+SUITE(TestConfigTitlePointsList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigTitlePointsPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback,
+	//			ARBConfigLifetimePointsList& ioLifetimePoints);
+	}
+
+
+	TEST(sort)
+	{
+		TODO_TEST
+	//	void sort();
+	}
+
+
+	TEST(GetTitlePoints)
+	{
+		TODO_TEST
+	//	double GetTitlePoints(double inFaults) const;
+	}
+
+
+	TEST(Find)
+	{
+		TODO_TEST
+	//	bool FindTitlePoints(
+	//			double inFaults,
+	//			ARBConfigTitlePointsPtr* outPoints = NULL) const;
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddTitlePoints(
+	//			double inPoints,
+	//			double inFaults,
+	//			ARBConfigTitlePointsPtr* outPoints = NULL);
+	//	bool DeleteTitlePoints(double inFaults);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePoints_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigTitlePoints& operator=(ARBConfigTitlePoints const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePoints_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBConfigTitlePoints const& rhs) const;
-//	bool operator!=(ARBConfigTitlePoints const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePoints_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePoints_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback,
-//			ARBConfigLifetimePointsList& ioLifetimePoints);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePoints_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePointsList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback,
-//			ARBConfigLifetimePointsList& ioLifetimePoints);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePointsList_sort)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	void sort();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePointsList_GetTitlePoints)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	double GetTitlePoints(double inFaults) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePointsList_Find)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindTitlePoints(
-//			double inFaults,
-//			ARBConfigTitlePointsPtr* outPoints = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigTitlePointsList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddTitlePoints(
-//			double inPoints,
-//			double inFaults,
-//			ARBConfigTitlePointsPtr* outPoints = NULL);
-//	bool DeleteTitlePoints(double inFaults);
-}
-END_TEST

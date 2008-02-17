@@ -39,34 +39,34 @@
 #include "ARBTypes.h"
 
 
-BEGIN_TEST(Version_ctor)
+SUITE(TestVersion)
 {
-	unsigned short maj = 0, minor = 0;
-	ARBVersion v;
-	WIN_ASSERT_EQUAL(maj, v.Major());
-	WIN_ASSERT_EQUAL(minor, v.Minor());
+	TEST(ctor)
+	{
+		unsigned short maj = 0, minor = 0;
+		ARBVersion v;
+		CHECK(maj == v.Major());
+		CHECK(minor == v.Minor());
 
-	maj = 1;
-	minor = 2;
-	ARBVersion v2(maj, minor);
-	WIN_ASSERT_EQUAL(maj, v2.Major());
-	WIN_ASSERT_EQUAL(minor, v2.Minor());
+		maj = 1;
+		minor = 2;
+		ARBVersion v2(maj, minor);
+		CHECK(maj == v2.Major());
+		CHECK(minor == v2.Minor());
+	}
+
+
+	TEST(str)
+	{
+		ARBVersion v(1, 2);
+		CHECK(_T("1.2") == v.str());
+	}
+
+
+	TEST(Comparison)
+	{
+		ARBVersion v1(1, 2);
+		ARBVersion v2(2, 1);
+		CHECK(v1 < v2);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(Version_str)
-{
-	ARBVersion v(1, 2);
-	WIN_ASSERT_STRING_EQUAL(_T("1.2"), v.str().c_str());
-}
-END_TEST
-
-
-BEGIN_TEST(Version_Comparison)
-{
-	ARBVersion v1(1, 2);
-	ARBVersion v2(2, 1);
-	WIN_ASSERT_TRUE(v1 < v2);
-}
-END_TEST

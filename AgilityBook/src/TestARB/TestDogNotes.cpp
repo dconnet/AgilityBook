@@ -41,57 +41,54 @@
 #include "Element.h"
 
 
-BEGIN_TEST(MetaData_MetaData)
+SUITE(TestDogNotes)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBMetaDataPtr MetaData();
-//	size_t length() const				{return m_Bytes;}
-//	unsigned char const* data() const	{return m_Data;}
+	TEST(MetaData)
+	{
+		TODO_TEST
+	//	static ARBMetaDataPtr MetaData();
+	//	size_t length() const				{return m_Bytes;}
+	//	unsigned char const* data() const	{return m_Data;}
+	}
+
+
+	TEST(ctor)
+	{
+		TODO_TEST
+	//	ARBDogNotes();
+	//	ARBDogNotes(ARBDogNotes const& rhs);
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBDogNotes& operator=(ARBDogNotes const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBDogNotes const& rhs) const;
+	//	bool operator!=(ARBDogNotes const& rhs) const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfig const& inConfig,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(DogNotes_ctor)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogNotes();
-//	ARBDogNotes(ARBDogNotes const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(DogNotes_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogNotes& operator=(ARBDogNotes const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(DogNotes_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBDogNotes const& rhs) const;
-//	bool operator!=(ARBDogNotes const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(DogNotes_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfig const& inConfig,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogNotes_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST

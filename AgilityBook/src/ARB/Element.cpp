@@ -127,21 +127,6 @@ static char THIS_FILE[] = __FILE__;
 
 ////////////////////////////////////////////////////////////////////////////
 
-static void DumpErrorMessage(tstring const& msg)
-{
-#ifndef _WINDOWS
-#ifdef _UNICODE
-	std::wcerr << msg << std::endl;
-#else
-	std::cerr << msg << std::endl;
-#endif
-#else
-	TRACE(_T("%s\n"), msg.str().c_str());
-#endif
-}
-
-////////////////////////////////////////////////////////////////////////////
-
 bool Element::Initialize(tstring& outMsg)
 {
 	outMsg.erase();

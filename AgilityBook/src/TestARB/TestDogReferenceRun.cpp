@@ -41,83 +41,80 @@
 #include "Element.h"
 
 
-BEGIN_TEST(DogReferenceRun_New)
+SUITE(TestDogReferenceRun)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBDogReferenceRunPtr New();
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBDogReferenceRunPtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBDogReferenceRunPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBDogReferenceRun const& rhs) const;
+	//	bool operator!=(ARBDogReferenceRun const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfig const& inConfig,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(DogReferenceRun_Clone)
+SUITE(TestDogReferenceRunList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogReferenceRunPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfig const& inConfig,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
+	//	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(DogReferenceRun_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(DogReferenceRun_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBDogReferenceRun const& rhs) const;
-//	bool operator!=(ARBDogReferenceRun const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(DogReferenceRun_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const
-}
-END_TEST
-
-
-BEGIN_TEST(DogReferenceRun_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfig const& inConfig,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogReferenceRun_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogReferenceRunList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfig const& inConfig,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogReferenceRunList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
-//	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
-}
-END_TEST

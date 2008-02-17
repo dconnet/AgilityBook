@@ -41,21 +41,6 @@
 #include "Element.h"
 
 
-FIXTURE(ConfigAction)
-
-
-SETUP(ConfigAction)
-{
-	WIN_ASSERT_TRUE(CommonSetup());
-}
-
-
-TEARDOWN(ConfigAction)
-{
-	WIN_ASSERT_TRUE(CommonTeardown());
-}
-
-
 class ActionCallbackStop : public IConfigActionCallback
 {
 public:
@@ -76,493 +61,449 @@ public:
 };
 
 
-BEGIN_TEST(ConfigActionDeleteCalPlugin_New)
+SUITE(TestConfigAction)
 {
-	ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(_T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteCalPlugin_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(_T("name"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteCalPlugin_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameOtherPoints_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(_T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameOtherPoints_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(_T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameOtherPoints_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteOtherPoints_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(_T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteOtherPoints_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(_T("name"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteOtherPoints_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameVenue_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(_T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameVenue_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(_T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameVenue_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteVenue_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(_T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteVenue_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(_T("name"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteVenue_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameMultiQ_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(_T("venue"), _T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameMultiQ_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(_T("venue"), _T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameMultiQ_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteMultiQ_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(_T("venue"), _T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteMultiQ_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(_T("venue"), _T("name"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteMultiQ_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameDivision_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(_T("venue"), _T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameDivision_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(_T("venue"), _T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameDivision_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteDivision_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(_T("venue"), _T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteDivision_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(_T("venue"), _T("name"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteDivision_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameLevel_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-	obj = ARBConfigActionRenameLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameLevel_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-
-	obj = ARBConfigActionRenameLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("oldname"), _T("newname"));
-	obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameLevel_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteLevel_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(_T("venue"), _T("div"), _T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-	obj = ARBConfigActionDeleteLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteLevel_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(_T("venue"), _T("div"), _T("name"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-
-	obj = ARBConfigActionDeleteLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("name"));
-	obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteLevel_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameTitle_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(_T("venue"), _T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameTitle_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(_T("venue"), _T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameTitle_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteTitle_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteTitle_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteTitle_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameEvent_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(_T("venue"), _T("oldname"), _T("newname"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameEvent_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(_T("venue"), _T("oldname"), _T("newname"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionRenameEvent_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteEvent_New)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(_T("venue"), _T("name"));
-	WIN_ASSERT_NOT_NULL(obj.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteEvent_Clone)
-{
-	ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(_T("venue"), _T("name"));
-	ARBConfigActionPtr obj2 = obj->Clone();
-	WIN_ASSERT_NOT_NULL(obj2.get());
-	WIN_ASSERT_NOT_EQUAL(obj.get(), obj2.get());
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigActionDeleteEvent_Apply)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual bool Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TEST
-
-
-BEGIN_TESTF(ConfigActionList_Load, ConfigAction)
-{
-	ElementNodePtr actions = CreateActionList();
-	ARBConfigActionList lst;
-	tstring err;
-	ARBErrorCallback callback(err);
-	for (int i = 0; i < actions->GetElementCount(); ++i)
+	TEST(DeleteCalPlugin_New)
 	{
-		if (!actions->GetElementNode(i))
-			continue;
-		WIN_ASSERT_TRUE(lst.Load(actions->GetElementNode(i), ARBVersion(1, 0), callback));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(_T("name"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteCalPlugin_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(_T("name"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteCalPlugin_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(RenameOtherPoints_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(_T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(RenameOtherPoints_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(_T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(RenameOtherPoints_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(DeleteOtherPoints_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(_T("name"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteOtherPoints_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(_T("name"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteOtherPoints_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(RenameVenue_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(_T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(RenameVenue_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(_T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(RenameVenue_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(DeleteVenue_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(_T("name"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteVenue_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(_T("name"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteVenue_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(RenameMultiQ_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(_T("venue"), _T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(RenameMultiQ_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(RenameMultiQ_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(DeleteMultiQ_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(_T("venue"), _T("name"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteMultiQ_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteMultiQ_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(RenameDivision_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(_T("venue"), _T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(RenameDivision_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(RenameDivision_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(DeleteDivision_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(_T("venue"), _T("name"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteDivision_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteDivision_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(RenameLevel_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+		obj = ARBConfigActionRenameLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(RenameLevel_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+
+		obj = ARBConfigActionRenameLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("oldname"), _T("newname"));
+		obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(RenameLevel_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(DeleteLevel_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(_T("venue"), _T("div"), _T("name"));
+		CHECK(NULL != obj.get());
+		obj = ARBConfigActionDeleteLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("name"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteLevel_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(_T("venue"), _T("div"), _T("name"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+
+		obj = ARBConfigActionDeleteLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("name"));
+		obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteLevel_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(RenameTitle_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(_T("venue"), _T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(RenameTitle_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(RenameTitle_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(DeleteTitle_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteTitle_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteTitle_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(RenameEvent_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(_T("venue"), _T("oldname"), _T("newname"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(RenameEvent_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(RenameEvent_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(DeleteEvent_New)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(_T("venue"), _T("name"));
+		CHECK(NULL != obj.get());
+	}
+
+
+	TEST(DeleteEvent_Clone)
+	{
+		ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj2 = obj->Clone();
+		CHECK(NULL != obj2.get());
+		CHECK(obj.get() != obj2.get());
+	}
+
+
+	TEST(DeleteEvent_Apply)
+	{
+		TODO_TEST
+		//virtual bool Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
+	}
+
+
+	TEST(List_Load)
+	{
+		ElementNodePtr actions = CreateActionList();
+		ARBConfigActionList lst;
+		tstring err;
+		ARBErrorCallback callback(err);
+		for (int i = 0; i < actions->GetElementCount(); ++i)
+		{
+			if (!actions->GetElementNode(i))
+				continue;
+			CHECK(lst.Load(actions->GetElementNode(i), ARBVersion(1, 0), callback));
+		}
+	}
+
+
+	TEST(List_Apply)
+	{
+		TODO_TEST
+		//int Apply(
+		//		ARBConfig& ioConfig,
+		//		ARBDogList* ioDogs,
+		//		otstringstream& ioInfo,
+		//		IConfigActionCallback& ioCallBack) const;
 	}
 }
-END_TESTF
-
-
-BEGIN_TESTF(ConfigActionList_Apply, ConfigAction)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int Apply(
-	//		ARBConfig& ioConfig,
-	//		ARBDogList* ioDogs,
-	//		otstringstream& ioInfo,
-	//		IConfigActionCallback& ioCallBack) const;
-}
-END_TESTF

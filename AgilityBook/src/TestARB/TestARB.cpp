@@ -41,33 +41,47 @@
 #include "ARBStructure.h"
 #include "Element.h"
 
-#pragma comment(lib, "WinUnitLib.lib")
+#if _MSC_VER >= 1300 && _MSC_VER < 1400
+#define UNITTESTLIB		"UnitTest++.vsnet2003"
+#elif _MSC_VER >= 1400 && _MSC_VER < 1500
+#define UNITTESTLIB		"UnitTest++.vsnet2005"
+#elif _MSC_VER >= 1500
+#define UNITTESTLIB		"UnitTest++.vsnet2008"
+#else
+#error Unsupported compiler
+#endif
+#ifdef _UNICODE
+#define UNITTESTLIBU	"U"
+#else
+#define UNITTESTLIBU	""
+#endif
+#ifdef _DEBUG
+#define UNITTESTLIBD	"D"
+#else
+#define UNITTESTLIBD	""
+#endif
+#pragma comment(lib, UNITTESTLIB UNITTESTLIBU UNITTESTLIBD ".lib")
 
 
-// In theory, this stuff should only be done once - but the framework doesn't
-// support that, so just provide global functions so it can be implemented in
-// one place. In time, when this is added to WinUnit, we can just make these
-// empty functions - unless there really is something we want to do across all
-// fixture tests.
 
-bool CommonSetup()
+int _tmain(int /*argc*/, _TCHAR* /*argv*/ [])
 {
+	AfxSetResourceHandle(GetModuleHandle(NULL));
+
 	static CLocalization localization;
-	static bool bInit = false;
-	if (!bInit)
-	{
-		bInit = true;
-		IARBLocalization::Init(&localization);
-	}
+	IARBLocalization::Init(&localization);
+
 	tstring errs;
-	return Element::Initialize(errs);
-}
+	if (!Element::Initialize(errs))
+	{
+		return 1;
+	}
 
+	int rc = UnitTest::RunAllTests();
 
-bool CommonTeardown()
-{
 	Element::Terminate();
-	return true;
+
+	return rc;
 }
 
 
@@ -86,25 +100,25 @@ ElementNodePtr LoadXMLData(UINT id)
 			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
 			if (!tree->LoadXMLBuffer(pData, size, errMsg))
 			{
-				WIN_TRACE(errMsg.c_str());
+				DumpErrorMessage(errMsg);
 				tree.reset();
 			}
 			FreeResource(hRes);
 		}
 	}
-	WIN_ASSERT_TRUE(tree);
+	VERIFY(tree);
 	return tree;
 }
 
 
 bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 {
-	WIN_ASSERT_TRUE(tree);
-	WIN_ASSERT_STRING_EQUAL(_T("DefaultConfig"), tree->GetName().c_str());
+	VERIFY(tree);
+	VERIFY(tree->GetName() == _T("DefaultConfig"));
 	ARBVersion version;
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 	int idx = tree->FindElement(TREE_CONFIG);
-	WIN_ASSERT_TRUE(0 <= idx);
+	VERIFY(0 <= idx);
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	return config.Load(tree->GetElementNode(idx), version, err);
@@ -202,8 +216,8 @@ ElementNodePtr CreateActionList()
 	bool bParse = actions->LoadXMLBuffer(configData, strlen(configData), errmsg);
 	if (!bParse)
 	{
-		WIN_TRACE(errmsg.c_str());
+		DumpErrorMessage(errmsg);
 	}
-	WIN_ASSERT_TRUE(bParse);
+	VERIFY(bParse);
 	return actions;
 }

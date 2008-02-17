@@ -40,112 +40,107 @@
 #include "ARBConfigPlaceInfo.h"
 #include "Element.h"
 
-BEGIN_TEST(ConfigPlaceInfo_New)
+
+SUITE(TestConfigPlaceInfo)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBConfigPlaceInfoPtr New();
-//	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue, bool bMustQ);
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBConfigPlaceInfoPtr New();
+	//	static ARBConfigPlaceInfoPtr New(short inPlace, double inValue, bool bMustQ);
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBConfigPlaceInfoPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBConfigPlaceInfo const& rhs) const;
+	//	bool operator!=(ARBConfigPlaceInfo const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const;
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigPlaceInfo_Clone)
+SUITE(TestConfigPlaceInfoList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigPlaceInfoPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(sort)
+	{
+		TODO_TEST
+	//	void sort();
+	}
+
+
+	TEST(GetPlaceInfo)
+	{
+		TODO_TEST
+	//	bool GetPlaceInfo(short inPlace, double &outValue) const;
+	}
+
+
+	TEST(Find)
+	{
+		TODO_TEST
+	//	bool FindPlaceInfo(
+	//			short inPlace,
+	//			ARBConfigPlaceInfoPtr* outPlace = NULL) const;
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddPlaceInfo(
+	//			short inPlace,
+	//			double inValue,
+	//			bool inMustQ,
+	//			ARBConfigPlaceInfoPtr* outPlace = NULL);
+	//	bool DeletePlaceInfo(short inPlace);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfo_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigPlaceInfo& operator=(ARBConfigPlaceInfo const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfo_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBConfigPlaceInfo const& rhs) const;
-//	bool operator!=(ARBConfigPlaceInfo const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfo_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfo_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfo_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfoList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfoList_sort)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	void sort();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfoList_GetPlaceInfo)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool GetPlaceInfo(short inPlace, double &outValue) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfoList_Find)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindPlaceInfo(
-//			short inPlace,
-//			ARBConfigPlaceInfoPtr* outPlace = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigPlaceInfoList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddPlaceInfo(
-//			short inPlace,
-//			double inValue,
-//			bool inMustQ,
-//			ARBConfigPlaceInfoPtr* outPlace = NULL);
-//	bool DeletePlaceInfo(short inPlace);
-}
-END_TEST

@@ -174,7 +174,7 @@ typedef long LONG_PTR;
 #define _tstol _ttol
 #endif
 
-#else // _WINDOWS
+#else // _WINDOWS ||_CONSOLE
 
 // Include other platform common files here. This way we can continue to
 // include 'stdafx.h' as the first header in all .cpp files so win32
@@ -196,4 +196,4 @@ typedef char	TCHAR;
 #define _tcstod	strtod
 #endif // UNICODE
 
-#endif // _WINDOWS
+#endif // _WINDOWS ||_CONSOLE

@@ -43,7 +43,7 @@
  */
 
 #include "stdafx.h"
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_CONSOLE)
 #include "resource.h"
 #endif
 #include "ARBConfig.h"
@@ -260,7 +260,7 @@ void ARBConfig::Default()
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_CONSOLE)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 	if (hrSrc)
 	{
@@ -296,7 +296,7 @@ void ARBConfig::Default()
 std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 {
 	std::string dtd;
-#ifdef _WINDOWS
+#if defined(_WINDOWS) || defined(_CONSOLE)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
 	if (hrSrc)
 	{

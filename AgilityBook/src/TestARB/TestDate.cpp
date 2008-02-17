@@ -39,143 +39,135 @@
 #include "ARBDate.h"
 
 
-BEGIN_TEST(Date_New)
+SUITE(TestDate)
 {
-	ARBDate d;
-	WIN_ASSERT_FALSE(d.IsValid());
+	TEST(New)
+	{
+		ARBDate d;
+		CHECK(!d.IsValid());
+	}
+
+
+	TEST(Valid)
+	{
+		ARBDate d(1999, 3, 27);
+		CHECK_EQUAL(1999, d.GetYear());
+		CHECK_EQUAL(3, d.GetMonth());
+		CHECK_EQUAL(27, d.GetDay());
+	}
+
+
+	TEST(Bad)
+	{
+		ARBDate d(1999, 3, 42);
+		CHECK(!d.IsValid());
+	}
+
+
+	TEST(Equality)
+	{
+		ARBDate d1(1999, 3, 27);
+		ARBDate d2(1999, 3, 27);
+		CHECK(d1 == d2);
+	}
+
+
+	TEST(Less)
+	{
+		ARBDate d1(1999, 3, 27);
+		ARBDate d2(1999, 4, 27);
+		CHECK(d1 < d2);
+	}
+
+
+	TEST(Between)
+	{
+		ARBDate d1(1999, 3, 27);
+		ARBDate d2(1999, 4, 27);
+		ARBDate d3(1999, 5, 27);
+		CHECK(d2.isBetween(d1, d3));
+		CHECK(d2.isBetween(d3, d1));
+		CHECK(!d1.isBetween(d2, d3));
+		CHECK(!d1.isBetween(d3, d2));
+	}
+
+
+	TEST(String)
+	{
+		ARBDate d(1999, 3, 2);
+		CHECK(_T("03/02/1999") == d.GetString(ARBDate::eDefault));
+		CHECK(_T("03-02-1999") == d.GetString(ARBDate::eDashMMDDYYYY));
+		CHECK(_T("03/02/1999") == d.GetString(ARBDate::eSlashMMDDYYYY));
+		CHECK(_T("1999-03-02") == d.GetString(ARBDate::eDashYYYYMMDD));
+		CHECK(_T("1999/03/02") == d.GetString(ARBDate::eSlashYYYYMMDD));
+		CHECK(_T("02-03-1999") == d.GetString(ARBDate::eDashDDMMYYYY));
+		CHECK(_T("02/03/1999") == d.GetString(ARBDate::eSlashDDMMYYYY));
+		CHECK(_T("3-2-1999") == d.GetString(ARBDate::eDashMDY));
+		CHECK(_T("3/2/1999") == d.GetString(ARBDate::eSlashMDY));
+		CHECK(_T("1999-3-2") == d.GetString(ARBDate::eDashYMD));
+		CHECK(_T("1999/3/2") == d.GetString(ARBDate::eSlashYMD));
+		CHECK(_T("2-3-1999") == d.GetString(ARBDate::eDashDMY));
+		CHECK(_T("2/3/1999") == d.GetString(ARBDate::eSlashDMY));
+		CHECK(_T("19990302") == d.GetString(ARBDate::eYYYYMMDD));
+	}
+
+
+	TEST(Add)
+	{
+		ARBDate d1(1999, 3, 27);
+		ARBDate d2(1999, 3, 30);
+		long days = 3;
+		ARBDate dt1 = d1 + days;
+		CHECK(dt1 == d2);
+		ARBDate dt2 = d1;
+		dt2 += days;
+		CHECK(dt2 == d2);
+		CHECK(dt1 == dt2);
+	}
+
+
+	TEST(Subtract)
+	{
+		ARBDate d1(1999, 3, 30);
+		ARBDate d2(1999, 3, 27);
+		long days = 3;
+		ARBDate dt1 = d1 - days;
+		CHECK(dt1 == d2);
+		ARBDate dt2 = d1;
+		dt2 -= days;
+		CHECK(dt2 == d2);
+		CHECK(dt1 == dt2);
+	}
+
+
+	TEST(FromString)
+	{
+		ARBDate d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDashYYYYMMDD);
+		CHECK(d.IsValid());
+		ARBDate d2(1999, 3, 27);
+		CHECK(d == d2);
+		d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDefault);
+		CHECK(d == d2);
+		CHECK(d.IsValid());
+		d = ARBDate::FromString(_T("3/27/1999"), ARBDate::eDefault);
+		CHECK(d.IsValid());
+		CHECK(d == d2);
+		d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
+		CHECK(!d.IsValid());
+		//TODO: Add more complete tests (test each format, bad formats, etc)
+	}
+
+
+	TEST(ValidDateString)
+	{
+		ARBDate d1(1999, 3, 30);
+		ARBDate d2(1999, 3, 27);
+		tstring s = ARBDate::GetValidDateString(d1, d2);
+		CHECK(_T("[1999-3-30-1999-3-27]") == s);
+		d1.clear();
+		s = ARBDate::GetValidDateString(d1, d2);
+		CHECK(_T("[*-1999-3-27]") == s);
+		s = ARBDate::GetValidDateString(d2, d1);
+		CHECK(_T("[1999-3-27-*]") == s);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(Date_Valid)
-{
-	ARBDate d(1999, 3, 27);
-	WIN_ASSERT_EQUAL(1999, d.GetYear());
-	WIN_ASSERT_EQUAL(3, d.GetMonth());
-	WIN_ASSERT_EQUAL(27, d.GetDay());
-}
-END_TEST
-
-
-BEGIN_TEST(Date_Bad)
-{
-	ARBDate d(1999, 3, 42);
-	WIN_ASSERT_FALSE(d.IsValid());
-}
-END_TEST
-
-
-BEGIN_TEST(Date_Equality)
-{
-	ARBDate d1(1999, 3, 27);
-	ARBDate d2(1999, 3, 27);
-	WIN_ASSERT_EQUAL(d1, d2);
-}
-END_TEST
-
-
-BEGIN_TEST(Date_Less)
-{
-	ARBDate d1(1999, 3, 27);
-	ARBDate d2(1999, 4, 27);
-	WIN_ASSERT_TRUE(d1 < d2);
-}
-END_TEST
-
-
-BEGIN_TEST(Date_Between)
-{
-	ARBDate d1(1999, 3, 27);
-	ARBDate d2(1999, 4, 27);
-	ARBDate d3(1999, 5, 27);
-	WIN_ASSERT_TRUE(d2.isBetween(d1, d3));
-	WIN_ASSERT_TRUE(d2.isBetween(d3, d1));
-	WIN_ASSERT_FALSE(d1.isBetween(d2, d3));
-	WIN_ASSERT_FALSE(d1.isBetween(d3, d2));
-}
-END_TEST
-
-
-BEGIN_TEST(Date_String)
-{
-	ARBDate d(1999, 3, 2);
-	WIN_ASSERT_STRING_EQUAL(_T("03/02/1999"), d.GetString(ARBDate::eDefault).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("03-02-1999"), d.GetString(ARBDate::eDashMMDDYYYY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("03/02/1999"), d.GetString(ARBDate::eSlashMMDDYYYY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("1999-03-02"), d.GetString(ARBDate::eDashYYYYMMDD).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("1999/03/02"), d.GetString(ARBDate::eSlashYYYYMMDD).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("02-03-1999"), d.GetString(ARBDate::eDashDDMMYYYY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("02/03/1999"), d.GetString(ARBDate::eSlashDDMMYYYY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("3-2-1999"), d.GetString(ARBDate::eDashMDY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("3/2/1999"), d.GetString(ARBDate::eSlashMDY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("1999-3-2"), d.GetString(ARBDate::eDashYMD).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("1999/3/2"), d.GetString(ARBDate::eSlashYMD).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("2-3-1999"), d.GetString(ARBDate::eDashDMY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("2/3/1999"), d.GetString(ARBDate::eSlashDMY).c_str());
-	WIN_ASSERT_STRING_EQUAL(_T("19990302"), d.GetString(ARBDate::eYYYYMMDD).c_str());
-}
-END_TEST
-
-
-BEGIN_TEST(Date_Add)
-{
-	ARBDate d1(1999, 3, 27);
-	ARBDate d2(1999, 3, 30);
-	long days = 3;
-	ARBDate dt1 = d1 + days;
-	WIN_ASSERT_EQUAL(dt1, d2);
-	ARBDate dt2 = d1;
-	dt2 += days;
-	WIN_ASSERT_EQUAL(dt2, d2);
-	WIN_ASSERT_EQUAL(dt1, dt2);
-}
-END_TEST
-
-
-BEGIN_TEST(Date_Subtract)
-{
-	ARBDate d1(1999, 3, 30);
-	ARBDate d2(1999, 3, 27);
-	long days = 3;
-	ARBDate dt1 = d1 - days;
-	WIN_ASSERT_EQUAL(dt1, d2);
-	ARBDate dt2 = d1;
-	dt2 -= days;
-	WIN_ASSERT_EQUAL(dt2, d2);
-	WIN_ASSERT_EQUAL(dt1, dt2);
-}
-END_TEST
-
-
-BEGIN_TEST(Date_FromString)
-{
-	ARBDate d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDashYYYYMMDD);
-	WIN_ASSERT_TRUE(d.IsValid());
-	ARBDate d2(1999, 3, 27);
-	WIN_ASSERT_EQUAL(d, d2);
-	d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDefault);
-	WIN_ASSERT_EQUAL(d, d2);
-	WIN_ASSERT_TRUE(d.IsValid());
-	d = ARBDate::FromString(_T("3/27/1999"), ARBDate::eDefault);
-	WIN_ASSERT_TRUE(d.IsValid());
-	WIN_ASSERT_EQUAL(d, d2);
-	d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
-	WIN_ASSERT_FALSE(d.IsValid());
-	//TODO: Add more complete tests (test each format, bad formats, etc)
-}
-END_TEST
-
-
-BEGIN_TEST(Date_ValidDateString)
-{
-	ARBDate d1(1999, 3, 30);
-	ARBDate d2(1999, 3, 27);
-	tstring s = ARBDate::GetValidDateString(d1, d2);
-	WIN_ASSERT_STRING_EQUAL(_T("[1999-3-30-1999-3-27]"), s.c_str());
-	d1.clear();
-	s = ARBDate::GetValidDateString(d1, d2);
-	WIN_ASSERT_STRING_EQUAL(_T("[*-1999-3-27]"), s.c_str());
-	s = ARBDate::GetValidDateString(d2, d1);
-	WIN_ASSERT_STRING_EQUAL(_T("[1999-3-27-*]"), s.c_str());
-}
-END_TEST
