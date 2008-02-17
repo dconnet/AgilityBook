@@ -56,22 +56,23 @@ public:
 };
 
 
-BEGIN_TEST(ErrorCallback_Callback)
+SUITE(TestErrorCallback)
 {
-	tstring msg;
-	ARBErrorCallback err(msg);
-	err.LogMessage(_T("Testing1"));
-	WIN_ASSERT_STRING_EQUAL(_T("Testing1"), msg.c_str());
-}
-END_TEST
+	TEST(Callback)
+	{
+		tstring msg;
+		ARBErrorCallback err(msg);
+		err.LogMessage(_T("Testing1"));
+		CHECK(msg == _T("Testing1"));
+	}
 
 
-BEGIN_TEST(ErrorCallback_Derived)
-{
-	tstring msg;
-	ErrorCallback err(msg);
-	err.LogMessage(_T("Testing1"));
-	WIN_ASSERT_EQUAL(msg, err.m_Msg);
-	WIN_ASSERT_STRING_EQUAL(_T("Testing1"), msg.c_str());
+	TEST(Derived)
+	{
+		tstring msg;
+		ErrorCallback err(msg);
+		err.LogMessage(_T("Testing1"));
+		CHECK(msg == err.m_Msg);
+		CHECK(msg == _T("Testing1"));
+	}
 }
-END_TEST

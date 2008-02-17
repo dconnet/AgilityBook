@@ -41,91 +41,87 @@
 #include "Element.h"
 
 
-BEGIN_TEST(ConfigSubLevel_New)
+SUITE(TestConfigSubLevel)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBConfigSubLevelPtr New();
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBConfigSubLevelPtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBConfigSubLevelPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBConfigSubLevel const& rhs) const;
+	//	bool operator!=(ARBConfigSubLevel const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigSubLevel_Clone)
+SUITE(TestConfigSubLevelList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigSubLevelPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Find)
+	{
+		TODO_TEST
+	//	bool FindSubLevel(tstring const& inName) const;
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddSubLevel(
+	//			tstring const& inName,
+	//			ARBConfigSubLevelPtr* outLevel = NULL);
+	//	bool DeleteSubLevel(tstring const& inName);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevel_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevel_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBConfigSubLevel const& rhs) const;
-//	bool operator!=(ARBConfigSubLevel const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevel_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevel_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevel_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevelList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevelList_Find)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindSubLevel(tstring const& inName) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigSubLevelList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddSubLevel(
-//			tstring const& inName,
-//			ARBConfigSubLevelPtr* outLevel = NULL);
-//	bool DeleteSubLevel(tstring const& inName);
-}
-END_TEST

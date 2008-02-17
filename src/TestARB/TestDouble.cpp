@@ -39,25 +39,26 @@
 #include "ARBTypes.h"
 
 
-BEGIN_TEST(Double_str)
+SUITE(TestDouble)
 {
-	double p = 3.14159265358979323846;
+	TEST(str)
+	{
+		double p = 3.14159265358979323846;
 
-	tstring s = ARBDouble::str(p);
-	WIN_ASSERT_STRING_EQUAL(_T("3.14"), s.c_str());
-	s = ARBDouble::str(p, 4);
-	WIN_ASSERT_STRING_EQUAL(_T("3.1416"), s.c_str());
+		tstring s = ARBDouble::str(p);
+		CHECK(_T("3.14") == s);
+		s = ARBDouble::str(p, 4);
+		CHECK(_T("3.1416") == s);
+	}
+
+
+	TEST(equal)
+	{
+		double p1 = 3.14159265;
+		double p2 = 3.141592;
+		double p3 = 3.141592657;
+		CHECK(ARBDouble::equal(p1, p2, 0.00001));
+		CHECK(!ARBDouble::equal(p1, p2, 0.00000001));
+		CHECK(ARBDouble::equal(p1, p3, 0.00000001));
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(Double_equal)
-{
-	double p1 = 3.14159265;
-	double p2 = 3.141592;
-	double p3 = 3.141592657;
-	WIN_ASSERT_TRUE(ARBDouble::equal(p1, p2, 0.00001));
-	WIN_ASSERT_FALSE(ARBDouble::equal(p1, p2, 0.00000001));
-	WIN_ASSERT_TRUE(ARBDouble::equal(p1, p3, 0.00000001));
-}
-END_TEST

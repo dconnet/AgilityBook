@@ -1,7 +1,7 @@
 Setting up the build environment
 ================================
 Additional software packages required (all free):
-- WinUnit
+- UnitTest++
 - HTML Help Workshop
 - Boost libraries
 - Windows Installer XML toolset (or Inno Setup)
@@ -18,13 +18,18 @@ Once the above software is unpacked, the directory structure should look like:
 
 --------------------
 
-WinUnit: http://msdn.microsoft.com/msdnmag/issues/08/02/NativeUnitTesting
-I'm currently using version 1.0.1125.0. [MSDN Feb 2008]
+UnitTest++: http://unittest-cpp.sourceforge.net/
+I'm currently using version 1.3, with modifications.
 If you don't want to run the unit tests, this is not required.
-By default, TestARB.vcproj assumes that WinUnit is installed in /Tools/WinUnit.
+By default, TestARB.vcproj assumes that UnitTest++ is installed in /Tools/UnitTest++.
 All project files have been modified such that:
-OutputDirectory: $(SolutionDir)\bin\$(PlatformName)\$(ConfigurationName)
-IntermediateDirectory: $(SolutionDir)\bin\$(PlatformName)\$(ConfigurationName)\$(ProjectName)
+ [UnitTest] OutputDirectory: $(SolutionDir)\lib
+ [TestUnitTest] OutputDirectory: $(SolutionDir)\bin
+ IntermediateDirectory: $(OutDir)\$(ProjectName)\$(ConfigurationName)
+ Unicode/Non-unicode configs added to all projects, .lib names changed
+  to UnitTest++.vsnet<vsversion>[U][D].lib
+Source changes: Changed "Check.h" to pass Actual/Expected by const&
+- Current SVN has those changes, I may update to those soon
 
 --------------------
 

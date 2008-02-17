@@ -1,1 +1,2 @@
-This is built using the WinUnit test framework as described in MSDN Feb 2008
+This is built using UnitTest++ [http://unittest-cpp.sourceforge.net/]
+(see ..\..\Readme.txt)

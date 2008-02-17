@@ -42,20 +42,16 @@
 #include "Element.h"
 
 
-FIXTURE(InfoItem)
-
-
-namespace
+struct TestInfoItemData
 {
 	ElementNodePtr tree;
 	ElementNodePtr data; // clubinfo
-}
+	TestInfoItemData();
+};
 
 
-SETUP(InfoItem)
+TestInfoItemData::TestInfoItemData()
 {
-	WIN_ASSERT_TRUE(CommonSetup());
-
 	tree = ElementNode::New(TREE_INFO);
 	data = tree->AddElementNode(TREE_CLUBINFO);
 	data->AddAttrib(ATTRIB_INFO_NAME, _T("Club1"));
@@ -78,227 +74,214 @@ SETUP(InfoItem)
 }
 
 
-TEARDOWN(InfoItem)
+SUITE(TestInfoItem)
 {
-	tree.reset();
-	WIN_ASSERT_TRUE(CommonTeardown());
+	TEST(New)
+	{
+		ARBInfoItemPtr info = ARBInfoItem::New();
+		CHECK(NULL != info.get());
+	}
+
+
+	TEST(Clone)
+	{
+		ARBInfoItemPtr info = ARBInfoItem::New();
+		info->SetName(_T("Testing"));
+		ARBInfoItemPtr info2 = info->Clone();
+		CHECK(NULL != info2.get());
+		CHECK(info.get() != info2.get());
+		CHECK(*info == *info2);
+		info->SetName(_T("Test2"));
+		CHECK(info->GetName() != info2->GetName());
+	}
+
+
+	TEST(OpEqual)
+	{
+		ARBInfoItemPtr info1 = ARBInfoItem::New();
+		info1->SetName(_T("Testing"));
+		ARBInfoItemPtr info2 = ARBInfoItem::New();
+		CHECK(*info1 != *info2);
+		*info1 = *info2;
+		CHECK(*info1 == *info2);
+	}
+
+
+	TEST(Compare)
+	{
+		ARBInfoItemPtr info1 = ARBInfoItem::New();
+		info1->SetName(_T("A"));
+		ARBInfoItemPtr info2 = ARBInfoItem::New();
+		info2->SetName(_T("B"));
+		CHECK(*info1 < *info2);
+		CHECK(!(*info1 > *info2));
+	}
+
+
+	TEST(GenName)
+	{
+		ARBInfoItemPtr info1 = ARBInfoItem::New();
+		info1->SetName(_T("A"));
+		CHECK(info1->GetGenericName() == _T("A"));
+	}
+
+
+	TEST_FIXTURE(TestInfoItemData, Load)
+	{
+		ARBInfoItemPtr info = ARBInfoItem::New();
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(info->Load(data, ARBVersion(1, 0), callback, TREE_CLUBINFO));
+		tstring name = info->GetGenericName();
+		CHECK(!name.empty());
+	}
+
+
+	TEST_FIXTURE(TestInfoItemData, Save)
+	{
+		ARBInfoItemPtr info = ARBInfoItem::New();
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(info->Load(data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
+		ElementNodePtr ele = ElementNode::New();
+		CHECK(info->Save(ele, TREE_CLUBINFO));
+	}
 }
 
 
-BEGIN_TEST(InfoItem_New)
+SUITE(TestInfoItemList)
 {
-	ARBInfoItemPtr info = ARBInfoItem::New();
-	WIN_ASSERT_NOT_NULL(info.get());
+	TEST_FIXTURE(TestInfoItemData, Load)
+	{
+		ARBInfoItemList infolist(TREE_CLUBINFO);
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(infolist.Load(data, ARBVersion(2, 0), callback));
+		ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
+		ele->SetValue(_T("These are some notes"));
+		ele->AddAttrib(_T("Name"), _T("PASA"));
+		CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
+		CHECK_EQUAL(1u, infolist.size());
+	}
+
+
+	TEST(Load2)
+	{
+		ElementNodePtr ele = ElementNode::New(_T("InfoItem"));
+		ele->SetValue(_T("These are some notes"));
+		ARBInfoItemList infolist(TREE_CLUBINFO);
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
+	}
+
+
+	TEST(sort)
+	{
+		ARBInfoItemList infolist(TREE_CLUBINFO);
+		ARBInfoItemPtr info1 = ARBInfoItem::New();
+		info1->SetName(_T("Test2"));
+		info1->SetComment(_T("A note"));
+		ARBInfoItemPtr info2 = info1->Clone();
+		info2->SetName(_T("Test1"));
+		CHECK(infolist.AddItem(info1));
+		CHECK(infolist.AddItem(info2));
+
+		ARBInfoItemList infolist2(TREE_CLUBINFO);
+		infolist.Clone(infolist2);
+		CHECK(infolist == infolist2);
+		infolist.sort();
+		CHECK(infolist != infolist2);
+	}
+
+
+	TEST_FIXTURE(TestInfoItemData, GetAllItems)
+	{
+		ARBInfo info;
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
+		std::set<tstring> items;
+		CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
+	}
+
+
+	TEST_FIXTURE(TestInfoItemData, CondenseContent)
+	{
+		ARBInfo info;
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
+		std::set<tstring> items;
+		items.insert(_T("Club1"));
+		items.insert(_T("Club3"));
+		info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
+		items.clear();
+		CHECK_EQUAL(3u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
+	}
+
+
+	TEST_FIXTURE(TestInfoItemData, Find)
+	{
+		ARBInfo info;
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
+		CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3")));
+		CHECK(!info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3xc")));
+	}
+
+
+	TEST(AddDelete)
+	{
+		ARBInfoItemList infolist(TREE_CLUBINFO);
+		ARBInfoItemPtr info1 = ARBInfoItem::New();
+		info1->SetName(_T("Test2"));
+		info1->SetComment(_T("A note"));
+		ARBInfoItemPtr info2 = info1->Clone();
+		info2->SetName(_T("Test1"));
+		CHECK(infolist.AddItem(info1));
+		CHECK(infolist.AddItem(info2));
+		infolist.sort();
+		ARBInfoItemPtr info3 = infolist[0]->Clone();
+		CHECK(*info2 == *info3);
+		info3->SetComment(_T("Test comments"));
+		CHECK(*info2 != *info3);
+		CHECK(!infolist.AddItem(info3));
+		CHECK(!infolist.AddItem(info1->Clone()));
+		info3->SetName(_T("Test3"));
+		CHECK(infolist.AddItem(info3));
+		infolist.sort();
+		CHECK_EQUAL(3u, infolist.size());
+		CHECK(infolist.DeleteItem(info1));
+		CHECK_EQUAL(2u, infolist.size());
+		CHECK(!infolist.DeleteItem(info1));
+		CHECK_EQUAL(2u, infolist.size());
+		CHECK(*infolist[0] != *infolist[1]);
+		ARBInfoItemList infolist2(TREE_CLUBINFO);
+		infolist.Clone(infolist2);
+		CHECK(infolist == infolist2);
+		CHECK(infolist[0].get() != infolist2[0].get());
+		CHECK(*infolist[0] == *infolist2[0]);
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(InfoItem_Clone)
+SUITE(TestInfo)
 {
-	ARBInfoItemPtr info = ARBInfoItem::New();
-	info->SetName(_T("Testing"));
-	ARBInfoItemPtr info2 = info->Clone();
-	WIN_ASSERT_NOT_NULL(info2.get());
-	WIN_ASSERT_NOT_EQUAL(info.get(), info2.get());
-	WIN_ASSERT_EQUAL(*info, *info2);
-	info->SetName(_T("Test2"));
-	WIN_ASSERT_NOT_EQUAL(info->GetName(), info2->GetName());
+	TEST_FIXTURE(TestInfoItemData, Load)
+	{
+		ARBInfo info;
+		tstring errs;
+		ARBErrorCallback callback(errs);
+		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
+		CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).size());
+		CHECK_EQUAL(2u, info.GetInfo(ARBInfo::eJudgeInfo).size());
+		CHECK_EQUAL(1u, info.GetInfo(ARBInfo::eLocationInfo).size());
+
+		ARBInfo info2(info);
+		CHECK(info == info2);
+		CHECK(info.GetInfo(ARBInfo::eClubInfo)[0].get() != info2.GetInfo(ARBInfo::eClubInfo)[0].get());
+		CHECK(*info.GetInfo(ARBInfo::eClubInfo)[0] == *info2.GetInfo(ARBInfo::eClubInfo)[0]);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(InfoItem_OpEqual)
-{
-	ARBInfoItemPtr info1 = ARBInfoItem::New();
-	info1->SetName(_T("Testing"));
-	ARBInfoItemPtr info2 = ARBInfoItem::New();
-	WIN_ASSERT_NOT_EQUAL(*info1, *info2);
-	*info1 = *info2;
-	WIN_ASSERT_EQUAL(*info1, *info2);
-}
-END_TEST
-
-
-BEGIN_TEST(InfoItem_Compare)
-{
-	ARBInfoItemPtr info1 = ARBInfoItem::New();
-	info1->SetName(_T("A"));
-	ARBInfoItemPtr info2 = ARBInfoItem::New();
-	info2->SetName(_T("B"));
-	WIN_ASSERT_TRUE(*info1 < *info2);
-	WIN_ASSERT_FALSE(*info1 > *info2);
-}
-END_TEST
-
-
-BEGIN_TEST(InfoItem_GenName)
-{
-	ARBInfoItemPtr info1 = ARBInfoItem::New();
-	info1->SetName(_T("A"));
-	WIN_ASSERT_STRING_EQUAL(_T("A"), info1->GetGenericName().c_str());
-}
-END_TEST
-
-
-BEGIN_TESTF(InfoItem_Load, InfoItem)
-{
-	ARBInfoItemPtr info = ARBInfoItem::New();
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info->Load(data, ARBVersion(1, 0), callback, TREE_CLUBINFO));
-	tstring name = info->GetGenericName();
-	WIN_ASSERT_FALSE(name.empty());
-}
-END_TESTF
-
-
-BEGIN_TESTF(InfoItem_Save, InfoItem)
-{
-	ARBInfoItemPtr info = ARBInfoItem::New();
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info->Load(data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
-	ElementNodePtr ele = ElementNode::New();
-	WIN_ASSERT_TRUE(info->Save(ele, TREE_CLUBINFO));
-}
-END_TESTF
-
-
-BEGIN_TESTF(InfoItemList_Load, InfoItem)
-{
-	ARBInfoItemList infolist(TREE_CLUBINFO);
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(infolist.Load(data, ARBVersion(2, 0), callback));
-	ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
-	ele->SetValue(_T("These are some notes"));
-	ele->AddAttrib(_T("Name"), _T("PASA"));
-	WIN_ASSERT_FALSE(infolist.Load(ele, ARBVersion(2, 0), callback));
-	WIN_ASSERT_EQUAL(1u, infolist.size());
-}
-END_TESTF
-
-
-BEGIN_TESTF(InfoItemList_Load2, InfoItem)
-{
-	ElementNodePtr ele = ElementNode::New(_T("InfoItem"));
-	ele->SetValue(_T("These are some notes"));
-	ARBInfoItemList infolist(TREE_CLUBINFO);
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_FALSE(infolist.Load(ele, ARBVersion(2, 0), callback));
-}
-END_TESTF
-
-
-BEGIN_TEST(InfoItemList_sort)
-{
-	ARBInfoItemList infolist(TREE_CLUBINFO);
-	ARBInfoItemPtr info1 = ARBInfoItem::New();
-	info1->SetName(_T("Test2"));
-	info1->SetComment(_T("A note"));
-	ARBInfoItemPtr info2 = info1->Clone();
-	info2->SetName(_T("Test1"));
-	WIN_ASSERT_TRUE(infolist.AddItem(info1));
-	WIN_ASSERT_TRUE(infolist.AddItem(info2));
-
-	ARBInfoItemList infolist2(TREE_CLUBINFO);
-	infolist.Clone(infolist2);
-	WIN_ASSERT_EQUAL(infolist, infolist2);
-	infolist.sort();
-	WIN_ASSERT_NOT_EQUAL(infolist, infolist2);
-}
-END_TEST
-
-
-BEGIN_TESTF(InfoItemList_GetAllItems, InfoItem)
-{
-	ARBInfo info;
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info.Load(tree, ARBVersion(1, 0), callback));
-	std::set<tstring> items;
-	WIN_ASSERT_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
-}
-END_TESTF
-
-
-BEGIN_TESTF(InfoItemList_CondenseContent, InfoItem)
-{
-	ARBInfo info;
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info.Load(tree, ARBVersion(1, 0), callback));
-	std::set<tstring> items;
-	items.insert(_T("Club1"));
-	items.insert(_T("Club3"));
-	info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
-	items.clear();
-	WIN_ASSERT_EQUAL(3u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
-}
-END_TESTF
-
-
-BEGIN_TESTF(InfoItemList_Find, InfoItem)
-{
-	ARBInfo info;
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info.Load(tree, ARBVersion(1, 0), callback));
-	WIN_ASSERT_TRUE(info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3")));
-	WIN_ASSERT_FALSE(info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3xc")));
-}
-END_TESTF
-
-
-BEGIN_TEST(InfoItemList_AddDelete)
-{
-	ARBInfoItemList infolist(TREE_CLUBINFO);
-	ARBInfoItemPtr info1 = ARBInfoItem::New();
-	info1->SetName(_T("Test2"));
-	info1->SetComment(_T("A note"));
-	ARBInfoItemPtr info2 = info1->Clone();
-	info2->SetName(_T("Test1"));
-	WIN_ASSERT_TRUE(infolist.AddItem(info1));
-	WIN_ASSERT_TRUE(infolist.AddItem(info2));
-	infolist.sort();
-	ARBInfoItemPtr info3 = infolist[0]->Clone();
-	WIN_ASSERT_EQUAL(*info2, *info3);
-	info3->SetComment(_T("Test comments"));
-	WIN_ASSERT_NOT_EQUAL(*info2, *info3);
-	WIN_ASSERT_FALSE(infolist.AddItem(info3));
-	WIN_ASSERT_FALSE(infolist.AddItem(info1->Clone()));
-	info3->SetName(_T("Test3"));
-	WIN_ASSERT_TRUE(infolist.AddItem(info3));
-	infolist.sort();
-	WIN_ASSERT_EQUAL(3u, infolist.size());
-	WIN_ASSERT_TRUE(infolist.DeleteItem(info1));
-	WIN_ASSERT_EQUAL(2u, infolist.size());
-	WIN_ASSERT_FALSE(infolist.DeleteItem(info1));
-	WIN_ASSERT_EQUAL(2u, infolist.size());
-	WIN_ASSERT_NOT_EQUAL(*infolist[0], *infolist[1]);
-	ARBInfoItemList infolist2(TREE_CLUBINFO);
-	infolist.Clone(infolist2);
-	WIN_ASSERT_EQUAL(infolist, infolist2);
-	WIN_ASSERT_NOT_EQUAL(infolist[0].get(), infolist2[0].get());
-	WIN_ASSERT_EQUAL(*infolist[0], *infolist2[0]);
-}
-END_TEST
-
-
-BEGIN_TESTF(Info_Load, InfoItem)
-{
-	ARBInfo info;
-	tstring errs;
-	ARBErrorCallback callback(errs);
-	WIN_ASSERT_TRUE(info.Load(tree, ARBVersion(1, 0), callback));
-	WIN_ASSERT_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).size());
-	WIN_ASSERT_EQUAL(2u, info.GetInfo(ARBInfo::eJudgeInfo).size());
-	WIN_ASSERT_EQUAL(1u, info.GetInfo(ARBInfo::eLocationInfo).size());
-
-	ARBInfo info2(info);
-	WIN_ASSERT_EQUAL(info, info2);
-	WIN_ASSERT_NOT_EQUAL(info.GetInfo(ARBInfo::eClubInfo)[0].get(), info2.GetInfo(ARBInfo::eClubInfo)[0].get());
-	WIN_ASSERT_EQUAL(*info.GetInfo(ARBInfo::eClubInfo)[0], *info2.GetInfo(ARBInfo::eClubInfo)[0]);
-}
-END_TESTF

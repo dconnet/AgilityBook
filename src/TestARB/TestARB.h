@@ -42,29 +42,15 @@
 #define PRAGMA_MESSAGE(x) ( __FILE__ "(" STRING(__LINE__) ") : " x )
 //#pragma PRAGMA_MESSAGE("My message")
 
-#include "WinUnit.h"
+#include "UnitTest++.h"
 #include "ARBTypes.h"
-
-extern bool CommonSetup();
-extern bool CommonTeardown();
 
 extern ElementNodePtr LoadXMLData(UINT id);
 extern bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config);
 extern ElementNodePtr CreateActionList();
 
-/*
-Quick reference for winunit macros:
-WIN_ASSERT_EQUAL(expected, actual, ...)			uses '=='
-WIN_ASSERT_NOT_EQUAL(notExpected, actual, ...)	uses '!='
-WIN_ASSERT_STRING_EQUAL(expected, actual, ...)	case-sensitve string compare
-WIN_ASSERT_ZERO(zeroExpression, ...)			compares to 0, fail if not equal
-WIN_ASSERT_NOT_ZERO(expr, ...)					compares to 0, fail if equal
-WIN_ASSERT_NULL(expr, ...)						compare ptr to NULL
-WIN_ASSERT_NOT_NULL(expr, ...)					compare ptr to NULL
-WIN_ASSERT_FAIL(message, ...)					always fails
-WIN_ASSERT_TRUE(expr, ...)						succeed if true
-WIN_ASSERT_FALSE(expr, ...)						succeed if !expr
-WIN_ASSERT_WINAPI_SUCCESS(expr, ...)			Makes use of GetLastError
-WIN_ASSERT_THROWS(expr, exceptionType, ...)		succeed if expr throws a C++ exception of type
-WIN_TRACE(message, ...)							output info msg for debugging
-*/
+#ifdef _DEBUG
+#define TODO_TEST
+#else
+#define TODO_TEST	CHECK(false);
+#endif

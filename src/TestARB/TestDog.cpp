@@ -41,393 +41,358 @@
 #include "Element.h"
 
 
-BEGIN_TEST(Dog_New)
+SUITE(TestDog)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//static ARBDogPtr New();
+	TEST(New)
+	{
+		TODO_TEST
+		//static ARBDogPtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+		//ARBDogPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+		//ARBDog& operator=(ARBDog const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+		//bool operator==(ARBDog const& rhs) const;
+		//bool operator!=(ARBDog const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+		//virtual tstring GetGenericName() const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+		//bool Load(
+		//		ARBConfig const& inConfig,
+		//		ElementNodePtr inTree,
+		//		ARBVersion const& inVersion,
+		//		ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+		//bool Save(ElementNodePtr ioTree) const;
+	}
+
+
+	TEST(RenameVenue)
+	{
+		TODO_TEST
+		//int RenameVenue(
+		//		tstring const& inOldVenue,
+		//		tstring const& inNewVenue);
+	}
+
+
+	TEST(DeleteVenue)
+	{
+		TODO_TEST
+		//int DeleteVenue(tstring const& inVenue);
+	}
+
+
+	TEST(RenameDivision)
+	{
+		TODO_TEST
+		//int RenameDivision(
+		//		ARBConfigVenuePtr inVenue,
+		//		tstring const& inOldDiv,
+		//		tstring const& inNewDiv);
+	}
+
+
+	TEST(DeleteDivision)
+	{
+		TODO_TEST
+		//int DeleteDivision(
+		//		ARBConfig const& inConfig,
+		//		tstring const& inVenue,
+		//		tstring const& inDiv);
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(Dog_Clone)
+SUITE(TestDogList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//ARBDogPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+		//bool Load(
+		//		ARBConfig const& inConfig,
+		//		ElementNodePtr inTree,
+		//		ARBVersion const& inVersion,
+		//		ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	}
+
+
+	TEST(SetMultiQs)
+	{
+		TODO_TEST
+		//void SetMultiQs(ARBConfig const& inConfig);
+	}
+
+
+	TEST(NumExistingPointsInVenue)
+	{
+		TODO_TEST
+		//int NumExistingPointsInVenue(tstring const& inVenue) const;
+	}
+
+
+	TEST(NumRegNumsInVenue)
+	{
+		TODO_TEST
+		//int NumRegNumsInVenue(tstring const& inVenue) const;
+	}
+
+
+	TEST(NumTitlesInVenue)
+	{
+		TODO_TEST
+		//int NumTitlesInVenue(tstring const& inVenue) const;
+	}
+
+
+	TEST(NumTrialsInVenue)
+	{
+		TODO_TEST
+		//int NumTrialsInVenue(tstring const& inVenue) const;
+	}
+
+
+	TEST(RenameVenue)
+	{
+		TODO_TEST
+		//int RenameVenue(
+		//		tstring const& inOldVenue,
+		//		tstring const& inNewVenue);
+	}
+
+
+	TEST(DeleteVenue)
+	{
+		TODO_TEST
+		//int DeleteVenue(tstring const& inVenue);
+	}
+
+
+	TEST(NumOtherPointsInUse)
+	{
+		TODO_TEST
+		//int NumOtherPointsInUse(tstring const& inOther) const;
+	}
+
+
+	TEST(RenameOtherPoints)
+	{
+		TODO_TEST
+		//int RenameOtherPoints(
+		//		tstring const& inOldOther,
+		//		tstring const& inNewOther);
+	}
+
+
+	TEST(DeleteOtherPoints)
+	{
+		TODO_TEST
+		//int DeleteOtherPoints(tstring const& inOther);
+	}
+
+
+	TEST(NumMultiQsInUse)
+	{
+		TODO_TEST
+		//int NumMultiQsInUse(
+		//		tstring const& inVenue,
+		//		tstring const& inMultiQ) const;
+	}
+
+
+	TEST(RenameMultiQs)
+	{
+		TODO_TEST
+		//int RenameMultiQs(
+		//		tstring const& inVenue,
+		//		tstring const& inOldMultiQ,
+		//		tstring const& inNewMultiQ);
+	}
+
+
+	TEST(DeleteMultiQs)
+	{
+		TODO_TEST
+		//int DeleteMultiQs(
+		//		ARBConfig const& inConfig,
+		//		tstring const& inVenue);
+	}
+
+
+	TEST(NumMultiHostedTrialsInDivision)
+	{
+		TODO_TEST
+		//int NumMultiHostedTrialsInDivision(
+		//		ARBConfig const& inConfig,
+		//		tstring const& inVenue,
+		//		tstring const& inDiv) const;
+	}
+
+
+	TEST(NumExistingPointsInDivision)
+	{
+		TODO_TEST
+		//int NumExistingPointsInDivision(
+		//		ARBConfigVenuePtr inVenue,
+		//		tstring const& inDiv) const;
+	}
+
+
+	TEST(NumRunsInDivision)
+	{
+		TODO_TEST
+		//int NumRunsInDivision(
+		//		ARBConfigVenuePtr inVenue,
+		//		tstring const& inDiv) const;
+	}
+
+
+	TEST(RenameDivision)
+	{
+		TODO_TEST
+		//int RenameDivision(
+		//		ARBConfigVenuePtr inVenue,
+		//		tstring const& inOldDiv,
+		//		tstring const& inNewDiv);
+	}
+
+
+	TEST(DeleteDivision)
+	{
+		TODO_TEST
+		//int DeleteDivision(
+		//		ARBConfig const& inConfig,
+		//		tstring const& inVenue,
+		//		tstring const& inDiv);
+	}
+
+
+	TEST(NumLevelsInUse)
+	{
+		TODO_TEST
+		//int NumLevelsInUse(
+		//		tstring const& inVenue,
+		//		tstring const& inDiv,
+		//		tstring const& inLevel) const;
+	}
+
+
+	TEST(RenameLevel)
+	{
+		TODO_TEST
+		//int RenameLevel(
+		//		tstring const& inVenue,
+		//		tstring const& inDiv,
+		//		tstring const& inOldLevel,
+		//		tstring const& inNewLevel);
+	}
+
+
+	TEST(DeleteLevel)
+	{
+		TODO_TEST
+		//int DeleteLevel(
+		//		tstring const& inVenue,
+		//		tstring const& inDiv,
+		//		tstring const& inLevel);
+	}
+
+
+	TEST(NumTitlesInUse)
+	{
+		TODO_TEST
+		//int NumTitlesInUse(
+		//		tstring const& inVenue,
+		//		tstring const& inTitle) const;
+	}
+
+
+	TEST(RenameTitle)
+	{
+		TODO_TEST
+		//int RenameTitle(
+		//		tstring const& inVenue,
+		//		tstring const& inOldTitle,
+		//		tstring const& inNewTitle);
+	}
+
+
+	TEST(DeleteTitle)
+	{
+		TODO_TEST
+		//int DeleteTitle(
+		//		tstring const& inVenue,
+		//		tstring const& inTitle);
+	}
+
+
+	TEST(NumEventsInUse)
+	{
+		TODO_TEST
+		//int NumEventsInUse(
+		//		tstring const& inVenue,
+		//		tstring const& inEvent) const;
+	}
+
+
+	TEST(RenameEvent)
+	{
+		TODO_TEST
+		//int RenameEvent(
+		//		tstring const& inVenue,
+		//		tstring const& inOldEvent,
+		//		tstring const& inNewEvent);
+	}
+
+
+	TEST(DeleteEvent)
+	{
+		TODO_TEST
+		//int DeleteEvent(
+		//		tstring const& inVenue,
+		//		tstring const& inEvent);
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+		//bool AddDog(ARBDogPtr inDog);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(Dog_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//ARBDog& operator=(ARBDog const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool operator==(ARBDog const& rhs) const;
-	//bool operator!=(ARBDog const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//virtual tstring GetGenericName() const
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool Load(
-	//		ARBConfig const& inConfig,
-	//		ElementNodePtr inTree,
-	//		ARBVersion const& inVersion,
-	//		ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_RenameVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameVenue(
-	//		tstring const& inOldVenue,
-	//		tstring const& inNewVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_DeleteVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteVenue(tstring const& inVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_RenameDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameDivision(
-	//		ARBConfigVenuePtr inVenue,
-	//		tstring const& inOldDiv,
-	//		tstring const& inNewDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(Dog_DeleteDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteDivision(
-	//		ARBConfig const& inConfig,
-	//		tstring const& inVenue,
-	//		tstring const& inDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool Load(
-	//		ARBConfig const& inConfig,
-	//		ElementNodePtr inTree,
-	//		ARBVersion const& inVersion,
-	//		ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_SetMultiQs)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//void SetMultiQs(ARBConfig const& inConfig);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumExistingPointsInVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumExistingPointsInVenue(tstring const& inVenue) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumRegNumsInVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumRegNumsInVenue(tstring const& inVenue) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumTitlesInVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumTitlesInVenue(tstring const& inVenue) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumTrialsInVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumTrialsInVenue(tstring const& inVenue) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_RenameVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameVenue(
-	//		tstring const& inOldVenue,
-	//		tstring const& inNewVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_DeleteVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteVenue(tstring const& inVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumOtherPointsInUse)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumOtherPointsInUse(tstring const& inOther) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_RenameOtherPoints)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameOtherPoints(
-	//		tstring const& inOldOther,
-	//		tstring const& inNewOther);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_DeleteOtherPoints)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteOtherPoints(tstring const& inOther);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumMultiQsInUse)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumMultiQsInUse(
-	//		tstring const& inVenue,
-	//		tstring const& inMultiQ) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_RenameMultiQs)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameMultiQs(
-	//		tstring const& inVenue,
-	//		tstring const& inOldMultiQ,
-	//		tstring const& inNewMultiQ);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_DeleteMultiQs)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteMultiQs(
-	//		ARBConfig const& inConfig,
-	//		tstring const& inVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumMultiHostedTrialsInDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumMultiHostedTrialsInDivision(
-	//		ARBConfig const& inConfig,
-	//		tstring const& inVenue,
-	//		tstring const& inDiv) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumExistingPointsInDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumExistingPointsInDivision(
-	//		ARBConfigVenuePtr inVenue,
-	//		tstring const& inDiv) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumRunsInDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumRunsInDivision(
-	//		ARBConfigVenuePtr inVenue,
-	//		tstring const& inDiv) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_RenameDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameDivision(
-	//		ARBConfigVenuePtr inVenue,
-	//		tstring const& inOldDiv,
-	//		tstring const& inNewDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_DeleteDivision)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteDivision(
-	//		ARBConfig const& inConfig,
-	//		tstring const& inVenue,
-	//		tstring const& inDiv);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumLevelsInUse)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumLevelsInUse(
-	//		tstring const& inVenue,
-	//		tstring const& inDiv,
-	//		tstring const& inLevel) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_RenameLevel)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameLevel(
-	//		tstring const& inVenue,
-	//		tstring const& inDiv,
-	//		tstring const& inOldLevel,
-	//		tstring const& inNewLevel);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_DeleteLevel)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteLevel(
-	//		tstring const& inVenue,
-	//		tstring const& inDiv,
-	//		tstring const& inLevel);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumTitlesInUse)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumTitlesInUse(
-	//		tstring const& inVenue,
-	//		tstring const& inTitle) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_RenameTitle)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameTitle(
-	//		tstring const& inVenue,
-	//		tstring const& inOldTitle,
-	//		tstring const& inNewTitle);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_DeleteTitle)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteTitle(
-	//		tstring const& inVenue,
-	//		tstring const& inTitle);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_NumEventsInUse)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int NumEventsInUse(
-	//		tstring const& inVenue,
-	//		tstring const& inEvent) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_RenameEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int RenameEvent(
-	//		tstring const& inVenue,
-	//		tstring const& inOldEvent,
-	//		tstring const& inNewEvent);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_DeleteEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//int DeleteEvent(
-	//		tstring const& inVenue,
-	//		tstring const& inEvent);
-}
-END_TEST
-
-
-BEGIN_TEST(DogList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool AddDog(ARBDogPtr inDog);
-}
-END_TEST

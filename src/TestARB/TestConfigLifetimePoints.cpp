@@ -40,111 +40,106 @@
 #include "ARBConfigLifetimePoints.h"
 #include "Element.h"
 
-BEGIN_TEST(ConfigLifetimePoints_New)
+
+SUITE(TestConfigLifetimePoints)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBConfigLifetimePointsPtr New();
-//	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBConfigLifetimePointsPtr New();
+	//	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBConfigLifetimePointsPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBConfigLifetimePoints const& rhs) const;
+	//	bool operator!=(ARBConfigLifetimePoints const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const;
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigLifetimePoints_Clone)
+SUITE(TestConfigLifetimePointsList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigLifetimePointsPtr Clone() const;
+	TEST(New)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(sort)
+	{
+		TODO_TEST
+	//	void sort();
+	}
+
+
+	TEST(GetLifetimePoints)
+	{
+		TODO_TEST
+	//	double GetLifetimePoints(double inFaults) const;
+	}
+
+
+	TEST(Find)
+	{
+		TODO_TEST
+	//	bool FindLifetimePoints(
+	//			double inFaults,
+	//			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddLifetimePoints(
+	//			double inPoints,
+	//			double inFaults,
+	//			ARBConfigLifetimePointsPtr* outPoints = NULL);
+	//	bool DeleteLifetimePoints(double inFaults);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePoints_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePoints_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBConfigLifetimePoints const& rhs) const;
-//	bool operator!=(ARBConfigLifetimePoints const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePoints_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePoints_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePoints_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePointsList_)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePointsList_sort)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	void sort();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePointsList_GetLifetimePoints)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	double GetLifetimePoints(double inFaults) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePointsList_Find)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindLifetimePoints(
-//			double inFaults,
-//			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigLifetimePointsList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddLifetimePoints(
-//			double inPoints,
-//			double inFaults,
-//			ARBConfigLifetimePointsPtr* outPoints = NULL);
-//	bool DeleteLifetimePoints(double inFaults);
-}
-END_TEST

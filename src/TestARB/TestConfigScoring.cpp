@@ -40,134 +40,127 @@
 #include "ARBConfigScoring.h"
 #include "Element.h"
 
-BEGIN_TEST(ConfigScoring_GetScoringStyleStr)
+
+SUITE(TestConfigScoring)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static tstring GetScoringStyleStr(ScoringStyle inStyle);
+	TEST(GetScoringStyleStr)
+	{
+		TODO_TEST
+	//	static tstring GetScoringStyleStr(ScoringStyle inStyle);
+	}
+
+
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBConfigScoringPtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBConfigScoringPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBConfigScoring const& rhs) const;
+	//	bool operator!=(ARBConfigScoring const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfigDivisionList const& inDivisions,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
+
+
+	TEST(IsValidOn)
+	{
+		TODO_TEST
+	//	bool IsValidOn(ARBDate inDate) const
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigScoring_New)
+SUITE(TestConfigScoringList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBConfigScoringPtr New();
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfigDivisionList const& inDivisions,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(FindAllEvents)
+	{
+		TODO_TEST
+	//	size_t FindAllEvents(
+	//			tstring const& inDivision,
+	//			tstring const& inLevel,
+	//			ARBDate const& inDate,
+	//			bool inTitlePoints,
+	//			ARBVector<ARBConfigScoringPtr>& outList) const;
+	}
+
+
+	TEST(FindEvent)
+	{
+		TODO_TEST
+	//	bool FindEvent(
+	//			tstring const& inDivision,
+	//			tstring const& inLevel,
+	//			ARBDate const& inDate,
+	//			ARBConfigScoringPtr* outEvent = NULL) const;
+	}
+
+
+	TEST(VerifyEvent)
+	{
+		TODO_TEST
+	//	bool VerifyEvent(
+	//			tstring const& inDivision,
+	//			tstring const& inLevel,
+	//			ARBDate const& inDate) const;
+	}
+
+
+	TEST(Add)
+	{
+		TODO_TEST
+	//	ARBConfigScoringPtr AddScoring();
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigScoring_Clone)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigScoringPtr Clone() const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoring_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigScoring& operator=(ARBConfigScoring const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoring_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBConfigScoring const& rhs) const;
-//	bool operator!=(ARBConfigScoring const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoring_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoring_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfigDivisionList const& inDivisions,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoring_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoring_IsValidOn)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool IsValidOn(ARBDate inDate) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoringList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfigDivisionList const& inDivisions,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoringList_FindAllEvents)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	size_t FindAllEvents(
-//			tstring const& inDivision,
-//			tstring const& inLevel,
-//			ARBDate const& inDate,
-//			bool inTitlePoints,
-//			ARBVector<ARBConfigScoringPtr>& outList) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoringList_FindEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindEvent(
-//			tstring const& inDivision,
-//			tstring const& inLevel,
-//			ARBDate const& inDate,
-//			ARBConfigScoringPtr* outEvent = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoringList_VerifyEvent)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool VerifyEvent(
-//			tstring const& inDivision,
-//			tstring const& inLevel,
-//			ARBDate const& inDate) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigScoringList_Add)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigScoringPtr AddScoring();
-}
-END_TEST

@@ -115,6 +115,14 @@ typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > otstream;
 typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > oftstream;
 
 /**
+ * Dump a string to cerr or TRACE
+ * @param inMsg String to dump
+ * @param bIncNewLine Add a newline
+ */
+void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine = true);
+
+
+/**
  * Make a string safe for HTML viewing.
  * @param inRawData String to sanitize
  * @param bConvertCR Convert \n to html-breaks.

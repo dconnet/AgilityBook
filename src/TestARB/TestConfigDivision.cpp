@@ -41,136 +41,128 @@
 #include "Element.h"
 
 
-BEGIN_TEST(ConfigDivision_New)
+SUITE(TestConfigDivision)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//static ARBConfigDivisionPtr New();
+	TEST(New)
+	{
+		TODO_TEST
+		//static ARBConfigDivisionPtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+		//ARBConfigDivisionPtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBConfigDivision const& rhs) const;
+	//	bool operator!=(ARBConfigDivision const& rhs) const
+	}
+
+
+	TEST(Clear)
+	{
+		TODO_TEST
+	//	void clear();
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfigVenue& ioVenue,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
+
+
+	TEST(Update)
+	{
+		TODO_TEST
+	//	bool Update(
+	//			int indent,
+	//			ARBConfigDivisionPtr inDivNew,
+	//			tstring& ioInfo);
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigDivision_Clone)
+SUITE(TestConfigDivisionList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//ARBConfigDivisionPtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfigVenue& ioVenue,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Reorder)
+	{
+		TODO_TEST
+	//	void ReorderBy(ARBConfigDivisionList const& inList);
+		// Make sure the target config has a division that the source config does not
+	}
+
+
+	TEST(VerifyLevel)
+	{
+		TODO_TEST
+	//	bool VerifyLevel(
+	//			tstring const& inDiv,
+	//			tstring const& inLevel) const;
+	}
+
+
+	TEST(Find)
+	{
+		TODO_TEST
+	//	bool FindDivision(
+	//			tstring const& inDiv,
+	//			ARBConfigDivisionPtr* outDiv = NULL) const;
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+	//	bool AddDivision(
+	//			tstring const& inDiv,
+	//			ARBConfigDivisionPtr* outDiv = NULL);
+	//	bool AddDivision(ARBConfigDivisionPtr inDiv);
+	//	int DeleteDivision(
+	//			tstring const& inDiv,
+	//			ARBConfigEventList& ioEvents);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigDivision_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivision_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBConfigDivision const& rhs) const;
-//	bool operator!=(ARBConfigDivision const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivision_Clear)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	void clear();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivision_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivision_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfigVenue& ioVenue,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivision_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivision_Update)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Update(
-//			int indent,
-//			ARBConfigDivisionPtr inDivNew,
-//			tstring& ioInfo);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivisionList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfigVenue& ioVenue,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivisionList_Reorder)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	void ReorderBy(ARBConfigDivisionList const& inList);
-	// Make sure the target config has a division that the source config does not
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivisionList_VerifyLevel)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool VerifyLevel(
-//			tstring const& inDiv,
-//			tstring const& inLevel) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivisionList_Find)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindDivision(
-//			tstring const& inDiv,
-//			ARBConfigDivisionPtr* outDiv = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigDivisionList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddDivision(
-//			tstring const& inDiv,
-//			ARBConfigDivisionPtr* outDiv = NULL);
-//	bool AddDivision(ARBConfigDivisionPtr inDiv);
-//	int DeleteDivision(
-//			tstring const& inDiv,
-//			ARBConfigEventList& ioEvents);
-}
-END_TEST

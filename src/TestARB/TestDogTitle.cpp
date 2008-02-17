@@ -41,173 +41,160 @@
 #include "Element.h"
 
 
-BEGIN_TEST(DogTitle_New)
+SUITE(TestDogTitle)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	static ARBDogTitlePtr New();
+	TEST(New)
+	{
+		TODO_TEST
+	//	static ARBDogTitlePtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+	//	ARBDogTitlePtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+	//	ARBDogTitle& operator=(ARBDogTitle const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+	//	bool operator==(ARBDogTitle const& rhs) const;
+	//	bool operator!=(ARBDogTitle const& rhs) const
+	}
+
+
+	TEST(GenName)
+	{
+		TODO_TEST
+	//	virtual tstring GetGenericName() const;
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfig const& inConfig,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	//	bool Save(ElementNodePtr ioTree) const;
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(DogTitle_Clone)
+SUITE(TestDogTitleList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogTitlePtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+	//	bool Load(
+	//			ARBConfig const& inConfig,
+	//			ElementNodePtr inTree,
+	//			ARBVersion const& inVersion,
+	//			ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+	}
+
+
+	TEST(sort)
+	{
+		TODO_TEST
+	//	void sort();
+	}
+
+
+	TEST(NumTitlesInVenue)
+	{
+		TODO_TEST
+	//	int NumTitlesInVenue(tstring const& inVenue) const;
+	}
+
+
+	TEST(FindTitle)
+	{
+		TODO_TEST
+	//	bool FindTitle(
+	//			tstring const& inVenue,
+	//			tstring const& inTitle,
+	//			ARBDogTitlePtr* outTitle = NULL) const;
+	}
+
+
+	TEST(FindMaxInstance)
+	{
+		TODO_TEST
+	//	short FindMaxInstance(
+	//			tstring const& inVenue,
+	//			tstring const& inTitle) const;
+	}
+
+
+	TEST(RenameVenue)
+	{
+		TODO_TEST
+	//	int RenameVenue(
+	//			tstring const& inOldVenue,
+	//			tstring const& inNewVenue);
+	}
+
+
+	TEST(DeleteVenue)
+	{
+		TODO_TEST
+	//	int DeleteVenue(tstring const& inVenue);
+	}
+
+
+	TEST(NumTitlesInUse)
+	{
+		TODO_TEST
+	//	int NumTitlesInUse(
+	//			tstring const& inVenue,
+	//			tstring const& inTitle) const;
+	}
+
+
+	TEST(RenameTitle)
+	{
+		TODO_TEST
+	//	int RenameTitle(
+	//			tstring const& inVenue,
+	//			tstring const& inOldTitle,
+	//			tstring const& inNewTitle);
+	}
+
+
+	TEST(AddTitle)
+	{
+		TODO_TEST
+	//	bool AddTitle(ARBDogTitlePtr inTitle);
+	}
+
+
+	TEST(DeleteTitle)
+	{
+		TODO_TEST
+	//	bool DeleteTitle(ARBDogTitlePtr inTitle);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(DogTitle_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	ARBDogTitle& operator=(ARBDogTitle const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitle_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool operator==(ARBDogTitle const& rhs) const;
-//	bool operator!=(ARBDogTitle const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitle_GenName)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	virtual tstring GetGenericName() const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitle_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfig const& inConfig,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitle_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool Load(
-//			ARBConfig const& inConfig,
-//			ElementNodePtr inTree,
-//			ARBVersion const& inVersion,
-//			ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_sort)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	void sort();
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_NumTitlesInVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int NumTitlesInVenue(tstring const& inVenue) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_FindTitle)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool FindTitle(
-//			tstring const& inVenue,
-//			tstring const& inTitle,
-//			ARBDogTitlePtr* outTitle = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_FindMaxInstance)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	short FindMaxInstance(
-//			tstring const& inVenue,
-//			tstring const& inTitle) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_RenameVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameVenue(
-//			tstring const& inOldVenue,
-//			tstring const& inNewVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_DeleteVenue)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int DeleteVenue(tstring const& inVenue);
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_NumTitlesInUse)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int NumTitlesInUse(
-//			tstring const& inVenue,
-//			tstring const& inTitle) const;
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_RenameTitle)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	int RenameTitle(
-//			tstring const& inVenue,
-//			tstring const& inOldTitle,
-//			tstring const& inNewTitle);
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_AddTitle)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool AddTitle(ARBDogTitlePtr inTitle);
-}
-END_TEST
-
-
-BEGIN_TEST(DogTitleList_DeleteTitle)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-//	bool DeleteTitle(ARBDogTitlePtr inTitle);
-}
-END_TEST

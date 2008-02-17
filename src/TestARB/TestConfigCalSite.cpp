@@ -41,126 +41,119 @@
 #include "Element.h"
 
 
-BEGIN_TEST(ConfigCalSite_New)
+SUITE(TestConfigCalSite)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//static ARBConfigCalSitePtr New();
+	TEST(New)
+	{
+		TODO_TEST
+		//static ARBConfigCalSitePtr New();
+	}
+
+
+	TEST(Clone)
+	{
+		TODO_TEST
+		//ARBConfigCalSitePtr Clone() const;
+	}
+
+
+	TEST(OpEqual)
+	{
+		TODO_TEST
+		//ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
+	}
+
+
+	TEST(Compare)
+	{
+		TODO_TEST
+		//bool operator==(ARBConfigCalSite const& rhs) const;
+		//bool operator!=(ARBConfigCalSite const& rhs) const
+	}
+
+
+	TEST(Load)
+	{
+		TODO_TEST
+		//bool Load(
+		//		ElementNodePtr inTree,
+		//		ARBVersion const& inVersion,
+		//		ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(Save)
+	{
+		TODO_TEST
+		//bool Save(ElementNodePtr ioTree) const;
+	}
+
+
+	TEST(GetFormattedURL)
+	{
+		TODO_TEST
+		//tstring GetFormattedURL(
+		//		std::vector<tstring> const& inLocCodes,
+		//		std::vector<tstring> const& inVenueCodes) const;
+	}
+
+
+	TEST(LocationCodes)
+	{
+		TODO_TEST
+		//bool HasLocationCode(tstring const& inCode) const;
+		//bool AddLocationCode(tstring const& inCode, tstring const& inName);
+		//bool RemoveLocationCode(tstring const& inCode);
+		//bool RemoveAllLocationCodes();
+	}
+
+
+	TEST(VenueCodes)
+	{
+		TODO_TEST
+		//bool HasVenueCode(tstring const& inCode) const;
+		//bool AddVenueCode(tstring const& inCode, tstring const& inVenue);
+		//bool RemoveVenueCode(tstring const& inCode);
+		//bool RemoveAllVenueCodes();
+	}
 }
-END_TEST
 
 
-BEGIN_TEST(ConfigCalSite_Clone)
+SUITE(TestConfigCalSiteList)
 {
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//ARBConfigCalSitePtr Clone() const;
+	TEST(Load)
+	{
+		TODO_TEST
+		//bool Load(
+		//		ElementNodePtr inTree,
+		//		ARBVersion const& inVersion,
+		//		ARBErrorCallback& ioCallback);
+	}
+
+
+	TEST(sort)
+	{
+		TODO_TEST
+		//void sort();
+	}
+
+
+	TEST(Find)
+	{
+		TODO_TEST
+		//bool FindSite(
+		//		tstring const& inSite,
+		//		ARBConfigCalSitePtr* outSite = NULL) const;
+	}
+
+
+	TEST(AddDelete)
+	{
+		TODO_TEST
+		//bool AddSite(
+		//		tstring const& inSite,
+		//		ARBConfigCalSitePtr* outSite = NULL);
+		//bool AddSite(ARBConfigCalSitePtr inSite);
+		//int DeleteSite(tstring const& inSite);
+	}
 }
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSite_OpEqual)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//ARBConfigCalSite& operator=(ARBConfigCalSite const& rhs);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSite_Compare)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool operator==(ARBConfigCalSite const& rhs) const;
-	//bool operator!=(ARBConfigCalSite const& rhs) const
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSite_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool Load(
-	//		ElementNodePtr inTree,
-	//		ARBVersion const& inVersion,
-	//		ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSite_Save)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool Save(ElementNodePtr ioTree) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSite_GetFormattedURL)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//tstring GetFormattedURL(
-	//		std::vector<tstring> const& inLocCodes,
-	//		std::vector<tstring> const& inVenueCodes) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSite_LocationCodes)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool HasLocationCode(tstring const& inCode) const;
-	//bool AddLocationCode(tstring const& inCode, tstring const& inName);
-	//bool RemoveLocationCode(tstring const& inCode);
-	//bool RemoveAllLocationCodes();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSite_VenueCodes)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool HasVenueCode(tstring const& inCode) const;
-	//bool AddVenueCode(tstring const& inCode, tstring const& inVenue);
-	//bool RemoveVenueCode(tstring const& inCode);
-	//bool RemoveAllVenueCodes();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSiteList_Load)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool Load(
-	//		ElementNodePtr inTree,
-	//		ARBVersion const& inVersion,
-	//		ARBErrorCallback& ioCallback);
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSiteList_sort)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//void sort();
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSiteList_Find)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool FindSite(
-	//		tstring const& inSite,
-	//		ARBConfigCalSitePtr* outSite = NULL) const;
-}
-END_TEST
-
-
-BEGIN_TEST(ConfigCalSiteList_AddDelete)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool AddSite(
-	//		tstring const& inSite,
-	//		ARBConfigCalSitePtr* outSite = NULL);
-	//bool AddSite(ARBConfigCalSitePtr inSite);
-	//int DeleteSite(tstring const& inSite);
-}
-END_TEST

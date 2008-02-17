@@ -44,195 +44,172 @@
 #include "Element.h"
 
 
-FIXTURE(Config)
-
-
-SETUP(Config)
+SUITE(TestConfig)
 {
-	WIN_ASSERT_TRUE(CommonSetup());
-}
-
-
-TEARDOWN(Config)
-{
-	WIN_ASSERT_TRUE(CommonTeardown());
-}
-
-
-BEGIN_TESTF(Config_Equality, Config)
-{
-	ARBConfig config1, config2;
-	WIN_ASSERT_EQUAL(config1, config2);
-	config1.Default();
-	WIN_ASSERT_NOT_EQUAL(config1, config2);
-	ARBConfig config3(config1);
-	WIN_ASSERT_EQUAL(config1, config3);
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_Clear, Config)
-{
-	ARBConfig config1, config2;
-	config1.Default();
-	WIN_ASSERT_NOT_EQUAL(config1, config2);
-	config1.clear();
-	WIN_ASSERT_EQUAL(config1, config2);
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_LoadFault, Config)
-{
-	ElementNodePtr data = ElementNode::New();
-	ARBConfig config;
-	tstring err;
-	ARBErrorCallback callback(err);
-	WIN_ASSERT_FALSE(config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
-	WIN_ASSERT_FALSE(config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
-	WIN_ASSERT_FALSE(config.LoadFault(data, ARBVersion(1,0), callback));
-	WIN_ASSERT_FALSE(config.LoadFault(data, ARBVersion(2,0), callback));
-	data->SetName(TREE_FAULTTYPE);
-	data->SetValue(_T("A fault"));
-	WIN_ASSERT_FALSE(config.LoadFault(data, ARBVersion(1,0), callback));
-	WIN_ASSERT_TRUE(config.LoadFault(data, ARBVersion(2,0), callback));
-	data->AddAttrib(_T("Name"), _T("A fault"));
-	WIN_ASSERT_TRUE(config.LoadFault(data, ARBVersion(1,0), callback));
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_LoadOtherPoints, Config)
-{
-	ElementNodePtr data = ElementNode::New();
-	ARBConfig config;
-	tstring err;
-	ARBErrorCallback callback(err);
-	WIN_ASSERT_FALSE(config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
-	WIN_ASSERT_FALSE(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-	data->SetName(TREE_OTHERPTS);
-	WIN_ASSERT_FALSE(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-	data->AddAttrib(ATTRIB_OTHERPTS_NAME, _T("Some Breed points"));
-	WIN_ASSERT_FALSE(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-	data->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("2"));
-	WIN_ASSERT_FALSE(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-	data->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("All"));
-	WIN_ASSERT_TRUE(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_Load, Config)
-{
-	UINT configs[] = {
-		IDR_XML_CONFIG08_V10_2,
-		IDR_XML_CONFIG09_V11_0,
-		IDR_XML_CONFIG12_V12_1,
-		IDR_XML_CONFIG14_V12_2,
-		IDR_XML_CONFIG19_V12_5,
-		IDR_XML_CONFIG20_V12_6,
-		0
-	};
-	for (int i = 0; configs[i] != 0; ++i)
+	TEST(Equality)
 	{
-		ElementNodePtr tree = LoadXMLData(configs[i]);
+		ARBConfig config1, config2;
+		CHECK(config1 == config2);
+		config1.Default();
+		CHECK(config1 != config2);
+		ARBConfig config3(config1);
+		CHECK(config1 == config3);
+	}
+
+
+	TEST(Clear)
+	{
+		ARBConfig config1, config2;
+		config1.Default();
+		CHECK(config1 != config2);
+		config1.clear();
+		CHECK(config1 == config2);
+	}
+
+
+	TEST(LoadFault)
+	{
+		ElementNodePtr data = ElementNode::New();
 		ARBConfig config;
-		WIN_ASSERT_TRUE(LoadConfigFromTree(tree, config));
+		tstring err;
+		ARBErrorCallback callback(err);
+		CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
+		CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
+		CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
+		CHECK(!config.LoadFault(data, ARBVersion(2,0), callback));
+		data->SetName(TREE_FAULTTYPE);
+		data->SetValue(_T("A fault"));
+		CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
+		CHECK(config.LoadFault(data, ARBVersion(2,0), callback));
+		data->AddAttrib(_T("Name"), _T("A fault"));
+		CHECK(config.LoadFault(data, ARBVersion(1,0), callback));
+	}
+
+
+	TEST(LoadOtherPoints)
+	{
+		ElementNodePtr data = ElementNode::New();
+		ARBConfig config;
+		tstring err;
+		ARBErrorCallback callback(err);
+		CHECK(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
+		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+		data->SetName(TREE_OTHERPTS);
+		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+		data->AddAttrib(ATTRIB_OTHERPTS_NAME, _T("Some Breed points"));
+		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+		data->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("2"));
+		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+		data->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("All"));
+		CHECK(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
+	}
+
+
+	TEST(Load)
+	{
+		UINT configs[] = {
+			IDR_XML_CONFIG08_V10_2,
+			IDR_XML_CONFIG09_V11_0,
+			IDR_XML_CONFIG12_V12_1,
+			IDR_XML_CONFIG14_V12_2,
+			IDR_XML_CONFIG19_V12_5,
+			IDR_XML_CONFIG20_V12_6,
+			0
+		};
+		for (int i = 0; configs[i] != 0; ++i)
+		{
+			ElementNodePtr tree = LoadXMLData(configs[i]);
+			ARBConfig config;
+			CHECK(LoadConfigFromTree(tree, config));
+		}
+	}
+
+
+	TEST(Save)
+	{
+		ARBConfig config;
+		config.Default();
+		ElementNodePtr tree = ElementNode::New();
+		CHECK(config.Save(tree));
+		CHECK_EQUAL(1, tree->GetNodeCount(ElementNode::Element_Node));
+		int idx = tree->FindElement(TREE_CONFIG);
+		CHECK(idx >= 0);
+	}
+
+
+	TEST(Default)
+	{
+		ARBConfig config;
+		CHECK_EQUAL(0u, config.GetCalSites().size());
+		CHECK_EQUAL(0u, config.GetActions().size());
+		CHECK_EQUAL(0u, config.GetFaults().size());
+		CHECK_EQUAL(0u, config.GetOtherPoints().size());
+		CHECK_EQUAL(0u, config.GetVenues().size());
+		config.Default();
+		CHECK_EQUAL(0u, config.GetCalSites().size());
+		CHECK_EQUAL(80u, config.GetActions().size());
+		CHECK_EQUAL(0u, config.GetFaults().size());
+		CHECK_EQUAL(5u, config.GetOtherPoints().size());
+		CHECK_EQUAL(13u, config.GetVenues().size());
+		CHECK(config.GetVenues().FindVenue(_T("AAC")));
+		CHECK(config.GetVenues().FindVenue(_T("AKC")));
+		CHECK(config.GetVenues().FindVenue(_T("ASCA")));
+		CHECK(config.GetVenues().FindVenue(_T("CKC")));
+		CHECK(config.GetVenues().FindVenue(_T("CPE")));
+		CHECK(config.GetVenues().FindVenue(_T("DOCNA")));
+		CHECK(config.GetVenues().FindVenue(_T("FCI")));
+		CHECK(config.GetVenues().FindVenue(_T("NADAC")));
+		CHECK(config.GetVenues().FindVenue(_T("SCC")));
+		CHECK(config.GetVenues().FindVenue(_T("SSA")));
+		CHECK(config.GetVenues().FindVenue(_T("TDAA")));
+		CHECK(config.GetVenues().FindVenue(_T("UKC")));
+		CHECK(config.GetVenues().FindVenue(_T("USDAA")));
+	}
+
+
+	TEST(GetDTD)
+	{
+		std::string dtd = ARBConfig::GetDTD();
+		CHECK(0 != dtd.length());
+		std::string dtd2 = ARBConfig::GetDTD(false);
+		CHECK(0 != dtd2.length());
+		CHECK(dtd != dtd2);
+	}
+
+
+	TEST(GetTitleNiceName)
+	{
+		ARBConfig config;
+		config.Default();
+		tstring nice = config.GetTitleNiceName(_T("AKC"), _T("MX"));
+		CHECK(0 != nice.length());
+	}
+
+
+	TEST(GetTitleCompleteName)
+	{
+		ARBConfig config;
+		config.Default();
+		ARBDogTitlePtr title = ARBDogTitle::New();
+		title->SetVenue(_T("AKC"));
+		title->SetName(_T("MX"), 1, false);
+		tstring name1 = config.GetTitleCompleteName(title);
+		CHECK(0 != name1.length());
+		tstring name2 = config.GetTitleCompleteName(title, false);
+		CHECK(0 != name2.length());
+		CHECK(name1 != name2);
+		tstring nice = config.GetTitleNiceName(_T("AKC"), _T("MX"));
+		nice += _T(" [MX]");
+		CHECK(nice == name2);
+	}
+
+
+	TEST(Update)
+	{
+		TODO_TEST
+		//bool Update(
+		//		int indent,
+		//		ARBConfig const& inConfigNew,
+		//		otstringstream& ioInfo);
 	}
 }
-END_TESTF
-
-
-BEGIN_TESTF(Config_Save, Config)
-{
-	ARBConfig config;
-	config.Default();
-	ElementNodePtr tree = ElementNode::New();
-	WIN_ASSERT_TRUE(config.Save(tree));
-	WIN_ASSERT_EQUAL(1, tree->GetNodeCount(ElementNode::Element_Node));
-	int idx = tree->FindElement(TREE_CONFIG);
-	WIN_ASSERT_TRUE(idx >= 0);
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_Default, Config)
-{
-	ARBConfig config;
-	WIN_ASSERT_EQUAL(0u, config.GetCalSites().size());
-	WIN_ASSERT_EQUAL(0u, config.GetActions().size());
-	WIN_ASSERT_EQUAL(0u, config.GetFaults().size());
-	WIN_ASSERT_EQUAL(0u, config.GetOtherPoints().size());
-	WIN_ASSERT_EQUAL(0u, config.GetVenues().size());
-	config.Default();
-	WIN_ASSERT_EQUAL(0u, config.GetCalSites().size());
-	WIN_ASSERT_EQUAL(80u, config.GetActions().size());
-	WIN_ASSERT_EQUAL(0u, config.GetFaults().size());
-	WIN_ASSERT_EQUAL(5u, config.GetOtherPoints().size());
-	WIN_ASSERT_EQUAL(13u, config.GetVenues().size());
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("AAC")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("AKC")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("ASCA")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("CKC")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("CPE")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("DOCNA")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("FCI")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("NADAC")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("SCC")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("SSA")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("TDAA")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("UKC")));
-	WIN_ASSERT_TRUE(config.GetVenues().FindVenue(_T("USDAA")));
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_GetDTD, Config)
-{
-	std::string dtd = ARBConfig::GetDTD();
-	WIN_ASSERT_NOT_ZERO(dtd.length());
-	std::string dtd2 = ARBConfig::GetDTD(false);
-	WIN_ASSERT_NOT_ZERO(dtd2.length());
-	WIN_ASSERT_NOT_EQUAL(dtd, dtd2);
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_GetTitleNiceName, Config)
-{
-	ARBConfig config;
-	config.Default();
-	tstring nice = config.GetTitleNiceName(_T("AKC"), _T("MX"));
-	WIN_ASSERT_NOT_ZERO(nice.length());
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_GetTitleCompleteName, Config)
-{
-	ARBConfig config;
-	config.Default();
-	ARBDogTitlePtr title = ARBDogTitle::New();
-	title->SetVenue(_T("AKC"));
-	title->SetName(_T("MX"), 1, false);
-	tstring name1 = config.GetTitleCompleteName(title);
-	WIN_ASSERT_NOT_ZERO(name1.length());
-	tstring name2 = config.GetTitleCompleteName(title, false);
-	WIN_ASSERT_NOT_ZERO(name2.length());
-	WIN_ASSERT_NOT_EQUAL(name1, name2);
-	tstring nice = config.GetTitleNiceName(_T("AKC"), _T("MX"));
-	nice += _T(" [MX]");
-	WIN_ASSERT_STRING_EQUAL(nice.c_str(), name2.c_str());
-}
-END_TESTF
-
-
-BEGIN_TESTF(Config_Update, Config)
-{
-	WIN_ASSERT_FAIL(_T("TODO: Write test"));
-	//bool Update(
-	//		int indent,
-	//		ARBConfig const& inConfigNew,
-	//		otstringstream& ioInfo);
-}
-END_TESTF

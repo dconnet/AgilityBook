@@ -39,15 +39,17 @@
 #include "ARBTypes.h"
 
 
-BEGIN_TEST(Html_Sanitize)
+SUITE(TestMisc)
 {
-	tstring s(_T("<&amp>"));
-	tstring s2 = SanitizeStringForHTML(s);
-	WIN_ASSERT_STRING_EQUAL(_T("&lt;&amp;amp&gt;"), s2.c_str());
-	s = _T("1\r\n2\n3");
-	s2 = SanitizeStringForHTML(s, true);
-	WIN_ASSERT_STRING_EQUAL(_T("1<br/>2<br/>3"), s2.c_str());
-	s2 = SanitizeStringForHTML(s, false);
-	WIN_ASSERT_STRING_EQUAL(_T("1\r\n2\n3"), s2.c_str());
+	TEST(Html_Sanitize)
+	{
+		tstring s(_T("<&amp>"));
+		tstring s2 = SanitizeStringForHTML(s);
+		CHECK(_T("&lt;&amp;amp&gt;") == s2);
+		s = _T("1\r\n2\n3");
+		s2 = SanitizeStringForHTML(s, true);
+		CHECK(_T("1<br/>2<br/>3") == s2);
+		s2 = SanitizeStringForHTML(s, false);
+		CHECK(_T("1\r\n2\n3") == s2);
+	}
 }
-END_TEST

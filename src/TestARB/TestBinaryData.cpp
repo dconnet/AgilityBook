@@ -39,7 +39,7 @@
 #include "BinaryData.h"
 
 
-namespace
+SUITE(TestBinaryData)
 {
 	// This is an small gif file.
 	static const size_t RawDataSize = 84;
@@ -61,46 +61,43 @@ namespace
 	static const tstring RawString(_T("This is a test of a string"));
 	// compressed, encoded string
 	static const tstring EncodedString(_T("eJwLycgsVgCiRIWS1OIShfw0IKu4pCgzLx0AeIAJIw=="));
+
+
+	TEST(RawDecode)
+	{
+		unsigned char* outData = NULL;
+		size_t bytes;
+		CHECK(BinaryData::Decode(EncodedData, outData, bytes));
+		CHECK(outData != NULL);
+		CHECK_EQUAL(RawDataSize, bytes);
+		CHECK_EQUAL(0, memcmp(RawData, outData, bytes));
+		BinaryData::Release(outData);
+	}
+
+
+	TEST(RawEncode)
+	{
+		tstring str;
+		CHECK(BinaryData::Encode(RawData, RawDataSize, str));
+		CHECK(EncodedData == str);
+	}
+
+
+	//TODO: Test Encode(FILE*, tstring& outdata)
+
+
+	TEST(StringDecode)
+	{
+		tstring str;
+		CHECK(BinaryData::DecodeString(EncodedString, str));
+		CHECK(RawString == str);
+	}
+
+
+	TEST(StringEncode)
+	{
+		tstring str;
+		CHECK(BinaryData::EncodeString(RawString, str));
+		CHECK(EncodedString == str);
+	}
 }
-
-BEGIN_TEST(BinaryData_RawDecode)
-{
-	unsigned char* outData = NULL;
-	size_t bytes;
-	WIN_ASSERT_TRUE(BinaryData::Decode(EncodedData, outData, bytes));
-	WIN_ASSERT_NOT_NULL(outData);
-	WIN_ASSERT_EQUAL(RawDataSize, bytes);
-	WIN_ASSERT_EQUAL(0, memcmp(RawData, outData, bytes));
-	BinaryData::Release(outData);
-}
-END_TEST
-
-
-BEGIN_TEST(BinaryData_RawEncode)
-{
-	tstring str;
-	WIN_ASSERT_TRUE(BinaryData::Encode(RawData, RawDataSize, str));
-	WIN_ASSERT_STRING_EQUAL(EncodedData.c_str(), str.c_str());
-}
-END_TEST
-
-
-//TODO: Test Encode(FILE*, tstring& outdata)
-
-
-BEGIN_TEST(BinaryData_StringDecode)
-{
-	tstring str;
-	WIN_ASSERT_TRUE(BinaryData::DecodeString(EncodedString, str));
-	WIN_ASSERT_STRING_EQUAL(RawString.c_str(), str.c_str());
-}
-END_TEST
-
-
-BEGIN_TEST(BinaryData_tStringEncode)
-{
-	tstring str;
-	WIN_ASSERT_TRUE(BinaryData::EncodeString(RawString, str));
-	WIN_ASSERT_STRING_EQUAL(EncodedString.c_str(), str.c_str());
-}
-END_TEST
