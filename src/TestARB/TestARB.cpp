@@ -41,12 +41,13 @@
 #include "ARBStructure.h"
 #include "Element.h"
 
+// The trailing 'S' is for 'static' since we staticly link the runtime
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
-#define UNITTESTLIB		"UnitTest++.vsnet2003"
+#define UNITTESTLIB		"UnitTest++.VC7S"
 #elif _MSC_VER >= 1400 && _MSC_VER < 1500
-#define UNITTESTLIB		"UnitTest++.vsnet2005"
+#define UNITTESTLIB		"UnitTest++.VC8S"
 #elif _MSC_VER >= 1500
-#define UNITTESTLIB		"UnitTest++.vsnet2008"
+#define UNITTESTLIB		"UnitTest++.VC9S"
 #else
 #error Unsupported compiler
 #endif
