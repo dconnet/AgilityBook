@@ -19,17 +19,16 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 UnitTest++: http://unittest-cpp.sourceforge.net/
-I'm currently using version 1.3, with modifications.
+I'm currently using the SVN head (as of 2/19/2008, subject to change)
 If you don't want to run the unit tests, this is not required.
 By default, TestARB.vcproj assumes that UnitTest++ is installed in /Tools/UnitTest++.
-All project files have been modified such that:
- [UnitTest] OutputDirectory: $(SolutionDir)\lib
- [TestUnitTest] OutputDirectory: $(SolutionDir)\bin
- IntermediateDirectory: $(OutDir)\$(ProjectName)\$(ConfigurationName)
- Unicode/Non-unicode configs added to all projects, .lib names changed
-  to UnitTest++.vsnet<vsversion>[U][D].lib
-Source changes: Changed "Check.h" to pass Actual/Expected by const&
-- Current SVN has those changes, I may update to those soon
+All project files have been copied/renamed/modified such that:
+ "vsnet..." to "VC..."
+ OutputDirectory: $(SolutionDir)\bin\$(PlatformName)
+ IntermediateDirectory: $(OutDir)\$(ConfigurationName)\$(ProjectName)
+ Unicode/Non-unicode/LIB/DLL configs added to all projects (except vc7)
+ .lib names changed to UnitTest++.VC<vcversion>[S][U][D].lib
+ VC8/9 projects now use common vsprops files
 
 --------------------
 
