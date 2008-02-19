@@ -41,28 +41,35 @@
 #include "ARBStructure.h"
 #include "Element.h"
 
-// The trailing 'S' is for 'static' since we staticly link the runtime
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
-#define UNITTESTLIB		"UnitTest++.VC7S"
+#define UT_NAME			"UnitTest++.VC7"
 #elif _MSC_VER >= 1400 && _MSC_VER < 1500
-#define UNITTESTLIB		"UnitTest++.VC8S"
+#define UT_NAME			"UnitTest++.VC8"
 #elif _MSC_VER >= 1500
-#define UNITTESTLIB		"UnitTest++.VC9S"
+#define UT_NAME			"UnitTest++.VC9"
 #else
 #error Unsupported compiler
 #endif
-#ifdef _UNICODE
-#define UNITTESTLIBU	"U"
-#else
-#define UNITTESTLIBU	""
-#endif
-#ifdef _DEBUG
-#define UNITTESTLIBD	"D"
-#else
-#define UNITTESTLIBD	""
-#endif
-#pragma comment(lib, UNITTESTLIB UNITTESTLIBU UNITTESTLIBD ".lib")
 
+// Note, if using static runtime, swap comments on following 2 defines
+// I don't know if there's a compiler define that tells us which runtime
+// we're linking with...
+#define UT_STATIC_RTL	"S"
+//#define UT_STATIC_RTL	""
+
+#ifdef _UNICODE
+#define UT_UNICODE		"U"
+#else
+#define UT_UNICODE		""
+#endif
+
+#ifdef _DEBUG
+#define UT_DEBUG		"D"
+#else
+#define UT_DEBUG		""
+#endif
+
+#pragma comment(lib, UT_NAME UT_STATIC_RTL UT_UNICODE UT_DEBUG ".lib")
 
 
 int _tmain(int /*argc*/, _TCHAR* /*argv*/ [])
