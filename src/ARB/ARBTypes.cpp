@@ -71,7 +71,7 @@ void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine)
 	if (bIncNewLine)
 		TRACE(_T("%s\n"), inMsg.c_str());
 	else
-		TRACE0(inMsg.c_str());
+		TRACE(_T("%s"), inMsg.c_str());
 #endif
 }
 

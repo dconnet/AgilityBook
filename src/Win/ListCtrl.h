@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-20 DRC Added subitem editing to lists.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-30 DRC Allow restricted selection in multi-select lists.
  * @li 2004-09-16 DRC Override SetColumnWidth to auto-fix tooltip rectangles.
@@ -149,12 +150,19 @@ public:
 	void SetSelection(
 			std::vector<int>& indices,
 			bool bEnsureVisible = false);
+
 	/**
 	 * Returns the data required to print/copy a line.
 	 */
 	virtual void GetPrintLine(
 			int nItem,
 			CStringArray& line);
+
+	/**
+	 * Edit a sub item.
+	 * @return Temporary handle to edit control (do not save)
+	 */
+	CEdit* EditSubItem(int index, int nCol);
 
 protected:
 	bool Init();
@@ -169,6 +177,9 @@ protected:
 	//{{AFX_MSG(CListCtrl2)
 	afx_msg void OnDestroy();
 	afx_msg BOOL OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -236,12 +247,19 @@ public:
 	void SetSelection(
 			std::vector<int>& indices,
 			bool bEnsureVisible = false);
+
 	/**
 	 * Returns the data required to print/copy a line.
 	 */
 	virtual void GetPrintLine(
 			int nItem,
 			CStringArray& line);
+
+	/**
+	 * Edit a sub item.
+	 * @return Temporary handle to edit control (do not save)
+	 */
+	CEdit* EditSubItem(int index, int nCol);
 
 protected:
 	bool Init();
@@ -262,6 +280,9 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg BOOL OnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);
 	afx_msg void OnEditCopy();
 	afx_msg void OnUpdateEditSelectAll(CCmdUI* pCmdUI);
