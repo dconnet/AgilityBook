@@ -95,6 +95,8 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeLocation();
 	afx_msg void OnKillfocusLocation();
+	afx_msg void OnBeginLabelEditClubs(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnEndLabelEditClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkClubs(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydownClubs(NMHDR* pNMHDR, LRESULT* pResult);

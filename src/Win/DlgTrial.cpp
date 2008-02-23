@@ -119,6 +119,8 @@ BEGIN_MESSAGE_MAP(CDlgTrial, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgTrial)
 	ON_CBN_SELCHANGE(IDC_TRIAL_LOCATION, OnSelchangeLocation)
 	ON_CBN_KILLFOCUS(IDC_TRIAL_LOCATION, OnKillfocusLocation)
+	ON_NOTIFY(LVN_BEGINLABELEDIT, IDC_TRIAL_CLUBS, OnBeginLabelEditClubs)
+	ON_NOTIFY(LVN_ENDLABELEDIT, IDC_TRIAL_CLUBS, OnEndLabelEditClubs)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TRIAL_CLUBS, OnItemchangedClubs)
 	ON_NOTIFY(NM_DBLCLK, IDC_TRIAL_CLUBS, OnDblclkClubs)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_TRIAL_CLUBS, OnKeydownClubs)
@@ -218,6 +220,7 @@ BOOL CDlgTrial::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 	m_ctrlClubs.SetExtendedStyle(m_ctrlClubs.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	m_ctrlClubs.AllowEdit();
 
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
@@ -262,6 +265,71 @@ void CDlgTrial::OnKillfocusLocation()
 {
 	UpdateData(TRUE);
 	UpdateNotes(true, false);
+}
+
+
+void CDlgTrial::OnBeginLabelEditClubs(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
+{
+	NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+	LRESULT res = 1;
+	switch (pDispInfo->item.iSubItem)
+	{
+	case 0:
+		{
+			set<tstring> clubs;
+			m_pDoc->GetAllClubNames(clubs, true, true);
+			vector<tstring> items;
+			items.insert(items.end(), clubs.begin(), clubs.end());
+			m_ctrlClubs.SetEditList(items);
+		}
+		res = 0;
+		break;
+	case 1:
+		{
+			vector<tstring> items;
+			for (ARBConfigVenueList::iterator venues = m_pDoc->GetConfig().GetVenues().begin();
+				venues != m_pDoc->GetConfig().GetVenues().end();
+				++venues)
+			{
+				items.push_back((*venues)->GetName());
+			}
+			m_ctrlClubs.SetEditList(items);
+		}
+		res = 0;
+		break;
+	}
+	*pResult = res;
+}
+
+
+void CDlgTrial::OnEndLabelEditClubs(
+		NMHDR* pNMHDR,
+		LRESULT* pResult)
+{
+	NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+	LRESULT res = 1;
+	switch (pDispInfo->item.iSubItem)
+	{
+	case 0:
+		{
+			ARBDogClubPtr pClub = GetClubData(pDispInfo->item.iItem);
+			pClub->SetName(pDispInfo->item.pszText);
+			m_ctrlClubs.SetItemText(pDispInfo->item.iItem, 0, pClub->GetName().c_str());
+			res = 0;
+		}
+		break;
+	case 1:
+		{
+			ARBDogClubPtr pClub = GetClubData(pDispInfo->item.iItem);
+			pClub->SetVenue(pDispInfo->item.pszText);
+			m_ctrlClubs.SetItemText(pDispInfo->item.iItem, 1, pClub->GetVenue().c_str());
+			res = 0;
+		}
+		break;
+	}
+	*pResult = res;
 }
 
 

@@ -96,11 +96,16 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CListCtrl2 : public CListCtrl
+class CListCtrl2;
+class CListView2;
+
+class CListCtrlEx
 {
+protected:
+	CListCtrlEx(CListCtrl* pList, bool bAutoDelete = true);
+
 public:
-	CListCtrl2(bool bAutoDelete);
-	virtual ~CListCtrl2();
+	void AllowEdit()		{m_bAllowEdit = true;}
 
 	// Header functions
 	void FixTooltips();
@@ -110,10 +115,6 @@ public:
 			int iCol,
 			CHeaderCtrl2::SortOrder eOrder);
 
-	/**
-	 * Override column insertion/removal so we can deal with tooltips.
-	 * Note, this must be called directly, not thru the base class.
-	 */
 	int InsertColumn(
 			int nCol,
 			LVCOLUMN const* pColumn);
@@ -140,6 +141,7 @@ public:
 	 * @param bRestricted In multi-select lists, only allow a single selection.
 	 */
 	int GetSelection(bool bRestricted = false);
+
 	/**
 	 * Returns the number of selected items.
 	 */
@@ -159,16 +161,61 @@ public:
 			CStringArray& line);
 
 	/**
-	 * Edit a sub item.
-	 * @return Temporary handle to edit control (do not save)
+	 * Initialize the type of editing control.
+	 * @note Call this during the LVN_BEGINLABELEDIT callback.
+	 * @note Only droplist style is supported due to issues with the child edit control of a combobox.
+	 * @param dropItems Items to initial combo
 	 */
-	CEdit* EditSubItem(int index, int nCol);
+	void SetEditList(std::vector<tstring> const& dropItems);
+
+	/**
+	 * Edit a sub item.
+	 * @note This will be either an edit control (default) or combobox,
+	 * depending on whether SetEditList is called.
+	 * @return Temporary handle to control (do not save)
+	 */
+	CWnd* EditSubItem(int index, int nCol);
 
 protected:
 	bool Init();
+	int HitTestEx(CPoint& point, int& col);
+
+	CListCtrl* m_List;
 	CHeaderCtrl2 m_SortHeader;
 	bool m_bAutoDelete;
+	bool m_bAllowEdit;
 
+	bool m_editControl;
+	std::vector<tstring> m_Items;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CListCtrl2 : public CListCtrl, public CListCtrlEx
+{
+public:
+	CListCtrl2(bool bAutoDelete);
+	virtual ~CListCtrl2();
+
+	/**
+	 * Override column insertion/removal so we can deal with tooltips.
+	 * Note, this must be called directly, not thru CListCtrl or CListView::GetListCtrl
+	 */
+	int InsertColumn(
+			int nCol,
+			LVCOLUMN const* pColumn);
+	int InsertColumn(
+			int nCol,
+			LPCTSTR lpszColumnHeading,
+			int nFormat = LVCFMT_LEFT,
+			int nWidth = -1,
+			int nSubItem = -1);
+	BOOL SetColumnWidth(
+			int nCol,
+			int cx);
+	BOOL DeleteColumn(int nCol);
+
+protected:
 // Overrides
 	//{{AFX_VIRTUAL(CListCtrl2)
 	//}}AFX_VIRTUAL
@@ -186,7 +233,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CListView2 : public CListView
+class CListView2 : public CListView, public CListCtrlEx
 {
 	DECLARE_DYNCREATE(CListView2)
 public:
@@ -196,20 +243,11 @@ public:
 	/**
 	 * @param bAuto Should the list items be automatically deleted?
 	 */
-	void SetAutoDelete(bool bAuto)		{m_bAutoDelete = bAuto;}
-
-	// Header functions
-	void FixTooltips();
-	int HeaderItemCount();
-	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
-	void HeaderSort(
-			int iCol,
-			CHeaderCtrl2::SortOrder eOrder);
+	void SetAutoDelete(bool bAuto);
 
 	/**
-	 * For views, these functions should be used to insert/remove the
-	 * columns instead of calling GetListCtrl. That way we can automagically
-	 * fix the tooltips for these headers.
+	 * Override column insertion/removal so we can deal with tooltips.
+	 * Note, this must be called directly, not thru CListCtrl or CListView::GetListCtrl
 	 */
 	int InsertColumn(
 			int nCol,
@@ -225,49 +263,8 @@ public:
 			int cx);
 	BOOL DeleteColumn(int nCol);
 
-	/*
-	 * Simple wrappers to control data access.
-	 * Only valid if autodelete is set.
-	 */
-	CListData* GetData(int index) const;
-	void SetData(int index, CListData* inData);
-
-	/**
-	 * Returns the first selected item.
-	 * @param bRestricted In multi-select lists, only allow a single selection.
-	 */
-	int GetSelection(bool bRestricted = false);
-	/**
-	 * Returns the number of selected items.
-	 */
-	size_t GetSelection(std::vector<int>& indices);
-	void SetSelection(
-			int index,
-			bool bEnsureVisible = false);
-	void SetSelection(
-			std::vector<int>& indices,
-			bool bEnsureVisible = false);
-
-	/**
-	 * Returns the data required to print/copy a line.
-	 */
-	virtual void GetPrintLine(
-			int nItem,
-			CStringArray& line);
-
-	/**
-	 * Edit a sub item.
-	 * @return Temporary handle to edit control (do not save)
-	 */
-	CEdit* EditSubItem(int index, int nCol);
-
-protected:
-	bool Init();
-	CHeaderCtrl2 m_SortHeader;
-	bool m_bAutoDelete;
-
 	//{{AFX_VIRTUAL(CListView2)
-	protected:
+protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
