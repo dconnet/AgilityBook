@@ -160,8 +160,8 @@ void CInPlaceEdit::OnKillFocus(CWnd* pNewWnd)
 	dispinfo.item.mask = LVIF_TEXT;
 	dispinfo.item.iItem = m_iItem;
 	dispinfo.item.iSubItem = m_iSubItem;
-	dispinfo.item.pszText = m_bESC ? NULL : LPTSTR((LPCTSTR)str);
-	dispinfo.item.cchTextMax = str.GetLength();
+	dispinfo.item.pszText = m_bESC ? LPTSTR((LPCTSTR)m_sInitText) : LPTSTR((LPCTSTR)str);
+	dispinfo.item.cchTextMax = m_bESC ? m_sInitText.GetLength() : str.GetLength();
 
 	GetParent()->GetParent()->SendMessage(WM_NOTIFY,
 			GetParent()->GetDlgCtrlID(),
@@ -219,189 +219,133 @@ void CInPlaceEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 /////////////////////////////////////////////////////////////////////////////
 
-static size_t GetSelection(
-		CListCtrl& list,
-		std::vector<int>& indices)
+class CInPlaceCombo : public CComboBox
 {
-	indices.clear();
-	POSITION pos = list.GetFirstSelectedItemPosition();
-	while (NULL != pos)
+public:
+	CInPlaceCombo(int iItem, int iSubItem, CString const& sInitText)
+		: m_sInitText(sInitText)
 	{
-		indices.push_back(list.GetNextSelectedItem(pos));
+		m_iItem = iItem;
+		m_iSubItem = iSubItem;
+		m_bESC = FALSE;
 	}
-	return indices.size();
-}
+
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+
+protected:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnNcDestroy();
+	afx_msg void OnKillFocus(CWnd* pNewWnd);
+	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnCloseup();
+	DECLARE_MESSAGE_MAP()
+private:
+	int m_iItem;
+	int m_iSubItem;
+	CString m_sInitText;
+	BOOL m_bESC;	 	// To indicate whether ESC key was pressed
+};
 
 
-static void SetSelection(
-		CListCtrl& list,
-		std::vector<int>& indices,
-		bool bEnsureVisible)
+BEGIN_MESSAGE_MAP(CInPlaceCombo, CEdit)
+	//{{AFX_MSG_MAP(CInPlaceCombo)
+	ON_WM_CREATE()
+	ON_WM_NCDESTROY()
+	ON_WM_KILLFOCUS()
+	ON_WM_CHAR()
+	ON_CONTROL_REFLECT(CBN_CLOSEUP, OnCloseup)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+
+BOOL CInPlaceCombo::PreTranslateMessage(MSG* pMsg)
 {
-	// Clear everything.
-	POSITION pos = list.GetFirstSelectedItemPosition();
-	while (NULL != pos)
+	if (pMsg->message == WM_KEYDOWN)
 	{
-		int i = list.GetNextSelectedItem(pos);
-		list.SetItemState(i, 0, LVIS_SELECTED|LVIS_FOCUSED);
-	}
-	// Set it.
-	for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
-	{
-		int index = *iter;
-		if (index >= 0 && index < list.GetItemCount())
+		if (pMsg->wParam == VK_RETURN || pMsg->wParam == VK_ESCAPE)
 		{
-			list.SetItemState(index, LVIS_SELECTED|LVIS_FOCUSED, LVIS_SELECTED|LVIS_FOCUSED);
-			if (bEnsureVisible)
-				list.EnsureVisible(index, FALSE);
+			::TranslateMessage(pMsg);
+			::DispatchMessage(pMsg);
+			return TRUE; // DO NOT process further
 		}
 	}
+	return CComboBox::PreTranslateMessage(pMsg);
 }
 
 
-static void GetPrintLineImp(
-		CListCtrl& list,
-		int nItem,
-		CStringArray& line)
+int CInPlaceCombo::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	line.RemoveAll();
-	int nColumns = list.GetHeaderCtrl()->GetItemCount();
-	for (int i = 0; i < nColumns; ++i)
+	if (CComboBox::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// Set the proper font
+	CFont* font = GetParent()->GetFont();
+	SetFont(font);
+
+	SetFocus();
+
+	return 0;
+}
+
+
+void CInPlaceCombo::OnNcDestroy()
+{
+	CComboBox::OnNcDestroy();
+	delete this;
+}
+
+
+void CInPlaceCombo::OnKillFocus(CWnd* pNewWnd)
+{
+	CComboBox::OnKillFocus(pNewWnd);
+	if (pNewWnd)
 	{
-		if (0 > nItem)
-		{
-			TCHAR buffer[1000];
-			HDITEM hdr;
-			hdr.mask = HDI_TEXT;
-			hdr.pszText = buffer;
-			hdr.cchTextMax = sizeof(buffer) / sizeof(TCHAR);
-			list.GetHeaderCtrl()->GetItem(i, &hdr);
-			line.Add(buffer);
-		}
-		else
-			line.Add(list.GetItemText(nItem, i));
+		// The edit control of the combo is getting focus
+		if (pNewWnd->GetParent() == this)
+			return;
 	}
-}
 
-
-static int HitTestEx(CListCtrl const& list, CPoint& point, int& col)
-{
-	int row = list.HitTest(point, NULL);
-	col = 0;
-
-	// Make sure that the ListView is in LVS_REPORT
-	if ((GetWindowLong(list.m_hWnd, GWL_STYLE) & LVS_TYPEMASK) != LVS_REPORT)
-		return row;
-
-	// Get the top and bottom row visible
-	row = list.GetTopIndex();
-	int bottom = row + list.GetCountPerPage();
-	if (bottom > list.GetItemCount())
-		bottom = list.GetItemCount();
-
-	// Get the number of columns
-	CHeaderCtrl* pHeader = (CHeaderCtrl*)list.GetDlgItem(0);
-	int nColumnCount = pHeader->GetItemCount();
-
-	// Loop through the visible rows
-	for ( ;row <= bottom; ++row)
-	{
-		// Get bounding rect of item and check whether point falls in it.
-		CRect rect;
-		list.GetItemRect(row, &rect, LVIR_BOUNDS);
-		if (rect.PtInRect(point))
-		{
-			// Now find the column
-			for (int colnum = 0; colnum < nColumnCount; ++colnum)
-			{
-				int colwidth = list.GetColumnWidth(colnum);
-				if (point.x >= rect.left
-				&& point.x <= (rect.left + colwidth))
-				{
-					col = colnum;
-					return row;
-				}
-				rect.left += colwidth;
-			}
-		}
-	}
-	return -1;
-}
-
-
-// The returned pointer should not be saved
-static CEdit* EditSubItem(CListCtrl& list, int index, int nCol)
-{
-	// Make sure item is valid
-	if (0 > index || index >= list.GetItemCount())
-		return NULL;
-
-	// Make sure that nCol is valid
-	CHeaderCtrl* pHeader = (CHeaderCtrl*)list.GetDlgItem(0);
-	int nColumnCount = pHeader->GetItemCount();
-	if (nCol >= nColumnCount || list.GetColumnWidth(nCol) < 5)
-		return NULL;
+	CString str;
+	GetWindowText(str);
 
 	// Send Notification to parent of ListView ctrl
 	LV_DISPINFO dispinfo;
-	dispinfo.hdr.hwndFrom = list.m_hWnd;
-	dispinfo.hdr.idFrom = list.GetDlgCtrlID();
-	dispinfo.hdr.code = LVN_BEGINLABELEDIT;
-	dispinfo.item.mask = 0;
-	dispinfo.item.iItem = index;
-	dispinfo.item.iSubItem = nCol;
-	if (list.GetParent()->SendMessage(WM_NOTIFY, list.GetDlgCtrlID(), (LPARAM)&dispinfo))
-		return NULL;
+	dispinfo.hdr.hwndFrom = GetParent()->m_hWnd;
+	dispinfo.hdr.idFrom = GetDlgCtrlID();
+	dispinfo.hdr.code = LVN_ENDLABELEDIT;
 
-	// Make sure that the item is visible
-	if (!list.EnsureVisible(index, TRUE))
-		return NULL;
+	dispinfo.item.mask = LVIF_TEXT;
+	dispinfo.item.iItem = m_iItem;
+	dispinfo.item.iSubItem = m_iSubItem;
+	dispinfo.item.pszText = m_bESC ? LPTSTR((LPCTSTR)m_sInitText) : LPTSTR((LPCTSTR)str);
+	dispinfo.item.cchTextMax = m_bESC ? m_sInitText.GetLength() : str.GetLength();
 
-	// Get the column offset
-	int offset = 0;
-	for (int i = 0; i < nCol; ++i)
-		offset += list.GetColumnWidth(i);
+	GetParent()->GetParent()->SendMessage(WM_NOTIFY,
+			GetParent()->GetDlgCtrlID(),
+			(LPARAM)&dispinfo);
 
-	CRect rect;
-	list.GetItemRect(index, &rect, LVIR_BOUNDS);
+	DestroyWindow();
+}
 
-	// Now scroll if we need to expose the column
-	CRect rcClient;
-	list.GetClientRect(&rcClient);
-	if (offset + rect.left < 0 || offset + rect.left > rcClient.right)
+
+void CInPlaceCombo::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	if (nChar == VK_ESCAPE || nChar == VK_RETURN)
 	{
-		CSize size;
-		size.cx = offset + rect.left;
-		size.cy = 0;
-		list.Scroll(size);
-		rect.left -= size.cx;
+		if (nChar == VK_ESCAPE)
+			m_bESC = TRUE;
+		GetParent()->SetFocus();
+		return;
 	}
 
-	// Get Column alignment
-	LV_COLUMN lvcol;
-	lvcol.mask = LVCF_FMT;
-	list.GetColumn(nCol, &lvcol);
-	DWORD dwStyle;
-	if ((lvcol.fmt & LVCFMT_JUSTIFYMASK) == LVCFMT_LEFT)
-		dwStyle = ES_LEFT;
-	else if((lvcol.fmt & LVCFMT_JUSTIFYMASK) == LVCFMT_RIGHT)
-		dwStyle = ES_RIGHT;
-	else
-		dwStyle = ES_CENTER;
+	CComboBox::OnChar(nChar, nRepCnt, nFlags);
+}
 
-	// Additional offsets determined by looking at normal edit of col0.
-	rect.left += offset + 4;
-	rect.right = rect.left + list.GetColumnWidth(nCol) + 5;
-	if (rect.right > rcClient.right)
-		rect.right = rcClient.right;
-	--rect.top;
-	rect.bottom += 2;
 
-	dwStyle |= WS_BORDER | WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL;
-	CEdit *pEdit = new CInPlaceEdit(index, nCol, list.GetItemText(index, nCol));
-	pEdit->Create(dwStyle, rect, &list, IDC_IPEDIT);
-
-	return pEdit;
+void CInPlaceCombo::OnCloseup()
+{
+	// Set the focus to the parent list control
+	GetParent()->SetFocus();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -596,6 +540,362 @@ void CHeaderCtrl2::Sort(
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// CListCtrlEx
+
+CListCtrlEx::CListCtrlEx(CListCtrl* pList, bool bAutoDelete)
+	: m_List(pList)
+	, m_SortHeader()
+	, m_bAutoDelete(bAutoDelete)
+	, m_bAllowEdit(false)
+	, m_editControl(true)
+	, m_Items()
+{
+}
+
+
+/// Returns whether we ran the initialization.
+bool CListCtrlEx::Init()
+{
+	if (::IsWindow(m_List->GetHeaderCtrl()->GetSafeHwnd())
+	&& (!m_SortHeader.GetSafeHwnd() || !::IsWindow(m_SortHeader.GetSafeHwnd())))
+	{
+		m_SortHeader.SubclassWindow(m_List->GetHeaderCtrl()->GetSafeHwnd());
+		m_SortHeader.FixTooltips();
+		return true;
+	}
+	return false;
+}
+
+
+int CListCtrlEx::HitTestEx(CPoint& point, int& col)
+{
+	int row = m_List->HitTest(point, NULL);
+	col = 0;
+
+	// Make sure that the ListView is in LVS_REPORT
+	if ((GetWindowLong(m_List->m_hWnd, GWL_STYLE) & LVS_TYPEMASK) != LVS_REPORT)
+		return row;
+
+	// Get the top and bottom row visible
+	row = m_List->GetTopIndex();
+	int bottom = row + m_List->GetCountPerPage();
+	if (bottom > m_List->GetItemCount())
+		bottom = m_List->GetItemCount();
+
+	// Get the number of columns
+	CHeaderCtrl* pHeader = (CHeaderCtrl*)m_List->GetDlgItem(0);
+	int nColumnCount = pHeader->GetItemCount();
+
+	// Loop through the visible rows
+	for ( ;row <= bottom; ++row)
+	{
+		// Get bounding rect of item and check whether point falls in it.
+		CRect rect;
+		m_List->GetItemRect(row, &rect, LVIR_BOUNDS);
+		if (rect.PtInRect(point))
+		{
+			// Now find the column
+			for (int colnum = 0; colnum < nColumnCount; ++colnum)
+			{
+				int colwidth = m_List->GetColumnWidth(colnum);
+				if (point.x >= rect.left
+				&& point.x <= (rect.left + colwidth))
+				{
+					col = colnum;
+					return row;
+				}
+				rect.left += colwidth;
+			}
+		}
+	}
+	return -1;
+}
+
+
+void CListCtrlEx::FixTooltips()
+{
+	if (!Init())
+		m_SortHeader.FixTooltips();
+}
+
+
+int CListCtrlEx::HeaderItemCount()
+{
+	Init();
+	return m_SortHeader.GetItemCount();
+}
+
+
+CHeaderCtrl2::SortOrder CListCtrlEx::HeaderSortOrder(int iCol) const
+{
+	const_cast<CListCtrlEx*>(this)->Init();
+	return m_SortHeader.GetSortOrder(iCol);
+}
+
+
+void CListCtrlEx::HeaderSort(
+		int iCol,
+		CHeaderCtrl2::SortOrder eOrder)
+{
+	Init();
+	m_SortHeader.Sort(iCol, eOrder);
+}
+
+
+int CListCtrlEx::InsertColumn(
+		int nCol,
+		LVCOLUMN const* pColumn)
+{
+	int rc = m_List->InsertColumn(nCol, pColumn);
+	if (0 <= rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+
+int CListCtrlEx::InsertColumn(
+		int nCol,
+		LPCTSTR lpszColumnHeading,
+		int nFormat,
+		int nWidth,
+		int nSubItem)
+{
+	int rc = m_List->InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
+	if (0 <= rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+
+BOOL CListCtrlEx::SetColumnWidth(
+		int nCol,
+		int cx)
+{
+	BOOL rc = m_List->SetColumnWidth(nCol, cx);
+	if (rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+
+BOOL CListCtrlEx::DeleteColumn(int nCol)
+{
+	BOOL rc = m_List->DeleteColumn(nCol);
+	if (rc && !Init())
+		m_SortHeader.FixTooltips();
+	return rc;
+}
+
+
+CListData* CListCtrlEx::GetData(int index) const
+{
+	if (0 <= index && index < m_List->GetItemCount() && m_bAutoDelete)
+		return reinterpret_cast<CListData*>(m_List->GetItemData(index));
+	return NULL;
+}
+
+
+void CListCtrlEx::SetData(int index, CListData* inData)
+{
+	if (0 <= index && index < m_List->GetItemCount() && m_bAutoDelete)
+	{
+		CListData* pData = GetData(index);
+		if (pData)
+			delete pData;
+		m_List->SetItemData(index, reinterpret_cast<LPARAM>(inData));
+	}
+}
+
+
+int CListCtrlEx::GetSelection(bool bRestricted)
+{
+	std::vector<int> indices;
+	GetSelection(indices);
+	bool bSingle = (bRestricted || (LVS_SINGLESEL == (m_List->GetStyle() & LVS_SINGLESEL)));
+	if ((bSingle && 1 == indices.size())
+	|| (!bSingle && 0 < indices.size()))
+		return indices[0];
+	else
+		return -1;
+}
+
+
+size_t CListCtrlEx::GetSelection(std::vector<int>& indices)
+{
+	indices.clear();
+	POSITION pos = m_List->GetFirstSelectedItemPosition();
+	while (NULL != pos)
+	{
+		indices.push_back(m_List->GetNextSelectedItem(pos));
+	}
+	return indices.size();
+}
+
+
+void CListCtrlEx::SetSelection(
+		int index,
+		bool bEnsureVisible)
+{
+	std::vector<int> indices;
+	indices.push_back(index);
+	SetSelection(indices, bEnsureVisible);
+}
+
+
+void CListCtrlEx::SetSelection(
+		std::vector<int>& indices,
+		bool bEnsureVisible)
+{
+	// Clear everything.
+	POSITION pos = m_List->GetFirstSelectedItemPosition();
+	while (NULL != pos)
+	{
+		int i = m_List->GetNextSelectedItem(pos);
+		m_List->SetItemState(i, 0, LVIS_SELECTED|LVIS_FOCUSED);
+	}
+	// Set it.
+	for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+	{
+		int index = *iter;
+		if (index >= 0 && index < m_List->GetItemCount())
+		{
+			m_List->SetItemState(index, LVIS_SELECTED|LVIS_FOCUSED, LVIS_SELECTED|LVIS_FOCUSED);
+			if (bEnsureVisible)
+				m_List->EnsureVisible(index, FALSE);
+		}
+	}
+}
+
+
+// This allows a derived class to print a subset of columns if it wants.
+void CListCtrlEx::GetPrintLine(
+		int nItem,
+		CStringArray& line)
+{
+	line.RemoveAll();
+	int nColumns = m_List->GetHeaderCtrl()->GetItemCount();
+	for (int i = 0; i < nColumns; ++i)
+	{
+		if (0 > nItem)
+		{
+			TCHAR buffer[1000];
+			HDITEM hdr;
+			hdr.mask = HDI_TEXT;
+			hdr.pszText = buffer;
+			hdr.cchTextMax = sizeof(buffer) / sizeof(TCHAR);
+			m_List->GetHeaderCtrl()->GetItem(i, &hdr);
+			line.Add(buffer);
+		}
+		else
+			line.Add(m_List->GetItemText(nItem, i));
+	}
+}
+
+
+void CListCtrlEx::SetEditList(std::vector<tstring> const& dropItems)
+{
+	m_editControl = false;
+	m_Items = dropItems;
+}
+
+
+// The returned pointer should not be saved
+CWnd* CListCtrlEx::EditSubItem(int index, int nCol)
+{
+	// Make sure item is valid
+	if (0 > index || index >= m_List->GetItemCount())
+		return NULL;
+
+	// Make sure that nCol is valid
+	CHeaderCtrl* pHeader = (CHeaderCtrl*)m_List->GetDlgItem(0);
+	int nColumnCount = pHeader->GetItemCount();
+	if (nCol >= nColumnCount || m_List->GetColumnWidth(nCol) < 5)
+		return NULL;
+
+	// Send Notification to parent of ListView ctrl
+	LV_DISPINFO dispinfo;
+	dispinfo.hdr.hwndFrom = m_List->m_hWnd;
+	dispinfo.hdr.idFrom = m_List->GetDlgCtrlID();
+	dispinfo.hdr.code = LVN_BEGINLABELEDIT;
+	dispinfo.item.mask = 0;
+	dispinfo.item.iItem = index;
+	dispinfo.item.iSubItem = nCol;
+	if (m_List->GetParent()->SendMessage(WM_NOTIFY, m_List->GetDlgCtrlID(), (LPARAM)&dispinfo))
+		return NULL;
+
+	// Make sure that the item is visible
+	if (!m_List->EnsureVisible(index, TRUE))
+		return NULL;
+
+	// Get the column offset
+	int offset = 0;
+	for (int i = 0; i < nCol; ++i)
+		offset += m_List->GetColumnWidth(i);
+
+	CRect rect;
+	m_List->GetItemRect(index, &rect, LVIR_BOUNDS);
+
+	// Now scroll if we need to expose the column
+	CRect rcClient;
+	m_List->GetClientRect(&rcClient);
+	if (offset + rect.left < 0 || offset + rect.left > rcClient.right)
+	{
+		CSize size;
+		size.cx = offset + rect.left;
+		size.cy = 0;
+		m_List->Scroll(size);
+		rect.left -= size.cx;
+	}
+
+	// Additional offsets determined by looking at normal edit of col0.
+	rect.left += offset + 4;
+	rect.right = rect.left + m_List->GetColumnWidth(nCol) + 5;
+	if (rect.right > rcClient.right)
+		rect.right = rcClient.right;
+	--rect.top;
+	rect.bottom += 2;
+
+	// Get Column alignment
+	CWnd* pWnd = NULL;
+	CString text = m_List->GetItemText(index, nCol);
+	DWORD dwStyle = WS_BORDER | WS_CHILD | WS_VISIBLE;
+	if (m_editControl)
+	{
+		LV_COLUMN lvcol;
+		lvcol.mask = LVCF_FMT;
+		m_List->GetColumn(nCol, &lvcol);
+		dwStyle |= ES_AUTOHSCROLL;
+		if ((lvcol.fmt & LVCFMT_JUSTIFYMASK) == LVCFMT_LEFT)
+			dwStyle |= ES_LEFT;
+		else if((lvcol.fmt & LVCFMT_JUSTIFYMASK) == LVCFMT_RIGHT)
+			dwStyle |= ES_RIGHT;
+		else
+			dwStyle |= ES_CENTER;
+		CEdit* pEdit = new CInPlaceEdit(index, nCol, text);
+		pEdit->Create(dwStyle, rect, m_List, IDC_IPEDIT);
+		pWnd = pEdit;
+	}
+	else
+	{
+		dwStyle |= CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL;
+		CComboBox* pCombo = new CInPlaceCombo(index, nCol, text);
+		rect.bottom += 300;
+		pCombo->Create(dwStyle, rect, m_List, IDC_IPEDIT);
+		for (std::vector<tstring>::iterator i = m_Items.begin(); i != m_Items.end(); ++i)
+		{
+			int idx = pCombo->AddString((*i).c_str());
+			if (text == (*i).c_str())
+				pCombo->SetCurSel(idx);
+		}
+	}
+
+	m_editControl = true;
+	m_Items.clear();
+
+	return pWnd;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CListCtrl2
 
 BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
@@ -609,11 +909,13 @@ BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 END_MESSAGE_MAP()
 
 
+#pragma warning ( push )
+#pragma warning ( disable : 4355 )
 CListCtrl2::CListCtrl2(bool bAutoDelete)
-	: m_SortHeader()
-	, m_bAutoDelete(bAutoDelete)
+	: CListCtrlEx(this, bAutoDelete)
 {
 }
+#pragma warning ( pop )
 
 
 CListCtrl2::~CListCtrl2()
@@ -621,58 +923,11 @@ CListCtrl2::~CListCtrl2()
 }
 
 
-/// Returns whether we ran the initialization.
-bool CListCtrl2::Init()
-{
-	if (::IsWindow(GetHeaderCtrl()->GetSafeHwnd())
-	&& (!m_SortHeader.GetSafeHwnd() || !::IsWindow(m_SortHeader.GetSafeHwnd())))
-	{
-		m_SortHeader.SubclassWindow(GetHeaderCtrl()->GetSafeHwnd());
-		m_SortHeader.FixTooltips();
-		return true;
-	}
-	return false;
-}
-
-
-void CListCtrl2::FixTooltips()
-{
-	if (!Init())
-		m_SortHeader.FixTooltips();
-}
-
-
-int CListCtrl2::HeaderItemCount()
-{
-	Init();
-	return m_SortHeader.GetItemCount();
-}
-
-
-CHeaderCtrl2::SortOrder CListCtrl2::HeaderSortOrder(int iCol) const
-{
-	const_cast<CListCtrl2*>(this)->Init();
-	return m_SortHeader.GetSortOrder(iCol);
-}
-
-
-void CListCtrl2::HeaderSort(
-		int iCol,
-		CHeaderCtrl2::SortOrder eOrder)
-{
-	Init();
-	m_SortHeader.Sort(iCol, eOrder);
-}
-
-
 int CListCtrl2::InsertColumn(
 		int nCol,
 		LVCOLUMN const* pColumn)
 {
-	int rc = CListCtrl::InsertColumn(nCol, pColumn);
-	if (0 <= rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
+	return CListCtrlEx::InsertColumn(nCol, pColumn);
 }
 
 
@@ -683,102 +938,19 @@ int CListCtrl2::InsertColumn(
 		int nWidth,
 		int nSubItem)
 {
-	int rc = CListCtrl::InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
-	if (0 <= rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
+	return CListCtrlEx::InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
 }
 
 
-BOOL CListCtrl2::SetColumnWidth(
-		int nCol,
-		int cx)
+BOOL CListCtrl2::SetColumnWidth(int nCol, int cx)
 {
-	BOOL rc = CListCtrl::SetColumnWidth(nCol, cx);
-	if (rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
+	return CListCtrlEx::SetColumnWidth(nCol, cx);
 }
 
 
 BOOL CListCtrl2::DeleteColumn(int nCol)
 {
-	BOOL rc = CListCtrl::DeleteColumn(nCol);
-	if (rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
-}
-
-
-CListData* CListCtrl2::GetData(int index) const
-{
-	if (0 <= index && index < GetItemCount() && m_bAutoDelete)
-		return reinterpret_cast<CListData*>(GetItemData(index));
-	return NULL;
-}
-
-
-void CListCtrl2::SetData(int index, CListData* inData)
-{
-	if (0 <= index && index < GetItemCount() && m_bAutoDelete)
-	{
-		CListData* pData = GetData(index);
-		if (pData)
-			delete pData;
-		SetItemData(index, reinterpret_cast<LPARAM>(inData));
-	}
-}
-
-
-int CListCtrl2::GetSelection(bool bRestricted)
-{
-	std::vector<int> indices;
-	::GetSelection(*this, indices);
-	bool bSingle = (bRestricted || (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL)));
-	if ((bSingle && 1 == indices.size())
-	|| (!bSingle && 0 < indices.size()))
-		return indices[0];
-	else
-		return -1;
-}
-
-
-size_t CListCtrl2::GetSelection(std::vector<int>& indices)
-{
-	return ::GetSelection(*this, indices);
-}
-
-
-void CListCtrl2::SetSelection(
-		int index,
-		bool bEnsureVisible)
-{
-	std::vector<int> indices;
-	indices.push_back(index);
-	::SetSelection(*this, indices, bEnsureVisible);
-}
-
-
-void CListCtrl2::SetSelection(
-		std::vector<int>& indices,
-		bool bEnsureVisible)
-{
-	::SetSelection(*this, indices, bEnsureVisible);
-}
-
-
-// This allows a derived class to print a subset of columns if it wants.
-void CListCtrl2::GetPrintLine(
-		int nItem,
-		CStringArray& line)
-{
-	GetPrintLineImp(*this, nItem, line);
-}
-
-
-CEdit* CListCtrl2::EditSubItem(int index, int nCol)
-{
-	return ::EditSubItem(*this, index, nCol);
+	return CListCtrlEx::DeleteColumn(nCol);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -808,14 +980,15 @@ BOOL CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 void CListCtrl2::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	bool bDefault = true;
-	if (GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
+	if (m_bAllowEdit)
+	//if (GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
 	{
 		int index;
 		int colnum;
-		if ((index = HitTestEx(*this, point, colnum)) != -1)
+		if ((index = HitTestEx(point, colnum)) != -1)
 		{
 			UINT flag = LVIS_FOCUSED;
-			if ((GetItemState(index, flag) & flag) == flag && colnum > 0)
+			if ((GetItemState(index, flag) & flag) == flag)
 			{
 				bDefault = false;
 				EditSubItem(index, colnum);
@@ -875,8 +1048,7 @@ END_MESSAGE_MAP()
 
 
 CListView2::CListView2()
-	: m_SortHeader()
-	, m_bAutoDelete(true)
+	: CListCtrlEx(&GetListCtrl())
 {
 }
 
@@ -886,46 +1058,9 @@ CListView2::~CListView2()
 }
 
 
-bool CListView2::Init()
+void CListView2::SetAutoDelete(bool bAuto)
 {
-	if (::IsWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd())
-	&& (!m_SortHeader.GetSafeHwnd() || !::IsWindow(m_SortHeader.GetSafeHwnd())))
-	{
-		m_SortHeader.SubclassWindow(GetListCtrl().GetHeaderCtrl()->GetSafeHwnd());
-		m_SortHeader.FixTooltips();
-		return true;
-	}
-	return false;
-}
-
-
-void CListView2::FixTooltips()
-{
-	if (!Init())
-		m_SortHeader.FixTooltips();
-}
-
-
-int CListView2::HeaderItemCount()
-{
-	Init();
-	return m_SortHeader.GetItemCount();
-}
-
-
-CHeaderCtrl2::SortOrder CListView2::HeaderSortOrder(int iCol) const
-{
-	const_cast<CListView2*>(this)->Init();
-	return m_SortHeader.GetSortOrder(iCol);
-}
-
-
-void CListView2::HeaderSort(
-		int iCol,
-		CHeaderCtrl2::SortOrder eOrder)
-{
-	Init();
-	m_SortHeader.Sort(iCol, eOrder);
+	m_bAutoDelete = bAuto;
 }
 
 
@@ -933,10 +1068,7 @@ int CListView2::InsertColumn(
 		int nCol,
 		LVCOLUMN const* pColumn)
 {
-	int rc = GetListCtrl().InsertColumn(nCol, pColumn);
-	if (0 <= rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
+	return CListCtrlEx::InsertColumn(nCol, pColumn);
 }
 
 
@@ -947,102 +1079,19 @@ int CListView2::InsertColumn(
 		int nWidth,
 		int nSubItem)
 {
-	int rc = GetListCtrl().InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
-	if (0 <= rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
+	return CListCtrlEx::InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
 }
 
 
-BOOL CListView2::SetColumnWidth(
-		int nCol,
-		int cx)
+BOOL CListView2::SetColumnWidth(int nCol, int cx)
 {
-	BOOL rc = GetListCtrl().SetColumnWidth(nCol, cx);
-	if (rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
+	return CListCtrlEx::SetColumnWidth(nCol, cx);
 }
 
 
 BOOL CListView2::DeleteColumn(int nCol)
 {
-	BOOL rc = GetListCtrl().DeleteColumn(nCol);
-	if (rc && !Init())
-		m_SortHeader.FixTooltips();
-	return rc;
-}
-
-
-CListData* CListView2::GetData(int index) const
-{
-	if (0 <= index && index < GetListCtrl().GetItemCount() && m_bAutoDelete)
-		return reinterpret_cast<CListData*>(GetListCtrl().GetItemData(index));
-	return NULL;
-}
-
-
-void CListView2::SetData(int index, CListData* inData)
-{
-	if (0 <= index && index < GetListCtrl().GetItemCount() && m_bAutoDelete)
-	{
-		CListData* pData = GetData(index);
-		if (pData)
-			delete pData;
-		GetListCtrl().SetItemData(index, reinterpret_cast<LPARAM>(inData));
-	}
-}
-
-
-int CListView2::GetSelection(bool bRestricted)
-{
-	std::vector<int> indices;
-	::GetSelection(GetListCtrl(), indices);
-	bool bSingle = (bRestricted || (LVS_SINGLESEL == (GetStyle() & LVS_SINGLESEL)));
-	if ((bSingle && 1 == indices.size())
-	|| (!bSingle && 0 < indices.size()))
-		return indices[0];
-	else
-		return -1;
-}
-
-
-size_t CListView2::GetSelection(std::vector<int>& indices)
-{
-	return ::GetSelection(GetListCtrl(), indices);
-}
-
-
-void CListView2::SetSelection(
-		int index,
-		bool bEnsureVisible)
-{
-	std::vector<int> indices;
-	indices.push_back(index);
-	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
-}
-
-
-void CListView2::SetSelection(
-		std::vector<int>& indices,
-		bool bEnsureVisible)
-{
-	::SetSelection(GetListCtrl(), indices, bEnsureVisible);
-}
-
-
-// This allows a derived class to print a subset of columns if it wants.
-void CListView2::GetPrintLine(
-		int nItem,
-		CStringArray& line)
-{
-	GetPrintLineImp(GetListCtrl(), nItem, line);
-}
-
-
-CEdit* CListView2::EditSubItem(int index, int nCol)
-{
-	return ::EditSubItem(GetListCtrl(), index, nCol);
+	return CListCtrlEx::DeleteColumn(nCol);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1078,11 +1127,12 @@ BOOL CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 void CListView2::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	bool bDefault = true;
-	if (GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
+	if (m_bAllowEdit)
+	//if (GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
 	{
 		int index;
 		int colnum;
-		if ((index = HitTestEx(GetListCtrl(), point, colnum)) != -1)
+		if ((index = HitTestEx(point, colnum)) != -1)
 		{
 			UINT flag = LVIS_FOCUSED;
 			if ((GetListCtrl().GetItemState(index, flag) & flag) == flag && colnum > 0)
