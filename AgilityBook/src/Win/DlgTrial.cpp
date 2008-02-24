@@ -281,7 +281,14 @@ void CDlgTrial::OnBeginLabelEditClubs(
 			set<tstring> clubs;
 			m_pDoc->GetAllClubNames(clubs, true, true);
 			vector<tstring> items;
+			// VC6 is stupid. The compiler is trying to use insert(iterator, size, T)
+#if _MSC_VER < 1300
+			items.reserve(clubs.size());
+			for (set<tstring>::iterator i = clubs.begin(); i != clubs.end(); ++i)
+				items.push_back(*i);
+#else
 			items.insert(items.end(), clubs.begin(), clubs.end());
+#endif
 			m_ctrlClubs.SetEditList(items);
 		}
 		res = 0;
