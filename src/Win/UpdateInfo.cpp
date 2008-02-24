@@ -380,7 +380,7 @@ void CUpdateInfo::CheckConfig(
 	// If the parse was successful, check for the posted config version.
 	bool bUpToDate = true;
 	// Cool! New config!
-	if (0 < m_FileName.length() && m_VerConfig > pDoc->GetConfig().GetVersion())
+	if (0 < m_FileName.length() && m_VerConfig > pDoc->Book().GetConfig().GetVersion())
 	{
 		bUpToDate = false;
 		CString msg;

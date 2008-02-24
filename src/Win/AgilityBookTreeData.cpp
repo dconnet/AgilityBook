@@ -110,7 +110,7 @@ static bool EditDog(
 		bOk = true;
 		if (bAdd)
 		{
-			if (!pTree->GetDocument()->GetDogs().AddDog(pDog))
+			if (!pTree->GetDocument()->Book().GetDogs().AddDog(pDog))
 			{
 				bOk = false;
 			}
@@ -227,7 +227,7 @@ static bool EditRun(
 			AfxMessageBox(IDS_NEED_CLUB, MB_ICONEXCLAMATION);
 			return false;
 		}
-		if (!pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
+		if (!pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
 		{
 			CString msg;
 			msg.FormatMessage(IDS_VENUE_CONFIG_MISSING, pClub->GetVenue().c_str());
@@ -257,7 +257,7 @@ static bool EditRun(
 				// When adding a new trial, we need to reset the multiQs.
 				// The edit dialog does it in OnOK, but we don't add the run
 				// until after the dialog is done.
-				pTrialData->GetTrial()->SetMultiQs(pTree->GetDocument()->GetConfig());
+				pTrialData->GetTrial()->SetMultiQs(pTree->GetDocument()->Book().GetConfig());
 				pTrialData->GetTrial()->GetRuns().sort();
 				pTrialData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 				pTree->GetDocument()->ResetVisibility(venues, pTrialData->GetTrial(), pRun);
@@ -363,7 +363,7 @@ static bool AddTitle(
 		CAgilityBookTree* pTree)
 {
 	ASSERT(pDogData && pDogData->GetDog());
-	CDlgTitle dlg(pTree->GetDocument()->GetConfig(), pDogData->GetDog()->GetTitles(), ARBDogTitlePtr(), pTree);
+	CDlgTitle dlg(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog()->GetTitles(), ARBDogTitlePtr(), pTree);
 	if (IDOK == dlg.DoModal())
 	{
 		pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
@@ -419,7 +419,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				ARBDogRunPtr pRun(ARBDogRun::New());
 				if (pRun)
 				{
-					if (pRun->Load(m_pTree->GetDocument()->GetConfig(), pTrial->GetClubs(), element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+					if (pRun->Load(m_pTree->GetDocument()->Book().GetConfig(), pTrial->GetClubs(), element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 						runs.push_back(pRun);
 				}
 			}
@@ -488,7 +488,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 			if (pNewTrial)
 			{
 				CErrorCallback err;
-				if (pNewTrial->Load(m_pTree->GetDocument()->GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				if (pNewTrial->Load(m_pTree->GetDocument()->Book().GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
 					std::vector<CVenueFilter> venues;
@@ -590,7 +590,7 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id) const
 		bEnable = true;
 		break;
 	case ID_REORDER:
-		if (m_pTree && 1 < m_pTree->GetDocument()->GetDogs().size())
+		if (m_pTree && 1 < m_pTree->GetDocument()->Book().GetDogs().size())
 			bEnable = true;
 		break;
 	case ID_EXPAND:
@@ -637,7 +637,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		if (GetDog())
 		{
 			ARBDogPtr pDog = GetDog()->Clone();
-			m_pTree->GetDocument()->GetDogs().AddDog(pDog);
+			m_pTree->GetDocument()->Book().GetDogs().AddDog(pDog);
 			bModified = true;
 			m_pTree->GetDocument()->UpdateAllViews(NULL, UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW);
 		}
@@ -686,7 +686,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		if (!bPrompt
 		|| IDYES == AfxMessageBox(IDS_DELETE_DOG_DATA, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2))
 		{
-			if (m_hItem && m_pTree->GetDocument()->GetDogs().DeleteDog(m_pDog))
+			if (m_hItem && m_pTree->GetDocument()->Book().GetDogs().DeleteDog(m_pDog))
 			{
 				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
 				// DeleteItem will cause this object to be deleted.
@@ -699,7 +699,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 
 	case ID_REORDER:
 		if (m_pTree)
-			ReOrderDogs(m_pTree->GetDocument()->GetDogs(), m_pTree);
+			ReOrderDogs(m_pTree->GetDocument()->Book().GetDogs(), m_pTree);
 		break;
 
 	case ID_EXPAND:
@@ -811,7 +811,7 @@ CAgilityBookTreeDataTrial::CAgilityBookTreeDataTrial(
 		if (m_pTrial->GetClubs().GetPrimaryClub(&pClub))
 		{
 			ARBConfigVenuePtr pVenue;
-			if (pTree->GetDocument()->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
+			if (pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue))
 			{
 				short idx = pVenue->GetIcon();
 				if (0 <= idx && idx < m_pTree->GetImageList().GetImageCount())
@@ -1005,7 +1005,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			{
 				runs.push_back(RunInfo(GetTrial(), *iRun));
 			}
-			PrintRuns(&(m_pTree->GetDocument()->GetConfig()), GetDog(), runs);
+			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), GetDog(), runs);
 		}
 		break;
 	}
@@ -1352,7 +1352,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		{
 			std::vector<RunInfo> runs;
 			runs.push_back(RunInfo(GetTrial(), m_pRun));
-			PrintRuns(&(m_pTree->GetDocument()->GetConfig()), GetDog(), runs);
+			PrintRuns(&(m_pTree->GetDocument()->Book().GetConfig()), GetDog(), runs);
 		}
 		break;
 	}

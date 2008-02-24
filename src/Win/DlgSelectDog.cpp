@@ -72,9 +72,9 @@ CDlgSelectDog::CDlgSelectDog(
 DOMODAL_RETVAL CDlgSelectDog::DoModal() 
 {
 	m_Dogs.clear();
-	if (1 == m_pDoc->GetDogs().size())
+	if (1 == m_pDoc->Book().GetDogs().size())
 	{
-		m_Dogs.push_back(*(m_pDoc->GetDogs().begin()));
+		m_Dogs.push_back(*(m_pDoc->Book().GetDogs().begin()));
 		return IDOK;
 	}
 	else
@@ -114,7 +114,7 @@ BOOL CDlgSelectDog::OnInitDialog()
 			selection.insert((LPCTSTR)dog);
 	}
 
-	ARBDogList const& dogs = m_pDoc->GetDogs();
+	ARBDogList const& dogs = m_pDoc->Book().GetDogs();
 	for (ARBDogList::const_iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
 	{
 		ARBDogPtr pDog = *iter;

@@ -446,8 +446,8 @@ void CDlgExistingPoints::FillVenues()
 	if (CB_ERR != index)
 		type = static_cast<ARBDogExistingPoints::PointType>(m_ctrlType.GetItemData(index));
 
-	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->GetConfig().GetVenues().begin();
-		iterVenue != m_pDoc->GetConfig().GetVenues().end();
+	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
+		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
 		++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
@@ -637,7 +637,7 @@ void CDlgExistingPoints::FillSubNames()
 	ARBConfigEventPtr pEvent = GetEventData(index)->GetData();
 
 	std::set<tstring> names;
-	m_pDoc->GetAllEventSubNames(pVenue->GetName(), pEvent, names);
+	m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
 	for (std::set<tstring>::const_iterator iter = names.begin();
 		iter != names.end();
 		++iter)
@@ -704,8 +704,8 @@ BOOL CDlgExistingPoints::OnInitDialog()
 		int index = m_ctrlType.AddString(ARBDogExistingPoints::GetPointTypeName(types[i]).c_str());
 		m_ctrlType.SetItemData(index, types[i]);
 	}
-	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->GetConfig().GetVenues().begin();
-		iterVenue != m_pDoc->GetConfig().GetVenues().end();
+	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
+		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
 		++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
@@ -718,8 +718,8 @@ BOOL CDlgExistingPoints::OnInitDialog()
 	}
 
 	// Set the contents of the other points combo.
-	for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->GetConfig().GetOtherPoints().begin();
-		iterOther != m_pDoc->GetConfig().GetOtherPoints().end();
+	for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
+		iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
 		++iterOther)
 	{
 		ARBConfigOtherPointsPtr pOther = (*iterOther);

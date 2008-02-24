@@ -285,9 +285,9 @@ void CAgilityBookViewCalendar::LoadData()
 	// Add items.
 	std::vector<ARBCalendarPtr> entered;
 	if (bHide)
-		GetDocument()->GetCalendar().GetAllEntered(entered);
-	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
-		iter != GetDocument()->GetCalendar().end();
+		GetDocument()->Book().GetCalendar().GetAllEntered(entered);
+	for (ARBCalendarList::iterator iter = GetDocument()->Book().GetCalendar().begin();
+		iter != GetDocument()->Book().GetCalendar().end();
 		++iter)
 	{
 		ARBCalendarPtr pCal = (*iter);
@@ -1373,8 +1373,8 @@ void CAgilityBookViewCalendar::OnCalendarNew()
 		if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 		{
 			SetCurrentDate(cal->GetStartDate(), false);
-			GetDocument()->GetCalendar().AddCalendar(cal);
-			GetDocument()->GetCalendar().sort();
+			GetDocument()->Book().GetCalendar().AddCalendar(cal);
+			GetDocument()->Book().GetCalendar().sort();
 			LoadData();
 			GetDocument()->SetModifiedFlag();
 			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
@@ -1412,7 +1412,7 @@ void CAgilityBookViewCalendar::OnUpdateAgilityCreateentryCalendar(CCmdUI* pCmdUI
 	{
 		// Make sure the venue is recognized.
 		ARBCalendarPtr pCal = *(entries.begin());
-		if (GetDocument()->GetConfig().GetVenues().FindVenue(pCal->GetVenue()))
+		if (GetDocument()->Book().GetConfig().GetVenues().FindVenue(pCal->GetVenue()))
 			bEnable = TRUE;
 	}
 	else if (1 < entries.size())

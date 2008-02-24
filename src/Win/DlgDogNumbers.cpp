@@ -356,7 +356,7 @@ void CDlgDogNumbers::OnItemchangedRegNums(
 
 void CDlgDogNumbers::OnRegNew()
 {
-	CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, ARBDogRegNumPtr(), this);
+	CDlgRegNum dlg(m_pDoc->Book().GetConfig(), m_RegNums, ARBDogRegNumPtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListRegNums();
 }
@@ -371,7 +371,7 @@ void CDlgDogNumbers::OnRegEdit()
 		ARBDogRegNumPtr pRegNum;
 		if (pData)
 			pRegNum = pData->GetData();
-		CDlgRegNum dlg(m_pDoc->GetConfig(), m_RegNums, pRegNum, this);
+		CDlgRegNum dlg(m_pDoc->Book().GetConfig(), m_RegNums, pRegNum, this);
 		if (IDOK == dlg.DoModal())
 			ListRegNums();
 	}

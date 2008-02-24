@@ -730,7 +730,7 @@ void CDlgRunScore::FillSubNames()
 		if (pEvent->HasSubNames())
 		{
 			std::set<tstring> names;
-			m_pDoc->GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
+			m_pDoc->Book().GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
 			m_ctrlSubNames.ResetContent();
 			for (std::set<tstring>::const_iterator iter = names.begin();
 				iter != names.end();
@@ -758,7 +758,7 @@ void CDlgRunScore::FillSubNames()
 void CDlgRunScore::FillJudges()
 {
 	set<tstring> names;
-	m_pDoc->GetAllJudges(names, true, true);
+	m_pDoc->Book().GetAllJudges(names, true, true);
 	if (!m_Run->GetJudge().empty())
 		names.insert(m_Run->GetJudge());
 	m_ctrlJudge.ResetContent();
@@ -1155,7 +1155,7 @@ BOOL CDlgRunScore::OnInitDialog()
 	FillDivisions(); // This will call UpdateControls();
 
 	set<tstring> names;
-	m_pDoc->GetAllHeights(names);
+	m_pDoc->Book().GetAllHeights(names);
 	set<tstring>::const_iterator iter;
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
@@ -1178,7 +1178,7 @@ BOOL CDlgRunScore::OnInitDialog()
 	}
 	FillJudges();
 
-	m_pDoc->GetAllHandlers(names);
+	m_pDoc->Book().GetAllHandlers(names);
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		m_ctrlHandler.AddString((*iter).c_str());
@@ -1228,7 +1228,7 @@ BOOL CDlgRunScore::OnInitDialog()
 	m_Obstacles = m_Run->GetScoring().GetObstacles();
 	SetObstacles();
 
-	if (0 < m_pDoc->GetConfig().GetOtherPoints().size())
+	if (0 < m_pDoc->Book().GetConfig().GetOtherPoints().size())
 		m_ctrlOtherPoints.EnableWindow(TRUE);
 	else
 		m_ctrlOtherPoints.EnableWindow(FALSE);
@@ -1303,7 +1303,7 @@ void CDlgRunScore::OnPartnersEdit()
 
 void CDlgRunScore::OnOtherpoints() 
 {
-	CDlgListCtrl dlg(m_pDoc->GetConfig(), m_Run, this);
+	CDlgListCtrl dlg(m_pDoc->Book().GetConfig(), m_Run, this);
 	dlg.DoModal();
 }
 

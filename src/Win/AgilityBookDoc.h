@@ -101,71 +101,7 @@ public:
 	ARBDogPtr GetCurrentDog();
 	ARBDogTrialPtr GetCurrentTrial();
 	ARBDogRunPtr GetCurrentRun();
-	ARBAgilityRecordBook& GetARB()			{return m_Records;}
-	ARBCalendarList& GetCalendar()			{return m_Records.GetCalendar();}
-	ARBTrainingList& GetTraining()			{return m_Records.GetTraining();}
-	ARBConfig& GetConfig()					{return m_Records.GetConfig();}
-	ARBInfo& GetInfo()						{return m_Records.GetInfo();}
-	ARBDogList& GetDogs()					{return m_Records.GetDogs();}
-
-	size_t GetAllClubNames(
-			std::set<tstring>& outClubs,
-			bool bInfo = true,
-			bool bVisibleOnly = false) const
-	{
-		return m_Records.GetAllClubNames(outClubs, bInfo, bVisibleOnly);
-	}
-	size_t GetAllTrialLocations(
-			std::set<tstring>& outLocations,
-			bool bInfo = true,
-			bool bVisibleOnly = false) const
-	{
-		return m_Records.GetAllTrialLocations(outLocations, bInfo, bVisibleOnly);
-	}
-	size_t GetAllEventSubNames(
-			tstring const& inVenue,
-			ARBConfigEventPtr inEvent,
-			std::set<tstring>& outNames) const
-	{
-		return m_Records.GetAllEventSubNames(inVenue, inEvent, outNames);
-	}
-	size_t GetAllHeights(std::set<tstring>& ouHeights) const
-	{
-		return m_Records.GetAllHeights(ouHeights);
-	}
-	size_t GetAllCallNames(std::set<tstring>& outNames) const
-	{
-		return m_Records.GetAllCallNames(outNames);
-	}
-	size_t GetAllBreeds(std::set<tstring>& outBreeds) const
-	{
-		return m_Records.GetAllBreeds(outBreeds);
-	}
-	size_t GetAllJudges(
-			std::set<tstring>& outJudges,
-			bool bInfo = true,
-			bool bVisibleOnly = false) const
-	{
-		return m_Records.GetAllJudges(outJudges, bInfo, bVisibleOnly);
-	}
-	size_t GetAllHandlers(std::set<tstring>& outHandlers) const
-	{
-		return m_Records.GetAllHandlers(outHandlers);
-	}
-	void GetAllPartners(
-			std::set<tstring>& outPartners,
-			std::set<tstring>& outDogs) const
-	{
-		m_Records.GetAllPartners(outPartners, outDogs);
-	}
-	size_t GetAllFaultTypes(std::set<tstring>& outFaults) const
-	{
-		return m_Records.GetAllFaultTypes(outFaults);
-	}
-	size_t GetAllTrainingLogNames(std::set<tstring>& outNames) const
-	{
-		return m_Records.GetTraining().GetAllNames(outNames);
-	}
+	ARBAgilityRecordBook& Book()			{return m_Records;}
 
 	// These are called from the Runs view so the tree view can do the add.
 	void AddTitle(ARBDogRunPtr pSelectedRun);

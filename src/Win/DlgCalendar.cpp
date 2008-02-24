@@ -216,7 +216,7 @@ void CDlgCalendar::UpdateLocationInfo(TCHAR const* pLocation)
 	if (pLocation && *pLocation)
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace(_T("\n"), _T("\r\n"));
@@ -229,7 +229,7 @@ void CDlgCalendar::UpdateLocationInfo(TCHAR const* pLocation)
 void CDlgCalendar::ListLocations()
 {
 	set<tstring> locations;
-	m_pDoc->GetAllTrialLocations(locations, true, true);
+	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
 	if (!m_pCal->GetLocation().empty())
 		locations.insert(m_pCal->GetLocation());
 	tstring loc((LPCTSTR)m_Location);
@@ -254,7 +254,7 @@ void CDlgCalendar::UpdateClubInfo(TCHAR const* pClub)
 	if (pClub && *pClub)
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace(_T("\n"), _T("\r\n"));
@@ -267,7 +267,7 @@ void CDlgCalendar::UpdateClubInfo(TCHAR const* pClub)
 void CDlgCalendar::ListClubs()
 {
 	set<tstring> clubs;
-	m_pDoc->GetAllClubNames(clubs, true, true);
+	m_pDoc->Book().GetAllClubNames(clubs, true, true);
 	if (!m_pCal->GetClub().empty())
 		clubs.insert(m_pCal->GetClub());
 	tstring club((LPCTSTR)m_Club);
@@ -294,7 +294,7 @@ BOOL CDlgCalendar::OnInitDialog()
 
 	ListLocations();
 
-	m_ctrlVenue.Initialize(m_pDoc->GetConfig().GetVenues(), m_pCal->GetVenue());
+	m_ctrlVenue.Initialize(m_pDoc->Book().GetConfig().GetVenues(), m_pCal->GetVenue());
 
 	ListClubs();
 

@@ -249,7 +249,7 @@ void CDlgRunReference::CreateRefRunMe()
 	m_pRefRunMe->SetBreed(m_pDoc->GetCurrentDog()->GetBreed());
 	m_pRefRunMe->SetTime(m_Run->GetScoring().GetTime());
 	ARBConfigScoringPtr pScoring;
-	if (m_pDoc->GetConfig().GetVenues().FindEvent(
+	if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
 		m_Venue->GetName(),
 		m_Run->GetEvent(),
 		m_Run->GetDivision(),
@@ -370,7 +370,7 @@ void CDlgRunReference::ListRuns()
 
 void CDlgRunReference::GetAllHeights(std::set<tstring>& outNames)
 {
-	m_pDoc->GetAllHeights(outNames);
+	m_pDoc->Book().GetAllHeights(outNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
 	{
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
@@ -386,7 +386,7 @@ void CDlgRunReference::GetAllHeights(std::set<tstring>& outNames)
 
 void CDlgRunReference::GetAllCallNames(std::set<tstring>& outNames)
 {
-	m_pDoc->GetAllCallNames(outNames);
+	m_pDoc->Book().GetAllCallNames(outNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
 	{
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
@@ -402,7 +402,7 @@ void CDlgRunReference::GetAllCallNames(std::set<tstring>& outNames)
 
 void CDlgRunReference::GetAllBreeds(std::set<tstring>& outNames)
 {
-	m_pDoc->GetAllBreeds(outNames);
+	m_pDoc->Book().GetAllBreeds(outNames);
 	for (int index = 0; index < m_ctrlRefRuns.GetItemCount(); ++index)
 	{
 		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
@@ -585,7 +585,7 @@ void CDlgRunReference::OnRefRunNew()
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
 		ARBConfigScoringPtr pScoring;
-		if (m_pDoc->GetConfig().GetVenues().FindEvent(
+		if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
 			m_Venue->GetName(),
 			m_Run->GetEvent(),
 			m_Run->GetDivision(),

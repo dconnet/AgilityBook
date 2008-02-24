@@ -149,7 +149,7 @@ void CDlgTrial::UpdateNotes(
 	{
 		CString str;
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem((LPCTSTR)m_Location, &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem((LPCTSTR)m_Location, &pItem))
 		{
 			str = pItem->GetComment().c_str();
 			str.Replace(_T("\n"), _T("\r\n"));
@@ -166,7 +166,7 @@ void CDlgTrial::UpdateNotes(
 			if (pClub)
 			{
 				ARBInfoItemPtr pItem;
-				if (m_pDoc->GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
+				if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
 				{
 					str = pItem->GetComment().c_str();
 					str.Replace(_T("\n"), _T("\r\n"));
@@ -181,7 +181,7 @@ void CDlgTrial::UpdateNotes(
 void CDlgTrial::ListLocations()
 {
 	set<tstring> locations;
-	m_pDoc->GetAllTrialLocations(locations, true, true);
+	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
 	if (!m_pTrial->GetLocation().empty())
 		locations.insert(m_pTrial->GetLocation());
 	tstring loc((LPCTSTR)m_Location);
@@ -279,7 +279,7 @@ void CDlgTrial::OnBeginLabelEditClubs(
 	case 0:
 		{
 			set<tstring> clubs;
-			m_pDoc->GetAllClubNames(clubs, true, true);
+			m_pDoc->Book().GetAllClubNames(clubs, true, true);
 			vector<tstring> items;
 			// VC6 is stupid. The compiler is trying to use insert(iterator, size, T)
 #if _MSC_VER < 1300
@@ -296,8 +296,8 @@ void CDlgTrial::OnBeginLabelEditClubs(
 	case 1:
 		{
 			vector<tstring> items;
-			for (ARBConfigVenueList::iterator venues = m_pDoc->GetConfig().GetVenues().begin();
-				venues != m_pDoc->GetConfig().GetVenues().end();
+			for (ARBConfigVenueList::iterator venues = m_pDoc->Book().GetConfig().GetVenues().begin();
+				venues != m_pDoc->Book().GetConfig().GetVenues().end();
 				++venues)
 			{
 				items.push_back((*venues)->GetName());
@@ -507,7 +507,7 @@ void CDlgTrial::OnOK()
 				bool bFound = false;
 				for (std::set<tstring>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
 				{
-					if (m_pDoc->GetConfig().GetVenues().FindEvent(
+					if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
 						(*iterVenues),
 						pRun->GetEvent(),
 						pRun->GetDivision(),

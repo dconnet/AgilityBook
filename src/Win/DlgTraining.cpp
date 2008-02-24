@@ -101,7 +101,7 @@ BOOL CDlgTraining::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 
 	std::set<tstring> names;
-	m_pDoc->GetTraining().GetAllNames(names);
+	m_pDoc->Book().GetTraining().GetAllNames(names);
 	std::set<tstring>::iterator iter;
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
@@ -109,7 +109,7 @@ BOOL CDlgTraining::OnInitDialog()
 		if ((*iter) == m_pTraining->GetName())
 			m_ctrlNames.SetCurSel(index);
 	}
-	m_pDoc->GetTraining().GetAllSubNames(names);
+	m_pDoc->Book().GetTraining().GetAllSubNames(names);
 	for (iter = names.begin(); iter != names.end(); ++iter)
 	{
 		int index = m_ctrlSubNames.AddString((*iter).c_str());

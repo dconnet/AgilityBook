@@ -306,7 +306,7 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 		ARBCalendar const& cal,
 		CTabView* pTabView)
 {
-	if (!GetConfig().GetVenues().FindVenue(cal.GetVenue()))
+	if (!m_Records.GetConfig().GetVenues().FindVenue(cal.GetVenue()))
 		return false;
 	bool bCreated = false;
 	ARBDogTrialPtr pTrial(ARBDogTrial::New(cal));
@@ -343,7 +343,7 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 void CAgilityBookDoc::SortDates()
 {
 	bool bDescending = !CAgilityBookOptions::GetNewestDatesFirst();
-	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
+	for (ARBDogList::iterator iterDogs = m_Records.GetDogs().begin(); iterDogs != m_Records.GetDogs().end(); ++iterDogs)
 	{
 		ARBDogPtr pDog = *iterDogs;
 		pDog->GetTrials().sort(bDescending);
@@ -607,19 +607,19 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 		if (0 < countClubs)
 		{
 			std::set<tstring> namesInUse;
-			GetAllClubNames(namesInUse, false);
+			m_Records.GetAllClubNames(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eClubInfo).CondenseContent(namesInUse);
 		}
 		if (0 < countJudges)
 		{
 			std::set<tstring> namesInUse;
-			GetAllJudges(namesInUse, false);
+			m_Records.GetAllJudges(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eJudgeInfo).CondenseContent(namesInUse);
 		}
 		if (0 < countLocations)
 		{
 			std::set<tstring> namesInUse;
-			GetAllTrialLocations(namesInUse, false);
+			m_Records.GetAllTrialLocations(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 		}
 		CString str;
@@ -828,17 +828,17 @@ void CAgilityBookDoc::ResetVisibility()
 	std::set<tstring> names;
 	CFilterOptions::Options().GetTrainingFilterNames(names);
 
-	for (ARBDogList::iterator iterDogs = GetDogs().begin(); iterDogs != GetDogs().end(); ++iterDogs)
+	for (ARBDogList::iterator iterDogs = m_Records.GetDogs().begin(); iterDogs != m_Records.GetDogs().end(); ++iterDogs)
 	{
 		ResetVisibility(venues, *iterDogs);
 	}
 
-	for (ARBTrainingList::iterator iterTraining = GetTraining().begin(); iterTraining != GetTraining().end(); ++iterTraining)
+	for (ARBTrainingList::iterator iterTraining = m_Records.GetTraining().begin(); iterTraining != m_Records.GetTraining().end(); ++iterTraining)
 	{
 		ResetVisibility(names, *iterTraining);
 	}
 
-	for (ARBCalendarList::iterator iterCal = GetCalendar().begin(); iterCal != GetCalendar().end(); ++iterCal)
+	for (ARBCalendarList::iterator iterCal = m_Records.GetCalendar().begin(); iterCal != m_Records.GetCalendar().end(); ++iterCal)
 	{
 		ARBCalendarPtr pCal = *iterCal;
 		bool bVis = CFilterOptions::Options().IsCalendarVisible(venues, pCal);
@@ -1045,7 +1045,7 @@ BOOL CAgilityBookDoc::OnNewDocument()
 	m_Records.Default();
 	m_Records.GetConfig().GetActions().clear();
 
-	if (0 == GetDogs().size())
+	if (0 == m_Records.GetDogs().size())
 	{
 		if (AfxGetMainWnd() && IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
@@ -1155,7 +1155,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		theApp.UpdateInfo().AutoCheckConfiguration(this, theApp.LanguageManager());
 	}
 
-	if (0 == GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
+	if (0 == m_Records.GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{
 		AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 	}
@@ -1257,7 +1257,7 @@ void CAgilityBookDoc::OnFileExportWizard()
 
 void CAgilityBookDoc::OnFileLinked()
 {
-	CDlgFindLinks dlg(GetDogs());
+	CDlgFindLinks dlg(m_Records.GetDogs());
 	if (0 == dlg.GetNumLinks())
 		AfxMessageBox(IDS_NO_LINKED_FILES, MB_ICONINFORMATION);
 	else
@@ -1286,8 +1286,8 @@ void CAgilityBookDoc::OnCopyTitles()
 		CFilterOptions::Options().GetFilterVenue(venues);
 
 		tstring preTitles, postTitles;
-		for (ARBConfigVenueList::const_iterator iVenue = GetConfig().GetVenues().begin();
-			iVenue != GetConfig().GetVenues().end();
+		for (ARBConfigVenueList::const_iterator iVenue = m_Records.GetConfig().GetVenues().begin();
+			iVenue != m_Records.GetConfig().GetVenues().end();
 			++iVenue)
 		{
 			if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
@@ -1381,7 +1381,7 @@ void CAgilityBookDoc::OnAgilityNewDog()
 			if (pFrame)
 				pFrame->SetCurTab(0);
 			SetModifiedFlag();
-			if (!GetDogs().AddDog(dog))
+			if (!m_Records.GetDogs().AddDog(dog))
 				pTree->InsertDog(dog, true);
 		}
 	}
@@ -1399,8 +1399,8 @@ void CAgilityBookDoc::OnAgilityNewCalendar()
 			CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
 			if (pFrame)
 				pFrame->SetCurTab(2);
-			GetCalendar().AddCalendar(cal);
-			GetCalendar().sort();
+			m_Records.GetCalendar().AddCalendar(cal);
+			m_Records.GetCalendar().sort();
 			SetModifiedFlag();
 			UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
 			POSITION pos = GetFirstViewPosition();
@@ -1433,8 +1433,8 @@ void CAgilityBookDoc::OnAgilityNewTraining()
 		CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
 		if (pFrame)
 			pFrame->SetCurTab(3);
-		GetTraining().AddTraining(training);
-		GetTraining().sort();
+		m_Records.GetTraining().AddTraining(training);
+		m_Records.GetTraining().sort();
 		SetModifiedFlag();
 		UpdateAllViews(NULL, UPDATE_TRAINING_VIEW);
 		POSITION pos = GetFirstViewPosition();
@@ -1513,13 +1513,13 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	CString search = Text();
 	if (!MatchCase())
 		search.MakeLower();
-	ARBInfo& info = m_pDoc->GetInfo();
+	ARBInfo& info = m_pDoc->Book().GetInfo();
 	std::set<tstring> inUse;
-	m_pDoc->GetAllClubNames(inUse, false);
+	m_pDoc->Book().GetAllClubNames(inUse, false, false);
 	Search(search, ARBInfo::eClubInfo, inUse, info);
-	m_pDoc->GetAllJudges(inUse, false);
+	m_pDoc->Book().GetAllJudges(inUse, false, false);
 	Search(search, ARBInfo::eJudgeInfo, inUse, info);
-	m_pDoc->GetAllTrialLocations(inUse, false);
+	m_pDoc->Book().GetAllTrialLocations(inUse, false, false);
 	Search(search, ARBInfo::eLocationInfo, inUse, info);
 	if (0 < m_Items.size())
 	{

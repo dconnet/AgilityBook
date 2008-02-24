@@ -919,10 +919,10 @@ void CAgilityBookViewCalendarList::LoadData()
 	int i = 0;
 	std::vector<ARBCalendarPtr> entered;
 	if (bHide)
-		GetDocument()->GetCalendar().GetAllEntered(entered);
+		GetDocument()->Book().GetCalendar().GetAllEntered(entered);
 	CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
-	for (ARBCalendarList::iterator iter = GetDocument()->GetCalendar().begin();
-	iter != GetDocument()->GetCalendar().end();
+	for (ARBCalendarList::iterator iter = GetDocument()->Book().GetCalendar().begin();
+	iter != GetDocument()->Book().GetCalendar().end();
 	++iter)
 	{
 		ARBCalendarPtr pCal = (*iter);
@@ -1189,7 +1189,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)
 
 void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 {
-	if (0 == GetDocument()->GetDogs().size())
+	if (0 == GetDocument()->Book().GetDogs().size())
 		return;
 	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
 	if (pData)
@@ -1261,9 +1261,9 @@ void CAgilityBookViewCalendarList::OnCalendarEdit()
 				{
 					ARBDate today(ARBDate::Today());
 					today -= CAgilityBookOptions::DaysTillEntryIsPast();
-					GetDocument()->GetCalendar().TrimEntries(today);
+					GetDocument()->Book().GetCalendar().TrimEntries(today);
 				}
-				GetDocument()->GetCalendar().sort();
+				GetDocument()->Book().GetCalendar().sort();
 				if (oldDate != pData->GetCalendar()->GetStartDate())
 				{
 					CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
@@ -1286,8 +1286,8 @@ void CAgilityBookViewCalendarList::OnCalendarNew()
 	{
 		if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 		{
-			GetDocument()->GetCalendar().AddCalendar(cal);
-			GetDocument()->GetCalendar().sort();
+			GetDocument()->Book().GetCalendar().AddCalendar(cal);
+			GetDocument()->Book().GetCalendar().sort();
 			LoadData();
 			GetDocument()->SetModifiedFlag();
 			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
@@ -1330,9 +1330,9 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 				++nNewIsNotVisible;
 			}
 			cal->SetEntered(ARBCalendar::eNot);
-			GetDocument()->GetCalendar().AddCalendar(cal);
+			GetDocument()->Book().GetCalendar().AddCalendar(cal);
 		}
-		GetDocument()->GetCalendar().sort();
+		GetDocument()->Book().GetCalendar().sort();
 		LoadData();
 		GetDocument()->SetModifiedFlag();
 		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
@@ -1458,7 +1458,7 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 					if (pCal->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 					{
 						bLoaded = true;
-						GetDocument()->GetCalendar().AddCalendar(pCal);
+						GetDocument()->Book().GetCalendar().AddCalendar(pCal);
 					}
 				}
 			}
@@ -1467,7 +1467,7 @@ void CAgilityBookViewCalendarList::OnEditPaste()
 	clpData.Close();
 	if (bLoaded)
 	{
-		GetDocument()->GetCalendar().sort();
+		GetDocument()->Book().GetCalendar().sort();
 		LoadData();
 		GetDocument()->SetModifiedFlag();
 		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
@@ -1509,7 +1509,7 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 		}
 		for (std::vector<CAgilityBookViewCalendarData*>::iterator iter = items.begin(); iter != items.end(); ++iter)
 		{
-			GetDocument()->GetCalendar().DeleteCalendar((*iter)->GetCalendar());
+			GetDocument()->Book().GetCalendar().DeleteCalendar((*iter)->GetCalendar());
 		}
 		if (0 < items.size())
 		{

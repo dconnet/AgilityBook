@@ -1330,7 +1330,7 @@ static void InsertRun(
 {
 	ARBConfigScoringPtr pScoring;
 	if (pTrial->GetClubs().GetPrimaryClub())
-		 pDoc->GetConfig().GetVenues().FindEvent(
+		 pDoc->Book().GetConfig().GetVenues().FindEvent(
 			pTrial->GetClubs().GetPrimaryClubVenue(),
 			pRun->GetEvent(),
 			pRun->GetDivision(),

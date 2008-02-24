@@ -109,20 +109,20 @@ CDlgInfoJudge::CDlgInfoJudge(
 	, m_pDoc(pDoc)
 	, m_Type(inType)
 	, m_Select(inSelect)
-	, m_InfoOrig(m_pDoc->GetInfo().GetInfo(m_Type))
-	, m_Info(m_pDoc->GetInfo().GetInfo(m_Type).GetItemName())
+	, m_InfoOrig(m_pDoc->Book().GetInfo().GetInfo(m_Type))
+	, m_Info(m_pDoc->Book().GetInfo().GetInfo(m_Type).GetItemName())
 	, m_nAdded(0)
 {
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
-		m_pDoc->GetAllClubNames(m_NamesInUse, false);
+		m_pDoc->Book().GetAllClubNames(m_NamesInUse, false, false);
 		break;
 	case ARBInfo::eJudgeInfo:
-		m_pDoc->GetAllJudges(m_NamesInUse, false);
+		m_pDoc->Book().GetAllJudges(m_NamesInUse, false, false);
 		break;
 	case ARBInfo::eLocationInfo:
-		m_pDoc->GetAllTrialLocations(m_NamesInUse, false);
+		m_pDoc->Book().GetAllTrialLocations(m_NamesInUse, false, false);
 		break;
 	}
 	m_InfoOrig.Clone(m_Info);
@@ -166,15 +166,15 @@ BOOL CDlgInfoJudge::OnInitDialog()
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
-		m_pDoc->GetAllClubNames(names);
+		m_pDoc->Book().GetAllClubNames(names, true, false);
 		caption.LoadString(IDS_INFO_CLUB);
 		break;
 	case ARBInfo::eJudgeInfo:
-		m_pDoc->GetAllJudges(names);
+		m_pDoc->Book().GetAllJudges(names, true, false);
 		caption.LoadString(IDS_INFO_JUDGE);
 		break;
 	case ARBInfo::eLocationInfo:
-		m_pDoc->GetAllTrialLocations(names);
+		m_pDoc->Book().GetAllTrialLocations(names, true, false);
 		caption.LoadString(IDS_INFO_LOCATION);
 		break;
 	}
@@ -446,7 +446,7 @@ void CDlgInfoJudge::OnOK()
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)
 	{
-		m_pDoc->GetInfo().GetInfo(m_Type) = m_Info;
+		m_pDoc->Book().GetInfo().GetInfo(m_Type) = m_Info;
 		m_pDoc->SetModifiedFlag();
 	}
 	CDlgBaseDialog::OnOK();

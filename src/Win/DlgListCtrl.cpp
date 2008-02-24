@@ -159,7 +159,7 @@ bool CDlgListCtrlDataCalendar::OnEdit()
 
 void CDlgListCtrlDataCalendar::Apply()
 {
-	m_pDoc->GetCalendar().AddCalendar(m_pCal);
+	m_pDoc->Book().GetCalendar().AddCalendar(m_pCal);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -204,7 +204,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		std::set<tstring>& faults)
 {
 	faults.clear();
-	pDoc->GetAllFaultTypes(faults);
+	pDoc->Book().GetAllFaultTypes(faults);
 	if (pRun)
 	{
 		for (ARBDogFaultList::const_iterator iterFault = pRun->GetFaults().begin();
@@ -529,7 +529,7 @@ void CDlgListCtrl::UpdateControls()
 			ARBCalendarPtr pCal = pData->GetCalendar();
 			if (pCal)
 			{
-				if (m_pDoc->GetConfig().GetVenues().FindVenue(pCal->GetVenue()))
+				if (m_pDoc->Book().GetConfig().GetVenues().FindVenue(pCal->GetVenue()))
 					bEnableCreate = TRUE;
 			}
 		}
@@ -571,7 +571,7 @@ void CDlgListCtrl::GetAllPartners(
 {
 	if (m_pDoc)
 	{
-		m_pDoc->GetAllPartners(ioPartners, ioDogs);
+		m_pDoc->Book().GetAllPartners(ioPartners, ioDogs);
 		for (int index = 0; index < m_ctrlList.GetItemCount(); ++index)
 		{
 			CListData* pRawData = m_ctrlList.GetData(index);
@@ -1063,7 +1063,7 @@ void CDlgListCtrl::OnOK()
 	case eCalendar:
 		{
 			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
-				m_pDoc->GetCalendar().DeleteCalendar((*iter));
+				m_pDoc->Book().GetCalendar().DeleteCalendar((*iter));
 		}
 		break;
 	case eFaults:
@@ -1094,9 +1094,9 @@ void CDlgListCtrl::OnOK()
 		{
 			ARBDate today(ARBDate::Today());
 			today -= CAgilityBookOptions::DaysTillEntryIsPast();
-			m_pDoc->GetCalendar().TrimEntries(today);
+			m_pDoc->Book().GetCalendar().TrimEntries(today);
 		}
-		m_pDoc->GetCalendar().sort();
+		m_pDoc->Book().GetCalendar().sort();
 		m_pDoc->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
 		break;
 	default:

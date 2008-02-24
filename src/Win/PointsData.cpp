@@ -432,7 +432,7 @@ tstring CPointsDataTitle::OnNeedText(size_t inCol) const
 			str = m_pTitle->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
 			break;
 		case 2:
-			str = m_pDoc->GetConfig().GetTitleCompleteName(m_pTitle, false);
+			str = m_pDoc->Book().GetConfig().GetTitleCompleteName(m_pTitle, false);
 			if (m_pTitle->GetReceived())
 				str += _T("*");
 			break;
@@ -464,7 +464,7 @@ tstring CPointsDataTitle::GetHtml(size_t nCurLine) const
 
 void CPointsDataTitle::Details() const
 {
-	CDlgTitle dlg(m_pDoc->GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pParent);
+	CDlgTitle dlg(m_pDoc->Book().GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pParent);
 	if (IDOK == dlg.DoModal())
 	{
 		m_pDoc->SetModifiedFlag();
@@ -1311,8 +1311,8 @@ void CPointsDataItems::LoadData(
 	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataDog(pParent, pDoc, inDog)));
 
 	// For each venue...
-	for (ARBConfigVenueList::const_iterator iterVenue = pDoc->GetConfig().GetVenues().begin();
-		iterVenue != pDoc->GetConfig().GetVenues().end();
+	for (ARBConfigVenueList::const_iterator iterVenue = pDoc->Book().GetConfig().GetVenues().begin();
+		iterVenue != pDoc->Book().GetConfig().GetVenues().end();
 		++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
@@ -1879,7 +1879,7 @@ void CPointsDataItems::LoadData(
 	}
 
 	// After all the venues, we do 'other points'.
-	ARBConfigOtherPointsList const& other = pDoc->GetConfig().GetOtherPoints();
+	ARBConfigOtherPointsList const& other = pDoc->Book().GetConfig().GetOtherPoints();
 	if (0 < other.size())
 	{
 		CString str;
