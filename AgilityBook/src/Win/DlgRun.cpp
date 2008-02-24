@@ -84,7 +84,7 @@ CDlgRun::CDlgRun(
 	pTrial->GetClubs().GetPrimaryClub(&pClub);
 	ASSERT(NULL != pClub.get());
 	ARBConfigVenuePtr pVenue;
-	pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
+	pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
 	ASSERT(NULL != pVenue.get());
 
 	m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);
@@ -130,7 +130,7 @@ void CDlgRun::OnOK()
 			m_pTrial->GetClubs().GetPrimaryClub(&pClub);
 			ASSERT(NULL != pClub.get());
 			ARBConfigVenuePtr pVenue;
-			m_pDoc->GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
+			m_pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
 			ASSERT(NULL != pVenue.get());
 			ARBConfigEventPtr pEvent;
 			pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
@@ -142,7 +142,7 @@ void CDlgRun::OnOK()
 #endif
 		//End TODO
 		*m_pRealRun = *m_Run;
-		m_pTrial->SetMultiQs(m_pDoc->GetConfig()); // Note, when adding a new run, this is actually too soon to call - the run isn't in the trial yet
+		m_pTrial->SetMultiQs(m_pDoc->Book().GetConfig()); // Note, when adding a new run, this is actually too soon to call - the run isn't in the trial yet
 		CAgilityBookOptions::SetLastEnteredDivision(m_Run->GetDivision().c_str());
 		CAgilityBookOptions::SetLastEnteredLevel(m_Run->GetLevel().c_str());
 		CAgilityBookOptions::SetLastEnteredHeight(m_Run->GetHeight().c_str());

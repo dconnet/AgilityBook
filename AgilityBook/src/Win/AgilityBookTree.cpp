@@ -326,7 +326,7 @@ void CAgilityBookTree::OnInitialUpdate()
 	GetTreeCtrl().SetImageList(&m_ImageList, TVSIL_NORMAL);
 	GetTreeCtrl().SetImageList(&m_ImageListStates, TVSIL_STATE);
 	m_bSuppressSelect = false;
-	if (0 == GetDocument()->GetDogs().size())
+	if (0 == GetDocument()->Book().GetDogs().size())
 		PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 }
 
@@ -771,13 +771,13 @@ bool CAgilityBookTree::PasteDog(bool& bLoaded)
 			if (pDog)
 			{
 				CErrorCallback err;
-				if (pDog->Load(GetDocument()->GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+				if (pDog->Load(GetDocument()->Book().GetConfig(), tree->GetNthElementNode(0), ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 				{
 					bLoaded = true;
 					pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 					std::vector<CVenueFilter> venues;
 					CFilterOptions::Options().GetFilterVenue(venues);
-					if (!GetDocument()->GetDogs().AddDog(pDog))
+					if (!GetDocument()->Book().GetDogs().AddDog(pDog))
 					{
 						bLoaded = false;
 						AfxMessageBox(IDS_CREATEDOG_FAILED, MB_ICONSTOP);
@@ -855,8 +855,8 @@ void CAgilityBookTree::LoadData()
 	CTreeCtrl& tree = GetTreeCtrl();
 	tree.DeleteAllItems();
 	HTREEITEM hItem = NULL;
-	for (ARBDogList::const_iterator iterDog = GetDocument()->GetDogs().begin();
-		iterDog != GetDocument()->GetDogs().end();
+	for (ARBDogList::const_iterator iterDog = GetDocument()->Book().GetDogs().begin();
+		iterDog != GetDocument()->Book().GetDogs().end();
 		++iterDog)
 	{
 		HTREEITEM hItem2 = InsertDog((*iterDog));
@@ -1117,10 +1117,10 @@ BOOL CAgilityBookTree::OnDogCmd(UINT id)
 			if (IDOK == dlg.DoModal())
 			{
 				GetDocument()->SetModifiedFlag();
-				if (GetDocument()->GetDogs().AddDog(dog))
+				if (GetDocument()->Book().GetDogs().AddDog(dog))
 					InsertDog(dog, true);
 				// For some reason, the first dog isn't showing up.
-				if (1 == GetDocument()->GetDogs().size())
+				if (1 == GetDocument()->Book().GetDogs().size())
 					LoadData();
 			}
 			bHandled = TRUE;

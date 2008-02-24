@@ -428,7 +428,7 @@ void CWizardExport::UpdatePreview()
 
 	case WIZ_EXPORT_RUNS:
 		{
-			for (ARBDogList::const_iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
+			for (ARBDogList::const_iterator iterDog = m_pDoc->Book().GetDogs().begin(); iterDog != m_pDoc->Book().GetDogs().end(); ++iterDog)
 			{
 				ARBDogPtr pDog = *iterDog;
 				for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
@@ -439,7 +439,7 @@ void CWizardExport::UpdatePreview()
 						ARBDogRunPtr pRun = *iterRun;
 						ARBConfigScoringPtr pScoring;
 						if (pTrial->GetClubs().GetPrimaryClub())
-							m_pDoc->GetConfig().GetVenues().FindEvent(
+							m_pDoc->Book().GetConfig().GetVenues().FindEvent(
 								pTrial->GetClubs().GetPrimaryClubVenue(),
 								pRun->GetEvent(),
 								pRun->GetDivision(),
@@ -762,7 +762,7 @@ void CWizardExport::UpdatePreview()
 
 	case WIZ_EXPORT_CALENDAR:
 		{
-			for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+			for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin(); iterCal != m_pDoc->Book().GetCalendar().end(); ++iterCal)
 			{
 				CString data;
 				ARBCalendarPtr pCal = *iterCal;
@@ -833,8 +833,8 @@ void CWizardExport::UpdatePreview()
 			std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
 			if (!entries)
 			{
-				allEntries.reserve(m_pDoc->GetCalendar().size());
-				for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+				allEntries.reserve(m_pDoc->Book().GetCalendar().size());
+				for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin(); iterCal != m_pDoc->Book().GetCalendar().end(); ++iterCal)
 				{
 					allEntries.push_back(*iterCal);
 				}
@@ -972,8 +972,8 @@ void CWizardExport::UpdatePreview()
 			std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
 			if (!entries)
 			{
-				allEntries.reserve(m_pDoc->GetCalendar().size());
-				for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+				allEntries.reserve(m_pDoc->Book().GetCalendar().size());
+				for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin(); iterCal != m_pDoc->Book().GetCalendar().end(); ++iterCal)
 				{
 					allEntries.push_back(*iterCal);
 				}
@@ -1108,7 +1108,7 @@ void CWizardExport::UpdatePreview()
 
 	case WIZ_EXPORT_LOG:
 		{
-			for (ARBTrainingList::const_iterator iterLog = m_pDoc->GetTraining().begin(); iterLog != m_pDoc->GetTraining().end(); ++iterLog)
+			for (ARBTrainingList::const_iterator iterLog = m_pDoc->Book().GetTraining().begin(); iterLog != m_pDoc->Book().GetTraining().end(); ++iterLog)
 			{
 				CString data;
 				ARBTrainingPtr pLog = *iterLog;

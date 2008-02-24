@@ -571,8 +571,8 @@ void CAgilityBookViewPoints::OnViewHiddenTitles()
 	CAgilityBookOptions::SetViewHiddenTitles(!CAgilityBookOptions::GetViewHiddenTitles());
 	std::vector<CVenueFilter> venues;
 	CFilterOptions::Options().GetFilterVenue(venues);
-	for (ARBDogList::iterator iterDogs = GetDocument()->GetDogs().begin();
-			iterDogs != GetDocument()->GetDogs().end();
+	for (ARBDogList::iterator iterDogs = GetDocument()->Book().GetDogs().begin();
+			iterDogs != GetDocument()->Book().GetDogs().end();
 			++iterDogs)
 	{
 		for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin();

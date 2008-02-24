@@ -96,7 +96,7 @@ CDlgDog::~CDlgDog()
 	{
 		std::vector<CVenueFilter> venues;
 		CFilterOptions::Options().GetFilterVenue(venues);
-		for (ARBDogList::iterator iterDogs = m_pDoc->GetDogs().begin(); iterDogs != m_pDoc->GetDogs().end(); ++iterDogs)
+		for (ARBDogList::iterator iterDogs = m_pDoc->Book().GetDogs().begin(); iterDogs != m_pDoc->Book().GetDogs().end(); ++iterDogs)
 			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
 				m_pDoc->ResetVisibility(venues, *iterTitle);
 		m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);

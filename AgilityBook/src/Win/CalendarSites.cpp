@@ -789,7 +789,7 @@ CStringA CPluginConfigData::Process(IProgressMeter *progress)
 
 bool CPluginConfigData::Edit(CWnd* pParent)
 {
-	CDlgPluginDetails dlg(m_pDoc->GetConfig(), m_Site, pParent);
+	CDlgPluginDetails dlg(m_pDoc->Book().GetConfig(), m_Site, pParent);
 	if (IDOK == dlg.DoModal())
 	{
 		m_Name = m_Site->GetName().c_str();
@@ -807,7 +807,7 @@ bool CPluginConfigData::Edit(CWnd* pParent)
 
 bool CPluginConfigData::Delete()
 {
-	if (m_pDoc->GetConfig().GetCalSites().DeleteSite(m_OrigSite->GetName()))
+	if (m_pDoc->Book().GetConfig().GetCalSites().DeleteSite(m_OrigSite->GetName()))
 	{
 		m_pDoc->SetModifiedFlag(TRUE);
 		m_OrigSite.reset();
@@ -1077,8 +1077,8 @@ BOOL CDlgCalendarPlugins::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
-	for (ARBConfigCalSiteList::const_iterator iConfig = m_pDoc->GetConfig().GetCalSites().begin();
-		iConfig != m_pDoc->GetConfig().GetCalSites().end();
+	for (ARBConfigCalSiteList::const_iterator iConfig = m_pDoc->Book().GetConfig().GetCalSites().begin();
+		iConfig != m_pDoc->Book().GetConfig().GetCalSites().end();
 		++iConfig)
 	{
 		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, *iConfig);
@@ -1300,11 +1300,11 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry()
 				{
 					ARBCalendarPtr cal = pData->CalEntry();
 					ARBCalendarPtr calFound;
-					if (!m_pDoc->GetCalendar().FindCalendar(cal, false, &calFound))
+					if (!m_pDoc->Book().GetCalendar().FindCalendar(cal, false, &calFound))
 					{
 						if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 						{
-							m_pDoc->GetCalendar().AddCalendar(cal);
+							m_pDoc->Book().GetCalendar().AddCalendar(cal);
 							++nAdded;
 						}
 					}
@@ -1324,7 +1324,7 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry()
 	}
 	if (0 < nAdded + nUpdated)
 	{
-		m_pDoc->GetCalendar().sort();
+		m_pDoc->Book().GetCalendar().sort();
 		m_pDoc->UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
 		m_pDoc->SetModifiedFlag();
 	}
@@ -1369,7 +1369,7 @@ void CDlgCalendarPlugins::OnPluginQueryDetails()
 		if (pData && pData->HasQueryDetails())
 		{
 			CDlgCalendarQueryDetail dlg(
-				m_pDoc->GetConfig(),
+				m_pDoc->Book().GetConfig(),
 				pData->QueryLocationCodes(), pData->LocationCodes(),
 				pData->QueryVenueCodes(), pData->VenueCodes(),
 				this);
@@ -1386,10 +1386,10 @@ void CDlgCalendarPlugins::OnPluginQueryDetails()
 void CDlgCalendarPlugins::OnPluginNew()
 {
 	ARBConfigCalSitePtr site = ARBConfigCalSite::New();
-	CDlgPluginDetails dlg(m_pDoc->GetConfig(), site, this);
+	CDlgPluginDetails dlg(m_pDoc->Book().GetConfig(), site, this);
 	if (IDOK == dlg.DoModal())
 	{
-		m_pDoc->GetConfig().GetCalSites().AddSite(site);
+		m_pDoc->Book().GetConfig().GetCalSites().AddSite(site);
 		m_pDoc->SetModifiedFlag(TRUE);
 		CPluginConfigData* pData = new CPluginConfigData(m_pDoc, site);
 		HTREEITEM hItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,

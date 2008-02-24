@@ -95,7 +95,7 @@ BOOL CDlgClub::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 
 	set<tstring> clubs;
-	m_pDoc->GetAllClubNames(clubs, true, true);
+	m_pDoc->Book().GetAllClubNames(clubs, true, true);
 	if (m_pClub && !m_pClub->GetName().empty())
 		clubs.insert(m_pClub->GetName());
 	for (set<tstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
@@ -104,7 +104,7 @@ BOOL CDlgClub::OnInitDialog()
 	}
 	m_ctrlClubs.SetCurSel(-1);
 
-	m_ctrlVenues.Initialize(m_pDoc->GetConfig().GetVenues(), tstring());
+	m_ctrlVenues.Initialize(m_pDoc->Book().GetConfig().GetVenues(), tstring());
 	m_ctrlVenues.SetCurSel(-1);
 	if (m_pClub)
 	{

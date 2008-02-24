@@ -134,8 +134,8 @@ int CALLBACK CompareTitles(
 			break;
 		case 4: // nice name
 			{
-				tstring name1 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-				tstring name2 = psi->pDoc->GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
+				tstring name1 = psi->pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+				tstring name2 = psi->pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -290,7 +290,7 @@ void CDlgDogTitles::ListTitles()
 		}
 		m_ctrlTitles.SetItemText(nItem, 2, pTitle->GetVenue().c_str());
 		m_ctrlTitles.SetItemText(nItem, 3, pTitle->GetGenericName().c_str());
-		m_ctrlTitles.SetItemText(nItem, 4, m_pDoc->GetConfig().GetTitleNiceName(pTitle->GetVenue(), pTitle->GetRawName()).c_str());
+		m_ctrlTitles.SetItemText(nItem, 4, m_pDoc->Book().GetConfig().GetTitleNiceName(pTitle->GetVenue(), pTitle->GetRawName()).c_str());
 		++i;
 	}
 	for (i = 0; i < nColTitleInfo; ++i)
@@ -416,7 +416,7 @@ void CDlgDogTitles::OnItemchangedTitles(
 
 void CDlgDogTitles::OnTitleNew()
 {
-	CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, ARBDogTitlePtr(), this);
+	CDlgTitle dlg(m_pDoc->Book().GetConfig(), m_Titles, ARBDogTitlePtr(), this);
 	if (IDOK == dlg.DoModal())
 		ListTitles();
 }
@@ -428,7 +428,7 @@ void CDlgDogTitles::OnTitleEdit()
 	if (0 <= i)
 	{
 		CListPtrData<ARBDogTitlePtr>* pTitle = GetTitleData(i);
-		CDlgTitle dlg(m_pDoc->GetConfig(), m_Titles, pTitle->GetData(), this);
+		CDlgTitle dlg(m_pDoc->Book().GetConfig(), m_Titles, pTitle->GetData(), this);
 		if (IDOK == dlg.DoModal())
 			ListTitles();
 	}

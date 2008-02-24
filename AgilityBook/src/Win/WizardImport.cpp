@@ -616,7 +616,7 @@ BOOL CWizardImport::OnWizardFinish()
 				{
 					if (0 <= idxVenue[i] && 0 <= idxEvent[i] && 0 <= idxDiv[i] && 0 <= idxLevel[i] && 0 <= idxDate[i])
 					{
-						m_pDoc->GetConfig().GetVenues().FindEvent(
+						m_pDoc->Book().GetConfig().GetVenues().FindEvent(
 							GetPrimaryVenue(entry[idxVenue[i]]),
 							entry[idxEvent[i]],
 							entry[idxDiv[i]],
@@ -837,7 +837,7 @@ BOOL CWizardImport::OnWizardFinish()
 				// matched for pScoring! So check v/d/l/e again.
 				if (pRun)
 				{
-					if (!m_pDoc->GetConfig().GetVenues().FindVenue(trialVenue))
+					if (!m_pDoc->Book().GetConfig().GetVenues().FindVenue(trialVenue))
 					{
 						loadstr.FormatMessage(IDS_IMPORT_BAD_VENUE,
 							nItem + 1,
@@ -845,7 +845,7 @@ BOOL CWizardImport::OnWizardFinish()
 						errLog << (LPCTSTR)loadstr;
 						pRun.reset();
 					}
-					else if (!m_pDoc->GetConfig().GetVenues().FindEvent(
+					else if (!m_pDoc->Book().GetConfig().GetVenues().FindEvent(
 						trialVenue,
 						pRun->GetEvent(),
 						pRun->GetDivision(),
@@ -866,7 +866,7 @@ BOOL CWizardImport::OnWizardFinish()
 					if (0 < nameReg.length() || 0 < nameCall.length())
 					{
 						pDog.reset();
-						for (ARBDogList::iterator iterDog = m_pDoc->GetDogs().begin(); iterDog != m_pDoc->GetDogs().end(); ++iterDog)
+						for (ARBDogList::iterator iterDog = m_pDoc->Book().GetDogs().begin(); iterDog != m_pDoc->Book().GetDogs().end(); ++iterDog)
 						{
 							ARBDogPtr pDogTmp = *iterDog;
 							if ((0 < nameReg.length() && pDogTmp->GetRegisteredName() == nameReg
@@ -890,19 +890,19 @@ BOOL CWizardImport::OnWizardFinish()
 								pDog->SetCallName(nameCall);
 							if (0 == nameCall.length() && 0 < nameReg.length())
 								pDog->SetCallName(nameReg);
-							m_pDoc->GetDogs().AddDog(pDog);
+							m_pDoc->Book().GetDogs().AddDog(pDog);
 						}
 					}
 					if (!pDog)
 					{
-						if (m_pDoc->GetDogs().begin() == m_pDoc->GetDogs().end())
+						if (m_pDoc->Book().GetDogs().begin() == m_pDoc->Book().GetDogs().end())
 						{
 							pDog = ARBDogPtr(ARBDog::New());
 							pDog->SetCallName(_T("?"));
-							m_pDoc->GetDogs().AddDog(pDog);
+							m_pDoc->Book().GetDogs().AddDog(pDog);
 						}
 						else
-							pDog = *(m_pDoc->GetDogs().begin());
+							pDog = *(m_pDoc->Book().GetDogs().begin());
 					}
 					ASSERT(pDog);
 
@@ -966,7 +966,7 @@ BOOL CWizardImport::OnWizardFinish()
 							pTrial->SetNote(trialNotes);
 					}
 					pTrial->GetRuns().AddRun(pRun);
-					pTrial->SetMultiQs(m_pDoc->GetConfig());
+					pTrial->SetMultiQs(m_pDoc->Book().GetConfig());
 					pTrial->GetRuns().sort();
 					++nAdded;
 				}
@@ -1123,10 +1123,10 @@ BOOL CWizardImport::OnWizardFinish()
 				if (pCal)
 				{
 					ARBCalendarPtr cal;
-					if (!m_pDoc->GetCalendar().FindCalendar(pCal, false, &cal))
+					if (!m_pDoc->Book().GetCalendar().FindCalendar(pCal, false, &cal))
 					{
-						m_pDoc->GetCalendar().AddCalendar(pCal);
-						m_pDoc->GetCalendar().sort();
+						m_pDoc->Book().GetCalendar().AddCalendar(pCal);
+						m_pDoc->Book().GetCalendar().sort();
 						++nAdded;
 					}
 					else
@@ -1188,10 +1188,10 @@ BOOL CWizardImport::OnWizardFinish()
 				}
 				if (pLog)
 				{
-					if (!m_pDoc->GetTraining().FindTraining(pLog))
+					if (!m_pDoc->Book().GetTraining().FindTraining(pLog))
 					{
-						m_pDoc->GetTraining().AddTraining(pLog);
-						m_pDoc->GetTraining().sort();
+						m_pDoc->Book().GetTraining().AddTraining(pLog);
+						m_pDoc->Book().GetTraining().sort();
 						++nAdded;
 					}
 					else

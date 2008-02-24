@@ -468,7 +468,7 @@ BOOL CWizardStart::OnWizardFinish()
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->GetARB().Save(tree, verstr, true, false, false, false, false))
+					if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
 					{
 						CStringA filename(file.GetFileName());
 						tree->SaveXML(filename);
@@ -504,8 +504,8 @@ BOOL CWizardStart::OnWizardFinish()
 					std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
 					if (!entries)
 					{
-						allEntries.reserve(m_pDoc->GetCalendar().size());
-						for (ARBCalendarList::const_iterator iterCal = m_pDoc->GetCalendar().begin(); iterCal != m_pDoc->GetCalendar().end(); ++iterCal)
+						allEntries.reserve(m_pDoc->Book().GetCalendar().size());
+						for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin(); iterCal != m_pDoc->Book().GetCalendar().end(); ++iterCal)
 						{
 							allEntries.push_back(*iterCal);
 						}
@@ -577,7 +577,7 @@ BOOL CWizardStart::OnWizardFinish()
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->GetARB().Save(tree, verstr, false, true, false, false, false))
+					if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
 					{
 						CStringA filename(file.GetFileName());
 						tree->SaveXML(filename);
@@ -608,7 +608,7 @@ BOOL CWizardStart::OnWizardFinish()
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->GetARB().Save(tree, verstr, false, false, true, false, false))
+					if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
 					{
 						CStringA filename(file.GetFileName());
 						tree->SaveXML(filename);
@@ -661,7 +661,7 @@ BOOL CWizardStart::OnWizardFinish()
 					CVersionNum ver(NULL);
 					tstring verstr = (LPCTSTR)ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
-					if (m_pDoc->GetARB().Save(tree, verstr, true, true, true, true, true))
+					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 					{
 						CStringA filename(file.GetFileName());
 						std::string dtd = ARBConfig::GetDTD();

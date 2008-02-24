@@ -537,8 +537,8 @@ void CAgilityBookViewTraining::LoadData()
 
 	// Add items.
 	int i = 0;
-	for (ARBTrainingList::iterator iter = GetDocument()->GetTraining().begin();
-	iter != GetDocument()->GetTraining().end();
+	for (ARBTrainingList::iterator iter = GetDocument()->Book().GetTraining().begin();
+	iter != GetDocument()->Book().GetTraining().end();
 	++iter)
 	{
 		ARBTrainingPtr pTraining = (*iter);
@@ -748,7 +748,7 @@ void CAgilityBookViewTraining::OnTrainingEdit()
 		CDlgTraining dlg(pData->GetTraining(), GetDocument());
 		if (IDOK == dlg.DoModal())
 		{
-			GetDocument()->GetTraining().sort();
+			GetDocument()->Book().GetTraining().sort();
 			LoadData();
 			GetDocument()->SetModifiedFlag();
 			Invalidate();
@@ -766,8 +766,8 @@ void CAgilityBookViewTraining::OnTrainingNew()
 	CDlgTraining dlg(training, GetDocument());
 	if (IDOK == dlg.DoModal())
 	{
-		GetDocument()->GetTraining().AddTraining(training);
-		GetDocument()->GetTraining().sort();
+		GetDocument()->Book().GetTraining().AddTraining(training);
+		GetDocument()->Book().GetTraining().sort();
 		LoadData();
 		GetDocument()->SetModifiedFlag();
 		SetCurrentDate(training->GetDate());
@@ -806,8 +806,8 @@ void CAgilityBookViewTraining::OnEditDuplicate()
 			// is on name/date. So they can see the item that's being duped, which means
 			// the new one is visible too.
 			ARBTrainingPtr training = (*iter)->GetTraining()->Clone();
-			GetDocument()->GetTraining().AddTraining(training);
-			GetDocument()->GetTraining().sort();
+			GetDocument()->Book().GetTraining().AddTraining(training);
+			GetDocument()->Book().GetTraining().sort();
 			date = training->GetDate();
 		}
 		if (0 < items.size())
@@ -923,7 +923,7 @@ void CAgilityBookViewTraining::OnEditPaste()
 					if (pLog->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
 					{
 						bLoaded = true;
-						GetDocument()->GetTraining().AddTraining(pLog);
+						GetDocument()->Book().GetTraining().AddTraining(pLog);
 					}
 				}
 			}
@@ -932,7 +932,7 @@ void CAgilityBookViewTraining::OnEditPaste()
 	clpData.Close();
 	if (bLoaded)
 	{
-		GetDocument()->GetCalendar().sort();
+		GetDocument()->Book().GetCalendar().sort();
 		LoadData();
 		GetDocument()->SetModifiedFlag();
 		GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
@@ -959,7 +959,7 @@ void CAgilityBookViewTraining::OnTrainingDelete()
 		{
 			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
 			if (pData)
-				GetDocument()->GetTraining().DeleteTraining(pData->GetTraining());
+				GetDocument()->Book().GetTraining().DeleteTraining(pData->GetTraining());
 		}
 		GetDocument()->SetModifiedFlag();
 		LoadData();

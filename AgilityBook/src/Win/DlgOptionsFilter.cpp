@@ -186,7 +186,7 @@ END_MESSAGE_MAP()
 void CDlgOptionsFilter::FillControls()
 {
 	std::set<tstring> allLogNames;
-	m_pDoc->GetAllTrainingLogNames(allLogNames);
+	m_pDoc->Book().GetTraining().GetAllNames(allLogNames);
 
 	m_ViewDates = m_FilterOptions.GetViewAllDates() ? 0 : 1;
 	if (m_FilterOptions.GetStartFilterDate().IsValid())
@@ -245,10 +245,10 @@ void CDlgOptionsFilter::FillControls()
 
 	m_ViewVenues = m_FilterOptions.GetViewAllVenues() ? 0 : 1;
 	m_ctrlVenue.DeleteAllItems();
-	if (0 < m_pDoc->GetConfig().GetVenues().size())
+	if (0 < m_pDoc->Book().GetConfig().GetVenues().size())
 	{
-		for (ARBConfigVenueList::const_iterator iVenue = m_pDoc->GetConfig().GetVenues().begin();
-			iVenue != m_pDoc->GetConfig().GetVenues().end();
+		for (ARBConfigVenueList::const_iterator iVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
+			iVenue != m_pDoc->Book().GetConfig().GetVenues().end();
 			++iVenue)
 		{
 			ARBConfigVenuePtr pVenue = (*iVenue);
