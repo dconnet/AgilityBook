@@ -49,8 +49,8 @@
  */
 
 
-#define ARB_VERSION						1,10,5,12
-#define ARB_VERSION_STRING				"1.10.5.12"
+#define ARB_VERSION						1,10,6,12
+#define ARB_VERSION_STRING				"1.10.6.12"
 
 #define ARB_VERSION_CompanyName			"dcon Software"
 #define ARB_VERSION_FileDescription		"Agility Record Book"
