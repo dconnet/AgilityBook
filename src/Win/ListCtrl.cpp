@@ -247,7 +247,7 @@ private:
 };
 
 
-BEGIN_MESSAGE_MAP(CInPlaceCombo, CEdit)
+BEGIN_MESSAGE_MAP(CInPlaceCombo, CComboBox)
 	//{{AFX_MSG_MAP(CInPlaceCombo)
 	ON_WM_CREATE()
 	ON_WM_NCDESTROY()
