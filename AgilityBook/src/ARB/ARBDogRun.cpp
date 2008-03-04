@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-03-03 DRC Title point computation on T+F runs was wrong.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-10-31 DRC Time+Fault runs didn't compute titling points right.
@@ -575,29 +576,27 @@ double ARBDogRun::GetTitlePoints(
 	case ARBDogRunScoring::eTypeByTime:
 		{
 			double score = m_Scoring.GetCourseFaults() + m_Scoring.GetTimeFaults(inScoring);
+			if (ARBDouble::equal(score, 0))
+			{
+				if (outClean)
+					*outClean = true;
+			}
 			if (ARBConfigScoring::eTimePlusFaults == inScoring->GetScoringStyle())
 			{
-				bool bGood = true;
-				if (inScoring && inScoring->QsMustBeClean() && score > 0.0)
-					bGood = false;
-				score += m_Scoring.GetTime();
-				if (bGood
-				&& (ARBDouble::equal(m_Scoring.GetSCT(), 0) || score <= m_Scoring.GetSCT()))
+				if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
 				{
-					if (outClean)
-						*outClean = true;
-					pts = inScoring->GetTitlePoints().GetTitlePoints(0) + bonusPts;
+					score += m_Scoring.GetTime();
+					// Adjust the 'score' to the number of "faults" (total over SCT)
+					score -= m_Scoring.GetSCT();
+					if (0.0 > score)
+						score = 0.0;
+					pts = inScoring->GetTitlePoints().GetTitlePoints(score) + bonusPts;
 					if (outLifeTime)
-						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(0) + bonusPts;
+						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusPts;
 				}
 			}
 			else
 			{
-				if (ARBDouble::equal(score, 0))
-				{
-					if (outClean)
-						*outClean = true;
-				}
 				pts = inScoring->GetTitlePoints().GetTitlePoints(score) + bonusPts;
 				if (outLifeTime)
 					*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusPts;

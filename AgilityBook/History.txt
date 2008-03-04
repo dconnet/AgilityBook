@@ -1,6 +1,9 @@
-2/23/2008: v1.10.6.12 <in development>
+3/3/2008: v1.10.6.12 <in development>
 - New features / Enhancements:
   - Made trial properties dialog support in-place editing in club list
+- Bug fixes:
+  - Title points were not computed properly in Time+Fault runs where time
+    faults are allowed (DOCNA Challenge).
 
 2/9/2008: v1.10.5.12
 - Bumped file version to 12.7:
