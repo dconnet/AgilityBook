@@ -57,8 +57,6 @@
 				Name="VCLinkerTool"
 				GenerateManifest="false"
 				ResourceOnlyDLL="true"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -121,8 +119,6 @@
 				Name="VCLinkerTool"
 				GenerateManifest="false"
 				ResourceOnlyDLL="true"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -185,8 +181,6 @@
 				Name="VCLinkerTool"
 				GenerateManifest="false"
 				ResourceOnlyDLL="true"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -249,8 +243,6 @@
 				Name="VCLinkerTool"
 				GenerateManifest="false"
 				ResourceOnlyDLL="true"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
