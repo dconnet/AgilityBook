@@ -57,8 +57,6 @@
 				Name="VCLinkerTool"
 				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -125,8 +123,6 @@
 				Name="VCLinkerTool"
 				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -192,8 +188,6 @@
 				Name="VCLinkerTool"
 				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -260,8 +254,6 @@
 				Name="VCLinkerTool"
 				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
