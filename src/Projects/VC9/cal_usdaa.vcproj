@@ -59,8 +59,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -124,8 +122,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -190,8 +186,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -256,8 +250,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
