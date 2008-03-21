@@ -38,6 +38,8 @@
 
 #define STREAM_DATA_BEGIN		_T("ARB Begin Data")
 #define STREAM_DATA_END			_T("ARB End Data")
+#define STREAM_SYSTEM_BEGIN		_T("ARB Begin SysInfo")
+#define STREAM_SYSTEM_END		_T("ARB End SysInfo")
 #define STREAM_REGISTRY_BEGIN	_T("ARB Begin Registry")
 #define STREAM_REGISTRY_END		_T("ARB End Registry")
 #define STREAM_FILE_BEGIN		_T("ARB Begin File")

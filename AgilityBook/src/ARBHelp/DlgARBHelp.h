@@ -50,6 +50,7 @@ class CDlgARBHelp : public CPropertySheet
 public:
 	CDlgARBHelp(bool decode);
 
+	void AddSysInfo(tstring const& inData);
 	void AddRegistryInfo(LPCTSTR inData);
 	void SetARBFileStatus(CString const& inFileName, bool bInclude = true);
 	typedef std::map<CString, bool> FileMap;
@@ -65,6 +66,7 @@ protected:
 	CDlgPageEncodeFinish m_pageEncodeFinish;
 	CDlgPageDecode m_pageDecode;
 	CDlgPageDecodeFinish m_pageDecodeFinish;
+	tstring m_SysInfo;
 	tstring m_RegInfo;
 	FileMap m_IncFile;
 

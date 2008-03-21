@@ -161,6 +161,15 @@ BOOL CDlgARBHelp::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
+
+void CDlgARBHelp::AddSysInfo(tstring const& inData)
+{
+	m_SysInfo.clear();
+	if (!inData.empty())
+		m_SysInfo = inData;
+}
+
+
 void CDlgARBHelp::AddRegistryInfo(LPCTSTR inData)
 {
 	m_RegInfo.clear();
@@ -181,6 +190,14 @@ void CDlgARBHelp::SendIt()
 	tstring arbData;
 	{
 		otstringstream clp;
+
+		{
+			tstring data;
+			BinaryData::EncodeString(m_SysInfo, data);
+			clp << _T("\r\n") << STREAM_SYSTEM_BEGIN << _T("\r\n")
+				<< data
+				<< _T("\r\n") << STREAM_SYSTEM_END << _T("\r\n");
+		}
 
 		{
 			tstring data;

@@ -664,6 +664,93 @@ LRESULT CDlgHelpPage1::OnWizardNext()
 
 	CString msg, tmp;
 
+	// Get system information
+	{
+		otstringstream info;
+		OSVERSIONINFO os;
+		os.dwOSVersionInfoSize = sizeof(os);
+		GetVersionEx(&os);
+		switch (os.dwPlatformId)
+		{
+		default: // Win32s
+			info << _T("Windows32s ")
+				<< os.dwMajorVersion
+				<< '.'
+				<< os.dwMinorVersion
+				<< ' '
+				<< os.szCSDVersion
+				<< _T("\r\n");
+			break;
+		case VER_PLATFORM_WIN32_WINDOWS: // Win95/98
+			if (0 == os.dwMinorVersion)
+				info << _T("Windows 95 ")
+					<< os.dwMajorVersion
+					<< '.'
+					<< os.dwMinorVersion
+					<< '.'
+					<< int(LOWORD(os.dwBuildNumber))
+					<< ' '
+					<< os.szCSDVersion
+					<< _T("\r\n");
+			else
+				info << _T("Windows 98 ")
+					<< os.dwMajorVersion
+					<< '.'
+					<< os.dwMinorVersion
+					<< '.'
+					<< int(LOWORD(os.dwBuildNumber))
+					<< ' '
+					<< os.szCSDVersion
+					<< _T("\r\n");
+			break;
+		case VER_PLATFORM_WIN32_NT: // NT/Win2000
+			info << _T("Windows ")
+				<< os.dwMajorVersion
+				<< '.'
+				<< os.dwMinorVersion
+				<< '.'
+				<< os.dwBuildNumber
+				<< ' '
+				<< os.szCSDVersion
+				<< _T("\r\n");
+			break;
+		}
+
+		// Common controls.
+		HINSTANCE hCommCtrl = LoadLibrary(_T("comctl32.dll"));
+		if (hCommCtrl)
+		{
+			CVersionNum ver(hCommCtrl);
+			info << (LPCTSTR)ver.GetFileName();
+			info << _T(": ");
+			if (ver.Valid())
+				info << (LPCTSTR)ver.GetVersionString();
+			else
+				info << _T("Unknown version");
+			info << _T("\r\n");
+			FreeLibrary(hCommCtrl);
+			hCommCtrl = NULL;
+		}
+
+		// Internet Explorer.
+		HINSTANCE hShellDocObj = LoadLibrary(_T("shdocvw.dll"));
+		if (hShellDocObj)
+		{
+			CVersionNum ver(hShellDocObj);
+			info << (LPCTSTR)ver.GetFileName();
+			info << _T(": ");
+			if (ver.Valid())
+				info << (LPCTSTR)ver.GetVersionString();
+			else
+				info << _T("Unknown version");
+			info << _T("\r\n");
+			FreeLibrary(hShellDocObj);
+			hShellDocObj = NULL;
+		}
+
+		m_Parent->AddSysInfo(info.str());
+	}
+
 	// Read registry settings
 	tmp.LoadString(IDS_TASK_REGISTRY);
 	msg += tmp;
