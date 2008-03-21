@@ -123,31 +123,44 @@ BOOL CDlgPageDecodeFinish::OnInitDialog()
 			otstringstream editData;
 			editData << _T("Any temporary files created will be deleted upon closing this window.\r\n\r\n");
 
-			pos = data.Find(STREAM_REGISTRY_BEGIN);
-			if (0 <= pos)
+			static const struct
 			{
-				int posEnd = data.Find(STREAM_REGISTRY_END);
-				if (pos < posEnd)
+				LPCTSTR begin;
+				LPCTSTR end;
+			} sc_sections[] = {
+				{STREAM_SYSTEM_BEGIN, STREAM_SYSTEM_END},
+				{STREAM_REGISTRY_BEGIN, STREAM_REGISTRY_END},
+				{NULL, NULL}
+			};
+			for (int idx = 0; sc_sections[idx].begin; ++idx)
+			{
+				pos = data.Find(sc_sections[idx].begin);
+				if (0 <= pos)
 				{
-					int posData = pos + lstrlen(STREAM_REGISTRY_BEGIN);
-					// Dump the preceding data.
-					editData << (LPCTSTR)data.Left(posData) << _T("\r\n");
-					// Trim preceding
-					data = data.Mid(posData);
-					data.TrimLeft();
-					// Get the data to decode
-					posEnd = data.Find(STREAM_REGISTRY_END); // Recompute - we just changed the string
-					dataIn = (LPCTSTR)data.Left(posEnd);
-					// Strip that from main data.
-					data = data.Mid(posEnd + lstrlen(STREAM_REGISTRY_END));
-					data.TrimLeft();
-					// Now decode
-					BinaryData::DecodeString(dataIn, dataOut);
-					dataIn.clear();
-					editData << dataOut << STREAM_REGISTRY_END << _T("\r\n\r\n");
-					dataOut.clear();
+					int posEnd = data.Find(sc_sections[idx].end);
+					if (pos < posEnd)
+					{
+						int posData = pos + lstrlen(sc_sections[idx].begin);
+						// Dump the preceding data.
+						editData << (LPCTSTR)data.Left(posData) << _T("\r\n");
+						// Trim preceding
+						data = data.Mid(posData);
+						data.TrimLeft();
+						// Get the data to decode
+						posEnd = data.Find(sc_sections[idx].end); // Recompute - we just changed the string
+						dataIn = (LPCTSTR)data.Left(posEnd);
+						// Strip that from main data.
+						data = data.Mid(posEnd + lstrlen(sc_sections[idx].end));
+						data.TrimLeft();
+						// Now decode
+						BinaryData::DecodeString(dataIn, dataOut);
+						dataIn.clear();
+						editData << dataOut << sc_sections[idx].end << _T("\r\n\r\n");
+						dataOut.clear();
+					}
 				}
 			}
+
 			while ((0 <= (pos = data.Find(STREAM_FILE_BEGIN))))
 			{
 				int posEnd = data.Find(STREAM_FILE_END);
