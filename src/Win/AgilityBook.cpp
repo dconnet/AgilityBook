@@ -773,7 +773,7 @@ void CAgilityBookApp::OnHelpSysinfo()
 	{
 		CVersionNum ver(NULL);
 		info << (LPCTSTR)ver.GetFileName();
-		info << ": ";
+		info << _T(": ");
 		if (ver.Valid())
 			info << (LPCTSTR)ver.GetVersionString();
 		else
@@ -787,7 +787,7 @@ void CAgilityBookApp::OnHelpSysinfo()
 	{
 		CVersionNum ver(hCommCtrl);
 		info << (LPCTSTR)ver.GetFileName();
-		info << ": ";
+		info << _T(": ");
 		if (ver.Valid())
 			info << (LPCTSTR)ver.GetVersionString();
 		else
@@ -803,7 +803,7 @@ void CAgilityBookApp::OnHelpSysinfo()
 	{
 		CVersionNum ver(hShellDocObj);
 		info << (LPCTSTR)ver.GetFileName();
-		info << ": ";
+		info << _T(": ");
 		if (ver.Valid())
 			info << (LPCTSTR)ver.GetVersionString();
 		else
