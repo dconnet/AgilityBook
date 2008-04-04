@@ -42,7 +42,15 @@
 #if defined(_WINDOWS) || defined(_CONSOLE)
 
 // _MSCVER
-// 1200: VC6.0
+//  600: C Compiler version 6.0                  
+//  700: C/C++ compiler version 7.0              
+//  800: Visual C++, Windows, version 1.0        
+//  800: Visual C++, 32-bit, version 1.0         
+//  900: Visual C++, Windows, version 2.0        
+//  900: Visual C++, 32-bit, version 2.x         
+// 1000: Visual C++, 32-bit, version 4.0         
+// 1100: Visual C++, 32-bit, version 5.0         
+// 1200: Visual C++, 32-bit, version 6.0
 // 1300: VC7.0
 // 1310: VC7.1
 // 1400: VC8.0
