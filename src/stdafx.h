@@ -42,6 +42,7 @@
 #if defined(_WINDOWS) || defined(_CONSOLE)
 
 // _MSCVER
+// http://support.microsoft.com/kb/65472 (define values thru vc6)
 //  600: C Compiler version 6.0                  
 //  700: C/C++ compiler version 7.0              
 //  800: Visual C++, Windows, version 1.0        
