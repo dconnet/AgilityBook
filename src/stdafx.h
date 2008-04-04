@@ -53,9 +53,9 @@
 // 1100: Visual C++, 32-bit, version 5.0         
 // 1200: Visual C++, 32-bit, version 6.0
 // 1300: VC7.0
-// 1310: VC7.1
-// 1400: VC8.0
-// 1500: VC9.0
+// 1310: VC7.1 http://msdn2.microsoft.com/en-us/library/b0084kay(VS.71).aspx
+// 1400: VC8.0 http://msdn2.microsoft.com/en-us/library/b0084kay(VS.80).aspx
+// 1500: VC9.0 http://msdn2.microsoft.com/en-us/library/b0084kay.aspx
 // _M_IX86: Defined for x86 (value specifies processor)
 // _M_X64: Defined for x64 processors
 // _M_IA64: Defined for Itanium processor family
