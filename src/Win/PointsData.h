@@ -63,7 +63,7 @@ typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
  * Used to accumulate lifetime info. Also for Placement totals.
  */
 class LifeTimePointInfo;
-typedef boost::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
+typedef tr1::shared_ptr<LifeTimePointInfo> LifeTimePointInfoPtr;
 class LifeTimePointInfo
 {
 private:
@@ -113,7 +113,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 
 class CPointsDataBase;
-typedef boost::shared_ptr<CPointsDataBase> CPointsDataBasePtr;
+typedef tr1::shared_ptr<CPointsDataBase> CPointsDataBasePtr;
 class CPointsDataBase
 {
 public:
@@ -179,7 +179,7 @@ private:
 	tstring m_Col1;
 	tstring m_Col2;
 };
-typedef boost::shared_ptr<CPointsDataText> CPointsDataTextPtr;
+typedef tr1::shared_ptr<CPointsDataText> CPointsDataTextPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -203,7 +203,7 @@ public:
 protected:
 	ARBDogPtr m_pDog;
 };
-typedef boost::shared_ptr<CPointsDataDog> CPointsDataDogPtr;
+typedef tr1::shared_ptr<CPointsDataDog> CPointsDataDogPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -229,7 +229,7 @@ protected:
 	ARBDogPtr m_pDog;
 	ARBConfigVenuePtr m_pVenue;
 };
-typedef boost::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
+typedef tr1::shared_ptr<CPointsDataVenue> CPointsDataVenuePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -255,7 +255,7 @@ protected:
 	ARBDogPtr m_pDog;
 	ARBDogTitlePtr m_pTitle;
 };
-typedef boost::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
+typedef tr1::shared_ptr<CPointsDataTitle> CPointsDataTitlePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -306,7 +306,7 @@ protected:
 	tstring m_SuperQ;
 	tstring m_Speed;
 };
-typedef boost::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
+typedef tr1::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -340,7 +340,7 @@ protected:
 	double m_Lifetime;	//< Total lifetime points.
 	double m_Filtered;	//< Points that are filtered out.
 };
-typedef boost::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
+typedef tr1::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
 
 /**
  * Subtotal lifetime points by division.
@@ -369,7 +369,7 @@ public:
 protected:
 	tstring m_Name;
 };
-typedef boost::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
+typedef tr1::shared_ptr<CPointsDataLifetimeByName> CPointsDataLifetimeByNamePtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -400,7 +400,7 @@ protected:
 	std::set<MultiQdata> m_MQs;
 	double m_ExistingDblQs;
 };
-typedef boost::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
+typedef tr1::shared_ptr<CPointsDataMultiQs> CPointsDataMultiQsPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -424,7 +424,7 @@ protected:
 	ARBConfigVenuePtr m_Venue;
 	int m_Pts;
 };
-typedef boost::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
+typedef tr1::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -443,7 +443,7 @@ protected:
 	double m_Score;
 	std::list<OtherPtInfo> m_RunList;
 };
-typedef boost::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
+typedef tr1::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
 
 class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
 {
@@ -463,7 +463,7 @@ public:
 protected:
 	tstring m_Name;
 };
-typedef boost::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
+typedef tr1::shared_ptr<CPointsDataOtherPointsTallyAll> CPointsDataOtherPointsTallyAllPtr;
 
 class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
 {
@@ -483,7 +483,7 @@ public:
 protected:
 	tstring m_Event;
 };
-typedef boost::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
+typedef tr1::shared_ptr<CPointsDataOtherPointsTallyAllByEvent> CPointsDataOtherPointsTallyAllByEventPtr;
 
 class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
 {
@@ -503,7 +503,7 @@ public:
 protected:
 	tstring m_Level;
 };
-typedef boost::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
+typedef tr1::shared_ptr<CPointsDataOtherPointsTallyLevel> CPointsDataOtherPointsTallyLevelPtr;
 
 class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
 {
@@ -525,7 +525,7 @@ protected:
 	tstring m_Level;
 	tstring m_Event;
 };
-typedef boost::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
+typedef tr1::shared_ptr<CPointsDataOtherPointsTallyLevelByEvent> CPointsDataOtherPointsTallyLevelByEventPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 

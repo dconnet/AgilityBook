@@ -1500,13 +1500,13 @@ ElementPtr ElementNode::GetElement(int inIndex)
 
 ElementNodePtr ElementNode::GetElementNode(int inIndex) const
 {
-	return boost::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
+	return tr1::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
 }
 
 
 ElementNodePtr ElementNode::GetElementNode(int inIndex)
 {
-	return boost::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
+	return tr1::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
 }
 
 

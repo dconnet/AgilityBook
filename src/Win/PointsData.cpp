@@ -49,6 +49,7 @@
 #include "stdafx.h"
 #include "PointsData.h"
 
+#include <algorithm>
 #include <map>
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
@@ -287,7 +288,7 @@ void CPointsDataDog::Details() const
 
 bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataDogPtr inDog = boost::shared_dynamic_cast<CPointsDataDog, CPointsDataBase>(inData);
+	CPointsDataDogPtr inDog = tr1::dynamic_pointer_cast<CPointsDataDog, CPointsDataBase>(inData);
 	if (inDog)
 		return m_pDog->GetCallName() == inDog->m_pDog->GetCallName();
 	else
@@ -400,7 +401,7 @@ void CPointsDataVenue::Details() const
 
 bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataVenuePtr inVenue = boost::shared_dynamic_cast<CPointsDataVenue, CPointsDataBase>(inData);
+	CPointsDataVenuePtr inVenue = tr1::dynamic_pointer_cast<CPointsDataVenue, CPointsDataBase>(inData);
 	if (inVenue)
 		return m_pVenue->GetName() == inVenue->m_pVenue->GetName();
 	else
@@ -478,7 +479,7 @@ void CPointsDataTitle::Details() const
 
 bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataTitlePtr inTitle = boost::shared_dynamic_cast<CPointsDataTitle, CPointsDataBase>(inData);
+	CPointsDataTitlePtr inTitle = tr1::dynamic_pointer_cast<CPointsDataTitle, CPointsDataBase>(inData);
 	if (inTitle)
 		return m_pTitle->GetVenue() == inTitle->m_pTitle->GetVenue()
 			&& m_pTitle->GetRawName() == inTitle->m_pTitle->GetRawName();
@@ -603,7 +604,7 @@ void CPointsDataEvent::Details() const
 
 bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataEventPtr inEvent = boost::shared_dynamic_cast<CPointsDataEvent, CPointsDataBase>(inData);
+	CPointsDataEventPtr inEvent = tr1::dynamic_pointer_cast<CPointsDataEvent, CPointsDataBase>(inData);
 	if (inEvent)
 		return m_Venue->GetName() == inEvent->m_Venue->GetName()
 			&& m_Div->GetName() == inEvent->m_Div->GetName()
@@ -722,7 +723,7 @@ void CPointsDataLifetime::Details() const
 
 bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataLifetimePtr inLife = boost::shared_dynamic_cast<CPointsDataLifetime, CPointsDataBase>(inData);
+	CPointsDataLifetimePtr inLife = tr1::dynamic_pointer_cast<CPointsDataLifetime, CPointsDataBase>(inData);
 	if (inLife)
 		return m_Venue == inLife->m_Venue;
 	else
@@ -792,7 +793,7 @@ tstring CPointsDataLifetimeByName::GetHtml(size_t nCurLine) const
 
 bool CPointsDataLifetimeByName::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataLifetimeByNamePtr inLife = boost::shared_dynamic_cast<CPointsDataLifetimeByName, CPointsDataBase>(inData);
+	CPointsDataLifetimeByNamePtr inLife = tr1::dynamic_pointer_cast<CPointsDataLifetimeByName, CPointsDataBase>(inData);
 	if (inLife)
 		return CPointsDataLifetimeByName::IsEqual(inData)
 			&& m_Name == inLife->m_Name;
@@ -871,7 +872,7 @@ void CPointsDataMultiQs::Details() const
 
 bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataMultiQsPtr inMulti = boost::shared_dynamic_cast<CPointsDataMultiQs, CPointsDataBase>(inData);
+	CPointsDataMultiQsPtr inMulti = tr1::dynamic_pointer_cast<CPointsDataMultiQs, CPointsDataBase>(inData);
 	if (inMulti)
 		return m_Venue->GetName() == inMulti->m_Venue->GetName()
 			&& m_MultiQ->GetName() == inMulti->m_MultiQ->GetName();
@@ -919,7 +920,7 @@ tstring CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 
 bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataSpeedPtsPtr inPts = boost::shared_dynamic_cast<CPointsDataSpeedPts, CPointsDataBase>(inData);
+	CPointsDataSpeedPtsPtr inPts = tr1::dynamic_pointer_cast<CPointsDataSpeedPts, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Venue->GetName() == inPts->m_Venue->GetName();
 	else
@@ -1006,7 +1007,7 @@ void CPointsDataOtherPointsTallyAll::Details() const
 
 bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyAllPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyAll, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyAllPtr inPts = tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyAll, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Name == inPts->m_Name;
 	else
@@ -1076,7 +1077,7 @@ void CPointsDataOtherPointsTallyAllByEvent::Details() const
 
 bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyAllByEventPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyAllByEvent, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyAllByEventPtr inPts = tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyAllByEvent, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Event == inPts->m_Event;
 	else
@@ -1146,7 +1147,7 @@ void CPointsDataOtherPointsTallyLevel::Details() const
 
 bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyLevelPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyLevel, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyLevelPtr inPts = tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevel, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Level == inPts->m_Level;
 	else
@@ -1222,7 +1223,7 @@ void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 
 bool CPointsDataOtherPointsTallyLevelByEvent::IsEqual(CPointsDataBasePtr inData)
 {
-	CPointsDataOtherPointsTallyLevelByEventPtr inPts = boost::shared_dynamic_cast<CPointsDataOtherPointsTallyLevelByEvent, CPointsDataBase>(inData);
+	CPointsDataOtherPointsTallyLevelByEventPtr inPts = tr1::dynamic_pointer_cast<CPointsDataOtherPointsTallyLevelByEvent, CPointsDataBase>(inData);
 	if (inPts)
 		return m_Level == inPts->m_Level
 			&& m_Event == inPts->m_Event;

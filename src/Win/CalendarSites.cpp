@@ -52,7 +52,6 @@
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 #include "ReadHttp.h"
-#include <boost/shared_ptr.hpp>
 #include <map>
 #include <vector>
 
@@ -157,7 +156,7 @@ private:
 };
 
 
-typedef boost::shared_ptr<CalSiteData> CalSiteDataPtr;
+typedef tr1::shared_ptr<CalSiteData> CalSiteDataPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 

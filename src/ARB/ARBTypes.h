@@ -44,22 +44,20 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <boost/weak_ptr.hpp>
-#include <boost/shared_ptr.hpp>
 
 // Forward references
 class ARBConfig;
 #define ARB_TYPEDEF(name) \
 	class name;\
-	typedef boost::shared_ptr<name> name##Ptr;
+	typedef tr1::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF2(name) \
 	class name;\
-	typedef boost::weak_ptr<name> name##WPtr;\
-	typedef boost::shared_ptr<name> name##Ptr;
+	typedef tr1::weak_ptr<name> name##WPtr;\
+	typedef tr1::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF_LIST(name) \
 	class name;\
 	class name##List;\
-	typedef boost::shared_ptr<name> name##Ptr;
+	typedef tr1::shared_ptr<name> name##Ptr;
 
 ARB_TYPEDEF(ARBConfigActionDeleteDivision)
 ARB_TYPEDEF(ARBConfigActionDeleteEvent)

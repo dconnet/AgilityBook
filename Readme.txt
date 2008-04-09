@@ -3,7 +3,7 @@ Setting up the build environment
 Additional software packages required (all free):
 - UnitTest++
 - HTML Help Workshop
-- Boost libraries
+- Boost libraries (optional as of VC9+TR1)
 - Windows Installer XML toolset (or Inno Setup)
 - Xerces-C (included in src tree)
 - zlib (included in src tree)
@@ -52,6 +52,8 @@ this will vary based on boost version). This should be renamed to 'boost'
 to avoid problems in the project files.
 - Note: use of Boost may change in the future. Smart Ptrs are part of the
   TR1 spec. When compilers actually implemement TR1, I will change to that.
+- Boost is no longer required when using VC9+FeaturePack (TR1). Note, the
+  included project files now assume the feature pack is installed with VS2008.
 
 --------------------
 

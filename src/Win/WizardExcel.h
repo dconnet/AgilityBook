@@ -36,18 +36,13 @@
  * @li 2004-09-30 DRC Created
  */
 
-#include <boost/shared_ptr.hpp>
-
-/**
- * Forward references and typedefs.
- */
 class IDlgProgress;
 class IWizardExporter;
-typedef boost::shared_ptr<IWizardExporter> IWizardExporterPtr;
+typedef tr1::shared_ptr<IWizardExporter> IWizardExporterPtr;
 class IWizardImporter;
-typedef boost::shared_ptr<IWizardImporter> IWizardImporterPtr;
+typedef tr1::shared_ptr<IWizardImporter> IWizardImporterPtr;
 class IWizardSpreadSheet;
-typedef boost::shared_ptr<IWizardSpreadSheet> IWizardSpreadSheetPtr;
+typedef tr1::shared_ptr<IWizardSpreadSheet> IWizardSpreadSheetPtr;
 
 /**
  * Interface for exporting to a spreadsheet.

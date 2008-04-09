@@ -37,6 +37,7 @@
 #include "stdafx.h"
 #include "ARBConfigCalSite.h"
 
+#include <algorithm>
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 #include "Element.h"

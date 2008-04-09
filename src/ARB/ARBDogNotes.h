@@ -46,7 +46,7 @@
 typedef std::vector<tstring> ARBDogFaultList;
 
 class ARBMetaData;
-typedef boost::shared_ptr<ARBMetaData> ARBMetaDataPtr;
+typedef tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
 class ARBMetaData
 {
 	friend class ARBDogNotes;

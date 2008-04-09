@@ -38,6 +38,7 @@
 #include "AgilityBook.h"
 #include "DlgCalendarQueryDetail.h"
 
+#include <algorithm>
 #include "ARBConfig.h"
 #include "DlgQueryDetail.h"
 
