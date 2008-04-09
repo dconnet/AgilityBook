@@ -41,8 +41,6 @@
 
 #include <map>
 #include <vector>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
 #include <xercesc/sax/InputSource.hpp>
 #include "ARBTypes.h"
 class ARBDate;

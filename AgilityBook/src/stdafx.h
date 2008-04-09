@@ -206,3 +206,14 @@ typedef char	TCHAR;
 #endif // UNICODE
 
 #endif // _WINDOWS ||_CONSOLE
+
+#include <memory> // To pick up the _HAS_TR1 define
+#if _HAS_TR1
+namespace tr1 = std::tr1;
+#else
+#include <boost/weak_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
+namespace tr1 = boost;
+#define shared_dynamic_cast dynamic_pointer_cast
+#endif

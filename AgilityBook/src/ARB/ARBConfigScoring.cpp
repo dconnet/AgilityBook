@@ -56,6 +56,7 @@
 #include "stdafx.h"
 #include "ARBConfigScoring.h"
 
+#include <algorithm>
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 #include "Element.h"

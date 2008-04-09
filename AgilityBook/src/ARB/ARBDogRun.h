@@ -44,7 +44,6 @@
  */
 
 #include <set>
-#include <boost/weak_ptr.hpp>
 #include "ARBBase.h"
 #include "ARBDate.h"
 #include "ARBDogNotes.h"
@@ -352,7 +351,7 @@ public:
 	void RemoveLink(tstring const& inLink);
 
 private:
-	std::set<boost::weak_ptr<ARBConfigMultiQ> > m_pMultiQs; //< Not persisted.
+	std::set<tr1::weak_ptr<ARBConfigMultiQ> > m_pMultiQs; //< Not persisted.
 	ARBDate m_Date;
 	tstring m_Division;
 	tstring m_Level;

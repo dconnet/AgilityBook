@@ -38,7 +38,6 @@
 
 #include "ARBBase64.h"
 #include "zlib.h"
-#include <boost/scoped_ptr.hpp>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -76,7 +75,8 @@ bool BinaryData::Decode(
         return false;
 	}
 
-	boost::scoped_ptr<unsigned char> out(new unsigned char[CHUNK]);
+	// Originally used boost::scoped_ptr, but not available in TR1
+	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
 	strm.avail_in = static_cast<uInt>(len);
 	strm.next_in = reinterpret_cast<Bytef*>(pData);
 	do
@@ -132,7 +132,7 @@ bool BinaryData::Encode(
 {
 	outBase64.empty();
 
-	boost::scoped_ptr<unsigned char> out(new unsigned char[CHUNK]);
+	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
     z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -182,8 +182,8 @@ bool BinaryData::Encode(
 {
 	outBase64.empty();
 
-	boost::scoped_ptr<unsigned char> in(new unsigned char[CHUNK]);
-	boost::scoped_ptr<unsigned char> out(new unsigned char[CHUNK]);
+	tr1::shared_ptr<unsigned char> in(new unsigned char[CHUNK]);
+	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
     z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
