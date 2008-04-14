@@ -903,6 +903,7 @@ BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 	ON_WM_DESTROY()
 	ON_NOTIFY_REFLECT_EX(LVN_DELETEITEM, OnDeleteitem)
 	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
 	ON_WM_HSCROLL()
 	ON_WM_VSCROLL()
 	//}}AFX_MSG_MAP
@@ -1000,6 +1001,14 @@ void CListCtrl2::OnLButtonDown(UINT nFlags, CPoint point)
 }
 
 
+BOOL CListCtrl2::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	if (GetFocus() != this)
+		SetFocus();
+	return CListCtrl::OnMouseWheel(nFlags, zDelta, pt);
+}
+
+
 void CListCtrl2::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	// For subitem editing support
@@ -1030,6 +1039,7 @@ BEGIN_MESSAGE_MAP(CListView2, CListView)
 	ON_WM_INITMENUPOPUP()
 	ON_NOTIFY_REFLECT_EX(LVN_DELETEITEM, OnDeleteitem)
 	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
 	ON_WM_HSCROLL()
 	ON_WM_VSCROLL()
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
@@ -1144,6 +1154,14 @@ void CListView2::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 	if (bDefault)
 		CListView::OnLButtonDown(nFlags, point);
+}
+
+
+BOOL CListView2::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	if (GetFocus() != this)
+		SetFocus();
+	return CListView::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 
