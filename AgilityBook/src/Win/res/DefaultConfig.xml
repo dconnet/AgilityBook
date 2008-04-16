@@ -63,9 +63,10 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="20">
+  <Configuration version="21">
     <Action NewName="SSA" OldName="Sweepstakes" Verb="RenameVenue" />
     <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle" />
+    <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision" />
     <Action NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle" />
     <Action NewName="ATCH-OP" OldName="V-ATCH-OP" Venue="ASCA" Verb="DeleteTitle" />
     <Action NewName="ATCH-SP" OldName="V-ATCH-SP" Venue="ASCA" Verb="DeleteTitle" />
@@ -301,7 +302,7 @@ Revision History:
       <Division Name="ISC">
         <Level Name="Excellent B" />
       </Division>
-      <Division Name="Standard">
+      <Division Name="Regular">
         <Level Name="Novice">
           <SubLevel Name="Novice A" />
           <SubLevel Name="Novice B" />
@@ -323,7 +324,7 @@ Revision History:
         <Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
-        <Scoring Division="Standard" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Regular" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <PlaceInfo Place="1" Value="2" />
           <PlaceInfo Place="2" Value="1.5" />
           <TitlePoints Faults="0" Points="1" />
@@ -347,7 +348,7 @@ Revision History:
         <Scoring Division="ISC" Level="Excellent B" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
-        <Scoring Division="Standard" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Regular" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <PlaceInfo Place="1" Value="2" />
           <PlaceInfo Place="2" Value="1.5" />
           <TitlePoints Faults="0" Points="1" />
@@ -369,12 +370,12 @@ Revision History:
       </Event>
       <Event Name="National Rounds">
         <Desc>Hybrid, Challenger and Final Rounds</Desc>
-        <Scoring Division="Standard" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime" />
+        <Scoring Division="Regular" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime" />
       </Event>
       <Event Name="FAST">
         <Desc>Fifteen and Send Time</Desc>
         <Scoring Division="*" Level="*" OpeningPts="50" ValidTo="2006-12-31" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime" />
-        <Scoring Division="Standard" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+        <Scoring Division="Regular" Level="Novice" OpeningPts="50" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <Note>SCT: 38/35/32</Note>
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
@@ -382,7 +383,7 @@ Revision History:
           <Note>SCT: 41/38/35</Note>
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
-        <Scoring Division="Standard" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+        <Scoring Division="Regular" Level="Open" OpeningPts="55" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <Note>SCT: 38/35/32</Note>
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
@@ -390,7 +391,7 @@ Revision History:
           <Note>SCT: 41/38/35</Note>
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
-        <Scoring Division="Standard" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+        <Scoring Division="Regular" Level="Excellent A" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <Note>SCT: 38/35/32</Note>
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
@@ -398,7 +399,7 @@ Revision History:
           <Note>SCT: 41/38/35</Note>
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
-        <Scoring Division="Standard" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
+        <Scoring Division="Regular" Level="Excellent B" OpeningPts="60" ValidFrom="2007-1-1" dropFractions="y" overTF="y" subtractTF="y" type="ScoreThenTime">
           <Note>SCT: 38/35/32</Note>
           <TitlePoints Faults="0" Points="1" />
         </Scoring>
@@ -408,8 +409,8 @@ Revision History:
         </Scoring>
       </Event>
       <MultiQ Name="Double Q" SName="QQ">
-        <MultiQItem Div="Standard" Event="JWW" Level="Excellent B" />
-        <MultiQItem Div="Standard" Event="Standard" Level="Excellent B" />
+        <MultiQItem Div="Regular" Event="JWW" Level="Excellent B" />
+        <MultiQItem Div="Regular" Event="Standard" Level="Excellent B" />
       </MultiQ>
       <MultiQ Name="Preferred Double Q" SName="QQ">
         <MultiQItem Div="Preferred" Event="JWW" Level="Excellent B" />
