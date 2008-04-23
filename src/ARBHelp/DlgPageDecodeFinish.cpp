@@ -37,6 +37,7 @@
 #include "stdafx.h"
 #include "DlgPageDecodeFinish.h"
 
+#include <algorithm>
 #include <fstream>
 #include <ios>
 #include "ARBHelp.h"
