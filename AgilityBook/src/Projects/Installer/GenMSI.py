@@ -41,24 +41,33 @@ def getversion(numParts):
 	for i in range(1, numParts):
 		ver = ver + ".0"
 		ver2 = ver2 + "_0"
+	resStr = [
+		"#define VER_MAJOR",
+		"#define VER_MINOR",
+		"#define VER_DOT",
+		"#define VER_FILEVER"
+		]
+	found = 0;
+	version = ["0", "0", "0", "0"]
 	res = open(WinSrcDir + r"\Include\VersionNumber.h", "r")
 	while (1):
 		line = res.readline()
 		if line:
 			line = string.strip(line)
-			ResString = "#define ARB_VERSION"
-			pos = line.find(ResString)
-			if 0 == pos:
-				line = string.strip(line[pos+len(ResString):])
-				line = line.split(',')
-				ver = line[0]
-				ver2 = line[0]
-				for i in range(1, numParts):
-					ver = ver + '.' + line[i]
-					ver2 = ver2 + '_' + line[i]
+			for i in range(0, 4):
+				pos = line.find(resStr[i])
+				if 0 == pos:
+					found = found + 1
+					version[i] = string.strip(line[pos+len(resStr[i]):])
+			if found == 4:
 				break
 		else:
 			break
+	ver = version[0]
+	ver2 = version[0]
+	for i in range(1, numParts):
+		ver = ver + '.' + version[i]
+		ver2 = ver2 + '_' + version[i]
 	return ver, ver2
 
 
@@ -165,6 +174,11 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'                <Shortcut Id="AppDesktop" Name="ARB" LongName="Agility Record Book" Directory="DesktopFolder" />'
 	print >>setup, r'                <Shortcut Id="AppMenu" Name="ARB" LongName="Agility Record Book" Directory="ARBMenuFolder" />'
 	print >>setup, r'              </File>'
+	print >>setup, r'              <File Id="ARBHelp" Name="ARBHelp" LongName="ARBHelp.exe"'
+	print >>setup, r'                    Source="' + baseDir + r'ARBHelp.exe"'
+	print >>setup, r'                    Vital="yes" DiskId="1">'
+	print >>setup, r'                <Shortcut Id="ARBHelpShortcut" Name="ARBHelp" LongName="ARB Helper" Directory="ARBMenuFolder" />'
+	print >>setup, r'              </File>'
 	print >>setup, r'              <File Id="Help" Name="ARBchm" LongName="AgilityBook.chm"'
 	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.chm"'
 	print >>setup, r'                    Vital="yes" DiskId="1">'
@@ -192,6 +206,11 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'                    Source="' + baseDir + r'cal_usdaa.dll"'
 	print >>setup, r'                    Vital="no" DiskId="1" />'
 	print >>setup, r'            </Component>'
+	print >>setup, r'            <Component Id="ARBHelp" Guid="014BD8FF-D094-49EB-B4A9-BE74ED440893">'
+	print >>setup, r'              <File Id="arbhelp" Name="ARBHelp" LongName="ARBHelp.exe"'
+	print >>setup, r'                    Source="' + baseDir + r'ARBHelp.exe"'
+	print >>setup, r'                    Vital="no" DiskId="1" />'
+	print >>setup, r'            </Component>'
 	print >>setup, r''
 	print >>setup, r'            <Component Id="empty" Guid="74004007-0948-46E6-9250-5733CC0D4607"/>'
 	print >>setup, r''
@@ -203,8 +222,14 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'    <Feature Id="Complete" Display="expand" Level="1"'
 	print >>setup, r'             AllowAdvertise="no"'
 	print >>setup, r'             Title="Agility Record Book" Description="Main Agility Record Book files" ConfigurableDirectory="INSTALLDIR">'
+	print >>setup, r'      <ComponentRef Id="ARBHelp"/>'
 	print >>setup, r'      <ComponentRef Id="ApplicationCore"/>'
 	print >>setup, r'      <ComponentRef Id="French"/>'
+	print >>setup, r'      <Feature Id="ARBHelp" Display="expand" Level="100"'
+	print >>setup, r'               AllowAdvertise="no"'
+	print >>setup, r'               Title="ARBHelp" Description="Help diagnose problems by assembling necessary files for debugging">'
+	print >>setup, r'          <ComponentRef Id="ARBHelp"/>'
+	print >>setup, r'        </Feature>'
 	print >>setup, r'      <Feature Id="Languages" Display="expand" Level="100"'
 	print >>setup, r'               AllowAdvertise="no"'
 	print >>setup, r'               Title="Languages" Description="Supported languages that can be changed while running the program (English is always available)">'
@@ -291,6 +316,7 @@ def genInno(version, version2, code, tidy):
 	print >>setup, r''
 	print >>setup, r'[Files]'
 	print >>setup, r'Source: ' + baseDir + r'AgilityBook.exe; DestDir: {app}'
+	print >>setup, r'Source: ' + baseDir + r'ARBHelp.exe; DestDir: {app}'
 	print >>setup, r'Source: ' + baseDir + r'AgilityBook.chm; DestDir: {app}'
 	print >>setup, r'Source: ' + baseDir + r'AgilityBookFRA.dll; DestDir: {app}'
 	print >>setup, r'Source: ' + baseDir + r'cal_usdaa.dll; DestDir: {app}'
@@ -298,6 +324,7 @@ def genInno(version, version2, code, tidy):
 	print >>setup, r'[Icons]'
 	print >>setup, r'Name: {commondesktop}\{#ARBName}; Filename: {app}\AgilityBook.exe'
 	print >>setup, r'Name: {group}\{#ARBName}; Filename: {app}\AgilityBook.exe; IconFilename: {app}\AgilityBook.exe; IconIndex: 0'
+	print >>setup, r'Name: {group}\{#ARBName} Helper; Filename: {app}\ARBHelp.exe; IconFilename: {app}\ARBHelp.exe; IconIndex: 0'
 	print >>setup, r'Name: {group}\{#ARBName} Help; Filename: {app}\AgilityBook.chm'
 	print >>setup, r'Name: {group}\{#ARBName} Web Site; Filename: http://www.agilityrecordbook.com/'
 	print >>setup, r'Name: {group}\Yahoo Discussion Group; Filename: http://groups.yahoo.com/group/AgilityRecordBook/'
