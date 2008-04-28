@@ -213,7 +213,5 @@ namespace tr1 = std::tr1;
 #else
 #include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/scoped_ptr.hpp>
 namespace tr1 = boost;
-#define shared_dynamic_cast dynamic_pointer_cast
 #endif
