@@ -3,10 +3,10 @@
 #  CVS Info :
 #
 #     $Author: arnaud02 $ 
-#     $Date: 2007/04/19 13:07:43 $ 
-#     $Revision: 1.34 $ 
+#     $Date: 2008/03/22 21:13:38 $ 
+#     $Revision: 1.37 $ 
 #
-#  Copyright (c) 1998-2007 World Wide Web Consortium
+#  Copyright (c) 1998-2008 World Wide Web Consortium
 #  (Massachusetts Institute of Technology, European Research 
 #  Consortium for Informatics and Mathematics, Keio University).
 #  All Rights Reserved.
@@ -91,7 +91,7 @@ DOCDIR = ${TOPDIR}/htmldoc
 # For optimised builds, flags such as "-O2" should be added and -D_DEBUG=1
 # disabled.
 CC= gcc
-CFLAGS= -g -pedantic -Wall -Wno-switch -Wno-parentheses -I $(INCDIR)
+CFLAGS= -g -pedantic -Wall -I $(INCDIR)
 # flags only supported with gcc 3.x
 CFLAGS += -Wunused-parameter
 
