@@ -356,6 +356,7 @@ bool ARBConfig::Update(
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update CalSites. (existing ones are never removed except by an action)
+	// Maintained in sorted order.
 	int nNew = 0;
 	int nUpdated = 0;
 	int nSkipped = 0;
@@ -447,7 +448,7 @@ bool ARBConfig::Update(
 	}
 
 	// Update Venues.
-	// UI maintains a sorted order, so we don't need to worry about list order.
+	// Maintained in sorted order.
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;

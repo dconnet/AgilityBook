@@ -169,6 +169,12 @@ public:
 			ARBErrorCallback& ioCallback);
 
 	/**
+	 * Reorder the list based on 'inList'
+	 * @param inList List we want to match order on.
+	 */
+	void ReorderBy(ARBConfigLevelList const& inList);
+
+	/**
 	 * Verify this is a valid level (not sublevel).
 	 * Used to verify configuration stuff.
 	 * @param inName Name of level to verify.
@@ -187,7 +193,7 @@ public:
 	 */
 	bool FindLevel(
 			tstring const& inName,
-			ARBConfigLevelPtr* outLevel = NULL);
+			ARBConfigLevelPtr* outLevel = NULL) const;
 
 	/**
 	 * Find a level, only looks at leaf nodes.

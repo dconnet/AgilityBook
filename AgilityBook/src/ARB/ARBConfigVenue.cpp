@@ -394,6 +394,7 @@ bool ARBConfigVenue::Update(
 		}
 		else
 		{
+			info += indentBuffer;
 			info += Localization()->UpdateTitlesReordered();
 			info += _T("\n");
 		}
@@ -441,6 +442,7 @@ bool ARBConfigVenue::Update(
 		}
 		else
 		{
+			info += indentBuffer;
 			info += Localization()->UpdateDivisionsReordered();
 			info += _T("\n");
 		}
@@ -488,6 +490,7 @@ bool ARBConfigVenue::Update(
 		}
 		else
 		{
+			info += indentBuffer;
 			info += Localization()->UpdateEventsReordered();
 			info += _T("\n");
 		}
@@ -541,6 +544,7 @@ bool ARBConfigVenue::Update(
 		}
 		else
 		{
+			info += indentBuffer;
 			info += Localization()->UpdateMultiqsReordered();
 			info += _T("\n");
 		}

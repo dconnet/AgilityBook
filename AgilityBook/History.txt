@@ -1,4 +1,4 @@
-4/15/2008: v1.10.6.12 <in development>
+5/8/2008: v1.10.6.12 <in development>
 - Configuration v21:
   - Changed AKC 'standard' division to 'regular'.
 - New features / Enhancements:
@@ -6,6 +6,7 @@
 - Bug fixes:
   - Title points were not computed properly in Time+Fault runs where time
     faults are allowed (DOCNA Challenge).
+  - Reordering Levels and SubLevels in the configuration didn't stick.
 
 2/9/2008: v1.10.5.12
 - Bumped file version to 12.7:

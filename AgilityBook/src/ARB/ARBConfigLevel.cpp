@@ -46,6 +46,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 #include "Element.h"
+#include <algorithm>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -184,10 +185,18 @@ bool ARBConfigLevel::Update(
 				GetSubLevels().AddSubLevel((*iterSub)->GetName());
 			}
 		}
+		GetSubLevels().ReorderBy(inLevelNew->GetSubLevels());
 		if (0 < nAdded)
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateSubLevels(nAdded);
+			info += _T("\n");
+		}
+		// Reordered
+		else
+		{
+			info += indentBuffer;
+			info += Localization()->UpdateSubLevelsReordered();
 			info += _T("\n");
 		}
 	}
@@ -215,6 +224,32 @@ bool ARBConfigLevelList::Load(
 }
 
 
+void ARBConfigLevelList::ReorderBy(ARBConfigLevelList const& inList)
+{
+	if (*this != inList)
+	{
+		ARBConfigLevelList tmp;
+		tmp.reserve(size());
+		for (ARBConfigLevelList::const_iterator i = inList.begin();
+			i != inList.end();
+			++i)
+		{
+			ARBConfigLevelPtr level;
+			if (FindLevel((*i)->GetName(), &level))
+			{
+				tmp.push_back(level);
+				ARBConfigLevelList::iterator iFound = std::find(begin(), end(), level);
+				ASSERT(iFound != end());
+				erase(iFound);
+			}
+		}
+		if (0 < size())
+			tmp.insert(tmp.end(), begin(), end());
+		std::swap(tmp, *this);
+	}
+}
+
+
 bool ARBConfigLevelList::VerifyLevel(
 		tstring const& inName,
 		bool inAllowWildCard) const
@@ -233,7 +268,7 @@ bool ARBConfigLevelList::VerifyLevel(
 
 bool ARBConfigLevelList::FindLevel(
 		tstring const& inName,
-		ARBConfigLevelPtr* outLevel)
+		ARBConfigLevelPtr* outLevel) const
 {
 	if (outLevel)
 		outLevel->reset();

@@ -309,6 +309,18 @@ tstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped) cons
 }
 
 
+tstring CLocalization::UpdateLevelsReordered() const
+{
+	otstringstream buffer;
+	CString data;
+	data.LoadString(IDS_COL_LEVELS);
+	buffer << (LPCTSTR)data << _T(": ");
+	data.LoadString(IDS_REORDERED);
+	buffer << (LPCTSTR)data;
+	return buffer.str();
+}
+
+
 tstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
@@ -342,6 +354,18 @@ tstring CLocalization::UpdateSubLevels(int nAdded) const
 	otstringstream buffer;
 	CString data;
 	data.FormatMessage(IDS_UPDATE_NEWSUBLEVELS, nAdded);
+	buffer << (LPCTSTR)data;
+	return buffer.str();
+}
+
+
+tstring CLocalization::UpdateSubLevelsReordered() const
+{
+	otstringstream buffer;
+	CString data;
+	data.LoadString(IDS_COL_LEVELS);
+	buffer << (LPCTSTR)data << _T(": ");
+	data.LoadString(IDS_REORDERED);
 	buffer << (LPCTSTR)data;
 	return buffer.str();
 }
