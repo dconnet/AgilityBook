@@ -98,9 +98,11 @@ public:
 	virtual tstring UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const = 0;
 	virtual tstring UpdateMultiqsReordered() const = 0;
 	virtual tstring UpdateLevels(int nAdded, int nUpdated, int nSkipped) const = 0;
+	virtual tstring UpdateLevelsReordered() const = 0;
 	virtual tstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const = 0;
 	virtual tstring UpdateTitlesReordered() const = 0;
 	virtual tstring UpdateSubLevels(int nAdded) const = 0;
+	virtual tstring UpdateSubLevelsReordered() const = 0;
 	virtual tstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const = 0;
 	virtual tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const = 0;
 	virtual tstring UpdateTableRuns(int nRuns) const = 0;

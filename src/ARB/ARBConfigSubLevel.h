@@ -142,11 +142,19 @@ public:
 			ARBErrorCallback& ioCallback);
 
 	/**
+	 * Reorder the list based on 'inList'
+	 * @param inList List we want to match order on.
+	 */
+	void ReorderBy(ARBConfigSubLevelList const& inList);
+
+	/**
 	 * Find a sublevel.
 	 * @param inName Name of sublevel to find.
 	 * @return Whether name exists.
 	 */
-	bool FindSubLevel(tstring const& inName) const;
+	bool FindSubLevel(
+			tstring const& inName,
+			ARBConfigSubLevelPtr* outLevel = NULL) const;
 
 	/**
 	 * Find a sublevel.

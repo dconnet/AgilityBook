@@ -43,6 +43,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 #include "Element.h"
+#include <algorithm>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -138,12 +139,44 @@ bool ARBConfigSubLevelList::Load(
 }
 
 
-bool ARBConfigSubLevelList::FindSubLevel(tstring const& inName) const
+void ARBConfigSubLevelList::ReorderBy(ARBConfigSubLevelList const& inList)
+{
+	if (*this != inList)
+	{
+		ARBConfigSubLevelList tmp;
+		tmp.reserve(size());
+		for (ARBConfigSubLevelList::const_iterator i = inList.begin();
+			i != inList.end();
+			++i)
+		{
+			ARBConfigSubLevelPtr level;
+			if (FindSubLevel((*i)->GetName(), &level))
+			{
+				tmp.push_back(level);
+				ARBConfigSubLevelList::iterator iFound = std::find(begin(), end(), level);
+				ASSERT(iFound != end());
+				erase(iFound);
+			}
+		}
+		if (0 < size())
+			tmp.insert(tmp.end(), begin(), end());
+		std::swap(tmp, *this);
+	}
+}
+
+
+bool ARBConfigSubLevelList::FindSubLevel(
+		tstring const& inName,
+		ARBConfigSubLevelPtr* outLevel) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == inName)
+		{
+			if (outLevel)
+				*outLevel = *iter;
 			return true;
+		}
 	}
 	return false;
 }

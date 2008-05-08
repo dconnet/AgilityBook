@@ -88,9 +88,11 @@ public:
 	tstring UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const;
 	tstring UpdateMultiqsReordered() const;
 	tstring UpdateLevels(int nAdded, int nUpdated, int nSkipped) const;
+	tstring UpdateLevelsReordered() const;
 	tstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const;
 	tstring UpdateTitlesReordered() const;
 	tstring UpdateSubLevels(int nAdded) const;
+	tstring UpdateSubLevelsReordered() const;
 	tstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
 	tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const;
 	tstring UpdateTableRuns(int nRuns) const;

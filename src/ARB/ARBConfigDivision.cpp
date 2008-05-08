@@ -211,6 +211,7 @@ bool ARBConfigDivision::Update(
 				info2 += _T("\n");
 			}
 		}
+		GetLevels().ReorderBy(inDivNew->GetLevels());
 		// ... so only generate a message if we added or changed.
 		if (0 < nAdded || 0 < nChanged)
 		{
@@ -218,6 +219,13 @@ bool ARBConfigDivision::Update(
 			info += Localization()->UpdateLevels(nAdded, nChanged, nSkipped);
 			info += _T("\n");
 			info += info2;
+		}
+		// Reordered
+		else
+		{
+			info += indentBuffer;
+			info += Localization()->UpdateLevelsReordered();
+			info += _T("\n");
 		}
 	}
 
