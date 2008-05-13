@@ -1568,7 +1568,7 @@ void CPointsDataItems::LoadData(
 						}
 						//TODO: Add ability to accumulate existing placement points
 						// Now we deal with the visible runs.
-						if (0 < allmatching.size())
+						if (0 < points || 0 < allmatching.size())
 						{
 							CString strRunCount;
 							strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
