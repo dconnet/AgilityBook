@@ -150,6 +150,7 @@ public:
 	/**
 	 * Find a sublevel.
 	 * @param inName Name of sublevel to find.
+	 * @param outLevel Pointer to object, NULL if not found.
 	 * @return Whether name exists.
 	 */
 	bool FindSubLevel(
