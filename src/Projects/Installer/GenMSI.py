@@ -354,6 +354,9 @@ def main():
 	doWiX = 1
 	doInno = 0
 	bTesting = 0
+	if 1 == len(sys.argv):
+		b32 = 1
+		bTesting = 1
 	for i in range(1, len(sys.argv)):
 		o = sys.argv[i]
 		if o == "/32":
