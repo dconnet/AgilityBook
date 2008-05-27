@@ -7,6 +7,8 @@ Additional software packages required (all free):
 - Windows Installer XML toolset (or Inno Setup)
 - Xerces-C (included in src tree)
 - zlib (included in src tree)
+- Doxygen (optional)
+- GraphViz (optional)
 
 Once the above software is unpacked, the directory structure should look like:
   - AgilityBook/
@@ -106,6 +108,18 @@ This used to be an external package, but has now been moved into ARBs
 codeline as of v1.9.2.12.
 I'm currently using v1.2.3.
 The zlib source package has been pruned to just what is required.
+
+--------------------
+
+Doxygen: http://www.stack.nl/~dimitri/doxygen
+Used to create source code documentation. AgilityBook.dox uses v1.5.6.
+[Install to default location]
+
+--------------------
+
+GraphViz: http://www.graphviz.org
+Used to create source code documentation. AgilityBook.dox uses v2.18.
+[Install to default location]
 
 
 Compiler notes
