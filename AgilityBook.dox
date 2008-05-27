@@ -141,10 +141,10 @@ CHM_INDEX_ENCODING     =
 BINARY_TOC             = NO
 TOC_EXPAND             = NO
 DISABLE_INDEX          = NO
-ENUM_VALUES_PER_LINE   = 4
+ENUM_VALUES_PER_LINE   = 1
 GENERATE_TREEVIEW      = NO
 TREEVIEW_WIDTH         = 250
-FORMULA_FONTSIZE       = 10
+FORMULA_FONTSIZE       = 8
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
@@ -236,12 +236,12 @@ CALLER_GRAPH           = NO
 GRAPHICAL_HIERARCHY    = YES
 DIRECTORY_GRAPH        = YES
 DOT_IMAGE_FORMAT       = gif
-DOT_PATH               = "c:/Program Files/Graphviz/bin/"
+DOT_PATH               = "c:/Program Files/ATT/Graphviz/bin/"
 DOTFILE_DIRS           = 
 DOT_GRAPH_MAX_NODES    = 50
 MAX_DOT_GRAPH_DEPTH    = 1000
 DOT_TRANSPARENT        = NO
-DOT_MULTI_TARGETS      = NO
+DOT_MULTI_TARGETS      = YES
 GENERATE_LEGEND        = YES
 DOT_CLEANUP            = YES
 #---------------------------------------------------------------------------

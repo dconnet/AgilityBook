@@ -118,7 +118,8 @@ Used to create source code documentation. AgilityBook.dox uses v1.5.6.
 --------------------
 
 GraphViz: http://www.graphviz.org
-Used to create source code documentation. AgilityBook.dox uses v2.18.
+Used to create source code documentation. AgilityBook.dox uses v2.14.1.
+Newer versions just don't seem to work right.
 [Install to default location]
 
 
