@@ -211,6 +211,15 @@ tstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped) cons
 }
 
 
+tstring CLocalization::UpdateLevelsReordered() const
+{
+	otstringstream buffer;
+	buffer << _T("Levels: ");
+	buffer << _T("Reordered");
+	return buffer.str();
+}
+
+
 tstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
@@ -235,6 +244,15 @@ tstring CLocalization::UpdateSubLevels(int nAdded) const
 {
 	otstringstream buffer;
 	buffer << nAdded << _T(" new sub-levels");
+	return buffer.str();
+}
+
+
+tstring CLocalization::UpdateSubLevelsReordered() const
+{
+	otstringstream buffer;
+	buffer << _T("Levels: ");
+	buffer << _T("Reordered");
 	return buffer.str();
 }
 
