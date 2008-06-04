@@ -395,7 +395,8 @@ def main():
 	# Wix
 	if doWiX:
 		productId = genuuid()
-		version, version2 = getversion(3)
+		version, junk = getversion(3)
+		junk, version2 = getversion(4)
 		os.environ['PATH'] += ';' + WiXdir
 		if b32:
 			if genWiX(productId, version, version2, code32, tidy):
