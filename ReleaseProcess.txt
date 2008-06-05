@@ -30,6 +30,7 @@ Do a full rebuild and verify it.
   'cd ...\src; BuildHelp.py Release VC9Win32']
 - Run 'GenMSI.py /all' to create w32/x64/w98 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
+  - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
 Tag SubVersion repository
@@ -40,9 +41,6 @@ Create the files to be distributed (make sure you archive them too)
 - Copy a backup of AgilityBook.exe to \AgilityBook\test\[vc6/vc7/vc8/vc9/vc9x64]
   Currently, I only archive vc8/vc9/x64 - the exe's that are released to the wild.
   [if support DLLs change, see readme.txt in 'test' directory]
-- Copy AgilityBook_n_n_n_n-*.zip (setup files) to distrib\vN.N.N.N\
-- Create AgilityBook_n_n_n_n-ALT.zip (VC8 AgilityBook.exe/.chm/arbzlib.dll)
-  Copy this to distrib\vN.N.N.N\
 - Clean out all build artifacts.
   - Everything under bin/...
   - Output files in Project/...
@@ -58,6 +56,7 @@ In SourceForge, enter the File Releases section in Admin.
 - Enter all necessary information.
 - ftp to upload.sourceforge.net, cd incoming. Set binary mode.
 - Upload all files.
+- UPDATE: ftp'ing no longer works, use web upload (link on SF page)
   - Readme1st.vn.n.n.n.txt
   - AgilityBook_n_n_n_n-src.zip
   - AgilityBook_n_n_n_n-win.zip
