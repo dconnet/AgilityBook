@@ -54,7 +54,7 @@
 
 #define VER_MAJOR						1
 #define VER_MINOR						10
-#define VER_DOT							6
+#define VER_DOT							7
 #define VER_FILEVER						12
 
 #define VER_STR_MAJOR					STR(VER_MAJOR)
