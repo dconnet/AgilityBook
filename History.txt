@@ -1,3 +1,8 @@
+6/11/2008: v1.10.7.12
+- Bug fixes:
+  - Title points were not computed properly in T+F runs when no SCT was
+    specified. This snuck in with the T+F fix in the last release.
+
 6/4/2008: v1.10.6.12
 - Configuration v21:
   - Changed AKC 'standard' division to 'regular'.

@@ -33,14 +33,15 @@ Do a full rebuild and verify it.
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
+Commit all changes to SVN.
+
 Tag SubVersion repository
  - https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/tags/vn.n.n.n
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup of AgilityBook.exe to \AgilityBook\test\[vc6/vc7/vc8/vc9/vc9x64]
+- Copy a backup of released files to \AgilityBook\test\[vc6/vc7/vc8/vc9/vc9x64]
   Currently, I only archive vc8/vc9/x64 - the exe's that are released to the wild.
-  [if support DLLs change, see readme.txt in 'test' directory]
 - Clean out all build artifacts.
   - Everything under bin/...
   - Output files in Project/...
@@ -94,21 +95,5 @@ Backup:
 
 Prepare for next release:
 - Update src/Win/AgilityBook.rc: VERSIONINFO
+  - This is done by editing .../include/VersionNumber.h
 - Update History.txt
-[Note: Once WiX is working, this section goes away]
-- Update src/Projects/Win32/VC8/AgilityBookSetup.vdproj
-  - Open in VS8, select the setup project on the solutions tab, switch
-    to the properties tab and update 'Version'. Say Yes to changing the
-    ProductCode/etc GUIDs. (Note, if you decide to change the version
-    number later, do not change the ProductCode again)
-  - Update src/Projects/Win32/VC8/AgilityBookSetup98/64.vdproj
-    - Manually copy the GUIDs from AgilityBookSetup.vdproj
-  [Note: need to verify, but I don't think this is a problem anymore since
-  runtime is statically linked, and setup projects are separated]
-  - Note: Often VERSION.DLL gets unmarked for exclusion - to prevent, do the
-    following after changing the version:
-    - Rebuild everything (will show version.dll as excluded).
-    - Save all changes and exit the program.
-    - Start program again and open project (now shown as included).
-    - Mark as excluded.
-    Things should remain okay now.
