@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-06-11 DRC Still not right - runs with 0 SCT should allow title pts.
  * @li 2008-03-03 DRC Title point computation on T+F runs was wrong.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
@@ -585,11 +586,17 @@ double ARBDogRun::GetTitlePoints(
 			{
 				if (!(inScoring && inScoring->QsMustBeClean() && score > 0.0))
 				{
-					score += m_Scoring.GetTime();
-					// Adjust the 'score' to the number of "faults" (total over SCT)
-					score -= m_Scoring.GetSCT();
-					if (0.0 > score)
-						score = 0.0;
+					// If SCT is 0, don't compute anything.
+					if (0.0 < m_Scoring.GetSCT())
+					{
+						score += m_Scoring.GetTime();
+						// Adjust the 'score' to the number of "faults" (total over SCT)
+						// This allows DOCNA's Challenge to work - it's T+F with 12 time faults allowed
+						score -= m_Scoring.GetSCT();
+						// If negative, run was faster than SCT
+						if (0.0 > score)
+							score = 0.0;
+					}
 					pts = inScoring->GetTitlePoints().GetTitlePoints(score) + bonusPts;
 					if (outLifeTime)
 						*outLifeTime = inScoring->GetLifetimePoints().GetLifetimePoints(score) + bonusPts;
