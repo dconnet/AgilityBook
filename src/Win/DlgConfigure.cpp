@@ -109,7 +109,7 @@ CDlgConfigure::CDlgConfigure(
 	, m_hItemFaults(NULL)
 	, m_hItemOtherPts(NULL)
 {
-	ASSERT(m_pDoc);
+	assert(m_pDoc);
 	//{{AFX_DATA_INIT(CDlgConfigure)
 	//}}AFX_DATA_INIT
 }

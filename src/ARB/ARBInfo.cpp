@@ -42,10 +42,8 @@
 #include "ARBAgilityRecordBook.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -108,7 +106,7 @@ bool ARBInfo::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_INFO)
 		return false;
 	for (int i = 0; i < inTree->GetElementCount(); ++i)
@@ -139,7 +137,7 @@ bool ARBInfo::Load(
 
 bool ARBInfo::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr info = ioTree->AddElementNode(TREE_INFO);

@@ -141,7 +141,7 @@ static bool EditTrial(
 		CAgilityBookTree* pTree,
 		bool* bTreeSelectionSet)
 {
-	ASSERT(pDogData && pDogData->GetDog());
+	assert(pDogData && pDogData->GetDog());
 	bool bAdd = false;
 	ARBDogTrialPtr pTrial;
 	if (pTrialData)
@@ -213,8 +213,8 @@ static bool EditRun(
 		CAgilityBookTree* pTree,
 		bool* bTreeSelectionSet)
 {
-	ASSERT(pDogData && pDogData->GetDog());
-	ASSERT(pTrialData && pTrialData->GetTrial());
+	assert(pDogData && pDogData->GetDog());
+	assert(pTrialData && pTrialData->GetTrial());
 	bool bAdd = false;
 	ARBDogRunPtr pRun;
 	if (pRunData)
@@ -362,7 +362,7 @@ static bool AddTitle(
 		CAgilityBookTreeDataDog* pDogData,
 		CAgilityBookTree* pTree)
 {
-	ASSERT(pDogData && pDogData->GetDog());
+	assert(pDogData && pDogData->GetDog());
 	CDlgTitle dlg(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog()->GetTitles(), ARBDogTitlePtr(), pTree);
 	if (IDOK == dlg.DoModal())
 	{
@@ -830,7 +830,7 @@ CAgilityBookTreeDataTrial::~CAgilityBookTreeDataTrial()
 ARBDogPtr CAgilityBookTreeDataTrial::GetDog() const
 {
 	CAgilityBookTreeDataDog const* pDog = GetDataDog();
-	ASSERT(pDog);
+	assert(pDog);
 	return pDog->GetDog();
 }
 
@@ -838,7 +838,7 @@ ARBDogPtr CAgilityBookTreeDataTrial::GetDog() const
 ARBDogPtr CAgilityBookTreeDataTrial::GetDog()
 {
 	CAgilityBookTreeDataDog* pDog = GetDataDog();
-	ASSERT(pDog);
+	assert(pDog);
 	return pDog->GetDog();
 }
 
@@ -850,7 +850,7 @@ CAgilityBookTreeDataDog const* CAgilityBookTreeDataTrial::GetDataDog() const
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
 	CAgilityBookTreeData const* pData = reinterpret_cast<CAgilityBookTreeData const*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
 	CAgilityBookTreeDataDog const* pDog = dynamic_cast<CAgilityBookTreeDataDog const*>(pData);
-	ASSERT(pDog);
+	assert(pDog);
 	return pDog;
 }
 
@@ -862,7 +862,7 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
 	CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
 	CAgilityBookTreeDataDog* pDog = dynamic_cast<CAgilityBookTreeDataDog*>(pData);
-	ASSERT(pDog);
+	assert(pDog);
 	return pDog;
 }
 
@@ -1143,7 +1143,7 @@ CAgilityBookTreeDataRun::~CAgilityBookTreeDataRun()
 ARBDogPtr CAgilityBookTreeDataRun::GetDog() const
 {
 	CAgilityBookTreeDataDog const* pDog = GetDataDog();
-	ASSERT(pDog);
+	assert(pDog);
 	return pDog->GetDog();
 }
 
@@ -1151,7 +1151,7 @@ ARBDogPtr CAgilityBookTreeDataRun::GetDog() const
 ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial() const
 {
 	CAgilityBookTreeDataTrial const* pTrial = GetDataTrial();
-	ASSERT(pTrial);
+	assert(pTrial);
 	return pTrial->GetTrial();
 }
 
@@ -1159,7 +1159,7 @@ ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial() const
 ARBDogPtr CAgilityBookTreeDataRun::GetDog()
 {
 	CAgilityBookTreeDataDog* pDog = GetDataDog();
-	ASSERT(pDog);
+	assert(pDog);
 	return pDog->GetDog();
 }
 
@@ -1167,7 +1167,7 @@ ARBDogPtr CAgilityBookTreeDataRun::GetDog()
 ARBDogTrialPtr CAgilityBookTreeDataRun::GetTrial()
 {
 	CAgilityBookTreeDataTrial* pTrial = GetDataTrial();
-	ASSERT(pTrial);
+	assert(pTrial);
 	return pTrial->GetTrial();
 }
 
@@ -1179,7 +1179,7 @@ CAgilityBookTreeDataDog const* CAgilityBookTreeDataRun::GetDataDog() const
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
 	CAgilityBookTreeData const* pData = reinterpret_cast<CAgilityBookTreeData const*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
 	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
-	ASSERT(pTrial);
+	assert(pTrial);
 	return pTrial->GetDataDog();
 }
 
@@ -1191,7 +1191,7 @@ CAgilityBookTreeDataTrial const* CAgilityBookTreeDataRun::GetDataTrial() const
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
 	CAgilityBookTreeData const* pData = reinterpret_cast<CAgilityBookTreeData const*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
 	CAgilityBookTreeDataTrial const* pTrial = dynamic_cast<CAgilityBookTreeDataTrial const*>(pData);
-	ASSERT(pTrial);
+	assert(pTrial);
 	return pTrial;
 }
 
@@ -1203,7 +1203,7 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataRun::GetDataDog()
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
 	CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
 	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
-	ASSERT(pTrial);
+	assert(pTrial);
 	return pTrial->GetDataDog();
 }
 
@@ -1215,7 +1215,7 @@ CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 	HTREEITEM hParent = m_pTree->GetTreeCtrl().GetParentItem(m_hItem);
 	CAgilityBookTreeData* pData = reinterpret_cast<CAgilityBookTreeData*>(m_pTree->GetTreeCtrl().GetItemData(hParent));
 	CAgilityBookTreeDataTrial* pTrial = dynamic_cast<CAgilityBookTreeDataTrial*>(pData);
-	ASSERT(pTrial);
+	assert(pTrial);
 	return pTrial;
 }
 

@@ -97,10 +97,8 @@
 #include "ARBTypes.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -147,7 +145,7 @@ bool ARBAgilityRecordBook::Load(
 	// Get the records ready.
 	clear();
 
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_BOOK)
 		return false;
 
@@ -291,7 +289,7 @@ bool ARBAgilityRecordBook::Load(
 
 static tstring GetTimeStamp()
 {
-#if defined(_WINDOWS) || defined(_CONSOLE)
+#if defined(_MFC_VER)
 	CString s = CTime::GetCurrentTime().Format("%Y-%m-%d %H:%M:%S");
 	return tstring((LPCTSTR)s);
 #else
@@ -311,7 +309,7 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 		bool inInfo,
 		bool inDogs) const
 {
-	ASSERT(outTree);
+	assert(outTree);
 	if (!outTree)
 		return false;
 	outTree->clear();

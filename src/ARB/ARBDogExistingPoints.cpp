@@ -47,10 +47,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -179,7 +177,7 @@ bool ARBDogExistingPoints::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_EXISTING_PTS)
 		return false;
 
@@ -403,7 +401,7 @@ bool ARBDogExistingPoints::Load(
 
 bool ARBDogExistingPoints::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr title = ioTree->AddElementNode(TREE_EXISTING_PTS);
@@ -411,7 +409,7 @@ bool ARBDogExistingPoints::Save(ElementNodePtr ioTree) const
 	switch (m_Type)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		break;
 	case eOtherPoints:
 		title->AddAttrib(ATTRIB_EXISTING_PTS_TYPE, EXISTING_PTS_TYPE_OTHER);

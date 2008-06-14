@@ -46,10 +46,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 #ifdef UNICODE
@@ -60,18 +58,33 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
+std::string Convert(std::wstring const& str)
+{
+	CStringA convert(str.c_str());
+	return (LPCSTR)convert;
+}
+
+
+std::wstring Convert(std::string const& str)
+{
+	CStringW convert(str.c_str());
+	return (LPCWSTR)convert;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine)
 {
-#ifndef _WINDOWS
-	if (bIncNewLine)
-		TCERR << inMsg << std::endl;
-	else
-		TCERR << inMsg;
-#else
+#if defined(_MFC_VER)
 	if (bIncNewLine)
 		TRACE(_T("%s\n"), inMsg.c_str());
 	else
 		TRACE(_T("%s"), inMsg.c_str());
+#else
+	if (bIncNewLine)
+		TCERR << inMsg << std::endl;
+	else
+		TCERR << inMsg;
 #endif
 }
 
@@ -229,7 +242,7 @@ bool ARB_Q::Save(
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
-	ASSERT(inAttribName != NULL);
+	assert(inAttribName != NULL);
 	bool bOk = false;
 	tstring q(_T("NA"));
 	for (int i = 0; i < sc_nQs; ++i)

@@ -78,7 +78,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	, m_Config(config)
 	, m_pOther(pOther)
 {
-	ASSERT(m_pOther);
+	assert(m_pOther);
 	m_Desc.Replace(_T("\n"), _T("\r\n"));
 	//{{AFX_DATA_INIT(CDlgConfigOtherPoints)
 	//}}AFX_DATA_INIT

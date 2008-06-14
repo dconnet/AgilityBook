@@ -50,10 +50,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1234,7 +1232,7 @@ bool ARBConfigActionList::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_ACTION)
 		return false;
 	tstring verb;

@@ -42,10 +42,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -120,7 +118,7 @@ bool ARBConfigCalSite::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CALSITE)
 		return false;
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_CALSITE_NAME, m_Name))
@@ -180,7 +178,7 @@ bool ARBConfigCalSite::Load(
 
 bool ARBConfigCalSite::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr calsite = ioTree->AddElementNode(TREE_CALSITE);

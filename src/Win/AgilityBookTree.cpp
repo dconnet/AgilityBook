@@ -367,9 +367,9 @@ void CAgilityBookTree::OnUpdate(
 		// It was reinterpretted on the sending side in the same manner.
 		// Definite abuse of this parameter.
 		ARBDogTrialPtr pTrial(*reinterpret_cast<ARBDogTrialPtr*>(pHint));
-		ASSERT(pTrial);
+		assert(pTrial);
 		CAgilityBookTreeData* pData = FindData(TVI_ROOT, pTrial);
-		ASSERT(pData);
+		assert(pData);
 		GetTreeCtrl().Select(pData->GetHTreeItem(), TVGN_CARET);
 		GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
 	}
@@ -549,7 +549,7 @@ void CAgilityBookTree::Dump(CDumpContext& dc) const
 
 CAgilityBookDoc* CAgilityBookTree::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
+	assert(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
 	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
@@ -964,7 +964,7 @@ void CAgilityBookTree::OnContextMenu(
 		CMenu menu;
 		menu.LoadMenu(idMenu);
 		CMenu* pMenu = menu.GetSubMenu(0);
-		ASSERT(pMenu != NULL);
+		assert(pMenu != NULL);
 		UINT id = pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD, point.x, point.y, AfxGetMainWnd());
 		// By processing the menu id ourselves, we can control the selection
 		// item. Otherwise, the menu id gets posted and arrives back to the

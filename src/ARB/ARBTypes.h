@@ -113,6 +113,13 @@ typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > otstream;
 typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > oftstream;
 
 /**
+ * Convert between ansi/unicode
+ */
+std::string Convert(std::wstring const& str);
+std::wstring Convert(std::string const& str);
+
+
+/**
  * Dump a string to cerr or TRACE
  * @param inMsg String to dump
  * @param bIncNewLine Add a newline

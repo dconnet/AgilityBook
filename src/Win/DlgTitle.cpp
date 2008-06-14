@@ -140,7 +140,7 @@ void CDlgTitle::FillTitles()
 	{
 		ARBDate date = GetDate();
 		ARBConfigVenuePtr pVenue = GetVenueData(index);
-		ASSERT(pVenue);
+		assert(pVenue);
 		for (ARBConfigTitleList::const_iterator iterTitle = pVenue->GetTitles().begin();
 			iterTitle != pVenue->GetTitles().end();
 			++iterTitle)
@@ -274,7 +274,7 @@ void CDlgTitle::OnOK()
 		return;
 	}
 	ARBConfigVenuePtr pVenue = GetVenueData(index);
-	ASSERT(pVenue);
+	assert(pVenue);
 
 	index = m_ctrlTitles.GetCurSel();
 	if (CB_ERR == index)
@@ -283,7 +283,7 @@ void CDlgTitle::OnOK()
 		return;
 	}
 	ARBConfigTitlePtr pTitle = GetTitleData(index);
-	ASSERT(pTitle);
+	assert(pTitle);
 
 	CString name;
 	m_ctrlTitles.GetLBText(index, name);

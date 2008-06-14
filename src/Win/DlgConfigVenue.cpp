@@ -88,8 +88,8 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_pVenue(pVenue->Clone())
 	, m_Action(eNone)
 {
-	ASSERT(m_pVenueOrig);
-	ASSERT(m_pVenue);
+	assert(m_pVenueOrig);
+	assert(m_pVenue);
 	//{{AFX_DATA_INIT(CDlgConfigVenue)
 	//}}AFX_DATA_INIT
 }
@@ -1096,7 +1096,7 @@ void CDlgConfigVenue::OnDelete()
 			if (0 <= (index = m_ctrlDivisions.GetSelection()))
 			{
 				CDlgConfigureDataDivision* pDivData = dynamic_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetData(index));
-				ASSERT(NULL != pDivData);
+				assert(NULL != pDivData);
 				tstring div = pDivData->GetDivision()->GetName();
 				// If we were able to delete it...
 				if (m_pVenue->GetDivisions().DeleteDivision(div, m_pVenue->GetEvents()))
@@ -1158,7 +1158,7 @@ void CDlgConfigVenue::OnDelete()
 			if (0 <= (index = m_ctrlTitles.GetSelection()))
 			{
 				CDlgConfigureDataTitle* pTitleData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-				ASSERT(NULL != pTitleData);
+				assert(NULL != pTitleData);
 				tstring title = pTitleData->GetTitle()->GetName();
 				if (m_pVenue->GetTitles().DeleteTitle(title))
 				{
@@ -1175,7 +1175,7 @@ void CDlgConfigVenue::OnDelete()
 			if (0 <= (index = m_ctrlEvents.GetSelection()))
 			{
 				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
-				ASSERT(NULL != pEventData);
+				assert(NULL != pEventData);
 				tstring evt = pEventData->GetEvent()->GetName();
 				if (m_pVenue->GetEvents().DeleteEvent(evt))
 				{
@@ -1193,7 +1193,7 @@ void CDlgConfigVenue::OnDelete()
 			if (0 <= (index = m_ctrlMultiQ.GetSelection()))
 			{
 				CDlgConfigureDataMultiQ* pData = dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
-				ASSERT(NULL != pData);
+				assert(NULL != pData);
 				tstring multiQ = pData->GetMultiQ()->GetName();
 				if (m_pVenue->GetMultiQs().DeleteMultiQ(pData->GetMultiQ()))
 				{

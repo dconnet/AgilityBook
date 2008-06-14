@@ -82,10 +82,10 @@ CDlgRun::CDlgRun(
 
 	ARBDogClubPtr pClub;
 	pTrial->GetClubs().GetPrimaryClub(&pClub);
-	ASSERT(NULL != pClub.get());
+	assert(NULL != pClub.get());
 	ARBConfigVenuePtr pVenue;
 	pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-	ASSERT(NULL != pVenue.get());
+	assert(NULL != pVenue.get());
 
 	m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);
 	m_pageComments = new CDlgRunComments(pDoc, m_Run);
@@ -128,13 +128,13 @@ void CDlgRun::OnOK()
 		{
 			ARBDogClubPtr pClub;
 			m_pTrial->GetClubs().GetPrimaryClub(&pClub);
-			ASSERT(NULL != pClub.get());
+			assert(NULL != pClub.get());
 			ARBConfigVenuePtr pVenue;
 			m_pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-			ASSERT(NULL != pVenue.get());
+			assert(NULL != pVenue.get());
 			ARBConfigEventPtr pEvent;
 			pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
-			ASSERT(NULL != pEvent.get());
+			assert(NULL != pEvent.get());
 			if (!pEvent->HasTable())
 				if (m_Run->GetScoring().HasTable())
 					AfxMessageBox(_T("Poof!"));

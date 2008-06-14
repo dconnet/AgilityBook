@@ -161,7 +161,7 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 	m_ctrlCalView.SetFont(&m_fontCalView);
 
 	int idx;
-	ASSERT(ARBDate::eSunday == 0);
+	assert(ARBDate::eSunday == 0);
 	LCTYPE days[] = {
 		LOCALE_SDAYNAME7, // Start with sunday
 		LOCALE_SDAYNAME1,

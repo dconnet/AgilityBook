@@ -231,7 +231,7 @@ void CDlgExistingPoints::GetEnableLists(
 		switch (type)
 		{
 		default:
-			ASSERT(0);
+			assert(0);
 			break;
 
 		case ARBDogExistingPoints::eOtherPoints:

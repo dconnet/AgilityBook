@@ -40,10 +40,8 @@
 #include "stdafx.h"
 #include "ARBLocalization.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -58,6 +56,6 @@ void IARBLocalization::Init(IARBLocalization const* pLocalization)
 
 IARBLocalization const* Localization()
 {
-	ASSERT(NULL != s_Localization);
+	assert(NULL != s_Localization);
 	return s_Localization;
 }

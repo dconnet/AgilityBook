@@ -57,10 +57,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -203,7 +201,7 @@ bool ARBDog::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_DOG)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DOG_CALLNAME, m_CallName)
@@ -281,7 +279,7 @@ bool ARBDog::Load(
 
 bool ARBDog::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr dog = ioTree->AddElementNode(TREE_DOG);

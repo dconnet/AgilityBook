@@ -147,8 +147,8 @@ BOOL CPrintRuns::DoPreparePrinting(CPrintInfo* pInfo)
 	pInfo->m_pPD->m_pd.nToPage = (WORD)pInfo->GetMaxPage();
 	if (theApp.DoPrintDialog(pInfo->m_pPD) != IDOK)
 		return FALSE;
-	ASSERT(pInfo->m_pPD != NULL);
-	ASSERT(pInfo->m_pPD->m_pd.hDC != NULL);
+	assert(pInfo->m_pPD != NULL);
+	assert(pInfo->m_pPD->m_pd.hDC != NULL);
 	if (pInfo->m_pPD->m_pd.hDC == NULL)
 		return FALSE;
 	pInfo->m_nNumPreviewPages = theApp.m_nNumPreviewPages;
@@ -883,11 +883,11 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 
 	CPrintInfo printInfo;
 	printInfo.m_rectDraw.SetRectEmpty();
-	ASSERT(printInfo.m_pPD != NULL);    // must be set
+	assert(printInfo.m_pPD != NULL);    // must be set
 	if (!runs.OnPreparePrinting(&printInfo))
 		return false;
 	// hDC must be set (did you remember to call DoPreparePrinting?)
-	ASSERT(printInfo.m_pPD->m_pd.hDC != NULL);
+	assert(printInfo.m_pPD->m_pd.hDC != NULL);
 
 	CString strTitle;
 	strTitle.LoadString(IDS_RUNS);
@@ -908,7 +908,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 	dcPrint.SetAbortProc(AbortProc);
 
 	CWnd* hwndTemp = AfxGetMainWnd();
-	ASSERT(hwndTemp);
+	assert(hwndTemp);
 	hwndTemp->EnableWindow(FALSE);
 	CPrintingDialog2 dlgPrintStatus(AfxGetMainWnd());
 
@@ -992,7 +992,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 		// StartPage now resets the device attributes.
 		runs.OnPrepareDC(&dcPrint, &printInfo);
 
-		ASSERT(printInfo.m_bContinuePrinting);
+		assert(printInfo.m_bContinuePrinting);
 
 		// page successfully started, so now render the page
 		runs.OnPrint(&dcPrint, &printInfo);

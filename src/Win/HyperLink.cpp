@@ -263,7 +263,7 @@ void CHyperLink::PreSubclassWindow()
 	GetWindowText(strWndText);
 	if (strWndText.IsEmpty())
 	{
-		//ASSERT(!m_strURL.IsEmpty());	// Window and URL both NULL. DUH!
+		//assert(!m_strURL.IsEmpty());	// Window and URL both NULL. DUH!
 		// This should be ok - I may be setting the text in the initdialog.
 		// This means the control will run the presubclass code before I
 		// have a chance to do my thing...
@@ -280,10 +280,10 @@ void CHyperLink::PreSubclassWindow()
 		if (hFont)
 			pFont = CFont::FromHandle(hFont);
 	}
-	ASSERT(pFont);
+	assert(pFont);
 	if (pFont)
 	{
-		ASSERT(pFont->GetSafeHandle());
+		assert(pFont->GetSafeHandle());
 
 		// Create the underline font
 		LOGFONT lf;
@@ -336,7 +336,7 @@ HBRUSH CHyperLink::CtlColor(
 		UINT nCtlColor)
 {
 	UNUSED(nCtlColor);
-	ASSERT(nCtlColor == CTLCOLOR_STATIC);
+	assert(nCtlColor == CTLCOLOR_STATIC);
 	if (m_bOverControl)
 		pDC->SetTextColor(m_crHoverColor);
 	else if (m_bVisited)
@@ -517,7 +517,7 @@ void CHyperLink::SetAutoSize(bool bAutoSize)
 void CHyperLink::DrawFocusRect()
 {
 	CWnd* pParent = GetParent();
-	ASSERT(pParent);
+	assert(pParent);
 	CRect r;
 	GetWindowRect(&r);
 	r.InflateRect(1, 1);

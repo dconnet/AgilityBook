@@ -215,7 +215,7 @@ void CCheckTreeCtrl::SendDispInfo(HTREEITEM hItem)
 void CCheckTreeCtrl::PreSubclassWindow() 
 {
 	CTreeCtrl::PreSubclassWindow();
-	ASSERT(!(GetStyle() & TVS_CHECKBOXES));
+	assert(!(GetStyle() & TVS_CHECKBOXES));
 	SetImageList(&m_stateList, TVSIL_STATE);
 }
 
@@ -224,7 +224,7 @@ int CCheckTreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CTreeCtrl::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	ASSERT(!(GetStyle() & TVS_CHECKBOXES));
+	assert(!(GetStyle() & TVS_CHECKBOXES));
 	SetImageList(&m_stateList, TVSIL_STATE);
 	return 0;
 }

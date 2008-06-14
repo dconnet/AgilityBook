@@ -42,10 +42,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -134,7 +132,7 @@ bool ARBConfigPlaceInfo::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_PLACE_INFO)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_PLACE_INFO_PLACE, m_Place))
@@ -158,7 +156,7 @@ bool ARBConfigPlaceInfo::Load(
 
 bool ARBConfigPlaceInfo::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr title = ioTree->AddElementNode(TREE_PLACE_INFO);

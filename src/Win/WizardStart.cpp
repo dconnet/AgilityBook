@@ -83,7 +83,7 @@ static int TransWizardToDlg(int wizCode)
 	switch (wizCode)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		// fall thru
 	case WIZARD_RADIO_EXCEL:
 		return IDC_WIZARD_START_EXCEL - IDC_WIZARD_START_EXCEL;
@@ -102,7 +102,7 @@ static int TransDlgToWizard(int radioBtn)
 	switch (radioBtn + IDC_WIZARD_START_EXCEL)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		// fall thru
 	case IDC_WIZARD_START_EXCEL:
 		return WIZARD_RADIO_EXCEL;
@@ -299,7 +299,7 @@ void CWizardStart::UpdateList()
 	m_ctrlDesc.SetWindowText(_T(""));
 	for (int i = 0; i < sc_nItems; ++i)
 	{
-		ASSERT(sc_Items[i].index == i);
+		assert(sc_Items[i].index == i);
 		bool bAdd = true;
 		if (m_pSheet->GetCalendarEntries()
 		&& sc_Items[i].index != WIZ_EXPORT_CALENDAR_VCAL

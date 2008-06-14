@@ -123,8 +123,8 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_pScoring(pScoring)
 {
 	// Copy the existing scorings.
-	ASSERT(m_pVenue);
-	ASSERT(m_pScoring);
+	assert(m_pVenue);
+	assert(m_pScoring);
 	m_pScoring->GetPlaceInfo().Clone(m_PlaceInfo);
 	//{{AFX_DATA_INIT(CDlgConfigEventMethod)
 	m_DropFractions = m_pScoring->DropFractions() ? TRUE : FALSE;

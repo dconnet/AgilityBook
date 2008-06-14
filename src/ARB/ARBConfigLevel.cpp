@@ -48,10 +48,8 @@
 #include "Element.h"
 #include <algorithm>
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -118,7 +116,7 @@ bool ARBConfigLevel::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_LEVEL)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_LEVEL_NAME, m_Name)
@@ -144,7 +142,7 @@ bool ARBConfigLevel::Load(
 
 bool ARBConfigLevel::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr level = ioTree->AddElementNode(TREE_LEVEL);
@@ -239,7 +237,7 @@ void ARBConfigLevelList::ReorderBy(ARBConfigLevelList const& inList)
 			{
 				tmp.push_back(level);
 				ARBConfigLevelList::iterator iFound = std::find(begin(), end(), level);
-				ASSERT(iFound != end());
+				assert(iFound != end());
 				erase(iFound);
 			}
 		}

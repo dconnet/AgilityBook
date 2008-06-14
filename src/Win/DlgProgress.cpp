@@ -171,7 +171,7 @@ bool CDlgProgress::SetNumProgressBars(short nBars)
 {
 	if (0 > nBars || 2 < nBars)
 	{
-		ASSERT(0);
+		assert(0);
 		return false;
 	}
 	UINT nShow1 = SW_HIDE;
