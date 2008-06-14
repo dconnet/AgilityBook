@@ -171,8 +171,8 @@ CPointsDataText::CPointsDataText(
 	, m_Col1(inCol1)
 	, m_Col2(inCol2)
 {
-	ASSERT(NULL != inCol1);
-	ASSERT(NULL != inCol2);
+	assert(NULL != inCol1);
+	assert(NULL != inCol2);
 }
 
 
@@ -1257,7 +1257,7 @@ public:
 			switch (m_Order[i])
 			{
 			default:
-				ASSERT(0);
+				assert(0);
 				return false;
 
  			case CAgilityBookOptions::ePointsViewSortDivision:
@@ -1467,7 +1467,7 @@ void CPointsDataItems::LoadData(
 										continue;
 									ARBConfigScoringPtr pScoring;
 									pEvent->FindEvent(pDiv->GetName(), pLevel->GetName(), pRun->GetDate(), &pScoring);
-									ASSERT(pScoring);
+									assert(pScoring);
 									if (!pScoring) continue; // Shouldn't need it...
 									if (*pScoring != *pScoringMethod)
 										continue;

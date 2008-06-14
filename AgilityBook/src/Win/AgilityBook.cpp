@@ -239,7 +239,7 @@ BOOL GetLocalStatus(
 #endif
 
 #if _MSC_VER >= 1400
-	ASSERT( lpszFileName != NULL );
+	assert( lpszFileName != NULL );
 #endif
 
 	if ( lpszFileName == NULL )
@@ -249,7 +249,7 @@ BOOL GetLocalStatus(
 
 	if ( lstrlen(lpszFileName) >= _MAX_PATH )
 	{
-		ASSERT(FALSE); // MFC requires paths with length < _MAX_PATH
+		assert(FALSE); // MFC requires paths with length < _MAX_PATH
 		return FALSE;
 	}
 
@@ -272,7 +272,7 @@ BOOL GetLocalStatus(
 		(0xff & (findFileData.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL));
 
 	// get just the low DWORD of the file size
-	ASSERT(findFileData.nFileSizeHigh == 0);
+	assert(findFileData.nFileSizeHigh == 0);
 	rStatus.m_size = (LONG)findFileData.nFileSizeLow;
 
 	// convert times as appropriate

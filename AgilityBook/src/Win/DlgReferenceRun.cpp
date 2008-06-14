@@ -73,7 +73,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Breeds(inBreeds)
 	, m_Ref(ref)
 {
-	ASSERT(m_Ref);
+	assert(m_Ref);
 	//{{AFX_DATA_INIT(CDlgReferenceRun)
 	m_Place = m_Ref->GetPlace();
 	m_Points = m_Ref->GetScore().c_str();

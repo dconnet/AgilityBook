@@ -115,13 +115,13 @@ CDlgOptions::CDlgOptions(
 	m_pagePrint.m_Bottom = margins.bottom / 100.0;
 
 	AddPage(&m_pageProgram);
-	ASSERT(0 == GetProgramPage());
+	assert(0 == GetProgramPage());
 	AddPage(&m_pageFilter);
-	ASSERT(1 == GetFilterPage());
+	assert(1 == GetFilterPage());
 	AddPage(&m_pageCal);
-	ASSERT(2 == GetCalendarPage());
+	assert(2 == GetCalendarPage());
 	AddPage(&m_pagePrint);
-	ASSERT(3 == GetPrintPage());
+	assert(3 == GetPrintPage());
 }
 
 

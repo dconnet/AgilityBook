@@ -93,7 +93,7 @@ CLanguageManager::~CLanguageManager()
 BOOL CALLBACK EnumLangProc(HANDLE, LPCTSTR, LPCTSTR, WORD wIDLanguage, LONG_PTR lParam)
 {
     PLANGINFO LangInfo = reinterpret_cast<PLANGINFO>(lParam);
-	ASSERT(LangInfo);
+	assert(LangInfo);
     ++LangInfo->Count;
     LangInfo->LangID = wIDLanguage;
     return TRUE; // continue enumeration
@@ -258,7 +258,7 @@ void CLanguageManager::SetInitialLanguage(LPCTSTR* pszHelpFilePath)
 {
 	if (!m_hInstance)
 	{
-		ASSERT(pszHelpFilePath);
+		assert(pszHelpFilePath);
 		m_pszHelpFilePath = pszHelpFilePath;
 		m_ContextHelp = m_InitContextHelp + _T(".txt");
 		if (m_InitHelpFilePath.IsEmpty())

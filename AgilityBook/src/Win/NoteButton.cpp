@@ -87,7 +87,7 @@ END_MESSAGE_MAP()
 
 void CNoteButton::PreSubclassWindow()
 {
-	ASSERT(GetStyle() & BS_OWNERDRAW);
+	assert(GetStyle() & BS_OWNERDRAW);
 	CButton::PreSubclassWindow();
 	VERIFY(SetWindowPos(NULL, -1, -1,
 		SMICON_CX + 2*BUTTON_MARGIN,
@@ -100,7 +100,7 @@ int CNoteButton::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CButton::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	ASSERT(GetStyle() & BS_OWNERDRAW);
+	assert(GetStyle() & BS_OWNERDRAW);
 	VERIFY(SetWindowPos(NULL, -1, -1,
 		SMICON_CX + 2*BUTTON_MARGIN,
 		SMICON_CY + 2*BUTTON_MARGIN,
@@ -138,9 +138,9 @@ BOOL CNoteButton::OnEraseBkgnd(CDC* pDC)
 
 void CNoteButton::DrawItem(LPDRAWITEMSTRUCT lpDIS)
 {
-	ASSERT(lpDIS != NULL);
+	assert(lpDIS != NULL);
 	// must have at least the first bitmap loaded before calling DrawItem
-	ASSERT(0 <= m_idxNormal);
+	assert(0 <= m_idxNormal);
 
 	// Figure out where things are, etc.
 	CDC* pDC = CDC::FromHandle(lpDIS->hDC);

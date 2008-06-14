@@ -96,8 +96,8 @@ CDlgConfigEvent::CDlgConfigEvent(
 {
 	// Copy the existing scorings.
 	pEvent->GetScorings().Clone(m_Scorings);
-	ASSERT(m_pVenue);
-	ASSERT(m_pEvent);
+	assert(m_pVenue);
+	assert(m_pEvent);
 	m_Name = m_pEvent->GetName().c_str();
 	m_Desc = m_pEvent->GetDesc().c_str();
 	m_Desc.Replace(_T("\n"), _T("\r\n"));
@@ -826,7 +826,7 @@ void CDlgConfigEvent::OnPointsNew()
 				switch (dlg.Type())
 				{
 				default:
-					ASSERT(0);
+					assert(0);
 				case CDlgConfigTitlePoints::eTitleNormal:
 					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
 						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
@@ -914,7 +914,7 @@ void CDlgConfigEvent::OnPointsEdit()
 					switch (dlg.Type())
 					{
 					default:
-						ASSERT(0);
+						assert(0);
 					case CDlgConfigTitlePoints::eTitleNormal:
 						bOk = pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults());
 						if (!bOk)

@@ -356,7 +356,7 @@ static LPCTSTR CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 	case CAgilityBookOptions::eCalColorEntered:
 		return _T("EnteredColor");
 	}
-	ASSERT(0);
+	assert(0);
 	return _T("");
 }
 
@@ -376,7 +376,7 @@ static COLORREF CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 	case CAgilityBookOptions::eCalColorEntered:
 		return RGB(0,0,255); // Blue
 	}
-	ASSERT(0);
+	assert(0);
 	return 0;
 }
 
@@ -1253,7 +1253,7 @@ bool CAgilityBookOptions::IsCalSiteVisible(
 		CString const& filename,
 		CVersionNum const& inVer)
 {
-	ASSERT(inVer.Valid());
+	assert(inVer.Valid());
 	if (filename.IsEmpty())
 		return true;
 	bool bVisible = true;

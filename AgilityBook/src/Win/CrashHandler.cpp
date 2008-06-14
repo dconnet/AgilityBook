@@ -125,7 +125,7 @@ static DWORD GetModuleBaseNameA(
 	{
 		// Load up PSAPI.DLL.
 		HINSTANCE hInst = LoadLibraryA("PSAPI.DLL");
-		ASSERT(NULL != hInst);
+		assert(NULL != hInst);
 		if (NULL == hInst)
 		{
 			TRACE0("Unable to load PSAPI.DLL!\n");
@@ -134,7 +134,7 @@ static DWORD GetModuleBaseNameA(
 		}
 		// Now do the GetProcAddress stuff.
 		g_pGetModuleBaseName = reinterpret_cast<GETMODULEBASENAME>(GetProcAddress(hInst, "GetModuleBaseNameA"));
-		ASSERT(NULL != g_pGetModuleBaseName);
+		assert(NULL != g_pGetModuleBaseName);
 		if (NULL == g_pGetModuleBaseName)
 		{
 			TRACE0("GetProcAddress failed on GetModuleBaseNameA!\n");
@@ -157,7 +157,7 @@ static bool IsNT()
 	memset(&stOSVI, NULL, sizeof(OSVERSIONINFO));
 	stOSVI.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	BOOL bRet = GetVersionEx(&stOSVI);
-	ASSERT(TRUE == bRet);
+	assert(TRUE == bRet);
 	if (!bRet)
 	{
 		TRACE0("GetVersionEx failed!\n");
@@ -189,7 +189,7 @@ static DWORD BSUGetModuleBaseName(
 	else
 	{
 		// Win95GetModuleBaseName(hProcess, hModule, lpBaseName, nSize);
-		ASSERT(!IsBadWritePtr(lpBaseName, nSize));
+		assert(!IsBadWritePtr(lpBaseName, nSize));
 		if (IsBadWritePtr(lpBaseName, nSize))
 		{
 			TRACE0("Win95GetModuleBaseName Invalid string buffer\n");
@@ -200,7 +200,7 @@ static DWORD BSUGetModuleBaseName(
 		// This could blow the stack...
 		char szBuff[MAX_PATH + 1];
 		DWORD dwRet = GetModuleFileName(hModule, szBuff, MAX_PATH);
-		ASSERT(0 != dwRet);
+		assert(0 != dwRet);
 		if (0 == dwRet)
 			return 0;
 
@@ -321,7 +321,7 @@ static BOOL InternalSymGetLineFromAddr(
 
 static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 {
-	ASSERT(FALSE == IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)));
+	assert(FALSE == IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)));
 	if (IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)))
 	{
 		TRACE0("Bad parameter to GetFaultReasonA\n");
@@ -358,14 +358,14 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 				0) * sizeof(TCHAR));
 		}
 
-		ASSERT(iCurr < BUFF_SIZE);
+		assert(iCurr < BUFF_SIZE);
 
 		iCurr += wsprintf(g_szBuff + iCurr, _T(" in module "));
 
 		dwTemp = g_SymGetModuleBase(GetCurrentProcess(),
 			reinterpret_cast<DWORD64>(pExPtrs->ExceptionRecord->ExceptionAddress));
 
-		ASSERT(NULL != dwTemp);
+		assert(NULL != dwTemp);
 
 		if (NULL == dwTemp)
 		{
@@ -394,7 +394,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 #else
 #error Undefined architecture
 #endif
-		ASSERT(iCurr < BUFF_SIZE);
+		assert(iCurr < BUFF_SIZE);
 
 		// Start looking up the exception address.
 		//lint -e545
@@ -442,7 +442,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 			__leave;
 		}
 
-		ASSERT(iCurr < BUFF_SIZE);
+		assert(iCurr < BUFF_SIZE);
 
 		// Do the source and line lookup.
 		ZeroMemory(&g_stLine64, sizeof(IMAGEHLP_LINE64));
@@ -489,7 +489,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		ASSERT(FALSE);
+		assert(FALSE);
 		szRet = NULL;
 	}
 	return szRet;
@@ -498,7 +498,7 @@ static LPCTSTR GetFaultReason(LPEXCEPTION_POINTERS pExPtrs)
 
 static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 {
-	ASSERT(!IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)));
+	assert(!IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)));
 	if (IsBadReadPtr(pExPtrs, sizeof(EXCEPTION_POINTERS)))
 	{
 		TRACE0("GetStackTraceString - invalid pExPtrs!\n");
@@ -569,7 +569,7 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 		{
 			iCurr += wsprintf(g_szBuff + iCurr, _T(" "));
 			dwTemp = g_SymGetModuleBase(GetCurrentProcess(), g_stFrame64.AddrPC.Offset);
-			ASSERT(NULL != dwTemp);
+			assert(NULL != dwTemp);
 			if (NULL == dwTemp)
 			{
 				iCurr += wsprintf(g_szBuff + iCurr, _T("<UNKNOWN>"));
@@ -583,7 +583,7 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 			}
 		}
 
-		ASSERT (iCurr < BUFF_SIZE);
+		assert (iCurr < BUFF_SIZE);
 		DWORD64 dwDisp64;
 
 		//if (GSTSO_SYMBOL == (dwOpts & GSTSO_SYMBOL))
@@ -680,7 +680,7 @@ static LPCTSTR InternalGetStackTraceString(EXCEPTION_POINTERS* pExPtrs)
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		ASSERT(FALSE);
+		assert(FALSE);
 		szRet = NULL;
 	}
 	return szRet;
@@ -953,7 +953,7 @@ bool InitCrashHandler(HKEY hAppKey)
 	if (!g_bSymEngInit)
 	{
 		HINSTANCE hInst = LoadLibraryA("DBGHELP.DLL");
-		ASSERT(NULL != hInst);
+		assert(NULL != hInst);
 		if (NULL == hInst)
 		{
 			TRACE0("Unable to load DBGHELP.DLL!\n");

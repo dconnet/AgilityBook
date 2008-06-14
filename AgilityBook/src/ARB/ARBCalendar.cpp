@@ -56,10 +56,8 @@
 #include "ARBTypes.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -467,7 +465,7 @@ tstring ARBCalendar::GetUID(eUidType inType) const
 	switch (inType)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		str << _T("u");
 		break;
 	case eUIDvEvent:
@@ -571,7 +569,7 @@ bool ARBCalendar::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_CALENDAR)
 		return false;
 	switch (inTree->GetAttrib(ATTRIB_CAL_START, m_DateStart))
@@ -715,7 +713,7 @@ bool ARBCalendar::Load(
 
 bool ARBCalendar::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr cal = ioTree->AddElementNode(TREE_CALENDAR);

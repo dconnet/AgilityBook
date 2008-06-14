@@ -447,7 +447,7 @@ void CWizardExport::UpdatePreview()
 								pRun->GetDate(),
 								NULL,
 								&pScoring);
-						ASSERT(pScoring);
+						assert(pScoring);
 						if (pScoring)
 						{
 							int idxType = -1;
@@ -468,7 +468,7 @@ void CWizardExport::UpdatePreview()
 								idxType = IO_TYPE_RUNS_TIME_FAULTS;
 								break;
 							}
-							ASSERT(-1 != idxType);
+							assert(-1 != idxType);
 							if (0 <= idxType)
 							{
 								CString data;

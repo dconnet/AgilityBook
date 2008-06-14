@@ -44,10 +44,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -100,7 +98,7 @@ bool ARBConfigFault::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_FAULTTYPE)
 		return false;
 	if (inVersion == ARBVersion(1,0))
@@ -120,7 +118,7 @@ bool ARBConfigFault::Load(
 
 bool ARBConfigFault::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr element = ioTree->AddElementNode(TREE_FAULTTYPE);

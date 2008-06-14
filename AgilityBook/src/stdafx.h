@@ -207,6 +207,19 @@ typedef char	TCHAR;
 
 #endif // _WINDOWS ||_CONSOLE
 
+#if !defined(_MFC_VER)
+
+// Pre-compiled header setup
+#include "wx/wxprec.h"
+#ifdef __BORLANDC__
+#   pragma hdrstop
+#endif
+#ifndef WX_PRECOMP
+#   include "wx/wx.h"
+#endif
+
+#endif // _MFC_VER
+
 #include <memory> // To pick up the _HAS_TR1 define
 #if _HAS_TR1
 namespace tr1 = std::tr1;
@@ -215,3 +228,5 @@ namespace tr1 = std::tr1;
 #include <boost/shared_ptr.hpp>
 namespace tr1 = boost;
 #endif
+
+#include <assert.h>

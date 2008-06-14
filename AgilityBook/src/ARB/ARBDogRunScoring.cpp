@@ -54,10 +54,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -68,7 +66,7 @@ ARBDogRunScoring::ScoringType ARBDogRunScoring::TranslateConfigScoring(ARBConfig
 	switch (inType)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 	case ARBConfigScoring::eFaultsThenTime:
 	case ARBConfigScoring::eFaults100ThenTime:
 	case ARBConfigScoring::eFaults200ThenTime:
@@ -178,7 +176,7 @@ bool ARBDogRunScoring::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || !(inTree->GetName() == TREE_BY_TIME
 	|| inTree->GetName() == TREE_BY_OPENCLOSE
 	|| inTree->GetName() == TREE_BY_POINTS))
@@ -286,7 +284,7 @@ bool ARBDogRunScoring::Load(
 
 bool ARBDogRunScoring::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	switch (m_type)

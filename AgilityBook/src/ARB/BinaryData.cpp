@@ -39,7 +39,7 @@
 #include "ARBBase64.h"
 #include "zlib.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
 #endif
 
@@ -84,7 +84,7 @@ bool BinaryData::Decode(
         strm.avail_out = CHUNK;
         strm.next_out = (Bytef*)out.get();
         int ret = inflate(&strm, Z_NO_FLUSH);
-        ASSERT(ret != Z_STREAM_ERROR);  /* state not clobbered */
+        assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
         switch (ret)
 		{
         case Z_NEED_DICT:
@@ -149,7 +149,7 @@ bool BinaryData::Encode(
         strm.avail_out = CHUNK;
         strm.next_out = (Bytef*)out.get();
         /*int ret =*/ deflate(&strm, Z_FINISH);    /* no bad return value */
-        //ASSERT(ret != Z_STREAM_ERROR);  /* state not clobbered */
+        //assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
         size_t have = CHUNK - strm.avail_out;
 		if (pData)
 		{
@@ -210,7 +210,7 @@ bool BinaryData::Encode(
 			strm.avail_out = CHUNK;
 			strm.next_out = (Bytef*)out.get();
 			/*int ret =*/ deflate(&strm, flush);    /* no bad return value */
-			//ASSERT(ret != Z_STREAM_ERROR);  /* state not clobbered */
+			//assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
 			size_t have = CHUNK - strm.avail_out;
 			if (pData)
 			{

@@ -317,7 +317,7 @@ void CDlgDogTitles::ListTitles()
 void CDlgDogTitles::UpdateButtons()
 {
 	UINT selected = m_ctrlTitles.GetSelectedCount();
-	ASSERT(1 >= selected);
+	assert(1 >= selected);
 	if (0 == selected)
 	{
 		m_ctrlTitleEdit.EnableWindow(FALSE);

@@ -136,11 +136,11 @@ CDlgRunScore::CDlgRunScore(
 	, m_pRealRun(pRealRun)
 	, m_Run(pRun)
 {
-	ASSERT(NULL != m_pVenue.get());
-	ASSERT(NULL != m_pTrial.get());
+	assert(NULL != m_pVenue.get());
+	assert(NULL != m_pTrial.get());
 	ARBDogClubPtr pClub;
 	m_pTrial->GetClubs().GetPrimaryClub(&pClub);
-	ASSERT(NULL != pClub.get());
+	assert(NULL != pClub.get());
 	//{{AFX_DATA_INIT(CDlgRunScore)
 	m_Venue = m_pVenue->GetName().c_str();
 	m_Club = pClub->GetName().c_str();
@@ -311,7 +311,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		}
 		level = (LPCTSTR)str;
 		CDlgRunDataLevel* pLevel = GetLevelData(index);
-		ASSERT(pLevel);
+		assert(pLevel);
 
 		pDX->PrepareCtrl(m_ctrlEvents.GetDlgCtrlID());
 		index = m_ctrlEvents.GetCurSel();
@@ -383,7 +383,7 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		switch (pScoring->GetScoringStyle())
 		{
 		default:
-			ASSERT(0);
+			assert(0);
 			break;
 		case ARBConfigScoring::eFaultsThenTime:
 		case ARBConfigScoring::eFaults100ThenTime:
@@ -529,7 +529,7 @@ bool CDlgRunScore::GetScoring(ARBConfigScoringPtr* outScoring) const
 		if (!str.IsEmpty())
 			level = (LPCTSTR)str;
 		CDlgRunDataLevel* pLevel = GetLevelData(index);
-		ASSERT(pLevel);
+		assert(pLevel);
 		ARBConfigEventPtr pEvent;
 		if (GetEvent(&pEvent))
 		{
@@ -1024,7 +1024,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 	switch (pScoring->GetScoringStyle())
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		break;
 	case ARBConfigScoring::eFaultsThenTime:
 	case ARBConfigScoring::eFaults100ThenTime:

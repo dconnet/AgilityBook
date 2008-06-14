@@ -254,7 +254,7 @@ void CAgilityBookViewPoints::OnContextMenu(
 		CMenu menu;
 		menu.LoadMenu(idMenu);
 		CMenu* pMenu = menu.GetSubMenu(0);
-		ASSERT(pMenu != NULL);
+		assert(pMenu != NULL);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, AfxGetMainWnd());
 	}
 }
@@ -370,7 +370,7 @@ void CAgilityBookViewPoints::Dump(CDumpContext& dc) const
 
 CAgilityBookDoc* CAgilityBookViewPoints::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
+	assert(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
 	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG

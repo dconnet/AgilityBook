@@ -144,7 +144,7 @@ CSplashWnd::CSplashWnd(bool bTimed)
 CSplashWnd::~CSplashWnd()
 {
 	// Clear the static window pointer.
-	ASSERT(c_pSplashWnd == this);
+	assert(c_pSplashWnd == this);
 	c_pSplashWnd = NULL;
 }
 

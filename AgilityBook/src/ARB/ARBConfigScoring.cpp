@@ -61,10 +61,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -249,7 +247,7 @@ bool ARBConfigScoring::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_SCORING)
 		return false;
 	// Probably unnecessary since it isn't actually implemented yet!
@@ -491,7 +489,7 @@ bool ARBConfigScoring::Load(
 
 bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr scoring = ioTree->AddElementNode(TREE_SCORING);
@@ -504,9 +502,9 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 	switch (m_Style)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 #ifdef _DEBUG
-		TRACE(_T("%s\n"), Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE).c_str());
+		DumpErrorMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE), true);
 #endif
 		return false;
 	case eFaultsThenTime:
@@ -703,7 +701,9 @@ bool ARBConfigScoringList::FindEvent(
 		{
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
-			TRACE0("Warning: Overlapping date ranges\n");
+#ifdef _DEBUG
+			DumpErrorMessage(_T("Warning: Overlapping date ranges"), true);
+#endif
 			pEvent = *(items.begin());
 		}
 	}

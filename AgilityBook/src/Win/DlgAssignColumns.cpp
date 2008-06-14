@@ -922,13 +922,13 @@ BOOL CDlgAssignColumns::OnInitDialog()
 #ifdef _DEBUG
 	for (index = 0; index < IO_MAX; ++index)
 	{
-		ASSERT(sc_FieldNames[index].index == index);
+		assert(sc_FieldNames[index].index == index);
 	}
 #endif
 	int idxSelect = 0;
 	for (index = 0; index < IO_TYPE_MAX; ++index)
 	{
-		ASSERT(sc_Types[index].index == index);
+		assert(sc_Types[index].index == index);
 		if (!(sc_Types[index].bValid & m_eOrder))
 			continue;
 		CString str;

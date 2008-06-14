@@ -235,7 +235,7 @@ static bool GetField(
 	if (ioStr.IsEmpty())
 		return false;
 
-	ASSERT(delim.GetLength() == 1);
+	assert(delim.GetLength() == 1);
 
 	int pos;
 	int nLen = ioStr.GetLength();
@@ -654,7 +654,7 @@ BOOL CWizardImport::OnWizardFinish()
 					i = IO_TYPE_RUNS_TIME_FAULTS;
 					break;
 				}
-				ASSERT(0 <= i);
+				assert(0 <= i);
 
 				tstring nameReg, nameCall;
 				tstring trialVenue, trialClub, trialLocation, trialNotes;
@@ -904,7 +904,7 @@ BOOL CWizardImport::OnWizardFinish()
 						else
 							pDog = *(m_pDoc->Book().GetDogs().begin());
 					}
-					ASSERT(pDog);
+					assert(pDog);
 
 					// Find the trial
 					std::vector<tstring> venues;

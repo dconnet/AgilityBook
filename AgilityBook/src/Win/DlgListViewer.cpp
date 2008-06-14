@@ -185,7 +185,7 @@ public:
 		: m_ColData(inColData)
 		, m_Existing(inExisting)
 	{
-		ASSERT(m_ColData);
+		assert(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
 	}
@@ -265,13 +265,13 @@ public:
 		, m_Scoring(inScoring)
 		, m_ScoringDetail(inScoringDetail)
 	{
-		ASSERT(m_ColData);
+		assert(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
 		// Note, some users have changed NADAC to remove Novice A/B and only
 		// have Novice (no sublevels). This means during a config update,
 		// all hell will break loose. Don't bother asserting here...
-		//ASSERT(inScoring);
+		//assert(inScoring);
 	}
 	virtual ~CDlgListViewerDataRun()
 	{
@@ -402,7 +402,7 @@ public:
 		, m_Date(inDate)
 		, m_Trial(inTrial)
 	{
-		ASSERT(m_ColData);
+		assert(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
 	}
@@ -729,7 +729,7 @@ public:
 		: m_ColData(inColData)
 		, m_info(info)
 	{
-		ASSERT(m_ColData);
+		assert(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
 	}
@@ -819,7 +819,7 @@ public:
 		: m_ColData(inColData)
 		, m_info(info)
 	{
-		ASSERT(m_ColData);
+		assert(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
 	}
@@ -973,7 +973,7 @@ public:
 		: m_ColData(inColData)
 		, m_info(info)
 	{
-		ASSERT(m_ColData);
+		assert(m_ColData);
 		if (m_ColData)
 			m_ColData->AddRef();
 	}

@@ -823,7 +823,7 @@ public:
 		: m_Filename(filename)
 		, m_CalData(calData)
 	{
-		ASSERT(m_CalData);
+		assert(m_CalData);
 		SetNameDesc();
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
@@ -1053,7 +1053,7 @@ int CALLBACK SortPluginsProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 	CPluginData* pData1 = dynamic_cast<CPluginData*>(pRawData1);
 	CPluginData* pData2 = dynamic_cast<CPluginData*>(pRawData2);
 	// The root level that we're sorting should never contain CPluginCalData
-	ASSERT(pData1 && pData2);
+	assert(pData1 && pData2);
 	if (!pData1 || !pData2)
 		return 0;
 	return pData1->GetSortName().Compare(pData2->GetSortName());

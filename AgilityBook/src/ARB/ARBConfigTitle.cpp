@@ -48,10 +48,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -142,7 +140,7 @@ bool ARBConfigTitle::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TITLES)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLES_NAME, m_Name)
@@ -186,7 +184,7 @@ bool ARBConfigTitle::Load(
 
 bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr title = ioTree->AddElementNode(TREE_TITLES);
@@ -296,7 +294,7 @@ void ARBConfigTitleList::ReorderBy(ARBConfigTitleList const& inList)
 			{
 				tmp.push_back(title);
 				ARBConfigTitleList::iterator iFound = std::find(begin(), end(), title);
-				ASSERT(iFound != end());
+				assert(iFound != end());
 				erase(iFound);
 			}
 		}

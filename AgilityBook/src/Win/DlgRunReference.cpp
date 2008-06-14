@@ -172,7 +172,7 @@ CDlgRunReference::CDlgRunReference(
 	, m_pRefRunMe()
 	, m_sortRefRuns(_T("RefRuns"))
 {
-	ASSERT(NULL != m_Venue.get());
+	assert(NULL != m_Venue.get());
 	m_sortRefRuns.Initialize(scNumColumns);
 	//{{AFX_DATA_INIT(CDlgRunReference)
 	//}}AFX_DATA_INIT

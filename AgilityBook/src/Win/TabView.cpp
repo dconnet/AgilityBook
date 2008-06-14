@@ -110,7 +110,7 @@ void CTabView::UpdateLanguage()
 	CString str;
 	for (int nPane = 0; nPane < sc_nPanes; ++nPane)
 	{
-		ASSERT(sc_Panes[nPane].idxPane == nPane);
+		assert(sc_Panes[nPane].idxPane == nPane);
 		str.LoadString(sc_Panes[nPane].idPane);
 		TCITEM item;
 		item.mask = TCIF_TEXT;
@@ -160,7 +160,7 @@ bool CTabView::ShowPointsAs(bool bHtml)
 
 	if (!m_Panes[IDX_PANE_POINTS])
 	{
-		ASSERT(0);
+		assert(0);
 		return false;
 	}
 
@@ -169,7 +169,7 @@ bool CTabView::ShowPointsAs(bool bHtml)
 
 	// Setup needed information.
 	CView* pView = dynamic_cast<CView*>(m_Panes[IDX_PANE_POINTS]);
-	ASSERT(pView);
+	assert(pView);
 	CDocument* pDoc = pView->GetDocument();
 	CFrameWnd* pFrame = pView->GetParentFrame();
 	bool bSetView = false;
@@ -274,11 +274,11 @@ void CTabView::OnInitialUpdate()
 	CString str;
 	for (int nPane = 0; nPane < sc_nPanes; ++nPane)
 	{
-		ASSERT(sc_Panes[nPane].idxPane == nPane);
+		assert(sc_Panes[nPane].idxPane == nPane);
 		str.LoadString(sc_Panes[nPane].idPane);
 		GetTabCtrl().InsertItem(nPane, str);
 	}
-	ASSERT(0 == m_Panes.size());
+	assert(0 == m_Panes.size());
 	m_Panes.insert(m_Panes.begin(), sc_nPanes, static_cast<CWnd*>(NULL));
 
 	CCreateContext context;
@@ -356,7 +356,7 @@ void CTabView::Dump(CDumpContext& dc) const
 
 CAgilityBookDoc* CTabView::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
+	assert(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
 	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG

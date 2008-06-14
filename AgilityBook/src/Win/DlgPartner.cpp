@@ -61,7 +61,7 @@ CDlgPartner::CDlgPartner(
 	, m_Handlers(inHandlers)
 	, m_Dogs(inDogs)
 {
-	ASSERT(m_Partner);
+	assert(m_Partner);
 	//{{AFX_DATA_INIT(CDlgPartner)
 	m_Handler = m_Partner->GetHandler().c_str();
 	m_Dog = m_Partner->GetDog().c_str();

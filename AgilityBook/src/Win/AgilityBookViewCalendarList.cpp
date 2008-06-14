@@ -823,7 +823,7 @@ void CAgilityBookViewCalendarList::Dump(CDumpContext& dc) const
 
 CAgilityBookDoc* CAgilityBookViewCalendarList::GetDocument() const // non-debug version is inline
 {
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
+	assert(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
 	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 #endif //_DEBUG
@@ -1050,7 +1050,7 @@ void CAgilityBookViewCalendarList::OnContextMenu(
 		CMenu menu;
 		menu.LoadMenu(idMenu);
 		CMenu* pMenu = menu.GetSubMenu(0);
-		ASSERT(pMenu != NULL);
+		assert(pMenu != NULL);
 		pMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, AfxGetMainWnd());
 	}
 }
@@ -1196,7 +1196,7 @@ void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 	{
 		ARBCalendarPtr pCal = pData->GetCalendar();
 		CWnd* pParent = GetParent()->GetParent();
-		ASSERT(pParent->IsKindOf(RUNTIME_CLASS(CTabView)));
+		assert(pParent->IsKindOf(RUNTIME_CLASS(CTabView)));
 		CTabView* pView = DYNAMIC_DOWNCAST(CTabView, pParent);
 		GetDocument()->CreateTrialFromCalendar(*pCal, pView);
 	}

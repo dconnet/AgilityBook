@@ -345,7 +345,7 @@ void CDlgTrial::OnItemchangedClubs(
 {
 	//NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UINT selected = m_ctrlClubs.GetSelectedCount();
-	ASSERT(1 >= selected);
+	assert(1 >= selected);
 	if (0 == selected)
 	{
 		m_ctrlEdit.EnableWindow(FALSE);

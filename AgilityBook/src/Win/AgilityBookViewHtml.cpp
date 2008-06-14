@@ -106,7 +106,7 @@ CAgilityBookDoc* CAgilityBookViewHtml::GetDocument() const
 {
 	if (m_DocAsControl)
 		return m_DocAsControl;
-	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
+	assert(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
 	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
 }
 
@@ -300,7 +300,7 @@ void CAgilityBookViewHtml::Dump(CDumpContext& dc) const
 
 CString CAgilityBookViewHtml::GetFullName() const
 {
-	ASSERT(m_pBrowserApp != NULL);
+	assert(m_pBrowserApp != NULL);
 	BSTR bstr;
 	m_pBrowserApp->get_FullName(&bstr);
 	CString retVal(bstr);
@@ -311,7 +311,7 @@ CString CAgilityBookViewHtml::GetFullName() const
 
 CString CAgilityBookViewHtml::GetType() const
 {
-	ASSERT(m_pBrowserApp != NULL);
+	assert(m_pBrowserApp != NULL);
 	BSTR bstr;
 	m_pBrowserApp->get_Type(&bstr);
 	CString retVal(bstr);
@@ -322,7 +322,7 @@ CString CAgilityBookViewHtml::GetType() const
 
 CString CAgilityBookViewHtml::GetLocationName() const
 {
-	ASSERT(m_pBrowserApp != NULL);
+	assert(m_pBrowserApp != NULL);
 	BSTR bstr;
 	m_pBrowserApp->get_LocationName(&bstr);
 	CString retVal(bstr);
@@ -333,7 +333,7 @@ CString CAgilityBookViewHtml::GetLocationName() const
 
 CString CAgilityBookViewHtml::GetLocationURL() const
 {
-	ASSERT(m_pBrowserApp != NULL);
+	assert(m_pBrowserApp != NULL);
 	BSTR bstr;
 	m_pBrowserApp->get_LocationURL(&bstr);
 	CString retVal(bstr);
@@ -371,7 +371,7 @@ void CAgilityBookViewHtml::Navigate(
 BOOL CAgilityBookViewHtml::LoadFromResource(LPCTSTR lpszResource)
 {
 	HINSTANCE hInstance = AfxGetResourceHandle();
-	ASSERT(hInstance != NULL);
+	assert(hInstance != NULL);
 	CString strResourceURL;
 	BOOL bRetVal = TRUE;
 	LPTSTR lpszModule = new TCHAR[_MAX_PATH];
@@ -390,7 +390,7 @@ BOOL CAgilityBookViewHtml::LoadFromResource(LPCTSTR lpszResource)
 BOOL CAgilityBookViewHtml::LoadFromResource(UINT nRes)
 {
 	HINSTANCE hInstance = AfxGetResourceHandle();
-	ASSERT(hInstance != NULL);
+	assert(hInstance != NULL);
 	CString strResourceURL;
 	BOOL bRetVal = TRUE;
 	LPTSTR lpszModule = new TCHAR[_MAX_PATH];

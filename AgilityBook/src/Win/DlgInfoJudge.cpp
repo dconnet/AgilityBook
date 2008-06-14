@@ -159,7 +159,7 @@ END_MESSAGE_MAP()
 BOOL CDlgInfoJudge::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
-	ASSERT(m_ctrlNames.GetStyle() & CBS_OWNERDRAWFIXED);
+	assert(m_ctrlNames.GetStyle() & CBS_OWNERDRAWFIXED);
 
 	CString caption;
 	std::set<tstring> names;
@@ -241,7 +241,7 @@ void CDlgInfoJudge::OnDrawItem(
 	if (-1 == lpDrawItemStruct->itemID)
 		return;
 
-	ASSERT(lpDrawItemStruct->CtlType == ODT_COMBOBOX);
+	assert(lpDrawItemStruct->CtlType == ODT_COMBOBOX);
 	CDC dc;
 	dc.Attach(lpDrawItemStruct->hDC);
 

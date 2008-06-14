@@ -119,10 +119,8 @@ XERCES_CPP_NAMESPACE_USE
 using namespace std;
 #endif
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 ////////////////////////////////////////////////////////////////////////////
@@ -719,7 +717,7 @@ void SAXImportHandlers::startElement(
 		else
 		{
 			pParent = m_Parents.front();
-			ASSERT(pParent);
+			assert(pParent);
 			pParent = pParent->AddElementNode(m_CurrentName);
 			m_Parents.push_front(pParent);
 		}
@@ -732,7 +730,7 @@ void SAXImportHandlers::startElement(
 	}
 	if (0 < m_CurrentData.length())
 	{
-		ASSERT(0 < m_Parents.size());
+		assert(0 < m_Parents.size());
 		// Get the most current node.
 		ElementNodePtr pParent = m_Parents.front();
 		StringDOM data(m_CurrentData.c_str());
@@ -1560,7 +1558,7 @@ ElementTextPtr ElementNode::AddElementText(
 		tstring const& inText,
 		int inAt)
 {
-	ASSERT(0 == m_Value.length());
+	assert(0 == m_Value.length());
 	size_t index;
 	std::vector<ElementPtr>::iterator iter = m_Elements.begin();
 	if (0 < inAt)
@@ -1725,10 +1723,7 @@ bool ElementNode::SaveXML(
 	{
 		const char* treeBook = "AgilityBook";
 #ifdef _DEBUG
-		// I'm keeping MFC stuff out of this layer - this is just an
-		// integrity check.
-		CStringA test(TREE_BOOK);
-		ASSERT(test == treeBook);
+		assert(0 == _tcscmp(TREE_BOOK, L"AgilityBook"));
 #endif
 		outOutput << "<!DOCTYPE " << treeBook << " [\n";
 		outOutput << *inDTD;

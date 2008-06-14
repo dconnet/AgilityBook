@@ -442,7 +442,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pConfig(NULL)
 	, m_pRun(run)
 {
-	ASSERT(m_What == eFaults || m_What == ePartners);
+	assert(m_What == eFaults || m_What == ePartners);
 }
 
 
@@ -635,7 +635,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 	switch (m_What)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		return TRUE;
 
 	case eCalendar:
@@ -863,7 +863,7 @@ void CDlgListCtrl::OnNew()
 	switch (m_What)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		break;
 	case eCalendar:
 		{
@@ -1058,7 +1058,7 @@ void CDlgListCtrl::OnOK()
 	switch (m_What)
 	{
 	default:
-		ASSERT(0);
+		assert(0);
 		break;
 	case eCalendar:
 		{

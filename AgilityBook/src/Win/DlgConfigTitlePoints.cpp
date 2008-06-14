@@ -79,7 +79,7 @@ void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
 	if (pDX->m_bSaveAndValidate)
 	{
 		int idx = m_ctrlType.GetCurSel();
-		ASSERT(0 <= idx);
+		assert(0 <= idx);
 		m_Type = (ETitlePointType)m_ctrlType.GetItemData(idx);
 	}
 }
@@ -133,7 +133,7 @@ BOOL CDlgConfigTitlePoints::OnInitDialog()
 	CString str;
 	m_ctrlValueText.GetWindowText(str);
 	int idx = str.Find('\n');
-	ASSERT(0 < idx);
+	assert(0 < idx);
 	m_FaultText = str.Left(idx);
 	m_PlaceText = str.Mid(idx+1);
 

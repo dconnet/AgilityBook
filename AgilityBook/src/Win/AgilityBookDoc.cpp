@@ -206,7 +206,7 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial()
 {
 	ARBDogTrialPtr pTrial;
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
+	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pTrial = pTree->GetCurrentTreeItem()->GetTrial();
 	return pTrial;
@@ -220,7 +220,7 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun()
 {
 	ARBDogRunPtr pRun;
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
+	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pRun = pTree->GetCurrentTreeItem()->GetRun();
 	return pRun;
@@ -235,7 +235,7 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun()
 void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
 	if (pData)
 	{
@@ -249,7 +249,7 @@ void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
 	if (pData)
 	{
@@ -263,7 +263,7 @@ void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
 	if (pData)
 	{
@@ -277,7 +277,7 @@ void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pRun);
 	if (pData)
 	{
@@ -291,7 +291,7 @@ void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
 	CAgilityBookTree* pTree = GetTreeView();
-	ASSERT(pTree);
+	assert(pTree);
 	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pRun);
 	if (pData)
 	{
@@ -940,7 +940,7 @@ CAgilityBookViewCalendarList* CAgilityBookDoc::GetCalendarListView() const
 		if (pView2)
 			return pView2;
 	}
-	ASSERT(0);
+	assert(0);
 	return NULL;
 }
 
@@ -958,7 +958,7 @@ CAgilityBookViewCalendar* CAgilityBookDoc::GetCalendarView() const
 		if (pView2)
 			return pView2;
 	}
-	ASSERT(0);
+	assert(0);
 	return NULL;
 }
 
@@ -976,7 +976,7 @@ CAgilityBookViewTraining* CAgilityBookDoc::GetTrainingView() const
 		if (pView2)
 			return pView2;
 	}
-	ASSERT(0);
+	assert(0);
 	return NULL;
 }
 

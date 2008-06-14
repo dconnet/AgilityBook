@@ -52,10 +52,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#ifdef _DEBUG
+#if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -123,7 +121,7 @@ bool ARBConfigDivision::Load(
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
-	ASSERT(inTree);
+	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_DIVISION)
 		return false;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_DIVISION_NAME, m_Name)
@@ -156,7 +154,7 @@ bool ARBConfigDivision::Load(
 
 bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 {
-	ASSERT(ioTree);
+	assert(ioTree);
 	if (!ioTree)
 		return false;
 	ElementNodePtr division = ioTree->AddElementNode(TREE_DIVISION);
@@ -269,7 +267,7 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 			{
 				tmp.push_back(div);
 				ARBConfigDivisionList::iterator iFound = std::find(begin(), end(), div);
-				ASSERT(iFound != end());
+				assert(iFound != end());
 				erase(iFound);
 			}
 		}

@@ -259,7 +259,7 @@ void CDlgDogNumbers::ListRegNums()
 void CDlgDogNumbers::UpdateButtons()
 {
 	UINT selected = m_ctrlRegNums.GetSelectedCount();
-	ASSERT(1 >= selected);
+	assert(1 >= selected);
 	if (0 == selected)
 	{
 		m_ctrlRegEdit.EnableWindow(FALSE);

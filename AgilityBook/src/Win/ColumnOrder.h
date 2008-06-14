@@ -52,12 +52,12 @@ public:
 	int FindColumnOrder(int column) const; // Gives index in order for a given column.
 	int GetColumnAt(int index) const
 	{
-		ASSERT(m_order && 0 <= index && m_nColumns > index);
+		assert(m_order && 0 <= index && m_nColumns > index);
 		return m_order[index];
 	}
 	bool IsDescending(int column) const
 	{
-		ASSERT(m_bDescending && 0 <= column && m_nColumns > column);
+		assert(m_bDescending && 0 <= column && m_nColumns > column);
 		return m_bDescending[column];
 	}
 

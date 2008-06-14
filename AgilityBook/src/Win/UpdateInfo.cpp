@@ -364,7 +364,7 @@ bool CUpdateInfo::IsOutOfDate()
 	if (!m_VersionNum.Valid())
 		return true;
 	CVersionNum verThis(NULL); // This auto-loads the versioninfo.
-	ASSERT(verThis.Valid());
+	assert(verThis.Valid());
 	if (verThis < m_VersionNum)
 		return true;
 	else

@@ -196,11 +196,11 @@ BOOL CDlgMessageBox::OnInitDialog()
 	TCHAR szExeName[_MAX_PATH] = _T("");
 	::GetModuleFileName(NULL, szExeName, _MAX_PATH);
 	TCHAR* pStr = _tcsrchr(szExeName, '.');
-	ASSERT(pStr != NULL);
-	ASSERT(*pStr == '.');
+	assert(pStr != NULL);
+	assert(*pStr == '.');
 	*pStr = 0;       // no suffix
 	pStr = _tcsrchr(szExeName, '\\');
-	ASSERT(pStr);
+	assert(pStr);
 	SetWindowText(pStr+1);
 
 	// Set the text.
