@@ -79,11 +79,11 @@ class ARBiCal : public ICalendar
 {
 public:
 	ARBiCal(
-			otstream& ioStream,
+			std::ostream& ioStream,
 			int inVersion);
 	virtual ~ARBiCal()
 	{
-		m_ioStream << "END:VCALENDAR\r\n";
+		m_ioStream << _T("END:VCALENDAR\r\n");
 	}
 
 	virtual void Release()
@@ -93,13 +93,12 @@ public:
 
 	void BeginEvent()
 	{
-		m_ioStream << "BEGIN:VEVENT\r\n";
+		m_ioStream << _T("BEGIN:VEVENT\r\n");
 	}
 #ifdef UNICODE
 	void DoUID(std::wstring const& inUID)
 	{
-		CStringA convert(inUID.c_str());
-		DoUID(std::string(convert));
+		DoUID(tstringUtil::Convert(inUID));
 	}
 #endif
 	void DoUID(std::string const& inUID)
@@ -121,18 +120,15 @@ public:
 #ifdef UNICODE
 	void DoSUMMARY(std::wstring const& inStr)
 	{
-		CStringA convert(inStr.c_str());
-		DoSUMMARY(std::string(convert));
+		DoSUMMARY(tstringUtil::Convert(inStr));
 	}
 	void DoLOCATION(std::wstring const& inStr)
 	{
-		CStringA convert(inStr.c_str());
-		DoLOCATION(std::string(convert));
+		DoLOCATION(tstringUtil::Convert(inStr));
 	}
 	void DoDESCRIPTION(std::wstring const& inStr)
 	{
-		CStringA convert(inStr.c_str());
-		DoDESCRIPTION(std::string(convert));
+		DoDESCRIPTION(tstringUtil::Convert(inStr));
 	}
 #endif
 	void DoSUMMARY(std::string const& inStr)
@@ -151,16 +147,16 @@ public:
 	{
 		if (1 < m_Version)
 		{
-			m_ioStream << "BEGIN:VALARM\r\n";
-			m_ioStream << "ACTION:DISPLAY\r\n";
-			m_ioStream << "TRIGGER:-PT" << inDaysBefore * 24 * 60 << "M\r\n";
-			m_ioStream << "DESCRIPTION:Reminder\r\n";
-			m_ioStream << "END:VALARM\r\n";
+			m_ioStream << "BEGIN:VALARM\r\n"
+				<< "ACTION:DISPLAY\r\n"
+				<< "TRIGGER:-PT" << inDaysBefore * 24 * 60 << "M\r\n"
+				<< "DESCRIPTION:Reminder\r\n"
+				<< "END:VALARM\r\n";
 		}
 	}
 	void EndEvent()
 	{
-		m_ioStream << "END:VEVENT" << "\r\n";
+		m_ioStream << "END:VEVENT\r\n";
 	}
 
 private:
@@ -174,13 +170,13 @@ private:
 			std::string const& inText,
 			bool bQuotedPrint);
 
-	otstream& m_ioStream;
+	std::ostream& m_ioStream;
 	int m_Version;
 };
 
 
 ARBiCal::ARBiCal(
-		otstream& ioStream,
+		std::ostream& ioStream,
 		int inVersion)
 	: m_ioStream(ioStream)
 	, m_Version(inVersion)
@@ -215,8 +211,7 @@ void ARBiCal::Write(
 		m_ioStream << ':';
 	}
 #ifdef UNICODE
-	CStringA tmp(inDate.GetString(ARBDate::eYYYYMMDD).c_str());
-	m_ioStream << tmp;
+	m_ioStream << tstringUtil::Convert(inDate.GetString(ARBDate::eYYYYMMDD));
 #else
 	m_ioStream << inDate.GetString(ARBDate::eYYYYMMDD);
 #endif
@@ -313,21 +308,21 @@ void ARBiCal::DoDTSTAMP()
 		_localtime64_s(&l, &t);
 		struct tm* pTime = &l;
 #endif
-		otstringstream str;
-		str.fill(_T('0'));
+		std::ostringstream str;
+		str.fill('0');
 		str.width(4);
 		str << pTime->tm_year + 1900;
 		str.width(2);
 		str << pTime->tm_mon + 1;
 		str.width(2);
-		str << pTime->tm_mday << _T('T');
+		str << pTime->tm_mday << 'T';
 		str.width(2);
 		str << pTime->tm_hour;
 		str.width(2);
 		str << pTime->tm_min;
 		str.width(2);
 		str << pTime->tm_sec;
-		m_ioStream << _T("DTSTAMP:") << str.str() << _T("\r\n");
+		m_ioStream << "DTSTAMP:" << str.str() << "\r\n";
 	}
 }
 
@@ -343,7 +338,7 @@ ICalendar::~ICalendar()
 
 
 ICalendar* ICalendar::iCalendarBegin(
-		otstream& ioStream,
+		std::ostream& ioStream,
 		int inVersion)
 {
 	ICalendar* pCal = NULL;

@@ -58,17 +58,204 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string Convert(std::wstring const& str)
+std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 {
-	CStringA convert(str.c_str());
-	return (LPCSTR)convert;
+	std::string str;
+	if (inStr && *inStr)
+	{
+		CStringA convert(inStr, static_cast<int>(inLen));
+		str = (LPCSTR)convert;
+	}
+	return str;
 }
 
 
-std::wstring Convert(std::string const& str)
+std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 {
-	CStringW convert(str.c_str());
-	return (LPCWSTR)convert;
+	std::wstring str;
+	if (inStr && *inStr)
+	{
+		CStringW convert(inStr, static_cast<int>(inLen));
+		str = (LPCWSTR)convert;
+	}
+	return str;
+}
+
+
+template <typename T, typename C> T TrimImpl(T const& inStr, C toTrim)
+{
+	T::size_type posFirst = inStr.find_first_not_of(toTrim);
+	if (T::npos == posFirst)
+		return T();
+	T::size_type posLast = inStr.find_last_not_of(toTrim);
+	if (inStr.length() == posLast - posFirst + 1)
+		return inStr;
+	T::size_type posLength = posLast - posFirst + 1;
+	return inStr.substr(posFirst, posLength);
+}
+
+
+std::string tstringUtil::Trim(std::string const& inStr, char toTrim)
+{
+	return TrimImpl<std::string, char>(inStr, toTrim);
+}
+
+
+std::wstring tstringUtil::Trim(std::wstring const& inStr, wchar_t toTrim)
+{
+	return TrimImpl<std::wstring, wchar_t>(inStr, toTrim);
+}
+
+
+template <typename T, typename C> T TrimLeftImpl(T const& inStr, C toTrim)
+{
+	T::size_type pos = inStr.find_first_not_of(toTrim);
+	if (T::npos == pos)
+		return T();
+	else if (0 == pos)
+		return inStr;
+	return inStr.substr(pos);
+}
+
+
+std::string tstringUtil::TrimLeft(std::string const& inStr, char toTrim)
+{
+	return TrimLeftImpl<std::string, char>(inStr, toTrim);
+}
+
+
+std::wstring tstringUtil::TrimLeft(std::wstring const& inStr, wchar_t toTrim)
+{
+	return TrimLeftImpl<std::wstring, wchar_t>(inStr, toTrim);
+}
+
+
+template <typename T, typename C> T TrimRightImpl(T const& inStr, C toTrim)
+{
+	T::size_type pos = inStr.find_last_not_of(toTrim);
+	if (T::npos == pos)
+		return T();
+	else if (inStr.length() == pos + 1)
+		return inStr;
+	return inStr.substr(0, pos + 1);
+}
+
+
+std::string tstringUtil::TrimRight(std::string const& inStr, char toTrim)
+{
+	return TrimRightImpl<std::string, char>(inStr, toTrim);
+}
+
+
+std::wstring tstringUtil::TrimRight(std::wstring const& inStr, wchar_t toTrim)
+{
+	return TrimRightImpl<std::wstring, wchar_t>(inStr, toTrim);
+}
+
+
+template <typename T, typename C> T ToLowerImpl(T const& inStr)
+{
+	T out;
+	if (!inStr.empty())
+	{
+		size_t len = inStr.length();
+		out.append(len, ' ');
+		for (size_t i = 0; i < len; ++i)
+		{
+			out[i] = static_cast<C>(tolower(inStr[i]));
+		}
+	}
+	return out;
+}
+
+
+std::string tstringUtil::ToLower(std::string const& inStr)
+{
+	return ToLowerImpl<std::string, char>(inStr);
+}
+
+
+std::wstring tstringUtil::ToLower(std::wstring const& inStr)
+{
+	return ToLowerImpl<std::wstring, wchar_t>(inStr);
+}
+
+
+template <typename T, typename C> T ToUpperImpl(T const& inStr)
+{
+	T out;
+	if (!inStr.empty())
+	{
+		size_t len = inStr.length();
+		out.append(len, ' ');
+		for (size_t i = 0; i < len; ++i)
+		{
+			out[i] = static_cast<C>(toupper(inStr[i]));
+		}
+	}
+	return out;
+}
+
+
+std::string tstringUtil::ToUpper(std::string const& inStr)
+{
+	return ToUpperImpl<std::string, char>(inStr);
+}
+
+
+std::wstring tstringUtil::ToUpper(std::wstring const& inStr)
+{
+	return ToUpperImpl<std::wstring, wchar_t>(inStr);
+}
+
+
+template <typename T, typename S> T ReplaceImpl(
+		T const& inStr,
+		T const& inReplace,
+		T const& inReplaceWith)
+{
+	if (inReplace.empty())
+		return inStr;
+	S str;
+	T text(inStr);
+	while (!text.empty())
+	{
+		T::size_type pos = text.find(inReplace);
+		if (T::npos != pos)
+		{
+			if (0 < pos)
+			{
+				str << text.substr(0, pos);
+			}
+			if (!inReplaceWith.empty())
+				str << inReplaceWith;
+			text = text.substr(pos+inReplace.length(), T::npos);
+		}
+		else
+		{
+			str << text;
+			text.erase();
+		}
+	}
+	return str.str();
+}
+
+
+std::string tstringUtil::Replace(
+		std::string const& inStr,
+		std::string const& inReplace,
+		std::string const& inReplaceWith)
+{
+	return ReplaceImpl<std::string, std::ostringstream>(inStr, inReplace, inReplaceWith);
+}
+
+
+std::wstring tstringUtil::Replace(
+		std::wstring const& inStr,
+		std::wstring const& inReplace,
+		std::wstring const& inReplaceWith)
+{
+	return ReplaceImpl<std::wstring, std::wostringstream>(inStr, inReplace, inReplaceWith);
 }
 
 /////////////////////////////////////////////////////////////////////////////

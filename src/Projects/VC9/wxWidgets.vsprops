@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="wxWidgets Settings"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="C:\wx\include;C:\wx\include\msvc"
+		PreprocessorDefinitions="WXWIDGETS"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		AdditionalIncludeDirectories="C:\wx\include"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC9.0s"
+		AdditionalOptions="/SafeSEH"
+		TargetMachine="1"
+	/>
+</VisualStudioPropertySheet>

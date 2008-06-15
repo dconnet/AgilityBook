@@ -1394,7 +1394,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 			data += _T("\r\n");
 		}
 
-		otstringstream iCal;
+		ostringstream iCal;
 		ElementNodePtr tree(ElementNode::New(CLIPDATA));
 
 		// Now all the data.
@@ -1422,8 +1422,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 
 		clpData.SetData(eFormatCalendar, tree);
 		clpData.SetData(data);
-		tstring s = iCal.str();
-		clpData.SetData(eFormatiCalendar, s);
+		clpData.SetData(eFormatiCalendar, iCal.str());
 	}
 }
 
