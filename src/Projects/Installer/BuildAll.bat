@@ -18,6 +18,42 @@ rd /q/s VC8x64
 rd /q/s VC9Win32
 rd /q/s VC9x64
 
+REM Targets:
+REM VC6
+REM  Configuration: 'Release'/'Debug' (non-unicode)
+REM  Platform: Win32
+REM  Targets: AgilityBook, cal_usdaa, LibTidy, LibXerces, LibZlib
+REM VC7.1
+REM  Configuration: 'Release'/'Debug' (non-unicode)
+REM  Platform: Win32
+REM  Targets: AgilityBook, cal_usdaa, LibTidy, LibXerces, LibZlib
+REM VC8
+REM  Configuration: 'Release'/'Debug'/'Unicode Release'/'Unicode Debug'
+REM  Platform: Win32, x64
+REM  ARBHelp: 'Release'/'Debug'
+REM  Targets:
+REM   AgilityBook: all
+REM   AgilityBookFRA: all
+REM   ARBHelp: no unicode
+REM   cal_usdaa: all
+REM   LibTidy: no unicode
+REM   LibXerces: no unicode
+REM   LibZlib: no unicode
+REM   ParseResourceHeader: all
+REM VC9
+REM  Configuration: 'Release'/'Debug'/'Release - No Unicode'/'Debug - No Unicode'
+REM  Platform: Win32, x64
+REM  Targets:
+REM   AgilityBook: unicode only
+REM   AgilityBookFRA: unicode only
+REM   ARBHelp: unicode only
+REM   cal_usdaa: unicode only
+REM   LibTidy: no unicode [debug/release=non unicode]
+REM   LibXerces: no unicode [debug/release=non unicode]
+REM   LibZlib: no unicode [debug/release=non unicode]
+REM   ParseResourceHeader: unicode only
+REM   TestARB: all
+
 cd ..\src\Projects\VC8
 del bldWin98.txt
 REM Non-unicode, must do in VC8 since VC9 no longer supports win98
