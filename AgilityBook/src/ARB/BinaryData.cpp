@@ -248,8 +248,7 @@ bool BinaryData::DecodeString(
 		return false;
 	// TODO: Better conversion
 #ifdef UNICODE
-	CString tmp(reinterpret_cast<char*>(data), (int)len);
-	outData = (LPCTSTR)tmp;
+	outData = tstringUtil::Convert(reinterpret_cast<char*>(data), len);
 #else
 	outData = tstring(reinterpret_cast<char*>(data), len);
 #endif
@@ -268,12 +267,11 @@ bool BinaryData::EncodeString(
 	// Do not include the null terminator. Otherwise decoding includes it into
 	// the output string - which when streamed, then includes the null. Which
 	// in an ostringstream, terminates the string on output of the stream.
-	size_t len = inData.length();
 	// TODO: Better conversion
 #ifdef UNICODE
-	CStringA tmp(inData.c_str());
-	return BinaryData::Encode(reinterpret_cast<unsigned char const*>((LPCSTR)tmp), len, outBase64);
+	std::string tmp(tstringUtil::Convert(inData));
+	return BinaryData::Encode(reinterpret_cast<unsigned char const*>(tmp.c_str()), tmp.length(), outBase64);
 #else
-	return BinaryData::Encode(reinterpret_cast<unsigned char const*>(inData.c_str()), len, outBase64);
+	return BinaryData::Encode(reinterpret_cast<unsigned char const*>(inData.c_str()), inData.length(), outBase64);
 #endif
 }

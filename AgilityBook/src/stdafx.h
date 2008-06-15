@@ -39,7 +39,7 @@
  * @li 2005-10-30 DRC Added static xerces library support.
  */
 
-#if defined(_WINDOWS) || defined(_CONSOLE)
+#if defined(_WIN32)
 
 // _MSCVER
 // http://support.microsoft.com/kb/65472 (define values thru vc6)
@@ -161,6 +161,8 @@
 	#error We do not support UNICODE builds for Win98
 #endif
 
+#if !defined(WXWIDGETS)
+
 // This is new as of vc7
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	/// some CString constructors will be explicit
 #define _AFX_ALL_WARNINGS	/// turns off MFC's hiding of some common and often safely ignored warning messages
@@ -175,6 +177,8 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxdlgs.h>
 
+#endif // WXWIDGETS
+
 // Some minor tweaks to allow VC6 support while using new features.
 #if _MSC_VER < 1300
 #define CStringA CString
@@ -183,7 +187,7 @@ typedef long LONG_PTR;
 #define _tstol _ttol
 #endif
 
-#else // _WINDOWS ||_CONSOLE
+#else // _WIN32
 
 // Include other platform common files here. This way we can continue to
 // include 'stdafx.h' as the first header in all .cpp files so win32
@@ -197,15 +201,17 @@ typedef wchar_t	TCHAR;
 #define _T(x)	L##x
 #define _tstol	atol
 #define _tcstod	strtod
+#define _tcscmp	strcmp
 
 #else
 typedef char	TCHAR;
 #define _T(x)	x
 #define _tstol	atol
 #define _tcstod	strtod
+#define _tcscmp	strcmp
 #endif // UNICODE
 
-#endif // _WINDOWS ||_CONSOLE
+#endif // _WIN32
 
 #if !defined(_MFC_VER)
 

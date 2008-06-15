@@ -43,7 +43,7 @@
  */
 
 #include "stdafx.h"
-#if defined(_WINDOWS) || defined(_CONSOLE)
+#if defined(_WIN32)
 #include "resource.h"
 #endif
 #include "ARBConfig.h"
@@ -258,7 +258,7 @@ void ARBConfig::Default()
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
-#if defined(_WINDOWS) || defined(_CONSOLE)
+#if defined(_WIN32)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 	if (hrSrc)
 	{
@@ -294,7 +294,7 @@ void ARBConfig::Default()
 std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 {
 	std::string dtd;
-#if defined(_WINDOWS) || defined(_CONSOLE)
+#if defined(_WIN32)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
 	if (hrSrc)
 	{
@@ -303,10 +303,9 @@ std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 		{
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
 			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			CStringA data(pData, size);
+			dtd = std::string(pData, size);
 			if (bNormalizeCRNL)
-				data.Replace("\r\n", "\n");
-			dtd = std::string(data, data.GetLength());
+				dtd = tstringUtil::Replace(dtd, "\r\n", "\n");
 			FreeResource(hRes);
 		}
 	}

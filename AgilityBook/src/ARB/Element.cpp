@@ -1723,7 +1723,7 @@ bool ElementNode::SaveXML(
 	{
 		const char* treeBook = "AgilityBook";
 #ifdef _DEBUG
-		assert(0 == _tcscmp(TREE_BOOK, L"AgilityBook"));
+		assert(0 == _tcscmp(TREE_BOOK, _T("AgilityBook")));
 #endif
 		outOutput << "<!DOCTYPE " << treeBook << " [\n";
 		outOutput << *inDTD;

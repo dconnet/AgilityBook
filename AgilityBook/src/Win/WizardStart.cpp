@@ -511,7 +511,7 @@ BOOL CWizardStart::OnWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					oftstream output(file.GetFileName(), std::ios::out | std::ios::binary);
+					std::ofstream output(file.GetFileName(), std::ios::out | std::ios::binary);
 					output.exceptions(std::ios_base::badbit);
 					if (output.is_open())
 					{

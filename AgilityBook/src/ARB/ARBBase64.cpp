@@ -326,8 +326,7 @@ bool ARBBase64::Encode(
 	{
 		bOk = true;
 #ifdef UNICODE
-		CString tmp(encoded);
-		outData = (LPCTSTR)tmp;
+		outData = tstringUtil::Convert(reinterpret_cast<char*>(encoded));
 #else
 		outData = reinterpret_cast<char*>(encoded);
 #endif
