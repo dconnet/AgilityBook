@@ -63,8 +63,29 @@ std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 	std::string str;
 	if (inStr && *inStr)
 	{
+#ifdef _WIN32
+#ifdef _MFC_VER
 		CStringA convert(inStr, static_cast<int>(inLen));
 		str = (LPCSTR)convert;
+#else
+		int lenA = ::WideCharToMultiByte(CP_ACP, 0, inStr, inLen, 0, 0, NULL, NULL);
+		if (lenA > 0)
+		{
+			char* ansistr = new char[lenA + 1];
+			::WideCharToMultiByte(CP_ACP, 0, inStr, inLen, ansistr, lenA, NULL, NULL);
+			ansistr[lenA] = 0;
+			str = ansistr;
+			delete [] ansistr;
+		}
+		else
+		{
+			// handle the error
+			//DWORD dwErr = GetLastError();
+		}
+#endif
+#else
+#error Not yet implemented
+#endif
 	}
 	return str;
 }
@@ -75,8 +96,30 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 	std::wstring str;
 	if (inStr && *inStr)
 	{
+#ifdef _WIN32
+#ifdef _MFC_VER
 		CStringW convert(inStr, static_cast<int>(inLen));
 		str = (LPCWSTR)convert;
+#else
+		int lenW = ::MultiByteToWideChar(CP_ACP, 0, inStr, inLen, 0, 0);
+		if (lenW > 0)
+		{
+			// Check whether conversion was successful
+			wchar_t* unicodestr = new wchar_t[lenW + 1];
+			::MultiByteToWideChar(CP_ACP, 0, inStr, inLen, unicodestr, lenW);
+			unicodestr[lenW] = 0;
+			str = unicodestr;
+			delete [] unicodestr;
+		}
+		else
+		{
+			// handle the error
+			//DWORD dwErr = GetLastError();
+		}
+#endif
+#else
+#error Not yet implemented
+#endif
 	}
 	return str;
 }
