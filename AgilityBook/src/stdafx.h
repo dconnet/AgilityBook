@@ -39,6 +39,14 @@
  * @li 2005-10-30 DRC Added static xerces library support.
  */
 
+
+// These are needed in order to generate a decent pragma message
+#define STRING2(x) #x
+#define STRING(x) STRING2(x)
+//#pragma message ( __FILE__ "(" STRING(__LINE__) ") : message" )
+#define PRAGMA_MESSAGE(x) ( __FILE__ "(" STRING(__LINE__) ") : " x )
+
+
 #if defined(_WIN32)
 
 // _MSCVER

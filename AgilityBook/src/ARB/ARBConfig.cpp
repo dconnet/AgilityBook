@@ -258,7 +258,7 @@ void ARBConfig::Default()
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
-#if defined(_WIN32)
+#if defined(_WIN32) && defined(_MFC_VER)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 	if (hrSrc)
 	{
@@ -272,10 +272,11 @@ void ARBConfig::Default()
 		}
 	}
 #else
+#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DefaultConfig.xml usage" )
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
-	bOk = tree->LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
+	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
 #endif
 	if (bOk && tree->GetName() == _T("DefaultConfig"))
 	{
@@ -294,7 +295,7 @@ void ARBConfig::Default()
 std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 {
 	std::string dtd;
-#if defined(_WIN32)
+#if defined(_WIN32) && defined(_MFC_VER)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
 	if (hrSrc)
 	{
@@ -310,6 +311,7 @@ std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 		}
 	}
 #else
+#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DTD usage" )
 	// @todo: Porting issues: Not currently implemented
 	dtd = "<!-- Not implemented on non-windows platforms -->\n";
 #endif
