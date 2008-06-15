@@ -64,7 +64,7 @@ std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 	if (inStr && *inStr)
 	{
 #ifdef _WIN32
-#ifdef _MFC_VER
+#if defined(_MFC_VER) && _MSC_VER >= 1300
 		CStringA convert(inStr, static_cast<int>(inLen));
 		str = (LPCSTR)convert;
 #else
@@ -97,7 +97,7 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 	if (inStr && *inStr)
 	{
 #ifdef _WIN32
-#ifdef _MFC_VER
+#if defined(_MFC_VER) && _MSC_VER >= 1300
 		CStringW convert(inStr, static_cast<int>(inLen));
 		str = (LPCWSTR)convert;
 #else
