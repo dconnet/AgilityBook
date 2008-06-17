@@ -1,4 +1,6 @@
-6/15/2008: v1.10.8.12 <in development>
+6/16/2008: v1.10.8.12 <in development>
+- Configuration v22:
+  - NADAC Chances was missing the Bonus Points option.
 - New features / Enhancements:
   - Start adding support for non-MFC/non-Windows platforms.
 - Bug fixes:
