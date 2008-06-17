@@ -4,6 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2008-06-16 DRC Configuration version 22.
+               NADAC Chances was missing the Bonus Points option.
+2008-06-04 DRC Configuration version 21.
+               Changed AKC 'standard' division to 'regular'.
 2007-12-24 DRC Configuration version 20.
                Fixed AKC FAST titles.
                Added Hoopers/Gaters to NADAC, updated titles.
@@ -63,7 +67,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="21">
+  <Configuration version="22">
     <Action NewName="SSA" OldName="Sweepstakes" Verb="RenameVenue" />
     <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle" />
     <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision" />
@@ -2526,12 +2530,12 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
       <Event Name="Chances">
         <Desc>Transition Gamblers class
 Was called Wild Card briefly.</Desc>
-        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" type="OCScoreThenTime">
+        <Scoring Division="Proficient" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10" />
           <LifeTime Faults="0" Points="10" />
         </Scoring>
-        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" type="OCScoreThenTime">
+        <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="OCScoreThenTime">
           <Note>This is the new Gamblers style. It is simply Q or NQ.</Note>
           <TitlePoints Faults="0" Points="10" />
           <LifeTime Faults="0" Points="10" />
