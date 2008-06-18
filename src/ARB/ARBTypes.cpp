@@ -68,13 +68,13 @@ std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 		CStringA convert(inStr, static_cast<int>(inLen));
 		str = (LPCSTR)convert;
 #else
-		int lenA = ::WideCharToMultiByte(CP_ACP, 0, inStr, inLen, 0, 0, NULL, NULL);
+		int lenA = ::WideCharToMultiByte(CP_UTF8, 0, inStr, inLen, 0, 0, NULL, NULL);
 		if (lenA > 0)
 		{
 			char* ansistr = new char[lenA + 1];
-			::WideCharToMultiByte(CP_ACP, 0, inStr, inLen, ansistr, lenA, NULL, NULL);
+			::WideCharToMultiByte(CP_UTF8, 0, inStr, inLen, ansistr, lenA, NULL, NULL);
 			ansistr[lenA] = 0;
-			str = ansistr;
+			str = std::string(ansistr, lenA);
 			delete [] ansistr;
 		}
 		else
@@ -101,12 +101,12 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 		CStringW convert(inStr, static_cast<int>(inLen));
 		str = (LPCWSTR)convert;
 #else
-		int lenW = ::MultiByteToWideChar(CP_ACP, 0, inStr, inLen, 0, 0);
+		int lenW = ::MultiByteToWideChar(CP_UTF8, 0, inStr, inLen, 0, 0);
 		if (lenW > 0)
 		{
 			// Check whether conversion was successful
 			wchar_t* unicodestr = new wchar_t[lenW + 1];
-			::MultiByteToWideChar(CP_ACP, 0, inStr, inLen, unicodestr, lenW);
+			::MultiByteToWideChar(CP_UTF8, 0, inStr, inLen, unicodestr, lenW);
 			unicodestr[lenW] = 0;
 			str = unicodestr;
 			delete [] unicodestr;
