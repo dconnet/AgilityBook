@@ -1,6 +1,7 @@
-6/16/2008: v1.10.8.12 <in development>
+6/21/2008: v1.10.8.12 <in development>
 - Configuration v22:
   - NADAC Chances was missing the Bonus Points option.
+    Updated Platinum Speed Star titles to allow multiple.
 - New features / Enhancements:
   - Start adding support for non-MFC/non-Windows platforms.
 - Bug fixes:
