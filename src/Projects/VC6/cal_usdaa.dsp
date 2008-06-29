@@ -148,6 +148,14 @@ SOURCE=..\..\ARB\ARBDate.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\ARB\ARBString.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ARB\ARBString.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\ARB\ARBTypes.cpp
 # End Source File
 # Begin Source File

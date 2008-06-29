@@ -1,12 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <DefaultConfig Book="12.7">
   <!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2008-06-21 DRC Configuration version 22.
+2008-06-29 DRC Configuration version 22.
                NADAC Chances was missing the Bonus Points option.
                Updated Platinum Speed Star titles to allow multiple.
+               Added All-Around titles.
 2008-06-04 DRC Configuration version 21.
                Changed AKC 'standard' division to 'regular'.
 2007-12-24 DRC Configuration version 20.
@@ -2316,11 +2317,6 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
       <Titles LongName="Purple Versatility NATCH" Name="Purple Versatility NATCH">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
       <Titles LongName="NADAC Medal" Multiple="2" Name="NADAC Medal">Skilled Elite: 230 Regular pts, 130 Jumpers pts, and 130 pts Chances</Titles>
       <Titles LongName="Versatility Medal" Multiple="2" Name="Vers-Medal">Skilled Elite: 230 Regular, 130 of each other class. Each subsequent Vers-Medal requires an additional 200 Regular, 100 of each other class.</Titles>
-      <Titles LongName="Platinum Speed Star" Multiple="2" Name="Platinum Speed Star">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index.</Titles>
-      <Titles LongName="Platinum Versatility Speed Star" Multiple="2" Name="Platinum Versatility Speed Star">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index, if applicable.</Titles>
-      <Titles LongName="Purple Achievement Cup" Name="Purple Achievement Cup">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
-      <Titles LongName="Purple Versatility Achievement Cup" Name="Purple Versatility Achievement Cup">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances, 10 in Elite Tunnelers, 10 in Elite Touch N Go, and 10 in Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
-      <Titles LongName="Master Of Distance, Speed, QUality And Directionals" Name="MOD SQUAD">3 qualifying rounds in Elite Regular, Elite Jumpers, Elite Chances, Elite Tunnelers, Elite Touch N Go, and Elite Weavers, with ALL rounds earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
       <Titles LongName="Novice Triple Superior Award" Name="Triple Superior-Novice">Proficient/Skilled: Superior Performance titles in Novice Regular, Jumpers, Chances.</Titles>
       <Titles LongName="Open Triple Superior Award" Name="Triple Superior-Open">Proficient/Skilled: Superior Performance titles in Open Regular, Jumpers, Chances.</Titles>
       <Titles LongName="Elite Triple Superior Award" Name="Triple Superior-Elite">Proficient: Superior Performance titles in Elite Regular, Jumpers, Chances.</Titles>
@@ -2338,6 +2334,18 @@ joker: 1 contact, weaves, broad, double, triple (5 pts each)</Desc>
       <Titles LongName="Triple Superior Versatility Award" Name="Triple Superior Versatility">Superior Versatility Award in all three levels</Titles>
       <Titles LongName="Triple Superior Versatility Certificate" Name="Triple Superior Versatility Skilled">Novice and Open Superior Versatility Award and an Elite Superior Versatility Certificate.</Titles>
       <Titles LongName="Lifetime Point Award" Multiple="2" Name="Point Award">Special certificate earned at 1000. Also at 2500, 5000, etc career pts.</Titles>
+      <Titles LongName="All Around Award Novice" Multiple="2" Name="All Around Novice">A Superior Performance title earned in every class offered by NADAC at the Novice level.</Titles>
+      <Titles LongName="All Around Award Open" Multiple="2" Name="All Around Open">A Superior Performance title earned in every class offered by NADAC at the Novice and Open levels.</Titles>
+      <Titles LongName="All Around Award Elite" Multiple="2" Name="All Around Elite">A Superior Performance title earned in every class offered by NADAC at the Novice, Open and Elite levels.</Titles>
+      <Titles LongName="Platinum Speed Star" Multiple="2" Name="Platinum Speed Star">20 qualifying rounds in Regular and 10 qualifying rounds in Jumpers and 10 qualifying rounds in Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index. (Run Index is not computed for Chances.)</Titles>
+      <Titles LongName="Platinum Versatility Speed Star" Multiple="2" Name="Platinum Versatility Speed Star">20 qualifying rounds in Regular and 10 qualifying rounds each in Jumpers, Chances, Tunnelers, Touch N Go, and Weavers, with ALL rounds (except Chances) earned with a 100+ Run Index. (Run Index is not computed for Chances.)</Titles>
+      <Titles LongName="Silver Achievement Cup" Name="Silver Achievement Cup">20 qualifying rounds in Elite Regular, 10 in Elite Jumpers, 10 in Elite Chances with ALL rounds of Regular and Jumpers earned with a 100+ Run Index AND a 15-point bonus box, if applicable.</Titles>
+      <Titles LongName="Silver Versatility Achievement Cup" Name="Silver Versatility Achievement Cup">20 qualifying rounds in Regular and 10 qualifying rounds each in Jumpers, Chances, Tunnelers, Touch N Go, and Weavers, with ALL rounds earned with a 20 point Bonus Box.</Titles>
+      <Titles LongName="Master Of Distance, Speed, Quality and Directional skills" Name="MOD SQUAD">3 qualifying rounds each in Regular, Jumpers, Chances, Tunnelers, Touch N Go, and Weavers, with ALL rounds earned with a 20 point Bonus Box AND at least one bonus run in each of Regular, Jumpers, Tunnelers, Touch N Go and Weavers must have a 100+ Run Index.</Titles>
+      <Titles LongName="Purple Achievement Cup" Name="Purple Achievement Cup">20 qualifying rounds in Regular and 10 qualifying rounds in Jumpers and Chances with ALL rounds earned with a 100+ Run Index AND with a 20 point Bonus Box.
+
+There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxes in this class, and those must be earned for the Purple Achievement Cup.</Titles>
+      <Titles LongName="Purple Versatility Achievement Cup" Name="Purple Versatility Achievement Cup">20 qualifying rounds in Regular and 10 qualifying rounds each in Jumpers, Chances, Tunnelers, Touch N Go, and Weavers, with ALL rounds earned with a 100+ Run Index AND with a 20 point Bonus Box. (no RI in Chances)</Titles>
       <Titles LongName="Novice Agility Certificate-Veterans" Name="NAC-V" ValidTo="2005-12-9">30 points</Titles>
       <Titles LongName="Novice Jumpers Certificate-Veterans" Name="NJC-V" ValidTo="2005-12-9">30 points (20 pts before 8/1/2005)</Titles>
       <Titles LongName="Novice Gamblers Certificate-Veterans" Name="NGC-V" ValidTo="2005-12-9">30 points (20 pts before 8/1/2005)</Titles>

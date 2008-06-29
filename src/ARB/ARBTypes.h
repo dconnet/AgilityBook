@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-06-29 DRC Moved string stuff to ARBString.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Removed ARBDouble.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -106,49 +107,7 @@ ARB_TYPEDEF_LIST(ARBTraining)
 ARB_TYPEDEF2(ElementNode)
 ARB_TYPEDEF2(ElementText)
 
-// Note, for non-Windows systems, see stdafx.h for additional requirements.
-typedef std::basic_ostringstream<TCHAR> otstringstream;
-typedef std::basic_string<TCHAR> tstring;
-typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > otstream;
-typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > oftstream;
-
-/**
- * Convert between ansi/unicode
- */
-class tstringUtil
-{
-public:
-	static std::string Convert(wchar_t const* const inStr, size_t inLen);
-	static std::string Convert(std::wstring const& inStr)
-	{
-		return Convert(inStr.c_str(), inStr.length());
-	}
-	static std::wstring Convert(char const* const inStr, size_t inLen);
-	static std::wstring Convert(std::string const& inStr)
-	{
-		return Convert(inStr.c_str(), inStr.length());
-	}
-
-	// Some CString-style functions
-	static std::string Trim(std::string const& inStr, char toTrim = ' ');
-	static std::wstring Trim(std::wstring const& inStr, wchar_t toTrim = ' ');
-	static std::string TrimLeft(std::string const& inStr, char toTrim = ' ');
-	static std::wstring TrimLeft(std::wstring const& inStr, wchar_t toTrim = ' ');
-	static std::string TrimRight(std::string const& inStr, char toTrim = ' ');
-	static std::wstring TrimRight(std::wstring const& inStr, wchar_t toTrim = ' ');
-	static std::string ToLower(std::string const& inStr);
-	static std::wstring ToLower(std::wstring const& inStr);
-	static std::string ToUpper(std::string const& inStr);
-	static std::wstring ToUpper(std::wstring const& inStr);
-	static std::string Replace(
-			std::string const& inStr,
-			std::string const& inReplace,
-			std::string const& inReplaceWith);
-	static std::wstring Replace(
-			std::wstring const& inStr,
-			std::wstring const& inReplace,
-			std::wstring const& inReplaceWith);
-};
+#include "ARBString.h"
 
 
 /**

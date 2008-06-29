@@ -87,11 +87,11 @@ def main():
 	# /r:overwrite readonly, /q: don't show copied filename, /y:no prompt
 	print
 	print "Copying chm file to build output directories"
-	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC6\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC7\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC8Win32\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9Win32\\Release\\\"")
-	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9Win32\\Debug\\\"")
-	RunCommand("xcopy /r/q/y Help\\*.chm \"..\\bin\\VC9x64\\Release\\\"")
+	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC6\Release\"')
+	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC7\Release\"')
+	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC8Win32\Release\"')
+	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Release\"')
+	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Debug\"')
+	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9x64\Release\"')
 
 main()
