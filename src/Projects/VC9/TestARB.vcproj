@@ -500,6 +500,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestString.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestTraining.cpp"
 				>
 			</File>
@@ -857,6 +861,14 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\ARBLocalization.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBString.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBString.h"
 				>
 			</File>
 			<File
