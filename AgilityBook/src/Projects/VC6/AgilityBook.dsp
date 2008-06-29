@@ -1259,6 +1259,14 @@ SOURCE=..\..\ARB\ARBLocalization.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\ARB\ARBString.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ARB\ARBString.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\ARB\ARBTraining.cpp
 # End Source File
 # Begin Source File

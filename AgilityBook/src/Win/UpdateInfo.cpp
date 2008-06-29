@@ -36,6 +36,7 @@
  * line 2-n: xml (see below)
  *
  * Revision History
+ * @li 2008-06-29 DRC When looking for language ids, it was searching the wrong node.
  * @li 2008-01-01 DRC Fix a bug parsing Element data (GetElementNode may return null)
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
@@ -56,6 +57,10 @@
 #include "ReadHttp.h"
 #include "Splash.h"
 #include "VersionNum.h"
+
+#ifdef _DEBUG
+//#define USE_LOCAL
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -133,6 +138,19 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	CStringA data;
 	CString errMsg;
 
+#ifdef USE_LOCAL
+	CStdioFile file;
+	if (file.Open(_T("c:\\AgilityBook\\www\\version.txt"), CFile::modeRead))
+	{
+		CString line;
+		while (file.ReadString(line))
+		{
+			data += line;
+			data += '\n';
+		}
+		file.Close();
+	}
+#else
 	CReadHttp file(url, data);
 	CString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
 	if (file.ReadHttpFile(userName, errMsg))
@@ -157,6 +175,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		return false;
 	}
 	file.Close();
+#endif
 
 	// Now parse it into the object.
 	CString tmp(data);
@@ -269,7 +288,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 						if (lang->GetName() == _T("Lang"))
 						{
 							tstring langIdStr;
-							node->GetAttrib(_T("id"), langIdStr);
+							lang->GetAttrib(_T("id"), langIdStr);
 							LANGID langId = static_cast<LANGID>(_tcstol(langIdStr.c_str(), NULL, 16));
 							m_InfoMsg[langId] = lang->GetValue();
 						}

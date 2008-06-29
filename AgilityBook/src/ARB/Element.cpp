@@ -1716,9 +1716,9 @@ bool ElementNode::SaveXML(
 		std::string const* inDTD) const
 {
 	// On Win32, an XMLCh is a UNICODE character.
-	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"UTF-8");
+	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"utf-8");
 	CXMLFormatTarget formatTarget(outOutput);
-	outOutput << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	outOutput << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 	if (inDTD && 0 < inDTD->length())
 	{
 		const char* treeBook = "AgilityBook";

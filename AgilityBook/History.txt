@@ -1,11 +1,16 @@
-6/21/2008: v1.10.8.12 <in development>
-- Configuration v22:
-  - NADAC Chances was missing the Bonus Points option.
-    Updated Platinum Speed Star titles to allow multiple.
+6/29/2008: v1.10.8.12 <in development>
 - New features / Enhancements:
   - Start adding support for non-MFC/non-Windows platforms.
 - Bug fixes:
   - ICalendar output mixed ansi/unicode strings in output.
+  - Fix parsing of version.txt for language ids.
+
+6/29/2008: Config 22
+- Configuration v22:
+  (Note: version.txt has been uploaded without lang translations due to a bug)
+  - NADAC Chances was missing the Bonus Points option.
+    Updated Platinum Speed Star titles to allow multiple.
+    Added All-Around awards.
 
 6/11/2008: v1.10.7.12
 - Bug fixes:

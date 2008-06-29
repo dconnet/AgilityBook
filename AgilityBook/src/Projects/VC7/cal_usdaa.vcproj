@@ -200,6 +200,12 @@
 				RelativePath="..\..\ARB\ARBDate.h">
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARBString.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBString.h">
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBTypes.cpp">
 			</File>
 			<File

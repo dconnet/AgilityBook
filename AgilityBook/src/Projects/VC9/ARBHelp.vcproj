@@ -379,7 +379,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARB\ARBTypes.h"
+				RelativePath="..\..\ARB\ARBString.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBString.h"
 				>
 			</File>
 			<File
