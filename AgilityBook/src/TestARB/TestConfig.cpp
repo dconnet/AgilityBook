@@ -114,6 +114,8 @@ SUITE(TestConfig)
 			IDR_XML_CONFIG14_V12_2,
 			IDR_XML_CONFIG19_V12_5,
 			IDR_XML_CONFIG20_V12_6,
+			IDR_XML_CONFIG21_V12_7,
+			IDR_XML_CONFIG22_V12_7,
 			0
 		};
 		for (int i = 0; configs[i] != 0; ++i)
@@ -147,7 +149,7 @@ SUITE(TestConfig)
 		CHECK_EQUAL(0u, config.GetVenues().size());
 		config.Default();
 		CHECK_EQUAL(0u, config.GetCalSites().size());
-		CHECK_EQUAL(80u, config.GetActions().size());
+		CHECK_EQUAL(81u, config.GetActions().size());
 		CHECK_EQUAL(0u, config.GetFaults().size());
 		CHECK_EQUAL(5u, config.GetOtherPoints().size());
 		CHECK_EQUAL(13u, config.GetVenues().size());

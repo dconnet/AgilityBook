@@ -11,6 +11,8 @@
 #define IDR_XML_CONFIG14_V12_2          143
 #define IDR_XML_CONFIG19_V12_5          144
 #define IDR_XML_CONFIG20_V12_6          145
+#define IDR_XML_CONFIG21_V12_7          146
+#define IDR_XML_CONFIG22_V12_7          147
 
 // Next default values for new objects
 // 
