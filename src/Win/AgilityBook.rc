@@ -201,21 +201,21 @@ BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_DOG
             MENUITEM SEPARATOR
             MENUITEM "&New...",                     ID_AGILITY_NEW_DOG
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
+            MENUITEM "De&lete...",                  ID_AGILITY_DELETE_DOG
         END
         POPUP "&Title"
         BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_TITLE
             MENUITEM SEPARATOR
             MENUITEM "&New...",                     ID_AGILITY_NEW_TITLE
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TITLE
+            MENUITEM "De&lete...",                  ID_AGILITY_DELETE_TITLE
         END
         POPUP "Tr&ial"
         BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRIAL
             MENUITEM SEPARATOR
             MENUITEM "&New...",                     ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
+            MENUITEM "De&lete...",                  ID_AGILITY_DELETE_TRIAL
             MENUITEM SEPARATOR
             MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_TRIAL
         END
@@ -224,7 +224,7 @@ BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_RUN
             MENUITEM SEPARATOR
             MENUITEM "&New...\tCtrl+R",             ID_AGILITY_NEW_RUN
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+            MENUITEM "De&lete...",                  ID_AGILITY_DELETE_RUN
             MENUITEM SEPARATOR
             MENUITEM "Print &Runs...",              ID_AGILITY_PRINT_RUNS
         END
@@ -234,7 +234,7 @@ BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_CALENDAR
             MENUITEM SEPARATOR
             MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_CALENDAR
+            MENUITEM "De&lete...",                  ID_AGILITY_DELETE_CALENDAR
             MENUITEM SEPARATOR
             MENUITEM "&Update...",                  ID_AGILITY_UPDATE_CALENDAR
             MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
@@ -246,7 +246,7 @@ BEGIN
             MENUITEM "&Properties...",              ID_AGILITY_EDIT_TRAINING
             MENUITEM SEPARATOR
             MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
-            MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRAINING
+            MENUITEM "De&lete...",                  ID_AGILITY_DELETE_TRAINING
         END
     END
     POPUP "&Notes"
@@ -312,11 +312,11 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
         END
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "&Duplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete",                     ID_AGILITY_DELETE_DOG
+        MENUITEM "De&lete...",                  ID_AGILITY_DELETE_DOG
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
         MENUITEM SEPARATOR
@@ -342,11 +342,11 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "&Duplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete",                     ID_AGILITY_DELETE_TRIAL
+        MENUITEM "De&lete...",                  ID_AGILITY_DELETE_TRIAL
         MENUITEM SEPARATOR
         MENUITEM "Reorder...",                  ID_REORDER
         MENUITEM SEPARATOR
@@ -372,11 +372,11 @@ BEGIN
             MENUITEM "Tr&ial...",                   ID_AGILITY_NEW_TRIAL
             MENUITEM "&Run...\tCtrl+R",             ID_AGILITY_NEW_RUN
         END
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "&Duplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete",                     ID_AGILITY_DELETE_RUN
+        MENUITEM "De&lete...",                  ID_AGILITY_DELETE_RUN
         MENUITEM SEPARATOR
         MENUITEM "&Reorder...",                 ID_REORDER
         MENUITEM SEPARATOR
@@ -406,11 +406,11 @@ BEGIN
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_CALENDAR
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "&Duplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete...",                  ID_AGILITY_DELETE_CALENDAR
+        MENUITEM "De&lete...",                  ID_AGILITY_DELETE_CALENDAR
         MENUITEM SEPARATOR
         MENUITEM "&Update...",                  ID_AGILITY_UPDATE_CALENDAR
         MENUITEM "&Export...",                  ID_AGILITY_EXPORT_CALENDAR
@@ -427,11 +427,11 @@ BEGIN
         MENUITEM "&Options...\tF7",             ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "&New...",                     ID_AGILITY_NEW_TRAINING
-        MENUITEM "D&uplicate",                  ID_EDIT_DUPLICATE
+        MENUITEM "&Duplicate",                  ID_EDIT_DUPLICATE
         MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM "&Delete...",                  ID_AGILITY_DELETE_TRAINING
+        MENUITEM "De&lete...",                  ID_AGILITY_DELETE_TRAINING
     END
 END
 
@@ -3048,7 +3048,7 @@ STRINGTABLE
 BEGIN
     ID_EDIT_DUPLICATE       "Duplicate the current selection\nDuplicate"
     ID_AGILITY_NEW_DOG      "Create a new Dog\nNew Dog"
-    ID_AGILITY_EDIT_DOG     "Edit a Dog's information\\Edit Dog"
+    ID_AGILITY_EDIT_DOG     "Edit a Dog's information\nEdit Dog"
     ID_AGILITY_DELETE_DOG   "Delete a Dog and all its information\nDelete Dog"
 END
 
@@ -3078,7 +3078,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_AGILITY_NEW_TITLE    "Create a new Title\nNew Title"
-    ID_AGILITY_EDIT_TITLE   "Edit a Title's information\\Edit Title"
+    ID_AGILITY_EDIT_TITLE   "Edit a Title's information\nEdit Title"
     ID_AGILITY_DELETE_TITLE "Delete a Title\nDelete Title"
     ID_AGILITY_NEW_TRIAL    "Create a new Trial\nNew Trial"
     ID_AGILITY_EDIT_TRIAL   "Edit a Trial's information\nEdit Trial"

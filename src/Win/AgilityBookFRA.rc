@@ -198,21 +198,21 @@ BEGIN
             MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_DOG
             MENUITEM SEPARATOR
             MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_DOG
-            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_DOG
+            MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_DOG
         END
         POPUP "&Récompense"
         BEGIN
             MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_TITLE
             MENUITEM SEPARATOR
             MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_TITLE
-            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TITLE
+            MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_TITLE
         END
         POPUP "C&oncours"
         BEGIN
             MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_TRIAL
             MENUITEM SEPARATOR
             MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_TRIAL
-            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRIAL
+            MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_TRIAL
             MENUITEM SEPARATOR
             MENUITEM "&Imprimer Parcours...",       ID_AGILITY_PRINT_TRIAL
         END
@@ -221,7 +221,7 @@ BEGIN
             MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_RUN
             MENUITEM SEPARATOR
             MENUITEM "&Nouveau...\tCtrl+R",         ID_AGILITY_NEW_RUN
-            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_RUN
+            MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_RUN
             MENUITEM SEPARATOR
             MENUITEM "&Imprimer Parcours...",       ID_AGILITY_PRINT_RUNS
         END
@@ -231,7 +231,7 @@ BEGIN
             MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_CALENDAR
             MENUITEM SEPARATOR
             MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_CALENDAR
-            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_CALENDAR
+            MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_CALENDAR
             MENUITEM SEPARATOR
             MENUITEM "&Mise à jour...",             ID_AGILITY_UPDATE_CALENDAR
             MENUITEM "E&xporter...",                ID_AGILITY_EXPORT_CALENDAR
@@ -243,7 +243,7 @@ BEGIN
             MENUITEM "&Propriétés...",              ID_AGILITY_EDIT_TRAINING
             MENUITEM SEPARATOR
             MENUITEM "&Nouveau...",                 ID_AGILITY_NEW_TRAINING
-            MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRAINING
+            MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_TRAINING
         END
     END
     POPUP "&Notes"
@@ -313,7 +313,7 @@ BEGIN
         MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
         MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
         MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
-        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_DOG
+        MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_DOG
         MENUITEM SEPARATOR
         MENUITEM "&Trier...",                   ID_REORDER
         MENUITEM SEPARATOR
@@ -343,7 +343,7 @@ BEGIN
         MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
         MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
         MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
-        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRIAL
+        MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_TRIAL
         MENUITEM SEPARATOR
         MENUITEM "&Trier...",                   ID_REORDER
         MENUITEM SEPARATOR
@@ -373,7 +373,7 @@ BEGIN
         MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
         MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
         MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
-        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_RUN
+        MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_RUN
         MENUITEM SEPARATOR
         MENUITEM "&Trier...",                   ID_REORDER
         MENUITEM SEPARATOR
@@ -407,7 +407,7 @@ BEGIN
         MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
         MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
         MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
-        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_CALENDAR
+        MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_CALENDAR
         MENUITEM SEPARATOR
         MENUITEM "&Mise à jour...",             ID_AGILITY_UPDATE_CALENDAR
         MENUITEM "E&xporter...",                ID_AGILITY_EXPORT_CALENDAR
@@ -428,7 +428,7 @@ BEGIN
         MENUITEM "Co&uper\tCtrl+X",             ID_EDIT_CUT
         MENUITEM "&Copier\tCtrl+C",             ID_EDIT_COPY
         MENUITEM "Co&ller\tCtrl+V",             ID_EDIT_PASTE
-        MENUITEM "&Supprimer",                  ID_AGILITY_DELETE_TRAINING
+        MENUITEM "&Supprimer...",               ID_AGILITY_DELETE_TRAINING
     END
 END
 
@@ -3059,7 +3059,7 @@ STRINGTABLE
 BEGIN
     ID_EDIT_DUPLICATE       "Dupliquer selection courant\nDupliquer"
     ID_AGILITY_NEW_DOG      "Creer nouveau chien\nNouveau chien"
-    ID_AGILITY_EDIT_DOG     "Editer information sur chien\\Editer chien"
+    ID_AGILITY_EDIT_DOG     "Editer information sur chien\nEditer chien"
     ID_AGILITY_DELETE_DOG   "Supprimer chien et tous information associé\nSupprimer chien"
 END
 
@@ -3092,7 +3092,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_AGILITY_NEW_TITLE    "Creer nouveau distinction\nNouveau distinction"
-    ID_AGILITY_EDIT_TITLE   "Editer information sur distinction\\Editer distinction"
+    ID_AGILITY_EDIT_TITLE   "Editer information sur distinction\nEditer distinction"
     ID_AGILITY_DELETE_TITLE "Supprimer distinction\nSupprimer distinction"
     ID_AGILITY_NEW_TRIAL    "Creer nouveau concours\nNouveau concours"
     ID_AGILITY_EDIT_TRIAL   "Editer l'information sur concours\nEditer concours"
