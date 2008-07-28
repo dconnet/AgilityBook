@@ -116,7 +116,10 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 }
 
 
-template <typename T, typename C> T TrimImpl(T const& inStr, C toTrim)
+static const char* const sc_Whitespace = "\r\n\t ";
+static const wchar_t* const sc_wWhitespace = L"\r\n\t ";
+
+template <typename T> T TrimImpl(T const& inStr, T const& toTrim)
 {
 	T::size_type posFirst = inStr.find_first_not_of(toTrim);
 	if (T::npos == posFirst)
@@ -129,19 +132,31 @@ template <typename T, typename C> T TrimImpl(T const& inStr, C toTrim)
 }
 
 
+std::string tstringUtil::Trim(std::string const& inStr)
+{
+	return TrimImpl<std::string>(inStr, sc_Whitespace);
+}
+
+
+std::wstring tstringUtil::Trim(std::wstring const& inStr)
+{
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace);
+}
+
+
 std::string tstringUtil::Trim(std::string const& inStr, char toTrim)
 {
-	return TrimImpl<std::string, char>(inStr, toTrim);
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim));
 }
 
 
 std::wstring tstringUtil::Trim(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimImpl<std::wstring, wchar_t>(inStr, toTrim);
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim));
 }
 
 
-template <typename T, typename C> T TrimLeftImpl(T const& inStr, C toTrim)
+template <typename T> T TrimLeftImpl(T const& inStr, T const& toTrim)
 {
 	T::size_type pos = inStr.find_first_not_of(toTrim);
 	if (T::npos == pos)
@@ -152,19 +167,31 @@ template <typename T, typename C> T TrimLeftImpl(T const& inStr, C toTrim)
 }
 
 
+std::string tstringUtil::TrimLeft(std::string const& inStr)
+{
+	return TrimLeftImpl<std::string>(inStr, sc_Whitespace);
+}
+
+
+std::wstring tstringUtil::TrimLeft(std::wstring const& inStr)
+{
+	return TrimLeftImpl<std::wstring>(inStr, sc_wWhitespace);
+}
+
+
 std::string tstringUtil::TrimLeft(std::string const& inStr, char toTrim)
 {
-	return TrimLeftImpl<std::string, char>(inStr, toTrim);
+	return TrimLeftImpl<std::string>(inStr, std::string(1, toTrim));
 }
 
 
 std::wstring tstringUtil::TrimLeft(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimLeftImpl<std::wstring, wchar_t>(inStr, toTrim);
+	return TrimLeftImpl<std::wstring>(inStr, std::wstring(1, toTrim));
 }
 
 
-template <typename T, typename C> T TrimRightImpl(T const& inStr, C toTrim)
+template <typename T> T TrimRightImpl(T const& inStr, T const& toTrim)
 {
 	T::size_type pos = inStr.find_last_not_of(toTrim);
 	if (T::npos == pos)
@@ -175,15 +202,27 @@ template <typename T, typename C> T TrimRightImpl(T const& inStr, C toTrim)
 }
 
 
+std::string tstringUtil::TrimRight(std::string const& inStr)
+{
+	return TrimRightImpl<std::string>(inStr, sc_Whitespace);
+}
+
+
+std::wstring tstringUtil::TrimRight(std::wstring const& inStr)
+{
+	return TrimRightImpl<std::wstring>(inStr, sc_wWhitespace);
+}
+
+
 std::string tstringUtil::TrimRight(std::string const& inStr, char toTrim)
 {
-	return TrimRightImpl<std::string, char>(inStr, toTrim);
+	return TrimRightImpl<std::string>(inStr, std::string(1, toTrim));
 }
 
 
 std::wstring tstringUtil::TrimRight(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimRightImpl<std::wstring, wchar_t>(inStr, toTrim);
+	return TrimRightImpl<std::wstring>(inStr, std::wstring(1, toTrim));
 }
 
 
