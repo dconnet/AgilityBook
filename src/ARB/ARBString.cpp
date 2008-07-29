@@ -118,7 +118,7 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 
 static const char* const sc_Whitespace = "\r\n\t ";
 static const wchar_t* const sc_wWhitespace = L"\r\n\t ";
-static enum TrimType
+enum TrimType
 {
 	eTrimLeft = 0x1,
 	eTrimRight = 0x2,

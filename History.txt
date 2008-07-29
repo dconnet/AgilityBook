@@ -1,9 +1,13 @@
-6/29/2008: v1.10.8.12 <in development>
+7/29/2008: v1.10.8.12 <in development>
+- Configuration v23:
+  - Updated USDAA Grand Prix qualifying points.
 - New features / Enhancements:
   - Start adding support for non-MFC/non-Windows platforms.
 - Bug fixes:
   - ICalendar output mixed ansi/unicode strings in output.
   - Fix parsing of version.txt for language ids.
+  - Overlapping event ranges in the event configuration dialog were incorrectly
+    identified under certain conditions.
 
 6/29/2008: Config 22
 - Configuration v22:

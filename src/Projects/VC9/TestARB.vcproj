@@ -40,7 +40,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="/Tools/UnitTest++/src;../..;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -55,7 +55,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
 			/>
 			<Tool
@@ -106,7 +106,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="/Tools/UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
 			/>
 			<Tool
@@ -171,7 +171,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="/Tools/UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -186,7 +186,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
 			/>
 			<Tool
@@ -237,7 +237,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="/Tools/UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -252,7 +252,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="\Tools\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
 				SubSystem="1"
 			/>
 			<Tool

@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2008-07-29 DRC Method overlap detection was wrong.
  * @li 2007-05-08 DRC Fixed bug when deleting a method.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
@@ -997,6 +998,39 @@ void CDlgConfigEvent::OnPointsDelete()
 }
 
 
+static ARBDate DateEndPoints(ARBDate from1, ARBDate to1, ARBDate from2, ARBDate to2, bool bFirst)
+{
+	std::vector<ARBDate> dates;
+	if (from1.IsValid())
+		dates.push_back(from1);
+	if (to1.IsValid())
+		dates.push_back(to1);
+	if (from2.IsValid())
+		dates.push_back(from2);
+	if (to2.IsValid())
+		dates.push_back(to2);
+	ARBDate date;
+	if (1 <= dates.size())
+	{
+		date = dates[0];
+		for (size_t n = 1; n < dates.size(); ++n)
+		{
+			if (bFirst)
+			{
+				if (dates[n] < date)
+					date = dates[n];
+			}
+			else
+			{
+				if (dates[n] > date)
+					date = dates[n];
+			}
+		}
+	}
+	return date;
+}
+
+
 void CDlgConfigEvent::OnOK()
 {
 	if (!UpdateData(TRUE))
@@ -1052,16 +1086,36 @@ void CDlgConfigEvent::OnOK()
 				for (++iter; !bOverlap && iter != items.end(); ++iter)
 				{
 					ARBConfigScoringPtr pScoring2 = *iter;
-					if ((!pScore->GetValidFrom().IsValid()
-					&& !pScoring2->GetValidFrom().IsValid())
-					|| (!pScore->GetValidTo().IsValid()
-					&& !pScoring2->GetValidTo().IsValid()))
+					ARBDate from1 = pScore->GetValidFrom();
+					ARBDate to1 = pScore->GetValidTo();
+					ARBDate from2 = pScoring2->GetValidFrom();
+					ARBDate to2 = pScoring2->GetValidTo();
+					ARBDate low = DateEndPoints(from1, to1, from2, to2, true);
+					if (!low.IsValid())
+					{
+						// If date isn't valid, none of the dates are.
 						bOverlap = true;
-					if ((pScore->GetValidTo().IsValid() && pScoring2->GetValidFrom().IsValid()
-					&& pScore->GetValidTo() >= pScoring2->GetValidFrom())
-					|| (pScoring2->GetValidTo().IsValid() && pScore->GetValidFrom().IsValid()
-					&& pScoring2->GetValidTo() >= pScore->GetValidFrom()))
+						break;
+					}
+					ARBDate hi = DateEndPoints(from1, to1, from2, to2, false);
+					--low; // Push valid dates off by 1 so they are not in current range
+					++hi;
+					if (!from1.IsValid())
+						from1 = low;
+					if (!to1.IsValid())
+						to1 = hi;
+					if (!from2.IsValid())
+						from2 = low;
+					if (!to2.IsValid())
+						to2 = hi;
+					// Now that we've tweaked the dates, we can do plain old
+					// isBetween comparisons. This also means that if both
+					// methods have no date set on either the from or to dates,
+					// it will be properly flagged (since they are equal)
+					if (from1.isBetween(from2, to2) || to1.isBetween(from2, to2))
+					{
 						bOverlap = true;
+					}
 				}
 				items.erase(items.begin());
 			}

@@ -4,7 +4,7 @@ Additional software packages required (all free):
 - UnitTest++
 - HTML Help Workshop
 - Boost libraries (optional as of VC9+TR1)
-- Windows Installer XML toolset (or Inno Setup)
+- Windows Installer XML toolset
 - Xerces-C (included in src tree)
 - zlib (included in src tree)
 - Doxygen (optional)
@@ -17,13 +17,14 @@ Once the above software is unpacked, the directory structure should look like:
     - ...
   - boost/
       - ...(Boost structure)
+  - UnitTest++/
+      - ... (UnitTest structure)
 
 --------------------
 
 UnitTest++: http://unittest-cpp.sourceforge.net/
 I'm currently using the SVN head (as of 2/19/2008, subject to change)
 If you don't want to run the unit tests, this is not required.
-By default, TestARB.vcproj assumes that UnitTest++ is installed in /Tools/UnitTest++.
 All project files have been copied/renamed/modified such that:
  "vsnet..." to "VC..."
  OutputDirectory: $(SolutionDir)\bin\$(PlatformName)
@@ -31,6 +32,7 @@ All project files have been copied/renamed/modified such that:
  Unicode/Non-unicode/LIB/DLL configs added to all projects (except vc7)
  .lib names changed to UnitTest++.VC<vcversion>[S][U][D].lib
  VC8/9 projects now use common vsprops files
+  - common, debug dll, debug lib, debug settings, (and release versions)
 
 --------------------
 
@@ -45,9 +47,10 @@ the compiler options (Tools->Options, Directories tab):
 --------------------
 
 Boost: http://www.boost.org.
-ARB has been built and tested using Boost version 1.34.1. There is no need
+ARB has been built and tested using Boost version 1.35.1. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
-weak_ptr templates are used.) [also tested against 1.33.1, and 1.34.0]
+weak_ptr templates are used.) [also tested against 1.33.1, 1.34.0, 1.34.1,
+however, VC9 requires some tweaks to use these older versions]
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked in boost_1_34_0 (of course,
 this will vary based on boost version). This should be renamed to 'boost'
@@ -64,9 +67,6 @@ Currently using Version 2.0.5805.0 (as of ARB v1.10.0.12).
 - Install votive [optional]
 - Unzip binaries.zip into "C:\Tools\wix2'
   (GenMSI.py assumes WiX is installed here)
-
-Inno Setup: http://www.jrsoftware.org/isdl.php
-Currently using Version 5.2.2, also ISTool addon.
 
 During our release process of running BuildAll.bat,
 GenMSI.py will be called which generates the install files.
@@ -142,10 +142,7 @@ Microsoft Visual Studio .NET 2003 (VC7.1)
 Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
-   Note - zlib/xerces are checked in using VC8+SP1
 
-Microsoft Visual Studio .NET 2008 (VC9)
-=======================================
-   Boost: boost/config/compilers/visualc.hpp: Change 1400 to 1500 on last
-   known version check (bottom of file). Also create a BOOST_COMPILER_VERSION
-   macro above that.
+Microsoft Visual Studio .NET 2008 (VC9) + Feature Pack
+======================================================
+   It works, no additional notes.
