@@ -37,6 +37,7 @@
 #include "TestARB.h"
 
 #include "ARBString.h"
+#include <iostream>
 
 
 SUITE(TestString)
@@ -59,25 +60,97 @@ SUITE(TestString)
 
 	TEST(TrimA)
 	{
-		std::string s(" str ");
+		std::string s(" \tstr\t\r\n ");
+		std::string s1 = tstringUtil::Trim(s, ' ');
+		CHECK("\tstr\t\r\n" == s1);
+		std::string s2 = tstringUtil::TrimLeft(s, ' ');
+		CHECK("\tstr\t\r\n " == s2);
+		std::string s3 = tstringUtil::TrimRight(s, ' ');
+		CHECK(" \tstr\t\r\n" == s3);
+	}
+
+
+	TEST(TrimA2)
+	{
+		std::string s(" \tstr\t\r\n ");
 		std::string s1 = tstringUtil::Trim(s);
 		CHECK("str" == s1);
 		std::string s2 = tstringUtil::TrimLeft(s);
-		CHECK("str " == s2);
+		CHECK("str\t\r\n " == s2);
 		std::string s3 = tstringUtil::TrimRight(s);
-		CHECK(" str" == s3);
+		CHECK(" \tstr" == s3);
 	}
 
 
 	TEST(TrimW)
 	{
-		std::wstring s(L" str ");
+		std::wstring s(L" \tstr\t\r\n ");
+		std::wstring s1 = tstringUtil::Trim(s, ' ');
+		CHECK(L"\tstr\t\r\n" == s1);
+		std::wstring s2 = tstringUtil::TrimLeft(s, ' ');
+		CHECK(L"\tstr\t\r\n " == s2);
+		std::wstring s3 = tstringUtil::TrimRight(s, ' ');
+		CHECK(L" \tstr\t\r\n" == s3);
+	}
+
+
+	TEST(TrimW2)
+	{
+		std::wstring s(L" \tstr\t\r\n ");
 		std::wstring s1 = tstringUtil::Trim(s);
 		CHECK(L"str" == s1);
 		std::wstring s2 = tstringUtil::TrimLeft(s);
-		CHECK(L"str " == s2);
+		CHECK(L"str\t\r\n " == s2);
 		std::wstring s3 = tstringUtil::TrimRight(s);
-		CHECK(L" str" == s3);
+		CHECK(L" \tstr" == s3);
+	}
+
+
+	TEST(TrimNone)
+	{
+		std::string s("This is a test");
+		std::string s1 = tstringUtil::Trim(s);
+		CHECK(s == s1);
+		std::string s2 = tstringUtil::TrimLeft(s);
+		CHECK(s == s2);
+		std::string s3 = tstringUtil::TrimRight(s);
+		CHECK(s == s3);
+	}
+
+
+	TEST(TrimNoneW)
+	{
+		std::wstring s(L"This is a test");
+		std::wstring s1 = tstringUtil::Trim(s);
+		CHECK(s == s1);
+		std::wstring s2 = tstringUtil::TrimLeft(s);
+		CHECK(s == s2);
+		std::wstring s3 = tstringUtil::TrimRight(s);
+		CHECK(s == s3);
+	}
+
+
+	TEST(TrimAll)
+	{
+		std::string s("\t  \t\r\n");
+		std::string s1 = tstringUtil::Trim(s);
+		CHECK(0 == s1.length());
+		std::string s2 = tstringUtil::TrimLeft(s);
+		CHECK(0 == s2.length());
+		std::string s3 = tstringUtil::TrimRight(s);
+		CHECK(0 == s3.length());
+	}
+
+
+	TEST(TrimAllW)
+	{
+		std::wstring s(L"\t  \t\r\n");
+		std::wstring s1 = tstringUtil::Trim(s);
+		CHECK(0 == s1.length());
+		std::wstring s2 = tstringUtil::TrimLeft(s);
+		CHECK(0 == s2.length());
+		std::wstring s3 = tstringUtil::TrimRight(s);
+		CHECK(0 == s3.length());
 	}
 
 

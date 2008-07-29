@@ -118,111 +118,107 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 
 static const char* const sc_Whitespace = "\r\n\t ";
 static const wchar_t* const sc_wWhitespace = L"\r\n\t ";
-
-template <typename T> T TrimImpl(T const& inStr, T const& toTrim)
+static enum TrimType
 {
-	T::size_type posFirst = inStr.find_first_not_of(toTrim);
-	if (T::npos == posFirst)
-		return T();
-	T::size_type posLast = inStr.find_last_not_of(toTrim);
+	eTrimLeft = 0x1,
+	eTrimRight = 0x2,
+	eTrimBoth = eTrimLeft | eTrimRight
+};
+
+template <typename T> T TrimImpl(T const& inStr, T const& toTrim, TrimType type)
+{
+	if (0 == inStr.length())
+		return inStr;
+	typename T::size_type posFirst = 0;
+	if (type & eTrimLeft)
+	{
+		posFirst = inStr.find_first_not_of(toTrim);
+		if (T::npos == posFirst)
+			return T();
+	}
+	typename T::size_type posLast = inStr.length() - 1;
+	if (type & eTrimRight)
+	{
+		posLast = inStr.find_last_not_of(toTrim);
+		if (T::npos == posLast)
+			return T();
+	}
 	if (inStr.length() == posLast - posFirst + 1)
 		return inStr;
-	T::size_type posLength = posLast - posFirst + 1;
+	typename T::size_type posLength = posLast - posFirst + 1;
 	return inStr.substr(posFirst, posLength);
 }
 
 
 std::string tstringUtil::Trim(std::string const& inStr)
 {
-	return TrimImpl<std::string>(inStr, sc_Whitespace);
+	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimBoth);
 }
 
 
 std::wstring tstringUtil::Trim(std::wstring const& inStr)
 {
-	return TrimImpl<std::wstring>(inStr, sc_wWhitespace);
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimBoth);
 }
 
 
 std::string tstringUtil::Trim(std::string const& inStr, char toTrim)
 {
-	return TrimImpl<std::string>(inStr, std::string(1, toTrim));
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimBoth);
 }
 
 
 std::wstring tstringUtil::Trim(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim));
-}
-
-
-template <typename T> T TrimLeftImpl(T const& inStr, T const& toTrim)
-{
-	T::size_type pos = inStr.find_first_not_of(toTrim);
-	if (T::npos == pos)
-		return T();
-	else if (0 == pos)
-		return inStr;
-	return inStr.substr(pos);
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimBoth);
 }
 
 
 std::string tstringUtil::TrimLeft(std::string const& inStr)
 {
-	return TrimLeftImpl<std::string>(inStr, sc_Whitespace);
+	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimLeft);
 }
 
 
 std::wstring tstringUtil::TrimLeft(std::wstring const& inStr)
 {
-	return TrimLeftImpl<std::wstring>(inStr, sc_wWhitespace);
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimLeft);
 }
 
 
 std::string tstringUtil::TrimLeft(std::string const& inStr, char toTrim)
 {
-	return TrimLeftImpl<std::string>(inStr, std::string(1, toTrim));
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimLeft);
 }
 
 
 std::wstring tstringUtil::TrimLeft(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimLeftImpl<std::wstring>(inStr, std::wstring(1, toTrim));
-}
-
-
-template <typename T> T TrimRightImpl(T const& inStr, T const& toTrim)
-{
-	T::size_type pos = inStr.find_last_not_of(toTrim);
-	if (T::npos == pos)
-		return T();
-	else if (inStr.length() == pos + 1)
-		return inStr;
-	return inStr.substr(0, pos + 1);
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimLeft);
 }
 
 
 std::string tstringUtil::TrimRight(std::string const& inStr)
 {
-	return TrimRightImpl<std::string>(inStr, sc_Whitespace);
+	return TrimImpl<std::string>(inStr, sc_Whitespace, eTrimRight);
 }
 
 
 std::wstring tstringUtil::TrimRight(std::wstring const& inStr)
 {
-	return TrimRightImpl<std::wstring>(inStr, sc_wWhitespace);
+	return TrimImpl<std::wstring>(inStr, sc_wWhitespace, eTrimRight);
 }
 
 
 std::string tstringUtil::TrimRight(std::string const& inStr, char toTrim)
 {
-	return TrimRightImpl<std::string>(inStr, std::string(1, toTrim));
+	return TrimImpl<std::string>(inStr, std::string(1, toTrim), eTrimRight);
 }
 
 
 std::wstring tstringUtil::TrimRight(std::wstring const& inStr, wchar_t toTrim)
 {
-	return TrimRightImpl<std::wstring>(inStr, std::wstring(1, toTrim));
+	return TrimImpl<std::wstring>(inStr, std::wstring(1, toTrim), eTrimRight);
 }
 
 
