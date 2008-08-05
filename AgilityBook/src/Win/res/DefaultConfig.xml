@@ -453,7 +453,7 @@ Revision History:
       <Titles LongName="Elite Regular Superior Performance" Name="RS-E-SP">400 Points</Titles>
       <Titles LongName="Elite Jumpers Superior Performance" Name="JS-E-SP">200 Points</Titles>
       <Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP">200 Points</Titles>
-      <Titles LongName="Agility Trial Champion" Multiple="4" Name="ATCH" Prefix="y">R*-E plus 200 pts, G*-E plus 100 pts, J*-E plus 100 pts
+      <Titles LongName="Agility Trial Champion" Multiple="4" Name="ATCH" Prefix="y" Style="1">R*-E plus 200 pts, G*-E plus 100 pts, J*-E plus 100 pts
 Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
       <Titles LongName="Outstanding Performance Agility Trial Champion" Name="ATCH-OP" Prefix="y">R*-E plus 400 pts, G*-E plus 200 pts, J*-E plus 200 pts</Titles>
       <Titles LongName="Superior Performance Agility Trial Champion" Name="ATCH-SP" Prefix="y">R*-E plus 600 pts, G*-E plus 300 pts, J*-E plus 300 pts</Titles>

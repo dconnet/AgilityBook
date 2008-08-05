@@ -370,6 +370,7 @@ bool ARBConfigVenue::Update(
 					++nChanged;
 					pTitle->SetLongName((*iterTitle)->GetLongName());
 					pTitle->SetMultiple((*iterTitle)->GetMultiple());
+					pTitle->SetMultipleStyle((*iterTitle)->GetMultipleStyle());
 					pTitle->SetPrefix((*iterTitle)->GetPrefix());
 					pTitle->SetValidFrom((*iterTitle)->GetValidFrom());
 					pTitle->SetValidTo((*iterTitle)->GetValidTo());

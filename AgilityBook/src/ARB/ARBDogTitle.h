@@ -44,13 +44,14 @@
  */
 
 #include "ARBBase.h"
+#include "ARBConfigTitle.h"
 #include "ARBDate.h"
 #include "ARBTypes.h"
 
 /**
  * Titles a dog has earned.
  */
-class ARBDogTitle : public ARBBase
+class ARBDogTitle : public ARBBase, protected ARBTitleInstance
 {
 protected:
 	ARBDogTitle();
@@ -142,16 +143,22 @@ public:
 	{
 		return m_Instance;
 	}
+	ARBTitleStyle GetStyle() const
+	{
+		return m_MultipleStyle;
+	}
 	void SetName(
 			tstring const& inName,
 			short inInstance,
-			bool bShowInstance)
+			bool bShowInstance,
+			ARBTitleStyle style)
 	{
 		m_Name = inName;
 		m_Instance = inInstance;
 		m_bShowInstanceOne = false;
 		if (1 == m_Instance && bShowInstance)
 			m_bShowInstanceOne = true;
+		m_MultipleStyle = style;
 	}
 	bool GetReceived() const
 	{
@@ -179,6 +186,7 @@ private:
 	tstring m_Name;
 	bool m_bShowInstanceOne;
 	short m_Instance;
+	ARBTitleStyle m_MultipleStyle;
 	bool m_bReceived;
 	bool m_bHidden;
 };

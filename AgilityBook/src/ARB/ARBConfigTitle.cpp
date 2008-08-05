@@ -44,6 +44,7 @@
 #include "ARBConfigTitle.h"
 
 #include <algorithm>
+#include <math.h>
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 #include "Element.h"
@@ -51,6 +52,93 @@
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
 #endif
+
+
+/*
+// Roman number conversion (modified from C# code on CodeProject)
+static short RomanDigit(TCHAR digit)
+{
+	switch (digit)
+	{
+	case 'I':
+		return 1;
+	case 'V':
+		return 5;
+	case 'X':
+		return 10;
+	case 'L':
+		return 50;
+	case 'C':
+		return 100;
+	case 'D':
+		return 500;
+	case 'M':
+		return 1000;
+	default :
+		//We're in a limited world - don't worry about out-of-range
+		//throw new ArgumentOutOfRangeException("digit");
+		return 0;
+	}
+}
+static short RomanToShort(tstring number)
+{
+	short result = 0;
+	short oldValue = 1000;
+	for (tstring::const_iterator index = number.begin(); index != number.end(); ++index)
+	{
+		short newValue = RomanDigit(*index);
+		if (newValue > oldValue)
+			result = result + newValue - 2 * oldValue;
+		else
+			result += newValue;
+		oldValue = newValue;
+	}
+	return result;
+}
+*/
+static tstring ShortToRoman(short value)
+{
+	static const TCHAR* romanDigits[9][4] =
+	{
+		{_T("M"),   _T("C"),    _T("X"),    _T("I")   },
+		{_T("MM"),  _T("CC"),   _T("XX"),   _T("II")  },
+		{_T("MMM"), _T("CCC"),  _T("XXX"),  _T("III") },
+		{NULL,      _T("CD"),   _T("XL"),   _T("IV")  },
+		{NULL,      _T("D"),    _T("L"),    _T("V")   },
+		{NULL,      _T("DC"),   _T("LX"),   _T("VI")  },
+		{NULL,      _T("DCC"),  _T("LXX"),  _T("VII") },
+		{NULL,      _T("DCCC"), _T("LXXX"), _T("VIII")},
+		{NULL,      _T("CM"),   _T("XC"),   _T("IX")  }
+	};
+	otstringstream result;
+	for (int index = 0; index < 4; ++index)
+	{
+		short power = static_cast<short>(pow(10.0, 3 - index));
+		short digit = value / power;
+		value -= digit * power;
+		if (digit > 0)
+			result << romanDigits[digit-1][index];
+	}
+	return result.str();
+}
+
+
+tstring ARBTitleInstance::TitleInstance(
+		bool bShowInstanceOne,
+		short instance,
+		ARBTitleStyle style) const
+{
+	if (bShowInstanceOne || 1 < instance)
+	{
+		otstringstream str;
+		if (eTitleRoman == style)
+			str << ' ' << ShortToRoman(instance);
+		else
+			str << instance;
+		return str.str();
+	}
+	return _T("");
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -64,6 +152,7 @@ ARBConfigTitle::ARBConfigTitle()
 	: m_Name()
 	, m_LongName()
 	, m_Multiple(0)
+	, m_MultipleStyle(eTitleNumber)
 	, m_Prefix(false)
 	, m_ValidFrom()
 	, m_ValidTo()
@@ -76,6 +165,7 @@ ARBConfigTitle::ARBConfigTitle(ARBConfigTitle const& rhs)
 	: m_Name(rhs.m_Name)
 	, m_LongName(rhs.m_LongName)
 	, m_Multiple(rhs.m_Multiple)
+	, m_MultipleStyle(rhs.m_MultipleStyle)
 	, m_Prefix(rhs.m_Prefix)
 	, m_ValidFrom(rhs.m_ValidFrom)
 	, m_ValidTo(rhs.m_ValidTo)
@@ -102,6 +192,7 @@ ARBConfigTitle& ARBConfigTitle::operator=(ARBConfigTitle const& rhs)
 		m_Name = rhs.m_Name;
 		m_LongName = rhs.m_LongName;
 		m_Multiple = rhs.m_Multiple;
+		m_MultipleStyle = rhs.m_MultipleStyle;
 		m_Prefix = rhs.m_Prefix;
 		m_ValidFrom = rhs.m_ValidFrom;
 		m_ValidTo = rhs.m_ValidTo;
@@ -116,6 +207,7 @@ bool ARBConfigTitle::operator==(ARBConfigTitle const& rhs) const
 	return m_Name == rhs.m_Name
 		&& m_LongName == rhs.m_LongName
 		&& m_Multiple == rhs.m_Multiple
+		&& m_MultipleStyle == rhs.m_MultipleStyle
 		&& m_Prefix == rhs.m_Prefix
 		&& m_ValidFrom == rhs.m_ValidFrom
 		&& m_ValidTo == rhs.m_ValidTo
@@ -128,6 +220,7 @@ void ARBConfigTitle::clear()
 	m_Name.erase();
 	m_LongName.erase();
 	m_Multiple = 0;
+	m_MultipleStyle = eTitleNumber;
 	m_Prefix = false;
 	m_ValidFrom.clear();
 	m_ValidTo.clear();
@@ -152,6 +245,9 @@ bool ARBConfigTitle::Load(
 
 	inTree->GetAttrib(ATTRIB_TITLES_LONGNAME, m_LongName);
 	inTree->GetAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
+	short tmp;
+	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_TITLES_MULTIPLE_STYLE, tmp))
+		m_MultipleStyle = static_cast<ARBTitleStyle>(tmp);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool().c_str()));
@@ -191,6 +287,8 @@ bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 	title->AddAttrib(ATTRIB_TITLES_NAME, m_Name);
 	if (0 < m_Multiple)
 		title->AddAttrib(ATTRIB_TITLES_MULTIPLE, m_Multiple);
+	if (eTitleNumber != m_MultipleStyle)
+		title->AddAttrib(ATTRIB_TITLES_MULTIPLE_STYLE, static_cast<short>(m_MultipleStyle));
 	if (m_Prefix)
 		title->AddAttrib(ATTRIB_TITLES_PREFIX, m_Prefix);
 	if (0 < m_LongName.length())
@@ -211,16 +309,9 @@ tstring ARBConfigTitle::GetCompleteName(
 		bool bAbbrevFirst,
 		bool bAddDates) const
 {
-	tstring buffer;
-	if (bShowInstance || 1 < inInstance)
-	{
-		// Keep sync'd with ARBDogTitle
-		otstringstream str;
-		str << inInstance;
-		buffer = str.str();
-	}
+	tstring buffer = TitleInstance(bShowInstance, inInstance, m_MultipleStyle);
 	// Special formatting used in configuration dialogs.
-	else if (0 > inInstance && 0 < m_Multiple)
+	if (0 > inInstance && 0 < m_Multiple)
 	{
 		otstringstream str;
 		str << _T("+");
