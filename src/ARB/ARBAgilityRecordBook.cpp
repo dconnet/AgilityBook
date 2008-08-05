@@ -37,6 +37,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2008-08-05 DRC File version 12.8
+ *                    Added 'style' to Title, 'Style' to 'Titles'
  * @li 2008-01-01 DRC File version 12.7. Added 'Visible' to InfoItem,
  *                    'obstacles' to 'Scoring'
  * @li 2007-07-03 DRC File version 12.6. Added 'show' to 'Title',
@@ -108,7 +110,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(12, 7);
+	static ARBVersion const curVersion(12, 8);
 	return curVersion;
 }
 
@@ -405,7 +407,7 @@ bool ARBAgilityRecordBook::Update(
 			ARBDogTitlePtr pTitle = *iterTitle;
 			ARBConfigTitlePtr pConfigTitle;
 			if (m_Config.GetVenues().FindTitle(pTitle->GetVenue(), pTitle->GetRawName(), &pConfigTitle))
-				pTitle->SetName(pTitle->GetRawName(), pTitle->GetInstance(), pConfigTitle->GetMultiple() == 1);
+				pTitle->SetName(pTitle->GetRawName(), pTitle->GetInstance(), pConfigTitle->GetMultiple() == 1, pConfigTitle->GetMultipleStyle());
 		}
 		for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
 			iterTrial != pDog->GetTrials().end();

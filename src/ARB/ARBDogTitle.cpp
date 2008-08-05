@@ -70,6 +70,7 @@ ARBDogTitle::ARBDogTitle()
 	, m_Name()
 	, m_bShowInstanceOne(false)
 	, m_Instance(1)
+	, m_MultipleStyle(eTitleNumber)
 	, m_bReceived(false)
 	, m_bHidden(false)
 {
@@ -82,6 +83,7 @@ ARBDogTitle::ARBDogTitle(ARBDogTitle const& rhs)
 	, m_Name(rhs.m_Name)
 	, m_bShowInstanceOne(rhs.m_bShowInstanceOne)
 	, m_Instance(rhs.m_Instance)
+	, m_MultipleStyle(rhs.m_MultipleStyle)
 	, m_bReceived(rhs.m_bReceived)
 	, m_bHidden(rhs.m_bHidden)
 {
@@ -108,6 +110,7 @@ ARBDogTitle& ARBDogTitle::operator=(ARBDogTitle const& rhs)
 		m_Name = rhs.m_Name;
 		m_bShowInstanceOne = rhs.m_bShowInstanceOne;
 		m_Instance = rhs.m_Instance;
+		m_MultipleStyle = rhs.m_MultipleStyle;
 		m_bReceived = rhs.m_bReceived;
 		m_bHidden = rhs.m_bHidden;
 	}
@@ -122,6 +125,7 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 		&& m_Name == rhs.m_Name
 		&& m_bShowInstanceOne == rhs.m_bShowInstanceOne
 		&& m_Instance == rhs.m_Instance
+		&& m_MultipleStyle == rhs.m_MultipleStyle
 		&& m_bReceived == rhs.m_bReceived
 		&& m_bHidden == rhs.m_bHidden;
 }
@@ -129,15 +133,7 @@ bool ARBDogTitle::operator==(ARBDogTitle const& rhs) const
 
 tstring ARBDogTitle::GetGenericName() const
 {
-	tstring name;
-	name = m_Name;
-	if (m_bShowInstanceOne || 1 < m_Instance)
-	{
-		otstringstream buffer;
-		// Keep sync'd with ARBConfigTitle
-		buffer << m_Instance;
-		name += buffer.str();
-	}
+	tstring name = m_Name + TitleInstance(m_bShowInstanceOne, m_Instance, m_MultipleStyle);
 	return name;
 }
 
@@ -220,6 +216,9 @@ bool ARBDogTitle::Load(
 	inTree->GetAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
 	if (1 < m_Instance)
 		m_bShowInstanceOne = true;
+	short tmp;
+	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_TITLE_STYLE, tmp))
+		m_MultipleStyle = static_cast<ARBTitleStyle>(tmp);
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived))
 	{
@@ -276,6 +275,8 @@ bool ARBDogTitle::Save(ElementNodePtr ioTree) const
 		title->AddAttrib(ATTRIB_TITLE_INSTANCE_SHOW, m_bShowInstanceOne);
 	if (1 < m_Instance)
 		title->AddAttrib(ATTRIB_TITLE_INSTANCE, m_Instance);
+	if (eTitleNumber != m_MultipleStyle)
+		title->AddAttrib(ATTRIB_TITLE_STYLE, static_cast<short>(m_MultipleStyle));
 	if (m_bReceived) // Default is no.
 		title->AddAttrib(ATTRIB_TITLE_RECEIVED, m_bReceived);
 	return true;
@@ -441,7 +442,7 @@ int ARBDogTitleList::RenameTitle(
 		if ((*iter)->GetVenue() == inVenue && (*iter)->GetRawName() == inOldTitle)
 		{
 			++count;
-			(*iter)->SetName(inNewTitle, (*iter)->GetInstance(), (*iter)->ShowInstanceOne());
+			(*iter)->SetName(inNewTitle, (*iter)->GetInstance(), (*iter)->ShowInstanceOne(), (*iter)->GetStyle());
 		}
 	}
 	return count;

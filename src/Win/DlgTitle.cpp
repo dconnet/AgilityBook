@@ -315,7 +315,7 @@ void CDlgTitle::OnOK()
 	title->SetDate(date);
 	title->SetHidden(bHidden);
 	title->SetVenue(pVenue->GetName());
-	title->SetName(pTitle->GetName(), instance, pTitle->GetMultiple() == 1);
+	title->SetName(pTitle->GetName(), instance, pTitle->GetMultiple() == 1, pTitle->GetMultipleStyle());
 	title->SetReceived(bReceived);
 	if (m_pTitle)
 	{

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-08-05 DRC Added Roman numbers
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-14 DRC Added option to prefix a title.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -46,11 +47,29 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 
+
+enum ARBTitleStyle
+{
+	eTitleNumber = 0,	/// "Title4"
+	eTitleRoman = 1,	/// "Title IV"
+};
+
+
+class ARBTitleInstance
+{
+protected:
+	virtual tstring TitleInstance(
+			bool bShowInstanceOne,
+			short instance,
+			ARBTitleStyle style) const;
+};
+
+
 /**
  * Title configuration.
  * A title consists of a name (the abbreviation), a long name and a description.
  */
-class ARBConfigTitle : public ARBBase
+class ARBConfigTitle : public ARBBase, protected ARBTitleInstance
 {
 protected:
 	ARBConfigTitle();
@@ -182,6 +201,14 @@ public:
 	{
 		m_Multiple = inMultiple;
 	}
+	ARBTitleStyle GetMultipleStyle() const
+	{
+		return m_MultipleStyle;
+	}
+	void SetMultipleStyle(ARBTitleStyle inMultipleStyle)
+	{
+		m_MultipleStyle = inMultipleStyle;
+	}
 	bool GetPrefix() const
 	{
 		return m_Prefix;
@@ -219,6 +246,7 @@ private:
 	tstring m_Name;
 	tstring m_LongName;
 	short m_Multiple;
+	ARBTitleStyle m_MultipleStyle;
 	bool m_Prefix;
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;

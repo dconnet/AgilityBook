@@ -1,8 +1,10 @@
-7/29/2008: v1.10.8.12 <in development>
-- Configuration v23:
+8/5/2008: v1.10.8.12 <in development>
+- Bumped file version to 12.8, Configuration v23:
+  - Added 'style' to Title, 'Style' to 'Titles'
   - Updated USDAA Grand Prix qualifying points.
 - New features / Enhancements:
   - Start adding support for non-MFC/non-Windows platforms.
+  - Multiple titles can now have roman numerals instead of numbers.
 - Bug fixes:
   - ICalendar output mixed ansi/unicode strings in output.
   - Fix parsing of version.txt for language ids.

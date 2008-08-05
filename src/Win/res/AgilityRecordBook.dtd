@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2008-08-05 DRC File version 12.8
+               Added 'style' to Title, 'Style' to 'Titles'
 2008-01-21 DRC File version 12.7
                Added 'Visible' to InfoItem, 'obstacles' to 'Scoring'
 2007-08-10 DRC File version 12.6
@@ -283,6 +285,7 @@ top-ten points. The 'Count' value is how they are accumulated
 		Name CDATA #REQUIRED
 		LongName CDATA #IMPLIED
 		Multiple CDATA #IMPLIED
+		Style CDATA #IMPLIED
 		Prefix (y|n) 'n'
 		ValidFrom CDATA #IMPLIED
 		ValidTo CDATA #IMPLIED
@@ -504,6 +507,7 @@ depends on how a venue has been defined above.
 		Name CDATA #REQUIRED
 		show (y|n) 'n'
 		instance CDATA #IMPLIED
+		style CDATA #IMPLIED
 		isReceived (y|n) 'n'
 		isHidden (y|n) 'n'
 	>
