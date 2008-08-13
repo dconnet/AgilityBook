@@ -143,6 +143,6 @@ Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
 
-Microsoft Visual Studio .NET 2008 (VC9) + Feature Pack
-======================================================
+Microsoft Visual Studio .NET 2008 (VC9) + Feature Pack (or SP1)
+===============================================================
    It works, no additional notes.
