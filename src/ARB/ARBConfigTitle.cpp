@@ -132,7 +132,7 @@ tstring ARBTitleInstance::TitleInstance(
 	{
 		otstringstream str;
 		if (eTitleRoman == style)
-			str << ' ' << ShortToRoman(instance);
+			str << '-' << ShortToRoman(instance);
 		else
 			str << instance;
 		return str.str();
