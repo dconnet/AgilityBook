@@ -194,7 +194,7 @@ SUITE(TestConfig)
 		config.Default();
 		ARBDogTitlePtr title = ARBDogTitle::New();
 		title->SetVenue(_T("AKC"));
-		title->SetName(_T("MX"), 1, false);
+		title->SetName(_T("MX"), 1, false, eTitleNumber);
 		tstring name1 = config.GetTitleCompleteName(title);
 		CHECK(0 != name1.length());
 		tstring name2 = config.GetTitleCompleteName(title, false);
