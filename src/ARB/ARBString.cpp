@@ -36,6 +36,8 @@
 
 #include "stdafx.h"
 #include "ARBString.h"
+#include <algorithm>
+#include <locale>
 
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
@@ -124,6 +126,7 @@ enum TrimType
 	eTrimRight = 0x2,
 	eTrimBoth = eTrimLeft | eTrimRight
 };
+
 
 template <typename T> T TrimImpl(T const& inStr, T const& toTrim, TrimType type)
 {
@@ -222,59 +225,59 @@ std::wstring tstringUtil::TrimRight(std::wstring const& inStr, wchar_t toTrim)
 }
 
 
-template <typename T, typename C> T ToLowerImpl(T const& inStr)
+static void my_tolower(char& ch)
 {
-	T out;
-	if (!inStr.empty())
-	{
-		size_t len = inStr.length();
-		out.append(len, ' ');
-		for (size_t i = 0; i < len; ++i)
-		{
-			out[i] = static_cast<C>(tolower(inStr[i]));
-		}
-	}
-	return out;
+	ch = std::tolower(ch, std::locale::classic());
 }
 
 
 std::string tstringUtil::ToLower(std::string const& inStr)
 {
-	return ToLowerImpl<std::string, char>(inStr);
+	std::string out(inStr);
+	std::for_each(out.begin(), out.end(), my_tolower);
+	return out;
+}
+
+
+static void my_wtolower(wchar_t& ch)
+{
+	ch = std::tolower(ch, std::locale::classic());
 }
 
 
 std::wstring tstringUtil::ToLower(std::wstring const& inStr)
 {
-	return ToLowerImpl<std::wstring, wchar_t>(inStr);
+	std::wstring out(inStr);
+	std::for_each(out.begin(), out.end(), my_wtolower);
+	return out;
 }
 
 
-template <typename T, typename C> T ToUpperImpl(T const& inStr)
+static void my_toupper(char& ch)
 {
-	T out;
-	if (!inStr.empty())
-	{
-		size_t len = inStr.length();
-		out.append(len, ' ');
-		for (size_t i = 0; i < len; ++i)
-		{
-			out[i] = static_cast<C>(toupper(inStr[i]));
-		}
-	}
-	return out;
+	ch = std::toupper(ch, std::locale::classic());
 }
 
 
 std::string tstringUtil::ToUpper(std::string const& inStr)
 {
-	return ToUpperImpl<std::string, char>(inStr);
+	std::string out(inStr);
+	std::for_each(out.begin(), out.end(), my_toupper);
+	return out;
+}
+
+
+static void my_wtoupper(wchar_t& ch)
+{
+	ch = std::toupper(ch, std::locale::classic());
 }
 
 
 std::wstring tstringUtil::ToUpper(std::wstring const& inStr)
 {
-	return ToUpperImpl<std::wstring, wchar_t>(inStr);
+	std::wstring out(inStr);
+	std::for_each(out.begin(), out.end(), my_wtoupper);
+	return out;
 }
 
 
