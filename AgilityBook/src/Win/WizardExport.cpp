@@ -1243,12 +1243,13 @@ BOOL CWizardExport::OnWizardFinish()
 			if (pExporter->CreateArray(m_ctrlPreview.GetItemCount(), nColumnCount))
 			{
 #else
-			IDlgProgress* pProgress = IDlgProgress::CreateProgress(this);
-			CString exporting;
-			exporting.LoadString(IDS_EXPORTING);
-			pProgress->SetMessage(exporting);
-			pProgress->SetRange(1, 0, m_ctrlPreview.GetItemCount() * nColumnCount);
-			pProgress->Show();
+				IDlgProgress* pProgress = IDlgProgress::CreateProgress(GetSafeHwnd());
+				pProgress->EnableCancel(false);
+				CString exporting;
+				exporting.LoadString(IDS_EXPORTING);
+				pProgress->SetMessage(exporting);
+				pProgress->SetRange(1, 0, m_ctrlPreview.GetItemCount() * nColumnCount);
+				pProgress->Show();
 
 #endif
 				for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)

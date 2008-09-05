@@ -99,7 +99,8 @@ void CReadHttp::Close()
 }
 
 
-static DWORD dwHttpRequestFlags = INTERNET_FLAG_EXISTING_CONNECT | INTERNET_FLAG_NO_AUTO_REDIRECT;
+// existing connect is for ftp
+static DWORD dwHttpRequestFlags = INTERNET_FLAG_RELOAD | INTERNET_FLAG_EXISTING_CONNECT | INTERNET_FLAG_NO_AUTO_REDIRECT;
 static const TCHAR szHeaders[] = _T("Accept: text\r\n");
 
 
@@ -108,8 +109,12 @@ DWORD CReadHttp::Connect(CString& userName, CString& outErrMsg, CWnd* pParent)
 	if (!m_session)
 		m_session = new CInternetSession(_T("my version"));
 	m_pServer = m_session->GetHttpConnection(m_strServerName, m_nPort);
+	if (!m_pServer)
+		return HTTP_STATUS_SERVER_ERROR;
 	m_pFile = m_pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
-		m_strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
+			m_strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
+	if (!m_pFile)
+		return HTTP_STATUS_SERVER_ERROR;
 	m_pFile->AddRequestHeaders(szHeaders);
 	m_pFile->SendRequest();
 	DWORD dwRet;
@@ -121,8 +126,12 @@ DWORD CReadHttp::Connect(CString& userName, CString& outErrMsg, CWnd* pParent)
 		if (IDOK == dlg.DoModal())
 		{
 			m_pServer = m_session->GetHttpConnection(m_strServerName, m_nPort, dlg.GetUserName(), dlg.GetPassword());
+			if (!m_pServer)
+				return HTTP_STATUS_SERVER_ERROR;
 			m_pFile = m_pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
-				m_strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
+					m_strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
+			if (!m_pFile)
+				return HTTP_STATUS_SERVER_ERROR;
 			m_pFile->AddRequestHeaders(szHeaders);
 			m_pFile->SendRequest();
 			m_pFile->QueryInfoStatusCode(dwRet);

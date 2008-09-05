@@ -1305,7 +1305,8 @@ void CWizardImport::OnImportFile()
 				pImporter = m_pSheet->CalcHelper()->GetImporter();
 			if (pImporter)
 			{
-				IDlgProgress* pProgress = IDlgProgress::CreateProgress(this);
+				IDlgProgress* pProgress = IDlgProgress::CreateProgress(GetSafeHwnd());
+				pProgress->EnableCancel(false);
 				if (pImporter->OpenFile(m_FileName))
 				{
 					pImporter->GetData(m_ExcelData, pProgress);

@@ -95,7 +95,7 @@ static size_t TranslateCodeMap(
 class CProgressMeter : public IProgressMeter
 {
 public:
-	CProgressMeter(int nEntries, CWnd* pParent);
+	CProgressMeter(int nEntries, HWND pParent);
 	~CProgressMeter();
 
 	void SetForegroundWindow();
@@ -108,6 +108,7 @@ public:
 	virtual void StepIt();
 	virtual void SetPos(int pos);
 	virtual int GetPos();
+	virtual bool HasCanceled() const;
 
 private:
 	int m_nEntries;
@@ -214,7 +215,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-CProgressMeter::CProgressMeter(int nEntries, CWnd* pParent)
+CProgressMeter::CProgressMeter(int nEntries, HWND pParent)
 	: m_nEntries(nEntries)
 	, m_pProgress(NULL)
 {
@@ -232,8 +233,7 @@ CProgressMeter::CProgressMeter(int nEntries, CWnd* pParent)
 
 CProgressMeter::~CProgressMeter()
 {
-	if (m_pProgress)
-		m_pProgress->Dismiss();
+	Dismiss();
 }
 
 
@@ -322,6 +322,15 @@ int CProgressMeter::GetPos()
 		m_pProgress->GetPos(nBar, pos);
 	}
 	return pos;
+}
+
+
+bool CProgressMeter::HasCanceled() const
+{
+	bool bCanceled = false;
+	if (m_pProgress)
+		bCanceled = m_pProgress->HasCanceled();
+	return bCanceled;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1190,7 +1199,7 @@ void CDlgCalendarPlugins::OnPluginRead()
 			++nEntries;
 	}
 
-	CProgressMeter progress(nEntries, this);
+	CProgressMeter progress(nEntries, GetSafeHwnd());
 
 	CWaitCursor wait;
 	for (hItem = m_ctrlPlugins.GetRootItem();
@@ -1206,71 +1215,74 @@ void CDlgCalendarPlugins::OnPluginRead()
 			{
 				int nInserted = 0;
 				CStringA data = pData->Process(&progress);
-				progress.SetForegroundWindow();
-				wait.Restore();
-				ElementNodePtr tree(ElementNode::New());
-				tstring errMsg;
-				bool bOk = false;
-				if (!data.IsEmpty())
+				if (!progress.HasCanceled())
 				{
-					bOk = tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg);
-					data.Empty();
-				}
-				if (bOk)
-				{
-					CErrorCallback err;
-					ARBAgilityRecordBook book;
-					bOk = book.Load(tree, true, false, false, false, false, err);
-					tree.reset();
-					if (bOk)
-					{
-						if (0 < err.m_ErrMsg.length())
-						{
-							AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
-							progress.SetForegroundWindow();
-							wait.Restore();
-						}
-						for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
-						{
-							CPluginCalData* pCalData = new CPluginCalData(*iter);
-							HTREEITEM hCalItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
-								LPSTR_TEXTCALLBACK,
-								0, 0,
-								0, 0,
-								reinterpret_cast<LPARAM>(static_cast<CPluginBase*>(pCalData)),
-								pData->GetHTreeItem(), TVI_LAST);
-							pCalData->SetHTreeItem(hCalItem);
-							m_ctrlPlugins.ShowCheckbox(hCalItem, true);
-							++nInserted;
-						}
-					}
-				}
-				else
-				{
-					CString str(pData->GetName());
-					CString err;
-					err.FormatMessage(IDS_ERR_PARSING_DATA, (LPCTSTR)str);
-					if (!errMsg.empty())
-					{
-						err += ":\n\t";
-						err += errMsg.c_str();
-					}
-					UINT flags = MB_ICONWARNING;
-					if (pData->CanDisable())
-					{
-						flags |= MB_YESNO | MB_DEFBUTTON2;
-						err += "\n\n";
-						str.LoadString(IDS_USE_PLUGIN);
-						err += str;
-					}
-					if (IDNO == AfxMessageBox(err, flags))
-						pData->Disable();
 					progress.SetForegroundWindow();
 					wait.Restore();
+					ElementNodePtr tree(ElementNode::New());
+					tstring errMsg;
+					bool bOk = false;
+					if (!data.IsEmpty())
+					{
+						bOk = tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg);
+						data.Empty();
+					}
+					if (bOk)
+					{
+						CErrorCallback err;
+						ARBAgilityRecordBook book;
+						bOk = book.Load(tree, true, false, false, false, false, err);
+						tree.reset();
+						if (bOk)
+						{
+							if (0 < err.m_ErrMsg.length())
+							{
+								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+								progress.SetForegroundWindow();
+								wait.Restore();
+							}
+							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
+							{
+								CPluginCalData* pCalData = new CPluginCalData(*iter);
+								HTREEITEM hCalItem = m_ctrlPlugins.InsertItem(TVIF_TEXT | TVIF_PARAM,
+									LPSTR_TEXTCALLBACK,
+									0, 0,
+									0, 0,
+									reinterpret_cast<LPARAM>(static_cast<CPluginBase*>(pCalData)),
+									pData->GetHTreeItem(), TVI_LAST);
+								pCalData->SetHTreeItem(hCalItem);
+								m_ctrlPlugins.ShowCheckbox(hCalItem, true);
+								++nInserted;
+							}
+						}
+					}
+					else
+					{
+						CString str(pData->GetName());
+						CString err;
+						err.FormatMessage(IDS_ERR_PARSING_DATA, (LPCTSTR)str);
+						if (!errMsg.empty())
+						{
+							err += ":\n\t";
+							err += errMsg.c_str();
+						}
+						UINT flags = MB_ICONWARNING;
+						if (pData->CanDisable())
+						{
+							flags |= MB_YESNO | MB_DEFBUTTON2;
+							err += "\n\n";
+							str.LoadString(IDS_USE_PLUGIN);
+							err += str;
+						}
+						if (IDNO == AfxMessageBox(err, flags))
+							pData->Disable();
+						progress.SetForegroundWindow();
+						wait.Restore();
+					}
+					m_ctrlPlugins.ShowCheckbox(hItem, false);
+					if (0 < nInserted)
+						m_ctrlPlugins.Expand(hItem, TVE_EXPAND);
 				}
-				m_ctrlPlugins.ShowCheckbox(hItem, false);
-				if (0 < nInserted)
-					m_ctrlPlugins.Expand(hItem, TVE_EXPAND);
 			}
 		}
 	}
@@ -1458,5 +1470,7 @@ CCalendarSites::~CCalendarSites()
 
 bool CCalendarSites::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
 {
+	if (!pDoc->SaveModified())
+		return false;
 	return m_Impl->FindEntries(pDoc, inCalendar, pParent);
 }

@@ -314,6 +314,8 @@ char* CCalendarSite::Process(
 
 	if (progress)
 	{
+		if (progress->HasCanceled())
+			return NULL;
 		CStringA msg;
 		msg.LoadString(IDS_FINDING_ENTRIES);
 		progress->SetMessage(msg);
@@ -401,13 +403,21 @@ char* CCalendarSite::Process(
 	}
 
 	if (progress)
+	{
+		if (progress->HasCanceled())
+			return NULL;
 		progress->SetRange(0, nEntries);
+	}
 
 	int idxCal = -1;
 	while (0 <= (idxCal = calTree->FindElement(TREE_CALENDAR, idxCal+1)))
 	{
 		if (progress)
+		{
+			if (progress->HasCanceled())
+				return NULL;
 			progress->StepIt();
+		}
 		ElementNodePtr cal = calTree->GetElementNode(idxCal);
 		tstring detail = cal->GetValue();
 		if (detail.empty())
@@ -417,6 +427,8 @@ char* CCalendarSite::Process(
 		address += detail.c_str();
 		if (progress)
 		{
+			if (progress->HasCanceled())
+				return NULL;
 			CString tmp;
 			tmp.FormatMessage(IDS_GETTING_DETAIL, (LPCTSTR)address);
 			CStringA msg(tmp);
