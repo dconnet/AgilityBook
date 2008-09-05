@@ -43,7 +43,7 @@
 class IDlgProgress
 {
 public:
-	static IDlgProgress* CreateProgress(CWnd* pParent = NULL);
+	static IDlgProgress* CreateProgress(HWND hwndParent = NULL);
 
 	// Setup dialog.
 	/// Set the caption of the dialog.
@@ -71,6 +71,8 @@ public:
 	virtual bool GetPos(
 			short inBar,
 			int& outPos) = 0;
+	virtual void EnableCancel(bool bEnable = true) = 0;
+	virtual bool HasCanceled() const = 0;
 
 	/// Show/hide the dialog.
 	virtual void Show(bool bShow = true) = 0;

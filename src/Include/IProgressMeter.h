@@ -71,4 +71,9 @@ public:
 	 * Get the current position.
 	 */
 	virtual int GetPos() = 0;
+
+	/**
+	 * User canceled
+	 */
+	virtual bool HasCanceled() const = 0;
 };
