@@ -39,6 +39,7 @@
  */
 
 #include "DlgBaseDialog.h"
+#include "afxwin.h"
 
 class CDlgConfigTitle : public CDlgBaseDialog
 {
@@ -63,6 +64,7 @@ private:
 	CDateTimeCtrl	m_ctrlDateFrom;
 	BOOL	m_DateTo;
 	CDateTimeCtrl	m_ctrlDateTo;
+	CComboBox m_ctrlStyle;
 	//}}AFX_DATA
 	ARBConfigTitlePtr m_Title;
 

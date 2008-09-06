@@ -852,20 +852,21 @@ void CAgilityBookViewTraining::OnEditCopy()
 			return;
 
 		CString data;
-		CStringArray line;
+		CString html;
+		CClipboardDataTable table(data, html);
 
 		// Take care of the header, but only if more than one line is selected.
 		if (1 < indices.size()
 		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
 		{
+			CStringArray line;
 			GetPrintLine(-1, line);
+			table.StartLine();
 			for (int i = 0; i < line.GetSize(); ++i)
 			{
-				if (0 < i)
-					data += '\t';
-				data += line[i];
+				table.Cell(i, line[i]);
 			}
-			data += _T("\r\n");
+			table.EndLine();
 		}
 
 		ElementNodePtr tree(ElementNode::New(CLIPDATA));
@@ -876,19 +877,18 @@ void CAgilityBookViewTraining::OnEditCopy()
 			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
 			if (pData)
 				pData->GetTraining()->Save(tree);
-			CStringArray line2;
-			GetPrintLine((*iter), line2);
-			for (int i = 0; i < line2.GetSize(); ++i)
+			CStringArray line;
+			GetPrintLine((*iter), line);
+			table.StartLine();
+			for (int i = 0; i < line.GetSize(); ++i)
 			{
-				if (0 < i)
-					data += '\t';
-				data += line2[i];
+				table.Cell(i, line[i]);
 			}
-			data += _T("\r\n");
+			table.EndLine();
 		}
 
 		clpData.SetData(eFormatLog, tree);
-		clpData.SetData(data);
+		clpData.SetData(table);
 	}
 }
 

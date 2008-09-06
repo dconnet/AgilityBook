@@ -289,6 +289,10 @@ Long name of the title.
 Allow the title to be created multiple times. For instance, MACH, MACH-2, etc.
 Usually, this will be 2. In some cases, like NADAC, it may start higher.
 
+.topic HIDC_CONFIG_TITLE_STYLE
+When a title allows multiple copies,
+display the number as either a number or a roman numeral.
+
 .topic HIDC_CONFIG_TITLE_PREFIX
 Is this title listed before a dog's name?
 

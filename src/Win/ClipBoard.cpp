@@ -60,6 +60,7 @@ static UINT GetClipboardFormat(eClipFormat fmt)
 	static UINT uCal = 0;
 	static UINT uiCal = 0;
 	static UINT uLog = 0;
+	static UINT uHtml = 0;
 	if (!bInitialized)
 	{
 		bInitialized = true;
@@ -69,6 +70,7 @@ static UINT GetClipboardFormat(eClipFormat fmt)
 		uCal = RegisterClipboardFormat(_T("ARB-Cal"));
 		uiCal = RegisterClipboardFormat(_T("+//ISBN 1-887687-00-9::versit::PDI//vCalendar"));
 		uLog = RegisterClipboardFormat(_T("ARB-Log"));
+		uHtml = RegisterClipboardFormat(_T("HTML Format"));
 	}
 	switch (fmt)
 	{
@@ -79,6 +81,7 @@ static UINT GetClipboardFormat(eClipFormat fmt)
 	case eFormatCalendar:	return uCal;
 	case eFormatiCalendar:	return uiCal;
 	case eFormatLog:		return uLog;
+	case eFormatHtml:		return uHtml;
 	}
 }
 
@@ -100,6 +103,7 @@ CClipboardData::~CClipboardData()
 
 bool CClipboardData::Open()
 {
+
 	if (!m_bOkay)
 	{
 		if (AfxGetMainWnd() && AfxGetMainWnd()->OpenClipboard())
@@ -211,6 +215,60 @@ bool CClipboardDataReader::GetData(
 
 ////////////////////////////////////////////////////////////////////////////
 
+CClipboardDataTable::CClipboardDataTable(CString& ioText, CString& ioHtml)
+	: m_ioText(ioText)
+	, m_ioHtml(ioHtml)
+	, m_Closed(false)
+{
+	Reset();
+}
+
+
+void CClipboardDataTable::Reset()
+{
+	m_ioHtml = _T("<table border=\"1\">");
+	m_ioText.Empty();
+	m_Closed = false;
+}
+
+
+void CClipboardDataTable::StartLine()
+{
+	m_ioHtml += _T("<TR>");
+}
+
+
+void CClipboardDataTable::EndLine()
+{
+	m_ioText += _T("\r\n");
+	m_ioHtml += _T("</TR>");
+}
+
+
+void CClipboardDataTable::Cell(int iCol, CString const& inData)
+{
+	if (0 < iCol)
+		m_ioText += '\t';
+	m_ioText += inData;
+	m_ioHtml += _T("<TD>");
+	m_ioHtml += inData;
+	m_ioHtml += _T("</TD>");
+}
+
+
+bool CClipboardDataTable::Write(CClipboardDataWriter& writer)
+{
+	if (!m_Closed)
+	{
+		m_ioHtml += _T("</table>");
+		m_Closed = true;
+	}
+	writer.SetData(eFormatHtml, m_ioHtml);
+	return writer.SetData(m_ioText);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 CClipboardDataWriter::CClipboardDataWriter()
 	: CClipboardData(true)
 {
@@ -247,7 +305,10 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		std::wstring const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(wchar_t)*(inData.length()+1));
+	if (eFormatHtml == clpFmt)
+		return SetData(clpFmt, tstringUtil::Convert(inData));
+	else
+		return SetData(GetClipboardFormat(clpFmt), inData.c_str(), sizeof(wchar_t)*(inData.length()+1));
 }
 
 
@@ -255,7 +316,7 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		CStringA const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), (LPCSTR)inData, sizeof(char)*(inData.GetLength()+1));
+	return SetData(GetClipboardFormat(clpFmt), inData, sizeof(char)*(inData.GetLength()+1));
 }
 
 
@@ -264,7 +325,10 @@ bool CClipboardDataWriter::SetData(
 		eClipFormat clpFmt,
 		CStringW const& inData)
 {
-	return SetData(GetClipboardFormat(clpFmt), (LPCWSTR)inData, sizeof(wchar_t)*(inData.GetLength()+1));
+	if (eFormatHtml == clpFmt)
+		return SetData(clpFmt, CStringA(inData));
+	else
+		return SetData(GetClipboardFormat(clpFmt), (LPCWSTR)inData, sizeof(wchar_t)*(inData.GetLength()+1));
 }
 #endif
 
@@ -296,6 +360,12 @@ bool CClipboardDataWriter::SetData(CStringW const& inData)
 #endif
 
 
+bool CClipboardDataWriter::SetData(CClipboardDataTable& inData)
+{
+	return inData.Write(*this);
+}
+
+
 bool CClipboardDataWriter::SetData(
 		UINT uFormat,
 		void const* inData,
@@ -303,6 +373,40 @@ bool CClipboardDataWriter::SetData(
 {
 	if (!m_bOkay)
 		return false;
+
+	std::string html;
+	if (GetClipboardFormat(eFormatHtml) == uFormat)
+	{
+		std::string data(reinterpret_cast<char const*>(inData), inLen);
+		inLen = data.length();
+		size_t lenHeader = 97;
+		std::string startHtml("<html><body>\r\n");
+		std::string endHtml("</body>\r\n</html>\r\n");
+		std::string startFragment("<!--StartFragment-->");
+		std::string endFragment("<!--EndFragment-->");
+		std::ostringstream out;
+		out.fill('0');
+		out << "Version:0.9\r\nStartHTML:";
+		out.width(8);
+		out << lenHeader << "\r\nEndHTML:";
+		out.width(8);
+		out << lenHeader + startHtml.length() + startFragment.length() + inLen + endFragment.length() + endHtml.length()
+			<< "\r\nStartFragment:";
+		out.width(8);
+		out << lenHeader + startHtml.length() + startFragment.length()
+			<< "\r\nEndFragment:";
+		out.width(8);
+		out << lenHeader + startHtml.length() + startFragment.length() + inLen << "\r\n";
+#ifdef _DEBUG
+		ASSERT(out.str().length() == lenHeader);
+#endif
+		out << startHtml << startFragment
+			<< data
+			<< endFragment << endHtml;
+		html = out.str();
+		inData = html.c_str();
+		inLen = html.length() + 1;
+	}
 
 	bool bOk = false;
 	if (inData && 0 < inLen)

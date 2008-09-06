@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-09-06 DRC Added roman numeral support
  * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
@@ -92,6 +93,7 @@ void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIG_TITLE_VALID_FROM_DATE, m_ctrlDateFrom);
 	DDX_Check(pDX, IDC_CONFIG_TITLE_VALID_TO, m_DateTo);
 	DDX_Control(pDX, IDC_CONFIG_TITLE_VALID_TO_DATE, m_ctrlDateTo);
+	DDX_Control(pDX, IDC_CONFIG_TITLE_STYLE, m_ctrlStyle);
 	//}}AFX_DATA_MAP
 }
 
@@ -109,6 +111,7 @@ void CDlgConfigTitle::UpdateButtons()
 {
 	m_ctrlDateFrom.EnableWindow(m_DateFrom);
 	m_ctrlDateTo.EnableWindow(m_DateTo);
+	m_ctrlStyle.EnableWindow(m_ctrlMultiple.IsWindowEnabled());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -132,6 +135,27 @@ BOOL CDlgConfigTitle::OnInitDialog()
 		t = CTime::GetCurrentTime();
 	m_ctrlDateTo.SetTime(&t);
 
+	static struct
+	{
+		UINT idRes;
+		ARBTitleStyle style;
+	} styles[] = {
+		{IDS_CONFIG_TITLE_NUMBER, eTitleNumber},
+		{IDS_CONFIG_TITLE_ROMAN, eTitleRoman},
+	};
+	static size_t nStyles = sizeof(styles) / sizeof(styles[0]);
+	for (size_t n = 0; n < nStyles; ++n)
+	{
+		CString str;
+		str.LoadString(styles[n].idRes);
+		int idx = m_ctrlStyle.AddString(str);
+		m_ctrlStyle.SetItemData(idx, static_cast<DWORD_PTR>(styles[n].style));
+		if (m_Title->GetMultipleStyle() == styles[n].style)
+			m_ctrlStyle.SetCurSel(n);
+	}
+	if (0 > m_ctrlStyle.GetCurSel())
+		m_ctrlStyle.SetCurSel(0);
+
 	UpdateButtons();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -149,6 +173,7 @@ void CDlgConfigTitle::OnAllowMultiple()
 		UpdateData(FALSE);
 	}
 	m_ctrlMultiple.EnableWindow(m_AllowMany);
+	UpdateButtons();
 }
 
 
@@ -202,6 +227,8 @@ void CDlgConfigTitle::OnOK()
 	m_Title->SetDescription((LPCTSTR)m_Desc);
 	m_Title->SetPrefix(m_Prefix ? true : false);
 	m_Title->SetMultiple(m_Multiple);
+	if (0 <= m_ctrlStyle.GetCurSel())
+		m_Title->SetMultipleStyle(static_cast<ARBTitleStyle>(m_ctrlStyle.GetItemData(m_ctrlStyle.GetCurSel())));
 	ARBDate date;
 	if (m_DateFrom)
 	{

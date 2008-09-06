@@ -1,4 +1,31 @@
 <ul type="circle">
+	<li><b><a name="v1.10.8.12">9/6/2008: v1.10.8.12</a></b>
+	<ul>
+		<li>Bumped file version to 12.8, Configuration v23
+		<ul type="disc">
+			<li>Added 'style' to Title, 'Style' to 'Titles'</li>
+			<li>Updated USDAA Grand Prix qualifying points.</li>
+		</ul>
+		</li>
+		<li>New features / Enhancements
+		<ul type="disc">
+			<li>Start adding support for non-MFC/non-Windows platforms.</li>
+			<li>Multiple titles can now have roman numerals instead of numbers.</li>
+			<li>Add a cancel button to the progress dialog when reading USDAA events.</li>
+			<li>When copying runs, put them in the clipboard in HTML table
+			format, in addition to text.</li>
+		</ul>
+		</li>
+		<li>Bug fixes
+		<ul type="disc">
+		</ul>
+			<li>ICalendar output mixed ansi/unicode strings in output.</li>
+			<li>Fix parsing of version.txt for language ids.</li>
+			<li>Overlapping event ranges in the event configuration dialog
+			were incorrectly identified under certain conditions.</li>
+		</li>
+	</ul>
+	</li>
 	<li><b><a name="v1.10.7.12">6/11/2008: v1.10.7.12</a></b>
 	<ul>
 		<li>Bug fixes
@@ -7,6 +34,7 @@
 			SCT was specified.
 			This snuck in with the T+F fix in the last release.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.10.6.12">6/4/2008: v1.10.6.12</a></b>
@@ -15,6 +43,7 @@
 		<ul type="disc">
 			<li>Changed AKC 'standard' division to 'regular'.</li>
 		</ul>
+		</li>
 		<li>Bug fixes
 		<ul type="disc">
 			<li>Title points were not computed properly in Time+Fault runs
@@ -24,6 +53,7 @@
 			<li>In the Points view, if an event has existing points but no
 			runs, the existing points did not show up.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.10.5.12">2/9/2008: v1.10.5.12</a></b>
@@ -33,6 +63,7 @@
 			<li>Added 'Visible' to Note items.</li>
 			<li>Added 'obstacle' to 'Scoring'</li>
 		</ul>
+		</li>
 		<li>New features / Enhancements
 		<ul type="disc">
 			<li>Added a list of existing venues into calendar query detail
@@ -50,6 +81,7 @@
 			coming!].</li>
 			<li>Added YPS to Reference Run dialog.</li>
 		</ul>
+		</li>
 		<li>Bug fixes
 		<ul type="disc">
 			<li>User-added data in the configuration could be lost when
@@ -63,6 +95,7 @@
 			not be correctly set. This will correct itself later, but is
 			annoying in the meantime.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.10.4.12">1/1/2008: v1.10.4.12</a></b>
@@ -71,6 +104,7 @@
 		<ul type="disc">
 			<li>Fixed a crash parsing version data from web.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.10.3.12">12/28/2007: v1.10.3.12</a></b>
@@ -128,6 +162,7 @@
 			<li>The drop list for the Notes items (judges/etc) didn't properly
 			show the highlight color.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.9.1.12">6/24/2007: v1.9.1.12</a></b>
@@ -172,6 +207,7 @@
 		<ul type="disc">
 			<li>Fixed a problem redrawing list contents when column size changed.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.8.2.12">2/17/2007: v1.8.2.12</a></b>
@@ -194,6 +230,7 @@
 			<li>Fixed a problem with scroll bar not appearing in the Calendar view.</li>
 			<li>Fixed a problem where 'hasTable' was set to true for non-table runs.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.8.1.12">12/24/2006: v1.8.1.12</a></b>
@@ -202,6 +239,7 @@
 		<ul type="disc">
 			<li>Several venues were double-counting points in the Points view.</li>
 		</ul>
+		</li>
 	</ul>
 	</li>
 	<li><b><a name="v1.8.0.12">12/24/2006: v1.8.0.12</a></b>
@@ -796,7 +834,6 @@
 			<li>Enable the 'new title' toolbar button in the Points view.</li>
 			<li>Enable the merging (via Import) of Dogs, Trials, Runs,
 			Judges.</li>
-			</li>
 			<li>Added an option to disable the splash screen.</li>
 			<li>Added tooltips in lists when columns are too small.</li>
 		</ul>
@@ -921,7 +958,7 @@
 	</li>
 	<li><b><a name="v1.1.0.8">4/30/2004: v1.1.0.8</a></b>
 	<ul>
-		<li>Bumped file version to 8.6, configuration to version 3.</li>
+		<li>Bumped file version to 8.6, configuration to version 3.
 		<ul type="disc">
 			<li>Changed 'TableInYPS' to 'hasTable', added 'hasTable'
 			to 'Scoring'</li>
@@ -1254,10 +1291,11 @@
 			(for instance, say the number of faults allowed for a
 			given event changes from 10 to 5)</li>
 		</ul>
+		</li>
 		<li>Bug fixes
 			<ul type="disc">
-			<li>Changed copyright notices from "(c)" to "©" (internal
-			code, not visible)</li>
+			<li>Changed copyright notices from "(c)" to copyright symbol
+			(internal code, not visible)</li>
 			<li>Right-clicking on a Calendar entry sets that as the
 			current date before popping up the context menu.</li>
 			<li>Cleaned up page scrolling in calendar view.</li>
