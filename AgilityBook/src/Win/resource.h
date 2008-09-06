@@ -221,10 +221,11 @@
 #define IDC_CONFIG_TITLE_VALID_FROM_DATE 1147
 #define IDC_CONFIG_TITLE_VALID_TO       1148
 #define IDC_CONFIG_TITLE_VALID_TO_DATE  1149
-#define IDC_CONFIG_UPDATE_DEFAULT       1150
-#define IDC_CONFIG_UPDATE_EXISTING      1151
-#define IDC_CONFIG_UPDATE_NAME          1152
-#define IDC_CONFIG_UPDATE_FILENAME      1153
+#define IDC_CONFIG_TITLE_STYLE          1150
+#define IDC_CONFIG_UPDATE_DEFAULT       1155
+#define IDC_CONFIG_UPDATE_EXISTING      1156
+#define IDC_CONFIG_UPDATE_NAME          1157
+#define IDC_CONFIG_UPDATE_FILENAME      1158
 #define IDC_CAL_DATE_START              1160
 #define IDC_CAL_DATE_END                1161
 #define IDC_CAL_TENTATIVE               1162
@@ -586,7 +587,6 @@
 #define IDC_QUERYDETAIL_NAME_TEXT       1711
 #define IDC_QUERYDETAIL_NAME            1712
 #define IDC_QUERYDETAIL_COMBO           1713
-#define IDC_BUTTON1                     1720
 #define IDS_BUTTON_OK                   4000
 #define IDS_BUTTON_CANCEL               4001
 #define IDS_BUTTON_YES                  4002
@@ -984,6 +984,8 @@
 #define IDS_UPDATED                     5070
 #define IDS_VIEWING_OPTIONS             5072
 #define IDS_EXPORTING                   5073
+#define IDS_CONFIG_TITLE_NUMBER         5074
+#define IDS_CONFIG_TITLE_ROMAN          5075
 #define IDS_AFFECTED_RUNS               5100
 #define IDS_ARE_YOU_SURE_CONTINUE       5102
 #define IDS_AUTODELETE_CAL              5103
@@ -1156,7 +1158,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        260
 #define _APS_NEXT_COMMAND_VALUE         32900
-#define _APS_NEXT_CONTROL_VALUE         1721
+#define _APS_NEXT_CONTROL_VALUE         1720
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif

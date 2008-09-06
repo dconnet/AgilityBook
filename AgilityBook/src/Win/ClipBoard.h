@@ -51,7 +51,9 @@ typedef enum
 	eFormatCalendar,
 	eFormatiCalendar,
 	eFormatLog,
+	eFormatHtml,
 } eClipFormat;
+
 
 /**
  * Clipboard reader/writer base class.
@@ -74,6 +76,7 @@ protected:
 	bool m_bOkay;
 };
 
+
 class CClipboardDataReader : public CClipboardData
 {
 public:
@@ -94,6 +97,27 @@ private:
 	bool GetData(
 			UINT uFormat,
 			CStringA& outData);
+};
+
+
+class CClipboardDataWriter;
+
+/**
+ * Helper class to create html tables when copying to clipboard
+ */
+class CClipboardDataTable
+{
+public:
+	CClipboardDataTable(CString& ioText, CString& ioHtml);
+	void Reset();
+	void StartLine();
+	void EndLine();
+	void Cell(int nCol, CString const& inData);
+	bool Write(CClipboardDataWriter& writer);
+private:
+	bool m_Closed;
+	CString& m_ioText;
+	CString& m_ioHtml;
 };
 
 /**
@@ -131,6 +155,8 @@ public:
 #if _MSC_VER >= 1300
 	bool SetData(CStringW const& inData);
 #endif
+
+	bool SetData(CClipboardDataTable& inData);
 
 	// Raw form.
 	bool SetData(

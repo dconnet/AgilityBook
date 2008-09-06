@@ -1,4 +1,4 @@
-9/5/2008: v1.10.8.12 <in development>
+9/6/2008: v1.10.8.12 <in development>
 - Bumped file version to 12.8, Configuration v23:
   - Added 'style' to Title, 'Style' to 'Titles'
   - Updated USDAA Grand Prix qualifying points.
@@ -6,6 +6,8 @@
   - Start adding support for non-MFC/non-Windows platforms.
   - Multiple titles can now have roman numerals instead of numbers.
   - Add a cancel button to the progress dialog when reading USDAA events.
+  - When copying runs, put them in the clipboard in HTML table format,
+    in addition to text.
 - Bug fixes:
   - ICalendar output mixed ansi/unicode strings in output.
   - Fix parsing of version.txt for language ids.

@@ -1756,30 +1756,33 @@ void CDlgListViewer::OnBnClickedListCopy()
 			return;
 
 		CString data;
-		CStringArray line;
+		CString html;
+		CClipboardDataTable table(data, html);
 
-		m_ctrlList.GetPrintLine(-1, line);
-		for (int i = 0; i < line.GetSize(); ++i)
 		{
-			if (0 < i)
-				data += '\t';
-			data += line[i];
+			CStringArray line;
+			m_ctrlList.GetPrintLine(-1, line);
+			table.StartLine();
+			for (int i = 0; i < line.GetSize(); ++i)
+			{
+				table.Cell(i, line[i]);
+			}
+			table.EndLine();
 		}
-		data += _T("\r\n");
 
 		// Now all the data.
 		for (int idx = 0; idx < m_ctrlList.GetItemCount(); ++idx)
 		{
+			CStringArray line;
 			m_ctrlList.GetPrintLine(idx, line);
+			table.StartLine();
 			for (int i = 0; i < line.GetSize(); ++i)
 			{
-				if (0 < i)
-					data += '\t';
-				data += line[i];
+				table.Cell(i, line[i]);
 			}
-			data += _T("\r\n");
+			table.EndLine();
 		}
 
-		clpData.SetData(data);
+		clpData.SetData(table);
 	}
 }
