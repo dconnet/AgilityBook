@@ -310,8 +310,8 @@ Dans quelques cas, comme par exemple pour NADAC,
 cela peut commencer plus haut.
 
 .topic HIDC_CONFIG_TITLE_STYLE
-When a title allows multiple copies,
-display the number as either a number or a roman numeral.
+Quand un titre permet des copies multiples,
+afficher le nombre soit en chiffres arabes soit en chiffres romains.
 
 .topic HIDC_CONFIG_TITLE_PREFIX
 Cette récompense est-elle listée devant le nom du chien?
