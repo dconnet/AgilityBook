@@ -379,24 +379,39 @@ bool CClipboardDataWriter::SetData(
 	{
 		std::string data(reinterpret_cast<char const*>(inData), inLen);
 		inLen = data.length();
-		size_t lenHeader = 97;
 		std::string startHtml("<html><body>\r\n");
 		std::string endHtml("</body>\r\n</html>\r\n");
 		std::string startFragment("<!--StartFragment-->");
 		std::string endFragment("<!--EndFragment-->");
+#if _MSC_VER >= 1300 && _MSC_VER < 1400
+		// VC7 has issues streaming size_t: warnings about 'size_t' to 'unsigned int' conversion
+		int lenData = static_cast<int>(inLen);
+		int lenHeader = 97;
+		int lenStartHtml = static_cast<int>(startHtml.length());
+		int lenEndHtml = static_cast<int>(endHtml.length());
+		int lenStartFragment = static_cast<int>(startFragment.length());
+		int lenEndFragment = static_cast<int>(endFragment.length());
+#else
+		size_t lenData = inLen;
+		size_t lenHeader = 97;
+		size_t lenStartHtml = startHtml.length();
+		size_t lenEndHtml = endHtml.length();
+		size_t lenStartFragment = startFragment.length();
+		size_t lenEndFragment = endFragment.length();
+#endif
 		std::ostringstream out;
 		out.fill('0');
 		out << "Version:0.9\r\nStartHTML:";
 		out.width(8);
 		out << lenHeader << "\r\nEndHTML:";
 		out.width(8);
-		out << lenHeader + startHtml.length() + startFragment.length() + inLen + endFragment.length() + endHtml.length()
+		out << lenHeader + lenStartHtml + lenStartFragment + lenData + lenEndFragment + lenEndHtml
 			<< "\r\nStartFragment:";
 		out.width(8);
-		out << lenHeader + startHtml.length() + startFragment.length()
+		out << lenHeader + lenStartHtml + lenStartFragment
 			<< "\r\nEndFragment:";
 		out.width(8);
-		out << lenHeader + startHtml.length() + startFragment.length() + inLen << "\r\n";
+		out << lenHeader + lenStartHtml + lenStartFragment + lenData << "\r\n";
 #ifdef _DEBUG
 		ASSERT(out.str().length() == lenHeader);
 #endif
