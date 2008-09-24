@@ -1,4 +1,4 @@
-9/6/2008: v1.10.8.12 <in development>
+9/24/2008: v1.10.8.12
 - Bumped file version to 12.8, Configuration v23:
   - Added 'style' to Title, 'Style' to 'Titles'
   - Updated USDAA Grand Prix qualifying points.
