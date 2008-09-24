@@ -143,8 +143,8 @@ BOOL CDlgConfigTitle::OnInitDialog()
 		{IDS_CONFIG_TITLE_NUMBER, eTitleNumber},
 		{IDS_CONFIG_TITLE_ROMAN, eTitleRoman},
 	};
-	static size_t nStyles = sizeof(styles) / sizeof(styles[0]);
-	for (size_t n = 0; n < nStyles; ++n)
+	static int nStyles = sizeof(styles) / sizeof(styles[0]);
+	for (int n = 0; n < nStyles; ++n)
 	{
 		CString str;
 		str.LoadString(styles[n].idRes);
