@@ -3,7 +3,7 @@ Setting up the build environment
 Additional software packages required (all free):
 - UnitTest++
 - HTML Help Workshop
-- Boost libraries (optional as of VC9+TR1)
+- Boost libraries (not needed as of VC9+SP1)
 - Windows Installer XML toolset
 - Xerces-C (included in src tree)
 - zlib (included in src tree)
@@ -47,18 +47,17 @@ the compiler options (Tools->Options, Directories tab):
 --------------------
 
 Boost: http://www.boost.org.
-ARB has been built and tested using Boost version 1.35.1. There is no need
+ARB has been built and tested using Boost version 1.36.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
-weak_ptr templates are used.) [also tested against 1.33.1, 1.34.0, 1.34.1,
-however, VC9 requires some tweaks to use these older versions]
+weak_ptr templates are used.)
+[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1
+however, VC9 requires some tweaks to use versions older than 1.35.1]
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked in boost_1_34_0 (of course,
 this will vary based on boost version). This should be renamed to 'boost'
 to avoid problems in the project files.
-- Note: use of Boost may change in the future. Smart Ptrs are part of the
-  TR1 spec. When compilers actually implemement TR1, I will change to that.
-- Boost is no longer required when using VC9+FeaturePack (TR1). Note, the
-  included project files now assume the feature pack is installed with VS2008.
+- Boost is no longer required when using VC9+SP1 (or FeaturePack). Note, the
+  included project files now assume the Service Pack is installed with VS2008.
 
 --------------------
 
@@ -143,6 +142,10 @@ Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
 
-Microsoft Visual Studio .NET 2008 (VC9) + Feature Pack (or SP1)
-===============================================================
+Microsoft Visual Studio .NET 2008 (VC9)
+=======================================
+   Not supported.
+
+Microsoft Visual Studio .NET 2008 (VC9) + SP1
+=============================================
    It works, no additional notes.
