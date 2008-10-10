@@ -271,6 +271,9 @@ void ARBConfig::Default()
 			FreeResource(hRes);
 		}
 	}
+#elif defined(WXWIDGETS)
+#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS DefaultConfig.xml usage" )
+	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
 #else
 #pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DefaultConfig.xml usage" )
 	// @todo: Porting issues: This needs more work...
@@ -310,6 +313,10 @@ std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
 			FreeResource(hRes);
 		}
 	}
+#elif defined(WXWIDGETS)
+#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS DTD usage" )
+	// @todo: Porting issues: Not currently implemented
+	dtd = "<!-- Not implemented on non-windows platforms -->\n";
 #else
 #pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DTD usage" )
 	// @todo: Porting issues: Not currently implemented
