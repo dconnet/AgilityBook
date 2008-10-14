@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.py &quot;$(ConfigurationName)&quot; VC9$(PlatformName)&#x0D;&#x0A;"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,6 +144,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -207,7 +208,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)..\..&#x0D;&#x0A;BuildHelp.py &quot;$(ConfigurationName)&quot; VC9$(PlatformName)&#x0D;&#x0A;"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -272,6 +273,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
 			/>
 		</Configuration>
 	</Configurations>

@@ -66,11 +66,13 @@ Global
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|Win32.Build.0 = Debug|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|x64.ActiveCfg = Debug|x64
+		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Debug|x64.Build.0 = Debug|x64
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release - No Unicode|Win32.ActiveCfg = Release|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release - No Unicode|x64.ActiveCfg = Release|x64
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release|Win32.ActiveCfg = Release|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release|Win32.Build.0 = Release|Win32
 		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release|x64.ActiveCfg = Release|x64
+		{E608D05A-7F1D-4C1C-867D-EA699DCAB177}.Release|x64.Build.0 = Release|x64
 		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug - No Unicode|Win32.ActiveCfg = Debug|Win32
 		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug - No Unicode|x64.ActiveCfg = Debug|x64
 		{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}.Debug|Win32.ActiveCfg = Debug|Win32
@@ -86,6 +88,7 @@ Global
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug - No Unicode|Win32.ActiveCfg = Debug|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug - No Unicode|Win32.Build.0 = Debug|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug - No Unicode|x64.ActiveCfg = Debug|x64
+		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug - No Unicode|x64.Build.0 = Debug|x64
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug|Win32.ActiveCfg = Debug|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug|Win32.Build.0 = Debug|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug|x64.ActiveCfg = Debug|x64
@@ -93,6 +96,7 @@ Global
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release - No Unicode|Win32.ActiveCfg = Release|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release - No Unicode|Win32.Build.0 = Release|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release - No Unicode|x64.ActiveCfg = Release|x64
+		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release - No Unicode|x64.Build.0 = Release|x64
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release|Win32.ActiveCfg = Release|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release|Win32.Build.0 = Release|Win32
 		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release|x64.ActiveCfg = Release|x64
@@ -100,6 +104,7 @@ Global
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug - No Unicode|Win32.ActiveCfg = Debug|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug - No Unicode|Win32.Build.0 = Debug|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug - No Unicode|x64.ActiveCfg = Debug|x64
+		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug - No Unicode|x64.Build.0 = Debug|x64
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug|Win32.Build.0 = Debug|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug|x64.ActiveCfg = Debug|x64
@@ -107,6 +112,7 @@ Global
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release - No Unicode|Win32.ActiveCfg = Release|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release - No Unicode|Win32.Build.0 = Release|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release - No Unicode|x64.ActiveCfg = Release|x64
+		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release - No Unicode|x64.Build.0 = Release|x64
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release|Win32.ActiveCfg = Release|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release|Win32.Build.0 = Release|Win32
 		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release|x64.ActiveCfg = Release|x64
@@ -114,6 +120,7 @@ Global
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug - No Unicode|Win32.ActiveCfg = Debug|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug - No Unicode|Win32.Build.0 = Debug|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug - No Unicode|x64.ActiveCfg = Debug|x64
+		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug - No Unicode|x64.Build.0 = Debug|x64
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug|Win32.Build.0 = Debug|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug|x64.ActiveCfg = Debug|x64
@@ -121,6 +128,7 @@ Global
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release - No Unicode|Win32.ActiveCfg = Release|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release - No Unicode|Win32.Build.0 = Release|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release - No Unicode|x64.ActiveCfg = Release|x64
+		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release - No Unicode|x64.Build.0 = Release|x64
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release|Win32.ActiveCfg = Release|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release|Win32.Build.0 = Release|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release|x64.ActiveCfg = Release|x64
@@ -152,6 +160,7 @@ Global
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Debug - No Unicode|Win32.ActiveCfg = Debug - No Unicode|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Debug - No Unicode|Win32.Build.0 = Debug - No Unicode|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Debug - No Unicode|x64.ActiveCfg = Debug - No Unicode|x64
+		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Debug - No Unicode|x64.Build.0 = Debug - No Unicode|x64
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Debug|Win32.Build.0 = Debug|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Debug|x64.ActiveCfg = Debug|x64
@@ -159,6 +168,7 @@ Global
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Release - No Unicode|Win32.ActiveCfg = Release - No Unicode|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Release - No Unicode|Win32.Build.0 = Release - No Unicode|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Release - No Unicode|x64.ActiveCfg = Release - No Unicode|x64
+		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Release - No Unicode|x64.Build.0 = Release - No Unicode|x64
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Release|Win32.ActiveCfg = Release|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Release|Win32.Build.0 = Release|Win32
 		{DA3555E9-9D25-4E49-A36C-CBB88F0D2469}.Release|x64.ActiveCfg = Release|x64
