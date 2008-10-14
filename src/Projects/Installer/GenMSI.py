@@ -1,6 +1,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2008-10-14 DRC Added x64 specific tags
 # 2007-11-14 DRC Wix works! (it's now the default)
 # 2007-11-05 DRC Add WiX back (addition)
 #            Note, WiX doesn't work yet, that's why I added Inno
@@ -133,6 +134,8 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'        Description="Agility Record Book"'
 	print >>setup, r'        Comments="Track all your agility records in one convenient place."'
 	print >>setup, r'        InstallerVersion="200"'
+	if code64 == code:
+		print >>setup, r'        Platforms="x64"'
 	print >>setup, r'        Compressed="yes"/>'
 	print >>setup, r''
 	print >>setup, r'    <Property Id="INSTALLLEVEL">100</Property>'
@@ -163,11 +166,18 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'      <Directory Id="ProgramMenuFolder">'
 	print >>setup, r'        <Directory Id="ARBMenuFolder" Name="ARB" LongName="Agility Record Book"/>'
 	print >>setup, r'      </Directory>'
-	print >>setup, r'      <Directory Id="ProgramFilesFolder">'
+	if code64 == code:
+		print >>setup, r'      <Directory Id="ProgramFiles64Folder">'
+	else:
+		print >>setup, r'      <Directory Id="ProgramFilesFolder">'
 	print >>setup, r'        <Directory Id="CompanyFolder" Name="dconSoft" LongName="dcon Software">'
 	print >>setup, r'          <Directory Id="INSTALLDIR" Name="ARB" LongName="Agility Record Book">'
 	print >>setup, r''
-	print >>setup, r'            <Component Id="ApplicationCore" Guid="F8886313-42A0-4B12-B2EE-C40FB614101F">'
+
+	if code64 == code:
+		print >>setup, r'            <Component Id="ApplicationCore" Guid="54DDED5B-A520-49A1-B96A-76C5B7E7651B" Win64="yes">'
+	else:
+		print >>setup, r'            <Component Id="ApplicationCore" Guid="F8886313-42A0-4B12-B2EE-C40FB614101F">'
 	print >>setup, r'              <File Id="App" Name="ARBexe" LongName="AgilityBook.exe"'
 	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.exe"'
 	print >>setup, r'                    Vital="yes" DiskId="1">'
@@ -193,7 +203,10 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'              <Registry Id="AppIcon1" Root="HKCR" Key="AgilityBook.Document\DefaultIcon" Action="write"'
 	print >>setup, r'                        Type="string" Value="[INSTALLDIR]AgilityBook.exe,0" />'
 	print >>setup, r'            </Component>'
-	print >>setup, r'            <Component Id="French" Guid="BC52AC1B-B3CD-49E1-BD21-6F9955AB31D6">'
+	if code64 == code:
+		print >>setup, r'            <Component Id="French" Guid="7C0E5438-3E23-495B-8808-84986FDB880C" Win64="yes">'
+	else:
+		print >>setup, r'            <Component Id="French" Guid="BC52AC1B-B3CD-49E1-BD21-6F9955AB31D6">'
 	print >>setup, r'              <File Id="ResFRA" Name="fradll" LongName="AgilityBookFRA.dll"'
 	print >>setup, r'                    Source="' + baseDir + r'AgilityBookFRA.dll"'
 	print >>setup, r'                    Vital="no" DiskId="1" />'
@@ -201,12 +214,18 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'                    Source="' + baseDir + r'AgilityBookFRA.chm"'
 	print >>setup, r'                    Vital="yes" DiskId="1" />'
 	print >>setup, r'            </Component>'
-	print >>setup, r'            <Component Id="CALusdaa" Guid="DA49BBD9-D16D-4B03-80F2-524553F76FFF">'
+	if code64 == code:
+		print >>setup, r'            <Component Id="CALusdaa" Guid="2E778DAE-3E68-4C6E-A5B3-4A0A7A810923" Win64="yes">'
+	else:
+		print >>setup, r'            <Component Id="CALusdaa" Guid="DA49BBD9-D16D-4B03-80F2-524553F76FFF">'
 	print >>setup, r'              <File Id="usdaa" Name="CALusdaa" LongName="cal_usdaa.dll"'
 	print >>setup, r'                    Source="' + baseDir + r'cal_usdaa.dll"'
 	print >>setup, r'                    Vital="no" DiskId="1" />'
 	print >>setup, r'            </Component>'
-	print >>setup, r'            <Component Id="ARBHelp" Guid="014BD8FF-D094-49EB-B4A9-BE74ED440893">'
+	if code64 == code:
+		print >>setup, r'            <Component Id="ARBHelp" Guid="63EBB1E4-4156-4511-A80E-E837DA8FEA47" Win64="yes">'
+	else:
+		print >>setup, r'            <Component Id="ARBHelp" Guid="014BD8FF-D094-49EB-B4A9-BE74ED440893">'
 	print >>setup, r'              <File Id="arbhelp" Name="ARBHelp" LongName="ARBHelp.exe"'
 	print >>setup, r'                    Source="' + baseDir + r'ARBHelp.exe"'
 	print >>setup, r'                    Vital="no" DiskId="1" />'
