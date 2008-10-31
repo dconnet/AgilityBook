@@ -47,8 +47,6 @@
 /**
  * Date class.
  * In XML/Element, this class is only used as an attribute, never an element.
- *
- * @todo Migrate all usage away from time_t.
  */
 class ARBDate
 {
