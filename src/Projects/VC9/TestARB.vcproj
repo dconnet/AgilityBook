@@ -561,6 +561,10 @@
 			UniqueIdentifier="{718D9CED-72EB-4A38-8517-BC03AE844060}"
 			>
 			<File
+				RelativePath="..\..\TestARB\ConfigHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\Local.cpp"
 				>
 			</File>
@@ -822,6 +826,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{9DF372DE-C31D-44D4-BDB1-28D168BD0C30}"
 			>
+			<File
+				RelativePath="..\..\TestARB\ConfigHandler.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\TestARB\Local.h"
 				>

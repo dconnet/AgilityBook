@@ -43,9 +43,6 @@
  */
 
 #include "stdafx.h"
-#if defined(_WIN32)
-#include "resource.h"
-#endif
 #include "ARBConfig.h"
 
 #include "ARBAgilityRecordBook.h"
@@ -248,81 +245,36 @@ bool ARBConfig::Save(ElementNodePtr ioTree) const
 
 
 // Add a few known configurations.
-void ARBConfig::Default()
+void ARBConfig::Default(IARBConfigHandler* inHandler)
 {
 	clear();
-	// We could just distribute the .xml file and load it, but I'm taking
-	// advantage of Win32 resources and stashing the default config inside
-	// the program.
-	bool bOk = false;
-	tstring errMsg;
-	ARBErrorCallback err(errMsg);
-	ElementNodePtr tree(ElementNode::New());
-#if defined(_WIN32) && defined(_MFC_VER)
-	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
-	if (hrSrc)
+	if (inHandler)
 	{
-		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
-		if (hRes)
+		ElementNodePtr tree = inHandler->LoadDefaultConfig();
+		if (tree && tree->GetName() == _T("DefaultConfig"))
 		{
-			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			bOk = tree->LoadXMLBuffer(pData, size, errMsg);
-			FreeResource(hRes);
-		}
-	}
-#elif defined(WXWIDGETS)
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS DefaultConfig.xml usage" )
-	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
-#else
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DefaultConfig.xml usage" )
-	// @todo: Porting issues: This needs more work...
-	// This will work, but we need to make sure DefaultConfig.xml is
-	// distributed - there's also the issue of paths...
-	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
-#endif
-	if (bOk && tree->GetName() == _T("DefaultConfig"))
-	{
-		ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
-		tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
-		int config = tree->FindElement(TREE_CONFIG);
-		if (0 <= config)
-		{
-			bOk = Load(tree->GetElementNode(config), version, err);
+			ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
+			tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
+			int config = tree->FindElement(TREE_CONFIG);
+			if (0 <= config)
+			{
+				tstring errMsg;
+				ARBErrorCallback err(errMsg);
+				Load(tree->GetElementNode(config), version, err);
+			}
 		}
 	}
 }
 
 
 /* static */
-std::string ARBConfig::GetDTD(bool bNormalizeCRNL)
+std::string ARBConfig::GetDTD(
+		IARBConfigHandler* inHandler,
+		bool bNormalizeCRNL)
 {
-	std::string dtd;
-#if defined(_WIN32) && defined(_MFC_VER)
-	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
-	if (hrSrc)
-	{
-		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
-		if (hRes)
-		{
-			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			dtd = std::string(pData, size);
-			if (bNormalizeCRNL)
-				dtd = tstringUtil::Replace(dtd, "\r\n", "\n");
-			FreeResource(hRes);
-		}
-	}
-#elif defined(WXWIDGETS)
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS DTD usage" )
-	// @todo: Porting issues: Not currently implemented
-	dtd = "<!-- Not implemented on non-windows platforms -->\n";
-#else
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DTD usage" )
-	// @todo: Porting issues: Not currently implemented
-	dtd = "<!-- Not implemented on non-windows platforms -->\n";
-#endif
-	return dtd;
+	if (inHandler)
+		return inHandler->LoadDTD(bNormalizeCRNL);
+	return std::string();
 }
 
 

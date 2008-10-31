@@ -113,8 +113,7 @@ public:
 	{
 	}
 	ARBDate(time_t inTime);
-#if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
-	// VC6 doesn't have this and VC8's time_t is 64bit.
+#if defined(ARB_HAS_32_AND_64_BIT_TIMET)
 	ARBDate(__time64_t inTime);
 #endif
 	ARBDate(

@@ -83,7 +83,6 @@
 // Currently, we've used versions 2.2 and 2.7. There were no source code
 // changes needed between the two, hence we haven't needed to do any
 // funny stuff!
-#if defined(_MSC_VER)
 #if _XERCES_VERSION < 20200
 #error Minimum version of Xerces is 2.2.
 #elif _XERCES_VERSION > 20800
@@ -92,6 +91,7 @@
 #pragma message ( "Compiling with Xerces " XERCES_FULLVERSIONDOT )
 
 /*
+#if defined(_MSC_VER)
 #ifdef XML_LIBRARY
 	#ifdef _DEBUG
 		#define XERCES_LIB	"xerces-c_static_2D.lib"
@@ -107,8 +107,8 @@
 #endif
 #pragma message ( "Linking with " XERCES_LIB )
 #pragma comment(lib, XERCES_LIB)
-*/
 #endif
+*/
 
 #if _MSC_VER >= 1300
 #pragma warning ( pop )

@@ -196,6 +196,9 @@
 				RelativePath="..\..\Win\ComboBox.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\ConfigHandler.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\CrashHandler.cpp">
 			</File>
 			<File
@@ -528,6 +531,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ComboBox.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\ConfigHandler.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\CommonView.h">

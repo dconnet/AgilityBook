@@ -147,9 +147,10 @@ public:
 
 	/**
 	 * Create a default document: No dogs, default configuration.
+	 * @param inHandler Interface to deal with platform specific resource issues
 	 * @post Clears all content, then creates default configuration.
 	 */
-	void Default();
+	void Default(IARBConfigHandler* inHandler);
 
 	/**
 	 * Update this configuration from inConfigNew.

@@ -53,6 +53,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "ConfigHandler.h"
 #include "DlgMessage.h"
 #include "Element.h"
 #include "Wizard.h"
@@ -634,7 +635,8 @@ BOOL CWizardStart::OnWizardFinish()
 					output.exceptions(std::ios_base::badbit);
 					if (output.is_open())
 					{
-						output << ARBConfig::GetDTD(false);
+						CConfigHandler handler;
+						output << ARBConfig::GetDTD(&handler, false);
 						output.close();
 					}
 					bOk = true;
@@ -663,8 +665,9 @@ BOOL CWizardStart::OnWizardFinish()
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 					{
+						CConfigHandler handler;
 						CStringA filename(file.GetFileName());
-						std::string dtd = ARBConfig::GetDTD();
+						std::string dtd = ARBConfig::GetDTD(&handler);
 						tree->SaveXML(filename, &dtd);
 					}
 					bOk = true;

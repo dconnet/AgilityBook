@@ -57,17 +57,13 @@ std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 	if (inStr && *inStr)
 	{
 #ifdef _WIN32
-#if defined(_MFC_VER) && _MSC_VER >= 1300
-		CStringA convert(inStr, static_cast<int>(inLen));
-		str = (LPCSTR)convert;
-#else
-		int lenA = ::WideCharToMultiByte(CP_UTF8, 0, inStr, inLen, 0, 0, NULL, NULL);
-		if (lenA > 0)
+		int bytes = ::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0, NULL, NULL);
+		if (bytes > 0)
 		{
-			char* ansistr = new char[lenA + 1];
-			::WideCharToMultiByte(CP_UTF8, 0, inStr, inLen, ansistr, lenA, NULL, NULL);
-			ansistr[lenA] = 0;
-			str = std::string(ansistr, lenA);
+			char* ansistr = new char[bytes + 1];
+			::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), ansistr, bytes, NULL, NULL);
+			ansistr[bytes] = 0;
+			str = std::string(ansistr, bytes);
 			delete [] ansistr;
 		}
 		else
@@ -75,7 +71,6 @@ std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 			// handle the error
 			//DWORD dwErr = GetLastError();
 		}
-#endif
 #else
 #error Not yet implemented
 #endif
@@ -90,17 +85,13 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 	if (inStr && *inStr)
 	{
 #ifdef _WIN32
-#if defined(_MFC_VER) && _MSC_VER >= 1300
-		CStringW convert(inStr, static_cast<int>(inLen));
-		str = (LPCWSTR)convert;
-#else
-		int lenW = ::MultiByteToWideChar(CP_UTF8, 0, inStr, inLen, 0, 0);
-		if (lenW > 0)
+		int chars = ::MultiByteToWideChar(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0);
+		if (chars > 0)
 		{
 			// Check whether conversion was successful
-			wchar_t* unicodestr = new wchar_t[lenW + 1];
-			::MultiByteToWideChar(CP_UTF8, 0, inStr, inLen, unicodestr, lenW);
-			unicodestr[lenW] = 0;
+			wchar_t* unicodestr = new wchar_t[chars + 1];
+			::MultiByteToWideChar(CP_UTF8, 0, inStr, static_cast<int>(inLen), unicodestr, chars);
+			unicodestr[chars] = 0;
 			str = unicodestr;
 			delete [] unicodestr;
 		}
@@ -109,7 +100,6 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 			// handle the error
 			//DWORD dwErr = GetLastError();
 		}
-#endif
 #else
 #error Not yet implemented
 #endif

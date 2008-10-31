@@ -42,6 +42,7 @@
 
 #include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
+#include "ConfigHandler.h"
 #include "Element.h"
 
 #ifdef _DEBUG
@@ -105,7 +106,10 @@ bool CDlgConfigUpdate::LoadConfig(TCHAR const* pFile)
 {
 	CWaitCursor wait;
 	if (!pFile)
-		m_Book.GetConfig().Default();
+	{
+		CConfigHandler handler;
+		m_Book.GetConfig().Default(&handler);
+	}
 	else
 	{
 		tstring errMsg;
