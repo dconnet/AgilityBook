@@ -147,7 +147,7 @@ public:
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
 	 * @param inHandler Interface to deal with platform specific resource issues
-	 * @param bNormalizeCRNL Normalize '\r\n' sequence to '\n'
+	 * @param bNormalizeCRNL Normalize CRNL sequence to NL
 	 */
 	static std::string GetDTD(
 			IARBConfigHandler* inHandler,
