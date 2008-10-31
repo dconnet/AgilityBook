@@ -5,15 +5,15 @@
 	Name="x64 Settings"
 	>
 	<Tool
-		Name="VCMIDLTool"
-		TargetEnvironment="3"
-	/>
-	<Tool
 		Name="VCCLCompilerTool"
-		PreprocessorDefinitions="WIN64"
+		PreprocessorDefinitions="WIN32;WIN64"
 	/>
 	<Tool
 		Name="VCLinkerTool"
 		TargetMachine="17"
+	/>
+	<Tool
+		Name="VCMIDLTool"
+		TargetEnvironment="3"
 	/>
 </VisualStudioPropertySheet>

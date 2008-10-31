@@ -221,7 +221,7 @@ ElementNodePtr CreateActionList()
 
 	ElementNodePtr actions = ElementNode::New();
 	tstring errmsg;
-	bool bParse = actions->LoadXMLBuffer(configData, strlen(configData), errmsg);
+	bool bParse = actions->LoadXMLBuffer(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
 		DumpErrorMessage(errmsg);

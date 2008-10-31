@@ -13,10 +13,4 @@
 		Name="VCResourceCompilerTool"
 		AdditionalIncludeDirectories="C:\wx\include"
 	/>
-	<Tool
-		Name="VCLinkerTool"
-		AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC9.0s"
-		AdditionalOptions="/SafeSEH"
-		TargetMachine="1"
-	/>
 </VisualStudioPropertySheet>
