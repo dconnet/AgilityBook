@@ -1,7 +1,7 @@
 @echo off
 REM This script is called in the post-build step to run the unittest program
-if ("%1")==("") goto usage
-if ("%2")==("") goto usage
+if (%1)==() goto usage
+if (%2)==() goto usage
 
 if ("%2")==("Win32") goto w32
 if ("%2")==("x64") goto x64
