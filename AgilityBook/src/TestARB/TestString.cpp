@@ -58,6 +58,16 @@ SUITE(TestString)
 	}
 
 
+	TEST(Convert_Multi)
+	{
+		wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
+		std::wstring s(1, w);
+		std::string s2 = tstringUtil::Convert(s);
+		CHECK(s.length() == 1);
+		CHECK(s2.length() == 3);
+	}
+
+
 	TEST(TrimA)
 	{
 		std::string s(" \tstr\t\r\n ");

@@ -205,18 +205,21 @@ typedef long LONG_PTR;
 // compile ARB. I am making use of Window's tchar.h mappings.
 // Obviously, much more work is required for the 'Win' directory!
 #ifdef UNICODE
-typedef wchar_t	TCHAR;
-#define _T(x)	L##x
-#define _tstol	atol
-#define _tcstod	strtod
-#define _tcscmp	strcmp
+typedef wchar_t		TCHAR;
+#define _T(x)		L##x
+#define _tstol		atol
+#define _tcstod		strtod
+#define _tcscmp		strcmp
+#define _tcsftime	strftime
 
 #else
-typedef char	TCHAR;
-#define _T(x)	x
-#define _tstol	atol
-#define _tcstod	strtod
-#define _tcscmp	strcmp
+typedef char		TCHAR;
+#define _T(x)		x
+#define _tstol		atol
+#define _tcstod		strtod
+#define _tcscmp		strcmp
+#define _tcsftime	strftime
+
 #endif // UNICODE
 
 #endif // _WIN32
@@ -244,3 +247,23 @@ namespace tr1 = boost;
 #endif
 
 #include <assert.h>
+
+
+// Compiler configuration
+
+// ARB_HAS_32_AND_64_BIT_TIMET
+// This define means the compiler has 2 time_ts
+// time_t: 32bits
+// __time64_t: 64bits
+#if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
+// VC6: time_t is 32bits
+// VC7: time_t is 32bits, and __time64_t is 64
+// VC8+: time_t is 64bit
+#define ARB_HAS_32_AND_64_BIT_TIMET
+#endif
+
+// ARB_HAS_SECURE_LOCALTIME
+//  _localtime64_s(struct tm*, time_t*)
+#if _MSC_VER >= 1400
+#define ARB_HAS_SECURE_LOCALTIME
+#endif

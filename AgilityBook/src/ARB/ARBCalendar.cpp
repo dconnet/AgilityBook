@@ -301,12 +301,12 @@ void ARBiCal::DoDTSTAMP()
 	{
 		time_t t;
 		time(&t);
-#if _MSC_VER < 1400
-		struct tm* pTime = localtime(&t);
-#else
+#if defined(ARB_HAS_SECURE_LOCALTIME)
 		struct tm l;
 		_localtime64_s(&l, &t);
 		struct tm* pTime = &l;
+#else
+		struct tm* pTime = localtime(&t);
 #endif
 		std::ostringstream str;
 		str.fill('0');

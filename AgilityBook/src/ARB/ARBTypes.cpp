@@ -65,6 +65,7 @@ void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine)
 	if (bIncNewLine)
 		TRACE(_T("%s\n"), inMsg.c_str());
 	else
+		// Yes, this looks odd, but TRACE0 does exactly this.
 		TRACE(_T("%s"), inMsg.c_str());
 #else
 	if (bIncNewLine)

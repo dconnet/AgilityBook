@@ -300,12 +300,12 @@ ARBDate::ARBDate(time_t inTime)
 {
 	if (0 != inTime)
 	{
-#if _MSC_VER < 1400
-		struct tm* pTime = localtime(&inTime);
-#else
+#if defined(ARB_HAS_SECURE_LOCALTIME)
 		struct tm l;
 		_localtime64_s(&l, &inTime);
 		struct tm* pTime = &l;
+#else
+		struct tm* pTime = localtime(&inTime);
 #endif
 		m_Julian = GregorianToSdn(
 			pTime->tm_year + 1900,
@@ -315,7 +315,7 @@ ARBDate::ARBDate(time_t inTime)
 }
 
 
-#if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
+#if defined(ARB_HAS_32_AND_64_BIT_TIMET)
 ARBDate::ARBDate(__time64_t inTime)
 	: m_Julian(0)
 {
@@ -335,12 +335,12 @@ void ARBDate::SetToday()
 {
 	time_t t;
 	time(&t);
-#if _MSC_VER < 1400
-	struct tm* pTime = localtime(&t);
-#else
+#if defined(ARB_HAS_SECURE_LOCALTIME)
 	struct tm l;
 	_localtime64_s(&l, &t);
 	struct tm* pTime = &l;
+#else
+	struct tm* pTime = localtime(&t);
 #endif
 	m_Julian = GregorianToSdn(
 		pTime->tm_year + 1900,

@@ -48,6 +48,22 @@
 #include "ARBConfigVenue.h"
 #include "ARBTypes.h"
 
+
+/**
+ * Move platform specific code out of ARBConfig.
+ * On Windows, these files are stored in the resources.
+ * Other platforms may be different.
+ */
+class IARBConfigHandler
+{
+public:
+	/// Load the default configuration
+	virtual ElementNodePtr LoadDefaultConfig() const = 0;
+	/// Load the DTD
+	virtual std::string LoadDTD(bool bNormalizeCRNL) const = 0;
+};
+
+
 /**
  * The main configuration class.
  */
@@ -124,13 +140,18 @@ public:
 
 	/**
 	 * Set the configuration to the default (DefaultConfig.xml)
+	 * @param inHandler Interface to deal with platform specific resource issues
 	 */
-	void Default();
+	void Default(IARBConfigHandler* inHandler);
 
 	/**
 	 * Get the DTD (AgilityRecordBook.dtd)
+	 * @param inHandler Interface to deal with platform specific resource issues
+	 * @param bNormalizeCRNL Normalize '\r\n' sequence to '\n'
 	 */
-	static std::string GetDTD(bool bNormalizeCRNL = true);
+	static std::string GetDTD(
+			IARBConfigHandler* inHandler,
+			bool bNormalizeCRNL = true);
 
 	/**
 	 * Convenience function to get the nice name of a title.

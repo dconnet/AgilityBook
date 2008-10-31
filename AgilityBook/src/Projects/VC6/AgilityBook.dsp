@@ -170,6 +170,10 @@ SOURCE=..\..\Win\ComboBox.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\ConfigHandler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\CrashHandler.cpp
 # End Source File
 # Begin Source File
@@ -596,6 +600,10 @@ SOURCE=..\..\Win\ColumnOrder.h
 # Begin Source File
 
 SOURCE=..\..\Win\ComboBox.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\ConfigHandler.h
 # End Source File
 # Begin Source File
 

@@ -291,15 +291,22 @@ bool ARBAgilityRecordBook::Load(
 
 static tstring GetTimeStamp()
 {
-#if defined(_MFC_VER)
-	CString s = CTime::GetCurrentTime().Format("%Y-%m-%d %H:%M:%S");
-	return tstring((LPCTSTR)s);
+	time_t t;
+	time(&t);
+	struct tm* pTime = NULL;
+#if defined(ARB_HAS_SECURE_LOCALTIME)
+	struct tm l;
+	if (0 == _localtime64_s(&l, &t))
+		pTime = &l;
 #else
-	// TODO: Porting: I'm being lazy for now...
-	//time_t t;
-	//time(&t);
-	return ARBDate::Today().GetString(ARBDate::eDashYYYYMMDD);
+	pTime = localtime(&t);
 #endif
+	TCHAR szBuffer[128]; // as defined by VC9 ATL::maxTimeBufferSize
+	if (!pTime || !_tcsftime(szBuffer, 128, _T("%Y-%m-%d %H:%M:%S"), pTime))
+	{
+		szBuffer[0] = '\0';
+	}
+	return tstring(szBuffer);
 }
 
 
@@ -358,10 +365,10 @@ void ARBAgilityRecordBook::clear()
 }
 
 
-void ARBAgilityRecordBook::Default()
+void ARBAgilityRecordBook::Default(IARBConfigHandler* inHandler)
 {
 	clear();
-	m_Config.Default();
+	m_Config.Default(inHandler);
 }
 
 

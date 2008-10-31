@@ -41,6 +41,7 @@
 #include "ARBStructure.h"
 #include "ARBConfig.h"
 #include "ARBDogTitle.h"
+#include "ConfigHandler.h"
 #include "Element.h"
 
 
@@ -50,7 +51,8 @@ SUITE(TestConfig)
 	{
 		ARBConfig config1, config2;
 		CHECK(config1 == config2);
-		config1.Default();
+		CConfigHandler handler;
+		config1.Default(&handler);
 		CHECK(config1 != config2);
 		ARBConfig config3(config1);
 		CHECK(config1 == config3);
@@ -60,7 +62,8 @@ SUITE(TestConfig)
 	TEST(Clear)
 	{
 		ARBConfig config1, config2;
-		config1.Default();
+		CConfigHandler handler;
+		config1.Default(&handler);
 		CHECK(config1 != config2);
 		config1.clear();
 		CHECK(config1 == config2);
@@ -130,7 +133,8 @@ SUITE(TestConfig)
 	TEST(Save)
 	{
 		ARBConfig config;
-		config.Default();
+		CConfigHandler handler;
+		config.Default(&handler);
 		ElementNodePtr tree = ElementNode::New();
 		CHECK(config.Save(tree));
 		CHECK_EQUAL(1, tree->GetNodeCount(ElementNode::Element_Node));
@@ -147,7 +151,8 @@ SUITE(TestConfig)
 		CHECK_EQUAL(0u, config.GetFaults().size());
 		CHECK_EQUAL(0u, config.GetOtherPoints().size());
 		CHECK_EQUAL(0u, config.GetVenues().size());
-		config.Default();
+		CConfigHandler handler;
+		config.Default(&handler);
 		CHECK_EQUAL(0u, config.GetCalSites().size());
 		CHECK_EQUAL(81u, config.GetActions().size());
 		CHECK_EQUAL(0u, config.GetFaults().size());
@@ -171,9 +176,10 @@ SUITE(TestConfig)
 
 	TEST(GetDTD)
 	{
-		std::string dtd = ARBConfig::GetDTD();
+		CConfigHandler handler;
+		std::string dtd = ARBConfig::GetDTD(&handler);
 		CHECK(0 != dtd.length());
-		std::string dtd2 = ARBConfig::GetDTD(false);
+		std::string dtd2 = ARBConfig::GetDTD(&handler, false);
 		CHECK(0 != dtd2.length());
 		CHECK(dtd != dtd2);
 	}
@@ -182,7 +188,8 @@ SUITE(TestConfig)
 	TEST(GetTitleNiceName)
 	{
 		ARBConfig config;
-		config.Default();
+		CConfigHandler handler;
+		config.Default(&handler);
 		tstring nice = config.GetTitleNiceName(_T("AKC"), _T("MX"));
 		CHECK(0 != nice.length());
 	}
@@ -191,7 +198,8 @@ SUITE(TestConfig)
 	TEST(GetTitleCompleteName)
 	{
 		ARBConfig config;
-		config.Default();
+		CConfigHandler handler;
+		config.Default(&handler);
 		ARBDogTitlePtr title = ARBDogTitle::New();
 		title->SetVenue(_T("AKC"));
 		title->SetName(_T("MX"), 1, false, eTitleNumber);

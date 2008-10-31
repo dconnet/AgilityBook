@@ -82,6 +82,7 @@
 #include "AgilityBookViewCalendarList.h"
 #include "AgilityBookViewTraining.h"
 #include "ClipBoard.h"
+#include "ConfigHandler.h"
 #include "DlgCalendar.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
@@ -122,8 +123,9 @@ static short GetCurrentConfigVersion()
 	if (!bLoaded)
 	{
 		bLoaded = true;
+		CConfigHandler handler;
 		ARBConfig config;
-		config.Default();
+		config.Default(&handler);
 		ver = config.GetVersion();
 	}
 	return ver;
@@ -1042,7 +1044,8 @@ BOOL CAgilityBookDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 	theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
-	m_Records.Default();
+	CConfigHandler handler;
+	m_Records.Default(&handler);
 	m_Records.GetConfig().GetActions().clear();
 
 	if (0 == m_Records.GetDogs().size())
