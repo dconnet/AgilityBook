@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces.
  *
  * Revision History
+ * @li 2008-11-02 DRC Added xerces 3.0 support
  * @li 2007-09-06 DRC Added GetNthElementNode
  * @li 2007-08-15 DRC Modified to support mixed text/nodes.
  * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
@@ -82,33 +83,15 @@
 // Note, see XercesVersion.hpp for how to use the version macros.
 // Currently, we've used versions 2.2 and 2.7. There were no source code
 // changes needed between the two, hence we haven't needed to do any
-// funny stuff!
+// funny stuff! Include 2.8 in that list...
 #if _XERCES_VERSION < 20200
 #error Minimum version of Xerces is 2.2.
 #elif _XERCES_VERSION > 20800
+#if _XERCES_VERSION != 30000
 #pragma message ( "Warning: Untested version of Xerces" )
 #endif
+#endif
 #pragma message ( "Compiling with Xerces " XERCES_FULLVERSIONDOT )
-
-/*
-#if defined(_MSC_VER)
-#ifdef XML_LIBRARY
-	#ifdef _DEBUG
-		#define XERCES_LIB	"xerces-c_static_2D.lib"
-	#else
-		#define XERCES_LIB	"xerces-c_static_2.lib"
-	#endif
-#else
-	#ifdef _DEBUG
-		#define XERCES_LIB	"xerces-c_2D.lib"
-	#else
-		#define XERCES_LIB	"xerces-c_2.lib"
-	#endif
-#endif
-#pragma message ( "Linking with " XERCES_LIB )
-#pragma comment(lib, XERCES_LIB)
-#endif
-*/
 
 #if _MSC_VER >= 1300
 #pragma warning ( pop )
@@ -743,8 +726,14 @@ void SAXImportHandlers::startElement(
 #else
 	m_CurrentName = m_ElementNames.TranscodeElement(localname);
 #endif
+#if _XERCES_VERSION < 30000
 	unsigned int nAttribs = attrs.getLength();
-	for (unsigned int i = 0; i < nAttribs; ++i)
+	unsigned int i;
+#else
+	XMLSize_t nAttribs = attrs.getLength();
+	XMLSize_t i;
+#endif
+	for (i = 0; i < nAttribs; ++i)
 	{
 #ifdef UNICODE
 		m_CurrentAttribs.push_back(CurrentAttrib(attrs.getLocalName(i), attrs.getValue(i)));
@@ -889,6 +878,7 @@ public:
 	~CXMLFormatTarget()
 	{
 	}
+#if _XERCES_VERSION < 30000
 	void writeChars(
 		XMLByte const* const toWrite,
 		unsigned int const count,
@@ -896,6 +886,15 @@ public:
 	{
 		m_out.write(reinterpret_cast<char const* const>(toWrite), count);
 	}
+#else
+	virtual void writeChars(
+		const XMLByte* const toWrite,
+		const XMLSize_t count,
+		XMLFormatter* const /*formatter*/)
+	{
+		m_out.write(reinterpret_cast<char const* const>(toWrite), count);
+	}
+#endif
 private:
 	std::ostream& m_out; ///< Output stream.
 	CXMLFormatTarget(CXMLFormatTarget const& other); ///< Unimplemented method.
