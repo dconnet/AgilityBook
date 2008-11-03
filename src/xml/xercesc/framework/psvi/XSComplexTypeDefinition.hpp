@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: XSComplexTypeDefinition.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XSComplexTypeDefinition.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-#if !defined(XSCOMPLEXTYPEDEFINITION_HPP)
-#define XSCOMPLEXTYPEDEFINITION_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XSCOMPLEXTYPEDEFINITION_HPP)
+#define XERCESC_INCLUDE_GUARD_XSCOMPLEXTYPEDEFINITION_HPP
 
 #include <xercesc/framework/psvi/XSTypeDefinition.hpp>
 
@@ -183,7 +183,7 @@ public:
      * The name of type <code>NCName</code> of this declaration as defined in 
      * XML Namespaces.
      */
-    const XMLCh* getName();
+    const XMLCh* getName() const;
 
     /**
      *  The [target namespace] of this object, or <code>null</code> if it is 

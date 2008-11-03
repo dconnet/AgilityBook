@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,13 @@
  */
 
 /*
- * $Id: TransService.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: TransService.cpp 688055 2008-08-22 11:10:05Z johns $
  */
 // ---------------------------------------------------------------------------
 //  Includes
 // ---------------------------------------------------------------------------
 #include <xercesc/util/Janitor.hpp>
+#include <xercesc/util/TransService.hpp>
 #include <xercesc/util/XML88591Transcoder.hpp>
 #include <xercesc/util/XMLASCIITranscoder.hpp>
 #include <xercesc/util/XMLChTranscoder.hpp>
@@ -35,9 +36,9 @@
 #include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/util/XMLUni.hpp>
 #include <xercesc/util/EncodingValidator.hpp>
-#include <xercesc/util/XMLRegisterCleanup.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/TransENameMap.hpp>
+#include <xercesc/util/XMLInitializer.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -52,20 +53,21 @@ XERCES_CPP_NAMESPACE_BEGIN
 static bool gStrictIANAEncoding = false;
 RefHashTableOf<ENameMap>* XMLTransService::gMappings = 0;
 RefVectorOf<ENameMap> * XMLTransService::gMappingsRecognizer = 0;
-static XMLRegisterCleanup mappingsCleanup;
-static XMLRegisterCleanup mappingsRecognizerCleanup;
 
-// -----------------------------------------------------------------------
-//  Notification that lazy data has been deleted
-// -----------------------------------------------------------------------
-void XMLTransService::reinitMappings() {
-    delete gMappings;    // The contents of the gMappings hash table are owned by
-    gMappings = 0;       //   the it, and so will be deleted by gMapping's destructor.
+void XMLInitializer::initializeTransService()
+{
+    XMLTransService::gMappings = new RefHashTableOf<ENameMap>(103);
+    XMLTransService::gMappingsRecognizer = new RefVectorOf<ENameMap>(
+      (XMLSize_t)XMLRecognizer::Encodings_Count);
 }
 
-void XMLTransService::reinitMappingsRecognizer() {
+void XMLInitializer::terminateTransService()
+{
     delete XMLTransService::gMappingsRecognizer;
-    gMappingsRecognizer = 0;
+    XMLTransService::gMappingsRecognizer = 0;
+
+    delete XMLTransService::gMappings;
+    XMLTransService::gMappings = 0;
 }
 
 // ---------------------------------------------------------------------------
@@ -73,31 +75,6 @@ void XMLTransService::reinitMappingsRecognizer() {
 // ---------------------------------------------------------------------------
 XMLTransService::XMLTransService()
 {
-    if (!gMappings) {
-        RefHashTableOf<ENameMap>* t = new RefHashTableOf<ENameMap>(103);
-
-        if (XMLPlatformUtils::compareAndSwap((void **)&gMappings, t, 0) != 0)
-        {
-            delete t;
-        }
-        else
-        {
-            mappingsCleanup.registerCleanup(reinitMappings);
-        }
-    }
-
-    if (!gMappingsRecognizer) {
-        RefVectorOf<ENameMap>* t = new RefVectorOf<ENameMap>(XMLRecognizer::Encodings_Count);
-
-        if (XMLPlatformUtils::compareAndSwap((void **)&gMappingsRecognizer, t, 0) != 0)
-        {
-            delete t;
-        }
-        else
-        {
-            mappingsRecognizerCleanup.registerCleanup(reinitMappingsRecognizer);
-        }
-    }
 }
 
 XMLTransService::~XMLTransService()
@@ -120,7 +97,7 @@ void XMLTransService::addEncoding(const XMLCh* const encoding,
 XMLTranscoder*
 XMLTransService::makeNewTranscoderFor(  const   char* const             encodingName
                                         ,       XMLTransService::Codes& resValue
-                                        , const unsigned int            blockSize
+                                        , const XMLSize_t               blockSize
                                         ,       MemoryManager* const    manager)
 {
     XMLCh* tmpName = XMLString::transcode(encodingName, manager);
@@ -132,7 +109,7 @@ XMLTransService::makeNewTranscoderFor(  const   char* const             encoding
 XMLTranscoder*
 XMLTransService::makeNewTranscoderFor(  const   XMLCh* const            encodingName
                                         ,       XMLTransService::Codes& resValue
-                                        , const unsigned int            blockSize
+                                        , const XMLSize_t               blockSize
                                         ,       MemoryManager* const    manager)
 {
     //
@@ -153,7 +130,7 @@ XMLTransService::makeNewTranscoderFor(  const   XMLCh* const            encoding
     //  name because we use a hash table and we stored all our mappings
     //  in all uppercase.
     //
-    const unsigned int bufSize = 2048;
+    const XMLSize_t bufSize = 2048;
     XMLCh upBuf[bufSize + 1];
     if (!XMLString::copyNString(upBuf, encodingName, bufSize))
     {
@@ -165,7 +142,7 @@ XMLTransService::makeNewTranscoderFor(  const   XMLCh* const            encoding
 
     // If we found it, then call the factory method for it
     if (ourMapping)
-	{		
+	{
        XMLTranscoder* temp = ourMapping->makeNew(blockSize, manager);
        resValue = temp ? XMLTransService::Ok : XMLTransService::InternalFailure;
        return temp;
@@ -190,7 +167,7 @@ XMLTransService::makeNewTranscoderFor(  const   XMLCh* const            encoding
 XMLTranscoder*
 XMLTransService::makeNewTranscoderFor(  XMLRecognizer::Encodings        encodingEnum
                                         ,       XMLTransService::Codes& resValue
-                                        , const unsigned int            blockSize
+                                        , const XMLSize_t               blockSize
                                         ,       MemoryManager* const    manager)
 {
     //
@@ -204,7 +181,7 @@ XMLTransService::makeNewTranscoderFor(  XMLRecognizer::Encodings        encoding
     ENameMap* ourMapping = gMappingsRecognizer->elementAt(encodingEnum);
 
     // If we found it, then call the factory method for it
-    if (ourMapping)	{		
+    if (ourMapping)	{
        XMLTranscoder* temp = ourMapping->makeNew(blockSize, manager);
        resValue = temp ? XMLTransService::Ok : XMLTransService::InternalFailure;
        return temp;
@@ -232,7 +209,7 @@ void XMLTransService::initTransService()
     //
     //  A stupid way to increment the fCurCount inside the RefVectorOf
     //
-    for (unsigned int i = 0; i < XMLRecognizer::Encodings_Count; i++)
+    for (XMLSize_t i = 0; i < (XMLSize_t)XMLRecognizer::Encodings_Count; i++)
         gMappingsRecognizer->addElement(0);
 
     //
@@ -278,11 +255,8 @@ void XMLTransService::initTransService()
     //
     //  Add in our mappings for UTF-16 and UCS-4, little endian
     //
-    bool swapped = false;
+    bool swapped = XMLPlatformUtils::fgXMLChBigEndian;
 
-    #if defined(ENDIANMODE_BIG)
-    swapped = true;
-    #endif
     gMappingsRecognizer->setElementAt(new EEndianNameMapFor<XMLUTF16Transcoder>(XMLUni::fgUTF16LEncodingString, swapped), XMLRecognizer::UTF_16L);
     gMappings->put
     (
@@ -328,10 +302,8 @@ void XMLTransService::initTransService()
     //
     //  Add in our mappings for UTF-16 and UCS-4, big endian
     //
-    swapped = false;
-    #if defined(ENDIANMODE_LITTLE)
-    swapped = true;
-    #endif
+    swapped = !XMLPlatformUtils::fgXMLChBigEndian;
+
     gMappingsRecognizer->setElementAt(new EEndianNameMapFor<XMLUTF16Transcoder>(XMLUni::fgUTF16BEncodingString, swapped), XMLRecognizer::UTF_16B);
     gMappings->put
     (
@@ -535,10 +507,10 @@ XMLTranscoder::~XMLTranscoder()
 //  XMLTranscoder: Hidden Constructors
 // ---------------------------------------------------------------------------
 XMLTranscoder::XMLTranscoder(const  XMLCh* const    encodingName
-                            , const unsigned int    blockSize
+                            , const XMLSize_t       blockSize
                             , MemoryManager* const  manager) :
       fBlockSize(blockSize)
-    , fEncodingName(0)    
+    , fEncodingName(0)
     , fMemoryManager(manager)
 {
     fEncodingName = XMLString::replicate(encodingName, fMemoryManager);
@@ -548,11 +520,6 @@ XMLTranscoder::XMLTranscoder(const  XMLCh* const    encodingName
 // ---------------------------------------------------------------------------
 //  XMLTranscoder: Protected helpers
 // ---------------------------------------------------------------------------
-void XMLTranscoder::checkBlockSize(const unsigned int)
-{
-//    if (toCheck > fBlockSize)
-//        ThrowXML(TranscodingException, XMLExcepts::Trans_BadBlockSize);
-}
 
 
 // ---------------------------------------------------------------------------
@@ -568,6 +535,186 @@ XMLLCPTranscoder::XMLLCPTranscoder()
 // ---------------------------------------------------------------------------
 XMLLCPTranscoder::~XMLLCPTranscoder()
 {
+}
+
+// ---------------------------------------------------------------------------
+//  TranscodeToStr: Public constructors and destructor
+// ---------------------------------------------------------------------------
+TranscodeToStr::TranscodeToStr(const XMLCh *in, const char *encoding,
+                               MemoryManager *manager)
+    : fString(0),
+      fBytesWritten(0),
+      fMemoryManager(manager)
+{
+    XMLTransService::Codes failReason;
+    const XMLSize_t blockSize = 2048;
+
+    XMLTranscoder* trans = XMLPlatformUtils::fgTransService->makeNewTranscoderFor(encoding, failReason, blockSize, fMemoryManager);
+    Janitor<XMLTranscoder> janTrans(trans);
+
+    transcode(in, XMLString::stringLen(in), trans);
+}
+
+TranscodeToStr::TranscodeToStr(const XMLCh *in, XMLSize_t length, const char *encoding,
+                               MemoryManager *manager)
+    : fString(0),
+      fBytesWritten(0),
+      fMemoryManager(manager)
+{
+    XMLTransService::Codes failReason;
+    const XMLSize_t blockSize = 2048;
+
+    XMLTranscoder* trans = XMLPlatformUtils::fgTransService->makeNewTranscoderFor(encoding, failReason, blockSize, fMemoryManager);
+    Janitor<XMLTranscoder> janTrans(trans);
+
+    transcode(in, length, trans);
+}
+
+TranscodeToStr::TranscodeToStr(const XMLCh *in, XMLTranscoder* trans,
+                               MemoryManager *manager)
+    : fString(0),
+      fBytesWritten(0),
+      fMemoryManager(manager)
+{
+    transcode(in, XMLString::stringLen(in), trans);
+}
+
+TranscodeToStr::TranscodeToStr(const XMLCh *in, XMLSize_t length, XMLTranscoder* trans,
+                               MemoryManager *manager)
+    : fString(0),
+      fBytesWritten(0),
+      fMemoryManager(manager)
+{
+    transcode(in, length, trans);
+}
+
+TranscodeToStr::~TranscodeToStr()
+{
+    if(fString)
+        fMemoryManager->deallocate(fString);
+}
+
+// ---------------------------------------------------------------------------
+//  TranscodeToStr: Private helper methods
+// ---------------------------------------------------------------------------
+void TranscodeToStr::transcode(const XMLCh *in, XMLSize_t len, XMLTranscoder* trans)
+{
+    if(!in) return;
+
+    XMLSize_t allocSize = len * sizeof(XMLCh);
+    fString = (XMLByte*)fMemoryManager->allocate(allocSize);
+
+    XMLSize_t charsRead;
+    XMLSize_t charsDone = 0;
+
+    while(true) {
+        fBytesWritten += trans->transcodeTo(in + charsDone, len - charsDone,
+                                            fString + fBytesWritten, allocSize - fBytesWritten,
+                                            charsRead, XMLTranscoder::UnRep_Throw);
+        charsDone += charsRead;
+
+        if(charsDone == len) break;
+
+        allocSize *= 2;
+        XMLByte *newBuf = (XMLByte*)fMemoryManager->allocate(allocSize);
+        memcpy(newBuf, fString, fBytesWritten);
+        fMemoryManager->deallocate(fString);
+        fString = newBuf;
+    }
+
+    // null terminate
+    if(fBytesWritten > (allocSize - 4)) {
+        allocSize = fBytesWritten + 4;
+        XMLByte *newBuf = (XMLByte*)fMemoryManager->allocate(allocSize);
+        memcpy(newBuf, fString, fBytesWritten);
+        fMemoryManager->deallocate(fString);
+        fString = newBuf;
+    }
+    fString[fBytesWritten + 0] = 0;
+    fString[fBytesWritten + 1] = 0;
+    fString[fBytesWritten + 2] = 0;
+    fString[fBytesWritten + 3] = 0;
+}
+
+// ---------------------------------------------------------------------------
+//  TranscodeFromStr: Public constructors and destructor
+// ---------------------------------------------------------------------------
+TranscodeFromStr::TranscodeFromStr(const XMLByte *data, XMLSize_t length, const char *encoding,
+                                   MemoryManager *manager)
+    : fString(0),
+      fCharsWritten(0),
+      fMemoryManager(manager)
+{
+    XMLTransService::Codes failReason;
+    const XMLSize_t blockSize = 2048;
+
+    XMLTranscoder* trans = XMLPlatformUtils::fgTransService->makeNewTranscoderFor(encoding, failReason, blockSize, fMemoryManager);
+    Janitor<XMLTranscoder> janTrans(trans);
+
+    transcode(data, length, trans);
+}
+
+TranscodeFromStr::TranscodeFromStr(const XMLByte *data, XMLSize_t length, XMLTranscoder *trans,
+                                   MemoryManager *manager)
+    : fString(0),
+      fCharsWritten(0),
+      fMemoryManager(manager)
+{
+    transcode(data, length, trans);
+}
+
+TranscodeFromStr::~TranscodeFromStr()
+{
+    if(fString)
+        fMemoryManager->deallocate(fString);
+}
+
+// ---------------------------------------------------------------------------
+//  TranscodeFromStr: Private helper methods
+// ---------------------------------------------------------------------------
+void TranscodeFromStr::transcode(const XMLByte *in, XMLSize_t length, XMLTranscoder *trans)
+{
+    if(!in) return;
+
+    XMLSize_t allocSize = length + 1;
+    fString = (XMLCh*)fMemoryManager->allocate(allocSize * sizeof(XMLCh));
+
+    XMLSize_t csSize = length;
+    ArrayJanitor<unsigned char> charSizes((unsigned char*)fMemoryManager->allocate(csSize * sizeof(unsigned char)),
+                                          fMemoryManager);
+
+    XMLSize_t bytesRead;
+    XMLSize_t bytesDone = 0;
+
+    while(true) {
+        fCharsWritten += trans->transcodeFrom(in + bytesDone, length - bytesDone,
+                                              fString + fCharsWritten, allocSize - fCharsWritten,
+                                              bytesRead, charSizes.get());
+        bytesDone += bytesRead;
+        if(bytesDone == length) break;
+
+        allocSize *= 2;
+        XMLCh *newBuf = (XMLCh*)fMemoryManager->allocate(allocSize * sizeof(XMLCh));
+        memcpy(newBuf, fString, fCharsWritten);
+        fMemoryManager->deallocate(fString);
+        fString = newBuf;
+
+        if((allocSize - fCharsWritten) > csSize) {
+            csSize = allocSize - fCharsWritten;
+            charSizes.reset((unsigned char*)fMemoryManager->allocate(csSize * sizeof(unsigned char)),
+                            fMemoryManager);
+        }
+    }
+
+    // null terminate
+    if(fCharsWritten == allocSize) {
+        allocSize += 1;
+        XMLCh *newBuf = (XMLCh*)fMemoryManager->allocate(allocSize * sizeof(XMLCh));
+        memcpy(newBuf, fString, fCharsWritten);
+        fMemoryManager->deallocate(fString);
+        fString = newBuf;
+    }
+    fString[fCharsWritten] = 0;
 }
 
 XERCES_CPP_NAMESPACE_END

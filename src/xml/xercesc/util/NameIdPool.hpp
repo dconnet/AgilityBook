@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,16 +16,16 @@
  */
 
 /*
- * $Id: NameIdPool.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: NameIdPool.hpp 678409 2008-07-21 13:08:10Z borisk $
  */
 
-
-#if !defined(NAMEIDPOOL_HPP)
-#define NAMEIDPOOL_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_NAMEIDPOOL_HPP)
+#define XERCESC_INCLUDE_GUARD_NAMEIDPOOL_HPP
 
 #include <xercesc/util/XMemory.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/RefHashTableOf.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -58,30 +58,6 @@ template <class TElem> class NameIdPoolEnumerator;
 //
 //  All elements are assumed to be owned by the pool!
 //
-//  We have to have a bucket element structure to use to maintain the linked
-//  lists for each bucket. Because some of the compilers we have to support
-//  are totally brain dead, it cannot be a nested class as it should be.
-//
-template <class TElem> struct NameIdPoolBucketElem
-{
-public :
-    NameIdPoolBucketElem
-    (
-        TElem* const                            value
-        , NameIdPoolBucketElem<TElem>* const    next
-    );
-    ~NameIdPoolBucketElem();
-
-    TElem*                          fData;
-    NameIdPoolBucketElem<TElem>*    fNext;
-private:
-    // -----------------------------------------------------------------------
-    //  Unimplemented constructors and operators
-    // -----------------------------------------------------------------------
-    NameIdPoolBucketElem(const NameIdPoolBucketElem<TElem>&);
-    NameIdPoolBucketElem<TElem>& operator=(const NameIdPoolBucketElem<TElem>&);
-};
-
 
 template <class TElem> class NameIdPool : public XMemory
 {
@@ -111,8 +87,8 @@ public :
     // -----------------------------------------------------------------------
     TElem* getByKey(const XMLCh* const key);
     const TElem* getByKey(const XMLCh* const key) const;
-    TElem* getById(const unsigned elemId);
-    const TElem* getById(const unsigned elemId) const;
+    TElem* getById(const unsigned int elemId);
+    const TElem* getById(const unsigned int elemId) const;
 
     MemoryManager* getMemoryManager() const;
     // -----------------------------------------------------------------------
@@ -138,28 +114,11 @@ private :
     NameIdPool(const NameIdPool<TElem>&);
     NameIdPool<TElem>& operator=(const NameIdPool<TElem>&);
 
-
-    // -----------------------------------------------------------------------
-    //  Private helper methods
-    // -----------------------------------------------------------------------
-    NameIdPoolBucketElem<TElem>* findBucketElem
-    (
-        const XMLCh* const      key
-        ,     unsigned int&     hashVal
-    );
-    const NameIdPoolBucketElem<TElem>* findBucketElem
-    (
-        const   XMLCh* const    key
-        ,       unsigned int&   hashVal
-    )   const;
-
-
     // -----------------------------------------------------------------------
     //  Data members
     //
     //  fBucketList
-    //      This is the array that contains the heads of all of the list
-    //      buckets, one for each possible hash value.
+    //      This is the hash table that contains the values.
     //
     //  fIdPtrs
     //  fIdPtrsCount
@@ -175,16 +134,12 @@ private :
     //      element. So the first element is 1, the next is 2, etc... This
     //      means that this value is set to the top index of the fIdPtrs array.
     //
-    //  fHashModulus
-    //      This is the modulus to use in this pool. The fBucketList array
-    //      is of this size. It should be a prime number.
     // -----------------------------------------------------------------------
     MemoryManager*                  fMemoryManager;
-    NameIdPoolBucketElem<TElem>**   fBucketList;
+    RefHashTableOf<TElem>           fBucketList;
     TElem**                         fIdPtrs;
     unsigned int                    fIdPtrsCount;
     unsigned int                    fIdCounter;
-    unsigned int                    fHashModulus;
 };
 
 
@@ -218,14 +173,14 @@ public :
     (
         const   NameIdPoolEnumerator<TElem>& toAssign
     );
-   
+
     // -----------------------------------------------------------------------
     //  Enum interface
     // -----------------------------------------------------------------------
     bool hasMoreElements() const;
     TElem& nextElement();
     void Reset();
-    int  size()  const;
+    unsigned int  size()  const;
 
 private :
     // -----------------------------------------------------------------------

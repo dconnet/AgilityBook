@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: HandlerBase.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: HandlerBase.hpp 557282 2007-07-18 14:54:15Z amassari $
  */
 
-
-#ifndef HANDLERBASE_HPP
-#define HANDLERBASE_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_HANDLERBASE_HPP)
+#define XERCESC_INCLUDE_GUARD_HANDLERBASE_HPP
 
 #include <xercesc/sax/DocumentHandler.hpp>
 #include <xercesc/sax/DTDHandler.hpp>
@@ -80,7 +79,7 @@ public:
     virtual void characters
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
   /**
@@ -130,7 +129,7 @@ public:
     virtual void ignorableWhitespace
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
   /**
@@ -378,7 +377,7 @@ private:
 //  HandlerBase: Inline default implementations
 // ---------------------------------------------------------------------------
 inline void HandlerBase::characters(const   XMLCh* const
-                                    , const unsigned int)
+                                    , const XMLSize_t)
 {
 }
 
@@ -401,7 +400,7 @@ inline void HandlerBase::fatalError(const SAXParseException& exc)
 
 inline void
 HandlerBase::ignorableWhitespace(   const   XMLCh* const
-                                    , const unsigned int)
+                                    , const XMLSize_t)
 {
 }
 

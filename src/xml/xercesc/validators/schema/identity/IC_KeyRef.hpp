@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: IC_KeyRef.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IC_KeyRef.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-#if !defined(IC_KEYREF_HPP)
-#define IC_KEYREF_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_IC_KEYREF_HPP)
+#define XERCESC_INCLUDE_GUARD_IC_KEYREF_HPP
 
 
 // ---------------------------------------------------------------------------
@@ -74,7 +74,7 @@ private:
 // ---------------------------------------------------------------------------
 inline short IC_KeyRef::getType() const {
 
-    return IdentityConstraint::KEYREF;
+    return IdentityConstraint::ICType_KEYREF;
 }
 
 inline IdentityConstraint* IC_KeyRef::getKey() const {

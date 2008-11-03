@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: ReaderMgr.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ReaderMgr.hpp 696218 2008-09-17 09:31:41Z borisk $
  */
 
-#if !defined(READERMGR_HPP)
-#define READERMGR_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_READERMGR_HPP)
+#define XERCESC_INCLUDE_GUARD_READERMGR_HPP
 
 #include <xercesc/internal/XMLReader.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
@@ -45,7 +45,7 @@ class XMLScanner;
 //  talks to the reader manager, which handles the stack and popping off
 //  used up readers.
 // ---------------------------------------------------------------------------
-class XMLPARSER_EXPORT ReaderMgr :   public XMemory 
+class XMLPARSER_EXPORT ReaderMgr :   public XMemory
                                    , public Locator
 {
 public :
@@ -56,8 +56,8 @@ public :
     {
         const   XMLCh*          systemId;
         const   XMLCh*          publicId;
-                XMLSSize_t      lineNumber;
-                XMLSSize_t      colNumber;
+                XMLFileLoc      lineNumber;
+                XMLFileLoc      colNumber;
     };
 
 
@@ -94,6 +94,7 @@ public :
     bool skippedChar(const XMLCh toSkip);
     bool skippedSpace();
     bool skippedString(const XMLCh* const toSkip);
+    bool skippedStringLong(const XMLCh* const toSkip);
     void skipQuotedString(const XMLCh quoteCh);
     XMLCh skipUntilIn(const XMLCh* const listToSkip);
     XMLCh skipUntilInOrWS(const XMLCh* const listToSkip);
@@ -103,7 +104,7 @@ public :
     // -----------------------------------------------------------------------
     //  Control methods
     // -----------------------------------------------------------------------
-    void cleanStackBackTo(const unsigned int readerNum);
+    void cleanStackBackTo(const XMLSize_t readerNum);
     XMLReader* createReader
     (
         const   InputSource&        src
@@ -144,7 +145,7 @@ public :
         , const XMLReader::RefFrom  refFrom
         , const XMLReader::Types    type
         , const XMLCh* const        dataBuf
-        , const unsigned int        dataLen
+        , const XMLSize_t           dataLen
         , const bool                copyBuf
         , const bool                calcSrcOfs = true
     );
@@ -165,10 +166,10 @@ public :
     XMLEntityDecl* getCurrentEntity();
     const XMLReader* getCurrentReader() const;
     XMLReader* getCurrentReader();
-    unsigned int getCurrentReaderNum() const;
-    unsigned int getReaderDepth() const;
+    XMLSize_t getCurrentReaderNum() const;
+    XMLSize_t getReaderDepth() const;
     void getLastExtEntityInfo(LastExtEntityInfo& lastInfo) const;
-    unsigned int getSrcOffset() const;
+    XMLFilePos getSrcOffset() const;
     bool getThrowEOE() const;
 
 
@@ -185,8 +186,8 @@ public :
     // -----------------------------------------------------------------------
     virtual const XMLCh* getPublicId() const;
     virtual const XMLCh* getSystemId() const;
-    virtual XMLSSize_t getLineNumber() const;
-    virtual XMLSSize_t getColumnNumber() const;
+    virtual XMLFileLoc getLineNumber() const;
+    virtual XMLFileLoc getColumnNumber() const;
 
 
 private :
@@ -267,7 +268,7 @@ private :
 //  do because some of the compilers we have to support are too stupid to
 //  understand out of order inlines!
 // ---------------------------------------------------------------------------
-inline unsigned int ReaderMgr::getCurrentReaderNum() const
+inline XMLSize_t ReaderMgr::getCurrentReaderNum() const
 {
     return fCurReader->getReaderNum();
 }
@@ -315,7 +316,7 @@ inline bool ReaderMgr::getThrowEOE() const
     return fThrowEOE;
 }
 
-inline unsigned int ReaderMgr::getSrcOffset() const
+inline XMLFilePos ReaderMgr::getSrcOffset() const
 {
     return fCurReader? fCurReader->getSrcOffset() : 0;
 }
@@ -346,6 +347,11 @@ inline bool ReaderMgr::skippedString(const XMLCh* const toSkip)
     return fCurReader->skippedString(toSkip);
 }
 
+inline bool ReaderMgr::skippedStringLong(const XMLCh* const toSkip)
+{
+    return fCurReader->skippedStringLong(toSkip);
+}
+
 inline void ReaderMgr::skipToChar(const XMLCh toSkipTo)
 {
 	XMLCh nextCh = 0;
@@ -353,7 +359,7 @@ inline void ReaderMgr::skipToChar(const XMLCh toSkipTo)
     {
         // Get chars until we find the one to skip
         nextCh = getNextChar();
-	} 
+	}
     // Break out at end of input or the char to skip
 	while((nextCh != toSkipTo) && nextCh!=0);
 }
@@ -365,7 +371,7 @@ inline void ReaderMgr::skipPastChar(const XMLCh toSkipPast)
     {
         // Get chars until we find the one to skip
         nextCh = getNextChar();
-	} 
+	}
 	while((nextCh != toSkipPast) && nextCh!=0);
 }
 
@@ -412,7 +418,7 @@ public :
 private :
     // -----------------------------------------------------------------------
     //  Unimplemented constructors and operators
-    // -----------------------------------------------------------------------    
+    // -----------------------------------------------------------------------
     ThrowEOEJanitor(const ThrowEOEJanitor&);
     ThrowEOEJanitor& operator=(const ThrowEOEJanitor&);
 

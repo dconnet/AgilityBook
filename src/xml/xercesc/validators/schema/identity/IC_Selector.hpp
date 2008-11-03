@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: IC_Selector.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IC_Selector.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-#if !defined(IC_SELECTOR_HPP)
-#define IC_SELECTOR_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_IC_SELECTOR_HPP)
+#define XERCESC_INCLUDE_GUARD_IC_SELECTOR_HPP
 
 
 // ---------------------------------------------------------------------------
@@ -107,7 +107,7 @@ public:
                       const unsigned int urlId,
                       const XMLCh* const elemPrefix,
 		              const RefVectorOf<XMLAttr>& attrList,
-                      const unsigned int attrCount);
+                      const XMLSize_t attrCount);
     void endElement(const XMLElementDecl& elemDecl,
                     const XMLCh* const elemContent);
 

@@ -16,13 +16,11 @@
  */
 
 /*
- * $Id: SchemaValidator.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: SchemaValidator.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-
-
-#if !defined(SCHEMAVALIDATOR_HPP)
-#define SCHEMAVALIDATOR_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_SCHEMAVALIDATOR_HPP)
+#define XERCESC_INCLUDE_GUARD_SCHEMAVALIDATOR_HPP
 
 #include <xercesc/framework/XMLValidator.hpp>
 #include <xercesc/framework/XMLBuffer.hpp>
@@ -59,11 +57,12 @@ public:
     // -----------------------------------------------------------------------
     //  Implementation of the XMLValidator interface
     // -----------------------------------------------------------------------
-    virtual int checkContent
+    virtual bool checkContent
     (
         XMLElementDecl* const   elemDecl
         , QName** const         children
-        , const unsigned int    childCount
+        , XMLSize_t             childCount
+        , XMLSize_t*            indexFailingChild
     );
 
     virtual void faultInAttr
@@ -210,6 +209,10 @@ private:
                       const ComplexTypeInfo* const baseInfo,
                       const bool toLax = false);
     void checkNSSubset(const ContentSpecNode* const derivedSpecNode,
+                       const ContentSpecNode* const baseSpecNode);
+    bool checkNSSubsetChoiceRoot(const ContentSpecNode* const derivedSpecNode,
+                       const ContentSpecNode* const baseSpecNode);
+    bool checkNSSubsetChoice(const ContentSpecNode* const derivedSpecNode,
                        const ContentSpecNode* const baseSpecNode);
     bool isWildCardEltSubset(const ContentSpecNode* const derivedSpecNode,
                              const ContentSpecNode* const baseSpecNode);

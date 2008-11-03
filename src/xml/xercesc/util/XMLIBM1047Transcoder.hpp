@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-#ifndef XMLIBM1047TRANSCODER_HPP
-#define XMLIBM1047TRANSCODER_HPP
+/*
+ * $Id: XMLIBM1047Transcoder.hpp 570552 2007-08-28 19:57:36Z amassari $
+ */
+
+#if !defined(XERCESC_INCLUDE_GUARD_XMLIBM1047TRANSCODER_HPP)
+#define XERCESC_INCLUDE_GUARD_XMLIBM1047TRANSCODER_HPP
 
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/util/XML256TableTranscoder.hpp>
@@ -46,8 +50,8 @@ public :
     // -----------------------------------------------------------------------
     XMLIBM1047Transcoder
     (
-        const   XMLCh* const    encodingName
-        , const unsigned int    blockSize
+        const   XMLCh* const   encodingName
+        , const XMLSize_t      blockSize
         , MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager
     );
 

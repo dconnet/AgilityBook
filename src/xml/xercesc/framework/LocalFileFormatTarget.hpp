@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: LocalFileFormatTarget.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: LocalFileFormatTarget.hpp 553937 2007-07-06 16:02:19Z amassari $
  */
 
-#ifndef LocalFileFormatTarget_HEADER_GUARD_
-#define LocalFileFormatTarget_HEADER_GUARD_
+#if !defined(XERCESC_INCLUDE_GUARD_LOCALFILEFORMATTARGET_HPP)
+#define XERCESC_INCLUDE_GUARD_LOCALFILEFORMATTARGET_HPP
 
 #include <xercesc/framework/XMLFormatter.hpp>
 
@@ -50,7 +50,7 @@ public:
     //  Implementations of the format target interface
     // -----------------------------------------------------------------------
     virtual void writeChars(const XMLByte* const toWrite
-                          , const unsigned int   count
+                          , const XMLSize_t      count
                           , XMLFormatter* const  formatter);
 
     virtual void flush();
@@ -66,7 +66,7 @@ private:
     //  Private helpers
     // -----------------------------------------------------------------------
     void flushBuffer();
-    bool insureCapacity(const unsigned int extraNeeded);
+    bool insureCapacity(const XMLSize_t extraNeeded);
 
     // -----------------------------------------------------------------------
     //  Private data members
@@ -89,8 +89,8 @@ private:
     // -----------------------------------------------------------------------
     FileHandle      fSource;
     XMLByte*        fDataBuf;
-    unsigned int    fIndex;
-    unsigned int    fCapacity;
+    XMLSize_t       fIndex;
+    XMLSize_t       fCapacity;
     MemoryManager*  fMemoryManager;
 };
 

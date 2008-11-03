@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,13 +16,11 @@
  */
 
 /*
- * $Id: DTDGrammar.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: DTDGrammar.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-
-
-#if !defined(DTDGRAMMAR_HPP)
-#define DTDGRAMMAR_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_DTDGRAMMAR_HPP)
+#define XERCESC_INCLUDE_GUARD_DTDGRAMMAR_HPP
 
 #include <xercesc/util/RefHashTableOf.hpp>
 #include <xercesc/util/NameIdPool.hpp>
@@ -72,7 +70,7 @@ public:
         ,       bool&           wasAdded
     ) ;
 
-    virtual unsigned int getElemId
+    virtual XMLSize_t getElemId
     (
         const   unsigned int    uriId
         , const XMLCh* const    baseName
@@ -128,13 +126,13 @@ public:
         , const bool            notDeclared = false
     );
 
-    virtual unsigned int putElemDecl
+    virtual XMLSize_t putElemDecl
     (
         XMLElementDecl* const elemDecl
         , const bool          notDeclared = false
     )   ;
 
-    virtual unsigned int putNotationDecl
+    virtual XMLSize_t putNotationDecl
     (
         XMLNotationDecl* const notationDecl
     )   const;
@@ -146,10 +144,7 @@ public:
     // -----------------------------------------------------------------------
     //  Getter methods
     // -----------------------------------------------------------------------
-    
-    // deprecated.  returns the ID of the root element; not
-    // useable in multithreaded environments!
-    unsigned int getRootElemId() const;
+
     const DTDEntityDecl* getEntityDecl(const XMLCh* const entName) const;
     DTDEntityDecl* getEntityDecl(const XMLCh* const entName);
     NameIdPool<DTDEntityDecl>* getEntityDeclPool();
@@ -162,9 +157,6 @@ public:
     //  Setter methods
     // -----------------------------------------------------------------------
 
-    // deprecated.  Not usable in multithreaded environments
-    void setRootElemId(unsigned int rootElemId);
-
     virtual void                    setGrammarDescription( XMLGrammarDescription*);
     virtual XMLGrammarDescription*  getGrammarDescription() const;
 
@@ -173,23 +165,12 @@ public:
     // -----------------------------------------------------------------------
     unsigned int putEntityDecl(DTDEntityDecl* const entityDecl) const;
 
-
-    // -----------------------------------------------------------------------
-    //  Notification that lazy data has been deleted
-    // -----------------------------------------------------------------------
-    static void reinitDfltEntities();
-
     /***
      * Support for Serialization/De-serialization
      ***/
     DECL_XSERIALIZABLE(DTDGrammar)
 
 private:
-    // -----------------------------------------------------------------------
-    //  Private helper methods
-    // -----------------------------------------------------------------------
-    void resetEntityDeclPool();
-
     // -----------------------------------------------------------------------
     // Unimplemented constructors and operators
     // -----------------------------------------------------------------------
@@ -217,11 +198,6 @@ private:
     //      This is a pool of NotationDecl objects, which contains all of the
     //      notations declared in the DTD subsets.
     //
-    //  fRootElemId
-    //      The id of the root element that we found in the DOCTYPE statement.
-    //      Its initialized to ContentModel::fgInvalidElemId, so that its
-    //      invalid unless we have a DOCTYPE.
-    //
     //  fValidated
     //      Indicates if the content of the Grammar has been pre-validated
     //      or not. When using a cached grammar, no need for pre content
@@ -238,20 +214,10 @@ private:
     NameIdPool<XMLNotationDecl>*      fNotationDeclPool;
     XMLDTDDescription*                fGramDesc;
 
-    unsigned int                      fRootElemId;
     bool                              fValidated;
 
     friend class XMLInitializer;
 };
-
-
-// ---------------------------------------------------------------------------
-//  DTDGrammar: Getter methods
-// ---------------------------------------------------------------------------
-inline unsigned int DTDGrammar::getRootElemId() const
-{
-    return fRootElemId;
-}
 
 // ---------------------------------------------------------------------------
 //  DTDGrammar: Getter methods
@@ -309,10 +275,6 @@ inline const NameIdPool<DTDEntityDecl>* DTDGrammar::getEntityDeclPool() const
 // -----------------------------------------------------------------------
 //  Setter methods
 // -----------------------------------------------------------------------
-inline void DTDGrammar::setRootElemId(unsigned int rootElemId) {
-    fRootElemId = rootElemId;
-}
-
 inline unsigned int DTDGrammar::putEntityDecl(DTDEntityDecl* const entityDecl)   const
 {
     return fEntityDeclPool->put(entityDecl);
@@ -331,7 +293,7 @@ inline const XMLCh* DTDGrammar::getTargetNamespace() const {
 }
 
 // Element Decl
-inline unsigned int DTDGrammar::getElemId (const   unsigned int
+inline XMLSize_t DTDGrammar::getElemId (const   unsigned int
                                               , const XMLCh* const
                                               , const XMLCh* const    qName
                                               , unsigned int) const
@@ -384,9 +346,9 @@ inline XMLElementDecl* DTDGrammar::getElemDecl(const unsigned int elemId)
     return fElemDeclPool->getById(elemId);
 }
 
-inline unsigned int
+inline XMLSize_t
 DTDGrammar::putElemDecl(XMLElementDecl* const elemDecl,
-                        const bool notDeclared) 
+                        const bool notDeclared)
 {
     if (notDeclared)
     {
@@ -409,7 +371,7 @@ inline XMLNotationDecl* DTDGrammar::getNotationDecl(const XMLCh* const notName)
     return fNotationDeclPool->getByKey(notName);
 }
 
-inline unsigned int DTDGrammar::putNotationDecl(XMLNotationDecl* const notationDecl)   const
+inline XMLSize_t DTDGrammar::putNotationDecl(XMLNotationDecl* const notationDecl)   const
 {
     return fNotationDeclPool->put(notationDecl);
 }

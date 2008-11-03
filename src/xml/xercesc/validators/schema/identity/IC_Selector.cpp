@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: IC_Selector.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IC_Selector.cpp 679382 2008-07-24 12:09:39Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -61,23 +61,23 @@ void SelectorMatcher::startElement(const XMLElementDecl& elemDecl,
                                    const unsigned int urlId,
                                    const XMLCh* const elemPrefix,
                                    const RefVectorOf<XMLAttr>& attrList,
-                                   const unsigned int attrCount) {
+                                   const XMLSize_t attrCount) {
 
     XPathMatcher::startElement(elemDecl, urlId, elemPrefix, attrList, attrCount);
     fElementDepth++;
 
     // activate the fields, if selector is matched
-    int matched = isMatched();
+    unsigned char matched = isMatched();
     if ((fMatchedDepth == -1 && ((matched & XP_MATCHED) == XP_MATCHED))
         || ((matched & XP_MATCHED_D) == XP_MATCHED_D)) {
 
         IdentityConstraint* ic = fSelector->getIdentityConstraint();
-        int count = ic->getFieldCount();
+        XMLSize_t count = ic->getFieldCount();
 
         fMatchedDepth = fElementDepth;
         fFieldActivator->startValueScopeFor(ic, fInitialDepth);
 
-        for (int i = 0; i < count; i++) {
+        for (XMLSize_t i = 0; i < count; i++) {
 
             XPathMatcher* matcher = fFieldActivator->activateField(ic->getFieldAt(i), fInitialDepth);
             matcher->startElement(elemDecl, urlId, elemPrefix, attrList, attrCount);

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: SAXParser.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: SAXParser.hpp 673975 2008-07-04 09:23:56Z borisk $
  */
 
-#if !defined(SAXPARSER_HPP)
-#define SAXPARSER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_SAXPARSER_HPP)
+#define XERCESC_INCLUDE_GUARD_SAXPARSER_HPP
 
 #include <xercesc/sax/Parser.hpp>
 #include <xercesc/internal/VecAttrListImpl.hpp>
@@ -30,7 +30,9 @@
 #include <xercesc/framework/XMLErrorReporter.hpp>
 #include <xercesc/framework/XMLBuffer.hpp>
 #include <xercesc/util/SecurityManager.hpp>
+#include <xercesc/validators/common/Grammar.hpp>
 #include <xercesc/validators/DTD/DocTypeHandler.hpp>
+
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -40,7 +42,6 @@ class EntityResolver;
 class XMLPScanToken;
 class XMLScanner;
 class XMLValidator;
-class Grammar;
 class GrammarResolver;
 class XMLGrammarPool;
 class XMLEntityResolver;
@@ -59,6 +60,10 @@ class PSVIHandler;
   * @deprecated This interface has been replaced by the SAX2
   *             interface, which includes Namespace support.
   *             See SAX2XMLReader for more information.
+  *
+  * Note - XMLDocumentHandler calls, when used with SAXParser, will not provide correct namespace information. This is becaue the SAX parser does not support namespace aware processing.
+  *
+  *
   */
 
 class PARSERS_EXPORT SAXParser :
@@ -68,7 +73,7 @@ class PARSERS_EXPORT SAXParser :
     , public XMLDocumentHandler
     , public XMLErrorReporter
     , public XMLEntityHandler
-    , public DocTypeHandler    
+    , public DocTypeHandler
 {
 public :
     // -----------------------------------------------------------------------
@@ -107,7 +112,7 @@ public :
     (
           XMLValidator*   const valToAdopt = 0
         , MemoryManager*  const manager = XMLPlatformUtils::fgMemoryManager
-        , XMLGrammarPool* const gramPool = 0 
+        , XMLGrammarPool* const gramPool = 0
     );
 
     /**
@@ -297,7 +302,7 @@ public :
       *         set validation constraint errors as fatal, false
       *         otherwise.
       *
-      * @see #setValidationContraintFatal
+      * @see #setValidationConstraintFatal
       */
     bool getValidationConstraintFatal() const;
 
@@ -345,18 +350,18 @@ public :
 
    /** Get the SecurityManager instance attached to this parser.
       *
-      * This method returns the security manager 
+      * This method returns the security manager
       * that was specified using setSecurityManager.
       *
-      * The SecurityManager instance must have been specified by the application; 
+      * The SecurityManager instance must have been specified by the application;
       * this should not be deleted until after the parser has been deleted (or
       * a new SecurityManager instance has been supplied to the parser).
-      * 
-      * @return a pointer to the SecurityManager instance 
+      *
+      * @return a pointer to the SecurityManager instance
       *         specified externally.  A null pointer is returned if nothing
       *         was specified externally.
       *
-      * @see #setSecurityManager(const SecurityManager* const)
+      * @see #setSecurityManager(SecurityManager* const)
       */
     SecurityManager* getSecurityManager() const;
 
@@ -372,6 +377,19 @@ public :
       * @see #getValidationScheme
       */
     bool getLoadExternalDTD() const;
+
+    /** Get the 'Loading Schema' flag
+      *
+      * This method returns the state of the parser's loading schema
+      * flag.
+      *
+      * @return true, if the parser is currently configured to
+      *         automatically load schemas that are not in the
+      *         grammar pool, false otherwise.
+      *
+      * @see #setLoadSchema
+      */
+    bool getLoadSchema() const;
 
     /** Get the 'Grammar caching' flag
       *
@@ -451,10 +469,10 @@ public :
      *
      * @return offset within the input source
      */
-    unsigned int getSrcOffset() const;
+    XMLFilePos getSrcOffset() const;
 
     /** Get the 'generate synthetic annotations' flag
-      *    
+      *
       * @return true, if the parser is currently configured to
       *         generate synthetic annotations, false otherwise.
       *         A synthetic XSAnnotation is created when a schema
@@ -467,7 +485,7 @@ public :
     bool getGenerateSyntheticAnnotations() const;
 
     /** Get the 'validate annotations' flag
-      *    
+      *
       * @return true, if the parser is currently configured to
       *         validate annotations, false otherwise.
       *
@@ -476,7 +494,7 @@ public :
     bool getValidateAnnotations() const;
 
     /** Get the 'ignore cached DTD grammar' flag
-      *    
+      *
       * @return true, if the parser is currently configured to
       *         ignore cached DTD, false otherwise.
       *
@@ -485,7 +503,7 @@ public :
     bool getIgnoreCachedDTD() const;
 
     /** Get the 'ignore annotations' flag
-      *    
+      *
       * @return true, if the parser is currently configured to
       *         ignore annotations, false otherwise.
       *
@@ -494,7 +512,7 @@ public :
     bool getIgnoreAnnotations() const;
 
     /** Get the 'disable default entity resolution' flag
-      *    
+      *
       * @return true, if the parser is currently configured to
       *         not perform default entity resolution, false otherwise.
       *
@@ -503,7 +521,7 @@ public :
     bool getDisableDefaultEntityResolution() const;
 
     /** Get the 'skip DTD validation' flag
-      *    
+      *
       * @return true, if the parser is currently configured to
       *         skip DTD validation, false otherwise.
       *
@@ -511,6 +529,14 @@ public :
       */
     bool getSkipDTDValidation() const;
 
+    /** Get the 'handle multiple schema imports' flag
+      *
+      * @return true, if the parser is currently configured to
+      *         import multiple schemas with the same namespace, false otherwise.
+      *
+      * @see #setHandleMultipleImports
+      */
+    bool getHandleMultipleImports() const;
     //@}
 
 
@@ -521,7 +547,7 @@ public :
     /** @name Setter methods */
     //@{
     /** set the 'generate synthetic annotations' flag
-      *    
+      *
       * @param newValue The value for specifying whether Synthetic Annotations
       *        should be generated or not.
       *        A synthetic XSAnnotation is created when a schema
@@ -533,7 +559,7 @@ public :
     void setGenerateSyntheticAnnotations(const bool newValue);
 
     /** set the 'validate annotations' flag
-      *    
+      *
       * @param newValue The value for specifying whether annotations
       *        should be validate or not.
       *
@@ -753,6 +779,23 @@ public :
       */
     void setLoadExternalDTD(const bool newState);
 
+    /** Set the 'Loading Schema' flag
+      *
+      * This method allows users to enable or disable the loading of schemas.
+      * When set to false, the parser not attempt to load schemas beyond
+      * querying the grammar pool for them.
+      *
+      * The parser's default state is: true.
+      *
+      * @param newState The value specifying whether schemas should
+      *                 be loaded if they're not found in the grammar
+      *                 pool.
+      *
+      * @see #getLoadSchema
+      * @see #setDoSchema
+      */
+    void setLoadSchema(const bool newState);
+
     /** Set the 'Grammar caching' flag
       *
       * This method allows users to enable or disable caching of grammar when
@@ -837,7 +880,7 @@ public :
       *
       * @param bufferSize The maximum input buffer size
       */
-    void setInputBufferSize(const size_t bufferSize);
+    void setInputBufferSize(const XMLSize_t bufferSize);
 
     /** Set the 'ignore cached DTD grammar' flag
       *
@@ -873,18 +916,18 @@ public :
       * parser will try to resolve the entity on its own.  When this option
       * is set to true, the parser will not attempt to resolve the entity
       * when the resolveEntity method returns NULL.
-      *    
+      *
       * The parser's default state is false
       *
       * @param newValue The state to set
       *
-      * @see #entityResolver
+      * @see #EntityResolver
       */
     void setDisableDefaultEntityResolution(const bool newValue);
 
     /** Set the 'skip DTD validation' flag
       *
-      * This method gives users the option to skip DTD validation only when 
+      * This method gives users the option to skip DTD validation only when
       * schema validation is on (i.e. when performing validation,  we will
       * ignore the DTD, except for entities, when schema validation is enabled).
       *
@@ -895,6 +938,19 @@ public :
       * @param newValue The state to set
       */
     void setSkipDTDValidation(const bool newValue);
+
+    /** Set the 'handle multiple schema imports' flag
+      *
+      * This method gives users the ability to import multiple schemas that
+      * have the same namespace.
+      *
+      * NOTE: This option is ignored if schema validation is disabled.
+      *
+      * The parser's default state is false
+      *
+      * @param newValue The state to set
+      */
+    void setHandleMultipleImports(const bool newValue);
     //@}
 
 
@@ -913,6 +969,8 @@ public :
       * <p>The methods in the advanced callback interface represent
       * Xerces-C extensions. There is no specification for this interface.</p>
       *
+      * Note - XMLDocumentHandler calls, when used with SAXParser, will not provide correct namespace information. This is becaue the SAX parser does not support namespace aware processing.
+      *
       * @param toInstall A pointer to the users advanced callback handler.
       *
       * @see #removeAdvDocHandler
@@ -925,6 +983,8 @@ public :
       * callbacks are not invoked by the scanner.
       * @param toRemove A pointer to the advanced callback handler which
       *                 should be removed.
+      *
+      * Note - XMLDocumentHandler calls, when used with SAXParser, will not provide correct namespace information. This is becaue the SAX parser does not support namespace aware processing.
       *
       * @see #installAdvDocHandler
       */
@@ -1123,7 +1183,7 @@ public :
       * @see InputSource#InputSource
       */
     Grammar* loadGrammar(const InputSource& source,
-                         const short grammarType,
+                         const Grammar::GrammarType grammarType,
                          const bool toCache = false);
 
     /**
@@ -1152,7 +1212,7 @@ public :
       * @exception DOMException A DOM exception as per DOM spec.
       */
     Grammar* loadGrammar(const XMLCh* const systemId,
-                         const short grammarType,
+                         const Grammar::GrammarType grammarType,
                          const bool toCache = false);
 
     /**
@@ -1180,7 +1240,7 @@ public :
       * @exception DOMException A DOM exception as per DOM spec.
       */
     Grammar* loadGrammar(const char* const systemId,
-                         const short grammarType,
+                         const Grammar::GrammarType grammarType,
                          const bool toCache = false);
 
     /**
@@ -1336,7 +1396,7 @@ public :
     virtual void docCharacters
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
         , const bool            cdataSection
     );
 
@@ -1456,7 +1516,7 @@ public :
     virtual void ignorableWhitespace
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
         , const bool            cdataSection
     );
 
@@ -1510,7 +1570,7 @@ public :
         , const unsigned int            urlId
         , const XMLCh* const            elemPrefix
         , const RefVectorOf<XMLAttr>&   attrList
-        , const unsigned int            attrCount
+        , const XMLSize_t               attrCount
         , const bool                    isEmpty
         , const bool                    isRoot
     );
@@ -1593,8 +1653,8 @@ public :
         , const XMLCh* const                errorText
         , const XMLCh* const                systemId
         , const XMLCh* const                publicId
-        , const XMLSSize_t                  lineNum
-        , const XMLSSize_t                  colNum
+        , const XMLFileLoc                  lineNum
+        , const XMLFileLoc                  colNum
     );
 
     /**
@@ -1657,40 +1717,11 @@ public :
       */
     virtual void resetEntities();
 
-    /**
-      * This method allows a user installed entity handler to further
-      * process any pointers to external entities. The applications
-      * can implement 'redirection' via this callback. The driver
-      * should call the SAX EntityHandler 'resolveEntity' method.
-      *
-      * @deprecated This method is no longer called (the other resolveEntity one is).
-      *
-      * @param publicId A const pointer to a Unicode string representing the
-      *                 public id of the entity just parsed.
-      * @param systemId A const pointer to a Unicode string representing the
-      *                 system id of the entity just parsed.
-      * @param baseURI  A const pointer to a Unicode string representing the
-      *                 base URI of the entity just parsed,
-      *                 or <code>null</code> if there is no base URI.
-      * @return The value returned by the SAX resolveEntity method or
-      *         NULL otherwise to indicate no processing was done.
-      *         The returned InputSource is owned by the parser which is
-      *         responsible to clean up the memory.
-      * @see EntityResolver
-      * @see XMLEntityHandler
-      */
-    virtual InputSource* resolveEntity
-    (
-        const   XMLCh* const    publicId
-        , const XMLCh* const    systemId
-        , const XMLCh* const    baseURI = 0
-    );
-
     /** Resolve a public/system id
       *
       * This method allows a user installed entity handler to further
       * process any pointers to external entities. The applications can
-      * implement 'redirection' via this callback.  
+      * implement 'redirection' via this callback.
       *
       * @param resourceIdentifier An object containing the type of
       *        resource to be resolved and the associated data members
@@ -1822,7 +1853,7 @@ public :
     virtual void doctypeWhitespace
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
     /**
@@ -1969,41 +2000,6 @@ public :
     );
     //@}
 
-
-    // -----------------------------------------------------------------------
-    //  Deprecated Methods
-    // -----------------------------------------------------------------------
-    /** @name Deprecated Methods */
-    //@{
-    /**
-      * This method returns the state of the parser's validation
-      * handling flag which controls whether validation checks
-      * are enforced or not.
-      *
-      * @return true, if the parser is currently configured to
-      *         do validation, false otherwise.
-      *
-      * @see #setDoValidation
-      */
-    bool getDoValidation() const;
-
-    /**
-      * This method allows users to enable or disable the parser's validation
-      * checks.
-      *
-      * <p>By default, the parser does not to any validation. The default
-      * value is false.</p>
-      *
-      * @param newState The value specifying whether the parser should
-      *                 do validity checks or not against the DTD in the
-      *                 input XML document.
-      *
-      * @see #getDoValidation
-      */
-    void setDoValidation(const bool newState);
-    //@}
-
-
 protected :
     // -----------------------------------------------------------------------
     //  Protected Methods
@@ -2092,9 +2088,9 @@ private:
     //
     // -----------------------------------------------------------------------
     bool                 fParseInProgress;
-    unsigned int         fElemDepth;
-    unsigned int         fAdvDHCount;
-    unsigned int         fAdvDHListSize;
+    XMLSize_t            fElemDepth;
+    XMLSize_t            fAdvDHCount;
+    XMLSize_t            fAdvDHListSize;
     VecAttrListImpl      fAttrList;
     DocumentHandler*     fDocHandler;
     DTDHandler*          fDTDHandler;

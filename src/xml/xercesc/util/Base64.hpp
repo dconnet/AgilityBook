@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: Base64.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: Base64.hpp 555320 2007-07-11 16:05:13Z amassari $
  */
 
-#ifndef BASE64_HPP
-#define BASE64_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_BASE64_HPP)
+#define XERCESC_INCLUDE_GUARD_BASE64_HPP
 
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/util/XMLUniDefs.hpp>
@@ -68,8 +68,8 @@ public :
      * @see   XMLString::release(XMLByte**)
      */
     static XMLByte* encode(const XMLByte* const inputData
-                         , const unsigned int   inputLength
-                         , unsigned int*        outputLength
+                         , const XMLSize_t      inputLength
+                         , XMLSize_t*           outputLength
                          , MemoryManager* const memMgr = 0);
 
     /**
@@ -96,42 +96,11 @@ public :
      */
     static XMLByte* decode(
                            const XMLByte*        const   inputData
-                         ,       unsigned int*           decodedLength
+                         ,       XMLSize_t*              decodedLength
                          ,       MemoryManager*  const   memMgr = 0
                          ,       Conformance             conform = Conf_RFC2045
                           );
-
-    /**
-     * Decodes Base64 data into XMLCh
-     *
-     * NOTE: The returned buffer is dynamically allocated and is the
-     * responsibility of the caller to delete it when not longer needed.
-     * You can call XMLString::release to release this returned buffer.
-     *
-     * If a memory manager is provided, ask the memory manager to de-allocate
-     * the returned buffer.
-     *
-     * @param inputData Base64 data in XMLCh stream.
-     * @param decodedLength Length of decoded XMLCh stream
-     * @param memMgr client provided memory manager
-     * @param conform conformance specified: if the input data conforms to the
-     *                RFC 2045 it is allowed to have any number of whitespace
-     *                characters inside; if it conforms to the XMLSchema specs,
-     *                it is allowed to have at most one whitespace character
-     *                between the quartets
-     * @return Decoded binary data in XMLCh stream,
-     *      or NULL if input data can not be decoded.
-     * @see   XMLString::release(XMLCh**)
-     * @deprecated use decodeToXMLByte instead.
-     */
-
-    static XMLCh* decode(
-                         const XMLCh*          const    inputData
-                       ,       unsigned int*            decodedLength
-                       ,       MemoryManager*  const    memMgr = 0
-                       ,       Conformance              conform = Conf_RFC2045
-                        );
-   
+  
    /**
      * Decodes Base64 data into octets
      *
@@ -156,7 +125,7 @@ public :
      */
     static XMLByte* decodeToXMLByte(
                            const XMLCh*          const   inputData
-                         ,       unsigned int*           decodedLength
+                         ,       XMLSize_t*              decodedLength
                          ,       MemoryManager*  const   memMgr = 0
                          ,       Conformance             conform = Conf_RFC2045
                           );
@@ -210,13 +179,11 @@ private :
 
     static XMLByte* decode(
                            const XMLByte*        const   inputData
-                         ,       unsigned int*           outputLength
+                         ,       XMLSize_t*              outputLength
                          ,       XMLByte*&               canRepData
                          ,       MemoryManager*  const   memMgr = 0
                          ,       Conformance             conform = Conf_RFC2045
                           );
-
-    static void init();
 
     static bool isData(const XMLByte& octet);
     static bool isPad(const XMLByte& octet);
@@ -260,8 +227,7 @@ private :
     static const XMLByte  base64Alphabet[];
     static const XMLByte  base64Padding;
 
-    static XMLByte  base64Inverse[];
-    static bool  isInitialized;
+    static const XMLByte  base64Inverse[];
 
     static const unsigned int  quadsPerLine;
 };

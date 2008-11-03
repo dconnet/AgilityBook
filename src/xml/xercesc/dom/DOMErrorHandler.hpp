@@ -1,6 +1,3 @@
-#ifndef DOMErrorHandler_HEADER_GUARD_
-#define DOMErrorHandler_HEADER_GUARD_
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -19,9 +16,11 @@
  */
 
 /*
- * $Id: DOMErrorHandler.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: DOMErrorHandler.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
+#if !defined(XERCESC_INCLUDE_GUARD_DOMERRORHANDLER_HPP)
+#define XERCESC_INCLUDE_GUARD_DOMERRORHANDLER_HPP
 
 #include <xercesc/util/XercesDefs.hpp>
 
@@ -40,7 +39,7 @@ class DOMError;
   * <p>The application that is using the DOM implementation is expected to
   * implement this interface.</p>
   *
-  * @see DOMBuilder#setErrorHandler
+  * @see DOMLSParser#getDomConfig
   * @since DOM Level 3
   */
 
@@ -85,8 +84,7 @@ public:
     //@{
     /**
      * This method is called on the error handler when an error occures.
-     *
-     * <p><b>"Experimental - subject to change"</b></p>
+     * If an exception is thrown from this method, it is considered to be equivalent of returning <code>true</code>.
      *
      * @param domError The error object that describes the error, this object
      *                 may be reused by the DOM implementation across multiple

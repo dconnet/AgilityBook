@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: DTDElementDecl.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: DTDElementDecl.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-
-#if !defined(DTDELEMENTDECL_HPP)
-#define DTDELEMENTDECL_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_DTDELEMENTDECL_HPP)
+#define XERCESC_INCLUDE_GUARD_DTDELEMENTDECL_HPP
 
 #include <xercesc/util/RefHashTableOf.hpp>
 #include <xercesc/util/QName.hpp>
@@ -88,19 +87,9 @@ public :
     // -----------------------------------------------------------------------
     //  The virtual element decl interface
     // -----------------------------------------------------------------------
-    virtual XMLAttDef* findAttr
-    (
-        const   XMLCh* const    qName
-        , const unsigned int    uriId
-        , const XMLCh* const    baseName
-        , const XMLCh* const    prefix
-        , const LookupOpts      options
-        ,       bool&           wasAdded
-    )   const;
     virtual XMLAttDefList& getAttDefList() const;
     virtual CharDataOpts getCharDataOpts() const;
-    virtual bool hasAttDefs() const;
-    virtual bool resetDefs();
+    virtual bool hasAttDefs() const;   
     virtual const ContentSpecNode* getContentSpec() const;
     virtual ContentSpecNode* getContentSpec();
     virtual void setContentSpec(ContentSpecNode* toAdopt);
@@ -123,16 +112,6 @@ public :
     const DTDAttDef* getAttDef(const XMLCh* const attName) const;
     DTDAttDef* getAttDef(const XMLCh* const attName);
     ModelTypes getModelType() const;
-
-    /**
-     * @deprecated
-    **/
-    const XMLCh* getDOMTypeInfoName() const;
-
-    /**
-     * @deprecated
-    **/
-    const XMLCh* getDOMTypeInfoUri() const;
 
     // -----------------------------------------------------------------------
     //  Setter methods
@@ -252,14 +231,6 @@ inline const XMLCh* DTDElementDecl::getKey() const
 inline DTDElementDecl::ModelTypes DTDElementDecl::getModelType() const
 {
     return fModelType;
-}
-
-inline const XMLCh* DTDElementDecl::getDOMTypeInfoName() const {
-    return 0;
-}
-
-inline const XMLCh* DTDElementDecl::getDOMTypeInfoUri() const {
-    return 0;
 }
 
 // ---------------------------------------------------------------------------

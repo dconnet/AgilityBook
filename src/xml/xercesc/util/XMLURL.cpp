@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: XMLURL.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XMLURL.cpp 670359 2008-06-22 13:43:45Z borisk $
  */
 
 
@@ -606,12 +606,12 @@ BinInputStream* XMLURL::makeNewStream() const
             // Need to manually replace any character reference %xx first
             // HTTP protocol will be done automatically by the netaccessor
             //
-            int end = XMLString::stringLen(realPath);
+            XMLSize_t end = XMLString::stringLen(realPath);
             int percentIndex = XMLString::indexOf(realPath, chPercent, 0, fMemoryManager);
 
             while (percentIndex != -1) {
 
-                if (percentIndex+2 >= end ||
+                if (percentIndex+2 >= (int)end ||
                     !isHexDigit(realPath[percentIndex+1]) ||
                     !isHexDigit(realPath[percentIndex+2]))
                 {
@@ -629,7 +629,7 @@ BinInputStream* XMLURL::makeNewStream() const
 
                 realPath[percentIndex] = XMLCh(value);
 
-                int i =0;
+                XMLSize_t i =0;
                 for (i = percentIndex + 1; i < end - 2 ; i++)
                     realPath[i] = realPath[i+2];
                 realPath[i] = chNull;
@@ -693,7 +693,7 @@ void XMLURL::makeRelativeTo(const XMLURL& baseURL)
 void XMLURL::buildFullText()
 {
     // Calculate the worst case size of the buffer required
-    unsigned int bufSize = gMaxProtoLen + 1
+    XMLSize_t bufSize = gMaxProtoLen + 1
                            + XMLString::stringLen(fFragment) + 1
                            + XMLString::stringLen(fHost) + 2
                            + XMLString::stringLen(fPassword) + 1
@@ -1130,10 +1130,13 @@ void XMLURL::parse(const XMLCh* const urlText)
     }
 
     // If we are at the end, then we are done now
-    if (!*srcPtr)
-	{
+    if (!*srcPtr) {
+        if(fHost) {
+            static const XMLCh slash[] = { chForwardSlash, chNull };
+            fPath = XMLString::replicate(slash, fMemoryManager);
+        }
         return;
-	}
+    }
 
     //
     //  Next is the path part. It can be absolute, i.e. starting with a
@@ -1404,10 +1407,13 @@ bool XMLURL::parse(const XMLCh* const urlText, XMLURL& xmlURL)
     }
 
     // If we are at the end, then we are done now
-    if (!*srcPtr)
-	{
+    if (!*srcPtr) {
+        if(xmlURL.fHost) {
+            static const XMLCh slash[] = { chForwardSlash, chNull };
+            xmlURL.fPath = XMLString::replicate(slash, xmlURL.fMemoryManager);
+        }
         return true;
-	}
+    }
 
     //
     //  Next is the path part. It can be absolute, i.e. starting with a
@@ -1479,5 +1485,4 @@ bool XMLURL::parse(const XMLCh* const urlText, XMLURL& xmlURL)
 }
 
 XERCES_CPP_NAMESPACE_END
-
 

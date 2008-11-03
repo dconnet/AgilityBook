@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: DGXMLScanner.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: DGXMLScanner.hpp 678409 2008-07-21 13:08:10Z borisk $
  */
 
-
-#if !defined(DGXMLSCANNER_HPP)
-#define DGXMLSCANNER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_DGXMLSCANNER_HPP)
+#define XERCESC_INCLUDE_GUARD_DGXMLSCANNER_HPP
 
 #include <xercesc/internal/XMLScanner.hpp>
 #include <xercesc/util/ValueVectorOf.hpp>
@@ -111,7 +110,7 @@ private :
     virtual void scanReset(const InputSource& src);
     virtual void sendCharData(XMLBuffer& toSend);
     virtual InputSource* resolveSystemId(const XMLCh* const sysId
-                                        ,const XMLCh* const pubId); 
+                                        ,const XMLCh* const pubId);
 
     // -----------------------------------------------------------------------
     //  Private helper methods
@@ -119,9 +118,9 @@ private :
     void commonInit();
     void cleanUp();
 
-    unsigned int buildAttList
+    XMLSize_t buildAttList
     (
-        const unsigned int                attCount
+        const XMLSize_t                     attCount
         ,       XMLElementDecl*             elemDecl
         ,       RefVectorOf<XMLAttr>&       toFill
     );
@@ -136,7 +135,7 @@ private :
         , const XMLCh* const attrLocalName
         , const XMLCh* const attrValue
     );
-    void scanAttrListforNameSpaces(RefVectorOf<XMLAttr>* theAttrList, int attCount, XMLElementDecl* elemDecl);
+    void scanAttrListforNameSpaces(RefVectorOf<XMLAttr>* theAttrList, XMLSize_t attCount, XMLElementDecl* elemDecl);
 
     // -----------------------------------------------------------------------
     //  Private scanning methods
@@ -168,11 +167,6 @@ private :
     //  fDTDValidator
     //      The DTD validator instance.
     //
-    //  fElemState
-    //  fElemStateSize
-    //      Stores an element next state from DFA content model - used for
-    //      wildcard validation
-    //
     // fDTDElemNonDeclPool
     //     registry of "faulted-in" DTD element decls
     // fElemCount
@@ -190,7 +184,7 @@ private :
     DTDGrammar*                 fDTDGrammar;
     NameIdPool<DTDElementDecl>* fDTDElemNonDeclPool;
     unsigned int                fElemCount;
-    RefHashTableOf<unsigned int>* fAttDefRegistry;
+    RefHashTableOf<unsigned int, PtrHasher>* fAttDefRegistry;
     RefHashTableOf<unsigned int>* fUndeclaredAttrRegistry;
 };
 

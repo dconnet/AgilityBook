@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: ValidationContextImpl.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ValidationContextImpl.hpp 577322 2007-09-19 14:58:04Z cargilld $
  */
 
-#if !defined(VALIDATION_CONTEXTIMPL_HPP)
-#define VALIDATION_CONTEXTIMPL_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_VALIDATION_CONTEXTIMPL_HPP)
+#define XERCESC_INCLUDE_GUARD_VALIDATION_CONTEXTIMPL_HPP
 
 #include <xercesc/framework/ValidationContext.hpp>
 
@@ -91,6 +91,9 @@ public :
       */
     virtual bool isPrefixUnknown(XMLCh* prefix);
     virtual void setElemStack(ElemStack* elemStack);
+    virtual const XMLCh* getURIForPrefix(XMLCh* prefix);
+    virtual void setScanner(XMLScanner* scanner);   
+
 
     //@}
   
@@ -131,6 +134,8 @@ private:
     bool                                fToCheckIdRefList;
     DatatypeValidator *                 fValidatingMemberType;    
     ElemStack*      fElemStack;
+    XMLScanner*     fScanner;
+
 
 };
 
@@ -148,6 +153,10 @@ inline void ValidationContextImpl::setValidatingMemberType(DatatypeValidator * v
 
 inline void ValidationContextImpl::setElemStack(ElemStack* elemStack) {
     fElemStack = elemStack;
+}
+
+inline void ValidationContextImpl::setScanner(XMLScanner* scanner) {
+    fScanner = scanner;
 }
 
 XERCES_CPP_NAMESPACE_END

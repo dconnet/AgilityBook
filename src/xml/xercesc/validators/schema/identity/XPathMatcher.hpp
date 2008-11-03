@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: XPathMatcher.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XPathMatcher.hpp 679382 2008-07-24 12:09:39Z amassari $
  */
 
-#if !defined(XPATHMATCHER_HPP)
-#define XPATHMATCHER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XPATHMATCHER_HPP)
+#define XERCESC_INCLUDE_GUARD_XPATHMATCHER_HPP
 
 
 // ---------------------------------------------------------------------------
@@ -42,6 +42,8 @@ class DatatypeValidator;
 class XMLStringPool;
 class XercesLocationPath;
 class XMLAttr;
+class XercesNodeTest;
+class QName;
 
 class VALIDATORS_EXPORT XPathMatcher : public XMemory
 {
@@ -68,7 +70,7 @@ public:
     /**
       * Returns true if XPath has been matched.
       */
-    int isMatched();
+    unsigned char isMatched();
     virtual int getInitialDepth() const;
 
     // -----------------------------------------------------------------------
@@ -79,11 +81,9 @@ public:
                               const unsigned int urlId,
                               const XMLCh* const elemPrefix,
                               const RefVectorOf<XMLAttr>& attrList,
-                              const unsigned int attrCount);
+                              const XMLSize_t attrCount);
     virtual void endElement(const XMLElementDecl& elemDecl,
                             const XMLCh* const elemContent);
-
-protected:
 
     enum
     {
@@ -93,6 +93,8 @@ protected:
         , XP_MATCHED_DP = 13  // matched some previous (ancestor) node on the
                               // descendant-or-self-axis, but not this node
     };
+
+protected:
 
     // -----------------------------------------------------------------------
     //  Match methods
@@ -104,6 +106,8 @@ protected:
       */
     virtual void matched(const XMLCh* const content,
                          DatatypeValidator* const dv, const bool isNil);
+
+    bool matches(const XercesNodeTest* nodeTest, const QName* qName);
 
 private:
     // -----------------------------------------------------------------------
@@ -143,14 +147,14 @@ private:
     //      selectors.
     //
     // -----------------------------------------------------------------------
-    unsigned int                     fLocationPathSize;
-    int*                             fMatched;
-    int*                             fNoMatchDepth;
-    int*                             fCurrentStep;
-    RefVectorOf<ValueStackOf<int> >* fStepIndexes;
-    RefVectorOf<XercesLocationPath>* fLocationPaths;
-    IdentityConstraint*              fIdentityConstraint;
-    MemoryManager*                   fMemoryManager;
+    XMLSize_t                               fLocationPathSize;
+    unsigned char*                          fMatched;
+    XMLSize_t*                              fNoMatchDepth;
+    XMLSize_t*                              fCurrentStep;
+    RefVectorOf<ValueStackOf<XMLSize_t> >*  fStepIndexes;
+    RefVectorOf<XercesLocationPath>*        fLocationPaths;
+    IdentityConstraint*                     fIdentityConstraint;
+    MemoryManager*                          fMemoryManager;
 };
 
 // ---------------------------------------------------------------------------

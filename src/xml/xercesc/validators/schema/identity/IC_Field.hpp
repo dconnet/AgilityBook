@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: IC_Field.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IC_Field.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-#if !defined(IC_FIELD_HPP)
-#define IC_FIELD_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_IC_FIELD_HPP)
+#define XERCESC_INCLUDE_GUARD_IC_FIELD_HPP
 
 
 // ---------------------------------------------------------------------------
@@ -61,19 +61,6 @@ public:
     XercesXPath* getXPath() const { return fXPath; }
     IdentityConstraint* getIdentityConstraint() const { return fIdentityConstraint; }
 
-    /**
-      * @deprecated
-      */
-    bool getMayMatch() const { return false; }
-
-    // -----------------------------------------------------------------------
-    //  Setter methods
-    // -----------------------------------------------------------------------
-    /**
-      * @deprecated
-      */
-    void setMayMatch(const bool) {}
-
     // -----------------------------------------------------------------------
     //  Factory methods
     // -----------------------------------------------------------------------
@@ -83,12 +70,6 @@ public:
         , ValueStore* const valueStore
         , MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager
     );
-
-    /**
-      * @deprecated
-      */
-    XPathMatcher* createMatcher(ValueStore* const valueStore,
-                                MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager);
 
     /***
      * Support for Serialization/De-serialization

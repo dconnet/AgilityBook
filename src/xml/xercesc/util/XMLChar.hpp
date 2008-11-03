@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: XMLChar.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XMLChar.hpp 558817 2007-07-23 18:12:54Z cargilld $
  */
 
-#if !defined(XMLCHAR_HPP)
-#define XMLCHAR_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XMLCHAR_HPP)
+#define XERCESC_INCLUDE_GUARD_XMLCHAR_HPP
 
 #include <xercesc/util/XMLUniDefs.hpp>
 
@@ -51,25 +51,25 @@ public:
     static bool isAllSpaces
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool containsWhiteSpace
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool isValidNmtoken
     (
         const   XMLCh*        const    toCheck
-      , const   unsigned int           count
+      , const   XMLSize_t              count
     );
 
     static bool isValidName
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool isValidName
@@ -80,13 +80,13 @@ public:
     static bool isValidNCName
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool isValidQName
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     // -----------------------------------------------------------------------
@@ -257,25 +257,25 @@ public:
     static bool isAllSpaces
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool containsWhiteSpace
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool isValidNmtoken
     (
         const   XMLCh*        const    toCheck
-      , const   unsigned int           count
+      , const   XMLSize_t              count
     );
 
     static bool isValidName
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool isValidName
@@ -286,13 +286,13 @@ public:
     static bool isValidNCName
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     static bool isValidQName
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     );
 
     // -----------------------------------------------------------------------

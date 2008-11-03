@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: ListDatatypeValidator.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ListDatatypeValidator.hpp 695949 2008-09-16 15:57:44Z borisk $
  */
 
-#if !defined(LIST_DATATYPEVALIDATOR_HPP)
-#define LIST_DATATYPEVALIDATOR_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_LIST_DATATYPEVALIDATOR_HPP)
+#define XERCESC_INCLUDE_GUARD_LIST_DATATYPEVALIDATOR_HPP
 
 #include <xercesc/validators/datatype/AbstractStringValidator.hpp>
 #include <xercesc/validators/schema/SchemaSymbols.hpp>
@@ -139,7 +139,7 @@ protected:
     virtual void checkValueSpace(const XMLCh* const content
                                 , MemoryManager* const manager);
 
-    virtual int  getLength(const XMLCh* const content
+    virtual XMLSize_t getLength(const XMLCh* const content
             , MemoryManager* const manager) const;
 
     //
@@ -171,7 +171,7 @@ private:
 // Getter methods
 // -----------------------------------------------------------------------
 
-    inline const XMLCh* const   getContent() const;
+    inline const XMLCh*         getContent() const;
 
 // -----------------------------------------------------------------------
 // Setter methods
@@ -199,7 +199,7 @@ private:
 // -----------------------------------------------------------------------
 // Getter methods
 // -----------------------------------------------------------------------
-inline const XMLCh* const ListDatatypeValidator::getContent() const
+inline const XMLCh* ListDatatypeValidator::getContent() const
 {
     return fContent;
 }

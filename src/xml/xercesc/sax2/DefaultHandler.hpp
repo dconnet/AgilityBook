@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: DefaultHandler.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: DefaultHandler.hpp 557282 2007-07-18 14:54:15Z amassari $
  */
 
-
-#ifndef DEFAULTHANDLER_HPP
-#define DEFAULTHANDLER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_DEFAULTHANDLER_HPP)
+#define XERCESC_INCLUDE_GUARD_DEFAULTHANDLER_HPP
 
 #include <xercesc/sax2/ContentHandler.hpp>
 #include <xercesc/sax2/LexicalHandler.hpp>
@@ -88,7 +87,7 @@ public:
     virtual void characters
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
   /**
@@ -145,7 +144,7 @@ public:
     virtual void ignorableWhitespace
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
   /**
@@ -460,7 +459,7 @@ public:
     virtual void comment
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
   /**
@@ -645,7 +644,7 @@ private:
 //  HandlerBase: Inline default implementations
 // ---------------------------------------------------------------------------
 inline void DefaultHandler::characters(const   XMLCh* const
-                                       ,const   unsigned int)
+                                       ,const  XMLSize_t)
 {
 }
 
@@ -670,7 +669,7 @@ inline void DefaultHandler::fatalError(const SAXParseException& exc)
 
 inline void
 DefaultHandler::ignorableWhitespace( const   XMLCh* const
-                                    , const unsigned int)
+                                    , const XMLSize_t)
 {
 }
 
@@ -748,7 +747,7 @@ inline void DefaultHandler::skippedEntity ( const	XMLCh* const)
 }
 
 inline void DefaultHandler::comment(  const   XMLCh* const
-                                       , const unsigned int)
+                                       , const XMLSize_t)
 {
 }
 

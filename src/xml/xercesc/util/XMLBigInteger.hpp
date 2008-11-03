@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: XMLBigInteger.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XMLBigInteger.hpp 557254 2007-07-18 13:28:54Z amassari $
  */
 
-#ifndef XML_BIGINTEGER_HPP
-#define XML_BIGINTEGER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XML_BIGINTEGER_HPP)
+#define XERCESC_INCLUDE_GUARD_XML_BIGINTEGER_HPP
 
 #include <xercesc/util/XMemory.hpp>
 #include <xercesc/util/XMLString.hpp>
@@ -80,18 +80,8 @@ public:
 
     void        divide(const unsigned int byteToShift);
 
-    int         getTotalDigit() const;
-
-    /**
-     *
-     *  Deprecated: please use getRawData
-     *
-     *  Return a copy of the fMagnitue.
-     *  A leading sign is ALWAYS in place and the caller of this method
-     *  is responsible for the de-allocation of the memory.
-     */
-    inline XMLCh*      toString() const;
-    
+    unsigned int       getTotalDigit() const;
+   
     /**
      *  Return a copy of the fMagnitue.
      *  This is similar to toString, except the internal buffer is returned directly
@@ -160,9 +150,9 @@ inline int XMLBigInteger::getSign() const
     return fSign;
 }
 
-inline int XMLBigInteger::getTotalDigit() const
+inline unsigned int XMLBigInteger::getTotalDigit() const
 {
-    return ((getSign() ==0) ? 0 : XMLString::stringLen(fMagnitude));
+    return ((getSign() ==0) ? 0 : (unsigned int)XMLString::stringLen(fMagnitude));
 }
 
 inline bool XMLBigInteger::operator==(const XMLBigInteger& toCompare) const
@@ -178,15 +168,6 @@ inline void XMLBigInteger::setSign(int newSign)
 inline XMLCh*  XMLBigInteger::getRawData() const
 {
     return fRawData;
-}
-
-//
-// The caller needs to de-allocate the memory allocated by this function
-//
-inline XMLCh*  XMLBigInteger::toString() const
-{
-    // Return data using global operator new
-    return XMLString::replicate(fRawData, fMemoryManager);
 }
 
 XERCES_CPP_NAMESPACE_END

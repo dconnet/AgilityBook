@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: HexBin.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: HexBin.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-#ifndef HEXBIN_HPP
-#define HEXBIN_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_HEXBIN_HPP)
+#define XERCESC_INCLUDE_GUARD_HEXBIN_HPP
 
 #include <xercesc/util/PlatformUtils.hpp>
 
@@ -73,29 +73,6 @@ public :
                     ,       MemoryManager*  const manager = XMLPlatformUtils::fgMemoryManager
                   );
 
-    /**
-     * Decodes HexBinary data into XMLCh
-     *
-     * NOTE: The returned buffer is dynamically allocated and is the
-     * responsibility of the caller to delete it when not longer needed.
-     * You can call XMLString::release to release this returned buffer.
-     *
-     * If a memory manager is provided, ask the memory manager to de-allocate
-     * the returned buffer.
-     *
-     * @param hexData HexBinary data in XMLCh stream.
-     * @param manager client provided memory manager
-     * @return Decoded binary data in XMLCh stream,
-     *      or NULL if input data can not be decoded.
-     * @see   XMLString::release(XMLCh**)
-     * @deprecated use decodeToXMLByte instead.
-     */
-
-    static XMLCh* decode(
-                         const XMLCh*          const    hexData
-                       ,       MemoryManager*  const    manager = XMLPlatformUtils::fgMemoryManager
-                        );
-
    /**
      * Decodes HexBinary data into XMLByte
      *
@@ -126,8 +103,6 @@ private :
     //  Helper methods
     // -----------------------------------------------------------------------
 
-    static void init();
-
     static bool isHex(const XMLCh& octect);
 
     // -----------------------------------------------------------------------
@@ -149,8 +124,7 @@ private :
     //     arrany holding valid hexNumber character.
     //
     // -----------------------------------------------------------------------
-    static bool       isInitialized;
-    static XMLByte    hexNumberTable[];
+    static const XMLByte    hexNumberTable[];
 };
 
 XERCES_CPP_NAMESPACE_END

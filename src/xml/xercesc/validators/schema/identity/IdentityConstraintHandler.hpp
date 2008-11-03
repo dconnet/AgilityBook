@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: IdentityConstraintHandler.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IdentityConstraintHandler.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-#if !defined(IDENTITYCONSTRAINT_HANDLER_HPP)
-#define IDENTITYCONSTRAINT_HANDLER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_IDENTITYCONSTRAINT_HANDLER_HPP)
+#define XERCESC_INCLUDE_GUARD_IDENTITYCONSTRAINT_HANDLER_HPP
 
 // ---------------------------------------------------------------------------
 //  Includes
@@ -57,7 +57,7 @@ public:
     // -----------------------------------------------------------------------
     //  Getter methods
     // -----------------------------------------------------------------------
-    inline  int          getMatcherCount() const;
+    inline  XMLSize_t    getMatcherCount() const;
 
 	// -----------------------------------------------------------------------
     //  Setter methods
@@ -81,7 +81,7 @@ public:
                              , const unsigned int                 uriId
                              , const XMLCh*                 const elemPrefix
                              , const RefVectorOf<XMLAttr>&        attrList
-                             , const unsigned int                 attrCount
+                             , const XMLSize_t                    attrCount
                                );
 
             void         reset();
@@ -143,7 +143,7 @@ void  IdentityConstraintHandler::endDocument()
 }
 
 inline
-int  IdentityConstraintHandler::getMatcherCount() const
+XMLSize_t IdentityConstraintHandler::getMatcherCount() const
 {
     return fMatcherStack->getMatcherCount();
 }

@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: ValidationContextImpl.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ValidationContextImpl.cpp 577322 2007-09-19 14:58:04Z cargilld $
  */
 
 
@@ -28,6 +28,7 @@
 #include <xercesc/validators/DTD/DTDEntityDecl.hpp>
 #include <xercesc/validators/datatype/InvalidDatatypeValueException.hpp>
 #include <xercesc/internal/ElemStack.hpp>
+#include <xercesc/internal/XMLScanner.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -48,6 +49,7 @@ ValidationContextImpl::ValidationContextImpl(MemoryManager* const manager)
 ,fToCheckIdRefList(true)
 ,fValidatingMemberType(0)
 ,fElemStack(0)
+,fScanner(0)
 {
     fIdRefList = new (fMemoryManager) RefHashTableOf<XMLRefInfo>(109, fMemoryManager);
 }
@@ -186,9 +188,19 @@ bool ValidationContextImpl::isPrefixUnknown(XMLCh* prefix) {
         return true;                
     }            
     else if (!XMLString::equals(prefix, XMLUni::fgXMLString)) {
-        unsigned int uriId = fElemStack->mapPrefixToURI(prefix, (ElemStack::MapModes) ElemStack::Mode_Element, unknown);                
+        fElemStack->mapPrefixToURI(prefix, (ElemStack::MapModes) ElemStack::Mode_Element, unknown);                
     }                
     return unknown;
+}
+
+const XMLCh* ValidationContextImpl::getURIForPrefix(XMLCh* prefix) { 
+    bool unknown = false;
+    unsigned int uriId = fElemStack->mapPrefixToURI(prefix, (ElemStack::MapModes) ElemStack::Mode_Element, unknown);
+    if (!unknown) {
+        return fScanner->getURIText(uriId);
+    }
+    
+    return XMLUni::fgZeroLenString; 
 }
 
 XERCES_CPP_NAMESPACE_END

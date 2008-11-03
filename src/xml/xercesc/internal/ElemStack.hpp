@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: ElemStack.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ElemStack.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-#if !defined(ELEMSTACK_HPP)
-#define ELEMSTACK_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_ELEMSTACK_HPP)
+#define XERCESC_INCLUDE_GUARD_ELEMSTACK_HPP
 
 #include <xercesc/util/StringPool.hpp>
 #include <xercesc/util/QName.hpp>
@@ -99,24 +99,24 @@ public :
     struct StackElem : public XMemory
     {
         XMLElementDecl*     fThisElement;
-        unsigned int        fReaderNum;
+        XMLSize_t           fReaderNum;
 
-        unsigned int        fChildCapacity;
-        unsigned int        fChildCount;
+        XMLSize_t           fChildCapacity;
+        XMLSize_t           fChildCount;
         QName**             fChildren;
 
         PrefMapElem*        fMap;
-        unsigned int        fMapCapacity;
-        unsigned int        fMapCount;
+        XMLSize_t           fMapCapacity;
+        XMLSize_t           fMapCount;
 
         bool                fValidationFlag;
         bool                fCommentOrPISeen;
         bool                fReferenceEscaped;
-        int                 fCurrentScope;
+        unsigned int        fCurrentScope;
         Grammar*            fCurrentGrammar;
         unsigned int        fCurrentURI;
         XMLCh *             fSchemaElemName;
-        unsigned int        fSchemaElemNameMaxLen;
+        XMLSize_t           fSchemaElemNameMaxLen;
         
         int                 fPrefixColonPos;
     };
@@ -139,16 +139,16 @@ public :
     //  Stack access
     // -----------------------------------------------------------------------
     unsigned int addLevel();
-    unsigned int addLevel(XMLElementDecl* const toSet, const unsigned int readerNum);
+    unsigned int addLevel(XMLElementDecl* const toSet, const XMLSize_t readerNum);
     const StackElem* popTop();
 
 
     // -----------------------------------------------------------------------
     //  Stack top access
     // -----------------------------------------------------------------------
-    unsigned int addChild(QName* const child, const bool toParent);
+    XMLSize_t addChild(QName* const child, const bool toParent);
     const StackElem* topElement() const;
-    void setElement(XMLElementDecl* const toSet, const unsigned int readerNum);
+    void setElement(XMLElementDecl* const toSet, const XMLSize_t readerNum);
 
     void setValidationFlag(bool validationFlag);
     bool getValidationFlag();
@@ -204,6 +204,7 @@ public :
         , const unsigned int    xmlNSId
     );
 
+    unsigned int getEmptyNamespaceId();
 
 private :
     // -----------------------------------------------------------------------
@@ -263,7 +264,7 @@ private :
     unsigned int                 fGlobalPoolId;
     XMLStringPool                fPrefixPool;
     StackElem**                  fStack;
-    unsigned int                 fStackCapacity;
+    XMLSize_t                    fStackCapacity;
     unsigned int                 fStackTop;
     unsigned int                 fUnknownNamespaceId;
     unsigned int                 fXMLNamespaceId;
@@ -492,7 +493,7 @@ inline void ElemStack::setReferenceEscaped()
 
 inline void ElemStack::setCurrentSchemaElemName(const XMLCh * const schemaElemName)
 {
-    unsigned int schemaElemNameLen = XMLString::stringLen(schemaElemName);
+    XMLSize_t schemaElemNameLen = XMLString::stringLen(schemaElemName);
     unsigned int stackPos = fStackTop-1;
     
     if(fStack[stackPos]->fSchemaElemNameMaxLen <= schemaElemNameLen)
@@ -560,6 +561,10 @@ inline void ElemStack::setPrefixColonPos(int colonPos)
  
 inline int ElemStack::getPrefixColonPos() const {
     return fStack[fStackTop-1]->fPrefixColonPos;
+}
+
+inline unsigned int ElemStack::getEmptyNamespaceId() {
+    return fEmptyNamespaceId;
 }
 
 // ---------------------------------------------------------------------------

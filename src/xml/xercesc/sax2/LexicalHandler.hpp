@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: LexicalHandler.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: LexicalHandler.hpp 557282 2007-07-18 14:54:15Z amassari $
  */
 
-
-#ifndef LEXICALHANDLER_HPP
-#define LEXICALHANDLER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_LEXICALHANDLER_HPP)
+#define XERCESC_INCLUDE_GUARD_LEXICALHANDLER_HPP
 
 #include <xercesc/util/XercesDefs.hpp>
 
@@ -80,7 +79,7 @@ public:
     virtual void comment
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     ) = 0;
 
   /**

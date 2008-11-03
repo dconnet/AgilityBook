@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: ErrorHandler.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ErrorHandler.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-
-#ifndef ERRORHANDLER_HPP
-#define ERRORHANDLER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_ERRORHANDLER_HPP)
+#define XERCESC_INCLUDE_GUARD_ERRORHANDLER_HPP
 
 #include <xercesc/util/XercesDefs.hpp>
 

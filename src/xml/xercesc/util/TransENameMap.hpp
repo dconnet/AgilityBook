@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
+/*
+ * $Id: TransENameMap.hpp 570552 2007-08-28 19:57:36Z amassari $
+ */
 
-#if !defined(TRANSENAMEMAP_HPP)
-#define TRANSENAMEMAP_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_TRANSENAMEMAP_HPP)
+#define XERCESC_INCLUDE_GUARD_TRANSENAMEMAP_HPP
 
 #include <xercesc/util/TransService.hpp>
 #include <xercesc/util/XMLString.hpp>
@@ -48,7 +51,7 @@ public :
     // -----------------------------------------------------------------------
     virtual XMLTranscoder* makeNew
     (
-        const   unsigned int    blockSize
+        const   XMLSize_t       blockSize
         , MemoryManager*  const manager = XMLPlatformUtils::fgMemoryManager
     )   const = 0;
 
@@ -105,7 +108,7 @@ public :
     // -----------------------------------------------------------------------
     //  Implementation of virtual factory method
     // -----------------------------------------------------------------------
-    virtual XMLTranscoder* makeNew(const unsigned int blockSize,
+    virtual XMLTranscoder* makeNew(const XMLSize_t      blockSize,
                                    MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager) const;
 
 
@@ -132,7 +135,7 @@ public :
     // -----------------------------------------------------------------------
     //  Implementation of virtual factory method
     // -----------------------------------------------------------------------
-    virtual XMLTranscoder* makeNew(const unsigned int blockSize,
+    virtual XMLTranscoder* makeNew(const XMLSize_t      blockSize,
                                    MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager) const;
 
 

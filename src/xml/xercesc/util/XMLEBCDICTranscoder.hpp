@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-#ifndef XMLEBCDICTRANSCODER_HPP
-#define XMLEBCDICTRANSCODER_HPP
+/*
+ * $Id: XMLEBCDICTranscoder.hpp 570552 2007-08-28 19:57:36Z amassari $
+ */
+
+#if !defined(XERCESC_INCLUDE_GUARD_XMLEBCDICTRANSCODER_HPP)
+#define XERCESC_INCLUDE_GUARD_XMLEBCDICTRANSCODER_HPP
 
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/util/XML256TableTranscoder.hpp>
@@ -47,8 +51,8 @@ public :
     // -----------------------------------------------------------------------
     XMLEBCDICTranscoder
     (
-        const   XMLCh* const    encodingName
-        , const unsigned int    blockSize
+        const   XMLCh* const   encodingName
+        , const XMLSize_t      blockSize
         , MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager
     );
 

@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: ICUMsgLoader.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ICUMsgLoader.hpp 570552 2007-08-28 19:57:36Z amassari $
  */
 
-
-#if !defined(ICUMSGLOADER_HPP)
-#define ICUMSGLOADER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_ICUMSGLOADER_HPP)
+#define XERCESC_INCLUDE_GUARD_ICUMSGLOADER_HPP
 
 #include <xercesc/util/XMLMsgLoader.hpp>
 #include "unicode/ures.h"
@@ -49,14 +48,14 @@ public :
     (
         const   XMLMsgLoader::XMLMsgId  msgToLoad
         ,       XMLCh* const            toFill
-        , const unsigned int           maxChars
+        , const XMLSize_t               maxChars
     );
 
     virtual bool loadMsg
     (
         const   XMLMsgLoader::XMLMsgId  msgToLoad
         ,       XMLCh* const            toFill
-        , const unsigned int            maxChars
+        , const XMLSize_t               maxChars
         , const XMLCh* const            repText1
         , const XMLCh* const            repText2 = 0
         , const XMLCh* const            repText3 = 0
@@ -68,7 +67,7 @@ public :
     (
         const   XMLMsgLoader::XMLMsgId  msgToLoad
         ,       XMLCh* const            toFill
-        , const unsigned int            maxChars
+        , const XMLSize_t               maxChars
         , const char* const             repText1
         , const char* const             repText2 = 0
         , const char* const             repText3 = 0

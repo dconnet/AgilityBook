@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "_CRTDBG_MAP_ALLOC" /D "PROJ_SAX2" /D "PROJ_XMLPARSER" /D "PROJ_XMLUTIL" /D "PROJ_PARSERS" /D "PROJ_SAX4C" /D "PROJ_DOM" /D "PROJ_VALIDATORS" /D "XML_USE_WIN32_TRANSCODER" /D "XML_USE_INMEM_MESSAGELOADER" /D "XML_USE_NETACCESSOR_WINSOCK" /D "XML_LIBRARY" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "_CRTDBG_MAP_ALLOC" /D "XERCES_STATIC_LIBRARY" /D "XERCES_BUILDING_LIBRARY" /D "XERCES_USE_TRANSCODER_WINDOWS" /D "XERCES_USE_MSGLOADER_INMEMORY" /D "XERCES_USE_NETACCESSOR_WINSOCK" /D "XERCES_USE_FILEMGR_WINDOWS" /D "XERCES_USE_MUTEXMGR_WINDOWS" /D "XERCES_PATH_DELIMITER_BACKSLASH" /D "HAVE_STRICMP" /D "HAVE_STRNICMP" /D "HAVE_LIMITS_H" /D "HAVE_SYS_TIMEB_H" /D "HAVE_FTIME" /D "HAVE_WCSUPR" /D "HAVE_WCSLWR" /D "HAVE_WCSICMP" /D "HAVE_WCSNICMP" /FD /GZ /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -67,7 +67,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "_CRTDBG_MAP_ALLOC" /D "PROJ_SAX2" /D "PROJ_XMLPARSER" /D "PROJ_XMLUTIL" /D "PROJ_PARSERS" /D "PROJ_SAX4C" /D "PROJ_DOM" /D "PROJ_VALIDATORS" /D "XML_USE_WIN32_TRANSCODER" /D "XML_USE_INMEM_MESSAGELOADER" /D "XML_USE_NETACCESSOR_WINSOCK" /D "XML_LIBRARY" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\xml" /D "WIN32" /D "_WINDOWS" /D "NDEBUG" /D "_MBCS" /D "_LIB" /D "_CRTDBG_MAP_ALLOC" /D "XERCES_STATIC_LIBRARY" /D "XERCES_BUILDING_LIBRARY" /D "XERCES_USE_TRANSCODER_WINDOWS" /D "XERCES_USE_MSGLOADER_INMEMORY" /D "XERCES_USE_NETACCESSOR_WINSOCK" /D "XERCES_USE_FILEMGR_WINDOWS" /D "XERCES_USE_MUTEXMGR_WINDOWS" /D "XERCES_PATH_DELIMITER_BACKSLASH" /D "HAVE_STRICMP" /D "HAVE_STRNICMP" /D "HAVE_LIMITS_H" /D "HAVE_SYS_TIMEB_H" /D "HAVE_FTIME" /D "HAVE_WCSUPR" /D "HAVE_WCSLWR" /D "HAVE_WCSICMP" /D "HAVE_WCSNICMP" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -92,20 +92,7 @@ LIB32=link.exe -lib
 # PROP Default_Filter ".cpp,.hpp"
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\Platforms\Win32\resource.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\Compilers\VCPPDefs.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\Platforms\Win32\Win32Defs.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\Platforms\Win32\Win32PlatformUtils.cpp
-# ADD CPP /Ze
+SOURCE=..\..\xml\xercesc\util\Xerces_autoconf_config.msvc.hpp
 # End Source File
 # End Group
 # Begin Group "MsgLoaders"
@@ -130,7 +117,6 @@ SOURCE=..\..\xml\xercesc\util\MsgLoaders\InMemory\XercesMessages_en_US.hpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\Transcoders\Win32\Win32TransService.cpp
-# ADD CPP /Ze
 # End Source File
 # Begin Source File
 
@@ -142,8 +128,15 @@ SOURCE=..\..\xml\xercesc\util\Transcoders\Win32\Win32TransService.hpp
 # PROP Default_Filter ".cpp,.hpp"
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\util\NetAccessors\BinHTTPInputStreamCommon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\NetAccessors\BinHTTPInputStreamCommon.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\util\NetAccessors\WinSock\BinHTTPURLInputStream.cpp
-# ADD CPP /Ze
 # End Source File
 # Begin Source File
 
@@ -152,7 +145,6 @@ SOURCE=..\..\xml\xercesc\util\NetAccessors\WinSock\BinHTTPURLInputStream.hpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\NetAccessors\WinSock\WinSockNetAccessor.cpp
-# ADD CPP /Ze
 # End Source File
 # Begin Source File
 
@@ -212,27 +204,11 @@ SOURCE=..\..\xml\xercesc\util\regx\ConcatToken.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\regx\ConditionToken.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\regx\ConditionToken.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\xml\xercesc\util\regx\Match.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\regx\Match.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\regx\ModifierToken.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\regx\ModifierToken.hpp
 # End Source File
 # Begin Source File
 
@@ -383,6 +359,30 @@ SOURCE=..\..\xml\xercesc\util\regx\XMLUniCharacter.cpp
 SOURCE=..\..\xml\xercesc\util\regx\XMLUniCharacter.hpp
 # End Source File
 # End Group
+# Begin Group "FileManager"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\FileManagers\WindowsFileMgr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\FileManagers\WindowsFileMgr.hpp
+# End Source File
+# End Group
+# Begin Group "MutexManager"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\MutexManagers\WindowsMutexMgr.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\MutexManagers\WindowsMutexMgr.hpp
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\ArrayIndexOutOfBoundsException.hpp
@@ -479,31 +479,7 @@ SOURCE=..\..\xml\xercesc\util\FlagJanitor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\HashBase.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\HashCMStateSet.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\HashPtr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\HashPtr.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\HashXMLCh.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\HashXMLCh.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\HeaderDummy.cpp
+SOURCE=..\..\xml\xercesc\util\Hashers.hpp
 # End Source File
 # Begin Source File
 
@@ -545,6 +521,11 @@ SOURCE=..\..\xml\xercesc\util\KeyRefPair.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\util\KeyValuePair.c
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\util\KeyValuePair.hpp
 # End Source File
 # Begin Source File
@@ -554,11 +535,6 @@ SOURCE=..\..\xml\xercesc\util\KVStringPair.cpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\KVStringPair.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\LogicalPath.c
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -612,6 +588,14 @@ SOURCE=..\..\xml\xercesc\util\PlatformUtils.cpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\PlatformUtils.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\PSVIUni.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\util\PSVIUni.hpp
 # End Source File
 # Begin Source File
 
@@ -778,6 +762,43 @@ SOURCE=..\..\xml\xercesc\util\ValueVectorOf.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\util\Xerces_autoconf_config.hpp
+
+!IF  "$(CFG)" == "XercesLib - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__XERCE="$(InputDir)\$(InputName).msvc.hpp"	
+# Begin Custom Build
+InputDir=\Xerces\Xerces-C\xml\xercesc\util
+InputPath=..\..\xml\xercesc\util\Xerces_autoconf_config.hpp
+InputName=Xerces_autoconf_config
+
+"$(InputPath)" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	echo copy "$(InputDir)\$(InputName).msvc.hpp" "$(InputPath)" 
+	copy "$(InputDir)\$(InputName).msvc.hpp" "$(InputPath)" 
+	
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "XercesLib - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__XERCE="$(InputDir)\$(InputName).msvc.hpp"	
+# Begin Custom Build
+InputDir=\Xerces\Xerces-C\xml\xercesc\util
+InputPath=..\..\xml\xercesc\util\Xerces_autoconf_config.hpp
+InputName=Xerces_autoconf_config
+
+"$(InputPath)" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	echo copy "$(InputDir)\$(InputName).msvc.hpp" "$(InputPath)" 
+	copy "$(InputDir)\$(InputName).msvc.hpp" "$(InputPath)" 
+	
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\util\XercesDefs.hpp
 # End Source File
 # Begin Source File
@@ -866,10 +887,6 @@ SOURCE=..\..\xml\xercesc\util\XMLDateTime.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\XMLDeleterFor.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\xml\xercesc\util\XMLDOMMsg.hpp
 # End Source File
 # Begin Source File
@@ -910,16 +927,15 @@ SOURCE=..\..\xml\xercesc\util\XMLExceptMsgs.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\util\XMLFileMgr.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\util\XMLFloat.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\XMLFloat.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\XMLHolder.c
-# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
@@ -963,6 +979,10 @@ SOURCE=..\..\xml\xercesc\util\XMLMsgLoader.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\util\XMLMutexMgr.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\util\XMLNetAccessor.hpp
 # End Source File
 # Begin Source File
@@ -972,14 +992,6 @@ SOURCE=..\..\xml\xercesc\util\XMLNumber.cpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\util\XMLNumber.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\XMLRegisterCleanup.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\util\XMLRegisterCleanup.hpp
 # End Source File
 # Begin Source File
 
@@ -1003,11 +1015,11 @@ SOURCE=..\..\xml\xercesc\util\XMLStringTokenizer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\XMLUCS4Transcoder.hpp
+SOURCE=..\..\xml\xercesc\util\XMLUCS4Transcoder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\util\XMLUCSTranscoder.cpp
+SOURCE=..\..\xml\xercesc\util\XMLUCS4Transcoder.hpp
 # End Source File
 # Begin Source File
 
@@ -1352,11 +1364,11 @@ SOURCE=..\..\xml\xercesc\framework\ValidationContext.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\framework\Wrapper4DOMInputSource.cpp
+SOURCE=..\..\xml\xercesc\framework\Wrapper4DOMLSInput.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\framework\Wrapper4DOMInputSource.hpp
+SOURCE=..\..\xml\xercesc\framework\Wrapper4DOMLSInput.hpp
 # End Source File
 # Begin Source File
 
@@ -1476,6 +1488,14 @@ SOURCE=..\..\xml\xercesc\framework\XMLGrammarPool.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\framework\XMLGrammarPoolImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\framework\XMLGrammarPoolImpl.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\framework\XMLNotationDecl.cpp
 # End Source File
 # Begin Source File
@@ -1584,14 +1604,6 @@ SOURCE=..\..\xml\xercesc\internal\IGXMLScanner2.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\internal\MemoryManagerArrayImpl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\internal\MemoryManagerArrayImpl.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\xml\xercesc\internal\MemoryManagerImpl.cpp
 # End Source File
 # Begin Source File
@@ -1645,14 +1657,6 @@ SOURCE=..\..\xml\xercesc\internal\WFXMLScanner.cpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\internal\WFXMLScanner.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\internal\XMLGrammarPoolImpl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\internal\XMLGrammarPoolImpl.hpp
 # End Source File
 # Begin Source File
 
@@ -1808,11 +1812,11 @@ SOURCE=..\..\xml\xercesc\parsers\AbstractDOMParser.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\parsers\DOMBuilderImpl.cpp
+SOURCE=..\..\xml\xercesc\parsers\DOMLSParserImpl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\parsers\DOMBuilderImpl.hpp
+SOURCE=..\..\xml\xercesc\parsers\DOMLSParserImpl.hpp
 # End Source File
 # Begin Source File
 
@@ -1880,6 +1884,10 @@ SOURCE=..\..\xml\xercesc\validators\common\CMBinaryOp.hpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\validators\common\CMLeaf.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\validators\common\CMRepeatingLeaf.hpp
 # End Source File
 # Begin Source File
 
@@ -2812,6 +2820,14 @@ SOURCE=..\..\xml\xercesc\dom\impl\DOMImplementationimpl.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\dom\impl\DOMImplementationListImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMImplementationListImpl.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\dom\impl\DOMImplementationRegistry.cpp
 # End Source File
 # Begin Source File
@@ -2821,6 +2837,30 @@ SOURCE=..\..\xml\xercesc\dom\impl\DOMLocatorImpl.cpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\dom\impl\DOMLocatorImpl.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMLSInputImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMLSInputImpl.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMLSOutputImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMLSOutputImpl.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMLSSerializerImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMLSSerializerImpl.hpp
 # End Source File
 # Begin Source File
 
@@ -2912,6 +2952,14 @@ SOURCE=..\..\xml\xercesc\dom\impl\DOMRangeImpl.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\dom\impl\DOMStringListImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMStringListImpl.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\dom\impl\DOMStringPool.cpp
 # End Source File
 # Begin Source File
@@ -2944,11 +2992,27 @@ SOURCE=..\..\xml\xercesc\dom\impl\DOMTypeInfoImpl.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\dom\impl\DOMWriterImpl.cpp
+SOURCE=..\..\xml\xercesc\dom\impl\DOMXPathExpressionImpl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\dom\impl\DOMWriterImpl.hpp
+SOURCE=..\..\xml\xercesc\dom\impl\DOMXPathExpressionImpl.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMXPathNSResolverImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMXPathNSResolverImpl.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMXPathResultImpl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\impl\DOMXPathResultImpl.hpp
 # End Source File
 # Begin Source File
 
@@ -2966,10 +3030,6 @@ SOURCE=..\..\xml\xercesc\dom\DOM.hpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\dom\DOMAttr.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\dom\DOMBuilder.hpp
 # End Source File
 # Begin Source File
 
@@ -3021,10 +3081,6 @@ SOURCE=..\..\xml\xercesc\dom\DOMEntityReference.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\dom\DOMEntityResolver.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\xml\xercesc\dom\DOMError.hpp
 # End Source File
 # Begin Source File
@@ -3045,6 +3101,10 @@ SOURCE=..\..\xml\xercesc\dom\DOMImplementation.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\dom\DOMImplementationList.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\dom\DOMImplementationLS.hpp
 # End Source File
 # Begin Source File
@@ -3057,11 +3117,47 @@ SOURCE=..\..\xml\xercesc\dom\DOMImplementationSource.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\dom\DOMInputSource.hpp
+SOURCE=..\..\xml\xercesc\dom\DOMLocator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\xml\xercesc\dom\DOMLocator.hpp
+SOURCE=..\..\xml\xercesc\dom\DOMLSException.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSException.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSInput.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSOutput.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSParser.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSParserFilter.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSResourceResolver.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSSerializer.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMLSSerializerFilter.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\dom\DOMMemoryManager.hpp
 # End Source File
 # Begin Source File
 
@@ -3109,6 +3205,10 @@ SOURCE=..\..\xml\xercesc\dom\DOMRangeException.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\xml\xercesc\dom\DOMStringList.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\xml\xercesc\dom\DOMText.hpp
 # End Source File
 # Begin Source File
@@ -3122,14 +3222,6 @@ SOURCE=..\..\xml\xercesc\dom\DOMTypeInfo.hpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\dom\DOMUserDataHandler.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\dom\DOMWriter.hpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\xml\xercesc\dom\DOMWriterFilter.hpp
 # End Source File
 # Begin Source File
 
@@ -3162,6 +3254,34 @@ SOURCE=..\..\xml\xercesc\dom\DOMXPathResult.hpp
 # Begin Source File
 
 SOURCE=..\..\xml\xercesc\dom\StDOMNode.hpp
+# End Source File
+# End Group
+# Begin Group "xinclude"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\xinclude\XIncludeDOMDocumentProcessor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\xinclude\XIncludeDOMDocumentProcessor.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\xinclude\XIncludeLocation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\xinclude\XIncludeLocation.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\xinclude\XIncludeUtils.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\xml\xercesc\xinclude\XIncludeUtils.hpp
 # End Source File
 # End Group
 # End Target
