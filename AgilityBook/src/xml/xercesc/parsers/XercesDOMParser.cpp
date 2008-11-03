@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,7 +20,7 @@
 *  handler with the scanner. In these handler methods, appropriate DOM nodes
 *  are created and added to the DOM tree.
 *
-* $Id: XercesDOMParser.cpp 568078 2007-08-21 11:43:25Z amassari $
+* $Id: XercesDOMParser.cpp 673944 2008-07-04 07:53:16Z borisk $
 *
 */
 
@@ -94,7 +94,7 @@ const XMLCh* XercesDOMParser::getURIText(unsigned int uriId) const
     return getScanner()->getURIText(uriId);
 }
 
-unsigned int XercesDOMParser::getSrcOffset() const
+XMLFilePos XercesDOMParser::getSrcOffset() const
 {
     return getScanner()->getSrcOffset();
 }
@@ -182,8 +182,8 @@ void XercesDOMParser::error( const   unsigned int
                              , const XMLCh* const                errorText
                              , const XMLCh* const                systemId
                              , const XMLCh* const                publicId
-                             , const XMLSSize_t                  lineNum
-                             , const XMLSSize_t                  colNum)
+                             , const XMLFileLoc                  lineNum
+                             , const XMLFileLoc                  colNum)
 {
     SAXParseException toThrow = SAXParseException
         (
@@ -223,20 +223,6 @@ void XercesDOMParser::resetErrors()
 //  XercesDOMParser: Implementation of XMLEntityHandler interface
 // ---------------------------------------------------------------------------
 InputSource*
-XercesDOMParser::resolveEntity(const XMLCh* const publicId,
-                               const XMLCh* const systemId,
-                               const XMLCh* const)
-{
-    //
-    //  Just map it to the SAX entity resolver. If there is not one installed,
-    //  return a null pointer to cause the default resolution.
-    //
-    if (fEntityResolver)
-        return fEntityResolver->resolveEntity(publicId, systemId);
-    return 0;
-}
-
-InputSource*
 XercesDOMParser::resolveEntity(XMLResourceIdentifier* resourceIdentifier)
 {
     //
@@ -244,7 +230,7 @@ XercesDOMParser::resolveEntity(XMLResourceIdentifier* resourceIdentifier)
     //  return a null pointer to cause the default resolution.
     //
     if (fEntityResolver)
-        return fEntityResolver->resolveEntity(resourceIdentifier->getPublicId(), 
+        return fEntityResolver->resolveEntity(resourceIdentifier->getPublicId(),
                                                 resourceIdentifier->getSystemId());
     if (fXMLEntityResolver)
         return fXMLEntityResolver->resolveEntity(resourceIdentifier);
@@ -258,7 +244,7 @@ typedef JanitorMemFunCall<XercesDOMParser>  ResetParseType;
 //  XercesDOMParser: Grammar preparsing methods
 // ---------------------------------------------------------------------------
 Grammar* XercesDOMParser::loadGrammar(const char* const systemId,
-                                      const short grammarType,
+                                      const Grammar::GrammarType grammarType,
                                       const bool toCache)
 {
     // Avoid multiple entrance
@@ -272,7 +258,7 @@ Grammar* XercesDOMParser::loadGrammar(const char* const systemId,
     try
     {
         setParseInProgress(true);
-        if (grammarType == Grammar::DTDGrammarType) 
+        if (grammarType == Grammar::DTDGrammarType)
             getScanner()->setDocTypeHandler(0);
         grammar = getScanner()->loadGrammar(systemId, grammarType, toCache);
     }
@@ -287,7 +273,7 @@ Grammar* XercesDOMParser::loadGrammar(const char* const systemId,
 }
 
 Grammar* XercesDOMParser::loadGrammar(const XMLCh* const systemId,
-                                      const short grammarType,
+                                      const Grammar::GrammarType grammarType,
                                       const bool toCache)
 {
     // Avoid multiple entrance
@@ -301,7 +287,7 @@ Grammar* XercesDOMParser::loadGrammar(const XMLCh* const systemId,
     try
     {
         setParseInProgress(true);
-        if (grammarType == Grammar::DTDGrammarType) 
+        if (grammarType == Grammar::DTDGrammarType)
             getScanner()->setDocTypeHandler(0);
         grammar = getScanner()->loadGrammar(systemId, grammarType, toCache);
     }
@@ -316,7 +302,7 @@ Grammar* XercesDOMParser::loadGrammar(const XMLCh* const systemId,
 }
 
 Grammar* XercesDOMParser::loadGrammar(const InputSource& source,
-                                      const short grammarType,
+                                      const Grammar::GrammarType grammarType,
                                       const bool toCache)
 {
     // Avoid multiple entrance
@@ -330,7 +316,7 @@ Grammar* XercesDOMParser::loadGrammar(const InputSource& source,
     try
     {
         setParseInProgress(true);
-        if (grammarType == Grammar::DTDGrammarType) 
+        if (grammarType == Grammar::DTDGrammarType)
             getScanner()->setDocTypeHandler(0);
         grammar = getScanner()->loadGrammar(source, grammarType, toCache);
     }
@@ -360,4 +346,3 @@ void XercesDOMParser::resetCachedGrammarPool()
 }
 
 XERCES_CPP_NAMESPACE_END
-

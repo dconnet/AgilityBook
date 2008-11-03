@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: ValueStoreCache.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ValueStoreCache.cpp 679340 2008-07-24 10:28:29Z borisk $
  */
 
 // ---------------------------------------------------------------------------
@@ -25,7 +25,6 @@
 #include <xercesc/validators/schema/identity/ValueStoreCache.hpp>
 #include <xercesc/validators/schema/identity/ValueStore.hpp>
 #include <xercesc/validators/schema/SchemaElementDecl.hpp>
-#include <xercesc/util/HashPtr.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
@@ -78,11 +77,10 @@ void ValueStoreCache::startDocument() {
 void ValueStoreCache::startElement() {
 
     fGlobalMapStack->push(fGlobalICMap);
-    fGlobalICMap = new (fMemoryManager) RefHashTableOf<ValueStore>
+    fGlobalICMap = new (fMemoryManager) RefHashTableOf<ValueStore, PtrHasher>
     (
         13
         , false
-        , new (fMemoryManager) HashPtr()
         , fMemoryManager
     );
 }
@@ -93,8 +91,8 @@ void ValueStoreCache::endElement() {
         return; // must be an invalid doc!
     }
 
-    RefHashTableOf<ValueStore>* oldMap = fGlobalMapStack->pop();
-    RefHashTableOfEnumerator<ValueStore> mapEnum(oldMap, false, fMemoryManager);
+    RefHashTableOf<ValueStore, PtrHasher>* oldMap = fGlobalMapStack->pop();
+    RefHashTableOfEnumerator<ValueStore, PtrHasher> mapEnum(oldMap, false, fMemoryManager);
 //    Janitor<RefHashTableOf<ValueStore> > janMap(oldMap);
 
     while (mapEnum.hasMoreElements()) {
@@ -127,30 +125,28 @@ void ValueStoreCache::cleanUp() {
 void ValueStoreCache::init() {
 
     fValueStores = new (fMemoryManager) RefVectorOf<ValueStore>(8, true, fMemoryManager);
-    fGlobalICMap = new (fMemoryManager) RefHashTableOf<ValueStore>
+    fGlobalICMap = new (fMemoryManager) RefHashTableOf<ValueStore, PtrHasher>
     (
         13
         , false
-        , new (fMemoryManager) HashPtr()
         , fMemoryManager
     );
-    fIC2ValueStoreMap = new (fMemoryManager) RefHash2KeysTableOf<ValueStore>
+    fIC2ValueStoreMap = new (fMemoryManager) RefHash2KeysTableOf<ValueStore, PtrHasher>
     (
         13
         , false
-        , new (fMemoryManager) HashPtr()
         , fMemoryManager
     );
-    fGlobalMapStack = new (fMemoryManager) RefStackOf<RefHashTableOf<ValueStore> >(8, true, fMemoryManager);
+    fGlobalMapStack = new (fMemoryManager) RefStackOf<RefHashTableOf<ValueStore, PtrHasher> >(8, true, fMemoryManager);
 }
 
 void ValueStoreCache::initValueStoresFor(SchemaElementDecl* const elemDecl,
                                          const int initialDepth) {
 
     // initialize value stores for unique fields
-    unsigned int icCount = elemDecl->getIdentityConstraintCount();
+    XMLSize_t icCount = elemDecl->getIdentityConstraintCount();
 
-    for (unsigned int i=0; i<icCount; i++) {
+    for (XMLSize_t i=0; i<icCount; i++) {
 
         IdentityConstraint* ic = elemDecl->getIdentityConstraintAt(i);
         ValueStore* valueStore = new (fMemoryManager) ValueStore(ic, fScanner, fMemoryManager);
@@ -161,7 +157,7 @@ void ValueStoreCache::initValueStoresFor(SchemaElementDecl* const elemDecl,
 
 void ValueStoreCache::transplant(IdentityConstraint* const ic, const int initialDepth) {
 
-    if (ic->getType() == IdentityConstraint::KEYREF) {
+    if (ic->getType() == IdentityConstraint::ICType_KEYREF) {
         return;
     }
 
@@ -183,4 +179,3 @@ XERCES_CPP_NAMESPACE_END
 /**
   * End of file ValueStoreCache.cpp
   */
-

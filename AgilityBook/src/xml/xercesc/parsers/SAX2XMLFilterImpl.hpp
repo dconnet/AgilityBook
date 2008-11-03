@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: SAX2XMLFilterImpl.hpp 569031 2007-08-23 15:05:28Z amassari $
+ * $Id: SAX2XMLFilterImpl.hpp 673975 2008-07-04 09:23:56Z borisk $
  */
 
-#if !defined(SAX2XMLFilterImpl_HPP)
-#define SAX2XMLFilterImpl_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_SAX2XMLFILTERIMPL_HPP)
+#define XERCESC_INCLUDE_GUARD_SAX2XMLFILTERIMPL_HPP
 
 #include <xercesc/sax2/SAX2XMLFilter.hpp>
 #include <xercesc/sax/EntityResolver.hpp>
@@ -37,7 +37,7 @@ XERCES_CPP_NAMESPACE_BEGIN
   *
   */
 
-class PARSERS_EXPORT SAX2XMLFilterImpl : 
+class PARSERS_EXPORT SAX2XMLFilterImpl :
     public SAX2XMLFilter
     , public EntityResolver
     , public DTDHandler
@@ -53,7 +53,7 @@ public :
     /** The default constructor */
 	SAX2XMLFilterImpl(SAX2XMLReader* parent);
 
-    /** The destructor */	
+    /** The destructor */
 	~SAX2XMLFilterImpl() ;
    //@}
 
@@ -176,7 +176,7 @@ public :
     * @see DefaultHandler#DefaultHandler
     */
     virtual void setEntityResolver(EntityResolver* const resolver) ;
-    
+
   /**
     * Allow an application to register an error event handler.
     *
@@ -208,10 +208,10 @@ public :
     * <br>http://apache.org/xml/features/validation/reuse-grammar (default: false)
     * <br>http://apache.org/xml/features/validation/schema (default: true)
     * <br>http://apache.org/xml/features/validation/schema-full-checking (default: false)
+    * <br>http://apache.org/xml/features/validating/load-schema (default: true)
     * <br>http://apache.org/xml/features/nonvalidating/load-external-dtd (default: true)
     * <br>http://apache.org/xml/features/continue-after-fatal-error (default: false)
     * <br>http://apache.org/xml/features/validation-error-as-fatal (default: false)
-    * <br>http://apache.org/xml/features/validation/reuse-validator (Deprecated) (default: false)
     *
     * @param name The unique identifier (URI) of the feature.
     * @param value The requested state of the feature (true or false).
@@ -323,7 +323,7 @@ public :
     (
         const   char* const     systemId
     ) ;
-	
+
     //@}
 
     // -----------------------------------------------------------------------
@@ -410,7 +410,7 @@ public :
       * @return number of errors encountered during the latest
       *			parse operation.
       */
-    virtual int getErrorCount() const ;
+    virtual XMLSize_t getErrorCount() const ;
 
     /**
       * This method returns the state of the parser's
@@ -472,7 +472,7 @@ public :
       *
       * @return offset within the input source
       */
-    virtual unsigned int getSrcOffset() const;
+    virtual XMLFilePos getSrcOffset() const;
 
     //@}
 
@@ -735,7 +735,7 @@ public :
       * @see InputSource#InputSource
       */
     virtual Grammar* loadGrammar(const InputSource& source,
-                                 const short grammarType,
+                                 const Grammar::GrammarType grammarType,
                                  const bool toCache = false);
 
     /**
@@ -764,7 +764,7 @@ public :
       * @exception DOMException A DOM exception as per DOM spec.
       */
     virtual Grammar* loadGrammar(const XMLCh* const systemId,
-                                 const short grammarType,
+                                 const Grammar::GrammarType grammarType,
                                  const bool toCache = false);
 
     /**
@@ -792,7 +792,7 @@ public :
       * @exception DOMException A DOM exception as per DOM spec.
       */
     virtual Grammar* loadGrammar(const char* const systemId,
-                                 const short grammarType,
+                                 const Grammar::GrammarType grammarType,
                                  const bool toCache = false);
 
     /**
@@ -810,7 +810,7 @@ public :
       *
       * @param bufferSize The maximum input buffer size
       */
-    void setInputBufferSize(const size_t bufferSize);
+    void setInputBufferSize(const XMLSize_t bufferSize);
 
     //@}
 
@@ -1028,7 +1028,7 @@ public :
     virtual void characters
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
   /**
@@ -1092,7 +1092,7 @@ public :
     virtual void ignorableWhitespace
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
   /**

@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: IC_Unique.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IC_Unique.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-#if !defined(IC_UNIQUE_HPP)
-#define IC_UNIQUE_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_IC_UNIQUE_HPP)
+#define XERCESC_INCLUDE_GUARD_IC_UNIQUE_HPP
 
 
 /**
@@ -71,7 +71,7 @@ private:
 // ---------------------------------------------------------------------------
 inline short IC_Unique::getType() const {
 
-    return IdentityConstraint::UNIQUE;
+    return IdentityConstraint::ICType_UNIQUE;
 }
 
 XERCES_CPP_NAMESPACE_END

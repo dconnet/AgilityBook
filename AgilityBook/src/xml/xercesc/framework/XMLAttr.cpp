@@ -16,7 +16,7 @@
  */
 
 /**
- * $Id: XMLAttr.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XMLAttr.cpp 555320 2007-07-11 16:05:13Z amassari $
  */
 
 
@@ -39,9 +39,7 @@ XMLAttr::XMLAttr(MemoryManager* const manager) :
     , fValueBufSz(0)
     , fValue(0)
     , fAttName(0)
-    , fMemoryManager(manager)
-    , fDatatypeValidator(0)
-    , fIsSchemaValidated(false)
+    , fMemoryManager(manager)  
 {
     fAttName = new (fMemoryManager) QName(fMemoryManager);
 }
@@ -63,9 +61,7 @@ XMLAttr::XMLAttr(   const   unsigned int        uriId
     , fValueBufSz(0)
     , fValue(0)
     , fAttName(0)
-    , fMemoryManager(manager)
-    , fDatatypeValidator(datatypeValidator)
-    , fIsSchemaValidated(isSchema)
+    , fMemoryManager(manager)   
 {
     CleanupType cleanup(this, &XMLAttr::cleanUp);
 
@@ -102,9 +98,7 @@ XMLAttr::XMLAttr(   const   unsigned int        uriId
     , fValueBufSz(0)
     , fValue(0)
     , fAttName(0)
-    , fMemoryManager(manager)
-    , fDatatypeValidator(datatypeValidator)
-    , fIsSchemaValidated(isSchema)
+    , fMemoryManager(manager)  
 {
     CleanupType cleanup(this, &XMLAttr::cleanUp);
 
@@ -154,7 +148,7 @@ void XMLAttr::setURIId(const unsigned int uriId)
 
 void XMLAttr::setValue(const XMLCh* const newValue)
 {
-    const unsigned int newLen = XMLString::stringLen(newValue);
+    const XMLSize_t newLen = XMLString::stringLen(newValue);
     if (!fValueBufSz || (newLen > fValueBufSz))
     {
         fMemoryManager->deallocate(fValue); //delete [] fValue;

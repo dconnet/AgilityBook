@@ -16,7 +16,7 @@
  */
 
 /*
-  * $Id: WFXMLScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
+  * $Id: WFXMLScanner.cpp 696218 2008-09-17 09:31:41Z borisk $
  */
 
 
@@ -200,7 +200,6 @@ void WFXMLScanner::scanDocument(const InputSource& src)
                 (
                     XMLErrs::XMLException_Warning
                     , excToCatch.getCode()
-                    , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
             else if (excToCatch.getErrorType() >= XMLErrorReporter::ErrType_Fatal)
@@ -208,7 +207,6 @@ void WFXMLScanner::scanDocument(const InputSource& src)
                 (
                     XMLErrs::XMLException_Fatal
                     , excToCatch.getCode()
-                    , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
             else
@@ -216,7 +214,6 @@ void WFXMLScanner::scanDocument(const InputSource& src)
                 (
                     XMLErrs::XMLException_Error
                     , excToCatch.getCode()
-                    , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
         }
@@ -249,7 +246,7 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
         ThrowXMLwithMemMgr(RuntimeException, XMLExcepts::Scan_BadPScanToken, fMemoryManager);
 
     // Find the next token and remember the reader id
-    unsigned int orgReader;
+    XMLSize_t orgReader;
     XMLTokens curToken;
     bool retVal = true;
 
@@ -371,7 +368,6 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
                 (
                     XMLErrs::XMLException_Warning
                     , excToCatch.getCode()
-                    , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
             else if (excToCatch.getErrorType() >= XMLErrorReporter::ErrType_Fatal)
@@ -379,7 +375,6 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
                 (
                     XMLErrs::XMLException_Fatal
                     , excToCatch.getCode()
-                    , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
             else
@@ -387,7 +382,6 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
                 (
                     XMLErrs::XMLException_Error
                     , excToCatch.getCode()
-                    , excToCatch.getType()
                     , excToCatch.getMessage()
                 );
         }
@@ -428,7 +422,7 @@ bool WFXMLScanner::scanNext(XMLPScanToken& token)
 void WFXMLScanner::commonInit()
 {
     fEntityTable = new (fMemoryManager) ValueHashTableOf<XMLCh>(11, fMemoryManager);
-    fAttrNameHashList = new (fMemoryManager)ValueVectorOf<unsigned int>(16, fMemoryManager);
+    fAttrNameHashList = new (fMemoryManager)ValueVectorOf<XMLSize_t>(16, fMemoryManager);
     fAttrNSList = new (fMemoryManager) ValueVectorOf<XMLAttr*>(8, fMemoryManager);
     fElements = new (fMemoryManager) RefVectorOf<XMLElementDecl>(32, true, fMemoryManager);
     fElementLookup = new (fMemoryManager) RefHashTableOf<XMLElementDecl>(109, false, fMemoryManager);
@@ -471,6 +465,14 @@ WFXMLScanner::resolvePrefix(const   XMLCh* const          prefix
 
     // If it was unknown, then the URI was faked in but we have to issue an error
     if (unknown)
+        emitError(XMLErrs::UnknownPrefix, prefix);
+
+    // check to see if uriId is empty; in XML 1.1 an emptynamespace is okay unless
+    // we are trying to use it.
+    if (*prefix &&
+        mode == ElemStack::Mode_Element &&
+        fXMLVersion != XMLReader::XMLV1_0 &&
+        uriId == fElemStack.getEmptyNamespaceId())             
         emitError(XMLErrs::UnknownPrefix, prefix);
 
     return uriId;
@@ -588,7 +590,7 @@ bool WFXMLScanner::scanContent()
                 //  Sense what the next top level token is. According to what
                 //  this tells us, we will call something to handle that kind
                 //  of thing.
-                unsigned int orgReader;
+                XMLSize_t orgReader;
                 const XMLTokens curToken = senseNextToken(orgReader);
 
                 //  Handle character data and end of file specially. Char data
@@ -711,7 +713,7 @@ void WFXMLScanner::scanEndTag(bool& gotData)
     const bool isRoot = fElemStack.isEmpty();
 
     // Make sure that its the end of the element that we expect
-    if (!fReaderMgr.skippedString(topElem->fThisElement->getFullName()))
+    if (!fReaderMgr.skippedStringLong(topElem->fThisElement->getFullName()))
     {
         emitError
         (
@@ -822,8 +824,8 @@ bool WFXMLScanner::scanStartTag(bool& gotData)
 
     //  We loop until we either see a /> or >, handling attribute/value
     //  pairs until we get there.
-    unsigned int    attCount = 0;
-    unsigned int    curAttListSize = fAttrList->size();
+    XMLSize_t    attCount = 0;
+    XMLSize_t    curAttListSize = fAttrList->size();
     while (true)
     {
         // And get the next non-space character
@@ -907,11 +909,11 @@ bool WFXMLScanner::scanStartTag(bool& gotData)
 
             //  See if this attribute is declared more than one for this element.
             const XMLCh* attNameRawBuf = fAttNameBuf.getRawBuffer();
-            unsigned int attNameHash = XMLString::hash(attNameRawBuf, 109, fMemoryManager);
+            XMLSize_t attNameHash = XMLString::hash(attNameRawBuf, 109);
 
             if (attCount) {
 
-                for (unsigned int k=0; k < attCount; k++) {
+                for (XMLSize_t k=0; k < attCount; k++) {
 
                     if (fAttrNameHashList->elementAt(k) == attNameHash) {
                         if (
@@ -1153,8 +1155,8 @@ bool WFXMLScanner::scanStartTagNS(bool& gotData)
 
     // We loop until we either see a /> or >, handling attribute/value
     // pairs until we get there.
-    unsigned int attCount = 0;
-    unsigned int curAttListSize = fAttrList->size();
+    XMLSize_t attCount = 0;
+    XMLSize_t curAttListSize = fAttrList->size();
     while (true)
     {
         // And get the next non-space character
@@ -1242,10 +1244,10 @@ bool WFXMLScanner::scanStartTagNS(bool& gotData)
 
             //  See if this attribute is declared more than one for this element.
             const XMLCh* attNameRawBuf = fAttNameBuf.getRawBuffer();
-            unsigned int attNameHash = XMLString::hash(attNameRawBuf, 109, fMemoryManager);
+            XMLSize_t attNameHash = XMLString::hash(attNameRawBuf, 109);
             if (attCount) {
 
-                for (unsigned int k=0; k < attCount; k++) {
+                for (XMLSize_t k=0; k < attCount; k++) {
 
                     if (fAttrNameHashList->elementAt(k) == attNameHash) {
                         if (XMLString::equals(
@@ -1608,7 +1610,7 @@ bool WFXMLScanner::scanAttValue(const XMLCh* const attrName
 
     //  We have to get the current reader because we have to ignore closing
     //  quotes until we hit the same reader again.
-    const unsigned int curReader = fReaderMgr.getCurrentReaderNum();
+    const XMLSize_t curReader = fReaderMgr.getCurrentReaderNum();
 
     //  Loop until we get the attribute value. Note that we use a double
     //  loop here to avoid the setup/teardown overhead of the exception
@@ -2060,7 +2062,7 @@ WFXMLScanner::scanEntityRef(const bool
     escaped = false;
 
     // We have to insure that its all in one entity
-    const unsigned int curReader = fReaderMgr.getCurrentReaderNum();
+    const XMLSize_t curReader = fReaderMgr.getCurrentReaderNum();
 
     //  If the next char is a pound, then its a character reference and we
     //  need to expand it always.
@@ -2114,8 +2116,8 @@ WFXMLScanner::scanEntityRef(const bool
     // here's where we need to check if there's a SecurityManager,
     // how many entity references we've had
     if(fSecurityManager != 0 && ++fEntityExpansionCount > fEntityExpansionLimit) {
-        XMLCh expLimStr[16];
-        XMLString::binToText(fEntityExpansionLimit, expLimStr, 15, 10, fMemoryManager);
+        XMLCh expLimStr[32];
+        XMLString::sizeToText(fEntityExpansionLimit, expLimStr, 31, 10, fMemoryManager);
         emitError
         ( 
             XMLErrs::EntityExpansionLimitExceeded

@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-#ifndef XMLUTF16TRANSCODER_HPP
-#define XMLUTF16TRANSCODER_HPP
+/*
+ * $Id: XMLUTF16Transcoder.hpp 635560 2008-03-10 14:10:09Z borisk $
+ */
+
+#if !defined(XERCESC_INCLUDE_GUARD_XMLUTF16TRANSCODER_HPP)
+#define XERCESC_INCLUDE_GUARD_XMLUTF16TRANSCODER_HPP
 
 #include <xercesc/util/XercesDefs.hpp>
 #include <xercesc/util/TransService.hpp>
@@ -41,7 +45,7 @@ public :
     XMLUTF16Transcoder
     (
         const   XMLCh* const    encodingName
-        , const unsigned int    blockSize
+        , const XMLSize_t       blockSize
         , const bool            swapped
         , MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager
     );
@@ -52,30 +56,30 @@ public :
     // -----------------------------------------------------------------------
     //  Implementation of the XMLTranscoder interface
     // -----------------------------------------------------------------------
-    virtual unsigned int transcodeFrom
+    virtual XMLSize_t transcodeFrom
     (
         const   XMLByte* const          srcData
-        , const unsigned int            srcCount
+        , const XMLSize_t               srcCount
         ,       XMLCh* const            toFill
-        , const unsigned int            maxChars
-        ,       unsigned int&           bytesEaten
+        , const XMLSize_t               maxChars
+        ,       XMLSize_t&              bytesEaten
         ,       unsigned char* const    charSizes
     );
 
-    virtual unsigned int transcodeTo
+    virtual XMLSize_t transcodeTo
     (
         const   XMLCh* const    srcData
-        , const unsigned int    srcCount
+        , const XMLSize_t       srcCount
         ,       XMLByte* const  toFill
-        , const unsigned int    maxBytes
-        ,       unsigned int&   charsEaten
+        , const XMLSize_t       maxBytes
+        ,       XMLSize_t&      charsEaten
         , const UnRepOpts       options
     );
 
     virtual bool canTranscodeTo
     (
         const   unsigned int    toCheck
-    )   const;
+    );
 
 
 private :

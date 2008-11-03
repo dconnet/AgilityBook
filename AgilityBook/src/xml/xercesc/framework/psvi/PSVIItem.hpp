@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: PSVIItem.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: PSVIItem.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-#if !defined(PSVIITEM_HPP)
-#define PSVIITEM_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_PSVIITEM_HPP)
+#define XERCESC_INCLUDE_GUARD_PSVIITEM_HPP
 
 #include <xercesc/util/PlatformUtils.hpp>
 

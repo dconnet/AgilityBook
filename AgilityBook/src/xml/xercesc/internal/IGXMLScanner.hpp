@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: IGXMLScanner.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IGXMLScanner.hpp 678409 2008-07-21 13:08:10Z borisk $
  */
 
-
-#if !defined(IGXMLSCANNER_HPP)
-#define IGXMLSCANNER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_IGXMLSCANNER_HPP)
+#define XERCESC_INCLUDE_GUARD_IGXMLSCANNER_HPP
 
 #include <xercesc/internal/XMLScanner.hpp>
 #include <xercesc/util/KVStringPair.hpp>
@@ -130,17 +129,17 @@ private :
     void commonInit();
     void cleanUp();
 
-    unsigned int buildAttList
+    XMLSize_t buildAttList
     (
         const   RefVectorOf<KVStringPair>&  providedAttrs
-        , const unsigned int                attCount
+        , const XMLSize_t                   attCount
         ,       XMLElementDecl*             elemDecl
         ,       RefVectorOf<XMLAttr>&       toFill
     );
     bool normalizeAttValue
     (
         const   XMLAttDef* const    attDef
-        , const XMLCh* const       name 
+        , const XMLCh* const       name
         , const XMLCh* const        value
         ,       XMLBuffer&          toFill
     );
@@ -164,7 +163,7 @@ private :
     void updateNSMap
     (
         const   XMLCh* const    attrName
-        , const XMLCh* const    attrValue        
+        , const XMLCh* const    attrValue
     );
     void updateNSMap
     (
@@ -172,7 +171,7 @@ private :
         , const XMLCh* const    attrValue
         , const int             colonPosition
     );
-    void scanRawAttrListforNameSpaces(int attCount);
+    void scanRawAttrListforNameSpaces(XMLSize_t attCount);
     void parseSchemaLocation(const XMLCh* const schemaLocationStr);
     void resolveSchemaGrammar(const XMLCh* const loc, const XMLCh* const uri);
     bool switchGrammar(const XMLCh* const newGrammarNameSpace);
@@ -203,7 +202,7 @@ private :
         const   XMLCh* const    attrName
         ,       XMLBuffer&      toFill
     );
-    unsigned int rawAttrScan
+    XMLSize_t rawAttrScan
     (
         const   XMLCh* const                elemName
         ,       RefVectorOf<KVStringPair>&  toFill
@@ -256,6 +255,7 @@ private :
     //      This flag indicates a schema has been seen.
     //
     //  fElemState
+    //  fElemLoopState
     //  fElemStateSize
     //      Stores an element next state from DFA content model - used for
     //      wildcard validation
@@ -284,6 +284,7 @@ private :
     Grammar::GrammarType                    fGrammarType;
     unsigned int                            fElemStateSize;
     unsigned int*                           fElemState;
+    unsigned int*                           fElemLoopState;
     XMLBuffer                               fContent;
     RefVectorOf<KVStringPair>*              fRawAttrList;
     unsigned int                            fRawAttrColonListSize;
@@ -296,7 +297,7 @@ private :
     NameIdPool<DTDElementDecl>*             fDTDElemNonDeclPool;
     RefHash3KeysIdPool<SchemaElementDecl>*  fSchemaElemNonDeclPool;
     unsigned int                            fElemCount;
-    RefHashTableOf<unsigned int>*           fAttDefRegistry;
+    RefHashTableOf<unsigned int, PtrHasher>*fAttDefRegistry;
     RefHashTableOf<unsigned int>*           fUndeclaredAttrRegistry;
     RefHash2KeysTableOf<unsigned int>*      fUndeclaredAttrRegistryNS;
     PSVIAttributeList *                     fPSVIAttrList;

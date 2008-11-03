@@ -1,160 +1,197 @@
-# Copyright (c) 2001-2002 IBM, Inc. and others
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
 #
-# File
-#    icu/source/samples/ufortune/resources/Makefile
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-# Usage:
-#    See the instructions in the parent Makefile,
-#          icu/source/samples/ufortune/Makefile.
-#          This subproject builds the ICU resource files for ufortune.
-#          It is normally invoked from the parent directory,
-#            although the resources can be built from here.
-#
-#    Two ICU tools are run from this makefile:
-#      genrb    compiles a resource source file (.txt) into
-#               a binary .res file.
-#      pkgdata  combines all of the .res files into a single
-#               shared library that can then be linked with the
-#               main application.
-#
-#               pkgdata will recursively generate and run yet
-#               another makefile, which in turn runs two more
-#               icu tools.  gencmn combines the individual .res
-#               files, and genccode emits the data as C source
-#               code that can then be built into a .so
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 
+# TODO:
+# @@ get rid of unused vars
 #
-PLATFORM = @platform@
-CC  = @cc@
-CXX = @cxx@
-CXXVER = @cxxver@
-GCC = @GCC@
-GXX = @GXX@
-CXXFLAGS = @cxxflags@
-CFLAGS = @cflags@
-PREFIX = @prefix@
-PREFIX_INCLUDE = @prefix_include@
-LDFLAGS = @ldflags@
-LIBS = @libs@
-OSVER = @osver@
-USELIBWWW = @uselibwww@
-MESSAGELOADER = @messageloader@
-TRANSCODER = @transcoder@
-THREADS = @threads@
-LIBTYPE = @libtype@
-ARCH = @host_cpu@
 
-include ../../../../../../version.incl
-include ../../../../Makefile.incl
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+libdir = @libdir@
+ICU_PREFIX = @ICU_PREFIX@
+SHREXT = @SHREXT@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+mkdir_p = @mkdir_p@
 
-####################################################################
-# Load ICU information. You can copy this to other makefiles #######
-####################################################################
-CC=$(shell icu-config --cc)
-CXX=$(shell icu-config --cxx)
-CPPFLAGS=$(shell icu-config --cppflags)
-CFLAGS=$(shell icu-config --cflags)
-CXXFLAGS=$(shell icu-config --cxxflags)
-LDFLAGS =$(shell icu-config --ldflags)
-LDFLAGS_USTDIO =$(shell icu-config --ldflags-ustdio)
-INVOKE=$(shell icu-config --invoke)
-#GENRB=$(shell icu-config --invoke=genrb)
-GENRB=genrb
-GENRBOPT=--package-name $(PKGNAME)
-#PKGDATA=$(shell icu-config --invoke=pkgdata)
-PKGDATA=pkgdata
-SO=$(shell icu-config --so)
-PKGDATAOPTS=-v -d .
-# default - resources in same mode as ICU
-# RESMODE=$(shell icu-config --icudata-mode)
+CC = @CC@
+CXX = @CXX@
+AR = @AR@
+RANLIB = @RANLIB@
+CPPFLAGS = @CPPFLAGS@
+CFLAGS = @CFLAGS@
+CXXFLAGS = @CXXFLAGS@
+LIBTOOL = @LIBTOOL@
+LDFLAGS = @LDFLAGS@
 
-####################################################################
-### Project independent things (common) 
-### We depend on gmake for the bulk of the work 
+BUILD_SHARED = @BUILD_SHARED@
+BUILD_STATIC = @BUILD_STATIC@
 
-RMV=rm -rf
+include $(top_srcdir)/version.incl
 
-# No conventional target - this dir is resources only.
-TARGET=
-CLEANFILES += *.mak *.[co] *.lst *.a *.$(SO) $(RESFILES) *.ao README*resources.txt
+GENRB=$(ICU_PREFIX)/bin/genrb
+PKGDATA=$(ICU_PREFIX)/bin/pkgdata
 
-ifeq ($(LIBTYPE),shared)
-  RESMODE=dll
-else
-  RESMODE=static
-endif
+# Add -v if you want to see more verbose output.
+#
+PKGDATAOPTS=-d . -M '"CC=$(CC)" "CXX=$(CXX)" "AR=$(AR)" "RANLIB=$(RANLIB)" \
+"CPPFLAGS=$(CPPFLAGS)" "CFLAGS=$(CFLAGS)" "CXXFLAGS=$(CXXFLAGS)" "LDFLAGS=$(LDFLAGS)"'
 
 # Resource shortname
-RESNAME=XercesMessages
-PKGNAME=XercesMessages$(VER)
+PKGNAME=xercesc_messages_$(INTERFACE_VER_U)
 
-RESLDFLAGS=
-CHECK_VARS= ICU_DATA=$(RESDIR)
-
-# DLL and static modes are identical here
-RESLDFLAGS= -L$(RESDIR) -l$(RESNAME)
-RESCPPFLAGS=
-CHECK_VARS=
-
-# target file for resource bundle - this must be set, or 'make all' won't
-# build any resources.
-RESLIBNAME=lib$(RESNAME)
-
-ifeq ($(LIBTYPE),shared)
-  RESTARGET=lib$(RESNAME)$(ICUSHLIBSUFFIX)
-  PKGTARGET=lib$(PKGNAME)$(ICUSHLIBSUFFIX)
-else
-  RESTARGET=lib$(RESNAME)$(STLIBSUFFIX)
-  PKGTARGET=lib$(PKGNAME)$(STLIBSUFFIX)
-endif
-
-# Resource files.  Add new ones for additional locales here.
-# keep in sync with the file RESLIST
-RESFILES=$(RESNAME)_en_US.res
+# Resource files.  Add new ones for additional locales here. Keep in sync
+# with the file RESLIST and don't forget to add the object file below.
+#
+RESFILES=root.res
 
 # list of resource bundles  - keep in sync with RESFILES
-RESLIST=res-file-list-unix.txt
+RESLIST=$(srcdir)/res-file-list.txt
 
-# list of targets that aren't actually created
-.PHONY: all clean distclean check report 
+#
+#
+.PHONY: all
+all: xercesc_messages.lo
 
-all: $(ALL_SUBDIR) $(RESTARGET) $(TARGET)  
-
-$(TARGET): $(OBJECTS)
-	$(LINK.cc) $^ $(LOADLIBES) $(LDLIBS) -o $@ $(XTRALIBS)
-
-$(RESTARGET): $(RESFILES)
-	@echo building ${FQ_RESLIB_REAL_NAME}
-	$(PKGDATA) --name $(PKGNAME) --mode $(RESMODE) $(PKGDATAOPTS) $(RESLIST)
-	mv $(PKGTARGET) $(RESTARGET)
-	mv $(RESTARGET) ${FQ_RESLIB_REAL_NAME}
-ifeq (${LIBTYPE},shared)
-	@echo symlink ${FQ_RESLIB_SO_NAME}
-	ln -fs ${FQ_RESLIB_REAL_NAME} ${FQ_RESLIB_SO_NAME}
-	@echo symlink ${FQ_RESLIB_LINK_NAME}
-	ln -fs ${FQ_RESLIB_SO_NAME} ${FQ_RESLIB_LINK_NAME}
+# ICU makefiles use .o and .ao for non-PIC object file extensions
+# on different platforms. We need to account for that. Also on some
+# platforms ICU produces root_res.o. Overall, this is one hairy hack
+# to make ICU work with libtool. If you know of a better way to handle
+# this do let us (c-dev@xerces.apache.org) know.
+#
+xercesc_messages.lo: $(RESFILES)
+ifeq ($(BUILD_SHARED),yes)
+	@rm -f $(PKGNAME)_dat.o root_res.o
+	$(PKGDATA) --name $(PKGNAME) --mode dll $(PKGDATAOPTS) $(RESLIST)
+	mv $(PKGNAME)_dat.o $(PKGNAME)_dat-pic.o
+	@if test -f root_res.o; then mv root_res.o root_res-pic.o; fi
 endif
-	
-res-install: $(RESTARGET)
-	$(PKGDATA) --name $(PKGNAME) --mode $(RESMODE) $(PKGDATAOPTS) $(RESLIST) --install $(shell icu-config --libdir)
+ifeq ($(BUILD_STATIC),yes)
+	@rm -f $(PKGNAME)_dat.o $(PKGNAME)_dat.ao root_res.o root_res.ao
+	$(PKGDATA) --name $(PKGNAME) --mode static $(PKGDATAOPTS) $(RESLIST)
+	@if test -f $(PKGNAME)_dat.ao; then mv $(PKGNAME)_dat.ao $(PKGNAME)_dat.o; fi
+	@if test -f root_res.ao; then mv root_res.ao root_res.o; fi
+endif
+	@echo "# $@ - a libtool object file" >$@
+	@echo "# Generated by `$(LIBTOOL) --version | \
+sed -e 's/^\([^ ]*\) (GNU \(.*\)) \(.*\)$$/\1 - GNU \2 \3/' -e q`" >>$@
+	@echo "" >>$@
+ifeq ($(BUILD_SHARED),yes)
+	@echo "pic_object='$(PKGNAME)_dat-pic.o'" >>$@
+else
+	@echo "pic_object=none" >>$@
+endif
+ifeq ($(BUILD_STATIC),yes)
+	@echo "non_pic_object='$(PKGNAME)_dat.o'" >>$@
+else
+	@echo "non_pic_object=none" >>$@
+endif
+	@echo "# root_res.lo - a libtool object file" >root_res.lo
+	@echo "# Generated by `$(LIBTOOL) --version | \
+sed -e 's/^\([^ ]*\) (GNU \(.*\)) \(.*\)$$/\1 - GNU \2 \3/' -e q`" >>root_res.lo
+	@echo "" >>root_res.lo
+ifeq ($(BUILD_SHARED),yes)
+	@echo "pic_object='root_res-pic.o'" >>root_res.lo
+else
+	@echo "pic_object=none" >>root_res.lo
+endif
+ifeq ($(BUILD_STATIC),yes)
+	@echo "non_pic_object='root_res.o'" >>root_res.lo
+else
+	@echo "non_pic_object=none" >>root_res.lo
+endif
+	@if test ! -f root_res-pic.o -a ! -f root_res.o; then \
+$(LIBTOOL) --quiet --tag=CXX --mode=compile $(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+-c -o root_res.lo root_res_dummy.cpp; fi
 
-# clean out files
-distclean clean: $(CLEAN_SUBDIR)
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
-	-rm -f $(OBJECTS) $(TARGET) $(RESTARGET) $(RESFILES)
+%.res: $(srcdir)/%.txt
+	$(GENRB) $^
 
-# Make check: simply runs the sample, logged to a file
-check: $(TARGET)
-	$(INVOKE) $(CHECK_VARS) ./$(TARGET) $(CHECK_ARGS) | tee $(TARGET).out
+# Let the corresponding tools (pkgdata, libtool) clean up their own
+# files. pkgdata does not remove the .dat and README file for some
+# reason.
+#
+clean:
+	rm -f xercesc_messages.lo root_res.lo
+ifeq ($(BUILD_SHARED),yes)
+	$(PKGDATA) --name $(PKGNAME) --mode dll --clean $(PKGDATAOPTS) $(RESLIST)
+	rm -f $(PKGNAME)_dat-pic.o root_res-pic.o
+	rm -rf .libs
+endif
+ifeq ($(BUILD_STATIC),yes)
+	$(PKGDATA) --name $(PKGNAME) --mode static --clean $(PKGDATAOPTS) $(RESLIST)
+	rm -f README_$(PKGNAME).txt root_res.o
+endif
+	rm -f $(RESFILES)
+	rm -f $(PKGNAME).dat
 
-## resources
-$(RESNAME)_%.res: %.txt
-	@echo "generating $@"
-	$(GENRB) $(GENRBOPT) $^
+# Distclean is invoked even if we are not building with ICU.
+# As a result, we cannot use pkgdata to clean up.
+#
+distclean:
+	rm -f xercesc_messages.lo root_res.lo
+	rm -f lib$(PKGNAME).so
+	rm -f lib$(PKGNAME).a
+	rm -f $(PKGNAME)_dat*.o root_res*.o
+	rm -f $(PKGNAME)*.lst
+	rm -f $(PKGNAME)*.mak
+	rm -f $(RESFILES)
+	rm -f $(PKGNAME).dat
+	rm -f README_$(PKGNAME).txt
+	rm -rf .libs
 
-#end of rules.mk
+#
+#
+.PHONY: check
+check: all
 
-# for installing the library
-install: res-install
+# Support for "make dist"
+#
+distdir:
+	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
+	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
+	list='res-file-list.txt root.txt Makefile.in resources.mak root_res_dummy.cpp'; \
+	  dist_files=`for file in $$list; do echo $$file; done | \
+	  sed -e "s|^$$srcdirstrip/||;t" \
+	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
+	case $$dist_files in \
+	  */*) $(MKDIR_P) `echo "$$dist_files" | \
+			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
+			   sort -u` ;; \
+	esac; \
+	for file in $$dist_files; do \
+	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
+	  if test -d $$d/$$file; then \
+	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
+	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
+	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
+	    fi; \
+	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || cp -p $$d/$$file $(distdir)/$$file \
+	    || exit 1; \
+	  fi; \
+	done
 
+
+# Nothing to do for these targets.
+#
+install: ; @:
+uninstall: ; @:

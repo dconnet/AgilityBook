@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: SGXMLScanner.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: SGXMLScanner.hpp 678409 2008-07-21 13:08:10Z borisk $
  */
 
-
-#if !defined(SGXMLSCANNER_HPP)
-#define SGXMLSCANNER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_SGXMLSCANNER_HPP)
+#define XERCESC_INCLUDE_GUARD_SGXMLSCANNER_HPP
 
 #include <xercesc/internal/XMLScanner.hpp>
 #include <xercesc/util/KVStringPair.hpp>
@@ -110,17 +109,17 @@ protected:
     // -----------------------------------------------------------------------
     //  Helper methods
     // -----------------------------------------------------------------------
-    unsigned int buildAttList
+    XMLSize_t buildAttList
     (
         const   RefVectorOf<KVStringPair>&  providedAttrs
-        , const unsigned int                attCount
+        , const XMLSize_t                   attCount
         ,       XMLElementDecl*             elemDecl
         ,       RefVectorOf<XMLAttr>&       toFill
     );
     bool laxElementValidation(QName* element, ContentLeafNameTypeVector* cv,
                               const XMLContentModel* const cm,
                               const unsigned int parentElemDepth);
-    unsigned int rawAttrScan
+    XMLSize_t rawAttrScan
     (
         const   XMLCh* const                elemName
         ,       RefVectorOf<KVStringPair>&  toFill
@@ -167,6 +166,7 @@ protected:
     //      This flag indicates a schema has been seen.
     //
     //  fElemState
+    //  fElemLoopState
     //  fElemStateSize
     //      Stores an element next state from DFA content model - used for
     //      wildcard validation
@@ -191,6 +191,7 @@ protected:
     Grammar::GrammarType                    fGrammarType;
     unsigned int                            fElemStateSize;
     unsigned int*                           fElemState;
+    unsigned int*                           fElemLoopState;
     XMLBuffer                               fContent;
     ValueHashTableOf<XMLCh>*                fEntityTable;
     RefVectorOf<KVStringPair>*              fRawAttrList;
@@ -201,7 +202,7 @@ protected:
     IdentityConstraintHandler*              fICHandler;
     RefHash3KeysIdPool<SchemaElementDecl>*  fElemNonDeclPool;
     unsigned int                            fElemCount;
-    RefHashTableOf<unsigned int>*           fAttDefRegistry;
+    RefHashTableOf<unsigned int, PtrHasher>*fAttDefRegistry;
     RefHash2KeysTableOf<unsigned int>*      fUndeclaredAttrRegistryNS;
     PSVIAttributeList *                     fPSVIAttrList;
     XSModel*                                fModel;
@@ -243,7 +244,7 @@ private :
     bool normalizeAttValue
     (
         const   XMLAttDef* const    attDef
-        , const XMLCh* const        attrName 
+        , const XMLCh* const        attrName
         , const XMLCh* const        value
         ,       XMLBuffer&          toFill
     );
@@ -259,7 +260,7 @@ private :
         ,       XMLBuffer&          uriBufToFill
         , const ElemStack::MapModes mode
     );
-    void scanRawAttrListforNameSpaces(int attCount);
+    void scanRawAttrListforNameSpaces(XMLSize_t attCount);
     void parseSchemaLocation(const XMLCh* const schemaLocationStr);
     void resolveSchemaGrammar(const XMLCh* const loc, const XMLCh* const uri);
     bool switchGrammar(const XMLCh* const newGrammarNameSpace);

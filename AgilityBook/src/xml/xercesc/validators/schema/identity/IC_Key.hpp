@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: IC_Key.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: IC_Key.hpp 527149 2007-04-10 14:56:39Z amassari $
  */
 
-#if !defined(IC_KEY_HPP)
-#define IC_KEY_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_IC_KEY_HPP)
+#define XERCESC_INCLUDE_GUARD_IC_KEY_HPP
 
 
 // ---------------------------------------------------------------------------
@@ -67,7 +67,7 @@ private:
 // ---------------------------------------------------------------------------
 inline short IC_Key::getType() const {
 
-    return IdentityConstraint::KEY;
+    return IdentityConstraint::ICType_KEY;
 }
 
 XERCES_CPP_NAMESPACE_END

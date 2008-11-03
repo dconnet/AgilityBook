@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: QName.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: QName.hpp 555320 2007-07-11 16:05:13Z amassari $
  */
 
-#if !defined(QNAME_HPP)
-#define QNAME_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_QNAME_HPP)
+#define XERCESC_INCLUDE_GUARD_QNAME_HPP
 
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/XMLUniDefs.hpp>
@@ -96,8 +96,8 @@ public :
 
     void setPrefix(const XMLCh*) ;
     void setLocalPart(const XMLCh*) ;
-    void setNPrefix(const XMLCh*, const unsigned int) ;
-    void setNLocalPart(const XMLCh*, const unsigned int) ;
+    void setNPrefix(const XMLCh*, const XMLSize_t ) ;
+    void setNLocalPart(const XMLCh*, const XMLSize_t ) ;
     void setURI(const unsigned int) ;
 
     void setValues(const QName& qname);
@@ -151,9 +151,9 @@ private :
     //  fURIId
     //      The id of the URI that this attribute belongs to.
     // -----------------------------------------------------------------------
-    unsigned int        fPrefixBufSz;
-    unsigned int        fLocalPartBufSz;
-    unsigned int        fRawNameBufSz;
+    XMLSize_t           fPrefixBufSz;
+    XMLSize_t           fLocalPartBufSz;
+    XMLSize_t           fRawNameBufSz;
     unsigned int        fURIId;
     XMLCh*              fPrefix;
     XMLCh*              fLocalPart;

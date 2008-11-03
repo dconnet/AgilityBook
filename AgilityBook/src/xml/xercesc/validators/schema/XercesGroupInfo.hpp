@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: XercesGroupInfo.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XercesGroupInfo.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-#if !defined(XERCESGROUPINFO_HPP)
-#define XERCESGROUPINFO_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XERCESGROUPINFO_HPP)
+#define XERCESC_INCLUDE_GUARD_XERCESGROUPINFO_HPP
 
 
 /**
@@ -64,11 +64,11 @@ public:
     //  Getter methods
     // -----------------------------------------------------------------------
     bool                     getCheckElementConsistency() const;
-    int                      getScope() const;
-    unsigned int             elementCount() const;
+    unsigned int             getScope() const;
+    XMLSize_t                elementCount() const;
     ContentSpecNode*         getContentSpec() const;
-    SchemaElementDecl*       elementAt(const unsigned int index);
-    const SchemaElementDecl* elementAt(const unsigned int index) const;
+    SchemaElementDecl*       elementAt(const XMLSize_t index);
+    const SchemaElementDecl* elementAt(const XMLSize_t index) const;
     XSDLocator*              getLocator() const;
     XercesGroupInfo*         getBaseGroup() const;
     unsigned int             getNameId() const;
@@ -77,7 +77,7 @@ public:
 	// -----------------------------------------------------------------------
     //  Setter methods
     // -----------------------------------------------------------------------
-    void setScope(const int other);
+    void setScope(const unsigned int other);
     void setContentSpec(ContentSpecNode* const other);
     void addElement(SchemaElementDecl* const toAdd);
     void setLocator(XSDLocator* const aLocator);
@@ -101,7 +101,7 @@ private:
     //  Private data members
     // -----------------------------------------------------------------------
     bool                            fCheckElementConsistency;
-    int                             fScope;
+    unsigned int                    fScope;
     unsigned int                    fNameId;
     unsigned int                    fNamespaceId;
     ContentSpecNode*                fContentSpec;
@@ -113,12 +113,12 @@ private:
 // ---------------------------------------------------------------------------
 //  XercesGroupInfo: Getter methods
 // ---------------------------------------------------------------------------
-inline int XercesGroupInfo::getScope() const {
+inline unsigned int XercesGroupInfo::getScope() const {
 
     return fScope;
 }
 
-inline unsigned int XercesGroupInfo::elementCount() const {
+inline XMLSize_t XercesGroupInfo::elementCount() const {
 
     return fElements->size();
 }
@@ -129,13 +129,13 @@ inline ContentSpecNode* XercesGroupInfo::getContentSpec() const {
 }
 
 inline SchemaElementDecl*
-XercesGroupInfo::elementAt(const unsigned int index) {
+XercesGroupInfo::elementAt(const XMLSize_t index) {
 
     return fElements->elementAt(index);
 }
 
 inline const SchemaElementDecl*
-XercesGroupInfo::elementAt(const unsigned int index) const {
+XercesGroupInfo::elementAt(const XMLSize_t index) const {
 
     return fElements->elementAt(index);
 }
@@ -168,7 +168,7 @@ inline unsigned int XercesGroupInfo::getNamespaceId() const
 // ---------------------------------------------------------------------------
 //  XercesGroupInfo: Setter methods
 // ---------------------------------------------------------------------------}
-inline void XercesGroupInfo::setScope(const int other) {
+inline void XercesGroupInfo::setScope(const unsigned int other) {
 
     fScope = other;
 }

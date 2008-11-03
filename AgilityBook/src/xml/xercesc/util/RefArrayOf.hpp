@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: RefArrayOf.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: RefArrayOf.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-
-#if !defined(REFARRAY_HPP)
-#define REFARRAY_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_REFARRAY_HPP)
+#define XERCESC_INCLUDE_GUARD_REFARRAY_HPP
 
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/ArrayIndexOutOfBoundsException.hpp>
@@ -39,12 +38,12 @@ public :
     // -----------------------------------------------------------------------
     RefArrayOf
     (
-          const unsigned int size
+          const XMLSize_t size
         , MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager);
 	RefArrayOf
     (
           TElem* values[]
-        , const unsigned int size
+        , const XMLSize_t size
         , MemoryManager* const manager = XMLPlatformUtils::fgMemoryManager);
 	RefArrayOf(const RefArrayOf<TElem>& source);
 	~RefArrayOf();
@@ -53,8 +52,8 @@ public :
     // -----------------------------------------------------------------------
     //  Public operators
     // -----------------------------------------------------------------------
-	TElem*& operator[](const unsigned int index);
-	const TElem* operator[](const unsigned int index) const;
+	TElem*& operator[](const XMLSize_t index);
+	const TElem* operator[](const XMLSize_t index) const;
 	RefArrayOf<TElem>& operator=(const RefArrayOf<TElem>& toAssign);
 	bool operator==(const RefArrayOf<TElem>& toCompare) const;
 	bool operator!=(const RefArrayOf<TElem>& toCompare) const;
@@ -63,29 +62,29 @@ public :
     // -----------------------------------------------------------------------
     //  Copy operations
     // -----------------------------------------------------------------------
-    unsigned int copyFrom(const RefArrayOf<TElem>& srcArray);
+    XMLSize_t copyFrom(const RefArrayOf<TElem>& srcArray);
 
 
     // -----------------------------------------------------------------------
     //  Getter methods
     // -----------------------------------------------------------------------
-	unsigned int length() const;
+	XMLSize_t length() const;
 	TElem** rawData() const;
 
 
     // -----------------------------------------------------------------------
     //  Element management methods
     // -----------------------------------------------------------------------
-    void deleteAt(const unsigned int index);
+    void deleteAt(const XMLSize_t index);
     void deleteAllElements();
-    void resize(const unsigned int newSize);
+    void resize(const XMLSize_t newSize);
 
 
 private :
     // -----------------------------------------------------------------------
     //  Data members
     // -----------------------------------------------------------------------
-	unsigned int    fSize;
+	XMLSize_t       fSize;
 	TElem**         fArray;
     MemoryManager*  fMemoryManager;
 };
@@ -138,7 +137,7 @@ private :
     //      The reference array being enumerated.
     // -----------------------------------------------------------------------
     bool                fAdopted;
-    unsigned int        fCurIndex;
+    XMLSize_t           fCurIndex;
     RefArrayOf<TElem>*  fToEnum;
 };
 

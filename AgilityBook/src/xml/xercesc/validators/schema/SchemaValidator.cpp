@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,6 +21,7 @@
 #include <xercesc/util/Janitor.hpp>
 #include <xercesc/framework/XMLDocumentHandler.hpp>
 #include <xercesc/framework/XMLSchemaDescription.hpp>
+#include <xercesc/framework/psvi/XSAnnotation.hpp>
 #include <xercesc/internal/XMLReader.hpp>
 #include <xercesc/internal/XMLScanner.hpp>
 #include <xercesc/internal/ElemStack.hpp>
@@ -36,7 +37,6 @@
 #include <xercesc/validators/schema/XercesGroupInfo.hpp>
 #include <xercesc/validators/schema/XSDLocator.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
-#include <xercesc/internal/XMLGrammarPoolImpl.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -77,9 +77,10 @@ SchemaValidator::~SchemaValidator()
 // ---------------------------------------------------------------------------
 //  SchemaValidator: Implementation of the XMLValidator interface
 // ---------------------------------------------------------------------------
-int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
-                                 , QName** const         children
-                                 , const unsigned int    childCount)
+bool SchemaValidator::checkContent (XMLElementDecl* const elemDecl
+                                 , QName** const          children
+                                 , XMLSize_t              childCount
+                                 , XMLSize_t*             indexFailingChild)
 {
     fErrorOccurred = false;
     fElemIsSpecified = false;
@@ -102,7 +103,8 @@ int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
             ? (SchemaElementDecl::ModelTypes)(currType->getContentType())
             : ((SchemaElementDecl*)elemDecl)->getModelType();
 
-    if (modelType == SchemaElementDecl::Empty)
+    if (modelType == SchemaElementDecl::Empty  ||
+        modelType == SchemaElementDecl::ElementOnlyEmpty)
     {
         //
         //  We can do this one here. It cannot have any children. If it does
@@ -110,7 +112,8 @@ int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
         //
         if (childCount) {
             fErrorOccurred = true;
-            return 0;
+            *indexFailingChild=0;
+            return false;
         }
     }
     else if ((modelType == SchemaElementDecl::Mixed_Simple)
@@ -134,16 +137,18 @@ int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
 
             // Ask it to validate and return its return
             unsigned int emptyNS = getScanner()->getEmptyNamespaceId();
-            int result = elemCM->validateContent(children, childCount, emptyNS);
-            if (result != -1) {
+            bool result = elemCM->validateContent(children, childCount, emptyNS, indexFailingChild, getScanner()->getMemoryManager());
+            if (!result) {
                 result = elemCM->validateContentSpecial(children
                                                       , childCount
                                                       , emptyNS
                                                       , fGrammarResolver
-                                                      , fGrammarResolver->getStringPool());
+                                                      , fGrammarResolver->getStringPool()
+                                                      , indexFailingChild
+													  , getScanner()->getMemoryManager());
             }
 
-            if(result != -1) {
+            if(!result) {
                 fErrorOccurred = true;
             }
 
@@ -192,10 +197,14 @@ int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
                         //  this value will be legal since it matches one of them.
                         int colonPos = -1;
                         unsigned int uriId = getScanner()->resolveQName(value, *fNotationBuf, ElemStack::Mode_Element, colonPos);
-                        fNotationBuf->set(getScanner()->getURIText(uriId));
-                        fNotationBuf->append(chColon);
-                        fNotationBuf->append(&value[colonPos + 1]);
-                        value = fNotationBuf->getRawBuffer();
+
+                        const XMLCh* uriText = getScanner()->getURIText(uriId);
+                        if (uriText && *uriText) {
+                            fNotationBuf->set(uriText);
+                            fNotationBuf->append(chColon);
+                            fNotationBuf->append(&value[colonPos + 1]);
+                            value = fNotationBuf->getRawBuffer();
+                        }
                     }
 
                     if (elemDefaultValue)
@@ -256,7 +265,7 @@ int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
                         }
                         catch (XMLException& idve)
                         {
-                            emitError (XMLValid::DatatypeError, idve.getCode(), idve.getType(), idve.getMessage());
+                            emitError (XMLValid::DatatypeError, idve.getCode(), idve.getMessage());
                             fErrorOccurred = true;
                         }
                         catch(const OutOfMemoryException&) {
@@ -302,7 +311,7 @@ int SchemaValidator::checkContent (XMLElementDecl* const elemDecl
     fCurrentDatatypeValidator = 0;
 
     // Went ok, so return success
-    return -1;
+    return true;
 }
 
 void SchemaValidator::faultInAttr (XMLAttr&    toFill, const XMLAttDef&  attDef)   const
@@ -412,9 +421,15 @@ void SchemaValidator::validateAttrValue (const XMLAttDef*      attDef
                 XMLBuffer notationBuf(1023, fMemoryManager);
                 int colonPos = -1;
                 unsigned int uriId = getScanner()->resolveQName(attrValue, notationBuf, ElemStack::Mode_Element, colonPos);
-                notationBuf.set(getScanner()->getURIText(uriId));
-                notationBuf.append(chColon);
-                notationBuf.append(&attrValue[colonPos + 1]);
+                const XMLCh* uriText = getScanner()->getURIText(uriId);
+                if (uriText && *uriText) {
+                    notationBuf.set(uriText);
+                    notationBuf.append(chColon);
+                    notationBuf.append(&attrValue[colonPos + 1]);
+                }
+                else {
+                    notationBuf.set(attrValue);
+                }
 
                 attDefDV->validate(notationBuf.getRawBuffer()
                                  , context
@@ -429,7 +444,7 @@ void SchemaValidator::validateAttrValue (const XMLAttDef*      attDef
         }
         catch (XMLException& idve) {
             fErrorOccurred = true;
-            emitError (XMLValid::DatatypeError, idve.getCode(), idve.getType(), idve.getMessage());       
+            emitError (XMLValid::DatatypeError, idve.getCode(), idve.getMessage());
         }
         catch(const OutOfMemoryException&)
         {
@@ -440,7 +455,7 @@ void SchemaValidator::validateAttrValue (const XMLAttDef*      attDef
             fMostRecentAttrValidator = DatatypeValidatorFactory::getBuiltInRegistry()->get(SchemaSymbols::fgDT_ANYSIMPLETYPE);
             fErrorOccurred = true;
             throw;
-        } 
+        }
         fMostRecentAttrValidator = attDefDV;
         // now we can look for ID's, entities, ...
 
@@ -548,7 +563,7 @@ void SchemaValidator::validateElement(const   XMLElementDecl*  elemDef)
                         fErrorOccurred = true;
                     }
                     else {
-                        if (elemTypeInfo || (fCurrentDatatypeValidator  
+                        if (elemTypeInfo || (fCurrentDatatypeValidator
                                 && !fCurrentDatatypeValidator->isSubstitutableBy(xsiTypeDV))) {
                             // the type is not derived from ancestor
                             emitError(XMLValid::NonDerivedXsiType, fXsiType->getRawName(), elemDef->getFullName());
@@ -946,17 +961,8 @@ void SchemaValidator::normalizeWhiteSpace(DatatypeValidator* dV, const XMLCh* co
     if (!*value)
         return;
 
-    enum States
-    {
-        InWhitespace
-        , InContent
-    };
-
-    States curState = InContent;
-
     //  Loop through the chars of the source value and normalize it
     //  according to the whitespace facet
-    bool firstNonWS = false;
     XMLCh nextCh;
     const XMLCh* srcPtr = value;
     XMLReader* fCurReader = getReaderMgr()->getCurrentReader();
@@ -967,47 +973,51 @@ void SchemaValidator::normalizeWhiteSpace(DatatypeValidator* dV, const XMLCh* co
         toFill.append(chSpace);
     }
 
-    while (*srcPtr)
+    if (wsFacet == DatatypeValidator::REPLACE)
     {
-        nextCh = *srcPtr;
-        if (wsFacet == DatatypeValidator::REPLACE)
+        while (*srcPtr)
         {
+            nextCh = *srcPtr++;
             if (fCurReader->isWhitespace(nextCh))
                 nextCh = chSpace;
+            // Add this char to the target buffer
+            toFill.append(nextCh);
         }
-        else // COLLAPSE case
+    }
+    else // COLLAPSE
+    {
+        enum States
         {
-            if (curState == InWhitespace)
-            {
-                if (!fCurReader->isWhitespace(nextCh))
-                {
-                    if (firstNonWS)
-                        toFill.append(chSpace);
-                    curState = InContent;
-                    firstNonWS = true;
-                }
-                else
-                {
-                    srcPtr++;
-                    continue;
-                }
-            }
-            else if (curState == InContent)
+            InWhitespace
+            , InContent
+        };
+
+        bool firstNonWS = false;
+        States curState = InContent;
+        while (*srcPtr)
+        {
+            nextCh = *srcPtr++;
+            if (curState == InContent)
             {
                 if (fCurReader->isWhitespace(nextCh))
                 {
                     curState = InWhitespace;
-                    srcPtr++;
                     continue;
                 }
                 firstNonWS = true;
             }
+            else if (curState == InWhitespace)
+            {
+                if (fCurReader->isWhitespace(nextCh))
+                    continue;
+                if (firstNonWS)
+                    toFill.append(chSpace);
+                curState = InContent;
+                firstNonWS = true;
+            }
+            // Add this char to the target buffer
+            toFill.append(nextCh);
         }
-        // Add this char to the target buffer
-        toFill.append(nextCh);
-
-        // And move up to the next character in the source
-        srcPtr++;
     }
     if (fCurReader->isWhitespace(*(srcPtr-1)))
         fTrailing = true;
@@ -1023,11 +1033,11 @@ void SchemaValidator::checkRefElementConsistency(SchemaGrammar* const currentGra
                                                  const ComplexTypeInfo* const curTypeInfo,
                                                  const XercesGroupInfo* const curGroup) {
 
-    unsigned int elemCount = (curTypeInfo) ? curTypeInfo->elementCount() : curGroup->elementCount();
+    XMLSize_t elemCount = (curTypeInfo) ? curTypeInfo->elementCount() : curGroup->elementCount();
     int elemScope = (curTypeInfo) ? curTypeInfo->getScopeDefined() : curGroup->getScope();
     XSDLocator* typeInfoLocator = (curTypeInfo) ? curTypeInfo->getLocator() : curGroup->getLocator();
 
-    for (unsigned int i=0; i < elemCount; i++) {
+    for (XMLSize_t i=0; i < elemCount; i++) {
 
         const SchemaElementDecl* elemDecl = (curTypeInfo) ? curTypeInfo->elementAt(i) : curGroup->elementAt(i);
 
@@ -1051,9 +1061,9 @@ void SchemaValidator::checkRefElementConsistency(SchemaGrammar* const currentGra
 
             if (subsElements) {
 
-                unsigned subsElemSize = subsElements->size();
+                XMLSize_t subsElemSize = subsElements->size();
 
-                for (unsigned int j=0; j < subsElemSize; j++) {
+                for (XMLSize_t j=0; j < subsElemSize; j++) {
 
                     SchemaElementDecl* subsElem = subsElements->elementAt(j);
                     const XMLCh* subsElemName = subsElem->getBaseName();
@@ -1180,7 +1190,7 @@ void SchemaValidator::checkParticleDerivationOk(SchemaGrammar* const aGrammar,
                 {
                     ThrowXMLwithMemMgr(RuntimeException, XMLExcepts::PD_InvalidContentType, fMemoryManager);
                 }
-            }		
+            }
         }
     case ContentSpecNode::Any:
     case ContentSpecNode::Any_Other:
@@ -1199,6 +1209,12 @@ void SchemaValidator::checkParticleDerivationOk(SchemaGrammar* const aGrammar,
             case ContentSpecNode::All:
             case ContentSpecNode::Leaf:
                 {
+                    if (baseNodeType == ContentSpecNode::Any_NS_Choice) {
+                        if (checkNSSubsetChoiceRoot(curSpecNode, baseSpecNode)) {
+                            return;
+                        }
+                    }
+
                     ThrowXMLwithMemMgr(RuntimeException, XMLExcepts::PD_ForbiddenRes1, fMemoryManager);
                 }
             default:
@@ -1429,27 +1445,28 @@ SchemaValidator::checkNameAndTypeOK(SchemaGrammar* const currentGrammar,
         return;
     }
 
-    SchemaGrammar* aGrammar = currentGrammar;
-    const XMLCh* schemaURI = fGrammarResolver->getStringPool()->getValueForId(derivedURI);
+    SchemaGrammar* dGrammar = currentGrammar;
 
-    if (derivedURI != getScanner()->getEmptyNamespaceId()) {
-        aGrammar= (SchemaGrammar*) fGrammarResolver->getGrammar(schemaURI);
+    if (derivedURI != getScanner()->getEmptyNamespaceId())
+    {
+        const XMLCh* dURI = fGrammarResolver->getStringPool()->getValueForId(derivedURI);
+        dGrammar= (SchemaGrammar*) fGrammarResolver->getGrammar(dURI);
     }
 
-    if (!aGrammar) { //something is wrong
+    if (!dGrammar) { //something is wrong
         return;
     }
-   
-    const XMLCh* derivedName = derivedSpecNode->getElement()->getLocalPart();    
 
-    SchemaElementDecl* derivedElemDecl = findElement(derivedScope, derivedURI, derivedName, aGrammar);
+    const XMLCh* derivedName = derivedSpecNode->getElement()->getLocalPart();
+
+    SchemaElementDecl* derivedElemDecl = findElement(derivedScope, derivedURI, derivedName, dGrammar);
 
     if (!derivedElemDecl) {
         return;
     }
 
-	const XMLCh* baseName = baseSpecNode->getElement()->getLocalPart();
-	unsigned int baseURI = baseSpecNode->getElement()->getURI();
+    const XMLCh* baseName = baseSpecNode->getElement()->getLocalPart();
+    unsigned int baseURI = baseSpecNode->getElement()->getURI();
     bool subsGroup = false;
 
     if (!XMLString::equals(derivedName, baseName) || derivedURI != baseURI) {
@@ -1468,15 +1485,33 @@ SchemaValidator::checkNameAndTypeOK(SchemaGrammar* const currentGrammar,
         }
 
         subsGroup = true;
-    } 
+    }
 
     if (!isOccurrenceRangeOK(derivedSpecNode->getMinOccurs(), derivedSpecNode->getMaxOccurs(),
                              baseSpecNode->getMinOccurs(), baseSpecNode->getMaxOccurs())) {
         ThrowXMLwithMemMgr1(RuntimeException, XMLExcepts::PD_OccurRangeE, derivedName, fMemoryManager);
     }
 
+    // Find the schema grammar for the base element using the base type as
+    // a reference if it is available (it is unavailable if we are checking
+    // element group restriction which happens in redefine).
+    //
+    SchemaGrammar* bGrammar = dGrammar;
+
+    if (baseInfo)
+    {
+        const XMLCh* baseTypeURI = baseInfo->getTypeUri ();
+
+        if (baseTypeURI != 0 && *baseTypeURI != 0) // Non-empty namespace.
+            bGrammar= (SchemaGrammar*) fGrammarResolver->getGrammar(baseTypeURI);
+
+        if (!bGrammar) { //something is wrong
+            return;
+        }
+    }
+
     SchemaElementDecl* baseElemDecl =
-        findElement(baseScope, baseURI, baseName, aGrammar, baseInfo);
+        findElement(baseScope, baseURI, baseName, bGrammar, baseInfo);
 
     if (!baseElemDecl) {
         return;
@@ -1558,19 +1593,19 @@ SchemaValidator::checkICRestriction(const SchemaElementDecl* const derivedElemDe
                                    const XMLCh* const baseElemName) {
 
     // REVIST - need to get more clarification
-    unsigned int derivedICCount = derivedElemDecl->getIdentityConstraintCount();
-    unsigned int baseICCount = baseElemDecl->getIdentityConstraintCount();
+    XMLSize_t derivedICCount = derivedElemDecl->getIdentityConstraintCount();
+    XMLSize_t baseICCount = baseElemDecl->getIdentityConstraintCount();
 
     if (derivedICCount > baseICCount) {
         ThrowXMLwithMemMgr2(RuntimeException, XMLExcepts::PD_NameTypeOK6, derivedElemName, baseElemName, fMemoryManager);
     }
 
-    for (unsigned int i=0; i < derivedICCount; i++) {
+    for (XMLSize_t i=0; i < derivedICCount; i++) {
 
         bool found = false;
         IdentityConstraint* ic= derivedElemDecl->getIdentityConstraintAt(i);
 
-        for (unsigned int j=0; j < baseICCount; j++) {
+        for (XMLSize_t j=0; j < baseICCount; j++) {
             if (*ic == *(baseElemDecl->getIdentityConstraintAt(j))) {
 
                 found = true;
@@ -1642,13 +1677,13 @@ SchemaValidator::checkRecurseAsIfGroup(SchemaGrammar* const currentGrammar,
                                        ValueVectorOf<ContentSpecNode*>* const baseNodes,
                                        const ComplexTypeInfo* const baseInfo) {
 
-    ContentSpecNode::NodeTypes baseType = baseSpecNode->getType();    
+    ContentSpecNode::NodeTypes baseType = baseSpecNode->getType();
     bool toLax = false;
 
     //Treat the element as if it were in a group of the same variety as base
     ContentSpecNode derivedGroupNode(baseType, derivedSpecNodeIn, 0, false, true, fMemoryManager);
     const ContentSpecNode* const derivedSpecNode = &derivedGroupNode;
-    
+
     if ((baseSpecNode->getType() & 0x0f) == ContentSpecNode::Choice) {
         toLax = true;
     }
@@ -1656,21 +1691,21 @@ SchemaValidator::checkRecurseAsIfGroup(SchemaGrammar* const currentGrammar,
     // Instead of calling this routine, inline it
     // checkRecurse(currentGrammar, &derivedGroupNode, derivedScope, &derivedNodes,
     //             baseSpecNode, baseScope, baseNodes, baseInfo, toLax);
- 
+
     if (!isOccurrenceRangeOK(derivedSpecNode->getMinOccurs(), derivedSpecNode->getMaxOccurs(),
                              baseSpecNode->getMinOccurs(), baseSpecNode->getMaxOccurs())) {
         ThrowXMLwithMemMgr(RuntimeException, XMLExcepts::PD_Recurse1, fMemoryManager);
     }
 
     // check for mapping of children
-    XMLExcepts::Codes codeToThrow = XMLExcepts::NoError;   
-    unsigned int count2= baseNodes->size();
-    unsigned int current = 0;    
+    XMLExcepts::Codes codeToThrow = XMLExcepts::NoError;
+    XMLSize_t count2= baseNodes->size();
+    XMLSize_t current = 0;
 
     {
         bool matched = false;
 
-        for (unsigned int j = current; j < count2; j++) {
+        for (XMLSize_t j = current; j < count2; j++) {
 
             ContentSpecNode* baseNode = baseNodes->elementAt(j);
             current++;
@@ -1694,18 +1729,16 @@ SchemaValidator::checkRecurseAsIfGroup(SchemaGrammar* const currentGrammar,
 
         // did not find a match
         if (!matched) {
-            codeToThrow = XMLExcepts::PD_Recurse2;            
+            codeToThrow = XMLExcepts::PD_Recurse2;
         }
     }
 
     // Now, see if there are some elements in the base we didn't match up
     // in case of Sequence or All
-    if (!toLax && codeToThrow == XMLExcepts::NoError &&
-        (true || (baseType & 0x0f) == ContentSpecNode::All || 
-         derivedSpecNodeIn->getElement()->getURI() != XMLElementDecl::fgPCDataElemId)) {
-        for (unsigned int j = current; j < count2; j++) {
+    if (!toLax && codeToThrow == XMLExcepts::NoError) {
+        for (XMLSize_t j = current; j < count2; j++) {
             if (baseNodes->elementAt(j)->getMinTotalRange() * baseSpecNode->getMinOccurs()) { //!emptiable
-                codeToThrow =  XMLExcepts::PD_Recurse2;                
+                codeToThrow =  XMLExcepts::PD_Recurse2;
                 break;
             }
         }
@@ -1734,15 +1767,15 @@ SchemaValidator::checkRecurse(SchemaGrammar* const currentGrammar,
 
     // check for mapping of children
     XMLExcepts::Codes codeToThrow = XMLExcepts::NoError;
-    unsigned int count1= derivedNodes->size();
-    unsigned int count2= baseNodes->size();
-    unsigned int current = 0;    
+    XMLSize_t count1= derivedNodes->size();
+    XMLSize_t count2= baseNodes->size();
+    XMLSize_t current = 0;
 
-    for (unsigned int i=0; i<count1; i++) {
+    for (XMLSize_t i=0; i<count1; i++) {
 
         bool matched = false;
 
-        for (unsigned int j = current; j < count2; j++) {
+        for (XMLSize_t j = current; j < count2; j++) {
 
             ContentSpecNode* baseNode = baseNodes->elementAt(j);
             current++;
@@ -1775,9 +1808,9 @@ SchemaValidator::checkRecurse(SchemaGrammar* const currentGrammar,
     // Now, see if there are some elements in the base we didn't match up
     // in case of Sequence or All
     if (!toLax && codeToThrow == XMLExcepts::NoError) {
-        for (unsigned int j = current; j < count2; j++) {
-            if (baseNodes->elementAt(j)->getMinTotalRange()) { //!emptiable                
-                codeToThrow =  XMLExcepts::PD_Recurse2;                
+        for (XMLSize_t j = current; j < count2; j++) {
+            if (baseNodes->elementAt(j)->getMinTotalRange()) { //!emptiable
+                codeToThrow =  XMLExcepts::PD_Recurse2;
                 break;
             }
         }
@@ -1802,6 +1835,45 @@ void SchemaValidator::checkNSSubset(const ContentSpecNode* const derivedSpecNode
     }
 }
 
+bool SchemaValidator::checkNSSubsetChoiceRoot(const ContentSpecNode* const derivedSpecNode,
+                                    const ContentSpecNode* const baseSpecNode) {
+    bool found = false;
+
+    if (baseSpecNode->getType() == ContentSpecNode::Any_NS_Choice) {
+        const ContentSpecNode* first = baseSpecNode->getFirst();
+        const ContentSpecNode* second = baseSpecNode->getSecond();
+
+        if (first) {
+            found = checkNSSubsetChoiceRoot(derivedSpecNode, first);
+            if (found) return true;
+        }
+        if (second) {
+            found = checkNSSubsetChoiceRoot(derivedSpecNode, second);
+            if (found) return true;
+        }
+    }
+    else { // should be Any_NS
+        found = checkNSSubsetChoice(derivedSpecNode, baseSpecNode);
+    }
+
+    return found;
+}
+
+bool SchemaValidator::checkNSSubsetChoice(const ContentSpecNode* const derivedSpecNode,
+                                    const ContentSpecNode* const baseSpecNode) {
+
+    // check Occurrence ranges
+    if (!isOccurrenceRangeOK(derivedSpecNode->getMinOccurs(), derivedSpecNode->getMaxOccurs(),
+                             baseSpecNode->getMinOccurs(), baseSpecNode->getMaxOccurs())) {
+        return false;
+    }
+
+    if (!isWildCardEltSubset(derivedSpecNode, baseSpecNode)) {
+        return false;
+    }
+    return true;
+}
+
 bool
 SchemaValidator::isWildCardEltSubset(const ContentSpecNode* const derivedSpecNode,
                                      const ContentSpecNode* const baseSpecNode) {
@@ -1816,9 +1888,11 @@ SchemaValidator::isWildCardEltSubset(const ContentSpecNode* const derivedSpecNod
     unsigned int baseURI = baseSpecNode->getElement()->getURI();
     unsigned int derivedURI = derivedSpecNode->getElement()->getURI();
 
+    // Below we assume that empty string has id 1.
+    //
     if (((derivedType & 0x0f) == ContentSpecNode::Any_Other) &&
         ((baseType & 0x0f) == ContentSpecNode::Any_Other) &&
-        baseURI == derivedURI) {
+        (baseURI == derivedURI || baseURI == 1)) {
         return true;
     }
 
@@ -1830,7 +1904,7 @@ SchemaValidator::isWildCardEltSubset(const ContentSpecNode* const derivedSpecNod
         }
 
         if (((baseType & 0x0f) == ContentSpecNode::Any_Other) &&
-            baseURI != derivedURI) {
+            (derivedURI == 1 || baseURI != derivedURI)) {
             return true;
         }
     }
@@ -1858,9 +1932,9 @@ SchemaValidator::checkNSRecurseCheckCardinality(SchemaGrammar* const currentGram
     }
 
     // Check that each member of the group is a valid restriction of the wildcard
-    unsigned int nodesCount = derivedNodes->size();
+    XMLSize_t nodesCount = derivedNodes->size();
 
-    for (unsigned int i = 0; i < nodesCount; i++) {
+    for (XMLSize_t i = 0; i < nodesCount; i++) {
         checkParticleDerivationOk(currentGrammar, derivedNodes->elementAt(i), derivedScope, baseSpecNode, -1, 0, false);
     }
 }
@@ -1882,25 +1956,25 @@ SchemaValidator::checkRecurseUnordered(SchemaGrammar* const currentGrammar,
     }
 
     XMLExcepts::Codes  codeToThrow = XMLExcepts::NoError;
-    unsigned int       derivedCount= derivedNodes->size();
-    unsigned int       baseCount = baseNodes->size();
+    XMLSize_t          derivedCount= derivedNodes->size();
+    XMLSize_t          baseCount = baseNodes->size();
     bool*              foundIt = (bool*) fMemoryManager->allocate
     (
         baseCount * sizeof(bool)
     );//new bool[baseCount];
     ArrayJanitor<bool> janFoundIt(foundIt, fMemoryManager);
 
-    for (unsigned k=0; k < baseCount; k++) {
+    for (XMLSize_t k=0; k < baseCount; k++) {
         foundIt[k] = false;
     }
 
     // check for mapping of children
-    for (unsigned int i = 0; i < derivedCount; i++) {
+    for (XMLSize_t i = 0; i < derivedCount; i++) {
 
         ContentSpecNode* derivedNode = derivedNodes->elementAt(i);
         bool matched = false;
 
-        for (unsigned int j = 0; j < baseCount; j++) {
+        for (XMLSize_t j = 0; j < baseCount; j++) {
 
             try {
 
@@ -1929,7 +2003,7 @@ SchemaValidator::checkRecurseUnordered(SchemaGrammar* const currentGrammar,
 
     // For all unmapped particles in base, check to see it it's emptiable or not
     if (codeToThrow == XMLExcepts::NoError) {
-        for (unsigned int j=0; j < baseCount; j++) {
+        for (XMLSize_t j=0; j < baseCount; j++) {
             if (!foundIt[j] && baseNodes->elementAt(j)->getMinTotalRange()) {
 
 	            codeToThrow = XMLExcepts::PD_RecurseUnordered;
@@ -1954,13 +2028,13 @@ SchemaValidator::checkMapAndSum(SchemaGrammar* const currentGrammar,
                                 const ComplexTypeInfo* const baseInfo) {
 
     // check Occurrence ranges
-    int derivedCount = derivedNodes->size();
-    int baseCount = baseNodes->size();
-    int derivedMin = derivedSpecNode->getMinOccurs() * derivedCount;
+    XMLSize_t derivedCount = derivedNodes->size();
+    XMLSize_t baseCount = baseNodes->size();
+    int derivedMin = derivedSpecNode->getMinOccurs() * (unsigned int)derivedCount;
     int derivedMax = derivedSpecNode->getMaxOccurs();
 
     if (derivedMax != SchemaSymbols::XSD_UNBOUNDED) {
-        derivedMax *= derivedCount;
+        derivedMax *= (unsigned int)derivedCount;
     }
 
     if (!isOccurrenceRangeOK(derivedMin, derivedMax, baseSpecNode->getMinOccurs(),
@@ -1969,12 +2043,12 @@ SchemaValidator::checkMapAndSum(SchemaGrammar* const currentGrammar,
     }
 
     // check for mapping of children
-    for (int i = 0; i < derivedCount; i++) {
+    for (XMLSize_t i = 0; i < derivedCount; i++) {
 
         ContentSpecNode* derivedNode = derivedNodes->elementAt(i);
         bool matched = false;
 
-        for (int j = 0; j < baseCount && !matched; j++) {
+        for (XMLSize_t j = 0; j < baseCount && !matched; j++) {
 
             try {
 

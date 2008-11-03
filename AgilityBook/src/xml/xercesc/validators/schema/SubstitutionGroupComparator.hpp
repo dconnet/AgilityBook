@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: SubstitutionGroupComparator.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: SubstitutionGroupComparator.hpp 677705 2008-07-17 20:15:32Z amassari $
  */
 
-#if !defined(SUBSTITUTIONGROUPCOMPARATOR_HPP)
-#define SUBSTITUTIONGROUPCOMPARATOR_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_SUBSTITUTIONGROUPCOMPARATOR_HPP)
+#define XERCESC_INCLUDE_GUARD_SUBSTITUTIONGROUPCOMPARATOR_HPP
 
 #include <xercesc/util/StringPool.hpp>
 #include <xercesc/util/QName.hpp>
@@ -69,8 +69,8 @@ public:
 	   *
 	   * @param  exeplar     QName of the head element in the group
 	   */
-    bool isEquivalentTo(QName* const anElement
-                       , QName* const exemplar);
+    bool isEquivalentTo(const QName* const anElement
+                      , const QName* const exemplar);
 	 //@}
 
     /*

@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: ValueStore.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: ValueStore.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-#if !defined(VALUESTORE_HPP)
-#define VALUESTORE_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_VALUESTORE_HPP)
+#define XERCESC_INCLUDE_GUARD_VALUESTORE_HPP
 
 /**
   * This class stores values associated to an identity constraint.
@@ -73,17 +73,10 @@ public:
                   const XMLCh* const value);
     bool contains(const FieldValueMap* const other);
 
-    /**
-      * @deprecated
-      */
-    void addValue(IC_Field* const field, DatatypeValidator* const dv,
-                  const XMLCh* const value);
-
-
     // -----------------------------------------------------------------------
     //  Document handling methods
     // -----------------------------------------------------------------------
-    void endDcocumentFragment(ValueStoreCache* const valueStoreCache);
+    void endDocumentFragment(ValueStoreCache* const valueStoreCache);
 
     // -----------------------------------------------------------------------
     //  Error reporting methods
@@ -117,7 +110,7 @@ private:
     //  Data
     // -----------------------------------------------------------------------
     bool                        fDoReportError;
-    int                         fValuesCount;
+    XMLSize_t                   fValuesCount;
     IdentityConstraint*         fIdentityConstraint;
     FieldValueMap               fValues;
     RefVectorOf<FieldValueMap>* fValueTuples;

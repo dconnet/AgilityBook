@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: XMLScanner.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XMLScanner.hpp 679340 2008-07-24 10:28:29Z borisk $
  */
 
-#if !defined(XMLSCANNER_HPP)
-#define XMLSCANNER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XMLSCANNER_HPP)
+#define XERCESC_INCLUDE_GUARD_XMLSCANNER_HPP
 
 #include <xercesc/framework/XMLBufferMgr.hpp>
 #include <xercesc/framework/XMLErrorCodes.hpp>
@@ -176,6 +176,7 @@ public :
         , const XMLCh* const        text2 = 0
         , const XMLCh* const        text3 = 0
         , const XMLCh* const        text4 = 0
+
     );
 
     // -----------------------------------------------------------------------
@@ -254,7 +255,7 @@ public :
     ) const;*/
     const Locator* getLocator() const;
     const ReaderMgr* getReaderMgr() const;
-    unsigned int getSrcOffset() const;
+    XMLFilePos getSrcOffset() const;
     bool getStandalone() const;
     const XMLValidator* getValidator() const;
     XMLValidator* getValidator();
@@ -266,6 +267,7 @@ public :
     XMLCh* getExternalNoNamespaceSchemaLocation() const;
     SecurityManager* getSecurityManager() const;
     bool getLoadExternalDTD() const;
+    bool getLoadSchema() const;
     bool getNormalizeData() const;
     bool isCachingGrammarFromParse() const;
     bool isUsingCachedGrammarInParse() const;
@@ -283,6 +285,7 @@ public :
     bool getIgnoreAnnotations() const;
     bool getDisableDefaultEntityResolution() const;
     bool getSkipDTDValidation() const;
+    bool getHandleMultipleImports() const;
 
     // -----------------------------------------------------------------------
     //  Getter methods
@@ -372,11 +375,12 @@ public :
     void setExternalNoNamespaceSchemaLocation(const char* const noNamespaceSchemaLocation);
     void setSecurityManager(SecurityManager* const securityManager);
     void setLoadExternalDTD(const bool loadDTD);
+    void setLoadSchema(const bool loadSchema);
     void setNormalizeData(const bool normalizeData);
     void setCalculateSrcOfs(const bool newValue);
     void setParseSettings(XMLScanner* const refScanner);
     void setStandardUriConformant(const bool newValue);
-    void setInputBufferSize(const size_t bufferSize);
+    void setInputBufferSize(const XMLSize_t bufferSize);
 
     void setGenerateSyntheticAnnotations(const bool newValue);
     void setValidateAnnotations(const bool newValue);
@@ -384,18 +388,12 @@ public :
     void setIgnoreAnnotations(const bool newValue);
     void setDisableDefaultEntityResolution(const bool newValue);
     void setSkipDTDValidation(const bool newValue);
+    void setHandleMultipleImports(const bool newValue);
 
     // -----------------------------------------------------------------------
     //  Mutator methods
     // -----------------------------------------------------------------------
     void incrementErrorCount(void);			// For use by XMLValidator
-
-    // -----------------------------------------------------------------------
-    //  Deprecated methods as of 3.2.0. Use getValidationScheme() and
-    //  setValidationScheme() instead.
-    // -----------------------------------------------------------------------
-    bool getDoValidation() const;
-    void setDoValidation(const bool validate);
 
     // -----------------------------------------------------------------------
     //  Document scanning methods
@@ -448,12 +446,6 @@ public :
         , const bool            toCache = false
     );
 
-    // -----------------------------------------------------------------------
-    //  Notification that lazy data has been deleted
-    // -----------------------------------------------------------------------
-	static void reinitScannerMutex();
-	static void reinitMsgLoader();
-
 protected:
     // -----------------------------------------------------------------------
     //  Protected pure virtual methods
@@ -492,7 +484,7 @@ protected:
     void checkInternalDTD(bool hasExtSubset, const XMLCh* const sysId, const XMLCh* const pubId);
     void checkIDRefs();
     bool isLegalToken(const XMLPScanToken& toCheck);
-    XMLTokens senseNextToken(unsigned int& orgReader);
+    XMLTokens senseNextToken(XMLSize_t& orgReader);
     void initValidator(XMLValidator* theValidator);
     inline void resetValidationContext();
     unsigned int *getNewUIntPtr();
@@ -502,7 +494,7 @@ protected:
     inline
     void setAttrDupChkRegistry
          (
-            const unsigned int &attrNumber
+            const XMLSize_t    &attrNumber
           ,       bool         &toUseHashTable
          );
 
@@ -704,6 +696,10 @@ protected:
     //  fLoadExternalDTD
     //      This flag indicates whether the external DTD be loaded or not
     //
+    //  fLoadSchema
+    //      This flag indicates whether the parser should attempt to load
+    //      schemas if they cannot be found in the grammar pool.
+    //
     //  fNormalizeData
     //      This flag indicates whether the parser should perform datatype
     //      normalization that is defined in the schema.
@@ -716,14 +712,14 @@ protected:
     //      This flag controls whether we force conformant URI
     //
     //  fXMLVersion
-    //      Enum to indicate if the main doc is XML 1.1 or XML 1.0 conformant    
+    //      Enum to indicate if the main doc is XML 1.1 or XML 1.0 conformant
     //  fUIntPool
     //      pool of unsigned integers to help with duplicate attribute
     //      detection and filling in default/fixed attributes
     //  fUIntPoolRow
     //      current row in fUIntPool
     //  fUIntPoolCol
-    //      current column i row
+    //      current column in row
     //  fUIntPoolRowTotal
     //      total number of rows in table
     //
@@ -731,7 +727,7 @@ protected:
     //      Pluggable memory manager for dynamic allocation/deallocation.
     //
     // -----------------------------------------------------------------------
-    size_t                      fBufferSize;
+    XMLSize_t                   fBufferSize;
     bool                        fStandardUriConformant;
     bool                        fCalculateSrcOfs;
     bool                        fDoNamespaces;
@@ -748,6 +744,7 @@ protected:
     bool                        fToCacheGrammar;
     bool                        fUseCachedGrammar;
     bool                        fLoadExternalDTD;
+    bool                        fLoadSchema;
     bool                        fNormalizeData;
     bool                        fGenerateSyntheticAnnotations;
     bool                        fValidateAnnotations;
@@ -755,9 +752,10 @@ protected:
     bool                        fIgnoreAnnotations;
     bool                        fDisableDefaultEntityResolution;
     bool                        fSkipDTDValidation;
+    bool                        fHandleMultipleImports;
     int                         fErrorCount;
-    unsigned int                fEntityExpansionLimit;
-    unsigned int                fEntityExpansionCount;
+    XMLSize_t                   fEntityExpansionLimit;
+    XMLSize_t                   fEntityExpansionCount;
     unsigned int                fEmptyNamespaceId;
     unsigned int                fUnknownNamespaceId;
     unsigned int                fXMLNamespaceId;
@@ -770,7 +768,7 @@ protected:
     XMLUInt32                   fScannerId;
     XMLUInt32                   fSequenceId;
     RefVectorOf<XMLAttr>*       fAttrList;
-    RefHash2KeysTableOf<XMLAttr>*  fAttrDupChkRegistry;    
+    RefHash2KeysTableOf<XMLAttr>*  fAttrDupChkRegistry;
     XMLDocumentHandler*         fDocHandler;
     DocTypeHandler*             fDocTypeHandler;
     XMLEntityHandler*           fEntityHandler;
@@ -822,7 +820,7 @@ private :
     //  Private scanning methods
     // -----------------------------------------------------------------------
     bool getQuotedString(XMLBuffer& toFill);
-    unsigned int scanUpToWSOr
+    XMLSize_t scanUpToWSOr
     (
                 XMLBuffer&  toFill
         , const XMLCh       chEndChar
@@ -943,7 +941,7 @@ inline const ReaderMgr* XMLScanner::getReaderMgr() const
     return &fReaderMgr;
 }
 
-inline unsigned int XMLScanner::getSrcOffset() const
+inline XMLFilePos XMLScanner::getSrcOffset() const
 {
     return fReaderMgr.getSrcOffset();
 }
@@ -1048,6 +1046,11 @@ inline bool XMLScanner::getLoadExternalDTD() const
     return fLoadExternalDTD;
 }
 
+inline bool XMLScanner::getLoadSchema() const
+{
+    return fLoadSchema;
+}
+
 inline bool XMLScanner::getNormalizeData() const
 {
     return fNormalizeData;
@@ -1131,6 +1134,11 @@ inline bool XMLScanner::getDisableDefaultEntityResolution() const
 inline bool XMLScanner::getSkipDTDValidation() const
 {
     return fSkipDTDValidation;
+}
+
+inline bool XMLScanner::getHandleMultipleImports() const
+{
+    return fHandleMultipleImports;
 }
 
 // ---------------------------------------------------------------------------
@@ -1248,7 +1256,7 @@ inline void XMLScanner::setExternalNoNamespaceSchemaLocation(const char* const n
 inline void XMLScanner::setSecurityManager(SecurityManager* const securityManager)
 {
     fSecurityManager = securityManager;
-    if(securityManager != 0) 
+    if(securityManager != 0)
     {
         fEntityExpansionLimit = securityManager->getEntityExpansionLimit();
         fEntityExpansionCount = 0;
@@ -1258,6 +1266,11 @@ inline void XMLScanner::setSecurityManager(SecurityManager* const securityManage
 inline void XMLScanner::setLoadExternalDTD(const bool loadDTD)
 {
     fLoadExternalDTD = loadDTD;
+}
+
+inline void XMLScanner::setLoadSchema(const bool loadSchema)
+{
+    fLoadSchema = loadSchema;
 }
 
 inline void XMLScanner::setNormalizeData(const bool normalizeData)
@@ -1296,10 +1309,10 @@ inline void XMLScanner::setValidateAnnotations(const bool newValue)
     fValidateAnnotations = newValue;
 }
 
-inline void XMLScanner::setInputBufferSize(const size_t bufferSize)
+inline void XMLScanner::setInputBufferSize(const XMLSize_t bufferSize)
 {
     fBufferSize = bufferSize;
-    fCDataBuf.setFullHandler(this, (unsigned int)fBufferSize);
+    fCDataBuf.setFullHandler(this, fBufferSize);
 }
 
 inline void XMLScanner::setIgnoredCachedDTD(const bool newValue)
@@ -1322,29 +1335,17 @@ inline void XMLScanner::setSkipDTDValidation(const bool newValue)
     fSkipDTDValidation = newValue;
 }
 
+inline void XMLScanner::setHandleMultipleImports(const bool newValue)
+{
+    fHandleMultipleImports = newValue;
+}
+
 // ---------------------------------------------------------------------------
 //  XMLScanner: Mutator methods
 // ---------------------------------------------------------------------------
 inline void XMLScanner::incrementErrorCount()
 {
     ++fErrorCount;
-}
-
-// ---------------------------------------------------------------------------
-//  XMLScanner: Deprecated methods
-// ---------------------------------------------------------------------------
-inline bool XMLScanner::getDoValidation() const
-{
-    return fValidate;
-}
-
-inline void XMLScanner::setDoValidation(const bool validate)
-{
-    fValidate = validate;
-    if (fValidate)
-        fValScheme = Val_Always;
-    else
-        fValScheme = Val_Never;
 }
 
 inline void XMLScanner::resetValidationContext()
@@ -1354,7 +1355,7 @@ inline void XMLScanner::resetValidationContext()
     fEntityDeclPoolRetrieved = false;
 }
 
-inline void XMLScanner::setAttrDupChkRegistry(const unsigned int &attrNumber
+inline void XMLScanner::setAttrDupChkRegistry(const XMLSize_t    &attrNumber
                                             ,       bool         &toUseHashTable)
 {
    // once the attribute exceed 100, we use hash table to check duplication
@@ -1366,7 +1367,7 @@ inline void XMLScanner::setAttrDupChkRegistry(const unsigned int &attrNumber
         {
             fAttrDupChkRegistry = new (fMemoryManager) RefHash2KeysTableOf<XMLAttr>
             (
-              2*attrNumber+1, false, new (fMemoryManager)HashXMLCh(), fMemoryManager
+              2*attrNumber+1, false, fMemoryManager
             );
         }
         else
@@ -1385,4 +1386,3 @@ inline Grammar::GrammarType XMLScanner::getCurrentGrammarType() const
 XERCES_CPP_NAMESPACE_END
 
 #endif
-

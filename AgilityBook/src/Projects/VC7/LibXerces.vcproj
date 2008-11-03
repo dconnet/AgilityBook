@@ -22,7 +22,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../xml"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_CRTDBG_MAP_ALLOC;PROJ_SAX2;PROJ_XMLPARSER;PROJ_XMLUTIL;PROJ_PARSERS;PROJ_SAX4C;PROJ_DOM;PROJ_VALIDATORS;XML_USE_WIN32_TRANSCODER;XML_USE_INMEM_MESSAGELOADER;XML_USE_NETACCESSOR_WINSOCK;XML_LIBRARY"
+				PreprocessorDefinitions="_CRTDBG_MAP_ALLOC;_DEBUG;WIN32;_WINDOWS;XERCES_STATIC_LIBRARY;XERCES_BUILDING_LIBRARY;XERCES_USE_TRANSCODER_WINDOWS;XERCES_USE_MSGLOADER_INMEMORY;XERCES_USE_NETACCESSOR_WINSOCK;XERCES_USE_FILEMGR_WINDOWS;XERCES_USE_MUTEXMGR_WINDOWS;XERCES_PATH_DELIMITER_BACKSLASH;HAVE_STRICMP;HAVE_STRNICMP;HAVE_LIMITS_H;HAVE_SYS_TIMEB_H;HAVE_FTIME;HAVE_WCSUPR;HAVE_WCSLWR;HAVE_WCSICMP;HAVE_WCSNICMP"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -75,7 +75,7 @@
 				Optimization="3"
 				OmitFramePointers="TRUE"
 				AdditionalIncludeDirectories="../../xml"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;PLATFORM_WIN32;_CRTDBG_MAP_ALLOC;PROJ_XMLPARSER;PROJ_XMLUTIL;PROJ_PARSERS;PROJ_SAX4C;PROJ_SAX2;PROJ_DOM;PROJ_VALIDATORS;XML_USE_WIN32_TRANSCODER;XML_USE_INMEM_MESSAGELOADER;XML_USE_NETACCESSOR_WINSOCK;XML_LIBRARY"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;XERCES_STATIC_LIBRARY;XERCES_BUILDING_LIBRARY;XERCES_USE_TRANSCODER_WINDOWS;XERCES_USE_MSGLOADER_INMEMORY;XERCES_USE_NETACCESSOR_WINSOCK;XERCES_USE_FILEMGR_WINDOWS;XERCES_USE_MUTEXMGR_WINDOWS;XERCES_PATH_DELIMITER_BACKSLASH;HAVE_STRICMP;HAVE_STRNICMP;HAVE_LIMITS_H;HAVE_SYS_TIMEB_H;HAVE_FTIME;HAVE_WCSUPR;HAVE_WCSLWR;HAVE_WCSICMP;HAVE_WCSNICMP"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="TRUE"
@@ -181,22 +181,7 @@
 				RelativePath="..\..\xml\xercesc\util\FlagJanitor.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\util\HashBase.hpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\util\HashCMStateSet.hpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\util\HashPtr.cpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\util\HashPtr.hpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\util\HashXMLCh.cpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\util\HashXMLCh.hpp">
+				RelativePath="..\..\xml\xercesc\util\Hashers.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\util\HeaderDummy.cpp">
@@ -260,6 +245,12 @@
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\util\PlatformUtils.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\util\PSVIUni.cpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\util\PSVIUni.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\util\QName.cpp">
@@ -334,6 +325,25 @@
 				RelativePath="..\..\xml\xercesc\util\ValueVectorOf.hpp">
 			</File>
 			<File
+				RelativePath="..\..\xml\xercesc\util\Xerces_autoconf_config.hpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="echo copy &quot;$(InputDir)$(InputName).msvc.hpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;copy &quot;$(InputDir)$(InputName).msvc.hpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(InputDir)\$(InputName).msvc.hpp"
+						Outputs="$(InputPath)"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="echo copy &quot;$(InputDir)$(InputName).msvc.hpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;copy &quot;$(InputDir)$(InputName).msvc.hpp&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="$(InputDir)\$(InputName).msvc.hpp"
+						Outputs="$(InputPath)"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\xml\xercesc\util\XercesDefs.hpp">
 			</File>
 			<File
@@ -398,9 +408,6 @@
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\util\XMLDateTime.hpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\util\XMLDeleterFor.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\util\XMLDOMMsg.hpp">
@@ -496,10 +503,10 @@
 				RelativePath="..\..\xml\xercesc\util\XMLStringTokenizer.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\util\XMLUCS4Transcoder.hpp">
+				RelativePath="..\..\xml\xercesc\util\XMLUCS4Transcoder.cpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\util\XMLUCSTranscoder.cpp">
+				RelativePath="..\..\xml\xercesc\util\XMLUCS4Transcoder.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\util\XMLUni.cpp">
@@ -541,37 +548,6 @@
 				RelativePath="..\..\xml\xercesc\util\XMLWin1252Transcoder.hpp">
 			</File>
 			<Filter
-				Name="Win32"
-				Filter=".cpp,.hpp">
-				<File
-					RelativePath="..\..\xml\xercesc\util\Platforms\Win32\resource.h">
-				</File>
-				<File
-					RelativePath="..\..\xml\xercesc\util\Platforms\Win32\Win32Defs.hpp">
-				</File>
-				<File
-					RelativePath="..\..\xml\xercesc\util\Platforms\Win32\Win32PlatformUtils.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\..\xml\xercesc\util\XMLRegisterCleanup.cpp">
-				</File>
-				<File
-					RelativePath="..\..\xml\xercesc\util\XMLRegisterCleanup.hpp">
-				</File>
-			</Filter>
-			<Filter
 				Name="MsgLoaders"
 				Filter=".cpp,.hpp">
 				<File
@@ -589,18 +565,6 @@
 				Filter=".cpp,.hpp">
 				<File
 					RelativePath="..\..\xml\xercesc\util\Transcoders\Win32\Win32TransService.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\util\Transcoders\Win32\Win32TransService.hpp">
@@ -610,37 +574,19 @@
 				Name="NetAccessors"
 				Filter=".cpp,.hpp">
 				<File
+					RelativePath="..\..\xml\xercesc\util\NetAccessors\BinHTTPInputStreamCommon.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\util\NetAccessors\BinHTTPInputStreamCommon.hpp">
+				</File>
+				<File
 					RelativePath="..\..\xml\xercesc\util\NetAccessors\WinSock\BinHTTPURLInputStream.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\util\NetAccessors\WinSock\BinHTTPURLInputStream.hpp">
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\util\NetAccessors\WinSock\WinSockNetAccessor.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							DisableLanguageExtensions="FALSE"/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\util\NetAccessors\WinSock\WinSockNetAccessor.hpp">
@@ -686,22 +632,10 @@
 					RelativePath="..\..\xml\xercesc\util\regx\ConcatToken.hpp">
 				</File>
 				<File
-					RelativePath="..\..\xml\xercesc\util\regx\ConditionToken.cpp">
-				</File>
-				<File
-					RelativePath="..\..\xml\xercesc\util\regx\ConditionToken.hpp">
-				</File>
-				<File
 					RelativePath="..\..\xml\xercesc\util\regx\Match.cpp">
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\util\regx\Match.hpp">
-				</File>
-				<File
-					RelativePath="..\..\xml\xercesc\util\regx\ModifierToken.cpp">
-				</File>
-				<File
-					RelativePath="..\..\xml\xercesc\util\regx\ModifierToken.hpp">
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\util\regx\Op.cpp">
@@ -812,9 +746,30 @@
 					RelativePath="..\..\xml\xercesc\util\regx\XMLUniCharacter.hpp">
 				</File>
 			</Filter>
+			<Filter
+				Name="FileManager"
+				Filter="">
+				<File
+					RelativePath="..\..\xml\xercesc\util\FileManagers\WindowsFileMgr.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\util\FileManagers\WindowsFileMgr.hpp">
+				</File>
+			</Filter>
+			<Filter
+				Name="MutexManager"
+				Filter="">
+				<File
+					RelativePath="..\..\xml\xercesc\util\MutexManagers\WindowsMutexMgr.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\util\MutexManagers\WindowsMutexMgr.hpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
-			Name="framework">
+			Name="framework"
+			Filter="">
 			<File
 				RelativePath="..\..\xml\xercesc\framework\LocalFileFormatTarget.cpp">
 			</File>
@@ -864,10 +819,10 @@
 				RelativePath="..\..\xml\xercesc\framework\ValidationContext.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\framework\Wrapper4DOMInputSource.cpp">
+				RelativePath="..\..\xml\xercesc\framework\Wrapper4DOMLSInput.cpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\framework\Wrapper4DOMInputSource.hpp">
+				RelativePath="..\..\xml\xercesc\framework\Wrapper4DOMLSInput.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\framework\Wrapper4InputSource.cpp">
@@ -972,6 +927,9 @@
 				RelativePath="..\..\xml\xercesc\framework\XMLSchemaDescription.cpp">
 			</File>
 			<File
+				RelativePath="..\..\xml\xercesc\framework\XMLSchemaDescription.hpp">
+			</File>
+			<File
 				RelativePath="..\..\xml\xercesc\framework\XMLValidator.cpp">
 			</File>
 			<File
@@ -981,7 +939,8 @@
 				RelativePath="..\..\xml\xercesc\framework\XMLValidityCodes.hpp">
 			</File>
 			<Filter
-				Name="psvi">
+				Name="psvi"
+				Filter="">
 				<File
 					RelativePath="..\..\xml\xercesc\framework\psvi\PSVIAttribute.cpp">
 				</File>
@@ -1189,12 +1148,6 @@
 				RelativePath="..\..\xml\xercesc\internal\IGXMLScanner2.cpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\internal\MemoryManagerArrayImpl.cpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\internal\MemoryManagerArrayImpl.hpp">
-			</File>
-			<File
 				RelativePath="..\..\xml\xercesc\internal\MemoryManagerImpl.cpp">
 			</File>
 			<File
@@ -1237,10 +1190,10 @@
 				RelativePath="..\..\xml\xercesc\internal\WFXMLScanner.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\internal\XMLGrammarPoolImpl.cpp">
+				RelativePath="..\..\xml\xercesc\framework\XMLGrammarPoolImpl.cpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\internal\XMLGrammarPoolImpl.hpp">
+				RelativePath="..\..\xml\xercesc\framework\XMLGrammarPoolImpl.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\internal\XMLInternalErrorHandler.hpp">
@@ -1344,10 +1297,10 @@
 				RelativePath="..\..\xml\xercesc\parsers\AbstractDOMParser.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\parsers\DOMBuilderImpl.cpp">
+				RelativePath="..\..\xml\xercesc\parsers\DOMLSParserImpl.cpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\parsers\DOMBuilderImpl.hpp">
+				RelativePath="..\..\xml\xercesc\parsers\DOMLSParserImpl.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\parsers\SAX2XMLFilterImpl.cpp">
@@ -1400,6 +1353,9 @@
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\validators\common\CMLeaf.hpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\validators\common\CMRepeatingLeaf.hpp">
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\validators\common\CMNode.hpp">
@@ -1976,12 +1932,10 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="dom">
+			Name="dom"
+			Filter="">
 			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMAttr.hpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\dom\DOMBuilder.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMCDATASection.hpp">
@@ -2020,9 +1974,6 @@
 				RelativePath="..\..\xml\xercesc\dom\DOMEntityReference.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\dom\DOMEntityResolver.hpp">
-			</File>
-			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMError.hpp">
 			</File>
 			<File
@@ -2038,6 +1989,9 @@
 				RelativePath="..\..\xml\xercesc\dom\DOMImplementation.hpp">
 			</File>
 			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMImplementationList.hpp">
+			</File>
+			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMImplementationLS.hpp">
 			</File>
 			<File
@@ -2047,10 +2001,34 @@
 				RelativePath="..\..\xml\xercesc\dom\DOMImplementationSource.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\dom\DOMInputSource.hpp">
+				RelativePath="..\..\xml\xercesc\dom\DOMLocator.hpp">
 			</File>
 			<File
-				RelativePath="..\..\xml\xercesc\dom\DOMLocator.hpp">
+				RelativePath="..\..\xml\xercesc\dom\DOMLSException.cpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSException.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSInput.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSOutput.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSParser.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSParserFilter.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSResourceResolver.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSSerializer.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMLSSerializerFilter.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMNamedNodeMap.hpp">
@@ -2083,6 +2061,9 @@
 				RelativePath="..\..\xml\xercesc\dom\DOMRangeException.hpp">
 			</File>
 			<File
+				RelativePath="..\..\xml\xercesc\dom\DOMStringList.hpp">
+			</File>
+			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMText.hpp">
 			</File>
 			<File
@@ -2093,12 +2074,6 @@
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMUserDataHandler.hpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\dom\DOMWriter.hpp">
-			</File>
-			<File
-				RelativePath="..\..\xml\xercesc\dom\DOMWriterFilter.hpp">
 			</File>
 			<File
 				RelativePath="..\..\xml\xercesc\dom\DOMXPathEvaluator.hpp">
@@ -2122,7 +2097,8 @@
 				RelativePath="..\..\xml\xercesc\dom\DOMXPathResult.hpp">
 			</File>
 			<Filter
-				Name="impl">
+				Name="impl"
+				Filter="">
 				<File
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMAttrImpl.cpp">
 				</File>
@@ -2235,7 +2211,13 @@
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMImplementationImpl.cpp">
 				</File>
 				<File
-					RelativePath="..\..\xml\xercesc\dom\impl\DOMImplementationimpl.hpp">
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMImplementationImpl.hpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMImplementationListImpl.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMImplementationListImpl.hpp">
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMImplementationRegistry.cpp">
@@ -2245,6 +2227,24 @@
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMLocatorImpl.hpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMLSInputImpl.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMLSInputImpl.hpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMLSOutputImpl.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMLSOutputImpl.hpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMLSSerializerImpl.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMLSSerializerImpl.hpp">
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMNamedNodeMapImpl.cpp">
@@ -2313,6 +2313,12 @@
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMRangeImpl.hpp">
 				</File>
 				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMStringListImpl.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMStringListImpl.hpp">
+				</File>
+				<File
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMStringPool.cpp">
 				</File>
 				<File
@@ -2337,10 +2343,22 @@
 					RelativePath="..\..\xml\xercesc\dom\impl\DOMTypeInfoImpl.hpp">
 				</File>
 				<File
-					RelativePath="..\..\xml\xercesc\dom\impl\DOMWriterImpl.cpp">
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMXPathExpressionImpl.cpp">
 				</File>
 				<File
-					RelativePath="..\..\xml\xercesc\dom\impl\DOMWriterImpl.hpp">
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMXPathExpressionImpl.hpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMXPathNSResolverImpl.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMXPathNSResolverImpl.hpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMXPathResultImpl.cpp">
+				</File>
+				<File
+					RelativePath="..\..\xml\xercesc\dom\impl\DOMXPathResultImpl.hpp">
 				</File>
 				<File
 					RelativePath="..\..\xml\xercesc\dom\impl\XSDElementNSImpl.cpp">
@@ -2349,6 +2367,28 @@
 					RelativePath="..\..\xml\xercesc\dom\impl\XSDElementNSImpl.hpp">
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="xinclude"
+			Filter="">
+			<File
+				RelativePath="..\..\xml\xercesc\xinclude\XIncludeDOMDocumentProcessor.cpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\xinclude\XIncludeDOMDocumentProcessor.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\xinclude\XIncludeLocation.cpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\xinclude\XIncludeLocation.hpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\xinclude\XIncludeUtils.cpp">
+			</File>
+			<File
+				RelativePath="..\..\xml\xercesc\xinclude\XIncludeUtils.hpp">
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: WFXMLScanner.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: WFXMLScanner.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-
-#if !defined(WFXMLSCANNER_HPP)
-#define WFXMLSCANNER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_WFXMLSCANNER_HPP)
+#define XERCESC_INCLUDE_GUARD_WFXMLSCANNER_HPP
 
 #include <xercesc/internal/XMLScanner.hpp>
 #include <xercesc/util/ValueHashTableOf.hpp>
@@ -150,7 +149,7 @@ private :
     unsigned int                       fElementIndex;
     RefVectorOf<XMLElementDecl>*       fElements;
     ValueHashTableOf<XMLCh>*           fEntityTable;
-    ValueVectorOf<unsigned int>*       fAttrNameHashList;
+    ValueVectorOf<XMLSize_t>*          fAttrNameHashList;
     ValueVectorOf<XMLAttr*>*           fAttrNSList;
     RefHashTableOf<XMLElementDecl>*    fElementLookup;  
 };

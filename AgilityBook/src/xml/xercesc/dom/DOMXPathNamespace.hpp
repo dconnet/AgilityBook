@@ -1,6 +1,3 @@
-#ifndef DOMXPathNamespace_HEADER_GUARD_
-#define DOMXPathNamespace_HEADER_GUARD_
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,6 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/*
+ * $Id: DOMXPathNamespace.hpp 527149 2007-04-10 14:56:39Z amassari $
+ */
+
+#if !defined(XERCESC_INCLUDE_GUARD_DOMXPATHNAMESPACE_HPP)
+#define XERCESC_INCLUDE_GUARD_DOMXPATHNAMESPACE_HPP
 
 #include <xercesc/dom/DOMNode.hpp>
 
@@ -90,7 +94,7 @@ public:
     //@}
 
     // -----------------------------------------------------------------------
-    // Virtual DOMDocument interface
+    // Virtual DOMXPathNamespace interface
     // -----------------------------------------------------------------------
     /** @name Functions introduced in DOM Level 3 */
     //@{

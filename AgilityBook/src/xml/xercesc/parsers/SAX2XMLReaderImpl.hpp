@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: SAX2XMLReaderImpl.hpp 569031 2007-08-23 15:05:28Z amassari $
+ * $Id: SAX2XMLReaderImpl.hpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
-#if !defined(SAX2XMLReaderImpl_HPP)
-#define SAX2XMLReaderImpl_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_SAX2XMLREADERIMPL_HPP)
+#define XERCESC_INCLUDE_GUARD_SAX2XMLREADERIMPL_HPP
 
 #include <xercesc/parsers/SAXParser.hpp>
 #include <xercesc/sax/Parser.hpp>
@@ -74,10 +74,10 @@ public :
     /** The default constructor */
 	SAX2XMLReaderImpl(
                             MemoryManager* const  manager = XMLPlatformUtils::fgMemoryManager
-                          , XMLGrammarPool* const gramPool = 0 
+                          , XMLGrammarPool* const gramPool = 0
                           );
 
-    /** The destructor */	
+    /** The destructor */
 	~SAX2XMLReaderImpl() ;
    //@}
 
@@ -218,7 +218,7 @@ public :
     * @see DefaultHandler#DefaultHandler
     */
     virtual void setEntityResolver(EntityResolver* const resolver) ;
-    
+
   /** Set the entity resolver
     *
     * This method allows applications to install their own entity
@@ -278,10 +278,10 @@ public :
     * <br>http://apache.org/xml/features/validation/reuse-grammar (default: false)
     * <br>http://apache.org/xml/features/validation/schema (default: true)
     * <br>http://apache.org/xml/features/validation/schema-full-checking (default: false)
+    * <br>http://apache.org/xml/features/validating/load-schema (default: true)
     * <br>http://apache.org/xml/features/nonvalidating/load-external-dtd (default: true)
     * <br>http://apache.org/xml/features/continue-after-fatal-error (default: false)
     * <br>http://apache.org/xml/features/validation-error-as-fatal (default: false)
-    * <br>http://apache.org/xml/features/validation/reuse-validator (Deprecated) (default: false)
     *
     * @param name The unique identifier (URI) of the feature.
     * @param value The requested state of the feature (true or false).
@@ -393,7 +393,7 @@ public :
     (
         const   char* const     systemId
     ) ;
-	
+
     //@}
 
     // -----------------------------------------------------------------------
@@ -481,7 +481,7 @@ public :
       * @return number of errors encountered during the latest
       *			parse operation.
       */
-    virtual int getErrorCount() const ;
+    virtual XMLSize_t getErrorCount() const ;
 
     /**
       * This method returns the state of the parser's
@@ -543,7 +543,7 @@ public :
       *
       * @return offset within the input source
       */
-    virtual unsigned int getSrcOffset() const;
+    virtual XMLFilePos getSrcOffset() const;
 
     //@}
 
@@ -804,7 +804,7 @@ public :
       * @see InputSource#InputSource
       */
     virtual Grammar* loadGrammar(const InputSource& source,
-                                 const short grammarType,
+                                 const Grammar::GrammarType grammarType,
                                  const bool toCache = false);
 
     /**
@@ -831,7 +831,7 @@ public :
       * @exception DOMException A DOM exception as per DOM spec.
       */
     virtual Grammar* loadGrammar(const XMLCh* const systemId,
-                                 const short grammarType,
+                                 const Grammar::GrammarType grammarType,
                                  const bool toCache = false);
 
     /**
@@ -857,7 +857,7 @@ public :
       * @exception DOMException A DOM exception as per DOM spec.
       */
     virtual Grammar* loadGrammar(const char* const systemId,
-                                 const short grammarType,
+                                 const Grammar::GrammarType grammarType,
                                  const bool toCache = false);
 
     /**
@@ -875,7 +875,7 @@ public :
       *
       * @param bufferSize The maximum input buffer size
       */
-    virtual void setInputBufferSize(const size_t bufferSize);
+    virtual void setInputBufferSize(const XMLSize_t bufferSize);
 
     //@}
 
@@ -936,7 +936,7 @@ public :
     virtual void docCharacters
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
         , const bool            cdataSection
     );
 
@@ -1056,7 +1056,7 @@ public :
     virtual void ignorableWhitespace
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
         , const bool            cdataSection
     );
 
@@ -1110,7 +1110,7 @@ public :
         , const unsigned int            urlId
         , const XMLCh* const            elemPrefix
         , const RefVectorOf<XMLAttr>&   attrList
-        , const unsigned int            attrCount
+        , const XMLSize_t               attrCount
         , const bool                    isEmpty
         , const bool                    isRoot
     );
@@ -1193,8 +1193,8 @@ public :
         , const XMLCh* const                errorText
         , const XMLCh* const                systemId
         , const XMLCh* const                publicId
-        , const XMLSSize_t                   lineNum
-        , const XMLSSize_t                   colNum
+        , const XMLFileLoc                  lineNum
+        , const XMLFileLoc                  colNum
     );
 
     /**
@@ -1257,40 +1257,11 @@ public :
       */
     virtual void resetEntities();
 
-    /**
-      * This method allows a user installed entity handler to further
-      * process any pointers to external entities. The applications
-      * can implement 'redirection' via this callback. The driver
-      * should call the SAX EntityHandler 'resolveEntity' method.
-      *
-      * @deprecated This method is no longer called (the other resolveEntity one is).
-      *
-      * @param publicId A const pointer to a Unicode string representing the
-      *                 public id of the entity just parsed.
-      * @param systemId A const pointer to a Unicode string representing the
-      *                 system id of the entity just parsed.
-      * @param baseURI  A const pointer to a Unicode string representing the
-      *                 base URI of the entity just parsed,
-      *                 or <code>null</code> if there is no base URI.
-      * @return The value returned by the SAX resolveEntity method or
-      *         NULL otherwise to indicate no processing was done.
-      *         The returned InputSource is owned by the parser which is
-      *         responsible to clean up the memory.
-      * @see EntityResolver
-      * @see XMLEntityHandler
-      */
-    virtual InputSource* resolveEntity
-    (
-        const   XMLCh* const    publicId
-        , const XMLCh* const    systemId
-        , const XMLCh* const    baseURI = 0
-    );
-
     /** Resolve a public/system id
       *
       * This method allows a user installed entity handler to further
       * process any pointers to external entities. The applications can
-      * implement 'redirection' via this callback.  
+      * implement 'redirection' via this callback.
       *
       * @param resourceIdentifier An object containing the type of
       *        resource to be resolved and the associated data members
@@ -1422,7 +1393,7 @@ public :
     virtual void doctypeWhitespace
     (
         const   XMLCh* const    chars
-        , const unsigned int    length
+        , const XMLSize_t       length
     );
 
     /**
@@ -1673,15 +1644,16 @@ private :
     bool                        fValidation;
     bool                        fParseInProgress;
     bool                        fHasExternalSubset;
-    unsigned int                fElemDepth;
-    unsigned int                fAdvDHCount;
-    unsigned int                fAdvDHListSize;
-    VecAttributesImpl		    fAttrList ;
-    ContentHandler*		        fDocHandler ;
+    XMLSize_t                   fElemDepth;
+    XMLSize_t                   fAdvDHCount;
+    XMLSize_t                   fAdvDHListSize;
+    VecAttributesImpl	        fAttrList ;
+    ContentHandler*		fDocHandler ;
     RefVectorOf<XMLAttr>*       fTempAttrVec ;
     XMLStringPool*              fPrefixesStorage ;
     ValueStackOf<unsigned int>* fPrefixes ;
-    ValueStackOf<unsigned int>* fPrefixCounts ;
+    ValueStackOf<XMLSize_t>*    fPrefixCounts ;
+    XMLBuffer*                  fTempQName;
     DTDHandler*                 fDTDHandler;
     EntityResolver*             fEntityResolver;
     XMLEntityResolver*          fXMLEntityResolver;
@@ -1696,7 +1668,7 @@ private :
     XMLValidator*               fValidator;
     MemoryManager*              fMemoryManager;
     XMLGrammarPool*             fGrammarPool;
-	
+
     // -----------------------------------------------------------------------
     // internal function used to set the state of the parser
     // -----------------------------------------------------------------------
@@ -1771,7 +1743,7 @@ inline const XMLCh* SAX2XMLReaderImpl::getURIText(unsigned int uriId) const
     return fScanner->getURIText(uriId);
 }
 
-inline unsigned int SAX2XMLReaderImpl::getSrcOffset() const
+inline XMLFilePos SAX2XMLReaderImpl::getSrcOffset() const
 {
     return fScanner->getSrcOffset();
 }

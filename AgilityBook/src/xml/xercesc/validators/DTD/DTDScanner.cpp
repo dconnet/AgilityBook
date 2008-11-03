@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: DTDScanner.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: DTDScanner.cpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
 
@@ -232,7 +232,7 @@ bool DTDScanner::expandPERef( const   bool    scanExternal
             fScanner->emitError(XMLErrs::EntityNotFound, bbName.getRawBuffer());
         }
         else {
-            if (fScanner->getDoValidation())
+            if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
                 fScanner->getValidator()->emitError(XMLValid::VC_EntityNotFound, bbName.getRawBuffer());
         }
 
@@ -244,7 +244,7 @@ bool DTDScanner::expandPERef( const   bool    scanExternal
     //  If we are a standalone document, then it has to have been declared
     //  in the internal subset. Keep going though.
     //
-    if (fScanner->getDoValidation() && fScanner->getStandalone() && !decl->getDeclaredInIntSubset())
+    if (fScanner->getValidationScheme() == XMLScanner::Val_Always && fScanner->getStandalone() && !decl->getDeclaredInIntSubset())
         fScanner->getValidator()->emitError(XMLValid::VC_IllegalRefInStandalone, bbName.getRawBuffer());
 
     //
@@ -309,7 +309,7 @@ bool DTDScanner::expandPERef( const   bool    scanExternal
             //  to get back to here if we get an exception out of the
             //  ext subset scan.
             //
-            const unsigned int readerNum = fReaderMgr->getCurrentReaderNum();
+            const XMLSize_t readerNum = fReaderMgr->getCurrentReaderNum();
             try
             {
                 scanExtSubsetDecl(false, false);
@@ -376,15 +376,10 @@ bool DTDScanner::getQuotedString(XMLBuffer& toFill)
     if (!fReaderMgr->skipIfQuote(quoteCh))
         return false;
 
-    while (true)
+	XMLCh nextCh;
+    // Get another char and see if it matches the starting quote char
+    while ((nextCh=fReaderMgr->getNextChar())!=quoteCh)
     {
-        // Get another char
-        const XMLCh nextCh = fReaderMgr->getNextChar();
-
-        // See if it matches the starting quote char
-        if (nextCh == quoteCh)
-            break;
-
         //
         //  We should never get either an end of file null char here. If we
         //  do, just fail. It will be handled more gracefully in the higher
@@ -548,7 +543,7 @@ DTDScanner::scanAttDef(DTDElementDecl& parentElem, XMLBuffer& bufToUse)
     scanDefaultDecl(*decl);
 
     // If validating, then do a couple of validation constraints
-    if (fScanner->getDoValidation())
+    if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
     {
         if (decl->getType() == XMLAttDef::ID)
         {
@@ -568,7 +563,7 @@ DTDScanner::scanAttDef(DTDElementDecl& parentElem, XMLBuffer& bufToUse)
             bool ok = false;
             if (decl->getType() == XMLAttDef::Enumeration) {
                 BaseRefVectorOf<XMLCh>* enumVector = XMLString::tokenizeString(decl->getEnumeration(), fMemoryManager);
-                int size = enumVector->size();
+                XMLSize_t size = enumVector->size();
                 ok = (size == 1 &&
                      (XMLString::equals(enumVector->elementAt(0), fgDefault) ||
                       XMLString::equals(enumVector->elementAt(0), fgPreserve))) ||
@@ -711,7 +706,7 @@ void DTDScanner::scanAttListDecl()
             //  make sure that we have not seen an id attribute yet. Set
             //  the flag to say that we've seen one now also.
             //
-            if (fScanner->getDoValidation())
+            if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
             {
                 if (attDef->getType() == XMLAttDef::ID)
                 {
@@ -763,7 +758,7 @@ bool DTDScanner::scanAttValue(const   XMLCh* const        attrName
     //  We have to get the current reader because we have to ignore closing
     //  quotes until we hit the same reader again.
     //
-    const unsigned int curReader = fReaderMgr->getCurrentReaderNum();
+    const XMLSize_t curReader = fReaderMgr->getCurrentReaderNum();
 
     //
     //  Loop until we get the attribute value. Note that we use a double
@@ -1047,7 +1042,7 @@ DTDScanner::scanChildren(const DTDElementDecl& elemDecl, XMLBuffer& bufToUse)
     checkForPERef(false, true);
 
     // We have to check entity nesting here
-    unsigned int curReader;
+    XMLSize_t curReader;
 
     //
     //  We know that the caller just saw an opening parenthesis, so we need
@@ -1069,7 +1064,7 @@ DTDScanner::scanChildren(const DTDElementDecl& elemDecl, XMLBuffer& bufToUse)
         if (!curNode)
             return 0;
 
-        if (curReader != fReaderMgr->getCurrentReaderNum() && fScanner->getDoValidation())
+        if (curReader != fReaderMgr->getCurrentReaderNum() && fScanner->getValidationScheme() == XMLScanner::Val_Always)
             fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
     }
      else
@@ -1263,7 +1258,7 @@ DTDScanner::scanChildren(const DTDElementDecl& elemDecl, XMLBuffer& bufToUse)
                         return 0;
                     }
 
-                    if (curReader != fReaderMgr->getCurrentReaderNum() && fScanner->getDoValidation())
+                    if (curReader != fReaderMgr->getCurrentReaderNum() && fScanner->getValidationScheme() == XMLScanner::Val_Always)
                         fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
 
                     // Else patch it in and make it the new current
@@ -1460,7 +1455,7 @@ void DTDScanner::scanComment()
             else
                 bbComment.append(nextCh);
         }
-         else if (curState == OneDash)
+        else if (curState == OneDash)
         {
             //
             //  If its another dash, then we change to the two dashes states.
@@ -1471,14 +1466,14 @@ void DTDScanner::scanComment()
             {
                 curState = TwoDashes;
             }
-             else
+            else
             {
                 bbComment.append(chDash);
                 bbComment.append(nextCh);
                 curState = InText;
             }
         }
-         else if (curState == TwoDashes)
+        else if (curState == TwoDashes)
         {
             // The next character must be the closing bracket
             if (nextCh != chCloseAngle)
@@ -1528,7 +1523,7 @@ bool DTDScanner::scanContentSpec(DTDElementDecl& toFill)
     }
 
     // Get the current reader id, so we can test for partial markup
-    const unsigned int curReader = fReaderMgr->getCurrentReaderNum();
+    const XMLSize_t curReader = fReaderMgr->getCurrentReaderNum();
 
     // We could have a PE ref here, but don't require space
     checkForPERef(false, true);
@@ -1549,7 +1544,7 @@ bool DTDScanner::scanContentSpec(DTDElementDecl& toFill)
         //  If we are validating we have to check that there are no multiple
         //  uses of any child elements.
         //
-        if (fScanner->getDoValidation())
+        if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
         {
             if (((const MixedContentModel*)toFill.getContentModel())->hasDups())
                 fScanner->getValidator()->emitError(XMLValid::RepElemInMixed);
@@ -1571,7 +1566,7 @@ bool DTDScanner::scanContentSpec(DTDElementDecl& toFill)
     }
 
     // Make sure we are on the same reader as where we started
-    if (curReader != fReaderMgr->getCurrentReaderNum() && fScanner->getDoValidation())
+    if (curReader != fReaderMgr->getCurrentReaderNum() && fScanner->getValidationScheme() == XMLScanner::Val_Always)
         fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
 
     return status;
@@ -1662,7 +1657,7 @@ void DTDScanner::scanElementDecl()
     {
         if (decl->isDeclared())
         {
-            if (fScanner->getDoValidation())
+            if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
                 fScanner->getValidator()->emitError(XMLValid::ElementAlreadyExists, bbName.getRawBuffer());
 
             if (!fDumElemDecl)
@@ -1909,7 +1904,7 @@ DTDScanner::scanEntityRef(XMLCh& firstCh, XMLCh& secondCh, bool& escaped)
     secondCh = 0;
 
     // We have to insure its all done in a single entity
-    const unsigned int curReader = fReaderMgr->getCurrentReaderNum();
+    const XMLSize_t curReader = fReaderMgr->getCurrentReaderNum();
 
     //
     //  If the next char is a pound, then its a character reference and we
@@ -1962,7 +1957,7 @@ DTDScanner::scanEntityRef(XMLCh& firstCh, XMLCh& secondCh, bool& escaped)
             fScanner->emitError(XMLErrs::EntityNotFound, bbName.getRawBuffer());
         }
         else {
-            if (fScanner->getDoValidation())
+            if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
                 fScanner->getValidator()->emitError(XMLValid::VC_EntityNotFound, bbName.getRawBuffer());
         }
 
@@ -2094,7 +2089,7 @@ bool DTDScanner::scanEntityLiteral(XMLBuffer& toFill)
     XMLBuffer& nameBuf = bbName.getBuffer();
 
     // Remember the current reader
-    const unsigned int orgReader = fReaderMgr->getCurrentReaderNum();
+    const XMLSize_t orgReader = fReaderMgr->getCurrentReaderNum();
 
     //
     //  Loop until we see the ending quote character, handling any references
@@ -2244,7 +2239,7 @@ bool DTDScanner::scanEntityLiteral(XMLBuffer& toFill)
     //  then we propogated some entity out of the literal, so issue an
     //  error, but don't fail.
     //
-    if (fReaderMgr->getCurrentReaderNum() != orgReader && fScanner->getDoValidation())
+    if (fReaderMgr->getCurrentReaderNum() != orgReader && fScanner->getValidationScheme() == XMLScanner::Val_Always)
         fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
 
     return true;
@@ -2282,6 +2277,7 @@ bool DTDScanner::scanEntityDef(DTDEntityDecl& decl, const bool isPEDecl)
     if (!scanId(bbPubId.getBuffer(), bbSysId.getBuffer(), IDType_External))
         return false;
 
+    decl.setIsExternal(true);
     ReaderMgr::LastExtEntityInfo lastInfo;
     fReaderMgr->getLastExtEntityInfo(lastInfo);
 
@@ -2478,7 +2474,7 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
     }
 
     // Get the current reader number
-    const unsigned int orgReader = fReaderMgr->getCurrentReaderNum();
+    const XMLSize_t orgReader = fReaderMgr->getCurrentReaderNum();
 
     //
     //  Loop until we hit the end of the external subset entity. Note that
@@ -2496,11 +2492,15 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
             {
                 const XMLCh nextCh = fReaderMgr->peekNextChar();
 
-                if (nextCh == chOpenAngle)
+                if (!nextCh)
+                {
+                    return; // nothing left
+                }
+                else if (nextCh == chOpenAngle)
                 {
                     // Get the reader we started this on
                     // XML 1.0 P28a Well-formedness constraint: PE Between Declarations
-                    const unsigned int orgReader = fReaderMgr->getCurrentReaderNum();
+                    const XMLSize_t orgReader = fReaderMgr->getCurrentReaderNum();
                     bool wasInPE = (fReaderMgr->getCurrentReader()->getType() == XMLReader::Type_PE);
 
                     //
@@ -2519,12 +2519,12 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
                     if (fReaderMgr->getCurrentReaderNum() != orgReader){
                         if (wasInPE)
                             fScanner->emitError(XMLErrs::PEBetweenDecl);
-                        else if (fScanner->getDoValidation())
+                        else if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
                             fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
                     }
 
                 }
-                 else if (fReaderMgr->getCurrentReader()->isWhitespace(nextCh))
+                else if (fReaderMgr->getCurrentReader()->isWhitespace(nextCh))
                 {
                     //
                     //  If we have a doc type handler, and advanced callbacks are
@@ -2543,7 +2543,7 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
                             , bbSpace.getLen()
                         );
                     }
-                     else
+                    else
                     {
                         //
                         //  If we hit an end of entity in the middle of white
@@ -2553,7 +2553,7 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
                         fReaderMgr->skipPastSpaces();
                     }
                 }
-                 else if (nextCh == chPercent)
+                else if (nextCh == chPercent)
                 {
                     //
                     //  Expand (and scan if external) the reference value. Tell
@@ -2563,7 +2563,7 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
                     fReaderMgr->getNextChar();
                     expandPERef(true, false, false, true);
                 }
-                 else if (inIncludeSect && (nextCh == chCloseSquare))
+                else if (inIncludeSect && (nextCh == chCloseSquare))
                 {
                     //
                     //  Its the end of a conditional include section. So scan it and
@@ -2575,16 +2575,12 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
                         fScanner->emitError(XMLErrs::ExpectedEndOfConditional);
                         fReaderMgr->skipPastChar(chCloseAngle);
                     }
-                     else if (!fReaderMgr->skippedChar(chCloseAngle))
+                    else if (!fReaderMgr->skippedChar(chCloseAngle))
                     {
                         fScanner->emitError(XMLErrs::ExpectedEndOfConditional);
                         fReaderMgr->skipPastChar(chCloseAngle);
                     }
                     return;
-                }
-                 else if (!nextCh)
-                {
-                    return; // nothing left
                 }
                 else
                 {
@@ -2617,7 +2613,6 @@ void DTDScanner::scanExtSubsetDecl(const bool inIncludeSect, const bool isDTD)
                 bAcceptDecl = false;
             }
         }
-
         catch(const EndOfEntityException& toCatch)
         {
             //
@@ -2945,7 +2940,7 @@ bool DTDScanner::scanInternalSubset()
         {
             // Remember this reader before we start the scan, for checking
             // XML 1.0 P28a Well-formedness constraint: PE Between Declarations
-            const unsigned int orgReader = fReaderMgr->getCurrentReaderNum();
+            const XMLSize_t orgReader = fReaderMgr->getCurrentReaderNum();
             bool wasInPE = (fReaderMgr->getCurrentReader()->getType() == XMLReader::Type_PE);
 
             // And scan this markup
@@ -2956,7 +2951,7 @@ bool DTDScanner::scanInternalSubset()
             if (fReaderMgr->getCurrentReaderNum() != orgReader) {
                 if (wasInPE)
                     fScanner->emitError(XMLErrs::PEBetweenDecl);
-                else if (fScanner->getDoValidation())
+                else if (fScanner->getValidationScheme() == XMLScanner::Val_Always)
                     fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
             }
         }
@@ -3082,7 +3077,7 @@ void DTDScanner::scanMarkupDecl(const bool parseTextDecl)
                     fScanner->emitError(XMLErrs::ExpectedINCLUDEBracket);
 
                 // Get the reader we started this on
-                const unsigned int orgReader = fReaderMgr->getCurrentReaderNum();
+                const XMLSize_t orgReader = fReaderMgr->getCurrentReaderNum();
 
                 checkForPERef(false, true);
 
@@ -3096,7 +3091,7 @@ void DTDScanner::scanMarkupDecl(const bool parseTextDecl)
                 //  And see if we got back to the same level. If not, then its
                 //  a partial markup error.
                 //
-                if (fReaderMgr->getCurrentReaderNum() != orgReader && fScanner->getDoValidation())
+                if (fReaderMgr->getCurrentReaderNum() != orgReader && fScanner->getValidationScheme() == XMLScanner::Val_Always)
                     fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
 
             }
@@ -3109,7 +3104,7 @@ void DTDScanner::scanMarkupDecl(const bool parseTextDecl)
                     fScanner->emitError(XMLErrs::ExpectedINCLUDEBracket);
 
                 // Get the reader we started this on
-                const unsigned int orgReader = fReaderMgr->getCurrentReaderNum();
+                const XMLSize_t orgReader = fReaderMgr->getCurrentReaderNum();
 
                 // And scan over the ignored part
                 scanIgnoredSection();
@@ -3118,7 +3113,7 @@ void DTDScanner::scanMarkupDecl(const bool parseTextDecl)
                 //  And see if we got back to the same level. If not, then its
                 //  a partial markup error.
                 //
-                if (fReaderMgr->getCurrentReaderNum() != orgReader && fScanner->getDoValidation())
+                if (fReaderMgr->getCurrentReaderNum() != orgReader && fScanner->getValidationScheme() == XMLScanner::Val_Always)
                     fScanner->getValidator()->emitError(XMLValid::PartialMarkupInPE);
 
             }
@@ -3731,18 +3726,13 @@ bool DTDScanner::scanSystemLiteral(XMLBuffer& toFill)
         return false;
     }
 
-    while (true)
+	XMLCh nextCh;
+    // Break out on terminating quote
+    while ((nextCh=fReaderMgr->getNextChar())!=quoteCh)
     {
-        const XMLCh nextCh = fReaderMgr->getNextChar();
-
         // Watch for EOF
         if (!nextCh)
             ThrowXMLwithMemMgr(UnexpectedEOFException, XMLExcepts::Gen_UnexpectedEOF, fMemoryManager);
-
-        // Break out on terminating quote
-        if (nextCh == quoteCh)
-            break;
-
         toFill.append(nextCh);
     }
     return true;

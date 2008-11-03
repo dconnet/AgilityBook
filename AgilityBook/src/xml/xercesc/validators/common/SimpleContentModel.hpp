@@ -16,12 +16,11 @@
  */
 
 /*
- * $Id: SimpleContentModel.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: SimpleContentModel.hpp 677705 2008-07-17 20:15:32Z amassari $
  */
 
-
-#if !defined(SIMPLECONTENTMODEL_HPP)
-#define SIMPLECONTENTMODEL_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_SIMPLECONTENTMODEL_HPP)
+#define XERCESC_INCLUDE_GUARD_SIMPLECONTENTMODEL_HPP
 
 #include <xercesc/framework/XMLContentModel.hpp>
 #include <xercesc/validators/common/ContentSpecNode.hpp>
@@ -73,26 +72,38 @@ public :
     // -----------------------------------------------------------------------
     //  Implementation of the ContentModel virtual interface
     // -----------------------------------------------------------------------
-	virtual int validateContent
+    virtual bool validateContent
     (
         QName** const         children
-      , const unsigned int    childCount
-      , const unsigned int    emptyNamespaceId
+      , XMLSize_t             childCount
+      , unsigned int          emptyNamespaceId
+      , XMLSize_t*            indexFailingChild
+      , MemoryManager*  const manager = XMLPlatformUtils::fgMemoryManager
     ) const;
 
-	virtual int validateContentSpecial
+    virtual bool validateContentSpecial
     (
         QName** const           children
-      , const unsigned int      childCount
-      , const unsigned int      emptyNamespaceId
+      , XMLSize_t               childCount
+      , unsigned int            emptyNamespaceId
       , GrammarResolver*  const pGrammarResolver
       , XMLStringPool*    const pStringPool
+      , XMLSize_t*              indexFailingChild
+      , MemoryManager*    const manager = XMLPlatformUtils::fgMemoryManager
     ) const;
 
     virtual ContentLeafNameTypeVector *getContentLeafNameTypeVector() const;
 
-    virtual unsigned int getNextState(const unsigned int currentState,
-                                      const unsigned int elementIndex) const;
+    virtual unsigned int getNextState(unsigned int currentState,
+                                      XMLSize_t    elementIndex) const;
+
+    virtual bool handleRepetitions( const QName* const curElem,
+                                    unsigned int curState,
+                                    unsigned int currentLoop,
+                                    unsigned int& nextState,
+                                    unsigned int& nextLoop,
+                                    XMLSize_t elementIndex,
+                                    SubstitutionGroupComparator * comparator) const;
 
     virtual void checkUniqueParticleAttribution
     (
@@ -153,7 +164,7 @@ inline SimpleContentModel::SimpleContentModel
     : fFirstChild(0)
     , fSecondChild(0)
     , fOp(cmOp)
-	, fDTD(dtd)
+    , fDTD(dtd)
     , fMemoryManager(manager)
 {
     if (firstChild)
@@ -178,10 +189,22 @@ inline SimpleContentModel::~SimpleContentModel()
 //  SimpleContentModel: Virtual methods
 // ---------------------------------------------------------------------------
 inline unsigned int
-SimpleContentModel::getNextState(const unsigned int,
-                                 const unsigned int) const {
+SimpleContentModel::getNextState(unsigned int,
+                                 XMLSize_t) const {
 
     return XMLContentModel::gInvalidTrans;
+}
+
+inline bool
+SimpleContentModel::handleRepetitions( const QName* const curElem,
+                                    unsigned int curState,
+                                    unsigned int currentLoop,
+                                    unsigned int& nextState,
+                                    unsigned int& nextLoop,
+                                    XMLSize_t elementIndex,
+                                    SubstitutionGroupComparator * comparator) const
+{
+    return true;
 }
 
 XERCES_CPP_NAMESPACE_END

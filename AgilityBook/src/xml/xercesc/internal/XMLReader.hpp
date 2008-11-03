@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,11 +16,11 @@
  */
 
 /*
- * $Id: XMLReader.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XMLReader.hpp 698118 2008-09-23 10:16:06Z borisk $
  */
 
-#if !defined(XMLREADER_HPP)
-#define XMLREADER_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XMLREADER_HPP)
+#define XERCESC_INCLUDE_GUARD_XMLREADER_HPP
 
 #include <xercesc/util/XMLChar.hpp>
 #include <xercesc/framework/XMLRecognizer.hpp>
@@ -88,19 +88,19 @@ public:
     bool isAllSpaces
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     ) const;
 
     bool containsWhiteSpace
     (
         const   XMLCh* const    toCheck
-        , const unsigned int    count
+        , const XMLSize_t       count
     ) const;
 
 
     bool isXMLLetter(const XMLCh toCheck) const;
     bool isFirstNameChar(const XMLCh toCheck) const;
-    bool isNameChar(const XMLCh toCheck) const;    
+    bool isNameChar(const XMLCh toCheck) const;
     bool isPlainContentChar(const XMLCh toCheck) const;
     bool isSpecialStartTagChar(const XMLCh toCheck) const;
     bool isXMLChar(const XMLCh toCheck) const;
@@ -108,7 +108,7 @@ public:
     bool isControlChar(const XMLCh toCheck) const;
     bool isPublicIdChar(const XMLCh toCheck) const;
     bool isFirstNCNameChar(const XMLCh toCheck) const;
-    bool isNCNameChar(const XMLCh toCheck) const;    
+    bool isNCNameChar(const XMLCh toCheck) const;
 
     // -----------------------------------------------------------------------
     //  Constructors and Destructor
@@ -163,7 +163,7 @@ public:
     // -----------------------------------------------------------------------
     //  Character buffer management methods
     // -----------------------------------------------------------------------
-    unsigned long charsLeftInBuffer() const;
+    XMLSize_t charsLeftInBuffer() const;
     bool refreshCharBuffer();
 
 
@@ -183,21 +183,22 @@ public:
     bool skippedChar(const XMLCh toSkip);
     bool skippedSpace();
     bool skippedString(const XMLCh* const toSkip);
+    bool skippedStringLong(const XMLCh* toSkip);
     bool peekString(const XMLCh* const toPeek);
 
 
     // -----------------------------------------------------------------------
     //  Getter methods
     // -----------------------------------------------------------------------
-    XMLSSize_t getColumnNumber() const;
+    XMLFileLoc getColumnNumber() const;
     const XMLCh* getEncodingStr() const;
-    XMLSSize_t getLineNumber() const;
+    XMLFileLoc getLineNumber() const;
     bool getNoMoreFlag() const;
     const XMLCh* getPublicId() const;
-    unsigned int getReaderNum() const;
+    XMLSize_t getReaderNum() const;
     RefFrom getRefFrom() const;
     Sources getSource() const;
-    unsigned int getSrcOffset() const;
+    XMLFilePos getSrcOffset() const;
     const XMLCh* getSystemId() const;
     bool getThrowAtEnd() const;
     Types getType() const;
@@ -210,7 +211,7 @@ public:
     (
         const   XMLCh* const    newEncoding
     );
-    void setReaderNum(const unsigned int newNum);
+    void setReaderNum(const XMLSize_t newNum);
     void setThrowAtEnd(const bool newValue);
     void setXMLVersion(const XMLVersion version);
 
@@ -266,11 +267,11 @@ private:
         const   XMLCh* const    newEncoding
     );
 
-    unsigned int xcodeMoreChars
+    XMLSize_t xcodeMoreChars
     (
                 XMLCh* const            bufToFill
         ,       unsigned char* const    charSizes
-        , const unsigned int            maxChars
+        , const XMLSize_t               maxChars
     );
 
     void handleEOL
@@ -425,26 +426,26 @@ private:
     //  fXMLVersion
     //      Enum to indicate if this Reader is conforming to XML 1.0 or XML 1.1
     // -----------------------------------------------------------------------
-    unsigned int                fCharIndex;
+    XMLSize_t                   fCharIndex;
     XMLCh                       fCharBuf[kCharBufSize];
-    unsigned int                fCharsAvail;
+    XMLSize_t                   fCharsAvail;
     unsigned char               fCharSizeBuf[kCharBufSize];
     unsigned int                fCharOfsBuf[kCharBufSize];
-    XMLSSize_t                  fCurCol;
-    XMLSSize_t                  fCurLine;
+    XMLFileLoc                  fCurCol;
+    XMLFileLoc                  fCurLine;
     XMLRecognizer::Encodings    fEncoding;
     XMLCh*                      fEncodingStr;
     bool                        fForcedEncoding;
     bool                        fNoMore;
     XMLCh*                      fPublicId;
-    unsigned int                fRawBufIndex;
+    XMLSize_t                   fRawBufIndex;
     XMLByte                     fRawByteBuf[kRawBufSize];
-    unsigned int                fRawBytesAvail;
-    unsigned int                fReaderNum;
+    XMLSize_t                   fRawBytesAvail;
+    XMLSize_t                   fReaderNum;
     RefFrom                     fRefFrom;
     bool                        fSentTrailingSpace;
     Sources                     fSource;
-    unsigned int                fSrcOfsBase;
+    XMLFilePos                  fSrcOfsBase;
     bool                        fSrcOfsSupported;
     bool                        fCalculateSrcOfs;
     XMLCh*                      fSystemId;
@@ -486,7 +487,7 @@ inline bool XMLReader::isFirstNameChar(const XMLCh toCheck) const
 
 inline bool XMLReader::isFirstNCNameChar(const XMLCh toCheck) const
 {
-    return (((fgCharCharsTable[toCheck] & gFirstNameCharMask) != 0) 
+    return (((fgCharCharsTable[toCheck] & gFirstNameCharMask) != 0)
             && (toCheck != chColon));
 }
 
@@ -519,7 +520,7 @@ inline bool XMLReader::isControlChar(const XMLCh toCheck) const
 // ---------------------------------------------------------------------------
 //  XMLReader: Buffer management methods
 // ---------------------------------------------------------------------------
-inline unsigned long XMLReader::charsLeftInBuffer() const
+inline XMLSize_t XMLReader::charsLeftInBuffer() const
 {
     return fCharsAvail - fCharIndex;
 }
@@ -528,7 +529,7 @@ inline unsigned long XMLReader::charsLeftInBuffer() const
 // ---------------------------------------------------------------------------
 //  XMLReader: Getter methods
 // ---------------------------------------------------------------------------
-inline XMLSSize_t XMLReader::getColumnNumber() const
+inline XMLFileLoc XMLReader::getColumnNumber() const
 {
     return fCurCol;
 }
@@ -538,7 +539,7 @@ inline const XMLCh* XMLReader::getEncodingStr() const
     return fEncodingStr;
 }
 
-inline XMLSSize_t XMLReader::getLineNumber() const
+inline XMLFileLoc XMLReader::getLineNumber() const
 {
     return fCurLine;
 }
@@ -553,7 +554,7 @@ inline const XMLCh* XMLReader::getPublicId() const
     return fPublicId;
 }
 
-inline unsigned int XMLReader::getReaderNum() const
+inline XMLSize_t XMLReader::getReaderNum() const
 {
     return fReaderNum;
 }
@@ -586,7 +587,7 @@ inline XMLReader::Types XMLReader::getType() const
 // ---------------------------------------------------------------------------
 //  XMLReader: Setter methods
 // ---------------------------------------------------------------------------
-inline void XMLReader::setReaderNum(const unsigned int newNum)
+inline void XMLReader::setReaderNum(const XMLSize_t newNum)
 {
     fReaderNum = newNum;
 }
@@ -624,19 +625,16 @@ inline void XMLReader::setXMLVersion(const XMLVersion version)
 // ---------------------------------------------------------------------------
 inline void XMLReader::movePlainContentChars(XMLBuffer &dest)
 {
-    unsigned int count = fCharIndex;
+    const XMLSize_t chunkSize = fCharsAvail - fCharIndex;
+    const XMLCh* cursor = &fCharBuf[fCharIndex];
+    XMLSize_t count=0;
+    for(;count<chunkSize && (fgCharCharsTable[*cursor++] & gPlainContentCharMask) != 0;++count) /*noop*/ ;
 
-    while (fCharIndex < fCharsAvail)
+    if (count!=0)
     {
-        if (!isPlainContentChar(fCharBuf[fCharIndex]))
-            break;
-        fCharIndex++;
-    }
-
-    if (count != fCharIndex)
-    {
-        fCurCol    += (fCharIndex - count);
-        dest.append(&fCharBuf[count], fCharIndex - count);
+        dest.append(&fCharBuf[fCharIndex], count);
+        fCharIndex += count;
+        fCurCol    += (XMLFileLoc)count;
     }
 }
 

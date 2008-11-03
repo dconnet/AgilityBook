@@ -16,14 +16,13 @@
  */
 
 /*
- * $Id: StringPool.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: StringPool.hpp 649259 2008-04-17 20:14:20Z amassari $
  */
 
-#if !defined(STRINGPOOL_HPP)
-#define STRINGPOOL_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_STRINGPOOL_HPP)
+#define XERCESC_INCLUDE_GUARD_STRINGPOOL_HPP
 
 #include <xercesc/util/RefHashTableOf.hpp>
-
 #include <xercesc/internal/XSerializable.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
@@ -154,10 +153,7 @@ inline bool XMLStringPool::exists(const XMLCh* const newString) const
 
 inline bool XMLStringPool::exists(const unsigned int id) const
 {
-    if (!id || (id >= fCurId))
-        return false;
-
-    return true;
+    return (id > 0 && (id < fCurId));
 }
 
 inline const XMLCh* XMLStringPool::getValueForId(const unsigned int id) const

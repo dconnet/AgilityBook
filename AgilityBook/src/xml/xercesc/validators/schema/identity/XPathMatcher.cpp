@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: XPathMatcher.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XPathMatcher.cpp 679382 2008-07-24 12:09:39Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -109,22 +109,22 @@ void XPathMatcher::init(XercesXPath* const xpath) {
 
         if (fLocationPathSize) {
 
-            fStepIndexes = new (fMemoryManager) RefVectorOf<ValueStackOf<int> >(fLocationPathSize, true, fMemoryManager);
-            fCurrentStep = (int*) fMemoryManager->allocate
+            fStepIndexes = new (fMemoryManager) RefVectorOf<ValueStackOf<XMLSize_t> >(fLocationPathSize, true, fMemoryManager);
+            fCurrentStep = (XMLSize_t*) fMemoryManager->allocate
             (
-                fLocationPathSize * sizeof(int)
+                fLocationPathSize * sizeof(XMLSize_t)
             );//new int[fLocationPathSize];
-            fNoMatchDepth = (int*) fMemoryManager->allocate
+            fNoMatchDepth = (XMLSize_t*) fMemoryManager->allocate
             (
-                fLocationPathSize * sizeof(int)
+                fLocationPathSize * sizeof(XMLSize_t)
             );//new int[fLocationPathSize];
-            fMatched = (int*) fMemoryManager->allocate
+            fMatched = (unsigned char*) fMemoryManager->allocate
             (
-                fLocationPathSize * sizeof(int)
+                fLocationPathSize * sizeof(unsigned char)
             );//new int[fLocationPathSize];
 
-            for(unsigned int i=0; i < fLocationPathSize; i++) {
-                fStepIndexes->addElement(new (fMemoryManager) ValueStackOf<int>(8, fMemoryManager));
+            for(XMLSize_t i=0; i < fLocationPathSize; i++) {
+                fStepIndexes->addElement(new (fMemoryManager) ValueStackOf<XMLSize_t>(8, fMemoryManager));
             }
         }
     }
@@ -136,7 +136,7 @@ void XPathMatcher::init(XercesXPath* const xpath) {
 // ---------------------------------------------------------------------------
 void XPathMatcher::startDocumentFragment() {
 
-    for(unsigned int i = 0; i < fLocationPathSize; i++) {
+    for(XMLSize_t i = 0; i < fLocationPathSize; i++) {
 
         fStepIndexes->elementAt(i)->removeAllElements();
         fCurrentStep[i] = 0;
@@ -149,12 +149,12 @@ void XPathMatcher::startElement(const XMLElementDecl& elemDecl,
                                 const unsigned int urlId,
                                 const XMLCh* const elemPrefix,
 								const RefVectorOf<XMLAttr>& attrList,
-                                const unsigned int attrCount) {
+                                const XMLSize_t attrCount) {
 
-    for (int i = 0; i < (int) fLocationPathSize; i++) {
+    for (XMLSize_t i = 0; i < fLocationPathSize; i++) {
 
         // push context
-        int startStep = fCurrentStep[i];
+        XMLSize_t startStep = fCurrentStep[i];
         fStepIndexes->elementAt(i)->push(startStep);
 
         // try next xpath, if not matching
@@ -169,10 +169,10 @@ void XPathMatcher::startElement(const XMLElementDecl& elemDecl,
 
         // consume self::node() steps
         XercesLocationPath* locPath = fLocationPaths->elementAt(i);
-        int stepSize = locPath->getStepSize();
+        XMLSize_t stepSize = locPath->getStepSize();
 
         while (fCurrentStep[i] < stepSize &&
-               locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::SELF) {
+               locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::AxisType_SELF) {
             fCurrentStep[i]++;
         }
 
@@ -186,10 +186,10 @@ void XPathMatcher::startElement(const XMLElementDecl& elemDecl,
         // step do its thing; if it fails, we reset ourselves
         // to look at this step for next time we're called.
         // so first consume all descendants:
-        int descendantStep = fCurrentStep[i];
+        XMLSize_t descendantStep = fCurrentStep[i];
 
         while (fCurrentStep[i] < stepSize &&
-               locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::DESCENDANT) {
+               locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::AxisType_DESCENDANT) {
             fCurrentStep[i]++;
         }
 
@@ -202,26 +202,21 @@ void XPathMatcher::startElement(const XMLElementDecl& elemDecl,
 
         // match child::... step, if haven't consumed any self::node()
         if ((fCurrentStep[i] == startStep || fCurrentStep[i] > descendantStep) &&
-            locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::CHILD) {
+            locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::AxisType_CHILD) {
 
             XercesStep* step = locPath->getStep(fCurrentStep[i]);
             XercesNodeTest* nodeTest = step->getNodeTest();
 
-            if (nodeTest->getType() == XercesNodeTest::QNAME) {
+            QName elemQName(elemPrefix, elemDecl.getElementName()->getLocalPart(), urlId, fMemoryManager);
+            if (!matches(nodeTest, &elemQName)) {
 
-                QName elemQName(elemPrefix, elemDecl.getElementName()->getLocalPart(), urlId, fMemoryManager);
-
-//                if (!(*(nodeTest->getName()) == *(elemDecl.getElementName()))) {
-                if (!(*(nodeTest->getName()) == elemQName)) {
-
-                    if(fCurrentStep[i] > descendantStep) {
-                        fCurrentStep[i] = descendantStep;
-                        continue;
-                    }
-
-                    fNoMatchDepth[i]++;
+                if(fCurrentStep[i] > descendantStep) {
+                    fCurrentStep[i] = descendantStep;
                     continue;
                 }
+
+                fNoMatchDepth[i]++;
+                continue;
             }
 
             fCurrentStep[i]++;
@@ -243,25 +238,24 @@ void XPathMatcher::startElement(const XMLElementDecl& elemDecl,
 
         // match attribute::... step
         if (fCurrentStep[i] < stepSize &&
-            locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::ATTRIBUTE) {
+            locPath->getStep(fCurrentStep[i])->getAxisType() == XercesStep::AxisType_ATTRIBUTE) {
 
             if (attrCount) {
 
                 XercesNodeTest* nodeTest = locPath->getStep(fCurrentStep[i])->getNodeTest();
 
-                for (unsigned int attrIndex = 0; attrIndex < attrCount; attrIndex++) {
+                for (XMLSize_t attrIndex = 0; attrIndex < attrCount; attrIndex++) {
 
                     const XMLAttr* curDef = attrList.elementAt(attrIndex);
 
-                    if (nodeTest->getType() != XercesNodeTest::QNAME ||
-                        (*(nodeTest->getName()) == *(curDef->getAttName()))) {
+                    if (matches(nodeTest, curDef->getAttName())) {
 
                         fCurrentStep[i]++;
 
                         if (fCurrentStep[i] == stepSize) {
 
                             fMatched[i] = XP_MATCHED_A;
-                            int j=0;
+                            XMLSize_t j=0;
 
                             for(; j<i && ((fMatched[j] & XP_MATCHED) != XP_MATCHED); j++) ;
 
@@ -294,7 +288,7 @@ void XPathMatcher::startElement(const XMLElementDecl& elemDecl,
 void XPathMatcher::endElement(const XMLElementDecl& elemDecl,
                               const XMLCh* const elemContent) {
 
-    for(int i = 0; i < (int) fLocationPathSize; i++) {
+    for(XMLSize_t i = 0; i < fLocationPathSize; i++) {
 
         // go back a step
         fCurrentStep[i] = fStepIndexes->elementAt(i)->pop();
@@ -306,12 +300,16 @@ void XPathMatcher::endElement(const XMLElementDecl& elemDecl,
         // signal match, if appropriate
         else {
 
-            int j=0;
+            XMLSize_t j=0;
             for(; j<i && ((fMatched[j] & XP_MATCHED) != XP_MATCHED); j++) ;
 
-            if (j < i || (fMatched[j] == 0)
-                || ((fMatched[j] & XP_MATCHED_A) == XP_MATCHED_A))
-				continue;
+            if ((j < i) || (fMatched[j] == 0)) {
+                continue;
+            }
+            if ((fMatched[j] & XP_MATCHED_A) == XP_MATCHED_A) {
+                fMatched[i] = 0;
+                continue;
+            }
 
             DatatypeValidator* dv = ((SchemaElementDecl*) &elemDecl)->getDatatypeValidator();
             bool isNillable = (((SchemaElementDecl *) &elemDecl)->getMiscFlags() & SchemaSymbols::XSD_NILLABLE) != 0;
@@ -326,10 +324,10 @@ void XPathMatcher::endElement(const XMLElementDecl& elemDecl,
 // ---------------------------------------------------------------------------
 //  XPathMatcher: Match methods
 // ---------------------------------------------------------------------------
-int XPathMatcher::isMatched() {
+unsigned char XPathMatcher::isMatched() {
 
     // xpath has been matched if any one of the members of the union have matched.
-    for (int i=0; i < (int) fLocationPathSize; i++) {
+    for (XMLSize_t i=0; i < fLocationPathSize; i++) {
         if (((fMatched[i] & XP_MATCHED) == XP_MATCHED)
             && ((fMatched[i] & XP_MATCHED_DP) != XP_MATCHED_DP))
             return fMatched[i];
@@ -344,6 +342,17 @@ void XPathMatcher::matched(const XMLCh* const,
     return;
 }
 
+bool XPathMatcher::matches(const XercesNodeTest* nodeTest, const QName* qName)
+{
+    if (nodeTest->getType() == XercesNodeTest::NodeType_QNAME) {
+        return (*nodeTest->getName())==(*qName);
+    }
+    if (nodeTest->getType() == XercesNodeTest::NodeType_NAMESPACE) {
+        return nodeTest->getName()->getURI() == qName->getURI();
+    }
+    // NodeType_WILDCARD
+    return true;
+}
 
 // ---------------------------------------------------------------------------
 //  XPathMatcher: Match methods

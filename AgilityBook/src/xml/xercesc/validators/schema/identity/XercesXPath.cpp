@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: XercesXPath.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XercesXPath.cpp 676911 2008-07-15 13:27:32Z amassari $
  */
 
 // ---------------------------------------------------------------------------
@@ -65,7 +65,7 @@ XercesNodeTest::XercesNodeTest(const short aType,
 }
 
 XercesNodeTest::XercesNodeTest(const QName* const qName)
-    : fType(QNAME)
+    : fType(NodeType_QNAME)
     , fName(new (qName->getMemoryManager()) QName(*qName))
 {
 }
@@ -73,7 +73,7 @@ XercesNodeTest::XercesNodeTest(const QName* const qName)
 XercesNodeTest::XercesNodeTest(const XMLCh* const prefix,
                                const unsigned int uriId,
                                MemoryManager* const manager)
-    : fType(NAMESPACE)
+    : fType(NodeType_NAMESPACE)
     , fName(new (manager) QName(manager))
 {
     fName->setURI(uriId);
@@ -110,7 +110,7 @@ void XercesNodeTest::serialize(XSerializeEngine& serEng)
 }
 
 XercesNodeTest::XercesNodeTest(MemoryManager* const)
-:fType(UNKNOWN)
+:fType(NodeType_UNKNOWN)
 ,fName(0)
 {
 }
@@ -185,8 +185,8 @@ bool XercesStep::operator==(const XercesStep& other) const {
     if (fAxisType != other.fAxisType)
         return false;
 
-    if (fAxisType == XercesStep::CHILD ||
-        fAxisType == XercesStep::ATTRIBUTE) {
+    if (fAxisType == XercesStep::AxisType_CHILD ||
+        fAxisType == XercesStep::AxisType_ATTRIBUTE) {
         return (*fNodeTest == *(other.fNodeTest));
     }
 
@@ -222,7 +222,7 @@ void XercesStep::serialize(XSerializeEngine& serEng)
 }
 
 XercesStep::XercesStep(MemoryManager* const)
-:fAxisType(UNKNOWN)
+:fAxisType(AxisType_UNKNOWN)
 ,fNodeTest(0)
 {
 }
@@ -240,12 +240,12 @@ XercesLocationPath::XercesLocationPath(RefVectorOf<XercesStep>* const steps)
 // ---------------------------------------------------------------------------
 bool XercesLocationPath::operator==(const XercesLocationPath& other) const {
 
-    unsigned int stepsSize = fSteps->size();
+    XMLSize_t stepsSize = fSteps->size();
 
     if (stepsSize != other.fSteps->size())
         return false;
 
-    for (unsigned int i=0; i < stepsSize; i++) {
+    for (XMLSize_t i=0; i < stepsSize; i++) {
         if (*(fSteps->elementAt(i)) != *(other.fSteps->elementAt(i)))
             return false;
     }
@@ -294,7 +294,7 @@ typedef JanitorMemFunCall<XercesXPath>  CleanupType;
 // ---------------------------------------------------------------------------
 XercesXPath::XercesXPath(const XMLCh* const xpathExpr,
                          XMLStringPool* const stringPool,
-                         NamespaceScope* const scopeContext,
+                         XercesNamespaceResolver* const scopeContext,
                          const unsigned int emptyNamespaceId,
                          const bool isSelector,
                          MemoryManager* const manager)
@@ -334,12 +334,12 @@ XercesXPath::~XercesXPath() {
 // ---------------------------------------------------------------------------
 bool XercesXPath::operator==(const XercesXPath& other) const {
 
-    unsigned int locPathSize = fLocationPaths->size();
+    XMLSize_t locPathSize = fLocationPaths->size();
 
     if (locPathSize != other.fLocationPaths->size())
         return false;
 
-    for (unsigned int i=0; i < locPathSize; i++) {
+    for (XMLSize_t i=0; i < locPathSize; i++) {
         if (*(fLocationPaths->elementAt(i)) != *(other.fLocationPaths->elementAt(i)))
             return false;
     }
@@ -364,15 +364,15 @@ void XercesXPath::cleanUp() {
 void XercesXPath::checkForSelectedAttributes() {
 
     // verify that an attribute is not selected
-    unsigned int locSize = (fLocationPaths) ? fLocationPaths->size() : 0;
+    XMLSize_t locSize = (fLocationPaths) ? fLocationPaths->size() : 0;
 
-    for (unsigned int i = 0; i < locSize; i++) {
+    for (XMLSize_t i = 0; i < locSize; i++) {
 
         XercesLocationPath* locPath = fLocationPaths->elementAt(i);
-        unsigned int stepSize = locPath->getStepSize();
+        XMLSize_t stepSize = locPath->getStepSize();
 
         if (stepSize) {
-            if (locPath->getStep(stepSize - 1)->getAxisType() == XercesStep::ATTRIBUTE) {
+            if (locPath->getStep(stepSize - 1)->getAxisType() == XercesStep::AxisType_ATTRIBUTE) {
                 ThrowXMLwithMemMgr(XPathException, XMLExcepts::XPath_NoAttrSelector, fMemoryManager);
             }
 		}
@@ -380,9 +380,9 @@ void XercesXPath::checkForSelectedAttributes() {
 }
 
 void XercesXPath::parseExpression(XMLStringPool* const stringPool,
-                                  NamespaceScope* const scopeContext) {
+                                  XercesNamespaceResolver* const scopeContext) {
 
-    unsigned int length = XMLString::stringLen(fExpression);
+    XMLSize_t length = XMLString::stringLen(fExpression);
 
     if (!length) {
         return;
@@ -390,9 +390,11 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
 
     ValueVectorOf<int>                tokens(16, fMemoryManager);
     XPathScannerForSchema             scanner(stringPool);
-    bool                              success = scanner.scanExpression(fExpression, 0, length, &tokens);
+    if(!scanner.scanExpression(fExpression, 0, length, &tokens))
+        ThrowXMLwithMemMgr(XPathException, XMLExcepts::XPath_TokenNotSupported, fMemoryManager);
+
     bool                              firstTokenOfLocationPath=true;
-    unsigned int                      tokenCount = tokens.size();
+    XMLSize_t                         tokenCount = tokens.size();
     RefVectorOf<XercesStep>*          stepsVector = new (fMemoryManager) RefVectorOf<XercesStep>(16, true, fMemoryManager);
     Janitor<RefVectorOf<XercesStep> > janSteps(stepsVector);
 
@@ -400,7 +402,7 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
         fLocationPaths = new (fMemoryManager) RefVectorOf<XercesLocationPath>(8, true, fMemoryManager);
     }
 
-    for (unsigned int i = 0; i < tokenCount; i++) {
+    for (XMLSize_t i = 0; i < tokenCount; i++) {
 
         int  aToken = tokens.elementAt(i);
         bool isNamespace=false;
@@ -412,7 +414,7 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
                     ThrowXMLwithMemMgr(XPathException, XMLExcepts::XPath_NoUnionAtStart, fMemoryManager);
                 }
 
-                int stepsSize = stepsVector->size();
+                XMLSize_t stepsSize = stepsVector->size();
 
                 if (stepsSize == 0) {
                     ThrowXMLwithMemMgr(XPathException, XMLExcepts::XPath_NoMultipleUnion, fMemoryManager);
@@ -451,8 +453,8 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
 
                 case XercesXPath::EXPRTOKEN_NAMETEST_ANY:
                     {
-                        XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::WILDCARD, fMemoryManager);
-                        XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::ATTRIBUTE, nodeTest);
+                        XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::NodeType_WILDCARD, fMemoryManager);
+                        XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::AxisType_ATTRIBUTE, nodeTest);
                         stepsVector->addElement(step);
                         break;
                     }
@@ -481,7 +483,7 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
 
                             // build step
                             XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(prefix, uri, fMemoryManager);
-                            XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::ATTRIBUTE, nodeTest);
+                            XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::AxisType_ATTRIBUTE, nodeTest);
                             stepsVector->addElement(step);
                             break;
                         }
@@ -493,7 +495,7 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
 
                         // build step
                         XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(&aQName);
-                        XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::ATTRIBUTE, nodeTest);
+                        XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::AxisType_ATTRIBUTE, nodeTest);
                         stepsVector->addElement(step);
                         break;
                     }
@@ -521,8 +523,8 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
             }
         case XercesXPath::EXPRTOKEN_NAMETEST_ANY:
             {
-                XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::WILDCARD, fMemoryManager);
-                XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::CHILD, nodeTest);
+                XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::NodeType_WILDCARD, fMemoryManager);
+                XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::AxisType_CHILD, nodeTest);
                 stepsVector->addElement(step);
                 firstTokenOfLocationPath = false;
                 break;
@@ -553,7 +555,7 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
 
                     // build step
                     XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(prefix, uri, fMemoryManager);
-                    XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::CHILD, nodeTest);
+                    XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::AxisType_CHILD, nodeTest);
                     stepsVector->addElement(step);
                     break;
                 }
@@ -564,7 +566,7 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
 
                 // build step
                 XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(&aQName);
-                XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::CHILD, nodeTest);
+                XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::AxisType_CHILD, nodeTest);
                 stepsVector->addElement(step);
                 firstTokenOfLocationPath = false;
                 break;
@@ -572,8 +574,8 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
         case XercesXPath::EXPRTOKEN_PERIOD:
             {
                 // build step
-                XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::NODE, fMemoryManager);
-                XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::SELF, nodeTest);
+                XercesNodeTest* nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::NodeType_NODE, fMemoryManager);
+                XercesStep* step = new (fMemoryManager) XercesStep(XercesStep::AxisType_SELF, nodeTest);
                 stepsVector->addElement(step);
 
                 if (firstTokenOfLocationPath && i+1 < tokenCount) {
@@ -595,8 +597,8 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
                             }
                         }
                         // build step
-                        nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::NODE, fMemoryManager);
-                        step = new (fMemoryManager) XercesStep(XercesStep::DESCENDANT, nodeTest);
+                        nodeTest = new (fMemoryManager) XercesNodeTest(XercesNodeTest::NodeType_NODE, fMemoryManager);
+                        step = new (fMemoryManager) XercesStep(XercesStep::AxisType_DESCENDANT, nodeTest);
                         stepsVector->addElement(step);
                     }
                 }
@@ -630,7 +632,7 @@ void XercesXPath::parseExpression(XMLStringPool* const stringPool,
         }
     }
 
-    int stepsSize = stepsVector->size();
+    XMLSize_t stepsSize = stepsVector->size();
 
     if (stepsSize == 0) {
         if (!fLocationPaths || fLocationPaths->size() == 0) {
@@ -747,22 +749,18 @@ void XPathScanner::init() {
 //  XPathScanner: Scan methods
 // ---------------------------------------------------------------------------
 bool XPathScanner::scanExpression(const XMLCh* const data,
-                                  int currentOffset,
-                                  const int endOffset,
+                                  XMLSize_t currentOffset,
+                                  const XMLSize_t endOffset,
                                   ValueVectorOf<int>* const tokens) {
 
     bool      starIsMultiplyOperator = false;
-    int       nameOffset = -1;
+    XMLSize_t nameOffset = 0;
     int       nameHandle = -1;
     int       prefixHandle = -1;
     XMLCh     ch;
     XMLBuffer dataBuffer(128, tokens->getMemoryManager());
 
-    while (true) {
-
-        if (currentOffset == endOffset) {
-            break;
-        }
+    while (currentOffset != endOffset) {
 
         ch = data[currentOffset];
 
@@ -783,7 +781,7 @@ bool XPathScanner::scanExpression(const XMLCh* const data,
         //                  | NameTest | NodeType | Operator | FunctionName
         //                  | AxisName | Literal | Number | VariableReference
         //
-        XMLByte chartype = (ch >= 0x80) ? CHARTYPE_NONASCII : fASCIICharMap[ch];
+        XMLByte chartype = (ch >= 0x80) ? (XMLByte)CHARTYPE_NONASCII : fASCIICharMap[ch];
 
         switch (chartype) {
         case CHARTYPE_OPEN_PAREN:       // '('
@@ -979,7 +977,7 @@ bool XPathScanner::scanExpression(const XMLCh* const data,
 
                 ch = data[currentOffset];
 
-                int litOffset = currentOffset;
+                XMLSize_t litOffset = currentOffset;
                 while (ch != qchar) {
                     if (++currentOffset == endOffset) {
                         return false; // REVISIT
@@ -1306,9 +1304,9 @@ bool XPathScanner::scanExpression(const XMLCh* const data,
 }
 
 
-int XPathScanner::scanNCName(const XMLCh* const data,
-                             const int endOffset,
-                             int currentOffset) {
+XMLSize_t XPathScanner::scanNCName(const XMLCh* const data,
+                             const XMLSize_t endOffset,
+                             XMLSize_t currentOffset) {
 
     XMLCh ch = data[currentOffset];
 
@@ -1329,9 +1327,9 @@ int XPathScanner::scanNCName(const XMLCh* const data,
 }
 
 
-int XPathScanner::scanNumber(const XMLCh* const data,
-                             const int endOffset,
-                             int currentOffset,
+XMLSize_t XPathScanner::scanNumber(const XMLCh* const data,
+                             const XMLSize_t endOffset,
+                             XMLSize_t currentOffset,
                              ValueVectorOf<int>* const tokens) {
 
     XMLCh ch = data[currentOffset];

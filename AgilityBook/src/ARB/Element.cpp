@@ -624,18 +624,23 @@ public:
 	// -----------------------------------------------------------------------
 	//  Handlers for the SAX DocumentHandler interface
 	// -----------------------------------------------------------------------
-	void startElement(
+	virtual void startElement(
 			XMLCh const* const uri,
 			XMLCh const* const localname,
 			XMLCh const* const qname,
 			Attributes const& attrs);
-	void endElement(
+	virtual void endElement(
 			XMLCh const* const uri,
 			XMLCh const* const localname,
 			XMLCh const* const qname);
-	void characters(
+	virtual void characters(
 			XMLCh const* const chars,
-			unsigned int const length);
+#if _XERCES_VERSION < 30000
+			unsigned int const length
+#else
+			const XMLSize_t length
+#endif
+			);
 	void resetDocument();
 
 	// -----------------------------------------------------------------------
@@ -681,7 +686,7 @@ private:
 void SAXImportHandlers::startElement(
 		XMLCh const* const /*uri*/,
 		XMLCh const* const localname,
-		XMLCh const* const /*qname*/,
+		XMLCh const* const qname,
 		Attributes const& attrs)
 {
 	// If the name is non-zero, we're caching an element. This startElement is
@@ -721,10 +726,17 @@ void SAXImportHandlers::startElement(
 		pParent->AddElementText(data);
 	}
 	// Cache the data...
-#ifdef UNICODE
-	m_CurrentName = localname;
+#if _XERCES_VERSION < 30000
+	qname; // unused param suppression
+	XMLCh const* const elementName = localname;
 #else
-	m_CurrentName = m_ElementNames.TranscodeElement(localname);
+	localname; // unused param suppression
+	XMLCh const* const elementName = qname;
+#endif
+#ifdef UNICODE
+	m_CurrentName = elementName;
+#else
+	m_CurrentName = m_ElementNames.TranscodeElement(elementName);
 #endif
 #if _XERCES_VERSION < 30000
 	unsigned int nAttribs = attrs.getLength();
@@ -793,7 +805,12 @@ void SAXImportHandlers::endElement(
 
 void SAXImportHandlers::characters(
 		XMLCh const* const chars,
-		unsigned int const length)
+#if _XERCES_VERSION < 30000
+		unsigned int const length
+#else
+		const XMLSize_t length
+#endif
+		)
 {
 	m_CurrentData.append(chars, length);
 }
@@ -892,7 +909,7 @@ public:
 		const XMLSize_t count,
 		XMLFormatter* const /*formatter*/)
 	{
-		m_out.write(reinterpret_cast<char const* const>(toWrite), count);
+		m_out.write(reinterpret_cast<char const* const>(toWrite), static_cast<std::streamsize>(count));
 	}
 #endif
 private:

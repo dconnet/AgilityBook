@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,7 @@
  */
 
 /*
- * $Id: SAXParser.cpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: SAXParser.cpp 673975 2008-07-04 09:23:56Z borisk $
  */
 
 
@@ -142,7 +142,7 @@ void SAXParser::installAdvDocHandler(XMLDocumentHandler* const toInstall)
     if (fAdvDHCount == fAdvDHListSize)
     {
         // Calc a new size and allocate the new temp buffer
-        const unsigned int newSize = (unsigned int)(fAdvDHListSize * 1.5);
+        const XMLSize_t newSize = (XMLSize_t)(fAdvDHListSize * 1.5);
         XMLDocumentHandler** newList = (XMLDocumentHandler**) fMemoryManager->allocate
         (
             newSize * sizeof(XMLDocumentHandler*)
@@ -184,7 +184,7 @@ bool SAXParser::removeAdvDocHandler(XMLDocumentHandler* const toRemove)
     //  Search the array until we find this handler. If we find a null entry
     //  first, we can stop there before the list is kept contiguous.
     //
-    unsigned int index;
+    XMLSize_t index;
     for (index = 0; index < fAdvDHCount; index++)
     {
         //
@@ -312,6 +312,11 @@ bool SAXParser::getLoadExternalDTD() const
     return fScanner->getLoadExternalDTD();
 }
 
+bool SAXParser::getLoadSchema() const
+{
+    return fScanner->getLoadSchema();
+}
+
 bool SAXParser::isCachingGrammarFromParse() const
 {
     return fScanner->isCachingGrammarFromParse();
@@ -347,7 +352,7 @@ const XMLCh* SAXParser::getURIText(unsigned int uriId) const
     return fScanner->getURIText(uriId);
 }
 
-unsigned int SAXParser::getSrcOffset() const
+XMLFilePos SAXParser::getSrcOffset() const
 {
     return fScanner->getSrcOffset();
 }
@@ -370,6 +375,11 @@ bool SAXParser::getDisableDefaultEntityResolution() const
 bool SAXParser::getSkipDTDValidation() const
 {
     return fScanner->getSkipDTDValidation();
+}
+
+bool SAXParser::getHandleMultipleImports() const
+{
+    return fScanner->getHandleMultipleImports();
 }
 
 // ---------------------------------------------------------------------------
@@ -460,6 +470,11 @@ void SAXParser::setLoadExternalDTD(const bool newState)
     fScanner->setLoadExternalDTD(newState);
 }
 
+void SAXParser::setLoadSchema(const bool newState)
+{
+    fScanner->setLoadSchema(newState);
+}
+
 void SAXParser::cacheGrammarFromParse(const bool newState)
 {
     fScanner->cacheGrammarFromParse(newState);
@@ -503,7 +518,7 @@ void SAXParser::useScanner(const XMLCh* const scannerName)
     }
 }
 
-void SAXParser::setInputBufferSize(const size_t bufferSize)
+void SAXParser::setInputBufferSize(const XMLSize_t bufferSize)
 {
     fScanner->setInputBufferSize(bufferSize);
 }
@@ -526,6 +541,11 @@ void SAXParser::setDisableDefaultEntityResolution(const bool newValue)
 void SAXParser::setSkipDTDValidation(const bool newValue)
 {
     fScanner->setSkipDTDValidation(newValue);
+}
+
+void SAXParser::setHandleMultipleImports(const bool newValue)
+{
+    fScanner->setHandleMultipleImports(newValue);
 }
 
 // ---------------------------------------------------------------------------
@@ -650,10 +670,10 @@ void SAXParser::setPSVIHandler(PSVIHandler* const handler)
 {
     fPSVIHandler = handler;
     if (fPSVIHandler) {
-        fScanner->setPSVIHandler(fPSVIHandler);      
+        fScanner->setPSVIHandler(fPSVIHandler);
     }
     else {
-        fScanner->setPSVIHandler(0);       
+        fScanner->setPSVIHandler(0);
     }
 }
 
@@ -739,7 +759,7 @@ void SAXParser::parseReset(XMLPScanToken& token)
 //  SAXParser: Overrides of the XMLDocumentHandler interface
 // ---------------------------------------------------------------------------
 void SAXParser::docCharacters(  const   XMLCh* const    chars
-                                , const unsigned int    length
+                                , const XMLSize_t       length
                                 , const bool            cdataSection)
 {
     // Suppress the chars before the root element.
@@ -754,7 +774,7 @@ void SAXParser::docCharacters(  const   XMLCh* const    chars
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->docCharacters(chars, length, cdataSection);
 }
 
@@ -765,7 +785,7 @@ void SAXParser::docComment(const XMLCh* const commentText)
     //  SAX has no way to report this. But, if there are any installed
     //  advanced handlers, then lets call them with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->docComment(commentText);
 }
 
@@ -780,7 +800,7 @@ void SAXParser::XMLDecl( const  XMLCh* const    versionStr
     //  SAX has no way to report this. But, if there are any installed
     //  advanced handlers, then lets call them with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->XMLDecl( versionStr,
                                     encodingStr,
                                     standaloneStr,
@@ -799,7 +819,7 @@ void SAXParser::docPI(  const   XMLCh* const    target
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->docPI(target, data);
 }
 
@@ -813,7 +833,7 @@ void SAXParser::endDocument()
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->endDocument();
 }
 
@@ -847,7 +867,7 @@ void SAXParser::endElement( const   XMLElementDecl& elemDecl
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->endElement(elemDecl, uriId, isRoot, elemPrefix);
 
     //
@@ -865,13 +885,13 @@ void SAXParser::endEntityReference(const XMLEntityDecl& entityDecl)
     //  SAX has no way to report this event. But, if there are any installed
     //  advanced handlers, then lets call them with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->endEntityReference(entityDecl);
 }
 
 
 void SAXParser::ignorableWhitespace(const   XMLCh* const    chars
-                                    , const unsigned int    length
+                                    , const XMLSize_t       length
                                     , const bool            cdataSection)
 {
     // Do not report the whitespace before the root element.
@@ -886,7 +906,7 @@ void SAXParser::ignorableWhitespace(const   XMLCh* const    chars
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->ignorableWhitespace(chars, length, cdataSection);
 }
 
@@ -901,7 +921,7 @@ void SAXParser::resetDocument()
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->resetDocument();
 
     // Make sure our element depth flag gets set back to zero
@@ -913,16 +933,15 @@ void SAXParser::startDocument()
 {
     // Just map to the SAX document handler
     if (fDocHandler)
-    {
         fDocHandler->setDocumentLocator(fScanner->getLocator());
+    if(fDocHandler)
         fDocHandler->startDocument();
-    }
 
     //
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->startDocument();
 }
 
@@ -932,7 +951,7 @@ startElement(   const   XMLElementDecl&         elemDecl
                 , const unsigned int            elemURLId
                 , const XMLCh* const            elemPrefix
                 , const RefVectorOf<XMLAttr>&   attrList
-                , const unsigned int            attrCount
+                , const XMLSize_t               attrCount
                 , const bool                    isEmpty
                 , const bool                    isRoot)
 {
@@ -953,7 +972,7 @@ startElement(   const   XMLElementDecl&         elemDecl
                 fDocHandler->startElement(fElemQNameBuf.getRawBuffer(), fAttrList);
 
                 // If its empty, send the end tag event now
-                if (isEmpty)
+                if (isEmpty && fDocHandler)
                     fDocHandler->endElement(fElemQNameBuf.getRawBuffer());
             }
             else {
@@ -961,7 +980,7 @@ startElement(   const   XMLElementDecl&         elemDecl
                 fDocHandler->startElement(elemDecl.getBaseName(), fAttrList);
 
                 // If its empty, send the end tag event now
-                if (isEmpty)
+                if (isEmpty && fDocHandler)
                     fDocHandler->endElement(elemDecl.getBaseName());
             }
         }
@@ -969,7 +988,7 @@ startElement(   const   XMLElementDecl&         elemDecl
             fDocHandler->startElement(elemDecl.getFullName(), fAttrList);
 
             // If its empty, send the end tag event now
-            if (isEmpty)
+            if (isEmpty && fDocHandler)
                 fDocHandler->endElement(elemDecl.getFullName());
         }
     }
@@ -978,7 +997,7 @@ startElement(   const   XMLElementDecl&         elemDecl
     //  If there are any installed advanced handlers, then lets call them
     //  with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
     {
         fAdvDHList[index]->startElement
         (
@@ -1000,7 +1019,7 @@ void SAXParser::startEntityReference(const XMLEntityDecl& entityDecl)
     //  SAX has no way to report this. But, If there are any installed
     //  advanced handlers, then lets call them with this info.
     //
-    for (unsigned int index = 0; index < fAdvDHCount; index++)
+    for (XMLSize_t index = 0; index < fAdvDHCount; index++)
         fAdvDHList[index]->startEntityReference(entityDecl);
 }
 
@@ -1041,7 +1060,7 @@ void SAXParser::doctypePI(  const   XMLCh* const
 
 
 void SAXParser::doctypeWhitespace(  const   XMLCh* const
-                                    , const unsigned int)
+                                    , const XMLSize_t)
 {
     // Unused by SAX DTDHandler interface at this time
 }
@@ -1159,8 +1178,8 @@ void SAXParser::error(  const   unsigned int
                         , const XMLCh* const                errorText
                         , const XMLCh* const                systemId
                         , const XMLCh* const                publicId
-                        , const XMLSSize_t                  lineNum
-                        , const XMLSSize_t                  colNum)
+                        , const XMLFileLoc                  lineNum
+                        , const XMLFileLoc                  colNum)
 {
     SAXParseException toThrow = SAXParseException
     (
@@ -1208,25 +1227,12 @@ void SAXParser::resetEntities()
     // Nothing to do for this one
 }
 
-
-InputSource*
-SAXParser::resolveEntity(   const   XMLCh* const    publicId
-                            , const XMLCh* const    systemId
-                            , const XMLCh* const)
-{
-    // Just map to the SAX entity resolver handler
-    if (fEntityResolver)
-        return fEntityResolver->resolveEntity(publicId, systemId);
-    return 0;
-}
-
-
 InputSource*
 SAXParser::resolveEntity(  XMLResourceIdentifier* resourceIdentifier )
 {
     // Just map to the SAX entity resolver handler
     if (fEntityResolver)
-        return fEntityResolver->resolveEntity(resourceIdentifier->getPublicId(), 
+        return fEntityResolver->resolveEntity(resourceIdentifier->getPublicId(),
                                                 resourceIdentifier->getSystemId());
     if (fXMLEntityResolver)
         return fXMLEntityResolver->resolveEntity(resourceIdentifier);
@@ -1240,38 +1246,11 @@ void SAXParser::startInputSource(const InputSource&)
 }
 
 
-
-// ---------------------------------------------------------------------------
-//  SAXParser: Deprecated methods
-// ---------------------------------------------------------------------------
-bool SAXParser::getDoValidation() const
-{
-    //
-    //  We don't want to tie the public parser classes to the enum used
-    //  by the scanner, so we use a separate one and map.
-    //
-    //  DON'T mix the new and old methods!!
-    //
-    const XMLScanner::ValSchemes scheme = fScanner->getValidationScheme();
-    if (scheme == XMLScanner::Val_Always)
-        return true;
-    return false;
-}
-
-void SAXParser::setDoValidation(const bool newState)
-{
-    fScanner->setDoValidation
-    (
-        newState ? XMLScanner::Val_Always : XMLScanner::Val_Never
-    );
-}
-
-
 // ---------------------------------------------------------------------------
 //  SAXParser: Grammar preparsing methods
 // ---------------------------------------------------------------------------
 Grammar* SAXParser::loadGrammar(const char* const systemId,
-                                const short grammarType,
+                                const Grammar::GrammarType grammarType,
                                 const bool toCache)
 {
     // Avoid multiple entrance
@@ -1297,7 +1276,7 @@ Grammar* SAXParser::loadGrammar(const char* const systemId,
 }
 
 Grammar* SAXParser::loadGrammar(const XMLCh* const systemId,
-                                const short grammarType,
+                                const Grammar::GrammarType grammarType,
                                 const bool toCache)
 {
     // Avoid multiple entrance
@@ -1323,7 +1302,7 @@ Grammar* SAXParser::loadGrammar(const XMLCh* const systemId,
 }
 
 Grammar* SAXParser::loadGrammar(const InputSource& source,
-                                const short grammarType,
+                                const Grammar::GrammarType grammarType,
                                 const bool toCache)
 {
     // Avoid multiple entrance
@@ -1359,4 +1338,3 @@ void SAXParser::resetCachedGrammarPool()
 }
 
 XERCES_CPP_NAMESPACE_END
-

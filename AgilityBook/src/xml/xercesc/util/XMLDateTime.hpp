@@ -16,17 +16,18 @@
  */
 
 /*
- * $Id: XMLDateTime.hpp 568078 2007-08-21 11:43:25Z amassari $
+ * $Id: XMLDateTime.hpp 594002 2007-11-12 01:05:09Z cargilld $
  */
 
-#ifndef XML_DATETIME_HPP
-#define XML_DATETIME_HPP
+#if !defined(XERCESC_INCLUDE_GUARD_XML_DATETIME_HPP)
+#define XERCESC_INCLUDE_GUARD_XML_DATETIME_HPP
 
 #include <xercesc/util/XMLNumber.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/util/SchemaDateTimeException.hpp>
+#include <xercesc/util/XMLChar.hpp>
 
 XERCES_CPP_NAMESPACE_BEGIN
 
@@ -79,13 +80,6 @@ public:
     // -----------------------------------------------------------------------
     // Implementation of Abstract Interface
     // -----------------------------------------------------------------------
-
-    /**
-     *
-     *  Deprecated: please use getRawData
-     *
-     */
-    virtual XMLCh*        toString() const;
     
     virtual XMLCh*        getRawData() const;
 
@@ -201,7 +195,7 @@ private:
 
     void                  getYearMonth();
 
-    void                  getTimeZone(const int);
+    void                  getTimeZone(const XMLSize_t);
 
     void                  parseTimeZone();
 
@@ -209,19 +203,19 @@ private:
     // locator and converter
     // -----------------------------------------------------------------------
 
-    int                   findUTCSign(const int start);
+    int                   findUTCSign(const XMLSize_t start);
 
-    int                   indexOf(const int start
-                                , const int end
+    int                   indexOf(const XMLSize_t start
+                                , const XMLSize_t end
                                 , const XMLCh ch)     const;
 
-    int                   parseInt(const int start
-                                 , const int end)     const;
+    int                   parseInt(const XMLSize_t start
+                                 , const XMLSize_t end)     const;
 
-    int                   parseIntYear(const int end) const;
+    int                   parseIntYear(const XMLSize_t end) const;
 
-    double                parseMiliSecond(const int start
-                                        , const int end) const;
+    double                parseMiliSecond(const XMLSize_t start
+                                        , const XMLSize_t end) const;
 
     // -----------------------------------------------------------------------
     // validator and normalizer
@@ -231,7 +225,7 @@ private:
 
     void                  normalize();
 
-    void                  fillString(XMLCh*& ptr, int value, int expLen) const;
+    void                  fillString(XMLCh*& ptr, int value, XMLSize_t expLen) const;
 
     int                   fillYearString(XMLCh*& ptr, int value) const;
 
@@ -262,9 +256,9 @@ private:
 
     int          fValue[TOTAL_SIZE];
     int          fTimeZone[TIMEZONE_ARRAYSIZE];
-    int          fStart;
-    int          fEnd;
-    int          fBufferMaxLen;
+    XMLSize_t    fStart;
+    XMLSize_t    fEnd;
+    XMLSize_t    fBufferMaxLen;
 
     double       fMiliSecond;
     bool         fHasTime;
@@ -280,6 +274,13 @@ inline void XMLDateTime::setBuffer(const XMLCh* const aString)
     reset();
 
     fEnd = XMLString::stringLen(aString);
+
+    for (; fEnd > 0; fEnd--)
+    {
+        if (!XMLChar1_0::isWhitespace(aString[fEnd - 1]))
+            break;
+    }
+
     if (fEnd > 0) {
     
         if (fEnd > fBufferMaxLen)
@@ -289,7 +290,8 @@ inline void XMLDateTime::setBuffer(const XMLCh* const aString)
             fBuffer = (XMLCh*) fMemoryManager->allocate((fBufferMaxLen+1) * sizeof(XMLCh));
         }
 
-        memcpy(fBuffer, aString, (fEnd+1) * sizeof(XMLCh));
+        memcpy(fBuffer, aString, (fEnd) * sizeof(XMLCh));
+        fBuffer[fEnd] = '\0';
     }
 }
 
