@@ -209,7 +209,9 @@ void CAgilityBookDoc::StatusBarContextMenu(UINT id, CPoint point)
 				UINT flags = MF_STRING | MF_ENABLED;
 				if (*(*iDog) == *curDog)
 					flags |= MF_CHECKED;
-				menu.AppendMenu(flags, id, (*iDog)->GetGenericName().c_str());
+				CString item((*iDog)->GetGenericName().c_str());
+					item.Replace(_T("&"), _T("&&"));
+				menu.AppendMenu(flags, id, item);
 				dogs.push_back(*iDog);
 			}
 			UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
@@ -238,7 +240,9 @@ void CAgilityBookDoc::StatusBarContextMenu(UINT id, CPoint point)
 					UINT flags = MF_STRING | MF_ENABLED;
 					if (*iFilter == m_FilterName)
 						flags |= MF_CHECKED;
-					menu.AppendMenu(flags, id, (*iFilter).c_str());
+					CString item((*iFilter).c_str());
+					item.Replace(_T("&"), _T("&&"));
+					menu.AppendMenu(flags, id, item);
 				}
 				UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
 				if (baseID <= ret && ret < filterNames.size() + baseID)
