@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-19 DRC Added SelectDog()
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-31 DRC Make F1 invoke context help.
  * @li 2003-12-30 DRC Implemented customized text in tree.
@@ -85,6 +86,7 @@ public:
 	CAgilityBookDoc* GetDocument() const;
 	CIconList const& GetImageList() const	{return m_ImageList;}
 	CAgilityBookTreeData* GetCurrentTreeItem() const;
+	bool SelectDog(ARBDogPtr);
 	CAgilityBookTreeData* FindData(
 			HTREEITEM hItem,
 			ARBBasePtr pBase) const;

@@ -34,6 +34,7 @@
  * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
  *
  * Revision History
+ * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent' action.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -71,6 +72,7 @@
 
 #include "stdafx.h"
 #include "AgilityBook.h"
+#include <algorithm>
 #include <fstream>
 
 #include "AboutDlg.h"
@@ -185,6 +187,71 @@ CAgilityBookDoc::CAgilityBookDoc()
 
 CAgilityBookDoc::~CAgilityBookDoc()
 {
+}
+
+
+void CAgilityBookDoc::StatusBarContextMenu(UINT id, CPoint point)
+{
+	static UINT baseID = 100;
+	CAgilityBookTree* pTree = GetTreeView();
+	switch (id)
+	{
+	case ID_INDICATOR_DOG:
+		if (pTree && 1 < m_Records.GetDogs().size())
+		{
+			ARBDogPtr curDog = GetCurrentDog();
+			CMenu menu;
+			menu.CreatePopupMenu();
+			UINT id = baseID;
+			std::vector<ARBDogPtr> dogs;
+			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++id)
+			{
+				UINT flags = MF_STRING | MF_ENABLED;
+				if (*(*iDog) == *curDog)
+					flags |= MF_CHECKED;
+				menu.AppendMenu(flags, id, (*iDog)->GetGenericName().c_str());
+				dogs.push_back(*iDog);
+			}
+			UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
+			if (baseID <= ret && ret < m_Records.GetDogs().size() + baseID)
+			{
+				pTree->SelectDog(dogs[ret-baseID]);
+			}
+		}
+		break;
+	case ID_INDICATOR_STATUS:
+		break;
+	case ID_INDICATOR_FILTERED:
+		{
+			CFilterOptions m_FilterOptions;
+			std::vector<tstring> filterNames;
+			m_FilterOptions.GetAllFilterNames(filterNames);
+			if (1 < filterNames.size())
+			{
+				std::sort(filterNames.begin(), filterNames.end());
+				tstring m_FilterName = m_FilterOptions.GetCurrentFilter();
+				CMenu menu;
+				menu.CreatePopupMenu();
+				UINT id = baseID;
+				for (std::vector<tstring>::const_iterator iFilter = filterNames.begin(); iFilter != filterNames.end(); ++iFilter, ++id)
+				{
+					UINT flags = MF_STRING | MF_ENABLED;
+					if (*iFilter == m_FilterName)
+						flags |= MF_CHECKED;
+					menu.AppendMenu(flags, id, (*iFilter).c_str());
+				}
+				UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
+				if (baseID <= ret && ret < filterNames.size() + baseID)
+				{
+					m_FilterOptions.SetCurrentFilter(filterNames[ret-baseID]);
+					m_FilterOptions.Save();
+					CFilterOptions::Options().Load();
+					ResetVisibility();
+				}
+			}
+		}
+		break;
+	}
 }
 
 

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-09-01 DRC Added multi-monitor support.
  * @li 2003-05-18 DRC Obsoleted registry settings "Calendar"/"List" (bool)
  *                    "Settings"/"View" (int) changed (see TabView.cpp)
@@ -78,6 +79,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_CLOSE()
+	ON_WM_CONTEXTMENU()
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_STATUS, OnUpdatePane)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_FILTERED, OnUpdatePane)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_DOG, OnUpdatePane)
@@ -98,6 +100,11 @@ static UINT indicators[] =
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
 };
+#if _MSC_VER >= 1400
+static int numIndicators = _countof(indicators);
+#else
+static int numIndicators = sizeof(indicators) / sizeof(indicators[0]);
+#endif
 
 
 CMainFrame::CMainFrame()
@@ -344,6 +351,29 @@ void CMainFrame::OnClose()
 	theApp.WriteProfileInt(_T("Settings"), _T("lastState"), state);
 
 	CFrameWnd::OnClose();
+}
+
+
+void CMainFrame::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
+{
+	CPoint pt(point);
+	m_wndStatusBar.ScreenToClient(&pt);
+	for (int i = 0; i < numIndicators; ++i)
+	{
+		if (indicators[i] == ID_SEPARATOR)
+			continue;
+		CRect r;
+		m_wndStatusBar.GetItemRect(m_wndStatusBar.CommandToIndex(indicators[i]), r);
+		if (r.PtInRect(pt))
+		{
+			CAgilityBookDoc* pDoc = DYNAMIC_DOWNCAST(CAgilityBookDoc, GetActiveDocument());
+			ASSERT(pDoc);
+			if (pDoc)
+				pDoc->StatusBarContextMenu(indicators[i], point);
+			return;
+		}
+	}
+	Default();
 }
 
 

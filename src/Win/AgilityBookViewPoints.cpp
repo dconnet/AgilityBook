@@ -482,9 +482,9 @@ void CAgilityBookViewPoints::LoadData()
 	for (int i = 0; i < nColumnCount; ++i)
 		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
-	CString msg;
 	if (IsWindowVisible())
 	{
+		CString msg;
 		if (GetMessage(msg))
 			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))

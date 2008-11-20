@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
@@ -86,6 +87,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnClose();
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnUpdatePane(CCmdUI* pCmdUI);
 	afx_msg void OnNextTab();
 	afx_msg void OnPrevTab();

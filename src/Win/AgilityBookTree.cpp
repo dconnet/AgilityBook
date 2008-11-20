@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-19 DRC Added SelectDog()
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-22 DRC Support pasting a dog when no dogs exist in file.
  * @li 2005-08-31 DRC The wrong item in the tree was selected after reordering.
@@ -558,6 +559,20 @@ CAgilityBookDoc* CAgilityBookTree::GetDocument() const // non-debug version is i
 CAgilityBookTreeData* CAgilityBookTree::GetCurrentTreeItem() const
 {
 	return GetItemData(GetTreeCtrl().GetSelectedItem());
+}
+
+
+bool CAgilityBookTree::SelectDog(ARBDogPtr dog)
+{
+	bool bSelected = false;
+	CAgilityBookTreeData* pData = FindData(TVI_ROOT, dog);
+	if (pData)
+	{
+		bSelected = true;
+		GetTreeCtrl().SelectItem(pData->GetHTreeItem());
+		GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
+	}
+	return bSelected;
 }
 
 

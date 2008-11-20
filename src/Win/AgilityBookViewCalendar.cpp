@@ -406,9 +406,9 @@ void CAgilityBookViewCalendar::LoadData()
 	fontInfo.size *= 3;
 	fontInfo.CreateFont(m_fontMonth);
 
-	CString msg;
 	if (IsWindowVisible())
 	{
+		CString msg;
 		if (GetMessage(msg))
 			theApp.SetStatusText(msg, IsFiltered());
 		if (GetMessage2(msg))

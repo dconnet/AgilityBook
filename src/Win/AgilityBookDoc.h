@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-02 DRC Added subnames to events.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -97,6 +98,8 @@ protected: // create from serialization only
 	DECLARE_DYNCREATE(CAgilityBookDoc)
 
 public:
+	void StatusBarContextMenu(UINT id, CPoint point);
+
 	// Data
 	ARBDogPtr GetCurrentDog();
 	ARBDogTrialPtr GetCurrentTrial();
