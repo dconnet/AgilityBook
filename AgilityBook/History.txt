@@ -1,3 +1,8 @@
+11/19/2008: v1.10.9.12 <in development>
+- New features / Enhancements:
+  - Added context menus to status bar to enable fast switching between dogs
+    and named filters.
+
 9/24/2008: v1.10.8.12
 - Bumped file version to 12.8, Configuration v23:
   - Added 'style' to Title, 'Style' to 'Titles'
