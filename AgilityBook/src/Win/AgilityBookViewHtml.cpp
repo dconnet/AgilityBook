@@ -275,6 +275,15 @@ void CAgilityBookViewHtml::LoadData()
 	}
 	data << _T("</body></html>") << std::endl;
 	SetHTML(data.str());
+
+	if (IsWindowVisible())
+	{
+		CString msg;
+		if (GetMessage(msg))
+			theApp.SetStatusText(msg, IsFiltered());
+		if (GetMessage2(msg))
+			theApp.SetStatusText2(msg);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
