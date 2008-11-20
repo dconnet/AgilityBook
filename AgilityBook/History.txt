@@ -1,4 +1,6 @@
-11/19/2008: v1.10.9.12 <in development>
+11/20/2008: v1.10.9.12 <in development>
+- Bumped Configuration v24:
+  - Updated USDAA DAM events for LAA points.
 - New features / Enhancements:
   - Added context menus to status bar to enable fast switching between dogs
     and named filters.
