@@ -493,7 +493,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 		std::set<tstring> strings;
 		if (SearchAll())
 		{
-			CAgilityBookViewCalendarData* pData = m_pView->GetItemData(index);
+			CAgilityBookViewCalendarData* pData = m_pView->GetItemCalData(index);
 			if (pData)
 				pData->GetCalendar()->GetSearchStrings(strings);
 		}
@@ -865,7 +865,7 @@ bool CAgilityBookViewCalendarList::GetMessage2(CString& msg) const
 }
 
 
-CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemData(int index) const
+CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemCalData(int index) const
 {
 	return dynamic_cast<CAgilityBookViewCalendarData*>(GetData(index));
 }
@@ -900,7 +900,7 @@ void CAgilityBookViewCalendarList::LoadData()
 
 	// Remember what's selected.
 	ARBCalendarPtr pCurCal;
-	CAgilityBookViewCalendarData* pCurData = GetItemData(GetSelection());
+	CAgilityBookViewCalendarData* pCurData = GetItemCalData(GetSelection());
 	if (pCurData)
 		pCurCal = pCurData->GetCalendar();
 
@@ -1111,7 +1111,7 @@ void CAgilityBookViewCalendarList::OnItemChanged(
 	{
 		if (!m_bSuppressSelect)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
+			CAgilityBookViewCalendarData* pData = GetItemCalData(GetSelection(true));
 			if (pData && pData->GetCalendar() && pData->GetCalendar()->GetStartDate().IsValid())
 			{
 				CAgilityBookViewCalendar* pCalView = GetDocument()->GetCalendarView();
@@ -1180,7 +1180,7 @@ void CAgilityBookViewCalendarList::OnEditFindPrevious()
 void CAgilityBookViewCalendarList::OnUpdateCalendarCreateEntry(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewCalendarData* pData = GetItemCalData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1191,7 +1191,7 @@ void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 {
 	if (0 == GetDocument()->Book().GetDogs().size())
 		return;
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewCalendarData* pData = GetItemCalData(GetSelection(true));
 	if (pData)
 	{
 		ARBCalendarPtr pCal = pData->GetCalendar();
@@ -1220,7 +1220,7 @@ void CAgilityBookViewCalendarList::OnCalendarExport()
 		std::vector<ARBCalendarPtr> items;
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			CAgilityBookViewCalendarData* pData = GetItemCalData(*iter);
 			if (pData)
 			{
 				ARBCalendarPtr pCal = pData->GetCalendar();
@@ -1239,7 +1239,7 @@ void CAgilityBookViewCalendarList::OnCalendarExport()
 void CAgilityBookViewCalendarList::OnUpdateCalendarEdit(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewCalendarData* pData = GetItemCalData(GetSelection(true));
 	if (pData && pData->CanEdit())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1248,7 +1248,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarEdit(CCmdUI* pCmdUI)
 
 void CAgilityBookViewCalendarList::OnCalendarEdit()
 {
-	CAgilityBookViewCalendarData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewCalendarData* pData = GetItemCalData(GetSelection(true));
 	if (pData && pData->CanEdit())
 	{
 		if (pData->CanEdit())
@@ -1313,7 +1313,7 @@ void CAgilityBookViewCalendarList::OnEditDuplicate()
 		std::vector<CAgilityBookViewCalendarData*> items;
 		for (std::vector<int>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(*iterData);
+			CAgilityBookViewCalendarData* pData = GetItemCalData(*iterData);
 			if (pData)
 				items.push_back(pData);
 		}
@@ -1403,7 +1403,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 		ICalendar* iCalendar = ICalendar::iCalendarBegin(iCal, 2);
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			CAgilityBookViewCalendarData* pData = GetItemCalData(*iter);
 			if (pData)
 			{
 				pData->GetCalendar()->Save(tree);
@@ -1482,7 +1482,7 @@ void CAgilityBookViewCalendarList::OnUpdateCalendarDelete(CCmdUI* pCmdUI)
 	{
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(*iter);
+			CAgilityBookViewCalendarData* pData = GetItemCalData(*iter);
 			if (pData && pData->CanDelete())
 			{
 				bEnable = TRUE;
@@ -1502,7 +1502,7 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 		std::vector<CAgilityBookViewCalendarData*> items;
 		for (std::vector<int>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 		{
-			CAgilityBookViewCalendarData* pData = GetItemData(*iterData);
+			CAgilityBookViewCalendarData* pData = GetItemCalData(*iterData);
 			if (pData && pData->CanDelete())
 				items.push_back(pData);
 		}

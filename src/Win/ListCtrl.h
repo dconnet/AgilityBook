@@ -105,9 +105,6 @@ protected:
 public:
 	void AllowEdit()				{m_bAllowEdit = true;}
 
-	CWnd* GetCWnd()					{return m_List;}
-	CWnd const* GetCWnd() const		{return m_List;}
-
 	// Header functions
 	void FixTooltips();
 	int HeaderItemCount();
@@ -116,26 +113,35 @@ public:
 			int iCol,
 			CHeaderCtrl2::SortOrder eOrder);
 
-	// CWnd api
-	HWND GetSafeHwnd() const							{return m_List->GetSafeHwnd();}
-	void GetWindowRect(LPRECT lpRect) const				{m_List->GetWindowRect(lpRect);}
-	void Invalidate(BOOL bErase = TRUE)					{m_List->Invalidate(bErase);}
-	void InvalidateRect(LPCRECT lpRect, BOOL bErase = TRUE)	{m_List->InvalidateRect(lpRect, bErase);}
-	void SetRedraw(BOOL bRedraw = TRUE)					{m_List->SetRedraw(bRedraw);}
-	BOOL SetWindowPos(const CWnd* pWndInsertAfter, int x, int y, int cx, int cy, UINT nFlags)
-		{return m_List->SetWindowPos(pWndInsertAfter, x, y, cx, cy, nFlags);}
-	BOOL ShowWindow(int nCmdShow)						{return m_List->ShowWindow(nCmdShow);}
 	// CListCtrl api
-	DWORD GetExtendedStyle() const						{return m_List->GetExtendedStyle();}
-	DWORD SetExtendedStyle(DWORD dwNewStyle)			{return m_List->SetExtendedStyle(dwNewStyle);}
-	CHeaderCtrl* GetHeaderCtrl() const					{return m_List->GetHeaderCtrl();}
-	CImageList* GetImageList(int nImageList) const		{return m_List->GetImageList(nImageList);}
+	DWORD GetExtendedStyle() const
+	{
+		return m_List ? m_List->GetExtendedStyle() : 0;
+	}
+	DWORD SetExtendedStyle(DWORD dwNewStyle)
+	{
+		return m_List ? m_List->SetExtendedStyle(dwNewStyle): 0;
+	}
+	CHeaderCtrl* GetHeaderCtrl() const
+	{
+		return m_List ? m_List->GetHeaderCtrl() : NULL;
+	}
+	CImageList* GetImageList(int nImageList) const
+	{
+		return m_List ? m_List->GetImageList(nImageList) : NULL;
+	}
 	CImageList* SetImageList(CImageList* pImageList, int nImageList)
 	{
-		return m_List->SetImageList(pImageList, nImageList);
+		return m_List ? m_List->SetImageList(pImageList, nImageList) : NULL;
 	}
-	BOOL GetColumn(int nCol, LVCOLUMN* pColumn) const	{return m_List->GetColumn(nCol, pColumn);}
-	BOOL SetColumn(int nCol, const LVCOLUMN* pColumn)	{return m_List->SetColumn(nCol, pColumn);}
+	BOOL GetColumn(int nCol, LVCOLUMN* pColumn) const
+	{
+		return m_List ? m_List->GetColumn(nCol, pColumn) : FALSE;
+	}
+	BOOL SetColumn(int nCol, const LVCOLUMN* pColumn)
+	{
+		return m_List ? m_List->SetColumn(nCol, pColumn) : FALSE;
+	}
 	int InsertColumn(
 			int nCol,
 			LVCOLUMN const* pColumn);
@@ -149,43 +155,108 @@ public:
 			int nCol,
 			int cx);
 	BOOL DeleteColumn(int nCol);
-	int GetItemCount() const							{return m_List->GetItemCount();}
-	UINT GetSelectedCount() const						{return m_List->GetSelectedCount();}
-	BOOL EnsureVisible(int nItem, BOOL bPartialOK)		{return m_List->EnsureVisible(nItem, bPartialOK);}
-	BOOL GetCheck(int nItem) const						{return m_List->GetCheck(nItem);}
-	DWORD_PTR GetItemData(int nItem) const				{return m_List->GetItemData(nItem);}
+	int GetItemCount() const
+	{
+		return m_List ? m_List->GetItemCount() : 0;
+	}
+	UINT GetSelectedCount() const
+	{
+		return m_List ? m_List->GetSelectedCount() : 0;
+	}
+	BOOL EnsureVisible(int nItem, BOOL bPartialOK)
+	{
+		return m_List ? m_List->EnsureVisible(nItem, bPartialOK) : FALSE;
+	}
+	BOOL GetCheck(int nItem) const
+	{
+		return m_List ? m_List->GetCheck(nItem) : FALSE;
+	}
+	DWORD_PTR GetItemData(int nItem) const
+	{
+		return m_List ? m_List->GetItemData(nItem) : 0;
+	}
 	BOOL GetItemRect(int nItem, LPRECT lpRect, UINT nCode) const
-		{return m_List->GetItemRect(nItem, lpRect, nCode);}
+	{
+		return m_List ? m_List->GetItemRect(nItem, lpRect, nCode) : FALSE;
+	}
 	BOOL GetSubItemRect(int iItem, int iSubItem, int nArea, CRect& ref)
-		{return m_List->GetSubItemRect(iItem, iSubItem, nArea, ref);}
-	UINT GetItemState(int nItem, UINT nMask) const		{return m_List->GetItemState(nItem, nMask);}
-	CString GetItemText(int nItem, int nSubItem) const	{return m_List->GetItemText(nItem, nSubItem);}
+	{
+		return m_List ? m_List->GetSubItemRect(iItem, iSubItem, nArea, ref) : FALSE;
+	}
+	UINT GetItemState(int nItem, UINT nMask) const
+	{
+		return m_List ? m_List->GetItemState(nItem, nMask) : 0;
+	}
+	CString GetItemText(int nItem, int nSubItem) const
+	{
+		return m_List ? m_List->GetItemText(nItem, nSubItem) : CString();
+	}
 	int GetItemText(int nItem, int nSubItem, LPTSTR lpszText, int nLen) const
-		{return m_List->GetItemText(nItem, nSubItem, lpszText, nLen);}
-	BOOL SetCheck(int nItem, BOOL fCheck = TRUE)		{return m_List->SetCheck(nItem, fCheck);}
-	BOOL SetItem(const LVITEM* pItem)					{return m_List->SetItem(pItem);}
+	{
+		return m_List ? m_List->GetItemText(nItem, nSubItem, lpszText, nLen) : 0;
+	}
+	BOOL SetCheck(int nItem, BOOL fCheck = TRUE)
+	{
+		return m_List ? m_List->SetCheck(nItem, fCheck) : FALSE;
+	}
+	BOOL SetItem(const LVITEM* pItem)
+	{
+		return m_List ? m_List->SetItem(pItem) : FALSE;
+	}
 	BOOL SetItem(int nItem, int nSubItem, UINT nMask, LPCTSTR lpszItem, int nImage, UINT nState, UINT nStateMask, LPARAM lParam)
-		{return m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam);}
+	{
+		return m_List ? m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam) : FALSE;
+	}
 #if _MSC_VER >= 1300
 	BOOL SetItem(int nItem, int nSubItem, UINT nMask, LPCTSTR lpszItem, int nImage, UINT nState, UINT nStateMask, LPARAM lParam, int nIndent)
-		{return m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam, nIndent);}
+	{
+		return m_List ? m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam, nIndent) : FALSE;
+	}
 #endif
-	BOOL SetItemData(int nItem, DWORD_PTR dwData)		{return m_List->SetItemData(nItem, dwData);}
-	BOOL SetItemState(int nItem, LVITEM* pItem)			{return m_List->SetItemState(nItem, pItem);}
+	BOOL SetItemData(int nItem, DWORD_PTR dwData)
+	{
+		return m_List ? m_List->SetItemData(nItem, dwData) : FALSE;
+	}
+	BOOL SetItemState(int nItem, LVITEM* pItem)
+	{
+		return m_List ? m_List->SetItemState(nItem, pItem) : FALSE;
+	}
 	BOOL SetItemState(int nItem, UINT nState, UINT nMask)
-		{return m_List->SetItemState(nItem, nState, nMask);}
+	{
+		return m_List ? m_List->SetItemState(nItem, nState, nMask) : FALSE;
+	}
 	BOOL SetItemText(int nItem, int nSubItem, LPCTSTR lpszText)
-		{return m_List->SetItemText(nItem, nSubItem, lpszText);}
-	BOOL DeleteAllItems()								{return m_List->DeleteAllItems();}
-	BOOL DeleteItem(int nItem)							{return m_List->DeleteItem(nItem);}
-	int InsertItem(const LVITEM* pItem)					{return m_List->InsertItem(pItem);}
-	int InsertItem(int nItem, LPCTSTR lpszItem)			{return m_List->InsertItem(nItem, lpszItem);}
+	{
+		return m_List ? m_List->SetItemText(nItem, nSubItem, lpszText) : FALSE;
+	}
+	BOOL DeleteAllItems()
+	{
+		return m_List ? m_List->DeleteAllItems() : FALSE;
+	}
+	BOOL DeleteItem(int nItem)
+	{
+		return m_List ? m_List->DeleteItem(nItem) : FALSE;
+	}
+	int InsertItem(const LVITEM* pItem)
+	{
+		return m_List ? m_List->InsertItem(pItem) : -1;
+	}
+	int InsertItem(int nItem, LPCTSTR lpszItem)
+	{
+		return m_List ? m_List->InsertItem(nItem, lpszItem) : -1;
+	}
 	int InsertItem(int nItem, LPCTSTR lpszItem, int nImage)
-		{return m_List->InsertItem(nItem, lpszItem, nImage);}
+	{
+		return m_List ? m_List->InsertItem(nItem, lpszItem, nImage) : -1;
+	}
 	int InsertItem(UINT nMask, int nItem, LPCTSTR lpszItem, UINT nState, UINT nStateMask, int nImage, LPARAM lParam)
-		{return m_List->InsertItem(nMask, nItem, lpszItem, nState, nStateMask, nImage, lParam);}
+	{
+		return m_List ? m_List->InsertItem(nMask, nItem, lpszItem, nState, nStateMask, nImage, lParam) : -1;
+	}
 	BOOL SortItems(PFNLVCOMPARE pfnCompare, DWORD_PTR dwData)
-		{return m_List->SortItems(pfnCompare, dwData);}
+	{
+		return m_List ? m_List->SortItems(pfnCompare, dwData) : FALSE;
+	}
 
 	/*
 	 * Simple wrappers to control data access.
@@ -256,14 +327,16 @@ public:
 	CListCtrl2(bool bAutoDelete);
 	virtual ~CListCtrl2();
 
-	HWND GetSafeHwnd() const							{return CListCtrlEx::GetSafeHwnd();}
-	void GetWindowRect(LPRECT lpRect) const				{CListCtrlEx::GetWindowRect(lpRect);}
-	void Invalidate(BOOL bErase = TRUE)					{CListCtrlEx::Invalidate(bErase);}
-	void InvalidateRect(LPCRECT lpRect, BOOL bErase = TRUE)	{CListCtrlEx::InvalidateRect(lpRect, bErase);}
-	void SetRedraw(BOOL bRedraw = TRUE)					{CListCtrlEx::SetRedraw(bRedraw);}
+	CWnd& GetCWnd()										{return *this;}
+
+	HWND GetSafeHwnd() const							{return CListCtrl::GetSafeHwnd();}
+	void GetWindowRect(LPRECT lpRect) const				{CListCtrl::GetWindowRect(lpRect);}
+	void Invalidate(BOOL bErase = TRUE)					{CListCtrl::Invalidate(bErase);}
+	void InvalidateRect(LPCRECT lpRect, BOOL bErase = TRUE)	{CListCtrl::InvalidateRect(lpRect, bErase);}
+	void SetRedraw(BOOL bRedraw = TRUE)					{CListCtrl::SetRedraw(bRedraw);}
 	BOOL SetWindowPos(const CWnd* pWndInsertAfter, int x, int y, int cx, int cy, UINT nFlags)
-		{return CListCtrlEx::SetWindowPos(pWndInsertAfter, x, y, cx, cy, nFlags);}
-	BOOL ShowWindow(int nCmdShow)						{return CListCtrlEx::ShowWindow(nCmdShow);}
+		{return CListCtrl::SetWindowPos(pWndInsertAfter, x, y, cx, cy, nFlags);}
+	BOOL ShowWindow(int nCmdShow)						{return CListCtrl::ShowWindow(nCmdShow);}
 
 	DWORD GetExtendedStyle() const						{return CListCtrlEx::GetExtendedStyle();}
 	DWORD SetExtendedStyle(DWORD dwNewStyle)			{return CListCtrlEx::SetExtendedStyle(dwNewStyle);}
@@ -326,38 +399,27 @@ protected:
 
 inline void AFXAPI DDX_Control(CDataExchange* pDX, int nIDC, CListCtrl2& rControl)
 {
-	DDX_Control(pDX, nIDC, *rControl.GetCWnd());
+	DDX_Control(pDX, nIDC, rControl.GetCWnd());
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 // Protect the view so all access to the underlaying listctrl is through CListCtrlEx.
-class CListView2 : protected CListView, public CListCtrlEx
+class CListView2 : public CListView, public CListCtrlEx
 {
 	DECLARE_DYNCREATE(CListView2)
 public:
 	CListView2();
 	virtual ~CListView2();
 
-	virtual BOOL CreateEx(DWORD dwExStyle, LPCTSTR lpszClassName,
-		LPCTSTR lpszWindowName, DWORD dwStyle,
-		const RECT& rect,
-		CWnd* pParentWnd, UINT nID,
-		LPVOID lpParam = NULL)
-	{
-		return CListView::CreateEx(dwExStyle, lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, lpParam);
-	}
-
 	/**
 	 * @param bAuto Should the list items be automatically deleted?
 	 */
 	void SetAutoDelete(bool bAuto);
 
-	void SetRedraw(BOOL bRedraw = TRUE)					{CListCtrlEx::SetRedraw(bRedraw);}
-	void Invalidate(BOOL bErase = TRUE)					{CListCtrlEx::Invalidate(bErase);}
-
 	//{{AFX_VIRTUAL(CListView2)
 protected:
+	void OnDraw(CDC* pDC);
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
@@ -367,7 +429,10 @@ protected:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CListView2)
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg BOOL OnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

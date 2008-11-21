@@ -1166,7 +1166,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 		std::set<tstring> strings;
 		if (SearchAll())
 		{
-			CAgilityBookViewRunsData* pData = m_pView->GetItemData(index);
+			CAgilityBookViewRunsData* pData = m_pView->GetItemRunData(index);
 			if (pData)
 				pData->GetRun()->GetSearchStrings(strings);
 		}
@@ -1373,7 +1373,7 @@ bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 	int nQs = 0;
 	for (int index = 0; index < GetItemCount(); ++index)
 	{
-		CAgilityBookViewRunsData* pData = GetItemData(index);
+		CAgilityBookViewRunsData* pData = GetItemRunData(index);
 		if (pData && pData->GetRun() && pData->GetRun()->GetQ().Qualified())
 			++nQs;
 	}
@@ -1397,7 +1397,7 @@ bool CAgilityBookViewRuns::GetMessage2(CString& msg) const
 }
 
 
-CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemData(int index) const
+CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemRunData(int index) const
 {
 	return dynamic_cast<CAgilityBookViewRunsData*>(GetData(index));
 }
@@ -1656,7 +1656,7 @@ void CAgilityBookViewRuns::OnDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		GetDocument()->EditRun(pData->GetRun());
 	else
@@ -1677,7 +1677,7 @@ void CAgilityBookViewRuns::OnKeydown(
 	case VK_SPACE:
 	case VK_RETURN:
 		{
-			CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+			CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 			if (pData)
 				GetDocument()->EditRun(pData->GetRun());
 		}
@@ -1717,7 +1717,7 @@ void CAgilityBookViewRuns::OnEditFindPrevious()
 void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI) 
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1726,7 +1726,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityEditRun(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityEditRun() 
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		GetDocument()->EditRun(pData->GetRun());
 }
@@ -1735,7 +1735,7 @@ void CAgilityBookViewRuns::OnAgilityEditRun()
 void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1744,7 +1744,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewTitle(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityNewTitle()
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddTitle(pData->GetRun());
 }
@@ -1753,7 +1753,7 @@ void CAgilityBookViewRuns::OnAgilityNewTitle()
 void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1762,7 +1762,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewTrial(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityNewTrial()
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddTrial(pData->GetRun());
 }
@@ -1771,7 +1771,7 @@ void CAgilityBookViewRuns::OnAgilityNewTrial()
 void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1780,7 +1780,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityNewRun(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityNewRun()
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		GetDocument()->AddRun(pData->GetRun());
 }
@@ -1804,7 +1804,7 @@ void CAgilityBookViewRuns::OnAgilityPrintRuns()
 		std::vector<RunInfo> runs;
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			CAgilityBookViewRunsData* pData = GetItemData(*iter);
+			CAgilityBookViewRunsData* pData = GetItemRunData(*iter);
 			if (pData)
 			{
 				dog = pData->GetDog();
@@ -1878,7 +1878,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 		// Now all the data.
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			CAgilityBookViewRunsData* pData = GetItemData(*iter);
+			CAgilityBookViewRunsData* pData = GetItemRunData(*iter);
 			if (pData)
 				pData->GetRun()->Save(tree);
 			CStringArray line;
@@ -1900,7 +1900,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI) 
 {
 	BOOL bEnable = FALSE;
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -1909,7 +1909,7 @@ void CAgilityBookViewRuns::OnUpdateAgilityDeleteRun(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnAgilityDeleteRun() 
 {
-	CAgilityBookViewRunsData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewRunsData* pData = GetItemRunData(GetSelection(true));
 	if (pData)
 		GetDocument()->DeleteRun(pData->GetRun());
 }
