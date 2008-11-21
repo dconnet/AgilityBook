@@ -212,7 +212,7 @@ int CAgilityBookViewPoints::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
 	SetupColumns();
 
@@ -241,9 +241,9 @@ void CAgilityBookViewPoints::OnContextMenu(
 		CRect rect;
 		int index = GetSelection();
 		if (0 <= index)
-			GetListCtrl().GetItemRect(index, &rect, FALSE);
+			GetItemRect(index, &rect, FALSE);
 		else
-			GetListCtrl().GetClientRect(&rect);
+			GetClientRect(&rect);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -448,7 +448,7 @@ void CAgilityBookViewPoints::LoadData()
 	CWaitCursor wait;
 
 	// Reduce flicker
-	GetListCtrl().SetRedraw(FALSE);
+	SetRedraw(FALSE);
 
 	// Get the current item.
 	CPointsDataBasePtr curData;
@@ -457,7 +457,7 @@ void CAgilityBookViewPoints::LoadData()
 		curData = pCurData->m_Data;
 
 	// Clear everything.
-	GetListCtrl().DeleteAllItems();
+	DeleteAllItems();
 
 	CPointsDataItems items;
 	items.LoadData(this, GetDocument(), GetDocument()->GetCurrentDog());
@@ -469,18 +469,18 @@ void CAgilityBookViewPoints::LoadData()
 		if (data->IsVisible())
 		{
 			LVITEM item;
-			item.iItem = GetListCtrl().GetItemCount();
+			item.iItem = GetItemCount();
 			item.iSubItem = 0;
 			item.mask = LVIF_TEXT | LVIF_PARAM;
 			item.pszText = LPSTR_TEXTCALLBACK;
 			item.lParam = reinterpret_cast<LPARAM>(new PointsData(data));
-			GetListCtrl().InsertItem(&item);
+			InsertItem(&item);
 		}
 	}
 
-	int nColumnCount = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	int nColumnCount = GetHeaderCtrl()->GetItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
-		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	if (IsWindowVisible())
 	{
@@ -493,7 +493,7 @@ void CAgilityBookViewPoints::LoadData()
 
 	if (curData)
 	{
-		int n = GetListCtrl().GetItemCount();
+		int n = GetItemCount();
 		for (int i = 0; i < n; ++i)
 		{
 			PointsData* pBase = GetItemData(i);
@@ -502,7 +502,7 @@ void CAgilityBookViewPoints::LoadData()
 				if (pBase->IsEqual(curData))
 				{
 					SetSelection(i);
-					GetListCtrl().EnsureVisible(i, FALSE);
+					EnsureVisible(i, FALSE);
 					break;
 				}
 			}
@@ -510,8 +510,8 @@ void CAgilityBookViewPoints::LoadData()
 		curData.reset();
 	}
 
-	GetListCtrl().SetRedraw(TRUE);
-	GetListCtrl().Invalidate();
+	SetRedraw(TRUE);
+	Invalidate();
 }
 
 /////////////////////////////////////////////////////////////////////////////

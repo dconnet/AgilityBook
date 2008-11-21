@@ -251,18 +251,18 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 	if (!SearchDown())
 		inc = -1;
 	int index = m_pView->GetSelection();
-	if (0 <= index && index < m_pView->GetListCtrl().GetItemCount())
+	if (0 <= index && index < m_pView->GetItemCount())
 	{
 		index += inc;
 	}
 	else if (0 > index && SearchDown())
 		index = 0;
-	else if (index >= m_pView->GetListCtrl().GetItemCount() && !SearchDown())
-		index = m_pView->GetListCtrl().GetItemCount() - 1;
+	else if (index >= m_pView->GetItemCount() && !SearchDown())
+		index = m_pView->GetItemCount() - 1;
 	CString search = Text();
 	if (!MatchCase())
 		search.MakeLower();
-	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
+	for (; !bFound && 0 <= index && index < m_pView->GetItemCount(); index += inc)
 	{
 		std::set<tstring> strings;
 		if (SearchAll())
@@ -276,7 +276,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 			int nColumns = m_pView->HeaderItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
-				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
+				strings.insert((LPCTSTR)m_pView->GetItemText(index, i));
 			}
 		}
 		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
@@ -287,7 +287,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
-				m_pView->GetListCtrl().EnsureVisible(index, FALSE);
+				m_pView->EnsureVisible(index, FALSE);
 				bFound = true;
 			}
 		}
@@ -372,7 +372,7 @@ int CAgilityBookViewTraining::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	return 0;
 }
 
@@ -454,7 +454,7 @@ void CAgilityBookViewTraining::GetPrintLine(
 void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 {
 	int index = -1;
-	for (int i = 0; i < GetListCtrl().GetItemCount(); ++i)
+	for (int i = 0; i < GetItemCount(); ++i)
 	{
 		CAgilityBookViewTrainingData* pTraining = GetItemData(i);
 		if (pTraining && pTraining->GetTraining()->GetDate() == inDate)
@@ -464,7 +464,7 @@ void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 		}
 	}
 	SetSelection(index, true);
-	GetListCtrl().EnsureVisible(index, FALSE);
+	EnsureVisible(index, FALSE);
 }
 
 
@@ -480,7 +480,7 @@ bool CAgilityBookViewTraining::IsFiltered() const
 
 bool CAgilityBookViewTraining::GetMessage(CString& msg) const
 {
-	msg.FormatMessage(IDS_NUM_TRAINING, GetListCtrl().GetItemCount());
+	msg.FormatMessage(IDS_NUM_TRAINING, GetItemCount());
 	return true;
 }
 
@@ -530,10 +530,10 @@ void CAgilityBookViewTraining::LoadData()
 		pCurTraining = pCurData->GetTraining();
 
 	// Reduce flicker
-	GetListCtrl().SetRedraw(FALSE);
+	SetRedraw(FALSE);
 
 	// Clear everything.
-	GetListCtrl().DeleteAllItems();
+	DeleteAllItems();
 
 	// Add items.
 	int i = 0;
@@ -553,7 +553,7 @@ void CAgilityBookViewTraining::LoadData()
 		item.lParam = reinterpret_cast<LPARAM>(
 			static_cast<CListData*>(
 				new CAgilityBookViewTrainingData(this, pTraining)));
-		int index = GetListCtrl().InsertItem(&item);
+		int index = InsertItem(&item);
 		// We may have modified the entry, so don't do a full equality test.
 		// Just check the start/end date, location, club and venue. This allows
 		// us to modify the opens/closes dates, notes and entry status.
@@ -572,7 +572,7 @@ void CAgilityBookViewTraining::LoadData()
 	}
 	int nColumnCount = HeaderItemCount();
 	for (i = 0; i < nColumnCount; ++i)
-		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	if (IsWindowVisible())
 	{
@@ -586,15 +586,15 @@ void CAgilityBookViewTraining::LoadData()
 	SORT_TRAINING_INFO info;
 	info.pThis = this;
 	info.nCol = m_SortColumn.GetColumn();
-	GetListCtrl().SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
+	SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	// Now make sure the selected item is visible.
-	GetListCtrl().EnsureVisible(GetSelection(), FALSE);
+	EnsureVisible(GetSelection(), FALSE);
 
 	// Cleanup.
-	GetListCtrl().SetRedraw(TRUE);
-	GetListCtrl().Invalidate();
+	SetRedraw(TRUE);
+	Invalidate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -621,9 +621,9 @@ void CAgilityBookViewTraining::OnContextMenu(
 		CRect rect;
 		int index = GetSelection();
 		if (0 <= index)
-			GetListCtrl().GetItemRect(index, &rect, FALSE);
+			GetItemRect(index, &rect, FALSE);
 		else
-			GetListCtrl().GetClientRect(&rect);
+			GetClientRect(&rect);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -653,7 +653,7 @@ void CAgilityBookViewTraining::OnColumnclick(
 	SORT_TRAINING_INFO info;
 	info.pThis = this;
 	info.nCol = m_SortColumn.GetColumn();
-	GetListCtrl().SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
+	SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	*pResult = 0;
@@ -754,7 +754,7 @@ void CAgilityBookViewTraining::OnTrainingEdit()
 			Invalidate();
 			int nColumnCount = HeaderItemCount();
 			for (int i = 0; i < nColumnCount; ++i)
-				GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+				SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 		}
 	}
 }
@@ -773,7 +773,7 @@ void CAgilityBookViewTraining::OnTrainingNew()
 		SetCurrentDate(training->GetDate());
 		int nColumnCount = HeaderItemCount();
 		for (int i = 0; i < nColumnCount; ++i)
-			GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+			SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 	}
 }
 
@@ -781,7 +781,7 @@ void CAgilityBookViewTraining::OnTrainingNew()
 void CAgilityBookViewTraining::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -836,7 +836,7 @@ void CAgilityBookViewTraining::OnEditCut()
 void CAgilityBookViewTraining::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -857,7 +857,7 @@ void CAgilityBookViewTraining::OnEditCopy()
 
 		// Take care of the header, but only if more than one line is selected.
 		if (1 < indices.size()
-		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
+		|| indices.size() == static_cast<size_t>(GetItemCount()))
 		{
 			CStringArray line;
 			GetPrintLine(-1, line);
@@ -943,7 +943,7 @@ void CAgilityBookViewTraining::OnEditPaste()
 void CAgilityBookViewTraining::OnUpdateTrainingDelete(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }

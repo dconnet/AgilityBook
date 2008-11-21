@@ -250,7 +250,7 @@ bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
 	if (bCreateList)
 	{
 		CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
-		m_Panes[IDX_PANE_POINTS] = points;
+		m_Panes[IDX_PANE_POINTS] = points->GetCWnd();
 		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
 		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 		points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
@@ -316,7 +316,7 @@ void CTabView::OnInitialUpdate()
 	m_Panes[IDX_PANE_CALENDAR] = &m_splitterCal;
 
 	CAgilityBookViewTraining* training = reinterpret_cast<CAgilityBookViewTraining*>(RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject());
-	m_Panes[IDX_PANE_LOG] = training;
+	m_Panes[IDX_PANE_LOG] = training->GetCWnd();
 	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
 	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
 	training->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
