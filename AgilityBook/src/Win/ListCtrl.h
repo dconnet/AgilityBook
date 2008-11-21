@@ -118,9 +118,9 @@ public:
 
 	// CWnd api
 	HWND GetSafeHwnd() const							{return m_List->GetSafeHwnd();}
-	void GetWindowRect(LPRECT lpRect) const				{return m_List->GetWindowRect(lpRect);}
-	void Invalidate(BOOL bErase = TRUE)					{return m_List->Invalidate(bErase);}
-	void InvalidateRect(LPCRECT lpRect, BOOL bErase = TRUE)	{return m_List->InvalidateRect(lpRect, bErase);}
+	void GetWindowRect(LPRECT lpRect) const				{m_List->GetWindowRect(lpRect);}
+	void Invalidate(BOOL bErase = TRUE)					{m_List->Invalidate(bErase);}
+	void InvalidateRect(LPCRECT lpRect, BOOL bErase = TRUE)	{m_List->InvalidateRect(lpRect, bErase);}
 	void SetRedraw(BOOL bRedraw = TRUE)					{m_List->SetRedraw(bRedraw);}
 	BOOL SetWindowPos(const CWnd* pWndInsertAfter, int x, int y, int cx, int cy, UINT nFlags)
 		{return m_List->SetWindowPos(pWndInsertAfter, x, y, cx, cy, nFlags);}
@@ -166,8 +166,10 @@ public:
 	BOOL SetItem(const LVITEM* pItem)					{return m_List->SetItem(pItem);}
 	BOOL SetItem(int nItem, int nSubItem, UINT nMask, LPCTSTR lpszItem, int nImage, UINT nState, UINT nStateMask, LPARAM lParam)
 		{return m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam);}
+#if _MSC_VER >= 1300
 	BOOL SetItem(int nItem, int nSubItem, UINT nMask, LPCTSTR lpszItem, int nImage, UINT nState, UINT nStateMask, LPARAM lParam, int nIndent)
 		{return m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam, nIndent);}
+#endif
 	BOOL SetItemData(int nItem, DWORD_PTR dwData)		{return m_List->SetItemData(nItem, dwData);}
 	BOOL SetItemState(int nItem, LVITEM* pItem)			{return m_List->SetItemState(nItem, pItem);}
 	BOOL SetItemState(int nItem, UINT nState, UINT nMask)
@@ -255,9 +257,9 @@ public:
 	virtual ~CListCtrl2();
 
 	HWND GetSafeHwnd() const							{return CListCtrlEx::GetSafeHwnd();}
-	void GetWindowRect(LPRECT lpRect) const				{return CListCtrlEx::GetWindowRect(lpRect);}
-	void Invalidate(BOOL bErase = TRUE)					{return CListCtrlEx::Invalidate(bErase);}
-	void InvalidateRect(LPCRECT lpRect, BOOL bErase = TRUE)	{return CListCtrlEx::InvalidateRect(lpRect, bErase);}
+	void GetWindowRect(LPRECT lpRect) const				{CListCtrlEx::GetWindowRect(lpRect);}
+	void Invalidate(BOOL bErase = TRUE)					{CListCtrlEx::Invalidate(bErase);}
+	void InvalidateRect(LPCRECT lpRect, BOOL bErase = TRUE)	{CListCtrlEx::InvalidateRect(lpRect, bErase);}
 	void SetRedraw(BOOL bRedraw = TRUE)					{CListCtrlEx::SetRedraw(bRedraw);}
 	BOOL SetWindowPos(const CWnd* pWndInsertAfter, int x, int y, int cx, int cy, UINT nFlags)
 		{return CListCtrlEx::SetWindowPos(pWndInsertAfter, x, y, cx, cy, nFlags);}
@@ -288,8 +290,10 @@ public:
 	BOOL SetItem(const LVITEM* pItem)					{return CListCtrlEx::SetItem(pItem);}
 	BOOL SetItem(int nItem, int nSubItem, UINT nMask, LPCTSTR lpszItem, int nImage, UINT nState, UINT nStateMask, LPARAM lParam)
 		{return CListCtrlEx::SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam);}
+#if _MSC_VER >= 1300
 	BOOL SetItem(int nItem, int nSubItem, UINT nMask, LPCTSTR lpszItem, int nImage, UINT nState, UINT nStateMask, LPARAM lParam, int nIndent)
 		{return CListCtrlEx::SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam, nIndent);}
+#endif
 	BOOL SetItemData(int nItem, DWORD_PTR dwData)		{return CListCtrlEx::SetItemData(nItem, dwData);}
 	BOOL SetItemState(int nItem, LVITEM* pItem)			{return CListCtrlEx::SetItemState(nItem, pItem);}
 	BOOL SetItemState(int nItem, UINT nState, UINT nMask)	{return CListCtrlEx::SetItemState(nItem, nState, nMask);}
@@ -350,7 +354,7 @@ public:
 	void SetAutoDelete(bool bAuto);
 
 	void SetRedraw(BOOL bRedraw = TRUE)					{CListCtrlEx::SetRedraw(bRedraw);}
-	void Invalidate(BOOL bErase = TRUE)					{return CListCtrlEx::Invalidate(bErase);}
+	void Invalidate(BOOL bErase = TRUE)					{CListCtrlEx::Invalidate(bErase);}
 
 	//{{AFX_VIRTUAL(CListView2)
 protected:
