@@ -478,9 +478,12 @@ void CAgilityBookViewPoints::LoadData()
 		}
 	}
 
-	int nColumnCount = GetHeaderCtrl()->GetItemCount();
-	for (int i = 0; i < nColumnCount; ++i)
-		SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+	if (GetHeaderCtrl())
+	{
+		int nColumnCount = GetHeaderCtrl()->GetItemCount();
+		for (int i = 0; i < nColumnCount; ++i)
+			SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+	}
 
 	if (IsWindowVisible())
 	{
