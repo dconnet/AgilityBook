@@ -477,18 +477,18 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 	if (!SearchDown())
 		inc = -1;
 	int index = m_pView->GetSelection();
-	if (0 <= index && index < m_pView->GetListCtrl().GetItemCount())
+	if (0 <= index && index < m_pView->GetItemCount())
 	{
 		index += inc;
 	}
 	else if (0 > index && SearchDown())
 		index = 0;
-	else if (index >= m_pView->GetListCtrl().GetItemCount() && !SearchDown())
-		index = m_pView->GetListCtrl().GetItemCount() - 1;
+	else if (index >= m_pView->GetItemCount() && !SearchDown())
+		index = m_pView->GetItemCount() - 1;
 	CString search = Text();
 	if (!MatchCase())
 		search.MakeLower();
-	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
+	for (; !bFound && 0 <= index && index < m_pView->GetItemCount(); index += inc)
 	{
 		std::set<tstring> strings;
 		if (SearchAll())
@@ -502,7 +502,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 			int nColumns = m_pView->HeaderItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
-				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
+				strings.insert((LPCTSTR)m_pView->GetItemText(index, i));
 			}
 		}
 		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
@@ -513,7 +513,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
-				m_pView->GetListCtrl().EnsureVisible(index, FALSE);
+				m_pView->EnsureVisible(index, FALSE);
 				bFound = true;
 			}
 		}
@@ -615,16 +615,16 @@ int CAgilityBookViewCalendarList::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	GetListCtrl().SetImageList(&m_ImageStateList, LVSIL_STATE);
-	GetListCtrl().SetImageList(&m_ImageList, LVSIL_SMALL);
+	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	SetImageList(&m_ImageStateList, LVSIL_STATE);
+	SetImageList(&m_ImageList, LVSIL_SMALL);
 	return 0;
 }
 
 
 void CAgilityBookViewCalendarList::OnDestroy() 
 {
-	GetListCtrl().DeleteAllItems();
+	DeleteAllItems();
 	CListView2::OnDestroy();
 }
 
@@ -633,7 +633,7 @@ DWORD CAgilityBookViewCalendarList::GetFormatFlags(int iCol) const
 {
 	DWORD dwFlags = DT_NOPREFIX | DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS;
 	DWORD dwFormat = DT_LEFT;
-	CHeaderCtrl* pHdr = GetListCtrl().GetHeaderCtrl();
+	CHeaderCtrl* pHdr = GetHeaderCtrl();
 	if (pHdr)
 	{
 		HDITEM info;
@@ -659,32 +659,32 @@ DWORD CAgilityBookViewCalendarList::GetFormatFlags(int iCol) const
 
 void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
-	if (!GetListCtrl().GetHeaderCtrl() || lpDrawItemStruct->itemID < 0)
+	if (!GetHeaderCtrl() || lpDrawItemStruct->itemID < 0)
 	{
 		// No header control or no items in list.
 		return;
 	}
-	int nColumns = GetListCtrl().GetHeaderCtrl()->GetItemCount();
+	int nColumns = GetHeaderCtrl()->GetItemCount();
 	if (0 >= nColumns)
 	{
 		// No columns...
 		return;
 	}
 
-	UINT state = GetListCtrl().GetItemState(lpDrawItemStruct->itemID, static_cast<UINT>(-1));
+	UINT state = GetItemState(lpDrawItemStruct->itemID, static_cast<UINT>(-1));
 	bool bFocused = (GetFocus() == this);
-	bool bSelected = ((LVIS_SELECTED & state) && (bFocused || GetListCtrl().GetStyle() & LVS_SHOWSELALWAYS));
+	bool bSelected = ((LVIS_SELECTED & state) && (bFocused || GetStyle() & LVS_SHOWSELALWAYS));
 	bSelected = bSelected || (state & LVIS_DROPHILITED);
 
 	CListData* pRawData = reinterpret_cast<CListData*>(lpDrawItemStruct->itemData);
 	CAgilityBookViewCalendarData* pData = dynamic_cast<CAgilityBookViewCalendarData*>(pRawData);
 
 	CRect rLineFull; // Entire line (of data)
-	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineFull, LVIR_BOUNDS);
+	GetItemRect(lpDrawItemStruct->itemID, &rLineFull, LVIR_BOUNDS);
 	CRect rLineIcon; // Icon area - only normal icon, NOT state area also
-	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineIcon, LVIR_ICON);
+	GetItemRect(lpDrawItemStruct->itemID, &rLineIcon, LVIR_ICON);
 	CRect rLineLabel; // Area of first column
-	GetListCtrl().GetItemRect(lpDrawItemStruct->itemID, &rLineLabel, LVIR_LABEL);
+	GetItemRect(lpDrawItemStruct->itemID, &rLineLabel, LVIR_LABEL);
 	CRect rLine(rLineFull);
 	rLine.left = rLineLabel.left;
 
@@ -697,7 +697,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 	// Draw the background of the row.
 	dc.SetBkColor(pData->GetBackgroundColor(-1, bSelected, bFocused));
-	if (GetListCtrl().GetExtendedStyle() & LVS_EX_FULLROWSELECT)
+	if (GetExtendedStyle() & LVS_EX_FULLROWSELECT)
 		dc.ExtTextOut(0, 0, ETO_OPAQUE, rLine, NULL, 0, NULL);
 	else
 		dc.ExtTextOut(0, 0, ETO_OPAQUE, rLineLabel, NULL, 0, NULL);
@@ -706,7 +706,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CSize szIcon(16, 16);
 	CRect rIconPos(rLineIcon);
 	rIconPos.OffsetRect(0, (rLineIcon.Height() - szIcon.cy) / 2);
-	CImageList* pImageStateList = GetListCtrl().GetImageList(LVSIL_STATE);
+	CImageList* pImageStateList = GetImageList(LVSIL_STATE);
 	if (pImageStateList)
 	{
 		CRect rIconPos2(rIconPos);
@@ -723,7 +723,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 #endif
 		}
 	}
-	CImageList* pImageList = GetListCtrl().GetImageList(LVSIL_SMALL);
+	CImageList* pImageList = GetImageList(LVSIL_SMALL);
 	if (pData && pImageList)
 	{
 		int idxImage = pData->GetIcon();
@@ -750,7 +750,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	for (int i = 1; i < nColumns; ++i)
 	{
 		CRect r;
-		GetListCtrl().GetSubItemRect(lpDrawItemStruct->itemID, i, LVIR_BOUNDS, r);
+		GetSubItemRect(lpDrawItemStruct->itemID, i, LVIR_BOUNDS, r);
 		r.InflateRect(-OFFSET_OTHER, 0);
 		dc.SetTextColor(pData->GetTextColor(i, bSelected, bFocused));
 		dc.SetBkColor(pData->GetBackgroundColor(i, bSelected, bFocused));
@@ -853,7 +853,7 @@ bool CAgilityBookViewCalendarList::IsFiltered() const
 
 bool CAgilityBookViewCalendarList::GetMessage(CString& msg) const
 {
-	msg.FormatMessage(IDS_NUM_EVENTS, GetListCtrl().GetItemCount());
+	msg.FormatMessage(IDS_NUM_EVENTS, GetItemCount());
 	return true;
 }
 
@@ -905,10 +905,10 @@ void CAgilityBookViewCalendarList::LoadData()
 		pCurCal = pCurData->GetCalendar();
 
 	// Reduce flicker
-	GetListCtrl().SetRedraw(FALSE);
+	SetRedraw(FALSE);
 
 	// Clear everything.
-	GetListCtrl().DeleteAllItems();
+	DeleteAllItems();
 
 	ARBDate today(ARBDate::Today());
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
@@ -964,7 +964,7 @@ void CAgilityBookViewCalendarList::LoadData()
 		item.iImage = I_IMAGECALLBACK;
 		item.state = INDEXTOSTATEIMAGEMASK(pData->GetStateIcon());
 		item.lParam = reinterpret_cast<LPARAM>(static_cast<CListData*>(pData));
-		int index = GetListCtrl().InsertItem(&item);
+		int index = InsertItem(&item);
 		// We may have modified the entry, so don't do a full equality test.
 		// Just check the start/end date, location, club and venue. This allows
 		// us to modify the opens/closes dates, notes and entry status.
@@ -987,7 +987,7 @@ void CAgilityBookViewCalendarList::LoadData()
 	}
 	int nColumnCount = HeaderItemCount();
 	for (i = 0; i < nColumnCount; ++i)
-		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	if (IsWindowVisible())
 	{
@@ -1001,14 +1001,14 @@ void CAgilityBookViewCalendarList::LoadData()
 	SORT_CAL_INFO info;
 	info.pThis = this;
 	info.nCol = m_SortColumn.GetColumn();
-	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
+	SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	// Now make sure the selected item is visible.
-	GetListCtrl().EnsureVisible(GetSelection(), FALSE);
+	EnsureVisible(GetSelection(), FALSE);
 
-	GetListCtrl().SetRedraw(TRUE);
-	GetListCtrl().Invalidate();
+	SetRedraw(TRUE);
+	Invalidate();
 
 	m_bSuppressSelect = false;
 }
@@ -1037,9 +1037,9 @@ void CAgilityBookViewCalendarList::OnContextMenu(
 		CRect rect;
 		int index = GetSelection();
 		if (0 <= index)
-			GetListCtrl().GetItemRect(index, &rect, FALSE);
+			GetItemRect(index, &rect, FALSE);
 		else
-			GetListCtrl().GetClientRect(&rect);
+			GetClientRect(&rect);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -1069,7 +1069,7 @@ void CAgilityBookViewCalendarList::OnColumnclick(
 	SORT_CAL_INFO info;
 	info.pThis = this;
 	info.nCol = m_SortColumn.GetColumn();
-	GetListCtrl().SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
+	SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	*pResult = 0;
@@ -1206,7 +1206,7 @@ void CAgilityBookViewCalendarList::OnCalendarCreateEntry()
 void CAgilityBookViewCalendarList::OnUpdateCalendarExport(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1299,7 +1299,7 @@ void CAgilityBookViewCalendarList::OnCalendarNew()
 void CAgilityBookViewCalendarList::OnUpdateEditDuplicate(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1362,7 +1362,7 @@ void CAgilityBookViewCalendarList::OnEditCut()
 void CAgilityBookViewCalendarList::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1383,7 +1383,7 @@ void CAgilityBookViewCalendarList::OnEditCopy()
 
 		// Take care of the header, but only if more than one line is selected.
 		if (1 < indices.size()
-		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
+		|| indices.size() == static_cast<size_t>(GetItemCount()))
 		{
 			CStringArray line;
 			GetPrintLine(-1, line);
@@ -1514,10 +1514,10 @@ void CAgilityBookViewCalendarList::OnCalendarDelete()
 		{
 			LoadData();
 			int index = indices[0];
-			if (index >= GetListCtrl().GetItemCount())
-				index = GetListCtrl().GetItemCount() - 1;
+			if (index >= GetItemCount())
+				index = GetItemCount() - 1;
 			SetSelection(index);
-			GetListCtrl().EnsureVisible(index, FALSE);
+			EnsureVisible(index, FALSE);
 			GetDocument()->SetModifiedFlag();
 			GetDocument()->UpdateAllViews(this, UPDATE_CALENDAR_VIEW);
 		}

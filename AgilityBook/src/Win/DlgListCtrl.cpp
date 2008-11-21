@@ -70,7 +70,7 @@ static char THIS_FILE[] = __FILE__;
 class CDlgListCtrlData : public CListData
 {
 public:
-	CDlgListCtrlData(CListCtrl& list)
+	CDlgListCtrlData(CListCtrl2& list)
 		: m_List(list)
 	{
 	}
@@ -81,7 +81,7 @@ public:
 	virtual void Apply() = 0;
 	virtual ARBCalendarPtr GetCalendar() const	{return ARBCalendarPtr();}
 protected:
-	CListCtrl& m_List;
+	CListCtrl2& m_List;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ class CDlgListCtrlDataCalendar : public CDlgListCtrlData
 {
 public:
 	CDlgListCtrlDataCalendar(
-			CListCtrl& list,
+			CListCtrl2& list,
 			CAgilityBookDoc* pDoc,
 			ARBCalendarPtr pCal)
 		: CDlgListCtrlData(list)
@@ -168,12 +168,12 @@ class CDlgListCtrlDataFaults : public CDlgListCtrlData
 {
 public:
 	static void GetAllFaults(
-			CListCtrl& ctrl,
+			CListCtrl2& ctrl,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
 			std::set<tstring>& faults);
 	CDlgListCtrlDataFaults(
-			CListCtrl& list,
+			CListCtrl2& list,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
 			tstring fault)
@@ -198,7 +198,7 @@ private:
 
 
 void CDlgListCtrlDataFaults::GetAllFaults(
-		CListCtrl& ctrl,
+		CListCtrl2& ctrl,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr pRun,
 		std::set<tstring>& faults)
@@ -252,7 +252,7 @@ class CDlgListCtrlDataOtherPoints : public CDlgListCtrlData
 {
 public:
 	CDlgListCtrlDataOtherPoints(
-			CListCtrl& list,
+			CListCtrl2& list,
 			ARBConfig& config,
 			ARBDogRunPtr pRun,
 			ARBDogRunOtherPointsPtr pOther)
@@ -319,7 +319,7 @@ class CDlgListCtrlDataPartners : public CDlgListCtrlData
 public:
 	CDlgListCtrlDataPartners(
 			CDlgListCtrl* pDlg,
-			CListCtrl& list,
+			CListCtrl2& list,
 			ARBDogRunPtr pRun,
 			ARBDogRunPartnerPtr pPartner)
 		: CDlgListCtrlData(list)

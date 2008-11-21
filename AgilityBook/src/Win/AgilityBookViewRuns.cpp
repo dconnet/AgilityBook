@@ -1150,18 +1150,18 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 	if (!SearchDown())
 		inc = -1;
 	int index = m_pView->GetSelection();
-	if (0 <= index && index < m_pView->GetListCtrl().GetItemCount())
+	if (0 <= index && index < m_pView->GetItemCount())
 	{
 		index += inc;
 	}
 	else if (0 > index && SearchDown())
 		index = 0;
-	else if (index >= m_pView->GetListCtrl().GetItemCount() && !SearchDown())
-		index = m_pView->GetListCtrl().GetItemCount() - 1;
+	else if (index >= m_pView->GetItemCount() && !SearchDown())
+		index = m_pView->GetItemCount() - 1;
 	CString search = Text();
 	if (!MatchCase())
 		search.MakeLower();
-	for (; !bFound && 0 <= index && index < m_pView->GetListCtrl().GetItemCount(); index += inc)
+	for (; !bFound && 0 <= index && index < m_pView->GetItemCount(); index += inc)
 	{
 		std::set<tstring> strings;
 		if (SearchAll())
@@ -1175,7 +1175,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 			int nColumns = m_pView->HeaderItemCount();
 			for (int i = 0; i < nColumns; ++i)
 			{
-				strings.insert((LPCTSTR)m_pView->GetListCtrl().GetItemText(index, i));
+				strings.insert((LPCTSTR)m_pView->GetItemText(index, i));
 			}
 		}
 		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
@@ -1186,7 +1186,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->SetSelection(index, true);
-				m_pView->GetListCtrl().EnsureVisible(index, FALSE);
+				m_pView->EnsureVisible(index, FALSE);
 				bFound = true;
 			}
 		}
@@ -1281,8 +1281,8 @@ int CAgilityBookViewRuns::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CListView2::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	GetListCtrl().SetExtendedStyle(GetListCtrl().GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	GetListCtrl().SetImageList(&m_ImageList, LVSIL_SMALL);
+	SetExtendedStyle(GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	SetImageList(&m_ImageList, LVSIL_SMALL);
 	return 0;
 }
 
@@ -1371,13 +1371,13 @@ bool CAgilityBookViewRuns::IsFiltered() const
 bool CAgilityBookViewRuns::GetMessage(CString& msg) const
 {
 	int nQs = 0;
-	for (int index = 0; index < GetListCtrl().GetItemCount(); ++index)
+	for (int index = 0; index < GetItemCount(); ++index)
 	{
 		CAgilityBookViewRunsData* pData = GetItemData(index);
 		if (pData && pData->GetRun() && pData->GetRun()->GetQ().Qualified())
 			++nQs;
 	}
-	msg.FormatMessage(IDS_NUM_RUNS_QS, GetListCtrl().GetItemCount(), nQs);
+	msg.FormatMessage(IDS_NUM_RUNS_QS, GetItemCount(), nQs);
 	return true;
 }
 
@@ -1440,10 +1440,10 @@ void CAgilityBookViewRuns::LoadData()
 	ARBDogRunPtr pCurRun = GetDocument()->GetCurrentRun();
 
 	// Reduce flicker.
-	GetListCtrl().SetRedraw(FALSE);
+	SetRedraw(FALSE);
 
 	// Clear everything.
-	GetListCtrl().DeleteAllItems();
+	DeleteAllItems();
 
 	// Add items.
 	std::vector<CVenueFilter> venues;
@@ -1492,7 +1492,7 @@ void CAgilityBookViewRuns::LoadData()
 				item.lParam = reinterpret_cast<LPARAM>(
 					static_cast<CListData*>(
 						new CAgilityBookViewRunsData(this, pDog, pTrial, pRun)));
-				int index = GetListCtrl().InsertItem(&item);
+				int index = InsertItem(&item);
 				// Compare by ptr, not value.
 				if (pCurRun && pCurRun == pRun)
 				{
@@ -1504,7 +1504,7 @@ void CAgilityBookViewRuns::LoadData()
 	int i;
 	int nColumnCount = HeaderItemCount();
 	for (i = 0; i < nColumnCount; ++i)
-		GetListCtrl().SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
 
 	if (IsWindowVisible())
 	{
@@ -1518,18 +1518,18 @@ void CAgilityBookViewRuns::LoadData()
 	SORT_RUN_INFO info;
 	info.pThis = this;
 	info.nCol = m_SortColumn.GetColumn();
-	GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
+	SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
 	if (0 == m_SortColumn.GetColumn())
 		HeaderSort(0, CHeaderCtrl2::eNoSort);
 	else
 		HeaderSort(abs(m_SortColumn.GetColumn()),
 			info.nCol > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	// Now make sure the selected item is visible.
-	GetListCtrl().EnsureVisible(GetSelection(), FALSE);
+	EnsureVisible(GetSelection(), FALSE);
 
 	// Cleanup.
-	GetListCtrl().SetRedraw(TRUE);
-	GetListCtrl().Invalidate();
+	SetRedraw(TRUE);
+	Invalidate();
 
 	m_bSuppressSelect = false;
 }
@@ -1558,9 +1558,9 @@ void CAgilityBookViewRuns::OnContextMenu(
 		CRect rect;
 		int index = GetSelection();
 		if (0 <= index)
-			GetListCtrl().GetItemRect(index, &rect, FALSE);
+			GetItemRect(index, &rect, FALSE);
 		else
-			GetListCtrl().GetClientRect(&rect);
+			GetClientRect(&rect);
 		point.x = rect.left + rect.Width() / 3;
 		point.y = rect.top + rect.Height() / 2;
 		ClientToScreen(&point);
@@ -1592,7 +1592,7 @@ void CAgilityBookViewRuns::OnColumnclick(
 		SORT_RUN_INFO info;
 		info.pThis = this;
 		info.nCol = m_SortColumn.GetColumn();
-		GetListCtrl().SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
+		SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
 		HeaderSort(abs(m_SortColumn.GetColumn()),
 			nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
 	}
@@ -1632,7 +1632,7 @@ void CAgilityBookViewRuns::OnItemchanged(
 	&& !(LVIS_SELECTED & pNMListView->uOldState)
 	&& (LVIS_SELECTED & pNMListView->uNewState))
 	{
-		if (!m_bSuppressSelect && 1 == GetListCtrl().GetSelectedCount())
+		if (!m_bSuppressSelect && 1 == GetSelectedCount())
 		{
 			CListData* pRawData = reinterpret_cast<CListData*>(pNMListView->lParam);
 			CAgilityBookViewRunsData* pData = dynamic_cast<CAgilityBookViewRunsData*>(pRawData);
@@ -1789,7 +1789,7 @@ void CAgilityBookViewRuns::OnAgilityNewRun()
 void CAgilityBookViewRuns::OnUpdateAgilityPrintRuns(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1818,7 +1818,7 @@ void CAgilityBookViewRuns::OnAgilityPrintRuns()
 
 void CAgilityBookViewRuns::OnUpdateEditCut(CCmdUI* pCmdUI)
 {
-	if (1 == GetListCtrl().GetSelectedCount())
+	if (1 == GetSelectedCount())
 		OnUpdateEditCopy(pCmdUI);
 	else
 		pCmdUI->Enable(FALSE);
@@ -1827,7 +1827,7 @@ void CAgilityBookViewRuns::OnUpdateEditCut(CCmdUI* pCmdUI)
 
 void CAgilityBookViewRuns::OnEditCut()
 {
-	if (1 == GetListCtrl().GetSelectedCount())
+	if (1 == GetSelectedCount())
 	{
 		OnEditCopy();
 		OnAgilityDeleteRun();
@@ -1840,7 +1840,7 @@ void CAgilityBookViewRuns::OnEditCut()
 void CAgilityBookViewRuns::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1861,7 +1861,7 @@ void CAgilityBookViewRuns::OnEditCopy()
 
 		// Take care of the header, but only if more than one line is selected.
 		if (1 < indices.size()
-		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
+		|| indices.size() == static_cast<size_t>(GetItemCount()))
 		{
 			CStringArray line;
 			GetPrintLine(-1, line);

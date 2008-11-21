@@ -923,37 +923,6 @@ CListCtrl2::~CListCtrl2()
 {
 }
 
-
-int CListCtrl2::InsertColumn(
-		int nCol,
-		LVCOLUMN const* pColumn)
-{
-	return CListCtrlEx::InsertColumn(nCol, pColumn);
-}
-
-
-int CListCtrl2::InsertColumn(
-		int nCol,
-		LPCTSTR lpszColumnHeading,
-		int nFormat,
-		int nWidth,
-		int nSubItem)
-{
-	return CListCtrlEx::InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
-}
-
-
-BOOL CListCtrl2::SetColumnWidth(int nCol, int cx)
-{
-	return CListCtrlEx::SetColumnWidth(nCol, cx);
-}
-
-
-BOOL CListCtrl2::DeleteColumn(int nCol)
-{
-	return CListCtrlEx::DeleteColumn(nCol);
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CListCtrl2 message handlers
 
@@ -1071,37 +1040,6 @@ CListView2::~CListView2()
 void CListView2::SetAutoDelete(bool bAuto)
 {
 	m_bAutoDelete = bAuto;
-}
-
-
-int CListView2::InsertColumn(
-		int nCol,
-		LVCOLUMN const* pColumn)
-{
-	return CListCtrlEx::InsertColumn(nCol, pColumn);
-}
-
-
-int CListView2::InsertColumn(
-		int nCol,
-		LPCTSTR lpszColumnHeading,
-		int nFormat,
-		int nWidth,
-		int nSubItem)
-{
-	return CListCtrlEx::InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
-}
-
-
-BOOL CListView2::SetColumnWidth(int nCol, int cx)
-{
-	return CListCtrlEx::SetColumnWidth(nCol, cx);
-}
-
-
-BOOL CListView2::DeleteColumn(int nCol)
-{
-	return CListCtrlEx::DeleteColumn(nCol);
 }
 
 /////////////////////////////////////////////////////////////////////////////
