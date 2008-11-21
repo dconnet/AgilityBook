@@ -264,7 +264,7 @@ void CAgilityBookViewPoints::OnNMDblclk(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
 {
-	PointsData* pData = GetItemData(GetSelection(true));
+	PointsData* pData = GetItemPointsData(GetSelection(true));
 	if (pData)
 		pData->Details();
 	else
@@ -285,7 +285,7 @@ void CAgilityBookViewPoints::OnKeydown(
 	case VK_SPACE:
 	case VK_RETURN:
 		{
-			PointsData* pData = GetItemData(GetSelection(true));
+			PointsData* pData = GetItemPointsData(GetSelection(true));
 			if (pData)
 				pData->Details();
 			else
@@ -415,7 +415,7 @@ bool CAgilityBookViewPoints::GetMessage2(CString& msg) const
 }
 
 
-PointsData* CAgilityBookViewPoints::GetItemData(int index) const
+PointsData* CAgilityBookViewPoints::GetItemPointsData(int index) const
 {
 	return dynamic_cast<PointsData*>(GetData(index));
 }
@@ -452,7 +452,7 @@ void CAgilityBookViewPoints::LoadData()
 
 	// Get the current item.
 	CPointsDataBasePtr curData;
-	PointsData* pCurData = GetItemData(GetSelection(true));
+	PointsData* pCurData = GetItemPointsData(GetSelection(true));
 	if (pCurData)
 		curData = pCurData->m_Data;
 
@@ -496,7 +496,7 @@ void CAgilityBookViewPoints::LoadData()
 		int n = GetItemCount();
 		for (int i = 0; i < n; ++i)
 		{
-			PointsData* pBase = GetItemData(i);
+			PointsData* pBase = GetItemPointsData(i);
 			if (pBase)
 			{
 				if (pBase->IsEqual(curData))
@@ -520,7 +520,7 @@ void CAgilityBookViewPoints::LoadData()
 void CAgilityBookViewPoints::OnUpdateDetails(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	PointsData* pData = GetItemData(GetSelection(true));
+	PointsData* pData = GetItemPointsData(GetSelection(true));
 	if (pData && pData->HasDetails())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
@@ -529,7 +529,7 @@ void CAgilityBookViewPoints::OnUpdateDetails(CCmdUI* pCmdUI)
 
 void CAgilityBookViewPoints::OnDetails()
 {
-	PointsData* pData = GetItemData(GetSelection(true));
+	PointsData* pData = GetItemPointsData(GetSelection(true));
 	if (pData)
 		pData->Details();
 }

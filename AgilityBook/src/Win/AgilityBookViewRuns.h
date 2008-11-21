@@ -83,7 +83,7 @@ public:
 	virtual bool GetMessage2(CString& msg) const;
 
 private:
-	CAgilityBookViewRunsData* GetItemData(int index) const;
+	CAgilityBookViewRunsData* GetItemRunData(int index) const;
 	void SetupColumns();
 	void LoadData();
 

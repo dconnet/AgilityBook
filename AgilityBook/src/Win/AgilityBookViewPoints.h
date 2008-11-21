@@ -66,7 +66,7 @@ public:
 	virtual bool GetMessage2(CString& msg) const;
 
 private:
-	PointsData* GetItemData(int index) const;
+	PointsData* GetItemPointsData(int index) const;
 	void SetupColumns();
 	void LoadData();
 

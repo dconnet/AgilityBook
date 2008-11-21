@@ -267,7 +267,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 		std::set<tstring> strings;
 		if (SearchAll())
 		{
-			CAgilityBookViewTrainingData* pData = m_pView->GetItemData(index);
+			CAgilityBookViewTrainingData* pData = m_pView->GetItemTrainingData(index);
 			if (pData)
 				pData->GetTraining()->GetSearchStrings(strings);
 		}
@@ -456,7 +456,7 @@ void CAgilityBookViewTraining::SetCurrentDate(ARBDate const& inDate)
 	int index = -1;
 	for (int i = 0; i < GetItemCount(); ++i)
 	{
-		CAgilityBookViewTrainingData* pTraining = GetItemData(i);
+		CAgilityBookViewTrainingData* pTraining = GetItemTrainingData(i);
 		if (pTraining && pTraining->GetTraining()->GetDate() == inDate)
 		{
 			index = i;
@@ -492,7 +492,7 @@ bool CAgilityBookViewTraining::GetMessage2(CString& msg) const
 }
 
 
-CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemData(int index) const
+CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemTrainingData(int index) const
 {
 	return dynamic_cast<CAgilityBookViewTrainingData*>(GetData(index));
 }
@@ -525,7 +525,7 @@ void CAgilityBookViewTraining::LoadData()
 {
 	// Remember what's selected.
 	ARBTrainingPtr pCurTraining;
-	CAgilityBookViewTrainingData* pCurData = GetItemData(GetSelection());
+	CAgilityBookViewTrainingData* pCurData = GetItemTrainingData(GetSelection());
 	if (pCurData)
 		pCurTraining = pCurData->GetTraining();
 
@@ -734,7 +734,7 @@ void CAgilityBookViewTraining::OnEditFindPrevious()
 void CAgilityBookViewTraining::OnUpdateTrainingEdit(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (GetItemData(GetSelection(true)))
+	if (GetItemTrainingData(GetSelection(true)))
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -742,7 +742,7 @@ void CAgilityBookViewTraining::OnUpdateTrainingEdit(CCmdUI* pCmdUI)
 
 void CAgilityBookViewTraining::OnTrainingEdit()
 {
-	CAgilityBookViewTrainingData* pData = GetItemData(GetSelection(true));
+	CAgilityBookViewTrainingData* pData = GetItemTrainingData(GetSelection(true));
 	if (pData)
 	{
 		CDlgTraining dlg(pData->GetTraining(), GetDocument());
@@ -795,7 +795,7 @@ void CAgilityBookViewTraining::OnEditDuplicate()
 		std::vector<CAgilityBookViewTrainingData*> items;
 		for (std::vector<int>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
 		{
-			CAgilityBookViewTrainingData* pData = GetItemData(*iterData);
+			CAgilityBookViewTrainingData* pData = GetItemTrainingData(*iterData);
 			if (pData)
 				items.push_back(pData);
 		}
@@ -874,7 +874,7 @@ void CAgilityBookViewTraining::OnEditCopy()
 		// Now all the data.
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
+			CAgilityBookViewTrainingData* pData = GetItemTrainingData(*iter);
 			if (pData)
 				pData->GetTraining()->Save(tree);
 			CStringArray line;
@@ -957,7 +957,7 @@ void CAgilityBookViewTraining::OnTrainingDelete()
 		std::vector<CAgilityBookViewTrainingData*> items;
 		for (std::vector<int>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
 		{
-			CAgilityBookViewTrainingData* pData = GetItemData(*iter);
+			CAgilityBookViewTrainingData* pData = GetItemTrainingData(*iter);
 			if (pData)
 				GetDocument()->Book().GetTraining().DeleteTraining(pData->GetTraining());
 		}

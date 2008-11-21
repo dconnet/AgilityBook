@@ -84,7 +84,7 @@ public:
 	virtual bool GetMessage2(CString& msg) const;
 
 private:
-	CAgilityBookViewCalendarData* GetItemData(int index) const;
+	CAgilityBookViewCalendarData* GetItemCalData(int index) const;
 	void SetupColumns();
 	void LoadData();
 	CImageList m_ImageList;
