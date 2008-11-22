@@ -117,7 +117,6 @@ protected:
 	afx_msg void OnValidTo();
 	afx_msg void OnSelchangeType();
 	afx_msg void OnSpeedPoints();
-	afx_msg void OnGetdispinfoPlacement(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclkPlacement(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydownPlacement(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnItemchangedPlacement(NMHDR* pNMHDR, LRESULT* pResult);

@@ -123,7 +123,7 @@ public:
 	virtual ~CPointsDataBase();
 
 	/// Get a particular column of text (used for listctrl)
-	virtual tstring OnNeedText(size_t inCol) const = 0;
+	virtual tstring OnNeedText(int inCol) const = 0;
 	/// Get html for a line
 	virtual tstring GetHtml(size_t nCurLine) const = 0;
 	/// Is this entry visible? (used for special html processing)
@@ -149,7 +149,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			tstring const& inHtml);
 
-	virtual tstring OnNeedText(size_t inCol) const	{return _T("");}
+	virtual tstring OnNeedText(int inCol) const	{return _T("");}
 	virtual tstring GetHtml(size_t nCurLine) const	{return m_Html;}
 	virtual bool IsVisible() const						{return false;}
 	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
@@ -170,7 +170,7 @@ public:
 			LPCTSTR inCol1 = _T(""),
 			LPCTSTR inCol2 = _T(""));
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
@@ -194,7 +194,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -219,7 +219,7 @@ public:
 			ARBDogPtr pDog,
 			ARBConfigVenuePtr pVenue);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -245,7 +245,7 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTitlePtr pTitle);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -284,7 +284,7 @@ public:
 			tstring const& inSuperQ,
 			tstring const& inSpeed);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -327,7 +327,7 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -362,7 +362,7 @@ public:
 			double inLifetime,
 			double inFiltered);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
@@ -387,7 +387,7 @@ public:
 			ARBConfigMultiQPtr inMultiQ,
 			std::set<MultiQdata> const& inMQs);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -416,7 +416,7 @@ public:
 			ARBConfigVenuePtr inVenue,
 			int inPts);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
@@ -454,7 +454,7 @@ public:
 			tstring const& inName,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -474,7 +474,7 @@ public:
 			tstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -494,7 +494,7 @@ public:
 			tstring const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
@@ -515,7 +515,7 @@ public:
 			tstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
 
-	virtual tstring OnNeedText(size_t inCol) const;
+	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;

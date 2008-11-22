@@ -68,8 +68,7 @@ static char THIS_FILE[] = __FILE__;
 // us to use bad pointers.
 
 CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
-	: CDlgConfigureData()
-	, m_Venue(venue)
+	: m_Venue(venue)
 {
 }
 
@@ -79,13 +78,13 @@ CDlgConfigureDataVenue::~CDlgConfigureDataVenue()
 }
 
 
-CString CDlgConfigureDataVenue::OnNeedText() const
+tstring CDlgConfigureDataVenue::OnNeedText() const
 {
-	CString str(OnNeedText(0));
+	tstring str(OnNeedText(0));
 	for (int i = 1; i <= 2; ++i)
 	{
-		CString s(OnNeedText(i));
-		if (!s.IsEmpty())
+		tstring s(OnNeedText(i));
+		if (!s.empty())
 		{
 			str += _T("  ") + s;
 		}
@@ -94,20 +93,20 @@ CString CDlgConfigureDataVenue::OnNeedText() const
 }
 
 
-CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 {
-	CString str;
+	tstring str;
 	switch (iColumn)
 	{
 	case 0:
-		str = m_Venue->GetName().c_str();
+		str = m_Venue->GetName();
 		break;
 	case 1:
-		str = m_Venue->GetURL().c_str();
+		str = m_Venue->GetURL();
 		break;
 	case 2:
-		str = m_Venue->GetDesc().c_str();
-		str.Replace(_T("\n"), _T(" "));
+		str = m_Venue->GetDesc();
+		str = tstringUtil::Replace(str, _T("\n"), _T(" "));
 		break;
 	}
 	return str;
@@ -116,8 +115,7 @@ CString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
-	: CDlgConfigureData()
-	, m_Fault(fault)
+	: m_Fault(fault)
 {
 }
 
@@ -127,22 +125,21 @@ CDlgConfigureDataFault::~CDlgConfigureDataFault()
 }
 
 
-CString CDlgConfigureDataFault::OnNeedText() const
+tstring CDlgConfigureDataFault::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataFault::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataFault::OnNeedText(int iColumn) const
 {
-	return m_Fault->GetName().c_str();
+	return m_Fault->GetName();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints)
-	: CDlgConfigureData()
-	, m_OtherPoints(otherPoints)
+	: m_OtherPoints(otherPoints)
 {
 }
 
@@ -152,22 +149,21 @@ CDlgConfigureDataOtherPoints::~CDlgConfigureDataOtherPoints()
 }
 
 
-CString CDlgConfigureDataOtherPoints::OnNeedText() const
+tstring CDlgConfigureDataOtherPoints::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 {
-	return m_OtherPoints->GetName().c_str();
+	return m_OtherPoints->GetName();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivisionPtr div)
-	: CDlgConfigureData()
-	, m_Div(div)
+	: m_Div(div)
 {
 }
 
@@ -177,15 +173,15 @@ CDlgConfigureDataDivision::~CDlgConfigureDataDivision()
 }
 
 
-CString CDlgConfigureDataDivision::OnNeedText() const
+tstring CDlgConfigureDataDivision::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 {
-	return m_Div->GetName().c_str();
+	return m_Div->GetName();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -193,8 +189,7 @@ CString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 CDlgConfigureDataLevel::CDlgConfigureDataLevel(
 		ARBConfigDivisionPtr div,
 		ARBConfigLevelPtr level)
-	: CDlgConfigureData()
-	, m_Division(div)
+	: m_Division(div)
 	, m_Level(level)
 {
 }
@@ -205,15 +200,15 @@ CDlgConfigureDataLevel::~CDlgConfigureDataLevel()
 }
 
 
-CString CDlgConfigureDataLevel::OnNeedText() const
+tstring CDlgConfigureDataLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 {
-	return m_Level->GetName().c_str();
+	return m_Level->GetName();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -222,8 +217,7 @@ CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
 		ARBConfigDivisionPtr div,
 		ARBConfigLevelPtr level,
 		ARBConfigSubLevelPtr subLevel)
-	: CDlgConfigureData()
-	, m_Division(div)
+	: m_Division(div)
 	, m_Level(level)
 	, m_SubLevel(subLevel)
 {
@@ -235,23 +229,22 @@ CDlgConfigureDataSubLevel::~CDlgConfigureDataSubLevel()
 }
 
 
-CString CDlgConfigureDataSubLevel::OnNeedText() const
+tstring CDlgConfigureDataSubLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 {
-	return m_SubLevel->GetName().c_str();
+	return m_SubLevel->GetName();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataTitle::CDlgConfigureDataTitle(
 		ARBConfigTitlePtr title)
-	: CDlgConfigureData()
-	, m_Title(title)
+	: m_Title(title)
 {
 }
 
@@ -261,22 +254,21 @@ CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
 }
 
 
-CString CDlgConfigureDataTitle::OnNeedText() const
+tstring CDlgConfigureDataTitle::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
-	return m_Title->GetCompleteName(-1, false, true, true).c_str();
+	return m_Title->GetCompleteName(-1, false, true, true);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataEvent::CDlgConfigureDataEvent(ARBConfigEventPtr inEvent)
-	: CDlgConfigureData()
-	, m_Event(inEvent)
+	: m_Event(inEvent)
 {
 }
 
@@ -286,22 +278,21 @@ CDlgConfigureDataEvent::~CDlgConfigureDataEvent()
 }
 
 
-CString CDlgConfigureDataEvent::OnNeedText() const
+tstring CDlgConfigureDataEvent::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 {
-	return m_Event->GetName().c_str();
+	return m_Event->GetName();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq)
-	: CDlgConfigureData()
-	, m_MultiQ(multiq)
+	: m_MultiQ(multiq)
 {
 }
 
@@ -311,13 +302,13 @@ CDlgConfigureDataMultiQ::~CDlgConfigureDataMultiQ()
 }
 
 
-CString CDlgConfigureDataMultiQ::OnNeedText() const
+tstring CDlgConfigureDataMultiQ::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-CString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
 {
-	return m_MultiQ->GetName().c_str();
+	return m_MultiQ->GetName();
 }

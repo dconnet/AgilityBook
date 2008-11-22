@@ -136,7 +136,6 @@ void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgConfigVenue)
 	ON_WM_DESTROY()
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUE_DIVISION, OnGetdispinfoList)
 	ON_NOTIFY(TVN_GETDISPINFO, IDC_CONFIG_VENUE_LEVEL, OnGetdispinfoTree)
 	ON_NOTIFY(TVN_DELETEITEM, IDC_CONFIG_VENUE_LEVEL, OnDeleteitemTree)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_DIVISION, OnDblclk)
@@ -157,9 +156,6 @@ BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CONFIG_VENUE_COPY, OnCopy)
 	ON_BN_CLICKED(IDC_CONFIG_VENUE_MOVE_UP, OnMoveUp)
 	ON_BN_CLICKED(IDC_CONFIG_VENUE_MOVE_DOWN, OnMoveDown)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUE_TITLES, OnGetdispinfoList)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUE_EVENT, OnGetdispinfoList)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_VENUE_MULTIQ, OnGetdispinfoList)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_LEVEL, OnDblclk)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_VENUE_LEVEL, OnKeydown)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_TITLES, OnDblclk)
@@ -746,26 +742,6 @@ void CDlgConfigVenue::OnDestroy()
 }
 
 
-void CDlgConfigVenue::OnGetdispinfoList(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-		CDlgConfigureData* pData = dynamic_cast<CDlgConfigureData*>(pRawData);
-		if (pData)
-		{
-			CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
-			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
-			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-		}
-	}
-	*pResult = 0;
-}
-
-
 void CDlgConfigVenue::OnGetdispinfoTree(
 		NMHDR* pNMHDR,
 		LRESULT* pResult) 
@@ -774,11 +750,11 @@ void CDlgConfigVenue::OnGetdispinfoTree(
 	if (pTVDispInfo->item.mask & TVIF_TEXT)
 	{
 		CListData* pRawData = reinterpret_cast<CListData*>(pTVDispInfo->item.lParam);
-		CDlgConfigureData* pData = dynamic_cast<CDlgConfigureData*>(pRawData);
+		CListDataDispInfo* pData = reinterpret_cast<CListDataDispInfo*>(pRawData);
 		if (pData)
 		{
-			CString str = pData->OnNeedText(0);
-			::lstrcpyn(pTVDispInfo->item.pszText, str, pTVDispInfo->item.cchTextMax);
+			tstring str = pData->OnNeedText(0);
+			::lstrcpyn(pTVDispInfo->item.pszText, str.c_str(), pTVDispInfo->item.cchTextMax);
 			pTVDispInfo->item.pszText[pTVDispInfo->item.cchTextMax-1] = '\0';
 		}
 	}

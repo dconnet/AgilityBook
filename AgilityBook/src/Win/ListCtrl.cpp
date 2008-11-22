@@ -1197,6 +1197,7 @@ CWnd* CListCtrlEx::EditSubItem(int index, int nCol)
 BEGIN_MESSAGE_MAP(CListCtrl2, CListCtrl)
 	//{{AFX_MSG_MAP(CListCtrl2)
 	ON_WM_DESTROY()
+	ON_NOTIFY_REFLECT_EX(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT_EX(LVN_DELETEITEM, OnDeleteitem)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEWHEEL()
@@ -1226,6 +1227,31 @@ void CListCtrl2::OnDestroy()
 {
 	DeleteAllItems();
 	CListCtrl::OnDestroy();
+}
+
+
+BOOL CListCtrl2::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	BOOL bHandled = FALSE;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
+	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+	CListDataDispInfo* pData = dynamic_cast<CListDataDispInfo*>(pRawData);
+	if (pData)
+	{
+		bHandled = TRUE;
+		if (pDispInfo->item.mask & LVIF_TEXT)
+		{
+			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
+			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
+		}
+		if (pDispInfo->item.mask & LVIF_IMAGE)
+		{
+			pDispInfo->item.iImage = pData->OnNeedIcon();
+		}
+		*pResult = 0;
+	}
+	return bHandled;
 }
 
 
@@ -1302,6 +1328,7 @@ BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
 	ON_WM_DESTROY()
 	ON_WM_INITMENUPOPUP()
+	ON_NOTIFY_REFLECT_EX(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT_EX(LVN_DELETEITEM, OnDeleteitem)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEWHEEL()
@@ -1346,6 +1373,31 @@ void CListView2::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CListView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
+}
+
+
+BOOL CListView2::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	BOOL bHandled = FALSE;
+	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
+	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+	CListDataDispInfo* pData = dynamic_cast<CListDataDispInfo*>(pRawData);
+	if (pData)
+	{
+		bHandled = TRUE;
+		if (pDispInfo->item.mask & LVIF_TEXT)
+		{
+			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
+			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
+		}
+		if (pDispInfo->item.mask & LVIF_IMAGE)
+		{
+			pDispInfo->item.iImage = pData->OnNeedIcon();
+		}
+		*pResult = 0;
+	}
+	return bHandled;
 }
 
 

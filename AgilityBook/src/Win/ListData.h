@@ -33,16 +33,34 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-22 DRC Moved GetDispInfo accessors into base class.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-12 DRC Created
  */
 
+#include "ARBString.h"
+
+/// Controls that store data all insert the data via reinterpret_cast to this.
 class CListData
 {
 public:
 	CListData();
 	virtual ~CListData();
 };
+
+
+/// For data pulled out of the control (via reinterpret_cast), dynamic_cast
+/// to this class to make sure we have the right data.
+class CListDataDispInfo : public CListData
+{
+public:
+	CListDataDispInfo();
+	virtual ~CListDataDispInfo();
+	virtual tstring OnNeedText() const;	 /// For trees (or things that want a single text string of row)
+	virtual tstring OnNeedText(int iCol) const;	 /// For list controls
+	virtual int OnNeedIcon() const;
+};
+
 
 template <typename T>
 class CListPtrData : public CListData

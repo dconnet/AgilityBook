@@ -88,7 +88,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewRunsData
 
-class CAgilityBookViewRunsData : public CListData
+class CAgilityBookViewRunsData : public CListDataDispInfo
 {
 	friend int CALLBACK CompareRuns(LPARAM, LPARAM, LPARAM);
 public:
@@ -107,11 +107,11 @@ public:
 	{
 	}
 
-	ARBDogPtr GetDog() const		{return m_pDog;}
-	ARBDogTrialPtr GetTrial() const	{return m_pTrial;}
-	ARBDogRunPtr GetRun() const		{return m_pRun;}
-	tstring OnNeedText(int iCol) const;
-	int OnNeedIcon() const;
+	ARBDogPtr GetDog() const			{return m_pDog;}
+	ARBDogTrialPtr GetTrial() const		{return m_pTrial;}
+	ARBDogRunPtr GetRun() const			{return m_pRun;}
+	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const;
 
 protected:
 	CAgilityBookViewRuns* m_pView;
@@ -1212,7 +1212,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewRuns, CListView2)
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
-	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemchanged)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
@@ -1595,27 +1594,6 @@ void CAgilityBookViewRuns::OnColumnclick(
 		SortItems(CompareRuns, reinterpret_cast<LPARAM>(&info));
 		HeaderSort(abs(m_SortColumn.GetColumn()),
 			nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
-	}
-	*pResult = 0;
-}
-
-
-void CAgilityBookViewRuns::OnGetdispinfo(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-	CAgilityBookViewRunsData* pData = dynamic_cast<CAgilityBookViewRunsData*>(pRawData);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
-		::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
-		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-	}
-	if (pDispInfo->item.mask & LVIF_IMAGE)
-	{
-		pDispInfo->item.iImage = pData->OnNeedIcon();
 	}
 	*pResult = 0;
 }

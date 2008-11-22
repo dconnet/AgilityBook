@@ -105,7 +105,6 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnNMDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnLvnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnUpdateDetails(CCmdUI* pCmdUI);
 	afx_msg void OnDetails();
 	afx_msg void OnUpdateAgilityNewTitle(CCmdUI* pCmdUI);

@@ -56,7 +56,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataPlacement : public CListData
+class CDlgConfigureDataPlacement : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataPlacement(short inPlace, double inVal)
@@ -64,18 +64,18 @@ public:
 		, m_Value(inVal)
 	{
 	}
-	virtual CString OnNeedText(int iColumn) const;
-	short Place() const			{return m_Place;}
-	void Place(short place)		{m_Place = place;}
-	double Value() const		{return m_Value;}
-	void Value(double val)		{m_Value = val;}
+	virtual tstring OnNeedText(int iColumn) const;
+	short Place() const					{return m_Place;}
+	void Place(short place)				{m_Place = place;}
+	double Value() const				{return m_Value;}
+	void Value(double val)				{m_Value = val;}
 protected:
 	short m_Place;
 	double m_Value;
 };
 
 
-CString CDlgConfigureDataPlacement::OnNeedText(int iColumn) const
+tstring CDlgConfigureDataPlacement::OnNeedText(int iColumn) const
 {
 	otstringstream str;
 	switch (iColumn)
@@ -89,7 +89,7 @@ CString CDlgConfigureDataPlacement::OnNeedText(int iColumn) const
 		str << m_Value;
 		break;
 	}
-	return str.str().c_str();
+	return str.str();
 }
 
 
@@ -194,7 +194,6 @@ BEGIN_MESSAGE_MAP(CDlgConfigEventMethod, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_DATE_VALID_TO, OnValidTo)
 	ON_CBN_SELCHANGE(IDC_CONFIG_EVENT_TYPE, OnSelchangeType)
 	ON_BN_CLICKED(IDC_CONFIG_EVENT_SPEED, OnSpeedPoints)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_CONFIG_EVENT_PLACEMENT, OnGetdispinfoPlacement)
 	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_EVENT_PLACEMENT, OnDblclkPlacement)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_EVENT_PLACEMENT, OnKeydownPlacement)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_EVENT_PLACEMENT, OnItemchangedPlacement)
@@ -516,24 +515,6 @@ void CDlgConfigEventMethod::OnSpeedPoints()
 	m_ctrlPlacementNew.ShowWindow(m_SpeedPts ? SW_SHOW : SW_HIDE);
 	m_ctrlPlacementEdit.ShowWindow(m_SpeedPts ? SW_SHOW : SW_HIDE);
 	m_ctrlPlacementDelete.ShowWindow(m_SpeedPts ? SW_SHOW : SW_HIDE);
-}
-
-
-void CDlgConfigEventMethod::OnGetdispinfoPlacement(NMHDR* pNMHDR, LRESULT* pResult)
-{
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-		CDlgConfigureDataPlacement* pData = dynamic_cast<CDlgConfigureDataPlacement*>(pRawData);
-		if (pData)
-		{
-			CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
-			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
-			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-		}
-	}
-	*pResult = 0;
 }
 
 

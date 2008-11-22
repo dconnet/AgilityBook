@@ -488,6 +488,7 @@ public:
 protected:
 	//{{AFX_MSG(CListCtrl2)
 	afx_msg void OnDestroy();
+	afx_msg BOOL OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg BOOL OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
@@ -524,6 +525,7 @@ protected:
 	//{{AFX_MSG(CListView2)
 	afx_msg void OnDestroy();
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+	afx_msg BOOL OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg BOOL OnDeleteitem(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);

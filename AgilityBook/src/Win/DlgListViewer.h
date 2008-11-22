@@ -206,7 +206,6 @@ protected:
 protected:
 	//{{AFX_MSG(CDlgListViewer)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
