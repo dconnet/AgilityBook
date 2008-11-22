@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
  * @li 2006-12-24 DRC When finding events, only insert it once.
  * @li 2006-11-05 DRC Fix FindAllEvents to allow searching with wildcards.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -659,7 +660,7 @@ size_t ARBConfigScoringList::FindAllEvents(
 		ARBVector<ARBConfigScoringPtr>::iterator iter2;
 		for (iter2 = outList.begin(); iter2 != outList.end(); )
 		{
-			if (0 < (*iter2)->GetTitlePoints().size())
+			if (0 < (*iter2)->GetTitlePoints().size() || 0 < (*iter2)->GetLifetimePoints().size())
 				++iter2;
 			else
 				iter2 = outList.erase(iter2);

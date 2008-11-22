@@ -1,9 +1,11 @@
-11/20/2008: v1.10.9.12 <in development>
+11/21/2008: v1.10.9.12 <in development>
 - Bumped Configuration v24:
   - Updated USDAA DAM events for LAA points.
 - New features / Enhancements:
   - Added context menus to status bar to enable fast switching between dogs
     and named filters.
+- Bug fixes:
+  - Enable tallying runs that have only lifetime points.
 
 9/24/2008: v1.10.8.12
 - Bumped file version to 12.8, Configuration v23:

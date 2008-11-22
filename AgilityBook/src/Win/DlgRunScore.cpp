@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
  * @li 2007-12-03 DRC Refresh judge list after invoking 'notes' button.
  * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
  * @li 2006-11-05 DRC Trim Divisions/Levels if no events are available on date.
@@ -863,7 +864,7 @@ void CDlgRunScore::SetTotalFaults()
 void CDlgRunScore::FillQ(ARBConfigScoringPtr inScoring)
 {
 	m_ctrlQ.ResetContent();
-	bool bHasTitling = (0 < inScoring->GetTitlePoints().size());
+	bool bHasTitling = (0 < inScoring->GetTitlePoints().size()) || (0 < inScoring->GetLifetimePoints().size());
 	int nQs = ARB_Q::GetNumValidTypes();
 	for (int index = 0; index < nQs; ++index)
 	{
@@ -1110,7 +1111,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 
 	m_ctrlPlace.EnableWindow(TRUE);
 	m_ctrlInClass.EnableWindow(TRUE);
-	if (0 < pScoring->GetTitlePoints().size())
+	if (0 < pScoring->GetTitlePoints().size() || 0 < pScoring->GetLifetimePoints().size())
 	{
 		m_ctrlDogsQd.EnableWindow(TRUE);
 	}
