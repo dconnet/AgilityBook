@@ -556,7 +556,7 @@ CListCtrlEx::CListCtrlEx(CListCtrl* pList, bool bAutoDelete)
 /// Returns whether we ran the initialization.
 bool CListCtrlEx::Init()
 {
-	if (!m_List)
+	if (!IsSafe())
 		return false;
 	if (::IsWindow(m_List->GetHeaderCtrl()->GetSafeHwnd())
 	&& (!m_SortHeader.GetSafeHwnd() || !::IsWindow(m_SortHeader.GetSafeHwnd())))
@@ -571,7 +571,7 @@ bool CListCtrlEx::Init()
 
 int CListCtrlEx::HitTestEx(CPoint& point, int& col)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return -1;
 	int row = m_List->HitTest(point, NULL);
 	col = 0;
@@ -618,7 +618,7 @@ int CListCtrlEx::HitTestEx(CPoint& point, int& col)
 
 void CListCtrlEx::FixTooltips()
 {
-	if (!m_List)
+	if (!IsSafe())
 		return;
 	if (!Init())
 		m_SortHeader.FixTooltips();
@@ -627,7 +627,7 @@ void CListCtrlEx::FixTooltips()
 
 int CListCtrlEx::HeaderItemCount()
 {
-	if (!m_List)
+	if (!IsSafe())
 		return 0;
 	Init();
 	return m_SortHeader.GetItemCount();
@@ -636,7 +636,7 @@ int CListCtrlEx::HeaderItemCount()
 
 CHeaderCtrl2::SortOrder CListCtrlEx::HeaderSortOrder(int iCol) const
 {
-	if (!m_List)
+	if (!IsSafe())
 		return CHeaderCtrl2::eNoSort;
 	const_cast<CListCtrlEx*>(this)->Init();
 	return m_SortHeader.GetSortOrder(iCol);
@@ -647,10 +647,58 @@ void CListCtrlEx::HeaderSort(
 		int iCol,
 		CHeaderCtrl2::SortOrder eOrder)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return;
 	Init();
 	m_SortHeader.Sort(iCol, eOrder);
+}
+
+
+DWORD CListCtrlEx::GetExtendedStyle() const
+{
+	return IsSafe() ? m_List->GetExtendedStyle() : 0;
+}
+
+
+DWORD CListCtrlEx::SetExtendedStyle(DWORD dwNewStyle)
+{
+	return IsSafe() ? m_List->SetExtendedStyle(dwNewStyle): 0;
+}
+
+
+CHeaderCtrl* CListCtrlEx::GetHeaderCtrl() const
+{
+	return IsSafe() ? m_List->GetHeaderCtrl() : NULL;
+}
+
+
+CImageList* CListCtrlEx::GetImageList(int nImageList) const
+{
+	return IsSafe() ? m_List->GetImageList(nImageList) : NULL;
+}
+
+
+CImageList* CListCtrlEx::SetImageList(
+		CImageList* pImageList,
+		int nImageList)
+{
+	return IsSafe() ? m_List->SetImageList(pImageList, nImageList) : NULL;
+}
+
+
+BOOL CListCtrlEx::GetColumn(
+		int nCol,
+		LVCOLUMN* pColumn) const
+{
+	return IsSafe() ? m_List->GetColumn(nCol, pColumn) : FALSE;
+}
+
+
+BOOL CListCtrlEx::SetColumn(
+		int nCol,
+		const LVCOLUMN* pColumn)
+{
+	return IsSafe() ? m_List->SetColumn(nCol, pColumn) : FALSE;
 }
 
 
@@ -658,7 +706,7 @@ int CListCtrlEx::InsertColumn(
 		int nCol,
 		LVCOLUMN const* pColumn)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return -1;
 	int rc = m_List->InsertColumn(nCol, pColumn);
 	if (0 <= rc && !Init())
@@ -674,7 +722,7 @@ int CListCtrlEx::InsertColumn(
 		int nWidth,
 		int nSubItem)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return -1;
 	int rc = m_List->InsertColumn(nCol, lpszColumnHeading, nFormat, nWidth, nSubItem);
 	if (0 <= rc && !Init())
@@ -687,7 +735,7 @@ BOOL CListCtrlEx::SetColumnWidth(
 		int nCol,
 		int cx)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return FALSE;
 	BOOL rc = m_List->SetColumnWidth(nCol, cx);
 	if (rc && !Init())
@@ -698,7 +746,7 @@ BOOL CListCtrlEx::SetColumnWidth(
 
 BOOL CListCtrlEx::DeleteColumn(int nCol)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return FALSE;
 	BOOL rc = m_List->DeleteColumn(nCol);
 	if (rc && !Init())
@@ -707,9 +755,221 @@ BOOL CListCtrlEx::DeleteColumn(int nCol)
 }
 
 
+int CListCtrlEx::GetItemCount() const
+{
+	return IsSafe() ? m_List->GetItemCount() : 0;
+}
+
+
+UINT CListCtrlEx::GetSelectedCount() const
+{
+	return IsSafe() ? m_List->GetSelectedCount() : 0;
+}
+
+
+BOOL CListCtrlEx::EnsureVisible(
+		int nItem,
+		BOOL bPartialOK)
+{
+	return IsSafe() ? m_List->EnsureVisible(nItem, bPartialOK) : FALSE;
+}
+
+
+BOOL CListCtrlEx::GetCheck(int nItem) const
+{
+	return IsSafe() ? m_List->GetCheck(nItem) : FALSE;
+}
+
+
+DWORD_PTR CListCtrlEx::GetItemData(int nItem) const
+{
+	return IsSafe() ? m_List->GetItemData(nItem) : 0;
+}
+
+
+BOOL CListCtrlEx::GetItemRect(
+		int nItem,
+		LPRECT lpRect,
+		UINT nCode) const
+{
+	return IsSafe() ? m_List->GetItemRect(nItem, lpRect, nCode) : FALSE;
+}
+
+
+BOOL CListCtrlEx::GetSubItemRect(
+		int iItem,
+		int iSubItem,
+		int nArea,
+		CRect& ref)
+{
+	return IsSafe() ? m_List->GetSubItemRect(iItem, iSubItem, nArea, ref) : FALSE;
+}
+
+
+UINT CListCtrlEx::GetItemState(
+		int nItem,
+		UINT nMask) const
+{
+	return IsSafe() ? m_List->GetItemState(nItem, nMask) : 0;
+}
+
+
+CString CListCtrlEx::GetItemText(
+		int nItem,
+		int nSubItem) const
+{
+	return IsSafe() ? m_List->GetItemText(nItem, nSubItem) : CString();
+}
+
+
+int CListCtrlEx::GetItemText(
+		int nItem,
+		int nSubItem,
+		LPTSTR lpszText,
+		int nLen) const
+{
+	return IsSafe() ? m_List->GetItemText(nItem, nSubItem, lpszText, nLen) : 0;
+}
+
+
+BOOL CListCtrlEx::SetCheck(
+		int nItem,
+		BOOL fCheck)
+{
+	return IsSafe() ? m_List->SetCheck(nItem, fCheck) : FALSE;
+}
+
+
+BOOL CListCtrlEx::SetItem(const LVITEM* pItem)
+{
+	return IsSafe() ? m_List->SetItem(pItem) : FALSE;
+}
+
+
+BOOL CListCtrlEx::SetItem(
+		int nItem,
+		int nSubItem,
+		UINT nMask,
+		LPCTSTR lpszItem,
+		int nImage,
+		UINT nState,
+		UINT nStateMask,
+		LPARAM lParam)
+{
+	return IsSafe() ? m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam) : FALSE;
+}
+
+
+#if _MSC_VER >= 1300
+BOOL CListCtrlEx::SetItem(
+		int nItem,
+		int nSubItem,
+		UINT nMask,
+		LPCTSTR lpszItem,
+		int nImage,
+		UINT nState,
+		UINT nStateMask,
+		LPARAM lParam,
+		int nIndent)
+{
+	return IsSafe() ? m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam, nIndent) : FALSE;
+}
+#endif
+
+
+BOOL CListCtrlEx::SetItemData(
+		int nItem,
+		DWORD_PTR dwData)
+{
+	return IsSafe() ? m_List->SetItemData(nItem, dwData) : FALSE;
+}
+
+
+BOOL CListCtrlEx::SetItemState(
+		int nItem,
+		LVITEM* pItem)
+{
+	return IsSafe() ? m_List->SetItemState(nItem, pItem) : FALSE;
+}
+
+
+BOOL CListCtrlEx::SetItemState(
+		int nItem,
+		UINT nState,
+		UINT nMask)
+{
+	return IsSafe() ? m_List->SetItemState(nItem, nState, nMask) : FALSE;
+}
+
+
+BOOL CListCtrlEx::SetItemText(
+		int nItem,
+		int nSubItem,
+		LPCTSTR lpszText)
+{
+	return IsSafe() ? m_List->SetItemText(nItem, nSubItem, lpszText) : FALSE;
+}
+
+
+BOOL CListCtrlEx::DeleteAllItems()
+{
+	return IsSafe() ? m_List->DeleteAllItems() : FALSE;
+}
+
+
+BOOL CListCtrlEx::DeleteItem(int nItem)
+{
+	return IsSafe() ? m_List->DeleteItem(nItem) : FALSE;
+}
+
+
+int CListCtrlEx::InsertItem(const LVITEM* pItem)
+{
+	return IsSafe() ? m_List->InsertItem(pItem) : -1;
+}
+
+
+int CListCtrlEx::InsertItem(
+		int nItem,
+		LPCTSTR lpszItem)
+{
+	return IsSafe() ? m_List->InsertItem(nItem, lpszItem) : -1;
+}
+
+
+int CListCtrlEx::InsertItem(
+		int nItem,
+		LPCTSTR lpszItem,
+		int nImage)
+{
+	return IsSafe() ? m_List->InsertItem(nItem, lpszItem, nImage) : -1;
+}
+
+
+int CListCtrlEx::InsertItem(
+		UINT nMask,
+		int nItem,
+		LPCTSTR lpszItem,
+		UINT nState,
+		UINT nStateMask,
+		int nImage,
+		LPARAM lParam)
+{
+	return IsSafe() ? m_List->InsertItem(nMask, nItem, lpszItem, nState, nStateMask, nImage, lParam) : -1;
+}
+
+
+BOOL CListCtrlEx::SortItems(
+		PFNLVCOMPARE pfnCompare,
+		DWORD_PTR dwData)
+{
+	return IsSafe() ? m_List->SortItems(pfnCompare, dwData) : FALSE;
+}
+
+
 CListData* CListCtrlEx::GetData(int index) const
 {
-	if (!m_List)
+	if (!IsSafe())
 		return NULL;
 	if (0 <= index && index < m_List->GetItemCount() && m_bAutoDelete)
 		return reinterpret_cast<CListData*>(m_List->GetItemData(index));
@@ -719,7 +979,7 @@ CListData* CListCtrlEx::GetData(int index) const
 
 void CListCtrlEx::SetData(int index, CListData* inData)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return;
 	if (0 <= index && index < m_List->GetItemCount() && m_bAutoDelete)
 	{
@@ -733,7 +993,7 @@ void CListCtrlEx::SetData(int index, CListData* inData)
 
 int CListCtrlEx::GetSelection(bool bRestricted)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return -1;
 	std::vector<int> indices;
 	GetSelection(indices);
@@ -749,7 +1009,7 @@ int CListCtrlEx::GetSelection(bool bRestricted)
 size_t CListCtrlEx::GetSelection(std::vector<int>& indices)
 {
 	indices.clear();
-	if (!m_List)
+	if (!IsSafe())
 		return 0;
 	POSITION pos = m_List->GetFirstSelectedItemPosition();
 	while (NULL != pos)
@@ -764,7 +1024,7 @@ void CListCtrlEx::SetSelection(
 		int index,
 		bool bEnsureVisible)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return;
 	std::vector<int> indices;
 	indices.push_back(index);
@@ -776,7 +1036,7 @@ void CListCtrlEx::SetSelection(
 		std::vector<int>& indices,
 		bool bEnsureVisible)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return;
 	// Clear everything.
 	POSITION pos = m_List->GetFirstSelectedItemPosition();
@@ -805,7 +1065,7 @@ void CListCtrlEx::GetPrintLine(
 		CStringArray& line)
 {
 	line.RemoveAll();
-	if (!m_List)
+	if (!IsSafe())
 		return;
 	int nColumns = m_List->GetHeaderCtrl()->GetItemCount();
 	for (int i = 0; i < nColumns; ++i)
@@ -828,7 +1088,7 @@ void CListCtrlEx::GetPrintLine(
 
 void CListCtrlEx::SetEditList(std::vector<tstring> const& dropItems)
 {
-	if (!m_List)
+	if (!IsSafe())
 		return;
 	m_editControl = false;
 	m_Items = dropItems;
@@ -839,7 +1099,7 @@ void CListCtrlEx::SetEditList(std::vector<tstring> const& dropItems)
 CWnd* CListCtrlEx::EditSubItem(int index, int nCol)
 {
 	// Make sure item is valid
-	if (!m_List || 0 > index || index >= m_List->GetItemCount())
+	if (!IsSafe() || 0 > index || index >= m_List->GetItemCount())
 		return NULL;
 
 	// Make sure that nCol is valid
@@ -1040,10 +1300,7 @@ IMPLEMENT_DYNCREATE(CListView2, CListView)
 
 BEGIN_MESSAGE_MAP(CListView2, CListView)
 	//{{AFX_MSG_MAP(CListView2)
-	ON_WM_CREATE()
 	ON_WM_DESTROY()
-	ON_WM_SETFOCUS()
-	ON_WM_SIZE()
 	ON_WM_INITMENUPOPUP()
 	ON_NOTIFY_REFLECT_EX(LVN_DELETEITEM, OnDeleteitem)
 	ON_WM_LBUTTONDOWN()
@@ -1067,7 +1324,6 @@ END_MESSAGE_MAP()
 
 CListView2::CListView2()
 	: CListCtrlEx(&GetListCtrl())
-	//: CListCtrlEx(NULL)
 {
 }
 
@@ -1076,50 +1332,19 @@ CListView2::~CListView2()
 {
 }
 
-
-void CListView2::SetAutoDelete(bool bAuto)
-{
-	m_bAutoDelete = bAuto;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CListView2 message handlers
 
-int CListView2::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	//DWORD dwStyle = lpCreateStruct->style & 0xffff;
-	//lpCreateStruct->style &= 0xffff0000; // Clear the low order bits (LVS_*)
-	if (__super::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	//m_List.Create(dwStyle | WS_CHILD | WS_VISIBLE, CRect(0,0,0,0), this, 100);
-	return 0;
-}
-
 void CListView2::OnDestroy()
 {
-	//GetListCtrl().DeleteAllItems();
-	__super::OnDestroy();
-}
-
-
-void CListView2::OnSetFocus(CWnd* pOldWnd)
-{
-	__super::OnSetFocus(pOldWnd);
-	//m_List.SetFocus();
-}
-
-
-void CListView2::OnSize(UINT nType, int cx, int cy)
-{
-	__super::OnSize(nType, cx, cy);
-	//if (::IsWindow(m_List.GetSafeHwnd()))
-	//	m_List.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOMOVE | SWP_NOZORDER);
+	GetListCtrl().DeleteAllItems();
+	CListView::OnDestroy();
 }
 
 
 void CListView2::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
-	__super::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	CListView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 	InitMenuPopup(this, pPopupMenu, nIndex, bSysMenu);
 }
 
@@ -1140,7 +1365,6 @@ BOOL CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 void CListView2::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	bool bDefault = true;
-	/*
 	if (m_bAllowEdit)
 	//if (GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
 	{
@@ -1156,9 +1380,8 @@ void CListView2::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 		}
 	}
-	*/
 	if (bDefault)
-		__super::OnLButtonDown(nFlags, point);
+		CListView::OnLButtonDown(nFlags, point);
 }
 
 
@@ -1166,7 +1389,7 @@ BOOL CListView2::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	if (GetFocus() != this)
 		SetFocus();
-	return __super::OnMouseWheel(nFlags, zDelta, pt);
+	return CListView::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 
@@ -1175,7 +1398,7 @@ void CListView2::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	// For subitem editing support
 	if (GetFocus() != this)
 		SetFocus();
-	__super::OnHScroll(nSBCode, nPos, pScrollBar);
+	CListView::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
 
@@ -1184,15 +1407,7 @@ void CListView2::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	// For subitem editing support
 	if (GetFocus() != this)
 		SetFocus();
-	__super::OnVScroll(nSBCode, nPos, pScrollBar);
-}
-
-
-void CListView2::OnDraw(CDC* pDC)
-{
-	CRect r;
-	GetClientRect(&r);
-	pDC->DrawText(_T("Testing"), -1, r, DT_SINGLELINE | DT_NOPREFIX | DT_VCENTER | DT_CENTER);
+	CListView::OnVScroll(nSBCode, nPos, pScrollBar);
 }
 
 
@@ -1224,7 +1439,6 @@ void CListView2::OnBeginPrinting(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
-	/*
 	CListPrintData* pData = new CListPrintData();
 	pInfo->m_lpUserData = reinterpret_cast<void*>(pData);
 
@@ -1281,7 +1495,6 @@ void CListView2::OnBeginPrinting(
 	//	pData->nPages);
 	pInfo->SetMinPage(1);
 	pInfo->SetMaxPage(pData->nPages);
-	*/
 }
 
 
@@ -1298,7 +1511,6 @@ void CListView2::OnPrint(
 		CDC* pDC,
 		CPrintInfo* pInfo)
 {
-	/*
 	pDC->SetMapMode(MM_LOENGLISH);
 
 	CFontInfo fontInfo;
@@ -1326,24 +1538,20 @@ void CListView2::OnPrint(
 			r.left = r.right;
 		}
 	}
-	*/
 }
 
 
 void CListView2::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
-	/*
 	BOOL bEnable = FALSE;
 	if (0 < GetListCtrl().GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
-	*/
 }
 
 
 void CListView2::OnEditCopy()
 {
-	/*
 	std::vector<int> indices;
 	if (0 < GetSelection(indices))
 	{
@@ -1384,24 +1592,20 @@ void CListView2::OnEditCopy()
 
 		clpData.SetData(table);
 	}
-	*/
 }
 
 
 void CListView2::OnUpdateEditSelectAll(CCmdUI* pCmdUI)
 {
-	/*
 	BOOL bEnable = FALSE;
 	if (0 < GetListCtrl().GetItemCount() && (LVS_SINGLESEL != (GetStyle() & LVS_SINGLESEL)))
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
-	*/
 }
 
 
 void CListView2::OnEditSelectAll()
 {
-	/*
 	int nIndices = GetListCtrl().GetItemCount();
 	if (0 < nIndices)
 	{
@@ -1411,7 +1615,6 @@ void CListView2::OnEditSelectAll()
 			indices.push_back(i);
 		SetSelection(indices, false);
 	}
-	*/
 }
 
 

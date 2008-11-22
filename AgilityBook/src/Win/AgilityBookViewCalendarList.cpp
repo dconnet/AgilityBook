@@ -575,7 +575,7 @@ CAgilityBookViewCalendarList::CAgilityBookViewCalendarList()
 	, m_Callback(this)
 	, m_SortColumn(m_Columns)
 {
-	SetAutoDelete(true);
+	m_bAutoDelete = true;
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 6, 0);
 	m_imgEmpty = m_ImageList.Add(theApp.LoadIcon(IDI_EMPTY));
 	m_imgTentative = m_ImageList.Add(theApp.LoadIcon(IDI_QUESTIONMARK));

@@ -184,7 +184,7 @@ END_MESSAGE_MAP()
 
 CAgilityBookViewPoints::CAgilityBookViewPoints()
 {
-	SetAutoDelete(true);
+	m_bAutoDelete = true;
 }
 
 
