@@ -3118,7 +3118,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
         <Level Name="Senior"/>
       </Division>
       <Event Name="Standard" hasTable="y">
-        <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults">
           <Note>DAM Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3136,7 +3139,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
         <Scoring Division="Championship" Level="Novice" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults">
           <Note>PVP Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3159,7 +3165,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
         </Scoring>
       </Event>
       <Event Name="Jumpers">
-        <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults">
           <Note>DAM Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3178,7 +3187,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="FaultsThenTime"/>
-        <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
+        <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults">
           <Note>PVP Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3199,7 +3211,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
         <Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="FaultsThenTime"/>
       </Event>
       <Event Name="Gamblers">
-        <Scoring Division="Championship" Level="Nationals" type="OCScoreThenTime"/>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="OCScoreThenTime"/>
+        <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="OCScoreThenTime">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime">
           <Note>DAM Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3218,7 +3233,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="OCScoreThenTime"/>
-        <Scoring Division="Performance" Level="Nationals" type="OCScoreThenTime"/>
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="OCScoreThenTime"/>
+        <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="OCScoreThenTime">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="OCScoreThenTime">
           <Note>PVP Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3239,7 +3257,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
         <Scoring Division="Performance" Level="PI" ValidTo="2003-12-31" type="OCScoreThenTime"/>
       </Event>
       <Event Name="Snooker">
-        <Scoring Division="Championship" Level="Nationals" OpeningPts="37" type="ScoreThenTime"/>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="ScoreThenTime"/>
+        <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="ScoreThenTime">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime">
           <Note>DAM Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3258,7 +3279,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Championship" Level="Novice" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
-        <Scoring Division="Performance" Level="Nationals" OpeningPts="37" type="ScoreThenTime"/>
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="ScoreThenTime"/>
+        <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="ScoreThenTime">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="ScoreThenTime">
           <Note>PVP Team: Qualifying is marked under Relay.</Note>
         </Scoring>
@@ -3330,7 +3354,10 @@ DAM Team: Qualifying here means the team has qualified.</Note>
         </Scoring>
       </Event>
       <Event Name="Grand Prix">
-        <Scoring Division="Championship" Level="Nationals" type="FaultsThenTime"/>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime"/>
+        <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="FaultsThenTime">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="FaultsThenTime">
           <Note>In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -3346,9 +3373,14 @@ DAM Team: Qualifying here means the team has qualified.</Note>
           <TitlePoints Faults="7" Points="1"/>
           <LifeTime Faults="7" Points="1"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Nationals" type="FaultsThenTime">
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="FaultsThenTime">
           <Note>Performance National Standard
 For tracking purposes, you can use this to record Veterans GP also.</Note>
+        </Scoring>
+        <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="FaultsThenTime">
+        <Note>Performance National Standard
+For tracking purposes, you can use this to record Veterans GP also.</Note>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="FaultsThenTime">
           <Note>Performance National Standard
@@ -3371,7 +3403,10 @@ In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be m
         </Scoring>
       </Event>
       <Event Name="Steeplechase">
-        <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults"/>
+        <Scoring Division="Championship" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
           <Note>Only Round 1 is a qualifier. When entering Round 2, it should be marked NA.</Note>
           <TitlePoints Faults="0" Points="1"/>
@@ -3380,8 +3415,12 @@ In Regionals, only Round 1 is a qualifier. When entering Round 2, it should be m
         <Scoring Division="Championship" Level="Tournament" ValidTo="1998-12-31" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults">
+        <Scoring Division="Performance" Level="Nationals" ValidTo="2008-9-18" type="TimePlusFaults">
           <Note>Performance Speed Jumping</Note>
+        </Scoring>
+        <Scoring Division="Performance" Level="Nationals" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <Note>Performance Speed Jumping</Note>
+          <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2006-9-23" type="TimePlusFaults">
           <Note>Performance Speed Jumping
