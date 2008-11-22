@@ -343,7 +343,7 @@ CAgilityBookViewTraining::CAgilityBookViewTraining()
 	: m_Callback(this)
 	, m_SortColumn(m_Columns)
 {
-	SetAutoDelete(true);
+	m_bAutoDelete = true;
 }
 #pragma warning (pop)
 
