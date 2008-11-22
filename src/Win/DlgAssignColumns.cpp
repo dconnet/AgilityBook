@@ -561,10 +561,12 @@ CString CDlgAssignColumns::GetNameFromColumnID(int column)
 }
 
 
+// Only called during initialization/reset
 bool CDlgAssignColumns::GetColumnOrder(
 		CAgilityBookOptions::ColumnOrder eOrder,
 		size_t idxColumn,
-		std::vector<int>& values)
+		std::vector<int>& values,
+		bool bDefaultValues)
 {
 	bool bOk = false;
 	if (0 <= idxColumn && idxColumn < IO_TYPE_MAX)
@@ -572,7 +574,7 @@ bool CDlgAssignColumns::GetColumnOrder(
 		if (sc_Types[idxColumn].bValid & eOrder)
 		{
 			bOk = true;
-			CAgilityBookOptions::GetColumnOrder(eOrder, idxColumn, values);
+			CAgilityBookOptions::GetColumnOrder(eOrder, idxColumn, values, bDefaultValues);
 		}
 	}
 	return bOk;
@@ -797,6 +799,7 @@ BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDlgBaseDialog)
 	ON_BN_CLICKED(IDC_ASSIGN_DELETE, OnRemove)
 	ON_BN_CLICKED(IDC_ASSIGN_MOVE_UP, OnMoveUp)
 	ON_BN_CLICKED(IDC_ASSIGN_MOVE_DOWN, OnMoveDown)
+	ON_BN_CLICKED(IDC_ASSIGN_RESET, OnReset)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -945,11 +948,10 @@ BOOL CDlgAssignColumns::OnInitDialog()
 	}
 	m_ctrlType.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
 	m_ctrlType.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlType.SetSelection(idxSelect);
+	m_ctrlType.SetSelection(idxSelect); // Causes change event that fills columns
 	if (m_eOrder == CAgilityBookOptions::eView)
 		m_ctrlType.SortItems(CompareTypes, 0);
 	m_ctrlType.EnsureVisible(idxSelect, FALSE);
-	//FillColumns();
 	return TRUE;	// return TRUE unless you set the focus to a control
 					// EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -1083,6 +1085,20 @@ void CDlgAssignColumns::OnMoveDown()
 		m_ctrlColumns.SetCurSel(idxCol);
 		UpdateColumnVector();
 		UpdateButtons();
+	}
+}
+
+
+void CDlgAssignColumns::OnReset()
+{
+	int index = m_ctrlType.GetSelection();
+	int idxType = -1;
+	if (0 <= index)
+		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
+	if (0 <= idxType)
+	{
+		GetColumnOrder(m_eOrder, idxType, m_Columns[idxType], true);
+		FillColumns();
 	}
 }
 

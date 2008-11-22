@@ -247,7 +247,8 @@ protected:
 	static void GetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,
-			std::vector<int>& outValues);
+			std::vector<int>& outValues,
+			bool bDefaultValues = false);
 	static void SetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,

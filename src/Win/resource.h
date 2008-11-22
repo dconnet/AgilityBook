@@ -528,6 +528,7 @@
 #define IDC_ASSIGN_MOVE_UP              1594
 #define IDC_ASSIGN_MOVE_DOWN            1595
 #define IDC_ASSIGN_COLUMNS              1596
+#define IDC_ASSIGN_RESET                1597
 #define IDC_FINDLINKS_LIST              1600
 #define IDC_FINDLINKS_COPY              1601
 #define IDC_FINDLINKS_EDIT              1602

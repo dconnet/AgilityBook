@@ -21,6 +21,9 @@ Move the selected field down in the order.
 .topic HIDC_ASSIGN_MOVE_UP
 Move the selected field up in the order.
 
+.topic HIDC_ASSIGN_RESET
+Reset the current selection's fields to the program's defaults.
+
 .topic HIDC_ASSIGN_TYPE
 Run type (scoring style) these fields are being assigned for.
 
