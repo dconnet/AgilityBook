@@ -92,7 +92,7 @@ const int OFFSET_OTHER = 6;
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewCalendarData
 
-class CAgilityBookViewCalendarData : public CListData
+class CAgilityBookViewCalendarData : public CListDataDispInfo
 {
 	friend int CALLBACK CompareCalendar(LPARAM, LPARAM, LPARAM);
 public:
@@ -111,8 +111,8 @@ public:
 	bool CanDelete() const			{return true;}
 
 	ARBCalendarPtr GetCalendar()	{return m_pCal;}
-	CString OnNeedText(int iCol) const;
-	int GetIcon() const;
+	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const;
 	int GetStateIcon() const;
 
 	COLORREF GetTextColor(
@@ -132,44 +132,44 @@ private:
 };
 
 
-CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
+tstring CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 {
-	CString str;
+	tstring str;
 	if (m_pCal)
 	{
 		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_CAL_START_DATE:
-			str = m_pCal->GetStartDate().GetString(dFmt).c_str();
+			str = m_pCal->GetStartDate().GetString(dFmt);
 			break;
 		case IO_CAL_END_DATE:
-			str = m_pCal->GetEndDate().GetString(dFmt).c_str();
+			str = m_pCal->GetEndDate().GetString(dFmt);
 			break;
 		case IO_CAL_LOCATION:
-			str = m_pCal->GetLocation().c_str();
+			str = m_pCal->GetLocation();
 			break;
 		case IO_CAL_CLUB:
-			str = m_pCal->GetClub().c_str();
+			str = m_pCal->GetClub();
 			break;
 		case IO_CAL_VENUE:
-			str = m_pCal->GetVenue().c_str();
+			str = m_pCal->GetVenue();
 			break;
 		case IO_CAL_OPENS:
 			if (m_pCal->GetOpeningDate().IsValid())
-				str = m_pCal->GetOpeningDate().GetString(dFmt).c_str();
+				str = m_pCal->GetOpeningDate().GetString(dFmt);
 			break;
 		case IO_CAL_DRAWS:
 			if (m_pCal->GetDrawDate().IsValid())
-				str = m_pCal->GetDrawDate().GetString(dFmt).c_str();
+				str = m_pCal->GetDrawDate().GetString(dFmt);
 			break;
 		case IO_CAL_CLOSES:
 			if (m_pCal->GetClosingDate().IsValid())
-				str = m_pCal->GetClosingDate().GetString(dFmt).c_str();
+				str = m_pCal->GetClosingDate().GetString(dFmt);
 			break;
 		case IO_CAL_NOTES:
-			str = m_pCal->GetNote().c_str();
-			str.Replace(_T("\n"), _T(" "));
+			str = m_pCal->GetNote();
+			str = tstringUtil::Replace(str, _T("\n"), _T(" "));
 			break;
 		}
 	}
@@ -177,7 +177,7 @@ CString CAgilityBookViewCalendarData::OnNeedText(int iCol) const
 }
 
 
-int CAgilityBookViewCalendarData::GetIcon() const
+int CAgilityBookViewCalendarData::OnNeedIcon() const
 {
 	int idxImage = -1;
 	switch (m_pCal->GetEntered())
@@ -539,7 +539,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewCalendarList, CListView2)
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
-	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(LVN_ITEMCHANGED, OnItemChanged)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
@@ -726,7 +725,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CImageList* pImageList = GetImageList(LVSIL_SMALL);
 	if (pData && pImageList)
 	{
-		int idxImage = pData->GetIcon();
+		int idxImage = pData->OnNeedIcon();
 		if (0 <= idxImage)
 		{
 #if _MSC_VER < 1300
@@ -746,7 +745,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	rLineLabel.InflateRect(-OFFSET_FIRST, 0);
 	dc.SetTextColor(pData->GetTextColor(0, bSelected, bFocused));
 	dc.SetBkColor(pData->GetBackgroundColor(0, bSelected, bFocused));
-	dc.DrawText(pData->OnNeedText(0), rLineLabel, GetFormatFlags(0));
+	dc.DrawText(pData->OnNeedText(0).c_str(), -1, rLineLabel, GetFormatFlags(0));
 	for (int i = 1; i < nColumns; ++i)
 	{
 		CRect r;
@@ -754,7 +753,7 @@ void CAgilityBookViewCalendarList::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		r.InflateRect(-OFFSET_OTHER, 0);
 		dc.SetTextColor(pData->GetTextColor(i, bSelected, bFocused));
 		dc.SetBkColor(pData->GetBackgroundColor(i, bSelected, bFocused));
-		dc.DrawText(pData->OnNeedText(i), r, GetFormatFlags(i));
+		dc.DrawText(pData->OnNeedText(i).c_str(), -1, r, GetFormatFlags(i));
 	}
 
 	if ((LVIS_FOCUSED & state) && bFocused)
@@ -1072,28 +1071,6 @@ void CAgilityBookViewCalendarList::OnColumnclick(
 	SortItems(CompareCalendar, reinterpret_cast<LPARAM>(&info));
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
-	*pResult = 0;
-}
-
-
-void CAgilityBookViewCalendarList::OnGetdispinfo(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-	CAgilityBookViewCalendarData* pData = dynamic_cast<CAgilityBookViewCalendarData*>(pRawData);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
-		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
-		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-	}
-	if (pDispInfo->item.mask & LVIF_IMAGE)
-	{
-		if (pData)
-			pDispInfo->item.iImage = pData->GetIcon();
-	}
 	*pResult = 0;
 }
 

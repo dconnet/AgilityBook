@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ProjectDir)&quot; &quot;$(ConfigurationName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ProjectDir)&quot; &quot;$(ConfigurationName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -208,7 +208,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ProjectDir)&quot; &quot;$(ConfigurationName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -273,7 +273,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ConfigurationName)&quot; VC9$(PlatformName)"
+				CommandLine="$(ProjectDir)RunParseResourceHeader.bat &quot;$(ProjectDir)&quot; &quot;$(ConfigurationName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 	</Configurations>

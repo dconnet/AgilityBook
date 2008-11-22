@@ -42,7 +42,6 @@
 #include "ListCtrl.h"
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
-class CDlgConfigureData;
 class CDlgConfigureDataDivision;
 class CDlgConfigureDataEvent;
 class CDlgConfigureDataLevel;
@@ -141,7 +140,6 @@ protected:
 	//{{AFX_MSG(CDlgConfigVenue)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDestroy();
-	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);

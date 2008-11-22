@@ -78,7 +78,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookViewTrainingData
 
-class CAgilityBookViewTrainingData : public CListData
+class CAgilityBookViewTrainingData : public CListDataDispInfo
 {
 	friend int CALLBACK CompareTraining(LPARAM, LPARAM, LPARAM);
 public:
@@ -93,11 +93,11 @@ public:
 	{
 	}
 
-	bool CanEdit() const			{return true;}
-	bool CanDelete() const			{return true;}
+	bool CanEdit() const				{return true;}
+	bool CanDelete() const				{return true;}
 
-	ARBTrainingPtr GetTraining()	{return m_pTraining;}
-	CString OnNeedText(int iCol) const;
+	ARBTrainingPtr GetTraining()		{return m_pTraining;}
+	virtual tstring OnNeedText(int iCol) const;
 
 private:
 	CAgilityBookViewTraining* m_pView;
@@ -105,25 +105,25 @@ private:
 };
 
 
-CString CAgilityBookViewTrainingData::OnNeedText(int iCol) const
+tstring CAgilityBookViewTrainingData::OnNeedText(int iCol) const
 {
-	CString str;
+	tstring str;
 	if (m_pTraining)
 	{
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_LOG_DATE:
-			str = m_pTraining->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eTraining)).c_str();
+			str = m_pTraining->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eTraining));
 			break;
 		case IO_LOG_NAME:
-			str = m_pTraining->GetName().c_str();
+			str = m_pTraining->GetName();
 			break;
 		case IO_LOG_SUBNAME:
-			str = m_pTraining->GetSubName().c_str();
+			str = m_pTraining->GetSubName();
 			break;
 		case IO_LOG_NOTES:
-			str = m_pTraining->GetNote().c_str();
-			str.Replace(_T("\n"), _T(" "));
+			str = m_pTraining->GetNote();
+			str = tstringUtil::Replace(str, _T("\n"), _T(" "));
 			break;
 		}
 	}
@@ -313,7 +313,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewTraining, CListView2)
 	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnColumnclick)
-	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
 	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
@@ -545,11 +544,10 @@ void CAgilityBookViewTraining::LoadData()
 		if (pTraining->IsFiltered())
 			continue;
 		LV_ITEM item;
-		item.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+		item.mask = LVIF_TEXT | LVIF_PARAM;
 		item.pszText = LPSTR_TEXTCALLBACK;
 		item.iItem = i;
 		item.iSubItem = 0;
-		item.iImage = I_IMAGECALLBACK;
 		item.lParam = reinterpret_cast<LPARAM>(
 			static_cast<CListData*>(
 				new CAgilityBookViewTrainingData(this, pTraining)));
@@ -656,23 +654,6 @@ void CAgilityBookViewTraining::OnColumnclick(
 	SortItems(CompareTraining, reinterpret_cast<LPARAM>(&info));
 	HeaderSort(abs(m_SortColumn.GetColumn())-1,
 		nBackwards > 0 ? CHeaderCtrl2::eAscending : CHeaderCtrl2::eDescending);
-	*pResult = 0;
-}
-
-
-void CAgilityBookViewTraining::OnGetdispinfo(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-		CAgilityBookViewTrainingData* pData = dynamic_cast<CAgilityBookViewTrainingData*>(pRawData);
-		CString str = pData->OnNeedText(pDispInfo->item.iSubItem);
-		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
-		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-	}
 	*pResult = 0;
 }
 

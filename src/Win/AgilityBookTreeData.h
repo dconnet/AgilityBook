@@ -46,7 +46,7 @@ class CAgilityBookTreeDataTrial;
 class CAgilityBookTreeDataRun;
 class CAgilityBookViewDataCalendar;
 
-class CAgilityBookTreeData : public CListData
+class CAgilityBookTreeData : public CListDataDispInfo
 {
 public:
 	CAgilityBookTreeData(CAgilityBookTree* pTree)
@@ -122,8 +122,6 @@ public:
 	virtual bool OnCmd(
 			UINT id,
 			bool* bTreeSelectionSet) = 0; // Returns true if data modified
-	virtual CString OnNeedText() const = 0;
-	virtual int GetIcon() const = 0;
 
 	virtual void Properties() = 0;
 
@@ -181,8 +179,8 @@ public:
 	virtual bool OnCmd(
 			UINT id,
 			bool* bTreeSelectionSet);
-	virtual CString OnNeedText() const;
-	virtual int GetIcon() const;
+	virtual tstring OnNeedText() const;
+	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
 
@@ -237,8 +235,8 @@ public:
 	virtual bool OnCmd(
 			UINT id,
 			bool* bTreeSelectionSet);
-	virtual CString OnNeedText() const;
-	virtual int GetIcon() const;
+	virtual tstring OnNeedText() const;
+	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
 
@@ -298,8 +296,8 @@ public:
 	virtual bool OnCmd(
 			UINT id,
 			bool* bTreeSelectionSet);
-	virtual CString OnNeedText() const;
-	virtual int GetIcon() const;
+	virtual tstring OnNeedText() const;
+	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
 

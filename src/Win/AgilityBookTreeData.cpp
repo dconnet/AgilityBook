@@ -738,9 +738,9 @@ bool CAgilityBookTreeDataDog::OnCmd(
 }
 
 
-CString CAgilityBookTreeDataDog::OnNeedText() const
+tstring CAgilityBookTreeDataDog::OnNeedText() const
 {
-	CString str;
+	tstring str;
 	// We can actually be called for text BEFORE we call SetHTreeItem.
 	if (m_hItem)
 	{
@@ -751,16 +751,16 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 			switch (GetDogColumns()[idx])
 			{
 			case IO_TREE_DOG_REGNAME:
-				str += m_pDog->GetRegisteredName().c_str();
+				str += m_pDog->GetRegisteredName();
 				break;
 			case IO_TREE_DOG_CALLNAME:
-				str += m_pDog->GetCallName().c_str();
+				str += m_pDog->GetCallName();
 				break;
 			case IO_TREE_DOG_BREED:
-				str += m_pDog->GetBreed().c_str();
+				str += m_pDog->GetBreed();
 				break;
 			case IO_TREE_DOG_DOB:
-				str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+				str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 				break;
 			case IO_TREE_DOG_AGE:
 				{
@@ -771,7 +771,7 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 					CTimeSpan age = current - dob;
 					CString yrs;
 					yrs.FormatMessage(IDS_YEARS, ARBDouble::str(age.GetDays()/365.0, 1).c_str());
-					str += yrs;
+					str += (LPCTSTR)yrs;
 				}
 				break;
 			}
@@ -781,7 +781,7 @@ CString CAgilityBookTreeDataDog::OnNeedText() const
 }
 
 
-int CAgilityBookTreeDataDog::GetIcon() const
+int CAgilityBookTreeDataDog::OnNeedIcon() const
 {
 	return m_pTree->GetImageList().Dog();
 }
@@ -1013,9 +1013,9 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 }
 
 
-CString CAgilityBookTreeDataTrial::OnNeedText() const
+tstring CAgilityBookTreeDataTrial::OnNeedText() const
 {
-	CString str;
+	tstring str;
 	// We can actually be called for text BEFORE we call SetHTreeItem.
 	if (m_hItem)
 	{
@@ -1034,7 +1034,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 						else
 							str += ' ';
 					}
-					str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+					str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 					bNeedSpace = true;
 				}
 				break;
@@ -1048,7 +1048,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 						else
 							str += ' ';
 					}
-					str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+					str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 					bNeedSpace = true;
 				}
 				break;
@@ -1063,7 +1063,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 					{
 						if (0 < i)
 							str += _T("/");
-						str += (*iter)->GetName().c_str();
+						str += (*iter)->GetName();
 						bNeedSpace = true;
 					}
 				}
@@ -1079,7 +1079,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 					{
 						if (0 < i)
 							str += _T("/");
-						str += (*iter)->GetVenue().c_str();
+						str += (*iter)->GetVenue();
 						bNeedSpace = true;
 					}
 				}
@@ -1089,7 +1089,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 				{
 					if (bNeedSpace)
 						str += ' ';
-					str += m_pTrial->GetLocation().c_str();
+					str += m_pTrial->GetLocation();
 					bNeedSpace = true;
 				}
 				break;
@@ -1098,8 +1098,8 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 				{
 					if (bNeedSpace)
 						str += ' ';
-					str += m_pTrial->GetNote().c_str();
-					str.Replace(_T("\n"), _T(" "));
+					str += m_pTrial->GetNote();
+					str = tstringUtil::Replace(str, _T("\n"), _T(" "));
 					bNeedSpace = true;
 				}
 				break;
@@ -1110,7 +1110,7 @@ CString CAgilityBookTreeDataTrial::OnNeedText() const
 }
 
 
-int CAgilityBookTreeDataTrial::GetIcon() const
+int CAgilityBookTreeDataTrial::OnNeedIcon() const
 {
 	return m_idxIcon;
 }
@@ -1360,9 +1360,9 @@ bool CAgilityBookTreeDataRun::OnCmd(
 }
 
 
-CString CAgilityBookTreeDataRun::OnNeedText() const
+tstring CAgilityBookTreeDataRun::OnNeedText() const
 {
-	CString str;
+	tstring str;
 	// We can actually be called for text BEFORE we call SetHTreeItem.
 	if (m_hItem)
 	{
@@ -1373,11 +1373,11 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 			switch (GetRunColumns()[idx])
 			{
 			case IO_TREE_RUN_DATE:
-				str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+				str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 				break;
 			case IO_TREE_RUN_Q:
 				{
-					CString q;
+					tstring q;
 					if (m_pRun->GetQ().Qualified())
 					{
 						std::vector<ARBConfigMultiQPtr> multiQs;
@@ -1385,36 +1385,36 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 						{
 							for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 							{
-								if (!q.IsEmpty())
+								if (!q.empty())
 									q += _T('/');
-								q += (*iMultiQ)->GetShortName().c_str();
+								q += (*iMultiQ)->GetShortName();
 							}
 						}
 						if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 						{
 							CString tmp;
 							tmp.LoadString(IDS_SQ);
-							if (!q.IsEmpty())
+							if (!q.empty())
 								q += _T('/');
-							q += tmp;
+							q += (LPCTSTR)tmp;
 						}
 					}
-					if (q.IsEmpty())
-						q = m_pRun->GetQ().str().c_str();
+					if (q.empty())
+						q = m_pRun->GetQ().str();
 					str += q;
 				}
 				break;
 			case IO_TREE_RUN_EVENT:
-				str += m_pRun->GetEvent().c_str();
+				str += m_pRun->GetEvent();
 				break;
 			case IO_TREE_RUN_DIVISION:
-				str += m_pRun->GetDivision().c_str();
+				str += m_pRun->GetDivision();
 				break;
 			case IO_TREE_RUN_LEVEL:
-				str += m_pRun->GetLevel().c_str();
+				str += m_pRun->GetLevel();
 				break;
 			case IO_TREE_RUN_HEIGHT:
-				str += m_pRun->GetHeight().c_str();
+				str += m_pRun->GetHeight();
 				break;
 			}
 		}
@@ -1423,7 +1423,7 @@ CString CAgilityBookTreeDataRun::OnNeedText() const
 }
 
 
-int CAgilityBookTreeDataRun::GetIcon() const
+int CAgilityBookTreeDataRun::OnNeedIcon() const
 {
 	return m_pTree->GetImageList().Run();
 }

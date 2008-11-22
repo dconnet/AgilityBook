@@ -176,7 +176,7 @@ CPointsDataText::CPointsDataText(
 }
 
 
-tstring CPointsDataText::OnNeedText(size_t inCol) const
+tstring CPointsDataText::OnNeedText(int inCol) const
 {
 	switch (inCol)
 	{
@@ -220,7 +220,7 @@ CPointsDataDog::CPointsDataDog(
 }
 
 
-tstring CPointsDataDog::OnNeedText(size_t inCol) const
+tstring CPointsDataDog::OnNeedText(int inCol) const
 {
 	tstring str;
 	if (m_pDog)
@@ -309,7 +309,7 @@ CPointsDataVenue::CPointsDataVenue(
 }
 
 
-tstring CPointsDataVenue::OnNeedText(size_t inCol) const
+tstring CPointsDataVenue::OnNeedText(int inCol) const
 {
 	tstring str;
 	if (m_pVenue)
@@ -422,7 +422,7 @@ CPointsDataTitle::CPointsDataTitle(
 }
 
 
-tstring CPointsDataTitle::OnNeedText(size_t inCol) const
+tstring CPointsDataTitle::OnNeedText(int inCol) const
 {
 	tstring str;
 	if (m_pTitle)
@@ -525,7 +525,7 @@ CPointsDataEvent::CPointsDataEvent(
 }
 
 
-tstring CPointsDataEvent::OnNeedText(size_t inCol) const
+tstring CPointsDataEvent::OnNeedText(int inCol) const
 {
 	tstring str;
 	switch (inCol)
@@ -642,7 +642,7 @@ void CPointsDataLifetime::AddLifetimeInfo(
 }
 
 
-tstring CPointsDataLifetime::OnNeedText(size_t inCol) const
+tstring CPointsDataLifetime::OnNeedText(int inCol) const
 {
 	tstring str;
 	switch (inCol)
@@ -759,7 +759,7 @@ void CPointsDataLifetimeByName::AddLifetimeInfo(
 }
 
 
-tstring CPointsDataLifetimeByName::OnNeedText(size_t inCol) const
+tstring CPointsDataLifetimeByName::OnNeedText(int inCol) const
 {
 	tstring str;
 	switch (inCol)
@@ -831,7 +831,7 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 }
 
 
-tstring CPointsDataMultiQs::OnNeedText(size_t inCol) const
+tstring CPointsDataMultiQs::OnNeedText(int inCol) const
 {
 	tstring str;
 	if (7 == inCol)
@@ -894,7 +894,7 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 }
 
 
-tstring CPointsDataSpeedPts::OnNeedText(size_t inCol) const
+tstring CPointsDataSpeedPts::OnNeedText(int inCol) const
 {
 	tstring str;
 	if (7 == inCol)
@@ -958,7 +958,7 @@ CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
 }
 
 
-tstring CPointsDataOtherPointsTallyAll::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyAll::OnNeedText(int inCol) const
 {
 	tstring str;
 	switch (inCol)
@@ -1027,7 +1027,7 @@ CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 }
 
 
-tstring CPointsDataOtherPointsTallyAllByEvent::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyAllByEvent::OnNeedText(int inCol) const
 {
 	tstring str;
 	switch (inCol)
@@ -1097,7 +1097,7 @@ CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 }
 
 
-tstring CPointsDataOtherPointsTallyLevel::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyLevel::OnNeedText(int inCol) const
 {
 	tstring str;
 	switch (inCol)
@@ -1169,7 +1169,7 @@ CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent
 }
 
 
-tstring CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(size_t inCol) const
+tstring CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(int inCol) const
 {
 	tstring str;
 	switch (inCol)

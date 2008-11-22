@@ -691,7 +691,7 @@ HTREEITEM CAgilityBookTree::InsertDog(
 
 	CAgilityBookTreeDataDog* pDataDog = new CAgilityBookTreeDataDog(this, pDog);
 	int mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	int idxImage = pDataDog->GetIcon();
+	int idxImage = pDataDog->OnNeedIcon();
 
 	HTREEITEM hItem = GetTreeCtrl().InsertItem(mask,
 		LPSTR_TEXTCALLBACK,
@@ -726,7 +726,7 @@ HTREEITEM CAgilityBookTree::InsertTrial(
 
 	CAgilityBookTreeDataTrial* pDataTrial = new CAgilityBookTreeDataTrial(this, pTrial);
 	int mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM | TVIF_STATE;
-	int idxImage = pDataTrial->GetIcon();
+	int idxImage = pDataTrial->OnNeedIcon();
 	int state = pDataTrial->GetTrial()->IsVerified() ?
 		INDEXTOSTATEIMAGEMASK(m_idxChecked) : INDEXTOSTATEIMAGEMASK(m_idxEmpty);
 
@@ -759,7 +759,7 @@ HTREEITEM CAgilityBookTree::InsertRun(
 
 	CAgilityBookTreeDataRun* pDataRun = new CAgilityBookTreeDataRun(this, pRun);
 	int mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	int idxImage = pDataRun->GetIcon();
+	int idxImage = pDataRun->OnNeedIcon();
 
 	HTREEITEM hRun = GetTreeCtrl().InsertItem(mask,
 		LPSTR_TEXTCALLBACK,
@@ -1021,8 +1021,8 @@ void CAgilityBookTree::OnGetdispinfo(
 	{
 		if (pData)
 		{
-			CString str = pData->OnNeedText();
-			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+			tstring str = pData->OnNeedText();
+			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}
 	}

@@ -54,3 +54,34 @@ CListData::CListData()
 CListData::~CListData()
 {
 }
+
+
+CListDataDispInfo::CListDataDispInfo()
+{
+}
+
+
+CListDataDispInfo::~CListDataDispInfo()
+{
+}
+
+
+tstring CListDataDispInfo::OnNeedText() const
+{
+	ASSERT(0);
+	return tstring();
+}
+
+
+tstring CListDataDispInfo::OnNeedText(int iCol) const
+{
+	ASSERT(0);
+	return tstring();
+}
+
+
+int CListDataDispInfo::OnNeedIcon() const
+{
+	ASSERT(0);
+	return -1;
+}

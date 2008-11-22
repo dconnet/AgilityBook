@@ -46,7 +46,7 @@
 #include "ListCtrl.h"
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
-class CDlgConfigureData;
+class CListDataDispInfo;
 
 class CDlgConfigure : public CDlgBaseDialog
 {
@@ -87,7 +87,7 @@ protected:
 
 private:
 	eAction GetAction() const;
-	CDlgConfigureData* GetData(HTREEITEM hItem) const;
+	CListDataDispInfo* GetData(HTREEITEM hItem) const;
 	void UpdateButtons();
 	void LoadData(eAction dataToLoad);
 	HTREEITEM FindCurrentVenue(

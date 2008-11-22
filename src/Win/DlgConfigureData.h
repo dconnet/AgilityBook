@@ -40,29 +40,13 @@
 #include <vector>
 #include "ListData.h"
 
-/**
- * This class and its derivatives are used to keep data associated with controls.
- */
-class CDlgConfigureData : public CListData
-{
-public:
-	CDlgConfigureData()
-	{
-	}
-	virtual ~CDlgConfigureData()			{}
-	virtual CString OnNeedText() const = 0;
-	virtual CString OnNeedText(int iColumn) const = 0;
-};
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CDlgConfigureDataVenue : public CDlgConfigureData
+class CDlgConfigureDataVenue : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
 	~CDlgConfigureDataVenue();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigVenuePtr GetVenue() const		{return m_Venue;}
 protected:
 	ARBConfigVenuePtr m_Venue;
@@ -70,13 +54,13 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataFault : public CDlgConfigureData
+class CDlgConfigureDataFault : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
 	~CDlgConfigureDataFault();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigFaultPtr GetFault() const		{return m_Fault;}
 protected:
 	ARBConfigFaultPtr m_Fault;
@@ -84,13 +68,13 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataOtherPoints : public CDlgConfigureData
+class CDlgConfigureDataOtherPoints : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
 	~CDlgConfigureDataOtherPoints();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
 protected:
 	ARBConfigOtherPointsPtr m_OtherPoints;
@@ -98,13 +82,13 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataDivision : public CDlgConfigureData
+class CDlgConfigureDataDivision : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataDivision(ARBConfigDivisionPtr div);
 	~CDlgConfigureDataDivision();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
 protected:
 	ARBConfigDivisionPtr m_Div;
@@ -112,15 +96,15 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataLevel : public CDlgConfigureData
+class CDlgConfigureDataLevel : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataLevel(
 			ARBConfigDivisionPtr div,
 			ARBConfigLevelPtr level);
 	~CDlgConfigureDataLevel();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const		{return m_Level;}
 protected:
@@ -130,7 +114,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataSubLevel : public CDlgConfigureData
+class CDlgConfigureDataSubLevel : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataSubLevel(
@@ -138,8 +122,8 @@ public:
 			ARBConfigLevelPtr level,
 			ARBConfigSubLevelPtr subLevel);
 	~CDlgConfigureDataSubLevel();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 	ARBConfigSubLevelPtr GetSubLevel() const	{return m_SubLevel;}
@@ -151,14 +135,14 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataTitle : public CDlgConfigureData
+class CDlgConfigureDataTitle : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataTitle(
 			ARBConfigTitlePtr title);
 	~CDlgConfigureDataTitle();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigTitlePtr GetTitle() const		{return m_Title;}
 protected:
 	ARBConfigTitlePtr m_Title;
@@ -166,13 +150,13 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataEvent : public CDlgConfigureData
+class CDlgConfigureDataEvent : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataEvent(ARBConfigEventPtr inEvent);
 	~CDlgConfigureDataEvent();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigEventPtr GetEvent() const		{return m_Event;}
 protected:
 	ARBConfigEventPtr m_Event;
@@ -180,13 +164,13 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataMultiQ : public CDlgConfigureData
+class CDlgConfigureDataMultiQ : public CListDataDispInfo
 {
 public:
 	CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq);
 	~CDlgConfigureDataMultiQ();
-	virtual CString OnNeedText() const;
-	virtual CString OnNeedText(int iColumn) const;
+	virtual tstring OnNeedText() const;
+	virtual tstring OnNeedText(int iColumn) const;
 	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
 protected:
 	ARBConfigMultiQPtr m_MultiQ;

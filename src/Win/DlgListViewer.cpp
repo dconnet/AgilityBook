@@ -160,13 +160,12 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgListViewerData : public CListData
+class CDlgListViewerData : public CListDataDispInfo
 {
 public:
 	CDlgListViewerData() {}
 	virtual ~CDlgListViewerData() {}
 
-	virtual tstring OnNeedText(int iCol) const = 0;
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const = 0;
@@ -1307,7 +1306,6 @@ void CDlgListViewer::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgListViewer, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListViewer)
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_LIST_VIEWER, OnGetdispinfoList)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST_VIEWER, OnColumnclickList)
 	ON_WM_GETMINMAXINFO()
 	ON_WM_SIZE()
@@ -1672,28 +1670,6 @@ BOOL CDlgListViewer::OnInitDialog()
 	GetDlgItem(IDOK)->SetFocus();
 	return FALSE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgListViewer::OnGetdispinfoList(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-		CDlgListViewerData* pData = dynamic_cast<CDlgListViewerData*>(pRawData);
-		if (pData)
-		{
-			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
-			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
-			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-		}
-		else
-			pDispInfo->item.pszText[0] = '\0';
-	}
-	*pResult = 0;
 }
 
 

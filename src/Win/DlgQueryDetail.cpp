@@ -119,19 +119,16 @@ void CDlgQueryDetail::OnCbnSelchangeQuerydetailCombo()
 	if (0 <= idx)
 	{
 		CListData* pRawData = m_ctrlVenues.GetData(idx);
-		if (pRawData)
+		CListPtrData<ARBConfigVenuePtr>* pData = dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pRawData);
+		if (pData)
 		{
-			CListPtrData<ARBConfigVenuePtr>* pData = dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pRawData);
-			if (pData)
+			if (m_strCode != pData->GetData()->GetName().c_str())
 			{
-				if (m_strCode != pData->GetData()->GetName().c_str())
-				{
-					// Yes, this will kill the existing code. In general, most
-					// sites will probably use the same acronyms I am. So I'm
-					// just not going to worry about this.
-					m_strCode = pData->GetData()->GetName().c_str();
-					UpdateData(FALSE);
-				}
+				// Yes, this will kill the existing code. In general, most
+				// sites will probably use the same acronyms I am. So I'm
+				// just not going to worry about this.
+				m_strCode = pData->GetData()->GetName().c_str();
+				UpdateData(FALSE);
 			}
 		}
 	}

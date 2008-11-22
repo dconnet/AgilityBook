@@ -163,13 +163,16 @@ CDlgConfigure::eAction CDlgConfigure::GetAction() const
 }
 
 
-CDlgConfigureData* CDlgConfigure::GetData(HTREEITEM hItem) const
+CListDataDispInfo* CDlgConfigure::GetData(HTREEITEM hItem) const
 {
 	if (hItem)
 	{
 		HTREEITEM hParent = m_ctrlItems.GetParentItem(hItem);
 		if (hParent)
-			return reinterpret_cast<CDlgConfigureData*>(m_ctrlItems.GetItemData(hItem));
+		{
+			CListData* pRawData = reinterpret_cast<CListData*>(m_ctrlItems.GetItemData(hItem));
+			return reinterpret_cast<CListDataDispInfo*>(pRawData);
+		}
 	}
 	return NULL;
 }
@@ -223,7 +226,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
 					reinterpret_cast<LPARAM>(
-						static_cast<CDlgConfigureData*>(
+						static_cast<CListData*>(
 							new CDlgConfigureDataVenue(*iterVenue))),
 					hParent, TVI_LAST);
 			}
@@ -236,7 +239,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
 					reinterpret_cast<LPARAM>(
-						static_cast<CDlgConfigureData*>(
+						static_cast<CListData*>(
 							new CDlgConfigureDataFault(*iterFault))),
 					hParent, TVI_LAST);
 			}
@@ -249,7 +252,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
 					reinterpret_cast<LPARAM>(
-						static_cast<CDlgConfigureData*>(
+						static_cast<CListData*>(
 							new CDlgConfigureDataOtherPoints(*iterOther))),
 					hParent, TVI_LAST);
 			}
@@ -372,7 +375,7 @@ void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
 	if (NULL != m_ctrlItems.GetParentItem(pNMTreeView->itemOld.hItem))
 	{
-		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(pNMTreeView->itemOld.lParam);
+		CListData* pData = reinterpret_cast<CListData*>(pNMTreeView->itemOld.lParam);
 		delete pData;
 		pNMTreeView->itemOld.lParam = 0;
 	}
@@ -387,11 +390,12 @@ void CDlgConfigure::OnGetdispinfo(
 	TV_DISPINFO* pDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & TVIF_TEXT)
 	{
-		CDlgConfigureData* pData = reinterpret_cast<CDlgConfigureData*>(pDispInfo->item.lParam);
+		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+		CListDataDispInfo* pData = reinterpret_cast<CListDataDispInfo*>(pRawData);
 		if (pData)
 		{
-			CString str = pData->OnNeedText();
-			::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
+			tstring str = pData->OnNeedText();
+			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
 			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
 		}
 	}
@@ -433,7 +437,7 @@ void CDlgConfigure::OnNew()
 					m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 						0, 0, 0, 0,
 						reinterpret_cast<LPARAM>(
-							static_cast<CDlgConfigureData*>(
+							static_cast<CListData*>(
 								new CDlgConfigureDataVenue(pVenue))),
 						m_hItemVenues, TVI_LAST);
 					m_ctrlItems.SortChildren(m_hItemVenues);
@@ -460,7 +464,7 @@ void CDlgConfigure::OnNew()
 						m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 							0, 0, 0, 0,
 							reinterpret_cast<LPARAM>(
-								static_cast<CDlgConfigureData*>(
+								static_cast<CListData*>(
 									new CDlgConfigureDataFault(pNewFault))),
 							m_hItemFaults, TVI_LAST);
 						m_ctrlItems.SortChildren(m_hItemFaults);
@@ -483,7 +487,7 @@ void CDlgConfigure::OnNew()
 					m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 						0, 0, 0, 0,
 						reinterpret_cast<LPARAM>(
-							static_cast<CDlgConfigureData*>(
+							static_cast<CListData*>(
 								new CDlgConfigureDataOtherPoints(pOther))),
 						m_hItemOtherPts, TVI_LAST);
 					m_ctrlItems.SortChildren(m_hItemOtherPts);
@@ -499,7 +503,7 @@ void CDlgConfigure::OnNew()
 void CDlgConfigure::OnDelete() 
 {
 	HTREEITEM current = m_ctrlItems.GetSelectedItem();
-	CDlgConfigureData* pData = GetData(current);
+	CListDataDispInfo* pData = GetData(current);
 	if (!pData)
 		return;
 
@@ -547,7 +551,7 @@ void CDlgConfigure::OnDelete()
 void CDlgConfigure::OnEdit() 
 {
 	HTREEITEM current = m_ctrlItems.GetSelectedItem();
-	CDlgConfigureData* pData = GetData(current);
+	CListDataDispInfo* pData = GetData(current);
 	if (!pData)
 		return;
 
@@ -621,7 +625,7 @@ void CDlgConfigure::OnEdit()
 void CDlgConfigure::OnCopy() 
 {
 	HTREEITEM current = m_ctrlItems.GetSelectedItem();
-	CDlgConfigureData* pData = GetData(current);
+	CListDataDispInfo* pData = GetData(current);
 	if (!pData)
 		return;
 
@@ -642,11 +646,10 @@ void CDlgConfigure::OnCopy()
 			{
 				*pNewVenue = *pVenueData->GetVenue();
 				pNewVenue->SetName(name); // Put the name back.
-				CDlgConfigureData* pNewData = new CDlgConfigureDataVenue(pNewVenue);
+				CListData* pNewData = new CDlgConfigureDataVenue(pNewVenue);
 				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(
-						static_cast<CDlgConfigureData*>(pNewData)),
+					reinterpret_cast<LPARAM>(pNewData),
 					m_hItemVenues, TVI_LAST);
 				m_ctrlItems.SortChildren(m_hItemVenues);
 				FindCurrentVenue(pNewVenue, true);
@@ -661,11 +664,10 @@ void CDlgConfigure::OnCopy()
 			ARBConfigFaultPtr pNewFault;
 			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
-				CDlgConfigureData* pNewData = new CDlgConfigureDataFault(pNewFault);
+				CListData* pNewData = new CDlgConfigureDataFault(pNewFault);
 				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(
-						static_cast<CDlgConfigureData*>(pNewData)),
+					reinterpret_cast<LPARAM>(pNewData),
 					m_hItemFaults, TVI_LAST);
 				m_ctrlItems.SortChildren(m_hItemFaults);
 				FindCurrentFault(pNewFault, true);
@@ -687,11 +689,10 @@ void CDlgConfigure::OnCopy()
 			pOther->SetName(name);
 			if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 			{
-				CDlgConfigureData* pNewData = new CDlgConfigureDataOtherPoints(pOther);
+				CListData* pNewData = new CDlgConfigureDataOtherPoints(pOther);
 				m_ctrlItems.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
 					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(
-						static_cast<CDlgConfigureData*>(pNewData)),
+					reinterpret_cast<LPARAM>(pNewData),
 					m_hItemOtherPts, TVI_LAST);
 				m_ctrlItems.SortChildren(m_hItemOtherPts);
 				FindCurrentOtherPoints(pOther, true);

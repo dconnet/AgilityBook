@@ -67,7 +67,7 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgListCtrlData : public CListData
+class CDlgListCtrlData : public CListDataDispInfo
 {
 public:
 	CDlgListCtrlData(CListCtrl2& list)
@@ -76,7 +76,6 @@ public:
 	}
 	virtual ~CDlgListCtrlData() {}
 	virtual bool HasIcon() const				{return false;}
-	virtual tstring OnNeedText(int iCol) = 0;
 	virtual bool OnEdit() = 0;
 	virtual void Apply() = 0;
 	virtual ARBCalendarPtr GetCalendar() const	{return ARBCalendarPtr();}
@@ -90,16 +89,16 @@ class CDlgListCtrlDataCalendar : public CDlgListCtrlData
 {
 public:
 	CDlgListCtrlDataCalendar(
-			CListCtrl2& list,
-			CAgilityBookDoc* pDoc,
+			CDlgListCtrl* parent,
 			ARBCalendarPtr pCal)
-		: CDlgListCtrlData(list)
-		, m_pDoc(pDoc)
+		: CDlgListCtrlData(parent->m_ctrlList)
+		, m_Parent(parent)
 		, m_pCal(pCal)
 	{
 	}
 	virtual bool HasIcon() const				{return true;}
-	virtual tstring OnNeedText(int iCol);
+	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const;
 	virtual bool OnEdit();
 	virtual void Apply();
 	virtual ARBCalendarPtr GetCalendar() const	{return m_pCal;}
@@ -108,12 +107,12 @@ protected:
 	{
 	}
 private:
-	CAgilityBookDoc* m_pDoc;
+	CDlgListCtrl* m_Parent;
 	ARBCalendarPtr m_pCal;
 };
 
 
-tstring CDlgListCtrlDataCalendar::OnNeedText(int iCol)
+tstring CDlgListCtrlDataCalendar::OnNeedText(int iCol) const
 {
 	tstring str;
 	switch (iCol)
@@ -145,9 +144,23 @@ tstring CDlgListCtrlDataCalendar::OnNeedText(int iCol)
 }
 
 
+int CDlgListCtrlDataCalendar::OnNeedIcon() const
+{
+	switch (GetCalendar()->GetEntered())
+	{
+	default:
+		return GetCalendar()->IsTentative() ? m_Parent->m_imgTentative : m_Parent->m_imgEmpty;
+	case ARBCalendar::ePlanning:
+		return GetCalendar()->IsTentative() ? m_Parent->m_imgPlanTentative : m_Parent->m_imgPlan;
+	case ARBCalendar::eEntered:
+		return GetCalendar()->IsTentative() ? m_Parent->m_imgEnteredTentative : m_Parent->m_imgEntered;
+	}
+}
+
+
 bool CDlgListCtrlDataCalendar::OnEdit()
 {
-	CDlgCalendar dlg(m_pCal, m_pDoc);
+	CDlgCalendar dlg(m_pCal, m_Parent->m_pDoc);
 	if (IDOK == dlg.DoModal())
 	{
 		if (CAgilityBookOptions::AutoDeleteCalendarEntries() && m_pCal->GetEndDate() < ARBDate::Today())
@@ -159,7 +172,7 @@ bool CDlgListCtrlDataCalendar::OnEdit()
 
 void CDlgListCtrlDataCalendar::Apply()
 {
-	m_pDoc->Book().GetCalendar().AddCalendar(m_pCal);
+	m_Parent->m_pDoc->Book().GetCalendar().AddCalendar(m_pCal);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -183,7 +196,7 @@ public:
 		, m_Fault(fault)
 	{
 	}
-	virtual tstring OnNeedText(int iCol)	{return m_Fault;}
+	virtual tstring OnNeedText(int iCol) const	{return m_Fault;}
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -262,7 +275,7 @@ public:
 		, m_Other(pOther)
 	{
 	}
-	virtual tstring OnNeedText(int iCol);
+	virtual tstring OnNeedText(int iCol) const;
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -276,7 +289,7 @@ private:
 };
 
 
-tstring CDlgListCtrlDataOtherPoints::OnNeedText(int iCol)
+tstring CDlgListCtrlDataOtherPoints::OnNeedText(int iCol) const
 {
 	tstring str;
 	switch (iCol)
@@ -328,7 +341,7 @@ public:
 		, m_Partner(pPartner)
 	{
 	}
-	virtual tstring OnNeedText(int iCol);
+	virtual tstring OnNeedText(int iCol) const;
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -342,7 +355,7 @@ private:
 };
 
 
-tstring CDlgListCtrlDataPartners::OnNeedText(int iCol)
+tstring CDlgListCtrlDataPartners::OnNeedText(int iCol) const
 {
 	tstring str;
 	switch (iCol)
@@ -495,7 +508,6 @@ BEGIN_MESSAGE_MAP(CDlgListCtrl, CDlgBaseDialog)
 	//{{AFX_MSG_MAP(CDlgListCtrl)
 	ON_WM_GETMINMAXINFO()
 	ON_WM_SIZE()
-	ON_NOTIFY(LVN_GETDISPINFO, IDC_LIST, OnGetdispinfoList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST, OnItemchangedList)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST, OnDblclkList)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_LIST, OnKeydownList)
@@ -653,7 +665,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		{
 			for (std::vector<ARBCalendarPtr>::const_iterator iter = m_CalEntries->begin(); iter != m_CalEntries->end(); ++iter)
 			{
-				CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, *iter);
+				CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(this, *iter);
 				items.push_back(pData);
 			}
 		}
@@ -776,51 +788,6 @@ void CDlgListCtrl::OnSize(UINT nType, int cx, int cy)
 }
 
 
-void CDlgListCtrl::OnGetdispinfoList(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-	CDlgListCtrlData* pData = dynamic_cast<CDlgListCtrlData*>(pRawData);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
-		::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
-		pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-	}
-	if (pDispInfo->item.mask & LVIF_IMAGE)
-	{
-		CDlgListCtrlDataCalendar* pCal = dynamic_cast<CDlgListCtrlDataCalendar*>(pData);
-		if (pCal)
-		{
-			switch (pCal->GetCalendar()->GetEntered())
-			{
-			default:
-				if (pCal->GetCalendar()->IsTentative())
-					pDispInfo->item.iImage = m_imgTentative;
-				else
-					pDispInfo->item.iImage = m_imgEmpty;
-				break;
-			case ARBCalendar::ePlanning:
-				if (pCal->GetCalendar()->IsTentative())
-					pDispInfo->item.iImage = m_imgPlanTentative;
-				else
-					pDispInfo->item.iImage = m_imgPlan;
-				break;
-			case ARBCalendar::eEntered:
-				if (pCal->GetCalendar()->IsTentative())
-					pDispInfo->item.iImage = m_imgEnteredTentative;
-				else
-					pDispInfo->item.iImage = m_imgEntered;
-				break;
-			}
-		}
-	}
-	*pResult = 0;
-}
-
-
 void CDlgListCtrl::OnItemchangedList(
 		NMHDR* /*pNMHDR*/,
 		LRESULT* pResult) 
@@ -876,7 +843,7 @@ void CDlgListCtrl::OnNew()
 				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
 				{
 					bUpdate = true;
-					CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(m_ctrlList, m_pDoc, cal);
+					CDlgListCtrlDataCalendar* pData = new CDlgListCtrlDataCalendar(this, cal);
 					LV_ITEM item;
 					item.mask = LVIF_TEXT | LVIF_PARAM;
 					if (pData->HasIcon())

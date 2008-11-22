@@ -130,14 +130,14 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 
-class PointsData : public CListData
+class PointsData : public CListDataDispInfo
 {
 public:
 	PointsData(CPointsDataBasePtr inData)
 		: m_Data(inData)
 	{
 	}
-	virtual tstring OnNeedText(size_t index) const
+	virtual tstring OnNeedText(int index) const
 	{
 		return m_Data->OnNeedText(index);
 	}
@@ -170,7 +170,6 @@ BEGIN_MESSAGE_MAP(CAgilityBookViewPoints, CListView2)
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY_REFLECT(NM_DBLCLK, OnNMDblclk)
 	ON_NOTIFY_REFLECT(LVN_KEYDOWN, OnKeydown)
-	ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnLvnGetdispinfo)
 	ON_UPDATE_COMMAND_UI(ID_DETAILS, OnUpdateDetails)
 	ON_COMMAND(ID_DETAILS, OnDetails)
 	ON_UPDATE_COMMAND_UI(ID_AGILITY_NEW_TITLE, OnUpdateAgilityNewTitle)
@@ -292,28 +291,6 @@ void CAgilityBookViewPoints::OnKeydown(
 				MessageBeep(0);
 		}
 		break;
-	}
-	*pResult = 0;
-}
-
-
-void CAgilityBookViewPoints::OnLvnGetdispinfo(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	NMLVDISPINFO* pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
-	if (pDispInfo->item.mask & LVIF_TEXT)
-	{
-		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-		PointsData* pData = dynamic_cast<PointsData*>(pRawData);
-		if (pData)
-		{
-			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
-			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
-			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-		}
-		else
-			pDispInfo->item.pszText[0] = '\0';
 	}
 	*pResult = 0;
 }
