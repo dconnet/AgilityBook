@@ -808,28 +808,32 @@ static TCHAR const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 void CAgilityBookOptions::GetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
-		std::vector<int>& outValues)
+		std::vector<int>& outValues,
+		bool bDefaultValues)
 {
 	outValues.clear();
-	otstringstream item;
+	if (!bDefaultValues)
+	{
+		otstringstream item;
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-	item << _T("col") << static_cast<UINT>(idxColumn);
+		item << _T("col") << static_cast<UINT>(idxColumn);
 #else
-	item << _T("col") << idxColumn;
+		item << _T("col") << idxColumn;
 #endif
-	CString data = theApp.GetProfileString(GetColumnName(eOrder), item.str().c_str(), _T(""));
-	int idx = data.Find(',');
-	while (0 <= idx)
-	{
-		int val = _tstol((LPCTSTR)data);
-		outValues.push_back(val);
-		data = data.Mid(idx+1);
-		idx = data.Find(',');
-	}
-	if (0 < data.GetLength())
-	{
-		int val = _tstol((LPCTSTR)data);
-		outValues.push_back(val);
+		CString data = theApp.GetProfileString(GetColumnName(eOrder), item.str().c_str(), _T(""));
+		int idx = data.Find(',');
+		while (0 <= idx)
+		{
+			int val = _tstol((LPCTSTR)data);
+			outValues.push_back(val);
+			data = data.Mid(idx+1);
+			idx = data.Find(',');
+		}
+		if (0 < data.GetLength())
+		{
+			int val = _tstol((LPCTSTR)data);
+			outValues.push_back(val);
+		}
 	}
 	if (0 == outValues.size())
 	{

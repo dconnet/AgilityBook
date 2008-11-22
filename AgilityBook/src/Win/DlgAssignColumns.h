@@ -197,7 +197,8 @@ public:
 	static bool GetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
-			std::vector<int>& values);
+			std::vector<int>& values,
+			bool bDefaultValues = false);
 	static bool SetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
@@ -249,6 +250,7 @@ protected:
 	afx_msg void OnRemove();
 	afx_msg void OnMoveUp();
 	afx_msg void OnMoveDown();
+	afx_msg void OnReset();
 	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
