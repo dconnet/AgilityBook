@@ -24,7 +24,7 @@ Descendre le champ sélectionné dans l'ordre.
 Monter le champ sélectionné dans l'ordre.
 
 .topic HIDC_ASSIGN_RESET
-Reset the current selection's fields to the program's defaults.
+Réinitialise la sélection à la valeur par défaut.
 
 .topic HIDC_ASSIGN_TYPE
 Type de parcours (méthode pour calculer les points) pour ces champs.
