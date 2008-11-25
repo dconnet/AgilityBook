@@ -646,6 +646,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 	int nCols = 0;
 	std::vector<CDlgListCtrlData*> items;
 
+	m_ctrlList.SuppressTooltipFixing(true);
 	CString caption, str;
 	switch (m_What)
 	{
@@ -716,6 +717,7 @@ BOOL CDlgListCtrl::OnInitDialog()
 		}
 		break;
 	}
+	m_ctrlList.SuppressTooltipFixing(false);
 	SetWindowText(caption);
 
 	int i = 0;

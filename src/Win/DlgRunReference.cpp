@@ -423,6 +423,7 @@ BOOL CDlgRunReference::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlRefRuns.SetExtendedStyle(m_ctrlRefRuns.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
+	m_ctrlRefRuns.SuppressTooltipFixing(true);
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
 	int index;
@@ -436,6 +437,7 @@ BOOL CDlgRunReference::OnInitDialog()
 		m_ctrlRefRuns.InsertColumn(index, &col);
 		str.ReleaseBuffer();
 	}
+	m_ctrlRefRuns.SuppressTooltipFixing(false);
 	SetColumnHeaders();
 	ListRuns();
 	for (index = 0; index < scNumColumns; ++index)

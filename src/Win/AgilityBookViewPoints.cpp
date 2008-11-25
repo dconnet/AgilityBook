@@ -400,6 +400,7 @@ PointsData* CAgilityBookViewPoints::GetItemPointsData(int index) const
 
 void CAgilityBookViewPoints::SetupColumns()
 {
+	SuppressTooltipFixing(true);
 	int nColumnCount = HeaderItemCount();
 	int i;
 	for (i = 0; i < nColumnCount; ++i)
@@ -417,6 +418,7 @@ void CAgilityBookViewPoints::SetupColumns()
 		InsertColumn(i, &col);
 		title.ReleaseBuffer();
 	}
+	SuppressTooltipFixing(false);
 }
 
 

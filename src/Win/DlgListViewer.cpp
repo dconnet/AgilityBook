@@ -1429,6 +1429,7 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	if (m_Runs)
 	{
+		m_ctrlList.SuppressTooltipFixing(true);
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(10);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
@@ -1446,6 +1447,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_PLACE, IDS_COL_PLACE);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_INCLASS, IDS_COL_IN_CLASS);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_QD, IDS_COL_Q_D);
+		m_ctrlList.SuppressTooltipFixing(false);
 		int iItem = 0;
 		if (m_DataRun)
 		{
@@ -1483,6 +1485,7 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	else if (m_ScoringRuns)
 	{
+		m_ctrlList.SuppressTooltipFixing(true);
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(12);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_STATUS, IDS_COL_STATUS);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DOG, IDS_COL_DOG);
@@ -1502,6 +1505,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_PLACE, IDS_COL_PLACE);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_INCLASS, IDS_COL_IN_CLASS);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_QD, IDS_COL_Q_D);
+		m_ctrlList.SuppressTooltipFixing(false);
 		int iItem = 0;
 		for (std::list<ScoringRunInfo>::const_iterator iter = m_ScoringRuns->begin();
 			iter != m_ScoringRuns->end();
@@ -1534,12 +1538,14 @@ BOOL CDlgListViewer::OnInitDialog()
 			}
 		}
 
+		m_ctrlList.SuppressTooltipFixing(true);
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_TITLE_PTS, IDS_COL_TITLE_PTS);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_LOCATION, IDS_COL_LOCATION);
 		pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_CLUB, IDS_COL_CLUB);
+		m_ctrlList.SuppressTooltipFixing(false);
 		int iItem = 0;
 		if (m_DataMultiQ)
 		{
@@ -1578,6 +1584,7 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	else if (m_Lifetime)
 	{
+		m_ctrlList.SuppressTooltipFixing(true);
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
 		if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 		{
@@ -1589,6 +1596,7 @@ BOOL CDlgListViewer::OnInitDialog()
 			pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, IDS_COL_LEVEL);
 		}
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, IDS_COL_POINTS);
+		m_ctrlList.SuppressTooltipFixing(false);
 		int iItem = 0;
 		for (std::list<LifeTimePointInfoPtr>::const_iterator iter = m_Lifetime->begin();
 			iter != m_Lifetime->end();
@@ -1610,6 +1618,7 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	else if (m_OtherData)
 	{
+		m_ctrlList.SuppressTooltipFixing(true);
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(8);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_DATE, IDS_COL_DATE);
 		m_SortColumn = pColData->NumColumns();
@@ -1620,6 +1629,7 @@ BOOL CDlgListViewer::OnInitDialog()
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, IDS_COL_LEVEL);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_EVENT, IDS_COL_EVENT);
 		pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, IDS_COL_POINTS);
+		m_ctrlList.SuppressTooltipFixing(false);
 		int iItem = 0;
 		for (std::list<OtherPtInfo>::const_iterator iter = m_OtherData->begin();
 			iter != m_OtherData->end();
@@ -1642,11 +1652,13 @@ BOOL CDlgListViewer::OnInitDialog()
 
 	else if (m_Items)
 	{
+		m_ctrlList.SuppressTooltipFixing(true);
 		CDlgListViewerDataColumns* pColData = new CDlgListViewerDataColumns(3);
 		pColData->InsertColumn(m_ctrlList, COL_ITEM_TYPE, IDS_COL_TYPE);
 		m_SortColumn = pColData->NumColumns();
 		pColData->InsertColumn(m_ctrlList, COL_ITEM_NAME, IDS_COL_NAME);
 		pColData->InsertColumn(m_ctrlList, COL_ITEM_COMMENT, IDS_COL_COMMENTS);
+		m_ctrlList.SuppressTooltipFixing(false);
 		int iItem = 0;
 		for (std::vector<CFindItemInfo>::const_iterator iter = m_Items->begin();
 			iter != m_Items->end();

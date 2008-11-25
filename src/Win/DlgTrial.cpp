@@ -221,6 +221,7 @@ BOOL CDlgTrial::OnInitDialog()
 	CDlgBaseDialog::OnInitDialog();
 	m_ctrlClubs.SetExtendedStyle(m_ctrlClubs.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
+	m_ctrlClubs.SuppressTooltipFixing(true);
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 	int i;
@@ -235,6 +236,7 @@ BOOL CDlgTrial::OnInitDialog()
 		m_ctrlClubs.InsertColumn(i, &col);
 		str.ReleaseBuffer();
 	}
+	m_ctrlClubs.SuppressTooltipFixing(false);
 	m_ctrlEdit.EnableWindow(FALSE);
 	m_ctrlClubNotes.EnableWindow(FALSE);
 	m_ctrlDelete.EnableWindow(FALSE);
