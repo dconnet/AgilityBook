@@ -4,7 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2008-11-20 DRC Configuration version 24.
+2008-11-25 DRC Configuration version 24.
+               Updated AAC title comments.
                Updated USDAA DAM events for LAA points.
 2008-07-29 DRC Configuration version 23.
                Updated USDAA Grand Prix qualifying points.
@@ -157,15 +158,21 @@ Revision History:
     <Action OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-      <Titles LongName="Starters Games Dog of Canada" Name="SGDC">1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
+      <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges in each game
+[Before Jan 1, 2009] 1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
       <Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-      <Titles LongName="Advanced Games Dog of Canada" Name="AGDC">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under 2 different judges</Titles>
+      <Titles LongName="Advanced Games Dog of Canada" Name="AGDC">3 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under 2 different judges
+[Before Jan 1, 2009] 2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under 2 different judges</Titles>
       <Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
       <Titles LongName="Agility Trial Champion of Canada" Name="ATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
-      <Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">3 qualifying scores under at least 2 different judges</Titles>
-      <Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">3 qualifying scores under at least 2 different judges</Titles>
-      <Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">3 qualifying scores under at least 2 different judges</Titles>
-      <Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">3 qualifying scores under at least 2 different judges</Titles>
+      <Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">4 qualifying scores under at least 2 different judges
+[Before Jan 1, 2009] 3 qualifying scores under at least 2 different judges</Titles>
+      <Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">4 qualifying scores under at least 2 different judges
+[Before Jan 1, 2009] 3 qualifying scores under at least 2 different judges</Titles>
+      <Titles LongName="Masters Jumpers Dog of Canada" Name="MJDC">4 qualifying scores under at least 2 different judges
+[Before Jan 1, 2009] 3 qualifying scores under at least 2 different judges</Titles>
+      <Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">4 qualifying scores under at least 2 different judges
+[Before Jan 1, 2009] 3 qualifying scores under at least 2 different judges</Titles>
       <Titles LongName="Masters Steeplechase Dog of Canada" Name="MSCDC">10 qualifying scores under at least 4 different judges</Titles>
       <Titles Name="Bronze Award of Merit">ATChC, VATChC, or SATChC plus 10 Masters Standard, 25 games</Titles>
       <Titles Name="Silver Award of Merit">25 Masters Standard, 50 games</Titles>
