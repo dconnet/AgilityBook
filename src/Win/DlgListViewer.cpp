@@ -194,6 +194,7 @@ public:
 			m_ColData->Release();
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -278,6 +279,7 @@ public:
 			m_ColData->Release();
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -411,6 +413,7 @@ public:
 			m_ColData->Release();
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -738,6 +741,7 @@ public:
 			m_ColData->Release();
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -828,6 +832,7 @@ public:
 			m_ColData->Release();
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;
@@ -982,6 +987,7 @@ public:
 			m_ColData->Release();
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const		{return -1;}
 	virtual int Compare(
 			CDlgListViewerData const* pRow2,
 			int inCol) const;

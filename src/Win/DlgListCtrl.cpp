@@ -197,6 +197,7 @@ public:
 	{
 	}
 	virtual tstring OnNeedText(int iCol) const	{return m_Fault;}
+	virtual int OnNeedIcon() const				{return -1;}
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -276,6 +277,7 @@ public:
 	{
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const				{return -1;}
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:
@@ -342,6 +344,7 @@ public:
 	{
 	}
 	virtual tstring OnNeedText(int iCol) const;
+	virtual int OnNeedIcon() const				{return -1;}
 	virtual bool OnEdit();
 	virtual void Apply();
 protected:

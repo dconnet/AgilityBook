@@ -283,6 +283,8 @@ public:
 protected:
 	bool Init();
 	int HitTestEx(CPoint& point, int& col);
+	BOOL DoGetDispInfo(LV_DISPINFO* pDispInfo, LRESULT* pResult);
+	BOOL DoDeleteItem(NMLISTVIEW* pDispInfo, LRESULT* pResult);
 
 	CListCtrl* m_List;
 	CHeaderCtrl2 m_SortHeader;
@@ -291,6 +293,7 @@ protected:
 
 	bool m_editControl;
 	std::vector<tstring> m_Items;
+	std::vector<CListData*> m_OwnerData;
 };
 
 /////////////////////////////////////////////////////////////////////////////

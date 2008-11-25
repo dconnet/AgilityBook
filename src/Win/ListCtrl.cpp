@@ -52,6 +52,7 @@
 #include "AgilityBookOptions.h"
 #include "ClipBoard.h"
 #include "ListData.h"
+#include <algorithm>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -616,6 +617,62 @@ int CListCtrlEx::HitTestEx(CPoint& point, int& col)
 }
 
 
+BOOL CListCtrlEx::DoGetDispInfo(LV_DISPINFO* pDispInfo, LRESULT* pResult)
+{
+	BOOL bHandled = FALSE;
+	CListDataDispInfo* pData = NULL;
+	if ((m_List->GetStyle() & LVS_OWNERDATA))
+	{
+		pData = dynamic_cast<CListDataDispInfo*>(m_OwnerData[pDispInfo->item.iItem]);
+	}
+	else
+	{
+		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
+		pData = dynamic_cast<CListDataDispInfo*>(pRawData);
+	}
+	if (pData)
+	{
+		bHandled = TRUE;
+		if (pDispInfo->item.mask & LVIF_TEXT)
+		{
+			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
+			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
+			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
+		}
+		if (pDispInfo->item.mask & LVIF_IMAGE)
+		{
+			pDispInfo->item.iImage = pData->OnNeedIcon();
+		}
+		*pResult = 0;
+	}
+	return bHandled;
+}
+
+
+BOOL CListCtrlEx::DoDeleteItem(NMLISTVIEW* pNMListView, LRESULT* pResult)
+{
+	CListData* pData = NULL;
+	if (pNMListView)
+	{
+		if ((m_List->GetStyle() & LVS_OWNERDATA))
+		{
+			pData = m_OwnerData[pNMListView->iItem];
+			m_OwnerData.erase(m_OwnerData.begin() + pNMListView->iItem);
+		}
+		else
+		{
+			pData = reinterpret_cast<CListData*>(pNMListView->lParam);
+		}
+		pNMListView->lParam = 0;
+	}
+	if (m_bAutoDelete)
+	{
+		delete pData;
+	}
+	return FALSE; // Allow parent to handle also
+}
+
+
 void CListCtrlEx::FixTooltips()
 {
 	if (!IsSafe())
@@ -783,6 +840,7 @@ BOOL CListCtrlEx::GetCheck(int nItem) const
 
 DWORD_PTR CListCtrlEx::GetItemData(int nItem) const
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	return IsSafe() ? m_List->GetItemData(nItem) : 0;
 }
 
@@ -842,6 +900,7 @@ BOOL CListCtrlEx::SetCheck(
 
 BOOL CListCtrlEx::SetItem(const LVITEM* pItem)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	return IsSafe() ? m_List->SetItem(pItem) : FALSE;
 }
 
@@ -856,6 +915,7 @@ BOOL CListCtrlEx::SetItem(
 		UINT nStateMask,
 		LPARAM lParam)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	return IsSafe() ? m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam) : FALSE;
 }
 
@@ -872,6 +932,7 @@ BOOL CListCtrlEx::SetItem(
 		LPARAM lParam,
 		int nIndent)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	return IsSafe() ? m_List->SetItem(nItem, nSubItem, nMask, lpszItem, nImage, nState, nStateMask, lParam, nIndent) : FALSE;
 }
 #endif
@@ -881,6 +942,7 @@ BOOL CListCtrlEx::SetItemData(
 		int nItem,
 		DWORD_PTR dwData)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	return IsSafe() ? m_List->SetItemData(nItem, dwData) : FALSE;
 }
 
@@ -913,7 +975,22 @@ BOOL CListCtrlEx::SetItemText(
 
 BOOL CListCtrlEx::DeleteAllItems()
 {
-	return IsSafe() ? m_List->DeleteAllItems() : FALSE;
+	if ((m_List->GetStyle() & LVS_OWNERDATA))
+	{
+		if (m_bAutoDelete)
+		{
+			for (std::vector<CListData*>::iterator i = m_OwnerData.begin();
+				i != m_OwnerData.end();
+				++i)
+			{
+				delete *i;
+			}
+		}
+		m_OwnerData.clear();
+		return true;
+	}
+	else
+		return IsSafe() ? m_List->DeleteAllItems() : FALSE;
 }
 
 
@@ -925,6 +1002,16 @@ BOOL CListCtrlEx::DeleteItem(int nItem)
 
 int CListCtrlEx::InsertItem(const LVITEM* pItem)
 {
+	if ((m_List->GetStyle() & LVS_OWNERDATA))
+	{
+		ASSERT(pItem->mask & LVIF_PARAM);
+		ASSERT(!(pItem->mask & LVIF_TEXT) || ((pItem->mask & LVIF_TEXT) && (pItem->pszText == 0 || pItem->pszText == LPSTR_TEXTCALLBACK)));
+		ASSERT(!(pItem->mask & LVIF_IMAGE) || ((pItem->mask & LVIF_IMAGE) && (pItem->iImage == 0 || pItem->iImage == I_IMAGECALLBACK)));
+		CListData* pData = reinterpret_cast<CListData*>(pItem->lParam);
+		m_OwnerData.push_back(pData); // TODO: Insert at pItem->iItem
+		m_List->SetItemCount(m_OwnerData.size());
+		return static_cast<int>(m_OwnerData.size()) - 1;
+	}
 	return IsSafe() ? m_List->InsertItem(pItem) : -1;
 }
 
@@ -933,6 +1020,7 @@ int CListCtrlEx::InsertItem(
 		int nItem,
 		LPCTSTR lpszItem)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	return IsSafe() ? m_List->InsertItem(nItem, lpszItem) : -1;
 }
 
@@ -942,6 +1030,7 @@ int CListCtrlEx::InsertItem(
 		LPCTSTR lpszItem,
 		int nImage)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	return IsSafe() ? m_List->InsertItem(nItem, lpszItem, nImage) : -1;
 }
 
@@ -955,15 +1044,41 @@ int CListCtrlEx::InsertItem(
 		int nImage,
 		LPARAM lParam)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
+	// TODO: Add support
 	return IsSafe() ? m_List->InsertItem(nMask, nItem, lpszItem, nState, nStateMask, nImage, lParam) : -1;
 }
+
+
+class SortOwnerData
+{
+public:
+	SortOwnerData(PFNLVCOMPARE pfnCompare, DWORD_PTR dwData)
+		: m_Compare(pfnCompare)
+		, m_Data(dwData)
+	{
+	}
+	bool operator()(CListData* one, CListData* two)
+	{
+		return 0 > m_Compare(reinterpret_cast<LPARAM>(one), reinterpret_cast<LPARAM>(two), m_Data);
+	}
+private:
+	PFNLVCOMPARE m_Compare;
+	DWORD_PTR m_Data;
+};
 
 
 BOOL CListCtrlEx::SortItems(
 		PFNLVCOMPARE pfnCompare,
 		DWORD_PTR dwData)
 {
-	return IsSafe() ? m_List->SortItems(pfnCompare, dwData) : FALSE;
+	if ((m_List->GetStyle() & LVS_OWNERDATA))
+	{
+		std::stable_sort(m_OwnerData.begin(), m_OwnerData.end(), SortOwnerData(pfnCompare, dwData));
+		return FALSE;
+	}
+	else
+		return IsSafe() ? m_List->SortItems(pfnCompare, dwData) : FALSE;
 }
 
 
@@ -972,13 +1087,19 @@ CListData* CListCtrlEx::GetData(int index) const
 	if (!IsSafe())
 		return NULL;
 	if (0 <= index && index < m_List->GetItemCount() && m_bAutoDelete)
-		return reinterpret_cast<CListData*>(m_List->GetItemData(index));
+	{
+		if ((m_List->GetStyle() & LVS_OWNERDATA))
+			return m_OwnerData[index];
+		else
+			return reinterpret_cast<CListData*>(m_List->GetItemData(index));
+	}
 	return NULL;
 }
 
 
 void CListCtrlEx::SetData(int index, CListData* inData)
 {
+	ASSERT(!(m_List->GetStyle() & LVS_OWNERDATA));
 	if (!IsSafe())
 		return;
 	if (0 <= index && index < m_List->GetItemCount() && m_bAutoDelete)
@@ -1232,40 +1353,15 @@ void CListCtrl2::OnDestroy()
 
 BOOL CListCtrl2::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	BOOL bHandled = FALSE;
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-	CListDataDispInfo* pData = dynamic_cast<CListDataDispInfo*>(pRawData);
-	if (pData)
-	{
-		bHandled = TRUE;
-		if (pDispInfo->item.mask & LVIF_TEXT)
-		{
-			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
-			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
-			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-		}
-		if (pDispInfo->item.mask & LVIF_IMAGE)
-		{
-			pDispInfo->item.iImage = pData->OnNeedIcon();
-		}
-		*pResult = 0;
-	}
-	return bHandled;
+	return DoGetDispInfo(pDispInfo, pResult);
 }
 
 
 BOOL CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	if (pNMListView && m_bAutoDelete)
-	{
-		CListData* pData = reinterpret_cast<CListData*>(pNMListView->lParam);
-		delete pData;
-		pNMListView->lParam = 0;
-	}
-	*pResult = 0;
-	return FALSE; // Allow parent to handle also
+	NMLISTVIEW* pNMListView = (NMLISTVIEW*)pNMHDR;
+	return DoDeleteItem(pNMListView, pResult);
 }
 
 
@@ -1364,7 +1460,7 @@ CListView2::~CListView2()
 
 void CListView2::OnDestroy()
 {
-	GetListCtrl().DeleteAllItems();
+	CListCtrlEx::DeleteAllItems();
 	CListView::OnDestroy();
 }
 
@@ -1378,39 +1474,15 @@ void CListView2::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
 BOOL CListView2::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	BOOL bHandled = FALSE;
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
-	CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-	CListDataDispInfo* pData = dynamic_cast<CListDataDispInfo*>(pRawData);
-	if (pData)
-	{
-		bHandled = TRUE;
-		if (pDispInfo->item.mask & LVIF_TEXT)
-		{
-			tstring str = pData->OnNeedText(pDispInfo->item.iSubItem);
-			::lstrcpyn(pDispInfo->item.pszText, str.c_str(), pDispInfo->item.cchTextMax);
-			pDispInfo->item.pszText[pDispInfo->item.cchTextMax-1] = '\0';
-		}
-		if (pDispInfo->item.mask & LVIF_IMAGE)
-		{
-			pDispInfo->item.iImage = pData->OnNeedIcon();
-		}
-		*pResult = 0;
-	}
-	return bHandled;
+	return DoGetDispInfo(pDispInfo, pResult);
 }
 
 
 BOOL CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	if (pNMListView && m_bAutoDelete)
-	{
-		CListData* pData = reinterpret_cast<CListData*>(pNMListView->lParam);
-		delete pData;
-		pNMListView->lParam = 0;
-	}
-	return FALSE; // Allow parent to handle also
+	NMLISTVIEW* pNMListView = (NMLISTVIEW*)pNMHDR;
+	return DoDeleteItem(pNMListView, pResult);
 }
 
 
@@ -1425,7 +1497,7 @@ void CListView2::OnLButtonDown(UINT nFlags, CPoint point)
 		if ((index = HitTestEx(point, colnum)) != -1)
 		{
 			UINT flag = LVIS_FOCUSED;
-			if ((GetListCtrl().GetItemState(index, flag) & flag) == flag && colnum > 0)
+			if ((CListCtrlEx::GetItemState(index, flag) & flag) == flag && colnum > 0)
 			{
 				bDefault = false;
 				EditSubItem(index, colnum);
@@ -1514,7 +1586,7 @@ void CListView2::OnBeginPrinting(
 	pData->r.right -= margins.right;
 	pData->r.bottom -= margins.bottom;
 
-	int nMaxItem = GetListCtrl().GetItemCount();
+	int nMaxItem = CListCtrlEx::GetItemCount();
 	for (int i = -1; i < nMaxItem; ++i)
 	{
 		CStringArray line;
@@ -1540,10 +1612,10 @@ void CListView2::OnBeginPrinting(
 	pData->nLinesPerPage = abs(pData->r.Height()) / pData->nHeight;
 	if (1 > pData->nLinesPerPage)
 		pData->nLinesPerPage = 1;
-	pData->nPages = (GetListCtrl().GetItemCount() + 1) / pData->nLinesPerPage + 1;
+	pData->nPages = (CListCtrlEx::GetItemCount() + 1) / pData->nLinesPerPage + 1;
 	//TRACE(_T("Lines per page: %d\nLines: %d\nPages: %d\n"),
 	//	pData->nLinesPerPage,
-	//	GetListCtrl().GetItemCount(),
+	//	CListCtrlEx::GetItemCount(),
 	//	pData->nPages);
 	pInfo->SetMinPage(1);
 	pInfo->SetMaxPage(pData->nPages);
@@ -1574,7 +1646,7 @@ void CListView2::OnPrint(
 	CListPrintData* pData = reinterpret_cast<CListPrintData*>(pInfo->m_lpUserData);
 //	pDC->Rectangle(pData->r);
 
-	int nMaxItem = GetListCtrl().GetItemCount();
+	int nMaxItem = CListCtrlEx::GetItemCount();
 	// ListCtrl starts with item '-1'. This gets the header information.
 	int nStartItem = pData->nLinesPerPage * (pInfo->m_nCurPage - 1) - 1;
 	for (int nItem = nStartItem; nItem < nMaxItem && nItem - nStartItem < pData->nLinesPerPage; ++nItem)
@@ -1596,7 +1668,7 @@ void CListView2::OnPrint(
 void CListView2::OnUpdateEditCopy(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetSelectedCount())
+	if (0 < CListCtrlEx::GetSelectedCount())
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1617,7 +1689,7 @@ void CListView2::OnEditCopy()
 
 		// Take care of the header, but only if more than one line is selected.
 		if (1 < indices.size()
-		|| indices.size() == static_cast<size_t>(GetListCtrl().GetItemCount()))
+		|| indices.size() == static_cast<size_t>(CListCtrlEx::GetItemCount()))
 		{
 			CStringArray line;
 			GetPrintLine(-1, line);
@@ -1650,7 +1722,7 @@ void CListView2::OnEditCopy()
 void CListView2::OnUpdateEditSelectAll(CCmdUI* pCmdUI)
 {
 	BOOL bEnable = FALSE;
-	if (0 < GetListCtrl().GetItemCount() && (LVS_SINGLESEL != (GetStyle() & LVS_SINGLESEL)))
+	if (0 < CListCtrlEx::GetItemCount() && (LVS_SINGLESEL != (GetStyle() & LVS_SINGLESEL)))
 		bEnable = TRUE;
 	pCmdUI->Enable(bEnable);
 }
@@ -1658,7 +1730,7 @@ void CListView2::OnUpdateEditSelectAll(CCmdUI* pCmdUI)
 
 void CListView2::OnEditSelectAll()
 {
-	int nIndices = GetListCtrl().GetItemCount();
+	int nIndices = CListCtrlEx::GetItemCount();
 	if (0 < nIndices)
 	{
 		std::vector<int> indices;
