@@ -339,10 +339,10 @@ BOOL CDlgDogTitles::OnInitDialog()
 	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlTitles.SetImageList(&m_ImageList, LVSIL_SMALL);
 
+	m_ctrlTitles.SuppressTooltipFixing(true);
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	int i;
-	for (i = 0; i < nColTitleInfo; ++i)
+	for (int i = 0; i < nColTitleInfo; ++i)
 	{
 		col.fmt = colTitleInfo[i].fmt;
 		col.cx = colTitleInfo[i].cx;
@@ -350,6 +350,7 @@ BOOL CDlgDogTitles::OnInitDialog()
 		col.iSubItem = i;
 		m_ctrlTitles.InsertColumn(i, &col);
 	}
+	m_ctrlTitles.SuppressTooltipFixing(false);
 	SetColumnTitleHeaders();
 
 	m_ctrlHidden.SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);

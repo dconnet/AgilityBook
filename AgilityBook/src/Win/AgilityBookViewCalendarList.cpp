@@ -872,6 +872,7 @@ CAgilityBookViewCalendarData* CAgilityBookViewCalendarList::GetItemCalData(int i
 
 void CAgilityBookViewCalendarList::SetupColumns()
 {
+	SuppressTooltipFixing(true);
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
@@ -890,6 +891,7 @@ void CAgilityBookViewCalendarList::SetupColumns()
 		}
 		m_SortColumn.Initialize();
 	}
+	SuppressTooltipFixing(false);
 }
 
 

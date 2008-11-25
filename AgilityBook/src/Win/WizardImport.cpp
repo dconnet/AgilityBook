@@ -351,6 +351,7 @@ void CWizardImport::UpdatePreview()
 		}
 		break;
 	}
+	m_ctrlPreview.SuppressTooltipFixing(true);
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_TEXT | LVCF_SUBITEM;
 	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
@@ -361,6 +362,7 @@ void CWizardImport::UpdatePreview()
 		col.iSubItem = iCol;
 		m_ctrlPreview.InsertColumn(iCol, &col);
 	}
+	m_ctrlPreview.SuppressTooltipFixing(false);
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())

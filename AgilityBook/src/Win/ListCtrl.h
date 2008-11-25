@@ -57,6 +57,9 @@ public:
 
 	/// This function must be called whenever columns are added/removed/sized
 	void FixTooltips();
+	/// Suppress fixing tooltips when we know that we'll be adding/resizing alot
+	/// of columns. When suppression is eneded, it will automatically fix tips.
+	void SuppressTooltipFixing(bool bSuppress);
 
 	typedef enum
 	{
@@ -82,13 +85,15 @@ protected:
 	int m_sortAscending;
 	int m_sortDescending;
 	CToolTipCtrl m_ToolTip;
-	int fBufferSize;
-	TCHAR* fpBuffer;
+	bool m_SuppressFixing;
+	int m_BufferSize;
+	TCHAR* m_pBuffer;
 
 protected:
 	//{{AFX_MSG(CHeaderCtrl2)
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg BOOL OnHdnDividerDblClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg BOOL OnHdnItemChanged(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -108,6 +113,7 @@ public:
 
 	// Header functions
 	void FixTooltips();
+	void SuppressTooltipFixing(bool bSuppress);
 	int HeaderItemCount();
 	CHeaderCtrl2::SortOrder HeaderSortOrder(int iCol) const;
 	void HeaderSort(
@@ -242,12 +248,12 @@ public:
 	 * Returns the first selected item.
 	 * @param bRestricted In multi-select lists, only allow a single selection.
 	 */
-	int GetSelection(bool bRestricted = false);
+	int GetSelection(bool bRestricted = false) const;
 
 	/**
 	 * Returns the number of selected items.
 	 */
-	size_t GetSelection(std::vector<int>& indices);
+	size_t GetSelection(std::vector<int>& indices) const;
 	void SetSelection(
 			int index,
 			bool bEnsureVisible = false);

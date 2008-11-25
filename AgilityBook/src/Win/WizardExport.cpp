@@ -400,8 +400,10 @@ void CWizardExport::UpdatePreview()
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
+		m_ctrlPreview.SuppressTooltipFixing(true);
 		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
 			m_ctrlPreview.InsertColumn(iCol, _T(""));
+		m_ctrlPreview.SuppressTooltipFixing(false);
 		m_ctrlPreview.InsertItem(iLine, cols[0]);
 		for (iCol = 1; iCol < cols.GetSize(); ++iCol)
 			m_ctrlPreview.SetItemText(iLine, iCol, cols[iCol]);

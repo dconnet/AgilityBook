@@ -1404,6 +1404,7 @@ CAgilityBookViewRunsData* CAgilityBookViewRuns::GetItemRunData(int index) const
 
 void CAgilityBookViewRuns::SetupColumns()
 {
+	SuppressTooltipFixing(true);
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
@@ -1426,6 +1427,7 @@ void CAgilityBookViewRuns::SetupColumns()
 		}
 		m_SortColumn.Initialize();
 	}
+	SuppressTooltipFixing(false);
 }
 
 

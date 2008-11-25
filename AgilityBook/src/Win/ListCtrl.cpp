@@ -355,25 +355,31 @@ void CInPlaceCombo::OnCloseup()
 BEGIN_MESSAGE_MAP(CHeaderCtrl2, CHeaderCtrl)
 	//{{AFX_MSG_MAP(CHeaderCtrl2)
 	ON_WM_SIZE()
+	ON_NOTIFY_REFLECT_EX(HDN_DIVIDERDBLCLICK, OnHdnDividerDblClick)
 	ON_NOTIFY_REFLECT_EX(HDN_ITEMCHANGED, OnHdnItemChanged)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 CHeaderCtrl2::CHeaderCtrl2()
-	: fBufferSize(300)
-	, fpBuffer(NULL)
+	: m_ImageList()
+	, m_sortAscending(-1)
+	, m_sortDescending(-1)
+	, m_ToolTip()
+	, m_SuppressFixing(false)
+	, m_BufferSize(300)
+	, m_pBuffer(NULL)
 {
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
 	m_sortAscending = m_ImageList.Add(theApp.LoadIcon(IDI_HEADER_UP));
 	m_sortDescending = m_ImageList.Add(theApp.LoadIcon(IDI_HEADER_DOWN));
-	fpBuffer = new TCHAR[fBufferSize];
+	m_pBuffer = new TCHAR[m_BufferSize];
 }
 
 
 CHeaderCtrl2::~CHeaderCtrl2()
 {
-	delete [] fpBuffer;
+	delete [] m_pBuffer;
 }
 
 
@@ -411,6 +417,16 @@ void CHeaderCtrl2::OnSize(UINT nType, int cx, int cy)
 }
 
 
+BOOL CHeaderCtrl2::OnHdnDividerDblClick(
+		NMHDR* /*pNMHDR*/,
+		LRESULT* /*pResult*/)
+{
+	Default();
+	Invalidate();
+	return FALSE; // Allow parent to handle also
+}
+
+
 BOOL CHeaderCtrl2::OnHdnItemChanged(
 		NMHDR* pNMHDR,
 		LRESULT* pResult)
@@ -428,6 +444,9 @@ BOOL CHeaderCtrl2::OnHdnItemChanged(
 
 void CHeaderCtrl2::FixTooltips()
 {
+	if (m_SuppressFixing)
+		return;
+
 	if (!::IsWindow(m_ToolTip.GetSafeHwnd()) || !::IsWindow(GetSafeHwnd()))
 		return;
 
@@ -447,22 +466,22 @@ void CHeaderCtrl2::FixTooltips()
 	{
 		HDITEM item;
 		item.mask = HDI_TEXT | HDI_FORMAT;
-		item.pszText = fpBuffer;
-		item.cchTextMax = fBufferSize;
+		item.pszText = m_pBuffer;
+		item.cchTextMax = m_BufferSize;
 		bool bDelTip = true;
 		if (GetItem(iCol, &item))
 		{
 			// Get all the text a header may have.
-			while (lstrlen(fpBuffer) == fBufferSize - 1)
+			while (lstrlen(m_pBuffer) == m_BufferSize - 1)
 			{
-				delete [] fpBuffer;
-				fBufferSize *= 2;
-				fpBuffer = new TCHAR[fBufferSize];
-				item.pszText = fpBuffer;
-				item.cchTextMax = fBufferSize;
+				delete [] m_pBuffer;
+				m_BufferSize *= 2;
+				m_pBuffer = new TCHAR[m_BufferSize];
+				item.pszText = m_pBuffer;
+				item.cchTextMax = m_BufferSize;
 				GetItem(iCol, &item);
 			}
-			if (fpBuffer && *fpBuffer)
+			if (m_pBuffer && *m_pBuffer)
 			{
 				CRect rColumn;
 				GetItemRect(iCol, rColumn);
@@ -474,7 +493,7 @@ void CHeaderCtrl2::FixTooltips()
 				if (item.fmt & HDF_IMAGE)
 					rAdjusted.right -= 16; // Subtract icon.
 				CRect rText(rAdjusted);
-				CString str(fpBuffer);
+				CString str(m_pBuffer);
 				// It doesn't matter if the column is left/center/right adjusted.
 				// We only care if the text exceeds the allowed area.
 				dc.DrawText(str, rText, DT_CALCRECT | DT_LEFT | DT_SINGLELINE | DT_NOPREFIX);
@@ -492,6 +511,12 @@ void CHeaderCtrl2::FixTooltips()
 			m_ToolTip.DelTool(this, iCol+1);
 	}
 	dc.SelectObject(pOldFont);
+}
+
+
+void CHeaderCtrl2::SuppressTooltipFixing(bool bSuppress)
+{
+	m_SuppressFixing = bSuppress;
 }
 
 
@@ -628,7 +653,14 @@ BOOL CListCtrlEx::DoGetDispInfo(LV_DISPINFO* pDispInfo, LRESULT* pResult)
 	else
 	{
 		CListData* pRawData = reinterpret_cast<CListData*>(pDispInfo->item.lParam);
-		pData = dynamic_cast<CListDataDispInfo*>(pRawData);
+		try
+		{
+			pData = dynamic_cast<CListDataDispInfo*>(pRawData);
+		}
+		catch (...)
+		{
+			// It may not be a CListData at all.
+		}
 	}
 	if (pData)
 	{
@@ -658,12 +690,13 @@ BOOL CListCtrlEx::DoDeleteItem(NMLISTVIEW* pNMListView, LRESULT* pResult)
 		{
 			pData = m_OwnerData[pNMListView->iItem];
 			m_OwnerData.erase(m_OwnerData.begin() + pNMListView->iItem);
+			pNMListView->lParam = 0;
 		}
-		else
+		else if (m_bAutoDelete)
 		{
 			pData = reinterpret_cast<CListData*>(pNMListView->lParam);
+			pNMListView->lParam = 0;
 		}
-		pNMListView->lParam = 0;
 	}
 	if (m_bAutoDelete)
 	{
@@ -678,6 +711,14 @@ void CListCtrlEx::FixTooltips()
 	if (!IsSafe())
 		return;
 	if (!Init())
+		m_SortHeader.FixTooltips();
+}
+
+
+void CListCtrlEx::SuppressTooltipFixing(bool bSuppress)
+{
+	m_SortHeader.SuppressTooltipFixing(bSuppress);
+	if (!Init() && !bSuppress)
 		m_SortHeader.FixTooltips();
 }
 
@@ -1112,7 +1153,7 @@ void CListCtrlEx::SetData(int index, CListData* inData)
 }
 
 
-int CListCtrlEx::GetSelection(bool bRestricted)
+int CListCtrlEx::GetSelection(bool bRestricted) const
 {
 	if (!IsSafe())
 		return -1;
@@ -1127,7 +1168,7 @@ int CListCtrlEx::GetSelection(bool bRestricted)
 }
 
 
-size_t CListCtrlEx::GetSelection(std::vector<int>& indices)
+size_t CListCtrlEx::GetSelection(std::vector<int>& indices) const
 {
 	indices.clear();
 	if (!IsSafe())

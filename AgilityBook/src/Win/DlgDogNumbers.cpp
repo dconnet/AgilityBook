@@ -280,11 +280,10 @@ BOOL CDlgDogNumbers::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlRegNums.SetExtendedStyle(m_ctrlRegNums.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
+	m_ctrlRegNums.SuppressTooltipFixing(true);
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	int i;
-	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	for (i = 0; i < nColRegNumInfo; ++i)
+	for (int i = 0; i < nColRegNumInfo; ++i)
 	{
 		col.fmt = colRegNumInfo[i].fmt;
 		col.cx = colRegNumInfo[i].cx;
@@ -292,6 +291,7 @@ BOOL CDlgDogNumbers::OnInitDialog()
 		col.iSubItem = i;
 		m_ctrlRegNums.InsertColumn(i, &col);
 	}
+	m_ctrlRegNums.SuppressTooltipFixing(false);
 	SetColumnRegNumHeaders();
 
 	ListRegNums();

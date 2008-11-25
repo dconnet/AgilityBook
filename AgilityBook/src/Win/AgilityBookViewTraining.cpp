@@ -499,6 +499,7 @@ CAgilityBookViewTrainingData* CAgilityBookViewTraining::GetItemTrainingData(int 
 
 void CAgilityBookViewTraining::SetupColumns()
 {
+	SuppressTooltipFixing(true);
 	int nColumnCount = HeaderItemCount();
 	for (int i = 0; i < nColumnCount; ++i)
 		DeleteColumn(0);
@@ -517,6 +518,7 @@ void CAgilityBookViewTraining::SetupColumns()
 		}
 		m_SortColumn.Initialize();
 	}
+	SuppressTooltipFixing(false);
 }
 
 

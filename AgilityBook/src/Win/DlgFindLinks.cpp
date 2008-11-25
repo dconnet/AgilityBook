@@ -280,6 +280,7 @@ BOOL CDlgFindLinks::OnInitDialog()
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
 
+	m_ctrlLinks.SuppressTooltipFixing(true);
 	LV_COLUMN col;
 	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 	int i;
@@ -291,6 +292,7 @@ BOOL CDlgFindLinks::OnInitDialog()
 		col.iSubItem = i;
 		m_ctrlLinks.InsertColumn(i, &col);
 	}
+	m_ctrlLinks.SuppressTooltipFixing(false);
 
 	i = 0;
 	for (i = 0; i < static_cast<int>(m_Data.size()); ++i)
