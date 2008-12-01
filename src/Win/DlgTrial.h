@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2004-12-19 DRC Added Location/Club note information.
@@ -87,7 +88,7 @@ private:
 			bool bLocation,
 			bool bClub);
 	void ListLocations();
-	void ListClubs();
+	void ListClubs(ARBDogClubPtr* inClub = NULL);
 
 // Implementation
 protected:
