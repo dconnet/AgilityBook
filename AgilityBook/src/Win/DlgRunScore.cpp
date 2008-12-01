@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
  * @li 2007-12-03 DRC Refresh judge list after invoking 'notes' button.
  * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
@@ -1290,7 +1291,10 @@ void CDlgRunScore::OnJudgeNotes()
 	m_Judge.TrimLeft();
 	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eJudgeInfo, (LPCTSTR)m_Judge, this);
 	if (IDOK == dlg.DoModal())
+	{
+		m_Judge = dlg.CurrentSelection();
 		FillJudges();
+	}
 }
 
 

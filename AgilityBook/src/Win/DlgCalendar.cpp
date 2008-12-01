@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -469,6 +470,7 @@ void CDlgCalendar::OnClubNotes()
 	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, (LPCTSTR)m_Club, this);
 	if (IDOK == dlg.DoModal())
 	{
+		m_Club = dlg.CurrentSelection();
 		ListClubs();
 	}
 }
@@ -499,6 +501,7 @@ void CDlgCalendar::OnLocationNotes()
 	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
 	if (IDOK == dlg.DoModal())
 	{
+		m_Location = dlg.CurrentSelection();
 		ListLocations();
 	}
 }

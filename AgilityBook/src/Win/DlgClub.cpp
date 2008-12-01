@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-01 DRC Only modify existing club, don't add a new one (caller does).
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
@@ -139,15 +140,12 @@ void CDlgClub::OnOK()
 		GotoDlgCtrl(&m_ctrlVenues);
 		return;
 	}
-	CString venue;
-	m_ctrlVenues.GetLBText(index, venue);
+	m_ctrlVenues.GetLBText(index, m_Venue);
 
 	if (m_pClub)
 	{
 		m_pClub->SetName((LPCTSTR)m_Club);
-		m_pClub->SetVenue((LPCTSTR)venue);
+		m_pClub->SetVenue((LPCTSTR)m_Venue);
 	}
-	else
-		m_Clubs.AddClub((LPCTSTR)m_Club, (LPCTSTR)venue);
 	CDlgBaseDialog::OnOK();
 }

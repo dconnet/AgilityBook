@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2007-12-03 DRC Refresh location list after invoking 'notes' button.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
@@ -70,6 +71,33 @@ static struct
 	{LVCFMT_LEFT, 50, IDS_COL_VENUE},
 };
 static int const nColInfo1 = sizeof(colInfo1) / sizeof(colInfo1[0]);
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CListTrialData : public CListDataDispInfo
+{
+public:
+	CListTrialData(ARBDogClubPtr club) : m_Club(club) {}
+	virtual tstring OnNeedText(int iCol) const;
+	ARBDogClubPtr GetClub() const	{return m_Club;}
+private:
+	ARBDogClubPtr	m_Club;
+};
+
+
+tstring CListTrialData::OnNeedText(int iCol) const
+{
+	switch (iCol)
+	{
+	default:
+		ASSERT(0);
+		return _T("");
+	case 0:
+		return m_Club->GetName();
+	case 1:
+		return m_Club->GetVenue();
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgTrial dialog
@@ -137,7 +165,7 @@ END_MESSAGE_MAP()
 ARBDogClubPtr CDlgTrial::GetClubData(int index) const
 {
 	CListData* pData = m_ctrlClubs.GetData(index);
-	return dynamic_cast<CListPtrData<ARBDogClubPtr>*>(pData)->GetData();
+	return dynamic_cast<CListTrialData*>(pData)->GetClub();
 }
 
 
@@ -197,17 +225,24 @@ void CDlgTrial::ListLocations()
 }
 
 
-void CDlgTrial::ListClubs()
+void CDlgTrial::ListClubs(ARBDogClubPtr* inClub)
 {
 	m_ctrlClubs.DeleteAllItems();
 	int i = 0;
 	for (ARBDogClubList::const_iterator iter = m_Clubs.begin(); iter != m_Clubs.end(); ++i, ++iter)
 	{
 		ARBDogClubPtr pClub = (*iter);
-		int nItem = m_ctrlClubs.InsertItem(i, pClub->GetName().c_str());
-		m_ctrlClubs.SetItemText(nItem, 1, pClub->GetVenue().c_str());
-		m_ctrlClubs.SetData(nItem,
-			new CListPtrData<ARBDogClubPtr>(pClub));
+		LV_ITEM item;
+		item.mask = LVIF_TEXT | LVIF_PARAM;
+		item.pszText = LPSTR_TEXTCALLBACK;
+		item.iItem = i;
+		item.iSubItem = 0;
+		item.lParam = reinterpret_cast<LPARAM>(
+			static_cast<CListData*>(
+				new CListTrialData(pClub)));
+		int idx = m_ctrlClubs.InsertItem(&item);
+		if (inClub && *(*inClub) == *pClub)
+			m_ctrlClubs.SetSelection(idx);
 	}
 	for (i = 0; i < nColInfo1 ; ++i)
 		m_ctrlClubs.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
@@ -399,6 +434,7 @@ void CDlgTrial::OnLocationNotes()
 	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
 	if (IDOK == dlg.DoModal())
 	{
+		m_Location = dlg.CurrentSelection();
 		ListLocations();
 		UpdateNotes(true, false);
 	}
@@ -415,7 +451,13 @@ void CDlgTrial::OnClubNotes()
 		CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
 		if (IDOK == dlg.DoModal())
 		{
-			UpdateNotes(false, true);
+			if (pClub->GetName() != (LPCTSTR)dlg.CurrentSelection())
+			{
+				pClub->SetName((LPCTSTR)dlg.CurrentSelection());
+				ListClubs(&pClub);
+			}
+			else
+				UpdateNotes(false, true);
 		}
 	}
 }
@@ -425,7 +467,11 @@ void CDlgTrial::OnClubNew()
 {
 	CDlgClub dlg(m_pDoc, m_Clubs, ARBDogClubPtr(), this);
 	if (IDOK == dlg.DoModal())
-		ListClubs();
+	{
+		ARBDogClubPtr club;
+		if (m_Clubs.AddClub((LPCTSTR)dlg.Club(), (LPCTSTR)dlg.Venue(), &club))
+			ListClubs(&club);
+	}
 }
 
 
@@ -437,7 +483,7 @@ void CDlgTrial::OnClubEdit()
 		ARBDogClubPtr pClub = GetClubData(index);
 		CDlgClub dlg(m_pDoc, m_Clubs, pClub, this);
 		if (IDOK == dlg.DoModal())
-			ListClubs();
+			ListClubs(&pClub);
 	}
 }
 

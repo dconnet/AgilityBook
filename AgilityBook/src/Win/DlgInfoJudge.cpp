@@ -36,6 +36,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2008-02-01 DRC Add ability to see what was last selected.
  * @li 2008-01-01 DRC Added visible flag.
  * @li 2007-12-03 DRC SelectString was still used in OnNew.
  *                    Fix a drawing problem in the drop list.
@@ -112,6 +113,7 @@ CDlgInfoJudge::CDlgInfoJudge(
 	, m_InfoOrig(m_pDoc->Book().GetInfo().GetInfo(m_Type))
 	, m_Info(m_pDoc->Book().GetInfo().GetInfo(m_Type).GetItemName())
 	, m_nAdded(0)
+	, m_CurSel()
 {
 	switch (m_Type)
 	{
@@ -443,6 +445,12 @@ void CDlgInfoJudge::OnOK()
 {
 	// Not bothering to call UpdateData because we aren't exchanging any
 	// data. We're using the controls directly.
+	int index = m_ctrlNames.GetCurSel();
+	if (0 <= index)
+	{
+		size_t idx = static_cast<size_t>(m_ctrlNames.GetItemData(index));
+		m_CurSel = m_Names[idx].m_Name.c_str();
+	}
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)
 	{

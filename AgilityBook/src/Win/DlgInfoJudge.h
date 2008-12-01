@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-01 DRC Add ability to see what was last selected.
  * @li 2008-01-01 DRC Added visible flag.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-07 DRC Created
@@ -54,6 +55,8 @@ public:
 			ARBInfo::eInfoType inType,
 			tstring const& inSelect,
 			CWnd* pParent = NULL);
+
+	CString CurrentSelection() const	{return m_CurSel;}
 
 private:
 // Dialog Data
@@ -89,6 +92,7 @@ private:
 	};
 	std::vector<NameInfo> m_Names;
 	size_t m_nAdded;
+	CString m_CurSel;
 
 // Overrides
 	//{{AFX_VIRTUAL(CDlgInfoJudge)

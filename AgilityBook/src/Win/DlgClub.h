@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-02-01 DRC Only modify existing club, don't add a new one (caller does).
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
@@ -49,6 +50,9 @@ public:
 			ARBDogClubPtr pClub,
 			CWnd* pParent = NULL);
 
+	CString Club() const	{return m_Club;}
+	CString Venue() const	{return m_Venue;}
+
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgClub)
@@ -60,6 +64,7 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogClubList& m_Clubs;
 	ARBDogClubPtr m_pClub;
+	CString	m_Venue;
 
 	//{{AFX_VIRTUAL(CDlgClub)
 protected:
