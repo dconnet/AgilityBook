@@ -1,4 +1,4 @@
-12/1/2008: v1.10.9.12 <in development>
+12/5/2008: v1.10.9.12 <in development>
 - Bumped Configuration v24:
   - Updated USDAA DAM events for LAA points.
 - New features / Enhancements:
@@ -6,6 +6,7 @@
     and named filters.
   - Add a 'Reset' button into the column customization dialog to reset defaults.
   - Make the Notes button on various dialogs act as a selection mechanism.
+  - Make the Secretary Email a combobox in Calendar and list existing entries.
 - Bug fixes:
   - Enable tallying runs that have only lifetime points.
 

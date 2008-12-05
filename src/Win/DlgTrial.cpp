@@ -356,6 +356,7 @@ void CDlgTrial::OnEndLabelEditClubs(
 	switch (pDispInfo->item.iSubItem)
 	{
 	case 0:
+		if (pDispInfo->item.pszText)
 		{
 			ARBDogClubPtr pClub = GetClubData(pDispInfo->item.iItem);
 			pClub->SetName(pDispInfo->item.pszText);
@@ -364,6 +365,7 @@ void CDlgTrial::OnEndLabelEditClubs(
 		}
 		break;
 	case 1:
+		if (pDispInfo->item.pszText)
 		{
 			ARBDogClubPtr pClub = GetClubData(pDispInfo->item.iItem);
 			pClub->SetVenue(pDispInfo->item.pszText);
