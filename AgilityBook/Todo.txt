@@ -1,8 +1,6 @@
-Last Updated: 3/16/2008
+Last Updated: 12/5/2008
 
 - Add 'YPS' into Reference Run list
-
-- Remember secretary info so you can easily select into a calendar entry
 
 - Make the trial properties dialog easier to add a club.
 

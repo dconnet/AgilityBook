@@ -1252,6 +1252,7 @@ void CListCtrlEx::SetEditList(std::vector<tstring> const& dropItems)
 {
 	if (!IsSafe())
 		return;
+	ASSERT(m_bAllowEdit);
 	m_editControl = false;
 	m_Items = dropItems;
 }
@@ -1335,7 +1336,7 @@ CWnd* CListCtrlEx::EditSubItem(int index, int nCol)
 	}
 	else
 	{
-		dwStyle |= CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL;
+		dwStyle |= CBS_DROPDOWNLIST | CBS_SORT | CBS_AUTOHSCROLL | WS_VSCROLL;
 		CComboBox* pCombo = new CInPlaceCombo(index, nCol, text);
 		rect.bottom += 300;
 		pCombo->Create(dwStyle, rect, m_List, IDC_IPEDIT);
@@ -1409,8 +1410,8 @@ BOOL CListCtrl2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 void CListCtrl2::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	bool bDefault = true;
-	if (m_bAllowEdit)
-	//if (GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
+	if (m_bAllowEdit
+	&& GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
 	{
 		int index;
 		int colnum;
@@ -1530,8 +1531,8 @@ BOOL CListView2::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 void CListView2::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	bool bDefault = true;
-	if (m_bAllowEdit)
-	//if (GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
+	if (m_bAllowEdit
+	&& GetWindowLong(m_hWnd, GWL_STYLE) & LVS_EDITLABELS)
 	{
 		int index;
 		int colnum;

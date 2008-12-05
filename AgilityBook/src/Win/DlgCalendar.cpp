@@ -64,9 +64,10 @@ CDlgCalendar::CDlgCalendar(
 		CAgilityBookDoc* pDoc,
 		CWnd* pParent)
 	: CDlgBaseDialog(CDlgCalendar::IDD, pParent)
-	, m_ctrlLocation(false)
+	, m_ctrlEMailSecAddr(false)
 	, m_ctrlVenue(false)
 	, m_ctrlClub(false)
+	, m_ctrlLocation(false)
 	, m_pCal(pCal)
 	, m_pDoc(pDoc)
 	, m_Span(0)
@@ -165,7 +166,7 @@ void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CAL_PREMIUM_URL, m_PremiumUrl);
 	DDX_Control(pDX, IDC_CAL_PREMIUM_URL, m_ctrlPremiumUrl);
 	DDX_Control(pDX, IDC_CAL_EMAIL_SEC, m_ctrlEMailSec);
-	DDX_Text(pDX, IDC_CAL_EMAIL_SEC_ADDR, m_EMailSecAddr);
+	DDX_CBString(pDX, IDC_CAL_EMAIL_SEC_ADDR, m_EMailSecAddr);
 	DDX_Control(pDX, IDC_CAL_EMAIL_SEC_ADDR, m_ctrlEMailSecAddr);
 	DDX_Control(pDX, IDC_CAL_VENUE, m_ctrlVenue);
 	DDX_CBString(pDX, IDC_CAL_VENUE, m_Venue);
@@ -293,6 +294,23 @@ BOOL CDlgCalendar::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 
+	std::set<tstring> addrs;
+	for (ARBCalendarList::const_iterator iCal = m_pDoc->Book().GetCalendar().begin();
+		iCal != m_pDoc->Book().GetCalendar().end();
+		++iCal)
+	{
+		addrs.insert((*iCal)->GetSecEmail());
+	}
+	for (std::set<tstring>::iterator i = addrs.begin(); i != addrs.end(); ++i)
+	{
+		if (!(*i).empty())
+		{
+			int idx = m_ctrlEMailSecAddr.AddString((*i).c_str());
+			if (*i == (LPCTSTR)m_EMailSecAddr)
+				m_ctrlEMailSecAddr.SetCurSel(idx);
+		}
+	}
+
 	ListLocations();
 
 	m_ctrlVenue.Initialize(m_pDoc->Book().GetConfig().GetVenues(), m_pCal->GetVenue());
@@ -419,9 +437,11 @@ void CDlgCalendar::OnPremiumEntry()
 
 void CDlgCalendar::OnEnChangeCalEmailSecAddr()
 {
-	CString s;
-	m_ctrlEMailSecAddr.GetWindowText(s);
-	if (s.IsEmpty())
+	int idx = m_ctrlEMailSecAddr.GetCurSel();
+	CString str;
+	if (CB_ERR != idx)
+		m_ctrlEMailSecAddr.GetLBText(idx, str);
+	if (str.IsEmpty())
 		m_ctrlEMailSec.EnableWindow(FALSE);
 	else
 		m_ctrlEMailSec.EnableWindow(TRUE);

@@ -76,8 +76,8 @@ private:
 	CString	m_PremiumUrl;
 	CEdit	m_ctrlPremiumUrl;
 	CButton	m_ctrlEMailSec;
+	CComboBox2	m_ctrlEMailSecAddr;
 	CString	m_EMailSecAddr;
-	CEdit	m_ctrlEMailSecAddr;
 	CVenueComboBox	m_ctrlVenue;
 	CString	m_Venue;
 	CComboBox2	m_ctrlClub;
