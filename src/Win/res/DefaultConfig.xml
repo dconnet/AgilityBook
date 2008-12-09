@@ -4,9 +4,10 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2008-11-25 DRC Configuration version 24.
+2008-12-09 DRC Configuration version 24.
                Updated AAC title comments.
                Updated USDAA DAM events for LAA points.
+               Updated UKC UGRACH for multiple titles.
 2008-07-29 DRC Configuration version 23.
                Updated USDAA Grand Prix qualifying points.
 2008-06-29 DRC Configuration version 22.
@@ -2828,7 +2829,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins
       <Titles LongName="United Agility II" Name="UAGII">3 Qs in either A or B.</Titles>
       <Titles LongName="United Agility Champion" Name="UACH">100 pts from B, 40 must be from AgI, 40 must be from AgII</Titles>
       <Titles LongName="United Agility Champion Excellent" Name="UACHX">5 Qs from AGIII under at least 3 different judges</Titles>
-      <Titles LongName="United Grand Agility Champion" Name="UGRACH">5 triple-Qs with a combined score of 588 or higher, 2 of the combined wins must be under at least 2 different judges.</Titles>
+      <Titles LongName="United Grand Agility Champion" Multiple="2" Name="UGRACH">5 triple-Qs with a combined score of 588 or higher, 2 of the combined wins must be under at least 2 different judges.</Titles>
       <Division Name="Standard">
         <Level Name="Agility I">
           <SubLevel Name="Agility I A"/>
