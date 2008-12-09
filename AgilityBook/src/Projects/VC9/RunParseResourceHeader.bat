@@ -31,7 +31,7 @@ goto done
 
 :run
 cd %1..\..
-BuildHelp.py %2 VC9%3
+python BuildHelp.py %2 VC9%3
 
 goto done
 

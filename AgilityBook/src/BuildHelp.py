@@ -77,7 +77,7 @@ def main():
 	RunCommand("\"" + parseHeader + "\" Win\\resource.h Win\\resource.hm Help\\AgilityBookFRA.txt Help\\AgilityBook.h Help\\contextid.h")
 
 	# Generate History.html
-	RunCommand("UpdateHistory.py -h")
+	RunCommand("python UpdateHistory.py -h")
 
 	# Now generate the chm file
 	RunCommand("\"" + hhc + "\" AgilityBook.hhp")
