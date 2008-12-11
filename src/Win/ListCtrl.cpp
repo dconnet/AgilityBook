@@ -1050,7 +1050,7 @@ int CListCtrlEx::InsertItem(const LVITEM* pItem)
 		ASSERT(!(pItem->mask & LVIF_IMAGE) || ((pItem->mask & LVIF_IMAGE) && (pItem->iImage == 0 || pItem->iImage == I_IMAGECALLBACK)));
 		CListData* pData = reinterpret_cast<CListData*>(pItem->lParam);
 		m_OwnerData.push_back(pData); // TODO: Insert at pItem->iItem
-		m_List->SetItemCount(m_OwnerData.size());
+		m_List->SetItemCount(static_cast<int>(m_OwnerData.size()));
 		return static_cast<int>(m_OwnerData.size()) - 1;
 	}
 	return IsSafe() ? m_List->InsertItem(pItem) : -1;
