@@ -1251,13 +1251,13 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 		tstring::size_type pos = value.find('.');
 		if (tstring::npos != pos)
 		{
-			major = static_cast<unsigned short>(_tstol(value.c_str()));
+			major = static_cast<unsigned short>(tstringUtil::atol(value));
 			value = value.substr(pos+1);
-			minor = static_cast<unsigned short>(_tstol(value.c_str()));
+			minor = static_cast<unsigned short>(tstringUtil::atol(value));
 		}
 		else
 		{
-			major = static_cast<unsigned short>(_tstol(value.c_str()));
+			major = static_cast<unsigned short>(tstringUtil::atol(value));
 		}
 		outValue = ARBVersion(major, minor);
 	}
@@ -1311,7 +1311,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = static_cast<short>(_tstol(value.c_str()));
+			outValue = static_cast<short>(tstringUtil::atol(value));
 		else
 			rc = eInvalidValue;
 	}
@@ -1328,7 +1328,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = _tstol(value.c_str());
+			outValue = tstringUtil::atol(value);
 		else
 			rc = eInvalidValue;
 	}
@@ -1345,7 +1345,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = _tcstod(value.c_str(), NULL);
+			outValue = tstringUtil::strtod(value);
 		else
 			rc = eInvalidValue;
 	}
@@ -1726,6 +1726,9 @@ bool ElementNode::LoadXMLFile(
 	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
 
+#ifndef _WIN32
+#define _tcscmp		strcmp
+#endif
 
 bool ElementNode::SaveXML(
 		std::ostream& outOutput,

@@ -824,14 +824,14 @@ void CAgilityBookOptions::GetColumnOrder(
 		int idx = data.Find(',');
 		while (0 <= idx)
 		{
-			int val = _tstol((LPCTSTR)data);
+			int val = tstringUtil::atol((LPCTSTR)data);
 			outValues.push_back(val);
 			data = data.Mid(idx+1);
 			idx = data.Find(',');
 		}
 		if (0 < data.GetLength())
 		{
-			int val = _tstol((LPCTSTR)data);
+			int val = tstringUtil::atol((LPCTSTR)data);
 			outValues.push_back(val);
 		}
 	}

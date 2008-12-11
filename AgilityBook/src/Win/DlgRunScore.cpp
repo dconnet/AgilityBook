@@ -476,7 +476,7 @@ bool CDlgRunScore::GetText(
 		return false;
 	CString str;
 	pEdit->GetWindowText(str);
-	val = static_cast<short>(_tstol((LPCTSTR)str));
+	val = static_cast<short>(tstringUtil::atol((LPCTSTR)str));
 	return true;
 }
 
@@ -489,7 +489,7 @@ bool CDlgRunScore::GetText(
 		return false;
 	CString str;
 	pEdit->GetWindowText(str);
-	val = _tcstod((LPCTSTR)str, NULL);
+	val = tstringUtil::strtod((LPCTSTR)str);
 	return true;
 }
 

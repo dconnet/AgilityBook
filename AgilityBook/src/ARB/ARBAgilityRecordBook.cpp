@@ -288,6 +288,9 @@ bool ARBAgilityRecordBook::Load(
 	return bLoaded;
 }
 
+#ifndef _WIN32
+#define _tcsftime	strftime
+#endif
 
 static tstring GetTimeStamp()
 {

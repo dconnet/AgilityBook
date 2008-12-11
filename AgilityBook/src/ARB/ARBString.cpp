@@ -36,11 +36,19 @@
 
 #include "stdafx.h"
 #include "ARBString.h"
+
 #include <algorithm>
 #include <locale>
+#ifdef WXWIDGETS
+#include <wx/strconv.h>
+#endif
 
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
+#endif
+
+#if !defined(WXWIDGETS) && defined(_WIN32)
+#define HAS_WIDECHARTOMULTIBYTE
 #endif
 
 #ifdef UNICODE
@@ -51,12 +59,15 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+// Note, if not on Windows (HAS_WIDECHARTOMULTIBYTE not set) and not using
+// wxWidgets, MBCS/Unicode conversions won't necessarily work right.
+
 std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 {
 	std::string str;
 	if (inStr && *inStr)
 	{
-#ifdef _WIN32
+#if defined(HAS_WIDECHARTOMULTIBYTE)
 		int bytes = ::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0, NULL, NULL);
 		if (bytes > 0)
 		{
@@ -72,7 +83,45 @@ std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
 			//DWORD dwErr = GetLastError();
 		}
 #else
-#error Not yet implemented
+		// Create a copy because wcstombs doesn't use length.
+		str = Convert(std::wstring(inStr, inLen));
+#endif
+	}
+	return str;
+}
+
+
+std::string tstringUtil::Convert(std::wstring const& inStr)
+{
+	std::string str;
+	if (!inStr.empty())
+	{
+#if defined(HAS_WIDECHARTOMULTIBYTE)
+		str = Convert(inStr.c_str(), inStr.length());
+#else
+		size_t nNeeded;
+#if defined(WXWIDGETS)
+		wxMBConvUTF8 converter(wxMBConvUTF8::MAP_INVALID_UTF8_TO_PUA);
+		nNeeded = converter.WC2MB(NULL, inStr.c_str(), 0);
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+		wcstombs_s(&nNeeded, (char*)NULL, 0, inStr.c_str(), 0);
+#else
+		nNeeded = wcstombs((char*)NULL, inStr.c_str(), 0);
+#endif
+		if (0 < nNeeded)
+		{
+			char *ansistr = new char[nNeeded+1];
+#if defined(WXWIDGETS)
+			converter.WC2MB(ansistr, inStr.c_str(), nNeeded+1);
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+			wcstombs_s(NULL, ansistr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+#else
+			wcstombs(ansistr, inStr.c_str(), nNeeded);
+#endif
+			ansistr[nNeeded] = NULL;
+			str = ansistr;
+			delete [] ansistr;
+		}
 #endif
 	}
 	return str;
@@ -84,7 +133,7 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 	std::wstring str;
 	if (inStr && *inStr)
 	{
-#ifdef _WIN32
+#if defined(HAS_WIDECHARTOMULTIBYTE)
 		int chars = ::MultiByteToWideChar(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0);
 		if (chars > 0)
 		{
@@ -101,10 +150,80 @@ std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
 			//DWORD dwErr = GetLastError();
 		}
 #else
-#error Not yet implemented
+		// Create a copy because mbstowcs doesn't use length.
+		str = Convert(std::string(inStr, inLen));
 #endif
 	}
 	return str;
+}
+
+
+std::wstring tstringUtil::Convert(std::string const& inStr)
+{
+	std::wstring str;
+	if (!inStr.empty())
+	{
+#if defined(HAS_WIDECHARTOMULTIBYTE)
+		str = Convert(inStr.c_str(), inStr.length());
+#else
+		size_t nNeeded;
+#if defined(WXWIDGETS)
+		wxMBConvUTF8 converter(wxMBConvUTF8::MAP_INVALID_UTF8_TO_PUA);
+		nNeeded = converter.MB2WC(NULL, inStr.c_str(), 0);
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+		mbstowcs_s(&nNeeded, (wchar_t*)NULL, 0, inStr.c_str(), 0);
+#else
+		nNeeded = mbstowcs((wchar_t*)NULL, inStr.c_str(), 0);
+#endif
+		if (0 < nNeeded)
+		{
+			wchar_t *unicodestr = new wchar_t[nNeeded+1];
+#if defined(WXWIDGETS)
+			converter.MB2WC(unicodestr, inStr.c_str(), nNeeded+1);
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+			mbstowcs_s(NULL, unicodestr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+#else
+			mbstowcs(unicodestr, inStr.c_str(), nNeeded);
+#endif
+			unicodestr[nNeeded] = NULL;
+			str = unicodestr;
+			delete [] unicodestr;
+		}
+#endif
+	}
+	return str;
+}
+
+#if defined(_WIN32)
+#if _MSC_VER < 1300
+#define _tstol		_ttol
+#endif
+#else
+#define _tstol		atol
+#define _tcstod		strtod
+#endif
+
+long tstringUtil::atol(tstring const& inStr)
+{
+	return atol(inStr.c_str());
+}
+
+
+long tstringUtil::atol(TCHAR const* inStr)
+{
+	return _tstol(inStr);
+}
+
+
+double tstringUtil::strtod(tstring const& inStr)
+{
+	return strtod(inStr.c_str());
+}
+
+
+double tstringUtil::strtod(TCHAR const* inStr)
+{
+	return _tcstod(inStr, NULL);
 }
 
 
