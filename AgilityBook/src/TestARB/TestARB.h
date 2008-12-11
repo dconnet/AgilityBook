@@ -32,15 +32,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-12-11 DRC Made TODO_TEST have a better failure message
  * @li 2008-01-11 DRC Created
  */
-
-// These are needed in order to generate a decent pragma message
-#define STRING2(x) #x
-#define STRING(x) STRING2(x)
-//#pragma message ( __FILE__ "(" STRING(__LINE__) ") : message" )
-#define PRAGMA_MESSAGE(x) ( __FILE__ "(" STRING(__LINE__) ") : " x )
-//#pragma PRAGMA_MESSAGE("My message")
 
 #include "UnitTest++.h"
 #include "ARBTypes.h"
@@ -52,5 +46,5 @@ extern ElementNodePtr CreateActionList();
 #ifdef _DEBUG
 #define TODO_TEST
 #else
-#define TODO_TEST	CHECK(false);
+#define TODO_TEST	{bool TODO = false; CHECK(TODO);}
 #endif

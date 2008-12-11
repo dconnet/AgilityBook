@@ -211,7 +211,7 @@ long tstringUtil::atol(tstring const& inStr)
 
 long tstringUtil::atol(TCHAR const* inStr)
 {
-	return _tstol(inStr);
+	return ::_tstol(inStr);
 }
 
 
@@ -223,7 +223,7 @@ double tstringUtil::strtod(tstring const& inStr)
 
 double tstringUtil::strtod(TCHAR const* inStr)
 {
-	return _tcstod(inStr, NULL);
+	return ::_tcstod(inStr, NULL);
 }
 
 
