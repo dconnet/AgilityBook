@@ -185,47 +185,28 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxdlgs.h>
 
-#endif // WXWIDGETS
-
 // Some minor tweaks to allow VC6 support while using new features.
 #if _MSC_VER < 1300
 #define CStringA CString
 typedef DWORD DWORD_PTR;
 typedef long LONG_PTR;
-#define _tstol _ttol
 #endif
+
+#endif // WXWIDGETS
 
 #else // _WIN32
 
-// Include other platform common files here. This way we can continue to
-// include 'stdafx.h' as the first header in all .cpp files so win32
-// pre-compiled headers work properly.
+#ifndef WXWIDGETS
+#error Non-Windows platforms must use wxWidgets
+#endif
 
-// These are some examples of some things that MUST be defined in order to
-// compile ARB. I am making use of Window's tchar.h mappings.
-// Obviously, much more work is required for the 'Win' directory!
-#ifdef UNICODE
-typedef wchar_t		TCHAR;
-#define _T(x)		L##x
-#define _tstol		atol
-#define _tcstod		strtod
-#define _tcscmp		strcmp
-#define _tcsftime	strftime
-
-#else
-typedef char		TCHAR;
-#define _T(x)		x
-#define _tstol		atol
-#define _tcstod		strtod
-#define _tcscmp		strcmp
-#define _tcsftime	strftime
-
-#endif // UNICODE
+#define _T(x)		wxT(x)
+#define TCHAR		wxChar
 
 #endif // _WIN32
 
-#if !defined(_MFC_VER)
 
+#ifdef WXWIDGETS
 // Pre-compiled header setup
 #include "wx/wxprec.h"
 #ifdef __BORLANDC__
@@ -234,8 +215,8 @@ typedef char		TCHAR;
 #ifndef WX_PRECOMP
 #   include "wx/wx.h"
 #endif
+#endif // WXWIDGETS
 
-#endif // _MFC_VER
 
 #include <memory> // To pick up the _HAS_TR1 define
 #if _HAS_TR1
@@ -266,4 +247,10 @@ namespace tr1 = boost;
 //  _localtime64_s(struct tm*, time_t*)
 #if _MSC_VER >= 1400
 #define ARB_HAS_SECURE_LOCALTIME
+#endif
+
+// ARB_HAS_SECURE_MBS_WCS
+//  _wcstombs_s(size_t*, char*, size_t, const wchar_t*, size_t)
+#if _MSC_VER >= 1400
+#define ARB_HAS_SECURE_MBS_WCS
 #endif

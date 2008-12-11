@@ -51,15 +51,14 @@ class tstringUtil
 {
 public:
 	static std::string Convert(wchar_t const* const inStr, size_t inLen);
-	static std::string Convert(std::wstring const& inStr)
-	{
-		return Convert(inStr.c_str(), inStr.length());
-	}
+	static std::string Convert(std::wstring const& inStr);
 	static std::wstring Convert(char const* const inStr, size_t inLen);
-	static std::wstring Convert(std::string const& inStr)
-	{
-		return Convert(inStr.c_str(), inStr.length());
-	}
+	static std::wstring Convert(std::string const& inStr);
+
+	static long atol(tstring const& inStr);
+	static long atol(TCHAR const* inStr);
+	static double strtod(tstring const& inStr);
+	static double strtod(TCHAR const* inStr);
 
 	// Some CString-style functions
 	static std::string Trim(std::string const& inStr);

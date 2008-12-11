@@ -74,7 +74,12 @@
 
 int _tmain(int /*argc*/, _TCHAR* /*argv*/ [])
 {
+#ifdef _WIN32
+	_set_error_mode(_OUT_TO_MSGBOX);
+#endif
+#ifndef WXWIDGETS
 	AfxSetResourceHandle(GetModuleHandle(NULL));
+#endif
 
 	static CLocalization localization;
 	IARBLocalization::Init(&localization);
@@ -98,6 +103,10 @@ ElementNodePtr LoadXMLData(UINT id)
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
+	assert(tree);
+#ifdef WXWIDGETS
+#pragma message PRAGMA_MESSAGE("TODO")
+#else
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(id), _T("XML"));
 	if (hrSrc)
 	{
@@ -114,19 +123,23 @@ ElementNodePtr LoadXMLData(UINT id)
 			FreeResource(hRes);
 		}
 	}
-	VERIFY(tree);
+#endif
 	return tree;
 }
 
 
 bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 {
-	VERIFY(tree);
-	VERIFY(tree->GetName() == _T("DefaultConfig"));
+	assert(tree);
+	if (!tree)
+		return false;
+	assert(tree->GetName() == _T("DefaultConfig"));
+	if (tree->GetName() != _T("DefaultConfig"))
+		return false;
 	ARBVersion version;
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 	int idx = tree->FindElement(TREE_CONFIG);
-	VERIFY(0 <= idx);
+	assert(0 <= idx);
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	return config.Load(tree->GetElementNode(idx), version, err);
@@ -226,6 +239,6 @@ ElementNodePtr CreateActionList()
 	{
 		DumpErrorMessage(errmsg);
 	}
-	VERIFY(bParse);
+	assert(bParse);
 	return actions;
 }

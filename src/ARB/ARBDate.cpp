@@ -192,16 +192,16 @@ static int ParseFields(
 	tstring::size_type pos = inDate.find(sep);
 	if (tstring::npos != pos)
 	{
-		val1 = static_cast<short>(_tstol(inDate.c_str()));
+		val1 = static_cast<short>(tstringUtil::atol(inDate));
 		++nVals;
 		inDate = inDate.substr(pos+1);
 		pos = inDate.find(sep);
 		if (tstring::npos != pos)
 		{
-			val2 = static_cast<short>(_tstol(inDate.c_str()));
+			val2 = static_cast<short>(tstringUtil::atol(inDate));
 			++nVals;
 			inDate = inDate.substr(pos+1);
-			val3 = static_cast<short>(_tstol(inDate.c_str()));
+			val3 = static_cast<short>(tstringUtil::atol(inDate));
 			++nVals;
 		}
 	}

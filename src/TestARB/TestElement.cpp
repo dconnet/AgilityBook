@@ -46,6 +46,9 @@ SUITE(TestElement)
 {
 	static void LoadTree(ElementNodePtr tree)
 	{
+#ifdef WXWIDGETS
+#pragma message PRAGMA_MESSAGE("TODO")
+#else
 		HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 		VERIFY(hrSrc);
 		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
@@ -55,6 +58,7 @@ SUITE(TestElement)
 		tstring errs;
 		VERIFY(tree->LoadXMLBuffer(pData, size, errs));
 		FreeResource(hRes);
+#endif
 	}
 
 	TEST(Name)
@@ -275,16 +279,16 @@ SUITE(TestElement)
 		ElementNodePtr tree(ElementNode::New());
 		LoadTree(tree);
 
-		CStringA tmpfile("data.tmp");
+		char const* const tmpFile = "data.tmp";
 		std::ostringstream tmp1;
-		CHECK(tree->SaveXML(tmpfile));
+		CHECK(tree->SaveXML(tmpFile));
 		CHECK(tree->SaveXML(tmp1));
 
 		ElementNodePtr tree2(ElementNode::New());
 		tstring errs;
-		CHECK(tree2->LoadXMLFile(tmpfile, errs));
+		CHECK(tree2->LoadXMLFile(tmpFile, errs));
 
-		DeleteFile(CString(tmpfile));
+		_unlink(tmpFile);
 
 		std::ostringstream tmp2;
 		CHECK(tree2->SaveXML(tmp2));
