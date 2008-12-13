@@ -404,8 +404,7 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					CStringA fileName(file.GetPathName());
-					if (!tree->LoadXMLFile(fileName, errMsg))
+					if (!tree->LoadXMLFile(file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -436,8 +435,7 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					CStringA fileName(file.GetPathName());
-					if (!tree->LoadXMLFile(fileName, errMsg))
+					if (!tree->LoadXMLFile(file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
@@ -545,8 +543,7 @@ BOOL CWizardStart::OnWizardFinish()
 					CWaitCursor wait;
 					tstring errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					CStringA fileName(file.GetPathName());
-					if (!tree->LoadXMLFile(fileName, errMsg))
+					if (!tree->LoadXMLFile(file.GetPathName(), errMsg))
 					{
 						CString msg;
 						msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
