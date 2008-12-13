@@ -115,8 +115,7 @@ bool CDlgConfigUpdate::LoadConfig(TCHAR const* pFile)
 		tstring errMsg;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
-		CStringA fileName(pFile);
-		if (!tree->LoadXMLFile(fileName, errMsg))
+		if (!tree->LoadXMLFile(pFile, errMsg))
 		{
 			CString msg;
 			msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);

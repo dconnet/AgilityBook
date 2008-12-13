@@ -1718,7 +1718,7 @@ bool ElementNode::LoadXMLBuffer(
 
 
 bool ElementNode::LoadXMLFile(
-		char const* inFileName,
+		TCHAR const* inFileName,
 		tstring& ioErrMsg)
 {
 	XMLstring fileName(inFileName);

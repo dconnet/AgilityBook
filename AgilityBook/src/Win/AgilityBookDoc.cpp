@@ -1153,11 +1153,10 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 	DeleteContents();
 
-	CStringA source(lpszPathName);
 	tstring err;
 	ElementNodePtr tree(ElementNode::New());
 	// Translate the XML to a tree form.
-	if (!tree->LoadXMLFile(source, err))
+	if (!tree->LoadXMLFile(lpszPathName, err))
 	{
 		theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
 		CString msg;

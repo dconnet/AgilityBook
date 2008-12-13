@@ -392,7 +392,7 @@ public:
 	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXMLFile(
-			char const* inFileName,
+			TCHAR const* inFileName,
 			tstring& ioErrMsg);
 
 	/**
