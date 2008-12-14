@@ -1771,6 +1771,7 @@ bool ElementNode::SaveXML(
 		std::string const* inDTD) const
 {
 #ifdef WXWIDGETS
+#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS SaveXML" )
 	return false;
 #else // WXWIDGETS
 	// On Win32, an XMLCh is a UNICODE character.
