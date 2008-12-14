@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces.
  *
  * Revision History
+ * @li 2008-12-13 DRC Added wxWidget support (xml)
  * @li 2008-11-02 DRC Added xerces 3.0 support
  * @li 2007-09-06 DRC Added GetNthElementNode
  * @li 2007-08-15 DRC Modified to support mixed text/nodes.
@@ -1798,13 +1799,20 @@ bool ElementNode::SaveXML(
 
 
 bool ElementNode::SaveXML(
-		char const* outFile,
+		TCHAR const* outFile,
 		std::string const* inDTD) const
 {
 	bool bOk = false;
 	if (!outFile)
 		return bOk;
-	std::ofstream output(outFile, std::ios::out | std::ios::binary);
+	char const* pFile = NULL;
+#ifdef UNICODE
+	std::string filename = tstringUtil::Convert(std::wstring(outFile));
+	pFile = filename.c_str();
+#else
+	pFile = outFile;
+#endif
+	std::ofstream output(pFile, std::ios::out | std::ios::binary);
 	output.exceptions(std::ios_base::badbit);
 	if (output.is_open())
 	{

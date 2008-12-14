@@ -469,8 +469,7 @@ BOOL CWizardStart::OnWizardFinish()
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
 					{
-						CStringA filename(file.GetFileName());
-						tree->SaveXML(filename);
+						tree->SaveXML(file.GetFileName());
 					}
 					bOk = true;
 				}
@@ -577,8 +576,7 @@ BOOL CWizardStart::OnWizardFinish()
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
 					{
-						CStringA filename(file.GetFileName());
-						tree->SaveXML(filename);
+						tree->SaveXML(file.GetFileName());
 					}
 					bOk = true;
 				}
@@ -608,8 +606,7 @@ BOOL CWizardStart::OnWizardFinish()
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
 					{
-						CStringA filename(file.GetFileName());
-						tree->SaveXML(filename);
+						tree->SaveXML(file.GetFileName());
 					}
 					bOk = true;
 				}
@@ -663,9 +660,8 @@ BOOL CWizardStart::OnWizardFinish()
 					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 					{
 						CConfigHandler handler;
-						CStringA filename(file.GetFileName());
 						std::string dtd = ARBConfig::GetDTD(&handler);
-						tree->SaveXML(filename, &dtd);
+						tree->SaveXML(file.GetFileName(), &dtd);
 					}
 					bOk = true;
 				}

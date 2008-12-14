@@ -41,6 +41,14 @@
 #include "ARBStructure.h"
 #include "Element.h"
 
+#ifndef _WIN32
+#ifdef UNICODE
+#define _tunlink	_wunlink
+#else
+#define _tunlink	_unlink
+#endif
+#endif
+
 
 SUITE(TestElement)
 {
@@ -279,16 +287,16 @@ SUITE(TestElement)
 		ElementNodePtr tree(ElementNode::New());
 		LoadTree(tree);
 
-		char const* const tmpFile = "data.tmp";
+		TCHAR const* const tmpFile = _T("data.tmp");
 		std::ostringstream tmp1;
 		CHECK(tree->SaveXML(tmpFile));
 		CHECK(tree->SaveXML(tmp1));
 
 		ElementNodePtr tree2(ElementNode::New());
 		tstring errs;
-		CHECK(tree2->LoadXMLFile(_T("data.tmp"), errs));
+		CHECK(tree2->LoadXMLFile(tmpFile, errs));
 
-		_unlink(tmpFile);
+		_tunlink(tmpFile);
 
 		std::ostringstream tmp2;
 		CHECK(tree2->SaveXML(tmp2));
