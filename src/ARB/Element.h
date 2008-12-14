@@ -41,7 +41,6 @@
 
 #include <map>
 #include <vector>
-#include <xercesc/sax/InputSource.hpp>
 #include "ARBTypes.h"
 class ARBDate;
 
@@ -382,7 +381,7 @@ public:
 	 */
 	bool LoadXMLBuffer(
 			char const* inData,
-			unsigned int nData,
+			size_t nData,
 			tstring& ioErrMsg);
 
 	/**

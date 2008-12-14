@@ -37,7 +37,13 @@
 #include "BinaryData.h"
 
 #include "ARBBase64.h"
+#ifdef WXWIDGETS
+#include <wx/mstream.h>
+#include <wx/wfstream.h>
+#include <wx/zstream.h>
+#else // WXWIDGETS
 #include "zlib.h"
+#endif // WXWIDGETS
 
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
@@ -63,6 +69,16 @@ bool BinaryData::Decode(
 	if (!ARBBase64::Decode(inBase64, pData, len))
 		return false;
 
+#ifdef WXWIDGETS
+	wxZlibInputStream strm(new wxMemoryInputStream(pData, len), wxZLIB_ZLIB);
+	wxMemoryOutputStream output;
+	output.Write(input);
+	output.Close();
+	outBytes = output.GetSize();
+	outBinData = new unsigned char[outBytes];
+	output.CopyTo(outBinData, outBytes);
+
+#else // WXWIDGETS
 	z_stream strm;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -113,6 +129,8 @@ bool BinaryData::Decode(
 		}
 	} while (strm.avail_out == 0);
     inflateEnd(&strm);
+#endif // WXWIDGETS
+
 	ARBBase64::Release(pData);
 
 	return true;
@@ -132,6 +150,19 @@ bool BinaryData::Encode(
 {
 	outBase64.empty();
 
+	size_t nData = 0;
+	unsigned char* pData = NULL;
+
+#ifdef WXWIDGETS
+	wxMemoryOutputStream output;
+	wxZlibOutputStream strm(output);
+	strm.Write(inBinData, inBytes);
+	strm.Close();
+	nData = output.GetSize();
+	pData = new unsigned char[nData];
+	output.CopyTo(pData, nData);
+
+#else // WXWIDGETS
 	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
     z_stream strm;
     strm.zalloc = Z_NULL;
@@ -140,8 +171,6 @@ bool BinaryData::Encode(
     if (Z_OK != deflateInit(&strm, Z_DEFAULT_COMPRESSION))
         return false;
 
-	size_t nData = 0;
-	unsigned char* pData = NULL;
     strm.avail_in = (uInt)inBytes;
     strm.next_in = (Bytef*)inBinData;
     do
@@ -168,6 +197,7 @@ bool BinaryData::Encode(
 		}
     } while (strm.avail_out == 0);
     deflateEnd(&strm);
+#endif // WXWIDGETS
 
 	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
 	delete [] pData;
@@ -182,6 +212,21 @@ bool BinaryData::Encode(
 {
 	outBase64.empty();
 
+	size_t nData = 0;
+	unsigned char* pData = NULL;
+
+#ifdef WXWIDGETS
+	wxMemoryOutputStream output;
+	wxZlibOutputStream strm(output);
+	wxFileInputStream instrm(_fileno(inData));
+	strm.Write(instrm);
+	strm.Close();
+	nData = output.GetSize();
+	pData = new unsigned char[nData];
+	output.CopyTo(pData, nData);
+
+#else // WXWIDGETS
+
 	tr1::shared_ptr<unsigned char> in(new unsigned char[CHUNK]);
 	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
     z_stream strm;
@@ -192,8 +237,6 @@ bool BinaryData::Encode(
         return false;
 
 	int flush;
-	size_t nData = 0;
-	unsigned char* pData = NULL;
 	do
 	{
 		strm.avail_in = (uInt)fread(in.get(), 1, CHUNK, inData);
@@ -230,6 +273,7 @@ bool BinaryData::Encode(
 		} while (strm.avail_out == 0);
 	} while (flush != Z_FINISH);
     deflateEnd(&strm);
+#endif // WXWIDGETS
 
 	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
 	delete [] pData;

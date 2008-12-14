@@ -100,4 +100,14 @@ SUITE(TestBinaryData)
 		CHECK(BinaryData::EncodeString(RawString, str));
 		CHECK(EncodedString == str);
 	}
+
+	TEST(RoundTrip)
+	{
+		tstring str;
+		CHECK(BinaryData::EncodeString(RawString, str));
+		CHECK(EncodedString == str);
+		tstring str2;
+		CHECK(BinaryData::DecodeString(str, str2));
+		CHECK(RawString == str2);
+	}
 }

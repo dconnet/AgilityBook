@@ -56,6 +56,11 @@
 #include "ARBStructure.h"
 #include "ARBTypes.h"
 
+#ifdef WXWIDGETS
+#include <wx/mstream.h>
+#include <wx/xml/xml.h>
+
+#else // WXWIDGETS
 #if _MSC_VER >= 1300
 #pragma warning ( push )
 // Since we treat warnings as errors, turn off some xerces warnings.
@@ -97,6 +102,7 @@
 #pragma warning ( pop )
 #endif
 XERCES_CPP_NAMESPACE_USE
+#endif // WXWIDGETS
 
 #if _MSC_VER < 1300
 using namespace std;
@@ -111,6 +117,7 @@ using namespace std;
 bool Element::Initialize(tstring& outMsg)
 {
 	outMsg.erase();
+#ifndef WXWIDGETS
 	try
 	{
 		XMLPlatformUtils::Initialize();
@@ -127,13 +134,16 @@ bool Element::Initialize(tstring& outMsg)
 #endif
 		return false;
 	}
+#endif // WXWIDGETS
 	return true;
 }
 
 
 void Element::Terminate()
 {
+#ifndef WXWIDGETS
 	XMLPlatformUtils::Terminate();
+#endif // WXWIDGETS
 }
 
 
@@ -148,6 +158,8 @@ Element::~Element()
 
 
 ////////////////////////////////////////////////////////////////////////////
+
+#ifndef WXWIDGETS
 
 // [Copied from xerces DOMPrint.cpp sample code, with my comments added]
 // ---------------------------------------------------------------------------
@@ -1045,6 +1057,8 @@ std::ostream& operator<<(
 	return target;
 }
 
+#endif // WXWIDGETS
+
 /////////////////////////////////////////////////////////////////////////////
 
 ElementNodePtr ElementNode::New()
@@ -1657,12 +1671,19 @@ bool ElementNode::FindElementDeep(
 
 static bool LoadXML(
 		ElementNodePtr node,
+#ifdef WXWIDGETS
+		wxXmlDocument& inSource,
+#else // WXWIDGETS
 		XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
+#endif // WXWIDGETS
 		tstring& ioErrMsg)
 {
 	node->clear();
 	bool bOk = false;
 
+#ifdef WXWIDGETS
+
+#else // WXWIDGETS
 	SAX2XMLReader* parser = XMLReaderFactory::createXMLReader();
 	// On Win32, an XMLCh is a UNICODE character.
 	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://xml.org/sax/features/namespaces"), false);
@@ -1703,16 +1724,24 @@ static bool LoadXML(
 		ioErrMsg += eMsg;
 	}
 	delete parser;
+#endif // WXWIDGETS
 	return bOk;
 }
 
 
 bool ElementNode::LoadXMLBuffer(
 		char const* inData,
-		unsigned int nData,
+		size_t nData,
 		tstring& ioErrMsg)
 {
+#ifdef WXWIDGETS
+	wxXmlDocument source;
+	wxMemoryInputStream input(inData, nData);
+	if (!source.Load(input))
+		return false;
+#else // WXWIDGETS
 	MemBufInputSource source(reinterpret_cast<XMLByte const*>(inData), nData, "buffer");
+#endif // WXWIDGETS
 	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
 
@@ -1721,8 +1750,14 @@ bool ElementNode::LoadXMLFile(
 		TCHAR const* inFileName,
 		tstring& ioErrMsg)
 {
+#ifdef WXWIDGETS
+	wxXmlDocument source;
+	if (!source.Load(inFileName))
+		return false;
+#else // WXWIDGETS
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
+#endif // WXWIDGETS
 	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
 
@@ -1734,6 +1769,9 @@ bool ElementNode::SaveXML(
 		std::ostream& outOutput,
 		std::string const* inDTD) const
 {
+#ifdef WXWIDGETS
+	return false;
+#else // WXWIDGETS
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"utf-8");
 	CXMLFormatTarget formatTarget(outOutput);
@@ -1755,6 +1793,7 @@ bool ElementNode::SaveXML(
 	delete gFormatter;
 	gFormatter = NULL;
 	return true;
+#endif // WXWIDGETS
 }
 
 
