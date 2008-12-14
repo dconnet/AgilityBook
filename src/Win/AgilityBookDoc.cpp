@@ -1268,8 +1268,7 @@ BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	{
 		BackupFile(lpszPathName);
 		// Then we can stream that tree out as XML.
-		CStringA filename(lpszPathName);
-		if (tree->SaveXML(filename))
+		if (tree->SaveXML(lpszPathName))
 		{
 			theApp.WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
 			bOk = TRUE;

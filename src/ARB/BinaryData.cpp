@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-12-13 DRC Added wxWidget support (zlib)
  * @li 2007-01-03 DRC Created
  */
 
@@ -70,10 +71,12 @@ bool BinaryData::Decode(
 		return false;
 
 #ifdef WXWIDGETS
-	wxZlibInputStream strm(new wxMemoryInputStream(pData, len), wxZLIB_ZLIB);
 	wxMemoryOutputStream output;
-	output.Write(input);
-	output.Close();
+	{
+		wxZlibInputStream strm(new wxMemoryInputStream(pData, len), wxZLIB_ZLIB);
+		output.Write(strm);
+		output.Close();
+	}
 	outBytes = output.GetSize();
 	outBinData = new unsigned char[outBytes];
 	output.CopyTo(outBinData, outBytes);
@@ -155,9 +158,11 @@ bool BinaryData::Encode(
 
 #ifdef WXWIDGETS
 	wxMemoryOutputStream output;
-	wxZlibOutputStream strm(output);
-	strm.Write(inBinData, inBytes);
-	strm.Close();
+	{
+		wxZlibOutputStream strm(output);
+		strm.Write(inBinData, inBytes);
+		strm.Close();
+	}
 	nData = output.GetSize();
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);
@@ -217,10 +222,12 @@ bool BinaryData::Encode(
 
 #ifdef WXWIDGETS
 	wxMemoryOutputStream output;
-	wxZlibOutputStream strm(output);
-	wxFileInputStream instrm(_fileno(inData));
-	strm.Write(instrm);
-	strm.Close();
+	{
+		wxZlibOutputStream strm(output);
+		wxFileInputStream instrm(_fileno(inData));
+		strm.Write(instrm);
+		strm.Close();
+	}
 	nData = output.GetSize();
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);

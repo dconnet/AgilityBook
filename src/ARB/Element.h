@@ -413,7 +413,7 @@ public:
 	 * @retval false Tree failed to save.
 	 */
 	bool SaveXML(
-			char const* outFile,
+			TCHAR const* outFile,
 			std::string const* inDTD = NULL) const;
 
 protected:
