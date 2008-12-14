@@ -77,13 +77,13 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	}
 #elif defined(WXWIDGETS)
 #pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS DefaultConfig.xml usage" )
-	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
+	bOk = tree->LoadXMLFile(wxT("DefaultConfig.xml"), errMsg);
 #else
 #pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DefaultConfig.xml usage" )
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
-	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
+	bOk = tree->LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
 #endif
 	return bOk ? tree : ElementNodePtr();
 }

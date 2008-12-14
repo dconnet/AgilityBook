@@ -286,7 +286,7 @@ SUITE(TestElement)
 
 		ElementNodePtr tree2(ElementNode::New());
 		tstring errs;
-		CHECK(tree2->LoadXMLFile(tmpFile, errs));
+		CHECK(tree2->LoadXMLFile(_T("data.tmp"), errs));
 
 		_unlink(tmpFile);
 
