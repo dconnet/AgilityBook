@@ -12,7 +12,8 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "afxres.h"
+#include "afxres.h"
+
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -2961,7 +2962,7 @@ BEGIN
     IDS_NEED_CLUB           "Il faut créer un club organisateur avant créer des epreuves."
     IDS_NEW_DOG             "Voulez-vous créer un chien maintenant?"
     IDS_NO_LINKED_FILES     "Aucun fichier associé trouvé."
-    IDS_NONFATAL_MSGS       "Attention: Des messages pas fatal ont etais crée en chargent le fichier:\n\n"
+    IDS_NONFATAL_MSGS       "Attention: Des messages pas fatal ont etais crée en chargent le fichier:"
 END
 
 STRINGTABLE 
@@ -3033,20 +3034,20 @@ BEGIN
                             "Impossible de localiser information configuration pour organisation '%1'."
     IDS_YEARS               "%1 ans"
     IDS_IMPORT_SKIP_NOCONFIG 
-                            "Attention: Ligne %1!d!: Entré passé, impossible de trouver un entré configuration valide\n"
-    IDS_IMPORT_BAD_DATE_RUN "ERREUR: Ligne %1!d!, Colonne %2!d!: Date parcours invalide: %3\n"
-    IDS_IMPORT_BAD_VENUE    "Attention: Ligne %1!d!: Entré passé, nom organisation invalide: %2\n"
+                            "Attention: Ligne %1!d!: Entré passé, impossible de trouver un entré configuration valide"
+    IDS_IMPORT_BAD_DATE_RUN "ERREUR: Ligne %1!d!, Colonne %2!d!: Date parcours invalide: %3"
+    IDS_IMPORT_BAD_VENUE    "Attention: Ligne %1!d!: Entré passé, nom organisation invalide: %2"
     IDS_IMPORT_BAD_DATE_CALSTART 
-                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date commencement calendrier invalide: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date commencement calendrier invalide: %3"
     IDS_IMPORT_BAD_DATE_CALEND 
-                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date fermeture calendrier invalide: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date fermeture calendrier invalide: %3"
     IDS_IMPORT_BAD_DATE_CALOPEN 
-                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date ouverture calendrier invalide: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date ouverture calendrier invalide: %3"
     IDS_IMPORT_BAD_DATE_CALCLOSE 
-                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date fermeture calendrier invalide: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Date fermeture calendrier invalide: %3"
     IDS_IMPORT_BAD_CAL_VALUE 
-                            "ERREUR: Ligne %1!d!, colonne %2!d!: Invalide entré calendrier: %3 (valide: N, P ou E)\n"
-    IDS_IMPORT_BAD_DATE_LOG "ERREUR: Ligne %1!d!, colonne %2!d!: Date log entraînement invalide: %3\n"
+                            "ERREUR: Ligne %1!d!, colonne %2!d!: Invalide entré calendrier: %3 (valide: N, P ou E)"
+    IDS_IMPORT_BAD_DATE_LOG "ERREUR: Ligne %1!d!, colonne %2!d!: Date log entraînement invalide: %3"
     IDS_IMPORT_STATS        "%1!d! entrés rajoutés\n%2!d! entrés mis a jour\n%3!d! duplicats (pas rajoutés)\n%4!d! entrés passés"
 END
 
@@ -3165,7 +3166,8 @@ LANGUAGE 12, 1
 #include "res\l.fra\AgilityBook.rc2" // non-Microsoft Visual C++ edited resources
 #include "l.fra\afxres.rc"   // Standard components
 #include "l.fra\afxprint.rc" // Standard components
-#endif
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

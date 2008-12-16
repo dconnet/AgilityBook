@@ -634,7 +634,7 @@ BOOL CWizardImport::OnWizardFinish()
 				if (!pScoring)
 				{
 					loadstr.FormatMessage(IDS_IMPORT_SKIP_NOCONFIG, nItem + 1);
-					errLog << (LPCTSTR)loadstr;
+					errLog << (LPCTSTR)loadstr << '\n';
 					++nSkipped;
 					continue;
 				}
@@ -687,7 +687,7 @@ BOOL CWizardImport::OnWizardFinish()
 									nItem + 1,
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << (LPCTSTR)loadstr;
+								errLog << (LPCTSTR)loadstr << '\n';
 								if (pRun)
 									pRun.reset();
 								iCol = columns[i].size();
@@ -844,7 +844,7 @@ BOOL CWizardImport::OnWizardFinish()
 						loadstr.FormatMessage(IDS_IMPORT_BAD_VENUE,
 							nItem + 1,
 							trialVenue.c_str());
-						errLog << (LPCTSTR)loadstr;
+						errLog << (LPCTSTR)loadstr << '\n';
 						pRun.reset();
 					}
 					else if (!m_pDoc->Book().GetConfig().GetVenues().FindEvent(
@@ -855,7 +855,7 @@ BOOL CWizardImport::OnWizardFinish()
 						pRun->GetDate()))
 					{
 						loadstr.FormatMessage(IDS_IMPORT_SKIP_NOCONFIG, nItem + 1);
-						errLog << (LPCTSTR)loadstr;
+						errLog << (LPCTSTR)loadstr << '\n';
 						pRun.reset();
 					}
 				}
@@ -1002,7 +1002,7 @@ BOOL CWizardImport::OnWizardFinish()
 									nItem + 1,
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << (LPCTSTR)loadstr;
+								errLog << (LPCTSTR)loadstr << '\n';
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1023,7 +1023,7 @@ BOOL CWizardImport::OnWizardFinish()
 									nItem + 1,
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << (LPCTSTR)loadstr;
+								errLog << (LPCTSTR)loadstr << '\n';
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1056,7 +1056,7 @@ BOOL CWizardImport::OnWizardFinish()
 								nItem + 1,
 								static_cast<int>(iCol + 1),
 								entry[iCol].c_str());
-							errLog << (LPCTSTR)loadstr;
+							errLog << (LPCTSTR)loadstr << '\n';
 							if (pCal)
 								pCal.reset();
 							iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1088,7 +1088,7 @@ BOOL CWizardImport::OnWizardFinish()
 									nItem + 1,
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << (LPCTSTR)loadstr;
+								errLog << (LPCTSTR)loadstr << '\n';
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1109,7 +1109,7 @@ BOOL CWizardImport::OnWizardFinish()
 									nItem + 1,
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << (LPCTSTR)loadstr;
+								errLog << (LPCTSTR)loadstr << '\n';
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1167,7 +1167,7 @@ BOOL CWizardImport::OnWizardFinish()
 									nItem + 1,
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << (LPCTSTR)loadstr;
+								errLog << (LPCTSTR)loadstr << '\n';
 								if (pLog)
 									pLog.reset();
 								iCol = columns[IO_TYPE_TRAINING].size();
