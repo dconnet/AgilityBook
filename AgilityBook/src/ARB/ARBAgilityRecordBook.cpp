@@ -392,9 +392,35 @@ bool ARBAgilityRecordBook::Update(
 		bChanges = m_Config.Update(indent, inConfigNew, ioInfo);
 	}
 
-	// Fix existing runs. Note, we need to do this regardless of whether the user
-	// cancelled the update since some changes may have occurred that will cause
-	// additional runs to be lost.
+	// In configuration 24, we added 'Team'. Originally, 'Pairs/Tournament' was
+	// used to track Team Qs. Starting in v24, we're using it specifically for
+	// the Relay run. To track Team Qs, use the new 'Team' event. So
+	// automatically migrate pre-v24 Pair runs to 'Team'.
+	bool bFixUSDAAPairs = false;
+	if (curConfigVersion <= 23 && inConfigNew.GetVersion() >= 24)
+	{
+		ARBConfigVenuePtr venue, venueNew;
+		if (m_Config.GetVenues().FindVenue(_T("USDAA"), &venue) && inConfigNew.GetVenues().FindVenue(_T("USDAA"), &venueNew))
+		{
+			ARBConfigEventPtr event, eventNew;
+			if (venue->GetEvents().FindEvent(_T("Pairs"), &event) && venueNew->GetEvents().FindEvent(_T("Team"), &eventNew))
+			{
+				ARBDate d;
+				if (event->VerifyEvent(WILDCARD_DIVISION, _T("Nationals"), d)
+				|| event->VerifyEvent(WILDCARD_DIVISION, _T("Tournament"), d)
+				|| eventNew->VerifyEvent(WILDCARD_DIVISION, _T("Nationals"), d)
+				|| eventNew->VerifyEvent(WILDCARD_DIVISION, _T("Tournament"), d))
+				{
+					// Ok, the configuration passes...
+					bFixUSDAAPairs = true;
+				}
+			}
+		}
+	}
+
+	// Fix existing runs. Note, we need to do this regardless of whether the
+	// user cancelled the update since some changes may have occurred that will
+	// cause additional runs to be lost.
 	for (ARBConfigVenueList::iterator iterVenue = m_Config.GetVenues().begin();
 		iterVenue != m_Config.GetVenues().end();
 		++iterVenue)
@@ -402,7 +428,8 @@ bool ARBAgilityRecordBook::Update(
 		// This actually just synchronizes multiQs.
 		m_Dogs.DeleteMultiQs(m_Config, (*iterVenue)->GetName());
 	}
-	otstringstream msgDelRuns;
+	otstringstream msgPairsRuns, msgDelRuns;
+	int nUpdatedPairsRuns = 0;
 	int nDeletedRuns = 0;
 	for (ARBDogList::iterator iterDog = m_Dogs.begin();
 		iterDog != m_Dogs.end();
@@ -432,6 +459,24 @@ bool ARBAgilityRecordBook::Update(
 				)
 			{
 				ARBDogRunPtr pRun = *iterRun;
+				if (bFixUSDAAPairs && venue == _T("USDAA") && pRun->GetEvent() == _T("Pairs")
+				&& (pRun->GetLevel() == _T("Tournament") || pRun->GetLevel() == _T("Nationals")))
+				{
+					// Move pairs run to new team
+					pRun->SetEvent(_T("Team"));
+					msgPairsRuns << _T("   ")
+						<< pRun->GetDate().GetString(ARBDate::eDashYYYYMMDD)
+						<< _T(" ")
+						<< venue
+						<< _T(" ")
+						<< pRun->GetEvent()
+						<< _T(" ")
+						<< pRun->GetDivision()
+						<< _T("/")
+						<< pRun->GetLevel()
+						<< _T("\n");
+					++nUpdatedPairsRuns;
+				}
 				ARBConfigScoringPtr pScoring;
 				if (m_Config.GetVenues().FindEvent(
 					venue,
@@ -467,6 +512,12 @@ bool ARBAgilityRecordBook::Update(
 				}
 			}
 		}
+	}
+	if (0 < nUpdatedPairsRuns)
+	{
+		nChanges += nUpdatedPairsRuns;
+		tstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, msgPairsRuns.str());
+		ioInfo << _T("\n") << msg << _T("\n");
 	}
 	if (0 < nDeletedRuns)
 	{

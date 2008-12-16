@@ -1,5 +1,5 @@
-12/9/2008: v1.10.9.12 <in development>
-- Bumped Configuration v24:
+12/15/2008: v1.10.9.12 <in development>
+- Bumped file version to 12.9, Configuration v24:
   - Updated AAC title comments (requirement changes).
   - Updated UKC UGRACH for multiple titles.
   - Updated USDAA DAM events for LAA points.
