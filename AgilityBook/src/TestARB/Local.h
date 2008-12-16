@@ -95,6 +95,7 @@ public:
 	virtual tstring UpdateSubLevelsReordered() const;
 	tstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
 	tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const;
+	tstring UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const;
 	tstring UpdateTableRuns(int nRuns) const;
 
 	tstring ActionDeleteCalPlugin(tstring const& name) const;

@@ -560,6 +560,15 @@ tstring CLocalization::WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) cons
 }
 
 
+tstring CLocalization::UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const
+{
+	otstringstream buffer;
+	CString data;
+	buffer << _T("USDAA 'Pairs' converted to 'Team' in ") << nRuns << _T(" runs.") << _T("\n") << inRunsMsg;
+	return buffer.str();
+}
+
+
 tstring CLocalization::UpdateTableRuns(int nRuns) const
 {
 	otstringstream buffer;

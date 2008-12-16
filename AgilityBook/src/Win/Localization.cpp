@@ -748,7 +748,7 @@ tstring CLocalization::UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const
 {
 	otstringstream buffer;
 	CString data;
-	data.FormatMessage(IDS_UPDATE_TABLE_RUNS, nRuns);
+	data.FormatMessage(IDS_UPDATE_TEAM_RUNS, nRuns);
 	buffer << (LPCTSTR)data << _T("\n") << inRunsMsg;
 	return buffer.str();
 }
