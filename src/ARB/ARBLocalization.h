@@ -105,6 +105,7 @@ public:
 	virtual tstring UpdateSubLevelsReordered() const = 0;
 	virtual tstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const = 0;
 	virtual tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const = 0;
+	virtual tstring UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const = 0;
 	virtual tstring UpdateTableRuns(int nRuns) const = 0;
 
 	// Used in ARBConfigAction.cpp

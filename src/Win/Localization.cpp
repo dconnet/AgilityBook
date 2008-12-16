@@ -744,6 +744,16 @@ tstring CLocalization::WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) cons
 }
 
 
+tstring CLocalization::UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const
+{
+	otstringstream buffer;
+	CString data;
+	data.FormatMessage(IDS_UPDATE_TABLE_RUNS, nRuns);
+	buffer << (LPCTSTR)data << _T("\n") << inRunsMsg;
+	return buffer.str();
+}
+
+
 tstring CLocalization::UpdateTableRuns(int nRuns) const
 {
 	otstringstream buffer;

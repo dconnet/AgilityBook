@@ -2682,6 +2682,7 @@ BEGIN
     IDS_ACTION_PREDELETE_EVENT "DELETING: %1 Event [%2] %3!d! events"
     IDS_ACTION_DELETE_EVENT "Action: Deleting %1 Event [%2]"
     IDS_ACTION_DELETE_CALPLUGIN "Action: Deleting Plugin [%1]"
+    IDS_UPDATE_TEAM_RUNS    "USDAA 'Pairs' converted to 'Team' in %1!d! runs."
 END
 
 STRINGTABLE 
