@@ -1190,6 +1190,7 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	{
 		CString msg;
 		msg.LoadString(IDS_NONFATAL_MSGS);
+		msg += _T("\n\n");
 		msg += callback.m_ErrMsg.c_str();
 		CSplashWnd::HideSplashScreen();
 		AfxMessageBox(msg, MB_ICONINFORMATION);

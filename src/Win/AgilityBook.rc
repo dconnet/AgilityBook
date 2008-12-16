@@ -2951,7 +2951,7 @@ BEGIN
     IDS_NEED_CLUB           "You must create a hosting club before creating any events."
     IDS_NEW_DOG             "Would you like to create a dog now?"
     IDS_NO_LINKED_FILES     "No linked files found."
-    IDS_NONFATAL_MSGS       "Warning: Some non-fatal messages were generated while loading the file:\n\n"
+    IDS_NONFATAL_MSGS       "Warning: Some non-fatal messages were generated while loading the file:"
 END
 
 STRINGTABLE 
@@ -3022,20 +3022,20 @@ BEGIN
                             "Unable to locate configuration information for the venue '%1'."
     IDS_YEARS               "%1 yrs"
     IDS_IMPORT_SKIP_NOCONFIG 
-                            "Warning: Line %1!d!: Skipped entry, unable to find a valid configuration entry\n"
-    IDS_IMPORT_BAD_DATE_RUN "ERROR: Line %1!d!, Column %2!d!: Invalid run date: %3\n"
-    IDS_IMPORT_BAD_VENUE    "Warning: Line %1!d!: Skipped entry, invalid venue name: %2\n"
+                            "Warning: Line %1!d!: Skipped entry, unable to find a valid configuration entry"
+    IDS_IMPORT_BAD_DATE_RUN "ERROR: Line %1!d!, Column %2!d!: Invalid run date: %3"
+    IDS_IMPORT_BAD_VENUE    "Warning: Line %1!d!: Skipped entry, invalid venue name: %2"
     IDS_IMPORT_BAD_DATE_CALSTART 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar start date: %3\n"
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar start date: %3"
     IDS_IMPORT_BAD_DATE_CALEND 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar end date: %3\n"
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar end date: %3"
     IDS_IMPORT_BAD_DATE_CALOPEN 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar opening date: %3\n"
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar opening date: %3"
     IDS_IMPORT_BAD_DATE_CALCLOSE 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar closing date: %3\n"
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar closing date: %3"
     IDS_IMPORT_BAD_CAL_VALUE 
-                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar Entered value: %3 (valid: N, P or E)\n"
-    IDS_IMPORT_BAD_DATE_LOG "ERROR: Line %1!d!, Column %2!d!: Invalid training log date: %3\n"
+                            "ERROR: Line %1!d!, Column %2!d!: Invalid calendar Entered value: %3 (valid: N, P or E)"
+    IDS_IMPORT_BAD_DATE_LOG "ERROR: Line %1!d!, Column %2!d!: Invalid training log date: %3"
     IDS_IMPORT_STATS        "%1!d! entries added\n%2!d! entries updated\n%3!d! duplicates (not added)\n%4!d! entries skipped"
 END
 
