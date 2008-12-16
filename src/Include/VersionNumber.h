@@ -52,18 +52,18 @@
 #define _STR(x)							#x
 #define STR(x)							_STR(x)
 
-#define VER_MAJOR						1
-#define VER_MINOR						10
-#define VER_DOT							9
-#define VER_FILEVER						12
+#define ARB_VER_MAJOR					1
+#define ARB_VER_MINOR					10
+#define ARB_VER_DOT						9
+#define ARB_VER_FILEVER					12
 
-#define VER_STR_MAJOR					STR(VER_MAJOR)
-#define VER_STR_MINOR					STR(VER_MINOR)
-#define VER_STR_DOT						STR(VER_DOT)
-#define VER_STR_FILEVER					STR(VER_FILEVER)
+#define ARB_VER_STR_MAJOR				STR(ARB_VER_MAJOR)
+#define ARB_VER_STR_MINOR				STR(ARB_VER_MINOR)
+#define ARB_VER_STR_DOT					STR(ARB_VER_DOT)
+#define ARB_VER_STR_FILEVER				STR(ARB_VER_FILEVER)
 
-#define ARB_VERSION						VER_MAJOR,VER_MINOR,VER_DOT,VER_FILEVER
-#define ARB_VERSION_STRING				VER_STR_MAJOR "." VER_STR_MINOR "." VER_STR_DOT "." VER_STR_FILEVER
+#define ARB_VERSION						ARB_VER_MAJOR,ARB_VER_MINOR,ARB_VER_DOT,ARB_VER_FILEVER
+#define ARB_VERSION_STRING				ARB_VER_STR_MAJOR "." ARB_VER_STR_MINOR "." ARB_VER_STR_DOT "." ARB_VER_STR_FILEVER
 
 #define ARB_VERSION_CompanyName			"dcon Software"
 #define ARB_VERSION_FileDescription		"Agility Record Book"
