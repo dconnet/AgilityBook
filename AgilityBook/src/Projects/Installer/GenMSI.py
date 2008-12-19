@@ -43,10 +43,10 @@ def getversion(numParts):
 		ver = ver + ".0"
 		ver2 = ver2 + "_0"
 	resStr = [
-		"#define VER_MAJOR",
-		"#define VER_MINOR",
-		"#define VER_DOT",
-		"#define VER_FILEVER"
+		"#define ARB_VER_MAJOR",
+		"#define ARB_VER_MINOR",
+		"#define ARB_VER_DOT",
+		"#define ARB_VER_FILEVER"
 		]
 	found = 0;
 	version = ["0", "0", "0", "0"]
