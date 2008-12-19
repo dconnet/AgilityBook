@@ -132,9 +132,27 @@ tstring SanitizeStringForHTML(
  * Extend some common functionality.
  */
 template <typename T>
+#if _MSC_VER < 1300 // VC6
 class ARBVector : public std::vector<T>
+#else
+class ARBVector : private std::vector<T>
+#endif
 {
 public:
+#if _MSC_VER >= 1300
+	using std::vector<T>::begin;
+	using std::vector<T>::clear;
+	using std::vector<T>::const_iterator;
+	using std::vector<T>::end;
+	using std::vector<T>::erase;
+	using std::vector<T>::insert;
+	using std::vector<T>::iterator;
+	using std::vector<T>::operator[];
+	using std::vector<T>::push_back;
+	using std::vector<T>::reserve;
+	using std::vector<T>::size;
+#endif
+
 	ARBVector()
 	{
 	}
