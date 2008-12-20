@@ -1,4 +1,7 @@
 12/19/2008: v1.10.10.12 <in development>
+- Bug fixes:
+  - An error message wasn't displayed when trying to merge a bad configuration
+    from a file.
 
 12/19/2008: v1.10.9.12
 - Bumped Configuration v24:
