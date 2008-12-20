@@ -72,6 +72,8 @@ IDR_XML_CONFIG19_V12_5  XML                     "res\\Config19_v12_5.xml"
 IDR_XML_CONFIG20_V12_6  XML                     "res\\Config20_v12_6.xml"
 IDR_XML_CONFIG21_V12_7  XML                     "res\\Config21_v12_7.xml"
 IDR_XML_CONFIG22_V12_7  XML                     "res\\Config22_v12_7.xml"
+IDR_XML_CONFIG23_V12_8  XML                     "res\\Config23_v12_8.xml"
+IDR_XML_CONFIG24_V12_8  XML                     "res\\Config24_v12_8.xml"
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1

@@ -57,7 +57,8 @@ In SourceForge, enter the File Releases section in Admin.
 - Enter all necessary information.
 - ftp to upload.sourceforge.net, cd incoming. Set binary mode.
 - Upload all files.
-- UPDATE: ftp'ing no longer works, use web upload (link on SF page)
+- UPDATE: ftp'ing no longer works, use web upload
+  (https://frs.sourceforge.net/webupload)
   - Readme1st.vn.n.n.n.txt
   - AgilityBook_n_n_n_n-src.zip
   - AgilityBook_n_n_n_n-win.zip
