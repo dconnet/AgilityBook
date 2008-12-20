@@ -147,17 +147,15 @@ bool ARBAgilityRecordBook::Load(
 	// Get the records ready.
 	clear();
 
-	assert(inTree);
-	if (!inTree || inTree->GetName() != TREE_BOOK)
-		return false;
-
 	// Make sure the input looks okay.
 	// The root must be TREE_BOOK.
-	if (inTree->GetName() != TREE_BOOK)
+	assert(inTree);
+	if (!inTree || inTree->GetName() != TREE_BOOK)
 	{
 		ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidRoot().c_str()));
 		return false;
 	}
+
 	// The version of the document must be something we understand.
 	ARBVersion version;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_BOOK_VERSION, version))
