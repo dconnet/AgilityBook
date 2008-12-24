@@ -3029,7 +3029,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_READING_ROWSCOLS    "Lire %1!d! lignes and %2!d! colonnes"
-    IDS_TRIAL_DATES         "Dates concours: %1 a %3"
+    IDS_TRIAL_DATES         "Dates concours: %1 a %2"
     IDS_VENUE_CONFIG_MISSING 
                             "Impossible de localiser information configuration pour organisation '%1'."
     IDS_YEARS               "%1 ans"
