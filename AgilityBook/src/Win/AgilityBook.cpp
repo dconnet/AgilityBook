@@ -517,7 +517,7 @@ BOOL CAgilityBookApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	SetRegistryKey(_T("dcon Software"));
 	InitCrashHandler(GetAppRegistryKey());
-	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
+	LoadStdProfileSettings(CAgilityBookOptions::GetMRUFileCount());
 
 	// Parse command line for standard shell commands, DDE, file open
 	CAgilityBookCmdLine cmdInfo;

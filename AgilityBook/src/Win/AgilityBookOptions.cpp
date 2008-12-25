@@ -197,6 +197,7 @@ Settings:
 	DW autoCheck
 	DW BackupFiles
 	DW Lang
+	DW MRUsize
 	DW ShowSplash
 	ST Splash
 	DW autoShowTitle
@@ -1102,6 +1103,18 @@ void CAgilityBookOptions::SetColumnOrder(
 
 
 /////////////////////////////////////////////////////////////////////////////
+
+int CAgilityBookOptions::GetMRUFileCount()
+{
+	return theApp.GetProfileInt(_T("Settings"), _T("MRUsize"), 4);
+}
+
+
+void CAgilityBookOptions::SetMRUFileCount(int nFiles)
+{
+	theApp.WriteProfileInt(_T("Settings"), _T("MRUsize"), nFiles);
+}
+
 
 bool CAgilityBookOptions::GetAutoUpdateCheck()
 {
