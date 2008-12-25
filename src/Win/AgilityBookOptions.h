@@ -199,6 +199,8 @@ public:
 		eView			= 0x0100,
 	} ColumnOrder;
 	// General program options
+	static int GetMRUFileCount();
+	static void SetMRUFileCount(int nFiles);
 	static bool GetAutoUpdateCheck();
 	static void SetAutoUpdateCheck(bool bSet);
 	static int GetNumBackupFiles();
