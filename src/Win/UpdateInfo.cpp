@@ -340,7 +340,7 @@ bool CUpdateInfo::CheckProgram()
 			CString url(m_UpdateDownload);
 			CString suffix = url.Right(4);
 			suffix.MakeUpper();
-			if (suffix == ".PHP")
+			if (suffix == _T(".PHP"))
 			{
 				OSVERSIONINFO os;
 				os.dwOSVersionInfoSize = sizeof(os);
@@ -354,14 +354,14 @@ bool CUpdateInfo::CheckProgram()
 						SYSTEM_INFO info;
 						GetSystemInfo(&info);
 						if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
-							url += "?os=x64";
+							url += _T("?os=x64");
 						else
 #endif
-							url += "?os=win";
+							url += _T("?os=win");
 					}
 					break;
 				case VER_PLATFORM_WIN32_WINDOWS: // Win95/98/Me
-					url += "?os=win98";
+					url += _T("?os=win98");
 					break;
 				}
 			}
