@@ -194,6 +194,7 @@ std::wstring tstringUtil::Convert(std::string const& inStr)
 	return str;
 }
 
+#ifndef WXWIDGETS
 #if defined(_WIN32)
 #if _MSC_VER < 1300
 #define _tstol		_ttol
@@ -202,28 +203,57 @@ std::wstring tstringUtil::Convert(std::string const& inStr)
 #define _tstol		atol
 #define _tcstod		strtod
 #endif
+#endif
 
 long tstringUtil::atol(tstring const& inStr)
 {
-	return atol(inStr.c_str());
+	long l;
+#ifdef WXWIDGETS
+	wxString s(inStr);
+	s.ToLong(&l);
+#else
+	l = atol(inStr.c_str());
+#endif
+	return l;
 }
 
 
 long tstringUtil::atol(TCHAR const* inStr)
 {
-	return ::_tstol(inStr);
+	long l;
+#ifdef WXWIDGETS
+	wxString s(inStr);
+	s.ToLong(&l);
+#else
+	l = ::_tstol(inStr);
+#endif
+	return l;
 }
 
 
 double tstringUtil::strtod(tstring const& inStr)
 {
-	return strtod(inStr.c_str());
+	double d;
+#ifdef WXWIDGETS
+	wxString s(inStr);
+	s.ToDouble(&d);
+#else
+	d = strtod(inStr.c_str());
+#endif
+	return d;
 }
 
 
 double tstringUtil::strtod(TCHAR const* inStr)
 {
-	return ::_tcstod(inStr, NULL);
+	double d;
+#ifdef WXWIDGETS
+	wxString s(inStr);
+	s.ToDouble(&d);
+#else
+	d = ::_tcstod(inStr, NULL);
+#endif
+	return d;
 }
 
 
