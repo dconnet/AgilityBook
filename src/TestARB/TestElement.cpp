@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-12-27 DRC Replace local LoadTree with LoadXMLData
  * @li 2008-01-11 DRC Created
  */
 
@@ -52,23 +53,6 @@
 
 SUITE(TestElement)
 {
-	static void LoadTree(ElementNodePtr tree)
-	{
-#ifdef WXWIDGETS
-#pragma message PRAGMA_MESSAGE("TODO")
-#else
-		HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
-		VERIFY(hrSrc);
-		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
-		VERIFY(hRes);
-		DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-		char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-		tstring errs;
-		VERIFY(tree->LoadXMLBuffer(pData, size, errs));
-		FreeResource(hRes);
-#endif
-	}
-
 	TEST(Name)
 	{
 		ElementNodePtr ele = ElementNode::New(_T("name"));
@@ -272,8 +256,7 @@ SUITE(TestElement)
 
 	TEST(Load)
 	{
-		ElementNodePtr tree(ElementNode::New());
-		LoadTree(tree);
+		ElementNodePtr tree = LoadXMLData(IDR_XML_DEFAULT_CONFIG);
 
 		CHECK(_T("DefaultConfig") == tree->GetName());
 		CHECK_EQUAL(1, tree->GetAttribCount());
@@ -284,8 +267,7 @@ SUITE(TestElement)
 
 	TEST(Save)
 	{
-		ElementNodePtr tree(ElementNode::New());
-		LoadTree(tree);
+		ElementNodePtr tree = LoadXMLData(IDR_XML_DEFAULT_CONFIG);
 
 		TCHAR const* const tmpFile = _T("data.tmp");
 		std::ostringstream tmp1;

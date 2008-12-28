@@ -33,7 +33,7 @@
  * Actual reading and writing of XML is done using Xerces.
  *
  * Revision History
- * @li 2008-12-13 DRC Added wxWidget support (xml)
+ * @li 2008-12-27 DRC Added wxWidget support (xml)
  * @li 2008-11-02 DRC Added xerces 3.0 support
  * @li 2007-09-06 DRC Added GetNthElementNode
  * @li 2007-08-15 DRC Modified to support mixed text/nodes.
@@ -59,6 +59,7 @@
 
 #ifdef WXWIDGETS
 #include <wx/mstream.h>
+#include <wx/stream.h>
 #include <wx/xml/xml.h>
 
 #else // WXWIDGETS
@@ -160,7 +161,79 @@ Element::~Element()
 
 ////////////////////////////////////////////////////////////////////////////
 
-#ifndef WXWIDGETS
+#ifdef WXWIDGETS
+
+static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
+{
+	wxXmlProperty* attribs = node->GetProperties();
+	while (attribs)
+	{
+		tree->AddAttrib(attribs->GetName().c_str(), attribs->GetValue().c_str());
+		attribs = attribs->GetNext();
+	}
+	wxString content = node->GetNodeContent();
+	if (!content.empty())
+		tree->SetValue(content.c_str());
+	wxXmlNode* child = node->GetChildren();
+	while (child)
+	{
+		if (wxXML_ELEMENT_NODE == child->GetType())
+		{
+			ElementNodePtr subtree = tree->AddElementNode(child->GetName().c_str());
+			ReadDoc(child, subtree);
+		}
+		child = child->GetNext();
+	}
+}
+
+
+class CWrapSTLStream : public wxOutputStream
+{
+public:
+	CWrapSTLStream(std::ostream& output) : m_output(output) {}
+    
+    virtual wxOutputStream& Write(const void *buffer, size_t size)
+	{
+		m_output.write((const char*)buffer, size);
+		return *this;
+	}
+
+private:
+	std::ostream& m_output;
+};
+
+
+static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
+{
+	int i;
+	for (i = 0; i < toWrite.GetAttribCount(); ++i)
+	{
+		tstring name, value;
+		toWrite.GetNthAttrib(i, name, value);
+		node->AddProperty(name.c_str(), value.c_str());
+	}
+	int count = toWrite.GetElementCount();
+	for (i = 0; i < count; ++i)
+	{
+		ElementPtr element = toWrite.GetElement(i);
+		switch (element->GetType())
+		{
+		case Element::Element_Node:
+			{
+				wxXmlNode* child = new wxXmlNode(node, wxXML_ELEMENT_NODE, element->GetName().c_str());
+				node->AddChild(child);
+				CreateDoc(child, *(dynamic_cast<ElementNode*>(element.get())));
+			}
+			break;
+		case Element::Element_Text:
+			node->SetContent(element->GetValue().c_str());
+			break;
+		}
+	}
+}
+
+
+#else
 
 // [Copied from xerces DOMPrint.cpp sample code, with my comments added]
 // ---------------------------------------------------------------------------
@@ -1683,6 +1756,11 @@ static bool LoadXML(
 	bool bOk = false;
 
 #ifdef WXWIDGETS
+	if (!inSource.GetRoot())
+		return bOk;
+	node->SetName(inSource.GetRoot()->GetName().c_str());
+	ReadDoc(inSource.GetRoot(), node);
+	bOk = true;
 
 #else // WXWIDGETS
 	SAX2XMLReader* parser = XMLReaderFactory::createXMLReader();
@@ -1762,6 +1840,7 @@ bool ElementNode::LoadXMLFile(
 	return LoadXML(m_Me.lock(), source, ioErrMsg);
 }
 
+
 #ifndef _WIN32
 #define _tcscmp		strcmp
 #endif
@@ -1771,8 +1850,15 @@ bool ElementNode::SaveXML(
 		std::string const* inDTD) const
 {
 #ifdef WXWIDGETS
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS SaveXML" )
-	return false;
+	wxXmlDocument doc;
+	doc.SetVersion(wxT("1.0"));
+	doc.SetFileEncoding(wxT("utf-8"));
+	wxXmlNode* root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, GetName().c_str());
+	doc.SetRoot(root);
+	CreateDoc(root, *this);
+	CWrapSTLStream output(outOutput);
+	return doc.Save(output, 1);
+
 #else // WXWIDGETS
 	// On Win32, an XMLCh is a UNICODE character.
 	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"utf-8");

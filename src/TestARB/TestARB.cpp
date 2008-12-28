@@ -40,6 +40,7 @@
 #include "ARBConfig.h"
 #include "ARBStructure.h"
 #include "Element.h"
+#include "resource.h"
 
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
 #define UT_NAME			"UnitTest++.VC7"
@@ -106,6 +107,48 @@ ElementNodePtr LoadXMLData(UINT id)
 	assert(tree);
 #ifdef WXWIDGETS
 #pragma message PRAGMA_MESSAGE("TODO")
+	tstring filename;
+	switch (id)
+	{
+	case IDR_XML_DEFAULT_CONFIG:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml");
+		break;
+	case IDR_XML_CONFIG08_V10_2:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config08_v10_2.xml");
+		break;
+	case IDR_XML_CONFIG09_V11_0:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config09_v11_0.xml");
+		break;
+	case IDR_XML_CONFIG12_V12_1:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config12_v12_1.xml");
+		break;
+	case IDR_XML_CONFIG14_V12_2:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config14_v12_2.xml");
+		break;
+	case IDR_XML_CONFIG19_V12_5:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config19_v12_5.xml");
+		break;
+	case IDR_XML_CONFIG20_V12_6:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config20_v12_6.xml");
+		break;
+	case IDR_XML_CONFIG21_V12_7:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config21_v12_7.xml");
+		break;
+	case IDR_XML_CONFIG22_V12_7:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config22_v12_7.xml");
+		break;
+	case IDR_XML_CONFIG23_V12_8:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config23_v12_8.xml");
+		break;
+	case IDR_XML_CONFIG24_V12_8:
+		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config24_v12_8.xml");
+		break;
+	}
+	if (!tree->LoadXMLFile(filename.c_str(), errMsg))
+	{
+		DumpErrorMessage(errMsg);
+		tree.reset();
+	}
 #else
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(id), _T("XML"));
 	if (hrSrc)
