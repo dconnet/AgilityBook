@@ -232,8 +232,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 	}
 }
 
-
-#else
+#else // WXWIDGETS
 
 // [Copied from xerces DOMPrint.cpp sample code, with my comments added]
 // ---------------------------------------------------------------------------
