@@ -13,4 +13,8 @@
 		Name="VCResourceCompilerTool"
 		AdditionalIncludeDirectories="C:\wx\include"
 	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib version.lib htmlhelp.lib"
+	/>
 </VisualStudioPropertySheet>
