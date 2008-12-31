@@ -12,12 +12,14 @@
 # 2005-01-23 DRC Added History.html creation from a template.
 # 2004-05-20 DRC Created
 
-"""BuildHelp configuration compiler
+"""BuildHelp configuration compiler [wx]
 configuration: Release, Debug, Unicode Release, Unicode Debug
-compiler: VC8Win32, VC8x64, VC9Win32, VC9x64
+compiler: VC8Win32, VC8x64, VC9Win32, VC9x64 [compiler+$(PlatformName)]
 """
 
 hhc = "c:\\Program Files\\HTML Help Workshop\\hhc.exe"
+# Command line addon to winzip
+winzip = "c:\Program Files\WinZip\WZZIP.EXE"
 
 import os
 import sys
@@ -35,22 +37,21 @@ def RunCommand(cmd):
 	childout.close()
 
 def main():
-	if len(sys.argv) != 3:
+	if len(sys.argv) != 3 and len(sys.argv) != 4:
 		print >>sys.stderr, "Usage: ", __doc__
 		return
 
+	bChmFile = 1
 	bin = ""
 	if sys.argv[2] == "VC8Win32":
 		bin = "..\\bin\\" + sys.argv[2]
 	elif sys.argv[2] == "VC9Win32":
 		bin = "..\\bin\\" + sys.argv[2]
-	# 64bit Parse header won't work on a 32bit os!
-	# TODO: autodetect os to allow compiling on 64bit os
-	#elif sys.argv[2] == "VC8x64":
-	#	bin = "..\\bin\\" + sys.argv[2]
 	else:
 		print >>sys.stderr, "Usage: ", __doc__
 		return
+	if len(sys.argv) == 4 and sys.argv[3] == "wx":
+		bChmFile = 0
 
 	if sys.argv[1] == "Debug":
 		bin = bin + "\\" + sys.argv[1]
@@ -80,18 +81,31 @@ def main():
 	RunCommand("python UpdateHistory.py -h")
 
 	# Now generate the chm file
-	RunCommand("\"" + hhc + "\" AgilityBook.hhp")
-	RunCommand("\"" + hhc + "\" AgilityBookFRA.hhp")
+	if bChmFile:
+		RunCommand("\"" + hhc + "\" AgilityBook.hhp")
+		RunCommand("\"" + hhc + "\" AgilityBookFRA.hhp")
+	else:
+		RunCommand("\"" + winzip + "\" -a -r -P Help\\AgilityBook.htb AgilityBook.hhp AgilityBook.hhc Index.hhk Help\AgilityBook.h Help\\AgilityBook.txt Help\\contextid.h Help\\stoplist.stp Help\\html\\*.*")
+		RunCommand("\"" + winzip + "\" -a -r -P Help\\AgilityBookFRA.htb AgilityBookFRA.hhp AgilityBook.hhc Index.hhk Help\AgilityBook.h Help\\AgilityBookFRA.txt Help\\contextid.h Help\\stoplist.stp Help\\html\\*.*")
 
 	# Finally, copy the chm file into various locations.
 	# /r:overwrite readonly, /q: don't show copied filename, /y:no prompt
 	print
-	print "Copying chm file to build output directories"
-	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC6\Release\"')
-	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC7\Release\"')
-	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC8Win32\Release\"')
-	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Release\"')
-	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Debug\"')
-	RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9x64\Release\"')
+	if bChmFile:
+		print "Copying chm file to build output directories"
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC6\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC7\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC8Win32\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Debug\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9x64\Release\"')
+	else:
+		print "Copying htb file to build output directories"
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC6\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC7\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC8Win32\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC9Win32\Release\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC9Win32\Debug\"')
+		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC9x64\Release\"')
 
 main()

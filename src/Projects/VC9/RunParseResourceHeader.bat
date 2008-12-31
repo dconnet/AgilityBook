@@ -31,12 +31,12 @@ goto done
 
 :run
 cd %1..\..
-python BuildHelp.py %2 VC9%3
+python BuildHelp.py %2 VC9%3 %4
 
 goto done
 
 :usage
-echo Usage: %0 ProjectDirectory Configuration PlatformName
+echo Usage: %0 ProjectDirectory Configuration PlatformName [wx]
 echo PlatformName = Win32 x64
 echo Ex (in devenv postbuild): %0 "$(ProjectDir)" "$(ConfigurationName)" $(PlatformName)
 
