@@ -85,27 +85,27 @@ def main():
 		RunCommand("\"" + hhc + "\" AgilityBook.hhp")
 		RunCommand("\"" + hhc + "\" AgilityBookFRA.hhp")
 	else:
-		RunCommand("\"" + winzip + "\" -a -r -P Help\\AgilityBook.htb AgilityBook.hhp AgilityBook.hhc Index.hhk Help\AgilityBook.h Help\\AgilityBook.txt Help\\contextid.h Help\\stoplist.stp Help\\html\\*.*")
-		RunCommand("\"" + winzip + "\" -a -r -P Help\\AgilityBookFRA.htb AgilityBookFRA.hhp AgilityBook.hhc Index.hhk Help\AgilityBook.h Help\\AgilityBookFRA.txt Help\\contextid.h Help\\stoplist.stp Help\\html\\*.*")
+		RunCommand("\"" + winzip + "\" -a -r -P Help\\AgilityBook-en.htb AgilityBook.hhp AgilityBook.hhc Index.hhk Help\AgilityBook.h Help\\AgilityBook.txt Help\\contextid.h Help\\stoplist.stp Help\\html\\*.*")
+		RunCommand("\"" + winzip + "\" -a -r -P Help\\AgilityBook-fr.htb AgilityBookFRA.hhp AgilityBook.hhc Index.hhk Help\AgilityBook.h Help\\AgilityBookFRA.txt Help\\contextid.h Help\\stoplist.stp Help\\html\\*.*")
 
 	# Finally, copy the chm file into various locations.
 	# /r:overwrite readonly, /q: don't show copied filename, /y:no prompt
 	print
 	if bChmFile:
 		print "Copying chm file to build output directories"
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC6\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC7\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC8Win32\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9Win32\Debug\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm "..\bin\VC9x64\Release\"')
+		for dir in (r'"..\bin\VC6\Release\"', r'"..\bin\VC7\Release\"', r'"..\bin\VC8Win32\Release\"', r'"..\bin\VC9Win32\Release\"', r'"..\bin\VC9Win32\Debug\"'):
+			RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.chm ' + dir)
 	else:
 		print "Copying htb file to build output directories"
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC6\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC7\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC8Win32\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC9Win32\Release\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC9Win32\Debug\"')
-		RunCommand(r'%systemroot%\system32\xcopy /r/q/y Help\*.htb "..\bin\VC9x64\Release\"')
+		for langdir in ("en", "fr"):
+			for dir in (r'..\bin\VC6\Release', r'..\bin\VC7\Release', r'..\bin\VC8Win32\Release', r'..\bin\VC9Win32\Release', r'..\bin\VC9Win32\Debug'):
+				if not os.access(dir, os.F_OK):
+					os.mkdir(dir)
+				if not os.access(dir + '\\lang', os.F_OK):
+					os.mkdir(dir + '\\lang')
+				if not os.access(dir + '\\lang\\' + langdir, os.F_OK):
+					os.mkdir(dir + '\\lang\\' + langdir)
+				RunCommand(r'copy /b/y Help\AgilityBook-' + langdir + r'.htb ' + dir + '\\lang\\' + langdir + r'\AgilityBook.htb')
+
 
 main()
