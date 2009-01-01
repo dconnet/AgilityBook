@@ -106,7 +106,7 @@ BEGIN
             VALUE "FileDescription", "Agility Record Book WinUnit tester"
 			VALUE "FileVersion",     "1.0.0.0"
 			VALUE "InternalName",    "TestARB.dll"
-            VALUE "LegalCopyright", "Copyright © 2008 David Connet. All Rights Reserved."
+            VALUE "LegalCopyright", "Copyright © 2008-2009 David Connet. All Rights Reserved."
 			VALUE "OriginalFilename","TestARB.dll"
             VALUE "ProductName", "Agility Record Book Test Script"
             VALUE "ProductVersion", "1.0.0.0"
