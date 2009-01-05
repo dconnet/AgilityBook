@@ -3,6 +3,13 @@ REM This script is called in the post-build step to run the unittest program
 if (%1)==() goto usage
 if (%2)==() goto usage
 
+if ("%3")==("wx") goto genFiles
+goto testArg2
+:genFiles
+REM Create "TestARB.exe.dat"
+"c:\Program Files\WinZip\WZZIP.EXE" -a %1.dat ..\..\Win\res\DefaultConfig.xml ..\..\TestARB\res\*.xml
+
+:testArg2
 if ("%2")==("Win32") goto w32
 if ("%2")==("x64") goto x64
 
@@ -32,6 +39,6 @@ goto done
 :usage
 echo Usage: RunTests.bat Executable PlatformName
 echo PlatformName = Win32 x64
-echo Ex (in devenv postbuild): RunTests.bat "$(TargetPath)" $(PlatformName)
+echo Ex (in devenv postbuild): RunTests.bat "$(TargetPath)" $(PlatformName) [wx]
 
 :done
