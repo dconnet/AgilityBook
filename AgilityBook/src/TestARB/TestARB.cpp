@@ -42,6 +42,14 @@
 #include "Element.h"
 #include "resource.h"
 
+#ifdef WXWIDGETS
+#include "ConfigHandler.h"
+#include "wx/app.h"
+#include <wx/filesys.h>
+#include <wx/fs_zip.h>
+#include <wx/stdpaths.h>
+#endif
+
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
 #define UT_NAME			"UnitTest++.VC7"
 #elif _MSC_VER >= 1400 && _MSC_VER < 1500
@@ -78,7 +86,10 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/ [])
 #ifdef _WIN32
 	_set_error_mode(_OUT_TO_MSGBOX);
 #endif
-#ifndef WXWIDGETS
+#ifdef WXWIDGETS
+	wxInitializer initializer;
+	wxFileSystem::AddHandler(new wxZipFSHandler);
+#else
 	AfxSetResourceHandle(GetModuleHandle(NULL));
 #endif
 
@@ -106,45 +117,48 @@ ElementNodePtr LoadXMLData(UINT id)
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
 #ifdef WXWIDGETS
-#pragma message PRAGMA_MESSAGE("TODO")
-	tstring filename;
+	wxString datafile = wxFileName::FileName(wxStandardPaths::Get().GetExecutablePath()).GetFullName();
+	datafile += wxT(".dat");
+	bool bOk = false;
+	std::string data;
 	switch (id)
 	{
 	case IDR_XML_DEFAULT_CONFIG:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\Win\\res\\DefaultConfig.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("DefaultConfig.xml"), data);
 		break;
 	case IDR_XML_CONFIG08_V10_2:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config08_v10_2.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config08_v10_2.xml"), data);
 		break;
 	case IDR_XML_CONFIG09_V11_0:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config09_v11_0.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config09_v11_0.xml"), data);
 		break;
 	case IDR_XML_CONFIG12_V12_1:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config12_v12_1.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config12_v12_1.xml"), data);
 		break;
 	case IDR_XML_CONFIG14_V12_2:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config14_v12_2.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config14_v12_2.xml"), data);
 		break;
 	case IDR_XML_CONFIG19_V12_5:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config19_v12_5.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config19_v12_5.xml"), data);
 		break;
 	case IDR_XML_CONFIG20_V12_6:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config20_v12_6.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config20_v12_6.xml"), data);
 		break;
 	case IDR_XML_CONFIG21_V12_7:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config21_v12_7.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config21_v12_7.xml"), data);
 		break;
 	case IDR_XML_CONFIG22_V12_7:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config22_v12_7.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config22_v12_7.xml"), data);
 		break;
 	case IDR_XML_CONFIG23_V12_8:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config23_v12_8.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config23_v12_8.xml"), data);
 		break;
 	case IDR_XML_CONFIG24_V12_8:
-		filename = wxT("\\AgilityBook\\src\\AgilityBook\\src\\TestARB\\res\\Config24_v12_8.xml");
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config24_v12_8.xml"), data);
 		break;
 	}
-	if (!tree->LoadXMLFile(filename.c_str(), errMsg))
+	assert(bOk);
+	if (!tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
 	{
 		DumpErrorMessage(errMsg);
 		tree.reset();
