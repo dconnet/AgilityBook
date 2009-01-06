@@ -23,15 +23,15 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 UnitTest++: http://unittest-cpp.sourceforge.net/
-I'm currently using the SVN head (as of 2/19/2008, subject to change)
+I'm currently using version 1.4
 If you don't want to run the unit tests, this is not required.
 All project files have been copied/renamed/modified such that:
  "vsnet..." to "VC..."
  OutputDirectory: $(SolutionDir)\bin\$(PlatformName)
  IntermediateDirectory: $(OutDir)\$(ConfigurationName)\$(ProjectName)
- Unicode/Non-unicode/LIB/DLL configs added to all projects (except vc7)
+ Unicode/Non-unicode/LIB/DLL configs added to VC9 projects
  .lib names changed to UnitTest++.VC<vcversion>[S][U][D].lib
- VC8/9 projects now use common vsprops files
+ Projects now use common vsprops files
   - common, debug dll, debug lib, debug settings, (and release versions)
 
 --------------------
@@ -47,16 +47,16 @@ the compiler options (Tools->Options, Directories tab):
 --------------------
 
 Boost: http://www.boost.org.
-ARB has been built and tested using Boost version 1.36.0. There is no need
+ARB has been built and tested using Boost version 1.37.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
-[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1
+[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1, 1.36.0
 however, VC9 requires some tweaks to use versions older than 1.35.1]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked in boost_1_34_0 (of course,
+above. The default directory when unpacked is boost_1_34_0 (of course,
 this will vary based on boost version). This should be renamed to 'boost'
 to avoid problems in the project files.
-- Boost is no longer required when using VC9+SP1 (or FeaturePack). Note, the
+- Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
 
 --------------------
@@ -76,7 +76,7 @@ By default, it will create installers using WiX.
 
 Xerces-C: http://xml.apache.org/dist/xerces-c/.
 This used to be an external package, but has now been moved into ARBs
-codeline as of v1.9.2.12. Xerces will now be upgraded as needed. [current 2.8]
+codeline as of v1.9.2.12. Xerces will now be upgraded as needed. [current 3.0]
 
 [old comments]
 This program has been tested with 2.2 and 2.7 dlls.
