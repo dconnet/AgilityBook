@@ -660,8 +660,7 @@ BOOL CWizardStart::OnWizardFinish()
 					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 					{
 						CConfigHandler handler;
-						std::string dtd = ARBConfig::GetDTD(&handler);
-						tree->SaveXML(file.GetFileName(), &dtd);
+						tree->SaveXML(file.GetFileName(), ARBConfig::GetDTD(&handler));
 					}
 					bOk = true;
 				}

@@ -30,9 +30,10 @@
  * @brief Tree structure to store XML.
  * @author David Connet
  *
- * Actual reading and writing of XML is done using Xerces.
+ * Actual reading and writing of XML is done using Xerces (or wxWidgets)
  *
  * Revision History
+ * @li 2009-01-05 DRC Added libxml2 support
  * @li 2008-12-27 DRC Added wxWidget support (xml)
  * @li 2008-11-02 DRC Added xerces 3.0 support
  * @li 2007-09-06 DRC Added GetNthElementNode
@@ -57,12 +58,33 @@
 #include "ARBStructure.h"
 #include "ARBTypes.h"
 
-#ifdef WXWIDGETS
+#if defined(WXWIDGETS)
+#define USE_WXWIDGETS	1
+#else
+#define USE_WXWIDGETS	0
+#endif
+#if defined(XERCES_STATIC_LIBRARY)
+#define USE_XERCES		1
+#else
+#define USE_XERCES		0
+#endif
+// There's no define we're setting for libxml yet.
+#define USE_LIBXML		0
+
+#if USE_WXWIDGETS && USE_XERCES && USE_LIBXML
+#error Pick only one XML library.
+#endif
+#if !USE_WXWIDGETS && !USE_XERCES && !USE_LIBXML
+#error No XML parser defined.
+#endif
+
+#if USE_WXWIDGETS
 #include <wx/mstream.h>
 #include <wx/stream.h>
 #include <wx/xml/xml.h>
+#pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
 
-#else // WXWIDGETS
+#elif USE_XERCES
 #if _MSC_VER >= 1300
 #pragma warning ( push )
 // Since we treat warnings as errors, turn off some xerces warnings.
@@ -104,7 +126,16 @@
 #pragma warning ( pop )
 #endif
 XERCES_CPP_NAMESPACE_USE
-#endif // WXWIDGETS
+
+#elif USE_LIBXML
+#include "libxml/encoding.h"
+#include "libxml/parser.h"
+#include "libxml/xmlIO.h"
+#include "libxml/xmlreader.h"
+#include "libxml/xmlstring.h"
+#include "libxml/xmlwriter.h"
+
+#endif
 
 #if _MSC_VER < 1300
 using namespace std;
@@ -119,7 +150,7 @@ using namespace std;
 bool Element::Initialize(tstring& outMsg)
 {
 	outMsg.erase();
-#ifndef WXWIDGETS
+#if USE_XERCES
 	try
 	{
 		XMLPlatformUtils::Initialize();
@@ -136,16 +167,21 @@ bool Element::Initialize(tstring& outMsg)
 #endif
 		return false;
 	}
-#endif // WXWIDGETS
+#elif USE_LIBXML
+	xmlInitParser();
+	xmlSubstituteEntitiesDefault(1);
+#endif
 	return true;
 }
 
 
 void Element::Terminate()
 {
-#ifndef WXWIDGETS
+#if USE_XERCES
 	XMLPlatformUtils::Terminate();
-#endif // WXWIDGETS
+#elif USE_LIBXML
+	xmlCleanupParser();
+#endif
 }
 
 
@@ -161,7 +197,7 @@ Element::~Element()
 
 ////////////////////////////////////////////////////////////////////////////
 
-#ifdef WXWIDGETS
+#if USE_WXWIDGETS
 
 static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 {
@@ -232,7 +268,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 	}
 }
 
-#else // WXWIDGETS
+#elif USE_XERCES
 
 // [Copied from xerces DOMPrint.cpp sample code, with my comments added]
 // ---------------------------------------------------------------------------
@@ -1130,7 +1166,125 @@ std::ostream& operator<<(
 	return target;
 }
 
-#endif // WXWIDGETS
+#elif USE_LIBXML
+
+class XMLstring : public std::basic_string<xmlChar>
+{
+public:
+	XMLstring() {}
+	XMLstring(std::string const& inStr)
+		: std::basic_string<xmlChar>((xmlChar*)inStr.c_str())
+	{
+	}
+	XMLstring(std::wstring const& inStr)
+	{
+		std::string str = tstringUtil::Convert(inStr);
+		operator=(str.c_str());
+	}
+	XMLstring& operator=(std::string const& inStr)
+	{
+		std::basic_string<xmlChar>::operator=((xmlChar*)inStr.c_str());
+		return *this;
+	}
+	XMLstring& operator=(std::wstring const& inStr)
+	{
+		std::string str = tstringUtil::Convert(inStr);
+		operator=(str.c_str());
+		return *this;
+	}
+	XMLstring& operator=(const char* inStr)
+	{
+		std::basic_string<xmlChar>::operator=((xmlChar*)inStr);
+		return *this;
+	}
+	XMLstring& operator=(const wchar_t* inStr)
+	{
+		std::string str = tstringUtil::Convert(inStr);
+		operator=(str.c_str());
+		return *this;
+	}
+};
+
+
+class StringDOM : public tstring
+{
+public:
+	StringDOM() {}
+	StringDOM(const xmlChar* inStr)
+#ifndef UNICODE
+		: std::string((const char*)inStr)
+#endif
+	{
+#ifdef UNICODE
+		tstring::operator=(tstringUtil::Convert((const char*)inStr));
+#endif
+	}
+};
+
+
+static void ReadDoc(xmlNode* inNode, ElementNodePtr tree)
+{
+	if (!inNode)
+		return;
+	for (xmlAttr* attrib = inNode->properties; attrib; attrib = attrib->next)
+	{
+		tree->AddAttrib(StringDOM(attrib->name), StringDOM(attrib->children->content));
+	}
+	for (xmlNode* child = inNode->children; child; child = child->next)
+	{
+		if (child->type == XML_ELEMENT_NODE)
+		{
+			ElementNodePtr subtree = tree->AddElementNode(StringDOM(child->name));
+			ReadDoc(child, subtree);
+		}
+		else if (child->type == XML_TEXT_NODE)
+		{
+			tree->SetValue(StringDOM(child->content));
+		}
+	}
+}
+
+
+static void CreateDoc(xmlTextWriterPtr formatter, xmlOutputBufferPtr outputBuffer, ElementNode const& toWrite)
+{
+	int i;
+	for (i = 0; i < toWrite.GetAttribCount(); ++i)
+	{
+		tstring name, value;
+		toWrite.GetNthAttrib(i, name, value);
+		XMLstring name2(name);
+		XMLstring value2(value);
+		xmlTextWriterWriteAttribute(formatter, name2.c_str(), value2.c_str());
+		xmlOutputBufferFlush(outputBuffer);
+	}
+	int count = toWrite.GetElementCount();
+	for (i = 0; i < count; ++i)
+	{
+		ElementPtr element = toWrite.GetElement(i);
+		switch (element->GetType())
+		{
+		case Element::Element_Node:
+			{
+				XMLstring name(element->GetName());
+				xmlTextWriterStartElement(formatter, name.c_str());
+				xmlOutputBufferFlush(outputBuffer);
+				CreateDoc(formatter, outputBuffer, *(dynamic_cast<ElementNode*>(element.get())));
+				xmlTextWriterEndElement(formatter);
+				xmlOutputBufferFlush(outputBuffer);
+			}
+			break;
+		case Element::Element_Text:
+			{
+				XMLstring value(element->GetValue());
+				xmlTextWriterWriteString(formatter, value.c_str());
+				xmlOutputBufferFlush(outputBuffer);
+			}
+			break;
+		}
+	}
+}
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1744,24 +1898,26 @@ bool ElementNode::FindElementDeep(
 
 static bool LoadXML(
 		ElementNodePtr node,
-#ifdef WXWIDGETS
+#if USE_WXWIDGETS
 		wxXmlDocument& inSource,
-#else // WXWIDGETS
+#elif USE_XERCES
 		XERCES_CPP_NAMESPACE_QUALIFIER InputSource const& inSource,
-#endif // WXWIDGETS
+#elif USE_LIBXML
+		xmlDocPtr inSource,
+#endif
 		tstring& ioErrMsg)
 {
 	node->clear();
 	bool bOk = false;
 
-#ifdef WXWIDGETS
+#if USE_WXWIDGETS
 	if (!inSource.GetRoot())
 		return bOk;
 	node->SetName(inSource.GetRoot()->GetName().c_str());
 	ReadDoc(inSource.GetRoot(), node);
 	bOk = true;
 
-#else // WXWIDGETS
+#elif USE_XERCES
 	SAX2XMLReader* parser = XMLReaderFactory::createXMLReader();
 	// On Win32, an XMLCh is a UNICODE character.
 	parser->setFeature(reinterpret_cast<XMLCh*>(L"http://xml.org/sax/features/namespaces"), false);
@@ -1802,7 +1958,16 @@ static bool LoadXML(
 		ioErrMsg += eMsg;
 	}
 	delete parser;
-#endif // WXWIDGETS
+
+#elif USE_LIBXML
+	xmlNode* root = xmlDocGetRootElement(inSource);
+	if (!root)
+		return bOk;
+	node->SetName(StringDOM(root->name));
+	ReadDoc(root, node);
+	bOk = true;
+#endif
+
 	return bOk;
 }
 
@@ -1812,15 +1977,27 @@ bool ElementNode::LoadXMLBuffer(
 		size_t nData,
 		tstring& ioErrMsg)
 {
-#ifdef WXWIDGETS
+#if USE_WXWIDGETS
 	wxXmlDocument source;
 	wxMemoryInputStream input(inData, nData);
 	if (!source.Load(input))
 		return false;
-#else // WXWIDGETS
+#elif USE_XERCES
 	MemBufInputSource source(reinterpret_cast<XMLByte const*>(inData), nData, "buffer");
-#endif // WXWIDGETS
-	return LoadXML(m_Me.lock(), source, ioErrMsg);
+#elif USE_LIBXML
+	xmlDocPtr source = xmlReadMemory(inData, nData, NULL, NULL, 0);
+#endif
+
+	bool rc = LoadXML(m_Me.lock(), source, ioErrMsg);
+
+#if USE_WXWIDGETS
+#elif USE_XERCES
+#elif USE_LIBXML
+	if (source)
+		xmlFreeDoc(source);
+#endif
+
+	return rc;
 }
 
 
@@ -1828,65 +2005,120 @@ bool ElementNode::LoadXMLFile(
 		TCHAR const* inFileName,
 		tstring& ioErrMsg)
 {
-#ifdef WXWIDGETS
+#if USE_WXWIDGETS
 	wxXmlDocument source;
 	if (!source.Load(inFileName))
 		return false;
-#else // WXWIDGETS
+#elif USE_XERCES
 	XMLstring fileName(inFileName);
 	LocalFileInputSource source(fileName.c_str());
-#endif // WXWIDGETS
-	return LoadXML(m_Me.lock(), source, ioErrMsg);
+#elif USE_LIBXML
+	std::string filename = tstringUtil::Convert(inFileName);
+	xmlDocPtr source = xmlReadFile(filename.c_str(), NULL, 0);
+#endif
+
+	bool rc = LoadXML(m_Me.lock(), source, ioErrMsg);
+
+#if USE_WXWIDGETS
+#elif USE_XERCES
+#elif USE_LIBXML
+	if (source)
+		xmlFreeDoc(source);
+#endif
+
+	return rc;
 }
 
 
-#ifndef _WIN32
-#define _tcscmp		strcmp
+#if USE_LIBXML
+static int BufferWriteCallback(void* context, const char* buffer, int len)
+{
+	if (!context)
+		return -1;
+	std::ostream* output = reinterpret_cast<std::ostream*>(context);
+	output->write(buffer, len);
+	return len;
+}
+static int BufferCloseCallback(void* context)
+{
+	// don't close
+	return 0;
+}
 #endif
+
+
+bool ElementNode::SaveXML(std::ostream& outOutput) const
+{
+	std::string dtd;
+	return SaveXML(outOutput, dtd);
+}
+
 
 bool ElementNode::SaveXML(
 		std::ostream& outOutput,
-		std::string const* inDTD) const
+		std::string const& inDTD) const
 {
-#ifdef WXWIDGETS
+#if USE_WXWIDGETS
 	wxXmlDocument doc;
 	doc.SetVersion(wxT("1.0"));
 	doc.SetFileEncoding(wxT("utf-8"));
 	wxXmlNode* root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, GetName().c_str());
 	doc.SetRoot(root);
+	// TODO: Insert DTD
 	CreateDoc(root, *this);
 	CWrapSTLStream output(outOutput);
 	return doc.Save(output, 1);
 
-#else // WXWIDGETS
+#elif USE_XERCES || USE_LIBXML
 	// On Win32, an XMLCh is a UNICODE character.
-	XMLCh* encodingName = reinterpret_cast<XMLCh*>(L"utf-8");
-	CXMLFormatTarget formatTarget(outOutput);
 	outOutput << "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-	if (inDTD && 0 < inDTD->length())
+	if (!inDTD.empty())
 	{
-		const char* treeBook = "AgilityBook";
-#ifdef _DEBUG
-		assert(0 == _tcscmp(TREE_BOOK, _T("AgilityBook")));
+#ifdef UNICODE
+		std::string rootName = tstringUtil::Convert(GetName());
+#else
+		std::string rootName = GetName();
 #endif
-		outOutput << "<!DOCTYPE " << treeBook << " [\n";
-		outOutput << *inDTD;
+		outOutput << "<!DOCTYPE " << rootName << " [\n";
+		outOutput << inDTD;
 		outOutput << "\n]>\n";
 	}
+#if USE_XERCES
+	CXMLFormatTarget formatTarget(outOutput);
 	gIndentLevel = 0;
-	gFormatter = new XMLFormatter(encodingName, &formatTarget,
+	gFormatter = new XMLFormatter(reinterpret_cast<XMLCh*>(L"utf-8"), &formatTarget,
 		XMLFormatter::NoEscapes, XMLFormatter::UnRep_CharRef);
 	outOutput << *this;
 	delete gFormatter;
 	gFormatter = NULL;
+#elif USE_LIBXML
+	xmlOutputBufferPtr outputBuffer = xmlOutputBufferCreateIO(BufferWriteCallback, BufferCloseCallback, (void*)(&outOutput), NULL);
+	xmlTextWriterPtr formatter = xmlNewTextWriter(outputBuffer);
+	xmlTextWriterSetIndent(formatter, 2); // Only puts out 1 space no matter what.
+	xmlTextWriterSetIndentString(formatter, BAD_CAST "\t");
+	XMLstring name(GetName());
+	xmlTextWriterStartElement(formatter, name.c_str());
+	xmlOutputBufferFlush(outputBuffer);
+	CreateDoc(formatter, outputBuffer, *this);
+	xmlTextWriterEndElement(formatter);
+	xmlOutputBufferFlush(outputBuffer);
+	xmlFreeTextWriter(formatter);
+#endif
 	return true;
-#endif // WXWIDGETS
+#endif
+}
+
+
+bool ElementNode::SaveXML(TCHAR const* outFile) const
+{
+	std::string dtd;
+	return SaveXML(outFile, dtd);
 }
 
 
 bool ElementNode::SaveXML(
 		TCHAR const* outFile,
-		std::string const* inDTD) const
+		std::string const& inDTD) const
 {
 	bool bOk = false;
 	if (!outFile)

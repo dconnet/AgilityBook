@@ -397,13 +397,29 @@ public:
 	/**
 	 * Save this element to the given output stream.
 	 * @param outStream Stream to write tree to.
+	 * @retval true Tree successfully written.
+	 * @retval false Tree failed to save.
+	 */
+	bool SaveXML(std::ostream& outStream) const;
+
+	/**
+	 * Save this element to the given output stream.
+	 * @param outStream Stream to write tree to.
 	 * @param inDTD DTD to include in generation of XML file.
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
 	bool SaveXML(
 			std::ostream& outStream,
-			std::string const* inDTD = NULL) const;
+			std::string const& inDTD) const;
+
+	/**
+	 * Save this element to the given file.
+	 * @param outFile File to write tree to.
+	 * @retval true Tree successfully written.
+	 * @retval false Tree failed to save.
+	 */
+	bool SaveXML(TCHAR const* outFile) const;
 
 	/**
 	 * Save this element to the given file.
@@ -414,7 +430,7 @@ public:
 	 */
 	bool SaveXML(
 			TCHAR const* outFile,
-			std::string const* inDTD = NULL) const;
+			std::string const& inDTD) const;
 
 protected:
 	void RemoveAllTextNodes();
