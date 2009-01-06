@@ -13,7 +13,10 @@
 # 2004-05-20 DRC Created
 
 """BuildHelp configuration compiler [wx]
-configuration: Release, Debug, Unicode Release, Unicode Debug
+configuration:
+  Release, Debug (all compilers [mbcs: vc6/7/8, unicode: vc9])
+  Unicode Release, Unicode Debug (vc6/7/8)
+  Debug - No Unicode, Release - No Unicode (vc9)
 compiler: VC8Win32, VC8x64, VC9Win32, VC9x64 [compiler+$(PlatformName)]
 """
 
