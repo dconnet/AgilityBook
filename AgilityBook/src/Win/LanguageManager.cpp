@@ -94,8 +94,11 @@ BOOL CALLBACK EnumLangProc(HANDLE, LPCTSTR, LPCTSTR, WORD wIDLanguage, LONG_PTR 
 {
     PLANGINFO LangInfo = reinterpret_cast<PLANGINFO>(lParam);
 	assert(LangInfo);
-    ++LangInfo->Count;
-    LangInfo->LangID = wIDLanguage;
+	if (LangInfo)
+	{
+	    ++LangInfo->Count;
+		LangInfo->LangID = wIDLanguage;
+	}
     return TRUE; // continue enumeration
 }
 

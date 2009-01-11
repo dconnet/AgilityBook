@@ -202,16 +202,16 @@ void CAgilityBookDoc::StatusBarContextMenu(UINT id, CPoint point)
 			ARBDogPtr curDog = GetCurrentDog();
 			CMenu menu;
 			menu.CreatePopupMenu();
-			UINT id = baseID;
+			UINT menuId = baseID;
 			std::vector<ARBDogPtr> dogs;
-			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++id)
+			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 			{
 				UINT flags = MF_STRING | MF_ENABLED;
 				if (*(*iDog) == *curDog)
 					flags |= MF_CHECKED;
 				CString item((*iDog)->GetGenericName().c_str());
 					item.Replace(_T("&"), _T("&&"));
-				menu.AppendMenu(flags, id, item);
+				menu.AppendMenu(flags, menuId, item);
 				dogs.push_back(*iDog);
 			}
 			UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
@@ -234,15 +234,15 @@ void CAgilityBookDoc::StatusBarContextMenu(UINT id, CPoint point)
 				tstring m_FilterName = m_FilterOptions.GetCurrentFilter();
 				CMenu menu;
 				menu.CreatePopupMenu();
-				UINT id = baseID;
-				for (std::vector<tstring>::const_iterator iFilter = filterNames.begin(); iFilter != filterNames.end(); ++iFilter, ++id)
+				UINT menuId = baseID;
+				for (std::vector<tstring>::const_iterator iFilter = filterNames.begin(); iFilter != filterNames.end(); ++iFilter, ++menuId)
 				{
 					UINT flags = MF_STRING | MF_ENABLED;
 					if (*iFilter == m_FilterName)
 						flags |= MF_CHECKED;
 					CString item((*iFilter).c_str());
 					item.Replace(_T("&"), _T("&&"));
-					menu.AppendMenu(flags, id, item);
+					menu.AppendMenu(flags, menuId, item);
 				}
 				UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
 				if (baseID <= ret && ret < filterNames.size() + baseID)

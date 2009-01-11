@@ -637,11 +637,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\ConfigHandler.h"
+				RelativePath="..\..\Win\CommonView.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\CommonView.h"
+				RelativePath="..\..\Win\ConfigHandler.h"
 				>
 			</File>
 			<File

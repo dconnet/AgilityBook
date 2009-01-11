@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-11 DRC Fixed a bug that added an 8th day to week.
  * @li 2006-11-22 DRC Turned this into Calendar only, created new Print page.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
@@ -172,7 +173,7 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 		LOCALE_SDAYNAME6
 	};
 	LANGID id = theApp.LanguageManager().CurrentLanguage();
-	for (idx = 0; idx <= 7; ++idx)
+	for (idx = 0; idx < 7; ++idx)
 	{
 		CString str;
 		GetLocaleInfo(id, days[idx], str.GetBuffer(80), 80);

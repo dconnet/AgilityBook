@@ -603,11 +603,11 @@ SOURCE=..\..\Win\ComboBox.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\ConfigHandler.h
+SOURCE=..\..\Win\CommonView.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\CommonView.h
+SOURCE=..\..\Win\ConfigHandler.h
 # End Source File
 # Begin Source File
 
