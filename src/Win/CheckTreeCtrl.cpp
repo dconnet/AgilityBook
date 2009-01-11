@@ -234,7 +234,7 @@ void CCheckTreeCtrl::OnLButtonDown(
 		UINT nFlags,
 		CPoint point) 
 {
-	UINT flags;
+	UINT flags = 0;
 	HTREEITEM hItem = HitTest(point, &flags);
 	if (hItem && (TVHT_ONITEMSTATEICON & flags) && IsCheckVisible(hItem))
 	{

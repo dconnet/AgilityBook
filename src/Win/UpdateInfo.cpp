@@ -300,17 +300,17 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				}
 				else if (node->GetName() == _T("DisableCalPlugin"))
 				{
-					tstring file, ver;
-					node->GetAttrib(_T("file"), file);
+					tstring filename, ver;
+					node->GetAttrib(_T("file"), filename);
 					node->GetAttrib(_T("ver"), ver);
 					// The 'enable' attribute is in case we prematurely disable
 					bool bEnable = false;
 					node->GetAttrib(_T("enable"), bEnable);
 					CVersionNum vernum;
-					vernum.Parse(file.c_str(), ver.c_str());
+					vernum.Parse(filename.c_str(), ver.c_str());
 					if (vernum.Valid())
 					{
-						CAgilityBookOptions::SuppressCalSitePermanently(file.c_str(), vernum, !bEnable);
+						CAgilityBookOptions::SuppressCalSitePermanently(filename.c_str(), vernum, !bEnable);
 					}
 				}
 			}

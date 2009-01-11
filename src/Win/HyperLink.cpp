@@ -618,7 +618,7 @@ void CHyperLink::SetDefaultCursor()
 			HCURSOR hHandCursor = ::LoadCursor(hModule, MAKEINTRESOURCE(106));
 			if (hHandCursor)
 				m_hLinkCursor = CopyCursor(hHandCursor);
+			FreeLibrary(hModule);
 		}
-		FreeLibrary(hModule);
 	}
 }
