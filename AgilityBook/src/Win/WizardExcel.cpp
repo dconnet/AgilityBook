@@ -772,7 +772,7 @@ bool CWizardExcelImport::GetData(
 		IDlgProgress* ioProgress)
 {
 	outData.clear();
-	if (NULL != m_Worksheet.m_lpDispatch)
+	if (NULL == m_Worksheet.m_lpDispatch)
 		return false;
 	try
 	{
