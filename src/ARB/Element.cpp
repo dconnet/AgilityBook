@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces (or wxWidgets)
  *
  * Revision History
+ * @li 2009-02-08 DRC Fix wxWidget xml creation
  * @li 2009-01-05 DRC Added libxml2 support
  * @li 2008-12-27 DRC Added wxWidget support (xml)
  * @li 2008-11-02 DRC Added xerces 3.0 support
@@ -249,6 +250,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		node->AddProperty(name.c_str(), value.c_str());
 	}
 	int count = toWrite.GetElementCount();
+	wxXmlNode* lastChild = NULL;
 	for (i = 0; i < count; ++i)
 	{
 		ElementPtr element = toWrite.GetElement(i);
@@ -256,13 +258,20 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		{
 		case Element::Element_Node:
 			{
-				wxXmlNode* child = new wxXmlNode(node, wxXML_ELEMENT_NODE, element->GetName().c_str());
-				node->AddChild(child);
+				wxXmlNode* child = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, element->GetName().c_str());
+				if (lastChild)
+					lastChild->SetNext(child);
+				else
+					node->AddChild(child);
+				lastChild = child;
 				CreateDoc(child, *(dynamic_cast<ElementNode*>(element.get())));
 			}
 			break;
 		case Element::Element_Text:
-			node->SetContent(element->GetValue().c_str());
+			{
+				wxXmlNode* child = new wxXmlNode(NULL, wxXML_TEXT_NODE, element->GetName().c_str(), element->GetValue().c_str());
+				node->AddChild(child);
+			}
 			break;
 		}
 	}
