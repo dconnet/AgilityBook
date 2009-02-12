@@ -53,6 +53,7 @@ class ARBMetaData
 	ARBMetaData();
 public:
 	static ARBMetaDataPtr MetaData();
+	void Clear();
 	~ARBMetaData();
 
 	size_t length() const				{return m_Bytes;}
