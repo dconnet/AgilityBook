@@ -1,8 +1,12 @@
-2/6/2009: v1.10.10.12 <in development>
+2/12/2009: v1.10.10.12 <in development>
+- Bumped file version to 12.9:
+  - Fix metadata bug.
 - Bug fixes:
   - An error message wasn't displayed when trying to merge a bad configuration
     from a file.
   - Attempting to read directly from an excel file failed to read the data.
+  - If you copy a CRCD course into a dog's run, the icon won't go away even
+    after clearing the course.
 - New features / Enhancements:
   - When printing run details, add gray lines in comments if there is no text.
 

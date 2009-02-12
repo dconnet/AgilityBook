@@ -36,6 +36,7 @@
  * Note: The original code wrote lines with "\r\n". We don't.
  *
  * Revision History
+ * @li 2009-02-12 DRC Encoding/decoding 0 bytes should fail.
  * @li 2004-04-27 DRC Decoding: Did not properly compute the data length.
  *                    Encoding: Problem encoding 1 and 2 byte buffers.
  * @li 2004-03-06 DRC Created
@@ -116,7 +117,7 @@ bool ARBBase64::Decode(
 {
 	outBinData = NULL;
 	outBytes = 0;
-	if (0 == inBase64.length())
+	if (inBase64.empty())
 		return false;
 
 	size_t bufsize = inBase64.length();
@@ -209,118 +210,118 @@ bool ARBBase64::Encode(
 		size_t inBytes,
 		tstring& outData)
 {
+	outData.clear();
+	if (0 == inBytes || !inBinData || !*inBinData)
+		return false;
 	unsigned char* encoded = NULL;
-	if (inBinData != NULL && 0 < inBytes)
+	size_t alsize = (inBytes * 4) / 3;
+	encoded = new unsigned char[alsize + ((alsize / 76) * 2) + 10];
+	size_t count = 0;
+	size_t LineLen = 0;
+	unsigned char* fresult = encoded;
+	unsigned char const* s = inBinData;
+	int tmp = 0;
+	//let's step through the buffer and encode it...
+	if (inBytes > 2) // A really small buffer causes problems with the logic below
 	{
-		size_t alsize = (inBytes * 4) / 3;
-		encoded = new unsigned char[alsize + ((alsize / 76) * 2) + 10];
-		size_t count = 0;
-		size_t LineLen = 0;
-		unsigned char* fresult = encoded;
-		unsigned char const* s = inBinData;
-		int tmp = 0;
-		//let's step through the buffer and encode it...
-		if (inBytes > 2) // A really small buffer causes problems with the logic below
+		while (count <= inBytes)
 		{
-			while (count <= inBytes)
+			if (count % 3 == 0 && count != 0)
 			{
-				if (count % 3 == 0 && count != 0)
+				tmp >>= 8;
+				tmp &= 0xFFFFFF;
+				//we have 4 new b64 chars, add them to encoded
+				int mid = tmp;
+				mid >>= 18;
+				mid &= 0x3F;
+				*(fresult++) = base64chars[mid];
+				++LineLen;
+				mid = tmp;
+				mid >>= 12;
+				mid &= 0x3F;
+				*(fresult++) = base64chars[mid];
+				++LineLen;
+				mid = tmp;
+				mid >>= 6;
+				mid &= 0x3F;
+				*(fresult++) = base64chars[mid];
+				++LineLen;
+				mid = tmp;
+				mid &= 0x3F;
+				*(fresult++) = base64chars[mid];
+				++LineLen;
+				//reset tmp
+				tmp = 0;
+				// Should we break the line?
+				if (LineLen >= MaxLineLength)
 				{
-					tmp >>= 8;
-					tmp &= 0xFFFFFF;
-					//we have 4 new b64 chars, add them to encoded
-					int mid = tmp;
-					mid >>= 18;
-					mid &= 0x3F;
-					*(fresult++) = base64chars[mid];
-					++LineLen;
-					mid = tmp;
-					mid >>= 12;
-					mid &= 0x3F;
-					*(fresult++) = base64chars[mid];
-					++LineLen;
-					mid = tmp;
-					mid >>= 6;
-					mid &= 0x3F;
-					*(fresult++) = base64chars[mid];
-					++LineLen;
-					mid = tmp;
-					mid &= 0x3F;
-					*(fresult++) = base64chars[mid];
-					++LineLen;
-					//reset tmp
-					tmp = 0;
-					// Should we break the line?
-					if (LineLen >= MaxLineLength)
-					{
-						*(fresult++) = '\n';
-						LineLen = 0;
-					}
-					if (inBytes - count < 3)
-						break;
+					*(fresult++) = '\n';
+					LineLen = 0;
 				}
+				if (inBytes - count < 3)
+					break;
+			}
+			unsigned char mid = (256 - (0 - *s)) & 0xff;
+			tmp |= mid;
+			tmp <<= 8;
+			++count;
+			++s;
+		}
+	}
+	//do we have some chars left...
+	size_t rest = (inBytes - count) % 3;
+	if (rest != 0)
+	{
+		tmp = 0;
+		for (size_t i = 0; i < 3; ++i)
+		{
+			if (i < rest)
+			{
 				unsigned char mid = (256 - (0 - *s)) & 0xff;
 				tmp |= mid;
 				tmp <<= 8;
 				++count;
 				++s;
 			}
+			else
+			{
+				tmp |= 0;
+				tmp <<= 8;
+			}
 		}
-		//do we have some chars left...
-		size_t rest = (inBytes - count) % 3;
-		if (rest != 0)
+		tmp >>= 8;
+		tmp &= 0xFFFFFF;
+		//we have some new b64 chars, add them to encoded
+		int mid = tmp;
+		if (rest >= 1)
 		{
-			tmp = 0;
-			for (size_t i = 0; i < 3; ++i)
-			{
-				if (i < rest)
-				{
-					unsigned char mid = (256 - (0 - *s)) & 0xff;
-					tmp |= mid;
-					tmp <<= 8;
-					++count;
-					++s;
-				}
-				else
-				{
-					tmp |= 0;
-					tmp <<= 8;
-				}
-			}
-			tmp >>= 8;
-			tmp &= 0xFFFFFF;
-			//we have some new b64 chars, add them to encoded
-			int mid = tmp;
-			if (rest >= 1)
-			{
-				mid >>= 18;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-				mid = tmp;
-				mid >>= 12;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-			}
-			if (rest >= 2)
-			{
-				mid = tmp;
-				mid >>= 6;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-			}
-			if (rest >= 3)
-			{
-				mid = tmp;
-				mid &= 0x3F;
-				*(fresult++) = base64chars[mid];
-			}
-			for (size_t c = 3; c > rest; --c)
-			{
-				*(fresult++) = '=';
-			}
+			mid >>= 18;
+			mid &= 0x3F;
+			*(fresult++) = base64chars[mid];
+			mid = tmp;
+			mid >>= 12;
+			mid &= 0x3F;
+			*(fresult++) = base64chars[mid];
 		}
-		*(fresult++) = 0;
+		if (rest >= 2)
+		{
+			mid = tmp;
+			mid >>= 6;
+			mid &= 0x3F;
+			*(fresult++) = base64chars[mid];
+		}
+		if (rest >= 3)
+		{
+			mid = tmp;
+			mid &= 0x3F;
+			*(fresult++) = base64chars[mid];
+		}
+		for (size_t c = 3; c > rest; --c)
+		{
+			*(fresult++) = '=';
+		}
 	}
+	*(fresult++) = 0;
 	bool bOk = false;
 	if (encoded)
 	{

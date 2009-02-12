@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-12 DRC Clearing the metadata encoded a 0-length string
+ *                causing the program to think it still had metadata.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-03 DRC Added CRCDMetaFile, string of Windows Enhanced Metafile.
@@ -68,6 +70,12 @@ ARBMetaData::ARBMetaData()
 
 
 ARBMetaData::~ARBMetaData()
+{
+	Clear();
+}
+
+
+void ARBMetaData::Clear()
 {
 	BinaryData::Release(m_Data);
 }
@@ -168,8 +176,11 @@ bool ARBDogNotes::Load(
 			tstring tmp = element->GetValue();
 			unsigned char* data;
 			size_t bytes;
-			ARBBase64::Decode(tmp, data, bytes);
-			BinaryData::Encode(data, bytes, m_CRCDMeta);
+			if (ARBBase64::Decode(tmp, data, bytes))
+			{
+				if (!BinaryData::Encode(data, bytes, m_CRCDMeta))
+					m_CRCDMeta.clear();
+			}
 			ARBBase64::Release(data);
 		}
 		else if (element->GetName() == TREE_OTHER)
@@ -177,6 +188,19 @@ bool ARBDogNotes::Load(
 			m_Note = element->GetValue();
 		}
 	}
+	// Fix a bug where clearing the metadata still encoded an empty string.
+	if (inVersion < ARBVersion(12,9))
+	{
+		ARBMetaDataPtr data = ARBMetaData::MetaData();
+		if (!BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes))
+			m_CRCDMeta.clear();
+		else
+		{
+			if (data->m_Bytes == 0 || !*data->m_Data)
+				m_CRCDMeta.clear();
+		}
+	}
+
 	return true;
 }
 
@@ -223,7 +247,8 @@ bool ARBDogNotes::Save(ElementNodePtr ioTree) const
 ARBMetaDataPtr ARBDogNotes::GetCRCDMetaData() const
 {
 	ARBMetaDataPtr data = ARBMetaData::MetaData();
-	BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes);
+	if (!BinaryData::Decode(m_CRCDMeta, data->m_Data, data->m_Bytes))
+		data->Clear();
 	return data;
 }
 

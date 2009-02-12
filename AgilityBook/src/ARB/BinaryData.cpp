@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-12 DRC Encoding/decoding 0 bytes should fail.
  * @li 2008-12-13 DRC Added wxWidget support (zlib)
  * @li 2007-01-03 DRC Created
  */
@@ -64,6 +65,8 @@ bool BinaryData::Decode(
 {
 	outBinData = NULL;
 	outBytes = 0;
+	if (inBase64.empty())
+		return false;
 
 	unsigned char* pData;
 	size_t len;
@@ -151,7 +154,9 @@ bool BinaryData::Encode(
 		size_t inBytes,
 		tstring& outBase64)
 {
-	outBase64.empty();
+	outBase64.clear();
+	if (0 == inBytes)
+		return false;
 
 	size_t nData = 0;
 	unsigned char* pData = NULL;
@@ -215,7 +220,9 @@ bool BinaryData::Encode(
 		FILE* inData,
 		tstring& outBase64)
 {
-	outBase64.empty();
+	outBase64.clear();
+	if (!inData)
+		return false;
 
 	size_t nData = 0;
 	unsigned char* pData = NULL;
@@ -293,6 +300,11 @@ bool BinaryData::DecodeString(
 		tstring const& inBase64,
 		tstring& outData)
 {
+	if (inBase64.empty())
+	{
+		outData.clear();
+		return false;
+	}
 	unsigned char* data;
 	size_t len;
 	if (!BinaryData::Decode(inBase64, data, len))
@@ -312,7 +324,7 @@ bool BinaryData::EncodeString(
 		tstring const& inData,
 		tstring& outBase64)
 {
-	outBase64.empty();
+	outBase64.clear();
 	if (inData.empty())
 		return false;
 	// Do not include the null terminator. Otherwise decoding includes it into

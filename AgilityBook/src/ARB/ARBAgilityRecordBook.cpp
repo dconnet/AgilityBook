@@ -37,6 +37,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2008-02-12 DRC File version 12.9
+ *                    Fix metadata bug in dognotes.
  * @li 2008-08-05 DRC File version 12.8
  *                    Added 'style' to Title, 'Style' to 'Titles'
  * @li 2008-01-01 DRC File version 12.7. Added 'Visible' to InfoItem,
@@ -110,7 +112,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(12, 8);
+	static ARBVersion const curVersion(12, 9);
 	return curVersion;
 }
 
