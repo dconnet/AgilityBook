@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-20 DRC After editing, icon was set on wrong item.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Added 'Open' button.
  * @li 2004-03-31 DRC Created.
@@ -441,7 +442,7 @@ void CDlgFindLinks::OnEdit()
 				m_ctrlLinks.InvalidateRect(r);
 				LVITEM item;
 				item.mask = LVIF_IMAGE;
-				item.iItem = index;
+				item.iItem = nItem;
 				item.iImage = GetImageIndex(m_Data[index].m_Link);
 				m_ctrlLinks.SetItem(&item);
 			}
