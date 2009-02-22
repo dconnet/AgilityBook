@@ -338,7 +338,8 @@ Abréviation pour la récompense.
 
 .topic HIDC_CONFIG_TITLEPTS_VALUE
 Le nombre des points pénalité permis pour points Normaux et Cumulatif.
-Classement qui permet de gagner des points de Classement.
+Classement qui permet de gagner des points de Classement
+('-1' is a wildcard match for any runs with a non-zero place).
 
 .topic HIDC_CONFIG_TITLEPTS_POINTS
 Le nombre de points qui seront gagnés.

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-22 DRC Added wildcard placement points (for UK Warrant points)
  * @li 2006-11-03 DRC Created
  */
 
@@ -226,6 +227,19 @@ bool ARBConfigPlaceInfoList::FindPlaceInfo(
 			if (outPlace)
 				*outPlace = *iter;
 			return true;
+		}
+	}
+	// Special case: -1: wildcard match if none of the others matched
+	if (0 < inPlace)
+	{
+		for (const_iterator iter = begin(); iter != end(); ++iter)
+		{
+			if (-1 == (*iter)->GetPlace())
+			{
+				if (outPlace)
+					*outPlace = *iter;
+				return true;
+			}
 		}
 	}
 	return false;
