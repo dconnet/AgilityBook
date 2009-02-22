@@ -316,7 +316,8 @@ Title abbreviation.
 
 .topic HIDC_CONFIG_TITLEPTS_VALUE
 Number of faulted points allowed for Normal and Lifetime points.
-Place that earns the points for Placement points.
+Place that earns the points for Placement points
+('-1' is a wildcard match for any runs with a non-zero place).
 
 .topic HIDC_CONFIG_TITLEPTS_POINTS
 Number of points that will be earned.

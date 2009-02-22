@@ -1,4 +1,4 @@
-2/20/2009: v1.10.10.12 <in development>
+2/22/2009: v1.10.10.12 <in development>
 - Bumped file version to 12.9:
   - Fix metadata bug.
 - Bug fixes:
@@ -10,6 +10,7 @@
   - After editing a linked file, icon was set on wrong item.
 - New features / Enhancements:
   - When printing run details, add gray lines in comments if there is no text.
+  - Added wildcard placement points (for UK Warrant points) in configuration.
 
 12/19/2008: v1.10.9.12
 - Bumped Configuration v24:
