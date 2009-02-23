@@ -5,8 +5,6 @@ Additional software packages required (all free):
 - HTML Help Workshop
 - Boost libraries (not needed as of VC9+SP1)
 - Windows Installer XML toolset
-- Xerces-C (included in src tree)
-- zlib (included in src tree)
 - Doxygen (optional)
 - GraphViz (optional)
 
@@ -47,17 +45,17 @@ the compiler options (Tools->Options, Directories tab):
 --------------------
 
 Boost: http://www.boost.org.
-ARB has been built and tested using Boost version 1.37.0. There is no need
+- Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
+  included project files now assume the Service Pack is installed with VS2008.
+ARB has been built and tested using Boost version 1.38.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
-[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1, 1.36.0
+[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1, 1.36.0, 1.37.0
 however, VC9 requires some tweaks to use versions older than 1.35.1]
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked is boost_1_34_0 (of course,
 this will vary based on boost version). This should be renamed to 'boost'
 to avoid problems in the project files.
-- Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
-  included project files now assume the Service Pack is installed with VS2008.
 
 --------------------
 
@@ -74,51 +72,14 @@ By default, it will create installers using WiX.
 
 --------------------
 
-Xerces-C: http://xml.apache.org/dist/xerces-c/.
-This used to be an external package, but has now been moved into ARBs
-codeline as of v1.9.2.12. Xerces will now be upgraded as needed. [current 3.0]
-
-[old comments]
-This program has been tested with 2.2 and 2.7 dlls.
-  - AgilityBook.cpp issues some warnings/comments about the version that
-    is currently in use during compilation.
-Note: To compile for x64, (Xerces)/src/xercesc/util/AutoSense.hpp needs
-to be modified. In the '_WIN32 || WIN32' section, after:
-[Note: this is currently checked in - if using xerces separately, do this]
-    #ifndef WIN32
-      #define WIN32
-    #endif
-add
-	#if defined(_WIN64) && !defined(WIN64)
-      #define WIN64
-    #endif
-Also, the Win32/VC8/... project files should be copied to x64/VC8/...
-About the only changes were to modify the output paths, change the
-DebugInformationFormat to '3' (VCCLCompilerTool), set the TargetMachine to 17
-(VCLinkerTool) and set TargetEnvironment to 3 (VCMIDLTool). That was it.
-ARB deviates from xerces structure here - instead of creating an x64 directory,
-ARB uses VC8x64. I just didn't feel like creating another directory layer.
-[This assumes you've installed the x64 libraries with VC8]
-
---------------------
-
-zlib: http://www.zlib.net/
-This used to be an external package, but has now been moved into ARBs
-codeline as of v1.9.2.12.
-I'm currently using v1.2.3.
-The zlib source package has been pruned to just what is required.
-
---------------------
-
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.5.6.
+Used to create source code documentation. AgilityBook.dox uses v1.5.8.
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
 Used to create source code documentation. AgilityBook.dox uses v2.14.1.
-Newer versions just don't seem to work right.
 [Install to default location]
 
 
