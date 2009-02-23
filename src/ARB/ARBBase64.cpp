@@ -210,7 +210,7 @@ bool ARBBase64::Encode(
 		size_t inBytes,
 		tstring& outData)
 {
-	outData.clear();
+	outData.erase();
 	if (0 == inBytes || !inBinData || !*inBinData)
 		return false;
 	unsigned char* encoded = NULL;

@@ -154,7 +154,7 @@ bool BinaryData::Encode(
 		size_t inBytes,
 		tstring& outBase64)
 {
-	outBase64.clear();
+	outBase64.erase();
 	if (0 == inBytes)
 		return false;
 
@@ -220,7 +220,7 @@ bool BinaryData::Encode(
 		FILE* inData,
 		tstring& outBase64)
 {
-	outBase64.clear();
+	outBase64.erase();
 	if (!inData)
 		return false;
 
@@ -302,7 +302,7 @@ bool BinaryData::DecodeString(
 {
 	if (inBase64.empty())
 	{
-		outData.clear();
+		outData.erase();
 		return false;
 	}
 	unsigned char* data;
@@ -324,7 +324,7 @@ bool BinaryData::EncodeString(
 		tstring const& inData,
 		tstring& outBase64)
 {
-	outBase64.clear();
+	outBase64.erase();
 	if (inData.empty())
 		return false;
 	// Do not include the null terminator. Otherwise decoding includes it into

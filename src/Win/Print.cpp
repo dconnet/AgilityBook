@@ -770,7 +770,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 						pDC->SelectObject(oldPen);
 				}
 				if (sc_lines[j].bContinuation)
-					str.clear();
+					str.erase();
 
 				rect.InflateRect(-1, 1);
 				CRect rText(rect);
