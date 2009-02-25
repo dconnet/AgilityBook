@@ -1,6 +1,9 @@
-2/22/2009: v1.10.10.12 <in development>
+2/25/2009: v1.10.10.12
 - Bumped file version to 12.9:
   - Fix metadata bug.
+- New features / Enhancements:
+  - When printing run details, add gray lines in comments if there is no text.
+  - Added wildcard placement points (for UK Warrant points) in configuration.
 - Bug fixes:
   - An error message wasn't displayed when trying to merge a bad configuration
     from a file.
@@ -8,9 +11,6 @@
   - If you copy a CRCD course into a dog's run, the icon won't go away even
     after clearing the course.
   - After editing a linked file, icon was set on wrong item.
-- New features / Enhancements:
-  - When printing run details, add gray lines in comments if there is no text.
-  - Added wildcard placement points (for UK Warrant points) in configuration.
 
 12/19/2008: v1.10.9.12
 - Bumped Configuration v24:

@@ -1,6 +1,7 @@
 Last Updated: 12/5/2008
 
 - Add 'YPS' into Reference Run list
+  (currently only in dialog to enter Reference Run data).
 
 - Make the trial properties dialog easier to add a club.
 

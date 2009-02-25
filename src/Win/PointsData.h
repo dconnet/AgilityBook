@@ -316,10 +316,16 @@ typedef tr1::shared_ptr<CPointsDataEvent> CPointsDataEventPtr;
 class CPointsDataLifetime : public CPointsDataBase
 {
 public:
+	/**
+	 * @param pParent Parent window
+	 * @param pDoc Document
+	 * @param bLifetime Lifetime or Placement?
+	 * @param inVenue Associated venue
+	 */
 	CPointsDataLifetime(
 			CWnd* pParent,
 			CAgilityBookDoc* pDoc,
-			bool bLifetime, ///< Lifetime or Placement?
+			bool bLifetime,
 			ARBConfigVenuePtr inVenue);
 	void AddLifetimeInfo(
 			tstring const& inDiv,
@@ -337,8 +343,8 @@ protected:
 	bool m_bLifetime;	///< Lifetime or Placement?
 	ARBConfigVenuePtr m_Venue;
 	std::list<LifeTimePointInfoPtr> m_Data;
-	double m_Lifetime;	//< Total lifetime points.
-	double m_Filtered;	//< Points that are filtered out.
+	double m_Lifetime;	///< Total lifetime points.
+	double m_Filtered;	///< Points that are filtered out.
 };
 typedef tr1::shared_ptr<CPointsDataLifetime> CPointsDataLifetimePtr;
 
