@@ -25,9 +25,6 @@ Run Doxygen and fix any warnings/errors it reports.
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
 - BuildAll.bat [runs VC9 and VC8 compiles]
-  [note: When this runs the post-build process in ParseResourceHeader to
-  build the chm files, 'xcopy' is not recognized. So, after the script finishes,
-  'cd ...\src; BuildHelp.py Release VC9Win32']
 - Run 'GenMSI.py /all' to create w32/x64/w98 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
