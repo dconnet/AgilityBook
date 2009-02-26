@@ -33,14 +33,17 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-04-02 DRC Up the ref count to prevent problems.
  */
 
-#include <vector>
-#include "ListData.h"
+//#include <vector>
+//#include "ListData.h"
 
-class CDlgConfigureDataVenue : public CListDataDispInfo
+#pragma message PRAGMA_MESSAGE("TODO: Implement CCDlgConfigureDataVenue ")
+#if 0
+class CDlgConfigureDataVenue : public CListData
 {
 public:
 	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
@@ -54,7 +57,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataFault : public CListDataDispInfo
+class CDlgConfigureDataFault : public CListData
 {
 public:
 	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
@@ -68,7 +71,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataOtherPoints : public CListDataDispInfo
+class CDlgConfigureDataOtherPoints : public CListData
 {
 public:
 	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
@@ -82,7 +85,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataDivision : public CListDataDispInfo
+class CDlgConfigureDataDivision : public CListData
 {
 public:
 	CDlgConfigureDataDivision(ARBConfigDivisionPtr div);
@@ -96,7 +99,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataLevel : public CListDataDispInfo
+class CDlgConfigureDataLevel : public CListData
 {
 public:
 	CDlgConfigureDataLevel(
@@ -114,7 +117,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataSubLevel : public CListDataDispInfo
+class CDlgConfigureDataSubLevel : public CListData
 {
 public:
 	CDlgConfigureDataSubLevel(
@@ -135,7 +138,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataTitle : public CListDataDispInfo
+class CDlgConfigureDataTitle : public CListData
 {
 public:
 	CDlgConfigureDataTitle(
@@ -150,7 +153,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataEvent : public CListDataDispInfo
+class CDlgConfigureDataEvent : public CListData
 {
 public:
 	CDlgConfigureDataEvent(ARBConfigEventPtr inEvent);
@@ -164,7 +167,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataMultiQ : public CListDataDispInfo
+class CDlgConfigureDataMultiQ : public CListData
 {
 public:
 	CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq);
@@ -175,3 +178,4 @@ public:
 protected:
 	ARBConfigMultiQPtr m_MultiQ;
 };
+#endif

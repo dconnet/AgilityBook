@@ -12,12 +12,13 @@
 # 2005-01-23 DRC Added History.html creation from a template.
 # 2004-05-20 DRC Created
 
-"""BuildHelp configuration compiler [wx]
+"""BuildHelp configuration compiler [wx/win]
 configuration:
   Release, Debug (all compilers [mbcs: vc6/7/8, unicode: vc9])
   Unicode Release, Unicode Debug (vc6/7/8)
   Debug - No Unicode, Release - No Unicode (vc9)
 compiler: VC8Win32, VC8x64, VC9Win32, VC9x64 [compiler+$(PlatformName)]
+wx/win: Build help for wx (default) or windows chm
 """
 
 hhc = "c:\\Program Files\\HTML Help Workshop\\hhc.exe"
@@ -44,7 +45,7 @@ def main():
 		print >>sys.stderr, "Usage: ", __doc__
 		return
 
-	bChmFile = 1
+	bChmFile = 0
 	bin = ""
 	if sys.argv[2] == "VC8Win32":
 		bin = "..\\bin\\" + sys.argv[2]
@@ -53,8 +54,8 @@ def main():
 	else:
 		print >>sys.stderr, "Usage: ", __doc__
 		return
-	if len(sys.argv) == 4 and sys.argv[3] == "wx":
-		bChmFile = 0
+	if len(sys.argv) == 4 and sys.argv[3] == "win":
+		bChmFile = 1
 
 	if sys.argv[1] == "Debug":
 		bin = bin + "\\" + sys.argv[1]

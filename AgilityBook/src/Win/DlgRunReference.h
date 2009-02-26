@@ -33,20 +33,32 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
-#include <set>
 #include "ARBTypes.h"
-#include "ColumnOrder.h"
-#include "DlgBasePropertyPage.h"
-#include "ListCtrl.h"
-#include "ListData.h"
+//#include "ColumnOrder.h"
+//#include "DlgBasePropertyPage.h"
+//#include "ListCtrl.h"
+//#include "ListData.h"
+//#include <set>
 class CAgilityBookDoc;
 
+
+class CDlgRunReference
+{
+public:
+	CDlgRunReference(
+			CAgilityBookDoc* pDoc,
+			ARBConfigVenuePtr pVenue,
+			ARBDogRunPtr pRun) {}
+};
+
+#if 0
 class CDlgRunReference : public CDlgBasePropertyPage
 {
 public:
@@ -104,3 +116,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

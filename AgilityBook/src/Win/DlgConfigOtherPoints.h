@@ -33,12 +33,30 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+#include "ARBTypes.h"
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
 
+
+class CDlgConfigOtherPoints
+{
+public:
+	CDlgConfigOtherPoints(
+			ARBConfig& config,
+			ARBConfigOtherPointsPtr pOther,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgConfigOtherPoints"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgConfigOtherPoints : public CDlgBaseDialog
 {
 public:
@@ -72,3 +90,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

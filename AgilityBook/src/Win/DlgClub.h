@@ -33,49 +33,36 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Only modify existing club, don't add a new one (caller does).
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+#include "ARBTypes.h"
 class CAgilityBookDoc;
+class CVenueComboBox;
 
-class CDlgClub : public CDlgBaseDialog
+
+class CDlgClub : public wxDialog
 {
 public:
 	CDlgClub(
 			CAgilityBookDoc* pDoc,
-			ARBDogClubList& clubs,
+			ARBDogClubList& inClubs,
 			ARBDogClubPtr pClub,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
-	CString Club() const	{return m_Club;}
-	CString Venue() const	{return m_Venue;}
+	wxString Club() const	{return m_Club;}
+	wxString Venue() const	{return m_Venue;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgClub)
-	enum { IDD = IDD_CLUB };
-	CComboBox2	m_ctrlClubs;
-	CString	m_Club;
-	CVenueComboBox	m_ctrlVenues;
-	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	ARBDogClubList& m_Clubs;
 	ARBDogClubPtr m_pClub;
-	CString	m_Venue;
+	wxComboBox* m_ctrlClubs;
+	CVenueComboBox* m_ctrlVenues;
+	wxString m_Club;
+	wxString m_Venue;
 
-	//{{AFX_VIRTUAL(CDlgClub)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgClub)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
 };

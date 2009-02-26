@@ -33,13 +33,29 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-12-24 DRC Created
  */
 
 #include "ARBConfigCalSite.h"
-#include "DlgBaseDialog.h"
+//#include "DlgBaseDialog.h"
 class ARBConfig;
 
+class CDlgPluginDetails
+{
+public:
+	CDlgPluginDetails(
+			ARBConfig& inConfig,
+			ARBConfigCalSitePtr calSite,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgPluginDetails"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgPluginDetails : public CDlgBaseDialog
 {
 	DECLARE_DYNAMIC(CDlgPluginDetails)
@@ -72,3 +88,4 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
+#endif

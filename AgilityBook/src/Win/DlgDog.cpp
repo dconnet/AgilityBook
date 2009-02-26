@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-17 DRC Points view didn't update 'View Hidden' after canceling.
  * @li 2004-02-03 DRC Broke dialog up into pages.
@@ -39,29 +40,22 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgDog.h"
 
-#include "AgilityBookDoc.h"
-#include "AgilityBookOptions.h"
-#include "ARBDog.h"
-#include "DlgDogNumbers.h"
-#include "DlgDogPoints.h"
-#include "DlgDogProp.h"
-#include "DlgDogTitles.h"
-#include "DlgRegNum.h"
-#include "DlgTitle.h"
-#include "FilterOptions.h"
+//#include "AgilityBook.h"
+//#include "AgilityBookDoc.h"
+//#include "AgilityBookOptions.h"
+//#include "ARBDog.h"
+//#include "DlgDogNumbers.h"
+//#include "DlgDogPoints.h"
+//#include "DlgDogProp.h"
+//#include "DlgDogTitles.h"
+//#include "DlgRegNum.h"
+//#include "DlgTitle.h"
+//#include "FilterOptions.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgDog dialog
-
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgDog")
+#if 0
 IMPLEMENT_DYNAMIC(CDlgDog, CDlgBaseSheet)
 
 CDlgDog::CDlgDog(
@@ -138,3 +132,4 @@ void CDlgDog::OnOK()
 
 	EndDialog(IDOK);
 }
+#endif

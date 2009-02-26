@@ -31,18 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-22 DRC Moved printing to new page.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgOptionsPrint.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsPrint")
+#if 0
+#include "AgilityBook.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsPrint property page
@@ -86,7 +84,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsPrint message handlers
 
-BOOL CDlgOptionsPrint::OnInitDialog() 
+BOOL CDlgOptionsPrint::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	m_fontPrintInfo.CreateFont(m_fontPrint);
@@ -108,3 +106,4 @@ void CDlgOptionsPrint::OnFontPrint()
 		m_ctrlFontPrint.SetFont(&(m_fontPrint));
 	}
 }
+#endif

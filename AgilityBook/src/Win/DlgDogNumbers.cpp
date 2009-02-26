@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -38,9 +39,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgDogNumbers.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgDogNumbers")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDog.h"
 #include "DlgRegNum.h"
@@ -320,7 +323,7 @@ void CDlgDogNumbers::OnColumnclickRegNums(
 
 void CDlgDogNumbers::OnDblclkRegNums(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	OnRegEdit();
 	*pResult = 0;
@@ -391,3 +394,4 @@ void CDlgDogNumbers::OnRegDelete()
 		m_ctrlRegNums.DeleteItem(i);
 	}
 }
+#endif

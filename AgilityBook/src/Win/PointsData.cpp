@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2007-03-14 DRC Change accumulation to work by event, not method.
  *                    This removes the multiple listings in the view.
  * @li 2006-07-15 DRC Add option to sort by event instead of division.
@@ -53,19 +54,27 @@
 #include <map>
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookViewPoints.h"
+#include "AgilityBookPointsView.h"
 #include "ARBDate.h"
 #include "ARBDog.h"
 #include "DlgDog.h"
 #include "DlgListViewer.h"
 #include "DlgTitle.h"
 #include "FilterOptions.h"
+#include <wx/utils.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+/////////////////////////////////////////////////////////////////////////////
+
+static const tstring s_TableHeader(wxT("<table border=\"2\" cellspacing=\"0\" cellpadding=\"2\">"));
+
+
+static tstring Sanitize(tstring const& inRawData, bool nbsp = false)
+{
+	tstring data = SanitizeStringForHTML(inRawData);
+	if (nbsp && data.empty())
+		data = _T("&nbsp;");
+	return data;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -135,7 +144,7 @@ OtherPtInfo::~OtherPtInfo()
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataBase::CPointsDataBase(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc)
 	: m_pParent(pParent)
 	, m_pDoc(pDoc)
@@ -150,7 +159,7 @@ CPointsDataBase::~CPointsDataBase()
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataSeparator::CPointsDataSeparator(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inHtml)
 	: CPointsDataBase(pParent, pDoc)
@@ -161,11 +170,11 @@ CPointsDataSeparator::CPointsDataSeparator(
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataText::CPointsDataText(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bUseInHtml,
-		LPCTSTR inCol1,
-		LPCTSTR inCol2)
+		wxChar const* inCol1,
+		wxChar const* inCol2)
 	: CPointsDataBase(pParent, pDoc)
 	, m_UseInHtml(bUseInHtml)
 	, m_Col1(inCol1)
@@ -181,7 +190,7 @@ tstring CPointsDataText::OnNeedText(int inCol) const
 	switch (inCol)
 	{
 	default:
-		return _T("");
+		return wxT("");
 	case 0:
 		return m_Col1;
 	case 1:
@@ -195,9 +204,9 @@ tstring CPointsDataText::GetHtml(size_t /*nCurLine*/) const
 	otstringstream data;
 	if (m_UseInHtml)
 	{
-		data << _T("<tr>") << std::endl
-			<< _T("<td>") << SanitizeStringForHTML(m_Col2) << _T("</td>") << std::endl
-			<< _T("</tr>") << std::endl;
+		data << wxT("<tr>") << std::endl
+			<< wxT("<td>") << Sanitize(m_Col2, true) << wxT("</td>") << std::endl
+			<< wxT("</tr>") << std::endl;
 	}
 	return data.str();
 }
@@ -211,7 +220,7 @@ bool CPointsDataText::IsEqual(CPointsDataBasePtr /*inData*/)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataDog::CPointsDataDog(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog)
 	: CPointsDataBase(pParent, pDoc)
@@ -247,25 +256,23 @@ tstring CPointsDataDog::GetHtml(size_t nCurLine) const
 	otstringstream data;
 	if (m_pDog)
 	{
-		CString title;
-		title.LoadString(IDS_TITLING_POINTS);
-		data << _T("<h1 align=\"center\">") << (LPCTSTR)title <<_T(" ")
-			<< SanitizeStringForHTML(ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)))
-			<< _T("</h1>")
-			<< _T("<h1><a href=\"") << ARB_PROTOCOL
+		data << wxT("<h1 align=\"center\">") << _("IDS_TITLING_POINTS") << wxT(" ")
+			<< Sanitize(ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)))
+			<< wxT("</h1>")
+			<< wxT("<h1><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 			<< static_cast<UINT>(nCurLine)
 #else
 			<< nCurLine
 #endif
-			<< _T("\">") << SanitizeStringForHTML(m_pDog->GetCallName());
+			<< wxT("\">") << Sanitize(m_pDog->GetCallName());
 		if (!m_pDog->GetRegisteredName().empty())
 		{
-			data << _T("</a> [")
-				<< SanitizeStringForHTML(m_pDog->GetRegisteredName())
-				<< _T("]");
+			data << wxT("</a> [")
+				<< Sanitize(m_pDog->GetRegisteredName())
+				<< wxT("]");
 		}
-		data << _T("</h1>") << std::endl;
+		data << wxT("</h1>") << std::endl;
 
 	}
 	return data.str();
@@ -278,10 +285,11 @@ void CPointsDataDog::Details() const
 	// So we need to cache the document in a stack variable.
 	CAgilityBookDoc* pDoc = m_pDoc;
 	CDlgDog dlg(pDoc, m_pDog, m_pParent, 0);
-	if (IDOK == dlg.DoModal())
+	if (wxID_OK == dlg.ShowModal())
 	{
-		pDoc->SetModifiedFlag();
-		pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+		pDoc->Modify(true);
+		CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+		pDoc->UpdateAllViews(NULL, &hint);
 	}
 }
 
@@ -298,7 +306,7 @@ bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataVenue::CPointsDataVenue(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog,
 		ARBConfigVenuePtr pVenue)
@@ -325,7 +333,7 @@ tstring CPointsDataVenue::OnNeedText(int inCol) const
 				ARBDogRegNumPtr pRegNum;
 				if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 				{
-					str = _T("[") + pRegNum->GetNumber() + _T("]");
+					str = wxT("[") + pRegNum->GetNumber() + wxT("]");
 				}
 			}
 			break;
@@ -340,35 +348,35 @@ tstring CPointsDataVenue::GetHtml(size_t nCurLine) const
 	otstringstream data;
 	if (m_pVenue)
 	{
-		data << _T("<h2>");
+		data << wxT("<h2>");
 		if (m_pVenue->GetURL().empty())
 		{
-			data << SanitizeStringForHTML(m_pVenue->GetName());
+			data << Sanitize(m_pVenue->GetName());
 		}
 		else
 		{
-			data << _T("<a href=\"")
+			data << wxT("<a href=\"")
 				<< m_pVenue->GetURL()
-				<< _T("\">")
-				<< SanitizeStringForHTML(m_pVenue->GetName())
-				<< _T("</a>");
+				<< wxT("\">")
+				<< Sanitize(m_pVenue->GetName())
+				<< wxT("</a>");
 		}
 		if (m_pDog)
 		{
 			ARBDogRegNumPtr pRegNum;
 			if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 			{
-				data << _T(" [<a href=\"") << ARB_PROTOCOL
+				data << wxT(" [<a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 					<< static_cast<UINT>(nCurLine)
 #else
 					<< nCurLine
 #endif
-					<< _T("\">") << SanitizeStringForHTML(pRegNum->GetNumber())
-					<< _T("</a>]") << std::endl;
+					<< wxT("\">") << Sanitize(pRegNum->GetNumber())
+					<< wxT("</a>]") << std::endl;
 			}
 		}
-		data << _T("</h2>") << std::endl;
+		data << wxT("</h2>") << std::endl;
 	}
 	return data.str();
 }
@@ -385,17 +393,18 @@ void CPointsDataVenue::Details() const
 			// So we need to cache the document in a stack variable.
 			CAgilityBookDoc* pDoc = m_pDoc;
 			CDlgDog dlg(pDoc, m_pDog, m_pParent, 2);
-			if (IDOK == dlg.DoModal())
+			if (wxID_OK == dlg.ShowModal())
 			{
-				pDoc->SetModifiedFlag();
-				pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				pDoc->Modify(true);
+				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
+				pDoc->UpdateAllViews(NULL, &hint);
 			}
 		}
 		else
-			MessageBeep(0);
+			wxBell();
 	}
 	else
-		MessageBeep(0);
+		wxBell();
 }
 
 
@@ -411,7 +420,7 @@ bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataTitle::CPointsDataTitle(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog,
 		ARBDogTitlePtr pTitle)
@@ -435,7 +444,7 @@ tstring CPointsDataTitle::OnNeedText(int inCol) const
 		case 2:
 			str = m_pDoc->Book().GetConfig().GetTitleCompleteName(m_pTitle, false);
 			if (m_pTitle->GetReceived())
-				str += _T("*");
+				str += wxT("*");
 			break;
 		}
 	}
@@ -448,16 +457,16 @@ tstring CPointsDataTitle::GetHtml(size_t nCurLine) const
 	otstringstream data;
 	if (m_pTitle)
 	{
-		data << _T("<tr>") << std::endl
-			<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
-			<< _T("<td><a href=\"") << ARB_PROTOCOL
+		data << wxT("<tr>") << std::endl
+			<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
+			<< wxT("<td><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 			<< static_cast<UINT>(nCurLine)
 #else
 			<< nCurLine
 #endif
-			<< _T("\">") << SanitizeStringForHTML(OnNeedText(2)) << _T("</a></td>") << std::endl
-			<< _T("</tr>") << std::endl;
+			<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>") << std::endl
+			<< wxT("</tr>") << std::endl;
 	}
 	return data.str();
 }
@@ -466,13 +475,14 @@ tstring CPointsDataTitle::GetHtml(size_t nCurLine) const
 void CPointsDataTitle::Details() const
 {
 	CDlgTitle dlg(m_pDoc->Book().GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pParent);
-	if (IDOK == dlg.DoModal())
+	if (wxID_OK == dlg.ShowModal())
 	{
-		m_pDoc->SetModifiedFlag();
+		m_pDoc->Modify(true);
 		std::vector<CVenueFilter> venues;
 		CFilterOptions::Options().GetFilterVenue(venues);
 		m_pDoc->ResetVisibility(venues, m_pTitle);
-		m_pDoc->UpdateAllViews(NULL, UPDATE_POINTS_VIEW);
+		CUpdateHint hint(UPDATE_POINTS_VIEW);
+		m_pDoc->UpdateAllViews(NULL, &hint);
 	}
 }
 
@@ -490,7 +500,7 @@ bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataEvent::CPointsDataEvent(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		std::list<RunInfo>& inMatching,
@@ -565,40 +575,38 @@ tstring CPointsDataEvent::OnNeedText(int inCol) const
 tstring CPointsDataEvent::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(3)) << _T("</td>") << std::endl
-		<< _T("<td><a href=\"") << ARB_PROTOCOL
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>") << std::endl
+		<< wxT("<td><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">") << SanitizeStringForHTML(OnNeedText(4)) << _T("</a></td>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(5)) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\">") << SanitizeStringForHTML(OnNeedText(6)) << _T("</td>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(7)) << _T("</td>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(8)) << _T("</td>") << std::endl
-		<< _T("</tr>") << std::endl;
+		<< wxT("\">") << Sanitize(OnNeedText(4)) << wxT("</a></td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(5), true) << wxT("</td>") << std::endl
+		<< wxT("<td align=\"right\">") << Sanitize(OnNeedText(6), true) << wxT("</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(8), true) << wxT("</td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
 
 void CPointsDataEvent::Details() const
 {
-	CString runs;
-	runs.LoadString(IDS_RUNS);
 	otstringstream str;
-	str << (LPCTSTR)runs << _T(": ")
+	str << _("IDS_RUNS") << wxT(": ")
 		<< m_Div->GetName()
-		<< _T("/")
+		<< wxT("/")
 		<< m_Level->GetName()
-		<< _T("/")
+		<< wxT("/")
 		<< m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
 	CDlgListViewer dlg(m_pDoc, str.str().c_str(), m_Dog ? &data : NULL, m_Matching, m_pParent);
-	dlg.DoModal();
+	dlg.ShowModal();
 }
 
 
@@ -617,7 +625,7 @@ bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataLifetime::CPointsDataLifetime(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
 		ARBConfigVenuePtr inVenue)
@@ -649,29 +657,28 @@ tstring CPointsDataLifetime::OnNeedText(int inCol) const
 	{
 	case 1:
 		{
-			CString str2;
+			wxString str2;
 			if (m_bLifetime)
 			{
-				CString lifetime;
+				wxString lifetime;
 				if (m_Venue->HasLifetimeName())
 					lifetime = m_Venue->GetLifetimeName().c_str();
 				else
-					lifetime.LoadString(IDS_TITLEPOINT_LIFETIME);
-				str2.FormatMessage(IDS_LIFETIME_POINTS, (LPCTSTR)lifetime);
+					lifetime = _("IDS_TITLEPOINT_LIFETIME");
+				str2 = wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str());
 			}
 			else
-				str2.LoadString(IDS_PLACEMENT_POINTS);
-			str = (LPCTSTR)str2;
+				str2 = _("IDS_PLACEMENT_POINTS");
+			str = str2.c_str();
 		}
 		break;
 	case 2:
 		{
-			CString total;
-			total.LoadString(IDS_TOTAL);
+			wxString total(_("IDS_TOTAL"));
 			otstringstream str2;
-			str2 << (LPCTSTR)total << _T(": ");
+			str2 << total.c_str() << wxT(": ");
 			if (0 < m_Filtered)
-				str2 << m_Lifetime - m_Filtered << _T(" (") << m_Lifetime << ')';
+				str2 << m_Lifetime - m_Filtered << wxT(" (") << m_Lifetime << ')';
 			else
 				str2 << m_Lifetime;
 			str = str2.str();
@@ -685,39 +692,39 @@ tstring CPointsDataLifetime::OnNeedText(int inCol) const
 tstring CPointsDataLifetime::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr><td>&nbsp;</td</tr>") << std::endl
-		<< _T("<tr>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+	data << wxT("<tr><td>&nbsp;</td</tr>") << std::endl
+		<< wxT("<tr>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
+		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">") << SanitizeStringForHTML(OnNeedText(2)) << _T("</a></td>") << std::endl
-		<< _T("</tr>") << std::endl;
+		<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
 
 void CPointsDataLifetime::Details() const
 {
-	CString caption(m_Venue->GetName().c_str());
-	CString str;
+	wxString caption(m_Venue->GetName().c_str());
+	wxString str;
 	if (m_bLifetime)
 	{
-		CString lifetime;
+		wxString lifetime;
 		if (m_Venue->HasLifetimeName())
 			lifetime = m_Venue->GetLifetimeName().c_str();
 		else
-			lifetime.LoadString(IDS_TITLEPOINT_LIFETIME);
-		str.FormatMessage(IDS_LIFETIME_POINTS, (LPCTSTR)lifetime);
+			lifetime = _("IDS_TITLEPOINT_LIFETIME");
+		str = wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str());
 	}
 	else
-		str.LoadString(IDS_PLACEMENT_POINTS);
-	caption += _T(" ") + str;
+		str = _("IDS_PLACEMENT_POINTS");
+	caption += wxT(" ") + str;
 	CDlgListViewer dlg(m_pDoc, caption, m_Data, m_pParent);
-	dlg.DoModal();
+	dlg.ShowModal();
 }
 
 
@@ -733,7 +740,7 @@ bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
 		ARBConfigVenuePtr inVenue,
@@ -767,9 +774,9 @@ tstring CPointsDataLifetimeByName::OnNeedText(int inCol) const
 	case 2:
 		{
 			otstringstream str2;
-			str2 << m_Name << _T(": ");
+			str2 << m_Name << wxT(": ");
 			if (0 < m_Filtered)
-				str2 << m_Lifetime - m_Filtered << _T(" (") << m_Lifetime << ')';
+				str2 << m_Lifetime - m_Filtered << wxT(" (") << m_Lifetime << ')';
 			else
 				str2 << m_Lifetime;
 			str = str2.str();
@@ -783,10 +790,10 @@ tstring CPointsDataLifetimeByName::OnNeedText(int inCol) const
 tstring CPointsDataLifetimeByName::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td/>") << std::endl
-		<< _T("<td align=\"right\">") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
-		<< _T("</tr>") << std::endl;
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td>&nbsp;</td>") << std::endl
+		<< wxT("<td align=\"right\">") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
@@ -804,7 +811,7 @@ bool CPointsDataLifetimeByName::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataMultiQs::CPointsDataMultiQs(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		ARBConfigVenuePtr inVenue,
@@ -847,17 +854,17 @@ tstring CPointsDataMultiQs::OnNeedText(int inCol) const
 tstring CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td colspan=\"6\"/>") << std::endl
-		<< _T("<td><a href=\"") << ARB_PROTOCOL
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td colspan=\"6\"/>") << std::endl
+		<< wxT("<td><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">")
-		<< SanitizeStringForHTML(OnNeedText(7)) << _T("</a></td>") << std::endl
-		<< _T("</tr>") << std::endl;
+		<< wxT("\">")
+		<< Sanitize(OnNeedText(7)) << wxT("</a></td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
@@ -866,7 +873,7 @@ void CPointsDataMultiQs::Details() const
 {
 	MultiQInfoData data(m_Dog, m_Venue, m_MultiQ);
 	CDlgListViewer dlg(m_pDoc, m_MultiQ->GetName().c_str(), &data, m_MQs, m_pParent);
-	dlg.DoModal();
+	dlg.ShowModal();
 }
 
 
@@ -883,7 +890,7 @@ bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataSpeedPts::CPointsDataSpeedPts(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBConfigVenuePtr inVenue,
 		int inPts)
@@ -896,24 +903,22 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 
 tstring CPointsDataSpeedPts::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	if (7 == inCol)
 	{
-		CString str2;
-		str2.FormatMessage(IDS_POINTS_SPEED, m_Pts);
-		str = (LPCTSTR)str2;
+		str = wxString::Format(_("IDS_POINTS_SPEED"), m_Pts);
 	}
-	return str;
+	return str.c_str();
 }
 
 
 tstring CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td colspan=\"6\"/>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(7)) << _T("</td>") << std::endl
-		<< _T("</tr>") << std::endl;
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td colspan=\"6\"/>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
@@ -930,7 +935,7 @@ bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPoints::CPointsDataOtherPoints(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataBase(pParent, pDoc)
@@ -948,7 +953,7 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inName,
 		std::list<OtherPtInfo> const& inRunList)
@@ -981,27 +986,25 @@ tstring CPointsDataOtherPointsTallyAll::OnNeedText(int inCol) const
 tstring CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(1)) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
+		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">")
-		<< SanitizeStringForHTML(OnNeedText(2)) << _T("</a></td>") << std::endl
-		<< _T("</tr>") << std::endl;
+		<< wxT("\">")
+		<< Sanitize(OnNeedText(2)) << wxT("</a></td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
 
 void CPointsDataOtherPointsTallyAll::Details() const
 {
-	CString str;
-	str.LoadString(IDS_OTHERPOINTS);
-	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
-	dlg.DoModal();
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	dlg.ShowModal();
 }
 
 
@@ -1017,7 +1020,7 @@ bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
@@ -1050,28 +1053,26 @@ tstring CPointsDataOtherPointsTallyAllByEvent::OnNeedText(int inCol) const
 tstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td/>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td>&nbsp;</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
+		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">")
-		<< SanitizeStringForHTML(OnNeedText(3)) << _T("</a></td>") << std::endl
-		<< _T("</tr>") << std::endl;
+		<< wxT("\">")
+		<< Sanitize(OnNeedText(3)) << wxT("</a></td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
 
 void CPointsDataOtherPointsTallyAllByEvent::Details() const
 {
-	CString str;
-	str.LoadString(IDS_OTHERPOINTS);
-	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
-	dlg.DoModal();
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	dlg.ShowModal();
 }
 
 
@@ -1087,7 +1088,7 @@ bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inLevel,
 		std::list<OtherPtInfo> const& inRunList)
@@ -1120,28 +1121,26 @@ tstring CPointsDataOtherPointsTallyLevel::OnNeedText(int inCol) const
 tstring CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td/>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td>&nbsp;</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
+		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">")
-		<< SanitizeStringForHTML(OnNeedText(3)) << _T("</a></td>") << std::endl
-		<< _T("</tr>") << std::endl;
+		<< wxT("\">")
+		<< Sanitize(OnNeedText(3)) << wxT("</a></td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
 
 void CPointsDataOtherPointsTallyLevel::Details() const
 {
-	CString str;
-	str.LoadString(IDS_OTHERPOINTS);
-	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
-	dlg.DoModal();
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	dlg.ShowModal();
 }
 
 
@@ -1157,7 +1156,7 @@ bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inLevel,
 		tstring const& inEvent,
@@ -1195,29 +1194,27 @@ tstring CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(int inCol) const
 tstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
 {
 	otstringstream data;
-	data << _T("<tr>") << std::endl
-		<< _T("<td/>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(2)) << _T("</td>") << std::endl
-		<< _T("<td>") << SanitizeStringForHTML(OnNeedText(3)) << _T("</td>") << std::endl
-		<< _T("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+	data << wxT("<tr>") << std::endl
+		<< wxT("<td>&nbsp;</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
+		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>") << std::endl
+		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<UINT>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< _T("\">")
-		<< SanitizeStringForHTML(OnNeedText(4)) << _T("</a></td>") << std::endl
-		<< _T("</tr>") << std::endl;
+		<< wxT("\">")
+		<< Sanitize(OnNeedText(4)) << wxT("</a></td>") << std::endl
+		<< wxT("</tr>") << std::endl;
 	return data.str();
 }
 
 
 void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 {
-	CString str;
-	str.LoadString(IDS_OTHERPOINTS);
-	CDlgListViewer dlg(m_pDoc, str, m_RunList, m_pParent);
-	dlg.DoModal();
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	dlg.ShowModal();
 }
 
 
@@ -1284,7 +1281,7 @@ private:
 
 
 void CPointsDataItems::InsertVenueHeader(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		ARBConfigVenuePtr pVenue)
@@ -1295,7 +1292,7 @@ void CPointsDataItems::InsertVenueHeader(
 
 
 void CPointsDataItems::LoadData(
-		CWnd* pParent,
+		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog)
 {
@@ -1334,18 +1331,17 @@ void CPointsDataItems::LoadData(
 				{
 					bHeaderInserted = true;
 					InsertVenueHeader(pParent, pDoc, inDog, pVenue);
-					CString str;
-					str.LoadString(IDS_TITLES);
-					tstring data(_T("<h3>"));
-					data += (LPCTSTR)str;
-					data += _T("</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
+					tstring data(wxT("<h3>"));
+					data += _("IDS_TITLES");
+					data += wxT("</h3>");
+					data += s_TableHeader;
 					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
 				}
 				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataTitle(pParent, pDoc, inDog, pTitle)));
 			}
 		}
 		if (bHeaderInserted)
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, _T("</table>"))));
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, wxT("</table>"))));
 
 		bool bRunsInserted = false;
 		LifeTimePointsList lifetime;
@@ -1373,11 +1369,10 @@ void CPointsDataItems::LoadData(
 				InsertVenueHeader(pParent, pDoc, inDog, pVenue);
 			}
 			bRunsInserted = true;
-			CString str;
-			str.LoadString(IDS_RUNS);
-			tstring data(_T("<h3>"));
-			data += (LPCTSTR)str;
-			data += _T("</h3><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
+			tstring data(wxT("<h3>"));
+			data += _("IDS_RUNS");
+			data += wxT("</h3>");
+			data += s_TableHeader;
 			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
 			int speedPts = 0;
 			bool bHasSpeedPts = false;
@@ -1570,53 +1565,43 @@ void CPointsDataItems::LoadData(
 						// Now we deal with the visible runs.
 						if (0 < points || 0 < allmatching.size())
 						{
-							CString strRunCount;
-							strRunCount.FormatMessage(IDS_POINTS_RUNS_JUDGES,
+							wxString strRunCount = wxString::Format(_("IDS_POINTS_RUNS_JUDGES"),
 								allmatching.size(),
 								judges.size());
 							if (pEvent->HasPartner() && 0 < partners.size())
 							{
-								CString str2;
-								str2.FormatMessage(IDS_POINTS_PARTNERS, partners.size());
-								strRunCount += str2;
+								strRunCount += wxString::Format(_("IDS_POINTS_PARTNERS"), partners.size());
 							}
 							double percentQs = 0.0;
 							if (0 < allmatching.size())
 								percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size())) * 100;
-							CString strQcount;
-							strQcount.FormatMessage(IDS_POINTS_QS,
+							wxString strQcount = wxString::Format(_("IDS_POINTS_QS"),
 								nCleanQ + nNotCleanQ,
 								static_cast<int>(percentQs));
 							if (0 < nCleanQ)
 							{
-								CString str2;
-								str2.FormatMessage(IDS_POINTS_CLEAN, nCleanQ);
-								strQcount += str2;
+								strQcount += wxString::Format(_("IDS_POINTS_CLEAN"), nCleanQ);
 							}
 							if (0 < judgesQ.size())
 							{
-								CString str2;
-								str2.FormatMessage(IDS_POINTS_JUDGES, judgesQ.size());
-								strQcount += str2;
+								strQcount += wxString::Format(_("IDS_POINTS_JUDGES"), judgesQ.size());
 							}
 							if (pEvent->HasPartner() && 0 < partnersQ.size())
 							{
-								CString str2;
-								str2.FormatMessage(IDS_POINTS_PARTNERS, partnersQ.size());
-								strQcount += str2;
+								strQcount += wxString::Format(_("IDS_POINTS_PARTNERS"), partnersQ.size());
 							}
 							otstringstream strPts;
-							CString strSuperQ;
+							wxString strSuperQ;
 							strPts << points + nExistingSQ;
 							if (hasSQs)
 							{
 								SQs += nExistingSQ;
-								strSuperQ.FormatMessage(IDS_POINTS_SQS, SQs);
+								strSuperQ = wxString::Format(_("IDS_POINTS_SQS"), SQs);
 							}
-							CString strSpeed;
+							wxString strSpeed;
 							if (bHasSpeedPts && 0 < speedPtsEvent)
 							{
-								strSpeed.FormatMessage(IDS_POINTS_SPEED_SUBTOTAL, speedPtsEvent);
+								strSpeed = wxString::Format(_("IDS_POINTS_SPEED_SUBTOTAL"), speedPtsEvent);
 							}
 							items.push_back(new CPointsDataEvent(pParent, pDoc,
 								!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
@@ -1625,11 +1610,11 @@ void CPointsDataItems::LoadData(
 								pDiv, idxDiv,
 								pLevel, idxLevel,
 								pEvent, idxEvent,
-								(LPCTSTR)strRunCount,
-								(LPCTSTR)strQcount,
+								strRunCount.c_str(),
+								strQcount.c_str(),
 								strPts.str().c_str(),
-								(LPCTSTR)strSuperQ,
-								(LPCTSTR)strSpeed));
+								strSuperQ.c_str(),
+								strSpeed.c_str()));
 						}
 					}
 					if (bHasSpeedPts)
@@ -1770,7 +1755,7 @@ void CPointsDataItems::LoadData(
 					pData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
 				pNameData->AddLifetimeInfo(iter->pDiv->GetName(), iter->pLevel->GetName(), pts2, ptFiltered2);
 			}
-			
+
 			m_Lines.push_back(CPointsDataBasePtr(pData));
 			if (1 < subgroups.size())
 			{
@@ -1876,19 +1861,19 @@ void CPointsDataItems::LoadData(
 			}
 		}
 		if (bRunsInserted)
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, _T("</table>"))));
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, wxT("</table>"))));
 	}
 
 	// After all the venues, we do 'other points'.
 	ARBConfigOtherPointsList const& other = pDoc->Book().GetConfig().GetOtherPoints();
 	if (0 < other.size())
 	{
-		CString str;
-		str.LoadString(IDS_OTHERPOINTS);
+		wxString str(_("IDS_OTHERPOINTS"));
 		tstring table;
-		table = _T("<h2>");
-		table += (LPCTSTR)str;
-		table += _T("</h2><table border=\"2\" cellspacing=\"1\" cellpadding=\"1\">");
+		table = wxT("<h2>");
+		table += str;
+		table += wxT("</h2>");
+		table += s_TableHeader;
 
 		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, table)));
 		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, false)));
@@ -1952,7 +1937,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyAllByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, _T(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, wxT(""), pOther->GetName().c_str())));
 				{
 					std::set<tstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -1976,7 +1961,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevel:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, _T(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, wxT(""), pOther->GetName().c_str())));
 				{
 					std::set<tstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -2000,7 +1985,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevelByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, _T(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, wxT(""), pOther->GetName().c_str())));
 				{
 					typedef std::pair<tstring, tstring> LevelEvent;
 					std::set<LevelEvent> tally;
@@ -2026,7 +2011,7 @@ void CPointsDataItems::LoadData(
 				break;
 			}
 		}
-		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, _T("</table></p>"))));
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, wxT("</table></p>"))));
 	}
 }
 

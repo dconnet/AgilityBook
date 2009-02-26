@@ -31,16 +31,19 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-10-05 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgCalendarQueryDetail.h"
 
-#include <algorithm>
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgCalendarQueryDetail")
+#if 0
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "DlgQueryDetail.h"
+#include <algorithm>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -365,3 +368,4 @@ void CDlgCalendarQueryDetail::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

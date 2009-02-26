@@ -33,18 +33,35 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-10 DRC Created
  */
 
 #include "ARBCalendar.h"
-#include "DlgBaseSheet.h"
-#include "WizardExcel.h"
+#include <vector>
+//#include "DlgBaseSheet.h"
+//#include "WizardExcel.h"
 class CAgilityBookDoc;
-class CWizardExport;
-class CWizardImport;
-class CWizardStart;
+//class CWizardExport;
+//class CWizardImport;
+//class CWizardStart;
 
+class CWizard
+{
+public:
+	CWizard(
+			CAgilityBookDoc* pDoc,
+			std::vector<ARBCalendarPtr>* pCalEntries = NULL,
+			wxWindow* pParentWnd = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CWizard"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 // These must agree with the order of items in sc_Items in WizardStart.cpp.
 // They are simply for ease-of-coding.
 #define WIZ_IMPORT_RUNS				0
@@ -142,3 +159,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

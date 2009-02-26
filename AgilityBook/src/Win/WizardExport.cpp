@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
@@ -42,10 +43,12 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "WizardExport.h"
-#include <fstream>
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CWizardExport")
+#if 0
+#include <fstream>
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "AgilityBookViewCalendarList.h"
@@ -1149,7 +1152,7 @@ void CWizardExport::UpdatePreview()
 /////////////////////////////////////////////////////////////////////////////
 // CWizardExport message handlers
 
-BOOL CWizardExport::OnInitDialog() 
+BOOL CWizardExport::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	static struct
@@ -1182,7 +1185,7 @@ BOOL CWizardExport::OnInitDialog()
 }
 
 
-BOOL CWizardExport::OnSetActive() 
+BOOL CWizardExport::OnSetActive()
 {
 	UpdateButtons();
 	UpdatePreview();
@@ -1196,7 +1199,7 @@ LRESULT CWizardExport::OnWizardBack()
 }
 
 
-BOOL CWizardExport::OnWizardFinish() 
+BOOL CWizardExport::OnWizardFinish()
 {
 	UpdateData(TRUE);
 	int index = m_ctrlDateFormat.GetCurSel();
@@ -1326,7 +1329,7 @@ BOOL CWizardExport::OnWizardFinish()
 }
 
 
-void CWizardExport::OnExportDelim() 
+void CWizardExport::OnExportDelim()
 {
 	UpdateData(TRUE);
 	UpdateButtons();
@@ -1334,7 +1337,7 @@ void CWizardExport::OnExportDelim()
 }
 
 
-void CWizardExport::OnExportAssign() 
+void CWizardExport::OnExportAssign()
 {
 	UpdateData(TRUE);
 	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
@@ -1370,7 +1373,8 @@ void CWizardExport::OnExportAssign()
 }
 
 
-void CWizardExport::OnSelchangeDate() 
+void CWizardExport::OnSelchangeDate()
 {
 	UpdatePreview();
 }
+#endif

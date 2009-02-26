@@ -31,13 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-09-30 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "WizardExcel.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CWizardExcel")
+#if 0
+#include "AgilityBook.h"
 #include "DlgProgress.h"
 
 #include "excel8.h"
@@ -1279,3 +1282,4 @@ bool IWizardSpreadSheet::GetRowCol(
 		return false;
 	}
 }
+#endif

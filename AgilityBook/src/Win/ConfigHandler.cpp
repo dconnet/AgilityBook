@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-03 DRC Ported to wxWidgets.
  * @li 2008-10-31 DRC Created
  */
 
@@ -38,15 +39,41 @@
 #include "ConfigHandler.h"
 
 #include "Element.h"
-#include "resource.h"
+#include <sstream>
+#include <wx/filesys.h>
+#include <wx/stdpaths.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
+bool CConfigHandler::LoadWxFile(
+		wxString const& zipFile,
+		wxString const& archiveFile,
+		std::string& outData)
+{
+	outData.clear();
+	wxString zipfile = wxFileSystem::FileNameToURL(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + zipFile);
+	zipfile += wxT("#zip:") + archiveFile;
+	wxFileSystem filesys;
+	wxFSFile* file = filesys.OpenFile(zipfile);
+	if (file)
+	{
+		std::ostringstream data;
+		size_t size = 0;
+		wxInputStream* input = file->GetStream();
+		while (input->CanRead())
+		{
+			char buffer[1024];
+			size_t num = 1024;
+			input->Read(buffer, num);
+			data.write(buffer, input->LastRead());
+			size += input->LastRead();
+		}
+		delete file;
+		outData = data.str();
+		return true;
+	}
+	return false;
+}
+
 
 CConfigHandler::CConfigHandler()
 {
@@ -55,14 +82,19 @@ CConfigHandler::CConfigHandler()
 
 ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 {
-	// We could just distribute the .xml file and load it, but I'm taking
-	// advantage of Win32 resources and stashing the default config inside
-	// the program.
 	bool bOk = false;
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
-#if defined(_WIN32) && defined(_MFC_VER)
+
+#if defined(WXWIDGETS)
+	wxString datafile = wxFileName::FileName(wxStandardPaths::Get().GetExecutablePath()).GetName();
+	datafile += wxT(".dat");
+	std::string data;
+	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
+		bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
+
+#elif defined(_WIN32) && defined(_MFC_VER)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
 	if (hrSrc)
 	{
@@ -75,16 +107,16 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 			FreeResource(hRes);
 		}
 	}
-#elif defined(WXWIDGETS)
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS DefaultConfig.xml usage" )
-	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
+
 #else
 #pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DefaultConfig.xml usage" )
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
-	bOk = tree->LoadXMLFile("DefaultConfig.xml", errMsg);
+	// Right now, we only support MFC or wxWidgets, so this is here just because
+	bOk = tree->LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
 #endif
+
 	return bOk ? tree : ElementNodePtr();
 }
 
@@ -92,7 +124,13 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 {
 	std::string dtd;
-#if defined(_WIN32) && defined(_MFC_VER)
+
+#if defined(WXWIDGETS)
+	wxString datafile = wxFileName::FileName(wxStandardPaths::Get().GetExecutablePath()).GetName();
+	datafile += wxT(".dat");
+	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);
+
+#elif defined(_WIN32) && defined(_MFC_VER)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
 	if (hrSrc)
 	{
@@ -102,19 +140,18 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
 			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
 			dtd = std::string(pData, size);
-			if (bNormalizeCRNL)
-				dtd = tstringUtil::Replace(dtd, "\r\n", "\n");
 			FreeResource(hRes);
 		}
 	}
-#elif defined(WXWIDGETS)
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: WXWIDGETS DTD usage" )
-	// @todo: Porting issues: Not currently implemented
-	dtd = "<!-- Not implemented on non-windows platforms -->\n";
+
 #else
 #pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DTD usage" )
 	// @todo: Porting issues: Not currently implemented
+	// Right now, we only support MFC or wxWidgets, so this is here just because
 	dtd = "<!-- Not implemented on non-windows platforms -->\n";
 #endif
+
+	if (bNormalizeCRNL)
+		dtd = tstringUtil::Replace(dtd, "\r\n", "\n");
 	return dtd;
 }

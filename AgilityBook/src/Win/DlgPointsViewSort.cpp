@@ -31,88 +31,178 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-07-16 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgPointsViewSort.h"
 
 #include "AgilityBookOptions.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "Globals.h"
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgPointsViewSort dialog
 
-CDlgPointsViewSort::CDlgPointsViewSort(CWnd* pParent)
-	: CDlgBaseDialog(CDlgPointsViewSort::IDD, pParent)
-	, m_ctrlPrimary(false)
-	, m_ctrlSecondary(false)
-	, m_ctrlTertiary(false)
+class CPointViewData : public wxClientData
 {
-	//{{AFX_DATA_INIT(CDlgPointsViewSort)
-	//}}AFX_DATA_INIT
+public:
+	CPointViewData(CAgilityBookOptions::PointsViewSort item)
+		: m_Item(item)
+	{
+	}
+	CAgilityBookOptions::PointsViewSort m_Item;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+BEGIN_EVENT_TABLE(CDlgPointsViewSort, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgPointsViewSort::OnOk)
+END_EVENT_TABLE()
+
+
+CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_POINTS_VIEW_SORT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	, m_ctrlPrimary(NULL)
+	, m_ctrlSecondary(NULL)
+	, m_ctrlTertiary(NULL)
+	, m_ctrlOk(NULL)
+{
 	CAgilityBookOptions::GetPointsViewSort(m_Primary, m_Secondary, m_Tertiary);
+
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
+		_("IDC_POINTS_VIEW_SORT_C1"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	text1->Wrap(-1);
+
+	m_ctrlPrimary = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlPrimary->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgPointsViewSort::OnSelchangePrimary), NULL, this);
+	m_ctrlPrimary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C1"));
+	m_ctrlPrimary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C1"));
+
+	wxStaticText* text2 = new wxStaticText(this, wxID_ANY,
+		_("IDC_POINTS_VIEW_SORT_C2"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	text2->Wrap(-1);
+
+	m_ctrlSecondary = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlSecondary->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgPointsViewSort::OnSelchangeSecondary), NULL, this);
+	m_ctrlSecondary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C2"));
+	m_ctrlSecondary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C2"));
+
+	wxStaticText* text3 = new wxStaticText(this, wxID_ANY,
+		_("IDC_POINTS_VIEW_SORT_C3"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	text3->Wrap(-1);
+
+	m_ctrlTertiary = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY);
+	m_ctrlTertiary->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgPointsViewSort::OnSelchangeTertiary), NULL, this);
+	m_ctrlTertiary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C3"));
+	m_ctrlTertiary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C3"));
+
+	FillPrimary();
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizer1 = new wxBoxSizer(wxHORIZONTAL);
+	sizer1->Add(text1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizer1->Add(m_ctrlPrimary, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizer1, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
+	sizer2->Add(text2, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizer2->Add(m_ctrlSecondary, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizer2, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
+	sizer3->Add(text3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizer3->Add(m_ctrlTertiary, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizer3, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
+	assert(m_ctrlOk != NULL);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz(GetSize());
+	SetSizeHints(sz, sz);
+	CenterOnParent();
+
+	m_ctrlOk->SetFocus();
+	UpdateControls();
 }
 
 
-void CDlgPointsViewSort::DoDataExchange(CDataExchange* pDX)
+void CDlgPointsViewSort::UpdateControls()
 {
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgPointsViewSort)
-	DDX_Control(pDX, IDC_POINTS_VIEW_SORT_C1, m_ctrlPrimary);
-	DDX_Control(pDX, IDC_POINTS_VIEW_SORT_C2, m_ctrlSecondary);
-	DDX_Control(pDX, IDC_POINTS_VIEW_SORT_C3, m_ctrlTertiary);
-	//}}AFX_DATA_MAP
+	if (m_ctrlOk)
+	{
+		bool bEnable = false;
+		if (wxNOT_FOUND != m_ctrlPrimary->GetSelection()
+		&& wxNOT_FOUND != m_ctrlSecondary->GetSelection()
+		&& wxNOT_FOUND != m_ctrlTertiary->GetSelection())
+		{
+			bEnable = true;
+		}
+		m_ctrlOk->Enable(bEnable);
+	}
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgPointsViewSort, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgPointsViewSort)
-	ON_CBN_SELCHANGE(IDC_POINTS_VIEW_SORT_C1, OnCbnSelchangePrimary)
-	ON_CBN_SELCHANGE(IDC_POINTS_VIEW_SORT_C2, OnCbnSelchangeSecondary)
-	ON_CBN_SELCHANGE(IDC_POINTS_VIEW_SORT_C3, OnCbnSelchangeTertiary)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-
-static int AddItem(CComboBox2& ctrl, CAgilityBookOptions::PointsViewSort item, CAgilityBookOptions::PointsViewSort inSelect)
+static int AddItem(
+		wxComboBox* ctrl,
+		CAgilityBookOptions::PointsViewSort item,
+		CAgilityBookOptions::PointsViewSort inSelect)
 {
-	int idx = CB_ERR;
-	CString str;
+	int idx = -1;
+	wxString str;
 	switch (item)
 	{
 	case CAgilityBookOptions::ePointsViewSortDivision:
-		str.LoadString(IDS_COL_DIVISION);
-		idx = ctrl.AddString(str);
-		ctrl.SetItemData(idx, item);
+		str = _("IDS_COL_DIVISION");
+		idx = ctrl->Append(str);
+		ctrl->SetClientObject(idx, new CPointViewData(item));
 		break;
 	case CAgilityBookOptions::ePointsViewSortLevel:
-		str.LoadString(IDS_COL_LEVEL);
-		idx = ctrl.AddString(str);
-		ctrl.SetItemData(idx, item);
+		str = _("IDS_COL_LEVEL");
+		idx = ctrl->Append(str);
+		ctrl->SetClientObject(idx, new CPointViewData(item));
 		break;
 	case CAgilityBookOptions::ePointsViewSortEvent:
-		str.LoadString(IDS_COL_EVENT);
-		idx = ctrl.AddString(str);
-		ctrl.SetItemData(idx, item);
+		str = _("IDS_COL_EVENT");
+		idx = ctrl->Append(str);
+		ctrl->SetClientObject(idx, new CPointViewData(item));
 		break;
 	}
-	if (item == inSelect && CB_ERR != idx)
-		ctrl.SetCurSel(idx);
+	if (item == inSelect && 0 <= idx)
+		ctrl->SetSelection(idx);
 	return idx;
 }
 
 
 void CDlgPointsViewSort::FillPrimary()
 {
-	m_ctrlPrimary.ResetContent();
+	m_ctrlPrimary->Clear();
 	AddItem(m_ctrlPrimary, CAgilityBookOptions::ePointsViewSortDivision, m_Primary);
 	AddItem(m_ctrlPrimary, CAgilityBookOptions::ePointsViewSortLevel, m_Primary);
 	AddItem(m_ctrlPrimary, CAgilityBookOptions::ePointsViewSortEvent, m_Primary);
@@ -122,7 +212,7 @@ void CDlgPointsViewSort::FillPrimary()
 
 void CDlgPointsViewSort::FillSecondary()
 {
-	m_ctrlSecondary.ResetContent();
+	m_ctrlSecondary->Clear();
 	if (m_Primary != CAgilityBookOptions::ePointsViewSortDivision)
 		AddItem(m_ctrlSecondary, CAgilityBookOptions::ePointsViewSortDivision, m_Secondary);
 	if (m_Primary != CAgilityBookOptions::ePointsViewSortLevel)
@@ -135,7 +225,7 @@ void CDlgPointsViewSort::FillSecondary()
 
 void CDlgPointsViewSort::FillTertiary()
 {
-	m_ctrlTertiary.ResetContent();
+	m_ctrlTertiary->Clear();
 	if (m_Primary != CAgilityBookOptions::ePointsViewSortDivision
 	&& m_Secondary != CAgilityBookOptions::ePointsViewSortDivision)
 		AddItem(m_ctrlTertiary, CAgilityBookOptions::ePointsViewSortDivision, m_Tertiary);
@@ -145,79 +235,47 @@ void CDlgPointsViewSort::FillTertiary()
 	if (m_Primary != CAgilityBookOptions::ePointsViewSortEvent
 	&& m_Secondary != CAgilityBookOptions::ePointsViewSortEvent)
 		AddItem(m_ctrlTertiary, CAgilityBookOptions::ePointsViewSortEvent, m_Tertiary);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgPointsViewSort message handlers
-
-BOOL CDlgPointsViewSort::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	FillPrimary();
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	UpdateControls();
 }
 
 
-void CDlgPointsViewSort::OnCbnSelchangePrimary()
+void CDlgPointsViewSort::OnSelchangePrimary(wxCommandEvent& evt)
 {
-	int idx = m_ctrlPrimary.GetCurSel();
-	if (CB_ERR == idx)
+	int idx = m_ctrlPrimary->GetSelection();
+	if (wxNOT_FOUND == idx)
 		m_Primary = CAgilityBookOptions::ePointsViewSortUnknown;
 	else
-		m_Primary = static_cast<CAgilityBookOptions::PointsViewSort>(m_ctrlPrimary.GetItemData(idx));
+		m_Primary = dynamic_cast<CPointViewData*>(m_ctrlPrimary->GetClientObject(idx))->m_Item;
 	FillSecondary();
 }
 
 
-void CDlgPointsViewSort::OnCbnSelchangeSecondary()
+void CDlgPointsViewSort::OnSelchangeSecondary(wxCommandEvent& evt)
 {
-	int idx = m_ctrlSecondary.GetCurSel();
-	if (CB_ERR == idx)
+	int idx = m_ctrlSecondary->GetSelection();
+	if (wxNOT_FOUND == idx)
 		m_Secondary = CAgilityBookOptions::ePointsViewSortUnknown;
 	else
-		m_Secondary = static_cast<CAgilityBookOptions::PointsViewSort>(m_ctrlSecondary.GetItemData(idx));
+		m_Secondary = dynamic_cast<CPointViewData*>(m_ctrlSecondary->GetClientObject(idx))->m_Item;
 	FillTertiary();
 }
 
 
-void CDlgPointsViewSort::OnCbnSelchangeTertiary()
+void CDlgPointsViewSort::OnSelchangeTertiary(wxCommandEvent& evt)
 {
-	int idx = m_ctrlTertiary.GetCurSel();
-	if (CB_ERR == idx)
+	int idx = m_ctrlTertiary->GetSelection();
+	if (wxNOT_FOUND == idx)
 		m_Tertiary = CAgilityBookOptions::ePointsViewSortUnknown;
 	else
-		m_Tertiary = static_cast<CAgilityBookOptions::PointsViewSort>(m_ctrlTertiary.GetItemData(idx));
+		m_Tertiary = dynamic_cast<CPointViewData*>(m_ctrlTertiary->GetClientObject(idx))->m_Item;
+	UpdateControls();
 }
 
 
-void CDlgPointsViewSort::OnOK()
+void CDlgPointsViewSort::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-
-	int index = m_ctrlPrimary.GetCurSel();
-	if (CB_ERR == index)
-	{
-		GotoDlgCtrl(&m_ctrlPrimary);
-		return;
-	}
-
-	index = m_ctrlSecondary.GetCurSel();
-	if (CB_ERR == index)
-	{
-		GotoDlgCtrl(&m_ctrlSecondary);
-		return;
-	}
-
-	index = m_ctrlTertiary.GetCurSel();
-	if (CB_ERR == index)
-	{
-		GotoDlgCtrl(&m_ctrlTertiary);
-		return;
-	}
-
 	CAgilityBookOptions::SetPointsViewSort(m_Primary, m_Secondary, m_Tertiary);
-
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }

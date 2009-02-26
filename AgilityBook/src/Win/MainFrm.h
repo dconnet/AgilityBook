@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright Â© 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,66 +33,52 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-class CLanguageManager;
-class CTabView;
+#include "AgilityBookMenu.h"
+#include <wx/docview.h>
 
-class CMainFrame : public CFrameWnd
+#define NUM_STATUS_FIELDS	5
+#define STATUS_INFO			0
+#define STATUS_DOG			1
+#define STATUS_STATUS		2
+#define STATUS_FILTERED		3
+#define STATUS_FILLER		4
+
+
+class CMainFrame : public wxDocParentFrame
 {
-	friend class CTabView; // So it can set m_pTabView.
-protected: // create from serialization only
-	CMainFrame();
-	DECLARE_DYNCREATE(CMainFrame)
+	DECLARE_NO_COPY_CLASS(CMainFrame)
 
-// Overrides
 public:
-	//{{AFX_VIRTUAL(CMainFrame)
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+	CMainFrame(wxDocManager* manager);
+	~CMainFrame();
 
-// Implementation
-public:
-	virtual ~CMainFrame();
-	void InitLangMgr(CLanguageManager* pLangMgr);
-	void SetStatusText(
-			CString const& msg,
+	void SetMessageText(
+			wxString const& msg,
 			bool bFiltered);
-	void SetStatusText2(CString const& msg);
-	int GetCurTab() const;
-	void SetCurTab(int tab);
-	bool ShowPointsAs(bool bHtml);
+	void SetMessageText2(wxString const& msg);
 
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
+private:
+	void SetMessage(wxString const& msg, int index, bool bResize);
 
-protected:  // control bar embedded members
-	BOOL ReplaceView(
-			CRuntimeClass* pViewClass,
-			int row,
-			int col);
-	CTabView*	m_pTabView;
-	CLanguageManager*	m_pLangMgr;
-	CMenu*		m_pNewMenu;
-	CStatusBar  m_wndStatusBar;
-	CToolBar    m_wndToolBar;
+	CAgilityBookMenu m_MenuBar;
+	int m_Widths[NUM_STATUS_FIELDS];
 
-// Generated message map functions
-protected:
-	//{{AFX_MSG(CMainFrame)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnDestroy();
-	afx_msg void OnClose();
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	afx_msg void OnUpdatePane(CCmdUI* pCmdUI);
-	afx_msg void OnNextTab();
-	afx_msg void OnPrevTab();
-	afx_msg void OnUpdateFileLanguageChoose(CCmdUI* pCmdUI);
-	afx_msg void OnFileLanguageChoose();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+private:
+	DECLARE_EVENT_TABLE()
+	void OnStatusBarContextMenu(wxContextMenuEvent& evt);
+	void OnClose(wxCloseEvent& evt);
+	void OnUpdateCmd(wxUpdateUIEvent& evt);
+	void OnFileLanguageChoose(wxCommandEvent& evt);
+	void OnPrintBlankRuns(wxCommandEvent& evt);
+	void OnQuit(wxCommandEvent& evt);
+	void OnType(wxCommandEvent& evt);
+	void OnOrient(wxCommandEvent& evt);
+	void OnNextPane(wxCommandEvent& evt);
+	void OnPrevPane(wxCommandEvent& evt);
+	void OnHelpSysinfo(wxCommandEvent& evt);
 };

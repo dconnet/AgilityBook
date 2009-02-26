@@ -31,18 +31,20 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-25 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
 
 #include "stdafx.h"
-#include "resource.h"
 
+#include "CalVerNum.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
 #include "../ARB/ARBStructure.h"
 #include "../ARB/Element.h"
 #include "../Win/ReadHttp.h"
 #include "../tidy/include/tidy.h"
+#include <errno.h>
 #include <sstream>
 
 #define GENERATE_TESTDATA	0
@@ -56,11 +58,6 @@
 #include <fstream>
 #endif
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -115,6 +112,11 @@ public:
 	~CCalendarSite();
 
 	virtual void Release();
+	virtual bool GetVersion(
+			short* pMajor,
+			short* pMinor,
+			short* pRelease,
+			short* pBuild) const;
 	virtual void releaseBuffer(char* pData) const;
 	virtual char* GetName() const;
 	virtual char* GetDescription() const;
@@ -143,6 +145,24 @@ void CCalendarSite::Release()
 }
 
 
+bool CCalendarSite::GetVersion(
+		short* pMajor,
+		short* pMinor,
+		short* pDot,
+		short* pBuild) const
+{
+	if (pMajor)
+		*pMajor = CAL_VER_MAJOR;
+	if (pMinor)
+		*pMinor = CAL_VER_MINOR;
+	if (pDot)
+		*pDot = CAL_VER_DOT;
+	if (pBuild)
+		*pBuild = CAL_VER_BUILD;
+	return true;
+}
+
+
 void CCalendarSite::releaseBuffer(char* pData) const
 {
 	delete [] pData;
@@ -158,9 +178,7 @@ char* CCalendarSite::GetName() const
 
 char* CCalendarSite::GetDescription() const
 {
-	CStringA tmp;
-	tmp.LoadString(IDS_DESCRIPTION);
-	std::string desc((LPCSTR)tmp);
+	std::string desc("Get all the events from USDAA. This will parse the HTML returned from http://www.usdaa.com/events.cfm.");
 	return Allocate(desc);
 }
 
@@ -179,18 +197,18 @@ char* CCalendarSite::GetVenueCodes() const
 
 static ElementNodePtr ReadData(
 #if USE_TESTDATA
-		CStringA const& inAddress
+		std::string const& inAddress
 #else
-		CString const& inAddress
+		wxString const& inAddress
 #endif
 #if GENERATE_TESTDATA
-		, CStringA const& outTestData
+		, std::string const& outTestData
 #endif
 		)
 {
 	ElementNodePtr tree;
 
-	CStringA data;
+	std::string data;
 #if USE_TESTDATA
 	FILE* fp = fopen(inAddress, "r");
 	if (fp)
@@ -205,10 +223,10 @@ static ElementNodePtr ReadData(
 		fclose(fp);
 	}
 #else
-	CReadHttp http(inAddress, data);
+	CReadHttp http(inAddress, &data);
 #endif
 
-	CString username, errMsg;
+	wxString username, errMsg;
 #if !USE_TESTDATA
 	if (http.ReadHttpFile(username, errMsg))
 #endif
@@ -223,7 +241,7 @@ raw.close();
 		TidyDoc tdoc = tidyCreate();
 		tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
 		tidyOptSetBool(tdoc, TidyNumEntities, yes);
-		if (0 > tidyParseString(tdoc, (LPCSTR)data))
+		if (0 > tidyParseString(tdoc, data.c_str()))
 		{
 			tidyRelease(tdoc);
 			return tree;
@@ -240,22 +258,24 @@ raw.close();
 			tidyRelease(tdoc);
 			return tree;
 		}
-		char* pData = data.GetBuffer(len);
+		char* pData = new char[len+1];
+		strcpy(pData, data.c_str());
 		if (0 > tidySaveString(tdoc, pData, &len))
 		{
 			tidyRelease(tdoc);
-			data.ReleaseBuffer();
+			delete [] pData;
 			return tree;
 		}
 		tidyRelease(tdoc);
-		// Note, Tidy does not null terminate the buffer. So we need to
-		// truncate the buffer when releasing. CString may have allocated
-		// more memory then we asked for.
-		data.ReleaseBuffer(len);
+		// Note, Tidy does not null terminate the buffer.
+		pData[len] = 0;
+		data = pData;
+		delete [] pData;
+		pData = NULL;
 #ifdef _DEBUG
 //Test code to look at 'tidy'd data
 //{
-//CStringA out(inAddress);
+//std::string out(inAddress);
 //out += ".out";
 //std::ofstream raw(out, std::ios::out);
 //raw << (LPCSTR)data;
@@ -265,17 +285,17 @@ raw.close();
 
 		tstring err;
 		tree = ElementNode::New();
-		if (!tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), err))
+		if (!tree->LoadXMLBuffer(data.c_str(), data.length(), err))
 		{
 			tree.reset();
-			AfxMessageBox(err.c_str());
+			wxMessageBox(err.c_str(), wxMessageBoxCaptionStr, wxCENTRE);
 		}
 		else
 		{
 #ifdef _DEBUG
 //Test code to look at xml data
 //{
-//CStringA out(inAddress);
+//std::string out(inAddress);
 //out += ".tree";
 //std::ofstream raw(out, std::ios::out);
 //tree->SaveXML(raw);
@@ -299,7 +319,7 @@ char* CCalendarSite::Process(
 		progress->SetMessage("Reading http://www.usdaa.com/events.cfm");
 
 #if USE_TESTDATA || GENERATE_TESTDATA
-	CStringA testData(TESTDATANAME);
+	std::string testData(TESTDATANAME);
 	testData += ".xml";
 #if USE_TESTDATA
 	ElementNodePtr tree = ReadData(testData);
@@ -316,9 +336,8 @@ char* CCalendarSite::Process(
 	{
 		if (progress->HasCanceled())
 			return NULL;
-		CStringA msg;
-		msg.LoadString(IDS_FINDING_ENTRIES);
-		progress->SetMessage(msg);
+		std::string msg("Finding entries...");
+		progress->SetMessage(msg.c_str());
 	}
 
 	bool bOk = false;
@@ -423,16 +442,15 @@ char* CCalendarSite::Process(
 		if (detail.empty())
 			continue;
 		cal->SetValue(_T(""));
-		CString address(_T("http://www.usdaa.com/"));
+		wxString address(wxT("http://www.usdaa.com/"));
 		address += detail.c_str();
 		if (progress)
 		{
 			if (progress->HasCanceled())
 				return NULL;
-			CString tmp;
-			tmp.FormatMessage(IDS_GETTING_DETAIL, (LPCTSTR)address);
-			CStringA msg(tmp);
-			progress->SetMessage((LPCSTR)msg);
+			std::string msg("Getting detail from ");
+			msg += tstringUtil::Convert(address.c_str());
+			progress->SetMessage(msg.c_str());
 		}
 #if GENERATE_TESTDATA || USE_TESTDATA
 		testData = TESTDATANAME;

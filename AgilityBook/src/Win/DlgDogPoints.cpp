@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-07-15 DRC Only adjust column widths the first time.
  *                    Add a selected-item total.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -39,9 +40,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgDogPoints.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgDogPoints")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDate.h"
 #include "ARBDog.h"
@@ -387,7 +390,7 @@ void CDlgDogPoints::OnColumnclickExistingPoints(
 
 void CDlgDogPoints::OnDblclkExistingPoints(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	OnEdit();
 	*pResult = 0;
@@ -520,3 +523,4 @@ void CDlgDogPoints::OnDelete()
 		UpdateButtons();
 	}
 }
+#endif

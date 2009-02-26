@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
  * @li 2004-08-11 DRC Added verified column to trial in tree.
@@ -42,9 +43,8 @@
 
 #include <vector>
 #include "AgilityBookOptions.h"
-#include "DlgBaseDialog.h"
-#include "ListBox.h"
-#include "ListCtrl.h"
+//#include "ListBox.h"
+//#include "ListCtrl.h"
 
 /*
  * If types/columns are added/removed, do not change these numbers.
@@ -134,7 +134,7 @@
 #define IO_TREE_RUN_LEVEL			62
 #define IO_TREE_RUN_HEIGHT			63
 #define IO_LOG_SUBNAME				64
-#define IO_RESERVED					65	// Was IO_TREE_TRIAL_VERIFIED 
+#define IO_RESERVED					65	// Was IO_TREE_TRIAL_VERIFIED
 #define IO_RUNS_SPEED               66
 #define IO_CAL_APPT_SUBJECT			67
 #define IO_CAL_APPT_START_DATE		68
@@ -188,60 +188,59 @@
 
 class CAgilityBookDoc;
 
-class CDlgAssignColumns : public CDlgBaseDialog
+class CDlgAssignColumns : public wxDialog
 {
-// Construction
 public:
-	static UINT GetFormatFromColumnID(int column);
-	static CString GetNameFromColumnID(int column);
+	static int GetFormatFromColumnID(long column);
+	static wxString GetNameFromColumnID(long column);
 	static bool GetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
-			std::vector<int>& values,
+			std::vector<long>& values,
 			bool bDefaultValues = false);
 	static bool SetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
-			std::vector<int> const& values);
+			std::vector<long> const& values);
 
 	CDlgAssignColumns(
 			CAgilityBookOptions::ColumnOrder eOrder,
-			CWnd* pParent = NULL,
+			wxWindow* pParent = NULL,
 			CAgilityBookDoc* pDoc = NULL,
-			int initSelection = 0); // IO_TYPE list to initially select (if multiple)
+			long initSelection = 0); // IO_TYPE list to initially select (if multiple)
+	//TODO: Tmp
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgAssignColumns"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgAssignColumns)
-	enum { IDD = IDD_ASSIGN_COLUMNS };
-	CListCtrl2	m_ctrlType;
-	CListBox2	m_ctrlAvailable;
-	CListBox2	m_ctrlColumns;
-	CButton	m_ctrlAdd;
-	CButton	m_ctrlRemove;
-	CButton	m_ctrlUp;
-	CButton	m_ctrlDown;
-	//}}AFX_DATA
+	//enum { IDD = IDD_ASSIGN_COLUMNS };
+	//CListCtrl2	m_ctrlType;
+	//CListBox2	m_ctrlAvailable;
+	//CListBox2	m_ctrlColumns;
+//	CButton	m_ctrlAdd;
+//	CButton	m_ctrlRemove;
+//	CButton	m_ctrlUp;
+//	CButton	m_ctrlDown;
 	CAgilityBookDoc* m_pDoc;
 	CAgilityBookOptions::ColumnOrder m_eOrder;
-	int m_initSelection;
+	long m_initSelection;
 	bool m_bIncludeBlank;
-	std::vector<int> m_Columns[IO_TYPE_MAX];
+	std::vector<long> m_Columns[IO_TYPE_MAX];
 
+#if 0
 private:
 	void FillColumns();
 	void UpdateColumnVector();
 	void UpdateButtons();
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgAssignColumns)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
-	//{{AFX_MSG(CDlgAssignColumns)
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+
+protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSelchangeAvailable();
@@ -252,6 +251,6 @@ protected:
 	afx_msg void OnMoveDown();
 	afx_msg void OnReset();
 	virtual void OnOK();
-	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+#endif
 };

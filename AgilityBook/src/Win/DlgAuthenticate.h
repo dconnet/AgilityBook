@@ -33,36 +33,23 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Created
  */
 
-class CDlgAuthenticate : public CDialog
+class CDlgAuthenticate : public wxDialog
 {
-	DECLARE_DYNAMIC(CDlgAuthenticate)
-
 public:
-	CDlgAuthenticate(CString& userName, CWnd* pParent = NULL);
-	LPCTSTR GetUserName() const		{return (LPCTSTR)m_Name;}
-	LPCTSTR GetPassword() const		{return (LPCTSTR)m_Password;}
+	CDlgAuthenticate(
+			wxString const& userName,
+			wxWindow* parent,
+			wxString const& caption = _("IDD_AUTHENTICATE"),
+			wxString const& message = wxEmptyString);
+
+	wxString GetUserName() const	{return m_Name;}
+	wxString GetPassword() const	{return m_Password;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgAuthenticate)
-	enum { IDD = IDD_AUTHENTICATE };
-	CString m_Name;
-	static CString m_Password;
-	//}}AFX_DATA
-	CString& m_userName;
-
-	//{{AFX_VIRTUAL(CDlgAuthenticate)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgAuthenticate)
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	wxString m_Name;
+	wxString m_Password;
 };

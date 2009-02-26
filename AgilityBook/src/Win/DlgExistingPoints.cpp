@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-31 DRC Changed how QQs are done.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -39,9 +40,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgExistingPoints.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgExistingPoints")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBDogExistingPoints.h"
@@ -756,31 +759,31 @@ BOOL CDlgExistingPoints::OnInitDialog()
 }
 
 
-void CDlgExistingPoints::OnSelchangeType() 
+void CDlgExistingPoints::OnSelchangeType()
 {
 	FillVenues();
 }
 
 
-void CDlgExistingPoints::OnSelchangeVenues() 
+void CDlgExistingPoints::OnSelchangeVenues()
 {
 	FillFromVenue();
 }
 
 
-void CDlgExistingPoints::OnSelchangeDivision() 
+void CDlgExistingPoints::OnSelchangeDivision()
 {
 	FillLevels();
 }
 
 
-void CDlgExistingPoints::OnSelchangeLevel() 
+void CDlgExistingPoints::OnSelchangeLevel()
 {
 	FillEvents();
 }
 
 
-void CDlgExistingPoints::OnSelchangeEvent() 
+void CDlgExistingPoints::OnSelchangeEvent()
 {
 	FillSubNames();
 }
@@ -927,3 +930,4 @@ void CDlgExistingPoints::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

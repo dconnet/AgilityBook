@@ -33,13 +33,32 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-12-24 DRC Created
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
-#include <map>
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
+//#include <map>
+class ARBConfig;
 
+
+class CDlgQueryDetail
+{
+public:
+	CDlgQueryDetail(
+			wxChar const* inCode,
+			wxChar const* inName,
+			wxWindow* pParent = NULL,
+			ARBConfig const* inConfig = NULL); // Only set when using venues
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgQueryDetail"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgQueryDetail : public CDlgBaseDialog
 {
 public:
@@ -82,3 +101,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

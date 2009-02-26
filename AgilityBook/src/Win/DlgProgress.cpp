@@ -31,13 +31,17 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-09-05 DRC Put progress dialog into separate UI thread
  * @li 2004-10-01 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgProgress.h"
+
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgProgress")
+#if 0
+#include "AgilityBook.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -216,7 +220,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgProgress message handlers
 
-BOOL CDlgProgress::OnInitDialog() 
+BOOL CDlgProgress::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -234,7 +238,7 @@ BOOL CDlgProgress::OnInitDialog()
 }
 
 
-void CDlgProgress::OnCancel() 
+void CDlgProgress::OnCancel()
 {
 	m_HasCanceled = TRUE;
 	m_ctrlCancel.EnableWindow(FALSE);
@@ -650,3 +654,4 @@ IDlgProgress* IDlgProgress::CreateProgress(HWND hwndParent)
 IDlgProgress::~IDlgProgress()
 {
 }
+#endif

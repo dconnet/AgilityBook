@@ -31,95 +31,48 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgName.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "Validators.h"
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgName dialog
 
-CDlgName::CDlgName(
-		LPCTSTR name,
-		UINT caption,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgName::IDD, pParent)
-	, m_Name(name)
+bool CDlgName::Create(
+		wxString const& caption,
+		wxWindow* parent)
 {
-	if (0 != caption)
-		m_Caption.LoadString(caption);
-	//{{AFX_DATA_INIT(CDlgName)
-	//}}AFX_DATA_INIT
-}
+	if (!wxDialog::Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
+		return false;
 
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
-CDlgName::CDlgName(
-		LPCTSTR name,
-		LPCTSTR pCaption,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgName::IDD, pParent)
-	, m_Name(name)
-	, m_Caption(pCaption)
-{
-}
+	// Controls (these are done first to control tab order)
 
+	wxTextCtrl* textCtrl = new wxTextCtrl(this, wxID_ANY, m_Name,
+		wxDefaultPosition, wxSize(300, -1), 0,
+		CTrimValidator(&m_Name));
+	textCtrl->SetHelpText(_("HIDC_NAME"));
+	textCtrl->SetToolTip(_("HIDC_NAME"));
 
-CDlgName::~CDlgName()
-{
-}
+	// Sizers (sizer creation is in same order as wxFormBuilder)
 
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(textCtrl, 0, wxALL|wxEXPAND, 5);
 
-void CDlgName::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgName)
-	DDX_Text(pDX, IDC_NAME, m_Name);
-	//}}AFX_DATA_MAP
-}
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz = GetSize();
+	SetSizeHints(sz, wxSize(-1, sz.y));
+	CenterOnParent();
 
-BEGIN_MESSAGE_MAP(CDlgName, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgName)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	textCtrl->SetFocus();
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgName message handlers
-
-BOOL CDlgName::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	if (!m_Caption.IsEmpty())
-		SetWindowText(m_Caption);
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgName::OnOK()
-{
-	if (!UpdateData(TRUE))
-		return;
-#if _MSC_VER >= 1300
-	m_Name.Trim();
-#else
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-#endif
-	UpdateData(FALSE);
-	if (m_Name.IsEmpty())
-	{
-		GotoDlgCtrl(GetDlgItem(IDC_NAME));
-		return;
-	}
-	CDlgBaseDialog::OnOK();
+	return true;
 }

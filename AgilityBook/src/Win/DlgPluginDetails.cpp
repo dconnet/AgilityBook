@@ -31,13 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-12-24 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgPluginDetails.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgPluginDetails")
+#if 0
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigCalSite.h"
 #include "DlgCalendarQueryDetail.h"
@@ -109,7 +112,7 @@ void CDlgPluginDetails::SetCodeText()
 
 // CDlgPluginDetails message handlers
 
-BOOL CDlgPluginDetails::OnInitDialog() 
+BOOL CDlgPluginDetails::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 	m_ctrlCodes.GetWindowText(m_strCodes);
@@ -140,7 +143,7 @@ void CDlgPluginDetails::OnPluginDetailCodes()
 }
 
 
-void CDlgPluginDetails::OnOK() 
+void CDlgPluginDetails::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -163,3 +166,4 @@ void CDlgPluginDetails::OnOK()
 		m_Config.GetCalSites().AddSite(m_CalSite);
 	CDlgBaseDialog::OnOK();
 }
+#endif

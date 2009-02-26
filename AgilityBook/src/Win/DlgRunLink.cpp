@@ -31,15 +31,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Moved ShellExecute code to AgilityBook.cpp, added icons.
  * @li 2004-03-30 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgRunLink.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgRunLink")
+#if 0
+#include "AgilityBook.h"
 #include "ARBDogRun.h"
 #include "CheckLink.h"
 #include "DlgSelectURL.h"
@@ -151,7 +154,7 @@ int CDlgRunLink::GetImageIndex(tstring const& inLink)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunLink message handlers
 
-BOOL CDlgRunLink::OnInitDialog() 
+BOOL CDlgRunLink::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
@@ -165,7 +168,7 @@ BOOL CDlgRunLink::OnInitDialog()
 
 void CDlgRunLink::OnDblclkList(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	OnEdit();
 	*pResult = 0;
@@ -174,7 +177,7 @@ void CDlgRunLink::OnDblclkList(
 
 void CDlgRunLink::OnKeydownList(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
@@ -199,7 +202,7 @@ void CDlgRunLink::OnItemchangedList(
 }
 
 
-void CDlgRunLink::OnNew() 
+void CDlgRunLink::OnNew()
 {
 	CDlgSelectURL dlg(_T(""), this);
 	if (IDOK == dlg.DoModal())
@@ -214,7 +217,7 @@ void CDlgRunLink::OnNew()
 }
 
 
-void CDlgRunLink::OnEdit() 
+void CDlgRunLink::OnEdit()
 {
 	int nItem = m_ctrlLinks.GetSelection();
 	if (0 <= nItem)
@@ -236,7 +239,7 @@ void CDlgRunLink::OnEdit()
 }
 
 
-void CDlgRunLink::OnDelete() 
+void CDlgRunLink::OnDelete()
 {
 	int nItem = m_ctrlLinks.GetSelection();
 	if (0 <= nItem)
@@ -257,3 +260,4 @@ void CDlgRunLink::OnOpen()
 		RunCommand(name);
 	}
 }
+#endif

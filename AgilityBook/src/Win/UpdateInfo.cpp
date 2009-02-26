@@ -36,6 +36,7 @@
  * line 2-n: xml (see below)
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-06-29 DRC When looking for language ids, it was searching the wrong node.
  * @li 2008-01-01 DRC Fix a bug parsing Element data (GetElementNode may return null)
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
@@ -47,49 +48,49 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "UpdateInfo.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "Element.h"
-#include "HyperLink.h"
+#include "LanguageManager.h"
 #include "ReadHttp.h"
-#include "Splash.h"
 #include "VersionNum.h"
+#include <wx/config.h>
 
 #ifdef _DEBUG
-//#define USE_LOCAL
+#define USE_LOCAL
 #endif
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+#ifdef USE_LOCAL
+#include <wx/textfile.h>
+#ifdef WIN32
+#define FILENAME	wxT("c:/AgilityBook/www/version.txt")
+#else
+#define FILENAME	wxT("/AgilityBook/www/version.txt")
+#endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool CUpdateInfo::UpdateConfig(
 		CAgilityBookDoc* ioDoc,
-		TCHAR const* inMsg)
+		wxChar const* inMsg)
 {
-	CSplashWnd::HideSplashScreen();
-
-	CString msg;
-	msg.LoadString(IDS_UPDATED_CONFIG);
+	wxString msg(_("IDS_UPDATED_CONFIG"));
 	if (inMsg && *inMsg)
 	{
-		msg += _T("\n\n");
+		msg += wxT("\n\n");
 		msg += inMsg;
 	}
 
-	bool b = (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO));
+	bool b = (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO));
 	/* TODO: Change to include 'never' option
 	if (!b)
 	{
 		ioDoc->GetConfig().SetUpdateStatus(false);
-		ioDoc->SetModifiedFlag(TRUE);
+		ioDoc->Modify(true);
 	}
 	*/
 	return b;
@@ -103,7 +104,7 @@ CUpdateInfo::CUpdateInfo()
 	, m_FileName()
 	, m_InfoMsg()
 	, m_UpdateDownload()
-	, m_usernameHint(_T("default"))
+	, m_usernameHint(wxT("default"))
 	, m_CalSiteSuppression()
 {
 }
@@ -122,88 +123,84 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	m_FileName.erase();
 	m_InfoMsg.clear();
 	m_UpdateDownload.Empty();
-	m_usernameHint = _T("default");
+	m_usernameHint = wxT("default");
 	m_CalSiteSuppression.clear();
 
 	// Set the default values.
-	m_UpdateDownload.LoadString(IDS_ABOUT_LINK_ARB_DOWNLOAD);
-	int nTab = m_UpdateDownload.Find('\t');
-	if (0 < nTab)
-		m_UpdateDownload = m_UpdateDownload.Mid(nTab+1);
+	m_UpdateDownload = _("LinkArbDownloadUrl");
 
 	// Read the file.
-	CString url;
-	url.LoadString(IDS_HELP_UPDATE);
-	url += _T("/version.txt");
-	CStringA data;
-	CString errMsg;
+	wxString url(_("IDS_HELP_UPDATE"));
+	url += wxT("/version.txt");
+	std::string data; // must be 'char' for XML parsing
+	wxString errMsg;
 
 #ifdef USE_LOCAL
-	CStdioFile file;
-	if (file.Open(_T("c:\\AgilityBook\\www\\version.txt"), CFile::modeRead))
+	wxTextFile file;
+	if (file.Open(FILENAME))
 	{
-		CString line;
-		while (file.ReadString(line))
+		for (size_t line = 0; line < file.GetLineCount(); ++line)
 		{
-			data += line;
+#ifdef UNICODE
+			data += tstringUtil::Convert(file[line].c_str());
+#else
+			data += file[line];
+#endif
 			data += '\n';
 		}
 		file.Close();
 	}
 #else
 	CReadHttp file(url, data);
-	CString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+	wxString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
 	if (file.ReadHttpFile(userName, errMsg))
 		CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 	else
 	{
 		if (bVerbose)
 		{
-			CSplashWnd::HideSplashScreen();
-			data.LoadString(IDS_UPDATE_UNKNOWN);
+			data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
 #ifdef UNICODE
-			CString tmp(data);
+			wxString tmp(data.c_str(), wxMBConvUTF8());
 			if (!errMsg.IsEmpty())
 				tmp += errMsg;
-			AfxMessageBox(tmp, MB_ICONEXCLAMATION);
+			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 #else
 			if (!errMsg.IsEmpty())
 				data += errMsg;
-			AfxMessageBox(data, MB_ICONEXCLAMATION);
+			wxMessageBox(data, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 #endif
 		}
 		return false;
 	}
-	file.Close();
 #endif
 
 	// Now parse it into the object.
-	CString tmp(data);
+	wxString tmp(data.c_str(), wxMBConvUTF8());
 	// This is a static string in "version.txt"
-	static CString const idStr(_T("ARB Version "));
+	static wxString const idStr(wxT("ARB Version "));
 	if (0 == tmp.Find(idStr))
 	{
-		tmp = tmp.Mid(idStr.GetLength());
-		m_VersionNum.Parse(_T("version.txt"), tmp);
+		tmp = tmp.Mid(idStr.length());
+		m_VersionNum.Parse(wxT("version.txt"), tmp);
 	}
 
 	if (!m_VersionNum.Valid())
 	{
 		if (bVerbose)
 		{
-			CSplashWnd::HideSplashScreen();
-			AfxMessageBox(IDS_UPDATE_UNKNOWN, MB_ICONEXCLAMATION);
+			wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 		}
 		return false;
 	}
 
 	// Skip the first line, that's the version.
-	int n = data.Find('\n');
-	if (0 < n)
-		data = data.Mid(n+1);
+	std::string::size_type n = data.find('\n');
+	if (std::string::npos != n)
+		data = data.substr(n+1);
 	else
-		data.Empty();
-	if (!data.IsEmpty())
+		data.clear();
+	if (!data.empty())
 	{
 		// The rest of the file is xml:
 		/*
@@ -224,13 +221,15 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		    >
 		<!--
 		'id' specified the LANGID of the plugin language DLL, '0' is used
-		for the program default.
+		for the program default. (mfc)
+		'id2' is gettext lang code. (wxWidgets)
 		-->
 		<!ELEMENT Lang (#PCDATA) >
 		  <!ATTLIST Lang id CDATA #REQUIRED >
+		  <!ATTLIST Lang id2 CDATA #REQUIRED >
 
 		<!--
-		if Download is not set, defaults to IDS_ABOUT_LINK_ARB_DOWNLOAD,
+		if Download is not set, defaults to 'LinkArbDownloadUrl',
 		which is http://www.agilityrecordbook.com/download.php
 		-->
 		<!ELEMENT Download (#PCDATA) >
@@ -250,34 +249,32 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		*/
 		tstring errMsg2;
 		ElementNodePtr tree(ElementNode::New());
-		if (!tree->LoadXMLBuffer((LPCSTR)data, data.GetLength(), errMsg2))
+		if (!tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg2))
 		{
 			if (bVerbose)
 			{
-				CString msg;
-				msg.FormatMessage(IDS_LOAD_FAILED, _T("version.txt"));
+				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), wxT("version.txt"));
 				if (0 < errMsg2.length())
 				{
-					msg += _T("\n\n");
+					msg += wxT("\n\n");
 					msg += errMsg2.c_str();
 				}
-				CSplashWnd::HideSplashScreen();
-				AfxMessageBox(msg, MB_ICONEXCLAMATION);
+				wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 				// Even tho we failed, we'll still report success.
 				// The return code is really whether we loaded the pgm verno.
 			}
 		}
-		else if (tree->GetName() == _T("Data"))
+		else if (tree->GetName() == wxT("Data"))
 		{
 			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
 			{
 				ElementNodePtr node = tree->GetElementNode(nIndex);
 				if (!node)
 					continue;
-				if (node->GetName() == _T("Config"))
+				if (node->GetName() == wxT("Config"))
 				{
-					node->GetAttrib(_T("ver"), m_VerConfig);
-					node->GetAttrib(_T("file"), m_FileName);
+					node->GetAttrib(wxT("ver"), m_VerConfig);
+					node->GetAttrib(wxT("file"), m_FileName);
 					// Note, before v1.10, we did "m_InfoMsg = node->GetValue();"
 					// In 1.10, we changed the format of version.txt.
 					for (int nLang = 0; nLang < node->GetElementCount(); ++nLang)
@@ -285,27 +282,26 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 						ElementNodePtr lang = node->GetElementNode(nLang);
 						if (!lang)
 							continue;
-						if (lang->GetName() == _T("Lang"))
+						if (lang->GetName() == wxT("Lang"))
 						{
 							tstring langIdStr;
-							lang->GetAttrib(_T("id"), langIdStr);
-							LANGID langId = static_cast<LANGID>(_tcstol(langIdStr.c_str(), NULL, 16));
-							m_InfoMsg[langId] = lang->GetValue();
+							lang->GetAttrib(wxT("id2"), langIdStr);
+							m_InfoMsg[langIdStr] = lang->GetValue();
 						}
 					}
 				}
-				else if (node->GetName() == _T("Download"))
+				else if (node->GetName() == wxT("Download"))
 				{
 					m_UpdateDownload = node->GetValue().c_str();
 				}
-				else if (node->GetName() == _T("DisableCalPlugin"))
+				else if (node->GetName() == wxT("DisableCalPlugin"))
 				{
 					tstring filename, ver;
-					node->GetAttrib(_T("file"), filename);
-					node->GetAttrib(_T("ver"), ver);
+					node->GetAttrib(wxT("file"), filename);
+					node->GetAttrib(wxT("ver"), ver);
 					// The 'enable' attribute is in case we prematurely disable
 					bool bEnable = false;
-					node->GetAttrib(_T("enable"), bEnable);
+					node->GetAttrib(wxT("enable"), bEnable);
 					CVersionNum vernum;
 					vernum.Parse(filename.c_str(), ver.c_str());
 					if (vernum.Valid())
@@ -331,17 +327,16 @@ bool CUpdateInfo::CheckProgram()
 	if (IsOutOfDate())
 	{
 		bNeedsUpdating = true;
-		CSplashWnd::HideSplashScreen();
-		theApp.WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
-		CString msg;
-		msg.FormatMessage(IDS_VERSION_AVAILABLE, (LPCTSTR)m_VersionNum.GetVersionString());
-		if (IDYES == AfxMessageBox(msg, MB_ICONQUESTION | MB_YESNO))
+		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
+		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
+		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
 		{
-			CString url(m_UpdateDownload);
-			CString suffix = url.Right(4);
+			wxString url(m_UpdateDownload);
+			wxString suffix = url.Right(4);
 			suffix.MakeUpper();
-			if (suffix == _T(".PHP"))
+			if (suffix == wxT(".PHP"))
 			{
+#ifdef WIN32
 				OSVERSIONINFO os;
 				os.dwOSVersionInfoSize = sizeof(os);
 				GetVersionEx(&os);
@@ -354,22 +349,27 @@ bool CUpdateInfo::CheckProgram()
 						SYSTEM_INFO info;
 						GetSystemInfo(&info);
 						if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
-							url += _T("?os=x64");
+							url += wxT("?os=x64");
 						else
 #endif
-							url += _T("?os=win");
+							url += wxT("?os=win");
 					}
 					break;
 				case VER_PLATFORM_WIN32_WINDOWS: // Win95/98/Me
-					url += _T("?os=win98");
+					url += wxT("?os=win98");
 					break;
 				}
+#else
+#pragma message PRAGMA_MESSAGE("TODO: Add 'os' tag for URL download")
+				// @todo Add appropriate 'os' tag for other OS's
+				// Must agree with website's download.php
+#endif
 			}
-			CHyperLink::GotoURL(url);
+			wxLaunchDefaultBrowser(url);
 		}
 	}
 	else
-		theApp.WriteProfileString(_T("Settings"), _T("lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
+		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
 	return bNeedsUpdating;
 }
 
@@ -382,7 +382,7 @@ bool CUpdateInfo::IsOutOfDate()
 	// If we haven't parsed the internet file yet, assume we're out-of-date.
 	if (!m_VersionNum.Valid())
 		return true;
-	CVersionNum verThis(NULL); // This auto-loads the versioninfo.
+	CVersionNum verThis;
 	assert(verThis.Valid());
 	if (verThis < m_VersionNum)
 		return true;
@@ -402,10 +402,10 @@ void CUpdateInfo::CheckConfig(
 	if (0 < m_FileName.length() && m_VerConfig > pDoc->Book().GetConfig().GetVersion())
 	{
 		bUpToDate = false;
-		CString msg;
+		wxString msg;
 		if (0 < m_InfoMsg.size())
 		{
-			std::map<LANGID, tstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
+			std::map<tstring, tstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
 			if (iMsg == m_InfoMsg.end())
 				iMsg = m_InfoMsg.find(0);
 			if (iMsg != m_InfoMsg.end() && 0 < iMsg->second.length())
@@ -422,33 +422,31 @@ void CUpdateInfo::CheckConfig(
 		if (UpdateConfig(pDoc, msg))
 		{
 			// Load the config.
-			CString url;
-			url.LoadString(IDS_HELP_UPDATE);
-			url += _T("/");
+			wxString url = _("IDS_HELP_UPDATE");
+			url += wxT("/");
 			url += m_FileName.c_str();
-			CStringA strConfig;
-			CString errMsg;
-			CReadHttp file(url, strConfig);
-			CString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+			std::string strConfig;
+			wxString errMsg;
+			CReadHttp file(url, &strConfig);
+			wxString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
 			if (file.ReadHttpFile(m_usernameHint, errMsg))
 			{
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
-				file.Close();
 				ElementNodePtr tree(ElementNode::New());
 				tstring errMsg2;
-				if (!tree->LoadXMLBuffer((LPCSTR)strConfig, strConfig.GetLength(), errMsg2))
+				if (!tree->LoadXMLBuffer(strConfig.c_str(), strConfig.length(), errMsg2))
 				{
-					msg.FormatMessage(IDS_LOAD_FAILED, (LPCTSTR)url);
+					wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
 					if (0 < errMsg2.length())
 					{
-						msg += _T("\n\n");
+						msg += wxT("\n\n");
 						msg += errMsg2.c_str();
 					}
-					AfxMessageBox(msg, MB_ICONEXCLAMATION);
+					wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 				}
-				else if (tree->GetName() == _T("DefaultConfig"))
+				else if (tree->GetName() == wxT("DefaultConfig"))
 				{
-					strConfig.Empty();
+					strConfig.clear();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 					tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 					int nConfig = tree->FindElement(TREE_CONFIG);
@@ -459,12 +457,12 @@ void CUpdateInfo::CheckConfig(
 						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 						{
 							if (0 < err.m_ErrMsg.length())
-								AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+								wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 						}
 						else
 						{
 							pDoc->ImportConfiguration(book.GetConfig());
-							pDoc->SetModifiedFlag(TRUE);
+							pDoc->Modify(true);
 						}
 					}
 				}
@@ -473,8 +471,7 @@ void CUpdateInfo::CheckConfig(
 	}
 	if (bUpToDate && bVerbose)
 	{
-		CSplashWnd::HideSplashScreen();
-		AfxMessageBox(IDS_UPDATE_CURRENT, MB_ICONINFORMATION);
+		wxMessageBox(_("IDS_UPDATE_CURRENT"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 	}
 }
 

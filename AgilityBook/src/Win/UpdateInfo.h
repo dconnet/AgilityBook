@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2004-08-03 DRC Created
@@ -40,8 +41,11 @@
 
 #include "ARBTypes.h"
 #include "VersionNum.h"
+#include <map>
+#include <vector>
 class CAgilityBookDoc;
 class CLanguageManager;
+
 
 /**
  * This class manages checking to see if there are newer versions of the
@@ -71,7 +75,7 @@ public:
 	 */
 	static bool UpdateConfig(
 			CAgilityBookDoc* ioDoc,
-			TCHAR const* inMsg = NULL);
+			wxChar const* inMsg = NULL);
 
 	/**
 	 * Called when the program does its monthly auto-check.
@@ -103,8 +107,8 @@ private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
 	tstring m_FileName;
-	std::map<LANGID, tstring> m_InfoMsg;
-	CString m_UpdateDownload;
-	CString m_usernameHint;
+	std::map<tstring, tstring> m_InfoMsg;
+	wxString m_UpdateDownload;
+	wxString m_usernameHint;
 	std::vector<CVersionNum> m_CalSiteSuppression;
 };

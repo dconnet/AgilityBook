@@ -33,24 +33,20 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2005-12-12 DRC Created
  */
 
-class CNoteButton : public CButton
+class CNoteButton : public wxBitmapButton
 {
-	DECLARE_DYNAMIC(CNoteButton)
-
 public:
-	CNoteButton();
-	CNoteButton(UINT idIcon);
-	virtual ~CNoteButton();
+	CNoteButton(wxWindow* parent);
 
 protected:
-	void Load(UINT idIcon);
-
-	CImageList m_ImageList;
+	wxImageList m_ImageList;
 	int m_idxNormal;
 
+#if 0
 	virtual void PreSubclassWindow();
 	virtual void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
 
@@ -59,4 +55,5 @@ protected:
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+#endif
 };

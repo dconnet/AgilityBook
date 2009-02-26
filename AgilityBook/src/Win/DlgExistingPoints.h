@@ -33,17 +33,35 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-02-03 DRC Created
  */
 
 #include "ARBDate.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
 #include "ListData.h"
 class CAgilityBookDoc;
-class CDlgPointsDataLevel;
+//class CDlgPointsDataLevel;
 
+
+class CDlgExistingPoints
+{
+public:
+	CDlgExistingPoints(
+			CAgilityBookDoc* pDoc,
+			ARBDogExistingPointsList& points,
+			ARBDogExistingPointsPtr pExistingPoints,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgExistingPoints"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgExistingPoints : public CDlgBaseDialog
 {
 public:
@@ -124,3 +142,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

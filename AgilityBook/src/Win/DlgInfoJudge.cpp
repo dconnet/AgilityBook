@@ -36,6 +36,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Add ability to see what was last selected.
  * @li 2008-01-01 DRC Added visible flag.
  * @li 2007-12-03 DRC SelectString was still used in OnNew.
@@ -53,9 +54,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgInfoJudge.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgInfoJudge")
+#if 0
+#include "AgilityBook.h"
 #include <algorithm>
 #include "AgilityBookDoc.h"
 #include "DlgName.h"
@@ -459,3 +462,4 @@ void CDlgInfoJudge::OnOK()
 	}
 	CDlgBaseDialog::OnOK();
 }
+#endif

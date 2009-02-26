@@ -31,13 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-03-06 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgCRCDViewer.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgCRCDViewer")
+#if 0
+#include "AgilityBook.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -182,3 +185,4 @@ void CDlgCRCDViewer::OnSize(
 		AdjustCRCD();
 	}
 }
+#endif

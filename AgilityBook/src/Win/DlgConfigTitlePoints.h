@@ -33,21 +33,24 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
  */
 
-#include "DlgBaseDialog.h"
-#include "afxwin.h"
+#include "ARBTypes.h"
 
-class CDlgConfigTitlePoints : public CDlgBaseDialog
+
+class CDlgConfigTitlePoints : public wxDialog
 {
 public:
 	enum ETitlePointType
 	{
-		eTitleNormal,
+		// These numbers correspond to the index in the choice list
+		eTitleNormal = 0,
 		eTitleLifetime,
-		eTitlePlacement
+		eTitlePlacement,
+		eTitleMax
 	};
 
 	CDlgConfigTitlePoints(
@@ -55,39 +58,22 @@ public:
 			double inValue, // Faults or Place
 			double inPoints,
 			ETitlePointType inType,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
-	double Faults() const			{return m_Value;}
-	short Place() const				{return static_cast<short>(m_Value);}
+	double Faults() const			{return m_Faults;}
+	short Place() const				{return m_Place;}
 	double Points() const			{return m_Points;}
-	ETitlePointType Type() const	{return m_Type;}
+	ETitlePointType Type() const	{return static_cast<ETitlePointType>(m_Type);}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigTitlePoints)
-	enum { IDD = IDD_CONFIG_TITLE_POINTS };
-	CStatic	m_ctrlValueText;
-	double	m_Value;
-	double	m_Points;
-	CComboBox m_ctrlType;
-	//}}AFX_DATA
 	ARBConfigVenuePtr m_Venue;
-	ETitlePointType m_Type;
-	CString m_FaultText;
-	CString m_PlaceText;
+	int m_Type;
+	wxStaticText* m_textValue;
+	wxTextCtrl* m_ctrlValue;
+	wxChoice* m_ctrlType;
+	double m_Faults;
+	short m_Place;
+	double m_Points;
 
-	//{{AFX_VIRTUAL(CDlgConfigTitlePoints)
-protected:
-	virtual BOOL OnInitDialog();
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	void UpdateText();
-
-	//{{AFX_MSG(CDlgConfigTitlePoints)
-	afx_msg void OnCbnSelchangeTitlePoints();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnSelchangeTitlePoints(wxCommandEvent& evt);
 };

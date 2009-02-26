@@ -31,114 +31,153 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-09-21 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgTraining.h"
 
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBTraining.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "Validators.h"
+#include <wx/datectrl.h>
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgTraining dialog
+
+BEGIN_EVENT_TABLE(CDlgTraining, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgTraining::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgTraining::CDlgTraining(
 		ARBTrainingPtr pTraining,
 		CAgilityBookDoc* pDoc,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgTraining::IDD, pParent)
-	, m_ctrlNames(false)
-	, m_ctrlSubNames(false)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_TRAINING"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 	, m_pTraining(pTraining)
 	, m_pDoc(pDoc)
+	, m_datePicker(NULL)
+	, m_Name(pTraining->GetName().c_str())
+	, m_SubName(pTraining->GetSubName().c_str())
+	, m_Notes(pTraining->GetNote().c_str())
 {
-	//{{AFX_DATA_INIT(CDlgTraining)
-	m_date = CTime::GetCurrentTime();
-	m_Name = pTraining->GetName().c_str();
-	m_SubName = pTraining->GetSubName().c_str();
-	m_Notes = pTraining->GetNote().c_str();
-	//}}AFX_DATA_INIT
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	wxDateTime date(wxDateTime::Now());
 	if (pTraining->GetDate().IsValid())
-		m_date = CTime(pTraining->GetDate().GetDate());
-	m_Notes.Replace(_T("\n"), _T("\r\n"));
-}
+		date.Set(pTraining->GetDate().GetDate());
 
+	wxArrayString names, subnames;
 
-void CDlgTraining::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgTraining)
-	DDX_DateTimeCtrl(pDX, IDC_TRAINING_DATE, m_date);
-	DDX_Control(pDX, IDC_TRAINING_NAME, m_ctrlNames);
-	DDX_CBString(pDX, IDC_TRAINING_NAME, m_Name);
-	DDX_Control(pDX, IDC_TRAINING_SUBNAME, m_ctrlSubNames);
-	DDX_CBString(pDX, IDC_TRAINING_SUBNAME, m_SubName);
-	DDX_Text(pDX, IDC_TRAINING_NOTES, m_Notes);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgTraining, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgTraining)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgTraining message handlers
-
-BOOL CDlgTraining::OnInitDialog() 
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	std::set<tstring> names;
-	m_pDoc->Book().GetTraining().GetAllNames(names);
+	std::set<tstring> items;
+	m_pDoc->Book().GetTraining().GetAllNames(items);
 	std::set<tstring>::iterator iter;
-	for (iter = names.begin(); iter != names.end(); ++iter)
+	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		int index = m_ctrlNames.AddString((*iter).c_str());
-		if ((*iter) == m_pTraining->GetName())
-			m_ctrlNames.SetCurSel(index);
+		names.Add((*iter).c_str());
 	}
-	m_pDoc->Book().GetTraining().GetAllSubNames(names);
-	for (iter = names.begin(); iter != names.end(); ++iter)
+	names.Sort();
+	m_pDoc->Book().GetTraining().GetAllSubNames(items);
+	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		int index = m_ctrlSubNames.AddString((*iter).c_str());
-		if ((*iter) == m_pTraining->GetName())
-			m_ctrlSubNames.SetCurSel(index);
+		subnames.Add((*iter).c_str());
 	}
+	subnames.Sort();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textDate = new wxStaticText(this, wxID_ANY,
+		_("HIDC_TRAINING_DATE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDate->Wrap(-1);
+
+	m_datePicker = new wxDatePickerCtrl(this, wxID_ANY, date,
+		wxDefaultPosition, wxDefaultSize,
+		wxDP_DROPDOWN|wxDP_SHOWCENTURY);
+	m_datePicker->SetHelpText(_("HIDC_TRAINING_DATE"));
+	m_datePicker->SetToolTip(_("HIDC_TRAINING_DATE"));
+
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_TRAINING_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
+
+	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY, m_Name,
+		wxDefaultPosition, wxDefaultSize,
+		names, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlName->SetHelpText(_("HIDC_TRAINING_NAME"));
+	ctrlName->SetToolTip(_("HIDC_TRAINING_NAME"));
+
+	wxStaticText* textSubname = new wxStaticText(this, wxID_ANY,
+		_("IDC_TRAINING_SUBNAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textSubname->Wrap(-1);
+
+	wxComboBox* ctrlSubname = new wxComboBox(this, wxID_ANY, m_SubName,
+		wxDefaultPosition, wxDefaultSize,
+		subnames, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlSubname->SetHelpText(_("HIDC_TRAINING_SUBNAME"));
+	ctrlSubname->SetToolTip(_("HIDC_TRAINING_SUBNAME"));
+
+	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, m_Notes,
+		wxDefaultPosition, wxSize(370,210),
+		wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_RIGHT));
+	ctrlNote->SetHelpText(_("HIDC_TRAINING_NOTES"));
+	ctrlNote->SetToolTip(_("HIDC_TRAINING_NOTES"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerDate = new wxBoxSizer(wxHORIZONTAL);
+	sizerDate->Add(textDate, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerDate->Add(m_datePicker, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerDate, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(ctrlName, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerSubname = new wxBoxSizer(wxHORIZONTAL);
+	sizerSubname->Add(textSubname, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerSubname->Add(ctrlSubname, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerSubname, 0, wxEXPAND, 5);
+	bSizer->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	m_datePicker->SetFocus();
 }
 
 
-void CDlgTraining::OnOK() 
+void CDlgTraining::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	ARBDate date(m_date.GetYear(), m_date.GetMonth(), m_date.GetDay());
+	wxDateTime date = m_datePicker->GetValue();
 
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-	m_SubName.TrimRight();
-	m_SubName.TrimLeft();
-	m_Notes.Replace(_T("\r\n"), _T("\n"));
+	m_pTraining->SetDate(ARBDate(date.GetYear(), date.GetMonth(), date.GetDay()));
+	m_pTraining->SetName(m_Name.c_str());
+	m_pTraining->SetSubName(m_SubName.c_str());
+	m_pTraining->SetNote(m_Notes.c_str());
 
-	m_pTraining->SetDate(date);
-	m_pTraining->SetName((LPCTSTR)m_Name);
-	m_pTraining->SetSubName((LPCTSTR)m_SubName);
-	m_pTraining->SetNote((LPCTSTR)m_Notes);
-
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }

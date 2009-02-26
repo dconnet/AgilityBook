@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-09-30 DRC Created
  */
 
@@ -59,7 +60,7 @@ public:
 	virtual bool InsertArrayData(
 			long inRow,
 			long inCol,
-			CString const& inData) = 0;
+			wxString const& inData) = 0;
 	virtual bool ExportDataArray(
 			long inRowTop = 0,
 			long inColLeft = 0) = 0;
@@ -90,7 +91,7 @@ public:
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
-			CString const& inData) = 0;
+			wxString const& inData) = 0;
 
 	virtual bool AutoFit(
 			long inColFrom,
@@ -104,9 +105,9 @@ class IWizardImporter
 {
 public:
 	virtual ~IWizardImporter() = 0;
-	virtual bool OpenFile(CString const& inFilename) = 0;
+	virtual bool OpenFile(wxString const& inFilename) = 0;
 	virtual bool GetData(
-			std::vector< std::vector<CString> >& outData,
+			std::vector< std::vector<wxString> >& outData,
 			IDlgProgress* ioProgress = NULL) = 0;
 };
 
@@ -133,7 +134,7 @@ public:
 	static bool GetRowCol(
 			long inRow,
 			long inCol,
-			CString& outCell);
+			wxString& outCell);
 
 	virtual ~IWizardSpreadSheet() = 0;
 	virtual IWizardExporterPtr GetExporter() const = 0;

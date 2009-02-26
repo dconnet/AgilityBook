@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2005-08-18 DRC Separated options and filters into two dialogs.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2004-08-31 DRC Added option to disable splash screen.
@@ -40,22 +41,27 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgOptions.h"
-#include "MainFrm.h"
 
+//#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+//#include "MainFrm.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptions
+int CDlgOptions::ShowModal()
+{
+	if (wxOK == wxMessageBox(wxT("CDlgOptions\nTest: OK == toggle points"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION | wxOK | wxCANCEL))
+	{
+		CAgilityBookOptions::SetShowHtmlPoints(!CAgilityBookOptions::ShowHtmlPoints());
+		m_pDoc->ShowPointsAsHtml(CAgilityBookOptions::ShowHtmlPoints());
+	}
+	return wxID_CANCEL;
+}
 
+
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptions")
+#if 0
 IMPLEMENT_DYNAMIC(CDlgOptions, CDlgBaseSheet)
 
 CDlgOptions::CDlgOptions(
@@ -130,7 +136,7 @@ CDlgOptions::~CDlgOptions()
 }
 
 
-BOOL CDlgOptions::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CDlgOptions::PreCreateWindow(CREATESTRUCT& cs)
 {
 	return CDlgBaseSheet::PreCreateWindow(cs);
 }
@@ -204,11 +210,13 @@ void CDlgOptions::OnOK()
 
 		if (bResetHtmlView)
 		{
-			CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
-			if (pFrame)
-				pFrame->ShowPointsAs(CAgilityBookOptions::ShowHtmlPoints());
+			//CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
+			//if (pFrame)
+			//	pFrame->ShowPointsAs(CAgilityBookOptions::ShowHtmlPoints());
+			m_pDoc->ShowPointsAsHtml(CAgilityBookOptions::ShowHtmlPoints());
 		}
 
 		EndDialog(IDOK);
 	}
 }
+#endif

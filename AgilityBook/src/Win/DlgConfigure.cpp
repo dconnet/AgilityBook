@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-19 DRC Simplified UI layout into a single tree.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent' action.
@@ -45,9 +46,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigure.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigure")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
@@ -60,12 +63,6 @@
 #include "DlgMessage.h"
 #include "DlgMessageBox.h"
 #include "DlgName.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -186,7 +183,7 @@ void CDlgConfigure::UpdateButtons()
 	BOOL bCopy = FALSE;
 	if (eNone != GetAction())
 		bNew = TRUE;
-	if (GetData(m_ctrlItems.GetSelectedItem()))	
+	if (GetData(m_ctrlItems.GetSelectedItem()))
 	{
 		bDelete = bEdit = bCopy = TRUE;
 	}
@@ -385,7 +382,7 @@ void CDlgConfigure::OnDeleteitem(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CDlgConfigure::OnGetdispinfo(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	TV_DISPINFO* pDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & TVIF_TEXT)
@@ -405,7 +402,7 @@ void CDlgConfigure::OnGetdispinfo(
 
 void CDlgConfigure::OnDblclk(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	OnEdit();
 	*pResult = 0;
@@ -414,14 +411,14 @@ void CDlgConfigure::OnDblclk(
 
 void CDlgConfigure::OnSelchanged(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	UpdateButtons();
 	*pResult = 0;
 }
 
 
-void CDlgConfigure::OnNew() 
+void CDlgConfigure::OnNew()
 {
 	switch (GetAction())
 	{
@@ -500,7 +497,7 @@ void CDlgConfigure::OnNew()
 }
 
 
-void CDlgConfigure::OnDelete() 
+void CDlgConfigure::OnDelete()
 {
 	HTREEITEM current = m_ctrlItems.GetSelectedItem();
 	CListDataDispInfo* pData = GetData(current);
@@ -548,7 +545,7 @@ void CDlgConfigure::OnDelete()
 }
 
 
-void CDlgConfigure::OnEdit() 
+void CDlgConfigure::OnEdit()
 {
 	HTREEITEM current = m_ctrlItems.GetSelectedItem();
 	CListDataDispInfo* pData = GetData(current);
@@ -622,7 +619,7 @@ void CDlgConfigure::OnEdit()
 }
 
 
-void CDlgConfigure::OnCopy() 
+void CDlgConfigure::OnCopy()
 {
 	HTREEITEM current = m_ctrlItems.GetSelectedItem();
 	CListDataDispInfo* pData = GetData(current);
@@ -714,7 +711,7 @@ public:
 
 
 // Updating a configuration is mainly an additive procedure.
-void CDlgConfigure::OnUpdate() 
+void CDlgConfigure::OnUpdate()
 {
 	CDlgConfigUpdate dlg(this);
 	if (IDOK == dlg.DoModal())
@@ -744,7 +741,7 @@ void CDlgConfigure::OnUpdate()
 		else
 			AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
 	}
-} 
+}
 
 
 void CDlgConfigure::OnOK()
@@ -756,3 +753,4 @@ void CDlgConfigure::OnOK()
 	}
 	CDlgBaseDialog::OnOK();
 }
+#endif

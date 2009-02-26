@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-09-20 DRC Added yourself was not getting up-to-date scoring info.
  * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
@@ -42,9 +43,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgRunReference.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgRunReference")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDogRun.h"
 #include "DlgReferenceRun.h"
@@ -418,7 +421,7 @@ void CDlgRunReference::GetAllBreeds(std::set<tstring>& outNames)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunReference message handlers
 
-BOOL CDlgRunReference::OnInitDialog() 
+BOOL CDlgRunReference::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlRefRuns.SetExtendedStyle(m_ctrlRefRuns.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
@@ -458,7 +461,7 @@ BOOL CDlgRunReference::OnSetActive()
 
 void CDlgRunReference::OnGetdispinfoRefRuns(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	LV_DISPINFO* pDispInfo = reinterpret_cast<LV_DISPINFO*>(pNMHDR);
 	if (pDispInfo->item.mask & LVIF_TEXT)
@@ -509,7 +512,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 
 void CDlgRunReference::OnColumnclickRefRuns(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	SORTINFO si;
@@ -525,7 +528,7 @@ void CDlgRunReference::OnColumnclickRefRuns(
 
 void CDlgRunReference::OnItemchangedRefRuns(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 //	NM_LISTVIEW* pNMListView = reinterpret_cast<NM_LISTVIEW*>(pNMHDR);
 	UpdateButtons();
@@ -535,7 +538,7 @@ void CDlgRunReference::OnItemchangedRefRuns(
 
 void CDlgRunReference::OnDblclkRefRuns(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	OnRefRunEdit();
 	*pResult = 0;
@@ -544,7 +547,7 @@ void CDlgRunReference::OnDblclkRefRuns(
 
 void CDlgRunReference::OnKeydownRefRuns(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
@@ -581,7 +584,7 @@ void CDlgRunReference::OnRefRunAdd()
 }
 
 
-void CDlgRunReference::OnRefRunNew() 
+void CDlgRunReference::OnRefRunNew()
 {
 	ARBDogReferenceRunPtr ref(ARBDogReferenceRun::New());
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
@@ -638,7 +641,7 @@ void CDlgRunReference::OnRefRunNew()
 }
 
 
-void CDlgRunReference::OnRefRunEdit() 
+void CDlgRunReference::OnRefRunEdit()
 {
 	int nItem = m_ctrlRefRuns.GetSelection();
 	if (0 <= nItem)
@@ -655,7 +658,7 @@ void CDlgRunReference::OnRefRunEdit()
 }
 
 
-void CDlgRunReference::OnRefRunDelete() 
+void CDlgRunReference::OnRefRunDelete()
 {
 	int nItem = m_ctrlRefRuns.GetSelection();
 	if (0 <= nItem)
@@ -671,3 +674,4 @@ void CDlgRunReference::OnRefRunDelete()
 		UpdateButtons();
 	}
 }
+#endif

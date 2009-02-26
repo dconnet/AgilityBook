@@ -33,13 +33,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  */
 
-#include <afxinet.h>
-class CInternetSession;
-class CHttpConnection;
-class CHttpFile;
+#include "ARBString.h"
+#include <wx/protocol/http.h>
+
 
 /**
  * Read data from the internet
@@ -51,44 +51,33 @@ public:
 	 * Construction
 	 * @param inURL URL to read data from.
 	 * @param outData Returned data, in raw ascii form, not unicode (makes XML parsing easier)
+	 * @note If outData is NULL, ReadHttpFile will only check for connectivity.
 	 */
-	CReadHttp(CString const& inURL, CStringA& outData);
-	~CReadHttp();
-
-	/**
-	 * Close everything.
-	 */
-	void Close();
+	CReadHttp(
+			wxString const& inURL,
+			std::string* outData);
 
 	/**
 	 * Read the HTTP via a 'GET'
 	 * @param userName Default username, if required. May be modified.
 	 * @param outErrMsg Generated error messages
 	 * @param pParent Owner of any dialogs that may be displayed
+	 * @param bCheckOnly Only check connection, do not read, do not prompt for password
 	 * @return Success
 	 */
-	bool ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParent = NULL);
+	bool ReadHttpFile(
+			wxString& userName,
+			wxString& outErrMsg,
+			wxWindow* pParent = NULL,
+			bool bCheckOnly = false);
+
+	bool CheckHttpFile(wxWindow* pParent = NULL);
 
 private:
-	/**
-	 * Close the connection and file, not session
-	 */
-	void CloseFiles();
-
-	/**
-	 * Create the session, connection and file.
-	 * @param userName Default username, if required. May be modified.
-	 * @param outErrMsg Generated error messages
-	 * @param pParent Owner of any dialogs that may be displayed
-	 */
-	DWORD Connect(CString& userName, CString& outErrMsg, CWnd* pParent);
-
-	CString m_URL; // Note, this cannot be a reference - otherwise CReadHttp("http://www", data) fails as the reference goes away.
-	CStringA& m_Data;
-	CInternetSession* m_session;
-	CHttpConnection* m_pServer;
-	CHttpFile* m_pFile;
-	CString m_strServerName;
-	CString m_strObject;
-	INTERNET_PORT m_nPort;
+	bool m_Valid;
+	wxString m_URL;
+	wxString m_Protocol;
+	wxString m_Host;
+	wxString m_Request;
+	std::string* m_Data;
 };

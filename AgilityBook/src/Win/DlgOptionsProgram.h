@@ -33,11 +33,17 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-08-31 DRC Added option to disable splash screen.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2004-04-08 DRC Created
  */
 
+class CDlgOptionsProgram
+{
+};
+
+#if 0
 #include "DlgBasePropertyPage.h"
 
 class CDlgOptionsProgram : public CDlgBasePropertyPage
@@ -77,3 +83,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

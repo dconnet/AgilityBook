@@ -33,46 +33,32 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-29 DRC Added Note to regnum.
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+#include "ARBTypes.h"
+class CVenueComboBox;
 
-class CDlgRegNum : public CDlgBaseDialog
+
+class CDlgRegNum : public wxDialog
 {
 public:
 	CDlgRegNum(
 			ARBConfig const& config,
 			ARBDogRegNumList& regnums,
 			ARBDogRegNumPtr pRegNum,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgRegNum)
-	enum { IDD = IDD_REG_NUM };
-	CVenueComboBox	m_ctrlVenues;
-	CString	m_RegNum;
-	CString	m_Height;
-	BOOL	m_bReceived;
-	CString	m_Note;
-	//}}AFX_DATA
-	ARBConfig const& m_Config;
 	ARBDogRegNumList& m_RegNums;
 	ARBDogRegNumPtr m_pRegNum;
+	wxString m_Venue;
+	wxString m_RegNum;
+	wxString m_Height;
+	bool m_bReceived;
+	wxString m_Note;
 
-	//{{AFX_VIRTUAL(CDlgRegNum)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgRegNum)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnOk(wxCommandEvent& evt);
 };

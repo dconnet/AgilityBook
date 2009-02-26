@@ -33,43 +33,23 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include <set>
 #include "ARBTypes.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+#include <set>
 
-class CDlgFault : public CDlgBaseDialog
+
+class CDlgFault : public wxDialog
 {
 public:
 	CDlgFault(
 			std::set<tstring>& faults,
-			LPCTSTR pFault,
-			CWnd* pParent = NULL);
-	CString GetFault() const		{return m_Faults;}
+			wxString const& fault,
+			wxWindow* pParent = NULL);
+	wxString GetFault() const		{return m_Fault;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgFault)
-	enum { IDD = IDD_FAULT };
-	CComboBox2	m_ctrlFaults;
-	CString	m_Faults;
-	//}}AFX_DATA
-	std::set<tstring>& m_setFaults;
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgFault)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgFault)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	wxString m_Fault;
 };

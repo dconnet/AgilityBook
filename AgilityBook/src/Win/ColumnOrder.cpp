@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-28 DRC Ported to wxWidgets.
  */
 
 #include "stdafx.h"
@@ -38,12 +39,7 @@
 #include "ColumnOrder.h"
 
 #include "ARBTypes.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include <wx/config.h>
 
 /////////////////////////////////////////////////////////////////////////////
 // CColumnOrder
@@ -51,7 +47,7 @@ static char THIS_FILE[] = __FILE__;
 //  m_bDescending indicates the sort order
 //   - this not ordered like m_order is, it is column specific.
 
-CColumnOrder::CColumnOrder(LPCTSTR pItem)
+CColumnOrder::CColumnOrder(wxString const& pItem)
 	: m_Item(pItem)
 	, m_nColumns(0)
 	, m_bDefaultDescending(false)
@@ -88,7 +84,8 @@ bool CColumnOrder::Initialize(int nColumns)
 	}
 	bool rc = false;
 	// Load last settings.
-	CString str = theApp.GetProfileString(_T("Sorting"), m_Item + _T("Order"), _T(""));
+	wxString item = wxT("Sorting/") + m_Item + wxT("Order");
+	wxString str = wxConfig::Get()->Read(item, wxT(""));
 	int i;
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
@@ -100,7 +97,8 @@ bool CColumnOrder::Initialize(int nColumns)
 		else
 			str.Empty();
 	}
-	str = theApp.GetProfileString(_T("Sorting"), m_Item + _T("Sort"), _T(""));
+	item = wxT("Sorting/") + m_Item + wxT("Sort");
+	str = wxConfig::Get()->Read(item, wxT(""));
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
@@ -125,7 +123,8 @@ void CColumnOrder::Save()
 				str << ',';
 			str << m_order[i];
 		}
-		theApp.WriteProfileString(_T("Sorting"), m_Item + _T("Order"), str.str().c_str());
+		wxString item = wxT("Sorting/") + m_Item + wxT("Order");
+		wxConfig::Get()->Write(item, str.str().c_str());
 	}
 	{
 		otstringstream str;
@@ -135,7 +134,8 @@ void CColumnOrder::Save()
 				str << ',';
 			str << static_cast<int>(m_bDescending[i]);
 		}
-		theApp.WriteProfileString(_T("Sorting"), m_Item + _T("Sort"), str.str().c_str());
+		wxString item = wxT("Sorting/") + m_Item + wxT("Sort");
+		wxConfig::Get()->Write(item, str.str().c_str());
 	}
 }
 

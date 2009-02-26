@@ -33,36 +33,29 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-02 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-30 DRC Implemented customized text in tree.
  */
 
+#include "AgilityBookMenu.h"
+#include "ARBDog.h"
+#include "ARBDogTrial.h"
 #include <list>
-#include "AgilityBookDoc.h"
-#include "ListData.h"
-class CAgilityBookTree;
+#include <wx/treectrl.h>
+class CAgilityBookTreeView;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;
 class CAgilityBookTreeDataRun;
-class CAgilityBookViewDataCalendar;
 
-class CAgilityBookTreeData : public CListDataDispInfo
+
+class CAgilityBookTreeData : public wxTreeItemData
 {
 public:
-	CAgilityBookTreeData(CAgilityBookTree* pTree)
+	CAgilityBookTreeData(CAgilityBookTreeView* pTree)
 		: m_pTree(pTree)
-		, m_hItem(NULL)
 	{}
-	virtual ~CAgilityBookTreeData() {}
 
-	HTREEITEM GetHTreeItem() const
-	{
-		return m_hItem;
-	}
-	void SetHTreeItem(HTREEITEM hItem)
-	{
-		m_hItem = hItem;
-	}
 	virtual CAgilityBookTreeData const* GetParent() const = 0;
 	virtual ARBBasePtr GetARBBase() const
 	{
@@ -117,11 +110,14 @@ public:
 		return NULL;
 	}
 
-	virtual UINT GetMenuID() const = 0;
-	virtual bool OnUpdateCmd(UINT id) const = 0;
+	virtual MenuIdentityPopup GetMenuID() const = 0;
+	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const = 0;
 	virtual bool OnCmd(
 			UINT id,
+			bool& bModified,
 			bool* bTreeSelectionSet) = 0; // Returns true if data modified
+	virtual tstring OnNeedText() const = 0;
+	virtual int OnNeedIcon() const = 0;
 
 	virtual void Properties() = 0;
 
@@ -129,11 +125,10 @@ public:
 	bool DoPaste(bool* bTreeSelectionSet);
 
 protected:
-	CAgilityBookTree* m_pTree;
-	HTREEITEM m_hItem;
-	std::vector<int> const& GetDogColumns() const;
-	std::vector<int> const& GetTrialColumns() const;
-	std::vector<int> const& GetRunColumns() const;
+	CAgilityBookTreeView* m_pTree;
+	std::vector<long> const& GetDogColumns() const;
+	std::vector<long> const& GetTrialColumns() const;
+	std::vector<long> const& GetRunColumns() const;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -142,7 +137,7 @@ class CAgilityBookTreeDataDog : public CAgilityBookTreeData
 {
 public:
 	CAgilityBookTreeDataDog(
-			CAgilityBookTree* pTree,
+			CAgilityBookTreeView* pTree,
 			ARBDogPtr pDog);
 	~CAgilityBookTreeDataDog();
 
@@ -171,13 +166,14 @@ public:
 		return this;
 	}
 
-	virtual UINT GetMenuID() const
+	virtual MenuIdentityPopup GetMenuID() const
 	{
-		return IDR_DOG;
+		return IdMenuDog;
 	}
-	virtual bool OnUpdateCmd(UINT id) const;
+	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const;
 	virtual bool OnCmd(
 			UINT id,
+			bool& bModified,
 			bool* bTreeSelectionSet);
 	virtual tstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
@@ -194,9 +190,8 @@ class CAgilityBookTreeDataTrial : public CAgilityBookTreeData
 {
 public:
 	CAgilityBookTreeDataTrial(
-			CAgilityBookTree* pTree,
+			CAgilityBookTreeView* pTree,
 			ARBDogTrialPtr pTrial);
-	~CAgilityBookTreeDataTrial();
 
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
@@ -227,13 +222,14 @@ public:
 		return this;
 	}
 
-	virtual UINT GetMenuID() const
+	virtual MenuIdentityPopup GetMenuID() const
 	{
-		return IDR_TRIAL;
+		return IdMenuTrial;
 	}
-	virtual bool OnUpdateCmd(UINT id) const;
+	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const;
 	virtual bool OnCmd(
 			UINT id,
+			bool& bModified,
 			bool* bTreeSelectionSet);
 	virtual tstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
@@ -251,7 +247,7 @@ class CAgilityBookTreeDataRun : public CAgilityBookTreeData
 {
 public:
 	CAgilityBookTreeDataRun(
-			CAgilityBookTree* pTree,
+			CAgilityBookTreeView* pTree,
 			ARBDogRunPtr pRun);
 	~CAgilityBookTreeDataRun();
 
@@ -288,13 +284,14 @@ public:
 		return this;
 	}
 
-	virtual UINT GetMenuID() const
+	virtual MenuIdentityPopup GetMenuID() const
 	{
-		return IDR_RUN;
+		return IdMenuRun;
 	}
-	virtual bool OnUpdateCmd(UINT id) const;
+	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const;
 	virtual bool OnCmd(
 			UINT id,
+			bool& bModified,
 			bool* bTreeSelectionSet);
 	virtual tstring OnNeedText() const;
 	virtual int OnNeedIcon() const;

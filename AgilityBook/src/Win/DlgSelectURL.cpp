@@ -31,88 +31,73 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-03-30 DRC Created.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgSelectURL.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "Validators.h"
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgSelectURL dialog
 
 CDlgSelectURL::CDlgSelectURL(
-		LPCTSTR name,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgSelectURL::IDD, pParent)
+		wxString const& name,
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_SELECT_URL "), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
 	, m_Name(name)
+	, m_textCtrl(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgSelectURL)
-	//}}AFX_DATA_INIT
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	// Controls (these are done first to control tab order)
+
+	m_textCtrl = new wxTextCtrl(this, wxID_ANY, m_Name,
+		wxDefaultPosition, wxSize(300, -1), 0,
+		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
+	m_textCtrl->SetHelpText(_("HIDC_SELECTURL_NAME"));
+	m_textCtrl->SetToolTip(_("HIDC_SELECTURL_NAME"));
+
+	wxButton* btnSelect = new wxButton(this, wxID_ANY,
+		_("IDC_SELECTURL_FILENAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	btnSelect->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgSelectURL::OnFilename), NULL, this);
+	btnSelect->SetHelpText(_("HIDC_SELECTURL_FILENAME"));
+	btnSelect->SetToolTip(_("HIDC_SELECTURL_FILENAME"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* bTextSizer = new wxBoxSizer(wxHORIZONTAL);
+	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
+
+	bSizer->Add(bTextSizer, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 1, wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	m_textCtrl->SetFocus();
 }
 
 
-CDlgSelectURL::~CDlgSelectURL()
+void CDlgSelectURL::OnFilename(wxCommandEvent& evt)
 {
-}
-
-
-void CDlgSelectURL::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgSelectURL)
-	DDX_Text(pDX, IDC_SELECTURL_NAME, m_Name);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgSelectURL, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgSelectURL)
-	ON_BN_CLICKED(IDC_SELECTURL_FILENAME, OnBnClickedFilename)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgSelectURL message handlers
-
-BOOL CDlgSelectURL::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgSelectURL::OnBnClickedFilename()
-{
-	UpdateData(TRUE);
-	CString filter;
-	filter.LoadString(IDS_FILEEXT_FILTER_ALL);
-	CFileDialog dlg(TRUE, NULL, m_Name, OFN_FILEMUSTEXIST, filter, this);
-	if (IDOK == dlg.DoModal())
+	wxFileDialog file(this,
+			wxT(""), // caption
+			wxT(""), // default dir
+			m_textCtrl->GetValue(),
+			_("IDS_FILEEXT_FILTER_ALL"),
+			wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	if (wxID_OK == file.ShowModal())
 	{
-		m_Name = dlg.GetPathName();
-		UpdateData(FALSE);
+		m_textCtrl->SetValue(file.GetPath());
 	}
-}
-
-
-void CDlgSelectURL::OnOK()
-{
-	if (!UpdateData(TRUE))
-		return;
-#if _MSC_VER >= 1300
-	m_Name.Trim();
-#else
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-#endif
-	UpdateData(FALSE);
-	CDlgBaseDialog::OnOK();
 }

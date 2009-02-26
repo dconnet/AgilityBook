@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-09 DRC When importing ARB files, update regnum and titles
  *                    that are different.
@@ -47,10 +48,12 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "WizardStart.h"
-#include <fstream>
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CWizardStart")
+#if 0
+#include "AgilityBook.h"
+#include <fstream>
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ConfigHandler.h"
@@ -344,7 +347,7 @@ void CWizardStart::UpdateButtons()
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart message handlers
 
-BOOL CWizardStart::OnInitDialog() 
+BOOL CWizardStart::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	if (!m_pSheet->ExcelHelper())
@@ -357,14 +360,14 @@ BOOL CWizardStart::OnInitDialog()
 }
 
 
-BOOL CWizardStart::OnSetActive() 
+BOOL CWizardStart::OnSetActive()
 {
 	UpdateButtons();
 	return CDlgBasePropertyPage::OnSetActive();
 }
 
 
-LRESULT CWizardStart::OnWizardNext() 
+LRESULT CWizardStart::OnWizardNext()
 {
 	LRESULT nextPage = -1;
 	int index = m_ctrlList.GetCurSel();
@@ -378,7 +381,7 @@ LRESULT CWizardStart::OnWizardNext()
 }
 
 
-BOOL CWizardStart::OnWizardFinish() 
+BOOL CWizardStart::OnWizardFinish()
 {
 	bool bOk = false;
 	int index = m_ctrlList.GetCurSel();
@@ -675,7 +678,7 @@ BOOL CWizardStart::OnWizardFinish()
 }
 
 
-void CWizardStart::OnWizardStyle() 
+void CWizardStart::OnWizardStyle()
 {
 	UpdateData(TRUE);
 	theApp.WriteProfileInt(LAST_SECTION, LAST_STYLE, TransDlgToWizard(m_Style));
@@ -684,7 +687,7 @@ void CWizardStart::OnWizardStyle()
 }
 
 
-void CWizardStart::OnSelchangeExportList() 
+void CWizardStart::OnSelchangeExportList()
 {
 	CString msg;
 	int index = m_ctrlList.GetCurSel();
@@ -700,7 +703,7 @@ void CWizardStart::OnSelchangeExportList()
 }
 
 
-void CWizardStart::OnDblclkExportList() 
+void CWizardStart::OnDblclkExportList()
 {
 	int index = m_ctrlList.GetCurSel();
 	if (-1 != m_Style && LB_ERR != index)
@@ -718,3 +721,4 @@ void CWizardStart::OnDblclkExportList()
 		}
 	}
 }
+#endif

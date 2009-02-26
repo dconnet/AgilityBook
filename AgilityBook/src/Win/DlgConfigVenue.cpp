@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -52,9 +53,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigVenue.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigVenue")
+#if 0
+#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigVenue.h"
 #include "DlgConfigEvent.h"
@@ -735,7 +738,7 @@ BOOL CDlgConfigVenue::OnInitDialog()
 }
 
 
-void CDlgConfigVenue::OnDestroy() 
+void CDlgConfigVenue::OnDestroy()
 {
 	m_ctrlLevels.DeleteAllItems();
 	CDlgBaseDialog::OnDestroy();
@@ -744,7 +747,7 @@ void CDlgConfigVenue::OnDestroy()
 
 void CDlgConfigVenue::OnGetdispinfoTree(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	if (pTVDispInfo->item.mask & TVIF_TEXT)
@@ -764,7 +767,7 @@ void CDlgConfigVenue::OnGetdispinfoTree(
 
 void CDlgConfigVenue::OnDeleteitemTree(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
 	CListData* pData = reinterpret_cast<CListData*>(pNMTreeView->itemOld.lParam);
@@ -776,7 +779,7 @@ void CDlgConfigVenue::OnDeleteitemTree(
 
 void CDlgConfigVenue::OnDblclk(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	OnEdit();
 	*pResult = 0;
@@ -785,7 +788,7 @@ void CDlgConfigVenue::OnDblclk(
 
 void CDlgConfigVenue::OnKeydown(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
@@ -802,7 +805,7 @@ void CDlgConfigVenue::OnKeydown(
 
 void CDlgConfigVenue::OnItemchangedDivision(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	LoadLevelData();
 	UpdateButtons();
@@ -812,7 +815,7 @@ void CDlgConfigVenue::OnItemchangedDivision(
 
 void CDlgConfigVenue::OnItemchangedList(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	UpdateButtons();
 	*pResult = 0;
@@ -821,7 +824,7 @@ void CDlgConfigVenue::OnItemchangedList(
 
 void CDlgConfigVenue::OnItemchanged(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	UpdateButtons();
 	*pResult = 0;
@@ -830,7 +833,7 @@ void CDlgConfigVenue::OnItemchanged(
 
 void CDlgConfigVenue::OnSetfocusDivision(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	SetAction(eDivisions);
 	*pResult = 0;
@@ -839,7 +842,7 @@ void CDlgConfigVenue::OnSetfocusDivision(
 
 void CDlgConfigVenue::OnSetfocusLevel(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	SetAction(eLevels);
 	*pResult = 0;
@@ -848,7 +851,7 @@ void CDlgConfigVenue::OnSetfocusLevel(
 
 void CDlgConfigVenue::OnSetfocusTitles(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	SetAction(eTitles);
 	*pResult = 0;
@@ -857,7 +860,7 @@ void CDlgConfigVenue::OnSetfocusTitles(
 
 void CDlgConfigVenue::OnSetfocusEvent(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	SetAction(eEvents);
 	*pResult = 0;
@@ -866,14 +869,14 @@ void CDlgConfigVenue::OnSetfocusEvent(
 
 void CDlgConfigVenue::OnSetfocusMultiQ(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	SetAction(eMultiQ);
 	*pResult = 0;
 }
 
 
-void CDlgConfigVenue::OnNew() 
+void CDlgConfigVenue::OnNew()
 {
 	bool done = false;
 	tstring name;
@@ -1062,7 +1065,7 @@ void CDlgConfigVenue::OnNew()
 }
 
 
-void CDlgConfigVenue::OnDelete() 
+void CDlgConfigVenue::OnDelete()
 {
 	switch (m_Action)
 	{
@@ -1183,7 +1186,7 @@ void CDlgConfigVenue::OnDelete()
 }
 
 
-void CDlgConfigVenue::OnEdit() 
+void CDlgConfigVenue::OnEdit()
 {
 	switch (m_Action)
 	{
@@ -1225,7 +1228,7 @@ void CDlgConfigVenue::OnEdit()
 			}
 		}
 		break;
-	
+
 	case eLevels:
 		{
 			CDlgConfigureDataLevel* pLevelData = GetCurrentLevelData();
@@ -1441,7 +1444,7 @@ void CDlgConfigVenue::OnEdit()
 }
 
 
-void CDlgConfigVenue::OnCopy() 
+void CDlgConfigVenue::OnCopy()
 {
 	switch (m_Action)
 	{
@@ -1532,7 +1535,7 @@ void CDlgConfigVenue::OnCopy()
 }
 
 
-void CDlgConfigVenue::OnMoveUp() 
+void CDlgConfigVenue::OnMoveUp()
 {
 	switch (m_Action)
 	{
@@ -1630,7 +1633,7 @@ void CDlgConfigVenue::OnMoveUp()
 }
 
 
-void CDlgConfigVenue::OnMoveDown() 
+void CDlgConfigVenue::OnMoveDown()
 {
 	switch (m_Action)
 	{
@@ -1787,3 +1790,4 @@ void CDlgConfigVenue::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

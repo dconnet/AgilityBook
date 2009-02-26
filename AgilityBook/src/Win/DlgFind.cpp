@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2003-12-27 DRC Created
  */
 
@@ -38,93 +39,137 @@
 #include "AgilityBook.h"
 #include "DlgFind.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgFind dialog
 
 CDlgFind::CDlgFind(
 		IFindCallback& callback,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgFind::IDD, pParent)
+		wxWindow* parent)
+	: wxDialog()
 	, m_Callback(callback)
+	, m_textCtrl(NULL)
+	, m_radioBoxSearch(NULL)
+	, m_radioBoxDir(NULL)
+	, m_btnFind(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgFind)
-	m_strName = m_Callback.Text();
-	m_bCase = m_Callback.MatchCase() ? TRUE : FALSE;
-	m_Search = m_Callback.SearchAll() ? 0 : 1;
-	m_Direction = m_Callback.SearchDown() ? 1 : 0;
-	//}}AFX_DATA_INIT
-}
+	wxString caption = m_Callback.GetCaption();
+	if (caption.empty())
+		caption = _("IDD_FIND");
+	wxString text = m_Callback.Text();
 
+	Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
-void CDlgFind::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgFind)
-	DDX_Text(pDX, IDC_FIND_NAME, m_strName);
-	DDX_Check(pDX, IDC_FIND_CASE, m_bCase);
-	DDX_Radio(pDX, IDC_FIND_ALL, m_Search);
-	DDX_Radio(pDX, IDC_FIND_UP, m_Direction);
-	DDX_Control(pDX, IDOK, m_ctrlFind);
-	//}}AFX_DATA_MAP
-}
+	// Controls (these are done first to control tab order)
 
+	wxStaticText* staticText = new wxStaticText(this, wxID_ANY,
+		_("IDC_FIND_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	staticText->Wrap(-1);
 
-BEGIN_MESSAGE_MAP(CDlgFind, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgFind)
-	ON_EN_CHANGE(IDC_FIND_NAME, OnChangeName)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	m_textCtrl = new wxTextCtrl(this, wxID_ANY, text,
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_textCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgFind::OnChangeName), NULL, this);
+	m_textCtrl->SetHelpText(_("HIDC_FIND_NAME"));
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgFind message handlers
+	m_checkBox = new wxCheckBox(this, wxID_ANY,
+		_("IDC_FIND_CASE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_checkBox->SetValue(m_Callback.MatchCase());
+	m_checkBox->SetHelpText(_("HIDC_FIND_CASE"));
 
-BOOL CDlgFind::OnInitDialog() 
-{
-	CDlgBaseDialog::OnInitDialog();
-	CString caption = m_Callback.GetCaption();
-	if (!caption.IsEmpty())
-		SetWindowText(caption);
-	if (0 < m_strName.GetLength())
-		m_ctrlFind.EnableWindow(TRUE);
-	else
-		m_ctrlFind.EnableWindow(FALSE);
+	wxString radioSearchFields[] =
+	{
+		_("IDC_FIND_ALL"),
+		_("IDC_FIND_VISIBLE")
+	};
+	int radioSearchCount = sizeof(radioSearchFields) / sizeof(radioSearchFields[0]);
+	m_radioBoxSearch = new wxRadioBox(this, wxID_ANY,
+		_("IDC_FIND_FIELDS"),
+		wxDefaultPosition, wxDefaultSize,
+		radioSearchCount, radioSearchFields,
+		1, wxRA_SPECIFY_COLS);
+	m_radioBoxSearch->SetItemHelpText(0, _("HIDC_FIND_ALL"));
+	m_radioBoxSearch->SetItemToolTip(0, _("HIDC_FIND_ALL"));
+	m_radioBoxSearch->SetItemHelpText(1, _("HIDC_FIND_VISIBLE"));
+	m_radioBoxSearch->SetItemToolTip(1, _("HIDC_FIND_VISIBLE"));
+	m_radioBoxSearch->SetSelection(m_Callback.SearchAll() ? 0 : 1);
 	if (!m_Callback.EnableSearch())
+    	m_radioBoxSearch->Enable(false);
+
+	wxString radioDirectionFields[] =
 	{
-    	GetDlgItem(IDC_FIND_ALL)->EnableWindow(FALSE);
-    	GetDlgItem(IDC_FIND_VISIBLE)->EnableWindow(FALSE);
-	}
+		_("IDC_FIND_UP"),
+		_("IDC_FIND_DOWN")
+	};
+	int radioDirectionCount = sizeof(radioDirectionFields) / sizeof(radioDirectionFields[0]);
+	m_radioBoxDir = new wxRadioBox(this, wxID_ANY,
+		_("IDC_FIND_DIRECTION"),
+		wxDefaultPosition, wxDefaultSize,
+		radioDirectionCount, radioDirectionFields,
+		1, wxRA_SPECIFY_COLS);
+	m_radioBoxDir->SetItemHelpText(0, _("HIDC_FIND_UP"));
+	m_radioBoxDir->SetItemToolTip(0, _("HIDC_FIND_UP"));
+	m_radioBoxDir->SetItemHelpText(1, _("HIDC_FIND_DOWN"));
+	m_radioBoxDir->SetItemToolTip(1, _("HIDC_FIND_DOWN"));
+	m_radioBoxDir->SetSelection(m_Callback.SearchDown() ? 1 : 0);
 	if (!m_Callback.EnableDirection())
-	{
-    	GetDlgItem(IDC_FIND_UP)->EnableWindow(FALSE);
-    	GetDlgItem(IDC_FIND_DOWN)->EnableWindow(FALSE);
-	}
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+    	m_radioBoxDir->Enable(false);
+
+	m_btnFind = new wxButton(this, wxID_ANY,
+		_("IDC_FIND_NEXT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnFind->SetDefault();
+	m_btnFind->Enable(0 < text.length());
+	m_btnFind->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgFind::OnFind), NULL, this);
+
+	wxButton* btnClose = new wxButton(this, wxID_CANCEL,
+		_("IDC_FIND_CLOSE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* bSizer2 = new wxBoxSizer(wxHORIZONTAL);
+	bSizer2->Add(staticText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	bSizer2->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(bSizer2, 0, wxEXPAND, 5);
+	bSizer->Add(m_checkBox, 0, wxALL, 5);
+
+	wxBoxSizer* bSizer3 = new wxBoxSizer(wxHORIZONTAL);
+	bSizer3->Add(m_radioBoxSearch, 0, wxALL, 5);
+	bSizer3->Add(m_radioBoxDir, 0, wxALL, 5);
+
+	bSizer->Add(bSizer3, 0, 0, 5);
+
+	wxBoxSizer* bSizerBtns = new wxBoxSizer(wxHORIZONTAL);
+	bSizerBtns->Add(0, 0, 1, wxEXPAND, 5);
+	bSizerBtns->Add(m_btnFind, 0, wxALL, 5);
+	bSizerBtns->Add(btnClose, 0, wxALL, 5);
+
+	bSizer->Add(bSizerBtns, 0, wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	m_textCtrl->SetFocus();
 }
 
 
-void CDlgFind::OnChangeName() 
+void CDlgFind::OnChangeName(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	if (0 < m_strName.GetLength())
-		m_ctrlFind.EnableWindow(TRUE);
-	else
-		m_ctrlFind.EnableWindow(FALSE);
+	m_btnFind->Enable(0 < m_textCtrl->GetValue().length());
 }
 
 
-void CDlgFind::OnOK() 
+void CDlgFind::OnFind(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	m_Callback.Text(m_strName);
-	m_Callback.MatchCase(m_bCase ? true : false);
-	m_Callback.SearchAll(0 == m_Search);
-	m_Callback.SearchDown(1 == m_Direction);
+	m_Callback.Text(m_textCtrl->GetValue());
+	m_Callback.MatchCase(m_checkBox->GetValue());
+	m_Callback.SearchAll(m_radioBoxSearch->GetSelection() == 0);
+	m_Callback.SearchDown(m_radioBoxDir->GetSelection() == 1);
 	m_Callback.Search(this);
 }

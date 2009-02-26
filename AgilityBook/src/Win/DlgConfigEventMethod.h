@@ -33,18 +33,35 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-04 DRC Created.
  */
 
 #include "ARBConfigScoring.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
-#include "ListBox.h"
-#include "ListCtrl.h"
-#include "ListData.h"
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
+//#include "ListBox.h"
+//#include "ListCtrl.h"
+//#include "ListData.h"
 class ARBAgilityRecordBook;
-class CDlgFixup;
+//class CDlgFixup;
 
+
+class CDlgConfigEventMethod
+{
+public:
+	CDlgConfigEventMethod(
+			ARBConfigVenuePtr pVenue,
+			ARBConfigScoringPtr pScoring,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgConfigEventMethod"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgConfigEventMethod : public CDlgBaseDialog
 {
 public:
@@ -127,3 +144,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

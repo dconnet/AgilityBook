@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-27 DRC Ported to wxWidgets.
  * @li 2009-01-21 DRC Leave gray separator line in when text in run is empty.
  * @li 2007-07-13 DRC Created
  */
@@ -38,18 +39,15 @@
 #include "stdafx.h"
 #include "AgilityBook.h"
 
-#include "ARBConfig.h"
-#include "ARBDog.h"
-#include "ARBDogRun.h"
-#include "ARBDogRunOtherPoints.h"
-#include "ARBDogTrial.h"
+//#include "ARBConfig.h"
+//#include "ARBDog.h"
+//#include "ARBDogRun.h"
+//#include "ARBDogRunOtherPoints.h"
+//#include "ARBDogTrial.h"
+#include "PointsData.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
+#if 0
 /////////////////////////////////////////////////////////////////////////////
 
 // Added '2' to avoid dependencies on class defined (locally) in viewprnt.cpp.
@@ -770,7 +768,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 						pDC->SelectObject(oldPen);
 				}
 				if (sc_lines[j].bContinuation)
-					str.erase();
+					str.clear();
 
 				rect.InflateRect(-1, 1);
 				CRect rText(rect);
@@ -910,11 +908,15 @@ void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 
 	pDC->RestoreDC(saveDC);
 }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
 bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> const& inRuns)
 {
+	wxMessageBox(wxT("PrintRuns"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+#pragma message PRAGMA_MESSAGE("TODO: implement print")
+#if 0
 	CPrintRuns runs(inConfig, inDog, inRuns);
 
 	// Style the printing after CView (code is based on CView::OnFilePrint)
@@ -1042,10 +1044,10 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 		// Is this a bug in CView? Leaving this here causes it to print all pages.
 		// If there are 5 pages available, and I specified 1-2, this changes it
 		// to print all 5.
-			//nEndPage = printInfo.GetMaxPage() + nStep; 
+			//nEndPage = printInfo.GetMaxPage() + nStep;
 		}
 
-		// If the user restarts the job when it's spooling, all 
+		// If the user restarts the job when it's spooling, all
 		// subsequent calls to EndPage returns < 0. The first time
 		// GetLastError returns ERROR_PRINT_CANCELLED
 		if (dcPrint.EndPage() < 0 && (GetLastError()!= ERROR_SUCCESS))
@@ -1055,7 +1057,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 			break;
 		}
 		if (!AbortProc(dcPrint.m_hDC, 0))
-		{		
+		{
 			bError = true;
 			break;
 		}
@@ -1073,4 +1075,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 	dcPrint.Detach();   // will be cleaned up by CPrintInfo destructor
 
 	return bError;
+#else
+	return false;
+#endif
 }

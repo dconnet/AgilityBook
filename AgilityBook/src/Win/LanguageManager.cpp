@@ -31,322 +31,164 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-09-22 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "LanguageManager.h"
-#include <imm.h>
-#include <winnls.h>
 
-#include "DlgLanguage.h"
-#include "VersionNum.h"
+#include <wx/cshelp.h>
+#include <wx/dir.h>
+#include <wx/html/helpctrl.h>
+#include <wx/stdpaths.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// Based on code in the VC8 satdll sample.
-
-// Type definitions
-typedef struct LANGINFO_DEF
-{
-	int Count;
-	LANGID LangID;
-} LANGINFO;
-typedef LANGINFO *PLANGINFO;
-
-/////////////////////////////////////////////////////////////////////////////
-// CLanguageManager
 
 CLanguageManager::CLanguageManager()
-	: m_hInstance(NULL)
-	, m_InitHelpFilePath()
-	, m_InitContextHelp(_T("::/Help/AgilityBook"))
-	, m_pszHelpFilePath(NULL)
-	, m_ContextHelp()
-	, m_LangID(0)
-	, m_Langs()
-	, m_CurLang(0)
+	: m_help(NULL)
+	, m_dirLang()
+	, m_dirLoadedLang()
+	, m_locale(NULL)
+	, m_CurLang(wxLANGUAGE_DEFAULT)
 	, m_Localization()
 {
 	IARBLocalization::Init(&m_Localization);
+
+	//wxHelpProvider::Set(new wxHelpControllerHelpProvider);
+	wxHelpProvider::Set(new wxSimpleHelpProvider);
+
+	m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+
+	int lang = m_CurLang;
+	long lastLang;
+	if (wxConfig::Get()->Read(wxT("Settings/Lang2"), &lastLang, 0) && 0 != lastLang)
+	{
+		lang = lastLang;
+	}
+	else if (wxConfig::Get()->Read(wxT("Settings/Lang"), &lastLang, 0) && 0 != lastLang)
+	{
+		// Translates v1.10 registry
+		if (0x0409 == lastLang)
+			lang = wxLANGUAGE_ENGLISH;
+		else if (0x040c == lastLang)
+			lang = wxLANGUAGE_FRENCH;
+	}
+
+	if (lang == wxLANGUAGE_DEFAULT)
+		SelectLanguage();
+	else
+		SetLang(lang);
 }
 
 
 CLanguageManager::~CLanguageManager()
 {
-	IARBLocalization::Init(NULL);
-	for (LangResources::iterator iLang = m_Langs.begin();
-		iLang != m_Langs.end();
-		++iLang)
-	{
-		FreeLibrary(iLang->second);
-	}
+	delete m_locale;
+	m_locale = NULL;
+	delete m_help;
+	m_help = NULL;
 }
 
 
-BOOL CALLBACK EnumLangProc(HANDLE, LPCTSTR, LPCTSTR, WORD wIDLanguage, LONG_PTR lParam)
+bool CLanguageManager::SetLang(int langId)
 {
-    PLANGINFO LangInfo = reinterpret_cast<PLANGINFO>(lParam);
-	assert(LangInfo);
-	if (LangInfo)
+	if (langId == m_CurLang)
+		return false;
+
+	m_CurLang = langId;
+	if (m_locale)
+		delete m_locale;
+	m_locale = new wxLocale();
+	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
+	if (!m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING))
 	{
-	    ++LangInfo->Count;
-		LangInfo->LangID = wIDLanguage;
+		//return false;
 	}
-    return TRUE; // continue enumeration
+	m_locale->AddCatalog(wxT("arb"));
+
+	m_dirLoadedLang = m_locale->GetCanonicalName();
+	if (2 < m_dirLoadedLang.length())
+		m_dirLoadedLang = m_dirLoadedLang.Left(2);
+
+	m_Localization.Load();
+
+	delete m_help;
+	m_help = new wxHtmlHelpController();
+	m_help->Initialize(
+		m_dirLang + wxFileName::GetPathSeparator()
+		+ m_dirLoadedLang + wxFileName::GetPathSeparator() + wxT("AgilityBook.htb"));
+	return true;
 }
 
 
-LANGID CLanguageManager::DetectLanguage() const
+int CLanguageManager::SelectLang(wxWindow* parent)
 {
-	// Detect correct initial UI language
-	OSVERSIONINFO os;
-	os.dwOSVersionInfoSize = sizeof(os);
-	LANGID uiLangID = 0;
-	if (GetVersionEx(&os))
+	int lang = m_CurLang;
+
+	int idxLang = -1;
+	std::vector<int> langId;
+	wxArrayString choices;
+
+	wxDir dir(m_dirLang);
+	if (dir.IsOpened())
 	{
-		switch (os.dwPlatformId)
+		wxString filename;
+		bool cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_DIRS);
+		while (cont)
 		{
-		// On Windows NT, Windows 2000 or higher
-		case VER_PLATFORM_WIN32_NT:
-			if (os.dwMajorVersion >= 5) // Windows 2000 or higher
+			wxLanguageInfo const* info = wxLocale::FindLanguageInfo(filename);
+			if (info)
 			{
-#if (WINVER >= 0x0500)
-				uiLangID = GetUserDefaultUILanguage();
-#else
-				uiLangID = GetUserDefaultLangID();
-#endif
+				choices.Add(info->Description);
+				langId.push_back(info->Language);
+				if (info->Language == lang)
+					idxLang = langId.size() - 1;
 			}
-			// for NT4 check the language of ntdll.dll
-			else
-			{
-				// Get the HModule for ntdll.
-				HMODULE hNtDll = GetModuleHandle(_T("ntdll.dll"));
-				if (hNtDll)
-				{
-					LANGINFO LangInfo;
-					LPCTSTR Type = (LPCTSTR)((LPVOID)((WORD)16));
-					LPCTSTR Name = (LPCTSTR)1;
-					ZeroMemory(&LangInfo, sizeof(LangInfo));
-					// We count the langids and just remember the last one
-					BOOL result = EnumResourceLanguages(hNtDll, Type, Name, (ENUMRESLANGPROC)EnumLangProc, reinterpret_cast<LONG_PTR>(&LangInfo));
-					if (result && LangInfo.Count > 0)
-					{
-						uiLangID = LangInfo.LangID;
-					}
-				}
-				// special processing for Honkong SAR version of NT4
-				if (uiLangID == 1033)
-				{
-					HMODULE hMod = LoadLibrary(_T("imm32.dll"));
-					if (hMod)
-					{
-						typedef BOOL (WINAPI *IMMRELEASECONTEXT)(HWND, HIMC);
-						IMMRELEASECONTEXT pImmReleaseContext = (IMMRELEASECONTEXT)GetProcAddress(hMod, "ImmReleaseContext");
-						if (pImmReleaseContext)
-						{
-							if (pImmReleaseContext(NULL, NULL))
-								uiLangID = 3076;
-						}
-						FreeLibrary(hMod);
-					}
-				}
-			}
-			break;
-		// On Windows 98 or Windows ME
-		case VER_PLATFORM_WIN32_WINDOWS:
-			// Open the registry key for the UI language
-			{
-				HKEY hKey;
-				if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, _T("Default\\Control Panel\\Desktop\\ResourceLocale"), 0, KEY_QUERY_VALUE, &hKey))
-				{
-					// Get the type of the default key
-					DWORD Type;
-					if (ERROR_SUCCESS == RegQueryValueEx(hKey, NULL, NULL, &Type, NULL, NULL) && REG_SZ == Type)
-					{
-						// Read the key value
-						TCHAR langKeyValue[80];
-						DWORD BuffLen = sizeof(langKeyValue)/sizeof(langKeyValue[0]);
-						if (ERROR_SUCCESS == RegQueryValueEx(hKey, NULL, NULL, &Type, (LPBYTE)langKeyValue, &BuffLen))
-						{
-							uiLangID = static_cast<LANGID>(_ttoi(langKeyValue));
-						}
-					}
-					RegCloseKey(hKey);
-				}
-				break;
-			}
-		}
-	}
-	if (uiLangID == 0)
-		uiLangID = GetUserDefaultLangID();
-	return uiLangID;
-}
-
-
-bool CLanguageManager::SetLanguage(LANGID langId)
-{
-	bool bSet = false;
-	if (langId != m_CurLang)
-	{
-		HINSTANCE hInst = NULL;
-		if (langId == m_LangID)
-		{
-			hInst = m_hInstance;
-		}
-		else
-		{
-			LangResources::iterator iLang = m_Langs.find(langId);
-			if (iLang != m_Langs.end())
-			{
-				hInst = iLang->second;
-			}
-			// Search failed, try finding primary language match
-			if (!hInst)
-			{
-				for (iLang = m_Langs.begin(); iLang != m_Langs.end(); ++iLang)
-				{
-					if (PRIMARYLANGID(langId) == PRIMARYLANGID(iLang->first))
-					{
-						hInst = iLang->second;
-						break;
-					}
-				}
-			}
-		}
-		if (hInst)
-		{
-			bSet = true;
-			AfxSetResourceHandle(hInst);
-			m_Localization.Load();
-			m_CurLang = langId;
-			SetHelpFile();
-		}
-	}
-	return bSet;
-}
-
-
-#define MAX_LANGUAGE 80
-void CLanguageManager::SetHelpFile()
-{
-	if (m_pszHelpFilePath && 0 != m_CurLang)
-	{
-		TCHAR langName[MAX_LANGUAGE];
-		GetLocaleInfo(m_CurLang, LOCALE_SABBREVLANGNAME, langName, MAX_LANGUAGE);
-
-		if (*m_pszHelpFilePath)
-			free((void*)(*m_pszHelpFilePath));
-		CString chmFile(m_InitHelpFilePath.Left(m_InitHelpFilePath.GetLength()-4));
-		m_ContextHelp = m_InitContextHelp;
-		if (m_CurLang != m_LangID)
-		{
-			chmFile += langName;
-			m_ContextHelp += langName;
-		}
-		chmFile += _T(".chm");
-		m_ContextHelp += _T(".txt");
-		*m_pszHelpFilePath = _tcsdup((LPCTSTR)chmFile);
-	}
-}
-
-
-void CLanguageManager::SetInitialLanguage(LPCTSTR* pszHelpFilePath)
-{
-	if (!m_hInstance)
-	{
-		assert(pszHelpFilePath);
-		m_pszHelpFilePath = pszHelpFilePath;
-		m_ContextHelp = m_InitContextHelp + _T(".txt");
-		if (m_InitHelpFilePath.IsEmpty())
-			m_InitHelpFilePath = *m_pszHelpFilePath;
-
-		// Don't use AfxGetResourceHandle as a satelite resource may have
-		// been auto-mapped into our space, if the OS supports it. Since
-		// we still target OSs that don't (pre-w2k), we need to test.
-		m_hInstance = AfxGetInstanceHandle();
-		CVersionNum verExe(m_hInstance);
-		m_LangID = verExe.GetLangID();
-		{
-			CVersionNum ver(AfxGetResourceHandle());
-			// If OS auto-loaded a version mismatch, fix it!
-			if (ver == verExe)
-				m_CurLang = ver.GetLangID();
-			else
-			{
-				m_CurLang = m_LangID;
-				AfxSetResourceHandle(m_hInstance);
-			}
-			m_Localization.Load();
-		}
-		SetHelpFile();
-		// Load resource DLLs
-		CString exeName;
-		TCHAR* pName = exeName.GetBuffer(MAX_PATH);
-		GetModuleFileName(NULL, pName, MAX_PATH);
-		exeName.ReleaseBuffer();
-		exeName = exeName.Left(exeName.GetLength() - 4); // Remove ".exe"
-		WIN32_FIND_DATA data;
-		HANDLE hFind = FindFirstFile(exeName + _T("*.dll"), &data);
-		if (INVALID_HANDLE_VALUE != hFind)
-		{
-			do
-			{
-				CString filename(data.cFileName);
-				HINSTANCE hInst = LoadLibrary(filename);
-				if (hInst)
-				{
-					CVersionNum ver(hInst);
-					if (ver == verExe)
-					{
-						LANGID id = ver.GetLangID();
-						m_Langs[id] = hInst;
-					}
-				}
-			}
-			while (FindNextFile(hFind, &data));
-			FindClose(hFind);
+			cont = dir.GetNext(&filename);
 		}
 	}
 
-	SetLanguage(DetectLanguage());
-}
-
-
-void CLanguageManager::SetDefaultLanguage()
-{
-	LANGID id = static_cast<LANGID>(theApp.GetProfileInt(_T("Settings"), _T("Lang"), 0));
-	if (0 == id)
-		SelectLanguage();
+	if (1 == choices.size())
+		lang = langId[0];
 	else
-		SetLanguage(id);
-}
-
-
-size_t CLanguageManager::NumLanguages()
-{
-	return m_Langs.size();
-}
-
-
-bool CLanguageManager::SelectLanguage()
-{
-	CDlgLanguage dlg(*this);
-	if (IDOK == dlg.DoModal())
 	{
-		LANGID id = dlg.GetSelectedLanguage();
-		theApp.WriteProfileInt(_T("Settings"), _T("Lang"), static_cast<DWORD>(id));
-		if (m_CurLang != id)
-		{
-			SetLanguage(id);
-			return true;
-		}
+		// Note, the size arguments are ignored. sigh.
+		wxSingleChoiceDialog dialog(parent, _("IDC_LANG_CHOOSE"), _("IDD_LANGUAGE"), choices);
+		dialog.SetHelpText(_("HIDC_LANGUAGE"));
+		dialog.SetSelection(idxLang);
+		if (wxID_OK == dialog.ShowModal())
+			lang = langId[dialog.GetSelection()];
+		else
+			lang = wxLANGUAGE_ENGLISH;
 	}
-	return false;
+	wxConfig::Get()->Write(wxT("Settings/Lang2"), lang);
+
+	return lang;
+}
+
+
+bool CLanguageManager::SelectLanguage(wxWindow* parent)
+{
+	return SetLang(SelectLang(parent));
+}
+
+
+void CLanguageManager::HelpDisplayContents()
+{
+	m_help->DisplayContents();
+}
+
+
+void CLanguageManager::HelpDisplayIndex()
+{
+	m_help->DisplayIndex();
+}
+
+
+void CLanguageManager::HelpDisplaySection(wxString const& topic)
+{
+	if (topic.empty())
+		m_help->DisplayContents();
+	else
+		m_help->DisplaySection(topic);
 }

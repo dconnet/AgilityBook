@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
  * @li 2007-12-03 DRC Refresh judge list after invoking 'notes' button.
@@ -71,9 +72,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgRunScore.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgRunScore")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
@@ -1138,7 +1141,7 @@ void CDlgRunScore::UpdateControls(bool bOnEventChange)
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunScore message handlers
 
-BOOL CDlgRunScore::OnInitDialog() 
+BOOL CDlgRunScore::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 
@@ -1242,7 +1245,7 @@ BOOL CDlgRunScore::OnInitDialog()
 }
 
 
-void CDlgRunScore::OnDestroy() 
+void CDlgRunScore::OnDestroy()
 {
 	m_ctrlLevels.ResetContent();
 	CDlgBasePropertyPage::OnDestroy();
@@ -1251,7 +1254,7 @@ void CDlgRunScore::OnDestroy()
 
 void CDlgRunScore::OnDatetimechangeDate(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	// Do not call UpdateData, it causes too much validation
 	CTime time;
@@ -1298,7 +1301,7 @@ void CDlgRunScore::OnJudgeNotes()
 }
 
 
-void CDlgRunScore::OnPartnersEdit() 
+void CDlgRunScore::OnPartnersEdit()
 {
 	CDlgListCtrl dlg(CDlgListCtrl::ePartners, m_pDoc, m_Run, this);
 	if (IDOK == dlg.DoModal())
@@ -1306,7 +1309,7 @@ void CDlgRunScore::OnPartnersEdit()
 }
 
 
-void CDlgRunScore::OnOtherpoints() 
+void CDlgRunScore::OnOtherpoints()
 {
 	CDlgListCtrl dlg(m_pDoc->Book().GetConfig(), m_Run, this);
 	dlg.DoModal();
@@ -1326,7 +1329,7 @@ void CDlgRunScore::OnKillfocusFaults()
 }
 
 
-void CDlgRunScore::OnKillfocusTime() 
+void CDlgRunScore::OnKillfocusTime()
 {
 	GetText(&m_ctrlTime, m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
@@ -1347,7 +1350,7 @@ void CDlgRunScore::OnKillfocusYards()
 }
 
 
-void CDlgRunScore::OnKillfocusSct() 
+void CDlgRunScore::OnKillfocusSct()
 {
 	GetText(&m_ctrlSCT, m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
@@ -1358,7 +1361,7 @@ void CDlgRunScore::OnKillfocusSct()
 }
 
 
-void CDlgRunScore::OnKillfocusSct2() 
+void CDlgRunScore::OnKillfocusSct2()
 {
 	GetText(&m_ctrlSCT2, m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
@@ -1443,3 +1446,4 @@ void CDlgRunScore::OnSelchangeQ()
 	m_Run->SetQ(q);
 	SetTitlePoints();
 }
+#endif

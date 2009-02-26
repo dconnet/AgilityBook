@@ -33,19 +33,37 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Add ability to see what was last selected.
  * @li 2008-01-01 DRC Added visible flag.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-07 DRC Created
  */
 
-#include <set>
 #include "ARBInfo.h"
-#include "ARBTypes.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+//#include "ARBTypes.h"
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
+//#include <set>
 class CAgilityBookDoc;
 
+class CDlgInfoJudge
+{
+public:
+	CDlgInfoJudge(
+			CAgilityBookDoc* pDoc,
+			ARBInfo::eInfoType inType,
+			tstring const& inSelect,
+			wxWindow* pParent = NULL) {}
+	wxString CurrentSelection() const	{return wxT("");}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgInfoJudge"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgInfoJudge : public CDlgBaseDialog
 {
 // Construction
@@ -115,3 +133,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

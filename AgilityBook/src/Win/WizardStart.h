@@ -33,14 +33,25 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2003-12-10 DRC Created
  */
 
-#include "DlgBasePropertyPage.h"
-#include "ListBox.h"
+//#include "DlgBasePropertyPage.h"
+//#include "ListBox.h"
 class CAgilityBookDoc;
 class CWizard;
 
+
+class CWizardStart
+{
+public:
+	CWizardStart(
+			CWizard* pSheet,
+			CAgilityBookDoc* pDoc) {}
+};
+
+#if 0
 class CWizardStart : public CDlgBasePropertyPage
 {
 	DECLARE_DYNAMIC(CWizardStart)
@@ -88,3 +99,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

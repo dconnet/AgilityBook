@@ -33,14 +33,26 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
-#include "ARBDate.h"
-#include "DlgBasePropertyPage.h"
+#include "ARBTypes.h"
+//#include "DlgBasePropertyPage.h"
 class CAgilityBookDoc;
 
+
+class CDlgDogProperties
+{
+	friend class CDlgDog;
+public:
+	CDlgDogProperties(
+			CAgilityBookDoc* pDoc,
+			ARBDogPtr pDog) {}
+};
+
+#if 0
 class CDlgDogProperties : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
@@ -85,3 +97,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

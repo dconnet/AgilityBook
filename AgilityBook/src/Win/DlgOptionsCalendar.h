@@ -33,12 +33,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-22 DRC Turned this into Calendar only, created new Print page.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
  * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
+class CDlgOptionsCalendar
+{
+};
+
+#if 0
 #include "AgilityBookOptions.h"
 #include "ComboBox.h"
 #include "DlgBasePropertyPage.h"
@@ -101,3 +107,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

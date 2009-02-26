@@ -33,21 +33,36 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-19 DRC Simplified UI layout into a single tree.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include <list>
-#include <vector>
-#include "ARBConfig.h"
+//#include "ARBConfig.h"
 #include "ARBTypes.h"
-#include "DlgBaseDialog.h"
-#include "DlgListViewer.h"
-#include "ListCtrl.h"
+//#include "DlgBaseDialog.h"
+//#include "DlgListViewer.h"
+//#include "ListCtrl.h"
+//#include <list>
+//#include <vector>
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
-class CListDataDispInfo;
 
+
+class CDlgConfigure
+{
+public:
+	CDlgConfigure(
+			CAgilityBookDoc* pDoc,
+			ARBAgilityRecordBook& book) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgConfigure"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgConfigure : public CDlgBaseDialog
 {
 public:
@@ -116,3 +131,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

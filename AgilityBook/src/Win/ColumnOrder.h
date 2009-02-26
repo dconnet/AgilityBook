@@ -33,13 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-28 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 class CColumnOrder
 {
 public:
-	CColumnOrder(LPCTSTR pItem);
+	CColumnOrder(wxString const& pItem);
 	~CColumnOrder();
 	bool Initialize(int nColumns); // Returns true if saved settings restored
 	void Save();
@@ -62,7 +63,7 @@ public:
 	}
 
 private:
-	CString m_Item;
+	wxString m_Item;
 	int m_nColumns;
 	bool m_bDefaultDescending;
 	int* m_order;

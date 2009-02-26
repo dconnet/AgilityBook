@@ -33,139 +33,44 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-12-14 DRC Ported to wxWidgets.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2004-06-02 DRC Moved ShellExecute code here.
  */
 
-#ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
-#endif
-
-#include "resource.h"       // main symbols
-#include "LanguageManager.h"
 #include "UpdateInfo.h"
+class CAgilityBookDoc;
+class CAgilityBookDocManager;
+class CLanguageManager;
 
-class CAgilityBookApp : public CWinApp
+
+class CAgilityBookApp : public wxApp
 {
+	DECLARE_NO_COPY_CLASS(CAgilityBookApp)
 public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	CAgilityBookApp();
 
-	CUpdateInfo& UpdateInfo()						{return m_UpdateInfo;}
-	CLanguageManager const& LanguageManager() const	{return m_LangMgr;}
+	bool SelectLanguage(wxWindow* parent = NULL);
+	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
+	void UpdateConfiguration(CAgilityBookDoc* pDoc);
+	void ShowHelp(wxString const& topic);
 
-	/**
-	 * Override the WinHelp api so we can map it to HtmlHelp.
-	 * We are not re-mapping the cmd ids - most of the WinHelp cmds are
-	 * <i>not</i> the same as HtmlHelp. It is recommended that when you
-	 * need to call help, that you use the HtmlHelp api. Overriding this
-	 * api allows MFC contexthelp to work properly.
-	 */
-	virtual void WinHelp(
-			DWORD_PTR dwData,
-			UINT nCmd = HELP_CONTEXT);
-
-	void SetStatusText(
-			CString const& msg,
+	void SetMessageText(
+			wxString const& msg,
 			bool bFiltered);
-	void SetStatusText2(CString const& msg);
+	void SetMessageText2(wxString const& msg);
 
-private:
+protected:
+	virtual bool OnInit();
+	virtual int OnExit();
+
+	CLanguageManager* m_LangMgr;
 	CUpdateInfo m_UpdateInfo;
-	CLanguageManager m_LangMgr;
+	CAgilityBookDocManager* m_manager;
 
-// Overrides
-	//{{AFX_VIRTUAL(CAgilityBookApp)
-public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
-	//}}AFX_VIRTUAL
-
-// Implementation
-private:
-	//{{AFX_MSG(CAgilityBookApp)
-	afx_msg void OnHelpContents();
-	afx_msg void OnHelpIndex();
-	afx_msg void OnHelpSplash();
-	afx_msg void OnHelpSysinfo();
-	afx_msg void OnPrintBlankRuns();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnHelpContents(wxCommandEvent& evt);
+	void OnHelpIndex(wxCommandEvent& evt);
 };
 
-extern CAgilityBookApp theApp;
-
-// Some global functions.
-class CAgilityBookDoc;
-
-/**
- * Make popup menus use the ON_UPDATE_COMMAND_UI handlers
- * @param pTarget Window messages should be propagated to
- * @param pPopupMenu OnInitMenuPopup parameter
- * @param nIndex OnInitMenuPopup parameter
- * @param bSysMenu OnInitMenuPopup parameter
- */
-extern void InitMenuPopup(
-		CCmdTarget* pTarget,
-		CMenu* pPopupMenu,
-		UINT nIndex,
-		BOOL bSysMenu);
-
-/**
- * Show context help.
- * @param langMgr Language Manager
- * @param pHelpInfo OnHelpInfo parameter.
- */
-extern bool ShowContextHelp(CLanguageManager const& langMgr, HELPINFO* pHelpInfo);
-
-/**
- * Use ShellExecute to start a program.
- * @param pCmd Command to run.
- */
-extern void RunCommand(TCHAR const* const pCmd);
-
-/**
- * Expand all items in a tree control.
- * @param ctrl Tree control
- * @param hItem Item from which to expand all items
- * @param code Expand/Collapse code
- */
-extern void ExpandAll(
-		CTreeCtrl& ctrl,
-		HTREEITEM hItem,
-		UINT code);
-
-/**
- * Get the file status of a file. This works around a bug in MFC with CTime.
- * @param lpszFileName File to check.
- * @param rStatus Status structure.
- */
-extern BOOL GetLocalStatus(
-		LPCTSTR lpszFileName,
-		CFileStatus& rStatus);
-
-/**
- * Print blank pages to enter runs on.
- * @param inConfig Configuration
- * @param inDog Dog's runs to print.
- * @param inRuns Runs to print, if empty, print blank pages.
- * @return Printed?
- */
-#include "PointsData.h"
-extern bool PrintRuns(
-		ARBConfig const* inConfig,
-		ARBDogPtr inDog,
-		std::vector<RunInfo> const& inRuns);
-
-
-/**
- * Separate a line into substrings. Very simply routine that has no escape chars
- * @param inSep Separator character
- * @param inStr String to separate
- * @param outFields Separated pieces
- * @return Number of fields
- */
-extern size_t BreakLine(
-		char inSep,
-		tstring inStr,
-		std::vector<tstring>& outFields);
+DECLARE_APP(CAgilityBookApp)

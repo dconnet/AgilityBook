@@ -33,15 +33,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-09-22 DRC Created
  */
 
-#include <map>
 #include "Localization.h"
+class wxHtmlHelpController;
+class wxLocale;
+
 
 /**
- * Class to manage resource-only language DLLs.
- * This class is meant to work closely with CWinApp.
+ * Wrap language management apis.
+ * (originally managed resource language dlls on windows)
  */
 class CLanguageManager
 {
@@ -50,64 +53,39 @@ public:
 	~CLanguageManager();
 
 	/**
-	 * Set the initial language in the app based on system settings.
-	 * This is normally called once as the first thing in InitInstance
-	 */
-	void SetInitialLanguage(LPCTSTR* pszHelpFilePath);
-
-	/**
-	 * Set the default language. When run the first time, this will call
-	 * SelectLanguage(). Subsequent calls will load the last selected language.
-	 * @note Do not call until after SetRegistryKey as it needs to access
-	 * the registry to retrieve the last selected language.
-	 */
-	void SetDefaultLanguage();
-
-	/**
-	 * How many languages are we managing - Number of AgilityBook*.dll files
-	 * found in the executables directory that have the same version number as
-	 * the executable.
-	 */
-	size_t NumLanguages();
-
-	/**
 	 * Display a user interface to select a language.
 	 */
-	bool SelectLanguage();
-
-	/**
-	 * Executables language (embedded resources)
-	 */
-	LANGID ExeLanguage() const				{return m_LangID;}
-
-	typedef std::map<LANGID, HINSTANCE> LangResources;
-	/**
-	 * Mapping of language ids to loaded resource instance.
-	 */
-	LangResources const& Languages() const	{return m_Langs;}
+	bool SelectLanguage(wxWindow* parent = NULL);
 
 	/**
 	 * Currectly selected language.
 	 */
-	LANGID CurrentLanguage() const			{return m_CurLang;}
+	wxString CurrentLanguage() const			{return m_dirLoadedLang;}
 
 	/**
-	 *
+	 * Display the contents of the help file.
 	 */
-	CString ContextHelpFile() const			{return m_ContextHelp;}
+	void HelpDisplayContents();
+
+	/**
+	 * Display the index of the help file.
+	 */
+	void HelpDisplayIndex();
+
+	/**
+	 * Display the specified topic of the help file.
+	 * @param topic Topic to display. If empty, displays contents.
+	 */
+	void HelpDisplaySection(wxString const& topic);
 
 private:
-	LANGID DetectLanguage() const;
-	bool SetLanguage(LANGID langId);
-	void SetHelpFile();
+	int SelectLang(wxWindow* parent = NULL);
+	bool SetLang(int langId);
 
-	HINSTANCE m_hInstance;
-	CString m_InitHelpFilePath;
-	CString m_InitContextHelp;
-	LPCTSTR* m_pszHelpFilePath;
-	CString m_ContextHelp;
-	LANGID m_LangID;
-	LangResources m_Langs;
-	LANGID m_CurLang;
+	wxHtmlHelpController* m_help;
+	wxString m_dirLang; /// Where the en/fr/etc directories are located
+	wxString m_dirLoadedLang; /// 'en'/'fr' etc
+	wxLocale* m_locale;
+	int m_CurLang;
 	CLocalization m_Localization;
 };

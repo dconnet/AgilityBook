@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2006-03-02 DRC Separated filter options from main options.
  */
 
@@ -40,6 +41,7 @@
 #include <vector>
 #include "ARBDate.h"
 #include "ARBTypes.h"
+
 
 struct CVenueFilter
 {
@@ -57,6 +59,7 @@ struct CVenueFilter
 		return !operator==(rhs);
 	}
 };
+
 
 class CCalendarViewFilter
 {
@@ -117,6 +120,7 @@ public:
 	unsigned short m_Filter;
 };
 
+
 class CFilterOptions
 {
 public:
@@ -164,7 +168,7 @@ private:
 	std::set<tstring> m_nameFilter;
 
 	tstring m_curFilter;
-	int m_nFilters;
+	long m_nFilters;
 	std::vector<CFilterOptionData> m_filters;
 
 	std::vector<CFilterOptionData>::iterator FindFilter(tstring const& inName);

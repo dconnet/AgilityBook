@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-12 DRC Created
  */
@@ -38,13 +39,6 @@
 #include "stdafx.h"
 #include "ListData.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
 
 CListData::CListData()
 {
@@ -56,32 +50,8 @@ CListData::~CListData()
 }
 
 
-CListDataDispInfo::CListDataDispInfo()
+void CListData::OnNeedListItem(long iCol, wxListItem& info) const
 {
-}
-
-
-CListDataDispInfo::~CListDataDispInfo()
-{
-}
-
-
-tstring CListDataDispInfo::OnNeedText() const
-{
-	ASSERT(0);
-	return tstring();
-}
-
-
-tstring CListDataDispInfo::OnNeedText(int iCol) const
-{
-	ASSERT(0);
-	return tstring();
-}
-
-
-int CListDataDispInfo::OnNeedIcon() const
-{
-	ASSERT(0);
-	return -1;
+	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
+	info.SetText(OnNeedText(iCol));
 }

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
@@ -39,26 +40,18 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgCalendar.h"
 
-#include "AgilityBookDoc.h"
-#include "AgilityBookOptions.h"
-#include "ARBCalendar.h"
-#include "ARBConfig.h"
-#include "DlgInfoJudge.h"
+//#include "AgilityBook.h"
+//#include "AgilityBookDoc.h"
+//#include "AgilityBookOptions.h"
+//#include "ARBCalendar.h"
+//#include "ARBConfig.h"
+//#include "DlgInfoJudge.h"
 
-using namespace std;
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgCalendar dialog
-
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgCalendar")
+#if 0
 CDlgCalendar::CDlgCalendar(
 		ARBCalendarPtr pCal,
 		CAgilityBookDoc* pDoc,
@@ -359,7 +352,7 @@ void CDlgCalendar::OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void CDlgCalendar::OnDateOpensUnknown() 
+void CDlgCalendar::OnDateOpensUnknown()
 {
 	UpdateData(TRUE);
 	if (m_bOpeningUnknown)
@@ -369,7 +362,7 @@ void CDlgCalendar::OnDateOpensUnknown()
 }
 
 
-void CDlgCalendar::OnDateDrawsUnknown() 
+void CDlgCalendar::OnDateDrawsUnknown()
 {
 	UpdateData(TRUE);
 	if (m_bDrawingUnknown)
@@ -379,7 +372,7 @@ void CDlgCalendar::OnDateDrawsUnknown()
 }
 
 
-void CDlgCalendar::OnDateClosesUnknown() 
+void CDlgCalendar::OnDateClosesUnknown()
 {
 	UpdateData(TRUE);
 	if (m_bClosingUnknown)
@@ -628,3 +621,4 @@ void CDlgCalendar::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

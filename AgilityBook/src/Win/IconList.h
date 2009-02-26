@@ -33,10 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-27 DRC Ported to wxWidgets.
  * @li 2007-04-22 DRC Created.
  */
 
-class CIconList : public CImageList
+#include <wx/imaglist.h>
+
+
+class CIconList : public wxImageList
 {
 public:
 	CIconList();

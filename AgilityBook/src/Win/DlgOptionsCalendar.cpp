@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2009-01-11 DRC Fixed a bug that added an 8th day to week.
  * @li 2006-11-22 DRC Turned this into Calendar only, created new Print page.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -41,9 +42,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgOptionsCalendar.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsCalendar")
+#if 0
+#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 
@@ -155,7 +158,7 @@ void CDlgOptionsCalendar::UpdateControls()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsCalendar message handlers
 
-BOOL CDlgOptionsCalendar::OnInitDialog() 
+BOOL CDlgOptionsCalendar::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	m_fontCalViewInfo.CreateFont(m_fontCalView);
@@ -354,3 +357,4 @@ void CDlgOptionsCalendar::OnFontCalView()
 		m_ctrlCalView.Invalidate();
 	}
 }
+#endif

@@ -33,19 +33,30 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-07-15 DRC Add a selected-item total.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-02-03 DRC Created.
  */
 
 #include "ARBDogExistingPoints.h"
-#include "ColumnOrder.h"
-#include "DlgBasePropertyPage.h"
-#include "ListCtrl.h"
-#include "ListData.h"
-
+//#include "ColumnOrder.h"
+//#include "DlgBasePropertyPage.h"
+//#include "ListCtrl.h"
+//#include "ListData.h"
 class CAgilityBookDoc;
 
+
+class CDlgDogPoints
+{
+	friend class CDlgDog;
+public:
+	CDlgDogPoints(
+			CAgilityBookDoc* pDoc,
+			ARBDogExistingPointsList const& points) {}
+};
+
+#if 0
 class CDlgDogPoints : public CDlgBasePropertyPage
 {
 	friend class CDlgDog;
@@ -93,3 +104,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

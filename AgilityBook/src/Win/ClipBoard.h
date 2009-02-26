@@ -33,11 +33,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
  */
 
 #include "ARBTypes.h"
+#include <wx/clipbrd.h>
 
 // Name of root element when writing Elements.
 #define CLIPDATA	_T("ClipData")
@@ -82,21 +84,13 @@ class CClipboardDataReader : public CClipboardData
 public:
 	CClipboardDataReader();
 
-	static BOOL IsFormatAvailable(eClipFormat clpFmt);
+	static bool IsFormatAvailable(eClipFormat clpFmt);
 
 	bool GetData(
 			eClipFormat clpFmt,
 			ElementNodePtr outTree);
 
-	bool GetData(CStringA& outData);
-#if _MSC_VER >= 1300
-	bool GetData(CStringW& outData);
-#endif
-
-private:
-	bool GetData(
-			UINT uFormat,
-			CStringA& outData);
+	bool GetData(wxString& outData);
 };
 
 
@@ -108,16 +102,16 @@ class CClipboardDataWriter;
 class CClipboardDataTable
 {
 public:
-	CClipboardDataTable(CString& ioText, CString& ioHtml);
+	CClipboardDataTable(wxString& ioText, wxString& ioHtml);
 	void Reset();
 	void StartLine();
 	void EndLine();
-	void Cell(int nCol, CString const& inData);
+	void Cell(int nCol, wxString const& inData);
 	bool Write(CClipboardDataWriter& writer);
 private:
 	bool m_Closed;
-	CString& m_ioText;
-	CString& m_ioHtml;
+	wxString& m_ioText;
+	wxString& m_ioHtml;
 };
 
 /**
@@ -127,40 +121,23 @@ class CClipboardDataWriter : public CClipboardData
 {
 public:
 	CClipboardDataWriter();
+	virtual ~CClipboardDataWriter();
 
-	bool SetData(
+	bool AddData(
 			eClipFormat clpFmt,
 			ElementNodePtr inTree);
 
 	// Used to write special data.
-	bool SetData(
+	bool AddData(
 			eClipFormat clpFmt,
-			std::string const& inData);
-	bool SetData(
-			eClipFormat clpFmt,
-			CStringA const& inData);
-	bool SetData(
-			eClipFormat clpFmt,
-			std::wstring const& inData);
-#if _MSC_VER >= 1300
-	bool SetData(
-			eClipFormat clpFmt,
-			CStringW const& inData);
-#endif
+			wxString const& inData);
 
-	// Write data as CF_TEXT (in Unicode builds, CF_UNICODETEXT also)
-	bool SetData(std::string const& inData);
-	bool SetData(std::wstring const& inData);
-	bool SetData(CStringA const& inData);
-#if _MSC_VER >= 1300
-	bool SetData(CStringW const& inData);
-#endif
+	bool AddData(wxString const& inData);
 
-	bool SetData(CClipboardDataTable& inData);
+	bool AddData(CClipboardDataTable& inData);
 
-	// Raw form.
-	bool SetData(
-			UINT uFormat,
-			void const* inData,
-			size_t inLen);
+	bool CommitData();
+
+private:
+	wxDataObjectComposite* m_Object;
 };

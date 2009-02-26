@@ -31,129 +31,125 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-02-18 DRC Remember selected dogs.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgSelectDog.h"
 
-#include <algorithm>
-#include <set>
+#include "AgilityBook.h"
 #include "ARBDog.h"
 #include "ARBTypes.h"
 #include "AgilityBookDoc.h"
-#include "ListData.h"
+#include <wx/config.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgSelectDog dialog
+BEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgSelectDog::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgSelectDog::CDlgSelectDog(
 		CAgilityBookDoc* pDoc,
-		std::vector<ARBDogPtr>& dogs,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgSelectDog::IDD, pParent)
-	, m_ctrlList(true)
+		std::vector<ARBDogPtr>& outDogs,
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_DOG_PICKER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
 	, m_pDoc(pDoc)
-	, m_Dogs(dogs)
+	, m_outDogs(outDogs)
+	, m_Dogs()
+	, m_checkList(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgSelectDog)
-	//}}AFX_DATA_INIT
+	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
+
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	std::set<wxString> selection;
+	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);
+	for (long iDog = 1; iDog <= nDogs; ++iDog)
+	{
+		otstringstream item;
+		item << _T("Selection/Dog") << iDog;
+		wxString dog = wxConfig::Get()->Read(item.str().c_str(), wxT(""));
+		if (!dog.empty())
+			selection.insert(dog);
+	}
+
+	// Controls (these are done first to control tab order)
+
+	wxArrayString checkListChoices;
+	for (ARBDogList::const_iterator iter = m_Dogs.begin(); iter != m_Dogs.end(); ++iter)
+	{
+		checkListChoices.Add((*iter)->GetCallName().c_str());
+	}
+	m_checkList = new wxCheckListBox(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		checkListChoices,
+		wxLB_EXTENDED|wxLB_NEEDED_SB);
+	for (int index = 0; index < static_cast<int>(m_Dogs.size()); ++index)
+	{
+		if (selection.end() != std::find(selection.begin(), selection.end(), m_Dogs[index]->GetCallName()))
+			m_checkList->Check(index, true);
+	}
+	m_checkList->SetHelpText(_("HIDC_PICK_NAME"));
+	m_checkList->SetToolTip(_("HIDC_PICK_NAME"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(m_checkList, 1, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	m_checkList->SetFocus();
 }
 
 
-DOMODAL_RETVAL CDlgSelectDog::DoModal() 
+int CDlgSelectDog::ShowModal()
 {
-	m_Dogs.clear();
+	m_outDogs.clear();
 	if (1 == m_pDoc->Book().GetDogs().size())
 	{
-		m_Dogs.push_back(*(m_pDoc->Book().GetDogs().begin()));
-		return IDOK;
+		m_outDogs.push_back(*(m_pDoc->Book().GetDogs().begin()));
+		return wxID_OK;
 	}
 	else
-		return CDlgBaseDialog::DoModal();
+		return wxDialog::ShowModal();
 }
 
 
-void CDlgSelectDog::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgSelectDog)
-	DDX_Control(pDX, IDC_PICK_NAME, m_ctrlList);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgSelectDog, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgSelectDog)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgSelectDog message handlers
-
-BOOL CDlgSelectDog::OnInitDialog() 
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	std::set<tstring> selection;
-	int nDogs = theApp.GetProfileInt(_T("Selection"), _T("nDogs"), 0);
-	for (int iDog = 1; iDog <= nDogs; ++iDog)
-	{
-		otstringstream item;
-		item << _T("Dog") << iDog;
-		CString dog = theApp.GetProfileString(_T("Selection"), item.str().c_str(), _T(""));
-		if (!dog.IsEmpty())
-			selection.insert((LPCTSTR)dog);
-	}
-
-	ARBDogList const& dogs = m_pDoc->Book().GetDogs();
-	for (ARBDogList::const_iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
-	{
-		ARBDogPtr pDog = *iter;
-		int index = m_ctrlList.AddString(pDog->GetCallName().c_str());
-		m_ctrlList.SetItemDataPtr(index,
-			new CListPtrData<ARBDogPtr>(pDog));
-		if (selection.end() != std::find(selection.begin(), selection.end(), pDog->GetCallName()))
-			m_ctrlList.SetCheck(index, 1);
-	}
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgSelectDog::OnOK() 
+void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 {
 	// Erase existing.
-	int nDogs = theApp.GetProfileInt(_T("Selection"), _T("nDogs"), 0);
+	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
 		otstringstream item;
-		item << _T("Dog") << iDog;
-		theApp.WriteProfileString(_T("Selection"), item.str().c_str(), NULL);
+		item << wxT("Selection/Dog") << iDog;
+		wxConfig::Get()->DeleteEntry(item.str().c_str());
 	}
 	// Now commit the selection.
 	nDogs = 0;
-	m_Dogs.clear();
-	for (int index = 0; index < m_ctrlList.GetCount(); ++index)
+	m_outDogs.clear();
+	for (int index = 0; index < static_cast<int>(m_checkList->GetCount()); ++index)
 	{
-		if (m_ctrlList.GetCheck(index))
+		if (m_checkList->IsChecked(index))
 		{
-			ARBDogPtr pDog = reinterpret_cast<CListPtrData<ARBDogPtr>*>(m_ctrlList.GetItemDataPtr(index))->GetData();
-			m_Dogs.push_back(pDog);
+			m_outDogs.push_back(m_Dogs[index]);
 			++nDogs;
 			otstringstream item;
-			item << _T("Dog") << nDogs;
-			theApp.WriteProfileString(_T("Selection"), item.str().c_str(), pDog->GetCallName().c_str());
+			item << wxT("Selection/Dog") << nDogs;
+			wxConfig::Get()->Write(item.str().c_str(), m_Dogs[index]->GetCallName().c_str());
 		}
 	}
-	theApp.WriteProfileInt(_T("Selection"), _T("nDogs"), nDogs);
-	CDlgBaseDialog::OnOK();
+	wxConfig::Get()->Write(wxT("Selection/nDogs"), nDogs);
+	EndDialog(wxID_OK);
 }

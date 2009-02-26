@@ -33,41 +33,35 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  */
 
-#include "DlgBaseDialog.h"
 
-class CDlgName : public CDlgBaseDialog
+class CDlgName : public wxDialog
 {
 public:
 	CDlgName(
-			LPCTSTR name,
-			UINT caption = 0,
-			CWnd* pParent = NULL);
+			wxString const& name,
+			wxWindow* pParent = NULL)
+		: m_Name(name)
+	{
+		Create(_("IDD_NAME"), pParent);
+	}
 	CDlgName(
-			LPCTSTR name,
-			LPCTSTR pCaption = NULL,
-			CWnd* pParent = NULL);
-	virtual ~CDlgName();
-	LPCTSTR GetName() const	{return (LPCTSTR)m_Name;}
+			wxString const& name,
+			wxString const& caption,
+			wxWindow* pParent = NULL)
+		: m_Name(name)
+	{
+		Create(caption, pParent);
+	}
+
+	bool Create(
+			wxString const& caption,
+			wxWindow* pParent = NULL);
+
+	wxString GetName() const	{return m_Name;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgName)
-	enum { IDD = IDD_NAME };
-	CString m_Name;
-	//}}AFX_DATA
-	CString m_Caption;
-
-	//{{AFX_VIRTUAL(CDlgName)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	//{{AFX_MSG(CDlgName)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	wxString m_Name;
 };

@@ -22,7 +22,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -81,13 +81,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -105,7 +105,6 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -124,7 +123,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -148,13 +147,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -191,7 +190,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -214,13 +213,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -239,7 +238,6 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -258,7 +256,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -282,13 +280,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug - No Unicode|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			>
@@ -324,7 +322,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -347,13 +345,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug - No Unicode|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			>
@@ -371,7 +369,6 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -390,7 +387,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -414,13 +411,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release - No Unicode|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -457,7 +454,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -480,13 +477,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release - No Unicode|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;.\zlib.vsprops;.\Xerces.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -505,7 +502,6 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -524,7 +520,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName)"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -548,7 +544,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName)"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
 			/>
 		</Configuration>
 	</Configurations>

@@ -33,9 +33,15 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-22 DRC Moved printing to new page.
  */
 
+class CDlgOptionsPrint
+{
+};
+
+#if 0
 #include "AgilityBookOptions.h"
 #include "ComboBox.h"
 #include "DlgBasePropertyPage.h"
@@ -75,3 +81,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

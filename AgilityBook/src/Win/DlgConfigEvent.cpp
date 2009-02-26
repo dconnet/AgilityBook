@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-07-29 DRC Method overlap detection was wrong.
  * @li 2007-05-08 DRC Fixed bug when deleting a method.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -54,9 +55,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigEvent.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigEvent")
+#if 0
+#include "AgilityBook.h"
 #include <algorithm>
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
@@ -1184,3 +1187,4 @@ void CDlgConfigEvent::OnOK()
 	m_pEvent->GetScorings() = m_Scorings;
 	CDlgBaseDialog::OnOK();
 }
+#endif

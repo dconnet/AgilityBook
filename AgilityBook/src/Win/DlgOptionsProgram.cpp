@@ -31,15 +31,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-08-31 DRC Added option to disable splash screen.
  * @li 2004-07-23 DRC Auto-check the config version on document open.
  * @li 2004-04-08 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgOptionsProgram.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsProgram")
+#if 0
+#include "AgilityBook.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -104,7 +107,7 @@ void CDlgOptionsProgram::UpdateButtons()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsProgram message handlers
 
-BOOL CDlgOptionsProgram::OnInitDialog() 
+BOOL CDlgOptionsProgram::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -131,3 +134,4 @@ void CDlgOptionsProgram::OnBrowse()
 		UpdateData(FALSE);
 	}
 }
+#endif

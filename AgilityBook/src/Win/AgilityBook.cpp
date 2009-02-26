@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-12-14 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
  * @li 2005-02-10 DRC There was a problem initializing RICHED*.DLL on Win98.
@@ -44,579 +45,307 @@
 
 #include "stdafx.h"
 #include "AgilityBook.h"
-#include "CrashHandler.h"
-#include "MainFrm.h"
-#if _MSC_VER < 1300
-#include "htmlhelp.h"
-#endif
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookTree.h"
-#include "AgilityBookViewCalendar.h"
-#include "AgilityBookViewHtml.h"
-#include "AgilityBookViewPoints.h"
-#include "AgilityBookViewRuns.h"
-#include "AgilityBookViewTraining.h"
-#include "DlgMessage.h"
 #include "Element.h"
 #include "LanguageManager.h"
-#include "Splash.h"
+#include "MainFrm.h"
 #include "TabView.h"
+#include <vector>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+#include <wx/choicdlg.h>
+#include <wx/cmdline.h>
+#include <wx/config.h>
+#include <wx/display.h>
+#include <wx/docview.h>
+#include <wx/file.h>
+#include <wx/filesys.h>
+#include <wx/fs_zip.h>
+#include <wx/msgdlg.h>
+#include <wx/settings.h>
+#include <wx/stdpaths.h>
+#include <wx/utils.h>
+#include <wx/version.h>
+#include <wx/xrc/xmlres.h>	// XRC XML resources
+
+#if !wxCHECK_VERSION(2, 8, 9)
+// ARB was developed against v2.8.9 - anything earlier is not supported.
+#error Unsupported wxWidget version
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-// Some global functions.
 
-void InitMenuPopup(CCmdTarget* pTarget, CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
-{
-	CCmdUI cmdUI;
-	cmdUI.m_nIndexMax = pPopupMenu->GetMenuItemCount();
-	for (UINT n = 0; n < cmdUI.m_nIndexMax; ++n)
-	{
-		cmdUI.m_nIndex = n;
-		cmdUI.m_nID = pPopupMenu->GetMenuItemID(cmdUI.m_nIndex);
-		cmdUI.m_pMenu = pPopupMenu;
-		cmdUI.DoUpdate(pTarget, FALSE);
-	}
-}
+IMPLEMENT_APP(CAgilityBookApp)
 
 
-bool ShowContextHelp(CLanguageManager const& langMgr, HELPINFO* pHelpInfo)
-{
-	bool bOk = false;
-	if (pHelpInfo->dwContextId > 0)
-	{
-		bOk = true;
-		HWND hwnd = NULL;
-		POINT pt = pHelpInfo->MousePos;
-		if (HELPINFO_WINDOW == pHelpInfo->iContextType)
-		{
-			hwnd = static_cast<HWND>(pHelpInfo->hItemHandle);
-			RECT r;
-			::GetWindowRect(hwnd, &r);
-			pt.x = r.left + (r.right - r.left) / 2;
-			pt.y = r.bottom;
-		}
-		HH_POPUP popup;
-		memset(&popup, 0, sizeof(HH_POPUP));
-		popup.cbStruct = sizeof(HH_POPUP);
-		popup.hinst = 0;
-		popup.idString = static_cast<UINT>(pHelpInfo->dwContextId);
-		popup.pszText = _T("");
-		popup.pt = pt;
-		popup.clrForeground = GetSysColor(COLOR_INFOTEXT);
-		popup.clrBackground = GetSysColor(COLOR_INFOBK);
-		popup.rcMargins.left = -1;
-		popup.rcMargins.top = -1;
-		popup.rcMargins.right = -1;
-		popup.rcMargins.bottom = -1;
-		popup.pszFont = _T("Arial, 8, ascii, , , ");
-
-		CString name(theApp.m_pszHelpFilePath);
-		name += langMgr.ContextHelpFile();
-		::HtmlHelp(hwnd, name, HH_DISPLAY_TEXT_POPUP, (DWORD_PTR)&popup);
-	}
-	return bOk;
-}
-
-
-void RunCommand(TCHAR const* const pCmd)
-{
-	if (pCmd)
-	{
-		INT_PTR result = reinterpret_cast<INT_PTR>(ShellExecute(NULL, _T("open"), pCmd, NULL, NULL, SW_SHOW));
-		if (result <= HINSTANCE_ERROR)
-		{
-			CString str;
-			str.LoadString(IDS_UNABLE_TO_OPEN);
-			otstringstream msg;
-			msg << (LPCTSTR)str
-				<< pCmd
-				<< _T("\n");
-			switch (result)
-			{
-			case 0:
-				str.LoadString(IDS_SYSERR_MEMORY);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_PNF:
-				str.LoadString(IDS_SYSERR_SE_ERR_PNF);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_FNF:
-				str.LoadString(IDS_SYSERR_SE_ERR_FNF);
-				msg << (LPCTSTR)str;
-				break;
-			case ERROR_BAD_FORMAT:
-				str.LoadString(IDS_SYSERR_ERROR_BAD_FORMAT);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_ACCESSDENIED:
-				str.LoadString(IDS_SYSERR_SE_ERR_ACCESSDENIED);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_ASSOCINCOMPLETE:
-				str.LoadString(IDS_SYSERR_SE_ERR_ASSOCINCOMPLETE);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_DDEBUSY:
-				str.LoadString(IDS_SYSERR_SE_ERR_DDEBUSY);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_DDEFAIL:
-				str.LoadString(IDS_SYSERR_SE_ERR_DDEFAIL);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_DDETIMEOUT:
-				str.LoadString(IDS_SYSERR_SE_ERR_DDETIMEOUT);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_DLLNOTFOUND:
-				str.LoadString(IDS_SYSERR_SE_ERR_DLLNOTFOUND);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_NOASSOC:
-				str.LoadString(IDS_SYSERR_SE_ERR_NOASSOC);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_OOM:
-				str.LoadString(IDS_SYSERR_SE_ERR_OOM);
-				msg << (LPCTSTR)str;
-				break;
-			case SE_ERR_SHARE:
-				str.LoadString(IDS_SYSERR_SE_ERR_SHARE);
-				msg << (LPCTSTR)str;
-				break;
-			default:
-				str.FormatMessage(IDS_SYSERR_UNKNOWN, (long)result);
-				msg << (LPCTSTR)str;
-				break;
-			}
-			AfxMessageBox(msg.str().c_str(), MB_ICONEXCLAMATION | MB_OK);
-		}
-	}
-}
-
-
-void ExpandAll(
-		CTreeCtrl& ctrl,
-		HTREEITEM hItem,
-		UINT code)
-{
-	if (NULL == hItem)
-		return;
-	if (TVI_ROOT != hItem)
-		ctrl.Expand(hItem, code);
-	HTREEITEM hChildItem = ctrl.GetNextItem(hItem, TVGN_CHILD);
-	while (NULL != hChildItem)
-	{
-		ExpandAll(ctrl, hChildItem, code);
-		hChildItem = ctrl.GetNextItem(hChildItem, TVGN_NEXT);
-	}
-}
-
-
-// Copy of CFile::GetStatus, changes are commented below.
-// For some reason the timestamp on files can be totally messed up.
-// It happens in the FILETIME to CTime conversion (throws a COleException)
-// This has occurred with files on a NAS and CD.
-// VC8 has changed, but still has problems - VC8 code has been merged below
-BOOL GetLocalStatus(
-		LPCTSTR lpszFileName,
-		CFileStatus& rStatus)
-{
-	// Defined in "Microsoft Visual Studio 8\VC\atlmfc\src\mfc\afximpl.h"
-#if _MSC_VER >= 1400
-	BOOL AFXAPI AfxFullPath(__out_z LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
-#else
-	BOOL AFXAPI AfxFullPath(LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
-#endif
-
-#if _MSC_VER >= 1400
-	assert( lpszFileName != NULL );
-#endif
-
-	if ( lpszFileName == NULL )
-	{
-		return FALSE;
-	}
-
-	if ( lstrlen(lpszFileName) >= _MAX_PATH )
-	{
-		assert(FALSE); // MFC requires paths with length < _MAX_PATH
-		return FALSE;
-	}
-
-	// attempt to fully qualify path first
-	if (!AfxFullPath(rStatus.m_szFullName, lpszFileName))
-	{
-		rStatus.m_szFullName[0] = '\0';
-		return FALSE;
-	}
-
-	WIN32_FIND_DATA findFileData;
-	HANDLE hFind = FindFirstFile((LPTSTR)lpszFileName, &findFileData);
-	if (hFind == INVALID_HANDLE_VALUE)
-		return FALSE;
-	VERIFY(FindClose(hFind));
-
-	// strip attribute of NORMAL bit, our API doesn't have a "normal" bit.
-// CHANGE: Added '0xff' due to runtime cast check option
-	rStatus.m_attribute = (BYTE)
-		(0xff & (findFileData.dwFileAttributes & ~FILE_ATTRIBUTE_NORMAL));
-
-	// get just the low DWORD of the file size
-	assert(findFileData.nFileSizeHigh == 0);
-	rStatus.m_size = (LONG)findFileData.nFileSizeLow;
-
-	// convert times as appropriate
-// CHANGE: handle COleException
-#if _MSC_VER >= 1400
-	if (CTime::IsValidFILETIME(findFileData.ftCreationTime))
-	{
-		try
-		{
-			rStatus.m_ctime = CTime(findFileData.ftCreationTime);
-		}
-		catch (COleException* pe)
-		{
-			pe->Delete();
-			rStatus.m_ctime = CTime();
-		}
-	}
-	else
-	{
-		rStatus.m_ctime = CTime();
-	}
-
-	if (CTime::IsValidFILETIME(findFileData.ftLastAccessTime))
-	{
-		try
-		{
-			rStatus.m_atime = CTime(findFileData.ftLastAccessTime);
-		}
-		catch (COleException* pe)
-		{
-			pe->Delete();
-			rStatus.m_atime = CTime();
-		}
-	}
-	else
-	{
-		rStatus.m_atime = CTime();
-	}
-
-	if (CTime::IsValidFILETIME(findFileData.ftLastWriteTime))
-	{
-		try
-		{
-			rStatus.m_mtime = CTime(findFileData.ftLastWriteTime);
-		}
-		catch (COleException* pe)
-		{
-			pe->Delete();
-			rStatus.m_mtime = CTime();
-		}
-	}
-	else
-	{
-		rStatus.m_mtime = CTime();
-	}
-
-#else
-	//rStatus.m_ctime = CTime(findFileData.ftCreationTime);
-	//rStatus.m_atime = CTime(findFileData.ftLastAccessTime);
-	//rStatus.m_mtime = CTime(findFileData.ftLastWriteTime);
-	CTime* times[3]; times[0] = &rStatus.m_ctime; times[1] = &rStatus.m_atime; times[2] = &rStatus.m_mtime;
-	FILETIME* ft[3]; ft[0] = &findFileData.ftCreationTime; ft[1] = &findFileData.ftLastAccessTime; ft[2] = &findFileData.ftLastWriteTime;
-	for (int i = 0; i < 3; ++i)
-	{
-		try
-		{
-			*(times[i]) = CTime(*(ft[i]));
-		}
-		catch (COleException* pe)
-		{
-			pe->Delete();
-			*(times[i]) = 0;
-		}
-	}
-#endif
-
-	if (rStatus.m_ctime.GetTime() == 0)
-		rStatus.m_ctime = rStatus.m_mtime;
-
-	if (rStatus.m_atime.GetTime() == 0)
-		rStatus.m_atime = rStatus.m_mtime;
-
-	return TRUE;
-}
-
-
-size_t BreakLine(
-		char inSep,
-		tstring inStr,
-		std::vector<tstring>& outFields)
-{
-	outFields.clear();
-	tstring::size_type pos = inStr.find(inSep);
-	while (tstring::npos != pos)
-	{
-		outFields.push_back(inStr.substr(0, pos));
-		inStr = inStr.substr(pos+1);
-		pos = inStr.find(inSep);
-	}
-	outFields.push_back(inStr);
-	return outFields.size();
-}
+BEGIN_EVENT_TABLE(CAgilityBookApp, wxApp)
+	EVT_MENU(wxID_HELP_CONTENTS, CAgilityBookApp::OnHelpContents)
+	EVT_MENU(wxID_HELP_INDEX, CAgilityBookApp::OnHelpIndex)
+END_EVENT_TABLE()
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CAgilityBookCmdLine : public CCommandLineInfo
+class CAgilityBookDocManager : public wxDocManager
 {
 public:
-	CAgilityBookCmdLine()
-		: m_bRegister(false)
-		, m_bUnregister(false)
-	{
-	}
-	virtual void ParseParam( 
-		const TCHAR* pszParam,  
-		BOOL bFlag, 
-		BOOL bLast);
-	bool m_bRegister;
-	bool m_bUnregister;
+	CAgilityBookDocManager(size_t historySize);
+	virtual wxFileHistory* OnCreateFileHistory();
+private:
+	size_t m_History;
 };
 
 
-void CAgilityBookCmdLine::ParseParam( 
-		const TCHAR* pszParam,  
-		BOOL bFlag, 
-		BOOL bLast)
+CAgilityBookDocManager::CAgilityBookDocManager(size_t historySize)
+	: m_History(historySize)
 {
-	// override register/unregister to all auto-reg of filetype handling
-	if (0 == lstrcmpi(pszParam, _T("register")))
-	{
-		m_bRegister = true;
-	}
-	else if (0 == lstrcmpi(pszParam, _T("unregister")))
-	{
-		m_bUnregister = true;
-	}
-	CCommandLineInfo::ParseParam(pszParam, bFlag, bLast);
+	if (wxMAX_FILE_HISTORY < m_History)
+		m_History = wxMAX_FILE_HISTORY;
+}
+
+
+wxFileHistory* CAgilityBookDocManager::OnCreateFileHistory()
+{
+	return new wxFileHistory(m_History);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CAgilityBookApp
-
-BEGIN_MESSAGE_MAP(CAgilityBookApp, CWinApp)
-	//{{AFX_MSG_MAP(CAgilityBookApp)
-	ON_COMMAND(ID_HELP_CONTENTS, OnHelpContents)
-	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
-	ON_COMMAND(ID_HELP_SPLASH, OnHelpSplash)
-	ON_COMMAND(ID_HELP_SYSINFO, OnHelpSysinfo)
-	ON_COMMAND(ID_FILE_PRINT_BLANK_RUNS, OnPrintBlankRuns)
-	//}}AFX_MSG_MAP
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
-	// Standard file based document commands
-	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
-	// Standard print setup command
-	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
-END_MESSAGE_MAP()
-
 
 CAgilityBookApp::CAgilityBookApp()
+	: m_LangMgr(NULL)
+	, m_UpdateInfo()
+	, m_manager(NULL)
+
 {
 }
 
 
-// The one and only CAgilityBookApp object
-CAgilityBookApp theApp;
-
-
-// CAgilityBookApp initialization
-BOOL CAgilityBookApp::InitInstance()
+bool CAgilityBookApp::SelectLanguage(wxWindow* parent)
 {
-	m_LangMgr.SetInitialLanguage(&m_pszHelpFilePath);
+	assert(m_LangMgr);
+	return m_LangMgr->SelectLanguage(parent);
+}
 
-	if (!AfxOleInit())
+
+void CAgilityBookApp::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
+{
+	assert(m_LangMgr);
+	m_UpdateInfo.AutoCheckConfiguration(pDoc, *m_LangMgr);
+}
+
+
+void CAgilityBookApp::UpdateConfiguration(CAgilityBookDoc* pDoc)
+{
+	assert(m_LangMgr);
+	m_UpdateInfo.UpdateConfiguration(pDoc, *m_LangMgr);
+}
+
+
+void CAgilityBookApp::ShowHelp(wxString const& topic)
+{
+#pragma message PRAGMA_MESSAGE("TODO: handle help from modal dialogs - this won't work")
+	if (topic.empty())
+		m_LangMgr->HelpDisplayContents();
+	else
+		m_LangMgr->HelpDisplaySection(topic);
+}
+
+
+void CAgilityBookApp::SetMessageText(
+		wxString const& msg,
+		bool bFiltered)
+{
+	CMainFrame* pFrame = wxDynamicCast(GetTopWindow(), CMainFrame);
+	if (pFrame)
 	{
-		AfxMessageBox(IDS_ERR_COM_FAILED, MB_ICONSTOP);
-		return FALSE;
+		pFrame->SetMessageText(msg, bFiltered);
 	}
+}
 
-	INITCOMMONCONTROLSEX icc;
-	icc.dwSize = sizeof(icc);
-	// Note: ICC_WIN95_CLASSES == ICC_LISTVIEW_CLASSES ICC_TREEVIEW_CLASSES
-	//  ICC_BAR_CLASSES ICC_TAB_CLASSES ICC_UPDOWN_CLASS ICC_PROGRESS_CLASS
-	//  ICC_HOTKEY_CLASS ICC_ANIMATE_CLASS
-	icc.dwICC = ICC_DATE_CLASSES | ICC_WIN95_CLASSES;
-	if (!InitCommonControlsEx(&icc))
+
+void CAgilityBookApp::SetMessageText2(wxString const& msg)
+{
+	CMainFrame* pFrame = wxDynamicCast(GetTopWindow(), CMainFrame);
+	if (pFrame)
 	{
-		AfxMessageBox(IDS_ERR_COMCTRL, MB_ICONSTOP);
-		return FALSE;
+		pFrame->SetMessageText2(msg);
 	}
+}
 
-	CWinApp::InitInstance();
 
-	// Calling AfxInitRichEdit() is not sufficient for older systems.
-	// All that will do is load RICHED32.DLL. On newer systems, RICHED32
-	// automatically loads RICHED20 also. But not on Win98. So specifically
-	// load that too [with AfxInitRichEdit2].
-#if _MSC_VER < 1300
-	// VC6
-	if (!AfxInitRichEdit())
-	{
-		AfxMessageBox(IDS_ERR_RICHED32, MB_ICONSTOP);
-		return FALSE;
-	}
-	if (NULL == LoadLibrary(_T("RICHED20.DLL")))
-#else
-	if (!AfxInitRichEdit2())
-#endif
-	{
-		AfxMessageBox(IDS_ERR_RICHED32, MB_ICONSTOP);
-		return FALSE;
-	}
-
+bool CAgilityBookApp::OnInit()
+{
 	tstring errMsg;
 	if (!Element::Initialize(errMsg))
 	{
-		AfxMessageBox(errMsg.c_str(), MB_ICONSTOP);
-		return FALSE;
+		wxMessageBox(errMsg.c_str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);
+		return false;
 	}
-
-#if _MSC_VER < 1300
-#ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
-#else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
-#endif
-#endif
 
 	// We need at least 800x600 (the event(run) dialog is big!)
-	if (800 > GetSystemMetrics(SM_CXSCREEN)
-	|| 600 > GetSystemMetrics(SM_CYSCREEN))
+	if (wxSYS_SCREEN_DESKTOP != wxSystemSettings::GetScreenType())
 	{
-		if (IDNO == AfxMessageBox(IDS_MIN_RESOLUTION, MB_ICONSTOP | MB_YESNO))
-			return FALSE;
+		if (IDNO == wxMessageBox(_("IDS_MIN_RESOLUTION"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_ERROR))
+			return false;
 	}
 
-	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	// of your final executable, you should remove from the following
-	// the specific initialization routines you do not need
+	SetAppName(wxT("Agility Record Book"));
+	wxConfig::Set(new wxConfig(wxT("Agility Record Book"), wxT("dcon Software")));
 
-	// Change the registry key under which our settings are stored
-	SetRegistryKey(_T("dcon Software"));
-	InitCrashHandler(GetAppRegistryKey());
-	LoadStdProfileSettings(CAgilityBookOptions::GetMRUFileCount());
+	wxImage::AddHandler(new wxGIFHandler);
+	wxFileSystem::AddHandler(new wxZipFSHandler);
+	wxXmlResource::Get()->InitAllHandlers();
+	m_LangMgr = new CLanguageManager();
 
-	// Parse command line for standard shell commands, DDE, file open
-	CAgilityBookCmdLine cmdInfo;
-	ParseCommandLine(cmdInfo);
-
-	// Register the application's document templates.  Document templates
-	//  serve as the connection between documents, frame windows and views
-	CSingleDocTemplate* pDocTemplate;
-	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CAgilityBookDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CTabView));
-	AddDocTemplate(pDocTemplate);
-
-	if (cmdInfo.m_bUnregister)
+	wxString filename;
+	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
-		// unregister and exit
-		UnregisterShellFileTypes();
-		return FALSE;
+		{wxCMD_LINE_PARAM, NULL, NULL, wxT("input file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
+		{wxCMD_LINE_NONE}
+	};
+	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
+	if (0 != cmdline.Parse(false))
+	{
+		cmdline.Usage();
+		Element::Terminate();
+		delete m_LangMgr;
+		m_LangMgr = NULL;
+		return false;
+	}
+	if (0 < cmdline.GetParamCount())
+	{
+		filename = cmdline.GetParam(0);
+		// Normalize filename - windows sometimes passes in short form
+		wxFileName fName(filename);
+		fName.Normalize(wxPATH_NORM_LONG | wxPATH_NORM_DOTS | wxPATH_NORM_TILDE | wxPATH_NORM_ABSOLUTE);
+		filename = fName.GetFullPath();
 	}
 
-	// Enable DDE Execute open
-	EnableShellOpen();
-	RegisterShellFileTypes(FALSE);
-	if (cmdInfo.m_bRegister)
-	{
-		// We're done registering - byebye!
-		return FALSE;
-	}
+	m_manager = new CAgilityBookDocManager(CAgilityBookOptions::GetMRUFileCount());
+	m_manager->SetMaxDocsOpen(1);
+	wxConfig::Get()->SetPath(wxT("Recent File List")); // Named this way for compatibility with existing MFC app
+	m_manager->FileHistoryLoad(*wxConfig::Get());
+	wxConfig::Get()->SetPath(wxT(".."));
 
-	// Don't do language until after cmdline checks
-	m_LangMgr.SetDefaultLanguage();
-	CSplashWnd::EnableSplashScreen(cmdInfo.m_bShowSplash && CAgilityBookOptions::AutoShowSplashScreen());
-
-	// Enable Html help
-#if _MSC_VER >= 1300
-	EnableHtmlHelp();
+	(void)new wxDocTemplate(m_manager, wxT("ARB"), wxT("*.arb"), wxT(""), wxT("arb"), wxT("ARB Doc"), wxT("ARB View"),
+		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
+#ifdef __WXMAC__
+	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'WXMB', 'WXMA');
 #endif
 
+	CMainFrame *frame = new CMainFrame(m_manager);
+
+	int x, y, width, height;
+	x = y = wxDefaultCoord;
+	frame->GetSize(&width, &height);
+	int defWidth = width;
+	int defHeight = height;
+	wxConfig::Get()->Read(wxT("Settings/lastXpos"), &x, x);
+	wxConfig::Get()->Read(wxT("Settings/lastYpos"), &y, y);
+	wxConfig::Get()->Read(wxT("Settings/lastCX"), &width, width);
+	wxConfig::Get()->Read(wxT("Settings/lastCY"), &height, height);
+	long state = wxConfig::Get()->Read(wxT("Settings/lastState"), 0L);
+	bool bCompute = false;
+	wxMouseState mouseState = ::wxGetMouseState();
+	if (wxDefaultCoord != x)
+	{
+		bCompute = true;
+		mouseState.SetX(x);
+	}
+	if (wxDefaultCoord != y)
+	{
+		bCompute = true;
+		mouseState.SetY(y);
+	}
+	wxSize curSize(defWidth, defHeight);
+	if (defWidth != width)
+	{
+		bCompute = true;
+		curSize.SetWidth(width);
+	}
+	if (defHeight != height)
+	{
+		bCompute = true;
+		curSize.SetHeight(height);
+	}
+	if (bCompute)
+	{
+		wxPoint curPt(mouseState.GetX(), mouseState.GetY());
+		int display = wxDisplay::GetFromPoint(curPt);
+		if (wxNOT_FOUND == display)
+			display = 0; // If the display can't be found, use the primary.
+		wxDisplay monitor(display);
+		wxRect rWorkSpace = monitor.GetClientArea();
+		wxRect rect(curPt, curSize);
+		// Make sure window is not bigger.
+		if (rect.GetWidth() > rWorkSpace.GetWidth())
+			rect.SetRight(rect.GetLeft() + rWorkSpace.GetWidth());
+		if (rect.GetHeight() > rWorkSpace.GetHeight())
+			rect.SetBottom(rect.GetTop() + rWorkSpace.GetHeight());
+		// Make sure the window is fully visible in the screen.
+		if (!rWorkSpace.Contains(rect.GetTopLeft()))
+		{
+			if (rect.GetLeft() < rWorkSpace.GetLeft())
+				rect.Offset(rWorkSpace.GetLeft() - rect.GetLeft(), 0);
+			if (rect.GetTop() < rWorkSpace.GetTop())
+				rect.Offset(0, rWorkSpace.GetTop() - rect.GetTop());
+		}
+		// Only check the bottom-right if the rect has size.
+		if (!rect.IsEmpty() && !rWorkSpace.Contains(rect.GetBottomRight()))
+		{
+			if (rect.GetRight() > rWorkSpace.GetRight())
+				rect.Offset(rWorkSpace.GetRight() - rect.GetRight(), 0);
+			if (rect.GetBottom() > rWorkSpace.GetBottom())
+				rect.Offset(0, rWorkSpace.GetBottom() - rect.GetBottom());
+		}
+		if (wxDefaultCoord != x)
+			x = rect.GetLeft();
+		if (wxDefaultCoord != y)
+			y = rect.GetTop();
+		if (defWidth != width)
+			width = rect.GetWidth();
+		if (defHeight != height)
+			height = rect.GetHeight();
+	}
+	frame->SetSize(x, y, width, height);
+	frame->DragAcceptFiles(true);
+
+	SetTopWindow(frame);
+
+
 	// Should we open the last open file?
-	bool bOpeningLast = false;
-	if (CCommandLineInfo::FileNew == cmdInfo.m_nShellCommand)
+	if (filename.empty())
 	{
 		// Don't open it if the shift key is down.
 		if (0 <= GetKeyState(VK_SHIFT))
 		{
-			CString strFile = GetProfileString(_T("Settings"), _T("LastFile"), _T(""));
-			if (!strFile.IsEmpty())
-			{
-				bOpeningLast = true;
-				cmdInfo.ParseParam(strFile, FALSE, TRUE);
-			}
+			filename = wxConfig::Get()->Read(wxT("Settings/LastFile"), wxT(""));
 		}
 	}
 	// If a file is being opened, verify it exists first!
 	// This catches both the case where the remembered last file (above)
 	// doesn't exist and the case where the user types a command line where
 	// it doesn't exist.
-	if (CCommandLineInfo::FileOpen == cmdInfo.m_nShellCommand)
+	if (!filename.empty())
 	{
-		CFileStatus rStatus;
-		if (!GetLocalStatus(cmdInfo.m_strFileName, rStatus)
-		|| 0 == rStatus.m_size)
+		if (!wxFile::Access(filename, wxFile::read))
 		{
-			cmdInfo.m_strFileName = _T("");
-			cmdInfo.m_nShellCommand = CCommandLineInfo::FileNew;
+			filename.clear();
 		}
 	}
+	if (filename.empty())
+		m_manager->CreateDocument(wxEmptyString, wxDOC_NEW);
+	else
+		m_manager->CreateDocument(filename, wxDOC_SILENT);
 
-	// Dispatch commands specified on the command line.  Will return FALSE if
-	// app was launched with /RegServer, /Register, /Unregserver or /Unregister.
-	if (!ProcessShellCommand(cmdInfo))
-	{
-		// If the last document failed to open, just open a new file.
-		if (bOpeningLast
-		&& cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
-		{
-			cmdInfo.m_nShellCommand = CCommandLineInfo::FileNew;
-			if (!ProcessShellCommand(cmdInfo))
-				return FALSE;
-		}
-		else
-			return FALSE;
-	}
-	// The one and only window has been initialized, so show and update it
-	m_pMainWnd->ShowWindow(SW_SHOW);
-	m_pMainWnd->UpdateWindow();
-	// call DragAcceptFiles only if there's a suffix
-	//  In an SDI app, this should occur after ProcessShellCommand
-	// Enable drag/drop open
-	m_pMainWnd->DragAcceptFiles();
-	reinterpret_cast<CMainFrame*>(m_pMainWnd)->InitLangMgr(&m_LangMgr);
+	if (0 < state)
+		frame->Maximize();
+	frame->Show(true);
 
 	// Check for updates every 30 days.
-	if (theApp.GetProfileInt(_T("Settings"), _T("autoCheck"), 1))
+	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
-		CString ver = theApp.GetProfileString(_T("Settings"), _T("lastVerCheck"), _T(""));
-		ARBDate date = ARBDate::FromString((LPCTSTR)ver, ARBDate::eDashYYYYMMDD);
+		wxString ver = wxConfig::Get()->Read(wxT("Settings/lastVerCheck"), wxT(""));
+		ARBDate date = ARBDate::FromString(ver.c_str(), ARBDate::eDashYYYYMMDD);
 		if (date.IsValid())
 		{
 			ARBDate today = ARBDate::Today();
@@ -625,202 +354,32 @@ BOOL CAgilityBookApp::InitInstance()
 				m_UpdateInfo.AutoUpdateProgram();
 		}
 	}
-	return TRUE;
+
+	return true;
 }
 
 
-int CAgilityBookApp::ExitInstance()
+int CAgilityBookApp::OnExit()
 {
-	// Close any open HTML Help windows
-	::HtmlHelp(NULL, NULL, HH_CLOSE_ALL, 0);
+	wxConfig::Get()->SetPath(wxT("Recent File List"));
+	m_manager->FileHistorySave(*wxConfig::Get());
+	wxConfig::Get()->SetPath(wxT(".."));
+	delete m_LangMgr;
+	m_LangMgr = NULL;
+	delete m_manager;
+	m_manager = NULL;
 	Element::Terminate();
-	CleanupCrashHandler();
-	return CWinApp::ExitInstance();
+	return wxApp::OnExit();
 }
 
 
-void CAgilityBookApp::WinHelp(
-		DWORD_PTR dwData,
-		UINT nCmd)
+void CAgilityBookApp::OnHelpContents(wxCommandEvent& evt)
 {
-#if _MSC_VER < 1300
-	::HtmlHelp(AfxGetMainWnd()->GetSafeHwnd(), m_pszHelpFilePath, nCmd, dwData);
-#else
-	HtmlHelp(dwData, nCmd);
-#endif
+	m_LangMgr->HelpDisplayContents();
 }
 
 
-// These functions were moved here to centralize mainwnd checking.
-// AfxGetApp _will_ always return what we expect. AfxGetMainWnd may not.
-void CAgilityBookApp::SetStatusText(
-		CString const& msg,
-		bool bFiltered)
+void CAgilityBookApp::OnHelpIndex(wxCommandEvent& evt)
 {
-	// Calling AfxGetMainWnd is actually dangerous. When the splash screen
-	// is created, it becomes the main window until the mainframe is up.
-	// Calling "IsWindow(pWnd->GetSafeWnd())" when pWnd is NULL, does NOT
-	// crash - it returns false. But for real safety, check!
-	CWnd* pWnd = AfxGetMainWnd();
-	if (pWnd && IsWindow(pWnd->GetSafeHwnd()) && dynamic_cast<CMainFrame*>(pWnd))
-	{
-		reinterpret_cast<CMainFrame*>(pWnd)->SetStatusText(msg, bFiltered);
-	}
-}
-
-
-void CAgilityBookApp::SetStatusText2(CString const& msg)
-{
-	CWnd* pWnd = AfxGetMainWnd();
-	if (pWnd && IsWindow(pWnd->GetSafeHwnd()) && dynamic_cast<CMainFrame*>(pWnd))
-	{
-		reinterpret_cast<CMainFrame*>(pWnd)->SetStatusText2(msg);
-	}
-}
-
-
-/////////////////////////////////////////////////////////////////////////////
-// CAgilityBookApp message handlers
-
-void CAgilityBookApp::OnHelpContents()
-{
-	WinHelp(0, HH_DISPLAY_TOC);
-}
-
-
-void CAgilityBookApp::OnHelpIndex()
-{
-	WinHelp(0, HH_DISPLAY_INDEX);
-}
-
-
-void CAgilityBookApp::OnHelpSplash()
-{
-	BOOL bEnabled = CSplashWnd::IsSplashScreenEnabled();
-	CSplashWnd::EnableSplashScreen(TRUE);
-	CSplashWnd::ShowSplashScreen(AfxGetMainWnd(), false);
-	CSplashWnd::EnableSplashScreen(bEnabled);
-}
-
-
-BOOL CAgilityBookApp::PreTranslateMessage(MSG* pMsg)
-{
-	// The following lines were added by the Splash Screen component.
-	if (CSplashWnd::PreTranslateAppMessage(pMsg))
-		return TRUE;
-	return CWinApp::PreTranslateMessage(pMsg);
-}
-
-
-void CAgilityBookApp::OnHelpSysinfo()
-{
-	otstringstream info;
-
-	// Windows version
-	OSVERSIONINFO os;
-	os.dwOSVersionInfoSize = sizeof(os);
-	GetVersionEx(&os);
-	switch (os.dwPlatformId)
-	{
-	default: // Win32s
-		info << _T("Windows32s ")
-			<< os.dwMajorVersion
-			<< '.'
-			<< os.dwMinorVersion
-			<< ' '
-			<< os.szCSDVersion
-			<< std::endl;
-		break;
-	case VER_PLATFORM_WIN32_WINDOWS: // Win95/98
-		if (0 == os.dwMinorVersion)
-			info << _T("Windows 95 ")
-				<< os.dwMajorVersion
-				<< '.'
-				<< os.dwMinorVersion
-				<< '.'
-				<< int(LOWORD(os.dwBuildNumber))
-				<< ' '
-				<< os.szCSDVersion
-				<< std::endl;
-		else
-			info << _T("Windows 98 ")
-				<< os.dwMajorVersion
-				<< '.'
-				<< os.dwMinorVersion
-				<< '.'
-				<< int(LOWORD(os.dwBuildNumber))
-				<< ' '
-				<< os.szCSDVersion
-				<< std::endl;
-		break;
-	case VER_PLATFORM_WIN32_NT: // NT/Win2000
-		info << _T("Windows ")
-			<< os.dwMajorVersion
-			<< '.'
-			<< os.dwMinorVersion
-			<< '.'
-			<< os.dwBuildNumber
-			<< ' '
-			<< os.szCSDVersion
-			<< std::endl;
-		break;
-	}
-
-	CString badVer;
-	badVer.LoadString(IDS_BAD_VERSION);
-
-	// Me.
-	{
-		CVersionNum ver(NULL);
-		info << (LPCTSTR)ver.GetFileName();
-		info << _T(": ");
-		if (ver.Valid())
-			info << (LPCTSTR)ver.GetVersionString();
-		else
-			info << (LPCTSTR)badVer;
-		info << std::endl;
-	}
-
-	// Common controls.
-	HINSTANCE hCommCtrl = LoadLibrary(_T("comctl32.dll"));
-	if (hCommCtrl)
-	{
-		CVersionNum ver(hCommCtrl);
-		info << (LPCTSTR)ver.GetFileName();
-		info << _T(": ");
-		if (ver.Valid())
-			info << (LPCTSTR)ver.GetVersionString();
-		else
-			info << (LPCTSTR)badVer;
-		info << std::endl;
-		FreeLibrary(hCommCtrl);
-		hCommCtrl = NULL;
-	}
-
-	// Internet Explorer.
-	HINSTANCE hShellDocObj = LoadLibrary(_T("shdocvw.dll"));
-	if (hShellDocObj)
-	{
-		CVersionNum ver(hShellDocObj);
-		info << (LPCTSTR)ver.GetFileName();
-		info << _T(": ");
-		if (ver.Valid())
-			info << (LPCTSTR)ver.GetVersionString();
-		else
-			info << (LPCTSTR)badVer;
-		info << std::endl;
-		FreeLibrary(hShellDocObj);
-		hShellDocObj = NULL;
-	}
-
-	CString msg(info.str().c_str());
-	CDlgMessage dlg(msg);
-	dlg.DoModal();
-}
-
-
-void CAgilityBookApp::OnPrintBlankRuns()
-{
-	std::vector<RunInfo> runs;
-	PrintRuns(NULL, ARBDogPtr(), runs);
+	m_LangMgr->HelpDisplayIndex();
 }

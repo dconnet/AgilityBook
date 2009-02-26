@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-12-24 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Added UserNames
  * @li 2006-07-16 DRC Added PointsViewSort
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -48,26 +49,28 @@
  * @li 2003-12-11 DRC Added options for import/export wizard.
  */
 
-#include <set>
-#include <vector>
 #include "ARBDate.h"
 #include "ARBTypes.h"
+#include <set>
+#include <vector>
+#include <wx/colour.h>
+#include <wx/font.h>
+#include <wx/fontdlg.h>
 class CVersionNum;
+
 
 struct CFontInfo
 {
-	CString name;
+	wxString name;
 	int size;
 	bool italic;
 	bool bold;
+	void CreateFont(wxFont& font);
 	void CreateFont(
-			CFont& font,
-			CDC* pDC = NULL);
-	void CreateFont(
-			CFontDialog const& dlg,
-			CFont& font,
-			CDC* pDC = NULL);
+			wxFontDialog const& dlg,
+			wxFont& font);
 };
+
 
 class CAgilityBookOptions
 {
@@ -81,8 +84,8 @@ public:
 	static void SetViewAllCalendarOpening(bool bView);
 	static bool ViewAllCalendarClosing();
 	static void SetViewAllCalendarClosing(bool bView);
-	static int DaysTillEntryIsPast();
-	static void SetDaysTillEntryIsPast(int nDays);
+	static long DaysTillEntryIsPast();
+	static void SetDaysTillEntryIsPast(long nDays);
 	static bool HideOverlappingCalendarEntries();
 	static void SetHideOverlappingCalendarEntries(bool bHide);
 	typedef enum
@@ -93,20 +96,20 @@ public:
 		eCalColorClosing,
 		eCalColorEntered
 	} CalendarColorItem;
-	static COLORREF CalendarColor(CalendarColorItem inItem);
+	static wxColour CalendarColor(CalendarColorItem inItem);
 	static void SetCalendarColor(
 			CalendarColorItem inItem,
-			COLORREF inColor);
-	static COLORREF CalendarClosingColor();
-	static void SetCalendarClosingColor(COLORREF inColor);
-	static int CalendarOpeningNear();
-	static void SetCalendarOpeningNear(int inDays);
-	static int CalendarClosingNear();
-	static void SetCalendarClosingNear(int inDays);
-	static COLORREF CalendarOpeningNearColor();
-	static void SetCalendarOpeningNearColor(COLORREF inColor);
-	static COLORREF CalendarClosingNearColor();
-	static void SetCalendarClosingNearColor(COLORREF inColor);
+			wxColour inColor);
+	static wxColour CalendarClosingColor();
+	static void SetCalendarClosingColor(wxColour inColor);
+	static long CalendarOpeningNear();
+	static void SetCalendarOpeningNear(long inDays);
+	static long CalendarClosingNear();
+	static void SetCalendarClosingNear(long inDays);
+	static wxColour CalendarOpeningNearColor();
+	static void SetCalendarOpeningNearColor(wxColour inColor);
+	static wxColour CalendarClosingNearColor();
+	static void SetCalendarClosingNearColor(wxColour inColor);
 	// Common options
 	static ARBDate::DayOfWeek GetFirstDayOfWeek();
 	static void SetFirstDayOfWeek(ARBDate::DayOfWeek day);
@@ -142,23 +145,23 @@ public:
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);
-	static void GetPrinterMargins(CRect& outMargins); // In .01 inches
-	static void SetPrinterMargins(CRect const& inMargins);
+	static void GetPrinterMargins(wxRect& outMargins); // In .01 inches
+	static void SetPrinterMargins(wxRect const& inMargins);
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
-	static CString GetLastEnteredDivision();
-	static void SetLastEnteredDivision(TCHAR const* inLast);
-	static CString GetLastEnteredLevel();
-	static void SetLastEnteredLevel(TCHAR const* inLast);
-	static CString GetLastEnteredHeight();
-	static void SetLastEnteredHeight(TCHAR const* inLast);
-	static CString GetLastEnteredRefHeight();
-	static void SetLastEnteredRefHeight(TCHAR const* inLast);
-	static CString GetLastEnteredJudge();
-	static void SetLastEnteredJudge(TCHAR const* inLast);
-	static CString GetLastEnteredHandler();
-	static void SetLastEnteredHandler(TCHAR const* inLast);
+	static wxString GetLastEnteredDivision();
+	static void SetLastEnteredDivision(wxChar const* inLast);
+	static wxString GetLastEnteredLevel();
+	static void SetLastEnteredLevel(wxChar const* inLast);
+	static wxString GetLastEnteredHeight();
+	static void SetLastEnteredHeight(wxChar const* inLast);
+	static wxString GetLastEnteredRefHeight();
+	static void SetLastEnteredRefHeight(wxChar const* inLast);
+	static wxString GetLastEnteredJudge();
+	static void SetLastEnteredJudge(wxChar const* inLast);
+	static wxString GetLastEnteredHandler();
+	static void SetLastEnteredHandler(wxChar const* inLast);
 	// Import/Export options
 	enum
 	{
@@ -169,16 +172,16 @@ public:
 		eDelimComma		= 5,
 		eDelimOther		= 6
 	};
-	static int GetImportStartRow();
-	static void SetImportStartRow(int row);
+	static long GetImportStartRow();
+	static void SetImportStartRow(long row);
 	static void GetImportExportDelimiters(
 			bool bImport,
-			int& delim,
-			CString& delimiter);
+			long& delim,
+			wxString& delimiter);
 	static void SetImportExportDelimiters(
 			bool bImport,
-			int delim,
-			CString const& delimiter);
+			long delim,
+			wxString const& delimiter);
 	static void GetImportExportDateFormat(
 			bool bImport,
 			ARBDate::DateFormat& outFormat);
@@ -199,16 +202,16 @@ public:
 		eView			= 0x0100,
 	} ColumnOrder;
 	// General program options
-	static int GetMRUFileCount();
-	static void SetMRUFileCount(int nFiles);
+	static long GetMRUFileCount();
+	static void SetMRUFileCount(long nFiles);
 	static bool GetAutoUpdateCheck();
 	static void SetAutoUpdateCheck(bool bSet);
-	static int GetNumBackupFiles();
-	static void SetNumBackupFiles(int nFiles);
+	static long GetNumBackupFiles();
+	static void SetNumBackupFiles(long nFiles);
 	static bool AutoShowSplashScreen();
 	static void AutoShowSplashScreen(bool bAutoShow);
-	static CString GetSplashImage();
-	static void SetSplashImage(CString const& filename);
+	static wxString GetSplashImage();
+	static void SetSplashImage(wxString const& filename);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
 	typedef enum
@@ -228,18 +231,18 @@ public:
 	static void SetShowHtmlPoints(bool bSet);
 	// Internet things
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
-	static CString GetUserName(CString const& hint);
-	static void SetUserName(CString const& hint, CString const& userName);
+	static wxString GetUserName(wxString const& hint);
+	static void SetUserName(wxString const& hint, wxString const& userName);
 	// -CalSite suppression options
 	static bool IsCalSiteVisible(
-			CString const& filename,
+			wxString const& filename,
 			CVersionNum const& inVer); // Version number of current calsite
 	static void SuppressCalSite(
-			CString const& filename,
+			wxString const& filename,
 			bool bSuppress);
-	static CVersionNum GetCalSitePermanentStatus(CString const& filename);
+	static CVersionNum GetCalSitePermanentStatus(wxString const& filename);
 	static void SuppressCalSitePermanently(
-			CString const& filename,
+			wxString const& filename,
 			CVersionNum const& inVer,
 			bool bSuppress = true);
 
@@ -249,10 +252,10 @@ protected:
 	static void GetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,
-			std::vector<int>& outValues,
+			std::vector<long>& outValues,
 			bool bDefaultValues = false);
 	static void SetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,
-			std::vector<int> const& inValues);
+			std::vector<long> const& inValues);
 };

@@ -33,37 +33,21 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-03-30 DRC Created.
  */
 
-#include "DlgBaseDialog.h"
-
-class CDlgSelectURL : public CDlgBaseDialog
+class CDlgSelectURL : public wxDialog
 {
 public:
 	CDlgSelectURL(
-			LPCTSTR name,
-			CWnd* pParent = NULL);
-	virtual ~CDlgSelectURL();
-	LPCTSTR GetName() const	{return (LPCTSTR)m_Name;}
+			wxString const& name,
+			wxWindow* pParent = NULL);
+	wxString GetName() const	{return m_Name;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgSelectURL)
-	enum { IDD = IDD_SELECT_URL };
-	CString m_Name;
-	//}}AFX_DATA
+	wxString m_Name;
+	wxTextCtrl* m_textCtrl;
 
-	//{{AFX_VIRTUAL(CDlgSelectURL)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	//{{AFX_MSG(CDlgSelectURL)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedFilename();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnFilename(wxCommandEvent& evt);
 };

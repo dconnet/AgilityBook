@@ -1,0 +1,304 @@
+/*
+ * Copyright © 2008-2009 David Connet. All Rights Reserved.
+ *
+ * Permission to use, copy, modify and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted, provided
+ * that the above copyright notice appear in all copies, that both the
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the names of David Connet, dcon Software,
+ * AgilityBook, AgilityRecordBook or "Agility Record Book" not be used in
+ * advertising or publicity pertaining to distribution of the software
+ * without specific, written prior permission. David Connet makes no
+ * representations about the suitability of this software for any purpose.
+ * It is provided "as is" without express or implied warranty.
+ *
+ * DAVID CONNET DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO
+ * EVENT SHALL DAVID CONNET BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+ * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+ * USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+ * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
+ *
+ * http://opensource.org
+ * Open Source Historical Permission Notice and Disclaimer.
+ */
+
+/**
+ * @file
+ *
+ * @brief Panels in tab control (views go in these)
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2008-12-14 DRC Created
+ */
+
+#include "stdafx.h"
+#include "AgilityBookPanels.h"
+
+#include "AgilityBookCalendarListView.h"
+#include "AgilityBookCalendarView.h"
+#include "AgilityBookHtmlView.h"
+#include "AgilityBookOptions.h"
+#include "AgilityBookPointsView.h"
+#include "AgilityBookRunsView.h"
+#include "AgilityBookTrainingView.h"
+#include "AgilityBookTreeView.h"
+#include "CommonView.h"
+#include <wx/config.h>
+#include <wx/object.h>
+#include <wx/splitter.h>
+
+// Default splitter widths
+#define DEFAULT_RUN_WIDTH	200L
+#define DEFAULT_CAL_WIDTH	200L
+
+
+CBasePanel::CBasePanel(wxWindow* parent, wxString const& helpText)
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER)
+	, m_views()
+	, m_lastActiveView(NULL)
+{
+#if wxUSE_HELP
+	if (!helpText.empty())
+		SetHelpText(helpText);
+#endif
+}
+
+
+CBasePanel::~CBasePanel()
+{
+	DetachViews();
+}
+
+
+void CBasePanel::ActivateView()
+{
+	if (m_lastActiveView)
+		m_lastActiveView->Activate(true);
+	else if (0 < m_views.size())
+		m_views[0]->Activate(true);
+}
+
+
+bool CBasePanel::ActivateView(int iSplit)
+{
+	if (0 <= iSplit && iSplit < static_cast<int>(m_views.size()))
+	{
+		m_lastActiveView = m_views[iSplit];
+		ActivateView();
+		return true;
+	}
+	return false;
+}
+
+
+void CBasePanel::DetachViews(std::vector<CAgilityBookBaseExtraView*>& outViews)
+{
+	outViews = m_views;
+	DetachViews();
+}
+
+
+void CBasePanel::OnActivateView(CAgilityBookBaseExtraView* activeView)
+{
+	m_lastActiveView = activeView;
+}
+
+
+void CBasePanel::DetachViews()
+{
+	if (0 < m_views.size())
+	{
+		for (std::vector<CAgilityBookBaseExtraView*>::iterator iter = m_views.begin(); iter != m_views.end(); ++iter)
+		{
+			(*iter)->DetachView();
+		}
+		m_views.clear();
+		m_lastActiveView = NULL;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CAgilityBookPanelRuns::CAgilityBookPanelRuns(
+		CTabView* pTabView,
+		wxWindow *parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	: CBasePanel(parent, _("PanelRuns"))
+	, m_splitter(NULL)
+{
+	m_views = inViews;
+	bool bAttachViews = m_views.empty();
+
+	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
+	m_splitter->Connect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelRuns::SplitterOnIdle), NULL, this);
+
+	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxBoxSizer* bSizer1 = new wxBoxSizer(wxVERTICAL);
+
+	if (bAttachViews)
+	{
+		CAgilityBookBaseExtraView* pView = new CAgilityBookTreeView(pTabView, doc);
+		assert(pView->HasNextPane() && pView->HasPrevPane());
+		m_views.push_back(pView);
+	}
+	m_views[0]->Create(this, panel1, doc, flags, bSizer1, 1, wxALL|wxEXPAND, 0);
+
+	panel1->SetSizer(bSizer1);
+	panel1->Layout();
+	bSizer1->Fit(panel1);
+
+	wxPanel* panel2 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxBoxSizer* bSizer2 = new wxBoxSizer(wxVERTICAL);
+	if (bAttachViews)
+	{
+		CAgilityBookBaseExtraView* pView = new CAgilityBookRunsView(pTabView, doc);
+		assert(pView->HasNextPane() && pView->HasPrevPane());
+		m_views.push_back(pView);
+	}
+	m_views[1]->Create(this, panel2, doc, flags, bSizer2, 1, wxALL|wxEXPAND, 0);
+	panel2->SetSizer(bSizer2);
+	panel2->Layout();
+	bSizer2->Fit(panel2);
+
+	m_splitter->SplitVertically(panel1, panel2);
+
+    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+    sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
+    SetSizer(sizerPanel);
+}
+
+
+CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
+{
+	wxConfig::Get()->Write(wxT("Settings/splitCX"), m_splitter->GetSashPosition());
+}
+
+
+void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
+{
+	long cx = wxConfig::Get()->Read(wxT("Settings/splitCX"), DEFAULT_RUN_WIDTH);
+	m_splitter->SetSashPosition(cx);
+	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelRuns::SplitterOnIdle), NULL, this);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CAgilityBookPanelPoints::CAgilityBookPanelPoints(
+		CTabView* pTabView,
+		wxWindow* parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	: CBasePanel(parent, _("PanelPoints"))
+{
+	m_views = inViews;
+	bool bAttachViews = m_views.empty();
+
+    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+
+	if (bAttachViews)
+	{
+		CAgilityBookBaseExtraView* pView;
+		if (CAgilityBookOptions::ShowHtmlPoints())
+			pView = new CAgilityBookHtmlView(pTabView, doc);
+		else
+			pView = new CAgilityBookPointsView(pTabView, doc);
+		assert(!pView->HasNextPane() && !pView->HasPrevPane());
+		m_views.push_back(pView);
+	}
+	m_views[0]->Create(this, this, doc, flags, sizerPanel, 1, wxEXPAND, 0);
+    SetSizer(sizerPanel);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
+		CTabView* pTabView,
+		wxWindow* parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	: CBasePanel(parent, _("PanelCal"))
+	, m_splitter(NULL)
+{
+	m_views = inViews;
+	bool bAttachViews = m_views.empty();
+
+	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
+	m_splitter->Connect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelCalendar::SplitterOnIdle), NULL, this);
+
+	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxBoxSizer* bSizer1 = new wxBoxSizer(wxVERTICAL);
+	if (bAttachViews)
+	{
+		CAgilityBookBaseExtraView* pView = new CAgilityBookCalendarListView(pTabView, doc);
+		assert(pView->HasNextPane() && pView->HasPrevPane());
+		m_views.push_back(pView);
+	}
+	m_views[0]->Create(this, panel1, doc, flags, bSizer1, 1, wxALL|wxEXPAND, 0);
+	panel1->SetSizer(bSizer1);
+	panel1->Layout();
+	bSizer1->Fit(panel1);
+
+	wxPanel* panel2 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
+	wxBoxSizer* bSizer2 = new wxBoxSizer(wxVERTICAL);
+	if (bAttachViews)
+	{
+		CAgilityBookBaseExtraView* pView = new CAgilityBookCalendarView(pTabView, doc);
+		assert(pView->HasNextPane() && pView->HasPrevPane());
+		m_views.push_back(pView);
+	}
+	m_views[1]->Create(this, panel2, doc, flags, bSizer2, 1, wxALL|wxEXPAND, 0);
+	panel2->SetSizer(bSizer2);
+	panel2->Layout();
+	bSizer2->Fit(panel2);
+
+	m_splitter->SplitVertically(panel1, panel2);
+
+    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+    sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
+    SetSizer(sizerPanel);
+}
+
+
+CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
+{
+	wxConfig::Get()->Write(wxT("Settings/splitCX2"), m_splitter->GetSashPosition());
+}
+
+
+void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
+{
+	long cx = wxConfig::Get()->Read(wxT("Settings/splitCX2"), DEFAULT_CAL_WIDTH);
+	m_splitter->SetSashPosition(cx);
+	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelCalendar::SplitterOnIdle), NULL, this);
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CAgilityBookPanelTraining::CAgilityBookPanelTraining(
+		CTabView* pTabView,
+		wxWindow* parent,
+		wxDocument* doc,
+		long flags,
+		std::vector<CAgilityBookBaseExtraView*> const& inViews)
+	: CBasePanel(parent, _("PanelTraining"))
+{
+	m_views = inViews;
+	bool bAttachViews = m_views.empty();
+
+    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	if (bAttachViews)
+	{
+		CAgilityBookBaseExtraView* pView = new CAgilityBookTrainingView(pTabView, doc);
+		assert(!pView->HasNextPane() && !pView->HasPrevPane());
+		m_views.push_back(pView);
+	}
+	m_views[0]->Create(this, this, doc, flags, sizerPanel, 1, wxEXPAND, 0);
+    SetSizer(sizerPanel);
+}

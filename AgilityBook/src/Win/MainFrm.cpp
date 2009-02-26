@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright Â© 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-09-01 DRC Added multi-monitor support.
  * @li 2003-05-18 DRC Obsoleted registry settings "Calendar"/"List" (bool)
@@ -38,80 +39,157 @@
  */
 
 #include "stdafx.h"
-#include <afxpriv.h>
-#include "AgilityBook.h"
 #include "MainFrm.h"
 
-#include "ARBConfigVenue.h"
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "AgilityBookOptions.h"
-#include "AgilityBookTree.h"
-#include "AgilityBookViewCalendar.h"
-#include "AgilityBookViewCalendarList.h"
-#include "AgilityBookViewPoints.h"
-#include "AgilityBookViewRuns.h"
+#include "AgilityBookMenu.h"
 #include "CommonView.h"
-#include "FilterOptions.h"
-#include "Splash.h"
+#include "DlgMessage.h"
+#include "Globals.h"
+#include "PointsData.h"
 #include "TabView.h"
+#include <wx/config.h>
+#include <wx/stdpaths.h>
+#include <wx/version.h>
 
-#if WINVER < 0x0500
-#if _MSC_VER < 1400
-#define COMPILE_MULTIMON_STUBS
-#endif
-#include <MultiMon.h>
-#endif
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CMainFrame
-
-IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
-
-
-BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
-	//{{AFX_MSG_MAP(CMainFrame)
-	ON_WM_CREATE()
-	ON_WM_DESTROY()
-	ON_WM_CLOSE()
-	ON_WM_CONTEXTMENU()
-	ON_UPDATE_COMMAND_UI(ID_INDICATOR_STATUS, OnUpdatePane)
-	ON_UPDATE_COMMAND_UI(ID_INDICATOR_FILTERED, OnUpdatePane)
-	ON_UPDATE_COMMAND_UI(ID_INDICATOR_DOG, OnUpdatePane)
-	ON_COMMAND(ID_NEXT_TAB, OnNextTab)
-	ON_COMMAND(ID_PREV_TAB, OnPrevTab)
-	ON_UPDATE_COMMAND_UI(ID_FILE_LANGUAGE_CHOOSE, OnUpdateFileLanguageChoose)
-	ON_COMMAND(ID_FILE_LANGUAGE_CHOOSE, OnFileLanguageChoose)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+#include "res/AgilityBook16.xpm"
+#include "res/AgilityBook32.xpm"
+#include "res/AgilityBook48.xpm"
+#include "res/toolbarNew.xpm"
+#include "res/toolbarOpen.xpm"
+#include "res/toolbarSave.xpm"
+#include "res/toolbarDog.xpm"
+#include "res/toolbarTitle.xpm"
+#include "res/toolbarTrial.xpm"
+#include "res/toolbarRun.xpm"
+#include "res/toolbarCalendar.xpm"
+#include "res/toolbarTraining.xpm"
+#include "res/toolbarCut.xpm"
+#include "res/toolbarCopy.xpm"
+#include "res/toolbarPaste.xpm"
+#include "res/toolbarPreview.xpm"
+#include "res/toolbarPrint.xpm"
+#include "res/toolbarAbout.xpm"
 
 
-static UINT indicators[] =
+BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
+	EVT_CLOSE(CMainFrame::OnClose)
+	EVT_UPDATE_UI(wxID_DUPLICATE, CMainFrame::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_CUT, CMainFrame::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_COPY, CMainFrame::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_PASTE, CMainFrame::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_SELECTALL, CMainFrame::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_FIND, CMainFrame::OnUpdateCmd)
+	EVT_UPDATE_UI_RANGE(ID_ARB_FIRST, ID_ARB_LAST, CMainFrame::OnUpdateCmd)
+	EVT_MENU(ID_FILE_LANGUAGE_CHOOSE, CMainFrame::OnFileLanguageChoose)
+	EVT_MENU(ID_FILE_PRINT_BLANK_RUNS, CMainFrame::OnPrintBlankRuns)
+	EVT_MENU(wxID_EXIT, CMainFrame::OnQuit)
+	EVT_MENU_RANGE(ID_BOOK_FIRST, ID_BOOK_LAST, CMainFrame::OnType)
+	EVT_MENU_RANGE(ID_ORIENT_FIRST, ID_ORIENT_LAST, CMainFrame::OnOrient)
+	EVT_MENU(ID_NEXT_PANE, CMainFrame::OnNextPane)
+	EVT_MENU(ID_PREV_PANE, CMainFrame::OnPrevPane)
+	EVT_MENU(ID_HELP_SYSINFO, CMainFrame::OnHelpSysinfo)
+END_EVENT_TABLE()
+
+
+static const struct
 {
-	ID_SEPARATOR,           // status line indicator
-	ID_INDICATOR_DOG,
-	ID_INDICATOR_STATUS,
-	ID_INDICATOR_FILTERED,
-	ID_INDICATOR_CAPS,
-	ID_INDICATOR_NUM,
+	int id;
+	wxChar* label;
+	wxChar* shortHelp;
+	char** bitmap;
+} sc_Toolbar[] =
+{
+	{wxID_NEW, wxT("MenuFileNew"), wxT("DescFileNew"), toolbarNew_xpm},
+	{wxID_OPEN, wxT("MenuFileOpen"), wxT("DescFileOpen"), toolbarOpen_xpm},
+	{wxID_SAVE, wxT("MenuFileSave"), wxT("DescFileSave"), toolbarSave_xpm},
+	{0, NULL, NULL, NULL},
+	{ID_AGILITY_NEW_DOG, wxT("MenuNew"), wxT("DescDogNew"), toolbarDog_xpm},
+	{ID_AGILITY_NEW_TITLE, wxT("MenuNew"), wxT("DescTitleNew"), toolbarTitle_xpm},
+	{ID_AGILITY_NEW_TRIAL, wxT("MenuNew"), wxT("DescTrialNew"), toolbarTrial_xpm},
+	{ID_AGILITY_NEW_RUN, wxT("MenuNew"), wxT("DescRunNew"), toolbarRun_xpm},
+	{ID_AGILITY_NEW_CALENDAR, wxT("MenuNew"), wxT("DescCalendarNew"), toolbarCalendar_xpm},
+	{ID_AGILITY_NEW_TRAINING, wxT("MenuNew"), wxT("DescTrainingNew"), toolbarTraining_xpm},
+	{0, NULL, NULL, NULL},
+	{wxID_CUT, wxT("MenuEditCut"), wxT("DescEditCut"), toolbarCut_xpm},
+	{wxID_COPY, wxT("MenuEditCopy"), wxT("DescEditCopy"), toolbarCopy_xpm},
+	{wxID_PASTE, wxT("MenuEditPaste"), wxT("DescEditPaste"), toolbarPaste_xpm},
+	{0, NULL, NULL, NULL},
+	{wxID_PREVIEW, wxT("MenuFilePrintPreview"), wxT("DescFilePrintPreview"), toolbarPreview_xpm},
+	{wxID_PRINT, wxT("MenuFilePrint"), wxT("DescFilePrint"), toolbarPrint_xpm},
+	{0, NULL, NULL, NULL},
+	{wxID_ABOUT, wxT("MenuHelpAbout"), wxT("DescHelpAbout"), toolbarAbout_xpm},
 };
-#if _MSC_VER >= 1400
-static int numIndicators = _countof(indicators);
-#else
-static int numIndicators = sizeof(indicators) / sizeof(indicators[0]);
-#endif
+static const int sc_ToolbarSize = sizeof(sc_Toolbar) / sizeof(sc_Toolbar[0]);
 
 
-CMainFrame::CMainFrame()
-	: m_pTabView(NULL)
-	, m_pLangMgr(NULL)
-	, m_pNewMenu(NULL)
+CMainFrame::CMainFrame(wxDocManager* manager)
+	: wxDocParentFrame(manager, NULL, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
+	, m_MenuBar()
 {
+	wxIconBundle icons;
+	icons.AddIcon(wxIcon(AgilityBook16_xpm));
+	icons.AddIcon(wxIcon(AgilityBook32_xpm));
+	icons.AddIcon(wxIcon(AgilityBook48_xpm));
+	SetIcons(icons);
+//#if wxUSE_HELP
+// Note: do not set help on the frame. Help will disable the min/max buttons.
+//	SetExtraStyle(wxFRAME_EX_CONTEXTHELP);
+//#endif
+
+	m_MenuBar.CreateMenu(this, manager);
+
+	wxToolBar* toolbar = CreateToolBar(wxTB_FLAT);
+	if (toolbar)
+	{
+		for (int i = 0; i < sc_ToolbarSize; ++i)
+		{
+			if (0 == sc_Toolbar[i].id)
+				toolbar->AddSeparator();
+			else
+				toolbar->AddTool(sc_Toolbar[i].id, wxGetTranslation(sc_Toolbar[i].label), sc_Toolbar[i].bitmap, wxGetTranslation(sc_Toolbar[i].shortHelp));
+		}
+		toolbar->Realize();
+	}
+
+	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
+	if (statusbar)
+	{
+		statusbar->Connect(wxEVT_CONTEXT_MENU, wxContextMenuEventHandler(CMainFrame::OnStatusBarContextMenu), NULL, this);
+		wxClientDC dc(GetStatusBar());
+		int style[NUM_STATUS_FIELDS];
+		m_Widths[0] = -1;
+		style[0] = wxSB_FLAT;
+		for (int i = 1; i < NUM_STATUS_FIELDS; ++i)
+		{
+			wxString str;
+			switch (i)
+			{
+			default:
+				assert(0);
+				break;
+			case STATUS_DOG:
+				str = _("ID_INDICATOR_DOG");
+				break;
+			case STATUS_STATUS:
+				str = _("ID_INDICATOR_STATUS");
+				break;
+			case STATUS_FILTERED:
+				str = _("ID_INDICATOR_FILTERED");
+				break;
+			case STATUS_FILLER:
+				str = wxT("   "); // Filler for where the grabber is
+				break;
+			}
+			wxSize sz = dc.GetTextExtent(str);
+			m_Widths[i] = sz.x;
+			style[i] = wxSB_NORMAL;
+			SetStatusText(str, i);
+		}
+		statusbar->SetStatusWidths(NUM_STATUS_FIELDS, m_Widths);
+		statusbar->SetStatusStyles(NUM_STATUS_FIELDS, style);
+	}
 }
 
 
@@ -120,342 +198,318 @@ CMainFrame::~CMainFrame()
 }
 
 
-BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
-{
-	int x = theApp.GetProfileInt(_T("Settings"), _T("lastXpos"), cs.x);
-	int y = theApp.GetProfileInt(_T("Settings"), _T("lastYpos"), cs.y);
-	int cx = theApp.GetProfileInt(_T("Settings"), _T("lastCX"), cs.cx);
-	int cy = theApp.GetProfileInt(_T("Settings"), _T("lastCY"), cs.cy);
-
-	bool bCompute = false;
-	CPoint curPt;
-	GetCursorPos(&curPt);
-	if (CW_USEDEFAULT != x)
-	{
-		bCompute = true;
-		curPt.x = x;
-	}
-	if (CW_USEDEFAULT != y)
-	{
-		bCompute = true;
-		curPt.y = y;
-	}
-	CSize curSize(0, 0);
-	if (CW_USEDEFAULT != cx)
-	{
-		bCompute = true;
-		curSize.cx = cx;
-	}
-	if (CW_USEDEFAULT != cy)
-	{
-		bCompute = true;
-		curSize.cy = cy;
-	}
-
-	if (bCompute)
-	{
-		HMONITOR hMon = MonitorFromPoint(curPt, MONITOR_DEFAULTTONEAREST);
-		MONITORINFO mi;
-		mi.cbSize = sizeof(mi);
-		GetMonitorInfo(hMon, &mi);
-		CRect rWorkSpace(mi.rcWork);
-		CRect rect(curPt, curSize);
-		// Make sure window is not bigger.
-		if (rect.Width() > rWorkSpace.Width())
-			rect.right = rect.left + rWorkSpace.Width();
-		if (rect.Height() > rWorkSpace.Height())
-			rect.bottom = rect.top + rWorkSpace.Height();
-		// Make sure the window is fully visible in the screen.
-		if (!rWorkSpace.PtInRect(rect.TopLeft()))
-		{
-			if (rect.left < rWorkSpace.left)
-				rect.OffsetRect(rWorkSpace.left - rect.left, 0);
-			if (rect.top < rWorkSpace.top)
-				rect.OffsetRect(0, rWorkSpace.top - rect.top);
-		}
-		// Only check the bottom-right if the rect has size.
-		if (!rect.IsRectEmpty() && !rWorkSpace.PtInRect(rect.BottomRight()))
-		{
-			if (rect.right > rWorkSpace.right)
-				rect.OffsetRect(rWorkSpace.right - rect.right, 0);
-			if (rect.bottom > rWorkSpace.bottom)
-				rect.OffsetRect(0, rWorkSpace.bottom - rect.bottom);
-		}
-		if (CW_USEDEFAULT != x)
-			cs.x = rect.left;
-		if (CW_USEDEFAULT != y)
-			cs.y = rect.top;
-		if (CW_USEDEFAULT != cx)
-			cs.cx = rect.Width();
-		if (CW_USEDEFAULT != cy)
-			cs.cy = rect.Height();
-	}
-
-	return CFrameWnd::PreCreateWindow(cs);
-}
-
-
-#ifdef _DEBUG
-// CMainFrame diagnostics
-void CMainFrame::AssertValid() const
-{
-	CFrameWnd::AssertValid();
-}
-
-
-void CMainFrame::Dump(CDumpContext& dc) const
-{
-	CFrameWnd::Dump(dc);
-}
-#endif //_DEBUG
-
-
-void CMainFrame::InitLangMgr(CLanguageManager* pLangMgr)
-{
-	m_pLangMgr = pLangMgr;
-}
-
-
-void CMainFrame::SetStatusText(
-		CString const& msg,
+void CMainFrame::SetMessageText(
+		wxString const& msg,
 		bool bFiltered)
 {
-	if (!::IsWindow(m_wndStatusBar.GetSafeHwnd()))
-		return;
-	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
-	if (0 > index)
-		return;
-	UINT nId, nStyle;
-	int cxWidth;
-	m_wndStatusBar.GetPaneInfo(index, nId, nStyle, cxWidth);
-	CWindowDC dc(&m_wndStatusBar);
-	CFont* pOldFont = dc.SelectObject(m_wndStatusBar.GetFont());
-	CSize sz = dc.GetTextExtent(msg);
-	dc.SelectObject(pOldFont);
-	m_wndStatusBar.SetPaneInfo(index, nId, nStyle, sz.cx);
-	// Note, a cmdui handler is required to get text to display.
-	m_wndStatusBar.SetPaneText(index, msg);
-
-	CString filtered;
+	SetMessage(msg, STATUS_STATUS, true);
+	wxString filtered;
 	if (bFiltered)
-		filtered.LoadString(ID_INDICATOR_FILTERED);
-	index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_FILTERED);
-	m_wndStatusBar.SetPaneText(index, filtered);
+		filtered = _("ID_INDICATOR_FILTERED");
+	SetMessage(filtered, STATUS_FILTERED, false);
 }
 
 
-void CMainFrame::SetStatusText2(CString const& msg)
+void CMainFrame::SetMessageText2(wxString const& msg)
 {
-	if (!::IsWindow(m_wndStatusBar.GetSafeHwnd()))
+	SetMessage(msg, STATUS_DOG, true);
+}
+
+
+void CMainFrame::SetMessage(wxString const& msg, int index, bool bResize)
+{
+	wxStatusBar* statusbar = GetStatusBar();
+	if (!statusbar)
 		return;
-	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_DOG);
-	if (0 > index)
-		return;
-	UINT nId, nStyle;
-	int cxWidth;
-	m_wndStatusBar.GetPaneInfo(index, nId, nStyle, cxWidth);
-	CWindowDC dc(&m_wndStatusBar);
-	CFont* pOldFont = dc.SelectObject(m_wndStatusBar.GetFont());
-	CSize sz = dc.GetTextExtent(msg);
-	dc.SelectObject(pOldFont);
-	m_wndStatusBar.SetPaneInfo(index, nId, nStyle, sz.cx);
-	m_wndStatusBar.SetPaneText(index, msg);
-}
-
-
-void CMainFrame::SetCurTab(int tab)
-{
-	m_pTabView->SetCurSel(tab);
-}
-
-
-int CMainFrame::GetCurTab() const
-{
-	return m_pTabView->GetCurSel();
-}
-
-
-bool CMainFrame::ShowPointsAs(bool bHtml)
-{
-	return m_pTabView->ShowPointsAs(bHtml);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CMainFrame message handlers
-
-int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
-		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
+	if (bResize)
 	{
-		TRACE0("Failed to create toolbar\n");
-		return -1;      // fail to create
+		wxClientDC dc(statusbar);
+		m_Widths[index] = dc.GetTextExtent(msg).x;
+		statusbar->SetStatusWidths(NUM_STATUS_FIELDS, m_Widths);
 	}
+	SetStatusText(msg, index);
+}
 
-	if (!m_wndStatusBar.Create(this) ||
-		!m_wndStatusBar.SetIndicators(indicators,
-		  sizeof(indicators)/sizeof(UINT)))
+
+void CMainFrame::OnStatusBarContextMenu(wxContextMenuEvent& evt)
+{
+	bool bSkip = true;
+	wxStatusBar* statusbar = GetStatusBar();
+	if (statusbar)
 	{
-		TRACE0("Failed to create status bar\n");
-		return -1;      // fail to create
+		wxRect rect;
+		wxPoint point = evt.GetPosition();
+		if (wxDefaultPosition == point)
+		{
+			rect = statusbar->GetScreenRect();
+			point = ::wxGetMousePosition();
+			if (!rect.Contains(point))
+			{
+				point.x = rect.GetLeft() + rect.GetWidth() / 3;
+				point.y = rect.GetTop() + rect.GetHeight() / 2;
+			}
+			point = statusbar->ScreenToClient(point);
+		}
+		else
+			point = statusbar->ScreenToClient(point);
+		static const int ids[NUM_STATUS_FIELDS-1] = {STATUS_DOG, STATUS_STATUS, STATUS_FILTERED};
+		CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+		assert(pDoc);
+		if (pDoc)
+		{
+			for (int i = 0; i < NUM_STATUS_FIELDS - 1; ++i)
+			{
+				if (statusbar->GetFieldRect(ids[i], rect) && rect.Contains(point))
+				{
+					if (pDoc->StatusBarContextMenu(statusbar, ids[i], point))
+					{
+						bSkip = false;
+						break;
+					}
+				}
+			}
+		}
 	}
-	int index = m_wndStatusBar.CommandToIndex(ID_INDICATOR_STATUS);
-	m_wndStatusBar.SetPaneText(index, _T(""));
-
-	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	EnableDocking(CBRS_ALIGN_ANY);
-	DockControlBar(&m_wndToolBar);
-
-	CSplashWnd::ShowSplashScreen(this);
-	return 0;
+	if (bSkip)
+		evt.Skip();
 }
 
 
-void CMainFrame::OnDestroy()
+void CMainFrame::OnClose(wxCloseEvent& evt)
 {
-	CFrameWnd::OnDestroy();
-	delete m_pNewMenu;
-	m_pNewMenu = NULL;
+	long state = 0;
+	if (IsMaximized() || IsFullScreen())
+	{
+		state = 1;
+	}
+	else if (IsIconized())
+	{
+		state = -1;
+	}
+	else
+	{
+		wxRect r = GetScreenRect();
+		wxConfig::Get()->Write(wxT("Settings/lastXpos"), r.x);
+		wxConfig::Get()->Write(wxT("Settings/lastYpos"), r.y);
+		wxConfig::Get()->Write(wxT("Settings/lastCX"), r.width);
+		wxConfig::Get()->Write(wxT("Settings/lastCY"), r.height);
+	}
+	wxConfig::Get()->Write(wxT("Settings/lastState"), state);
+	evt.Skip();
 }
 
 
-void CMainFrame::OnClose() 
+void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 {
-	WINDOWPLACEMENT win;
-	GetWindowPlacement(&win);
-	int state;
-	switch (win.showCmd)
+	bool bEnable = false;
+	switch (evt.GetId())
 	{
 	default:
-		state = 0;
+		// Eat std commands that haven't been implemented by a child view
+		if ((ID_BOOK_FIRST <= evt.GetId() && evt.GetId() < ID_BOOK_LAST)
+		|| (ID_ORIENT_FIRST <= evt.GetId() && evt.GetId() < ID_ORIENT_LAST))
 		{
-			CRect r;
-			GetWindowRect(&r);
-			theApp.WriteProfileInt(_T("Settings"), _T("lastXpos"), r.left);
-			theApp.WriteProfileInt(_T("Settings"), _T("lastYpos"), r.top);
-			theApp.WriteProfileInt(_T("Settings"), _T("lastCX"), r.Width());
-			theApp.WriteProfileInt(_T("Settings"), _T("lastCY"), r.Height());
+			bEnable = true;
 		}
 		break;
-	case SW_SHOWMINIMIZED:
-		state = -1;
+	case ID_FILE_LANGUAGE_CHOOSE:
+	case ID_FILE_PRINT_BLANK_RUNS:
+		bEnable = true;
 		break;
-	case SW_SHOWMAXIMIZED:
-		state = 1;
+	case ID_NEXT_PANE:
+		{
+			CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+			if (pView)
+				bEnable = pView->HasNextPane();
+		}
+		break;
+	case ID_PREV_PANE:
+		{
+			CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+			if (pView)
+				bEnable = pView->HasPrevPane();
+		}
+		break;
+	case ID_HELP_SYSINFO:
+		bEnable = true;
 		break;
 	}
-	theApp.WriteProfileInt(_T("Settings"), _T("lastState"), state);
-
-	CFrameWnd::OnClose();
+	evt.Enable(bEnable);
 }
 
 
-void CMainFrame::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
+void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 {
-	CPoint pt(point);
-	m_wndStatusBar.ScreenToClient(&pt);
-	for (int i = 0; i < numIndicators; ++i)
+	if (wxGetApp().SelectLanguage(this))
 	{
-		if (indicators[i] == ID_SEPARATOR)
-			continue;
-		CRect r;
-		m_wndStatusBar.GetItemRect(m_wndStatusBar.CommandToIndex(indicators[i]), r);
-		if (r.PtInRect(pt))
+		if (GetDocumentManager()->GetCurrentDocument())
 		{
-			CAgilityBookDoc* pDoc = DYNAMIC_DOWNCAST(CAgilityBookDoc, GetActiveDocument());
-			ASSERT(pDoc);
-			if (pDoc)
-				pDoc->StatusBarContextMenu(indicators[i], point);
-			return;
+			CUpdateHint hint(UPDATE_LANG_CHANGE);
+			GetDocumentManager()->GetCurrentDocument()->UpdateAllViews(NULL, &hint);
 		}
-	}
-	Default();
-}
-
-
-void CMainFrame::OnUpdatePane(CCmdUI* pCmdUI)
-{
-	pCmdUI->Enable();
-}
-
-
-void CMainFrame::OnNextTab()
-{
-	if (m_pTabView)
-	{
-		int idx = m_pTabView->GetCurSel();
-		++idx;
-		if (idx == m_pTabView->GetItemCount())
-			idx = 0;
-		m_pTabView->SetCurSel(idx);
-	}
-}
-
-
-void CMainFrame::OnPrevTab()
-{
-	if (m_pTabView)
-	{
-		int idx = m_pTabView->GetCurSel();
-		--idx;
-		if (idx == -1)
-			idx = m_pTabView->GetItemCount() - 1;
-		m_pTabView->SetCurSel(idx);
-	}
-}
-
-
-void CMainFrame::OnUpdateFileLanguageChoose(CCmdUI* pCmdUI)
-{
-	BOOL bEnable = FALSE;
-	if (m_pLangMgr && 0 < m_pLangMgr->NumLanguages())
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
-}
-
-
-void CMainFrame::OnFileLanguageChoose()
-{
-	if (m_pLangMgr && m_pLangMgr->SelectLanguage())
-	{
-		// Reset frame menu...
-		CMenu* pCurrentMenu = GetMenu();
-		if (pCurrentMenu->m_hMenu != m_hMenuDefault)
+		m_MenuBar.UpdateMenu();
+		wxToolBar* toolbar = GetToolBar();
+		if (toolbar)
 		{
-			pCurrentMenu->DestroyMenu();
-			delete pCurrentMenu;
+			for (int i = 0; i < sc_ToolbarSize; ++i)
+			{
+				if (0 == sc_Toolbar[i].id)
+					continue;
+				wxToolBarToolBase* btn = toolbar->FindById(sc_Toolbar[i].id);
+				if (btn)
+				{
+					btn->SetLabel(wxGetTranslation(sc_Toolbar[i].label));
+					btn->SetShortHelp(wxGetTranslation(sc_Toolbar[i].shortHelp));
+				}
+			}
 		}
-		m_pNewMenu = new CMenu;
-		m_pNewMenu->LoadMenu(IDR_MAINFRAME);
-		SetMenu(m_pNewMenu);
-		// ...accelerators...
-		m_hAccelTable = NULL;
-		LoadAccelTable(MAKEINTRESOURCE(IDR_MAINFRAME));
-		// ...and status bar...
-		// ...my stuff
-		ICommonView* pView = dynamic_cast<ICommonView*>(GetActiveView());
-		CString msg;
+
+		CAgilityBookBaseView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseView);
+		wxString msg;
 		bool bFiltered = false;
 		if (pView && pView->GetMessage(msg))
 			bFiltered = pView->IsFiltered();
 		else
-			msg.Empty();
-		SetStatusText(msg, false);
+			msg.clear();
+		SetMessageText(msg, false);
 		if (!pView || !pView->GetMessage2(msg))
-			msg.Empty();
-		SetStatusText2(msg);
-		// ...'Ready' message
-		SendMessage(WM_POPMESSAGESTRING, AFX_IDS_IDLEMESSAGE);
-		// Tell all the views (we're SDI, so only need active doc)
-		CDocument* pDoc = GetActiveDocument();
-		if (pDoc)
-			pDoc->UpdateAllViews(NULL, UPDATE_LANG_CHANGE);
-		// And finally, fix the tabview
-		if (m_pTabView)
-			m_pTabView->UpdateLanguage();
+			msg.clear();
+		SetMessageText2(msg);
 	}
+}
+
+
+void CMainFrame::OnPrintBlankRuns(wxCommandEvent& evt)
+{
+	std::vector<RunInfo> runs;
+	PrintRuns(NULL, ARBDogPtr(), runs);
+}
+
+
+void CMainFrame::OnQuit(wxCommandEvent& evt)
+{
+	Close(true);
+}
+
+
+void CMainFrame::OnType(wxCommandEvent& evt)
+{
+	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+	assert(pDoc);
+	CTabView* pView = pDoc->GetTabView();
+	assert(pView);
+	pView->OnType(evt.GetId());
+}
+
+
+void CMainFrame::OnOrient(wxCommandEvent& evt)
+{
+	CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+	assert(pDoc);
+	CTabView* pView = pDoc->GetTabView();
+	assert(pView);
+	pView->OnOrient(evt.GetId());
+}
+
+
+void CMainFrame::OnNextPane(wxCommandEvent& evt)
+{
+	bool bHandled = false;
+	CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+	if (pView)
+		bHandled = pView->NextPane();
+	if (!bHandled)
+		evt.Skip();
+}
+
+
+void CMainFrame::OnPrevPane(wxCommandEvent& evt)
+{
+	bool bHandled = false;
+	CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+	if (pView)
+		bHandled = pView->PrevPane();
+	if (!bHandled)
+		evt.Skip();
+}
+
+
+void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
+{
+	otstringstream info;
+
+	// OS version
+#if defined(WIN32)
+	OSVERSIONINFO os;
+	os.dwOSVersionInfoSize = sizeof(os);
+	GetVersionEx(&os);
+	switch (os.dwPlatformId)
+	{
+	default: // Win32s
+		info << wxT("Windows32s ")
+			<< os.dwMajorVersion
+			<< '.'
+			<< os.dwMinorVersion
+			<< ' '
+			<< os.szCSDVersion
+			<< std::endl;
+		break;
+	case VER_PLATFORM_WIN32_WINDOWS: // Win95/98
+		if (0 == os.dwMinorVersion)
+			info << wxT("Windows 95 ")
+				<< os.dwMajorVersion
+				<< '.'
+				<< os.dwMinorVersion
+				<< '.'
+				<< int(LOWORD(os.dwBuildNumber))
+				<< ' '
+				<< os.szCSDVersion
+				<< std::endl;
+		else
+			info << wxT("Windows 98 ")
+				<< os.dwMajorVersion
+				<< '.'
+				<< os.dwMinorVersion
+				<< '.'
+				<< int(LOWORD(os.dwBuildNumber))
+				<< ' '
+				<< os.szCSDVersion
+				<< std::endl;
+		break;
+	case VER_PLATFORM_WIN32_NT: // NT/Win2000
+		info << wxT("Windows ")
+			<< os.dwMajorVersion
+			<< '.'
+			<< os.dwMinorVersion
+			<< '.'
+			<< os.dwBuildNumber
+			<< ' '
+			<< os.szCSDVersion
+			<< std::endl;
+		break;
+	}
+#else
+#error Please implement platform dependent identity code here
+#endif
+
+	// Me.
+	{
+		CVersionNum ver;
+		info << wxStandardPaths::Get().GetExecutablePath().c_str() << wxT(": ");
+		if (ver.Valid())
+			info << ver.GetVersionString().c_str();
+		else
+		{
+			wxString badVer = _("IDS_BAD_VERSION");
+			info << badVer.c_str();
+		}
+		info << std::endl;
+	}
+
+	// wxWidgets
+	info << wxVERSION_STRING << std::endl;
+
+	wxString msg(info.str().c_str());
+	CDlgMessage dlg(msg, this);
+	dlg.ShowModal();
 }

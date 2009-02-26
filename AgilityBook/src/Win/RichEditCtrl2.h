@@ -33,39 +33,29 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-19 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-30 DRC Created
  */
 
-class CRichEditCtrl2 : public CRichEditCtrl
+class wxTextUrlEvent;
+
+
+class CRichEditCtrl2 : public wxTextCtrl
 {
 public:
-	CRichEditCtrl2();
+	CRichEditCtrl2(
+			wxWindow* parent,
+			wxWindowID id,
+			const wxString& value = wxEmptyString,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = 0, // wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH will automatically be added
+			const wxValidator& validator = wxDefaultValidator,
+			const wxString& name = wxTextCtrlNameStr);
 
-	//{{AFX_VIRTUAL(CRichEditCtrl2)
-public:
-	virtual BOOL Create(
-			DWORD dwStyle,
-			const RECT& rect,
-			CWnd* pParentWnd,
-			UINT nID);
-#if _MSC_VER >= 1300
-	virtual BOOL CreateEx(
-			DWORD dwExStyle,
-			DWORD dwStyle,
-			const RECT& rect,
-			CWnd* pParentWnd,
-			UINT nID);
-#endif
-protected:
-	virtual void PreSubclassWindow();
-	//}}AFX_VIRTUAL
+	virtual void SetEditable(bool editable);
 
-// Implementation
 protected:
-	void Setup();
-	//{{AFX_MSG(CRichEditCtrl2)
-	afx_msg void OnEnLink(NMHDR* pNMHDR, LRESULT* pResult);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnUrl(wxTextUrlEvent& evt);
 };

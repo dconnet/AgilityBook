@@ -33,41 +33,24 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2008-11-22 DRC Moved GetDispInfo accessors into base class.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-12 DRC Created
  */
 
-#include "ARBString.h"
+#include <wx/string.h>
+#include <wx/listctrl.h>
 
-/// Controls that store data all insert the data via reinterpret_cast to this.
+
 class CListData
 {
 public:
 	CListData();
 	virtual ~CListData();
+	/// If iCol == -1, return all columns
+	virtual wxString OnNeedText(long iCol) const = 0;
+	/// By default, just uses OnNeedText to fill in text.
+	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 };
-
-
-/// For data pulled out of the control (via reinterpret_cast), dynamic_cast
-/// to this class to make sure we have the right data.
-class CListDataDispInfo : public CListData
-{
-public:
-	CListDataDispInfo();
-	virtual ~CListDataDispInfo();
-	virtual tstring OnNeedText() const;	 /// For trees (or things that want a single text string of row)
-	virtual tstring OnNeedText(int iCol) const;	 /// For list controls
-	virtual int OnNeedIcon() const;
-};
-
-
-template <typename T>
-class CListPtrData : public CListData
-{
-public:
-	CListPtrData(T inData) : m_Data(inData) {}
-	T GetData() const	{return m_Data;}
-protected:
-	T m_Data;
-};
+typedef tr1::shared_ptr<CListData> CListDataPtr;

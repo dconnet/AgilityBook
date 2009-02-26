@@ -31,14 +31,17 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-10 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "Wizard.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CWizard")
+#if 0
+#include "AgilityBook.h"
 #include "WizardExport.h"
 #include "WizardImport.h"
 #include "WizardStart.h"
@@ -110,3 +113,4 @@ void CWizard::ResetData()
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizard message handlers
+#endif
