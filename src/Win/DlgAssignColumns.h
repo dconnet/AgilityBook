@@ -43,8 +43,6 @@
 
 #include <vector>
 #include "AgilityBookOptions.h"
-//#include "ListBox.h"
-//#include "ListCtrl.h"
 
 /*
  * If types/columns are added/removed, do not change these numbers.
@@ -187,6 +185,9 @@
 #define IO_MAX						115
 
 class CAgilityBookDoc;
+class wxListEvent;
+class wxListView;
+
 
 class CDlgAssignColumns : public wxDialog
 {
@@ -208,49 +209,35 @@ public:
 			wxWindow* pParent = NULL,
 			CAgilityBookDoc* pDoc = NULL,
 			long initSelection = 0); // IO_TYPE list to initially select (if multiple)
-	//TODO: Tmp
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgAssignColumns"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-
 
 private:
-	//enum { IDD = IDD_ASSIGN_COLUMNS };
-	//CListCtrl2	m_ctrlType;
-	//CListBox2	m_ctrlAvailable;
-	//CListBox2	m_ctrlColumns;
-//	CButton	m_ctrlAdd;
-//	CButton	m_ctrlRemove;
-//	CButton	m_ctrlUp;
-//	CButton	m_ctrlDown;
 	CAgilityBookDoc* m_pDoc;
 	CAgilityBookOptions::ColumnOrder m_eOrder;
 	long m_initSelection;
 	bool m_bIncludeBlank;
 	std::vector<long> m_Columns[IO_TYPE_MAX];
+	wxListView* m_ctrlType;
+	wxListBox* m_ctrlAvailable;
+	wxListBox* m_ctrlColumns;
+	wxButton* m_btnAdd;
+	wxButton* m_btnRemove;
+	wxButton* m_btnUp;
+	wxButton* m_btnDown;
 
-#if 0
 private:
 	void FillColumns();
 	void UpdateColumnVector();
 	void UpdateButtons();
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
-protected:
-	virtual BOOL OnInitDialog();
-	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSelchangeAvailable();
-	afx_msg void OnSelchangeColumns();
-	afx_msg void OnAdd();
-	afx_msg void OnRemove();
-	afx_msg void OnMoveUp();
-	afx_msg void OnMoveDown();
-	afx_msg void OnReset();
-	virtual void OnOK();
-	DECLARE_MESSAGE_MAP()
-#endif
+	DECLARE_EVENT_TABLE()
+	void OnItemchanged(wxListEvent& evt);
+	void OnSelchangeAvailable(wxCommandEvent& evt);
+	void OnSelchangeColumns(wxCommandEvent& evt);
+	void OnAdd(wxCommandEvent& evt);
+	void OnRemove(wxCommandEvent& evt);
+	void OnMoveUp(wxCommandEvent& evt);
+	void OnMoveDown(wxCommandEvent& evt);
+	void OnReset(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
