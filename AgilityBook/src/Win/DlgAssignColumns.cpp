@@ -101,7 +101,6 @@ Training Log:
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgAssignColumns.h"
 
 #include "AgilityBookDoc.h"
@@ -750,25 +749,64 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 };
 
 /////////////////////////////////////////////////////////////////////////////
+
+class ColumnData : public wxClientData 
+{
+public:
+	ColumnData(long data) : m_Data(data) {}
+	long m_Data;
+};
+
+
+static long GetListBoxData(wxListBox* box, long idx)
+{
+	ColumnData* pData = dynamic_cast<ColumnData*>(box->GetClientObject(idx));
+	return pData->m_Data;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgAssignColumns")
+int wxCALLBACK CompareTypes(long lParam1, long lParam2, long lParam3)
+{
+	if (lParam1 >= 0 && lParam1 < IO_TYPE_MAX
+	&& lParam2 >= 0 && lParam2 < IO_TYPE_MAX)
+	{
+		if (sc_Types[lParam1].sortOrder < sc_Types[lParam2].sortOrder)
+			return -1;
+		else if (sc_Types[lParam1].sortOrder > sc_Types[lParam2].sortOrder)
+			return 1;
+	}
+	return 0;
+}
+
+
+BEGIN_EVENT_TABLE(CDlgAssignColumns, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgAssignColumns::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgAssignColumns::CDlgAssignColumns(
 		CAgilityBookOptions::ColumnOrder eOrder,
 		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		long initSelection)
-	: wxDialog(pParent, wxID_ANY, wxT("TODO: assign"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
-	//, m_ctrlType(false)
-	//, m_ctrlAvailable(false)
-	//, m_ctrlColumns(false)
+	: wxDialog(pParent, wxID_ANY, _("IDD_ASSIGN_COLUMNS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
 	, m_pDoc(pDoc)
 	, m_eOrder(eOrder)
 	, m_initSelection(initSelection)
 	, m_bIncludeBlank(false)
+	, m_Columns()
+	, m_ctrlType(NULL)
+	, m_ctrlAvailable(NULL)
+	, m_ctrlColumns(NULL)
+	, m_btnAdd(NULL)
+	, m_btnRemove(NULL)
+	, m_btnUp(NULL)
+	, m_btnDown(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
 	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		GetColumnOrder(m_eOrder, i, m_Columns[i]);
 	switch (m_eOrder)
@@ -784,52 +822,162 @@ CDlgAssignColumns::CDlgAssignColumns(
 		m_bIncludeBlank = true;
 		break;
 	}
+
+	// Controls (these are done first to control tab order)
+
+	m_ctrlType = new wxListView(this, wxID_ANY,
+		wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
+	m_ctrlType->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgAssignColumns::OnItemchanged), NULL, this);
+	m_ctrlType->SetHelpText(_("HIDC_ASSIGN_TYPE"));
+	m_ctrlType->SetToolTip(_("HIDC_ASSIGN_TYPE"));
+	m_ctrlType->InsertColumn(0, _("IDS_COL_RUNTYPE"));
+	m_ctrlType->InsertColumn(1, _("IDS_COL_DESCRIPTION"));
+#ifdef _DEBUG
+	for (int index = 0; index < IO_MAX; ++index)
+	{
+		assert(sc_FieldNames[index].index == index);
+	}
+#endif
+	int idxSelect = 0;
+	for (int index = 0; index < IO_TYPE_MAX; ++index)
+	{
+		assert(sc_Types[index].index == index);
+		if (!(sc_Types[index].valid & m_eOrder))
+			continue;
+		int idx = m_ctrlType->InsertItem(index, wxGetTranslation(sc_Types[index].name));
+		if (0 <= idx)
+		{
+			m_ctrlType->SetItemData(idx, index);
+			wxListItem info;
+			info.SetId(idx);
+			info.SetColumn(1);
+			info.SetMask(wxLIST_MASK_TEXT);
+			info.SetText(wxGetTranslation(sc_Types[index].desc));
+			m_ctrlType->SetItem(info);
+			if (m_initSelection == index)
+				idxSelect = idx;
+		}
+	}
+	m_ctrlType->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+	m_ctrlType->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
+
+	wxStaticText* textAvail = new wxStaticText(this, wxID_ANY,
+		_("IDC_ASSIGN_AVAILABLE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textAvail->Wrap(-1);
+
+	m_ctrlAvailable = new wxListBox(this, wxID_ANY,
+		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
+	m_ctrlAvailable->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgAssignColumns::OnSelchangeAvailable), NULL, this);
+	m_ctrlAvailable->SetHelpText(_("HIDC_ASSIGN_AVAILABLE"));
+	m_ctrlAvailable->SetToolTip(_("HIDC_ASSIGN_AVAILABLE"));
+
+	wxStaticText* textSpacer = new wxStaticText(this, wxID_ANY, wxT("Hidden"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textSpacer->Wrap(-1);
+	textSpacer->Show(false);
+
+	m_btnAdd = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_ADD"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnAdd->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnAdd), NULL, this);
+	m_btnAdd->SetHelpText(_("HIDC_ASSIGN_ADD"));
+	m_btnAdd->SetToolTip(_("HIDC_ASSIGN_ADD"));
+
+	m_btnRemove = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_DELETE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnRemove->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnRemove), NULL, this);
+	m_btnRemove->SetHelpText(_("HIDC_ASSIGN_DELETE"));
+	m_btnRemove->SetToolTip(_("HIDC_ASSIGN_DELETE"));
+
+	m_btnUp = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_MOVE_UP"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnUp->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnMoveUp), NULL, this);
+	m_btnUp->SetHelpText(_("HIDC_ASSIGN_MOVE_UP"));
+	m_btnUp->SetToolTip(_("HIDC_ASSIGN_MOVE_UP"));
+
+	m_btnDown = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_MOVE_DOWN"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnMoveDown), NULL, this);
+	m_btnDown->SetHelpText(_("HIDC_ASSIGN_MOVE_DOWN"));
+	m_btnDown->SetToolTip(_("HIDC_ASSIGN_MOVE_DOWN"));
+
+	wxButton* btnReset = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_RESET"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	btnReset->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnReset), NULL, this);
+	btnReset->SetHelpText(_("HIDC_ASSIGN_RESET"));
+	btnReset->SetToolTip(_("HIDC_ASSIGN_RESET"));
+
+	wxStaticText* textOrder = new wxStaticText(this, wxID_ANY,
+		_("IDC_ASSIGN_COLUMNS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textOrder->Wrap(-1);
+
+	m_ctrlColumns = new wxListBox(this, wxID_ANY,
+		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
+	m_ctrlColumns->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgAssignColumns::OnSelchangeColumns), NULL, this);
+	m_ctrlColumns->SetHelpText(_("HIDC_ASSIGN_COLUMNS"));
+	m_ctrlColumns->SetToolTip(_("HIDC_ASSIGN_COLUMNS"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(m_ctrlType, 0, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerFields = new wxBoxSizer(wxHORIZONTAL);
+
+	wxBoxSizer* sizerAvail = new wxBoxSizer(wxVERTICAL);
+	sizerAvail->Add(textAvail, 0, wxLEFT, 5);
+	sizerAvail->Add(m_ctrlAvailable, 1, wxALL|wxEXPAND, 5);
+
+	sizerFields->Add(sizerAvail, 1, wxEXPAND, 5);
+
+	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
+	sizerBtns->Add(textSpacer, 0, 0, 5);
+	sizerBtns->Add(m_btnAdd, 0, wxALL, 5);
+	sizerBtns->Add(m_btnRemove, 0, wxALL, 5);
+	sizerBtns->Add(m_btnUp, 0, wxALL, 5);
+	sizerBtns->Add(m_btnDown, 0, wxALL, 5);
+	sizerBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizerBtns->Add(btnReset, 0, wxALL, 5);
+
+	sizerFields->Add(sizerBtns, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerOrder = new wxBoxSizer(wxVERTICAL);
+	sizerOrder->Add(textOrder, 0, wxLEFT, 5);
+	sizerOrder->Add(m_ctrlColumns, 1, wxALL|wxEXPAND, 5);
+
+	sizerFields->Add(sizerOrder, 1, wxEXPAND, 5);
+
+	bSizer->Add(sizerFields, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	m_ctrlType->Select(idxSelect); // Causes change event that fills columns
+	if (m_eOrder == CAgilityBookOptions::eView)
+		m_ctrlType->SortItems(CompareTypes, 0);
+	m_ctrlType->EnsureVisible(idxSelect);
+	m_ctrlType->SetFocus();
 }
 
-
-#if 0
-void CDlgAssignColumns::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgAssignColumns)
-	DDX_Control(pDX, IDC_ASSIGN_TYPE, m_ctrlType);
-	DDX_Control(pDX, IDC_ASSIGN_AVAILABLE, m_ctrlAvailable);
-	DDX_Control(pDX, IDC_ASSIGN_COLUMNS, m_ctrlColumns);
-	DDX_Control(pDX, IDC_ASSIGN_ADD, m_ctrlAdd);
-	DDX_Control(pDX, IDC_ASSIGN_DELETE, m_ctrlRemove);
-	DDX_Control(pDX, IDC_ASSIGN_MOVE_UP, m_ctrlUp);
-	DDX_Control(pDX, IDC_ASSIGN_MOVE_DOWN, m_ctrlDown);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgAssignColumns, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgAssignColumns)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_ASSIGN_TYPE, OnItemchanged)
-	ON_LBN_SELCHANGE(IDC_ASSIGN_AVAILABLE, OnSelchangeAvailable)
-	ON_LBN_SELCHANGE(IDC_ASSIGN_COLUMNS, OnSelchangeColumns)
-	ON_BN_CLICKED(IDC_ASSIGN_ADD, OnAdd)
-	ON_BN_CLICKED(IDC_ASSIGN_DELETE, OnRemove)
-	ON_BN_CLICKED(IDC_ASSIGN_MOVE_UP, OnMoveUp)
-	ON_BN_CLICKED(IDC_ASSIGN_MOVE_DOWN, OnMoveDown)
-	ON_BN_CLICKED(IDC_ASSIGN_RESET, OnReset)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
 
 void CDlgAssignColumns::FillColumns()
 {
-	m_ctrlAvailable.ResetContent();
-	m_ctrlColumns.ResetContent();
-	int index = m_ctrlType.GetSelection();
-	int idxType = -1;
+	m_ctrlAvailable->Clear();
+	m_ctrlColumns->Clear();
+	int index = m_ctrlType->GetFirstSelected();
+	long idxType = -1;
 	if (0 <= index)
-		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
+		idxType = m_ctrlType->GetItemData(index);
 	if (0 <= idxType)
 	{
-		CString blank;
-		blank.LoadString(IDS_BLANK_COLUMN);
+		wxString blank(_("IDS_BLANK_COLUMN"));
 		size_t i;
 		bool bInUse[IO_MAX];
 		for (i = 0; i < IO_MAX; ++i)
@@ -839,26 +987,26 @@ void CDlgAssignColumns::FillColumns()
 			if (0 <= m_Columns[idxType][i])
 			{
 				bInUse[m_Columns[idxType][i]] = true;
-				CString name = GetNameFromColumnID(m_Columns[idxType][i]);
-				int idx = m_ctrlColumns.AddString(name);
-				if (LB_ERR != idx)
-					m_ctrlColumns.SetItemData(idx, m_Columns[idxType][i]);
+				wxString name = GetNameFromColumnID(m_Columns[idxType][i]);
+				int idx = m_ctrlColumns->Append(name);
+				if (0 <= idx)
+					m_ctrlColumns->SetClientObject(idx, new ColumnData(m_Columns[idxType][i]));
 			}
 			else
 			{
 				if (m_bIncludeBlank)
 				{
-					int idx = m_ctrlColumns.AddString(blank);
-					if (LB_ERR != idx)
-						m_ctrlColumns.SetItemData(idx, static_cast<DWORD>(-1));
+					int idx = m_ctrlColumns->Append(blank);
+					if (0 <= idx)
+						m_ctrlColumns->SetClientObject(idx, new ColumnData(-1));
 				}
 			}
 		}
 		if (m_bIncludeBlank)
 		{
-			int idx = m_ctrlAvailable.AddString(blank);
-			if (LB_ERR != idx)
-				m_ctrlAvailable.SetItemData(idx, static_cast<DWORD>(-1));
+			int idx = m_ctrlAvailable->Append(blank);
+			if (0 <= idx)
+				m_ctrlAvailable->SetClientObject(idx, new ColumnData(-1));
 		}
 		bool bImport = (CAgilityBookOptions::eRunsImport == m_eOrder
 			|| CAgilityBookOptions::eCalImport == m_eOrder
@@ -870,10 +1018,10 @@ void CDlgAssignColumns::FillColumns()
 			|| (bImport && !sc_FieldNames[sc_Fields[idxType][i]].bImportable)
 			|| bInUse[sc_Fields[idxType][i]])
 				continue;
-			CString name = GetNameFromColumnID(sc_Fields[idxType][i]);
-			int idx = m_ctrlAvailable.AddString(name);
-			if (LB_ERR != idx)
-				m_ctrlAvailable.SetItemData(idx, sc_Fields[idxType][i]);
+			wxString name = GetNameFromColumnID(sc_Fields[idxType][i]);
+			int idx = m_ctrlAvailable->Append(name);
+			if (0 <= idx)
+				m_ctrlAvailable->SetClientObject(idx, new ColumnData(sc_Fields[idxType][i]));
 		}
 	}
 	UpdateButtons();
@@ -882,17 +1030,17 @@ void CDlgAssignColumns::FillColumns()
 
 void CDlgAssignColumns::UpdateColumnVector()
 {
-	int index = m_ctrlType.GetSelection();
-	int idxType = -1;
+	int index = m_ctrlType->GetFirstSelected();
+	long idxType = -1;
 	if (0 <= index)
-		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
+		idxType = m_ctrlType->GetItemData(index);
 	if (0 <= idxType)
 	{
 		m_Columns[idxType].clear();
-		m_Columns[idxType].reserve(m_ctrlColumns.GetCount());
-		for (int idx = 0; idx < m_ctrlColumns.GetCount(); ++idx)
+		m_Columns[idxType].reserve(m_ctrlColumns->GetCount());
+		for (unsigned int idx = 0; idx < m_ctrlColumns->GetCount(); ++idx)
 		{
-			m_Columns[idxType].push_back(static_cast<int>(m_ctrlColumns.GetItemData(idx)));
+			m_Columns[idxType].push_back(GetListBoxData(m_ctrlColumns, idx));
 		}
 	}
 }
@@ -900,114 +1048,51 @@ void CDlgAssignColumns::UpdateColumnVector()
 
 void CDlgAssignColumns::UpdateButtons()
 {
-	int idxAvail = m_ctrlAvailable.GetCurSel();
-	int idxCol = m_ctrlColumns.GetCurSel();
-	m_ctrlAdd.EnableWindow(idxAvail != LB_ERR && 0 < m_ctrlAvailable.GetCount());
-	m_ctrlRemove.EnableWindow(idxCol != LB_ERR && 0 < m_ctrlColumns.GetCount());
-	m_ctrlUp.EnableWindow(idxCol != LB_ERR && 1 < m_ctrlColumns.GetCount() && 0 != idxCol);
-	m_ctrlDown.EnableWindow(idxCol != LB_ERR && 1 < m_ctrlColumns.GetCount() && m_ctrlColumns.GetCount()-1 != idxCol);
+	int idxAvail = m_ctrlAvailable->GetSelection();
+	int idxCol = m_ctrlColumns->GetSelection();
+	m_btnAdd->Enable(0 <= idxAvail && 0 < m_ctrlAvailable->GetCount());
+	m_btnRemove->Enable(0 <= idxCol && 0 < m_ctrlColumns->GetCount());
+	m_btnUp->Enable(0 <= idxCol && 1 < m_ctrlColumns->GetCount() && 0 != idxCol);
+	m_btnDown->Enable(0 <= idxCol && 1 < m_ctrlColumns->GetCount() && static_cast<int>(m_ctrlColumns->GetCount())-1 != idxCol);
 }
 
 
-int CALLBACK CompareTypes(LPARAM lParam1, LPARAM lParam2, LPARAM lParam3)
-{
-	if (lParam1 >= 0 && lParam1 < IO_TYPE_MAX
-	&& lParam2 >= 0 && lParam2 < IO_TYPE_MAX)
-	{
-		if (sc_Types[lParam1].sortOrder < sc_Types[lParam2].sortOrder)
-			return -1;
-		else if (sc_Types[lParam1].sortOrder > sc_Types[lParam2].sortOrder)
-			return 1;
-	}
-	return 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgAssignColumns message handlers
-
-BOOL CDlgAssignColumns::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	m_ctrlType.SetExtendedStyle(m_ctrlType.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	CString col;
-	col.LoadString(IDS_COL_RUNTYPE);
-	m_ctrlType.InsertColumn(0, col);
-	col.LoadString(IDS_COL_DESCRIPTION);
-	m_ctrlType.InsertColumn(1, col);
-	int index;
-#ifdef _DEBUG
-	for (index = 0; index < IO_MAX; ++index)
-	{
-		assert(sc_FieldNames[index].index == index);
-	}
-#endif
-	int idxSelect = 0;
-	for (index = 0; index < IO_TYPE_MAX; ++index)
-	{
-		assert(sc_Types[index].index == index);
-		if (!(sc_Types[index].valid & m_eOrder))
-			continue;
-		CString str;
-		str.LoadString(sc_Types[index].name);
-		int idx = m_ctrlType.InsertItem(index, str);
-		if (0 <= idx)
-		{
-			str.LoadString(sc_Types[index].desc);
-			m_ctrlType.SetItemText(idx, 1, str);
-			m_ctrlType.SetItemData(idx, index);
-			if (m_initSelection == index)
-				idxSelect = idx;
-		}
-	}
-	m_ctrlType.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlType.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlType.SetSelection(idxSelect); // Causes change event that fills columns
-	if (m_eOrder == CAgilityBookOptions::eView)
-		m_ctrlType.SortItems(CompareTypes, 0);
-	m_ctrlType.EnsureVisible(idxSelect, FALSE);
-	return TRUE;	// return TRUE unless you set the focus to a control
-					// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgAssignColumns::OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgAssignColumns::OnItemchanged(wxListEvent& evt)
 {
 	FillColumns();
-	*pResult = 0;
 }
 
 
-void CDlgAssignColumns::OnSelchangeAvailable()
+void CDlgAssignColumns::OnSelchangeAvailable(wxCommandEvent& evt)
 {
 	UpdateButtons();
 }
 
 
-void CDlgAssignColumns::OnSelchangeColumns()
+void CDlgAssignColumns::OnSelchangeColumns(wxCommandEvent& evt)
 {
 	UpdateButtons();
 }
 
 
-void CDlgAssignColumns::OnAdd()
+void CDlgAssignColumns::OnAdd(wxCommandEvent& evt)
 {
-	int idxAvail = m_ctrlAvailable.GetCurSel();
-	if (LB_ERR != idxAvail)
+	int idxAvail = m_ctrlAvailable->GetSelection();
+	if (0 <= idxAvail)
 	{
-		CString str;
-		m_ctrlAvailable.GetText(idxAvail, str);
-		DWORD_PTR dwData = m_ctrlAvailable.GetItemData(idxAvail);
-		int idxCol = m_ctrlColumns.AddString(str);
-		if (LB_ERR != idxCol)
+		wxString str = m_ctrlAvailable->GetString(idxAvail);
+		long data = GetListBoxData(m_ctrlAvailable, idxAvail);
+		int idxCol = m_ctrlColumns->Append(str);
+		if (0 <= idxCol)
 		{
-			m_ctrlColumns.SetItemData(idxCol, dwData);
-			m_ctrlColumns.SetCurSel(idxCol);
-			if (static_cast<int>(dwData) >= 0)
+			m_ctrlColumns->SetClientObject(idxCol, new ColumnData(data));
+			m_ctrlColumns->SetSelection(idxCol);
+			if (data >= 0)
 			{
-				m_ctrlAvailable.DeleteString(idxAvail);
-				if (idxAvail == m_ctrlAvailable.GetCount())
+				m_ctrlAvailable->Delete(idxAvail);
+				if (idxAvail == static_cast<int>(m_ctrlAvailable->GetCount()))
 					--idxAvail;
-				m_ctrlAvailable.SetCurSel(idxAvail);
+				m_ctrlAvailable->SetSelection(idxAvail);
 			}
 		}
 		UpdateColumnVector();
@@ -1016,49 +1101,48 @@ void CDlgAssignColumns::OnAdd()
 }
 
 
-void CDlgAssignColumns::OnRemove()
+void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 {
-	int idxCol = m_ctrlColumns.GetCurSel();
-	if (LB_ERR != idxCol)
+	unsigned int idxCol = m_ctrlColumns->GetSelection();
+	if (0 <= idxCol)
 	{
-		CString str;
-		m_ctrlColumns.GetText(idxCol, str);
-		DWORD_PTR dwData = m_ctrlColumns.GetItemData(idxCol);
-		if (static_cast<int>(dwData) >= 0)
+		wxString str = m_ctrlColumns->GetString(idxCol);
+		long data = GetListBoxData(m_ctrlColumns, idxCol);
+		if (data >= 0)
 		{
-			int idxAvail = 0;
+			unsigned int idxAvail = 0;
 			if (m_bIncludeBlank)
 				++idxAvail; // Skip special "blank column"
 			bool bDone = false;
-			for (; idxAvail < m_ctrlAvailable.GetCount(); ++idxAvail)
+			for (; idxAvail < m_ctrlAvailable->GetCount(); ++idxAvail)
 			{
-				DWORD_PTR data = m_ctrlAvailable.GetItemData(idxAvail);
-				if (dwData < data)
+				long data2 = GetListBoxData(m_ctrlAvailable, idxAvail);
+				if (data < data2)
 				{
 					bDone = true;
-					idxAvail = m_ctrlAvailable.InsertString(idxAvail, str);
+					m_ctrlAvailable->Insert(str, idxAvail);
 					break;
 				}
 			}
 			if (!bDone)
-				idxAvail = m_ctrlAvailable.AddString(str);
-			m_ctrlAvailable.SetCurSel(idxAvail);
+				idxAvail = m_ctrlAvailable->Append(str);
+			m_ctrlAvailable->SetSelection(idxAvail);
 			// Find where to insert it...
-			if (LB_ERR != idxAvail)
+			if (0 <= idxAvail)
 			{
-				m_ctrlAvailable.SetItemData(idxAvail, dwData);
-				m_ctrlColumns.DeleteString(idxCol);
-				if (idxCol == m_ctrlColumns.GetCount())
+				m_ctrlAvailable->SetClientObject(idxAvail, new ColumnData(data));
+				m_ctrlColumns->Delete(idxCol);
+				if (idxCol == m_ctrlColumns->GetCount())
 					--idxCol;
-				m_ctrlColumns.SetCurSel(idxCol);
+				m_ctrlColumns->SetSelection(idxCol);
 			}
 		}
 		else
 		{
-			m_ctrlColumns.DeleteString(idxCol);
-			if (idxCol == m_ctrlColumns.GetCount())
+			m_ctrlColumns->Delete(idxCol);
+			if (idxCol == m_ctrlColumns->GetCount())
 				--idxCol;
-			m_ctrlColumns.SetCurSel(idxCol);
+			m_ctrlColumns->SetSelection(idxCol);
 		}
 		UpdateColumnVector();
 		UpdateButtons();
@@ -1066,48 +1150,46 @@ void CDlgAssignColumns::OnRemove()
 }
 
 
-void CDlgAssignColumns::OnMoveUp()
+void CDlgAssignColumns::OnMoveUp(wxCommandEvent& evt)
 {
-	int idxCol = m_ctrlColumns.GetCurSel();
-	if (LB_ERR != idxCol && 1 < m_ctrlColumns.GetCount() && 0 != idxCol)
+	int idxCol = m_ctrlColumns->GetSelection();
+	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount() && 0 != idxCol)
 	{
-		CString str;
-		m_ctrlColumns.GetText(idxCol, str);
-		DWORD_PTR dwData = m_ctrlColumns.GetItemData(idxCol);
-		m_ctrlColumns.DeleteString(idxCol);
-		idxCol = m_ctrlColumns.InsertString(--idxCol, str);
-		m_ctrlColumns.SetItemData(idxCol, dwData);
-		m_ctrlColumns.SetCurSel(idxCol);
+		wxString str = m_ctrlColumns->GetString(idxCol);
+		long data = GetListBoxData(m_ctrlColumns, idxCol);
+		m_ctrlColumns->Delete(idxCol);
+		m_ctrlColumns->Insert(str, --idxCol);
+		m_ctrlColumns->SetClientObject(idxCol, new ColumnData(data));
+		m_ctrlColumns->SetSelection(idxCol);
 		UpdateColumnVector();
 		UpdateButtons();
 	}
 }
 
 
-void CDlgAssignColumns::OnMoveDown()
+void CDlgAssignColumns::OnMoveDown(wxCommandEvent& evt)
 {
-	int idxCol = m_ctrlColumns.GetCurSel();
-	if (LB_ERR != idxCol && 1 < m_ctrlColumns.GetCount() && m_ctrlColumns.GetCount() - 1 != idxCol)
+	unsigned int idxCol = m_ctrlColumns->GetSelection();
+	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount() && m_ctrlColumns->GetCount() - 1 != idxCol)
 	{
-		CString str;
-		m_ctrlColumns.GetText(idxCol, str);
-		DWORD_PTR dwData = m_ctrlColumns.GetItemData(idxCol);
-		m_ctrlColumns.DeleteString(idxCol);
-		idxCol = m_ctrlColumns.InsertString(++idxCol, str);
-		m_ctrlColumns.SetItemData(idxCol, dwData);
-		m_ctrlColumns.SetCurSel(idxCol);
+		wxString str = m_ctrlColumns->GetString(idxCol);
+		long data = GetListBoxData(m_ctrlColumns, idxCol);
+		m_ctrlColumns->Delete(idxCol);
+		m_ctrlColumns->Insert(str, ++idxCol);
+		m_ctrlColumns->SetClientObject(idxCol, new ColumnData(data));
+		m_ctrlColumns->SetSelection(idxCol);
 		UpdateColumnVector();
 		UpdateButtons();
 	}
 }
 
 
-void CDlgAssignColumns::OnReset()
+void CDlgAssignColumns::OnReset(wxCommandEvent& evt)
 {
-	int index = m_ctrlType.GetSelection();
-	int idxType = -1;
+	int index = m_ctrlType->GetFirstSelected();
+	long idxType = -1;
 	if (0 <= index)
-		idxType = static_cast<int>(m_ctrlType.GetItemData(index));
+		idxType = m_ctrlType->GetItemData(index);
 	if (0 <= idxType)
 	{
 		GetColumnOrder(m_eOrder, idxType, m_Columns[idxType], true);
@@ -1116,7 +1198,7 @@ void CDlgAssignColumns::OnReset()
 }
 
 
-void CDlgAssignColumns::OnOK()
+void CDlgAssignColumns::OnOk(wxCommandEvent& evt)
 {
 	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		SetColumnOrder(m_eOrder, i, m_Columns[i]);
@@ -1125,6 +1207,5 @@ void CDlgAssignColumns::OnOK()
 		CUpdateHint hint(UPDATE_CUSTOMIZE);
 		m_pDoc->UpdateAllViews(NULL, &hint);
 	}
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif

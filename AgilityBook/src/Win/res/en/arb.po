@@ -927,6 +927,31 @@ msgstr "Height Card &Received"
 msgid "IDC_MESSAGE_BOX_DETAILS"
 msgstr "Details..."
 
+# DlgAssignColumns
+msgid "IDD_ASSIGN_COLUMNS"
+msgstr "Assign Columns"
+
+msgid "IDC_ASSIGN_AVAILABLE"
+msgstr "Available &fields:"
+
+msgid "IDC_ASSIGN_ADD"
+msgstr "&Add ->"
+
+msgid "IDC_ASSIGN_DELETE"
+msgstr "<- &Remove"
+
+msgid "IDC_ASSIGN_MOVE_UP"
+msgstr "Move &Up"
+
+msgid "IDC_ASSIGN_MOVE_DOWN"
+msgstr "Move &Down"
+
+msgid "IDC_ASSIGN_RESET"
+msgstr "Reset"
+
+msgid "IDC_ASSIGN_COLUMNS"
+msgstr "Field &order:"
+
 # Begin Columns
 msgid "IDS_COL_ACTUAL_WORK"
 msgstr "Actual Work"

@@ -999,6 +999,31 @@ msgstr "Carte hauteur &reçu"
 msgid "IDC_MESSAGE_BOX_DETAILS"
 msgstr "Détails..."
 
+# DlgAssignColumns
+msgid "IDD_ASSIGN_COLUMNS"
+msgstr "Attribuer Colonnes"
+
+msgid "IDC_ASSIGN_AVAILABLE"
+msgstr "&Champs Disponibles:"
+
+msgid "IDC_ASSIGN_ADD"
+msgstr "&Ajouter ->"
+
+msgid "IDC_ASSIGN_DELETE"
+msgstr "<- &Supprimer"
+
+msgid "IDC_ASSIGN_MOVE_UP"
+msgstr "&Monter"
+
+msgid "IDC_ASSIGN_MOVE_DOWN"
+msgstr "&Descendre"
+
+msgid "IDC_ASSIGN_RESET"
+msgstr "Réinitialiser"
+
+msgid "IDC_ASSIGN_COLUMNS"
+msgstr "&Ordre des Champs:"
+
 # Begin Columns
 msgid "IDS_COL_ACTUAL_WORK"
 msgstr "Travail actuel"
