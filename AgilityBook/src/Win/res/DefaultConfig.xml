@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2009-02-25 DRC Configuration version 25.
+               Updated AAC titles and Challenge event.
 2008-12-15 DRC Configuration version 24.
                Updated AAC title comments.
                Updated USDAA DAM events for LAA points, DAM relay tracking.
@@ -75,7 +77,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-   <Configuration version="24">
+   <Configuration version="25">
       <Action NewName="SSA" OldName="Sweepstakes" Verb="RenameVenue"/>
       <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
       <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
@@ -159,13 +161,14 @@ Revision History:
       <Action OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
       <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
          <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges in each game
+         <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 3 games (jumpers, gamblers, snooker) under at least 2 different judges in each game
 [Before Jan 1, 2009] 1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
          <Titles LongName="Advanced Agility Dog of Canada" Name="AADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Advanced Games Dog of Canada" Name="AGDC">3 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under 2 different judges
+         <Titles LongName="Advanced Games Dog of Canada" Name="AGDC">3 qualifying scores in each of the 3 games (jumpers, gamblers, snooker) under 2 different judges
 [Before Jan 1, 2009] 2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under 2 different judges</Titles>
          <Titles LongName="Master Agility Dog of Canada" Name="MADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Agility Trial Champion of Canada" Name="ATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+         <Titles LongName="Agility Trial Champion of Canada" Name="ATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, and Masters Snooker titles
+[Before Jan 1, 2009] Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Master Relay titles</Titles>
          <Titles LongName="Masters Gamblers Dog of Canada" Name="MGDC">4 qualifying scores under at least 2 different judges
 [Before Jan 1, 2009] 3 qualifying scores under at least 2 different judges</Titles>
          <Titles LongName="Masters Team Relay Dog of Canada" Name="MTRDC">4 qualifying scores under at least 2 different judges
@@ -175,32 +178,59 @@ Revision History:
          <Titles LongName="Masters Snooker Dog of Canada" Name="MSDC">4 qualifying scores under at least 2 different judges
 [Before Jan 1, 2009] 3 qualifying scores under at least 2 different judges</Titles>
          <Titles LongName="Masters Steeplechase Dog of Canada" Name="MSCDC">10 qualifying scores under at least 4 different judges</Titles>
+         <Titles LongName="Masters Challenge Dog of Canada" Name="MCDC">10 qualifying scores under at least 2 different judges</Titles>
          <Titles Name="Bronze Award of Merit">ATChC, VATChC, or SATChC plus 10 Masters Standard, 25 games</Titles>
          <Titles Name="Silver Award of Merit">25 Masters Standard, 50 games</Titles>
          <Titles Name="Gold Award of Merit">50 Masters Standard, 100 games</Titles>
          <Titles Name="Lifetime Achievement Award of Excellence">100 Masters Standard, 125 games</Titles>
-         <Titles LongName="Veteran Agility Dog of Canada" Name="VADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Starters Games Dog of Canada" Name="VSGDC">1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Advanced Agility Dog of Canada" Name="VAADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Advanced Games Dog of Canada" Name="VAGDC">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Master Agility Dog of Canada" Name="VMADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Masters Steeplechase Dog of Canada" Name="VMSCDC">10 qualifying scores under at least 4 different judges</Titles>
-         <Titles LongName="Veteran Masters Gamblers Dog of Canada" Name="VMGDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Masters Team Relay Dog of Canada" Name="VMTRDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Masters Jumpers Dog of Canada" Name="VMJDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Masters Snooker Dog of Canada" Name="VMSDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Veteran Agility Trial Champion of Canada" Name="VATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
-         <Titles LongName="Special Agility Dog of Canada" Name="SADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Special Starters Games Dog of Canada" Name="SSGDC">1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
-         <Titles LongName="Special Advanced Agility Dog of Canada" Name="SAADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Special Advanced Games Dog of Canada" Name="SAGDC">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
-         <Titles LongName="Special Master Agility Dog of Canada" Name="SMADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
-         <Titles LongName="Special Masters Steeplechase Dog of Canada" Name="SMSCDC">10 qualifying scores under at least 4 different judges</Titles>
-         <Titles LongName="Special Masters Gamblers Dog of Canada" Name="SMGDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Special Masters Team Relay Dog of Canada" Name="SMTRDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Special Masters Jumpers Dog of Canada" Name="SMJDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Special Masters Snooker Dog of Canada" Name="SMSDC">3 qualifying scores under at least 2 different judges</Titles>
-         <Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC" Prefix="y">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+         <Titles LongName="Expert Standard Bronze" Name="ExSt Bronze">10 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Jumpers Bronze" Name="ExJ Bronze">10 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Snooker Bronze" Name="ExSn Bronze">10 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Gamblers Bronze" Name="ExG Bronze">10 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Team Relay Bronze" Name="ExT Bronze">10 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Steeplechase Bronze" Name="ExSc Bronze">25 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Challenge Bronze" Name="ExC Bronze">25 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Standard Silver" Name="ExSt Silver">25 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Jumpers Silver" Name="ExJ Silver">25 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Snooker Silver" Name="ExSn Silver">25 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Gamblers Silver" Name="ExG Silver">25 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Team Relay Silver" Name="ExT Silver">25 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Steeplechase Silver" Name="ExSc Silver">50 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Challenge Silver" Name="ExC Silver">50 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Standard Gold" Name="ExSt Gold">50 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Jumpers Gold" Name="ExJ Gold">50 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Snooker Gold" Name="ExSn Gold">50 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Gamblers Gold" Name="ExG Gold">50 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Team Relay Gold" Name="ExT Gold">50 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Steeplechase Gold" Name="ExSc Gold">100 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Expert Challenge Gold" Name="ExC Gold">100 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Versatility Bronze Award" Name="VBA">Any 3 Bronze Expert Titles</Titles>
+         <Titles LongName="Versatility Silver Award" Name="VSA">Any 4 Silver Expert Titles</Titles>
+         <Titles LongName="Versatility Gold Award" Name="VGA">Any 5 Gold Expert Titles</Titles>
+         <Titles LongName="Versatility Lifetime Award" Name="VLA">Any 6 Gold Expert Titles</Titles>
+         <Titles LongName="Veteran Agility Dog of Canada" Name="VADC" ValidTo="2008-12-31">3 qualifying scores in Standard under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Starters Games Dog of Canada" Name="VSGDC" ValidTo="2008-12-31">1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Advanced Agility Dog of Canada" Name="VAADC" ValidTo="2008-12-31">3 qualifying scores in Standard under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Advanced Games Dog of Canada" Name="VAGDC" ValidTo="2008-12-31">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Master Agility Dog of Canada" Name="VMADC" ValidTo="2008-12-31">3 qualifying scores in Standard under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Masters Steeplechase Dog of Canada" Name="VMSCDC" ValidTo="2008-12-31">10 qualifying scores under at least 4 different judges</Titles>
+         <Titles LongName="Veteran Masters Gamblers Dog of Canada" Name="VMGDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Masters Team Relay Dog of Canada" Name="VMTRDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Masters Jumpers Dog of Canada" Name="VMJDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Masters Snooker Dog of Canada" Name="VMSDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Veteran Agility Trial Champion of Canada" Name="VATChC" Prefix="y" ValidTo="2008-12-31">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+         <Titles LongName="Special Agility Dog of Canada" Name="SADC" ValidTo="2008-12-31">3 qualifying scores in Standard under at least 2 different judges</Titles>
+         <Titles LongName="Special Starters Games Dog of Canada" Name="SSGDC" ValidTo="2008-12-31">1 qualifying score in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
+         <Titles LongName="Special Advanced Agility Dog of Canada" Name="SAADC" ValidTo="2008-12-31">3 qualifying scores in Standard under at least 2 different judges</Titles>
+         <Titles LongName="Special Advanced Games Dog of Canada" Name="SAGDC" ValidTo="2008-12-31">2 qualifying scores in each of the 4 games (jumpers, gamblers, snooker, relay) under at least 2 different judges</Titles>
+         <Titles LongName="Special Master Agility Dog of Canada" Name="SMADC" ValidTo="2008-12-31">3 qualifying scores in Standard under at least 2 different judges</Titles>
+         <Titles LongName="Special Masters Steeplechase Dog of Canada" Name="SMSCDC" ValidTo="2008-12-31">10 qualifying scores under at least 4 different judges</Titles>
+         <Titles LongName="Special Masters Gamblers Dog of Canada" Name="SMGDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Special Masters Team Relay Dog of Canada" Name="SMTRDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Special Masters Jumpers Dog of Canada" Name="SMJDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Special Masters Snooker Dog of Canada" Name="SMSDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
+         <Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC" Prefix="y" ValidTo="2008-12-31">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
+
          <Division Name="Regular">
             <Level Name="Starters"/>
             <Level Name="Advanced"/>
@@ -283,6 +313,12 @@ Revision History:
          </Event>
          <Event Name="Steeplechase">
             <Scoring Division="*" Level="Masters" type="TimePlusFaults">
+               <TitlePoints Faults="0" Points="1"/>
+               <LifeTime Faults="0" Points="1"/>
+            </Scoring>
+         </Event>
+         <Event Name="Challenge">
+            <Scoring Division="*" Level="Masters" ValidFrom="2009-1-1" type="FaultsThenTime">
                <TitlePoints Faults="0" Points="1"/>
                <LifeTime Faults="0" Points="1"/>
             </Scoring>

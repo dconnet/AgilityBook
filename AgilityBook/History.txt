@@ -1,3 +1,7 @@
+2/25/2009: v2.0.0.0 <in development>
+- Bumped Configuration v25:
+  - Updated AAC titles and added 'Challenge'.
+
 2/25/2009: v1.10.10.12
 - Bumped file version to 12.9:
   - Fix metadata bug.
