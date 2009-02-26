@@ -33,50 +33,32 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include <vector>
 #include "ARBBase.h"
-#include "ARBTypes.h"
-#include "DlgBaseDialog.h"
-#include "ListBox.h"
+#include <vector>
 
-class CDlgReorder : public CDlgBaseDialog
+
+class CDlgReorder : public wxDialog
 {
-// Construction
 public:
 	CDlgReorder(
 			std::vector<ARBBasePtr>& items,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgReorder)
-	enum { IDD = IDD_REORDER };
-	CListBox2	m_ctrlList;
-	CButton	m_ctrlUp;
-	CButton	m_ctrlDown;
-	//}}AFX_DATA
 	std::vector<ARBBasePtr>& m_Items;
+	wxListBox* m_ctrlList;
+	wxButton* m_ctrlUp;
+	wxButton* m_ctrlDown;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgReorder)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
 	void LoadData();
-	void EnableControls();
+	void UpdateControls();
 
-	//{{AFX_MSG(CDlgReorder)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeList();
-	afx_msg void OnMoveUp();
-	afx_msg void OnMoveDown();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnItemSelected(wxCommandEvent& evt);
+	void OnMoveUp(wxCommandEvent& evt);
+	void OnMoveDown(wxCommandEvent& evt);
 };

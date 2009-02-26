@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2008-12-24 DRC Ported to wxWidgets.
  * @li 2008-01-14 DRC Make ViewLifetimeEvents default to true.
  * @li 2007-08-03 DRC Added UserNames
  * @li 2006-07-16 DRC Added PointsViewSort
@@ -63,50 +64,46 @@
 #include "DlgAssignColumns.h"
 #include "VersionNum.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include <wx/config.h>
 
-/////////////////////////////////////////////////////////////////////////////
 
-/* Registry entries
+/* Registry entries (all referenced in the file, unless noted otherwise)
+ * DW == dword, ST == string
 Calendar
 	DW AutoDelete
-	DW ViewAll
-	DW ViewOpen
-	DW ViewClose
-	DW PastEntry
-	DW HideOverlapping
-	DW Filter
-	DW NotEnteredColor
-	DW PlanningColor
-	DW OpenColor
 	DW CloseColor
-	DW EnteredColor
-	DW OpenNear
 	DW CloseNear
-	DW OpenNearColor
 	DW CloseNearColor
+	DW EnteredColor
+	DW Filter (FilterOptions.cpp)
+	DW FontTextBold
+	DW FontTextItalic
 	ST FontTextName
 	DW FontTextSize
-	DW FontTextItalic
-	DW FontTextBold
-	Obsolete ST FontDateName
-	Obsolete DW FontDateSize
-	Obsolete DW FontDateItalic
-	Obsolete DW FontDateBold
-	Obsolete ST PrintFontDateName
-	Obsolete DW PrintFontDateSize
-	Obsolete DW PrintFontDateItalic
-	Obsolete DW PrintFontDateBold
-	Obsolete ST PrintFontTextName
-	Obsolete DW PrintFontTextSize
-	Obsolete DW PrintFontTextItalic
-	Obsolete DW PrintFontTextBold
+	DW HideOverlapping
+	DW NotEnteredColor
+	DW OpenColor
+	DW OpenNear
+	DW OpenNearColor
+	DW PastEntry
+	DW PlanningColor
+	DW ViewAll
+	DW ViewClose
+	DW ViewOpen
 	Obsolete(1.7.6.12) DW EntrySize.cx
 	Obsolete(1.7.6.12) DW EntrySize.cy
+	Obsolete DW FontDateBold
+	Obsolete DW FontDateItalic
+	Obsolete ST FontDateName
+	Obsolete DW FontDateSize
+	Obsolete DW PrintFontDateBold
+	Obsolete DW PrintFontDateItalic
+	Obsolete ST PrintFontDateName
+	Obsolete DW PrintFontDateSize
+	Obsolete DW PrintFontTextBold
+	Obsolete DW PrintFontTextItalic
+	Obsolete ST PrintFontTextName
+	Obsolete DW PrintFontTextSize
 CalSites
 	DW (DLL names in EXE directory)
 CalSites2 - used for permanently disabling a version
@@ -114,48 +111,48 @@ CalSites2 - used for permanently disabling a version
 Columns
 	ST col[n]
 Common
-	DW FirstDayOfWeek
-	DW ViewAllDates
-	DW StartFilterJDay
-	DW StartFilter
-	DW EndFilterJDay
-	DW EndFilter
-	DW ViewAllVenues
-	ST FilterVenue
-	DW ViewRuns
-	Obsolete DW ViewAllRuns
-	Obsolete DW ViewQRuns
-	DW ViewAllNames
-	ST FilterTrainingNames
-	DW ViewRunsByTrial
-	DW ViewNewestFirst
-	DW ViewHiddenTitles
-	DW ViewLifetimeEvents
-	DW TableInYPS
 	DW CRCDImage
-	ST PrintFontListName
-	DW PrintFontListSize
-	DW PrintFontListItalic
-	DW PrintFontListBold
+	ST CurrentFilter (FilterOptions.cpp)
+	DW EndFilter (FilterOptions.cpp)
+	DW EndFilterJDay (FilterOptions.cpp)
+	ST FilterTrainingNames (FilterOptions.cpp)
+	ST FilterVenue (FilterOptions.cpp)
+	DW FirstDayOfWeek
+	DW Margins.B
 	DW Margins.L
 	DW Margins.R
 	DW Margins.T
-	DW Margins.B
-	DW numFilters
-	ST CurrentFilter
+	DW numFilters (FilterOptions.cpp)
+	DW PrintFontListBold
+	DW PrintFontListItalic
+	ST PrintFontListName
+	DW PrintFontListSize
 	DW sortPtVw1
 	DW sortPtVw2
 	DW sortPtVw3
-	Obsolete DW TrainingViewAllDates
-	Obsolete DW TrainingStartFilterJDay
-	Obsolete DW TrainingStartFilter
-	Obsolete DW TrainingEndFilterJDay
+	DW StartFilter (FilterOptions.cpp)
+	DW StartFilterJDay (FilterOptions.cpp)
+	DW TableInYPS
+	DW ViewAllDates (FilterOptions.cpp)
+	DW ViewAllNames (FilterOptions.cpp)
+	DW ViewAllVenues (FilterOptions.cpp)
+	DW ViewHiddenTitles
+	DW ViewLifetimeEvents
+	DW ViewNewestFirst
+	DW ViewRuns (FilterOptions.cpp)
+	DW ViewRunsByTrial
 	Obsolete DW TrainingEndFilter
+	Obsolete DW TrainingEndFilterJDay
+	Obsolete DW TrainingStartFilter
+	Obsolete DW TrainingStartFilterJDay
+	Obsolete DW TrainingViewAllDates
+	Obsolete DW ViewAllRuns
+	Obsolete DW ViewQRuns
 Export
+	ST col[n]
+	DW dateformat
 	DW delim
 	ST delimiter
-	DW dateformat
-	ST col[n]
 ExportCal
 	ST col[n]
 ExportCalAppt
@@ -165,43 +162,42 @@ ExportCalTask
 ExportLog
 	ST col[n]
 Filter[number]
-	DW Cal
-	DW AllDates
-	DW Start
-	DW StartJDay
-	DW End
-	DW EndJDay
-	DW AllVenues
-	ST FilterVenues
-	DW ViewRuns
-	DW AllNames
-	ST FilterNames
+	DW AllDates (FilterOptions.cpp)
+	DW AllNames (FilterOptions.cpp)
+	DW AllVenues (FilterOptions.cpp)
+	DW Cal (FilterOptions.cpp)
+	DW End (FilterOptions.cpp)
+	DW EndJDay (FilterOptions.cpp)
+	ST FilterNames (FilterOptions.cpp)
+	ST FilterVenue (FilterOptions.cpp)
+	ST Name (FilterOptions.cpp)
+	DW Start (FilterOptions.cpp)
+	DW StartJDay (FilterOptions.cpp)
+	DW ViewRuns (FilterOptions.cpp)
 Import
-	DW row
+	ST col[n]
+	DW dateformat
 	DW delim
 	ST delimiter
-	DW dateformat
-	ST col[n]
+	DW row
 ImportCal
 	ST col[n]
 ImportLog
 	ST col[n]
 Last
 	ST Division
-	ST Level
-	ST Height
-	ST RefHeight
-	ST Judge
 	ST Handler
+	ST Height
+	ST Judge
+	ST Level
+	ST RefHeight
+Selection:
+	DW nDogs (DlgSelectDog.cpp)
+	ST <dog name> (DlgSelectDog.cpp)
 Settings:
 	DW autoCheck
-	DW BackupFiles
-	DW Lang
-	DW MRUsize
-	DW ShowSplash
-	ST Splash
 	DW autoShowTitle
-	DW showHtml
+	DW BackupFiles
 	DW dateFormat[n]
 		{
 			eRunTree	= 0,
@@ -211,52 +207,58 @@ Settings:
 			eCalendar	= 4,
 			eTraining	= 5,
 		}
+	DW Lang2 [added 2.0.0.0] (LanguageManager.cpp)
+	DW lastCX (AgilityBook.cpp/MainFrm.cpp)
+	DW lastCY (AgilityBook.cpp/MainFrm.cpp)
+	ST LastDog (AgilityBookDoc.cpp/AgilityBookTreeView.cpp)
+	ST LastFile (AgilityBook.cpp/AgilityBookDoc.cpp)
+	DW lastState (AgilityBook.cpp/MainFrm.cpp)
+	ST lastVerCheck (AgilityBook.cpp/UpdateInfo.cpp)
+	DW lastXpos (AgilityBook.cpp/MainFrm.cpp)
+	DW lastYpos (AgilityBook.cpp/MainFrm.cpp)
+	DW showHtml
+	DW ShowSplash
+	ST Splash
+	DW splitCX (AgilityBookPanels.cpp)
+	DW splitCX2 (AgilityBookPanels.cpp)
+	DW View (TabView.cpp)
+	DW ViewOrient (TabView.cpp)
+	DW ViewType (TabView.cpp)
+	Obsolete(2.0.0.0) DW Lang (F.cppilterOptions)
+Sorting:
+	ST [key]Order (ColumnOrder.cpp)
+	ST [key]Sort (ColumnOrder.cpp)
+	DW Calendar (AgilityBookCalendarListView.cpp)
+	DW Runs (AgilityBookRunsView.cpp)
+	DW Training (AgilityBookTrainingView.cpp)
 Unknown
 	ST col[n]
 */
 
-/////////////////////////////////////////////////////////////////////////////
 
-void CFontInfo::CreateFont(
-		CFont& font,
-		CDC* pDC)
+void CFontInfo::CreateFont(wxFont& font)
 {
-	font.DeleteObject();
-	LOGFONT logFont;
-	memset(&logFont, 0, sizeof(logFont));
-	if (pDC && pDC->IsPrinting())
-	{
-		int logPixelsY = pDC->GetDeviceCaps(LOGPIXELSY);
-		logFont.lfHeight = -MulDiv(size/10, logPixelsY, 72);
-	}
-	else
-		logFont.lfHeight = size;
-	lstrcpy(logFont.lfFaceName, (LPCTSTR)name);
+	font = wxFont();
+	font.SetFaceName(name);
+	font.SetPointSize(size);
+	int style = wxFONTSTYLE_NORMAL;
 	if (italic)
-		logFont.lfItalic = TRUE;
-	else
-		logFont.lfItalic = FALSE;
+		style |= wxFONTFLAG_ITALIC;
 	if (bold)
-		logFont.lfWeight = FW_BOLD;
-	else
-		logFont.lfWeight = FW_NORMAL;
-	if (pDC && pDC->IsPrinting())
-		font.CreateFontIndirect(&logFont);
-	else
-		font.CreatePointFontIndirect(&logFont);
+		style |= wxFONTFLAG_BOLD;
+	font.SetStyle(style);
 }
 
 
 void CFontInfo::CreateFont(
-		CFontDialog const& dlg,
-		CFont& font,
-		CDC* pDC)
+		wxFontDialog const& dlg,
+		wxFont& font)
 {
-	size = dlg.GetSize();
-	name = dlg.GetFaceName();
-	italic = dlg.IsItalic() ? true : false;
-	bold = dlg.IsBold() ? true : false;
-	CreateFont(font, pDC);
+	font = dlg.GetFont();
+	size = font.GetPointSize();
+	name = font.GetFaceName();
+	italic = (font.GetStyle() & wxFONTFLAG_ITALIC) ? true : false;
+	bold = (font.GetStyle() & wxFONTFLAG_BOLD) ? true : false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -264,181 +266,202 @@ void CFontInfo::CreateFont(
 
 bool CAgilityBookOptions::AutoDeleteCalendarEntries()
 {
-	int val = theApp.GetProfileInt(_T("Calendar"), _T("AutoDelete"), 0);
-	return val == 1 ? true : false;
+	bool val = false;
+	wxConfig::Get()->Read(wxT("Calendar/AutoDelete"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetAutoDeleteCalendarEntries(bool bAuto)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("AutoDelete"), bAuto ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Calendar/AutoDelete"), bAuto);
 }
 
 
 // View all or hide old entries
 bool CAgilityBookOptions::ViewAllCalendarEntries()
 {
-	int val = theApp.GetProfileInt(_T("Calendar"), _T("ViewAll"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Calendar/ViewAll"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetViewAllCalendarEntries(bool bView)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("ViewAll"), bView ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Calendar/ViewAll"), bView);
 }
 
 
 bool CAgilityBookOptions::ViewAllCalendarOpening()
 {
-	int val = theApp.GetProfileInt(_T("Calendar"), _T("ViewOpen"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Calendar/ViewOpen"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetViewAllCalendarOpening(bool bView)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("ViewOpen"), bView ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Calendar/ViewOpen"), bView);
 }
 
 
 bool CAgilityBookOptions::ViewAllCalendarClosing()
 {
-	int val = theApp.GetProfileInt(_T("Calendar"), _T("ViewClose"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Calendar/ViewClose"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetViewAllCalendarClosing(bool bView)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("ViewClose"), bView ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Calendar/ViewClose"), bView);
 }
 
 
-int CAgilityBookOptions::DaysTillEntryIsPast()
+long CAgilityBookOptions::DaysTillEntryIsPast()
 {
-	return theApp.GetProfileInt(_T("Calendar"), _T("PastEntry"), 5);
+	long val = 5;
+	wxConfig::Get()->Read(wxT("Calendar/PastEntry"), &val);
+	return val;
 }
 
 
-void CAgilityBookOptions::SetDaysTillEntryIsPast(int nDays)
+void CAgilityBookOptions::SetDaysTillEntryIsPast(long nDays)
 {
 	if (0 > nDays)
 		nDays = 0;
-	theApp.WriteProfileInt(_T("Calendar"), _T("PastEntry"), nDays);
+	wxConfig::Get()->Write(wxT("Calendar/PastEntry"), nDays);
 }
 
 
 bool CAgilityBookOptions::HideOverlappingCalendarEntries()
 {
-	int val = theApp.GetProfileInt(_T("Calendar"), _T("HideOverlapping"), 0);
-	return val == 1 ? true : false;
+	bool val = false;
+	wxConfig::Get()->Read(wxT("Calendar/HideOverlapping"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("HideOverlapping"), bHide ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Calendar/HideOverlapping"), bHide);
 }
 
 
-static LPCTSTR CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
+static wxChar* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 {
 	switch (inItem)
 	{
 	case CAgilityBookOptions::eCalColorNotEntered:
-		return _T("NotEnteredColor");
+		return wxT("NotEnteredColor");
 	case CAgilityBookOptions::eCalColorPlanning:
-		return _T("PlanningColor");
+		return wxT("PlanningColor");
 	case CAgilityBookOptions::eCalColorOpening:
-		return _T("OpenColor");
+		return wxT("OpenColor");
 	case CAgilityBookOptions::eCalColorClosing:
-		return _T("CloseColor");
+		return wxT("CloseColor");
 	case CAgilityBookOptions::eCalColorEntered:
-		return _T("EnteredColor");
+		return wxT("EnteredColor");
 	}
 	assert(0);
-	return _T("");
+	return wxT("");
 }
 
 
-static COLORREF CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
+static wxColour CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 {
 	switch (inItem)
 	{
 	case CAgilityBookOptions::eCalColorNotEntered:
-		return RGB(0,0,0); // Black
+		return wxColour(0,0,0); // Black
 	case CAgilityBookOptions::eCalColorPlanning:
-		return RGB(255,128,0); // Orange
+		return wxColour(255,128,0); // Orange
 	case CAgilityBookOptions::eCalColorOpening:
-		return RGB(0,128,0); // Dk Green
+		return wxColour(0,128,0); // Dk Green
 	case CAgilityBookOptions::eCalColorClosing:
-		return RGB(255,0,0); // Red
+		return wxColour(255,0,0); // Red
 	case CAgilityBookOptions::eCalColorEntered:
-		return RGB(0,0,255); // Blue
+		return wxColour(0,0,255); // Blue
 	}
 	assert(0);
-	return 0;
+	return wxColour(0,0,0);
 }
 
 
-COLORREF CAgilityBookOptions::CalendarColor(CalendarColorItem inItem)
+wxColour CAgilityBookOptions::CalendarColor(CalendarColorItem inItem)
 {
-	return theApp.GetProfileInt(_T("Calendar"), CalItemName(inItem), CalItemColor(inItem));
+	wxColour val = CalItemColor(inItem);
+	wxString key(wxT("Calendar/"));
+	key += CalItemName(inItem);
+	val.Set(wxConfig::Get()->Read(key, val.GetPixel()));
+	return val;
 }
 
 
-void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, COLORREF inColor)
+void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, wxColour inColor)
 {
-	theApp.WriteProfileInt(_T("Calendar"), CalItemName(inItem), inColor);
+	wxString key(wxT("Calendar/"));
+	key += CalItemName(inItem);
+	wxConfig::Get()->Write(key, static_cast<long>(inColor.GetPixel()));
 }
 
 
-int CAgilityBookOptions::CalendarOpeningNear()
+long CAgilityBookOptions::CalendarOpeningNear()
 {
-	return theApp.GetProfileInt(_T("Calendar"), _T("OpenNear"), 5);
+	long val = 4;
+	wxConfig::Get()->Read(wxT("Calendar/OpenNear"), &val);
+	return val;
 }
 
 
-void CAgilityBookOptions::SetCalendarOpeningNear(int inDays)
+void CAgilityBookOptions::SetCalendarOpeningNear(long inDays)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("OpenNear"), inDays);
+	wxConfig::Get()->Write(wxT("Calendar/OpenNear"), inDays);
 }
 
 
-int CAgilityBookOptions::CalendarClosingNear()
+long CAgilityBookOptions::CalendarClosingNear()
 {
-	return theApp.GetProfileInt(_T("Calendar"), _T("CloseNear"), 10);
+	long val = 10;
+	wxConfig::Get()->Read(wxT("Calendar/CloseNear"), &val);
+	return val;
 }
 
 
-void CAgilityBookOptions::SetCalendarClosingNear(int inDays)
+void CAgilityBookOptions::SetCalendarClosingNear(long inDays)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("CloseNear"), inDays);
+	wxConfig::Get()->Write(wxT("Calendar/CloseNear"), inDays);
 }
 
 
-COLORREF CAgilityBookOptions::CalendarOpeningNearColor()
+wxColour CAgilityBookOptions::CalendarOpeningNearColor()
 {
-	return theApp.GetProfileInt(_T("Calendar"), _T("OpenNearColor"), RGB(0,0,255));
+	wxColour val(0,0,255);
+	val.Set(wxConfig::Get()->Read(wxT("Calendar/OpenNearColor"), val.GetPixel()));
+	return val;
 }
 
 
-void CAgilityBookOptions::SetCalendarOpeningNearColor(COLORREF inColor)
+void CAgilityBookOptions::SetCalendarOpeningNearColor(wxColour inColor)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("OpenNearColor"), inColor);
+	wxConfig::Get()->Write(wxT("Calendar/OpenNearColor"), static_cast<long>(inColor.GetPixel()));
 }
 
 
-COLORREF CAgilityBookOptions::CalendarClosingNearColor()
+wxColour CAgilityBookOptions::CalendarClosingNearColor()
 {
-	return theApp.GetProfileInt(_T("Calendar"), _T("CloseNearColor"), RGB(255,0,0));
+	wxColour val(255,0,0);
+	val.Set(wxConfig::Get()->Read(wxT("Calendar/CloseNearColor"), val.GetPixel()));
+	return val;
 }
 
 
-void CAgilityBookOptions::SetCalendarClosingNearColor(COLORREF inColor)
+void CAgilityBookOptions::SetCalendarClosingNearColor(wxColour inColor)
 {
-	theApp.WriteProfileInt(_T("Calendar"), _T("CloseNearColor"), inColor);
+	wxConfig::Get()->Write(wxT("Calendar/CloseNearColor"), static_cast<long>(inColor.GetPixel()));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -446,16 +469,17 @@ void CAgilityBookOptions::SetCalendarClosingNearColor(COLORREF inColor)
 
 ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("FirstDayOfWeek"), static_cast<int>(ARBDate::eSunday));
+	long val = static_cast<long>(ARBDate::eSunday);
+	wxConfig::Get()->Read(wxT("Common/FirstDayOfWeek"), &val);
 	if (val < 0 || val > 6)
-		val = static_cast<int>(ARBDate::eSunday);
+		val = static_cast<long>(ARBDate::eSunday);
 	return static_cast<ARBDate::DayOfWeek>(val);
 }
 
 
 void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("FirstDayOfWeek"), static_cast<int>(day));
+	wxConfig::Get()->Write(wxT("Common/FirstDayOfWeek"), static_cast<long>(day));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -463,27 +487,29 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 
 bool CAgilityBookOptions::GetViewRunsByTrial()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("ViewRunsByTrial"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Common/ViewRunsByTrial"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetViewRunsByTrial(bool bView)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("ViewRunsByTrial"), bView ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/ViewRunsByTrial"),bView);
 }
 
 
 bool CAgilityBookOptions::GetNewestDatesFirst()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("ViewNewestFirst"), 0);
-	return val == 1 ? true : false;
+	bool val = false;
+	wxConfig::Get()->Read(wxT("Common/ViewNewestFirst"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("ViewNewestFirst"), bNewest ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/ViewNewestFirst"), bNewest);
 }
 
 
@@ -492,9 +518,9 @@ void CAgilityBookOptions::GetPointsViewSort(
 		PointsViewSort& outSecondary,
 		PointsViewSort& outTertiary)
 {
-	outPrimary = static_cast<PointsViewSort>(theApp.GetProfileInt(_T("Common"), _T("sortPtVw1"), static_cast<int>(ePointsViewSortDivision)));
-	outSecondary = static_cast<PointsViewSort>(theApp.GetProfileInt(_T("Common"), _T("sortPtVw2"), static_cast<int>(ePointsViewSortLevel)));
-	outTertiary = static_cast<PointsViewSort>(theApp.GetProfileInt(_T("Common"), _T("sortPtVw3"), static_cast<int>(ePointsViewSortEvent)));
+	outPrimary = static_cast<PointsViewSort>(wxConfig::Get()->Read(wxT("Common/sortPtVw1"), static_cast<long>(ePointsViewSortDivision)));
+	outSecondary = static_cast<PointsViewSort>(wxConfig::Get()->Read(wxT("Common/sortPtVw2"), static_cast<long>(ePointsViewSortLevel)));
+	outTertiary = static_cast<PointsViewSort>(wxConfig::Get()->Read(wxT("Common/sortPtVw3"), static_cast<long>(ePointsViewSortEvent)));
 }
 
 
@@ -503,252 +529,276 @@ void CAgilityBookOptions::SetPointsViewSort(
 		PointsViewSort inSecondary,
 		PointsViewSort inTertiary)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("sortPtVw1"), static_cast<int>(inPrimary));
-	theApp.WriteProfileInt(_T("Common"), _T("sortPtVw2"), static_cast<int>(inSecondary));
-	theApp.WriteProfileInt(_T("Common"), _T("sortPtVw3"), static_cast<int>(inTertiary));
+	wxConfig::Get()->Write(wxT("Common/sortPtVw1"), static_cast<long>(inPrimary));
+	wxConfig::Get()->Write(wxT("Common/sortPtVw2"), static_cast<long>(inSecondary));
+	wxConfig::Get()->Write(wxT("Common/sortPtVw3"), static_cast<long>(inTertiary));
 }
 
 
 bool CAgilityBookOptions::GetViewHiddenTitles()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("ViewHiddenTitles"), 0);
-	return val == 1 ? true : false;
+	bool val = false;
+	wxConfig::Get()->Read(wxT("Common/ViewHiddenTitles"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("ViewHiddenTitles"), bSet ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/ViewHiddenTitles"), bSet);
 }
 
 
 bool CAgilityBookOptions::GetViewLifetimePointsByEvent()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("ViewLifetimeEvents"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Common/ViewLifetimeEvents"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetViewLifetimePointsByEvent(bool bSet)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("ViewLifetimeEvents"), bSet ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/ViewLifetimeEvents"), bSet);
 }
 
 
 bool CAgilityBookOptions::GetTableInYPS()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("TableInYPS"), 0);
-	return val == 1 ? true : false;
+	bool val = false;
+	wxConfig::Get()->Read(wxT("Common/TableInYPS"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetTableInYPS(bool bSet)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("TableInYPS"), bSet ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/TableInYPS"), bSet);
 }
 
 
 bool CAgilityBookOptions::GetIncludeCRCDImage()
 {
-	int val = theApp.GetProfileInt(_T("Common"), _T("CRCDImage"), 0);
-	return val == 1 ? true : false;
+	bool val = false;
+	wxConfig::Get()->Read(wxT("Common/CRCDImage"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("CRCDImage"), bSet ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/CRCDImage"), bSet);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Font options
 
+// Note: Fonts are factored by 10 for backwards compatibility with ARBv1
+
 void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
 {
-	info.name = _T("Times New Roman");
+	info.name = wxT("Times New Roman");
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	CString item(_T("PrintFontList"));
-	info.name = theApp.GetProfileString(_T("Common"), item + _T("Name"), info.name);
-	info.size = theApp.GetProfileInt(_T("Common"), item + _T("Size"), info.size);
-	info.italic = (theApp.GetProfileInt(_T("Common"), item + _T("Italic"), info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (theApp.GetProfileInt(_T("Common"), item + _T("Bold"), info.bold ? 1 : 0)) == 1 ? true : false;
+	info.name = wxConfig::Get()->Read(wxT("Common/PrintFontListName"), info.name);
+	wxConfig::Get()->Read(wxT("Common/PrintFontListSize"), &info.size, info.size);
+	wxConfig::Get()->Read(wxT("Common/PrintFontListItalic"), &info.italic, info.italic);
+	wxConfig::Get()->Read(wxT("Common/PrintFontListBold"), &info.bold, info.bold);
+	info.size /= 10;
 }
 
 
 void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 {
-	CString item(_T("PrintFontList"));
-	theApp.WriteProfileString(_T("Common"), item + _T("Name"), info.name);
-	theApp.WriteProfileInt(_T("Common"), item + _T("Size"), info.size);
-	theApp.WriteProfileInt(_T("Common"), item + _T("Italic"), info.italic ? 1 : 0);
-	theApp.WriteProfileInt(_T("Common"), item + _T("Bold"), info.bold ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/PrintFontListName"), info.name);
+	wxConfig::Get()->Write(wxT("Common/PrintFontListSize"), info.size * 10);
+	wxConfig::Get()->Write(wxT("Common/PrintFontListItalic"), info.italic);
+	wxConfig::Get()->Write(wxT("Common/PrintFontListBold"), info.bold);
 }
 
 
-void CAgilityBookOptions::GetPrinterMargins(CRect& outMargins)
+void CAgilityBookOptions::GetPrinterMargins(wxRect& outMargins)
 {
-	outMargins.left = theApp.GetProfileInt(_T("Common"), _T("Margins.L"), 50);
-	outMargins.top = theApp.GetProfileInt(_T("Common"), _T("Margins.T"), 50);
-	outMargins.right = theApp.GetProfileInt(_T("Common"), _T("Margins.R"), 50);
-	outMargins.bottom = theApp.GetProfileInt(_T("Common"), _T("Margins.B"), 50);
+	outMargins.SetLeft(wxConfig::Get()->Read(wxT("Common/Margins.L"), 50L));
+	outMargins.SetTop(wxConfig::Get()->Read(wxT("Common/Margins.T"), 50L));
+	outMargins.SetRight(wxConfig::Get()->Read(wxT("Common/Margins.R"), 50L));
+	outMargins.SetBottom(wxConfig::Get()->Read(wxT("Common/Margins.B"), 50L));
 }
 
 
-void CAgilityBookOptions::SetPrinterMargins(CRect const& inMargins)
+void CAgilityBookOptions::SetPrinterMargins(wxRect const& inMargins)
 {
-	theApp.WriteProfileInt(_T("Common"), _T("Margins.L"), inMargins.left);
-	theApp.WriteProfileInt(_T("Common"), _T("Margins.T"), inMargins.top);
-	theApp.WriteProfileInt(_T("Common"), _T("Margins.R"), inMargins.right);
-	theApp.WriteProfileInt(_T("Common"), _T("Margins.B"), inMargins.bottom);
+	wxConfig::Get()->Write(wxT("Common/Margins.L"), inMargins.GetLeft());
+	wxConfig::Get()->Write(wxT("Common/Margins.T"), inMargins.GetTop());
+	wxConfig::Get()->Write(wxT("Common/Margins.R"), inMargins.GetRight());
+	wxConfig::Get()->Write(wxT("Common/Margins.B"), inMargins.GetBottom());
 }
 
 
 void CAgilityBookOptions::GetCalendarFontInfo(CFontInfo& info)
 {
-	info.name = _T("Times New Roman");
+	info.name = wxT("Times New Roman");
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	info.name = theApp.GetProfileString(_T("Calendar"), _T("FontTextName"), info.name);
-	info.size = theApp.GetProfileInt(_T("Calendar"), _T("FontTextSize"), info.size);
-	info.italic = (theApp.GetProfileInt(_T("Calendar"), _T("FontTextItalic"), info.italic ? 1 : 0)) == 1 ? true : false;
-	info.bold = (theApp.GetProfileInt(_T("Calendar"), _T("FontTextBold"), info.bold ? 1 : 0)) == 1 ? true : false;
+	info.name = wxConfig::Get()->Read(wxT("Calendar/FontTextName"), info.name);
+	wxConfig::Get()->Read(wxT("Calendar/FontTextSize"), &info.size, info.size);
+	wxConfig::Get()->Read(wxT("Calendar/FontTextItalic"), &info.italic, info.italic);
+	wxConfig::Get()->Read(wxT("Calendar/FontTextBold"), &info.bold, info.bold);
+	info.size /= 10;
 }
 
 
 void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 {
-	theApp.WriteProfileString(_T("Calendar"), _T("FontTextName"), info.name);
-	theApp.WriteProfileInt(_T("Calendar"), _T("FontTextSize"), info.size);
-	theApp.WriteProfileInt(_T("Calendar"), _T("FontTextItalic"), info.italic ? 1 : 0);
-	theApp.WriteProfileInt(_T("Calendar"), _T("FontTextBold"), info.bold ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Calendar/FontTextName"), info.name);
+	wxConfig::Get()->Write(wxT("Calendar/FontTextSize"), info.size * 10);
+	wxConfig::Get()->Write(wxT("Calendar/FontTextItalic"), info.italic);
+	wxConfig::Get()->Write(wxT("Calendar/FontTextBold"), info.bold);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Last entered options
 
-CString CAgilityBookOptions::GetLastEnteredDivision()
+wxString CAgilityBookOptions::GetLastEnteredDivision()
 {
-	return theApp.GetProfileString(_T("Last"), _T("Division"), _T(""));
+	return wxConfig::Get()->Read(wxT("Last/Division"), wxString());
 }
 
 
-void CAgilityBookOptions::SetLastEnteredDivision(TCHAR const* inLast)
+void CAgilityBookOptions::SetLastEnteredDivision(wxChar const* inLast)
 {
-	theApp.WriteProfileString(_T("Last"), _T("Division"), inLast);
+	if (inLast)
+		wxConfig::Get()->Write(wxT("Last/Division"), inLast);
+	else
+		wxConfig::Get()->DeleteEntry(wxT("Last/Division"));
 }
 
 
-CString CAgilityBookOptions::GetLastEnteredLevel()
+wxString CAgilityBookOptions::GetLastEnteredLevel()
 {
-	return theApp.GetProfileString(_T("Last"), _T("Level"), _T(""));
+	return wxConfig::Get()->Read(wxT("Last/Level"), wxString());
 }
 
 
-void CAgilityBookOptions::SetLastEnteredLevel(TCHAR const* inLast)
+void CAgilityBookOptions::SetLastEnteredLevel(wxChar const* inLast)
 {
-	theApp.WriteProfileString(_T("Last"), _T("Level"), inLast);
+	if (inLast)
+		wxConfig::Get()->Write(wxT("Last/Level"), inLast);
+	else
+		wxConfig::Get()->DeleteEntry(wxT("Last/Level"));
 }
 
 
-CString CAgilityBookOptions::GetLastEnteredHeight()
+wxString CAgilityBookOptions::GetLastEnteredHeight()
 {
-	return theApp.GetProfileString(_T("Last"), _T("Height"), _T(""));
+	return wxConfig::Get()->Read(wxT("Last/Height"), wxString());
 }
 
 
-void CAgilityBookOptions::SetLastEnteredHeight(TCHAR const* inLast)
+void CAgilityBookOptions::SetLastEnteredHeight(wxChar const* inLast)
 {
-	theApp.WriteProfileString(_T("Last"), _T("Height"), inLast);
+	if (inLast)
+		wxConfig::Get()->Write(wxT("Last/Height"), inLast);
+	else
+		wxConfig::Get()->DeleteEntry(wxT("Last/Height"));
 }
 
 
-CString CAgilityBookOptions::GetLastEnteredRefHeight()
+wxString CAgilityBookOptions::GetLastEnteredRefHeight()
 {
-	return theApp.GetProfileString(_T("Last"), _T("RefHeight"), _T(""));
+	return wxConfig::Get()->Read(wxT("Last/RefHeight"), wxString());
 }
 
 
-void CAgilityBookOptions::SetLastEnteredRefHeight(TCHAR const* inLast)
+void CAgilityBookOptions::SetLastEnteredRefHeight(wxChar const* inLast)
 {
-	theApp.WriteProfileString(_T("Last"), _T("RefHeight"), inLast);
+	if (inLast)
+		wxConfig::Get()->Write(wxT("Last/RefHeight"), inLast);
+	else
+		wxConfig::Get()->DeleteEntry(wxT("Last/RefHeight"));
 }
 
 
-CString CAgilityBookOptions::GetLastEnteredJudge()
+wxString CAgilityBookOptions::GetLastEnteredJudge()
 {
-	return theApp.GetProfileString(_T("Last"), _T("Judge"), _T(""));
+	return wxConfig::Get()->Read(wxT("Last/Judge"), wxString());
 }
 
 
-void CAgilityBookOptions::SetLastEnteredJudge(TCHAR const* inLast)
+void CAgilityBookOptions::SetLastEnteredJudge(wxChar const* inLast)
 {
-	theApp.WriteProfileString(_T("Last"), _T("Judge"), inLast);
+	if (inLast)
+		wxConfig::Get()->Write(wxT("Last/Judge"), inLast);
+	else
+		wxConfig::Get()->DeleteEntry(wxT("Last/Judge"));
 }
 
 
-CString CAgilityBookOptions::GetLastEnteredHandler()
+wxString CAgilityBookOptions::GetLastEnteredHandler()
 {
-	return theApp.GetProfileString(_T("Last"), _T("Handler"), _T(""));
+	return wxConfig::Get()->Read(wxT("Last/Handler"), wxString());
 }
 
 
-void CAgilityBookOptions::SetLastEnteredHandler(TCHAR const* inLast)
+void CAgilityBookOptions::SetLastEnteredHandler(wxChar const* inLast)
 {
-	theApp.WriteProfileString(_T("Last"), _T("Handler"), inLast);
+	if (inLast)
+		wxConfig::Get()->Write(wxT("Last/Handler"), inLast);
+	else
+		wxConfig::Get()->DeleteEntry(wxT("Last/Handler"));
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // Import/export options
 
-int CAgilityBookOptions::GetImportStartRow()
+long CAgilityBookOptions::GetImportStartRow()
 {
-	int row = theApp.GetProfileInt(_T("Import"), _T("row"), 1);
+	long row = wxConfig::Get()->Read(wxT("Import/row"), 1L);
 	if (0 > row)
 		row = 1;
 	return row;
 }
 
 
-void CAgilityBookOptions::SetImportStartRow(int row)
+void CAgilityBookOptions::SetImportStartRow(long row)
 {
-	theApp.WriteProfileInt(_T("Import"), _T("row"), row);
+	wxConfig::Get()->Write(wxT("Import/row"), row);
 }
 
 
 void CAgilityBookOptions::GetImportExportDelimiters(
 		bool bImport,
-		int& delim,
-		CString& delimiter)
+		long& delim,
+		wxString& delimiter)
 {
-	CString section;
+	wxString section;
 	if (bImport)
-		section = _T("Import");
+		section = wxT("Import/");
 	else
-		section = _T("Export");
+		section = wxT("Export/");
 	delim = eDelimTab;
 	delimiter.Empty();
-	delim = theApp.GetProfileInt(section, _T("delim"), delim);
-	delimiter = theApp.GetProfileString(section, _T("delimiter"), delimiter);
-	if (1 < delimiter.GetLength())
+	delim = wxConfig::Get()->Read(section + wxT("delim"), delim);
+	delimiter = wxConfig::Get()->Read(section + wxT("delimiter"), delimiter);
+	if (1 < delimiter.length())
 		delimiter = delimiter.Left(1);
 }
 
 
 void CAgilityBookOptions::SetImportExportDelimiters(
 		bool bImport,
-		int delim,
-		CString const& delimiter)
+		long delim,
+		wxString const& delimiter)
 {
-	CString section;
+	wxString section;
 	if (bImport)
-		section = _T("Import");
+		section = wxT("Import/");
 	else
-		section = _T("Export");
-	theApp.WriteProfileInt(section, _T("delim"), delim);
-	theApp.WriteProfileString(section, _T("delimiter"), delimiter);
+		section = wxT("Export/");
+	wxConfig::Get()->Write(section + wxT("delim"), delim);
+	wxConfig::Get()->Write(section + wxT("delimiter"), delimiter);
 }
 
 
@@ -756,12 +806,12 @@ void CAgilityBookOptions::GetImportExportDateFormat(
 		bool bImport,
 		ARBDate::DateFormat& outFormat)
 {
-	CString section;
+	wxString section;
 	if (bImport)
-		section = _T("Import");
+		section = wxT("Import/");
 	else
-		section = _T("Export");
-	outFormat = static_cast<ARBDate::DateFormat>(theApp.GetProfileInt(section, _T("dateformat"), static_cast<int>(ARBDate::eDashYYYYMMDD)));
+		section = wxT("Export/");
+	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + wxT("dateformat"), static_cast<long>(ARBDate::eDashYYYYMMDD)));
 }
 
 
@@ -769,39 +819,39 @@ void CAgilityBookOptions::SetImportExportDateFormat(
 		bool bImport,
 		ARBDate::DateFormat inFormat)
 {
-	CString section;
+	wxString section;
 	if (bImport)
-		section = _T("Import");
+		section = wxT("Import/");
 	else
-		section = _T("Export");
-	theApp.WriteProfileInt(section, _T("dateformat"), static_cast<int>(inFormat));
+		section = wxT("Export/");
+	wxConfig::Get()->Write(section + wxT("dateformat"), static_cast<long>(inFormat));
 }
 
 
-static TCHAR const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
+static wxChar const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 {
 	switch (eOrder)
 	{
 	default:
-		return _T("Unknown");
+		return wxT("Unknown");
 	case CAgilityBookOptions::eRunsImport:
-		return _T("Import");
+		return wxT("Import");
 	case CAgilityBookOptions::eRunsExport:
-		return _T("Export");
+		return wxT("Export");
 	case CAgilityBookOptions::eCalImport:
-		return _T("ImportCal");
+		return wxT("ImportCal");
 	case CAgilityBookOptions::eCalExport:
-		return _T("ExportCal");
+		return wxT("ExportCal");
 	case CAgilityBookOptions::eCalExportAppt:
-		return _T("ExportCalAppt");
+		return wxT("ExportCalAppt");
 	case CAgilityBookOptions::eCalExportTask:
-		return _T("ExportCalTask");
+		return wxT("ExportCalTask");
 	case CAgilityBookOptions::eLogImport:
-		return _T("ImportLog");
+		return wxT("ImportLog");
 	case CAgilityBookOptions::eLogExport:
-		return _T("ExportLog");
+		return wxT("ExportLog");
 	case CAgilityBookOptions::eView:
-		return _T("Columns");
+		return wxT("Columns");
 	}
 }
 
@@ -809,30 +859,31 @@ static TCHAR const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder)
 void CAgilityBookOptions::GetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
-		std::vector<int>& outValues,
+		std::vector<long>& outValues,
 		bool bDefaultValues)
 {
 	outValues.clear();
 	if (!bDefaultValues)
 	{
 		otstringstream item;
+		item << GetColumnName(eOrder)
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-		item << _T("col") << static_cast<UINT>(idxColumn);
+			<< wxT("/col") << static_cast<UINT>(idxColumn);
 #else
-		item << _T("col") << idxColumn;
+			<< wxT("/col") << idxColumn;
 #endif
-		CString data = theApp.GetProfileString(GetColumnName(eOrder), item.str().c_str(), _T(""));
+		wxString data = wxConfig::Get()->Read(item.str().c_str(), wxString());
 		int idx = data.Find(',');
 		while (0 <= idx)
 		{
-			int val = tstringUtil::atol((LPCTSTR)data);
+			int val = tstringUtil::atol(data.c_str());
 			outValues.push_back(val);
 			data = data.Mid(idx+1);
 			idx = data.Find(',');
 		}
-		if (0 < data.GetLength())
+		if (0 < data.length())
 		{
-			int val = tstringUtil::atol((LPCTSTR)data);
+			long val = tstringUtil::atol(data.c_str());
 			outValues.push_back(val);
 		}
 	}
@@ -1083,106 +1134,110 @@ void CAgilityBookOptions::GetColumnOrder(
 void CAgilityBookOptions::SetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
-		std::vector<int> const& inValues)
+		std::vector<long> const& inValues)
 {
 	otstringstream data;
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
 		if (0 < i)
-			data << _T(",");
+			data << wxT(",");
 		data << inValues[i];
 	}
 	otstringstream item;
+	item << GetColumnName(eOrder)
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-	item << _T("col") << static_cast<UINT>(idxColumn);
+		<< wxT("/col") << static_cast<UINT>(idxColumn);
 #else
-	item << _T("col") << idxColumn;
+		<< wxT("/col") << idxColumn;
 #endif
-	theApp.WriteProfileString(GetColumnName(eOrder), item.str().c_str(), data.str().c_str());
+	wxConfig::Get()->Write(item.str().c_str(), data.str().c_str());
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
 
-int CAgilityBookOptions::GetMRUFileCount()
+long CAgilityBookOptions::GetMRUFileCount()
 {
-	return theApp.GetProfileInt(_T("Settings"), _T("MRUsize"), 4);
+	return wxConfig::Get()->Read(wxT("Settings/MRUsize"), 4L);
 }
 
 
-void CAgilityBookOptions::SetMRUFileCount(int nFiles)
+void CAgilityBookOptions::SetMRUFileCount(long nFiles)
 {
-	theApp.WriteProfileInt(_T("Settings"), _T("MRUsize"), nFiles);
+	wxConfig::Get()->Write(wxT("Settings/MRUsize"), nFiles);
 }
 
 
 bool CAgilityBookOptions::GetAutoUpdateCheck()
 {
-	int val = theApp.GetProfileInt(_T("Settings"), _T("autoCheck"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Settings/autoCheck"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetAutoUpdateCheck(bool bSet)
 {
-	theApp.WriteProfileInt(_T("Settings"), _T("autoCheck"), bSet ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Settings/autoCheck"), bSet);
 }
 
 
-int CAgilityBookOptions::GetNumBackupFiles()
+long CAgilityBookOptions::GetNumBackupFiles()
 {
-	return theApp.GetProfileInt(_T("Settings"), _T("BackupFiles"), 3);
+	return wxConfig::Get()->Read(wxT("Settings/BackupFiles"), 3L);
 }
 
 
-void CAgilityBookOptions::SetNumBackupFiles(int nFiles)
+void CAgilityBookOptions::SetNumBackupFiles(long nFiles)
 {
-	theApp.WriteProfileInt(_T("Settings"), _T("BackupFiles"), nFiles);
+	wxConfig::Get()->Write(wxT("Settings/BackupFiles"), nFiles);
 }
 
 
 bool CAgilityBookOptions::AutoShowSplashScreen()
 {
-	int val = theApp.GetProfileInt(_T("Settings"), _T("ShowSplash"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Settings/ShowSplash"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::AutoShowSplashScreen(bool bAutoShow)
 {
-	theApp.WriteProfileInt(_T("Settings"), _T("ShowSplash"), bAutoShow ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Settings/ShowSplash"), bAutoShow);
 }
 
 
-CString CAgilityBookOptions::GetSplashImage()
+wxString CAgilityBookOptions::GetSplashImage()
 {
-	return theApp.GetProfileString(_T("Settings"), _T("Splash"), _T(""));
+	return wxConfig::Get()->Read(wxT("Settings/Splash"), wxString());
 }
 
 
-void CAgilityBookOptions::SetSplashImage(CString const& filename)
+void CAgilityBookOptions::SetSplashImage(wxString const& filename)
 {
-	theApp.WriteProfileString(_T("Settings"), _T("Splash"), filename);
+	wxConfig::Get()->Write(wxT("Settings/Splash"), filename);
 }
 
 
 bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 {
-	int val = theApp.GetProfileInt(_T("Settings"), _T("autoShowTitle"), 1);
-	return val == 1 ? true : false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Settings/autoShowTitle"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
-	theApp.WriteProfileInt(_T("Settings"), _T("autoShowTitle"), bShow ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Settings/autoShowTitle"), bShow);
 }
 
 
 ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 {
 	otstringstream section;
-	section << _T("dateFormat") << static_cast<int>(inItem);
+	section << wxT("Settings/dateFormat") << static_cast<int>(inItem);
 	ARBDate::DateFormat def;
 	switch (inItem)
 	{
@@ -1194,8 +1249,7 @@ ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 	case eCalendar: def = ARBDate::eDashYMD; break;
 	case eTraining: def = ARBDate::eDashYMD; break;
 	}
-	int val = theApp.GetProfileInt(_T("Settings"), section.str().c_str(), static_cast<int>(def));
-	return static_cast<ARBDate::DateFormat>(val);
+	return static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section.str().c_str(), static_cast<long>(def)));
 }
 
 
@@ -1204,104 +1258,88 @@ void CAgilityBookOptions::SetDateFormat(
 		ARBDate::DateFormat inFormat)
 {
 	otstringstream section;
-	section << _T("dateFormat") << static_cast<int>(inItem);
-	theApp.WriteProfileInt(_T("Settings"), section.str().c_str(), static_cast<int>(inFormat));
+	section << wxT("Settings/dateFormat") << static_cast<int>(inItem);
+	wxConfig::Get()->Write(section.str().c_str(), static_cast<long>(inFormat));
 }
 
 
 bool CAgilityBookOptions::ShowHtmlPoints(bool* outIEInstalled)
 {
-	static bool s_bChecked = false;
-	static bool s_bIEInstalled = false;
-
-	if (!s_bChecked)
-	{
-		s_bChecked = true;
-		HINSTANCE hShellDoc = LoadLibrary(_T("shdocvw.dll"));
-		if (hShellDoc)
-		{
-			CVersionNum ver(hShellDoc);
-			CVersionNum::VERSION_NUMBER verno;
-			ver.GetVersion(verno);
-			// See MSDN q164539: "How to Determine Which Version of Internet Explorer Is Installed"
-			// Version 5.0.3314.2100: ie5.01sp2 (win95/98/nt4)
-			// Version 5.0.3315.2879: ie5.01sp2 (w2k)
-			if (5 < verno.part1
-			|| (5 == verno.part1 && 0 < verno.part2)
-			|| (5 == verno.part1 && 0 == verno.part2 && 3314 <= verno.part3))
-				s_bIEInstalled = true;
-			// No need to unload, we'll use it shortly.
-		}
-	}
-	if (outIEInstalled)
-		*outIEInstalled = s_bIEInstalled;
-	if (s_bIEInstalled)
-	{
-		int val = theApp.GetProfileInt(_T("Settings"), _T("showHtml"), 1);
-		return val == 1 ? true : false;
-	}
-	else
-		return false;
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Settings/showHtml"), &val);
+	return val;
 }
 
 
 void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
 {
-	theApp.WriteProfileInt(_T("Settings"), _T("showHtml"), bSet ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Settings/showHtml"), bSet);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-CString CAgilityBookOptions::GetUserName(CString const& hint)
+wxString CAgilityBookOptions::GetUserName(wxString const& hint)
 {
-	return theApp.GetProfileString(_T("UserNames"), hint, _T(""));
+	wxString section(wxT("UserNames/"));
+	section += hint;
+	return wxConfig::Get()->Read(section, wxString());
 }
 
 
 void CAgilityBookOptions::SetUserName(
-		CString const& hint,
-		CString const& userName)
+		wxString const& hint,
+		wxString const& userName)
 {
-	theApp.WriteProfileString(_T("UserNames"), hint, userName);
+	wxString section(wxT("UserNames/"));
+	section += hint;
+	wxConfig::Get()->Write(section, userName);
 }
 
 
 bool CAgilityBookOptions::IsCalSiteVisible(
-		CString const& filename,
+		wxString const& filename,
 		CVersionNum const& inVer)
 {
 	assert(inVer.Valid());
 	if (filename.IsEmpty())
 		return true;
 	bool bVisible = true;
-	if (1 == theApp.GetProfileInt(_T("CalSites"), filename, 1))
+	wxString section(wxT("CalSites/"));
+	section += filename;
+	bool bSuppress = true;
+	wxConfig::Get()->Read(section, &bSuppress);
+	if (bSuppress)
+		bVisible = false;
+	else
 	{
 		CVersionNum ver = GetCalSitePermanentStatus(filename);
 		if (ver.Valid() && inVer <= ver)
 			bVisible = false;
 	}
-	else
-		bVisible = false;
 	return bVisible;
 }
 
 
 void CAgilityBookOptions::SuppressCalSite(
-		CString const& filename,
+		wxString const& filename,
 		bool bSuppress)
 {
 	if (filename.IsEmpty())
 		return;
-	theApp.WriteProfileInt(_T("CalSites"), filename, bSuppress ? 0 : 1);
+	wxString section(wxT("CalSites/"));
+	section += filename;
+	wxConfig::Get()->Write(section, !bSuppress);
 }
 
 
-CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(CString const& filename)
+CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(wxString const& filename)
 {
 	CVersionNum ver;
 	if (!filename.IsEmpty())
 	{
-		CString str = theApp.GetProfileString(_T("CalSites2"), filename, NULL);
+		wxString section(wxT("CalSites2/"));
+		section += filename;
+		wxString str = wxConfig::Get()->Read(section, wxString());
 		if (!str.IsEmpty())
 			ver.Parse(filename, str);
 	}
@@ -1310,22 +1348,24 @@ CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(CString const& filena
 
 
 void CAgilityBookOptions::SuppressCalSitePermanently(
-		CString const& filename,
+		wxString const& filename,
 		CVersionNum const& inVer,
 		bool bSuppress)
 {
 	if (filename.IsEmpty())
 		return;
+	wxString section(wxT("CalSites2/"));
+	section += filename;
 	if (bSuppress)
-		theApp.WriteProfileString(_T("CalSites2"), filename, inVer.GetVersionString());
+		wxConfig::Get()->Write(section, inVer.GetVersionString());
 	else
 	{
 		// If we're clearing one, make sure we haven't written a different version
 		CVersionNum ver;
-		CString str = theApp.GetProfileString(_T("CalSites2"), filename, NULL);
+		wxString str = wxConfig::Get()->Read(section, wxString());
 		if (!str.IsEmpty())
 			ver.Parse(filename, str);
 		if (ver == inVer)
-			theApp.WriteProfileString(_T("CalSites2"), filename, NULL);
+			wxConfig::Get()->DeleteEntry(section);
 	}
 }

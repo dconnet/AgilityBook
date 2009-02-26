@@ -33,14 +33,31 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-30 DRC Created.
  */
 
 #include "ARBDate.h"
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
+//#include "DlgBaseDialog.h"
+//#include "ListCtrl.h"
 
+
+class CDlgConfigMultiQ
+{
+public:
+	CDlgConfigMultiQ(
+			ARBConfigVenuePtr inVenue,
+			ARBConfigMultiQPtr inMultiQ,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgConfigMultiQ"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgConfigMultiQ : public CDlgBaseDialog
 {
 public:
@@ -90,3 +107,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

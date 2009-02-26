@@ -33,10 +33,25 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-03-06 DRC Created
  */
 
+class CDlgCRCDViewer
+{
+public:
+	CDlgCRCDViewer(
+			HENHMETAFILE inMetaFile,
+			wxWindow* pParent = NULL);
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgCRCDViewer"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 #include "DlgBaseDialog.h"
 
 class CDlgCRCDViewer : public CDlgBaseDialog
@@ -75,3 +90,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

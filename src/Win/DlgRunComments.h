@@ -33,12 +33,24 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "DlgBasePropertyPage.h"
+#include "ARBTypes.h"
+//#include "DlgBasePropertyPage.h"
 class CAgilityBookDoc;
 
+
+class CDlgRunComments
+{
+public:
+	CDlgRunComments(
+			CAgilityBookDoc* pDoc,
+			ARBDogRunPtr pRun) {}
+};
+
+#if 0
 class CDlgRunComments : public CDlgBasePropertyPage
 {
 public:
@@ -75,3 +87,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

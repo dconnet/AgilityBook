@@ -33,19 +33,30 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-10 DRC Place quotes are field on output as needed.
  * @li 2004-01-04 DRC Added date format specification.
  * @li 2003-12-10 DRC Created
  */
 
-#include "AgilityBookOptions.h"
-#include "ComboBox.h"
-#include "DlgBasePropertyPage.h"
-#include "ListCtrl.h"
+//#include "AgilityBookOptions.h"
+//#include "ComboBox.h"
+//#include "DlgBasePropertyPage.h"
+//#include "ListCtrl.h"
 class CAgilityBookDoc;
 class CWizard;
 
+
+class CWizardExport
+{
+public:
+	CWizardExport(
+			CWizard* pSheet,
+			CAgilityBookDoc* pDoc) {}
+};
+
+#if 0
 class CWizardExport : public CDlgBasePropertyPage
 {
 	DECLARE_DYNAMIC(CWizardExport)
@@ -102,3 +113,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

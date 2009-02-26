@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-25 DRC Ported to wxWidgets.
  * @li 2004-09-11 DRC Created
  */
 
@@ -43,16 +44,12 @@ class IMessageBoxCallback
 {
 public:
 	virtual ~IMessageBoxCallback();
-	virtual void OnDetails(CWnd* pParent) = 0;
+	virtual void OnDetails(wxWindow* pParent) = 0;
 };
 
+
 extern int AfxMessageBox2(
-		UINT inIDText,
-		UINT inType = MB_OK,
+		wxString const& inText,
+		long inFlags = wxOK, //wxOK, wxCANCEL, wxYES, wxNO, wxHELP, wxNO_DEFAULT
 		IMessageBoxCallback* inCallback = NULL,
-		CWnd* inParent = NULL);
-extern int AfxMessageBox2(
-		CString const& inText,
-		UINT inType = MB_OK,
-		IMessageBoxCallback* inCallback = NULL,
-		CWnd* inParent = NULL);
+		wxWindow* inParent = NULL);

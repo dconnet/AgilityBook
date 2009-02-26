@@ -33,80 +33,56 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Added 'Open' button.
  * @li 2004-03-31 DRC Created.
  */
 
-#include <afxinet.h>
-#include <vector>
+#include "ARBTypes.h"
 #include "ColumnOrder.h"
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
+#include <vector>
+class CReportListCtrl;
+class wxListEvent;
 
-class CDlgFindLinks : public CDlgBaseDialog
+class CDlgFindLinksData;
+typedef tr1::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
+
+
+class CDlgFindLinks : public wxDialog
 {
-	friend int CALLBACK CompareLinks(LPARAM, LPARAM, LPARAM);
+	friend int wxCALLBACK CompareLinks(long item1, long item2, long sortData);
 public:
 	CDlgFindLinks(
 			ARBDogList& inDogs,
-			CWnd* pParent = NULL);
-	virtual ~CDlgFindLinks();
+			wxWindow* pParent = NULL);
+
 	size_t GetNumLinks() const		{return m_Data.size();}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgFindLinks)
-	enum { IDD = IDD_FIND_LINKS };
-	CListCtrl2	m_ctrlLinks;
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlOpen;
-	//}}AFX_DATA
-	CColumnOrder m_sortLinks;
-	CImageList m_ImageList;
-	int m_imgEmpty;
-	int m_imgOk;
-	int m_imgMissing;
-	CInternetSession m_Session;
-
-	class CDlgFindLinksData
-	{
-	public:
-		CDlgFindLinksData(
-				ARBDogPtr pDog,
-				ARBDogTrialPtr pTrial,
-				ARBDogRunPtr pRun,
-				tstring const& inLink);
-		~CDlgFindLinksData();
-		ARBDogPtr m_pDog;
-		ARBDogTrialPtr m_pTrial;
-		ARBDogRunPtr m_pRun;
-		tstring m_OldLink;
-		tstring m_Link;
-	};
-	std::vector<CDlgFindLinksData> m_Data;
-
-	//{{AFX_VIRTUAL(CDlgFindLinks)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
+	CDlgFindLinksDataPtr GetItemLinkDataByData(long data);
 	int GetImageIndex(tstring const& inLink);
 	void SetColumnHeaders();
 	void UpdateButtons();
+	void Edit();
 
-	//{{AFX_MSG(CDlgFindLinks)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnGetdispinfoList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnKeydownList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnCopy();
-	afx_msg void OnEdit();
-	afx_msg void OnOpen();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	CReportListCtrl* m_ctrlLinks;
+	wxButton* m_ctrlEdit;
+	wxButton* m_ctrlOpen;
+
+	CColumnOrder m_sortLinks;
+	int m_imgEmpty;
+	int m_imgOk;
+	int m_imgMissing;
+	std::vector<CDlgFindLinksDataPtr> m_Data;
+
+	DECLARE_EVENT_TABLE()
+	void OnColumnClick(wxListEvent& evt);
+	void OnItemSelected(wxListEvent& evt);
+	void OnDoubleClick(wxMouseEvent& evt);
+	void OnKeyDown(wxListEvent& evt);
+	void OnCopy(wxCommandEvent& evt);
+	void OnEdit(wxCommandEvent& evt);
+	void OnOpen(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

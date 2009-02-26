@@ -33,9 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-10-24 DRC Changed ctor and added <= operators
  * @li 2004-03-04 DRC Created
  */
+
 
 class CVersionNum
 {
@@ -49,17 +52,13 @@ public:
 	} VERSION_NUMBER;
 
 	CVersionNum();
-	CVersionNum(
-			HMODULE inModule,
-			WORD inwLangID = 0,
-			WORD inwCharSet = 0);
 	CVersionNum(CVersionNum const& rhs);
 	CVersionNum& operator=(CVersionNum const& rhs);
 
 	/**
 	 * Parse a version number, must be in form "n.n.n.n".
 	 */
-	bool Parse(CString inFileName, CString inVer);
+	bool Parse(wxString inFileName, wxString inVer);
 
 	/**
 	 * Equality is based solely on the version number, not any language aspects.
@@ -72,16 +71,10 @@ public:
 
 	void clear();
 	bool Valid() const						{return m_Valid;}
-	CString GetFileName() const				{return m_FileName;}
-	CString GetProductName() const			{return m_ProdName;}
-	CString GetVersionString() const;
-	void GetVersion(VERSION_NUMBER& outVer) const; 
-	LANGID GetLangID() const				{return m_wLangID;}
+	wxString GetVersionString() const;
+	void GetVersion(VERSION_NUMBER& outVer) const;
 
 private:
 	bool m_Valid;
-	CString m_FileName;
-	CString m_ProdName;
 	VERSION_NUMBER m_Version;
-	WORD m_wLangID;
 };

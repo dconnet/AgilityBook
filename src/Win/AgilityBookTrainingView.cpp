@@ -1,0 +1,927 @@
+/*
+ * Copyright © 2003-2009 David Connet. All Rights Reserved.
+ *
+ * Permission to use, copy, modify and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted, provided
+ * that the above copyright notice appear in all copies, that both the
+ * copyright notice and this permission notice appear in supporting
+ * documentation, and that the names of David Connet, dcon Software,
+ * AgilityBook, AgilityRecordBook or "Agility Record Book" not be used in
+ * advertising or publicity pertaining to distribution of the software
+ * without specific, written prior permission. David Connet makes no
+ * representations about the suitability of this software for any purpose.
+ * It is provided "as is" without express or implied warranty.
+ *
+ * DAVID CONNET DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+ * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO
+ * EVENT SHALL DAVID CONNET BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+ * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF
+ * USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+ * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
+ *
+ * http://opensource.org
+ * Open Source Historical Permission Notice and Disclaimer.
+ */
+
+/**
+ * @file
+ *
+ * @brief implementation of the CAgilityBookTrainingView class
+ * @author David Connet
+ *
+ * Revision History
+ * @li 2009-02-04 DRC Ported to wxWidgets.
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2005-01-25 DRC Remember the sort column between program invocations.
+ * @li 2004-12-31 DRC Make F1 invoke context help.
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
+ * @li 2004-06-24 DRC Added a sort header image.
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
+ * @li 2004-04-15 DRC Added Duplicate menu item.
+ * @li 2004-04-06 DRC Added simple sorting by column.
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
+ * @li 2003-12-27 DRC Implemented Find/FindNext.
+ * @li 2003-12-14 DRC Re-sort items after editing an existing one.
+ * @li 2003-09-21 DRC Created
+ */
+
+#include "stdafx.h"
+#include "AgilityBookTrainingView.h"
+
+#include "AgilityBook.h"
+#include "AgilityBookDoc.h"
+#include "AgilityBookMenu.h"
+#include "AgilityBookOptions.h"
+#include "ARBTraining.h"
+#include "ClipBoard.h"
+#include "DlgAssignColumns.h"
+#include "DlgFind.h"
+#include "DlgTraining.h"
+#include "Element.h"
+#include "FilterOptions.h"
+#include "ListData.h"
+#include <wx/config.h>
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CAgilityBookTrainingViewData
+
+class CAgilityBookTrainingViewData : public CListData
+{
+public:
+	CAgilityBookTrainingViewData(
+			CAgilityBookTrainingView* pView,
+			ARBTrainingPtr pTraining)
+		: m_pView(pView)
+		, m_pTraining(pTraining)
+	{
+	}
+	~CAgilityBookTrainingViewData()
+	{
+	}
+
+	bool CanEdit() const				{return true;}
+	bool CanDelete() const				{return true;}
+
+	ARBTrainingPtr GetTraining()		{return m_pTraining;}
+	virtual wxString OnNeedText(long iCol) const;
+	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
+
+private:
+	CAgilityBookTrainingView* m_pView;
+	ARBTrainingPtr m_pTraining;
+};
+
+
+wxString CAgilityBookTrainingViewData::OnNeedText(long iCol) const
+{
+	tstring str;
+	if (m_pTraining)
+	{
+		switch (m_pView->m_Columns[iCol])
+		{
+		case IO_LOG_DATE:
+			str = m_pTraining->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eTraining));
+			break;
+		case IO_LOG_NAME:
+			str = m_pTraining->GetName();
+			break;
+		case IO_LOG_SUBNAME:
+			str = m_pTraining->GetSubName();
+			break;
+		case IO_LOG_NOTES:
+			str = tstringUtil::Replace(m_pTraining->GetNote(), wxT("\n"), wxT(" "));
+			break;
+		}
+	}
+	return str.c_str();
+}
+
+
+void CAgilityBookTrainingViewData::OnNeedListItem(long iCol, wxListItem& info) const
+{
+	if (m_pTraining)
+	{
+		info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
+		info.SetText(OnNeedText(iCol));
+		if (0 == iCol)
+		{
+			info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
+			info.SetImage(m_pView->m_Ctrl->ImageEmpty());
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// List sorting
+
+CAgilityBookTrainingView::CSortColumn::CSortColumn(std::vector<long>& inColumns)
+	: m_Columns(inColumns)
+	, m_iCol(1)
+{
+}
+
+
+void CAgilityBookTrainingView::CSortColumn::Initialize()
+{
+	long realCol = IO_LOG_DATE;
+	realCol = wxConfig::Get()->Read(wxT("Sorting/Training"), realCol);
+	long neg = 1;
+	if (0 > realCol)
+	{
+		neg = -1;
+		realCol *= -1;
+	}
+	long col = LookupColumn(realCol);
+	if (0 > m_iCol)
+		col = LookupColumn(IO_LOG_DATE);
+	m_iCol = col * neg;
+}
+
+
+void CAgilityBookTrainingView::CSortColumn::SetColumn(long iCol)
+{
+	m_iCol = iCol;
+	if (0 == iCol)
+		return;
+	long neg = 1;
+	long col = iCol;
+	if (0 > iCol)
+	{
+		neg = -1;
+		col = iCol * -1;
+	}
+	long realCol = m_Columns[col-1] * neg;
+	wxConfig::Get()->Write(wxT("Sorting/Training"), realCol);
+}
+
+
+long CAgilityBookTrainingView::CSortColumn::LookupColumn(long iCol) const
+{
+	size_t n = m_Columns.size();
+	for (size_t i = 0; i < n; ++i)
+	{
+		if (m_Columns[i] == iCol)
+		{
+			return static_cast<long>(i+1);
+		}
+	}
+	return -1;
+}
+
+
+// The wx functions take a 'long'. Which means we can't pass pointers on 64bit.
+// So, we use a global. Since this is only used in one place, we don't have
+// any threading issues.
+static struct SORT_TRAINING_INFO
+{
+	CAgilityBookTrainingView* pThis;
+	int nCol;
+} s_SortInfo;
+
+
+int wxCALLBACK CompareTraining(long item1, long item2, long sortData)
+{
+	if (0 == s_SortInfo.nCol)
+		return 0;
+	CListDataPtr pRawItem1 = s_SortInfo.pThis->m_Ctrl->GetDataByData(item1);
+	CListDataPtr pRawItem2 = s_SortInfo.pThis->m_Ctrl->GetDataByData(item2);
+	CAgilityBookTrainingViewDataPtr pItem1 = tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem1);
+	CAgilityBookTrainingViewDataPtr pItem2 = tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(pRawItem2);
+	int nRet = 0;
+	int iCol = abs(s_SortInfo.nCol);
+	switch (s_SortInfo.pThis->m_Columns[iCol-1])
+	{
+	case IO_LOG_DATE:
+		if (pItem1->GetTraining()->GetDate() < pItem2->GetTraining()->GetDate())
+			nRet = -1;
+		else if (pItem1->GetTraining()->GetDate() > pItem2->GetTraining()->GetDate())
+			nRet = 1;
+		break;
+	case IO_LOG_NAME:
+		if (pItem1->GetTraining()->GetName() < pItem2->GetTraining()->GetName())
+			nRet = -1;
+		else if (pItem1->GetTraining()->GetName() > pItem2->GetTraining()->GetName())
+			nRet = 1;
+		break;
+	case IO_LOG_SUBNAME:
+		if (pItem1->GetTraining()->GetSubName() < pItem2->GetTraining()->GetSubName())
+			nRet = -1;
+		else if (pItem1->GetTraining()->GetSubName() > pItem2->GetTraining()->GetSubName())
+			nRet = 1;
+		break;
+	case IO_LOG_NOTES:
+		if (pItem1->GetTraining()->GetNote() < pItem2->GetTraining()->GetNote())
+			nRet = -1;
+		else if (pItem1->GetTraining()->GetNote() > pItem2->GetTraining()->GetNote())
+			nRet = 1;
+		break;
+	}
+	if (0 > s_SortInfo.nCol)
+		nRet *= -1;
+	return nRet;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Find
+
+bool CFindTraining::Search(CDlgFind* pDlg) const
+{
+	bool bFound = false;
+	int inc = 1;
+	if (!SearchDown())
+		inc = -1;
+	long index = m_pView->m_Ctrl->GetFirstSelected();
+	if (0 <= index && index < m_pView->m_Ctrl->GetItemCount())
+	{
+		index += inc;
+	}
+	else if (0 > index && SearchDown())
+		index = 0;
+	else if (index >= m_pView->m_Ctrl->GetItemCount() && !SearchDown())
+		index = m_pView->m_Ctrl->GetItemCount() - 1;
+	wxString search = Text();
+	if (!MatchCase())
+		search.MakeLower();
+	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
+	{
+		std::set<tstring> strings;
+		if (SearchAll())
+		{
+			CAgilityBookTrainingViewDataPtr pData = m_pView->GetItemTrainingData(index);
+			if (pData)
+				pData->GetTraining()->GetSearchStrings(strings);
+		}
+		else
+		{
+			long nColumns = m_pView->m_Ctrl->GetColumnCount();
+			for (long i = 0; i < nColumns; ++i)
+			{
+				wxListItem info;
+				info.SetId(index);
+				info.SetMask(wxLIST_MASK_TEXT);
+				info.SetColumn(i);
+				m_pView->m_Ctrl->GetItem(info);
+				strings.insert(info.GetText());
+			}
+		}
+		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		{
+			wxString str((*iter).c_str());
+			if (!MatchCase())
+				str.MakeLower();
+			if (0 <= str.Find(search))
+			{
+				m_pView->m_Ctrl->Select(index, true);
+				m_pView->m_Ctrl->EnsureVisible(index);
+				bFound = true;
+			}
+		}
+	}
+	if (!bFound)
+	{
+		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
+	}
+	return bFound;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+IMPLEMENT_CLASS(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
+
+
+BEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
+	EVT_CONTEXT_MENU(CAgilityBookTrainingView::OnViewContextMenu)
+	EVT_UPDATE_UI(wxID_DUPLICATE, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(wxID_DUPLICATE, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_CUT, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(wxID_CUT, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_COPY, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(wxID_COPY, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_PASTE, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(wxID_PASTE, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(wxID_SELECTALL, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(wxID_FIND, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(wxID_FIND, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(ID_EDIT_FIND_NEXT, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(ID_EDIT_FIND_NEXT, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(ID_EDIT_FIND_PREVIOUS, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(ID_EDIT_FIND_PREVIOUS, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(ID_AGILITY_EDIT_TRAINING, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(ID_AGILITY_EDIT_TRAINING, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_TRAINING, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(ID_AGILITY_NEW_TRAINING, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(ID_AGILITY_DELETE_TRAINING, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(ID_AGILITY_DELETE_TRAINING, CAgilityBookTrainingView::OnViewCmd)
+	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewUpdateCmd)
+	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewCmd)
+END_EVENT_TABLE()
+
+
+#ifdef _MSC_VER
+#pragma warning (push)
+#pragma warning (disable : 4355)
+#endif
+CAgilityBookTrainingView::CAgilityBookTrainingView(
+		CTabView* pTabView,
+		wxDocument* doc)
+	: CAgilityBookBaseExtraView(pTabView, doc)
+	, m_Ctrl(NULL)
+	, m_Columns()
+	, m_Callback(this)
+	, m_SortColumn(m_Columns)
+{
+}
+#ifdef _MSC_VER
+#pragma warning (pop)
+#endif
+
+
+CAgilityBookTrainingView::~CAgilityBookTrainingView()
+{
+}
+
+
+bool CAgilityBookTrainingView::Create(
+		CBasePanel* parentView,
+		wxWindow* parentCtrl,
+		wxDocument* doc,
+		long flags,
+		wxSizer* sizer,
+		int proportion,
+		int sizerFlags,
+		int border)
+{
+	m_Ctrl = new CReportListCtrl(parentCtrl, false);
+	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookTrainingView::OnCtrlColumnClick), NULL, this);
+	m_Ctrl->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookTrainingView::OnCtrlDoubleClick), NULL, this);
+	m_Ctrl->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CAgilityBookTrainingView::OnCtrlKeyDown), NULL, this);
+	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
+}
+
+
+void CAgilityBookTrainingView::DetachView()
+{
+	// The control is actually owned by the panel, the view is not.
+	m_Ctrl = NULL;
+}
+
+
+void CAgilityBookTrainingView::SetCurrentDate(ARBDate const& inDate)
+{
+	if (!m_Ctrl)
+		return;
+	long index = -1;
+	for (long i = 0; i < m_Ctrl->GetItemCount(); ++i)
+	{
+		CAgilityBookTrainingViewDataPtr pTraining = GetItemTrainingData(i);
+		if (pTraining && pTraining->GetTraining()->GetDate() == inDate)
+		{
+			index = i;
+			break;
+		}
+	}
+	m_Ctrl->Select(index, true);
+	m_Ctrl->EnsureVisible(index);
+}
+
+
+bool CAgilityBookTrainingView::IsFiltered() const
+{
+	if (CFilterOptions::Options().GetViewAllDates()
+	&& CFilterOptions::Options().GetTrainingViewAllNames())
+		return false;
+	else
+		return true;
+}
+
+
+bool CAgilityBookTrainingView::GetMessage(wxString& msg) const
+{
+	if (!m_Ctrl)
+		return false;
+	msg = wxString::Format(_("IDS_NUM_TRAINING"), m_Ctrl->GetItemCount());
+	return true;
+}
+
+
+bool CAgilityBookTrainingView::GetMessage2(wxString& msg) const
+{
+	msg = _("IDS_INDICATOR_BLANK");
+	return true;
+}
+
+
+bool CAgilityBookTrainingView::OnCreate(
+		wxDocument* doc,
+		long flags)
+{
+	SetupColumns();
+	return true;
+}
+
+
+void CAgilityBookTrainingView::DoActivateView(
+		bool activate,
+		wxView* activeView,
+		wxView* deactiveView)
+{
+	if (m_Ctrl && activate)
+		m_Ctrl->SetFocus();
+}
+
+
+void CAgilityBookTrainingView::OnDraw(wxDC* dc)
+{
+}
+
+
+void CAgilityBookTrainingView::OnUpdate(
+		wxView* sender,
+		wxObject* inHint)
+{
+	if (!m_Ctrl)
+		return;
+	CUpdateHint* hint = NULL;
+	if (inHint)
+		hint = reinterpret_cast<CUpdateHint*>(inHint);
+	if (!hint || hint->IsSet(UPDATE_TRAINING_VIEW)
+	|| hint->IsEqual(UPDATE_OPTIONS))
+	{
+		LoadData();
+	}
+	else if (hint && (hint->IsEqual(UPDATE_LANG_CHANGE) || hint->IsEqual(UPDATE_CUSTOMIZE)))
+	{
+		SetupColumns();
+		LoadData();
+	}
+}
+
+
+void CAgilityBookTrainingView::GetPrintLine(
+		long item,
+		std::vector<wxString>& line) const
+{
+	if (m_Ctrl)
+		m_Ctrl->GetPrintLine(item, line);
+}
+
+
+CAgilityBookTrainingViewDataPtr CAgilityBookTrainingView::GetItemTrainingData(long index) const
+{
+	if (!m_Ctrl)
+		return CAgilityBookTrainingViewDataPtr();
+	return tr1::dynamic_pointer_cast<CAgilityBookTrainingViewData, CListData>(m_Ctrl->GetData(index));
+}
+
+
+void CAgilityBookTrainingView::SetupColumns()
+{
+	if (!m_Ctrl)
+		return;
+	int nColumnCount = m_Ctrl->GetColumnCount();
+	for (int i = 0; i < nColumnCount; ++i)
+		m_Ctrl->DeleteColumn(0);
+	if (CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TRAINING_LIST, m_Columns))
+	{
+		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
+		{
+			wxString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
+			int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
+			m_Ctrl->InsertColumn(static_cast<long>(iCol), str, fmt);
+		}
+		m_SortColumn.Initialize();
+	}
+}
+
+
+void CAgilityBookTrainingView::LoadData()
+{
+	if (!m_Ctrl)
+		return;
+
+	// Remember what's selected.
+	ARBTrainingPtr pCurTraining;
+	CAgilityBookTrainingViewDataPtr pCurData = GetItemTrainingData(m_Ctrl->GetFirstSelected());
+	if (pCurData)
+	{
+		pCurTraining = pCurData->GetTraining();
+		pCurData.reset();
+	}
+
+	// Reduce flicker
+	m_Ctrl->Freeze();
+
+	// Clear everything.
+	m_Ctrl->DeleteAllItems();
+
+	// Add items.
+	int i = 0;
+	for (ARBTrainingList::iterator iter = GetDocument()->Book().GetTraining().begin();
+	iter != GetDocument()->Book().GetTraining().end();
+	++iter)
+	{
+		ARBTrainingPtr pTraining = (*iter);
+		if (pTraining->IsFiltered())
+			continue;
+		long index = m_Ctrl->InsertItem(CAgilityBookTrainingViewDataPtr(new CAgilityBookTrainingViewData(this, pTraining)));
+		// We may have modified the entry, so don't do a full equality test.
+		// Just check the start/end date, location, club and venue. This allows
+		// us to modify the opens/closes dates, notes and entry status.
+		// Note: This is only important when editing the entry from the other
+		// calendar view! If we edit locally, this is not a problem since we
+		// just modified our own entry.
+		if (pCurTraining)
+		{
+			if (*pCurTraining == *pTraining
+			|| pCurTraining->GetDate() == pTraining->GetDate())
+			{
+				m_Ctrl->Select(index, true);
+			}
+		}
+		++i;
+	}
+	int nColumnCount = m_Ctrl->GetColumnCount();
+	for (int i = 0; i < nColumnCount; ++i)
+		m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+
+	s_SortInfo.pThis = this;
+	s_SortInfo.nCol = m_SortColumn.GetColumn();
+	m_Ctrl->SortItems(CompareTraining, 0);
+	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, m_SortColumn.GetColumn());
+	// Now make sure the selected item is visible.
+	m_Ctrl->EnsureVisible(m_Ctrl->GetFirstSelected());
+
+	// Cleanup.
+	m_Ctrl->Thaw();
+	m_Ctrl->Refresh();
+
+	UpdateMessages();
+}
+
+
+void CAgilityBookTrainingView::OnCtrlColumnClick(wxListEvent& evt)
+{
+	if (!m_Ctrl)
+		return;
+	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, 0);
+	int nBackwards = 1;
+	if (m_SortColumn.GetColumn() == evt.GetColumn() + 1)
+		nBackwards = -1;
+	m_SortColumn.SetColumn((evt.GetColumn() + 1) * nBackwards);
+	s_SortInfo.pThis = this;
+	s_SortInfo.nCol = m_SortColumn.GetColumn();
+	m_Ctrl->SortItems(CompareTraining, 0);
+	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, m_SortColumn.GetColumn());
+}
+
+
+void CAgilityBookTrainingView::OnCtrlDoubleClick(wxMouseEvent& evt)
+{
+	OnCmd(ID_AGILITY_EDIT_TRAINING);
+	evt.Skip();
+}
+
+
+void CAgilityBookTrainingView::OnCtrlKeyDown(wxListEvent& evt)
+{
+	switch (evt.GetKeyCode())
+	{
+	default:
+		break;
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
+	case WXK_RETURN:
+	case WXK_NUMPAD_ENTER:
+		OnCmd(ID_AGILITY_EDIT_TRAINING);
+		break;
+	}
+	evt.Skip();
+}
+
+
+void CAgilityBookTrainingView::OnViewContextMenu(wxContextMenuEvent& evt)
+{
+	if (!m_Ctrl)
+		return;
+	wxPoint point;
+	if (GetMenuPosition(point, *m_Ctrl, evt))
+	{
+		wxMenu* menu = CreatePopup(IdMenuTraining);
+		m_Ctrl->PopupMenu(menu, point);
+		delete menu;
+	}
+	else
+		evt.Skip();
+}
+
+
+void CAgilityBookTrainingView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
+{
+	switch (evt.GetId())
+	{
+	case wxID_DUPLICATE:
+		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		break;
+	case wxID_CUT:
+		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		break;
+	case wxID_COPY:
+		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		break;
+	case wxID_PASTE:
+		evt.Enable(CClipboardDataReader::IsFormatAvailable(eFormatLog));
+		break;
+	case wxID_SELECTALL:
+		evt.Enable(m_Ctrl->CanSelectAll());
+		break;
+	case wxID_FIND:
+		evt.Enable(true);
+		break;
+	case ID_EDIT_FIND_NEXT:
+		evt.Enable(true);
+		break;
+	case ID_EDIT_FIND_PREVIOUS:
+		evt.Enable(true);
+		break;
+	case ID_AGILITY_EDIT_TRAINING:
+		evt.Enable(1 == m_Ctrl->GetSelectedItemCount());
+		break;
+	case ID_AGILITY_NEW_TRAINING:
+		evt.Enable(true);
+		break;
+	case ID_AGILITY_DELETE_TRAINING:
+		evt.Enable(0 < m_Ctrl->GetSelectedItemCount());
+		break;
+	case ID_VIEW_CUSTOMIZE:
+		evt.Enable(true);
+		break;
+	}
+}
+
+
+bool CAgilityBookTrainingView::OnCmd(int id)
+{
+	if (!m_Ctrl)
+		return false;
+	bool bHandled = true;
+	switch (id)
+	{
+	default:
+		bHandled = false;
+		break;
+
+	case wxID_DUPLICATE:
+		{
+			std::vector<long> indices;
+			if (0 < m_Ctrl->GetSelection(indices))
+			{
+				std::vector<CAgilityBookTrainingViewDataPtr> items;
+				for (std::vector<long>::iterator iterData = indices.begin(); iterData != indices.end(); ++iterData)
+				{
+					CAgilityBookTrainingViewDataPtr pData = GetItemTrainingData(*iterData);
+					if (pData)
+						items.push_back(pData);
+				}
+				ARBDate date;
+				for (std::vector<CAgilityBookTrainingViewDataPtr>::iterator iter = items.begin(); iter != items.end(); ++iter)
+				{
+					// Currently, we don't need to worry if this is visible. The only filtering
+					// is on name/date. So they can see the item that's being duped, which means
+					// the new one is visible too.
+					ARBTrainingPtr training = (*iter)->GetTraining()->Clone();
+					GetDocument()->Book().GetTraining().AddTraining(training);
+					GetDocument()->Book().GetTraining().sort();
+					date = training->GetDate();
+				}
+				if (0 < items.size())
+				{
+					LoadData();
+					GetDocument()->Modify(true);
+					SetCurrentDate(date);
+				}
+			}
+		}
+		break;
+
+	case wxID_CUT:
+		OnCmd(wxID_COPY);
+		OnCmd(ID_AGILITY_DELETE_TRAINING);
+		break;
+
+	case wxID_COPY:
+		{
+			std::vector<long> indices;
+			if (0 < m_Ctrl->GetSelection(indices))
+			{
+				CClipboardDataWriter clpData;
+				if (!clpData.isOkay())
+					return true;
+
+				wxString data;
+				wxString html;
+				CClipboardDataTable table(data, html);
+
+				// Take care of the header, but only if more than one line is selected.
+				if (1 < indices.size()
+				|| indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
+				{
+					std::vector<wxString> line;
+					m_Ctrl->GetPrintLine(-1, line);
+					table.StartLine();
+					for (size_t i = 0; i < line.size(); ++i)
+					{
+						table.Cell(i, line[i]);
+					}
+					table.EndLine();
+				}
+
+				ElementNodePtr tree(ElementNode::New(CLIPDATA));
+
+				// Now all the data.
+				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+				{
+					CAgilityBookTrainingViewDataPtr pData = GetItemTrainingData(*iter);
+					if (pData)
+						pData->GetTraining()->Save(tree);
+					std::vector<wxString> line;
+					m_Ctrl->GetPrintLine((*iter), line);
+					table.StartLine();
+					for (size_t i = 0; i < line.size(); ++i)
+					{
+						table.Cell(i, line[i]);
+					}
+					table.EndLine();
+				}
+
+				clpData.AddData(eFormatLog, tree);
+				clpData.AddData(table);
+				clpData.CommitData();
+			}
+		}
+		break;
+
+	case wxID_PASTE:
+		{
+			bool bLoaded = false;
+			ElementNodePtr tree(ElementNode::New());
+			CClipboardDataReader clpData;
+			if (clpData.GetData(eFormatLog, tree))
+			{
+				if (CLIPDATA == tree->GetName())
+				{
+					for (int i = 0; i < tree->GetElementCount(); ++i)
+					{
+						ElementNodePtr element = tree->GetElementNode(i);
+						if (!element)
+							continue;
+						if (element->GetName() == TREE_TRAINING)
+						{
+							ARBTrainingPtr pLog(ARBTraining::New());
+							CErrorCallback err;
+							if (pLog->Load(element, ARBAgilityRecordBook::GetCurrentDocVersion(), err))
+							{
+								bLoaded = true;
+								GetDocument()->Book().GetTraining().AddTraining(pLog);
+							}
+						}
+					}
+				}
+			}
+			clpData.Close();
+			if (bLoaded)
+			{
+				GetDocument()->Book().GetCalendar().sort();
+				LoadData();
+				GetDocument()->Modify(true);
+				CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+				GetDocument()->UpdateAllViews(this, &hint);
+			}
+		}
+		break;
+
+	case wxID_SELECTALL:
+		m_Ctrl->SelectAll();
+		break;
+
+	case wxID_FIND:
+		{
+			CDlgFind dlg(m_Callback, m_Ctrl);
+			dlg.ShowModal();
+		}
+		break;
+
+	case ID_EDIT_FIND_NEXT:
+		{
+			m_Callback.SearchDown(true);
+			if (m_Callback.Text().IsEmpty())
+				OnCmd(wxID_FIND);
+			else
+				m_Callback.Search(NULL);
+		}
+		break;
+
+	case ID_EDIT_FIND_PREVIOUS:
+		{
+			m_Callback.SearchDown(false);
+			if (m_Callback.Text().IsEmpty())
+				OnCmd(wxID_FIND);
+			else
+				m_Callback.Search(NULL);
+		}
+		break;
+
+	case ID_AGILITY_EDIT_TRAINING:
+		{
+			CAgilityBookTrainingViewDataPtr pData = GetItemTrainingData(m_Ctrl->GetFirstSelected());
+			if (pData)
+			{
+				CDlgTraining dlg(pData->GetTraining(), GetDocument());
+				if (wxID_OK == dlg.ShowModal())
+				{
+					GetDocument()->Book().GetTraining().sort();
+					LoadData();
+					GetDocument()->Modify(true);
+					m_Ctrl->Refresh();
+					int nColumnCount = m_Ctrl->GetColumnCount();
+					for (int i = 0; i < nColumnCount; ++i)
+						m_Ctrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+				}
+			}
+		}
+		break;
+
+	case ID_AGILITY_NEW_TRAINING:
+		{
+			ARBTrainingPtr training(ARBTraining::New());
+			CDlgTraining dlg(training, GetDocument());
+			if (wxID_OK == dlg.ShowModal())
+			{
+				GetDocument()->Book().GetTraining().AddTraining(training);
+				GetDocument()->Book().GetTraining().sort();
+				LoadData();
+				GetDocument()->Modify(true);
+				SetCurrentDate(training->GetDate());
+				int nColumnCount = m_Ctrl->GetColumnCount();
+				for (int i = 0; i < nColumnCount; ++i)
+					m_Ctrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+			}
+		}
+		break;
+
+	case ID_AGILITY_DELETE_TRAINING:
+		{
+			std::vector<long> indices;
+			if (0 < m_Ctrl->GetSelection(indices))
+			{
+				std::vector<CAgilityBookTrainingViewDataPtr> items;
+				for (std::vector<long>::iterator iter = indices.begin(); iter != indices.end(); ++iter)
+				{
+					CAgilityBookTrainingViewDataPtr pData = GetItemTrainingData(*iter);
+					if (pData)
+						GetDocument()->Book().GetTraining().DeleteTraining(pData->GetTraining());
+				}
+				GetDocument()->Modify(true);
+				LoadData();
+			}
+		}
+		break;
+
+	case ID_VIEW_CUSTOMIZE:
+		{
+			CDlgAssignColumns dlg(CAgilityBookOptions::eView, m_Ctrl, GetDocument(), IO_TYPE_VIEW_TRAINING_LIST);
+			dlg.ShowModal();
+		}
+		break;
+	}
+	return bHandled;
+}
+
+
+void CAgilityBookTrainingView::OnViewCmd(wxCommandEvent& evt)
+{
+	OnCmd(evt.GetId());
+}

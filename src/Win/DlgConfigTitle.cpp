@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-09-06 DRC Added roman numeral support
  * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -39,9 +40,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigTitle.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigTitle")
+#if 0
+#include "AgilityBook.h"
 #include "ARBConfigTitle.h"
 
 #ifdef _DEBUG
@@ -251,3 +254,4 @@ void CDlgConfigTitle::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-09-01 DRC Fix setting of 'After' (start) date filter.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-12-18 DRC Added Opening/Closing dates to view, plus color.
@@ -40,9 +41,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgOptionsFilter.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsFilter")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
@@ -206,7 +209,8 @@ void CDlgOptionsFilter::FillControls()
 	m_FilterOptions.GetTrainingFilterNames(names);
 	bool bFix = false;
 	for (std::set<tstring>::iterator iter = names.begin();
-		iter != names.end(); )
+		iter != names.end();
+		)
 	{
 		if (allLogNames.end() == allLogNames.find((*iter)))
 		{
@@ -444,7 +448,7 @@ void CDlgOptionsFilter::UpdateControls()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgOptionsFilter message handlers
 
-BOOL CDlgOptionsFilter::OnInitDialog() 
+BOOL CDlgOptionsFilter::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	FillControls();
@@ -486,7 +490,7 @@ void CDlgOptionsFilter::OnSetdispinfoNames(
 
 void CDlgOptionsFilter::OnSetdispinfoVenues(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	//TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
 	// We could probably do this by just watching what changed. but this
@@ -551,3 +555,4 @@ void CDlgOptionsFilter::OnBnClickedOptFilterNamesDelete()
 		}
 	}
 }
+#endif

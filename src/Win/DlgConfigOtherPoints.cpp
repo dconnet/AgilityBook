@@ -31,14 +31,17 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-22 DRC Fixed CRNL sequences.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigOtherPoints.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigOtherPoints")
+#if 0
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 
@@ -162,3 +165,4 @@ void CDlgConfigOtherPoints::OnOK()
 	m_pOther->SetDescription((LPCTSTR)m_Desc);
 	CDlgBaseDialog::OnOK();
 }
+#endif

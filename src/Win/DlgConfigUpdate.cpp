@@ -31,80 +31,100 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
  * @li 2003-12-07 DRC Changed Load/Save api to support new info section.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigUpdate.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
 #include "ConfigHandler.h"
 #include "Element.h"
+#include <wx/filedlg.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigUpdate dialog
+BEGIN_EVENT_TABLE(CDlgConfigUpdate, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgConfigUpdate::OnOk)
+END_EVENT_TABLE()
 
-CDlgConfigUpdate::CDlgConfigUpdate(CWnd* pParent)
-	: CDlgBaseDialog(CDlgConfigUpdate::IDD, pParent)
+
+CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* parent)
+	: wxDialog(parent, wxID_ANY, _("IDD_CONFIG_UPDATE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	, m_radioDefault(NULL)
+	, m_radioExisting(NULL)
+	, m_btnPick(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgConfigUpdate)
-	m_Update = 0;
-	m_FileName = _T("");
-	//}}AFX_DATA_INIT
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	// Controls (these are done first to control tab order)
+
+	m_radioDefault = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CONFIG_UPDATE_DEFAULT"),
+		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	m_radioDefault->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgConfigUpdate::OnUpdateDefault), NULL, this);
+	m_radioDefault->SetHelpText(_("HIDC_CONFIG_UPDATE_DEFAULT"));
+	m_radioDefault->SetToolTip(_("HIDC_CONFIG_UPDATE_DEFAULT"));
+
+	m_radioExisting = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CONFIG_UPDATE_EXISTING"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_radioExisting->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgConfigUpdate::OnUpdateExisting), NULL, this);
+	m_radioExisting->SetHelpText(_("HIDC_CONFIG_UPDATE_EXISTING"));
+	m_radioExisting->SetToolTip(_("HIDC_CONFIG_UPDATE_EXISTING"));
+
+	m_radioDefault->SetValue(true);
+
+	m_btnPick = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_UPDATE_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_btnPick->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigUpdate::OnName), NULL, this);
+	m_btnPick->SetHelpText(_("HIDC_CONFIG_UPDATE_NAME"));
+	m_btnPick->SetToolTip(_("HIDC_CONFIG_UPDATE_NAME"));
+
+	m_FileName = new wxTextCtrl(this, wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_FileName->SetHelpText(_("HIDC_CONFIG_UPDATE_FILENAME"));
+	m_FileName->SetToolTip(_("HIDC_CONFIG_UPDATE_FILENAME"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(m_radioDefault, 0, wxALL, 5);
+
+	wxBoxSizer* bSizerRadio = new wxBoxSizer(wxHORIZONTAL);
+	bSizerRadio->Add(m_radioExisting, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	bSizerRadio->Add(m_btnPick, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(bSizerRadio, 0, 0, 5);
+
+	wxBoxSizer* bSizerWithSpace = new wxBoxSizer(wxHORIZONTAL);
+	bSizerWithSpace->Add(15, 0, 0, wxEXPAND, 5);
+	bSizerWithSpace->Add(m_FileName, 1, wxALL|wxEXPAND, 5);
+
+	bSizer->Add(bSizerWithSpace, 0, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	EnableControls();
 }
 
 
-void CDlgConfigUpdate::DoDataExchange(CDataExchange* pDX)
+bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
 {
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgConfigUpdate)
-	DDX_Radio(pDX, IDC_CONFIG_UPDATE_DEFAULT, m_Update);
-	DDX_Control(pDX, IDC_CONFIG_UPDATE_FILENAME, m_ctrlFileNameEdit);
-	DDX_Text(pDX, IDC_CONFIG_UPDATE_FILENAME, m_FileName);
-	DDX_Control(pDX, IDC_CONFIG_UPDATE_NAME, m_ctrlFileName);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgConfigUpdate, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgConfigUpdate)
-	ON_BN_CLICKED(IDC_CONFIG_UPDATE_DEFAULT, OnUpdateDefault)
-	ON_BN_CLICKED(IDC_CONFIG_UPDATE_EXISTING, OnUpdateExisting)
-	ON_BN_CLICKED(IDC_CONFIG_UPDATE_NAME, OnName)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-
-void CDlgConfigUpdate::EnableControls()
-{
-	if (0 == m_Update)
-	{
-		m_ctrlFileNameEdit.EnableWindow(FALSE);
-		m_ctrlFileName.EnableWindow(FALSE);
-	}
-	else
-	{
-		m_ctrlFileNameEdit.EnableWindow(TRUE);
-		m_ctrlFileName.EnableWindow(TRUE);
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-bool CDlgConfigUpdate::LoadConfig(TCHAR const* pFile)
-{
-	CWaitCursor wait;
+	wxBusyCursor wait;
 	if (!pFile)
 	{
 		CConfigHandler handler;
@@ -117,81 +137,82 @@ bool CDlgConfigUpdate::LoadConfig(TCHAR const* pFile)
 		// Translate the XML to a tree form.
 		if (!tree->LoadXMLFile(pFile, errMsg))
 		{
-			CString msg;
-			msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
+			//TODO
+			wxString msg = _("AFX_IDP_FAILED_TO_OPEN_DOC");
 			if (0 < errMsg.length())
 			{
-				msg += _T("\n\n");
+				msg += wxT("\n\n");
 				msg += errMsg.c_str();
 			}
-			AfxMessageBox(msg, MB_ICONEXCLAMATION);
+			wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 			return false;
 		}
 		CErrorCallback err;
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
 			if (0 < err.m_ErrMsg.length())
-				AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+				wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		else if (0 < err.m_ErrMsg.length())
-			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigUpdate message handlers
 
-BOOL CDlgConfigUpdate::OnInitDialog() 
+void CDlgConfigUpdate::EnableControls()
 {
-	CDlgBaseDialog::OnInitDialog();
-
-	EnableControls();
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgConfigUpdate::OnUpdateDefault() 
-{
-	UpdateData(TRUE);
-	EnableControls();
-}
-
-
-void CDlgConfigUpdate::OnUpdateExisting() 
-{
-	UpdateData(TRUE);
-	EnableControls();
-}
-
-
-void CDlgConfigUpdate::OnName() 
-{
-	CString def, fname, filter;
-	def.LoadString(IDS_FILEEXT_DEF_ARB);
-	fname.LoadString(IDS_FILEEXT_FNAME_ARB);
-	filter.LoadString(IDS_FILEEXT_FILTER_ARB);
-	CFileDialog file(TRUE, def, fname, OFN_FILEMUSTEXIST, filter);
-	if (IDOK == file.DoModal())
+	if (m_radioDefault->GetValue())
 	{
-		m_FileName = file.GetPathName();
-		UpdateData(FALSE);
+		m_btnPick->Enable(false);
+		m_FileName->Enable(false);
+	}
+	else
+	{
+		m_btnPick->Enable(true);
+		m_FileName->Enable(true);
 	}
 }
 
 
-void CDlgConfigUpdate::OnOK() 
+void CDlgConfigUpdate::OnUpdateDefault(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
-		return;
-	LPCTSTR pFile = NULL;
-	CString source(m_FileName);
-	if (1 == m_Update)
-		pFile = source;
-	if (!LoadConfig(pFile))
-		return;
-	CDlgBaseDialog::OnOK();
+	EnableControls();
+}
+
+
+void CDlgConfigUpdate::OnUpdateExisting(wxCommandEvent& evt)
+{
+	EnableControls();
+}
+
+
+void CDlgConfigUpdate::OnName(wxCommandEvent& evt)
+{
+	wxFileDialog file(this,
+			wxT(""), // caption
+			wxT(""), // default dir
+			m_FileName->GetValue(),
+			_("IDS_FILEEXT_FILTER_ARB"),
+			wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	if (wxID_OK == file.ShowModal())
+	{
+		m_FileName->SetValue(file.GetPath());
+	}
+}
+
+
+void CDlgConfigUpdate::OnOk(wxCommandEvent& evt)
+{
+	if (Validate() && TransferDataFromWindow())
+	{
+		wxChar const* pFile = NULL;
+		wxString source(m_FileName->GetValue());
+		if (m_radioExisting->GetValue())
+			pFile = source;
+		if (!LoadConfig(pFile))
+			return;
+		EndDialog(wxID_OK);
+	}
 }

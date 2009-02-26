@@ -31,36 +31,33 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "CalendarSites.h"
 
+//#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "AgilityBookOptions.h"
-#include "ARBAgilityRecordBook.h"
-#include "ARBConfig.h"
-#include "CheckTreeCtrl.h"
-#include "DlgAssignColumns.h"
-#include "DlgBaseDialog.h"
-#include "DlgCalendarQueryDetail.h"
-#include "DlgPluginDetails.h"
-#include "DlgProgress.h"
-#include "Element.h"
-#include "ICalendarSite.h"
-#include "IProgressMeter.h"
-#include "ReadHttp.h"
-#include <map>
-#include <vector>
+//#include "AgilityBookOptions.h"
+//#include "ARBAgilityRecordBook.h"
+//#include "ARBConfig.h"
+//#include "CheckTreeCtrl.h"
+//#include "DlgAssignColumns.h"
+//#include "DlgBaseDialog.h"
+//#include "DlgCalendarQueryDetail.h"
+//#include "DlgPluginDetails.h"
+//#include "DlgProgress.h"
+//#include "Element.h"
+//#include "ICalendarSite.h"
+//#include "IProgressMeter.h"
+//#include "ReadHttp.h"
+//#include <map>
+//#include <vector>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
+#pragma message PRAGMA_MESSAGE("TODO: Implement CCalendarSites")
+#if 0
 /////////////////////////////////////////////////////////////////////////////
 
 static tstring TranslateCodeMap(std::vector<tstring> const& inCodes)
@@ -1453,24 +1450,30 @@ void CDlgCalendarPlugins::OnPluginDelete()
 		}
 	}
 }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
 CCalendarSites::CCalendarSites()
-	: m_Impl(new CCalendarSitesImpl())
+	//: m_Impl(new CCalendarSitesImpl())
+	: m_Impl(NULL)
 {
 }
 
 
 CCalendarSites::~CCalendarSites()
 {
-	delete m_Impl;
+	//delete m_Impl;
 }
 
 
-bool CCalendarSites::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
+bool CCalendarSites::FindEntries(
+		CAgilityBookDoc* pDoc,
+		ARBCalendarList& inCalendar,
+		wxWindow* pParent)
 {
-	if (!pDoc->SaveModified())
+	if (!pDoc->OnSaveModified())
 		return false;
-	return m_Impl->FindEntries(pDoc, inCalendar, pParent);
+	//return m_Impl->FindEntries(pDoc, inCalendar, pParent);
+	return false;
 }

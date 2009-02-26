@@ -31,13 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-04 DRC Created.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigEventMethod.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigEventMethod")
+#if 0
+#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
@@ -394,7 +397,7 @@ void CDlgConfigEventMethod::OnCbnSelchangeDivision()
 }
 
 
-void CDlgConfigEventMethod::OnValidFrom() 
+void CDlgConfigEventMethod::OnValidFrom()
 {
 	BOOL bEnable = FALSE;
 	if (m_ctrlValidFrom.GetCheck())
@@ -403,7 +406,7 @@ void CDlgConfigEventMethod::OnValidFrom()
 }
 
 
-void CDlgConfigEventMethod::OnValidTo() 
+void CDlgConfigEventMethod::OnValidTo()
 {
 	BOOL bEnable = FALSE;
 	if (m_ctrlValidTo.GetCheck())
@@ -412,7 +415,7 @@ void CDlgConfigEventMethod::OnValidTo()
 }
 
 
-void CDlgConfigEventMethod::OnSelchangeType() 
+void CDlgConfigEventMethod::OnSelchangeType()
 {
 	int idxType = m_ctrlType.GetCurSel();
 	if (CB_ERR == idxType)
@@ -741,3 +744,4 @@ void CDlgConfigEventMethod::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

@@ -31,14 +31,17 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-30 DRC Created.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigMultiQ.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigMultiQ")
+#if 0
+#include "AgilityBook.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigLevel.h"
@@ -195,7 +198,7 @@ void CDlgConfigMultiQ::OnNMDblclk(
 
 void CDlgConfigMultiQ::OnKeydown(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
@@ -355,3 +358,4 @@ void CDlgConfigMultiQ::OnOK()
 	}
 	CDlgBaseDialog::OnOK();
 }
+#endif

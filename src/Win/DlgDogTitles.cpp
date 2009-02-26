@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
@@ -40,9 +41,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgDogTitles.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgDogTitles")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
@@ -381,7 +384,7 @@ void CDlgDogTitles::OnColumnclickTitles(
 
 void CDlgDogTitles::OnDblclkTitles(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	OnTitleEdit();
 	*pResult = 0;
@@ -390,7 +393,7 @@ void CDlgDogTitles::OnDblclkTitles(
 
 void CDlgDogTitles::OnKeydownTitles(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
 	switch (pLVKeyDown->wVKey)
@@ -453,3 +456,4 @@ void CDlgDogTitles::OnBnClickedHidden()
 	CAgilityBookOptions::SetViewHiddenTitles(m_ctrlHidden.GetCheck() == 1);
 	ListTitles();
 }
+#endif

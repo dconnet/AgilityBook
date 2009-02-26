@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright Â© 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -30,10 +30,8 @@
  * @brief implementation of the CAgilityBookDoc class
  * @author David Connet
  *
- * MFC document class, provides a binding between the real data in the
- * CAgilityRecordBook class, XML, and the MFC Doc-View architecture.
- *
  * Revision History
+ * @li 2009-02-05 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2006-02-08 DRC Added 'RenameEvent' action.
@@ -71,20 +69,20 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
-#include <algorithm>
-#include <fstream>
-
-#include "AboutDlg.h"
 #include "AgilityBookDoc.h"
+
+#include "AgilityBook.h"
+#include "AgilityBookCalendarListView.h"
+#include "AgilityBookCalendarView.h"
+#include "AgilityBookMenu.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookTree.h"
+#include "AgilityBookRunsView.h"
+#include "AgilityBookTrainingView.h"
 #include "AgilityBookTreeData.h"
-#include "AgilityBookViewCalendar.h"
-#include "AgilityBookViewCalendarList.h"
-#include "AgilityBookViewTraining.h"
+#include "AgilityBookTreeView.h"
 #include "ClipBoard.h"
 #include "ConfigHandler.h"
+#include "DlgAbout.h"
 #include "DlgCalendar.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigure.h"
@@ -100,21 +98,18 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
-#include "Splash.h"
 #include "TabView.h"
+#include "UpdateInfo.h"
+#include "VersionNum.h"
 #include "Wizard.h"
+#include <algorithm>
+#include <fstream>
+#include <wx/config.h>
+#include <wx/file.h>
+#include <wx/filefn.h>
 
-#if _MSC_VER < 1300
-#ifndef INVALID_FILE_ATTRIBUTES
-#define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
-#endif
-#endif
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+IMPLEMENT_DYNAMIC_CLASS(CAgilityBookDoc, wxDocument)
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -143,44 +138,55 @@ CErrorCallback::CErrorCallback()
 
 bool CErrorCallback::OnError(TCHAR const* const pMsg)
 {
-	CSplashWnd::HideSplashScreen();
-	return (IDYES == AfxMessageBox(pMsg, MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2));
+	return wxYES == wxMessageBox(pMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION | wxYES_NO | wxNO_DEFAULT);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CAgilityBookDoc
 
-IMPLEMENT_DYNCREATE(CAgilityBookDoc, CDocument)
-
-BEGIN_MESSAGE_MAP(CAgilityBookDoc, CDocument)
-	//{{AFX_MSG_MAP(CAgilityBookDoc)
-	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
-	ON_COMMAND(ID_FILE_EXPORT_WIZARD, OnFileExportWizard)
-	ON_COMMAND(ID_FILE_LINKED, OnFileLinked)
-	ON_UPDATE_COMMAND_UI(ID_COPY_TITLES_LIST, OnUpdateCopyTitles)
-	ON_COMMAND(ID_COPY_TITLES_LIST, OnCopyTitles)
-	ON_COMMAND(ID_EDIT_CONFIGURATION, OnEditConfiguration)
-	ON_COMMAND(ID_AGILITY_NEW_DOG, OnAgilityNewDog)
-	ON_COMMAND(ID_AGILITY_NEW_CALENDAR, OnAgilityNewCalendar)
-	ON_COMMAND(ID_AGILITY_UPDATE_CALENDAR, OnAgilityUpdateCalendar)
-	ON_COMMAND(ID_AGILITY_NEW_TRAINING, OnAgilityNewTraining)
-	ON_COMMAND(ID_NOTES_CLUBS, OnNotesClubs)
-	ON_COMMAND(ID_NOTES_JUDGES, OnNotesJudges)
-	ON_COMMAND(ID_NOTES_LOCATIONS, OnNotesLocations)
-	ON_COMMAND(ID_NOTES_SEARCH, OnNotesSearch)
-	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_SORTRUNS, OnUpdateViewSortruns)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_RUNS_BY_TRIAL, OnUpdateViewRunsByTrial)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDDEN, OnUpdateViewHiddenTitles)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_TABLE_IN_YPS, OnUpdateViewTableInYPS)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_LIFETIME_EVENTS, OnUpdateViewLifetimeEvents)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
+	EVT_UPDATE_UI(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_FILE_EXPORT_WIZARD, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_FILE_LINKED, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_FILE_LINKED, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_COPY_TITLES_LIST, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_COPY_TITLES_LIST, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_EDIT_CONFIGURATION, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_EDIT_CONFIGURATION, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_DOG, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_AGILITY_NEW_DOG, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_CALENDAR, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_AGILITY_NEW_CALENDAR, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_AGILITY_UPDATE_CALENDAR, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_AGILITY_UPDATE_CALENDAR, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_AGILITY_NEW_TRAINING, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_AGILITY_NEW_TRAINING, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_NOTES_CLUBS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_NOTES_CLUBS, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_NOTES_JUDGES, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_NOTES_JUDGES, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_NOTES_LOCATIONS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_NOTES_LOCATIONS, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_NOTES_SEARCH, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_NOTES_SEARCH, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_VIEW_OPTIONS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_VIEW_OPTIONS, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookDoc::OnUpdateCmd)
+	EVT_UPDATE_UI(wxID_ABOUT, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(wxID_ABOUT, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(ID_HELP_UPDATE, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(ID_HELP_UPDATE, CAgilityBookDoc::OnCmd)
+END_EVENT_TABLE()
 
 
 CAgilityBookDoc::CAgilityBookDoc()
 	: m_SuppressUpdates(false)
+	, m_Records()
+	, m_CalSites()
+	, m_StatusData(NULL)
 {
 }
 
@@ -190,72 +196,127 @@ CAgilityBookDoc::~CAgilityBookDoc()
 }
 
 
-void CAgilityBookDoc::StatusBarContextMenu(UINT id, CPoint point)
+class CStatusHandler
 {
-	static UINT baseID = 100;
-	CAgilityBookTree* pTree = GetTreeView();
+public:
+	CStatusHandler() {}
+	// For dog menu
+	std::vector<ARBDogPtr> dogs;
+	// For filter menu
+	CFilterOptions filterOptions;
+	std::vector<tstring> filterNames;
+};
+
+
+static const int baseID = 100;
+
+
+void CAgilityBookDoc::OnStatusDog(wxCommandEvent& evt)
+{
+	if (m_StatusData
+	&& baseID <= evt.GetId()
+	&& evt.GetId() < static_cast<int>(m_StatusData->dogs.size()) + baseID
+	&& m_StatusData->dogs[evt.GetId()-baseID] != GetCurrentDog())
+	{
+		CAgilityBookTreeView* pTree = GetTreeView();
+		if (pTree)
+			pTree->SelectDog(m_StatusData->dogs[evt.GetId()-baseID]);
+	}
+}
+
+
+void CAgilityBookDoc::OnStatusFilter(wxCommandEvent& evt)
+{
+	if (m_StatusData
+	&& baseID <= evt.GetId()
+	&& evt.GetId() < static_cast<int>(m_StatusData->filterNames.size()) + baseID
+	&& m_StatusData->filterNames[evt.GetId()-baseID] != m_StatusData->filterOptions.GetCurrentFilter())
+	{
+		m_StatusData->filterOptions.SetCurrentFilter(m_StatusData->filterNames[evt.GetId()-baseID]);
+		m_StatusData->filterOptions.Save();
+		CFilterOptions::Options().Load();
+		ResetVisibility();
+	}
+}
+
+
+bool CAgilityBookDoc::StatusBarContextMenu(
+		wxWindow* parent,
+		int id,
+		wxPoint const& point)
+{
+	if (!parent)
+		return false;
+	bool bHandled = false;
 	switch (id)
 	{
-	case ID_INDICATOR_DOG:
-		if (pTree && 1 < m_Records.GetDogs().size())
+	case STATUS_DOG:
+		if (GetTreeView() && 1 < m_Records.GetDogs().size())
 		{
 			ARBDogPtr curDog = GetCurrentDog();
-			CMenu menu;
-			menu.CreatePopupMenu();
-			UINT menuId = baseID;
-			std::vector<ARBDogPtr> dogs;
+			wxMenu* menu = new wxMenu();
+			int menuId = baseID;
+			CStatusHandler data;
 			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 			{
-				UINT flags = MF_STRING | MF_ENABLED;
+				parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
+				wxString item((*iDog)->GetGenericName().c_str());
+				item.Replace(wxT("&"), wxT("&&"));
+				wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
 				if (*(*iDog) == *curDog)
-					flags |= MF_CHECKED;
-				CString item((*iDog)->GetGenericName().c_str());
-					item.Replace(_T("&"), _T("&&"));
-				menu.AppendMenu(flags, menuId, item);
-				dogs.push_back(*iDog);
+					menuitem->Check(true);
+				data.dogs.push_back(*iDog);
 			}
-			UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
-			if (baseID <= ret && ret < m_Records.GetDogs().size() + baseID)
+			bHandled = true;
+			m_StatusData = &data;
+			parent->PopupMenu(menu, point);
+			delete menu;
+			menuId = baseID;
+			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 			{
-				pTree->SelectDog(dogs[ret-baseID]);
+				parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
 			}
 		}
 		break;
-	case ID_INDICATOR_STATUS:
+	case STATUS_STATUS:
 		break;
-	case ID_INDICATOR_FILTERED:
+	case STATUS_FILTERED:
 		{
-			CFilterOptions m_FilterOptions;
-			std::vector<tstring> filterNames;
-			m_FilterOptions.GetAllFilterNames(filterNames);
-			if (1 < filterNames.size())
+			CStatusHandler data;
+			data.filterOptions.GetAllFilterNames(data.filterNames);
+			if (1 < data.filterNames.size())
 			{
-				std::sort(filterNames.begin(), filterNames.end());
-				tstring m_FilterName = m_FilterOptions.GetCurrentFilter();
-				CMenu menu;
-				menu.CreatePopupMenu();
-				UINT menuId = baseID;
-				for (std::vector<tstring>::const_iterator iFilter = filterNames.begin(); iFilter != filterNames.end(); ++iFilter, ++menuId)
+				std::sort(data.filterNames.begin(), data.filterNames.end());
+				tstring filterName = data.filterOptions.GetCurrentFilter();
+				wxMenu* menu = new wxMenu();
+				int menuId = baseID;
+				for (std::vector<tstring>::const_iterator iFilter = data.filterNames.begin();
+					iFilter != data.filterNames.end();
+					++iFilter, ++menuId)
 				{
-					UINT flags = MF_STRING | MF_ENABLED;
-					if (*iFilter == m_FilterName)
-						flags |= MF_CHECKED;
-					CString item((*iFilter).c_str());
-					item.Replace(_T("&"), _T("&&"));
-					menu.AppendMenu(flags, menuId, item);
+					parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
+					wxString item((*iFilter).c_str());
+					item.Replace(wxT("&"), wxT("&&"));
+					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
+					if (*iFilter == filterName)
+						menuitem->Check(true);
 				}
-				UINT ret = menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, point.x, point.y, AfxGetMainWnd());
-				if (baseID <= ret && ret < filterNames.size() + baseID)
+				bHandled = true;
+				m_StatusData = &data;
+				parent->PopupMenu(menu, point);
+				delete menu;
+				menuId = baseID;
+				for (std::vector<tstring>::const_iterator iFilter = data.filterNames.begin();
+					iFilter != data.filterNames.end();
+					++iFilter, ++menuId)
 				{
-					m_FilterOptions.SetCurrentFilter(filterNames[ret-baseID]);
-					m_FilterOptions.Save();
-					CFilterOptions::Options().Load();
-					ResetVisibility();
+					parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
 				}
 			}
 		}
 		break;
 	}
+	return bHandled;
 }
 
 
@@ -265,7 +326,7 @@ void CAgilityBookDoc::StatusBarContextMenu(UINT id, CPoint point)
 ARBDogPtr CAgilityBookDoc::GetCurrentDog()
 {
 	ARBDogPtr pDog;
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	if (pTree && pTree->GetCurrentTreeItem())
 		pDog = pTree->GetCurrentTreeItem()->GetDog();
 	return pDog;
@@ -278,7 +339,7 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog()
 ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial()
 {
 	ARBDogTrialPtr pTrial;
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pTrial = pTree->GetCurrentTreeItem()->GetTrial();
@@ -292,7 +353,7 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial()
 ARBDogRunPtr CAgilityBookDoc::GetCurrentRun()
 {
 	ARBDogRunPtr pRun;
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
 	if (pTree && pTree->GetCurrentTreeItem())
 		pRun = pTree->GetCurrentTreeItem()->GetRun();
@@ -307,70 +368,90 @@ ARBDogRunPtr CAgilityBookDoc::GetCurrentRun()
  */
 void CAgilityBookDoc::AddTitle(ARBDogRunPtr pSelectedRun)
 {
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
-		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
-		if (pData->OnCmd(ID_AGILITY_NEW_TITLE, NULL))
-			SetModifiedFlag(TRUE);
+		pTree->EnsureVisible(pData->GetId());
+		bool bModified = false;
+		if (pData->OnCmd(ID_AGILITY_NEW_TITLE, bModified, NULL))
+		{
+			if (bModified)
+				Modify(true);
+		}
 	}
 }
 
 
 void CAgilityBookDoc::AddTrial(ARBDogRunPtr pSelectedRun)
 {
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
-		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
-		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, NULL))
-			SetModifiedFlag(TRUE);
+		pTree->EnsureVisible(pData->GetId());
+		bool bModified = false;
+		if (pData->OnCmd(ID_AGILITY_NEW_TRIAL, bModified, NULL))
+		{
+			if (bModified)
+				Modify(true);
+		}
 	}
 }
 
 
 void CAgilityBookDoc::AddRun(ARBDogRunPtr pSelectedRun)
 {
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pSelectedRun);
+	CAgilityBookTreeData* pData = pTree->FindData(pSelectedRun);
 	if (pData)
 	{
-		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
-		if (pData->OnCmd(ID_AGILITY_NEW_RUN, NULL))
-			SetModifiedFlag(TRUE);
+		pTree->EnsureVisible(pData->GetId());
+		bool bModified = false;
+		if (pData->OnCmd(ID_AGILITY_NEW_RUN, bModified, NULL))
+		{
+			if (bModified)
+				Modify(true);
+		}
 	}
 }
 
 
 void CAgilityBookDoc::EditRun(ARBDogRunPtr pRun)
 {
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pRun);
+	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
-		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
-		if (pData->OnCmd(ID_AGILITY_EDIT_RUN, NULL))
-			SetModifiedFlag(TRUE);
+		pTree->EnsureVisible(pData->GetId());
+		bool bModified = false;
+		if (pData->OnCmd(ID_AGILITY_EDIT_RUN, bModified, NULL))
+		{
+			if (bModified)
+				Modify(true);
+		}
 	}
 }
 
 
 void CAgilityBookDoc::DeleteRun(ARBDogRunPtr pRun)
 {
-	CAgilityBookTree* pTree = GetTreeView();
+	CAgilityBookTreeView* pTree = GetTreeView();
 	assert(pTree);
-	CAgilityBookTreeData* pData = pTree->FindData(TVI_ROOT, pRun);
+	CAgilityBookTreeData* pData = pTree->FindData(pRun);
 	if (pData)
 	{
-		pTree->GetTreeCtrl().EnsureVisible(pData->GetHTreeItem());
-		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, NULL))
-			SetModifiedFlag(TRUE);
+		pTree->EnsureVisible(pData->GetId());
+		bool bModified = false;
+		if (pData->OnCmd(ID_AGILITY_DELETE_RUN, bModified, NULL))
+		{
+			if (bModified)
+				Modify(true);
+		}
 	}
 }
 
@@ -384,11 +465,11 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 	bool bCreated = false;
 	ARBDogTrialPtr pTrial(ARBDogTrial::New(cal));
 	CDlgTrial dlg(this, pTrial);
-	if (IDOK == dlg.DoModal())
+	if (wxID_OK == dlg.ShowModal())
 	{
 		std::vector<ARBDogPtr> dogs;
 		CDlgSelectDog dlgDogs(this, dogs);
-		if (IDOK == dlgDogs.DoModal() && 0 < dogs.size())
+		if (wxID_OK == dlgDogs.ShowModal() && 0 < dogs.size())
 		{
 			for (std::vector<ARBDogPtr>::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
 			{
@@ -400,13 +481,14 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 				// the other - until you save, exit and reload the program.
 				ARBDogTrialPtr pNewTrial = pTrial->Clone();
 				pDog->GetTrials().AddTrial(pNewTrial);
-				SetModifiedFlag();
+				Modify(true);
 				// This is pure evil - casting ARBDogTrialPtr* to a CObject*.
 				// On the other side, we reinterpret right back to ARBDogTriaPtrl*
 				// Definite abuse of this parameter.
-				UpdateAllViews(NULL, UPDATE_NEW_TRIAL, reinterpret_cast<CObject*>(&pNewTrial));
+				CUpdateHint hint(UPDATE_NEW_TRIAL, pNewTrial);
+				UpdateAllViews(NULL, &hint);
 			}
-			pTabView->SetCurSel(0);
+			pTabView->SetCurTab(0);
 		}
 	}
 	return bCreated;
@@ -435,11 +517,10 @@ public:
 
 void CConfigActionCallback::PreDelete(tstring const& inMsg)
 {
-	CString msg(inMsg.c_str());
-	CString check;
-	check.LoadString(IDS_ARE_YOU_SURE_CONTINUE);
-	msg += _T("\n\n") + check;
-	if (IDNO == AfxMessageBox(msg, MB_ICONWARNING | MB_YESNO))
+	wxString msg(inMsg.c_str());
+	msg += wxT("\n\n");
+	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
+	if (wxID_NO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO))
 	{
 		m_bContinue = false;
 	}
@@ -448,7 +529,7 @@ void CConfigActionCallback::PreDelete(tstring const& inMsg)
 
 void CConfigActionCallback::PostDelete(tstring const& msg) const
 {
-	AfxMessageBox(msg.c_str(), MB_ICONWARNING);
+	wxMessageBox(msg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 }
 
 
@@ -458,13 +539,14 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	CConfigActionCallback callback;
 	if (m_Records.Update(0, update, info, callback))
 	{
-		CDlgMessage dlg(info.str().c_str(), 0);
-		dlg.DoModal();
-		SetModifiedFlag();
-		UpdateAllViews(NULL, UPDATE_CONFIG);
+		CDlgMessage dlg(info.str().c_str());
+		dlg.ShowModal();
+		Modify(true);
+		CUpdateHint hint(UPDATE_CONFIG);
+		UpdateAllViews(NULL, &hint);
 	}
 	else
-		AfxMessageBox(IDS_CONFIG_NO_UPDATE, MB_ICONINFORMATION);
+		wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 }
 
 
@@ -480,7 +562,7 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 	}
 	else
 	{
-		if (IDOK == dlg.DoModal())
+		if (wxID_OK == dlg.ShowModal())
 			bDoIt = true;
 	}
 	if (bDoIt)
@@ -493,7 +575,7 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 }
 
 
-bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
+bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 {
 	bool bOk = false;
 	CErrorCallback err;
@@ -501,7 +583,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 	if (book.Load(inTree, false, false, true, true, true, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		int countDog = 0;
 		int countRegNumsAdded = 0;
 		int countRegNumsUpdated = 0;
@@ -535,9 +617,8 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 			}
 			else if (*pExisting != *pDog)
 			{
-				// If the dog exists, only update the
-				// existing points, registration numbers,
-				// titles and trials.
+				// If the dog exists, only update the existing points,
+				// registration numbers, titles and trials.
 				if (pExisting->GetRegNums() != pDog->GetRegNums())
 				{
 					for (ARBDogRegNumList::iterator iter = pDog->GetRegNums().begin();
@@ -674,8 +755,9 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 		|| 0 < countTitlesAdded || 0 < countTitlesUpdated
 		|| 0 < countTrials)
 		{
-			UpdateAllViews(NULL, UPDATE_ALL_VIEW);
-			SetModifiedFlag();
+			CUpdateHint hint(UPDATE_ALL_VIEW);
+			UpdateAllViews(NULL, &hint);
+			Modify(true);
 		}
 		if (0 < countClubs)
 		{
@@ -695,124 +777,99 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, CWnd* pParent)
 			m_Records.GetAllTrialLocations(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 		}
-		CString str;
-		str.LoadString(IDS_ADDED);
+		wxString str(_("IDS_ADDED"));
 		bool bAdded = false;
 		if (0 < countDog)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_DOGS, countDog);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_DOGS"), countDog);
 		}
 		if (0 < countRegNumsAdded)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsAdded);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_REGNUMS"), countRegNumsAdded);
 		}
 		if (0 < countExistingPts)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_EXISTINGPTS, countExistingPts);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_EXISTINGPTS"), countExistingPts);
 		}
 		if (0 < countTitlesAdded)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_TITLES, countTitlesAdded);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_TITLES"), countTitlesAdded);
 		}
 		if (0 < countTrials)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_TRIALS, countTrials);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_TRIALS"), countTrials);
 		}
 		if (0 < countClubs)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_CLUBS, countClubs);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_CLUBS"), countClubs);
 		}
 		if (0 < countJudges)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_JUDGES, countJudges);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_JUDGES"), countJudges);
 		}
 		if (0 < countLocations)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_LOCATIONS, countLocations);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_LOCATIONS"), countLocations);
 		}
 		bAdded = false;
 		if (0 < countRegNumsUpdated)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			else
 			{
-				CString tmp;
-				tmp.LoadString(IDS_UPDATED);
-				str += _T("\n");
-				str += tmp;
+				str += wxT("\n");
+				str += _("IDS_UPDATED");
 			}
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_REGNUMS, countRegNumsUpdated);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_REGNUMS"), countRegNumsUpdated);
 		}
 		if (0 < countTitlesUpdated)
 		{
 			if (bAdded)
-				str += _T(", ");
+				str += wxT(", ");
 			else
 			{
-				CString tmp;
-				tmp.LoadString(IDS_UPDATED);
-				str += _T("\n");
-				str += tmp;
+				str += wxT("\n");
+				str += _("IDS_UPDATED");
 			}
 			bAdded = true;
-			CString str2;
-			str2.FormatMessage(IDS_ADDED_TITLES, countTitlesUpdated);
-			str += str2;
+			str += wxString::Format(_("IDS_ADDED_TITLES"), countTitlesUpdated);
 		}
-		AfxMessageBox(str, MB_ICONINFORMATION);
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+		wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
 
-bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, CWnd* pParent)
+bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 {
 	bool bOk = false;
 	CErrorCallback err;
@@ -820,7 +877,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, CWnd* pParent)
 	if (book.Load(inTree, true, false, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		int nAdded = 0;
 		int nUpdated = 0;
 		for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -844,21 +901,21 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, CWnd* pParent)
 		if (0 < nAdded + nUpdated)
 		{
 			m_Records.GetCalendar().sort();
-			UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
-			SetModifiedFlag();
+			CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+			UpdateAllViews(NULL, &hint);
+			Modify(true);
 		}
-		CString str;
-		str.FormatMessage(IDS_UPDATED_CAL_ITEMS, nAdded, nUpdated);
-		AfxMessageBox(str, MB_ICONINFORMATION);
+		wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+		wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
 
-bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, CWnd* pParent)
+bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 {
 	bool bOk = false;
 	CErrorCallback err;
@@ -866,7 +923,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, CWnd* pParent)
 	if (book.Load(inTree, false, true, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONINFORMATION);
+			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		int count = 0;
 		for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
 		{
@@ -880,16 +937,16 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, CWnd* pParent)
 		if (0 < count)
 		{
 			m_Records.GetTraining().sort();
-			UpdateAllViews(NULL, UPDATE_TRAINING_VIEW);
-			SetModifiedFlag();
+			CUpdateHint hint(UPDATE_TRAINING_VIEW);
+			UpdateAllViews(NULL, &hint);
+			Modify(true);
 		}
-		CString str;
-		str.FormatMessage(IDS_ADDED_TRAINING_ITEMS, count);
-		AfxMessageBox(str, MB_ICONINFORMATION);
+		wxString str = wxString::Format(_("IDS_ADDED_TRAINING_ITEMS"), count);
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		AfxMessageBox(err.m_ErrMsg.c_str(), MB_ICONWARNING);
+		wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -919,7 +976,10 @@ void CAgilityBookDoc::ResetVisibility()
 	}
 
 	if (!m_SuppressUpdates)
-		UpdateAllViews(NULL, UPDATE_OPTIONS);
+	{
+		CUpdateHint hint(UPDATE_OPTIONS);
+		UpdateAllViews(NULL, &hint);
+	}
 }
 
 
@@ -982,18 +1042,52 @@ void CAgilityBookDoc::ResetVisibility(
 }
 
 
+bool CAgilityBookDoc::ShowPointsAsHtml(bool bHtml)
+{
+	CTabView* pView = GetTabView();
+	if (pView)
+		return pView->ShowPointsAsHtml(bHtml);
+	return false;
+}
+
+
+CTabView* CAgilityBookDoc::GetTabView() const
+{
+	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
+	{
+		CTabView* pView = wxDynamicCast(*iView, CTabView);
+		if (pView)
+			return pView;
+	}
+	return NULL;
+}
+
+
 /**
  * Function to get the tree view. This is used internally and by the runs view.
  */
-CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
+CAgilityBookTreeView* CAgilityBookDoc::GetTreeView() const
 {
-	POSITION pos = this->GetFirstViewPosition();
-	while (NULL != pos)
+	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
 	{
-		CView* pView = GetNextView(pos);
-		CAgilityBookTree* pView2 = DYNAMIC_DOWNCAST(CAgilityBookTree, pView);
-		if (pView2)
-			return pView2;
+		CAgilityBookTreeView* pView = wxDynamicCast(*iView, CAgilityBookTreeView);
+		if (pView)
+			return pView;
+	}
+	return NULL;
+}
+
+
+/**
+ * Function to get the run view.
+ */
+CAgilityBookRunsView* CAgilityBookDoc::GetRunsView() const
+{
+	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
+	{
+		CAgilityBookRunsView* pView = wxDynamicCast(*iView, CAgilityBookRunsView);
+		if (pView)
+			return pView;
 	}
 	return NULL;
 }
@@ -1003,15 +1097,13 @@ CAgilityBookTree* CAgilityBookDoc::GetTreeView() const
  * Function to get the calendar list view. This is used by the calendar view
  * and by the export wizard.
  */
-CAgilityBookViewCalendarList* CAgilityBookDoc::GetCalendarListView() const
+CAgilityBookCalendarListView* CAgilityBookDoc::GetCalendarListView() const
 {
-	POSITION pos = this->GetFirstViewPosition();
-	while (NULL != pos)
+	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
 	{
-		CView* pView = GetNextView(pos);
-		CAgilityBookViewCalendarList* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewCalendarList, pView);
-		if (pView2)
-			return pView2;
+		CAgilityBookCalendarListView* pView = wxDynamicCast(*iView, CAgilityBookCalendarListView);
+		if (pView)
+			return pView;
 	}
 	assert(0);
 	return NULL;
@@ -1021,15 +1113,13 @@ CAgilityBookViewCalendarList* CAgilityBookDoc::GetCalendarListView() const
 /**
  * Function to get the calendar view. This is used by the calendar list view.
  */
-CAgilityBookViewCalendar* CAgilityBookDoc::GetCalendarView() const
+CAgilityBookCalendarView* CAgilityBookDoc::GetCalendarView() const
 {
-	POSITION pos = this->GetFirstViewPosition();
-	while (NULL != pos)
+	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
 	{
-		CView* pView = GetNextView(pos);
-		CAgilityBookViewCalendar* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewCalendar, pView);
-		if (pView2)
-			return pView2;
+		CAgilityBookCalendarView* pView = wxDynamicCast(*iView, CAgilityBookCalendarView);
+		if (pView)
+			return pView;
 	}
 	assert(0);
 	return NULL;
@@ -1039,22 +1129,20 @@ CAgilityBookViewCalendar* CAgilityBookDoc::GetCalendarView() const
 /**
  * Function to get the trainging view. This is used by the export wizard.
  */
-CAgilityBookViewTraining* CAgilityBookDoc::GetTrainingView() const
+CAgilityBookTrainingView* CAgilityBookDoc::GetTrainingView() const
 {
-	POSITION pos = this->GetFirstViewPosition();
-	while (NULL != pos)
+	for (wxList::const_iterator iView = GetViews().begin(); iView != GetViews().end(); ++iView)
 	{
-		CView* pView = GetNextView(pos);
-		CAgilityBookViewTraining* pView2 = DYNAMIC_DOWNCAST(CAgilityBookViewTraining, pView);
-		if (pView2)
-			return pView2;
+		CAgilityBookTrainingView* pView = wxDynamicCast(*iView, CAgilityBookTrainingView);
+		if (pView)
+			return pView;
 	}
 	assert(0);
 	return NULL;
 }
 
 
-void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
+void CAgilityBookDoc::BackupFile(wxString lpszPathName)
 {
 	int nBackups = CAgilityBookOptions::GetNumBackupFiles();
 	if (0 < nBackups)
@@ -1064,9 +1152,8 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 		int i;
 		for (i = 1; i <= nBackups; ++i)
 		{
-			otstringstream backup;
-			backup << lpszPathName << _T(".bck") << i;
-			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(backup.str().c_str()))
+			wxString backup = wxString::Format(wxT("%s.bck%d"), lpszPathName.c_str(), i);
+			if (!wxFile::Exists(backup))
 			{
 				nHole = i;
 				break;
@@ -1077,123 +1164,104 @@ void CAgilityBookDoc::BackupFile(LPCTSTR lpszPathName)
 		// Then shift all the files into the hole.
 		for (i = nHole; i > 1; --i)
 		{
-			otstringstream backup;
-			backup << lpszPathName << _T(".bck") << i;
-			if (INVALID_FILE_ATTRIBUTES != GetFileAttributes(backup.str().c_str()))
-				DeleteFile(backup.str().c_str());
-			otstringstream filename;
-			filename << lpszPathName << _T(".bck") << i-1;
-			MoveFile(filename.str().c_str(), backup.str().c_str());
+			wxString backup = wxString::Format(wxT("%s.bck%d"), lpszPathName.c_str(), i);
+			if (wxFile::Exists(backup))
+				wxRemoveFile(backup);
+			wxString filename = wxString::Format(wxT("%s.bck%d"), lpszPathName.c_str(), i-1);
+			wxRenameFile(filename, backup);
 		}
-		otstringstream backup;
-		backup << lpszPathName << _T(".bck1");
-		CopyFile(lpszPathName, backup.str().c_str(), FALSE);
+		wxString backup = lpszPathName + wxT(".bck1");
+		wxCopyFile(lpszPathName, backup, false);
 	}
 }
 
 
-/**
- * MFC method to delete contents of current document.
- */
-void CAgilityBookDoc::DeleteContents()
+bool CAgilityBookDoc::DeleteContents()
 {
-	CString msg;
-	msg.LoadString(IDS_INDICATOR_BLANK);
-	theApp.SetStatusText(msg, CFilterOptions::Options().IsFilterEnabled());
-	theApp.SetStatusText2(msg);
+	if (!wxDocument::DeleteContents())
+		return false;
+	wxString msg(_("IDS_INDICATOR_BLANK"));
+	wxGetApp().SetMessageText(msg, CFilterOptions::Options().IsFilterEnabled());
+	wxGetApp().SetMessageText2(msg);
 	m_Records.clear();
-	CDocument::DeleteContents();
-	SetModifiedFlag(FALSE);
+	return wxDocument::DeleteContents();
 }
 
 
-/**
- * MFC method to create a new empty document.
- */
-BOOL CAgilityBookDoc::OnNewDocument()
+bool CAgilityBookDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
-	theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
+	if (!wxDocument::OnNewDocument())
+		return false;
+	wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
 	CConfigHandler handler;
 	m_Records.Default(&handler);
 	m_Records.GetConfig().GetActions().clear();
-
 	if (0 == m_Records.GetDogs().size())
 	{
-		if (AfxGetMainWnd() && IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
-			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
+#pragma message PRAGMA_MESSAGE("TODO: Delay message to create dog?")
+//		if (AfxGetMainWnd() && IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
+//			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 	}
-	return TRUE;
+	return true;
 }
 
 
-/**
- * Since we are not using the CArchive serialization (via Serialize()), we
- * have to provide a full implementation of the open and save routines.
- * We do not want the CArchive stuff since we're using Xerces to read the XML.
- */
-BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
+// We override this instead of DoOpenDocument because we may need to modify
+// the document.
+bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 {
-	CFileStatus status;
-	if (!GetLocalStatus(lpszPathName, status))
-	{
-		CSplashWnd::HideSplashScreen();
-		theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
-		ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
-		return FALSE;
-	}
+    if (!OnSaveModified())
+        return false;
 
-	CWaitCursor wait;
+	//
+	// DoOpenDocument stuff
+	//
 
-	// Do standard CDocument stuff.
-	if (IsModified())
+	if (!wxFile::Exists(filename))
 	{
-		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
+		wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
+		wxMessageBox(_("Sorry, could not open this file."),
+			wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+		return false;
 	}
-	DeleteContents();
+	wxBusyCursor wait;
 
 	tstring err;
 	ElementNodePtr tree(ElementNode::New());
 	// Translate the XML to a tree form.
-	if (!tree->LoadXMLFile(lpszPathName, err))
+	if (!tree->LoadXMLFile(filename, err))
 	{
-		theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
-		CString msg;
-		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
+		wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
+		// This string is in fr/fr.po
+		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
 		if (0 < err.length())
 		{
-			msg += _T("\n\n");
+			msg += wxT("\n\n");
 			msg += err.c_str();
 		}
-		CSplashWnd::HideSplashScreen();
-		AfxMessageBox(msg, MB_ICONEXCLAMATION);
-		return FALSE;
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+		return false;
 	}
 	// Translate the tree to a class structure.
 	CErrorCallback callback;
 	if (!m_Records.Load(tree, callback))
 	{
-		theApp.WriteProfileString(_T("Settings"), _T("LastFile"), _T(""));
-		CString msg;
-		msg.LoadString(AFX_IDP_FAILED_TO_OPEN_DOC);
+		wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
+		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
 		if (0 < callback.m_ErrMsg.length())
 		{
-			msg += _T("\n\n");
+			msg += wxT("\n\n");
 			msg += callback.m_ErrMsg.c_str();
 		}
-		CSplashWnd::HideSplashScreen();
-		AfxMessageBox(msg, MB_ICONEXCLAMATION);
-		return FALSE;
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+		return false;
 	}
 	else if (0 < callback.m_ErrMsg.length())
 	{
-		CString msg;
-		msg.LoadString(IDS_NONFATAL_MSGS);
-		msg += _T("\n\n");
+		wxString msg(_("IDS_NONFATAL_MSGS"));
+		msg += wxT("\n\n");
 		msg += callback.m_ErrMsg.c_str();
-		CSplashWnd::HideSplashScreen();
-		AfxMessageBox(msg, MB_ICONINFORMATION);
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 	}
 	SortDates();
 
@@ -1201,17 +1269,23 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	ResetVisibility();
 	m_SuppressUpdates = false;
 
-	SetModifiedFlag(FALSE);     // start off with unmodified
+	//
+	// End DoOpenDocument stuff
+	//
+
+    SetFilename(filename, true);
+    Modify(false);
+    m_savedYet = true;
 
 	if (CAgilityBookOptions::AutoDeleteCalendarEntries())
 	{
 		ARBDate today(ARBDate::Today());
 		today -= CAgilityBookOptions::DaysTillEntryIsPast();
 		if (0 < m_Records.GetCalendar().TrimEntries(today))
-			SetModifiedFlag(TRUE);
+			Modify(true);
 	}
 
-	theApp.WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
+	wxConfig::Get()->Write(wxT("Settings/LastFile"), filename);
 
 	// Check our internal config.
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
@@ -1220,340 +1294,72 @@ BOOL CAgilityBookDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		if (CUpdateInfo::UpdateConfig(this))
 		{
 			if (ImportConfiguration(true))
-				SetModifiedFlag(TRUE);
+				Modify(true);
 		}
 	}
 	// Then check the external config.
 	else
 	{
-		theApp.UpdateInfo().AutoCheckConfiguration(this, theApp.LanguageManager());
+		wxGetApp().AutoCheckConfiguration(this);
 	}
 
+#pragma message PRAGMA_MESSAGE("TODO: Delay message to create dog?")
+	/*
 	if (0 == m_Records.GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{
 		AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 	}
+	*/
 
-	return TRUE;
+	// Kick the LoadData in every view
+    UpdateAllViews();
+
+	return true;
 }
 
 
-/**
- * MFC method to close a document (will call DeleteContents thru base class)
- */
-void CAgilityBookDoc::OnCloseDocument()
+bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 {
-	ARBDogPtr pDog = GetCurrentDog();
-	if (pDog)
-		theApp.WriteProfileString(_T("Settings"), _T("LastDog"), pDog->GetCallName().c_str());
-	else
-		theApp.WriteProfileString(_T("Settings"), _T("LastDog"), _T(""));
-	CDocument::OnCloseDocument();
-}
+	wxBusyCursor wait;
 
-
-/**
- * MFC method to save a document.
- */
-BOOL CAgilityBookDoc::OnSaveDocument(LPCTSTR lpszPathName)
-{
-	CWaitCursor wait;
-
-	CVersionNum ver(NULL);
-	tstring verstr = (LPCTSTR)ver.GetVersionString();
+	CVersionNum ver;
+	tstring verstr = ver.GetVersionString();
 	bool bAlreadyWarned = false;
-	BOOL bOk = FALSE;
+	bool bOk = false;
 	ElementNodePtr tree(ElementNode::New());
 	// First, we have to push all the class data into a tree.
 	if (m_Records.Save(tree, verstr, true, true, true, true, true))
 	{
-		BackupFile(lpszPathName);
+		BackupFile(filename);
 		// Then we can stream that tree out as XML.
-		if (tree->SaveXML(lpszPathName))
+		if (tree->SaveXML(filename))
 		{
-			theApp.WriteProfileString(_T("Settings"), _T("LastFile"), lpszPathName);
-			bOk = TRUE;
-			SetModifiedFlag(FALSE);
+			wxConfig::Get()->Write(wxT("Settings/LastFile"), filename);
+			bOk = true;
 		}
 		else
 		{
 			bAlreadyWarned = true;
-			CString errMsg;
-			errMsg.FormatMessage(IDS_CANNOT_OPEN, lpszPathName);
-			AfxMessageBox(errMsg, MB_OK | MB_ICONEXCLAMATION);
+			wxString errMsg = wxString::Format(_("IDS_CANNOT_OPEN"), filename.c_str());
+			wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 		}
 	}
 	if (!bOk && !bAlreadyWarned)
 	{
-		AfxMessageBox(IDS_INTERNAL_ERROR, MB_ICONSTOP);
+		wxMessageBox(_("IDS_INTERNAL_ERROR"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
 	}
 	return bOk;
 }
 
 
-#ifdef _DEBUG
-// CAgilityBookDoc diagnostics
-void CAgilityBookDoc::AssertValid() const
+bool CAgilityBookDoc::OnCloseDocument()
 {
-	CDocument::AssertValid();
-}
-
-
-void CAgilityBookDoc::Dump(CDumpContext& dc) const
-{
-	CDocument::Dump(dc);
-}
-#endif //_DEBUG
-
-/////////////////////////////////////////////////////////////////////////////
-// CAgilityBookDoc commands
-
-void CAgilityBookDoc::OnAppAbout()
-{
-	CAboutDlg aboutDlg(this);
-	aboutDlg.DoModal();
-}
-
-
-void CAgilityBookDoc::OnHelpUpdate()
-{
-	theApp.UpdateInfo().UpdateConfiguration(this, theApp.LanguageManager());
-}
-
-
-void CAgilityBookDoc::OnFileExportWizard()
-{
-	CWizard wiz(this);
-	wiz.DoModal();
-}
-
-
-void CAgilityBookDoc::OnFileLinked()
-{
-	CDlgFindLinks dlg(m_Records.GetDogs());
-	if (0 == dlg.GetNumLinks())
-		AfxMessageBox(IDS_NO_LINKED_FILES, MB_ICONINFORMATION);
+	ARBDogPtr pDog = GetCurrentDog();
+	if (pDog)
+		wxConfig::Get()->Write(wxT("Settings/LastDog"), pDog->GetCallName());
 	else
-		dlg.DoModal();
-}
-
-
-void CAgilityBookDoc::OnUpdateCopyTitles(CCmdUI* pCmdUI)
-{
-	// As long as a dog is current, enable. This means the copy may have
-	// only the dog's name.
-	BOOL bEnable = FALSE;
-	ARBDogPtr pDog = GetCurrentDog();
-	if (pDog)
-		bEnable = TRUE;
-	pCmdUI->Enable(bEnable);
-}
-
-
-void CAgilityBookDoc::OnCopyTitles()
-{
-	ARBDogPtr pDog = GetCurrentDog();
-	if (pDog)
-	{
-		std::vector<CVenueFilter> venues;
-		CFilterOptions::Options().GetFilterVenue(venues);
-
-		tstring preTitles, postTitles;
-		for (ARBConfigVenueList::const_iterator iVenue = m_Records.GetConfig().GetVenues().begin();
-			iVenue != m_Records.GetConfig().GetVenues().end();
-			++iVenue)
-		{
-			if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
-				continue;
-			tstring preTitles2, postTitles2;
-			for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
-				iTitle != (*iVenue)->GetTitles().end();
-				++iTitle)
-			{
-				ARBDogTitlePtr pTitle;
-				if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
-				{
-					if (pTitle->GetDate().IsValid()
-					&& !pTitle->IsFiltered())
-					{
-						if ((*iTitle)->GetPrefix())
-						{
-							if (!preTitles2.empty())
-								preTitles2 += ' ';
-							preTitles2 += pTitle->GetGenericName();
-						}
-						else
-						{
-							if (!postTitles2.empty())
-								postTitles2 += ' ';
-							postTitles2 += pTitle->GetGenericName();
-						}
-					}
-				}
-			}
-			if (!preTitles2.empty())
-			{
-				if (!preTitles.empty())
-					preTitles += ' ';
-				preTitles += preTitles2;
-			}
-			if (!postTitles2.empty())
-			{
-				if (!postTitles.empty())
-					postTitles += _T("; ");
-				postTitles += postTitles2;
-			}
-		}
-
-		CString data(preTitles.c_str());
-		if (!data.IsEmpty())
-			data += ' ';
-		data += pDog->GetCallName().c_str();
-		if (!postTitles.empty())
-		{
-			data += _T(": ");
-			data += postTitles.c_str();
-		}
-		CClipboardDataWriter clpData;
-		if (clpData.isOkay())
-		{
-			clpData.SetData(data);
-		}
-	}
-}
-
-
-void CAgilityBookDoc::OnEditConfiguration()
-{
-	CDlgConfigure config(this, m_Records);
-	config.DoModal();
-	// Don't need to update calsite info - done during OnOK.
-}
-
-
-void CAgilityBookDoc::OnAgilityNewDog()
-{
-	ARBDogPtr dog(ARBDog::New());
-	CDlgDog dlg(this, dog);
-	if (IDOK == dlg.DoModal())
-	{
-		CAgilityBookTree* pTree = NULL;
-		POSITION pos = GetFirstViewPosition();
-		while (NULL != pos)
-		{
-			CView* pView = GetNextView(pos);
-			if (DYNAMIC_DOWNCAST(CAgilityBookTree, pView))
-			{
-				pTree = reinterpret_cast<CAgilityBookTree*>(pView);
-				break;
-			}
-		}
-		if (pTree)
-		{
-			CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
-			if (pFrame)
-				pFrame->SetCurTab(0);
-			SetModifiedFlag();
-			if (!m_Records.GetDogs().AddDog(dog))
-				pTree->InsertDog(dog, true);
-		}
-	}
-}
-
-
-void CAgilityBookDoc::OnAgilityNewCalendar()
-{
-	ARBCalendarPtr cal(ARBCalendar::New());
-	CDlgCalendar dlg(cal, this);
-	if (IDOK == dlg.DoModal())
-	{
-		if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
-		{
-			CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
-			if (pFrame)
-				pFrame->SetCurTab(2);
-			m_Records.GetCalendar().AddCalendar(cal);
-			m_Records.GetCalendar().sort();
-			SetModifiedFlag();
-			UpdateAllViews(NULL, UPDATE_CALENDAR_VIEW);
-			POSITION pos = GetFirstViewPosition();
-			while (NULL != pos)
-			{
-				CView* pView = GetNextView(pos);
-				if (DYNAMIC_DOWNCAST(CAgilityBookViewCalendar, pView))
-				{
-					reinterpret_cast<CAgilityBookViewCalendar*>(pView)->SetCurrentDate(cal->GetStartDate(), true);
-					break;
-				}
-			}
-		}
-	}
-}
-
-
-void CAgilityBookDoc::OnAgilityUpdateCalendar()
-{
-	m_CalSites.FindEntries(this, m_Records.GetCalendar());
-}
-
-
-void CAgilityBookDoc::OnAgilityNewTraining()
-{
-	ARBTrainingPtr training(ARBTraining::New());
-	CDlgTraining dlg(training, this);
-	if (IDOK == dlg.DoModal())
-	{
-		CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
-		if (pFrame)
-			pFrame->SetCurTab(3);
-		m_Records.GetTraining().AddTraining(training);
-		m_Records.GetTraining().sort();
-		SetModifiedFlag();
-		UpdateAllViews(NULL, UPDATE_TRAINING_VIEW);
-		POSITION pos = GetFirstViewPosition();
-		while (NULL != pos)
-		{
-			CView* pView = GetNextView(pos);
-			if (DYNAMIC_DOWNCAST(CAgilityBookViewTraining, pView))
-			{
-				reinterpret_cast<CAgilityBookViewTraining*>(pView)->SetCurrentDate(training->GetDate());
-				break;
-			}
-		}
-	}
-}
-
-
-void CAgilityBookDoc::OnNotesClubs()
-{
-	tstring select;
-	ARBDogTrialPtr pTrial = GetCurrentTrial();
-	if (pTrial)
-		select = pTrial->GetClubs().GetPrimaryClubName();
-	CDlgInfoJudge dlg(this, ARBInfo::eClubInfo, select);
-	dlg.DoModal();
-}
-
-
-void CAgilityBookDoc::OnNotesJudges()
-{
-	tstring select;
-	ARBDogRunPtr pRun = GetCurrentRun();
-	if (pRun)
-		select = pRun->GetJudge();
-	CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo, select);
-	dlg.DoModal();
-}
-
-
-void CAgilityBookDoc::OnNotesLocations()
-{
-	tstring select;
-	ARBDogTrialPtr pTrial = GetCurrentTrial();
-	if (pTrial)
-		select = pTrial->GetLocation();
-	CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo, select);
-	dlg.DoModal();
+		wxConfig::Get()->Write(wxT("Settings/LastDog"), wxEmptyString);
+	return wxDocument::OnCloseDocument();
 }
 
 
@@ -1563,7 +1369,7 @@ public:
 	CFindInfo(CAgilityBookDoc* pDoc)
 		: m_pDoc(pDoc)
 	{
-		m_strCaption.LoadString(IDS_SEARCH_NOTES);
+		m_strCaption = _("IDS_SEARCH_NOTES");
 		m_bEnableSearch = false;
 		m_bSearchAll = true;
 		m_bEnableDirection = false;
@@ -1573,7 +1379,7 @@ public:
 private:
 	CAgilityBookDoc* m_pDoc;
 	void Search(
-			CString const& search,
+			wxString const& search,
 			ARBInfo::eInfoType inType,
 			std::set<tstring> const& inUse,
 			ARBInfo const& info) const;
@@ -1583,7 +1389,7 @@ private:
 bool CFindInfo::Search(CDlgFind* pDlg) const
 {
 	m_Items.clear();
-	CString search = Text();
+	wxString search = Text();
 	if (!MatchCase())
 		search.MakeLower();
 	ARBInfo& info = m_pDoc->Book().GetInfo();
@@ -1596,28 +1402,27 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	Search(search, ARBInfo::eLocationInfo, inUse, info);
 	if (0 < m_Items.size())
 	{
-		pDlg->EndDialog(IDOK);
+		pDlg->EndModal(wxID_OK);
 		return true;
 	}
 	else
 	{
-		CString msg;
-		msg.FormatMessage(IDS_CANNOT_FIND, (LPCTSTR)m_strSearch);
-		AfxMessageBox(msg, MB_ICONINFORMATION);
+		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		return false;
 	}
 }
 
 
 void CFindInfo::Search(
-		CString const& search,
+		wxString const& search,
 		ARBInfo::eInfoType inType,
 		std::set<tstring> const& inUse,
 		ARBInfo const& info) const
 {
 	for (std::set<tstring>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
 	{
-		CString str((*iter).c_str());
+		wxString str((*iter).c_str());
 		if (!MatchCase())
 			str.MakeLower();
 		if (0 <= str.Find(search))
@@ -1639,7 +1444,7 @@ void CFindInfo::Search(
 		{
 			for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 			{
-				CString str((*iter).c_str());
+				wxString str((*iter).c_str());
 				if (!MatchCase())
 					str.MakeLower();
 				if (0 <= str.Find(search))
@@ -1669,72 +1474,307 @@ void CFindInfo::Search(
 }
 
 
-void CAgilityBookDoc::OnNotesSearch()
+void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 {
-	CFindInfo callback(this);
-	CDlgFind dlg(callback);
-	if (IDOK == dlg.DoModal())
+	switch (evt.GetId())
 	{
-		CString caption;
-		caption.LoadString(IDS_COL_NOTES);
-		CDlgListViewer dlgList(this, caption, callback.m_Items);
-		dlgList.DoModal();
+	case ID_FILE_EXPORT_WIZARD:
+	case ID_FILE_LINKED:
+		evt.Enable(true);
+		break;
+	case ID_COPY_TITLES_LIST:
+		// As long as a dog is current, enable. This means the copy may have
+		// only the dog's name.
+		evt.Enable(GetCurrentDog() ? true : false);
+		break;
+	case ID_EDIT_CONFIGURATION:
+	case ID_AGILITY_NEW_DOG:
+	case ID_AGILITY_NEW_CALENDAR:
+	case ID_AGILITY_UPDATE_CALENDAR:
+	case ID_AGILITY_NEW_TRAINING:
+	case ID_NOTES_CLUBS:
+	case ID_NOTES_JUDGES:
+	case ID_NOTES_LOCATIONS:
+	case ID_NOTES_SEARCH:
+	case ID_VIEW_OPTIONS:
+		evt.Enable(true);
+		break;
+	case ID_VIEW_SORTRUNS:
+		evt.Check(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);
+		break;
+	case ID_VIEW_RUNS_BY_TRIAL:
+		evt.Check(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
+		break;
+	case ID_VIEW_HIDDEN:
+		evt.Check(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
+		break;
+	case ID_VIEW_TABLE_IN_YPS:
+		evt.Check(CAgilityBookOptions::GetTableInYPS() ? 1 : 0);
+		break;
+	case ID_VIEW_LIFETIME_EVENTS:
+		evt.Check(CAgilityBookOptions::GetViewLifetimePointsByEvent() ? 1 : 0);
+		break;
+	case wxID_ABOUT:
+	case ID_HELP_UPDATE:
+		evt.Enable(true);
+		break;
 	}
 }
 
 
-void CAgilityBookDoc::OnViewOptions()
+void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 {
-	int nPage;
-	CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
-	if (!pFrame)
-		return;
-	switch (pFrame->GetCurTab())
+	switch (evt.GetId())
 	{
-	default:
-		nPage = CDlgOptions::GetProgramPage();
+	case ID_FILE_EXPORT_WIZARD:
+		{
+			CWizard wiz(this);
+			wiz.ShowModal();
+		}
 		break;
-	case IDX_PANE_RUNS:
-	case IDX_PANE_POINTS:
-		nPage = CDlgOptions::GetFilterPage();
+
+	case ID_FILE_LINKED:
+		{
+			CDlgFindLinks dlg(m_Records.GetDogs());
+			if (0 == dlg.GetNumLinks())
+				wxMessageBox(_("IDS_NO_LINKED_FILES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			else
+				dlg.ShowModal();
+		}
 		break;
-	case IDX_PANE_CALENDAR:
-		nPage = CDlgOptions::GetCalendarPage();
+
+	case ID_COPY_TITLES_LIST:
+		{
+			ARBDogPtr pDog = GetCurrentDog();
+			if (pDog)
+			{
+				std::vector<CVenueFilter> venues;
+				CFilterOptions::Options().GetFilterVenue(venues);
+
+				tstring preTitles, postTitles;
+				for (ARBConfigVenueList::const_iterator iVenue = m_Records.GetConfig().GetVenues().begin();
+					iVenue != m_Records.GetConfig().GetVenues().end();
+					++iVenue)
+				{
+					if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
+						continue;
+					tstring preTitles2, postTitles2;
+					for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
+						iTitle != (*iVenue)->GetTitles().end();
+						++iTitle)
+					{
+						ARBDogTitlePtr pTitle;
+						if (pDog->GetTitles().FindTitle((*iVenue)->GetName(), (*iTitle)->GetName(), &pTitle))
+						{
+							if (pTitle->GetDate().IsValid()
+							&& !pTitle->IsFiltered())
+							{
+								if ((*iTitle)->GetPrefix())
+								{
+									if (!preTitles2.empty())
+										preTitles2 += ' ';
+									preTitles2 += pTitle->GetGenericName();
+								}
+								else
+								{
+									if (!postTitles2.empty())
+										postTitles2 += ' ';
+									postTitles2 += pTitle->GetGenericName();
+								}
+							}
+						}
+					}
+					if (!preTitles2.empty())
+					{
+						if (!preTitles.empty())
+							preTitles += ' ';
+						preTitles += preTitles2;
+					}
+					if (!postTitles2.empty())
+					{
+						if (!postTitles.empty())
+							postTitles += _T("; ");
+						postTitles += postTitles2;
+					}
+				}
+
+				wxString data(preTitles.c_str());
+				if (!data.IsEmpty())
+					data += ' ';
+				data += pDog->GetCallName().c_str();
+				if (!postTitles.empty())
+				{
+					data += _T(": ");
+					data += postTitles.c_str();
+				}
+				CClipboardDataWriter clpData;
+				if (clpData.isOkay())
+				{
+					clpData.AddData(data);
+					clpData.CommitData();
+				}
+			}
+		}
 		break;
-	case IDX_PANE_LOG:
-		nPage = CDlgOptions::GetFilterPage();
+
+	case ID_EDIT_CONFIGURATION:
+		{
+			CDlgConfigure config(this, m_Records);
+			config.ShowModal();
+			// Don't need to update calsite info - done during OnOK.
+		}
+		break;
+
+	case ID_AGILITY_NEW_DOG:
+		{
+			ARBDogPtr dog(ARBDog::New());
+			CDlgDog dlg(this, dog);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				CTabView* pTab = GetTabView();
+				if (pTab)
+					pTab->SetCurTab(IDX_PANE_RUNS);
+				Modify(true);
+				if (!m_Records.GetDogs().AddDog(dog))
+				{
+					CAgilityBookTreeView* pTree = GetTreeView();
+					if (pTree)
+						pTree->InsertDog(dog, true);
+				}
+			}
+		}
+		break;
+
+	case ID_AGILITY_NEW_CALENDAR:
+		{
+			ARBCalendarPtr cal(ARBCalendar::New());
+			CDlgCalendar dlg(cal, this);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
+				{
+					CTabView* pTab = GetTabView();
+					if (pTab)
+						pTab->SetCurTab(IDX_PANE_CALENDAR);
+					m_Records.GetCalendar().AddCalendar(cal);
+					m_Records.GetCalendar().sort();
+					Modify(true);
+					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
+					UpdateAllViews(NULL, &hint);
+					CAgilityBookCalendarView* pCal = GetCalendarView();
+					if (pCal)
+						pCal->SetCurrentDate(cal->GetStartDate(), true);
+				}
+			}
+		}
+		break;
+
+	case ID_AGILITY_UPDATE_CALENDAR:
+		m_CalSites.FindEntries(this, m_Records.GetCalendar());
+		break;
+
+	case ID_AGILITY_NEW_TRAINING:
+		{
+			ARBTrainingPtr training(ARBTraining::New());
+			CDlgTraining dlg(training, this);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				CTabView* pTab = GetTabView();
+				if (pTab)
+					pTab->SetCurTab(IDX_PANE_LOG);
+				m_Records.GetTraining().AddTraining(training);
+				m_Records.GetTraining().sort();
+				Modify(true);
+				CUpdateHint hint(UPDATE_TRAINING_VIEW);
+				UpdateAllViews(NULL, &hint);
+				CAgilityBookTrainingView* pView = GetTrainingView();
+				if (pView)
+					pView->SetCurrentDate(training->GetDate());
+			}
+		}
+		break;
+
+	case ID_NOTES_CLUBS:
+		{
+			tstring select;
+			ARBDogTrialPtr pTrial = GetCurrentTrial();
+			if (pTrial)
+				select = pTrial->GetClubs().GetPrimaryClubName();
+			CDlgInfoJudge dlg(this, ARBInfo::eClubInfo, select);
+			dlg.ShowModal();
+		}
+		break;
+
+	case ID_NOTES_JUDGES:
+		{
+			tstring select;
+			ARBDogRunPtr pRun = GetCurrentRun();
+			if (pRun)
+				select = pRun->GetJudge();
+			CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo, select);
+			dlg.ShowModal();
+		}
+		break;
+
+	case ID_NOTES_LOCATIONS:
+		{
+			tstring select;
+			ARBDogTrialPtr pTrial = GetCurrentTrial();
+			if (pTrial)
+				select = pTrial->GetLocation();
+			CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo, select);
+			dlg.ShowModal();
+		}
+		break;
+
+	case ID_NOTES_SEARCH:
+		{
+			CFindInfo callback(this);
+			CDlgFind dlg(callback);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				CDlgListViewer dlgList(this, _("IDS_COL_NOTES"), callback.m_Items);
+				dlgList.ShowModal();
+			}
+		}
+		break;
+
+	case ID_VIEW_OPTIONS:
+		{
+			int nPage;
+			CTabView* pTab = GetTabView();
+			if (!pTab)
+				return;
+			switch (pTab->GetCurTab())
+			{
+			default:
+				nPage = CDlgOptions::GetProgramPage();
+				break;
+			case IDX_PANE_RUNS:
+			case IDX_PANE_POINTS:
+				nPage = CDlgOptions::GetFilterPage();
+				break;
+			case IDX_PANE_CALENDAR:
+				nPage = CDlgOptions::GetCalendarPage();
+				break;
+			case IDX_PANE_LOG:
+				nPage = CDlgOptions::GetFilterPage();
+				break;
+			}
+			CDlgOptions options(this, wxGetApp().GetTopWindow(), nPage);
+			options.ShowModal();
+		}
+		break;
+
+	case wxID_ABOUT:
+		{
+			CDlgAbout dlg(this, NULL);
+			dlg.ShowModal();
+		}
+		break;
+
+	case ID_HELP_UPDATE:
+		wxGetApp().UpdateConfiguration(this);
 		break;
 	}
-	CDlgOptions options(this, pFrame, nPage);
-	options.DoModal();
-}
-
-
-void CAgilityBookDoc::OnUpdateViewSortruns(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);
-}
-
-
-void CAgilityBookDoc::OnUpdateViewRunsByTrial(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
-}
-
-
-void CAgilityBookDoc::OnUpdateViewHiddenTitles(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
-}
-
-
-void CAgilityBookDoc::OnUpdateViewTableInYPS(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(CAgilityBookOptions::GetTableInYPS() ? 1 : 0);
-}
-
-
-void CAgilityBookDoc::OnUpdateViewLifetimeEvents(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(CAgilityBookOptions::GetViewLifetimePointsByEvent() ? 1 : 0);
 }

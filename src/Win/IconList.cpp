@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-27 DRC Ported to wxWidgets.
  * @li 2007-04-22 DRC Created.
  */
 
@@ -38,45 +39,57 @@
 #include "AgilityBook.h"
 #include "IconList.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "res/dog.xpm"
+#include "res/trial.xpm"
+#include "res/run.xpm"
+#include "res/venue-aac.xpm"
+#include "res/venue-akc.xpm"
+#include "res/venue-asca.xpm"
+#include "res/venue-ckc.xpm"
+#include "res/venue-cpe.xpm"
+#include "res/venue-docna.xpm"
+#include "res/venue-fci.xpm"
+#include "res/venue-nadac.xpm"
+#include "res/venue-scc.xpm"
+#include "res/venue-sweep.xpm"
+#include "res/venue-tdaa.xpm"
+#include "res/venue-ukc.xpm"
+#include "res/venue-usdaa.xpm"
 
-/////////////////////////////////////////////////////////////////////////////
 
 CIconList::CIconList()
+	: wxImageList(16, 16)
 {
+	const wxSize imageSize(16, 16);
 	struct
 	{
 		int* index;
-		UINT resId;
+		char** xpmData;
 	} icons[] =
 	{
 		// Note: The order of these icons CANNOT be changed. The index
 		// is saved in the ARB file to associate an icon with a venue.
-		{&m_idxDog,				IDI_DOG},
-		{&m_idxTrial,			IDI_TRIAL},
-		{&m_idxRun,				IDI_RUN},
-		{&m_idxVenueAAC,		IDI_VENUE_AAC},
-		{&m_idxVenueAKC,		IDI_VENUE_AKC},
-		{&m_idxVenueASCA,		IDI_VENUE_ASCA},
-		{&m_idxVenueCKC,		IDI_VENUE_CKC},
-		{&m_idxVenueCPE,		IDI_VENUE_CPE},
-		{&m_idxVenueDOCNA,		IDI_VENUE_DOCNA},
-		{&m_idxVenueNADAC,		IDI_VENUE_NADAC},
-		{&m_idxVenueSweep,		IDI_VENUE_SWEEP},
-		{&m_idxVenueTDAA,		IDI_VENUE_TDAA},
-		{&m_idxVenueUKC,		IDI_VENUE_UKC},
-		{&m_idxVenueUSDAA,		IDI_VENUE_USDAA},
-		{&m_idxVenueFCI,		IDI_VENUE_FCI},
-		{&m_idxVenueSCC,		IDI_VENUE_SCC},
+		{&m_idxDog,				dog_xpm},
+		{&m_idxTrial,			trial_xpm},
+		{&m_idxRun,				run_xpm},
+		{&m_idxVenueAAC,		venue_aac_xpm},
+		{&m_idxVenueAKC,		venue_akc_xpm},
+		{&m_idxVenueASCA,		venue_asca_xpm},
+		{&m_idxVenueCKC,		venue_ckc_xpm},
+		{&m_idxVenueCPE,		venue_cpe_xpm},
+		{&m_idxVenueDOCNA,		venue_docna_xpm},
+		{&m_idxVenueNADAC,		venue_nadac_xpm},
+		{&m_idxVenueSweep,		venue_sweep_xpm},
+		{&m_idxVenueTDAA,		venue_tdaa_xpm},
+		{&m_idxVenueUKC,		venue_ukc_xpm},
+		{&m_idxVenueUSDAA,		venue_usdaa_xpm},
+		{&m_idxVenueFCI,		venue_fci_xpm},
+		{&m_idxVenueSCC,		venue_scc_xpm},
 	};
 	int nIcons = sizeof(icons) / sizeof(icons[0]);
-	Create(16, 16, ILC_MASK | ILC_COLOR32, nIcons, 1);
+
 	for (int idx = 0; idx < nIcons; ++idx)
 	{
-		*icons[idx].index = Add(theApp.LoadIcon(icons[idx].resId));
+		*icons[idx].index = Add(wxIcon(icons[idx].xpmData));
 	}
 }

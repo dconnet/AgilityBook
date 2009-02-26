@@ -31,54 +31,88 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Created
  */
 
 #include "stdafx.h"
-#include "resource.h"
 #include "DlgAuthenticate.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgAuthenticate dialog
-
-IMPLEMENT_DYNAMIC(CDlgAuthenticate, CDialog)
-
-CString CDlgAuthenticate::m_Password; // So we remember the password for the life of the program
+#include <wx/sizer.h>
+#include <wx/statbox.h>
+#include <wx/valgen.h>
 
 
-CDlgAuthenticate::CDlgAuthenticate(CString& userName, CWnd* pParent)
-	: CDialog(CDlgAuthenticate::IDD, pParent)
-	, m_userName(userName)
+CDlgAuthenticate::CDlgAuthenticate(
+		wxString const& userName,
+		wxWindow* parent,
+		wxString const& caption,
+		wxString const& message)
+	: wxDialog(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize)
 {
-	//{{AFX_DATA_INIT(CDlgAuthenticate)
-	//}}AFX_DATA_INIT
-}
+	// Controls (these are done first to control tab order)
 
+	wxStaticText* textMsg = NULL;
+	if (!message.IsEmpty())
+	{
+		textMsg = new wxStaticText(this, wxID_ANY, message, wxDefaultPosition, wxDefaultSize, 0);
+		textMsg->Wrap(-1);
+	}
 
-void CDlgAuthenticate::DoDataExchange(CDataExchange* pDX)
-{
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgAuthenticate)
-	DDX_Text(pDX, IDC_AUTH_USERNAME, m_Name);
-	DDX_Text(pDX, IDC_AUTH_PASSWORD, m_Password);
-	//}}AFX_DATA_MAP
-}
+	wxStaticText* textUserName = new wxStaticText(this, wxID_ANY, _("User Name"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textUserName->Wrap(-1);
 
+	wxTextCtrl* ctrlUsername = new wxTextCtrl(this, wxID_ANY, userName,
+		wxDefaultPosition, wxSize(180, -1), 0,
+		wxGenericValidator(&m_Name));
 
-BEGIN_MESSAGE_MAP(CDlgAuthenticate, CDialog)
-	//{{AFX_MSG_MAP(CDlgAuthenticate)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	wxStaticText* textPassword = new wxStaticText(this, wxID_ANY, _("Password"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPassword->Wrap(-1);
 
+	wxTextCtrl* ctrlPassword = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(180, -1), wxTE_PASSWORD,
+		wxGenericValidator(&m_Password));
 
-void CDlgAuthenticate::OnOK()
-{
-	CDialog::OnOK();
-	m_userName = m_Name;
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+
+	if (textMsg)
+	{
+		sizer->Add(textMsg, 0, wxALL|wxEXPAND, 5);
+		sizer->Add(0, 10, 0, 0, 0);
+	}
+
+	wxBoxSizer* sizerRows = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerUserName = new wxBoxSizer(wxHORIZONTAL);
+	sizerUserName->Add(textUserName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerUserName->Add(ctrlUsername, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	sizerRows->Add(sizerUserName, 1, wxEXPAND, 5);
+
+	wxBoxSizer* sizerPassword = new wxBoxSizer(wxHORIZONTAL);
+	sizerPassword->Add(textPassword, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPassword->Add(ctrlPassword, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	sizerRows->Add(sizerPassword, 1, wxEXPAND, 5);
+
+	sizer->Add(sizerRows, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	sizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(sizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz = GetSize();
+	SetSizeHints(sz, wxSize(-1, sz.y));
+	CenterOnParent();
+
+	if (userName.empty())
+		ctrlUsername->SetFocus();
+	else
+		ctrlPassword->SetFocus();
 }

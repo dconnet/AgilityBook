@@ -33,18 +33,36 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
-#include "DlgBaseSheet.h"
+#include "ARBTypes.h"
+//#include "DlgBaseSheet.h"
 class CAgilityBookDoc;
-class CDlgDogNumbers;
-class CDlgDogPoints;
-class CDlgDogProperties;
-class CDlgDogTitles;
+//class CDlgDogNumbers;
+//class CDlgDogPoints;
+//class CDlgDogProperties;
+//class CDlgDogTitles;
 
+class CDlgDog
+{
+public:
+	CDlgDog(
+			CAgilityBookDoc* pDoc,
+			ARBDogPtr pDog,
+			wxWindow* pParent = NULL,
+			int iSelectPage = 0) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgDog"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgDog : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgDog)
@@ -76,3 +94,4 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 };
+#endif

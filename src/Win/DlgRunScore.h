@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
@@ -43,15 +44,29 @@
  * @li 2004-02-14 DRC Added Table-in-YPS flag.
  */
 
-#include <vector>
-#include "ComboBox.h"
-#include "DlgBasePropertyPage.h"
-#include "ListData.h"
-#include "NoteButton.h"
-#include "RichEditCtrl2.h"
+#include "ARBTypes.h"
+//#include <vector>
+//#include "ComboBox.h"
+//#include "DlgBasePropertyPage.h"
+//#include "ListData.h"
+//#include "NoteButton.h"
+//#include "RichEditCtrl2.h"
 class CAgilityBookDoc;
-class CDlgRunDataLevel;
+//class CDlgRunDataLevel;
 
+
+class CDlgRunScore
+{
+public:
+	CDlgRunScore(
+			CAgilityBookDoc* pDoc,
+			ARBConfigVenuePtr pVenue,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRealRun,
+			ARBDogRunPtr pRun) {}
+};
+
+#if 0
 class CDlgRunScore : public CDlgBasePropertyPage
 {
 public:
@@ -214,3 +229,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

@@ -33,14 +33,30 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
  * @li 2004-01-05 DRC Created.
  */
 
-#include "DlgBaseDialog.h"
-#include "afxwin.h"
+//#include "DlgBaseDialog.h"
+#include "ARBTypes.h"
 
+
+class CDlgConfigTitle
+{
+public:
+	CDlgConfigTitle(
+			ARBConfigTitlePtr inTitle,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgConfigTitle"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgConfigTitle : public CDlgBaseDialog
 {
 public:
@@ -83,3 +99,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

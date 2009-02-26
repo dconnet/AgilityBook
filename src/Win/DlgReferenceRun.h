@@ -33,15 +33,36 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include <set>
 #include "ARBTypes.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
+
+class CDlgReferenceRun
+{
+public:
+	CDlgReferenceRun(
+			CAgilityBookDoc* pDoc,
+			ARBDogRunPtr inRun,
+			std::set<tstring> const& inHeights,
+			std::set<tstring> const& inNames,
+			std::set<tstring> const& inBreeds,
+			ARBDogReferenceRunPtr ref,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgReferenceRun"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgReferenceRun : public CDlgBaseDialog
 {
 public:
@@ -93,3 +114,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

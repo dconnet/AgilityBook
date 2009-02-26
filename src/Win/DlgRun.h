@@ -33,17 +33,37 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "DlgBaseSheet.h"
+#include "ARBTypes.h"
+//#include "DlgBaseSheet.h"
 class CAgilityBookDoc;
-class CDlgRunScore;
-class CDlgRunComments;
-class CDlgRunReference;
-class CDlgRunCRCD;
-class CDlgRunLink;
+//class CDlgRunScore;
+//class CDlgRunComments;
+//class CDlgRunReference;
+//class CDlgRunCRCD;
+//class CDlgRunLink;
 
+
+class CDlgRun
+{
+public:
+	CDlgRun(
+			CAgilityBookDoc* pDoc,
+			ARBDogTrialPtr pTrial,
+			ARBDogRunPtr pRun,
+			wxWindow* pParent = NULL,
+			int iSelectPage = 0) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgRun"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgRun : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgRun)
@@ -78,3 +98,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright Â© 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-05 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -49,23 +50,19 @@
  *                    prevent constant re-evaluation.
  */
 
-#include <set>
 #include "ARBAgilityRecordBook.h"
 #include "ARBTypes.h"
 #include "CalendarSites.h"
-class CAgilityBookTree;
-class CAgilityBookViewCalendar;
-class CAgilityBookViewCalendarList;
-class CAgilityBookViewTraining;
+#include <set>
+#include <wx/docview.h>
+class CAgilityBookCalendarListView;
+class CAgilityBookCalendarView;
+class CAgilityBookRunsView;
+class CAgilityBookTrainingView;
+class CAgilityBookTreeView;
+class CStatusHandler;
 class CTabView;
 struct CVenueFilter;
-
-//
-// Application specific message
-//
-#define PM_DELAY_MESSAGE		(WM_APP+1)
-	// Only sent if there are no dogs and we want to auto-create one to start
-	#define	CREATE_NEWDOG				1 // LPARAM unused
 
 
 // UpdateAllViews() hints: Only the view bits can be or'd. Each item is
@@ -83,6 +80,30 @@ struct CVenueFilter;
 #define UPDATE_LANG_CHANGE		0x0400
 #define UPDATE_CUSTOMIZE		0x0500
 
+class CUpdateHint : public wxObject
+{
+public:
+	CUpdateHint(unsigned int hint, ARBBasePtr pObj = ARBBasePtr())
+		: m_Hint(hint)
+		, m_pObj(pObj)
+	{
+	}
+	bool IsSet(unsigned int bit) const
+	{
+		// '?' to avoid the bool optimization warning
+		return (m_Hint & bit) ? true : false;
+	}
+	bool IsEqual(unsigned int val) const
+	{
+		return m_Hint == val;
+	}
+	ARBBasePtr GetObj() const	{return m_pObj;}
+private:
+	unsigned int m_Hint;
+	ARBBasePtr m_pObj;
+};
+
+
 class CErrorCallback : public ARBErrorCallback
 {
 public:
@@ -91,14 +112,15 @@ public:
 	tstring m_ErrMsg;
 };
 
-class CAgilityBookDoc : public CDocument
-{
-protected: // create from serialization only
-	CAgilityBookDoc();
-	DECLARE_DYNCREATE(CAgilityBookDoc)
 
+class CAgilityBookDoc : public wxDocument
+{
+	DECLARE_DYNAMIC_CLASS(CAgilityBookDoc)
 public:
-	void StatusBarContextMenu(UINT id, CPoint point);
+	CAgilityBookDoc();
+	~CAgilityBookDoc();
+
+	bool StatusBarContextMenu(wxWindow* parent, int id, wxPoint const& point);
 
 	// Data
 	ARBDogPtr GetCurrentDog();
@@ -119,9 +141,9 @@ public:
 	void SortDates();
 	void ImportConfiguration(ARBConfig& update);
 	bool ImportConfiguration(bool bUseDefault);
-	bool ImportARBRunData(ElementNodePtr inTree, CWnd* pParent);
-	bool ImportARBCalData(ElementNodePtr inTree, CWnd* pParent);
-	bool ImportARBLogData(ElementNodePtr inTree, CWnd* pParent);
+	bool ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent);
+	bool ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent);
+	bool ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent);
 
 	/**
 	 * Reset the visibility of all objects.
@@ -147,59 +169,33 @@ public:
 			std::set<tstring>& names,
 			ARBTrainingPtr pTraining);
 
-	CAgilityBookTree* GetTreeView() const;
-	CAgilityBookViewCalendarList* GetCalendarListView() const;
-	CAgilityBookViewCalendar* GetCalendarView() const;
-	CAgilityBookViewTraining* GetTrainingView() const;
+	bool ShowPointsAsHtml(bool bHtml);
+	CTabView* GetTabView() const;
+	CAgilityBookTreeView* GetTreeView() const;
+	CAgilityBookRunsView* GetRunsView() const;
+	CAgilityBookCalendarListView* GetCalendarListView() const;
+	CAgilityBookCalendarView* GetCalendarView() const;
+	CAgilityBookTrainingView* GetTrainingView() const;
 
-	void BackupFile(LPCTSTR lpszPathName);
+	void BackupFile(wxString lpszPathName);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CAgilityBookDoc)
-	virtual void DeleteContents();
-	virtual BOOL OnNewDocument();
-	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
-	virtual void OnCloseDocument();
-	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
-	//}}AFX_VIRTUAL
-
-// Implementation
-public:
-	virtual ~CAgilityBookDoc();
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
-#endif
 private:
 	bool m_SuppressUpdates;
 	ARBAgilityRecordBook m_Records; ///< The real records.
 	CCalendarSites m_CalSites;
+	CStatusHandler* m_StatusData;
 
-// Generated message map functions
 protected:
-	//{{AFX_MSG(CAgilityBookDoc)
-	afx_msg void OnAppAbout();
-	afx_msg void OnHelpUpdate();
-	afx_msg void OnFileExportWizard();
-	afx_msg void OnFileLinked();
-	afx_msg void OnUpdateCopyTitles(CCmdUI* pCmdUI);
-	afx_msg void OnCopyTitles();
-	afx_msg void OnEditConfiguration();
-	afx_msg void OnAgilityNewDog();
-	afx_msg void OnAgilityNewCalendar();
-	afx_msg void OnAgilityUpdateCalendar();
-	afx_msg void OnAgilityNewTraining();
-	afx_msg void OnNotesClubs();
-	afx_msg void OnNotesJudges();
-	afx_msg void OnNotesLocations();
-	afx_msg void OnNotesSearch();
-	afx_msg void OnViewOptions();
-	afx_msg void OnUpdateViewSortruns(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateViewRunsByTrial(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateViewHiddenTitles(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateViewTableInYPS(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateViewLifetimeEvents(CCmdUI* pCmdUI);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+    virtual bool DeleteContents();
+	virtual bool OnNewDocument();
+	virtual bool OnOpenDocument(const wxString& file);
+	virtual bool DoSaveDocument(const wxString& file);
+    virtual bool OnCloseDocument();
+
+private:
+	DECLARE_EVENT_TABLE()
+	void OnStatusDog(wxCommandEvent& evt);
+	void OnStatusFilter(wxCommandEvent& evt);
+	void OnUpdateCmd(wxUpdateUIEvent& evt);
+	void OnCmd(wxCommandEvent& evt);
 };

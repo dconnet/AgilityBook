@@ -33,14 +33,62 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-10-05 DRC Created
  */
 
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
+//#include "DlgBaseDialog.h"
+//#include "ListCtrl.h"
+#include "ARBTypes.h"
 #include <map>
+#include <vector>
 class ARBConfig;
 
+
+class CDlgCalendarQueryDetail
+{
+public:
+	CDlgCalendarQueryDetail(
+			ARBConfig const& inConfig,
+			std::map<tstring, tstring> const& inLocCodes,
+			std::map<tstring, tstring> const& inVenueCodes,
+			wxWindow* pParent = NULL);
+	CDlgCalendarQueryDetail(
+			ARBConfig const& inConfig,
+			std::map<tstring, tstring> const& inLocCodes,
+			std::vector<tstring> const& inSelectedLocCodes,
+			std::map<tstring, tstring> const& inVenueCodes,
+			std::vector<tstring> const& inSelectedVenueCodes,
+			wxWindow* pParent = NULL);
+	std::map<tstring, tstring> const& GetLocationCodes() const
+	{
+		return m_LocCodes;
+	}
+	std::map<tstring, tstring> const& GetVenueCodes() const
+	{
+		return m_VenueCodes;
+	}
+	std::vector<tstring> const& GetSelectedLocationCodes() const
+	{
+		return m_Locations;
+	}
+	std::vector<tstring> const& GetSelectedVenueCodes() const
+	{
+		return m_Venues;
+	}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgCalendarQueryDetail"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+private:
+	std::map<tstring, tstring> m_LocCodes;
+	std::map<tstring, tstring> m_VenueCodes;
+	std::vector<tstring> m_Locations;
+	std::vector<tstring> m_Venues;
+};
+
+#if 0
 class CDlgCalendarQueryDetail : public CDlgBaseDialog
 {
 public:
@@ -121,3 +169,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

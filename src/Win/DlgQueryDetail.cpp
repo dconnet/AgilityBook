@@ -31,13 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-12-24 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgQueryDetail.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgQueryDetail")
+#if 0
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 
 #ifdef _DEBUG
@@ -177,3 +180,4 @@ void CDlgQueryDetail::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

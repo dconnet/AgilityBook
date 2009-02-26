@@ -59,6 +59,17 @@ public:
 	virtual void Release() = 0;
 
 	/**
+	 * Get the version of the plugin.
+	 * We're not directly parsing VERSIONINFO as that is not platform portable.
+	 * @return Whether the version was returned.
+	 */
+	virtual bool GetVersion(
+			short* pMajor,
+			short* pMinor,
+			short* pDot,
+			short* pBuild) const = 0;
+
+	/**
 	 * Release a string returned from GetDescription or Process.
 	 * This must be done because the objects may have been allocated on
 	 * different heaps. If would be easier to just return an STL string,

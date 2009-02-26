@@ -33,49 +33,39 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  */
 
 #include "ARBAgilityRecordBook.h"
-#include "DlgBaseDialog.h"
 
-class CDlgConfigUpdate : public CDlgBaseDialog
+
+class CDlgConfigUpdate : public wxDialog
 {
 public:
-	CDlgConfigUpdate(CWnd* pParent = NULL);
+	CDlgConfigUpdate(wxWindow* parent = NULL);
+
 	ARBConfig& GetConfig()		{return m_Book.GetConfig();}
 	// This should not be called if the dialog was flown. It is intended
 	// to allow loading config data without flying the dialog (for instance,
 	// from the import menu item).
 	// NULL will load the default configuration.
-	bool LoadConfig(TCHAR const* pFile);
+	bool LoadConfig(wxChar const* pFile);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigUpdate)
-	enum { IDD = IDD_CONFIG_UPDATE };
-	int		m_Update;
-	CEdit	m_ctrlFileNameEdit;
-	CString	m_FileName;
-	CButton	m_ctrlFileName;
-	//}}AFX_DATA
-	ARBAgilityRecordBook m_Book;
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgConfigUpdate)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
 	void EnableControls();
 
-	//{{AFX_MSG(CDlgConfigUpdate)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnUpdateDefault();
-	afx_msg void OnUpdateExisting();
-	afx_msg void OnName();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	wxRadioButton* m_radioDefault;
+	wxRadioButton* m_radioExisting;
+	wxButton* m_btnPick;
+	wxTextCtrl* m_FileName;
+	//CEdit	m_ctrlFileNameEdit;
+	//CString	m_FileName;
+	//CButton	m_ctrlFileName;
+	ARBAgilityRecordBook m_Book;
+
+	DECLARE_EVENT_TABLE()
+	void OnUpdateDefault(wxCommandEvent& evt);
+	void OnUpdateExisting(wxCommandEvent& evt);
+	void OnName(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

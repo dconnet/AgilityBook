@@ -31,107 +31,119 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
-#include "resource.h"
 #include "DlgReorder.h"
 
-#include "ARBBase.h"
-#include "DlgConfigureData.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgReorder dialog
 
 CDlgReorder::CDlgReorder(
 		std::vector<ARBBasePtr>& items,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgReorder::IDD, pParent)
-	, m_ctrlList(false)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_REORDER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 	, m_Items(items)
+	, m_ctrlList(NULL)
+	, m_ctrlUp(NULL)
+	, m_ctrlDown(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgReorder)
-	//}}AFX_DATA_INIT
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
+	// Controls (these are done first to control tab order)
 
-void CDlgReorder::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgReorder)
-	DDX_Control(pDX, IDC_REORDER_LIST, m_ctrlList);
-	DDX_Control(pDX, IDC_REORDER_MOVE_UP, m_ctrlUp);
-	DDX_Control(pDX, IDC_REORDER_MOVE_DOWN, m_ctrlDown);
-	//}}AFX_DATA_MAP
-}
+	m_ctrlList = new wxListBox(this, wxID_ANY,
+		wxDefaultPosition, wxSize(200,150),
+		0, NULL,
+		wxLB_NEEDED_SB|wxLB_SINGLE);
+	m_ctrlList->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgReorder::OnItemSelected), NULL, this);
+	m_ctrlList->SetHelpText(_("HIDC_REORDER_LIST"));
+	m_ctrlList->SetToolTip(_("HIDC_REORDER_LIST"));
 
+	wxButton* btnOk = new wxButton(this, wxID_OK);
 
-BEGIN_MESSAGE_MAP(CDlgReorder, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgReorder)
-	ON_LBN_SELCHANGE(IDC_REORDER_LIST, OnSelchangeList)
-	ON_BN_CLICKED(IDC_REORDER_MOVE_UP, OnMoveUp)
-	ON_BN_CLICKED(IDC_REORDER_MOVE_DOWN, OnMoveDown)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	wxButton* btnCancel = new wxButton(this, wxID_CANCEL);
 
-/////////////////////////////////////////////////////////////////////////////
+	m_ctrlUp = new wxButton(this, wxID_ANY,
+		_("IDC_REORDER_MOVE_UP"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlUp->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgReorder::OnMoveUp), NULL, this);
+	m_ctrlUp->SetHelpText(_("HIDC_REORDER_MOVE_UP"));
+	m_ctrlUp->SetToolTip(_("HIDC_REORDER_MOVE_UP"));
 
-void CDlgReorder::LoadData()
-{
-	m_ctrlList.ResetContent();
-	for (size_t i = 0; i < m_Items.size(); ++i)
-		m_ctrlList.AddString(m_Items[i]->GetGenericName().c_str());
-	EnableControls();
-}
+	m_ctrlDown = new wxButton(this, wxID_ANY,
+		_("IDC_REORDER_MOVE_DOWN"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgReorder::OnMoveDown), NULL, this);
+	m_ctrlDown->SetHelpText(_("HIDC_REORDER_MOVE_DOWN"));
+	m_ctrlDown->SetToolTip(_("HIDC_REORDER_MOVE_DOWN"));
 
+	// Sizers (sizer creation is in same order as wxFormBuilder)
 
-void CDlgReorder::EnableControls()
-{
-	BOOL bEnableUp = FALSE;
-	BOOL bEnableDown = FALSE;
-	int index = m_ctrlList.GetCurSel();
-	if (LB_ERR != index)
-	{
-		bEnableUp = bEnableDown = TRUE;
-		if (0 == index)
-			bEnableUp = FALSE;
-		if (index == m_ctrlList.GetCount() - 1)
-			bEnableDown = FALSE;
-	}
-	m_ctrlUp.EnableWindow(bEnableUp);
-	m_ctrlDown.EnableWindow(bEnableDown);
-}
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgReorder message handlers
+	wxBoxSizer* bSizerList = new wxBoxSizer(wxHORIZONTAL);
+	bSizerList->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
 
-BOOL CDlgReorder::OnInitDialog() 
-{
-	CDlgBaseDialog::OnInitDialog();
+	wxBoxSizer* bSizerSide = new wxBoxSizer(wxVERTICAL);
+	bSizerSide->Add(btnOk, 0, wxALL, 5);
+	bSizerSide->Add(btnCancel, 0, wxALL, 5);
+	bSizerSide->Add(0, 0, 1, wxEXPAND, 5);
+	bSizerSide->Add(m_ctrlUp, 0, wxALL, 5);
+	bSizerSide->Add(m_ctrlDown, 0, wxALL, 5);
+
+	bSizerList->Add(bSizerSide, 0, wxEXPAND, 5);
+
+	bSizer->Add(bSizerList, 1, wxEXPAND, 5);
 
 	LoadData();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	m_ctrlList->SetFocus();
 }
 
 
-void CDlgReorder::OnSelchangeList() 
+void CDlgReorder::LoadData()
 {
-	EnableControls();	
+	m_ctrlList->Clear();
+	for (size_t i = 0; i < m_Items.size(); ++i)
+		m_ctrlList->Append(m_Items[i]->GetGenericName().c_str());
+	UpdateControls();
 }
 
 
-void CDlgReorder::OnMoveUp() 
+void CDlgReorder::UpdateControls()
 {
-	int index = m_ctrlList.GetCurSel();
+	bool bEnableUp = false;
+	bool bEnableDown = false;
+	int index = m_ctrlList->GetSelection();
+	if (0 <= index)
+	{
+		bEnableUp = bEnableDown = true;
+		if (0 == index)
+			bEnableUp = false;
+		if (index == static_cast<int>(m_ctrlList->GetCount()) - 1)
+			bEnableDown = false;
+	}
+	m_ctrlUp->Enable(bEnableUp);
+	m_ctrlDown->Enable(bEnableDown);
+}
+
+
+void CDlgReorder::OnItemSelected(wxCommandEvent& /*evt*/)
+{
+	UpdateControls();
+}
+
+
+void CDlgReorder::OnMoveUp(wxCommandEvent& evt)
+{
+	int index = m_ctrlList->GetSelection();
 	if (LB_ERR != index)
 	{
 		int newIndex = index - 1;
@@ -141,33 +153,27 @@ void CDlgReorder::OnMoveUp()
 			m_Items[index] = m_Items[newIndex];
 			m_Items[newIndex] = pTmp;
 			LoadData();
-			m_ctrlList.SetCurSel(newIndex);
-			EnableControls();
+			m_ctrlList->SetSelection(newIndex);
+			UpdateControls();
 		}
 	}
 }
 
 
-void CDlgReorder::OnMoveDown() 
+void CDlgReorder::OnMoveDown(wxCommandEvent& evt)
 {
-	int index = m_ctrlList.GetCurSel();
+	int index = m_ctrlList->GetSelection();
 	if (LB_ERR != index)
 	{
 		int newIndex = index + 1;
-		if (newIndex < m_ctrlList.GetCount())
+		if (newIndex < static_cast<int>(m_ctrlList->GetCount()))
 		{
 			ARBBasePtr pTmp = m_Items[index];
 			m_Items[index] = m_Items[newIndex];
 			m_Items[newIndex] = pTmp;
 			LoadData();
-			m_ctrlList.SetCurSel(newIndex);
-			EnableControls();
+			m_ctrlList->SetSelection(newIndex);
+			UpdateControls();
 		}
 	}
-}
-
-
-void CDlgReorder::OnOK() 
-{
-	CDlgBaseDialog::OnOK();
 }

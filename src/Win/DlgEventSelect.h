@@ -33,66 +33,49 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-30 DRC Created.
  */
 
 #include "ARBDate.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
 
-class CDlgEventSelect : public CDlgBaseDialog
+
+class CDlgEventSelect : public wxDialog
 {
 public:
 	CDlgEventSelect(
 			ARBConfigVenuePtr inVenue,
 			ARBDate const& inDate,
-			TCHAR const* const inDivision,
-			TCHAR const* const inLevel,
-			TCHAR const* const inEvent,
-			CWnd* pParent = NULL);
-	virtual ~CDlgEventSelect();
-	TCHAR const* const GetDivision() const	{return (LPCTSTR)m_Div;}
-	TCHAR const* const GetLevel() const		{return (LPCTSTR)m_Lev;}
-	TCHAR const* const GetEvent() const		{return (LPCTSTR)m_Evt;}
+			wxString const& inDivision,
+			wxString const& inLevel,
+			wxString const& inEvent,
+			wxWindow* pParent = NULL);
+
+	wxString GetDivision() const	{return m_Division;}
+	wxString GetLevel() const		{return m_Level;}
+	wxString GetEvent() const		{return m_Event;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgEventSelect)
-	enum { IDD = IDD_EVENT_SELECT };
-	CString	m_Division;
-	CComboBox2	m_ctrlDivisions;
-	CString	m_Level;
-	CComboBox2	m_ctrlLevels;
-	CString	m_Event;
-	CComboBox2	m_ctrlEvents;
-	CButton	m_ctrlOk;
-	//}}AFX_DATA
-	ARBConfigVenuePtr m_pVenue;
-	ARBDate m_Date;
-	TCHAR const* m_inDivision;
-	TCHAR const* m_inLevel;
-	TCHAR const* m_inEvent;
-	CString m_Div;
-	CString m_Lev;
-	CString m_Evt;
-
-	//{{AFX_VIRTUAL(CDlgEventSelect)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
 	void UpdateControls();
 	void FillLevels();
 	void FillEvents();
-	//{{AFX_MSG(CDlgEventSelect)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeDivision();
-	afx_msg void OnSelchangeLevel();
-	afx_msg void OnSelchangeEvent();
-	virtual void OnOK();
-	virtual void OnCancel();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+
+	wxComboBox* m_ctrlDivisions;
+	wxComboBox* m_ctrlLevels;
+	wxComboBox* m_ctrlEvents;
+	wxButton* m_ctrlOk;
+	wxString m_Division;
+	wxString m_Level;
+	wxString m_Event;
+	wxString m_inLevel;
+	wxString m_inEvent;
+	ARBConfigVenuePtr m_pVenue;
+	ARBDate m_Date;
+
+	DECLARE_EVENT_TABLE()
+	void OnSelchangeDivision(wxCommandEvent& evt);
+	void OnSelchangeLevel(wxCommandEvent& evt);
+	void OnSelchangeEvent(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

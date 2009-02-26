@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-11-27 DRC Check that the html view was actually created.
  * @li 2004-06-24 DRC Removed sending initialupdate messages (redundant)
  * @li 2003-12-07 DRC Fixed a crash when opening a bad ARB file version.
@@ -38,468 +39,340 @@
  */
 
 #include "stdafx.h"
+#include "TabView.h"
+
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-#include "TabView.h"
-#include <afxpriv.h>
-
-#include "AgilityBookOptions.h"
-#include "AgilityBookTree.h"
-#include "AgilityBookViewCalendar.h"
-#include "AgilityBookViewCalendarList.h"
-#include "AgilityBookViewHtml.h"
-#include "AgilityBookViewPoints.h"
-#include "AgilityBookViewRuns.h"
-#include "AgilityBookViewTraining.h"
+#include "AgilityBookPanels.h"
+#include "AgilityBookTreeView.h"
 #include "MainFrm.h"
+#include <wx/choicebk.h>
+#include <wx/config.h>
+#include <wx/listbook.h>
+#include <wx/notebook.h>
+#include <wx/toolbook.h>
+#include <wx/treebook.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+#include "res/run.xpm"
+#include "res/points.xpm"
+#include "res/calendar.xpm"
+#include "res/training.xpm"
+
+
+IMPLEMENT_DYNAMIC_CLASS(CTabView, wxView)
+
+
+static long GetDefaultBook()
+{
+#if wxUSE_NOTEBOOK
+	return ID_BOOK_NOTEBOOK;
+#elif wxUSE_LISTBOOK
+	return ID_BOOK_LISTBOOK;
+#elif wxUSE_CHOICEBOOK
+	return ID_BOOK_CHOICEBOOK;
+#elif wxUSE_TREEBOOK
+	return ID_BOOK_TREEBOOK;
+#elif wxUSE_TOOLBOOK
+	return ID_BOOK_TOOLBOOK;
+#elif
+	#error "No books enabled in wxWidgets build!"
 #endif
-
-// Default splitter widths
-#define DEFAULT_RUN_WIDTH	200
-#define DEFAULT_CAL_WIDTH	200
-
-static const struct
-{
-	int idxPane;
-	UINT idPane;
-} sc_Panes[] =
-{
-	{IDX_PANE_RUNS,     IDS_RUNS},
-	{IDX_PANE_POINTS,   IDS_POINTS},
-	{IDX_PANE_CALENDAR, IDS_CALENDAR},
-	{IDX_PANE_LOG,      IDS_TRAINING},
-};
-static const int sc_nPanes = sizeof(sc_Panes) / sizeof(sc_Panes[0]);
-
-/////////////////////////////////////////////////////////////////////////////
-// CTabView
-
-IMPLEMENT_DYNCREATE(CTabView, CCtrlView)
-
-BEGIN_MESSAGE_MAP(CTabView, CCtrlView)
-	//{{AFX_MSG_MAP(CTabView)
-	ON_WM_DESTROY()
-	ON_WM_SIZE()
-	ON_WM_SETFOCUS()
-	ON_NOTIFY_REFLECT(TCN_SELCHANGING, OnSelChanging)
-	ON_NOTIFY_REFLECT(TCN_SELCHANGE, OnSelChange)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+}
 
 
 CTabView::CTabView()
-	: CCtrlView(_T("SysTabControl32"), AFX_WS_DEFAULT_VIEW)
-	, m_pLastFocusRuns(NULL)
-	, m_pLastFocusCal(NULL)
+	: m_frame(NULL)
+	, m_type(GetDefaultBook())
+	, m_orient(ID_ORIENT_TOP)
+	, m_sizerFrame(NULL)
+	, m_ctrlBook(NULL)
+	, m_imageList(16,16)
+	, m_bIgnoreEvents(false)
 {
+	m_imageList.Add(wxIcon(run_xpm));
+	m_imageList.Add(wxIcon(points_xpm));
+	m_imageList.Add(wxIcon(calendar_xpm));
+	m_imageList.Add(wxIcon(training_xpm));
+	m_type = wxConfig::Get()->Read(wxT("Settings/ViewType"), m_type);
+	switch (m_type)
+	{
+	default:
+		m_type = GetDefaultBook();
+		break;
+#if wxUSE_NOTEBOOK
+	case ID_BOOK_NOTEBOOK:
+#elif wxUSE_LISTBOOK
+	case ID_BOOK_LISTBOOK:
+#elif wxUSE_CHOICEBOOK
+	case ID_BOOK_CHOICEBOOK:
+#elif wxUSE_TREEBOOK
+	case ID_BOOK_TREEBOOK:
+#elif wxUSE_TOOLBOOK
+	case ID_BOOK_TOOLBOOK:
+#endif
+		break;
+	}
+	m_orient = wxConfig::Get()->Read(wxT("Settings/ViewOrient"), m_orient);
+	if (m_orient < ID_ORIENT_FIRST || m_orient >= ID_ORIENT_LAST)
+		m_orient = ID_ORIENT_FIRST;
 }
 
 
 CTabView::~CTabView()
 {
-}
-
-
-void CTabView::UpdateLanguage()
-{
-	CString str;
-	for (int nPane = 0; nPane < sc_nPanes; ++nPane)
+	if (m_ctrlBook)
 	{
-		assert(sc_Panes[nPane].idxPane == nPane);
-		str.LoadString(sc_Panes[nPane].idPane);
-		TCITEM item;
-		item.mask = TCIF_TEXT;
-		item.pszText = str.GetBuffer(0);
-		GetTabCtrl().SetItem(nPane, &item);
-		str.ReleaseBuffer();
+		wxConfig::Get()->Write(wxT("Settings/ViewType"), m_type);
+		wxConfig::Get()->Write(wxT("Settings/ViewOrient"), m_orient);
+		wxConfig::Get()->Write(wxT("Settings/View"), m_ctrlBook->GetSelection());
+		m_ctrlBook->Destroy();
+		m_ctrlBook = NULL;
 	}
 }
 
 
-void CTabView::OnDestroy()
+void CTabView::OnType(int id)
 {
-	m_Panes.clear();
+	m_type = id;
+	RecreateBook(GetDocument(), 0, false);
+}
 
-	// If doc fails to open, no window was ever created.
-	if (IsWindow(GetSafeHwnd()) && IsWindow(m_splitterRuns.GetSafeHwnd()) && IsWindow(m_splitterCal.GetSafeHwnd()))
+
+void CTabView::OnOrient(int id)
+{
+	m_orient = id;
+	RecreateBook(GetDocument(), 0, false);
+}
+
+
+class CIgnore
+{
+public:
+	CIgnore(bool& ignore) : m_Ignore(ignore) { m_Ignore = true; }
+	~CIgnore()								{ reset(); }
+	void reset()							{ m_Ignore = false; }
+private:
+	bool& m_Ignore;
+};
+
+
+void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
+{
+	int flags;
+	switch (m_orient)
 	{
-		theApp.WriteProfileInt(_T("Settings"), _T("View"), GetTabCtrl().GetCurSel());
-		int cxCur, cxMin;
-		m_splitterRuns.GetColumnInfo(0, cxCur, cxMin);
-		theApp.WriteProfileInt(_T("Settings"), _T("splitCX"), cxCur);
-		m_splitterCal.GetColumnInfo(0, cxCur, cxMin);
-		theApp.WriteProfileInt(_T("Settings"), _T("splitCX2"), cxCur);
+	default:
+	case ID_ORIENT_TOP:
+		flags = wxBK_TOP;
+		break;
+	case ID_ORIENT_BOTTOM:
+		flags = wxBK_BOTTOM;
+		break;
+	case ID_ORIENT_LEFT:
+		flags = wxBK_LEFT;
+		break;
+	case ID_ORIENT_RIGHT:
+		flags = wxBK_RIGHT;
+		break;
 	}
 
-	CCtrlView::OnDestroy();
+	if (m_type == ID_BOOK_NOTEBOOK)
+		flags |= wxNB_MULTILINE;
+
+	wxBookCtrlBase *oldBook = m_ctrlBook;
+
+	m_ctrlBook = NULL;
+	CIgnore ignore(m_bIgnoreEvents);
+
+	switch (m_type)
+	{
+#if wxUSE_NOTEBOOK
+	case ID_BOOK_NOTEBOOK:
+		m_ctrlBook = new wxNotebook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
+		m_ctrlBook->Connect(m_ctrlBook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler(CTabView::OnNotebookChanged), NULL, this);
+		break;
+#endif
+#if wxUSE_LISTBOOK
+	case ID_BOOK_LISTBOOK:
+		m_ctrlBook = new wxListbook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
+		m_ctrlBook->Connect(m_ctrlBook->GetId(), wxEVT_COMMAND_LISTBOOK_PAGE_CHANGED, wxListbookEventHandler(CTabView::OnListbookChanged), NULL, this);
+		break;
+#endif
+#if wxUSE_CHOICEBOOK
+	case ID_BOOK_CHOICEBOOK:
+		m_ctrlBook = new wxChoicebook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
+		m_ctrlBook->Connect(m_ctrlBook->GetId(), wxEVT_COMMAND_CHOICEBOOK_PAGE_CHANGED, wxChoicebookEventHandler(CTabView::OnChoicebookChanged), NULL, this);
+		break;
+#endif
+#if wxUSE_TREEBOOK
+	case ID_BOOK_TREEBOOK:
+		m_ctrlBook = new wxTreebook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
+		m_ctrlBook->Connect(m_ctrlBook->GetId(), wxEVT_COMMAND_TREEBOOK_PAGE_CHANGED, wxTreebookEventHandler(CTabView::OnTreebookChanged), NULL, this);
+		break;
+#endif
+#if wxUSE_TOOLBOOK
+	case ID_BOOK_TOOLBOOK:
+		m_ctrlBook = new wxToolbook(m_frame, wxID_ANY, wxDefaultPosition, wxDefaultSize, flags);
+		m_ctrlBook->Connect(m_ctrlBook->GetId(), wxEVT_COMMAND_TOOLBOOK_PAGE_CHANGED, wxToolbookEventHandler(CTabView::OnToolbookChanged), NULL, this);
+		break;
+#endif
+	}
+
+	if (!m_ctrlBook)
+		return;
+
+	m_ctrlBook->SetImageList(&m_imageList);
+
+	std::vector<CAgilityBookBaseExtraView*> views[4];
+	int sel = wxNOT_FOUND;
+	if (oldBook)
+	{
+		sel = oldBook->GetSelection();
+		for (size_t i = 0; i < 4; ++i)
+		{
+			CBasePanel* panel = wxDynamicCast(oldBook->GetPage(i), CBasePanel);
+			panel->DetachViews(views[i]);
+		}
+		m_sizerFrame->Detach(oldBook);
+		oldBook->Destroy();
+	}
+	else
+		sel = wxConfig::Get()->Read(wxT("Settings/View"), 0L);
+
+	CBasePanel* pages[4];
+	m_ctrlBook->AddPage(
+		(pages[IDX_PANE_RUNS] = new CAgilityBookPanelRuns(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_RUNS])),
+		_("IDS_RUNS"), false, IDX_PANE_RUNS);
+	m_ctrlBook->AddPage(
+		(pages[IDX_PANE_POINTS] = new CAgilityBookPanelPoints(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_POINTS])),
+		_("IDS_POINTS"), false, IDX_PANE_POINTS);
+	m_ctrlBook->AddPage(
+		(pages[IDX_PANE_CALENDAR] = new CAgilityBookPanelCalendar(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_CALENDAR])),
+		_("IDS_CALENDAR"), false, IDX_PANE_CALENDAR);
+	m_ctrlBook->AddPage(
+		(pages[IDX_PANE_LOG] = new CAgilityBookPanelTraining(this, m_ctrlBook, doc, inFlags, views[IDX_PANE_LOG])),
+		_("IDS_TRAINING"), false, IDX_PANE_LOG);
+	ignore.reset();
+
+	if (sel != wxNOT_FOUND)
+	{
+		if (!bOnCreate)
+			doc->UpdateAllViews();
+		m_ctrlBook->ChangeSelection(sel);
+		pages[sel]->ActivateView();
+	}
+
+	m_sizerFrame->Add(m_ctrlBook, 1, wxEXPAND | wxALL, 0);
+	m_sizerFrame->Layout();
 }
 
 
-BOOL CTabView::PreCreateWindow(CREATESTRUCT& cs)
+bool CTabView::ShowPointsAsHtml(bool bHtml)
 {
-	// FYI: FOCUSNEVER doesn't seem to work properly...
-	cs.style |= TCS_TABS | TCS_FOCUSNEVER;
-	return CCtrlView::PreCreateWindow(cs);
-}
-
-
-// This should only be called when the view already exists.
-bool CTabView::ShowPointsAs(bool bHtml)
-{
-	CAgilityBookViewHtml* html = dynamic_cast<CAgilityBookViewHtml*>(m_Panes[IDX_PANE_POINTS]);
-	if (html && bHtml)
+	if (m_ctrlBook)
+	{
+		wxBusyCursor wait;
+		CAgilityBookDoc* pDoc = GetDocument();
+		int sel = m_ctrlBook->GetSelection();
+		CBasePanel* panel = wxDynamicCast(m_ctrlBook->GetPage(IDX_PANE_POINTS), CBasePanel);
+		std::vector<CAgilityBookBaseExtraView*> views;
+		panel->DetachViews(views);
+		for (std::vector<CAgilityBookBaseExtraView*>::iterator iView = views.begin();
+			iView != views.end();
+			++iView)
+		{
+			pDoc->RemoveView(*iView);
+			delete *iView;
+		}
+		views.clear();
+		m_ctrlBook->DeletePage(IDX_PANE_POINTS);
+		CBasePanel* page = new CAgilityBookPanelPoints(this, m_ctrlBook, pDoc, 0, views);
+		m_ctrlBook->InsertPage(IDX_PANE_POINTS, page, _("IDS_POINTS"), false, IDX_PANE_POINTS);
+		CUpdateHint hint(UPDATE_POINTS_VIEW);
+		pDoc->UpdateAllViews(this, &hint);
+		if (sel == IDX_PANE_POINTS)
+		{
+			m_ctrlBook->ChangeSelection(sel);
+			page->ActivateView();
+		}
 		return true;
-	CAgilityBookViewPoints* points = dynamic_cast<CAgilityBookViewPoints*>(m_Panes[IDX_PANE_POINTS]);
-	if (points && !bHtml)
-		return true;
-
-	if (!m_Panes[IDX_PANE_POINTS])
-	{
-		assert(0);
-		return false;
 	}
-
-	CWaitCursor wait;
-	SetRedraw(FALSE);
-
-	// Setup needed information.
-	CView* pView = dynamic_cast<CView*>(m_Panes[IDX_PANE_POINTS]);
-	assert(pView);
-	CDocument* pDoc = pView->GetDocument();
-	CFrameWnd* pFrame = pView->GetParentFrame();
-	bool bSetView = false;
-	if (pFrame->GetActiveView() == pView)
-	{
-		// If we're deleting the active view, first fix the frame.
-		bSetView = true;
-		pFrame->SetActiveView(NULL, FALSE);
-	}
-	CRect r;
-	GetTabCtrl().GetClientRect(r);
-	GetTabCtrl().AdjustRect(FALSE, r);
-
-	// Set flag so that document will not be deleted when view is destroyed
-	BOOL bAutoDelete = pDoc->m_bAutoDelete;
-	pDoc->m_bAutoDelete = FALSE;
-	// Delete existing view
-	pView->DestroyWindow();
-	m_Panes[IDX_PANE_POINTS] = NULL;
-	// Restore flag
-	pDoc->m_bAutoDelete = bAutoDelete;
-
-	CCreateContext context;
-	context.m_pNewViewClass = NULL;
-	context.m_pCurrentDoc = pDoc;
-	context.m_pNewDocTemplate = NULL;
-	context.m_pLastView = NULL;
-	context.m_pCurrentFrame = pFrame;
-
-	bool bCreatedAsAsked = CreatePointView(bHtml, context);
-	pView = dynamic_cast<CView*>(m_Panes[IDX_PANE_POINTS]);
-
-	pView->SendMessage(WM_INITIALUPDATE, 0, 0);
-	pView->MoveWindow(r.left, r.top, r.Width(), r.Height());
-	// If we were viewing this tab, activate it again.
-	if (bSetView)
-		SetCurSel(IDX_PANE_POINTS);
-
-	SetRedraw(TRUE);
-
-	pView->Invalidate();
-	pView->UpdateWindow();
-	return bCreatedAsAsked;
+	return false;
 }
 
 
-bool CTabView::CreatePointView(bool bHtml, CCreateContext& context)
+int CTabView::GetCurTab() const
 {
-	bool bCreateList = !bHtml;
-	if (bHtml)
+	if (!m_ctrlBook)
+		return -1;
+	return m_ctrlBook->GetSelection();
+}
+
+
+int CTabView::SetCurTab(int index)
+{
+	if (!m_ctrlBook)
+		return -1;
+	return m_ctrlBook->ChangeSelection(index);
+}
+
+
+void CTabView::OnChangeFilename()
+{
+	// The default simply puts the filename in the caption.
+	// I want the application name too.
+	m_frame->SetLabel(GetDocument()->GetDocumentManager()->MakeFrameTitle(GetDocument()));
+}
+
+
+bool CTabView::OnCreate(wxDocument* doc, long flags)
+{
+	m_frame = wxDynamicCast(wxGetApp().GetTopWindow(), CMainFrame);
+	SetFrame(m_frame);
+	assert(m_frame);
+	m_sizerFrame = new wxBoxSizer(wxVERTICAL);
+	m_frame->SetSizer(m_sizerFrame);
+	RecreateBook(doc, flags, true);
+	// On initial creation, this isn't needed. But if we open/create another
+	// document, the tabview isn't visible until the frame resizes.
+	m_frame->SendSizeEvent();
+	return wxView::OnCreate(doc, flags);
+}
+
+
+void CTabView::OnDraw(wxDC* dc)
+{
+}
+
+
+void CTabView::OnUpdate(wxView* sender, wxObject* inHint)
+{
+	CUpdateHint* hint = NULL;
+	if (inHint)
+		hint = reinterpret_cast<CUpdateHint*>(inHint);
+	if (hint && hint->IsEqual(UPDATE_LANG_CHANGE))
 	{
-		CAgilityBookViewHtml* html = reinterpret_cast<CAgilityBookViewHtml*>(RUNTIME_CLASS(CAgilityBookViewHtml)->CreateObject());
-		if (!html)
+		m_ctrlBook->SetPageText(IDX_PANE_RUNS, _("IDS_RUNS"));
+		m_ctrlBook->SetPageText(IDX_PANE_POINTS, _("IDS_POINTS"));
+		m_ctrlBook->SetPageText(IDX_PANE_CALENDAR, _("IDS_CALENDAR"));
+		m_ctrlBook->SetPageText(IDX_PANE_LOG, _("IDS_TRAINING"));
+	}
+}
+
+
+void CTabView::OnBookCtrlChanged(wxBookCtrlBaseEvent& evt)
+{
+	if (!m_bIgnoreEvents)
+	{
+		CBasePanel* panel = wxDynamicCast(m_ctrlBook->GetPage(evt.GetSelection()), CBasePanel);
+		if (panel)
 		{
-			CAgilityBookOptions::SetShowHtmlPoints(false);
-			bCreateList = true;
-		}
-		else
-		{
-			m_Panes[IDX_PANE_POINTS] = html;
-			context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewHtml);
-			DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-			if (!html->Create(NULL, NULL,
-				dwStyle,
-				CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context))
-			{
-				// If it failed, we may think IE is installed, but it isn't.
-				// This may happen when running under CrossOver on the Mac.
-				// The version check we do passes, but IE wasn't installed with
-				// Crossover. So if we fail to create IWebBrowser2, we will
-				// now flip back to the list control.
-				CAgilityBookOptions::SetShowHtmlPoints(false);
-				bCreateList = true;
-				delete html;
-			}
+			m_ctrlBook->ChangeSelection(evt.GetSelection());
+			panel->ActivateView();
+			// Swallow the event - or the base control will set the focus to the
+			// page - which just undid our focus setting above
+			return;
 		}
 	}
-	if (bCreateList)
-	{
-		CAgilityBookViewPoints* points = reinterpret_cast<CAgilityBookViewPoints*>(RUNTIME_CLASS(CAgilityBookViewPoints)->CreateObject());
-		m_Panes[IDX_PANE_POINTS] = points;
-		context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewPoints);
-		DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-		points->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
-			dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
-			CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
-	}
-	// Returns whether we created the view we asked for.
-	return bCreateList == !bHtml;
-}
-
-
-void CTabView::OnInitialUpdate()
-{
-	CCtrlView::OnInitialUpdate();
-
-	if (0 != GetTabCtrl().GetItemCount())
-		return;
-
-	reinterpret_cast<CMainFrame*>(GetParentFrame())->m_pTabView = this;
-
-	CString str;
-	for (int nPane = 0; nPane < sc_nPanes; ++nPane)
-	{
-		assert(sc_Panes[nPane].idxPane == nPane);
-		str.LoadString(sc_Panes[nPane].idPane);
-		GetTabCtrl().InsertItem(nPane, str);
-	}
-	assert(0 == m_Panes.size());
-	m_Panes.insert(m_Panes.begin(), sc_nPanes, static_cast<CWnd*>(NULL));
-
-	CCreateContext context;
-	context.m_pCurrentDoc = GetDocument();
-	context.m_pNewDocTemplate = NULL;
-	context.m_pLastView = NULL;
-	context.m_pCurrentFrame = NULL;
-
-	if (!m_splitterRuns.CreateStatic(this, 1, 2))
-		return;
-	m_splitterRuns.ShowWindow(SW_HIDE);
-	m_splitterRuns.EnableWindow(FALSE);
-	int cx = theApp.GetProfileInt(_T("Settings"), _T("splitCX"), DEFAULT_RUN_WIDTH);
-	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookTree);
-	if (!m_splitterRuns.CreateView(0, 0, RUNTIME_CLASS(CAgilityBookTree), CSize(cx, 100), &context))
-		return;
-	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewRuns);
-	if (!m_splitterRuns.CreateView(0, 1, RUNTIME_CLASS(CAgilityBookViewRuns), CSize(200, 100), &context))
-		return;
-	m_Panes[IDX_PANE_RUNS] = &m_splitterRuns;
-
-	CreatePointView(CAgilityBookOptions::ShowHtmlPoints(), context);
-
-	if (!m_splitterCal.CreateStatic(this, 1, 2))
-		return;
-	m_splitterCal.ShowWindow(SW_HIDE);
-	m_splitterCal.EnableWindow(FALSE);
-	cx = theApp.GetProfileInt(_T("Settings"), _T("splitCX2"), DEFAULT_CAL_WIDTH);
-	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewCalendarList);
-	if (!m_splitterCal.CreateView(0, 0, RUNTIME_CLASS(CAgilityBookViewCalendarList), CSize(cx, 100), &context))
-		return;
-	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewCalendar);
-	if (!m_splitterCal.CreateView(0, 1, RUNTIME_CLASS(CAgilityBookViewCalendar), CSize(200, 100), &context))
-		return;
-	m_Panes[IDX_PANE_CALENDAR] = &m_splitterCal;
-
-	CAgilityBookViewTraining* training = reinterpret_cast<CAgilityBookViewTraining*>(RUNTIME_CLASS(CAgilityBookViewTraining)->CreateObject());
-	m_Panes[IDX_PANE_LOG] = training;
-	context.m_pNewViewClass = RUNTIME_CLASS(CAgilityBookViewTraining);
-	DWORD dwStyle = AFX_WS_DEFAULT_VIEW & ~WS_BORDER & ~WS_VISIBLE;
-	training->CreateEx(WS_EX_CLIENTEDGE, NULL, NULL,
-		dwStyle | LVS_REPORT | LVS_SHOWSELALWAYS,
-		CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST+1, &context);
-
-	int nSel = theApp.GetProfileInt(_T("Settings"), _T("View"), 0);
-	// The usage of 'View' has changed. It was cal=1,pts=2,runs=3. (v0.2.0.3)
-	// It is now the index of the tab.
-	if (0 > nSel || nSel > 3)
-		nSel = 0;
-	SetCurSel(nSel);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CTabView drawing
-
-void CTabView::OnDraw(CDC* pDC)
-{
-//	CDocument* pDoc = GetDocument();
-}
-
-
-// CTabView diagnostics
-#ifdef _DEBUG
-void CTabView::AssertValid() const
-{
-	CCtrlView::AssertValid();
-}
-
-
-void CTabView::Dump(CDumpContext& dc) const
-{
-	CCtrlView::Dump(dc);
-}
-
-
-CAgilityBookDoc* CTabView::GetDocument() const // non-debug version is inline
-{
-	assert(m_pDocument->IsKindOf(RUNTIME_CLASS(CAgilityBookDoc)));
-	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
-}
-#endif //_DEBUG
-
-
-void CTabView::SetCurSel(int index)
-{
-	NMHDR hdr;
-	hdr.code = TCN_SELCHANGING;
-	hdr.hwndFrom = GetTabCtrl().GetSafeHwnd();
-	hdr.idFrom = GetTabCtrl().GetDlgCtrlID();
-	SendMessage(WM_NOTIFY, 0, reinterpret_cast<LPARAM>(&hdr));
-	GetTabCtrl().SetCurSel(index);
-	hdr.code = TCN_SELCHANGE;
-	SendMessage(WM_NOTIFY, 0, reinterpret_cast<LPARAM>(&hdr));
-}
-
-
-void CTabView::SetActiveView()
-{
-	CView* pView = NULL;
-	ICommonView* pCommon = NULL;
-	int nIndex = GetTabCtrl().GetCurSel();
-	switch (nIndex)
-	{
-	case IDX_PANE_RUNS:
-		// We may need to kick start the view the 1st time.
-		if (!m_pLastFocusRuns)
-			m_pLastFocusRuns = reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,0));
-		pView = m_pLastFocusRuns;
-		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterRuns.GetPane(0,1)));
-		break;
-	case IDX_PANE_POINTS:
-		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
-		pCommon = dynamic_cast<ICommonView*>(pView);
-		break;
-	case IDX_PANE_CALENDAR:
-		if (!m_pLastFocusCal)
-			m_pLastFocusCal = reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0));
-		pView = m_pLastFocusCal;
-		pCommon = dynamic_cast<ICommonView*>(reinterpret_cast<CView*>(m_splitterCal.GetPane(0,0)));
-		break;
-	case IDX_PANE_LOG:
-		pView = reinterpret_cast<CView*>(m_Panes[nIndex]);
-		pCommon = dynamic_cast<ICommonView*>(pView);
-		break;
-	}
-	if (pView)
-	{
-		pView->SetFocus();
-		GetParentFrame()->SetActiveView(pView);
-	}
-	if (pCommon)
-	{
-		CString msg;
-		if (pCommon->GetMessage(msg))
-			reinterpret_cast<CMainFrame*>(GetParentFrame())->SetStatusText(msg, pCommon->IsFiltered());
-		if (pCommon->GetMessage2(msg))
-			reinterpret_cast<CMainFrame*>(GetParentFrame())->SetStatusText2(msg);
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CTabView message handlers
-
-void CTabView::OnSize(
-		UINT nType,
-		int cx,
-		int cy)
-{
-	CCtrlView::OnSize(nType, cx, cy);
-	if (!m_Panes.empty())
-	{
-		CRect r;
-		GetTabCtrl().GetClientRect(r);
-		GetTabCtrl().AdjustRect(FALSE, r);
-		for (std::vector<CWnd*>::iterator iter = m_Panes.begin(); iter != m_Panes.end(); ++iter)
-		{
-			if (*iter)
-				(*iter)->MoveWindow(r.left, r.top, r.Width(), r.Height());
-		}
-	}
-}
-
-
-void CTabView::OnSetFocus(CWnd* pOldWnd)
-{
-	int nIndex = GetTabCtrl().GetCurSel();
-	if (pOldWnd && DYNAMIC_DOWNCAST(CView, pOldWnd))
-	{
-		switch (nIndex)
-		{
-		case IDX_PANE_RUNS:
-			m_pLastFocusRuns = reinterpret_cast<CView*>(pOldWnd);
-			break;
-		case IDX_PANE_CALENDAR:
-			m_pLastFocusCal = reinterpret_cast<CView*>(pOldWnd);
-			break;
-		}
-	}
-	SetActiveView();
-	//CCtrlView::OnSetFocus(pOldWnd);
-}
-
-
-void CTabView::OnSelChanging(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	int nIndex = GetTabCtrl().GetCurSel();
-	if (0 > nIndex || nIndex >= GetTabCtrl().GetItemCount())
-		return;
-	if (IDX_PANE_RUNS == nIndex)
-	{
-		int r, c;
-		m_splitterRuns.GetActivePane(&r, &c);
-		if (0 <= r && 0 <= c)
-			m_pLastFocusRuns = reinterpret_cast<CView*>(m_splitterRuns.GetPane(r, c));
-		// No else. If there is no active, we want to inherit what was set
-		// in the OnSetFocus handler.
-	}
-	else if (IDX_PANE_CALENDAR == nIndex)
-	{
-		int r, c;
-		m_splitterCal.GetActivePane(&r, &c);
-		if (0 <= r && 0 <= c)
-			m_pLastFocusCal = reinterpret_cast<CView*>(m_splitterCal.GetPane(r, c));
-	}
-	m_Panes[nIndex]->ShowWindow(SW_HIDE);
-	m_Panes[nIndex]->EnableWindow(FALSE);
-	*pResult = 0;
-}
-
-
-void CTabView::OnSelChange(
-		NMHDR* /*pNMHDR*/,
-		LRESULT* pResult)
-{
-	int nIndex = GetTabCtrl().GetCurSel();
-	if (0 > nIndex || nIndex >= GetTabCtrl().GetItemCount())
-		return;
-	m_Panes[nIndex]->EnableWindow(TRUE);
-	m_Panes[nIndex]->ShowWindow(SW_SHOW);
-	SetActiveView();
-	*pResult = 0;
+	evt.Skip();
 }

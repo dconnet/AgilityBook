@@ -33,42 +33,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  */
 
-#include "DlgBaseDialog.h"
-
-class CDlgMessage : public CDlgBaseDialog
+class CDlgMessage : public wxDialog
 {
 public:
 	CDlgMessage(
-			CString const& msg,
-			UINT caption = 0,
-			CWnd* pParent = NULL);
-
-private:
-// Dialog Data
-	//{{AFX_DATA(CDlgMessage)
-	enum { IDD = IDD_MESSAGE };
-	CEdit	m_ctrlMessage;
-	CString m_Message;
-	CButton	m_ctrlClose;
-	//}}AFX_DATA
-	CString m_Caption;
-	CRect m_rWin;
-	CRect m_rDlg;
-	CRect m_rMsg;
-	CRect m_rClose;
-
-	//{{AFX_VIRTUAL(CDlgMessage)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	//{{AFX_MSG(CDlgMessage)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+			wxString const& msg,
+			wxWindow* pParent = NULL,
+			wxString const& caption = _("IDD_MESSAGE"));
 };

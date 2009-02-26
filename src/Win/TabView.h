@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright Â© 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,74 +33,67 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  */
 
-#include <vector>
-#include "Splitter.h"
+#include "CommonView.h"
+#include <wx/docview.h>
+#include <wx/choicebk.h>
+#include <wx/listbook.h>
+#include <wx/notebook.h>
+#include <wx/toolbook.h>
+#include <wx/treebook.h>
+class CMainFrame;
 
 #define IDX_PANE_RUNS		0
 #define IDX_PANE_POINTS		1
 #define IDX_PANE_CALENDAR	2
 #define IDX_PANE_LOG		3
 
-class CTabView : public CCtrlView
+
+class CTabView : public CAgilityBookBaseView
 {
-	DECLARE_DYNCREATE(CTabView)
+	DECLARE_DYNAMIC_CLASS(CTabView)
 
 public:
 	CTabView();
-	virtual ~CTabView();
+	~CTabView();
+	bool ShowPointsAsHtml(bool bHtml);
+	int GetCurTab() const;
+	int SetCurTab(int index);
+	virtual void OnChangeFilename();
+	virtual bool OnCreate(wxDocument* doc, long flags);
+	virtual void OnDraw(wxDC* dc);
+	virtual void OnUpdate(wxView* sender, wxObject* inHint = NULL);
 
-	void UpdateLanguage();
+	void OnType(int id);
+	void OnOrient(int id);
 
-	CAgilityBookDoc* GetDocument() const;
-	CTabCtrl const& GetTabCtrl() const	{return *reinterpret_cast<CTabCtrl const*>(this);}
-	CTabCtrl& GetTabCtrl()				{return *reinterpret_cast<CTabCtrl*>(this);}
-	int GetItemCount() const			{return GetTabCtrl().GetItemCount();}
-	int GetCurSel() const				{return GetTabCtrl().GetCurSel();}
-	void SetCurSel(int index);
+private:
+	void RecreateBook(wxDocument* doc, long flags, bool bOnCreate);
 
-	bool ShowPointsAs(bool bHtml);
+	CMainFrame* m_frame;
+	long m_type;
+	long m_orient;
+	wxBoxSizer* m_sizerFrame;
+	wxBookCtrlBase* m_ctrlBook;
+	wxImageList m_imageList;
+	bool m_bIgnoreEvents;
 
-// Overrides
-	//{{AFX_VIRTUAL(CTabView)
-public:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
-protected:
-	virtual void OnInitialUpdate();
-	//}}AFX_VIRTUAL
-
-// Implementation
-public:
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	void OnBookCtrlChanged(wxBookCtrlBaseEvent& evt);
+#if wxUSE_NOTEBOOK
+	void OnNotebookChanged(wxNotebookEvent& evt)		{OnBookCtrlChanged(evt);}
 #endif
-
-protected:
-	bool CreatePointView(bool bHtml, CCreateContext& context);
-	void SetActiveView();
-
-	CSplitter m_splitterRuns;
-	CSplitter m_splitterCal;
-	std::vector<CWnd*> m_Panes;
-	CView* m_pLastFocusRuns; // Last view with focus in splitter window.
-	CView* m_pLastFocusCal; // Last view with focus in splitter window.
-
-	DECLARE_MESSAGE_MAP()
-	//{{AFX_MSG(CTabView)
-	afx_msg void OnDestroy();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
-	afx_msg void OnSelChanging(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSelChange(NMHDR* pNMHDR, LRESULT* pResult);
-	//}}AFX_MSG
+#if wxUSE_CHOICEBOOK
+	void OnChoicebookChanged(wxChoicebookEvent& evt)	{OnBookCtrlChanged(evt);}
+#endif
+#if wxUSE_LISTBOOK
+	void OnListbookChanged(wxListbookEvent& evt)		{OnBookCtrlChanged(evt);}
+#endif
+#if wxUSE_TREEBOOK
+	void OnTreebookChanged(wxTreebookEvent& evt)		{OnBookCtrlChanged(evt);}
+#endif
+#if wxUSE_TOOLBOOK
+	void OnToolbookChanged(wxToolbookEvent& evt)		{OnBookCtrlChanged(evt);}
+#endif
 };
-
-#ifndef _DEBUG  // debug version in TabView.cpp
-inline CAgilityBookDoc* CTabView::GetDocument() const
-{
-	return reinterpret_cast<CAgilityBookDoc*>(m_pDocument);
-}
-#endif

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -42,11 +43,29 @@
  */
 
 #include "ARBConfigScoring.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
-#include "ListBox.h"
-#include "ListData.h"
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
+//#include "ListBox.h"
+//#include "ListData.h"
 
+
+class CDlgConfigEvent
+{
+public:
+	CDlgConfigEvent(
+			bool bNewEntry,
+			ARBConfigVenuePtr pVenue,
+			ARBConfigEventPtr pEvent,
+			wxWindow* pParent = NULL) {}
+	void GetFixups(std::vector<ARBConfigActionPtr>& ioFixups) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgConfigEvent"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgConfigEvent : public CDlgBaseDialog
 {
 public:
@@ -136,3 +155,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

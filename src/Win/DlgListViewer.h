@@ -33,20 +33,23 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-28 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
  * @li 2005-01-02 DRC Show existing points in the list viewer.
  * @li 2004-07-29 DRC Created
  */
 
-#include "resource.h"
-#include <set>
 #include "ARBInfo.h"
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
 #include "PointsData.h"
+#include <set>
 class ARBDate;
 class CAgilityBookDoc;
+class CReportListCtrl;
+
+class CDlgListViewerData;
+typedef tr1::shared_ptr<CDlgListViewerData> CDlgListViewerDataPtr;
+
 
 class ScoringRunInfo
 {
@@ -81,6 +84,7 @@ public:
 	eScoringDetail m_ScoringDetail;
 };
 
+
 class RunInfoData
 {
 	friend class CDlgListViewer;
@@ -105,6 +109,7 @@ public:
 	ARBConfigEventPtr m_Event;
 };
 
+
 class MultiQInfoData
 {
 	friend class CDlgListViewer;
@@ -123,6 +128,7 @@ public:
 	ARBConfigMultiQPtr m_MultiQ;
 };
 
+
 struct CFindItemInfo
 {
 	ARBInfo::eInfoType type;
@@ -130,86 +136,64 @@ struct CFindItemInfo
 	ARBInfoItemPtr pItem;
 };
 
-class CDlgListViewer : public CDlgBaseDialog
+
+class CDlgListViewer : public wxDialog
 {
 public:
 	// Viewing runs
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			CString const& inCaption,
+			wxString const& inCaption,
 			RunInfoData const* inData,
 			std::list<RunInfo> const& inRuns,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// Viewing runs affected by configuration changes
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			CString const& inCaption,
+			wxString const& inCaption,
 			std::list<ScoringRunInfo> const& inScoringRuns,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// Viewing multi-Qs
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			CString const& inCaption,
+			wxString const& inCaption,
 			MultiQInfoData const* inData,
 			std::set<MultiQdata> const& inMQs,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// Viewing lifetime data
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			CString const& inCaption,
+			wxString const& inCaption,
 			std::list<LifeTimePointInfoPtr> const& inLifetime,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// Viewing other points
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			CString const& inCaption,
+			wxString const& inCaption,
 			std::list<OtherPtInfo> const& inRunList,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// Viewing Info
 	CDlgListViewer(
 			CAgilityBookDoc* inDoc,
-			CString const& inCaption,
+			wxString const& inCaption,
 			std::vector<CFindItemInfo> const& inItems,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
+
+	CDlgListViewerDataPtr GetDataByData(long data) const;
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgListViewer)
-	enum { IDD = IDD_LIST_VIEWER };
-	CListCtrl2	m_ctrlList;
-	CButton	m_ctrlCopy;
-	CButton	m_ctrlClose;
-	//}}AFX_DATA
-	CString m_Caption;
+	bool Create(
+			wxString const& inCaption,
+			wxWindow* pParent = NULL);
+	void FinishCreate();
+
+	CReportListCtrl* m_ctrlList;
+	wxButton* m_ctrlCopy;
+
 	CAgilityBookDoc* m_pDoc;
-	RunInfoData const* m_DataRun;
-	MultiQInfoData const* m_DataMultiQ;
-	std::list<RunInfo> const* m_Runs;
-	std::list<ScoringRunInfo> const* m_ScoringRuns;
-	std::set<MultiQdata> const* m_MultiQdata;
-	std::list<LifeTimePointInfoPtr> const* m_Lifetime;
-	std::list<OtherPtInfo> const* m_OtherData;
-	std::vector<CFindItemInfo> const* m_Items;
-	CRect m_rWin;
-	CRect m_rDlg;
-	CRect m_rList;
-	CRect m_rCopy;
-	CRect m_rOK;
 	int m_SortColumn;
 
-	//{{AFX_VIRTUAL(CDlgListViewer)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgListViewer)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnColumnclickList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnBnClickedListCopy();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnColumnClick(wxListEvent& evt);
+	void OnItemSelected(wxListEvent& evt);
+	void OnCopy(wxCommandEvent& evt);
 };

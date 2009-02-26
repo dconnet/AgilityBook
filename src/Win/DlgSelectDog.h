@@ -33,51 +33,30 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#include "ARBTypes.h"
 #include <vector>
-#include "DlgBaseDialog.h"
-#include "ListBox.h"
 class CAgilityBookDoc;
 
-#if _MSC_VER >= 1300
-#define DOMODAL_RETVAL	INT_PTR
-#else
-#define DOMODAL_RETVAL	int
-#endif
-
-class CDlgSelectDog : public CDlgBaseDialog
+class CDlgSelectDog : public wxDialog
 {
-// Construction
 public:
 	CDlgSelectDog(
 			CAgilityBookDoc* pDoc,
-			std::vector<ARBDogPtr>& dogs,
-			CWnd* pParent = NULL);
+			std::vector<ARBDogPtr>& outDogs,
+			wxWindow* pParent = NULL);
+
+	int ShowModal();
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgSelectDog)
-	enum { IDD = IDD_DOG_PICKER };
-	CCheckListBox2	m_ctrlList;
-	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
-	std::vector<ARBDogPtr>& m_Dogs;
+	std::vector<ARBDogPtr>& m_outDogs;
+	std::vector<ARBDogPtr> m_Dogs;
+	wxCheckListBox* m_checkList;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgSelectDog)
-	public:
-	virtual DOMODAL_RETVAL DoModal();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgSelectDog)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
 };

@@ -31,30 +31,39 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-30 DRC Created.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgEventSelect.h"
 
+#include "AgilityBook.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigLevel.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
-#include "ListData.h"
+#include "Globals.h"
+#include <wx/valgen.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgEventSelectData : public CListData
+class CDlgDivSelectData : public wxClientData
+{
+public:
+	CDlgDivSelectData(ARBConfigDivisionPtr pDiv)
+		: m_pDiv(pDiv)
+	{
+	}
+	ARBConfigDivisionPtr m_pDiv;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgEventSelectData : public wxClientData
 {
 public:
 	CDlgEventSelectData(ARBConfigLevelPtr pLevel)
@@ -74,98 +83,164 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgEventSelect dialog
+
+BEGIN_EVENT_TABLE(CDlgEventSelect, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgEventSelect::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgEventSelect::CDlgEventSelect(
 		ARBConfigVenuePtr inVenue,
 		ARBDate const& inDate,
-		TCHAR const* const inDivision,
-		TCHAR const* const inLevel,
-		TCHAR const* const inEvent,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgEventSelect::IDD, pParent)
-	, m_ctrlDivisions(true)
-	, m_ctrlLevels(true)
-	, m_ctrlEvents(false)
-	, m_pVenue(inVenue)
-	, m_Date(inDate)
-	, m_inDivision(inDivision)
+		wxString const& inDivision,
+		wxString const& inLevel,
+		wxString const& inEvent,
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_EVENT_SELECT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	, m_ctrlDivisions(NULL)
+	, m_ctrlLevels(NULL)
+	, m_ctrlEvents(NULL)
+	, m_ctrlOk(NULL)
+	, m_Division()
+	, m_Level()
+	, m_Event()
 	, m_inLevel(inLevel)
 	, m_inEvent(inEvent)
-	, m_Division(_T(""))
-	, m_Level(_T(""))
-	, m_Event(_T(""))
+	, m_pVenue(inVenue)
+	, m_Date(inDate)
 {
-	//{{AFX_DATA_INIT(CDlgEventSelect)
-	//}}AFX_DATA_INIT
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textDiv = new wxStaticText(this, wxID_ANY,
+		_("IDC_EVENT_SELECT_DIVISION"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDiv->Wrap(-1);
+
+	m_ctrlDivisions = new wxComboBox(this, wxID_ANY, m_Division,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_Division));
+	m_ctrlDivisions->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgEventSelect::OnSelchangeDivision), NULL, this);
+	m_ctrlDivisions->SetHelpText(_("HIDC_EVENT_SELECT_DIVISION"));
+	m_ctrlDivisions->SetToolTip(_("HIDC_EVENT_SELECT_DIVISION"));
+
+	wxStaticText* textLevel = new wxStaticText(this, wxID_ANY,
+		_("IDC_EVENT_SELECT_LEVEL"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textLevel->Wrap(-1);
+
+	m_ctrlLevels = new wxComboBox(this, wxID_ANY, m_Level,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_Level));
+	m_ctrlLevels->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgEventSelect::OnSelchangeLevel), NULL, this);
+	m_ctrlLevels->SetHelpText(_("HIDC_EVENT_SELECT_LEVEL"));
+	m_ctrlLevels->SetToolTip(_("HIDC_EVENT_SELECT_LEVEL"));
+
+	wxStaticText* textEvent = new wxStaticText(this, wxID_ANY, _("IDC_EVENT_SELECT_EVENT"), wxDefaultPosition, wxDefaultSize, 0);
+	textEvent->Wrap(-1);
+
+	m_ctrlEvents = new wxComboBox(this, wxID_ANY, m_Event,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_Event));
+	m_ctrlEvents->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgEventSelect::OnSelchangeEvent), NULL, this);
+	m_ctrlEvents->SetHelpText(_("HIDC_EVENT_SELECT_EVENT"));
+	m_ctrlEvents->SetToolTip(_("HIDC_EVENT_SELECT_EVENT"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizer1 = new wxBoxSizer(wxHORIZONTAL);
+	sizer1->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizer1->Add(m_ctrlDivisions, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizer1, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
+	sizer2->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizer2->Add(m_ctrlLevels, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizer2, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizer3 = new wxBoxSizer(wxHORIZONTAL);
+	sizer3->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizer3->Add(m_ctrlEvents, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizer3, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	m_ctrlOk = wxDynamicCast(FindWindowInSizer(bSizer, wxID_OK), wxButton);
+	assert(m_ctrlOk != NULL);
+
+	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
+		iterDiv != m_pVenue->GetDivisions().end();
+		++iterDiv)
+	{
+		ARBConfigDivisionPtr pDiv = (*iterDiv);
+		int index = m_ctrlDivisions->Append(pDiv->GetName().c_str());
+		m_ctrlDivisions->SetClientObject(index,
+			new CDlgDivSelectData(pDiv));
+		if (pDiv->GetName() == inDivision)
+			m_ctrlDivisions->SetSelection(index);
+	}
+	FillLevels();
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz(GetSize());
+	SetSizeHints(sz, sz);
+	CenterOnParent();
+
+	m_ctrlOk->SetFocus();
 }
-
-
-CDlgEventSelect::~CDlgEventSelect()
-{
-}
-
-
-void CDlgEventSelect::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgEventSelect)
-	DDX_CBString(pDX, IDC_EVENT_SELECT_DIVISION, m_Division);
-	DDX_Control(pDX, IDC_EVENT_SELECT_DIVISION, m_ctrlDivisions);
-	DDX_CBString(pDX, IDC_EVENT_SELECT_LEVEL, m_Level);
-	DDX_Control(pDX, IDC_EVENT_SELECT_LEVEL, m_ctrlLevels);
-	DDX_CBString(pDX, IDC_EVENT_SELECT_EVENT, m_Event);
-	DDX_Control(pDX, IDC_EVENT_SELECT_EVENT, m_ctrlEvents);
-	DDX_Control(pDX, IDOK, m_ctrlOk);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgEventSelect, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgEventSelect)
-	ON_CBN_SELCHANGE(IDC_EVENT_SELECT_DIVISION, OnSelchangeDivision)
-	ON_CBN_SELCHANGE(IDC_EVENT_SELECT_LEVEL, OnSelchangeLevel)
-	ON_CBN_SELCHANGE(IDC_EVENT_SELECT_EVENT, OnSelchangeEvent)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
 
 
 void CDlgEventSelect::UpdateControls()
 {
-	BOOL bEnable = FALSE;
-	if (0 <= m_ctrlDivisions.GetCurSel()
-	&& 0 <= m_ctrlLevels.GetCurSel()
-	&& 0 <= m_ctrlEvents.GetCurSel())
+	if (m_ctrlOk)
 	{
-		bEnable = TRUE;
+		bool bEnable = false;
+		if (wxNOT_FOUND != m_ctrlDivisions->GetSelection()
+		&& wxNOT_FOUND != m_ctrlLevels->GetSelection()
+		&& wxNOT_FOUND != m_ctrlEvents->GetSelection())
+		{
+			bEnable = true;
+		}
+		m_ctrlOk->Enable(bEnable);
 	}
-	m_ctrlOk.EnableWindow(bEnable);
 }
 
 
 void CDlgEventSelect::FillLevels()
 {
-	CString str;
-	tstring level;
-	int index = m_ctrlLevels.GetCurSel();
-	if (CB_ERR != index)
+	wxString level;
+	int index = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND != index)
 	{
-		m_ctrlLevels.GetLBText(index, str);
-		level = (LPCTSTR)str;
+		TransferDataFromWindow();
+		level = m_Level;
 	}
-	if (m_inLevel)
+	if (!m_inLevel.empty())
 	{
 		level = m_inLevel;
-		m_inLevel = NULL;
+		m_inLevel.clear();
 	}
-	m_ctrlLevels.ResetContent();
-	index = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR != index)
+	m_ctrlLevels->Clear();
+	index = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != index)
 	{
-		CListPtrData<ARBConfigDivisionPtr>* pData = reinterpret_cast<CListPtrData<ARBConfigDivisionPtr>*>(m_ctrlDivisions.GetItemDataPtr(index));
-		ARBConfigDivisionPtr pDiv = pData->GetData();
-		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
-			iter != pDiv->GetLevels().end();
+		CDlgDivSelectData* pData = dynamic_cast<CDlgDivSelectData*>(m_ctrlDivisions->GetClientObject(index));
+		for (ARBConfigLevelList::const_iterator iter = pData->m_pDiv->GetLevels().begin();
+			iter != pData->m_pDiv->GetLevels().end();
 			++iter)
 		{
 			ARBConfigLevelPtr pLevel = (*iter);
@@ -176,20 +251,20 @@ void CDlgEventSelect::FillLevels()
 					++iterSub)
 				{
 					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-					int idx = m_ctrlLevels.AddString(pSubLevel->GetName().c_str());
-					m_ctrlLevels.SetItemDataPtr(idx,
+					int idx = m_ctrlLevels->Append(pSubLevel->GetName().c_str());
+					m_ctrlLevels->SetClientObject(idx,
 						new CDlgEventSelectData(pLevel, pSubLevel));
 					if (level == pSubLevel->GetName())
-						m_ctrlLevels.SetCurSel(idx);
+						m_ctrlLevels->SetSelection(idx);
 				}
 			}
 			else
 			{
-				int idx = m_ctrlLevels.AddString(pLevel->GetName().c_str());
-				m_ctrlLevels.SetItemDataPtr(idx,
+				int idx = m_ctrlLevels->Append(pLevel->GetName().c_str());
+				m_ctrlLevels->SetClientObject(idx,
 					new CDlgEventSelectData(pLevel));
 				if (level == pLevel->GetName())
-					m_ctrlLevels.SetCurSel(idx);
+					m_ctrlLevels->SetSelection(idx);
 			}
 		}
 	}
@@ -199,40 +274,38 @@ void CDlgEventSelect::FillLevels()
 
 void CDlgEventSelect::FillEvents()
 {
-	CString str;
-	tstring evt;
-	int index = m_ctrlEvents.GetCurSel();
-	if (CB_ERR != index)
+	wxString evt;
+	int index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND != index)
 	{
-		m_ctrlEvents.GetLBText(index, str);
-		evt = (LPCTSTR)str;
+		TransferDataFromWindow();
+		evt = m_Event;
 	}
-	if (m_inEvent)
+	if (!m_inEvent.empty())
 	{
 		evt = m_inEvent;
-		m_inEvent = NULL;
+		m_inEvent.clear();
 	}
-	m_ctrlEvents.ResetContent();
-	int idxDiv = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR != idxDiv)
+	m_ctrlEvents->Clear();
+	int idxDiv = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != idxDiv)
 	{
-		CListPtrData<ARBConfigDivisionPtr>* pData = reinterpret_cast<CListPtrData<ARBConfigDivisionPtr>*>(m_ctrlDivisions.GetItemDataPtr(idxDiv));
-		ARBConfigDivisionPtr pDiv = pData->GetData();
-		int idxLevel = m_ctrlLevels.GetCurSel();
-		if (CB_ERR != idxLevel)
+		CDlgDivSelectData* pData = dynamic_cast<CDlgDivSelectData*>(m_ctrlDivisions->GetClientObject(idxDiv));
+		int idxLevel = m_ctrlLevels->GetSelection();
+		if (wxNOT_FOUND != idxLevel)
 		{
-			CDlgEventSelectData* pEvtData = reinterpret_cast<CDlgEventSelectData*>(m_ctrlLevels.GetItemDataPtr(idxLevel));
+			CDlgEventSelectData* pEvtData = dynamic_cast<CDlgEventSelectData*>(m_ctrlLevels->GetClientObject(idxLevel));
 			for (ARBConfigEventList::const_iterator iter = m_pVenue->GetEvents().begin();
 				iter != m_pVenue->GetEvents().end();
 				++iter)
 			{
 				ARBConfigEventPtr pEvent = (*iter);
-				if (pEvent->FindEvent(pDiv->GetName(), pEvtData->m_pLevel->GetName(), m_Date))
+				if (pEvent->FindEvent(pData->m_pDiv->GetName(), pEvtData->m_pLevel->GetName(), m_Date))
 				{
-					int idx = m_ctrlEvents.AddString(pEvent->GetName().c_str());
+					int idx = m_ctrlEvents->Append(pEvent->GetName().c_str());
 					if (evt == pEvent->GetName())
 					{
-						m_ctrlEvents.SetCurSel(idx);
+						m_ctrlEvents->SetSelection(idx);
 					}
 				}
 			}
@@ -241,73 +314,34 @@ void CDlgEventSelect::FillEvents()
 	UpdateControls();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgEventSelect message handlers
 
-BOOL CDlgEventSelect::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	int index;
-	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
-		iterDiv != m_pVenue->GetDivisions().end();
-		++iterDiv)
-	{
-		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		index = m_ctrlDivisions.AddString(pDiv->GetName().c_str());
-		m_ctrlDivisions.SetItemDataPtr(index, 
-			new CListPtrData<ARBConfigDivisionPtr>(pDiv));
-		if (m_inDivision && pDiv->GetName() == m_inDivision)
-			m_ctrlDivisions.SetCurSel(index);
-	}
-	m_inDivision = NULL;
-
-	FillLevels(); // This will call	UpdateControls();
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgEventSelect::OnSelchangeDivision()
+void CDlgEventSelect::OnSelchangeDivision(wxCommandEvent& evt)
 {
 	FillLevels();
 }
 
 
-void CDlgEventSelect::OnSelchangeLevel()
+void CDlgEventSelect::OnSelchangeLevel(wxCommandEvent& evt)
 {
 	FillEvents();
 }
 
 
-void CDlgEventSelect::OnSelchangeEvent()
+void CDlgEventSelect::OnSelchangeEvent(wxCommandEvent& evt)
 {
 	UpdateControls();
 }
 
 
-void CDlgEventSelect::OnOK()
+void CDlgEventSelect::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
+
 	if (m_Division.IsEmpty()
 	|| m_Level.IsEmpty()
 	|| m_Event.IsEmpty())
 		return;
-	// Copy them because ClearLevels will affect things.
-	m_Div = m_Division;
-	m_Lev = m_Level;
-	m_Evt = m_Event;
-	m_ctrlDivisions.ResetContent();
-	m_ctrlLevels.ResetContent();
-	CDlgBaseDialog::OnOK();
-}
 
-
-void CDlgEventSelect::OnCancel()
-{
-	m_ctrlDivisions.ResetContent();
-	m_ctrlLevels.ResetContent();
-	CDlgBaseDialog::OnCancel();
+	EndDialog(wxID_OK);
 }

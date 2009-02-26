@@ -31,12 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgReferenceRun.h"
+
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgReferenceRun")
+#if 0
+#include "AgilityBook.h"
 #include <set>
 
 #include "AgilityBookDoc.h"
@@ -126,7 +130,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgReferenceRun message handlers
 
-BOOL CDlgReferenceRun::OnInitDialog() 
+BOOL CDlgReferenceRun::OnInitDialog()
 {
 	CDlgBaseDialog::OnInitDialog();
 	int nQs = ARB_Q::GetNumValidTypes();
@@ -175,7 +179,7 @@ void CDlgReferenceRun::OnKillfocusRefRunTime()
 }
 
 
-void CDlgReferenceRun::OnOK() 
+void CDlgReferenceRun::OnOK()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -212,3 +216,4 @@ void CDlgReferenceRun::OnOK()
 
 	CDlgBaseDialog::OnOK();
 }
+#endif

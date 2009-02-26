@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-10-24 DRC Changed ctor and added <= operators
  * @li 2006-12-10 DRC Fixed operator< and operator>.
  * @li 2004-03-04 DRC Created
@@ -40,140 +42,23 @@
 #include "VersionNum.h"
 
 #include "ARBTypes.h"
+#include "VersionNumber.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
 
 CVersionNum::CVersionNum()
-	: m_Valid(false)
-	, m_FileName()
-	, m_ProdName()
+	: m_Valid(true)
 	, m_Version()
-	, m_wLangID(0)
 {
-}
-
-CVersionNum::CVersionNum(
-		HMODULE inModule,
-		WORD inwLangID,
-		WORD inwCharSet)
-	: m_Valid(false)
-	, m_FileName()
-	, m_ProdName()
-	, m_Version()
-	, m_wLangID(0)
-{
-	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
-
-	// Get the filename and other info...
-	LPTSTR tp = m_FileName.GetBuffer(MAX_PATH);
-	::GetModuleFileName(inModule, tp, MAX_PATH);
-	m_FileName.ReleaseBuffer();
-#ifndef _UNICODE
-	m_FileName.OemToAnsi();
-#endif
-
-	// Get the version information size for allocate the buffer
-	LPTSTR pAppName = m_FileName.GetBuffer(0);
-	DWORD fvHandle;
-	DWORD dwSize = ::GetFileVersionInfoSize(pAppName, &fvHandle);
-	if (0 == dwSize)
-	{
-		m_FileName.ReleaseBuffer();
-		return;
-	}
-
-	// Allocate buffer and retrieve version information
-	BYTE* pFVData = new BYTE[dwSize];
-	if (!::GetFileVersionInfo(pAppName, fvHandle, dwSize, pFVData))
-	{
-		m_FileName.ReleaseBuffer();
-		return;
-	}
-	m_FileName.ReleaseBuffer();
-	// Retrieve the language and character-set identifier
-	UINT nQuerySize;
-	DWORD* pTransBlock;
-	if (!::VerQueryValue(pFVData, _T("\\VarFileInfo\\Translation"), reinterpret_cast<void**>(&pTransBlock), &nQuerySize))
-	{
-		delete [] pFVData;
-		pFVData = NULL;
-		return;
-	}
-	DWORD dwData = 0;
-	if (nQuerySize > 4 && (0 != inwLangID || 0 != inwCharSet))
-	{
-		bool bOk = false;
-		for (DWORD offset = 0; !bOk && offset < nQuerySize; offset += sizeof(DWORD))
-		{
-			dwData = pTransBlock[0];
-			if (inwLangID == LOWORD(dwData) && inwCharSet == HIWORD(dwData))
-				bOk = true;
-		}
-		if (!bOk)
-			dwData = pTransBlock[0];
-	}
-	else
-		dwData = pTransBlock[0];
-	// Swap the words so wsprintf will print the lang-codepage in
-	// the correct format.
-	//  Hi-order: IBM code page
-	//  Lo-order: Microsoft language id
-	m_wLangID = LOWORD(dwData);
-	WORD wCodePage = HIWORD(dwData);
-
-	// Cache the fixed info.
-	VS_FIXEDFILEINFO* pffi;
-	if (!::VerQueryValue(pFVData, _T("\\"), reinterpret_cast<void**>(&pffi), &nQuerySize))
-	{
-		delete [] pFVData;
-		pFVData = NULL;
-		return;
-	}
-	// Date didn't get set. Get the create date.
-	if (0 == pffi->dwFileDateLS && 0 == pffi->dwFileDateMS)
-	{
-		HANDLE hFile = CreateFile(m_FileName, GENERIC_READ, FILE_SHARE_READ, NULL,
-			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-		if (hFile)
-		{
-			FILETIME ft;
-			GetFileTime(hFile, &ft, NULL, NULL);
-			CloseHandle(hFile);
-			pffi->dwFileDateLS = ft.dwLowDateTime;
-			pffi->dwFileDateMS = ft.dwHighDateTime;
-		}
-	}
-
-	// Get the real name.
-	TCHAR subBlockName[255];
-	wsprintf(subBlockName, _T("\\StringFileInfo\\%04hx%04hx\\ProductName"), m_wLangID, wCodePage);
-	void* pValue = NULL;
-	UINT vSize;
-	::VerQueryValue(pFVData, subBlockName, &pValue, &vSize);
-	m_ProdName = reinterpret_cast<LPCTSTR>(pValue);
-
-	m_Version.part1 = HIWORD(pffi->dwProductVersionMS);
-	m_Version.part2 = LOWORD(pffi->dwProductVersionMS);
-	m_Version.part3 = HIWORD(pffi->dwProductVersionLS);
-	m_Version.part4 = LOWORD(pffi->dwProductVersionLS);
-
-	delete [] pFVData;
-	m_Valid = true;
+	m_Version.part1 = ARB_VER_MAJOR;
+	m_Version.part2 = ARB_VER_MINOR;
+	m_Version.part3 = ARB_VER_DOT;
+	m_Version.part4 = ARB_VER_BUILD;
 }
 
 
 CVersionNum::CVersionNum(CVersionNum const& rhs)
 	: m_Valid(rhs.m_Valid)
-	, m_FileName(rhs.m_FileName)
-	, m_ProdName(rhs.m_ProdName)
 	, m_Version(rhs.m_Version)
-	, m_wLangID(rhs.m_wLangID)
 {
 }
 
@@ -183,34 +68,31 @@ CVersionNum& CVersionNum::operator=(CVersionNum const& rhs)
 	if (this != &rhs)
 	{
 		m_Valid = rhs.m_Valid;
-		m_FileName = rhs.m_FileName;
-		m_ProdName = rhs.m_ProdName;
 		m_Version = rhs.m_Version;
-		m_wLangID = rhs.m_wLangID;
 	}
 	return *this;
 }
 
 
-bool CVersionNum::Parse(CString inFileName, CString inVer)
+bool CVersionNum::Parse(wxString inFileName, wxString inVer)
 {
 	clear();
 	int pos = inVer.Find('.');
 	if (0 <= pos)
 	{
-		m_Version.part1 = static_cast<WORD>(tstringUtil::atol((LPCTSTR)inVer));
+		m_Version.part1 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
 		inVer = inVer.Mid(pos+1);
 		pos = inVer.Find('.');
 		if (0 <= pos)
 		{
-			m_Version.part2 = static_cast<WORD>(tstringUtil::atol((LPCTSTR)inVer));
+			m_Version.part2 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
 			inVer = inVer.Mid(pos+1);
 			pos = inVer.Find('.');
 			if (0 <= pos)
 			{
-				m_Version.part3 = static_cast<WORD>(tstringUtil::atol((LPCTSTR)inVer));
+				m_Version.part3 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
 				inVer = inVer.Mid(pos+1);
-				m_Version.part4 = static_cast<WORD>(tstringUtil::atol((LPCTSTR)inVer));
+				m_Version.part4 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
 				m_Valid = true;
 			}
 		}
@@ -282,14 +164,11 @@ bool CVersionNum::operator>=(CVersionNum const& rhs) const
 void CVersionNum::clear()
 {
 	m_Valid = false;
-	m_FileName.Empty();
-	m_ProdName.Empty();
 	m_Version.part1 = m_Version.part2 = m_Version.part3 = m_Version.part4 = 0;
-	m_wLangID = 0;
 }
 
 
-CString CVersionNum::GetVersionString() const
+wxString CVersionNum::GetVersionString() const
 {
 	otstringstream str;
 	str << m_Version.part1

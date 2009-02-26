@@ -33,10 +33,10 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2003-12-27 DRC Created
  */
 
-#include "DlgBaseDialog.h"
 class CDlgFind;
 
 class IFindCallback
@@ -53,9 +53,9 @@ public:
 	{
 	}
 
-	virtual CString const& GetCaption() const	{return m_strCaption;}
-	virtual CString const& Text() const			{return m_strSearch;}
-	virtual void Text(CString const& text)		{m_strSearch = text;}
+	virtual wxString const& GetCaption() const	{return m_strCaption;}
+	virtual wxString const& Text() const		{return m_strSearch;}
+	virtual void Text(wxString const& text)		{m_strSearch = text;}
 	virtual bool MatchCase() const				{return m_bMatchCase;}
 	virtual void MatchCase(bool bCase)			{m_bMatchCase = bCase;}
 	virtual bool EnableSearch() const			{return m_bEnableSearch;}
@@ -68,8 +68,8 @@ public:
 	virtual bool Search(CDlgFind* pDlg) const = 0;
 
 protected:
-	CString m_strCaption;
-	CString m_strSearch;
+	wxString m_strCaption;
+	wxString m_strSearch;
 	bool m_bMatchCase;
 	bool m_bEnableSearch;
 	bool m_bSearchAll;
@@ -77,38 +77,22 @@ protected:
 	bool m_bDown;
 };
 
-class CDlgFind : public CDlgBaseDialog
+
+class CDlgFind : public wxDialog
 {
-// Construction
 public:
 	CDlgFind(
 			IFindCallback& callback,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgFind)
-	enum { IDD = IDD_FIND };
-	CString	m_strName;
-	BOOL	m_bCase;
-	int		m_Search;
-	int		m_Direction;
-	CButton	m_ctrlFind;
-	//}}AFX_DATA
 	IFindCallback& m_Callback;
+	wxTextCtrl* m_textCtrl;
+	wxCheckBox* m_checkBox;
+	wxRadioBox* m_radioBoxSearch;
+	wxRadioBox* m_radioBoxDir;
+	wxButton* m_btnFind;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgFind)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgFind)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnChangeName();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnChangeName(wxCommandEvent& evt);
+	void OnFind(wxCommandEvent& evt);
 };

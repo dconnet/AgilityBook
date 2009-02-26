@@ -31,125 +31,49 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-19 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-30 DRC Created
  */
 
 #include "stdafx.h"
-#include <shellapi.h>
 #include "RichEditCtrl2.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CRichEditCtrl2 control
-
-CRichEditCtrl2::CRichEditCtrl2()
+CRichEditCtrl2::CRichEditCtrl2(
+		wxWindow* parent,
+		wxWindowID id,
+		const wxString& value,
+		const wxPoint& pos,
+		const wxSize& size,
+		long style,
+		const wxValidator& validator,
+		const wxString& name)
+	: wxTextCtrl(parent, id, value, pos, size, style|wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH, validator, name)
 {
-}
-
-
-BEGIN_MESSAGE_MAP(CRichEditCtrl2, CRichEditCtrl)
-	ON_NOTIFY_REFLECT(EN_LINK, OnEnLink)
-END_MESSAGE_MAP()
-
-
-BOOL CRichEditCtrl2::Create(
-		DWORD dwStyle,
-		const RECT& rect,
-		CWnd* pParentWnd,
-		UINT nID)
-{
-	if (!CRichEditCtrl::Create(dwStyle, rect, pParentWnd, nID))
-		return FALSE;
-	Setup();
-	return TRUE;
-}
-
-
-#if _MSC_VER >= 1300
-BOOL CRichEditCtrl2::CreateEx(
-		DWORD dwExStyle,
-		DWORD dwStyle,
-		const RECT& rect,
-		CWnd* pParentWnd,
-		UINT nID)
-{
-	if (!CRichEditCtrl::CreateEx(dwExStyle, dwStyle, rect, pParentWnd, nID))
-		return FALSE;
-	Setup();
-	return TRUE;
-}
-#endif
-
-
-void CRichEditCtrl2::PreSubclassWindow()
-{
-	CRichEditCtrl::PreSubclassWindow();
-	Setup();
-}
-
-
-void CRichEditCtrl2::Setup()
-{
-	// A readonly richedit has a white background.
-	if (GetStyle() & ES_READONLY)
-		SetBackgroundColor(FALSE, ::GetSysColor(COLOR_3DFACE));
-	SetEventMask(GetEventMask() | ENM_LINK);
-#if _MSC_VER < 1300
-	assert(::IsWindow(m_hWnd));
-	::SendMessage(m_hWnd, EM_AUTOURLDETECT, static_cast<WPARAM>(TRUE), 0);
-#else
-	SetAutoURLDetect(TRUE);
-#endif
-}
-
-
-void CRichEditCtrl2::OnEnLink(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	ENLINK* pEnLink = reinterpret_cast<ENLINK*>(pNMHDR);
-	*pResult = 0;
-
-	switch (pEnLink->msg)
+	Connect(wxEVT_COMMAND_TEXT_URL, wxTextUrlEventHandler(CRichEditCtrl2::OnUrl));
+	if (style & wxTE_READONLY)
 	{
-	case WM_LBUTTONDOWN:
-		{
-			CWaitCursor WaitCursor;
-			CHARRANGE CharRange;
-			GetSel(CharRange);
-			SetSel(pEnLink->chrg);
-			CString URL = GetSelText();
-			SetSel(CharRange);
-			SHELLEXECUTEINFO sei;
-			ZeroMemory(&sei, sizeof(sei));
-			sei.cbSize = sizeof(SHELLEXECUTEINFO);
-			sei.fMask = SEE_MASK_FLAG_DDEWAIT;
-			if (AfxGetMainWnd()->GetSafeHwnd())
-				sei.hwnd = AfxGetMainWnd()->GetSafeHwnd();
-			//sei.lpVerb = NULL;
-			//sei.lpVerb = _T("opennew");
-			sei.lpVerb = _T("open");
-			//sei.lpVerb = _T("edit");
-			sei.lpFile = (LPCTSTR)URL;
-			sei.lpParameters = NULL;
-			sei.lpDirectory = NULL;
-			sei.nShow = SW_SHOWNORMAL;
-			ShellExecuteEx(&sei);
-			*pResult = 1;
-		}
-		break;
-
-	case WM_LBUTTONUP:
-		*pResult = 1;
-		break;
-
-	default:
-		break;
+		SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE));
 	}
+}
+
+
+void CRichEditCtrl2::SetEditable(bool editable)
+{
+	if (editable != IsEditable())
+	{
+		wxTextCtrl::SetEditable(editable);
+		if (editable)
+			SetBackgroundColour(wxNullColour); // reset to default
+		else
+			SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE));
+	}
+}
+
+
+void CRichEditCtrl2::OnUrl(wxTextUrlEvent& evt)
+{
+	wxString url = GetRange(evt.GetURLStart(), evt.GetURLEnd());
+	wxLaunchDefaultBrowser(url);
 }

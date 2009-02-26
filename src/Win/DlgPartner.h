@@ -33,45 +33,29 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+#include "ARBTypes.h"
+#include <set>
 
-class CDlgPartner : public CDlgBaseDialog
+
+class CDlgPartner : public wxDialog
 {
 public:
 	CDlgPartner(
 			ARBDogRunPartnerPtr partner,
 			std::set<tstring> const& inHandlers,
 			std::set<tstring> const& inDogs,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgPartner)
-	enum { IDD = IDD_PARTNER };
-	CComboBox2	m_ctrlHandler;
-	CString	m_Handler;
-	CComboBox2	m_ctrlDog;
-	CString	m_Dog;
-	CString m_RegNum;
-	//}}AFX_DATA
+	wxString m_Handler;
+	wxString m_Dog;
+	wxString m_RegNum;
 	ARBDogRunPartnerPtr m_Partner;
-	std::set<tstring> const& m_Handlers;
-	std::set<tstring> const& m_Dogs;
 
-	//{{AFX_VIRTUAL(CDlgPartner)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgPartner)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
 };

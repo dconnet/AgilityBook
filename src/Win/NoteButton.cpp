@@ -31,52 +31,27 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2005-12-12 DRC Created
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "NoteButton.h"
 
-// Extra space around the icon
-#define BUTTON_MARGIN	2
-
-// Don't use GetSystemMetrics(SM_CXSMICON)-large font systems have bigger
-// small icons - but our image list IS 16x16.
-#define SMICON_CX	16
-#define SMICON_CY	16
-
-IMPLEMENT_DYNAMIC(CNoteButton, CButton)
+#include "res/Note.xpm"
 
 
-CNoteButton::CNoteButton()
-	: CButton()
+CNoteButton::CNoteButton(wxWindow* parent)
+	: wxBitmapButton()
+	, m_ImageList(16,16)
 	, m_idxNormal(-1)
 {
-	Load(IDI_NOTEBTN);
+	wxBitmapButton::Create(parent, wxID_ANY, wxBitmap(Note_xpm), wxDefaultPosition, wxSize(20, 20));
 }
 
 
-CNoteButton::CNoteButton(UINT idIcon)
-	: CButton()
-	, m_idxNormal(-1)
-{
-	Load(idIcon);
-}
-
-
-CNoteButton::~CNoteButton()
-{
-}
-
-
-void CNoteButton::Load(UINT idIcon)
-{
-	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 1, 0);
-	VERIFY(0 <= (m_idxNormal = m_ImageList.Add(theApp.LoadIcon(idIcon))));
-}
-
-
+#pragma message PRAGMA_MESSAGE("TODO: Implement CNoteButton")
+#if 0
 BEGIN_MESSAGE_MAP(CNoteButton, CButton)
 	ON_WM_CREATE()
 	ON_WM_SETFOCUS()
@@ -220,3 +195,4 @@ void CNoteButton::DrawItem(LPDRAWITEMSTRUCT lpDIS)
 		pDC->DrawFocusRect(rect);
 	}
 }
+#endif

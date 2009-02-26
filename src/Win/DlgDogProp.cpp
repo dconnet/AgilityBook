@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-30 DRC DOB/Deceased were not initialized in ctor.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
@@ -38,9 +39,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgDogProp.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgDogProp")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDog.h"
 #include "DlgRegNum.h"
@@ -194,3 +197,4 @@ void CDlgDogProperties::OnIsDeceased()
 		m_ctrlDateDeceased.ShowWindow(SW_HIDE);
 	UpdateAge();
 }
+#endif

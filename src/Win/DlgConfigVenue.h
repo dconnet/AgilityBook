@@ -33,22 +33,41 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-01-24 DRC Created
  */
 
 #include "ARBConfigScoring.h"
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
+//#include "DlgBaseDialog.h"
+//#include "ListCtrl.h"
 class ARBAgilityRecordBook;
-class CAgilityBookDoc;
-class CDlgConfigureDataDivision;
-class CDlgConfigureDataEvent;
-class CDlgConfigureDataLevel;
-class CDlgConfigureDataMultiQ;
-class CDlgConfigureDataSubLevel;
-class CDlgConfigureDataTitle;
+//class CAgilityBookDoc;
+//class CDlgConfigureDataDivision;
+//class CDlgConfigureDataEvent;
+//class CDlgConfigureDataLevel;
+//class CDlgConfigureDataMultiQ;
+//class CDlgConfigureDataSubLevel;
+//class CDlgConfigureDataTitle;
 
+
+class CDlgConfigVenue
+{
+public:
+	CDlgConfigVenue(
+			ARBAgilityRecordBook const& book,
+			ARBConfig const& config,
+			ARBConfigVenuePtr pVenue,
+			wxWindow* pParent = NULL);
+	void GetFixups(ARBConfigActionList& ioFixups) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CCDlgConfigVenue"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgConfigVenue : public CDlgBaseDialog
 {
 public:
@@ -162,3 +181,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

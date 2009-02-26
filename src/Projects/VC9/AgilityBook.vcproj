@@ -5,8 +5,8 @@
 	Name="AgilityBook"
 	ProjectGUID="{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
 	RootNamespace="AgilityBook"
-	Keyword="MFCProj"
-	TargetFrameworkVersion="131072"
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -22,8 +22,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/Xerces.vsprops;$(SolutionDir)/zlib.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -59,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib htmlhelp.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC9.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -81,13 +80,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/Xerces.vsprops;$(SolutionDir)/zlib.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -123,7 +122,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib htmlhelp.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_amd64_lib_VC9.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -145,13 +144,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/Xerces.vsprops;$(SolutionDir)/zlib.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -188,7 +187,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib htmlhelp.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC9.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -210,13 +209,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/Xerces.vsprops;$(SolutionDir)/zlib.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -252,7 +251,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib htmlhelp.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_amd64_lib_VC9.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -274,6 +273,267 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug - No Unicode|Win32"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
+				RuntimeLibrary="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC9.0s"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug - No Unicode|x64"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
+				RuntimeLibrary="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_amd64_lib_VC9.0s"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release - No Unicode|Win32"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
+				RuntimeLibrary="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC9.0s"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release - No Unicode|x64"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../../Include;../../ARB;../../Win"
+				PreprocessorDefinitions="_WINDOWS"
+				RuntimeLibrary="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_amd64_lib_VC9.0s"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -281,15 +541,498 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc"
+			Name="Source Files"
+			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Win\AboutDlg.h"
+				RelativePath="..\..\Win\AgilityBook.cpp"
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\AgilityBookCalendarListView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookCalendarView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookDoc.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookHtmlView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookMenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookOptions.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookPanels.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookPointsView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookRunsView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTrainingView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTreeData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTreeView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CalendarSites.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CheckLink.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ClipBoard.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ColumnOrder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CommonView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ConfigHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAbout.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAssignColumns.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgAuthenticate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgCalendar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgCalendarQueryDetail.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgClub.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigEventMethod.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigMultiQ.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigOtherPoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigPlaceInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigTitle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigTitlePoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigUpdate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigure.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigureData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgConfigVenue.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgCRCDViewer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgDog.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgDogNumbers.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgDogPoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgDogProp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgDogTitles.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgEventSelect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgExistingPoints.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgFault.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgFind.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgFindLinks.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgInfoJudge.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgListCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgListViewer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgMessageBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgName.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgOptions.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgOptionsCalendar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgOptionsFilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgOptionsPrint.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgOptionsProgram.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgOtherPoint.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgPartner.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgPluginDetails.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgPointsViewSort.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgProgress.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgQueryDetail.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgReferenceRun.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgRegNum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgReorder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgRun.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgRunComments.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgRunCRCD.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgRunLink.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgRunReference.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgRunScore.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgSelectDog.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgSelectURL.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgTitle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgTraining.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\DlgTrial.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\FilterOptions.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\Globals.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\IconList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\LanguageManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ListCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ListData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\Localization.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\MainFrm.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\NoteButton.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\PointsData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\Print.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ReadHttp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\RichEditCtrl2.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\stdafx.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug - No Unicode|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug - No Unicode|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release - No Unicode|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release - No Unicode|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\Win\TabView.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\UpdateInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\Validators.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\VenueComboBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\VersionNum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\Wizard.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\WizardExcel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\WizardExport.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\WizardImport.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\WizardStart.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File
 				RelativePath="..\..\Win\AgilityBook.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookCalendarListView.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookCalendarView.h"
 				>
 			</File>
 			<File
@@ -297,11 +1040,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\AgilityBookHtmlView.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookMenu.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\AgilityBookOptions.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookTree.h"
+				RelativePath="..\..\Win\AgilityBookPanels.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookPointsView.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookRunsView.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTrainingView.h"
 				>
 			</File>
 			<File
@@ -309,27 +1072,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendar.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendarList.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewHtml.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewPoints.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewRuns.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewTraining.h"
+				RelativePath="..\..\Win\AgilityBookTreeView.h"
 				>
 			</File>
 			<File
@@ -341,19 +1084,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\CheckTreeCtrl.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\ClipBoard.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\ColumnOrder.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ComboBox.h"
 				>
 			</File>
 			<File
@@ -365,7 +1100,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\CrashHandler.h"
+				RelativePath="..\..\Win\DlgAbout.h"
 				>
 			</File>
 			<File
@@ -374,18 +1109,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgAuthenticate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseDialog.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBasePropertyPage.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseSheet.h"
 				>
 			</File>
 			<File
@@ -490,10 +1213,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgInfoJudge.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgLanguage.h"
 				>
 			</File>
 			<File
@@ -617,19 +1336,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\excel8.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\FilterOptions.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\HyperLink.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ICalendarSite.h"
+				RelativePath="..\..\Win\Globals.h"
 				>
 			</File>
 			<File
@@ -638,10 +1349,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\LanguageManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ListBox.h"
 				>
 			</File>
 			<File
@@ -665,10 +1372,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\ooCalc.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\PointsData.h"
 				>
 			</File>
@@ -677,31 +1380,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\Resource.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\resource.hm"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\RichEditCtrl2.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\Splash.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\Splitter.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\SymbolEngine.h"
 				>
 			</File>
 			<File
@@ -713,11 +1396,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VersionNum.h"
+				RelativePath="..\..\Win\Validators.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VersionNumber.h"
+				RelativePath="..\..\Win\VenueComboBox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\VersionNum.h"
 				>
 			</File>
 			<File
@@ -743,206 +1430,15 @@
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath="..\..\Win\res\AccConfirm.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\AccNone.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\AccTodo.ico"
-				>
-			</File>
 			<File
 				RelativePath="..\..\Win\res\AgilityBook.ico"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBook.rc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\l.enu\AgilityBook.rc2"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\AgilityBookDoc.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\AgilityRecordBook.dtd"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalEmpty.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalEntered.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalEnteredTentative.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalMaybe.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalPlan.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalPlanMaybe.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalPlanTentative.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\CalTentative.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\checked.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\crcd.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\DefaultConfig.xml"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\dog.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\HdrDown.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\HdrUp.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\help.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\hidden.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\jump.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\Logo.bmp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\Note.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\NoteF.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\NoteU.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\NoteX.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\run.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\Splash.bmp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\title.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\title2.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\Toolbar.bmp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\trial.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\unchecked.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-aac.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-akc.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-asca.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-ckc.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-cpe.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-docna.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-fci.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-nadac.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-scc.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-sweep.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-tdaa.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-ukc.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\res\venue-usdaa.ico"
 				>
 			</File>
 		</Filter>
@@ -1282,489 +1778,8 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm"
-			>
-			<File
-				RelativePath="..\..\Win\AboutDlg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBook.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookDoc.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookOptions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookTree.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookTreeData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendarList.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewHtml.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewRuns.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewTraining.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\CalendarSites.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\CheckLink.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\CheckTreeCtrl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ClipBoard.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ColumnOrder.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ComboBox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ConfigHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\CrashHandler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgAssignColumns.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgAuthenticate.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseDialog.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBasePropertyPage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseSheet.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgCalendar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgCalendarQueryDetail.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgClub.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigEvent.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigEventMethod.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigMultiQ.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigOtherPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigPlaceInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigTitle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigTitlePoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigUpdate.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigure.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigureData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgConfigVenue.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgCRCDViewer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDog.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogNumbers.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogProp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogTitles.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgEventSelect.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgExistingPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgFault.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgFind.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgFindLinks.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgInfoJudge.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgLanguage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgListCtrl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgListViewer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgMessage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgMessageBox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgName.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgOptions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgOptionsCalendar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgOptionsFilter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgOptionsPrint.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgOptionsProgram.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgOtherPoint.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgPartner.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgPluginDetails.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgPointsViewSort.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgProgress.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgQueryDetail.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgReferenceRun.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRegNum.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgReorder.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRun.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunComments.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunCRCD.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunLink.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunReference.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunScore.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgSelectDog.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgSelectURL.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgTitle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgTraining.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgTrial.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\FilterOptions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\HyperLink.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\IconList.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\LanguageManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ListBox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ListCtrl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ListData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\Localization.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\MainFrm.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\NoteButton.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\PointsData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\Print.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ReadHttp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\RichEditCtrl2.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\Splash.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\Splitter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\stdafx.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\Win\TabView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\UpdateInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\VersionNum.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\Wizard.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\WizardExcel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\WizardExport.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\WizardImport.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\WizardStart.cpp"
-				>
-			</File>
-		</Filter>
 		<File
-			RelativePath="..\..\..\History.txt"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\License.txt"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\Readme.txt"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\ReleaseProcess.txt"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\Todo.txt"
+			RelativePath="..\..\Win\ReadMe.txt"
 			>
 		</File>
 	</Files>

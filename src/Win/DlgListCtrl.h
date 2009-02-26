@@ -33,19 +33,23 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-12-26 DRC Made dialog resizable.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include <vector>
 #include "ARBDate.h"
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
+#include <vector>
 class CAgilityBookDoc;
-class CDlgListCtrlData;
+class CReportListCtrl;
 class CTabView;
+class wxListEvent;
 
-class CDlgListCtrl : public CDlgBaseDialog
+class CDlgListCtrlData;
+typedef tr1::shared_ptr<CDlgListCtrlData> CDlgListCtrlDataPtr;
+
+
+class CDlgListCtrl : public wxDialog
 {
 	friend class CDlgListCtrlDataCalendar; // To allow easy access to image icons
 public:
@@ -63,44 +67,46 @@ public:
 			ARBDate const& date,
 			std::vector<ARBCalendarPtr> const* entries,
 			CTabView* pTabView,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// Faults, Partners
 	CDlgListCtrl(
 			WhatToList inType,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr run,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// OtherPoints
 	CDlgListCtrl(
 			ARBConfig& pConfig,
 			ARBDogRunPtr run,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
+
+	void GetAllPartners(
+			std::set<tstring>& ioPartners,
+			std::set<tstring>& ioDogs) const;
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgListCtrl)
-	enum { IDD = IDD_LISTCTRL };
-	CListCtrl2	m_ctrlList;
-	CButton	m_ctrlNew;
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlDelete;
-	CButton	m_ctrlUp;
-	CButton	m_ctrlDown;
-	CButton m_ctrlCreateTrial;
-	CButton	m_ctrlOk;
-	CButton	m_ctrlCancel;
-	//}}AFX_DATA
-	CRect m_rWin;
-	CRect m_rDlg;
-	CRect m_rList;
-	CRect m_rNew;
-	CRect m_rEdit;
-	CRect m_rDelete;
-	CRect m_rUp;
-	CRect m_rDown;
-	CRect m_rTrial;
-	CRect m_rOK;
-	CRect m_rCancel;
+	bool Create(
+			wxString const& inCaption,
+			wxWindow* pParent = NULL);
+	void FinishCreate(
+			int nCols,
+			std::vector<CDlgListCtrlDataPtr>& items);
+	CDlgListCtrlDataPtr GetItemListData(long item) const;
+	void UpdateControls();
+	void SwapEntries(
+			long oldIndex,
+			long newIndex);
+	void OnEdit();
+	// Only PocketPC calls this directly. We're making use of it internally.
+	virtual bool DoOK();
+
+	CReportListCtrl* m_ctrlList;
+	wxButton* m_ctrlNew;
+	wxButton* m_ctrlEdit;
+	wxButton* m_ctrlDelete;
+	wxButton* m_ctrlUp;
+	wxButton* m_ctrlDown;
+	wxButton* m_ctrlCreateTrial;
 	WhatToList m_What;
 	CAgilityBookDoc* m_pDoc;
 	ARBDate m_Date;
@@ -108,7 +114,6 @@ private:
 	CTabView* m_pTabView;
 	ARBConfig* m_pConfig;
 	ARBDogRunPtr m_pRun;
-	CImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgTentative;
 	int m_imgPlan;
@@ -116,37 +121,15 @@ private:
 	int m_imgEntered;
 	int m_imgEnteredTentative;
 
-	//{{AFX_VIRTUAL(CDlgListCtrl)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	void UpdateControls();
-	void SwapEntries(
-			int oldIndex,
-			int newIndex);
-public:
-	void GetAllPartners(
-			std::set<tstring>& ioPartners,
-			std::set<tstring>& ioDogs) const;
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgListCtrl)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDblclkList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnKeydownList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnNew();
-	afx_msg void OnEdit();
-	afx_msg void OnDelete();
-	afx_msg void OnMoveUp();
-	afx_msg void OnMoveDown();
-	afx_msg void OnCreateTrial();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnItemSelected(wxListEvent& evt);
+	void OnDoubleClick(wxMouseEvent& evt);
+	void OnKeyDown(wxListEvent& evt);
+	void OnNew(wxCommandEvent& evt);
+	void OnEdit(wxCommandEvent& evt);
+	void OnDelete(wxCommandEvent& evt);
+	void OnMoveUp(wxCommandEvent& evt);
+	void OnMoveDown(wxCommandEvent& evt);
+	void OnCreateTrial(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

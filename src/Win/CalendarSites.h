@@ -33,10 +33,11 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
 
-class ARBConfig;
+#include "ARBTypes.h"
 class CAgilityBookDoc;
 class CCalendarSitesImpl;
 
@@ -52,7 +53,10 @@ public:
 	/**
 	 * Iterate through all the active sites and add the desired entries.
 	 */
-	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent = NULL);
+	bool FindEntries(
+			CAgilityBookDoc* pDoc,
+			ARBCalendarList& inCalendar,
+			wxWindow* pParent = NULL);
 
 private:
 	CCalendarSitesImpl* m_Impl;

@@ -33,60 +33,49 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#include "ARBDate.h"
 #include "ARBTypes.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
-#include "RichEditCtrl2.h"
+class CRichEditCtrl2;
+class CVenueComboBox;
+class wxDateEvent;
+class wxDatePickerCtrl;
 
-class CDlgTitle : public CDlgBaseDialog
+
+class CDlgTitle : public wxDialog
 {
 public:
 	CDlgTitle(
 			ARBConfig const& config,
 			ARBDogTitleList& titles,
 			ARBDogTitlePtr pTitle,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgTitle)
-	enum { IDD = IDD_TITLE };
-	CButton	m_ctrlEarned;
-	CDateTimeCtrl	m_ctrlDate;
-	CButton	m_ctrlHidden;
-	CVenueComboBox	m_ctrlVenues;
-	CComboBox2	m_ctrlTitles;
-	CButton	m_ctrlReceived;
-	CRichEditCtrl2	m_ctrlDesc;
-	//}}AFX_DATA
-	ARBConfig const& m_Config;
-	ARBDogTitleList& m_Titles;
-	ARBDogTitlePtr m_pTitle;
-	bool m_bInit;
-
-	//{{AFX_VIRTUAL(CDlgTitle)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	ARBConfigVenuePtr GetVenueData(int index) const;
 	ARBConfigTitlePtr GetTitleData(int index) const;
 	ARBDate GetDate();
-	void FillTitles();
+	void FillTitles(bool bIniting = false);
 	void FillTitleInfo();
 
-	//{{AFX_MSG(CDlgTitle)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnDtnDatetimechangeTitleDate(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnBnClickedEarned();
-	afx_msg void OnSelchangeVenues();
-	afx_msg void OnSelchangeTitles();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	ARBDogTitleList& m_Titles;
+	ARBDogTitlePtr m_pTitle;
+	wxDatePickerCtrl* m_ctrlDate;
+	wxCheckBox* m_ctrlReceived;
+	CVenueComboBox* m_ctrlVenues;
+	wxComboBox* m_ctrlTitles;
+	CRichEditCtrl2* m_ctrlDesc;
+	wxString m_Venue;
+	bool m_bEarned;
+	bool m_bHidden;
+	bool m_bReceived;
+
+	DECLARE_EVENT_TABLE()
+	void OnTitleDateChanged(wxDateEvent& evt);
+	void OnClickedEarned(wxCommandEvent& evt);
+	void OnSelchangeVenues(wxCommandEvent& evt);
+	void OnSelchangeTitles(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

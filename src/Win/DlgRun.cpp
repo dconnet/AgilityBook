@@ -31,33 +31,28 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgRun.h"
 
-#include "AgilityBookDoc.h"
-#include "AgilityBookOptions.h"
-#include "ARBDogRun.h"
-#include "DlgRunComments.h"
-#include "DlgRunCRCD.h"
-#include "DlgRunLink.h"
-#include "DlgRunReference.h"
-#include "DlgRunScore.h"
+//#include "AgilityBook.h"
+//#include "AgilityBookDoc.h"
+//#include "AgilityBookOptions.h"
+//#include "ARBDogRun.h"
+//#include "DlgRunComments.h"
+//#include "DlgRunCRCD.h"
+//#include "DlgRunLink.h"
+//#include "DlgRunReference.h"
+//#include "DlgRunScore.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgRun
-
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgRun")
+#if 0
 IMPLEMENT_DYNAMIC(CDlgRun, CDlgBaseSheet)
 
 
@@ -151,3 +146,4 @@ void CDlgRun::OnOK()
 		EndDialog(IDOK);
 	}
 }
+#endif

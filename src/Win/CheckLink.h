@@ -33,12 +33,12 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-20 DRC Ported to wxWidgets.
  * @li 2005-09-20 DRC Created
  */
 
 #include "ARBTypes.h"
-class CInternetSession;
 
 extern bool CheckLink(
-		CInternetSession& inSession,
-		tstring const& inLink);
+		tstring const& inLink,
+		wxWindow* parent = NULL);

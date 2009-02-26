@@ -31,232 +31,127 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-01-01 DRC Fix closing the connection - Close didn't reset null.
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  */
 
 #include "stdafx.h"
-#include "resource.h"
 #include "ReadHttp.h"
 
 #include "DlgAuthenticate.h"
+#include <wx/sstream.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
 
 CReadHttp::CReadHttp(
-		CString const& inURL,
-		CStringA& outData)
-	: m_URL(inURL)
+		wxString const& inURL,
+		std::string* outData)
+	: m_Valid(false)
+	, m_URL(inURL)
+	, m_Protocol()
+	, m_Host()
+	, m_Request()
 	, m_Data(outData)
-	, m_session(NULL)
-	, m_pServer(NULL)
-	, m_pFile(NULL)
-	, m_strServerName()
-	, m_strObject()
-	, m_nPort(0)
 {
-}
-
-
-CReadHttp::~CReadHttp()
-{
-	Close();
-}
-
-
-void CReadHttp::CloseFiles()
-{
-	if (m_pFile)
+	wxString url(inURL);
+	int pos = url.Find(wxT(':'));
+	if (wxNOT_FOUND != pos)
 	{
-		m_pFile->Close();
-		delete m_pFile;
-		m_pFile = NULL;
-	}
-	if (m_pServer)
-	{
-		m_pServer->Close();
-		delete m_pServer;
-		m_pServer = NULL;
-	}
-}
-
-
-void CReadHttp::Close()
-{
-	CloseFiles();
-	if (m_session)
-	{
-		m_session->Close();
-		delete m_session;
-		m_session = NULL;
-	}
-}
-
-
-// existing connect is for ftp
-static DWORD dwHttpRequestFlags = INTERNET_FLAG_RELOAD | INTERNET_FLAG_EXISTING_CONNECT | INTERNET_FLAG_NO_AUTO_REDIRECT;
-static const TCHAR szHeaders[] = _T("Accept: text\r\n");
-
-
-DWORD CReadHttp::Connect(CString& userName, CString& outErrMsg, CWnd* pParent)
-{
-	if (!m_session)
-		m_session = new CInternetSession(_T("my version"));
-	m_pServer = m_session->GetHttpConnection(m_strServerName, m_nPort);
-	if (!m_pServer)
-		return HTTP_STATUS_SERVER_ERROR;
-	m_pFile = m_pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
-			m_strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
-	if (!m_pFile)
-		return HTTP_STATUS_SERVER_ERROR;
-	m_pFile->AddRequestHeaders(szHeaders);
-	m_pFile->SendRequest();
-	DWORD dwRet;
-	m_pFile->QueryInfoStatusCode(dwRet);
-	while (dwRet == HTTP_STATUS_DENIED && m_pServer && m_pFile)
-	{
-		CloseFiles();
-		CDlgAuthenticate dlg(userName, pParent);
-		if (IDOK == dlg.DoModal())
+		m_Protocol = url(0, pos);
+		if (pos + 2 < (int)url.length() && url[pos+1] == wxT('/') && url[pos+2] == wxT('/'))
 		{
-			m_pServer = m_session->GetHttpConnection(m_strServerName, m_nPort, dlg.GetUserName(), dlg.GetPassword());
-			if (!m_pServer)
-				return HTTP_STATUS_SERVER_ERROR;
-			m_pFile = m_pServer->OpenRequest(CHttpConnection::HTTP_VERB_GET,
-					m_strObject, NULL, 1, NULL, NULL, dwHttpRequestFlags);
-			if (!m_pFile)
-				return HTTP_STATUS_SERVER_ERROR;
-			m_pFile->AddRequestHeaders(szHeaders);
-			m_pFile->SendRequest();
-			m_pFile->QueryInfoStatusCode(dwRet);
-		}
-		else
-		{
-			outErrMsg.LoadString(IDS_HTTP_ACCESS_DENIED);
+			url = url(pos + 3, url.length() - 2);
+			pos = url.Find(wxT('/'));
+			m_Host = url;
+			m_Request = wxT("/");
+			pos = m_Host.Find(wxT('/'));
+			if (wxNOT_FOUND != pos)
+			{
+				m_Request = m_Host(pos, m_Host.length());
+				m_Host = m_Host(0, pos);
+			}
+			m_Valid = true;
 		}
 	}
-	return dwRet;
 }
 
 
-bool CReadHttp::ReadHttpFile(CString& userName, CString& outErrMsg, CWnd* pParent)
+bool CReadHttp::ReadHttpFile(
+		wxString& userName,
+		wxString& outErrMsg,
+		wxWindow* pParent,
+		bool bCheckOnly)
 {
-	bool bOk = false;
+	if (m_Data)
+		m_Data->clear();
+	if (!m_Valid)
+	{
+		outErrMsg = _("IDS_HTTP_INVALID_URL");
+		outErrMsg += wxT(": ");
+		outErrMsg += m_URL;
+		return false;
+	}
 	outErrMsg.Empty();
-	m_Data.Empty();
-	CWaitCursor wait;
-	try
+	wxBusyCursor wait;
+
+	wxHTTP http;
+	http.SetHeader(wxT("Content-type"), wxT("text/html; charset=utf-8"));
+	http.SetTimeout(10); // 10 seconds of timeout instead of 10 minutes ...
+
+	// This will wait until the user connects to the internet. It is
+	// important in case of dialup (or ADSL) connections
+	int nTrys = 0;
+	while (!http.Connect(m_Host))
 	{
-		// Code is based on the MSDN 'TEAR' sample.
-		// Simply using OpenURL() is easier, but it doesn't handle redirection.
-		DWORD dwServiceType;
-		if (AfxParseURL(m_URL, dwServiceType, m_strServerName, m_strObject, m_nPort)
-		&& dwServiceType == INTERNET_SERVICE_HTTP)
+		if (++nTrys > 5)
 		{
-			DWORD dwRet = Connect(userName, outErrMsg, pParent);
+#pragma message PRAGMA_MESSAGE("TODO: error message")
+			outErrMsg = wxT("Time out");
+			return false;
+		}
+		wxSleep(5);
+	}
 
-			// If we've been redirected, re-parse. In theory SendRequest()
-			// should do this if NO_AUTO_REDIRECT is not specified. I haven't
-			// figured out how yet...
-			if (dwRet == HTTP_STATUS_MOVED
-			|| dwRet == HTTP_STATUS_REDIRECT
-			|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
-			{
-				CString strNewLocation;
-				m_pFile->QueryInfo(HTTP_QUERY_RAW_HEADERS_CRLF, strNewLocation);
-				int nPlace = strNewLocation.Find(_T("Location: "));
-				if (-1 == nPlace)
-				{
-					CString tmp;
-					tmp.LoadString(IDS_HTTP_INVALID_HEADER_QUERY);
-					outErrMsg += _T("\n") + tmp + _T(": ") + strNewLocation;
-					strNewLocation.Empty();
-				}
-				else
-				{
-					strNewLocation = strNewLocation.Mid(nPlace + 10);
-					nPlace = strNewLocation.Find('\n');
-					if (nPlace > 0)
-						strNewLocation = strNewLocation.Left(nPlace);
-					// Put what we're accessing back into the url.
-					strNewLocation += m_strObject;
-				}
-				// Now close the existing connections...
-				CloseFiles();
-				// And reopen them.
-				if (!strNewLocation.IsEmpty()
-				&& AfxParseURL(strNewLocation, dwServiceType, m_strServerName, m_strObject, m_nPort))
-				{
-					// try again at the new location
-					dwRet = Connect(userName, outErrMsg, pParent);
+	wxApp::IsMainLoopRunning(); // should return true
 
-					if (dwRet == HTTP_STATUS_MOVED
-					|| dwRet == HTTP_STATUS_REDIRECT
-					|| dwRet == HTTP_STATUS_REDIRECT_METHOD)
-					{
-						CString tmp;
-						tmp.LoadString(IDS_HTTP_URL_REDIRECTION);
-						outErrMsg += _T("\n") + tmp + _T(": ") + m_URL;
-						tmp.LoadString(IDS_HTTP_INVALID_URL2);
-						outErrMsg += _T("\n") + tmp + _T(": ") + strNewLocation;
-						CloseFiles();
-					}
-					else if (dwRet != HTTP_STATUS_OK)
-					{
-						CString msg;
-						msg.FormatMessage(IDS_HTTP_INVALID_URL_ERR, dwRet);
-						outErrMsg += _T("\n") + msg + _T(": ") + strNewLocation;
-						CloseFiles();
-					}
-				}
-				else
-				{
-					CString tmp;
-					tmp.LoadString(IDS_HTTP_INVALID_URL);
-					outErrMsg += _T("\n") + tmp + _T(": ") + strNewLocation;
-				}
-			}
-			else if (dwRet != HTTP_STATUS_OK)
-			{
-				CString msg;
-				msg.FormatMessage(IDS_HTTP_INVALID_URL_ERR, dwRet);
-				outErrMsg += _T("\n") + msg + _T(": ") + m_URL;
-				CloseFiles();
-			}
-			if (m_pFile)
-			{
-				char buffer[1025];
-				UINT nChars;
-				while (0 < (nChars = m_pFile->Read(buffer, sizeof(buffer)/sizeof(buffer[1])-1)))
-				{
-					buffer[nChars] = 0;
-					m_Data += buffer;
-				}
-				bOk = true;
-			}
-			CloseFiles();
+	wxInputStream* stream = http.GetInputStream(m_Request);
+	while (wxPROTO_NOERR != http.GetError())
+	{
+		if (stream)
+			delete stream;
+		http.Close();
+		if (bCheckOnly)
+			return false;
+		CDlgAuthenticate dlg(userName, pParent);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			http.SetUser(dlg.GetUserName());
+			http.SetPassword(dlg.GetPassword());
 		}
 		else
-		{
-			CString tmp;
-			tmp.LoadString(IDS_HTTP_INVALID_URL);
-			outErrMsg += _T("\n") + tmp + _T(": ") + m_URL;
-		}
+			return false;
+		while (!http.Connect(m_Host))
+			wxSleep(5);
+		stream = http.GetInputStream(m_Request);
 	}
-	catch (CInternetException* ex)
+
+	wxString res;
+	if (m_Data)
 	{
-		m_Data.Empty();
-		CString err;
-		ex->GetErrorMessage(err.GetBuffer(1024), 1023);
-		err.ReleaseBuffer();
-		ex->Delete();
-		outErrMsg += _T("\n") + err;
+		wxStringOutputStream outStream(&res);
+		stream->Read(outStream);
 	}
-	return bOk;
+	delete stream;
+	http.Close();
+	if (m_Data)
+		*m_Data = res.mb_str(wxMBConvUTF8());
+
+	return true;
+}
+
+
+bool CReadHttp::CheckHttpFile(wxWindow* pParent)
+{
+	wxString userName, outErrMsg;
+	return ReadHttpFile(userName, outErrMsg, pParent, true);
 }

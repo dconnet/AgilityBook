@@ -31,84 +31,56 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
-#include <set>
-#include "AgilityBook.h"
 #include "DlgFault.h"
 
-#include "AgilityBookDoc.h"
-#include "ARBConfig.h"
-#include "ARBConfigFault.h"
+#include "Validators.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgFault dialog
 
 CDlgFault::CDlgFault(
-		std::set<tstring>& faults,
-		LPCTSTR pFault,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgFault::IDD, pParent)
-	, m_ctrlFaults(false)
-	, m_setFaults(faults)
+		std::set<tstring>& inFaults,
+		wxString const& fault,
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_FAULT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	, m_Fault(fault)
 {
-	//{{AFX_DATA_INIT(CDlgFault)
-	m_Faults = _T("");
-	//}}AFX_DATA_INIT
-	if (pFault)
-		m_Faults = pFault;
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
-
-void CDlgFault::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgFault)
-	DDX_Control(pDX, IDC_FAULTS, m_ctrlFaults);
-	DDX_CBString(pDX, IDC_FAULTS, m_Faults);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgFault, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgFault)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgFault message handlers
-
-BOOL CDlgFault::OnInitDialog() 
-{
-	CDlgBaseDialog::OnInitDialog();
-	
-	for (std::set<tstring>::const_iterator iter = m_setFaults.begin(); iter != m_setFaults.end(); ++iter)
+	wxArrayString faults;
+	for (std::set<tstring>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)
 	{
-		int index = m_ctrlFaults.AddString((*iter).c_str());
-		if (m_Faults == (*iter).c_str())
-			m_ctrlFaults.SetCurSel(index);
+		faults.Add((*iter).c_str());
 	}
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
+	faults.Sort();
 
+	// Controls (these are done first to control tab order)
 
-void CDlgFault::OnOK() 
-{
-	if (!UpdateData(TRUE))
-		return;
-	m_Faults.TrimRight();
-	m_Faults.TrimLeft();
-	UpdateData(FALSE);
-	if (m_Faults.IsEmpty())
-		return;
-	CDlgBaseDialog::OnOK();
+	wxComboBox* comboBox = new wxComboBox(this, wxID_ANY, m_Fault,
+		wxDefaultPosition, wxDefaultSize,
+		faults,
+		wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Fault));
+	comboBox->SetHelpText(_("HIDC_FAULTS"));
+	comboBox->SetToolTip(_("HIDC_FAULTS"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(comboBox, 1, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz = GetSize();
+	SetSizeHints(sz, wxSize(-1, sz.y));
+	CenterOnParent();
+
+	comboBox->SetFocus();
 }

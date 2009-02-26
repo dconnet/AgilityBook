@@ -33,17 +33,36 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-18 DRC Separated options and filters into two dialogs.
  */
 
-#include "DlgBaseSheet.h"
-#include "DlgOptionsFilter.h"
-#include "DlgOptionsPrint.h"
-#include "DlgOptionsProgram.h"
-#include "DlgOptionsCalendar.h"
+//#include "DlgBaseSheet.h"
+//#include "DlgOptionsFilter.h"
+//#include "DlgOptionsPrint.h"
+//#include "DlgOptionsProgram.h"
+//#include "DlgOptionsCalendar.h"
 class CAgilityBookDoc;
 
+
+class CDlgOptions
+{
+public:
+	static int GetProgramPage()		{return 0;}
+	static int GetFilterPage()		{return 1;}
+	static int GetCalendarPage()	{return 2;}
+	static int GetPrintPage()		{return 3;}
+	CDlgOptions(
+			CAgilityBookDoc* pDoc,
+			wxWindow* pParentWnd = NULL,
+			int iSelectPage = 0) : m_pDoc(pDoc) {}
+	int ShowModal();
+private:
+	CAgilityBookDoc* m_pDoc;
+};
+
+#if 0
 class CDlgOptions : public CDlgBaseSheet
 {
 	DECLARE_DYNAMIC(CDlgOptions)
@@ -82,3 +101,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

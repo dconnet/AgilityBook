@@ -33,45 +33,33 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
-#include "RichEditCtrl2.h"
+#include "ARBTypes.h"
+class CRichEditCtrl2;
 
-class CDlgOtherPoint : public CDlgBaseDialog
+
+class CDlgOtherPoint : public wxDialog
 {
 public:
 	CDlgOtherPoint(
 			ARBConfig& config,
 			ARBDogRunOtherPointsPtr pRunOther,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgOtherPoint)
-	enum { IDD = IDD_OTHER_POINT };
-	CComboBox2	m_ctrlOtherPoints;
-	CRichEditCtrl2	m_ctrlDesc;
-	short	m_Points;
-	//}}AFX_DATA
+	void LoadPoints(ARBConfigOtherPointsPtr inOther);
+
 	ARBConfig& m_Config;
 	ARBDogRunOtherPointsPtr m_pRunOther;
+	wxChoice* m_ctrlOtherPoints;
+	CRichEditCtrl2* m_ctrlDesc;
+	short m_Points;
 
-	//{{AFX_VIRTUAL(CDlgOtherPoint)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	void LoadPoints(ARBConfigOtherPointsPtr inOther);
-	//{{AFX_MSG(CDlgOtherPoint)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeOtherpoints();
-	afx_msg void OnBnClickedOtherNew();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnSelchangeOtherpoints(wxCommandEvent& evt);
+	void OnOtherNew(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

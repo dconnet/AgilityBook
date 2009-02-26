@@ -52,17 +52,17 @@
 #define _STR(x)							#x
 #define STR(x)							_STR(x)
 
-#define ARB_VER_MAJOR					1
-#define ARB_VER_MINOR					10
-#define ARB_VER_DOT						10
-#define ARB_VER_FILEVER					12
+#define ARB_VER_MAJOR					2
+#define ARB_VER_MINOR					0
+#define ARB_VER_DOT						0
+#define ARB_VER_BUILD					0
 
 #define ARB_VER_STR_MAJOR				STR(ARB_VER_MAJOR)
 #define ARB_VER_STR_MINOR				STR(ARB_VER_MINOR)
 #define ARB_VER_STR_DOT					STR(ARB_VER_DOT)
-#define ARB_VER_STR_FILEVER				STR(ARB_VER_FILEVER)
+#define ARB_VER_STR_FILEVER				STR(ARB_VER_BUILD)
 
-#define ARB_VERSION						ARB_VER_MAJOR,ARB_VER_MINOR,ARB_VER_DOT,ARB_VER_FILEVER
+#define ARB_VERSION						ARB_VER_MAJOR,ARB_VER_MINOR,ARB_VER_DOT,ARB_VER_BUILD
 #define ARB_VERSION_STRING				ARB_VER_STR_MAJOR "." ARB_VER_STR_MINOR "." ARB_VER_STR_DOT "." ARB_VER_STR_FILEVER
 
 #define ARB_VERSION_CompanyName			"dcon Software"

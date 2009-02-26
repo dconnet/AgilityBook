@@ -33,19 +33,31 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-01-04 DRC Implemented import, except for trials/runs.
  * @li 2003-12-10 DRC Created
  */
 
-#include <vector>
-#include "AgilityBookOptions.h"
-#include "ComboBox.h"
-#include "DlgBasePropertyPage.h"
-#include "ListCtrl.h"
+//#include <vector>
+//#include "AgilityBookOptions.h"
+//#include "ComboBox.h"
+//#include "DlgBasePropertyPage.h"
+//#include "ListCtrl.h"
 class CAgilityBookDoc;
 class CWizard;
 
+
+class CWizardImport
+{
+public:
+	CWizardImport(
+			CWizard* pSheet,
+			CAgilityBookDoc* pDoc) {}
+	void ResetData() {}
+};
+
+#if 0
 class CWizardImport : public CDlgBasePropertyPage
 {
 	DECLARE_DYNAMIC(CWizardImport)
@@ -106,3 +118,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

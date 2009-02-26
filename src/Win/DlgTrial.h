@@ -33,80 +33,69 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2004-12-19 DRC Added Location/Club note information.
  */
 
+#include "ARBTypes.h"
 #include "ARBDogClub.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
-#include "ListCtrl.h"
-#include "NoteButton.h"
-#include "RichEditCtrl2.h"
 class CAgilityBookDoc;
+class CNoteButton;
+class CReportListCtrl;
+class CRichEditCtrl2;
+class wxListEvent;
+class wxTextUrlEvent;
 
-class CDlgTrial : public CDlgBaseDialog
+
+class CDlgTrial : public wxDialog
 {
 public:
 	CDlgTrial(
 			CAgilityBookDoc* pDoc,
 			ARBDogTrialPtr pTrial,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
+
 	bool RunsWereDeleted() const		{return m_bRunsDeleted;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgTrial)
-	enum { IDD = IDD_TRIAL };
-	CString	m_Location;
-	CComboBox2	m_ctrlLocation;
-	BOOL	m_Verified;
-	CString	m_Notes;
-	CNoteButton	m_ctrlLocationNotes;
-	CRichEditCtrl2	m_ctrlLocationInfo;
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlDelete;
-	CListCtrl2	m_ctrlClubs;
-	CNoteButton	m_ctrlClubNotes;
-	CRichEditCtrl2	m_ctrlClubInfo;
-	//}}AFX_DATA
+	wxString m_Location;
+	wxComboBox* m_ctrlLocation;
+	bool m_Verified;
+	wxString m_Notes;
+	CNoteButton* m_ctrlLocationNotes;
+	CRichEditCtrl2* m_ctrlLocationInfo;
+	wxButton* m_ctrlEdit;
+	wxButton* m_ctrlDelete;
+	CReportListCtrl* m_ctrlClubs;
+	CNoteButton* m_ctrlClubNotes;
+	CRichEditCtrl2* m_ctrlClubInfo;
 	CAgilityBookDoc* m_pDoc;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogClubList m_Clubs;
 	bool m_bRunsDeleted;
 
-	//{{AFX_VIRTUAL(CDlgTrial)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
 private:
-	ARBDogClubPtr GetClubData(int index) const;
+	ARBDogClubPtr GetClubData(long index) const;
 	void UpdateNotes(
 			bool bLocation,
 			bool bClub);
 	void ListLocations();
 	void ListClubs(ARBDogClubPtr* inClub = NULL);
+	void EditClub();
 
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgTrial)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeLocation();
-	afx_msg void OnKillfocusLocation();
-	afx_msg void OnBeginLabelEditClubs(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnEndLabelEditClubs(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedClubs(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDblclkClubs(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnKeydownClubs(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnLocationNotes();
-	afx_msg void OnClubNotes();
-	afx_msg void OnClubNew();
-	afx_msg void OnClubEdit();
-	afx_msg void OnClubDelete();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnSelchangeLocation(wxCommandEvent& evt);
+	void OnKillfocusLocation(wxFocusEvent& evt);
+	void OnItemSelectedClubs(wxListEvent& evt);
+	void OnDblclkClubs(wxMouseEvent& evt);
+	void OnKeydownClubs(wxListEvent& evt);
+	void OnLocationNotes(wxCommandEvent& evt);
+	void OnClubNotes(wxCommandEvent& evt);
+	void OnClubNew(wxCommandEvent& evt);
+	void OnClubEdit(wxCommandEvent& evt);
+	void OnClubDelete(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };

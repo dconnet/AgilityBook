@@ -31,69 +31,30 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-25 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
 
 #include "stdafx.h"
-#include "cal_usdaa.h"
 #include "../ARB/Element.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
 
-//
-//TODO: If this DLL is dynamically linked against the MFC DLLs,
-//		any functions exported from this DLL which call into
-//		MFC must have the AFX_MANAGE_STATE macro added at the
-//		very beginning of the function.
-//
-//		For example:
-//
-//		extern "C" BOOL PASCAL EXPORT ExportedFunction()
-//		{
-//			AFX_MANAGE_STATE(AfxGetStaticModuleState());
-//			// normal function body here
-//		}
-//
-//		It is very important that this macro appear in each
-//		function, prior to any calls into MFC.  This means that
-//		it must appear as the first statement within the 
-//		function, even before any object variable declarations
-//		as their constructors may generate calls into the MFC
-//		DLL.
-//
-//		Please see MFC Technical Notes 33 and 58 for additional
-//		details.
-//
+HINSTANCE ghInstance = NULL;
 
-// CcalusdaaApp
-
-BEGIN_MESSAGE_MAP(CcalusdaaApp, CWinApp)
-END_MESSAGE_MAP()
-
-// CcalusdaaApp construction
-
-CcalusdaaApp::CcalusdaaApp()
+BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
-}
-
-
-// The one and only CcalusdaaApp object
-CcalusdaaApp theApp;
-
-
-BOOL CcalusdaaApp::InitInstance()
-{
-	CWinApp::InitInstance();
-	tstring err;
-	Element::Initialize(err);
-	return TRUE;
-}
-
-
-int CcalusdaaApp::ExitInstance()
-{
-	Element::Terminate();
-	return CWinApp::ExitInstance();
+	switch (ul_reason_for_call)
+	{
+	case DLL_PROCESS_ATTACH:
+		{
+			ghInstance = (HINSTANCE)hModule;
+			tstring err;
+			Element::Initialize(err);
+		}
+		break;
+	case DLL_PROCESS_DETACH:
+		Element::Terminate();
+		break;
+	}
+    return TRUE;
 }

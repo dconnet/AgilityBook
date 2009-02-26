@@ -33,48 +33,32 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-09-21 DRC Created
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
+#include "ARBTypes.h"
 class CAgilityBookDoc;
+class wxDatePickerCtrl;
 
-class CDlgTraining : public CDlgBaseDialog
+
+class CDlgTraining : public wxDialog
 {
-// Construction
 public:
 	CDlgTraining(
 			ARBTrainingPtr pTraining,
 			CAgilityBookDoc* pDoc,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgTraining)
-	enum { IDD = IDD_TRAINING };
-	CTime	m_date;
-	CComboBox2	m_ctrlNames;
-	CString	m_Name;
-	CComboBox2	m_ctrlSubNames;
-	CString	m_SubName;
-	CString	m_Notes;
-	//}}AFX_DATA
 	ARBTrainingPtr m_pTraining;
 	CAgilityBookDoc* m_pDoc;
+	wxDatePickerCtrl* m_datePicker;
+	wxString m_Name;
+	wxString m_SubName;
+	wxString m_Notes;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgTraining)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgTraining)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
 };

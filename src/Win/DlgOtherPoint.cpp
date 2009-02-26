@@ -31,121 +31,161 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgOtherPoint.h"
 
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBDogRunOtherPoints.h"
 #include "DlgConfigOtherPoints.h"
-#include "ListData.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "RichEditCtrl2.h"
+#include "Validators.h"
+
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgOtherPoint dialog
+
+class COtherPointData : public wxClientData
+{
+public:
+	COtherPointData(ARBConfigOtherPointsPtr other)
+		: pOther(other)
+	{
+	}
+	ARBConfigOtherPointsPtr pOther;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+BEGIN_EVENT_TABLE(CDlgOtherPoint, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgOtherPoint::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgOtherPoint::CDlgOtherPoint(
 		ARBConfig& config,
 		ARBDogRunOtherPointsPtr pRunOther,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgOtherPoint::IDD, pParent)
-	, m_ctrlOtherPoints(true)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_OTHER_POINT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 	, m_Config(config)
 	, m_pRunOther(pRunOther)
+	, m_ctrlOtherPoints(NULL)
+	, m_ctrlDesc(NULL)
+	, m_Points(pRunOther->GetPoints())
 {
-	//{{AFX_DATA_INIT(CDlgOtherPoint)
-	m_Points = m_pRunOther->GetPoints();
-	//}}AFX_DATA_INIT
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	// Controls (these are done first to control tab order)
+
+	m_ctrlOtherPoints = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
+	m_ctrlOtherPoints->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgOtherPoint::OnSelchangeOtherpoints), NULL, this);
+	m_ctrlOtherPoints->SetHelpText(_("HIDC_OTHER_OTHERPOINTS"));
+	m_ctrlOtherPoints->SetToolTip(_("HIDC_OTHER_OTHERPOINTS"));
+
+	wxButton* ctrlNew = new wxButton(this, wxID_ANY,
+		_("IDC_OTHER_NEW"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOtherPoint::OnOtherNew), NULL, this);
+	ctrlNew->SetHelpText(_("HIDC_OTHER_NEW"));
+	ctrlNew->SetToolTip(_("HIDC_OTHER_NEW"));
+
+	m_ctrlDesc = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(210,120),
+		wxTE_READONLY);
+	m_ctrlDesc->SetHelpText(_("HIDC_OTHER_DESC"));
+	m_ctrlDesc->SetToolTip(_("HIDC_OTHER_DESC"));
+
+	wxStaticText* textPoints = new wxStaticText(this, wxID_ANY,
+		_("IDC_OTHER_POINTS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPoints->Wrap(-1);
+
+	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CGenericValidator(&m_Points));
+	ctrlPoints->SetHelpText(_("HIDC_OTHER_POINTS"));
+	ctrlPoints->SetToolTip(_("HIDC_OTHER_POINTS"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerItems = new wxBoxSizer(wxHORIZONTAL);
+	sizerItems->Add(m_ctrlOtherPoints, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+	sizerItems->Add(ctrlNew, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerItems, 0, wxEXPAND, 5);
+	bSizer->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPoints->Add(ctrlPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	m_ctrlOtherPoints->SetFocus();
+
+	LoadPoints(ARBConfigOtherPointsPtr());
 }
 
-
-void CDlgOtherPoint::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgOtherPoint)
-	DDX_Control(pDX, IDC_OTHER_OTHERPOINTS, m_ctrlOtherPoints);
-	DDX_Control(pDX, IDC_OTHER_DESC, m_ctrlDesc);
-	DDX_Text(pDX, IDC_OTHER_POINTS, m_Points);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgOtherPoint, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgOtherPoint)
-	ON_CBN_SELCHANGE(IDC_OTHER_OTHERPOINTS, OnSelchangeOtherpoints)
-	ON_BN_CLICKED(IDC_OTHER_NEW, OnBnClickedOtherNew)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
 
 void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
 {
-	m_ctrlOtherPoints.ResetContent();
-	m_ctrlDesc.SetWindowText(_T(""));
+	m_ctrlOtherPoints->Clear();
+	m_ctrlDesc->SetValue(wxT(""));
 	for (ARBConfigOtherPointsList::const_iterator iterOther = m_Config.GetOtherPoints().begin();
 		iterOther != m_Config.GetOtherPoints().end();
 		++iterOther)
 	{
 		ARBConfigOtherPointsPtr pOther = (*iterOther);
-		int index = m_ctrlOtherPoints.AddString(pOther->GetName().c_str());
-		m_ctrlOtherPoints.SetData(index,
-			new CListPtrData<ARBConfigOtherPointsPtr>(pOther));
+		int index = m_ctrlOtherPoints->Append(pOther->GetName().c_str());
+		m_ctrlOtherPoints->SetClientObject(index, new COtherPointData(pOther));
 		if ((!inOther && pOther->GetName() == m_pRunOther->GetName())
 		|| (inOther && *inOther == *pOther))
 		{
-			m_ctrlOtherPoints.SetCurSel(index);
-			CString str(pOther->GetDescription().c_str());
-			str.Replace(_T("\n"), _T("\r\n"));
-			m_ctrlDesc.SetWindowText(str);
+			m_ctrlOtherPoints->SetSelection(index);
+			m_ctrlDesc->SetValue(pOther->GetDescription().c_str());
 			m_Points = pOther->GetDefault();
-			UpdateData(FALSE);
+			TransferDataToWindow();
 		}
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOtherPoint message handlers
 
-BOOL CDlgOtherPoint::OnInitDialog() 
+void CDlgOtherPoint::OnSelchangeOtherpoints(wxCommandEvent& evt)
 {
-	CDlgBaseDialog::OnInitDialog();
-	LoadPoints(ARBConfigOtherPointsPtr());
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgOtherPoint::OnSelchangeOtherpoints() 
-{
-	int index = m_ctrlOtherPoints.GetCurSel();
-	if (CB_ERR != index)
+	int index = m_ctrlOtherPoints->GetSelection();
+	if (wxNOT_FOUND != index)
 	{
-		CListData* pData = m_ctrlOtherPoints.GetData(index);
-		ARBConfigOtherPointsPtr pOther = dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData)->GetData();
-		CString str(pOther->GetDescription().c_str());
-		str.Replace(_T("\n"), _T("\r\n"));
-		m_ctrlDesc.SetWindowText(str);
-		m_Points = pOther->GetDefault();
-		UpdateData(FALSE);
+		COtherPointData* pData = dynamic_cast<COtherPointData*>(m_ctrlOtherPoints->GetClientObject(index));
+		m_ctrlDesc->SetValue(pData->pOther->GetDescription().c_str());
+		m_Points = pData->pOther->GetDefault();
+		TransferDataToWindow();
 	}
 }
 
 
-void CDlgOtherPoint::OnBnClickedOtherNew()
+void CDlgOtherPoint::OnOtherNew(wxCommandEvent& evt)
 {
 	ARBConfigOtherPointsPtr pOther(ARBConfigOtherPoints::New());
 	CDlgConfigOtherPoints dlg(m_Config, pOther, this);
-	if (IDOK == dlg.DoModal())
+	if (wxID_OK == dlg.ShowModal())
 	{
 		if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 		{
@@ -155,19 +195,18 @@ void CDlgOtherPoint::OnBnClickedOtherNew()
 }
 
 
-void CDlgOtherPoint::OnOK() 
+void CDlgOtherPoint::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-	int index = m_ctrlOtherPoints.GetCurSel();
-	if (CB_ERR == index)
+
+	int index = m_ctrlOtherPoints->GetSelection();
+	if (wxNOT_FOUND == index)
 	{
-		GotoDlgCtrl(&m_ctrlOtherPoints);
 		return;
 	}
-	CListData* pData = m_ctrlOtherPoints.GetData(index);
-	ARBConfigOtherPointsPtr pOther = dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData)->GetData();
-	m_pRunOther->SetName(pOther->GetName());
+	COtherPointData* pData = dynamic_cast<COtherPointData*>(m_ctrlOtherPoints->GetClientObject(index));
+	m_pRunOther->SetName(pData->pOther->GetName());
 	m_pRunOther->SetPoints(m_Points);
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }

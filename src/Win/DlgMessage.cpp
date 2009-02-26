@@ -31,105 +31,39 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgMessage.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgMessage dialog
 
 CDlgMessage::CDlgMessage(
-		CString const& msg,
-		UINT caption,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgMessage::IDD, pParent)
-	, m_rWin(0,0,0,0)
-	, m_rDlg(0,0,0,0)
-	, m_rMsg(0,0,0,0)
-	, m_rClose(0,0,0,0)
+		wxString const& msg,
+		wxWindow* pParent,
+		wxString const& caption)
+	: wxDialog(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
-	if (0 != caption)
-		m_Caption.LoadString(caption);
-	//{{AFX_DATA_INIT(CDlgMessage)
-	m_Message = msg;
-	//}}AFX_DATA_INIT
-	m_Message.Replace(_T("\n"), _T("\r\n"));
-}
+	// Controls (these are done first to control tab order)
 
+	wxTextCtrl* textCtrl = new wxTextCtrl(this, wxID_ANY, msg,
+		wxDefaultPosition, wxSize(450, 300),
+		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
 
-void CDlgMessage::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgMessage)
-	DDX_Control(pDX, IDC_MESSAGE, m_ctrlMessage);
-	DDX_Text(pDX, IDC_MESSAGE, m_Message);
-	DDX_Control(pDX, IDOK, m_ctrlClose);
-	//}}AFX_DATA_MAP
-}
+	wxButton* btnClose = new wxButton(this, wxID_OK, _("IDD_MESSAGE_CLOSE"));
+	btnClose->SetDefault();
 
+	// Sizers (sizer creation is in same order as wxFormBuilder)
 
-BEGIN_MESSAGE_MAP(CDlgMessage, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgMessage)
-	ON_WM_GETMINMAXINFO()
-	ON_WM_SIZE()
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(textCtrl, 1, wxALL|wxEXPAND, 5);
+	bSizer->Add(btnClose, 0, wxALIGN_RIGHT|wxALL, 5);
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgMessage message handlers
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
 
-BOOL CDlgMessage::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	// Set the icon for this dialog.  The framework does this automatically
-	//  when the application's main window is not a dialog
-	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), TRUE);	// Set big icon
-	SetIcon(theApp.LoadIcon(IDR_MAINFRAME), FALSE);	// Set small icon
-
-	if (!m_Caption.IsEmpty())
-		SetWindowText(m_Caption);
-
-	GetWindowRect(m_rWin);
-	GetClientRect(m_rDlg);
-	m_ctrlMessage.GetWindowRect(m_rMsg);
-	ScreenToClient(m_rMsg);
-	m_ctrlClose.GetWindowRect(m_rClose);
-	ScreenToClient(m_rClose);
-
-	m_ctrlClose.SetFocus();
-	return FALSE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgMessage::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
-{
-	lpMMI->ptMinTrackSize.x = m_rWin.Width();
-	lpMMI->ptMinTrackSize.y = m_rWin.Height();
-	CDlgBaseDialog::OnGetMinMaxInfo(lpMMI);
-}
-
-
-void CDlgMessage::OnSize(UINT nType, int cx, int cy)
-{
-	CDlgBaseDialog::OnSize(nType, cx, cy);
-	if (::IsWindow(m_ctrlMessage.GetSafeHwnd()))
-	{
-		m_ctrlClose.SetWindowPos(NULL,
-			cx - (m_rDlg.Width() - m_rClose.left), cy - (m_rDlg.Height() - m_rClose.bottom) - m_rClose.Height(),
-			0, 0, SWP_NOZORDER | SWP_NOSIZE);
-		m_ctrlMessage.SetWindowPos(NULL,
-			0, 0,
-			cx - (m_rDlg.Width() - m_rMsg.Width()), cy - (m_rDlg.Height() - m_rMsg.Height()),
-			SWP_NOZORDER | SWP_NOMOVE);
-	}
+	btnClose->SetFocus();
 }

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-08 DRC Added validation during import to make sure names are
  *                    correct.
@@ -46,8 +47,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "WizardImport.h"
+
+#pragma message PRAGMA_MESSAGE("TODO: Implement CWizardImport")
+#if 0
+#include "AgilityBook.h"
 #include <fstream>
 
 #include "AgilityBookDoc.h"
@@ -416,7 +420,7 @@ void CWizardImport::UpdatePreview()
 /////////////////////////////////////////////////////////////////////////////
 // CWizardImport message handlers
 
-BOOL CWizardImport::OnInitDialog() 
+BOOL CWizardImport::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlPreview.SetExtendedStyle(m_ctrlPreview.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
@@ -452,7 +456,7 @@ BOOL CWizardImport::OnInitDialog()
 }
 
 
-BOOL CWizardImport::OnSetActive() 
+BOOL CWizardImport::OnSetActive()
 {
 	UpdateButtons();
 	BOOL rc = CDlgBasePropertyPage::OnSetActive();
@@ -515,7 +519,7 @@ static ARBTrainingPtr CreateLog(ARBTrainingPtr pLog)
 }
 
 
-BOOL CWizardImport::OnWizardFinish() 
+BOOL CWizardImport::OnWizardFinish()
 {
 	if (!UpdateData(TRUE))
 		return FALSE;
@@ -1233,7 +1237,7 @@ void CWizardImport::OnImportKillFocus()
 
 void CWizardImport::OnDeltaposImportRowSpin(
 		NMHDR* pNMHDR,
-		LRESULT* pResult) 
+		LRESULT* pResult)
 {
 	NM_UPDOWN* pNMUpDown = reinterpret_cast<NM_UPDOWN*>(pNMHDR);
 	// There is no "changed" msg, only the "changing".
@@ -1248,7 +1252,7 @@ void CWizardImport::OnDeltaposImportRowSpin(
 }
 
 
-void CWizardImport::OnImportDelim() 
+void CWizardImport::OnImportDelim()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -1257,7 +1261,7 @@ void CWizardImport::OnImportDelim()
 }
 
 
-void CWizardImport::OnImportAssign() 
+void CWizardImport::OnImportAssign()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -1274,7 +1278,7 @@ void CWizardImport::OnImportAssign()
 }
 
 
-void CWizardImport::OnImportFile() 
+void CWizardImport::OnImportFile()
 {
 	if (!UpdateData(TRUE))
 		return;
@@ -1335,3 +1339,4 @@ void CWizardImport::OnImportFile()
 		UpdatePreview();
 	}
 }
+#endif

@@ -31,121 +31,124 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Only modify existing club, don't add a new one (caller does).
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgClub.h"
 
 #include "AgilityBookDoc.h"
 #include "ARBDogClub.h"
+#include "Validators.h"
+#include "VenueComboBox.h"
+#include <set>
 
-using namespace std;
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+BEGIN_EVENT_TABLE(CDlgClub, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgClub::OnOk)
+END_EVENT_TABLE()
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgClub dialog
 
 // If pClub is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgClub::CDlgClub(
 		CAgilityBookDoc* pDoc,
-		ARBDogClubList& clubs,
+		ARBDogClubList& inClubs,
 		ARBDogClubPtr pClub,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgClub::IDD, pParent)
-	, m_ctrlClubs(false)
-	, m_ctrlVenues(false)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CLUB"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
 	, m_pDoc(pDoc)
-	, m_Clubs(clubs)
 	, m_pClub(pClub)
+	, m_ctrlClubs(NULL)
+	, m_ctrlVenues(NULL)
+	, m_Club()
+	, m_Venue()
 {
-	//{{AFX_DATA_INIT(CDlgClub)
-	m_Club = _T("");
-	//}}AFX_DATA_INIT
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
-
-void CDlgClub::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgClub)
-	DDX_Control(pDX, IDC_CLUB_CLUBS, m_ctrlClubs);
-	DDX_CBString(pDX, IDC_CLUB_CLUBS, m_Club);
-	DDX_Control(pDX, IDC_CLUB_VENUES, m_ctrlVenues);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgClub, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgClub)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgClub message handlers
-
-BOOL CDlgClub::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	set<tstring> clubs;
-	m_pDoc->Book().GetAllClubNames(clubs, true, true);
-	if (m_pClub && !m_pClub->GetName().empty())
-		clubs.insert(m_pClub->GetName());
-	for (set<tstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
-	{
-		m_ctrlClubs.AddString((*iter).c_str());
-	}
-	m_ctrlClubs.SetCurSel(-1);
-
-	m_ctrlVenues.Initialize(m_pDoc->Book().GetConfig().GetVenues(), tstring());
-	m_ctrlVenues.SetCurSel(-1);
 	if (m_pClub)
 	{
 		m_Club = m_pClub->GetName().c_str();
-		int index = m_ctrlVenues.FindStringExact(0, m_pClub->GetVenue().c_str());
-		if (0 <= index)
-			m_ctrlVenues.SetCurSel(index);
-		UpdateData(FALSE);
+		m_Venue = m_pClub->GetVenue().c_str();
 	}
+	std::set<tstring> clubnames;
+	for (ARBDogClubList::const_iterator iClub = inClubs.begin(); iClub != inClubs.end(); ++iClub)
+		clubnames.insert((*iClub)->GetName());
+	m_pDoc->Book().GetAllClubNames(clubnames, true, true);
+	if (m_pClub && !m_pClub->GetName().empty())
+		clubnames.insert(m_pClub->GetName());
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	wxArrayString clubs;
+	for (std::set<tstring>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
+	{
+		clubs.Add((*iter).c_str());
+	}
+	clubs.Sort();
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_CLUB_CLUBS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
+
+	m_ctrlClubs = new wxComboBox(this, wxID_ANY, m_Club,
+		wxDefaultPosition, wxDefaultSize,
+		clubs, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Club));
+	m_ctrlClubs->SetHelpText(_("HIDC_CLUB_CLUBS"));
+	m_ctrlClubs->SetToolTip(_("HIDC_CLUB_CLUBS"));
+
+	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
+		_("IDC_CLUB_VENUES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textVenue->Wrap(-1);
+
+	m_ctrlVenues = new CVenueComboBox(this,
+		m_pDoc->Book().GetConfig().GetVenues(), m_Venue, false,
+		wxGenericValidator(&m_Venue));
+	m_ctrlVenues->SetHelpText(_("HIDC_CLUB_VENUES"));
+	m_ctrlVenues->SetToolTip(_("HIDC_CLUB_VENUES"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(m_ctrlClubs, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerVenue->Add(m_ctrlVenues, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizerVenue, 0, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz(GetSize());
+	SetSizeHints(sz, wxSize(-1, sz.y));
+	CenterOnParent();
+
+	m_ctrlClubs->SetFocus();
 }
 
 
-void CDlgClub::OnOK()
+void CDlgClub::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-
-	m_Club.TrimRight();
-	m_Club.TrimLeft();
-	if (m_Club.IsEmpty())
-	{
-		GotoDlgCtrl(&m_ctrlClubs);
-		return;
-	}
-
-	int index = m_ctrlVenues.GetCurSel();
-	if (CB_ERR == index)
-	{
-		GotoDlgCtrl(&m_ctrlVenues);
-		return;
-	}
-	m_ctrlVenues.GetLBText(index, m_Venue);
-
 	if (m_pClub)
 	{
-		m_pClub->SetName((LPCTSTR)m_Club);
-		m_pClub->SetVenue((LPCTSTR)m_Venue);
+		m_pClub->SetName(m_Club.c_str());
+		m_pClub->SetVenue(m_Venue.c_str());
 	}
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }

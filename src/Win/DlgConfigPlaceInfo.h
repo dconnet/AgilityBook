@@ -33,42 +33,27 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-04 DRC Created.
  */
 
-#include "DlgBaseDialog.h"
+#include <vector>
 
-class CDlgConfigPlaceInfo : public CDlgBaseDialog
+
+class CDlgConfigPlaceInfo : public wxDialog
 {
 public:
 	CDlgConfigPlaceInfo(
 			std::vector<short> const& inExistingPlaces,
 			short inPlace,
 			double inValue,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
+
 	short GetPlace() const		{return m_Place;}
 	double GetValue() const		{return m_Value;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigPlaceInfo)
-	enum { IDD = IDD_CONFIG_PLACEINFO };
-	short	m_Place;
-	double	m_Value;
-	//}}AFX_DATA
-	short	m_origPlace;
-	double	m_origValue;
-	std::vector<short> const& m_ExistingPlaces;
-
-	//{{AFX_VIRTUAL(CDlgConfigPlaceInfo)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgConfigPlaceInfo)
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	short m_Place;
+	double m_Value;
+	double m_origValue;
 };

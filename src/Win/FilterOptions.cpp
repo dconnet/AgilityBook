@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2006-03-02 DRC Separated filter options from main options.
  */
 
@@ -44,54 +45,47 @@
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
 #include "AgilityBookOptions.h"
-#include "DlgAssignColumns.h"
+#include <wx/config.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
 
 static void FilterVenue(
-		CString inVenue,
+		wxString inVenue,
 		std::vector<CVenueFilter>& venues)
 {
 	if (!inVenue.IsEmpty())
 	{
-		CStringArray raw;
+		std::vector<wxString> raw;
 		int pos;
 		while (0 <= (pos = inVenue.Find(':')))
 		{
-			raw.Add(inVenue.Left(pos));
+			raw.push_back(inVenue.Left(pos));
 			inVenue = inVenue.Mid(pos+1);
 		}
-		raw.Add(inVenue);
-		for (int i = 0; i < raw.GetSize(); ++i)
+		raw.push_back(inVenue);
+		for (size_t i = 0; i < raw.size(); ++i)
 		{
 			inVenue = raw[i];
-			CStringArray rawFilter;
+			std::vector<wxString> rawFilter;
 			while (0 <= (pos = inVenue.Find('/')))
 			{
-				rawFilter.Add(inVenue.Left(pos));
+				rawFilter.push_back(inVenue.Left(pos));
 				inVenue = inVenue.Mid(pos+1);
 			}
-			rawFilter.Add(inVenue);
-			if (0 < rawFilter.GetSize())
+			rawFilter.push_back(inVenue);
+			if (0 < rawFilter.size())
 			{
 				CVenueFilter filter;
-				switch (rawFilter.GetSize())
+				switch (rawFilter.size())
 				{
 				default:
 				case 3:
-					filter.level = (LPCTSTR)rawFilter[2];
+					filter.level = rawFilter[2].c_str();
 					// fallthru
 				case 2:
-					filter.division = (LPCTSTR)rawFilter[1];
+					filter.division = rawFilter[1].c_str();
 					// fallthru
 				case 1:
-					filter.venue = (LPCTSTR)rawFilter[0];
+					filter.venue = rawFilter[0].c_str();
 				}
 				venues.push_back(filter);
 			}
@@ -100,43 +94,43 @@ static void FilterVenue(
 }
 
 
-static CString FilterVenue(std::vector<CVenueFilter> const& venues)
+static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 {
-	CString venue;
+	wxString venue;
 	for (std::vector<CVenueFilter>::const_iterator iter = venues.begin();
 		iter != venues.end();
 		++iter)
 	{
 		if (!venue.IsEmpty())
-			venue += ':';
-		venue += (*iter).venue.c_str();
-		venue += _T("/");
-		venue += (*iter).division.c_str();
-		venue += _T("/");
-		venue += (*iter).level.c_str();
+			venue += wxT(':');
+		venue += (*iter).venue;
+		venue += wxT("/");
+		venue += (*iter).division;
+		venue += wxT("/");
+		venue += (*iter).level;
 	}
 	return venue;
 }
 
 
-static void TrainingNames(CString inNames, std::set<tstring>& outNames)
+static void TrainingNames(wxString inNames, std::set<tstring>& outNames)
 {
 	if (!inNames.IsEmpty())
 	{
 		int pos;
 		while (0 <= (pos = inNames.Find(':')))
 		{
-			outNames.insert((LPCTSTR)inNames.Left(pos));
+			outNames.insert(inNames.Left(pos).c_str());
 			inNames = inNames.Mid(pos+1);
 		}
-		outNames.insert((LPCTSTR)inNames);
+		outNames.insert(inNames.c_str());
 	}
 }
 
 
-static CString TrainingNames(std::set<tstring> const& inNames)
+static wxString TrainingNames(std::set<tstring> const& inNames)
 {
-	CString names;
+	wxString names;
 	for (std::set<tstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
 		if (!names.IsEmpty())
@@ -163,32 +157,31 @@ CFilterOptions::CFilterOptions()
 
 void CFilterOptions::Load()
 {
-	CString val;
+	wxString val;
 
-	m_calView.m_Filter = static_cast<unsigned short>(theApp.GetProfileInt(_T("Calendar"), _T("Filter"), CCalendarViewFilter::eViewNormal));
-
-	m_bAllDates = theApp.GetProfileInt(_T("Common"), _T("ViewAllDates"), 1) == 1;
-	m_bStartDate = theApp.GetProfileInt(_T("Common"), _T("StartFilter"), 0) == 1;
+	m_calView.m_Filter = static_cast<CCalendarViewFilter::eViewFilter>(wxConfig::Get()->Read(wxT("Calendar/Filter"), static_cast<long>(CCalendarViewFilter::eViewNormal)));
+	wxConfig::Get()->Read(wxT("Common/ViewAllDates"), &m_bAllDates, true);
+	wxConfig::Get()->Read(wxT("Common/StartFilter"), &m_bStartDate, false);
 	m_dateStartDate = ARBDate::Today();
-	m_dateStartDate.SetJulianDay(theApp.GetProfileInt(_T("Common"), _T("StartFilterJDay"), m_dateStartDate.GetJulianDay()));
-	m_bEndDate = theApp.GetProfileInt(_T("Common"), _T("EndFilter"), 0) == 1;
+	m_dateStartDate.SetJulianDay(wxConfig::Get()->Read(wxT("Common/StartFilterJDay"), m_dateStartDate.GetJulianDay()));
+	wxConfig::Get()->Read(wxT("Common/EndFilter"), &m_bEndDate, false);
 	m_dateEndDate = ARBDate::Today();
-	m_dateEndDate.SetJulianDay(theApp.GetProfileInt(_T("Common"), _T("EndFilterJDay"), m_dateEndDate.GetJulianDay()));
+	m_dateEndDate.SetJulianDay(wxConfig::Get()->Read(wxT("Common/EndFilterJDay"), m_dateEndDate.GetJulianDay()));
 
-	m_bViewAllVenues = theApp.GetProfileInt(_T("Common"), _T("ViewAllVenues"), 1) == 1;
-	val = theApp.GetProfileString(_T("Common"), _T("FilterVenue"), _T(""));
+	wxConfig::Get()->Read(wxT("Common/ViewAllVenues"), &m_bViewAllVenues, true);
+	val = wxConfig::Get()->Read(wxT("Common/FilterVenue"), wxEmptyString);
 	m_venueFilter.clear();
 	FilterVenue(val, m_venueFilter);
 
-	m_eRuns = static_cast<eViewRuns>(theApp.GetProfileInt(_T("Common"), _T("ViewRuns"), 0));
+	m_eRuns = static_cast<eViewRuns>(wxConfig::Get()->Read(wxT("Common/ViewRuns"), 0L));
 
-	m_bViewAllNames = theApp.GetProfileInt(_T("Common"), _T("ViewAllNames"), 1) == 1;
-	val = theApp.GetProfileString(_T("Common"), _T("FilterTrainingNames"), _T(""));
+	wxConfig::Get()->Read(wxT("Common/ViewAllNames"), &m_bViewAllNames, true);
+	val = wxConfig::Get()->Read(wxT("Common/FilterTrainingNames"), wxEmptyString);
 	m_nameFilter.clear();
 	TrainingNames(val, m_nameFilter);
 
-	m_curFilter = (LPCTSTR)theApp.GetProfileString(_T("Common"), _T("CurrentFilter"), _T(""));
-	m_nFilters = theApp.GetProfileInt(_T("Common"), _T("numFilters"), 0);
+	m_curFilter = wxConfig::Get()->Read(wxT("Common/CurrentFilter"), wxEmptyString).c_str();
+	m_nFilters = wxConfig::Get()->Read(wxT("Common/numFilters"), 0L);
 	m_filters.clear();
 	for (int idx = 0; idx < m_nFilters; ++idx)
 	{
@@ -200,7 +193,7 @@ void CFilterOptions::Load()
 
 void CFilterOptions::Save()
 {
-	CString val;
+	wxString val;
 
 	if (!m_curFilter.empty())
 	{
@@ -225,33 +218,33 @@ void CFilterOptions::Save()
 		}
 	}
 
-	theApp.WriteProfileInt(_T("Calendar"), _T("Filter"), m_calView.m_Filter);
+	wxConfig::Get()->Write(wxT("Calendar/Filter"), static_cast<long>(m_calView.m_Filter));
 
-	theApp.WriteProfileInt(_T("Common"), _T("ViewAllDates"), m_bAllDates ? 1 : 0);
-	theApp.WriteProfileInt(_T("Common"), _T("StartFilter"), m_bStartDate ? 1 : 0);
-	theApp.WriteProfileInt(_T("Common"), _T("StartFilterJDay"), m_dateStartDate.GetJulianDay());
-	theApp.WriteProfileInt(_T("Common"), _T("EndFilter"), m_bEndDate ? 1 : 0);
-	theApp.WriteProfileInt(_T("Common"), _T("EndFilterJDay"), m_dateEndDate.GetJulianDay());
+	wxConfig::Get()->Write(wxT("Common/ViewAllDates"), m_bAllDates);
+	wxConfig::Get()->Write(wxT("Common/StartFilter"), m_bStartDate);
+	wxConfig::Get()->Write(wxT("Common/StartFilterJDay"), m_dateStartDate.GetJulianDay());
+	wxConfig::Get()->Write(wxT("Common/EndFilter"), m_bEndDate);
+	wxConfig::Get()->Write(wxT("Common/EndFilterJDay"), m_dateEndDate.GetJulianDay());
 
-	theApp.WriteProfileInt(_T("Common"), _T("ViewAllVenues"), m_bViewAllVenues ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/ViewAllVenues"), m_bViewAllVenues);
 	val = FilterVenue(m_venueFilter);
-	theApp.WriteProfileString(_T("Common"), _T("FilterVenue"), val);
+	wxConfig::Get()->Write(wxT("Common/FilterVenue"), val);
 
-	theApp.WriteProfileInt(_T("Common"), _T("ViewRuns"), static_cast<int>(m_eRuns));
+	wxConfig::Get()->Write(wxT("Common/ViewRuns"), static_cast<long>(m_eRuns));
 
-	theApp.WriteProfileInt(_T("Common"), _T("ViewAllNames"), m_bViewAllNames ? 1 : 0);
+	wxConfig::Get()->Write(wxT("Common/ViewAllNames"), m_bViewAllNames);
 	val = TrainingNames(m_nameFilter);
-	theApp.WriteProfileString(_T("Common"), _T("FilterTrainingNames"), val);
+	wxConfig::Get()->Write(wxT("Common/FilterTrainingNames"), val);
 
-	theApp.WriteProfileString(_T("Common"), _T("CurrentFilter"), m_curFilter.c_str());
+	wxConfig::Get()->Write(wxT("Common/CurrentFilter"), m_curFilter.c_str());
 
 	int nFilters = static_cast<int>(m_filters.size());
 	if (nFilters < m_nFilters)
 	{
 		for (int n = nFilters; n < m_nFilters; ++n)
 		{
-			val.Format(_T("Filter%d"), n);
-			theApp.WriteProfileString(val, NULL, NULL);
+			val = wxString::Format(wxT("Filter%d"), n);
+			wxConfig::Get()->DeleteGroup(val);
 		}
 	}
 	int index = 0;
@@ -262,7 +255,7 @@ void CFilterOptions::Save()
 		(*i).Save(index);
 	}
 	m_nFilters = nFilters;
-	theApp.WriteProfileInt(_T("Common"), _T("numFilters"), m_nFilters);
+	wxConfig::Get()->Write(wxT("Common/numFilters"), m_nFilters);
 }
 
 
@@ -702,23 +695,22 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 		, bViewAllNames(true)
 		, nameFilter()
 {
-	CString section;
+	wxString section = wxString::Format(wxT("Filter%d/"), index);
 
-	section.Format(_T("Filter%d"), index);
-	filterName = (LPCTSTR)theApp.GetProfileString(section, _T("Name"), filterName.c_str());
-	calView.m_Filter = static_cast<unsigned short>(theApp.GetProfileInt(section, _T("Cal"), calView.m_Filter));
-	bAllDates = theApp.GetProfileInt(section, _T("AllDates"), bAllDates ? 1 : 0) == 1;
-	bStartDate = theApp.GetProfileInt(section, _T("Start"), bStartDate ? 1 : 0) == 1;
-	dateStartDate.SetJulianDay(theApp.GetProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay()));
-	bEndDate = theApp.GetProfileInt(section, _T("End"), bEndDate ? 1 : 0) == 1;
-	dateEndDate.SetJulianDay(theApp.GetProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay()));
-	bViewAllVenues = theApp.GetProfileInt(section, _T("AllVenues"), bViewAllVenues ? 1 : 0) == 1;
-	CString names = theApp.GetProfileString(section, _T("FilterVenue"), _T(""));
+	filterName = wxConfig::Get()->Read(section + wxT("Name"), filterName.c_str()).c_str();
+	calView.m_Filter = static_cast<CCalendarViewFilter::eViewFilter>(wxConfig::Get()->Read(section + wxT("Cal"), static_cast<long>(calView.m_Filter)));
+	wxConfig::Get()->Read(section + wxT("AllDates"), &bAllDates, bAllDates);
+	wxConfig::Get()->Read(section + wxT("Start"), &bStartDate, bStartDate);
+	dateStartDate.SetJulianDay(wxConfig::Get()->Read(section + wxT("StartJDay"), dateStartDate.GetJulianDay()));
+	wxConfig::Get()->Read(section + wxT("End"), &bEndDate, bEndDate);
+	dateEndDate.SetJulianDay(wxConfig::Get()->Read(section + wxT("EndJDay"), dateEndDate.GetJulianDay()));
+	wxConfig::Get()->Read(section + wxT("AllVenues"), &bViewAllVenues, bViewAllVenues);
+	wxString names = wxConfig::Get()->Read(section + wxT("FilterVenue"), wxEmptyString);
 	venueFilter.clear();
 	FilterVenue(names, venueFilter);
-	eRuns = static_cast<CFilterOptions::eViewRuns>(theApp.GetProfileInt(section, _T("ViewRuns"), eRuns));
-	bViewAllNames = theApp.GetProfileInt(section, _T("AllNames"), bViewAllNames ? 1 : 0) == 1;
-	names = theApp.GetProfileString(section, _T("FilterNames"), _T(""));
+	eRuns = static_cast<CFilterOptions::eViewRuns>(wxConfig::Get()->Read(section + wxT("ViewRuns"), static_cast<long>(eRuns)));
+	wxConfig::Get()->Read(section + wxT("AllNames"), &bViewAllNames, bViewAllNames);
+	names = wxConfig::Get()->Read(section + wxT("FilterNames"), wxEmptyString);
 	nameFilter.clear();
 	TrainingNames(names, nameFilter);
 }
@@ -766,22 +758,21 @@ CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 
 bool CFilterOptions::CFilterOptionData::Save(int index)
 {
-	CString section;
-	section.Format(_T("Filter%d"), index);
+	wxString section = wxString::Format(wxT("Filter%d/"), index);
 
-	theApp.WriteProfileString(section, _T("Name"), filterName.c_str());
-	theApp.WriteProfileInt(section, _T("Cal"), calView.m_Filter);
-	theApp.WriteProfileInt(section, _T("AllDates"), bAllDates ? 1 : 0);
-	theApp.WriteProfileInt(section, _T("Start"), bStartDate ? 1 : 0);
-	theApp.WriteProfileInt(section, _T("StartJDay"), dateStartDate.GetJulianDay());
-	theApp.WriteProfileInt(section, _T("End"), bEndDate ? 1 : 0);
-	theApp.WriteProfileInt(section, _T("EndJDay"), dateEndDate.GetJulianDay());
-	theApp.WriteProfileInt(section, _T("AllVenues"), bViewAllVenues ? 1 : 0);
-	CString name = FilterVenue(venueFilter);
-	theApp.WriteProfileString(section, _T("FilterVenue"), name);
-	theApp.WriteProfileInt(section, _T("ViewRuns"), static_cast<int>(eRuns));
-	theApp.WriteProfileInt(section, _T("AllNames"), bViewAllNames ? 1 : 0);
+	wxConfig::Get()->Write(section + wxT("Name"), filterName.c_str());
+	wxConfig::Get()->Write(section + wxT("Cal"), static_cast<long>(calView.m_Filter));
+	wxConfig::Get()->Write(section + wxT("AllDates"), bAllDates);
+	wxConfig::Get()->Write(section + wxT("Start"), bStartDate);
+	wxConfig::Get()->Write(section + wxT("StartJDay"), dateStartDate.GetJulianDay());
+	wxConfig::Get()->Write(section + wxT("End"), bEndDate);
+	wxConfig::Get()->Write(section + wxT("EndJDay"), dateEndDate.GetJulianDay());
+	wxConfig::Get()->Write(section + wxT("AllVenues"), bViewAllVenues);
+	wxString name = FilterVenue(venueFilter);
+	wxConfig::Get()->Write(section + wxT("FilterVenue"), name);
+	wxConfig::Get()->Write(section + wxT("ViewRuns"), static_cast<long>(eRuns));
+	wxConfig::Get()->Write(section + wxT("AllNames"), bViewAllNames);
 	name = TrainingNames(nameFilter);
-	theApp.WriteProfileString(section, _T("FilterNames"), name);
+	wxConfig::Get()->Write(section + wxT("FilterNames"), name);
 	return true;
 }

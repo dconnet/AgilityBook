@@ -31,132 +31,155 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-06-29 DRC Added Note to regnum.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgRegNum.h"
 
 #include "ARBConfig.h"
 #include "ARBDogRegNum.h"
+#include "Validators.h"
+#include "VenueComboBox.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgRegNum dialog
 
 // If pRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgRegNum::CDlgRegNum(
 		ARBConfig const& config,
 		ARBDogRegNumList& regnums,
 		ARBDogRegNumPtr pRegNum,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgRegNum::IDD, pParent)
-	, m_ctrlVenues(false)
-	, m_Config(config)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_REG_NUM"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_RegNums(regnums)
 	, m_pRegNum(pRegNum)
+	, m_Venue()
+	, m_RegNum()
+	, m_Height()
+	, m_bReceived(false)
+	, m_Note()
 {
-	//{{AFX_DATA_INIT(CDlgRegNum)
-	m_RegNum = _T("");
-	m_Height = _T("");
-	m_bReceived = FALSE;
-	m_Note = _T("");
-	//}}AFX_DATA_INIT
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
-
-void CDlgRegNum::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgRegNum)
-	DDX_Control(pDX, IDC_REGNUM_VENUES, m_ctrlVenues);
-	DDX_Text(pDX, IDC_REGNUM_REG_NUM, m_RegNum);
-	DDX_Text(pDX, IDC_REGNUM_HEIGHT, m_Height);
-	DDX_Check(pDX, IDC_REGNUM_RECEIVED, m_bReceived);
-	DDX_Text(pDX, IDC_REGNUM_NOTE, m_Note);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgRegNum, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgRegNum)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgRegNum message handlers
-
-BOOL CDlgRegNum::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	m_ctrlVenues.Initialize(m_Config.GetVenues(), tstring());
 	if (m_pRegNum)
 	{
+		m_Venue = m_pRegNum->GetVenue().c_str();
 		m_RegNum = m_pRegNum->GetNumber().c_str();
-		int index = m_ctrlVenues.FindStringExact(0, m_pRegNum->GetVenue().c_str());
-		if (0 <= index)
-			m_ctrlVenues.SetCurSel(index);
 		m_Height = m_pRegNum->GetHeight().c_str();
-		m_bReceived = m_pRegNum->GetReceived() ? TRUE : FALSE;
+		m_bReceived = m_pRegNum->GetReceived();
 		m_Note = m_pRegNum->GetNote().c_str();
-		m_Note.Replace(_T("\n"), _T("\r\n"));
-		UpdateData(FALSE);
 	}
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
+		_("IDC_REGNUM_VENUES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textVenue->Wrap(-1);
+
+	CVenueComboBox* ctrlVenues = new CVenueComboBox(this,
+		config.GetVenues(), m_Venue, false,
+		CTrimValidator(&m_Venue));
+	ctrlVenues->SetHelpText(_("HIDC_REGNUM_VENUES"));
+	ctrlVenues->SetToolTip(_("HIDC_REGNUM_VENUES"));
+
+	wxStaticText* textRegNum = new wxStaticText(this, wxID_ANY,
+		_("IDC_REGNUM_REG_NUM"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textRegNum->Wrap(-1);
+
+	wxTextCtrl* ctrlRegNum = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_RegNum));
+	ctrlRegNum->SetHelpText(_("HIDC_REGNUM_REG_NUM"));
+	ctrlRegNum->SetToolTip(_("HIDC_REGNUM_REG_NUM"));
+
+	wxStaticText* textHeight = new wxStaticText(this, wxID_ANY,
+		_("IDC_REGNUM_HEIGHT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textHeight->Wrap(-1);
+
+	wxTextCtrl* ctrlHeight = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlHeight->SetHelpText(_("HIDC_REGNUM_HEIGHT"));
+	ctrlHeight->SetToolTip(_("HIDC_REGNUM_HEIGHT"));
+
+	wxCheckBox* checkReceived = new wxCheckBox(this, wxID_ANY,
+		_("IDC_REGNUM_RECEIVED"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bReceived));
+	checkReceived->SetHelpText(_("HIDC_REGNUM_RECEIVED"));
+	checkReceived->SetToolTip(_("HIDC_REGNUM_RECEIVED"));
+
+	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(350, 100),
+		wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Note, TRIMVALIDATOR_TRIM_RIGHT));
+	ctrlDesc->SetHelpText(_("HIDC_REGNUM_NOTE"));
+	ctrlDesc->SetToolTip(_("HIDC_REGNUM_NOTE"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerVenue->Add(ctrlVenues, 0, wxALL, 5);
+
+	bSizer->Add(sizerVenue, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerRegNum = new wxBoxSizer(wxHORIZONTAL);
+	sizerRegNum->Add(textRegNum, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerRegNum->Add(ctrlRegNum, 0, wxALL, 5);
+
+	bSizer->Add(sizerRegNum, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerHeight = new wxBoxSizer(wxHORIZONTAL);
+	sizerHeight->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerHeight->Add(ctrlHeight, 0, wxALL, 5);
+
+	bSizer->Add(sizerHeight, 0, wxEXPAND, 5);
+	bSizer->Add(checkReceived, 0, wxALL, 5);
+	bSizer->Add(ctrlDesc, 1, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+	
+	ctrlVenues->SetFocus();
 }
 
 
-void CDlgRegNum::OnOK()
+void CDlgRegNum::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-	m_RegNum.TrimRight();
-	m_RegNum.TrimLeft();
-	m_Height.TrimRight();
-	m_Height.TrimLeft();
-	m_Note.TrimRight();
-	m_Note.TrimLeft();
 
-	int index = m_ctrlVenues.GetCurSel();
-	if (CB_ERR == index)
-	{
-		GotoDlgCtrl(&m_ctrlVenues);
-		return;
-	}
-	CString venue;
-	m_ctrlVenues.GetLBText(index, venue);
-	if (m_RegNum.IsEmpty())
-	{
-		GotoDlgCtrl(GetDlgItem(IDC_REGNUM_REG_NUM));
-		return;
-	}
-	m_Note.Replace(_T("\r\n"), _T("\n"));
 	if (m_pRegNum)
 	{
-		m_pRegNum->SetNumber((LPCTSTR)m_RegNum);
-		m_pRegNum->SetVenue((LPCTSTR)venue);
-		m_pRegNum->SetHeight((LPCTSTR)m_Height);
-		m_pRegNum->SetReceived(m_bReceived ? true : false);
-		m_pRegNum->SetNote((LPCTSTR)m_Note);
+		m_pRegNum->SetNumber(m_RegNum.c_str());
+		m_pRegNum->SetVenue(m_Venue.c_str());
+		m_pRegNum->SetHeight(m_Height.c_str());
+		m_pRegNum->SetReceived(m_bReceived);
+		m_pRegNum->SetNote(m_Note.c_str());
 	}
 	else
 	{
 		ARBDogRegNumPtr pRegNum;
-		if (m_RegNums.AddRegNum((LPCTSTR)venue, (LPCTSTR)m_RegNum, &pRegNum))
+		if (m_RegNums.AddRegNum(m_Venue.c_str(), m_RegNum.c_str(), &pRegNum))
 		{
-			pRegNum->SetHeight((LPCTSTR)m_Height);
-			pRegNum->SetReceived(m_bReceived ? true : false);
-			pRegNum->SetNote((LPCTSTR)m_Note);
+			m_pRegNum->SetHeight(m_Height.c_str());
+			m_pRegNum->SetReceived(m_bReceived);
+			m_pRegNum->SetNote(m_Note.c_str());
 		}
 	}
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }

@@ -31,121 +31,145 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgConfigTitlePoints.h"
 
 #include "ARBConfigVenue.h"
+#include "Validators.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigTitlePoints dialog
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		ARBConfigVenuePtr inVenue,
 		double inValue, // Faults or Place
 		double inPoints,
 		ETitlePointType inType,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgConfigTitlePoints::IDD, pParent)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_TITLE_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_Venue(inVenue)
-	, m_Value(inValue)
-	, m_Points(inPoints)
 	, m_Type(inType)
+	, m_textValue(NULL)
+	, m_ctrlValue(NULL)
+	, m_ctrlType(NULL)
+	, m_Faults(inValue)
+	, m_Place(inValue)
+	, m_Points(inPoints)
 {
-	//{{AFX_DATA_INIT(CDlgConfigTitlePoints)
-	//}}AFX_DATA_INIT
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
+	// Controls (these are done first to control tab order)
 
-void CDlgConfigTitlePoints::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgConfigTitlePoints)
-	DDX_Control(pDX, IDC_CONFIG_TITLEPTS_VALUE_TEXT, m_ctrlValueText);
-	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_VALUE, m_Value);
-	DDX_Text(pDX, IDC_CONFIG_TITLEPTS_POINTS, m_Points);
-	DDX_Control(pDX, IDC_CONFIG_TITLEPTS_TITLE_POINTS, m_ctrlType);
-	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
-	{
-		int idx = m_ctrlType.GetCurSel();
-		assert(0 <= idx);
-		m_Type = (ETitlePointType)m_ctrlType.GetItemData(idx);
-	}
-}
+	wxString caption = (eTitlePlacement == m_Type) ? _("IDC_CONFIG_TITLEPTS_VALUE_TEXT2") : _("IDC_CONFIG_TITLEPTS_VALUE_TEXT1");
+	m_textValue = new wxStaticText(this, wxID_ANY,
+		caption,
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_textValue->Wrap(-1);
 
-
-BEGIN_MESSAGE_MAP(CDlgConfigTitlePoints, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgConfigTitlePoints)
-	ON_CBN_SELCHANGE(IDC_CONFIG_TITLEPTS_TITLE_POINTS, OnCbnSelchangeTitlePoints)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-
-void CDlgConfigTitlePoints::UpdateText()
-{
+	m_ctrlValue = new wxTextCtrl(this, wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0);
 	if (eTitlePlacement == m_Type)
-		m_ctrlValueText.SetWindowText(m_PlaceText);
+		m_ctrlValue->SetValidator(CGenericValidator(&m_Place));
 	else
-		m_ctrlValueText.SetWindowText(m_FaultText);
-}
+		m_ctrlValue->SetValidator(CGenericValidator(&m_Faults));
+	m_ctrlValue->SetHelpText(_("HIDC_CONFIG_TITLEPTS_VALUE"));
+	m_ctrlValue->SetToolTip(_("HIDC_CONFIG_TITLEPTS_VALUE"));
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigTitlePoints message handlers
+	wxStaticText* textPoints = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLEPTS_POINTS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPoints->Wrap(-1);
 
-BOOL CDlgConfigTitlePoints::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
+	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CGenericValidator(&m_Points));
+	ctrlPoints->SetHelpText(_("HIDC_CONFIG_TITLEPTS_POINTS"));
+	ctrlPoints->SetToolTip(_("HIDC_CONFIG_TITLEPTS_POINTS"));
 
-	static struct
+	wxArrayString types;
+	for (int i = eTitleNormal; i < eTitleMax; ++i)
 	{
-		UINT iText;
-		ETitlePointType eType;
-	} sc_Types[] = {
-		{ IDS_TITLEPOINT_NORMAL, eTitleNormal},
-		{ IDS_TITLEPOINT_LIFETIME, eTitleLifetime},
-		{ IDS_TITLEPOINT_PLACEMENT, eTitlePlacement}
-	};
-	for (int index = 0; index < 3; ++index)
-	{
-		CString str;
-		if (IDS_TITLEPOINT_LIFETIME == sc_Types[index].iText && m_Venue->HasLifetimeName())
-			str = m_Venue->GetLifetimeName().c_str();
-		else
-			str.LoadString(sc_Types[index].iText);
-		int idx = m_ctrlType.AddString(str);
-		m_ctrlType.SetItemData(idx, sc_Types[index].eType);
-		if (m_Type == sc_Types[index].eType)
-			m_ctrlType.SetCurSel(index);
+		switch (i)
+		{
+		default:
+			assert(0);
+			break;
+		case eTitleNormal:
+			types.Add(_("IDS_TITLEPOINT_NORMAL"));
+			break;
+		case eTitleLifetime:
+			if (m_Venue->HasLifetimeName())
+				types.Add(m_Venue->GetLifetimeName().c_str());
+			else
+				types.Add(_("IDS_TITLEPOINT_LIFETIME"));
+			break;
+		case eTitlePlacement:
+			types.Add(_("IDS_TITLEPOINT_PLACEMENT"));
+			break;
+		}
 	}
+	m_ctrlType = new wxChoice(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize, types, 0);
+	m_ctrlType->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(CDlgConfigTitlePoints::OnSelchangeTitlePoints), NULL, this);
+	m_ctrlType->SetHelpText(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
+	m_ctrlType->SetToolTip(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
+	m_ctrlType->SetSelection(m_Type);
 
-	CString str;
-	m_ctrlValueText.GetWindowText(str);
-	int idx = str.Find('\n');
-	assert(0 < idx);
-	m_FaultText = str.Left(idx);
-	m_PlaceText = str.Mid(idx+1);
+	// Sizers (sizer creation is in same order as wxFormBuilder)
 
-	UpdateText();
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	wxBoxSizer* sizerValue = new wxBoxSizer(wxHORIZONTAL);
+	sizerValue->Add(m_textValue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerValue->Add(m_ctrlValue, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerValue, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPoints->Add(ctrlPoints, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+	bSizer->Add(m_ctrlType, 0, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz = GetSize();
+	SetSizeHints(sz, sz);
+	CenterOnParent();
+
+	m_ctrlValue->SetFocus();
 }
 
 
-void CDlgConfigTitlePoints::OnCbnSelchangeTitlePoints()
+void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	UpdateText();
+	int oldType = m_Type;
+	m_Type = m_ctrlType->GetSelection();
+	TransferDataFromWindow();
+	if (eTitlePlacement == m_Type)
+	{
+		m_Place = m_Faults; // Copy old value
+		m_textValue->SetLabel(_("IDC_CONFIG_TITLEPTS_VALUE_TEXT2"));
+		m_ctrlValue->SetValidator(CGenericValidator(&m_Place));
+		TransferDataToWindow();
+		GetSizer()->Fit(this);
+	}
+	else if (oldType == eTitlePlacement)
+	{
+		m_Faults = m_Place; // Copy old value
+		m_textValue->SetLabel(_("IDC_CONFIG_TITLEPTS_VALUE_TEXT1"));
+		m_ctrlValue->SetValidator(CGenericValidator(&m_Faults));
+		TransferDataToWindow();
+		GetSizer()->Fit(this);
+	}
 }

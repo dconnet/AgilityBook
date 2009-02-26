@@ -31,15 +31,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-05-04 DRC Added ability to suppress metafile.
  * @li 2004-04-27 DRC Added some error recovery.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgRunCRCD.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgRunCRCD")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "ARBDogRun.h"
 #include "ClipBoard.h"
@@ -201,7 +204,7 @@ void CDlgRunCRCD::SetCRCDData()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunCRCD message handlers
 
-BOOL CDlgRunCRCD::OnInitDialog() 
+BOOL CDlgRunCRCD::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlCRCD.GetWindowRect(m_rCRCDwin);
@@ -363,3 +366,4 @@ void CDlgRunCRCD::OnImage()
 		m_ViewText = true;
 	SetView();
 }
+#endif

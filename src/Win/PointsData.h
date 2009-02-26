@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2006-07-15 DRC Add option to sort by event instead of division.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-18 DRC Remember last selected item when reloading data.
@@ -57,7 +58,7 @@ typedef std::pair<ARBDate, ARBDogTrialPtr> MultiQdata;
 typedef std::pair<ARBDogTrialPtr, ARBDogRunPtr> RunInfo;
 
 // Special HTML tag for href's
-#define ARB_PROTOCOL	_T("arb:")
+#define ARB_PROTOCOL	wxT("arb:")
 
 /**
  * Used to accumulate lifetime info. Also for Placement totals.
@@ -118,7 +119,7 @@ class CPointsDataBase
 {
 public:
 	CPointsDataBase(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc);
 	virtual ~CPointsDataBase();
 
@@ -135,7 +136,7 @@ public:
 	virtual bool IsEqual(CPointsDataBasePtr inData) = 0;
 
 protected:
-	CWnd* m_pParent;
+	wxWindow* m_pParent;
 	CAgilityBookDoc* m_pDoc;
 };
 
@@ -145,11 +146,11 @@ class CPointsDataSeparator : public CPointsDataBase
 {
 public:
 	CPointsDataSeparator(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			tstring const& inHtml);
 
-	virtual tstring OnNeedText(int inCol) const	{return _T("");}
+	virtual tstring OnNeedText(int inCol) const	{return wxT("");}
 	virtual tstring GetHtml(size_t nCurLine) const	{return m_Html;}
 	virtual bool IsVisible() const						{return false;}
 	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
@@ -164,11 +165,11 @@ class CPointsDataText : public CPointsDataBase
 {
 public:
 	CPointsDataText(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bUseInHtml,
-			LPCTSTR inCol1 = _T(""),
-			LPCTSTR inCol2 = _T(""));
+			wxChar const* inCol1 = wxT(""),
+			wxChar const* inCol2 = wxT(""));
 
 	virtual tstring OnNeedText(int inCol) const;
 	virtual tstring GetHtml(size_t nCurLine) const;
@@ -190,7 +191,7 @@ class CPointsDataDog : public CPointsDataBase
 {
 public:
 	CPointsDataDog(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog);
 
@@ -214,7 +215,7 @@ class CPointsDataVenue : public CPointsDataBase
 {
 public:
 	CPointsDataVenue(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog,
 			ARBConfigVenuePtr pVenue);
@@ -240,7 +241,7 @@ class CPointsDataTitle : public CPointsDataBase
 {
 public:
 	CPointsDataTitle(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog,
 			ARBDogTitlePtr pTitle);
@@ -267,7 +268,7 @@ class CPointsDataEvent : public CPointsDataBase
 	friend class SortPointItems;
 public:
 	CPointsDataEvent(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog,
 			std::list<RunInfo>& inMatching,
@@ -323,7 +324,7 @@ public:
 	 * @param inVenue Associated venue
 	 */
 	CPointsDataLifetime(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bLifetime,
 			ARBConfigVenuePtr inVenue);
@@ -355,7 +356,7 @@ class CPointsDataLifetimeByName : public CPointsDataLifetime
 {
 public:
 	CPointsDataLifetimeByName(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			bool bLifetime,
 			ARBConfigVenuePtr inVenue,
@@ -386,7 +387,7 @@ class CPointsDataMultiQs : public CPointsDataBase
 {
 public:
 	CPointsDataMultiQs(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog,
 			ARBConfigVenuePtr inVenue,
@@ -417,7 +418,7 @@ class CPointsDataSpeedPts : public CPointsDataBase
 {
 public:
 	CPointsDataSpeedPts(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBConfigVenuePtr inVenue,
 			int inPts);
@@ -441,7 +442,7 @@ class CPointsDataOtherPoints : public CPointsDataBase
 {
 public:
 	CPointsDataOtherPoints(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			std::list<OtherPtInfo> const& inRunList);
 
@@ -455,7 +456,7 @@ class CPointsDataOtherPointsTallyAll : public CPointsDataOtherPoints
 {
 public:
 	CPointsDataOtherPointsTallyAll(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			tstring const& inName,
 			std::list<OtherPtInfo> const& inRunList);
@@ -475,7 +476,7 @@ class CPointsDataOtherPointsTallyAllByEvent : public CPointsDataOtherPoints
 {
 public:
 	CPointsDataOtherPointsTallyAllByEvent(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			tstring const& inEvent,
 			std::list<OtherPtInfo> const& inRunList);
@@ -495,7 +496,7 @@ class CPointsDataOtherPointsTallyLevel : public CPointsDataOtherPoints
 {
 public:
 	CPointsDataOtherPointsTallyLevel(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			tstring const& inLevel,
 			std::list<OtherPtInfo> const& inRunList);
@@ -515,7 +516,7 @@ class CPointsDataOtherPointsTallyLevelByEvent : public CPointsDataOtherPoints
 {
 public:
 	CPointsDataOtherPointsTallyLevelByEvent(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			tstring const& inLevel,
 			tstring const& inEvent,
@@ -542,7 +543,7 @@ public:
 	~CPointsDataItems();
 
 	void LoadData(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog);
 	void clear();
@@ -583,7 +584,7 @@ private:
 	typedef std::list<LifeTimePoints> LifeTimePointsList;
 
 	void InsertVenueHeader(
-			CWnd* pParent,
+			wxWindow* pParent,
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr inDog,
 			ARBConfigVenuePtr pVenue);

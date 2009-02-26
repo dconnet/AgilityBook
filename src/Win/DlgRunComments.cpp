@@ -31,13 +31,16 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgRunComments.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgRunComments")
+#if 0
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDogRun.h"
 #include "DlgListCtrl.h"
@@ -113,7 +116,7 @@ void CDlgRunComments::SetFaultsText()
 /////////////////////////////////////////////////////////////////////////////
 // CDlgRunComments message handlers
 
-BOOL CDlgRunComments::OnInitDialog() 
+BOOL CDlgRunComments::OnInitDialog()
 {
 	CDlgBasePropertyPage::OnInitDialog();
 	SetFaultsText();
@@ -128,3 +131,4 @@ void CDlgRunComments::OnCommentsFaults()
 	if (IDOK == dlg.DoModal())
 		SetFaultsText();
 }
+#endif

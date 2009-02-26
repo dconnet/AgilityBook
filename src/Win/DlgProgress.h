@@ -37,19 +37,20 @@
  * and the factory method will remain behind.
  *
  * Revision History
+ * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-10-01 DRC Created
  */
 
 class IDlgProgress
 {
 public:
-	static IDlgProgress* CreateProgress(HWND hwndParent = NULL);
+	static IDlgProgress* CreateProgress(wxWindow* parent = NULL);
 
 	// Setup dialog.
 	/// Set the caption of the dialog.
-	virtual void SetCaption(LPCTSTR inCaption) = 0;
+	virtual void SetCaption(wxString const& inCaption) = 0;
 	/// Set a visible message.
-	virtual void SetMessage(LPCTSTR inMessage) = 0;
+	virtual void SetMessage(wxString const& inMessage) = 0;
 	/// Set the number of progress bars (0,1,2)
 	virtual bool SetNumProgressBars(short nBars) = 0;
 

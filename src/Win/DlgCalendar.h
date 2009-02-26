@@ -33,17 +33,34 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-13 DRC Added direct access to Notes dialog.
  * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
-#include "NoteButton.h"
-#include "RichEditCtrl2.h"
+//#include "ComboBox.h"
+//#include "DlgBaseDialog.h"
+//#include "NoteButton.h"
+//#include "RichEditCtrl2.h"
+#include "ARBTypes.h"
 class CAgilityBookDoc;
 
+class CDlgCalendar
+{
+public:
+	CDlgCalendar(
+			ARBCalendarPtr pCal,
+			CAgilityBookDoc* pDoc,
+			wxWindow* pParent = NULL) {}
+	int ShowModal()
+	{
+		wxMessageBox(wxT("CDlgCalendar"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		return wxID_CANCEL;
+	}
+};
+
+#if 0
 class CDlgCalendar : public CDlgBaseDialog
 {
 public:
@@ -130,3 +147,4 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif

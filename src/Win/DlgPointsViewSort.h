@@ -33,47 +33,37 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-07-16 DRC Created
  */
 
 #include "AgilityBookOptions.h"
-#include "ComboBox.h"
-#include "DlgBaseDialog.h"
 
-class CDlgPointsViewSort : public CDlgBaseDialog
+
+class CDlgPointsViewSort : public wxDialog
 {
 public:
-	CDlgPointsViewSort(CWnd* pParent = NULL);
+	CDlgPointsViewSort(wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgPointsViewSort)
-	enum { IDD = IDD_POINTS_VIEW_SORT };
-	CComboBox2	m_ctrlPrimary;
-	CComboBox2	m_ctrlSecondary;
-	CComboBox2	m_ctrlTertiary;
-	//}}AFX_DATA
+	wxComboBox* m_ctrlPrimary;
+	wxComboBox* m_ctrlSecondary;
+	wxComboBox* m_ctrlTertiary;
+	wxButton* m_ctrlOk;
+
 	CAgilityBookOptions::PointsViewSort m_Primary;
 	CAgilityBookOptions::PointsViewSort m_Secondary;
 	CAgilityBookOptions::PointsViewSort m_Tertiary;
 
-	//{{AFX_VIRTUAL(CDlgPointsViewSort)
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
+	void UpdateControls();
 	void FillPrimary();
 	void FillSecondary();
 	void FillTertiary();
 
-	//{{AFX_MSG(CDlgPointsViewSort)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	afx_msg void OnCbnSelchangePrimary();
-	afx_msg void OnCbnSelchangeSecondary();
-	afx_msg void OnCbnSelchangeTertiary();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnSelchangePrimary(wxCommandEvent& evt);
+	void OnSelchangeSecondary(wxCommandEvent& evt);
+	void OnSelchangeTertiary(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
