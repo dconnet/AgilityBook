@@ -577,6 +577,53 @@ msgstr "&Details..."
 msgid "DescDetails"
 msgstr "Display details"
 
+# DlgConfigOtherPoints
+msgid "IDD_CONFIG_OTHERPOINTS"
+msgstr "Other Points Configuration"
+
+msgid "IDC_CONFIG_OTHER_NAME"
+msgstr "&Name"
+
+msgid "IDC_CONFIG_OTHER_TALLY"
+msgstr "&Tally Points"
+
+msgid "IDC_CONFIG_OTHER_DEFAULT"
+msgstr "Default &Points"
+
+msgid "IDC_CONFIG_OTHER_DESC"
+msgstr "&Description"
+
+# DlgReferenceRun
+msgid "IDD_REF_RUN"
+msgstr "Reference Run"
+
+msgid "IDC_REFRUN_PLACE"
+msgstr "&Place"
+
+msgid "IDC_REFRUN_Q"
+msgstr "&Q?"
+
+msgid "IDC_REFRUN_TIME"
+msgstr "&Time"
+
+msgid "IDC_REFRUN_YPS"
+msgstr "YPS"
+
+msgid "IDC_REFRUN_POINTS"
+msgstr "&Score"
+
+msgid "IDC_REFRUN_HEIGHT"
+msgstr "&Height"
+
+msgid "IDC_REFRUN_NAME"
+msgstr "&Name"
+
+msgid "IDC_REFRUN_BREED"
+msgstr "&Breed"
+
+msgid "IDC_REFRUN_NOTES"
+msgstr "N&otes"
+
 # DlgAbout
 msgid "IDD_ABOUTBOX"
 msgstr "About"

@@ -39,12 +39,10 @@
 
 #include <set>
 #include "ARBTypes.h"
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
 class CAgilityBookDoc;
 
 
-class CDlgReferenceRun
+class CDlgReferenceRun : public wxDialog
 {
 public:
 	CDlgReferenceRun(
@@ -54,64 +52,23 @@ public:
 			std::set<tstring> const& inNames,
 			std::set<tstring> const& inBreeds,
 			ARBDogReferenceRunPtr ref,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgReferenceRun"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgReferenceRun : public CDlgBaseDialog
-{
-public:
-	CDlgReferenceRun(
-			CAgilityBookDoc* pDoc,
-			ARBDogRunPtr inRun,
-			std::set<tstring> const& inHeights,
-			std::set<tstring> const& inNames,
-			std::set<tstring> const& inBreeds,
-			ARBDogReferenceRunPtr ref,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgReferenceRun)
-	enum { IDD = IDD_REF_RUN };
-	short	m_Place;
-	CComboBox2	m_ctrlQ;
-	CString	m_Points;
-	double	m_Time;
-	CStatic	m_ctrlYPS;
-	CString	m_YPS;
-	CComboBox2	m_ctrlHeight;
-	CString	m_Height;
-	CComboBox2	m_ctrlName;
-	CString	m_Name;
-	CComboBox2	m_ctrlBreed;
-	CString	m_Breed;
-	CString	m_Notes;
-	//}}AFX_DATA
 	CAgilityBookDoc* m_pDoc;
 	ARBDogRunPtr m_Run;
 	ARBDogReferenceRunPtr m_Ref;
-	std::set<tstring> const& m_Heights;
-	std::set<tstring> const& m_Names;
-	std::set<tstring> const& m_Breeds;
+	short m_Place;
+	ARB_Q m_Q;
+	double m_Time;
+	wxStaticText* m_ctrlYPS;
+	wxString m_Points;
+	wxString m_Height;
+	wxString m_Name;
+	wxString m_Breed;
+	wxString m_Notes;
 
-	//{{AFX_VIRTUAL(CDlgReferenceRun)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgReferenceRun)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnKillfocusRefRunTime();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnKillfocusRefRunTime(wxFocusEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

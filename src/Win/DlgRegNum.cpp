@@ -42,8 +42,9 @@
 
 #include "ARBConfig.h"
 #include "ARBDogRegNum.h"
+#include "ComboBoxes.h"
 #include "Validators.h"
-#include "VenueComboBox.h"
+
 
 
 // If pRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.

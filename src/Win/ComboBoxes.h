@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief Make inserting items in a listbox easier.
+ * @brief Special comboboxes
  * @author David Connet
  *
  * Revision History
@@ -45,6 +45,7 @@
 /// Combobox specifically for listing venues
 class CVenueComboBox : public wxChoice
 {
+DECLARE_CLASS(CVenueComboBox)
 public:
 	CVenueComboBox(
 			wxWindow* parent,
@@ -55,4 +56,29 @@ public:
 
 
 	ARBConfigVenuePtr GetVenue(int index) const;
+};
+
+
+/// Combobox for Qs
+class CQualifyingComboBox : public wxChoice
+{
+DECLARE_CLASS(CQualifyingComboBox)
+public:
+	CQualifyingComboBox(
+			wxWindow* parent,
+			ARBDogReferenceRunPtr refRun,
+			wxValidator const& validator = wxDefaultValidator);
+	CQualifyingComboBox(
+			wxWindow* parent,
+			ARBDogRunPtr run,
+			ARBConfigScoringPtr inScoring,
+			wxValidator const& validator = wxDefaultValidator);
+
+	void ResetContent();
+	ARB_Q GetQ(int index) const;
+
+private:
+	ARBDogReferenceRunPtr m_refRun;
+	ARBDogRunPtr m_Run;
+	ARBConfigScoringPtr m_Scoring;
 };

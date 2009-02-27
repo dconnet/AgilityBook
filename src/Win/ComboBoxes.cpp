@@ -27,7 +27,7 @@
 /**
  * @file
  *
- * @brief Make inserting items in a listbox easier.
+ * @brief Special comboboxes
  * @author David Connet
  *
  * Revision History
@@ -38,10 +38,17 @@
  */
 
 #include "stdafx.h"
-#include "VenueComboBox.h"
+#include "ComboBoxes.h"
 
 #include "ARBConfigVenue.h"
+#include "ARBDogReferenceRun.h"
+#include "ARBDogRun.h"
 
+
+IMPLEMENT_CLASS(CVenueComboBox, wxChoice)
+IMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
+
+/////////////////////////////////////////////////////////////////////////////
 
 class CVenueComboData : public wxClientData
 {
@@ -87,4 +94,85 @@ ARBConfigVenuePtr CVenueComboBox::GetVenue(int index) const
 	if (pData)
 		return dynamic_cast<CVenueComboData*>(pData)->m_Venue;
 	return ARBConfigVenuePtr();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CQualifyingComboData : public wxClientData
+{
+public:
+	CQualifyingComboData(ARB_Q q) : m_Q(q) {}
+	ARB_Q m_Q;
+};
+
+
+CQualifyingComboBox::CQualifyingComboBox(
+		wxWindow* parent,
+		ARBDogReferenceRunPtr refRun,
+		wxValidator const& validator)
+	: wxChoice()
+	, m_refRun(refRun)
+	, m_Run()
+	, m_Scoring()
+{
+	wxChoice::Create(parent, wxID_ANY,
+		wxDefaultPosition, wxSize(50, -1),
+		0, NULL, 0, validator);
+	ResetContent();
+}
+
+
+CQualifyingComboBox::CQualifyingComboBox(
+		wxWindow* parent,
+		ARBDogRunPtr run,
+		ARBConfigScoringPtr inScoring,
+		wxValidator const& validator)
+	: wxChoice()
+	, m_refRun()
+	, m_Run(run)
+	, m_Scoring(inScoring)
+{
+	wxChoice::Create(parent, wxID_ANY,
+		wxDefaultPosition, wxSize(50, -1),
+		0, NULL, 0, validator);
+	ResetContent();
+}
+
+
+void CQualifyingComboBox::ResetContent()
+{
+	Clear();
+	bool bHasTitling = true;
+	if (m_Scoring)
+		bHasTitling = (0 < m_Scoring->GetTitlePoints().size() || 0 < m_Scoring->GetLifetimePoints().size());
+	ARB_Q curQ = ARB_Q::eQ_NA;
+	if (m_refRun)
+		curQ = m_refRun->GetQ();
+	else if (m_Run)
+		curQ = m_Run->GetQ();
+
+	int nQs = ARB_Q::GetNumValidTypes();
+	for (int index = 0; index < nQs; ++index)
+	{
+		ARB_Q q = ARB_Q::GetValidType(index);
+		if (m_Scoring && ARB_Q::eQ_SuperQ == q && !m_Scoring->HasSuperQ())
+			continue;
+		// Allow non-titling runs to only have 'NA' and 'E'
+		if (!bHasTitling && !(ARB_Q::eQ_E == q || ARB_Q::eQ_NA == q))
+			continue;
+		int idx = Append(q.str().c_str());
+		SetClientObject(idx, new CQualifyingComboData(q));
+		if (curQ == q)
+			SetSelection(idx);
+	}
+	Enable(0 < GetCount());
+}
+
+
+ARB_Q CQualifyingComboBox::GetQ(int index) const
+{
+	wxClientData* pData = GetClientObject(index);
+	if (pData)
+		return dynamic_cast<CQualifyingComboData*>(pData)->m_Q;
+	return ARB_Q::eQ_NA;
 }

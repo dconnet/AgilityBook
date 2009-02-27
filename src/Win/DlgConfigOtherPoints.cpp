@@ -39,130 +39,213 @@
 #include "stdafx.h"
 #include "DlgConfigOtherPoints.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigOtherPoints")
-#if 0
-#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "Validators.h"
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CNameValidator : public CTrimValidator
+{
+public:
+	CNameValidator(
+			CDlgConfigOtherPoints* dlg,
+			wxString* valPtr)
+		: CTrimValidator(valPtr)
+		, m_Dlg(dlg)
+	{
+	}
+
+	virtual bool Validate(wxWindow* parent);
+
+private:
+	CDlgConfigOtherPoints* m_Dlg;
+};
+
+
+bool CNameValidator::Validate(wxWindow* parent)
+{
+	if (!CTrimValidator::Validate(parent))
+		return false;
+
+	wxString* tmpString = m_pString;
+	wxString tmp;
+	m_pString = &tmp;
+	TransferFromWindow();
+	m_pString = tmpString;
+
+	if (!m_Dlg->IsNameOkay(tmp))
+	{
+		m_validatorWindow->SetFocus();
+		wxMessageBox(_("IDS_NAME_IN_USE"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
+		return false;
+	}
+	return true;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
 static struct
 {
-	UINT idDesc;
+	wxChar* idDesc;
 	ARBConfigOtherPoints::eOtherPointsTally tally;
 } const sc_Tally[] =
 {
-	{IDS_OTHERPTS_ALL, ARBConfigOtherPoints::eTallyAll},
-	{IDS_OTHERPTS_EVENT, ARBConfigOtherPoints::eTallyAllByEvent},
-	{IDS_OTHERPTS_LEVEL, ARBConfigOtherPoints::eTallyLevel},
-	{IDS_OTHERPTS_EVENT_LEVEL, ARBConfigOtherPoints::eTallyLevelByEvent}
+	{wxT("IDS_OTHERPTS_ALL"), ARBConfigOtherPoints::eTallyAll},
+	{wxT("IDS_OTHERPTS_EVENT"), ARBConfigOtherPoints::eTallyAllByEvent},
+	{wxT("IDS_OTHERPTS_LEVEL"), ARBConfigOtherPoints::eTallyLevel},
+	{wxT("IDS_OTHERPTS_EVENT_LEVEL"), ARBConfigOtherPoints::eTallyLevelByEvent}
 };
 static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
 
+
+class DlgConfigOtherPointData : public wxClientData 
+{
+public:
+	DlgConfigOtherPointData(ARBConfigOtherPoints::eOtherPointsTally tally)
+		: m_Tally(tally)
+	{
+	}
+	ARBConfigOtherPoints::eOtherPointsTally m_Tally;
+};
+
 /////////////////////////////////////////////////////////////////////////////
-// CDlgConfigOtherPoints dialog
+
+BEGIN_EVENT_TABLE(CDlgConfigOtherPoints, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgConfigOtherPoints::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		ARBConfig& config,
 		ARBConfigOtherPointsPtr pOther,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgConfigOtherPoints::IDD, pParent)
-	, m_Name(pOther->GetName().c_str())
-	, m_ctrlTally(false)
-	, m_Default(pOther->GetDefault())
-	, m_Desc(pOther->GetDescription().c_str())
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_OTHERPOINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_Config(config)
 	, m_pOther(pOther)
+	, m_Name(pOther->GetName().c_str())
+	, m_ctrlTally(NULL)
+	, m_Default(pOther->GetDefault())
+	, m_Desc(pOther->GetDescription().c_str())
 {
-	assert(m_pOther);
-	m_Desc.Replace(_T("\n"), _T("\r\n"));
-	//{{AFX_DATA_INIT(CDlgConfigOtherPoints)
-	//}}AFX_DATA_INIT
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
+	// Controls (these are done first to control tab order)
 
-CDlgConfigOtherPoints::~CDlgConfigOtherPoints()
-{
-}
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_OTHER_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
 
+	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CNameValidator(this, &m_Name));
+	ctrlName->SetHelpText(_("HIDC_CONFIG_OTHER_NAME"));
+	ctrlName->SetToolTip(_("HIDC_CONFIG_OTHER_NAME"));
 
-void CDlgConfigOtherPoints::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgConfigOtherPoints)
-	DDX_Text(pDX, IDC_CONFIG_OTHER_NAME, m_Name);
-	DDX_Control(pDX, IDC_CONFIG_OTHER_TALLY, m_ctrlTally);
-	DDX_Text(pDX, IDC_CONFIG_OTHER_DEFAULT, m_Default);
-	DDX_Text(pDX, IDC_CONFIG_OTHER_DESC, m_Desc);
-	//}}AFX_DATA_MAP
-}
+	wxStaticText* textTally = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_OTHER_TALLY"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textTally->Wrap(-1);
 
-
-BEGIN_MESSAGE_MAP(CDlgConfigOtherPoints, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgConfigOtherPoints)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigOtherPoints message handlers
-
-BOOL CDlgConfigOtherPoints::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
+	m_ctrlTally = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL,
+		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
 	for (int index = 0; index < sc_numTally; ++index)
 	{
-		CString desc;
-		desc.LoadString(sc_Tally[index].idDesc);
-		int id = m_ctrlTally.AddString(desc);
-		m_ctrlTally.SetItemData(id, sc_Tally[index].tally);
+		wxString desc = wxGetTranslation(sc_Tally[index].idDesc);
+		int id = m_ctrlTally->Append(desc);
+		m_ctrlTally->SetClientObject(id, new DlgConfigOtherPointData(sc_Tally[index].tally));
 		if (m_pOther->GetTally() == sc_Tally[index].tally)
-			m_ctrlTally.SetCurSel(id);
+			m_ctrlTally->SetSelection(id);
 	}
+	m_ctrlTally->SetHelpText(_("HIDC_CONFIG_OTHER_TALLY"));
+	m_ctrlTally->SetToolTip(_("HIDC_CONFIG_OTHER_TALLY"));
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	wxStaticText* textPoints = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_OTHER_DEFAULT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPoints->Wrap(-1);
+
+	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		CGenericValidator(&m_Default));
+	ctrlPoints->SetHelpText(_("HIDC_CONFIG_OTHER_DEFAULT"));
+	ctrlPoints->SetToolTip(_("HIDC_CONFIG_OTHER_DEFAULT"));
+
+	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_OTHER_DESC"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDesc->Wrap(-1);
+
+	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(210, 110),
+		wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlDesc->SetHelpText(_("HIDC_CONFIG_OTHER_DESC"));
+	ctrlDesc->SetToolTip(_("HIDC_CONFIG_OTHER_DESC"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(ctrlName, 1, wxALL, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerTally = new wxBoxSizer(wxHORIZONTAL);
+	sizerTally->Add(textTally, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerTally->Add(m_ctrlTally, 1, wxALL, 5);
+
+	bSizer->Add(sizerTally, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPoints->Add(ctrlPoints, 0, wxALL, 5);
+
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+	bSizer->Add(textDesc, 0, wxALL, 5);
+	bSizer->Add(ctrlDesc, 1, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
 }
 
 
-void CDlgConfigOtherPoints::OnOK()
+bool CDlgConfigOtherPoints::IsNameOkay(wxString const& name) const
 {
-	if (!UpdateData(TRUE))
-		return;
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-	m_Desc.TrimRight();
-	m_Desc.TrimLeft();
-	m_Desc.Replace(_T("\r\n"), _T("\n"));
-	if (m_Name.IsEmpty())
+	if (m_pOther->GetName() != name.c_str()
+	&& m_Config.GetOtherPoints().FindOtherPoints(name.c_str()))
 	{
-		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_OTHER_NAME));
-		return;
+		return false;
 	}
-	if (m_pOther->GetName() != (LPCTSTR)m_Name)
-	{
-		if (m_Config.GetOtherPoints().FindOtherPoints((LPCTSTR)m_Name))
-		{
-			AfxMessageBox(IDS_NAME_IN_USE);
-			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_OTHER_NAME));
-			return;
-		}
-		m_pOther->SetName((LPCTSTR)m_Name);
-	}
-	m_pOther->SetDefault(m_Default);
-	int index = m_ctrlTally.GetCurSel();
-	if (index != CB_ERR)
-	{
-		m_pOther->SetTally(static_cast<ARBConfigOtherPoints::eOtherPointsTally>(m_ctrlTally.GetItemData(index)));
-	}
-	m_pOther->SetDescription((LPCTSTR)m_Desc);
-	CDlgBaseDialog::OnOK();
+	return true;
 }
-#endif
+
+
+void CDlgConfigOtherPoints::OnOk(wxCommandEvent& evt)
+{
+	if (!Validate() || !TransferDataFromWindow())
+		return;
+
+	m_pOther->SetName(m_Name.c_str());
+	m_pOther->SetDefault(m_Default);
+	int index = m_ctrlTally->GetSelection();
+	if (index != wxNOT_FOUND)
+	{
+		m_pOther->SetTally(dynamic_cast<DlgConfigOtherPointData*>(m_ctrlTally->GetClientObject(index))->m_Tally);
+	}
+	m_pOther->SetDescription(m_Desc.c_str());
+	EndDialog(wxID_OK);
+}
