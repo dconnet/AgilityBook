@@ -38,24 +38,19 @@
 #include "stdafx.h"
 #include "DlgReferenceRun.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgReferenceRun")
-#if 0
-#include "AgilityBook.h"
-#include <set>
-
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBDogReferenceRun.h"
 #include "ARBTypes.h"
+#include "ComboBoxes.h"
+#include "Validators.h"
+#include <set>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgReferenceRun dialog
+BEGIN_EVENT_TABLE(CDlgReferenceRun, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgReferenceRun::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
@@ -64,156 +59,237 @@ CDlgReferenceRun::CDlgReferenceRun(
 		std::set<tstring> const& inNames,
 		std::set<tstring> const& inBreeds,
 		ARBDogReferenceRunPtr ref,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgReferenceRun::IDD, pParent)
-	, m_ctrlQ(false)
-	, m_ctrlHeight(false)
-	, m_ctrlName(false)
-	, m_ctrlBreed(false)
-	, m_Run(inRun)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_REF_RUN"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
 	, m_pDoc(pDoc)
-	, m_Heights(inHeights)
-	, m_Names(inNames)
-	, m_Breeds(inBreeds)
+	, m_Run(inRun)
 	, m_Ref(ref)
+	, m_Place(m_Ref->GetPlace())
+	, m_Q(ARB_Q::eQ_NA)
+	, m_Time(m_Ref->GetTime())
+	, m_ctrlYPS(NULL)
+	, m_Points(m_Ref->GetScore().c_str())
+	, m_Height(m_Ref->GetHeight().c_str())
+	, m_Name(m_Ref->GetName().c_str())
+	, m_Breed(m_Ref->GetBreed().c_str())
+	, m_Notes(m_Ref->GetNote().c_str())
 {
-	assert(m_Ref);
-	//{{AFX_DATA_INIT(CDlgReferenceRun)
-	m_Place = m_Ref->GetPlace();
-	m_Points = m_Ref->GetScore().c_str();
-	m_Time = m_Ref->GetTime();
-	double yps;
-	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
-	{
-		m_YPS = ARBDouble::str(yps, 3).c_str();
-	}
-	m_Name = m_Ref->GetName().c_str();
-	m_Height = m_Ref->GetHeight().c_str();
-	m_Breed = m_Ref->GetBreed().c_str();
-	m_Notes = m_Ref->GetNote().c_str();
-	//}}AFX_DATA_INIT
-	if (m_Points.IsEmpty())
-		m_Points = _T("0");
-	m_Notes.Replace(_T("\n"), _T("\r\n"));
-	if (m_Height.IsEmpty())
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
+	if (m_Points.empty())
+		m_Points = wxT("0");
+	if (m_Height.empty())
 		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
-}
 
-
-void CDlgReferenceRun::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgReferenceRun)
-	DDX_Text(pDX, IDC_REFRUN_PLACE, m_Place);
-	DDX_Control(pDX, IDC_REFRUN_Q, m_ctrlQ);
-	DDX_Text(pDX, IDC_REFRUN_POINTS, m_Points);
-	DDX_Text(pDX, IDC_REFRUN_TIME, m_Time);
-	DDX_Control(pDX, IDC_REFRUN_YPS, m_ctrlYPS);
-	DDX_Text(pDX, IDC_REFRUN_YPS, m_YPS);
-	DDX_Control(pDX, IDC_REFRUN_HEIGHT, m_ctrlHeight);
-	DDX_CBString(pDX, IDC_REFRUN_HEIGHT, m_Height);
-	DDX_Control(pDX, IDC_REFRUN_NAME, m_ctrlName);
-	DDX_CBString(pDX, IDC_REFRUN_NAME, m_Name);
-	DDX_Control(pDX, IDC_REFRUN_BREED, m_ctrlBreed);
-	DDX_CBString(pDX, IDC_REFRUN_BREED, m_Breed);
-	DDX_Text(pDX, IDC_REFRUN_NOTES, m_Notes);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgReferenceRun, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgReferenceRun)
-	ON_EN_KILLFOCUS(IDC_REFRUN_TIME, OnKillfocusRefRunTime)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgReferenceRun message handlers
-
-BOOL CDlgReferenceRun::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	int nQs = ARB_Q::GetNumValidTypes();
-	for (int index = 0; index < nQs; ++index)
-	{
-		ARB_Q q = ARB_Q::GetValidType(index);
-		int idx = m_ctrlQ.AddString(q.str().c_str());
-		m_ctrlQ.SetItemData(idx, index);
-		if (m_Ref->GetQ() == q)
-			m_ctrlQ.SetCurSel(idx);
-	}
-
-	std::set<tstring>::const_iterator iter;
-
-	for (iter = m_Heights.begin(); iter != m_Heights.end(); ++iter)
-	{
-		m_ctrlHeight.AddString((*iter).c_str());
-	}
-	for (iter = m_Names.begin(); iter != m_Names.end(); ++iter)
-	{
-		m_ctrlName.AddString((*iter).c_str());
-	}
-	for (iter = m_Breeds.begin(); iter != m_Breeds.end(); ++iter)
-	{
-		m_ctrlBreed.AddString((*iter).c_str());
-	}
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgReferenceRun::OnKillfocusRefRunTime()
-{
-	UpdateData(TRUE);
+	wxString strYPS;
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
-		m_YPS = ARBDouble::str(yps, 3).c_str();
+		strYPS = ARBDouble::str(yps, 3).c_str();
+	}
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textPlace = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_PLACE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPlace->Wrap(-1);
+
+	wxTextCtrl* ctrlPlace = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(40, -1), 0,
+		CGenericValidator(&m_Place));
+	ctrlPlace->SetHelpText(_("HIDC_REFRUN_PLACE"));
+	ctrlPlace->SetToolTip(_("HIDC_REFRUN_PLACE"));
+
+	wxStaticText* textQ = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_Q"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textQ->Wrap(-1);
+
+	CQualifyingComboBox* ctrlQ = new CQualifyingComboBox(this, m_Ref,
+		CQualifyingValidator(&m_Q));
+	ctrlQ->SetHelpText(_("HIDC_REFRUN_Q"));
+	ctrlQ->SetToolTip(_("HIDC_REFRUN_Q"));
+
+	wxStaticText* textTime = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_TIME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textTime->Wrap(-1);
+
+	wxTextCtrl* ctrlTime = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(60, -1), 0,
+		CGenericValidator(&m_Time));
+	ctrlTime->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgReferenceRun::OnKillfocusRefRunTime), NULL, this);
+	ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
+	ctrlTime->SetToolTip(_("HIDC_REFRUN_TIME"));
+
+	wxStaticText* textYPS = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_YPS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textYPS->Wrap(-1);
+
+	m_ctrlYPS = new wxStaticText(this, wxID_ANY,
+		strYPS, wxDefaultPosition, wxSize(40, -1),
+		wxALIGN_CENTRE|wxSTATIC_BORDER);
+	m_ctrlYPS->Wrap(-1);
+
+	wxStaticText* textScore = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_POINTS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textScore->Wrap(-1);
+
+	wxTextCtrl* ctrlScore = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(40, -1), 0,
+		CTrimValidator(&m_Points, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlScore->SetHelpText(_("HIDC_REFRUN_POINTS"));
+	ctrlScore->SetToolTip(_("HIDC_REFRUN_POINTS"));
+
+	wxStaticText* textHt = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_HEIGHT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textHt->Wrap(-1);
+
+	wxArrayString choices;
+	for (std::set<tstring>::const_iterator iter = inHeights.begin(); iter != inHeights.end(); ++iter)
+	{
+		choices.Add((*iter).c_str());
+	}
+	choices.Sort();
+	wxComboBox* ctrlHt = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1),
+		choices, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlHt->SetHelpText(_("HIDC_REFRUN_HEIGHT"));
+	ctrlHt->SetToolTip(_("HIDC_REFRUN_HEIGHT"));
+
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
+
+	choices.Clear();
+	for (std::set<tstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	{
+		choices.Add((*iter).c_str());
+	}
+	choices.Sort();
+	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY,
+		wxEmptyString, wxDefaultPosition, wxDefaultSize,
+		choices, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlName->SetHelpText(_("HIDC_REFRUN_NAME"));
+	ctrlName->SetToolTip(_("HIDC_REFRUN_NAME"));
+
+	wxStaticText* textBreed = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_BREED"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textBreed->Wrap(-1);
+
+	choices.Clear();
+	for (std::set<tstring>::const_iterator iter = inBreeds.begin(); iter != inBreeds.end(); ++iter)
+	{
+		choices.Add((*iter).c_str());
+	}
+	choices.Sort();
+	wxComboBox* ctrlBreed = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		choices, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Breed, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlBreed->SetHelpText(_("HIDC_REFRUN_BREED"));
+	ctrlBreed->SetToolTip(_("HIDC_REFRUN_BREED"));
+
+	wxStaticText* textNotes = new wxStaticText(this, wxID_ANY,
+		_("IDC_REFRUN_NOTES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textNotes->Wrap(-1);
+
+	wxTextCtrl* ctrlNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(-1, 70), 0,
+		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlNotes->SetHelpText(_("HIDC_REFRUN_NOTES"));
+	ctrlNotes->SetToolTip(_("HIDC_REFRUN_NOTES"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerStats = new wxBoxSizer(wxHORIZONTAL);
+	sizerStats->Add(textPlace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStats->Add(ctrlPlace, 0, wxALL, 5);
+	sizerStats->Add(textQ, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStats->Add(ctrlQ, 0, wxALL, 5);
+	sizerStats->Add(textTime, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStats->Add(ctrlTime, 0, wxALL, 5);
+	sizerStats->Add(textYPS, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStats->Add(m_ctrlYPS, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStats->Add(textScore, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStats->Add(ctrlScore, 0, wxALL, 5);
+	sizerStats->Add(textHt, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStats->Add(ctrlHt, 0, wxALL, 5);
+
+	bSizer->Add(sizerStats, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(ctrlName, 1, wxALL, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerBreed = new wxBoxSizer(wxHORIZONTAL);
+	sizerBreed->Add(textBreed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerBreed->Add(ctrlBreed, 1, wxALL, 5);
+
+	bSizer->Add(sizerBreed, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerNotes = new wxBoxSizer(wxHORIZONTAL);
+	sizerNotes->Add(textNotes, 0, wxALIGN_TOP|wxALL, 5);
+	sizerNotes->Add(ctrlNotes, 1, wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizerNotes, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+}
+
+
+void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
+{
+	TransferDataFromWindow();
+	wxString strYPS;
+	double yps;
+	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
+	{
+		strYPS = ARBDouble::str(yps, 3).c_str();
 	}
 	else
 	{
-		m_YPS.Empty();
+		strYPS.Empty();
 	}
-	m_ctrlYPS.SetWindowText(m_YPS);
+	m_ctrlYPS->SetLabel(strYPS);
 }
 
 
-void CDlgReferenceRun::OnOK()
+void CDlgReferenceRun::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-	m_Points.TrimRight();
-	m_Points.TrimLeft();
-	m_Height.TrimRight();
-	m_Height.TrimLeft();
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-	m_Breed.TrimRight();
-	m_Breed.TrimLeft();
-	m_Notes.TrimRight();
-	m_Notes.TrimLeft();
-
-	int index = m_ctrlQ.GetCurSel();
-	if (CB_ERR == index)
-	{
-		GotoDlgCtrl(&m_ctrlQ);
-		return;
-	}
-	ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 
 	CAgilityBookOptions::SetLastEnteredRefHeight(m_Height);
 
-	m_Ref->SetQ(q);
+	m_Ref->SetQ(m_Q);
 	m_Ref->SetPlace(m_Place);
-	m_Ref->SetScore((LPCTSTR)m_Points);
+	m_Ref->SetScore(m_Points.c_str());
 	m_Ref->SetTime(m_Time); // Letting the prec default to 2 is fine.
-	m_Ref->SetName((LPCTSTR)m_Name);
-	m_Ref->SetHeight((LPCTSTR)m_Height);
-	m_Ref->SetBreed((LPCTSTR)m_Breed);
-	m_Notes.Replace(_T("\r\n"), _T("\n"));
-	m_Ref->SetNote((LPCTSTR)m_Notes);
+	m_Ref->SetName(m_Name.c_str());
+	m_Ref->SetHeight(m_Height.c_str());
+	m_Ref->SetBreed(m_Breed.c_str());
+	m_Ref->SetNote(m_Notes.c_str());
 
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif

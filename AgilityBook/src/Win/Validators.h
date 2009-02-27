@@ -36,13 +36,14 @@
  * @li 2009-02-15 DRC Created
  */
 
+#include "ARBTypes.h"
 #include <wx/valgen.h>
 #include <wx/valtext.h>
 
 
 /// wxGenericValidator doesn't do shorts and doubles
 // Would have preferred to inherit from wxGenericValidator, but there's
-// no ctor I can use, and it has no default one.
+// no ctor I can use (it has no default one).
 class CGenericValidator : public wxValidator
 {
 DECLARE_CLASS(CGenericValidator)
@@ -86,4 +87,24 @@ public:
 
 protected:
 	long m_TrimStyle;
+};
+
+
+/// For use with CQualifyingComboBox
+class CQualifyingValidator : public wxValidator
+{
+DECLARE_CLASS(CQualifyingValidator)
+public:
+	CQualifyingValidator(ARB_Q* valPtr = NULL, bool bAllowNoSel = false);
+	CQualifyingValidator(CQualifyingValidator const& rhs);
+
+	virtual wxObject *Clone() const {return new CQualifyingValidator(*this);}
+
+	virtual bool TransferFromWindow();
+	virtual bool TransferToWindow();
+	virtual bool Validate(wxWindow* parent);
+
+private:
+	ARB_Q* m_pQ;
+	bool m_bAllowNoSel;
 };

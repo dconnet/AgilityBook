@@ -41,9 +41,6 @@
  * @li 2003-12-10 DRC Created
  */
 
-#include <vector>
-#include "AgilityBookOptions.h"
-
 /*
  * If types/columns are added/removed, do not change these numbers.
  * These numbers are stored in a users registry for the order.
@@ -184,6 +181,8 @@
 #define IO_RUNS_OPS					114
 #define IO_MAX						115
 
+#include <vector>
+#include "AgilityBookOptions.h"
 class CAgilityBookDoc;
 class wxListEvent;
 class wxListView;

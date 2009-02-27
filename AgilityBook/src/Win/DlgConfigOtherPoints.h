@@ -38,56 +38,26 @@
  */
 
 #include "ARBTypes.h"
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
 
 
-class CDlgConfigOtherPoints
+class CDlgConfigOtherPoints : public wxDialog
 {
 public:
 	CDlgConfigOtherPoints(
 			ARBConfig& config,
 			ARBConfigOtherPointsPtr pOther,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgConfigOtherPoints"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
+			wxWindow* pParent = NULL);
 
-#if 0
-class CDlgConfigOtherPoints : public CDlgBaseDialog
-{
-public:
-	CDlgConfigOtherPoints(
-			ARBConfig& config,
-			ARBConfigOtherPointsPtr pOther,
-			CWnd* pParent = NULL);
-	virtual ~CDlgConfigOtherPoints();
+	bool IsNameOkay(wxString const& name) const;
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigOtherPoints)
-	enum { IDD = IDD_CONFIG_OTHERPOINTS };
-	CString m_Name;
-	CComboBox2 m_ctrlTally;
-	short m_Default;
-	CString m_Desc;
-	//}}AFX_DATA
 	ARBConfig& m_Config;
 	ARBConfigOtherPointsPtr m_pOther;
+	wxString m_Name;
+	wxComboBox* m_ctrlTally;
+	short m_Default;
+	wxString m_Desc;
 
-	//{{AFX_VIRTUAL(CSelectDlg)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	//{{AFX_MSG(CDlgConfigOtherPoints)
-	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

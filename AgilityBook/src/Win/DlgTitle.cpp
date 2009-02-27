@@ -45,9 +45,9 @@
 
 #include "ARBConfig.h"
 #include "ARBDogTitle.h"
+#include "ComboBoxes.h"
 #include "RichEditCtrl2.h"
 #include "Validators.h"
-#include "VenueComboBox.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 

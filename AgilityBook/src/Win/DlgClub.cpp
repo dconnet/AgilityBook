@@ -41,8 +41,8 @@
 
 #include "AgilityBookDoc.h"
 #include "ARBDogClub.h"
+#include "ComboBoxes.h"
 #include "Validators.h"
-#include "VenueComboBox.h"
 #include <set>
 
 

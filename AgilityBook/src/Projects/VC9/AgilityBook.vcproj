@@ -990,7 +990,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VenueComboBox.cpp"
+				RelativePath="..\..\Win\ComboBoxes.cpp"
 				>
 			</File>
 			<File
@@ -1400,7 +1400,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VenueComboBox.h"
+				RelativePath="..\..\Win\ComboBoxes.h"
 				>
 			</File>
 			<File
