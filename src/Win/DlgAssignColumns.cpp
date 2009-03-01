@@ -974,7 +974,7 @@ void CDlgAssignColumns::FillColumns()
 	int index = m_ctrlType->GetFirstSelected();
 	long idxType = -1;
 	if (0 <= index)
-		idxType = m_ctrlType->GetItemData(index);
+		idxType = static_cast<long>(m_ctrlType->GetItemData(index));
 	if (0 <= idxType)
 	{
 		wxString blank(_("IDS_BLANK_COLUMN"));
@@ -1033,7 +1033,7 @@ void CDlgAssignColumns::UpdateColumnVector()
 	int index = m_ctrlType->GetFirstSelected();
 	long idxType = -1;
 	if (0 <= index)
-		idxType = m_ctrlType->GetItemData(index);
+		idxType = static_cast<long>(m_ctrlType->GetItemData(index));
 	if (0 <= idxType)
 	{
 		m_Columns[idxType].clear();
@@ -1189,7 +1189,7 @@ void CDlgAssignColumns::OnReset(wxCommandEvent& evt)
 	int index = m_ctrlType->GetFirstSelected();
 	long idxType = -1;
 	if (0 <= index)
-		idxType = m_ctrlType->GetItemData(index);
+		idxType = static_cast<long>(m_ctrlType->GetItemData(index));
 	if (0 <= idxType)
 	{
 		GetColumnOrder(m_eOrder, idxType, m_Columns[idxType], true);

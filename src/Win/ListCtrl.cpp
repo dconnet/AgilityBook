@@ -247,7 +247,7 @@ CListDataPtr CReportListCtrl::GetData(long item) const
 {
 	CListDataPtr ptr;
 	if (0 <= item && item < GetItemCount())
-		ptr = GetDataByData(GetItemData(item));
+		ptr = GetDataByData(static_cast<long>(GetItemData(item)));
 	return ptr;
 }
 
@@ -258,7 +258,7 @@ bool CReportListCtrl::SetData(long item, CListDataPtr inData)
 	if (0 <= item && item < GetItemCount())
 	{
 		bSet = true;
-		long data = GetItemData(item);
+		long data = static_cast<long>(GetItemData(item));
 		if (0 < data)
 			m_OwnerData[data] = inData;
 		else

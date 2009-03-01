@@ -1504,7 +1504,7 @@ void CDlgListViewer::OnCopy(wxCommandEvent& evt)
 			std::vector<wxString> line;
 			m_ctrlList->GetPrintLine(-1, line);
 			table.StartLine();
-			for (size_t i = 0; i < line.size(); ++i)
+			for (int i = 0; i < static_cast<int>(line.size()); ++i)
 			{
 				table.Cell(i, line[i]);
 			}
@@ -1517,7 +1517,7 @@ void CDlgListViewer::OnCopy(wxCommandEvent& evt)
 			std::vector<wxString> line;
 			m_ctrlList->GetPrintLine(indices[idx], line);
 			table.StartLine();
-			for (size_t i = 0; i < line.size(); ++i)
+			for (int i = 0; i < static_cast<int>(line.size()); ++i)
 			{
 				table.Cell(i, line[i]);
 			}

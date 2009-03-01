@@ -478,7 +478,7 @@ bool CAgilityBookPointsView::OnCmd(int id)
 				std::vector<wxString> line;
 				m_Ctrl->GetPrintLine(-1, line);
 				table.StartLine();
-				for (size_t i = 0; i < line.size(); ++i)
+				for (int i = 0; i < static_cast<int>(line.size()); ++i)
 				{
 					table.Cell(i, line[i]);
 				}
@@ -491,7 +491,7 @@ bool CAgilityBookPointsView::OnCmd(int id)
 				std::vector<wxString> line;
 				m_Ctrl->GetPrintLine((*iter), line);
 				table.StartLine();
-				for (size_t i = 0; i < line.size(); ++i)
+				for (int i = 0; i < static_cast<int>(line.size()); ++i)
 				{
 					table.Cell(i, line[i]);
 				}

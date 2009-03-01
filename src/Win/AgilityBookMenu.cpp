@@ -148,7 +148,7 @@ void CAgilityBookMenu::CreateMenu(
 		wxDocManager* manager)
 {
 	if (bCreate)
-		handles.idx = m_MenuBar->GetMenuCount();
+		handles.idx = static_cast<int>(m_MenuBar->GetMenuCount());
 
 	wxString title;
 
@@ -291,7 +291,7 @@ void CAgilityBookMenu::CreateMenu(
 void CAgilityBookMenu::CreateSubMenu(wxMenu* parent, MenuHandles& handles, bool bCreate)
 {
 	if (bCreate)
-		handles.idx = parent->GetMenuItemCount();
+		handles.idx = static_cast<int>(parent->GetMenuItemCount());
 
 	wxString title;
 
