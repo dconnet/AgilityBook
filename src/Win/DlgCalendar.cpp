@@ -47,7 +47,7 @@
 //#include "AgilityBookOptions.h"
 //#include "ARBCalendar.h"
 //#include "ARBConfig.h"
-//#include "DlgInfoJudge.h"
+//#include "DlgInfoNote.h"
 
 
 #pragma message PRAGMA_MESSAGE("TODO: Implement CDlgCalendar")
@@ -480,7 +480,7 @@ void CDlgCalendar::OnClubNotes()
 	UpdateData(TRUE);
 	m_Club.TrimRight();
 	m_Club.TrimLeft();
-	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, (LPCTSTR)m_Club, this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, (LPCTSTR)m_Club, this);
 	if (IDOK == dlg.DoModal())
 	{
 		m_Club = dlg.CurrentSelection();
@@ -511,7 +511,7 @@ void CDlgCalendar::OnLocationNotes()
 	UpdateData(TRUE);
 	m_Location.TrimRight();
 	m_Location.TrimLeft();
-	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
 	if (IDOK == dlg.DoModal())
 	{
 		m_Location = dlg.CurrentSelection();

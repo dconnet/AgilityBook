@@ -88,7 +88,7 @@
 #include "DlgConfigure.h"
 #include "DlgDog.h"
 #include "DlgFindLinks.h"
-#include "DlgInfoJudge.h"
+#include "DlgInfoNote.h"
 #include "DlgListViewer.h"
 #include "DlgMessage.h"
 #include "DlgOptions.h"
@@ -1700,7 +1700,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
 				select = pTrial->GetClubs().GetPrimaryClubName();
-			CDlgInfoJudge dlg(this, ARBInfo::eClubInfo, select);
+			CDlgInfoNote dlg(this, ARBInfo::eClubInfo, select);
 			dlg.ShowModal();
 		}
 		break;
@@ -1711,7 +1711,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogRunPtr pRun = GetCurrentRun();
 			if (pRun)
 				select = pRun->GetJudge();
-			CDlgInfoJudge dlg(this, ARBInfo::eJudgeInfo, select);
+			CDlgInfoNote dlg(this, ARBInfo::eJudgeInfo, select);
 			dlg.ShowModal();
 		}
 		break;
@@ -1722,7 +1722,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
 				select = pTrial->GetLocation();
-			CDlgInfoJudge dlg(this, ARBInfo::eLocationInfo, select);
+			CDlgInfoNote dlg(this, ARBInfo::eLocationInfo, select);
 			dlg.ShowModal();
 		}
 		break;
