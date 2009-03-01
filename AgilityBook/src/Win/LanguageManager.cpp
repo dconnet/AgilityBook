@@ -142,7 +142,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 				choices.Add(info->Description);
 				langId.push_back(info->Language);
 				if (info->Language == lang)
-					idxLang = langId.size() - 1;
+					idxLang = static_cast<int>(langId.size()) - 1;
 			}
 			cont = dir.GetNext(&filename);
 		}

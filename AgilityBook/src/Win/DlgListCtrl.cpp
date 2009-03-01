@@ -719,8 +719,8 @@ void CDlgListCtrl::SwapEntries(
 		long oldIndex,
 		long newIndex)
 {
-	long data1 = m_ctrlList->GetItemData(oldIndex);
-	long data2 = m_ctrlList->GetItemData(newIndex);
+	long data1 = static_cast<long>(m_ctrlList->GetItemData(oldIndex));
+	long data2 = static_cast<long>(m_ctrlList->GetItemData(newIndex));
 	m_ctrlList->SetItemData(oldIndex, data2);
 	m_ctrlList->SetItemData(newIndex, data1);
 	m_ctrlList->SetSelection(newIndex);
