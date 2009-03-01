@@ -151,7 +151,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		file.Close();
 	}
 #else
-	CReadHttp file(url, data);
+	CReadHttp file(url, &data);
 	wxString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
 	if (file.ReadHttpFile(userName, errMsg))
 		CAgilityBookOptions::SetUserName(m_usernameHint, userName);

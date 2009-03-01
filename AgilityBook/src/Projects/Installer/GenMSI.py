@@ -1,6 +1,8 @@
 # Generate MSI files
 #
 # Revision History
+# 2009-03-01 DRC Made v2 coexist with v1, updated for wxWidgets
+#            Fixed bug where french and arbhelp would always be installed
 # 2008-10-14 DRC Added x64 specific tags
 # 2007-11-14 DRC Wix works! (it's now the default)
 # 2007-11-05 DRC Add WiX back (addition)
@@ -33,7 +35,15 @@ WinSrcDir = AgilityBookDir + "\\src"
 code32 = 1
 code64 = 3
 code98 = 2
-UpgradeCode = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
+
+# v1 upgrade code
+# (this can no longer generate a v1 install, but keep this here for reference)
+#UpgradeCode = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
+#defFolder = 'Agility Record Book'
+
+# v2 upgrade code
+UpgradeCode = "4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4"
+defFolder = 'Agility Record Book v2'
 
 
 def getversion(numParts):
@@ -46,7 +56,7 @@ def getversion(numParts):
 		"#define ARB_VER_MAJOR",
 		"#define ARB_VER_MINOR",
 		"#define ARB_VER_DOT",
-		"#define ARB_VER_FILEVER"
+		"#define ARB_VER_BUILD"
 		]
 	found = 0;
 	version = ["0", "0", "0", "0"]
@@ -164,37 +174,35 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'    <Directory Id="TARGETDIR" Name="SourceDir">'
 	print >>setup, r'      <Directory Id="DesktopFolder"/>'
 	print >>setup, r'      <Directory Id="ProgramMenuFolder">'
-	print >>setup, r'        <Directory Id="ARBMenuFolder" Name="ARB" LongName="Agility Record Book"/>'
+	print >>setup, r'        <Directory Id="ARBMenuFolder" Name="ARB" LongName="' + defFolder + '"/>'
 	print >>setup, r'      </Directory>'
 	if code64 == code:
 		print >>setup, r'      <Directory Id="ProgramFiles64Folder">'
 	else:
 		print >>setup, r'      <Directory Id="ProgramFilesFolder">'
 	print >>setup, r'        <Directory Id="CompanyFolder" Name="dconSoft" LongName="dcon Software">'
-	print >>setup, r'          <Directory Id="INSTALLDIR" Name="ARB" LongName="Agility Record Book">'
+	print >>setup, r'          <Directory Id="INSTALLDIR" Name="ARB" LongName="' + defFolder + '">'
 	print >>setup, r''
-
 	if code64 == code:
-		print >>setup, r'            <Component Id="ApplicationCore" Guid="54DDED5B-A520-49A1-B96A-76C5B7E7651B" Win64="yes">'
+		print >>setup, r'            <Component Id="ApplicationCore" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="yes">'
 	else:
-		print >>setup, r'            <Component Id="ApplicationCore" Guid="F8886313-42A0-4B12-B2EE-C40FB614101F">'
+		print >>setup, r'            <Component Id="ApplicationCore" Guid="55CB5388-14EA-4927-B2A4-96315EA09418">'
 	print >>setup, r'              <File Id="App" Name="ARBexe" LongName="AgilityBook.exe"'
 	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.exe"'
 	print >>setup, r'                    Vital="yes" DiskId="1">'
-	print >>setup, r'                <Shortcut Id="AppDesktop" Name="ARB" LongName="Agility Record Book" Directory="DesktopFolder" />'
-	print >>setup, r'                <Shortcut Id="AppMenu" Name="ARB" LongName="Agility Record Book" Directory="ARBMenuFolder" />'
+	print >>setup, r'                <Shortcut Id="AppDesktop" Name="ARB" LongName="' + defFolder + '" Directory="DesktopFolder" />'
+	print >>setup, r'                <Shortcut Id="AppMenu" Name="ARB" LongName="' + defFolder + '" Directory="ARBMenuFolder" />'
+	print >>setup, r'              </File>'
+	print >>setup, r'              <File Id="ARBData" Name="ARBData" LongName="AgilityBook.dat"'
+	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.dat"'
+	print >>setup, r'                    Vital="yes" DiskId="1">'
 	print >>setup, r'              </File>'
 	print >>setup, r'              <File Id="ARBHelp" Name="ARBHelp" LongName="ARBHelp.exe"'
 	print >>setup, r'                    Source="' + baseDir + r'ARBHelp.exe"'
 	print >>setup, r'                    Vital="yes" DiskId="1">'
 	print >>setup, r'                <Shortcut Id="ARBHelpShortcut" Name="ARBHelp" LongName="ARB Helper" Directory="ARBMenuFolder" />'
 	print >>setup, r'              </File>'
-	print >>setup, r'              <File Id="Help" Name="ARBchm" LongName="AgilityBook.chm"'
-	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.chm"'
-	print >>setup, r'                    Vital="yes" DiskId="1">'
-	print >>setup, r'                <Shortcut Id="ChmShortcut" Name="Help" LongName="Help" Directory="ARBMenuFolder" />'
-	print >>setup, r'              </File>'
-	print >>setup, r'              <!-- The description is the same since MFC will set it to that -->'
+	print >>setup, r'              <!-- The description is the same since that was what MFC set it to (v1) -->'
 	print >>setup, r'              <ProgId Id="AgilityBook.Document" Description="AgilityBook.Document">'
 	print >>setup, r'                <Extension Id="arb">'
 	print >>setup, r'                  <Verb Id="open" Sequence="1" Command="Open" Target="[!App]" Argument=' + "'\"%1\"'/>"
@@ -204,35 +212,46 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'                        Type="string" Value="[INSTALLDIR]AgilityBook.exe,0" />'
 	print >>setup, r'            </Component>'
 	if code64 == code:
-		print >>setup, r'            <Component Id="French" Guid="7C0E5438-3E23-495B-8808-84986FDB880C" Win64="yes">'
+		print >>setup, r'            <Component Id="CALusdaa" Guid="16F399ED-BA94-4CBF-B85E-D79C737D3232" Win64="yes">'
 	else:
-		print >>setup, r'            <Component Id="French" Guid="BC52AC1B-B3CD-49E1-BD21-6F9955AB31D6">'
-	print >>setup, r'              <File Id="ResFRA" Name="fradll" LongName="AgilityBookFRA.dll"'
-	print >>setup, r'                    Source="' + baseDir + r'AgilityBookFRA.dll"'
-	print >>setup, r'                    Vital="no" DiskId="1" />'
-	print >>setup, r'              <File Id="HelpFRA" Name="ARBchm" LongName="AgilityBookFRA.chm"'
-	print >>setup, r'                    Source="' + baseDir + r'AgilityBookFRA.chm"'
-	print >>setup, r'                    Vital="yes" DiskId="1" />'
-	print >>setup, r'            </Component>'
-	if code64 == code:
-		print >>setup, r'            <Component Id="CALusdaa" Guid="2E778DAE-3E68-4C6E-A5B3-4A0A7A810923" Win64="yes">'
-	else:
-		print >>setup, r'            <Component Id="CALusdaa" Guid="DA49BBD9-D16D-4B03-80F2-524553F76FFF">'
+		print >>setup, r'            <Component Id="CALusdaa" Guid="8C9B6F50-7F0A-46AA-B813-A66A8300E421">'
 	print >>setup, r'              <File Id="usdaa" Name="CALusdaa" LongName="cal_usdaa.dll"'
 	print >>setup, r'                    Source="' + baseDir + r'cal_usdaa.dll"'
 	print >>setup, r'                    Vital="no" DiskId="1" />'
 	print >>setup, r'            </Component>'
 	if code64 == code:
-		print >>setup, r'            <Component Id="ARBHelp" Guid="63EBB1E4-4156-4511-A80E-E837DA8FEA47" Win64="yes">'
+		print >>setup, r'            <Component Id="ARBHelp" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="yes">'
 	else:
-		print >>setup, r'            <Component Id="ARBHelp" Guid="014BD8FF-D094-49EB-B4A9-BE74ED440893">'
+		print >>setup, r'            <Component Id="ARBHelp" Guid="9CB60EE5-C5A3-4219-83C4-A59D2872DC8F">'
 	print >>setup, r'              <File Id="arbhelp" Name="ARBHelp" LongName="ARBHelp.exe"'
 	print >>setup, r'                    Source="' + baseDir + r'ARBHelp.exe"'
 	print >>setup, r'                    Vital="no" DiskId="1" />'
 	print >>setup, r'            </Component>'
 	print >>setup, r''
-	print >>setup, r'            <Component Id="empty" Guid="74004007-0948-46E6-9250-5733CC0D4607"/>'
-	print >>setup, r''
+	print >>setup, r'            <Directory Id="lang" Name="lang">'
+	print >>setup, r'              <Directory Id="dirFR" Name="fr">'
+	if code64 == code:
+		print >>setup, r'                <Component Id="langFR" Guid="581CB1F1-0846-4205-8551-5FEE8A03AF62" Win64="yes">'
+	else:
+		print >>setup, r'                <Component Id="langFR" Guid="53DA3663-A90A-44AF-A921-5EC0E104ABAD">'
+	print >>setup, r'                  <File Id="ResFR" Name="arb.mo"'
+	print >>setup, r'                        Source="' + baseDir + r'lang\fr\arb.mo"'
+	print >>setup, r'                        Vital="no" DiskId="1" />'
+	print >>setup, r'                </Component>'
+	print >>setup, r'              </Directory>'
+	print >>setup, r'              <Directory Id="dirEN" Name="en">'
+	if code64 == code:
+		print >>setup, r'                <Component Id="langEN" Guid="27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6" Win64="yes">'
+	else:
+		print >>setup, r'                <Component Id="langEN" Guid="9AFD56DF-F038-4877-A35A-00036A508FD8">'
+	print >>setup, r'                  <File Id="ResEN" Name="arb.mo"'
+	print >>setup, r'                        Source="' + baseDir + r'lang\en\arb.mo"'
+	print >>setup, r'                        Vital="yes" DiskId="1">'
+	print >>setup, r'                  </File>'
+	print >>setup, r'                </Component>'
+	print >>setup, r'              </Directory>'
+	print >>setup, r'            </Directory>'
+	print >>setup, r'            <Component Id="empty" Guid="7B73272C-8FB4-4FED-9A73-1C0A534A583C"/>'
 	print >>setup, r'          </Directory>'
 	print >>setup, r'        </Directory>'
 	print >>setup, r'      </Directory>'
@@ -241,9 +260,8 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'    <Feature Id="Complete" Display="expand" Level="1"'
 	print >>setup, r'             AllowAdvertise="no"'
 	print >>setup, r'             Title="Agility Record Book" Description="Main Agility Record Book files" ConfigurableDirectory="INSTALLDIR">'
-	print >>setup, r'      <ComponentRef Id="ARBHelp"/>'
 	print >>setup, r'      <ComponentRef Id="ApplicationCore"/>'
-	print >>setup, r'      <ComponentRef Id="French"/>'
+	print >>setup, r'      <ComponentRef Id="langEN"/>'
 	print >>setup, r'      <Feature Id="ARBHelp" Display="expand" Level="100"'
 	print >>setup, r'               AllowAdvertise="no"'
 	print >>setup, r'               Title="ARBHelp" Description="Help diagnose problems by assembling necessary files for debugging">'
@@ -257,7 +275,7 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'        <Feature Id="French" Level="100"'
 	print >>setup, r'                 AllowAdvertise="no"'
 	print >>setup, r'                 Title="French" Description="French">'
-	print >>setup, r'          <ComponentRef Id="French"/>'
+	print >>setup, r'          <ComponentRef Id="langFR"/>'
 	print >>setup, r'        </Feature>'
 	print >>setup, r'      </Feature>'
 	print >>setup, r'      <Feature Id="Plugins" Display="expand" Level="100"'
@@ -309,7 +327,7 @@ def genInno(version, version2, code, tidy):
 		return 0
 
 	setup = open(outputFile + ".iss", "w")
-	print >>setup, r'#define ARBName "Agility Record Book"'
+	print >>setup, r'#define ARBName "' + defFolder + '"'
 	print >>setup, r'#define ARBVersion "' + version + '"'
 	print >>setup, r''
 	print >>setup, r'[Setup]'
@@ -336,15 +354,14 @@ def genInno(version, version2, code, tidy):
 	print >>setup, r'[Files]'
 	print >>setup, r'Source: ' + baseDir + r'AgilityBook.exe; DestDir: {app}'
 	print >>setup, r'Source: ' + baseDir + r'ARBHelp.exe; DestDir: {app}'
-	print >>setup, r'Source: ' + baseDir + r'AgilityBook.chm; DestDir: {app}'
-	print >>setup, r'Source: ' + baseDir + r'AgilityBookFRA.dll; DestDir: {app}'
+	print >>setup, r'Source: ' + baseDir + r'lang\en\arb.mo; DestDir: {app}\lang\en'
+	print >>setup, r'Source: ' + baseDir + r'lang\fr\arb.mo; DestDir: {app}\lang\fr'
 	print >>setup, r'Source: ' + baseDir + r'cal_usdaa.dll; DestDir: {app}'
 	print >>setup, r''
 	print >>setup, r'[Icons]'
 	print >>setup, r'Name: {commondesktop}\{#ARBName}; Filename: {app}\AgilityBook.exe'
 	print >>setup, r'Name: {group}\{#ARBName}; Filename: {app}\AgilityBook.exe; IconFilename: {app}\AgilityBook.exe; IconIndex: 0'
 	print >>setup, r'Name: {group}\{#ARBName} Helper; Filename: {app}\ARBHelp.exe; IconFilename: {app}\ARBHelp.exe; IconIndex: 0'
-	print >>setup, r'Name: {group}\{#ARBName} Help; Filename: {app}\AgilityBook.chm'
 	print >>setup, r'Name: {group}\{#ARBName} Web Site; Filename: http://www.agilityrecordbook.com/'
 	print >>setup, r'Name: {group}\Yahoo Discussion Group; Filename: http://groups.yahoo.com/group/AgilityRecordBook/'
 	print >>setup, r'Name: "{group}\{cm:UninstallProgram,{#ARBName}}"; Filename: "{uninstallexe}"'

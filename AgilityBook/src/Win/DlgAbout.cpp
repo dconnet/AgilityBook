@@ -122,7 +122,7 @@ void CHyperlinkCtrl::OnFocus(wxFocusEvent& evt)
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* parent)
-	: wxDialog(parent, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog(parent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_pDoc(pDoc)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);

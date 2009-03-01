@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -209,7 +209,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -273,7 +273,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -337,7 +337,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -402,7 +402,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -467,7 +467,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -533,7 +533,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
 			/>
 		</Configuration>
 	</Configurations>
@@ -611,6 +611,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ColumnOrder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ComboBoxes.cpp"
 				>
 			</File>
 			<File
@@ -990,10 +994,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\ComboBoxes.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\VersionNum.cpp"
 				>
 			</File>
@@ -1089,6 +1089,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\ColumnOrder.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\ComboBoxes.h"
 				>
 			</File>
 			<File
@@ -1397,10 +1401,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\Validators.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\ComboBoxes.h"
 				>
 			</File>
 			<File
