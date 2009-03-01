@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief interface of the CDlgInfoJudge class
+ * @brief Dialog for adding notes to ARBInfo items.
  * @author David Connet
  *
  * Revision History
@@ -41,50 +41,27 @@
  */
 
 #include "ARBInfo.h"
-//#include "ARBTypes.h"
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
-//#include <set>
+#include <vector>
+#include <set>
 class CAgilityBookDoc;
+class wxBitmapComboBox;
 
-class CDlgInfoJudge
+
+class CDlgInfoNote : public wxDialog
 {
 public:
-	CDlgInfoJudge(
+	CDlgInfoNote(
 			CAgilityBookDoc* pDoc,
 			ARBInfo::eInfoType inType,
 			tstring const& inSelect,
-			wxWindow* pParent = NULL) {}
-	wxString CurrentSelection() const	{return wxT("");}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgInfoJudge"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
+			wxWindow* pParent = NULL);
 
-#if 0
-class CDlgInfoJudge : public CDlgBaseDialog
-{
-// Construction
-public:
-	CDlgInfoJudge(
-			CAgilityBookDoc* pDoc,
-			ARBInfo::eInfoType inType,
-			tstring const& inSelect,
-			CWnd* pParent = NULL);
-
-	CString CurrentSelection() const	{return m_CurSel;}
+	wxString CurrentSelection() const	{return m_CurSel;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgInfoJudge)
-	enum { IDD = IDD_JUDGE_INFO };
-	CButton	m_ctrlDelete;
-	CComboBox2	m_ctrlNames;
-	CButton		m_ctrlVisible;
-	CEdit		m_ctrlComment;
-	//}}AFX_DATA
+	void UpdateImage(int index);
+	void UpdateData();
+
 	CAgilityBookDoc* m_pDoc;
 	ARBInfo::eInfoType m_Type;
 	tstring m_Select;
@@ -110,27 +87,21 @@ private:
 	};
 	std::vector<NameInfo> m_Names;
 	size_t m_nAdded;
-	CString m_CurSel;
+	wxString m_CurSel;
+	wxBitmapComboBox* m_ctrlNames;
+	wxButton* m_ctrlDelete;
+	wxCheckBox* m_ctrlVisible;
+	wxTextCtrl* m_ctrlNotes;
+	wxBitmap m_None;
+	wxBitmap m_Note;
+	wxBitmap m_Added;
+	wxBitmap m_NoteAdded;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgInfoJudge)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgInfoJudge)
-	virtual BOOL OnInitDialog();
-	afx_msg int OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
-	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
-	afx_msg void OnSelchangeName();
-	afx_msg void OnBnClickedJudgeVisible();
-	afx_msg void OnKillfocusComments();
-	afx_msg void OnNew();
-	afx_msg void OnDelete();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnSelchangeName(wxCommandEvent& evt);
+	void OnNewItem(wxCommandEvent& evt);
+	void OnDeleteItem(wxCommandEvent& evt);
+	void OnClickedJudgeVisible(wxCommandEvent& evt);
+	void OnKillfocusComments(wxFocusEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

@@ -85,7 +85,7 @@
 #include "ARBDogClub.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
-#include "DlgInfoJudge.h"
+#include "DlgInfoNote.h"
 #include "DlgListCtrl.h"
 
 using namespace std;
@@ -1292,7 +1292,7 @@ void CDlgRunScore::OnJudgeNotes()
 	UpdateData(TRUE);
 	m_Judge.TrimRight();
 	m_Judge.TrimLeft();
-	CDlgInfoJudge dlg(m_pDoc, ARBInfo::eJudgeInfo, (LPCTSTR)m_Judge, this);
+	CDlgInfoNote dlg(m_pDoc, ARBInfo::eJudgeInfo, (LPCTSTR)m_Judge, this);
 	if (IDOK == dlg.DoModal())
 	{
 		m_Judge = dlg.CurrentSelection();

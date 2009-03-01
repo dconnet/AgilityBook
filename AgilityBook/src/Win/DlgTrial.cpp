@@ -48,7 +48,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBDogTrial.h"
 #include "DlgClub.h"
-#include "DlgInfoJudge.h"
+#include "DlgInfoNote.h"
 #include "ListCtrl.h"
 #include "ListData.h"
 #include "NoteButton.h"
@@ -437,7 +437,7 @@ void CDlgTrial::OnLocationNotes(wxCommandEvent& evt)
 {
 	if (TransferDataFromWindow())
 	{
-		CDlgInfoJudge dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_Location = dlg.CurrentSelection();
@@ -455,7 +455,7 @@ void CDlgTrial::OnClubNotes(wxCommandEvent& evt)
 	if (0 <= index)
 	{
 		ARBDogClubPtr pClub = GetClubData(index);
-		CDlgInfoJudge dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			if (pClub->GetName() != dlg.CurrentSelection())

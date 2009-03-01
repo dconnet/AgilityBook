@@ -734,7 +734,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgInfoJudge.cpp"
+				RelativePath="..\..\Win\DlgInfoNote.cpp"
 				>
 			</File>
 			<File
@@ -1212,7 +1212,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgInfoJudge.h"
+				RelativePath="..\..\Win\DlgInfoNote.h"
 				>
 			</File>
 			<File

@@ -649,6 +649,19 @@ msgstr "&Détails..."
 msgid "DescDetails"
 msgstr "Montrer details"
 
+# DlgInfoNote
+msgid "IDD_JUDGE_INFO"
+msgstr "Information"
+
+msgid "IDC_JUDGE_NEW"
+msgstr "&Nouveax"
+
+msgid "IDC_JUDGE_DELETE"
+msgstr "&Supprimer"
+
+msgid "IDC_JUDGE_VISIBLE"
+msgstr "&Visible dans les listes"
+
 # DlgConfigOtherPoints
 msgid "IDD_CONFIG_OTHERPOINTS"
 msgstr "Paramètres autres points"
