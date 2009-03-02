@@ -33,41 +33,28 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-01-02 DRC Created
  */
 
-#include "resource.h"
+#include "ARBTypes.h"
+#include <wx/wizard.h>
 class CDlgARBHelp;
 
-class CDlgHelpPage1 : public CPropertyPage
+
+class CDlgPageEncode : public wxWizardPageSimple
 {
-	DECLARE_DYNAMIC(CDlgHelpPage1)
 public:
-	CDlgHelpPage1(CDlgARBHelp* pParent);
-	~CDlgHelpPage1();
+	CDlgPageEncode(CDlgARBHelp* pParent);
+
+	virtual bool TransferDataFromWindow();
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgHelpPage1)
-	enum { IDD = IDD_PAGE_ENCODE };
-	CStatic m_ctrlText;
-	CStatic m_ctrlText2;
-	//}}AFX_DATA
+	void DumpGroup(
+			otstringstream* data,
+			wxString const& group,
+			std::vector<wxString>* items);
+
 	CDlgARBHelp* m_Parent;
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgHelpPage1)
-public:
-	virtual BOOL OnSetActive();
-	virtual LRESULT OnWizardNext();
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgHelpPage1)
-	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	wxRadioBox* m_DiskChoices;
 };

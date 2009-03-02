@@ -217,12 +217,22 @@ bool BinaryData::Encode(
 
 
 bool BinaryData::Encode(
+#ifdef WXWIDGETS
+		wxFFile& inData,
+#else
 		FILE* inData,
+#endif
 		tstring& outBase64)
 {
 	outBase64.erase();
+
+#ifdef WXWIDGETS
+	if (!inData.IsOpened())
+		return false;
+#else
 	if (!inData)
 		return false;
+#endif
 
 	size_t nData = 0;
 	unsigned char* pData = NULL;
@@ -231,7 +241,7 @@ bool BinaryData::Encode(
 	wxMemoryOutputStream output;
 	{
 		wxZlibOutputStream strm(output);
-		wxFileInputStream instrm(_fileno(inData));
+		wxFFileInputStream instrm(inData);
 		strm.Write(instrm);
 		strm.Close();
 	}

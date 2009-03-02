@@ -33,44 +33,26 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-01-02 DRC Created
  */
 
-#include "resource.h"
+#include <wx/wizard.h>
 class CDlgARBHelp;
 
-class CDlgPageEncodeFiles : public CPropertyPage
+
+class CDlgPageEncodeFiles : public wxWizardPageSimple
 {
-	DECLARE_DYNAMIC(CDlgPageEncodeFiles)
 public:
 	CDlgPageEncodeFiles(CDlgARBHelp* pParent);
-	~CDlgPageEncodeFiles();
+
+	virtual bool TransferDataToWindow();
+	virtual bool TransferDataFromWindow();
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgPageEncodeFiles)
-	enum { IDD = IDD_PAGE_ENCODE_FILES };
-	CStatic	m_ctrlText;
-	CCheckListBox	m_ctrlList;
-	//}}AFX_DATA
 	CDlgARBHelp* m_Parent;
-	CString m_Text;
+	wxCheckListBox* m_ctrlList;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgPageEncodeFiles)
-public:
-	virtual BOOL OnSetActive();
-	virtual LRESULT OnWizardNext();
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	void UpdateText();
-	//{{AFX_MSG(CDlgPageEncodeFiles)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnCheckChange();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnCheckAll(wxCommandEvent& evt);
+	void OnCheckNone(wxCommandEvent& evt);
 };

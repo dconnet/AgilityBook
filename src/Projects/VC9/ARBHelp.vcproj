@@ -43,7 +43,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 				DisableSpecificWarnings="4100"
@@ -109,7 +109,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
@@ -175,7 +175,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 				DisableSpecificWarnings="4100"
@@ -242,7 +242,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
@@ -302,10 +302,6 @@
 			</File>
 			<File
 				RelativePath="..\..\ARBHelp\DlgPageDecode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.cpp"
 				>
 			</File>
 			<File
@@ -425,10 +421,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\ARBHelp\DlgPageEncode.h"
 				>
 			</File>
@@ -438,10 +430,6 @@
 			</File>
 			<File
 				RelativePath="..\..\ARBHelp\DlgPageEncodeFinish.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARBHelp\resource.h"
 				>
 			</File>
 			<File
