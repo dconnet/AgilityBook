@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-01-02 DRC Created
  */
 
@@ -39,98 +40,86 @@
 
 #include "DlgARBHelp.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgPageEncodeFiles property page
-
-IMPLEMENT_DYNAMIC(CDlgPageEncodeFiles, CPropertyPage)
 
 CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
-	: CPropertyPage(CDlgPageEncodeFiles::IDD)
+	: wxWizardPageSimple(pParent)
 	, m_Parent(pParent)
+	, m_ctrlList(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgPageEncodeFiles)
-	//}}AFX_DATA_INIT
+	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
+		wxT("Check the files you would like to be sent"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	text1->Wrap(-1);
+
+	m_ctrlList = new wxCheckListBox(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, 0);
+
+	wxButton* btnAll = new wxButton(this, wxID_ANY, wxT("Check All"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	btnAll->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgPageEncodeFiles::OnCheckAll), NULL, this);
+
+	wxButton* btnNone = new wxButton(this, wxID_ANY, wxT("Uncheck All"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	btnNone->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgPageEncodeFiles::OnCheckNone), NULL, this);
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(text1, 0, wxALL, 5);
+
+	wxBoxSizer* sizerListBtns = new wxBoxSizer(wxHORIZONTAL);
+	sizerListBtns->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
+	sizerBtns->Add(btnAll, 0, wxALL, 5);
+	sizerBtns->Add(btnNone, 0, wxALL, 5);
+
+	sizerListBtns->Add(sizerBtns, 0, wxEXPAND, 5);
+
+	bSizer->Add(sizerListBtns, 1, wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
 }
 
-CDlgPageEncodeFiles::~CDlgPageEncodeFiles()
+
+void CDlgPageEncodeFiles::OnCheckAll(wxCommandEvent& evt)
 {
-}
-
-void CDlgPageEncodeFiles::DoDataExchange(CDataExchange* pDX)
-{
-	CPropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgPageEncodeFiles)
-	DDX_Control(pDX, IDC_TEXT, m_ctrlText);
-	DDX_Control(pDX, IDC_LIST, m_ctrlList);
-	//}}AFX_DATA_MAP
-}
-
-BEGIN_MESSAGE_MAP(CDlgPageEncodeFiles, CPropertyPage)
-	//{{AFX_MSG_MAP(CDlgPageEncodeFiles)
-	ON_CLBN_CHKCHANGE(IDC_LIST, OnCheckChange)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-
-void CDlgPageEncodeFiles::UpdateText()
-{
-	int nChecked = 0;
-	for (int i = 0; i < m_ctrlList.GetCount(); ++i)
+	for (unsigned int n = 0; n < m_ctrlList->GetCount(); ++n)
 	{
-		if (1 == m_ctrlList.GetCheck(i))
-			++nChecked;
+		m_ctrlList->Check(n, true);
 	}
-	CString txt;
-	txt.FormatMessage(m_Text, nChecked);
-	m_ctrlText.SetWindowText(txt);
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgPageEncodeFiles message handlers
 
-BOOL CDlgPageEncodeFiles::OnInitDialog()
+void CDlgPageEncodeFiles::OnCheckNone(wxCommandEvent& evt)
 {
-	CPropertyPage::OnInitDialog();
-	m_ctrlText.GetWindowText(m_Text);
+	for (unsigned int n = 0; n < m_ctrlList->GetCount(); ++n)
+	{
+		m_ctrlList->Check(n, false);
+	}
+}
+
+
+bool CDlgPageEncodeFiles::TransferDataToWindow()
+{
+	m_ctrlList->Clear();
 	for (CDlgARBHelp::FileMap::const_iterator i = m_Parent->GetARBFiles().begin();
 		i != m_Parent->GetARBFiles().end();
 		++i)
 	{
-		int idx = m_ctrlList.AddString((*i).first);
-		m_ctrlList.SetCheck(idx, (*i).second ? 1 : 0);
+		int idx = m_ctrlList->Append((*i).first);
+		m_ctrlList->Check(idx, (*i).second);
 	}
-	UpdateText();
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	return true;
 }
 
-void CDlgPageEncodeFiles::OnCheckChange()
-{
-	UpdateText();
-}
 
-BOOL CDlgPageEncodeFiles::OnSetActive()
+bool CDlgPageEncodeFiles::TransferDataFromWindow()
 {
-	CPropertySheet* psheet = (CPropertySheet*)GetParent();
-	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_NEXT);
-	return __super::OnSetActive();
-}
-
-LRESULT CDlgPageEncodeFiles::OnWizardNext()
-{
-	for (int i = 0; i < m_ctrlList.GetCount(); ++i)
+	for (unsigned int i = 0; i < m_ctrlList->GetCount(); ++i)
 	{
-		CString filename;
-		m_ctrlList.GetText(i, filename);
-		m_Parent->SetARBFileStatus(filename, (1 == m_ctrlList.GetCheck(i)));
+		wxString filename = m_ctrlList->GetString(i);
+		m_Parent->SetARBFileStatus(filename, m_ctrlList->IsChecked(i));
 	}
-	return 0;
+	return true;
 }

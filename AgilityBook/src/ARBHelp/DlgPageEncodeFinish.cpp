@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-01-02 DRC Created
  */
 
@@ -39,74 +40,35 @@
 
 #include "DlgARBHelp.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgPageEncodeFinish property page
-
-IMPLEMENT_DYNAMIC(CDlgPageEncodeFinish, CPropertyPage)
 
 CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
-	: CPropertyPage(CDlgPageEncodeFinish::IDD)
+	: wxWizardPageSimple(pParent)
 	, m_Parent(pParent)
 {
-	//{{AFX_DATA_INIT(CDlgPageEncodeFinish)
-	//}}AFX_DATA_INIT
+	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
+		wxT("Now that the information is gathered, send an email to help@agilityrecordbook.com with this data."),
+		wxDefaultPosition, wxDefaultSize, 0);
+	text1->Wrap(500);
+
+	m_ctrlText = new wxTextCtrl(this, wxID_ANY,
+		wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		wxTE_MULTILINE|wxTE_READONLY);
+	m_ctrlText->SetMaxLength(0);
+	wxFont font = m_ctrlText->GetFont();
+	m_ctrlText->SetFont(wxFont(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight()));
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(text1, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(m_ctrlText, 1, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
 }
 
-CDlgPageEncodeFinish::~CDlgPageEncodeFinish()
+
+bool CDlgPageEncodeFinish::TransferDataToWindow()
 {
-}
-
-void CDlgPageEncodeFinish::DoDataExchange(CDataExchange* pDX)
-{
-	CPropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgPageEncodeFinish)
-	//}}AFX_DATA_MAP
-}
-
-BEGIN_MESSAGE_MAP(CDlgPageEncodeFinish, CPropertyPage)
-	//{{AFX_MSG_MAP(CDlgPageEncodeFinish)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgPageEncodeFinish message handlers
-
-BOOL CDlgPageEncodeFinish::OnInitDialog()
-{
-	CPropertyPage::OnInitDialog();
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-BOOL CDlgPageEncodeFinish::OnSetActive()
-{
-	CPropertySheet* psheet = (CPropertySheet*)GetParent();
-	psheet->SetWizardButtons(PSWIZB_BACK | PSWIZB_FINISH);
-	return __super::OnSetActive();
-}
-
-LRESULT CDlgPageEncodeFinish::OnWizardBack()
-{
-	if (0 == m_Parent->GetARBFiles().size())
-		return IDD_PAGE_ENCODE;
-	else
-		return 0;
-}
-
-BOOL CDlgPageEncodeFinish::OnWizardFinish()
-{
-	CWaitCursor wait;
-	CPropertySheet* psheet = (CPropertySheet*) GetParent();
-	// SetWizardButtons does a postmessage. I need it updated now! (lparam is buttons)
-	psheet->SendMessage(PSM_SETWIZBUTTONS, 0, 0);
-
-	m_Parent->SendIt();
-
-	return __super::OnWizardFinish();
+	m_ctrlText->SetValue(m_Parent->GetEncodedData());
+	return true;
 }

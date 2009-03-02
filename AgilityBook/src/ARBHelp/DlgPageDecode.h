@@ -33,37 +33,21 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-01-02 DRC Created
  */
 
-#include "resource.h"
-
-class CDlgPageDecode : public CPropertyPage
+class CDlgPageDecode : public wxDialog
 {
-	DECLARE_DYNAMIC(CDlgPageDecode)
 public:
 	CDlgPageDecode();
-	~CDlgPageDecode();
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgPageDecode)
-	enum { IDD = IDD_PAGE_DECODE };
-	CStatic m_ctrlText;
-	//}}AFX_DATA
+	wxTextCtrl* m_ctrlEncoded;
+	wxTextCtrl* m_ctrlDecoded;
+	std::vector<wxString> m_TmpFiles;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgPageDecode)
-public:
-	virtual BOOL OnSetActive();
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgPageDecode)
-	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnDecode(wxCommandEvent& evt);
+	void OnCancel(wxCommandEvent& evt);
 };

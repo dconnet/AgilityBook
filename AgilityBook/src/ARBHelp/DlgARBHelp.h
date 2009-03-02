@@ -33,44 +33,31 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  */
 
-#include <map>
-#include "resource.h"
 #include "ARBTypes.h"
-#include "DlgPageEncode.h"
-#include "DlgPageEncodeFiles.h"
-#include "DlgPageEncodeFinish.h"
-#include "DlgPageDecode.h"
-#include "DlgPageDecodeFinish.h"
+#include <map>
+#include <wx/wizard.h>
+class CDlgPageEncode;
 
-class CDlgARBHelp : public CPropertySheet
+
+class CDlgARBHelp : public wxWizard
 {
-	DECLARE_DYNAMIC(CDlgARBHelp)
 public:
-	CDlgARBHelp(bool decode);
+	CDlgARBHelp();
 
 	void AddSysInfo(tstring const& inData);
-	void AddRegistryInfo(LPCTSTR inData);
-	void SetARBFileStatus(CString const& inFileName, bool bInclude = true);
-	typedef std::map<CString, bool> FileMap;
-	FileMap const& GetARBFiles() const			{return m_IncFile;}
-	void SendIt();
+	void AddRegistryInfo(wxChar const* inData);
+	void SetARBFileStatus(wxString const& inFileName, bool bInclude = true);
 
-// Implementation
+	typedef std::map<wxString, bool> FileMap;
+	FileMap const& GetARBFiles() const			{return m_IncFile;}
+
+	wxString GetEncodedData();
+
 protected:
-	HICON m_hIcon;
-	bool m_Decode;
-	CDlgHelpPage1 m_pageEncode;
-	CDlgPageEncodeFiles m_pageFiles;
-	CDlgPageEncodeFinish m_pageEncodeFinish;
-	CDlgPageDecode m_pageDecode;
-	CDlgPageDecodeFinish m_pageDecodeFinish;
 	tstring m_SysInfo;
 	tstring m_RegInfo;
 	FileMap m_IncFile;
-
-	// Generated message map functions
-	virtual BOOL OnInitDialog();
-	DECLARE_MESSAGE_MAP()
 };

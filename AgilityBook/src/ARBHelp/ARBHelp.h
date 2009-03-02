@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-02-08 DRC Created
  */
 

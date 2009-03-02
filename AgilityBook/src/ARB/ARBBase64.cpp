@@ -128,7 +128,7 @@ bool ARBBase64::Decode(
 	size_t count = 1;
 	size_t nChar = 0;
 
-	while (inBase64[nChar] != '=' && count <= bufsize)
+	while (count <= bufsize && inBase64[nChar] != '=')
 	{
 		//check to see if it's a legal base64 char...
 		while (SKIP == base64map[inBase64[nChar]])

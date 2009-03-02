@@ -31,67 +31,58 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-02-08 DRC Created
  */
 
 #include "stdafx.h"
 #include "DlgARBHelp.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
+#include "DlgPageDecode.h"
+#include <wx/cmdline.h>
+#include <wx/config.h>
 
 
-class CARBHelpCommandLine : public CCommandLineInfo
+class CARBHelpApp : public wxApp
 {
-public:
-	CARBHelpCommandLine()
-		: m_Decode(false)
-	{}
-	virtual void ParseParam(LPCTSTR lpszParam, BOOL bFlag, BOOL bLast);
-	bool m_Decode;
-};
-
-void CARBHelpCommandLine::ParseParam(LPCTSTR lpszParam, BOOL bFlag, BOOL bLast)
-{
-	if (bFlag)
-	{
-		CString arg(lpszParam);
-		if (0 == arg.CompareNoCase(_T("decode")))
-			m_Decode = true;
-	}
-	else
-		CCommandLineInfo::ParseParam(lpszParam, bFlag, bLast);
-}
-
-class CARBHelpApp : public CWinApp
-{
+	DECLARE_NO_COPY_CLASS(CARBHelpApp)
 public:
 	CARBHelpApp();
-	virtual BOOL InitInstance();
-	DECLARE_MESSAGE_MAP()
+	virtual bool OnInit();
 };
 
-BEGIN_MESSAGE_MAP(CARBHelpApp, CWinApp)
-END_MESSAGE_MAP()
+
+IMPLEMENT_APP(CARBHelpApp)
+
 
 CARBHelpApp::CARBHelpApp()
 {
 }
 
-CARBHelpApp theApp;
 
-BOOL CARBHelpApp::InitInstance()
+bool CARBHelpApp::OnInit()
 {
-	CWinApp::InitInstance();
-	SetRegistryKey(_T("dcon Software"));
+	SetAppName(wxT("Agility Record Book"));
+	wxConfig::Set(new wxConfig(wxT("Agility Record Book"), wxT("dcon Software")));
 
-	CARBHelpCommandLine cmdInfo;
-	ParseCommandLine(cmdInfo);
+	static const wxCmdLineEntryDesc cmdLineDesc[] =
+	{
+		{wxCMD_LINE_SWITCH, wxT("decode"), NULL, wxT("Decode ARBHelp data from clipboard")},
+		{wxCMD_LINE_NONE}
+	};
+	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
+	if (0 != cmdline.Parse(true))
+		return false;
 
-	CDlgARBHelp dlg(cmdInfo.m_Decode);
-	m_pMainWnd = &dlg;
-	dlg.DoModal();
+	if (cmdline.Found(wxT("decode")))
+	{
+		CDlgPageDecode* dlg = new CDlgPageDecode();
+		dlg->Show();
+	}
+	else
+	{
+		new CDlgARBHelp();
+	}
 
-	return FALSE;
+	return true;
 }
