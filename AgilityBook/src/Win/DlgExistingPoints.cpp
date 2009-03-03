@@ -42,412 +42,542 @@
 #include "stdafx.h"
 #include "DlgExistingPoints.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgExistingPoints")
-#if 0
-#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBDogExistingPoints.h"
-#include "ListData.h"
+#include "Globals.h"
+#include "Validators.h"
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgPointsDataLevel : public CListData
+class CDlgPointsVenueData : public wxClientData
 {
 public:
-	CDlgPointsDataLevel(ARBConfigLevelPtr pLevel)
-		: m_pLevel(pLevel)
-		, m_pSubLevel()
+	CDlgPointsVenueData(ARBConfigVenuePtr venue)
+		: m_Venue(venue)
 	{
 	}
-	CDlgPointsDataLevel(
-			ARBConfigLevelPtr pLevel,
-			ARBConfigSubLevelPtr pSubLevel)
-		: m_pLevel(pLevel)
-		, m_pSubLevel(pSubLevel)
+	ARBConfigVenuePtr m_Venue;
+};
+
+class CDlgPointsDivisionData : public wxClientData
+{
+public:
+	CDlgPointsDivisionData(ARBConfigDivisionPtr div)
+		: m_Div(div)
 	{
 	}
-	ARBConfigLevelPtr m_pLevel;
-	ARBConfigSubLevelPtr m_pSubLevel;
+	ARBConfigDivisionPtr m_Div;
+};
+
+class CDlgPointsLevelData : public wxClientData
+{
+public:
+	CDlgPointsLevelData(ARBConfigLevelPtr level)
+		: m_Level(level)
+		, m_SubLevel()
+	{
+	}
+	CDlgPointsLevelData(
+			ARBConfigLevelPtr level,
+			ARBConfigSubLevelPtr subLevel)
+		: m_Level(level)
+		, m_SubLevel(subLevel)
+	{
+	}
+	ARBConfigLevelPtr m_Level;
+	ARBConfigSubLevelPtr m_SubLevel;
+};
+
+class CDlgPointsEventData : public wxClientData
+{
+public:
+	CDlgPointsEventData(ARBConfigEventPtr evt)
+		: m_Event(evt)
+	{
+	}
+	ARBConfigEventPtr m_Event;
+};
+
+class CDlgPointsOtherPtData : public wxClientData
+{
+public:
+	CDlgPointsOtherPtData(ARBConfigOtherPointsPtr other)
+		: m_Other(other)
+	{
+	}
+	ARBConfigOtherPointsPtr m_Other;
+};
+
+class CDlgPointsMultiQData : public wxClientData
+{
+public:
+	CDlgPointsMultiQData(ARBConfigMultiQPtr multiQ)
+		: m_MultiQ(multiQ)
+	{
+	}
+	ARBConfigMultiQPtr m_MultiQ;
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgExistingPoints dialog
+
+BEGIN_EVENT_TABLE(CDlgExistingPoints, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgExistingPoints::OnOk)
+END_EVENT_TABLE()
+
+
+// Controls (all are readonly, except subname):
+// ARBDogExistingPoints::eOtherPoints:
+//  Venue  Division  Level  Event          OtherPts 
+// ARBDogExistingPoints::eRuns:
+//  Venue  Division  Level  Event  SubName
+// ARBDogExistingPoints::eSQ:
+//  Venue  Division  Level  Event
+// ARBDogExistingPoints::eSpeed:
+//  Venue  Division  Level
+// ARBDogExistingPoints::eMQ:
+//  Venue  MultiQ
 
 // If pExistingPoints is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgExistingPoints::CDlgExistingPoints(
 		CAgilityBookDoc* pDoc,
 		ARBDogExistingPointsList& points,
 		ARBDogExistingPointsPtr pExistingPoints,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgExistingPoints::IDD, pParent)
-	, m_ctrlType(false)
-	, m_ctrlOther(true)
-	, m_ctrlMultiQ(true)
-	, m_ctrlVenues(true)
-	, m_ctrlDivisions(true)
-	, m_ctrlLevels(true)
-	, m_ctrlEvents(true)
-	, m_ctrlSubNames(false)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_EXISTING_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_pDoc(pDoc)
 	, m_PointsList(points)
 	, m_pExistingPoints(pExistingPoints)
+	, m_Date()
+	, m_Points(0.0)
+	, m_Comments()
+	, m_ctrlDate(NULL)
+	, m_ctrlType(NULL)
+	, m_ctrlVenues(NULL)
+	, m_TextVenue()
+	, m_textDivMultiQs(NULL)
+	, m_ctrlDivMultiQs(NULL)
+	, m_TextDivMultiQ()
+	, m_ctrlLevels(NULL)
+	, m_TextLevel()
+	, m_ctrlEvents(NULL)
+	, m_TextEvent()
+	, m_ctrlSubNames(NULL)
+	, m_TextSubName()
+	, m_ctrlOthers(NULL)
+	, m_TextOther()
 {
-	//{{AFX_DATA_INIT(CDlgExistingPoints)
-	m_Points = 0.0;
-	m_Comments = _T("");
-	//}}AFX_DATA_INIT
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
 	if (m_pExistingPoints)
 	{
 		m_Date = m_pExistingPoints->GetDate();
 		m_Points = m_pExistingPoints->GetPoints();
 		m_Comments = m_pExistingPoints->GetComment().c_str();
-		m_Comments.Replace(_T("\n"), _T("\r\n"));
+		// Do not initialize the text for the other combos.
+		// Otherwise the validators will try to select before we're ready.
 	}
-}
+	else
+		m_Date.SetToday();
 
+	// Controls (these are done first to control tab order)
 
-void CDlgExistingPoints::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgExistingPoints)
-	DDX_Control(pDX, IDC_EXISTING_DATE, m_ctrlDate);
-	DDX_Control(pDX, IDC_EXISTING_TYPE, m_ctrlType);
-	DDX_Control(pDX, IDC_EXISTING_OTHERPOINTS_TEXT, m_ctrlOtherText);
-	DDX_Control(pDX, IDC_EXISTING_OTHERPOINTS, m_ctrlOther);
-	DDX_Control(pDX, IDC_EXISTING_MULTIQ_TEXT, m_ctrlMultiQText);
-	DDX_Control(pDX, IDC_EXISTING_MULTIQ, m_ctrlMultiQ);
-	DDX_Control(pDX, IDC_EXISTING_VENUES_TEXT, m_ctrlVenuesText);
-	DDX_Control(pDX, IDC_EXISTING_VENUES, m_ctrlVenues);
-	DDX_Control(pDX, IDC_EXISTING_DIVISION_TEXT, m_ctrlDivisionsText);
-	DDX_Control(pDX, IDC_EXISTING_DIVISION, m_ctrlDivisions);
-	DDX_Control(pDX, IDC_EXISTING_LEVEL_TEXT, m_ctrlLevelsText);
-	DDX_Control(pDX, IDC_EXISTING_LEVEL, m_ctrlLevels);
-	DDX_Control(pDX, IDC_EXISTING_EVENT_TEXT, m_ctrlEventsText);
-	DDX_Control(pDX, IDC_EXISTING_EVENT, m_ctrlEvents);
-	DDX_Control(pDX, IDC_EXISTING_SUBNAME_TEXT, m_ctrlSubNamesText);
-	DDX_Control(pDX, IDC_EXISTING_SUBNAME, m_ctrlSubNames);
-	DDX_CBString(pDX, IDC_EXISTING_SUBNAME, m_SubName);
-	DDX_Text(pDX, IDC_EXISTING_POINTS, m_Points);
-	DDX_Text(pDX, IDC_EXISTING_COMMENTS, m_Comments);
-	DDX_Control(pDX, IDOK, m_ctrlOk);
-	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
+	wxStaticText* textType = new wxStaticText(this, wxID_ANY,
+		_("IDC_EXISTING_TYPE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textType->Wrap(-1);
+
+	m_ctrlType = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
+	m_ctrlType->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgExistingPoints::OnSelchangeType), NULL, this);
+	m_ctrlType->SetHelpText(_("HIDC_EXISTING_TYPE"));
+	m_ctrlType->SetToolTip(_("HIDC_EXISTING_TYPE"));
+	// Set the contents of the type combo.
+	ARBDogExistingPoints::PointType types[] =
 	{
-		CTime time;
-		m_ctrlDate.GetTime(time);
-		m_Date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+		ARBDogExistingPoints::eOtherPoints,
+		ARBDogExistingPoints::eRuns,
+		ARBDogExistingPoints::eSpeed,
+		//ARBDogExistingPoints::eMQ, Not here - will be added later as long as a venue supports it
+		ARBDogExistingPoints::eSQ
+	};
+	int nTypes = sizeof(types) / sizeof(types[0]);
+	for (int i = 0; i < nTypes; ++i)
+	{
+		int index = m_ctrlType->Append(ARBDogExistingPoints::GetPointTypeName(types[i]).c_str());
+		m_ctrlType->SetClientData(index, reinterpret_cast<void*>(types[i]));
+		if (m_pExistingPoints && m_pExistingPoints->GetType() == types[i])
+			m_ctrlType->SetSelection(index);
+		else if (!m_pExistingPoints && ARBDogExistingPoints::eRuns == types[i])
+			m_ctrlType->SetSelection(index);
 	}
-}
+	if (wxNOT_FOUND == m_ctrlType->GetSelection())
+		m_ctrlType->SetSelection(0);
 
+	wxStaticText* textEarned = new wxStaticText(this, wxID_ANY,
+		_("IDC_EXISTING_DATE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textEarned->Wrap(-1);
 
-BEGIN_MESSAGE_MAP(CDlgExistingPoints, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgExistingPoints)
-	ON_CBN_SELCHANGE(IDC_EXISTING_TYPE, OnSelchangeType)
-	ON_CBN_SELCHANGE(IDC_EXISTING_VENUES, OnSelchangeVenues)
-	ON_CBN_SELCHANGE(IDC_EXISTING_DIVISION, OnSelchangeDivision)
-	ON_CBN_SELCHANGE(IDC_EXISTING_LEVEL, OnSelchangeLevel)
-	ON_CBN_SELCHANGE(IDC_EXISTING_EVENT, OnSelchangeEvent)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	m_ctrlDate = new wxDatePickerCtrl(this, wxID_ANY,
+		wxDateTime(m_Date.GetDate()),
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
+	m_ctrlDate->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgExistingPoints::OnDateChanged), NULL, this);
+	m_ctrlDate->SetHelpText(_("HIDC_EXISTING_DATE"));
+	m_ctrlDate->SetToolTip(_("HIDC_EXISTING_DATE"));
 
-/////////////////////////////////////////////////////////////////////////////
+	wxStaticText* textPoints = new wxStaticText(this, wxID_ANY,
+		_("IDC_EXISTING_POINTS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPoints->Wrap(-1);
 
-CListPtrData<ARBConfigVenuePtr>* CDlgExistingPoints::GetVenueData(int index) const
-{
-	CListData* pData = m_ctrlVenues.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pData);
-}
+	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		CGenericValidator(&m_Points));
+	ctrlPoints->SetHelpText(_("HIDC_EXISTING_POINTS"));
+	ctrlPoints->SetToolTip(_("HIDC_EXISTING_POINTS"));
 
+	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
+		_("IDC_EXISTING_VENUES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textVenue->Wrap(-1);
 
-CListPtrData<ARBConfigDivisionPtr>* CDlgExistingPoints::GetDivisionData(int index) const
-{
-	CListData* pData = m_ctrlDivisions.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigDivisionPtr>*>(pData);
-}
+	m_ctrlVenues = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_TextVenue));
+	m_ctrlVenues->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgExistingPoints::OnSelchangeVenue), NULL, this);
+	m_ctrlVenues->SetHelpText(_("HIDC_EXISTING_VENUES"));
+	m_ctrlVenues->SetToolTip(_("HIDC_EXISTING_VENUES"));
 
+	m_textDivMultiQs = new wxStaticText(this, wxID_ANY, wxT(""),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_textDivMultiQs->Wrap(-1);
 
-CListPtrData<ARBConfigEventPtr>* CDlgExistingPoints::GetEventData(int index) const
-{
-	CListData* pData = m_ctrlEvents.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigEventPtr>*>(pData);
-}
+	m_ctrlDivMultiQs = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_TextDivMultiQ));
+	m_ctrlDivMultiQs->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgExistingPoints::OnSelchangeDivMultiQ), NULL, this);
 
+	wxStaticText* textLevel = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_LEVEL"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textLevel->Wrap(-1);
 
-CDlgPointsDataLevel* CDlgExistingPoints::GetLevelData(int index) const
-{
-	CListData* pData = m_ctrlLevels.GetData(index);
-	return dynamic_cast<CDlgPointsDataLevel*>(pData);
-}
+	m_ctrlLevels = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_TextLevel));
+	m_ctrlLevels->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgExistingPoints::OnSelchangeLevel), NULL, this);
+	m_ctrlLevels->SetHelpText(_("HIDC_EXISTING_LEVEL"));
+	m_ctrlLevels->SetToolTip(_("HIDC_EXISTING_LEVEL"));
 
+	wxStaticText* textEvent = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_EVENT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textEvent->Wrap(-1);
 
-CListPtrData<ARBConfigOtherPointsPtr>* CDlgExistingPoints::GetOtherPointData(int index) const
-{
-	CListData* pData = m_ctrlOther.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigOtherPointsPtr>*>(pData);
-}
+	m_ctrlEvents = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_TextEvent));
+	m_ctrlEvents->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgExistingPoints::OnSelchangeEvent), NULL, this);
+	m_ctrlEvents->SetHelpText(_("HIDC_EXISTING_EVENT"));
+	m_ctrlEvents->SetToolTip(_("HIDC_EXISTING_EVENT"));
 
+	wxStaticText* textSubName = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_SUBNAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textSubName->Wrap(-1);
 
-CListPtrData<ARBConfigMultiQPtr>* CDlgExistingPoints::GetMultiQData(int index) const
-{
-	CListData* pData = m_ctrlMultiQ.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigMultiQPtr>*>(pData);
-}
+	m_ctrlSubNames = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN,
+		wxGenericValidator(&m_TextSubName));
+	m_ctrlSubNames->SetHelpText(_("HIDC_EXISTING_SUBNAME"));
+	m_ctrlSubNames->SetToolTip(_("HIDC_EXISTING_SUBNAME"));
 
+	wxStaticText* textOther = new wxStaticText(this, wxID_ANY, _("IDC_EXISTING_OTHERPOINTS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textOther->Wrap(-1);
 
-// Control order
-//  OtherPoints
-//  Venue       MultiQ
-//  Div
-//  Level
-//  Event       SubName
-// Other, MultiQ: Never moves, all others do.
+	m_ctrlOthers = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY,
+		wxGenericValidator(&m_TextOther));
+	m_ctrlOthers->SetHelpText(_("HIDC_EXISTING_OTHERPOINTS"));
+	m_ctrlOthers->SetToolTip(_("HIDC_EXISTING_OTHERPOINTS"));
 
-void CDlgExistingPoints::GetEnableLists(
-		int index,
-		BOOL& outOther,
-		BOOL& outMQ,
-		BOOL& outVenue,
-		BOOL& outDiv,
-		BOOL& outLevel,
-		BOOL& outEvent,
-		BOOL& outSubName,
-		bool bSet)
-{
-	outOther = FALSE;
-	outMQ = FALSE;
-	outVenue = FALSE;
-	outDiv = FALSE;
-	outLevel = FALSE;
-	outEvent = FALSE;
-	outSubName = FALSE;
+	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(200, 150), wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_RIGHT));
+	ctrlNote->SetHelpText(_("HIDC_EXISTING_COMMENTS"));
+	ctrlNote->SetToolTip(_("HIDC_EXISTING_COMMENTS"));
 
-	if (0 <= index)
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
+	sizerPoints->Add(textType, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPoints->Add(m_ctrlType, 0, wxALL, 5);
+	sizerPoints->Add(textEarned, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPoints->Add(m_ctrlDate, 0, wxALL, 5);
+	sizerPoints->Add(textPoints, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerPoints->Add(ctrlPoints, 0, wxALL, 5);
+
+	bSizer->Add(sizerPoints, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
+
+	wxStaticBoxSizer* sizerWhere = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_POINTS_WHERE")), wxVERTICAL);
+
+	wxFlexGridSizer* sizerCombo = new wxFlexGridSizer(6, 2, 0, 0);
+	sizerCombo->SetFlexibleDirection(wxBOTH);
+	sizerCombo->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+
+	sizerCombo->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerCombo->Add(m_ctrlVenues, 0, wxALL, 5);
+
+	sizerCombo->Add(m_textDivMultiQs, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerCombo->Add(m_ctrlDivMultiQs, 0, wxALL, 5);
+
+	sizerCombo->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerCombo->Add(m_ctrlLevels, 0, wxALL, 5);
+
+	sizerCombo->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerCombo->Add(m_ctrlEvents, 0, wxALL, 5);
+
+	sizerCombo->Add(textSubName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerCombo->Add(m_ctrlSubNames, 0, wxALL, 5);
+
+	sizerCombo->Add(textOther, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerCombo->Add(m_ctrlOthers, 0, wxALL, 5);
+
+	sizerWhere->Add(sizerCombo, 0, wxEXPAND, 5);
+
+	sizerContent->Add(sizerWhere, 1, wxALL|wxEXPAND, 5);
+
+	wxStaticBoxSizer* sizerComment = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_COMMENTS")), wxVERTICAL);
+
+	sizerComment->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
+
+	sizerContent->Add(sizerComment, 1, wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizerContent, 1, wxEXPAND, 5);
+
+	// Not a separated sizer like most other dialogs because of the groups
+	// boxes right above them.
+	m_sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(m_sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	// Add MultiQ to types if at least one venue supports it.
+	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
+		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
+		++iterVenue)
 	{
-		ARBDogExistingPoints::PointType type = static_cast<ARBDogExistingPoints::PointType>(m_ctrlType.GetItemData(index));
-		switch (type)
+		ARBConfigVenuePtr pVenue = (*iterVenue);
+		if (0 < pVenue->GetMultiQs().size())
 		{
-		default:
-			assert(0);
-			break;
-
-		case ARBDogExistingPoints::eOtherPoints:
-			outOther = TRUE;
-			outVenue = TRUE;
-			outDiv = TRUE;
-			outLevel = TRUE;
-			outEvent = TRUE;
-			if (bSet)
-			{
-				// other points is at 0
-				m_ctrlVenuesText.SetWindowPos(NULL,
-					m_ptControls[0][1].x, m_ptControls[0][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlVenues.SetWindowPos(NULL,
-					m_ptControls[1][1].x, m_ptControls[1][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisionsText.SetWindowPos(NULL,
-					m_ptControls[0][2].x, m_ptControls[0][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisions.SetWindowPos(NULL,
-					m_ptControls[1][2].x, m_ptControls[1][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevelsText.SetWindowPos(NULL,
-					m_ptControls[0][3].x, m_ptControls[0][3].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevels.SetWindowPos(NULL,
-					m_ptControls[1][3].x, m_ptControls[1][3].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEventsText.SetWindowPos(NULL,
-					m_ptControls[0][4].x, m_ptControls[0][4].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEvents.SetWindowPos(NULL,
-					m_ptControls[1][4].x, m_ptControls[1][4].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-			}
-			break;
-
-		case ARBDogExistingPoints::eRuns:
-			outVenue = TRUE;
-			outDiv = TRUE;
-			outLevel = TRUE;
-			outEvent = TRUE;
-			outSubName = TRUE;
-			if (bSet)
-			{
-				m_ctrlVenuesText.SetWindowPos(NULL,
-					m_ptControls[0][0].x, m_ptControls[0][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlVenues.SetWindowPos(NULL,
-					m_ptControls[1][0].x, m_ptControls[1][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisionsText.SetWindowPos(NULL,
-					m_ptControls[0][1].x, m_ptControls[0][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisions.SetWindowPos(NULL,
-					m_ptControls[1][1].x, m_ptControls[1][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevelsText.SetWindowPos(NULL,
-					m_ptControls[0][2].x, m_ptControls[0][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevels.SetWindowPos(NULL,
-					m_ptControls[1][2].x, m_ptControls[1][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEventsText.SetWindowPos(NULL,
-					m_ptControls[0][3].x, m_ptControls[0][3].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEvents.SetWindowPos(NULL,
-					m_ptControls[1][3].x, m_ptControls[1][3].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlSubNamesText.SetWindowPos(NULL,
-					m_ptControls[0][4].x, m_ptControls[0][4].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlSubNames.SetWindowPos(NULL,
-					m_ptControls[1][4].x, m_ptControls[1][4].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-			}
-			break;
-
-		case ARBDogExistingPoints::eSpeed:
-			outVenue = TRUE;
-			outDiv = TRUE;
-			outLevel = TRUE;
-			if (bSet)
-			{
-				m_ctrlVenuesText.SetWindowPos(NULL,
-					m_ptControls[0][0].x, m_ptControls[0][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlVenues.SetWindowPos(NULL,
-					m_ptControls[1][0].x, m_ptControls[1][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisionsText.SetWindowPos(NULL,
-					m_ptControls[0][1].x, m_ptControls[0][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisions.SetWindowPos(NULL,
-					m_ptControls[1][1].x, m_ptControls[1][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevelsText.SetWindowPos(NULL,
-					m_ptControls[0][2].x, m_ptControls[0][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevels.SetWindowPos(NULL,
-					m_ptControls[1][2].x, m_ptControls[1][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-			}
-			break;
-
-		case ARBDogExistingPoints::eMQ:
-			outVenue = TRUE;
-			outMQ = TRUE;
-			if (bSet)
-			{
-				m_ctrlVenuesText.SetWindowPos(NULL,
-					m_ptControls[0][0].x, m_ptControls[0][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlVenues.SetWindowPos(NULL,
-					m_ptControls[1][0].x, m_ptControls[1][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				// multiq is at 1
-			}
-			break;
-
-		case ARBDogExistingPoints::eSQ:
-			outVenue = TRUE;
-			outDiv = TRUE;
-			outLevel = TRUE;
-			outEvent = TRUE;
-			if (bSet)
-			{
-				m_ctrlVenuesText.SetWindowPos(NULL,
-					m_ptControls[0][0].x, m_ptControls[0][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlVenues.SetWindowPos(NULL,
-					m_ptControls[1][0].x, m_ptControls[1][0].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisionsText.SetWindowPos(NULL,
-					m_ptControls[0][1].x, m_ptControls[0][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlDivisions.SetWindowPos(NULL,
-					m_ptControls[1][1].x, m_ptControls[1][1].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevelsText.SetWindowPos(NULL,
-					m_ptControls[0][2].x, m_ptControls[0][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlLevels.SetWindowPos(NULL,
-					m_ptControls[1][2].x, m_ptControls[1][2].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEventsText.SetWindowPos(NULL,
-					m_ptControls[0][3].x, m_ptControls[0][3].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-				m_ctrlEvents.SetWindowPos(NULL,
-					m_ptControls[1][3].x, m_ptControls[1][3].y,
-					0, 0, SWP_NOZORDER | SWP_NOSIZE);
-			}
+			int index = m_ctrlType->Append(ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::eMQ).c_str());
+			m_ctrlType->SetClientData(index, reinterpret_cast<void*>(ARBDogExistingPoints::eMQ));
+			if (m_pExistingPoints && m_pExistingPoints->GetType() == ARBDogExistingPoints::eMQ)
+				m_ctrlType->SetSelection(index);
 			break;
 		}
 	}
 
+	// Set the contents of the other points combo.
+	for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
+		iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
+		++iterOther)
+	{
+		ARBConfigOtherPointsPtr pOther = (*iterOther);
+		int index = m_ctrlOthers->Append(pOther->GetName().c_str());
+		m_ctrlOthers->SetClientObject(index, new CDlgPointsOtherPtData(pOther));
+		if (m_pExistingPoints && ARBDogExistingPoints::eOtherPoints == m_pExistingPoints->GetType())
+		{
+			if (m_pExistingPoints->GetOtherPoints() == pOther->GetName())
+				m_ctrlOthers->SetSelection(index);
+		}
+	}
+
+	// All other combos are filled based on other content.
+
+	FillVenues();
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+}
+
+
+ARBDogExistingPoints::PointType CDlgExistingPoints::GetCurrentType() const
+{
+	ARBDogExistingPoints::PointType type = ARBDogExistingPoints::eUnknown;
+	int index = m_ctrlType->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		type = static_cast<ARBDogExistingPoints::PointType>(
+			reinterpret_cast<int>(m_ctrlType->GetClientData(index)));
+	}
+	return type;
+}
+
+
+CDlgPointsVenueData* CDlgExistingPoints::GetVenueData(int index) const
+{
+	wxClientData* pData = m_ctrlVenues->GetClientObject(index);
+	return dynamic_cast<CDlgPointsVenueData*>(pData);
+}
+
+
+CDlgPointsDivisionData* CDlgExistingPoints::GetDivisionData(int index) const
+{
+	wxClientData* pData = m_ctrlDivMultiQs->GetClientObject(index);
+	return dynamic_cast<CDlgPointsDivisionData*>(pData);
+}
+
+
+CDlgPointsLevelData* CDlgExistingPoints::GetLevelData(int index) const
+{
+	wxClientData* pData = m_ctrlLevels->GetClientObject(index);
+	return dynamic_cast<CDlgPointsLevelData*>(pData);
+}
+
+
+CDlgPointsEventData* CDlgExistingPoints::GetEventData(int index) const
+{
+	wxClientData* pData = m_ctrlEvents->GetClientObject(index);
+	return dynamic_cast<CDlgPointsEventData*>(pData);
+}
+
+
+CDlgPointsOtherPtData* CDlgExistingPoints::GetOtherPointData(int index) const
+{
+	wxClientData* pData = m_ctrlOthers->GetClientObject(index);
+	return dynamic_cast<CDlgPointsOtherPtData*>(pData);
+}
+
+
+CDlgPointsMultiQData* CDlgExistingPoints::GetMultiQData(int index) const
+{
+	wxClientData* pData = m_ctrlDivMultiQs->GetClientObject(index);
+	return dynamic_cast<CDlgPointsMultiQData*>(pData);
+}
+
+
+void CDlgExistingPoints::SetEnableLists(
+		bool& outVenue,
+		bool& outDivMQ,
+		bool& outLevel,
+		bool& outEvent,
+		bool& outSubName,
+		bool& outOther,
+		bool bSet)
+{
+	outVenue = false;
+	outDivMQ = false;
+	outLevel = false;
+	outEvent = false;
+	outSubName = false;
+	outOther = false;
+
+	switch (GetCurrentType())
+	{
+	default:
+		break;
+
+	case ARBDogExistingPoints::eOtherPoints:
+		outVenue = true;
+		outDivMQ = true;
+		outLevel = true;
+		outEvent = true;
+		outOther = true;
+		break;
+
+	case ARBDogExistingPoints::eRuns:
+		outVenue = true;
+		outDivMQ = true;
+		outLevel = true;
+		outEvent = true;
+		outSubName = true;
+		break;
+
+	case ARBDogExistingPoints::eSpeed:
+		outVenue = true;
+		outDivMQ = true;
+		outLevel = true;
+		break;
+
+	case ARBDogExistingPoints::eMQ:
+		outVenue = true;
+		outDivMQ = true;
+		break;
+
+	case ARBDogExistingPoints::eSQ:
+		outVenue = true;
+		outDivMQ = true;
+		outLevel = true;
+		outEvent = true;
+		break;
+	}
+
 	if (bSet)
 	{
-		m_ctrlOtherText.ShowWindow(outOther ? SW_SHOW : SW_HIDE);
-		m_ctrlOther.ShowWindow(outOther ? SW_SHOW : SW_HIDE);
-		m_ctrlMultiQText.ShowWindow(outMQ ? SW_SHOW : SW_HIDE);
-		m_ctrlMultiQ.ShowWindow(outMQ ? SW_SHOW : SW_HIDE);
-		m_ctrlVenuesText.ShowWindow(outVenue ? SW_SHOW : SW_HIDE);
-		m_ctrlVenues.ShowWindow(outVenue ? SW_SHOW : SW_HIDE);
-		m_ctrlDivisionsText.ShowWindow(outDiv ? SW_SHOW : SW_HIDE);
-		m_ctrlDivisions.ShowWindow(outDiv ? SW_SHOW : SW_HIDE);
-		m_ctrlLevelsText.ShowWindow(outLevel ? SW_SHOW : SW_HIDE);
-		m_ctrlLevels.ShowWindow(outLevel ? SW_SHOW : SW_HIDE);
-		m_ctrlEventsText.ShowWindow(outEvent ? SW_SHOW : SW_HIDE);
-		m_ctrlEvents.ShowWindow(outEvent ? SW_SHOW : SW_HIDE);
-		m_ctrlSubNamesText.ShowWindow(outSubName ? SW_SHOW : SW_HIDE);
-		m_ctrlSubNames.ShowWindow(outSubName ? SW_SHOW : SW_HIDE);
+		m_ctrlVenues->Enable(outVenue);
+		m_ctrlDivMultiQs->Enable(outDivMQ);
+		m_ctrlLevels->Enable(outLevel);
+		m_ctrlEvents->Enable(outEvent);
+		m_ctrlSubNames->Enable(outSubName);
+		m_ctrlOthers->Enable(outOther);
 	}
 }
 
 
 void CDlgExistingPoints::UpdateControls()
 {
-	int index = m_ctrlType.GetCurSel();
-	BOOL bOther = FALSE;
-	BOOL bMQ = FALSE;
-	BOOL bVenue = FALSE;
-	BOOL bDiv = FALSE;
-	BOOL bLevel = FALSE;
-	BOOL bEvent = FALSE;
-	BOOL bSubName = FALSE;
-	BOOL bOk = FALSE;
-	if (CB_ERR != index)
-		bOk = TRUE;
-	GetEnableLists(index, bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName, true);
-	m_ctrlOk.EnableWindow(bOk);
+	bool outVenue;
+	bool outDivMQ;
+	bool outLevel;
+	bool outEvent;
+	bool outSubName;
+	bool outOther;
+	SetEnableLists(outVenue, outDivMQ, outLevel, outEvent, outSubName, outOther, true);
+	ARBDogExistingPoints::PointType type = GetCurrentType();
+	if (ARBDogExistingPoints::eMQ == type)
+	{
+		m_textDivMultiQs->SetLabel(_("IDC_EXISTING_MULTIQ"));
+		m_ctrlDivMultiQs->SetHelpText(_("HIDC_EXISTING_MULTIQ"));
+		m_ctrlDivMultiQs->SetToolTip(_("HIDC_EXISTING_MULTIQ"));
+	}
+	else
+	{
+		m_textDivMultiQs->SetLabel(_("IDC_EXISTING_DIVISION"));
+		m_ctrlDivMultiQs->SetHelpText(_("HIDC_EXISTING_DIVISION"));
+		m_ctrlDivMultiQs->SetToolTip(_("HIDC_EXISTING_DIVISION"));
+	}
+	wxWindow* btnOk = FindWindowInSizer(m_sdbSizer, wxID_OK);
+	if (btnOk)
+		btnOk->Enable(ARBDogExistingPoints::eUnknown != type);
 }
 
 
 void CDlgExistingPoints::FillVenues()
 {
-	tstring venue;
-	int index = m_ctrlVenues.GetCurSel();
-	if (CB_ERR != index)
-	{
-		CString str;
-		m_ctrlVenues.GetLBText(index, str);
-		venue = (LPCTSTR)str;
-	}
+	wxString venue;
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND != index)
+		venue = m_ctrlVenues->GetString(index);
 	else if (m_pExistingPoints)
 		venue = m_pExistingPoints->GetVenue();
-	m_ctrlVenues.ResetContent();
+	m_ctrlVenues->Clear();
 
-	ARBDogExistingPoints::PointType type = ARBDogExistingPoints::eUnknown;
-	index = m_ctrlType.GetCurSel();
-	if (CB_ERR != index)
-		type = static_cast<ARBDogExistingPoints::PointType>(m_ctrlType.GetItemData(index));
+	ARBDogExistingPoints::PointType type = GetCurrentType();
 
 	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
 		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
@@ -456,94 +586,83 @@ void CDlgExistingPoints::FillVenues()
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (ARBDogExistingPoints::eMQ != type || 0 < pVenue->GetMultiQs().size())
 		{
-			int idx = m_ctrlVenues.AddString(pVenue->GetName().c_str());
-			m_ctrlVenues.SetData(idx,
-				new CListPtrData<ARBConfigVenuePtr>(pVenue));
+			int idx = m_ctrlVenues->Append(pVenue->GetName().c_str());
+			m_ctrlVenues->SetClientObject(idx, new CDlgPointsVenueData(pVenue));
 			if (m_pExistingPoints && venue == pVenue->GetName())
-				m_ctrlVenues.SetCurSel(idx);
+				m_ctrlVenues->SetSelection(idx);
 		}
 	}
-	FillFromVenue();
+	FillDivMultiQ();
 }
 
 
-void CDlgExistingPoints::FillFromVenue()
+void CDlgExistingPoints::FillDivMultiQ()
 {
-	tstring multiQ;
-	int index = m_ctrlMultiQ.GetCurSel();
-	if (CB_ERR != index)
-	{
-		CString str;
-		m_ctrlMultiQ.GetLBText(index, str);
-		multiQ = (LPCTSTR)str;
-	}
+	ARBDogExistingPoints::PointType type = GetCurrentType();
+	wxString divMultiQ;
+	int index = m_ctrlDivMultiQs->GetSelection();
+	if (wxNOT_FOUND != index)
+		divMultiQ = m_ctrlDivMultiQs->GetString(index);
 	else if (m_pExistingPoints)
-		multiQ = m_pExistingPoints->GetMultiQ();
-	m_ctrlMultiQ.ResetContent();
-
-	tstring div;
-	index = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR != index)
 	{
-		CString str;
-		m_ctrlDivisions.GetLBText(index, str);
-		div = (LPCTSTR)str;
+		if (ARBDogExistingPoints::eMQ == type)
+			divMultiQ = m_pExistingPoints->GetMultiQ();
+		else
+			divMultiQ = m_pExistingPoints->GetDivision();
 	}
-	else if (m_pExistingPoints)
-		div = m_pExistingPoints->GetDivision();
-	m_ctrlDivisions.ResetContent();
+	m_ctrlDivMultiQs->Clear();
 
-	int idxVenue = m_ctrlVenues.GetCurSel();
-	if (CB_ERR != idxVenue)
+	int idxVenue = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND != idxVenue)
 	{
-		ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->GetData();
+		ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->m_Venue;
 
-		for (ARBConfigMultiQList::const_iterator iterQ = pVenue->GetMultiQs().begin();
-			iterQ != pVenue->GetMultiQs().end();
-			++iterQ)
+		if (ARBDogExistingPoints::eMQ == type)
 		{
-			ARBConfigMultiQPtr pMulti = *iterQ;
-			int idx = m_ctrlMultiQ.AddString(pMulti->GetName().c_str());
-			m_ctrlMultiQ.SetItemDataPtr(idx,
-				new CListPtrData<ARBConfigMultiQPtr>(pMulti));
-			if (m_pExistingPoints && multiQ == pMulti->GetName())
-				m_ctrlMultiQ.SetCurSel(idx);
+			for (ARBConfigMultiQList::const_iterator iterQ = pVenue->GetMultiQs().begin();
+				iterQ != pVenue->GetMultiQs().end();
+				++iterQ)
+			{
+				ARBConfigMultiQPtr pMulti = *iterQ;
+				int idx = m_ctrlDivMultiQs->Append(pMulti->GetName().c_str());
+				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsMultiQData(pMulti));
+				if (m_pExistingPoints && divMultiQ == pMulti->GetName())
+					m_ctrlDivMultiQs->SetSelection(idx);
+			}
 		}
-
-		for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
-			iterDiv != pVenue->GetDivisions().end();
-			++iterDiv)
+		else
 		{
-			ARBConfigDivisionPtr pDiv = (*iterDiv);
-			int idx = m_ctrlDivisions.AddString(pDiv->GetName().c_str());
-			m_ctrlDivisions.SetItemDataPtr(idx,
-				new CListPtrData<ARBConfigDivisionPtr>(pDiv));
-			if (m_pExistingPoints && div == pDiv->GetName())
-				m_ctrlDivisions.SetCurSel(idx);
+			for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
+				iterDiv != pVenue->GetDivisions().end();
+				++iterDiv)
+			{
+				ARBConfigDivisionPtr pDiv = (*iterDiv);
+				int idx = m_ctrlDivMultiQs->Append(pDiv->GetName().c_str());
+				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsDivisionData(pDiv));
+				if (m_pExistingPoints && divMultiQ == pDiv->GetName())
+					m_ctrlDivMultiQs->SetSelection(idx);
+			}
 		}
 	}
-	FillLevels();
+	if (ARBDogExistingPoints::eMQ != type)
+		FillLevels();
 }
 
 
 void CDlgExistingPoints::FillLevels()
 {
-	CString str;
-	tstring level;
-	int index = m_ctrlLevels.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlLevels.GetLBText(index, str);
-		level = (LPCTSTR)str;
-	}
+	wxString level;
+	int index = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND != index)
+		level = m_ctrlLevels->GetString(index);
 	else if (m_pExistingPoints)
 		level = m_pExistingPoints->GetLevel();
 
-	m_ctrlLevels.ResetContent();
-	int idxDiv = m_ctrlDivisions.GetCurSel();
-	if (CB_ERR != idxDiv)
+	m_ctrlLevels->Clear();
+	int idxDiv = m_ctrlDivMultiQs->GetSelection();
+	if (wxNOT_FOUND != idxDiv)
 	{
-		ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->GetData();
+		ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->m_Div;
 		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
 			iter != pDiv->GetLevels().end();
 			++iter)
@@ -556,20 +675,20 @@ void CDlgExistingPoints::FillLevels()
 					++iterSub)
 				{
 					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-					CDlgPointsDataLevel* pData = new CDlgPointsDataLevel(pLevel, pSubLevel);
-					int idx = m_ctrlLevels.AddString(pSubLevel->GetName().c_str());
-					m_ctrlLevels.SetItemDataPtr(idx, pData);
+					CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel, pSubLevel);
+					int idx = m_ctrlLevels->Append(pSubLevel->GetName().c_str());
+					m_ctrlLevels->SetClientObject(idx, pData);
 					if (level == pSubLevel->GetName())
-						m_ctrlLevels.SetCurSel(idx);
+						m_ctrlLevels->SetSelection(idx);
 				}
 			}
 			else
 			{
-				CDlgPointsDataLevel* pData = new CDlgPointsDataLevel(pLevel);
-				int idx = m_ctrlLevels.AddString(pLevel->GetName().c_str());
-				m_ctrlLevels.SetItemDataPtr(idx, pData);
+				CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel);
+				int idx = m_ctrlLevels->Append(pLevel->GetName().c_str());
+				m_ctrlLevels->SetClientObject(idx, pData);
 				if (level == pLevel->GetName())
-					m_ctrlLevels.SetCurSel(idx);
+					m_ctrlLevels->SetSelection(idx);
 			}
 		}
 	}
@@ -579,42 +698,37 @@ void CDlgExistingPoints::FillLevels()
 
 void CDlgExistingPoints::FillEvents()
 {
-	CString str;
-	tstring evt;
-	int index = m_ctrlEvents.GetCurSel();
-	if (CB_ERR != index)
-	{
-		m_ctrlEvents.GetLBText(index, str);
-		evt = (LPCTSTR)str;
-	}
+	wxString evt;
+	int index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND != index)
+		evt = m_ctrlEvents->GetString(index);
 	else if (m_pExistingPoints)
 		evt = m_pExistingPoints->GetEvent();
-	m_ctrlEvents.ResetContent();
+	m_ctrlEvents->Clear();
 
-	int idxVenue = m_ctrlVenues.GetCurSel();
-	if (CB_ERR != idxVenue)
+	int idxVenue = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND != idxVenue)
 	{
-		ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->GetData();
-		int idxDiv = m_ctrlDivisions.GetCurSel();
-		if (CB_ERR != idxDiv)
+		ARBConfigVenuePtr pVenue = GetVenueData(idxVenue)->m_Venue;
+		int idxDiv = m_ctrlDivMultiQs->GetSelection();
+		if (wxNOT_FOUND != idxDiv)
 		{
-			ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->GetData();
-			int idxLevel = m_ctrlLevels.GetCurSel();
-			if (CB_ERR != idxLevel)
+			ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->m_Div;
+			int idxLevel = m_ctrlLevels->GetSelection();
+			if (wxNOT_FOUND != idxLevel)
 			{
-				CDlgPointsDataLevel* pData = GetLevelData(idxLevel);
+				CDlgPointsLevelData* pData = GetLevelData(idxLevel);
 				for (ARBConfigEventList::const_iterator iter = pVenue->GetEvents().begin();
 					iter != pVenue->GetEvents().end();
 					++iter)
 				{
 					ARBConfigEventPtr pEvent = (*iter);
-					if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName(), m_Date))
+					if (pEvent->FindEvent(pDiv->GetName(), pData->m_Level->GetName(), m_Date))
 					{
-						int idx = m_ctrlEvents.AddString(pEvent->GetName().c_str());
-						m_ctrlEvents.SetItemDataPtr(idx,
-							new CListPtrData<ARBConfigEventPtr>(pEvent));
+						int idx = m_ctrlEvents->Append(pEvent->GetName().c_str());
+						m_ctrlEvents->SetClientObject(idx, new CDlgPointsEventData(pEvent));
 						if (evt == pEvent->GetName())
-							m_ctrlEvents.SetCurSel(idx);
+							m_ctrlEvents->SetSelection(idx);
 					}
 				}
 			}
@@ -627,273 +741,125 @@ void CDlgExistingPoints::FillEvents()
 
 void CDlgExistingPoints::FillSubNames()
 {
-	m_ctrlSubNames.ResetContent();
+	m_ctrlSubNames->Clear();
 
-	int index = m_ctrlVenues.GetCurSel();
-	if (CB_ERR == index)
+	int index = m_ctrlVenues->GetSelection();
+	if (wxNOT_FOUND == index)
 		return;
-	ARBConfigVenuePtr pVenue = GetVenueData(index)->GetData();
+	ARBConfigVenuePtr pVenue = GetVenueData(index)->m_Venue;
 
-	index = m_ctrlEvents.GetCurSel();
-	if (CB_ERR == index)
+	index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND == index)
 		return;
-	ARBConfigEventPtr pEvent = GetEventData(index)->GetData();
+	ARBConfigEventPtr pEvent = GetEventData(index)->m_Event;
 
-	std::set<tstring> names;
-	m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
-	for (std::set<tstring>::const_iterator iter = names.begin();
-		iter != names.end();
-		++iter)
+	if (pEvent->HasSubNames())
 	{
-		index = m_ctrlSubNames.AddString(iter->c_str());
-		if (m_pExistingPoints && *iter == m_pExistingPoints->GetSubName())
-			m_ctrlSubNames.SetCurSel(index);
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgExistingPoints message handlers
-
-BOOL CDlgExistingPoints::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	// We _know_ which controls are where. In the future,
-	// we could make this intelligent to just scan all the
-	// controls and give back the 5 unique ones.
-	CRect rect;
-	m_ctrlOtherText.GetWindowRect(rect);
-		m_ptControls[0][0] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[0][0]);
-	m_ctrlOther.GetWindowRect(rect);
-		m_ptControls[1][0] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[1][0]);
-	m_ctrlVenuesText.GetWindowRect(rect);
-		m_ptControls[0][1] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[0][1]);
-	m_ctrlVenues.GetWindowRect(rect);
-		m_ptControls[1][1] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[1][1]);
-	m_ctrlDivisionsText.GetWindowRect(rect);
-		m_ptControls[0][2] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[0][2]);
-	m_ctrlDivisions.GetWindowRect(rect);
-		m_ptControls[1][2] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[1][2]);
-	m_ctrlLevelsText.GetWindowRect(rect);
-		m_ptControls[0][3] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[0][3]);
-	m_ctrlLevels.GetWindowRect(rect);
-		m_ptControls[1][3] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[1][3]);
-	m_ctrlEventsText.GetWindowRect(rect);
-		m_ptControls[0][4] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[0][4]);
-	m_ctrlEvents.GetWindowRect(rect);
-		m_ptControls[1][4] = rect.TopLeft();
-		ScreenToClient(&m_ptControls[1][4]);
-
-	// Set the contents of the type combo.
-	ARBDogExistingPoints::PointType types[] =
-	{
-		ARBDogExistingPoints::eOtherPoints,
-		ARBDogExistingPoints::eRuns,
-		ARBDogExistingPoints::eSpeed,
-		ARBDogExistingPoints::eSQ
-	};
-	int nTypes = sizeof(types) / sizeof(types[0]);
-	for (int i = 0; i < nTypes; ++i)
-	{
-		int index = m_ctrlType.AddString(ARBDogExistingPoints::GetPointTypeName(types[i]).c_str());
-		m_ctrlType.SetItemData(index, types[i]);
-	}
-	for (ARBConfigVenueList::const_iterator iterVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
-		iterVenue != m_pDoc->Book().GetConfig().GetVenues().end();
-		++iterVenue)
-	{
-		ARBConfigVenuePtr pVenue = (*iterVenue);
-		if (0 < pVenue->GetMultiQs().size())
+		m_ctrlSubNames->Enable(true);
+		std::set<tstring> names;
+		m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
+		for (std::set<tstring>::const_iterator iter = names.begin();
+			iter != names.end();
+			++iter)
 		{
-			int index = m_ctrlType.AddString(ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::eMQ).c_str());
-			m_ctrlType.SetItemData(index, ARBDogExistingPoints::eMQ);
-			break;
+			index = m_ctrlSubNames->Append(iter->c_str());
+			if (m_pExistingPoints && *iter == m_pExistingPoints->GetSubName())
+				m_ctrlSubNames->SetSelection(index);
 		}
 	}
-
-	// Set the contents of the other points combo.
-	for (ARBConfigOtherPointsList::const_iterator iterOther = m_pDoc->Book().GetConfig().GetOtherPoints().begin();
-		iterOther != m_pDoc->Book().GetConfig().GetOtherPoints().end();
-		++iterOther)
-	{
-		ARBConfigOtherPointsPtr pOther = (*iterOther);
-		int index = m_ctrlOther.AddString(pOther->GetName().c_str());
-		m_ctrlOther.SetItemDataPtr(index,
-			new CListPtrData<ARBConfigOtherPointsPtr>(pOther));
-	}
-
-	// All other combos are filled based on other content.
-
-	// Now initialize existing data.
-	if (m_pExistingPoints)
-	{
-		if (m_Date.IsValid())
-		{
-			CTime t = m_Date.GetDate();
-			m_ctrlDate.SetTime(&t);
-		}
-		int index = m_ctrlType.FindStringExact(0,
-			ARBDogExistingPoints::GetPointTypeName(m_pExistingPoints->GetType()).c_str());
-		if (0 <= index)
-			m_ctrlType.SetCurSel(index);
-		if (ARBDogExistingPoints::eOtherPoints == m_pExistingPoints->GetType())
-		{
-			index = m_ctrlOther.FindStringExact(0,
-				m_pExistingPoints->GetOtherPoints().c_str());
-			if (0 <= index)
-				m_ctrlOther.SetCurSel(index);
-		}
-	}
-	FillVenues();
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	else
+		m_ctrlSubNames->Enable(false);
 }
 
 
-void CDlgExistingPoints::OnSelchangeType()
+void CDlgExistingPoints::OnDateChanged(wxDateEvent& evt)
 {
-	FillVenues();
+	m_Date.SetDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth(), evt.GetDate().GetDay());
+	FillEvents();
 }
 
 
-void CDlgExistingPoints::OnSelchangeVenues()
+void CDlgExistingPoints::OnSelchangeType(wxCommandEvent& evt)
 {
-	FillFromVenue();
+	UpdateControls();
 }
 
 
-void CDlgExistingPoints::OnSelchangeDivision()
+void CDlgExistingPoints::OnSelchangeVenue(wxCommandEvent& evt)
 {
-	FillLevels();
+	FillDivMultiQ();
 }
 
 
-void CDlgExistingPoints::OnSelchangeLevel()
+void CDlgExistingPoints::OnSelchangeDivMultiQ(wxCommandEvent& evt)
+{
+	if (ARBDogExistingPoints::eMQ != GetCurrentType())
+		FillLevels();
+}
+
+
+void CDlgExistingPoints::OnSelchangeLevel(wxCommandEvent& evt)
 {
 	FillEvents();
 }
 
 
-void CDlgExistingPoints::OnSelchangeEvent()
+void CDlgExistingPoints::OnSelchangeEvent(wxCommandEvent& evt)
 {
 	FillSubNames();
 }
 
 
-void CDlgExistingPoints::OnOK()
+void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	int index = m_ctrlType.GetCurSel();
-	if (CB_ERR == index)
-	{
-		GotoDlgCtrl(&m_ctrlType);
-		return;
-	}
-	ARBDogExistingPoints::PointType type = static_cast<ARBDogExistingPoints::PointType>(m_ctrlType.GetItemData(index));
-
-	BOOL bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName;
-	GetEnableLists(index, bOther, bMQ, bVenue, bDiv, bLevel, bEvent, bSubName, false);
-
+	ARBDogExistingPoints::PointType type = GetCurrentType();
 	tstring other;
-	if (bOther)
-	{
-		index = m_ctrlOther.GetCurSel();
-		if (CB_ERR == index)
-		{
-			GotoDlgCtrl(&m_ctrlOther);
-			return;
-		}
-		ARBConfigOtherPointsPtr pOther = GetOtherPointData(index)->GetData();
-		other = pOther->GetName();
-	}
-
 	tstring venue;
-	if (bVenue)
-	{
-		index = m_ctrlVenues.GetCurSel();
-		if (CB_ERR == index)
-		{
-			GotoDlgCtrl(&m_ctrlVenues);
-			return;
-		}
-		ARBConfigVenuePtr pVenue = GetVenueData(index)->GetData();
-		venue = pVenue->GetName();
-	}
-
-	tstring multiQ;
-	if (bMQ)
-	{
-		index = m_ctrlMultiQ.GetCurSel();
-		if (CB_ERR == index)
-		{
-			GotoDlgCtrl(&m_ctrlMultiQ);
-			return;
-		}
-		ARBConfigMultiQPtr pMultiQ = GetMultiQData(index)->GetData();
-		multiQ = pMultiQ->GetName();
-	}
-
 	tstring div;
-	if (bDiv)
-	{
-		index = m_ctrlDivisions.GetCurSel();
-		if (CB_ERR == index)
-		{
-			GotoDlgCtrl(&m_ctrlDivisions);
-			return;
-		}
-		ARBConfigDivisionPtr pDiv = GetDivisionData(index)->GetData();
-		div = pDiv->GetName();
-	}
-
 	tstring level;
-	if (bLevel)
-	{
-		index = m_ctrlLevels.GetCurSel();
-		if (CB_ERR == index)
-		{
-			GotoDlgCtrl(&m_ctrlLevels);
-			return;
-		}
-		CDlgPointsDataLevel* pData = GetLevelData(index);
-		level = pData->m_pLevel->GetName();
-		if (pData->m_pSubLevel)
-			level = pData->m_pSubLevel->GetName();
-	}
-
-	tstring evt;
-	if (bEvent)
-	{
-		index = m_ctrlEvents.GetCurSel();
-		if (CB_ERR == index)
-		{
-			GotoDlgCtrl(&m_ctrlEvents);
-			return;
-		}
-		ARBConfigEventPtr pEvent = GetEventData(index)->GetData();
-		evt = pEvent->GetName();
-	}
-
+	tstring eventName;
 	tstring subName;
-	if (bSubName)
+	tstring multiQ;
+	switch (type)
 	{
-		m_SubName.TrimRight();
-		m_SubName.TrimLeft();
-		subName = (LPCTSTR)m_SubName;
+	//  OtherPts Venue    Division Level Event
+	case ARBDogExistingPoints::eOtherPoints:
+		other = m_TextOther;
+		venue = m_TextVenue;
+		div = m_TextDivMultiQ;
+		level = m_TextLevel;
+		eventName = m_TextEvent;
+		break;
+	//  Venue    Division Level    Event SubName
+	case ARBDogExistingPoints::eRuns:
+		venue = m_TextVenue;
+		div = m_TextDivMultiQ;
+		level = m_TextLevel;
+		eventName = m_TextEvent;
+		subName = m_TextSubName;
+		break;
+	//  Venue    Division Level    Event
+	case ARBDogExistingPoints::eSQ:
+		venue = m_TextVenue;
+		div = m_TextDivMultiQ;
+		level = m_TextLevel;
+		eventName = m_TextEvent;
+		break;
+	//  Venue    Division Level
+	case ARBDogExistingPoints::eSpeed:
+		venue = m_TextVenue;
+		div = m_TextDivMultiQ;
+		level = m_TextLevel;
+		break;
+	//  Venue    MultiQ
+	case ARBDogExistingPoints::eMQ:
+		venue = m_TextVenue;
+		multiQ = m_TextDivMultiQ;
+		break;
 	}
-
-	m_Comments.Replace(_T("\r\n"), _T("\n"));
 
 	if (m_pExistingPoints)
 	{
@@ -904,9 +870,9 @@ void CDlgExistingPoints::OnOK()
 		m_pExistingPoints->SetMultiQ(multiQ);
 		m_pExistingPoints->SetDivision(div);
 		m_pExistingPoints->SetLevel(level);
-		m_pExistingPoints->SetEvent(evt);
+		m_pExistingPoints->SetEvent(eventName);
 		m_pExistingPoints->SetSubName(subName);
-		m_pExistingPoints->SetComment((LPCTSTR)m_Comments);
+		m_pExistingPoints->SetComment(m_Comments.c_str());
 		m_pExistingPoints->SetPoints(m_Points);
 	}
 	else
@@ -921,13 +887,12 @@ void CDlgExistingPoints::OnOK()
 			pPoints->SetMultiQ(multiQ);
 			pPoints->SetDivision(div);
 			pPoints->SetLevel(level);
-			pPoints->SetEvent(evt);
+			pPoints->SetEvent(eventName);
 			pPoints->SetSubName(subName);
-			pPoints->SetComment((LPCTSTR)m_Comments);
+			pPoints->SetComment(m_Comments.c_str());
 			pPoints->SetPoints(m_Points);
 		}
 	}
 
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif

@@ -113,7 +113,7 @@ CDlgTitle::CDlgTitle(
 	checkEarned->SetToolTip(_("HIDC_TITLE_EARNED"));
 
 	m_ctrlDate = new wxDatePickerCtrl(this, wxID_ANY, date,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
 	m_ctrlDate->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgTitle::OnTitleDateChanged), NULL, this);
 	m_ctrlDate->SetHelpText(_("HIDC_TITLE_DATE"));
 	m_ctrlDate->SetToolTip(_("HIDC_TITLE_DATE"));
