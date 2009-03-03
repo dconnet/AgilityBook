@@ -1,0 +1,1235 @@
+# Agility Record Book translations from MFC resource file.
+# Copyright (C) 2002-2009 David Connet. All Rights Reserved.
+# This file is distributed under the same license as the Agility Record Book package.
+# David Connet <help@agilityrecordbook.com> 2002-2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Agility Record Book v2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-15 14:27-0700\n"
+"PO-Revision-Date: 2009-02-11 23:15-0800\n"
+"Last-Translator: David Connet <help@agilityrecordbook.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "HIDC_ABOUT_UPDATE"
+msgstr "Check to see if there are any updates available. If there are, you will be taken to the web site where you can download the new version."
+
+msgid "HIDC_ASSIGN_ADD"
+msgstr "Add the selected available field to the end of the field order items."
+
+msgid "HIDC_ASSIGN_AVAILABLE"
+msgstr "Fields that are available for assigning as import or export."
+
+msgid "HIDC_ASSIGN_COLUMNS"
+msgstr "Fields that are currently assigned for importing and exporting."
+
+msgid "HIDC_ASSIGN_DELETE"
+msgstr "Remove the selected field from the field order. This will place the field back into the available fields."
+
+msgid "HIDC_ASSIGN_MOVE_DOWN"
+msgstr "Move the selected field down in the order."
+
+msgid "HIDC_ASSIGN_MOVE_UP"
+msgstr "Move the selected field up in the order."
+
+msgid "HIDC_ASSIGN_RESET"
+msgstr "Reset the current selection's fields to the program's defaults."
+
+msgid "HIDC_ASSIGN_TYPE"
+msgstr "Run type (scoring style) these fields are being assigned for."
+
+msgid "HIDC_CAL_CLUB"
+msgstr "Name of the club hosting this event."
+
+msgid "HIDC_CAL_CLUB_NOTE"
+msgstr "Notes about the selected club."
+
+msgid "HIDC_CAL_CLUB_NOTES"
+msgstr "Enter notes about a club."
+
+msgid "HIDC_CAL_DATE_CLOSES"
+msgstr "Date the trial closes."
+
+msgid "HIDC_CAL_DATE_CLOSES_UNKNOWN"
+msgstr "The date the trial closes is not known or does not apply."
+
+msgid "HIDC_CAL_DATE_DRAWS"
+msgstr "Date entries for the trial are drawn."
+
+msgid "HIDC_CAL_DATE_DRAWS_UNKNOWN"
+msgstr "The draw date for the trial is not known or does not apply."
+
+msgid "HIDC_CAL_DATE_END"
+msgstr "Date the trial ends."
+
+msgid "HIDC_CAL_DATE_OPENS"
+msgstr "Date the trial opens."
+
+msgid "HIDC_CAL_DATE_OPENS_UNKNOWN"
+msgstr "The date the trial opens is not known or does not apply."
+
+msgid "HIDC_CAL_DATE_START"
+msgstr "Date the trial begins."
+
+msgid "HIDC_CAL_ENTER_ENTERED"
+msgstr "Your entry status on this trial. Currently entered."
+
+msgid "HIDC_CAL_ENTER_NOT"
+msgstr "Your entry status on this trial. Not entered."
+
+msgid "HIDC_CAL_ENTER_PLANNING"
+msgstr "Your entry status on this trial. Planning on entering."
+
+msgid "HIDC_CAL_LOCATION"
+msgstr "Location this trial is being held."
+
+msgid "HIDC_CAL_LOCATION_NOTE"
+msgstr "Notes about the selected location."
+
+msgid "HIDC_CAL_LOCATION_NOTES"
+msgstr "Enter Notes about a location."
+
+msgid "HIDC_CAL_NOTES"
+msgstr "Any notes you want to make about this trial."
+
+msgid "HIDC_CAL_TENTATIVE"
+msgstr "Trial information is currently tentative and may change."
+
+msgid "HIDC_CAL_VENUE"
+msgstr "Trial venue. You may select an existing venue or type anything you want. If the text in this field does not exactly match an existing venue, you will not be able to automatically create a trial from this calendar entry."
+
+msgid "HIDC_CAL_ACCOM_NONE"
+msgstr "No accommodations are needed."
+
+msgid "HIDC_CAL_ACCOM_NEEDED"
+msgstr "Accommodations (hotel or camping) are needed."
+
+msgid "HIDC_CAL_ACCOM_MADE"
+msgstr "Reservations have been made."
+
+msgid "HIDC_CAL_ACCOM_CONFIRMATION"
+msgstr "Confirmation number of reservation."
+
+msgid "HIDC_CAL_ONLINE_ENTRY"
+msgstr "Enter online using the following specified URL."
+
+msgid "HIDC_CAL_ONLINE_URL"
+msgstr "URL to enter online."
+
+msgid "HIDC_CAL_EMAIL_SEC_ADDR"
+msgstr "Email address for Trial Secretary."
+
+msgid "HIDC_CAL_EMAIL_SEC"
+msgstr "Email the trial secretary using the specified address."
+
+msgid "HIDC_CAL_PREMIUM_URL"
+msgstr "URL for the trial premium."
+
+msgid "HIDC_CAL_PREMIUM_ENTRY"
+msgstr "View the trial premium using the specified URL."
+
+msgid "HIDC_CLUB_CLUBS"
+msgstr "Enter the name of the club. All previously entered clubs are listed here."
+
+msgid "HIDC_CLUB_VENUES"
+msgstr "Venue of hosting club."
+
+msgid "HIDC_CONFIG_EVENT"
+msgstr "Name of event."
+
+msgid "HIDC_CONFIG_EVENT_CLOSING_PTS"
+msgstr "Number of closing points required in order to qualify."
+
+msgid "HIDC_CONFIG_EVENT_COPY"
+msgstr "Make a copy of the selected scoring method."
+
+msgid "HIDC_CONFIG_EVENT_DATE_END"
+msgstr "Date this scoring method is valid until."
+
+msgid "HIDC_CONFIG_EVENT_DATE_START"
+msgstr "Date this scoring method becomes valid."
+
+msgid "HIDC_CONFIG_EVENT_DATE_VALID_FROM"
+msgstr "Enable/disable the setting of a date. This allows for evolving rule changes."
+
+msgid "HIDC_CONFIG_EVENT_DATE_VALID_TO"
+msgstr "Enable/disable the setting of a date. This allows for evolving rule changes."
+
+msgid "HIDC_CONFIG_EVENT_DELETE"
+msgstr "Delete the selected scoring method."
+
+msgid "HIDC_CONFIG_EVENT_DESC"
+msgstr "Description of this event."
+
+msgid "HIDC_CONFIG_EVENT_DIVISION"
+msgstr "Division this scoring method applies to."
+
+msgid "HIDC_CONFIG_EVENT_DROP_FRACTIONS"
+msgstr "When computing time faults, should the fractions be dropped?"
+
+msgid "HIDC_CONFIG_EVENT_EDIT"
+msgstr "Edit the selected scoring method. You can also double click on the entry."
+
+msgid "HIDC_CONFIG_EVENT_HAS_SUBNAMES"
+msgstr "Allow sub-names for this event. This allows the user to 'create' an event without modifying the configuration. An example of this is different types of Gambles in NADAC."
+
+msgid "HIDC_CONFIG_EVENT_INFO"
+msgstr "Displays information about the selected scoring method. This information is available for editing via the 'Edit' button."
+
+msgid "HIDC_CONFIG_EVENT_LEVEL"
+msgstr "Level this scoring method applies to."
+
+msgid "HIDC_CONFIG_EVENT_METHODS"
+msgstr "Currently defined scoring methods. Order is very important - the first scoring method that matches a division/level is the one that will be used."
+
+msgid "HIDC_CONFIG_EVENT_MOVE_DOWN"
+msgstr "Move the selected scoring method down."
+
+msgid "HIDC_CONFIG_EVENT_MOVE_UP"
+msgstr "Move the selected scoring method up."
+
+msgid "HIDC_CONFIG_EVENT_NEW"
+msgstr "Create a new scoring method."
+
+msgid "HIDC_CONFIG_EVENT_NOTES"
+msgstr "Notes about the current scoring method."
+
+msgid "HIDC_CONFIG_EVENT_OPENING_PTS"
+msgstr "Number of opening points required in order to qualify. For events without closing points, this is the total number of points required."
+
+msgid "HIDC_CONFIG_EVENT_PARTNER"
+msgstr "Does this event have partners?"
+
+msgid "HIDC_CONFIG_EVENT_PLACEMENT"
+msgstr "List of placement multipliers used when computing speed points. If there are no entries, then placements will not affect speed points."
+
+msgid "HIDC_CONFIG_EVENT_PLACEMENT_DELETE"
+msgstr "Delete the currently selected Speed Point Multiplier."
+
+msgid "HIDC_CONFIG_EVENT_PLACEMENT_EDIT"
+msgstr "Edit the currently selected Speed Point Multiplier."
+
+msgid "HIDC_CONFIG_EVENT_PLACEMENT_NEW"
+msgstr "Add a new Speed Point Multiplier. Placements must be unique."
+
+msgid "HIDC_CONFIG_EVENT_POINTS"
+msgstr "List of titling and/or lifetime points, based on the number of faulted points."
+
+msgid "HIDC_CONFIG_EVENT_POINTS_DELETE"
+msgstr "Delete the selected titling point item."
+
+msgid "HIDC_CONFIG_EVENT_POINTS_EDIT"
+msgstr "Edit the selected titling point item."
+
+msgid "HIDC_CONFIG_EVENT_POINTS_NEW"
+msgstr "Create a new titling point item."
+
+msgid "HIDC_CONFIG_EVENT_SPEED"
+msgstr "Does this scoring method have Speed points? (In AKC, these are MACH points.) Speed points are computed as full seconds under SCT. First place earns 2x. Second place earns 1.5x. All other places earn 1 point per second."
+
+msgid "HIDC_CONFIG_EVENT_BONUS"
+msgstr "Does this scoring method have extra titling points? This would apply to venues like NADAC that have a bonus feature that allows the dog to earn 15 point Qs."
+
+msgid "HIDC_CONFIG_EVENT_SUBNAMES"
+msgstr "Pre-configured event sub-names."
+
+msgid "HIDC_CONFIG_EVENT_SUBNAMES_DELETE"
+msgstr "Remove an event sub-name."
+
+msgid "HIDC_CONFIG_EVENT_SUBNAMES_EDIT"
+msgstr "Edit the selected event sub-name."
+
+msgid "HIDC_CONFIG_EVENT_SUBNAMES_NEW"
+msgstr "Add an event sub-name."
+
+msgid "HIDC_CONFIG_EVENT_SUPERQ"
+msgstr "Does this scoring method have Super Qs?"
+
+msgid "HIDC_CONFIG_EVENT_TABLE"
+msgstr "Could there be a table in this event?"
+
+msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
+msgstr "For TimePlusFault runs, the run must be clean to earn titling points."
+
+msgid "HIDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
+msgstr "Subtract any time faults from the points earned."
+
+msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
+msgstr "Add time faults for the number of seconds under course time."
+
+msgid "HIDC_CONFIG_EVENT_TIME_FAULTS_OVER"
+msgstr "Add time faults for the number of seconds over course time."
+
+msgid "HIDC_CONFIG_EVENT_TF_MULTIPLY"
+msgstr "Multiply any time faults by a weighting factor."
+
+msgid "HIDC_CONFIG_EVENT_TYPE"
+msgstr "Scoring style of this scoring method."
+
+msgid "HIDC_CONFIG_EVENT_UNUSED"
+msgstr "Divisions/levels that are not currently defined."
+
+msgid "HIDC_CONFIG_OTHER_DEFAULT"
+msgstr "Default number of points when Other Points dialog is initially displayed."
+
+msgid "HIDC_CONFIG_OTHER_DESC"
+msgstr "Description of this Other Point item. This is normally the rules on how to accumulate the points."
+
+msgid "HIDC_CONFIG_OTHER_NAME"
+msgstr "Name of this Other Point item."
+
+msgid "HIDC_CONFIG_OTHER_TALLY"
+msgstr "How are these Other Points accumulated?"
+
+msgid "HIDC_CONFIG_TITLE_DESC"
+msgstr "Description of this title."
+
+msgid "HIDC_CONFIG_TITLE_LONG_NAME"
+msgstr "Long name of the title."
+
+msgid "HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"
+msgstr "Allow the title to be created multiple times. For instance, MACH, MACH-2, etc. Usually, this will be 2. In some cases, like NADAC, it may start higher."
+
+msgid "HIDC_CONFIG_TITLE_STYLE"
+msgstr "When a title allows multiple copies, display the number as either a number or a roman numeral."
+
+msgid "HIDC_CONFIG_TITLE_PREFIX"
+msgstr "Is this title listed before a dog's name?"
+
+msgid "HIDC_CONFIG_TITLE_VALID_FROM"
+msgstr "Enable/disable the setting of a date. This allows for evolving title changes."
+
+msgid "HIDC_CONFIG_TITLE_VALID_FROM_DATE"
+msgstr "Date this title becomes valid."
+
+msgid "HIDC_CONFIG_TITLE_VALID_TO"
+msgstr "Enable/disable the setting of a date. This allows for evolving title changes."
+
+msgid "HIDC_CONFIG_TITLE_VALID_TO_DATE"
+msgstr "Date this title is valid until."
+
+msgid "HIDC_CONFIG_TITLE_NAME"
+msgstr "Title abbreviation."
+
+msgid "HIDC_CONFIG_TITLEPTS_VALUE"
+msgstr "Number of faulted points allowed for Normal and Lifetime points. Place that earns the points for Placement points ('-1' is a wildcard match for any runs with a non-zero place)."
+
+msgid "HIDC_CONFIG_TITLEPTS_POINTS"
+msgstr "Number of points that will be earned."
+
+msgid "HIDC_CONFIG_TITLEPTS_TITLE_POINTS"
+msgstr "Select the type of titling points: Normal (points awarded per run), Lifetime (points accumulated towards lifetime, normally the same as Normal), Placement (points accumulated based on placement, treated like lifetime)"
+
+msgid "HIDC_CONFIG_PLACEINFO_PLACE"
+msgstr "Enter the place that has a multiplier. The multiplier will increase title points earned based on the dog's placement."
+
+msgid "HIDC_CONFIG_PLACEINFO_VALUE"
+msgstr "Enter the multiplier value for the specified placement."
+
+msgid "HIDC_CONFIG_UPDATE_DEFAULT"
+msgstr "Merge in the configuration defined in this program."
+
+msgid "HIDC_CONFIG_UPDATE_EXISTING"
+msgstr "Merge in a configuration from another AgilityRecordBook file."
+
+msgid "HIDC_CONFIG_UPDATE_FILENAME"
+msgstr "Name of file to merge."
+
+msgid "HIDC_CONFIG_UPDATE_NAME"
+msgstr "Select a file."
+
+msgid "HIDC_CONFIG_VENUE"
+msgstr "Name of Venue."
+
+msgid "HIDC_CONFIG_VENUE_COPY"
+msgstr "Copy the selected item."
+
+msgid "HIDC_CONFIG_VENUE_DELETE"
+msgstr "Delete the selected item."
+
+msgid "HIDC_CONFIG_VENUE_DESC"
+msgstr "Description of the venue."
+
+msgid "HIDC_CONFIG_VENUE_DIVISION"
+msgstr "List of currently configured divisions."
+
+msgid "HIDC_CONFIG_VENUE_EDIT"
+msgstr "Edit the selected item."
+
+msgid "HIDC_CONFIG_VENUE_EVENT"
+msgstr "List of currently configured events."
+
+msgid "HIDC_CONFIG_VENUE_LEVEL"
+msgstr "List of currently configured levels for the selected division."
+
+msgid "HIDC_CONFIG_VENUE_LONGNAME"
+msgstr "Full name of the Venue."
+
+msgid "HIDC_CONFIG_VENUE_MOVE_DOWN"
+msgstr "Move the selected item down."
+
+msgid "HIDC_CONFIG_VENUE_MOVE_UP"
+msgstr "Move the selected item up."
+
+msgid "HIDC_CONFIG_VENUE_NEW"
+msgstr "Create a new item."
+
+msgid "HIDC_CONFIG_VENUE_TITLES"
+msgstr "List of currently configured titles for the selected division."
+
+msgid "HIDC_CONFIG_VENUE_MULTIQ"
+msgstr "Configure Multi-Q events (i.e.: AKC QQs and UKC QQQs)."
+
+msgid "HIDC_CONFIG_VENUE_URL"
+msgstr "URL for the venue."
+
+msgid "HIDC_CONFIG_VENUE_LIFETIME_NAME"
+msgstr "Name to use when displaying lifetime points. If this is not set, 'Lifetime' is used."
+
+msgid "HIDC_CONFIG_COPY"
+msgstr "Copy the selected item."
+
+msgid "HIDC_CONFIG_DELETE"
+msgstr "Delete the selected item."
+
+msgid "HIDC_CONFIG_EDIT"
+msgstr "Edit the selected item."
+
+msgid "HIDC_CONFIG_NEW"
+msgstr "Create a new item."
+
+msgid "HIDC_CONFIG_UPDATE"
+msgstr "Update the configuration."
+
+msgid "HIDC_CONFIG_ITEMS"
+msgstr "List of currently configured items."
+
+msgid "HIDC_DOGNUM_DELETE"
+msgstr "Delete the selected registration number."
+
+msgid "HIDC_DOGNUM_EDIT"
+msgstr "Edit the selected registration number."
+
+msgid "HIDC_DOGNUM_NEW"
+msgstr "Create a new registration number."
+
+msgid "HIDC_DOGNUM_REG_NUMS"
+msgstr "List of configured registration numbers."
+
+msgid "HIDC_PICK_NAME"
+msgstr "List of existing dogs."
+
+msgid "HIDC_DOGPTS_DELETE"
+msgstr "Delete the selected existing points item."
+
+msgid "HIDC_DOGPTS_EDIT"
+msgstr "Edit the selected existing points item."
+
+msgid "HIDC_DOGPTS_NEW"
+msgstr "Create a new existing points item."
+
+msgid "HIDC_DOGPTS_POINTS"
+msgstr "List of existing points. These allow you to enter an advanced dog without needing to enter every run the dog has done."
+
+msgid "HIDC_DOG_BREED"
+msgstr "Breed of your dog."
+
+msgid "HIDC_DOG_CALLNAME"
+msgstr "Call name of your dog."
+
+msgid "HIDC_DOG_DECEASED"
+msgstr "Date this dog passed away."
+
+msgid "HIDC_DOG_DOB"
+msgstr "Birthday."
+
+msgid "HIDC_DOG_IS_DECEASED"
+msgstr "Has this dog passed away? This will cause the deceased date to be visible and stop computing the age."
+
+msgid "HIDC_DOG_NOTES"
+msgstr "Notes. Anything additional you want to add."
+
+msgid "HIDC_DOG_REG_NAME"
+msgstr "Registered name."
+
+msgid "HIDC_DOG_TITLE_DELETE"
+msgstr "Delete the selected title."
+
+msgid "HIDC_DOG_TITLE_EDIT"
+msgstr "Edit the selected title."
+
+msgid "HIDC_DOG_TITLE_HIDDEN"
+msgstr "Set the viewing status for hidden titles. This is also available in the main menu."
+
+msgid "HIDC_DOG_TITLE_NEW"
+msgstr "Create a new title."
+
+msgid "HIDC_DOG_TITLE_TITLES"
+msgstr "List of titles. The icon denotes whether the title is hidden and also whether you have actually received the certificate."
+
+msgid "HIDC_EXISTING_COMMENTS"
+msgstr "Comments about these existing points."
+
+msgid "HIDC_EXISTING_DATE"
+msgstr "Date these points were earned by."
+
+msgid "HIDC_EXISTING_DIVISION"
+msgstr "Division these points were earned in."
+
+msgid "HIDC_EXISTING_EVENT"
+msgstr "Event these points were earned in."
+
+msgid "HIDC_EXISTING_LEVEL"
+msgstr "Level these points were earned in."
+
+msgid "HIDC_EXISTING_MULTIQ"
+msgstr "Multiple Q that was earned."
+
+msgid "HIDC_EXISTING_OTHERPOINTS"
+msgstr "Other Points these points were earned in."
+
+msgid "HIDC_EXISTING_POINTS"
+msgstr "Number of points earned."
+
+msgid "HIDC_EXISTING_SUBNAME"
+msgstr "Extra naming information used to organize events."
+
+msgid "HIDC_EXISTING_TYPE"
+msgstr "Type of existing points. Note, if entering a Snooker run and you have SuperQ points, you should create two separate entries for the points."
+
+msgid "HIDC_EXISTING_VENUES"
+msgstr "Venue these points were earned in."
+
+msgid "HIDC_FAULTS"
+msgstr "List of all faults, both configured and user-defined. You may also enter any text you want."
+
+msgid "HIDC_FIND_ALL"
+msgstr "Search all fields in this view."
+
+msgid "HIDC_FIND_CASE"
+msgstr "Match case when searching."
+
+msgid "HIDC_FIND_DOWN"
+msgstr "Search from the selected item down."
+
+msgid "HIDC_FIND_NAME"
+msgstr "Text to search for."
+
+msgid "HIDC_FIND_UP"
+msgstr "Search from the selected item up."
+
+msgid "HIDC_FIND_VISIBLE"
+msgstr "Search only the fields that are visible in this view."
+
+msgid "HIDC_FINDLINKS_COPY"
+msgstr "Copy all the paths to the clipboard."
+
+msgid "HIDC_FINDLINKS_EDIT"
+msgstr "Edit the selected link. This allows you to fix any bad paths."
+
+msgid "HIDC_FINDLINKS_LIST"
+msgstr "List of all linked files."
+
+msgid "HIDC_FINDLINKS_OPEN"
+msgstr "View the selected link."
+
+msgid "HIDC_INFONOTE"
+msgstr "List of club, judges or locations from all your runs, plus any created here."
+
+msgid "HIDC_INFONOTE_COMMENTS"
+msgstr "Comments about the club, judge or location."
+
+msgid "HIDC_INFONOTE_DELETE"
+msgstr "Delete the selected club, judge or location. If this item is currently in use, only the comments will be deleted."
+
+msgid "HIDC_INFONOTE_NEW"
+msgstr "Create a new club, judge or location."
+
+msgid "HIDC_INFONOTE_VISIBLE"
+msgstr "Show or hide this item in various selection lists."
+
+msgid "HIDC_LANGUAGE"
+msgstr "Select a language to use."
+
+msgid "HIDC_LIST_VIEWER"
+msgstr "List of entries."
+
+msgid "HIDC_LIST_COPY"
+msgstr "Copy the items in the list to the clipboard in a tab-delineated form."
+
+msgid "HIDC_LIST"
+msgstr "List of entries."
+
+msgid "HIDC_LIST_DELETE"
+msgstr "Delete the selected entry."
+
+msgid "HIDC_LIST_EDIT"
+msgstr "Edit the selected entry."
+
+msgid "HIDC_LIST_MOVE_DOWN"
+msgstr "Move the selected entry down."
+
+msgid "HIDC_LIST_MOVE_UP"
+msgstr "Move the selected entry up."
+
+msgid "HIDC_LIST_NEW"
+msgstr "Create a new entry."
+
+msgid "HIDC_LIST_TRIAL"
+msgstr "Create a trial from the selected calendar entry. Only entries with recognized venues can create a trial directly."
+
+msgid "HIDC_NAME"
+msgstr "Enter a name."
+
+msgid "HIDC_OTHER_DESC"
+msgstr "Description of the selected Other Points."
+
+msgid "HIDC_OTHER_OTHERPOINTS"
+msgstr "Select one of the configured Other Point items."
+
+msgid "HIDC_OTHER_POINTS"
+msgstr "Number of Other Points earned."
+
+msgid "HIDC_OTHER_NEW"
+msgstr "Create a new Other Points item."
+
+msgid "HIDC_PARTNER_CALLNAME"
+msgstr "Name of dog you partnered with."
+
+msgid "HIDC_PARTNER_NAME"
+msgstr "Name of person you partnered with."
+
+msgid "HIDC_PARTNER_REG_NUM"
+msgstr "Registration number of dog."
+
+msgid "HIDC_REFRUN_BREED"
+msgstr "Breed of dog."
+
+msgid "HIDC_REFRUN_NAME"
+msgstr "Name of dog."
+
+msgid "HIDC_REFRUN_HEIGHT"
+msgstr "Height of the dog."
+
+msgid "HIDC_REFRUN_NOTES"
+msgstr "General notes about run."
+
+msgid "HIDC_REFRUN_PLACE"
+msgstr "Where did this dog place? If not known, set to 0."
+
+msgid "HIDC_REFRUN_POINTS"
+msgstr "Score of run."
+
+msgid "HIDC_REFRUN_Q"
+msgstr "Qualifying status."
+
+msgid "HIDC_REFRUN_TIME"
+msgstr "Time of run."
+
+msgid "HIDC_REGNUM_NOTE"
+msgstr "Any additional information about this registration, such as your number."
+
+msgid "HIDC_REGNUM_HEIGHT"
+msgstr "Measured height."
+
+msgid "HIDC_REGNUM_RECEIVED"
+msgstr "Have you received a permanent height card?"
+
+msgid "HIDC_REGNUM_REG_NUM"
+msgstr "Registration number of dog."
+
+msgid "HIDC_REGNUM_VENUES"
+msgstr "Select an existing venue this registration is for."
+
+msgid "HIDC_REORDER_LIST"
+msgstr "List of runs in trial to be reordered."
+
+msgid "HIDC_REORDER_MOVE_DOWN"
+msgstr "Move the selected run down."
+
+msgid "HIDC_REORDER_MOVE_UP"
+msgstr "Move the selected run up."
+
+msgid "HIDC_RUNCOMMENT_COMMENTS"
+msgstr "General comments about this run."
+
+msgid "HIDC_RUNCOMMENT_COMMENTS_FAULTS"
+msgstr "Add a specific fault to the list of faults."
+
+msgid "HIDC_RUNCOMMENT_FAULTS_LIST"
+msgstr "List of specific faults in this run."
+
+msgid "HIDC_RUNCRCD_COPY"
+msgstr "Clear the existing course, or paste the clipboard data here."
+
+msgid "HIDC_RUNCRCD_CRCD"
+msgstr "Preview of course."
+
+msgid "HIDC_RUNCRCD_DESC"
+msgstr "CRCD text."
+
+msgid "HIDC_RUNCRCD_EDIT"
+msgstr "Display the course in a resizeable viewing window."
+
+msgid "HIDC_RUNCRCD_VIEW"
+msgstr "Toggle the course view between the image and text."
+
+msgid "HIDC_RUNCRCD_IMAGE"
+msgstr "Include the course image in the file. This will significantly increase the file size."
+
+msgid "HIDC_RUNLINK_DELETE"
+msgstr "Delete the selected link from this list."
+
+msgid "HIDC_RUNLINK_EDIT"
+msgstr "Edit the path of the selected link."
+
+msgid "HIDC_RUNLINK_LIST"
+msgstr "List of linked files."
+
+msgid "HIDC_RUNLINK_NEW"
+msgstr "Create a new link."
+
+msgid "HIDC_RUNLINK_OPEN"
+msgstr "Open the selected link using the associated Windows program."
+
+msgid "HIDC_RUNREF_DELETE"
+msgstr "Delete the selected reference run from this list."
+
+msgid "HIDC_RUNREF_EDIT"
+msgstr "Edit the selected reference run."
+
+msgid "HIDC_RUNREF_NEW"
+msgstr "Create a new reference run."
+
+msgid "HIDC_RUNREF_REF_RUNS"
+msgstr "List of reference runs."
+
+msgid "HIDC_RUNREF_ADDDOG"
+msgstr "Add your dog as a reference run."
+
+msgid "HIDC_RUNSCORE_CLOSE_PTS"
+msgstr "Number of points earned in the closing sequence."
+
+msgid "HIDC_RUNSCORE_CLOSING_PTS"
+msgstr "Number of points required in the closing sequence."
+
+msgid "HIDC_RUNSCORE_CONDITIONS"
+msgstr "Conditions of the run: weather, ground surface, etc."
+
+msgid "HIDC_RUNSCORE_DATE"
+msgstr "Date of this run."
+
+msgid "HIDC_RUNSCORE_DESC"
+msgstr "Description of the event (from the configuration)."
+
+msgid "HIDC_RUNSCORE_DIVISION"
+msgstr "Division of this run."
+
+msgid "HIDC_RUNSCORE_DOGS_QD"
+msgstr "Number of dogs that qualified. Enter \"-1\" if not known."
+
+msgid "HIDC_RUNSCORE_EVENT"
+msgstr "Type of run. This list is filled in based on the selection in the Level list. If this is empty, a Level has not yet been selected. This selection will control what fields are enabled on this dialog."
+
+msgid "HIDC_RUNSCORE_FAULTS"
+msgstr "Number of faulted points in this run."
+
+msgid "HIDC_RUNSCORE_HANDLER"
+msgstr "Who handled the dog? This may be blank."
+
+msgid "HIDC_RUNSCORE_HEIGHT"
+msgstr "Height the dog ran at. This list contains all heights previously run. You may enter any text you want."
+
+msgid "HIDC_RUNSCORE_IN_CLASS"
+msgstr "Number of dogs in this event. Enter -1 if not known."
+
+msgid "HIDC_RUNSCORE_JUDGE"
+msgstr "List of judges previously entered. You may enter any text you want."
+
+msgid "HIDC_RUNSCORE_JUDGE_NOTES"
+msgstr "Enter Notes about a judge."
+
+msgid "HIDC_RUNSCORE_LEVEL"
+msgstr "Level of this run. This list is filled in based on the selection in the Division list. If this is empty, a Division has not yet been selected."
+
+msgid "HIDC_RUNSCORE_OPENING_PTS"
+msgstr "Number of points required in the opening sequence."
+
+msgid "HIDC_RUNSCORE_OPEN_PTS"
+msgstr "Number of points earned in the opening sequence."
+
+msgid "HIDC_RUNSCORE_OTHERPOINTS"
+msgstr "Configure Other Point information here."
+
+msgid "HIDC_RUNSCORE_PARTNER"
+msgstr "List of partners."
+
+msgid "HIDC_RUNSCORE_PARTNERS_EDIT"
+msgstr "Configure Partner information."
+
+msgid "HIDC_RUNSCORE_PLACE"
+msgstr "Placement earned. Enter 0 if not known or doesn't apply."
+
+msgid "HIDC_RUNSCORE_Q"
+msgstr "Qualifying status of run."
+
+msgid "HIDC_RUNSCORE_BONUSPTS"
+msgstr "Number of extra titling and lifetime points earned. Enter 5 in NADAC on a 0-fault qualifying run where you completed the bonus box in order to earn 15 title points."
+
+msgid "HIDC_RUNSCORE_SCT"
+msgstr "Standard Course Time (or opening time for point-based events)"
+
+msgid "HIDC_RUNSCORE_SCT2"
+msgstr "Standard Course Time (or closing time for point-based events)"
+
+msgid "HIDC_RUNSCORE_SUBNAME"
+msgstr "Extra naming information used to organize events."
+
+msgid "HIDC_RUNSCORE_TABLE"
+msgstr "Did this run have a table in it?"
+
+msgid "HIDC_RUNSCORE_TIME"
+msgstr "Time of run."
+
+msgid "HIDC_RUNSCORE_YARDS"
+msgstr "Yardage of run. Enter 0 if not known or doesn't apply."
+
+msgid "HIDC_SELECTURL_FILENAME"
+msgstr "Browse for a file to select."
+
+msgid "HIDC_SELECTURL_NAME"
+msgstr "Filename or URL. Enter URLs using the \"http://\" notation."
+
+msgid "HIDC_TITLE_DATE"
+msgstr "Date title was earned."
+
+msgid "HIDC_TITLE_DESC"
+msgstr "Description of this title."
+
+msgid "HIDC_TITLE_EARNED"
+msgstr "Was this title earned? Unearned titles have no date. You may want to create entries for titles that cannot be earned and then hide them."
+
+msgid "HIDC_TITLE_HIDDEN"
+msgstr "Should this title be hidden?"
+
+msgid "HIDC_TITLE_RECEIVED"
+msgstr "Have you received this title yet?"
+
+msgid "HIDC_TITLE_TITLES"
+msgstr "List of titles available in the selected venue."
+
+msgid "HIDC_TITLE_VENUES"
+msgstr "Venue title was earned in."
+
+msgid "HIDC_TRAINING_DATE"
+msgstr "Date of training log entry."
+
+msgid "HIDC_TRAINING_NAME"
+msgstr "List of names previously created. You may type any text you want."
+
+msgid "HIDC_TRAINING_SUBNAME"
+msgstr "List of sub-names previously created. You may type any text you want."
+
+msgid "HIDC_TRAINING_NOTES"
+msgstr "Training Log entry."
+
+msgid "HIDC_TRIAL_CLUBS"
+msgstr "List of clubs associated with this trial. The order of the clubs is very important."
+
+msgid "HIDC_TRIAL_CLUB_DELETE"
+msgstr "Remove the selected club from this trial."
+
+msgid "HIDC_TRIAL_CLUB_EDIT"
+msgstr "Edit the selected club."
+
+msgid "HIDC_TRIAL_CLUB_NEW"
+msgstr "Create a new club to associate with this trial."
+
+msgid "HIDC_TRIAL_CLUB_NOTES"
+msgstr "Enter Notes about a Club."
+
+msgid "HIDC_TRIAL_LOCATION"
+msgstr "Where is this trial located. All previous locations are provided for convenience."
+
+msgid "HIDC_TRIAL_LOCATION_NOTES"
+msgstr "Enter Notes about a location."
+
+msgid "HIDC_TRIAL_NOTES"
+msgstr "General notes about the trial."
+
+msgid "HIDC_TRIAL_VERIFIED"
+msgstr "Have the results of this trial been verified?"
+
+msgid "HIDC_TRIAL_CLUB_INFO"
+msgstr "Notes about the selected club."
+
+msgid "HIDC_TRIAL_LOCATION_INFO"
+msgstr "Notes about the selected location."
+
+msgid "HIDC_OPT_PGM_AUTO_CHECK"
+msgstr "Automatically check every 30 days to see if a new version of the program is available."
+
+msgid "HIDC_OPT_PGM_EDIT"
+msgstr "Number of backup copies to keep. Each time you save the file, a new backup will be made. Setting this to 0 turns the feature off."
+
+msgid "HIDC_OPT_PGM_AUTOSHOW"
+msgstr "After adding a title, automatically display the dialog containing all titles."
+
+msgid "HIDC_OPT_PGM_SHOW_SPLASH"
+msgstr "Show the splash screen when the program starts."
+
+msgid "HIDC_OPT_PGM_FILENAME"
+msgstr "BMP file to use as the splash screen. If the file does not exist or the entry is empty, the default splash screen will be used."
+
+msgid "HIDC_OPT_PGM_BROWSE"
+msgstr "Browse for a Windows .bmp file to use as the splash screen."
+
+msgid "HIDC_OPT_PGM_SHOWHTML"
+msgstr "Use HTML in the Points View. This allows a 'Prettier' view and better printing."
+
+msgid "HIDC_OPT_FILTER_DATE_ALL"
+msgstr "View all dates."
+
+msgid "HIDC_OPT_FILTER_DATE_RANGE"
+msgstr "View only runs falling in the defined date range."
+
+msgid "HIDC_OPT_FILTER_DATE_START_CHECK"
+msgstr "View any runs after (inclusive) the specified date."
+
+msgid "HIDC_OPT_FILTER_DATE_START"
+msgstr "View any runs after (inclusive) the specified date."
+
+msgid "HIDC_OPT_FILTER_DATE_END_CHECK"
+msgstr "View any runs before (inclusive) the specified date."
+
+msgid "HIDC_OPT_FILTER_DATE_END"
+msgstr "View any runs before (inclusive) the specified date."
+
+msgid "HIDC_OPT_FILTER_LOG_NAME_ALL"
+msgstr "View all names."
+
+msgid "HIDC_OPT_FILTER_LOG_NAME_SELECTED"
+msgstr "View only the selected names."
+
+msgid "HIDC_OPT_FILTER_LOG_NAME"
+msgstr "Names in existing training log entries."
+
+msgid "HIDC_OPT_FILTER_CAL_NOT_ENTERED"
+msgstr "Display calendar entries that you have not entered."
+
+msgid "HIDC_OPT_FILTER_CAL_PLANNING"
+msgstr "Display calendar entries you are planning on entering."
+
+msgid "HIDC_OPT_FILTER_CAL_ENTERED"
+msgstr "Display calendar entries you have already entered."
+
+msgid "HIDC_OPT_FILTER_RUN_VENUES_ALL"
+msgstr "View all levels in all venues."
+
+msgid "HIDC_OPT_FILTER_RUN_VENUES_SELECTED"
+msgstr "View only the levels selected below."
+
+msgid "HIDC_OPT_FILTER_RUN_VENUES"
+msgstr "Select the levels within each venue that you wish to view."
+
+msgid "HIDC_OPT_FILTER_RUN_RUNS_ALL"
+msgstr "View both qualifying and non-qualifying runs."
+
+msgid "HIDC_OPT_FILTER_RUN_RUNS_Q"
+msgstr "View only qualifying runs."
+
+msgid "HIDC_OPT_FILTER_RUN_RUNS_NON_Q"
+msgstr "View only non-qualifying runs."
+
+msgid "HIDC_OPT_FILTER_NAMES"
+msgstr "List of pre-defined filters."
+
+msgid "HIDC_OPT_FILTER_NAMES_SAVE"
+msgstr "Save the current filter settings as the specified name. Note, you must press the save button to save a filter settings."
+
+msgid "HIDC_OPT_FILTER_NAMES_DELETE"
+msgstr "Delete the selected filter."
+
+msgid "HIDC_OPT_CAL_WARN_OPENNEAR"
+msgstr "Highlight an entry when the current date is near the opening date and you have indicated that you are planning on entering the trial."
+
+msgid "HIDC_OPT_CAL_COLOR_OPENNEAR_SET"
+msgstr "Use this to change the color used for drawing an entry whose opening date is near."
+
+msgid "HIDC_OPT_CAL_OPENNEAR"
+msgstr "Number of dates before the opening date that is considered 'near'."
+
+msgid "HIDC_OPT_CAL_WARN_CLOSENEAR"
+msgstr "Highlight an entry when the current date is near the closing date and you have indicated that you are planning on entering the trial."
+
+msgid "HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"
+msgstr "Use this to change the color used for drawing an entry whose closing date is near."
+
+msgid "HIDC_OPT_CAL_CLOSENEAR"
+msgstr "Number of dates before the closing (or trial) date that is considered 'near'."
+
+msgid "HIDC_OPT_CAL_DAY_OF_WEEK"
+msgstr "Define with day of the week will be displayed as the first day in the calendar view."
+
+msgid "HIDC_OPT_CAL_AUTO_DELETE"
+msgstr "Automatically delete calendar entries that have passed."
+
+msgid "HIDC_OPT_CAL_HIDE_OLD"
+msgstr "Hide calendar entries that have passed."
+
+msgid "HIDC_OPT_CAL_OLD_ENTRY_DAYS"
+msgstr "An entry is defined as past when it is older than the specified number of days."
+
+msgid "HIDC_OPT_CAL_HIDE_OVERLAP"
+msgstr "Hide calendar entries on days with multiple trials defined where you have entered a trial."
+
+msgid "HIDC_OPT_CAL_OPENING"
+msgstr "Display opening dates of calendar entries on entries you are planning on entering."
+
+msgid "HIDC_OPT_CAL_CLOSING"
+msgstr "Display closing dates of calendar entries on entries you are planning on entering."
+
+msgid "HIDC_OPT_CAL_ENTRIES"
+msgstr "Select a type of calendar entry in order to set its color."
+
+msgid "HIDC_OPT_CAL_COLOR_SET"
+msgstr "Use this to change the color used for drawing the selected calendar entry."
+
+msgid "HIDC_OPT_CAL_FONT"
+msgstr "Set the font to be used when viewing the dates in the calendar."
+
+msgid "HIDC_OPT_PRINT_FONT"
+msgstr "Set the font to be used when printing the dates in the calendar."
+
+msgid "HIDC_OPT_PRINT_MARGIN_L"
+msgstr "Set the left margin for printing in inches."
+
+msgid "HIDC_OPT_PRINT_MARGIN_R"
+msgstr "Set the right margin for printing in inches."
+
+msgid "HIDC_OPT_PRINT_MARGIN_T"
+msgstr "Set the top margin for printing in inches."
+
+msgid "HIDC_OPT_PRINT_MARGIN_B"
+msgstr "Set the bottom margin for printing in inches."
+
+msgid "HIDC_WIZARD_EXPORT_ASSIGN"
+msgstr "Configure how the exported data is aligned. When the fields/columns are assigned, changes will be reflected in the preview below."
+
+msgid "HIDC_WIZARD_EXPORT_DATE"
+msgstr "Format the date will be exported in."
+
+msgid "HIDC_WIZARD_EXPORT_DELIM"
+msgstr "The specified character separates the various fields."
+
+msgid "HIDC_WIZARD_EXPORT_DELIM_COLON"
+msgstr "A colon character separates the various fields."
+
+msgid "HIDC_WIZARD_EXPORT_DELIM_COMMA"
+msgstr "A comma character separates the various fields."
+
+msgid "HIDC_WIZARD_EXPORT_DELIM_OTHER"
+msgstr "The specified character separates the various fields."
+
+msgid "HIDC_WIZARD_EXPORT_DELIM_SEMI"
+msgstr "A semi-colon character separates the various fields."
+
+msgid "HIDC_WIZARD_EXPORT_DELIM_SPACE"
+msgstr "A space character separates the various fields."
+
+msgid "HIDC_WIZARD_EXPORT_DELIM_TAB"
+msgstr "A tab character separates the various fields."
+
+msgid "HIDC_WIZARD_EXPORT_PREVIEW"
+msgstr "Preview of how the exported data will appear. Use the 'Assign Columns' button above to align."
+
+msgid "HIDC_WIZARD_IMPORT_ASSIGN"
+msgstr "Configure how the imported data is aligned. When the fields/columns are assigned, changes will be reflected in the preview below."
+
+msgid "HIDC_WIZARD_IMPORT_DATE"
+msgstr "Format the imported date is in."
+
+msgid "HIDC_WIZARD_IMPORT_DELIM"
+msgstr "The specified character separates the various fields."
+
+msgid "HIDC_WIZARD_IMPORT_DELIM_COLON"
+msgstr "A colon character separates the various fields."
+
+msgid "HIDC_WIZARD_IMPORT_DELIM_COMMA"
+msgstr "A comma character separates the various fields."
+
+msgid "HIDC_WIZARD_IMPORT_DELIM_OTHER"
+msgstr "The specified character separates the various fields."
+
+msgid "HIDC_WIZARD_IMPORT_DELIM_SEMI"
+msgstr "A semi-colon character separates the various fields."
+
+msgid "HIDC_WIZARD_IMPORT_DELIM_SPACE"
+msgstr "A space character separates the various fields."
+
+msgid "HIDC_WIZARD_IMPORT_DELIM_TAB"
+msgstr "A tab character separates the various fields."
+
+msgid "HIDC_WIZARD_IMPORT_FILE"
+msgstr "Select a file to import."
+
+msgid "HIDC_WIZARD_IMPORT_PREVIEW"
+msgstr "Preview of how the imported fields are aligned. Verify the data is aligned properly before importing. Use the 'Assign Columns' button above to align."
+
+msgid "HIDC_WIZARD_IMPORT_ROW"
+msgstr "Start the import at the specified row. This allows skipping of header data."
+
+msgid "HIDC_WIZARD_IMPORT_ROW_SPIN"
+msgstr "Use this to scroll the starting row."
+
+msgid "HIDC_WIZARD_START_ARB"
+msgstr "Import data from or export data to another Agility Record Book file."
+
+msgid "HIDC_WIZARD_START_CALC"
+msgstr "Import data directly from or export data directly to Open Office Calc."
+
+msgid "HIDC_WIZARD_START_EXCEL"
+msgstr "Import data directly from or export data directly to Microsoft Excel."
+
+msgid "HIDC_WIZARD_START_LIST"
+msgstr "Things that can be imported or exported. Selecting an item will display some information in the pane to the right."
+
+msgid "HIDC_WIZARD_START_SPREADSHEET"
+msgstr "Import data from or export data to a spreadsheet in text form."
+
+msgid "HIDC_CONFIG_MULTIQ_SHORTNAME"
+msgstr "Short name of multiple-Q configuration."
+
+msgid "HIDC_CONFIG_MULTIQ_NAME"
+msgstr "Full name of multiple-Q configuration."
+
+msgid "HIDC_CONFIG_MULTIQ_DATE_VALID_FROM"
+msgstr "Enable/disable the setting of a date. This allows for evolving rule changes."
+
+msgid "HIDC_CONFIG_MULTIQ_DATE_START"
+msgstr "Date this multiple-Q becomes valid."
+
+msgid "HIDC_CONFIG_MULTIQ_DATE_VALID_TO"
+msgstr "Enable/disable the setting of a date. This allows for evolving rule changes."
+
+msgid "HIDC_CONFIG_MULTIQ_DATE_END"
+msgstr "Date this multiple-Q is valid until."
+
+msgid "HIDC_CONFIG_MULTIQ_ITEMS"
+msgstr "List of events that define a multiple-Q."
+
+msgid "HIDC_CONFIG_MULTIQ_ADD"
+msgstr "Add an event to the multiple-Q configuration."
+
+msgid "HIDC_CONFIG_MULTIQ_EDIT"
+msgstr "Edit a selected event."
+
+msgid "HIDC_CONFIG_MULTIQ_DELETE"
+msgstr "Delete a selected event."
+
+msgid "HIDC_EVENT_SELECT_DIVISION"
+msgstr "Division of this multiple-Q item."
+
+msgid "HIDC_EVENT_SELECT_LEVEL"
+msgstr "Level of this multiple-Q item."
+
+msgid "HIDC_EVENT_SELECT_EVENT"
+msgstr "Event of this multiple-Q item."
+
+msgid "HIDC_POINTS_VIEW_SORT_C1"
+msgstr "Set the primary sort key for viewing events in the Points view."
+
+msgid "HIDC_POINTS_VIEW_SORT_C2"
+msgstr "Set the secondary sort key for viewing events in the Points view."
+
+msgid "HIDC_POINTS_VIEW_SORT_C3"
+msgstr "Set the tertiary sort key for viewing events in the Points view."
+
+msgid "HIDC_PLUGIN_TREE"
+msgstr "List of available calendar plugins and their calendar entries."
+
+msgid "HIDC_PLUGIN_DETAILS"
+msgstr "Details for the selected item in the tree."
+
+msgid "HIDC_PLUGIN_READ"
+msgstr "Read the calendar entries from the selected plugins."
+
+msgid "HIDC_PLUGIN_ADD"
+msgstr "Add the selected calendar entries into the program."
+
+msgid "HIDC_PLUGIN_ENABLE"
+msgstr "Enable the selected plugin. Plugins may be disabled because the format of the html that was expected has changed, causing the parsing algorithm to fail. Normally, a plugin should only be enabled if a new version of the plugin has been obtained."
+
+msgid "HIDC_PLUGIN_QUERYDETAILS"
+msgstr "Edit detailed query information for the selected plugin, if available."
+
+msgid "HIDC_PLUGIN_NEW"
+msgstr "Add a new Calendar plugin to the current configuration."
+
+msgid "HIDC_PLUGIN_EDIT"
+msgstr "Edit the selected Calendar plugin (only applicable to plugs in the configuration)"
+
+msgid "HIDC_PLUGIN_DELETE"
+msgstr "Delete the selected Calendar plugin (only applicable to plugs in the configuration)"
+
+msgid "HIDC_QUERY_LOCATIONS"
+msgstr "List of location codes and names that a plugin can specifically query. The code is used in the actual query and the name is displayed."
+
+msgid "HIDC_QUERY_LOCCODE_NEW"
+msgstr "Create a new Location code entry."
+
+msgid "HIDC_QUERY_LOCCODE_EDIT"
+msgstr "Edit the selected Location code entry."
+
+msgid "HIDC_QUERY_LOCCODE_DELETE"
+msgstr "Delete the selected Location code entry."
+
+msgid "HIDC_QUERY_VENUES"
+msgstr "List of venue codes and names that a plugin can specifically query. The code is used in the actual query and the venue name is one of Agility Record Book's venue names."
+
+msgid "HIDC_QUERY_VENUE_NEW"
+msgstr "Create a new Venue code entry."
+
+msgid "HIDC_QUERY_VENUE_EDIT"
+msgstr "Edit the selected Venue code entry."
+
+msgid "HIDC_QUERY_VENUE_DELETE"
+msgstr "Delete the selected Venue code entry."
+
+msgid "HIDC_PLUGINDETAIL_NAME"
+msgstr "Name of the plugin."
+
+msgid "HIDC_PLUGINDETAIL_DESC"
+msgstr "Description of plugin."
+
+msgid "HIDC_PLUGINDETAIL_SEARCH"
+msgstr "This URL is used to read data from the Internet. The \"!L!\" and \"!V!\" strings are replaced with the location and venue codes a user selects. Multiple codes are assembled using the '+' character between the codes."
+
+msgid "HIDC_PLUGINDETAIL_HELP"
+msgstr "Special URL that will guide the user to an external web site for additional details. This will typically be used by a supplier of Calendar data that limits what is available to the general public and sells additional data for a fee. This URL would be used to describe how to get that additional data."
+
+msgid "HIDC_PLUGINDETAIL_CODES"
+msgstr "Configure the Location and Venue codes that are supported."
+
+msgid "HIDC_QUERYDETAIL_CODE"
+msgstr "This is the code that will be transmitted to the web site as part of the query URL."
+
+msgid "HIDC_QUERYDETAIL_NAME"
+msgstr "This is the pretty name displayed to the user to select a code."
+
+msgid "HIDC_QUERYDETAIL_COMBO"
+msgstr "This is the pretty name displayed to the user to select a code."
+
+msgid "HIDC_RUNSCORE_OBSTACLES"
+msgstr "Number of obstacles attempted. For runs with an opening and closing time, this is only the number in the opening."
+
+msgid "HIDC_RUNSCORE_OBSTACLES_PER_SEC"
+msgstr "Number of obstacles per second. For runs with an opening/closing time, only the opening time is used. For other runs, the dog's time is used."
+

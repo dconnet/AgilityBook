@@ -42,216 +42,316 @@
 #include "stdafx.h"
 #include "DlgConfigTitle.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigTitle")
-#if 0
-#include "AgilityBook.h"
 #include "ARBConfigTitle.h"
+#include "Validators.h"
+#include <wx/datectrl.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+
+class CMultipleValidator : public CGenericValidator
+{
+public:
+	CMultipleValidator(
+			wxCheckBox* ctrlAllowMany,
+			short* val)
+		: CGenericValidator(val)
+		, m_ctrlAllowMany(ctrlAllowMany)
+	{
+	}
+	virtual bool Validate(wxWindow* parent);
+private:
+	wxCheckBox* m_ctrlAllowMany;
+};
+
+
+bool CMultipleValidator::Validate(wxWindow* parent)
+{
+	if (!CGenericValidator::Validate(parent))
+		return false;
+	wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+	short val = static_cast<short>(wxAtoi(pControl->GetValue()));
+	if (m_ctrlAllowMany->GetValue() && 1 > val)
+	{
+		wxBell();
+		pControl->SetValue(wxT("2"));
+		return false;
+	}
+	return true;
+}
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgConfigTitle dialog
+
+BEGIN_EVENT_TABLE(CDlgConfigTitle, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgConfigTitle::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgConfigTitle::CDlgConfigTitle(
 		ARBConfigTitlePtr inTitle,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgConfigTitle::IDD, pParent)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_Title(inTitle)
 	, m_Name(inTitle->GetName().c_str())
+	, m_Prefix(inTitle->GetPrefix())
 	, m_LongName(inTitle->GetLongName().c_str())
 	, m_Desc(inTitle->GetDescription().c_str())
-	, m_Prefix(inTitle->GetPrefix() ? TRUE : FALSE)
-	, m_AllowMany(0 < inTitle->GetMultiple() ? TRUE : FALSE)
+	, m_AllowMany(0 < inTitle->GetMultiple())
 	, m_Multiple(inTitle->GetMultiple())
-	, m_DateFrom(inTitle->GetValidFrom().IsValid() ? TRUE : FALSE)
-	, m_DateTo(inTitle->GetValidTo().IsValid() ? TRUE : FALSE)
+	, m_DateFrom(inTitle->GetValidFrom().IsValid())
+	, m_DateTo(inTitle->GetValidTo().IsValid())
+	, m_ctrlMultiple(NULL)
+	, m_ctrlDateFrom(NULL)
+	, m_ctrlDateTo(NULL)
+	, m_ctrlStyle(NULL)
 {
-	m_Desc.Replace(_T("\n"), _T("\r\n"));
-	//{{AFX_DATA_INIT(CDlgConfigTitle)
-	//}}AFX_DATA_INIT
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
+	// Controls (these are done first to control tab order)
 
-CDlgConfigTitle::~CDlgConfigTitle()
-{
-}
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
 
+	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_Name));
+	ctrlName->SetHelpText(_("HIDC_CONFIG_TITLE_NAME"));
+	ctrlName->SetToolTip(_("HIDC_CONFIG_TITLE_NAME"));
 
-void CDlgConfigTitle::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgConfigTitle)
-	DDX_Text(pDX, IDC_CONFIG_TITLE_NAME, m_Name);
-	DDX_Text(pDX, IDC_CONFIG_TITLE_LONG_NAME, m_LongName);
-	DDX_Text(pDX, IDC_CONFIG_TITLE_DESC, m_Desc);
-	DDX_Check(pDX, IDC_CONFIG_TITLE_PREFIX, m_Prefix);
-	DDX_Check(pDX, IDC_CONFIG_TITLE_ALLOW_MULTIPLE, m_AllowMany);
-	DDX_Control(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_ctrlMultiple);
-	DDX_Text(pDX, IDC_CONFIG_TITLE_MULTIPLE, m_Multiple);
-	DDX_Check(pDX, IDC_CONFIG_TITLE_VALID_FROM, m_DateFrom);
-	DDX_Control(pDX, IDC_CONFIG_TITLE_VALID_FROM_DATE, m_ctrlDateFrom);
-	DDX_Check(pDX, IDC_CONFIG_TITLE_VALID_TO, m_DateTo);
-	DDX_Control(pDX, IDC_CONFIG_TITLE_VALID_TO_DATE, m_ctrlDateTo);
-	DDX_Control(pDX, IDC_CONFIG_TITLE_STYLE, m_ctrlStyle);
-	//}}AFX_DATA_MAP
-}
+	wxCheckBox* ctrlPrefix = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_PREFIX"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_Prefix));
+	ctrlPrefix->SetHelpText(_("HIDC_CONFIG_TITLE_PREFIX"));
+	ctrlPrefix->SetToolTip(_("HIDC_CONFIG_TITLE_PREFIX"));
 
+	wxStaticText* textLong = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_LONG_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textLong->Wrap(-1);
 
-BEGIN_MESSAGE_MAP(CDlgConfigTitle, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgConfigTitle)
-	ON_BN_CLICKED(IDC_CONFIG_TITLE_ALLOW_MULTIPLE, OnAllowMultiple)
-	ON_BN_CLICKED(IDC_CONFIG_TITLE_VALID_FROM, OnCheck)
-	ON_BN_CLICKED(IDC_CONFIG_TITLE_VALID_TO, OnCheck)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	wxTextCtrl* ctrlLongName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_LongName, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlLongName->SetHelpText(_("HIDC_CONFIG_TITLE_LONG_NAME"));
+	ctrlLongName->SetToolTip(_("HIDC_CONFIG_TITLE_LONG_NAME"));
 
+	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_DESC"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDesc->Wrap(-1);
 
-void CDlgConfigTitle::UpdateButtons()
-{
-	m_ctrlDateFrom.EnableWindow(m_DateFrom);
-	m_ctrlDateTo.EnableWindow(m_DateTo);
-	m_ctrlStyle.EnableWindow(m_ctrlMultiple.IsWindowEnabled());
-}
+	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(-1, 110), wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlDesc->SetHelpText(_("HIDC_CONFIG_TITLE_DESC"));
+	ctrlDesc->SetToolTip(_("HIDC_CONFIG_TITLE_DESC"));
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigTitle message handlers
+	wxCheckBox* ctrlAllowMany = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_ALLOW_MULTIPLE"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_AllowMany));
+	ctrlAllowMany->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigTitle::OnAllowMultiple), NULL, this);
+	ctrlAllowMany->SetHelpText(_("HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"));
+	ctrlAllowMany->SetToolTip(_("HIDC_CONFIG_TITLE_ALLOW_MULTIPLE"));
 
-BOOL CDlgConfigTitle::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
+	wxStaticText* textStart = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_MULTIPLE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textStart->Wrap(-1);
 
-	m_ctrlMultiple.EnableWindow(m_AllowMany);
+	m_ctrlMultiple = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		CMultipleValidator(ctrlAllowMany, &m_Multiple));
+	m_ctrlMultiple->Enable(m_AllowMany);
 
-	CTime t;
+	wxCheckBox* ctrlValidFrom = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_VALID_FROM"),
+		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
+		wxGenericValidator(&m_DateFrom));
+	ctrlValidFrom->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigTitle::OnCheck), NULL, this);
+	ctrlValidFrom->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_FROM"));
+	ctrlValidFrom->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_FROM"));
+
+	wxDateTime date(wxDateTime::Now());
 	if (m_DateFrom)
-		t = m_Title->GetValidFrom().GetDate();
-	else
-		t = CTime::GetCurrentTime();
-	m_ctrlDateFrom.SetTime(&t);
-	if (m_DateTo)
-		t = m_Title->GetValidTo().GetDate();
-	else
-		t = CTime::GetCurrentTime();
-	m_ctrlDateTo.SetTime(&t);
+		date = m_Title->GetValidFrom().GetDate();
+	m_ctrlDateFrom = new wxDatePickerCtrl(this, wxID_ANY, date,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
+	m_ctrlDateFrom->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_FROM_DATE"));
+	m_ctrlDateFrom->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_FROM_DATE"));
 
+	wxCheckBox* ctrlValidTo = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_VALID_TO"),
+		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
+		wxGenericValidator(&m_DateTo));
+	ctrlValidTo->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigTitle::OnCheck), NULL, this);
+	ctrlValidTo->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_TO"));
+	ctrlValidTo->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_TO"));
+
+	date = wxDateTime::Now();
+	if (m_DateTo)
+		date = m_Title->GetValidTo().GetDate();
+	m_ctrlDateTo = new wxDatePickerCtrl(this, wxID_ANY, date,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN);
+	m_ctrlDateTo->SetHelpText(_("HIDC_CONFIG_TITLE_VALID_TO_DATE"));
+	m_ctrlDateTo->SetToolTip(_("HIDC_CONFIG_TITLE_VALID_TO_DATE"));
+
+	wxStaticText* textDisplay = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_TITLE_STYLE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDisplay->Wrap(-1);
+
+	m_ctrlStyle = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0, NULL, 0); 
+	m_ctrlStyle->SetHelpText(_("HIDC_CONFIG_TITLE_STYLE"));
+	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
 	static struct
 	{
-		UINT idRes;
+		wxChar const* idRes;
 		ARBTitleStyle style;
 	} styles[] = {
-		{IDS_CONFIG_TITLE_NUMBER, eTitleNumber},
-		{IDS_CONFIG_TITLE_ROMAN, eTitleRoman},
+		{wxT("IDS_CONFIG_TITLE_NUMBER"), eTitleNumber},
+		{wxT("IDS_CONFIG_TITLE_ROMAN"), eTitleRoman},
 	};
 	static int nStyles = sizeof(styles) / sizeof(styles[0]);
 	for (int n = 0; n < nStyles; ++n)
 	{
-		CString str;
-		str.LoadString(styles[n].idRes);
-		int idx = m_ctrlStyle.AddString(str);
-		m_ctrlStyle.SetItemData(idx, static_cast<DWORD_PTR>(styles[n].style));
+		wxString str = wxGetTranslation(styles[n].idRes);
+		int idx = m_ctrlStyle->Append(str);
+		m_ctrlStyle->SetClientData(idx, reinterpret_cast<void*>(styles[n].style));
 		if (m_Title->GetMultipleStyle() == styles[n].style)
-			m_ctrlStyle.SetCurSel(n);
+			m_ctrlStyle->SetSelection(n);
 	}
-	if (0 > m_ctrlStyle.GetCurSel())
-		m_ctrlStyle.SetCurSel(0);
+	if (0 > m_ctrlStyle->GetSelection())
+		m_ctrlStyle->SetSelection(0);
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(ctrlName, 0, wxALL, 5);
+	sizerName->Add(ctrlPrefix, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(textLong, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
+	bSizer->Add(ctrlLongName, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(textDesc, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+	bSizer->Add(ctrlDesc, 1, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerDetails = new wxBoxSizer(wxHORIZONTAL);
+
+	wxBoxSizer* sizerMultiple = new wxBoxSizer(wxVERTICAL);
+	sizerMultiple->Add(ctrlAllowMany, 0, wxALL, 5);
+
+	wxBoxSizer* sizerStart = new wxBoxSizer(wxHORIZONTAL);
+	sizerStart->Add(15, 0, 0, 0, 5);
+	sizerStart->Add(textStart, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerStart->Add(m_ctrlMultiple, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+
+	sizerMultiple->Add(sizerStart, 0, wxTOP, 2);
+
+	sizerDetails->Add(sizerMultiple, 0, wxEXPAND, 5);
+
+	wxFlexGridSizer* sizerDates;
+	sizerDates = new wxFlexGridSizer(2, 2, 0, 0);
+	sizerDates->SetFlexibleDirection(wxBOTH);
+	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	sizerDates->Add(ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxLEFT|wxRIGHT, 5);
+	sizerDates->Add(m_ctrlDateFrom, 0, wxALL, 3);
+	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxLEFT|wxRIGHT, 5);
+	sizerDates->Add(m_ctrlDateTo, 0, wxALL, 3);
+
+	sizerDetails->Add(sizerDates, 0, wxEXPAND, 5);
+
+	bSizer->Add(sizerDetails, 0, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerDisplay = new wxBoxSizer(wxHORIZONTAL);
+	sizerDisplay->Add(15, 0, 0, 0, 5);
+	sizerDisplay->Add(textDisplay, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+	sizerDisplay->Add(m_ctrlStyle, 0, wxLEFT|wxRIGHT, 5);
+
+	bSizer->Add(sizerDisplay, 0, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
 
 	UpdateButtons();
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
 
-void CDlgConfigTitle::OnAllowMultiple()
+void CDlgConfigTitle::UpdateButtons()
 {
-	if (!UpdateData(TRUE))
-		return;
+	m_ctrlDateFrom->Enable(m_DateFrom);
+	m_ctrlDateTo->Enable(m_DateTo);
+	m_ctrlStyle->Enable(m_ctrlMultiple->IsEnabled());
+}
+
+
+void CDlgConfigTitle::OnAllowMultiple(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
 	if (m_AllowMany && 1 > m_Multiple)
 	{
 		m_Multiple = 2;
-		UpdateData(FALSE);
+		TransferDataToWindow();
 	}
-	m_ctrlMultiple.EnableWindow(m_AllowMany);
+	m_ctrlMultiple->Enable(m_AllowMany);
 	UpdateButtons();
 }
 
 
-void CDlgConfigTitle::OnCheck()
+void CDlgConfigTitle::OnCheck(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
+	TransferDataFromWindow();
 	UpdateButtons();
 }
 
 
-void CDlgConfigTitle::OnOK()
+void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-#if _MSC_VER >= 1300
-	m_Name.Trim();
-	m_LongName.Trim();
-	m_Desc.Trim();
-#else
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-	m_LongName.TrimRight();
-	m_LongName.TrimLeft();
-	m_Desc.TrimRight();
-	m_Desc.TrimLeft();
-#endif
-	if (m_Name.IsEmpty())
-	{
-		UpdateData(FALSE); // Stuff what we did back.
-		MessageBeep(0);
-		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_TITLE_NAME));
-		return;
-	}
-	if (m_AllowMany && 1 > m_Multiple)
-	{
-		UpdateData(FALSE); // Stuff what we did back.
-		MessageBeep(0);
-		m_Multiple = 2;
-		UpdateData(FALSE);
-		GotoDlgCtrl(&m_ctrlMultiple);
-		return;
-	}
-	else if (!m_AllowMany && 0 != m_Multiple)
+	if (!m_AllowMany && 0 != m_Multiple)
 	{
 		m_Multiple = 0;
 	}
-	m_Desc.Replace(_T("\r\n"), _T("\n"));
 
-	m_Title->SetName((LPCTSTR)m_Name);
-	m_Title->SetLongName((LPCTSTR)m_LongName);
-	m_Title->SetDescription((LPCTSTR)m_Desc);
-	m_Title->SetPrefix(m_Prefix ? true : false);
+	m_Title->SetName(m_Name.c_str());
+	m_Title->SetLongName(m_LongName.c_str());
+	m_Title->SetDescription(m_Desc.c_str());
+	m_Title->SetPrefix(m_Prefix);
 	m_Title->SetMultiple(m_Multiple);
-	if (0 <= m_ctrlStyle.GetCurSel())
-		m_Title->SetMultipleStyle(static_cast<ARBTitleStyle>(m_ctrlStyle.GetItemData(m_ctrlStyle.GetCurSel())));
+	if (0 <= m_ctrlStyle->GetSelection())
+		m_Title->SetMultipleStyle(
+			static_cast<ARBTitleStyle>(
+				reinterpret_cast<int>(
+					m_ctrlStyle->GetClientData(m_ctrlStyle->GetSelection()))));
 	ARBDate date;
 	if (m_DateFrom)
 	{
-		CTime time;
-		if (GDT_VALID == m_ctrlDateFrom.GetTime(time))
-			date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+		wxDateTime d = m_ctrlDateFrom->GetValue();
+		date = ARBDate(d.GetYear(), d.GetMonth(), d.GetDay());
 	}
 	else
 		date.clear();
 	m_Title->SetValidFrom(date);
 	if (m_DateTo)
 	{
-		CTime time;
-		if (GDT_VALID == m_ctrlDateTo.GetTime(time))
-			date = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
+		wxDateTime d = m_ctrlDateTo->GetValue();
+		date = ARBDate(d.GetYear(), d.GetMonth(), d.GetDay());
 	}
 	else
 		date.clear();
 	m_Title->SetValidTo(date);
 
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif
