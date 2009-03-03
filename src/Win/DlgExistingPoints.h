@@ -39,107 +39,79 @@
  */
 
 #include "ARBDate.h"
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
-#include "ListData.h"
+#include "ARBDogExistingPoints.h"
 class CAgilityBookDoc;
-//class CDlgPointsDataLevel;
+class CDlgPointsDivisionData;
+class CDlgPointsEventData;
+class CDlgPointsLevelData;
+class CDlgPointsMultiQData;
+class CDlgPointsOtherPtData;
+class CDlgPointsVenueData;
+class wxDateEvent;
+class wxDatePickerCtrl;
 
 
-class CDlgExistingPoints
+class CDlgExistingPoints : public wxDialog
 {
 public:
 	CDlgExistingPoints(
 			CAgilityBookDoc* pDoc,
 			ARBDogExistingPointsList& points,
 			ARBDogExistingPointsPtr pExistingPoints,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgExistingPoints"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgExistingPoints : public CDlgBaseDialog
-{
-public:
-	CDlgExistingPoints(
-			CAgilityBookDoc* pDoc,
-			ARBDogExistingPointsList& points,
-			ARBDogExistingPointsPtr pExistingPoints,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgExistingPoints)
-	enum { IDD = IDD_EXISTING_POINTS };
-	CDateTimeCtrl	m_ctrlDate;
-	CComboBox2	m_ctrlType;
-	CStatic	m_ctrlOtherText;
-	CComboBox2	m_ctrlOther;
-	CStatic	m_ctrlMultiQText;
-	CComboBox2	m_ctrlMultiQ;
-	CStatic	m_ctrlVenuesText;
-	CComboBox2	m_ctrlVenues;
-	CStatic	m_ctrlDivisionsText;
-	CComboBox2	m_ctrlDivisions;
-	CStatic	m_ctrlLevelsText;
-	CComboBox2	m_ctrlLevels;
-	CStatic	m_ctrlEventsText;
-	CComboBox2	m_ctrlEvents;
-	CStatic	m_ctrlSubNamesText;
-	CComboBox2	m_ctrlSubNames;
-	CString	m_SubName;
-	double	m_Points;
-	CString	m_Comments;
-	CButton	m_ctrlOk;
-	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
-	ARBDogExistingPointsList& m_PointsList;
-	ARBDogExistingPointsPtr m_pExistingPoints;
-	CPoint m_ptControls[2][5];
-	ARBDate m_Date;
-
-	//{{AFX_VIRTUAL(CDlgExistingPoints)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	CListPtrData<ARBConfigVenuePtr>* GetVenueData(int index) const;
-	CListPtrData<ARBConfigDivisionPtr>* GetDivisionData(int index) const;
-	CListPtrData<ARBConfigEventPtr>* GetEventData(int index) const;
-	CDlgPointsDataLevel* GetLevelData(int index) const;
-	CListPtrData<ARBConfigOtherPointsPtr>* GetOtherPointData(int index) const;
-	CListPtrData<ARBConfigMultiQPtr>* GetMultiQData(int index) const;
-	void GetEnableLists(
-			int index,
-			BOOL& outOther,
-			BOOL& outMQ,
-			BOOL& outVenue,
-			BOOL& outDiv,
-			BOOL& outLevel,
-			BOOL& outEvent,
-			BOOL& outSubName,
+	ARBDogExistingPoints::PointType GetCurrentType() const;
+	CDlgPointsVenueData* GetVenueData(int index) const;
+	CDlgPointsDivisionData* GetDivisionData(int index) const;
+	CDlgPointsLevelData* GetLevelData(int index) const;
+	CDlgPointsEventData* GetEventData(int index) const;
+	CDlgPointsOtherPtData* GetOtherPointData(int index) const;
+	CDlgPointsMultiQData* GetMultiQData(int index) const;
+	void SetEnableLists(
+			bool& outVenue,
+			bool& outDivMQ,
+			bool& outLevel,
+			bool& outEvent,
+			bool& outSubName,
+			bool& outOther,
 			bool bSet);
 	void UpdateControls();
 	void FillVenues();
-	void FillFromVenue();
+	void FillDivMultiQ();
 	void FillLevels();
 	void FillEvents();
 	void FillSubNames();
-	//{{AFX_MSG(CDlgExistingPoints)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeType();
-	afx_msg void OnSelchangeVenues();
-	afx_msg void OnSelchangeDivision();
-	afx_msg void OnSelchangeLevel();
-	afx_msg void OnSelchangeEvent();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+
+	CAgilityBookDoc* m_pDoc;
+	ARBDogExistingPointsList& m_PointsList;
+	ARBDogExistingPointsPtr m_pExistingPoints;
+	ARBDate m_Date;
+	double m_Points;
+	wxString m_Comments;
+	wxDatePickerCtrl* m_ctrlDate;
+	wxComboBox* m_ctrlType;
+	wxComboBox* m_ctrlVenues;
+	wxString m_TextVenue;
+	wxStaticText* m_textDivMultiQs;
+	wxComboBox* m_ctrlDivMultiQs;
+	wxString m_TextDivMultiQ;
+	wxComboBox* m_ctrlLevels;
+	wxString m_TextLevel;
+	wxComboBox* m_ctrlEvents;
+	wxString m_TextEvent;
+	wxComboBox* m_ctrlSubNames;
+	wxString m_TextSubName;
+	wxComboBox* m_ctrlOthers;
+	wxString m_TextOther;
+	wxSizer* m_sdbSizer;
+
+	DECLARE_EVENT_TABLE()
+	void OnDateChanged(wxDateEvent& evt);
+	void OnSelchangeType(wxCommandEvent& evt);
+	void OnSelchangeVenue(wxCommandEvent& evt);
+	void OnSelchangeDivMultiQ(wxCommandEvent& evt);
+	void OnSelchangeLevel(wxCommandEvent& evt);
+	void OnSelchangeEvent(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif
