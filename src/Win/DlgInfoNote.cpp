@@ -178,35 +178,35 @@ CDlgInfoNote::CDlgInfoNote(
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
 	m_ctrlNames->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgInfoNote::OnSelchangeName), NULL, this);
-	m_ctrlNames->SetHelpText(_("HIDC_JUDGE"));
-	m_ctrlNames->SetToolTip(_("HIDC_JUDGE"));
+	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
+	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
 
 	wxButton* ctrlNew = new wxButton(this, wxID_ANY,
-		_("IDC_JUDGE_NEW"),
+		_("IDC_INFONOTE_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgInfoNote::OnNewItem), NULL, this);
-	ctrlNew->SetHelpText(_("HIDC_JUDGE_NEW"));
-	ctrlNew->SetToolTip(_("HIDC_JUDGE_NEW"));
+	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
+	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
-		_("IDC_JUDGE_DELETE"),
+		_("IDC_INFONOTE_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
 	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgInfoNote::OnDeleteItem), NULL, this);
-	m_ctrlDelete->SetHelpText(_("HIDC_JUDGE_DELETE"));
-	m_ctrlDelete->SetToolTip(_("HIDC_JUDGE_DELETE"));
+	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
+	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
 
 	m_ctrlVisible = new wxCheckBox(this, wxID_ANY,
-		_("IDC_JUDGE_VISIBLE"),
+		_("IDC_INFONOTE_VISIBLE"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlVisible->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgInfoNote::OnClickedJudgeVisible), NULL, this);
-	m_ctrlVisible->SetHelpText(_("HIDC_JUDGE_VISIBLE"));
-	m_ctrlVisible->SetToolTip(_("HIDC_JUDGE_VISIBLE"));
+	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
+	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
 	m_ctrlNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(300, 100), wxTE_MULTILINE);
 	m_ctrlNotes->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgInfoNote::OnKillfocusComments), NULL, this);
-	m_ctrlNotes->SetHelpText(_("HIDC_JUDGE_COMMENTS"));
-	m_ctrlNotes->SetToolTip(_("HIDC_JUDGE_COMMENTS"));
+	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
+	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
 
 	bool bSet = false;
 	for (size_t idx = 0; idx < m_Names.size(); ++idx)

@@ -541,19 +541,19 @@ msgstr "Liste de tous les dossiers liés."
 msgid "HIDC_FINDLINKS_OPEN"
 msgstr "Montrer le lien sélectionné."
 
-msgid "HIDC_JUDGE"
+msgid "HIDC_INFONOTE"
 msgstr "Liste des clubs, des juges ou des endroits de tous vos parcours, plus ceux créés ici."
 
-msgid "HIDC_JUDGE_COMMENTS"
+msgid "HIDC_INFONOTE_COMMENTS"
 msgstr "Notes sur le club, le juge ou lendroit."
 
-msgid "HIDC_JUDGE_DELETE"
+msgid "HIDC_INFONOTE_DELETE"
 msgstr "Supprimer le club, le juge ou l'endroit sélectionné. Seule les notes seront supprimées."
 
-msgid "HIDC_JUDGE_NEW"
+msgid "HIDC_INFONOTE_NEW"
 msgstr "Créer un nouveau club, un juge ou un endroit."
 
-msgid "HIDC_JUDGE_VISIBLE"
+msgid "HIDC_INFONOTE_VISIBLE"
 msgstr "Afficher ou cacher cet article dans des listes sélection."
 
 msgid "HIDC_LANGUAGE"

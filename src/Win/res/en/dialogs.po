@@ -7,57 +7,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2009-03-01 09:24-0800\n"
+"POT-Creation-Date: 2008-06-15 14:27-0700\n"
+"PO-Revision-Date: 2009-02-11 23:15-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
-"Language-Team:  <help@agilityrecordbook.com>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"plural-forms: nplurals=2; plural=n > 1\n"
-"POT-Creation-Date: \n"
-"X-Poedit-Language: French\n"
+"X-Poedit-Language: English\n"
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 # DlgAssignColumns
 msgid "IDD_ASSIGN_COLUMNS"
-msgstr "Attribuer Colonnes"
+msgstr "Assign Columns"
 
 msgid "IDC_ASSIGN_AVAILABLE"
-msgstr "&Champs Disponibles:"
+msgstr "Available &fields:"
 
 msgid "IDC_ASSIGN_ADD"
-msgstr "&Ajouter ->"
+msgstr "&Add ->"
 
 msgid "IDC_ASSIGN_DELETE"
-msgstr "<- &Supprimer"
+msgstr "<- &Remove"
 
 msgid "IDC_ASSIGN_MOVE_UP"
-msgstr "&Monter"
+msgstr "Move &Up"
 
 msgid "IDC_ASSIGN_MOVE_DOWN"
-msgstr "&Descendre"
+msgstr "Move &Down"
 
 msgid "IDC_ASSIGN_RESET"
-msgstr "Réinitialiser"
+msgstr "Reset"
 
 msgid "IDC_ASSIGN_COLUMNS"
-msgstr "&Ordre des Champs:"
+msgstr "Field &order:"
 
 # DlgAbout
 msgid "IDD_ABOUTBOX"
-msgstr "à Propos de"
+msgstr "About"
 
 msgid "Version"
 msgstr ""
 "Version %1$s\n"
 "\n"
-"%2$s est Open Source et gratuite a utiliser; nous demandons seulement que vous faites une donne de 10 euros ou plus a la SPA ou semblable organisation.\n"
+"%2$s is Open Source and freely distibutable. We only request that you make a contribution ($10 or more) to your local animal shelter or rescue group.\n"
 "\n"
-" SVP envoyez vos rapport d'erreur et suggestions a:"
+"Please send any bug reports or suggestions to:"
 
 msgid "LinkYahooText"
-msgstr "Forum Yahoo"
+msgstr "Yahoo Discussion Group"
 
 msgid "LinkYahooUrl"
 msgstr "http://groups.yahoo.com/group/AgilityRecordBook"
@@ -66,152 +65,152 @@ msgid "LinkHelpText"
 msgstr "help@agilityrecordbook.com"
 
 msgid "LinkHelpUrl"
-msgstr "mailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=SVP decrivez la problème, et si possible, comment c'est arrivé.0d%0a%0d%0aIf une fichier particulé a causé cette problème; SVP attachez une copie au me"
+msgstr "mailto:help@agilityrecordbook.com?subject=AgilityBook v%VERSION% Help:&body=Please describe the problem, and if possible, how to recreate it:%0d%0a%0d%0aIf a particular file is causing the problem, please attach a copy of that file to this message."
 
 msgid "UsefulLinks"
-msgstr "Liens utiles:"
+msgstr "Useful links:"
 
 msgid "LinkArbText"
-msgstr "Site d'internet Agility Record Book"
+msgstr "Agility Record Book Home Page"
 
 msgid "LinkArbUrl"
 msgstr "http://www.agilityrecordbook.com"
 
 msgid "LinkArbDownloadText"
-msgstr "Telecharger Agility Record Book"
+msgstr "Agility Record Book Downloads"
 
 msgid "LinkArbDownloadUrl"
 msgstr "http://www.agilityrecordbook.com/download.php"
 
 msgid "CheckForUpdates"
-msgstr "Chercher des mises à jours..."
+msgstr "Check for Updates..."
 
 # DlgAuthenticate
 msgid "IDD_AUTHENTICATE"
-msgstr "Authentification"
+msgstr "Authentication"
 
-# "Zone Protégée par Mot de Passe" (in MFC, this was static text above user/pw)
+# "Password Protected Area" (in MFC, this was static text above user/pw)
 msgid "User Name"
-msgstr "Nom d'utilisateur"
+msgstr "User Name"
 
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Password"
 
 # DlgClub
 msgid "IDD_CLUB"
 msgstr "Club"
 
 msgid "IDC_CLUB_CLUBS"
-msgstr "&Nom"
+msgstr "&Name"
 
 msgid "IDC_CLUB_VENUES"
-msgstr "&Organisation"
+msgstr "&Venue"
 
 # DlgConfigOtherPoints
 msgid "IDD_CONFIG_OTHERPOINTS"
-msgstr "Paramètres autres points"
+msgstr "Other Points Configuration"
 
 msgid "IDC_CONFIG_OTHER_NAME"
-msgstr "&Nom"
+msgstr "&Name"
 
 msgid "IDC_CONFIG_OTHER_TALLY"
-msgstr "Points &Correspondance"
+msgstr "&Tally Points"
 
 msgid "IDC_CONFIG_OTHER_DEFAULT"
-msgstr "&Points par défaut"
+msgstr "Default &Points"
 
 msgid "IDC_CONFIG_OTHER_DESC"
 msgstr "&Description"
 
 # DlgConfigPlaceInfo
 msgid "IDD_CONFIG_PLACEINFO"
-msgstr "Multiplicateurs de Classement"
+msgstr "Placement Multipliers"
 
 msgid "IDD_CONFIG_PLACEINFO_TEXT"
-msgstr "Note: Zéro attribuera le Multiplicateur pour tous les Classements non spécifiquement listés."
+msgstr "Note: Entering a place of zero will assign the specified multiplier to all placements not explicitly listed."
 
 msgid "IDC_CONFIG_PLACEINFO_PLACE"
-msgstr "&Classement"
+msgstr "&Place"
 
 msgid "IDC_CONFIG_PLACEINFO_VALUE"
-msgstr "&Valeur"
+msgstr "&Value"
 
 # DlgConfigTitle
 msgid "IDD_CONFIG_TITLE"
-msgstr "Paramètres Récompense"
+msgstr "Title Configuration"
 
 msgid "IDC_CONFIG_TITLE_NAME"
-msgstr "&Nom"
+msgstr "&Name"
 
 msgid "IDC_CONFIG_TITLE_PREFIX"
-msgstr "&Préfixe?"
+msgstr "&Prefix?"
 
 msgid "IDC_CONFIG_TITLE_LONG_NAME"
-msgstr "Nom &complet"
+msgstr "&Long Name"
 
 msgid "IDC_CONFIG_TITLE_DESC"
 msgstr "&Description"
 
 msgid "IDC_CONFIG_TITLE_ALLOW_MULTIPLE"
-msgstr "Copies &multiples autorisées"
+msgstr "&Allow user to create multiple copies of this title"
 
 msgid "IDC_CONFIG_TITLE_MULTIPLE"
-msgstr "C&ommencer par:"
+msgstr "&Start at:"
 
 msgid "IDC_CONFIG_TITLE_VALID_FROM"
-msgstr "&Valide du"
+msgstr "Valid &From"
 
 msgid "IDC_CONFIG_TITLE_VALID_TO"
-msgstr "Valide &jusqu'au"
+msgstr "Valid &To"
 
 msgid "IDC_CONFIG_TITLE_STYLE"
-msgstr "&Afficher comme:"
+msgstr "D&isplay As:"
 
 # DlgConfigTitlePoints
 msgid "IDD_CONFIG_TITLE_POINTS"
-msgstr "Points Récompense"
+msgstr "Title Points"
 
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT1"
-msgstr "&Nombre de fautes permises"
+msgstr "&Faults Allowed"
 
 msgid "IDC_CONFIG_TITLEPTS_VALUE_TEXT2"
-msgstr "&Classement"
+msgstr "&Place"
 
 msgid "IDC_CONFIG_TITLEPTS_POINTS"
-msgstr "Points &gagnés"
+msgstr "Points &Earned"
 
 # DlgConfigUpdate
 msgid "IDD_CONFIG_UPDATE"
-msgstr "Mettre à jour la configuration"
+msgstr "Update Configuration"
 
 msgid "IDC_CONFIG_UPDATE_DEFAULT"
-msgstr "Utiliser configuration par &défaut"
+msgstr "Use &Default Configuration"
 
 msgid "IDC_CONFIG_UPDATE_EXISTING"
-msgstr "Utiliser configuration &existante"
+msgstr "Use &Existing Configuration"
 
 msgid "IDC_CONFIG_UPDATE_NAME"
-msgstr "&Choisir fichier"
+msgstr "&Pick File..."
 
 # DlgEventSelect
 msgid "IDD_EVENT_SELECT"
-msgstr "Sélection épreuve"
+msgstr "Event Selection"
 
 msgid "IDC_EVENT_SELECT_DIVISION"
-msgstr "&Niveau conducteur"
+msgstr "&Division"
 
 msgid "IDC_EVENT_SELECT_LEVEL"
-msgstr "&Degré"
+msgstr "&Level"
 
 msgid "IDC_EVENT_SELECT_EVENT"
-msgstr "&Épreuve"
+msgstr "&Event"
 
 # DlgExistingPoints
 msgid "IDD_EXISTING_POINTS"
-msgstr "Points acquis"
+msgstr "Existing Points"
 
 msgid "IDC_EXISTING_DATE"
-msgstr "&Points acquis au:"
+msgstr "&Points Earned by:"
 
 msgid "IDC_EXISTING_TYPE"
 msgstr "&Type"
@@ -220,51 +219,51 @@ msgid "IDC_EXISTING_POINTS"
 msgstr "Po&ints"
 
 msgid "IDC_EXISTING_POINTS_WHERE"
-msgstr "Lieu d'Acquisition des points"
+msgstr "Where Points were earned"
 
 msgid "IDC_EXISTING_OTHERPOINTS"
-msgstr "&Autres points"
+msgstr "&Other Points"
 
 msgid "IDC_EXISTING_VENUES"
-msgstr "&Organisation"
+msgstr "&Venue"
 
 msgid "IDC_EXISTING_MULTIQ"
-msgstr "&MultiQ"
+msgstr "&Multiple Q"
 
 msgid "IDC_EXISTING_DIVISION"
-msgstr "Niveau &conducteur"
+msgstr "&Division"
 
 msgid "IDC_EXISTING_LEVEL"
-msgstr "&Degré"
+msgstr "&Level"
 
 msgid "IDC_EXISTING_EVENT"
-msgstr "&Epreuve"
+msgstr "&Event"
 
 msgid "IDC_EXISTING_SUBNAME"
-msgstr "&Sous-titre"
+msgstr "&Sub-Name"
 
 msgid "IDC_EXISTING_COMMENTS"
-msgstr "&Notes"
+msgstr "&Comment"
 
 # DlgFault
 msgid "IDD_FAULT"
-msgstr "Faute"
+msgstr "Fault"
 
 # DlgFind
 msgid "IDD_FIND"
-msgstr "Rechercher"
+msgstr "Find"
 
 msgid "IDC_FIND_NAME"
-msgstr "Chercher:"
+msgstr "Fi&nd what:"
 
 msgid "IDC_FIND_CASE"
-msgstr "Respecter la &casse"
+msgstr "Match &case"
 
 msgid "IDC_FIND_FIELDS"
-msgstr "Champs à rechercher"
+msgstr "Fields to search"
 
 msgid "IDC_FIND_ALL"
-msgstr "&Tous"
+msgstr "&All"
 
 msgid "IDC_FIND_VISIBLE"
 msgstr "&Visible"
@@ -273,254 +272,254 @@ msgid "IDC_FIND_DIRECTION"
 msgstr "Direction"
 
 msgid "IDC_FIND_UP"
-msgstr "&Monter"
+msgstr "&Up"
 
 msgid "IDC_FIND_DOWN"
-msgstr "&Descendre"
+msgstr "&Down"
 
 msgid "IDC_FIND_NEXT"
-msgstr "Chercher &suivant"
+msgstr "&Find Next"
 
 msgid "IDC_FIND_CLOSE"
-msgstr "Quitter"
+msgstr "Close"
 
 # DlgFindLinks
 msgid "IDD_FIND_LINKS"
-msgstr "Liens fichiers"
+msgstr "File Links"
 
 msgid "IDC_FINDLINKS_COPY"
-msgstr "&Copier adresse"
+msgstr "&Copy Paths"
 
 msgid "IDC_FINDLINKS_EDIT"
-msgstr "&Édition"
+msgstr "&Edit"
 
 msgid "IDC_FINDLINKS_OPEN"
-msgstr "&Ouvrir"
+msgstr "&Open"
 
 # DlgInfoNote
 msgid "IDD_INFONOTE"
 msgstr "Information"
 
 msgid "IDC_INFONOTE_NEW"
-msgstr "&Nouveax"
+msgstr "&New"
 
 msgid "IDC_INFONOTE_DELETE"
-msgstr "&Supprimer"
+msgstr "&Delete"
 
 msgid "IDC_INFONOTE_VISIBLE"
-msgstr "&Visible dans les listes"
+msgstr "&Visible in lists"
 
 # DlgLanguage
 msgid "IDD_LANGUAGE"
-msgstr "Choisir la Langue"
+msgstr "Language Selection"
 
 msgid "IDC_LANG_CHOOSE"
-msgstr "Choisir la Langue:"
+msgstr "Choose a language:"
 
 # DlgListCtrl
 msgid "IDC_LIST_NEW"
-msgstr "&Nouveau"
+msgstr "&New"
 
 msgid "IDC_LIST_EDIT"
-msgstr "&Édition"
+msgstr "&Edit"
 
 msgid "IDC_LIST_DELETE"
-msgstr "&Supprimer"
+msgstr "&Delete"
 
 msgid "IDC_LIST_MOVE_UP"
-msgstr "&Monter"
+msgstr "Move &Up"
 
 msgid "IDC_LIST_MOVE_DOWN"
-msgstr "&Descendre"
+msgstr "Move Do&wn"
 
 msgid "IDC_LIST_TRIAL"
-msgstr "&Créer concours..."
+msgstr "&Create Trial..."
 
 # DlgListViewer
 msgid "IDC_LIST_COPY"
-msgstr "Copier"
+msgstr "Copy"
 
 msgid "IDC_LIST_CLOSE"
-msgstr "Quitter"
+msgstr "Close"
 
 # DlgMessage
 msgid "IDD_MESSAGE"
 msgstr "Message"
 
 msgid "IDD_MESSAGE_CLOSE"
-msgstr "Quitter"
+msgstr "Close"
 
 # DlgMessageBox
 msgid "IDC_MESSAGE_BOX_DETAILS"
-msgstr "Détails..."
+msgstr "Details..."
 
 # DlgName
 msgid "IDD_NAME"
-msgstr "Nom"
+msgstr "Name"
 
 # DlgOtherPoint
 msgid "IDD_OTHER_POINT"
-msgstr "Autres points"
+msgstr "Other Points"
 
 msgid "IDC_OTHER_POINTS"
 msgstr "&Points"
 
 msgid "IDC_OTHER_NEW"
-msgstr "Nouveau..."
+msgstr "New..."
 
 # DlgPartner
 msgid "IDD_PARTNER"
-msgstr "Accompagnent"
+msgstr "Partner"
 
 msgid "IDC_PARTNER_NAME"
-msgstr "&Conducteur"
+msgstr "&Handler"
 
 msgid "IDC_PARTNER_CALLNAME"
-msgstr "C&hien"
+msgstr "&Dog"
 
 msgid "IDC_PARTNER_REG_NUM"
-msgstr "&Numéro"
+msgstr "&Number"
 
 # DlgPointsViewSort
 msgid "IDD_POINTS_VIEW_SORT"
-msgstr "Ordre des points"
+msgstr "Points View Sort Order"
 
 msgid "IDC_POINTS_VIEW_SORT_C1"
-msgstr "&1er Niveau"
+msgstr "&Primary"
 
 msgid "IDC_POINTS_VIEW_SORT_C2"
-msgstr "&2ème Niveau"
+msgstr "&Secondary"
 
 msgid "IDC_POINTS_VIEW_SORT_C3"
-msgstr "&3ème Niveau"
+msgstr "&Tertiary"
 
 # DlgReferenceRun
 msgid "IDD_REF_RUN"
-msgstr "Parcours de référence"
+msgstr "Reference Run"
 
 msgid "IDC_REFRUN_PLACE"
-msgstr "&Classement"
+msgstr "&Place"
 
 msgid "IDC_REFRUN_Q"
-msgstr "&Qualifiant?"
+msgstr "&Q?"
 
 msgid "IDC_REFRUN_TIME"
-msgstr "&Temps"
+msgstr "&Time"
 
 msgid "IDC_REFRUN_YPS"
-msgstr "m/s"
+msgstr "YPS"
 
 msgid "IDC_REFRUN_POINTS"
-msgstr "&Résultat"
+msgstr "&Score"
 
 msgid "IDC_REFRUN_HEIGHT"
-msgstr "&Hauteur"
+msgstr "&Height"
 
 msgid "IDC_REFRUN_NAME"
-msgstr "&Nom"
+msgstr "&Name"
 
 msgid "IDC_REFRUN_BREED"
-msgstr "R&ace"
+msgstr "&Breed"
 
 msgid "IDC_REFRUN_NOTES"
 msgstr "N&otes"
 
 # DlgRegNum
 msgid "IDD_REG_NUM"
-msgstr "Numéro inscription"
+msgstr "Registration Number"
 
 msgid "IDC_REGNUM_VENUES"
-msgstr "&Organisation"
+msgstr "&Venue"
 
 msgid "IDC_REGNUM_REG_NUM"
-msgstr "&Numéro inscription"
+msgstr "Registration &Number"
 
 msgid "IDC_REGNUM_HEIGHT"
-msgstr "&Hauteur au garot"
+msgstr "Measured &Height"
 
 msgid "IDC_REGNUM_RECEIVED"
-msgstr "Carte hauteur &reçu"
+msgstr "Height Card &Received"
 
 # DlgReorder
 msgid "IDD_REORDER"
-msgstr "Changer l'ordre"
+msgstr "Reorder"
 
 msgid "IDC_REORDER_MOVE_UP"
-msgstr "&Monter"
+msgstr "Move &Up"
 
 msgid "IDC_REORDER_MOVE_DOWN"
-msgstr "&Descendre"
+msgstr "Move Do&wn"
 
 # DlgSelectDog
 msgid "IDD_DOG_PICKER"
-msgstr "Choisir chien(s)"
+msgstr "Select dog(s)"
 
 # DlgSelectURL
 msgid "IDD_SELECT_URL"
-msgstr "Nom de fichier ou URL"
+msgstr "File Name or URL"
 
 msgid "IDC_SELECTURL_FILENAME"
-msgstr "Chercher..."
+msgstr "Browse..."
 
 # DlgTitle
 msgid "IDD_TITLE"
-msgstr "Récompense"
+msgstr "Title"
 
 msgid "IDC_TITLE_EARNED"
-msgstr "&Gagné"
+msgstr "&Earned"
 
 msgid "IDC_TITLE_HIDDEN"
-msgstr "&Cacher cette Récompense"
+msgstr "&Hide this title"
 
 msgid "IDC_TITLE_RECEIVED"
-msgstr "&Reçu"
+msgstr "&Received"
 
 msgid "IDC_TITLE_VENUES"
-msgstr "&Organisation"
+msgstr "&Venue"
 
 msgid "IDC_TITLE_TITLES"
-msgstr "R&écompense"
+msgstr "&Title"
 
 # DlgTraining
 msgid "IDD_TRAINING"
-msgstr "Journal Entraînement"
+msgstr "Training Log"
 
 msgid "IDC_TRAINING_DATE"
 msgstr "&Date:"
 
 msgid "IDC_TRAINING_NAME"
-msgstr "&Nom"
+msgstr "&Name"
 
 msgid "IDC_TRAINING_SUBNAME"
-msgstr "&Sous-titre"
+msgstr "&SubName"
 
 # DlgTrial
 msgid "IDD_TRIAL"
-msgstr "Paramètres concours"
+msgstr "Trial Properties"
 
 msgid "IDC_TRIAL_LOCATION"
-msgstr "&Endroit"
+msgstr "&Location"
 
 msgid "IDC_TRIAL_VERIFIED"
-msgstr "C&onfirmé"
+msgstr "&Verified"
 
 msgid "IDC_TRIAL_NOTES"
-msgstr "No&tes"
+msgstr "N&otes"
 
 msgid "IDC_TRIAL_LOCATION_INFO"
-msgstr "Notes Endroit"
+msgstr "Location Notes"
 
 msgid "IDC_TRIAL_CLUBS"
 msgstr "&Club"
 
 msgid "IDC_TRIAL_CLUB_NEW"
-msgstr "&Nouveau..."
+msgstr "&New..."
 
 msgid "IDC_TRIAL_CLUB_EDIT"
-msgstr "&Édition..."
+msgstr "&Edit..."
 
 msgid "IDC_TRIAL_CLUB_DELETE"
-msgstr "&Supprimer"
+msgstr "&Delete"
 
 msgid "IDC_TRIAL_CLUB_INFO"
-msgstr "Notes club"
+msgstr "Club Notes"

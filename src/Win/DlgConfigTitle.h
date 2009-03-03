@@ -39,64 +39,37 @@
  * @li 2004-01-05 DRC Created.
  */
 
-//#include "DlgBaseDialog.h"
 #include "ARBTypes.h"
+class wxDatePickerCtrl;
 
 
-class CDlgConfigTitle
+class CDlgConfigTitle : public wxDialog
 {
 public:
 	CDlgConfigTitle(
 			ARBConfigTitlePtr inTitle,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgConfigTitle"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgConfigTitle : public CDlgBaseDialog
-{
-public:
-	CDlgConfigTitle(
-			ARBConfigTitlePtr inTitle,
-			CWnd* pParent = NULL);
-	virtual ~CDlgConfigTitle();
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigTitle)
-	enum { IDD = IDD_CONFIG_TITLE };
-	CString m_Name;
-	CString m_LongName;
-	CString m_Desc;
-	BOOL	m_Prefix;
-	BOOL	m_AllowMany;
-	CEdit	m_ctrlMultiple;
-	short	m_Multiple;
-	BOOL	m_DateFrom;
-	CDateTimeCtrl	m_ctrlDateFrom;
-	BOOL	m_DateTo;
-	CDateTimeCtrl	m_ctrlDateTo;
-	CComboBox m_ctrlStyle;
-	//}}AFX_DATA
 	ARBConfigTitlePtr m_Title;
-
-	//{{AFX_VIRTUAL(CDlgConfigTitle)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	wxString m_Name;
+	bool m_Prefix;
+	wxString m_LongName;
+	wxString m_Desc;
+	bool m_AllowMany;
+	short m_Multiple;
+	bool m_DateFrom;
+	bool m_DateTo;
+	wxTextCtrl* m_ctrlMultiple;
+	wxDatePickerCtrl* m_ctrlDateFrom;
+	wxDatePickerCtrl* m_ctrlDateTo;
+	wxComboBox* m_ctrlStyle;
 
 protected:
 	void UpdateButtons();
-	//{{AFX_MSG(CDlgConfigTitle)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnAllowMultiple();
-	afx_msg void OnCheck();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+
+	DECLARE_EVENT_TABLE()
+	void OnAllowMultiple(wxCommandEvent& evt);
+	void OnCheck(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif
