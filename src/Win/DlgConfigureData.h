@@ -38,18 +38,16 @@
  * @li 2004-04-02 DRC Up the ref count to prevent problems.
  */
 
-//#include <vector>
-//#include "ListData.h"
+#include "ARBTypes.h"
+#include "ListData.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CCDlgConfigureDataVenue ")
-#if 0
-class CDlgConfigureDataVenue : public CListData
+
+class CDlgConfigureDataVenue : public CTreeData
 {
 public:
 	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
-	~CDlgConfigureDataVenue();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigVenuePtr GetVenue() const		{return m_Venue;}
 protected:
 	ARBConfigVenuePtr m_Venue;
@@ -57,13 +55,12 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataFault : public CListData
+class CDlgConfigureDataFault : public CTreeData
 {
 public:
 	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
-	~CDlgConfigureDataFault();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigFaultPtr GetFault() const		{return m_Fault;}
 protected:
 	ARBConfigFaultPtr m_Fault;
@@ -71,13 +68,12 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataOtherPoints : public CListData
+class CDlgConfigureDataOtherPoints : public CTreeData
 {
 public:
 	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
-	~CDlgConfigureDataOtherPoints();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
 protected:
 	ARBConfigOtherPointsPtr m_OtherPoints;
@@ -85,13 +81,12 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataDivision : public CListData
+class CDlgConfigureDataDivision : public CTreeData
 {
 public:
 	CDlgConfigureDataDivision(ARBConfigDivisionPtr div);
-	~CDlgConfigureDataDivision();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
 protected:
 	ARBConfigDivisionPtr m_Div;
@@ -99,17 +94,16 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataLevel : public CListData
+class CDlgConfigureDataLevel : public CTreeData
 {
 public:
 	CDlgConfigureDataLevel(
 			ARBConfigDivisionPtr div,
 			ARBConfigLevelPtr level);
-	~CDlgConfigureDataLevel();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
-	ARBConfigLevelPtr GetLevel() const		{return m_Level;}
+	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 protected:
 	ARBConfigDivisionPtr m_Division;
 	ARBConfigLevelPtr m_Level;
@@ -117,16 +111,15 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataSubLevel : public CListData
+class CDlgConfigureDataSubLevel : public CTreeData
 {
 public:
 	CDlgConfigureDataSubLevel(
 			ARBConfigDivisionPtr div,
 			ARBConfigLevelPtr level,
 			ARBConfigSubLevelPtr subLevel);
-	~CDlgConfigureDataSubLevel();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 	ARBConfigSubLevelPtr GetSubLevel() const	{return m_SubLevel;}
@@ -138,14 +131,13 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataTitle : public CListData
+class CDlgConfigureDataTitle : public CTreeData
 {
 public:
 	CDlgConfigureDataTitle(
 			ARBConfigTitlePtr title);
-	~CDlgConfigureDataTitle();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigTitlePtr GetTitle() const		{return m_Title;}
 protected:
 	ARBConfigTitlePtr m_Title;
@@ -153,13 +145,12 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataEvent : public CListData
+class CDlgConfigureDataEvent : public CTreeData
 {
 public:
 	CDlgConfigureDataEvent(ARBConfigEventPtr inEvent);
-	~CDlgConfigureDataEvent();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigEventPtr GetEvent() const		{return m_Event;}
 protected:
 	ARBConfigEventPtr m_Event;
@@ -167,15 +158,13 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataMultiQ : public CListData
+class CDlgConfigureDataMultiQ : public CTreeData
 {
 public:
 	CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq);
-	~CDlgConfigureDataMultiQ();
-	virtual tstring OnNeedText() const;
-	virtual tstring OnNeedText(int iColumn) const;
+	virtual wxString OnNeedText() const;
+	virtual wxString OnNeedText(int iColumn) const;
 	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
 protected:
 	ARBConfigMultiQPtr m_MultiQ;
 };
-#endif

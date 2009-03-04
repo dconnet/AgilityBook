@@ -107,6 +107,25 @@ msgstr "&Nom"
 msgid "IDC_CLUB_VENUES"
 msgstr "&Organisation"
 
+# DlgConfigure
+msgid "IDD_CONFIGURE"
+msgstr "Paramètres"
+
+msgid "IDC_CONFIG_NEW"
+msgstr "&Nouveau..."
+
+msgid "IDC_CONFIG_EDIT"
+msgstr "&Édition..."
+
+msgid "IDC_CONFIG_DELETE"
+msgstr "&Supprimer"
+
+msgid "IDC_CONFIG_COPY"
+msgstr "&Copier..."
+
+msgid "IDC_CONFIG_UPDATE"
+msgstr "&Mettre à jour paramètres..."
+
 # DlgConfigMultiQ
 msgid "IDD_CONFIG_MULTI_Q"
 msgstr "Configuration du 'multiple Q' (pour AKC et UKC)"

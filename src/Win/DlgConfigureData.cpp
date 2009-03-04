@@ -43,9 +43,6 @@
 #include "stdafx.h"
 #include "DlgConfigureData.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigureData")
-#if 0
-#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigDivision.h"
@@ -57,18 +54,8 @@
 #include "DlgName.h"
 #include "DlgReorder.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 ////////////////////////////////////////////////////////////////////////////
-
-// We _must_ ref count these objects. Otherwise, for instance, when we edit
-// Event/Scoring in the tree, the new scoring methods are pushed into the
-// event object. The GETDISPINFO triggers before we rebuild the tree, causing
-// us to use bad pointers.
 
 CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
 	: m_Venue(venue)
@@ -76,17 +63,12 @@ CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
 }
 
 
-CDlgConfigureDataVenue::~CDlgConfigureDataVenue()
+wxString CDlgConfigureDataVenue::OnNeedText() const
 {
-}
-
-
-tstring CDlgConfigureDataVenue::OnNeedText() const
-{
-	tstring str(OnNeedText(0));
+	wxString str(OnNeedText(0));
 	for (int i = 1; i <= 2; ++i)
 	{
-		tstring s(OnNeedText(i));
+		wxString s(OnNeedText(i));
 		if (!s.empty())
 		{
 			str += _T("  ") + s;
@@ -96,9 +78,9 @@ tstring CDlgConfigureDataVenue::OnNeedText() const
 }
 
 
-tstring CDlgConfigureDataVenue::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 {
-	tstring str;
+	wxString str;
 	switch (iColumn)
 	{
 	case 0:
@@ -123,20 +105,15 @@ CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
 }
 
 
-CDlgConfigureDataFault::~CDlgConfigureDataFault()
-{
-}
-
-
-tstring CDlgConfigureDataFault::OnNeedText() const
+wxString CDlgConfigureDataFault::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataFault::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 {
-	return m_Fault->GetName();
+	return m_Fault->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -147,20 +124,15 @@ CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsP
 }
 
 
-CDlgConfigureDataOtherPoints::~CDlgConfigureDataOtherPoints()
-{
-}
-
-
-tstring CDlgConfigureDataOtherPoints::OnNeedText() const
+wxString CDlgConfigureDataOtherPoints::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 {
-	return m_OtherPoints->GetName();
+	return m_OtherPoints->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -171,20 +143,15 @@ CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivisionPtr div)
 }
 
 
-CDlgConfigureDataDivision::~CDlgConfigureDataDivision()
-{
-}
-
-
-tstring CDlgConfigureDataDivision::OnNeedText() const
+wxString CDlgConfigureDataDivision::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataDivision::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 {
-	return m_Div->GetName();
+	return m_Div->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -198,20 +165,15 @@ CDlgConfigureDataLevel::CDlgConfigureDataLevel(
 }
 
 
-CDlgConfigureDataLevel::~CDlgConfigureDataLevel()
-{
-}
-
-
-tstring CDlgConfigureDataLevel::OnNeedText() const
+wxString CDlgConfigureDataLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataLevel::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 {
-	return m_Level->GetName();
+	return m_Level->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -227,20 +189,15 @@ CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
 }
 
 
-CDlgConfigureDataSubLevel::~CDlgConfigureDataSubLevel()
-{
-}
-
-
-tstring CDlgConfigureDataSubLevel::OnNeedText() const
+wxString CDlgConfigureDataSubLevel::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 {
-	return m_SubLevel->GetName();
+	return m_SubLevel->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -252,20 +209,15 @@ CDlgConfigureDataTitle::CDlgConfigureDataTitle(
 }
 
 
-CDlgConfigureDataTitle::~CDlgConfigureDataTitle()
-{
-}
-
-
-tstring CDlgConfigureDataTitle::OnNeedText() const
+wxString CDlgConfigureDataTitle::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataTitle::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 {
-	return m_Title->GetCompleteName(-1, false, true, true);
+	return m_Title->GetCompleteName(-1, false, true, true).c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -276,20 +228,15 @@ CDlgConfigureDataEvent::CDlgConfigureDataEvent(ARBConfigEventPtr inEvent)
 }
 
 
-CDlgConfigureDataEvent::~CDlgConfigureDataEvent()
-{
-}
-
-
-tstring CDlgConfigureDataEvent::OnNeedText() const
+wxString CDlgConfigureDataEvent::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataEvent::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 {
-	return m_Event->GetName();
+	return m_Event->GetName().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -300,19 +247,13 @@ CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq)
 }
 
 
-CDlgConfigureDataMultiQ::~CDlgConfigureDataMultiQ()
-{
-}
-
-
-tstring CDlgConfigureDataMultiQ::OnNeedText() const
+wxString CDlgConfigureDataMultiQ::OnNeedText() const
 {
 	return OnNeedText(0);
 }
 
 
-tstring CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
+wxString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
 {
-	return m_MultiQ->GetName();
+	return m_MultiQ->GetName().c_str();
 }
-#endif

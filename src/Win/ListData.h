@@ -41,6 +41,7 @@
 
 #include <wx/string.h>
 #include <wx/listctrl.h>
+#include <wx/treectrl.h>
 
 
 class CListData
@@ -54,3 +55,13 @@ public:
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 };
 typedef tr1::shared_ptr<CListData> CListDataPtr;
+
+
+/// Provide a way to refresh items easily by using a common tree data class
+class CTreeData : public wxTreeItemData
+{
+public:
+	CTreeData();
+	virtual ~CTreeData();
+	virtual wxString OnNeedText() const = 0;
+};

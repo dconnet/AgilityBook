@@ -58,7 +58,7 @@ public:
 			ARBAgilityRecordBook const& book,
 			ARBConfig const& config,
 			ARBConfigVenuePtr pVenue,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = NULL) {}
 	void GetFixups(ARBConfigActionList& ioFixups) {}
 	int ShowModal()
 	{

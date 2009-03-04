@@ -106,6 +106,25 @@ msgstr "&Name"
 msgid "IDC_CLUB_VENUES"
 msgstr "&Venue"
 
+# DlgConfigure
+msgid "IDD_CONFIGURE"
+msgstr "Configuration"
+
+msgid "IDC_CONFIG_NEW"
+msgstr "&New..."
+
+msgid "IDC_CONFIG_EDIT"
+msgstr "&Edit..."
+
+msgid "IDC_CONFIG_DELETE"
+msgstr "&Delete"
+
+msgid "IDC_CONFIG_COPY"
+msgstr "&Copy..."
+
+msgid "IDC_CONFIG_UPDATE"
+msgstr "&Update Configuration..."
+
 # DlgConfigMultiQ
 msgid "IDD_CONFIG_MULTI_Q"
 msgstr "Multiple Q Configuration"
