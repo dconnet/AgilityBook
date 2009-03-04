@@ -84,3 +84,38 @@ wxWindow* FindWindowInSizer(
 	}
 	return NULL;
 }
+
+
+wxString GetListColumnText(
+		wxListCtrl const* list,
+		long index,
+		long col)
+{
+	wxString val;
+	if (list)
+	{
+		wxListItem info;
+		info.SetId(index);
+		info.SetColumn(col);
+		info.SetMask(wxLIST_MASK_TEXT);
+		if (list->GetItem(info))
+			val = info.GetText();
+	}
+	return val;
+}
+
+
+bool SetListColumnText(
+		wxListCtrl* list,
+		long index,
+		long col,
+		wxString const& text)
+{
+	if (!list)
+		return false;
+	wxListItem info;
+	info.SetId(index);
+	info.SetColumn(col);
+	info.SetText(text);
+	return list->SetItem(info);
+}

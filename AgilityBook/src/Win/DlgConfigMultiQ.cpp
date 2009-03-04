@@ -39,131 +39,167 @@
 #include "stdafx.h"
 #include "DlgConfigMultiQ.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigMultiQ")
-#if 0
-#include "AgilityBook.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigLevel.h"
 #include "ARBConfigSubLevel.h"
 #include "ARBConfigVenue.h"
 #include "DlgEventSelect.h"
+#include "Globals.h"
+#include "Validators.h"
+#include <wx/datectrl.h>
+#include <wx/listctrl.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigMultiQ dialog
+BEGIN_EVENT_TABLE(CDlgConfigMultiQ, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgConfigMultiQ::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgConfigMultiQ::CDlgConfigMultiQ(
 		ARBConfigVenuePtr inVenue,
 		ARBConfigMultiQPtr inMultiQ,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgConfigMultiQ::IDD, pParent)
-	, m_ctrlItems(false)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_MULTI_Q"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_pVenue(inVenue)
-	, m_pMultiQ(inMultiQ)
+	, m_pOrigMultiQ(inMultiQ)
+	, m_pMultiQ(inMultiQ->Clone())
 	, m_Name(inMultiQ->GetName().c_str())
 	, m_ShortName(inMultiQ->GetShortName().c_str())
+	, m_bFrom(inMultiQ->GetValidFrom().IsValid())
+	, m_ctrlDateFrom(NULL)
 	, m_DateFrom(inMultiQ->GetValidFrom())
-	, m_bFrom(inMultiQ->GetValidFrom().IsValid() ? TRUE : FALSE)
+	, m_bTo(inMultiQ->GetValidTo().IsValid())
+	, m_ctrlDateTo(NULL)
 	, m_DateTo(inMultiQ->GetValidTo())
-	, m_bTo(inMultiQ->GetValidTo().IsValid() ? TRUE : FALSE)
+	, m_ctrlName(NULL)
+	, m_ctrlItems(NULL)
+	, m_ctrlEdit(NULL)
+	, m_ctrlRemove(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgConfigMultiQ)
-	//}}AFX_DATA_INIT
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
+	// Controls (these are done first to control tab order)
 
-CDlgConfigMultiQ::~CDlgConfigMultiQ()
-{
-}
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_MULTIQ_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
 
+	m_ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_Name));
+	m_ctrlName->SetHelpText(_("HIDC_CONFIG_MULTIQ_NAME"));
+	m_ctrlName->SetToolTip(_("HIDC_CONFIG_MULTIQ_NAME"));
 
-void CDlgConfigMultiQ::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgConfigMultiQ)
-	DDX_Text(pDX, IDC_CONFIG_MULTIQ_NAME, m_Name);
-	DDX_Text(pDX, IDC_CONFIG_MULTIQ_SHORTNAME, m_ShortName);
-	DDX_Check(pDX, IDC_CONFIG_MULTIQ_DATE_VALID_FROM, m_bFrom);
-	DDX_Control(pDX, IDC_CONFIG_MULTIQ_DATE_START, m_ctrlDateFrom);
-	DDX_Check(pDX, IDC_CONFIG_MULTIQ_DATE_VALID_TO, m_bTo);
-	DDX_Control(pDX, IDC_CONFIG_MULTIQ_DATE_END, m_ctrlDateTo);
-	DDX_Control(pDX, IDC_CONFIG_MULTIQ_ITEMS, m_ctrlItems);
-	DDX_Control(pDX, IDC_CONFIG_MULTIQ_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_CONFIG_MULTIQ_DELETE, m_ctrlRemove);
-	//}}AFX_DATA_MAP
-	if (pDX->m_bSaveAndValidate)
-	{
-		CTime time;
-		if (GDT_VALID == m_ctrlDateFrom.GetTime(time))
-			m_DateFrom = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
-		if (GDT_VALID == m_ctrlDateTo.GetTime(time))
-			m_DateTo = ARBDate(time.GetYear(), time.GetMonth(), time.GetDay());
-	}
-}
+	wxStaticText* textAbbrev = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_MULTIQ_SHORTNAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textAbbrev->Wrap(-1);
 
+	wxTextCtrl* ctrlAbbrev = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_ShortName));
+	ctrlAbbrev->SetHelpText(_("HIDC_CONFIG_MULTIQ_SHORTNAME"));
+	ctrlAbbrev->SetToolTip(_("HIDC_CONFIG_MULTIQ_SHORTNAME"));
 
-BEGIN_MESSAGE_MAP(CDlgConfigMultiQ, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgConfigMultiQ)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_MULTIQ_ITEMS, OnNMDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_MULTIQ_ITEMS, OnKeydown)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_MULTIQ_ITEMS, OnItemchanged)
-	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_DATE_VALID_FROM, OnClickFrom)
-	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_DATE_VALID_TO, OnClickTo)
-	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_ADD, OnAdd)
-	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_EDIT, OnEdit)
-	ON_BN_CLICKED(IDC_CONFIG_MULTIQ_DELETE, OnRemove)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	wxCheckBox* ctrlValidFrom = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_MULTIQ_DATE_VALID_FROM"),
+		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
+		wxGenericValidator(&m_bFrom));
+	ctrlValidFrom->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgConfigMultiQ::OnClickFrom), NULL, this);
+	ctrlValidFrom->SetHelpText(_("HIDC_CONFIG_MULTIQ_DATE_VALID_FROM"));
+	ctrlValidFrom->SetToolTip(_("HIDC_CONFIG_MULTIQ_DATE_VALID_FROM"));
 
+	m_ctrlDateFrom = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+		CGenericValidator(&m_DateFrom));
+	m_ctrlDateFrom->SetHelpText(_("HIDC_CONFIG_MULTIQ_DATE_START"));
+	m_ctrlDateFrom->SetToolTip(_("HIDC_CONFIG_MULTIQ_DATE_START"));
 
-void CDlgConfigMultiQ::UpdateControls()
-{
-	if (m_bFrom)
-		m_ctrlDateFrom.EnableWindow(TRUE);
-	else
-		m_ctrlDateFrom.EnableWindow(FALSE);
-	if (m_bTo)
-		m_ctrlDateTo.EnableWindow(TRUE);
-	else
-		m_ctrlDateTo.EnableWindow(FALSE);
-	int idx = m_ctrlItems.GetSelection();
-	BOOL bEnable = FALSE;
-	if (0 <= idx)
-		bEnable = TRUE;
-	m_ctrlEdit.EnableWindow(bEnable);
-	m_ctrlRemove.EnableWindow(bEnable);
-}
+	wxCheckBox* ctrlValidTo = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_MULTIQ_DATE_VALID_TO"),
+		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT,
+		wxGenericValidator(&m_bTo));
+	ctrlValidTo->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgConfigMultiQ::OnClickTo), NULL, this);
+	ctrlValidTo->SetHelpText(_("HIDC_CONFIG_MULTIQ_DATE_VALID_TO"));
+	ctrlValidTo->SetToolTip(_("HIDC_CONFIG_MULTIQ_DATE_VALID_TO"));
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigMultiQ message handlers
+	m_ctrlDateTo = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+		CGenericValidator(&m_DateTo));
+	m_ctrlDateTo->SetHelpText(_("HIDC_CONFIG_MULTIQ_DATE_END"));
+	m_ctrlDateTo->SetToolTip(_("HIDC_CONFIG_MULTIQ_DATE_END"));
 
-BOOL CDlgConfigMultiQ::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	m_ctrlItems.SetExtendedStyle(m_ctrlItems.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
+	m_ctrlItems = new wxListView(this, wxID_ANY,
+		wxDefaultPosition, wxSize(300, 95), wxLC_REPORT|wxLC_SINGLE_SEL);
+	m_ctrlItems->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgConfigMultiQ::OnItemchanged), NULL, this);
+	m_ctrlItems->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigMultiQ::OnDblclkItem), NULL, this);
+	m_ctrlItems->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgConfigMultiQ::OnKeydownItem), NULL, this);
+	m_ctrlItems->SetHelpText(_("HIDC_CONFIG_MULTIQ_ITEMS"));
+	m_ctrlItems->SetToolTip(_("HIDC_CONFIG_MULTIQ_ITEMS"));
+	m_ctrlItems->InsertColumn(0, _("IDS_COL_DIVISION"));
+	m_ctrlItems->InsertColumn(1, _("IDS_COL_LEVEL"));
+	m_ctrlItems->InsertColumn(2, _("IDS_COL_EVENT"));
 
-	CTime t = CTime::GetCurrentTime();
-	if (m_DateFrom.IsValid())
-		t = m_DateFrom.GetDate();
-	m_ctrlDateFrom.SetTime(&t);
-	t = CTime::GetCurrentTime();
-	if (m_DateTo.IsValid())
-		t = m_DateTo.GetDate();
-	m_ctrlDateTo.SetTime(&t);
+	wxButton* btnAdd = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_MULTIQ_ADD"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	btnAdd->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigMultiQ::OnAdd), NULL, this);
+	btnAdd->SetHelpText(_("HIDC_CONFIG_MULTIQ_ADD"));
+	btnAdd->SetToolTip(_("HIDC_CONFIG_MULTIQ_ADD"));
 
-	CString col;
-	col.LoadString(IDS_COL_DIVISION);
-	m_ctrlItems.InsertColumn(0, col);
-	col.LoadString(IDS_COL_LEVEL);
-	m_ctrlItems.InsertColumn(1, col);
-	col.LoadString(IDS_COL_EVENT);
-	m_ctrlItems.InsertColumn(2, col);
+	m_ctrlEdit = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_MULTIQ_EDIT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigMultiQ::OnEdit), NULL, this);
+	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_MULTIQ_EDIT"));
+	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_MULTIQ_EDIT"));
+
+	m_ctrlRemove = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_MULTIQ_DELETE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlRemove->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigMultiQ::OnRemove), NULL, this);
+	m_ctrlRemove->SetHelpText(_("HIDC_CONFIG_MULTIQ_DELETE"));
+	m_ctrlRemove->SetToolTip(_("HIDC_CONFIG_MULTIQ_DELETE"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(m_ctrlName, 1, wxALL, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerAbbrev = new wxBoxSizer(wxHORIZONTAL);
+	sizerAbbrev->Add(textAbbrev, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerAbbrev->Add(ctrlAbbrev, 0, wxALL, 3);
+
+	bSizer->Add(sizerAbbrev, 0, wxEXPAND, 5);
+
+	wxFlexGridSizer* sizerDates = new wxFlexGridSizer(2, 2, 0, 0);
+	sizerDates->SetFlexibleDirection(wxBOTH);
+	sizerDates->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+
+	sizerDates->Add(ctrlValidFrom, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
+	sizerDates->Add(m_ctrlDateFrom, 0, wxALL, 3);
+	sizerDates->Add(ctrlValidTo, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
+	sizerDates->Add(m_ctrlDateTo, 0, wxALL, 3);
+
+	bSizer->Add(sizerDates, 0, wxEXPAND, 5);
+	bSizer->Add(m_ctrlItems, 0, wxEXPAND|wxLEFT|wxRIGHT|wxTOP, 5);
+
+	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
+	sizerBtns->Add(btnAdd, 0, wxALL, 5);
+	sizerBtns->Add(m_ctrlEdit, 0, wxALL, 5);
+	sizerBtns->Add(m_ctrlRemove, 0, wxALL, 5);
+
+	bSizer->Add(sizerBtns, 0, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
@@ -171,177 +207,176 @@ BOOL CDlgConfigMultiQ::OnInitDialog()
 		tstring div, level, evt;
 		if (m_pMultiQ->GetItem(i, div, level, evt))
 		{
-			int idx = m_ctrlItems.InsertItem(static_cast<int>(i), div.c_str());
-			m_ctrlItems.SetItemText(idx, 1, level.c_str());
-			m_ctrlItems.SetItemText(idx, 2, evt.c_str());
+			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), div.c_str());
+			SetListColumnText(m_ctrlItems, idx, 1, level.c_str());
+			SetListColumnText(m_ctrlItems, idx, 2, evt.c_str());
 		}
 	}
-	m_ctrlItems.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlItems.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlItems.SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+	m_ctrlItems->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
+	m_ctrlItems->SetColumnWidth(2, wxLIST_AUTOSIZE_USEHEADER);
 
 	UpdateControls();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
 }
 
 
-void CDlgConfigMultiQ::OnNMDblclk(
-		NMHDR* /*pNMHDR*/,
-		LRESULT* pResult)
+void CDlgConfigMultiQ::UpdateControls()
 {
-	OnEdit();
-	*pResult = 0;
+	m_ctrlDateFrom->Enable(m_bFrom);
+	m_ctrlDateTo->Enable(m_bTo);
+	bool bEnable = (0 <= m_ctrlItems->GetFirstSelected());
+	m_ctrlEdit->Enable(bEnable);
+	m_ctrlRemove->Enable(bEnable);
 }
 
 
-void CDlgConfigMultiQ::OnKeydown(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
+void CDlgConfigMultiQ::EditItem()
 {
-	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
-	switch (pLVKeyDown->wVKey)
-	{
-	default:
-		break;
-	case VK_SPACE:
-		OnEdit();
-		break;
-	}
-	*pResult = 0;
-}
-
-
-void CDlgConfigMultiQ::OnItemchanged(
-		NMHDR* /*pNMHDR*/,
-		LRESULT* pResult)
-{
-	//LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	UpdateControls();
-	*pResult = 0;
-}
-
-
-void CDlgConfigMultiQ::OnClickFrom()
-{
-	if (!UpdateData(TRUE))
-		return;
-	UpdateControls();
-}
-
-
-void CDlgConfigMultiQ::OnClickTo()
-{
-	if (!UpdateData(TRUE))
-		return;
-	UpdateControls();
-}
-
-
-void CDlgConfigMultiQ::OnAdd()
-{
-	if (!UpdateData(TRUE))
-		return;
-	ARBDate date = ARBDate::Today();
-	if (m_bFrom)
-		date = m_DateFrom;
-	else if (m_bTo)
-		date = m_DateTo;
-	CDlgEventSelect dlg(m_pVenue, date, NULL, NULL, NULL, this);
-	if (IDOK == dlg.DoModal())
-	{
-		if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
-		{
-			int idx = m_ctrlItems.InsertItem(m_ctrlItems.GetItemCount(), dlg.GetDivision());
-			m_ctrlItems.SetItemText(idx, 1, dlg.GetLevel());
-			m_ctrlItems.SetItemText(idx, 2, dlg.GetEvent());
-			m_ctrlItems.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-			m_ctrlItems.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-			m_ctrlItems.SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
-		}
-		else
-			MessageBeep(MB_ICONEXCLAMATION);
-	}
-}
-
-
-void CDlgConfigMultiQ::OnEdit()
-{
-	if (!UpdateData(TRUE))
-		return;
-	int idx = m_ctrlItems.GetSelection();
+	int idx = m_ctrlItems->GetFirstSelected();
 	if (0 <= idx)
 	{
-		CString div = m_ctrlItems.GetItemText(idx, 0);
-		CString level = m_ctrlItems.GetItemText(idx, 1);
-		CString evt = m_ctrlItems.GetItemText(idx, 2);
+		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
+		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
+		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
 		ARBDate date = ARBDate::Today();
 		if (m_bFrom)
 			date = m_DateFrom;
 		else if (m_bTo)
 			date = m_DateTo;
-		CDlgEventSelect dlg(m_pVenue, date, (LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)evt, this);
-		if (IDOK == dlg.DoModal())
+		CDlgEventSelect dlg(m_pVenue, date, div, level, evt, this);
+		if (wxID_OK == dlg.ShowModal())
 		{
-			if (m_pMultiQ->RemoveItem((LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)evt))
-				m_ctrlItems.DeleteItem(idx);
+			if (m_pMultiQ->RemoveItem(div, level, evt))
+				m_ctrlItems->DeleteItem(idx);
 			if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 			{
-				idx = m_ctrlItems.InsertItem(idx,dlg.GetDivision());
-				m_ctrlItems.SetItemText(idx, 1, dlg.GetLevel());
-				m_ctrlItems.SetItemText(idx, 2, dlg.GetEvent());
-				m_ctrlItems.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-				m_ctrlItems.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-				m_ctrlItems.SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
+				idx = m_ctrlItems->InsertItem(idx, dlg.GetDivision());
+				SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
+				SetListColumnText(m_ctrlItems, idx, 2, dlg.GetEvent());
+				m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+				m_ctrlItems->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
+				m_ctrlItems->SetColumnWidth(2, wxLIST_AUTOSIZE_USEHEADER);
 			}
 			else
-				MessageBeep(MB_ICONEXCLAMATION);
+				wxBell();
 		}
 	}
 }
 
 
-void CDlgConfigMultiQ::OnRemove()
+void CDlgConfigMultiQ::OnItemchanged(wxListEvent& evt)
 {
-	int idx = m_ctrlItems.GetSelection();
-	if (0 <= idx)
-		m_ctrlItems.DeleteItem(idx);
+	TransferDataFromWindow();
+	UpdateControls();
 }
 
 
-void CDlgConfigMultiQ::OnOK()
+void CDlgConfigMultiQ::OnDblclkItem(wxMouseEvent& evt)
 {
-	if (!UpdateData(TRUE))
-		return;
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-	if (m_Name.IsEmpty())
+	EditItem();
+}
+
+
+void CDlgConfigMultiQ::OnKeydownItem(wxListEvent& evt)
+{
+	switch (evt.GetKeyCode())
 	{
-		AfxMessageBox(IDS_ENTER_NAME, MB_ICONINFORMATION);
-		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_NAME));
-		return;
+	default:
+		break;
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
+		EditItem();
+		break;
 	}
-	m_ShortName.TrimRight();
-	m_ShortName.TrimLeft();
-	if (m_ShortName.IsEmpty())
+}
+
+
+void CDlgConfigMultiQ::OnClickFrom(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	UpdateControls();
+}
+
+
+void CDlgConfigMultiQ::OnClickTo(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	UpdateControls();
+}
+
+
+void CDlgConfigMultiQ::OnAdd(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	ARBDate date = ARBDate::Today();
+	if (m_bFrom)
+		date = m_DateFrom;
+	else if (m_bTo)
+		date = m_DateTo;
+	CDlgEventSelect dlg(m_pVenue, date, wxEmptyString, wxEmptyString, wxEmptyString, this);
+	if (wxID_OK == dlg.ShowModal())
 	{
-		AfxMessageBox(IDS_ENTER_SHORTNAME, MB_ICONINFORMATION);
-		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_SHORTNAME));
-		return;
-	}
-	if (m_pMultiQ->GetName() != (LPCTSTR)m_Name)
-	{
-		if (m_pVenue->GetMultiQs().FindMultiQ((LPCTSTR)m_Name))
+		if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 		{
-			AfxMessageBox(IDS_NAME_IN_USE);
-			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_MULTIQ_NAME));
+			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), dlg.GetDivision());
+			SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
+			SetListColumnText(m_ctrlItems, idx, 2, dlg.GetEvent());
+			m_ctrlItems->SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+			m_ctrlItems->SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+			m_ctrlItems->SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
+		}
+		else
+			wxBell();
+	}
+}
+
+
+void CDlgConfigMultiQ::OnEdit(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	EditItem();
+}
+
+
+void CDlgConfigMultiQ::OnRemove(wxCommandEvent& evt)
+{
+	int idx = m_ctrlItems->GetFirstSelected();
+	if (0 <= idx)
+	{
+		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
+		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
+		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
+		if (m_pMultiQ->RemoveItem(div, level, evt))
+			m_ctrlItems->DeleteItem(idx);
+		else
+			wxBell();
+	}
+}
+
+
+void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
+{
+	if (!Validate() || !TransferDataFromWindow())
+		return;
+
+	if (m_pMultiQ->GetName() != m_Name)
+	{
+		if (m_pVenue->GetMultiQs().FindMultiQ(m_Name))
+		{
+			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+			m_ctrlName->SetFocus();
 			return;
 		}
 	}
 
-	m_pMultiQ->SetName((LPCTSTR)m_Name);
-	m_pMultiQ->SetShortName((LPCTSTR)m_ShortName);
+	m_pMultiQ->SetName(m_Name.c_str());
+	m_pMultiQ->SetShortName(m_ShortName.c_str());
 	if (!m_bFrom)
 		m_DateFrom.clear();
 	m_pMultiQ->SetValidFrom(m_DateFrom);
@@ -349,13 +384,14 @@ void CDlgConfigMultiQ::OnOK()
 		m_DateTo.clear();
 	m_pMultiQ->SetValidTo(m_DateTo);
 	m_pMultiQ->RemoveAllItems();
-	for (int idx = m_ctrlItems.GetItemCount() - 1; idx >= 0; --idx)
+	for (int idx = m_ctrlItems->GetItemCount() - 1; idx >= 0; --idx)
 	{
-		CString div = m_ctrlItems.GetItemText(idx, 0);
-		CString level = m_ctrlItems.GetItemText(idx, 1);
-		CString evt = m_ctrlItems.GetItemText(idx, 2);
-		m_pMultiQ->AddItem((LPCTSTR)div, (LPCTSTR)level, (LPCTSTR)evt);
+		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
+		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
+		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
+		m_pMultiQ->AddItem(div.c_str(), level.c_str(), evt.c_str());
 	}
-	CDlgBaseDialog::OnOK();
+	*m_pOrigMultiQ = *m_pMultiQ;
+
+	EndDialog(wxID_OK);
 }
-#endif

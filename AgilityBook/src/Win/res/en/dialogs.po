@@ -106,6 +106,31 @@ msgstr "&Name"
 msgid "IDC_CLUB_VENUES"
 msgstr "&Venue"
 
+# DlgConfigMultiQ
+msgid "IDD_CONFIG_MULTI_Q"
+msgstr "Multiple Q Configuration"
+
+msgid "IDC_CONFIG_MULTIQ_NAME"
+msgstr "&Name"
+
+msgid "IDC_CONFIG_MULTIQ_SHORTNAME"
+msgstr "A&bbreviation"
+
+msgid "IDC_CONFIG_MULTIQ_DATE_VALID_FROM"
+msgstr "Valid &From"
+
+msgid "IDC_CONFIG_MULTIQ_DATE_VALID_TO"
+msgstr "Valid &To"
+
+msgid "IDC_CONFIG_MULTIQ_ADD"
+msgstr "&Add"
+
+msgid "IDC_CONFIG_MULTIQ_EDIT"
+msgstr "&Edit"
+
+msgid "IDC_CONFIG_MULTIQ_DELETE"
+msgstr "&Remove"
+
 # DlgConfigOtherPoints
 msgid "IDD_CONFIG_OTHERPOINTS"
 msgstr "Other Points Configuration"

@@ -29,7 +29,7 @@
 /**
  * @file
  *
- * @brief Text validator with white space trimming.
+ * @brief Various validators.
  * @author David Connet
  *
  * Revision History
@@ -39,6 +39,7 @@
 #include "ARBTypes.h"
 #include <wx/valgen.h>
 #include <wx/valtext.h>
+class ARBDate;
 
 
 /// wxGenericValidator doesn't do shorts and doubles
@@ -50,6 +51,7 @@ DECLARE_CLASS(CGenericValidator)
 public:
 	CGenericValidator(short* val);
 	CGenericValidator(double* val, int inPrec = 2);
+	CGenericValidator(ARBDate* val);
 	CGenericValidator(CGenericValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CGenericValidator(*this);}
@@ -62,6 +64,7 @@ private:
 	short* m_pShort;
 	double* m_pDouble;
 	int m_Prec;
+	ARBDate* m_pDate;
 };
 
 

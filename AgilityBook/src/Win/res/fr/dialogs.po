@@ -107,6 +107,31 @@ msgstr "&Nom"
 msgid "IDC_CLUB_VENUES"
 msgstr "&Organisation"
 
+# DlgConfigMultiQ
+msgid "IDD_CONFIG_MULTI_Q"
+msgstr "Configuration du 'multiple Q' (pour AKC et UKC)"
+
+msgid "IDC_CONFIG_MULTIQ_NAME"
+msgstr "&Nom"
+
+msgid "IDC_CONFIG_MULTIQ_SHORTNAME"
+msgstr "A&bbréviation"
+
+msgid "IDC_CONFIG_MULTIQ_DATE_VALID_FROM"
+msgstr "Valide &du"
+
+msgid "IDC_CONFIG_MULTIQ_DATE_VALID_TO"
+msgstr "Valide &jusqu'au"
+
+msgid "IDC_CONFIG_MULTIQ_ADD"
+msgstr "&Ajouter"
+
+msgid "IDC_CONFIG_MULTIQ_EDIT"
+msgstr "&Édition"
+
+msgid "IDC_CONFIG_MULTIQ_DELETE"
+msgstr "&Supprimer"
+
 # DlgConfigOtherPoints
 msgid "IDD_CONFIG_OTHERPOINTS"
 msgstr "Paramètres autres points"

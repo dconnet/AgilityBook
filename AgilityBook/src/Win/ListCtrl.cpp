@@ -49,6 +49,7 @@
 #include "stdafx.h"
 #include "ListCtrl.h"
 
+#include "Globals.h"
 #include "ListData.h"
 
 #include "res/CalEmpty.xpm"
@@ -285,13 +286,7 @@ void CReportListCtrl::GetPrintLine(
 		for (long iCol = 0; iCol < nCols; ++iCol)
 		{
 			if (0 > item)
-			{
-				wxListItem info;
-				info.SetMask(wxLIST_MASK_TEXT);
-				info.SetColumn(iCol);
-				GetColumn(iCol, info);
-				line.push_back(info.GetText());
-			}
+				line.push_back(GetListColumnText(this, item, iCol));
 			else
 				line.push_back(data->OnNeedText(iCol));
 		}

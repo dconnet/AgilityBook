@@ -27,7 +27,7 @@
 /**
  * @file
  *
- * @brief Text validator with white space trimming.
+ * @brief Various validators.
  * @author David Connet
  *
  * Revision History
@@ -37,8 +37,10 @@
 #include "stdafx.h"
 #include "Validators.h"
 
+#include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ComboBoxes.h"
+#include <wx/datectrl.h>
 
 
 IMPLEMENT_CLASS(CGenericValidator, wxValidator)
@@ -51,6 +53,7 @@ CGenericValidator::CGenericValidator(short* val)
 	: m_pShort(val)
 	, m_pDouble(NULL)
 	, m_Prec(0)
+	, m_pDate(NULL)
 {
 }
 
@@ -59,6 +62,16 @@ CGenericValidator::CGenericValidator(double* val, int inPrec)
 	: m_pShort(NULL)
 	, m_pDouble(val)
 	, m_Prec(inPrec)
+	, m_pDate(NULL)
+{
+}
+
+
+CGenericValidator::CGenericValidator(ARBDate* val)
+	: m_pShort(NULL)
+	, m_pDouble(NULL)
+	, m_Prec(0)
+	, m_pDate(val)
 {
 }
 
@@ -67,6 +80,7 @@ CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
 	: m_pShort(rhs.m_pShort)
 	, m_pDouble(rhs.m_pDouble)
 	, m_Prec(rhs.m_Prec)
+	, m_pDate(rhs.m_pDate)
 {
 	Copy(rhs);
 }
@@ -86,6 +100,19 @@ bool CGenericValidator::TransferFromWindow()
 		else if (m_pDouble)
 		{
 			pControl->GetValue().ToDouble(m_pDouble);
+			return true;
+		}
+	}
+	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrl)))
+	{
+		wxDatePickerCtrl* pControl = (wxDatePickerCtrl*)m_validatorWindow;
+		if (m_pDate)
+		{
+			wxDateTime date = pControl->GetValue();
+			if (date.IsValid())
+				m_pDate->SetDate(date.GetYear(), date.GetMonth(), date.GetDay());
+			else
+				m_pDate->clear();
 			return true;
 		}
 	}
@@ -110,6 +137,32 @@ bool CGenericValidator::TransferToWindow()
 			tstring str = ARBDouble::str(*m_pDouble, m_Prec);
 			pControl->SetValue(str.c_str());
 			return true;
+		}
+	}
+	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrl)))
+	{
+		wxDatePickerCtrl* pControl = (wxDatePickerCtrl*)m_validatorWindow;
+		if (m_pDate)
+		{
+			if (m_pDate->IsValid())
+			{
+				pControl->SetValue(m_pDate->GetDate());
+				return true;
+			}
+			else
+			{
+				if (pControl->HasFlag(wxDP_ALLOWNONE))
+				{
+					wxDateTime date;
+					pControl->SetValue(date);
+					return true;
+				}
+				else
+				{
+					pControl->SetValue(ARBDate::Today().GetDate());
+					return true;
+				}
+			}
 		}
 	}
 	return false;

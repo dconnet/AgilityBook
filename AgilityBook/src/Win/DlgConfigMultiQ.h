@@ -39,72 +39,47 @@
  */
 
 #include "ARBDate.h"
-//#include "DlgBaseDialog.h"
-//#include "ListCtrl.h"
+class wxDatePickerCtrl;
+class wxListView;
+class wxListEvent;
 
 
-class CDlgConfigMultiQ
+class CDlgConfigMultiQ : public wxDialog
 {
 public:
 	CDlgConfigMultiQ(
 			ARBConfigVenuePtr inVenue,
 			ARBConfigMultiQPtr inMultiQ,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgConfigMultiQ"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgConfigMultiQ : public CDlgBaseDialog
-{
-public:
-	CDlgConfigMultiQ(
-			ARBConfigVenuePtr inVenue,
-			ARBConfigMultiQPtr inMultiQ,
-			CWnd* pParent = NULL);
-	virtual ~CDlgConfigMultiQ();
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigMultiQ)
-	enum { IDD = IDD_CONFIG_MULTI_Q };
-	CString	m_Name;
-	CString	m_ShortName;
-	BOOL	m_bFrom;
-	CDateTimeCtrl	m_ctrlDateFrom;
-	ARBDate	m_DateFrom;
-	BOOL	m_bTo;
-	CDateTimeCtrl	m_ctrlDateTo;
-	ARBDate	m_DateTo;
-	CListCtrl2	m_ctrlItems;
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlRemove;
-	//}}AFX_DATA
-	ARBConfigVenuePtr m_pVenue;
-	ARBConfigMultiQPtr m_pMultiQ;
-
-	//{{AFX_VIRTUAL(CDlgConfigMultiQ)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
 	void UpdateControls();
-	//{{AFX_MSG(CDlgConfigMultiQ)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnNMDblclk(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnClickFrom();
-	afx_msg void OnClickTo();
-	afx_msg void OnAdd();
-	afx_msg void OnEdit();
-	afx_msg void OnRemove();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void EditItem();
+
+	ARBConfigVenuePtr m_pVenue;
+	ARBConfigMultiQPtr m_pOrigMultiQ;
+	ARBConfigMultiQPtr m_pMultiQ;
+	wxString m_Name;
+	wxString m_ShortName;
+	bool m_bFrom;
+	wxDatePickerCtrl* m_ctrlDateFrom;
+	ARBDate	m_DateFrom;
+	bool	m_bTo;
+	wxDatePickerCtrl* m_ctrlDateTo;
+	ARBDate	m_DateTo;
+	wxTextCtrl* m_ctrlName;
+	wxListView* m_ctrlItems;
+	wxButton* m_ctrlEdit;
+	wxButton* m_ctrlRemove;
+
+	DECLARE_EVENT_TABLE()
+	void OnItemchanged(wxListEvent& evt);
+	void OnDblclkItem(wxMouseEvent& evt);
+	void OnKeydownItem(wxListEvent& evt);
+	void OnClickFrom(wxCommandEvent& evt);
+	void OnClickTo(wxCommandEvent& evt);
+	void OnAdd(wxCommandEvent& evt);
+	void OnEdit(wxCommandEvent& evt);
+	void OnRemove(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif
