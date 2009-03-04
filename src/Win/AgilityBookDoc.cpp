@@ -1522,7 +1522,6 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 }
 
 
-#include "DlgExistingPoints.h"
 void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 {
 	switch (evt.GetId())
@@ -1769,10 +1768,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case wxID_ABOUT:
 		{
-			//CDlgAbout dlg(this, NULL);
-			//dlg.ShowModal();
-			ARBDogPtr dog = GetCurrentDog();
-			CDlgExistingPoints dlg(this, dog->GetExistingPoints(), ARBDogExistingPointsPtr());
+			CDlgAbout dlg(this, NULL);
 			dlg.ShowModal();
 		}
 		break;

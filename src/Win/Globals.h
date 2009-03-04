@@ -77,3 +77,24 @@ extern bool PrintRuns(
 extern wxWindow* FindWindowInSizer(
 		wxSizer* sizer,
 		int id);
+
+
+/**
+ * Return the text for a column.
+ * This is just a simple wrapper around wxListItem/GetItem
+ */
+extern wxString GetListColumnText(
+		wxListCtrl const* list,
+		long index,
+		long col);
+
+
+/**
+ * Set the text for a column.
+ * This is just a simple wrapper around wxListItem/SetItem
+ */
+extern bool SetListColumnText(
+		wxListCtrl* list,
+		long index,
+		long col,
+		wxString const& text);
