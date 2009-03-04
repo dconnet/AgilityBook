@@ -37,6 +37,8 @@
 #include "stdafx.h"
 #include "Globals.h"
 
+#include "ListData.h"
+
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -118,4 +120,33 @@ bool SetListColumnText(
 	info.SetColumn(col);
 	info.SetText(text);
 	return list->SetItem(info);
+}
+
+
+void RefreshTreeItem(
+		wxTreeCtrl* tree,
+		wxTreeItemId item,
+		bool bRecurse)
+{
+	if (tree)
+	{
+		if (item.IsOk())
+		{
+			CTreeData* pData = dynamic_cast<CTreeData*>(tree->GetItemData(item));
+			if (pData)
+			{
+				tree->SetItemText(item, pData->OnNeedText());
+			}
+			if (bRecurse)
+			{
+				wxTreeItemIdValue cookie;
+				for (wxTreeItemId child = tree->GetFirstChild(item, cookie);
+					child.IsOk();
+					child = tree->GetNextChild(child, cookie))
+				{
+					RefreshTreeItem(tree, child, bRecurse);
+				}
+			}
+		}
+	}
 }

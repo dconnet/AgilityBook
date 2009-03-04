@@ -123,6 +123,7 @@ public:
 	void Freeze()								{m_Ctrl->Freeze();}
 	void Thaw()									{m_Ctrl->Thaw();}
 	void Refresh()								{m_Ctrl->Refresh();}
+	void RefreshItem(wxTreeItemId item, bool bRecurse = false);
 	bool IsExpanded(wxTreeItemId item) const	{return m_Ctrl->IsExpanded(item);}
 	void Expand(wxTreeItemId item)				{m_Ctrl->Expand(item);}
 	void ExpandAllChildren(wxTreeItemId item)	{m_Ctrl->ExpandAllChildren(item);}

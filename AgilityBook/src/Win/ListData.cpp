@@ -55,3 +55,13 @@ void CListData::OnNeedListItem(long iCol, wxListItem& info) const
 	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
 	info.SetText(OnNeedText(iCol));
 }
+
+
+CTreeData::CTreeData()
+{
+}
+
+
+CTreeData::~CTreeData()
+{
+}

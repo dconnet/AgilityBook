@@ -41,15 +41,15 @@
 #include "AgilityBookMenu.h"
 #include "ARBDog.h"
 #include "ARBDogTrial.h"
-#include <list>
-#include <wx/treectrl.h>
+#include "ListData.h"
+#include <vector>
 class CAgilityBookTreeView;
 class CAgilityBookTreeDataDog;
 class CAgilityBookTreeDataTrial;
 class CAgilityBookTreeDataRun;
 
 
-class CAgilityBookTreeData : public wxTreeItemData
+class CAgilityBookTreeData : public CTreeData
 {
 public:
 	CAgilityBookTreeData(CAgilityBookTreeView* pTree)
@@ -116,7 +116,7 @@ public:
 			UINT id,
 			bool& bModified,
 			bool* bTreeSelectionSet) = 0; // Returns true if data modified
-	virtual tstring OnNeedText() const = 0;
+	virtual wxString OnNeedText() const = 0;
 	virtual int OnNeedIcon() const = 0;
 
 	virtual void Properties() = 0;
@@ -175,7 +175,7 @@ public:
 			UINT id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual tstring OnNeedText() const;
+	virtual wxString OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
@@ -231,7 +231,7 @@ public:
 			UINT id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual tstring OnNeedText() const;
+	virtual wxString OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
@@ -293,7 +293,7 @@ public:
 			UINT id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual tstring OnNeedText() const;
+	virtual wxString OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();

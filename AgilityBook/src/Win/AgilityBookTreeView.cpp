@@ -67,6 +67,7 @@
 #include "DlgFind.h"
 #include "Element.h"
 #include "FilterOptions.h"
+#include "Globals.h"
 #include <wx/config.h>
 
 #include "res/CalEmpty.xpm"
@@ -422,6 +423,14 @@ bool CAgilityBookTreeView::GetMessage2(wxString& msg) const
 		msg.Empty();
 		return false;
 	}
+}
+
+
+void CAgilityBookTreeView::RefreshItem(
+		wxTreeItemId item,
+		bool bRecurse)
+{
+	RefreshTreeItem(m_Ctrl, item, bRecurse);
 }
 
 

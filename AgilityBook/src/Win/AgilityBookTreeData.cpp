@@ -122,7 +122,7 @@ static bool EditDog(
 			}
 		}
 		else
-			pTree->Refresh();
+			pTree->RefreshItem(pDogData->GetId());
 		// No need to update the tree view here. We don't sort the dogs so
 		// adding a new dog is all set and editing an existing one doesn't
 		// change any ordering.
@@ -191,7 +191,7 @@ static bool EditTrial(
 		{
 			pDogData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 			pTree->GetDocument()->ResetVisibility(venues, pTrial);
-			pTree->Refresh();
+			pTree->RefreshItem(pTrialData->GetId());
 			if (dlg.RunsWereDeleted())
 			{
 				if (bTreeSelectionSet)
@@ -757,9 +757,9 @@ bool CAgilityBookTreeDataDog::OnCmd(
 }
 
 
-tstring CAgilityBookTreeDataDog::OnNeedText() const
+wxString CAgilityBookTreeDataDog::OnNeedText() const
 {
-	tstring str;
+	wxString str;
 	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
 	{
 		if (0 < idx)
@@ -1033,9 +1033,9 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 }
 
 
-tstring CAgilityBookTreeDataTrial::OnNeedText() const
+wxString CAgilityBookTreeDataTrial::OnNeedText() const
 {
-	tstring str;
+	wxString str;
 	bool bNeedSpace = false;
 	for (size_t idx = 0; idx < GetTrialColumns().size(); ++idx)
 	{
@@ -1388,9 +1388,9 @@ bool CAgilityBookTreeDataRun::OnCmd(
 }
 
 
-tstring CAgilityBookTreeDataRun::OnNeedText() const
+wxString CAgilityBookTreeDataRun::OnNeedText() const
 {
-	tstring str;
+	wxString str;
 	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
 	{
 		if (0 < idx)
@@ -1402,7 +1402,7 @@ tstring CAgilityBookTreeDataRun::OnNeedText() const
 			break;
 		case IO_TREE_RUN_Q:
 			{
-				tstring q;
+				wxString q;
 				if (m_pRun->GetQ().Qualified())
 				{
 					std::vector<ARBConfigMultiQPtr> multiQs;

@@ -98,3 +98,13 @@ extern bool SetListColumnText(
 		long index,
 		long col,
 		wxString const& text);
+
+
+/**
+ * Refresh tree data - in Windows we used getdispinfo, in wxWindows that doesn't
+ * work. So the old code that simply invalidated the window no longer works.
+ */
+extern void RefreshTreeItem(
+		wxTreeCtrl* tree,
+		wxTreeItemId item,
+		bool bRecurse = false);
