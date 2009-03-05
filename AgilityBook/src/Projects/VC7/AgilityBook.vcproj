@@ -5,7 +5,7 @@
 	Name="AgilityBook"
 	ProjectGUID="{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
 	RootNamespace="AgilityBook"
-	Keyword="MFCProj">
+	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -16,35 +16,33 @@
 			OutputDirectory="..\..\..\bin\VC7\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC7\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
-			UseOfMFC="2"
+			UseOfMFC="0"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;XERCES_STATIC_LIBRARY"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;c:/wx/include;c:/wx/include/msvc"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;WXWIDGETS"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="TRUE"
 				RuntimeLibrary="3"
 				EnableFunctionLevelLinking="TRUE"
-				TreatWChar_tAsBuiltInType="TRUE"
+				TreatWChar_tAsBuiltInType="FALSE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
 				WarnAsError="TRUE"
-				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib htmlhelp.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="../../../lib/VC7"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC7.1s"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"/>
 			<Tool
@@ -78,32 +76,30 @@
 			OutputDirectory="..\..\..\bin\VC7\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\bin\VC7\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="1"
-			UseOfMFC="2"
+			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../zlib;../../xml;../../../../boost"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;XERCES_STATIC_LIBRARY"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;c:/wx/include;c:/wx/include/msvc"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;WXWIDGETS"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
-				TreatWChar_tAsBuiltInType="TRUE"
+				TreatWChar_tAsBuiltInType="FALSE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
 				WarningLevel="4"
 				WarnAsError="TRUE"
-				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib htmlhelp.lib"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="../../../lib/VC7"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC7.1s"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -142,40 +138,43 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm">
 			<File
-				RelativePath="..\..\Win\AboutDlg.cpp">
+				RelativePath="..\..\Win\AgilityBook.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBook.cpp">
+				RelativePath="..\..\Win\AgilityBookCalendarListView.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookCalendarView.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookDoc.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\AgilityBookHtmlView.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookMenu.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\AgilityBookOptions.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookTree.cpp">
+				RelativePath="..\..\Win\AgilityBookPanels.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookPointsView.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookRunsView.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTrainingView.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookTreeData.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendar.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendarList.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewHtml.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewPoints.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewRuns.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewTraining.cpp">
+				RelativePath="..\..\Win\AgilityBookTreeView.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\CalendarSites.cpp">
@@ -193,28 +192,22 @@
 				RelativePath="..\..\Win\ColumnOrder.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\ComboBox.cpp">
+				RelativePath="..\..\Win\ComboBoxes.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\CommonView.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\ConfigHandler.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\CrashHandler.cpp">
+				RelativePath="..\..\Win\DlgAbout.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgAssignColumns.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgAuthenticate.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseDialog.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBasePropertyPage.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseSheet.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgCalendar.cpp">
@@ -292,10 +285,7 @@
 				RelativePath="..\..\Win\DlgFindLinks.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgInfoJudge.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgLanguage.cpp">
+				RelativePath="..\..\Win\DlgInfoNote.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgListCtrl.cpp">
@@ -391,16 +381,13 @@
 				RelativePath="..\..\Win\FilterOptions.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\HyperLink.cpp">
+				RelativePath="..\..\Win\Globals.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\IconList.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\LanguageManager.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\ListBox.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\ListCtrl.cpp">
@@ -430,12 +417,6 @@
 				RelativePath="..\..\Win\RichEditCtrl2.cpp">
 			</File>
 			<File
-				RelativePath="..\..\Win\Splash.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\Splitter.cpp">
-			</File>
-			<File
 				RelativePath="..\..\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -455,6 +436,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\UpdateInfo.cpp">
+			</File>
+			<File
+				RelativePath="..\..\Win\Validators.cpp">
 			</File>
 			<File
 				RelativePath="..\..\Win\VersionNum.cpp">
@@ -479,40 +463,43 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc">
 			<File
-				RelativePath="..\..\Win\AboutDlg.h">
+				RelativePath="..\..\Win\AgilityBook.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBook.h">
+				RelativePath="..\..\Win\AgilityBookCalendarListView.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookCalendarView.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookDoc.h">
 			</File>
 			<File
+				RelativePath="..\..\Win\AgilityBookHtmlView.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookMenu.h">
+			</File>
+			<File
 				RelativePath="..\..\Win\AgilityBookOptions.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookTree.h">
+				RelativePath="..\..\Win\AgilityBookPanels.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookPointsView.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookRunsView.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\AgilityBookTrainingView.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\AgilityBookTreeData.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendar.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewCalendarList.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewHtml.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewPoints.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewRuns.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\AgilityBookViewTraining.h">
+				RelativePath="..\..\Win\AgilityBookTreeView.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\CalendarSites.h">
@@ -530,7 +517,7 @@
 				RelativePath="..\..\Win\ColumnOrder.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\ComboBox.h">
+				RelativePath="..\..\Win\ComboBoxes.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\CommonView.h">
@@ -539,22 +526,13 @@
 				RelativePath="..\..\Win\ConfigHandler.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\CrashHandler.h">
+				RelativePath="..\..\Win\DlgAbout.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgAssignColumns.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgAuthenticate.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseDialog.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBasePropertyPage.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgBaseSheet.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgCalendar.h">
@@ -632,10 +610,7 @@
 				RelativePath="..\..\Win\DlgFindLinks.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgInfoJudge.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgLanguage.h">
+				RelativePath="..\..\Win\DlgInfoNote.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgListCtrl.h">
@@ -734,16 +709,13 @@
 				RelativePath="..\..\Win\FilterOptions.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\HyperLink.h">
+				RelativePath="..\..\Win\Globals.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\IconList.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\LanguageManager.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\ListBox.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\ListCtrl.h">
@@ -770,31 +742,19 @@
 				RelativePath="..\..\Win\ReadHttp.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\Resource.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\resource.hm">
-			</File>
-			<File
 				RelativePath="..\..\Win\RichEditCtrl2.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\Splash.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\Splitter.h">
-			</File>
-			<File
 				RelativePath="..\..\stdafx.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\SymbolEngine.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\TabView.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\UpdateInfo.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\Validators.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\VersionNum.h">

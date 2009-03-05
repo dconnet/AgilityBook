@@ -117,8 +117,8 @@ ElementNodePtr LoadXMLData(UINT id)
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
 #ifdef WXWIDGETS
-	wxString datafile = wxFileName::FileName(wxStandardPaths::Get().GetExecutablePath()).GetFullName();
-	datafile += wxT(".dat");
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
 	bool bOk = false;
 	std::string data;
 	switch (id)

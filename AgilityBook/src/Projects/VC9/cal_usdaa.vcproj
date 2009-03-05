@@ -5,7 +5,7 @@
 	Name="cal_usdaa"
 	ProjectGUID="{1FB92846-A297-4773-BC46-90733251A689}"
 	RootNamespace="cal_usdaa"
-	Keyword="MFCDLLProj"
+	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -22,7 +22,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
 			<Tool
@@ -87,7 +87,7 @@
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;.\wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -109,7 +109,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
 			<Tool
@@ -152,7 +152,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -175,7 +175,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
 			<Tool
@@ -218,7 +218,7 @@
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;.\wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -241,7 +241,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
 			<Tool

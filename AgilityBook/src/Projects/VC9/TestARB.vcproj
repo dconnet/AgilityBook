@@ -81,7 +81,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -147,7 +147,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -213,7 +213,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -280,7 +280,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -345,7 +345,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -411,7 +411,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -477,7 +477,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 		<Configuration
@@ -544,7 +544,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetPath)&quot; $(PlatformName) wx"
+				CommandLine="$(ProjectDir)RunARBTests.bat &quot;$(TargetDir)&quot; &quot;$(TargetName)&quot; $(PlatformName)"
 			/>
 		</Configuration>
 	</Configurations>

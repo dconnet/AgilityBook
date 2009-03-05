@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-04 DRC Ported to wxWidgets.
  * @li 2008-10-31 DRC Created
  */
 
@@ -38,30 +39,17 @@
 #include "ConfigHandler.h"
 
 #include "Element.h"
-#if defined(WXWIDGETS)
 #include <sstream>
 #include <wx/filesys.h>
 #include <wx/stdpaths.h>
-#elif defined(_WIN32) && defined(_MFC_VER)
-#include "resource.h"
-#endif
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-
-#if defined(WXWIDGETS)
 
 bool CConfigHandler::LoadWxFile(
 		wxString const& zipFile,
 		wxString const& archiveFile,
 		std::string& outData)
 {
-	outData.clear();
+	outData.erase();
 	wxString zipfile = wxFileSystem::FileNameToURL(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + zipFile);
 	zipfile += wxT("#zip:") + archiveFile;
 	wxFileSystem filesys;
@@ -76,7 +64,7 @@ bool CConfigHandler::LoadWxFile(
 			char buffer[1024];
 			size_t num = 1024;
 			input->Read(buffer, num);
-			data.write(buffer, input->LastRead());
+			data.write(buffer, static_cast<std::streamsize>(input->LastRead()));
 			size += input->LastRead();
 		}
 		delete file;
@@ -85,9 +73,7 @@ bool CConfigHandler::LoadWxFile(
 	}
 	return false;
 }
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
 
 CConfigHandler::CConfigHandler()
 {
@@ -96,17 +82,16 @@ CConfigHandler::CConfigHandler()
 
 ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 {
-	// We could just distribute the .xml file and load it, but I'm taking
-	// advantage of Win32 resources and stashing the default config inside
-	// the program.
 	bool bOk = false;
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 
 #if defined(WXWIDGETS)
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
 	std::string data;
-	if (LoadWxFile(wxT("AgilityBook.dat"), wxT("DefaultConfig.xml"), data))
+	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
 		bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
 
 #elif defined(_WIN32) && defined(_MFC_VER)
@@ -128,6 +113,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	// @todo: Porting issues: This needs more work...
 	// This will work, but we need to make sure DefaultConfig.xml is
 	// distributed - there's also the issue of paths...
+	// Right now, we only support MFC or wxWidgets, so this is here just because
 	bOk = tree->LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
 #endif
 
@@ -140,7 +126,9 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 	std::string dtd;
 
 #if defined(WXWIDGETS)
-	LoadWxFile(wxT("AgilityBook.dat"), wxT("AgilityRecordBook.dtd"), dtd);
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);
 
 #elif defined(_WIN32) && defined(_MFC_VER)
 	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
@@ -159,6 +147,7 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 #else
 #pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DTD usage" )
 	// @todo: Porting issues: Not currently implemented
+	// Right now, we only support MFC or wxWidgets, so this is here just because
 	dtd = "<!-- Not implemented on non-windows platforms -->\n";
 #endif
 

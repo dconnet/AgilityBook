@@ -8,13 +8,11 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="../../zlib;../../xml;../../../../boost"
-		PreprocessorDefinitions="XERCES_STATIC_LIBRARY;_SECURE_SCL=1;_SECURE_SCL_THROWS=1"
+		AdditionalIncludeDirectories="../../../../boost"
 		StringPooling="true"
 		UsePrecompiledHeader="2"
 		WarningLevel="4"
 		WarnAsError="true"
-		Detect64BitPortabilityProblems="true"
 		DisableSpecificWarnings="4100;6031"
 	/>
 	<Tool

@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -209,7 +209,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -273,7 +273,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -337,7 +337,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -402,7 +402,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -467,7 +467,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -533,7 +533,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -1449,6 +1449,10 @@
 				RelativePath="..\..\Win\AgilityBook.rc"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Win\res\AgilityBook.rc2"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="ARB"
@@ -1787,7 +1791,23 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\..\Win\ReadMe.txt"
+			RelativePath="..\..\..\History.txt"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\License.txt"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\Readme.txt"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\ReleaseProcess.txt"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\Todo.txt"
 			>
 		</File>
 	</Files>

@@ -5,14 +5,11 @@
 	Name="cal_usdaa"
 	ProjectGUID="{1FB92846-A297-4773-BC46-90733251A689}"
 	RootNamespace="cal_usdaa"
-	Keyword="MFCDLLProj"
+	Keyword="Win32Proj"
 	>
 	<Platforms>
 		<Platform
 			Name="Win32"
-		/>
-		<Platform
-			Name="x64"
 		/>
 	</Platforms>
 	<ToolFiles>
@@ -21,8 +18,8 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			UseOfMFC="0"
 			CharacterSet="2"
 			>
 			<Tool
@@ -42,8 +39,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
 			<Tool
@@ -51,78 +48,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|x64"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="1"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -153,8 +86,8 @@
 		<Configuration
 			Name="Unicode Debug|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			UseOfMFC="0"
 			CharacterSet="1"
 			>
 			<Tool
@@ -174,8 +107,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
 			<Tool
@@ -183,78 +116,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Unicode Debug|x64"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="1"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -285,8 +154,8 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -307,8 +176,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
 			<Tool
@@ -316,79 +185,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|x64"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
-			CharacterSet="2"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="0"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -419,8 +223,8 @@
 		<Configuration
 			Name="Unicode Release|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -441,8 +245,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="../../Include;../../cal_usdaa;../../ARB"
+				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
 			<Tool
@@ -450,79 +254,14 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="../../Include"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Unicode Release|x64"
-			ConfigurationType="2"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../cal_usdaa"
-				PreprocessorDefinitions="_WINDOWS;_USRDLL"
-				RuntimeLibrary="0"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -583,23 +322,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -615,23 +338,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -645,14 +352,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\..\cal_usdaa\cal_usdaa.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\cal_usdaa\resource.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\stdafx.h"
 				>
@@ -712,25 +411,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Debug|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -748,25 +429,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|x64"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

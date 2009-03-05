@@ -64,7 +64,7 @@ bool CConfigHandler::LoadWxFile(
 			char buffer[1024];
 			size_t num = 1024;
 			input->Read(buffer, num);
-			data.write(buffer, input->LastRead());
+			data.write(buffer, static_cast<std::streamsize>(input->LastRead()));
 			size += input->LastRead();
 		}
 		delete file;
@@ -88,8 +88,8 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ElementNodePtr tree(ElementNode::New());
 
 #if defined(WXWIDGETS)
-	wxString datafile = wxFileName::FileName(wxStandardPaths::Get().GetExecutablePath()).GetName();
-	datafile += wxT(".dat");
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
 	std::string data;
 	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
 		bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
@@ -126,8 +126,8 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 	std::string dtd;
 
 #if defined(WXWIDGETS)
-	wxString datafile = wxFileName::FileName(wxStandardPaths::Get().GetExecutablePath()).GetName();
-	datafile += wxT(".dat");
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
 	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);
 
 #elif defined(_WIN32) && defined(_MFC_VER)
