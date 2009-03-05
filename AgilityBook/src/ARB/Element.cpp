@@ -231,7 +231,7 @@ public:
     
     virtual wxOutputStream& Write(const void *buffer, size_t size)
 	{
-		m_output.write((const char*)buffer, size);
+		m_output.write((const char*)buffer, static_cast<std::streamsize>(size));
 		return *this;
 	}
 
