@@ -325,7 +325,7 @@ void CWizardExport::UpdatePreview()
 		nodelim.LoadString(IDS_NO_DELIM_SPECIFIED);
 		m_ctrlPreview.InsertColumn(0, _T(""));
 		m_ctrlPreview.InsertItem(0, nodelim);
-		m_ctrlPreview.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlPreview.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 		m_ctrlPreview.SetRedraw(TRUE);
 		m_ctrlPreview.Invalidate();
 		return;
@@ -1144,7 +1144,7 @@ void CWizardExport::UpdatePreview()
 		break;
 	}
 	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
-		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlPreview.SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlPreview.SetRedraw(TRUE);
 	m_ctrlPreview.Invalidate();
 }

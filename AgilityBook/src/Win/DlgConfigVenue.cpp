@@ -329,7 +329,7 @@ void CDlgConfigVenue::LoadDivisionData()
 				static_cast<CListData*>(
 					new CDlgConfigureDataDivision(*iterDiv))));
 	}
-	m_ctrlDivisions.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlDivisions.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	FindCurrentDivision(pDiv, true);
 	LoadLevelData();
 }
@@ -406,7 +406,7 @@ void CDlgConfigVenue::LoadTitleData()
 				static_cast<CListData*>(
 					new CDlgConfigureDataTitle(*iterTitle))));
 	}
-	m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlTitles.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	FindCurrentTitle(pTitle, true);
 }
 
@@ -426,7 +426,7 @@ void CDlgConfigVenue::LoadEventData()
 				static_cast<CListData*>(
 					new CDlgConfigureDataEvent(*iterEvent))));
 	}
-	m_ctrlEvents.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlEvents.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	FindCurrentEvent(pOldEvent, true);
 }
 
@@ -448,7 +448,7 @@ void CDlgConfigVenue::LoadMultiQData()
 				static_cast<CListData*>(
 					new CDlgConfigureDataMultiQ(*iter))));
 	}
-	m_ctrlMultiQ.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlMultiQ.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	FindCurrentMultiQ(pOldMultiQ, true);
 }
 
@@ -1022,7 +1022,7 @@ void CDlgConfigVenue::OnNew()
 								static_cast<CListData*>(
 									new CDlgConfigureDataTitle(pTitle))));
 						m_ctrlTitles.SetSelection(index);
-						m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+						m_ctrlTitles.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 						m_ctrlTitles.Invalidate();
 					}
 				}
@@ -1385,7 +1385,7 @@ void CDlgConfigVenue::OnEdit()
 						title->SetName(name);
 					}
 					*(pTitleData->GetTitle()) = *title;
-					m_ctrlTitles.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+					m_ctrlTitles.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 					m_ctrlTitles.Invalidate();
 					if (name != oldName || longname != oldLongName)
 					{

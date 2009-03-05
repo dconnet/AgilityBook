@@ -119,7 +119,7 @@ public:
 	void SetColumnWidths(CReportListCtrl* inList)
 	{
 		for (int i = 0; i < static_cast<int>(m_Columns.size()); ++i)
-			inList->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+			inList->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 	}
 	int GetIndex(int inColumn)
 	{

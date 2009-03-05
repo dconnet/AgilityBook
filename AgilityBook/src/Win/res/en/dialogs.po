@@ -125,6 +125,70 @@ msgstr "&Copy..."
 msgid "IDC_CONFIG_UPDATE"
 msgstr "&Update Configuration..."
 
+# DlgConfigEventMethod
+msgid "IDD_CONFIG_EVENT_METHOD"
+msgstr "Method Configuration"
+
+msgid "IDC_CONFIG_EVENT_DIVISION"
+msgstr "&Division"
+
+msgid "IDC_CONFIG_EVENT_LEVEL"
+msgstr "&Level"
+
+msgid "IDC_CONFIG_EVENT_DATE_VALID_FROM"
+msgstr "Valid &From"
+
+msgid "IDC_CONFIG_EVENT_DATE_VALID_TO"
+msgstr "Valid &To"
+
+msgid "IDC_CONFIG_EVENT_TYPE"
+msgstr "&Scoring Style"
+
+msgid "IDC_CONFIG_EVENT_DROP_FRACTIONS"
+msgstr "Drop time fractions for faults"
+
+msgid "IDC_CONFIG_EVENT_BONUS"
+msgstr "Has Bonus Points"
+
+msgid "IDC_CONFIG_EVENT_SUPERQ"
+msgstr "Has Super Qs"
+
+msgid "IDC_CONFIG_EVENT_SPEED"
+msgstr "Has Speed Points"
+
+msgid "IDC_CONFIG_EVENT_TF_MULTIPLY"
+msgstr "Time Fault &Multiplier"
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT"
+msgstr "Speed Point &Placement Multipliers"
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT_NEW"
+msgstr "New..."
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT_EDIT"
+msgstr "Edit..."
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT_DELETE"
+msgstr "Delete"
+
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
+msgstr "Time+Fault runs must be clean to Q"
+
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
+msgstr "Compute time faults under SCT"
+
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_OVER"
+msgstr "Compute time faults over SCT"
+
+msgid "IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
+msgstr "Subtract time faults from score"
+
+msgid "IDC_CONFIG_EVENT_OPENING_PTS"
+msgstr "Required &Opening"
+
+msgid "IDC_CONFIG_EVENT_CLOSING_PTS"
+msgstr "Required &Closing"
+
 # DlgConfigMultiQ
 msgid "IDD_CONFIG_MULTI_Q"
 msgstr "Multiple Q Configuration"

@@ -327,9 +327,9 @@ void CDlgConfigMultiQ::OnAdd(wxCommandEvent& evt)
 			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), dlg.GetDivision());
 			SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
 			SetListColumnText(m_ctrlItems, idx, 2, dlg.GetEvent());
-			m_ctrlItems->SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-			m_ctrlItems->SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
-			m_ctrlItems->SetColumnWidth(2, LVSCW_AUTOSIZE_USEHEADER);
+			m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+			m_ctrlItems->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
+			m_ctrlItems->SetColumnWidth(2, wxLIST_AUTOSIZE_USEHEADER);
 		}
 		else
 			wxBell();

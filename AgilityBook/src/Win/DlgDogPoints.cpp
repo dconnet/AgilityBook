@@ -282,7 +282,7 @@ void CDlgDogPoints::ListExistingPoints()
 	}
 	if (bSetWidth)
 		for (i = 0; i < nColExistingPointsInfo; ++i)
-			m_ctrlPoints.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+			m_ctrlPoints.SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 	SORTINFO si;
 	si.pThis = this;
 	si.pCols = &m_sortPoints;

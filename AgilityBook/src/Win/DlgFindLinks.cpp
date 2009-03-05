@@ -292,7 +292,7 @@ CDlgFindLinks::CDlgFindLinks(
 		m_ctrlLinks->InsertItem(m_Data[i]);
 	}
 	for (int i = 0; i < nColLinkInfo; ++i)
-		m_ctrlLinks->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlLinks->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 	s_SortInfo.pThis = this;
 	s_SortInfo.pCols = &m_sortLinks;
 	m_ctrlLinks->SortItems(CompareLinks, 0);

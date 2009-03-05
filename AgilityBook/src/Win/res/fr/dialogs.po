@@ -126,6 +126,70 @@ msgstr "&Copier..."
 msgid "IDC_CONFIG_UPDATE"
 msgstr "&Mettre à jour paramètres..."
 
+# DlgConfigEventMethod
+msgid "IDD_CONFIG_EVENT_METHOD"
+msgstr "Paramètres de la méthode"
+
+msgid "IDC_CONFIG_EVENT_DIVISION"
+msgstr "Niveau &conducteur"
+
+msgid "IDC_CONFIG_EVENT_LEVEL"
+msgstr "&Degré"
+
+msgid "IDC_CONFIG_EVENT_DATE_VALID_FROM"
+msgstr "&Valide du"
+
+msgid "IDC_CONFIG_EVENT_DATE_VALID_TO"
+msgstr "Valide &jusqu'au"
+
+msgid "IDC_CONFIG_EVENT_TYPE"
+msgstr "&Style de Comptage"
+
+msgid "IDC_CONFIG_EVENT_DROP_FRACTIONS"
+msgstr "Compter les secondes entières pour les pénalités"
+
+msgid "IDC_CONFIG_EVENT_BONUS"
+msgstr "Points bonus?"
+
+msgid "IDC_CONFIG_EVENT_SUPERQ"
+msgstr "Super Q?"
+
+msgid "IDC_CONFIG_EVENT_SPEED"
+msgstr "Points vitesse?"
+
+msgid "IDC_CONFIG_EVENT_TF_MULTIPLY"
+msgstr "Multiplicateur pour pénalités temps"
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT"
+msgstr "Multiplicateur pour points de vitesse et de Classements"
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT_NEW"
+msgstr "Nouveau..."
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT_EDIT"
+msgstr "Édition..."
+
+msgid "IDC_CONFIG_EVENT_PLACEMENT_DELETE"
+msgstr "Supprimer"
+
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_CLEANQ"
+msgstr "Zéro fautes seul qualifiants"
+
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_UNDER"
+msgstr "Calculer pénalités temps sous TPS"
+
+msgid "IDC_CONFIG_EVENT_TIME_FAULTS_OVER"
+msgstr "Calculer penalités temps au-dessus TPS"
+
+msgid "IDC_CONFIG_EVENT_SUBTRACT_TIME_FAULTS"
+msgstr "Déduire pénalités temps du résultat"
+
+msgid "IDC_CONFIG_EVENT_OPENING_PTS"
+msgstr "Exigé pour débuter"
+
+msgid "IDC_CONFIG_EVENT_CLOSING_PTS"
+msgstr "Exigé pour finir"
+
 # DlgConfigMultiQ
 msgid "IDD_CONFIG_MULTI_Q"
 msgstr "Configuration du 'multiple Q' (pour AKC et UKC)"

@@ -664,7 +664,7 @@ void CDlgListCtrl::FinishCreate(
 		m_ctrlList->SetSelection(0);
 
 	for (i = 0; i < nCols; ++i)
-		m_ctrlList->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlList->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 	UpdateControls();
 }
 
@@ -865,7 +865,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 	{
 		int nColumns = m_ctrlList->GetColumnCount();
 		for (int i = 0; i < nColumns; ++i)
-			m_ctrlList->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+			m_ctrlList->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 	}
 	UpdateControls();
 }
