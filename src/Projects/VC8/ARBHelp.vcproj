@@ -5,14 +5,11 @@
 	Name="ARBHelp"
 	ProjectGUID="{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}"
 	RootNamespace="ARBHelp"
-	Keyword="MFCProj"
+	Keyword="Win32Proj"
 	>
 	<Platforms>
 		<Platform
 			Name="Win32"
-		/>
-		<Platform
-			Name="x64"
 		/>
 	</Platforms>
 	<ToolFiles>
@@ -21,8 +18,8 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\wxWidgets.vsprops"
+			UseOfMFC="0"
 			CharacterSet="2"
 			>
 			<Tool
@@ -42,7 +39,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../ARB;../../Include"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 				DisableSpecificWarnings="4100"
@@ -59,7 +56,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -87,11 +84,11 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Debug|x64"
+			Name="Unicode Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
-			CharacterSet="2"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\wxWidgets.vsprops"
+			UseOfMFC="0"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -110,9 +107,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../ARB;../../Include"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
+				DisableSpecificWarnings="4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -126,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -156,8 +154,8 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
-			UseOfMFC="1"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\wxWidgets.vsprops"
+			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -178,7 +176,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../ARB;../../Include"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 				DisableSpecificWarnings="4100"
@@ -195,7 +193,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -223,11 +221,11 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|x64"
+			Name="Unicode Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
-			UseOfMFC="1"
-			CharacterSet="2"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;.\wxWidgets.vsprops"
+			UseOfMFC="0"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -247,9 +245,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../ARB"
+				AdditionalIncludeDirectories="../../ARB;../../Include"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
+				DisableSpecificWarnings="4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -263,7 +262,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib"
+				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -312,10 +311,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\ARBHelp\DlgPageEncode.cpp"
 				>
 			</File>
@@ -339,7 +334,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|x64"
+					Name="Unicode Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -355,7 +350,7 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|x64"
+					Name="Unicode Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -433,10 +428,6 @@
 			</File>
 			<File
 				RelativePath="..\..\ARBHelp\DlgPageDecode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARBHelp\DlgPageDecodeFinish.h"
 				>
 			</File>
 			<File

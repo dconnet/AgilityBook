@@ -299,7 +299,7 @@ bool CClipboardDataWriter::AddData(
 			out.width(8);
 			out << lenHeader + lenStartHtml + lenStartFragment + lenData << "\r\n";
 #ifdef _DEBUG
-			assert(out.str().length() == lenHeader);
+			assert(out.str().length() == static_cast<std::string::size_type>(lenHeader));
 #endif
 			out << startHtml << startFragment
 				<< data

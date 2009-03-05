@@ -5,7 +5,7 @@
 	Name="ARBHelp"
 	ProjectGUID="{54D9E6E7-39CE-4B04-99EE-E7506C87E23A}"
 	RootNamespace="ARBHelp"
-	Keyword="MFCProj"
+	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>

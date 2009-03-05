@@ -1,16 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 8.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AgilityBook", "AgilityBook.vcproj", "{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}"
 	ProjectSection(ProjectDependencies) = postProject
-		{152CE948-F659-4206-A50A-1D2B9658EF96} = {152CE948-F659-4206-A50A-1D2B9658EF96}
-		{1E2CB48F-DD72-4411-8D85-9F368141863E} = {1E2CB48F-DD72-4411-8D85-9F368141863E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibXerces", "LibXerces.vcproj", "{152CE948-F659-4206-A50A-1D2B9658EF96}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibZlib", "LibZlib.vcproj", "{1E2CB48F-DD72-4411-8D85-9F368141863E}"
-	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTidy", "LibTidy.vcproj", "{05967875-9726-4F06-8EC8-DB6170C00BF3}"
@@ -19,7 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibTidy", "LibTidy.vcproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cal_usdaa", "cal_usdaa.vcproj", "{1FB92846-A297-4773-BC46-90733251A689}"
 	ProjectSection(ProjectDependencies) = postProject
-		{152CE948-F659-4206-A50A-1D2B9658EF96} = {152CE948-F659-4206-A50A-1D2B9658EF96}
 		{05967875-9726-4F06-8EC8-DB6170C00BF3} = {05967875-9726-4F06-8EC8-DB6170C00BF3}
 	EndProjectSection
 EndProject
@@ -35,14 +24,6 @@ Global
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}.Debug.Build.0 = Debug|Win32
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}.Release.ActiveCfg = Release|Win32
 		{ED5737BC-FD1F-49EA-A2DD-58B4DF6464B8}.Release.Build.0 = Release|Win32
-		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug.ActiveCfg = Debug|Win32
-		{152CE948-F659-4206-A50A-1D2B9658EF96}.Debug.Build.0 = Debug|Win32
-		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release.ActiveCfg = Release|Win32
-		{152CE948-F659-4206-A50A-1D2B9658EF96}.Release.Build.0 = Release|Win32
-		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug.ActiveCfg = Debug|Win32
-		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Debug.Build.0 = Debug|Win32
-		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release.ActiveCfg = Release|Win32
-		{1E2CB48F-DD72-4411-8D85-9F368141863E}.Release.Build.0 = Release|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug.ActiveCfg = Debug|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Debug.Build.0 = Debug|Win32
 		{05967875-9726-4F06-8EC8-DB6170C00BF3}.Release.ActiveCfg = Release|Win32
