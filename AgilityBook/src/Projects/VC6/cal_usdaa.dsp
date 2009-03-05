@@ -31,54 +31,55 @@ RSC=rc.exe
 
 !IF  "$(CFG)" == "cal_usdaa - Win32 Debug"
 
-# PROP BASE Use_MFC 5
+# PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
 # PROP BASE Output_Dir "Debug"
 # PROP BASE Intermediate_Dir "Debug"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 6
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "../../../bin/VC6/Debug"
 # PROP Intermediate_Dir "../../../bin/VC6/Debug/cal_usdaa"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_WINDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../.." /I "../../Include" /I "../../cal_usdaa" /I "../../xml" /I "../../../../boost" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "XERCES_STATIC_LIBRARY" /D "_WINDLL" /D "_AFXDLL" /D "_USRDLL" /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../.." /I "../../Include" /I "../../ARB" /I "../../cal_usdaa" /I "../../../../boost" /I "C:/wx/include" /I "C:/wx/include/msvc" /D "WXWIDGETS" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WINDLL" /Yu"stdafx.h" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /i "../../Include" /i "C:/wx/include" /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ws2_32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 ws2_32.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept /libpath:"C:\wx\lib\vc_lib_VC6.0"
 
 !ELSEIF  "$(CFG)" == "cal_usdaa - Win32 Release"
 
-# PROP BASE Use_MFC 5
+# PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "Release"
 # PROP BASE Intermediate_Dir "Release"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 6
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "../../../bin/VC6/Release"
 # PROP Intermediate_Dir "../../../bin/VC6/Release/cal_usdaa"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_WINDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../.." /I "../../Include" /I "../../cal_usdaa" /I "../../xml" /I "../../../../boost" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "XERCES_STATIC_LIBRARY" /D "_WINDLL" /D "_AFXDLL" /D "_USRDLL" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../.." /I "../../Include" /I "../../ARB" /I "../../cal_usdaa" /I "../../../../boost" /I "C:/wx/include" /I "C:/wx/include/msvc" /D "WXWIDGETS" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WINDLL" /Yu"stdafx.h" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /i "../../Include" /i "C:/wx/include" /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 ws2_32.lib /nologo /subsystem:windows /dll /machine:I386
+# ADD LINK32 ws2_32.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386 /libpath:"C:\wx\lib\vc_lib_VC6.0"
 
 !ENDIF 
 
@@ -114,14 +115,6 @@ SOURCE=..\..\stdafx.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=..\..\cal_usdaa\cal_usdaa.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\cal_usdaa\resource.h
-# End Source File
 # Begin Source File
 
 SOURCE=..\..\stdafx.h

@@ -832,14 +832,15 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlType->SetToolTip(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->InsertColumn(0, _("IDS_COL_RUNTYPE"));
 	m_ctrlType->InsertColumn(1, _("IDS_COL_DESCRIPTION"));
+	int index;
 #ifdef _DEBUG
-	for (int index = 0; index < IO_MAX; ++index)
+	for (index = 0; index < IO_MAX; ++index)
 	{
 		assert(sc_FieldNames[index].index == index);
 	}
 #endif
 	int idxSelect = 0;
-	for (int index = 0; index < IO_TYPE_MAX; ++index)
+	for (index = 0; index < IO_TYPE_MAX; ++index)
 	{
 		assert(sc_Types[index].index == index);
 		if (!(sc_Types[index].valid & m_eOrder))

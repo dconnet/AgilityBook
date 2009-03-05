@@ -257,7 +257,8 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 			wxMenu* menu = new wxMenu();
 			int menuId = baseID;
 			CStatusHandler data;
-			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
+			ARBDogList::const_iterator iDog;
+			for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 			{
 				parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
 				wxString item((*iDog)->GetGenericName().c_str());
@@ -272,7 +273,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 			parent->PopupMenu(menu, point);
 			delete menu;
 			menuId = baseID;
-			for (ARBDogList::const_iterator iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
+			for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 			{
 				parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
 			}
@@ -290,7 +291,8 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				tstring filterName = data.filterOptions.GetCurrentFilter();
 				wxMenu* menu = new wxMenu();
 				int menuId = baseID;
-				for (std::vector<tstring>::const_iterator iFilter = data.filterNames.begin();
+				std::vector<tstring>::const_iterator iFilter;
+				for (iFilter = data.filterNames.begin();
 					iFilter != data.filterNames.end();
 					++iFilter, ++menuId)
 				{
@@ -306,7 +308,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				parent->PopupMenu(menu, point);
 				delete menu;
 				menuId = baseID;
-				for (std::vector<tstring>::const_iterator iFilter = data.filterNames.begin();
+				for (iFilter = data.filterNames.begin();
 					iFilter != data.filterNames.end();
 					++iFilter, ++menuId)
 				{

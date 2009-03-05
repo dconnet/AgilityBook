@@ -198,11 +198,11 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	int index = m_ctrlDivision->Append(all);
 	if (m_pScoring->GetDivision() == WILDCARD_DIVISION)
 		m_ctrlDivision->SetSelection(index);
-	for (ARBConfigDivisionList::iterator iter = m_pVenue->GetDivisions().begin();
-		iter != m_pVenue->GetDivisions().end();
-		++iter)
+	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin();
+		iterDiv != m_pVenue->GetDivisions().end();
+		++iterDiv)
 	{
-		ARBConfigDivisionPtr pDiv = (*iter);
+		ARBConfigDivisionPtr pDiv = (*iterDiv);
 		index = m_ctrlDivision->Append(pDiv->GetName().c_str());
 		m_ctrlDivision->SetClientObject(index, new CDlgConfigureMethodDataDivision(pDiv));
 		if (m_pScoring->GetDivision() == pDiv->GetName())
@@ -360,12 +360,12 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacement->InsertColumn(0, _("IDS_COL_PLACE"));
 	m_ctrlPlacement->InsertColumn(1, _("IDS_COL_MULTIPLIER"));
 	index = 0;
-	for (ARBConfigPlaceInfoList::iterator iter = m_PlaceInfo.begin();
-		iter != m_PlaceInfo.end();
-		++index, ++iter)
+	for (ARBConfigPlaceInfoList::iterator iterPlace = m_PlaceInfo.begin();
+		iterPlace != m_PlaceInfo.end();
+		++index, ++iterPlace)
 	{
 		CDlgConfigureDataPlacementPtr pData(new CDlgConfigureDataPlacement(
-			(*iter)->GetPlace(), (*iter)->GetValue()));
+			(*iterPlace)->GetPlace(), (*iterPlace)->GetValue()));
 		m_ctrlPlacement->InsertItem(pData);
 	}
 	s_SortInfo.pThis = this;

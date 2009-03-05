@@ -565,8 +565,8 @@ void CAgilityBookTrainingView::LoadData()
 		++i;
 	}
 	int nColumnCount = m_Ctrl->GetColumnCount();
-	for (int i = 0; i < nColumnCount; ++i)
-		m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+	for (int iCol = 0; iCol < nColumnCount; ++iCol)
+		m_Ctrl->SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
 
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn.GetColumn();

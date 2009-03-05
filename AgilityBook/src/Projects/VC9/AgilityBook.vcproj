@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -209,7 +209,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -273,7 +273,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -337,7 +337,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -402,7 +402,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -467,7 +467,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -533,7 +533,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py $(OutDir) $(TargetName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -603,6 +603,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\CheckLink.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CheckTreeCtrl.cpp"
 				>
 			</File>
 			<File
@@ -1081,6 +1085,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\CheckLink.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CheckTreeCtrl.h"
 				>
 			</File>
 			<File

@@ -150,7 +150,8 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textHt->Wrap(-1);
 
 	wxArrayString choices;
-	for (std::set<tstring>::const_iterator iter = inHeights.begin(); iter != inHeights.end(); ++iter)
+	std::set<tstring>::const_iterator iter;
+	for (iter = inHeights.begin(); iter != inHeights.end(); ++iter)
 	{
 		choices.Add((*iter).c_str());
 	}
@@ -168,7 +169,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textName->Wrap(-1);
 
 	choices.Clear();
-	for (std::set<tstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	for (iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
 		choices.Add((*iter).c_str());
 	}
@@ -186,7 +187,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textBreed->Wrap(-1);
 
 	choices.Clear();
-	for (std::set<tstring>::const_iterator iter = inBreeds.begin(); iter != inBreeds.end(); ++iter)
+	for (iter = inBreeds.begin(); iter != inBreeds.end(); ++iter)
 	{
 		choices.Add((*iter).c_str());
 	}

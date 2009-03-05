@@ -287,12 +287,12 @@ CDlgFindLinks::CDlgFindLinks(
 		}
 	}
 
-	for (size_t i = 0; i < m_Data.size(); ++i)
+	for (size_t iData = 0; iData < m_Data.size(); ++iData)
 	{
-		m_ctrlLinks->InsertItem(m_Data[i]);
+		m_ctrlLinks->InsertItem(m_Data[iData]);
 	}
-	for (int i = 0; i < nColLinkInfo; ++i)
-		m_ctrlLinks->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+	for (int iCol = 0; iCol < nColLinkInfo; ++iCol)
+		m_ctrlLinks->SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
 	s_SortInfo.pThis = this;
 	s_SortInfo.pCols = &m_sortLinks;
 	m_ctrlLinks->SortItems(CompareLinks, 0);

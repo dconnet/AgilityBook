@@ -36,6 +36,7 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#if 0
 class CCheckTreeCtrl : public CTreeCtrl
 {
 public:
@@ -98,3 +99,4 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
+#endif

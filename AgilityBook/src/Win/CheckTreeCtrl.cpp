@@ -45,9 +45,11 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "CheckTreeCtrl.h"
 
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgCRCDViewer")
+#include "AgilityBook.h"
+#if 0
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -266,3 +268,4 @@ BOOL CCheckTreeCtrl::OnKeyDown(
 	*pResult = res;
 	return static_cast<BOOL>(res);
 }
+#endif
