@@ -868,7 +868,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 					m_Ctrl->Refresh();
 					int nColumnCount = m_Ctrl->GetColumnCount();
 					for (int i = 0; i < nColumnCount; ++i)
-						m_Ctrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+						m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 				}
 			}
 		}
@@ -887,7 +887,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 				SetCurrentDate(training->GetDate());
 				int nColumnCount = m_Ctrl->GetColumnCount();
 				for (int i = 0; i < nColumnCount; ++i)
-					m_Ctrl->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+					m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 			}
 		}
 		break;

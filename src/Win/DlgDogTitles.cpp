@@ -297,7 +297,7 @@ void CDlgDogTitles::ListTitles()
 		++i;
 	}
 	for (i = 0; i < nColTitleInfo; ++i)
-		m_ctrlTitles.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlTitles.SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 	SORTINFO si;
 	si.pDoc = m_pDoc;
 	si.pCols = &m_sortTitles;

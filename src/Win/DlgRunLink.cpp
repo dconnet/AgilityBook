@@ -132,7 +132,7 @@ void CDlgRunLink::ListFiles(TCHAR const* pItem)
 		if (pItem && *iter == pItem)
 			m_ctrlLinks.SetSelection(idx);
 	}
-	m_ctrlLinks.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlLinks.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	UpdateButtons();
 }
 

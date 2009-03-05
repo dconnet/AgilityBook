@@ -349,7 +349,7 @@ void CDlgRunReference::ListRuns()
 		m_ctrlRefRuns.InsertItem(&item);
 	}
 	for (index = 0; index < scNumColumns; ++index)
-		m_ctrlRefRuns.SetColumnWidth(index, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlRefRuns.SetColumnWidth(index, wxLIST_AUTOSIZE_USEHEADER);
 	SORTINFO si;
 	si.pThis = this;
 	si.pCols = &m_sortRefRuns;
@@ -444,7 +444,7 @@ BOOL CDlgRunReference::OnInitDialog()
 	SetColumnHeaders();
 	ListRuns();
 	for (index = 0; index < scNumColumns; ++index)
-		m_ctrlRefRuns.SetColumnWidth(index, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlRefRuns.SetColumnWidth(index, wxLIST_AUTOSIZE_USEHEADER);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE

@@ -174,8 +174,8 @@ BOOL CDlgCalendarQueryDetail::OnInitDialog()
 				m_ctrlLocations.SetCheck(idx, TRUE);
 		}
 	}
-	m_ctrlLocations.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlLocations.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlLocations.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+	m_ctrlLocations.SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
 
 	for (i = m_VenueCodes.begin(); i != m_VenueCodes.end(); ++i)
 	{
@@ -187,8 +187,8 @@ BOOL CDlgCalendarQueryDetail::OnInitDialog()
 				m_ctrlVenues.SetCheck(idx, TRUE);
 		}
 	}
-	m_ctrlVenues.SetColumnWidth(0, LVSCW_AUTOSIZE_USEHEADER);
-	m_ctrlVenues.SetColumnWidth(1, LVSCW_AUTOSIZE_USEHEADER);
+	m_ctrlVenues.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+	m_ctrlVenues.SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
 
 	UpdateButtons();
 	return TRUE;  // return TRUE unless you set the focus to a control

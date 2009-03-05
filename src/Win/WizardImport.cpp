@@ -412,7 +412,7 @@ void CWizardImport::UpdatePreview()
 		}
 	}
 	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
-		m_ctrlPreview.SetColumnWidth(iCol, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlPreview.SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlPreview.SetRedraw(TRUE);
 	m_ctrlPreview.Invalidate();
 }

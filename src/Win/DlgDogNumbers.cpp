@@ -239,7 +239,7 @@ void CDlgDogNumbers::ListRegNums()
 					new CListPtrData<ARBDogRegNumPtr>(pRegNum))));
 	}
 	for (i = 0; i < nColRegNumInfo; ++i)
-		m_ctrlRegNums.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlRegNums.SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 	SORTINFO si;
 	si.pThis = this;
 	si.pCols = &m_sortRegNums;

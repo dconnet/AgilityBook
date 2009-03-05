@@ -38,110 +38,88 @@
  */
 
 #include "ARBConfigScoring.h"
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
-//#include "ListBox.h"
-//#include "ListCtrl.h"
-//#include "ListData.h"
 class ARBAgilityRecordBook;
-//class CDlgFixup;
+class CDlgFixup;
+class CReportListCtrl;
+class wxDatePickerCtrl;
+class wxListEvent;
+
+class CDlgConfigureDataPlacement;
+typedef tr1::shared_ptr<CDlgConfigureDataPlacement> CDlgConfigureDataPlacementPtr;
 
 
-class CDlgConfigEventMethod
+class CDlgConfigEventMethod : public wxDialog
 {
+	friend int wxCALLBACK ComparePlacement(long item1, long item2, long sortData);
 public:
 	CDlgConfigEventMethod(
 			ARBConfigVenuePtr pVenue,
 			ARBConfigScoringPtr pScoring,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgConfigEventMethod"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgConfigEventMethod : public CDlgBaseDialog
-{
-public:
-	CDlgConfigEventMethod(
-			ARBConfigVenuePtr pVenue,
-			ARBConfigScoringPtr pScoring,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigEventMethod)
-	enum { IDD = IDD_CONFIG_EVENT_METHOD };
-	CComboBox2	m_ctrlDivision;
-	CComboBox2	m_ctrlLevel;
-	CButton	m_ctrlValidFrom;
-	CDateTimeCtrl	m_ctrlDateFrom;
-	CButton	m_ctrlValidTo;
-	CDateTimeCtrl	m_ctrlDateTo;
-	CComboBox2 	m_ctrlType;
-	CButton	m_ctrlDropFractions;
-	BOOL	m_DropFractions;
-	CButton	m_ctrlBonus;
-	BOOL	m_Bonus;
-	CButton	m_ctrlSuperQ;
-	BOOL	m_SuperQ;
-	CButton	m_ctrlSpeedPts;
-	BOOL	m_SpeedPts;
-	CStatic	m_ctrlMultiplyText;
-	CEdit	m_ctrlMultiply;
-	short	m_Multiply;
-	CStatic	m_ctrlPlacementText;
-	CListCtrl2	m_ctrlPlacement;
-	CButton	m_ctrlPlacementNew;
-	CButton	m_ctrlPlacementEdit;
-	CButton	m_ctrlPlacementDelete;
-	CButton	m_ctrlTimeFaultsCleanQ;
-	BOOL	m_TimeFaultsCleanQ;
-	CButton	m_ctrlTimeFaultsUnder;
-	BOOL	m_TimeFaultsUnder;
-	CButton	m_ctrlTimeFaultsOver;
-	BOOL	m_TimeFaultsOver;
-	CButton	m_ctrlSubtractTimeFaults;
-	BOOL	m_SubtractTimeFaults;
-	CStatic	m_ctrlPointsOpeningText;
-	CEdit	m_ctrlPointsOpening;
-	short	m_OpeningPts;
-	CStatic	m_ctrlPointsClosingText;
-	CEdit	m_ctrlPointsClosing;
-	short	m_ClosingPts;
-	//}}AFX_DATA
+	ARBConfigScoring::ScoringStyle GetType(int index) const;
+	CDlgConfigureDataPlacementPtr GetPlacementData(int index) const;
+	CDlgConfigureDataPlacementPtr GetPlacementDataByData(int index) const;
+	void UpdateButtons();
+	void UpdateControls();
+	void FillLevelList();
+	void DoPlacementEdit();
+
 	ARBConfigVenuePtr m_pVenue;
 	ARBConfigScoringPtr m_pScoring;
 	ARBConfigPlaceInfoList m_PlaceInfo;
-	CString m_strOpening[2];
+	wxComboBox* m_ctrlDivision;
+	wxComboBox* m_ctrlLevel;
+	wxCheckBox* m_ctrlValidFrom;
+	wxDatePickerCtrl* m_ctrlDateFrom;
+	wxCheckBox* m_ctrlValidTo;
+	wxDatePickerCtrl* m_ctrlDateTo;
+	wxComboBox* m_ctrlType;
+	wxCheckBox* m_ctrlDropFractions;
+	wxCheckBox* m_ctrlBonus;
+	wxCheckBox* m_ctrlSuperQ;
+	wxCheckBox* m_ctrlSpeedPts;
+	wxStaticText* m_ctrlMultiplyText;
+	wxTextCtrl* m_ctrlMultiply;
+	wxStaticText* m_ctrlPlacementText;
+	CReportListCtrl* m_ctrlPlacement;
+	wxButton* m_ctrlPlacementNew;
+	wxButton* m_ctrlPlacementEdit;
+	wxButton* m_ctrlPlacementDelete;
+	wxCheckBox* m_ctrlTimeFaultsCleanQ;
+	wxCheckBox* m_ctrlTimeFaultsUnder;
+	wxCheckBox* m_ctrlTimeFaultsOver;
+	wxCheckBox* m_ctrlSubtractTimeFaults;
+	wxStaticText* m_ctrlPointsOpeningText;
+	wxTextCtrl* m_ctrlPointsOpening;
+	wxStaticText* m_ctrlPointsClosingText;
+	wxTextCtrl* m_ctrlPointsClosing;
+	ARBDate m_dateFrom;
+	ARBDate m_dateTo;
+	bool m_DropFractions;
+	bool m_Bonus;
+	bool m_SuperQ;
+	bool m_SpeedPts;
+	short m_Multiply;
+	bool m_TimeFaultsCleanQ;
+	bool m_TimeFaultsUnder;
+	bool m_TimeFaultsOver;
+	bool m_SubtractTimeFaults;
+	short m_OpeningPts;
+	short m_ClosingPts;
 
-	void UpdateButtons();
-	void FillDivisionList();
-	void FillLevelList();
-
-	//{{AFX_VIRTUAL(CDlgConfigEventMethod)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	//{{AFX_MSG(CDlgConfigEventMethod)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnCbnSelchangeDivision();
-	afx_msg void OnValidFrom();
-	afx_msg void OnValidTo();
-	afx_msg void OnSelchangeType();
-	afx_msg void OnSpeedPoints();
-	afx_msg void OnDblclkPlacement(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnKeydownPlacement(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedPlacement(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnPlacementNew();
-	afx_msg void OnPlacementEdit();
-	afx_msg void OnPlacementDelete();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnSelchangeDivision(wxCommandEvent& evt);
+	void OnValidFrom(wxCommandEvent& evt);
+	void OnValidTo(wxCommandEvent& evt);
+	void OnSelchangeType(wxCommandEvent& evt);
+	void OnSpeedPoints(wxCommandEvent& evt);
+	void OnItemchangedPlacement(wxListEvent& evt);
+	void OnDblclkPlacement(wxMouseEvent& evt);
+	void OnKeydownPlacement(wxListEvent& evt);
+	void OnPlacementNew(wxCommandEvent& evt);
+	void OnPlacementEdit(wxCommandEvent& evt);
+	void OnPlacementDelete(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

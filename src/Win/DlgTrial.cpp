@@ -364,7 +364,7 @@ void CDlgTrial::ListClubs(ARBDogClubPtr* inClub)
 	}
 	int nColumns = m_ctrlClubs->GetColumnCount();
 	for (int i = 0; i < nColumns ; ++i)
-		m_ctrlClubs->SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		m_ctrlClubs->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 }
 
 
