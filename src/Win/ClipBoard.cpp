@@ -259,7 +259,11 @@ bool CClipboardDataWriter::AddData(
 {
 	if (eFormatHtml == clpFmt)
 	{
+#ifdef UNICODE
 		std::string data = tstringUtil::Convert(inData);
+#else
+		std::string data = inData;
+#endif
 		{
 			std::string startHtml("<html><body>\r\n");
 			std::string endHtml("</body>\r\n</html>\r\n");

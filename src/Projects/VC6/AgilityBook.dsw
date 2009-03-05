@@ -11,41 +11,11 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name LibXerces
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibZlib
-    End Project Dependency
 }}}
 
 ###############################################################################
 
 Project: "LibTidy"=.\LibTidy.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "LibXerces"=.\LibXerces.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "LibZlib"=.\LibZlib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -67,9 +37,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name LibTidy
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name LibXerces
     End Project Dependency
 }}}
 

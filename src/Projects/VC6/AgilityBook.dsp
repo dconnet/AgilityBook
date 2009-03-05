@@ -36,24 +36,25 @@ RSC=rc.exe
 # PROP BASE Output_Dir "Debug"
 # PROP BASE Intermediate_Dir "Debug"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "../../../bin/VC6/Debug"
 # PROP Intermediate_Dir "../../../bin/VC6/Debug/AgilityBook"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../.." /I "../../Include" /I "../../ARB" /I "../../Win" /I "../../zlib" /I "../../xml" /I "../../../../boost" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WINDLL" /D "_AFXDLL" /D "XERCES_STATIC_LIBRARY" /FR /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../.." /I "../../Include" /I "../../ARB" /I "../../Win" /I "../../../../boost" /I "C:/wx/include" /I "C:/wx/include/msvc" /D "WXWIDGETS" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WINDLL" /Yu"stdafx.h" /FD /GZ /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /i "../../Include" /d "_DEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /i "../../Include" /i "C:/wx/include" /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 version.lib htmlhelp.lib ws2_32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../lib/VC6"
+# ADD LINK32 ws2_32.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"../../../lib/VC6" /libpath:"C:\wx\lib\vc_lib_VC6.0"
 
 !ELSEIF  "$(CFG)" == "AgilityBook - Win32 Release"
 
@@ -62,25 +63,25 @@ LINK32=link.exe
 # PROP BASE Output_Dir "Release"
 # PROP BASE Intermediate_Dir "Release"
 # PROP BASE Target_Dir ""
-# PROP Use_MFC 2
+# PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "../../../bin/VC6/Release"
 # PROP Intermediate_Dir "../../../bin/VC6/Release/AgilityBook"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../.." /I "../../Include" /I "../../ARB" /I "../../Win" /I "../../zlib" /I "../../xml" /I "../../../../boost" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WINDLL" /D "_AFXDLL" /D "XERCES_STATIC_LIBRARY" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../.." /I "../../Include" /I "../../ARB" /I "../../Win" /I "../../../../boost" /I "C:/wx/include" /I "C:/wx/include/msvc" /D "WXWIDGETS" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_WINDLL" /Yu"stdafx.h" /FD /c
 # SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /i "../../Include" /d "NDEBUG" /d "_AFXDLL"
+# ADD RSC /l 0x409 /i "../../Include" /i "C:/wx/include" /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib htmlhelp.lib ws2_32.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib:"libc.lib" /libpath:"../../../lib/VC6"
+# ADD LINK32 ws2_32.lib comctl32.lib rpcrt4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386 /libpath:"../../../lib/VC6" /libpath:"C:\wx\lib\vc_lib_VC6.0"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -94,15 +95,15 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\Win\AboutDlg.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\AgilityBook.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\AgilityBook.rc
+SOURCE=..\..\Win\AgilityBookCalendarListView.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookCalendarView.cpp
 # End Source File
 # Begin Source File
 
@@ -110,11 +111,31 @@ SOURCE=..\..\Win\AgilityBookDoc.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\AgilityBookHtmlView.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookMenu.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\AgilityBookOptions.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\AgilityBookTree.cpp
+SOURCE=..\..\Win\AgilityBookPanels.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookPointsView.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookRunsView.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookTrainingView.cpp
 # End Source File
 # Begin Source File
 
@@ -122,27 +143,7 @@ SOURCE=..\..\Win\AgilityBookTreeData.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\AgilityBookViewCalendar.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewCalendarList.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewHtml.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewPoints.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewRuns.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewTraining.cpp
+SOURCE=..\..\Win\AgilityBookTreeView.cpp
 # End Source File
 # Begin Source File
 
@@ -166,7 +167,11 @@ SOURCE=..\..\Win\ColumnOrder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\ComboBox.cpp
+SOURCE=..\..\Win\ComboBoxes.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\CommonView.cpp
 # End Source File
 # Begin Source File
 
@@ -174,7 +179,7 @@ SOURCE=..\..\Win\ConfigHandler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\CrashHandler.cpp
+SOURCE=..\..\Win\DlgAbout.cpp
 # End Source File
 # Begin Source File
 
@@ -183,18 +188,6 @@ SOURCE=..\..\Win\DlgAssignColumns.cpp
 # Begin Source File
 
 SOURCE=..\..\Win\DlgAuthenticate.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgBaseDialog.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgBasePropertyPage.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgBaseSheet.cpp
 # End Source File
 # Begin Source File
 
@@ -298,11 +291,7 @@ SOURCE=..\..\Win\DlgFindLinks.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgInfoJudge.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgLanguage.cpp
+SOURCE=..\..\Win\DlgInfoNote.cpp
 # End Source File
 # Begin Source File
 
@@ -430,7 +419,7 @@ SOURCE=..\..\Win\FilterOptions.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\HyperLink.cpp
+SOURCE=..\..\Win\Globals.cpp
 # End Source File
 # Begin Source File
 
@@ -439,10 +428,6 @@ SOURCE=..\..\Win\IconList.cpp
 # Begin Source File
 
 SOURCE=..\..\Win\LanguageManager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\ListBox.cpp
 # End Source File
 # Begin Source File
 
@@ -482,14 +467,6 @@ SOURCE=..\..\Win\RichEditCtrl2.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\Splash.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\Splitter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\stdafx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
@@ -500,6 +477,10 @@ SOURCE=..\..\Win\TabView.cpp
 # Begin Source File
 
 SOURCE=..\..\Win\UpdateInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\Validators.cpp
 # End Source File
 # Begin Source File
 
@@ -531,11 +512,15 @@ SOURCE=..\..\Win\WizardStart.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\Win\AboutDlg.h
+SOURCE=..\..\Win\AgilityBook.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\AgilityBook.h
+SOURCE=..\..\Win\AgilityBookCalendarListView.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookCalendarView.h
 # End Source File
 # Begin Source File
 
@@ -543,11 +528,31 @@ SOURCE=..\..\Win\AgilityBookDoc.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\AgilityBookHtmlView.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookMenu.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\AgilityBookOptions.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\AgilityBookTree.h
+SOURCE=..\..\Win\AgilityBookPanels.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookPointsView.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookRunsView.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\AgilityBookTrainingView.h
 # End Source File
 # Begin Source File
 
@@ -555,27 +560,7 @@ SOURCE=..\..\Win\AgilityBookTreeData.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\AgilityBookViewCalendar.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewCalendarList.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewHtml.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewPoints.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewRuns.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\AgilityBookViewTraining.h
+SOURCE=..\..\Win\AgilityBookTreeView.h
 # End Source File
 # Begin Source File
 
@@ -599,7 +584,7 @@ SOURCE=..\..\Win\ColumnOrder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\ComboBox.h
+SOURCE=..\..\Win\ComboBoxes.h
 # End Source File
 # Begin Source File
 
@@ -611,7 +596,7 @@ SOURCE=..\..\Win\ConfigHandler.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\CrashHandler.h
+SOURCE=..\..\Win\DlgAbout.h
 # End Source File
 # Begin Source File
 
@@ -620,18 +605,6 @@ SOURCE=..\..\Win\DlgAssignColumns.h
 # Begin Source File
 
 SOURCE=..\..\Win\DlgAuthenticate.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgBaseDialog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgBasePropertyPage.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgBaseSheet.h
 # End Source File
 # Begin Source File
 
@@ -735,11 +708,7 @@ SOURCE=..\..\Win\DlgFindLinks.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgInfoJudge.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgLanguage.h
+SOURCE=..\..\Win\DlgInfoNote.h
 # End Source File
 # Begin Source File
 
@@ -871,7 +840,7 @@ SOURCE=..\..\Win\FilterOptions.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\HyperLink.h
+SOURCE=..\..\Win\Globals.h
 # End Source File
 # Begin Source File
 
@@ -880,10 +849,6 @@ SOURCE=..\..\Win\IconList.h
 # Begin Source File
 
 SOURCE=..\..\Win\LanguageManager.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\ListBox.h
 # End Source File
 # Begin Source File
 
@@ -919,27 +884,11 @@ SOURCE=..\..\Win\ReadHttp.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\resource.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\RichEditCtrl2.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\Splash.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\Splitter.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\stdafx.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\SymbolEngine.h
 # End Source File
 # Begin Source File
 
@@ -948,6 +897,10 @@ SOURCE=..\..\Win\TabView.h
 # Begin Source File
 
 SOURCE=..\..\Win\UpdateInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\Validators.h
 # End Source File
 # Begin Source File
 
@@ -1311,18 +1264,6 @@ SOURCE=..\..\ARB\Element.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=..\..\Win\res\AccConfirm.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\AccNone.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\AccTodo.ico
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\res\AgilityBook.ico
 # End Source File
 # Begin Source File
@@ -1331,171 +1272,11 @@ SOURCE=..\..\Win\res\l.enu\AgilityBook.rc2
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\res\AgilityBookDoc.ico
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\res\AgilityRecordBook.dtd
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\res\BoxCheck.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\BoxEmpty.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\BoxQuestion.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalEmpty.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalEntered.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalEnteredTentative.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalMaybe.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalPlan.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalPlanMaybe.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalPlanTentative.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\CalTentative.ico
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\checked-off.ico"
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\checked.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\crcd.ico
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\res\DefaultConfig.xml
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\dog.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\HdrDown.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\HdrUp.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\help.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\hidden.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\Note.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\Question.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\run.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\Splsh16.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\title.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\title2.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\Toolbar.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\trial.ico
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\res\unchecked.ico
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-aac.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-akc.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-asca.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-ckc.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-cpe.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-docna.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-nadac.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-sweep.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-tdaa.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-ukc.ico"
-# End Source File
-# Begin Source File
-
-SOURCE="..\..\Win\res\venue-usdaa.ico"
 # End Source File
 # End Group
 # End Target

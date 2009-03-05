@@ -1214,9 +1214,7 @@ CDlgListViewer::CDlgListViewer(
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_INCLASS, _("IDS_COL_IN_CLASS"));
 	pColData->InsertColumn(m_ctrlList, COL_RUN_MQ_QD, _("IDS_COL_Q_D"));
 	int iItem = 0;
-	for (std::list<ScoringRunInfo>::const_iterator iter = inScoringRuns.begin();
-		iter != inScoringRuns.end();
-		++iter)
+	for (iter = inScoringRuns.begin(); iter != inScoringRuns.end(); ++iter)
 	{
 		ScoringRunInfo const& info = *iter;
 		InsertRun(m_pDoc, m_ctrlList, pColData, iItem,

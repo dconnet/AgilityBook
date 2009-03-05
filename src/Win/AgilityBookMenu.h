@@ -49,7 +49,13 @@ public:
 	void CreateMenu(wxDocParentFrame* pFrame, wxDocManager* manager);
 	void UpdateMenu();
 
+// VC6: error C2248: 'IdMenuNone' : cannot access private enumerator declared in class 'CAgilityBookMenu'
+// so screw it, just open it up.
+#if _MSC_VER < 1300
+public:
+#else
 private:
+#endif
 	enum MenuIdentity
 	{
 		IdMenuNone,
@@ -70,6 +76,7 @@ private:
 		IdMenuWindow,
 		IdMenuHelp,
 	};
+private:
 	struct MenuHandles
 	{
 		MenuHandles() : id(IdMenuNone), menu(NULL), idx(-1) {}

@@ -83,7 +83,7 @@ bool CReadHttp::ReadHttpFile(
 		bool bCheckOnly)
 {
 	if (m_Data)
-		m_Data->clear();
+		m_Data->erase();
 	if (!m_Valid)
 	{
 		outErrMsg = _("IDS_HTTP_INVALID_URL");
@@ -105,7 +105,7 @@ bool CReadHttp::ReadHttpFile(
 	{
 		if (++nTrys > 5)
 		{
-#pragma message PRAGMA_MESSAGE("TODO: error message")
+#pragma message PRAGMA_MESSAGE("TODO: TranslateError message")
 			outErrMsg = wxT("Time out");
 			return false;
 		}

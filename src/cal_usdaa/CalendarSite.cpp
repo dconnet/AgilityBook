@@ -449,7 +449,9 @@ char* CCalendarSite::Process(
 			if (progress->HasCanceled())
 				return NULL;
 			std::string msg("Getting detail from ");
+#ifdef UNICODE
 			msg += tstringUtil::Convert(address.c_str());
+#endif
 			progress->SetMessage(msg.c_str());
 		}
 #if GENERATE_TESTDATA || USE_TESTDATA

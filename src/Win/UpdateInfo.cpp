@@ -199,7 +199,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	if (std::string::npos != n)
 		data = data.substr(n+1);
 	else
-		data.clear();
+		data.erase();
 	if (!data.empty())
 	{
 		// The rest of the file is xml:
@@ -446,7 +446,7 @@ void CUpdateInfo::CheckConfig(
 				}
 				else if (tree->GetName() == wxT("DefaultConfig"))
 				{
-					strConfig.clear();
+					strConfig.erase();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 					tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 					int nConfig = tree->FindElement(TREE_CONFIG);
