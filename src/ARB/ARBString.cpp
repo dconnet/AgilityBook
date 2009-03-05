@@ -102,7 +102,7 @@ std::string tstringUtil::Convert(std::wstring const& inStr)
 		size_t nNeeded;
 #if defined(WXWIDGETS)
 		wxMBConvUTF8 converter(wxMBConvUTF8::MAP_INVALID_UTF8_TO_PUA);
-		nNeeded = converter.WC2MB(NULL, inStr.c_str(), 0);
+		nNeeded = converter.FromWChar(NULL, 0, inStr.c_str());
 #elif defined(ARB_HAS_SECURE_MBS_WCS)
 		wcstombs_s(&nNeeded, (char*)NULL, 0, inStr.c_str(), 0);
 #else
@@ -112,7 +112,7 @@ std::string tstringUtil::Convert(std::wstring const& inStr)
 		{
 			char *ansistr = new char[nNeeded+1];
 #if defined(WXWIDGETS)
-			converter.WC2MB(ansistr, inStr.c_str(), nNeeded+1);
+			converter.FromWChar(ansistr, nNeeded+1, inStr.c_str());
 #elif defined(ARB_HAS_SECURE_MBS_WCS)
 			wcstombs_s(NULL, ansistr, nNeeded+1, inStr.c_str(), _TRUNCATE);
 #else
@@ -169,7 +169,7 @@ std::wstring tstringUtil::Convert(std::string const& inStr)
 		size_t nNeeded;
 #if defined(WXWIDGETS)
 		wxMBConvUTF8 converter(wxMBConvUTF8::MAP_INVALID_UTF8_TO_PUA);
-		nNeeded = converter.MB2WC(NULL, inStr.c_str(), 0);
+		nNeeded = converter.ToWChar(NULL, 0, inStr.c_str());
 #elif defined(ARB_HAS_SECURE_MBS_WCS)
 		mbstowcs_s(&nNeeded, (wchar_t*)NULL, 0, inStr.c_str(), 0);
 #else
@@ -179,7 +179,7 @@ std::wstring tstringUtil::Convert(std::string const& inStr)
 		{
 			wchar_t *unicodestr = new wchar_t[nNeeded+1];
 #if defined(WXWIDGETS)
-			converter.MB2WC(unicodestr, inStr.c_str(), nNeeded+1);
+			converter.ToWChar(unicodestr, nNeeded+1, inStr.c_str());
 #elif defined(ARB_HAS_SECURE_MBS_WCS)
 			mbstowcs_s(NULL, unicodestr, nNeeded+1, inStr.c_str(), _TRUNCATE);
 #else
