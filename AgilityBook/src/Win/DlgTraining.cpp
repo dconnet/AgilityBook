@@ -42,7 +42,6 @@
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBTraining.h"
-
 #include "Validators.h"
 #include <wx/datectrl.h>
 

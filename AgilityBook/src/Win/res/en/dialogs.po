@@ -96,6 +96,82 @@ msgstr "User Name"
 msgid "Password"
 msgstr "Password"
 
+# DlgCalendar
+msgid "IDD_CALENDAR"
+msgstr "Calendar Cribsheet"
+
+msgid "IDC_CAL_DATE_START"
+msgstr "&Start Date:"
+
+msgid "IDC_CAL_DATE_END"
+msgstr "End &Date:"
+
+msgid "IDC_CAL_TENTATIVE"
+msgstr "&Trial information is tentative"
+
+msgid "IDC_CAL_DATE_OPENS"
+msgstr "Trial Opens"
+
+msgid "IDC_CAL_DATE_OPENS_UNKNOWN"
+msgstr "Unknown"
+
+msgid "IDC_CAL_DATE_DRAWS"
+msgstr "Draws"
+
+msgid "IDC_CAL_DATE_DRAWS_UNKNOWN"
+msgstr "Unknown"
+
+msgid "IDC_CAL_DATE_CLOSES"
+msgstr "Closes"
+
+msgid "IDC_CAL_DATE_CLOSES_UNKNOWN"
+msgstr "Unknown"
+
+msgid "IDC_CAL_ENTER"
+msgstr "Entry"
+
+msgid "IDC_CAL_ENTER_NOT"
+msgstr "&Not currently"
+
+msgid "IDC_CAL_ENTER_PLANNING"
+msgstr "&Planning"
+
+msgid "IDC_CAL_ENTER_ENTERED"
+msgstr "&Entered"
+
+msgid "IDC_CAL_ONLINE_ENTRY"
+msgstr "Enter Online"
+
+msgid "IDC_CAL_ACCOM"
+msgstr "Accommodations"
+
+msgid "IDC_CAL_ACCOM_NONE"
+msgstr "Not needed"
+
+msgid "IDC_CAL_ACCOM_NEEDED"
+msgstr "Needed"
+
+msgid "IDC_CAL_ACCOM_MADE"
+msgstr "Made"
+
+msgid "IDC_CAL_PREMIUM_ENTRY"
+msgstr "Premium"
+
+msgid "IDC_CAL_EMAIL_SEC"
+msgstr "Email Sec"
+
+msgid "IDC_CAL_VENUE"
+msgstr "&Venue:"
+
+msgid "IDC_CAL_CLUB"
+msgstr "&Club:"
+
+msgid "IDC_CAL_LOCATION"
+msgstr "&Location:"
+
+msgid "IDC_CAL_NOTES"
+msgstr "N&otes"
+
 # DlgClub
 msgid "IDD_CLUB"
 msgstr "Club"
