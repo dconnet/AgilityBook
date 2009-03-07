@@ -139,7 +139,7 @@ class ARBVector : private std::vector<T>
 #endif
 {
 public:
-#if _MSC_VER >= 1300
+#if !defined(_MSC_VER ) || _MSC_VER >= 1300
 	using std::vector<T>::begin;
 	using std::vector<T>::clear;
 	using std::vector<T>::const_iterator;

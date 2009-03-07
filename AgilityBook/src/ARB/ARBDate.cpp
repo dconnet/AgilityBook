@@ -497,6 +497,7 @@ time_t ARBDate::GetDate() const
 }
 
 
+#ifdef WIN32
 bool ARBDate::GetDate(SYSTEMTIME& outTime) const
 {
 	if (0 < m_Julian)
@@ -515,6 +516,7 @@ bool ARBDate::GetDate(SYSTEMTIME& outTime) const
 	}
 	return false;
 }
+#endif
 
 
 void ARBDate::GetDate(
