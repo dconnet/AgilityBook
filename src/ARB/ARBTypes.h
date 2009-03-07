@@ -166,7 +166,7 @@ public:
 			return true;
 		if (size() != rhs.size())
 			return false;
-		const_iterator iter1, iter2;
+		typename const_iterator iter1, iter2;
 		for (iter1 = begin(), iter2 = rhs.begin(); iter1 != end(); ++iter1, ++iter2)
 		{
 			if (*(*iter1) != *(*iter2))
@@ -187,7 +187,7 @@ public:
 	{
 		outList.clear();
 		outList.reserve(size());
-		for (const_iterator iter = begin(); iter != end(); ++iter)
+		for (typename const_iterator iter = begin(); iter != end(); ++iter)
 		{
 			T pItem = *iter;
 			if (pItem)
@@ -204,7 +204,7 @@ public:
 	size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		size_t nItems = 0;
-		for (const_iterator iter = begin(); iter != end(); ++iter)
+		for (typename const_iterator iter = begin(); iter != end(); ++iter)
 			nItems += (*iter)->GetSearchStrings(ioStrings);
 		return nItems;
 	}
@@ -223,7 +223,7 @@ public:
 		if (inItem)
 		{
 			int n = 0;
-			for (iterator iter = begin(); iter != end(); ++iter, ++n)
+			for (typename iterator iter = begin(); iter != end(); ++iter, ++n)
 			{
 				if (inItem == *iter)
 				{
@@ -254,7 +254,7 @@ public:
 	 */
 	bool Save(ElementNodePtr ioTree) const
 	{
-		for (const_iterator iter = begin(); iter != end(); ++iter)
+		for (typename const_iterator iter = begin(); iter != end(); ++iter)
 		{
 			if (!(*iter)->Save(ioTree))
 				return false;
