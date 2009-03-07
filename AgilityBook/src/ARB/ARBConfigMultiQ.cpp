@@ -303,7 +303,7 @@ bool ARBConfigMultiQ::Match(
 				{
 					bInc = false;
 					outRuns.push_back(*iterR);
-					iterR = runs.erase(iterR);
+					runs.erase(iterR++);
 					break;
 				}
 			}
@@ -348,7 +348,7 @@ int ARBConfigMultiQ::DeleteDivision(tstring const& inDiv)
 		if ((*iter).m_Div == inDiv)
 		{
 			++count;
-			iter = m_Items.erase(iter);
+			m_Items.erase(iter++);
 		}
 		else
 			++iter;
@@ -390,7 +390,7 @@ int ARBConfigMultiQ::DeleteLevel(tstring const& inLevel)
 		if ((*iter).m_Level == inLevel)
 		{
 			++count;
-			iter = m_Items.erase(iter);
+			m_Items.erase(iter++);
 		}
 		else
 			++iter;
@@ -430,7 +430,7 @@ int ARBConfigMultiQ::DeleteEvent(tstring const& inEvent)
 		if ((*iter).m_Event == inEvent)
 		{
 			++count;
-			iter = m_Items.erase(iter);
+			m_Items.erase(iter++);
 		}
 		else
 			++iter;

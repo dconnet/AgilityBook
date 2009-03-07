@@ -200,8 +200,13 @@ std::wstring tstringUtil::Convert(std::string const& inStr)
 #define _tstol		_ttol
 #endif
 #else
+#ifdef UNICODE
+#define _tstol		_wtol
+#define _tcstod		wcstod
+#else
 #define _tstol		atol
 #define _tcstod		strtod
+#endif
 #endif
 #endif
 
