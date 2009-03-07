@@ -436,7 +436,7 @@ template <typename T, typename S> T ReplaceImpl(
 	T text(inStr);
 	while (!text.empty())
 	{
-		T::size_type pos = text.find(inReplace);
+		typename T::size_type pos = text.find(inReplace);
 		if (T::npos != pos)
 		{
 			if (0 < pos)
