@@ -296,10 +296,12 @@ public:
 	 */
 	time_t GetDate() const;
 
+#ifdef WIN32
 	/**
 	 * Convert the date to a time.
 	 */
 	bool GetDate(SYSTEMTIME& outTime) const;
+#endif
 
 	/**
 	 * Get the current date.
