@@ -45,7 +45,7 @@
 #include "ARBDogRun.h"
 
 
-IMPLEMENT_CLASS(CVenueComboBox, wxChoice)
+IMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
 IMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
 
 /////////////////////////////////////////////////////////////////////////////
@@ -63,13 +63,15 @@ CVenueComboBox::CVenueComboBox(
 		ARBConfigVenueList const& inVenues,
 		wxString const& inSelectVenue,
 		bool useLongName,
-		wxValidator const& validator)
-	: wxChoice()
+		wxValidator const& validator,
+		bool bEditable)
+	: wxComboBox()
 {
-	wxChoice::Create(parent, wxID_ANY,
+	wxComboBox::Create(parent, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
-		0, validator);
+		wxCB_DROPDOWN | (bEditable ? 0 : wxCB_READONLY) | wxCB_SORT,
+		validator);
 
 	for (ARBConfigVenueList::const_iterator iterVenue = inVenues.begin();
 		iterVenue != inVenues.end();
@@ -90,9 +92,9 @@ CVenueComboBox::CVenueComboBox(
 
 ARBConfigVenuePtr CVenueComboBox::GetVenue(int index) const
 {
-	wxClientData* pData = GetClientObject(index);
+	CVenueComboData* pData = dynamic_cast<CVenueComboData*>(GetClientObject(index));
 	if (pData)
-		return dynamic_cast<CVenueComboData*>(pData)->m_Venue;
+		pData->m_Venue;
 	return ARBConfigVenuePtr();
 }
 

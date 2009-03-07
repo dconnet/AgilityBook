@@ -97,6 +97,82 @@ msgstr "Nom d'utilisateur"
 msgid "Password"
 msgstr "Mot de passe"
 
+# DlgCalendar
+msgid "IDD_CALENDAR"
+msgstr "Calendrier"
+
+msgid "IDC_CAL_DATE_START"
+msgstr "&Date Début:"
+
+msgid "IDC_CAL_DATE_END"
+msgstr "Date &Fin:"
+
+msgid "IDC_CAL_TENTATIVE"
+msgstr "Date &provisoire"
+
+msgid "IDC_CAL_DATE_OPENS"
+msgstr "Inscription Début"
+
+msgid "IDC_CAL_DATE_OPENS_UNKNOWN"
+msgstr "Inconnu"
+
+msgid "IDC_CAL_DATE_DRAWS"
+msgstr "Tirage"
+
+msgid "IDC_CAL_DATE_DRAWS_UNKNOWN"
+msgstr "Inconnu"
+
+msgid "IDC_CAL_DATE_CLOSES"
+msgstr "Clôture"
+
+msgid "IDC_CAL_DATE_CLOSES_UNKNOWN"
+msgstr "Inconnu"
+
+msgid "IDC_CAL_ENTER"
+msgstr "Inscription"
+
+msgid "IDC_CAL_ENTER_NOT"
+msgstr "Pas &actuellement"
+
+msgid "IDC_CAL_ENTER_PLANNING"
+msgstr "P&révision"
+
+msgid "IDC_CAL_ENTER_ENTERED"
+msgstr "&Inscrit"
+
+msgid "IDC_CAL_ONLINE_ENTRY"
+msgstr "Inscription en ligne"
+
+msgid "IDC_CAL_ACCOM"
+msgstr "Hébergement"
+
+msgid "IDC_CAL_ACCOM_NONE"
+msgstr "Non nécessaire"
+
+msgid "IDC_CAL_ACCOM_NEEDED"
+msgstr "Nécessaire"
+
+msgid "IDC_CAL_ACCOM_MADE"
+msgstr "Confirmé"
+
+msgid "IDC_CAL_PREMIUM_ENTRY"
+msgstr "Premium"
+
+msgid "IDC_CAL_EMAIL_SEC"
+msgstr "Email"
+
+msgid "IDC_CAL_VENUE"
+msgstr "&Organisation:"
+
+msgid "IDC_CAL_CLUB"
+msgstr "&Club:"
+
+msgid "IDC_CAL_LOCATION"
+msgstr "&Endroit:"
+
+msgid "IDC_CAL_NOTES"
+msgstr "&Notes"
+
 # DlgClub
 msgid "IDD_CLUB"
 msgstr "Club"

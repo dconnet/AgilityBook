@@ -42,251 +42,317 @@
 #include "stdafx.h"
 #include "DlgCalendar.h"
 
-//#include "AgilityBook.h"
-//#include "AgilityBookDoc.h"
-//#include "AgilityBookOptions.h"
-//#include "ARBCalendar.h"
-//#include "ARBConfig.h"
-//#include "DlgInfoNote.h"
+#include "AgilityBookDoc.h"
+#include "AgilityBookOptions.h"
+#include "ARBCalendar.h"
+#include "ARBConfig.h"
+#include "ComboBoxes.h"
+#include "DlgInfoNote.h"
+#include "NoteButton.h"
+#include "RichEditCtrl2.h"
+#include "Validators.h"
+#include <set>
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
 
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgCalendar")
-#if 0
+BEGIN_EVENT_TABLE(CDlgCalendar, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgCalendar::OnOk)
+END_EVENT_TABLE()
+
+
 CDlgCalendar::CDlgCalendar(
 		ARBCalendarPtr pCal,
 		CAgilityBookDoc* pDoc,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgCalendar::IDD, pParent)
-	, m_ctrlEMailSecAddr(false)
-	, m_ctrlVenue(false)
-	, m_ctrlClub(false)
-	, m_ctrlLocation(false)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CALENDAR"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_pCal(pCal)
 	, m_pDoc(pDoc)
 	, m_Span(0)
+	, m_dateStart(ARBDate::Today())
+	, m_dateEnd(ARBDate::Today() + 1)
+	, m_bTentative(m_pCal->IsTentative())
+	, m_dateOpens(ARBDate::Today())
+	, m_bOpeningUnknown(true)
+	, m_dateDraws(ARBDate::Today())
+	, m_bDrawingUnknown(true)
+	, m_dateCloses(ARBDate::Today())
+	, m_bClosingUnknown(true)
+	, m_OnlineUrl(m_pCal->GetOnlineURL().c_str())
+	, m_Confirmation()
+	, m_PremiumUrl(m_pCal->GetPremiumURL().c_str())
+	, m_EMailSecAddr(m_pCal->GetSecEmail().c_str())
+	, m_Venue(m_pCal->GetVenue().c_str())
+	, m_Club(m_pCal->GetClub().c_str())
+	, m_Location(m_pCal->GetLocation().c_str())
+	, m_Notes(m_pCal->GetNote().c_str())
+	, m_ctrlEnd(NULL)
+	, m_ctrlOpens(NULL)
+	, m_ctrlDraws(NULL)
+	, m_ctrlCloses(NULL)
+	, m_ctrlEntryNot(NULL)
+	, m_ctrlEntryPlan(NULL)
+	, m_ctrlEntryEntered(NULL)
+	, m_ctrlOnlineUrlEntry(NULL)
+	, m_ctrlOnlineUrl(NULL)
+	, m_ctrlAccomNot(NULL)
+	, m_ctrlAccomNeeded(NULL)
+	, m_ctrlAccomMade(NULL)
+	, m_ctrlConfirmation(NULL)
+	, m_ctrlPremiumEntry(NULL)
+	, m_ctrlPremiumUrl(NULL)
+	, m_ctrlEMailSec(NULL)
+	, m_ctrlEMailSecAddr(NULL)
+	, m_ctrlVenue(NULL)
+	, m_ctrlClub(NULL)
+	, m_ctrlClubNotes(NULL)
+	, m_ctrlClubInfo(NULL)
+	, m_ctrlLocation(NULL)
+	, m_ctrlLocationNotes(NULL)
+	, m_ctrlLocationInfo(NULL)
 {
-	//{{AFX_DATA_INIT(CDlgCalendar)
-	m_dateStart = CTime::GetCurrentTime();
-	m_dateEnd = CTime::GetCurrentTime() + CTimeSpan(1, 0, 0, 0);
-	m_bTentative = m_pCal->IsTentative() ? TRUE : FALSE;
-	m_dateOpens = CTime::GetCurrentTime();
-	m_bOpeningUnknown = TRUE;
-	m_dateDraws = CTime::GetCurrentTime();
-	m_bDrawingUnknown = TRUE;
-	m_dateCloses = CTime::GetCurrentTime();
-	m_bClosingUnknown = TRUE;
-	m_Entered = 0;
-	m_OnlineUrl = m_pCal->GetOnlineURL().c_str();
-	m_Accommodation = 0;
-	m_PremiumUrl = m_pCal->GetPremiumURL().c_str();
-	m_EMailSecAddr = m_pCal->GetSecEmail().c_str();
-	m_Venue = m_pCal->GetVenue().c_str();
-	m_Club = m_pCal->GetClub().c_str();
-	m_Location = m_pCal->GetLocation().c_str();
-	m_Notes = m_pCal->GetNote().c_str();
-	//}}AFX_DATA_INIT
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+
 	if (m_pCal->GetStartDate().IsValid())
 	{
-		m_dateStart = CTime(m_pCal->GetStartDate().GetDate());
+		m_dateStart = m_pCal->GetStartDate();
 		if (m_pCal->GetEndDate().IsValid())
 			m_Span = m_pCal->GetEndDate() - m_pCal->GetStartDate();
 	}
 	if (m_pCal->GetEndDate().IsValid())
-		m_dateEnd = CTime(m_pCal->GetEndDate().GetDate());
+		m_dateEnd = m_pCal->GetEndDate();
 	if (m_pCal->GetOpeningDate().IsValid())
 	{
-		m_dateOpens = CTime(m_pCal->GetOpeningDate().GetDate());
-		m_bOpeningUnknown = FALSE;
+		m_dateOpens = m_pCal->GetOpeningDate();
+		m_bOpeningUnknown = false;
 	}
 	if (m_pCal->GetDrawDate().IsValid())
 	{
-		m_dateDraws = CTime(m_pCal->GetDrawDate().GetDate());
-		m_bDrawingUnknown = FALSE;
+		m_dateDraws = m_pCal->GetDrawDate();
+		m_bDrawingUnknown = false;
 	}
 	if (m_pCal->GetClosingDate().IsValid())
 	{
-		m_dateCloses = CTime(m_pCal->GetClosingDate().GetDate());
-		m_bClosingUnknown = FALSE;
+		m_dateCloses = m_pCal->GetClosingDate();
+		m_bClosingUnknown = false;
 	}
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textStart = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_DATE_START"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textStart->Wrap(-1);
+
+	wxDatePickerCtrl* ctrlStart = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		CGenericValidator(&m_dateStart));
+	ctrlStart->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgCalendar::OnDatetimechangeStart), NULL, this);
+	ctrlStart->SetHelpText(_("HIDC_CAL_DATE_START"));
+	ctrlStart->SetToolTip(_("HIDC_CAL_DATE_START"));
+
+	wxStaticText* textEnd = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_DATE_END"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textEnd->Wrap(-1);
+
+	m_ctrlEnd = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		CGenericValidator(&m_dateEnd));
+	m_ctrlEnd->SetHelpText(_("HIDC_CAL_DATE_END"));
+	m_ctrlEnd->SetToolTip(_("HIDC_CAL_DATE_END"));
+
+	wxCheckBox* ctrlTentative = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CAL_TENTATIVE"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bTentative));
+	ctrlTentative->SetHelpText(_("HIDC_CAL_TENTATIVE"));
+	ctrlTentative->SetToolTip(_("HIDC_CAL_TENTATIVE"));
+
+	wxStaticText* textOpens = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_DATE_OPENS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textOpens->Wrap(-1);
+
+	m_ctrlOpens = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		CGenericValidator(&m_dateOpens));
+	m_ctrlOpens->SetHelpText(_("HIDC_CAL_DATE_OPENS"));
+	m_ctrlOpens->SetToolTip(_("HIDC_CAL_DATE_OPENS"));
+	m_ctrlOpens->Enable(!m_bOpeningUnknown);
+
+	wxCheckBox* ctrlOpensUnknown = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CAL_DATE_OPENS_UNKNOWN"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bOpeningUnknown));
+	ctrlOpensUnknown->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgCalendar::OnDateOpensUnknown), NULL, this);
+	ctrlOpensUnknown->SetHelpText(_("HIDC_CAL_DATE_OPENS_UNKNOWN"));
+	ctrlOpensUnknown->SetToolTip(_("HIDC_CAL_DATE_OPENS_UNKNOWN"));
+
+	wxStaticText* textDraws = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_DATE_DRAWS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDraws->Wrap(-1);
+
+	m_ctrlDraws = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		CGenericValidator(&m_dateDraws));
+	m_ctrlDraws->SetHelpText(_("HIDC_CAL_DATE_DRAWS"));
+	m_ctrlDraws->SetToolTip(_("HIDC_CAL_DATE_DRAWS"));
+	m_ctrlDraws->Enable(!m_bDrawingUnknown);
+
+	wxCheckBox* ctrDrawsUnknown = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CAL_DATE_DRAWS_UNKNOWN"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bDrawingUnknown));
+	ctrDrawsUnknown->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgCalendar::OnDateDrawsUnknown), NULL, this);
+	ctrDrawsUnknown->SetHelpText(_("HIDC_CAL_DATE_DRAWS_UNKNOWN"));
+	ctrDrawsUnknown->SetToolTip(_("HIDC_CAL_DATE_DRAWS_UNKNOWN"));
+
+	wxStaticText* textCloses = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_DATE_CLOSES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textCloses->Wrap(-1);
+
+	m_ctrlCloses = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		CGenericValidator(&m_dateCloses));
+	m_ctrlCloses->SetHelpText(_("HIDC_CAL_DATE_CLOSES"));
+	m_ctrlCloses->SetToolTip(_("HIDC_CAL_DATE_CLOSES"));
+	m_ctrlCloses->Enable(!m_bClosingUnknown);
+
+	wxCheckBox* ctrlClosesUnknown = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CAL_DATE_CLOSES_UNKNOWN"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bClosingUnknown));
+	ctrlClosesUnknown->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgCalendar::OnDateClosesUnknown), NULL, this);
+	ctrlClosesUnknown->SetHelpText(_("HIDC_CAL_DATE_CLOSES_UNKNOWN"));
+	ctrlClosesUnknown->SetToolTip(_("HIDC_CAL_DATE_CLOSES_UNKNOWN"));
+
+	m_ctrlEntryNot = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CAL_ENTER_NOT"),
+		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	m_ctrlEntryNot->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgCalendar::OnCalEntry), NULL, this);
+	m_ctrlEntryNot->SetHelpText(_("HIDC_CAL_ENTER_NOT"));
+	m_ctrlEntryNot->SetToolTip(_("HIDC_CAL_ENTER_NOT"));
+
+	m_ctrlEntryPlan = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CAL_ENTER_PLANNING"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEntryPlan->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgCalendar::OnCalEntry), NULL, this);
+	m_ctrlEntryPlan->SetHelpText(_("HIDC_CAL_ENTER_PLANNING"));
+	m_ctrlEntryPlan->SetToolTip(_("HIDC_CAL_ENTER_PLANNING"));
+
+	m_ctrlEntryEntered = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CAL_ENTER_ENTERED"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEntryEntered->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgCalendar::OnCalEntry), NULL, this);
+	m_ctrlEntryEntered->SetHelpText(_("HIDC_CAL_ENTER_ENTERED"));
+	m_ctrlEntryEntered->SetToolTip(_("HIDC_CAL_ENTER_ENTERED"));
+
 	switch (m_pCal->GetEntered())
 	{
 	default:
+		m_ctrlEntryNot->SetValue(true);
 		break;
 	case ARBCalendar::ePlanning:
-		m_Entered = 1;
+		m_ctrlEntryPlan->SetValue(true);
 		break;
 	case ARBCalendar::eEntered:
-		m_Entered = 2;
+		m_ctrlEntryEntered->SetValue(true);
 		break;
 	}
+
+	m_ctrlOnlineUrlEntry = new wxButton(this, wxID_ANY,
+		_("IDC_CAL_ONLINE_ENTRY"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlOnlineUrlEntry->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendar::OnOnlineEntry), NULL, this);
+	m_ctrlOnlineUrlEntry->SetHelpText(_("HIDC_CAL_ONLINE_ENTRY"));
+	m_ctrlOnlineUrlEntry->SetToolTip(_("HIDC_CAL_ONLINE_ENTRY"));
+	if (ARBCalendar::ePlanning != m_pCal->GetEntered() || m_OnlineUrl.empty())
+		m_ctrlOnlineUrlEntry->Enable(false);
+
+	m_ctrlOnlineUrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_OnlineUrl, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlOnlineUrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgCalendar::OnEnChangeCalOnlineUrl), NULL, this);
+	m_ctrlOnlineUrl->SetHelpText(_("HIDC_CAL_ONLINE_URL"));
+	m_ctrlOnlineUrl->SetToolTip(_("HIDC_CAL_ONLINE_URL"));
+
+	m_ctrlAccomNot = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CAL_ACCOM_NONE"),
+		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+	m_ctrlAccomNot->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgCalendar::OnAccommodation), NULL, this);
+	m_ctrlAccomNot->SetHelpText(_("HIDC_CAL_ACCOM_NONE"));
+	m_ctrlAccomNot->SetToolTip(_("HIDC_CAL_ACCOM_NONE"));
+
+	m_ctrlAccomNeeded = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CAL_ACCOM_NEEDED"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlAccomNeeded->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgCalendar::OnAccommodation), NULL, this);
+	m_ctrlAccomNeeded->SetHelpText(_("HIDC_CAL_ACCOM_NEEDED"));
+	m_ctrlAccomNeeded->SetToolTip(_("HIDC_CAL_ACCOM_NEEDED"));
+
+	m_ctrlAccomMade = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CAL_ACCOM_MADE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlAccomMade->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgCalendar::OnAccommodation), NULL, this);
+	m_ctrlAccomMade->SetHelpText(_("HIDC_CAL_ACCOM_MADE"));
+	m_ctrlAccomMade->SetToolTip(_("HIDC_CAL_ACCOM_MADE"));
+
 	switch (m_pCal->GetAccommodation())
 	{
 	default:
+		m_ctrlAccomNot->SetValue(true);
 		break;
 	case ARBCalendar::eAccomTodo:
-		m_Accommodation = 1;
+		m_ctrlAccomNeeded->SetValue(true);
 		break;
 	case ARBCalendar::eAccomConfirmed:
-		m_Accommodation = 2;
+		m_ctrlAccomMade->SetValue(true);
 		m_Confirmation = m_pCal->GetConfirmation().c_str();
 		break;
 	}
-	m_Notes.Replace(_T("\n"), _T("\r\n"));
-}
 
+	m_ctrlConfirmation = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_Confirmation, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlConfirmation->SetHelpText(_("HIDC_CAL_ACCOM_CONFIRMATION"));
+	m_ctrlConfirmation->SetToolTip(_("HIDC_CAL_ACCOM_CONFIRMATION"));
+	m_ctrlConfirmation->Enable(ARBCalendar::eAccomConfirmed == m_pCal->GetAccommodation());
 
-void CDlgCalendar::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgCalendar)
-	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_START, m_dateStart);
-	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_END, m_dateEnd);
-	DDX_Check(pDX, IDC_CAL_TENTATIVE, m_bTentative);
-	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_OPENS, m_dateOpens);
-	DDX_Check(pDX, IDC_CAL_DATE_OPENS_UNKNOWN, m_bOpeningUnknown);
-	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_DRAWS, m_dateDraws);
-	DDX_Check(pDX, IDC_CAL_DATE_DRAWS_UNKNOWN, m_bDrawingUnknown);
-	DDX_DateTimeCtrl(pDX, IDC_CAL_DATE_CLOSES, m_dateCloses);
-	DDX_Check(pDX, IDC_CAL_DATE_CLOSES_UNKNOWN, m_bClosingUnknown);
-	DDX_Radio(pDX, IDC_CAL_ENTER_NOT, m_Entered);
-	DDX_Control(pDX, IDC_CAL_ONLINE_ENTRY, m_ctrlOnlineUrlEntry);
-	DDX_Text(pDX, IDC_CAL_ONLINE_URL, m_OnlineUrl);
-	DDX_Control(pDX, IDC_CAL_ONLINE_URL, m_ctrlOnlineUrl);
-	DDX_Radio(pDX, IDC_CAL_ACCOM_NONE, m_Accommodation);
-	DDX_Text(pDX, IDC_CAL_ACCOM_CONFIRMATION, m_Confirmation);
-	DDX_Control(pDX, IDC_CAL_ACCOM_CONFIRMATION, m_ctrlConfirmation);
-	DDX_Control(pDX, IDC_CAL_PREMIUM_ENTRY, m_ctrlPremiumEntry);
-	DDX_Text(pDX, IDC_CAL_PREMIUM_URL, m_PremiumUrl);
-	DDX_Control(pDX, IDC_CAL_PREMIUM_URL, m_ctrlPremiumUrl);
-	DDX_Control(pDX, IDC_CAL_EMAIL_SEC, m_ctrlEMailSec);
-	DDX_CBString(pDX, IDC_CAL_EMAIL_SEC_ADDR, m_EMailSecAddr);
-	DDX_Control(pDX, IDC_CAL_EMAIL_SEC_ADDR, m_ctrlEMailSecAddr);
-	DDX_Control(pDX, IDC_CAL_VENUE, m_ctrlVenue);
-	DDX_CBString(pDX, IDC_CAL_VENUE, m_Venue);
-	DDX_Control(pDX, IDC_CAL_CLUB, m_ctrlClub);
-	DDX_CBString(pDX, IDC_CAL_CLUB, m_Club);
-	DDX_Control(pDX, IDC_CAL_CLUB_NOTES, m_ctrlClubNotes);
-	DDX_Control(pDX, IDC_CAL_CLUB_NOTE, m_ctrlClubInfo);
-	DDX_Control(pDX, IDC_CAL_LOCATION, m_ctrlLocation);
-	DDX_CBString(pDX, IDC_CAL_LOCATION, m_Location);
-	DDX_Control(pDX, IDC_CAL_LOCATION_NOTES, m_ctrlLocationNotes);
-	DDX_Control(pDX, IDC_CAL_LOCATION_NOTE, m_ctrlLocationInfo);
-	DDX_Text(pDX, IDC_CAL_NOTES, m_Notes);
-	//}}AFX_DATA_MAP
-}
+	m_ctrlPremiumEntry = new wxButton(this, wxID_ANY,
+		_("IDC_CAL_PREMIUM_ENTRY"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlOnlineUrlEntry->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendar::OnPremiumEntry), NULL, this);
+	m_ctrlPremiumEntry->SetHelpText(_("HIDC_CAL_PREMIUM_ENTRY"));
+	m_ctrlPremiumEntry->SetToolTip(_("HIDC_CAL_PREMIUM_ENTRY"));
+	if (m_PremiumUrl.empty())
+		m_ctrlPremiumEntry->Enable(false);
 
+	m_ctrlPremiumUrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_PremiumUrl, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlPremiumUrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgCalendar::OnEnChangeCalPremiumUrl), NULL, this);
+	m_ctrlPremiumUrl->SetHelpText(_("HIDC_CAL_PREMIUM_URL"));
+	m_ctrlPremiumUrl->SetToolTip(_("HIDC_CAL_PREMIUM_URL"));
 
-BEGIN_MESSAGE_MAP(CDlgCalendar, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgCalendar)
-	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_CAL_DATE_START, OnDatetimechangeStart)
-	ON_BN_CLICKED(IDC_CAL_DATE_OPENS_UNKNOWN, OnDateOpensUnknown)
-	ON_BN_CLICKED(IDC_CAL_DATE_DRAWS_UNKNOWN, OnDateDrawsUnknown)
-	ON_BN_CLICKED(IDC_CAL_DATE_CLOSES_UNKNOWN, OnDateClosesUnknown)
-	ON_BN_CLICKED(IDC_CAL_ENTER_NOT, OnCalEntry)
-	ON_BN_CLICKED(IDC_CAL_ENTER_PLANNING, OnCalEntry)
-	ON_BN_CLICKED(IDC_CAL_ENTER_ENTERED, OnCalEntry)
-	ON_EN_CHANGE(IDC_CAL_ONLINE_URL, OnEnChangeCalOnlineUrl)
-	ON_BN_CLICKED(IDC_CAL_ONLINE_ENTRY, OnOnlineEntry)
-	ON_EN_CHANGE(IDC_CAL_PREMIUM_URL, OnEnChangeCalPremiumUrl)
-	ON_BN_CLICKED(IDC_CAL_PREMIUM_ENTRY, OnPremiumEntry)
-	ON_EN_CHANGE(IDC_CAL_EMAIL_SEC_ADDR, OnEnChangeCalEmailSecAddr)
-	ON_BN_CLICKED(IDC_CAL_EMAIL_SEC, OnEmailSec)
-	ON_BN_CLICKED(IDC_CAL_ACCOM_NONE, OnAccommodation)
-	ON_BN_CLICKED(IDC_CAL_ACCOM_NEEDED, OnAccommodation)
-	ON_BN_CLICKED(IDC_CAL_ACCOM_MADE, OnAccommodation)
-	ON_CBN_SELCHANGE(IDC_CAL_CLUB, OnSelchangeClub)
-	ON_CBN_KILLFOCUS(IDC_CAL_CLUB, OnKillfocusClub)
-	ON_BN_CLICKED(IDC_CAL_CLUB_NOTES, OnClubNotes)
-	ON_CBN_SELCHANGE(IDC_CAL_LOCATION, OnSelchangeLocation)
-	ON_CBN_KILLFOCUS(IDC_CAL_LOCATION, OnKillfocusLocation)
-	ON_BN_CLICKED(IDC_CAL_LOCATION_NOTES, OnLocationNotes)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	m_ctrlEMailSec = new wxButton(this, wxID_ANY,
+		_("IDC_CAL_EMAIL_SEC"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEMailSec->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendar::OnEmailSec), NULL, this);
+	m_ctrlEMailSec->SetHelpText(_("HIDC_CAL_EMAIL_SEC"));
+	m_ctrlEMailSec->SetToolTip(_("HIDC_CAL_EMAIL_SEC"));
+	if (m_EMailSecAddr.empty())
+		m_ctrlEMailSec->Enable(false);
 
-/////////////////////////////////////////////////////////////////////////////
-
-void CDlgCalendar::UpdateLocationInfo(TCHAR const* pLocation)
-{
-	CString str;
-	if (pLocation && *pLocation)
-	{
-		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
-		{
-			str = pItem->GetComment().c_str();
-			str.Replace(_T("\n"), _T("\r\n"));
-		}
-	}
-	m_ctrlLocationInfo.SetWindowText(str);
-}
-
-
-void CDlgCalendar::ListLocations()
-{
-	set<tstring> locations;
-	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
-	if (!m_pCal->GetLocation().empty())
-		locations.insert(m_pCal->GetLocation());
-	tstring loc((LPCTSTR)m_Location);
-	if (m_Location.IsEmpty())
-		loc = m_pCal->GetLocation();
-	m_ctrlLocation.ResetContent();
-	for (set<tstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
-	{
-		int index = m_ctrlLocation.AddString((*iter).c_str());
-		if ((*iter) == loc)
-		{
-			m_ctrlLocation.SetCurSel(index);
-			UpdateLocationInfo((*iter).c_str());
-		}
-	}
-}
-
-
-void CDlgCalendar::UpdateClubInfo(TCHAR const* pClub)
-{
-	CString str;
-	if (pClub && *pClub)
-	{
-		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
-		{
-			str = pItem->GetComment().c_str();
-			str.Replace(_T("\n"), _T("\r\n"));
-		}
-	}
-	m_ctrlClubInfo.SetWindowText(str);
-}
-
-
-void CDlgCalendar::ListClubs()
-{
-	set<tstring> clubs;
-	m_pDoc->Book().GetAllClubNames(clubs, true, true);
-	if (!m_pCal->GetClub().empty())
-		clubs.insert(m_pCal->GetClub());
-	tstring club((LPCTSTR)m_Club);
-	if (m_Club.IsEmpty())
-		club = m_pCal->GetClub();
-	m_ctrlClub.ResetContent();
-	for (set<tstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
-	{
-		int index = m_ctrlClub.AddString((*iter).c_str());
-		if ((*iter) == club)
-		{
-			m_ctrlClub.SetCurSel(index);
-			UpdateClubInfo((*iter).c_str());
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgCalendar message handlers
-
-BOOL CDlgCalendar::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
+	m_ctrlEMailSecAddr = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_EMailSecAddr, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlEMailSecAddr->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgCalendar::OnEnChangeCalEmailSecAddr), NULL, this);
+	m_ctrlEMailSecAddr->SetHelpText(_("HIDC_CAL_EMAIL_SEC_ADDR"));
+	m_ctrlEMailSecAddr->SetToolTip(_("HIDC_CAL_EMAIL_SEC_ADDR"));
 	std::set<tstring> addrs;
 	for (ARBCalendarList::const_iterator iCal = m_pDoc->Book().GetCalendar().begin();
 		iCal != m_pDoc->Book().GetCalendar().end();
@@ -298,190 +364,412 @@ BOOL CDlgCalendar::OnInitDialog()
 	{
 		if (!(*i).empty())
 		{
-			int idx = m_ctrlEMailSecAddr.AddString((*i).c_str());
-			if (*i == (LPCTSTR)m_EMailSecAddr)
-				m_ctrlEMailSecAddr.SetCurSel(idx);
+			m_ctrlEMailSecAddr->Append((*i).c_str());
 		}
 	}
+
+	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_VENUE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textVenue->Wrap(-1);
+
+	m_ctrlVenue = new CVenueComboBox(this, m_pDoc->Book().GetConfig().GetVenues(), m_Venue, false,
+		CTrimValidator(&m_Venue, TRIMVALIDATOR_TRIM_BOTH), true);
+	m_ctrlVenue->SetHelpText(_("HIDC_CAL_VENUE"));
+	m_ctrlVenue->SetToolTip(_("HIDC_CAL_VENUE"));
+
+	wxStaticText* textClub = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_CLUB"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textClub->Wrap(-1);
+
+	m_ctrlClub = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Club, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlClub->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgCalendar::OnSelchangeClub), NULL, this);
+	m_ctrlClub->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgCalendar::OnKillfocusClub), NULL, this);
+	m_ctrlClub->SetHelpText(_("HIDC_CAL_CLUB"));
+	m_ctrlClub->SetToolTip(_("HIDC_CAL_CLUB"));
+
+	m_ctrlClubNotes = new CNoteButton(this);
+	m_ctrlClubNotes->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendar::OnClubNotes), NULL, this);
+	m_ctrlClubNotes->SetHelpText(_("HIDC_CAL_CLUB_NOTES"));
+	m_ctrlClubNotes->SetToolTip(_("HIDC_CAL_CLUB_NOTES"));
+
+	m_ctrlClubInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(-1, 70),
+		wxTE_READONLY);
+	m_ctrlClubInfo->SetHelpText(_("HIDC_CAL_CLUB_NOTE"));
+	m_ctrlClubInfo->SetToolTip(_("HIDC_CAL_CLUB_NOTE"));
+
+	wxStaticText* textLocation = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_LOCATION"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textLocation->Wrap(-1);
+
+	m_ctrlLocation = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		CTrimValidator(&m_Location, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlLocation->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgCalendar::OnSelchangeLocation), NULL, this);
+	m_ctrlLocation->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgCalendar::OnKillfocusLocation), NULL, this);
+	m_ctrlLocation->SetHelpText(_("HIDC_CAL_LOCATION"));
+	m_ctrlLocation->SetToolTip(_("HIDC_CAL_LOCATION"));
+
+	m_ctrlLocationNotes = new CNoteButton(this);
+	m_ctrlLocationNotes->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendar::OnLocationNotes), NULL, this);
+	m_ctrlLocationNotes->SetHelpText(_("HIDC_CAL_LOCATION_NOTES"));
+	m_ctrlLocationNotes->SetToolTip(_("HIDC_CAL_LOCATION_NOTES"));
+
+	m_ctrlLocationInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(-1, 115),
+		wxTE_READONLY);
+	m_ctrlLocationInfo->SetHelpText(_("HIDC_CAL_LOCATION_NOTE"));
+	m_ctrlLocationInfo->SetToolTip(_("HIDC_CAL_LOCATION_NOTE"));
+
+	wxStaticText* textNotes = new wxStaticText(this, wxID_ANY,
+		_("IDC_CAL_NOTES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textNotes->Wrap(-1);
+
+	wxTextCtrl* ctrlNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE,
+		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlNotes->SetHelpText(_("HIDC_CAL_NOTES"));
+	ctrlNotes->SetToolTip(_("HIDC_CAL_NOTES"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerDates = new wxBoxSizer(wxHORIZONTAL);
+
+	wxBoxSizer* sizerTrialInfo = new wxBoxSizer(wxVERTICAL);
+
+	wxFlexGridSizer* sizerDates1 = new wxFlexGridSizer(2, 2, 0, 0);
+	sizerDates1->SetFlexibleDirection(wxBOTH);
+	sizerDates1->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	sizerDates1->Add(textStart, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 2);
+	sizerDates1->Add(ctrlStart, 0, wxALL, 3);
+	sizerDates1->Add(textEnd, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 3);
+	sizerDates1->Add(m_ctrlEnd, 0, wxALL, 3);
+
+	sizerTrialInfo->Add(sizerDates1, 0, wxEXPAND, 5);
+	sizerTrialInfo->Add(ctrlTentative, 0, wxALL, 5);
+
+	sizerDates->Add(sizerTrialInfo, 0, wxEXPAND, 5);
+
+	wxFlexGridSizer* sizerDates2 = new wxFlexGridSizer(3, 3, 0, 0);
+	sizerDates2->SetFlexibleDirection(wxBOTH);
+	sizerDates2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	sizerDates2->Add(textOpens, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 3);
+	sizerDates2->Add(m_ctrlOpens, 0, wxALL, 3);
+	sizerDates2->Add(ctrlOpensUnknown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
+	sizerDates2->Add(textDraws, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 3);
+	sizerDates2->Add(m_ctrlDraws, 0, wxALL, 3);
+	sizerDates2->Add(ctrDrawsUnknown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
+	sizerDates2->Add(textCloses, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 3);
+	sizerDates2->Add(m_ctrlCloses, 0, wxALL, 3);
+	sizerDates2->Add(ctrlClosesUnknown, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
+
+	sizerDates->Add(sizerDates2, 0, wxEXPAND, 5);
+
+	bSizer->Add(sizerDates, 0, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
+
+	wxBoxSizer* sizer1 = new wxBoxSizer(wxVERTICAL);
+
+	wxStaticBoxSizer* sizerEntry = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ENTER")), wxVERTICAL);
+	sizerEntry->Add(m_ctrlEntryNot, 0, wxALL, 3);
+	sizerEntry->Add(m_ctrlEntryPlan, 0, wxALL, 3);
+
+	wxBoxSizer* sizerOnline = new wxBoxSizer(wxHORIZONTAL);
+	sizerOnline->Add(15, 0, 0, 0, 5);
+	sizerOnline->Add(m_ctrlOnlineUrlEntry, 0, wxALL, 3);
+	sizerOnline->Add(m_ctrlOnlineUrl, 1, wxALL, 5);
+
+	sizerEntry->Add(sizerOnline, 0, wxEXPAND, 5);
+	sizerEntry->Add(m_ctrlEntryEntered, 0, wxALL, 3);
+
+	sizer1->Add(sizerEntry, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerPremium = new wxBoxSizer(wxHORIZONTAL);
+	sizerPremium->Add(m_ctrlPremiumEntry, 0, wxALL, 3);
+	sizerPremium->Add(m_ctrlPremiumUrl, 1, wxALIGN_CENTER_VERTICAL|wxALL, 3);
+
+	sizer1->Add(sizerPremium, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerSec = new wxBoxSizer(wxHORIZONTAL);
+	sizerSec->Add(m_ctrlEMailSec, 0, wxALL, 3);
+	sizerSec->Add(m_ctrlEMailSecAddr, 1, wxALIGN_CENTER_VERTICAL|wxALL, 3);
+
+	sizer1->Add(sizerSec, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
+	sizerVenue->Add(textVenue, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerVenue->Add(m_ctrlVenue, 0, wxALL, 3);
+
+	sizer1->Add(sizerVenue, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerClub = new wxBoxSizer(wxHORIZONTAL);
+	sizerClub->Add(textClub, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerClub->Add(m_ctrlClub, 0, wxALL, 3);
+	sizerClub->Add(m_ctrlClubNotes, 0, wxALL, 3);
+
+	sizer1->Add(sizerClub, 0, wxEXPAND, 5);
+	sizer1->Add(m_ctrlClubInfo, 1, wxALL|wxEXPAND, 5);
+
+	sizerContent->Add(sizer1, 3, wxEXPAND|wxLEFT|wxRIGHT, 5);
+
+	wxBoxSizer* sizer2 = new wxBoxSizer(wxVERTICAL);
+
+	wxStaticBoxSizer* sizerAccom = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ACCOM")), wxVERTICAL);
+
+	sizerAccom->Add(m_ctrlAccomNot, 0, wxALL, 3);
+	sizerAccom->Add(m_ctrlAccomNeeded, 0, wxALL, 3);
+
+	wxBoxSizer* sizerMade = new wxBoxSizer(wxHORIZONTAL);
+	sizerMade->Add(m_ctrlAccomMade, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
+	sizerMade->Add(m_ctrlConfirmation, 1, wxALL, 5);
+
+	sizerAccom->Add(sizerMade, 0, wxEXPAND, 5);
+
+	sizer2->Add(sizerAccom, 0, wxEXPAND, 5);
+	sizer2->Add(0, 0, 1, wxEXPAND, 5);
+	sizer2->Add(textLocation, 0, wxLEFT|wxRIGHT, 5);
+
+	wxBoxSizer* sizerLocation = new wxBoxSizer(wxHORIZONTAL);
+	sizerLocation->Add(m_ctrlLocation, 1, wxALL, 5);
+	sizerLocation->Add(m_ctrlLocationNotes, 0, wxALL, 5);
+
+	sizer2->Add(sizerLocation, 0, wxEXPAND, 5);
+	sizer2->Add(m_ctrlLocationInfo, 0, wxALL|wxEXPAND, 5);
+
+	sizerContent->Add(sizer2, 2, wxEXPAND|wxLEFT|wxRIGHT, 5);
+
+	bSizer->Add(sizerContent, 0, wxEXPAND, 5);
+	bSizer->Add(textNotes, 0, wxLEFT|wxRIGHT, 7);
+	bSizer->Add(ctrlNotes, 1, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
 	ListLocations();
-
-	m_ctrlVenue.Initialize(m_pDoc->Book().GetConfig().GetVenues(), m_pCal->GetVenue());
-
 	ListClubs();
 
-	if (m_bOpeningUnknown)
-		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(FALSE);
-	else
-		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(TRUE);
-	if (m_bDrawingUnknown)
-		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(FALSE);
-	else
-		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(TRUE);
-	if (m_bClosingUnknown)
-		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(FALSE);
-	else
-		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
-	if (1 != m_Entered || m_OnlineUrl.IsEmpty())
-		m_ctrlOnlineUrlEntry.EnableWindow(FALSE);
-	if (m_PremiumUrl.IsEmpty())
-		m_ctrlPremiumEntry.EnableWindow(FALSE);
-	if (m_EMailSecAddr.IsEmpty())
-		m_ctrlEMailSec.EnableWindow(FALSE);
-
-	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
 }
 
 
-void CDlgCalendar::OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult)
+void CDlgCalendar::UpdateLocationInfo(wxChar const* pLocation)
 {
-	LPNMDATETIMECHANGE pDTChange = reinterpret_cast<LPNMDATETIMECHANGE>(pNMHDR);
-	if (0 < m_Span)
+	wxString str;
+	if (pLocation && *pLocation)
 	{
-		if (pDTChange->dwFlags == GDT_VALID)
+		ARBInfoItemPtr pItem;
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
 		{
-			UpdateData(TRUE);
-			m_dateEnd = CTime(pDTChange->st) + CTimeSpan(m_Span, 0, 0, 0);
-			UpdateData(FALSE);
+			str = pItem->GetComment().c_str();
 		}
 	}
-	*pResult = 0;
+	m_ctrlLocationInfo->SetValue(str);
 }
 
 
-void CDlgCalendar::OnDateOpensUnknown()
+void CDlgCalendar::ListLocations()
 {
-	UpdateData(TRUE);
-	if (m_bOpeningUnknown)
-		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(FALSE);
+	std::set<tstring> locations;
+	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
+	if (!m_pCal->GetLocation().empty())
+		locations.insert(m_pCal->GetLocation());
+	tstring loc(m_Location.c_str());
+	if (m_Location.empty())
+		loc = m_pCal->GetLocation();
+	m_ctrlLocation->Clear();
+	for (std::set<tstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
+	{
+		int index = m_ctrlLocation->Append((*iter).c_str());
+		if ((*iter) == loc)
+		{
+			m_ctrlLocation->SetSelection(index);
+			UpdateLocationInfo((*iter).c_str());
+		}
+	}
+}
+
+
+void CDlgCalendar::UpdateClubInfo(wxChar const* pClub)
+{
+	wxString str;
+	if (pClub && *pClub)
+	{
+		ARBInfoItemPtr pItem;
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
+		{
+			str = pItem->GetComment().c_str();
+		}
+	}
+	m_ctrlClubInfo->SetValue(str);
+}
+
+
+void CDlgCalendar::ListClubs()
+{
+	std::set<tstring> clubs;
+	m_pDoc->Book().GetAllClubNames(clubs, true, true);
+	if (!m_pCal->GetClub().empty())
+		clubs.insert(m_pCal->GetClub());
+	tstring club(m_Club.c_str());
+	if (m_Club.empty())
+		club = m_pCal->GetClub();
+	m_ctrlClub->Clear();
+	for (std::set<tstring>::const_iterator iter = clubs.begin(); iter != clubs.end(); ++iter)
+	{
+		int index = m_ctrlClub->Append((*iter).c_str());
+		if ((*iter) == club)
+		{
+			m_ctrlClub->SetSelection(index);
+			UpdateClubInfo((*iter).c_str());
+		}
+	}
+}
+
+
+void CDlgCalendar::OnDatetimechangeStart(wxDateEvent& evt)
+{
+	if (0 < m_Span)
+	{
+		wxDateTime date = evt.GetDate();
+		if (date.IsValid())
+		{
+			date.Add(wxDateSpan(0, 0, 0, m_Span));
+			m_ctrlEnd->SetValue(date);
+		}
+	}
+}
+
+
+void CDlgCalendar::OnDateOpensUnknown(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	m_ctrlOpens->Enable(!m_bOpeningUnknown);
+}
+
+
+void CDlgCalendar::OnDateDrawsUnknown(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	m_ctrlDraws->Enable(!m_bDrawingUnknown);
+}
+
+
+void CDlgCalendar::OnDateClosesUnknown(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	m_ctrlCloses->Enable(!m_bClosingUnknown);
+}
+
+
+void CDlgCalendar::OnCalEntry(wxCommandEvent& evt)
+{
+	wxString s = m_ctrlOnlineUrl->GetValue();
+	if (!m_ctrlEntryPlan->GetValue() || s.empty())
+		m_ctrlOnlineUrlEntry->Enable(false);
 	else
-		GetDlgItem(IDC_CAL_DATE_OPENS)->EnableWindow(TRUE);
+		m_ctrlOnlineUrlEntry->Enable(true);
 }
 
 
-void CDlgCalendar::OnDateDrawsUnknown()
+void CDlgCalendar::OnEnChangeCalOnlineUrl(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	if (m_bDrawingUnknown)
-		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(FALSE);
+	wxString s = m_ctrlOnlineUrl->GetValue();
+	if (!m_ctrlEntryPlan->GetValue() || s.empty())
+		m_ctrlOnlineUrlEntry->Enable(false);
 	else
-		GetDlgItem(IDC_CAL_DATE_DRAWS)->EnableWindow(TRUE);
+		m_ctrlOnlineUrlEntry->Enable(true);
 }
 
 
-void CDlgCalendar::OnDateClosesUnknown()
+void CDlgCalendar::OnOnlineEntry(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	if (m_bClosingUnknown)
-		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(FALSE);
+	TransferDataFromWindow();
+	wxLaunchDefaultBrowser(m_OnlineUrl);
+}
+
+
+void CDlgCalendar::OnEnChangeCalPremiumUrl(wxCommandEvent& evt)
+{
+	if (m_ctrlPremiumUrl->GetValue().empty())
+		m_ctrlPremiumEntry->Enable(false);
 	else
-		GetDlgItem(IDC_CAL_DATE_CLOSES)->EnableWindow(TRUE);
+		m_ctrlPremiumEntry->Enable(true);
 }
 
 
-void CDlgCalendar::OnCalEntry()
+void CDlgCalendar::OnPremiumEntry(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	if (1 != m_Entered || m_OnlineUrl.IsEmpty())
-		m_ctrlOnlineUrlEntry.EnableWindow(FALSE);
+	TransferDataFromWindow();
+	wxLaunchDefaultBrowser(m_PremiumUrl);
+}
+
+
+void CDlgCalendar::OnEnChangeCalEmailSecAddr(wxCommandEvent& evt)
+{
+	int idx = m_ctrlEMailSecAddr->GetSelection();
+	wxString str;
+	if (wxNOT_FOUND != idx)
+		str = m_ctrlEMailSecAddr->GetString(idx);
+	if (str.empty())
+		m_ctrlEMailSec->Enable(false);
 	else
-		m_ctrlOnlineUrlEntry.EnableWindow(TRUE);
+		m_ctrlEMailSec->Enable(true);
 }
 
 
-void CDlgCalendar::OnEnChangeCalOnlineUrl()
+void CDlgCalendar::OnEmailSec(wxCommandEvent& evt)
 {
-	CString s;
-	m_ctrlOnlineUrl.GetWindowText(s);
-	if (1 != m_Entered || s.IsEmpty())
-		m_ctrlOnlineUrlEntry.EnableWindow(FALSE);
-	else
-		m_ctrlOnlineUrlEntry.EnableWindow(TRUE);
+	TransferDataFromWindow();
+	wxString s(m_EMailSecAddr);
+	if (0 != m_EMailSecAddr.Find(wxT("mailto:")))
+		s = wxT("mailto:") + m_EMailSecAddr;
+	wxLaunchDefaultBrowser(s);
 }
 
 
-void CDlgCalendar::OnOnlineEntry()
+void CDlgCalendar::OnAccommodation(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	RunCommand(m_OnlineUrl);
+	m_ctrlConfirmation->Enable(m_ctrlAccomMade->GetValue());
 }
 
 
-void CDlgCalendar::OnEnChangeCalPremiumUrl()
+void CDlgCalendar::OnSelchangeClub(wxCommandEvent& evt)
 {
-	CString s;
-	m_ctrlPremiumUrl.GetWindowText(s);
-	if (s.IsEmpty())
-		m_ctrlPremiumEntry.EnableWindow(FALSE);
-	else
-		m_ctrlPremiumEntry.EnableWindow(TRUE);
+	int idx = m_ctrlClub->GetSelection();
+	wxString str;
+	if (wxNOT_FOUND != idx)
+		str = m_ctrlClub->GetString(idx);
+	UpdateClubInfo(str.c_str());
 }
 
 
-void CDlgCalendar::OnPremiumEntry()
+void CDlgCalendar::OnKillfocusClub(wxFocusEvent& evt)
 {
-	UpdateData(TRUE);
-	RunCommand(m_PremiumUrl);
+	TransferDataFromWindow();
+	UpdateClubInfo(m_Club.c_str());
 }
 
 
-void CDlgCalendar::OnEnChangeCalEmailSecAddr()
+void CDlgCalendar::OnClubNotes(wxCommandEvent& evt)
 {
-	int idx = m_ctrlEMailSecAddr.GetCurSel();
-	CString str;
-	if (CB_ERR != idx)
-		m_ctrlEMailSecAddr.GetLBText(idx, str);
-	if (str.IsEmpty())
-		m_ctrlEMailSec.EnableWindow(FALSE);
-	else
-		m_ctrlEMailSec.EnableWindow(TRUE);
-}
-
-
-void CDlgCalendar::OnEmailSec()
-{
-	UpdateData(TRUE);
-	CString s(m_EMailSecAddr);
-	if (0 != m_EMailSecAddr.Find(_T("mailto:")))
-		s = _T("mailto:") + m_EMailSecAddr;
-	RunCommand(s);
-}
-
-
-void CDlgCalendar::OnAccommodation()
-{
-	UpdateData(TRUE);
-	m_ctrlConfirmation.EnableWindow(2 == m_Accommodation);
-}
-
-
-void CDlgCalendar::OnSelchangeClub()
-{
-	int idx = m_ctrlClub.GetCurSel();
-	CString str;
-	if (CB_ERR != idx)
-		m_ctrlClub.GetLBText(idx, str);
-	UpdateClubInfo((LPCTSTR)str);
-}
-
-
-void CDlgCalendar::OnKillfocusClub()
-{
-	UpdateData(TRUE);
-	UpdateClubInfo((LPCTSTR)m_Club);
-}
-
-
-void CDlgCalendar::OnClubNotes()
-{
-	UpdateData(TRUE);
-	m_Club.TrimRight();
-	m_Club.TrimLeft();
-	CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, (LPCTSTR)m_Club, this);
-	if (IDOK == dlg.DoModal())
+	TransferDataFromWindow();
+	CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, m_Club, this);
+	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Club = dlg.CurrentSelection();
 		ListClubs();
@@ -489,30 +777,27 @@ void CDlgCalendar::OnClubNotes()
 }
 
 
-void CDlgCalendar::OnSelchangeLocation()
+void CDlgCalendar::OnSelchangeLocation(wxCommandEvent& evt)
 {
-	int idx = m_ctrlLocation.GetCurSel();
-	CString str;
-	if (CB_ERR != idx)
-		m_ctrlLocation.GetLBText(idx, str);
-	UpdateLocationInfo((LPCTSTR)str);
+	int idx = m_ctrlLocation->GetSelection();
+	wxString str;
+	if (wxNOT_FOUND != idx)
+		str = m_ctrlLocation->GetString(idx);
+	UpdateLocationInfo(str.c_str());
 }
 
 
-void CDlgCalendar::OnKillfocusLocation()
+void CDlgCalendar::OnKillfocusLocation(wxFocusEvent& evt)
 {
-	UpdateData(TRUE);
-	UpdateLocationInfo((LPCTSTR)m_Location);
+	TransferDataFromWindow();
+	UpdateLocationInfo(m_Location.c_str());
 }
 
-
-void CDlgCalendar::OnLocationNotes()
+void CDlgCalendar::OnLocationNotes(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	m_Location.TrimRight();
-	m_Location.TrimLeft();
-	CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
-	if (IDOK == dlg.DoModal())
+	TransferDataFromWindow();
+	CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, m_Location, this);
+	if (wxID_OK == dlg.ShowModal())
 	{
 		m_Location = dlg.CurrentSelection();
 		ListLocations();
@@ -520,105 +805,80 @@ void CDlgCalendar::OnLocationNotes()
 }
 
 
-void CDlgCalendar::OnOK()
+void CDlgCalendar::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-	m_Venue.TrimRight();
-	m_Venue.TrimLeft();
-	m_Club.TrimRight();
-	m_Club.TrimLeft();
-	m_Location.TrimRight();
-	m_Location.TrimLeft();
-	m_Notes.TrimRight();
-	m_Notes.TrimLeft();
 
-	ARBDate startDate(m_dateStart.GetYear(), m_dateStart.GetMonth(), m_dateStart.GetDay());
-	ARBDate endDate(m_dateEnd.GetYear(), m_dateEnd.GetMonth(), m_dateEnd.GetDay());
-	if (startDate > endDate)
+	if (m_dateStart > m_dateEnd)
 	{
-		ARBDate temp = startDate;
-		startDate = endDate;
-		endDate = temp;
+		ARBDate temp = m_dateStart;
+		m_dateStart = m_dateEnd;
+		m_dateEnd = temp;
 	}
-	ARBDate openingDate(m_dateOpens.GetYear(), m_dateOpens.GetMonth(), m_dateOpens.GetDay());
-	ARBDate drawingDate(m_dateDraws.GetYear(), m_dateDraws.GetMonth(), m_dateDraws.GetDay());
-	ARBDate closingDate(m_dateCloses.GetYear(), m_dateCloses.GetMonth(), m_dateCloses.GetDay());
-	if (!m_bOpeningUnknown && !m_bClosingUnknown && openingDate > closingDate)
+	if (!m_bOpeningUnknown && !m_bClosingUnknown && m_dateOpens > m_dateCloses)
 	{
-		ARBDate temp = openingDate;
-		openingDate = closingDate;
-		closingDate = temp;
+		ARBDate temp = m_dateOpens;
+		m_dateOpens = m_dateCloses;
+		m_dateCloses = temp;
 	}
 	if (!m_bDrawingUnknown)
 	{
-		if (!m_bOpeningUnknown && openingDate > drawingDate)
+		if (!m_bOpeningUnknown && m_dateOpens > m_dateDraws)
 		{
-			AfxMessageBox(IDS_BAD_DRAWDATE);
-			GotoDlgCtrl(GetDlgItem(IDC_CAL_DATE_DRAWS));
+			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+			m_ctrlDraws->SetFocus();
 			return;
 		}
-		if (!m_bClosingUnknown && drawingDate > closingDate)
+		if (!m_bClosingUnknown && m_dateDraws > m_dateCloses)
 		{
-			AfxMessageBox(IDS_BAD_DRAWDATE);
-			GotoDlgCtrl(GetDlgItem(IDC_CAL_DATE_DRAWS));
+			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+			m_ctrlDraws->SetFocus();
 			return;
 		}
 	}
 	ARBDate today(ARBDate::Today());
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
-	if (CAgilityBookOptions::AutoDeleteCalendarEntries() && endDate < today)
+	if (CAgilityBookOptions::AutoDeleteCalendarEntries() && m_dateEnd < today)
 	{
-		if (IDYES != AfxMessageBox(IDS_AUTODELETE_CAL, MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON2))
+		if (wxYES != wxMessageBox(_("IDS_AUTODELETE_CAL"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO | wxNO_DEFAULT))
 			return;
 	}
 
-	m_pCal->SetStartDate(startDate);
-	m_pCal->SetEndDate(endDate);
-	switch (m_Entered)
-	{
-	default:
+	m_pCal->SetStartDate(m_dateStart);
+	m_pCal->SetEndDate(m_dateEnd);
+	if (m_ctrlEntryNot->GetValue())
 		m_pCal->SetEntered(ARBCalendar::eNot);
-		break;
-	case 1:
+	else if (m_ctrlEntryPlan->GetValue())
 		m_pCal->SetEntered(ARBCalendar::ePlanning);
-		break;
-	case 2:
+	else if (m_ctrlEntryEntered->GetValue())
 		m_pCal->SetEntered(ARBCalendar::eEntered);
-		break;
-	}
-	m_pCal->SetIsTentative(m_bTentative ? true : false);
-	m_pCal->SetLocation((LPCTSTR)m_Location);
-	m_pCal->SetVenue((LPCTSTR)m_Venue);
-	m_pCal->SetClub((LPCTSTR)m_Club);
+	m_pCal->SetIsTentative(m_bTentative);
+	m_pCal->SetLocation(m_Location.c_str());
+	m_pCal->SetVenue(m_Venue.c_str());
+	m_pCal->SetClub(m_Club.c_str());
 	if (m_bOpeningUnknown)
-		openingDate.clear();
+		m_dateOpens.clear();
 	if (m_bDrawingUnknown)
-		drawingDate.clear();
+		m_dateDraws.clear();
 	if (m_bClosingUnknown)
-		closingDate.clear();
-	m_pCal->SetOpeningDate(openingDate);
-	m_pCal->SetDrawDate(drawingDate);
-	m_pCal->SetClosingDate(closingDate);
-	m_pCal->SetOnlineURL((LPCTSTR)m_OnlineUrl);
-	m_pCal->SetPremiumURL((LPCTSTR)m_PremiumUrl);
-	m_pCal->SetSecEmail((LPCTSTR)m_EMailSecAddr);
-	switch (m_Accommodation)
-	{
-	default:
+		m_dateCloses.clear();
+	m_pCal->SetOpeningDate(m_dateOpens);
+	m_pCal->SetDrawDate(m_dateDraws);
+	m_pCal->SetClosingDate(m_dateCloses);
+	m_pCal->SetOnlineURL(m_OnlineUrl.c_str());
+	m_pCal->SetPremiumURL(m_PremiumUrl.c_str());
+	m_pCal->SetSecEmail(m_EMailSecAddr.c_str());
+	if (m_ctrlAccomNot->GetValue())
 		m_pCal->SetAccommodation(ARBCalendar::eAccomNone);
-		break;
-	case 1:
+	else if (m_ctrlAccomNeeded->GetValue())
 		m_pCal->SetAccommodation(ARBCalendar::eAccomTodo);
-		break;
-	case 2:
+	else if (m_ctrlAccomMade->GetValue())
+	{
 		m_pCal->SetAccommodation(ARBCalendar::eAccomConfirmed);
-		m_pCal->SetConfirmation((LPCTSTR)m_Confirmation);
-		break;
+		m_pCal->SetConfirmation(m_Confirmation.c_str());
 	}
-	m_Notes.Replace(_T("\r\n"), _T("\n"));
-	m_pCal->SetNote((LPCTSTR)m_Notes);
+	m_pCal->SetNote(m_Notes.c_str());
 
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif

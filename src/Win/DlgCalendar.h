@@ -39,112 +39,93 @@
  * @li 2005-01-21 DRC Added Location/Club info fields.
  */
 
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
-//#include "NoteButton.h"
-//#include "RichEditCtrl2.h"
+#include "ARBDate.h"
 #include "ARBTypes.h"
 class CAgilityBookDoc;
+class CNoteButton;
+class CRichEditCtrl2;
+class CVenueComboBox;
+class wxDateEvent;
+class wxDatePickerCtrl;
 
-class CDlgCalendar
+
+class CDlgCalendar : public wxDialog
 {
 public:
 	CDlgCalendar(
 			ARBCalendarPtr pCal,
 			CAgilityBookDoc* pDoc,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgCalendar"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgCalendar : public CDlgBaseDialog
-{
-public:
-	CDlgCalendar(
-			ARBCalendarPtr pCal,
-			CAgilityBookDoc* pDoc,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgCalendar)
-	enum { IDD = IDD_CALENDAR };
-	CTime	m_dateStart;
-	CTime	m_dateEnd;
-	BOOL	m_bTentative;
-	CTime	m_dateOpens;
-	BOOL	m_bOpeningUnknown;
-	CTime	m_dateDraws;
-	BOOL	m_bDrawingUnknown;
-	CTime	m_dateCloses;
-	BOOL	m_bClosingUnknown;
-	int		m_Entered;
-	CButton	m_ctrlOnlineUrlEntry;
-	CString	m_OnlineUrl;
-	CEdit	m_ctrlOnlineUrl;
-	int		m_Accommodation;
-	CString	m_Confirmation;
-	CEdit	m_ctrlConfirmation;
-	CButton	m_ctrlPremiumEntry;
-	CString	m_PremiumUrl;
-	CEdit	m_ctrlPremiumUrl;
-	CButton	m_ctrlEMailSec;
-	CComboBox2	m_ctrlEMailSecAddr;
-	CString	m_EMailSecAddr;
-	CVenueComboBox	m_ctrlVenue;
-	CString	m_Venue;
-	CComboBox2	m_ctrlClub;
-	CString	m_Club;
-	CNoteButton	m_ctrlClubNotes;
-	CRichEditCtrl2	m_ctrlClubInfo;
-	CComboBox2	m_ctrlLocation;
-	CString	m_Location;
-	CNoteButton	m_ctrlLocationNotes;
-	CRichEditCtrl2	m_ctrlLocationInfo;
-	CString	m_Notes;
-	//}}AFX_DATA
+	void UpdateLocationInfo(wxChar const* pLocation);
+	void ListLocations();
+	void UpdateClubInfo(wxChar const* pClub);
+	void ListClubs();
+
 	ARBCalendarPtr m_pCal;
 	CAgilityBookDoc* m_pDoc;
 	int m_Span;
+	ARBDate m_dateStart;
+	ARBDate m_dateEnd;
+	bool m_bTentative;
+	ARBDate m_dateOpens;
+	bool m_bOpeningUnknown;
+	ARBDate m_dateDraws;
+	bool m_bDrawingUnknown;
+	ARBDate m_dateCloses;
+	bool m_bClosingUnknown;
+	wxString m_OnlineUrl;
+	wxString m_Confirmation;
+	wxString m_PremiumUrl;
+	wxString m_EMailSecAddr;
+	wxString m_Venue;
+	wxString m_Club;
+	wxString m_Location;
+	wxString m_Notes;
+	wxDatePickerCtrl* m_ctrlEnd;
+	wxDatePickerCtrl* m_ctrlOpens;
+	wxDatePickerCtrl* m_ctrlDraws;
+	wxDatePickerCtrl* m_ctrlCloses;
+	wxRadioButton* m_ctrlEntryNot;
+	wxRadioButton* m_ctrlEntryPlan;
+	wxRadioButton* m_ctrlEntryEntered;
+	wxButton* m_ctrlOnlineUrlEntry;
+	wxTextCtrl* m_ctrlOnlineUrl;
+	wxRadioButton* m_ctrlAccomNot;
+	wxRadioButton* m_ctrlAccomNeeded;
+	wxRadioButton* m_ctrlAccomMade;
+	wxTextCtrl* m_ctrlConfirmation;
+	wxButton* m_ctrlPremiumEntry;
+	wxTextCtrl* m_ctrlPremiumUrl;
+	wxButton* m_ctrlEMailSec;
+	wxComboBox* m_ctrlEMailSecAddr;
+	CVenueComboBox* m_ctrlVenue;
+	wxComboBox* m_ctrlClub;
+	CNoteButton* m_ctrlClubNotes;
+	CRichEditCtrl2* m_ctrlClubInfo;
+	wxComboBox* m_ctrlLocation;
+	CNoteButton* m_ctrlLocationNotes;
+	CRichEditCtrl2* m_ctrlLocationInfo;
 
-	//{{AFX_VIRTUAL(CDlgCalendar)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	void UpdateLocationInfo(TCHAR const* pLocation);
-	void ListLocations();
-	void UpdateClubInfo(TCHAR const* pClub);
-	void ListClubs();
-	//{{AFX_MSG(CDlgCalendar)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnDatetimechangeStart(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDateOpensUnknown();
-	afx_msg void OnDateDrawsUnknown();
-	afx_msg void OnDateClosesUnknown();
-	afx_msg void OnCalEntry();
-	afx_msg void OnEnChangeCalOnlineUrl();
-	afx_msg void OnOnlineEntry();
-	afx_msg void OnEnChangeCalPremiumUrl();
-	afx_msg void OnPremiumEntry();
-	afx_msg void OnEnChangeCalEmailSecAddr();
-	afx_msg void OnEmailSec();
-	afx_msg void OnAccommodation();
-	afx_msg void OnSelchangeClub();
-	afx_msg void OnKillfocusClub();
-	afx_msg void OnClubNotes();
-	afx_msg void OnSelchangeLocation();
-	afx_msg void OnKillfocusLocation();
-	afx_msg void OnLocationNotes();
-
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnDatetimechangeStart(wxDateEvent& evt);
+	void OnDateOpensUnknown(wxCommandEvent& evt);
+	void OnDateDrawsUnknown(wxCommandEvent& evt);
+	void OnDateClosesUnknown(wxCommandEvent& evt);
+	void OnCalEntry(wxCommandEvent& evt);
+	void OnEnChangeCalOnlineUrl(wxCommandEvent& evt);
+	void OnOnlineEntry(wxCommandEvent& evt);
+	void OnEnChangeCalPremiumUrl(wxCommandEvent& evt);
+	void OnPremiumEntry(wxCommandEvent& evt);
+	void OnEnChangeCalEmailSecAddr(wxCommandEvent& evt);
+	void OnEmailSec(wxCommandEvent& evt);
+	void OnAccommodation(wxCommandEvent& evt);
+	void OnSelchangeClub(wxCommandEvent& evt);
+	void OnKillfocusClub(wxFocusEvent& evt);
+	void OnClubNotes(wxCommandEvent& evt);
+	void OnSelchangeLocation(wxCommandEvent& evt);
+	void OnKillfocusLocation(wxFocusEvent& evt);
+	void OnLocationNotes(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

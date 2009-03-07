@@ -43,7 +43,7 @@
 
 
 /// Combobox specifically for listing venues
-class CVenueComboBox : public wxChoice
+class CVenueComboBox : public wxComboBox
 {
 DECLARE_CLASS(CVenueComboBox)
 public:
@@ -52,8 +52,8 @@ public:
 			ARBConfigVenueList const& inVenues,
 			wxString const& inSelectVenue,
 			bool useLongName = false,
-			wxValidator const& validator = wxDefaultValidator);
-
+			wxValidator const& validator = wxDefaultValidator,
+			bool bEditable = false);
 
 	ARBConfigVenuePtr GetVenue(int index) const;
 };
