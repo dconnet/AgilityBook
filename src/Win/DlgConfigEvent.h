@@ -43,116 +43,92 @@
  */
 
 #include "ARBConfigScoring.h"
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
-//#include "ListBox.h"
-//#include "ListData.h"
+class CConfigEventDataLifetimePoints;
+class CConfigEventDataPlaceInfo;
+class CConfigEventDataScoring;
+class CConfigEventDataTitlePoints;
 
 
-class CDlgConfigEvent
+class CDlgConfigEvent : public wxDialog
 {
 public:
 	CDlgConfigEvent(
 			bool bNewEntry,
 			ARBConfigVenuePtr pVenue,
 			ARBConfigEventPtr pEvent,
-			wxWindow* pParent = NULL) {}
-	void GetFixups(std::vector<ARBConfigActionPtr>& ioFixups) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgConfigEvent"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
+			wxWindow* pParent = NULL);
+	~CDlgConfigEvent();
 
-#if 0
-class CDlgConfigEvent : public CDlgBaseDialog
-{
-public:
-	CDlgConfigEvent(
-			bool bNewEntry,
-			ARBConfigVenuePtr pVenue,
-			ARBConfigEventPtr pEvent,
-			CWnd* pParent = NULL);
-	virtual ~CDlgConfigEvent();
 	void GetFixups(std::vector<ARBConfigActionPtr>& ioFixups);
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigEvent)
-	enum { IDD = IDD_CONFIG_EVENT };
-	CString	m_Name;
-	BOOL	m_bHasTable;
-	BOOL	m_bHasPartners;
-	BOOL	m_bHasSubNames;
-	CListBox2	m_ctrlSubNames;
-	CButton	m_ctrlSubNamesNew;
-	CButton	m_ctrlSubNamesEdit;
-	CButton	m_ctrlSubNamesDelete;
-	CString	m_Desc;
-	CButton	m_ctrlNew;
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlDelete;
-	CButton	m_ctrlCopy;
-	CButton	m_ctrlUp;
-	CButton	m_ctrlDown;
-	CListBox2	m_ctrlMethods;
-	CListBox2	m_ctrlUnused;
-	CStatic	m_ctrlInfo;
-	CListBox2	m_ctrlPointsList;
-	CButton	m_ctrlPointsNew;
-	CButton	m_ctrlPointsEdit;
-	CButton	m_ctrlPointsDelete;
-	CEdit	m_ctrlNote;
-	//}}AFX_DATA
+	void ClearFixups();
+	CConfigEventDataScoring* GetScoringData(int index) const;
+	CConfigEventDataTitlePoints* GetTitleData(int index) const;
+	CConfigEventDataLifetimePoints* GetLifetimeData(int index) const;
+	CConfigEventDataPlaceInfo* GetPlacementData(int index) const;
+	wxString GetListName(ARBConfigScoringPtr pScoring) const;
+	void EnableSubnameControls();
+	void EnablePointsControls();
+	void FillSubNames(bool bInit = false);
+	void FillControls();
+	void FillMethodList();
+	void FillTitlePoints(ARBConfigScoringPtr pScoring);
+	bool SaveControls();
+	void EditMethod();
+	void EditPoints();
+
 	bool m_bNewEntry;
 	ARBConfigVenuePtr m_pVenue;
 	ARBConfigEventPtr m_pEvent;
 	std::vector<ARBConfigActionPtr> m_DlgFixup;
 	ARBConfigScoringList m_Scorings;
+	wxString m_Name;
+	bool m_bHasTable;
+	bool m_bHasPartners;
+	bool m_bHasSubNames;
+	wxString m_Desc;
+	wxTextCtrl* m_ctrlName;
+	wxListBox* m_ctrlSubNames;
+	wxButton* m_ctrlSubNamesNew;
+	wxButton* m_ctrlSubNamesEdit;
+	wxButton* m_ctrlSubNamesDelete;
+	wxButton* m_ctrlNew;
+	wxButton* m_ctrlEdit;
+	wxButton* m_ctrlDelete;
+	wxButton* m_ctrlCopy;
+	wxButton* m_ctrlUp;
+	wxButton* m_ctrlDown;
+	wxListBox* m_ctrlMethods;
+	wxListBox* m_ctrlUnused;
+	wxStaticText* m_ctrlInfo;
+	wxListBox* m_ctrlPointsList;
+	wxButton* m_ctrlPointsNew;
+	wxButton* m_ctrlPointsEdit;
+	wxButton* m_ctrlPointsDelete;
+	wxTextCtrl* m_ctrlNote;
 	int m_idxMethod;
 
-	void ClearFixups();
-	void FillSubNames(bool bInit = false);
-	CListPtrData<ARBConfigScoringPtr>* GetScoringData(int index) const;
-	CListPtrData<ARBConfigTitlePointsPtr>* GetTitleData(int index) const;
-	CListPtrData<ARBConfigLifetimePointsPtr>* GetLifetimeData(int index) const;
-	CListPtrData<ARBConfigPlaceInfoPtr>* GetPlacementData(int index) const;
-	CString GetListName(ARBConfigScoringPtr pScoring) const;
-	void FillControls();
-	void FillMethodList();
-	void FillTitlePoints(ARBConfigScoringPtr pScoring);
-	bool SaveControls();
-
-	//{{AFX_VIRTUAL(CDlgConfigEvent)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	//{{AFX_MSG(CDlgConfigEvent)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedSubNames();
-	afx_msg void OnLbnSelchangeSubnames();
-	afx_msg void OnBnClickedSubNamesNew();
-	afx_msg void OnBnClickedSubNamesEdit();
-	afx_msg void OnBnClickedSubNamesDelete();
-	afx_msg void OnLbnDblclkMethods();
-	afx_msg void OnLbnSelchangeMethods();
-	afx_msg void OnBnClickedNew();
-	afx_msg void OnBnClickedEdit();
-	afx_msg void OnBnClickedDelete();
-	afx_msg void OnBnClickedCopy();
-	afx_msg void OnBnClickedUp();
-	afx_msg void OnBnClickedDown();
-	afx_msg void OnDblclickConfigInfo();
-	afx_msg void OnSelchangePoints();
-	afx_msg void OnDblclkPoints();
-	afx_msg void OnPointsNew();
-	afx_msg void OnPointsEdit();
-	afx_msg void OnPointsDelete();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnClickedSubNames(wxCommandEvent& evt);
+	void OnLbnSelchangeSubnames(wxCommandEvent& evt);
+	void OnLbnDblclkSubnames(wxCommandEvent& evt);
+	void OnBnClickedSubNamesNew(wxCommandEvent& evt);
+	void OnBnClickedSubNamesEdit(wxCommandEvent& evt);
+	void OnBnClickedSubNamesDelete(wxCommandEvent& evt);
+	void OnLbnSelchangeMethods(wxCommandEvent& evt);
+	void OnLbnDblclkMethods(wxCommandEvent& evt);
+	void OnBnClickedNew(wxCommandEvent& evt);
+	void OnBnClickedEdit(wxCommandEvent& evt);
+	void OnBnClickedDelete(wxCommandEvent& evt);
+	void OnBnClickedCopy(wxCommandEvent& evt);
+	void OnBnClickedUp(wxCommandEvent& evt);
+	void OnBnClickedDown(wxCommandEvent& evt);
+	void OnDblclickConfigInfo(wxMouseEvent& evt);
+	void OnSelchangePoints(wxCommandEvent& evt);
+	void OnDblclkPoints(wxCommandEvent& evt);
+	void OnPointsNew(wxCommandEvent& evt);
+	void OnPointsEdit(wxCommandEvent& evt);
+	void OnPointsDelete(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

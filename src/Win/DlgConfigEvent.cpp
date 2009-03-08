@@ -57,10 +57,6 @@
 #include "stdafx.h"
 #include "DlgConfigEvent.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigEvent")
-#if 0
-#include "AgilityBook.h"
-#include <algorithm>
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
@@ -69,47 +65,401 @@
 #include "DlgConfigure.h"
 #include "DlgName.h"
 #include "ListData.h"
+#include "Validators.h"
+#include <algorithm>
+#include <wx/statline.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+class CConfigEventDataLifetimePoints : public wxClientData
+{
+public:
+	CConfigEventDataLifetimePoints(ARBConfigLifetimePointsPtr data)
+		: m_Data(data)
+	{
+	}
+	ARBConfigLifetimePointsPtr GetData() const	{return m_Data;}
+private:
+	ARBConfigLifetimePointsPtr m_Data;
+};
+
+
+class CConfigEventDataPlaceInfo : public wxClientData
+{
+public:
+	CConfigEventDataPlaceInfo(ARBConfigPlaceInfoPtr data)
+		: m_Data(data)
+	{
+	}
+	ARBConfigPlaceInfoPtr GetData() const	{return m_Data;}
+private:
+	ARBConfigPlaceInfoPtr m_Data;
+};
+
+
+class CConfigEventDataScoring : public wxClientData
+{
+public:
+	CConfigEventDataScoring(ARBConfigScoringPtr data)
+		: m_Data(data)
+	{
+	}
+	ARBConfigScoringPtr GetData() const	{return m_Data;}
+private:
+	ARBConfigScoringPtr m_Data;
+};
+
+
+class CConfigEventDataTitlePoints : public wxClientData
+{
+public:
+	CConfigEventDataTitlePoints(ARBConfigTitlePointsPtr data)
+		: m_Data(data)
+	{
+	}
+	ARBConfigTitlePointsPtr GetData() const	{return m_Data;}
+private:
+	ARBConfigTitlePointsPtr m_Data;
+};
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgConfigEvent dialog
+
+BEGIN_EVENT_TABLE(CDlgConfigEvent, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgConfigEvent::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgConfigEvent::CDlgConfigEvent(
 		bool bNewEntry,
 		ARBConfigVenuePtr pVenue,
 		ARBConfigEventPtr pEvent,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgConfigEvent::IDD, pParent)
-	, m_ctrlSubNames(false)
-	, m_ctrlMethods(true)
-	, m_ctrlUnused(false)
-	, m_ctrlPointsList(true)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_EVENT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_bNewEntry(bNewEntry)
 	, m_pVenue(pVenue)
 	, m_pEvent(pEvent)
+	, m_DlgFixup()
 	, m_Scorings()
+	, m_Name(m_pEvent->GetName().c_str())
+	, m_bHasTable(m_pEvent->HasTable())
+	, m_bHasPartners(m_pEvent->HasPartner())
+	, m_bHasSubNames(m_pEvent->HasSubNames())
+	, m_Desc(m_pEvent->GetDesc().c_str())
+	, m_ctrlName(NULL)
+	, m_ctrlSubNames(NULL)
+	, m_ctrlSubNamesNew(NULL)
+	, m_ctrlSubNamesEdit(NULL)
+	, m_ctrlSubNamesDelete(NULL)
+	, m_ctrlNew(NULL)
+	, m_ctrlEdit(NULL)
+	, m_ctrlDelete(NULL)
+	, m_ctrlCopy(NULL)
+	, m_ctrlUp(NULL)
+	, m_ctrlDown(NULL)
+	, m_ctrlMethods(NULL)
+	, m_ctrlUnused(NULL)
+	, m_ctrlInfo(NULL)
+	, m_ctrlPointsList(NULL)
+	, m_ctrlPointsNew(NULL)
+	, m_ctrlPointsEdit(NULL)
+	, m_ctrlPointsDelete(NULL)
+	, m_ctrlNote(NULL)
 	, m_idxMethod(-1)
-	, m_bHasTable(FALSE)
-	, m_bHasPartners(FALSE)
-	, m_bHasSubNames(FALSE)
 {
-	// Copy the existing scorings.
-	pEvent->GetScorings().Clone(m_Scorings);
 	assert(m_pVenue);
 	assert(m_pEvent);
-	m_Name = m_pEvent->GetName().c_str();
-	m_Desc = m_pEvent->GetDesc().c_str();
-	m_Desc.Replace(_T("\n"), _T("\r\n"));
-	m_bHasTable = m_pEvent->HasTable() ? TRUE : FALSE;
-	m_bHasPartners = m_pEvent->HasPartner() ? TRUE : FALSE;
-	m_bHasSubNames = m_pEvent->HasSubNames() ? TRUE : FALSE;
-	//{{AFX_DATA_INIT(CDlgConfigEvent)
-	//}}AFX_DATA_INIT
+	// Copy the existing scorings.
+	pEvent->GetScorings().Clone(m_Scorings);
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
+
+	m_ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_Name));
+	m_ctrlName->SetHelpText(_("HIDC_CONFIG_EVENT"));
+	m_ctrlName->SetToolTip(_("HIDC_CONFIG_EVENT"));
+
+	wxCheckBox* ctrlTable = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_TABLE"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bHasTable));
+	ctrlTable->SetHelpText(_("HIDC_CONFIG_EVENT_TABLE"));
+	ctrlTable->SetToolTip(_("HIDC_CONFIG_EVENT_TABLE"));
+
+	wxCheckBox* ctrlPartners = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_PARTNER"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bHasPartners));
+	ctrlPartners->SetHelpText(_("HIDC_CONFIG_EVENT_PARTNER"));
+	ctrlPartners->SetToolTip(_("HIDC_CONFIG_EVENT_PARTNER"));
+
+	wxCheckBox* ctrlHasSubnames = new wxCheckBox(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_HAS_SUBNAMES"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bHasSubNames));
+	ctrlHasSubnames->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnClickedSubNames), NULL, this);
+	ctrlHasSubnames->SetHelpText(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
+	ctrlHasSubnames->SetToolTip(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
+
+	wxStaticText* textNote = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_DESC"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textNote->Wrap(-1);
+
+	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Desc));
+	ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_DESC"));
+	ctrlNote->SetToolTip(_("HIDC_CONFIG_EVENT_DESC"));
+
+	m_ctrlSubNames = new wxListBox(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxLB_SINGLE|wxLB_SORT);
+	m_ctrlSubNames->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgConfigEvent::OnLbnSelchangeSubnames), NULL, this);
+	m_ctrlSubNames->Connect(wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler(CDlgConfigEvent::OnLbnDblclkSubnames), NULL, this);
+	m_ctrlSubNames->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES"));
+	m_ctrlSubNames->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES"));
+
+	m_ctrlSubNamesNew = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_SUBNAMES_NEW"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlSubNamesNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedSubNamesNew), NULL, this);
+	m_ctrlSubNamesNew->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES_NEW"));
+	m_ctrlSubNamesNew->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES_NEW"));
+
+	m_ctrlSubNamesEdit = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_SUBNAMES_EDIT"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlSubNamesEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedSubNamesEdit), NULL, this);
+	m_ctrlSubNamesEdit->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES_EDIT"));
+	m_ctrlSubNamesEdit->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES_EDIT"));
+
+	m_ctrlSubNamesDelete = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_SUBNAMES_DELETE"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlSubNamesDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedSubNamesDelete), NULL, this);
+	m_ctrlSubNamesDelete->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES_DELETE"));
+	m_ctrlSubNamesDelete->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES_DELETE"));
+
+	wxStaticText* textDefined = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_METHODS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDefined->Wrap(-1);
+
+	m_ctrlMethods = new wxListBox(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, 0);
+	m_ctrlMethods->Connect(wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler(CDlgConfigEvent::OnLbnDblclkMethods), NULL, this);
+	m_ctrlMethods->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgConfigEvent::OnLbnSelchangeMethods), NULL, this);
+	m_ctrlMethods->SetHelpText(_("HIDC_CONFIG_EVENT_METHODS"));
+	m_ctrlMethods->SetToolTip(_("HIDC_CONFIG_EVENT_METHODS"));
+
+	m_ctrlNew = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_NEW"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedNew), NULL, this);
+	m_ctrlNew->SetHelpText(_("HIDC_CONFIG_EVENT_NEW"));
+	m_ctrlNew->SetToolTip(_("HIDC_CONFIG_EVENT_NEW"));
+
+	m_ctrlEdit = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_EDIT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedEdit), NULL, this);
+	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_EVENT_EDIT"));
+	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_EVENT_EDIT"));
+
+	m_ctrlDelete = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_DELETE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedDelete), NULL, this);
+	m_ctrlDelete->SetHelpText(_("HIDC_CONFIG_EVENT_DELETE"));
+	m_ctrlDelete->SetToolTip(_("HIDC_CONFIG_EVENT_DELETE"));
+
+	m_ctrlCopy = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_COPY"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlCopy->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedCopy), NULL, this);
+	m_ctrlCopy->SetHelpText(_("HIDC_CONFIG_EVENT_COPY"));
+	m_ctrlCopy->SetToolTip(_("HIDC_CONFIG_EVENT_COPY"));
+ 
+	m_ctrlUp = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_MOVE_UP"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlUp->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedUp), NULL, this);
+	m_ctrlUp->SetHelpText(_("HIDC_CONFIG_EVENT_MOVE_UP"));
+	m_ctrlUp->SetToolTip(_("HIDC_CONFIG_EVENT_MOVE_UP"));
+
+	m_ctrlDown = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_MOVE_DOWN"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedDown), NULL, this);
+	m_ctrlDown->SetHelpText(_("HIDC_CONFIG_EVENT_MOVE_DOWN"));
+	m_ctrlDown->SetToolTip(_("HIDC_CONFIG_EVENT_MOVE_DOWN"));
+
+	wxStaticText* textNotDefined = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_UNUSED"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textNotDefined->Wrap(-1);
+
+	m_ctrlUnused = new wxListBox(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, 0);
+	m_ctrlUnused->SetHelpText(_("HIDC_CONFIG_EVENT_UNUSED"));
+	m_ctrlUnused->SetToolTip(_("HIDC_CONFIG_EVENT_UNUSED"));
+	m_ctrlUnused->Enable(false);
+
+	m_ctrlInfo = new wxStaticText(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
+	m_ctrlInfo->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigEvent::OnDblclickConfigInfo), NULL, this);
+	m_ctrlInfo->Wrap(-1);
+	m_ctrlInfo->SetHelpText(_("HIDC_CONFIG_EVENT_INFO"));
+	m_ctrlInfo->SetToolTip(_("HIDC_CONFIG_EVENT_INFO"));
+
+	wxStaticText* textTitlePoints = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_POINTS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textTitlePoints->Wrap( -1 );
+
+	m_ctrlPointsList = new wxListBox(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxLB_SINGLE);
+	m_ctrlPointsList->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgConfigEvent::OnSelchangePoints), NULL, this);
+	m_ctrlPointsList->Connect(wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler(CDlgConfigEvent::OnDblclkPoints), NULL, this);
+	m_ctrlPointsList->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS"));
+	m_ctrlPointsList->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS"));
+
+	m_ctrlPointsNew = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_POINTS_NEW"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlPointsNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnPointsNew), NULL, this);
+	m_ctrlPointsNew->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS_NEW"));
+	m_ctrlPointsNew->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS_NEW"));
+
+	m_ctrlPointsEdit = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_POINTS_EDIT"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlPointsEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnPointsEdit), NULL, this);
+	m_ctrlPointsEdit->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS_EDIT"));
+	m_ctrlPointsEdit->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS_EDIT"));
+
+	m_ctrlPointsDelete = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_POINTS_DELETE"),
+		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+	m_ctrlPointsDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnPointsDelete), NULL, this);
+	m_ctrlPointsDelete->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS_DELETE"));
+	m_ctrlPointsDelete->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS_DELETE"));
+
+	wxStaticText* textMethodNote = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_EVENT_NOTES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textMethodNote->Wrap(-1);
+
+	m_ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
+	m_ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_NOTES"));
+	m_ctrlNote->SetToolTip(_("HIDC_CONFIG_EVENT_NOTES"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxFlexGridSizer* sizerTop = new wxFlexGridSizer(2, 2, 0, 0);
+	sizerTop->SetFlexibleDirection(wxBOTH);
+	sizerTop->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(m_ctrlName, 0, wxALL, 5);
+	sizerName->Add(ctrlTable, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(ctrlPartners, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	sizerTop->Add(sizerName, 1, wxEXPAND, 5);
+	sizerTop->Add(ctrlHasSubnames, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	wxBoxSizer* sizerNotes = new wxBoxSizer(wxHORIZONTAL);
+	sizerNotes->Add(textNote, 0, wxALL, 5);
+	sizerNotes->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
+
+	sizerTop->Add(sizerNotes, 1, wxEXPAND, 5);
+
+	wxBoxSizer* sizerSubname = new wxBoxSizer(wxHORIZONTAL);
+	sizerSubname->Add(m_ctrlSubNames, 1, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerBtnSub = new wxBoxSizer(wxVERTICAL);
+	sizerBtnSub->Add(m_ctrlSubNamesNew, 0, wxALIGN_CENTER|wxALL, 5);
+	sizerBtnSub->Add(m_ctrlSubNamesEdit, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtnSub->Add(m_ctrlSubNamesDelete, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+
+	sizerSubname->Add(sizerBtnSub, 0, wxEXPAND, 5);
+
+	sizerTop->Add(sizerSubname, 1, wxEXPAND, 5);
+
+	bSizer->Add(sizerTop, 0, wxEXPAND, 5);
+
+	wxStaticBoxSizer* sizerMethods = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_CONFIG_EVENT_SCORING")), wxVERTICAL);
+
+	wxBoxSizer* sizerDefinitions = new wxBoxSizer(wxHORIZONTAL);
+
+	wxBoxSizer* sizerDefined = new wxBoxSizer(wxVERTICAL);
+	sizerDefined->Add(textDefined, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+	sizerDefined->Add(m_ctrlMethods, 1, wxALL|wxEXPAND, 5);
+
+	sizerDefinitions->Add(sizerDefined, 1, wxEXPAND, 5);
+
+	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
+	sizerBtns->Add(m_ctrlNew, 0, wxALL, 5);
+	sizerBtns->Add(m_ctrlEdit, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlDelete, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlCopy, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlUp, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlDown, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+
+	sizerDefinitions->Add(sizerBtns, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerNotDefined = new wxBoxSizer(wxVERTICAL);
+	sizerNotDefined->Add(textNotDefined, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+	sizerNotDefined->Add(m_ctrlUnused, 1, wxALL|wxEXPAND, 5);
+
+	sizerDefinitions->Add(sizerNotDefined, 1, wxEXPAND, 5);
+
+	sizerMethods->Add(sizerDefinitions, 1, wxEXPAND, 5);
+
+	wxStaticLine* staticLine = new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL);
+	sizerMethods->Add(staticLine, 0, wxBOTTOM|wxEXPAND|wxTOP, 5);
+	sizerMethods->Add(m_ctrlInfo, 0, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerPoints = new wxBoxSizer(wxHORIZONTAL);
+	sizerPoints->Add(textTitlePoints, 0, wxALL, 5);
+	sizerPoints->Add(m_ctrlPointsList, 1, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerBtnPts = new wxBoxSizer(wxVERTICAL);
+	sizerBtnPts->Add(m_ctrlPointsNew, 0, wxALIGN_CENTER|wxALL, 5);
+	sizerBtnPts->Add(m_ctrlPointsEdit, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtnPts->Add(m_ctrlPointsDelete, 0, wxALIGN_CENTER|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+
+	sizerPoints->Add(sizerBtnPts, 0, wxEXPAND, 5);
+	sizerPoints->Add(textMethodNote, 0, wxALL, 5);
+	sizerPoints->Add(m_ctrlNote, 1, wxALL|wxEXPAND, 5);
+
+	sizerMethods->Add(sizerPoints, 0, wxEXPAND, 5);
+
+	bSizer->Add(sizerMethods, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	FillSubNames(true);
+	FillMethodList();
+	FillControls();
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
 }
 
 
@@ -126,63 +476,6 @@ void CDlgConfigEvent::GetFixups(std::vector<ARBConfigActionPtr>& ioFixups)
 }
 
 
-void CDlgConfigEvent::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgConfigEvent)
-	DDX_Text(pDX, IDC_CONFIG_EVENT, m_Name);
-	DDX_Check(pDX, IDC_CONFIG_EVENT_TABLE, m_bHasTable);
-	DDX_Check(pDX, IDC_CONFIG_EVENT_PARTNER, m_bHasPartners);
-	DDX_Check(pDX, IDC_CONFIG_EVENT_HAS_SUBNAMES, m_bHasSubNames);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES, m_ctrlSubNames);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_NEW, m_ctrlSubNamesNew);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_EDIT, m_ctrlSubNamesEdit);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_SUBNAMES_DELETE, m_ctrlSubNamesDelete);
-	DDX_Text(pDX, IDC_CONFIG_EVENT_DESC, m_Desc);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_NEW, m_ctrlNew);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_COPY, m_ctrlCopy);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_MOVE_UP, m_ctrlUp);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_MOVE_DOWN, m_ctrlDown);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_METHODS, m_ctrlMethods);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_UNUSED, m_ctrlUnused);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_INFO, m_ctrlInfo);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS, m_ctrlPointsList);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_NEW, m_ctrlPointsNew);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_EDIT, m_ctrlPointsEdit);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_POINTS_DELETE, m_ctrlPointsDelete);
-	DDX_Control(pDX, IDC_CONFIG_EVENT_NOTES, m_ctrlNote);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgConfigEvent, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgConfigEvent)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_HAS_SUBNAMES, OnBnClickedSubNames)
-	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_SUBNAMES, OnLbnSelchangeSubnames)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_NEW, OnBnClickedSubNamesNew)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_EDIT, OnBnClickedSubNamesEdit)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_SUBNAMES_DELETE, OnBnClickedSubNamesDelete)
-	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_METHODS, OnLbnDblclkMethods)
-	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_METHODS, OnLbnSelchangeMethods)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_NEW, OnBnClickedNew)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_EDIT, OnBnClickedEdit)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_DELETE, OnBnClickedDelete)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_COPY, OnBnClickedCopy)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_UP, OnBnClickedUp)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_MOVE_DOWN, OnBnClickedDown)
-	ON_STN_DBLCLK(IDC_CONFIG_EVENT_INFO, OnDblclickConfigInfo)
-	ON_LBN_SELCHANGE(IDC_CONFIG_EVENT_POINTS, OnSelchangePoints)
-	ON_LBN_DBLCLK(IDC_CONFIG_EVENT_POINTS, OnDblclkPoints)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_NEW, OnPointsNew)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_EDIT, OnPointsEdit)
-	ON_BN_CLICKED(IDC_CONFIG_EVENT_POINTS_DELETE, OnPointsDelete)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-
 void CDlgConfigEvent::ClearFixups()
 {
 	m_DlgFixup.clear();
@@ -193,71 +486,66 @@ void CDlgConfigEvent::FillSubNames(bool bInit)
 {
 	if (m_bHasSubNames)
 	{
-		m_ctrlSubNames.ShowWindow(SW_SHOW);
-		m_ctrlSubNamesNew.ShowWindow(SW_SHOW);
-		m_ctrlSubNamesEdit.ShowWindow(SW_SHOW);
-		m_ctrlSubNamesDelete.ShowWindow(SW_SHOW);
+		m_ctrlSubNames->Show(true);
+		m_ctrlSubNamesNew->Show(true);
+		m_ctrlSubNamesEdit->Show(true);
+		m_ctrlSubNamesDelete->Show(true);
 		if (bInit)
 		{
-			m_ctrlSubNames.ResetContent();
+			m_ctrlSubNames->Clear();
 			std::set<tstring> subNames;
 			m_pEvent->GetSubNames(subNames);
 			for (std::set<tstring>::const_iterator iter = subNames.begin();
 				iter != subNames.end();
 				++iter)
 			{
-				m_ctrlSubNames.AddString(iter->c_str());
+				m_ctrlSubNames->Append(iter->c_str());
 			}
 		}
 	}
 	else
 	{
-		m_ctrlSubNames.ShowWindow(SW_HIDE);
-		m_ctrlSubNamesNew.ShowWindow(SW_HIDE);
-		m_ctrlSubNamesEdit.ShowWindow(SW_HIDE);
-		m_ctrlSubNamesDelete.ShowWindow(SW_HIDE);
+		m_ctrlSubNames->Show(false);
+		m_ctrlSubNamesNew->Show(false);
+		m_ctrlSubNamesEdit->Show(false);
+		m_ctrlSubNamesDelete->Show(false);
 	}
 }
 
 
-CListPtrData<ARBConfigScoringPtr>* CDlgConfigEvent::GetScoringData(int index) const
+CConfigEventDataScoring* CDlgConfigEvent::GetScoringData(int index) const
 {
-	CListData* pData = m_ctrlMethods.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigScoringPtr>*>(pData);
+	return dynamic_cast<CConfigEventDataScoring*>(m_ctrlMethods->GetClientObject(index));
 }
 
 
-CListPtrData<ARBConfigTitlePointsPtr>* CDlgConfigEvent::GetTitleData(int index) const
+CConfigEventDataTitlePoints* CDlgConfigEvent::GetTitleData(int index) const
 {
-	CListData* pData = m_ctrlPointsList.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigTitlePointsPtr>*>(pData);
+	return dynamic_cast<CConfigEventDataTitlePoints*>(m_ctrlPointsList->GetClientObject(index));
 }
 
 
-CListPtrData<ARBConfigLifetimePointsPtr>* CDlgConfigEvent::GetLifetimeData(int index) const
+CConfigEventDataLifetimePoints* CDlgConfigEvent::GetLifetimeData(int index) const
 {
-	CListData* pData = m_ctrlPointsList.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigLifetimePointsPtr>*>(pData);
+	return dynamic_cast<CConfigEventDataLifetimePoints*>(m_ctrlPointsList->GetClientObject(index));
 }
 
 
-CListPtrData<ARBConfigPlaceInfoPtr>* CDlgConfigEvent::GetPlacementData(int index) const
+CConfigEventDataPlaceInfo* CDlgConfigEvent::GetPlacementData(int index) const
 {
-	CListData* pData = m_ctrlPointsList.GetData(index);
-	return dynamic_cast<CListPtrData<ARBConfigPlaceInfoPtr>*>(pData);
+	return dynamic_cast<CConfigEventDataPlaceInfo*>(m_ctrlPointsList->GetClientObject(index));
 }
 
 
-CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
+wxString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 {
-	CString all;
-	all.LoadString(IDS_ALL);
-	CString str;
+	wxString all = _("IDS_ALL");
+	wxString str;
 	if (pScoring->GetDivision() == WILDCARD_DIVISION)
 		str = all;
 	else
 		str = pScoring->GetDivision().c_str();
-	str += _T(" / ");
+	str += wxT(" / ");
 	if (pScoring->GetLevel() == WILDCARD_LEVEL)
 		str += all;
 	else
@@ -272,29 +560,49 @@ CString CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 }
 
 
+void CDlgConfigEvent::EnableSubnameControls()
+{
+	bool bEnable = false;
+	if (wxNOT_FOUND != m_ctrlSubNames->GetSelection())
+		bEnable = true;
+	m_ctrlSubNamesEdit->Enable(bEnable);
+	m_ctrlSubNamesDelete->Enable(bEnable);
+}
+
+
+void CDlgConfigEvent::EnablePointsControls()
+{
+	bool bEnable = false;
+	if (wxNOT_FOUND != m_ctrlPointsList->GetSelection())
+		bEnable = true;
+	m_ctrlPointsEdit->Enable(bEnable);
+	m_ctrlPointsDelete->Enable(bEnable);
+}
+
+
 void CDlgConfigEvent::FillControls()
 {
-	BOOL bEnable = FALSE;
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	m_ctrlInfo.SetWindowText(_T(""));
-	m_ctrlPointsList.ResetContent();
-	m_ctrlNote.SetWindowText(_T(""));
-	if (LB_ERR != idxMethod)
+	bool bEnable = false;
+	int idxMethod = m_ctrlMethods->GetSelection();
+	m_ctrlInfo->SetLabel(wxT(""));
+	m_ctrlPointsList->Clear();
+	m_ctrlNote->SetValue(wxT(""));
+	if (wxNOT_FOUND != idxMethod)
 	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
 		if (pScoringData)
 		{
-			bEnable = TRUE;
+			bEnable = true;
 			ARBConfigScoringPtr pScoring = pScoringData->GetData();
 			// Get info
 			{
-				CString str1, str2;
+				wxString str1, str2;
 				otstringstream info;
 				ARBConfigScoring::ScoringStyle style = pScoring->GetScoringStyle();
-				str1.LoadString(IDS_CONFIGEVENT_STYLE);
-				info << (LPCTSTR)str1 << _T(": ")
+				str1 = _("IDS_CONFIGEVENT_STYLE");
+				info << str1 << wxT(": ")
 					<< ARBConfigScoring::GetScoringStyleStr(style)
-					<< _T("\r\n");
+					<< wxT("\n");
 				// The following strings should be the same as they are in
 				// the Method Configuration dialog.
 				switch (style)
@@ -304,153 +612,152 @@ void CDlgConfigEvent::FillControls()
 				case ARBConfigScoring::eFaultsThenTime:
 				case ARBConfigScoring::eFaults100ThenTime:
 				case ARBConfigScoring::eFaults200ThenTime:
-					str1.LoadString(IDS_CONFIGEVENT_TIMEFAULTMULT);
-					info << (LPCTSTR)str1 << _T(": ")
+					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
+					info << str1 << wxT(": ")
 						<< pScoring->TimeFaultMultiplier();
 					break;
 				case ARBConfigScoring::eOCScoreThenTime:
-    				str1.LoadString(IDS_CONFIGEVENT_REQOPEN);
-    				str2.LoadString(IDS_CONFIGEVENT_REQCLOSE);
-					info << (LPCTSTR)str1 << _T(": ")
+    				str1 = _("IDS_CONFIGEVENT_REQOPEN");
+    				str2 = _("IDS_CONFIGEVENT_REQCLOSE");
+					info << str1 << wxT(": ")
 						<< pScoring->GetRequiredOpeningPoints()
-						<< _T("; ") << (LPCTSTR)str2 << _T(": ")
+						<< wxT("; ") << str2 << wxT(": ")
 						<< pScoring->GetRequiredClosingPoints();
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_FROMSCORE);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
+						info << wxT("; ") << str1;
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_UNDER);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
+						info << wxT("; ") << str1;
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_OVER);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_OVER");
+						info << wxT("; ") << str1;
 					}
 					break;
 				case ARBConfigScoring::eScoreThenTime:
-					str1.LoadString(IDS_POINTS);
-					info << (LPCTSTR)str1 << _T(": ")
+					str1 = _("IDS_POINTS");
+					info << str1 << wxT(": ")
 						<< pScoring->GetRequiredOpeningPoints();
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_FROMSCORE);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
+						info << wxT("; ") << str1;
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_UNDER);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
+						info << wxT("; ") << str1;
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_OVER);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_OVER");
+						info << wxT("; ") << str1;
 					}
 					break;
 				case ARBConfigScoring::eTimePlusFaults:
-					str1.LoadString(IDS_CONFIGEVENT_TIMEFAULTMULT);
-					info << (LPCTSTR)str1 << _T(": ")
+					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
+					info << str1 << wxT(": ")
 						<< pScoring->TimeFaultMultiplier();
 					if (pScoring->QsMustBeClean())
 					{
 						// This string is slightly different: Just dropped
 						// the 'Time+Fault' at start.
-						str1.LoadString(IDS_CONFIGEVENT_CLEANQ);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_CLEANQ");
+						info << wxT("; ") << str1;
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_UNDER);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
+						info << wxT("; ") << str1;
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
-						str1.LoadString(IDS_CONFIGEVENT_TF_OVER);
-						info << _T("; ") << (LPCTSTR)str1;
+						str1 = _("IDS_CONFIGEVENT_TF_OVER");
+						info << wxT("; ") << str1;
 					}
 					break;
 				}
 				if (pScoring->DropFractions())
 				{
-					str1.LoadString(IDS_CONFIGEVENT_DROPFRAC);
-					info << _T("; ") << (LPCTSTR)str1;
+					str1 = _("IDS_CONFIGEVENT_DROPFRAC");
+					info << wxT("; ") << str1;
 				}
 				if (pScoring->HasBonusPts())
 				{
-					str1.LoadString(IDS_CONFIGEVENT_BONUS);
-					info << _T("; ") << (LPCTSTR)str1;
+					str1 = _("IDS_CONFIGEVENT_BONUS");
+					info << wxT("; ") << str1;
 				}
 				if (pScoring->HasSuperQ())
 				{
-					str1.LoadString(IDS_CONFIGEVENT_SUPERQ);
-					info << _T("; ") << (LPCTSTR)str1;
+					str1 = _("IDS_CONFIGEVENT_SUPERQ");
+					info << wxT("; ") << str1;
 				}
 				if (pScoring->HasSpeedPts())
 				{
-					str1.LoadString(IDS_CONFIGEVENT_SPEEDPTS);
-					info << _T("; ") << (LPCTSTR)str1;
+					str1 = _("IDS_CONFIGEVENT_SPEEDPTS");
+					info << wxT("; ") << str1;
 					if (0 < pScoring->GetPlaceInfo().size())
 					{
-						info << _T(" [");
+						info << wxT(" [");
 						int idx = 0;
 						for (ARBConfigPlaceInfoList::iterator iter = pScoring->GetPlaceInfo().begin();
 							iter != pScoring->GetPlaceInfo().end();
 							++idx, ++iter)
 						{
 							if (0 < idx)
-								info << _T(", ");
+								info << wxT(", ");
 							info << (*iter)->GetPlace()
-								<< _T("=")
+								<< wxT("=")
 								<< (*iter)->GetValue();
 						}
-						info << _T("]");
+						info << wxT("]");
 					}
 				}
-				m_ctrlInfo.SetWindowText(info.str().c_str());
+				m_ctrlInfo->SetLabel(info.str().c_str());
 			}
 			// Take care of title points
 			FillTitlePoints(pScoring);
 			// And the note.
-			CString str = pScoring->GetNote().c_str();
-			str.Replace(_T("\n"), _T("\r\n"));
-			m_ctrlNote.SetWindowText(str);
+			wxString str = pScoring->GetNote().c_str();
+			m_ctrlNote->SetValue(str);
 		}
 	}
-	m_ctrlEdit.EnableWindow(bEnable);
-	m_ctrlDelete.EnableWindow(bEnable);
-	m_ctrlCopy.EnableWindow(bEnable);
-	m_ctrlUp.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && 0 != idxMethod);
-	m_ctrlDown.EnableWindow(bEnable && 1 < m_ctrlMethods.GetCount() && m_ctrlMethods.GetCount() - 1 != idxMethod);
-	int idxTitle = m_ctrlPointsList.GetCurSel();
-	m_ctrlPointsList.EnableWindow(bEnable);
-	m_ctrlPointsNew.EnableWindow(bEnable);
-	m_ctrlPointsEdit.EnableWindow(bEnable && 0 <= idxTitle);
-	m_ctrlPointsDelete.EnableWindow(bEnable && 0 <= idxTitle);
-	m_ctrlNote.EnableWindow(bEnable);
+	m_ctrlEdit->Enable(bEnable);
+	m_ctrlDelete->Enable(bEnable);
+	m_ctrlCopy->Enable(bEnable);
+	m_ctrlUp->Enable(bEnable && 1 < m_ctrlMethods->GetCount() && 0 != idxMethod);
+	m_ctrlDown->Enable(bEnable && 1 < m_ctrlMethods->GetCount() && static_cast<int>(m_ctrlMethods->GetCount()) - 1 != idxMethod);
+	int idxTitle = m_ctrlPointsList->GetSelection();
+	m_ctrlPointsList->Enable(bEnable);
+	m_ctrlPointsNew->Enable(bEnable);
+	m_ctrlPointsEdit->Enable(bEnable && 0 <= idxTitle);
+	m_ctrlPointsDelete->Enable(bEnable && 0 <= idxTitle);
+	m_ctrlNote->Enable(bEnable);
 }
 
 
 void CDlgConfigEvent::FillMethodList()
 {
-	m_idxMethod = m_ctrlMethods.GetCurSel();
-	m_ctrlMethods.ResetContent();
-	CString str;
+	m_idxMethod = m_ctrlMethods->GetSelection();
+	m_ctrlMethods->Clear();
+	wxString str;
 	for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
 		iter != m_Scorings.end();
 		++iter)
 	{
 		ARBConfigScoringPtr pScoring = (*iter);
 		str = GetListName(pScoring);
-		int index = m_ctrlMethods.AddString(str);
-		m_ctrlMethods.SetData(index, new CListPtrData<ARBConfigScoringPtr>(pScoring));
+		int index = m_ctrlMethods->Append(str);
+		m_ctrlMethods->SetClientObject(index, new CConfigEventDataScoring(pScoring));
 	}
-	m_ctrlMethods.SetCurSel(m_idxMethod);
+	m_ctrlMethods->SetSelection(m_idxMethod);
 
-	m_ctrlUnused.ResetContent();
+	m_ctrlUnused->Clear();
 	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
 		iterDiv != m_pVenue->GetDivisions().end();
 		++iterDiv)
@@ -462,9 +769,9 @@ void CDlgConfigEvent::FillMethodList()
 			if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
 			{
 				str = (*iterDiv)->GetName().c_str();
-				str += _T(" / ");
+				str += wxT(" / ");
 				str += (*iterLevel)->GetName().c_str();
-				m_ctrlUnused.AddString(str);
+				m_ctrlUnused->Append(str);
 			}
 			// Remember, configuration doesn't do sublevels.
 		}
@@ -477,38 +784,37 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 	ARBConfigTitlePointsPtr pOldTitle;
 	ARBConfigLifetimePointsPtr pOldLifetime;
 	ARBConfigPlaceInfoPtr pOldPlacement;
-	int idxTitle = m_ctrlPointsList.GetCurSel();
-	if (LB_ERR != idxTitle)
+	int idxTitle = m_ctrlPointsList->GetSelection();
+	if (wxNOT_FOUND != idxTitle)
 	{
-		CListPtrData<ARBConfigTitlePointsPtr>* pTitleData = GetTitleData(idxTitle);
+		CConfigEventDataTitlePoints* pTitleData = GetTitleData(idxTitle);
 		if (pTitleData)
 		{
 			pOldTitle = pTitleData->GetData();
 		}
-		CListPtrData<ARBConfigLifetimePointsPtr>* pLifeData = GetLifetimeData(idxTitle);
+		CConfigEventDataLifetimePoints* pLifeData = GetLifetimeData(idxTitle);
 		if (pLifeData)
 		{
 			pOldLifetime = pLifeData->GetData();
 		}
-		CListPtrData<ARBConfigPlaceInfoPtr>* pPlacement = GetPlacementData(idxTitle);
+		CConfigEventDataPlaceInfo* pPlacement = GetPlacementData(idxTitle);
 		if (pPlacement)
 		{
 			pOldPlacement = pPlacement->GetData();
 		}
 	}
-	m_ctrlPointsList.ResetContent();
+	m_ctrlPointsList->Clear();
 	for (ARBConfigTitlePointsList::const_iterator iter = pScoring->GetTitlePoints().begin();
 		iter != pScoring->GetTitlePoints().end();
 		++iter)
 	{
 		ARBConfigTitlePointsPtr pTitle = (*iter);
-		int idx = m_ctrlPointsList.AddString(pTitle->GetGenericName().c_str());
-		if (LB_ERR != idx)
+		int idx = m_ctrlPointsList->Append(pTitle->GetGenericName().c_str());
+		if (wxNOT_FOUND != idx)
 		{
-			m_ctrlPointsList.SetData(idx,
-				new CListPtrData<ARBConfigTitlePointsPtr>(pTitle));
+			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataTitlePoints(pTitle));
 			if (pOldTitle == pTitle)
-				m_ctrlPointsList.SetCurSel(idx);
+				m_ctrlPointsList->SetSelection(idx);
 		}
 	}
 	for (ARBConfigLifetimePointsList::const_iterator iter2 = pScoring->GetLifetimePoints().begin();
@@ -516,13 +822,12 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 		++iter2)
 	{
 		ARBConfigLifetimePointsPtr pLife = (*iter2);
-		int idx = m_ctrlPointsList.AddString(pLife->GetGenericName().c_str());
-		if (LB_ERR != idx)
+		int idx = m_ctrlPointsList->Append(pLife->GetGenericName().c_str());
+		if (wxNOT_FOUND != idx)
 		{
-			m_ctrlPointsList.SetData(idx,
-				new CListPtrData<ARBConfigLifetimePointsPtr>(pLife));
+			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataLifetimePoints(pLife));
 			if (pOldLifetime == pLife)
-				m_ctrlPointsList.SetCurSel(idx);
+				m_ctrlPointsList->SetSelection(idx);
 		}
 	}
 	for (ARBConfigPlaceInfoList::const_iterator iter3 = pScoring->GetPlacements().begin();
@@ -530,17 +835,16 @@ void CDlgConfigEvent::FillTitlePoints(ARBConfigScoringPtr pScoring)
 		++iter3)
 	{
 		ARBConfigPlaceInfoPtr pPlace = (*iter3);
-		int idx = m_ctrlPointsList.AddString(pPlace->GetGenericName().c_str());
-		if (LB_ERR != idx)
+		int idx = m_ctrlPointsList->Append(pPlace->GetGenericName().c_str());
+		if (wxNOT_FOUND != idx)
 		{
-			m_ctrlPointsList.SetData(idx,
-				new CListPtrData<ARBConfigPlaceInfoPtr>(pPlace));
+			m_ctrlPointsList->SetClientObject(idx, new CConfigEventDataPlaceInfo(pPlace));
 			if (pOldPlacement == pPlace)
-				m_ctrlPointsList.SetCurSel(idx);
+				m_ctrlPointsList->SetSelection(idx);
 		}
 	}
-	m_ctrlPointsEdit.EnableWindow(FALSE);
-	m_ctrlPointsDelete.EnableWindow(FALSE);
+	m_ctrlPointsEdit->Enable(false);
+	m_ctrlPointsDelete->Enable(false);
 }
 
 
@@ -549,136 +853,26 @@ bool CDlgConfigEvent::SaveControls()
 	// Save the last selected method.
 	if (0 <= m_idxMethod)
 	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(m_idxMethod);
+		CConfigEventDataScoring* pScoringData = GetScoringData(m_idxMethod);
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		// Point/faults are already up-to-date.
-		CString str;
-		m_ctrlNote.GetWindowText(str);
-		str.Replace(_T("\r\n"), _T("\n"));
-		str.TrimRight();
-		pScoring->SetNote((LPCTSTR)str);
+		wxString str;
+		m_ctrlNote->SetValue(str);
+		str.Trim(true);
+		pScoring->SetNote(str.c_str());
 	}
 	return true;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigEvent message handlers
 
-BOOL CDlgConfigEvent::OnInitDialog()
+void CDlgConfigEvent::EditMethod()
 {
-	CDlgBaseDialog::OnInitDialog();
-
-	FillSubNames(true);
-	FillMethodList();
-	FillControls();
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgConfigEvent::OnBnClickedSubNames()
-{
-	UpdateData(TRUE);
-	FillSubNames();
-	OnLbnSelchangeSubnames();
-}
-
-
-void CDlgConfigEvent::OnLbnSelchangeSubnames()
-{
-	BOOL bEnable = FALSE;
-	if (LB_ERR != m_ctrlSubNames.GetCurSel())
-		bEnable = TRUE;
-	m_ctrlSubNamesEdit.EnableWindow(bEnable);
-	m_ctrlSubNamesDelete.EnableWindow(bEnable);
-}
-
-
-void CDlgConfigEvent::OnBnClickedSubNamesNew()
-{
-	CDlgName dlg(_T(""), static_cast<UINT>(0), this);
-	if (IDOK == dlg.DoModal())
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND != idxMethod)
 	{
-		int idx = m_ctrlSubNames.AddString(dlg.GetName());
-		m_ctrlSubNames.SetCurSel(idx);
-		OnLbnSelchangeSubnames();
-	}
-}
-
-
-void CDlgConfigEvent::OnBnClickedSubNamesEdit()
-{
-	int idx = m_ctrlSubNames.GetCurSel();
-	if (LB_ERR != idx)
-	{
-		CString name;
-		m_ctrlSubNames.GetText(idx, name);
-		CDlgName dlg(name, static_cast<UINT>(0), this);
-		if (IDOK == dlg.DoModal())
-		{
-			m_ctrlSubNames.DeleteString(idx);
-			m_ctrlSubNames.InsertString(idx, dlg.GetName());
-			m_ctrlSubNames.SetCurSel(idx);
-			OnLbnSelchangeSubnames();
-		}
-	}
-}
-
-
-void CDlgConfigEvent::OnBnClickedSubNamesDelete()
-{
-	int idx = m_ctrlSubNames.GetCurSel();
-	if (LB_ERR != idx)
-	{
-		m_ctrlSubNames.DeleteString(idx);
-		if (idx == m_ctrlSubNames.GetCount())
-			--idx;
-		m_ctrlSubNames.SetCurSel(idx);
-		m_ctrlSubNamesEdit.EnableWindow(FALSE);
-		m_ctrlSubNamesDelete.EnableWindow(FALSE);
-	}
-}
-
-
-void CDlgConfigEvent::OnLbnDblclkMethods()
-{
-	OnBnClickedEdit();
-}
-
-
-void CDlgConfigEvent::OnLbnSelchangeMethods()
-{
-	UpdateData(TRUE);
-	SaveControls();
-	m_idxMethod = m_ctrlMethods.GetCurSel();
-	FillControls();
-}
-
-
-void CDlgConfigEvent::OnBnClickedNew()
-{
-	UpdateData(TRUE);
-	SaveControls();
-	ARBConfigScoringPtr pScoring = m_Scorings.AddScoring();
-	CString str = GetListName(pScoring);
-	m_idxMethod = m_ctrlMethods.AddString(str);
-	m_ctrlMethods.SetData(m_idxMethod, new CListPtrData<ARBConfigScoringPtr>(pScoring));
-	m_ctrlMethods.SetCurSel(m_idxMethod);
-	FillMethodList();
-	FillControls();
-}
-
-
-void CDlgConfigEvent::OnBnClickedEdit()
-{
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
 		CDlgConfigEventMethod dlg(m_pVenue, pScoringData->GetData(), this);
-		if (IDOK == dlg.DoModal())
+		if (wxID_OK == dlg.ShowModal())
 		{
 			FillMethodList();
 			FillControls();
@@ -687,183 +881,17 @@ void CDlgConfigEvent::OnBnClickedEdit()
 }
 
 
-void CDlgConfigEvent::OnBnClickedDelete()
+void CDlgConfigEvent::EditPoints()
 {
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod)
+	int idxMethod = m_ctrlMethods->GetSelection();
+	int idx = m_ctrlPointsList->GetSelection();
+	if (wxNOT_FOUND != idxMethod && wxNOT_FOUND != idx)
 	{
-		if (m_idxMethod == idxMethod)
-		{
-			m_idxMethod = -1;
-			m_ctrlMethods.SetCurSel(-1);
-		}
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
-			iter != m_Scorings.end();
-			++iter)
-		{
-			if ((*iter) == pScoring)
-			{
-				m_Scorings.erase(iter);
-				break;
-			}
-		}
-		FillMethodList();
-		FillControls();
-	}
-}
-
-
-void CDlgConfigEvent::OnBnClickedCopy()
-{
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		ARBConfigScoringPtr pNewScoring = m_Scorings.AddScoring();
-		*pNewScoring = *pScoring;
-		CString str = GetListName(pNewScoring);
-		m_idxMethod = m_ctrlMethods.AddString(str);
-		m_ctrlMethods.SetData(m_idxMethod, new CListPtrData<ARBConfigScoringPtr>(pNewScoring));
-		m_ctrlMethods.SetCurSel(m_idxMethod);
-		FillMethodList();
-		FillControls();
-	}
-}
-
-
-void CDlgConfigEvent::OnBnClickedUp()
-{
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod && 0 != idxMethod)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
-			iter != m_Scorings.end();
-			++iter)
-		{
-			if ((*iter) == pScoring)
-			{
-				iter = m_Scorings.erase(iter);
-				--iter;
-				m_Scorings.insert(iter, pScoring);
-				m_ctrlMethods.SetCurSel(idxMethod-1);
-				break;
-			}
-		}
-		FillMethodList();
-		FillControls();
-	}
-}
-
-
-void CDlgConfigEvent::OnBnClickedDown()
-{
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod && idxMethod < m_ctrlMethods.GetCount() - 1)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
-			iter != m_Scorings.end();
-			++iter)
-		{
-			if ((*iter) == pScoring)
-			{
-				iter = m_Scorings.erase(iter);
-				++iter;
-				m_Scorings.insert(iter, pScoring);
-				m_ctrlMethods.SetCurSel(idxMethod+1);
-				break;
-			}
-		}
-		FillMethodList();
-		FillControls();
-	}
-}
-
-
-void CDlgConfigEvent::OnDblclickConfigInfo()
-{
-	OnBnClickedEdit();
-}
-
-
-void CDlgConfigEvent::OnSelchangePoints()
-{
-	UpdateData(TRUE);
-	BOOL bEnable = FALSE;
-	if (LB_ERR != m_ctrlPointsList.GetCurSel())
-		bEnable = TRUE;
-	m_ctrlPointsEdit.EnableWindow(bEnable);
-	m_ctrlPointsDelete.EnableWindow(bEnable);
-}
-
-
-void CDlgConfigEvent::OnDblclkPoints()
-{
-	OnPointsEdit();
-}
-
-
-void CDlgConfigEvent::OnPointsNew()
-{
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	if (LB_ERR != idxMethod)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		if (pScoring)
-		{
-			CDlgConfigTitlePoints dlg(m_pVenue, 0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, this);
-			if (IDOK == dlg.DoModal())
-			{
-				// The only reason this fails is if the faults entry exists.
-				switch (dlg.Type())
-				{
-				default:
-					assert(0);
-				case CDlgConfigTitlePoints::eTitleNormal:
-					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
-						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
-					break;
-				case CDlgConfigTitlePoints::eTitleLifetime:
-					if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults()))
-						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
-					break;
-				case CDlgConfigTitlePoints::eTitlePlacement:
-					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
-						AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
-					break;
-				}
-				FillTitlePoints(pScoring);
-				OnSelchangePoints(); // To update buttons
-			}
-		}
-	}
-}
-
-
-void CDlgConfigEvent::OnPointsEdit()
-{
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	int idx = m_ctrlPointsList.GetCurSel();
-	if (LB_ERR != idxMethod && LB_ERR != idx)
-	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
-		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		CListPtrData<ARBConfigTitlePointsPtr>* pData1 = GetTitleData(idx);
-		CListPtrData<ARBConfigLifetimePointsPtr>* pData2 = GetLifetimeData(idx);
-		CListPtrData<ARBConfigPlaceInfoPtr>* pData3 = GetPlacementData(idx);
+		CConfigEventDataTitlePoints* pData1 = GetTitleData(idx);
+		CConfigEventDataLifetimePoints* pData2 = GetLifetimeData(idx);
+		CConfigEventDataPlaceInfo* pData3 = GetPlacementData(idx);
 		ARBConfigTitlePointsPtr pTitle;
 		ARBConfigLifetimePointsPtr pLife;
 		ARBConfigPlaceInfoPtr pPlace;
@@ -897,7 +925,7 @@ void CDlgConfigEvent::OnPointsEdit()
 				type = CDlgConfigTitlePoints::eTitlePlacement;
 			}
 			CDlgConfigTitlePoints dlg(m_pVenue, value, points, type);
-			if (IDOK == dlg.DoModal())
+			if (wxID_OK == dlg.ShowModal())
 			{
 				if (type != dlg.Type()
 				|| (pTitle && pTitle->GetFaults() != dlg.Faults())
@@ -922,17 +950,17 @@ void CDlgConfigEvent::OnPointsEdit()
 					case CDlgConfigTitlePoints::eTitleNormal:
 						bOk = pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults());
 						if (!bOk)
-							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitleLifetime:
 						bOk = pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults());
 						if (!bOk)
-							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitlePlacement:
 						bOk = pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true);
 						if (!bOk)
-							AfxMessageBox(IDS_TITLEPTS_EXISTS, MB_ICONEXCLAMATION);
+							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					}
 					if (bOk && type != dlg.Type())
@@ -955,25 +983,294 @@ void CDlgConfigEvent::OnPointsEdit()
 						pPlace->SetValue(dlg.Points());
 				}
 				FillTitlePoints(pScoring);
-				OnSelchangePoints(); // To update buttons
+				EnablePointsControls();
 			}
 		}
 	}
 }
 
 
-void CDlgConfigEvent::OnPointsDelete()
+void CDlgConfigEvent::OnClickedSubNames(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	int idxMethod = m_ctrlMethods.GetCurSel();
-	int idx = m_ctrlPointsList.GetCurSel();
-	if (LB_ERR != idxMethod && LB_ERR != idx)
+	TransferDataFromWindow();
+	FillSubNames();
+	EnableSubnameControls();
+	Layout();
+	GetSizer()->Fit(this);
+}
+
+
+void CDlgConfigEvent::OnLbnSelchangeSubnames(wxCommandEvent& evt)
+{
+	EnableSubnameControls();
+}
+
+
+void CDlgConfigEvent::OnLbnDblclkSubnames(wxCommandEvent& evt)
+{
+}
+
+
+void CDlgConfigEvent::OnBnClickedSubNamesNew(wxCommandEvent& evt)
+{
+	CDlgName dlg(wxT(""), this);
+	if (wxID_OK == dlg.ShowModal())
 	{
-		CListPtrData<ARBConfigScoringPtr>* pScoringData = GetScoringData(idxMethod);
+		int idx = m_ctrlSubNames->Append(dlg.GetName());
+		m_ctrlSubNames->SetSelection(idx);
+		EnableSubnameControls();
+	}
+}
+
+
+void CDlgConfigEvent::OnBnClickedSubNamesEdit(wxCommandEvent& evt)
+{
+	int idx = m_ctrlSubNames->GetSelection();
+	if (wxNOT_FOUND != idx)
+	{
+		wxString name = m_ctrlSubNames->GetString(idx);
+		CDlgName dlg(name, this);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			m_ctrlSubNames->Delete(idx);
+			m_ctrlSubNames->Insert(dlg.GetName(), idx);
+			m_ctrlSubNames->SetSelection(idx);
+			EnableSubnameControls();
+		}
+	}
+}
+
+
+void CDlgConfigEvent::OnBnClickedSubNamesDelete(wxCommandEvent& evt)
+{
+	unsigned int idx = m_ctrlSubNames->GetSelection();
+	if (wxNOT_FOUND != idx)
+	{
+		m_ctrlSubNames->Delete(idx);
+		if (idx == m_ctrlSubNames->GetCount())
+			--idx;
+		m_ctrlSubNames->SetSelection(idx);
+		m_ctrlSubNamesEdit->Enable(false);
+		m_ctrlSubNamesDelete->Enable(false);
+	}
+}
+
+
+void CDlgConfigEvent::OnLbnDblclkMethods(wxCommandEvent& evt)
+{
+	EditMethod();
+}
+
+
+void CDlgConfigEvent::OnLbnSelchangeMethods(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	SaveControls();
+	m_idxMethod = m_ctrlMethods->GetSelection();
+	FillControls();
+}
+
+
+void CDlgConfigEvent::OnBnClickedNew(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	SaveControls();
+	ARBConfigScoringPtr pScoring = m_Scorings.AddScoring();
+	wxString str = GetListName(pScoring);
+	m_idxMethod = m_ctrlMethods->Append(str);
+	m_ctrlMethods->SetClientObject(m_idxMethod, new CConfigEventDataScoring(pScoring));
+	m_ctrlMethods->SetSelection(m_idxMethod);
+	FillMethodList();
+	FillControls();
+}
+
+
+void CDlgConfigEvent::OnBnClickedEdit(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	EditMethod();
+}
+
+
+void CDlgConfigEvent::OnBnClickedDelete(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND != idxMethod)
+	{
+		if (m_idxMethod == idxMethod)
+		{
+			m_idxMethod = -1;
+			m_ctrlMethods->SetSelection(-1);
+		}
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
-		CListPtrData<ARBConfigTitlePointsPtr>* pData1 = GetTitleData(idx);
-		CListPtrData<ARBConfigLifetimePointsPtr>* pData2 = GetLifetimeData(idx);
-		CListPtrData<ARBConfigPlaceInfoPtr>* pData3 = GetPlacementData(idx);
+		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
+			iter != m_Scorings.end();
+			++iter)
+		{
+			if ((*iter) == pScoring)
+			{
+				m_Scorings.erase(iter);
+				break;
+			}
+		}
+		FillMethodList();
+		FillControls();
+	}
+}
+
+
+void CDlgConfigEvent::OnBnClickedCopy(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND != idxMethod)
+	{
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		ARBConfigScoringPtr pNewScoring = m_Scorings.AddScoring();
+		*pNewScoring = *pScoring;
+		wxString str = GetListName(pNewScoring);
+		m_idxMethod = m_ctrlMethods->Append(str);
+		m_ctrlMethods->SetClientObject(m_idxMethod, new CConfigEventDataScoring(pNewScoring));
+		m_ctrlMethods->SetSelection(m_idxMethod);
+		FillMethodList();
+		FillControls();
+	}
+}
+
+
+void CDlgConfigEvent::OnBnClickedUp(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND != idxMethod && 0 != idxMethod)
+	{
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
+			iter != m_Scorings.end();
+			++iter)
+		{
+			if ((*iter) == pScoring)
+			{
+				iter = m_Scorings.erase(iter);
+				--iter;
+				m_Scorings.insert(iter, pScoring);
+				m_ctrlMethods->SetSelection(idxMethod-1);
+				break;
+			}
+		}
+		FillMethodList();
+		FillControls();
+	}
+}
+
+
+void CDlgConfigEvent::OnBnClickedDown(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND != idxMethod && idxMethod < static_cast<int>(m_ctrlMethods->GetCount()) - 1)
+	{
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		for (ARBConfigScoringList::iterator iter = m_Scorings.begin();
+			iter != m_Scorings.end();
+			++iter)
+		{
+			if ((*iter) == pScoring)
+			{
+				iter = m_Scorings.erase(iter);
+				++iter;
+				m_Scorings.insert(iter, pScoring);
+				m_ctrlMethods->SetSelection(idxMethod+1);
+				break;
+			}
+		}
+		FillMethodList();
+		FillControls();
+	}
+}
+
+
+void CDlgConfigEvent::OnDblclickConfigInfo(wxMouseEvent& evt)
+{
+	EditMethod();
+}
+
+
+void CDlgConfigEvent::OnSelchangePoints(wxCommandEvent& evt)
+{
+	EnablePointsControls();
+}
+
+
+void CDlgConfigEvent::OnDblclkPoints(wxCommandEvent& evt)
+{
+	EditPoints();
+}
+
+
+void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	int idxMethod = m_ctrlMethods->GetSelection();
+	if (wxNOT_FOUND != idxMethod)
+	{
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		if (pScoring)
+		{
+			CDlgConfigTitlePoints dlg(m_pVenue, 0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, this);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				// The only reason this fails is if the faults entry exists.
+				switch (dlg.Type())
+				{
+				default:
+					assert(0);
+				case CDlgConfigTitlePoints::eTitleNormal:
+					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
+						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					break;
+				case CDlgConfigTitlePoints::eTitleLifetime:
+					if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults()))
+						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					break;
+				case CDlgConfigTitlePoints::eTitlePlacement:
+					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
+						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					break;
+				}
+				FillTitlePoints(pScoring);
+				EnablePointsControls();
+			}
+		}
+	}
+}
+
+
+void CDlgConfigEvent::OnPointsEdit(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	EditPoints();
+}
+
+
+void CDlgConfigEvent::OnPointsDelete(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	int idxMethod = m_ctrlMethods->GetSelection();
+	unsigned int idx = m_ctrlPointsList->GetSelection();
+	if (wxNOT_FOUND != idxMethod && wxNOT_FOUND != idx)
+	{
+		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
+		ARBConfigScoringPtr pScoring = pScoringData->GetData();
+		CConfigEventDataTitlePoints* pData1 = GetTitleData(idx);
+		CConfigEventDataLifetimePoints* pData2 = GetLifetimeData(idx);
+		CConfigEventDataPlaceInfo* pData3 = GetPlacementData(idx);
 		ARBConfigTitlePointsPtr pTitle;
 		ARBConfigLifetimePointsPtr pLife;
 		ARBConfigPlaceInfoPtr pPlace;
@@ -991,11 +1288,11 @@ void CDlgConfigEvent::OnPointsDelete()
 				pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
 			else
 				pScoring->GetPlacements().DeletePlaceInfo(pPlace->GetPlace());
-			m_ctrlPointsList.DeleteString(idx);
-			if (idx == m_ctrlPointsList.GetCount())
+			m_ctrlPointsList->Delete(idx);
+			if (idx == m_ctrlPointsList->GetCount())
 				--idx;
-			m_ctrlPointsList.SetCurSel(idx);
-			OnSelchangePoints(); // To update buttons
+			m_ctrlPointsList->SetSelection(idx);
+			EnablePointsControls();
 		}
 	}
 }
@@ -1034,26 +1331,12 @@ static ARBDate DateEndPoints(ARBDate from1, ARBDate to1, ARBDate from2, ARBDate 
 }
 
 
-void CDlgConfigEvent::OnOK()
+void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
 	if (!SaveControls())
 		return;
-#if _MSC_VER >= 1300
-	m_Name.Trim();
-	m_Desc.Trim();
-#else
-	m_Name.TrimRight();
-	m_Name.TrimLeft();
-	m_Desc.TrimRight();
-	m_Desc.TrimLeft();
-#endif
-	if (m_Name.IsEmpty())
-	{
-		GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
-		return;
-	}
 
 	// Check if there is any overlap.
 	bool bOverlap = false;
@@ -1126,22 +1409,22 @@ void CDlgConfigEvent::OnOK()
 	}
 	if (bOverlap)
 	{
-		if (IDYES != AfxMessageBox(IDS_CONFIGEVENT_OVERLAPDATES, MB_ICONWARNING | MB_YESNO | MB_DEFBUTTON2))
+		if (wxYES != wxMessageBox(_("IDS_CONFIGEVENT_OVERLAPDATES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO | wxNO_DEFAULT))
 			return;
 	}
 
 	ClearFixups();
-	if (m_pEvent->GetName() != (LPCTSTR)m_Name)
+	if (m_pEvent->GetName() != m_Name)
 	{
-		if (m_pVenue->GetEvents().FindEvent((LPCTSTR)m_Name))
+		if (m_pVenue->GetEvents().FindEvent(m_Name.c_str()))
 		{
-			AfxMessageBox(IDS_NAME_IN_USE);
-			GotoDlgCtrl(GetDlgItem(IDC_CONFIG_EVENT));
+			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+			m_ctrlName->SetFocus();
 			return;
 		}
 		if (!m_bNewEntry)
-			m_DlgFixup.push_back(ARBConfigActionRenameEvent::New(m_pVenue->GetName(), m_pEvent->GetName(), (LPCTSTR)m_Name));
-		m_pEvent->SetName((LPCTSTR)m_Name);
+			m_DlgFixup.push_back(ARBConfigActionRenameEvent::New(m_pVenue->GetName(), m_pEvent->GetName(), m_Name.c_str()));
+		m_pEvent->SetName(m_Name.c_str());
 	}
 	// m_Book is only valid when editing an existing entry.
 	/*
@@ -1163,28 +1446,25 @@ void CDlgConfigEvent::OnOK()
 	}
 	*/
 
-	m_Desc.Replace(_T("\r\n"), _T("\n"));
-	m_pEvent->SetDesc((LPCTSTR)m_Desc);
-	m_pEvent->SetHasTable(m_bHasTable == TRUE ? true : false);
-	m_pEvent->SetHasPartner(m_bHasPartners == TRUE ? true : false);
-	m_pEvent->SetHasSubNames(m_bHasSubNames == TRUE ? true : false);
+	m_pEvent->SetDesc(m_Desc.c_str());
+	m_pEvent->SetHasTable(m_bHasTable);
+	m_pEvent->SetHasPartner(m_bHasPartners);
+	m_pEvent->SetHasSubNames(m_bHasSubNames);
 	if (m_bHasSubNames)
 	{
 		std::set<tstring> subNames;
-		int nCount = m_ctrlSubNames.GetCount();
+		int nCount = m_ctrlSubNames->GetCount();
 		for (int i = 0; i < nCount; ++i)
 		{
-			CString str;
-			m_ctrlSubNames.GetText(i, str);
-			str.TrimRight();
-			str.TrimLeft();
+			wxString str = m_ctrlSubNames->GetString(i);
+			str.Trim(true);
+			str.Trim(false);
 			if (!str.IsEmpty())
-				subNames.insert((LPCTSTR)str);
+				subNames.insert(str.c_str());
 		}
 		m_pEvent->SetSubNames(subNames);
 	}
 	// No need to clone them, just move them.
 	m_pEvent->GetScorings() = m_Scorings;
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif

@@ -39,97 +39,47 @@
  */
 
 #include "ARBConfigScoring.h"
-//#include "DlgBaseDialog.h"
-//#include "ListCtrl.h"
 class ARBAgilityRecordBook;
-//class CAgilityBookDoc;
-//class CDlgConfigureDataDivision;
-//class CDlgConfigureDataEvent;
-//class CDlgConfigureDataLevel;
-//class CDlgConfigureDataMultiQ;
-//class CDlgConfigureDataSubLevel;
-//class CDlgConfigureDataTitle;
+class CDlgConfigureDataBase;
+class wxTreeCtrl;
+class wxTreeEvent;
+class wxTreeItemId;
 
 
-class CDlgConfigVenue
+class CDlgConfigVenue : public wxDialog
 {
+	friend class CDlgConfigureDataDivision;
+	friend class CDlgConfigureDataEvent;
+	friend class CDlgConfigureDataLevel;
+	friend class CDlgConfigureDataMultiQ;
+	friend class CDlgConfigureDataSubLevel;
+	friend class CDlgConfigureDataTitle;
+	friend class CDlgConfigVenueDataRoot;
+
 public:
 	CDlgConfigVenue(
 			ARBAgilityRecordBook const& book,
 			ARBConfig const& config,
 			ARBConfigVenuePtr pVenue,
-			wxWindow* pParent = NULL) {}
-	void GetFixups(ARBConfigActionList& ioFixups) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CCDlgConfigVenue"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
+			wxWindow* pParent = NULL);
+	~CDlgConfigVenue();
 
-#if 0
-class CDlgConfigVenue : public CDlgBaseDialog
-{
-public:
-	CDlgConfigVenue(
-			ARBAgilityRecordBook const& book,
-			ARBConfig const& config,
-			ARBConfigVenuePtr pVenue,
-			CWnd* pParent = NULL);
-	virtual ~CDlgConfigVenue();
 	void GetFixups(ARBConfigActionList& ioFixups);
 
-private:
-// Dialog Data
-	//{{AFX_DATA(CDlgConfigVenue)
-	enum { IDD = IDD_CONFIG_VENUE };
-	CEdit	m_ctrlName;
-	CEdit	m_ctrlLongName;
-	CEdit	m_ctrlURL;
-	CEdit	m_ctrlDesc;
-	CEdit	m_ctrlLifetimeName;
-	CListCtrl2	m_ctrlDivisions;
-	CTreeCtrl	m_ctrlLevels;
-	CListCtrl2	m_ctrlEvents;
-	CListCtrl2	m_ctrlMultiQ;
-	CListCtrl2	m_ctrlTitles;
-	CButton	m_ctrlNew;
-	CButton	m_ctrlDelete;
-	CButton	m_ctrlEdit;
-	CButton	m_ctrlCopy;
-	CButton	m_ctrlMoveUp;
-	CButton	m_ctrlMoveDown;
-	CStatic	m_ctrlComments;
-	//}}AFX_DATA
-	ARBAgilityRecordBook const& m_Book;
-	ARBConfig const& m_Config;
-	ARBConfigVenuePtr m_pVenueOrig;
-	ARBConfigVenuePtr m_pVenue;
-	std::vector<ARBConfigActionPtr> m_DlgFixup;
 	typedef enum
 	{
 		eNone,
 		eDivisions,
-		eLevels,
-		eTitles,
 		eEvents,
-		eMultiQ
+		eMultiQ,
+		eTitles,
 	} eAction;
-	eAction m_Action;
-
-	//{{AFX_VIRTUAL(CDlgConfigVenue)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 private:
-	void SetAction(eAction inAction);
+	CDlgConfigureDataBase* GetData(wxTreeItemId item) const;
+	CDlgConfigureDataBase* GetCurrentData(wxTreeItemId* pItem = NULL) const;
 	void UpdateButtons();
-	void LoadDivisionData();
-	void LoadLevelData();
-	void LoadTitleData();
-	void LoadEventData();
-	void LoadMultiQData();
+	/*
 	int FindCurrentDivision(
 			ARBConfigDivisionPtr pDiv,
 			bool bSet);
@@ -148,37 +98,35 @@ private:
 	int FindCurrentMultiQ(
 			ARBConfigMultiQPtr pMultiQ,
 			bool bSet);
-	CDlgConfigureDataDivision* GetCurrentDivisionData();
-	CDlgConfigureDataLevel* GetCurrentLevelData();
-	CDlgConfigureDataSubLevel* GetCurrentSubLevelData();
-	CDlgConfigureDataTitle* GetCurrentTitleData();
-	CDlgConfigureDataEvent* GetCurrentEventData();
-	CDlgConfigureDataMultiQ* GetCurrentMultiQData();
+	*/
 
-protected:
-	//{{AFX_MSG(CDlgConfigVenue)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnDestroy();
-	afx_msg void OnGetdispinfoTree(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeleteitemTree(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDblclk(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnKeydown(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedDivision(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnItemchanged(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusDivision(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusLevel(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusTitles(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusEvent(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetfocusMultiQ(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnNew();
-	afx_msg void OnDelete();
-	afx_msg void OnEdit();
-	afx_msg void OnCopy();
-	afx_msg void OnMoveUp();
-	afx_msg void OnMoveDown();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	ARBAgilityRecordBook const& m_Book;
+	ARBConfig const& m_Config;
+	ARBConfigVenuePtr m_pVenueOrig;
+	ARBConfigVenuePtr m_pVenue;
+	std::vector<ARBConfigActionPtr> m_DlgFixup;
+	wxString m_Name;
+	wxString m_LongName;
+	wxString m_URL;
+	wxString m_LifetimeName;
+	wxString m_Desc;
+	wxTreeCtrl* m_ctrlItems;
+	wxButton* m_ctrlNew;
+	wxButton* m_ctrlEdit;
+	wxButton* m_ctrlDelete;
+	wxButton* m_ctrlCopy;
+	wxButton* m_ctrlMoveUp;
+	wxButton* m_ctrlMoveDown;
+
+	DECLARE_EVENT_TABLE()
+	void OnSelectionChanged(wxTreeEvent& evt);
+	void OnDblclk(wxMouseEvent& evt);
+	void OnKeydown(wxTreeEvent& evt);
+	void OnNew(wxCommandEvent& evt);
+	void OnDelete(wxCommandEvent& evt);
+	void OnEdit(wxCommandEvent& evt);
+	void OnCopy(wxCommandEvent& evt);
+	void OnMoveUp(wxCommandEvent& evt);
+	void OnMoveDown(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

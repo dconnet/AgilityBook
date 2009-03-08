@@ -202,6 +202,76 @@ msgstr "&Copier..."
 msgid "IDC_CONFIG_UPDATE"
 msgstr "&Mettre à jour paramètres..."
 
+# DlgConfigEvent
+msgid "IDD_CONFIG_EVENT"
+msgstr "Parametres de l'épreuve"
+
+msgid "IDC_CONFIG_EVENT"
+msgstr "&Nom"
+
+msgid "IDC_CONFIG_EVENT_TABLE"
+msgstr "&Table?"
+
+msgid "IDC_CONFIG_EVENT_PARTNER"
+msgstr "&Partenaires?"
+
+msgid "IDC_CONFIG_EVENT_HAS_SUBNAMES"
+msgstr "Sous-titres?"
+
+msgid "IDC_CONFIG_EVENT_SUBNAMES_NEW"
+msgstr "Nouveau..."
+
+msgid "IDC_CONFIG_EVENT_SUBNAMES_EDIT"
+msgstr "Édition"
+
+msgid "IDC_CONFIG_EVENT_SUBNAMES_DELETE"
+msgstr "Supprimer"
+
+msgid "IDC_CONFIG_EVENT_DESC"
+msgstr "Notes\n&épreuve"
+
+msgid "IDC_CONFIG_EVENT_SCORING"
+msgstr "Méthodes comptage"
+
+msgid "IDC_CONFIG_EVENT_METHODS"
+msgstr "Niveaux &conducteur/degrés définis"
+
+msgid "IDC_CONFIG_EVENT_UNUSED"
+msgstr "Niveaux conducteur/degrés non définis"
+
+msgid "IDC_CONFIG_EVENT_NEW"
+msgstr "Nouveau"
+
+msgid "IDC_CONFIG_EVENT_EDIT"
+msgstr "Édition"
+
+msgid "IDC_CONFIG_EVENT_DELETE"
+msgstr "Supprimer"
+
+msgid "IDC_CONFIG_EVENT_COPY"
+msgstr "Copier"
+
+msgid "IDC_CONFIG_EVENT_MOVE_UP"
+msgstr "Monter"
+
+msgid "IDC_CONFIG_EVENT_MOVE_DOWN"
+msgstr "Descendre"
+
+msgid "IDC_CONFIG_EVENT_POINTS"
+msgstr "Points\n&Récompense"
+
+msgid "IDC_CONFIG_EVENT_POINTS_NEW"
+msgstr "Nouveau..."
+
+msgid "IDC_CONFIG_EVENT_POINTS_EDIT"
+msgstr "Édition..."
+
+msgid "IDC_CONFIG_EVENT_POINTS_DELETE"
+msgstr "Supprimer"
+
+msgid "IDC_CONFIG_EVENT_NOTES"
+msgstr "Notes sur\n&méthode"
+
 # DlgConfigEventMethod
 msgid "IDD_CONFIG_EVENT_METHOD"
 msgstr "Paramètres de la méthode"
@@ -376,6 +446,55 @@ msgstr "Utiliser configuration &existante"
 
 msgid "IDC_CONFIG_UPDATE_NAME"
 msgstr "&Choisir fichier"
+
+# DlgConfigVenue
+msgid "IDD_CONFIG_VENUE"
+msgstr "Paramètres de lorganisation"
+
+msgid "IDC_CONFIG_VENUE"
+msgstr "N&om"
+
+msgid "IDC_CONFIG_VENUE_LONGNAME"
+msgstr "Nom complet"
+
+msgid "IDC_CONFIG_VENUE_URL"
+msgstr "Site &web"
+
+msgid "IDC_CONFIG_VENUE_LIFETIME_NAME"
+msgstr "Nom points cumulatifs"
+
+msgid "IDC_CONFIG_VENUE_DESC"
+msgstr "Desc&ription"
+
+msgid "IDC_CONFIG_VENUE_NEW"
+msgstr "&Nouveau..."
+
+msgid "IDC_CONFIG_VENUE_DELETE"
+msgstr "&Supprimer"
+
+msgid "IDC_CONFIG_VENUE_EDIT"
+msgstr "&Édition..."
+
+msgid "IDC_CONFIG_VENUE_COPY"
+msgstr "&Copier..."
+
+msgid "IDC_CONFIG_VENUE_MOVE_UP"
+msgstr "&Monter"
+
+msgid "IDC_CONFIG_VENUE_MOVE_DOWN"
+msgstr "&Descendre"
+
+msgid "IDC_CONFIG_VENUE_EVENT"
+msgstr "Épreuves"
+
+msgid "IDC_CONFIG_VENUE_MULTIQ"
+msgstr "Plusieurs épreuves qualifiantes"
+
+msgid "IDC_CONFIG_VENUE_DIVISION"
+msgstr "Niveaux conducteurs"
+
+msgid "IDC_CONFIG_VENUE_TITLES"
+msgstr "Récompense"
 
 # DlgEventSelect
 msgid "IDD_EVENT_SELECT"

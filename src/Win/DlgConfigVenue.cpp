@@ -55,9 +55,6 @@
 #include "stdafx.h"
 #include "DlgConfigVenue.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgConfigVenue")
-#if 0
-#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigVenue.h"
 #include "DlgConfigEvent.h"
@@ -65,36 +62,388 @@
 #include "DlgConfigTitle.h"
 #include "DlgConfigureData.h"
 #include "DlgName.h"
+#include "Globals.h"
+#include "Validators.h"
+#include <wx/treectrl.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDlgConfigVenue dialog
+
+class CDlgConfigVenueDataRoot : public CDlgConfigureDataBase
+{
+public:
+	CDlgConfigVenueDataRoot(
+			CDlgConfigVenue* pDlg,
+			CDlgConfigVenue::eAction action)
+		: CDlgConfigureDataBase(pDlg)
+		, m_Action(action)
+	{
+	}
+	CDlgConfigVenueDataRoot(CDlgConfigVenueDataRoot const& rhs)
+		: CDlgConfigureDataBase(rhs)
+		, m_Action(rhs.m_Action)
+	{
+	}
+	virtual CDlgConfigureDataBase* Clone() const
+	{
+		return new CDlgConfigVenueDataRoot(*this);
+	}
+	virtual bool CanAdd() const		{return true;}
+	virtual bool DoAdd() const;
+
+private:
+	CDlgConfigVenue::eAction m_Action;
+};
+
+
+bool CDlgConfigVenueDataRoot::DoAdd() const
+{
+	bool bAdded = false;
+	bool done = false;
+	tstring name;
+	switch (m_Action)
+	{
+	case CDlgConfigVenue::eDivisions:
+		while (!done)
+		{
+			done = true;
+			CDlgName dlg(name.c_str(), _("IDS_DIVISION_NAME"), m_pDlg);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				name = dlg.GetName();
+				if (m_pDlg->m_pVenue->GetDivisions().FindDivision(name))
+				{
+					done = false;
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					continue;
+				}
+				ARBConfigDivisionPtr pNewDiv;
+				if (m_pDlg->m_pVenue->GetDivisions().AddDivision(name, &pNewDiv))
+				{
+					CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(m_pDlg, pNewDiv);
+					wxTreeItemId div = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					m_pDlg->m_ctrlItems->SelectItem(div);
+					bAdded = true;
+				}
+			}
+		}
+		break;
+
+	case CDlgConfigVenue::eEvents:
+		{
+			// The dialog will ensure uniqueness.
+			ARBConfigEventPtr pEvent(ARBConfigEvent::New());
+			CDlgConfigEvent dlg(true, m_pDlg->m_pVenue, pEvent, m_pDlg);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
+				{
+					CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
+					wxTreeItemId evt = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					m_pDlg->m_ctrlItems->SelectItem(evt);
+					bAdded = true;
+				}
+			}
+		}
+		break;
+
+	case CDlgConfigVenue::eMultiQ:
+		{
+			// The dialog will ensure uniqueness.
+			ARBConfigMultiQPtr multiq(ARBConfigMultiQ::New());
+			CDlgConfigMultiQ dlg(m_pDlg->m_pVenue, multiq, m_pDlg);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
+				{
+					CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
+					wxTreeItemId mq = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					m_pDlg->m_ctrlItems->SelectItem(mq);
+					bAdded = true;
+				}
+			}
+		}
+		break;
+
+	case CDlgConfigVenue::eTitles:
+		while (!done)
+		{
+			done = true;
+			ARBConfigTitlePtr title(ARBConfigTitle::New());
+			title->SetName(name);
+			CDlgConfigTitle dlg(title, m_pDlg);
+			if (wxID_OK == dlg.ShowModal())
+			{
+				name = title->GetName();
+				if (m_pDlg->m_pVenue->GetTitles().FindTitle(name))
+				{
+					done = false;
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					continue;
+				}
+				ARBConfigTitlePtr pTitle;
+				if (m_pDlg->m_pVenue->GetTitles().AddTitle(name, &pTitle))
+				{
+					*pTitle = *title;
+					//pTitle->SetMultiple(dlg.GetMultiple());
+					//pTitle->SetLongName(dlg.GetLongName());
+					//pTitle->SetDescription(dlg.GetDesc());
+					CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, pTitle);
+					wxTreeItemId title = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					m_pDlg->m_ctrlItems->SelectItem(title);
+					bAdded = true;
+				}
+			}
+		}
+		break;
+	}
+	return bAdded;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+BEGIN_EVENT_TABLE(CDlgConfigVenue, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgConfigVenue::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgConfigVenue::CDlgConfigVenue(
 		ARBAgilityRecordBook const& book,
 		ARBConfig const& config,
 		ARBConfigVenuePtr pVenue,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgConfigVenue::IDD, pParent)
-	, m_ctrlDivisions(true)
-	, m_ctrlEvents(true)
-	, m_ctrlMultiQ(true)
-	, m_ctrlTitles(true)
+		wxWindow* pParent)
+	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_VENUE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
 	, m_Book(book)
 	, m_Config(config)
 	, m_pVenueOrig(pVenue)
 	, m_pVenue(pVenue->Clone())
-	, m_Action(eNone)
+	, m_DlgFixup()
+	, m_Name(m_pVenue->GetName().c_str())
+	, m_LongName(m_pVenue->GetLongName().c_str())
+	, m_URL(m_pVenue->GetURL().c_str())
+	, m_LifetimeName(m_pVenue->GetLifetimeName().c_str())
+	, m_Desc(m_pVenue->GetDesc().c_str())
+	, m_ctrlItems(NULL)
+	, m_ctrlNew(NULL)
+	, m_ctrlEdit(NULL)
+	, m_ctrlDelete(NULL)
+	, m_ctrlCopy(NULL)
+	, m_ctrlMoveUp(NULL)
+	, m_ctrlMoveDown(NULL)
 {
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	assert(m_pVenueOrig);
 	assert(m_pVenue);
-	//{{AFX_DATA_INIT(CDlgConfigVenue)
-	//}}AFX_DATA_INIT
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
+
+	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_Name));
+	ctrlName->SetHelpText(_("HIDC_CONFIG_VENUE"));
+	ctrlName->SetToolTip(_("HIDC_CONFIG_VENUE"));
+
+	wxStaticText* textURL = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_URL"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textURL->Wrap(-1);
+
+	wxTextCtrl* ctrlURL = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_URL, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlURL->SetHelpText(_("HIDC_CONFIG_VENUE_URL"));
+	ctrlURL->SetToolTip(_("HIDC_CONFIG_VENUE_URL"));
+
+	wxStaticText* textLongName = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_LONGNAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textLongName->Wrap(-1);
+
+	wxTextCtrl* ctrlLongName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_LongName, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlLongName->SetHelpText(_("HIDC_CONFIG_VENUE_LONGNAME"));
+	ctrlLongName->SetToolTip(_("HIDC_CONFIG_VENUE_LONGNAME"));
+
+	wxStaticText* textLifetime = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_LIFETIME_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textLifetime->Wrap(-1);
+
+	wxTextCtrl* ctrlLifetime = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_RIGHT));
+	ctrlLifetime->SetHelpText(_("HIDC_CONFIG_VENUE_LIFETIME_NAME"));
+	ctrlLifetime->SetToolTip(_("HIDC_CONFIG_VENUE_LIFETIME_NAME"));
+
+	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_DESC"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDesc->Wrap(-1);
+
+	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(-1, 70), wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_RIGHT));
+	ctrlDesc->SetHelpText(_("HIDC_CONFIG_VENUE_DESC"));
+	ctrlDesc->SetToolTip(_("HIDC_CONFIG_VENUE_DESC"));
+
+	m_ctrlItems = new wxTreeCtrl(this, wxID_ANY,
+		wxDefaultPosition, wxSize(300, 250),
+		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
+	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgConfigVenue::OnSelectionChanged), NULL, this);
+	m_ctrlItems->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigVenue::OnDblclk), NULL, this);
+	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CDlgConfigVenue::OnKeydown), NULL, this);
+	//m_ctrlItems->SetHelpText(_(""));
+	//m_ctrlItems->SetToolTip(_(""));
+
+	m_ctrlNew = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_NEW"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigVenue::OnNew), NULL, this);
+	m_ctrlNew->SetHelpText(_("HIDC_CONFIG_VENUE_NEW"));
+	m_ctrlNew->SetToolTip(_("HIDC_CONFIG_VENUE_NEW"));
+
+	m_ctrlEdit = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_EDIT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigVenue::OnEdit), NULL, this);
+	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_VENUE_EDIT"));
+	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_VENUE_EDIT"));
+
+	m_ctrlDelete = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_DELETE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigVenue::OnDelete), NULL, this);
+	m_ctrlDelete->SetHelpText(_("HIDC_CONFIG_VENUE_DELETE"));
+	m_ctrlDelete->SetToolTip(_("HIDC_CONFIG_VENUE_DELETE"));
+
+	m_ctrlCopy = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_COPY"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlCopy->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigVenue::OnCopy), NULL, this);
+	m_ctrlCopy->SetHelpText(_("HIDC_CONFIG_VENUE_COPY"));
+	m_ctrlCopy->SetToolTip(_("HIDC_CONFIG_VENUE_COPY"));
+
+	m_ctrlMoveUp = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_MOVE_UP"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlMoveUp->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigVenue::OnMoveUp), NULL, this);
+	m_ctrlMoveUp->SetHelpText(_("HIDC_CONFIG_VENUE_MOVE_UP"));
+	m_ctrlMoveUp->SetToolTip(_("HIDC_CONFIG_VENUE_MOVE_UP"));
+
+	m_ctrlMoveDown = new wxButton(this, wxID_ANY,
+		_("IDC_CONFIG_VENUE_MOVE_DOWN"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlMoveDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigVenue::OnMoveDown), NULL, this);
+	m_ctrlMoveDown->SetHelpText(_("HIDC_CONFIG_VENUE_MOVE_DOWN"));
+	m_ctrlMoveDown->SetToolTip(_("HIDC_CONFIG_VENUE_MOVE_DOWN"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(ctrlName, 0, wxALL, 5);
+	sizerName->Add(textURL, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerName->Add(ctrlURL, 1, wxALL, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+
+	wxBoxSizer* sizerLongName = new wxBoxSizer(wxHORIZONTAL);
+	sizerLongName->Add(textLongName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerLongName->Add(ctrlLongName, 1, wxALL, 5);
+
+	bSizer->Add(sizerLongName, 0, wxEXPAND, 5);
+	bSizer->Add(textLifetime, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+	bSizer->Add(ctrlLifetime, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(textDesc, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+	bSizer->Add(ctrlDesc, 0, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerTree = new wxBoxSizer(wxHORIZONTAL);
+	sizerTree->Add(m_ctrlItems, 1, wxALL|wxEXPAND, 5);
+
+	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
+	sizerBtns->Add(m_ctrlNew, 0, wxALL, 5);
+	sizerBtns->Add(m_ctrlEdit, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlDelete, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlCopy, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlMoveUp, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerBtns->Add(m_ctrlMoveDown, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+
+	sizerTree->Add(sizerBtns, 0, wxEXPAND, 5);
+
+	bSizer->Add(sizerTree, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	wxTreeItemId root = m_ctrlItems->AddRoot(wxT("Root"));
+
+	wxTreeItemId divs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_DIVISION"), -1, -1, new CDlgConfigVenueDataRoot(this, eDivisions));
+	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
+	{
+		CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(this, *iterDiv);
+		wxTreeItemId div = m_ctrlItems->AppendItem(divs, pData->OnNeedText(), -1, -1, pData);
+
+		for (ARBConfigLevelList::iterator iterLevel = (*iterDiv)->GetLevels().begin();
+			iterLevel != (*iterDiv)->GetLevels().end();
+			++iterLevel)
+		{
+			CDlgConfigureDataLevel* pLevData = new CDlgConfigureDataLevel(this, *iterDiv, *iterLevel);
+			wxTreeItemId level = m_ctrlItems->AppendItem(div, pLevData->OnNeedText(), -1, -1, pLevData);
+			if (0 < (*iterLevel)->GetSubLevels().size())
+			{
+				for (ARBConfigSubLevelList::iterator iterSubLevel = (*iterLevel)->GetSubLevels().begin(); iterSubLevel != (*iterLevel)->GetSubLevels().end(); ++iterSubLevel)
+				{
+					CDlgConfigureDataSubLevel* pSubLevelData = new CDlgConfigureDataSubLevel(this, *iterDiv, *iterLevel, *iterSubLevel);
+					m_ctrlItems->AppendItem(level, pSubLevelData->OnNeedText(), -1, -1, pSubLevelData);
+				}
+			}
+		}
+	}
+	m_ctrlItems->Expand(divs);
+
+	wxTreeItemId events = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_EVENT"), -1, -1, new CDlgConfigVenueDataRoot(this, eEvents));
+	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
+	{
+		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(this, *iterEvent);
+		m_ctrlItems->AppendItem(events, pData->OnNeedText(), -1, -1, pData);
+	}
+	m_ctrlItems->Expand(events);
+
+	wxTreeItemId multiQs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_MULTIQ"), -1, -1, new CDlgConfigVenueDataRoot(this, eMultiQ));
+	for (ARBConfigMultiQList::iterator iter = m_pVenue->GetMultiQs().begin();
+		iter != m_pVenue->GetMultiQs().end();
+		++iter)
+	{
+		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(this, *iter);
+		m_ctrlItems->AppendItem(multiQs, pData->OnNeedText(), -1, -1, pData);
+	}
+	m_ctrlItems->Expand(multiQs);
+
+	wxTreeItemId titles = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_TITLES"), -1, -1, new CDlgConfigVenueDataRoot(this, eTitles));
+	for (ARBConfigTitleList::iterator iterTitle = m_pVenue->GetTitles().begin();
+		iterTitle != m_pVenue->GetTitles().end();
+		++iterTitle)
+	{
+		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(this, *iterTitle);
+		m_ctrlItems->AppendItem(titles, pData->OnNeedText(), -1, -1, pData);
+	}
+	m_ctrlItems->Expand(titles);
+
+	m_ctrlItems->SelectItem(events);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
 }
 
 
@@ -111,1674 +460,187 @@ void CDlgConfigVenue::GetFixups(ARBConfigActionList& ioFixups)
 }
 
 
-void CDlgConfigVenue::DoDataExchange(CDataExchange* pDX)
+CDlgConfigureDataBase* CDlgConfigVenue::GetData(wxTreeItemId item) const
 {
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgConfigVenue)
-	DDX_Control(pDX, IDC_CONFIG_VENUE, m_ctrlName);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_LONGNAME, m_ctrlLongName);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_URL, m_ctrlURL);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_DESC, m_ctrlDesc);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_LIFETIME_NAME, m_ctrlLifetimeName);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_DIVISION, m_ctrlDivisions);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_LEVEL, m_ctrlLevels);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_TITLES, m_ctrlTitles);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_EVENT, m_ctrlEvents);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_MULTIQ, m_ctrlMultiQ);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_NEW, m_ctrlNew);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_DELETE, m_ctrlDelete);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_EDIT, m_ctrlEdit);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_COPY, m_ctrlCopy);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_MOVE_UP, m_ctrlMoveUp);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_MOVE_DOWN, m_ctrlMoveDown);
-	DDX_Control(pDX, IDC_CONFIG_VENUE_COMMENTS, m_ctrlComments);
-	//}}AFX_DATA_MAP
+	if (item.IsOk())
+		return dynamic_cast<CDlgConfigureDataBase*>(m_ctrlItems->GetItemData(item));
+	return NULL;
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgConfigVenue, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgConfigVenue)
-	ON_WM_DESTROY()
-	ON_NOTIFY(TVN_GETDISPINFO, IDC_CONFIG_VENUE_LEVEL, OnGetdispinfoTree)
-	ON_NOTIFY(TVN_DELETEITEM, IDC_CONFIG_VENUE_LEVEL, OnDeleteitemTree)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_DIVISION, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_VENUE_DIVISION, OnKeydown)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_DIVISION, OnItemchangedDivision)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_TITLES, OnItemchangedList)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_EVENT, OnItemchangedList)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CONFIG_VENUE_MULTIQ, OnItemchangedList)
-	ON_NOTIFY(TVN_SELCHANGED, IDC_CONFIG_VENUE_LEVEL, OnItemchanged)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_DIVISION, OnSetfocusDivision)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_LEVEL, OnSetfocusLevel)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_TITLES, OnSetfocusTitles)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_EVENT, OnSetfocusEvent)
-	ON_NOTIFY(NM_SETFOCUS, IDC_CONFIG_VENUE_MULTIQ, OnSetfocusMultiQ)
-	ON_BN_CLICKED(IDC_CONFIG_VENUE_NEW, OnNew)
-	ON_BN_CLICKED(IDC_CONFIG_VENUE_DELETE, OnDelete)
-	ON_BN_CLICKED(IDC_CONFIG_VENUE_EDIT, OnEdit)
-	ON_BN_CLICKED(IDC_CONFIG_VENUE_COPY, OnCopy)
-	ON_BN_CLICKED(IDC_CONFIG_VENUE_MOVE_UP, OnMoveUp)
-	ON_BN_CLICKED(IDC_CONFIG_VENUE_MOVE_DOWN, OnMoveDown)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_LEVEL, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_VENUE_LEVEL, OnKeydown)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_TITLES, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_VENUE_TITLES, OnKeydown)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_EVENT, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_VENUE_EVENT, OnKeydown)
-	ON_NOTIFY(NM_DBLCLK, IDC_CONFIG_VENUE_MULTIQ, OnDblclk)
-	ON_NOTIFY(LVN_KEYDOWN, IDC_CONFIG_VENUE_MULTIQ, OnKeydown)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-
-void CDlgConfigVenue::SetAction(eAction inAction)
+CDlgConfigureDataBase* CDlgConfigVenue::GetCurrentData(wxTreeItemId* pItem) const
 {
-	if (m_Action != inAction)
-	{
-		m_Action = inAction;
-		CString str(_T(""));
-		switch (m_Action)
-		{
-		case eDivisions:
-			str.LoadString(IDS_BUTTONS_DIVISIONS);
-			break;
-		case eLevels:
-			str.LoadString(IDS_BUTTONS_LEVELS);
-			break;
-		case eTitles:
-			str.LoadString(IDS_BUTTONS_TITLES);
-			break;
-		case eEvents:
-			str.LoadString(IDS_BUTTONS_EVENTS);
-			break;
-		case eMultiQ:
-			str.LoadString(IDS_BUTTONS_MULTIQS);
-			break;
-		}
-		m_ctrlComments.SetWindowText(str);
-	}
-	UpdateButtons();
+	wxTreeItemId item = m_ctrlItems->GetSelection();
+	if (pItem)
+		*pItem = item;
+	return GetData(item);
 }
 
 
 void CDlgConfigVenue::UpdateButtons()
 {
-	BOOL bNew = FALSE;
-	BOOL bDelete = FALSE;
-	BOOL bEdit = FALSE;
-	BOOL bCopy = FALSE;
-	BOOL bMoveUp = FALSE;
-	BOOL bMoveDown = FALSE;
+	bool bNew = false;
+	bool bEdit = false;
+	bool bDelete = false;
+	bool bCopy = false;
+	bool bMoveUp = false;
+	bool bMoveDown = false;
 
-	switch (m_Action)
+	wxTreeItemId item;
+	CDlgConfigureDataBase* pBase = GetCurrentData(&item);
+	if (pBase)
 	{
-	case eDivisions:
-		{
-			bNew = TRUE;
-			int index = m_ctrlDivisions.GetSelection();
-			if (0 <= index)
-			{
-				bDelete = bEdit = TRUE;
-				if (0 < index)
-					bMoveUp = TRUE;
-				if (index < m_ctrlDivisions.GetItemCount() - 1)
-					bMoveDown = TRUE;
-			}
-		}
-		break;
-
-	case eLevels:
-		{
-			if (GetCurrentDivisionData())
-				bNew = TRUE;
-			HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
-			if (NULL != hItem)
-			{
-				bDelete = bEdit = TRUE;
-				if (NULL != m_ctrlLevels.GetPrevSiblingItem(hItem))
-					bMoveUp = TRUE;
-				if (NULL != m_ctrlLevels.GetNextSiblingItem(hItem))
-					bMoveDown = TRUE;
-			}
-		}
-		break;
-
-	case eTitles:
-		{
-			bNew = TRUE;
-			int index = m_ctrlTitles.GetSelection();
-			if (0 <= index)
-			{
-				bDelete = bEdit = TRUE;
-				CDlgConfigureDataTitle* pData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-				if (pData)
-				{
-					bCopy = TRUE;
-					if (0 < index)
-						bMoveUp = TRUE;
-					if (index < m_ctrlTitles.GetItemCount() - 1)
-						bMoveDown = TRUE;
-				}
-			}
-		}
-		break;
-
-	case eEvents:
-		{
-			bNew = TRUE;
-			int index = m_ctrlEvents.GetSelection();
-			if (0 <= index)
-			{
-				bDelete = bEdit = TRUE;
-				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
-				if (pEventData)
-				{
-					bCopy = TRUE;
-					if (0 < index)
-						bMoveUp = TRUE;
-					if (index < m_ctrlEvents.GetItemCount() - 1)
-						bMoveDown = TRUE;
-				}
-			}
-		}
-		break;
-
-	case eMultiQ:
-		{
-			bNew = TRUE;
-			int index = m_ctrlMultiQ.GetSelection();
-			if (0 <= index)
-			{
-				bDelete = bEdit = TRUE;
-				CDlgConfigureDataMultiQ* pData = dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
-				if (pData)
-				{
-					bCopy = TRUE;
-					if (0 < index)
-						bMoveUp = TRUE;
-					if (index < m_ctrlMultiQ.GetItemCount() - 1)
-						bMoveDown = TRUE;
-				}
-			}
-		}
-		break;
+		bNew = pBase->CanAdd();
+		bEdit = pBase->CanEdit();
+		bDelete = pBase->CanDelete();
+		bCopy = pBase->CanCopy();
+		//TODO
+		//bMoveUp = pBase->CanMove() && m_ctrlItems->GetPrevSibling(item).IsOk();
+		//bMoveDown = pBase->CanMove() && m_ctrlItems->GetNextSibling(item).IsOk();
 	}
 
-	m_ctrlNew.EnableWindow(bNew);
-	m_ctrlDelete.EnableWindow(bDelete);
-	m_ctrlEdit.EnableWindow(bEdit);
-	m_ctrlCopy.EnableWindow(bCopy);
-	m_ctrlMoveUp.EnableWindow(bMoveUp);
-	m_ctrlMoveDown.EnableWindow(bMoveDown);
+	m_ctrlNew->Enable(bNew);
+	m_ctrlEdit->Enable(bEdit);
+	m_ctrlDelete->Enable(bDelete);
+	m_ctrlCopy->Enable(bCopy);
+	m_ctrlMoveUp->Enable(bMoveUp);
+	m_ctrlMoveDown->Enable(bMoveDown);
 }
 
 
-void CDlgConfigVenue::LoadDivisionData()
+void CDlgConfigVenue::OnDblclk(wxMouseEvent& evt)
 {
-	ARBConfigDivisionPtr pDiv;
-	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
-	if (pDivData)
-		pDiv = pDivData->GetDivision();
-	m_ctrlDivisions.DeleteAllItems();
-	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
-	{
-		m_ctrlDivisions.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlDivisions.GetItemCount(),
-			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataDivision(*iterDiv))));
-	}
-	m_ctrlDivisions.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
-	FindCurrentDivision(pDiv, true);
-	LoadLevelData();
+	CDlgConfigureDataBase* pBase = GetCurrentData();
+	if (pBase && pBase->CanEdit())
+		pBase->DoEdit();
 }
 
 
-void CDlgConfigVenue::LoadLevelData()
+void CDlgConfigVenue::OnSelectionChanged(wxTreeEvent& evt)
 {
-	ARBConfigLevelPtr pLevel;
-	ARBConfigSubLevelPtr pSubLevel;
-	CDlgConfigureDataLevel* pLevelData = GetCurrentLevelData();
-	CDlgConfigureDataSubLevel* pSubLevelData = GetCurrentSubLevelData();
-	if (pLevelData)
-	{
-		pLevel = pLevelData->GetLevel();
-	}
-	else if (pSubLevelData)
-	{
-		pLevel = pSubLevelData->GetLevel();
-		pSubLevel = pSubLevelData->GetSubLevel();
-	}
-	m_ctrlLevels.DeleteAllItems();
-	CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
-	if (!pDivData)
-		return;
-	for (ARBConfigLevelList::iterator iterLevel = pDivData->GetDivision()->GetLevels().begin();
-	iterLevel != pDivData->GetDivision()->GetLevels().end();
-	++iterLevel)
-	{
-		HTREEITEM hItem = m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-			0, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataLevel(pDivData->GetDivision(), *iterLevel))),
-			TVI_ROOT, TVI_LAST);
-		if (0 < (*iterLevel)->GetSubLevels().size())
-		{
-			for (ARBConfigSubLevelList::iterator iterSubLevel = (*iterLevel)->GetSubLevels().begin(); iterSubLevel != (*iterLevel)->GetSubLevels().end(); ++iterSubLevel)
-			{
-				m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-					0, 0, 0, 0,
-					reinterpret_cast<LPARAM>(
-						static_cast<CListData*>(
-							new CDlgConfigureDataSubLevel(pDivData->GetDivision(), *iterLevel, *iterSubLevel))),
-					hItem, TVI_LAST);
-			}
-			m_ctrlLevels.Expand(hItem, TVE_EXPAND);
-		}
-	}
-	if (pSubLevel)
-	{
-		FindCurrentSubLevel(pSubLevel, true);
-	}
-	else if (pLevel)
-	{
-		FindCurrentLevel(pLevel, true);
-	}
+	UpdateButtons();
 }
 
 
-void CDlgConfigVenue::LoadTitleData()
+void CDlgConfigVenue::OnKeydown(wxTreeEvent& evt)
 {
-	ARBConfigTitlePtr pTitle;
-	CDlgConfigureDataTitle* pTitleData = GetCurrentTitleData();
-	if (pTitleData)
-		pTitle = pTitleData->GetTitle();
-	m_ctrlTitles.DeleteAllItems();
-	for (ARBConfigTitleList::iterator iterTitle = m_pVenue->GetTitles().begin();
-		iterTitle != m_pVenue->GetTitles().end();
-		++iterTitle)
-	{
-		m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlTitles.GetItemCount(),
-			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataTitle(*iterTitle))));
-	}
-	m_ctrlTitles.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
-	FindCurrentTitle(pTitle, true);
-}
-
-
-void CDlgConfigVenue::LoadEventData()
-{
-	ARBConfigEventPtr pOldEvent;
-	CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-	if (pEventData)
-		pOldEvent = pEventData->GetEvent();
-	m_ctrlEvents.DeleteAllItems();
-	for (ARBConfigEventList::iterator iterEvent = m_pVenue->GetEvents().begin(); iterEvent != m_pVenue->GetEvents().end(); ++iterEvent)
-	{
-		m_ctrlEvents.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlEvents.GetItemCount(),
-			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataEvent(*iterEvent))));
-	}
-	m_ctrlEvents.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
-	FindCurrentEvent(pOldEvent, true);
-}
-
-
-void CDlgConfigVenue::LoadMultiQData()
-{
-	ARBConfigMultiQPtr pOldMultiQ;
-	CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
-	if (pData)
-		pOldMultiQ = pData->GetMultiQ();
-	m_ctrlMultiQ.DeleteAllItems();
-	for (ARBConfigMultiQList::iterator iter = m_pVenue->GetMultiQs().begin();
-		iter != m_pVenue->GetMultiQs().end();
-		++iter)
-	{
-		m_ctrlMultiQ.InsertItem(LVIF_TEXT | LVIF_PARAM, m_ctrlMultiQ.GetItemCount(),
-			LPSTR_TEXTCALLBACK, 0, 0, 0,
-			reinterpret_cast<LPARAM>(
-				static_cast<CListData*>(
-					new CDlgConfigureDataMultiQ(*iter))));
-	}
-	m_ctrlMultiQ.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
-	FindCurrentMultiQ(pOldMultiQ, true);
-}
-
-
-int CDlgConfigVenue::FindCurrentDivision(
-		ARBConfigDivisionPtr pDiv,
-		bool bSet)
-{
-	int idxCurrent = -1;
-	if (pDiv)
-	{
-		for (int index = 0; index < m_ctrlDivisions.GetItemCount(); ++index)
-		{
-			CDlgConfigureDataDivision* pData = dynamic_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetData(index));
-			if (pData->GetDivision() == pDiv)
-			{
-				idxCurrent = index;
-				break;
-			}
-		}
-	}
-	if (bSet)
-	{
-		m_ctrlDivisions.SetSelection(idxCurrent);
-		if (0 < idxCurrent)
-			m_ctrlDivisions.EnsureVisible(idxCurrent, FALSE);
-	}
-	return idxCurrent;
-}
-
-
-HTREEITEM CDlgConfigVenue::FindCurrentLevel(
-		ARBConfigLevelPtr pLevel,
-		bool bSet)
-{
-	HTREEITEM hCurrent = NULL;
-	if (pLevel)
-	{
-		HTREEITEM hItem = m_ctrlLevels.GetRootItem();
-		while (NULL != hItem)
-		{
-			CListData* pRawData = reinterpret_cast<CListData*>(m_ctrlLevels.GetItemData(hItem));
-			CDlgConfigureDataLevel* pData = dynamic_cast<CDlgConfigureDataLevel*>(pRawData);
-			if (pData->GetLevel() == pLevel)
-			{
-				hCurrent = hItem;
-				break;
-			}
-			hItem = m_ctrlLevels.GetNextSiblingItem(hItem);
-		}
-	}
-	if (bSet)
-	{
-		m_ctrlLevels.SelectItem(hCurrent);
-		if (NULL != hCurrent)
-			m_ctrlLevels.EnsureVisible(hCurrent);
-		UpdateButtons();
-	}
-	return hCurrent;
-}
-
-
-HTREEITEM CDlgConfigVenue::FindCurrentSubLevel(
-		ARBConfigSubLevelPtr pSubLevel,
-		bool bSet)
-{
-	HTREEITEM hCurrent = NULL;
-	if (pSubLevel)
-	{
-		HTREEITEM hItem = m_ctrlLevels.GetRootItem();
-		while (NULL == hCurrent && NULL != hItem)
-		{
-			if (m_ctrlLevels.ItemHasChildren(hItem))
-			{
-				HTREEITEM hChildItem = m_ctrlLevels.GetChildItem(hItem);
-				while (NULL == hCurrent && NULL != hChildItem)
-				{
-					CListData* pRawData = reinterpret_cast<CListData*>(m_ctrlLevels.GetItemData(hChildItem));
-					CDlgConfigureDataSubLevel* pData = dynamic_cast<CDlgConfigureDataSubLevel*>(pRawData);
-					if (pData->GetSubLevel() == pSubLevel)
-					{
-						hCurrent = hChildItem;
-						break;
-					}
-					hChildItem = m_ctrlLevels.GetNextSiblingItem(hChildItem);
-				}
-			}
-			hItem = m_ctrlLevels.GetNextSiblingItem(hItem);
-		}
-	}
-	if (bSet)
-	{
-		m_ctrlLevels.SelectItem(hCurrent);
-		if (NULL != hCurrent)
-			m_ctrlLevels.EnsureVisible(hCurrent);
-		UpdateButtons();
-	}
-	return hCurrent;
-}
-
-
-int CDlgConfigVenue::FindCurrentTitle(
-		ARBConfigTitlePtr pTitle,
-		bool bSet)
-{
-	int idxCurrent = -1;
-	if (pTitle)
-	{
-		for (int index = 0; index < m_ctrlTitles.GetItemCount(); ++index)
-		{
-			CDlgConfigureDataTitle* pData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-			if (pData->GetTitle() == pTitle)
-			{
-				idxCurrent = index;
-				break;
-			}
-		}
-	}
-	if (bSet)
-	{
-		m_ctrlTitles.SetSelection(idxCurrent);
-		if (0 < idxCurrent)
-			m_ctrlTitles.EnsureVisible(idxCurrent, FALSE);
-		UpdateButtons();
-	}
-	return idxCurrent;
-}
-
-
-int CDlgConfigVenue::FindCurrentEvent(
-		ARBConfigEventPtr pEvent,
-		bool bSet)
-{
-	int idxCurrent = -1;
-	if (pEvent)
-	{
-		for (int index = 0; index < m_ctrlEvents.GetItemCount(); ++index)
-		{
-			CDlgConfigureDataEvent* pData = dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
-			if (pData->GetEvent() == pEvent)
-			{
-				idxCurrent = index;
-				break;
-			}
-		}
-	}
-	if (bSet)
-	{
-		m_ctrlEvents.SetSelection(idxCurrent);
-		if (0 < idxCurrent)
-			m_ctrlEvents.EnsureVisible(idxCurrent, FALSE);
-		UpdateButtons();
-	}
-	return idxCurrent;
-}
-
-
-int CDlgConfigVenue::FindCurrentMultiQ(
-		ARBConfigMultiQPtr pMultiQ,
-		bool bSet)
-{
-	int idxCurrent = -1;
-	if (pMultiQ)
-	{
-		for (int index = 0; index < m_ctrlMultiQ.GetItemCount(); ++index)
-		{
-			CDlgConfigureDataMultiQ* pData = dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
-			if (pData->GetMultiQ() == pMultiQ)
-			{
-				idxCurrent = index;
-				break;
-			}
-		}
-	}
-	if (bSet)
-	{
-		m_ctrlMultiQ.SetSelection(idxCurrent);
-		if (0 < idxCurrent)
-			m_ctrlMultiQ.EnsureVisible(idxCurrent, FALSE);
-		UpdateButtons();
-	}
-	return idxCurrent;
-}
-
-
-CDlgConfigureDataDivision* CDlgConfigVenue::GetCurrentDivisionData()
-{
-	int index = m_ctrlDivisions.GetSelection();
-	if (LB_ERR != index)
-		return dynamic_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetData(index));
-	else
-		return NULL;
-}
-
-
-CDlgConfigureDataLevel* CDlgConfigVenue::GetCurrentLevelData()
-{
-	HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
-	if (NULL != hItem)
-	{
-		CListData* pData = reinterpret_cast<CListData*>(m_ctrlLevels.GetItemData(hItem));
-		return dynamic_cast<CDlgConfigureDataLevel*>(pData);
-	}
-	else
-		return NULL;
-}
-
-
-CDlgConfigureDataSubLevel* CDlgConfigVenue::GetCurrentSubLevelData()
-{
-	HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
-	if (NULL != hItem)
-	{
-		CListData* pData = reinterpret_cast<CListData*>(m_ctrlLevels.GetItemData(hItem));
-		return dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
-	}
-	else
-		return NULL;
-}
-
-
-CDlgConfigureDataTitle* CDlgConfigVenue::GetCurrentTitleData()
-{
-	int index = m_ctrlTitles.GetSelection();
-	if (0 <= index)
-		return dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-	else
-		return NULL;
-}
-
-
-CDlgConfigureDataEvent* CDlgConfigVenue::GetCurrentEventData()
-{
-	int index = m_ctrlEvents.GetSelection();
-	if (0 <= index)
-		return dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
-	else
-		return NULL;
-}
-
-
-CDlgConfigureDataMultiQ* CDlgConfigVenue::GetCurrentMultiQData()
-{
-	int index = m_ctrlMultiQ.GetSelection();
-	if (0 <= index)
-		return dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
-	else
-		return NULL;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgConfigVenue message handlers
-
-BOOL CDlgConfigVenue::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	m_ctrlDivisions.SetExtendedStyle(m_ctrlDivisions.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlEvents.SetExtendedStyle(m_ctrlEvents.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlMultiQ.SetExtendedStyle(m_ctrlMultiQ.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	m_ctrlTitles.SetExtendedStyle(m_ctrlTitles.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
-	CString col;
-	col.LoadString(IDS_COL_DIVISIONS);
-	m_ctrlDivisions.InsertColumn(0, col);
-	col.LoadString(IDS_COL_TITLES);
-	m_ctrlTitles.InsertColumn(0, col);
-	col.LoadString(IDS_COL_EVENTS);
-	m_ctrlEvents.InsertColumn(0, col);
-	col.LoadString(IDS_COL_MULTIQ);
-	m_ctrlMultiQ.InsertColumn(0, col);
-
-	m_ctrlName.SetWindowText(m_pVenue->GetName().c_str());
-	m_ctrlLongName.SetWindowText(m_pVenue->GetLongName().c_str());
-	m_ctrlURL.SetWindowText(m_pVenue->GetURL().c_str());
-	CString str(m_pVenue->GetDesc().c_str());
-	str.Replace(_T("\n"), _T("\r\n"));
-	m_ctrlDesc.SetWindowText(str);
-	m_ctrlLifetimeName.SetWindowText(m_pVenue->GetLifetimeName().c_str());
-
-	LoadDivisionData();
-	LoadEventData();
-	LoadTitleData();
-	LoadMultiQData();
-	SetAction(eDivisions);
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgConfigVenue::OnDestroy()
-{
-	m_ctrlLevels.DeleteAllItems();
-	CDlgBaseDialog::OnDestroy();
-}
-
-
-void CDlgConfigVenue::OnGetdispinfoTree(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	TV_DISPINFO* pTVDispInfo = reinterpret_cast<TV_DISPINFO*>(pNMHDR);
-	if (pTVDispInfo->item.mask & TVIF_TEXT)
-	{
-		CListData* pRawData = reinterpret_cast<CListData*>(pTVDispInfo->item.lParam);
-		CListDataDispInfo* pData = reinterpret_cast<CListDataDispInfo*>(pRawData);
-		if (pData)
-		{
-			tstring str = pData->OnNeedText(0);
-			::lstrcpyn(pTVDispInfo->item.pszText, str.c_str(), pTVDispInfo->item.cchTextMax);
-			pTVDispInfo->item.pszText[pTVDispInfo->item.cchTextMax-1] = '\0';
-		}
-	}
-	*pResult = 0;
-}
-
-
-void CDlgConfigVenue::OnDeleteitemTree(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	NM_TREEVIEW* pNMTreeView = reinterpret_cast<NM_TREEVIEW*>(pNMHDR);
-	CListData* pData = reinterpret_cast<CListData*>(pNMTreeView->itemOld.lParam);
-	delete pData;
-	pNMTreeView->itemOld.lParam = 0;
-	*pResult = 0;
-}
-
-
-void CDlgConfigVenue::OnDblclk(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	OnEdit();
-	*pResult = 0;
-}
-
-
-void CDlgConfigVenue::OnKeydown(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	LV_KEYDOWN* pLVKeyDown = reinterpret_cast<LV_KEYDOWN*>(pNMHDR);
-	switch (pLVKeyDown->wVKey)
+	switch (evt.GetKeyCode())
 	{
 	default:
 		break;
-	case VK_SPACE:
-		OnEdit();
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
+		{
+			CDlgConfigureDataBase* pBase = GetCurrentData();
+			if (pBase && pBase->CanEdit())
+				pBase->DoEdit();
+		}
 		break;
 	}
-	*pResult = 0;
+	evt.Skip();
 }
 
 
-void CDlgConfigVenue::OnItemchangedDivision(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
+void CDlgConfigVenue::OnNew(wxCommandEvent& evt)
 {
-	LoadLevelData();
-	UpdateButtons();
-	*pResult = 0;
+	CDlgConfigureDataBase* pBase = GetCurrentData();
+	if (pBase && pBase->CanAdd())
+		pBase->DoAdd();
 }
 
 
-void CDlgConfigVenue::OnItemchangedList(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
+void CDlgConfigVenue::OnEdit(wxCommandEvent& evt)
 {
-	UpdateButtons();
-	*pResult = 0;
+	CDlgConfigureDataBase* pBase = GetCurrentData();
+	if (pBase && pBase->CanEdit())
+		pBase->DoEdit();
 }
 
 
-void CDlgConfigVenue::OnItemchanged(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
+void CDlgConfigVenue::OnDelete(wxCommandEvent& evt)
 {
-	UpdateButtons();
-	*pResult = 0;
+	CDlgConfigureDataBase* pBase = GetCurrentData();
+	if (pBase && pBase->CanDelete())
+		pBase->DoDelete();
 }
 
 
-void CDlgConfigVenue::OnSetfocusDivision(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
+void CDlgConfigVenue::OnCopy(wxCommandEvent& evt)
 {
-	SetAction(eDivisions);
-	*pResult = 0;
+	CDlgConfigureDataBase* pBase = GetCurrentData();
+	if (pBase && pBase->CanCopy())
+		pBase->DoCopy();
 }
 
 
-void CDlgConfigVenue::OnSetfocusLevel(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
+void CDlgConfigVenue::OnMoveUp(wxCommandEvent& evt)
 {
-	SetAction(eLevels);
-	*pResult = 0;
-}
-
-
-void CDlgConfigVenue::OnSetfocusTitles(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	SetAction(eTitles);
-	*pResult = 0;
-}
-
-
-void CDlgConfigVenue::OnSetfocusEvent(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	SetAction(eEvents);
-	*pResult = 0;
-}
-
-
-void CDlgConfigVenue::OnSetfocusMultiQ(
-		NMHDR* pNMHDR,
-		LRESULT* pResult)
-{
-	SetAction(eMultiQ);
-	*pResult = 0;
-}
-
-
-void CDlgConfigVenue::OnNew()
-{
-	bool done = false;
-	tstring name;
-	switch (m_Action)
+	wxTreeItemId item;
+	CDlgConfigureDataBase* pBase = GetCurrentData(&item);
+	if (pBase && pBase->CanMove())
 	{
-	case eDivisions:
-		while (!done)
+		wxTreeItemId itemPrev = m_ctrlItems->GetPrevSibling(item);
+		CDlgConfigureDataBase* pPrev = GetData(itemPrev);
+		if (pPrev)
 		{
-			done = true;
-			CDlgName dlg(name.c_str(), IDS_DIVISION_NAME, this);
-			if (IDOK == dlg.DoModal())
-			{
-				name = dlg.GetName();
-				if (m_pVenue->GetDivisions().FindDivision(name))
-				{
-					done = false;
-					AfxMessageBox(IDS_NAME_IN_USE);
-					continue;
-				}
-				ARBConfigDivisionPtr pNewDiv;
-				if (m_pVenue->GetDivisions().AddDivision(name, &pNewDiv))
-				{
-					int nInsertAt = m_ctrlDivisions.GetSelection();
-					if (0 > nInsertAt)
-						nInsertAt = m_ctrlDivisions.GetItemCount();
-					else
-						++nInsertAt;
-					int index = m_ctrlDivisions.InsertItem(LVIF_TEXT | LVIF_PARAM, nInsertAt,
-						LPSTR_TEXTCALLBACK, 0, 0, 0,
-						reinterpret_cast<LPARAM>(
-							static_cast<CListData*>(
-								new CDlgConfigureDataDivision(pNewDiv))));
-					m_ctrlDivisions.SetSelection(index);
-					FindCurrentDivision(pNewDiv, true);
-				}
-			}
+			/*TODO: doesn't quite work right
+			CDlgConfigureDataBase* pCur2 = pBase->Clone();
+			CDlgConfigureDataBase* pPrev2 = pPrev->Clone();
+			m_ctrlItems->SetItemData(item, pPrev2);
+			m_ctrlItems->SetItemData(itemPrev, pCur2);
+			RefreshTreeItem(m_ctrlItems, item);
+			RefreshTreeItem(m_ctrlItems, itemPrev);
+			*/
 		}
-		break;
-
-	case eLevels:
-		{
-			CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
-			if (!pDivData)
-				return;
-			HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
-			CDlgConfigureDataLevel* pLevelData = GetCurrentLevelData();
-			CDlgConfigureDataSubLevel* pSubLevelData = GetCurrentSubLevelData();
-			UINT id = IDS_LEVEL_NAME;
-			HTREEITEM hParentItem = TVI_ROOT;
-			ARBConfigLevelPtr pLevel;
-			if (pLevelData
-			&& IDNO == AfxMessageBox(IDS_CREATE_LEVEL, MB_YESNO | MB_ICONQUESTION))
-			{
-				id = IDS_SUBLEVEL_NAME;
-				hParentItem = hItem;
-				pLevel = pLevelData->GetLevel();
-			}
-			else if (pSubLevelData)
-			{
-				id = IDS_SUBLEVEL_NAME;
-				hParentItem = m_ctrlLevels.GetParentItem(hItem);
-				pLevel = pSubLevelData->GetLevel();
-			}
-
-			while (!done)
-			{
-				done = true;
-				CDlgName dlg(name.c_str(), id, this);
-				if (IDOK == dlg.DoModal())
-				{
-					name = dlg.GetName();
-					if (pDivData->GetDivision()->GetLevels().FindSubLevel(name))
-					{
-						done = false;
-						AfxMessageBox(IDS_NAME_IN_USE);
-						continue;
-					}
-					if (IDS_LEVEL_NAME == id)
-					{
-						ARBConfigLevelPtr pNewLevel;
-						if (pDivData->GetDivision()->GetLevels().AddLevel(name, &pNewLevel))
-						{
-							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-								0, 0, 0, 0,
-								reinterpret_cast<LPARAM>(
-									static_cast<CListData*>(
-										new CDlgConfigureDataLevel(pDivData->GetDivision(), pNewLevel))),
-								hParentItem, hItem);
-							FindCurrentLevel(pNewLevel, true);
-						}
-					}
-					else
-					{
-						ARBConfigSubLevelPtr pNewSubLevel;
-						if (pLevel->GetSubLevels().AddSubLevel(name, &pNewSubLevel))
-						{
-							m_ctrlLevels.InsertItem(TVIF_TEXT | TVIF_PARAM, LPSTR_TEXTCALLBACK,
-								0, 0, 0, 0,
-								reinterpret_cast<LPARAM>(
-									static_cast<CListData*>(
-										new CDlgConfigureDataSubLevel(pDivData->GetDivision(), pLevel, pNewSubLevel))),
-								hParentItem, hItem);
-							FindCurrentSubLevel(pNewSubLevel, true);
-						}
-					}
-				}
-			}
-		}
-		break;
-
-	case eTitles:
-		{
-			while (!done)
-			{
-				done = true;
-				ARBConfigTitlePtr title(ARBConfigTitle::New());
-				title->SetName(name);
-				CDlgConfigTitle dlg(title, this);
-				if (IDOK == dlg.DoModal())
-				{
-					name = title->GetName();
-					if (m_pVenue->GetTitles().FindTitle(name))
-					{
-						done = false;
-						AfxMessageBox(IDS_NAME_IN_USE);
-						continue;
-					}
-					ARBConfigTitlePtr pTitle;
-					if (m_pVenue->GetTitles().AddTitle(name, &pTitle))
-					{
-						*pTitle = *title;
-						//pTitle->SetMultiple(dlg.GetMultiple());
-						//pTitle->SetLongName(dlg.GetLongName());
-						//pTitle->SetDescription(dlg.GetDesc());
-						int nInsertAt = m_ctrlTitles.GetSelection();
-						if (0 > nInsertAt)
-							nInsertAt = m_ctrlTitles.GetItemCount();
-						else
-							++nInsertAt;
-						int index = m_ctrlTitles.InsertItem(LVIF_TEXT | LVIF_PARAM, nInsertAt,
-							LPSTR_TEXTCALLBACK, 0, 0, 0,
-							reinterpret_cast<LPARAM>(
-								static_cast<CListData*>(
-									new CDlgConfigureDataTitle(pTitle))));
-						m_ctrlTitles.SetSelection(index);
-						m_ctrlTitles.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
-						m_ctrlTitles.Invalidate();
-					}
-				}
-			}
-		}
-		break;
-
-	case eEvents:
-		{
-			// The dialog will ensure uniqueness.
-			ARBConfigEventPtr pEvent(ARBConfigEvent::New());
-			CDlgConfigEvent dlg(true, m_pVenue, pEvent, this);
-			if (IDOK == dlg.DoModal())
-			{
-				if (m_pVenue->GetEvents().AddEvent(pEvent))
-				{
-					LoadEventData();
-					FindCurrentEvent(pEvent, true);
-				}
-			}
-		}
-		break;
-
-	case eMultiQ:
-		{
-			// The dialog will ensure uniqueness.
-			ARBConfigMultiQPtr multiq(ARBConfigMultiQ::New());
-			CDlgConfigMultiQ dlg(m_pVenue, multiq, this);
-			if (IDOK == dlg.DoModal())
-			{
-				if (m_pVenue->GetMultiQs().AddMultiQ(multiq))
-				{
-					LoadMultiQData();
-					FindCurrentMultiQ(multiq, true);
-				}
-			}
-		}
-		break;
 	}
 }
 
 
-void CDlgConfigVenue::OnDelete()
+void CDlgConfigVenue::OnMoveDown(wxCommandEvent& evt)
 {
-	switch (m_Action)
+	wxTreeItemId item;
+	CDlgConfigureDataBase* pBase = GetCurrentData(&item);
+	if (pBase && pBase->CanMove())
 	{
-	case eDivisions:
+		wxTreeItemId itemNext = m_ctrlItems->GetNextSibling(item);
+		CDlgConfigureDataBase* pNext = GetData(itemNext);
+		if (pNext)
 		{
-			int index;
-			if (0 <= (index = m_ctrlDivisions.GetSelection()))
-			{
-				CDlgConfigureDataDivision* pDivData = dynamic_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetData(index));
-				assert(NULL != pDivData);
-				tstring div = pDivData->GetDivision()->GetName();
-				// If we were able to delete it...
-				if (m_pVenue->GetDivisions().DeleteDivision(div, m_pVenue->GetEvents()))
-				{
-					m_pVenue->GetMultiQs().DeleteDivision(div);
-					m_DlgFixup.push_back(ARBConfigActionDeleteDivision::New(m_pVenue->GetName(), div));
-					m_ctrlDivisions.DeleteItem(index);
-				}
-			}
+			/*TODO: doesn't quite work right
+			CDlgConfigureDataBase* pCur2 = pBase->Clone();
+			CDlgConfigureDataBase* pNext2 = pNext->Clone();
+			m_ctrlItems->SetItemData(item, pNext2);
+			m_ctrlItems->SetItemData(itemNext, pCur2);
+			RefreshTreeItem(m_ctrlItems, item);
+			RefreshTreeItem(m_ctrlItems, itemNext);
+			*/
 		}
-		break;
-
-	case eLevels:
-		{
-			HTREEITEM hItem;
-			if (NULL != (hItem = m_ctrlLevels.GetSelectedItem()))
-			{
-				CListData* pData = reinterpret_cast<CListData*>(m_ctrlLevels.GetItemData(hItem));
-				CDlgConfigureDataLevel* pLevelData = dynamic_cast<CDlgConfigureDataLevel*>(pData);
-				CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
-				if (pLevelData)
-				{
-					tstring level = pLevelData->GetLevel()->GetName();
-					if (pLevelData->GetDivision()->GetLevels().DeleteLevel(pLevelData->GetDivision()->GetName(), level, m_pVenue->GetEvents()))
-					{
-						m_pVenue->GetMultiQs().DeleteLevel(level);
-						m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewLevel(
-							m_pVenue->GetName(),
-							pLevelData->GetDivision()->GetName(),
-							level));
-						m_ctrlLevels.DeleteItem(hItem);
-					}
-				}
-				else if (pSubLevelData)
-				{
-					tstring level = pSubLevelData->GetLevel()->GetName();
-					tstring subLevel = pSubLevelData->GetSubLevel()->GetName();
-					bool bLevelModified = false;
-					if (pSubLevelData->GetDivision()->GetLevels().DeleteSubLevel(subLevel, bLevelModified))
-					{
-						m_pVenue->GetMultiQs().DeleteLevel(subLevel);
-						// Note, if deleting the sublevel caused the level's name
-						// to change, just leave it. It causes more trouble to
-						// try modifing the name to the old sublevel name.
-						m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(
-							m_pVenue->GetName(),
-							pSubLevelData->GetDivision()->GetName(),
-							level, subLevel));
-						m_ctrlLevels.DeleteItem(hItem);
-					}
-				}
-			}
-		}
-		break;
-
-	case eTitles:
-		{
-			int index;
-			if (0 <= (index = m_ctrlTitles.GetSelection()))
-			{
-				CDlgConfigureDataTitle* pTitleData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-				assert(NULL != pTitleData);
-				tstring title = pTitleData->GetTitle()->GetName();
-				if (m_pVenue->GetTitles().DeleteTitle(title))
-				{
-					m_DlgFixup.push_back(ARBConfigActionDeleteTitle::New(m_pVenue->GetName(), tstring(), title, tstring()));
-					m_ctrlTitles.DeleteItem(index);
-				}
-			}
-		}
-		break;
-
-	case eEvents:
-		{
-			int index;
-			if (0 <= (index = m_ctrlEvents.GetSelection()))
-			{
-				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
-				assert(NULL != pEventData);
-				tstring evt = pEventData->GetEvent()->GetName();
-				if (m_pVenue->GetEvents().DeleteEvent(evt))
-				{
-					m_pVenue->GetMultiQs().DeleteEvent(evt);
-					m_DlgFixup.push_back(ARBConfigActionDeleteEvent::New(m_pVenue->GetName(), evt));
-					m_ctrlEvents.DeleteItem(index);
-				}
-			}
-		}
-		break;
-
-	case eMultiQ:
-		{
-			int index;
-			if (0 <= (index = m_ctrlMultiQ.GetSelection()))
-			{
-				CDlgConfigureDataMultiQ* pData = dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
-				assert(NULL != pData);
-				tstring multiQ = pData->GetMultiQ()->GetName();
-				if (m_pVenue->GetMultiQs().DeleteMultiQ(pData->GetMultiQ()))
-				{
-					m_DlgFixup.push_back(ARBConfigActionDeleteMultiQ::New(m_pVenue->GetName(), multiQ));
-					m_ctrlMultiQ.DeleteItem(index);
-				}
-			}
-		}
-		break;
 	}
 }
 
 
-void CDlgConfigVenue::OnEdit()
+void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 {
-	switch (m_Action)
-	{
-	case eDivisions:
-		{
-			CDlgConfigureDataDivision* pDivData = GetCurrentDivisionData();
-			if (!pDivData)
-				return;
-			bool done = false;
-			tstring oldName = pDivData->GetDivision()->GetName();
-			tstring name(oldName);
-			if (0 < m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_Book.GetConfig(), m_pVenue->GetName(), name))
-			{
-				if (IDYES != AfxMessageBox(IDS_CHANGEDIV_ISSUES, MB_ICONQUESTION | MB_YESNO))
-					return;
-			}
-			while (!done)
-			{
-				done = true;
-				CDlgName dlg(name.c_str(), IDS_DIVISION_NAME, this);
-				if (IDOK == dlg.DoModal())
-				{
-					name = dlg.GetName();
-					if (oldName != name)
-					{
-						if (m_pVenue->GetDivisions().FindDivision(name))
-						{
-							done = false;
-							AfxMessageBox(IDS_NAME_IN_USE);
-							continue;
-						}
-						pDivData->GetDivision()->SetName(name);
-						m_pVenue->GetEvents().RenameDivision(oldName, name);
-						m_pVenue->GetMultiQs().RenameDivision(oldName, name);
-						m_DlgFixup.push_back(ARBConfigActionRenameDivision::New(m_pVenue->GetName(), oldName, name));
-						m_ctrlDivisions.Invalidate();
-					}
-				}
-			}
-		}
-		break;
-
-	case eLevels:
-		{
-			CDlgConfigureDataLevel* pLevelData = GetCurrentLevelData();
-			CDlgConfigureDataSubLevel* pSubLevelData = GetCurrentSubLevelData();
-			if (pLevelData)
-			{
-				bool done = false;
-				tstring oldName = pLevelData->GetLevel()->GetName();
-				tstring name(oldName);
-				// If there are sublevels, don't ask the following question. If a level has
-				// sublevels, the level name isn't allowed to be used for an event.
-				if (0 == pLevelData->GetLevel()->GetSubLevels().size())
-				{
-					if (0 < m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_Book.GetConfig(), m_pVenue->GetName(), pLevelData->GetDivision()->GetName()))
-					{
-						if (IDYES != AfxMessageBox(IDS_CHANGELEVEL_ISSUES, MB_ICONQUESTION | MB_YESNO))
-							return;
-					}
-				}
-				while (!done)
-				{
-					done = true;
-					CDlgName dlg(name.c_str(), IDS_LEVEL_NAME, this);
-					if (IDOK == dlg.DoModal())
-					{
-						name = dlg.GetName();
-						// If the name hasn't changed, don't do the inuse verification.
-						if (oldName != name)
-						{
-							bool bInUse = false;
-							if (0 == pLevelData->GetLevel()->GetSubLevels().size())
-							{
-								if (pLevelData->GetDivision()->GetLevels().FindSubLevel(name))
-									bInUse = true;
-							}
-							else
-							{
-								if (pLevelData->GetDivision()->GetLevels().VerifyLevel(name, false))
-									bInUse = true;
-							}
-							if (bInUse)
-							{
-								done = false;
-								AfxMessageBox(IDS_NAME_IN_USE);
-								continue;
-							}
-							pLevelData->GetLevel()->SetName(name);
-							if (0 == pLevelData->GetLevel()->GetSubLevels().size())
-							{
-								m_pVenue->GetEvents().RenameLevel(
-									pLevelData->GetDivision()->GetName(),
-									oldName, name);
-								m_pVenue->GetMultiQs().RenameLevel(
-									pLevelData->GetDivision()->GetName(),
-									oldName, name);
-							}
-							m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(
-								m_pVenue->GetName(),
-								pLevelData->GetDivision()->GetName(),
-								oldName, pLevelData->GetLevel()->GetName()));
-							m_ctrlLevels.Invalidate();
-						}
-					}
-				}
-			}
-			else if (pSubLevelData)
-			{
-				bool done = false;
-				tstring oldName = pSubLevelData->GetSubLevel()->GetName();
-				tstring name(oldName);
-				if (0 < m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_Book.GetConfig(), m_pVenue->GetName(), pSubLevelData->GetDivision()->GetName()))
-				{
-					if (IDYES != AfxMessageBox(IDS_CHANGESUBLEVEL_ISSUES, MB_ICONQUESTION | MB_YESNO))
-						return;
-				}
-				while (!done)
-				{
-					done = true;
-					CDlgName dlg(name.c_str(), IDS_SUBLEVEL_NAME, this);
-					if (IDOK == dlg.DoModal())
-					{
-						name = dlg.GetName();
-						if (oldName != name)
-						{
-							if (pSubLevelData->GetDivision()->GetLevels().FindSubLevel(name))
-							{
-								done = false;
-								AfxMessageBox(IDS_NAME_IN_USE);
-								continue;
-							}
-							pSubLevelData->GetSubLevel()->SetName(name);
-							// No need to fix ARBConfigEventList cause we don't do sublevel names in events.
-							m_pVenue->GetMultiQs().RenameLevel(
-								pSubLevelData->GetDivision()->GetName(),
-								oldName, pSubLevelData->GetSubLevel()->GetName());
-							m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(
-								m_pVenue->GetName(),
-								pSubLevelData->GetDivision()->GetName(),
-								pSubLevelData->GetLevel()->GetName(),
-								oldName, pSubLevelData->GetSubLevel()->GetName()));
-							m_ctrlLevels.Invalidate();
-						}
-					}
-				}
-			}
-		}
-		break;
-
-	case eTitles:
-		{
-			CDlgConfigureDataTitle* pTitleData = GetCurrentTitleData();
-			if (!pTitleData)
-				return;
-			bool done = false;
-			tstring oldName = pTitleData->GetTitle()->GetName();
-			tstring oldLongName = pTitleData->GetTitle()->GetLongName();
-			tstring name(oldName);
-			tstring longname(oldLongName);
-			while (!done)
-			{
-				done = true;
-				ARBConfigTitlePtr title = pTitleData->GetTitle()->Clone();
-				CDlgConfigTitle dlg(title, this);
-				if (IDOK == dlg.DoModal())
-				{
-					name = title->GetName();
-					longname = title->GetLongName();
-					if (oldName != name)
-					{
-						if (m_pVenue->GetTitles().FindTitle(name))
-						{
-							int nTitles = m_Book.GetDogs().NumTitlesInUse(m_pVenue->GetName(), oldName);
-							bool bInUse = true;
-							if (0 < nTitles)
-							{
-								if (IDYES == AfxMessageBox(IDS_NAME_IN_USE_MERGE, MB_YESNO | MB_ICONQUESTION))
-								{
-									bInUse = false;
-									m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pVenue->GetName(), oldName, name));
-									if (m_pVenue->GetTitles().DeleteTitle(oldName))
-									{
-										m_ctrlTitles.DeleteItem(m_ctrlTitles.GetSelection());
-										// This will break out of the loop on the 'continue';
-									}
-								}
-							}
-							if (bInUse)
-							{
-								done = false;
-								AfxMessageBox(IDS_NAME_IN_USE);
-							}
-							continue;
-						}
-						title->SetName(name);
-					}
-					*(pTitleData->GetTitle()) = *title;
-					m_ctrlTitles.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
-					m_ctrlTitles.Invalidate();
-					if (name != oldName || longname != oldLongName)
-					{
-						if (name != oldName)
-							m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pVenue->GetName(), oldName, name));
-						m_ctrlTitles.Invalidate();
-					}
-				}
-			}
-		}
-		break;
-
-	case eEvents:
-		{
-			CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-			if (!pEventData)
-				return;
-			ARBConfigEventPtr pEvent = pEventData->GetEvent();
-			tstring oldName = pEvent->GetName();
-			CDlgConfigEvent dlg(false, m_pVenue, pEvent, this);
-			if (IDOK == dlg.DoModal())
-			{
-				m_pVenue->GetMultiQs().RenameEvent(oldName, pEvent->GetName());
-				dlg.GetFixups(m_DlgFixup);
-				LoadEventData();
-				FindCurrentEvent(pEvent, true);
-			}
-		}
-		break;
-
-	case eMultiQ:
-		{
-			CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
-			if (!pData)
-				return;
-			ARBConfigMultiQPtr pMultiQ = pData->GetMultiQ();
-			tstring oldName = pMultiQ->GetName();
-			bool done = false;
-			while (!done)
-			{
-				done = true;
-				CDlgConfigMultiQ dlg(m_pVenue, pMultiQ, this);
-				if (IDOK == dlg.DoModal())
-				{
-					tstring name = pMultiQ->GetName();
-					if (name != oldName)
-						m_DlgFixup.push_back(ARBConfigActionRenameMultiQ::New(m_pVenue->GetName(), oldName, name));
-					LoadMultiQData();
-					FindCurrentMultiQ(pMultiQ, true);
-				}
-			}
-		}
-		break;
-
-	}
-}
-
-
-void CDlgConfigVenue::OnCopy()
-{
-	switch (m_Action)
-	{
-	case eDivisions:
-	case eLevels:
-		// We don't currently support copying these.
-		break;
-
-	case eTitles:
-		{
-			int index;
-			if (0 <= (index = m_ctrlTitles.GetSelection()))
-			{
-				// Since index is valid, I know pData will be too.
-				CDlgConfigureDataTitle* pData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-				tstring name(pData->GetTitle()->GetName());
-				tstring longname(pData->GetTitle()->GetLongName());
-				while (m_pVenue->GetTitles().FindTitle(name))
-				{
-					CString copyOf;
-					copyOf.FormatMessage(IDS_COPYOF, name.c_str());
-					name = (LPCTSTR)copyOf;
-					copyOf.FormatMessage(IDS_COPYOF, longname.c_str());
-					longname = (LPCTSTR)copyOf;
-				}
-				ARBConfigTitlePtr title = pData->GetTitle()->Clone();
-				title->SetName(name);
-				title->SetLongName(longname);
-				if (m_pVenue->GetTitles().AddTitle(title))
-				{
-					LoadTitleData();
-					FindCurrentTitle(title, true);
-				}
-			}
-		}
-		break;
-
-	case eEvents:
-		{
-			int index;
-			if (0 <= (index = m_ctrlEvents.GetSelection()))
-			{
-				// Since index is valid, I know pEventData will be too.
-				CDlgConfigureDataEvent* pEventData = GetCurrentEventData();
-				tstring name(pEventData->GetEvent()->GetName());
-				while (m_pVenue->GetEvents().FindEvent(name))
-				{
-					CString copyOf;
-					copyOf.FormatMessage(IDS_COPYOF, name.c_str());
-					name = (LPCTSTR)copyOf;
-				}
-				ARBConfigEventPtr pEvent = pEventData->GetEvent()->Clone();
-				pEvent->SetName(name);
-				if (m_pVenue->GetEvents().AddEvent(pEvent))
-				{
-					LoadEventData();
-					FindCurrentEvent(pEvent, true);
-				}
-			}
-		}
-		break;
-
-	case eMultiQ:
-		{
-			int index;
-			if (0 <= (index = m_ctrlMultiQ.GetSelection()))
-			{
-				// Since index is valid, I know pData will be too.
-				CDlgConfigureDataMultiQ* pData = GetCurrentMultiQData();
-				tstring name(pData->GetMultiQ()->GetName());
-				while (m_pVenue->GetMultiQs().FindMultiQ(name))
-				{
-					CString copyOf;
-					copyOf.FormatMessage(IDS_COPYOF, name.c_str());
-					name = (LPCTSTR)copyOf;
-				}
-				ARBConfigMultiQPtr multiq = pData->GetMultiQ()->Clone();
-				multiq->SetName(name);
-				if (m_pVenue->GetMultiQs().AddMultiQ(multiq))
-				{
-					LoadMultiQData();
-					FindCurrentMultiQ(multiq, true);
-				}
-			}
-		}
-		break;
-	}
-}
-
-
-void CDlgConfigVenue::OnMoveUp()
-{
-	switch (m_Action)
-	{
-	case eDivisions:
-		{
-			int index = m_ctrlDivisions.GetSelection();
-			if (0 < index)
-			{
-				CDlgConfigureDataDivision* pDivData = dynamic_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetData(index));
-				ARBConfigDivisionPtr pDiv = pDivData->GetDivision();
-				m_pVenue->GetDivisions().Move(pDiv, -1);
-				LoadDivisionData();
-				UpdateButtons();
-				FindCurrentDivision(pDiv, true);
-			}
-		}
-		break;
-	case eLevels:
-		{
-			HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
-			HTREEITEM hPrevItem = m_ctrlLevels.GetPrevSiblingItem(hItem);
-			if (NULL != hPrevItem)
-			{
-				CListData* pData = reinterpret_cast<CListData*>(m_ctrlLevels.GetItemData(hItem));
-				CDlgConfigureDataLevel* pLevelData = dynamic_cast<CDlgConfigureDataLevel*>(pData);
-				CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
-				ARBConfigLevelPtr pLevel;
-				ARBConfigSubLevelPtr pSubLevel;
-				if (pLevelData)
-				{
-					pLevel = pLevelData->GetLevel();
-					pLevelData->GetDivision()->GetLevels().Move(pLevel, -1);
-				}
-				else if (pSubLevelData)
-				{
-					pSubLevel = pSubLevelData->GetSubLevel();
-					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevel, -1);
-				}
-				LoadLevelData();
-				UpdateButtons();
-				if (pLevel)
-				{
-					FindCurrentLevel(pLevel, true);
-				}
-				else if (pSubLevel)
-				{
-					FindCurrentSubLevel(pSubLevel, true);
-				}
-			}
-		}
-		break;
-	case eTitles:
-		{
-			int index = m_ctrlTitles.GetSelection();
-			if (0 < index)
-			{
-				CDlgConfigureDataTitle* pTitleData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-				ARBConfigTitlePtr pTitle = pTitleData->GetTitle();
-				m_pVenue->GetTitles().Move(pTitle, -1);
-				LoadTitleData();
-				UpdateButtons();
-				FindCurrentTitle(pTitle, true);
-			}
-		}
-		break;
-	case eEvents:
-		{
-			int index = m_ctrlEvents.GetSelection();
-			if (0 < index)
-			{
-				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
-				ARBConfigEventPtr pEvent = pEventData->GetEvent();
-				m_pVenue->GetEvents().Move(pEvent, -1);
-				LoadEventData();
-				UpdateButtons();
-				FindCurrentEvent(pEvent, true);
-			}
-		}
-		break;
-	case eMultiQ:
-		{
-			int index = m_ctrlMultiQ.GetSelection();
-			if (0 < index)
-			{
-				CDlgConfigureDataMultiQ* pData = dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
-				ARBConfigMultiQPtr pMultiQ = pData->GetMultiQ();
-				m_pVenue->GetMultiQs().Move(pMultiQ, -1);
-				LoadMultiQData();
-				UpdateButtons();
-				FindCurrentMultiQ(pMultiQ, true);
-			}
-		}
-		break;
-	}
-}
-
-
-void CDlgConfigVenue::OnMoveDown()
-{
-	switch (m_Action)
-	{
-	case eDivisions:
-		{
-			int index = m_ctrlDivisions.GetSelection();
-			if (index < m_ctrlDivisions.GetItemCount() - 1)
-			{
-				CDlgConfigureDataDivision* pDivData = dynamic_cast<CDlgConfigureDataDivision*>(m_ctrlDivisions.GetData(index));
-				ARBConfigDivisionPtr pDiv = pDivData->GetDivision();
-				m_pVenue->GetDivisions().Move(pDiv, 1);
-				LoadDivisionData();
-				UpdateButtons();
-				FindCurrentDivision(pDiv, true);
-			}
-		}
-		break;
-	case eLevels:
-		{
-			HTREEITEM hItem = m_ctrlLevels.GetSelectedItem();
-			HTREEITEM hNextItem = m_ctrlLevels.GetNextSiblingItem(hItem);
-			if (NULL != hNextItem)
-			{
-				CListData* pData = reinterpret_cast<CListData*>(m_ctrlLevels.GetItemData(hItem));
-				CDlgConfigureDataLevel* pLevelData = dynamic_cast<CDlgConfigureDataLevel*>(pData);
-				CDlgConfigureDataSubLevel* pSubLevelData = dynamic_cast<CDlgConfigureDataSubLevel*>(pData);
-				ARBConfigLevelPtr pLevel;
-				ARBConfigSubLevelPtr pSubLevel;
-				if (pLevelData)
-				{
-					pLevel = pLevelData->GetLevel();
-					pLevelData->GetDivision()->GetLevels().Move(pLevel, 1);
-				}
-				else if (pSubLevelData)
-				{
-					pSubLevel = pSubLevelData->GetSubLevel();
-					pSubLevelData->GetLevel()->GetSubLevels().Move(pSubLevel, 1);
-				}
-				LoadLevelData();
-				UpdateButtons();
-				if (pLevel)
-				{
-					FindCurrentLevel(pLevel, true);
-				}
-				else if (pSubLevel)
-				{
-					FindCurrentSubLevel(pSubLevel, true);
-				}
-			}
-		}
-		break;
-	case eTitles:
-		{
-			int index = m_ctrlTitles.GetSelection();
-			if (index < m_ctrlTitles.GetItemCount() - 1)
-			{
-				CDlgConfigureDataTitle* pTitleData = dynamic_cast<CDlgConfigureDataTitle*>(m_ctrlTitles.GetData(index));
-				ARBConfigTitlePtr pTitle = pTitleData->GetTitle();
-				m_pVenue->GetTitles().Move(pTitle, 1);
-				LoadTitleData();
-				UpdateButtons();
-				FindCurrentTitle(pTitle, true);
-			}
-		}
-		break;
-	case eEvents:
-		{
-			int index = m_ctrlEvents.GetSelection();
-			if (index < m_ctrlEvents.GetItemCount() - 1)
-			{
-				CDlgConfigureDataEvent* pEventData = dynamic_cast<CDlgConfigureDataEvent*>(m_ctrlEvents.GetData(index));
-				ARBConfigEventPtr pEvent = pEventData->GetEvent();
-				m_pVenue->GetEvents().Move(pEvent, 1);
-				LoadEventData();
-				UpdateButtons();
-				FindCurrentEvent(pEvent, true);
-			}
-		}
-		break;
-	case eMultiQ:
-		{
-			int index = m_ctrlMultiQ.GetSelection();
-			if (index < m_ctrlMultiQ.GetItemCount() - 1)
-			{
-				CDlgConfigureDataMultiQ* pData = dynamic_cast<CDlgConfigureDataMultiQ*>(m_ctrlMultiQ.GetData(index));
-				ARBConfigMultiQPtr pMultiQ = pData->GetMultiQ();
-				m_pVenue->GetMultiQs().Move(pMultiQ, 1);
-				LoadMultiQData();
-				UpdateButtons();
-				FindCurrentMultiQ(pMultiQ, true);
-			}
-		}
-		break;
-	}
-}
-
-
-void CDlgConfigVenue::OnOK()
-{
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
+	m_URL.Replace(_T("\""), _T(""));
 
-	CString str;
-	m_ctrlName.GetWindowText(str);
-	str.TrimRight();
-	str.TrimLeft();
-	if (0 == str.GetLength())
-	{
-		AfxMessageBox(IDS_INVALID_NAME);
-		GotoDlgCtrl(&m_ctrlName);
-		return;
-	}
-	tstring name((LPCTSTR)str);
+	tstring name(m_Name.c_str());
 	tstring oldName = m_pVenue->GetName();
 	if (oldName != name)
 	{
 		if (m_Config.GetVenues().FindVenue(name))
 		{
-			AfxMessageBox(IDS_NAME_IN_USE);
+			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 			return;
 		}
 		m_pVenue->SetName(name);
 	}
 
-	m_ctrlLongName.GetWindowText(str);
-	m_pVenue->SetLongName((LPCTSTR)str);
-
-	m_ctrlURL.GetWindowText(str);
-	str.Replace(_T("\""), _T(""));
-#if _MSC_VER >= 1300
-	str.Trim();
-#else
-	str.TrimRight();
-	str.TrimLeft();
-#endif
-	m_pVenue->SetURL((LPCTSTR)str);
-
-	m_ctrlDesc.GetWindowText(str);
-	str.TrimRight();
-	str.Replace(_T("\r\n"), _T("\n"));
-	m_pVenue->SetDesc((LPCTSTR)str);
-
-	m_ctrlLifetimeName.GetWindowText(str);
-	str.TrimRight();
-	m_pVenue->SetLifetimeName((LPCTSTR)str);
+	m_pVenue->SetLongName(m_LongName);
+	m_pVenue->SetURL(m_URL.c_str());
+	m_pVenue->SetDesc(m_Desc);
+	m_pVenue->SetLifetimeName(m_LifetimeName);
 
 	if (oldName != name)
 		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(oldName, name));
@@ -1788,6 +650,5 @@ void CDlgConfigVenue::OnOK()
 
 	// The rest is already taken care of.
 
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif
