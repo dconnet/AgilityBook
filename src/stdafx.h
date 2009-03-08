@@ -36,6 +36,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * @li 2009-03-07 DRC Added ARB_ERASE_RETURNS_ITERATOR.
  * @li 2005-10-30 DRC Added static xerces library support.
  */
 
@@ -254,4 +255,12 @@ namespace tr1 = boost;
 //  _wcstombs_s(size_t*, char*, size_t, const wchar_t*, size_t)
 #if _MSC_VER >= 1400
 #define ARB_HAS_SECURE_MBS_WCS
+#endif
+
+// ARB_ERASE_RETURNS_ITERATOR
+//  std::set<x>::iterator i = var.begin()...; i = var.erase(i); ...
+//  If not defined, will use "var.erase(i++);" construct
+//  BUT, if that is used on VC9, VC9 crashes with an incompatible iterator
+#ifdef _MSC_VER
+#define ARB_ERASE_RETURNS_ITERATOR
 #endif
