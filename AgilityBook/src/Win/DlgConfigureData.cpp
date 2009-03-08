@@ -48,17 +48,42 @@
 #include "ARBConfigDivision.h"
 #include "ARBConfigVenue.h"
 #include "DlgConfigEvent.h"
+#include "DlgConfigMultiQ.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigTitle.h"
 #include "DlgConfigure.h"
+#include "DlgConfigVenue.h"
 #include "DlgName.h"
 #include "DlgReorder.h"
+#include "Globals.h"
+#include <wx/treectrl.h>
 
 
 ////////////////////////////////////////////////////////////////////////////
 
+CDlgConfigureDataBase::CDlgConfigureDataBase(CDlgConfigVenue* pDlg)
+	: m_pDlg(pDlg)
+{
+}
+
+
+CDlgConfigureDataBase::CDlgConfigureDataBase(CDlgConfigureDataBase const& rhs)
+	: m_pDlg(rhs.m_pDlg)
+{
+}
+
+////////////////////////////////////////////////////////////////////////////
+
 CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
-	: m_Venue(venue)
+	: CDlgConfigureDataBase(NULL)
+	, m_Venue(venue)
+{
+}
+
+
+CDlgConfigureDataVenue::CDlgConfigureDataVenue(CDlgConfigureDataVenue const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_Venue(rhs.m_Venue)
 {
 }
 
@@ -100,7 +125,15 @@ wxString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
-	: m_Fault(fault)
+	: CDlgConfigureDataBase(NULL)
+	, m_Fault(fault)
+{
+}
+
+
+CDlgConfigureDataFault::CDlgConfigureDataFault(CDlgConfigureDataFault const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_Fault(rhs.m_Fault)
 {
 }
 
@@ -119,7 +152,15 @@ wxString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints)
-	: m_OtherPoints(otherPoints)
+	: CDlgConfigureDataBase(NULL)
+	, m_OtherPoints(otherPoints)
+{
+}
+
+
+CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(CDlgConfigureDataOtherPoints const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_OtherPoints(rhs.m_OtherPoints)
 {
 }
 
@@ -137,8 +178,18 @@ wxString CDlgConfigureDataOtherPoints::OnNeedText(int iColumn) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataDivision::CDlgConfigureDataDivision(ARBConfigDivisionPtr div)
-	: m_Div(div)
+CDlgConfigureDataDivision::CDlgConfigureDataDivision(
+		CDlgConfigVenue* pDlg,
+		ARBConfigDivisionPtr div)
+	: CDlgConfigureDataBase(pDlg)
+	, m_Div(div)
+{
+}
+
+
+CDlgConfigureDataDivision::CDlgConfigureDataDivision(CDlgConfigureDataDivision const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_Div(rhs.m_Div)
 {
 }
 
@@ -154,13 +205,108 @@ wxString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 	return m_Div->GetName().c_str();
 }
 
+
+bool CDlgConfigureDataDivision::DoAdd()
+{
+	bool added = false;
+	bool done = false;
+	tstring name;
+	while (!done)
+	{
+		done = true;
+		CDlgName dlg(name.c_str(), _("IDS_LEVEL_NAME"), m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			name = dlg.GetName();
+			if (m_Div->GetLevels().FindSubLevel(name))
+			{
+				done = false;
+				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+				continue;
+			}
+			ARBConfigLevelPtr pNewLevel;
+			if (m_Div->GetLevels().AddLevel(name, &pNewLevel))
+			{
+				CDlgConfigureDataLevel* pData = new CDlgConfigureDataLevel(m_pDlg, m_Div, pNewLevel);
+				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+				m_pDlg->m_ctrlItems->SelectItem(level);
+				added = true;
+			}
+		}
+	}
+	return added;
+}
+
+bool CDlgConfigureDataDivision::DoEdit()
+{
+	tstring oldName = m_Div->GetName();
+	tstring name(oldName);
+	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), name))
+	{
+		if (wxYES != wxMessageBox(_("IDS_CHANGEDIV_ISSUES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+			return false;
+	}
+	bool bEdited = false;
+	bool done = false;
+	while (!done)
+	{
+		done = true;
+		CDlgName dlg(name.c_str(), _("IDS_DIVISION_NAME"), m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			name = dlg.GetName();
+			if (oldName != name)
+			{
+				if (m_pDlg->m_pVenue->GetDivisions().FindDivision(name))
+				{
+					done = false;
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					continue;
+				}
+				m_Div->SetName(name);
+				m_pDlg->m_pVenue->GetEvents().RenameDivision(oldName, name);
+				m_pDlg->m_pVenue->GetMultiQs().RenameDivision(oldName, name);
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameDivision::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+				bEdited = true;
+			}
+		}
+	}
+	return bEdited;
+}
+
+
+bool CDlgConfigureDataDivision::DoDelete()
+{
+	tstring div = m_Div->GetName();
+	// If we were able to delete it...
+	if (m_pDlg->m_pVenue->GetDivisions().DeleteDivision(div, m_pDlg->m_pVenue->GetEvents()))
+	{
+		m_pDlg->m_pVenue->GetMultiQs().DeleteDivision(div);
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteDivision::New(m_pDlg->m_pVenue->GetName(), div));
+		m_pDlg->m_ctrlItems->Delete(GetId());
+		return true;
+	}
+	return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataLevel::CDlgConfigureDataLevel(
+		CDlgConfigVenue* pDlg,
 		ARBConfigDivisionPtr div,
 		ARBConfigLevelPtr level)
-	: m_Division(div)
+	: CDlgConfigureDataBase(pDlg)
+	, m_Division(div)
 	, m_Level(level)
+{
+}
+
+
+CDlgConfigureDataLevel::CDlgConfigureDataLevel(CDlgConfigureDataLevel const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_Division(rhs.m_Division)
+	, m_Level(rhs.m_Level)
 {
 }
 
@@ -176,15 +322,141 @@ wxString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 	return m_Level->GetName().c_str();
 }
 
+
+bool CDlgConfigureDataLevel::DoAdd()
+{
+	bool added = false;
+	bool done = false;
+	tstring name;
+	while (!done)
+	{
+		done = true;
+		CDlgName dlg(name.c_str(), _("IDS_SUBLEVEL_NAME"), m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			name = dlg.GetName();
+			if (m_Division->GetLevels().FindSubLevel(name))
+			{
+				done = false;
+				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+				continue;
+			}
+			ARBConfigSubLevelPtr pNewSubLevel;
+			if (m_Level->GetSubLevels().AddSubLevel(name, &pNewSubLevel))
+			{
+				CDlgConfigureDataSubLevel* pData = new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, pNewSubLevel);
+				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+				m_pDlg->m_ctrlItems->SelectItem(level);
+				added = true;
+			}
+		}
+	}
+	return added;
+}
+
+
+bool CDlgConfigureDataLevel::DoEdit()
+{
+	bool bEdited = false;
+	bool done = false;
+	tstring oldName = m_Level->GetName();
+	tstring name(oldName);
+	// If there are sublevels, don't ask the following question. If a level has
+	// sublevels, the level name isn't allowed to be used for an event.
+	if (0 == m_Level->GetSubLevels().size())
+	{
+		if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
+		{
+			if (wxYES != wxMessageBox(_("IDS_CHANGELEVEL_ISSUES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+				return false;
+		}
+	}
+	while (!done)
+	{
+		done = true;
+		CDlgName dlg(name.c_str(), _("IDS_LEVEL_NAME"), m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			name = dlg.GetName();
+			// If the name hasn't changed, don't do the inuse verification.
+			if (oldName != name)
+			{
+				bool bInUse = false;
+				if (0 == m_Level->GetSubLevels().size())
+				{
+					if (m_Division->GetLevels().FindSubLevel(name))
+						bInUse = true;
+				}
+				else
+				{
+					if (m_Division->GetLevels().VerifyLevel(name, false))
+						bInUse = true;
+				}
+				if (bInUse)
+				{
+					done = false;
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					continue;
+				}
+				m_Level->SetName(name);
+				if (0 == m_Level->GetSubLevels().size())
+				{
+					m_pDlg->m_pVenue->GetEvents().RenameLevel(
+						m_Division->GetName(),
+						oldName, name);
+					m_pDlg->m_pVenue->GetMultiQs().RenameLevel(
+						m_Division->GetName(),
+						oldName, name);
+				}
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(
+					m_pDlg->m_pVenue->GetName(),
+					m_Division->GetName(),
+					oldName, m_Level->GetName()));
+				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+				bEdited = true;
+			}
+		}
+	}
+	return bEdited;
+}
+
+
+bool CDlgConfigureDataLevel::DoDelete()
+{
+	tstring level = m_Level->GetName();
+	if (m_Division->GetLevels().DeleteLevel(m_Division->GetName(), level, m_pDlg->m_pVenue->GetEvents()))
+	{
+		m_pDlg->m_pVenue->GetMultiQs().DeleteLevel(level);
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewLevel(
+			m_pDlg->m_pVenue->GetName(),
+			m_Division->GetName(),
+			level));
+		m_pDlg->m_ctrlItems->Delete(GetId());
+		return true;
+	}
+	return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
+		CDlgConfigVenue* pDlg,
 		ARBConfigDivisionPtr div,
 		ARBConfigLevelPtr level,
 		ARBConfigSubLevelPtr subLevel)
-	: m_Division(div)
+	: CDlgConfigureDataBase(pDlg)
+	, m_Division(div)
 	, m_Level(level)
 	, m_SubLevel(subLevel)
+{
+}
+
+
+CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(CDlgConfigureDataSubLevel const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_Division(rhs.m_Division)
+	, m_Level(rhs.m_Level)
+	, m_SubLevel(rhs.m_SubLevel)
 {
 }
 
@@ -200,11 +472,87 @@ wxString CDlgConfigureDataSubLevel::OnNeedText(int iColumn) const
 	return m_SubLevel->GetName().c_str();
 }
 
+
+bool CDlgConfigureDataSubLevel::DoEdit()
+{
+	bool bEdited = false;
+	bool done = false;
+	tstring oldName = m_SubLevel->GetName();
+	tstring name(oldName);
+	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
+	{
+		if (wxYES != wxMessageBox(_("IDS_CHANGESUBLEVEL_ISSUES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+			return false;
+	}
+	while (!done)
+	{
+		done = true;
+		CDlgName dlg(name.c_str(), _("IDS_SUBLEVEL_NAME"), m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			name = dlg.GetName();
+			if (oldName != name)
+			{
+				if (m_Division->GetLevels().FindSubLevel(name))
+				{
+					done = false;
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					continue;
+				}
+				m_SubLevel->SetName(name);
+				// No need to fix ARBConfigEventList cause we don't do sublevel names in events.
+				m_pDlg->m_pVenue->GetMultiQs().RenameLevel(
+					m_Division->GetName(),
+					oldName, m_SubLevel->GetName());
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(
+					m_pDlg->m_pVenue->GetName(),
+					m_Division->GetName(),
+					m_Level->GetName(),
+					oldName, m_SubLevel->GetName()));
+				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+				bEdited = true;
+			}
+		}
+	}
+	return bEdited;
+}
+
+
+bool CDlgConfigureDataSubLevel::DoDelete()
+{
+	tstring level = m_Level->GetName();
+	tstring subLevel = m_SubLevel->GetName();
+	bool bLevelModified = false;
+	if (m_Division->GetLevels().DeleteSubLevel(subLevel, bLevelModified))
+	{
+		m_pDlg->m_pVenue->GetMultiQs().DeleteLevel(subLevel);
+		// Note, if deleting the sublevel caused the level's name
+		// to change, just leave it. It causes more trouble to
+		// try modifing the name to the old sublevel name.
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(
+			m_pDlg->m_pVenue->GetName(),
+			m_Division->GetName(),
+			level, subLevel));
+		m_pDlg->m_ctrlItems->Delete(GetId());
+		return true;
+	}
+	return false;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataTitle::CDlgConfigureDataTitle(
+		CDlgConfigVenue* pDlg,
 		ARBConfigTitlePtr title)
-	: m_Title(title)
+	: CDlgConfigureDataBase(pDlg)
+	, m_Title(title)
+{
+}
+
+
+CDlgConfigureDataTitle::CDlgConfigureDataTitle(CDlgConfigureDataTitle const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_Title(rhs.m_Title)
 {
 }
 
@@ -220,10 +568,119 @@ wxString CDlgConfigureDataTitle::OnNeedText(int iColumn) const
 	return m_Title->GetCompleteName(-1, false, true, true).c_str();
 }
 
+
+bool CDlgConfigureDataTitle::DoEdit()
+{
+	bool bEdited = false;
+	bool done = false;
+	tstring oldName = m_Title->GetName();
+	tstring oldLongName = m_Title->GetLongName();
+	tstring name(oldName);
+	tstring longname(oldLongName);
+	while (!done)
+	{
+		done = true;
+		ARBConfigTitlePtr title = m_Title->Clone();
+		CDlgConfigTitle dlg(title, m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			name = title->GetName();
+			longname = title->GetLongName();
+			if (oldName != name)
+			{
+				if (m_pDlg->m_pVenue->GetTitles().FindTitle(name))
+				{
+					int nTitles = m_pDlg->m_Book.GetDogs().NumTitlesInUse(m_pDlg->m_pVenue->GetName(), oldName);
+					bool bInUse = true;
+					if (0 < nTitles)
+					{
+						if (wxYES == wxMessageBox(_("IDS_NAME_IN_USE_MERGE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+						{
+							bInUse = false;
+							m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+							if (m_pDlg->m_pVenue->GetTitles().DeleteTitle(oldName))
+							{
+								m_pDlg->m_ctrlItems->Delete(GetId());
+								// This will break out of the loop on the 'continue';
+							}
+						}
+					}
+					if (bInUse)
+					{
+						done = false;
+						wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					}
+					continue;
+				}
+				title->SetName(name);
+			}
+			*m_Title = *title;
+			RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+			if (name != oldName || longname != oldLongName)
+			{
+				if (name != oldName)
+					m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+			}
+			bEdited = true;
+		}
+	}
+	return bEdited;
+}
+
+
+bool CDlgConfigureDataTitle::DoDelete()
+{
+	tstring title = m_Title->GetName();
+	if (m_pDlg->m_pVenue->GetTitles().DeleteTitle(title))
+	{
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteTitle::New(m_pDlg->m_pVenue->GetName(), tstring(), title, tstring()));
+		m_pDlg->m_ctrlItems->Delete(GetId());
+		return true;
+	}
+	return false;
+}
+
+
+bool CDlgConfigureDataTitle::DoCopy()
+{
+	bool bAdded = false;
+	tstring name(m_Title->GetName());
+	tstring longname(m_Title->GetLongName());
+	while (m_pDlg->m_pVenue->GetTitles().FindTitle(name))
+	{
+		wxString copyOf = wxString::Format(_("IDS_COPYOF"), name.c_str());
+		name = copyOf.c_str();
+		copyOf = wxString::Format(_("IDS_COPYOF"), longname.c_str());
+		longname = copyOf.c_str();
+	}
+	ARBConfigTitlePtr title = m_Title->Clone();
+	title->SetName(name);
+	title->SetLongName(longname);
+	if (m_pDlg->m_pVenue->GetTitles().AddTitle(title))
+	{
+		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, title);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		m_pDlg->m_ctrlItems->SelectItem(id);
+		bAdded = true;
+	}
+	return bAdded;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataEvent::CDlgConfigureDataEvent(ARBConfigEventPtr inEvent)
-	: m_Event(inEvent)
+CDlgConfigureDataEvent::CDlgConfigureDataEvent(
+		CDlgConfigVenue* pDlg,
+		ARBConfigEventPtr inEvent)
+	: CDlgConfigureDataBase(pDlg)
+	, m_Event(inEvent)
+{
+}
+
+
+CDlgConfigureDataEvent::CDlgConfigureDataEvent(CDlgConfigureDataEvent const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_Event(rhs.m_Event)
 {
 }
 
@@ -239,10 +696,72 @@ wxString CDlgConfigureDataEvent::OnNeedText(int iColumn) const
 	return m_Event->GetName().c_str();
 }
 
+
+bool CDlgConfigureDataEvent::DoEdit()
+{
+	bool bEdited = false;
+	tstring oldName = m_Event->GetName();
+	CDlgConfigEvent dlg(false, m_pDlg->m_pVenue, m_Event, m_pDlg);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		m_pDlg->m_pVenue->GetMultiQs().RenameEvent(oldName, m_Event->GetName());
+		dlg.GetFixups(m_pDlg->m_DlgFixup);
+		RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+		bEdited = true;
+	}
+	return bEdited;
+}
+
+
+bool CDlgConfigureDataEvent::DoDelete()
+{
+	tstring evt = m_Event->GetName();
+	if (m_pDlg->m_pVenue->GetEvents().DeleteEvent(evt))
+	{
+		m_pDlg->m_pVenue->GetMultiQs().DeleteEvent(evt);
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteEvent::New(m_pDlg->m_pVenue->GetName(), evt));
+		m_pDlg->m_ctrlItems->Delete(GetId());
+		return true;
+	}
+	return false;
+}
+
+
+bool CDlgConfigureDataEvent::DoCopy()
+{
+	bool bAdded = false;
+	tstring name(m_Event->GetName());
+	while (m_pDlg->m_pVenue->GetEvents().FindEvent(name))
+	{
+		wxString copyOf = wxString::Format(_("IDS_COPYOF"), name.c_str());
+		name = copyOf.c_str();
+	}
+	ARBConfigEventPtr pEvent = m_Event->Clone();
+	pEvent->SetName(name);
+	if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
+	{
+		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		m_pDlg->m_ctrlItems->SelectItem(id);
+		bAdded = true;
+	}
+	return bAdded;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(ARBConfigMultiQPtr multiq)
-	: m_MultiQ(multiq)
+CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(
+		CDlgConfigVenue* pDlg,
+		ARBConfigMultiQPtr multiq)
+	: CDlgConfigureDataBase(pDlg)
+	, m_MultiQ(multiq)
+{
+}
+
+
+CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(CDlgConfigureDataMultiQ const& rhs)
+	: CDlgConfigureDataBase(rhs)
+	, m_MultiQ(rhs.m_MultiQ)
 {
 }
 
@@ -256,4 +775,61 @@ wxString CDlgConfigureDataMultiQ::OnNeedText() const
 wxString CDlgConfigureDataMultiQ::OnNeedText(int iColumn) const
 {
 	return m_MultiQ->GetName().c_str();
+}
+
+
+bool CDlgConfigureDataMultiQ::DoEdit()
+{
+	bool bEdited = false;
+	tstring oldName = m_MultiQ->GetName();
+	bool done = false;
+	while (!done)
+	{
+		done = true;
+		CDlgConfigMultiQ dlg(m_pDlg->m_pVenue, m_MultiQ, m_pDlg);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			tstring name = m_MultiQ->GetName();
+			if (name != oldName)
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameMultiQ::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+			RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
+			bEdited = true;
+		}
+	}
+	return bEdited;
+}
+
+
+bool CDlgConfigureDataMultiQ::DoDelete()
+{
+	tstring multiQ = m_MultiQ->GetName();
+	if (m_pDlg->m_pVenue->GetMultiQs().DeleteMultiQ(m_MultiQ))
+	{
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteMultiQ::New(m_pDlg->m_pVenue->GetName(), multiQ));
+		m_pDlg->m_ctrlItems->Delete(GetId());
+		return true;
+	}
+	return false;
+}
+
+
+bool CDlgConfigureDataMultiQ::DoCopy()
+{
+	bool bAdded = false;
+	tstring name(m_MultiQ->GetName());
+	while (m_pDlg->m_pVenue->GetMultiQs().FindMultiQ(name))
+	{
+		wxString copyOf = wxString::Format(_("IDS_COPYOF"), name.c_str());
+		name = copyOf.c_str();
+	}
+	ARBConfigMultiQPtr multiq = m_MultiQ->Clone();
+	multiq->SetName(name);
+	if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
+	{
+		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		m_pDlg->m_ctrlItems->SelectItem(id);
+		bAdded = true;
+	}
+	return bAdded;
 }
