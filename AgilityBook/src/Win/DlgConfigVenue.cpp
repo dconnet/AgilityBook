@@ -79,15 +79,6 @@ public:
 		, m_Action(action)
 	{
 	}
-	CDlgConfigVenueDataRoot(CDlgConfigVenueDataRoot const& rhs)
-		: CDlgConfigureDataBase(rhs)
-		, m_Action(rhs.m_Action)
-	{
-	}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigVenueDataRoot(*this);
-	}
 	virtual bool CanAdd() const		{return true;}
 	virtual bool DoAdd() const;
 
@@ -122,6 +113,7 @@ bool CDlgConfigVenueDataRoot::DoAdd() const
 				{
 					CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(m_pDlg, pNewDiv);
 					wxTreeItemId div = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(div);
 					bAdded = true;
 				}
@@ -140,6 +132,7 @@ bool CDlgConfigVenueDataRoot::DoAdd() const
 				{
 					CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
 					wxTreeItemId evt = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(evt);
 					bAdded = true;
 				}
@@ -158,6 +151,7 @@ bool CDlgConfigVenueDataRoot::DoAdd() const
 				{
 					CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
 					wxTreeItemId mq = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(mq);
 					bAdded = true;
 				}
@@ -190,6 +184,7 @@ bool CDlgConfigVenueDataRoot::DoAdd() const
 					//pTitle->SetDescription(dlg.GetDesc());
 					CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, pTitle);
 					wxTreeItemId title = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					pData->AddSubItems();
 					m_pDlg->m_ctrlItems->SelectItem(title);
 					bAdded = true;
 				}
@@ -390,22 +385,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	{
 		CDlgConfigureDataDivision* pData = new CDlgConfigureDataDivision(this, *iterDiv);
 		wxTreeItemId div = m_ctrlItems->AppendItem(divs, pData->OnNeedText(), -1, -1, pData);
-
-		for (ARBConfigLevelList::iterator iterLevel = (*iterDiv)->GetLevels().begin();
-			iterLevel != (*iterDiv)->GetLevels().end();
-			++iterLevel)
-		{
-			CDlgConfigureDataLevel* pLevData = new CDlgConfigureDataLevel(this, *iterDiv, *iterLevel);
-			wxTreeItemId level = m_ctrlItems->AppendItem(div, pLevData->OnNeedText(), -1, -1, pLevData);
-			if (0 < (*iterLevel)->GetSubLevels().size())
-			{
-				for (ARBConfigSubLevelList::iterator iterSubLevel = (*iterLevel)->GetSubLevels().begin(); iterSubLevel != (*iterLevel)->GetSubLevels().end(); ++iterSubLevel)
-				{
-					CDlgConfigureDataSubLevel* pSubLevelData = new CDlgConfigureDataSubLevel(this, *iterDiv, *iterLevel, *iterSubLevel);
-					m_ctrlItems->AppendItem(level, pSubLevelData->OnNeedText(), -1, -1, pSubLevelData);
-				}
-			}
-		}
+		pData->AddSubItems();
 	}
 	m_ctrlItems->Expand(divs);
 
@@ -414,6 +394,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(this, *iterEvent);
 		m_ctrlItems->AppendItem(events, pData->OnNeedText(), -1, -1, pData);
+		pData->AddSubItems();
 	}
 	m_ctrlItems->Expand(events);
 
@@ -424,8 +405,8 @@ CDlgConfigVenue::CDlgConfigVenue(
 	{
 		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(this, *iter);
 		m_ctrlItems->AppendItem(multiQs, pData->OnNeedText(), -1, -1, pData);
+		pData->AddSubItems();
 	}
-	m_ctrlItems->Expand(multiQs);
 
 	wxTreeItemId titles = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_TITLES"), -1, -1, new CDlgConfigVenueDataRoot(this, eTitles));
 	for (ARBConfigTitleList::iterator iterTitle = m_pVenue->GetTitles().begin();
@@ -434,8 +415,8 @@ CDlgConfigVenue::CDlgConfigVenue(
 	{
 		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(this, *iterTitle);
 		m_ctrlItems->AppendItem(titles, pData->OnNeedText(), -1, -1, pData);
+		pData->AddSubItems();
 	}
-	m_ctrlItems->Expand(titles);
 
 	m_ctrlItems->SelectItem(events);
 
@@ -494,9 +475,8 @@ void CDlgConfigVenue::UpdateButtons()
 		bEdit = pBase->CanEdit();
 		bDelete = pBase->CanDelete();
 		bCopy = pBase->CanCopy();
-		//TODO
-		//bMoveUp = pBase->CanMove() && m_ctrlItems->GetPrevSibling(item).IsOk();
-		//bMoveDown = pBase->CanMove() && m_ctrlItems->GetNextSibling(item).IsOk();
+		bMoveUp = pBase->CanMove() && m_ctrlItems->GetPrevSibling(item).IsOk();
+		bMoveDown = pBase->CanMove() && m_ctrlItems->GetNextSibling(item).IsOk();
 	}
 
 	m_ctrlNew->Enable(bNew);
@@ -580,17 +560,23 @@ void CDlgConfigVenue::OnMoveUp(wxCommandEvent& evt)
 	if (pBase && pBase->CanMove())
 	{
 		wxTreeItemId itemPrev = m_ctrlItems->GetPrevSibling(item);
-		CDlgConfigureDataBase* pPrev = GetData(itemPrev);
-		if (pPrev)
+		if (itemPrev.IsOk())
 		{
-			/*TODO: doesn't quite work right
-			CDlgConfigureDataBase* pCur2 = pBase->Clone();
-			CDlgConfigureDataBase* pPrev2 = pPrev->Clone();
-			m_ctrlItems->SetItemData(item, pPrev2);
-			m_ctrlItems->SetItemData(itemPrev, pCur2);
-			RefreshTreeItem(m_ctrlItems, item);
-			RefreshTreeItem(m_ctrlItems, itemPrev);
-			*/
+			CDlgConfigureDataBase* pDup = pBase->DoMove(true);
+			if (pDup)
+			{
+				wxTreeItemId parent = m_ctrlItems->GetItemParent(item);
+				wxTreeItemId itemPrev2 = m_ctrlItems->GetPrevSibling(itemPrev);
+				wxTreeItemId itemNew;
+				if (itemPrev2.IsOk())
+					itemNew = m_ctrlItems->InsertItem(parent, itemPrev2, pDup->OnNeedText(), -1, -1, pDup);
+				else
+					itemNew = m_ctrlItems->InsertItem(parent, 0, pDup->OnNeedText(), -1, -1, pDup);
+				m_ctrlItems->Delete(item);
+				pDup->AddSubItems();
+				m_ctrlItems->SelectItem(itemNew);
+				UpdateButtons();
+			}
 		}
 	}
 }
@@ -603,17 +589,18 @@ void CDlgConfigVenue::OnMoveDown(wxCommandEvent& evt)
 	if (pBase && pBase->CanMove())
 	{
 		wxTreeItemId itemNext = m_ctrlItems->GetNextSibling(item);
-		CDlgConfigureDataBase* pNext = GetData(itemNext);
-		if (pNext)
+		if (itemNext.IsOk())
 		{
-			/*TODO: doesn't quite work right
-			CDlgConfigureDataBase* pCur2 = pBase->Clone();
-			CDlgConfigureDataBase* pNext2 = pNext->Clone();
-			m_ctrlItems->SetItemData(item, pNext2);
-			m_ctrlItems->SetItemData(itemNext, pCur2);
-			RefreshTreeItem(m_ctrlItems, item);
-			RefreshTreeItem(m_ctrlItems, itemNext);
-			*/
+			CDlgConfigureDataBase* pDup = pBase->DoMove(false);
+			if (pDup)
+			{
+				wxTreeItemId parent = m_ctrlItems->GetItemParent(item);
+				wxTreeItemId itemNew = m_ctrlItems->InsertItem(parent, itemNext, pDup->OnNeedText(), -1, -1, pDup);
+				m_ctrlItems->Delete(item);
+				pDup->AddSubItems();
+				m_ctrlItems->SelectItem(itemNew);
+				UpdateButtons();
+			}
 		}
 	}
 }

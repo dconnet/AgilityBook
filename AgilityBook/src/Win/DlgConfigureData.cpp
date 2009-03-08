@@ -66,24 +66,11 @@ CDlgConfigureDataBase::CDlgConfigureDataBase(CDlgConfigVenue* pDlg)
 {
 }
 
-
-CDlgConfigureDataBase::CDlgConfigureDataBase(CDlgConfigureDataBase const& rhs)
-	: m_pDlg(rhs.m_pDlg)
-{
-}
-
 ////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataVenue::CDlgConfigureDataVenue(ARBConfigVenuePtr venue)
 	: CDlgConfigureDataBase(NULL)
 	, m_Venue(venue)
-{
-}
-
-
-CDlgConfigureDataVenue::CDlgConfigureDataVenue(CDlgConfigureDataVenue const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_Venue(rhs.m_Venue)
 {
 }
 
@@ -131,13 +118,6 @@ CDlgConfigureDataFault::CDlgConfigureDataFault(ARBConfigFaultPtr fault)
 }
 
 
-CDlgConfigureDataFault::CDlgConfigureDataFault(CDlgConfigureDataFault const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_Fault(rhs.m_Fault)
-{
-}
-
-
 wxString CDlgConfigureDataFault::OnNeedText() const
 {
 	return OnNeedText(0);
@@ -154,13 +134,6 @@ wxString CDlgConfigureDataFault::OnNeedText(int iColumn) const
 CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints)
 	: CDlgConfigureDataBase(NULL)
 	, m_OtherPoints(otherPoints)
-{
-}
-
-
-CDlgConfigureDataOtherPoints::CDlgConfigureDataOtherPoints(CDlgConfigureDataOtherPoints const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_OtherPoints(rhs.m_OtherPoints)
 {
 }
 
@@ -187,13 +160,6 @@ CDlgConfigureDataDivision::CDlgConfigureDataDivision(
 }
 
 
-CDlgConfigureDataDivision::CDlgConfigureDataDivision(CDlgConfigureDataDivision const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_Div(rhs.m_Div)
-{
-}
-
-
 wxString CDlgConfigureDataDivision::OnNeedText() const
 {
 	return OnNeedText(0);
@@ -203,6 +169,19 @@ wxString CDlgConfigureDataDivision::OnNeedText() const
 wxString CDlgConfigureDataDivision::OnNeedText(int iColumn) const
 {
 	return m_Div->GetName().c_str();
+}
+
+
+void CDlgConfigureDataDivision::AddSubItems()
+{
+	for (ARBConfigLevelList::iterator iterLevel = m_Div->GetLevels().begin();
+		iterLevel != m_Div->GetLevels().end();
+		++iterLevel)
+	{
+		CDlgConfigureDataLevel* pLevData = new CDlgConfigureDataLevel(m_pDlg, m_Div, *iterLevel);
+		m_pDlg->m_ctrlItems->AppendItem(GetId(), pLevData->OnNeedText(), -1, -1, pLevData);
+		pLevData->AddSubItems();
+	}
 }
 
 
@@ -290,6 +269,14 @@ bool CDlgConfigureDataDivision::DoDelete()
 	return false;
 }
 
+
+CDlgConfigureDataBase* CDlgConfigureDataDivision::DoMove(bool bUp)
+{
+	if (m_pDlg->m_pVenue->GetDivisions().Move(m_Div, bUp ? -1 : 1))
+		return new CDlgConfigureDataDivision(m_pDlg, m_Div);
+	return NULL;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataLevel::CDlgConfigureDataLevel(
@@ -303,14 +290,6 @@ CDlgConfigureDataLevel::CDlgConfigureDataLevel(
 }
 
 
-CDlgConfigureDataLevel::CDlgConfigureDataLevel(CDlgConfigureDataLevel const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_Division(rhs.m_Division)
-	, m_Level(rhs.m_Level)
-{
-}
-
-
 wxString CDlgConfigureDataLevel::OnNeedText() const
 {
 	return OnNeedText(0);
@@ -320,6 +299,22 @@ wxString CDlgConfigureDataLevel::OnNeedText() const
 wxString CDlgConfigureDataLevel::OnNeedText(int iColumn) const
 {
 	return m_Level->GetName().c_str();
+}
+
+
+void CDlgConfigureDataLevel::AddSubItems()
+{
+	if (0 < m_Level->GetSubLevels().size())
+	{
+		for (ARBConfigSubLevelList::iterator iterSubLevel = m_Level->GetSubLevels().begin();
+			iterSubLevel != m_Level->GetSubLevels().end();
+			++iterSubLevel)
+		{
+			CDlgConfigureDataSubLevel* pSubLevelData = new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, *iterSubLevel);
+			m_pDlg->m_ctrlItems->AppendItem(GetId(), pSubLevelData->OnNeedText(), -1, -1, pSubLevelData);
+			pSubLevelData->AddSubItems();
+		}
+	}
 }
 
 
@@ -346,6 +341,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 			{
 				CDlgConfigureDataSubLevel* pData = new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, pNewSubLevel);
 				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(level);
 				added = true;
 			}
@@ -437,6 +433,14 @@ bool CDlgConfigureDataLevel::DoDelete()
 	return false;
 }
 
+
+CDlgConfigureDataBase* CDlgConfigureDataLevel::DoMove(bool bUp)
+{
+	if (m_Division->GetLevels().Move(m_Level, bUp ? -1 : 1))
+		return new CDlgConfigureDataLevel(m_pDlg, m_Division, m_Level);
+	return NULL;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
@@ -448,15 +452,6 @@ CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(
 	, m_Division(div)
 	, m_Level(level)
 	, m_SubLevel(subLevel)
-{
-}
-
-
-CDlgConfigureDataSubLevel::CDlgConfigureDataSubLevel(CDlgConfigureDataSubLevel const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_Division(rhs.m_Division)
-	, m_Level(rhs.m_Level)
-	, m_SubLevel(rhs.m_SubLevel)
 {
 }
 
@@ -539,6 +534,14 @@ bool CDlgConfigureDataSubLevel::DoDelete()
 	return false;
 }
 
+
+CDlgConfigureDataBase* CDlgConfigureDataSubLevel::DoMove(bool bUp)
+{
+	if (m_Level->GetSubLevels().Move(m_SubLevel, bUp ? -1 : 1))
+		return new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, m_SubLevel);
+	return NULL;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgConfigureDataTitle::CDlgConfigureDataTitle(
@@ -546,13 +549,6 @@ CDlgConfigureDataTitle::CDlgConfigureDataTitle(
 		ARBConfigTitlePtr title)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Title(title)
-{
-}
-
-
-CDlgConfigureDataTitle::CDlgConfigureDataTitle(CDlgConfigureDataTitle const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_Title(rhs.m_Title)
 {
 }
 
@@ -661,10 +657,19 @@ bool CDlgConfigureDataTitle::DoCopy()
 	{
 		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, title);
 		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
 	}
 	return bAdded;
+}
+
+
+CDlgConfigureDataBase* CDlgConfigureDataTitle::DoMove(bool bUp)
+{
+	if (m_pDlg->m_pVenue->GetTitles().Move(m_Title, bUp ? -1 : 1))
+		return new CDlgConfigureDataTitle(m_pDlg, m_Title);
+	return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -674,13 +679,6 @@ CDlgConfigureDataEvent::CDlgConfigureDataEvent(
 		ARBConfigEventPtr inEvent)
 	: CDlgConfigureDataBase(pDlg)
 	, m_Event(inEvent)
-{
-}
-
-
-CDlgConfigureDataEvent::CDlgConfigureDataEvent(CDlgConfigureDataEvent const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_Event(rhs.m_Event)
 {
 }
 
@@ -742,10 +740,19 @@ bool CDlgConfigureDataEvent::DoCopy()
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
 		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
 	}
 	return bAdded;
+}
+
+
+CDlgConfigureDataBase* CDlgConfigureDataEvent::DoMove(bool bUp)
+{
+	if (m_pDlg->m_pVenue->GetEvents().Move(m_Event, bUp ? -1 : 1))
+		return new CDlgConfigureDataEvent(m_pDlg, m_Event);
+	return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -755,13 +762,6 @@ CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(
 		ARBConfigMultiQPtr multiq)
 	: CDlgConfigureDataBase(pDlg)
 	, m_MultiQ(multiq)
-{
-}
-
-
-CDlgConfigureDataMultiQ::CDlgConfigureDataMultiQ(CDlgConfigureDataMultiQ const& rhs)
-	: CDlgConfigureDataBase(rhs)
-	, m_MultiQ(rhs.m_MultiQ)
 {
 }
 
@@ -828,8 +828,17 @@ bool CDlgConfigureDataMultiQ::DoCopy()
 	{
 		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
 		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
 	}
 	return bAdded;
+}
+
+
+CDlgConfigureDataBase* CDlgConfigureDataMultiQ::DoMove(bool bUp)
+{
+	if (m_pDlg->m_pVenue->GetMultiQs().Move(m_MultiQ, bUp ? -1 : 1))
+		return new CDlgConfigureDataMultiQ(m_pDlg, m_MultiQ);
+	return NULL;
 }

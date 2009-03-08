@@ -47,21 +47,24 @@ class CDlgConfigureDataBase : public CTreeData
 {
 public:
 	CDlgConfigureDataBase(CDlgConfigVenue* pDlg);
-	CDlgConfigureDataBase(CDlgConfigureDataBase const& rhs);
 
-	virtual CDlgConfigureDataBase* Clone() const = 0;
 	virtual wxString OnNeedText() const			{return wxEmptyString;}
+
+	// After adding a node, use this to add subchildren in venue (levels/sublevels)
+	virtual void AddSubItems()					{}
 
 	virtual bool CanAdd() const					{return false;}
 	virtual bool CanEdit() const				{return false;}
 	virtual bool CanDelete() const				{return false;}
 	virtual bool CanCopy() const				{return false;}
+	// Is the item allowed to move up/down - does not check for boundaries
 	virtual bool CanMove() const				{return false;}
 
 	virtual bool DoAdd()						{return false;}
 	virtual bool DoEdit()						{return false;}
 	virtual bool DoDelete()						{return false;}
 	virtual bool DoCopy()						{return false;}
+	virtual CDlgConfigureDataBase* DoMove(bool bUp)	{return NULL;}
 
 protected:
 	CDlgConfigVenue* m_pDlg;
@@ -73,12 +76,7 @@ class CDlgConfigureDataVenue : public CDlgConfigureDataBase
 {
 public:
 	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
-	CDlgConfigureDataVenue(CDlgConfigureDataVenue const& rhs);
 	ARBConfigVenuePtr GetVenue() const			{return m_Venue;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataVenue(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 protected:
@@ -91,12 +89,7 @@ class CDlgConfigureDataFault : public CDlgConfigureDataBase
 {
 public:
 	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
-	CDlgConfigureDataFault(CDlgConfigureDataFault const& rhs);
 	ARBConfigFaultPtr GetFault() const			{return m_Fault;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataFault(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 protected:
@@ -109,12 +102,7 @@ class CDlgConfigureDataOtherPoints : public CDlgConfigureDataBase
 {
 public:
 	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
-	CDlgConfigureDataOtherPoints(CDlgConfigureDataOtherPoints const& rhs);
 	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataOtherPoints(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 protected:
@@ -129,14 +117,10 @@ public:
 	CDlgConfigureDataDivision(
 			CDlgConfigVenue* pDlg,
 			ARBConfigDivisionPtr div);
-	CDlgConfigureDataDivision(CDlgConfigureDataDivision const& rhs);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Div;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataDivision(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
+	virtual void AddSubItems();
 	virtual bool CanAdd() const					{return true;}
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
@@ -144,6 +128,7 @@ public:
 	virtual bool DoAdd();
 	virtual bool DoEdit();
 	virtual bool DoDelete();
+	virtual CDlgConfigureDataBase* DoMove(bool bUp);
 protected:
 	ARBConfigDivisionPtr m_Div;
 };
@@ -157,15 +142,11 @@ public:
 			CDlgConfigVenue* pDlg,
 			ARBConfigDivisionPtr div,
 			ARBConfigLevelPtr level);
-	CDlgConfigureDataLevel(CDlgConfigureDataLevel const& rhs);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataLevel(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
+	virtual void AddSubItems();
 	virtual bool CanAdd() const					{return true;}
 	virtual bool CanEdit() const				{return true;}
 	virtual bool CanDelete() const				{return true;}
@@ -173,6 +154,7 @@ public:
 	virtual bool DoAdd();
 	virtual bool DoEdit();
 	virtual bool DoDelete();
+	virtual CDlgConfigureDataBase* DoMove(bool bUp);
 protected:
 	ARBConfigDivisionPtr m_Division;
 	ARBConfigLevelPtr m_Level;
@@ -188,14 +170,9 @@ public:
 			ARBConfigDivisionPtr div,
 			ARBConfigLevelPtr level,
 			ARBConfigSubLevelPtr subLevel);
-	CDlgConfigureDataSubLevel(CDlgConfigureDataSubLevel const& rhs);
 	ARBConfigDivisionPtr GetDivision() const	{return m_Division;}
 	ARBConfigLevelPtr GetLevel() const			{return m_Level;}
 	ARBConfigSubLevelPtr GetSubLevel() const	{return m_SubLevel;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataSubLevel(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
@@ -203,6 +180,7 @@ public:
 	virtual bool CanMove() const				{return true;}
 	virtual bool DoEdit();
 	virtual bool DoDelete();
+	virtual CDlgConfigureDataBase* DoMove(bool bUp);
 protected:
 	ARBConfigDivisionPtr m_Division;
 	ARBConfigLevelPtr m_Level;
@@ -217,12 +195,7 @@ public:
 	CDlgConfigureDataTitle(
 			CDlgConfigVenue* pDlg,
 			ARBConfigTitlePtr title);
-	CDlgConfigureDataTitle(CDlgConfigureDataTitle const& rhs);
 	ARBConfigTitlePtr GetTitle() const			{return m_Title;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataTitle(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
@@ -232,6 +205,7 @@ public:
 	virtual bool DoEdit();
 	virtual bool DoDelete();
 	virtual bool DoCopy();
+	virtual CDlgConfigureDataBase* DoMove(bool bUp);
 protected:
 	ARBConfigTitlePtr m_Title;
 };
@@ -244,12 +218,7 @@ public:
 	CDlgConfigureDataEvent(
 			CDlgConfigVenue* pDlg,
 			ARBConfigEventPtr inEvent);
-	CDlgConfigureDataEvent(CDlgConfigureDataEvent const& rhs);
 	ARBConfigEventPtr GetEvent() const			{return m_Event;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataEvent(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
@@ -259,6 +228,7 @@ public:
 	virtual bool DoEdit();
 	virtual bool DoDelete();
 	virtual bool DoCopy();
+	virtual CDlgConfigureDataBase* DoMove(bool bUp);
 protected:
 	ARBConfigEventPtr m_Event;
 };
@@ -271,12 +241,7 @@ public:
 	CDlgConfigureDataMultiQ(
 			CDlgConfigVenue* pDlg,
 			ARBConfigMultiQPtr multiq);
-	CDlgConfigureDataMultiQ(CDlgConfigureDataMultiQ const& rhs);
 	ARBConfigMultiQPtr GetMultiQ() const		{return m_MultiQ;}
-	virtual CDlgConfigureDataBase* Clone() const
-	{
-		return new CDlgConfigureDataMultiQ(*this);
-	}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 	virtual bool CanEdit() const				{return true;}
@@ -286,6 +251,7 @@ public:
 	virtual bool DoEdit();
 	virtual bool DoDelete();
 	virtual bool DoCopy();
+	virtual CDlgConfigureDataBase* DoMove(bool bUp);
 protected:
 	ARBConfigMultiQPtr m_MultiQ;
 };
