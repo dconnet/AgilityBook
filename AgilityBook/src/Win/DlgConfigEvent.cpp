@@ -1155,7 +1155,11 @@ void CDlgConfigEvent::OnBnClickedUp(wxCommandEvent& evt)
 		{
 			if ((*iter) == pScoring)
 			{
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iter = m_Scorings.erase(iter);
+#else
+				m_Scorings.erase(iter++);
+#endif
 				--iter;
 				m_Scorings.insert(iter, pScoring);
 				m_ctrlMethods->SetSelection(idxMethod-1);
@@ -1182,7 +1186,11 @@ void CDlgConfigEvent::OnBnClickedDown(wxCommandEvent& evt)
 		{
 			if ((*iter) == pScoring)
 			{
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iter = m_Scorings.erase(iter);
+#else
+				m_Scorings.erase(iter++);
+#endif
 				++iter;
 				m_Scorings.insert(iter, pScoring);
 				m_ctrlMethods->SetSelection(idxMethod+1);
@@ -1350,7 +1358,8 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 			ARBConfigScoringList::iterator iter = scorings.begin();
 			ARBConfigScoringPtr pScoring = items.AddScoring();
 			*pScoring = *(*iter);
-			iter = scorings.erase(scorings.begin());
+			scorings.erase(scorings.begin());
+			iter = scorings.begin();
 			while (iter != scorings.end())
 			{
 				ARBConfigScoringPtr pScoring2 = *iter;
@@ -1359,7 +1368,11 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 				{
 					pScoring2 = items.AddScoring();
 					*pScoring2 = *(*iter);
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 					iter = scorings.erase(iter);
+#else
+					scorings.erase(iter++);
+#endif
 				}
 				else
 					++iter;

@@ -663,7 +663,13 @@ size_t ARBConfigScoringList::FindAllEvents(
 			if (0 < (*iter2)->GetTitlePoints().size() || 0 < (*iter2)->GetLifetimePoints().size())
 				++iter2;
 			else
+			{
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iter2 = outList.erase(iter2);
+#else
+				outList.erase(iter2++);
+#endif
+			}
 		}
 	}
 	return outList.size();
@@ -692,7 +698,13 @@ bool ARBConfigScoringList::FindEvent(
 		{
 			ARBConfigScoringPtr pScoring = *iter;
 			if (!pScoring->IsValidOn(inDate))
+			{
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iter = items.erase(iter);
+#else
+				items.erase(iter++);
+#endif
+			}
 			else
 				++iter;
 		}

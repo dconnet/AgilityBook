@@ -643,7 +643,11 @@ int ARBDogExistingPointsList::DeleteVenue(tstring const& inVenue)
 	{
 		if ((*iter)->GetVenue() == venue)
 		{
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
+#else
+			erase(iter++);
+#endif
 			++count;
 		}
 		else
@@ -696,7 +700,11 @@ int ARBDogExistingPointsList::DeleteDivision(
 		if ((*iter)->GetVenue() == inVenue && (*iter)->GetDivision() == inDiv)
 		{
 			++count;
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
+#else
+			erase(iter++);
+#endif
 		}
 		else
 			++iter;
@@ -756,7 +764,11 @@ int ARBDogExistingPointsList::DeleteLevel(
 		&& (*iter)->GetLevel() == inLevel)
 		{
 			++count;
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
+#else
+			erase(iter++);
+#endif
 		}
 		else
 			++iter;
@@ -810,7 +822,11 @@ int ARBDogExistingPointsList::DeleteEvent(
 		&& (*iter)->GetEvent() == inEvent)
 		{
 			++count;
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
+#else
+			erase(iter++);
+#endif
 		}
 		else
 			++iter;
@@ -858,7 +874,11 @@ int ARBDogExistingPointsList::DeleteOtherPoints(tstring const& inOther)
 		if (ARBDogExistingPoints::eOtherPoints == (*iter)->GetType()
 		&& (*iter)->GetOtherPoints() == inOther)
 		{
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
+#else
+			erase(iter++);
+#endif
 			++count;
 		}
 		else
@@ -917,7 +937,11 @@ int ARBDogExistingPointsList::DeleteMultiQs(
 			if (ARBDogExistingPoints::eMQ == (*iter)->GetType()
 			&& !pVenue->GetMultiQs().FindMultiQ((*iter)->GetMultiQ(), true))
 			{
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iter = erase(iter);
+#else
+				erase(iter++);
+#endif
 				++count;
 			}
 			else

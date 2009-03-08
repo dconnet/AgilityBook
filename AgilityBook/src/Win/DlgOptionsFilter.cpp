@@ -215,7 +215,11 @@ void CDlgOptionsFilter::FillControls()
 		if (allLogNames.end() == allLogNames.find((*iter)))
 		{
 			bFix = true;
+#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = names.erase(iter);
+#else
+			names.erase(iter++);
+#endif
 		}
 		else
 			++iter;
