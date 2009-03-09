@@ -1331,13 +1331,7 @@ void ElementNode::RemoveAllTextNodes()
 		)
 	{
 		if (Element::Element_Text == (*i)->GetType())
-		{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 			i = m_Elements.erase(i);
-#else
-			m_Elements.erase(i++);
-#endif
-		}
 		else
 			++i;
 	}

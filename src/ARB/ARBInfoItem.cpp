@@ -267,13 +267,7 @@ void ARBInfoItemList::CondenseContent(std::set<tstring> const& inNamesInUse)
 			if (inNamesInUse.end() == inNamesInUse.find(item->GetName()))
 				++iter;
 			else
-			{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iter = erase(iter);
-#else
-				erase(iter++);
-#endif
-			}
 		}
 		else
 			++iter;

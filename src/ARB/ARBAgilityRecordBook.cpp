@@ -512,11 +512,7 @@ bool ARBAgilityRecordBook::Update(
 						<< pRun->GetLevel()
 						<< _T("\n");
 					++nDeletedRuns;
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 					iterRun = pTrial->GetRuns().erase(iterRun);
-#else
-					pTrial->GetRuns().erase(iterRun++);
-#endif
 				}
 			}
 		}

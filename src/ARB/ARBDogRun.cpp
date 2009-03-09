@@ -502,11 +502,7 @@ int ARBDogRun::DeleteOtherPoints(tstring const& inName)
 		if ((*iter)->GetName() == name)
 		{
 			++count;
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = m_OtherPoints.erase(iter);
-#else
-			m_OtherPoints.erase(iter++);
-#endif
 		}
 		else
 			++iter;

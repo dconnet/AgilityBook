@@ -461,11 +461,7 @@ int ARBConfigEventList::DeleteDivision(tstring const& inDiv)
 			if ((*iterScore)->GetDivision() == div)
 			{
 				++count;
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iterScore = (*iter)->GetScorings().erase(iterScore);
-#else
-				(*iter)->GetScorings().erase(iterScore++);
-#endif
 			}
 			else
 				++iterScore;
@@ -515,11 +511,7 @@ int ARBConfigEventList::DeleteLevel(
 			|| (*iterScore)->GetDivision() == inDiv))
 			{
 				++count;
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iterScore = (*iter)->GetScorings().erase(iterScore);
-#else
-				(*iter)->GetScorings().erase(iterScore++);
-#endif
 			}
 			else
 				++iterScore;

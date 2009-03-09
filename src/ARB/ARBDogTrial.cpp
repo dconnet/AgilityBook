@@ -468,24 +468,14 @@ int ARBDogTrialList::DeleteVenue(tstring const& inVenue)
 		{
 			if ((*iterClub)->GetVenue() == venue)
 			{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 				iterClub = (*iter)->GetClubs().erase(iterClub);
-#else
-				(*iter)->GetClubs().erase(iterClub++);
-#endif
 				++count;
 			}
 			else
 				++iterClub;
 		}
 		if (0 == (*iter)->GetClubs().size())
-		{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
-#else
-			erase(iter++);
-#endif
-		}
 		else
 			++iter;
 	}
@@ -643,11 +633,7 @@ int ARBDogTrialList::DeleteDivision(
 					if ((*iterRun)->GetDivision() == div)
 					{
 						++count;
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 						iterRun = (*iter)->GetRuns().erase(iterRun);
-#else
-						(*iter)->GetRuns().erase(iterRun++);
-#endif
 					}
 					else
 						++iterRun;
@@ -655,13 +641,7 @@ int ARBDogTrialList::DeleteDivision(
 			}
 		}
 		if (0 == (*iter)->GetRuns().size())
-		{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
-#else
-			erase(iter++);
-#endif
-		}
 		else
 			++iter;
 	}
@@ -736,24 +716,14 @@ int ARBDogTrialList::DeleteLevel(
 				&& (*iterRun)->GetLevel() == level)
 				{
 					++count;
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 					iterRun = (*iter)->GetRuns().erase(iterRun);
-#else
-					(*iter)->GetRuns().erase(iterRun++);
-#endif
 				}
 				else
 					++iterRun;
 			}
 		}
 		if (0 == (*iter)->GetRuns().size())
-		{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
-#else
-			erase(iter++);
-#endif
-		}
 		else
 			++iter;
 	}
@@ -821,24 +791,14 @@ int ARBDogTrialList::DeleteEvent(
 				if ((*iterRun)->GetEvent() == pEvent)
 				{
 					++count;
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 					iterRun = (*iter)->GetRuns().erase(iterRun);
-#else
-					(*iter)->GetRuns().erase(iterRun++);
-#endif
 				}
 				else
 					++iterRun;
 			}
 		}
 		if (0 == (*iter)->GetRuns().size())
-		{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
-#else
-			erase(iter++);
-#endif
-		}
 		else
 			++iter;
 	}

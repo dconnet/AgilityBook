@@ -407,11 +407,7 @@ int ARBDogTitleList::DeleteVenue(tstring const& inVenue)
 	{
 		if ((*iter)->GetVenue() == venue)
 		{
-#ifdef ARB_ERASE_RETURNS_ITERATOR
 			iter = erase(iter);
-#else
-			erase(iter++);
-#endif
 			++count;
 		}
 		else
