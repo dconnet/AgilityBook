@@ -214,8 +214,12 @@ typedef long LONG_PTR;
 #ifdef __BORLANDC__
 #   pragma hdrstop
 #endif
+// Compiler doesn't support precompiled headers,
+// pull in the headers that wxprec includes.
 #ifndef WX_PRECOMP
-#   include "wx/wx.h"
+#include "wx/defs.h"
+#include "wx/wxchar.h"
+#include "wx/wx.h"
 #endif
 #endif // WXWIDGETS
 
