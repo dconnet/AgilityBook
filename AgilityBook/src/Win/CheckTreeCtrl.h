@@ -36,67 +36,55 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#if 0
-class CCheckTreeCtrl : public CTreeCtrl
+#include <wx/treectrl.h>
+#include <wx/imaglist.h>
+
+
+class CCheckTreeCtrl : public wxTreeCtrl
 {
+	DECLARE_CLASS(CCheckTreeCtrl)
 public:
-	CCheckTreeCtrl();
+	CCheckTreeCtrl(wxWindow* pParent);
 
 	void ShowCheckbox(
-			HTREEITEM hItem,
+			wxTreeItemId hItem,
 			bool bShow = true);
-	bool IsCheckVisible(HTREEITEM hItem) const;
-	bool GetChecked(HTREEITEM hItem) const;
+	bool IsCheckVisible(wxTreeItemId hItem);
+	bool GetChecked(wxTreeItemId hItem);
 	bool SetChecked(
-			HTREEITEM hItem,
+			wxTreeItemId hItem,
 			bool bChecked,
 			bool bCascade = true);
 
 private:
-	void CheckParentCheck(HTREEITEM hItem);
+	void SendDispInfo(wxTreeItemId hItem);
+	void CheckParentCheck(wxTreeItemId hItem);
 	int Cascade(
-			HTREEITEM hItem,
+			wxTreeItemId hItem,
 			bool bChecked);
-	void SendDispInfo(HTREEITEM hItem);
 	// Hide the standard versions to make sure any usage to this tree
 	// shows/hides the checkboxes properly.
-	// (It's not quite a straight-drop in for CTreeCtrl)
-	// These are not virtual, so access via CTreeCtrl is possible.
+	// (It's not quite a straight-drop in for wxTreeCtrl)
+	// These are not virtual, so access via wxTreeCtrl is possible.
 	// Don't do that!
-	BOOL GetCheck(HTREEITEM hItem) const;
-	BOOL SetCheck(
-			HTREEITEM hItem,
-			BOOL fCheck = TRUE);
+	// [note, this are specifically not implemented]
+    bool IsItemChecked(const wxTreeItemId& item) const;
+    void SetItemCheck(const wxTreeItemId& item, bool check = true);
 	// No one should be setting the state directly.
-	BOOL SetItemState(
-			HTREEITEM hItem,
-			UINT nState,
-			UINT nStateMask);
+    void SetState(const wxTreeItemId& node, int state);
+    int GetState(const wxTreeItemId& node);
 
-protected:
-	CImageList m_stateList;
-	UINT m_stateUnChecked;
-	UINT m_stateChecked;
+	wxImageList m_stateList;
+	int m_stateNone;
+	int m_stateUnChecked;
+	int m_stateChecked;
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CCheckTreeCtrl)
-	protected:
-	virtual void PreSubclassWindow();
-	//}}AFX_VIRTUAL
-
-// Implementation
-public:
-	virtual ~CCheckTreeCtrl();
-
-	// Generated message map functions
-protected:
-	//{{AFX_MSG(CCheckTreeCtrl)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg BOOL OnKeyDown(NMHDR* pNMHDR, LRESULT* pResult);
-	//}}AFX_MSG
-
-	DECLARE_MESSAGE_MAP()
+	void OnStateClick(wxTreeEvent& evt);
+	void OnKeyDown(wxTreeEvent& evt);
 };
-#endif
+
+BEGIN_DECLARE_EVENT_TYPES()
+	DECLARE_EVENT_TYPE(wxEVT_COMMAND_TREE_CHECK_CHANGED, 621)
+END_DECLARE_EVENT_TYPES()
+
+#define EVT_TREE_CHECK_CHANGED(id, fn) wx__DECLARE_TREEEVT(CHECK_CHANGED, id, fn)

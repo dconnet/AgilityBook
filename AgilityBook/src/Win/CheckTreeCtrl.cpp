@@ -41,92 +41,88 @@
  * Get/SetCheck calls must be replaced with Get/SetChecked calls. Do not call
  * Get/SetCheck via the base class - the checkboxes will get messed up.
  *
+ * [wxWidgets] The above comments are still pertinent. Need to investigage
+ * wxTR_MULTIPLE style - the IsItemChecked/SetItemCheck pertain to that. It
+ * sounds like its actually selection, but the comments alude to checks...?
+ *
  * Revision History
  */
 
 #include "stdafx.h"
 #include "CheckTreeCtrl.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgCRCDViewer")
-#include "AgilityBook.h"
-#if 0
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "res/CalEmpty.xpm"
+#include "res/checked.xpm"
+#include "res/unchecked.xpm"
 
-/////////////////////////////////////////////////////////////////////////////
-// CCheckTreeCtrl
 
-CCheckTreeCtrl::CCheckTreeCtrl()
-	: CTreeCtrl()
+IMPLEMENT_CLASS(CCheckTreeCtrl, wxTreeCtrl)
+
+
+DEFINE_EVENT_TYPE(wxEVT_COMMAND_TREE_CHECK_CHANGED)
+
+
+CCheckTreeCtrl::CCheckTreeCtrl(wxWindow* pParent)
+	: wxTreeCtrl()
+	, m_stateList(16,16)
+	, m_stateNone(-1)
+	, m_stateUnChecked(-1)
+	, m_stateChecked(-1)
 {
-	m_stateList.Create(16, 16, ILC_MASK | ILC_COLOR32, 3, 0);
-	m_stateList.Add(theApp.LoadIcon(IDI_UNCHECKED)); // Index 0 is ignored.
-	m_stateUnChecked = m_stateList.Add(theApp.LoadIcon(IDI_UNCHECKED));
-	m_stateChecked = m_stateList.Add(theApp.LoadIcon(IDI_CHECKED));
+	wxTreeCtrl::Create(pParent, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
+	Connect(wxEVT_COMMAND_TREE_STATE_IMAGE_CLICK, wxTreeEventHandler(CCheckTreeCtrl::OnStateClick), NULL, this);
+	Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CCheckTreeCtrl::OnKeyDown), NULL, this);
+
+	m_stateNone = m_stateList.Add(wxIcon(CalEmpty_xpm));
+	m_stateUnChecked = m_stateList.Add(wxIcon(checked_xpm));
+	m_stateChecked = m_stateList.Add(wxIcon(unchecked_xpm));
+	SetStateImageList(&m_stateList);
 }
 
-
-CCheckTreeCtrl::~CCheckTreeCtrl()
-{
-}
-
-
-BEGIN_MESSAGE_MAP(CCheckTreeCtrl, CTreeCtrl)
-	//{{AFX_MSG_MAP(CCheckTreeCtrl)
-	ON_WM_CREATE()
-	ON_WM_LBUTTONDOWN()
-	ON_NOTIFY_REFLECT_EX(TVN_KEYDOWN, OnKeyDown)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
 
 void CCheckTreeCtrl::ShowCheckbox(
-		HTREEITEM hItem,
+		wxTreeItemId hItem,
 		bool bShow)
 {
 	if (IsCheckVisible(hItem))
 	{
 		if (!bShow)
-			CTreeCtrl::SetItemState(hItem, INDEXTOSTATEIMAGEMASK(0), TVIS_STATEIMAGEMASK);
+			wxTreeCtrl::SetState(hItem, m_stateNone);
 	}
 	else
 	{
 		if (bShow)
-			CTreeCtrl::SetItemState(hItem, INDEXTOSTATEIMAGEMASK(m_stateUnChecked), TVIS_STATEIMAGEMASK);
+			wxTreeCtrl::SetState(hItem, m_stateUnChecked);
 	}
 }
 
 
-bool CCheckTreeCtrl::IsCheckVisible(HTREEITEM hItem) const
+bool CCheckTreeCtrl::IsCheckVisible(wxTreeItemId hItem)
 {
-	UINT state = GetItemState(hItem, TVIS_STATEIMAGEMASK) >> 12;
-	return 0 != state;
+	return wxTreeCtrl::GetState(hItem) != m_stateNone;
 }
 
 
-bool CCheckTreeCtrl::GetChecked(HTREEITEM hItem) const
+bool CCheckTreeCtrl::GetChecked(wxTreeItemId hItem)
 {
-	UINT state = GetItemState(hItem, TVIS_STATEIMAGEMASK) >> 12;
-	return m_stateChecked == state;
+	return wxTreeCtrl::GetState(hItem) == m_stateChecked;
 }
 
 
 bool CCheckTreeCtrl::SetChecked(
-		HTREEITEM hItem,
+		wxTreeItemId hItem,
 		bool bChecked,
 		bool bCascade)
 {
 	if (IsCheckVisible(hItem))
 	{
-		int icon = 0;
+		int icon = m_stateNone;
 		if (bChecked)
 		{
 			icon = m_stateChecked;
-			CheckParentCheck(GetParentItem(hItem));
+			CheckParentCheck(GetItemParent(hItem));
 			if (bCascade)
 				Cascade(hItem, true);
 		}
@@ -136,20 +132,26 @@ bool CCheckTreeCtrl::SetChecked(
 			if (bCascade)
 				Cascade(hItem, false);
 		}
-		CTreeCtrl::SetItemState(hItem, INDEXTOSTATEIMAGEMASK(icon), TVIS_STATEIMAGEMASK);
+		wxTreeCtrl::SetState(hItem, icon);
 		return true;
 	}
 	else
 		return false;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// Private
+
+void CCheckTreeCtrl::SendDispInfo(wxTreeItemId hItem)
+{
+	wxTreeEvent evt(wxEVT_COMMAND_TREE_CHECK_CHANGED, GetId());
+	evt.SetEventObject(this);
+	GetEventHandler()->ProcessEvent(evt);
+}
+
 
 // When we check a child, make sure the parent chain is checked.
-void CCheckTreeCtrl::CheckParentCheck(HTREEITEM hItem)
+void CCheckTreeCtrl::CheckParentCheck(wxTreeItemId hItem)
 {
-	if (NULL != hItem)
+	if (hItem.IsOk())
 	{
 		bool bChecked = GetChecked(hItem);
 		if (!bChecked)
@@ -157,7 +159,7 @@ void CCheckTreeCtrl::CheckParentCheck(HTREEITEM hItem)
 			if (SetChecked(hItem, true, false))
 				SendDispInfo(hItem);
 			else
-				CheckParentCheck(GetParentItem(hItem));
+				CheckParentCheck(GetItemParent(hItem));
 		}
 	}
 }
@@ -165,14 +167,16 @@ void CCheckTreeCtrl::CheckParentCheck(HTREEITEM hItem)
 
 // Cascade to children (don't do hItem)
 int CCheckTreeCtrl::Cascade(
-		HTREEITEM hItem,
+		wxTreeItemId hItem,
 		bool bChecked)
 {
-	if (NULL == hItem)
+	if (!hItem.IsOk())
 		return 0;
 	int nChanged = 0;
-	HTREEITEM hChildItem = GetNextItem(hItem, TVGN_CHILD);
-	while (NULL != hChildItem)
+
+	wxTreeItemIdValue cookie;
+	wxTreeItemId hChildItem = GetFirstChild(hItem, cookie);
+	while (hChildItem)
 	{
 		if (GetChecked(hChildItem) != bChecked)
 		{
@@ -183,89 +187,38 @@ int CCheckTreeCtrl::Cascade(
 			}
 		}
 		nChanged += Cascade(hChildItem, bChecked);
-		hChildItem = GetNextItem(hChildItem, TVGN_NEXT);
+		hChildItem = GetNextChild(hChildItem, cookie);
 	}
 	return nChanged;
 }
 
 
-void CCheckTreeCtrl::SendDispInfo(HTREEITEM hItem)
+void CCheckTreeCtrl::OnStateClick(wxTreeEvent& evt)
 {
-	if (hItem)
+	if (evt.GetItem().IsOk() && IsCheckVisible(evt.GetItem()))
 	{
-		NMTVDISPINFO tvdi;
-		tvdi.hdr.hwndFrom = GetSafeHwnd();
-		tvdi.hdr.idFrom = 0;
-		tvdi.hdr.code = TVN_SETDISPINFO;
-		tvdi.item.mask = TVIF_STATE;
-		tvdi.item.hItem = hItem;
-		tvdi.item.state = (GetItemState(hItem, TVIS_STATEIMAGEMASK) >> 12);
-		tvdi.item.stateMask = TVIS_STATEIMAGEMASK;
-		tvdi.item.pszText = NULL;
-		tvdi.item.cchTextMax = 0;
-		tvdi.item.iImage = 0;
-		tvdi.item.iSelectedImage = 0;
-		tvdi.item.cChildren = 0;
-		tvdi.item.lParam = 0;
-		GetParent()->SendMessage(WM_NOTIFY, NULL, reinterpret_cast<LPARAM>(&tvdi));
+		bool bChecked = !GetChecked(evt.GetItem());
+		SetChecked(evt.GetItem(), bChecked);
+		SendDispInfo(evt.GetItem());
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CCheckTreeCtrl message handlers
 
-void CCheckTreeCtrl::PreSubclassWindow() 
+void CCheckTreeCtrl::OnKeyDown(wxTreeEvent& evt)
 {
-	CTreeCtrl::PreSubclassWindow();
-	assert(!(GetStyle() & TVS_CHECKBOXES));
-	SetImageList(&m_stateList, TVSIL_STATE);
-}
-
-
-int CCheckTreeCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
-{
-	if (CTreeCtrl::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	assert(!(GetStyle() & TVS_CHECKBOXES));
-	SetImageList(&m_stateList, TVSIL_STATE);
-	return 0;
-}
-
-
-void CCheckTreeCtrl::OnLButtonDown(
-		UINT nFlags,
-		CPoint point) 
-{
-	UINT flags = 0;
-	HTREEITEM hItem = HitTest(point, &flags);
-	if (hItem && (TVHT_ONITEMSTATEICON & flags) && IsCheckVisible(hItem))
+	switch (evt.GetKeyCode())
 	{
-		bool bChecked = !GetChecked(hItem);
-		SetChecked(hItem, bChecked);
-		SendDispInfo(hItem);
-	}
-	CTreeCtrl::OnLButtonDown(nFlags, point);
-}
-
-
-BOOL CCheckTreeCtrl::OnKeyDown(
-		NMHDR* pNMHDR,
-		LRESULT* pResult) 
-{
-	TV_KEYDOWN* pTVKeyDown = reinterpret_cast<TV_KEYDOWN*>(pNMHDR);
-	LRESULT res = 0;
-	if (VK_SPACE == pTVKeyDown->wVKey)
-	{
-		HTREEITEM hItem = GetSelectedItem();
-		if (hItem && IsCheckVisible(hItem))
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
 		{
-			bool bChecked = !GetChecked(hItem);
-			SetChecked(hItem, bChecked);
-			SendDispInfo(hItem);
+			wxTreeItemId hItem = GetSelection();
+			if (hItem.IsOk() && IsCheckVisible(hItem))
+			{
+				bool bChecked = !GetChecked(hItem);
+				SetChecked(hItem, bChecked);
+				SendDispInfo(hItem);
+			}
 		}
-		res = 1;
+		break;
 	}
-	*pResult = res;
-	return static_cast<BOOL>(res);
 }
-#endif
