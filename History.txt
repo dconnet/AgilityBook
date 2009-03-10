@@ -1,4 +1,6 @@
-2/25/2009: v2.0.0.0 <in development>
+3/9/2009: v2.0.0.0 <in development>
+
+3/9/2009: Config release on web
 - Bumped Configuration v25:
   - Updated AAC titles and added 'Challenge'.
 
