@@ -185,7 +185,7 @@ typedef tr1::shared_ptr<CDlgListViewerDataExisting> CDlgListViewerDataExistingPt
 
 wxString CDlgListViewerDataExisting::OnNeedText(long iCol) const
 {
-	wxString str;
+	tstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -217,7 +217,7 @@ wxString CDlgListViewerDataExisting::OnNeedText(long iCol) const
 		str = _("IDS_EXISTING_POINTS");
 		break;
 	}
-	return str;
+	return str.c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -347,7 +347,7 @@ wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
 		}
 		break;
 	}
-	return str.str();
+	return str.str().c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -381,7 +381,7 @@ typedef tr1::shared_ptr<CDlgListViewerDataMultiQ> CDlgListViewerDataMultiQPtr;
 
 wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 {
-	wxString str;
+	tstring str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -398,7 +398,7 @@ wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 			str = m_Trial->GetClubs().GetPrimaryClubName();
 		break;
 	}
-	return str;
+	return str.c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -721,7 +721,7 @@ wxString CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 			break;
 		}
 	}
-	return str.str();
+	return str.str().c_str();
 }
 
 
@@ -732,7 +732,7 @@ int CDlgListViewerDataLifetime::Compare(
 	CDlgListViewerDataLifetimePtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
-	wxString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -824,7 +824,7 @@ wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 		str << m_info.m_Score;
 		break;
 	}
-	return str.str();
+	return str.str().c_str();
 }
 
 
@@ -835,7 +835,7 @@ int CDlgListViewerDataOther::Compare(
 	CDlgListViewerDataOtherPtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
-	wxString str1, str2;
+	tstring str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -953,12 +953,12 @@ wxString CDlgListViewerDataItem::OnNeedText(long iCol) const
 		break;
 
 	case COL_ITEM_NAME:
-		str = m_info.name;
+		str = m_info.name.c_str();
 		break;
 
 	case COL_ITEM_COMMENT:
 		if (m_info.pItem)
-			str = m_info.pItem->GetComment();
+			str = m_info.pItem->GetComment().c_str();
 		break;
 	}
 	return str;
@@ -1004,15 +1004,15 @@ int CDlgListViewerDataItem::Compare(
 		break;
 
 	case COL_ITEM_NAME:
-		str1 = m_info.name;
-		str2 = pData->m_info.name;
+		str1 = m_info.name.c_str();
+		str2 = pData->m_info.name.c_str();
 		break;
 
 	case COL_ITEM_COMMENT:
 		if (m_info.pItem)
-			str1 = m_info.pItem->GetComment();
+			str1 = m_info.pItem->GetComment().c_str();
 		if (pData->m_info.pItem)
-			str1 = pData->m_info.pItem->GetComment();
+			str1 = pData->m_info.pItem->GetComment().c_str();
 		break;
 	}
 	if (str1 < str2)

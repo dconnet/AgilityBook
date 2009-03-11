@@ -416,11 +416,11 @@ void CDlgFindLinks::OnCopy(wxCommandEvent& evt)
 		if (!clpData.isOkay())
 			return;
 
-		tstring data;
+		wxString data;
 		for (size_t i = 0; i < m_Data.size(); ++i)
 		{
-			data += m_Data[i]->m_OldLink;
-			data += _T("\r\n");
+			data += m_Data[i]->m_OldLink.c_str();
+			data += wxT("\r\n");
 		}
 
 		clpData.AddData(data);

@@ -455,12 +455,12 @@ void CDlgTrial::OnClubNotes(wxCommandEvent& evt)
 	if (0 <= index)
 	{
 		ARBDogClubPtr pClub = GetClubData(index);
-		CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName().c_str(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			if (pClub->GetName() != dlg.CurrentSelection())
+			if (pClub->GetName() != dlg.CurrentSelection().c_str())
 			{
-				pClub->SetName(dlg.CurrentSelection());
+				pClub->SetName(dlg.CurrentSelection().c_str());
 				ListClubs(&pClub);
 			}
 			else

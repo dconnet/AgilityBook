@@ -1358,7 +1358,7 @@ bool CAgilityBookDoc::OnCloseDocument()
 {
 	ARBDogPtr pDog = GetCurrentDog();
 	if (pDog)
-		wxConfig::Get()->Write(wxT("Settings/LastDog"), pDog->GetCallName());
+		wxConfig::Get()->Write(wxT("Settings/LastDog"), pDog->GetCallName().c_str());
 	else
 		wxConfig::Get()->Write(wxT("Settings/LastDog"), wxEmptyString);
 	return wxDocument::OnCloseDocument();
@@ -1698,10 +1698,10 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_NOTES_CLUBS:
 		{
-			tstring select;
+			wxString select;
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
-				select = pTrial->GetClubs().GetPrimaryClubName();
+				select = pTrial->GetClubs().GetPrimaryClubName().c_str();
 			CDlgInfoNote dlg(this, ARBInfo::eClubInfo, select);
 			dlg.ShowModal();
 		}
@@ -1709,10 +1709,10 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_NOTES_JUDGES:
 		{
-			tstring select;
+			wxString select;
 			ARBDogRunPtr pRun = GetCurrentRun();
 			if (pRun)
-				select = pRun->GetJudge();
+				select = pRun->GetJudge().c_str();
 			CDlgInfoNote dlg(this, ARBInfo::eJudgeInfo, select);
 			dlg.ShowModal();
 		}
@@ -1720,10 +1720,10 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_NOTES_LOCATIONS:
 		{
-			tstring select;
+			wxString select;
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
-				select = pTrial->GetLocation();
+				select = pTrial->GetLocation().c_str();
 			CDlgInfoNote dlg(this, ARBInfo::eLocationInfo, select);
 			dlg.ShowModal();
 		}

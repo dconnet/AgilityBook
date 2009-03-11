@@ -98,7 +98,7 @@ wxString CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 		str << m_Value;
 		break;
 	}
-	return str.str();
+	return str.str().c_str();
 }
 
 

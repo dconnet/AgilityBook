@@ -405,7 +405,7 @@ void CUpdateInfo::CheckConfig(
 		wxString msg;
 		if (0 < m_InfoMsg.size())
 		{
-			std::map<tstring, tstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
+			std::map<tstring, tstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage().c_str());
 			if (iMsg == m_InfoMsg.end())
 				iMsg = m_InfoMsg.find(0);
 			if (iMsg != m_InfoMsg.end() && 0 < iMsg->second.length())

@@ -574,7 +574,7 @@ void CDlgExistingPoints::FillVenues()
 	if (wxNOT_FOUND != index)
 		venue = m_ctrlVenues->GetString(index);
 	else if (m_pExistingPoints)
-		venue = m_pExistingPoints->GetVenue();
+		venue = m_pExistingPoints->GetVenue().c_str();
 	m_ctrlVenues->Clear();
 
 	ARBDogExistingPoints::PointType type = GetCurrentType();
@@ -588,7 +588,7 @@ void CDlgExistingPoints::FillVenues()
 		{
 			int idx = m_ctrlVenues->Append(pVenue->GetName().c_str());
 			m_ctrlVenues->SetClientObject(idx, new CDlgPointsVenueData(pVenue));
-			if (m_pExistingPoints && venue == pVenue->GetName())
+			if (m_pExistingPoints && venue == pVenue->GetName().c_str())
 				m_ctrlVenues->SetSelection(idx);
 		}
 	}
@@ -606,9 +606,9 @@ void CDlgExistingPoints::FillDivMultiQ()
 	else if (m_pExistingPoints)
 	{
 		if (ARBDogExistingPoints::eMQ == type)
-			divMultiQ = m_pExistingPoints->GetMultiQ();
+			divMultiQ = m_pExistingPoints->GetMultiQ().c_str();
 		else
-			divMultiQ = m_pExistingPoints->GetDivision();
+			divMultiQ = m_pExistingPoints->GetDivision().c_str();
 	}
 	m_ctrlDivMultiQs->Clear();
 
@@ -626,7 +626,7 @@ void CDlgExistingPoints::FillDivMultiQ()
 				ARBConfigMultiQPtr pMulti = *iterQ;
 				int idx = m_ctrlDivMultiQs->Append(pMulti->GetName().c_str());
 				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsMultiQData(pMulti));
-				if (m_pExistingPoints && divMultiQ == pMulti->GetName())
+				if (m_pExistingPoints && divMultiQ == pMulti->GetName().c_str())
 					m_ctrlDivMultiQs->SetSelection(idx);
 			}
 		}
@@ -639,7 +639,7 @@ void CDlgExistingPoints::FillDivMultiQ()
 				ARBConfigDivisionPtr pDiv = (*iterDiv);
 				int idx = m_ctrlDivMultiQs->Append(pDiv->GetName().c_str());
 				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsDivisionData(pDiv));
-				if (m_pExistingPoints && divMultiQ == pDiv->GetName())
+				if (m_pExistingPoints && divMultiQ == pDiv->GetName().c_str())
 					m_ctrlDivMultiQs->SetSelection(idx);
 			}
 		}
@@ -656,7 +656,7 @@ void CDlgExistingPoints::FillLevels()
 	if (wxNOT_FOUND != index)
 		level = m_ctrlLevels->GetString(index);
 	else if (m_pExistingPoints)
-		level = m_pExistingPoints->GetLevel();
+		level = m_pExistingPoints->GetLevel().c_str();
 
 	m_ctrlLevels->Clear();
 	int idxDiv = m_ctrlDivMultiQs->GetSelection();
@@ -678,7 +678,7 @@ void CDlgExistingPoints::FillLevels()
 					CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel, pSubLevel);
 					int idx = m_ctrlLevels->Append(pSubLevel->GetName().c_str());
 					m_ctrlLevels->SetClientObject(idx, pData);
-					if (level == pSubLevel->GetName())
+					if (level == pSubLevel->GetName().c_str())
 						m_ctrlLevels->SetSelection(idx);
 				}
 			}
@@ -687,7 +687,7 @@ void CDlgExistingPoints::FillLevels()
 				CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel);
 				int idx = m_ctrlLevels->Append(pLevel->GetName().c_str());
 				m_ctrlLevels->SetClientObject(idx, pData);
-				if (level == pLevel->GetName())
+				if (level == pLevel->GetName().c_str())
 					m_ctrlLevels->SetSelection(idx);
 			}
 		}
@@ -703,7 +703,7 @@ void CDlgExistingPoints::FillEvents()
 	if (wxNOT_FOUND != index)
 		evt = m_ctrlEvents->GetString(index);
 	else if (m_pExistingPoints)
-		evt = m_pExistingPoints->GetEvent();
+		evt = m_pExistingPoints->GetEvent().c_str();
 	m_ctrlEvents->Clear();
 
 	int idxVenue = m_ctrlVenues->GetSelection();
@@ -727,7 +727,7 @@ void CDlgExistingPoints::FillEvents()
 					{
 						int idx = m_ctrlEvents->Append(pEvent->GetName().c_str());
 						m_ctrlEvents->SetClientObject(idx, new CDlgPointsEventData(pEvent));
-						if (evt == pEvent->GetName())
+						if (evt == pEvent->GetName().c_str())
 							m_ctrlEvents->SetSelection(idx);
 					}
 				}

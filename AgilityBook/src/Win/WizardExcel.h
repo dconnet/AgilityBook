@@ -37,6 +37,7 @@
  * @li 2004-09-30 DRC Created
  */
 
+#include <vector>
 class IDlgProgress;
 class IWizardExporter;
 typedef tr1::shared_ptr<IWizardExporter> IWizardExporterPtr;

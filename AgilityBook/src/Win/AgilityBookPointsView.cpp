@@ -125,7 +125,7 @@ public:
 	}
 	virtual wxString OnNeedText(long index) const
 	{
-		return m_Data->OnNeedText(index);
+		return m_Data->OnNeedText(index).c_str();
 	}
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 	virtual bool HasDetails() const

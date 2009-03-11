@@ -99,7 +99,7 @@ CDlgTitle::CDlgTitle(
 			m_bHidden = true;
 		if (m_pTitle->GetReceived())
 			m_bReceived = true;
-		m_Venue = m_pTitle->GetVenue();
+		m_Venue = m_pTitle->GetVenue().c_str();
 	}
 
 	// Controls (these are done first to control tab order)

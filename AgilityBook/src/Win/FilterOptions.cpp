@@ -103,11 +103,11 @@ static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 	{
 		if (!venue.IsEmpty())
 			venue += wxT(':');
-		venue += (*iter).venue;
+		venue += (*iter).venue.c_str();
 		venue += wxT("/");
-		venue += (*iter).division;
+		venue += (*iter).division.c_str();
 		venue += wxT("/");
-		venue += (*iter).level;
+		venue += (*iter).level.c_str();
 	}
 	return venue;
 }

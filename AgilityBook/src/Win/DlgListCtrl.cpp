@@ -144,19 +144,19 @@ wxString CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 	switch (iCol)
 	{
 	case 1: // Start Date
-		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD);
+		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD).c_str();
 		break;
 	case 2: // End Date
-		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD);
+		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD).c_str();
 		break;
 	case 3: // Location
-		str = m_pCal->GetLocation();
+		str = m_pCal->GetLocation().c_str();
 		break;
 	case 4: // Club
-		str = m_pCal->GetClub();
+		str = m_pCal->GetClub().c_str();
 		break;
 	case 5: // Venue
-		str = m_pCal->GetVenue();
+		str = m_pCal->GetVenue().c_str();
 		break;
 	case 6: // Notes
 		str = m_pCal->GetNote().c_str();
@@ -205,7 +205,7 @@ public:
 		, m_Fault(fault)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const	{return m_Fault;}
+	virtual wxString OnNeedText(long iCol) const	{return m_Fault.c_str();}
 	virtual bool OnEdit();
 	virtual void Apply();
 private:
@@ -238,7 +238,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		wxListItem info;
 		info.SetMask(wxLIST_MASK_TEXT);
 		ctrl->GetColumn(index, info);
-		faults.insert(info.GetText());
+		faults.insert(info.GetText().c_str());
 	}
 }
 
@@ -301,13 +301,13 @@ wxString CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
 	{
 	default:
 	case 0:
-		str = m_Other->GetName();
+		str = m_Other->GetName().c_str();
 		break;
 	case 1:
 		{
 			otstringstream tmp;
 			tmp << m_Other->GetPoints();
-			str = tmp.str();
+			str = tmp.str().c_str();
 		}
 		break;
 	}
@@ -359,7 +359,7 @@ typedef tr1::shared_ptr<CDlgListCtrlDataPartners> CDlgListCtrlDataPartnersPtr;
 
 wxString CDlgListCtrlDataPartners::OnNeedText(long iCol) const
 {
-	wxString str;
+	tstring str;
 	switch (iCol)
 	{
 	default:
@@ -373,7 +373,7 @@ wxString CDlgListCtrlDataPartners::OnNeedText(long iCol) const
 		str = m_Partner->GetHandler();
 		break;
 	}
-	return str;
+	return str.c_str();
 }
 
 
@@ -757,8 +757,8 @@ void CDlgListCtrl::GetAllPartners(
 			CDlgListCtrlDataPtr pData = GetItemListData(index);
 			if (pData)
 			{
-				ioPartners.insert(pData->OnNeedText(2));
-				ioDogs.insert(pData->OnNeedText(0));
+				ioPartners.insert(pData->OnNeedText(2).c_str());
+				ioDogs.insert(pData->OnNeedText(0).c_str());
 			}
 		}
 	}
@@ -827,7 +827,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 			if (wxID_OK == dlg.ShowModal())
 			{
 				bUpdate = true;
-				CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, dlg.GetFault()));
+				CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, dlg.GetFault().c_str()));
 				m_ctrlList->Select(m_ctrlList->InsertItem(pData));
 			}
 		}

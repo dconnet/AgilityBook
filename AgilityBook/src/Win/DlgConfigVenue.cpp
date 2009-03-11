@@ -624,10 +624,10 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 		m_pVenue->SetName(name);
 	}
 
-	m_pVenue->SetLongName(m_LongName);
+	m_pVenue->SetLongName(m_LongName.c_str());
 	m_pVenue->SetURL(m_URL.c_str());
-	m_pVenue->SetDesc(m_Desc);
-	m_pVenue->SetLifetimeName(m_LifetimeName);
+	m_pVenue->SetDesc(m_Desc.c_str());
+	m_pVenue->SetLifetimeName(m_LifetimeName.c_str());
 
 	if (oldName != name)
 		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(oldName, name));

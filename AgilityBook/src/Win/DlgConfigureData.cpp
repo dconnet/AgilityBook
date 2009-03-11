@@ -92,7 +92,7 @@ wxString CDlgConfigureDataVenue::OnNeedText() const
 
 wxString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 {
-	wxString str;
+	tstring str;
 	switch (iColumn)
 	{
 	case 0:
@@ -106,7 +106,7 @@ wxString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 		str = tstringUtil::Replace(str, _T("\n"), _T(" "));
 		break;
 	}
-	return str;
+	return str.c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
