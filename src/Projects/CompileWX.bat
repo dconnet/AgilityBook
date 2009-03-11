@@ -19,6 +19,7 @@ echo on
 set _DO_MBCS=1
 set _CFG=_VC6.0
 set _RUNTIME_LIBS=dynamic
+set _CPPFLAGS=
 REM vc_lib_VC6.0
 goto doit
 
@@ -28,6 +29,7 @@ call "C:\Program Files\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.
 set _DO_MBCS=1
 set _CFG=_VC7.1s
 set _RUNTIME_LIBS=static
+set _CPPFLAGS=
 REM vc_lib_VC7.1s
 goto doit
 
@@ -38,6 +40,7 @@ set _DO_UNICODE=1
 set _DO_MBCS=1
 set _CFG=_VC8.0s
 set _RUNTIME_LIBS=static
+set _CPPFLAGS=
 REM vc_lib_VC8.0s
 goto doit
 
@@ -48,6 +51,7 @@ set _DO_UNICODE=1
 set _DO_MBCS=1
 set _CFG=_VC9.0s
 set _RUNTIME_LIBS=static
+set _CPPFLAGS=/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1
 REM vc_lib_VC9.0s
 goto doit
 
@@ -58,6 +62,7 @@ set _DO_UNICODE=1
 set _TARGET_CPU=TARGET_CPU=amd64
 set _CFG=_VC9.0s
 set _RUNTIME_LIBS=static
+set _CPPFLAGS=/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1
 REM vc_amd64_lib_VC9.0s
 goto doit
 
@@ -66,13 +71,13 @@ goto doit
 cd \wx\build\msw
 
 if ("%_DO_UNICODE%")==("0") goto next
-nmake -f makefile.vc BUILD=release            UNICODE=1 RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG%
-nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG%
+nmake -f makefile.vc BUILD=release            UNICODE=1 RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG% CPPFLAGS="%_CPPFLAGS%"
+nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG% CPPFLAGS="%_CPPFLAGS%"
 
 :next
 if ("%_DO_MBCS%")==("0") goto next2
-nmake -f makefile.vc BUILD=release            RUNTIME_LIBS=%_RUNTIME_LIBS% CFG=%_CFG%
-nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 RUNTIME_LIBS=%_RUNTIME_LIBS% CFG=%_CFG%
+nmake -f makefile.vc BUILD=release            RUNTIME_LIBS=%_RUNTIME_LIBS% CFG=%_CFG% CPPFLAGS="%_CPPFLAGS%"
+nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 RUNTIME_LIBS=%_RUNTIME_LIBS% CFG=%_CFG% CPPFLAGS="%_CPPFLAGS%"
 
 :next2
 cd \AgilityBook\src\AgilityBook\src\Projects
