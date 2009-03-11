@@ -32,7 +32,7 @@ check it in!) There are a couple changes I've made:
   - WXWIN_COMPATIBILITY_2_6 0
   - wxUSE_STL 1
 - \wx\include\msvc\wx\setup.h:
-- This is hardcoded to include vc_lib\msw[u][d]/wx/setup.h,
+  This is hardcoded to include vc_lib\msw[u][d]/wx/setup.h,
   - Change it to include "wx/msw/setup.h"
     [unicode and nonunicode] (gets rid of all the ifdef sections)
 - \wx\src\msw\stdpaths.cpp
@@ -40,11 +40,12 @@ check it in!) There are a couple changes I've made:
     directory from the appdir, which causes problems.
 To build (for vc9):
 (i386)
-nmake -f makefile.vc BUILD=release UNICODE=1 RUNTIME_LIBS=static CFG=_VC9.0s
-nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=static CFG=_VC9.0s
+nmake -f makefile.vc BUILD=release UNICODE=1 RUNTIME_LIBS=static CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
+nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=static CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
 (amd64)
-nmake -f makefile.vc BUILD=release UNICODE=1 RUNTIME_LIBS=static TARGET_CPU=amd64 CFG=_VC9.0s
-nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=static TARGET_CPU=amd64 CFG=_VC9.0s
+nmake -f makefile.vc BUILD=release UNICODE=1 RUNTIME_LIBS=static TARGET_CPU=amd64 CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
+nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=static TARGET_CPU=amd64 CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
+[for vc, there's src/Projects/CompileWX.bat to easily compile for vc6 thru 9]
 
 --------------------
 
