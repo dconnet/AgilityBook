@@ -214,7 +214,7 @@ long tstringUtil::atol(tstring const& inStr)
 {
 	long l;
 #ifdef WXWIDGETS
-	wxString s(inStr);
+	wxString s(inStr.c_str());
 	s.ToLong(&l);
 #else
 	l = atol(inStr.c_str());
@@ -240,7 +240,7 @@ double tstringUtil::strtod(tstring const& inStr)
 {
 	double d;
 #ifdef WXWIDGETS
-	wxString s(inStr);
+	wxString s(inStr.c_str());
 	s.ToDouble(&d);
 #else
 	d = strtod(inStr.c_str());

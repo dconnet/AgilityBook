@@ -252,9 +252,9 @@ void CDlgConfigMultiQ::EditItem()
 		CDlgEventSelect dlg(m_pVenue, date, div, level, evt, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			if (m_pMultiQ->RemoveItem(div, level, evt))
+			if (m_pMultiQ->RemoveItem(div.c_str(), level.c_str(), evt.c_str()))
 				m_ctrlItems->DeleteItem(idx);
-			if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
+			if (m_pMultiQ->AddItem(dlg.GetDivision().c_str(), dlg.GetLevel().c_str(), dlg.GetEvent().c_str()))
 			{
 				idx = m_ctrlItems->InsertItem(idx, dlg.GetDivision());
 				SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
@@ -322,7 +322,7 @@ void CDlgConfigMultiQ::OnAdd(wxCommandEvent& evt)
 	CDlgEventSelect dlg(m_pVenue, date, wxEmptyString, wxEmptyString, wxEmptyString, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
+		if (m_pMultiQ->AddItem(dlg.GetDivision().c_str(), dlg.GetLevel().c_str(), dlg.GetEvent().c_str()))
 		{
 			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), dlg.GetDivision());
 			SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
@@ -352,7 +352,7 @@ void CDlgConfigMultiQ::OnRemove(wxCommandEvent& evt)
 		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
 		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
 		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
-		if (m_pMultiQ->RemoveItem(div, level, evt))
+		if (m_pMultiQ->RemoveItem(div.c_str(), level.c_str(), evt.c_str()))
 			m_ctrlItems->DeleteItem(idx);
 		else
 			wxBell();
@@ -365,9 +365,9 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	if (m_pMultiQ->GetName() != m_Name)
+	if (m_pMultiQ->GetName() != m_Name.c_str())
 	{
-		if (m_pVenue->GetMultiQs().FindMultiQ(m_Name))
+		if (m_pVenue->GetMultiQs().FindMultiQ(m_Name.c_str()))
 		{
 			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 			m_ctrlName->SetFocus();

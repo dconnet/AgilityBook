@@ -43,6 +43,7 @@
 #include "ARBDog.h"
 #include "ARBTypes.h"
 #include "AgilityBookDoc.h"
+#include <algorithm>
 #include <wx/config.h>
 
 
@@ -65,7 +66,7 @@ CDlgSelectDog::CDlgSelectDog(
 
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
-	std::set<wxString> selection;
+	std::set<tstring> selection;
 	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);
 	for (long iDog = 1; iDog <= nDogs; ++iDog)
 	{
@@ -73,7 +74,7 @@ CDlgSelectDog::CDlgSelectDog(
 		item << _T("Selection/Dog") << iDog;
 		wxString dog = wxConfig::Get()->Read(item.str().c_str(), wxT(""));
 		if (!dog.empty())
-			selection.insert(dog);
+			selection.insert(dog.c_str());
 	}
 
 	// Controls (these are done first to control tab order)

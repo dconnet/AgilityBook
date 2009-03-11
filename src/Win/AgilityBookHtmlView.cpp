@@ -215,7 +215,7 @@ void CAgilityBookHtmlView::LoadData()
 
 	m_Items->LoadData(m_Ctrl, GetDocument(), GetDocument()->GetCurrentDog());
 	tstring data = RawHtml(false);
-	m_Ctrl->SetPage(data);
+	m_Ctrl->SetPage(data.c_str());
 
 	UpdateMessages();
 }
@@ -313,7 +313,7 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 			if (clpData.isOkay())
 			{
 				tstring data = RawHtml(true);
-				clpData.AddData(eFormatHtml, data);
+				clpData.AddData(eFormatHtml, data.c_str());
 				clpData.AddData(m_Ctrl->ToText().c_str());
 				clpData.CommitData();
 			}

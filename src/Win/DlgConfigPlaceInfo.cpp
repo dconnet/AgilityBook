@@ -39,6 +39,7 @@
 #include "DlgConfigPlaceInfo.h"
 
 #include "Validators.h"
+#include <algorithm>
 #include <wx/valgen.h>
 
 

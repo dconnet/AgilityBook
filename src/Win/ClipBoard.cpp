@@ -260,7 +260,7 @@ bool CClipboardDataWriter::AddData(
 	if (eFormatHtml == clpFmt)
 	{
 #ifdef UNICODE
-		std::string data = tstringUtil::Convert(inData);
+		std::string data = tstringUtil::Convert(inData.c_str());
 #else
 		std::string data = inData;
 #endif

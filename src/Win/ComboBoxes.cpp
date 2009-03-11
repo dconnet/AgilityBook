@@ -84,7 +84,7 @@ CVenueComboBox::CVenueComboBox(
 		else
 			index = Append(pVenue->GetName().c_str());
 		SetClientObject(index, new CVenueComboData(pVenue));
-		if (!inSelectVenue.empty() && pVenue->GetName() == inSelectVenue)
+		if (!inSelectVenue.empty() && pVenue->GetName() == inSelectVenue.c_str())
 			SetSelection(index);
 	}
 }

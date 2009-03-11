@@ -221,6 +221,21 @@ typedef long LONG_PTR;
 #include "wx/wxchar.h"
 #include "wx/wx.h"
 #endif
+// Some sanity checking
+#ifndef wxUSE_GUI
+#error ARB: wxUSE_GUI must be defined in wxWidgets
+#endif
+#ifndef wxUSE_DATETIME
+#error ARB: wxUSE_DATETIME must be defined in wxWidgets
+#endif
+#ifndef wxUSE_NOTEBOOK
+#error ARB: wxUSE_NOTEBOOK must be defined in wxWidgets
+#endif
+#ifndef wxUSE_DOC_VIEW_ARCHITECTURE
+#error ARB: wxUSE_DOC_VIEW_ARCHITECTURE must be defined in wxWidgets
+#endif
+// There's other things that could be checked, but that's good enough for now.
+// If there's other things we need, the compilation will die at that point.
 #endif // WXWIDGETS
 
 

@@ -188,7 +188,7 @@ CDlgEventSelect::CDlgEventSelect(
 		int index = m_ctrlDivisions->Append(pDiv->GetName().c_str());
 		m_ctrlDivisions->SetClientObject(index,
 			new CDlgDivSelectData(pDiv));
-		if (pDiv->GetName() == inDivision)
+		if (pDiv->GetName() == inDivision.c_str())
 			m_ctrlDivisions->SetSelection(index);
 	}
 	FillLevels();
@@ -254,7 +254,7 @@ void CDlgEventSelect::FillLevels()
 					int idx = m_ctrlLevels->Append(pSubLevel->GetName().c_str());
 					m_ctrlLevels->SetClientObject(idx,
 						new CDlgEventSelectData(pLevel, pSubLevel));
-					if (level == pSubLevel->GetName())
+					if (level == pSubLevel->GetName().c_str())
 						m_ctrlLevels->SetSelection(idx);
 				}
 			}
@@ -263,7 +263,7 @@ void CDlgEventSelect::FillLevels()
 				int idx = m_ctrlLevels->Append(pLevel->GetName().c_str());
 				m_ctrlLevels->SetClientObject(idx,
 					new CDlgEventSelectData(pLevel));
-				if (level == pLevel->GetName())
+				if (level == pLevel->GetName().c_str())
 					m_ctrlLevels->SetSelection(idx);
 			}
 		}
@@ -303,7 +303,7 @@ void CDlgEventSelect::FillEvents()
 				if (pEvent->FindEvent(pData->m_pDiv->GetName(), pEvtData->m_pLevel->GetName(), m_Date))
 				{
 					int idx = m_ctrlEvents->Append(pEvent->GetName().c_str());
-					if (evt == pEvent->GetName())
+					if (evt == pEvent->GetName().c_str())
 					{
 						m_ctrlEvents->SetSelection(idx);
 					}

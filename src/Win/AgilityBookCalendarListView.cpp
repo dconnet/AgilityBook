@@ -459,7 +459,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 				info.SetMask(wxLIST_MASK_TEXT);
 				info.SetColumn(i);
 				m_pView->m_Ctrl->GetItem(info);
-				strings.insert(info.GetText());
+				strings.insert(info.GetText().c_str());
 			}
 		}
 		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)

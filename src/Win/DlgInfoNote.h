@@ -53,7 +53,7 @@ public:
 	CDlgInfoNote(
 			CAgilityBookDoc* pDoc,
 			ARBInfo::eInfoType inType,
-			tstring const& inSelect,
+			wxString const& inSelect,
 			wxWindow* pParent = NULL);
 
 	wxString CurrentSelection() const	{return m_CurSel;}

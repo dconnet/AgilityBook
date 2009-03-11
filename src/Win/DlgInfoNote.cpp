@@ -108,7 +108,7 @@ END_EVENT_TABLE()
 CDlgInfoNote::CDlgInfoNote(
 		CAgilityBookDoc* pDoc,
 		ARBInfo::eInfoType inType,
-		tstring const& inSelect,
+		wxString const& inSelect,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)

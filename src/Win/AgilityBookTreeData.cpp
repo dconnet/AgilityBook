@@ -767,16 +767,16 @@ wxString CAgilityBookTreeDataDog::OnNeedText() const
 		switch (GetDogColumns()[idx])
 		{
 		case IO_TREE_DOG_REGNAME:
-			str += m_pDog->GetRegisteredName();
+			str += m_pDog->GetRegisteredName().c_str();
 			break;
 		case IO_TREE_DOG_CALLNAME:
-			str += m_pDog->GetCallName();
+			str += m_pDog->GetCallName().c_str();
 			break;
 		case IO_TREE_DOG_BREED:
-			str += m_pDog->GetBreed();
+			str += m_pDog->GetBreed().c_str();
 			break;
 		case IO_TREE_DOG_DOB:
-			str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+			str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 			break;
 		case IO_TREE_DOG_AGE:
 			{
@@ -1051,7 +1051,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 					else
 						str += ' ';
 				}
-				str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+				str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 				bNeedSpace = true;
 			}
 			break;
@@ -1065,7 +1065,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 					else
 						str += ' ';
 				}
-				str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+				str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 				bNeedSpace = true;
 			}
 			break;
@@ -1080,7 +1080,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				{
 					if (0 < i)
 						str += wxT("/");
-					str += (*iter)->GetName();
+					str += (*iter)->GetName().c_str();
 					bNeedSpace = true;
 				}
 			}
@@ -1096,7 +1096,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				{
 					if (0 < i)
 						str += wxT("/");
-					str += (*iter)->GetVenue();
+					str += (*iter)->GetVenue().c_str();
 					bNeedSpace = true;
 				}
 			}
@@ -1106,7 +1106,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 			{
 				if (bNeedSpace)
 					str += ' ';
-				str += m_pTrial->GetLocation();
+				str += m_pTrial->GetLocation().c_str();
 				bNeedSpace = true;
 			}
 			break;
@@ -1115,8 +1115,8 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 			{
 				if (bNeedSpace)
 					str += ' ';
-				str += m_pTrial->GetNote();
-				str = tstringUtil::Replace(str, wxT("\n"), wxT(" "));
+				str += m_pTrial->GetNote().c_str();
+				str = tstringUtil::Replace(str.c_str(), wxT("\n"), wxT(" ")).c_str();
 				bNeedSpace = true;
 			}
 			break;
@@ -1398,7 +1398,7 @@ wxString CAgilityBookTreeDataRun::OnNeedText() const
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
-			str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+			str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
 			break;
 		case IO_TREE_RUN_Q:
 			{
@@ -1412,7 +1412,7 @@ wxString CAgilityBookTreeDataRun::OnNeedText() const
 						{
 							if (!q.empty())
 								q += wxT('/');
-							q += (*iMultiQ)->GetShortName();
+							q += (*iMultiQ)->GetShortName().c_str();
 						}
 					}
 					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
@@ -1424,21 +1424,21 @@ wxString CAgilityBookTreeDataRun::OnNeedText() const
 					}
 				}
 				if (q.empty())
-					q = m_pRun->GetQ().str();
+					q = m_pRun->GetQ().str().c_str();
 				str += q;
 			}
 			break;
 		case IO_TREE_RUN_EVENT:
-			str += m_pRun->GetEvent();
+			str += m_pRun->GetEvent().c_str();
 			break;
 		case IO_TREE_RUN_DIVISION:
-			str += m_pRun->GetDivision();
+			str += m_pRun->GetDivision().c_str();
 			break;
 		case IO_TREE_RUN_LEVEL:
-			str += m_pRun->GetLevel();
+			str += m_pRun->GetLevel().c_str();
 			break;
 		case IO_TREE_RUN_HEIGHT:
-			str += m_pRun->GetHeight();
+			str += m_pRun->GetHeight().c_str();
 			break;
 		}
 	}

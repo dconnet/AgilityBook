@@ -1415,7 +1415,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	}
 
 	ClearFixups();
-	if (m_pEvent->GetName() != m_Name)
+	if (m_pEvent->GetName() != m_Name.c_str())
 	{
 		if (m_pVenue->GetEvents().FindEvent(m_Name.c_str()))
 		{
