@@ -96,7 +96,7 @@ private:
 	void SwapEntries(
 			long oldIndex,
 			long newIndex);
-	void OnEdit();
+	void DoEdit();
 	// Only PocketPC calls this directly. We're making use of it internally.
 	virtual bool DoOK();
 

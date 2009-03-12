@@ -10,6 +10,7 @@ Additional software packages required (all free):
 - Windows Installer XML toolset
 - Doxygen (optional)
 - GraphViz (optional)
+[See "Compiler notes" at bottom of file for supported compilers]
 
 Once the above software is unpacked, the directory structure should look like:
   - AgilityBook/
@@ -130,6 +131,7 @@ Microsoft Visual Studio 6 + Service Pack 5 (VC6)
 ================================================
    Make sure you have updated the STL files with the patches noted at
    http://www.dinkumware.com/vc_fixes.html. (Last updated Nov 10, 2002)
+   [x86: MBCS only]
 
 Microsoft Visual Studio .NET (VC7)
 ==================================
@@ -138,10 +140,12 @@ Microsoft Visual Studio .NET (VC7)
 Microsoft Visual Studio .NET 2003 (VC7.1)
 =========================================
    It works, no additional notes.
+   [x86: MBCS only]
 
 Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
    It works, no additional notes.
+   [x86: UNICODE and MBCS]
 
 Microsoft Visual Studio .NET 2008 (VC9)
 =======================================
@@ -150,3 +154,5 @@ Microsoft Visual Studio .NET 2008 (VC9)
 Microsoft Visual Studio .NET 2008 (VC9) + SP1
 =============================================
    It works, no additional notes.
+   [x86: UNICODE and MBCS]
+   [x64: UNICODE only]

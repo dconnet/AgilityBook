@@ -256,11 +256,13 @@ HBRUSH CDlgRunCRCD::OnCtlColor(
 
 void CDlgRunCRCD::OnEdit()
 {
+#ifdef WIN32
 	if (m_metaFile)
 	{
 		CDlgCRCDViewer viewer(m_metaFile, this);
 		viewer.DoModal();
 	}
+#endif
 }
 
 

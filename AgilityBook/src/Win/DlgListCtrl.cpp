@@ -730,7 +730,7 @@ void CDlgListCtrl::SwapEntries(
 }
 
 
-void CDlgListCtrl::OnEdit()
+void CDlgListCtrl::DoEdit()
 {
 	int nItem = m_ctrlList->GetFirstSelected();
 	if (0 <= nItem)
@@ -773,7 +773,7 @@ void CDlgListCtrl::OnItemSelected(wxListEvent& /*evt*/)
 
 void CDlgListCtrl::OnDoubleClick(wxMouseEvent& evt)
 {
-	OnEdit();
+	DoEdit();
 	evt.Skip();
 }
 
@@ -786,7 +786,7 @@ void CDlgListCtrl::OnKeyDown(wxListEvent& evt)
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
-		OnEdit();
+		DoEdit();
 		break;
 	}
 	evt.Skip();
@@ -873,7 +873,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 
 void CDlgListCtrl::OnEdit(wxCommandEvent& evt)
 {
-	OnEdit();
+	DoEdit();
 }
 
 

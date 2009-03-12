@@ -244,15 +244,8 @@ typedef long LONG_PTR;
 #include "wx/wx.h"
 #endif
 // Some sanity checking
-#ifdef _MSC_VER
-// I tried to turn off STL, but couldn't figure out how to link (unresolved
-// references) So just insist on STL on VC. When compiling, we should test
-// that we can still compile with wxUSE_STL=0 - otherwise some string
-// conversion errors may creep into the code. Ideally, we'd insist that all
-// platforms ARB supports use this, but I don't know if we can do that...
 #ifndef wxUSE_STL
 #error ARB: wxUSE_STL must be defined in wxWidgets (include/wx/<platform>/setup.)
-#endif
 #endif
 #ifndef wxUSE_GUI
 #error ARB: wxUSE_GUI must be defined in wxWidgets (include/wx/<platform>/setup.)

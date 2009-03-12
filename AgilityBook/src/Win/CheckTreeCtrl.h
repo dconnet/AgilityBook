@@ -70,9 +70,6 @@ private:
 	// [note, this are specifically not implemented]
     bool IsItemChecked(const wxTreeItemId& item) const;
     void SetItemCheck(const wxTreeItemId& item, bool check = true);
-	// No one should be setting the state directly.
-    void SetState(const wxTreeItemId& node, int state);
-    int GetState(const wxTreeItemId& node);
 
 	wxImageList m_stateList;
 	int m_stateNone;

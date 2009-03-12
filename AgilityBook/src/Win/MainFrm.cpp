@@ -96,9 +96,9 @@ END_EVENT_TABLE()
 static const struct
 {
 	int id;
-	wxChar* label;
-	wxChar* shortHelp;
-	char** bitmap;
+	wxChar const* label;
+	wxChar const* shortHelp;
+	const char** bitmap;
 } sc_Toolbar[] =
 {
 	{wxID_NEW, wxT("MenuFileNew"), wxT("DescFileNew"), toolbarNew_xpm},

@@ -184,7 +184,7 @@ bool CAgilityBookApp::OnInit()
 	// We need at least 800x600 (the event(run) dialog is big!)
 	if (wxSYS_SCREEN_DESKTOP != wxSystemSettings::GetScreenType())
 	{
-		if (IDNO == wxMessageBox(_("IDS_MIN_RESOLUTION"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_ERROR))
+		if (wxNO == wxMessageBox(_("IDS_MIN_RESOLUTION"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_ERROR))
 			return false;
 	}
 
@@ -316,10 +316,13 @@ bool CAgilityBookApp::OnInit()
 	if (filename.empty())
 	{
 		// Don't open it if the shift key is down.
+#ifdef WIN32
+#pragma message PRAGMA_MESSAGE("TODO: Check how to see if shift key is down NOW")
 		if (0 <= GetKeyState(VK_SHIFT))
 		{
 			filename = wxConfig::Get()->Read(wxT("Settings/LastFile"), wxT(""));
 		}
+#endif
 	}
 	// If a file is being opened, verify it exists first!
 	// This catches both the case where the remembered last file (above)

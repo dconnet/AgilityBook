@@ -192,7 +192,7 @@ IMPLEMENT_CLASS(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 
 
 BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
-	EVT_CONTEXT_MENU(OnViewContextMenu)
+	EVT_CONTEXT_MENU(CAgilityBookTreeView::OnViewContextMenu)
 	EVT_UPDATE_UI(wxID_DUPLICATE, CAgilityBookTreeView::OnViewUpdateCmd)
 	EVT_MENU(wxID_DUPLICATE, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_CUT, CAgilityBookTreeView::OnViewUpdateCmd)

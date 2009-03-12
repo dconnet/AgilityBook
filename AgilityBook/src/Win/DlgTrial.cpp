@@ -437,7 +437,7 @@ void CDlgTrial::OnLocationNotes(wxCommandEvent& evt)
 {
 	if (TransferDataFromWindow())
 	{
-		CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, (LPCTSTR)m_Location, this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, m_Location.c_str(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_Location = dlg.CurrentSelection();
