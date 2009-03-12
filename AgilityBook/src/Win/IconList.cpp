@@ -64,7 +64,7 @@ CIconList::CIconList()
 	struct
 	{
 		int* index;
-		char** xpmData;
+		const char** xpmData;
 	} icons[] =
 	{
 		// Note: The order of these icons CANNOT be changed. The index

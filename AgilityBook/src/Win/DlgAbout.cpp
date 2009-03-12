@@ -45,7 +45,7 @@
 
 #include "AgilityBook.h"
 #include "ARBString.h"
-#include "VersionNumber.h"
+#include "VersionNum.h"
 
 #include "res/AgilityBook32.xpm"
 

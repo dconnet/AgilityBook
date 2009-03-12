@@ -36,6 +36,7 @@
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2005-12-12 DRC Created
  */
+#include "wx/imaglist.h"
 
 class CNoteButton : public wxBitmapButton
 {

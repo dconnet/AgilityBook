@@ -108,7 +108,7 @@ void CAgilityBookMenu::UpdateMenu()
 }
 
 
-static enum eMenuType
+enum eMenuType
 {
 	eMenuNormal,
 	eMenuCheck,

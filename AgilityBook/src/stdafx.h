@@ -224,6 +224,9 @@ typedef long LONG_PTR;
 #ifndef WORD
 #define WORD int
 #endif
+#ifndef UINT
+#define UINT uint
+#endif
 #endif // _WIN32
 
 
