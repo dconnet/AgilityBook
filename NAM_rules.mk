@@ -1,0 +1,303 @@
+################################################################################
+# NAM (Not AutoMake) included defaults.                                        #
+################################################################################
+# Copyright (C) 2005 Jason But, Centre for Advanced Internet Architectures,    #
+# Swinburne University                                                         #
+#                                                                              #
+# This library is free software; you can redistribute it and/or modify it under#
+# the terms of the GNU Lesser General Public License as published by the Free  #
+# Software Foundation; either version 2.1 of the License, or (at your option)  #
+# any later version.                                                           #
+#                                                                              #
+# This library is distributed in the hope that it will be useful, but WITHOUT  #
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS# 
+# FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more#
+# details.                                                                     #
+#                                                                              #
+# You should have received a copy of the GNU Lesser General Public License along 
+# along with this library; if not, write to the Free Software Foundation, Inc.,#
+# 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                      #
+################################################################################
+
+################################################################################
+# Set Makefile variables (based on results of "configure")                     #
+################################################################################
+
+##########
+# Compiler default parameters.
+#  CXX              - Compiler to use as determined by running "configure".
+#  CXXFLAGS         - Compiler flags as determined by running "configure".
+#  DEFS             - Pre-processor macros as defined by running "configure".
+#  DEPDIR           - Subdirectory of where to place the dependency file
+#  CPPDEPFLAGS      - Flags required to build the corresponding dependency file.
+#  DEFAULT_INCLUDES - Default include directories to specify during build
+##########
+CXX              = g++
+CXXFLAGS         = -g -O2
+DEFS             = -DPACKAGE_NAME=\"arb\" -DPACKAGE_TARNAME=\"arb\" -DPACKAGE_VERSION=\"0.1.0\" -DPACKAGE_STRING=\"arb\ 0.1.0\" -DPACKAGE_BUGREPORT=\"Contact\ Details\"
+DEPDIR           = .deps
+CPPDEPFLAGS      = -MMD -MP -MF "`dirname $@`/.deps/`basename $*`.d"
+DEFAULT_INCLUDES = -I. -I$(SRCDIR)
+
+##########
+# Linker default parameters.
+#  LD   - Linker to use.
+#  LIBS - List of libraries to link in as checked by running "configure"
+##########
+LD = g++
+LIBS = 
+
+##########
+# Programs used by NAM
+##########
+RM        = rm -f
+AUTOCONF  = autoconf
+RANLIB    = ranlib
+AR        = ar
+ARFLAGS   = cru
+
+INSTALL   = /usr/bin/install -c
+INSTALL_PROGRAM = ${INSTALL}
+INSTALL_SCRIPT = ${INSTALL}
+INSTALL_DATA = ${INSTALL} -m 644
+
+INSTALL_BINDIR = /usr/local${exec_prefix}/bin
+INSTALL_SBINDIR = /usr/local${exec_prefix}/sbin
+INSTALL_MANDIR = /usr/local${prefix}/share/man
+
+##########
+# sed script to transform a program name as defined during configure
+##########
+transform = s,x,x,
+
+##########
+# Set the variable OFFSETDIR to a string representation of the offset of the
+# current directory from the top build directory (equal to the offset of the
+# current source directory to the top level source directory.
+##########
+OFFSETDIR = `echo $(SRCDIR)/ | sed 's|$(TOPSRCDIR)/||'`
+
+################################################################################
+# Set default target.                                                          #
+# Ensure that "all" is the default target prior to including gnu/bsd.mk which  #
+# will dynamically define other targets.                                       #
+################################################################################
+.PHONY: all clean clean-default install uninstall
+all:
+
+################################################################################
+# Support for different types of 'make'                                        #
+################################################################################
+
+##########
+# Set MAKEINCLUDE to either bsd.mk or gnu.mk based on the type of 'make' being 
+# executed.  If BSD make is being executed then the first assignment will 
+# evaluate to setting the variable to bsd.mk.  If we are running GNU make 
+# instead, this command will achieve nothing and the variable will not be set, 
+# and so the second command will conditionally set it to gnu.mk.
+##########
+MAKEINCLUDE != echo bsd.mk
+MAKEINCLUDE ?= gnu.mk
+
+##########
+# Include the MAKEINCLUDE makefile with 'make' type specific instruction. This file:
+# - Defines xxx_OBJS as a list of all object files for each target to be built.
+# - Updates CLEANFILES with all object files to remove.
+# - Update DEPFILES as a list of all dependency files to include.
+# - Creates rule pre-requisites for each target to be linked
+# - Includes all the dependency files
+# - Creates DEPDIRS as a list of all directories where the dependency files live
+##########
+include $(TOPSRCDIR)/$(MAKEINCLUDE)
+
+################################################################################
+# Update variables.                                                            #
+################################################################################
+##########
+# Append all targets and precompiled headers to list of files to clean.
+##########
+CLEANFILES += $(PRECOMP_HEADER:.h=.h.gch)
+CLEANFILES += $(PROGRAMS:=$(EXEEXT))
+CLEANFILES += $(ARCHIVES:=.a)
+
+##########
+# Suffixes used in rules listed below.
+##########
+.SUFFIXES: .h.gch .h
+
+################################################################################
+# Define pre-requisites for basic targets.                                     #
+################################################################################
+ALL_TARGETS = $(DEPDIRS) $(PRECOMP_HEADER:.h=.h.gch) $(ARCHIVES:=.a) $(PROGRAMS:=$(EXEEXT)) 
+
+all:        $(SUBDIRS) $(ALL_TARGETS)
+
+clean::     $(SUBDIRS:%=%/__clean__) clean-default
+
+install::   $(SUBDIRS:%=%/__install__) $(ALL_TARGETS) $(INSTALL_BIN:%=%__install__) $(INSTALL_SBIN:%=%__install__) $(INSTALL_MAN:%=%__install__)
+
+uninstall:: $(SUBDIRS:%=%/__uninstall__) $(INSTALL_BIN:%=%__uninstall__) $(INSTALL_SBIN:%=%__uninstall__) $(INSTALL_MAN:%=%__uninstall__)
+
+clean-default:
+	@$(RM) $(CLEANFILES)
+
+################################################################################
+# Support for compiling C++ code.                                              #
+################################################################################
+
+##########
+# Generic rule to generate precompiled headers.
+##########
+.h.h.gch:
+	$(NICE_ECHO) "  Generating:\t$@"
+	$(CXX) $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) -c -o $@ $<
+
+##########
+# Generic rule to generate the compiled object file.
+##########
+.cpp.o:
+	$(NICE_ECHO) "  Compiling:\t`echo $< | sed 's|$(SRCDIR)/||'`"
+	$(CXX) $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
+
+##########
+# Generic rule to link the executable.
+##########
+$(PROGRAMS:=$(EXEEXT)):
+	$(NICE_ECHO) "  Linking:\t$@"
+	$(LD) $(LDFLAGS) $($(@:$(EXEEXT)=)_LDFLAGS) -o $@ $($(@:$(EXEEXT)=)_OBJS) $($(@:$(EXEEXT)=)_LIBS) $(LIBS) 
+
+##########
+# Generic rule to link an archive (static library)
+##########
+$(ARCHIVES:=.a):
+	$(NICE_ECHO) "  Archiving:\t$@"
+	$(AR) $(ARFLAGS) $@ $($(@:.a=)_OBJS) 
+	$(NICE_ECHO) "  Indexing:\t$@"
+	$(RANLIB) $@
+
+################################################################################
+# Default Install and Uninstall rules.                                         #
+################################################################################
+.PHONY: $(INSTALL_SBIN:%=%__install__) $(INSTALL_BIN:%=%__install__) $(INSTALL_MAN:%=%__install__) 
+
+.PHONY: $(INSTALL_SBIN:%=%__uninstall__) $(INSTALL_BIN:%=%__uninstall__) $(INSTALL_MAN:%=%__uninstall__)
+
+##########
+# Install rules
+##########
+$(INSTALL_SBIN:%=%__install__)::
+	source_file=$(@:%__install__=%)$(EXEEXT); \
+	install_file=$(INSTALL_SBINDIR)/`echo $(@:%__install__=%) | sed 's/$(EXEEXT)$$//;s,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+	echo -e "  Installing:\t\t$$install_file"; \
+	$(INSTALL_PROGRAM) "$$source_file" "$$install_file" || exit 1;
+
+$(INSTALL_BIN:%=%__install__):
+	source_file=$(@:%__install__=%)$(EXEEXT); \
+	install_file=$(INSTALL_BINDIR)/`echo $(@:%__install__=%) | sed 's/$(EXEEXT)$$//;s,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+	echo -e "  Installing:\t\t$$install_file"; \
+	$(INSTALL_PROGRAM) "$$file" "$$install_file" || exit 1;
+
+$(INSTALL_MAN:%=%__install__): 
+	source_file=$(@:%__install__=%); \
+	man_section=`echo $(@:%__install__=%) | sed 's/^.*\.//'`; \
+	install_file=$(INSTALL_MANDIR)/man$$man_section/`echo $(@:%__install__=%) | sed 's,^.*/,,;$(transform)'`; \
+	echo -e "  Installing:\t\t$$install_file"; \
+	$(INSTALL_DATA) "$(SRCDIR)/$$source_file" "$$install_file" || exit 1
+
+##########
+# Uninstall rules
+##########
+$(INSTALL_SBIN:%=%__uninstall__):
+	install_file=$(INSTALL_SBINDIR)/`echo $(@:%__uninstall__=%) | sed 's/$(EXEEXT)$$//;s,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+	echo -e "  Removing:\t\t$$install_file"; \
+	rm -f "$$install_file" || exit 1;
+
+$(INSTALL_BIN:%=%__uninstall__):
+	install_file=$(INSTALL_BINDIR)/`echo $(@:%__uninstall__=%) | sed 's/$(EXEEXT)$$//;s,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+	echo -e "  Removing:\t\t$$install_file"; \
+	rm -f "$$install_file" || exit 1;
+
+$(INSTALL_MAN:%=%__uninstall__):
+	man_section=`echo $(@:%__uninstall__=%) | sed 's/^.*\.//'`; \
+	install_file=$(INSTALL_MANDIR)/man$$man_section/`echo $(@:%__uninstall__=%) | sed 's,^.*/,,;$(transform)'`; \
+	echo -e "  Removing:\t\t$$install_file"; \
+	rm -f "$$install_file" "$$install_file.gz" || exit 1;
+
+################################################################################
+# Support for make in subdirectories.                                          #
+################################################################################
+##########
+# Recursive calls to make.
+# Echo a nice output of the directory that we enter before entering that 
+# directory and executing make with the required target.
+##########
+.PHONY: $(SUBDIRS) $(SUBDIRS:%=%/__clean__) $(SUBDIRS:%=%/__install__) $(SUBDIRS:%=%/__uninstall__)
+
+$(SUBDIRS)::
+	$(NICE_ECHO) " Making in\t$(OFFSETDIR)$@"
+	@cd $@ && $(MAKE)
+	$(NICE_ECHO) " Leaving\t$(OFFSETDIR)$@\n"
+
+$(SUBDIRS:%=%/__clean__): 
+	$(NICE_ECHO) " Cleaning in\t$(OFFSETDIR)`dirname $@`"
+	cd `dirname $@` && $(MAKE) clean
+
+$(SUBDIRS:%=%/__install__): 
+	$(NICE_ECHO) " Installing from\t$(OFFSETDIR)`dirname $@`"
+	cd `dirname $@` && $(MAKE) install
+	$(NICE_ECHO) " Leaving\t\t$(OFFSETDIR)`dirname $@`\n"
+
+$(SUBDIRS:%=%/__uninstall__):
+	$(NICE_ECHO) " Uninstalling from\t$(OFFSETDIR)`dirname $@`"
+	cd `dirname $@` && $(MAKE) uninstall
+	$(NICE_ECHO) " Leaving\t\t$(OFFSETDIR)`dirname $@`\n"
+
+################################################################################
+# Support for creating dependency subdirectories.                              #
+################################################################################
+.PHONY: $(DEPDIRS)
+
+$(DEPDIRS)::
+	if test ! -d $@; then mkdir -p $@; fi
+
+################################################################################
+# Support for re-making Makefiles (and friends).                               #
+################################################################################
+
+##########
+# The actual Makefile depends on its source Makefile.in and the config.status
+# script in the top build directory.  It is regenerated through executing the
+# config.status script with the name of the Makefile as a parameter. 
+##########
+Makefile:   $(SRCDIR)/Makefile.in $(TOPBUILDDIR)/NAM_rules.mk $(TOPBUILDDIR)/config.status
+	$(NICE_ECHO) "  Regenerating:\t$(OFFSETDIR)$@"
+	cd $(TOPBUILDDIR) && ./config.status $(OFFSETDIR)$@ 
+
+##########
+# The included NAM_rules.mk depends on its source NAM_rules.mk.in and the 
+# config.status script in the top build directory.  It is regenerated through
+# executing the config.status script with NAM_rules.mk as a parameter.
+##########
+$(TOPBUILDDIR)/NAM_rules.mk: $(TOPSRCDIR)/NAM_rules.mk.in $(TOPBUILDDIR)/config.status
+	$(NICE_ECHO) "  Regenerating:\tNAM_rules.mk"
+	cd $(TOPBUILDDIR) && ./config.status NAM_rules.mk 
+	
+#cd $(TOPBUILDDIR) && ./config.status NAM_rules.mk
+
+##########
+# The config.status script in the top build directory depends on the configure
+# script in the top source directory.  It is regenerated through executing the
+# config.status script with the "--recheck" flag.
+##########
+$(TOPBUILDDIR)/config.status: $(TOPSRCDIR)/configure 
+	$(NICE_ECHO) "  Re-running\tconfigure"
+	cd $(TOPBUILDDIR) && ./config.status --recheck
+	
+##########
+# The configure script in the top source directory depends on the source
+# configure.in/ac script in the same directory.  To regenerate it we need to
+# run autoconf on it.
+##########
+$(TOPSRCDIR)/configure:   $(TOPSRCDIR)/configure.in
+	$(NICE_ECHO) "  Regenerating:\t$@"
+	cd $(TOPSRCDIR) && $(AUTOCONF)

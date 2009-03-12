@@ -1,0 +1,70 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the                                               #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Recursively make in these subdirectories
+##########
+#SUBDIRS = ARB
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES = -DWXWIDGETS -I$(TOPSRCDIR)/src `wx-config --cppflags`
+
+##########
+# List of programs and archives to link
+##########
+#PROGRAMS = arb
+ARCHIVES = arblib
+
+##########
+# Source files for each target
+##########
+# prog1_SRCS = prog.cpp p1.cpp
+# prog2_SRCS = prog.cpp p2.cpp
+# libar1_SRCS = ar1.cpp ar2.cpp
+# libar2_SRCS = arA.cpp arB.cpp
+arb_SRCS = ARBAgilityRecordBook.cpp ARBBase64.cpp ARBBase.cpp ARBCalendar.cpp ARBConfigAction.cpp ARBConfigCalSite.cpp ARBConfig.cpp ARBConfigDivision.cpp ARBConfigEvent.cpp ARBConfigFault.cpp ARBConfigLevel.cpp ARBConfigLifetimePoints.cpp ARBConfigMultiQ.cpp ARBConfigOtherPoints.cpp ARBConfigPlaceInfo.cpp ARBConfigScoring.cpp ARBConfigSubLevel.cpp ARBConfigTitle.cpp ARBConfigTitlePoints.cpp ARBConfigVenue.cpp ARBDate.cpp ARBDogClub.cpp ARBDog.cpp ARBDogExistingPoints.cpp ARBDogNotes.cpp ARBDogReferenceRun.cpp ARBDogRegNum.cpp ARBDogRun.cpp ARBDogRunOtherPoints.cpp ARBDogRunPartner.cpp ARBDogRunScoring.cpp ARBDogTitle.cpp ARBDogTrial.cpp ARBInfo.cpp ARBInfoItem.cpp ARBLocalization.cpp ARBTraining.cpp ARBTypes.cpp BinaryData.cpp Element.cpp ARBString.cpp
+##########
+# Extra libraries for link stage (only if needed)
+##########
+#arb_LIBS = `wx-config --libs`
+# prog1_LDFLAGS = -L/path/to/extralib
+
+##########
+# Precompiled headers
+##########
+#PRECOMP_HEADER = ARBAgilityRecordBook.h ARBBase64.h ARBBase.h ARBCalendar.h ARBConfigAction.h ARBConfigCalSite.h ARBConfigDivision.h ARBConfigEvent.h ARBConfigFault.h ARBConfig.h ARBConfigLevel.h ARBConfigLifetimePoints.h ARBConfigMultiQ.h ARBConfigOtherPoints.h ARBConfigPlaceInfo.h ARBConfigScoring.h ARBConfigSubLevel.h ARBConfigTitle.h ARBConfigTitlePoints.h ARBConfigVenue.h ARBDate.h ARBDogClub.h ARBDogExistingPoints.h ARBDog.h ARBDogNotes.h ARBDogReferenceRun.h ARBDogRegNum.h ARBDogRun.h ARBDogRunOtherPoints.h ARBDogRunPartner.h ARBDogRunScoring.h ARBDogTitle.h ARBDogTrial.h ARBInfo.h ARBInfoItem.h ARBLocalization.h ARBString.h ARBStructure.h ARBTraining.h ARBTypes.h BinaryData.h Element.h
+
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = arb
+#INSTALL_SBIN = prog2
+#INSTALL_MAN = prog1.5
+
+@NAM_RULES@
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

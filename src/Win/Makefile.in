@@ -1,0 +1,65 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the                                               #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Recursively make in these subdirectories
+##########
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES =  -DWXWIDGETS -DWXUSE_GUI `wx-config --cppflags` -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/ARB 
+
+##########
+# List of programs and archives to link
+##########
+PROGRAMS = arb
+
+##########
+# Source files for each target
+##########
+arb_SRCS =  AgilityBookCalendarListView.cpp AgilityBookCalendarView.cpp AgilityBook.cpp AgilityBookDoc.cpp AgilityBookHtmlView.cpp AgilityBookMenu.cpp AgilityBookOptions.cpp AgilityBookPanels.cpp AgilityBookPointsView.cpp AgilityBookRunsView.cpp AgilityBookTrainingView.cpp AgilityBookTreeData.cpp AgilityBookTreeView.cpp CalendarSites.cpp CheckLink.cpp CheckTreeCtrl.cpp ClipBoard.cpp ColumnOrder.cpp ComboBoxes.cpp CommonView.cpp ConfigHandler.cpp DlgAbout.cpp DlgAssignColumns.cpp DlgAuthenticate.cpp DlgCalendar.cpp DlgCalendarQueryDetail.cpp DlgClub.cpp DlgConfigEvent.cpp DlgConfigEventMethod.cpp DlgConfigMultiQ.cpp DlgConfigOtherPoints.cpp DlgConfigPlaceInfo.cpp DlgConfigTitle.cpp DlgConfigTitlePoints.cpp DlgConfigUpdate.cpp DlgConfigure.cpp DlgConfigureData.cpp DlgConfigVenue.cpp DlgCRCDViewer.cpp DlgDog.cpp DlgDogNumbers.cpp DlgDogPoints.cpp DlgDogProp.cpp DlgDogTitles.cpp DlgEventSelect.cpp DlgExistingPoints.cpp DlgFault.cpp DlgFind.cpp DlgFindLinks.cpp DlgInfoNote.cpp DlgListCtrl.cpp DlgListViewer.cpp DlgMessageBox.cpp DlgMessage.cpp DlgName.cpp DlgOptionsCalendar.cpp DlgOptions.cpp DlgOptionsFilter.cpp DlgOptionsPrint.cpp DlgOptionsProgram.cpp DlgOtherPoint.cpp DlgPartner.cpp DlgPluginDetails.cpp DlgPointsViewSort.cpp DlgProgress.cpp DlgQueryDetail.cpp DlgReferenceRun.cpp DlgRegNum.cpp DlgReorder.cpp DlgRunComments.cpp DlgRun.cpp DlgRunCRCD.cpp DlgRunLink.cpp DlgRunReference.cpp DlgRunScore.cpp DlgSelectDog.cpp DlgSelectURL.cpp DlgTitle.cpp DlgTraining.cpp DlgTrial.cpp FilterOptions.cpp Globals.cpp IconList.cpp LanguageManager.cpp ListCtrl.cpp ListData.cpp Localization.cpp MainFrm.cpp NoteButton.cpp PointsData.cpp Print.cpp ReadHttp.cpp RichEditCtrl2.cpp TabView.cpp UpdateInfo.cpp Validators.cpp VersionNum.cpp Wizard.cpp WizardExcel.cpp WizardExport.cpp WizardImport.cpp WizardStart.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+arb_LIBS = arblib `wx-config --libs`
+arb_LDFLAGS = -L$(TOPBUILDDIR)
+
+##########
+# Precompiled headers
+##########
+#PRECOMP_HEADER = 
+
+
+##########
+# Stuff to install
+##########
+#INSTALL_BIN = arb
+#INSTALL_SBIN = prog2
+#INSTALL_MAN = prog1.5
+
+@NAM_RULES@
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################

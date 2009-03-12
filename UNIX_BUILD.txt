@@ -1,0 +1,53 @@
+Building on Ubuntu Linux:
+
+1. svn co https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/trunk/AgilityBook
+2. cd AgilityBook
+3. autoconf
+4. mkdir build
+5. cd build
+6. ../configure
+At this point the Makefile have been generated in all src subdirs and any changes to any of the Makefile.in files or the configure.in file will cause Makefiles to be be automatically regenerated.
+
+So to build the application and related libs:
+1. cd build
+2. make
+
+
+       
+Compile errors:
+
+In file included from ../../../src/ARB/ARBBase.h:43,
+                 from ../../../src/ARB/ARBCalendar.h:44,
+                 from ../../../src/ARB/ARBAgilityRecordBook.h:65,
+                 from ../../../src/ARB/ARBAgilityRecordBook.cpp:96:
+../../../src/ARB/ARBTypes.h:65: error: ‘tr1’ has not been declared
+../../../src/ARB/ARBTypes.h:65: error: expected initializer before ‘<’ token
+
+1. install boost dev lib:
+sudo apt-get install libboost-dev
+
+
+../../../src/stdafx.h:201:2: error: #error Non-Windows platforms must use wxWidgets
+In file included from ../../../src/ARB/ARBTypes.h:110,
+                 from ../../../src/ARB/ARBBase.h:43,
+                 from ../../../src/ARB/ARBCalendar.h:44,
+                 from ../../../src/ARB/ARBAgilityRecordBook.h:65,
+                 from ../../../src/ARB/ARBAgilityRecordBook.cpp:96:
+../../../src/ARB/ARBString.h:42: error: ‘wxChar’ was not declared in this scope
+
+
+
+1. install wxgtk:s
+  Version 2.8.9 or later wxWidget package is required
+  http://wiki.wxpython.org/InstallingOnUbuntuOrDebian
+  sudo apt-get install python-wxgtk2.8 python-wxtools wx2.8-i18n
+
+
+2. make sure /usr/bin is on your path and wx-config can be found
+
+
+UNIT TESTS
+1. extract UnitTests.zip to: src/UnitTests++
+2. cd src/UnitTests++
+3. make
+

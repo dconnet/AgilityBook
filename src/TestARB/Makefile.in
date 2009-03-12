@@ -1,0 +1,63 @@
+################################################################################
+# File: Makefile                                                               #
+################################################################################
+# Makefile for the                                               #
+################################################################################
+
+################################################################################
+# Variables required by the global make rules.                                 #
+################################################################################
+# TOPSRCDIR   - Points to the top level directory of the project.              #
+# SRCDIR      - Points to the actual directory where the source code files for #
+#               this Makefile exists.                                          #
+# VPATH       - Directory to look for source files if not in the current       #
+#               directory.  Must be equal to SRCDIR.                           #
+# TOPBUILDDIR - The top level directory we initially ran make from, used for   #
+#               generating nice output of the working directories.             #
+################################################################################
+TOPSRCDIR   = @top_srcdir@
+SRCDIR      = @srcdir@
+VPATH       = @srcdir@
+TOPBUILDDIR = ./@top_builddir@
+
+##########
+# Recursively make in these subdirectories
+##########
+#SUBDIRS = subdir1 subdir2
+#SUBDIRS = ARB
+
+##########
+# Compile flags, list include directories
+##########
+INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` -I$(TOPSRCDIR)/src/UnitTests++
+
+##########
+# List of programs and archives to link
+##########
+PROGRAMS = testarb
+
+##########
+# Source files for each target
+##########
+testarb_SRCS = ConfigHandler.cpp Local.cpp TestAgilityRecordBook.cpp TestARB.cpp TestBinaryData.cpp TestCalendar.cpp TestConfigAction.cpp TestConfigCalSite.cpp TestConfig.cpp TestConfigDivision.cpp TestConfigEvent.cpp TestConfigFault.cpp TestConfigLevel.cpp TestConfigLifetimePoints.cpp TestConfigMultiQ.cpp TestConfigOtherPoints.cpp TestConfigPlaceInfo.cpp TestConfigScoring.cpp TestConfigSubLevel.cpp TestConfigTitle.cpp TestConfigTitlePoints.cpp TestConfigVenue.cpp TestDate.cpp TestDogClub.cpp TestDog.cpp TestDogExistingPoints.cpp TestDogNotes.cpp TestDogReferenceRun.cpp TestDogRegNum.cpp TestDogRun.cpp TestDogRunOtherPoints.cpp TestDogRunPartner.cpp TestDogRunScoring.cpp TestDogTitle.cpp TestDogTrial.cpp TestDouble.cpp TestElement.cpp TestErrorCallback.cpp TestInfoItem.cpp TestMisc.cpp TestQ.cpp TestString.cpp TestTraining.cpp TestVersion.cpp
+
+##########
+# Extra libraries for link stage (only if needed)
+##########
+# arb_LIBS = `wx-config --libs`
+
+##########
+# Precompiled headers
+##########
+#PRECOMP_HEADER = stdafx.h
+
+##########
+# Stuff to install
+##########
+INSTALL_BIN = arb
+
+@NAM_RULES@
+
+################################################################################
+# End of File: Makefile                                                        #
+################################################################################
