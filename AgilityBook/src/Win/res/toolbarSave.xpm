@@ -1,5 +1,5 @@
 /* XPM */
-static char *toolbarSave_xpm[] = {
+static const char *toolbarSave_xpm[] = {
 "16 15 5 1 0 0",
 "  c #000000",
 "! c #808000",

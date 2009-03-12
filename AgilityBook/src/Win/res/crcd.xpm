@@ -1,5 +1,5 @@
 /* XPM */
-static char *crcd_xpm[] = {
+static const char *crcd_xpm[] = {
 "16 16 8 1 0 0",
 "  c #000000",
 "! c #800000",

@@ -1,5 +1,5 @@
 /* XPM */
-static char *CalEntered_xpm[] = {
+static const char *CalEntered_xpm[] = {
 "16 16 3 1 0 0",
 "  c #000000",
 "! c #FFFFFF",
