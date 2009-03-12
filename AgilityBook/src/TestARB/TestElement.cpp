@@ -36,7 +36,6 @@
 
 #include "stdafx.h"
 #include "TestARB.h"
-#include "resource.h"
 
 #include "ARBDate.h"
 #include "ARBStructure.h"

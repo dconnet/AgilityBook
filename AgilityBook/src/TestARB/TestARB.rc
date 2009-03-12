@@ -1,16 +1,26 @@
 // Microsoft Visual C++ generated resource script.
 //
-#include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "afxres.h"
-
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#define wxUSE_NO_MANIFEST 1
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -20,125 +30,45 @@
 
 1 TEXTINCLUDE  
 BEGIN
-    "resource.h\0"
 END
 
 2 TEXTINCLUDE  
 BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#define wxUSE_NO_MANIFEST 1\r\n\0"
 END
 
 3 TEXTINCLUDE  
 BEGIN
-    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
-    "#define _AFX_NO_OLE_RESOURCES\r\n"
-    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
-    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
-    "\r\n"
-	"#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-	"LANGUAGE 9, 1\r\n"
-	"#pragma code_page(1252)\r\n"
-    "#include ""res\\TestARB.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-#ifndef _AFXDLL
-    "#include ""afxres.rc""  	// Standard components\r\n"
-#endif
-    "#endif\r\n"
-    "\0"
+    "#include ""res\\TestARB.rc2""\r\n"
+    "#include ""wx/msw/wx.rc""\r\n\0"
 END
 
-/////////////////////////////////////////////////////////////////////////////
 #endif    // APSTUDIO_INVOKED
 
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// DTD
+// Icon
 //
 
-IDR_DTD_AGILITYRECORDBOOK DTD                     "..\\Win\\res\\AgilityRecordBook.dtd"
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "..\\Win\\res\\AgilityBook.ico"
 
+#endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
-//
-// XML
-//
-
-IDR_XML_DEFAULT_CONFIG  XML                     "..\\Win\\res\\DefaultConfig.xml"
-IDR_XML_CONFIG08_V10_2  XML                     "res\\Config08_v10_2.xml"
-IDR_XML_CONFIG09_V11_0  XML                     "res\\Config09_v11_0.xml"
-IDR_XML_CONFIG12_V12_1  XML                     "res\\Config12_v12_1.xml"
-IDR_XML_CONFIG14_V12_2  XML                     "res\\Config14_v12_2.xml"
-IDR_XML_CONFIG19_V12_5  XML                     "res\\Config19_v12_5.xml"
-IDR_XML_CONFIG20_V12_6  XML                     "res\\Config20_v12_6.xml"
-IDR_XML_CONFIG21_V12_7  XML                     "res\\Config21_v12_7.xml"
-IDR_XML_CONFIG22_V12_7  XML                     "res\\Config22_v12_7.xml"
-IDR_XML_CONFIG23_V12_8  XML                     "res\\Config23_v12_8.xml"
-IDR_XML_CONFIG24_V12_8  XML                     "res\\Config24_v12_8.xml"
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE 9, 1
-#pragma code_page(1252)
 
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
 
-VS_VERSION_INFO     VERSIONINFO
-  FILEVERSION       1,0,3,12
-  PRODUCTVERSION    1,0,3,12
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x1L
-#else
- FILEFLAGS 0x0L
-#endif
- FILEOS 0x4L
- FILETYPE 0x2L
- FILESUBTYPE 0x0L
-BEGIN
-	BLOCK "StringFileInfo"
-	BEGIN
-        BLOCK "040904e4"
-		BEGIN 
-            VALUE "CompanyName", "dcon Software"
-            VALUE "FileDescription", "Agility Record Book WinUnit tester"
-			VALUE "FileVersion",     "1.0.0.0"
-			VALUE "InternalName",    "TestARB.dll"
-            VALUE "LegalCopyright", "Copyright © 2008-2009 David Connet. All Rights Reserved."
-			VALUE "OriginalFilename","TestARB.dll"
-            VALUE "ProductName", "Agility Record Book Test Script"
-            VALUE "ProductVersion", "1.0.0.0"
-		END
-	END
-	BLOCK "VarFileInfo" 
-	BEGIN 
-		VALUE "Translation", 0x0409, 1252
-    END
-END
-
-#endif
 #ifndef APSTUDIO_INVOKED
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#define _AFX_NO_SPLITTER_RESOURCES
-#define _AFX_NO_OLE_RESOURCES
-#define _AFX_NO_TRACKER_RESOURCES
-#define _AFX_NO_PROPERTY_RESOURCES
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE 9, 1
-#pragma code_page(1252)
-#include "res\\TestARB.rc2"  // non-Microsoft Visual C++ edited resources
-#ifndef _AFXDLL
-#include "afxres.rc"  	// Standard components
-#endif
-#endif
-
+#include "res/TestARB.rc2"
+#include "wx/msw/wx.rc"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

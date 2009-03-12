@@ -34,7 +34,6 @@
  */
 
 #include "stdafx.h"
-#include "resource.h"
 #include "TestARB.h"
 
 #include "ARBAgilityRecordBook.h"
@@ -110,7 +109,7 @@ SUITE(TestConfig)
 
 	TEST(Load)
 	{
-		UINT configs[] = {
+		int configs[] = {
 			IDR_XML_CONFIG08_V10_2,
 			IDR_XML_CONFIG09_V11_0,
 			IDR_XML_CONFIG12_V12_1,
