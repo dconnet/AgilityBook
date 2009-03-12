@@ -77,7 +77,7 @@
 #pragma comment(lib, UT_NAME UT_STATIC_RTL UT_UNICODE UT_DEBUG ".lib")
 
 
-int _tmain(int /*argc*/, _TCHAR* /*argv*/ [])
+int main(int /*argc*/, char** /*argv*/)
 {
 #ifdef _WIN32
 	_set_error_mode(_OUT_TO_MSGBOX);
