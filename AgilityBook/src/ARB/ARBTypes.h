@@ -142,7 +142,6 @@ public:
 #if !defined(_MSC_VER ) || _MSC_VER >= 1300
 	using std::vector<T>::begin;
 	using std::vector<T>::clear;
-	using std::vector<T>::const_iterator;
 	using std::vector<T>::end;
 	using std::vector<T>::erase;
 	using std::vector<T>::insert;
@@ -235,7 +234,7 @@ public:
 					if (offset != n)
 					{
 						bOk = true;
-						std::swap(at(n), at(offset));
+						std::swap(ARBVector<T>::at(n), ARBVector<T>::at(offset));
 						break;
 					}
 				}
