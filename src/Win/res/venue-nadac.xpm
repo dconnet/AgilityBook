@@ -1,5 +1,5 @@
 /* XPM */
-static char *venue_nadac_xpm[] = {
+static const char *venue_nadac_xpm[] = {
 "16 16 19 1 0 0",
 "  c #000000",
 "! c #404000",

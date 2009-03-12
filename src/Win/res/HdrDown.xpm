@@ -1,5 +1,5 @@
 /* XPM */
-static char *HdrDown_xpm[] = {
+static const char *HdrDown_xpm[] = {
 "16 16 4 1 0 0",
 "  c #000000",
 "! c #808080",

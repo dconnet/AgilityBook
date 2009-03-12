@@ -1,5 +1,5 @@
 /* XPM */
-static char *venue_usdaa_xpm[] = {
+static const char *venue_usdaa_xpm[] = {
 "16 16 5 1 0 0",
 "  c #000000",
 "! c #FFFF00",

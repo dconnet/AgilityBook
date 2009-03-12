@@ -1,5 +1,5 @@
 /* XPM */
-static char *title_visible_xpm[] = {
+static const char *title_visible_xpm[] = {
 "16 16 5 1 0 0",
 "  c #000000",
 "! c #00FF00",

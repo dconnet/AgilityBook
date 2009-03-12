@@ -1,5 +1,5 @@
 /* XPM */
-static char *CalPlanTentative_xpm[] = {
+static const char *CalPlanTentative_xpm[] = {
 "16 16 5 1 0 0",
 "  c #000000",
 "! c #800000",

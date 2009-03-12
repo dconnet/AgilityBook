@@ -1,5 +1,5 @@
 /* XPM */
-static char *AccTodo_xpm[] = {
+static const char *AccTodo_xpm[] = {
 "16 16 24 1 0 0",
 "  c #000000",
 "! c #333300",

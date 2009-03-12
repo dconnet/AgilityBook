@@ -1,5 +1,5 @@
 /* XPM */
-static char *help48_xpm[] = {
+static const char *help48_xpm[] = {
 "48 48 11 1 0 0",
 "  c #000000",
 "! c #FFCC00",

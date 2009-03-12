@@ -1,5 +1,5 @@
 /* XPM */
-static char *venue_akc_xpm[] = {
+static const char *venue_akc_xpm[] = {
 "16 16 33 1 0 0",
 "  c #000000",
 "! c #905C25",

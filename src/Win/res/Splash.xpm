@@ -1,5 +1,5 @@
 /* XPM */
-static char * Splash_xpm[] = {
+static const char * Splash_xpm[] = {
 "597 429 256 2",
 "  	c #000000",
 ". 	c #800000",
