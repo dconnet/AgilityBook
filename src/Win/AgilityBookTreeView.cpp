@@ -264,19 +264,23 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(NULL)
 	, m_ImageList()
+#ifdef WIN32
 	, m_ImageListStates(16,16)
 	, m_idxEmpty(-1)
 	, m_idxChecked(-1)
+#endif
 	, m_Columns()
 	, m_bReset(false)
 	, m_bSuppressSelect(false)
 	, m_Callback(this)
 	, m_pDog()
 {
+#ifdef WIN32
 	// Note: Position 0 cannot be used.
 	m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
 	m_idxEmpty = m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
 	m_idxChecked = m_ImageListStates.Add(wxIcon(CalPlan_xpm));
+#endif
 
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_DOG, m_Columns[0]);
 	CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
@@ -310,7 +314,9 @@ bool CAgilityBookTreeView::Create(
 	m_Ctrl->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookTreeView::OnCtrlDoubleClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlKeyDown), NULL, this);
 	m_Ctrl->SetImageList(&m_ImageList);
+#ifdef WIN32
 	m_Ctrl->SetStateImageList(&m_ImageListStates);
+#endif
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 
@@ -622,8 +628,10 @@ wxTreeItemId CAgilityBookTreeView::InsertTrial(
 			pDataTrial->OnNeedText(),
 			idxImage, idxImage,
 			pDataTrial);
+#ifdef WIN32
 		int state = pDataTrial->GetTrial()->IsVerified() ?  m_idxChecked : m_idxEmpty;
 		m_Ctrl->SetState(hTrial, state);
+#endif
 		for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 			iterRun != pTrial->GetRuns().end();
 			++iterRun)
