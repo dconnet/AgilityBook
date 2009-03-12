@@ -198,9 +198,11 @@ private:
 
 	wxTreeCtrl* m_Ctrl;
 	CIconList m_ImageList;
+#ifdef WIN32
 	wxImageList m_ImageListStates;
 	int m_idxEmpty;
 	int m_idxChecked;
+#endif
 	std::vector<long> m_Columns[3];
 	bool m_bReset;
 	bool m_bSuppressSelect;
