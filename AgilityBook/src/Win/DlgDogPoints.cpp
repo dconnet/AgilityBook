@@ -192,7 +192,7 @@ CDlgDogPoints::CDlgDogPoints(
 	: CDlgBasePropertyPage(CDlgDogPoints::IDD)
 	, m_ctrlPoints(true)
 	, m_pDoc(pDoc)
-	, m_sortPoints(_T("ExistingPoints"))
+	, m_sortPoints(wxT("ExistingPoints"))
 	, m_ExistingPoints()
 {
 	points.Clone(m_ExistingPoints);
@@ -245,7 +245,7 @@ void CDlgDogPoints::SetColumnHeaders()
 		CString str;
 		str.LoadString(colExistingPointsInfo[i].idText);
 		otstringstream tmp;
-		tmp << (LPCTSTR)str << _T(" (") << m_sortPoints.FindColumnOrder(i) + 1 <<')';
+		tmp << (LPCTSTR)str << wxT(" (") << m_sortPoints.FindColumnOrder(i) + 1 <<')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
@@ -357,7 +357,7 @@ BOOL CDlgDogPoints::OnInitDialog()
 	{
 		col.fmt = colExistingPointsInfo[i].fmt;
 		col.cx = colExistingPointsInfo[i].cx;
-		col.pszText = _T("");
+		col.pszText = wxT("");
 		col.iSubItem = i;
 		m_ctrlPoints.InsertColumn(i, &col);
 	}
@@ -462,7 +462,7 @@ void CDlgDogPoints::OnGetdispinfoExistingPoints(
 			break;
 		case 10: // Comment
 			str = pData->GetComment().c_str();
-			str.Replace(_T("\n"), _T(" "));
+			str.Replace(wxT("\n"), wxT(" "));
 			break;
 		}
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);

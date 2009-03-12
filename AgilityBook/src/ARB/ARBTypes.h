@@ -263,7 +263,7 @@ public:
 	 * @param pMsg Message to display to user.
 	 * @return True to continue, false to abort.
 	 */
-	virtual bool OnError(TCHAR const* const pMsg)
+	virtual bool OnError(wxChar const* const pMsg)
 	{
 		return false;
 	}
@@ -484,7 +484,7 @@ public:
 	 */
 	bool Save(
 			ElementNodePtr ioTree,
-			TCHAR const* const inAttribName) const;
+			wxChar const* const inAttribName) const;
 
 private:
 	eQ m_Q;

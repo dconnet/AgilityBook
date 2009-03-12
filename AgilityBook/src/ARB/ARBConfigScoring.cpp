@@ -69,12 +69,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // static
 
-#define SCORING_TYPE_FT		_T("FaultsThenTime")
-#define SCORING_TYPE_FT100	_T("Faults100ThenTime")
-#define SCORING_TYPE_FT200	_T("Faults200ThenTime")
-#define SCORING_TYPE_OCT	_T("OCScoreThenTime")
-#define SCORING_TYPE_ST		_T("ScoreThenTime")
-#define SCORING_TYPE_TF		_T("TimePlusFaults")
+#define SCORING_TYPE_FT		wxT("FaultsThenTime")
+#define SCORING_TYPE_FT100	wxT("Faults100ThenTime")
+#define SCORING_TYPE_FT200	wxT("Faults200ThenTime")
+#define SCORING_TYPE_OCT	wxT("OCScoreThenTime")
+#define SCORING_TYPE_ST		wxT("ScoreThenTime")
+#define SCORING_TYPE_TF		wxT("TimePlusFaults")
 
 tstring ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 {
@@ -253,7 +253,7 @@ bool ARBConfigScoring::Load(
 		return false;
 	// Probably unnecessary since it isn't actually implemented yet!
 	if (inVersion == ARBVersion(8, 0))
-		inTree->GetAttrib(_T("Date"), m_ValidFrom);
+		inTree->GetAttrib(wxT("Date"), m_ValidFrom);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
 		tstring attrib;
@@ -290,7 +290,7 @@ bool ARBConfigScoring::Load(
 	{
 		tstring msg(Localization()->InvalidDivLevel());
 		msg += m_Division;
-		msg += _T("/");
+		msg += wxT("/");
 		msg += m_Level;
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_LEVEL, msg.c_str()));
 		return false;
@@ -323,15 +323,15 @@ bool ARBConfigScoring::Load(
 	{
 		tstring msg(Localization()->ValidValues());
 		msg += SCORING_TYPE_FT;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += SCORING_TYPE_FT100;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += SCORING_TYPE_FT200;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += SCORING_TYPE_OCT;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += SCORING_TYPE_ST;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += SCORING_TYPE_TF;
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, msg.c_str()));
 		return false;
@@ -375,9 +375,9 @@ bool ARBConfigScoring::Load(
 
 	if (inVersion < ARBVersion(11, 0))
 	{
-		if (ElementNode::eInvalidValue == inTree->GetAttrib(_T("doubleQ"), m_bDoubleQ))
+		if (ElementNode::eInvalidValue == inTree->GetAttrib(wxT("doubleQ"), m_bDoubleQ))
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, _T("doubleQ"), Localization()->ValidValuesBool().c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, wxT("doubleQ"), Localization()->ValidValuesBool().c_str()));
 			return false;
 		}
 	}
@@ -399,9 +399,9 @@ bool ARBConfigScoring::Load(
 	{
 		if (inVersion < ARBVersion(10, 1))
 		{
-			if (ElementNode::eInvalidValue == inTree->GetAttrib(_T("machPts"), m_bSpeedPts))
+			if (ElementNode::eInvalidValue == inTree->GetAttrib(wxT("machPts"), m_bSpeedPts))
 			{
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, _T("machPts"), Localization()->ValidValuesBool().c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, wxT("machPts"), Localization()->ValidValuesBool().c_str()));
 				return false;
 			}
 		}
@@ -461,9 +461,9 @@ bool ARBConfigScoring::Load(
 	else
 	{
 		short ptsWhenClean = 0;
-		if (ElementNode::eFound != inTree->GetAttrib(_T("Clean"), ptsWhenClean))
+		if (ElementNode::eFound != inTree->GetAttrib(wxT("Clean"), ptsWhenClean))
 		{
-			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SCORING, _T("Clean")));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_SCORING, wxT("Clean")));
 			return false;
 		}
 		if (0 < ptsWhenClean)
@@ -473,8 +473,8 @@ bool ARBConfigScoring::Load(
 
 		short faultsAllowed = 0;
 		short ptsWhenNotClean = 0;
-		inTree->GetAttrib(_T("FaultsAllowed"), faultsAllowed);
-		inTree->GetAttrib(_T("WithFaults"), ptsWhenNotClean);
+		inTree->GetAttrib(wxT("FaultsAllowed"), faultsAllowed);
+		inTree->GetAttrib(wxT("WithFaults"), ptsWhenNotClean);
 		if (0 < faultsAllowed && 0 < ptsWhenNotClean)
 		{
 			m_TitlePoints.AddTitlePoints(ptsWhenNotClean, faultsAllowed);
@@ -703,7 +703,7 @@ bool ARBConfigScoringList::FindEvent(
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
 #ifdef _DEBUG
-			DumpErrorMessage(_T("Warning: Overlapping date ranges"), true);
+			DumpErrorMessage(wxT("Warning: Overlapping date ranges"), true);
 #endif
 			pEvent = *(items.begin());
 		}

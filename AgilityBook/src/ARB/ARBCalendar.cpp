@@ -62,13 +62,13 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define ENTRY_NOT		_T("N")
-#define ENTRY_ENTERED	_T("E")
-#define ENTRY_PLANNING	_T("P")
+#define ENTRY_NOT		wxT("N")
+#define ENTRY_ENTERED	wxT("E")
+#define ENTRY_PLANNING	wxT("P")
 
-#define ACCOM_NONE		_T("N")
-#define ACCOM_TODO		_T("T")
-#define ACCOM_CONFIRMED	_T("C")
+#define ACCOM_NONE		wxT("N")
+#define ACCOM_TODO		wxT("T")
+#define ACCOM_CONFIRMED	wxT("C")
 
 /////////////////////////////////////////////////////////////////////////////
 // Static functions (for iCalendar/vCalender)
@@ -83,7 +83,7 @@ public:
 			int inVersion);
 	virtual ~ARBiCal()
 	{
-		m_ioStream << _T("END:VCALENDAR\r\n");
+		m_ioStream << wxT("END:VCALENDAR\r\n");
 	}
 
 	virtual void Release()
@@ -93,7 +93,7 @@ public:
 
 	void BeginEvent()
 	{
-		m_ioStream << _T("BEGIN:VEVENT\r\n");
+		m_ioStream << wxT("BEGIN:VEVENT\r\n");
 	}
 #ifdef UNICODE
 	void DoUID(std::wstring const& inUID)
@@ -461,13 +461,13 @@ tstring ARBCalendar::GetUID(eUidType inType) const
 	{
 	default:
 		assert(0);
-		str << _T("u");
+		str << wxT("u");
 		break;
 	case eUIDvEvent:
-		str << _T("e");
+		str << wxT("e");
 		break;
 	case eUIDvTodo:
-		str << _T("t");
+		str << wxT("t");
 		break;
 	}
 	str << m_DateStart.GetString(ARBDate::eYYYYMMDD);
@@ -642,9 +642,9 @@ bool ARBCalendar::Load(
 	if (inVersion == ARBVersion(1,0))
 	{
 		tstring attrib;
-		if (ElementNode::eFound == inTree->GetAttrib(_T("PlanOn"), attrib))
+		if (ElementNode::eFound == inTree->GetAttrib(wxT("PlanOn"), attrib))
 		{
-			if (attrib == _T("y"))
+			if (attrib == wxT("y"))
 				m_eEntered = ePlanning;
 			else
 				m_eEntered = eNot;
@@ -665,9 +665,9 @@ bool ARBCalendar::Load(
 			{
 				tstring msg(Localization()->ValidValues());
 				msg += ENTRY_ENTERED;
-				msg += _T(", ");
+				msg += wxT(", ");
 				msg += ENTRY_PLANNING;
-				msg += _T(", ");
+				msg += wxT(", ");
 				msg += ENTRY_NOT;
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, msg.c_str()));
 				return false;
@@ -686,9 +686,9 @@ bool ARBCalendar::Load(
 			{
 				tstring msg(Localization()->ValidValues());
 				msg += ACCOM_NONE;
-				msg += _T(", ");
+				msg += wxT(", ");
 				msg += ACCOM_TODO;
-				msg += _T(", ");
+				msg += wxT(", ");
 				msg += ACCOM_CONFIRMED;
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, msg.c_str()));
 				return false;
@@ -773,37 +773,37 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	{
 		otstringstream str;
 		if (IsTentative())
-			str << Localization()->CalendarTentative() << _T(" ");
+			str << Localization()->CalendarTentative() << wxT(" ");
 		switch (GetEntered())
 		{
 		default:
 		case ARBCalendar::eNot:
-			str << Localization()->CalendarStatusN() << _T(" ");
+			str << Localization()->CalendarStatusN() << wxT(" ");
 			break;
 		case ARBCalendar::eEntered:
-			str << Localization()->CalendarStatusE() << _T(" ");
+			str << Localization()->CalendarStatusE() << wxT(" ");
 			break;
 		case ARBCalendar::ePlanning:
-			str << Localization()->CalendarStatusP() << _T(" ");
+			str << Localization()->CalendarStatusP() << wxT(" ");
 			break;
 		}
 		if (m_DateOpening.IsValid())
 		{
 			str << Localization()->CalendarOpens()
 				<< m_DateOpening.GetString(ARBDate::eDefault)
-				<< _T(" ");
+				<< wxT(" ");
 		}
 		if (m_DateDraw.IsValid())
 		{
 			str << Localization()->CalendarDraw()
 				<< m_DateDraw.GetString(ARBDate::eDefault)
-				<< _T(" ");
+				<< wxT(" ");
 		}
 		if (m_DateClosing.IsValid())
 		{
 			str << Localization()->CalendarCloses()
 				<< m_DateClosing.GetString(ARBDate::eDefault)
-				<< _T(" ");
+				<< wxT(" ");
 		}
 		str << GetNote();
 		ioStream->DoDESCRIPTION(str.str());

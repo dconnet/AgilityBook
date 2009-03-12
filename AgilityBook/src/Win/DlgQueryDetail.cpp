@@ -53,8 +53,8 @@ static char THIS_FILE[] = __FILE__;
 // CDlgQueryDetail dialog
 
 CDlgQueryDetail::CDlgQueryDetail(
-		const TCHAR* inCode,
-		const TCHAR* inName,
+		const wxChar* inCode,
+		const wxChar* inName,
 		CWnd* pParent,
 		ARBConfig const* inConfig)
 	: CDlgBaseDialog(CDlgQueryDetail::IDD, pParent)

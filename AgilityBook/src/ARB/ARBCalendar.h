@@ -153,7 +153,7 @@ public:
 	 */
 	virtual tstring GetGenericName() const
 	{
-		return m_Venue + _T(" ") + m_Club + _T(" ") + m_Location;
+		return m_Venue + wxT(" ") + m_Club + wxT(" ") + m_Location;
 	}
 
 	/**

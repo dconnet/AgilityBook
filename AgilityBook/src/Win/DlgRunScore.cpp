@@ -152,7 +152,7 @@ CDlgRunScore::CDlgRunScore(
 	m_Location = m_pTrial->GetLocation().c_str();
 	m_SubName = m_Run->GetSubName().c_str();
 	m_Height = m_Run->GetHeight().c_str();
-	m_Handler = _T("");
+	m_Handler = wxT("");
 	m_Conditions = m_Run->GetConditions().c_str();
 	m_SCT = 0.0;
 	m_Opening = 0;
@@ -169,7 +169,6 @@ CDlgRunScore::CDlgRunScore(
 	m_InClass = m_Run->GetInClass();
 	m_DogsQd = m_Run->GetDogsQd();
 	//}}AFX_DATA_INIT
-	m_Conditions.Replace(_T("\n"), _T("\r\n"));
 }
 
 
@@ -383,7 +382,6 @@ void CDlgRunScore::DoDataExchange(CDataExchange* pDX)
 		m_Run->SetJudge((LPCTSTR)m_Judge);
 		m_Run->SetHandler((LPCTSTR)m_Handler);
 		CString tmp(m_Conditions);
-		tmp.Replace(_T("\r\n"), _T("\n"));
 		m_Run->SetConditions((LPCTSTR)tmp);
 		switch (pScoring->GetScoringStyle())
 		{
@@ -785,10 +783,9 @@ void CDlgRunScore::SetEventDesc(ARBConfigEventPtr inEvent)
 	{
 		tstring const& note = pScoring->GetNote();
 		if (!desc.IsEmpty() && 0 < note.length())
-			desc += _T("\n==========\n");
+			desc += wxT("\n==========\n");
 		desc += note.c_str();
 	}
-	desc.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlDesc.SetWindowText(desc);
 }
 
@@ -804,9 +801,9 @@ void CDlgRunScore::SetPartnerText()
 			for (ARBDogRunPartnerList::const_iterator iter = m_Run->GetPartners().begin(); iter != m_Run->GetPartners().end(); ++iter)
 			{
 				if (!partners.IsEmpty())
-					partners += _T(", ");
+					partners += wxT(", ");
 				partners += (*iter)->GetHandler().c_str();
-				partners += _T("/");
+				partners += wxT("/");
 				partners += (*iter)->GetDog().c_str();
 			}
 		}
@@ -898,10 +895,10 @@ void CDlgRunScore::SetTitlePoints()
 	}
 	ARB_Q q = ARB_Q::GetValidType(static_cast<int>(m_ctrlQ.GetItemData(index)));
 
-	CString strBonus(_T("0"));
-	CString strSpeed(_T("0"));
-	CString strTitle(_T("0"));
-	CString strScore(_T(""));
+	CString strBonus(wxT("0"));
+	CString strSpeed(wxT("0"));
+	CString strTitle(wxT("0"));
+	CString strScore(wxT(""));
 	ARBConfigScoringPtr pScoring;
 	if (GetScoring(&pScoring))
 	{

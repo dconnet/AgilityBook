@@ -51,10 +51,10 @@ struct TestTrainingData
 TestTrainingData::TestTrainingData()
 {
 	TrainingData = ElementNode::New(TREE_TRAINING);
-	TrainingData->SetValue(_T("These are some notes"));
-	TrainingData->AddAttrib(ATTRIB_TRAINING_DATE, _T("2006-3-4"));
-	TrainingData->AddAttrib(ATTRIB_TRAINING_NAME, _T("A Name"));
-	TrainingData->AddAttrib(ATTRIB_TRAINING_SUBNAME, _T("SubName1"));
+	TrainingData->SetValue(wxT("These are some notes"));
+	TrainingData->AddAttrib(ATTRIB_TRAINING_DATE, wxT("2006-3-4"));
+	TrainingData->AddAttrib(ATTRIB_TRAINING_NAME, wxT("A Name"));
+	TrainingData->AddAttrib(ATTRIB_TRAINING_SUBNAME, wxT("SubName1"));
 }
 
 
@@ -62,18 +62,18 @@ static void CreateTrainingList(ARBTrainingList& trainlist)
 {
 	ARBTrainingPtr train = ARBTraining::New();
 	train->SetDate(ARBDate(2006, 9, 4));
-	train->SetName(_T("Test1"));
-	train->SetSubName(_T("SubN"));
+	train->SetName(wxT("Test1"));
+	train->SetSubName(wxT("SubN"));
 	trainlist.AddTraining(train);
 	train = ARBTraining::New();
 	train->SetDate(ARBDate(2005, 3, 26));
-	train->SetName(_T("Test2"));
-	train->SetSubName(_T("Sub3N"));
+	train->SetName(wxT("Test2"));
+	train->SetSubName(wxT("Sub3N"));
 	trainlist.AddTraining(train);
 	train = ARBTraining::New();
 	train->SetDate(ARBDate(2005, 3, 26));
-	train->SetName(_T("Test2"));
-	train->SetSubName(_T("Sub2N"));
+	train->SetName(wxT("Test2"));
+	train->SetSubName(wxT("Sub2N"));
 	trainlist.AddTraining(train);
 	trainlist.sort();
 }
@@ -133,7 +133,7 @@ SUITE(TestTraining)
 	{
 		ARBTrainingPtr train = ARBTraining::New();
 		train->SetDate(ARBDate(2007, 3, 13));
-		CHECK(_T("3/13/2007") == train->GetGenericName());
+		CHECK(wxT("3/13/2007") == train->GetGenericName());
 	}
 
 	TEST_FIXTURE(TestTrainingData, Load)
@@ -169,10 +169,10 @@ SUITE(TestTrainingList)
 		CHECK(train.Load(TrainingData, ARBVersion(1, 0), callback));
 		CHECK(train.Load(TrainingData, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(2u, train.size());
-		ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
-		ele->SetValue(_T("These are some notes"));
-		ele->AddAttrib(ATTRIB_TRAINING_NAME, _T("Hollister, CA"));
-		ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, _T("PASA"));
+		ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
+		ele->SetValue(wxT("These are some notes"));
+		ele->AddAttrib(ATTRIB_TRAINING_NAME, wxT("Hollister, CA"));
+		ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, wxT("PASA"));
 		CHECK(!train.Load(ele, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(2u, train.size());
 	}
@@ -181,14 +181,14 @@ SUITE(TestTrainingList)
 	TEST_FIXTURE(TestTrainingData, Load2)
 	{
 		ElementNodePtr ele = ElementNode::New(TREE_TRAINING);
-		ele->SetValue(_T("These are some notes"));
-		ele->AddAttrib(ATTRIB_TRAINING_NAME, _T("Hollister, CA"));
-		ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, _T("PASA"));
+		ele->SetValue(wxT("These are some notes"));
+		ele->AddAttrib(ATTRIB_TRAINING_NAME, wxT("Hollister, CA"));
+		ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, wxT("PASA"));
 		ARBTrainingList train;
 		tstring errs;
 		ARBErrorCallback callback(errs);
 		CHECK(!train.Load(ele, ARBVersion(2, 0), callback));
-		ele->AddAttrib(ATTRIB_TRAINING_DATE, _T("2008-1-13"));
+		ele->AddAttrib(ATTRIB_TRAINING_DATE, wxT("2008-1-13"));
 		CHECK(train.Load(ele, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(1u, train.size());
 	}
@@ -199,9 +199,9 @@ SUITE(TestTrainingList)
 		ARBTrainingList trainlist;
 		ARBTrainingPtr train1 = ARBTraining::New();
 		train1->SetDate(ARBDate(2006, 9, 4));
-		train1->SetName(_T("Test1"));
-		train1->SetSubName(_T("SubN"));
-		train1->SetNote(_T("A note"));
+		train1->SetName(wxT("Test1"));
+		train1->SetSubName(wxT("SubN"));
+		train1->SetNote(wxT("A note"));
 		ARBTrainingPtr train2 = train1->Clone();
 		train2->SetDate(ARBDate(2005, 3, 26));
 		trainlist.AddTraining(train1);
@@ -242,7 +242,7 @@ SUITE(TestTrainingList)
 		ARBTrainingPtr train = trainlist[0]->Clone();
 
 		CHECK(trainlist.FindTraining(train));
-		train->SetNote(_T("a change"));
+		train->SetNote(wxT("a change"));
 		CHECK(!trainlist.FindTraining(train));
 	}
 
@@ -252,9 +252,9 @@ SUITE(TestTrainingList)
 		ARBTrainingList trainlist;
 		ARBTrainingPtr train1 = ARBTraining::New();
 		train1->SetDate(ARBDate(2006, 9, 4));
-		train1->SetName(_T("Test1"));
-		train1->SetSubName(_T("SubN"));
-		train1->SetNote(_T("A note"));
+		train1->SetName(wxT("Test1"));
+		train1->SetSubName(wxT("SubN"));
+		train1->SetNote(wxT("A note"));
 		ARBTrainingPtr train2 = train1->Clone();
 		train2->SetDate(ARBDate(2005, 3, 26));
 		trainlist.AddTraining(train1);
@@ -262,7 +262,7 @@ SUITE(TestTrainingList)
 		trainlist.sort();
 		ARBTrainingPtr train3 = trainlist[0]->Clone();
 		CHECK(*train2 == *train3);
-		train3->SetNote(_T("Test"));
+		train3->SetNote(wxT("Test"));
 		CHECK(*train2 != *train3);
 		trainlist.AddTraining(train3);
 		trainlist.AddTraining(train1->Clone());

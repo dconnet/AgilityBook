@@ -46,9 +46,9 @@ SUITE(TestDouble)
 		double p = 3.14159265358979323846;
 
 		tstring s = ARBDouble::str(p);
-		CHECK(_T("3.14") == s);
+		CHECK(wxT("3.14") == s);
 		s = ARBDouble::str(p, 4);
-		CHECK(_T("3.1416") == s);
+		CHECK(wxT("3.1416") == s);
 	}
 
 

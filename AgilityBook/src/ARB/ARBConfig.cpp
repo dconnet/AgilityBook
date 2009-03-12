@@ -251,7 +251,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler)
 	if (inHandler)
 	{
 		ElementNodePtr tree = inHandler->LoadDefaultConfig();
-		if (tree && tree->GetName() == _T("DefaultConfig"))
+		if (tree && tree->GetName() == wxT("DefaultConfig"))
 		{
 			ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 			tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
@@ -298,7 +298,7 @@ tstring ARBConfig::GetTitleCompleteName(
 		bool bAbbrevFirst) const
 {
 	if (!inTitle)
-		return _T("");
+		return wxT("");
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
 		return pTitle->GetCompleteName(inTitle->GetInstance(), inTitle->ShowInstanceOne(), bAbbrevFirst);
@@ -342,7 +342,7 @@ bool ARBConfig::Update(
 		}
 		if (0 < nNew || 0 < nUpdated)
 		{
-			ioInfo << Localization()->UpdateCalSites(nNew, nUpdated, nSkipped) << _T("\n");
+			ioInfo << Localization()->UpdateCalSites(nNew, nUpdated, nSkipped) << wxT("\n");
 		}
 	}
 
@@ -367,7 +367,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateFaults(nNew, nSkipped) << _T("\n");
+		ioInfo << Localization()->UpdateFaults(nNew, nSkipped) << wxT("\n");
 	}
 
 	// Update OtherPoints.
@@ -402,7 +402,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped) << _T("\n");
+		ioInfo << Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped) << wxT("\n");
 	}
 
 	// Update Venues.
@@ -434,14 +434,14 @@ bool ARBConfig::Update(
 			++nNew;
 			++nChanges;
 			GetVenues().AddVenue((*iterVenue));
-			venueInfo += _T("+");
+			venueInfo += wxT("+");
 			venueInfo += (*iterVenue)->GetName();
-			venueInfo += _T("\n");
+			venueInfo += wxT("\n");
 		}
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateVenues(nNew, nUpdated, nSkipped) << _T("\n");
+		ioInfo << Localization()->UpdateVenues(nNew, nUpdated, nSkipped) << wxT("\n");
 	}
 	if (0 < venueInfo.length())
 	{

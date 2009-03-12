@@ -52,9 +52,9 @@ struct ConfigFaultData
 ConfigFaultData::ConfigFaultData()
 {
 	ConfigFault1 = ElementNode::New(TREE_FAULTTYPE);
-	ConfigFault1->AddAttrib(_T("Name"), _T("Refusal"));
+	ConfigFault1->AddAttrib(wxT("Name"), wxT("Refusal"));
 	ConfigFault2 = ElementNode::New(TREE_FAULTTYPE);
-	ConfigFault2->SetValue(_T("Bar Down"));
+	ConfigFault2->SetValue(wxT("Bar Down"));
 }
 
 
@@ -70,12 +70,12 @@ SUITE(TestConfigFault)
 	TEST(Clone)
 	{
 		ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-		fault1->SetName(_T("Fault!"));
+		fault1->SetName(wxT("Fault!"));
 		ARBConfigFaultPtr fault2 = fault1->Clone();
 		CHECK(NULL != fault2.get());
 		CHECK(fault1.get() != fault2.get());
 		CHECK(*fault1 == *fault2);
-		fault1->SetName(_T("Here"));
+		fault1->SetName(wxT("Here"));
 		CHECK(fault1->GetName() != fault2->GetName());
 	}
 
@@ -83,7 +83,7 @@ SUITE(TestConfigFault)
 	TEST(OpEqual)
 	{
 		ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-		fault1->SetName(_T("Fault!"));
+		fault1->SetName(wxT("Fault!"));
 		ARBConfigFaultPtr fault2 = ARBConfigFault::New();
 		CHECK(*fault1 != *fault2);
 		*fault1 = *fault2;
@@ -94,8 +94,8 @@ SUITE(TestConfigFault)
 	TEST(GenName)
 	{
 		ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-		fault1->SetName(_T("Fault!"));
-		CHECK(_T("Fault!") == fault1->GetGenericName());
+		fault1->SetName(wxT("Fault!"));
+		CHECK(wxT("Fault!") == fault1->GetGenericName());
 	}
 
 
@@ -153,8 +153,8 @@ SUITE(TestConfigFaultList)
 		ARBErrorCallback callback(errs);
 		CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 		CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
-		ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
-		ele->SetValue(_T("a fault"));
+		ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
+		ele->SetValue(wxT("a fault"));
 		CHECK(!faultlist.Load(ele, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(2u, faultlist.size());
 	}
@@ -167,8 +167,8 @@ SUITE(TestConfigFaultList)
 		ARBErrorCallback callback(errs);
 		CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 		CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
-		CHECK(faultlist.FindFault(_T("Refusal")));
-		CHECK(!faultlist.FindFault(_T("refusal")));
+		CHECK(faultlist.FindFault(wxT("Refusal")));
+		CHECK(!faultlist.FindFault(wxT("refusal")));
 	}
 
 
@@ -177,13 +177,13 @@ SUITE(TestConfigFaultList)
 		ARBConfigFaultList faultlist;
 		tstring errs;
 		ARBErrorCallback callback(errs);
-		CHECK(faultlist.AddFault(_T("fault")));
+		CHECK(faultlist.AddFault(wxT("fault")));
 		CHECK_EQUAL(1u, faultlist.size());
-		CHECK(faultlist.AddFault(_T("fault2")));
+		CHECK(faultlist.AddFault(wxT("fault2")));
 		CHECK_EQUAL(2u, faultlist.size());
-		CHECK(faultlist.AddFault(_T("fault")));
+		CHECK(faultlist.AddFault(wxT("fault")));
 		CHECK_EQUAL(3u, faultlist.size());
-		CHECK(faultlist.DeleteFault(_T("fault")));
+		CHECK(faultlist.DeleteFault(wxT("fault")));
 		CHECK_EQUAL(2u, faultlist.size());
 	}
 }

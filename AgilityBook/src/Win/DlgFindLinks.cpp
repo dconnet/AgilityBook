@@ -175,7 +175,7 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_ctrlLinks(NULL)
 	, m_ctrlEdit(NULL)
 	, m_ctrlOpen(NULL)
-	, m_sortLinks(_T("Links"))
+	, m_sortLinks(wxT("Links"))
 	, m_imgEmpty(-1)
 	, m_imgOk(-1)
 	, m_imgMissing(-1)

@@ -165,7 +165,7 @@ CDlgDogTitles::CDlgDogTitles(
 	: CDlgBasePropertyPage(CDlgDogTitles::IDD)
 	, m_ctrlTitles(true)
 	, m_pDoc(pDoc)
-	, m_sortTitles(_T("Titles"))
+	, m_sortTitles(wxT("Titles"))
 	, m_Titles()
 {
 	titles.Clone(m_Titles);
@@ -349,7 +349,7 @@ BOOL CDlgDogTitles::OnInitDialog()
 	{
 		col.fmt = colTitleInfo[i].fmt;
 		col.cx = colTitleInfo[i].cx;
-		col.pszText = _T("");
+		col.pszText = wxT("");
 		col.iSubItem = i;
 		m_ctrlTitles.InsertColumn(i, &col);
 	}

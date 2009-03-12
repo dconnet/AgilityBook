@@ -171,66 +171,15 @@
 	#error We do not support UNICODE builds for Win98
 #endif
 
-#if !defined(WXWIDGETS)
-
-// This is new as of vc7
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	/// some CString constructors will be explicit
-#define _AFX_ALL_WARNINGS	/// turns off MFC's hiding of some common and often safely ignored warning messages
-
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
-#include <afxcview.h>
-
-#include <afxdtctl.h>		// MFC support for Internet Explorer 4 Common Controls
-#ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>			// MFC support for Windows Common Controls
-#endif // _AFX_NO_AFXCMN_SUPPORT
-#include <afxdlgs.h>
-
-// Some minor tweaks to allow VC6 support while using new features.
-#if _MSC_VER < 1300
-#define CStringA CString
-typedef DWORD DWORD_PTR;
-typedef long LONG_PTR;
-#endif
-
-#endif // WXWIDGETS
-
 #else // _WIN32
 
-
-#ifndef WXWIDGETS
-#error Non-Windows platforms must use wxWidgets
-#endif
-// SAS refactor since this dupes ifdef WXWIDGETS below
-#ifdef WXWIDGETS
-// Pre-compiled header setup
-#include "wx/wxprec.h"
-#ifdef __BORLANDC__
-#   pragma hdrstop
-#endif
-#ifndef WX_PRECOMP
-#   include "wx/wx.h"
-#endif
-#endif // WXWIDGETS
-
-#ifndef _T
-// linux build gives redefinition warning and subsequent errors
-#define _T(x)		wxT(x)
-#endif 
-#define TCHAR		wxChar
-
-// SAS there should be a posix include with WORD in it but can't find it
-#ifndef WORD
-#define WORD int
-#endif
+// There really shouldn't be any UINT usage - but just in case...
 #ifndef UINT
 #define UINT uint
 #endif
 #endif // _WIN32
 
 
-#ifdef WXWIDGETS
 // Pre-compiled header setup
 #include "wx/wxprec.h"
 #ifdef __BORLANDC__
@@ -247,6 +196,9 @@ typedef long LONG_PTR;
 #ifndef wxUSE_STL
 #error ARB: wxUSE_STL must be defined in wxWidgets (include/wx/<platform>/setup.)
 #endif
+#ifndef wxUSE_WCHAR_T
+#error ARB: wxUSE_WCHAR_T must be defined in wxWidgets (include/wx/<platform>/setup.)
+#endif
 #ifndef wxUSE_GUI
 #error ARB: wxUSE_GUI must be defined in wxWidgets (include/wx/<platform>/setup.)
 #endif
@@ -261,7 +213,6 @@ typedef long LONG_PTR;
 #endif
 // There's other things that could be checked, but that's good enough for now.
 // If there's other things we need, the compilation will die at that point.
-#endif // WXWIDGETS
 
 
 #include <memory> // To pick up the _HAS_TR1 define

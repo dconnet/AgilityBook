@@ -37,19 +37,16 @@
  */
 
 #include "ARBConfig.h"
-#if defined(WXWIDGETS)
 class wxString;
-#endif
+
 
 class CConfigHandler : public IARBConfigHandler
 {
 public:
-#if defined(WXWIDGETS)
 	static bool LoadWxFile(
 			wxString const& zipFile,
 			wxString const& archiveFile,
 			std::string& outData);
-#endif
 
 	CConfigHandler();
 

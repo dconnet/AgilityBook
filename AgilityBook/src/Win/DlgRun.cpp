@@ -132,7 +132,7 @@ void CDlgRun::OnOK()
 			assert(NULL != pEvent.get());
 			if (!pEvent->HasTable())
 				if (m_Run->GetScoring().HasTable())
-					AfxMessageBox(_T("Poof!"));
+					AfxMessageBox(wxT("Poof!"));
 		}
 #endif
 		//End TODO

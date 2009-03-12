@@ -218,17 +218,17 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		switch (os.dwPlatformId)
 		{
 		default: // Win32s
-			info << _T("Windows32s ")
+			info << wxT("Windows32s ")
 				<< os.dwMajorVersion
 				<< '.'
 				<< os.dwMinorVersion
 				<< ' '
 				<< os.szCSDVersion
-				<< _T("\r\n");
+				<< wxT("\n");
 			break;
 		case VER_PLATFORM_WIN32_WINDOWS: // Win95/98
 			if (0 == os.dwMinorVersion)
-				info << _T("Windows 95 ")
+				info << wxT("Windows 95 ")
 					<< os.dwMajorVersion
 					<< '.'
 					<< os.dwMinorVersion
@@ -236,9 +236,9 @@ bool CDlgPageEncode::TransferDataFromWindow()
 					<< int(LOWORD(os.dwBuildNumber))
 					<< ' '
 					<< os.szCSDVersion
-					<< _T("\r\n");
+					<< wxT("\n");
 			else
-				info << _T("Windows 98 ")
+				info << wxT("Windows 98 ")
 					<< os.dwMajorVersion
 					<< '.'
 					<< os.dwMinorVersion
@@ -246,10 +246,10 @@ bool CDlgPageEncode::TransferDataFromWindow()
 					<< int(LOWORD(os.dwBuildNumber))
 					<< ' '
 					<< os.szCSDVersion
-					<< _T("\r\n");
+					<< wxT("\n");
 			break;
 		case VER_PLATFORM_WIN32_NT: // NT/Win2000
-			info << _T("Windows ")
+			info << wxT("Windows ")
 				<< os.dwMajorVersion
 				<< '.'
 				<< os.dwMinorVersion
@@ -257,7 +257,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 				<< os.dwBuildNumber
 				<< ' '
 				<< os.szCSDVersion
-				<< _T("\r\n");
+				<< wxT("\n");
 			break;
 		}
 #else

@@ -61,7 +61,7 @@ CDlgOptionsProgram::CDlgOptionsProgram()
 	, m_Backups(0)
 	, m_bAutoShow(TRUE)
 	, m_bShowSplash(TRUE)
-	, m_Splash(_T(""))
+	, m_Splash(wxT(""))
 	, m_bShowHtml(FALSE)
 	, m_IEInstalled(FALSE)
 {

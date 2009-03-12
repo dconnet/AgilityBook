@@ -95,20 +95,20 @@ SUITE(TestDate)
 	TEST(String)
 	{
 		ARBDate d(1999, 3, 2);
-		CHECK(_T("03/02/1999") == d.GetString(ARBDate::eDefault));
-		CHECK(_T("03-02-1999") == d.GetString(ARBDate::eDashMMDDYYYY));
-		CHECK(_T("03/02/1999") == d.GetString(ARBDate::eSlashMMDDYYYY));
-		CHECK(_T("1999-03-02") == d.GetString(ARBDate::eDashYYYYMMDD));
-		CHECK(_T("1999/03/02") == d.GetString(ARBDate::eSlashYYYYMMDD));
-		CHECK(_T("02-03-1999") == d.GetString(ARBDate::eDashDDMMYYYY));
-		CHECK(_T("02/03/1999") == d.GetString(ARBDate::eSlashDDMMYYYY));
-		CHECK(_T("3-2-1999") == d.GetString(ARBDate::eDashMDY));
-		CHECK(_T("3/2/1999") == d.GetString(ARBDate::eSlashMDY));
-		CHECK(_T("1999-3-2") == d.GetString(ARBDate::eDashYMD));
-		CHECK(_T("1999/3/2") == d.GetString(ARBDate::eSlashYMD));
-		CHECK(_T("2-3-1999") == d.GetString(ARBDate::eDashDMY));
-		CHECK(_T("2/3/1999") == d.GetString(ARBDate::eSlashDMY));
-		CHECK(_T("19990302") == d.GetString(ARBDate::eYYYYMMDD));
+		CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eDefault));
+		CHECK(wxT("03-02-1999") == d.GetString(ARBDate::eDashMMDDYYYY));
+		CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eSlashMMDDYYYY));
+		CHECK(wxT("1999-03-02") == d.GetString(ARBDate::eDashYYYYMMDD));
+		CHECK(wxT("1999/03/02") == d.GetString(ARBDate::eSlashYYYYMMDD));
+		CHECK(wxT("02-03-1999") == d.GetString(ARBDate::eDashDDMMYYYY));
+		CHECK(wxT("02/03/1999") == d.GetString(ARBDate::eSlashDDMMYYYY));
+		CHECK(wxT("3-2-1999") == d.GetString(ARBDate::eDashMDY));
+		CHECK(wxT("3/2/1999") == d.GetString(ARBDate::eSlashMDY));
+		CHECK(wxT("1999-3-2") == d.GetString(ARBDate::eDashYMD));
+		CHECK(wxT("1999/3/2") == d.GetString(ARBDate::eSlashYMD));
+		CHECK(wxT("2-3-1999") == d.GetString(ARBDate::eDashDMY));
+		CHECK(wxT("2/3/1999") == d.GetString(ARBDate::eSlashDMY));
+		CHECK(wxT("19990302") == d.GetString(ARBDate::eYYYYMMDD));
 	}
 
 
@@ -142,17 +142,17 @@ SUITE(TestDate)
 
 	TEST(FromString)
 	{
-		ARBDate d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDashYYYYMMDD);
+		ARBDate d = ARBDate::FromString(wxT("1999-3-27"), ARBDate::eDashYYYYMMDD);
 		CHECK(d.IsValid());
 		ARBDate d2(1999, 3, 27);
 		CHECK(d == d2);
-		d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eDefault);
+		d = ARBDate::FromString(wxT("1999-3-27"), ARBDate::eDefault);
 		CHECK(d == d2);
 		CHECK(d.IsValid());
-		d = ARBDate::FromString(_T("3/27/1999"), ARBDate::eDefault);
+		d = ARBDate::FromString(wxT("3/27/1999"), ARBDate::eDefault);
 		CHECK(d.IsValid());
 		CHECK(d == d2);
-		d = ARBDate::FromString(_T("1999-3-27"), ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
+		d = ARBDate::FromString(wxT("1999-3-27"), ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
 		CHECK(!d.IsValid());
 		//TODO: Add more complete tests (test each format, bad formats, etc)
 	}
@@ -163,11 +163,11 @@ SUITE(TestDate)
 		ARBDate d1(1999, 3, 30);
 		ARBDate d2(1999, 3, 27);
 		tstring s = ARBDate::GetValidDateString(d1, d2);
-		CHECK(_T("[1999-3-30-1999-3-27]") == s);
+		CHECK(wxT("[1999-3-30-1999-3-27]") == s);
 		d1.clear();
 		s = ARBDate::GetValidDateString(d1, d2);
-		CHECK(_T("[*-1999-3-27]") == s);
+		CHECK(wxT("[*-1999-3-27]") == s);
 		s = ARBDate::GetValidDateString(d2, d1);
-		CHECK(_T("[1999-3-27-*]") == s);
+		CHECK(wxT("[1999-3-27-*]") == s);
 	}
 }

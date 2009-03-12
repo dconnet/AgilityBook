@@ -83,7 +83,7 @@ wxString CDlgConfigureDataVenue::OnNeedText() const
 		wxString s(OnNeedText(i));
 		if (!s.empty())
 		{
-			str += _T("  ") + s;
+			str += wxT("  ") + s;
 		}
 	}
 	return str;
@@ -103,7 +103,7 @@ wxString CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 		break;
 	case 2:
 		str = m_Venue->GetDesc();
-		str = tstringUtil::Replace(str, _T("\n"), _T(" "));
+		str = tstringUtil::Replace(str, wxT("\n"), wxT(" "));
 		break;
 	}
 	return str.c_str();

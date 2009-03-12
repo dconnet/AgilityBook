@@ -44,12 +44,12 @@
 static ElementNodePtr CreateNode()
 {
 	ElementNodePtr data = ElementNode::New(TREE_CALENDAR);
-	data->SetValue(_T("These are some notes"));
+	data->SetValue(wxT("These are some notes"));
 	data->AddAttrib(ATTRIB_CAL_START, ARBDate(2006, 3, 4));
 	data->AddAttrib(ATTRIB_CAL_END, ARBDate(2006, 3, 5));
-	data->AddAttrib(ATTRIB_CAL_LOCATION, _T("Sunnyvale, CA"));
-	data->AddAttrib(ATTRIB_CAL_CLUB, _T("Bay Team"));
-	data->AddAttrib(ATTRIB_CAL_VENUE, _T("USDAA"));
+	data->AddAttrib(ATTRIB_CAL_LOCATION, wxT("Sunnyvale, CA"));
+	data->AddAttrib(ATTRIB_CAL_CLUB, wxT("Bay Team"));
+	data->AddAttrib(ATTRIB_CAL_VENUE, wxT("USDAA"));
 	return data;
 }
 
@@ -69,9 +69,9 @@ CalData::CalData()
 	CalData1a = CreateNode();
 	CalData2 = CreateNode();
 	// Specialize the v1/v2 objs.
-	CalData1->AddAttrib(_T("PlanOn"), _T("y"));
-	CalData1a->AddAttrib(ATTRIB_CAL_ENTERED, _T("P"));
-	CalData2->AddAttrib(ATTRIB_CAL_ENTERED, _T("P"));
+	CalData1->AddAttrib(wxT("PlanOn"), wxT("y"));
+	CalData1a->AddAttrib(ATTRIB_CAL_ENTERED, wxT("P"));
+	CalData2->AddAttrib(ATTRIB_CAL_ENTERED, wxT("P"));
 }
 
 
@@ -88,14 +88,14 @@ SUITE(TestCalendar)
 	{
 		ARBCalendarPtr cal = ARBCalendar::New();
 		cal->SetStartDate(ARBDate(2007, 9, 1));
-		cal->SetLocation(_T("Here"));
+		cal->SetLocation(wxT("Here"));
 		ARBCalendarPtr cal2 = cal->Clone();
 		CHECK(NULL != cal2.get());
 		CHECK(cal.get() != cal2.get());
 		CHECK(*cal == *cal2);
 		CHECK(cal->GetStartDate() == cal2->GetStartDate());
 		CHECK(cal->GetLocation() == cal2->GetLocation());
-		cal->SetLocation(_T("Here2"));
+		cal->SetLocation(wxT("Here2"));
 		CHECK(cal->GetLocation() != cal2->GetLocation());
 	}
 
@@ -104,7 +104,7 @@ SUITE(TestCalendar)
 	{
 		ARBCalendarPtr cal1 = ARBCalendar::New();
 		cal1->SetStartDate(ARBDate(2007, 9, 1));
-		cal1->SetLocation(_T("Here"));
+		cal1->SetLocation(wxT("Here"));
 		ARBCalendarPtr cal2 = ARBCalendar::New();
 		CHECK(*cal1 != *cal2);
 		*cal1 = *cal2;
@@ -135,10 +135,10 @@ SUITE(TestCalendar)
 	TEST(GenName)
 	{
 		ARBCalendarPtr cal1 = ARBCalendar::New();
-		cal1->SetClub(_T("Way"));
-		cal1->SetVenue(_T("No"));
-		cal1->SetLocation(_T("There"));
-		CHECK(_T("No Way There") == cal1->GetGenericName());
+		cal1->SetClub(wxT("Way"));
+		cal1->SetVenue(wxT("No"));
+		cal1->SetLocation(wxT("There"));
+		CHECK(wxT("No Way There") == cal1->GetGenericName());
 	}
 
 
@@ -232,16 +232,16 @@ SUITE(TestCalendar)
 		ARBCalendarPtr cal1 = ARBCalendar::New();
 		cal1->SetStartDate(ARBDate(2007, 9, 1));
 		cal1->SetEndDate(ARBDate(2007, 9, 3));
-		cal1->SetVenue(_T("AKC"));
-		cal1->SetClub(_T("club"));
-		cal1->SetLocation(_T("There"));
+		cal1->SetVenue(wxT("AKC"));
+		cal1->SetClub(wxT("club"));
+		cal1->SetLocation(wxT("There"));
 
 		ARBCalendarPtr cal2;
 
 		CHECK(!cal1->IsMatch(cal2, true));
 
 		cal2 = cal1->Clone();
-		cal2->SetLocation(_T("Here"));
+		cal2->SetLocation(wxT("Here"));
 		CHECK(!cal1->IsMatch(cal2, true));
 		CHECK(cal1->IsMatch(cal2, false));
 		cal2->SetEndDate(cal2->GetEndDate() + 1);
@@ -254,14 +254,14 @@ SUITE(TestCalendar)
 		ARBCalendarPtr cal1 = ARBCalendar::New();
 		cal1->SetStartDate(ARBDate(2006, 9, 4));
 		cal1->SetEndDate(ARBDate(2006, 9, 5));
-		cal1->SetLocation(_T("Hollister"));
-		cal1->SetClub(_T("PASA"));
-		cal1->SetVenue(_T("ASCA"));
+		cal1->SetLocation(wxT("Hollister"));
+		cal1->SetClub(wxT("PASA"));
+		cal1->SetVenue(wxT("ASCA"));
 		ARBCalendarPtr cal2 = cal1->Clone();
 		cal1->SetEndDate(ARBDate(2006, 9, 6));
-		cal1->SetLocation(_T("Turlock"));
-		cal1->SetClub(_T("PASA"));
-		cal1->SetVenue(_T("ASCA"));
+		cal1->SetLocation(wxT("Turlock"));
+		cal1->SetClub(wxT("PASA"));
+		cal1->SetVenue(wxT("ASCA"));
 		CHECK(*cal1 != *cal2);
 		CHECK(cal1->Update(cal2));
 		CHECK(*cal1 == *cal2);
@@ -278,14 +278,14 @@ SUITE(TestCalendarList)
 		ARBErrorCallback callback(errs);
 		CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
 		CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));
-		ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
-		ele->SetValue(_T("These are some notes"));
+		ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
+		ele->SetValue(wxT("These are some notes"));
 		ele->AddAttrib(ATTRIB_CAL_START, ARBDate(2006, 9, 4));
 		ele->AddAttrib(ATTRIB_CAL_END, ARBDate(2006, 9, 5));
-		ele->AddAttrib(ATTRIB_CAL_LOCATION, _T("Hollister, CA"));
-		ele->AddAttrib(ATTRIB_CAL_CLUB, _T("PASA"));
-		ele->AddAttrib(ATTRIB_CAL_VENUE, _T("ASCA"));
-		ele->AddAttrib(_T("PlanOn"), _T("n"));
+		ele->AddAttrib(ATTRIB_CAL_LOCATION, wxT("Hollister, CA"));
+		ele->AddAttrib(ATTRIB_CAL_CLUB, wxT("PASA"));
+		ele->AddAttrib(ATTRIB_CAL_VENUE, wxT("ASCA"));
+		ele->AddAttrib(wxT("PlanOn"), wxT("n"));
 		CHECK(!callist.Load(ele, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(2u, callist.size());
 	}
@@ -299,13 +299,13 @@ SUITE(TestCalendarList)
 		CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
 		CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));
 		ElementNodePtr ele = ElementNode::New(TREE_CALENDAR);
-		ele->SetValue(_T("These are some notes"));
-		ele->AddAttrib(_T("DateStrt"), ARBDate(2006, 9, 4));
+		ele->SetValue(wxT("These are some notes"));
+		ele->AddAttrib(wxT("DateStrt"), ARBDate(2006, 9, 4));
 		ele->AddAttrib(ATTRIB_CAL_END, ARBDate(2006, 9, 5));
-		ele->AddAttrib(ATTRIB_CAL_LOCATION, _T("Hollister, CA"));
-		ele->AddAttrib(ATTRIB_CAL_CLUB, _T("PASA"));
-		ele->AddAttrib(ATTRIB_CAL_VENUE, _T("ASCA"));
-		ele->AddAttrib(_T("PlanOn"), _T("n"));
+		ele->AddAttrib(ATTRIB_CAL_LOCATION, wxT("Hollister, CA"));
+		ele->AddAttrib(ATTRIB_CAL_CLUB, wxT("PASA"));
+		ele->AddAttrib(ATTRIB_CAL_VENUE, wxT("ASCA"));
+		ele->AddAttrib(wxT("PlanOn"), wxT("n"));
 		CHECK(!callist.Load(ele, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(2u, callist.size());
 	}
@@ -317,9 +317,9 @@ SUITE(TestCalendarList)
 		ARBCalendarPtr cal1 = ARBCalendar::New();
 		cal1->SetStartDate(ARBDate(2006, 9, 4));
 		cal1->SetEndDate(ARBDate(2006, 9, 5));
-		cal1->SetLocation(_T("Hollister"));
-		cal1->SetClub(_T("PASA"));
-		cal1->SetVenue(_T("ASCA"));
+		cal1->SetLocation(wxT("Hollister"));
+		cal1->SetClub(wxT("PASA"));
+		cal1->SetVenue(wxT("ASCA"));
 		ARBCalendarPtr cal2 = cal1->Clone();
 		cal2->SetStartDate(ARBDate(2005, 3, 26));
 		cal2->SetEndDate(ARBDate(2005, 3, 27));
@@ -380,9 +380,9 @@ SUITE(TestCalendarList)
 		ARBCalendarPtr cal1 = ARBCalendar::New();
 		cal1->SetStartDate(ARBDate(2006, 9, 4));
 		cal1->SetEndDate(ARBDate(2006, 9, 5));
-		cal1->SetLocation(_T("Hollister"));
-		cal1->SetClub(_T("PASA"));
-		cal1->SetVenue(_T("ASCA"));
+		cal1->SetLocation(wxT("Hollister"));
+		cal1->SetClub(wxT("PASA"));
+		cal1->SetVenue(wxT("ASCA"));
 		ARBCalendarPtr cal2 = cal1->Clone();
 		cal2->SetStartDate(ARBDate(2005, 3, 26));
 		cal2->SetEndDate(ARBDate(2005, 3, 27));
@@ -407,9 +407,9 @@ SUITE(TestCalendarList)
 		ARBCalendarPtr cal1 = ARBCalendar::New();
 		cal1->SetStartDate(ARBDate(2006, 9, 4));
 		cal1->SetEndDate(ARBDate(2006, 9, 5));
-		cal1->SetLocation(_T("Hollister"));
-		cal1->SetClub(_T("PASA"));
-		cal1->SetVenue(_T("ASCA"));
+		cal1->SetLocation(wxT("Hollister"));
+		cal1->SetClub(wxT("PASA"));
+		cal1->SetVenue(wxT("ASCA"));
 		ARBCalendarPtr cal2 = cal1->Clone();
 		cal2->SetStartDate(ARBDate(2005, 3, 26));
 		cal2->SetEndDate(ARBDate(2005, 3, 27));
@@ -418,7 +418,7 @@ SUITE(TestCalendarList)
 		callist.sort();
 		ARBCalendarPtr cal3 = callist[0]->Clone();
 		CHECK(*cal2 == *cal3);
-		cal3->SetNote(_T("Test"));
+		cal3->SetNote(wxT("Test"));
 		CHECK(*cal2 != *cal3);
 		callist.AddCalendar(cal3);
 		callist.AddCalendar(cal1->Clone());

@@ -59,7 +59,6 @@ SUITE(TestString)
 
 
 	// We know this will fail using wcstombs.
-#if defined(HAS_WIDECHARTOMULTIBYTE) || defined(WXWIDGETS)
 	TEST(Convert_Multi)
 	{
 		wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
@@ -68,7 +67,6 @@ SUITE(TestString)
 		CHECK(s.length() == 1);
 		CHECK(s2.length() == 3);
 	}
-#endif
 
 
 	TEST(TrimA)

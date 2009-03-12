@@ -63,10 +63,10 @@ void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine)
 {
 #if defined(_MFC_VER)
 	if (bIncNewLine)
-		TRACE(_T("%s\n"), inMsg.c_str());
+		TRACE(wxT("%s\n"), inMsg.c_str());
 	else
 		// Yes, this looks odd, but TRACE0 does exactly this.
-		TRACE(_T("%s"), inMsg.c_str());
+		TRACE(wxT("%s"), inMsg.c_str());
 #else
 	if (bIncNewLine)
 		TCERR << inMsg << std::endl;
@@ -80,9 +80,9 @@ tstring SanitizeStringForHTML(
 		tstring const& inRawData,
 		bool bConvertCR)
 {
-	tstring::size_type pos = inRawData.find_first_of(_T("&<>"));
+	tstring::size_type pos = inRawData.find_first_of(wxT("&<>"));
 	if (tstring::npos == pos && bConvertCR)
-		pos = inRawData.find_first_of(_T("\r\n"));
+		pos = inRawData.find_first_of(wxT("\r\n"));
 	if (tstring::npos == pos)
 		return inRawData;
 	otstringstream data;
@@ -90,29 +90,29 @@ tstring SanitizeStringForHTML(
 	{
 		switch (inRawData[nChar])
 		{
-		case _T('&'):
-			data << _T("&amp;");
+		case wxT('&'):
+			data << wxT("&amp;");
 			break;
-		case _T('<'):
-			data << _T("&lt;");
+		case wxT('<'):
+			data << wxT("&lt;");
 			break;
-		case _T('>'):
-			data << _T("&gt;");
+		case wxT('>'):
+			data << wxT("&gt;");
 			break;
-		case _T('\r'):
+		case wxT('\r'):
 			if (bConvertCR)
 			{
 				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar+1])
 					continue;
 				else
-					data << _T("<br/>");
+					data << wxT("<br/>");
 			}
 			else
 				data << inRawData[nChar];
 			break;
 		case '\n':
 			if (bConvertCR)
-				data << _T("<br/>");
+				data << wxT("<br/>");
 			else
 				data << inRawData[nChar];
 			break;
@@ -129,7 +129,7 @@ tstring SanitizeStringForHTML(
 tstring ARBVersion::str() const
 {
 	otstringstream buffer;
-	buffer << Major() << _T(".") << Minor();
+	buffer << Major() << wxT(".") << Minor();
 	return buffer.str();
 }
 
@@ -137,7 +137,7 @@ tstring ARBVersion::str() const
 
 static struct Q2Enum
 {
-	TCHAR const* pQ;
+	wxChar const* pQ;
 	ARB_Q::eQ q;
 } const sc_Qs[] = {
 	{ARBQ_TYPE_NA, ARB_Q::eQ_NA},
@@ -155,7 +155,7 @@ tstring ARB_Q::GetValidTypes()
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (0 < i)
-			types += _T(", ");
+			types += wxT(", ");
 		types += sc_Qs[i].pQ;
 	}
 	return types;
@@ -191,7 +191,7 @@ ARB_Q ARB_Q::GetValidType(int inIndex)
 
 tstring ARB_Q::str() const
 {
-	tstring s(_T("?"));
+	tstring s(wxT("?"));
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].q == m_Q)
@@ -225,13 +225,13 @@ bool ARB_Q::Load(
 
 bool ARB_Q::Save(
 		ElementNodePtr ioTree,
-		TCHAR const* const inAttribName) const
+		wxChar const* const inAttribName) const
 {
 	// If, somehow, m_Q is set to a value we don't understand,
 	// it will be written as "NA".
 	assert(inAttribName != NULL);
 	bool bOk = false;
-	tstring q(_T("NA"));
+	tstring q(wxT("NA"));
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (m_Q == sc_Qs[i].q)
@@ -263,11 +263,11 @@ tstring ARBDouble::str(
 		// Strip trailing zeros iff they are all 0.
 		if (2 == inPrec)
 		{
-			if (retVal.substr(pos) == _T(".00"))
+			if (retVal.substr(pos) == wxT(".00"))
 			{
 				// Input is ".00", so simplify
 				if (0 == pos)
-					retVal = _T("0");
+					retVal = wxT("0");
 				// Strip the ".00".
 				else
 					retVal = retVal.substr(0, pos);

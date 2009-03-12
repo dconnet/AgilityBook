@@ -265,7 +265,7 @@ void CDlgOptionsFilter::FillControls()
 				TVI_ROOT,
 				TVI_LAST);
 			m_ctrlVenue.ShowCheckbox(hVenue, true);
-			if (m_FilterOptions.FilterExists(pVenue->GetName(), _T(""), _T("")))
+			if (m_FilterOptions.FilterExists(pVenue->GetName(), wxT(""), wxT("")))
 				m_ctrlVenue.SetChecked(hVenue, true);
 			for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 				iterDiv != pVenue->GetDivisions().end();
@@ -277,7 +277,7 @@ void CDlgOptionsFilter::FillControls()
 					hVenue,
 					TVI_LAST);
 				m_ctrlVenue.ShowCheckbox(hDiv, true);
-				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), _T("")))
+				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), wxT("")))
 				{
 					m_ctrlVenue.SetChecked(hDiv, true);
 					m_ctrlVenue.EnsureVisible(hDiv);
@@ -378,7 +378,7 @@ void CDlgOptionsFilter::FillFilter(
 			if (!m_ctrlVenue.GetChecked(hItem))
 				return;
 			if (!path.IsEmpty())
-				path += _T("/");
+				path += wxT("/");
 			path += m_ctrlVenue.GetItemText(hItem);
 		}
 	}
@@ -500,7 +500,7 @@ void CDlgOptionsFilter::OnSetdispinfoVenues(
 	// We could probably do this by just watching what changed. but this
 	// is way easier - no state to keep track of!
 	std::vector<CVenueFilter> venues;
-	FillFilter(TVI_ROOT, _T(""), venues);
+	FillFilter(TVI_ROOT, wxT(""), venues);
 	m_FilterOptions.SetFilterVenue(venues);
 	*pResult = 0;
 }

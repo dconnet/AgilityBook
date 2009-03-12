@@ -1,6 +1,6 @@
 @echo off
 rem This is my quick-and-easy way to compile wxWidgets on Windows.
-rem It assumes wxWidgets is in "\wx" and ARB is in "\AgilityBook\src\AgilityBook"
+rem It assumes ARB is in "\AgilityBook\src\AgilityBook"
 
 set _DO_UNICODE=0
 set _DO_MBCS=0
@@ -68,7 +68,7 @@ goto doit
 
 
 :doit
-cd \wx\build\msw
+cd %WXWIN$\build\msw
 
 if ("%_DO_UNICODE%")==("0") goto next
 nmake -f makefile.vc BUILD=release            UNICODE=1 RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG% CPPFLAGS="%_CPPFLAGS%"

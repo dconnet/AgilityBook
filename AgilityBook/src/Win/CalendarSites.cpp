@@ -611,7 +611,7 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 	: m_PathName()
 {
 	CString exeName;
-	TCHAR* pName = exeName.GetBuffer(MAX_PATH);
+	wxChar* pName = exeName.GetBuffer(MAX_PATH);
 	GetModuleFileName(NULL, pName, MAX_PATH);
 	exeName.ReleaseBuffer();
 	int iLastSlash = exeName.ReverseFind('\\');
@@ -955,7 +955,6 @@ public:
 				<< '\n';
 		}
 		m_Desc = desc.str().c_str();
-		m_Desc.Replace(_T("\n"), _T("\r\n"));
 	}
 
 	virtual CString GetName() const	{return m_Name;}

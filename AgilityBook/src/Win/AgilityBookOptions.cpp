@@ -868,7 +868,7 @@ void CAgilityBookOptions::GetColumnOrder(
 		otstringstream item;
 		item << GetColumnName(eOrder)
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-			<< wxT("/col") << static_cast<UINT>(idxColumn);
+			<< wxT("/col") << static_cast<unsigned int>(idxColumn);
 #else
 			<< wxT("/col") << idxColumn;
 #endif
@@ -1146,7 +1146,7 @@ void CAgilityBookOptions::SetColumnOrder(
 	otstringstream item;
 	item << GetColumnName(eOrder)
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-		<< wxT("/col") << static_cast<UINT>(idxColumn);
+		<< wxT("/col") << static_cast<unsigned int>(idxColumn);
 #else
 		<< wxT("/col") << idxColumn;
 #endif

@@ -43,13 +43,13 @@ SUITE(TestMisc)
 {
 	TEST(Html_Sanitize)
 	{
-		tstring s(_T("<&amp>"));
+		tstring s(wxT("<&amp>"));
 		tstring s2 = SanitizeStringForHTML(s);
-		CHECK(_T("&lt;&amp;amp&gt;") == s2);
-		s = _T("1\r\n2\n3");
+		CHECK(wxT("&lt;&amp;amp&gt;") == s2);
+		s = wxT("1\r\n2\n3");
 		s2 = SanitizeStringForHTML(s, true);
-		CHECK(_T("1<br/>2<br/>3") == s2);
+		CHECK(wxT("1<br/>2<br/>3") == s2);
 		s2 = SanitizeStringForHTML(s, false);
-		CHECK(_T("1\r\n2\n3") == s2);
+		CHECK(wxT("1\r\n2\n3") == s2);
 	}
 }

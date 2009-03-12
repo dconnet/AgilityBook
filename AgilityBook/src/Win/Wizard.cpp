@@ -65,7 +65,7 @@ CWizard::CWizard(
 		CAgilityBookDoc* pDoc,
 		std::vector<ARBCalendarPtr>* pCalEntries,
 		CWnd* pParentWnd)
-	: CDlgBaseSheet(_T(""), pParentWnd, 0)
+	: CDlgBaseSheet(wxT(""), pParentWnd, 0)
 	, m_pDoc(pDoc)
 	, m_CalEntries(pCalEntries)
 	, m_pageStart(NULL)

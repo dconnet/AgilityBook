@@ -279,17 +279,17 @@ tstring ARBDate::GetValidDateString(
 	tstring str;
 	if (inFrom.IsValid() || inTo.IsValid())
 	{
-		str += _T("[");
+		str += wxT("[");
 		if (inFrom.IsValid())
 			str += inFrom.GetString(inFormat).c_str();
 		else
-			str += _T("*");
-		str += _T("-");
+			str += wxT("*");
+		str += wxT("-");
 		if (inTo.IsValid())
 			str += inTo.GetString(inFormat).c_str();
 		else
-			str += _T("*");
-		str += _T("]");
+			str += wxT("*");
+		str += wxT("]");
 	}
 	return str;
 }
@@ -376,7 +376,7 @@ tstring ARBDate::GetString(
 	bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
-		return _T("");
+		return wxT("");
 	tstring date;
 	int yr = 0;
 	int mon = 0;
@@ -389,9 +389,9 @@ tstring ARBDate::GetString(
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
 		str.fill('0');
 		str.width(2);
-		str << mon << _T("-");
+		str << mon << wxT("-");
 		str.width(2);
-		str << day << _T("-");
+		str << day << wxT("-");
 		str.width(4);
 		str << yr;
 		break;
@@ -408,65 +408,65 @@ tstring ARBDate::GetString(
 	case eSlashMMDDYYYY:	///< MM/DD/YYYY
 		str.fill('0');
 		str.width(2);
-		str << mon << _T("/");
+		str << mon << wxT("/");
 		str.width(2);
-		str << day << _T("/");
+		str << day << wxT("/");
 		str.width(4);
 		str << yr;
 		break;
 	case eDashYYYYMMDD:		///< YYYY-MM-DD
 		str.fill('0');
 		str.width(4);
-		str << yr << _T("-");
+		str << yr << wxT("-");
 		str.width(2);
-		str << mon << _T("-");
+		str << mon << wxT("-");
 		str.width(2);
 		str << day;
 		break;
 	case eSlashYYYYMMDD:	///< YYYY/MM/DD
 		str.fill('0');
 		str.width(4);
-		str << yr << _T("/");
+		str << yr << wxT("/");
 		str.width(2);
-		str << mon << _T("/");
+		str << mon << wxT("/");
 		str.width(2);
 		str << day;
 		break;
 	case eDashDDMMYYYY:		///< DD-MM-YYYY
 		str.fill('0');
 		str.width(2);
-		str << day << _T("-");
+		str << day << wxT("-");
 		str.width(2);
-		str << mon << _T("-");
+		str << mon << wxT("-");
 		str.width(4);
 		str << yr;
 		break;
 	case eSlashDDMMYYYY:	///< DD/MM/YYYY
 		str.fill('0');
 		str.width(2);
-		str << day << _T("/");
+		str << day << wxT("/");
 		str.width(2);
-		str << mon << _T("/");
+		str << mon << wxT("/");
 		str.width(4);
 		str << yr;
 		break;
 	case eDashMDY:	///< M-D-Y
-		str << mon << _T("-") << day << _T("-") << yr;
+		str << mon << wxT("-") << day << wxT("-") << yr;
 		break;
 	case eSlashMDY:	///< M/D/Y
-		str << mon << _T("/") << day << _T("/") << yr;
+		str << mon << wxT("/") << day << wxT("/") << yr;
 		break;
 	case eDashYMD:	///< Y-M-D
-		str << yr << _T("-") << mon << _T("-") << day;
+		str << yr << wxT("-") << mon << wxT("-") << day;
 		break;
 	case eSlashYMD:	///< Y/M/D
-		str << yr << _T("/") << mon << _T("/") << day;
+		str << yr << wxT("/") << mon << wxT("/") << day;
 		break;
 	case eDashDMY:	///< D-M-Y
-		str << day << _T("-") << mon << _T("-") << yr;
+		str << day << wxT("-") << mon << wxT("-") << yr;
 		break;
 	case eSlashDMY:	///< D/M/Y
-		str << day << _T("/") << mon << _T("/") << yr;
+		str << day << wxT("/") << mon << wxT("/") << yr;
 		break;
 	}
 	date = str.str();

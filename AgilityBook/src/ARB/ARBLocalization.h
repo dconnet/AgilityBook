@@ -214,7 +214,7 @@ public:
 	 * @param inMsg Additional error information.
 	 * @return Message with newline.
 	 */
-	virtual tstring ErrorInvalidDocStructure(TCHAR const* const inMsg) const = 0;
+	virtual tstring ErrorInvalidDocStructure(wxChar const* const inMsg) const = 0;
 
 	/**
 	 * Return an error message about a missing required attribute.
@@ -225,9 +225,9 @@ public:
 	 * @return Message with newline.
 	 */
 	virtual tstring ErrorMissingAttribute(
-			TCHAR const* const inElement,
-			TCHAR const* const inAttrib,
-			TCHAR const* const inMsg = NULL) const = 0;
+			wxChar const* const inElement,
+			wxChar const* const inAttrib,
+			wxChar const* const inMsg = NULL) const = 0;
 
 	/**
 	 * Return an error message about an invalid value in an attribute.
@@ -238,16 +238,16 @@ public:
 	 * @return Message with newline.
 	 */
 	virtual tstring ErrorInvalidAttributeValue(
-			TCHAR const* const inElement,
-			TCHAR const* const inAttrib,
-			TCHAR const* const inMsg = NULL) const = 0;
+			wxChar const* const inElement,
+			wxChar const* const inAttrib,
+			wxChar const* const inMsg = NULL) const = 0;
 };
 
 // Used in ARBTypes.cpp
-#define ARBQ_TYPE_NA	_T("NA")
-#define ARBQ_TYPE_Q		_T("Q")
-#define ARBQ_TYPE_NQ	_T("NQ")
-#define ARBQ_TYPE_E		_T("E")
-#define ARBQ_TYPE_SQ	_T("SQ")
+#define ARBQ_TYPE_NA	wxT("NA")
+#define ARBQ_TYPE_Q		wxT("Q")
+#define ARBQ_TYPE_NQ	wxT("NQ")
+#define ARBQ_TYPE_E		wxT("E")
+#define ARBQ_TYPE_SQ	wxT("SQ")
 
 extern IARBLocalization const* Localization();

@@ -63,8 +63,8 @@ class CDlgQueryDetail : public CDlgBaseDialog
 {
 public:
 	CDlgQueryDetail(
-			const TCHAR* inCode,
-			const TCHAR* inName,
+			const wxChar* inCode,
+			const wxChar* inName,
 			CWnd* pParent = NULL,
 			ARBConfig const* inConfig = NULL); // Only set when using venues
 

@@ -81,10 +81,10 @@ SUITE(TestConfig)
 		CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
 		CHECK(!config.LoadFault(data, ARBVersion(2,0), callback));
 		data->SetName(TREE_FAULTTYPE);
-		data->SetValue(_T("A fault"));
+		data->SetValue(wxT("A fault"));
 		CHECK(!config.LoadFault(data, ARBVersion(1,0), callback));
 		CHECK(config.LoadFault(data, ARBVersion(2,0), callback));
-		data->AddAttrib(_T("Name"), _T("A fault"));
+		data->AddAttrib(wxT("Name"), wxT("A fault"));
 		CHECK(config.LoadFault(data, ARBVersion(1,0), callback));
 	}
 
@@ -99,11 +99,11 @@ SUITE(TestConfig)
 		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
 		data->SetName(TREE_OTHERPTS);
 		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-		data->AddAttrib(ATTRIB_OTHERPTS_NAME, _T("Some Breed points"));
+		data->AddAttrib(ATTRIB_OTHERPTS_NAME, wxT("Some Breed points"));
 		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-		data->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("2"));
+		data->AddAttrib(ATTRIB_OTHERPTS_COUNT, wxT("2"));
 		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
-		data->AddAttrib(ATTRIB_OTHERPTS_COUNT, _T("All"));
+		data->AddAttrib(ATTRIB_OTHERPTS_COUNT, wxT("All"));
 		CHECK(config.LoadOtherPoints(data, ARBVersion(1,0), callback));
 	}
 
@@ -160,19 +160,19 @@ SUITE(TestConfig)
 		CHECK_EQUAL(0u, config.GetFaults().size());
 		CHECK_EQUAL(5u, config.GetOtherPoints().size());
 		CHECK_EQUAL(13u, config.GetVenues().size());
-		CHECK(config.GetVenues().FindVenue(_T("AAC")));
-		CHECK(config.GetVenues().FindVenue(_T("AKC")));
-		CHECK(config.GetVenues().FindVenue(_T("ASCA")));
-		CHECK(config.GetVenues().FindVenue(_T("CKC")));
-		CHECK(config.GetVenues().FindVenue(_T("CPE")));
-		CHECK(config.GetVenues().FindVenue(_T("DOCNA")));
-		CHECK(config.GetVenues().FindVenue(_T("FCI")));
-		CHECK(config.GetVenues().FindVenue(_T("NADAC")));
-		CHECK(config.GetVenues().FindVenue(_T("SCC")));
-		CHECK(config.GetVenues().FindVenue(_T("SSA")));
-		CHECK(config.GetVenues().FindVenue(_T("TDAA")));
-		CHECK(config.GetVenues().FindVenue(_T("UKC")));
-		CHECK(config.GetVenues().FindVenue(_T("USDAA")));
+		CHECK(config.GetVenues().FindVenue(wxT("AAC")));
+		CHECK(config.GetVenues().FindVenue(wxT("AKC")));
+		CHECK(config.GetVenues().FindVenue(wxT("ASCA")));
+		CHECK(config.GetVenues().FindVenue(wxT("CKC")));
+		CHECK(config.GetVenues().FindVenue(wxT("CPE")));
+		CHECK(config.GetVenues().FindVenue(wxT("DOCNA")));
+		CHECK(config.GetVenues().FindVenue(wxT("FCI")));
+		CHECK(config.GetVenues().FindVenue(wxT("NADAC")));
+		CHECK(config.GetVenues().FindVenue(wxT("SCC")));
+		CHECK(config.GetVenues().FindVenue(wxT("SSA")));
+		CHECK(config.GetVenues().FindVenue(wxT("TDAA")));
+		CHECK(config.GetVenues().FindVenue(wxT("UKC")));
+		CHECK(config.GetVenues().FindVenue(wxT("USDAA")));
 	}
 
 
@@ -192,7 +192,7 @@ SUITE(TestConfig)
 		ARBConfig config;
 		CConfigHandler handler;
 		config.Default(&handler);
-		tstring nice = config.GetTitleNiceName(_T("AKC"), _T("MX"));
+		tstring nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
 		CHECK(0 != nice.length());
 	}
 
@@ -203,15 +203,15 @@ SUITE(TestConfig)
 		CConfigHandler handler;
 		config.Default(&handler);
 		ARBDogTitlePtr title = ARBDogTitle::New();
-		title->SetVenue(_T("AKC"));
-		title->SetName(_T("MX"), 1, false, eTitleNumber);
+		title->SetVenue(wxT("AKC"));
+		title->SetName(wxT("MX"), 1, false, eTitleNumber);
 		tstring name1 = config.GetTitleCompleteName(title);
 		CHECK(0 != name1.length());
 		tstring name2 = config.GetTitleCompleteName(title, false);
 		CHECK(0 != name2.length());
 		CHECK(name1 != name2);
-		tstring nice = config.GetTitleNiceName(_T("AKC"), _T("MX"));
-		nice += _T(" [MX]");
+		tstring nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
+		nice += wxT(" [MX]");
 		CHECK(nice == name2);
 	}
 

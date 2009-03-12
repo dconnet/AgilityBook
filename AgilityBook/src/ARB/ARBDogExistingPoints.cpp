@@ -54,11 +54,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // static
 
-#define EXISTING_PTS_TYPE_OTHER	_T("Other")
-#define EXISTING_PTS_TYPE_RUNS	_T("Run")
-#define EXISTING_PTS_TYPE_SPEED	_T("Speed")
-#define EXISTING_PTS_TYPE_MQ	_T("MQ")
-#define EXISTING_PTS_TYPE_SQ	_T("SQ")
+#define EXISTING_PTS_TYPE_OTHER	wxT("Other")
+#define EXISTING_PTS_TYPE_RUNS	wxT("Run")
+#define EXISTING_PTS_TYPE_SPEED	wxT("Speed")
+#define EXISTING_PTS_TYPE_MQ	wxT("MQ")
+#define EXISTING_PTS_TYPE_SQ	wxT("SQ")
 
 tstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
 {
@@ -210,10 +210,10 @@ bool ARBDogExistingPoints::Load(
 	else if (attrib == EXISTING_PTS_TYPE_SQ)
 		m_Type = eSQ;
 	// Changed attribute from 'Mach' to 'Speed' in 10.1
-	else if (inVersion < ARBVersion(10,1) && attrib == _T("Mach"))
+	else if (inVersion < ARBVersion(10,1) && attrib == wxT("Mach"))
 		m_Type = eSpeed;
 	// Changed QQ to MQ (multi Q)
-	else if (inVersion < ARBVersion(11,0) && attrib == _T("QQ"))
+	else if (inVersion < ARBVersion(11,0) && attrib == wxT("QQ"))
 	{
 		m_Type = eMQ;
 		bConvertedQQ = true;
@@ -222,13 +222,13 @@ bool ARBDogExistingPoints::Load(
 	{
 		tstring msg(Localization()->ValidValues());
 		msg += EXISTING_PTS_TYPE_OTHER;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += EXISTING_PTS_TYPE_RUNS;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += EXISTING_PTS_TYPE_SPEED;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += EXISTING_PTS_TYPE_MQ;
-		msg += _T(", ");
+		msg += wxT(", ");
 		msg += EXISTING_PTS_TYPE_SQ;
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str()));
 		return false;
@@ -284,7 +284,7 @@ bool ARBDogExistingPoints::Load(
 				ARBConfigMultiQPtr pMulti;
 				// If this isn't "AKC", or someone has edited the multiQ name,
 				// this will fail.
-				if (pVenue->GetMultiQs().FindMultiQ(_T("QQ"), true, &pMulti))
+				if (pVenue->GetMultiQs().FindMultiQ(wxT("QQ"), true, &pMulti))
 				{
 					bConvertedQQ = true;
 					m_MultiQ = pMulti->GetName();
@@ -296,7 +296,7 @@ bool ARBDogExistingPoints::Load(
 				else
 				{
 					bConvertedQQ = true;
-					m_MultiQ = _T("Double Q");
+					m_MultiQ = wxT("Double Q");
 				}
 			}
 			if (!bConvertedQQ)
@@ -314,7 +314,7 @@ bool ARBDogExistingPoints::Load(
 				{
 					tstring msg(Localization()->InvalidMultiqName());
 					msg += m_Venue;
-					msg += _T("/");
+					msg += wxT("/");
 					msg += m_MultiQ;
 					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, msg.c_str()));
 					return false;
@@ -364,11 +364,11 @@ bool ARBDogExistingPoints::Load(
 		{
 			tstring msg(Localization()->InvalidEventName());
 			msg += m_Venue;
-			msg += _T("/");
+			msg += wxT("/");
 			msg += m_Div;
-			msg += _T("/");
+			msg += wxT("/");
 			msg += m_Level;
-			msg += _T("/");
+			msg += wxT("/");
 			msg += m_Event;
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT, msg.c_str()));
 			return false;
@@ -381,9 +381,9 @@ bool ARBDogExistingPoints::Load(
 		{
 			tstring msg(Localization()->InvalidVenueName());
 			msg += m_Venue;
-			msg += _T("/");
+			msg += wxT("/");
 			msg += m_Div;
-			msg += _T("/");
+			msg += wxT("/");
 			msg += m_Level;
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;

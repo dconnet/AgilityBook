@@ -191,11 +191,11 @@ BOOL CDlgOptionsCalendar::OnInitDialog()
 	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorPlanning);
 	CString data;
 	data.LoadString(IDS_COL_OPENING);
-	data = _T("  ") + data;
+	data = wxT("  ") + data;
 	idx = m_ctrlCalEntries.AddString(data);
 	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorOpening);
 	data.LoadString(IDS_COL_CLOSING);
-	data = _T("  ") + data;
+	data = wxT("  ") + data;
 	idx = m_ctrlCalEntries.AddString(data);
 	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorClosing);
 	idx = m_ctrlCalEntries.AddString(Localization()->CalendarEntered().c_str());
@@ -253,31 +253,31 @@ void CDlgOptionsCalendar::OnDrawItem(
 
 			CString data;
 			data = Localization()->CalendarNotEntered().c_str();
-			data += _T(" Text");
+			data += wxT(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered));
 			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
 			data = Localization()->CalendarPlanning().c_str();
-			data += _T(" Text");
+			data += wxT(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning));
 			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
 			data.LoadString(IDS_COL_OPENING);
-			data += _T(" Text");
+			data += wxT(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening));
 			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
 			data.LoadString(IDS_COL_CLOSING);
-			data += _T(" Text");
+			data += wxT(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorClosing));
 			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 
 			r.top += tm.tmHeight;
 			data = Localization()->CalendarEntered().c_str();
-			data += _T(" Text");
+			data += wxT(" Text");
 			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered));
 			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
 

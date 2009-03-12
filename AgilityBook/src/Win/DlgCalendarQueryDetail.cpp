@@ -230,7 +230,7 @@ void CDlgCalendarQueryDetail::OnLvnItemchangedQueryVenues(NMHDR *pNMHDR, LRESULT
 
 void CDlgCalendarQueryDetail::OnNewLocationCode()
 {
-	CDlgQueryDetail dlg(_T(""), _T(""), this);
+	CDlgQueryDetail dlg(wxT(""), wxT(""), this);
 	if (IDOK == dlg.DoModal())
 	{
 		int idx = m_ctrlLocations.InsertItem(m_ctrlLocations.GetItemCount(), dlg.GetCode().c_str());
@@ -269,7 +269,7 @@ void CDlgCalendarQueryDetail::OnDeleteLocationCode()
 
 void CDlgCalendarQueryDetail::OnNewVenueCode()
 {
-	CDlgQueryDetail dlg(_T(""), _T(""), this, &m_Config);
+	CDlgQueryDetail dlg(wxT(""), wxT(""), this, &m_Config);
 	if (IDOK == dlg.DoModal())
 	{
 		tstring code = dlg.GetCode();

@@ -73,7 +73,6 @@ CDlgDogProperties::CDlgDogProperties(
 	m_Breed = pDog->GetBreed().c_str();
 	m_Notes = pDog->GetNote().c_str();
 	//}}AFX_DATA_INIT
-	m_Notes.Replace(_T("\n"), _T("\r\n"));
 }
 
 

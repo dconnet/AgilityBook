@@ -63,7 +63,7 @@ CDlgRunLink::CDlgRunLink(
 	, m_ctrlLinks(false)
 	, m_pDoc(pDoc)
 	, m_Run(pRun)
-	, m_Session(_T("runLink"))
+	, m_Session(wxT("runLink"))
 {
 	m_ImageList.Create(16, 16, ILC_MASK | ILC_COLOR32, 2, 0);
 	m_imgEmpty = m_ImageList.Add(theApp.LoadIcon(IDI_EMPTY));
@@ -117,7 +117,7 @@ void CDlgRunLink::UpdateButtons()
 }
 
 
-void CDlgRunLink::ListFiles(TCHAR const* pItem)
+void CDlgRunLink::ListFiles(wxChar const* pItem)
 {
 	CWaitCursor wait;
 	m_ctrlLinks.DeleteAllItems();
@@ -159,7 +159,7 @@ BOOL CDlgRunLink::OnInitDialog()
 	CDlgBasePropertyPage::OnInitDialog();
 	m_ctrlLinks.SetExtendedStyle(m_ctrlLinks.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 	m_ctrlLinks.SetImageList(&m_ImageList, LVSIL_SMALL);
-	m_ctrlLinks.InsertColumn(0, _T(""));
+	m_ctrlLinks.InsertColumn(0, wxT(""));
 	ListFiles(NULL);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -204,7 +204,7 @@ void CDlgRunLink::OnItemchangedList(
 
 void CDlgRunLink::OnNew()
 {
-	CDlgSelectURL dlg(_T(""), this);
+	CDlgSelectURL dlg(wxT(""), this);
 	if (IDOK == dlg.DoModal())
 	{
 		tstring newName = dlg.GetName();

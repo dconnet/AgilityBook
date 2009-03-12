@@ -108,7 +108,7 @@ class CErrorCallback : public ARBErrorCallback
 {
 public:
 	CErrorCallback();
-	virtual bool OnError(TCHAR const* const pMsg);
+	virtual bool OnError(wxChar const* const pMsg);
 	tstring m_ErrMsg;
 };
 

@@ -211,7 +211,6 @@ BOOL CDlgRunCRCD::OnInitDialog()
 	m_ctrlCRCD.GetClientRect(m_rCRCDclient);
 	m_ctrlCRCD.MapWindowPoints(this, m_rCRCDclient);
 	CString str = m_Run->GetCRCD().c_str();
-	str.Replace(_T("\n"), _T("\r\n"));
 	m_ctrlText.SetWindowText(str);
 	if (0 < str.GetLength())
 		m_Insert = false;
@@ -286,7 +285,7 @@ void CDlgRunCRCD::OnCopy()
 			CClipboardDataReader clpData;
 			if (clpData.Open())
 			{
-				m_ctrlText.SetWindowText(_T(""));
+				m_ctrlText.SetWindowText(wxT(""));
 				DeleteMetaFile();
 				if (bText)
 				{
@@ -296,11 +295,9 @@ void CDlgRunCRCD::OnCopy()
 					str.TrimRight();
 					str.TrimLeft();
 					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
-					// First standardize to \n, store it, then replace the
-					// other way for windows display.
-					str.Replace(_T("\r\n"), _T("\n"));
+					// Standardize to \n.
+					str.Replace(wxT("\r\n"), wxT("\n"));
 					m_Run->SetCRCD((LPCTSTR)str);
-					str.Replace(_T("\n"), _T("\r\n"));
 					m_ctrlText.SetWindowText(str);
 					if (0 < str.GetLength())
 						m_Insert = false;
@@ -331,9 +328,9 @@ void CDlgRunCRCD::OnCopy()
 	{
 		m_Insert = true;
 		m_ViewText = true;
-		m_ctrlText.SetWindowText(_T(""));
+		m_ctrlText.SetWindowText(wxT(""));
 		DeleteMetaFile();
-		m_Run->SetCRCD(_T(""));
+		m_Run->SetCRCD(wxT(""));
 		m_Run->SetCRCDMetaData(NULL, 0);
 		SetView();
 	}
