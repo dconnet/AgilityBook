@@ -43,6 +43,7 @@
 #include <wx/notebook.h>
 #include <wx/toolbook.h>
 #include <wx/treebook.h>
+#include <wx/imaglist.h>
 class CMainFrame;
 
 #define IDX_PANE_RUNS		0

@@ -41,6 +41,7 @@
 #include "ARBTypes.h"
 #include <map>
 #include <wx/listctrl.h>
+#include <wx/imaglist.h>
 ARB_TYPEDEF(CListData)
 
 
