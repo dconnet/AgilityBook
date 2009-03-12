@@ -46,6 +46,7 @@
 #include "CommonView.h"
 #include <wx/docview.h>
 
+class CAgilityBookCalendar;
 
 class CAgilityBookCalendarView : public CAgilityBookBaseExtraView
 {
