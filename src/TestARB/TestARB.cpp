@@ -102,7 +102,7 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/ [])
 }
 
 
-ElementNodePtr LoadXMLData(UINT id)
+ElementNodePtr LoadXMLData(int id)
 {
 	tstring errMsg;
 	ARBErrorCallback err(errMsg);

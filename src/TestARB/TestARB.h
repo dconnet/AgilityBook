@@ -39,7 +39,22 @@
 #include "UnitTest++.h"
 #include "ARBTypes.h"
 
-extern ElementNodePtr LoadXMLData(UINT id);
+#define IDR_DTD_AGILITYRECORDBOOK	1
+#define IDR_XML_DEFAULT_CONFIG		2
+#define IDR_XML_CONFIG08_V10_2		3
+#define IDR_XML_CONFIG09_V11_0		4
+#define IDR_XML_CONFIG12_V12_1		5
+#define IDR_XML_CONFIG14_V12_2		6
+#define IDR_XML_CONFIG19_V12_5		7
+#define IDR_XML_CONFIG20_V12_6		8
+#define IDR_XML_CONFIG21_V12_7		9
+#define IDR_XML_CONFIG22_V12_7		10
+#define IDR_XML_CONFIG23_V12_8		11
+#define IDR_XML_CONFIG24_V12_8		12
+
+
+extern ElementNodePtr LoadXMLData(int id);
+
 extern bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config);
 extern ElementNodePtr CreateActionList();
 
