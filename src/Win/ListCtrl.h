@@ -40,8 +40,9 @@
 #include "ARBString.h"
 #include "ARBTypes.h"
 #include <map>
-#include <wx/listctrl.h>
 #include <wx/imaglist.h>
+#include <wx/listctrl.h>
+
 ARB_TYPEDEF(CListData)
 
 

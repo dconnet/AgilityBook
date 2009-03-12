@@ -223,11 +223,11 @@ public:
 	virtual bool SetTextColor(
 			long inRow,
 			long inCol,
-			COLORREF inColor);
+			wxColour inColor);
 	virtual bool SetBackColor(
 			long inRow,
 			long inCol,
-			COLORREF inColor);
+			wxColour inColor);
 	virtual bool SetItalic(
 			long inRow,
 			long inCol,
@@ -323,11 +323,11 @@ public:
 	virtual bool SetTextColor(
 			long inRow,
 			long inCol,
-			COLORREF inColor);
+			wxColour inColor);
 	virtual bool SetBackColor(
 			long inRow,
 			long inCol,
-			COLORREF inColor);
+			wxColour inColor);
 	virtual bool SetItalic(
 			long inRow,
 			long inCol,
@@ -555,7 +555,7 @@ bool CWizardExcelExport::AllowAccess(bool bAllow)
 bool CWizardExcelExport::SetTextColor(
 		long inRow,
 		long inCol,
-		COLORREF inColor)
+		wxColour inColor)
 {
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -578,7 +578,7 @@ bool CWizardExcelExport::SetTextColor(
 bool CWizardExcelExport::SetBackColor(
 		long inRow,
 		long inCol,
-		COLORREF inColor)
+		wxColour inColor)
 {
 	CString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
@@ -978,7 +978,7 @@ bool CWizardCalcExport::AllowAccess(bool bAllow)
 bool CWizardCalcExport::SetTextColor(
 		long inRow,
 		long inCol,
-		COLORREF inColor)
+		wxColour inColor)
 {
 	// TODO
 	return false;
@@ -988,7 +988,7 @@ bool CWizardCalcExport::SetTextColor(
 bool CWizardCalcExport::SetBackColor(
 		long inRow,
 		long inCol,
-		COLORREF inColor)
+		wxColour inColor)
 {
 	// TODO
 	return false;

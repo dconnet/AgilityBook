@@ -38,6 +38,9 @@
  * @li 2004-03-06 DRC Created
  */
 
+#ifdef WIN32
+
+// Metafiles are only available on Windows
 class CDlgCRCDViewer
 {
 public:
@@ -90,4 +93,5 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+#endif
 #endif

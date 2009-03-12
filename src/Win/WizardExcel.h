@@ -71,11 +71,11 @@ public:
 	virtual bool SetTextColor(
 			long inRow,
 			long inCol,
-			COLORREF inColor) = 0;
+			wxColour inColor) = 0;
 	virtual bool SetBackColor(
 			long inRow,
 			long inCol,
-			COLORREF inColor) = 0;
+			wxColour inColor) = 0;
 	virtual bool SetItalic(
 			long inRow,
 			long inCol,

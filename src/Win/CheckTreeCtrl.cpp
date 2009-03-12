@@ -86,6 +86,8 @@ void CCheckTreeCtrl::ShowCheckbox(
 		wxTreeItemId hItem,
 		bool bShow)
 {
+#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
+	/*
 	if (IsCheckVisible(hItem))
 	{
 		if (!bShow)
@@ -96,18 +98,23 @@ void CCheckTreeCtrl::ShowCheckbox(
 		if (bShow)
 			wxTreeCtrl::SetState(hItem, m_stateUnChecked);
 	}
+	*/
 }
 
 
 bool CCheckTreeCtrl::IsCheckVisible(wxTreeItemId hItem)
 {
-	return wxTreeCtrl::GetState(hItem) != m_stateNone;
+#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
+	//return wxTreeCtrl::GetState(hItem) != m_stateNone;
+	return false;
 }
 
 
 bool CCheckTreeCtrl::GetChecked(wxTreeItemId hItem)
 {
-	return wxTreeCtrl::GetState(hItem) == m_stateChecked;
+#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
+	//return wxTreeCtrl::GetState(hItem) == m_stateChecked;
+	return false;
 }
 
 
@@ -132,7 +139,8 @@ bool CCheckTreeCtrl::SetChecked(
 			if (bCascade)
 				Cascade(hItem, false);
 		}
-		wxTreeCtrl::SetState(hItem, icon);
+#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
+		//wxTreeCtrl::SetState(hItem, icon);
 		return true;
 	}
 	else

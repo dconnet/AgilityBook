@@ -144,7 +144,7 @@ void CDlgReorder::OnItemSelected(wxCommandEvent& /*evt*/)
 void CDlgReorder::OnMoveUp(wxCommandEvent& evt)
 {
 	int index = m_ctrlList->GetSelection();
-	if (LB_ERR != index)
+	if (wxNOT_FOUND != index)
 	{
 		int newIndex = index - 1;
 		if (0 <= newIndex)
@@ -163,7 +163,7 @@ void CDlgReorder::OnMoveUp(wxCommandEvent& evt)
 void CDlgReorder::OnMoveDown(wxCommandEvent& evt)
 {
 	int index = m_ctrlList->GetSelection();
-	if (LB_ERR != index)
+	if (wxNOT_FOUND != index)
 	{
 		int newIndex = index + 1;
 		if (newIndex < static_cast<int>(m_ctrlList->GetCount()))

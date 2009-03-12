@@ -1587,7 +1587,7 @@ void CAgilityBookRunsView::OnCtrlItemSelected(wxListEvent& evt)
 		CAgilityBookRunsViewDataPtr pData = GetItemRunDataByData(evt.GetData());
 		if (pData)
 		{
-			CAgilityBookTreeData* pTreeData = GetDocument()->GetTreeView()->FindData(TVI_ROOT, pData->GetRun());
+			CAgilityBookTreeData* pTreeData = GetDocument()->GetTreeView()->FindData(pData->GetRun());
 			if (pTreeData)
 			{
 				GetDocument()->GetTreeView()->SuppressSelect(true);

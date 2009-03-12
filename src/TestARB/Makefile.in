@@ -29,7 +29,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` -I$(TOPSRCDIR)/src/UnitTests++
+INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` -I$(TOPSRCDIR)/src/UnitTests++
 
 ##########
 # List of programs and archives to link

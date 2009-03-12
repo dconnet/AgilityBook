@@ -54,7 +54,7 @@ private:
 
 	ARBConfig& m_Config;
 	ARBDogRunOtherPointsPtr m_pRunOther;
-	wxChoice* m_ctrlOtherPoints;
+	wxComboBox* m_ctrlOtherPoints;
 	CRichEditCtrl2* m_ctrlDesc;
 	short m_Points;
 

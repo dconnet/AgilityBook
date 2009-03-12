@@ -90,7 +90,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_order[i] = _ttoi(str);
+		m_order[i] = tstringUtil::atol(str.c_str());
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);
@@ -102,7 +102,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_bDescending[i] = _ttoi(str) == 0 ? false : true;
+		m_bDescending[i] = tstringUtil::atol(str.c_str()) == 0 ? false : true;
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);

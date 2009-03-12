@@ -42,6 +42,7 @@
 #include "VersionNum.h"
 
 #include "ARBTypes.h"
+#include "VersionNumber.h"
 
 
 CVersionNum::CVersionNum()

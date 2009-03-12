@@ -252,8 +252,6 @@ CDlgFindLinks::CDlgFindLinks(
 
 	m_ctrlLinks->SetFocus();
 
-	LV_COLUMN col;
-	col.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
 	for (int i = 0; i < nColLinkInfo; ++i)
 	{
 		m_ctrlLinks->InsertColumn(i, wxGetTranslation(colLinkInfo[i]));
