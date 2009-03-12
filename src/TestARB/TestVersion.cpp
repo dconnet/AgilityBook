@@ -59,7 +59,7 @@ SUITE(TestVersion)
 	TEST(str)
 	{
 		ARBVersion v(1, 2);
-		CHECK(_T("1.2") == v.str());
+		CHECK(wxT("1.2") == v.str());
 	}
 
 

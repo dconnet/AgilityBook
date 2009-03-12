@@ -193,11 +193,11 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 
 tstring ARBDogRun::GetGenericName() const
 {
-	tstring name = m_Date.GetString(ARBDate::eDashYMD) + _T(' ');
-	name += m_Division + _T(' ') + m_Level + _T(' ') + m_Event;
+	tstring name = m_Date.GetString(ARBDate::eDashYMD) + wxT(' ');
+	name += m_Division + wxT(' ') + m_Level + wxT(' ') + m_Event;
 	if (0 < m_SubName.length())
 	{
-		name += _T(' ') + m_SubName;
+		name += wxT(' ') + m_SubName;
 	}
 	return name;
 }

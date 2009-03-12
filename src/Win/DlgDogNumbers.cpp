@@ -147,7 +147,7 @@ CDlgDogNumbers::CDlgDogNumbers(
 	: CDlgBasePropertyPage(CDlgDogNumbers::IDD)
 	, m_ctrlRegNums(true)
 	, m_pDoc(pDoc)
-	, m_sortRegNums(_T("RegNums"))
+	, m_sortRegNums(wxT("RegNums"))
 	, m_RegNums()
 {
 	regnums.Clone(m_RegNums);
@@ -198,7 +198,7 @@ void CDlgDogNumbers::SetColumnRegNumHeaders()
 		CString str;
 		str.LoadString(colRegNumInfo[i].idText);
 		otstringstream tmp;
-		tmp << (LPCTSTR)str << _T(" (") << m_sortRegNums.FindColumnOrder(i) + 1 << ')';
+		tmp << (LPCTSTR)str << wxT(" (") << m_sortRegNums.FindColumnOrder(i) + 1 << ')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
@@ -229,9 +229,9 @@ void CDlgDogNumbers::ListRegNums()
 		int nItem = m_ctrlRegNums.InsertItem(i, pRegNum->GetVenue().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 1, pRegNum->GetNumber().c_str());
 		m_ctrlRegNums.SetItemText(nItem, 2, pRegNum->GetHeight().c_str());
-		m_ctrlRegNums.SetItemText(nItem, 3, pRegNum->GetReceived() ? _T("x") : _T(""));
+		m_ctrlRegNums.SetItemText(nItem, 3, pRegNum->GetReceived() ? wxT("x") : wxT(""));
 		CString str(pRegNum->GetNote().c_str());
-		str.Replace(_T("\n"), _T(" "));
+		str.Replace(wxT("\n"), wxT(" "));
 		m_ctrlRegNums.SetItemText(nItem, 4, str);
 		m_ctrlRegNums.SetItemData(nItem,
 			reinterpret_cast<LPARAM>(
@@ -290,7 +290,7 @@ BOOL CDlgDogNumbers::OnInitDialog()
 	{
 		col.fmt = colRegNumInfo[i].fmt;
 		col.cx = colRegNumInfo[i].cx;
-		col.pszText = _T("");
+		col.pszText = wxT("");
 		col.iSubItem = i;
 		m_ctrlRegNums.InsertColumn(i, &col);
 	}

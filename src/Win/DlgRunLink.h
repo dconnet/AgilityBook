@@ -89,7 +89,7 @@ protected:
 // Implementation
 protected:
 	void UpdateButtons();
-	void ListFiles(TCHAR const* pItem);
+	void ListFiles(wxChar const* pItem);
 	int GetImageIndex(tstring const& inLink);
 
 	//{{AFX_MSG(CDlgRunLink)

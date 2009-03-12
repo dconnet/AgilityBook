@@ -595,7 +595,7 @@ tstring CLocalization::UpdateTableRuns(int nRuns) const
 }
 
 
-tstring CLocalization::ErrorInvalidDocStructure(TCHAR const* const inMsg) const
+tstring CLocalization::ErrorInvalidDocStructure(wxChar const* const inMsg) const
 {
 	otstringstream buffer;
 	buffer << m_InvalidDocStructure;
@@ -606,9 +606,9 @@ tstring CLocalization::ErrorInvalidDocStructure(TCHAR const* const inMsg) const
 
 
 tstring CLocalization::ErrorMissingAttribute(
-		TCHAR const* const inElement,
-		TCHAR const* const inAttrib,
-		TCHAR const* const inMsg) const
+		wxChar const* const inElement,
+		wxChar const* const inAttrib,
+		wxChar const* const inMsg) const
 {
 	otstringstream buffer;
 	buffer << m_InvalidFileFormat
@@ -623,9 +623,9 @@ tstring CLocalization::ErrorMissingAttribute(
 
 
 tstring CLocalization::ErrorInvalidAttributeValue(
-		TCHAR const* const inElement,
-		TCHAR const* const inAttrib,
-		TCHAR const* const inMsg) const
+		wxChar const* const inElement,
+		wxChar const* const inAttrib,
+		wxChar const* const inMsg) const
 {
 	otstringstream buffer;
 	buffer << m_InvalidFileFormat

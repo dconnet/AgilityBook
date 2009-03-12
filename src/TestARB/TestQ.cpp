@@ -45,17 +45,17 @@ SUITE(TestARBQ)
 	TEST(ctor)
 	{
 		ARB_Q q;
-		CHECK(_T("NA") == q.str());
+		CHECK(wxT("NA") == q.str());
 
 		ARB_Q q1(ARB_Q::eQ_Q);
-		CHECK(_T("Q") == q1.str());
+		CHECK(wxT("Q") == q1.str());
 	}
 
 
 	TEST(Types)
 	{
 		CHECK_EQUAL(5, ARB_Q::GetNumValidTypes());
-		CHECK(_T("NA, Q, NQ, E, SQ") == ARB_Q::GetValidTypes());
+		CHECK(wxT("NA, Q, NQ, E, SQ") == ARB_Q::GetValidTypes());
 		CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(0));
 		CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(1));
 		CHECK(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(2));
@@ -116,8 +116,8 @@ SUITE(TestARBQ)
 		tstring errmsg;
 		ARBErrorCallback callback(errmsg);
 		ARBVersion ver(1, 0);
-		CHECK(q.Load(_T("SQ"), ver, callback));
-		CHECK(_T("SQ") == q.str());
+		CHECK(q.Load(wxT("SQ"), ver, callback));
+		CHECK(wxT("SQ") == q.str());
 	}
 
 
@@ -127,18 +127,18 @@ SUITE(TestARBQ)
 		tstring errmsg;
 		ARBErrorCallback callback(errmsg);
 		ARBVersion ver(1, 0);
-		CHECK(!q.Load(_T("attrib"), ver, callback));
-		CHECK(_T("NA") == q.str());
+		CHECK(!q.Load(wxT("attrib"), ver, callback));
+		CHECK(wxT("NA") == q.str());
 	}
 
 
 	TEST(Save)
 	{
 		ARB_Q q;
-		ElementNodePtr ele = ElementNode::New(_T("test"));
-		CHECK(q.Save(ele, _T("attrib")));
+		ElementNodePtr ele = ElementNode::New(wxT("test"));
+		CHECK(q.Save(ele, wxT("attrib")));
 		tstring str;
-		CHECK(ElementNode::eFound == ele->GetAttrib(_T("attrib"), str));
-		CHECK(_T("NA") == str);
+		CHECK(ElementNode::eFound == ele->GetAttrib(wxT("attrib"), str));
+		CHECK(wxT("NA") == str);
 	}
 }

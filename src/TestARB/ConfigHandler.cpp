@@ -87,35 +87,11 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 
-#if defined(WXWIDGETS)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
 	std::string data;
 	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
 		bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
-
-#elif defined(_WIN32) && defined(_MFC_VER)
-	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_XML_DEFAULT_CONFIG), _T("XML"));
-	if (hrSrc)
-	{
-		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
-		if (hRes)
-		{
-			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			bOk = tree->LoadXMLBuffer(pData, size, errMsg);
-			FreeResource(hRes);
-		}
-	}
-
-#else
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DefaultConfig.xml usage" )
-	// @todo: Porting issues: This needs more work...
-	// This will work, but we need to make sure DefaultConfig.xml is
-	// distributed - there's also the issue of paths...
-	// Right now, we only support MFC or wxWidgets, so this is here just because
-	bOk = tree->LoadXMLFile(_T("DefaultConfig.xml"), errMsg);
-#endif
 
 	return bOk ? tree : ElementNodePtr();
 }
@@ -123,33 +99,11 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 
 std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 {
-	std::string dtd;
-
-#if defined(WXWIDGETS)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+
+	std::string dtd;
 	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);
-
-#elif defined(_WIN32) && defined(_MFC_VER)
-	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(IDR_DTD_AGILITYRECORDBOOK), _T("DTD"));
-	if (hrSrc)
-	{
-		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
-		if (hRes)
-		{
-			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			dtd = std::string(pData, size);
-			FreeResource(hRes);
-		}
-	}
-
-#else
-#pragma message ( __FILE__ "(" STRING(__LINE__) ") : TODO: DTD usage" )
-	// @todo: Porting issues: Not currently implemented
-	// Right now, we only support MFC or wxWidgets, so this is here just because
-	dtd = "<!-- Not implemented on non-windows platforms -->\n";
-#endif
 
 	if (bNormalizeCRNL)
 		dtd = tstringUtil::Replace(dtd, "\r\n", "\n");

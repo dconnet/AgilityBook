@@ -71,7 +71,7 @@ CDlgSelectDog::CDlgSelectDog(
 	for (long iDog = 1; iDog <= nDogs; ++iDog)
 	{
 		otstringstream item;
-		item << _T("Selection/Dog") << iDog;
+		item << wxT("Selection/Dog") << iDog;
 		wxString dog = wxConfig::Get()->Read(item.str().c_str(), wxT(""));
 		if (!dog.empty())
 			selection.insert(dog.c_str());

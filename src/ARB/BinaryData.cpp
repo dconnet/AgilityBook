@@ -39,13 +39,9 @@
 #include "BinaryData.h"
 
 #include "ARBBase64.h"
-#ifdef WXWIDGETS
 #include <wx/mstream.h>
 #include <wx/wfstream.h>
 #include <wx/zstream.h>
-#else // WXWIDGETS
-#include "zlib.h"
-#endif // WXWIDGETS
 
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
@@ -73,7 +69,6 @@ bool BinaryData::Decode(
 	if (!ARBBase64::Decode(inBase64, pData, len))
 		return false;
 
-#ifdef WXWIDGETS
 	wxMemoryOutputStream output;
 	{
 		wxZlibInputStream strm(new wxMemoryInputStream(pData, len), wxZLIB_ZLIB);
@@ -83,59 +78,6 @@ bool BinaryData::Decode(
 	outBytes = output.GetSize();
 	outBinData = new unsigned char[outBytes];
 	output.CopyTo(outBinData, outBytes);
-
-#else // WXWIDGETS
-	z_stream strm;
-    strm.zalloc = Z_NULL;
-    strm.zfree = Z_NULL;
-    strm.opaque = Z_NULL;
-    strm.avail_in = 0;
-    strm.next_in = Z_NULL;
-    if (Z_OK != inflateInit(&strm))
-	{
-		ARBBase64::Release(pData);
-        return false;
-	}
-
-	// Originally used boost::scoped_ptr, but not available in TR1
-	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
-	strm.avail_in = static_cast<uInt>(len);
-	strm.next_in = reinterpret_cast<Bytef*>(pData);
-	do
-	{
-        strm.avail_out = CHUNK;
-        strm.next_out = (Bytef*)out.get();
-        int ret = inflate(&strm, Z_NO_FLUSH);
-        assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
-        switch (ret)
-		{
-        case Z_NEED_DICT:
-            ret = Z_DATA_ERROR;     /* and fall through */
-        case Z_DATA_ERROR:
-        case Z_MEM_ERROR:
-            inflateEnd(&strm);
-			ARBBase64::Release(pData);
-            return false;
-        }
-        size_t have = CHUNK - strm.avail_out;
-		if (outBinData)
-		{
-			unsigned char* tmp = new unsigned char[have + outBytes];
-			memcpy(tmp, outBinData, outBytes);
-			memcpy(tmp + outBytes, out.get(), have);
-			outBytes += have;
-			Release(outBinData);
-			outBinData = tmp;
-		}
-		else
-		{
-			outBinData = new unsigned char[have];
-			outBytes = have;
-			memcpy(outBinData, out.get(), have);
-		}
-	} while (strm.avail_out == 0);
-    inflateEnd(&strm);
-#endif // WXWIDGETS
 
 	ARBBase64::Release(pData);
 
@@ -161,7 +103,6 @@ bool BinaryData::Encode(
 	size_t nData = 0;
 	unsigned char* pData = NULL;
 
-#ifdef WXWIDGETS
 	wxMemoryOutputStream output;
 	{
 		wxZlibOutputStream strm(output);
@@ -172,43 +113,6 @@ bool BinaryData::Encode(
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);
 
-#else // WXWIDGETS
-	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
-    z_stream strm;
-    strm.zalloc = Z_NULL;
-    strm.zfree = Z_NULL;
-    strm.opaque = Z_NULL;
-    if (Z_OK != deflateInit(&strm, Z_DEFAULT_COMPRESSION))
-        return false;
-
-    strm.avail_in = (uInt)inBytes;
-    strm.next_in = (Bytef*)inBinData;
-    do
-	{
-        strm.avail_out = CHUNK;
-        strm.next_out = (Bytef*)out.get();
-        /*int ret =*/ deflate(&strm, Z_FINISH);    /* no bad return value */
-        //assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
-        size_t have = CHUNK - strm.avail_out;
-		if (pData)
-		{
-			unsigned char* tmp = new unsigned char[have + nData];
-			memcpy(tmp, pData, nData);
-			memcpy(tmp + nData, out.get(), have);
-			nData += have;
-			delete [] pData;
-			pData = tmp;
-		}
-		else
-		{
-			pData = new unsigned char[have];
-			nData = have;
-			memcpy(pData, out.get(), have);
-		}
-    } while (strm.avail_out == 0);
-    deflateEnd(&strm);
-#endif // WXWIDGETS
-
 	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
 	delete [] pData;
 
@@ -217,27 +121,17 @@ bool BinaryData::Encode(
 
 
 bool BinaryData::Encode(
-#ifdef WXWIDGETS
 		wxFFile& inData,
-#else
-		FILE* inData,
-#endif
 		tstring& outBase64)
 {
 	outBase64.erase();
 
-#ifdef WXWIDGETS
 	if (!inData.IsOpened())
 		return false;
-#else
-	if (!inData)
-		return false;
-#endif
 
 	size_t nData = 0;
 	unsigned char* pData = NULL;
 
-#ifdef WXWIDGETS
 	wxMemoryOutputStream output;
 	{
 		wxZlibOutputStream strm(output);
@@ -248,56 +142,6 @@ bool BinaryData::Encode(
 	nData = output.GetSize();
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);
-
-#else // WXWIDGETS
-
-	tr1::shared_ptr<unsigned char> in(new unsigned char[CHUNK]);
-	tr1::shared_ptr<unsigned char> out(new unsigned char[CHUNK]);
-    z_stream strm;
-    strm.zalloc = Z_NULL;
-    strm.zfree = Z_NULL;
-    strm.opaque = Z_NULL;
-    if (Z_OK != deflateInit(&strm, Z_DEFAULT_COMPRESSION))
-        return false;
-
-	int flush;
-	do
-	{
-		strm.avail_in = (uInt)fread(in.get(), 1, CHUNK, inData);
-		if (ferror(inData))
-		{
-			deflateEnd(&strm);
-			return false;
-		}
-		flush = feof(inData) ? Z_FINISH : Z_NO_FLUSH;
-		strm.next_in = (Bytef*)in.get();
-
-		do
-		{
-			strm.avail_out = CHUNK;
-			strm.next_out = (Bytef*)out.get();
-			/*int ret =*/ deflate(&strm, flush);    /* no bad return value */
-			//assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
-			size_t have = CHUNK - strm.avail_out;
-			if (pData)
-			{
-				unsigned char* tmp = new unsigned char[have + nData];
-				memcpy(tmp, pData, nData);
-				memcpy(tmp + nData, out.get(), have);
-				nData += have;
-				delete [] pData;
-				pData = tmp;
-			}
-			else
-			{
-				pData = new unsigned char[have];
-				nData = have;
-				memcpy(pData, out.get(), have);
-			}
-		} while (strm.avail_out == 0);
-	} while (flush != Z_FINISH);
-    deflateEnd(&strm);
-#endif // WXWIDGETS
 
 	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
 	delete [] pData;

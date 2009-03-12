@@ -202,7 +202,7 @@ tstring CAgilityBookHtmlView::RawHtml(bool bFragment) const
 		data << item->GetHtml(nItem);
 	}
 	if (!bFragment)
-		data << _T("</body></html>");
+		data << wxT("</body></html>");
 	data << std::endl;
 
 	return data.str();

@@ -143,6 +143,7 @@ BOOL CPrintRuns::DoPreparePrinting(CPrintInfo* pInfo)
 {
 	if (pInfo->m_pPD->m_pd.nMinPage > pInfo->m_pPD->m_pd.nMaxPage)
 		pInfo->m_pPD->m_pd.nMaxPage = pInfo->m_pPD->m_pd.nMinPage;
+	// TODO note: don't cast to 'WORD'
 	pInfo->m_pPD->m_pd.nFromPage = (WORD)pInfo->GetMinPage();
 	pInfo->m_pPD->m_pd.nToPage = (WORD)pInfo->GetMaxPage();
 	if (theApp.DoPrintDialog(pInfo->m_pPD) != IDOK)
@@ -673,15 +674,15 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 	pDC->SelectStockObject(NULL_BRUSH);
 	pDC->SetBkMode(TRANSPARENT);
 	CFont fontText, fontData;
-	fontText.CreatePointFont(70, _T("MS Sans Serif"), pDC);
+	fontText.CreatePointFont(70, wxT("MS Sans Serif"), pDC);
 	LOGFONT lf;
 	memset(&lf, 0, sizeof(LOGFONT));
 	lf.lfHeight = 90;
 	lf.lfWeight = FW_BOLD;
 #if _MSC_VER >= 1400
-	_tcsncpy_s(lf.lfFaceName, LF_FACESIZE, _T("Arial"), 5);
+	_tcsncpy_s(lf.lfFaceName, LF_FACESIZE, wxT("Arial"), 5);
 #else
-	_tcsncpy(lf.lfFaceName, _T("Arial"), 5);
+	_tcsncpy(lf.lfFaceName, wxT("Arial"), 5);
 #endif
 	fontData.CreatePointFontIndirect(&lf, pDC);
 	CFont* pOldFont = pDC->SelectObject(&fontText);
@@ -1007,7 +1008,7 @@ bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> 
 		if (!printInfo.m_bContinuePrinting)
 			break;
 		// write current page
-		TCHAR szBuf[80];
+		wxChar szBuf[80];
 #if _MSC_VER >= 1400
 		ATL_CRT_ERRORCHECK_SPRINTF(_sntprintf_s(szBuf, _countof(szBuf), _countof(szBuf) - 1, strTemp, printInfo.m_nCurPage));
 #else

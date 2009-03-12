@@ -22,7 +22,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -87,7 +87,7 @@
 		<Configuration
 			Name="Debug|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			>
@@ -123,7 +123,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -153,7 +153,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -190,7 +190,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -219,7 +219,7 @@
 		<Configuration
 			Name="Release|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -256,7 +256,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -286,7 +286,7 @@
 		<Configuration
 			Name="Debug - No Unicode|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			>
@@ -322,7 +322,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -351,7 +351,7 @@
 		<Configuration
 			Name="Debug - No Unicode|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			>
@@ -387,7 +387,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -417,7 +417,7 @@
 		<Configuration
 			Name="Release - No Unicode|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -454,7 +454,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -483,7 +483,7 @@
 		<Configuration
 			Name="Release - No Unicode|x64"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/x64 Support.vsprops"
 			UseOfMFC="0"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -520,7 +520,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);C:\wx\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>

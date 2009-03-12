@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -54,7 +54,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -85,7 +85,7 @@
 		<Configuration
 			Name="Unicode Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Debug Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -152,7 +152,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -189,7 +189,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -220,7 +220,7 @@
 		<Configuration
 			Name="Unicode Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops;$(SolutionDir)/wxWidgets.vsprops"
+			InheritedPropertySheets="$(SolutionDir)/Release Settings.vsprops;$(SolutionDir)/Win32 Support.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -257,7 +257,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
 			/>
 			<Tool
 				Name="VCALinkTool"

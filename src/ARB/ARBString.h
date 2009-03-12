@@ -32,17 +32,18 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
  */
 
 #include <string>
 #include <sstream>
 
-// Note, for non-Windows systems, see stdafx.h for additional requirements.
-typedef std::basic_ostringstream<TCHAR> otstringstream;
-typedef std::basic_string<TCHAR> tstring;
-typedef std::basic_ostream<TCHAR, std::char_traits<TCHAR> > otstream;
-typedef std::basic_ofstream<TCHAR, std::char_traits<TCHAR> > oftstream;
+// We use wxChar now - it's either 'char' or 'wchar_t'
+typedef std::basic_ostringstream<wxChar> otstringstream;
+typedef std::basic_string<wxChar> tstring;
+typedef std::basic_ostream<wxChar, std::char_traits<wxChar> > otstream;
+typedef std::basic_ofstream<wxChar, std::char_traits<wxChar> > oftstream;
 
 /**
  * Convert between ansi/unicode
@@ -56,9 +57,9 @@ public:
 	static std::wstring Convert(std::string const& inStr);
 
 	static long atol(tstring const& inStr);
-	static long atol(TCHAR const* inStr);
+	static long atol(wxChar const* inStr);
 	static double strtod(tstring const& inStr);
-	static double strtod(TCHAR const* inStr);
+	static double strtod(wxChar const* inStr);
 
 	// Some CString-style functions
 	static std::string Trim(std::string const& inStr);

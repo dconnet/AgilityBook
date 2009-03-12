@@ -8,7 +8,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="../../../../boost"
+		AdditionalIncludeDirectories="../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
 		StringPooling="true"
 		UsePrecompiledHeader="2"
 		WarningLevel="4"
@@ -18,6 +18,7 @@
 	<Tool
 		Name="VCLinkerTool"
 		AdditionalLibraryDirectories="$(OutDir)"
+		AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib ws2_32.lib"
 		SubSystem="2"
 	/>
 	<Tool
@@ -27,6 +28,6 @@
 	<Tool
 		Name="VCResourceCompilerTool"
 		Culture="1033"
-		AdditionalIncludeDirectories="$(IntDir)"
+		AdditionalIncludeDirectories="$(IntDir);$(WXWIN)/include"
 	/>
 </VisualStudioPropertySheet>

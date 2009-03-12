@@ -211,7 +211,7 @@ bool ARBDogRunScoring::Load(
 				// level. [note, changed to handle conversion on newone == 3+]
 				m_ConvertTable = true;
 				bool bTableInYPS = true;
-				if (ElementNode::eFound == inTree->GetAttrib(_T("TableInYPS"), bTableInYPS))
+				if (ElementNode::eFound == inTree->GetAttrib(wxT("TableInYPS"), bTableInYPS))
 				{
 					if (!bTableInYPS)
 					{

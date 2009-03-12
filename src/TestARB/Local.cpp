@@ -47,63 +47,63 @@ CLocalization::CLocalization()
 
 void CLocalization::Load()
 {
-	m_UnknownVersion = _T("Unknown document version");
-	m_WarningNewerDoc = _T("Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?");
-	m_InvalidDocStructure = _T("Invalid document structure");
-	m_InvalidFileFormat = _T("Invalid file format: '");
-	m_InvalidFileMissingAttrib = _T("' is missing required attribute '");
-	m_InvalidFileBadAttrib = _T("' has an invalid value for the attribute '");
-	m_InvalidDate = _T("Invalid date: ");
-	m_InvalidDivLevel = _T("Division/level pair has not been defined: ");
-	m_InvalidEventName = _T("Event has not been defined: ");
-	m_InvalidRoot = _T("'") TREE_BOOK _T("' must be the root element.");
-	m_MissingConfig = _T("Missing '") TREE_CONFIG _T("' section.");
-	m_InvalidConfig = _T("Only one '") TREE_CONFIG _T("' section is allowed.");
-	m_InvalidVenueConfig = _T("All '") TREE_DIVISION _T("' elements must come before '") TREE_EVENT _T("' elements.");
-	m_InvalidDivName = _T("Invalid division name: ");
-	m_InvalidVenueName = _T("Invalid venue name: ");
-	m_InvalidOtherPtsName = _T("Invalid Other Points name: ");
-	m_InvalidMultiqName = _T("Invalid Multiple Q name: ");
-	m_InvalidMultiqConversion = _T("Unable to convert Existing QQ Points");
-	m_InvalidEvent = _T("Unable to locate an event description in any of the venues of the affiliated clubs: ");
-	m_InvalidTitle = _T("Title is not defined in the Venue description: ");
-	m_ValidValues = _T("Valid values: ");
+	m_UnknownVersion = wxT("Unknown document version");
+	m_WarningNewerDoc = wxT("Warning: The file you are loading was created by a newer version of this program. Saving this file with this version of the program will result in a loss of data.\n\nAre you sure you want to continue?");
+	m_InvalidDocStructure = wxT("Invalid document structure");
+	m_InvalidFileFormat = wxT("Invalid file format: '");
+	m_InvalidFileMissingAttrib = wxT("' is missing required attribute '");
+	m_InvalidFileBadAttrib = wxT("' has an invalid value for the attribute '");
+	m_InvalidDate = wxT("Invalid date: ");
+	m_InvalidDivLevel = wxT("Division/level pair has not been defined: ");
+	m_InvalidEventName = wxT("Event has not been defined: ");
+	m_InvalidRoot = wxT("'") TREE_BOOK wxT("' must be the root element.");
+	m_MissingConfig = wxT("Missing '") TREE_CONFIG wxT("' section.");
+	m_InvalidConfig = wxT("Only one '") TREE_CONFIG wxT("' section is allowed.");
+	m_InvalidVenueConfig = wxT("All '") TREE_DIVISION wxT("' elements must come before '") TREE_EVENT wxT("' elements.");
+	m_InvalidDivName = wxT("Invalid division name: ");
+	m_InvalidVenueName = wxT("Invalid venue name: ");
+	m_InvalidOtherPtsName = wxT("Invalid Other Points name: ");
+	m_InvalidMultiqName = wxT("Invalid Multiple Q name: ");
+	m_InvalidMultiqConversion = wxT("Unable to convert Existing QQ Points");
+	m_InvalidEvent = wxT("Unable to locate an event description in any of the venues of the affiliated clubs: ");
+	m_InvalidTitle = wxT("Title is not defined in the Venue description: ");
+	m_ValidValues = wxT("Valid values: ");
 
 	// These values are fixed in Element.cpp
-	m_ValidValuesBool = m_ValidValues + _T("'y', 'n'");
+	m_ValidValuesBool = m_ValidValues + wxT("'y', 'n'");
 
-	m_CalendarTentative = _T("Information is tentative.");
-	m_CalendarNotEntered = _T("Not entered");
-	m_CalendarEntered = _T("Entered");
-	m_CalendarPlanning = _T("Planning");
-	m_CalendarStatusN = _T("Status: ") + m_CalendarNotEntered;
-	m_CalendarStatusE = _T("Status: ") + m_CalendarEntered;
-	m_CalendarStatusP = _T("Status: ") + m_CalendarPlanning;
-	m_CalendarOpens = _T("Trial opens: ");
-	m_CalendarDraw = _T("Trial draws: ");
-	m_CalendarCloses = _T("Trial closes: ");
-	m_ScoreStyleUnknown = _T("Unknown");
-	m_ScoreStyleFaultsTime = _T("Faults Then Time");
-	m_ScoreStyleFaults100Time = _T("100 Minus Faults Then Time");
-	m_ScoreStyleFaults200Time = _T("200 Minus Faults Then Time");
-	m_ScoreStyleOCScoreTime = _T("Opening/Closing Points Then Time");
-	m_ScoreStyleScoreTime = _T("Points Then Time");
-	m_ScoreStyleTimePlusFaults = _T("Time Plus Faults");
-	m_ExistingPointsOther = _T("OtherPoints");
-	m_ExistingPointsRun = _T("Run");
-	m_ExistingPointsSpeed = _T("Speed");
-	m_ExistingPointsMQ = _T("Multiple Q");
-	m_ExistingPointsSQ = _T("SuperQ");
+	m_CalendarTentative = wxT("Information is tentative.");
+	m_CalendarNotEntered = wxT("Not entered");
+	m_CalendarEntered = wxT("Entered");
+	m_CalendarPlanning = wxT("Planning");
+	m_CalendarStatusN = wxT("Status: ") + m_CalendarNotEntered;
+	m_CalendarStatusE = wxT("Status: ") + m_CalendarEntered;
+	m_CalendarStatusP = wxT("Status: ") + m_CalendarPlanning;
+	m_CalendarOpens = wxT("Trial opens: ");
+	m_CalendarDraw = wxT("Trial draws: ");
+	m_CalendarCloses = wxT("Trial closes: ");
+	m_ScoreStyleUnknown = wxT("Unknown");
+	m_ScoreStyleFaultsTime = wxT("Faults Then Time");
+	m_ScoreStyleFaults100Time = wxT("100 Minus Faults Then Time");
+	m_ScoreStyleFaults200Time = wxT("200 Minus Faults Then Time");
+	m_ScoreStyleOCScoreTime = wxT("Opening/Closing Points Then Time");
+	m_ScoreStyleScoreTime = wxT("Points Then Time");
+	m_ScoreStyleTimePlusFaults = wxT("Time Plus Faults");
+	m_ExistingPointsOther = wxT("OtherPoints");
+	m_ExistingPointsRun = wxT("Run");
+	m_ExistingPointsSpeed = wxT("Speed");
+	m_ExistingPointsMQ = wxT("Multiple Q");
+	m_ExistingPointsSQ = wxT("SuperQ");
 }
 
 
 tstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-    buffer << _T("Calendar Sites: ");
-	buffer << nNew << _T(" added, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+    buffer << wxT("Calendar Sites: ");
+	buffer << nNew << wxT(" added, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -111,9 +111,9 @@ tstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) cons
 tstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("Faults: ");
-	buffer << nNew << _T(" added, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("Faults: ");
+	buffer << nNew << wxT(" added, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -121,10 +121,10 @@ tstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
 tstring CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("OtherPoints: ");
-	buffer << nNew << _T(" added, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("OtherPoints: ");
+	buffer << nNew << wxT(" added, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -132,10 +132,10 @@ tstring CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped) cons
 tstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("Venues: ");
-	buffer << nNew << _T(" added, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("Venues: ");
+	buffer << nNew << wxT(" added, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -143,10 +143,10 @@ tstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) const
 tstring CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("Divisions: ");
-	buffer << nAdded << _T(" added, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("Divisions: ");
+	buffer << nAdded << wxT(" added, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -154,8 +154,8 @@ tstring CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipped) c
 tstring CLocalization::UpdateDivisionsReordered() const
 {
 	otstringstream buffer;
-	buffer << _T("Divisions: ");
-	buffer << _T("Reordered");
+	buffer << wxT("Divisions: ");
+	buffer << wxT("Reordered");
 	return buffer.str();
 }
 
@@ -163,10 +163,10 @@ tstring CLocalization::UpdateDivisionsReordered() const
 tstring CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("Events: ");
-	buffer << nAdded << _T(" added, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("Events: ");
+	buffer << nAdded << wxT(" added, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -174,8 +174,8 @@ tstring CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped) cons
 tstring CLocalization::UpdateEventsReordered() const
 {
 	otstringstream buffer;
-	buffer << _T("Events: ");
-	buffer << _T("Reordered");
+	buffer << wxT("Events: ");
+	buffer << wxT("Reordered");
 	return buffer.str();
 }
 
@@ -183,10 +183,10 @@ tstring CLocalization::UpdateEventsReordered() const
 tstring CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("MultiQs: ");
-	buffer << nAdded << _T(" added, ");
-	buffer << nDeleted << _T(" deleted, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("MultiQs: ");
+	buffer << nAdded << wxT(" added, ");
+	buffer << nDeleted << wxT(" deleted, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -194,8 +194,8 @@ tstring CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) con
 tstring CLocalization::UpdateMultiqsReordered() const
 {
 	otstringstream buffer;
-	buffer << _T("MultiQs: ");
-	buffer << _T("Reordered");
+	buffer << wxT("MultiQs: ");
+	buffer << wxT("Reordered");
 	return buffer.str();
 }
 
@@ -203,10 +203,10 @@ tstring CLocalization::UpdateMultiqsReordered() const
 tstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("Levels: ");
-	buffer << nAdded << _T(" added, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("Levels: ");
+	buffer << nAdded << wxT(" added, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -214,8 +214,8 @@ tstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped) cons
 tstring CLocalization::UpdateLevelsReordered() const
 {
 	otstringstream buffer;
-	buffer << _T("Levels: ");
-	buffer << _T("Reordered");
+	buffer << wxT("Levels: ");
+	buffer << wxT("Reordered");
 	return buffer.str();
 }
 
@@ -223,10 +223,10 @@ tstring CLocalization::UpdateLevelsReordered() const
 tstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T("Titles: ");
-	buffer << nAdded << _T(" added, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT("Titles: ");
+	buffer << nAdded << wxT(" added, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -234,8 +234,8 @@ tstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped) cons
 tstring CLocalization::UpdateTitlesReordered() const
 {
 	otstringstream buffer;
-	buffer << _T("Titles: ");
-	buffer << _T("Reordered");
+	buffer << wxT("Titles: ");
+	buffer << wxT("Reordered");
 	return buffer.str();
 }
 
@@ -243,7 +243,7 @@ tstring CLocalization::UpdateTitlesReordered() const
 tstring CLocalization::UpdateSubLevels(int nAdded) const
 {
 	otstringstream buffer;
-	buffer << nAdded << _T(" new sub-levels");
+	buffer << nAdded << wxT(" new sub-levels");
 	return buffer.str();
 }
 
@@ -251,8 +251,8 @@ tstring CLocalization::UpdateSubLevels(int nAdded) const
 tstring CLocalization::UpdateSubLevelsReordered() const
 {
 	otstringstream buffer;
-	buffer << _T("Levels: ");
-	buffer << _T("Reordered");
+	buffer << wxT("Levels: ");
+	buffer << wxT("Reordered");
 	return buffer.str();
 }
 
@@ -260,11 +260,11 @@ tstring CLocalization::UpdateSubLevelsReordered() const
 tstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const
 {
 	otstringstream buffer;
-	buffer << _T(" rules: ");
-	buffer << nAdded << _T(" added, ");
-	buffer << nDeleted << _T(" deleted, ");
-	buffer << nUpdated << _T(" updated, ");
-	buffer << nSkipped << _T(" identical");
+	buffer << wxT(" rules: ");
+	buffer << nAdded << wxT(" added, ");
+	buffer << nDeleted << wxT(" deleted, ");
+	buffer << nUpdated << wxT(" updated, ");
+	buffer << nSkipped << wxT(" identical");
 	return buffer.str();
 }
 
@@ -272,7 +272,7 @@ tstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, int n
 tstring CLocalization::ActionDeleteCalPlugin(tstring const& name) const
 {
 	otstringstream buffer;
-    buffer << _T("Action: Deleting Plugin [") << name << _T("]");
+    buffer << wxT("Action: Deleting Plugin [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -283,10 +283,10 @@ tstring CLocalization::ActionRenameOtherPoints(
 		int nChanges) const
 {
 	otstringstream buffer;
-    buffer << _T("Action: Renaming OtherPoints [") << oldName << _T("] to [") << newName << _T("]");
+    buffer << wxT("Action: Renaming OtherPoints [") << oldName << wxT("] to [") << newName << wxT("]");
 	if (0 < nChanges)
 	{
-		buffer << _T(", updating ") << nChanges << _T(" OtherPoints");
+		buffer << wxT(", updating ") << nChanges << wxT(" OtherPoints");
 	}
 	return buffer.str();
 }
@@ -297,7 +297,7 @@ tstring CLocalization::ActionPreDeleteOtherPoints(
 		int nChanges) const
 {
 	otstringstream buffer;
-    buffer << _T("DELETING: OtherPoints [") << name << _T("] ") << nChanges << _T(" items");
+    buffer << wxT("DELETING: OtherPoints [") << name << wxT("] ") << nChanges << wxT(" items");
 	return buffer.str();
 }
 
@@ -305,7 +305,7 @@ tstring CLocalization::ActionPreDeleteOtherPoints(
 tstring CLocalization::ActionDeleteOtherPoints(tstring const& name) const
 {
 	otstringstream buffer;
-    buffer << _T("Action: Deleting OtherPoints [") << name << _T("]");
+    buffer << wxT("Action: Deleting OtherPoints [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -316,10 +316,10 @@ tstring CLocalization::ActionRenameVenue(
 		int nChanges) const
 {
 	otstringstream buffer;
-    buffer << _T("Action: Renaming Venue [") << oldName << _T("] to [") << newName << _T("]");
+    buffer << wxT("Action: Renaming Venue [") << oldName << wxT("] to [") << newName << wxT("]");
 	if (0 < nChanges)
 	{
-    	buffer << _T(", updating ") << nChanges << _T(" related items");
+    	buffer << wxT(", updating ") << nChanges << wxT(" related items");
 	}
 	return buffer.str();
 }
@@ -330,7 +330,7 @@ tstring CLocalization::ActionPreDeleteVenue(
 		int nChanges) const
 {
 	otstringstream buffer;
-    buffer << _T("DELETING: Venue [") << name << _T("] ") << nChanges << _T(" items");
+    buffer << wxT("DELETING: Venue [") << name << wxT("] ") << nChanges << wxT(" items");
 	return buffer.str();
 }
 
@@ -338,7 +338,7 @@ tstring CLocalization::ActionPreDeleteVenue(
 tstring CLocalization::ActionDeleteVenue(tstring const& name) const
 {
 	otstringstream buffer;
-    buffer << _T("Action: Deleting Venue [") << name << _T("]");
+    buffer << wxT("Action: Deleting Venue [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -350,10 +350,10 @@ tstring CLocalization::ActionRenameMultiQ(
 		int nChanges) const
 {
 	otstringstream buffer;
-    buffer << _T("Action: Renaming ") << venue << _T(" MultiQ [") << oldName << _T("] to [") << newName << _T("]");
+    buffer << wxT("Action: Renaming ") << venue << wxT(" MultiQ [") << oldName << wxT("] to [") << newName << wxT("]");
 	if (0 < nChanges)
 	{
-		buffer << _T(", updating ") << nChanges << _T(" MultiQs");
+		buffer << wxT(", updating ") << nChanges << wxT(" MultiQs");
 	}
 	return buffer.str();
 }
@@ -365,7 +365,7 @@ tstring CLocalization::ActionPreDeleteMultiQ(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ") << venue << _T(" MultiQ [") << name << _T("] ") << nChanges << _T(" items");
+	buffer << wxT("DELETING: ") << venue << wxT(" MultiQ [") << name << wxT("] ") << nChanges << wxT(" items");
 	return buffer.str();
 }
 
@@ -375,7 +375,7 @@ tstring CLocalization::ActionDeleteMultiQ(
 		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting ") << venue << _T(" MultiQ [") << name << _T("]");
+	buffer << wxT("Action: Deleting ") << venue << wxT(" MultiQ [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -387,10 +387,10 @@ tstring CLocalization::ActionRenameDivision(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ") << venue << _T(" Division [") << oldName << _T("] to [") << newName << _T("]");
+	buffer << wxT("Action: Renaming ") << venue << wxT(" Division [") << oldName << wxT("] to [") << newName << wxT("]");
 	if (0 < nChanges)
 	{
-		buffer << _T(", updating ") << nChanges << _T(" runs");
+		buffer << wxT(", updating ") << nChanges << wxT(" runs");
 	}
 	return buffer.str();
 }
@@ -402,7 +402,7 @@ tstring CLocalization::ActionPreDeleteDivision(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ") << venue << _T(" Division [") << name << _T("] ") << nChanges << _T(" runs and existing points");
+	buffer << wxT("DELETING: ") << venue << wxT(" Division [") << name << wxT("] ") << nChanges << wxT(" runs and existing points");
 	return buffer.str();
 }
 
@@ -412,7 +412,7 @@ tstring CLocalization::ActionDeleteDivision(
 		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting ") << venue << _T(" Division [") << name << _T("]");
+	buffer << wxT("Action: Deleting ") << venue << wxT(" Division [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -424,10 +424,10 @@ tstring CLocalization::ActionRenameLevel(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ") << venue << _T(" Level [") << oldName  << _T("] to [") << newName << _T("]");
+	buffer << wxT("Action: Renaming ") << venue << wxT(" Level [") << oldName  << wxT("] to [") << newName << wxT("]");
 	if (0 < nChanges)
 	{
-		buffer << _T(", updating ") << nChanges << _T("!d! runs");
+		buffer << wxT(", updating ") << nChanges << wxT("!d! runs");
 	}
 	return buffer.str();
 }
@@ -439,7 +439,7 @@ tstring CLocalization::ActionPreDeleteLevel(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ") << venue << _T(" Level [") << name << _T("] ") << nChanges << _T(" runs");
+	buffer << wxT("DELETING: ") << venue << wxT(" Level [") << name << wxT("] ") << nChanges << wxT(" runs");
 	return buffer.str();
 }
 
@@ -449,7 +449,7 @@ tstring CLocalization::ActionDeleteLevel(
 		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting ") << venue << _T(" Level [") << name << _T("]");
+	buffer << wxT("Action: Deleting ") << venue << wxT(" Level [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -461,10 +461,10 @@ tstring CLocalization::ActionRenameTitle(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ") << venue << _T(" Title [") << oldName << _T("] to [") << newName << _T("]");
+	buffer << wxT("Action: Renaming ") << venue << wxT(" Title [") << oldName << wxT("] to [") << newName << wxT("]");
 	if (0 < nChanges)
 	{
-		buffer << _T(", updating ") << nChanges << _T("!d! titles");
+		buffer << wxT(", updating ") << nChanges << wxT("!d! titles");
 	}
 	return buffer.str();
 }
@@ -476,7 +476,7 @@ tstring CLocalization::ActionPreDeleteTitle(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ") << venue << _T(" Title []") << name << _T(" ") << nChanges << _T(" titles");
+	buffer << wxT("DELETING: ") << venue << wxT(" Title []") << name << wxT(" ") << nChanges << wxT(" titles");
 	return buffer.str();
 }
 
@@ -486,7 +486,7 @@ tstring CLocalization::ActionDeleteTitle(
 		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting ") << venue << _T(" Title [") << name << _T("]");
+	buffer << wxT("Action: Deleting ") << venue << wxT(" Title [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -498,10 +498,10 @@ tstring CLocalization::ActionRenameEvent(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Renaming ") << venue << _T(" Event [") << oldName << _T("] to [") << newName << _T("]");
+	buffer << wxT("Action: Renaming ") << venue << wxT(" Event [") << oldName << wxT("] to [") << newName << wxT("]");
 	if (0 < nChanges)
 	{
-		buffer << _T(", updating ") << nChanges << _T(" events");
+		buffer << wxT(", updating ") << nChanges << wxT(" events");
 	}
 	return buffer.str();
 }
@@ -513,7 +513,7 @@ tstring CLocalization::ActionPreDeleteEvent(
 		int nChanges) const
 {
 	otstringstream buffer;
-	buffer << _T("DELETING: ") << venue << _T(" Event [") << name << _T("] ") << nChanges << _T(" events");
+	buffer << wxT("DELETING: ") << venue << wxT(" Event [") << name << wxT("] ") << nChanges << wxT(" events");
 	return buffer.str();
 }
 
@@ -523,7 +523,7 @@ tstring CLocalization::ActionDeleteEvent(
 		tstring const& name) const
 {
 	otstringstream buffer;
-	buffer << _T("Action: Deleting ") << venue << _T(" Event [") << name << _T("]");
+	buffer << wxT("Action: Deleting ") << venue << wxT(" Event [") << name << wxT("]");
 	return buffer.str();
 }
 
@@ -531,7 +531,7 @@ tstring CLocalization::ActionDeleteEvent(
 tstring CLocalization::TitlePointsNameFormat(double points, double faults) const
 {
 	otstringstream buffer;
-	buffer << points << _T(" points with ") << faults << _T(" faults");
+	buffer << points << wxT(" points with ") << faults << wxT(" faults");
 	return buffer.str();
 }
 
@@ -539,7 +539,7 @@ tstring CLocalization::TitlePointsNameFormat(double points, double faults) const
 tstring CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
 	otstringstream buffer;
-	buffer << points << _T(" lifetime points with ") << faults << _T(" faults");
+	buffer << points << wxT(" lifetime points with ") << faults << wxT(" faults");
 	return buffer.str();
 }
 
@@ -547,7 +547,7 @@ tstring CLocalization::LifetimePointsNameFormat(double points, double faults) co
 tstring CLocalization::PlacementPointsNameFormat(double points, short place) const
 {
 	otstringstream buffer;
-	buffer << points << _T(" points with place of ") << place;
+	buffer << points << wxT(" points with place of ") << place;
 	return buffer.str();
 }
 
@@ -555,7 +555,7 @@ tstring CLocalization::PlacementPointsNameFormat(double points, short place) con
 tstring CLocalization::WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const
 {
 	otstringstream buffer;
-    buffer << _T("WARNING: ") << nRuns << _T(" run(s) deleted due to configuration changes.\n(Date, Venue, Event, Division/Level)\n") << inRunsMsg;
+    buffer << wxT("WARNING: ") << nRuns << wxT(" run(s) deleted due to configuration changes.\n(Date, Venue, Event, Division/Level)\n") << inRunsMsg;
 	return buffer.str();
 }
 
@@ -563,7 +563,7 @@ tstring CLocalization::WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) cons
 tstring CLocalization::UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const
 {
 	otstringstream buffer;
-	buffer << _T("USDAA 'Pairs' converted to 'Team' in ") << nRuns << _T(" runs.") << _T("\n") << inRunsMsg;
+	buffer << wxT("USDAA 'Pairs' converted to 'Team' in ") << nRuns << wxT(" runs.") << wxT("\n") << inRunsMsg;
 	return buffer.str();
 }
 
@@ -571,12 +571,12 @@ tstring CLocalization::UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const
 tstring CLocalization::UpdateTableRuns(int nRuns) const
 {
 	otstringstream buffer;
-	buffer << _T("Table setting updated in ") << nRuns << _T(" runs.");
+	buffer << wxT("Table setting updated in ") << nRuns << wxT(" runs.");
 	return buffer.str();
 }
 
 
-tstring CLocalization::ErrorInvalidDocStructure(TCHAR const* const inMsg) const
+tstring CLocalization::ErrorInvalidDocStructure(wxChar const* const inMsg) const
 {
 	otstringstream str;
 	str << m_InvalidDocStructure;
@@ -587,9 +587,9 @@ tstring CLocalization::ErrorInvalidDocStructure(TCHAR const* const inMsg) const
 
 
 tstring CLocalization::ErrorMissingAttribute(
-		TCHAR const* const inElement,
-		TCHAR const* const inAttrib,
-		TCHAR const* const inMsg) const
+		wxChar const* const inElement,
+		wxChar const* const inAttrib,
+		wxChar const* const inMsg) const
 {
 	otstringstream str;
 	str << m_InvalidFileFormat
@@ -604,9 +604,9 @@ tstring CLocalization::ErrorMissingAttribute(
 
 
 tstring CLocalization::ErrorInvalidAttributeValue(
-		TCHAR const* const inElement,
-		TCHAR const* const inAttrib,
-		TCHAR const* const inMsg) const
+		wxChar const* const inElement,
+		wxChar const* const inAttrib,
+		wxChar const* const inMsg) const
 {
 	otstringstream str;
 	str << m_InvalidFileFormat

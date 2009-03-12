@@ -49,14 +49,10 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#if defined(_MFC_VER) && defined(_DEBUG)
-#define new DEBUG_NEW
-#endif
-
 
 /*
 // Roman number conversion (modified from C# code on CodeProject)
-static short RomanDigit(TCHAR digit)
+static short RomanDigit(wxChar digit)
 {
 	switch (digit)
 	{
@@ -98,17 +94,17 @@ static short RomanToShort(tstring number)
 */
 static tstring ShortToRoman(short value)
 {
-	static const TCHAR* romanDigits[9][4] =
+	static const wxChar* romanDigits[9][4] =
 	{
-		{_T("M"),   _T("C"),    _T("X"),    _T("I")   },
-		{_T("MM"),  _T("CC"),   _T("XX"),   _T("II")  },
-		{_T("MMM"), _T("CCC"),  _T("XXX"),  _T("III") },
-		{NULL,      _T("CD"),   _T("XL"),   _T("IV")  },
-		{NULL,      _T("D"),    _T("L"),    _T("V")   },
-		{NULL,      _T("DC"),   _T("LX"),   _T("VI")  },
-		{NULL,      _T("DCC"),  _T("LXX"),  _T("VII") },
-		{NULL,      _T("DCCC"), _T("LXXX"), _T("VIII")},
-		{NULL,      _T("CM"),   _T("XC"),   _T("IX")  }
+		{wxT("M"),   wxT("C"),    wxT("X"),    wxT("I")   },
+		{wxT("MM"),  wxT("CC"),   wxT("XX"),   wxT("II")  },
+		{wxT("MMM"), wxT("CCC"),  wxT("XXX"),  wxT("III") },
+		{NULL,       wxT("CD"),   wxT("XL"),   wxT("IV")  },
+		{NULL,       wxT("D"),    wxT("L"),    wxT("V")   },
+		{NULL,       wxT("DC"),   wxT("LX"),   wxT("VI")  },
+		{NULL,       wxT("DCC"),  wxT("LXX"),  wxT("VII") },
+		{NULL,       wxT("DCCC"), wxT("LXXX"), wxT("VIII")},
+		{NULL,       wxT("CM"),   wxT("XC"),   wxT("IX")  }
 	};
 	otstringstream result;
 	for (int index = 0; index < 4; ++index)
@@ -137,7 +133,7 @@ tstring ARBTitleInstance::TitleInstance(
 			str << instance;
 		return str.str();
 	}
-	return _T("");
+	return wxT("");
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -314,7 +310,7 @@ tstring ARBConfigTitle::GetCompleteName(
 	if (0 > inInstance && 0 < m_Multiple)
 	{
 		otstringstream str;
-		str << _T("+");
+		str << wxT("+");
 		buffer = str.str();
 	}
 	otstringstream name;
@@ -322,18 +318,18 @@ tstring ARBConfigTitle::GetCompleteName(
 	{
 		if (bAbbrevFirst)
 		{
-			name << _T("[") << m_Name;
+			name << wxT("[") << m_Name;
 			if (0 < buffer.length())
 				name << buffer;
-			name << _T("] ");
+			name << wxT("] ");
 		}
 		name << m_LongName;
 		if (!bAbbrevFirst)
 		{
-			name << _T(" [") << m_Name;
+			name << wxT(" [") << m_Name;
 			if (0 < buffer.length())
 				name << buffer;
-			name << _T("]");
+			name << wxT("]");
 		}
 	}
 	else
@@ -346,7 +342,7 @@ tstring ARBConfigTitle::GetCompleteName(
 	{
 		tstring dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
 		if (!dates.empty())
-			name << _T(" ") << dates;
+			name << wxT(" ") << dates;
 	}
 	return name.str();
 }

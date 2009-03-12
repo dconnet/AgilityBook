@@ -164,9 +164,9 @@ bool ARBConfigLevel::Update(
 
 	tstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += _T("   ");
-	indentBuffer = indentName + _T("   ");
-	indentName += _T("-");
+		indentName += wxT("   ");
+	indentBuffer = indentName + wxT("   ");
+	indentName += wxT("-");
 
 	// If the order is different, we will fall into this...
 	if (GetSubLevels() != inLevelNew->GetSubLevels())
@@ -188,21 +188,21 @@ bool ARBConfigLevel::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateSubLevels(nAdded);
-			info += _T("\n");
+			info += wxT("\n");
 		}
 		// Reordered
 		else
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateSubLevelsReordered();
-			info += _T("\n");
+			info += wxT("\n");
 		}
 	}
 	bool bChanges = false;
 	if (0 < info.length())
 	{
 		bChanges = true;
-		ioInfo += indentName + GetName() + _T("\n") + info;
+		ioInfo += indentName + GetName() + wxT("\n") + info;
 	}
 	return bChanges;
 }
@@ -398,7 +398,7 @@ bool ARBConfigLevelList::DeleteSubLevel(
 					while (FindSubLevel(newName))
 					{
 						outLevelModified = true;
-						newName += _T("?");
+						newName += wxT("?");
 						(*iter)->SetName(newName);
 					}
 				}

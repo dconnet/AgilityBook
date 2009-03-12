@@ -26,9 +26,8 @@ Once the above software is unpacked, the directory structure should look like:
 
 wxWidgets: http://www.wxwidgets.org/
 I'm currently using version 2.8.9.
-Currently, this is "installed" into c:\wx. The vsprops file is coded with
-this knowledge. If you put it elsewhere, update the vsprops file (but don't
-check it in!) There are a couple changes I've made:
+Make sure WXWIN is set to wxWidgets root directory.
+There are a couple changes I've made:
 - in \wx\include\wx\msw\setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_6 0
   - wxUSE_STL 1
@@ -39,14 +38,7 @@ check it in!) There are a couple changes I've made:
 - \wx\src\msw\stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
     directory from the appdir, which causes problems.
-To build (for vc9):
-(i386)
-nmake -f makefile.vc BUILD=release UNICODE=1 RUNTIME_LIBS=static CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
-nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=static CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
-(amd64)
-nmake -f makefile.vc BUILD=release UNICODE=1 RUNTIME_LIBS=static TARGET_CPU=amd64 CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
-nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=1 RUNTIME_LIBS=static TARGET_CPU=amd64 CFG=_VC9.0s CPPFLAGS="/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1"
-[for vc, there's src/Projects/CompileWX.bat to easily compile for vc6 thru 9]
+To build for VC, see src/Projects/CompileWX.bat
 
 --------------------
 

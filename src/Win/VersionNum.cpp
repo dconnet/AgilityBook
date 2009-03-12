@@ -80,19 +80,19 @@ bool CVersionNum::Parse(wxString inFileName, wxString inVer)
 	int pos = inVer.Find('.');
 	if (0 <= pos)
 	{
-		m_Version.part1 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
+		m_Version.part1 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
 		inVer = inVer.Mid(pos+1);
 		pos = inVer.Find('.');
 		if (0 <= pos)
 		{
-			m_Version.part2 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
+			m_Version.part2 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
 			inVer = inVer.Mid(pos+1);
 			pos = inVer.Find('.');
 			if (0 <= pos)
 			{
-				m_Version.part3 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
+				m_Version.part3 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
 				inVer = inVer.Mid(pos+1);
-				m_Version.part4 = static_cast<WORD>(tstringUtil::atol(inVer.c_str()));
+				m_Version.part4 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
 				m_Valid = true;
 			}
 		}

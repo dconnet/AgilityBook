@@ -54,23 +54,23 @@ TestInfoItemData::TestInfoItemData()
 {
 	tree = ElementNode::New(TREE_INFO);
 	data = tree->AddElementNode(TREE_CLUBINFO);
-	data->AddAttrib(ATTRIB_INFO_NAME, _T("Club1"));
-	data->SetValue(_T("Club 1 info"));
+	data->AddAttrib(ATTRIB_INFO_NAME, wxT("Club1"));
+	data->SetValue(wxT("Club 1 info"));
 	ElementNodePtr club = tree->AddElementNode(TREE_CLUBINFO);
-	club->AddAttrib(ATTRIB_INFO_NAME, _T("Club2"));
-	club->SetValue(_T("Club 2 info"));
+	club->AddAttrib(ATTRIB_INFO_NAME, wxT("Club2"));
+	club->SetValue(wxT("Club 2 info"));
 	club = tree->AddElementNode(TREE_CLUBINFO);
-	club->AddAttrib(ATTRIB_INFO_NAME, _T("Club3"));
+	club->AddAttrib(ATTRIB_INFO_NAME, wxT("Club3"));
 	club = tree->AddElementNode(TREE_CLUBINFO);
-	club->AddAttrib(ATTRIB_INFO_NAME, _T("Club4"));
+	club->AddAttrib(ATTRIB_INFO_NAME, wxT("Club4"));
 	ElementNodePtr judge = tree->AddElementNode(TREE_JUDGEINFO);
-	judge->AddAttrib(ATTRIB_INFO_NAME, _T("Judge One"));
-	judge->SetValue(_T("Judge 1 info"));
+	judge->AddAttrib(ATTRIB_INFO_NAME, wxT("Judge One"));
+	judge->SetValue(wxT("Judge 1 info"));
 	judge = tree->AddElementNode(TREE_JUDGEINFO);
-	judge->AddAttrib(ATTRIB_INFO_NAME, _T("Judge Two"));
-	judge->SetValue(_T("Judge 2 info"));
+	judge->AddAttrib(ATTRIB_INFO_NAME, wxT("Judge Two"));
+	judge->SetValue(wxT("Judge 2 info"));
 	ElementNodePtr loc = tree->AddElementNode(TREE_LOCATIONINFO);
-	loc->AddAttrib(ATTRIB_INFO_NAME, _T("Sunnyvale"));
+	loc->AddAttrib(ATTRIB_INFO_NAME, wxT("Sunnyvale"));
 }
 
 
@@ -86,12 +86,12 @@ SUITE(TestInfoItem)
 	TEST(Clone)
 	{
 		ARBInfoItemPtr info = ARBInfoItem::New();
-		info->SetName(_T("Testing"));
+		info->SetName(wxT("Testing"));
 		ARBInfoItemPtr info2 = info->Clone();
 		CHECK(NULL != info2.get());
 		CHECK(info.get() != info2.get());
 		CHECK(*info == *info2);
-		info->SetName(_T("Test2"));
+		info->SetName(wxT("Test2"));
 		CHECK(info->GetName() != info2->GetName());
 	}
 
@@ -99,7 +99,7 @@ SUITE(TestInfoItem)
 	TEST(OpEqual)
 	{
 		ARBInfoItemPtr info1 = ARBInfoItem::New();
-		info1->SetName(_T("Testing"));
+		info1->SetName(wxT("Testing"));
 		ARBInfoItemPtr info2 = ARBInfoItem::New();
 		CHECK(*info1 != *info2);
 		*info1 = *info2;
@@ -110,9 +110,9 @@ SUITE(TestInfoItem)
 	TEST(Compare)
 	{
 		ARBInfoItemPtr info1 = ARBInfoItem::New();
-		info1->SetName(_T("A"));
+		info1->SetName(wxT("A"));
 		ARBInfoItemPtr info2 = ARBInfoItem::New();
-		info2->SetName(_T("B"));
+		info2->SetName(wxT("B"));
 		CHECK(*info1 < *info2);
 		CHECK(!(*info1 > *info2));
 	}
@@ -121,8 +121,8 @@ SUITE(TestInfoItem)
 	TEST(GenName)
 	{
 		ARBInfoItemPtr info1 = ARBInfoItem::New();
-		info1->SetName(_T("A"));
-		CHECK(info1->GetGenericName() == _T("A"));
+		info1->SetName(wxT("A"));
+		CHECK(info1->GetGenericName() == wxT("A"));
 	}
 
 
@@ -157,9 +157,9 @@ SUITE(TestInfoItemList)
 		tstring errs;
 		ARBErrorCallback callback(errs);
 		CHECK(infolist.Load(data, ARBVersion(2, 0), callback));
-		ElementNodePtr ele = ElementNode::New(_T("Doesnt matter"));
-		ele->SetValue(_T("These are some notes"));
-		ele->AddAttrib(_T("Name"), _T("PASA"));
+		ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
+		ele->SetValue(wxT("These are some notes"));
+		ele->AddAttrib(wxT("Name"), wxT("PASA"));
 		CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(1u, infolist.size());
 	}
@@ -167,8 +167,8 @@ SUITE(TestInfoItemList)
 
 	TEST(Load2)
 	{
-		ElementNodePtr ele = ElementNode::New(_T("InfoItem"));
-		ele->SetValue(_T("These are some notes"));
+		ElementNodePtr ele = ElementNode::New(wxT("InfoItem"));
+		ele->SetValue(wxT("These are some notes"));
 		ARBInfoItemList infolist(TREE_CLUBINFO);
 		tstring errs;
 		ARBErrorCallback callback(errs);
@@ -180,10 +180,10 @@ SUITE(TestInfoItemList)
 	{
 		ARBInfoItemList infolist(TREE_CLUBINFO);
 		ARBInfoItemPtr info1 = ARBInfoItem::New();
-		info1->SetName(_T("Test2"));
-		info1->SetComment(_T("A note"));
+		info1->SetName(wxT("Test2"));
+		info1->SetComment(wxT("A note"));
 		ARBInfoItemPtr info2 = info1->Clone();
-		info2->SetName(_T("Test1"));
+		info2->SetName(wxT("Test1"));
 		CHECK(infolist.AddItem(info1));
 		CHECK(infolist.AddItem(info2));
 
@@ -213,8 +213,8 @@ SUITE(TestInfoItemList)
 		ARBErrorCallback callback(errs);
 		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
 		std::set<tstring> items;
-		items.insert(_T("Club1"));
-		items.insert(_T("Club3"));
+		items.insert(wxT("Club1"));
+		items.insert(wxT("Club3"));
 		info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
 		items.clear();
 		CHECK_EQUAL(3u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
@@ -227,8 +227,8 @@ SUITE(TestInfoItemList)
 		tstring errs;
 		ARBErrorCallback callback(errs);
 		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-		CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3")));
-		CHECK(!info.GetInfo(ARBInfo::eClubInfo).FindItem(_T("Club3xc")));
+		CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(wxT("Club3")));
+		CHECK(!info.GetInfo(ARBInfo::eClubInfo).FindItem(wxT("Club3xc")));
 	}
 
 
@@ -236,20 +236,20 @@ SUITE(TestInfoItemList)
 	{
 		ARBInfoItemList infolist(TREE_CLUBINFO);
 		ARBInfoItemPtr info1 = ARBInfoItem::New();
-		info1->SetName(_T("Test2"));
-		info1->SetComment(_T("A note"));
+		info1->SetName(wxT("Test2"));
+		info1->SetComment(wxT("A note"));
 		ARBInfoItemPtr info2 = info1->Clone();
-		info2->SetName(_T("Test1"));
+		info2->SetName(wxT("Test1"));
 		CHECK(infolist.AddItem(info1));
 		CHECK(infolist.AddItem(info2));
 		infolist.sort();
 		ARBInfoItemPtr info3 = infolist[0]->Clone();
 		CHECK(*info2 == *info3);
-		info3->SetComment(_T("Test comments"));
+		info3->SetComment(wxT("Test comments"));
 		CHECK(*info2 != *info3);
 		CHECK(!infolist.AddItem(info3));
 		CHECK(!infolist.AddItem(info1->Clone()));
-		info3->SetName(_T("Test3"));
+		info3->SetName(wxT("Test3"));
 		CHECK(infolist.AddItem(info3));
 		infolist.sort();
 		CHECK_EQUAL(3u, infolist.size());

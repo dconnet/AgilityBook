@@ -136,7 +136,7 @@ CErrorCallback::CErrorCallback()
 }
 
 
-bool CErrorCallback::OnError(TCHAR const* const pMsg)
+bool CErrorCallback::OnError(wxChar const* const pMsg)
 {
 	return wxYES == wxMessageBox(pMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION | wxYES_NO | wxNO_DEFAULT);
 }
@@ -1595,7 +1595,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					if (!postTitles2.empty())
 					{
 						if (!postTitles.empty())
-							postTitles += _T("; ");
+							postTitles += wxT("; ");
 						postTitles += postTitles2;
 					}
 				}
@@ -1606,7 +1606,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 				data += pDog->GetCallName().c_str();
 				if (!postTitles.empty())
 				{
-					data += _T(": ");
+					data += wxT(": ");
 					data += postTitles.c_str();
 				}
 				CClipboardDataWriter clpData;

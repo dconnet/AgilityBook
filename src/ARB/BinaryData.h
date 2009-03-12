@@ -39,9 +39,8 @@
  */
 
 #include "ARBTypes.h"
-#ifdef WXWIDGETS
 class wxFFile;
-#endif
+
 
 class BinaryData
 {
@@ -76,11 +75,7 @@ public:
 			size_t inBytes,
 			tstring& outBase64);
 	static bool Encode(
-#ifdef WXWIDGETS
 			wxFFile& inData,
-#else
-			FILE* inData,
-#endif
 			tstring& outBase64);
 
 	static bool DecodeString(

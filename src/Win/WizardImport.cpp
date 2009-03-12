@@ -85,7 +85,7 @@ CWizardImport::CWizardImport(
 	//{{AFX_DATA_INIT(CWizardImport)
 	m_Row = CAgilityBookOptions::GetImportStartRow();
 	m_Delim = -1;
-	m_Delimiter = _T(":");
+	m_Delimiter = wxT(":");
 	//}}AFX_DATA_INIT
 	int delim;
 	CAgilityBookOptions::GetImportExportDelimiters(true, delim, m_Delimiter);
@@ -171,11 +171,11 @@ CString CWizardImport::GetDelim() const
 	switch (m_Delim)
 	{
 	default: break;
-	case 0: delim = _T("\t"); break;
-	case 1: delim = _T(" "); break;
-	case 2: delim = _T(":"); break;
-	case 3: delim = _T(";"); break;
-	case 4: delim = _T(","); break;
+	case 0: delim = wxT("\t"); break;
+	case 1: delim = wxT(" "); break;
+	case 2: delim = wxT(":"); break;
+	case 3: delim = wxT(";"); break;
+	case 4: delim = wxT(","); break;
 	case 5: delim = m_Delimiter; break;
 	}
 	return delim;
@@ -337,7 +337,7 @@ void CWizardImport::UpdatePreview()
 				else
 				{
 					if (cols[iCol] != str && 0 < str.GetLength())
-						cols[iCol] += _T("/") + str;
+						cols[iCol] += wxT("/") + str;
 				}
 			}
 		}
@@ -572,7 +572,6 @@ BOOL CWizardImport::OnWizardFinish()
 		for (int i = 0; i < nColumns; ++i)
 		{
 			CString str = m_ctrlPreview.GetItemText(nItem, i);
-			str.Replace(_T("\r\n"), _T("\n"));
 			entry.push_back((LPCTSTR)str);
 		}
 		switch (m_pSheet->GetImportExportItem())
@@ -807,8 +806,8 @@ BOOL CWizardImport::OnWizardFinish()
 						{
 							pRun = CreateRun(pRun, pScoring);
 							ARB_Q q;
-							if (_T("QQ") == entry[iCol])
-								entry[iCol] = _T("Q");
+							if (wxT("QQ") == entry[iCol])
+								entry[iCol] = wxT("Q");
 							CErrorCallback err;
 							q.Load(entry[iCol], ARBAgilityRecordBook::GetCurrentDocVersion(), err);
 							pRun->SetQ(q);
@@ -826,7 +825,7 @@ BOOL CWizardImport::OnWizardFinish()
 							pRun = CreateRun(pRun, pScoring);
 							tstring str = pRun->GetNote();
 							if (0 < str.length())
-								str += _T("\n");
+								str += wxT("\n");
 							str += entry[iCol];
 							pRun->SetNote(str);
 						}
@@ -904,7 +903,7 @@ BOOL CWizardImport::OnWizardFinish()
 						if (m_pDoc->Book().GetDogs().begin() == m_pDoc->Book().GetDogs().end())
 						{
 							pDog = ARBDogPtr(ARBDog::New());
-							pDog->SetCallName(_T("?"));
+							pDog->SetCallName(wxT("?"));
 							m_pDoc->Book().GetDogs().AddDog(pDog);
 						}
 						else
@@ -923,7 +922,7 @@ BOOL CWizardImport::OnWizardFinish()
 					{
 						// Clubs and venues now agree so we can use them together easily.
 						if (0 == clubs.size())
-							clubs.push_back(_T("?"));
+							clubs.push_back(wxT("?"));
 						while (clubs.size() < venues.size())
 							clubs.push_back(clubs[clubs.size()-1]);
 					}
@@ -1036,20 +1035,20 @@ BOOL CWizardImport::OnWizardFinish()
 						break;
 					case IO_CAL_TENTATIVE:
 						pCal = CreateCal(pCal);
-						pCal->SetIsTentative((_T("?") == entry[iCol] || _T("y") == entry[iCol] || _T("Y") == entry[iCol]));
+						pCal->SetIsTentative((wxT("?") == entry[iCol] || wxT("y") == entry[iCol] || wxT("Y") == entry[iCol]));
 						break;
 					case IO_CAL_ENTERED:
-						if (_T("N") == entry[iCol])
+						if (wxT("N") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eNot);
 						}
-						else if (_T("P") == entry[iCol] || _T("Planning") == entry[iCol])
+						else if (wxT("P") == entry[iCol] || wxT("Planning") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::ePlanning);
 						}
-						else if (_T("E") == entry[iCol] || _T("Entered") == entry[iCol])
+						else if (wxT("E") == entry[iCol] || wxT("Entered") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eEntered);
@@ -1210,7 +1209,7 @@ BOOL CWizardImport::OnWizardFinish()
 		}
 	}
 	if (0 < errLog.tellp())
-		errLog << _T("\n");
+		errLog << wxT("\n");
 	loadstr.FormatMessage(IDS_IMPORT_STATS, nAdded, nUpdated, nDuplicate, nSkipped);
 	errLog << (LPCTSTR)loadstr;
 	CDlgMessage dlg(errLog.str().c_str(), 0, this);
@@ -1289,7 +1288,7 @@ void CWizardImport::OnImportFile()
 		filter.LoadString(IDS_FILEEXT_FILTER_OOCALC);
 	else
 		filter.LoadString(IDS_FILEEXT_FILTER_TXTCSV);
-	CFileDialog dlg(TRUE, _T(""), _T(""), OFN_FILEMUSTEXIST, filter, this);
+	CFileDialog dlg(TRUE, wxT(""), wxT(""), OFN_FILEMUSTEXIST, filter, this);
 	if (IDOK == dlg.DoModal())
 	{
 		m_FileName = dlg.GetPathName();

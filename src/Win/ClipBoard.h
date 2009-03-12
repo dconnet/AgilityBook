@@ -42,7 +42,7 @@
 #include <wx/clipbrd.h>
 
 // Name of root element when writing Elements.
-#define CLIPDATA	_T("ClipData")
+#define CLIPDATA	wxT("ClipData")
 
 // Special clipboard formats
 typedef enum

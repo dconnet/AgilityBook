@@ -62,8 +62,8 @@ SUITE(TestErrorCallback)
 	{
 		tstring msg;
 		ARBErrorCallback err(msg);
-		err.LogMessage(_T("Testing1"));
-		CHECK(msg == _T("Testing1"));
+		err.LogMessage(wxT("Testing1"));
+		CHECK(msg == wxT("Testing1"));
 	}
 
 
@@ -71,8 +71,8 @@ SUITE(TestErrorCallback)
 	{
 		tstring msg;
 		ErrorCallback err(msg);
-		err.LogMessage(_T("Testing1"));
+		err.LogMessage(wxT("Testing1"));
 		CHECK(msg == err.m_Msg);
-		CHECK(msg == _T("Testing1"));
+		CHECK(msg == wxT("Testing1"));
 	}
 }

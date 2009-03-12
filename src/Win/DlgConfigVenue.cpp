@@ -610,7 +610,7 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
-	m_URL.Replace(_T("\""), _T(""));
+	m_URL.Replace(wxT("\""), wxT(""));
 
 	tstring name(m_Name.c_str());
 	tstring oldName = m_pVenue->GetName();

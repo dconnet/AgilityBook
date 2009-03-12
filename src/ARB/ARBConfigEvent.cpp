@@ -234,9 +234,9 @@ bool ARBConfigEvent::Update(
 
 	tstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += _T("   ");
-	indentBuffer = indentName + _T("   ");
-	indentName += _T("-");
+		indentName += wxT("   ");
+	indentBuffer = indentName + wxT("   ");
+	indentName += wxT("-");
 
 	bool bChanges = false;
 	if (GetDesc() != inEventNew->GetDesc())
@@ -319,7 +319,7 @@ bool ARBConfigEvent::Update(
 			info += indentBuffer;
 			info += GetName();
 			info += Localization()->UpdateRules(nAdded, nDeleted, nChanged, nSkipped);
-			info += _T("\n");
+			info += wxT("\n");
 		}
 	}
 	if (0 < info.length())

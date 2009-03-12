@@ -230,7 +230,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
 		curMonth = LastDayOfWeek(curMonth);
-		wxString str = wxString::Format(_T("%s %d"), m_Months[curMonth.GetMonth()-1].c_str(), curMonth.GetYear());
+		wxString str = wxString::Format(wxT("%s %d"), m_Months[curMonth.GetMonth()-1].c_str(), curMonth.GetYear());
 
 		wxRect rHeader;
 		wxRect rWeekDays;
@@ -677,7 +677,7 @@ void CAgilityBookCalendar::OnCopy()
 		maxLen[COL_CLOSES], columns[COL_CLOSES].c_str(),
 		maxLen[COL_NOTES], columns[COL_NOTES].c_str());
 	data.Trim();
-	data += _T("\r\n");
+	data += wxT("\n");
 
 	// The data
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
@@ -705,11 +705,11 @@ void CAgilityBookCalendar::OnCopy()
 			maxLen[COL_LOCATION], items[COL_LOCATION].c_str(),
 			maxLen[COL_CLUB], items[COL_CLUB].c_str(),
 			maxLen[COL_OPENS], items[COL_OPENS].c_str(),
-			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? _T(" - ") : _T("   "),
+			(0 < items[COL_OPENS].length() || 0 < items[COL_CLOSES].length()) ? wxT(" - ") : wxT("   "),
 			maxLen[COL_CLOSES], items[COL_CLOSES].c_str(),
 			maxLen[COL_NOTES], items[COL_NOTES].c_str());
 		str.Trim();
-		data += str + _T("\r\n");
+		data += str + wxT("\n");
 	}
 	clpData.AddData(data);
 	clpData.CommitData();

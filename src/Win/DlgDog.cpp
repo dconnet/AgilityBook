@@ -122,7 +122,6 @@ void CDlgDog::OnOK()
 	m_pDog->SetDeceased(m_pageProp->m_Deceased);
 	m_pDog->SetBreed((LPCTSTR)(m_pageProp->m_Breed));
 	m_pDog->SetRegisteredName((LPCTSTR)(m_pageProp->m_RegName));
-	m_pageProp->m_Notes.Replace(_T("\r\n"), _T("\n"));
 	m_pDog->SetNote((LPCTSTR)(m_pageProp->m_Notes));
 	m_pDog->GetTitles() = m_pageTitles->m_Titles;
 	m_pDog->GetRegNums() = m_pageRegNums->m_RegNums;

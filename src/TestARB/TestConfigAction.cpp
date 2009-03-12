@@ -65,14 +65,14 @@ SUITE(TestConfigAction)
 {
 	TEST(DeleteCalPlugin_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(_T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(wxT("name"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteCalPlugin_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(_T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteCalPlugin::New(wxT("name"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -92,14 +92,14 @@ SUITE(TestConfigAction)
 
 	TEST(RenameOtherPoints_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(_T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(RenameOtherPoints_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(_T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -119,14 +119,14 @@ SUITE(TestConfigAction)
 
 	TEST(DeleteOtherPoints_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(_T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(wxT("name"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteOtherPoints_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(_T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(wxT("name"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -146,14 +146,14 @@ SUITE(TestConfigAction)
 
 	TEST(RenameVenue_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(_T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(RenameVenue_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(_T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -173,14 +173,14 @@ SUITE(TestConfigAction)
 
 	TEST(DeleteVenue_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(_T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(wxT("name"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteVenue_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(_T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(wxT("name"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -200,14 +200,14 @@ SUITE(TestConfigAction)
 
 	TEST(RenameMultiQ_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(RenameMultiQ_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -227,14 +227,14 @@ SUITE(TestConfigAction)
 
 	TEST(DeleteMultiQ_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(wxT("venue"), wxT("name"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteMultiQ_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(wxT("venue"), wxT("name"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -254,14 +254,14 @@ SUITE(TestConfigAction)
 
 	TEST(RenameDivision_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(RenameDivision_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -281,14 +281,14 @@ SUITE(TestConfigAction)
 
 	TEST(DeleteDivision_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(wxT("venue"), wxT("name"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteDivision_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(wxT("venue"), wxT("name"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -308,21 +308,21 @@ SUITE(TestConfigAction)
 
 	TEST(RenameLevel_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
-		obj = ARBConfigActionRenameLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("oldname"), _T("newname"));
+		obj = ARBConfigActionRenameLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(RenameLevel_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
 
-		obj = ARBConfigActionRenameLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("oldname"), _T("newname"));
+		obj = ARBConfigActionRenameLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("oldname"), wxT("newname"));
 		obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -342,21 +342,21 @@ SUITE(TestConfigAction)
 
 	TEST(DeleteLevel_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(_T("venue"), _T("div"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(wxT("venue"), wxT("div"), wxT("name"));
 		CHECK(NULL != obj.get());
-		obj = ARBConfigActionDeleteLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("name"));
+		obj = ARBConfigActionDeleteLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("name"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteLevel_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(_T("venue"), _T("div"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(wxT("venue"), wxT("div"), wxT("name"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
 
-		obj = ARBConfigActionDeleteLevel::NewSubLevel(_T("venue"), _T("div"), _T("level"), _T("name"));
+		obj = ARBConfigActionDeleteLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("name"));
 		obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -376,14 +376,14 @@ SUITE(TestConfigAction)
 
 	TEST(RenameTitle_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(RenameTitle_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -403,14 +403,14 @@ SUITE(TestConfigAction)
 
 	TEST(DeleteTitle_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteTitle_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(_T("venue"), _T("div"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -430,14 +430,14 @@ SUITE(TestConfigAction)
 
 	TEST(RenameEvent_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(RenameEvent_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(_T("venue"), _T("oldname"), _T("newname"));
+		ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(wxT("venue"), wxT("oldname"), wxT("newname"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());
@@ -457,14 +457,14 @@ SUITE(TestConfigAction)
 
 	TEST(DeleteEvent_New)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(wxT("venue"), wxT("name"));
 		CHECK(NULL != obj.get());
 	}
 
 
 	TEST(DeleteEvent_Clone)
 	{
-		ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(_T("venue"), _T("name"));
+		ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(wxT("venue"), wxT("name"));
 		ARBConfigActionPtr obj2 = obj->Clone();
 		CHECK(NULL != obj2.get());
 		CHECK(obj.get() != obj2.get());

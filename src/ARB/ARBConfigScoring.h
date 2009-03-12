@@ -101,7 +101,7 @@ public:
 	 */
 	virtual tstring GetGenericName() const
 	{
-		return m_Division + _T(" ") + m_Level;
+		return m_Division + wxT(" ") + m_Level;
 	}
 
 	/**

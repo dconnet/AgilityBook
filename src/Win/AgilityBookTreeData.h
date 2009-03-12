@@ -111,9 +111,9 @@ public:
 	}
 
 	virtual MenuIdentityPopup GetMenuID() const = 0;
-	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const = 0;
+	virtual bool OnUpdateCmd(int id, bool& ioEnable) const = 0;
 	virtual bool OnCmd(
-			UINT id,
+			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet) = 0; // Returns true if data modified
 	virtual wxString OnNeedText() const = 0;
@@ -170,9 +170,9 @@ public:
 	{
 		return IdMenuDog;
 	}
-	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const;
+	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
 	virtual bool OnCmd(
-			UINT id,
+			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
 	virtual wxString OnNeedText() const;
@@ -226,9 +226,9 @@ public:
 	{
 		return IdMenuTrial;
 	}
-	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const;
+	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
 	virtual bool OnCmd(
-			UINT id,
+			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
 	virtual wxString OnNeedText() const;
@@ -288,9 +288,9 @@ public:
 	{
 		return IdMenuRun;
 	}
-	virtual bool OnUpdateCmd(UINT id, bool& ioEnable) const;
+	virtual bool OnUpdateCmd(int id, bool& ioEnable) const;
 	virtual bool OnCmd(
-			UINT id,
+			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
 	virtual wxString OnNeedText() const;

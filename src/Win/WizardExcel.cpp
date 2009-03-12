@@ -1091,8 +1091,8 @@ bool CWizardCalcImport::OpenFile(CString const& inFilename)
 	if (!m_Document)
 	{
 		CString fileName(inFilename);
-		fileName.Replace(_T("\\"), _T("/"));
-		fileName = _T("file:///") + fileName;
+		fileName.Replace(wxT("\\"), wxT("/"));
+		fileName = wxT("file:///") + fileName;
 		CComVariant param1(fileName);
 		m_Document = m_Manager.loadComponentFromURL(param1);
 	}
@@ -1234,40 +1234,40 @@ bool IWizardSpreadSheet::GetRowCol(
 		CString& outCell)
 {
 	// Lookup tables are nice!
-	static const TCHAR* const sc_ColumnNames[256] =
+	static const wxChar* const sc_ColumnNames[256] =
 	{
-		_T("A"), _T("B"), _T("C"), _T("D"), _T("E"), _T("F"), _T("G"), _T("H"),
-		_T("I"), _T("J"), _T("K"), _T("L"), _T("M"), _T("N"), _T("O"), _T("P"),
-		_T("Q"), _T("R"), _T("S"), _T("T"), _T("U"), _T("V"), _T("W"), _T("X"),
-		_T("Y"), _T("Z"), _T("AA"),_T("AB"),_T("AC"),_T("AD"),_T("AE"),_T("AF"),
-		_T("AG"),_T("AH"),_T("AI"),_T("AJ"),_T("AK"),_T("AL"),_T("AM"),_T("AN"),
-		_T("AO"),_T("AP"),_T("AQ"),_T("AR"),_T("AS"),_T("AT"),_T("AU"),_T("AV"),
-		_T("AW"),_T("AX"),_T("AY"),_T("AZ"),_T("BA"),_T("BB"),_T("BC"),_T("BD"),
-		_T("BE"),_T("BF"),_T("BG"),_T("BH"),_T("BI"),_T("BJ"),_T("BK"),_T("BL"),
-		_T("BM"),_T("BN"),_T("BO"),_T("BP"),_T("BQ"),_T("BR"),_T("BS"),_T("BT"),
-		_T("BU"),_T("BV"),_T("BW"),_T("BX"),_T("BY"),_T("BZ"),_T("CA"),_T("CB"),
-		_T("CC"),_T("CD"),_T("CE"),_T("CF"),_T("CG"),_T("CH"),_T("CI"),_T("CJ"),
-		_T("CK"),_T("CL"),_T("CM"),_T("CN"),_T("CO"),_T("CP"),_T("CQ"),_T("CR"),
-		_T("CS"),_T("CT"),_T("CU"),_T("CV"),_T("CW"),_T("CX"),_T("CY"),_T("CZ"),
-		_T("DA"),_T("DB"),_T("DC"),_T("DD"),_T("DE"),_T("DF"),_T("DG"),_T("DH"),
-		_T("DI"),_T("DJ"),_T("DK"),_T("DL"),_T("DM"),_T("DN"),_T("DO"),_T("DP"),
-		_T("DQ"),_T("DR"),_T("DS"),_T("DT"),_T("DU"),_T("DV"),_T("DW"),_T("DX"),
-		_T("DY"),_T("DZ"),_T("EA"),_T("EB"),_T("EC"),_T("ED"),_T("EE"),_T("EF"),
-		_T("EG"),_T("EH"),_T("EI"),_T("EJ"),_T("EK"),_T("EL"),_T("EM"),_T("EN"),
-		_T("EO"),_T("EP"),_T("EQ"),_T("ER"),_T("ES"),_T("ET"),_T("EU"),_T("EV"),
-		_T("EW"),_T("EX"),_T("EY"),_T("EZ"),_T("FA"),_T("FB"),_T("FC"),_T("FD"),
-		_T("FE"),_T("FF"),_T("FG"),_T("FH"),_T("FI"),_T("FJ"),_T("FK"),_T("FL"),
-		_T("FM"),_T("FN"),_T("FO"),_T("FP"),_T("FQ"),_T("FR"),_T("FS"),_T("FT"),
-		_T("FU"),_T("FV"),_T("FW"),_T("FX"),_T("FY"),_T("FZ"),_T("GA"),_T("GB"),
-		_T("GC"),_T("GD"),_T("GE"),_T("GF"),_T("GG"),_T("GH"),_T("GI"),_T("GJ"),
-		_T("GK"),_T("GL"),_T("GM"),_T("GN"),_T("GO"),_T("GP"),_T("GQ"),_T("GR"),
-		_T("GS"),_T("GT"),_T("GU"),_T("GV"),_T("GW"),_T("GX"),_T("GY"),_T("GZ"),
-		_T("HA"),_T("HB"),_T("HC"),_T("HD"),_T("HE"),_T("HF"),_T("HG"),_T("HH"),
-		_T("HI"),_T("HJ"),_T("HK"),_T("HL"),_T("HM"),_T("HN"),_T("HO"),_T("HP"),
-		_T("HQ"),_T("HR"),_T("HS"),_T("HT"),_T("HU"),_T("HV"),_T("HW"),_T("HX"),
-		_T("HY"),_T("HZ"),_T("IA"),_T("IB"),_T("IC"),_T("ID"),_T("IE"),_T("IF"),
-		_T("IG"),_T("IH"),_T("II"),_T("IJ"),_T("IK"),_T("IL"),_T("IM"),_T("IN"),
-		_T("IO"),_T("IP"),_T("IQ"),_T("IR"),_T("IS"),_T("IT"),_T("IU"),_T("IV"),
+		wxT("A"), wxT("B"), wxT("C"), wxT("D"), wxT("E"), wxT("F"), wxT("G"), wxT("H"),
+		wxT("I"), wxT("J"), wxT("K"), wxT("L"), wxT("M"), wxT("N"), wxT("O"), wxT("P"),
+		wxT("Q"), wxT("R"), wxT("S"), wxT("T"), wxT("U"), wxT("V"), wxT("W"), wxT("X"),
+		wxT("Y"), wxT("Z"), wxT("AA"),wxT("AB"),wxT("AC"),wxT("AD"),wxT("AE"),wxT("AF"),
+		wxT("AG"),wxT("AH"),wxT("AI"),wxT("AJ"),wxT("AK"),wxT("AL"),wxT("AM"),wxT("AN"),
+		wxT("AO"),wxT("AP"),wxT("AQ"),wxT("AR"),wxT("AS"),wxT("AT"),wxT("AU"),wxT("AV"),
+		wxT("AW"),wxT("AX"),wxT("AY"),wxT("AZ"),wxT("BA"),wxT("BB"),wxT("BC"),wxT("BD"),
+		wxT("BE"),wxT("BF"),wxT("BG"),wxT("BH"),wxT("BI"),wxT("BJ"),wxT("BK"),wxT("BL"),
+		wxT("BM"),wxT("BN"),wxT("BO"),wxT("BP"),wxT("BQ"),wxT("BR"),wxT("BS"),wxT("BT"),
+		wxT("BU"),wxT("BV"),wxT("BW"),wxT("BX"),wxT("BY"),wxT("BZ"),wxT("CA"),wxT("CB"),
+		wxT("CC"),wxT("CD"),wxT("CE"),wxT("CF"),wxT("CG"),wxT("CH"),wxT("CI"),wxT("CJ"),
+		wxT("CK"),wxT("CL"),wxT("CM"),wxT("CN"),wxT("CO"),wxT("CP"),wxT("CQ"),wxT("CR"),
+		wxT("CS"),wxT("CT"),wxT("CU"),wxT("CV"),wxT("CW"),wxT("CX"),wxT("CY"),wxT("CZ"),
+		wxT("DA"),wxT("DB"),wxT("DC"),wxT("DD"),wxT("DE"),wxT("DF"),wxT("DG"),wxT("DH"),
+		wxT("DI"),wxT("DJ"),wxT("DK"),wxT("DL"),wxT("DM"),wxT("DN"),wxT("DO"),wxT("DP"),
+		wxT("DQ"),wxT("DR"),wxT("DS"),wxT("DT"),wxT("DU"),wxT("DV"),wxT("DW"),wxT("DX"),
+		wxT("DY"),wxT("DZ"),wxT("EA"),wxT("EB"),wxT("EC"),wxT("ED"),wxT("EE"),wxT("EF"),
+		wxT("EG"),wxT("EH"),wxT("EI"),wxT("EJ"),wxT("EK"),wxT("EL"),wxT("EM"),wxT("EN"),
+		wxT("EO"),wxT("EP"),wxT("EQ"),wxT("ER"),wxT("ES"),wxT("ET"),wxT("EU"),wxT("EV"),
+		wxT("EW"),wxT("EX"),wxT("EY"),wxT("EZ"),wxT("FA"),wxT("FB"),wxT("FC"),wxT("FD"),
+		wxT("FE"),wxT("FF"),wxT("FG"),wxT("FH"),wxT("FI"),wxT("FJ"),wxT("FK"),wxT("FL"),
+		wxT("FM"),wxT("FN"),wxT("FO"),wxT("FP"),wxT("FQ"),wxT("FR"),wxT("FS"),wxT("FT"),
+		wxT("FU"),wxT("FV"),wxT("FW"),wxT("FX"),wxT("FY"),wxT("FZ"),wxT("GA"),wxT("GB"),
+		wxT("GC"),wxT("GD"),wxT("GE"),wxT("GF"),wxT("GG"),wxT("GH"),wxT("GI"),wxT("GJ"),
+		wxT("GK"),wxT("GL"),wxT("GM"),wxT("GN"),wxT("GO"),wxT("GP"),wxT("GQ"),wxT("GR"),
+		wxT("GS"),wxT("GT"),wxT("GU"),wxT("GV"),wxT("GW"),wxT("GX"),wxT("GY"),wxT("GZ"),
+		wxT("HA"),wxT("HB"),wxT("HC"),wxT("HD"),wxT("HE"),wxT("HF"),wxT("HG"),wxT("HH"),
+		wxT("HI"),wxT("HJ"),wxT("HK"),wxT("HL"),wxT("HM"),wxT("HN"),wxT("HO"),wxT("HP"),
+		wxT("HQ"),wxT("HR"),wxT("HS"),wxT("HT"),wxT("HU"),wxT("HV"),wxT("HW"),wxT("HX"),
+		wxT("HY"),wxT("HZ"),wxT("IA"),wxT("IB"),wxT("IC"),wxT("ID"),wxT("IE"),wxT("IF"),
+		wxT("IG"),wxT("IH"),wxT("II"),wxT("IJ"),wxT("IK"),wxT("IL"),wxT("IM"),wxT("IN"),
+		wxT("IO"),wxT("IP"),wxT("IQ"),wxT("IR"),wxT("IS"),wxT("IT"),wxT("IU"),wxT("IV"),
 	};
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{

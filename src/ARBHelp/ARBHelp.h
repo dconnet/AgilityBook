@@ -37,11 +37,11 @@
  * @li 2007-02-08 DRC Created
  */
 
-#define STREAM_DATA_BEGIN		_T("ARB Begin Data")
-#define STREAM_DATA_END			_T("ARB End Data")
-#define STREAM_SYSTEM_BEGIN		_T("ARB Begin SysInfo")
-#define STREAM_SYSTEM_END		_T("ARB End SysInfo")
-#define STREAM_REGISTRY_BEGIN	_T("ARB Begin Registry")
-#define STREAM_REGISTRY_END		_T("ARB End Registry")
-#define STREAM_FILE_BEGIN		_T("ARB Begin File")
-#define STREAM_FILE_END			_T("ARB End File")
+#define STREAM_DATA_BEGIN		wxT("ARB Begin Data")
+#define STREAM_DATA_END			wxT("ARB End Data")
+#define STREAM_SYSTEM_BEGIN		wxT("ARB Begin SysInfo")
+#define STREAM_SYSTEM_END		wxT("ARB End SysInfo")
+#define STREAM_REGISTRY_BEGIN	wxT("ARB Begin Registry")
+#define STREAM_REGISTRY_END		wxT("ARB End Registry")
+#define STREAM_FILE_BEGIN		wxT("ARB Begin File")
+#define STREAM_FILE_END			wxT("ARB End File")

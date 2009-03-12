@@ -71,7 +71,7 @@ public:
 	 */
 	virtual tstring GetGenericName() const
 	{
-		return GetVenue() + _T(" ") + GetNumber();
+		return GetVenue() + wxT(" ") + GetNumber();
 	}
 
 	/**

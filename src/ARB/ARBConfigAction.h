@@ -98,7 +98,7 @@ public:
 	 */
 	virtual tstring GetGenericName() const
 	{
-		return _T("");
+		return wxT("");
 	}
 
 	/**

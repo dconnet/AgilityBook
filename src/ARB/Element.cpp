@@ -33,6 +33,7 @@
  * Actual reading and writing of XML is done using Xerces (or wxWidgets)
  *
  * Revision History
+ * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2009-02-08 DRC Fix wxWidget xml creation
  * @li 2009-01-05 DRC Added libxml2 support
  * @li 2008-12-27 DRC Added wxWidget support (xml)
@@ -59,11 +60,7 @@
 #include "ARBStructure.h"
 #include "ARBTypes.h"
 
-#if defined(WXWIDGETS)
 #define USE_WXWIDGETS	1
-#else
-#define USE_WXWIDGETS	0
-#endif
 #if defined(XERCES_STATIC_LIBRARY)
 #define USE_XERCES		1
 #else
@@ -1343,16 +1340,16 @@ void ElementNode::Dump(int inLevel) const
 	int i;
 	otstringstream msg;
 	msg.width(inLevel);
-	msg << _T(" ") << m_Name;
+	msg << wxT(" ") << m_Name;
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		tstring name, value;
 		GetNthAttrib(i, name, value);
-		msg << _T(" ")
+		msg << wxT(" ")
 			<< name
-			<< _T("=\"")
+			<< wxT("=\"")
 			<< value
-			<< _T("\"");
+			<< wxT("\"");
 	}
 	DumpErrorMessage(msg.str());
 	for (i = 0; i < GetElementCount(); ++i)
@@ -1401,7 +1398,7 @@ void ElementNode::SetValue(tstring const& inValue)
 }
 
 
-void ElementNode::SetValue(TCHAR const* const inValue)
+void ElementNode::SetValue(wxChar const* const inValue)
 {
 	RemoveAllTextNodes();
 	ElementTextPtr pText = ElementText::New();
@@ -1541,9 +1538,9 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		if (value == _T("y"))
+		if (value == wxT("y"))
 			outValue = true;
-		else if (value == _T("n"))
+		else if (value == wxT("n"))
 			outValue = false;
 		else
 			rc = eInvalidValue;
@@ -1616,14 +1613,14 @@ bool ElementNode::AddAttrib(
 
 bool ElementNode::AddAttrib(
 		tstring const& inName,
-		TCHAR const* const inValue)
+		wxChar const* const inValue)
 {
 	if (inName.empty())
 		return false;
 	if (inValue)
 		m_Attribs[inName] = inValue;
 	else
-		m_Attribs[inName] = _T("");
+		m_Attribs[inName] = wxT("");
 	return true;
 }
 
@@ -1653,9 +1650,9 @@ bool ElementNode::AddAttrib(
 	if (inName.empty())
 		return false;
 	if (inValue)
-		m_Attribs[inName] = _T("y");
+		m_Attribs[inName] = wxT("y");
 	else
-		m_Attribs[inName] = _T("n");
+		m_Attribs[inName] = wxT("n");
 	return true;
 }
 
@@ -2011,7 +2008,7 @@ bool ElementNode::LoadXMLBuffer(
 
 
 bool ElementNode::LoadXMLFile(
-		TCHAR const* inFileName,
+		wxChar const* inFileName,
 		tstring& ioErrMsg)
 {
 #if USE_WXWIDGETS
@@ -2118,7 +2115,7 @@ bool ElementNode::SaveXML(
 }
 
 
-bool ElementNode::SaveXML(TCHAR const* outFile) const
+bool ElementNode::SaveXML(wxChar const* outFile) const
 {
 	std::string dtd;
 	return SaveXML(outFile, dtd);
@@ -2126,7 +2123,7 @@ bool ElementNode::SaveXML(TCHAR const* outFile) const
 
 
 bool ElementNode::SaveXML(
-		TCHAR const* outFile,
+		wxChar const* outFile,
 		std::string const& inDTD) const
 {
 	bool bOk = false;
@@ -2183,10 +2180,10 @@ void ElementText::Dump(int inLevel) const
 {
 	otstringstream msg;
 	msg.width(inLevel);
-	msg << _T(" ") << GetName();
+	msg << wxT(" ") << GetName();
 	if (0 < m_Value.length())
 	{
-		msg << _T(": ")
+		msg << wxT(": ")
 			<< m_Value;
 	}
 	DumpErrorMessage(msg.str());
@@ -2201,7 +2198,7 @@ Element::ElementType ElementText::GetType() const
 
 tstring const& ElementText::GetName() const
 {
-	static const tstring name(_T("#text"));
+	static const tstring name(wxT("#text"));
 	return name;
 }
 
@@ -2223,7 +2220,7 @@ void ElementText::SetValue(tstring const& inValue)
 }
 
 
-void ElementText::SetValue(TCHAR const* const inValue)
+void ElementText::SetValue(wxChar const* const inValue)
 {
 	if (inValue)
 		m_Value = inValue;

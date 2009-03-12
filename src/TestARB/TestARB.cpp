@@ -39,16 +39,12 @@
 
 #include "ARBConfig.h"
 #include "ARBStructure.h"
-#include "Element.h"
-#include "resource.h"
-
-#ifdef WXWIDGETS
 #include "ConfigHandler.h"
-#include "wx/app.h"
+#include "Element.h"
+#include <wx/app.h>
 #include <wx/filesys.h>
 #include <wx/fs_zip.h>
 #include <wx/stdpaths.h>
-#endif
 
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
 #define UT_NAME			"UnitTest++.VC7"
@@ -86,12 +82,8 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/ [])
 #ifdef _WIN32
 	_set_error_mode(_OUT_TO_MSGBOX);
 #endif
-#ifdef WXWIDGETS
 	wxInitializer initializer;
 	wxFileSystem::AddHandler(new wxZipFSHandler);
-#else
-	AfxSetResourceHandle(GetModuleHandle(NULL));
-#endif
 
 	static CLocalization localization;
 	IARBLocalization::Init(&localization);
@@ -116,7 +108,6 @@ ElementNodePtr LoadXMLData(UINT id)
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
-#ifdef WXWIDGETS
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
 	bool bOk = false;
@@ -163,24 +154,6 @@ ElementNodePtr LoadXMLData(UINT id)
 		DumpErrorMessage(errMsg);
 		tree.reset();
 	}
-#else
-	HRSRC hrSrc = FindResource(AfxGetResourceHandle(), MAKEINTRESOURCE(id), _T("XML"));
-	if (hrSrc)
-	{
-		HGLOBAL hRes = LoadResource(AfxGetResourceHandle(), hrSrc);
-		if (hRes)
-		{
-			DWORD size = SizeofResource(AfxGetResourceHandle(), hrSrc);
-			char const* pData = reinterpret_cast<char const*>(LockResource(hRes));
-			if (!tree->LoadXMLBuffer(pData, size, errMsg))
-			{
-				DumpErrorMessage(errMsg);
-				tree.reset();
-			}
-			FreeResource(hRes);
-		}
-	}
-#endif
 	return tree;
 }
 
@@ -190,8 +163,8 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	assert(tree);
 	if (!tree)
 		return false;
-	assert(tree->GetName() == _T("DefaultConfig"));
-	if (tree->GetName() != _T("DefaultConfig"))
+	assert(tree->GetName() == wxT("DefaultConfig"));
+	if (tree->GetName() != wxT("DefaultConfig"))
 		return false;
 	ARBVersion version;
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);

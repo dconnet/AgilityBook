@@ -173,7 +173,7 @@ CDlgRunReference::CDlgRunReference(
 	, m_Venue(pVenue)
 	, m_Run(pRun)
 	, m_pRefRunMe()
-	, m_sortRefRuns(_T("RefRuns"))
+	, m_sortRefRuns(wxT("RefRuns"))
 {
 	assert(NULL != m_Venue.get());
 	m_sortRefRuns.Initialize(scNumColumns);
@@ -309,7 +309,7 @@ void CDlgRunReference::SetColumnHeaders()
 		CString str;
 		str.LoadString(scColumns[i].idText);
 		otstringstream tmp;
-		tmp << (LPCTSTR)str << _T(" (" << m_sortRefRuns.FindColumnOrder(i) + 1) << ')';
+		tmp << (LPCTSTR)str << wxT(" (" << m_sortRefRuns.FindColumnOrder(i) + 1) << ')';
 		CString order(tmp.str().c_str());
 		col.pszText = order.GetBuffer(0);
 		col.iSubItem = i;
@@ -468,7 +468,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 	{
 		CListPtrData<ARBDogReferenceRunPtr>* pData = reinterpret_cast<CListPtrData<ARBDogReferenceRunPtr>*>(pDispInfo->item.lParam);
 		ARBDogReferenceRunPtr pRef = pData->GetData();
-		CString str(_T(""));
+		CString str(wxT(""));
 		switch (pDispInfo->item.iSubItem)
 		{
 		default:
@@ -500,7 +500,7 @@ void CDlgRunReference::OnGetdispinfoRefRuns(
 			break;
 		case 7: // Note
 			str = pRef->GetNote().c_str();
-			str.Replace(_T("\n"), _T(" "));
+			str.Replace(wxT("\n"), wxT(" "));
 			break;
 		}
 		::lstrcpyn(pDispInfo->item.pszText, str, pDispInfo->item.cchTextMax);
@@ -603,13 +603,13 @@ void CDlgRunReference::OnRefRunNew()
 			switch (pScoring->GetScoringStyle())
 			{
 			default:
-				nScore = _T("0");
+				nScore = wxT("0");
 				break;
 			case ARBConfigScoring::eFaults100ThenTime:
-				nScore = _T("100");
+				nScore = wxT("100");
 				break;
 			case ARBConfigScoring::eFaults200ThenTime:
-				nScore = _T("200");
+				nScore = wxT("200");
 				break;
 			}
 			ref->SetScore(nScore);

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2007-09-06 DRC Added GetNthElementNode
  * @li 2007-08-15 DRC Modified to support mixed text/nodes.
  * @li 2007-08-08 DRC Moved initialization here, so all XML usage is contained.
@@ -113,7 +114,7 @@ public:
 	 * @param inValue New value for this element.
 	 */
 	virtual void SetValue(tstring const& inValue) = 0;
-	virtual void SetValue(TCHAR const* const inValue) = 0;
+	virtual void SetValue(wxChar const* const inValue) = 0;
 	virtual void SetValue(short inValue) = 0;
 	virtual void SetValue(long inValue) = 0;
 
@@ -146,7 +147,7 @@ public:
 	virtual void SetName(tstring const& inName);
 	virtual tstring GetValue() const;
 	virtual void SetValue(tstring const& inValue);
-	virtual void SetValue(TCHAR const* const inValue);
+	virtual void SetValue(wxChar const* const inValue);
 	virtual void SetValue(short inValue);
 	virtual void SetValue(long inValue);
 	virtual void SetValue(double inValue, int inPrec = 2);
@@ -226,7 +227,7 @@ public:
 			tstring const& inValue);
 	bool AddAttrib(
 			tstring const& inName,
-			TCHAR const* const inValue);
+			wxChar const* const inValue);
 	bool AddAttrib(
 			tstring const& inName,
 			ARBVersion const& inValue);
@@ -391,7 +392,7 @@ public:
 	 * @return Whether file loaded successfully.
 	 */
 	bool LoadXMLFile(
-			TCHAR const* inFileName,
+			wxChar const* inFileName,
 			tstring& ioErrMsg);
 
 	/**
@@ -419,7 +420,7 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
-	bool SaveXML(TCHAR const* outFile) const;
+	bool SaveXML(wxChar const* outFile) const;
 
 	/**
 	 * Save this element to the given file.
@@ -429,7 +430,7 @@ public:
 	 * @retval false Tree failed to save.
 	 */
 	bool SaveXML(
-			TCHAR const* outFile,
+			wxChar const* outFile,
 			std::string const& inDTD) const;
 
 protected:
@@ -461,7 +462,7 @@ public:
 	virtual void SetName(tstring const& inName);
 	virtual tstring GetValue() const;
 	virtual void SetValue(tstring const& inValue);
-	virtual void SetValue(TCHAR const* const inValue);
+	virtual void SetValue(wxChar const* const inValue);
 	virtual void SetValue(short inValue);
 	virtual void SetValue(long inValue);
 	virtual void SetValue(double inValue, int inPrec = 2);

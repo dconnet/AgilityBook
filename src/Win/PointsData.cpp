@@ -72,7 +72,7 @@ static tstring Sanitize(tstring const& inRawData, bool nbsp = false)
 {
 	tstring data = SanitizeStringForHTML(inRawData);
 	if (nbsp && data.empty())
-		data = _T("&nbsp;");
+		data = wxT("&nbsp;");
 	return data;
 }
 
@@ -260,8 +260,8 @@ tstring CPointsDataDog::GetHtml(size_t nCurLine) const
 			<< Sanitize(ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)))
 			<< wxT("</h1>")
 			<< wxT("<h1><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-			<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+			<< static_cast<unsigned int>(nCurLine)
 #else
 			<< nCurLine
 #endif
@@ -367,8 +367,8 @@ tstring CPointsDataVenue::GetHtml(size_t nCurLine) const
 			if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 			{
 				data << wxT(" [<a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-					<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+					<< static_cast<unsigned int>(nCurLine)
 #else
 					<< nCurLine
 #endif
@@ -460,8 +460,8 @@ tstring CPointsDataTitle::GetHtml(size_t nCurLine) const
 		data << wxT("<tr>") << std::endl
 			<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
 			<< wxT("<td><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-			<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+			<< static_cast<unsigned int>(nCurLine)
 #else
 			<< nCurLine
 #endif
@@ -580,8 +580,8 @@ tstring CPointsDataEvent::GetHtml(size_t nCurLine) const
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
 		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>") << std::endl
 		<< wxT("<td><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
@@ -696,8 +696,8 @@ tstring CPointsDataLifetime::GetHtml(size_t nCurLine) const
 		<< wxT("<tr>") << std::endl
 		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
@@ -857,8 +857,8 @@ tstring CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 	data << wxT("<tr>") << std::endl
 		<< wxT("<td colspan=\"6\"/>") << std::endl
 		<< wxT("<td><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
@@ -989,8 +989,8 @@ tstring CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 	data << wxT("<tr>") << std::endl
 		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
@@ -1057,8 +1057,8 @@ tstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 		<< wxT("<td>&nbsp;</td>") << std::endl
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
@@ -1125,8 +1125,8 @@ tstring CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 		<< wxT("<td>&nbsp;</td>") << std::endl
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
@@ -1199,8 +1199,8 @@ tstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
 		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>") << std::endl
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
-#if _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<UINT>(nCurLine)
+#if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
+		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif

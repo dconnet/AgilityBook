@@ -340,9 +340,9 @@ wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
 			++iter2)
 		{
 			if (iter2 != m_Run->GetPartners().begin())
-				str << _T(", ");
+				str << wxT(", ");
 			str << (*iter2)->GetHandler().c_str();
-			str << _T("/");
+			str << wxT("/");
 			str << (*iter2)->GetDog().c_str();
 		}
 		break;
@@ -388,7 +388,7 @@ wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 		str = m_Date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
-		str = _T("1");
+		str = wxT("1");
 		break;
 	case COL_RUN_MQ_LOCATION:
 		str = m_Trial->GetLocation();
@@ -715,7 +715,7 @@ wxString CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 			break;
 		case COL_OTHER_PTS:
 			if (0 < m_info->filtered)
-				str << m_info->points - m_info->filtered << _T(" (") << m_info->points << ')';
+				str << m_info->points - m_info->filtered << wxT(" (") << m_info->points << ')';
 			else
 				str << m_info->points;
 			break;
@@ -804,7 +804,7 @@ wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 		break;
 	case COL_OTHER_CLUB:
 		if (m_info.m_pExisting)
-			str << _T('[') << _("IDS_EXISTING_POINTS") << _T(']');
+			str << wxT('[') << _("IDS_EXISTING_POINTS") << wxT(']');
 		else if (m_info.m_pTrial->GetClubs().GetPrimaryClub())
 			str << m_info.m_pTrial->GetClubs().GetPrimaryClubName();
 		break;

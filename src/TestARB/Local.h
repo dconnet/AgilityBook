@@ -194,15 +194,15 @@ public:
 	tstring ExistingPointsMQ() const			{return m_ExistingPointsMQ;}
 	tstring ExistingPointsSQ() const			{return m_ExistingPointsSQ;}
 
-	tstring ErrorInvalidDocStructure(TCHAR const* const inMsg) const;
+	tstring ErrorInvalidDocStructure(wxChar const* const inMsg) const;
 	tstring ErrorMissingAttribute(
-			TCHAR const* const inElement,
-			TCHAR const* const inAttrib,
-			TCHAR const* const inMsg = NULL) const;
+			wxChar const* const inElement,
+			wxChar const* const inAttrib,
+			wxChar const* const inMsg = NULL) const;
 	tstring ErrorInvalidAttributeValue(
-			TCHAR const* const inElement,
-			TCHAR const* const inAttrib,
-			TCHAR const* const inMsg = NULL) const;
+			wxChar const* const inElement,
+			wxChar const* const inAttrib,
+			wxChar const* const inMsg = NULL) const;
 
 private:
 	tstring m_UnknownVersion;

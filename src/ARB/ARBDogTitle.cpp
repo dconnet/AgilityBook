@@ -174,7 +174,7 @@ bool ARBDogTitle::Load(
 	{
 		tstring msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
-		msg += _T("'");
+		msg += wxT("'");
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_VENUE, msg.c_str()));
 		return false;
 	}
@@ -241,7 +241,7 @@ bool ARBDogTitle::Load(
 		{
 			tstring msg(Localization()->InvalidTitle());
 			msg += m_Venue;
-			msg += _T("/");
+			msg += wxT("/");
 			msg += m_Name;
 			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLE, ATTRIB_TITLE_NAME, msg.c_str()));
 			return false;

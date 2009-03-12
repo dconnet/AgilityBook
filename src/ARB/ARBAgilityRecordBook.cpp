@@ -308,8 +308,8 @@ static tstring GetTimeStamp()
 #else
 	pTime = localtime(&t);
 #endif
-	TCHAR szBuffer[128]; // as defined by VC9 ATL::maxTimeBufferSize
-	if (!pTime || !_tcsftime(szBuffer, 128, _T("%Y-%m-%d %H:%M:%S"), pTime))
+	wxChar szBuffer[128]; // as defined by VC9 ATL::maxTimeBufferSize
+	if (!pTime || !_tcsftime(szBuffer, 128, wxT("%Y-%m-%d %H:%M:%S"), pTime))
 	{
 		szBuffer[0] = '\0';
 	}
@@ -404,16 +404,16 @@ bool ARBAgilityRecordBook::Update(
 	if (curConfigVersion <= 23 && inConfigNew.GetVersion() >= 24)
 	{
 		ARBConfigVenuePtr venue, venueNew;
-		if (m_Config.GetVenues().FindVenue(_T("USDAA"), &venue) && inConfigNew.GetVenues().FindVenue(_T("USDAA"), &venueNew))
+		if (m_Config.GetVenues().FindVenue(wxT("USDAA"), &venue) && inConfigNew.GetVenues().FindVenue(wxT("USDAA"), &venueNew))
 		{
 			ARBConfigEventPtr event, eventNew;
-			if (venue->GetEvents().FindEvent(_T("Pairs"), &event) && venueNew->GetEvents().FindEvent(_T("Team"), &eventNew))
+			if (venue->GetEvents().FindEvent(wxT("Pairs"), &event) && venueNew->GetEvents().FindEvent(wxT("Team"), &eventNew))
 			{
 				ARBDate d;
-				if (event->VerifyEvent(WILDCARD_DIVISION, _T("Nationals"), d)
-				|| event->VerifyEvent(WILDCARD_DIVISION, _T("Tournament"), d)
-				|| eventNew->VerifyEvent(WILDCARD_DIVISION, _T("Nationals"), d)
-				|| eventNew->VerifyEvent(WILDCARD_DIVISION, _T("Tournament"), d))
+				if (event->VerifyEvent(WILDCARD_DIVISION, wxT("Nationals"), d)
+				|| event->VerifyEvent(WILDCARD_DIVISION, wxT("Tournament"), d)
+				|| eventNew->VerifyEvent(WILDCARD_DIVISION, wxT("Nationals"), d)
+				|| eventNew->VerifyEvent(WILDCARD_DIVISION, wxT("Tournament"), d))
 				{
 					// Ok, the configuration passes...
 					bFixUSDAAPairs = true;
@@ -463,22 +463,22 @@ bool ARBAgilityRecordBook::Update(
 				)
 			{
 				ARBDogRunPtr pRun = *iterRun;
-				if (bFixUSDAAPairs && venue == _T("USDAA") && pRun->GetEvent() == _T("Pairs")
-				&& (pRun->GetLevel() == _T("Tournament") || pRun->GetLevel() == _T("Nationals")))
+				if (bFixUSDAAPairs && venue == wxT("USDAA") && pRun->GetEvent() == wxT("Pairs")
+				&& (pRun->GetLevel() == wxT("Tournament") || pRun->GetLevel() == wxT("Nationals")))
 				{
 					// Move pairs run to new team
-					pRun->SetEvent(_T("Team"));
-					msgPairsRuns << _T("   ")
+					pRun->SetEvent(wxT("Team"));
+					msgPairsRuns << wxT("   ")
 						<< pRun->GetDate().GetString(ARBDate::eDashYYYYMMDD)
-						<< _T(" ")
+						<< wxT(" ")
 						<< venue
-						<< _T(" ")
+						<< wxT(" ")
 						<< pRun->GetEvent()
-						<< _T(" ")
+						<< wxT(" ")
 						<< pRun->GetDivision()
-						<< _T("/")
+						<< wxT("/")
 						<< pRun->GetLevel()
-						<< _T("\n");
+						<< wxT("\n");
 					++nUpdatedPairsRuns;
 				}
 				ARBConfigScoringPtr pScoring;
@@ -500,17 +500,17 @@ bool ARBAgilityRecordBook::Update(
 				}
 				else
 				{
-					msgDelRuns << _T("   ")
+					msgDelRuns << wxT("   ")
 						<< pRun->GetDate().GetString(ARBDate::eDashYYYYMMDD)
-						<< _T(" ")
+						<< wxT(" ")
 						<< venue
-						<< _T(" ")
+						<< wxT(" ")
 						<< pRun->GetEvent()
-						<< _T(" ")
+						<< wxT(" ")
 						<< pRun->GetDivision()
-						<< _T("/")
+						<< wxT("/")
 						<< pRun->GetLevel()
-						<< _T("\n");
+						<< wxT("\n");
 					++nDeletedRuns;
 					iterRun = pTrial->GetRuns().erase(iterRun);
 				}
@@ -521,14 +521,14 @@ bool ARBAgilityRecordBook::Update(
 	{
 		nChanges += nUpdatedPairsRuns;
 		tstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, msgPairsRuns.str());
-		ioInfo << _T("\n") << msg << _T("\n");
+		ioInfo << wxT("\n") << msg << wxT("\n");
 	}
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
 		tstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, msgDelRuns.str());
 		ioCallBack.PostDelete(msg);
-		ioInfo << _T("\n") << msg << _T("\n");
+		ioInfo << wxT("\n") << msg << wxT("\n");
 	}
 
 	// This fixup is only done when upgrading from Config version 2 to 3.
@@ -591,7 +591,7 @@ bool ARBAgilityRecordBook::Update(
 		{
 			nChanges += nUpdated;
 			ioInfo << Localization()->UpdateTableRuns(nUpdated)
-				<< _T("\n");
+				<< wxT("\n");
 		}
 	}
 

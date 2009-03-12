@@ -578,7 +578,7 @@ CAgilityBookTreeDataDog::~CAgilityBookTreeDataDog()
 }
 
 
-bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id, bool& ioEnable) const
+bool CAgilityBookTreeDataDog::OnUpdateCmd(int id, bool& ioEnable) const
 {
 	bool bHandled = true;
 	bool bEnable = false;
@@ -632,7 +632,7 @@ bool CAgilityBookTreeDataDog::OnUpdateCmd(UINT id, bool& ioEnable) const
 
 
 bool CAgilityBookTreeDataDog::OnCmd(
-		UINT id,
+		int id,
 		bool& bModified,
 		bool* bTreeSelectionSet)
 {
@@ -879,7 +879,7 @@ CAgilityBookTreeDataDog* CAgilityBookTreeDataTrial::GetDataDog()
 }
 
 
-bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id, bool& ioEnable) const
+bool CAgilityBookTreeDataTrial::OnUpdateCmd(int id, bool& ioEnable) const
 {
 	bool bHandled = true;
 	bool bEnable = false;
@@ -924,7 +924,7 @@ bool CAgilityBookTreeDataTrial::OnUpdateCmd(UINT id, bool& ioEnable) const
 
 
 bool CAgilityBookTreeDataTrial::OnCmd(
-		UINT id,
+		int id,
 		bool& bModified,
 		bool* bTreeSelectionSet)
 {
@@ -1240,7 +1240,7 @@ CAgilityBookTreeDataTrial* CAgilityBookTreeDataRun::GetDataTrial()
 }
 
 
-bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id, bool& ioEnable) const
+bool CAgilityBookTreeDataRun::OnUpdateCmd(int id, bool& ioEnable) const
 {
 	bool bHandled = true;
 	bool bEnable = false;
@@ -1284,7 +1284,7 @@ bool CAgilityBookTreeDataRun::OnUpdateCmd(UINT id, bool& ioEnable) const
 
 
 bool CAgilityBookTreeDataRun::OnCmd(
-		UINT id,
+		int id,
 		bool& bModified,
 		bool* bTreeSelectionSet)
 {

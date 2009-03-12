@@ -45,10 +45,10 @@ class CVersionNum
 public:
 	typedef struct
 	{
-		WORD part1;
-		WORD part2;
-		WORD part3;
-		WORD part4;
+		unsigned short part1;
+		unsigned short part2;
+		unsigned short part3;
+		unsigned short part4;
 	} VERSION_NUMBER;
 
 	CVersionNum();
