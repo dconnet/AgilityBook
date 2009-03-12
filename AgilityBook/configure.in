@@ -1,0 +1,71 @@
+################################################################################
+# The minimum version of autoconf required to regenerate the configure script. #
+################################################################################
+AC_PREREQ(2.59)
+
+################################################################################
+# Initialise autoconf, set package name, version number and contact details.   #
+################################################################################
+AC_INIT(arb, 0.1.0, [Contact Details])
+
+AC_CONFIG_SRCDIR(src/stdafx.cpp)
+
+################################################################################
+# Check for programs used to build my_prg                                      #
+################################################################################
+##########
+# Check whether make sets the MAKE variable.
+# Check which C++ compiler we have (sets CXX and CXXFLAGS)
+# Check which RANLIB program we have
+# Set the language for all further tests to C++
+##########
+AC_PROG_MAKE_SET
+AC_PROG_CXX
+AC_PROG_RANLIB
+AC_PROG_INSTALL
+
+AC_LANG(C++)
+
+AC_ARG_PROGRAM
+
+##########
+# Check how dependencies are created for the C++ compiler on this system
+##########
+AS_IF(g++ -v -MP 2> /dev/null,
+      [AC_SUBST(CPPDEPFLAGS, "-MMD -MP -MF \"\`dirname \$@\`/.deps/\`basename \$*\`.d\"")] [AC_SUBST(DEPDIR, ".deps")],
+      [AC_SUBST(CPPDEPFLAGS, "-MMD")] [AC_SUBST(DEPDIR, ".")])
+
+# Add macros to check for other programs here
+
+################################################################################
+# Checks for header files.                                                     #
+################################################################################
+# Add macros to check for header files here
+
+################################################################################
+# Checks for typedefs, structures, and compiler characteristics.               #
+################################################################################
+# Add macros to check for these characteristics here
+
+################################################################################
+# Checks for library functions.                                                #
+################################################################################
+# Add macros to check for library functions here
+
+################################################################################
+# Allow insertion of the global rules from NAM_rules.mk(.in) into any file     #
+# that requests it using @NAM_RULES@.  Note that for this to work properly,    #
+# NAM_rules.mk must be listed BEFORE any Makefiles that use this feature in    #
+# the AC_CONFIG_FILES() macro below.                                           #
+################################################################################
+NAM_RULES=NAM_rules.mk
+AC_SUBST_FILE(NAM_RULES)
+
+################################################################################
+# List of files to generate from the corresponding (*.in) files and the        #
+# subsequent command to generate those files.                                  #
+################################################################################
+#AC_CONFIG_FILES([NAM_rules.mk Makefile add extra makefiles])
+AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile  src/ARB/Makefile src/Win/Makefile src/TestARB/Makefile  ])
+
+AC_OUTPUT
