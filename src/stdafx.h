@@ -198,13 +198,32 @@ typedef long LONG_PTR;
 
 #else // _WIN32
 
+
 #ifndef WXWIDGETS
 #error Non-Windows platforms must use wxWidgets
 #endif
+// SAS refactor since this dupes ifdef WXWIDGETS below
+#ifdef WXWIDGETS
+// Pre-compiled header setup
+#include "wx/wxprec.h"
+#ifdef __BORLANDC__
+#   pragma hdrstop
+#endif
+#ifndef WX_PRECOMP
+#   include "wx/wx.h"
+#endif
+#endif // WXWIDGETS
 
+#ifndef _T
+// linux build gives redefinition warning and subsequent errors
 #define _T(x)		wxT(x)
+#endif 
 #define TCHAR		wxChar
 
+// SAS there should be a posix include with WORD in it but can't find it
+#ifndef WORD
+#define WORD int
+#endif
 #endif // _WIN32
 
 
