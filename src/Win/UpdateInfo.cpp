@@ -153,7 +153,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 #else
 	CReadHttp file(url, &data);
 	wxString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-	if (file.ReadHttpFile(userName, errMsg))
+	if (file.ReadHttpFile(userName, errMsg, wxGetApp().GetTopWindow()))
 		CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 	else
 	{
@@ -429,7 +429,7 @@ void CUpdateInfo::CheckConfig(
 			wxString errMsg;
 			CReadHttp file(url, &strConfig);
 			wxString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
-			if (file.ReadHttpFile(m_usernameHint, errMsg))
+			if (file.ReadHttpFile(m_usernameHint, errMsg, wxGetApp().GetTopWindow()))
 			{
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				ElementNodePtr tree(ElementNode::New());

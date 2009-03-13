@@ -786,7 +786,7 @@ CStringA CPluginConfigData::Process(IProgressMeter *progress)
 	data.Empty();
 	CReadHttp http(url.c_str(), data);
 	CString username, errMsg;
-	if (!http.ReadHttpFile(username, errMsg))
+	if (!http.ReadHttpFile(username, errMsg, wxGetApp().GetTopWindow()))
 		data.Empty();
 	return data;
 }
