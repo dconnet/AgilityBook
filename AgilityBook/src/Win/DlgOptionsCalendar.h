@@ -40,24 +40,18 @@
  * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
-class CDlgOptionsCalendar
-{
-};
-
-#if 0
 #include "AgilityBookOptions.h"
-#include "ComboBox.h"
-#include "DlgBasePropertyPage.h"
 
-class CDlgOptionsCalendar : public CDlgBasePropertyPage
+
+class CDlgOptionsCalendar : public wxPanel
 {
-	friend class CDlgOptions;
-	DECLARE_DYNAMIC(CDlgOptionsCalendar)
 public:
-	CDlgOptionsCalendar();
-	~CDlgOptionsCalendar();
+	CDlgOptionsCalendar(wxWindow* pParent);
+
+	void Save();
 
 private:
+/*
 // Dialog Data
 	//{{AFX_DATA(CDlgOptionsCalendar)
 	enum { IDD = IDD_VIEW_OPTIONS_CALENDAR };
@@ -106,5 +100,5 @@ protected:
 	afx_msg void OnFontCalView();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+	*/
 };
-#endif

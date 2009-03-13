@@ -145,8 +145,16 @@ public:
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);
-	static void GetPrinterMargins(wxRect& outMargins); // In .01 inches
-	static void SetPrinterMargins(wxRect const& inMargins);
+	static void GetPrinterMargins(
+			long& outLeft,
+			long& outRight,
+			long& outTop,
+			long& outBottom); // In .01 inches
+	static void SetPrinterMargins(
+			long inLeft,
+			long inRight,
+			long inTop,
+			long inBottom);
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options

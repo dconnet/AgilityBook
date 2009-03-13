@@ -660,7 +660,35 @@ msgstr "Details..."
 msgid "IDD_NAME"
 msgstr "Name"
 
-# DlgOptions
+# DlgOptionsPrint
+msgid "IDD_VIEW_OPTIONS_PRINTING"
+msgstr "Printing"
+
+msgid "IDC_OPT_PRINT_FONT_GROUP"
+msgstr "Print Font"
+
+msgid "IDC_OPT_PRINT_FONT_TEXT"
+msgstr "Printing Text"
+
+msgid "IDC_OPT_PRINT_FONT"
+msgstr "Set Font..."
+
+msgid "IDC_OPT_PRING_MARGIN"
+msgstr "Margins"
+
+msgid "IDC_OPT_PRINT_MARGIN_L"
+msgstr "&Left:"
+
+msgid "IDC_OPT_PRINT_MARGIN_R"
+msgstr "&Right:"
+
+msgid "IDC_OPT_PRINT_MARGIN_T"
+msgstr "&Top:"
+
+msgid "IDC_OPT_PRINT_MARGIN_B"
+msgstr "&Bottom:"
+
+# DlgOptionsProgram
 msgid "IDD_VIEW_OPTIONS_PROGRAM"
 msgstr "Program"
 

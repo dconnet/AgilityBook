@@ -661,7 +661,35 @@ msgstr "Détails..."
 msgid "IDD_NAME"
 msgstr "Nom"
 
-# DlgOptions
+# DlgOptionsPrint
+msgid "IDD_VIEW_OPTIONS_PRINTING"
+msgstr "Imprimer"
+
+msgid "IDC_OPT_PRINT_FONT_GROUP"
+msgstr "Police d'impression"
+
+msgid "IDC_OPT_PRINT_FONT_TEXT"
+msgstr "Example de Police"
+
+msgid "IDC_OPT_PRINT_FONT"
+msgstr "Choisir Police..."
+
+msgid "IDC_OPT_PRING_MARGIN"
+msgstr "Marges"
+
+msgid "IDC_OPT_PRINT_MARGIN_L"
+msgstr "&Gauche:"
+
+msgid "IDC_OPT_PRINT_MARGIN_R"
+msgstr "&Droite:"
+
+msgid "IDC_OPT_PRINT_MARGIN_T"
+msgstr "&Haute:"
+
+msgid "IDC_OPT_PRINT_MARGIN_B"
+msgstr "&Basse:"
+
+# DlgOptionsProgram
 msgid "IDD_VIEW_OPTIONS_PROGRAM"
 msgstr "Programme"
 
