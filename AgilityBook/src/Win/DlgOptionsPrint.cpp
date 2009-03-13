@@ -83,8 +83,8 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	wxTextCtrl* ctrlLeft = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CGenericValidator(&m_Left));
-	ctrlLeft ->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_L"));
-	ctrlLeft ->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_L"));
+	ctrlLeft->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_L"));
+	ctrlLeft->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_L"));
 
 	wxStaticText* textRight = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_MARGIN_R"),
@@ -105,8 +105,8 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	wxTextCtrl* ctrlTop = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CGenericValidator(&m_Top));
-	ctrlTop ->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_T"));
-	ctrlTop ->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_T"));
+	ctrlTop->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_T"));
+	ctrlTop->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_T"));
 
 	wxStaticText* textBottom = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_MARGIN_B"),
@@ -173,7 +173,6 @@ void CDlgOptionsPrint::Save()
 void CDlgOptionsPrint::OnFontPrint(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-
 	wxFontData data;
 	data.SetAllowSymbols(false);
 	data.SetInitialFont(m_fontPrint);
