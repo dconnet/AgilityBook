@@ -146,10 +146,12 @@ public:
 	{
 		if (this == &rhs)
 			return true;
-		if (size() != rhs.size())
+		if (ARBVector<T>::size() != rhs.size())
 			return false;
-		typename std::vector<T>::const_iterator iter1, iter2;
-		for (iter1 = begin(), iter2 = rhs.begin(); iter1 != end(); ++iter1, ++iter2)
+		typename ARBVector<T>::const_iterator iter1, iter2;
+		for (iter1 = ARBVector<T>::begin(), iter2 = rhs.begin();
+			iter1 != ARBVector<T>::end();
+			++iter1, ++iter2)
 		{
 			if (*(*iter1) != *(*iter2))
 				return false;
@@ -168,8 +170,10 @@ public:
 	size_t Clone(ARBVector<T>& outList) const
 	{
 		outList.clear();
-		outList.reserve(size());
-		for (typename std::vector<T>::const_iterator iter = begin(); iter != end(); ++iter)
+		outList.reserve(ARBVector<T>::size());
+		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
+			iter != ARBVector<T>::end();
+			++iter)
 		{
 			T pItem = *iter;
 			if (pItem)
@@ -186,8 +190,12 @@ public:
 	size_t GetSearchStrings(std::set<tstring>& ioStrings) const
 	{
 		size_t nItems = 0;
-		for (typename std::vector<T>::const_iterator iter = begin(); iter != end(); ++iter)
+		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
+			iter != ARBVector<T>::end();
+			++iter)
+		{
 			nItems += (*iter)->GetSearchStrings(ioStrings);
+		}
 		return nItems;
 	}
 
@@ -205,15 +213,17 @@ public:
 		if (inItem)
 		{
 			int n = 0;
-			for (typename std::vector<T>::iterator iter = begin(); iter != end(); ++iter, ++n)
+			for (typename ARBVector<T>::iterator iter = ARBVector<T>::begin();
+				iter != ARBVector<T>::end();
+				++iter, ++n)
 			{
 				if (inItem == *iter)
 				{
 					int offset = n + inMove;
 					if (offset < 0)
 						offset = 0;
-					if (offset >= static_cast<int>(size()))
-						offset = static_cast<int>(size()) - 1;
+					if (offset >= static_cast<int>(ARBVector<T>::size()))
+						offset = static_cast<int>(ARBVector<T>::size()) - 1;
 					if (offset != n)
 					{
 						bOk = true;
@@ -236,7 +246,9 @@ public:
 	 */
 	bool Save(ElementNodePtr ioTree) const
 	{
-		for (typename std::vector<T>::const_iterator iter = begin(); iter != end(); ++iter)
+		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
+			iter != ARBVector<T>::end();
+			++iter)
 		{
 			if (!(*iter)->Save(ioTree))
 				return false;
