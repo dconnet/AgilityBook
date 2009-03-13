@@ -39,48 +39,18 @@
  * @li 2004-04-08 DRC Created
  */
 
-class CDlgOptionsProgram
+class CDlgOptionsProgram : public wxPanel
 {
-};
-
-#if 0
-#include "DlgBasePropertyPage.h"
-
-class CDlgOptionsProgram : public CDlgBasePropertyPage
-{
-	friend class CDlgOptions;
-	DECLARE_DYNCREATE(CDlgOptionsProgram)
 public:
-	CDlgOptionsProgram();
-	~CDlgOptionsProgram();
+	CDlgOptionsProgram(wxWindow* pParent);
+
+	void Save();
+	bool ResetHtmlView() const	{return m_bResetHtmlView;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgOptionsProgram)
-	enum { IDD = IDD_VIEW_OPTIONS_PROGRAM };
-	BOOL	m_bAutoCheck;
-	int	m_Backups;
-	BOOL	m_bAutoShow;
-	BOOL	m_bShowSplash;
-	CString	m_Splash;
-	BOOL	m_bShowHtml;
-	//}}AFX_DATA
-	bool m_IEInstalled;
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsProgram)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	void UpdateButtons();
-	//{{AFX_MSG(CDlgOptionsProgram)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnShowSplash();
-	afx_msg void OnBrowse();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	bool m_bResetHtmlView;
+	bool m_bAutoCheck;
+	int m_Backups;
+	bool m_bAutoShow;
+	bool m_bShowHtml;
 };
-#endif

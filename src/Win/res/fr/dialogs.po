@@ -661,6 +661,28 @@ msgstr "Détails..."
 msgid "IDD_NAME"
 msgstr "Nom"
 
+# DlgOptions
+msgid "IDD_VIEW_OPTIONS_PROGRAM"
+msgstr "Programme"
+
+msgid "IDC_OPT_PGM_AUTO_CHECK"
+msgstr "Vérifie automatiquement les mises à jour"
+
+msgid "IDC_OPT_PGM_AUTO_CHECK_TEXT"
+msgstr "NB: Cette fonction vérifie si des mises à jour existent. Elle ne les télécharge pas."
+
+msgid "IDC_OPT_PGM_EDIT"
+msgstr "Nombre des copies de sauvegarde"
+
+msgid "IDC_OPT_PGM_EDIT_TEXT"
+msgstr "Chaque fois qu'un fichier est sauvegardé, une copie est faite. Mettez 0 pour éviter cela."
+
+msgid "IDC_OPT_PGM_AUTOSHOW"
+msgstr "Affichage paramètres du chien après l'ajout d'une Récompense"
+
+msgid "IDC_OPT_PGM_SHOWHTML"
+msgstr "Utiliser HTML dans la vue Points"
+
 # DlgOtherPoint
 msgid "IDD_OTHER_POINT"
 msgstr "Autres points"

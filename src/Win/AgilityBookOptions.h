@@ -227,7 +227,7 @@ public:
 	static void SetDateFormat(
 			FormattedDate inItem,
 			ARBDate::DateFormat inFormat);
-	static bool ShowHtmlPoints(bool* outIEInstalled = NULL);
+	static bool ShowHtmlPoints();
 	static void SetShowHtmlPoints(bool bSet);
 	// Internet things
 	// -username/pw for accessing URLs thru ReadHTTP.cpp

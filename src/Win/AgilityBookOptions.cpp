@@ -351,7 +351,7 @@ void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 }
 
 
-static wxChar* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
+static wxChar const* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 {
 	switch (inItem)
 	{
@@ -1266,7 +1266,7 @@ void CAgilityBookOptions::SetDateFormat(
 }
 
 
-bool CAgilityBookOptions::ShowHtmlPoints(bool* outIEInstalled)
+bool CAgilityBookOptions::ShowHtmlPoints()
 {
 	bool val = true;
 	wxConfig::Get()->Read(wxT("Settings/showHtml"), &val);
