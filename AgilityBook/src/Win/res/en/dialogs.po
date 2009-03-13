@@ -660,6 +660,28 @@ msgstr "Details..."
 msgid "IDD_NAME"
 msgstr "Name"
 
+# DlgOptions
+msgid "IDD_VIEW_OPTIONS_PROGRAM"
+msgstr "Program"
+
+msgid "IDC_OPT_PGM_AUTO_CHECK"
+msgstr "Automatically check for updates once a month."
+
+msgid "IDC_OPT_PGM_AUTO_CHECK_TEXT"
+msgstr "Note: This only >checks< for updates. It will not download the update, nor will it install the new version after you download it. You must do that."
+
+msgid "IDC_OPT_PGM_EDIT"
+msgstr "Number of backup copies"
+
+msgid "IDC_OPT_PGM_EDIT_TEXT"
+msgstr "Each time you save a file, a backup is made before saving the new file. Set to 0 to prevent backups."
+
+msgid "IDC_OPT_PGM_AUTOSHOW"
+msgstr "Automatically show Dog Properties after adding a title."
+
+msgid "IDC_OPT_PGM_SHOWHTML"
+msgstr "Use HTML in Points View."
+
 # DlgOtherPoint
 msgid "IDD_OTHER_POINT"
 msgstr "Other Points"

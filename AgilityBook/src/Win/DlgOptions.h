@@ -38,67 +38,33 @@
  * @li 2005-08-18 DRC Separated options and filters into two dialogs.
  */
 
-//#include "DlgBaseSheet.h"
-//#include "DlgOptionsFilter.h"
-//#include "DlgOptionsPrint.h"
-//#include "DlgOptionsProgram.h"
-//#include "DlgOptionsCalendar.h"
 class CAgilityBookDoc;
+class CDlgOptionsCalendar;
+class CDlgOptionsFilter;
+class CDlgOptionsPrint;
+class CDlgOptionsProgram;
 
 
-class CDlgOptions
+class CDlgOptions : public wxDialog
 {
 public:
 	static int GetProgramPage()		{return 0;}
 	static int GetFilterPage()		{return 1;}
 	static int GetCalendarPage()	{return 2;}
 	static int GetPrintPage()		{return 3;}
+
 	CDlgOptions(
 			CAgilityBookDoc* pDoc,
 			wxWindow* pParentWnd = NULL,
-			int iSelectPage = 0) : m_pDoc(pDoc) {}
-	int ShowModal();
-private:
-	CAgilityBookDoc* m_pDoc;
-};
-
-#if 0
-class CDlgOptions : public CDlgBaseSheet
-{
-	DECLARE_DYNAMIC(CDlgOptions)
-public:
-	static int GetProgramPage()		{return 0;}
-	static int GetFilterPage()		{return 1;}
-	static int GetCalendarPage()	{return 2;}
-	static int GetPrintPage()		{return 3;}
-
-	CDlgOptions(
-			CAgilityBookDoc* pDoc,
-			CWnd* pParentWnd = NULL,
-			UINT iSelectPage = 0);
-	virtual ~CDlgOptions();
-
-// Attributes
-public:
-	CAgilityBookDoc* m_pDoc;
-	CDlgOptionsProgram m_pageProgram;
-	CDlgOptionsFilter m_pageFilter;
-	CDlgOptionsCalendar m_pageCal;
-	CDlgOptionsPrint m_pagePrint;
-
-// Operations
-public:
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgOptions)
-	protected:
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	//}}AFX_VIRTUAL
+			int iSelectPage = 0);
 
 protected:
-	//{{AFX_MSG(CDlgOptions)
-	afx_msg void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	CAgilityBookDoc* m_pDoc;
+	CDlgOptionsProgram* m_pageProgram;
+	CDlgOptionsFilter* m_pageFilter;
+	CDlgOptionsCalendar* m_pageCal;
+	CDlgOptionsPrint* m_pagePrint;
+
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

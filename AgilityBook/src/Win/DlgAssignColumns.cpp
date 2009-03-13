@@ -118,8 +118,8 @@ static struct
 	unsigned int valid;
 	int index;
 	int sortOrder; // only used for view types
-	wxChar* name;
-	wxChar* desc;
+	wxChar const* name;
+	wxChar const* desc;
 } const sc_Types[] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport,
@@ -197,7 +197,7 @@ static struct
 	int index;
 	bool bImportable;
 	int fmt; // Only applicable to eView items
-	wxChar* name;
+	wxChar const* name;
 } const sc_FieldNames[IO_MAX] =
 {
 	{CAgilityBookOptions::eRunsImport | CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,

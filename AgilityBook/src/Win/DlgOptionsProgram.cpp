@@ -40,98 +40,91 @@
 #include "stdafx.h"
 #include "DlgOptionsProgram.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsProgram")
-#if 0
-#include "AgilityBook.h"
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsProgram property page
-
-IMPLEMENT_DYNCREATE(CDlgOptionsProgram, CDlgBasePropertyPage)
+#include "AgilityBookOptions.h"
+#include <wx/valgen.h>
 
 
-CDlgOptionsProgram::CDlgOptionsProgram()
-	: CDlgBasePropertyPage(CDlgOptionsProgram::IDD)
-	, m_bAutoCheck(TRUE)
-	, m_Backups(0)
-	, m_bAutoShow(TRUE)
-	, m_bShowSplash(TRUE)
-	, m_Splash(wxT(""))
-	, m_bShowHtml(FALSE)
-	, m_IEInstalled(FALSE)
+CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
+	, m_bResetHtmlView(false)
+	, m_bAutoCheck(CAgilityBookOptions::GetAutoUpdateCheck())
+	, m_Backups(CAgilityBookOptions::GetNumBackupFiles())
+	, m_bAutoShow(CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
+	, m_bShowHtml(CAgilityBookOptions::ShowHtmlPoints())
 {
+	// Controls (these are done first to control tab order)
+
+	wxCheckBox* ctrlUpdates = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_PGM_AUTO_CHECK"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bAutoCheck));
+	ctrlUpdates->SetHelpText(_("HIDC_OPT_PGM_AUTO_CHECK"));
+	ctrlUpdates->SetToolTip(_("HIDC_OPT_PGM_AUTO_CHECK"));
+
+	wxStaticText* textUpdates = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_PGM_AUTO_CHECK_TEXT"),
+		wxDefaultPosition, wxSize(400, -1), 0);
+	textUpdates->Wrap(400);
+
+	wxStaticText* textBackups = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_PGM_EDIT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textBackups->Wrap(-1);
+
+	wxTextCtrl* ctrlBackups = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		wxGenericValidator(&m_Backups));
+	ctrlBackups->SetHelpText(_("HIDC_OPT_PGM_EDIT"));
+	ctrlBackups->SetToolTip(_("HIDC_OPT_PGM_EDIT"));
+
+	wxStaticText* textBackupHelp = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_PGM_EDIT_TEXT"),
+		wxDefaultPosition, wxSize(250, -1), 0);
+	textBackupHelp->Wrap(250);
+
+	wxCheckBox* ctrlShowDog = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_PGM_AUTOSHOW"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bAutoShow));
+	ctrlShowDog->SetHelpText(_("HIDC_OPT_PGM_AUTOSHOW"));
+	ctrlShowDog->SetToolTip(_("HIDC_OPT_PGM_AUTOSHOW"));
+
+	wxCheckBox* ctrlHtml = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_PGM_SHOWHTML"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bShowHtml));
+	ctrlHtml->SetHelpText(_("HIDC_OPT_PGM_SHOWHTML"));
+	ctrlHtml->SetToolTip(_("HIDC_OPT_PGM_SHOWHTML"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* sizerPgm = new wxBoxSizer(wxVERTICAL);
+	sizerPgm->Add(ctrlUpdates, 0, wxALL, 5);
+	sizerPgm->Add(textUpdates, 0, wxBOTTOM|wxLEFT|wxRIGHT, 5);
+
+	wxBoxSizer* sizerBackups = new wxBoxSizer(wxHORIZONTAL);
+	sizerBackups->Add(textBackups, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerBackups->Add(ctrlBackups, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerBackups->Add(textBackupHelp, 0, wxALL, 5);
+
+	sizerPgm->Add(sizerBackups, 0, wxEXPAND, 5);
+	sizerPgm->Add(ctrlShowDog, 0, wxALL, 5);
+	sizerPgm->Add(ctrlHtml, 0, wxALL, 5);
+
+	SetSizer(sizerPgm);
+	Layout();
+	sizerPgm->Fit(this);
 }
 
 
-CDlgOptionsProgram::~CDlgOptionsProgram()
+void CDlgOptionsProgram::Save()
 {
-}
-
-
-void CDlgOptionsProgram::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBasePropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgOptionsProgram)
-	DDX_Check(pDX, IDC_OPT_PGM_AUTO_CHECK, m_bAutoCheck);
-	DDX_Text(pDX, IDC_OPT_PGM_EDIT, m_Backups);
-	DDX_Check(pDX, IDC_OPT_PGM_AUTOSHOW, m_bAutoShow);
-	DDX_Check(pDX, IDC_OPT_PGM_SHOW_SPLASH, m_bShowSplash);
-	DDX_Text(pDX, IDC_OPT_PGM_FILENAME, m_Splash);
-	DDX_Check(pDX, IDC_OPT_PGM_SHOWHTML, m_bShowHtml);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgOptionsProgram, CDlgBasePropertyPage)
-	//{{AFX_MSG_MAP(CDlgOptionsProgram)
-	ON_BN_CLICKED(IDC_OPT_PGM_SHOW_SPLASH, OnShowSplash)
-	ON_BN_CLICKED(IDC_OPT_PGM_BROWSE, OnBrowse)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-
-void CDlgOptionsProgram::UpdateButtons()
-{
-	GetDlgItem(IDC_OPT_PGM_FILENAME)->EnableWindow(m_bShowSplash);
-	GetDlgItem(IDC_OPT_PGM_BROWSE)->EnableWindow(m_bShowSplash);
-	if (!m_IEInstalled)
-		GetDlgItem(IDC_OPT_PGM_SHOWHTML)->EnableWindow(FALSE);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsProgram message handlers
-
-BOOL CDlgOptionsProgram::OnInitDialog()
-{
-	CDlgBasePropertyPage::OnInitDialog();
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CDlgOptionsProgram::OnShowSplash()
-{
-	UpdateData(TRUE);
-	UpdateButtons();
-}
-
-
-void CDlgOptionsProgram::OnBrowse()
-{
-	UpdateData(TRUE);
-	CString bmpFilter;
-	bmpFilter.LoadString(IDS_FILEEXT_FILTER_BMP);
-	CFileDialog dlg(TRUE, NULL, m_Splash, OFN_FILEMUSTEXIST, bmpFilter, this);
-	if (IDOK == dlg.DoModal())
+	CAgilityBookOptions::SetAutoUpdateCheck(m_bAutoCheck);
+	CAgilityBookOptions::SetNumBackupFiles(m_Backups);
+	CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_bAutoShow);
+	if (CAgilityBookOptions::ShowHtmlPoints() != m_bShowHtml)
 	{
-		m_Splash = dlg.GetPathName();
-		UpdateData(FALSE);
+		m_bResetHtmlView = true;
+		CAgilityBookOptions::SetShowHtmlPoints(m_bShowHtml);
 	}
 }
-#endif

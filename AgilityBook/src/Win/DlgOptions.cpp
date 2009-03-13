@@ -43,44 +43,46 @@
 #include "stdafx.h"
 #include "DlgOptions.h"
 
-//#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-//#include "MainFrm.h"
+#include "DlgOptionsProgram.h"
+#include <wx/notebook.h>
 
 
-int CDlgOptions::ShowModal()
-{
-	if (wxOK == wxMessageBox(wxT("CDlgOptions\nTest: OK == toggle points"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION | wxOK | wxCANCEL))
-	{
-		CAgilityBookOptions::SetShowHtmlPoints(!CAgilityBookOptions::ShowHtmlPoints());
-		m_pDoc->ShowPointsAsHtml(CAgilityBookOptions::ShowHtmlPoints());
-	}
-	return wxID_CANCEL;
-}
+BEGIN_EVENT_TABLE(CDlgOptions, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgOptions::OnOk)
+END_EVENT_TABLE()
 
-
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptions")
-#if 0
-IMPLEMENT_DYNAMIC(CDlgOptions, CDlgBaseSheet)
 
 CDlgOptions::CDlgOptions(
 		CAgilityBookDoc* pDoc,
-		CWnd* pParentWnd,
-		UINT iSelectPage)
-	: CDlgBaseSheet(IDS_VIEWING_OPTIONS, pParentWnd, iSelectPage)
+		wxWindow* pParent,
+		int iSelectPage)
+	: wxDialog(pParent, wxID_ANY, _("IDS_VIEWING_OPTIONS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
 	, m_pDoc(pDoc)
-	, m_pageFilter(pDoc)
 {
-	m_psh.dwFlags |= PSH_NOAPPLYNOW;
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
 
-	// Program options
-	m_pageProgram.m_bAutoCheck = CAgilityBookOptions::GetAutoUpdateCheck() ? TRUE : FALSE;
-	m_pageProgram.m_Backups = CAgilityBookOptions::GetNumBackupFiles();
-	m_pageProgram.m_bAutoShow = CAgilityBookOptions::AutoShowPropertiesOnNewTitle() ? TRUE : FALSE;
-	m_pageProgram.m_bShowSplash = CAgilityBookOptions::AutoShowSplashScreen() ? TRUE : FALSE;
-	m_pageProgram.m_Splash = CAgilityBookOptions::GetSplashImage();
-	m_pageProgram.m_bShowHtml = CAgilityBookOptions::ShowHtmlPoints(&m_pageProgram.m_IEInstalled);
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxNotebook* notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
+
+	m_pageProgram = new CDlgOptionsProgram(notebook);
+
+	notebook->AddPage(m_pageProgram, _("IDD_VIEW_OPTIONS_PROGRAM"), false);
+
+	bSizer->Add(notebook, 1, wxEXPAND | wxALL, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	/*
 
 	// Filters
 	// -handled thru CFilterOptions
@@ -128,95 +130,57 @@ CDlgOptions::CDlgOptions(
 	assert(2 == GetCalendarPage());
 	AddPage(&m_pagePrint);
 	assert(3 == GetPrintPage());
+	*/
 }
 
 
-CDlgOptions::~CDlgOptions()
+void CDlgOptions::OnOk(wxCommandEvent& evt)
 {
+	if (!Validate() || !TransferDataFromWindow())
+		return;
+
+	wxBusyCursor wait;
+	m_pageProgram->Save();
+
+	/*
+
+	// Calendar
+	if (!m_pageCal.m_bOpeningNear)
+		m_pageCal.m_nOpeningNear = -1;
+	CAgilityBookOptions::SetCalendarOpeningNear(m_pageCal.m_nOpeningNear);
+	if (!m_pageCal.m_bClosingNear)
+		m_pageCal.m_nClosingNear = -1;
+	CAgilityBookOptions::SetCalendarClosingNear(m_pageCal.m_nClosingNear);
+	CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCal.m_DayOfWeek));
+	CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCal.m_bAutoDelete ? true : false);
+	CAgilityBookOptions::SetViewAllCalendarEntries(m_pageCal.m_bHideOld ? false : true);
+	CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCal.m_Days);
+	CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCal.m_bHideOverlapping ? true : false);
+	CAgilityBookOptions::SetViewAllCalendarOpening(m_pageCal.m_bOpening ? true : false);
+	CAgilityBookOptions::SetViewAllCalendarClosing(m_pageCal.m_bClosing ? true : false);
+	CAgilityBookOptions::SetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
+
+	// Printing
+	CAgilityBookOptions::SetPrinterFontInfo(m_pagePrint.m_fontPrintInfo);
+	CRect margins;
+	margins.left = static_cast<int>(m_pagePrint.m_Left * 100);
+	margins.right = static_cast<int>(m_pagePrint.m_Right * 100);
+	margins.top = static_cast<int>(m_pagePrint.m_Top * 100);
+	margins.bottom = static_cast<int>(m_pagePrint.m_Bottom * 100);
+	CAgilityBookOptions::SetPrinterMargins(margins);
+
+	// Filters
+	// Commit to the registry
+	m_pageFilter.m_FilterOptions.Save();
+	// Now load into the default object
+	CFilterOptions::Options().Load();
+
+	// Update
+	m_pDoc->ResetVisibility();
+	*/
+
+	if (m_pageProgram->ResetHtmlView())
+		m_pDoc->ShowPointsAsHtml(CAgilityBookOptions::ShowHtmlPoints());
+
+	EndDialog(wxID_OK);
 }
-
-
-BOOL CDlgOptions::PreCreateWindow(CREATESTRUCT& cs)
-{
-	return CDlgBaseSheet::PreCreateWindow(cs);
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgOptions, CDlgBaseSheet)
-	//{{AFX_MSG_MAP(CDlgOptions)
-	ON_COMMAND(IDOK, OnOK)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptions message handlers
-
-void CDlgOptions::OnOK()
-{
-	if (GetActivePage()->UpdateData(TRUE))
-	{
-		CWaitCursor wait;
-		bool bResetHtmlView = false;
-
-		// Program options
-		CAgilityBookOptions::SetAutoUpdateCheck(m_pageProgram.m_bAutoCheck ? true : false);
-		CAgilityBookOptions::SetNumBackupFiles(m_pageProgram.m_Backups);
-		CAgilityBookOptions::AutoShowPropertiesOnNewTitle(m_pageProgram.m_bAutoShow ? true : false);
-		CAgilityBookOptions::AutoShowSplashScreen(m_pageProgram.m_bShowSplash ? true : false);
-		CAgilityBookOptions::SetSplashImage(m_pageProgram.m_Splash);
-		if (m_pageProgram.m_IEInstalled)
-		{
-			bool bShow = m_pageProgram.m_bShowHtml ? true : false;
-			if (CAgilityBookOptions::ShowHtmlPoints() != bShow)
-			{
-				bResetHtmlView = true;
-				CAgilityBookOptions::SetShowHtmlPoints(bShow);
-			}
-		}
-
-		// Calendar
-		if (!m_pageCal.m_bOpeningNear)
-			m_pageCal.m_nOpeningNear = -1;
-		CAgilityBookOptions::SetCalendarOpeningNear(m_pageCal.m_nOpeningNear);
-		if (!m_pageCal.m_bClosingNear)
-			m_pageCal.m_nClosingNear = -1;
-		CAgilityBookOptions::SetCalendarClosingNear(m_pageCal.m_nClosingNear);
-		CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCal.m_DayOfWeek));
-		CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCal.m_bAutoDelete ? true : false);
-		CAgilityBookOptions::SetViewAllCalendarEntries(m_pageCal.m_bHideOld ? false : true);
-		CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCal.m_Days);
-		CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCal.m_bHideOverlapping ? true : false);
-		CAgilityBookOptions::SetViewAllCalendarOpening(m_pageCal.m_bOpening ? true : false);
-		CAgilityBookOptions::SetViewAllCalendarClosing(m_pageCal.m_bClosing ? true : false);
-		CAgilityBookOptions::SetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
-
-		// Printing
-		CAgilityBookOptions::SetPrinterFontInfo(m_pagePrint.m_fontPrintInfo);
-		CRect margins;
-		margins.left = static_cast<int>(m_pagePrint.m_Left * 100);
-		margins.right = static_cast<int>(m_pagePrint.m_Right * 100);
-		margins.top = static_cast<int>(m_pagePrint.m_Top * 100);
-		margins.bottom = static_cast<int>(m_pagePrint.m_Bottom * 100);
-		CAgilityBookOptions::SetPrinterMargins(margins);
-
-		// Filters
-		// Commit to the registry
-		m_pageFilter.m_FilterOptions.Save();
-		// Now load into the default object
-		CFilterOptions::Options().Load();
-
-		// Update
-		m_pDoc->ResetVisibility();
-
-		if (bResetHtmlView)
-		{
-			//CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd());
-			//if (pFrame)
-			//	pFrame->ShowPointsAs(CAgilityBookOptions::ShowHtmlPoints());
-			m_pDoc->ShowPointsAsHtml(CAgilityBookOptions::ShowHtmlPoints());
-		}
-
-		EndDialog(IDOK);
-	}
-}
-#endif
