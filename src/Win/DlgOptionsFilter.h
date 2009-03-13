@@ -39,26 +39,22 @@
  * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
-class CDlgOptionsFilter
-{
-};
-
-#if 0
-#include <set>
 #include "CheckTreeCtrl.h"
-#include "ComboBox.h"
-#include "DlgBasePropertyPage.h"
 #include "FilterOptions.h"
+class CAgilityBookDoc;
 
-class CDlgOptionsFilter : public CDlgBasePropertyPage
+
+class CDlgOptionsFilter : public wxPanel
 {
-	friend class CDlgOptions;
-	DECLARE_DYNAMIC(CDlgOptionsFilter)
 public:
-	CDlgOptionsFilter(CAgilityBookDoc* pDoc);
-	~CDlgOptionsFilter();
+	CDlgOptionsFilter(wxWindow* pParent, CAgilityBookDoc* pDoc);
+
+	void Save();
 
 private:
+	CAgilityBookDoc* m_pDoc;
+	CFilterOptions m_FilterOptions;
+	/*
 // Dialog Data
 	//{{AFX_DATA(CDlgOptionsFilter)
 	enum { IDD = IDD_VIEW_OPTIONS_FILTER };
@@ -84,14 +80,6 @@ private:
 	CButton	m_ctrlSaveName;
 	CButton	m_ctrlDelName;
 	//}}AFX_DATA
-	CAgilityBookDoc* m_pDoc;
-	CFilterOptions m_FilterOptions;
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsFilter)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
@@ -112,5 +100,5 @@ protected:
 	afx_msg void OnBnClickedOptFilterNamesDelete();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+	*/
 };
-#endif

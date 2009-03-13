@@ -37,48 +37,24 @@
  * @li 2006-11-22 DRC Moved printing to new page.
  */
 
-class CDlgOptionsPrint
-{
-};
-
-#if 0
 #include "AgilityBookOptions.h"
-#include "ComboBox.h"
-#include "DlgBasePropertyPage.h"
 
-class CDlgOptionsPrint : public CDlgBasePropertyPage
+
+class CDlgOptionsPrint : public wxPanel
 {
-	friend class CDlgOptions;
-	DECLARE_DYNAMIC(CDlgOptionsPrint)
 public:
-	CDlgOptionsPrint();
-	~CDlgOptionsPrint();
+	CDlgOptionsPrint(wxWindow* pParent);
+
+	void Save();
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgOptionsPrint)
-	enum { IDD = IDD_VIEW_OPTIONS_PRINTING };
-	CStatic	m_ctrlFontPrint;
+	CFontInfo m_fontPrintInfo;
+	wxFont m_fontPrint;
 	double m_Left;
 	double m_Right;
 	double m_Top;
 	double m_Bottom;
-	//}}AFX_DATA
-	CFontInfo m_fontPrintInfo;
-	CFont m_fontPrint;
+	wxStaticText* m_ctrlFontPrint;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsPrint)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgOptionsPrint)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnFontPrint();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnFontPrint(wxCommandEvent& evt);
 };
-#endif

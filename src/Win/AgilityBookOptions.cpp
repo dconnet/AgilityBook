@@ -254,7 +254,7 @@ void CFontInfo::CreateFont(
 		wxFontDialog const& dlg,
 		wxFont& font)
 {
-	font = dlg.GetFont();
+	font = dlg.GetFontData().GetChosenFont();
 	size = font.GetPointSize();
 	name = font.GetFaceName();
 	italic = (font.GetStyle() & wxFONTFLAG_ITALIC) ? true : false;
@@ -618,21 +618,29 @@ void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 }
 
 
-void CAgilityBookOptions::GetPrinterMargins(wxRect& outMargins)
+void CAgilityBookOptions::GetPrinterMargins(
+		long& outLeft,
+		long& outRight,
+		long& outTop,
+		long& outBottom)
 {
-	outMargins.SetLeft(wxConfig::Get()->Read(wxT("Common/Margins.L"), 50L));
-	outMargins.SetTop(wxConfig::Get()->Read(wxT("Common/Margins.T"), 50L));
-	outMargins.SetRight(wxConfig::Get()->Read(wxT("Common/Margins.R"), 50L));
-	outMargins.SetBottom(wxConfig::Get()->Read(wxT("Common/Margins.B"), 50L));
+	outLeft = wxConfig::Get()->Read(wxT("Common/Margins.L"), 50L);
+	outRight = wxConfig::Get()->Read(wxT("Common/Margins.R"), 50L);
+	outTop = wxConfig::Get()->Read(wxT("Common/Margins.T"), 50L);
+	outBottom = wxConfig::Get()->Read(wxT("Common/Margins.B"), 50L);
 }
 
 
-void CAgilityBookOptions::SetPrinterMargins(wxRect const& inMargins)
+void CAgilityBookOptions::SetPrinterMargins(
+		long inLeft,
+		long inRight,
+		long inTop,
+		long inBottom)
 {
-	wxConfig::Get()->Write(wxT("Common/Margins.L"), inMargins.GetLeft());
-	wxConfig::Get()->Write(wxT("Common/Margins.T"), inMargins.GetTop());
-	wxConfig::Get()->Write(wxT("Common/Margins.R"), inMargins.GetRight());
-	wxConfig::Get()->Write(wxT("Common/Margins.B"), inMargins.GetBottom());
+	wxConfig::Get()->Write(wxT("Common/Margins.L"), inLeft);
+	wxConfig::Get()->Write(wxT("Common/Margins.R"), inRight);
+	wxConfig::Get()->Write(wxT("Common/Margins.T"), inTop);
+	wxConfig::Get()->Write(wxT("Common/Margins.B"), inBottom);
 }
 
 

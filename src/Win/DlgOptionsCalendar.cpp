@@ -44,29 +44,16 @@
 #include "stdafx.h"
 #include "DlgOptionsCalendar.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsCalendar")
-#if 0
-#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsCalendar property page
-
-IMPLEMENT_DYNAMIC(CDlgOptionsCalendar, CDlgBasePropertyPage)
-
-
-CDlgOptionsCalendar::CDlgOptionsCalendar()
-	: CDlgBasePropertyPage(CDlgOptionsCalendar::IDD)
-	, m_ctrlDayOfWeek(false)
-	, m_ctrlCalEntries(false)
+CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
+	//, m_ctrlDayOfWeek(false)
+	//, m_ctrlCalEntries(false)
 {
+	/*
 	//{{AFX_DATA_INIT(CDlgOptionsCalendar)
 	m_DayOfWeek = -1;
 	m_bAutoDelete = FALSE;
@@ -80,14 +67,56 @@ CDlgOptionsCalendar::CDlgOptionsCalendar()
 	m_bOpening = FALSE;
 	m_bClosing = FALSE;
 	//}}AFX_DATA_INIT
+	m_pageCal.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
+	if (0 > m_pageCal.m_nOpeningNear)
+	{
+		m_pageCal.m_bOpeningNear = FALSE;
+		m_pageCal.m_nOpeningNear = 0;
+	}
+	else
+		m_pageCal.m_bOpeningNear = TRUE;
+	m_pageCal.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
+	if (0 > m_pageCal.m_nClosingNear)
+	{
+		m_pageCal.m_bClosingNear = FALSE;
+		m_pageCal.m_nClosingNear = 0;
+	}
+	else
+		m_pageCal.m_bClosingNear = TRUE;
+	m_pageCal.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
+	m_pageCal.m_bAutoDelete = CAgilityBookOptions::AutoDeleteCalendarEntries() ? TRUE : FALSE;
+	m_pageCal.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
+	m_pageCal.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
+	m_pageCal.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
+	m_pageCal.m_bOpening = CAgilityBookOptions::ViewAllCalendarOpening() ? TRUE : FALSE;
+	m_pageCal.m_bClosing = CAgilityBookOptions::ViewAllCalendarClosing() ? TRUE : FALSE;
+	CAgilityBookOptions::GetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
+	*/
 }
 
 
-CDlgOptionsCalendar::~CDlgOptionsCalendar()
+void CDlgOptionsCalendar::Save()
 {
+	/*
+	if (!m_pageCal.m_bOpeningNear)
+		m_pageCal.m_nOpeningNear = -1;
+	CAgilityBookOptions::SetCalendarOpeningNear(m_pageCal.m_nOpeningNear);
+	if (!m_pageCal.m_bClosingNear)
+		m_pageCal.m_nClosingNear = -1;
+	CAgilityBookOptions::SetCalendarClosingNear(m_pageCal.m_nClosingNear);
+	CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCal.m_DayOfWeek));
+	CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCal.m_bAutoDelete ? true : false);
+	CAgilityBookOptions::SetViewAllCalendarEntries(m_pageCal.m_bHideOld ? false : true);
+	CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCal.m_Days);
+	CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCal.m_bHideOverlapping ? true : false);
+	CAgilityBookOptions::SetViewAllCalendarOpening(m_pageCal.m_bOpening ? true : false);
+	CAgilityBookOptions::SetViewAllCalendarClosing(m_pageCal.m_bClosing ? true : false);
+	CAgilityBookOptions::SetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
+	*/
 }
 
-
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsCalendar")
+#if 0
 void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);

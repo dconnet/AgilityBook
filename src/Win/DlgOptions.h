@@ -48,15 +48,15 @@ class CDlgOptionsProgram;
 class CDlgOptions : public wxDialog
 {
 public:
-	static int GetProgramPage()		{return 0;}
-	static int GetFilterPage()		{return 1;}
-	static int GetCalendarPage()	{return 2;}
-	static int GetPrintPage()		{return 3;}
+	static size_t GetProgramPage()	{return 0;}
+	static size_t GetFilterPage()	{return 1;}
+	static size_t GetCalendarPage()	{return 2;}
+	static size_t GetPrintPage()	{return 3;}
 
 	CDlgOptions(
 			CAgilityBookDoc* pDoc,
 			wxWindow* pParentWnd = NULL,
-			int iSelectPage = 0);
+			size_t iSelectPage = 0);
 
 protected:
 	CAgilityBookDoc* m_pDoc;

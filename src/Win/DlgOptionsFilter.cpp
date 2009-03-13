@@ -43,32 +43,21 @@
 #include "stdafx.h"
 #include "DlgOptionsFilter.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsFilter")
-#if 0
-#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsFilter property page
-
-IMPLEMENT_DYNAMIC(CDlgOptionsFilter, CDlgBasePropertyPage)
-
-
-CDlgOptionsFilter::CDlgOptionsFilter(CAgilityBookDoc* pDoc)
-	: CDlgBasePropertyPage(CDlgOptionsFilter::IDD)
+CDlgOptionsFilter::CDlgOptionsFilter(
+		wxWindow* parent,
+		CAgilityBookDoc* pDoc)
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
 	, m_pDoc(pDoc)
-	, m_ctrlFilters(false)
+	, m_FilterOptions()
+	//, m_ctrlFilters(false)
 {
-	//{{AFX_DATA_INIT(CDlgOptionsFilter)
+	/*
 	m_ViewDates = -1;
 	m_bDateStart = FALSE;
 	m_timeStart = 0;
@@ -80,15 +69,18 @@ CDlgOptionsFilter::CDlgOptionsFilter(CAgilityBookDoc* pDoc)
 	m_bEntered = TRUE;
 	m_ViewVenues = -1;
 	m_ViewQs = -1;
-	//}}AFX_DATA_INIT
+	*/
 }
 
 
-CDlgOptionsFilter::~CDlgOptionsFilter()
+void CDlgOptionsFilter::Save()
 {
+	// Commit to the registry
+	m_FilterOptions.Save();
 }
 
-
+#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsFilter")
+#if 0
 void CDlgOptionsFilter::DoDataExchange(CDataExchange* pDX)
 {
 	CDlgBasePropertyPage::DoDataExchange(pDX);
