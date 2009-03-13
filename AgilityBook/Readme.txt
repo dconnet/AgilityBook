@@ -133,6 +133,8 @@ Microsoft Visual Studio .NET 2003 (VC7.1)
 =========================================
    It works, no additional notes.
    [x86: MBCS only]
+   Note: Only 'kind-of' supported now. I can compile most of the code, but 2
+   files cause an internal compiler error. So I can't generate a .exe now.
 
 Microsoft Visual Studio .NET 2005 (VC8)
 =======================================
