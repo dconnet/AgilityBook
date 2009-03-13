@@ -50,7 +50,7 @@ INCLUDES = -DWXWIDGETS # -I$(TOPSRCDIR)/src/ARB
 ##########
 # Precompiled headers
 ##########
-#PRECOMP_HEADER = stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h 
 
 ##########
 # Stuff to install

@@ -21,12 +21,6 @@ VPATH       = @srcdir@
 TOPBUILDDIR = ./@top_builddir@
 
 ##########
-# Recursively make in these subdirectories
-##########
-#SUBDIRS = subdir1 subdir2
-#SUBDIRS = ARB
-
-##########
 # Compile flags, list include directories
 ##########
 INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` -I$(TOPSRCDIR)/src/UnitTests++
@@ -44,17 +38,17 @@ testarb_SRCS = ConfigHandler.cpp Local.cpp TestAgilityRecordBook.cpp TestARB.cpp
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-# arb_LIBS = `wx-config --libs`
+testarb_LIBS = `wx-config --libs`
 
 ##########
 # Precompiled headers
 ##########
-#PRECOMP_HEADER = stdafx.h
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
 ##########
 # Stuff to install
 ##########
-INSTALL_BIN = arb
+INSTALL_BIN = testarb
 
 @NAM_RULES@
 

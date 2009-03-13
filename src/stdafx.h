@@ -1,4 +1,6 @@
+#ifdef WIN
 #pragma once
+#endif
 
 /*
  * Copyright © 2002-2009 David Connet. All Rights Reserved.
@@ -258,3 +260,29 @@ namespace tr1 = boost;
 #ifdef _MSC_VER
 #define ARB_SET_ERASE_RETURNS_ITERATOR
 #endif
+
+// Some often used includes for speeding the build
+#include <map>
+#include <set>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include <wx/choicebk.h>
+#include <wx/clipbrd.h>
+#include <wx/colour.h>
+#include <wx/docview.h>
+#include <wx/font.h>
+#include <wx/fontdlg.h>
+#include <wx/html/htmlwin.h>
+#include <wx/hyperlink.h>
+#include <wx/imaglist.h>
+#include <wx/listctrl.h>
+#include <wx/listbook.h>
+#include <wx/notebook.h>
+#include <wx/string.h>
+#include <wx/toolbook.h>
+#include <wx/treebook.h>
+#include <wx/treectrl.h>
+#include <wx/valgen.h>
+#include <wx/valtext.h>

@@ -1,7 +1,7 @@
 ################################################################################
 # File: Makefile                                                               #
 ################################################################################
-# Makefile for the                                               #
+# Makefile for the src/Win subsystem                                           #
 ################################################################################
 
 ################################################################################
@@ -27,7 +27,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES =  -DWXWIDGETS -DWXUSE_GUI `wx-config --cppflags` -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB 
+INCLUDES =  -DWXWIDGETS -DWXUSE_GUI -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` 
 
 ##########
 # List of programs and archives to link
@@ -48,8 +48,7 @@ arb_LDFLAGS = -L$(TOPBUILDDIR)
 ##########
 # Precompiled headers
 ##########
-#PRECOMP_HEADER = 
-
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
 ##########
 # Stuff to install
