@@ -660,6 +660,137 @@ msgstr "Details..."
 msgid "IDD_NAME"
 msgstr "Name"
 
+# DlgOptionsCalendar
+msgid "IDD_VIEW_OPTIONS_CALENDAR"
+msgstr "Calendar"
+
+msgid "IDC_OPT_CAL_LIST"
+msgstr "Calendar List"
+
+msgid "IDC_OPT_CAL_WARN_OPENNEAR"
+msgstr "Warn when Opening date is near"
+
+msgid "IDC_OPT_CAL_COLOR_OPENNEAR_SET"
+msgstr "Set Color..."
+
+msgid "IDC_OPT_CAL_OPENNEAR"
+msgstr "days before"
+
+msgid "IDC_OPT_CAL_WARN_CLOSENEAR"
+msgstr "Warn when Closing date is near"
+
+msgid "IDC_OPT_CAL_COLOR_CLOSENEAR_SET"
+msgstr "Set Color..."
+
+msgid "IDC_OPT_CAL_CLOSENEAR"
+msgstr "days before"
+
+msgid "IDC_OPT_CAL_VIEW"
+msgstr "Calendar View"
+
+msgid "IDC_OPT_CAL_DAY_OF_WEEK"
+msgstr "First day of week"
+
+msgid "IDC_OPT_CAL_AUTO_DELETE"
+msgstr "Automatically delete past entries"
+
+msgid "IDC_OPT_CAL_HIDE_OLD"
+msgstr "Hide past entries"
+
+msgid "IDC_OPT_CAL_OLD_ENTRY_DAYS"
+msgstr "Past entry is"
+
+msgid "IDC_OPT_CAL_OLD_ENTRY_DAYS2"
+msgstr "days after event ends."
+
+msgid "IDC_OPT_CAL_HIDE_OVERLAP"
+msgstr "Hide entries on dates where you've entered a trial"
+
+msgid "IDC_OPT_CAL_OPENING"
+msgstr "View Opening dates"
+
+msgid "IDC_OPT_CAL_CLOSING"
+msgstr "View Closing dates"
+
+msgid "IDC_OPT_CAL_ENTRIES"
+msgstr "Calendar Entries"
+
+msgid "IDC_OPT_CAL_COLOR_SET"
+msgstr "Set Color..."
+
+msgid "IDC_OPT_CAL_FONT"
+msgstr "Set Font..."
+
+# DlgOptionsFilter
+msgid "IDD_VIEW_OPTIONS_FILTER"
+msgstr "Filters"
+
+msgid "IDC_OPT_FILTER_NAMES"
+msgstr "Named &Filters"
+
+msgid "IDC_OPT_FILTER_NAMES_SAVE"
+msgstr "Save"
+
+msgid "IDC_OPT_FILTER_NAMES_DELETE"
+msgstr "Delete"
+
+msgid "IDC_OPT_FILTER_DATE"
+msgstr "Dates"
+
+msgid "IDC_OPT_FILTER_DATE_ALL"
+msgstr "View all &dates"
+
+msgid "IDC_OPT_FILTER_DATE_RANGE"
+msgstr "View dates in &range (inclusive):"
+
+msgid "IDC_OPT_FILTER_DATE_START_CHECK"
+msgstr "&After"
+
+msgid "IDC_OPT_FILTER_DATE_END_CHECK"
+msgstr "&Before"
+
+msgid "IDC_OPT_FILTER_CAL"
+msgstr "Calendar Entries"
+
+msgid "IDC_OPT_FILTER_CAL_NOT_ENTERED"
+msgstr "View Not Entered"
+
+msgid "IDC_OPT_FILTER_CAL_PLANNING"
+msgstr "View Planning"
+
+msgid "IDC_OPT_FILTER_CAL_ENTERED"
+msgstr "View Entered"
+
+msgid "IDC_OPT_FILTER_LOG_NAME"
+msgstr "Training Log Names"
+
+msgid "IDC_OPT_FILTER_LOG_NAME_ALL"
+msgstr "View all na&mes"
+
+msgid "IDC_OPT_FILTER_LOG_NAME_SELECTED"
+msgstr "View onl&y:"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS"
+msgstr "Qs"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS_ALL"
+msgstr "V&iew all runs"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS_Q"
+msgstr "View only &Qualifying runs"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS_NON_Q"
+msgstr "View only &Non-Qualifying runs"
+
+msgid "IDC_OPT_FILTER_RUN_VENUES"
+msgstr "Venues/Levels"
+
+msgid "IDC_OPT_FILTER_RUN_VENUES_ALL"
+msgstr "&View all venues"
+
+msgid "IDC_OPT_FILTER_RUN_VENUES_SELECTED"
+msgstr "View &only:"
+
 # DlgOptionsPrint
 msgid "IDD_VIEW_OPTIONS_PRINTING"
 msgstr "Printing"

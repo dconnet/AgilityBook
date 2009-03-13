@@ -76,8 +76,8 @@ CDlgOptions::CDlgOptions(
 	m_pagePrint = new CDlgOptionsPrint(notebook);
 
 	notebook->AddPage(m_pageProgram, _("IDD_VIEW_OPTIONS_PROGRAM"), false);
-	notebook->AddPage(m_pageFilter, _("Filter"), false);
-	notebook->AddPage(m_pageCal, _("Calendar"), false);
+	notebook->AddPage(m_pageFilter, _("IDD_VIEW_OPTIONS_FILTER"), false);
+	notebook->AddPage(m_pageCal, _("IDD_VIEW_OPTIONS_CALENDAR"), false);
 	notebook->AddPage(m_pagePrint, _("IDD_VIEW_OPTIONS_PRINTING"), false);
 
 	bSizer->Add(notebook, 1, wxEXPAND | wxALL, 5);

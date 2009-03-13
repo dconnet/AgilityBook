@@ -661,6 +661,137 @@ msgstr "Détails..."
 msgid "IDD_NAME"
 msgstr "Nom"
 
+# DlgOptionsCalendar
+msgid "IDD_VIEW_OPTIONS_CALENDAR"
+msgstr "Calendrier"
+
+msgid "IDC_OPT_CAL_LIST"
+msgstr "Liste du calendrier"
+
+msgid "IDC_OPT_CAL_WARN_OPENNEAR"
+msgstr "Prévenir en avance"
+
+msgid "IDC_OPT_CAL_COLOR_OPENNEAR_SET"
+msgstr "Choisir couleur..."
+
+msgid "IDC_OPT_CAL_OPENNEAR"
+msgstr "jours avant"
+
+msgid "IDC_OPT_CAL_WARN_CLOSENEAR"
+msgstr "Prévenir en avance"
+
+msgid "IDC_OPT_CAL_COLOR_CLOSENEAR_SET"
+msgstr "Choisir couleur..."
+
+msgid "IDC_OPT_CAL_CLOSENEAR"
+msgstr "jours avant"
+
+msgid "IDC_OPT_CAL_VIEW"
+msgstr "Vue Calendrier"
+
+msgid "IDC_OPT_CAL_DAY_OF_WEEK"
+msgstr "La semaine commence le"
+
+msgid "IDC_OPT_CAL_AUTO_DELETE"
+msgstr "Supprimer automatiquement l'historique"
+
+msgid "IDC_OPT_CAL_HIDE_OLD"
+msgstr "Masquer historiques"
+
+msgid "IDC_OPT_CAL_OLD_ENTRY_DAYS"
+msgstr "Historique après"
+
+msgid "IDC_OPT_CAL_OLD_ENTRY_DAYS2"
+msgstr "jours."
+
+msgid "IDC_OPT_CAL_HIDE_OVERLAP"
+msgstr "Masquer autres activités le jour d'un concours où je suis inscrit"
+
+msgid "IDC_OPT_CAL_OPENING"
+msgstr "Voir Dates d'ouverture"
+
+msgid "IDC_OPT_CAL_CLOSING"
+msgstr "Voir Dates de clôture"
+
+msgid "IDC_OPT_CAL_ENTRIES"
+msgstr "Activités"
+
+msgid "IDC_OPT_CAL_COLOR_SET"
+msgstr "Choisir couleur..."
+
+msgid "IDC_OPT_CAL_FONT"
+msgstr "Choisir Police..."
+
+# DlgOptionsFilter
+msgid "IDD_VIEW_OPTIONS_FILTER"
+msgstr "Filtres"
+
+msgid "IDC_OPT_FILTER_NAMES"
+msgstr "&Filtres nommés"
+
+msgid "IDC_OPT_FILTER_NAMES_SAVE"
+msgstr "Sauvegarder"
+
+msgid "IDC_OPT_FILTER_NAMES_DELETE"
+msgstr "Supprimer"
+
+msgid "IDC_OPT_FILTER_DATE"
+msgstr "Dates"
+
+msgid "IDC_OPT_FILTER_DATE_ALL"
+msgstr "Voir toutes les dates"
+
+msgid "IDC_OPT_FILTER_DATE_RANGE"
+msgstr "Voir dates entre (inclus):"
+
+msgid "IDC_OPT_FILTER_DATE_START_CHECK"
+msgstr "&Après"
+
+msgid "IDC_OPT_FILTER_DATE_END_CHECK"
+msgstr "A&vant"
+
+msgid "IDC_OPT_FILTER_CAL"
+msgstr "Entrées du Calendrier"
+
+msgid "IDC_OPT_FILTER_CAL_NOT_ENTERED"
+msgstr "Voir non inscrits"
+
+msgid "IDC_OPT_FILTER_CAL_PLANNING"
+msgstr "Voir planning"
+
+msgid "IDC_OPT_FILTER_CAL_ENTERED"
+msgstr "Voir inscrits"
+
+msgid "IDC_OPT_FILTER_LOG_NAME"
+msgstr "Journal des entrainements"
+
+msgid "IDC_OPT_FILTER_LOG_NAME_ALL"
+msgstr "Voir tous les no&ms"
+
+msgid "IDC_OPT_FILTER_LOG_NAME_SELECTED"
+msgstr "Voir se&ulement:"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS"
+msgstr "Qualifiants"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS_ALL"
+msgstr "Voir toutes &épreuves"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS_Q"
+msgstr "Voir épreuves &qualifiantes"
+
+msgid "IDC_OPT_FILTER_RUN_RUNS_NON_Q"
+msgstr "Voir épreuves &non qualifiantes"
+
+msgid "IDC_OPT_FILTER_RUN_VENUES"
+msgstr "Organisation/Degrés"
+
+msgid "IDC_OPT_FILTER_RUN_VENUES_ALL"
+msgstr "Voir toutes &organisations"
+
+msgid "IDC_OPT_FILTER_RUN_VENUES_SELECTED"
+msgstr "Voir &seulement:"
+
 # DlgOptionsPrint
 msgid "IDD_VIEW_OPTIONS_PRINTING"
 msgstr "Imprimer"

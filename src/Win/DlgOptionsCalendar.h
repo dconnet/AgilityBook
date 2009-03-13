@@ -51,54 +51,44 @@ public:
 	void Save();
 
 private:
-/*
-// Dialog Data
-	//{{AFX_DATA(CDlgOptionsCalendar)
-	enum { IDD = IDD_VIEW_OPTIONS_CALENDAR };
-	BOOL	m_bOpeningNear;
-	CEdit	m_ctrlOpeningNear;
-	int		m_nOpeningNear;
-	CStatic	m_ctrlOpeningNearColor;
-	CButton	m_ctrlOpeningNearSet;
-	BOOL	m_bClosingNear;
-	CEdit	m_ctrlClosingNear;
-	int		m_nClosingNear;
-	CStatic	m_ctrlClosingNearColor;
-	CButton	m_ctrlClosingNearSet;
-	CComboBox2	m_ctrlDayOfWeek;
-	int		m_DayOfWeek;
-	BOOL	m_bAutoDelete;
-	BOOL	m_bHideOld;
-	UINT	m_Days;
-	BOOL	m_bHideOverlapping;
-	BOOL	m_bOpening;
-	BOOL	m_bClosing;
-	CComboBox2	m_ctrlCalEntries;
-	CStatic	m_ctrlColor;
-	CStatic	m_ctrlCalView;
-	//}}AFX_DATA
-	CFontInfo m_fontCalViewInfo;
-	CFont m_fontCalView;
-
-// Overrides
-	//{{AFX_VIRTUAL(CDlgOptionsCalendar)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
+	wxString GetCalText(
+			CAgilityBookOptions::CalendarColorItem type,
+			bool bForDisplay) const;
 	void UpdateControls();
-	//{{AFX_MSG(CDlgOptionsCalendar)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSelchangeCalEntries();
-	afx_msg void OnCalNear();
-	afx_msg void OnCalColorOpeningNear();
-	afx_msg void OnCalColorClosingNear();
-	afx_msg void OnCalColors();
-	afx_msg void OnFontCalView();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-	*/
+	void SetCalColor();
+	void SetRichText();
+
+	CFontInfo m_fontCalViewInfo;
+	wxFont m_fontCalView;
+	wxColour m_OpeningNear;
+	wxColour m_ClosingNear;
+	typedef std::pair<CAgilityBookOptions::CalendarColorItem, wxColour> tColorInfo;
+	std::vector<tColorInfo> m_CalColors;
+	bool m_bOpeningNear;
+	int m_nOpeningNear;
+	bool m_bClosingNear;
+	int m_nClosingNear;
+	bool m_bAutoDelete;
+	bool m_bHideOld;
+	int m_Days;
+	bool m_bHideOverlapping;
+	bool m_bOpening;
+	bool m_bClosing;
+	wxTextCtrl* m_ctrlOpeningNear;
+	wxStaticText* m_ctrlOpeningNearColor;
+	wxButton* m_ctrlOpeningNearSet;
+	wxTextCtrl* m_ctrlClosingNear;
+	wxStaticText* m_ctrlClosingNearColor;
+	wxButton* m_ctrlClosingNearSet;
+	wxChoice* m_ctrlDayOfWeek;
+	wxChoice* m_ctrlCalEntries;
+	wxStaticText* m_ctrlColor;
+	wxTextCtrl* m_ctrlCalView;
+
+	void OnSelchangeCalEntries(wxCommandEvent& evt);
+	void OnCalNear(wxCommandEvent& evt);
+	void OnCalColorOpeningNear(wxCommandEvent& evt);
+	void OnCalColorClosingNear(wxCommandEvent& evt);
+	void OnCalColors(wxCommandEvent& evt);
+	void OnFontCalView(wxCommandEvent& evt);
 };

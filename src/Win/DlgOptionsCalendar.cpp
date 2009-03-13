@@ -46,344 +46,533 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
+#include <wx/colordlg.h>
 
 
 CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
-	//, m_ctrlDayOfWeek(false)
-	//, m_ctrlCalEntries(false)
+	, m_fontCalViewInfo()
+	, m_fontCalView()
+	, m_OpeningNear(CAgilityBookOptions::CalendarOpeningNearColor())
+	, m_ClosingNear(CAgilityBookOptions::CalendarClosingNearColor())
+	, m_CalColors()
+	, m_bOpeningNear(true)
+	, m_nOpeningNear(CAgilityBookOptions::CalendarOpeningNear())
+	, m_bClosingNear(true)
+	, m_nClosingNear(CAgilityBookOptions::CalendarClosingNear())
+	, m_bAutoDelete(CAgilityBookOptions::AutoDeleteCalendarEntries())
+	, m_bHideOld(!CAgilityBookOptions::ViewAllCalendarEntries())
+	, m_Days(CAgilityBookOptions::DaysTillEntryIsPast())
+	, m_bHideOverlapping(CAgilityBookOptions::HideOverlappingCalendarEntries())
+	, m_bOpening(CAgilityBookOptions::ViewAllCalendarOpening())
+	, m_bClosing(CAgilityBookOptions::ViewAllCalendarClosing())
+	, m_ctrlOpeningNear(NULL)
+	, m_ctrlOpeningNearColor(NULL)
+	, m_ctrlOpeningNearSet(NULL)
+	, m_ctrlClosingNear(NULL)
+	, m_ctrlClosingNearColor(NULL)
+	, m_ctrlClosingNearSet(NULL)
+	, m_ctrlDayOfWeek(NULL)
+	, m_ctrlCalEntries(NULL)
+	, m_ctrlColor(NULL)
+	, m_ctrlCalView(NULL)
 {
-	/*
-	//{{AFX_DATA_INIT(CDlgOptionsCalendar)
-	m_DayOfWeek = -1;
-	m_bAutoDelete = FALSE;
-	m_bHideOld = FALSE;
-	m_Days = 0;
-	m_bHideOverlapping = FALSE;
-	m_bOpeningNear = TRUE;
-	m_nOpeningNear = -1;
-	m_bClosingNear = TRUE;
-	m_nClosingNear = -1;
-	m_bOpening = FALSE;
-	m_bClosing = FALSE;
-	//}}AFX_DATA_INIT
-	m_pageCal.m_nOpeningNear = CAgilityBookOptions::CalendarOpeningNear();
-	if (0 > m_pageCal.m_nOpeningNear)
+	CAgilityBookOptions::GetCalendarFontInfo(m_fontCalViewInfo);
+	m_fontCalViewInfo.CreateFont(m_fontCalView);
+	if (0 > m_nOpeningNear)
 	{
-		m_pageCal.m_bOpeningNear = FALSE;
-		m_pageCal.m_nOpeningNear = 0;
+		m_bOpeningNear = false;
+		m_nOpeningNear = 0;
 	}
-	else
-		m_pageCal.m_bOpeningNear = TRUE;
-	m_pageCal.m_nClosingNear = CAgilityBookOptions::CalendarClosingNear();
-	if (0 > m_pageCal.m_nClosingNear)
+	if (0 > m_nClosingNear)
 	{
-		m_pageCal.m_bClosingNear = FALSE;
-		m_pageCal.m_nClosingNear = 0;
+		m_bClosingNear = false;
+		m_nClosingNear = 0;
 	}
-	else
-		m_pageCal.m_bClosingNear = TRUE;
-	m_pageCal.m_DayOfWeek = static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek());
-	m_pageCal.m_bAutoDelete = CAgilityBookOptions::AutoDeleteCalendarEntries() ? TRUE : FALSE;
-	m_pageCal.m_bHideOld = CAgilityBookOptions::ViewAllCalendarEntries() ? FALSE : TRUE;
-	m_pageCal.m_Days = CAgilityBookOptions::DaysTillEntryIsPast();
-	m_pageCal.m_bHideOverlapping = CAgilityBookOptions::HideOverlappingCalendarEntries() ? TRUE : FALSE;
-	m_pageCal.m_bOpening = CAgilityBookOptions::ViewAllCalendarOpening() ? TRUE : FALSE;
-	m_pageCal.m_bClosing = CAgilityBookOptions::ViewAllCalendarClosing() ? TRUE : FALSE;
-	CAgilityBookOptions::GetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
-	*/
+
+	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorNotEntered, wxColour()));
+	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPlanning, wxColour()));
+	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorOpening, wxColour()));
+	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorClosing, wxColour()));
+	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorEntered, wxColour()));
+	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
+		iColor != m_CalColors.end();
+		++iColor)
+	{
+		(*iColor).second = CAgilityBookOptions::CalendarColor((*iColor).first);
+	}
+
+	// Controls (these are done first to control tab order)
+
+	wxCheckBox* ctrlWarnOpen = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_CAL_WARN_OPENNEAR"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bOpeningNear));
+	ctrlWarnOpen->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgOptionsCalendar::OnCalNear), NULL, this);
+	ctrlWarnOpen->SetHelpText(_("HIDC_OPT_CAL_WARN_OPENNEAR"));
+	ctrlWarnOpen->SetToolTip(_("HIDC_OPT_CAL_WARN_OPENNEAR"));
+
+	m_ctrlOpeningNear = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		wxGenericValidator(&m_nOpeningNear));
+	m_ctrlOpeningNear->SetHelpText(_("HIDC_OPT_CAL_OPENNEAR"));
+	m_ctrlOpeningNear->SetToolTip(_("HIDC_OPT_CAL_OPENNEAR"));
+
+	wxStaticText* textOpen = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_CAL_OPENNEAR"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textOpen->Wrap(-1);
+
+	m_ctrlOpeningNearColor = new wxStaticText(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(20, 20), wxSUNKEN_BORDER);
+	m_ctrlOpeningNearColor->Wrap(-1);
+	m_ctrlOpeningNearColor->SetBackgroundColour(m_OpeningNear);
+
+	m_ctrlOpeningNearSet = new wxButton(this, wxID_ANY,
+		_("IDC_OPT_CAL_COLOR_OPENNEAR_SET"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlOpeningNearSet->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsCalendar::OnCalColorOpeningNear), NULL, this);
+	m_ctrlOpeningNearSet->SetHelpText(_("HIDC_OPT_CAL_COLOR_OPENNEAR_SET"));
+	m_ctrlOpeningNearSet->SetToolTip(_("HIDC_OPT_CAL_COLOR_OPENNEAR_SET"));
+
+	wxCheckBox* ctrlWarnClose = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_CAL_WARN_CLOSENEAR"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bClosingNear));
+	ctrlWarnClose->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgOptionsCalendar::OnCalNear), NULL, this);
+	ctrlWarnClose->SetHelpText(_("HIDC_OPT_CAL_WARN_CLOSENEAR"));
+	ctrlWarnClose->SetToolTip(_("HIDC_OPT_CAL_WARN_CLOSENEAR"));
+
+	m_ctrlClosingNear = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		wxGenericValidator(&m_nClosingNear));
+	m_ctrlClosingNear->SetHelpText(_("HIDC_OPT_CAL_CLOSENEAR"));
+	m_ctrlClosingNear->SetToolTip(_("HIDC_OPT_CAL_CLOSENEAR"));
+
+	wxStaticText* textClose = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_CAL_CLOSENEAR"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textClose->Wrap(-1);
+
+	m_ctrlClosingNearColor = new wxStaticText(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(20, 20), wxSUNKEN_BORDER);
+	m_ctrlClosingNearColor->Wrap(-1);
+	m_ctrlClosingNearColor->SetBackgroundColour(m_ClosingNear);
+
+	m_ctrlClosingNearSet = new wxButton(this, wxID_ANY,
+		_("IDC_OPT_CAL_COLOR_CLOSENEAR_SET"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlClosingNearSet->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsCalendar::OnCalColorClosingNear), NULL, this);
+	m_ctrlClosingNearSet->SetHelpText(_("HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"));
+	m_ctrlClosingNearSet->SetToolTip(_("HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"));
+
+	wxStaticText* textDOW = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_CAL_DAY_OF_WEEK"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDOW->Wrap(-1);
+
+	assert(ARBDate::eSunday == 0);
+	wxString choicesDOW[] =
+	{
+		_("Sunday"),
+		_("Monday"),
+		_("Tuesday"),
+		_("Wednesday"),
+		_("Thursday"),
+		_("Friday"),
+		_("Saturday"),
+	};
+	int numChoicesDOW = sizeof(choicesDOW) / sizeof(choicesDOW[0]);
+	m_ctrlDayOfWeek = new wxChoice(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		numChoicesDOW, choicesDOW, 0);
+	m_ctrlDayOfWeek->SetSelection(static_cast<int>(CAgilityBookOptions::GetFirstDayOfWeek()));
+	m_ctrlDayOfWeek->SetHelpText(_("HIDC_OPT_CAL_DAY_OF_WEEK"));
+	m_ctrlDayOfWeek->SetToolTip(_("HIDC_OPT_CAL_DAY_OF_WEEK"));
+
+	wxCheckBox* ctrlAutoDel = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_CAL_AUTO_DELETE"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bAutoDelete));
+	ctrlAutoDel->SetHelpText(_("HIDC_OPT_CAL_AUTO_DELETE"));
+	ctrlAutoDel->SetToolTip(_("HIDC_OPT_CAL_AUTO_DELETE"));
+
+	wxCheckBox* ctrlHide = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_CAL_HIDE_OLD"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bHideOld));
+	ctrlHide->SetHelpText(_("HIDC_OPT_CAL_HIDE_OLD"));
+	ctrlHide->SetToolTip(_("HIDC_OPT_CAL_HIDE_OLD"));
+
+	wxStaticText* textPast1 = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_CAL_OLD_ENTRY_DAYS"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPast1->Wrap(-1);
+
+	wxTextCtrl* ctrlPast = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(30, -1), 0,
+		wxGenericValidator(&m_Days));
+	ctrlPast->SetHelpText(_("HIDC_OPT_CAL_OLD_ENTRY_DAYS"));
+	ctrlPast->SetToolTip(_("HIDC_OPT_CAL_OLD_ENTRY_DAYS"));
+
+	wxStaticText* textPast2 = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_CAL_OLD_ENTRY_DAYS2"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPast2->Wrap(-1);
+
+	wxCheckBox* ctrlHideEntered = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_CAL_HIDE_OVERLAP"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bHideOverlapping));
+	ctrlHideEntered->SetHelpText(_("HIDC_OPT_CAL_HIDE_OVERLAP"));
+	ctrlHideEntered->SetToolTip(_("HIDC_OPT_CAL_HIDE_OVERLAP"));
+
+	wxCheckBox* ctrlViewOpen = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_CAL_OPENING"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bOpening));
+	ctrlViewOpen->SetHelpText(_("HIDC_OPT_CAL_OPENING"));
+	ctrlViewOpen->SetToolTip(_("HIDC_OPT_CAL_OPENING"));
+
+	wxCheckBox* ctrlViewClose = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_CAL_CLOSING"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_bClosing));
+	ctrlViewClose->SetHelpText(_("HIDC_OPT_CAL_CLOSING"));
+	ctrlViewClose->SetToolTip(_("HIDC_OPT_CAL_CLOSING"));
+
+	wxStaticText* textCalEntry = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_CAL_ENTRIES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textCalEntry->Wrap(-1);
+
+	m_ctrlCalEntries = new wxChoice(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, 0);
+	m_ctrlCalEntries->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(CDlgOptionsCalendar::OnSelchangeCalEntries), NULL, this);
+	m_ctrlCalEntries->SetHelpText(_("HIDC_OPT_CAL_ENTRIES"));
+	m_ctrlCalEntries->SetToolTip(_("HIDC_OPT_CAL_ENTRIES"));
+	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
+		iColor != m_CalColors.end();
+		++iColor)
+	{
+		m_ctrlCalEntries->Append(GetCalText((*iColor).first, false));
+	}
+	m_ctrlCalEntries->SetSelection(0);
+
+	m_ctrlColor = new wxStaticText(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(20, 20), wxSUNKEN_BORDER);
+	m_ctrlColor->Wrap(-1);
+	SetCalColor();
+
+	wxButton* btnColor = new wxButton(this, wxID_ANY,
+		_("IDC_OPT_CAL_COLOR_SET"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	btnColor->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsCalendar::OnCalColors), NULL, this);
+	btnColor->SetHelpText(_("HIDC_OPT_CAL_COLOR_SET"));
+	btnColor->SetToolTip(_("HIDC_OPT_CAL_COLOR_SET"));
+
+	m_ctrlCalView = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH);
+	m_ctrlCalView->SetFont(m_fontCalView);
+	SetRichText();
+
+	wxButton* ctrlFont = new wxButton(this, wxID_ANY,
+		_("IDC_OPT_CAL_FONT"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	ctrlFont->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsCalendar::OnFontCalView), NULL, this);
+	ctrlFont->SetHelpText(_("HIDC_OPT_CAL_FONT"));
+	ctrlFont->SetToolTip(_("HIDC_OPT_CAL_FONT"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* sizerCal = new wxBoxSizer(wxVERTICAL);
+
+	wxStaticBoxSizer* sizerCalList = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_LIST")), wxVERTICAL);
+
+	wxFlexGridSizer* sizerCalListItems = new wxFlexGridSizer(2, 2, 0, 0);
+	sizerCalListItems->SetFlexibleDirection(wxBOTH);
+	sizerCalListItems->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+
+	wxBoxSizer* sizerOpen = new wxBoxSizer(wxVERTICAL);
+	sizerOpen->Add(ctrlWarnOpen, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	wxBoxSizer* sizerOpenDays = new wxBoxSizer(wxHORIZONTAL);
+	sizerOpenDays->Add(15, 0, 0, 0, 5);
+	sizerOpenDays->Add(m_ctrlOpeningNear, 0, wxLEFT|wxRIGHT, 5);
+	sizerOpenDays->Add(textOpen, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	sizerOpen->Add(sizerOpenDays, 0, 0, 5);
+
+	sizerCalListItems->Add(sizerOpen, 0, 0, 5);
+
+	wxBoxSizer* sizerOpenColor = new wxBoxSizer(wxHORIZONTAL);
+	sizerOpenColor->Add(m_ctrlOpeningNearColor, 0, wxALIGN_RIGHT|wxALL, 5);
+	sizerOpenColor->Add(m_ctrlOpeningNearSet, 0, wxALIGN_RIGHT|wxALL, 5);
+
+	sizerCalListItems->Add(sizerOpenColor, 0, 0, 5);
+
+	wxBoxSizer* sizerClose = new wxBoxSizer(wxVERTICAL);
+	sizerClose->Add(ctrlWarnClose, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	wxBoxSizer* sizerCloseDays = new wxBoxSizer(wxHORIZONTAL);
+	sizerCloseDays->Add(15, 0, 0, 0, 5);
+	sizerCloseDays->Add(m_ctrlClosingNear, 0, wxLEFT|wxRIGHT, 5);
+	sizerCloseDays->Add(textClose, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	sizerClose->Add(sizerCloseDays, 0, 0, 5);
+
+	sizerCalListItems->Add(sizerClose, 0, 0, 5);
+
+	wxBoxSizer* sizerCloseColor = new wxBoxSizer(wxHORIZONTAL);
+	sizerCloseColor->Add(m_ctrlClosingNearColor, 0, wxALL, 5);
+	sizerCloseColor->Add(m_ctrlClosingNearSet, 0, wxALIGN_RIGHT|wxALL, 5);
+
+	sizerCalListItems->Add(sizerCloseColor, 0, 0, 5);
+
+	sizerCalList->Add(sizerCalListItems, 0, 0, 5);
+
+	sizerCal->Add(sizerCalList, 0, 0, 5);
+
+	wxStaticBoxSizer* sizerCalView = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_VIEW")), wxHORIZONTAL);
+
+	wxBoxSizer* sizerCalView2 = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerDOW = new wxBoxSizer(wxHORIZONTAL);
+	sizerDOW->Add(textDOW, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerDOW->Add(m_ctrlDayOfWeek, 0, wxALL, 5);
+
+	sizerCalView2->Add(sizerDOW, 0, 0, 5);
+	sizerCalView2->Add(ctrlAutoDel, 0, wxALL, 5);
+	sizerCalView2->Add(ctrlHide, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+
+	wxBoxSizer* sizePast = new wxBoxSizer(wxHORIZONTAL);
+	sizePast->Add(15, 0, 0, 0, 5);
+	sizePast->Add(textPast1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizePast->Add(ctrlPast, 0, wxALL, 5);
+	sizePast->Add(textPast2, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	sizerCalView2->Add(sizePast, 0, 0, 5);
+	sizerCalView2->Add(ctrlHideEntered, 0, wxALL, 5);
+	sizerCalView2->Add(ctrlViewOpen, 0, wxALL, 5);
+	sizerCalView2->Add(ctrlViewClose, 0, wxALL, 5);
+
+	sizerCalView->Add(sizerCalView2, 0, 0, 5);
+
+	wxBoxSizer* sizerCalEntries = new wxBoxSizer(wxVERTICAL);
+	sizerCalEntries->Add(textCalEntry, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+
+	wxBoxSizer* sizerEntryColor = new wxBoxSizer(wxHORIZONTAL);
+	sizerEntryColor->Add(m_ctrlCalEntries, 0, wxALL, 5);
+	sizerEntryColor->Add(m_ctrlColor, 0, wxALL, 5);
+	sizerEntryColor->Add(btnColor, 0, wxALL, 5);
+
+	sizerCalEntries->Add(sizerEntryColor, 0, 0, 5);
+	sizerCalEntries->Add(m_ctrlCalView, 1, wxALL|wxEXPAND, 5);
+	sizerCalEntries->Add(ctrlFont, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+	sizerCalView->Add(sizerCalEntries, 0, wxEXPAND, 5);
+
+	sizerCal->Add(sizerCalView, 0, 0, 5);
+
+	SetSizer(sizerCal);
+	Layout();
+	sizerCal->Fit(this);
+
+	UpdateControls();
 }
 
 
 void CDlgOptionsCalendar::Save()
 {
-	/*
-	if (!m_pageCal.m_bOpeningNear)
-		m_pageCal.m_nOpeningNear = -1;
-	CAgilityBookOptions::SetCalendarOpeningNear(m_pageCal.m_nOpeningNear);
-	if (!m_pageCal.m_bClosingNear)
-		m_pageCal.m_nClosingNear = -1;
-	CAgilityBookOptions::SetCalendarClosingNear(m_pageCal.m_nClosingNear);
-	CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_pageCal.m_DayOfWeek));
-	CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_pageCal.m_bAutoDelete ? true : false);
-	CAgilityBookOptions::SetViewAllCalendarEntries(m_pageCal.m_bHideOld ? false : true);
-	CAgilityBookOptions::SetDaysTillEntryIsPast(m_pageCal.m_Days);
-	CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_pageCal.m_bHideOverlapping ? true : false);
-	CAgilityBookOptions::SetViewAllCalendarOpening(m_pageCal.m_bOpening ? true : false);
-	CAgilityBookOptions::SetViewAllCalendarClosing(m_pageCal.m_bClosing ? true : false);
-	CAgilityBookOptions::SetCalendarFontInfo(m_pageCal.m_fontCalViewInfo);
-	*/
+	if (!m_bOpeningNear)
+		m_nOpeningNear = -1;
+
+	CAgilityBookOptions::SetCalendarOpeningNearColor(m_OpeningNear);
+	CAgilityBookOptions::SetCalendarClosingNearColor(m_ClosingNear);
+	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
+		iColor != m_CalColors.end();
+		++iColor)
+	{
+		CAgilityBookOptions::SetCalendarColor((*iColor).first, (*iColor).second);
+	}
+
+	CAgilityBookOptions::SetCalendarOpeningNear(m_nOpeningNear);
+	if (!m_bClosingNear)
+		m_nClosingNear = -1;
+	CAgilityBookOptions::SetCalendarClosingNear(m_nClosingNear);
+
+	CAgilityBookOptions::SetFirstDayOfWeek(static_cast<ARBDate::DayOfWeek>(m_ctrlDayOfWeek->GetSelection()));
+	CAgilityBookOptions::SetAutoDeleteCalendarEntries(m_bAutoDelete);
+	CAgilityBookOptions::SetViewAllCalendarEntries(!m_bHideOld);
+	CAgilityBookOptions::SetDaysTillEntryIsPast(m_Days);
+	CAgilityBookOptions::SetHideOverlappingCalendarEntries(m_bHideOverlapping);
+	CAgilityBookOptions::SetViewAllCalendarOpening(m_bOpening);
+	CAgilityBookOptions::SetViewAllCalendarClosing(m_bClosing);
+	CAgilityBookOptions::SetCalendarFontInfo(m_fontCalViewInfo);
 }
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgOptionsCalendar")
-#if 0
-void CDlgOptionsCalendar::DoDataExchange(CDataExchange* pDX)
+
+wxString CDlgOptionsCalendar::GetCalText(
+		CAgilityBookOptions::CalendarColorItem type,
+		bool bForDisplay) const
 {
-	CDlgBasePropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgOptionsCalendar)
-	DDX_Check(pDX, IDC_OPT_CAL_WARN_OPENNEAR, m_bOpeningNear);
-	DDX_Control(pDX, IDC_OPT_CAL_OPENNEAR, m_ctrlOpeningNear);
-	DDX_Text(pDX, IDC_OPT_CAL_OPENNEAR, m_nOpeningNear);
-	DDX_Control(pDX, IDC_OPT_CAL_COLOR_OPENNEAR, m_ctrlOpeningNearColor);
-	DDX_Control(pDX, IDC_OPT_CAL_COLOR_OPENNEAR_SET, m_ctrlOpeningNearSet);
-	DDX_Check(pDX, IDC_OPT_CAL_WARN_CLOSENEAR, m_bClosingNear);
-	DDX_Control(pDX, IDC_OPT_CAL_CLOSENEAR, m_ctrlClosingNear);
-	DDX_Text(pDX, IDC_OPT_CAL_CLOSENEAR, m_nClosingNear);
-	DDX_Control(pDX, IDC_OPT_CAL_COLOR_CLOSENEAR, m_ctrlClosingNearColor);
-	DDX_Control(pDX, IDC_OPT_CAL_COLOR_CLOSENEAR_SET, m_ctrlClosingNearSet);
-	DDX_Control(pDX, IDC_OPT_CAL_DAY_OF_WEEK, m_ctrlDayOfWeek);
-	DDX_CBIndex(pDX, IDC_OPT_CAL_DAY_OF_WEEK, m_DayOfWeek);
-	DDX_Check(pDX, IDC_OPT_CAL_AUTO_DELETE, m_bAutoDelete);
-	DDX_Check(pDX, IDC_OPT_CAL_HIDE_OLD, m_bHideOld);
-	DDX_Text(pDX, IDC_OPT_CAL_OLD_ENTRY_DAYS, m_Days);
-	DDX_Check(pDX, IDC_OPT_CAL_HIDE_OVERLAP, m_bHideOverlapping);
-	DDX_Check(pDX, IDC_OPT_CAL_OPENING, m_bOpening);
-	DDX_Check(pDX, IDC_OPT_CAL_CLOSING, m_bClosing);
-	DDX_Control(pDX, IDC_OPT_CAL_ENTRIES, m_ctrlCalEntries);
-	DDX_Control(pDX, IDC_OPT_CAL_COLOR, m_ctrlColor);
-	DDX_Control(pDX, IDC_OPT_CAL_VIEW, m_ctrlCalView);
-	//}}AFX_DATA_MAP
+	wxString text;
+	switch (type)
+	{
+	case CAgilityBookOptions::eCalColorNotEntered:
+		text += Localization()->CalendarNotEntered().c_str();
+		if (bForDisplay)
+			text += wxT(" Text");
+		break;
+	case CAgilityBookOptions::eCalColorPlanning:
+		text += Localization()->CalendarPlanning().c_str();
+		if (bForDisplay)
+			text += wxT(" Text");
+		break;
+	case CAgilityBookOptions::eCalColorOpening:
+		if (!bForDisplay)
+			text += wxT("  ");
+		text += _("IDS_COL_OPENING");
+		if (bForDisplay)
+			text += wxT(" Text");
+		break;
+	case CAgilityBookOptions::eCalColorClosing:
+		if (!bForDisplay)
+			text += wxT("  ");
+		text += _("IDS_COL_CLOSING");
+		if (bForDisplay)
+			text += wxT(" Text");
+		break;
+	case CAgilityBookOptions::eCalColorEntered:
+		text += Localization()->CalendarEntered().c_str();
+		if (bForDisplay)
+			text += wxT(" Text");
+		break;
+	}
+	return text;
 }
-
-
-BEGIN_MESSAGE_MAP(CDlgOptionsCalendar, CDlgBasePropertyPage)
-	//{{AFX_MSG_MAP(CDlgOptionsCalendar)
-	ON_WM_DRAWITEM()
-	ON_CBN_SELCHANGE(IDC_OPT_CAL_ENTRIES, OnSelchangeCalEntries)
-	ON_BN_CLICKED(IDC_OPT_CAL_WARN_OPENNEAR, OnCalNear)
-	ON_BN_CLICKED(IDC_OPT_CAL_COLOR_OPENNEAR_SET, OnCalColorOpeningNear)
-	ON_BN_CLICKED(IDC_OPT_CAL_WARN_CLOSENEAR, OnCalNear)
-	ON_BN_CLICKED(IDC_OPT_CAL_COLOR_CLOSENEAR_SET, OnCalColorClosingNear)
-	ON_BN_CLICKED(IDC_OPT_CAL_COLOR_SET, OnCalColors)
-	ON_BN_CLICKED(IDC_OPT_CAL_FONT, OnFontCalView)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
 
 
 void CDlgOptionsCalendar::UpdateControls()
 {
-	if (m_bOpeningNear)
-	{
-		m_ctrlOpeningNear.EnableWindow(TRUE);
-		m_ctrlOpeningNearSet.EnableWindow(TRUE);
-	}
-	else
-	{
-		m_ctrlOpeningNear.EnableWindow(FALSE);
-		m_ctrlOpeningNearSet.EnableWindow(FALSE);
-	}
-	if (m_bClosingNear)
-	{
-		m_ctrlClosingNear.EnableWindow(TRUE);
-		m_ctrlClosingNearSet.EnableWindow(TRUE);
-	}
-	else
-	{
-		m_ctrlClosingNear.EnableWindow(FALSE);
-		m_ctrlClosingNearSet.EnableWindow(FALSE);
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgOptionsCalendar message handlers
-
-BOOL CDlgOptionsCalendar::OnInitDialog()
-{
-	CDlgBasePropertyPage::OnInitDialog();
-	m_fontCalViewInfo.CreateFont(m_fontCalView);
-	m_ctrlCalView.SetFont(&m_fontCalView);
-
-	int idx;
-	assert(ARBDate::eSunday == 0);
-	LCTYPE days[] = {
-		LOCALE_SDAYNAME7, // Start with sunday
-		LOCALE_SDAYNAME1,
-		LOCALE_SDAYNAME2,
-		LOCALE_SDAYNAME3,
-		LOCALE_SDAYNAME4,
-		LOCALE_SDAYNAME5,
-		LOCALE_SDAYNAME6
-	};
-	LANGID id = theApp.LanguageManager().CurrentLanguage();
-	for (idx = 0; idx < 7; ++idx)
-	{
-		CString str;
-		GetLocaleInfo(id, days[idx], str.GetBuffer(80), 80);
-		str.ReleaseBuffer();
-		m_ctrlDayOfWeek.AddString(str);
-	}
-	m_ctrlDayOfWeek.SetCurSel(m_DayOfWeek);
-
-	idx = m_ctrlCalEntries.AddString(Localization()->CalendarNotEntered().c_str());
-	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorNotEntered);
-	idx = m_ctrlCalEntries.AddString(Localization()->CalendarPlanning().c_str());
-	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorPlanning);
-	CString data;
-	data.LoadString(IDS_COL_OPENING);
-	data = wxT("  ") + data;
-	idx = m_ctrlCalEntries.AddString(data);
-	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorOpening);
-	data.LoadString(IDS_COL_CLOSING);
-	data = wxT("  ") + data;
-	idx = m_ctrlCalEntries.AddString(data);
-	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorClosing);
-	idx = m_ctrlCalEntries.AddString(Localization()->CalendarEntered().c_str());
-	m_ctrlCalEntries.SetItemData(idx, CAgilityBookOptions::eCalColorEntered);
-
-	m_ctrlCalEntries.SetCurSel(0);
-	UpdateControls();
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	m_ctrlOpeningNear->Enable(m_bOpeningNear);
+	m_ctrlOpeningNearSet->Enable(m_bOpeningNear);
+	m_ctrlClosingNear->Enable(m_bClosingNear);
+	m_ctrlClosingNearSet->Enable(m_bClosingNear);
 }
 
 
-void CDlgOptionsCalendar::OnDrawItem(
-		int nIDCtl,
-		LPDRAWITEMSTRUCT lpDrawItemStruct)
+void CDlgOptionsCalendar::SetCalColor()
 {
-	CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
-	CRect r;
-	switch (nIDCtl)
+	int idx = m_ctrlCalEntries->GetSelection();
+	if (0 <= idx)
 	{
-	case IDC_OPT_CAL_COLOR_OPENNEAR:
-		m_ctrlOpeningNearColor.GetClientRect(&r);
-		pDC->SetBkColor(CAgilityBookOptions::CalendarOpeningNearColor());
-		pDC->ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
-		break;
-	case IDC_OPT_CAL_COLOR_CLOSENEAR:
-		m_ctrlClosingNearColor.GetClientRect(&r);
-		pDC->SetBkColor(CAgilityBookOptions::CalendarClosingNearColor());
-		pDC->ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
-		break;
-	case IDC_OPT_CAL_COLOR:
-		{
-			int idx = m_ctrlCalEntries.GetCurSel();
-			if (0 <= idx)
-			{
-				m_ctrlColor.GetClientRect(&r);
-				CAgilityBookOptions::CalendarColorItem item = static_cast<CAgilityBookOptions::CalendarColorItem>(m_ctrlCalEntries.GetItemData(idx));
-				pDC->SetBkColor(CAgilityBookOptions::CalendarColor(item));
-				pDC->ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
-			}
-		}
-		break;
-	case IDC_OPT_CAL_VIEW:
-		{
-			m_ctrlCalView.GetClientRect(&r);
-			pDC->SetBkColor(GetSysColor(COLOR_WINDOW));
-			pDC->ExtTextOut(0, 0, ETO_OPAQUE, r, NULL, 0, NULL);
-
-			pDC->SetBkMode(TRANSPARENT);
-			pDC->SetTextColor(GetSysColor(COLOR_WINDOWTEXT));
-
-			CFont* pOldFont = pDC->SelectObject(&m_fontCalView);
-			TEXTMETRIC tm;
-			pDC->GetTextMetrics(&tm);
-
-			CString data;
-			data = Localization()->CalendarNotEntered().c_str();
-			data += wxT(" Text");
-			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered));
-			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
-
-			r.top += tm.tmHeight;
-			data = Localization()->CalendarPlanning().c_str();
-			data += wxT(" Text");
-			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning));
-			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
-
-			r.top += tm.tmHeight;
-			data.LoadString(IDS_COL_OPENING);
-			data += wxT(" Text");
-			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening));
-			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
-
-			r.top += tm.tmHeight;
-			data.LoadString(IDS_COL_CLOSING);
-			data += wxT(" Text");
-			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorClosing));
-			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
-
-			r.top += tm.tmHeight;
-			data = Localization()->CalendarEntered().c_str();
-			data += wxT(" Text");
-			pDC->SetTextColor(CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered));
-			pDC->DrawText(data, r, DT_NOPREFIX|DT_TOP);
-
-			pDC->SelectObject(pOldFont);
-		}
-		break;
+		m_ctrlColor->SetBackgroundColour(m_CalColors[idx].second);
+		m_ctrlColor->Refresh();
 	}
 }
 
 
-void CDlgOptionsCalendar::OnSelchangeCalEntries()
+void CDlgOptionsCalendar::SetRichText()
 {
-	UpdateData(TRUE);
-	m_ctrlColor.Invalidate();
-	m_ctrlCalView.Invalidate();
+	m_ctrlCalView->Clear();
+
+	std::vector<long> endLines;
+	endLines.push_back(-1);
+
+	wxString data;
+	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
+		iColor != m_CalColors.end();
+		++iColor)
+	{
+		data += GetCalText((*iColor).first, true);
+		data += wxT('\n');
+		endLines.push_back(data.length());
+	}
+
+	m_ctrlCalView->ChangeValue(data);
+
+	for (size_t i = 1; i < endLines.size(); ++i)
+	{
+		wxTextAttr style;
+		style.SetTextColour(m_CalColors[i-1].second);
+		m_ctrlCalView->SetStyle(endLines[i-1], endLines[i], style);
+	}
 }
 
 
-void CDlgOptionsCalendar::OnCalNear()
+void CDlgOptionsCalendar::OnSelchangeCalEntries(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
+	TransferDataFromWindow();
+	SetCalColor();
+	SetRichText();
+}
+
+
+void CDlgOptionsCalendar::OnCalNear(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
 	UpdateControls();
 }
 
 
-void CDlgOptionsCalendar::OnCalColorOpeningNear()
+void CDlgOptionsCalendar::OnCalColorOpeningNear(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	CColorDialog dlg(CAgilityBookOptions::CalendarOpeningNearColor(), CC_ANYCOLOR, this);
-	if (IDOK == dlg.DoModal())
+	wxColourData data;
+	data.SetColour(m_OpeningNear);
+	wxColourDialog dlg(this, &data);
+	if (wxID_OK == dlg.ShowModal())
 	{
-		CAgilityBookOptions::SetCalendarOpeningNearColor(dlg.GetColor());
-		m_ctrlOpeningNearColor.Invalidate();
+		m_OpeningNear = dlg.GetColourData().GetColour();
+		m_ctrlOpeningNearColor->SetBackgroundColour(m_OpeningNear);
+		m_ctrlOpeningNearColor->Refresh();
 	}
 }
 
 
-void CDlgOptionsCalendar::OnCalColorClosingNear()
+void CDlgOptionsCalendar::OnCalColorClosingNear(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	CColorDialog dlg(CAgilityBookOptions::CalendarClosingNearColor(), CC_ANYCOLOR, this);
-	if (IDOK == dlg.DoModal())
+	wxColourData data;
+	data.SetColour(m_ClosingNear);
+	wxColourDialog dlg(this, &data);
+	if (wxID_OK == dlg.ShowModal())
 	{
-		CAgilityBookOptions::SetCalendarClosingNearColor(dlg.GetColor());
-		m_ctrlClosingNearColor.Invalidate();
+		m_ClosingNear = dlg.GetColourData().GetColour();
+		m_ctrlClosingNearColor->SetBackgroundColour(m_ClosingNear);
+		m_ctrlClosingNearColor->Refresh();
 	}
 }
 
 
-void CDlgOptionsCalendar::OnCalColors()
+void CDlgOptionsCalendar::OnCalColors(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	int idx = m_ctrlCalEntries.GetCurSel();
-	if (0 > idx)
-		return;
-	CAgilityBookOptions::CalendarColorItem item = static_cast<CAgilityBookOptions::CalendarColorItem>(m_ctrlCalEntries.GetItemData(idx));
-	CColorDialog dlg(CAgilityBookOptions::CalendarColor(item), CC_ANYCOLOR, this);
-	if (IDOK == dlg.DoModal())
+	int idx = m_ctrlCalEntries->GetSelection();
+	if (0 <= idx)
 	{
-		CAgilityBookOptions::SetCalendarColor(item, dlg.GetColor());
-		m_ctrlColor.Invalidate();
-		m_ctrlCalView.Invalidate();
+		wxColourData data;
+		data.SetColour(m_CalColors[idx].second);
+		wxColourDialog dlg(this, &data);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			m_CalColors[idx].second = dlg.GetColourData().GetColour();
+			SetCalColor();
+			SetRichText();
+		}
 	}
 }
 
 
-void CDlgOptionsCalendar::OnFontCalView()
+void CDlgOptionsCalendar::OnFontCalView(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
-	LOGFONT logFont;
-	m_fontCalView.GetLogFont(&logFont);
-	CFontDialog dlg(&logFont, CF_SCREENFONTS);
-	if (IDOK == dlg.DoModal())
+	wxFontData data;
+	data.SetAllowSymbols(false);
+	data.SetInitialFont(m_fontCalView);
+	wxFontDialog dlg(this, data);
+	if (wxID_OK == dlg.ShowModal())
 	{
 		m_fontCalViewInfo.CreateFont(dlg, m_fontCalView);
-		m_ctrlCalView.SetFont(&(m_fontCalView));
-		m_ctrlCalView.Invalidate();
+		m_ctrlCalView->SetFont(m_fontCalView);
 	}
 }
-#endif
