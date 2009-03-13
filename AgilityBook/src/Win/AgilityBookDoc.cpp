@@ -466,11 +466,11 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 		return false;
 	bool bCreated = false;
 	ARBDogTrialPtr pTrial(ARBDogTrial::New(cal));
-	CDlgTrial dlg(this, pTrial);
+	CDlgTrial dlg(this, pTrial, wxGetApp().GetTopWindow());
 	if (wxID_OK == dlg.ShowModal())
 	{
 		std::vector<ARBDogPtr> dogs;
-		CDlgSelectDog dlgDogs(this, dogs);
+		CDlgSelectDog dlgDogs(this, dogs,wxGetApp().GetTopWindow());
 		if (wxID_OK == dlgDogs.ShowModal() && 0 < dogs.size())
 		{
 			for (std::vector<ARBDogPtr>::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
@@ -541,7 +541,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 	CConfigActionCallback callback;
 	if (m_Records.Update(0, update, info, callback))
 	{
-		CDlgMessage dlg(info.str().c_str());
+		CDlgMessage dlg(info.str().c_str(), wxGetApp().GetTopWindow());
 		dlg.ShowModal();
 		Modify(true);
 		CUpdateHint hint(UPDATE_CONFIG);
@@ -556,7 +556,7 @@ bool CAgilityBookDoc::ImportConfiguration(bool bUseDefault)
 {
 	bool bOk = false;
 	bool bDoIt = false;
-	CDlgConfigUpdate dlg;
+	CDlgConfigUpdate dlg(wxGetApp().GetTopWindow());
 	if (bUseDefault)
 	{
 		bDoIt = true;
@@ -1537,7 +1537,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_FILE_LINKED:
 		{
-			CDlgFindLinks dlg(m_Records.GetDogs());
+			CDlgFindLinks dlg(m_Records.GetDogs(), wxGetApp().GetTopWindow());
 			if (0 == dlg.GetNumLinks())
 				wxMessageBox(_("IDS_NO_LINKED_FILES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 			else
@@ -1621,7 +1621,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case ID_EDIT_CONFIGURATION:
 		{
-			CDlgConfigure config(this, m_Records);
+			CDlgConfigure config(this, m_Records, wxGetApp().GetTopWindow());
 			config.ShowModal();
 			// Don't need to update calsite info - done during OnOK.
 		}
@@ -1630,7 +1630,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_AGILITY_NEW_DOG:
 		{
 			ARBDogPtr dog(ARBDog::New());
-			CDlgDog dlg(this, dog);
+			CDlgDog dlg(this, dog, wxGetApp().GetTopWindow());
 			if (wxID_OK == dlg.ShowModal())
 			{
 				CTabView* pTab = GetTabView();
@@ -1650,7 +1650,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_AGILITY_NEW_CALENDAR:
 		{
 			ARBCalendarPtr cal(ARBCalendar::New());
-			CDlgCalendar dlg(cal, this);
+			CDlgCalendar dlg(cal, this, wxGetApp().GetTopWindow());
 			if (wxID_OK == dlg.ShowModal())
 			{
 				if (!(CAgilityBookOptions::AutoDeleteCalendarEntries() && cal->GetEndDate() < ARBDate::Today()))
@@ -1678,7 +1678,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_AGILITY_NEW_TRAINING:
 		{
 			ARBTrainingPtr training(ARBTraining::New());
-			CDlgTraining dlg(training, this);
+			CDlgTraining dlg(training, this, wxGetApp().GetTopWindow());
 			if (wxID_OK == dlg.ShowModal())
 			{
 				CTabView* pTab = GetTabView();
@@ -1702,7 +1702,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
 				select = pTrial->GetClubs().GetPrimaryClubName().c_str();
-			CDlgInfoNote dlg(this, ARBInfo::eClubInfo, select);
+			CDlgInfoNote dlg(this, ARBInfo::eClubInfo, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
 		break;
@@ -1713,7 +1713,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogRunPtr pRun = GetCurrentRun();
 			if (pRun)
 				select = pRun->GetJudge().c_str();
-			CDlgInfoNote dlg(this, ARBInfo::eJudgeInfo, select);
+			CDlgInfoNote dlg(this, ARBInfo::eJudgeInfo, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
 		break;
@@ -1724,7 +1724,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
 				select = pTrial->GetLocation().c_str();
-			CDlgInfoNote dlg(this, ARBInfo::eLocationInfo, select);
+			CDlgInfoNote dlg(this, ARBInfo::eLocationInfo, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
 		break;
@@ -1732,10 +1732,10 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	case ID_NOTES_SEARCH:
 		{
 			CFindInfo callback(this);
-			CDlgFind dlg(callback);
+			CDlgFind dlg(callback, wxGetApp().GetTopWindow());
 			if (wxID_OK == dlg.ShowModal())
 			{
-				CDlgListViewer dlgList(this, _("IDS_COL_NOTES"), callback.m_Items);
+				CDlgListViewer dlgList(this, _("IDS_COL_NOTES"), callback.m_Items, wxGetApp().GetTopWindow());
 				dlgList.ShowModal();
 			}
 		}
@@ -1770,7 +1770,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 
 	case wxID_ABOUT:
 		{
-			CDlgAbout dlg(this, NULL);
+			CDlgAbout dlg(this, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
 		break;

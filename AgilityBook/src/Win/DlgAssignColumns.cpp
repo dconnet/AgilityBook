@@ -92,6 +92,10 @@ Training Log:
 
  *
  * Revision History
+ * @li 2009-03-12 DRC Fixed a bug that assumed items in sc_Fields lists had ids
+ *                that were in ascending order. Adding verified broke that.
+ *                (Only issue was 'remove' would put item into wrong place in
+ *                available list)
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -397,7 +401,9 @@ static struct
 	{CAgilityBookOptions::eLogImport | CAgilityBookOptions::eLogExport | CAgilityBookOptions::eView,
 		IO_LOG_SUBNAME,
 		true, wxLIST_FORMAT_LEFT, wxT("IDS_COL_SUBNAME")},
-	{0, IO_RESERVED, false, 0, 0},
+	{CAgilityBookOptions::eView,
+		IO_TREE_TRIAL_VERIFIED,
+		false, 0, wxT("IDS_COL_VERIFIED")},
 	{CAgilityBookOptions::eRunsExport | CAgilityBookOptions::eView,
 		IO_RUNS_SPEED,
 		false, wxLIST_FORMAT_LEFT, wxT("IDS_COL_SPEED")},
@@ -673,8 +679,9 @@ static int const idxViewTreeDog[] = {
 	IO_TREE_DOG_DOB,		IO_TREE_DOG_AGE,
 -1};
 static int const idxViewTreeTrial[] = {
-	IO_TREE_TRIAL_START,	IO_TREE_TRIAL_END,		IO_TREE_TRIAL_CLUB,
-	IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,	IO_TREE_TRIAL_NOTES,
+	IO_TREE_TRIAL_VERIFIED,	IO_TREE_TRIAL_START,	IO_TREE_TRIAL_END,
+	IO_TREE_TRIAL_CLUB,		IO_TREE_TRIAL_VENUE,	IO_TREE_TRIAL_LOCATION,
+	IO_TREE_TRIAL_NOTES,
 -1};
 static int const idxViewTreeRun[] = {
 	IO_TREE_RUN_DATE,		IO_TREE_RUN_Q,			IO_TREE_RUN_EVENT,
@@ -750,19 +757,24 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ColumnData : public wxClientData 
+class ColumnData: public wxClientData 
 {
 public:
-	ColumnData(long data) : m_Data(data) {}
-	long m_Data;
+	ColumnData(
+			size_t index,
+			long data)
+		: m_Index(index)
+		, m_Data(data)
+	{
+	}
+	ColumnData(ColumnData const& rhs)
+		: m_Index(rhs.m_Index)
+		, m_Data(rhs.m_Data)
+	{
+	}
+	size_t m_Index; // Sort index for available fields
+	long m_Data; // Column identifier
 };
-
-
-static long GetListBoxData(wxListBox* box, long idx)
-{
-	ColumnData* pData = dynamic_cast<ColumnData*>(box->GetClientObject(idx));
-	return pData->m_Data;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
@@ -968,6 +980,18 @@ CDlgAssignColumns::CDlgAssignColumns(
 }
 
 
+ColumnData* CDlgAssignColumns::GetAvailableData(long idx) const
+{
+	return dynamic_cast<ColumnData*>(m_ctrlAvailable->GetClientObject(idx));
+}
+
+
+ColumnData* CDlgAssignColumns::GetInUseData(long idx) const
+{
+	return dynamic_cast<ColumnData*>(m_ctrlColumns->GetClientObject(idx));
+}
+
+
 void CDlgAssignColumns::FillColumns()
 {
 	m_ctrlAvailable->Clear();
@@ -991,7 +1015,7 @@ void CDlgAssignColumns::FillColumns()
 				wxString name = GetNameFromColumnID(m_Columns[idxType][i]);
 				int idx = m_ctrlColumns->Append(name);
 				if (0 <= idx)
-					m_ctrlColumns->SetClientObject(idx, new ColumnData(m_Columns[idxType][i]));
+					m_ctrlColumns->SetClientObject(idx, new ColumnData(i, m_Columns[idxType][i]));
 			}
 			else
 			{
@@ -999,7 +1023,7 @@ void CDlgAssignColumns::FillColumns()
 				{
 					int idx = m_ctrlColumns->Append(blank);
 					if (0 <= idx)
-						m_ctrlColumns->SetClientObject(idx, new ColumnData(-1));
+						m_ctrlColumns->SetClientObject(idx, new ColumnData(0, -1));
 				}
 			}
 		}
@@ -1007,7 +1031,7 @@ void CDlgAssignColumns::FillColumns()
 		{
 			int idx = m_ctrlAvailable->Append(blank);
 			if (0 <= idx)
-				m_ctrlAvailable->SetClientObject(idx, new ColumnData(-1));
+				m_ctrlAvailable->SetClientObject(idx, new ColumnData(0, -1));
 		}
 		bool bImport = (CAgilityBookOptions::eRunsImport == m_eOrder
 			|| CAgilityBookOptions::eCalImport == m_eOrder
@@ -1022,7 +1046,7 @@ void CDlgAssignColumns::FillColumns()
 			wxString name = GetNameFromColumnID(sc_Fields[idxType][i]);
 			int idx = m_ctrlAvailable->Append(name);
 			if (0 <= idx)
-				m_ctrlAvailable->SetClientObject(idx, new ColumnData(sc_Fields[idxType][i]));
+				m_ctrlAvailable->SetClientObject(idx, new ColumnData(i, sc_Fields[idxType][i]));
 		}
 	}
 	UpdateButtons();
@@ -1041,7 +1065,7 @@ void CDlgAssignColumns::UpdateColumnVector()
 		m_Columns[idxType].reserve(m_ctrlColumns->GetCount());
 		for (unsigned int idx = 0; idx < m_ctrlColumns->GetCount(); ++idx)
 		{
-			m_Columns[idxType].push_back(GetListBoxData(m_ctrlColumns, idx));
+			m_Columns[idxType].push_back(GetInUseData(idx)->m_Data);
 		}
 	}
 }
@@ -1082,13 +1106,13 @@ void CDlgAssignColumns::OnAdd(wxCommandEvent& evt)
 	if (0 <= idxAvail)
 	{
 		wxString str = m_ctrlAvailable->GetString(idxAvail);
-		long data = GetListBoxData(m_ctrlAvailable, idxAvail);
+		ColumnData* pData = GetAvailableData(idxAvail);
 		int idxCol = m_ctrlColumns->Append(str);
 		if (0 <= idxCol)
 		{
-			m_ctrlColumns->SetClientObject(idxCol, new ColumnData(data));
+			m_ctrlColumns->SetClientObject(idxCol, new ColumnData(*pData));
 			m_ctrlColumns->SetSelection(idxCol);
-			if (data >= 0)
+			if (pData->m_Data >= 0)
 			{
 				m_ctrlAvailable->Delete(idxAvail);
 				if (idxAvail == static_cast<int>(m_ctrlAvailable->GetCount()))
@@ -1108,8 +1132,8 @@ void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 	if (0 <= idxCol)
 	{
 		wxString str = m_ctrlColumns->GetString(idxCol);
-		long data = GetListBoxData(m_ctrlColumns, idxCol);
-		if (data >= 0)
+		ColumnData* pData = GetInUseData(idxCol);
+		if (pData->m_Data >= 0)
 		{
 			unsigned int idxAvail = 0;
 			if (m_bIncludeBlank)
@@ -1117,8 +1141,8 @@ void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 			bool bDone = false;
 			for (; idxAvail < m_ctrlAvailable->GetCount(); ++idxAvail)
 			{
-				long data2 = GetListBoxData(m_ctrlAvailable, idxAvail);
-				if (data < data2)
+				ColumnData* pData2 = GetAvailableData(idxAvail);
+				if (pData->m_Index < pData2->m_Index)
 				{
 					bDone = true;
 					m_ctrlAvailable->Insert(str, idxAvail);
@@ -1131,7 +1155,7 @@ void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 			// Find where to insert it...
 			if (0 <= idxAvail)
 			{
-				m_ctrlAvailable->SetClientObject(idxAvail, new ColumnData(data));
+				m_ctrlAvailable->SetClientObject(idxAvail, new ColumnData(*pData));
 				m_ctrlColumns->Delete(idxCol);
 				if (idxCol == m_ctrlColumns->GetCount())
 					--idxCol;
@@ -1157,10 +1181,10 @@ void CDlgAssignColumns::OnMoveUp(wxCommandEvent& evt)
 	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount() && 0 != idxCol)
 	{
 		wxString str = m_ctrlColumns->GetString(idxCol);
-		long data = GetListBoxData(m_ctrlColumns, idxCol);
+		ColumnData* pData = new ColumnData(*GetInUseData(idxCol));
 		m_ctrlColumns->Delete(idxCol);
 		m_ctrlColumns->Insert(str, --idxCol);
-		m_ctrlColumns->SetClientObject(idxCol, new ColumnData(data));
+		m_ctrlColumns->SetClientObject(idxCol, pData);
 		m_ctrlColumns->SetSelection(idxCol);
 		UpdateColumnVector();
 		UpdateButtons();
@@ -1174,10 +1198,10 @@ void CDlgAssignColumns::OnMoveDown(wxCommandEvent& evt)
 	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount() && m_ctrlColumns->GetCount() - 1 != idxCol)
 	{
 		wxString str = m_ctrlColumns->GetString(idxCol);
-		long data = GetListBoxData(m_ctrlColumns, idxCol);
+		ColumnData* pData = new ColumnData(*GetInUseData(idxCol));
 		m_ctrlColumns->Delete(idxCol);
 		m_ctrlColumns->Insert(str, ++idxCol);
-		m_ctrlColumns->SetClientObject(idxCol, new ColumnData(data));
+		m_ctrlColumns->SetClientObject(idxCol, pData);
 		m_ctrlColumns->SetSelection(idxCol);
 		UpdateColumnVector();
 		UpdateButtons();

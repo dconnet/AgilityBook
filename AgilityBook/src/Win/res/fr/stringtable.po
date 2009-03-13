@@ -335,6 +335,9 @@ msgstr "Metres"
 msgid "IDS_COL_YPS"
 msgstr "m/s"
 
+msgid "IDS_COL_VERIFIED"
+msgstr "Confirmé"
+
 msgid "IDR_MAINFRAME"
 msgstr ""
 "Agility Record Book\n"

@@ -1069,6 +1069,15 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				bNeedSpace = true;
 			}
 			break;
+		case IO_TREE_TRIAL_VERIFIED:
+			if (bNeedSpace)
+				str += ' ';
+			if (m_pTrial->IsVerified())
+				str += wxT("*");
+			else
+				str += wxT("  "); // 2 spaces due to font (variable spacing)
+			bNeedSpace = true;
+			break;
 		case IO_TREE_TRIAL_CLUB:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())

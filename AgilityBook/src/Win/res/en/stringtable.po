@@ -334,6 +334,9 @@ msgstr "Yards"
 msgid "IDS_COL_YPS"
 msgstr "YPS"
 
+msgid "IDS_COL_VERIFIED"
+msgstr "Verified"
+
 msgid "IDR_MAINFRAME"
 msgstr ""
 "Agility Record Book\n"

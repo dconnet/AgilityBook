@@ -312,7 +312,7 @@ int CDlgFindLinks::GetImageIndex(tstring const& inLink)
 	int img = m_imgEmpty;
 	if (0 < inLink.length())
 	{
-		if (CheckLink(inLink))
+		if (CheckLink(inLink, this))
 			img = m_imgOk;
 		else
 			img = m_imgMissing;
