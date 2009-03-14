@@ -87,7 +87,7 @@ void CFindTree::FillTree(wxTreeItemId hItem) const
 
 	wxTreeItemIdValue cookie;
 	wxTreeItemId hChildItem = m_pView->m_Ctrl->GetFirstChild(hItem, cookie);
-	while (hChildItem)
+	while (hChildItem.IsOk())
 	{
 		FillTree(hChildItem);
 		hChildItem = m_pView->m_Ctrl->GetNextChild(hChildItem, cookie);

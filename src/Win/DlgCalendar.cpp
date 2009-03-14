@@ -145,7 +145,7 @@ CDlgCalendar::CDlgCalendar(
 	textStart->Wrap(-1);
 
 	wxDatePickerCtrl* ctrlStart = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateStart));
 	ctrlStart->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgCalendar::OnDatetimechangeStart), NULL, this);
 	ctrlStart->SetHelpText(_("HIDC_CAL_DATE_START"));
@@ -157,7 +157,7 @@ CDlgCalendar::CDlgCalendar(
 	textEnd->Wrap(-1);
 
 	m_ctrlEnd = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateEnd));
 	m_ctrlEnd->SetHelpText(_("HIDC_CAL_DATE_END"));
 	m_ctrlEnd->SetToolTip(_("HIDC_CAL_DATE_END"));
@@ -175,7 +175,7 @@ CDlgCalendar::CDlgCalendar(
 	textOpens->Wrap(-1);
 
 	m_ctrlOpens = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateOpens));
 	m_ctrlOpens->SetHelpText(_("HIDC_CAL_DATE_OPENS"));
 	m_ctrlOpens->SetToolTip(_("HIDC_CAL_DATE_OPENS"));
@@ -195,7 +195,7 @@ CDlgCalendar::CDlgCalendar(
 	textDraws->Wrap(-1);
 
 	m_ctrlDraws = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateDraws));
 	m_ctrlDraws->SetHelpText(_("HIDC_CAL_DATE_DRAWS"));
 	m_ctrlDraws->SetToolTip(_("HIDC_CAL_DATE_DRAWS"));
@@ -215,7 +215,7 @@ CDlgCalendar::CDlgCalendar(
 	textCloses->Wrap(-1);
 
 	m_ctrlCloses = new wxDatePickerCtrl(this, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN,
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_dateCloses));
 	m_ctrlCloses->SetHelpText(_("HIDC_CAL_DATE_CLOSES"));
 	m_ctrlCloses->SetToolTip(_("HIDC_CAL_DATE_CLOSES"));
