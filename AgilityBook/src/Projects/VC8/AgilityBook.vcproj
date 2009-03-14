@@ -454,22 +454,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgDogNumbers.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogProp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogTitles.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\DlgEventSelect.cpp"
 				>
 			</File>
@@ -900,22 +884,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgDog.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogNumbers.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogPoints.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogProp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgDogTitles.h"
 				>
 			</File>
 			<File

@@ -82,6 +82,9 @@ public:
 	CTrimValidator(
 			wxString* valPtr = NULL,
 			long trimStyle = TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY);
+	CTrimValidator(
+			wxString* valPtr,
+			wxString const& errMsg); // Message to use when validation fails
 	CTrimValidator(CTrimValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CTrimValidator(*this);}
@@ -90,6 +93,7 @@ public:
 
 protected:
 	long m_TrimStyle;
+	wxString m_ErrMsg;
 };
 
 

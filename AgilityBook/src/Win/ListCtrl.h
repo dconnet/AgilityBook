@@ -164,4 +164,5 @@ private:
     long InsertItem(long index, const wxString& label);
     long InsertItem(long index, int imageIndex);
     long InsertItem(long index, const wxString& label, int imageIndex);
+	void SetImageList(wxImageList* imageList, int which);
 };

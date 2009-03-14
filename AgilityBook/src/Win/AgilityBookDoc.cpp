@@ -1503,18 +1503,28 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 		break;
 	case ID_VIEW_SORTRUNS:
 		evt.Check(CAgilityBookOptions::GetNewestDatesFirst() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
 		break;
 	case ID_VIEW_RUNS_BY_TRIAL:
 		evt.Check(CAgilityBookOptions::GetViewRunsByTrial() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
 		break;
 	case ID_VIEW_HIDDEN:
 		evt.Check(CAgilityBookOptions::GetViewHiddenTitles() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
 		break;
 	case ID_VIEW_TABLE_IN_YPS:
 		evt.Check(CAgilityBookOptions::GetTableInYPS() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
 		break;
 	case ID_VIEW_LIFETIME_EVENTS:
 		evt.Check(CAgilityBookOptions::GetViewLifetimePointsByEvent() ? 1 : 0);
+		evt.Enable(false);
+		evt.Skip();
 		break;
 	case wxID_ABOUT:
 	case ID_HELP_UPDATE:
