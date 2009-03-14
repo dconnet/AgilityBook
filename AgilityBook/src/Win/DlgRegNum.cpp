@@ -53,7 +53,7 @@ CDlgRegNum::CDlgRegNum(
 		ARBDogRegNumList& regnums,
 		ARBDogRegNumPtr pRegNum,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_REG_NUM"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_RegNums(regnums)
 	, m_pRegNum(pRegNum)
 	, m_Venue()
@@ -63,6 +63,7 @@ CDlgRegNum::CDlgRegNum(
 	, m_Note()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_REG_NUM"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (m_pRegNum)
 	{

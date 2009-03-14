@@ -55,7 +55,7 @@ CDlgTraining::CDlgTraining(
 		ARBTrainingPtr pTraining,
 		CAgilityBookDoc* pDoc,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_TRAINING"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+	: wxDialog()
 	, m_pTraining(pTraining)
 	, m_pDoc(pDoc)
 	, m_datePicker(NULL)
@@ -64,6 +64,7 @@ CDlgTraining::CDlgTraining(
 	, m_Notes(pTraining->GetNote().c_str())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_TRAINING"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxDateTime date(wxDateTime::Now());
 	if (pTraining->GetDate().IsValid())

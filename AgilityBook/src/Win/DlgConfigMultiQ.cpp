@@ -60,7 +60,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 		ARBConfigVenuePtr inVenue,
 		ARBConfigMultiQPtr inMultiQ,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_MULTI_Q"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_pVenue(inVenue)
 	, m_pOrigMultiQ(inMultiQ)
 	, m_pMultiQ(inMultiQ->Clone())
@@ -78,6 +78,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	, m_ctrlRemove(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_MULTI_Q"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

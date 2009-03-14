@@ -128,7 +128,7 @@ bool CGenericValidator::TransferToWindow()
 		if (m_pShort)
 		{
 			wxString str;
-			str.Printf(wxT("%d"), *m_pShort);
+			str.Printf(wxT("%hd"), *m_pShort);
 			pControl->SetValue(str);
 			return true;
 		}

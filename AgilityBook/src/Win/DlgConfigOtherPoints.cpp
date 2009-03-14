@@ -122,7 +122,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		ARBConfig& config,
 		ARBConfigOtherPointsPtr pOther,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_OTHERPOINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_Config(config)
 	, m_pOther(pOther)
 	, m_Name(pOther->GetName().c_str())
@@ -131,6 +131,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	, m_Desc(pOther->GetDescription().c_str())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_OTHERPOINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 

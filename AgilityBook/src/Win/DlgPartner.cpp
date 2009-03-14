@@ -52,13 +52,14 @@ CDlgPartner::CDlgPartner(
 		std::set<tstring> const& inHandlers,
 		std::set<tstring> const& inDogs,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_PARTNER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_Handler(partner->GetHandler().c_str())
 	, m_Dog(partner->GetDog().c_str())
 	, m_RegNum(partner->GetRegNum().c_str())
 	, m_Partner(partner)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_PARTNER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	wxArrayString handlers;
 	std::set<tstring>::const_iterator iter;

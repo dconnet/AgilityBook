@@ -96,7 +96,7 @@ CDlgEventSelect::CDlgEventSelect(
 		wxString const& inLevel,
 		wxString const& inEvent,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_EVENT_SELECT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_ctrlDivisions(NULL)
 	, m_ctrlLevels(NULL)
 	, m_ctrlEvents(NULL)
@@ -110,6 +110,7 @@ CDlgEventSelect::CDlgEventSelect(
 	, m_Date(inDate)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_EVENT_SELECT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

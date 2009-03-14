@@ -221,7 +221,7 @@ msgid "IDC_CONFIG_EVENT_SUBNAMES_NEW"
 msgstr "New..."
 
 msgid "IDC_CONFIG_EVENT_SUBNAMES_EDIT"
-msgstr "Edit"
+msgstr "Edit..."
 
 msgid "IDC_CONFIG_EVENT_SUBNAMES_DELETE"
 msgstr "Delete"
@@ -239,10 +239,10 @@ msgid "IDC_CONFIG_EVENT_UNUSED"
 msgstr "Division/Levels not defined"
 
 msgid "IDC_CONFIG_EVENT_NEW"
-msgstr "New"
+msgstr "New..."
 
 msgid "IDC_CONFIG_EVENT_EDIT"
-msgstr "Edit"
+msgstr "Edit..."
 
 msgid "IDC_CONFIG_EVENT_DELETE"
 msgstr "Delete"
@@ -352,10 +352,10 @@ msgid "IDC_CONFIG_MULTIQ_DATE_VALID_TO"
 msgstr "Valid &To"
 
 msgid "IDC_CONFIG_MULTIQ_ADD"
-msgstr "&Add"
+msgstr "&Add..."
 
 msgid "IDC_CONFIG_MULTIQ_EDIT"
-msgstr "&Edit"
+msgstr "&Edit..."
 
 msgid "IDC_CONFIG_MULTIQ_DELETE"
 msgstr "&Remove"
@@ -661,7 +661,7 @@ msgid "IDC_FINDLINKS_COPY"
 msgstr "&Copy Paths"
 
 msgid "IDC_FINDLINKS_EDIT"
-msgstr "&Edit"
+msgstr "&Edit..."
 
 msgid "IDC_FINDLINKS_OPEN"
 msgstr "&Open"
@@ -671,7 +671,7 @@ msgid "IDD_INFONOTE"
 msgstr "Information"
 
 msgid "IDC_INFONOTE_NEW"
-msgstr "&New"
+msgstr "&New..."
 
 msgid "IDC_INFONOTE_DELETE"
 msgstr "&Delete"
@@ -688,10 +688,10 @@ msgstr "Choose a language:"
 
 # DlgListCtrl
 msgid "IDC_LIST_NEW"
-msgstr "&New"
+msgstr "&New..."
 
 msgid "IDC_LIST_EDIT"
-msgstr "&Edit"
+msgstr "&Edit..."
 
 msgid "IDC_LIST_DELETE"
 msgstr "&Delete"

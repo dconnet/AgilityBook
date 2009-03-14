@@ -45,10 +45,11 @@ CDlgFault::CDlgFault(
 		std::set<tstring>& inFaults,
 		wxString const& fault,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_FAULT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_Fault(fault)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_FAULT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	wxArrayString faults;
 	for (std::set<tstring>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)

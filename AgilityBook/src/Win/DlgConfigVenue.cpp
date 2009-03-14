@@ -80,14 +80,14 @@ public:
 	{
 	}
 	virtual bool CanAdd() const		{return true;}
-	virtual bool DoAdd() const;
+	virtual bool DoAdd();
 
 private:
 	CDlgConfigVenue::eAction m_Action;
 };
 
 
-bool CDlgConfigVenueDataRoot::DoAdd() const
+bool CDlgConfigVenueDataRoot::DoAdd()
 {
 	bool bAdded = false;
 	bool done = false;
@@ -207,7 +207,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		ARBConfig const& config,
 		ARBConfigVenuePtr pVenue,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_VENUE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_Book(book)
 	, m_Config(config)
 	, m_pVenueOrig(pVenue)
@@ -227,6 +227,8 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_ctrlMoveDown(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_VENUE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+
 	assert(m_pVenueOrig);
 	assert(m_pVenue);
 

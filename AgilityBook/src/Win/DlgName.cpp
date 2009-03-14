@@ -44,10 +44,9 @@ bool CDlgName::Create(
 		wxString const& caption,
 		wxWindow* parent)
 {
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	if (!wxDialog::Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
-
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
 	// Controls (these are done first to control tab order)
 

@@ -222,7 +222,7 @@ msgid "IDC_CONFIG_EVENT_SUBNAMES_NEW"
 msgstr "Nouveau..."
 
 msgid "IDC_CONFIG_EVENT_SUBNAMES_EDIT"
-msgstr "Édition"
+msgstr "Édition..."
 
 msgid "IDC_CONFIG_EVENT_SUBNAMES_DELETE"
 msgstr "Supprimer"
@@ -240,10 +240,10 @@ msgid "IDC_CONFIG_EVENT_UNUSED"
 msgstr "Niveaux conducteur/degrés non définis"
 
 msgid "IDC_CONFIG_EVENT_NEW"
-msgstr "Nouveau"
+msgstr "Nouveau..."
 
 msgid "IDC_CONFIG_EVENT_EDIT"
-msgstr "Édition"
+msgstr "Édition..."
 
 msgid "IDC_CONFIG_EVENT_DELETE"
 msgstr "Supprimer"
@@ -356,7 +356,7 @@ msgid "IDC_CONFIG_MULTIQ_ADD"
 msgstr "&Ajouter"
 
 msgid "IDC_CONFIG_MULTIQ_EDIT"
-msgstr "&Édition"
+msgstr "&Édition..."
 
 msgid "IDC_CONFIG_MULTIQ_DELETE"
 msgstr "&Supprimer"
@@ -662,7 +662,7 @@ msgid "IDC_FINDLINKS_COPY"
 msgstr "&Copier adresse"
 
 msgid "IDC_FINDLINKS_EDIT"
-msgstr "&Édition"
+msgstr "&Édition..."
 
 msgid "IDC_FINDLINKS_OPEN"
 msgstr "&Ouvrir"
@@ -672,7 +672,7 @@ msgid "IDD_INFONOTE"
 msgstr "Information"
 
 msgid "IDC_INFONOTE_NEW"
-msgstr "&Nouveax"
+msgstr "&Nouveax..."
 
 msgid "IDC_INFONOTE_DELETE"
 msgstr "&Supprimer"
@@ -689,10 +689,10 @@ msgstr "Choisir la Langue:"
 
 # DlgListCtrl
 msgid "IDC_LIST_NEW"
-msgstr "&Nouveau"
+msgstr "&Nouveau..."
 
 msgid "IDC_LIST_EDIT"
-msgstr "&Édition"
+msgstr "&Édition..."
 
 msgid "IDC_LIST_DELETE"
 msgstr "&Supprimer"

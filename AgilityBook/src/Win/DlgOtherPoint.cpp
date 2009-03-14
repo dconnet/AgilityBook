@@ -70,7 +70,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 		ARBConfig& config,
 		ARBDogRunOtherPointsPtr pRunOther,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_OTHER_POINT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+	: wxDialog()
 	, m_Config(config)
 	, m_pRunOther(pRunOther)
 	, m_ctrlOtherPoints(NULL)
@@ -78,6 +78,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 	, m_Points(pRunOther->GetPoints())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_OTHER_POINT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 

@@ -96,7 +96,7 @@ CDlgTrial::CDlgTrial(
 		CAgilityBookDoc* pDoc,
 		ARBDogTrialPtr pTrial,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_TRIAL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_Location(pTrial->GetLocation().c_str())
 	, m_Verified(pTrial->IsVerified())
 	, m_Notes(pTrial->GetNote().c_str())
@@ -110,6 +110,7 @@ CDlgTrial::CDlgTrial(
 	, m_bRunsDeleted(false)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_TRIAL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	pTrial->GetClubs().Clone(m_Clubs);
 

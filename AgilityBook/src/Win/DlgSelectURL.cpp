@@ -44,11 +44,12 @@
 CDlgSelectURL::CDlgSelectURL(
 		wxString const& name,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_SELECT_URL "), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_Name(name)
 	, m_textCtrl(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_SELECT_URL "), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 

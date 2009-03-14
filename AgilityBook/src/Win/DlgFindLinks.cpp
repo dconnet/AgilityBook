@@ -171,7 +171,7 @@ END_EVENT_TABLE()
 CDlgFindLinks::CDlgFindLinks(
 		ARBDogList& inDogs,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_FIND_LINKS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+	: wxDialog()
 	, m_ctrlLinks(NULL)
 	, m_ctrlEdit(NULL)
 	, m_ctrlOpen(NULL)
@@ -180,10 +180,11 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
 {
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_FIND_LINKS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
 	wxBusyCursor wait;
 	m_sortLinks.Initialize(nColLinkInfo);
-
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 
 	// Controls (these are done first to control tab order)
 

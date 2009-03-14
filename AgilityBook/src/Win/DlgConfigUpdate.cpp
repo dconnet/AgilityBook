@@ -54,12 +54,13 @@ END_EVENT_TABLE()
 
 
 CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* parent)
-	: wxDialog(parent, wxID_ANY, _("IDD_CONFIG_UPDATE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_radioDefault(NULL)
 	, m_radioExisting(NULL)
 	, m_btnPick(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(parent, wxID_ANY, _("IDD_CONFIG_UPDATE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 
