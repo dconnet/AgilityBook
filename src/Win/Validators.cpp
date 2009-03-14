@@ -175,6 +175,17 @@ CTrimValidator::CTrimValidator(
 		long trimStyle)
 	: wxGenericValidator(valPtr)
 	, m_TrimStyle(trimStyle)
+	, m_ErrMsg()
+{
+}
+
+
+CTrimValidator::CTrimValidator(
+		wxString* valPtr,
+		wxString const& errMsg)
+	: wxGenericValidator(valPtr)
+	, m_TrimStyle(TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY)
+	, m_ErrMsg(errMsg)
 {
 }
 
@@ -236,8 +247,12 @@ bool CTrimValidator::Validate(wxWindow* parent)
 	if ((m_TrimStyle & TRIMVALIDATOR_NONEMPTY) && val.empty())
 	{
 		ok = false;
+		errormsg = m_ErrMsg;
+		if (errormsg.empty())
+		{
 #pragma message PRAGMA_MESSAGE("TODO: CTrimTextValidator translation")
-		errormsg = wxT("String may not be empty");
+			errormsg = wxT("String may not be empty");
+		}
 	}
 
 	if (!ok)

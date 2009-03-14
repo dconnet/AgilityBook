@@ -115,7 +115,7 @@ bool CReportListCtrl::Create(
 	m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
 	m_imgSortUp = m_ImageList.Add(wxIcon(HdrUp_xpm));
 	m_imgSortDn = m_ImageList.Add(wxIcon(HdrDown_xpm));
-	SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
+	wxListView::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	return true;
 }
 

@@ -255,22 +255,6 @@ SOURCE=..\..\Win\DlgDog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgDogNumbers.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgDogPoints.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgDogProp.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgDogTitles.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\DlgEventSelect.cpp
 # End Source File
 # Begin Source File
@@ -669,22 +653,6 @@ SOURCE=..\..\Win\DlgCRCDViewer.h
 # Begin Source File
 
 SOURCE=..\..\Win\DlgDog.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgDogNumbers.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgDogPoints.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgDogProp.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgDogTitles.h
 # End Source File
 # Begin Source File
 

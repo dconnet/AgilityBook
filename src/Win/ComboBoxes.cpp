@@ -94,7 +94,7 @@ ARBConfigVenuePtr CVenueComboBox::GetVenue(int index) const
 {
 	CVenueComboData* pData = dynamic_cast<CVenueComboData*>(GetClientObject(index));
 	if (pData)
-		pData->m_Venue;
+		return pData->m_Venue;
 	return ARBConfigVenuePtr();
 }
 

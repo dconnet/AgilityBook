@@ -505,7 +505,14 @@ void CDlgExistingPoints::SetEnableLists(
 		outDivMQ = true;
 		outLevel = true;
 		outEvent = true;
-		outSubName = true;
+		{
+			long index = m_ctrlEvents->GetSelection();
+			if (wxNOT_FOUND != index)
+			{
+				ARBConfigEventPtr pEvent = GetEventData(index)->m_Event;
+				outSubName = pEvent->HasSubNames();
+			}
+		}
 		break;
 
 	case ARBDogExistingPoints::eSpeed:

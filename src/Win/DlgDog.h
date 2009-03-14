@@ -39,59 +39,124 @@
  * @li 2003-08-18 DRC Added a deceased date for a dog.
  */
 
+#include "ARBDate.h"
+#include "ARBDogExistingPoints.h"
+#include "ARBDogRegNum.h"
+#include "ARBDogTitle.h"
 #include "ARBTypes.h"
-//#include "DlgBaseSheet.h"
+#include "ColumnOrder.h"
 class CAgilityBookDoc;
-//class CDlgDogNumbers;
-//class CDlgDogPoints;
-//class CDlgDogProperties;
-//class CDlgDogTitles;
+class CDlgDogDataTitle;
+class CReportListCtrl;
+class wxDateEvent;
+class wxDatePickerCtrl;
 
-class CDlgDog
+ARB_TYPEDEF(CDlgDogDataPoint)
+ARB_TYPEDEF(CDlgDogDataRegNum)
+ARB_TYPEDEF(CDlgDogDataTitle)
+
+
+class CDlgDog : public wxDialog
 {
+	friend class CDlgDogDataTitle;
 public:
 	CDlgDog(
 			CAgilityBookDoc* pDoc,
 			ARBDogPtr pDog,
 			wxWindow* pParent = NULL,
-			int iSelectPage = 0) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgDog"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
+			int iSelectPage = 0);
+	~CDlgDog();
 
-#if 0
-class CDlgDog : public CDlgBaseSheet
-{
-	DECLARE_DYNAMIC(CDlgDog)
-public:
-	CDlgDog(
-			CAgilityBookDoc* pDoc,
-			ARBDogPtr pDog,
-			CWnd* pParent = NULL,
-			UINT iSelectPage = 0);
-	virtual ~CDlgDog();
-
+	CDlgDogDataTitlePtr GetTitleData(long index) const;
+	CDlgDogDataTitlePtr GetTitleDataByData(long index) const;
+	CDlgDogDataRegNumPtr GetRegNumData(long index) const;
+	CDlgDogDataRegNumPtr GetRegNumDataByData(long index) const;
+	CDlgDogDataPointPtr GetPointData(long index) const;
+	CDlgDogDataPointPtr GetPointDataByData(long index) const;
 private:
+	void UpdateAge();
+	void UpdateDeceased();
+	void SetColumnTitleHeaders();
+	void ListTitles();
+	void UpdateTitleButtons();
+	void EditTitle();
+	void SetColumnRegNumHeaders();
+	void ListRegNums();
+	void UpdateRegNumButtons();
+	void EditRegNum();
+	void SetColumnPointsHeaders();
+	void ListExistingPoints();
+	void UpdatePointsButtons();
+	void EditPoints();
+
 	CAgilityBookDoc* m_pDoc;
 	ARBDogPtr m_pDog;
-	CDlgDogProperties* m_pageProp;
-	CDlgDogTitles* m_pageTitles;
-	CDlgDogNumbers* m_pageRegNums;
-	CDlgDogPoints* m_pagePoints;
 	bool m_viewHidden;
+	int m_imgTitlesEmpty;
+	int m_imgTitlesTitled;
+	int m_imgTitlesTitledReceived;
+	int m_imgTitlesHidden;
+	int m_imgTitlesTitledHidden;
+	int m_imgTitlesTitledHiddenReceived;
+	// Properties
+	wxString m_CallName;
+	wxString m_Breed;
+	wxString m_RegName;
+	ARBDate m_DOB;
+	bool m_IsDeceased;
+	ARBDate m_Deceased;
+	wxString m_Notes;
+	wxStaticText* m_ctrlAge;
+	wxDatePickerCtrl* m_ctrlDDay;
+	CReportListCtrl* m_ctrlTitles;
+	wxButton* m_ctrlTitleEdit;
+	wxButton* m_ctrlTitleDelete;
+	CReportListCtrl* m_ctrlRegNums;
+	wxButton* m_ctrlRegEdit;
+	wxButton* m_ctrlRegDelete;
+	CReportListCtrl* m_ctrlPoints;
+	wxButton* m_ctrlPointsEdit;
+	wxButton* m_ctrlPointsDelete;
+	wxStaticText* m_ctrlSelectedPts;
+	// Titles
+	ARBDogTitleList m_Titles;
+	CColumnOrder m_sortTitles;
+	bool m_ViewHiddenTitles;
+	// RegNums
+	ARBDogRegNumList m_RegNums;
+	CColumnOrder m_sortRegNums;
+	// Points
+	ARBDogExistingPointsList m_ExistingPoints;
+	CColumnOrder m_sortPoints;
 
-	//{{AFX_VIRTUAL(CDlgDog)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgDog)
-	afx_msg void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-public:
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
+	// Properties
+	void OnDateChanged(wxDateEvent& evt);
+	void OnDeceased(wxCommandEvent& evt);
+	// Titles
+	void OnTitleColumnClick(wxListEvent& evt);
+	void OnTitleItemSelected(wxListEvent& evt);
+	void OnTitleDoubleClick(wxMouseEvent& evt);
+	void OnTitleKeyDown(wxListEvent& evt);
+	void OnTitleNew(wxCommandEvent& evt);
+	void OnTitleEdit(wxCommandEvent& evt);
+	void OnTitleDelete(wxCommandEvent& evt);
+	void OnTitleHidden(wxCommandEvent& evt);
+	// RegNums
+	void OnRegNumColumnClick(wxListEvent& evt);
+	void OnRegNumItemSelected(wxListEvent& evt);
+	void OnRegNumDoubleClick(wxMouseEvent& evt);
+	void OnRegNumKeyDown(wxListEvent& evt);
+	void OnRegNumNew(wxCommandEvent& evt);
+	void OnRegNumEdit(wxCommandEvent& evt);
+	void OnRegNumDelete(wxCommandEvent& evt);
+	// Points
+	void OnPointsColumnClick(wxListEvent& evt);
+	void OnPointsItemSelected(wxListEvent& evt);
+	void OnPointsDoubleClick(wxMouseEvent& evt);
+	void OnPointsKeyDown(wxListEvent& evt);
+	void OnPointsNew(wxCommandEvent& evt);
+	void OnPointsEdit(wxCommandEvent& evt);
+	void OnPointsDelete(wxCommandEvent& evt);
 };
-#endif

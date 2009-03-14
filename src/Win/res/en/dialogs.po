@@ -495,6 +495,73 @@ msgstr "Divisions"
 msgid "IDC_CONFIG_VENUE_TITLES"
 msgstr "Titles"
 
+# DlgDog
+msgid "IDD_DOG_PROP"
+msgstr "Properties"
+
+msgid "IDC_DOG_CALLNAME"
+msgstr "&Call Name"
+
+msgid "IDC_DOG_BREED"
+msgstr "&Breed"
+
+msgid "IDC_DOG_REG_NAME"
+msgstr "&Registered Name"
+
+msgid "IDC_DOG_AGE_TEXT"
+msgstr "Age (years)"
+
+msgid "IDC_DOG_DOB"
+msgstr "B&irthday"
+
+msgid "IDC_DOG_IS_DECEASED"
+msgstr "&Deceased"
+
+msgid "IDC_DOG_NOTES"
+msgstr "&Notes"
+
+msgid "IDD_DOG_TITLES"
+msgstr "Titles"
+
+msgid "IDC_DOG_TITLE_NEW"
+msgstr "&New..."
+
+msgid "IDC_DOG_TITLE_EDIT"
+msgstr "&Edit..."
+
+msgid "IDC_DOG_TITLE_DELETE"
+msgstr "&Delete"
+
+msgid "IDC_DOG_TITLE_HIDDEN"
+msgstr "View Hidden"
+
+msgid "IDD_DOG_NUMBERS"
+msgstr "Registration Numbers"
+
+msgid "IDC_DOGNUM_NEW"
+msgstr "&New..."
+
+msgid "IDC_DOGNUM_EDIT"
+msgstr "&Edit..."
+
+msgid "IDC_DOGNUM_DELETE"
+msgstr "&Delete"
+
+msgid "IDD_DOG_POINTS"
+msgstr "Existing Points"
+
+msgid "IDC_DOGPTS_NEW"
+msgstr "&New..."
+
+msgid "IDC_DOGPTS_EDIT"
+msgstr "&Edit..."
+
+msgid "IDC_DOGPTS_DELETE"
+msgstr "&Delete"
+
+msgid "IDC_DOGPTS_SELECTED_PTS"
+msgstr "Selected Points"
+
 # DlgEventSelect
 msgid "IDD_EVENT_SELECT"
 msgstr "Event Selection"
