@@ -76,7 +76,7 @@ private:
 	int m_stateUnChecked;
 	int m_stateChecked;
 
-	void OnStateClick(wxTreeEvent& evt);
+	void OnClick(wxMouseEvent& evt);
 	void OnKeyDown(wxTreeEvent& evt);
 };
 

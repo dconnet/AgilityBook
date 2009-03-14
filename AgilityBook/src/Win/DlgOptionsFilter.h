@@ -42,6 +42,9 @@
 #include "CheckTreeCtrl.h"
 #include "FilterOptions.h"
 class CAgilityBookDoc;
+class CCheckTreeCtrl;
+class wxDatePickerCtrl;
+class wxTreeEvent;
 
 
 class CDlgOptionsFilter : public wxPanel
@@ -52,53 +55,49 @@ public:
 	void Save();
 
 private:
-	CAgilityBookDoc* m_pDoc;
-	CFilterOptions m_FilterOptions;
-	/*
-// Dialog Data
-	//{{AFX_DATA(CDlgOptionsFilter)
-	enum { IDD = IDD_VIEW_OPTIONS_FILTER };
-	int		m_ViewDates;
-	CButton	m_ctrlDateStartCheck;
-	BOOL	m_bDateStart;
-	CDateTimeCtrl	m_ctrlDateStart;
-	CTime	m_timeStart;
-	CButton	m_ctrlDateEndCheck;
-	BOOL	m_bDateEnd;
-	CDateTimeCtrl	m_ctrlDateEnd;
-	CTime	m_timeEnd;
-	int		m_ViewNames;
-	CCheckTreeCtrl	m_ctrlNames;
-	BOOL	m_bNotEntered;
-	BOOL	m_bPlanning;
-	BOOL	m_bEntered;
-	int		m_ViewVenues;
-	CCheckTreeCtrl	m_ctrlVenue;
-	int		m_ViewQs;
-	CComboBox2	m_ctrlFilters;
-	CString	m_FilterName;
-	CButton	m_ctrlSaveName;
-	CButton	m_ctrlDelName;
-	//}}AFX_DATA
-
-// Implementation
-protected:
 	void FillControls();
 	void FillFilter(
-			HTREEITEM hItem,
-			CString path,
+			wxTreeItemId  hItem,
+			wxString path,
 			std::vector<CVenueFilter>& outVenues);
 	void UpdateControls();
-	//{{AFX_MSG(CDlgOptionsFilter)
-	virtual BOOL OnInitDialog();
-	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	afx_msg void OnSetdispinfoNames(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnSetdispinfoVenues(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnUpdateFilters();
-	afx_msg void OnSelchangeFilterNames();
-	afx_msg void OnBnClickedOptFilterNamesSave();
-	afx_msg void OnBnClickedOptFilterNamesDelete();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-	*/
+
+	CAgilityBookDoc* m_pDoc;
+	CFilterOptions m_FilterOptions;
+	wxString m_FilterName;
+	bool m_bDateStart;
+	ARBDate m_timeStart;
+	bool m_bDateEnd;
+	ARBDate m_timeEnd;
+	bool m_bNotEntered;
+	bool m_bPlanning;
+	bool m_bEntered;
+
+	wxComboBox* m_ctrlFilters;
+	wxRadioButton* m_ctrlDatesAll;
+	wxRadioButton* m_ctrlDatesSome;
+	wxCheckBox* m_ctrlDateStartCheck;
+	wxDatePickerCtrl* m_ctrlDateStart;
+	wxCheckBox* m_ctrlDateEndCheck;
+	wxDatePickerCtrl* m_ctrlDateEnd;
+	wxRadioButton* m_ctrlLogAll;
+	wxRadioButton* m_ctrlLogSome;
+	wxCheckListBox* m_ctrlNames;
+	wxRadioButton* m_ctrlQsAll;
+	wxRadioButton* m_ctrlQsQs;
+	wxRadioButton* m_ctrlQsNonQs;
+	wxRadioButton* m_ctrlVenueAll;
+	wxRadioButton* m_ctrlVenueSome;
+	CCheckTreeCtrl* m_ctrlVenue;
+
+	void OnSelchangeFilterNames(wxCommandEvent& evt);
+	void OnClickedOptFilterNamesSave(wxCommandEvent& evt);
+	void OnClickedOptFilterNamesDelete(wxCommandEvent& evt);
+	void OnFilterDates(wxCommandEvent& evt);
+	void OnFilterCal(wxCommandEvent& evt);
+	void OnFilterLog(wxCommandEvent& evt);
+	void OnFilterLogNames(wxCommandEvent& evt);
+	void OnFilterQs(wxCommandEvent& evt);
+	void OnFilterVenues(wxCommandEvent& evt);
+	void OnFilterVenueCheck(wxTreeEvent& evt);
 };

@@ -41,9 +41,7 @@
  * Get/SetCheck calls must be replaced with Get/SetChecked calls. Do not call
  * Get/SetCheck via the base class - the checkboxes will get messed up.
  *
- * [wxWidgets] The above comments are still pertinent. Need to investigage
- * wxTR_MULTIPLE style - the IsItemChecked/SetItemCheck pertain to that. It
- * sounds like its actually selection, but the comments alude to checks...?
+ * [wxWidgets] The above comments are still pertinent.
  *
  * Revision History
  */
@@ -54,6 +52,12 @@
 #include "res/CalEmpty.xpm"
 #include "res/checked.xpm"
 #include "res/unchecked.xpm"
+
+#ifdef WIN32
+// GetState/SetState for state image lists only seems to work for Windows.
+// So we'll use the normal image list on other platforms.
+#define WX_TREE_HAS_STATE
+#endif
 
 
 IMPLEMENT_CLASS(CCheckTreeCtrl, wxTreeCtrl)
@@ -72,13 +76,17 @@ CCheckTreeCtrl::CCheckTreeCtrl(wxWindow* pParent)
 	wxTreeCtrl::Create(pParent, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
-	Connect(wxEVT_COMMAND_TREE_STATE_IMAGE_CLICK, wxTreeEventHandler(CCheckTreeCtrl::OnStateClick), NULL, this);
+	Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CCheckTreeCtrl::OnClick), NULL, this);
 	Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CCheckTreeCtrl::OnKeyDown), NULL, this);
 
 	m_stateNone = m_stateList.Add(wxIcon(CalEmpty_xpm));
-	m_stateUnChecked = m_stateList.Add(wxIcon(checked_xpm));
-	m_stateChecked = m_stateList.Add(wxIcon(unchecked_xpm));
+	m_stateUnChecked = m_stateList.Add(wxIcon(unchecked_xpm));
+	m_stateChecked = m_stateList.Add(wxIcon(checked_xpm));
+#ifdef WX_TREE_HAS_STATE
 	SetStateImageList(&m_stateList);
+#else
+	SetImageList(&m_stateList);
+#endif
 }
 
 
@@ -86,35 +94,43 @@ void CCheckTreeCtrl::ShowCheckbox(
 		wxTreeItemId hItem,
 		bool bShow)
 {
-#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
-	/*
-	if (IsCheckVisible(hItem))
+	if (IsCheckVisible(hItem) && !bShow)
 	{
-		if (!bShow)
-			wxTreeCtrl::SetState(hItem, m_stateNone);
+#ifdef WX_TREE_HAS_STATE
+		wxTreeCtrl::SetState(hItem, m_stateNone);
+#else
+		wxTreeCtrl::SetItemImage(hItem, m_stateNone);
+#endif
 	}
-	else
+	else if (!IsCheckVisible(hItem) && bShow)
 	{
-		if (bShow)
-			wxTreeCtrl::SetState(hItem, m_stateUnChecked);
+#ifdef WX_TREE_HAS_STATE
+		wxTreeCtrl::SetState(hItem, m_stateUnChecked);
+#else
+		wxTreeCtrl::SetItemImage(hItem, m_stateUnChecked);
+#endif
 	}
-	*/
 }
 
 
 bool CCheckTreeCtrl::IsCheckVisible(wxTreeItemId hItem)
 {
-#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
-	//return wxTreeCtrl::GetState(hItem) != m_stateNone;
-	return false;
+#ifdef WX_TREE_HAS_STATE
+	return wxTreeCtrl::GetState(hItem) != m_stateNone;
+#else
+	int index = wxTreeCtrl::GetItemImage(hItem);
+	return index == m_stateChecked || index == m_stateUnChecked;
+#endif
 }
 
 
 bool CCheckTreeCtrl::GetChecked(wxTreeItemId hItem)
 {
-#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
-	//return wxTreeCtrl::GetState(hItem) == m_stateChecked;
-	return false;
+#ifdef WX_TREE_HAS_STATE
+	return wxTreeCtrl::GetState(hItem) == m_stateChecked;
+#else
+	return wxTreeCtrl::GetItemImage(hItem) == m_stateChecked;
+#endif
 }
 
 
@@ -139,8 +155,11 @@ bool CCheckTreeCtrl::SetChecked(
 			if (bCascade)
 				Cascade(hItem, false);
 		}
-#pragma message PRAGMA_MESSAGE("TODO: Implement CheckTreeCtrl")
-		//wxTreeCtrl::SetState(hItem, icon);
+#ifdef WX_TREE_HAS_STATE
+		wxTreeCtrl::SetState(hItem, icon);
+#else
+		wxTreeCtrl::SetItemImage(hItem, icon);
+#endif
 		return true;
 	}
 	else
@@ -159,7 +178,7 @@ void CCheckTreeCtrl::SendDispInfo(wxTreeItemId hItem)
 // When we check a child, make sure the parent chain is checked.
 void CCheckTreeCtrl::CheckParentCheck(wxTreeItemId hItem)
 {
-	if (hItem.IsOk())
+	if (hItem.IsOk() && hItem != GetRootItem())
 	{
 		bool bChecked = GetChecked(hItem);
 		if (!bChecked)
@@ -201,14 +220,19 @@ int CCheckTreeCtrl::Cascade(
 }
 
 
-void CCheckTreeCtrl::OnStateClick(wxTreeEvent& evt)
+// We could connect to EVT_TREE_STATE_IMAGE_CLICK, but that only works on
+// Windows. So just handle all clicks ourselves and it will work on platforms.
+void CCheckTreeCtrl::OnClick(wxMouseEvent& evt)
 {
-	if (evt.GetItem().IsOk() && IsCheckVisible(evt.GetItem()))
+	int flags = 0;
+	wxTreeItemId item = HitTest(evt.GetPosition(), flags);
+	if (item.IsOk() && (flags & (wxTREE_HITTEST_ONITEMICON|wxTREE_HITTEST_ONITEMSTATEICON)))
 	{
-		bool bChecked = !GetChecked(evt.GetItem());
-		SetChecked(evt.GetItem(), bChecked);
-		SendDispInfo(evt.GetItem());
+		bool bChecked = !GetChecked(item);
+		SetChecked(item, bChecked);
+		SendDispInfo(item);
 	}
+	evt.Skip();
 }
 
 
