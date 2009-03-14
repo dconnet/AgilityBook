@@ -77,6 +77,9 @@ class CDlgConfigureDataVenue : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataVenue(ARBConfigVenuePtr venue);
 	ARBConfigVenuePtr GetVenue() const			{return m_Venue;}
+	virtual bool CanEdit() const				{return true;}
+	virtual bool CanDelete() const				{return true;}
+	virtual bool CanCopy() const				{return true;}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 protected:
@@ -90,6 +93,9 @@ class CDlgConfigureDataFault : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataFault(ARBConfigFaultPtr fault);
 	ARBConfigFaultPtr GetFault() const			{return m_Fault;}
+	virtual bool CanEdit() const				{return true;}
+	virtual bool CanDelete() const				{return true;}
+	virtual bool CanCopy() const				{return true;}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 protected:
@@ -103,6 +109,9 @@ class CDlgConfigureDataOtherPoints : public CDlgConfigureDataBase
 public:
 	CDlgConfigureDataOtherPoints(ARBConfigOtherPointsPtr otherPoints);
 	ARBConfigOtherPointsPtr GetOtherPoints() const	{return m_OtherPoints;}
+	virtual bool CanEdit() const				{return true;}
+	virtual bool CanDelete() const				{return true;}
+	virtual bool CanCopy() const				{return true;}
 	virtual wxString OnNeedText() const;
 	virtual wxString OnNeedText(int iColumn) const;
 protected:

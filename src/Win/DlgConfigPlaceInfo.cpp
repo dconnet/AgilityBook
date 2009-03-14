@@ -132,11 +132,12 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 		short inPlace,
 		double inValue,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_PLACEINFO"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_Place(inPlace)
 	, m_Value(inValue)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_PLACEINFO"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

@@ -132,7 +132,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 		ARBConfigVenuePtr pVenue,
 		ARBConfigEventPtr pEvent,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_EVENT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_bNewEntry(bNewEntry)
 	, m_pVenue(pVenue)
 	, m_pEvent(pEvent)
@@ -164,6 +164,9 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_ctrlNote(NULL)
 	, m_idxMethod(-1)
 {
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_EVENT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
 	assert(m_pVenue);
 	assert(m_pEvent);
 	// Copy the existing scorings.
@@ -312,7 +315,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_ctrlUnused->Enable(false);
 
 	m_ctrlInfo = new wxStaticText(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
+		wxDefaultPosition, wxSize(-1, 50), wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
 	m_ctrlInfo->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigEvent::OnDblclickConfigInfo), NULL, this);
 	m_ctrlInfo->Wrap(-1);
 	m_ctrlInfo->SetHelpText(_("HIDC_CONFIG_EVENT_INFO"));

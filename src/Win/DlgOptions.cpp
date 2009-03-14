@@ -61,10 +61,11 @@ CDlgOptions::CDlgOptions(
 		CAgilityBookDoc* pDoc,
 		wxWindow* pParent,
 		size_t iSelectPage)
-	: wxDialog(pParent, wxID_ANY, _("IDS_VIEWING_OPTIONS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_pDoc(pDoc)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
+	Create(pParent, wxID_ANY, _("IDS_VIEWING_OPTIONS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 

@@ -73,7 +73,7 @@ CDlgTitle::CDlgTitle(
 		ARBDogTitleList& titles,
 		ARBDogTitlePtr pTitle,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_Titles(titles)
 	, m_pTitle(pTitle)
 	, m_ctrlDate(NULL)
@@ -87,6 +87,7 @@ CDlgTitle::CDlgTitle(
 	, m_bReceived(false)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxDateTime date(wxDateTime::Now());
 	if (m_pTitle)

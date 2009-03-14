@@ -69,9 +69,11 @@ CDlgMessageBox::CDlgMessageBox(
 		long inFlags,
 		IMessageBoxCallback* inCallback,
 		wxWindow* inParent)
-	: wxDialog(inParent, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_Callback(inCallback)
 {
+	Create(inParent, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
 	// Controls (these are done first to control tab order)
 
 	wxStaticBitmap* ctrlIcon = NULL;

@@ -55,8 +55,8 @@ CDlgFind::CDlgFind(
 		caption = _("IDD_FIND");
 	wxString text = m_Callback.Text();
 
-	Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

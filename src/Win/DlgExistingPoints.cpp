@@ -147,7 +147,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		ARBDogExistingPointsList& points,
 		ARBDogExistingPointsPtr pExistingPoints,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_EXISTING_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_PointsList(points)
 	, m_pExistingPoints(pExistingPoints)
@@ -171,6 +171,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	, m_TextOther()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_EXISTING_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	if (m_pExistingPoints)
 	{

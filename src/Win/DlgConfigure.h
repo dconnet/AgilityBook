@@ -43,7 +43,7 @@
 #include <wx/treectrl.h>
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
-class CTreeData;
+class CDlgConfigureDataBase;
 
 
 class CDlgConfigure : public wxDialog
@@ -65,7 +65,7 @@ public:
 
 private:
 	eAction GetAction() const;
-	CTreeData* GetData(wxTreeItemId hItem) const;
+	CDlgConfigureDataBase* GetData(wxTreeItemId hItem) const;
 	void UpdateButtons();
 	void LoadData(eAction dataToLoad);
 	void DoEdit();

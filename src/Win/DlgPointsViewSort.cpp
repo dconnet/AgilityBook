@@ -61,15 +61,16 @@ END_EVENT_TABLE()
 
 
 CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_POINTS_VIEW_SORT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_ctrlPrimary(NULL)
 	, m_ctrlSecondary(NULL)
 	, m_ctrlTertiary(NULL)
 	, m_ctrlOk(NULL)
 {
-	CAgilityBookOptions::GetPointsViewSort(m_Primary, m_Secondary, m_Tertiary);
-
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_POINTS_VIEW_SORT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+
+	CAgilityBookOptions::GetPointsViewSort(m_Primary, m_Secondary, m_Tertiary);
 
 	// Controls (these are done first to control tab order)
 

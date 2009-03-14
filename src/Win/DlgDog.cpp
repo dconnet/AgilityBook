@@ -547,7 +547,7 @@ CDlgDog::CDlgDog(
 		ARBDogPtr pDog,
 		wxWindow* pParent,
 		int iSelectPage)
-	: wxDialog(pParent, wxID_ANY, _("IDS_COL_DOG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_pDog(pDog)
 	, m_viewHidden(CAgilityBookOptions::GetViewHiddenTitles())
@@ -585,6 +585,7 @@ CDlgDog::CDlgDog(
 	, m_ExistingPoints()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
+	Create(pParent, wxID_ANY, _("IDS_COL_DOG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (!m_Deceased.IsValid())
 		m_Deceased.SetToday();

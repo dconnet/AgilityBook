@@ -64,11 +64,12 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgConfigureDataRoot : public CTreeData
+class CDlgConfigureDataRoot : public CDlgConfigureDataBase
 {
 public:
 	CDlgConfigureDataRoot(CDlgConfigure::eAction action)
-		: m_Action(action)
+		: CDlgConfigureDataBase(NULL)
+		, m_Action(action)
 	{
 	}
 	virtual wxString OnNeedText() const	{return wxEmptyString;}
@@ -118,7 +119,7 @@ CDlgConfigure::CDlgConfigure(
 		CAgilityBookDoc* pDoc,
 		ARBAgilityRecordBook& book,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIGURE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Book(book)
 	, m_Config(m_Book.GetConfig())
@@ -131,8 +132,10 @@ CDlgConfigure::CDlgConfigure(
 	, m_hItemFaults()
 	, m_hItemOtherPts()
 {
-	assert(m_pDoc);
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIGURE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+
+	assert(m_pDoc);
 
 	// Controls (these are done first to control tab order)
 
@@ -255,10 +258,10 @@ CDlgConfigure::eAction CDlgConfigure::GetAction() const
 }
 
 
-CTreeData* CDlgConfigure::GetData(wxTreeItemId hItem) const
+CDlgConfigureDataBase* CDlgConfigure::GetData(wxTreeItemId hItem) const
 {
 	if (hItem.IsOk())
-		return dynamic_cast<CTreeData*>(m_ctrlItems->GetItemData(hItem));
+		return dynamic_cast<CDlgConfigureDataBase*>(m_ctrlItems->GetItemData(hItem));
 	return NULL;
 }
 
@@ -266,18 +269,21 @@ CTreeData* CDlgConfigure::GetData(wxTreeItemId hItem) const
 void CDlgConfigure::UpdateButtons()
 {
 	bool bNew = false;
-	bool bDelete = false;
 	bool bEdit = false;
+	bool bDelete = false;
 	bool bCopy = false;
 	if (eNone != GetAction())
 		bNew = true;
-	if (GetData(m_ctrlItems->GetSelection()))
+	CDlgConfigureDataBase* pData = GetData(m_ctrlItems->GetSelection());
+	if (pData)
 	{
-		bDelete = bEdit = bCopy = true;
+		bEdit = pData->CanEdit();
+		bDelete = pData->CanDelete();
+		bCopy = pData->CanCopy();
 	}
 	m_ctrlNew->Enable(bNew);
-	m_ctrlDelete->Enable(bDelete);
 	m_ctrlEdit->Enable(bEdit);
+	m_ctrlDelete->Enable(bDelete);
 	m_ctrlCopy->Enable(bCopy);
 }
 
@@ -352,8 +358,8 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 void CDlgConfigure::DoEdit()
 {
 	wxTreeItemId current = m_ctrlItems->GetSelection();
-	CTreeData* pData = GetData(current);
-	if (!pData)
+	CDlgConfigureDataBase* pData = GetData(current);
+	if (!pData || !pData->CanEdit())
 		return;
 
 	switch (GetAction())
@@ -598,8 +604,8 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 {
 	wxTreeItemId current = m_ctrlItems->GetSelection();
-	CTreeData* pData = GetData(current);
-	if (!pData)
+	CDlgConfigureDataBase* pData = GetData(current);
+	if (!pData || !pData->CanDelete())
 		return;
 
 	switch (GetAction())
@@ -652,8 +658,8 @@ void CDlgConfigure::OnEdit(wxCommandEvent& evt)
 void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 {
 	wxTreeItemId current = m_ctrlItems->GetSelection();
-	CTreeData* pData = GetData(current);
-	if (!pData)
+	CDlgConfigureDataBase* pData = GetData(current);
+	if (!pData || !pData->CanCopy())
 		return;
 
 	switch (GetAction())
@@ -672,7 +678,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 			{
 				*pNewVenue = *pVenueData->GetVenue();
 				pNewVenue->SetName(name); // Put the name back.
-				CTreeData* pNewData = new CDlgConfigureDataVenue(pNewVenue);
+				CDlgConfigureDataBase* pNewData = new CDlgConfigureDataVenue(pNewVenue);
 				m_ctrlItems->AppendItem(
 					m_hItemVenues,
 					pData->OnNeedText(),
@@ -691,7 +697,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 			ARBConfigFaultPtr pNewFault;
 			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
-				CTreeData* pNewData = new CDlgConfigureDataFault(pNewFault);
+				CDlgConfigureDataBase* pNewData = new CDlgConfigureDataFault(pNewFault);
 				m_ctrlItems->AppendItem(
 					m_hItemFaults,
 					pData->OnNeedText(),
@@ -716,7 +722,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 			pOther->SetName(name);
 			if (m_Config.GetOtherPoints().AddOtherPoints(pOther))
 			{
-				CTreeData* pNewData = new CDlgConfigureDataOtherPoints(pOther);
+				CDlgConfigureDataBase* pNewData = new CDlgConfigureDataOtherPoints(pOther);
 				m_ctrlItems->AppendItem(
 					m_hItemOtherPts,
 					pData->OnNeedText(),

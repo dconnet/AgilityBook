@@ -65,7 +65,7 @@ CDlgCalendar::CDlgCalendar(
 		ARBCalendarPtr pCal,
 		CAgilityBookDoc* pDoc,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CALENDAR"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_pCal(pCal)
 	, m_pDoc(pDoc)
 	, m_Span(0)
@@ -112,6 +112,7 @@ CDlgCalendar::CDlgCalendar(
 	, m_ctrlLocationInfo(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CALENDAR"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	if (m_pCal->GetStartDate().IsValid())
 	{

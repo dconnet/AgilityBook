@@ -57,7 +57,7 @@ CDlgClub::CDlgClub(
 		ARBDogClubList& inClubs,
 		ARBDogClubPtr pClub,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CLUB"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_pClub(pClub)
 	, m_ctrlClubs(NULL)
@@ -66,6 +66,7 @@ CDlgClub::CDlgClub(
 	, m_Venue()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CLUB"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	if (m_pClub)
 	{

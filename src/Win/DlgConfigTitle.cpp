@@ -88,7 +88,7 @@ END_EVENT_TABLE()
 CDlgConfigTitle::CDlgConfigTitle(
 		ARBConfigTitlePtr inTitle,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_Title(inTitle)
 	, m_Name(inTitle->GetName().c_str())
 	, m_Prefix(inTitle->GetPrefix())
@@ -104,6 +104,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	, m_ctrlStyle(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 

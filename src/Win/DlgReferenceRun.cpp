@@ -60,7 +60,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		std::set<tstring> const& inBreeds,
 		ARBDogReferenceRunPtr ref,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_REF_RUN"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_Run(inRun)
 	, m_Ref(ref)
@@ -75,6 +75,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Notes(m_Ref->GetNote().c_str())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_REF_RUN"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	if (m_Points.empty())
 		m_Points = wxT("0");

@@ -122,10 +122,11 @@ void CHyperlinkCtrl::OnFocus(wxFocusEvent& evt)
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* parent)
-	: wxDialog(parent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_pDoc(pDoc)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(parent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

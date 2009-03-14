@@ -130,7 +130,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		ARBConfigVenuePtr pVenue,
 		ARBConfigScoringPtr pScoring,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_EVENT_METHOD"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_pVenue(pVenue)
 	, m_pScoring(pScoring)
 	, m_PlaceInfo()
@@ -175,6 +175,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_ClosingPts(m_pScoring->GetRequiredClosingPoints())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_EVENT_METHOD"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Copy the existing scorings.
 	assert(m_pVenue);

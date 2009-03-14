@@ -56,15 +56,16 @@ CDlgSelectDog::CDlgSelectDog(
 		CAgilityBookDoc* pDoc,
 		std::vector<ARBDogPtr>& outDogs,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_DOG_PICKER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_outDogs(outDogs)
 	, m_Dogs()
 	, m_checkList(NULL)
 {
-	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
-
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_DOG_PICKER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+
+	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
 
 	std::set<tstring> selection;
 	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);

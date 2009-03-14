@@ -803,7 +803,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		long initSelection)
-	: wxDialog(pParent, wxID_ANY, _("IDD_ASSIGN_COLUMNS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
+	: wxDialog()
 	, m_pDoc(pDoc)
 	, m_eOrder(eOrder)
 	, m_initSelection(initSelection)
@@ -818,6 +818,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	, m_btnDown(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_ASSIGN_COLUMNS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		GetColumnOrder(m_eOrder, i, m_Columns[i]);

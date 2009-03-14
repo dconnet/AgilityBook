@@ -49,7 +49,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		double inPoints,
 		ETitlePointType inType,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_CONFIG_TITLE_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE)
+	: wxDialog()
 	, m_Venue(inVenue)
 	, m_Type(inType)
 	, m_textValue(NULL)
@@ -60,6 +60,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_Points(inPoints)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CONFIG_TITLE_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

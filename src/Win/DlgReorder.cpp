@@ -42,13 +42,14 @@
 CDlgReorder::CDlgReorder(
 		std::vector<ARBBasePtr>& items,
 		wxWindow* pParent)
-	: wxDialog(pParent, wxID_ANY, _("IDD_REORDER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+	: wxDialog()
 	, m_Items(items)
 	, m_ctrlList(NULL)
 	, m_ctrlUp(NULL)
 	, m_ctrlDown(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_REORDER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
