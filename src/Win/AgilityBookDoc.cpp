@@ -1325,7 +1325,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 	wxBusyCursor wait;
 
 	CVersionNum ver;
-	tstring verstr = ver.GetVersionString();
+	tstring verstr = ver.GetVersionString().c_str();
 	bool bAlreadyWarned = false;
 	bool bOk = false;
 	ElementNodePtr tree(ElementNode::New());
