@@ -366,12 +366,12 @@ void CDlgOptionsFilter::FillControls()
 	}
 	if (bFix)
 		m_FilterOptions.SetTrainingFilterNames(names);
-	for (std::set<tstring>::iterator iter = allLogNames.begin();
-		iter != allLogNames.end();
-		++iter)
+	for (std::set<tstring>::iterator iterLog = allLogNames.begin();
+		iterLog != allLogNames.end();
+		++iterLog)
 	{
-		int item = m_ctrlNames->Append((*iter).c_str());
-		if (names.end() != names.find((*iter)))
+		int item = m_ctrlNames->Append((*iterLog).c_str());
+		if (names.end() != names.find((*iterLog)))
 			m_ctrlNames->Check(item, true);
 	}
 
