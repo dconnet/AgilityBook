@@ -598,10 +598,10 @@ CDlgDog::CDlgDog(
 
 	// Controls (these are done first to control tab order)
 
-	// Properties
-
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, 0);
+
+	// Properties
 
 	wxPanel* panelProp = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);

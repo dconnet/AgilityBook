@@ -40,6 +40,7 @@
 
 #include "ARBConfig.h"
 #include "ARBTypes.h"
+#include "IconList.h"
 #include <wx/treectrl.h>
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
@@ -82,6 +83,8 @@ private:
 	CAgilityBookDoc* m_pDoc;
 	ARBAgilityRecordBook& m_Book;
 	ARBConfig m_Config;
+	CIconList m_ImageList;
+	int m_idxFaults;
 	wxTreeCtrl* m_ctrlItems;
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;
