@@ -39,6 +39,7 @@
 #include "AgilityBook.h"
 #include "IconList.h"
 
+#include "res/agilitybook16.xpm"
 #include "res/dog.xpm"
 #include "res/trial.xpm"
 #include "res/run.xpm"
@@ -60,36 +61,43 @@
 CIconList::CIconList()
 	: wxImageList(16, 16)
 {
-	const wxSize imageSize(16, 16);
 	struct
 	{
 		int* index;
+		int assertIndex;
 		const char** xpmData;
 	} icons[] =
 	{
 		// Note: The order of these icons CANNOT be changed. The index
 		// is saved in the ARB file to associate an icon with a venue.
-		{&m_idxDog,				dog_xpm},
-		{&m_idxTrial,			trial_xpm},
-		{&m_idxRun,				run_xpm},
-		{&m_idxVenueAAC,		venue_aac_xpm},
-		{&m_idxVenueAKC,		venue_akc_xpm},
-		{&m_idxVenueASCA,		venue_asca_xpm},
-		{&m_idxVenueCKC,		venue_ckc_xpm},
-		{&m_idxVenueCPE,		venue_cpe_xpm},
-		{&m_idxVenueDOCNA,		venue_docna_xpm},
-		{&m_idxVenueNADAC,		venue_nadac_xpm},
-		{&m_idxVenueSweep,		venue_sweep_xpm},
-		{&m_idxVenueTDAA,		venue_tdaa_xpm},
-		{&m_idxVenueUKC,		venue_ukc_xpm},
-		{&m_idxVenueUSDAA,		venue_usdaa_xpm},
-		{&m_idxVenueFCI,		venue_fci_xpm},
-		{&m_idxVenueSCC,		venue_scc_xpm},
+		{&m_idxDog,				0,	dog_xpm},
+		{&m_idxTrial,			1,	trial_xpm},
+		{&m_idxRun,				2,	run_xpm},
+		{&m_idxVenueAAC,		3,	venue_aac_xpm},
+		{&m_idxVenueAKC,		4,	venue_akc_xpm},
+		{&m_idxVenueASCA,		5,	venue_asca_xpm},
+		{&m_idxVenueCKC,		6,	venue_ckc_xpm},
+		{&m_idxVenueCPE,		7,	venue_cpe_xpm},
+		{&m_idxVenueDOCNA,		8,	venue_docna_xpm},
+		{&m_idxVenueNADAC,		9,	venue_nadac_xpm},
+		{&m_idxVenueSweep,		10,	venue_sweep_xpm},
+		{&m_idxVenueTDAA,		11,	venue_tdaa_xpm},
+		{&m_idxVenueUKC,		12,	venue_ukc_xpm},
+		{&m_idxVenueUSDAA,		13,	venue_usdaa_xpm},
+		{&m_idxVenueFCI,		14,	venue_fci_xpm},
+		{&m_idxVenueSCC,		15,	venue_scc_xpm},
+		{&m_idxARB,				-1,	AgilityBook16_xpm},
 	};
 	int nIcons = sizeof(icons) / sizeof(icons[0]);
 
 	for (int idx = 0; idx < nIcons; ++idx)
 	{
 		*icons[idx].index = Add(wxIcon(icons[idx].xpmData));
+#ifdef _DEBUG
+		if (0 <= icons[idx].assertIndex)
+		{
+			assert(icons[idx].assertIndex == *icons[idx].index );
+		}
+#endif
 	}
 }

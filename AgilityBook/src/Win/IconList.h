@@ -45,6 +45,7 @@ class CIconList : public wxImageList
 public:
 	CIconList();
 
+	int ARB() const			{return m_idxARB;}
 	int Dog() const			{return m_idxDog;}
 	int Trial() const		{return m_idxTrial;}
 	int Run() const			{return m_idxRun;}
@@ -63,6 +64,7 @@ public:
 	int SCC() const			{return m_idxVenueSCC;}
 
 protected:
+	int m_idxARB;
 	int m_idxDog;
 	int m_idxTrial;
 	int m_idxRun;
