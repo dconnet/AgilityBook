@@ -707,7 +707,8 @@ CDlgDog::CDlgDog(
 	m_imgTitlesHidden = m_ctrlTitles->AddIcon(wxIcon(hidden_xpm));
 	m_imgTitlesTitledHidden = m_ctrlTitles->AddIcon(wxIcon(title_hidden_xpm));
 	m_imgTitlesTitledHiddenReceived = m_ctrlTitles->AddIcon(wxIcon(title_hidden_have_xpm));
-	for (int i = 0; i < nColTitleInfo; ++i)
+	int i;
+	for (i = 0; i < nColTitleInfo; ++i)
 	{
 		m_ctrlTitles->InsertColumn(i, wxEmptyString, colTitleInfo[i].fmt, colTitleInfo[i].cx);
 	}
@@ -754,7 +755,7 @@ CDlgDog::CDlgDog(
 	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgDog::OnRegNumKeyDown), NULL, this);
 	m_ctrlRegNums->SetHelpText(_("HIDC_DOGNUM_REG_NUMS"));
 	m_ctrlRegNums->SetToolTip(_("HIDC_DOGNUM_REG_NUMS"));
-	for (int i = 0; i < nColRegNumInfo; ++i)
+	for (i = 0; i < nColRegNumInfo; ++i)
 	{
 		m_ctrlRegNums->InsertColumn(i, wxEmptyString, colRegNumInfo[i].fmt, colRegNumInfo[i].cx);
 	}
@@ -793,7 +794,7 @@ CDlgDog::CDlgDog(
 	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgDog::OnPointsKeyDown), NULL, this);
 	m_ctrlPoints->SetHelpText(_("HIDC_DOGPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_DOGPTS_POINTS"));
-	for (int i = 0; i < nColExistingPointsInfo; ++i)
+	for (i = 0; i < nColExistingPointsInfo; ++i)
 	{
 		m_ctrlPoints->InsertColumn(i, wxEmptyString, colExistingPointsInfo[i].fmt, colExistingPointsInfo[i].cx);
 	}

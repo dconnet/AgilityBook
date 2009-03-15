@@ -95,9 +95,8 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorOpening, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorClosing, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorEntered, wxColour()));
-	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
-		iColor != m_CalColors.end();
-		++iColor)
+	std::vector<tColorInfo>::iterator iColor;
+	for (iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
 		(*iColor).second = CAgilityBookOptions::CalendarColor((*iColor).first);
 	}
@@ -252,9 +251,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	m_ctrlCalEntries->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(CDlgOptionsCalendar::OnSelchangeCalEntries), NULL, this);
 	m_ctrlCalEntries->SetHelpText(_("HIDC_OPT_CAL_ENTRIES"));
 	m_ctrlCalEntries->SetToolTip(_("HIDC_OPT_CAL_ENTRIES"));
-	for (std::vector<tColorInfo>::iterator iColor = m_CalColors.begin();
-		iColor != m_CalColors.end();
-		++iColor)
+	for (iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
 		m_ctrlCalEntries->Append(GetCalText((*iColor).first, false));
 	}
