@@ -104,11 +104,6 @@ arb_SRCS = \
 	DlgRegNum.cpp \
 	DlgReorder.cpp \
 	DlgRun.cpp \
-	DlgRunComments.cpp \
-	DlgRunCRCD.cpp \
-	DlgRunLink.cpp \
-	DlgRunReference.cpp \
-	DlgRunScore.cpp \
 	DlgSelectDog.cpp \
 	DlgSelectURL.cpp \
 	DlgTitle.cpp \

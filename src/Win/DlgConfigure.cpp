@@ -561,14 +561,14 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 			CDlgName dlg(wxEmptyString, _("IDS_FAULT_TYPE_NAME"), this);
 			if (wxID_OK == dlg.ShowModal())
 			{
-				tstring name = dlg.GetName();
+				wxString name = dlg.GetName();
 				// We could check for uniqueness, but if the user wants 2
 				// strings the same, why argue! Afterall, these strings
 				// are only "helper" items to fill in other data.
 				if (0 < name.length())
 				{
 					ARBConfigFaultPtr pNewFault;
-					if (m_Config.GetFaults().AddFault(name, &pNewFault))
+					if (m_Config.GetFaults().AddFault(name.c_str(), &pNewFault))
 					{
 						CDlgConfigureDataFault* pData = new CDlgConfigureDataFault(pNewFault);
 						m_ctrlItems->AppendItem(

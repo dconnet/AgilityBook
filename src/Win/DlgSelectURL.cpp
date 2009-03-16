@@ -49,7 +49,7 @@ CDlgSelectURL::CDlgSelectURL(
 	, m_textCtrl(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
-	Create(pParent, wxID_ANY, _("IDD_SELECT_URL "), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(pParent, wxID_ANY, _("IDD_SELECT_URL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
@@ -71,7 +71,7 @@ CDlgSelectURL::CDlgSelectURL(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxBoxSizer* bTextSizer = new wxBoxSizer(wxHORIZONTAL);
-	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5);
+	bTextSizer->Add(m_textCtrl, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	bTextSizer->Add(btnSelect, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
 
 	bSizer->Add(bTextSizer, 1, wxEXPAND, 5);
