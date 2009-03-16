@@ -810,26 +810,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgRunComments.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunCRCD.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunLink.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunReference.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunScore.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\DlgSelectDog.cpp"
 				>
 			</File>
@@ -1273,26 +1253,6 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\DlgRun.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunComments.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunCRCD.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunLink.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunReference.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgRunScore.h"
 				>
 			</File>
 			<File

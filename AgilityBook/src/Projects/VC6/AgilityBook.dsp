@@ -359,26 +359,6 @@ SOURCE=..\..\Win\DlgRun.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgRunComments.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgRunCRCD.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgRunLink.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgRunReference.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgRunScore.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\DlgSelectDog.cpp
 # End Source File
 # Begin Source File

@@ -357,7 +357,7 @@ void CDlgFindLinks::Edit()
 		CDlgSelectURL dlg(data->m_Link.c_str(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			tstring newName = dlg.GetName();
+			tstring newName = dlg.GetName().c_str();
 			if (data->m_Link != newName)
 			{
 				data->m_Link = newName;
