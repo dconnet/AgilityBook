@@ -43,11 +43,460 @@
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBDogRun.h"
+#include "CheckLink.h"
+#include "ClipBoard.h"
 #include "ComboBoxes.h"
+#include "DlgCRCDViewer.h"
+#include "DlgListCtrl.h"
+#include "DlgReferenceRun.h"
+#include "DlgSelectURL.h"
+#include "Globals.h"
+#include "ListCtrl.h"
 #include "NoteButton.h"
+#include "Validators.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
+#include <wx/dcbuffer.h>
 
+#include "res/CalEmpty.xpm"
+#include "res/CalPlan.xpm"
+#include "res/CalTentative.xpm"
+
+#ifdef WIN32
+// You can currently only enable this on Win32. I directly use the win32
+// apis to play the metafile into a dc. In theory, I could use wxWidgets
+// to play them - but I still need the direct win32 access to copy a
+// metafile from the clipboard - wxWidgets only has support to copy >to<
+// the clipboard.
+#define HAS_ENHMETAFILE
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+static struct
+{
+	int fmt;
+	wxChar const* idText;
+} const scRefRunColumns[] = {
+	{wxLIST_FORMAT_CENTRE, _("IDS_COL_Q")},
+	{wxLIST_FORMAT_CENTRE, _("IDS_COL_PLACE")},
+	{wxLIST_FORMAT_CENTRE, _("IDS_COL_SCORE")},
+	{wxLIST_FORMAT_LEFT, _("IDS_COL_TIME")},
+	{wxLIST_FORMAT_LEFT, _("IDS_COL_NAME")},
+	{wxLIST_FORMAT_LEFT, _("IDS_COL_HEIGHT")},
+	{wxLIST_FORMAT_LEFT, _("IDS_COL_BREED")},
+	{wxLIST_FORMAT_LEFT, _("IDS_COL_NOTE")},
+};
+static int const scNumRefRunColumns = sizeof(scRefRunColumns) / sizeof(scRefRunColumns[0]);
+
+static struct SORTINFO
+{
+	CDlgRun* pThis;
+	CColumnOrder* pCols;
+} s_SortInfo;
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgDogRefRunData : public CListData
+{
+public:
+	CDlgDogRefRunData(ARBDogReferenceRunPtr refRun)
+		: m_RefRun(refRun)
+	{
+	}
+	virtual wxString OnNeedText(long iCol) const;
+	ARBDogReferenceRunPtr GetData() const		{return m_RefRun;}
+	void SetData(ARBDogReferenceRunPtr data)	{m_RefRun = data;}
+private:
+	ARBDogReferenceRunPtr m_RefRun;
+};
+
+
+wxString CDlgDogRefRunData::OnNeedText(long iCol) const
+{
+	wxString str;
+	switch (iCol)
+	{
+	default:
+		break;
+	case 0: // Q
+		str = m_RefRun->GetQ().str().c_str();
+		break;
+	case 1: // Place
+		{
+			otstringstream tmp;
+			tmp << m_RefRun->GetPlace();
+			str = tmp.str().c_str();
+		}
+		break;
+	case 2: // Score
+		str = m_RefRun->GetScore().c_str();
+		break;
+	case 3: // Time
+		str = ARBDouble::str(m_RefRun->GetTime()).c_str();
+		break;
+	case 4: // Name
+		str = m_RefRun->GetName().c_str();
+		break;
+	case 5: // Height
+		str = m_RefRun->GetHeight().c_str();
+		break;
+	case 6: // Breed
+		str = m_RefRun->GetBreed().c_str();
+		break;
+	case 7: // Note
+		str = m_RefRun->GetNote().c_str();
+		str.Replace(wxT("\n"), wxT(" "));
+		break;
+	}
+	return str;
+}
+
+
+int wxCALLBACK CompareRefRuns(long item1, long item2, long sortData)
+{
+	CDlgDogRefRunDataPtr pData1 = s_SortInfo.pThis->GetReferenceDataByData(item1);
+	CDlgDogRefRunDataPtr pData2 = s_SortInfo.pThis->GetReferenceDataByData(item2);
+	ARBDogReferenceRunPtr pTitle1 = pData1->GetData();
+	ARBDogReferenceRunPtr pTitle2 = pData2->GetData();
+	int rc = 0;
+	for (int i = 0; i < s_SortInfo.pCols->GetSize(); ++i)
+	{
+		int col = s_SortInfo.pCols->GetColumnAt(i);
+		switch (col)
+		{
+		default:
+		case 3: // Time
+			if (pTitle1->GetTime() < pTitle2->GetTime())
+				rc = -1;
+			else if (pTitle1->GetTime() > pTitle2->GetTime())
+				rc = 1;
+			break;
+		case 0: // Q
+			if (pTitle1->GetQ() < pTitle2->GetQ())
+				rc = -1;
+			else if (pTitle1->GetQ() > pTitle2->GetQ())
+				rc = 1;
+			break;
+		case 1: // Place
+			if (pTitle1->GetPlace() < pTitle2->GetPlace())
+				rc = -1;
+			else if (pTitle1->GetPlace() > pTitle2->GetPlace())
+				rc = 1;
+			break;
+		case 2: // Score
+			if (pTitle1->GetScore() < pTitle2->GetScore())
+				rc = -1;
+			else if (pTitle1->GetScore() > pTitle2->GetScore())
+				rc = 1;
+			break;
+		case 4: // Name
+			if (pTitle1->GetName() < pTitle2->GetName())
+				rc = -1;
+			else if (pTitle1->GetName() > pTitle2->GetName())
+				rc = 1;
+			break;
+		case 5: // Height
+			if (pTitle1->GetHeight() < pTitle2->GetHeight())
+				rc = -1;
+			else if (pTitle1->GetHeight() > pTitle2->GetHeight())
+				rc = 1;
+			break;
+		case 6: // Breed
+			if (pTitle1->GetBreed() < pTitle2->GetBreed())
+				rc = -1;
+			else if (pTitle1->GetBreed() > pTitle2->GetBreed())
+				rc = 1;
+			break;
+		case 7: // Notes
+			if (pTitle1->GetNote() < pTitle2->GetNote())
+				rc = -1;
+			else if (pTitle1->GetNote() > pTitle2->GetNote())
+				rc = 1;
+			break;
+		}
+		if (rc)
+		{
+			if (s_SortInfo.pCols->IsDescending(col))
+				rc *= -1;
+			break;
+		}
+	}
+	return rc;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CMetaDataDisplay : public wxTextCtrl
+{
+public:
+	CMetaDataDisplay(
+			wxWindow* parent,
+			ARBDogRunPtr pRun);
+	~CMetaDataDisplay();
+
+	bool HasMetafileSupport() const
+	{
+#ifdef HAS_ENHMETAFILE
+		return true;
+#else
+		return false;
+#endif
+	}
+	bool HasMetafile()
+	{
+#ifdef HAS_ENHMETAFILE
+		return NULL != m_metaFile;
+#else
+		return false;
+#endif
+	}
+	bool ViewText() const		{return m_ViewText;}
+	bool HasCourse() const		{return !m_Insert;}
+	void SetCRCDData();
+	void ToggleView();
+	void OnCopy();
+	void OnCRCDImage(bool checked);
+	void Display();
+
+private:
+	void DeleteMetaFile();
+
+	ARBDogRunPtr m_Run;
+#ifdef HAS_ENHMETAFILE
+	HENHMETAFILE m_metaFile;
+	HENHMETAFILE m_metaFileBack;
+#endif
+	bool m_ViewText;
+	bool m_Insert;
+
+	DECLARE_EVENT_TABLE()
+	void OnPaint(wxPaintEvent& evt);
+};
+
+
+BEGIN_EVENT_TABLE(CMetaDataDisplay, wxTextCtrl)
+	EVT_PAINT(CMetaDataDisplay::OnPaint)
+END_EVENT_TABLE()
+
+
+CMetaDataDisplay::CMetaDataDisplay(
+		wxWindow* parent,
+		ARBDogRunPtr pRun)
+	: m_Run(pRun)
+#ifdef HAS_ENHMETAFILE
+	, m_metaFile(NULL)
+	, m_metaFileBack(NULL)
+#endif
+	, m_ViewText(true)
+	, m_Insert(pRun->GetCRCD().empty())
+{
+	wxTextCtrl::Create(parent, wxID_ANY,
+		m_Run->GetCRCD().c_str(),
+		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY);
+
+#ifdef HAS_ENHMETAFILE
+	if (0 < m_Run->GetCRCDRawMetaData().length())
+	{
+		ARBMetaDataPtr metaData = m_Run->GetCRCDMetaData();
+		m_metaFile = SetEnhMetaFileBits(static_cast<UINT>(metaData->length()), reinterpret_cast<BYTE const*>(metaData->data()));
+		m_metaFileBack = m_metaFile;
+		if (m_metaFile)
+		{
+			m_ViewText = false;
+			Enable(m_ViewText);
+		}
+	}
+#endif
+}
+
+
+CMetaDataDisplay::~CMetaDataDisplay()
+{
+	DeleteMetaFile();
+}
+
+
+void CMetaDataDisplay::DeleteMetaFile()
+{
+#ifdef HAS_ENHMETAFILE
+	if (!m_metaFile && m_metaFileBack)
+		m_metaFile = m_metaFileBack;
+	if (m_metaFile)
+	{
+		DeleteEnhMetaFile(m_metaFile);
+		m_metaFile = NULL;
+		m_metaFileBack = NULL;
+	}
+#endif
+}
+
+
+void CMetaDataDisplay::SetCRCDData()
+{
+#ifdef HAS_ENHMETAFILE
+	if (m_metaFile)
+	{
+		ENHMETAHEADER header;
+		GetEnhMetaFileHeader(m_metaFile, sizeof(header), &header);
+		UINT nSize = GetEnhMetaFileBits(m_metaFile, 0, NULL);
+		LPBYTE bits = new BYTE[nSize+1];
+		GetEnhMetaFileBits(m_metaFile, nSize, bits);
+		assert(sizeof(BYTE) == sizeof(char));
+		m_Run->SetCRCDMetaData(bits, nSize);
+		delete [] bits;
+	}
+	else
+#endif
+		m_Run->SetCRCDMetaData(NULL, 0);
+}
+
+
+void CMetaDataDisplay::ToggleView()
+{
+	m_ViewText = !m_ViewText;
+	Enable(m_ViewText);
+	Refresh();
+}
+
+
+void CMetaDataDisplay::OnCopy()
+{
+	if (m_Insert)
+	{
+		bool bText = false;
+		bText = ::IsClipboardFormatAvailable(CF_TEXT) ? true : false;
+		bool bMeta = false;
+#ifdef HAS_ENHMETAFILE
+		bMeta = ::IsClipboardFormatAvailable(CF_ENHMETAFILE) ? true : false;
+		if (!CAgilityBookOptions::GetIncludeCRCDImage())
+			bMeta = FALSE;
+#endif
+		if (bText || bMeta)
+		{
+			CClipboardDataReader clpData;
+			if (clpData.Open())
+			{
+				SetLabel(wxT(""));
+				DeleteMetaFile();
+				if (bText)
+				{
+					m_ViewText = true;
+					wxString str;
+					clpData.GetData(str);
+					str.Trim(true);
+					str.Trim(false);
+					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
+					// Standardize to \n.
+					str.Replace(wxT("\r\n"), wxT("\n"));
+					m_Run->SetCRCD(str.c_str());
+					SetLabel(str);
+					if (0 < str.length())
+						m_Insert = false;
+					// Only create the metafile if we pasted text. Otherwise
+					// we could end up with a non-CRCD metafile. It's still
+					// possible this may not be CRCD data - the user can
+					// just clear it then.
+#ifdef HAS_ENHMETAFILE
+					if (bMeta)
+					{
+						HENHMETAFILE hData = reinterpret_cast<HENHMETAFILE>(GetClipboardData(CF_ENHMETAFILE));
+						m_metaFile = CopyEnhMetaFile(hData, NULL);
+						m_metaFileBack = m_metaFile;
+						SetCRCDData();
+						if (m_metaFile)
+						{
+							m_ViewText = false;
+							m_Insert = false;
+						}
+					}
+#endif
+				}
+			}
+		}
+	}
+	else
+	{
+		m_Insert = true;
+		m_ViewText = true;
+		SetLabel(wxT(""));
+		DeleteMetaFile();
+		m_Run->SetCRCD(wxT(""));
+		m_Run->SetCRCDMetaData(NULL, 0);
+	}
+	Enable(m_ViewText);
+	Refresh();
+}
+
+
+void CMetaDataDisplay::OnCRCDImage(bool checked)
+{
+#ifdef HAS_ENHMETAFILE
+	CAgilityBookOptions::SetIncludeCRCDImage(checked);
+	if (checked)
+	{
+		if (!m_metaFile && m_metaFileBack)
+			m_metaFile = m_metaFileBack;
+	}
+	else
+	{
+		if (m_metaFile)
+		{
+			m_metaFileBack = m_metaFile;
+			m_metaFile = NULL;
+		}
+	}
+	SetCRCDData();
+	if (m_metaFile)
+	{
+		m_ViewText = false;
+		m_Insert = false;
+	}
+	else
+		m_ViewText = true;
+	Enable(m_ViewText);
+	Refresh();
+#endif
+}
+
+
+void CMetaDataDisplay::Display()
+{
+#ifdef HAS_ENHMETAFILE
+	if (m_metaFile)
+	{
+		CDlgCRCDViewer viewer(m_metaFile, this);
+		viewer.ShowModal();
+	}
+#endif
+}
+
+
+void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
+{
+	if (m_ViewText)
+		evt.Skip(true);
+	else
+	{
+		wxBufferedPaintDC dc(this);
+		wxBrush br(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
+		dc.SetBrush(br);
+		dc.Clear();
+		dc.SetBrush(wxNullBrush);
+#ifdef HAS_ENHMETAFILE
+		wxSize sz = GetClientSize();
+		RECT r;
+		r.left = 0;
+		r.top = 0;
+		r.right = std::min(sz.x, sz.y);
+		r.bottom = std::min(sz.x, sz.y);
+		HDC hdc = (HDC)dc.GetHDC();
+		PlayEnhMetaFile(hdc, m_metaFile, &r);
+#endif
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 BEGIN_EVENT_TABLE(CDlgRun, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgRun::OnOk)
@@ -65,20 +514,48 @@ CDlgRun::CDlgRun(
 	, m_pTrial(pTrial)
 	, m_pRealRun(pRun)
 	, m_Run(pRun->Clone())
+	, m_pRefRunMe()
+	, m_Club()
+	, m_Venue()
+
+	, m_Comments(pRun->GetNote().c_str())
+	, m_sortRefRuns(wxT("RefRuns"))
+
+	, m_idxRefRunPage(-1)
+	, m_ctrlFaultsList(NULL)
+	, m_ctrlRefRuns(NULL)
+	, m_ctrlRefAddMe(NULL)
+	, m_ctrlRefEdit(NULL)
+	, m_ctrlRefDelete(NULL)
+
+	, m_CRCDDisplay(NULL)
+	, m_ctrlCourse(NULL)
+	, m_ctrlCRCDView(NULL)
+	, m_ctrlCRCDCopy(NULL)
+	, m_ctrlIncImage(NULL)
+
+	, m_ctrlLinks(NULL)
+	, m_ImageList(16,16)
+	, m_imgEmpty(-1)
+	, m_imgOk(-1)
+	, m_imgMissing(-1)
+	, m_ctrlLinkEdit(NULL)
+	, m_ctrlLinkDelete(NULL)
+	, m_ctrlLinkOpen(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
 	Create(pParent, wxID_ANY, _("IDS_RUN_PROPERTIES"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
-	ARBDogClubPtr pClub;
-	pTrial->GetClubs().GetPrimaryClub(&pClub);
-	assert(NULL != pClub.get());
-	ARBConfigVenuePtr pVenue;
-	pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-	assert(NULL != pVenue.get());
+	pTrial->GetClubs().GetPrimaryClub(&m_Club);
+	assert(NULL != m_Club.get());
+	pDoc->Book().GetConfig().GetVenues().FindVenue(m_Club->GetVenue(), &m_Venue);
+	assert(NULL != m_Venue.get());
 
-	//m_pageScore = new CDlgRunScore(pDoc, pVenue, pTrial, m_pRealRun, m_Run);
+	m_sortRefRuns.Initialize(scNumRefRunColumns);
+
+	//m_pageScore = new CDlgRunScore(pDoc, m_Venue, pTrial, m_pRealRun, m_Run);
 	//m_pageComments = new CDlgRunComments(pDoc, m_Run);
-	//m_pageReference = new CDlgRunReference(pDoc, pVenue, m_Run);
+	//m_pageReference = new CDlgRunReference(pDoc, m_Venue, m_Run);
 	//m_pageCRCD = new CDlgRunCRCD(m_Run);
 	//m_pageLink = new CDlgRunLink(pDoc, m_Run);
 
@@ -86,6 +563,7 @@ CDlgRun::CDlgRun(
 
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, 0);
+	notebook->Connect(wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler(CDlgRun::OnPageChanged), NULL, this);
 
 	// Score
 
@@ -102,12 +580,12 @@ CDlgRun::CDlgRun(
 	ctrlDate->SetToolTip(_("HIDC_RUNSCORE_DATE"));
 
 	wxStaticText* textVenue = new wxStaticText(panelScore, wxID_ANY,
-		pVenue->GetName().c_str(),
+		m_Venue->GetName().c_str(),
 		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
 	textVenue->Wrap(-1);
 
 	wxStaticText* textClub = new wxStaticText(panelScore, wxID_ANY,
-		pClub->GetName().c_str(),
+		m_Club->GetName().c_str(),
 		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
 	textClub->Wrap(-1);
 
@@ -422,19 +900,21 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
 	wxTextCtrl* ctrlComments = new wxTextCtrl(panelComments, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
+		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlComments->SetHelpText(_("HIDC_RUNCOMMENT_COMMENTS"));
 	ctrlComments->SetToolTip(_("HIDC_RUNCOMMENT_COMMENTS"));
 
-	wxListBox* ctrlFaultsList = new wxListBox(panelComments, wxID_ANY,
+	m_ctrlFaultsList = new wxListBox(panelComments, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, 0);
-	ctrlFaultsList->SetHelpText(_("HIDC_RUNCOMMENT_FAULTS_LIST"));
-	ctrlFaultsList->SetToolTip(_("HIDC_RUNCOMMENT_FAULTS_LIST"));
+	m_ctrlFaultsList->SetHelpText(_("HIDC_RUNCOMMENT_FAULTS_LIST"));
+	m_ctrlFaultsList->SetToolTip(_("HIDC_RUNCOMMENT_FAULTS_LIST"));
 
 	wxButton* btnFaults = new wxButton(panelComments, wxID_ANY,
 		_("IDC_RUNCOMMENT_COMMENTS_FAULTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
+	btnFaults->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCommentsFaults), NULL, this);
 	btnFaults->SetHelpText(_("HIDC_RUNCOMMENT_COMMENTS_FAULTS"));
 	btnFaults->SetToolTip(_("HIDC_RUNCOMMENT_COMMENTS_FAULTS"));
 
@@ -443,34 +923,50 @@ CDlgRun::CDlgRun(
 	wxPanel* panelRefRuns = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	wxListCtrl* ctrlRefRuns = new wxListCtrl(panelRefRuns, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize, wxLC_REPORT);
-	ctrlRefRuns->SetHelpText(_("HIDC_RUNREF_REF_RUNS"));
-	ctrlRefRuns->SetToolTip(_("HIDC_RUNREF_REF_RUNS"));
+	m_ctrlRefRuns = new CReportListCtrl(panelRefRuns,
+		true, CReportListCtrl::eSortHeader, true);
+	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgRun::OnRefRunColumnClick), NULL, this);
+	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgRun::OnRefRunItemSelected), NULL, this);
+	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgRun::OnRefRunDoubleClick), NULL, this);
+	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgRun::OnRefRunKeyDown), NULL, this);
+	m_ctrlRefRuns->SetHelpText(_("HIDC_RUNREF_REF_RUNS"));
+	m_ctrlRefRuns->SetToolTip(_("HIDC_RUNREF_REF_RUNS"));
+	int index;
+	for (index = 0; index < scNumRefRunColumns; ++index)
+	{
+		m_ctrlRefRuns->InsertColumn(index, wxGetTranslation(scRefRunColumns[index].idText), scRefRunColumns[index].fmt);
+	}
+	SetRefRunColumnHeaders();
+	for (index = 0; index < scNumRefRunColumns; ++index)
+		m_ctrlRefRuns->SetColumnWidth(index, wxLIST_AUTOSIZE_USEHEADER);
 
 	wxButton* btnRefNew = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
+	btnRefNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunNew), NULL, this);
 	btnRefNew->SetHelpText(_("HIDC_RUNREF_NEW"));
 	btnRefNew->SetToolTip(_("HIDC_RUNREF_NEW"));
 
-	wxButton* btnRefAddMe = new wxButton(panelRefRuns, wxID_ANY,
+	m_ctrlRefAddMe = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_ADDDOG"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnRefAddMe->SetHelpText(_("HIDC_RUNREF_ADDDOG"));
-	btnRefAddMe->SetToolTip(_("HIDC_RUNREF_ADDDOG"));
+	m_ctrlRefAddMe->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunAddMe), NULL, this);
+	m_ctrlRefAddMe->SetHelpText(_("HIDC_RUNREF_ADDDOG"));
+	m_ctrlRefAddMe->SetToolTip(_("HIDC_RUNREF_ADDDOG"));
 
-	wxButton* btnRefEdit = new wxButton(panelRefRuns, wxID_ANY,
+	m_ctrlRefEdit = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnRefEdit->SetHelpText(_("HIDC_RUNREF_EDIT"));
-	btnRefEdit->SetToolTip(_("HIDC_RUNREF_EDIT"));
+	m_ctrlRefEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunEdit), NULL, this);
+	m_ctrlRefEdit->SetHelpText(_("HIDC_RUNREF_EDIT"));
+	m_ctrlRefEdit->SetToolTip(_("HIDC_RUNREF_EDIT"));
 
-	wxButton* btnRefDelete = new wxButton(panelRefRuns, wxID_ANY,
+	m_ctrlRefDelete = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnRefDelete->SetHelpText(_("HIDC_RUNREF_DELETE"));
-	btnRefDelete->SetToolTip(_("HIDC_RUNREF_DELETE"));
+	m_ctrlRefDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunDelete), NULL, this);
+	m_ctrlRefDelete->SetHelpText(_("HIDC_RUNREF_DELETE"));
+	m_ctrlRefDelete->SetToolTip(_("HIDC_RUNREF_DELETE"));
 
 	// CRCD
 
@@ -482,73 +978,98 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textCRCD->Wrap(500);
 
-	wxStaticText* textDisplay = new wxStaticText(panelCRCD, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
-	textDisplay->Wrap(-1);
+	m_CRCDDisplay = new CMetaDataDisplay(panelCRCD, m_Run);
 
-	wxButton* btnCourse = new wxButton(panelCRCD, wxID_ANY,
-		_("IDC_RUNCRCD_EDIT"),
-		wxDefaultPosition, wxDefaultSize, 0);
-	btnCourse->SetHelpText(_("HIDC_RUNCRCD_EDIT"));
-	btnCourse->SetToolTip(_("HIDC_RUNCRCD_EDIT"));
+	if (m_CRCDDisplay->HasMetafileSupport())
+	{
+		m_ctrlCourse = new wxButton(panelCRCD, wxID_ANY,
+			_("IDC_RUNCRCD_EDIT"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlCourse->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDEdit), NULL, this);
+		m_ctrlCourse->SetHelpText(_("HIDC_RUNCRCD_EDIT"));
+		m_ctrlCourse->SetToolTip(_("HIDC_RUNCRCD_EDIT"));
 
-	wxButton* btnView = new wxButton(panelCRCD, wxID_ANY,
-		_("IDC_RUNCRCD_VIEW"),
-		wxDefaultPosition, wxDefaultSize, 0);
-	btnView->SetHelpText(_("HIDC_RUNCRCD_VIEW"));
-	btnView->SetToolTip(_("HIDC_RUNCRCD_VIEW"));
+		m_ctrlCRCDView = new wxButton(panelCRCD, wxID_ANY,
+			_("IDC_RUNCRCD_VIEW"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlCRCDView->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDView), NULL, this);
+		m_ctrlCRCDView->SetHelpText(_("HIDC_RUNCRCD_VIEW"));
+		m_ctrlCRCDView->SetToolTip(_("HIDC_RUNCRCD_VIEW"));
+	}
 
-	wxButton* btnCopyCRCD = new wxButton(panelCRCD, wxID_ANY,
+	m_ctrlCRCDCopy = new wxButton(panelCRCD, wxID_ANY,
 		_("IDC_RUNCRCD_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnCopyCRCD->SetHelpText(_("HIDC_RUNCRCD_COPY"));
-	btnCopyCRCD->SetToolTip(_("HIDC_RUNCRCD_COPY"));
+	m_ctrlCRCDCopy->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDCopy), NULL, this);
+	m_ctrlCRCDCopy->SetHelpText(_("HIDC_RUNCRCD_COPY"));
+	m_ctrlCRCDCopy->SetToolTip(_("HIDC_RUNCRCD_COPY"));
 
-	wxCheckBox* ctrlIncImage = new wxCheckBox(panelCRCD, wxID_ANY,
-		_("IDC_RUNCRCD_IMAGE"),
-		wxDefaultPosition, wxDefaultSize, 0);
-	ctrlIncImage->SetHelpText(_("HIDC_RUNCRCD_IMAGE"));
-	ctrlIncImage->SetToolTip(_("HIDC_RUNCRCD_IMAGE"));
+	wxStaticText* textImageDesc = NULL;
+	if (m_CRCDDisplay->HasMetafileSupport())
+	{
+		m_ctrlIncImage = new wxCheckBox(panelCRCD, wxID_ANY,
+			_("IDC_RUNCRCD_IMAGE"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		m_ctrlIncImage->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDImage), NULL, this);
+		m_ctrlIncImage->SetHelpText(_("HIDC_RUNCRCD_IMAGE"));
+		m_ctrlIncImage->SetToolTip(_("HIDC_RUNCRCD_IMAGE"));
+		bool setCheck = CAgilityBookOptions::GetIncludeCRCDImage();
+		if (m_CRCDDisplay->HasMetafile())
+			setCheck = true;
+		m_ctrlIncImage->SetValue(setCheck);
 
-	wxStaticText* textImageDesc = new wxStaticText(panelCRCD, wxID_ANY,
-		_("IDC_RUNCRCD_IMAGE_TEXT"),
-		wxDefaultPosition, wxDefaultSize, 0);
-	textImageDesc->Wrap(80);
+		textImageDesc = new wxStaticText(panelCRCD, wxID_ANY,
+			_("IDC_RUNCRCD_IMAGE_TEXT"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		textImageDesc->Wrap(80);
+	}
 
 	// Links
 
 	wxPanel* panelLinks = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	wxListBox* ctrlLinks = new wxListBox(panelLinks, wxID_ANY,
+	m_ctrlLinks = new wxListView(panelLinks, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, 0);
-	ctrlLinks->SetHelpText(_("HIDC_RUNLINK_LIST"));
-	ctrlLinks->SetToolTip(_("HIDC_RUNLINK_LIST"));
+		wxLC_NO_HEADER|wxLC_REPORT|wxLC_SINGLE_SEL);
+	m_ctrlLinks->SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
+	m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
+	m_imgOk = m_ImageList.Add(wxIcon(CalPlan_xpm));
+	m_imgMissing = m_ImageList.Add(wxIcon(CalTentative_xpm));
+	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgRun::OnLinksItemSelected), NULL, this);
+	m_ctrlLinks->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgRun::OnLinksDoubleClick), NULL, this);
+	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgRun::OnLinksKeyDown), NULL, this);
+	m_ctrlLinks->SetHelpText(_("HIDC_RUNLINK_LIST"));
+	m_ctrlLinks->SetToolTip(_("HIDC_RUNLINK_LIST"));
+	m_ctrlLinks->InsertColumn(0, wxT(""));
 
 	wxButton* btnLinkNew = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
+	btnLinkNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksNew), NULL, this);
 	btnLinkNew->SetHelpText(_("HIDC_RUNLINK_NEW"));
 	btnLinkNew->SetToolTip(_("HIDC_RUNLINK_NEW"));
 
-	wxButton* btnLinkEdit = new wxButton(panelLinks, wxID_ANY,
+	m_ctrlLinkEdit = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnLinkEdit->SetHelpText(_("HIDC_RUNLINK_EDIT"));
-	btnLinkEdit->SetToolTip(_("HIDC_RUNLINK_EDIT"));
+	m_ctrlLinkEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksEdit), NULL, this);
+	m_ctrlLinkEdit->SetHelpText(_("HIDC_RUNLINK_EDIT"));
+	m_ctrlLinkEdit->SetToolTip(_("HIDC_RUNLINK_EDIT"));
 
-	wxButton* btnLinkDelete = new wxButton(panelLinks, wxID_ANY,
+	m_ctrlLinkDelete = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnLinkDelete->SetHelpText(_("HIDC_RUNLINK_DELETE"));
-	btnLinkDelete->SetToolTip(_("HIDC_RUNLINK_DELETE"));
+	m_ctrlLinkDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksDelete), NULL, this);
+	m_ctrlLinkDelete->SetHelpText(_("HIDC_RUNLINK_DELETE"));
+	m_ctrlLinkDelete->SetToolTip(_("HIDC_RUNLINK_DELETE"));
 
-	wxButton* btnLinkOpen = new wxButton(panelLinks, wxID_ANY,
+	m_ctrlLinkOpen = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_OPEN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnLinkOpen->SetHelpText(_("HIDC_RUNLINK_OPEN"));
-	btnLinkOpen->SetToolTip(_("HIDC_RUNLINK_OPEN"));
+	m_ctrlLinkOpen->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksOpen), NULL, this);
+	m_ctrlLinkOpen->SetHelpText(_("HIDC_RUNLINK_OPEN"));
+	m_ctrlLinkOpen->SetToolTip(_("HIDC_RUNLINK_OPEN"));
 
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
@@ -740,7 +1261,7 @@ CDlgRun::CDlgRun(
 	sizerCommentsFaults->Add(ctrlComments, 1, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerFaultsList = new wxBoxSizer(wxVERTICAL);
-	sizerFaultsList->Add(ctrlFaultsList, 1, wxALL, 5);
+	sizerFaultsList->Add(m_ctrlFaultsList, 1, wxALL, 5);
 	sizerFaultsList->Add(btnFaults, 0, wxALL, 5);
 
 	sizerCommentsFaults->Add(sizerFaultsList, 0, wxEXPAND, 5);
@@ -751,34 +1272,39 @@ CDlgRun::CDlgRun(
 	notebook->AddPage(panelComments, _("IDD_RUN_COMMENTS"), false);
 
 	wxBoxSizer* sizerRefRuns = new wxBoxSizer(wxVERTICAL);
-	sizerRefRuns->Add(ctrlRefRuns, 1, wxALL|wxEXPAND, 5);
+	sizerRefRuns->Add(m_ctrlRefRuns, 1, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerRefBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerRefBtns->Add(btnRefNew, 0, wxALL, 5);
-	sizerRefBtns->Add(btnRefAddMe, 0, wxALL, 5);
-	sizerRefBtns->Add(btnRefEdit, 0, wxALL, 5);
-	sizerRefBtns->Add(btnRefDelete, 0, wxALL, 5);
+	sizerRefBtns->Add(m_ctrlRefAddMe, 0, wxALL, 5);
+	sizerRefBtns->Add(m_ctrlRefEdit, 0, wxALL, 5);
+	sizerRefBtns->Add(m_ctrlRefDelete, 0, wxALL, 5);
 	sizerRefRuns->Add(sizerRefBtns, 0, wxEXPAND, 5);
 
 	panelRefRuns->SetSizer(sizerRefRuns);
 	panelRefRuns->Layout();
 	sizerRefRuns->Fit(panelRefRuns);
 	notebook->AddPage(panelRefRuns, _("IDD_RUN_REFERENCE"), false);
+	m_idxRefRunPage = notebook->GetPageCount() - 1;
 
 	wxBoxSizer* sizerCRCD = new wxBoxSizer(wxHORIZONTAL);
 
 	wxBoxSizer* sizerDisplay = new wxBoxSizer(wxVERTICAL);
 	sizerDisplay->Add(textCRCD, 0, wxALL, 5);
-	sizerDisplay->Add(textDisplay, 1, wxALL|wxEXPAND, 5);
+	sizerDisplay->Add(m_CRCDDisplay, 1, wxALL|wxEXPAND, 5);
 
 	sizerCRCD->Add(sizerDisplay, 1, wxEXPAND, 5);
 
 	wxBoxSizer* sizerBtnsCRCD = new wxBoxSizer(wxVERTICAL);
-	sizerBtnsCRCD->Add(btnCourse, 0, wxALL, 5);
-	sizerBtnsCRCD->Add(btnView, 0, wxALL, 5);
-	sizerBtnsCRCD->Add(btnCopyCRCD, 0, wxALL, 5);
-	sizerBtnsCRCD->Add(ctrlIncImage, 0, wxALL, 5);
-	sizerBtnsCRCD->Add(textImageDesc, 0, wxALL, 5);
+	if (m_ctrlCourse)
+		sizerBtnsCRCD->Add(m_ctrlCourse, 0, wxALL, 5);
+	if (m_ctrlCRCDView)
+		sizerBtnsCRCD->Add(m_ctrlCRCDView, 0, wxALL, 5);
+	sizerBtnsCRCD->Add(m_ctrlCRCDCopy, 0, wxALL, 5);
+	if (m_ctrlIncImage)
+		sizerBtnsCRCD->Add(m_ctrlIncImage, 0, wxALL, 5);
+	if (textImageDesc)
+		sizerBtnsCRCD->Add(textImageDesc, 0, wxALL, 5);
 
 	sizerCRCD->Add(sizerBtnsCRCD, 0, wxEXPAND, 5);
 
@@ -788,14 +1314,14 @@ CDlgRun::CDlgRun(
 	notebook->AddPage(panelCRCD, _("IDD_RUN_CRCD"), false);
 
 	wxBoxSizer* sizerLinks = new wxBoxSizer(wxVERTICAL);
-	sizerLinks->Add(ctrlLinks, 1, wxALL|wxEXPAND, 5);
+	sizerLinks->Add(m_ctrlLinks, 1, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerLinkBtns = new wxBoxSizer(wxHORIZONTAL);
 	sizerLinkBtns->Add(btnLinkNew, 0, wxALL, 5);
-	sizerLinkBtns->Add(btnLinkEdit, 0, wxALL, 5);
-	sizerLinkBtns->Add(btnLinkDelete, 0, wxALL, 5);
+	sizerLinkBtns->Add(m_ctrlLinkEdit, 0, wxALL, 5);
+	sizerLinkBtns->Add(m_ctrlLinkDelete, 0, wxALL, 5);
 	sizerLinkBtns->Add(0, 0, 1, wxEXPAND, 5);
-	sizerLinkBtns->Add(btnLinkOpen, 0, wxALL, 5);
+	sizerLinkBtns->Add(m_ctrlLinkOpen, 0, wxALL, 5);
 
 	sizerLinks->Add(sizerLinkBtns, 0, wxEXPAND, 5);
 
@@ -809,6 +1335,11 @@ CDlgRun::CDlgRun(
 	wxSizer* sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
+	SetFaultsText();
+	ListRefRuns();
+	UpdateCRCDButtons();
+	ListLinkFiles(NULL);
+
 	SetSizer(bSizer);
 	Layout();
 	GetSizer()->Fit(this);
@@ -819,22 +1350,574 @@ CDlgRun::CDlgRun(
 }
 
 
+void CDlgRun::SetFaultsText()
+{
+	m_ctrlFaultsList->Clear();
+	for (ARBDogFaultList::const_iterator iter = m_Run->GetFaults().begin(); iter != m_Run->GetFaults().end(); ++iter)
+	{
+		m_ctrlFaultsList->Append((*iter).c_str());
+	}
+}
+
+
+CDlgDogRefRunDataPtr CDlgRun::GetReferenceDataByData(long index) const
+{
+	return tr1::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetDataByData(index));
+}
+
+
+CDlgDogRefRunDataPtr CDlgRun::GetReferenceData(long index) const
+{
+	return tr1::dynamic_pointer_cast<CDlgDogRefRunData, CListData>(m_ctrlRefRuns->GetData(index));
+}
+
+
+bool CDlgRun::IsRefRunMe()
+{
+	if (m_pRefRunMe)
+	{
+		for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
+			iterRef != m_Run->GetReferenceRuns().end();
+			++iterRef)
+		{
+			if (*iterRef == m_pRefRunMe)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+void CDlgRun::CreateRefRunMe()
+{
+	// Create the 'me' reference run.
+	m_pRefRunMe = ARBDogReferenceRunPtr(ARBDogReferenceRun::New());
+	m_pRefRunMe->SetQ(m_Run->GetQ());
+	m_pRefRunMe->SetPlace(m_Run->GetPlace());
+	m_pRefRunMe->SetName(m_pDoc->GetCurrentDog()->GetCallName());
+	m_pRefRunMe->SetHeight(m_Run->GetHeight());
+	m_pRefRunMe->SetBreed(m_pDoc->GetCurrentDog()->GetBreed());
+	m_pRefRunMe->SetTime(m_Run->GetScoring().GetTime());
+	ARBConfigScoringPtr pScoring;
+	if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
+		m_Venue->GetName(),
+		m_Run->GetEvent(),
+		m_Run->GetDivision(),
+		m_Run->GetLevel(),
+		m_Run->GetDate(),
+		NULL,
+		&pScoring))
+	{
+		m_pRefRunMe->SetScore(ARBDouble::str(m_Run->GetScore(pScoring)));
+	}
+
+	// Now see if I'm already in there.
+	// Only compare: Q/Place/Name/Time/Score.
+	for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
+		iterRef != m_Run->GetReferenceRuns().end();
+		++iterRef)
+	{
+		ARBDogReferenceRunPtr pRef = *iterRef;
+		if (pRef->GetQ() == m_pRefRunMe->GetQ()
+		&& pRef->GetPlace() == m_pRefRunMe->GetPlace()
+		&& pRef->GetName() == m_pRefRunMe->GetName()
+		&& ARBDouble::equal(pRef->GetTime(), m_pRefRunMe->GetTime())
+		&& pRef->GetScore() == m_pRefRunMe->GetScore())
+		{
+			m_pRefRunMe = pRef;
+			break;
+		}
+	}
+	// Note: This means if we create 'me', modify it, switch tabs
+	// and come back, 'addme' is enabled again.
+}
+
+
+void CDlgRun::UpdateRefRunButtons()
+{
+	m_ctrlRefAddMe->Enable(!IsRefRunMe());
+	bool bSelected = (0 <= m_ctrlRefRuns->GetFirstSelected());
+	m_ctrlRefEdit->Enable(bSelected);
+	m_ctrlRefDelete->Enable(bSelected);
+}
+
+
+void CDlgRun::SetRefRunColumnHeaders()
+{
+	LV_COLUMN col;
+	col.mask = LVCF_TEXT | LVCF_SUBITEM;
+	for (int i = 0; i < scNumRefRunColumns; ++i)
+	{
+		otstringstream str;
+		str << wxGetTranslation(scRefRunColumns[i].idText)
+			<< wxT(" (" << m_sortRefRuns.FindColumnOrder(i) + 1) << ')';
+		wxListItem item;
+		item.SetMask(wxLIST_MASK_TEXT);
+		item.SetText(str.str().c_str());
+		m_ctrlRefRuns->SetColumn(i, item);
+		m_ctrlRefRuns->SetColumnSort(i, m_sortRefRuns.IsDescending(i) ? -1 : 1);
+	}
+}
+
+
+void CDlgRun::ListRefRuns()
+{
+	ARBDogReferenceRunPtr pSelected;
+	long index = m_ctrlRefRuns->GetFirstSelected();
+	if (0 <= index)
+	{
+		ARBDogReferenceRunPtr pData = GetReferenceData(index)->GetData();
+		if (pData)
+			pSelected = pData;
+	}
+	m_ctrlRefRuns->DeleteAllItems();
+
+	index = 0;
+	for (ARBDogReferenceRunList::const_iterator iterRef = m_Run->GetReferenceRuns().begin();
+	iterRef != m_Run->GetReferenceRuns().end();
+	++index, ++iterRef)
+	{
+		CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(*iterRef));
+		m_ctrlRefRuns->InsertItem(data);
+	}
+	for (index = 0; index < scNumRefRunColumns; ++index)
+		m_ctrlRefRuns->SetColumnWidth(index, wxLIST_AUTOSIZE_USEHEADER);
+	s_SortInfo.pThis = this;
+	s_SortInfo.pCols = &m_sortRefRuns;
+	m_ctrlRefRuns->SortItems(CompareRefRuns, 0);
+
+	if (pSelected)
+	{
+		for (index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
+		{
+			ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
+			if (pRefRun == pSelected) // compare by ptr is fine.
+			{
+				m_ctrlRefRuns->SetSelection(index, true);
+				break;
+			}
+		}
+	}
+	UpdateRefRunButtons();
+}
+
+
+void CDlgRun::GetAllHeights(std::set<tstring>& outNames)
+{
+	m_pDoc->Book().GetAllHeights(outNames);
+	for (long index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
+	{
+		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
+		if (pRefRun)
+		{
+			tstring const& ht = pRefRun->GetHeight();
+			if (0 < ht.length())
+				outNames.insert(ht);
+		}
+	}
+}
+
+
+void CDlgRun::GetAllCallNames(std::set<tstring>& outNames)
+{
+	m_pDoc->Book().GetAllCallNames(outNames);
+	for (int index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
+	{
+		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
+		if (pRefRun)
+		{
+			tstring const& ht = pRefRun->GetName();
+			if (0 < ht.length())
+				outNames.insert(ht);
+		}
+	}
+}
+
+
+void CDlgRun::GetAllBreeds(std::set<tstring>& outNames)
+{
+	m_pDoc->Book().GetAllBreeds(outNames);
+	for (int index = 0; index < m_ctrlRefRuns->GetItemCount(); ++index)
+	{
+		ARBDogReferenceRunPtr pRefRun = GetReferenceData(index)->GetData();
+		if (pRefRun)
+		{
+			tstring const& ht = pRefRun->GetBreed();
+			if (0 < ht.length())
+				outNames.insert(ht);
+		}
+	}
+}
+
+
+void CDlgRun::EditRefRun()
+{
+	long nItem = m_ctrlRefRuns->GetFirstSelected();
+	if (0 <= nItem)
+	{
+		std::set<tstring> heights, names, breeds;
+		GetAllHeights(heights);
+		GetAllCallNames(names);
+		GetAllBreeds(breeds);
+		ARBDogReferenceRunPtr pRef = GetReferenceData(nItem)->GetData();
+		CDlgReferenceRun dlg(m_pDoc, m_Run, heights, names, breeds, pRef, this);
+		if (wxID_OK == dlg.ShowModal())
+			ListRefRuns();
+	}
+}
+
+
+void CDlgRun::UpdateCRCDButtons()
+{
+	if (m_ctrlCRCDView)
+	{
+		if (m_CRCDDisplay->ViewText())
+			m_ctrlCRCDView->SetLabel(_("IDS_CRCD_BTN_VIEWIMAGE"));
+		else
+			m_ctrlCRCDView->SetLabel(_("IDS_CRCD_BTN_VIEWTEXT"));
+	}
+	if (m_CRCDDisplay->HasCourse())
+		m_ctrlCRCDCopy->SetLabel(_("IDS_CRCD_BTN_CLEARCOURSE"));
+	else
+		m_ctrlCRCDCopy->SetLabel(_("IDS_CRCD_BTN_INSERTCOURSE"));
+
+	if (m_ctrlCourse)
+		m_ctrlCourse->Enable(m_CRCDDisplay->HasMetafile());
+	if (m_ctrlCRCDView)
+		m_ctrlCRCDView->Enable(m_CRCDDisplay->HasMetafile());
+}
+
+
+void CDlgRun::UpdateLinksButtons()
+{
+	bool bEnable = (0 <= m_ctrlLinks->GetFirstSelected());
+	m_ctrlLinkEdit->Enable(bEnable);
+	m_ctrlLinkDelete->Enable(bEnable);
+	m_ctrlLinkOpen->Enable(bEnable);
+}
+
+
+void CDlgRun::ListLinkFiles(wxChar const* pItem)
+{
+	wxBusyCursor wait;
+	m_ctrlLinks->DeleteAllItems();
+	std::set<tstring> links;
+	m_Run->GetLinks(links);
+	long i = 0;
+	for (std::set<tstring>::iterator iter = links.begin();
+		iter != links.end();
+		++iter)
+	{
+		int idx = m_ctrlLinks->InsertItem(i++, (*iter).c_str(), GetImageIndex((*iter).c_str()));
+		if (pItem && *iter == pItem)
+			m_ctrlLinks->Select(idx);
+	}
+	m_ctrlLinks->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+	UpdateLinksButtons();
+}
+
+
+int CDlgRun::GetImageIndex(tstring const& inLink)
+{
+	wxBusyCursor wait;
+	int img = m_imgEmpty;
+	if (0 < inLink.length())
+	{
+		if (CheckLink(inLink, this))
+			img = m_imgOk;
+		else
+			img = m_imgMissing;
+	}
+	return img;
+}
+
+
+void CDlgRun::EditLink()
+{
+	int nItem = m_ctrlLinks->GetFirstSelected();
+	if (0 <= nItem)
+	{
+		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		CDlgSelectURL dlg(name, this);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			wxString newName = dlg.GetName();
+			if (name != newName)
+			{
+				m_Run->RemoveLink(name.c_str());
+				if (0 < newName.length())
+					m_Run->AddLink(newName.c_str());
+				ListLinkFiles(newName.c_str());
+			}
+		}
+	}
+}
+
+
+void CDlgRun::OnCommentsFaults(wxCommandEvent& evt)
+{
+	CDlgListCtrl dlg(CDlgListCtrl::eFaults, m_pDoc, m_Run, this);
+	if (wxID_OK == dlg.ShowModal())
+		SetFaultsText();
+}
+
+
+void CDlgRun::OnRefRunColumnClick(wxListEvent& evt)
+{
+	s_SortInfo.pThis = this;
+	m_sortRefRuns.SetColumnOrder(evt.GetColumn());
+	SetRefRunColumnHeaders();
+	s_SortInfo.pCols = &m_sortRefRuns;
+	m_ctrlRefRuns->SortItems(CompareRefRuns, 0);
+	m_sortRefRuns.Save();
+}
+
+
+void CDlgRun::OnRefRunItemSelected(wxListEvent& evt)
+{
+	UpdateRefRunButtons();
+}
+
+
+void CDlgRun::OnRefRunDoubleClick(wxMouseEvent& evt)
+{
+	EditRefRun();
+}
+
+
+void CDlgRun::OnRefRunKeyDown(wxListEvent& evt)
+{
+	switch (evt.GetKeyCode())
+	{
+	default:
+		break;
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
+		EditRefRun();
+		break;
+	}
+	evt.Skip();
+}
+
+
+void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
+{
+	ARBDogReferenceRunPtr ref(ARBDogReferenceRun::New());
+	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	{
+		ARBConfigScoringPtr pScoring;
+		if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
+			m_Venue->GetName(),
+			m_Run->GetEvent(),
+			m_Run->GetDivision(),
+			m_Run->GetLevel(),
+			m_Run->GetDate(),
+			NULL,
+			&pScoring))
+		{
+			tstring nScore;
+			switch (pScoring->GetScoringStyle())
+			{
+			default:
+				nScore = wxT("0");
+				break;
+			case ARBConfigScoring::eFaults100ThenTime:
+				nScore = wxT("100");
+				break;
+			case ARBConfigScoring::eFaults200ThenTime:
+				nScore = wxT("200");
+				break;
+			}
+			ref->SetScore(nScore);
+		}
+	}
+	ref->SetQ(ARB_Q::eQ_Q);
+	std::set<tstring> heights, names, breeds;
+	GetAllHeights(heights);
+	GetAllCallNames(names);
+	GetAllBreeds(breeds);
+	CDlgReferenceRun dlg(m_pDoc, m_Run, heights, names, breeds, ref, this);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		if (m_Run->GetReferenceRuns().AddReferenceRun(ref))
+		{
+			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(ref));
+			long index = m_ctrlRefRuns->InsertItem(data);
+			m_ctrlRefRuns->Select(index);
+			// Insert item first to set selection.
+			// ListRefRuns then 'fixes' order.
+			ListRefRuns();
+		}
+	}
+}
+
+
+void CDlgRun::OnRefRunAddMe(wxCommandEvent& evt)
+{
+	if (!IsRefRunMe())
+	{
+		if (m_Run->GetReferenceRuns().AddReferenceRun(m_pRefRunMe))
+		{
+			CDlgDogRefRunDataPtr data(new CDlgDogRefRunData(m_pRefRunMe));
+			long index = m_ctrlRefRuns->InsertItem(data);
+			m_ctrlRefRuns->Select(index);
+			// Insert item first to set selection.
+			// ListRefRuns then 'fixes' order.
+			ListRefRuns();
+		}
+	}
+}
+
+
+void CDlgRun::OnRefRunEdit(wxCommandEvent& evt)
+{
+	EditRefRun();
+}
+
+
+void CDlgRun::OnRefRunDelete(wxCommandEvent& evt)
+{
+	long nItem = m_ctrlRefRuns->GetFirstSelected();
+	if (0 <= nItem)
+	{
+		ARBDogReferenceRunPtr pRef = GetReferenceData(nItem)->GetData();
+		if (pRef)
+		{
+			if (m_Run->GetReferenceRuns().DeleteReferenceRun(pRef))
+				m_ctrlRefRuns->DeleteItem(nItem);
+			if (m_pRefRunMe && m_pRefRunMe == pRef)
+				CreateRefRunMe();
+		}
+		UpdateRefRunButtons();
+	}
+}
+
+
+void CDlgRun::OnCRCDEdit(wxCommandEvent& evt)
+{
+	m_CRCDDisplay->Display();
+}
+
+
+void CDlgRun::OnCRCDView(wxCommandEvent& evt)
+{
+	m_CRCDDisplay->ToggleView();
+	UpdateCRCDButtons();
+}
+
+
+void CDlgRun::OnCRCDCopy(wxCommandEvent& evt)
+{
+	m_CRCDDisplay->OnCopy();
+	UpdateCRCDButtons();
+}
+
+
+void CDlgRun::OnCRCDImage(wxCommandEvent& evt)
+{
+	m_CRCDDisplay->OnCRCDImage(m_ctrlIncImage->GetValue());
+	UpdateCRCDButtons();
+}
+
+
+void CDlgRun::OnLinksItemSelected(wxListEvent& evt)
+{
+	UpdateLinksButtons();
+}
+
+
+void CDlgRun::OnLinksDoubleClick(wxMouseEvent& evt)
+{
+	EditLink();
+}
+
+
+void CDlgRun::OnLinksKeyDown(wxListEvent& evt)
+{
+	switch (evt.GetKeyCode())
+	{
+	default:
+		break;
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
+		EditLink();
+		break;
+	}
+	evt.Skip();
+}
+
+
+void CDlgRun::OnLinksNew(wxCommandEvent& evt)
+{
+	CDlgSelectURL dlg(wxT(""), this);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		wxString newName = dlg.GetName();
+		if (0 < newName.length())
+		{
+			m_Run->AddLink(newName.c_str());
+			ListLinkFiles(newName.c_str());
+		}
+	}
+}
+
+
+void CDlgRun::OnLinksEdit(wxCommandEvent& evt)
+{
+	EditLink();
+}
+
+
+void CDlgRun::OnLinksDelete(wxCommandEvent& evt)
+{
+	long nItem = m_ctrlLinks->GetFirstSelected();
+	if (0 <= nItem)
+	{
+		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		m_Run->RemoveLink(name.c_str());
+		ListLinkFiles(NULL);
+	}
+}
+
+
+void CDlgRun::OnLinksOpen(wxCommandEvent& evt)
+{
+	int nItem = m_ctrlLinks->GetFirstSelected();
+	if (0 <= nItem)
+	{
+		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
+		wxLaunchDefaultBrowser(name);
+	}
+}
+
+
+void CDlgRun::OnPageChanged(wxNotebookEvent& evt)
+{
+	if (m_idxRefRunPage == evt.GetSelection())
+	{
+		// Recreate the 'me' reference run on page change. This will push in
+		// any changes made in the scoring page.
+		CreateRefRunMe();
+		UpdateRefRunButtons();
+	}
+	evt.Skip();
+}
+
+
 void CDlgRun::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
+	m_Run->SetNote(m_Comments.c_str());
+
 	//TODO: Remove debugging code
 #ifdef _DEBUG
 	{
-		ARBDogClubPtr pClub;
-		m_pTrial->GetClubs().GetPrimaryClub(&pClub);
-		assert(NULL != pClub.get());
-		ARBConfigVenuePtr pVenue;
-		m_pDoc->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue(), &pVenue);
-		assert(NULL != pVenue.get());
 		ARBConfigEventPtr pEvent;
-		pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
+		m_Venue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
 		assert(NULL != pEvent.get());
 		if (!pEvent->HasTable())
 			if (m_Run->GetScoring().HasTable())
