@@ -28,7 +28,7 @@ INCLUDES = -DWXWIDGETS -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCD
 ##########
 # List of programs and archives to link
 ##########
-ARCHIVES = $(TOPBUILDDIR)/arblib
+ARCHIVES = arblib
 
 ##########
 # Source files for each target

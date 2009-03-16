@@ -135,8 +135,8 @@ agilitybook_SRCS = \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-agilitybook_LIBS = $(TOPBUILDDIR)/arblib.a `wx-config --libs`
-agilitybook_LDFLAGS = -L$(TOPBUILDDIR)
+agilitybook_LIBS = $(TOPBUILDDIR)/src/ARB/arblib.a `wx-config --libs`
+agilitybook_LDFLAGS = -L$(TOPSRCDIR)
 
 ##########
 # Precompiled headers
