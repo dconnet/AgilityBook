@@ -27,17 +27,17 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES =  -DWXWIDGETS -DWXUSE_GUI -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` 
+INCLUDES =  -DWXWIDGETS -DWXUSE_GUI -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags`
 
 ##########
 # List of programs and archives to link
 ##########
-PROGRAMS = arb
+PROGRAMS = agilitybook
 
 ##########
 # Source files for each target
 ##########
-arb_SRCS = \
+agilitybook_SRCS = \
 	AgilityBook.cpp \
 	AgilityBookCalendarListView.cpp \
 	AgilityBookCalendarView.cpp \
@@ -135,8 +135,8 @@ arb_SRCS = \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-arb_LIBS = arblib `wx-config --libs`
-arb_LDFLAGS = -L$(TOPBUILDDIR)
+agilitybook_LIBS = $(TOPBUILDDIR)/arblib.a `wx-config --libs`
+agilitybook_LDFLAGS = -L$(TOPBUILDDIR)
 
 ##########
 # Precompiled headers
@@ -146,7 +146,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = arb
+#INSTALL_BIN = agilitybook
 #INSTALL_SBIN = prog2
 #INSTALL_MAN = prog1.5
 
