@@ -1001,6 +1001,169 @@ msgstr "Move &Up"
 msgid "IDC_REORDER_MOVE_DOWN"
 msgstr "Move Do&wn"
 
+# DlgRun
+msgid "IDD_RUN_SCORE"
+msgstr "Score"
+
+msgid "IDC_RUNSCORE_DATE"
+msgstr "&Date"
+
+msgid "IDC_RUNSCORE_DIVISION"
+msgstr "Di&vision"
+
+msgid "IDC_RUNSCORE_LEVEL"
+msgstr "&Level"
+
+msgid "IDC_RUNSCORE_EVENT"
+msgstr "&Event"
+
+msgid "IDC_RUNSCORE_SUBNAME"
+msgstr "SubName"
+
+msgid "IDC_RUNSCORE_TABLE"
+msgstr "Run has a &Table"
+
+msgid "IDC_RUNSCORE_HEIGHT"
+msgstr "&Height"
+
+msgid "IDC_RUNSCORE_JUDGE"
+msgstr "&Judge"
+
+msgid "IDC_RUNSCORE_HANDLER"
+msgstr "H&andler"
+
+msgid "IDC_RUNSCORE_CONDITIONS"
+msgstr "&Conditions"
+
+msgid "IDC_RUNSCORE_PARTNERS_EDIT"
+msgstr "&Partners..."
+
+msgid "IDC_RUNSCORE_SCT"
+msgstr "Opening Time (SCT)"
+
+msgid "IDC_RUNSCORE_OPENING_PTS"
+msgstr "Required Opening Points"
+
+msgid "IDC_RUNSCORE_YARDS"
+msgstr "Yards"
+
+msgid "IDC_RUNSCORE_MIN_YPS"
+msgstr "Min YPS"
+
+msgid "IDC_RUNSCORE_SCT2"
+msgstr "Closing Time"
+
+msgid "IDC_RUNSCORE_CLOSING_PTS"
+msgstr "Required Closing Points"
+
+msgid "IDC_RUNSCORE_OBSTACLES"
+msgstr "Number of Obstacles"
+
+msgid "IDC_RUNSCORE_TIME"
+msgstr "Time"
+
+msgid "IDC_RUNSCORE_FAULTS"
+msgstr "Course Faults"
+
+msgid "IDC_RUNSCORE_OPEN_PTS"
+msgstr "Opening Points"
+
+msgid "IDC_RUNSCORE_YPS"
+msgstr "Yards per Second"
+
+msgid "IDC_RUNSCORE_CLOSE_PTS"
+msgstr "Closing Points"
+
+msgid "IDC_RUNSCORE_TOTAL_FAULTS"
+msgstr "Total Faults"
+
+msgid "IDC_RUNSCORE_OBSTACLES_PER_SEC"
+msgstr "Obstacles per second"
+
+msgid "IDC_RUNSCORE_PLACE"
+msgstr "Place"
+
+msgid "IDC_RUNSCORE_IN_CLASS"
+msgstr "of"
+
+msgid "IDC_RUNSCORE_DOGS_QD"
+msgstr "Dogs Q'd"
+
+msgid "IDC_RUNSCORE_Q"
+msgstr "&Q?"
+
+msgid "IDC_RUNSCORE_SCORE"
+msgstr "Score"
+
+msgid "IDC_RUNSCORE_BONUSPTS"
+msgstr "Bonus Points"
+
+msgid "IDC_RUNSCORE_SPEEDPTS"
+msgstr "Speed Points"
+
+msgid "IDC_RUNSCORE_TITLE_POINTS"
+msgstr "Title Points"
+
+msgid "IDC_RUNSCORE_OTHERPOINTS"
+msgstr "&Other Points..."
+
+msgid "IDD_RUN_COMMENTS"
+msgstr "Comments/Faults"
+
+msgid "IDC_RUNCOMMENT_COMMENTS_FAULTS"
+msgstr "&Faults..."
+
+msgid "IDD_RUN_REFERENCE"
+msgstr "Reference Runs"
+
+msgid "IDC_RUNREF_NEW"
+msgstr "&New..."
+
+msgid "IDC_RUNREF_ADDDOG"
+msgstr "&Add Me"
+
+msgid "IDC_RUNREF_EDIT"
+msgstr "&Edit..."
+
+msgid "IDC_RUNREF_DELETE"
+msgstr "&Delete"
+
+msgid "IDD_RUN_CRCD"
+msgstr "CRCD"
+
+msgid "IDC_RUN_CRCD"
+msgstr "Create a course in CRCD and copy it (ctrl+C). Insert it here with the Insert button.\nTo edit the course, view the text, copy it and paste into CRCD."
+
+msgid "IDC_RUNCRCD_EDIT"
+msgstr "Course Viewer"
+
+msgid "IDC_RUNCRCD_VIEW"
+msgstr "View"
+
+msgid "IDC_RUNCRCD_COPY"
+msgstr "Paste Course"
+
+msgid "IDC_RUNCRCD_IMAGE"
+msgstr "Include Image"
+
+msgid "IDC_RUNCRCD_IMAGE_TEXT"
+msgstr "Note: Including the image will make the file significantly larger."
+
+msgid "IDD_RUN_LINK"
+msgstr "Links"
+
+msgid "IDC_RUNLINK_NEW"
+msgstr "&New..."
+
+msgid "IDC_RUNLINK_EDIT"
+msgstr "&Edit..."
+
+msgid "IDC_RUNLINK_DELETE"
+msgstr "&Delete"
+
+msgid "IDC_RUNLINK_OPEN"
+msgstr "&Open"
+
 # DlgSelectDog
 msgid "IDD_DOG_PICKER"
 msgstr "Select dog(s)"

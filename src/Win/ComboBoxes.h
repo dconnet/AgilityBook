@@ -71,14 +71,17 @@ public:
 	CQualifyingComboBox(
 			wxWindow* parent,
 			ARBDogRunPtr run,
-			ARBConfigScoringPtr inScoring,
+			wxValidator const& validator = wxDefaultValidator);
+	CQualifyingComboBox(
+			wxWindow* parent,
+			ARBDogRunPtr run,
+			ARBConfigScoringPtr scoring,
 			wxValidator const& validator = wxDefaultValidator);
 
-	void ResetContent();
+	void ResetContent(ARBConfigScoringPtr scoring);
 	ARB_Q GetQ(int index) const;
 
 private:
 	ARBDogReferenceRunPtr m_refRun;
 	ARBDogRunPtr m_Run;
-	ARBConfigScoringPtr m_Scoring;
 };
