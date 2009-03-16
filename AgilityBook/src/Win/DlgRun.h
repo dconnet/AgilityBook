@@ -38,16 +38,10 @@
  */
 
 #include "ARBTypes.h"
-//#include "DlgBaseSheet.h"
 class CAgilityBookDoc;
-//class CDlgRunScore;
-//class CDlgRunComments;
-//class CDlgRunReference;
-//class CDlgRunCRCD;
-//class CDlgRunLink;
 
 
-class CDlgRun
+class CDlgRun : public wxDialog
 {
 public:
 	CDlgRun(
@@ -55,26 +49,7 @@ public:
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
 			wxWindow* pParent = NULL,
-			int iSelectPage = 0) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgRun"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgRun : public CDlgBaseSheet
-{
-	DECLARE_DYNAMIC(CDlgRun)
-public:
-	CDlgRun(
-			CAgilityBookDoc* pDoc,
-			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun,
-			CWnd* pParent = NULL,
-			UINT iSelectPage = 0);
-	virtual ~CDlgRun();
+			int iSelectPage = 0);
 
 // Attributes
 private:
@@ -82,20 +57,12 @@ private:
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRealRun;
 	ARBDogRunPtr m_Run;
-	CDlgRunScore* m_pageScore;
-	CDlgRunComments* m_pageComments;
-	CDlgRunReference* m_pageReference;
-	CDlgRunCRCD* m_pageCRCD;
-	CDlgRunLink* m_pageLink;
 
-// Overrides
-	//{{AFX_VIRTUAL(CDlgRun)
-	//}}AFX_VIRTUAL
-
-protected:
-	//{{AFX_MSG(CDlgRun)
-	afx_msg void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnOk(wxCommandEvent& evt);
+	// Score
+	// Comments
+	// RefRuns
+	// CRCD
+	// Links
 };
-#endif

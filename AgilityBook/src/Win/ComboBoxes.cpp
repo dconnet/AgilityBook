@@ -115,38 +115,51 @@ CQualifyingComboBox::CQualifyingComboBox(
 	: wxChoice()
 	, m_refRun(refRun)
 	, m_Run()
-	, m_Scoring()
 {
 	wxChoice::Create(parent, wxID_ANY,
 		wxDefaultPosition, wxSize(50, -1),
 		0, NULL, 0, validator);
-	ResetContent();
+	ResetContent(ARBConfigScoringPtr());
 }
 
 
 CQualifyingComboBox::CQualifyingComboBox(
 		wxWindow* parent,
 		ARBDogRunPtr run,
-		ARBConfigScoringPtr inScoring,
 		wxValidator const& validator)
 	: wxChoice()
 	, m_refRun()
 	, m_Run(run)
-	, m_Scoring(inScoring)
 {
 	wxChoice::Create(parent, wxID_ANY,
 		wxDefaultPosition, wxSize(50, -1),
 		0, NULL, 0, validator);
-	ResetContent();
+	ResetContent(ARBConfigScoringPtr());
 }
 
 
-void CQualifyingComboBox::ResetContent()
+CQualifyingComboBox::CQualifyingComboBox(
+		wxWindow* parent,
+		ARBDogRunPtr run,
+		ARBConfigScoringPtr scoring,
+		wxValidator const& validator)
+	: wxChoice()
+	, m_refRun()
+	, m_Run(run)
+{
+	wxChoice::Create(parent, wxID_ANY,
+		wxDefaultPosition, wxSize(50, -1),
+		0, NULL, 0, validator);
+	ResetContent(scoring);
+}
+
+
+void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
 {
 	Clear();
 	bool bHasTitling = true;
-	if (m_Scoring)
-		bHasTitling = (0 < m_Scoring->GetTitlePoints().size() || 0 < m_Scoring->GetLifetimePoints().size());
+	if (scoring)
+		bHasTitling = (0 < scoring->GetTitlePoints().size() || 0 < scoring->GetLifetimePoints().size());
 	ARB_Q curQ = ARB_Q::eQ_NA;
 	if (m_refRun)
 		curQ = m_refRun->GetQ();
@@ -157,7 +170,7 @@ void CQualifyingComboBox::ResetContent()
 	for (int index = 0; index < nQs; ++index)
 	{
 		ARB_Q q = ARB_Q::GetValidType(index);
-		if (m_Scoring && ARB_Q::eQ_SuperQ == q && !m_Scoring->HasSuperQ())
+		if (scoring && ARB_Q::eQ_SuperQ == q && !scoring->HasSuperQ())
 			continue;
 		// Allow non-titling runs to only have 'NA' and 'E'
 		if (!bHasTitling && !(ARB_Q::eQ_E == q || ARB_Q::eQ_NA == q))

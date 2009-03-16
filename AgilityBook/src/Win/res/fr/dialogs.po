@@ -1002,6 +1002,169 @@ msgstr "&Monter"
 msgid "IDC_REORDER_MOVE_DOWN"
 msgstr "&Descendre"
 
+# DlgRun
+msgid "IDD_RUN_SCORE"
+msgstr "Résultat"
+
+msgid "IDC_RUNSCORE_DATE"
+msgstr "&Date"
+
+msgid "IDC_RUNSCORE_DIVISION"
+msgstr "&Niveau conducteur"
+
+msgid "IDC_RUNSCORE_LEVEL"
+msgstr "De&gré"
+
+msgid "IDC_RUNSCORE_EVENT"
+msgstr "&Épreuve"
+
+msgid "IDC_RUNSCORE_SUBNAME"
+msgstr "&Sous-titre"
+
+msgid "IDC_RUNSCORE_TABLE"
+msgstr "&Table?"
+
+msgid "IDC_RUNSCORE_HEIGHT"
+msgstr "&Hauteur"
+
+msgid "IDC_RUNSCORE_JUDGE"
+msgstr "&Juge"
+
+msgid "IDC_RUNSCORE_HANDLER"
+msgstr "C&onducteur"
+
+msgid "IDC_RUNSCORE_CONDITIONS"
+msgstr "&Conditions"
+
+msgid "IDC_RUNSCORE_PARTNERS_EDIT"
+msgstr "&Accompagnant..."
+
+msgid "IDC_RUNSCORE_SCT"
+msgstr "Temps standard (TSP)"
+
+msgid "IDC_RUNSCORE_OPENING_PTS"
+msgstr "Points exigé pour participer"
+
+msgid "IDC_RUNSCORE_YARDS"
+msgstr "Mètres"
+
+msgid "IDC_RUNSCORE_MIN_YPS"
+msgstr "Vitesse minimum"
+
+msgid "IDC_RUNSCORE_SCT2"
+msgstr "Temps final"
+
+msgid "IDC_RUNSCORE_CLOSING_PTS"
+msgstr "Points exigé pour finir"
+
+msgid "IDC_RUNSCORE_OBSTACLES"
+msgstr "Nombre d'obstacles"
+
+msgid "IDC_RUNSCORE_TIME"
+msgstr "Temps"
+
+msgid "IDC_RUNSCORE_FAULTS"
+msgstr "Pénalités parcours"
+
+msgid "IDC_RUNSCORE_OPEN_PTS"
+msgstr "Points au début"
+
+msgid "IDC_RUNSCORE_YPS"
+msgstr "Mètres par seconde"
+
+msgid "IDC_RUNSCORE_CLOSE_PTS"
+msgstr "Points au final"
+
+msgid "IDC_RUNSCORE_TOTAL_FAULTS"
+msgstr "Pénalités totale"
+
+msgid "IDC_RUNSCORE_OBSTACLES_PER_SEC"
+msgstr "Obstacles par seconde"
+
+msgid "IDC_RUNSCORE_PLACE"
+msgstr "Classement"
+
+msgid "IDC_RUNSCORE_IN_CLASS"
+msgstr "de"
+
+msgid "IDC_RUNSCORE_DOGS_QD"
+msgstr "Chiens qualifiés"
+
+msgid "IDC_RUNSCORE_Q"
+msgstr "&Qualifié?"
+
+msgid "IDC_RUNSCORE_SCORE"
+msgstr "Résultat"
+
+msgid "IDC_RUNSCORE_BONUSPTS"
+msgstr "Points bonus"
+
+msgid "IDC_RUNSCORE_SPEEDPTS"
+msgstr "Points vitesse"
+
+msgid "IDC_RUNSCORE_TITLE_POINTS"
+msgstr "Points Récompense"
+
+msgid "IDC_RUNSCORE_OTHERPOINTS"
+msgstr "Autres &points..."
+
+msgid "IDD_RUN_COMMENTS"
+msgstr "Notes"
+
+msgid "IDC_RUNCOMMENT_COMMENTS_FAULTS"
+msgstr "&Fautes..."
+
+msgid "IDD_RUN_REFERENCE"
+msgstr "Épreuves de référence"
+
+msgid "IDC_RUNREF_NEW"
+msgstr "&Nouveau..."
+
+msgid "IDC_RUNREF_ADDDOG"
+msgstr "&Ajouter moi"
+
+msgid "IDC_RUNREF_EDIT"
+msgstr "&Édition..."
+
+msgid "IDC_RUNREF_DELETE"
+msgstr "&Supprimer"
+
+msgid "IDD_RUN_CRCD"
+msgstr "CRCD (logiciel pour créer des parcours)"
+
+msgid "IDC_RUN_CRCD"
+msgstr "Créer un parcours avec CRCD et faites un copier-coller depuis CRCD. Pour modifier le parcours, copiez-collez le texte dans CRCD."
+
+msgid "IDC_RUNCRCD_EDIT"
+msgstr "Afficheur de Parcours"
+
+msgid "IDC_RUNCRCD_VIEW"
+msgstr "Affichage"
+
+msgid "IDC_RUNCRCD_COPY"
+msgstr "Coller le parcours"
+
+msgid "IDC_RUNCRCD_IMAGE"
+msgstr "Inclure l'image"
+
+msgid "IDC_RUNCRCD_IMAGE_TEXT"
+msgstr "NB: Avec l'image le fichier sera beaucoup plus important."
+
+msgid "IDD_RUN_LINK"
+msgstr "Liens"
+
+msgid "IDC_RUNLINK_NEW"
+msgstr "&Nouveau..."
+
+msgid "IDC_RUNLINK_EDIT"
+msgstr "&Édition..."
+
+msgid "IDC_RUNLINK_DELETE"
+msgstr "&Supprimer"
+
+msgid "IDC_RUNLINK_OPEN"
+msgstr "&Ouvrir"
+
 # DlgSelectDog
 msgid "IDD_DOG_PICKER"
 msgstr "Choisir chien(s)"
