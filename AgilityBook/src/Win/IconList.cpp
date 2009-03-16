@@ -39,7 +39,7 @@
 #include "AgilityBook.h"
 #include "IconList.h"
 
-#include "res/agilitybook16.xpm"
+#include "res/AgilityBook16.xpm"
 #include "res/dog.xpm"
 #include "res/trial.xpm"
 #include "res/run.xpm"
