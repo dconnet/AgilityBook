@@ -326,13 +326,12 @@ void CDlgFindLinks::SetColumnHeaders()
 {
 	for (int i = 0; i < nColLinkInfo; ++i)
 	{
-		wxString str = wxGetTranslation(colLinkInfo[i]);
-		str += ' ';
-		otstringstream tmp;
-		tmp << str.c_str() << '(' << m_sortLinks.FindColumnOrder(i) + 1 << ')';
+		otstringstream str;
+		str << wxGetTranslation(colLinkInfo[i])
+			<< wxT(" (") << m_sortLinks.FindColumnOrder(i) + 1 << ')';
 		wxListItem item;
 		item.SetMask(wxLIST_MASK_TEXT);
-		item.SetText(tmp.str().c_str());
+		item.SetText(str.str().c_str());
 		m_ctrlLinks->SetColumn(i, item);
 		m_ctrlLinks->SetColumnSort(i, m_sortLinks.IsDescending(i) ? -1 : 1);
 	}

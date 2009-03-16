@@ -41,57 +41,12 @@
 #ifdef WIN32
 
 // Metafiles are only available on Windows
-class CDlgCRCDViewer
+class CDlgCRCDViewer : public wxDialog
 {
 public:
 	CDlgCRCDViewer(
 			HENHMETAFILE inMetaFile,
 			wxWindow* pParent = NULL);
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgCRCDViewer"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
 };
 
-#if 0
-#include "DlgBaseDialog.h"
-
-class CDlgCRCDViewer : public CDlgBaseDialog
-{
-public:
-	CDlgCRCDViewer(
-			HENHMETAFILE inMetaFile,
-			CWnd* pParent = NULL);
-
-private:
-// Dialog Data
-	//{{AFX_DATA(CDlgCRCDViewer)
-	enum { IDD = IDD_CRCD_VIEWER };
-	CStatic	m_ctrlCRCD;
-	CButton	m_ctrlOK;
-	//}}AFX_DATA
-	HENHMETAFILE m_metaFile;
-	CRect m_rWin;
-	CRect m_rDlg;
-	CRect m_rCRCDwin;
-	CRect m_rCRCDclient;
-	CRect m_rOK;
-
-	//{{AFX_VIRTUAL(CDlgCRCDViewer)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	void AdjustCRCD();
-	//{{AFX_MSG(CDlgCRCDViewer)
-	virtual BOOL OnInitDialog();
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
-#endif
 #endif

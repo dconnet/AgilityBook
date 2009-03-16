@@ -496,6 +496,13 @@ msgstr "Niveaux conducteurs"
 msgid "IDC_CONFIG_VENUE_TITLES"
 msgstr "Récompense"
 
+# DlgCRCDViewer
+msgid "IDD_CRCD_VIEWER"
+msgstr "Afficheur CRCD"
+
+msgid "IDC_VIEWER_CRCD_CLOSE"
+msgstr "Quitter"
+
 # DlgDog
 msgid "IDD_DOG_PROP"
 msgstr "Paramètres"

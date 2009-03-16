@@ -495,6 +495,13 @@ msgstr "Divisions"
 msgid "IDC_CONFIG_VENUE_TITLES"
 msgstr "Titles"
 
+# DlgCRCDViewer
+msgid "IDD_CRCD_VIEWER"
+msgstr "CRCD Viewer"
+
+msgid "IDC_VIEWER_CRCD_CLOSE"
+msgstr "Close"
+
 # DlgDog
 msgid "IDD_DOG_PROP"
 msgstr "Properties"
