@@ -64,7 +64,7 @@ CDlgFault::CDlgFault(
 		wxDefaultPosition, wxDefaultSize,
 		faults,
 		wxCB_DROPDOWN|wxCB_SORT,
-		CTrimValidator(&m_Fault));
+		CTrimValidator(&m_Fault, _("IDS_ENTER_NAME")));
 	comboBox->SetHelpText(_("HIDC_FAULTS"));
 	comboBox->SetToolTip(_("HIDC_FAULTS"));
 

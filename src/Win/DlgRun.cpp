@@ -31,10 +31,68 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-16 DRC Merged DlgRun* into here.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
+ * DlgRunCRCD
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2005-05-04 DRC Added ability to suppress metafile.
+ * @li 2004-04-27 DRC Added some error recovery.
+ * DlgRunComments
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * DlgRunLink
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2004-06-02 DRC Moved ShellExecute code to AgilityBook.cpp, added icons.
+ * @li 2004-03-30 DRC Created
+ * DlgRunReference
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2005-09-20 DRC Added yourself was not getting up-to-date scoring info.
+ * @li 2005-07-10 DRC Add button to add yourself to ref-runs.
+ *                    Make default ref-run a 'Q'.
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
+ * @li 2004-09-28 DRC Accumulate all heights for refrun dlg.
+ * @li 2003-12-27 DRC Changed FindEvent to take a date.
+ * @li 2003-10-13 DRC Make ref run dlg default to perfect score.
+ * DlgRunScore
+ * @li 2008-02-01 DRC Make 'Notes' button change selection.
+ * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
+ * @li 2007-12-03 DRC Refresh judge list after invoking 'notes' button.
+ * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
+ * @li 2006-11-05 DRC Trim Divisions/Levels if no events are available on date.
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2005-12-13 DRC Added direct access to Notes dialog.
+ * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
+ * @li 2005-11-20 DRC Allow 'E's on non-titling runs.
+ * @li 2005-08-11 DRC Removed QQ checkbox.
+ * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
+ * @li 2005-01-02 DRC Added subnames to events.
+ * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
+ * @li 2004-11-13 DRC Also compute score for NA runs that have no titling pts.
+ * @li 2004-09-07 DRC Time+Fault scoring shouldn't include time faults.
+ * @li 2004-03-20 DRC The date never got set if the initial entry had no date
+ *                    and we didn't change it (first run in a trial).
+ *                    Plus, the table-in-yps flag was backwards and didn't
+ *                    properly initialize when the event type changed.
+ * @li 2004-02-14 DRC Added Table-in-YPS flag.
+ * @li 2004-02-09 DRC Update YPS when the time is changed.
+ *                    When date changes, update controls.
+ * @li 2004-01-19 DRC Total faults weren't updated when course faults changed.
+ * @li 2004-01-18 DRC Calling UpdateData during data entry causes way too much
+ *                    validation. Only call during OnOK (from dlgsheet)
+ * @li 2003-12-27 DRC Changed FindEvent to take a date. Also, update the
+ *                    controls when the date changes as the scoring config may
+ *                    change.
+ * @li 2003-12-09 DRC Fixed a bug where the QQ checkbox didn't get set right.
+ * @li 2003-10-13 DRC Made Time/CourseFaults common to all scoring methods.
+ *                    This allows faults for things like language!
+ * @li 2003-09-29 DRC Required pts were being overwriten with default values
+ *                    during dialog initialization.
+ * @li 2003-09-01 DRC Total faults weren't being shown when there was no SCT.
+ * @li 2003-08-17 DRC Title points were being computed on 'NQ' and the score was
+ *                    always being computed. Fixed both.
+ * @li 2003-07-14 DRC Changed 'Score' to show data on 'Q' and 'NQ'.
  */
 
 #include "stdafx.h"
@@ -42,18 +100,27 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "ARBConfig.h"
+#include "ARBConfigOtherPoints.h"
+#include "ARBConfigVenue.h"
+#include "ARBDogClub.h"
 #include "ARBDogRun.h"
+#include "ARBDogTrial.h"
 #include "CheckLink.h"
 #include "ClipBoard.h"
 #include "ComboBoxes.h"
 #include "DlgCRCDViewer.h"
+#include "DlgInfoNote.h"
 #include "DlgListCtrl.h"
 #include "DlgReferenceRun.h"
 #include "DlgSelectURL.h"
 #include "Globals.h"
 #include "ListCtrl.h"
+#include "ListData.h"
 #include "NoteButton.h"
+#include "RichEditCtrl2.h"
 #include "Validators.h"
+#include <set>
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 #include <wx/dcbuffer.h>
@@ -94,6 +161,38 @@ static struct SORTINFO
 	CDlgRun* pThis;
 	CColumnOrder* pCols;
 } s_SortInfo;
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CDlgDogDivData : public wxClientData
+{
+public:
+	CDlgDogDivData(ARBConfigDivisionPtr div)
+		: m_Div(div)
+	{
+	}
+	ARBConfigDivisionPtr m_Div;
+};
+
+
+class CDlgDogLevelData : public wxClientData
+{
+public:
+	CDlgDogLevelData(ARBConfigLevelPtr pLevel)
+		: m_pLevel(pLevel)
+		, m_pSubLevel()
+	{
+	}
+	CDlgDogLevelData(
+			ARBConfigLevelPtr pLevel,
+			ARBConfigSubLevelPtr pSubLevel)
+		: m_pLevel(pLevel)
+		, m_pSubLevel(pSubLevel)
+	{
+	}
+	ARBConfigLevelPtr m_pLevel;
+	ARBConfigSubLevelPtr m_pSubLevel;
+};
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -516,8 +615,21 @@ CDlgRun::CDlgRun(
 	, m_Run(pRun->Clone())
 	, m_pRefRunMe()
 	, m_Club()
-	, m_Venue()
+	, m_pVenue()
 
+	, m_Date(pRun->GetDate())
+
+	, m_ctrlDivisions(NULL)
+	, m_ctrlLevels(NULL)
+	, m_ctrlEvents(NULL)
+	, m_ctrlSubNamesText(NULL)
+	, m_ctrlSubNames(NULL)
+	, m_SubName(pRun->GetSubName().c_str())
+	, m_Height(pRun->GetHeight().c_str())
+	, m_Judge(pRun->GetJudge().c_str())
+	, m_Handler(pRun->GetHandler().c_str())
+	, m_Conditions(pRun->GetConditions().c_str())
+	
 	, m_Comments(pRun->GetNote().c_str())
 	, m_sortRefRuns(wxT("RefRuns"))
 
@@ -548,14 +660,35 @@ CDlgRun::CDlgRun(
 
 	pTrial->GetClubs().GetPrimaryClub(&m_Club);
 	assert(NULL != m_Club.get());
-	pDoc->Book().GetConfig().GetVenues().FindVenue(m_Club->GetVenue(), &m_Venue);
-	assert(NULL != m_Venue.get());
+	pDoc->Book().GetConfig().GetVenues().FindVenue(m_Club->GetVenue(), &m_pVenue);
+	assert(NULL != m_pVenue.get());
 
 	m_sortRefRuns.Initialize(scNumRefRunColumns);
 
-	//m_pageScore = new CDlgRunScore(pDoc, m_Venue, pTrial, m_pRealRun, m_Run);
+	if (!m_Run->GetDate().IsValid())
+		m_Date.SetToday();
+	if (m_Height.empty())
+	{
+		wxString last = CAgilityBookOptions::GetLastEnteredHeight();
+		if (!last.empty())
+			m_Height = last;
+	}
+	if (m_Judge.empty())
+	{
+		wxString last = CAgilityBookOptions::GetLastEnteredJudge();
+		if (!last.empty())
+			m_Judge = last;
+	}
+	if (m_Handler.empty())
+	{
+		wxString last = CAgilityBookOptions::GetLastEnteredHandler();
+		if (!last.empty())
+			m_Handler = last;
+	}
+
+	//m_pageScore = new CDlgRunScore(pDoc, m_pVenue, pTrial, m_pRealRun, m_Run);
 	//m_pageComments = new CDlgRunComments(pDoc, m_Run);
-	//m_pageReference = new CDlgRunReference(pDoc, m_Venue, m_Run);
+	//m_pageReference = new CDlgRunReference(pDoc, m_pVenue, m_Run);
 	//m_pageCRCD = new CDlgRunCRCD(m_Run);
 	//m_pageLink = new CDlgRunLink(pDoc, m_Run);
 
@@ -575,12 +708,14 @@ CDlgRun::CDlgRun(
 	textDate->Wrap(-1);
 
 	wxDatePickerCtrl* ctrlDate = new wxDatePickerCtrl(panelScore, wxID_ANY, wxDefaultDateTime,
-		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY);
+		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
+		CGenericValidator(&m_Date));
+	ctrlDate->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgRun::OnScoreDateChanged), NULL, this);
 	ctrlDate->SetHelpText(_("HIDC_RUNSCORE_DATE"));
 	ctrlDate->SetToolTip(_("HIDC_RUNSCORE_DATE"));
 
 	wxStaticText* textVenue = new wxStaticText(panelScore, wxID_ANY,
-		m_Venue->GetName().c_str(),
+		m_pVenue->GetName().c_str(),
 		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
 	textVenue->Wrap(-1);
 
@@ -599,50 +734,55 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDiv->Wrap(-1);
 
-	wxComboBox* ctrlDivision = new wxComboBox(panelScore, wxID_ANY,
+	m_ctrlDivisions = new wxComboBox(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN);
-	ctrlDivision->SetHelpText(_("HIDC_RUNSCORE_DIVISION"));
-	ctrlDivision->SetToolTip(_("HIDC_RUNSCORE_DIVISION"));
+	m_ctrlDivisions->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeDivision), NULL, this);
+	m_ctrlDivisions->SetHelpText(_("HIDC_RUNSCORE_DIVISION"));
+	m_ctrlDivisions->SetToolTip(_("HIDC_RUNSCORE_DIVISION"));
 
 	wxStaticText* textLevel = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_LEVEL"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLevel->Wrap(-1);
 
-	wxComboBox* m_ctrlLevel = new wxComboBox(panelScore, wxID_ANY,
+	m_ctrlLevels = new wxComboBox(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN);
-	m_ctrlLevel->SetHelpText(_("HIDC_RUNSCORE_LEVEL"));
-	m_ctrlLevel->SetToolTip(_("HIDC_RUNSCORE_LEVEL"));
+	m_ctrlLevels->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeLevel), NULL, this);
+	m_ctrlLevels->SetHelpText(_("HIDC_RUNSCORE_LEVEL"));
+	m_ctrlLevels->SetToolTip(_("HIDC_RUNSCORE_LEVEL"));
 
 	wxStaticText* textEvent = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_EVENT"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textEvent->Wrap(-1);
 
-	wxComboBox* m_ctrlEvent = new wxComboBox(panelScore, wxID_ANY,
+	m_ctrlEvents = new wxComboBox(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN);
-	m_ctrlEvent->SetHelpText(_("HIDC_RUNSCORE_EVENT"));
-	m_ctrlEvent->SetToolTip(_("HIDC_RUNSCORE_EVENT"));
+	m_ctrlEvents->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeEvent), NULL, this);
+	m_ctrlEvents->SetHelpText(_("HIDC_RUNSCORE_EVENT"));
+	m_ctrlEvents->SetToolTip(_("HIDC_RUNSCORE_EVENT"));
 
-	wxStaticText* m_textSubName = new wxStaticText(panelScore, wxID_ANY,
+	m_ctrlSubNamesText = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_SUBNAME"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_textSubName->Wrap(-1);
+	m_ctrlSubNamesText->Wrap(-1);
 
-	wxComboBox* m_ctrlSubName = new wxComboBox(panelScore, wxID_ANY,
+	m_ctrlSubNames = new wxComboBox(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN);
-	m_ctrlSubName->SetHelpText(_("HIDC_RUNSCORE_SUBNAME"));
-	m_ctrlSubName->SetToolTip(_("HIDC_RUNSCORE_SUBNAME"));
+		0, NULL, wxCB_DROPDOWN,
+		CTrimValidator(&m_SubName, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlSubNames->SetHelpText(_("HIDC_RUNSCORE_SUBNAME"));
+	m_ctrlSubNames->SetToolTip(_("HIDC_RUNSCORE_SUBNAME"));
 
-	wxCheckBox* ctrlTable = new wxCheckBox(panelScore, wxID_ANY,
+	m_ctrlTable = new wxCheckBox(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_TABLE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	ctrlTable->SetHelpText(_("HIDC_RUNSCORE_TABLE"));
-	ctrlTable->SetToolTip(_("HIDC_RUNSCORE_TABLE"));
+	m_ctrlTable->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgRun::OnBnClickedTableYps), NULL, this);
+	m_ctrlTable->SetHelpText(_("HIDC_RUNSCORE_TABLE"));
+	m_ctrlTable->SetToolTip(_("HIDC_RUNSCORE_TABLE"));
 
 	wxStaticText* textHeight = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_HEIGHT"),
@@ -651,22 +791,32 @@ CDlgRun::CDlgRun(
 
 	wxComboBox* ctrlHeight = new wxComboBox(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxSize(50, -1),
-		0, NULL, wxCB_DROPDOWN);
+		0, NULL, wxCB_DROPDOWN,
+		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHeight->SetHelpText(_("HIDC_RUNSCORE_HEIGHT"));
 	ctrlHeight->SetToolTip(_("HIDC_RUNSCORE_HEIGHT"));
+	std::set<tstring> names;
+	m_pDoc->Book().GetAllHeights(names);
+	std::set<tstring>::const_iterator iter;
+	for (iter = names.begin(); iter != names.end(); ++iter)
+	{
+		ctrlHeight->Append((*iter).c_str());
+	}
 
 	wxStaticText* textJudge = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_JUDGE"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textJudge->Wrap(-1);
 
-	wxComboBox* ctrlJudge = new wxComboBox(panelScore, wxID_ANY,
+	m_ctrlJudge = new wxComboBox(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN);
-	ctrlJudge->SetHelpText(_("HIDC_RUNSCORE_JUDGE"));
-	ctrlJudge->SetToolTip(_("HIDC_RUNSCORE_JUDGE"));
+		0, NULL, wxCB_DROPDOWN,
+		CTrimValidator(&m_Judge, _("IDS_SELECT_JUDGE")));
+	m_ctrlJudge->SetHelpText(_("HIDC_RUNSCORE_JUDGE"));
+	m_ctrlJudge->SetToolTip(_("HIDC_RUNSCORE_JUDGE"));
 
 	CNoteButton* ctrlJudgeNote = new CNoteButton(panelScore);
+	ctrlJudgeNote->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnJudgeNotes), NULL, this);
 	ctrlJudgeNote->SetHelpText(_("HIDC_RUNSCORE_JUDGE_NOTES"));
 	ctrlJudgeNote->SetToolTip(_("HIDC_RUNSCORE_JUDGE_NOTES"));
 
@@ -677,9 +827,15 @@ CDlgRun::CDlgRun(
 
 	wxComboBox* ctrlHandler = new wxComboBox(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN);
+		0, NULL, wxCB_DROPDOWN,
+		CTrimValidator(&m_Handler, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHandler->SetHelpText(_("HIDC_RUNSCORE_HANDLER"));
 	ctrlHandler->SetToolTip(_("HIDC_RUNSCORE_HANDLER"));
+	m_pDoc->Book().GetAllHandlers(names);
+	for (iter = names.begin(); iter != names.end(); ++iter)
+	{
+		ctrlHandler->Append((*iter).c_str());
+	}
 
 	wxStaticText* textConditions = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_CONDITIONS"),
@@ -688,23 +844,25 @@ CDlgRun::CDlgRun(
 
 	wxTextCtrl* ctrlConditions = new wxTextCtrl(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxSize(-1, 50),
-		wxTE_MULTILINE|wxTE_WORDWRAP);
+		wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_Conditions, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlConditions->SetHelpText(_("HIDC_RUNSCORE_CONDITIONS"));
 	ctrlConditions->SetToolTip(_("HIDC_RUNSCORE_CONDITIONS"));
 
-	wxTextCtrl* m_ctrlNote = new wxTextCtrl(panelScore, wxID_ANY,
+	m_ctrlDesc = new CRichEditCtrl2(panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxSize(-1, 70),
-		wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH|wxTE_WORDWRAP);
-	m_ctrlNote->SetHelpText(_("HIDC_RUNSCORE_DESC"));
-	m_ctrlNote->SetToolTip(_("HIDC_RUNSCORE_DESC"));
+		wxTE_READONLY);
+	m_ctrlDesc->SetHelpText(_("HIDC_RUNSCORE_DESC"));
+	m_ctrlDesc->SetToolTip(_("HIDC_RUNSCORE_DESC"));
 
-	wxButton* m_btnPartner = new wxButton(panelScore, wxID_ANY,
+	wxButton* btnPartner = new wxButton(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_PARTNERS_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_btnPartner->SetHelpText(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
-	m_btnPartner->SetToolTip(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
+	btnPartner->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnPartnersEdit), NULL, this);
+	btnPartner->SetHelpText(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
+	btnPartner->SetToolTip(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
 
-	wxTextCtrl* m_ctrlPartner = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlPartner = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(200, -1), wxTE_READONLY);
 	m_ctrlPartner->SetHelpText(_("HIDC_RUNSCORE_PARTNER"));
 	m_ctrlPartner->SetToolTip(_("HIDC_RUNSCORE_PARTNER"));
@@ -714,7 +872,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textSCT->Wrap(-1);
 
-	wxTextCtrl* m_ctrlSCT = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlSCT = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
 	m_ctrlSCT->SetHelpText(_("HIDC_RUNSCORE_SCT"));
 	m_ctrlSCT->SetToolTip(_("HIDC_RUNSCORE_SCT"));
@@ -754,10 +912,10 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textBonus->Wrap(-1);
 
-	wxTextCtrl* m_ctrlBonus = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlBonusPts = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
-	m_ctrlBonus->SetHelpText(_("HIDC_RUNSCORE_BONUSPTS"));
-	m_ctrlBonus->SetToolTip(_("HIDC_RUNSCORE_BONUSPTS"));
+	m_ctrlBonusPts->SetHelpText(_("HIDC_RUNSCORE_BONUSPTS"));
+	m_ctrlBonusPts->SetToolTip(_("HIDC_RUNSCORE_BONUSPTS"));
 
 	wxStaticText* m_textYardsReqOpeningPts = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_OPENING_PTS"),
@@ -797,7 +955,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textSpeed->Wrap(-1);
 
-	wxStaticText* m_ctrlSpeed = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlSpeedPts = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
 
 	wxStaticText* m_textMinYPSClosingTime = new wxStaticText(panelScore, wxID_ANY,
@@ -806,7 +964,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textMinYPSClosingTime->Wrap(-1);
 
-	wxTextCtrl* m_ctrlMinYPSClosingTime = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlMinYPSClosingTime = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
 	m_ctrlMinYPSClosingTime->SetHelpText(_("HIDC_RUNSCORE_SCT2"));
 	m_ctrlMinYPSClosingTime->SetToolTip(_("HIDC_RUNSCORE_SCT2"));
@@ -817,7 +975,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textYPSOpeningPts->Wrap(-1);
 
-	wxTextCtrl* m_ctrlYPSOpeningPts = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlYPSOpeningPts = new wxTextCtrl(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
 	m_ctrlYPSOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPEN_PTS"));
 	m_ctrlYPSOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPEN_PTS"));
@@ -827,16 +985,17 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textQ->Wrap(-1);
 
-	CQualifyingComboBox* ctrlQ = new CQualifyingComboBox(panelScore, m_Run);
-	ctrlQ->SetHelpText(_("HIDC_RUNSCORE_Q"));
-	ctrlQ->SetToolTip(_("HIDC_RUNSCORE_Q"));
+	m_ctrlQ = new CQualifyingComboBox(panelScore, m_Run);
+	m_ctrlQ->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeQ), NULL, this);
+	m_ctrlQ->SetHelpText(_("HIDC_RUNSCORE_Q"));
+	m_ctrlQ->SetToolTip(_("HIDC_RUNSCORE_Q"));
 
 	wxStaticText* textTitlePts = new wxStaticText(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_TITLE_POINTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textTitlePts->Wrap(-1);
 
-	wxStaticText* ctrlTitlePts = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlTitlePoints = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
 
 	wxStaticText* m_textReqClosingPts = new wxStaticText(panelScore, wxID_ANY,
@@ -865,7 +1024,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textScore->Wrap(-1);
 
-	wxStaticText* ctrlScore = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlScore = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
 
 	wxStaticText* textNumObs = new wxStaticText(panelScore, wxID_ANY,
@@ -883,16 +1042,21 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textObsSec->Wrap(-1);
 
-	wxStaticText* m_ctrlObsSec = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlObstaclesPS = new wxStaticText(panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
-	m_ctrlObsSec->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
-	m_ctrlObsSec->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
+	m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
+	m_ctrlObstaclesPS->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
 
 	wxButton* btnOtherPoints = new wxButton(panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_OTHERPOINTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
+	btnOtherPoints->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnOtherpoints), NULL, this);
 	btnOtherPoints->SetHelpText(_("HIDC_RUNSCORE_OTHERPOINTS"));
 	btnOtherPoints->SetToolTip(_("HIDC_RUNSCORE_OTHERPOINTS"));
+	if (0 < m_pDoc->Book().GetConfig().GetOtherPoints().size())
+		btnOtherPoints->Enable(true);
+	else
+		btnOtherPoints->Enable(false);
 
 	// Comments
 
@@ -1092,15 +1256,15 @@ CDlgRun::CDlgRun(
 	sizerEvent->SetFlexibleDirection(wxBOTH);
 	sizerEvent->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 	sizerEvent->Add(textDiv, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(ctrlDivision, 0, wxALL, 5);
+	sizerEvent->Add(m_ctrlDivisions, 0, wxALL, 5);
 	sizerEvent->Add(textLevel, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(m_ctrlLevel, 0, wxALL, 5);
+	sizerEvent->Add(m_ctrlLevels, 0, wxALL, 5);
 	sizerEvent->Add(textEvent, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(m_ctrlEvent, 0, wxALL, 5);
-	sizerEvent->Add(m_textSubName, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerEvent->Add(m_ctrlSubName, 0, wxALL, 5);
+	sizerEvent->Add(m_ctrlEvents, 0, wxALL, 5);
+	sizerEvent->Add(m_ctrlSubNamesText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxBOTTOM|wxLEFT|wxTOP, 5);
+	sizerEvent->Add(m_ctrlSubNames, 0, wxALL, 5);
 	sizerEvent->Add(0, 0, 1, wxEXPAND, 5);
-	sizerEvent->Add(ctrlTable, 0, wxALL, 5);
+	sizerEvent->Add(m_ctrlTable, 0, wxALL, 5);
 
 	sizerDivHt->Add(sizerEvent, 0, wxEXPAND, 5);
 
@@ -1110,7 +1274,7 @@ CDlgRun::CDlgRun(
 	sizerHt->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
 	sizerHt->Add(ctrlHeight, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerHt->Add(textJudge, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerHt->Add(ctrlJudge, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerHt->Add(m_ctrlJudge, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerHt->Add(ctrlJudgeNote, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxRIGHT|wxTOP, 5);
 	sizerHt->Add(textHandler, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
 	sizerHt->Add(ctrlHandler, 0, wxALL, 5);
@@ -1124,10 +1288,10 @@ CDlgRun::CDlgRun(
 	sizerHtCond->Add(sizerCond, 1, wxEXPAND, 5);
 
 	wxBoxSizer* sizerComments = new wxBoxSizer(wxHORIZONTAL);
-	sizerComments->Add(m_ctrlNote, 1, wxALL|wxEXPAND, 5);
+	sizerComments->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerPartner = new wxBoxSizer(wxVERTICAL);
-	sizerPartner->Add(m_btnPartner, 0, wxALL, 5);
+	sizerPartner->Add(btnPartner, 0, wxALL, 5);
 	sizerPartner->Add(m_ctrlPartner, 0, wxALL, 5);
 
 	sizerComments->Add(sizerPartner, 0, wxEXPAND, 5);
@@ -1164,7 +1328,7 @@ CDlgRun::CDlgRun(
 
 	wxBoxSizer* sizerBonus = new wxBoxSizer(wxHORIZONTAL);
 	sizerBonus->Add(m_textBonus, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxTOP, 5);
-	sizerBonus->Add(m_ctrlBonus, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerBonus->Add(m_ctrlBonusPts, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	sizerResults->Add(sizerBonus, 0, wxALIGN_RIGHT, 5);
 
@@ -1188,7 +1352,7 @@ CDlgRun::CDlgRun(
 
 	wxBoxSizer* sizerSpeed = new wxBoxSizer(wxHORIZONTAL);
 	sizerSpeed->Add(m_textSpeed, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerSpeed->Add(m_ctrlSpeed, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerSpeed->Add(m_ctrlSpeedPts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
 	sizerResults->Add(sizerSpeed, 0, wxALIGN_RIGHT, 5);
 
@@ -1206,13 +1370,13 @@ CDlgRun::CDlgRun(
 
 	wxBoxSizer* sizerQ = new wxBoxSizer(wxHORIZONTAL);
 	sizerQ->Add(textQ, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerQ->Add(ctrlQ, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerQ->Add(m_ctrlQ, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
 	sizerResults->Add(sizerQ, 0, wxALIGN_RIGHT, 5);
 
 	wxBoxSizer* sizerTitlePts = new wxBoxSizer(wxHORIZONTAL);
 	sizerTitlePts->Add(textTitlePts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerTitlePts->Add(ctrlTitlePts, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerTitlePts->Add(m_ctrlTitlePoints, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
 	sizerResults->Add(sizerTitlePts, 0, wxALIGN_RIGHT, 5);
 
@@ -1232,7 +1396,7 @@ CDlgRun::CDlgRun(
 
 	wxBoxSizer* sizerScore = new wxBoxSizer(wxHORIZONTAL);
 	sizerScore->Add(textScore, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerScore->Add(ctrlScore, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerScore->Add(m_ctrlScore, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
 	sizerResults->Add(sizerScore, 0, wxALIGN_RIGHT, 5);
 
@@ -1244,7 +1408,7 @@ CDlgRun::CDlgRun(
 
 	wxBoxSizer* sizerObsSec = new wxBoxSizer(wxHORIZONTAL);
 	sizerObsSec->Add(textObsSec, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT, 5);
-	sizerObsSec->Add(m_ctrlObsSec, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
+	sizerObsSec->Add(m_ctrlObstaclesPS, 0, wxALIGN_CENTER_VERTICAL|wxBOTTOM|wxLEFT|wxRIGHT, 5);
 
 	sizerResults->Add(sizerObsSec, 0, wxALIGN_RIGHT, 5);
 	sizerResults->Add(0, 0, 1, wxEXPAND, 5);
@@ -1335,6 +1499,10 @@ CDlgRun::CDlgRun(
 	wxSizer* sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
+	FillDivisions(); // This will call UpdateControls();
+	FillJudges();
+	SetPartnerText();
+	SetObstacles();
 	SetFaultsText();
 	ListRefRuns();
 	UpdateCRCDButtons();
@@ -1347,6 +1515,446 @@ CDlgRun::CDlgRun(
 	CenterOnParent();
 
 	notebook->SetSelection(iSelectPage);
+}
+
+
+CDlgDogDivData* CDlgRun::GetDivisionData(int index) const
+{
+	return dynamic_cast<CDlgDogDivData*>(m_ctrlDivisions->GetClientObject(index));
+}
+
+
+CDlgDogLevelData* CDlgRun::GetLevelData(int index) const
+{
+	return dynamic_cast<CDlgDogLevelData*>(m_ctrlLevels->GetClientObject(index));
+}
+
+
+/*
+bool CDlgRun::GetText(
+		CEdit* pEdit,
+		short& val) const
+{
+{
+}
+
+
+bool CDlgRun::GetText(
+		CEdit* pEdit,
+		double& val) const
+{
+{
+}
+*/
+
+
+bool CDlgRun::GetEvent(ARBConfigEventPtr* outEvent) const
+{
+	if (outEvent)
+		outEvent->reset();
+	int index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND == index)
+		return false;
+	wxString str = m_ctrlEvents->GetString(index);
+	if (str.empty())
+		return false;
+	tstring evt = str.c_str();
+	return m_pVenue->GetEvents().FindEvent(evt, outEvent);
+}
+
+
+bool CDlgRun::GetScoring(ARBConfigScoringPtr* outScoring) const
+{
+	bool bFound = false;
+	if (outScoring)
+		outScoring->reset();
+	tstring div, level;
+	int index = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		div = m_ctrlDivisions->GetString(index);
+	}
+	index = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		level = m_ctrlLevels->GetString(index);
+		CDlgDogLevelData* pLevel = GetLevelData(index);
+		assert(pLevel);
+		ARBConfigEventPtr pEvent;
+		if (GetEvent(&pEvent))
+		{
+			if (0 < div.length() && 0 < level.length())
+				bFound = pEvent->FindEvent(div, pLevel->m_pLevel->GetName(), m_Run->GetDate(), outScoring);
+		}
+	}
+	return bFound;
+}
+
+
+void CDlgRun::FillDivisions()
+{
+	tstring div;
+	long index = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		div = m_ctrlDivisions->GetString(index).c_str();
+	}
+	if (div.empty())
+		div = m_Run->GetDivision();
+	m_ctrlDivisions->Clear();
+
+	for (ARBConfigDivisionList::const_iterator iterDiv = m_pVenue->GetDivisions().begin();
+		iterDiv != m_pVenue->GetDivisions().end();
+		++iterDiv)
+	{
+		ARBConfigDivisionPtr pDiv = (*iterDiv);
+		// Does this division have any events possible on this date?
+		for (ARBConfigEventList::const_iterator iterEvent = m_pVenue->GetEvents().begin();
+			iterEvent != m_pVenue->GetEvents().end();
+			++iterEvent)
+		{
+			if ((*iterEvent)->VerifyEvent(pDiv->GetName(), WILDCARD_LEVEL, m_Run->GetDate()))
+			{
+				index = m_ctrlDivisions->Append(pDiv->GetName().c_str());
+				m_ctrlDivisions->SetClientObject(index, new CDlgDogDivData(pDiv));
+				if (pDiv->GetName() == div)
+					m_ctrlDivisions->SetSelection(index);
+				break;
+			}
+		}
+	}
+	// First try to find 'div' (in case the divisions changed)
+	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection() && !div.empty())
+	{
+		index = m_ctrlDivisions->FindString(div.c_str(), true);
+		if (0 <= index)
+			m_ctrlDivisions->SetSelection(index);
+	}
+	// Then try to find the last entered
+	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
+	{
+		wxString last = CAgilityBookOptions::GetLastEnteredDivision();
+		if (0 < last.length())
+		{
+			index = m_ctrlDivisions->FindString(last, true);
+			if (0 <= index)
+				m_ctrlDivisions->SetSelection(index);
+		}
+	}
+	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
+	{
+		if (1 == m_ctrlDivisions->GetCount())
+			m_ctrlDivisions->SetSelection(0);
+	}
+	FillLevels();
+}
+
+
+void CDlgRun::FillLevels()
+{
+	tstring level;
+	int index = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		level = m_ctrlLevels->GetString(index).c_str();
+	}
+	if (level.empty())
+		level = m_Run->GetLevel();
+	m_ctrlLevels->Clear();
+	index = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		ARBConfigDivisionPtr pDiv = GetDivisionData(index)->m_Div;
+		for (ARBConfigLevelList::const_iterator iter = pDiv->GetLevels().begin();
+			iter != pDiv->GetLevels().end();
+			++iter)
+		{
+			ARBConfigLevelPtr pLevel = (*iter);
+			// Does this level have any events possible on this date?
+			for (ARBConfigEventList::const_iterator iterEvent = m_pVenue->GetEvents().begin();
+				iterEvent != m_pVenue->GetEvents().end();
+				++iterEvent)
+			{
+				if ((*iterEvent)->VerifyEvent(pDiv->GetName(), pLevel->GetName(), m_Run->GetDate()))
+				{
+					if (0 < pLevel->GetSubLevels().size())
+					{
+						for (ARBConfigSubLevelList::const_iterator iterSub = pLevel->GetSubLevels().begin();
+							iterSub != pLevel->GetSubLevels().end();
+							++iterSub)
+						{
+							ARBConfigSubLevelPtr pSubLevel = (*iterSub);
+							int idx = m_ctrlLevels->Append(pSubLevel->GetName().c_str());
+							m_ctrlLevels->SetClientObject(idx, new CDlgDogLevelData(pLevel, pSubLevel));
+							if (level == pSubLevel->GetName())
+								m_ctrlLevels->SetSelection(idx);
+						}
+					}
+					else
+					{
+						int idx = m_ctrlLevels->Append(pLevel->GetName().c_str());
+						m_ctrlLevels->SetClientObject(idx, new CDlgDogLevelData(pLevel));
+						if (level == pLevel->GetName())
+							m_ctrlLevels->SetSelection(idx);
+					}
+					break;
+				}
+			}
+		}
+		if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
+		{
+			wxString last = CAgilityBookOptions::GetLastEnteredLevel();
+			if (0 < last.length())
+			{
+				int idx = m_ctrlLevels->FindString(last, true);
+				if (0 <= idx)
+					m_ctrlLevels->SetSelection(idx);
+			}
+		}
+	}
+	if (wxNOT_FOUND == m_ctrlLevels->GetSelection())
+	{
+		if (1 == m_ctrlLevels->GetCount())
+			m_ctrlLevels->SetSelection(0);
+	}
+	FillEvents();
+	SetTitlePoints();
+}
+
+
+void CDlgRun::FillEvents()
+{
+	tstring evt;
+	int index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND != index)
+	{
+		evt = m_ctrlEvents->GetString(index).c_str();
+	}
+	if (evt.empty())
+		evt = m_Run->GetEvent();
+	m_ctrlEvents->Clear();
+	int idxDiv = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != idxDiv)
+	{
+		ARBConfigDivisionPtr pDiv = GetDivisionData(idxDiv)->m_Div;
+		int idxLevel = m_ctrlLevels->GetSelection();
+		if (wxNOT_FOUND != idxLevel)
+		{
+			CDlgDogLevelData* pData = GetLevelData(idxLevel);
+			for (ARBConfigEventList::const_iterator iter = m_pVenue->GetEvents().begin();
+				iter != m_pVenue->GetEvents().end();
+				++iter)
+			{
+				ARBConfigEventPtr pEvent = (*iter);
+				if (pEvent->FindEvent(pDiv->GetName(), pData->m_pLevel->GetName(), m_Run->GetDate()))
+				{
+					int idx = m_ctrlEvents->Append(pEvent->GetName().c_str());
+					if (evt == pEvent->GetName())
+					{
+						m_ctrlEvents->SetSelection(idx);
+						SetEventDesc(pEvent);
+					}
+				}
+			}
+		}
+	}
+	FillSubNames();
+	UpdateControls();
+}
+
+
+void CDlgRun::FillSubNames()
+{
+	ARBConfigEventPtr pEvent;
+	if (GetEvent(&pEvent))
+	{
+		if (pEvent->HasSubNames())
+		{
+			std::set<tstring> names;
+			m_pDoc->Book().GetAllEventSubNames(m_pVenue->GetName(), pEvent, names);
+			m_ctrlSubNames->Clear();
+			for (std::set<tstring>::const_iterator iter = names.begin();
+				iter != names.end();
+				++iter)
+			{
+				m_ctrlSubNames->Append(iter->c_str());
+			}
+			m_ctrlSubNamesText->Show(true);
+			m_ctrlSubNames->Show(true);
+		}
+		else
+		{
+			m_ctrlSubNamesText->Show(false);
+			m_ctrlSubNames->Show(false);
+		}
+	}
+	else
+	{
+		m_ctrlSubNamesText->Show(false);
+		m_ctrlSubNames->Show(false);
+	}
+}
+
+
+void CDlgRun::FillJudges()
+{
+	std::set<tstring> names;
+	m_pDoc->Book().GetAllJudges(names, true, true);
+	if (!m_Run->GetJudge().empty())
+		names.insert(m_Run->GetJudge());
+	m_ctrlJudge->Clear();
+	for (std::set<tstring>::const_iterator iter = names.begin(); iter != names.end(); ++iter)
+	{
+		m_ctrlJudge->Append((*iter).c_str());
+	}
+	m_ctrlJudge->SetValue(m_Judge);
+}
+
+
+void CDlgRun::SetEventDesc(ARBConfigEventPtr inEvent)
+{
+	wxString desc;
+	if (inEvent)
+		desc += inEvent->GetDesc().c_str();
+	ARBConfigScoringPtr pScoring;
+	if (GetScoring(&pScoring))
+	{
+		tstring const& note = pScoring->GetNote();
+		if (!desc.empty() && 0 < note.length())
+			desc += wxT("\n==========\n");
+		desc += note.c_str();
+	}
+	m_ctrlDesc->SetValue(desc);
+}
+
+
+void CDlgRun::SetPartnerText()
+{
+	wxString partners;
+	ARBConfigEventPtr pEvent;
+	if (GetEvent(&pEvent))
+	{
+		if (pEvent->HasPartner())
+		{
+			for (ARBDogRunPartnerList::const_iterator iter = m_Run->GetPartners().begin(); iter != m_Run->GetPartners().end(); ++iter)
+			{
+				if (!partners.empty())
+					partners += wxT(", ");
+				partners += (*iter)->GetHandler().c_str();
+				partners += wxT("/");
+				partners += (*iter)->GetDog().c_str();
+			}
+		}
+	}
+	m_ctrlPartner->SetValue(partners);
+}
+
+
+void CDlgRun::SetMinYPS()
+{
+	wxString str;
+	double yps;
+	if (m_Run->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+	{
+		str = ARBDouble::str(yps, 3).c_str();
+	}
+	m_ctrlMinYPSClosingTime->SetValue(str);
+}
+
+
+void CDlgRun::SetYPS()
+{
+	wxString str;
+	double yps;
+	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+	{
+		str = ARBDouble::str(yps, 3).c_str();
+	}
+	m_ctrlYPSOpeningPts->SetValue(str);
+}
+
+
+void CDlgRun::SetObstacles()
+{
+	wxString str;
+	double ops;
+	if (m_Run->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
+	{
+		str = ARBDouble::str(ops, 3).c_str();
+	}
+	m_ctrlObstaclesPS->SetLabel(str);
+}
+
+
+void CDlgRun::SetTotalFaults()
+{
+	wxString total;
+	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	{
+		ARBConfigScoringPtr pScoring;
+		GetScoring(&pScoring);
+		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(pScoring);
+		total = ARBDouble::str(faults, 3).c_str();
+	}
+	m_ctrlClosingPtsTotalFaults->SetValue(total);
+}
+
+
+void CDlgRun::SetTitlePoints()
+{
+	int index = m_ctrlQ->GetSelection();
+	if (wxNOT_FOUND == index)
+	{
+		m_ctrlQ->SetFocus();
+		return;
+	}
+	ARB_Q q = m_ctrlQ->GetQ(index);
+
+	wxString strBonus(wxT("0"));
+	wxString strSpeed(wxT("0"));
+	wxString strTitle(wxT("0"));
+	wxString strScore(wxT(""));
+	ARBConfigScoringPtr pScoring;
+	if (GetScoring(&pScoring))
+	{
+		// 8/17/03: Only compute title points on Q runs.
+		if (q.Qualified())
+		{
+			if (pScoring->HasBonusPts())
+			{
+				otstringstream str;
+				str << m_Run->GetScoring().GetBonusPts();
+				strBonus = str.str().c_str();
+			}
+			if (pScoring->HasSpeedPts())
+			{
+				otstringstream str;
+				str << m_Run->GetSpeedPoints(pScoring);
+				strSpeed = str.str().c_str();
+			}
+			{
+				otstringstream str;
+				str << m_Run->GetTitlePoints(pScoring);
+				strTitle = str.str().c_str();
+			}
+		}
+		// 8/17/03: Only compute score on Q and NQ runs.
+		// 11/13/04: Also compute score for NA runs that have no titling pts.
+		if (q.Qualified()
+		|| ARB_Q::eQ_NQ == q
+		|| (ARB_Q::eQ_NA == q && ARBDouble::equal(0.0, static_cast<double>(pScoring->GetTitlePoints().size()))))
+			strScore = ARBDouble::str(m_Run->GetScore(pScoring)).c_str();
+	}
+	// Doesn't matter if they're hidden,..
+	m_ctrlBonusPts->SetValue(strBonus);
+	m_ctrlSpeedPts->SetLabel(strSpeed);
+	m_ctrlTitlePoints->SetLabel(strTitle);
+	m_ctrlScore->SetLabel(strScore);
+}
+
+
+void CDlgRun::UpdateControls(bool bOnEventChange)
+{
 }
 
 
@@ -1402,7 +2010,7 @@ void CDlgRun::CreateRefRunMe()
 	m_pRefRunMe->SetTime(m_Run->GetScoring().GetTime());
 	ARBConfigScoringPtr pScoring;
 	if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-		m_Venue->GetName(),
+		m_pVenue->GetName(),
 		m_Run->GetEvent(),
 		m_Run->GetDivision(),
 		m_Run->GetLevel(),
@@ -1656,6 +2264,85 @@ void CDlgRun::EditLink()
 }
 
 
+void CDlgRun::OnScoreDateChanged(wxDateEvent& evt)
+{
+	m_Run->SetDate(ARBDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth(), evt.GetDate().GetDay()));
+	FillDivisions();
+}
+
+
+void CDlgRun::OnSelchangeDivision(wxCommandEvent& evt)
+{
+	FillLevels();
+}
+
+
+void CDlgRun::OnSelchangeLevel(wxCommandEvent& evt)
+{
+	FillEvents();
+}
+
+
+void CDlgRun::OnSelchangeEvent(wxCommandEvent& evt)
+{
+	FillSubNames();
+	UpdateControls(true);
+	ARBConfigEventPtr pEvent;
+	GetEvent(&pEvent);
+	SetEventDesc(pEvent);
+}
+
+
+void CDlgRun::OnJudgeNotes(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	CDlgInfoNote dlg(m_pDoc, ARBInfo::eJudgeInfo, m_Judge, this);
+	if (wxID_OK == dlg.ShowModal())
+	{
+		m_Judge = dlg.CurrentSelection();
+		FillJudges();
+	}
+}
+
+
+void CDlgRun::OnPartnersEdit(wxCommandEvent& evt)
+{
+	CDlgListCtrl dlg(CDlgListCtrl::ePartners, m_pDoc, m_Run, this);
+	if (wxID_OK == dlg.ShowModal())
+		SetPartnerText();
+}
+
+
+void CDlgRun::OnOtherpoints(wxCommandEvent& evt)
+{
+	CDlgListCtrl dlg(m_pDoc->Book().GetConfig(), m_Run, this);
+	dlg.ShowModal();
+}
+
+
+void CDlgRun::OnBnClickedTableYps(wxCommandEvent& evt)
+{
+	bool bSetTable = false;
+	if (m_ctrlTable->IsShown())
+		bSetTable  = m_ctrlTable->GetValue();
+	m_Run->GetScoring().SetHasTable(bSetTable);
+	SetMinYPS();
+	SetYPS();
+	SetObstacles();
+}
+
+
+void CDlgRun::OnSelchangeQ(wxCommandEvent& evt)
+{
+	ARB_Q q;
+	int index = m_ctrlQ->GetSelection();
+	if (wxNOT_FOUND != index)
+		q = m_ctrlQ->GetQ(index);
+	m_Run->SetQ(q);
+	SetTitlePoints();
+}
+
+
 void CDlgRun::OnCommentsFaults(wxCommandEvent& evt)
 {
 	CDlgListCtrl dlg(CDlgListCtrl::eFaults, m_pDoc, m_Run, this);
@@ -1709,7 +2396,7 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 	{
 		ARBConfigScoringPtr pScoring;
 		if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
-			m_Venue->GetName(),
+			m_pVenue->GetName(),
 			m_Run->GetEvent(),
 			m_Run->GetDivision(),
 			m_Run->GetLevel(),
@@ -1911,13 +2598,18 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
+	m_Run->SetSubName(m_SubName.c_str());
+	m_Run->SetHeight(m_Height.c_str());
+	m_Run->SetJudge(m_Judge.c_str());
+	m_Run->SetHandler(m_Handler.c_str());
+	m_Run->SetConditions(m_Conditions.c_str());
 	m_Run->SetNote(m_Comments.c_str());
 
 	//TODO: Remove debugging code
 #ifdef _DEBUG
 	{
 		ARBConfigEventPtr pEvent;
-		m_Venue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
+		m_pVenue->GetEvents().FindEvent(m_Run->GetEvent(), &pEvent);
 		assert(NULL != pEvent.get());
 		if (!pEvent->HasTable())
 			if (m_Run->GetScoring().HasTable())

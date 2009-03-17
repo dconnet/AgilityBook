@@ -251,7 +251,7 @@ bool CTrimValidator::Validate(wxWindow* parent)
 		if (errormsg.empty())
 		{
 #pragma message PRAGMA_MESSAGE("TODO: CTrimTextValidator translation")
-			errormsg = wxT("String may not be empty");
+			errormsg = wxT("Please enter a value");
 		}
 	}
 

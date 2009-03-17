@@ -52,7 +52,7 @@ bool CDlgName::Create(
 
 	wxTextCtrl* textCtrl = new wxTextCtrl(this, wxID_ANY, m_Name,
 		wxDefaultPosition, wxSize(300, -1), 0,
-		CTrimValidator(&m_Name));
+		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
 	textCtrl->SetHelpText(_("HIDC_NAME"));
 	textCtrl->SetToolTip(_("HIDC_NAME"));
 

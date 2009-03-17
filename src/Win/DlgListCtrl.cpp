@@ -426,7 +426,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pConfig(NULL)
 	, m_pRun()
 {
-	Create(_("IDS_CALENDAR"), pParent);
+	Create(_("IDS_CALENDAR"), pParent, true);
 	m_ctrlCreateTrial->Show();
 
 	int nCols = 0;
@@ -474,7 +474,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 	if (eFaults == m_What)
 	{
-		Create(_("IDS_FAULT_TYPES"), pParent);
+		Create(_("IDS_FAULT_TYPES"), pParent, false);
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_FAULT"));
 		for (ARBDogFaultList::const_iterator iter = m_pRun->GetFaults().begin(); iter != m_pRun->GetFaults().end(); ++iter)
 		{
@@ -485,7 +485,7 @@ CDlgListCtrl::CDlgListCtrl(
 
 	else if (ePartners == m_What)
 	{
-		Create(_("IDS_PARTNERS"), pParent);
+		Create(_("IDS_PARTNERS"), pParent, false);
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_DOG"));
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_NUMBER"));
 		m_ctrlList->InsertColumn(nCols++, _("IDS_COL_HANDLER"));
@@ -524,7 +524,7 @@ CDlgListCtrl::CDlgListCtrl(
 	, m_pConfig(&pConfig)
 	, m_pRun(run)
 {
-	Create(_("IDS_OTHERPOINTS"), pParent);
+	Create(_("IDS_OTHERPOINTS"), pParent, false);
 
 	int nCols = 0;
 	m_ctrlList->InsertColumn(nCols++, _("IDS_COL_NAME"));
@@ -541,7 +541,8 @@ CDlgListCtrl::CDlgListCtrl(
 
 bool CDlgListCtrl::Create(
 		wxString const& inCaption,
-		wxWindow* pParent)
+		wxWindow* pParent,
+		bool bHasImageList)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	if (!wxDialog::Create(pParent, wxID_ANY, inCaption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
@@ -551,7 +552,7 @@ bool CDlgListCtrl::Create(
 
 	m_ctrlList = new CReportListCtrl(this,
 		wxDefaultPosition, wxSize(400,150),
-		true, CReportListCtrl::eNoSortHeader, true);
+		true, CReportListCtrl::eNoSortHeader, true, bHasImageList);
 	m_imgEmpty = m_ctrlList->ImageEmpty();
 	m_imgTentative = m_ctrlList->AddIcon(wxIcon(CalTentative_xpm));
 	m_imgPlan = m_ctrlList->AddIcon(wxIcon(CalPlan_xpm));

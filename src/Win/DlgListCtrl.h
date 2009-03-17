@@ -87,7 +87,8 @@ public:
 private:
 	bool Create(
 			wxString const& inCaption,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent,
+			bool bHasImageList);
 	void FinishCreate(
 			int nCols,
 			std::vector<CDlgListCtrlDataPtr>& items);
