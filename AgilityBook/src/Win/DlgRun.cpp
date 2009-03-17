@@ -464,7 +464,11 @@ void CMetaDataDisplay::OnCopy()
 	if (m_Insert)
 	{
 		bool bText = false;
-		bText = ::IsClipboardFormatAvailable(CF_TEXT) ? true : false;
+		if (wxTheClipboard->Open())
+		{
+			bText = wxTheClipboard->IsSupported(wxDF_TEXT);
+			wxTheClipboard->Close();
+		}
 		bool bMeta = false;
 #ifdef HAS_ENHMETAFILE
 		bMeta = ::IsClipboardFormatAvailable(CF_ENHMETAFILE) ? true : false;
@@ -2054,8 +2058,6 @@ void CDlgRun::UpdateRefRunButtons()
 
 void CDlgRun::SetRefRunColumnHeaders()
 {
-	LV_COLUMN col;
-	col.mask = LVCF_TEXT | LVCF_SUBITEM;
 	for (int i = 0; i < scNumRefRunColumns; ++i)
 	{
 		otstringstream str;
