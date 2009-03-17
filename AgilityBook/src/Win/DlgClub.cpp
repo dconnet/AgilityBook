@@ -97,7 +97,7 @@ CDlgClub::CDlgClub(
 	m_ctrlClubs = new wxComboBox(this, wxID_ANY, m_Club,
 		wxDefaultPosition, wxDefaultSize,
 		clubs, wxCB_DROPDOWN|wxCB_SORT,
-		CTrimValidator(&m_Club));
+		CTrimValidator(&m_Club, _("IDS_ENTER_NAME")));
 	m_ctrlClubs->SetHelpText(_("HIDC_CLUB_CLUBS"));
 	m_ctrlClubs->SetToolTip(_("HIDC_CLUB_CLUBS"));
 

@@ -125,7 +125,7 @@ CDlgTrial::CDlgTrial(
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_SORT,
-		CTrimValidator(&m_Location));
+		CTrimValidator(&m_Location), _("IDS_ENTER_NAME"));
 	m_ctrlLocation->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgTrial::OnSelchangeLocation), NULL, this);
 	m_ctrlLocation->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgTrial::OnKillfocusLocation), NULL, this);
 	m_ctrlLocation->SetHelpText(_("HIDC_TRIAL_LOCATION"));

@@ -56,14 +56,16 @@ public:
 			wxWindow *parent,
 			bool bSingleSel,
 			SortHeader sortHeader = eSortHeader,
-			bool bHasBorder = false);
+			bool bHasBorder = false,
+			bool bHasImageList = true);
 	CReportListCtrl(
 			wxWindow *parent,
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
 			bool bSingleSel = false,
 			SortHeader sortHeader = eSortHeader,
-			bool bHasBorder = false);
+			bool bHasBorder = false,
+			bool bHasImageList = true);
 
 	int ImageEmpty() const			{return m_imgEmpty;}
 	int ImageSortUp() const			{return m_imgSortUp;}
@@ -142,7 +144,8 @@ protected:
 			const wxSize& size,
 			bool bSingleSel,
 			SortHeader sortHeader,
-			bool bHasBorder);
+			bool bHasBorder,
+			bool bHasImageList);
 	wxImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgSortUp;

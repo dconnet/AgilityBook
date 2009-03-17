@@ -64,7 +64,8 @@ CReportListCtrl::CReportListCtrl(
 		wxWindow *parent,
 		bool bSingleSel,
 		SortHeader sortHeader,
-		bool bHasBorder)
+		bool bHasBorder,
+		bool bHasImageList)
 	: wxListView()
 	, m_ImageList(16,16)
 	, m_imgEmpty(-1)
@@ -72,7 +73,7 @@ CReportListCtrl::CReportListCtrl(
 	, m_imgSortDn(-1)
 	, m_NextId(1)
 {
-	Create(parent, wxDefaultPosition, wxDefaultSize, bSingleSel, sortHeader, bHasBorder);
+	Create(parent, wxDefaultPosition, wxDefaultSize, bSingleSel, sortHeader, bHasBorder, bHasImageList);
 }
 
 
@@ -82,7 +83,8 @@ CReportListCtrl::CReportListCtrl(
 		const wxSize& size,
 		bool bSingleSel,
 		SortHeader sortHeader,
-		bool bHasBorder)
+		bool bHasBorder,
+		bool bHasImageList)
 	: wxListView()
 	, m_ImageList(16,16)
 	, m_imgEmpty(-1)
@@ -90,7 +92,7 @@ CReportListCtrl::CReportListCtrl(
 	, m_imgSortDn(-1)
 	, m_NextId(1)
 {
-	Create(parent, pos, size, bSingleSel, sortHeader, bHasBorder);
+	Create(parent, pos, size, bSingleSel, sortHeader, bHasBorder, bHasImageList);
 }
 
 
@@ -100,7 +102,8 @@ bool CReportListCtrl::Create(
 		const wxSize& size,
 		bool bSingleSel,
 		SortHeader sortHeader,
-		bool bHasBorder)
+		bool bHasBorder,
+		bool bHasImageList)
 {
 	if (!wxListView::Create(parent, wxID_ANY, pos, size, wxLC_REPORT
 		| (bSingleSel ? wxLC_SINGLE_SEL : 0)
@@ -112,10 +115,13 @@ bool CReportListCtrl::Create(
 	Connect(wxEVT_COMMAND_LIST_DELETE_ITEM, wxListEventHandler(CReportListCtrl::OnDeleteItem));
 	// Make the blank one the 1st icon so if an icon isn't set in a list
 	// it will use this by default
-	m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
-	m_imgSortUp = m_ImageList.Add(wxIcon(HdrUp_xpm));
-	m_imgSortDn = m_ImageList.Add(wxIcon(HdrDown_xpm));
-	wxListView::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
+	if (bHasImageList || sortHeader == eSortHeader)
+	{
+		m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
+		m_imgSortUp = m_ImageList.Add(wxIcon(HdrUp_xpm));
+		m_imgSortDn = m_ImageList.Add(wxIcon(HdrDown_xpm));
+		wxListView::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
+	}
 	return true;
 }
 

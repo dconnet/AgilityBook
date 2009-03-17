@@ -115,7 +115,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 
 	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_Name));
+		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_TITLE_NAME"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_TITLE_NAME"));
 

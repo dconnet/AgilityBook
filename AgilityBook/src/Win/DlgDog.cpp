@@ -31,9 +31,33 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-14 DRC Merged DlgRun* into here.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-17 DRC Points view didn't update 'View Hidden' after canceling.
+ * @li 2004-02-03 DRC Broke dialog up into pages.
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
+ * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * DlgDogNumbers
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2004-02-03 DRC Broke dialog up into pages.
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
+ * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * DlgDogPoints
+ * @li 2006-07-15 DRC Only adjust column widths the first time.
+ *                    Add a selected-item total.
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
+ * @li 2004-02-03 DRC Created.
+ * DlgDogProp
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2004-05-30 DRC DOB/Deceased were not initialized in ctor.
+ * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
+ * @li 2003-08-18 DRC Added a deceased date for a dog.
+ * DlgDogTitles
+ * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
+ * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
+ * @li 2004-06-16 DRC Changed ARBDate::GetString to put leadingzero into format.
  * @li 2004-02-03 DRC Broke dialog up into pages.
  * @li 2004-01-04 DRC Changed ARBDate::GetString to take a format code.
  * @li 2003-08-18 DRC Added a deceased date for a dog.

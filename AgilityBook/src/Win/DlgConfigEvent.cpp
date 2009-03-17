@@ -181,7 +181,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	m_ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_Name));
+		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
 	m_ctrlName->SetHelpText(_("HIDC_CONFIG_EVENT"));
 	m_ctrlName->SetToolTip(_("HIDC_CONFIG_EVENT"));
 
@@ -214,7 +214,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
-		CTrimValidator(&m_Desc));
+		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_DESC"));
 	ctrlNote->SetToolTip(_("HIDC_CONFIG_EVENT_DESC"));
 

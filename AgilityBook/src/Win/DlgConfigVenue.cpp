@@ -241,7 +241,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 
 	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_Name));
+		CTrimValidator(&m_Name, _("IDS_INVALID_NAME")));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_VENUE"));
 	ctrlName->SetToolTip(_("HIDC_CONFIG_VENUE"));
 
