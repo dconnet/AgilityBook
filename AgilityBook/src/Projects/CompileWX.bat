@@ -68,7 +68,7 @@ goto doit
 
 
 :doit
-cd %WXWIN$\build\msw
+cd %WXWIN%\build\msw
 
 if ("%_DO_UNICODE%")==("0") goto next
 nmake -f makefile.vc BUILD=release            UNICODE=1 RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG% CPPFLAGS="%_CPPFLAGS%"
