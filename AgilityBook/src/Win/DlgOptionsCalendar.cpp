@@ -486,7 +486,7 @@ void CDlgOptionsCalendar::SetRichText()
 	{
 		data += GetCalText((*iColor).first, true);
 		data += wxT('\n');
-		endLines.push_back(data.length());
+		endLines.push_back(static_cast<long>(data.length()));
 	}
 
 	m_ctrlCalView->ChangeValue(data);

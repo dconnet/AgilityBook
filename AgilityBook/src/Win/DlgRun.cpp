@@ -1453,7 +1453,7 @@ CDlgRun::CDlgRun(
 	panelRefRuns->Layout();
 	sizerRefRuns->Fit(panelRefRuns);
 	notebook->AddPage(panelRefRuns, _("IDD_RUN_REFERENCE"), false);
-	m_idxRefRunPage = notebook->GetPageCount() - 1;
+	m_idxRefRunPage = static_cast<int>(notebook->GetPageCount()) - 1;
 
 	wxBoxSizer* sizerCRCD = new wxBoxSizer(wxHORIZONTAL);
 
