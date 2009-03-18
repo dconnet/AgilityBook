@@ -25,19 +25,32 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 2.8.9.
+I'm currently using version 2.8.10.
 Make sure WXWIN is set to wxWidgets root directory.
 There are a couple changes I've made:
-- in \wx\include\wx\msw\setup.h, enable everything to compile, plus:
+- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_6 0
-  - wxUSE_STL 1
-- \wx\include\msvc\wx\setup.h:
-  This is hardcoded to include vc_lib\msw[u][d]/wx/setup.h,
+- include/msvc/wx/setup.h:
+  This is hardcoded to include vc_lib/msw[u][d]/wx/setup.h,
   - Change it to include "wx/msw/setup.h"
     [unicode and nonunicode] (gets rid of all the ifdef sections)
-- \wx\src\msw\stdpaths.cpp
+- src/msw/stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
     directory from the appdir, which causes problems.
+- include/wx/choicebk.h:
+Line 97:
+    void UpdateSelectedPage(size_t newsel)
+    {
+        m_selection = wx_static_cast(int, newsel);
+        GetChoiceCtrl()->Select(newsel);
+    }
+to:
+    void UpdateSelectedPage(size_t newsel)
+    {
+        m_selection = wx_static_cast(int, newsel);
+        GetChoiceCtrl()->Select(m_selection);  <-----
+    }
+
 To build for VC, see src/Projects/CompileWX.bat
 
 --------------------

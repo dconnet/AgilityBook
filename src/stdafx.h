@@ -195,9 +195,6 @@
 #include "wx/wx.h"
 #endif
 // Some sanity checking
-#ifndef wxUSE_STL
-#error ARB: wxUSE_STL must be defined in wxWidgets (include/wx/<platform>/setup.)
-#endif
 #ifndef wxUSE_WCHAR_T
 #error ARB: wxUSE_WCHAR_T must be defined in wxWidgets (include/wx/<platform>/setup.)
 #endif
