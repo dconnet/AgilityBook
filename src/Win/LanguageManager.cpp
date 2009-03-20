@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-19 DRC Make sure the catalog is intialized before calling dlg.
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-09-22 DRC Created
  */
@@ -75,7 +76,20 @@ CLanguageManager::CLanguageManager()
 	}
 
 	if (lang == wxLANGUAGE_DEFAULT)
+	{
+		wxLocale* tmp = new wxLocale(wxLANGUAGE_DEFAULT);
+		lang = tmp->GetLanguage();
+		delete tmp;
+		// Set the initial language to the system default.
+		SetLang(lang);
+		// If we don't support that language (lookup fails)...
+		if (wxString(wxT("IDD_LANGUAGE")) == _("IDD_LANGUAGE"))
+		{
+			// ... force English.
+			SetLang(wxLANGUAGE_ENGLISH);
+		}
 		SelectLanguage();
+	}
 	else
 		SetLang(lang);
 }
