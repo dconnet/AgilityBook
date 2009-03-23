@@ -52,8 +52,8 @@
 #define UT_NAME			"UnitTest++.VC8"
 #elif _MSC_VER >= 1500
 #define UT_NAME			"UnitTest++.VC9"
-#else
-#error Unsupported compiler
+// SAS #else
+// SAS #error Unsupported compiler
 #endif
 
 // Note, if using static runtime, swap comments on following 2 defines
@@ -178,7 +178,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 
 ElementNodePtr CreateActionList()
 {
-	static char const* const configData = 
+	static char const* const configData =
 "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RootNode>\n\
 <Action NewName=\"SSA\" OldName=\"Sweepstakes\" Verb=\"RenameVenue\" />\n\
 <Action NewName=\"MXF\" OldName=\"MF\" Venue=\"AKC\" Verb=\"RenameTitle\" />\n\

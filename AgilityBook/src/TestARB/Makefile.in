@@ -23,7 +23,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` -I$(TOPSRCDIR)/src/UnitTests++
+INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB -I$(TOPSRCDIR)/src/UnitTest++/src `wx-config --cppflags`
 
 ##########
 # List of programs and archives to link
@@ -33,7 +33,50 @@ PROGRAMS = testarb
 ##########
 # Source files for each target
 ##########
-testarb_SRCS = ConfigHandler.cpp Local.cpp TestAgilityRecordBook.cpp TestARB.cpp TestBinaryData.cpp TestCalendar.cpp TestConfigAction.cpp TestConfigCalSite.cpp TestConfig.cpp TestConfigDivision.cpp TestConfigEvent.cpp TestConfigFault.cpp TestConfigLevel.cpp TestConfigLifetimePoints.cpp TestConfigMultiQ.cpp TestConfigOtherPoints.cpp TestConfigPlaceInfo.cpp TestConfigScoring.cpp TestConfigSubLevel.cpp TestConfigTitle.cpp TestConfigTitlePoints.cpp TestConfigVenue.cpp TestDate.cpp TestDogClub.cpp TestDog.cpp TestDogExistingPoints.cpp TestDogNotes.cpp TestDogReferenceRun.cpp TestDogRegNum.cpp TestDogRun.cpp TestDogRunOtherPoints.cpp TestDogRunPartner.cpp TestDogRunScoring.cpp TestDogTitle.cpp TestDogTrial.cpp TestDouble.cpp TestElement.cpp TestErrorCallback.cpp TestInfoItem.cpp TestMisc.cpp TestQ.cpp TestString.cpp TestTraining.cpp TestVersion.cpp
+testarb_SRCS = ConfigHandler.cpp \
+	Local.cpp \
+	TestAgilityRecordBook.cpp \
+	TestARB.cpp \
+	TestBinaryData.cpp \
+	TestCalendar.cpp \
+	TestConfigAction.cpp \
+	TestConfigCalSite.cpp \
+	TestConfig.cpp \
+	TestConfigDivision.cpp \
+	TestConfigEvent.cpp \
+	TestConfigFault.cpp \
+	TestConfigLevel.cpp \
+	TestConfigLifetimePoints.cpp \
+	TestConfigMultiQ.cpp \
+	TestConfigOtherPoints.cpp \
+	TestConfigPlaceInfo.cpp \
+	TestConfigScoring.cpp \
+	TestConfigSubLevel.cpp \
+	TestConfigTitle.cpp \
+	TestConfigTitlePoints.cpp \
+	TestConfigVenue.cpp \
+	TestDate.cpp \
+	TestDogClub.cpp \
+	TestDog.cpp \
+	TestDogExistingPoints.cpp \
+	TestDogNotes.cpp \
+	TestDogReferenceRun.cpp \
+	TestDogRegNum.cpp \
+	TestDogRun.cpp \
+	TestDogRunOtherPoints.cpp \
+	TestDogRunPartner.cpp \
+	TestDogRunScoring.cpp \
+	TestDogTitle.cpp \
+	TestDogTrial.cpp \
+	TestDouble.cpp \
+	TestElement.cpp \
+	TestErrorCallback.cpp \
+	TestInfoItem.cpp \
+	TestMisc.cpp \
+	TestQ.cpp \
+	TestString.cpp \
+	TestTraining.cpp \
+	TestVersion.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
