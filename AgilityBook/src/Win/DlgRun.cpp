@@ -930,8 +930,7 @@ CDlgRun::CDlgRun(
 	m_ctrlConditions->SetToolTip(_("HIDC_RUNSCORE_CONDITIONS"));
 
 	m_ctrlDesc = new CRichEditCtrl2(m_panelScore, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxSize(-1, 70),
-		wxTE_READONLY);
+		wxEmptyString, wxDefaultPosition, wxSize(-1, 70), true);
 	m_ctrlDesc->SetHelpText(_("HIDC_RUNSCORE_DESC"));
 	m_ctrlDesc->SetToolTip(_("HIDC_RUNSCORE_DESC"));
 

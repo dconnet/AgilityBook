@@ -50,9 +50,8 @@ public:
 			const wxString& value = wxEmptyString,
 			const wxPoint& pos = wxDefaultPosition,
 			const wxSize& size = wxDefaultSize,
-			long style = 0, // wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH will automatically be added
-			const wxValidator& validator = wxDefaultValidator,
-			const wxString& name = wxTextCtrlNameStr);
+			bool bReadOnly = true, // Initial state of readonly
+			const wxValidator& validator = wxDefaultValidator);
 
 	virtual void SetEditable(bool editable);
 

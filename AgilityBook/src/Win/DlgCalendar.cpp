@@ -399,8 +399,7 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlClubNotes->SetToolTip(_("HIDC_CAL_CLUB_NOTES"));
 
 	m_ctrlClubInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, 70),
-		wxTE_READONLY);
+		wxDefaultPosition, wxSize(-1, 70), true);
 	m_ctrlClubInfo->SetHelpText(_("HIDC_CAL_CLUB_NOTE"));
 	m_ctrlClubInfo->SetToolTip(_("HIDC_CAL_CLUB_NOTE"));
 
@@ -424,8 +423,7 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlLocationNotes->SetToolTip(_("HIDC_CAL_LOCATION_NOTES"));
 
 	m_ctrlLocationInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(-1, 115),
-		wxTE_READONLY);
+		wxDefaultPosition, wxSize(-1, 115), true);
 	m_ctrlLocationInfo->SetHelpText(_("HIDC_CAL_LOCATION_NOTE"));
 	m_ctrlLocationInfo->SetToolTip(_("HIDC_CAL_LOCATION_NOTE"));
 
