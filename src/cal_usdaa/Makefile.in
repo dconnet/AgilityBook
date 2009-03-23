@@ -33,8 +33,7 @@ SHAREDLIBS = calusdaa
 ##########
 # Source files for each target
 ##########
-calusdaa_SRCS = CalendarSite.cpp \
-				cal_usdaa.cpp
+calusdaa_SRCS = CalendarSite.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
