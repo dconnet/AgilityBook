@@ -163,8 +163,7 @@ CDlgTitle::CDlgTitle(
 	m_ctrlTitles->SetToolTip(_("HIDC_TITLE_TITLES"));
 
 	m_ctrlDesc = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(450, 120),
-		wxTE_READONLY);
+		wxDefaultPosition, wxSize(450, 120), true);
 	m_ctrlDesc->SetHelpText(_("HIDC_TITLE_DESC"));
 	m_ctrlDesc->SetToolTip(_("HIDC_TITLE_DESC"));
 

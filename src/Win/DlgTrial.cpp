@@ -160,8 +160,7 @@ CDlgTrial::CDlgTrial(
 	noteLocationNotes->Wrap(-1);
 
 	m_ctrlLocationInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
-		wxTE_READONLY);
+		wxDefaultPosition, wxDefaultSize, true);
 	m_ctrlLocationInfo->SetHelpText(_("HIDC_TRIAL_LOCATION_INFO"));
 	m_ctrlLocationInfo->SetToolTip(_("HIDC_TRIAL_LOCATION_INFO"));
 
@@ -211,7 +210,7 @@ CDlgTrial::CDlgTrial(
 	textClubNotes->Wrap(-1);
 
 	m_ctrlClubInfo = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxTE_READONLY);
+		wxDefaultPosition, wxDefaultSize, true);
 	m_ctrlClubInfo->SetHelpText(_("HIDC_TRIAL_CLUB_INFO"));
 	m_ctrlClubInfo->SetToolTip(_("HIDC_TRIAL_CLUB_INFO"));
 

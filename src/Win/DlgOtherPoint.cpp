@@ -98,8 +98,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 	ctrlNew->SetToolTip(_("HIDC_OTHER_NEW"));
 
 	m_ctrlDesc = new CRichEditCtrl2(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(210,120),
-		wxTE_READONLY);
+		wxDefaultPosition, wxSize(210,120), true);
 	m_ctrlDesc->SetHelpText(_("HIDC_OTHER_DESC"));
 	m_ctrlDesc->SetToolTip(_("HIDC_OTHER_DESC"));
 

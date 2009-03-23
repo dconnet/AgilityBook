@@ -46,13 +46,14 @@ CRichEditCtrl2::CRichEditCtrl2(
 		const wxString& value,
 		const wxPoint& pos,
 		const wxSize& size,
-		long style,
-		const wxValidator& validator,
-		const wxString& name)
-	: wxTextCtrl(parent, id, value, pos, size, style|wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH, validator, name)
+		bool bReadOnly,
+		const wxValidator& validator)
+	: wxTextCtrl(parent, id, value, pos, size,
+	wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH | (bReadOnly ? wxTE_READONLY : 0),
+		validator)
 {
 	Connect(wxEVT_COMMAND_TEXT_URL, wxTextUrlEventHandler(CRichEditCtrl2::OnUrl));
-	if (style & wxTE_READONLY)
+	if (bReadOnly)
 	{
 		SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DFACE));
 	}
