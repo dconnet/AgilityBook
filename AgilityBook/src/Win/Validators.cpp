@@ -329,7 +329,7 @@ bool CQualifyingValidator::Validate(wxWindow* parent)
 		if (wxNOT_FOUND == pControl->GetSelection())
 		{
 			m_validatorWindow->SetFocus();
-			wxMessageBox(wxT("Please select an item"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
+			wxMessageBox(_("IDS_SELECT_Q"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
 			return false;
 		}
 	}

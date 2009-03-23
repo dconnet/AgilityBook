@@ -90,12 +90,6 @@ public:
 private:
 	CDlgDogDivData* GetDivisionData(int index) const;
 	CDlgDogLevelData* GetLevelData(int index) const;
-	//bool GetText(
-	//		CEdit* pEdit,
-	//		short& val) const;
-	//bool GetText(
-	//		CEdit* pEdit,
-	//		double& val) const;
 	bool GetEvent(ARBConfigEventPtr* outEvent) const;
 	bool GetScoring(ARBConfigScoringPtr* outScoring) const;
 	void FillDivisions();
@@ -255,6 +249,17 @@ private:
 	void OnOtherpoints(wxCommandEvent& evt);
 	void OnBnClickedTableYps(wxCommandEvent& evt);
 	void OnSelchangeQ(wxCommandEvent& evt);
+	void OnSCTChange(wxCommandEvent& evt);
+	void OnClosingTimeChange(wxCommandEvent& evt);
+	void OnNumObsChange(wxCommandEvent& evt);
+	void OnReqOpeningYPSChange(wxCommandEvent& evt);
+	void OnReqClosingChange(wxCommandEvent& evt);
+	void OnTimeChange(wxCommandEvent& evt);
+	void OnFaultsChange(wxCommandEvent& evt);
+	void OnOpenChange(wxCommandEvent& evt);
+	void OnCloseChange(wxCommandEvent& evt);
+	void OnPlaceChange(wxCommandEvent& evt);
+	void OnBonusChange(wxCommandEvent& evt);
 	// Comments
 	void OnCommentsFaults(wxCommandEvent& evt);
 	// RefRuns
