@@ -66,6 +66,6 @@ AC_SUBST_FILE(NAM_RULES)
 # subsequent command to generate those files.                                  #
 ################################################################################
 #AC_CONFIG_FILES([NAM_rules.mk Makefile add extra makefiles])
-AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile  src/ARB/Makefile src/Win/Makefile src/TestARB/Makefile])
+AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile  src/ARB/Makefile src/Win/Makefile src/TestARB/Makefile src/cal_usdaa/Makefile])
 
 AC_OUTPUT

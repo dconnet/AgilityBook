@@ -80,9 +80,11 @@ endef
 ################################################################################
 $(foreach target,$(PROGRAMS),$(eval $(call BUILD_VARS,$(target))))
 $(foreach target,$(ARCHIVES),$(eval $(call BUILD_VARS,$(target))))
+$(foreach target,$(SHAREDLIBS),$(eval $(call BUILD_VARS,$(target))))
 
 $(foreach target,$(PROGRAMS),$(eval $(call PROG_DEPS,$(target),$(EXEEXT))))
 $(foreach target,$(ARCHIVES),$(eval $(call PROG_DEPS,$(target),.a)))
+$(foreach target,$(SHAREDLIBS),$(eval $(call PROG_DEPS,$(target),.so)))
 
 ################################################################################
 # Include the dependency files, do note throw an error if the file does not    #
