@@ -13,7 +13,7 @@ So to build the application and related libs:
 2. make
 
 
-       
+
 Compile errors:
 
 In file included from ../../../src/ARB/ARBBase.h:43,
