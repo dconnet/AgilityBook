@@ -119,6 +119,7 @@ include $(TOPSRCDIR)/$(MAKEINCLUDE)
 CLEANFILES += $(PRECOMP_HEADER:.h=.h.gch)
 CLEANFILES += $(PROGRAMS:=$(EXEEXT))
 CLEANFILES += $(ARCHIVES:=.a)
+CLEANFILES += $(SHAREDLIBS:=.so)
 
 ##########
 # Suffixes used in rules listed below.
@@ -128,7 +129,7 @@ CLEANFILES += $(ARCHIVES:=.a)
 ################################################################################
 # Define pre-requisites for basic targets.                                     #
 ################################################################################
-ALL_TARGETS = $(DEPDIRS) $(PRECOMP_HEADER:.h=.h.gch) $(ARCHIVES:=.a) $(PROGRAMS:=$(EXEEXT)) 
+ALL_TARGETS = $(DEPDIRS) $(PRECOMP_HEADER:.h=.h.gch) $(ARCHIVES:=.a) $(SHAREDLIBS:=.so) $(PROGRAMS:=$(EXEEXT)) 
 
 all:        $(SUBDIRS) $(ALL_TARGETS)
 
@@ -174,6 +175,13 @@ $(ARCHIVES:=.a):
 	$(AR) $(ARFLAGS) $@ $($(@:.a=)_OBJS) 
 	$(NICE_ECHO) "  Indexing:\t$@"
 	$(RANLIB) $@
+
+##########
+# Generic rule to link a shared library
+##########
+$(SHAREDLIBS:=.so):
+	$(NICE_ECHO) "  Creating shared library:\t$@"
+	$(LD) $(LDFLAGS) $($(@:.so=)_OBJS) -o $@ 
 
 ################################################################################
 # Default Install and Uninstall rules.                                         #
@@ -281,7 +289,7 @@ Makefile:   $(SRCDIR)/Makefile.in $(TOPBUILDDIR)/NAM_rules.mk $(TOPBUILDDIR)/con
 $(TOPBUILDDIR)/NAM_rules.mk: $(TOPSRCDIR)/NAM_rules.mk.in $(TOPBUILDDIR)/config.status
 	$(NICE_ECHO) "  Regenerating:\tNAM_rules.mk"
 	cd $(TOPBUILDDIR) && ./config.status NAM_rules.mk 
-	
+
 #cd $(TOPBUILDDIR) && ./config.status NAM_rules.mk
 
 ##########
@@ -292,7 +300,7 @@ $(TOPBUILDDIR)/NAM_rules.mk: $(TOPSRCDIR)/NAM_rules.mk.in $(TOPBUILDDIR)/config.
 $(TOPBUILDDIR)/config.status: $(TOPSRCDIR)/configure 
 	$(NICE_ECHO) "  Re-running\tconfigure"
 	cd $(TOPBUILDDIR) && ./config.status --recheck
-	
+
 ##########
 # The configure script in the top source directory depends on the source
 # configure.in/ac script in the same directory.  To regenerate it we need to

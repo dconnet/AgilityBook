@@ -1,7 +1,7 @@
 ################################################################################
 # File: Makefile                                                               #
 ################################################################################
-# Makefile for the                                               #
+# Makefile for the cal_usdaa subdirectory                                      #
 ################################################################################
 
 ################################################################################
@@ -21,42 +21,36 @@ VPATH       = @srcdir@
 TOPBUILDDIR = ./@top_builddir@
 
 ##########
-# Recursively make in these subdirectories
-##########
-SUBDIRS = ARB Win TestARB cal_usdaa
-
-##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -DWXWIDGETS # -I$(TOPSRCDIR)/src/ARB
+INCLUDES = -DWXWIDGETS -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags` -fPIC
 
 ##########
 # List of programs and archives to link
 ##########
-#PROGRAMS = arb testarb
-#ARCHIVES = arblib
+SHAREDLIBS = calusdaa
 
 ##########
 # Source files for each target
 ##########
-
+calusdaa_SRCS = CalendarSite.cpp \
+				cal_usdaa.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-# prog1_LIBS = -lextralib
-# prog1_LDFLAGS = -L/path/to/extralib
+calusdaa_LDFLAGS = -G
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h 
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
+
 
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = arb
-#INSTALL_SBIN = prog2
+#INSTALL_BIN = arblib
 #INSTALL_MAN = prog1.5
 
 @NAM_RULES@
