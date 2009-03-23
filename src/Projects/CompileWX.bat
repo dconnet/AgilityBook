@@ -5,6 +5,17 @@ rem It assumes ARB is in "\AgilityBook\src\AgilityBook"
 set _DO_UNICODE=0
 set _DO_MBCS=0
 
+set _TRY_MBCS=0
+set _TRY_UNICODE=0
+if ("%2")==("mbcs") set _TRY_MBCS=1
+if ("%3")==("mbcs") set _TRY_MBCS=1
+if ("%2")==("unicode") set _TRY_UNICODE=1
+if ("%3")==("unicode") set _TRY_UNICODE=1
+if ("%_TRY_MBCS%")==("1") or ("%_TRY_UNICODE%")==("1") goto check1
+set _TRY_MBCS=1
+set _TRY_UNICODE=1
+
+:check1
 if ("%1")==("vc6") goto vc6
 if ("%1")==("vc7") goto vc7
 if ("%1")==("vc8") goto vc8
@@ -16,7 +27,7 @@ goto usage
 title VC6
 call "C:\Program Files\Microsoft Visual Studio\VC98\bin\vcvars32.bat"
 echo on
-set _DO_MBCS=1
+if ("%_TRY_MBCS%")==("1") set _DO_MBCS=1
 set _CFG=_VC6.0
 set _RUNTIME_LIBS=dynamic
 set _CPPFLAGS=
@@ -26,7 +37,7 @@ goto doit
 :vc7
 title VC7
 call "C:\Program Files\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat"
-set _DO_MBCS=1
+if ("%_TRY_MBCS%")==("1") set _DO_MBCS=1
 set _CFG=_VC7.1s
 set _RUNTIME_LIBS=static
 set _CPPFLAGS=
@@ -36,8 +47,8 @@ goto doit
 :vc8
 title VC8
 call "C:\Program Files\Microsoft Visual Studio 8.0\VC\vcvarsall.bat" x86
-set _DO_UNICODE=1
-set _DO_MBCS=1
+if ("%_TRY_UNICODE%")==("1") set _DO_UNICODE=1
+if ("%_TRY_MBCS%")==("1") set _DO_MBCS=1
 set _CFG=_VC8.0s
 set _RUNTIME_LIBS=static
 set _CPPFLAGS=
@@ -47,8 +58,8 @@ goto doit
 :vc9
 title VC9
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
-set _DO_UNICODE=1
-set _DO_MBCS=1
+if ("%_TRY_UNICODE%")==("1") set _DO_UNICODE=1
+if ("%_TRY_MBCS%")==("1") set _DO_MBCS=1
 set _CFG=_VC9.0s
 set _RUNTIME_LIBS=static
 set _CPPFLAGS=/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1
@@ -58,7 +69,7 @@ goto doit
 :vc9x64
 title VC9x64
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64
-set _DO_UNICODE=1
+if ("%_TRY_UNICODE%")==("1") set _DO_UNICODE=1
 set _TARGET_CPU=TARGET_CPU=amd64
 set _CFG=_VC9.0s
 set _RUNTIME_LIBS=static
@@ -84,7 +95,7 @@ cd \AgilityBook\src\AgilityBook\src\Projects
 goto done
 
 :usage
-echo Usage: %0 vc6 or vc7 or vc8 or vc9 or vc9x64
+echo Usage: %0 vc6 or vc7 or vc8 or vc9 or vc9x64 [mbcs] [unicode]
 
 :done
 set _DO_UNICODE=
