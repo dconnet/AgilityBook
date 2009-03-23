@@ -50,7 +50,7 @@ public:
 
 	virtual void LogMessage(tstring const& inMsg)
 	{
-		__super::LogMessage(inMsg);
+		ARBErrorCallback::LogMessage(inMsg);
 		m_Msg += inMsg;
 	}
 };

@@ -40,14 +40,7 @@
 #include "ARBDate.h"
 #include "ARBStructure.h"
 #include "Element.h"
-
-#ifndef _WIN32
-#ifdef UNICODE
-#define _tunlink	_wunlink
-#else
-#define _tunlink	_unlink
-#endif
-#endif
+#include <wx/filefn.h>
 
 
 SUITE(TestElement)
@@ -277,7 +270,7 @@ SUITE(TestElement)
 		tstring errs;
 		CHECK(tree2->LoadXMLFile(tmpFile, errs));
 
-		_tunlink(tmpFile);
+		wxRemoveFile(tmpFile);
 
 		std::ostringstream tmp2;
 		CHECK(tree2->SaveXML(tmp2));

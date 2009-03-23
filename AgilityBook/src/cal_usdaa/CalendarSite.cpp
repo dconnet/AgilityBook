@@ -569,7 +569,11 @@ char* CCalendarSite::Process(
 
 /////////////////////////////////////////////////////////////////////////////
 
-extern "C" __declspec(dllexport) ICalendarSite* GetCalendarInterface()
+extern "C"
+#ifdef _MSC_VER
+__declspec(dllexport)
+#endif
+ICalendarSite* GetCalendarInterface()
 {
 	return new CCalendarSite();
 }
