@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Generate the message libraries and data files
 #
-# Requires gettext (msgcat/msgfmt) and winzip command line addon (wzzip)
+# Requires gettext (msgcat/msgfmt)
 #
 # Revision History
 # 2009-03-05 DRC Fixed some parameter passing issues (spaces/hyphens in names)
@@ -20,10 +20,7 @@ import sys
 import subprocess
 import zipfile
 
-# By default, gettext is in the path, winzip is not.
-# Command line addon to winzip
-# winzip = 'c:\Program Files\WinZip\WZZIP'
-
+# By default, gettext is in the path
 # This file is generated with msgcat of all po files (arb.po is first)
 autogenFile = 'autogen.po'
 
