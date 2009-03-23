@@ -51,3 +51,10 @@ UNIT TESTS
 2. cd src/UnitTests++
 3. make
 
+Compiling Resources Manually
+- This will go in the makefiles
+1. in the root of the build directory:
+cd ../src/Win/res && python ./compile.py ../../../build/src/Win arb
+2. cd ../../../build/src/Win
+3. sudo cp -pR lang/en/*mo /usr/share/locale/en/LC_MESSAGES/
+4. sudo cp -pR lang/fr/*mo /usr/share/locale/fr/LC_MESSAGES/
