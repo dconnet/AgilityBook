@@ -81,7 +81,7 @@ testarb_SRCS = ConfigHandler.cpp \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-testarb_LIBS = $(TOPBUILDDIR)/src/ARB/arblib.a $(TOPSRCDIR)/src/UnitTest++/libUnitTest++.a `wx-config --libs`
+testarb_LIBS = $(TOPBUILDDIR)/src/ARB/libarb.a $(TOPSRCDIR)/src/UnitTest++/libUnitTest++.a `wx-config --libs`
 
 ##########
 # Precompiled headers
