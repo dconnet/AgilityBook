@@ -28,17 +28,17 @@ INCLUDES = -DWXWIDGETS -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCD
 ##########
 # List of programs and archives to link
 ##########
-SHAREDLIBS = calusdaa
+SHAREDLIBS = libcalusdaa
 
 ##########
 # Source files for each target
 ##########
-calusdaa_SRCS = CalendarSite.cpp
+libcalusdaa_SRCS = CalendarSite.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-calusdaa_LDFLAGS = -G
+libcalusdaa_LDFLAGS = -G
 
 ##########
 # Precompiled headers

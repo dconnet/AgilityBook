@@ -28,12 +28,52 @@ INCLUDES = -DWXWIDGETS -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include `wx-config 
 ##########
 # List of programs and archives to link
 ##########
-ARCHIVES = arblib
+ARCHIVES = libarb
 
 ##########
 # Source files for each target
 ##########
-arblib_SRCS = ARBAgilityRecordBook.cpp ARBBase64.cpp ARBBase.cpp ARBCalendar.cpp ARBConfigAction.cpp ARBConfigCalSite.cpp ARBConfig.cpp ARBConfigDivision.cpp ARBConfigEvent.cpp ARBConfigFault.cpp ARBConfigLevel.cpp ARBConfigLifetimePoints.cpp ARBConfigMultiQ.cpp ARBConfigOtherPoints.cpp ARBConfigPlaceInfo.cpp ARBConfigScoring.cpp ARBConfigSubLevel.cpp ARBConfigTitle.cpp ARBConfigTitlePoints.cpp ARBConfigVenue.cpp ARBDate.cpp ARBDogClub.cpp ARBDog.cpp ARBDogExistingPoints.cpp ARBDogNotes.cpp ARBDogReferenceRun.cpp ARBDogRegNum.cpp ARBDogRun.cpp ARBDogRunOtherPoints.cpp ARBDogRunPartner.cpp ARBDogRunScoring.cpp ARBDogTitle.cpp ARBDogTrial.cpp ARBInfo.cpp ARBInfoItem.cpp ARBLocalization.cpp ARBTraining.cpp ARBTypes.cpp BinaryData.cpp Element.cpp ARBString.cpp
+libarb_SRCS = ARBAgilityRecordBook.cpp \
+	ARBBase64.cpp \
+	ARBBase.cpp \
+	ARBCalendar.cpp \
+	ARBConfigAction.cpp \
+	ARBConfigCalSite.cpp \
+	ARBConfig.cpp \
+	ARBConfigDivision.cpp \
+	ARBConfigEvent.cpp \
+	ARBConfigFault.cpp \
+	ARBConfigLevel.cpp \
+	ARBConfigLifetimePoints.cpp \
+	ARBConfigMultiQ.cpp \
+	ARBConfigOtherPoints.cpp \
+	ARBConfigPlaceInfo.cpp \
+	ARBConfigScoring.cpp \
+	ARBConfigSubLevel.cpp \
+	ARBConfigTitle.cpp \
+	ARBConfigTitlePoints.cpp \
+	ARBConfigVenue.cpp \
+	ARBDate.cpp \
+	ARBDogClub.cpp \
+	ARBDog.cpp \
+	ARBDogExistingPoints.cpp \
+	ARBDogNotes.cpp \
+	ARBDogReferenceRun.cpp \
+	ARBDogRegNum.cpp \
+	ARBDogRun.cpp \
+	ARBDogRunOtherPoints.cpp \
+	ARBDogRunPartner.cpp \
+	ARBDogRunScoring.cpp \
+	ARBDogTitle.cpp \
+	ARBDogTrial.cpp \
+	ARBInfo.cpp \
+	ARBInfoItem.cpp \
+	ARBLocalization.cpp \
+	ARBString.cpp \
+	ARBTraining.cpp \
+	ARBTypes.cpp \
+	BinaryData.cpp \
+	Element.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
@@ -50,7 +90,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = arblib
+#INSTALL_BIN = libarb
 #INSTALL_MAN = prog1.5
 
 @NAM_RULES@
