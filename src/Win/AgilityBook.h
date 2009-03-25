@@ -53,7 +53,6 @@ public:
 	bool SelectLanguage(wxWindow* parent = NULL);
 	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
 	void UpdateConfiguration(CAgilityBookDoc* pDoc);
-	void ShowHelp(wxString const& topic);
 
 	void SetMessageText(
 			wxString const& msg,
@@ -67,10 +66,6 @@ protected:
 	CLanguageManager* m_LangMgr;
 	CUpdateInfo m_UpdateInfo;
 	CAgilityBookDocManager* m_manager;
-
-	DECLARE_EVENT_TABLE()
-	void OnHelpContents(wxCommandEvent& evt);
-	void OnHelpIndex(wxCommandEvent& evt);
 };
 
 DECLARE_APP(CAgilityBookApp)

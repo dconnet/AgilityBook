@@ -2,7 +2,6 @@ Notes for releasing a new version.
 
 Files to change before marking files for release:
 - If file version has changed:
-  - If major version has changed, make sure last part of pgm version agrees.
   - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
   - Update the version in DefaultConfig.xml
   - Plus: Make sure that the Update() methods have been updated!
@@ -10,11 +9,13 @@ Files to change before marking files for release:
 - If configuration has changed:
   - Same as file version changing above
 - Update CD Label (SureThing CD Labeler Deluxe v3.12)
-- Update help\html\images\DlgAbout.gif
 - History.txt
   Update program version and date, along with any comments.
   - Reflect these changes into help/html/HistoryData.html
   - Run "src\UpdateHistory.py -h"
+    (note: while a help file is no longer actually generated, continue doing
+	this as the website pulls it's data from this too. And at some point, I
+	may reinstate the help file)
 - Todo.txt
   Any necessary changes...
 
@@ -39,6 +40,7 @@ Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup of released files to \AgilityBook\test\[vc6/vc7/vc8/vc9/vc9x64]
   Currently, I only archive vc8/vc9/x64 - the exe's that are released to the wild.
+  [exe,dll,dat,lang/...]
 - Clean out all build artifacts.
   - Everything under bin/...
   - Output files in Project/...
@@ -92,6 +94,6 @@ Backup:
   - Remove unnecessary files (build relics, svn)
 
 Prepare for next release:
-- Update src/Win/AgilityBook.rc: VERSIONINFO
+- Update version number
   - This is done by editing .../include/VersionNumber.h
 - Update History.txt

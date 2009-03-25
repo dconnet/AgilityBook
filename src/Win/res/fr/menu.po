@@ -533,18 +533,6 @@ msgstr "Revenir au fenêtre précédent"
 msgid "MenuHelp"
 msgstr "Ai&de"
 
-msgid "MenuHelpContents"
-msgstr "&Contenu"
-
-msgid "DescHelpContents"
-msgstr "Montrer onglet contenu d'aide"
-
-msgid "MenuHelpIndex"
-msgstr "&Index"
-
-msgid "DescHelpIndex"
-msgstr "Liste les rubriques de l'aide"
-
 msgid "MenuHelpUpdates"
 msgstr "Recherche de &Mise à jour..."
 

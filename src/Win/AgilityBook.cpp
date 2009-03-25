@@ -77,12 +77,6 @@
 
 IMPLEMENT_APP(CAgilityBookApp)
 
-
-BEGIN_EVENT_TABLE(CAgilityBookApp, wxApp)
-	EVT_MENU(wxID_HELP_CONTENTS, CAgilityBookApp::OnHelpContents)
-	EVT_MENU(wxID_HELP_INDEX, CAgilityBookApp::OnHelpIndex)
-END_EVENT_TABLE()
-
 /////////////////////////////////////////////////////////////////////////////
 
 class CAgilityBookDocManager : public wxDocManager
@@ -137,16 +131,6 @@ void CAgilityBookApp::UpdateConfiguration(CAgilityBookDoc* pDoc)
 {
 	assert(m_LangMgr);
 	m_UpdateInfo.UpdateConfiguration(pDoc, *m_LangMgr);
-}
-
-
-void CAgilityBookApp::ShowHelp(wxString const& topic)
-{
-#pragma message PRAGMA_MESSAGE("TODO: handle help from modal dialogs - this won't work")
-	if (topic.empty())
-		m_LangMgr->HelpDisplayContents();
-	else
-		m_LangMgr->HelpDisplaySection(topic);
 }
 
 
@@ -316,13 +300,10 @@ bool CAgilityBookApp::OnInit()
 	if (filename.empty())
 	{
 		// Don't open it if the shift key is down.
-#ifdef WIN32
-#pragma message PRAGMA_MESSAGE("TODO: Check how to see if shift key is down NOW")
-		if (0 <= GetKeyState(VK_SHIFT))
+		if (::wxGetKeyState(WXK_SHIFT))
 		{
 			filename = wxConfig::Get()->Read(wxT("Settings/LastFile"), wxT(""));
 		}
-#endif
 	}
 	// If a file is being opened, verify it exists first!
 	// This catches both the case where the remembered last file (above)
@@ -373,16 +354,4 @@ int CAgilityBookApp::OnExit()
 	m_manager = NULL;
 	Element::Terminate();
 	return wxApp::OnExit();
-}
-
-
-void CAgilityBookApp::OnHelpContents(wxCommandEvent& evt)
-{
-	m_LangMgr->HelpDisplayContents();
-}
-
-
-void CAgilityBookApp::OnHelpIndex(wxCommandEvent& evt)
-{
-	m_LangMgr->HelpDisplayIndex();
 }

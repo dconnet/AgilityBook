@@ -519,18 +519,6 @@ msgstr "Switch back to the previous window pane"
 msgid "MenuHelp"
 msgstr "&Help"
 
-msgid "MenuHelpContents"
-msgstr "&Contents"
-
-msgid "DescHelpContents"
-msgstr "Display the Contents tab of the help file"
-
-msgid "MenuHelpIndex"
-msgstr "&Index"
-
-msgid "DescHelpIndex"
-msgstr "Display the Index tab of the help file"
-
 msgid "MenuHelpUpdates"
 msgstr "Check for &Updates..."
 
