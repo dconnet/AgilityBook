@@ -1323,7 +1323,8 @@ void CAgilityBookCalendarView::LoadData()
 	if (m_Ctrl)
 	{
 		m_Ctrl->LoadData(GetDocument());
-		UpdateMessages();
+		if (m_Ctrl->IsShownOnScreen())
+			UpdateMessages();
 	}
 }
 

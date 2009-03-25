@@ -473,7 +473,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 					else
 					{
-						m_pTree->SelectItem(hItem); // Select(hItem, TVGN_CARET);
+						m_pTree->SelectItem(hItem);
 						m_pTree->EnsureVisible(hItem);
 						if (bTreeSelectionSet)
 							*bTreeSelectionSet = true;
@@ -524,7 +524,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						}
 						else
 						{
-							m_pTree->SelectItem(hItem); //Select(hItem, TVGN_CARET);
+							m_pTree->SelectItem(hItem);
 							m_pTree->EnsureVisible(hItem);
 							if (bTreeSelectionSet)
 								*bTreeSelectionSet = true;

@@ -404,7 +404,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			{
 				wxString str2(m_pRun->GetNote().c_str());
 				str2.Replace(wxT("\n"), wxT(" "));
-				str << str2;
+				str << str2.c_str();
 			}
 			break;
 		case IO_RUNS_FAULTS:
@@ -1530,6 +1530,9 @@ void CAgilityBookRunsView::LoadData()
 	for (int i = 0; i < nColumnCount; ++i)
 		m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn.GetColumn();
 	m_Ctrl->SortItems(CompareRuns, 0);
@@ -1545,8 +1548,6 @@ void CAgilityBookRunsView::LoadData()
 	m_Ctrl->Refresh();
 
 	m_bSuppressSelect = false;
-
-	UpdateMessages();
 }
 
 

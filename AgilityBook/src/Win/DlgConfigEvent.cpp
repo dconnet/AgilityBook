@@ -603,7 +603,7 @@ void CDlgConfigEvent::FillControls()
 				otstringstream info;
 				ARBConfigScoring::ScoringStyle style = pScoring->GetScoringStyle();
 				str1 = _("IDS_CONFIGEVENT_STYLE");
-				info << str1 << wxT(": ")
+				info << str1.c_str() << wxT(": ")
 					<< ARBConfigScoring::GetScoringStyleStr(style)
 					<< wxT("\n");
 				// The following strings should be the same as they are in
@@ -616,94 +616,94 @@ void CDlgConfigEvent::FillControls()
 				case ARBConfigScoring::eFaults100ThenTime:
 				case ARBConfigScoring::eFaults200ThenTime:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					info << str1 << wxT(": ")
+					info << str1.c_str() << wxT(": ")
 						<< pScoring->TimeFaultMultiplier();
 					break;
 				case ARBConfigScoring::eOCScoreThenTime:
     				str1 = _("IDS_CONFIGEVENT_REQOPEN");
     				str2 = _("IDS_CONFIGEVENT_REQCLOSE");
-					info << str1 << wxT(": ")
+					info << str1.c_str() << wxT(": ")
 						<< pScoring->GetRequiredOpeningPoints()
-						<< wxT("; ") << str2 << wxT(": ")
+						<< wxT("; ") << str2.c_str() << wxT(": ")
 						<< pScoring->GetRequiredClosingPoints();
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					break;
 				case ARBConfigScoring::eScoreThenTime:
 					str1 = _("IDS_POINTS");
-					info << str1 << wxT(": ")
+					info << str1.c_str() << wxT(": ")
 						<< pScoring->GetRequiredOpeningPoints();
 					if (pScoring->SubtractTimeFaultsFromScore())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_FROMSCORE");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					break;
 				case ARBConfigScoring::eTimePlusFaults:
 					str1 = _("IDS_CONFIGEVENT_TIMEFAULTMULT");
-					info << str1 << wxT(": ")
+					info << str1.c_str() << wxT(": ")
 						<< pScoring->TimeFaultMultiplier();
 					if (pScoring->QsMustBeClean())
 					{
 						// This string is slightly different: Just dropped
 						// the 'Time+Fault' at start.
 						str1 = _("IDS_CONFIGEVENT_CLEANQ");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					if (pScoring->ComputeTimeFaultsUnder())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_UNDER");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					if (pScoring->ComputeTimeFaultsOver())
 					{
 						str1 = _("IDS_CONFIGEVENT_TF_OVER");
-						info << wxT("; ") << str1;
+						info << wxT("; ") << str1.c_str();
 					}
 					break;
 				}
 				if (pScoring->DropFractions())
 				{
 					str1 = _("IDS_CONFIGEVENT_DROPFRAC");
-					info << wxT("; ") << str1;
+					info << wxT("; ") << str1.c_str();
 				}
 				if (pScoring->HasBonusPts())
 				{
 					str1 = _("IDS_CONFIGEVENT_BONUS");
-					info << wxT("; ") << str1;
+					info << wxT("; ") << str1.c_str();
 				}
 				if (pScoring->HasSuperQ())
 				{
 					str1 = _("IDS_CONFIGEVENT_SUPERQ");
-					info << wxT("; ") << str1;
+					info << wxT("; ") << str1.c_str();
 				}
 				if (pScoring->HasSpeedPts())
 				{
 					str1 = _("IDS_CONFIGEVENT_SPEEDPTS");
-					info << wxT("; ") << str1;
+					info << wxT("; ") << str1.c_str();
 					if (0 < pScoring->GetPlaceInfo().size())
 					{
 						info << wxT(" [");

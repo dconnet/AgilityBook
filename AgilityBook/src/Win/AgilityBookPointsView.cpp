@@ -374,10 +374,11 @@ void CAgilityBookPointsView::LoadData()
 	for (int i = 0; i < nColumnCount; ++i)
 		m_Ctrl->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
 
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+
 	m_Ctrl->Thaw();
 	m_Ctrl->Refresh();
-
-	UpdateMessages();
 }
 
 

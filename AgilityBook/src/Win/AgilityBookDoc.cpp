@@ -1315,6 +1315,13 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 
 	// Kick the LoadData in every view
     UpdateAllViews();
+	// Finally, force a status update (currently, the last loaddata is the winner)
+	if (GetDocumentManager())
+	{
+		CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+		if (pView)
+			pView->UpdateMessages();
+	}
 
 	return true;
 }

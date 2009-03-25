@@ -825,6 +825,9 @@ void CAgilityBookCalendarListView::LoadData()
 	for (int iCol = 0; iCol < nColumnCount; ++iCol)
 		m_Ctrl->SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
 
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn.GetColumn();
 	m_Ctrl->SortItems(CompareCalendar, 0);
@@ -837,8 +840,6 @@ void CAgilityBookCalendarListView::LoadData()
 	m_Ctrl->Refresh();
 
 	m_bSuppressSelect = false;
-
-	UpdateMessages();
 }
 
 

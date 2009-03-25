@@ -171,7 +171,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 				str.MakeLower();
 			if (0 <= str.Find(search))
 			{
-				m_pView->m_Ctrl->SelectItem(hItem); // Select(hItem, TVGN_CARET);
+				m_pView->ChangeSelection(hItem);
 				m_pView->m_Ctrl->EnsureVisible(hItem);
 				bFound = true;
 			}
@@ -388,7 +388,7 @@ void CAgilityBookTreeView::OnUpdate(
 		assert(pTrial);
 		CAgilityBookTreeData* pData = FindData(pTrial);
 		assert(pData);
-		m_Ctrl->SelectItem(pData->GetId());  // Select(pData->GetId(), TVGN_CARET);
+		ChangeSelection(pData->GetId());
 		m_Ctrl->EnsureVisible(pData->GetId());
 	}
 	else if (hint && hint->IsEqual(UPDATE_CUSTOMIZE))
@@ -605,8 +605,7 @@ wxTreeItemId CAgilityBookTreeView::InsertDog(
 		}
 		if (bSelect)
 		{
-#pragma message PRAGMA_MESSAGE("TODO: Check whether SelectItem generates changing events")
-			m_Ctrl->SelectItem(hItem); // NOTE: In MFC this was Select() - which generated TVN_SELCHANGING and TVN_SELCHANGED
+			ChangeSelection(hItem);
 			m_Ctrl->EnsureVisible(hItem);
 		}
 	}
@@ -738,6 +737,33 @@ void CAgilityBookTreeView::UpdateData(wxTreeItemId hItem)
 }
 
 
+void CAgilityBookTreeView::ChangeSelection(wxTreeItemId hItem)
+{
+	m_Ctrl->SelectItem(hItem);
+	DoSelectionChange(hItem);
+}
+
+
+void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
+{
+	if (!m_bSuppressSelect)
+	{
+		CAgilityBookTreeData* pData = GetTreeItem(hItem);
+		ARBDogPtr pDog;
+		unsigned int iHint = UPDATE_RUNS_VIEW;
+		if (pData)
+		{
+			pDog = pData->GetDog();
+			if (!m_pDog || !pDog || m_pDog != pDog)
+				iHint |= UPDATE_POINTS_VIEW;
+		}
+		m_pDog = pDog;
+		CUpdateHint hint(iHint, m_pDog);
+		GetDocument()->UpdateAllViews(this, &hint);
+	}
+}
+
+
 void CAgilityBookTreeView::LoadData()
 {
 	if (!m_Ctrl)
@@ -803,11 +829,12 @@ void CAgilityBookTreeView::LoadData()
 	// We may have reloaded during a context menu operation.
 	m_bReset = false;
 
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+
 	m_Ctrl->Thaw();
 	m_Ctrl->Refresh();
 	m_bSuppressSelect = false;
-
-	UpdateMessages();
 }
 
 
@@ -851,21 +878,7 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 
 void CAgilityBookTreeView::OnCtrlSelectionChanged(wxTreeEvent& evt)
 {
-	if (!m_bSuppressSelect)
-	{
-		CAgilityBookTreeData* pData = GetTreeItem(evt.GetItem());
-		ARBDogPtr pDog;
-		unsigned int iHint = UPDATE_RUNS_VIEW;
-		if (pData)
-		{
-			pDog = pData->GetDog();
-			if (!m_pDog || !pDog || m_pDog != pDog)
-				iHint |= UPDATE_POINTS_VIEW;
-		}
-		m_pDog = pDog;
-		CUpdateHint hint(iHint, m_pDog);
-		GetDocument()->UpdateAllViews(this, &hint);
-	}
+	DoSelectionChange(evt.GetItem());
 	evt.Skip();
 }
 
@@ -1145,7 +1158,10 @@ bool CAgilityBookTreeView::OnCmd(int id)
 	case ID_VIEW_RUNS_BY_TRIAL:
 		bHandled = true;
 		CAgilityBookOptions::SetViewRunsByTrial(!CAgilityBookOptions::GetViewRunsByTrial());
-		LoadData();
+		{
+			CUpdateHint hint(UPDATE_RUNS_VIEW);
+			GetDocument()->UpdateAllViews(this, &hint);
+		}
 		break;
 
 	case ID_VIEW_TABLE_IN_YPS:

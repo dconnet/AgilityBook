@@ -601,6 +601,17 @@ void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
+// This is just to get the text in a sunken static control to look better
+static wxString Pad(tstring const& val)
+{
+	wxString padded(wxT(" "));
+	padded += val.c_str();
+	padded += ' ';
+	return padded;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 BEGIN_EVENT_TABLE(CDlgRun, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgRun::OnOk)
 END_EVENT_TABLE()
@@ -620,7 +631,6 @@ CDlgRun::CDlgRun(
 	, m_pRefRunMe()
 	, m_Club()
 	, m_pVenue()
-
 	, m_panelScore(NULL)
 	, m_Date(pRun->GetDate())
 	, m_ctrlDivisions(NULL)
@@ -685,7 +695,6 @@ CDlgRun::CDlgRun(
 	, m_ctrlTitlePointsText(NULL)
 	, m_ctrlTitlePoints(NULL)
 	, m_ctrlScore(NULL)
-
 	, m_Comments(pRun->GetNote().c_str())
 	, m_sortRefRuns(wxT("RefRuns"))
 	, m_idxRefRunPage(-1)
@@ -794,17 +803,17 @@ CDlgRun::CDlgRun(
 	ctrlDate->SetToolTip(_("HIDC_RUNSCORE_DATE"));
 
 	wxStaticText* textVenue = new wxStaticText(m_panelScore, wxID_ANY,
-		m_pVenue->GetName().c_str(),
+		Pad(m_pVenue->GetName()),
 		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
 	textVenue->Wrap(-1);
 
 	wxStaticText* textClub = new wxStaticText(m_panelScore, wxID_ANY,
-		m_Club->GetName().c_str(),
+		Pad(m_Club->GetName()),
 		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
 	textClub->Wrap(-1);
 
 	wxStaticText* textLocation = new wxStaticText(m_panelScore, wxID_ANY,
-		pTrial->GetLocation().c_str(),
+		Pad(pTrial->GetLocation()),
 		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
 	textLocation->Wrap(-1);
 
@@ -1047,7 +1056,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlClosingPtsTotalFaults = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
-	m_textClosingPtsTotalFaults->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnCloseChange), NULL, this);
+	m_ctrlClosingPtsTotalFaults->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnCloseChange), NULL, this);
 	m_ctrlClosingPtsTotalFaults->SetHelpText(_("HIDC_RUNSCORE_CLOSE_PTS"));
 	m_ctrlClosingPtsTotalFaults->SetToolTip(_("HIDC_RUNSCORE_CLOSE_PTS"));
 
@@ -1091,7 +1100,7 @@ CDlgRun::CDlgRun(
 	textDogsQd->Wrap(-1);
 
 	m_ctrlDogsQd = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(50, -1), 0,
+		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_DogsQd));
 	m_ctrlDogsQd->SetHelpText(_("HIDC_RUNSCORE_DOGS_QD"));
 	m_ctrlDogsQd->SetToolTip(_("HIDC_RUNSCORE_DOGS_QD"));
@@ -1600,13 +1609,6 @@ CDlgRun::CDlgRun(
 	FillDivisions(); // This will call UpdateControls();
 	FillJudges();
 	SetPartnerText();
-	SetObstacles();
-	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
-	{
-		SetMinYPS();
-		SetYPS();
-		SetTotalFaults();
-	}
 	SetFaultsText();
 	ListRefRuns();
 	UpdateCRCDButtons();
@@ -1938,25 +1940,31 @@ void CDlgRun::SetPartnerText()
 
 void CDlgRun::SetMinYPS()
 {
-	wxString str;
-	double yps;
-	if (m_Run->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
-		str = ARBDouble::str(yps, 3).c_str();
+		wxString str;
+		double yps;
+		if (m_Run->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+		{
+			str = ARBDouble::str(yps, 3).c_str();
+		}
+		m_ctrlMinYPSClosingTime->ChangeValue(str);
 	}
-	m_ctrlMinYPSClosingTime->ChangeValue(str);
 }
 
 
 void CDlgRun::SetYPS()
 {
-	wxString str;
-	double yps;
-	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
-		str = ARBDouble::str(yps, 3).c_str();
+		wxString str;
+		double yps;
+		if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
+		{
+			str = ARBDouble::str(yps, 3).c_str();
+		}
+		m_ctrlYPSOpeningPts->ChangeValue(str);
 	}
-	m_ctrlYPSOpeningPts->ChangeValue(str);
 }
 
 
@@ -1974,15 +1982,15 @@ void CDlgRun::SetObstacles()
 
 void CDlgRun::SetTotalFaults()
 {
-	wxString total;
 	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
 	{
+		wxString total;
 		ARBConfigScoringPtr pScoring;
 		GetScoring(&pScoring);
 		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(pScoring);
 		total = ARBDouble::str(faults, 3).c_str();
+		m_ctrlClosingPtsTotalFaults->ChangeValue(total);
 	}
-	m_ctrlClosingPtsTotalFaults->ChangeValue(total);
 }
 
 
@@ -2196,8 +2204,19 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		break;
 	case ARBConfigScoring::eOCScoreThenTime:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, pScoring->DropFractions());
-		m_Opening = pScoring->GetRequiredOpeningPoints();
-		m_Closing = pScoring->GetRequiredClosingPoints();
+		if (bOnEventChange)
+		{
+			if (ARBDogRunScoring::eTypeByOpenClose == m_pRealRun->GetScoring().GetType())
+			{
+				m_Opening = m_Run->GetScoring().GetNeedOpenPts();
+				m_Closing = m_Run->GetScoring().GetNeedClosePts();
+			}
+			else
+			{
+				m_Opening = pScoring->GetRequiredOpeningPoints();
+				m_Closing = pScoring->GetRequiredClosingPoints();
+			}
+		}
 		// Do not push these (above) back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlSCTText->Show(true);
@@ -2243,7 +2262,13 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		break;
 	case ARBConfigScoring::eScoreThenTime:
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, pScoring->DropFractions());
-		m_Opening = pScoring->GetRequiredOpeningPoints();
+		if (bOnEventChange)
+		{
+			if (ARBDogRunScoring::eTypeByPoints == m_pRealRun->GetScoring().GetType())
+				m_Opening = m_Run->GetScoring().GetNeedOpenPts();
+			else
+				m_Opening = pScoring->GetRequiredOpeningPoints();
+		}
 		// Do not push this back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
 		m_ctrlSCTText->Show(true);
@@ -2294,6 +2319,13 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_ctrlSpeedPts->Show(true);
 	}
 	SetTitlePoints();
+	SetObstacles();
+	if (ARBDogRunScoring::eTypeByTime == m_Run->GetScoring().GetType())
+	{
+		SetMinYPS();
+		SetYPS();
+		SetTotalFaults();
+	}
 	FixScoreLayout();
 }
 
@@ -2611,18 +2643,27 @@ void CDlgRun::OnScoreDateChanged(wxDateEvent& evt)
 
 void CDlgRun::OnSelchangeDivision(wxCommandEvent& evt)
 {
+	int index = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != index)
+		m_Run->SetDivision(m_ctrlDivisions->GetString(index).c_str());
 	FillLevels();
 }
 
 
 void CDlgRun::OnSelchangeLevel(wxCommandEvent& evt)
 {
+	int index = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND != index)
+		m_Run->SetLevel(m_ctrlLevels->GetString(index).c_str());
 	FillEvents();
 }
 
 
 void CDlgRun::OnSelchangeEvent(wxCommandEvent& evt)
 {
+	int index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND != index)
+		m_Run->SetEvent(m_ctrlEvents->GetString(index).c_str());
 	FillSubNames();
 	UpdateControls(true);
 	ARBConfigEventPtr pEvent;
@@ -2728,6 +2769,7 @@ void CDlgRun::OnReqOpeningYPSChange(wxCommandEvent& evt)
 			SetMinYPS();
 			SetYPS();
 			SetTotalFaults();
+			break;
 		}
 	}
 }
@@ -3050,12 +3092,67 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
+	int index = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND == index)
+	{
+		wxMessageBox(_("IDS_SELECT_DIVISION"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		m_ctrlDivisions->SetFocus();
+		return;
+	}
+	tstring curDiv = m_ctrlDivisions->GetString(index).c_str();
+
+	index = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND == index)
+	{
+		wxMessageBox(_("IDS_SELECT_LEVEL"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		m_ctrlLevels->SetFocus();
+		return;
+	}
+	CDlgDogLevelData* pLevel = GetLevelData(index);
+	assert(pLevel);
+
+	index = m_ctrlEvents->GetSelection();
+	if (wxNOT_FOUND == index)
+	{
+		wxMessageBox(_("IDS_SELECT_EVENT"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		m_ctrlEvents->SetFocus();
+		return;
+	}
+	tstring curEvent = m_ctrlEvents->GetString(index).c_str();
+
+	ARBConfigEventPtr pEvent;
+	m_pVenue->GetEvents().FindEvent(curEvent, &pEvent);
+	if (!pEvent)
+	{
+		wxMessageBox(_("IDS_BAD_EVENT"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		m_ctrlEvents->SetFocus();
+		return;
+	}
+
+	if (!pEvent->FindEvent(curDiv, pLevel->m_pLevel->GetName(), m_Run->GetDate()))
+	{
+		wxMessageBox(_("IDS_BAD_SCORINGMETHOD"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		m_ctrlLevels->SetFocus();
+		return;
+	}
+
+	if (wxNOT_FOUND == m_ctrlQ->GetSelection())
+	{
+		wxMessageBox(_("IDS_SELECT_Q"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		m_ctrlQ->SetFocus();
+		return;
+	}
+
+	//@todo: Add integrity checks - things like snooker score >=37? is Q set?
+
 	m_Run->SetSubName(m_SubName.c_str());
 	m_Run->SetHeight(m_Height.c_str());
 	m_Run->SetJudge(m_Judge.c_str());
 	m_Run->SetHandler(m_Handler.c_str());
 	m_Run->SetConditions(m_Conditions.c_str());
 	m_Run->SetNote(m_Comments.c_str());
+	m_Run->SetInClass(m_InClass);
+	m_Run->SetDogsQd(m_DogsQd);
 
 	//TODO: Remove debugging code
 #ifdef _DEBUG
