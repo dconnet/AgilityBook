@@ -269,10 +269,6 @@ void CAgilityBookMenu::CreateMenu(
 
 	case IdMenuHelp:
 		title = _("MenuHelp");
-		DoMenu(handles.menu, bCreate, wxID_HELP_CONTENTS, _("MenuHelpContents"), _("DescHelpContents"));
-		DoMenu(handles.menu, bCreate, wxID_HELP_INDEX, _("MenuHelpIndex"), _(""));
-		if (bCreate)
-			handles.menu->AppendSeparator();
 		DoMenu(handles.menu, bCreate, ID_HELP_UPDATE, _("MenuHelpUpdates"), _("DescHelpUpdates"));
 		DoMenu(handles.menu, bCreate, ID_HELP_SYSINFO, _("MenuHelpSysInfo"), _("DescHelpSysInfo"));
 		if (bCreate)

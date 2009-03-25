@@ -38,7 +38,6 @@
  */
 
 #include "Localization.h"
-class wxHtmlHelpController;
 class wxLocale;
 
 
@@ -62,27 +61,10 @@ public:
 	 */
 	wxString CurrentLanguage() const			{return m_dirLoadedLang;}
 
-	/**
-	 * Display the contents of the help file.
-	 */
-	void HelpDisplayContents();
-
-	/**
-	 * Display the index of the help file.
-	 */
-	void HelpDisplayIndex();
-
-	/**
-	 * Display the specified topic of the help file.
-	 * @param topic Topic to display. If empty, displays contents.
-	 */
-	void HelpDisplaySection(wxString const& topic);
-
 private:
 	int SelectLang(wxWindow* parent = NULL);
 	bool SetLang(int langId);
 
-	wxHtmlHelpController* m_help;
 	wxString m_dirLang; /// Where the en/fr/etc directories are located
 	wxString m_dirLoadedLang; /// 'en'/'fr' etc
 	wxLocale* m_locale;

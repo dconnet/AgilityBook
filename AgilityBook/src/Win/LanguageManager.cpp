@@ -46,8 +46,7 @@
 
 
 CLanguageManager::CLanguageManager()
-	: m_help(NULL)
-	, m_dirLang()
+	: m_dirLang()
 	, m_dirLoadedLang()
 	, m_locale(NULL)
 	, m_CurLang(wxLANGUAGE_DEFAULT)
@@ -99,8 +98,6 @@ CLanguageManager::~CLanguageManager()
 {
 	delete m_locale;
 	m_locale = NULL;
-	delete m_help;
-	m_help = NULL;
 }
 
 
@@ -126,11 +123,6 @@ bool CLanguageManager::SetLang(int langId)
 
 	m_Localization.Load();
 
-	delete m_help;
-	m_help = new wxHtmlHelpController();
-	m_help->Initialize(
-		m_dirLang + wxFileName::GetPathSeparator()
-		+ m_dirLoadedLang + wxFileName::GetPathSeparator() + wxT("AgilityBook.htb"));
 	return true;
 }
 
@@ -184,25 +176,4 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 bool CLanguageManager::SelectLanguage(wxWindow* parent)
 {
 	return SetLang(SelectLang(parent));
-}
-
-
-void CLanguageManager::HelpDisplayContents()
-{
-	m_help->DisplayContents();
-}
-
-
-void CLanguageManager::HelpDisplayIndex()
-{
-	m_help->DisplayIndex();
-}
-
-
-void CLanguageManager::HelpDisplaySection(wxString const& topic)
-{
-	if (topic.empty())
-		m_help->DisplayContents();
-	else
-		m_help->DisplaySection(topic);
 }
