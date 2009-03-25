@@ -57,7 +57,8 @@ CLanguageManager::CLanguageManager()
 	//wxHelpProvider::Set(new wxHelpControllerHelpProvider);
 	wxHelpProvider::Set(new wxSimpleHelpProvider);
 
-	m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	m_dirLang = fileName.GetPath() + wxFileName::GetPathSeparator() + wxT("lang");
 
 	int lang = m_CurLang;
 	long lastLang;
