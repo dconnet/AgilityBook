@@ -295,12 +295,11 @@ bool CAgilityBookApp::OnInit()
 
 	SetTopWindow(frame);
 
-
 	// Should we open the last open file?
 	if (filename.empty())
 	{
 		// Don't open it if the shift key is down.
-		if (::wxGetKeyState(WXK_SHIFT))
+		if (!::wxGetKeyState(WXK_SHIFT))
 		{
 			filename = wxConfig::Get()->Read(wxT("Settings/LastFile"), wxT(""));
 		}
