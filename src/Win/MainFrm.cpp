@@ -442,7 +442,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	// OS version
 	wxPlatformInfo info;
 	str << wxT("OS: ")
-		<< info.GetOperatingSystemIdName()
+		<< info.GetOperatingSystemIdName().c_str()
 		<< ' '
 		<< info.GetOSMajorVersion()
 		<< '.'
@@ -451,7 +451,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	if (wxPORT_BASE != info.GetPortId())
 	{
 		str << wxT("Port: ")
-			<< info.GetPortIdName()
+			<< info.GetPortIdName().c_str()
 			<< ' '
 			<< info.GetToolkitMajorVersion()
 			<< '.'
@@ -459,9 +459,9 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 			<< std::endl;
 	}
 	str << wxT("Architecture: ")
-		<< info.GetArchName()
+		<< info.GetArchName().c_str()
 		<< wxT(", ")
-		<< info.GetEndiannessName()
+		<< info.GetEndiannessName().c_str()
 		<< std::endl;
 
 	// Me.
@@ -471,10 +471,7 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 		if (ver.Valid())
 			str << ver.GetVersionString().c_str();
 		else
-		{
-			wxString badVer = _("IDS_BAD_VERSION");
-			str << badVer.c_str();
-		}
+			str << _("IDS_BAD_VERSION");
 		str << std::endl;
 	}
 

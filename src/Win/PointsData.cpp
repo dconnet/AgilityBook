@@ -1871,7 +1871,7 @@ void CPointsDataItems::LoadData(
 		wxString str(_("IDS_OTHERPOINTS"));
 		tstring table;
 		table = wxT("<h2>");
-		table += str;
+		table += str.c_str();
 		table += wxT("</h2>");
 		table += s_TableHeader;
 

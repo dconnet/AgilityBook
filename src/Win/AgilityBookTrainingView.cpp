@@ -568,6 +568,9 @@ void CAgilityBookTrainingView::LoadData()
 	for (int iCol = 0; iCol < nColumnCount; ++iCol)
 		m_Ctrl->SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
 
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
+
 	s_SortInfo.pThis = this;
 	s_SortInfo.nCol = m_SortColumn.GetColumn();
 	m_Ctrl->SortItems(CompareTraining, 0);
@@ -578,8 +581,6 @@ void CAgilityBookTrainingView::LoadData()
 	// Cleanup.
 	m_Ctrl->Thaw();
 	m_Ctrl->Refresh();
-
-	UpdateMessages();
 }
 
 

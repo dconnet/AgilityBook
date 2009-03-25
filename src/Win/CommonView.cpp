@@ -104,14 +104,11 @@ void CAgilityBookBaseExtraView::OnActivateView(
 
 void CAgilityBookBaseExtraView::UpdateMessages()
 {
-	if (GetDocumentManager() && GetDocumentManager()->GetCurrentView() == this)
-	{
-		wxString msg;
-		if (GetMessage(msg))
-			wxGetApp().SetMessageText(msg, IsFiltered());
-		if (GetMessage2(msg))
-			wxGetApp().SetMessageText2(msg);
-	}
+	wxString msg;
+	if (GetMessage(msg))
+		wxGetApp().SetMessageText(msg, IsFiltered());
+	if (GetMessage2(msg))
+		wxGetApp().SetMessageText2(msg);
 }
 
 

@@ -124,9 +124,9 @@ public:
 			wxView* activeView,
 			wxView* deactiveView) = 0;
 
-protected:
 	void UpdateMessages();
 
+protected:
 	// Returns points in client coordinates
 	bool GetMenuPosition(
 			wxPoint& outPos,

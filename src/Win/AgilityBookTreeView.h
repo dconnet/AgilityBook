@@ -129,7 +129,7 @@ public:
 	void ExpandAllChildren(wxTreeItemId item)	{m_Ctrl->ExpandAllChildren(item);}
 	void Collapse(wxTreeItemId item)			{m_Ctrl->Collapse(item);}
 	void CollapseAllChildren(wxTreeItemId item)	{m_Ctrl->CollapseAllChildren(item);}
-	void SelectItem(wxTreeItemId item)			{m_Ctrl->SelectItem(item);}
+	void SelectItem(wxTreeItemId item)			{ChangeSelection(item);}
 	void EnsureVisible(wxTreeItemId item)		{m_Ctrl->EnsureVisible(item);}
 	bool ItemHasChildren(wxTreeItemId item) const
 		{return m_Ctrl->ItemHasChildren(item);}
@@ -188,6 +188,8 @@ public:
 
 private:
 	void UpdateData(wxTreeItemId hItem);
+	void ChangeSelection(wxTreeItemId hItem);
+	void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
 	bool OnCmd(int id);
 	//void PrintLine(

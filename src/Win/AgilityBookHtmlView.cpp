@@ -183,7 +183,7 @@ tstring CAgilityBookHtmlView::RawHtml(bool bFragment) const
 
 	data << wxT("<html>") << std::endl;
 	if (!bFragment)
-		data << wxT("<head><title>") << title << wxT(" ")
+		data << wxT("<head><title>") << title.c_str() << wxT(" ")
 			<< today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
 			<< wxT("</title></head>")
 			<< std::endl
@@ -217,7 +217,8 @@ void CAgilityBookHtmlView::LoadData()
 	tstring data = RawHtml(false);
 	m_Ctrl->SetPage(data.c_str());
 
-	UpdateMessages();
+	if (m_Ctrl->IsShownOnScreen())
+		UpdateMessages();
 }
 
 
