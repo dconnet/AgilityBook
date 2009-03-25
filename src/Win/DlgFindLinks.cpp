@@ -125,7 +125,7 @@ static wxChar const* colLinkInfo[] =
 static int const nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
 
 
-static struct SORTINFO
+static struct
 {
 	CDlgFindLinks* pThis;
 	CColumnOrder* pCols;

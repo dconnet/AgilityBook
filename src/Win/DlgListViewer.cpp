@@ -1026,7 +1026,7 @@ int CDlgListViewerDataItem::Compare(
 /////////////////////////////////////////////////////////////////////////////
 // CDlgListViewer dialog
 
-static struct SORT_COL_INFO
+static struct
 {
 	CDlgListViewer* pThis;
 	int nCol;

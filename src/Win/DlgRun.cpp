@@ -156,7 +156,7 @@ static struct
 };
 static int const scNumRefRunColumns = sizeof(scRefRunColumns) / sizeof(scRefRunColumns[0]);
 
-static struct SORTINFO
+static struct
 {
 	CDlgRun* pThis;
 	CColumnOrder* pCols;
