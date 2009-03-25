@@ -50,7 +50,7 @@ bool CConfigHandler::LoadWxFile(
 		std::string& outData)
 {
 	outData.erase();
-	wxString zipfile = wxFileSystem::FileNameToURL(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + zipFile);
+	wxString zipfile = wxFileSystem::FileNameToURL(zipFile);
 	zipfile += wxT("#zip:") + archiveFile;
 	wxFileSystem filesys;
 	wxFSFile* file = filesys.OpenFile(zipfile);

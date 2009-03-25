@@ -44,7 +44,7 @@ class CConfigHandler : public IARBConfigHandler
 {
 public:
 	static bool LoadWxFile(
-			wxString const& zipFile,
+			wxString const& zipFile, ///< Full path name
 			wxString const& archiveFile,
 			std::string& outData);
 
