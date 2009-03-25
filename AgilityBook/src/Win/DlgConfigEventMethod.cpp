@@ -102,7 +102,7 @@ wxString CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 }
 
 
-static struct SORT_INFO
+static struct
 {
 	CDlgConfigEventMethod* pThis;
 } s_SortInfo;

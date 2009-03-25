@@ -194,7 +194,7 @@ long CAgilityBookTrainingView::CSortColumn::LookupColumn(long iCol) const
 // The wx functions take a 'long'. Which means we can't pass pointers on 64bit.
 // So, we use a global. Since this is only used in one place, we don't have
 // any threading issues.
-static struct SORT_TRAINING_INFO
+static struct
 {
 	CAgilityBookTrainingView* pThis;
 	int nCol;
