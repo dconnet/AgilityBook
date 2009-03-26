@@ -45,7 +45,10 @@ In file included from ../../../src/ARB/ARBTypes.h:110,
 
 2. make sure /usr/bin is on your path and wx-config can be found
 
+3. the libcalusdaa.so shared lib requires libtidy be installed:
+  sudo apt-get install tidy
 
+  
 UNIT TESTS
 1. extract UnitTests.zip to: src/UnitTests++
 2. cd src/UnitTests++

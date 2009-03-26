@@ -51,7 +51,8 @@ AS_IF(g++ -v -MP 2> /dev/null,
 # Checks for library functions.                                                #
 ################################################################################
 # Add macros to check for library functions here
-
+AC_CHECK_LIB([tidy], [tidyCreate])
+                   
 ################################################################################
 # Allow insertion of the global rules from NAM_rules.mk(.in) into any file     #
 # that requests it using @NAM_RULES@.  Note that for this to work properly,    #
