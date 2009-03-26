@@ -38,7 +38,7 @@ libcalusdaa_SRCS = CalendarSite.cpp
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-#libcalusdaa_LDFLAGS = -L/usr/lib/libtidy.so # -G
+libcalusdaa_LDFLAGS = -llibtidy.so
 
 ##########
 # Precompiled headers
