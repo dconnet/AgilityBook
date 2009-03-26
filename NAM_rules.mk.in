@@ -179,9 +179,10 @@ $(ARCHIVES:=.a):
 ##########
 # Generic rule to link a shared library
 ##########
+# SAS GENERALIZE THESE FLAGS! Supporting revisions would be nice too.
 $(SHAREDLIBS:=.so):
 	$(NICE_ECHO) "  Creating shared library:\t$@"
-	$(LD) $(LDFLAGS) $($(@:.so=)_OBJS) -o $@ 
+	$(CXX) -shared -W1,-soname,$@ -o $@ -lc $($(@:.so=)_OBJS)
 
 ################################################################################
 # Default Install and Uninstall rules.                                         #
