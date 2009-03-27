@@ -233,7 +233,7 @@ void ARBiCal::WriteSafeChar(std::string const& inText)
 		iter != inText.end();
 		++iter)
 	{
-		char c = *iter;
+		unsigned char c = *iter;
 		// See the RFC...
 		if ((0x21 <= c && c <= 0x7e) // ASCII
 		|| (0x80 <= c && c <= 0xf8) // NON-US-ASCII
