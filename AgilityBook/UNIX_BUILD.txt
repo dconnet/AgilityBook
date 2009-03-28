@@ -12,7 +12,8 @@ So to build the application and related libs:
 1. cd build
 2. make
 
-
+Depending on where libraries and include files are installed you may need to add include file directories to the invocation of ../configure
+For example on my Mac boost was installed in /opt/local/include/boost so I invoked configure as ../configure CPPFLAGS=-I/opt/local/include
 
 Compile errors:
 
