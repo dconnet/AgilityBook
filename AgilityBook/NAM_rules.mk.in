@@ -182,7 +182,7 @@ $(ARCHIVES:=.a):
 # SAS GENERALIZE THESE FLAGS! Supporting revisions would be nice too.
 $(SHAREDLIBS:=.so):
 	$(NICE_ECHO) "  Creating shared library:\t$@"
-	$(CXX) -shared -W1,-soname,$@ -o $@ -lc $($(@:.so=)_OBJS)
+	$(CXX) $(LDFLAGS) $($(@:.so=)_LDFLAGS)  -shared -W1,-soname,$@ -o $@ -lc $($(@:.so=)_OBJS)
 
 ################################################################################
 # Default Install and Uninstall rules.                                         #
