@@ -38,7 +38,7 @@ libcalusdaa_SRCS = CalendarSite.cpp
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-libcalusdaa_LDFLAGS = -llibtidy.so
+libcalusdaa_LDFLAGS = -ltidy -larb -L$(TOPBUILDDIR)/src/ARB `wx-config --libs`
 
 ##########
 # Precompiled headers

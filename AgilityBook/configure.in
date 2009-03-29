@@ -6,7 +6,7 @@ AC_PREREQ(2.59)
 ################################################################################
 # Initialise autoconf, set package name, version number and contact details.   #
 ################################################################################
-AC_INIT(arb, 0.1.0, [Contact Details])
+AC_INIT(agilitybook, 1.10.10.13, [help@agilityrecordbook.com])
 
 AC_CONFIG_SRCDIR(src/stdafx.cpp)
 
