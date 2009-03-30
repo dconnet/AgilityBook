@@ -125,7 +125,6 @@ agilitybook_SRCS = \
 	TabView.cpp \
 	UpdateInfo.cpp \
 	Validators.cpp \
-	VersionNum.cpp \
 	Wizard.cpp \
 	WizardExcel.cpp \
 	WizardExport.cpp \

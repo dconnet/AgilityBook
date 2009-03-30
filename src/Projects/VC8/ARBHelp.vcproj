@@ -405,11 +405,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VersionNum.cpp"
+				RelativePath="..\..\ARB\VersionNum.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VersionNum.h"
+				RelativePath="..\..\ARB\VersionNum.h"
 				>
 			</File>
 		</Filter>

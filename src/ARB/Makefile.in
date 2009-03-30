@@ -73,7 +73,8 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBTraining.cpp \
 	ARBTypes.cpp \
 	BinaryData.cpp \
-	Element.cpp
+	Element.cpp \
+	VersionNum.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
