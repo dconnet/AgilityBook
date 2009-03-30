@@ -678,10 +678,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VersionNum.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\Wizard.cpp"
 				>
 			</File>
@@ -1055,10 +1051,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Win\VersionNum.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Win\Wizard.h"
 				>
 			</File>
@@ -1429,6 +1421,14 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\Element.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\VersionNum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\VersionNum.h"
 				>
 			</File>
 		</Filter>

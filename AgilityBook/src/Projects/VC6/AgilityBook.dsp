@@ -448,10 +448,6 @@ SOURCE=..\..\Win\Validators.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\VersionNum.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\Wizard.cpp
 # End Source File
 # Begin Source File
@@ -852,10 +848,6 @@ SOURCE=..\..\Win\Validators.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\VersionNum.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\Win\Wizard.h
 # End Source File
 # Begin Source File
@@ -1205,6 +1197,14 @@ SOURCE=..\..\ARB\Element.cpp
 # Begin Source File
 
 SOURCE=..\..\ARB\Element.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ARB\VersionNum.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ARB\VersionNum.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
