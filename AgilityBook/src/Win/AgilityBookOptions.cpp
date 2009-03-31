@@ -254,7 +254,7 @@ void CFontInfo::CreateFont(
 		wxFontDialog const& dlg,
 		wxFont& font)
 {
-	font = dlg.GetFontData().GetChosenFont();
+        font = const_cast<wxFontDialog&>(dlg).GetFontData().GetChosenFont();
 	size = font.GetPointSize();
 	name = font.GetFaceName();
 	italic = (font.GetStyle() & wxFONTFLAG_ITALIC) ? true : false;
