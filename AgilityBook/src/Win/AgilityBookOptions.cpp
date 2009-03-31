@@ -391,13 +391,33 @@ static wxColour CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 }
 
 
+// Reading/writing is abstracted since a WXCOLORREF is vastly different
+// on a Mac (uchar[6] vs ulong). Which means trying to use it directly
+// with wxConfig makes for a very unhappy compiler.
+static wxColour ReadColor(wxString const& key, wxColour const& defColor)
+{
+	unsigned long val = defColor.Red();
+	val |= (defColor.Green() << 8);
+	val |= (defColor.Blue() << 16);
+	val = wxConfig::Get()->Read(key, val);
+	return wxColour(val);
+}
+
+
+static void WriteColor(wxString const& key, wxColour const& inColor)
+{
+	unsigned long val = inColor.Red();
+	val |= (inColor.Green() << 8);
+	val |= (inColor.Blue() << 16);
+	wxConfig::Get()->Write(key, static_cast<long>(val));
+}
+
+
 wxColour CAgilityBookOptions::CalendarColor(CalendarColorItem inItem)
 {
-	wxColour val = CalItemColor(inItem);
 	wxString key(wxT("Calendar/"));
 	key += CalItemName(inItem);
-	val.Set(wxConfig::Get()->Read(key, val.GetPixel()));
-	return val;
+	return ReadColor(key, CalItemColor(inItem));
 }
 
 
@@ -405,7 +425,7 @@ void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, wxColour in
 {
 	wxString key(wxT("Calendar/"));
 	key += CalItemName(inItem);
-	wxConfig::Get()->Write(key, static_cast<long>(inColor.GetPixel()));
+	WriteColor(key, inColor);
 }
 
 
@@ -439,29 +459,25 @@ void CAgilityBookOptions::SetCalendarClosingNear(long inDays)
 
 wxColour CAgilityBookOptions::CalendarOpeningNearColor()
 {
-	wxColour val(0,0,255);
-	val.Set(wxConfig::Get()->Read(wxT("Calendar/OpenNearColor"), val.GetPixel()));
-	return val;
+	return ReadColor(wxT("Calendar/OpenNearColor"), wxColour(0,0,255));
 }
 
 
 void CAgilityBookOptions::SetCalendarOpeningNearColor(wxColour inColor)
 {
-	wxConfig::Get()->Write(wxT("Calendar/OpenNearColor"), static_cast<long>(inColor.GetPixel()));
+	WriteColor(wxT("Calendar/OpenNearColor"), inColor);
 }
 
 
 wxColour CAgilityBookOptions::CalendarClosingNearColor()
 {
-	wxColour val(255,0,0);
-	val.Set(wxConfig::Get()->Read(wxT("Calendar/CloseNearColor"), val.GetPixel()));
-	return val;
+	return ReadColor(wxT("Calendar/CloseNearColor"), wxColour(255,0,0));
 }
 
 
 void CAgilityBookOptions::SetCalendarClosingNearColor(wxColour inColor)
 {
-	wxConfig::Get()->Write(wxT("Calendar/CloseNearColor"), static_cast<long>(inColor.GetPixel()));
+	WriteColor(wxT("Calendar/CloseNearColor"), inColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////
