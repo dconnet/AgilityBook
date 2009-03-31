@@ -69,7 +69,7 @@ define BUILD_VARS
  CLEANFILES += $$($(1)_OBJS)
  DEPFILES += $$(join $$(dir $$($(1)_OBJS)),$$(addprefix $(DEPDIR)/,$$(notdir $$($(1)_OBJS:.o=.d))))
 endef
- 
+
 define PROG_DEPS
  $(foreach dep,$($(1)_OBJS),$(eval $(1:=$(2)): $(dep)))
 endef
@@ -84,7 +84,7 @@ $(foreach target,$(SHAREDLIBS),$(eval $(call BUILD_VARS,$(target))))
 
 $(foreach target,$(PROGRAMS),$(eval $(call PROG_DEPS,$(target),$(EXEEXT))))
 $(foreach target,$(ARCHIVES),$(eval $(call PROG_DEPS,$(target),.a)))
-$(foreach target,$(SHAREDLIBS),$(eval $(call PROG_DEPS,$(target),.so)))
+$(foreach target,$(SHAREDLIBS),$(eval $(call PROG_DEPS,$(target),.$(SHAREDLIBEXT))))
 
 ################################################################################
 # Include the dependency files, do note throw an error if the file does not    #

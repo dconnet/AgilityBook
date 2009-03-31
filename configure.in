@@ -52,7 +52,16 @@ AS_IF(g++ -v -MP 2> /dev/null,
 ################################################################################
 # Add macros to check for library functions here
 AC_CHECK_LIB([tidy], [tidyCreate])
-                   
+case `uname` in
+     Darwin*)
+	AC_SUBST(SHAREDLIBEXT, 'dylib')
+#	AC_SUBST(SHAREDLDFLAGS, "-prebind -dynamiclib")
+     	;;                   
+     *)
+ 	AC_SUBST(SHAREDLIBEXT, 'so')
+#	AC_SUBST(SHAREDLDFLAGS, "-shared -W1,-soname,$(.TARGET)")
+	;;
+esac
 ################################################################################
 # Allow insertion of the global rules from NAM_rules.mk(.in) into any file     #
 # that requests it using @NAM_RULES@.  Note that for this to work properly,    #
