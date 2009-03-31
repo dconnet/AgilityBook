@@ -46,6 +46,8 @@ DEFAULT_INCLUDES = -I. -I$(SRCDIR)
 ##########
 LD = @CXX@
 LIBS = @LIBS@
+SHAREDLIBEXT = @SHAREDLIBEXT@
+SHAREDLDFLAGS = @SHAREDLDFLAGS@
 
 ##########
 # Programs used by NAM
@@ -119,7 +121,7 @@ include $(TOPSRCDIR)/$(MAKEINCLUDE)
 CLEANFILES += $(PRECOMP_HEADER:.h=.h.gch)
 CLEANFILES += $(PROGRAMS:=$(EXEEXT))
 CLEANFILES += $(ARCHIVES:=.a)
-CLEANFILES += $(SHAREDLIBS:=.so)
+CLEANFILES += $(SHAREDLIBS:=.$(SHAREDLIBEXT))
 
 ##########
 # Suffixes used in rules listed below.
@@ -129,7 +131,7 @@ CLEANFILES += $(SHAREDLIBS:=.so)
 ################################################################################
 # Define pre-requisites for basic targets.                                     #
 ################################################################################
-ALL_TARGETS = $(DEPDIRS) $(PRECOMP_HEADER:.h=.h.gch) $(ARCHIVES:=.a) $(SHAREDLIBS:=.so) $(PROGRAMS:=$(EXEEXT)) 
+ALL_TARGETS = $(DEPDIRS) $(PRECOMP_HEADER:.h=.h.gch) $(ARCHIVES:=.a) $(SHAREDLIBS:=.$(SHAREDLIBEXT)) $(PROGRAMS:=$(EXEEXT)) 
 
 all:        $(SUBDIRS) $(ALL_TARGETS)
 
@@ -179,10 +181,14 @@ $(ARCHIVES:=.a):
 ##########
 # Generic rule to link a shared library
 ##########
-# SAS GENERALIZE THESE FLAGS! Supporting revisions would be nice too.
 $(SHAREDLIBS:=.so):
 	$(NICE_ECHO) "  Creating shared library:\t$@"
-	$(CXX) $(LDFLAGS) $($(@:.so=)_LDFLAGS)  -shared -W1,-soname,$@ -o $@ -lc $($(@:.so=)_OBJS)
+#	$(CXX) -prebind -dynamiclib $($(@:.$(SHAREDLIBEXT)=)_LDFLAGS) -o $@ -lc $($(@:.$(SHAREDLIBEXT)=)_OBJS)
+	$(CXX) $(LDFLAGS) $($(@:.so=)_LDFLAGS) -shared -W1,-soname,$@ -o $@ -lc $($(@:.so=)_OBJS)
+
+$(SHAREDLIBS:=.dylib):
+	$(NICE_ECHO) "  Creating shared library:\t$@"
+	$(CXX) -prebind -dynamiclib $($(@:.$(SHAREDLIBEXT)=)_LDFLAGS) -o $@ -lc $($(@:.$(SHAREDLIBEXT)=)_OBJS)
 
 ################################################################################
 # Default Install and Uninstall rules.                                         #
