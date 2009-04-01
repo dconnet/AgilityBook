@@ -238,7 +238,7 @@ bool CClipboardDataWriter::AddData(
 	{
 		std::ostringstream out;
 		inTree->SaveXML(out);
-		data = tstringUtil::TString(out.str());
+		data = tstringUtil::TString(out.str()).c_str();
 	}
 	return AddData(clpFmt, data);
 }
