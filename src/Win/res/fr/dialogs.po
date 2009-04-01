@@ -952,6 +952,10 @@ msgstr "&2ème Niveau"
 msgid "IDC_POINTS_VIEW_SORT_C3"
 msgstr "&3ème Niveau"
 
+# DlgProgress
+msgid "IDD_PROGRESS_DLG"
+msgstr "Progression"
+
 # DlgReferenceRun
 msgid "IDD_REF_RUN"
 msgstr "Parcours de référence"

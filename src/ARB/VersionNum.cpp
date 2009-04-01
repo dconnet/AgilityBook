@@ -74,7 +74,7 @@ CVersionNum& CVersionNum::operator=(CVersionNum const& rhs)
 }
 
 
-bool CVersionNum::Parse(wxString inFileName, wxString inVer)
+bool CVersionNum::Parse(wxString inVer)
 {
 	clear();
 	int pos = inVer.Find('.');
@@ -98,6 +98,19 @@ bool CVersionNum::Parse(wxString inFileName, wxString inVer)
 		}
 	}
 	return m_Valid;
+}
+
+
+void CVersionNum::Assign(
+		unsigned short inMajor,
+		unsigned short inMinor,
+		unsigned short inDot,
+		unsigned short inBuild)
+{
+	m_Version.part1 = inMajor;
+	m_Version.part2 = inMinor;
+	m_Version.part3 = inDot;
+	m_Version.part4 = inBuild;
 }
 
 

@@ -44,39 +44,34 @@
 class IDlgProgress
 {
 public:
-	static IDlgProgress* CreateProgress(wxWindow* parent = NULL);
+	static IDlgProgress* CreateProgress(short nBars = 1, wxWindow* parent = NULL);
 
 	// Setup dialog.
 	/// Set the caption of the dialog.
 	virtual void SetCaption(wxString const& inCaption) = 0;
 	/// Set a visible message.
 	virtual void SetMessage(wxString const& inMessage) = 0;
-	/// Set the number of progress bars (0,1,2)
-	virtual bool SetNumProgressBars(short nBars) = 0;
 
 	// Progress bar interface (these are thin wrappers on the progress bar)
-	virtual bool SetRange(
+	virtual void SetRange(
 			short inBar,
-			int inLower,
-			int inUpper) = 0;
-	virtual bool SetStep(
+			int inRange) = 0;
+	virtual void SetStep(
 			short inBar,
 			int inStep) = 0;
-	virtual bool StepIt(short inBar) = 0;
-	virtual bool OffsetPos(
+	virtual void StepIt(short inBar) = 0;
+	virtual void OffsetPos(
 			short inBar,
 			int inDelta) = 0;
-	virtual bool SetPos(
+	virtual void SetPos(
 			short inBar,
 			int inPos) = 0;
-	virtual bool GetPos(
-			short inBar,
-			int& outPos) = 0;
+	virtual int GetPos(short inBar) = 0;
 	virtual void EnableCancel(bool bEnable = true) = 0;
 	virtual bool HasCanceled() const = 0;
 
 	/// Show/hide the dialog.
-	virtual void Show(bool bShow = true) = 0;
+	virtual void ShowProgress(bool bShow = true) = 0;
 	/// Force dialog to have focus
 	virtual void SetForegroundWindow() = 0;
 	/// Shut down (delete) the dialog.

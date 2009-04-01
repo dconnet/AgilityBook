@@ -450,6 +450,14 @@
 				RelativePath="..\..\Win\ReadHttp.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\ARB\VersionNum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\VersionNum.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

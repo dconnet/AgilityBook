@@ -179,6 +179,14 @@ SOURCE=..\..\Win\ReadHttp.cpp
 
 SOURCE=..\..\Win\ReadHttp.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\ARB\VersionNum.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\ARB\VersionNum.h
+# End Source File
 # End Group
 # End Target
 # End Project

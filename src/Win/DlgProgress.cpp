@@ -39,619 +39,287 @@
 #include "stdafx.h"
 #include "DlgProgress.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgProgress")
-#if 0
-#include "AgilityBook.h"
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+#include "Globals.h"
+#include <wx/utils.h>
 
 /////////////////////////////////////////////////////////////////////////////
+// I used the wxProgressDialog as a guide
 
-struct ProgressSetRangeData
-{
-	short bar;
-	int lower;
-	int upper;
-	ProgressSetRangeData(short b, int d1, int d2) : bar(b), lower(d1), upper(d2) {}
-};
-
-#define WM_PROGRESS_SETCAPTION		(WM_APP+1)
-		// wparam: unused
-		// lparam: LPCTSTR
-		// returns: 0
-#define WM_PROGRESS_SETMESSAGE		(WM_APP+2)
-		// wparam: unused
-		// lparam: LPCTSTR
-		// returns: 0
-#define WM_PROGRESS_SETNUMBARS		(WM_APP+3)
-		// wparam: short
-		// lparam: unused
-		// returns: BOOL
-#define WM_PROGRESS_SETRANGE		(WM_APP+4)
-		// wparam: unused
-		// lparam: ProgressSetRangeData*
-		// returns: BOOL
-#define WM_PROGRESS_SETSTEP			(WM_APP+5)
-		// wparam: short
-		// lparam: int
-		// returns: BOOL
-#define WM_PROGRESS_STEP			(WM_APP+6)
-		// wparam: short
-		// lparam: unused
-		// returns: BOOL
-#define WM_PROGRESS_OFFSETPOS		(WM_APP+7)
-		// wparam: short
-		// lparam: int
-		// returns: BOOL
-#define WM_PROGRESS_SETPOS			(WM_APP+8)
-		// wparam: short
-		// lparam: int
-		// returns: BOOL
-#define WM_PROGRESS_GETPOS			(WM_APP+9)
-		// wparam: short
-		// lparam: int*
-		// returns: BOOL
-#define WM_PROGRESS_ENABLECANCEL	(WM_APP+10)
-		// wparam: BOOL
-		// lparam: unused
-		// returns: 0
-#define WM_PROGRESS_HASCANCELED		(WM_APP+11)
-		// wparam: unused
-		// lparam: unused
-		// returns: BOOL
-#define WM_PROGRESS_SHOW			(WM_APP+12)
-		// wparam: BOOL
-		// lparam: unused
-		// returns: 0
-#define WM_PROGRESS_DISMISS			(WM_APP+13)
-		// wparam: unused
-		// lparam: unused
-		// returns: 0
-
-
-class CDlgProgress : public CDialog
+class CDlgProgress : public wxDialog, public IDlgProgress
 {
 public:
-	CDlgProgress(HANDLE hEvent);
+	CDlgProgress(short nBars, wxWindow* parent);
 	~CDlgProgress();
 
-	enum { IDD = IDD_PROGRESS_DLG };
+	virtual bool Show(bool show = true);
+
+	virtual void SetCaption(wxString const& inCaption);
+	virtual void SetMessage(wxString const& inMessage);
+	virtual void SetRange(
+			short inBar,
+			int inRange);
+	virtual void SetStep(
+			short inBar,
+			int inStep);
+	virtual void StepIt(short inBar);
+	virtual void OffsetPos(
+			short inBar,
+			int inDelta);
+	virtual void SetPos(
+			short inBar,
+			int inPos);
+	virtual int GetPos(short inBar);
+	virtual void EnableCancel(bool bEnable = true);
+	virtual bool HasCanceled() const;
+	virtual void ShowProgress(bool bShow = true);
+	virtual void SetForegroundWindow();
+	virtual void Dismiss();
+
 private:
-	//{{AFX_DATA(CDlgProgress)
-	CStatic	m_ctrlMessage;
-	CProgressCtrl	m_ctrlBar1;
-	CProgressCtrl	m_ctrlBar2;
-	CButton	m_ctrlCancel;
-	//}}AFX_DATA
-	HANDLE m_Event;
-	int m_nBars;
-	BOOL m_HasCanceled;
-
-	//{{AFX_VIRTUAL(CDlgProgress)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-protected:
-	CProgressCtrl* GetBar(short inBar)
+	struct GaugeData
 	{
-		CProgressCtrl* pBar = NULL;
-		if (1 == inBar)
-			pBar = &m_ctrlBar1;
-		else if (2 == inBar)
-			pBar = &m_ctrlBar2;
-		return pBar;
+		GaugeData() : gauge(NULL), step(1), pos(0) {}
+		GaugeData(wxGauge* inGauge) : gauge(inGauge), step(1), pos(0) {}
+		wxGauge* gauge;
+		int step;
+		int pos;
+	};
+	wxGauge* GetBar(short inBar)
+	{
+		if (1 <= inBar && static_cast<size_t>(inBar) <= m_ctrlBars.size())
+			return m_ctrlBars[inBar-1].gauge;
+		return NULL;
 	}
+	void ReenableOtherWindows();
 
-	//{{AFX_MSG(CDlgProgress)
-	virtual BOOL OnInitDialog();
-	virtual void OnCancel();
-	//}}AFX_MSG
-	afx_msg LRESULT OnProgressSetCaption(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressSetMessage(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressSetNumBars(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressSetRange(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressSetStep(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressStep(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressOffsetPos(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressSetPos(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressGetPos(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressEnableCancel(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressHasCanceled(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressShow(WPARAM, LPARAM);
-	afx_msg LRESULT OnProgressDismiss(WPARAM, LPARAM);
-	DECLARE_MESSAGE_MAP()
+	wxWindow* m_parentTop;
+	wxStaticText* m_ctrlMessage;
+	std::vector<GaugeData> m_ctrlBars;
+	wxButton* m_ctrlCancel;
+	wxWindowDisabler* m_winDisabler;
+	bool m_HasCanceled;
+
+	void OnCancel(wxCommandEvent& evt);
 };
 
 
-CDlgProgress::CDlgProgress(HANDLE hEvent)
-	: CDialog()
-	, m_Event(hEvent)
-	, m_nBars(1)
-	, m_HasCanceled(FALSE)
+CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
+	: wxDialog()
+	, m_parentTop(wxGetTopLevelParent(parent))
+	, m_ctrlMessage(NULL)
+	, m_ctrlBars()
+	, m_ctrlCancel(NULL)
+	, m_winDisabler(NULL)
+	, m_HasCanceled(false)
 {
-	ASSERT(m_Event);
-	// Don't Create/ShowWindow here. It must be done in the thread's
-	// InitInstance after we set the mainwnd pointer.
+	if (1 > nBars)
+		nBars = 1;
+	SetExtraStyle(GetExtraStyle() | wxWS_EX_TRANSIENT);
+
+	Create(parent, wxID_ANY, _("IDD_PROGRESS_DLG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+
+	// Controls (these are done first to control tab order)
+
+	m_ctrlMessage = new wxStaticText(this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlMessage->Wrap(-1);
+
+	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(300 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+	for (int nBar = 1; nBar < nBars; ++nBar)
+		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(300 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer;
+	bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(m_ctrlMessage, 0, wxALL|wxEXPAND, 5);
+	for (size_t i = 0; i < m_ctrlBars.size(); ++i)
+		bSizer->Add(m_ctrlBars[i].gauge, 0, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+	m_ctrlCancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	SetSizeHints(GetSize(), wxDefaultSize);
+	CenterOnParent();
+
+	//if (appmodal)
+		m_winDisabler = new wxWindowDisabler(this);
+	//else
+	//{
+	//	if (m_parentTop)
+	//		m_parentTop->Disable();
+	//	m_winDisabler = NULL;
+	//}
+	Show();
+	Enable();
 }
 
 
 CDlgProgress::~CDlgProgress()
 {
-	if (m_hWnd && ::IsWindow(m_hWnd))
-		DestroyWindow();
+	ReenableOtherWindows();
 }
 
 
-void CDlgProgress::DoDataExchange(CDataExchange* pDX)
+bool CDlgProgress::Show(bool show)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgProgress)
-	DDX_Control(pDX, IDC_PROGRESS_MESSAGE, m_ctrlMessage);
-	DDX_Control(pDX, IDC_PROGRESS_BAR1, m_ctrlBar1);
-	DDX_Control(pDX, IDC_PROGRESS_BAR2, m_ctrlBar2);
-	DDX_Control(pDX, IDCANCEL, m_ctrlCancel);
-	//}}AFX_DATA_MAP
+	if (!show)
+		ReenableOtherWindows();
+	return wxDialog::Show(show);
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgProgress, CDialog)
-	//{{AFX_MSG_MAP(CDlgProgress)
-	//}}AFX_MSG_MAP
-	ON_MESSAGE(WM_PROGRESS_SETCAPTION, OnProgressSetCaption)
-	ON_MESSAGE(WM_PROGRESS_SETMESSAGE, OnProgressSetMessage)
-	ON_MESSAGE(WM_PROGRESS_SETNUMBARS, OnProgressSetNumBars)
-	ON_MESSAGE(WM_PROGRESS_SETRANGE, OnProgressSetRange)
-	ON_MESSAGE(WM_PROGRESS_SETSTEP, OnProgressSetStep)
-	ON_MESSAGE(WM_PROGRESS_STEP, OnProgressStep)
-	ON_MESSAGE(WM_PROGRESS_OFFSETPOS, OnProgressOffsetPos)
-	ON_MESSAGE(WM_PROGRESS_SETPOS, OnProgressSetPos)
-	ON_MESSAGE(WM_PROGRESS_GETPOS, OnProgressGetPos)
-	ON_MESSAGE(WM_PROGRESS_ENABLECANCEL, OnProgressEnableCancel)
-	ON_MESSAGE(WM_PROGRESS_HASCANCELED, OnProgressHasCanceled)
-	ON_MESSAGE(WM_PROGRESS_SHOW, OnProgressShow)
-	ON_MESSAGE(WM_PROGRESS_DISMISS, OnProgressDismiss)
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
-// CDlgProgress message handlers
-
-BOOL CDlgProgress::OnInitDialog()
+void CDlgProgress::ReenableOtherWindows()
 {
-	CDialog::OnInitDialog();
-
-	m_ctrlBar1.SetStep(1);
-	m_ctrlBar1.SetRange(0, 10);
-	m_ctrlBar2.SetStep(1);
-	m_ctrlBar2.SetRange(0, 10);
-	m_ctrlBar2.ShowWindow(SW_HIDE);
-	m_nBars = 1;
-
-	::SetEvent(m_Event); // We're initialized, let the main thread go.
-	m_Event = NULL;
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	//if (appmodal)
+		delete m_winDisabler;
+	//else
+	//{
+	//	if (m_parentTop)
+	//		m_parentTop->Enable();
+	//}
 }
 
 
-void CDlgProgress::OnCancel()
+void CDlgProgress::OnCancel(wxCommandEvent& evt)
 {
-	m_HasCanceled = TRUE;
-	m_ctrlCancel.EnableWindow(FALSE);
+	m_HasCanceled = true;
+	m_ctrlCancel->Enable(false);
 }
 
 
-LRESULT CDlgProgress::OnProgressSetCaption(WPARAM, LPARAM lParam)
+void CDlgProgress::SetCaption(wxString const& inCaption)
 {
-	SetWindowText(reinterpret_cast<LPCTSTR>(lParam));
-	return 0;
+	SetLabel(inCaption);
 }
 
 
-LRESULT CDlgProgress::OnProgressSetMessage(WPARAM, LPARAM lParam)
+void CDlgProgress::SetMessage(wxString const& inMessage)
 {
-	m_ctrlMessage.SetWindowText(reinterpret_cast<LPCTSTR>(lParam));
-	return 0;
-}
-
-
-LRESULT CDlgProgress::OnProgressSetNumBars(WPARAM wParam, LPARAM)
-{
-	short nBars = static_cast<short>(wParam);
-	if (0 >= nBars || 2 < nBars)
+	if (!inMessage.empty() && inMessage != m_ctrlMessage->GetLabel())
 	{
-		ASSERT(0);
-		return FALSE;
+		m_ctrlMessage->SetLabel(inMessage);
+		wxYieldIfNeeded();
 	}
-	UINT nShow1 = SW_HIDE;
-	UINT nShow2 = SW_HIDE;
-	if (1 == nBars)
-	{
-		nShow1 = SW_SHOW;
-	}
-	else if (2 == nBars)
-	{
-		nShow1 = SW_SHOW;
-		nShow2 = SW_SHOW;
-	}
-	m_nBars = nBars;
-	m_ctrlBar1.ShowWindow(nShow1);
-	m_ctrlBar2.ShowWindow(nShow2);
-	return TRUE;
 }
 
 
-LRESULT CDlgProgress::OnProgressSetRange(WPARAM, LPARAM lParam)
+void CDlgProgress::SetRange(short inBar, int inRange)
 {
-	ProgressSetRangeData* pData = reinterpret_cast<ProgressSetRangeData*>(lParam);
-	BOOL bOk = FALSE;
-	CProgressCtrl* pBar = GetBar(pData->bar);
+	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		bOk = TRUE;
-		pBar->SetRange32(pData->lower, pData->upper);
+		pBar->SetRange(inRange);
+		Update();
 	}
-	return bOk;
 }
 
 
-LRESULT CDlgProgress::OnProgressSetStep(WPARAM wParam, LPARAM lParam)
+void CDlgProgress::SetStep(short inBar, int inStep)
 {
-	BOOL bOk = FALSE;
-	short nBar = static_cast<short>(wParam);
-	CProgressCtrl* pBar = GetBar(nBar);
+	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		bOk = TRUE;
-		pBar->SetStep(static_cast<int>(lParam));
+		m_ctrlBars[inBar-1].step = inStep;
 	}
-	return bOk;
 }
 
 
-LRESULT CDlgProgress::OnProgressStep(WPARAM wParam, LPARAM)
+void CDlgProgress::StepIt(short inBar)
 {
-	BOOL bOk = FALSE;
-	short nBar = static_cast<short>(wParam);
-	CProgressCtrl* pBar = GetBar(nBar);
+	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		bOk = TRUE;
-		pBar->StepIt();
-		pBar->UpdateWindow();
+		m_ctrlBars[inBar-1].pos += m_ctrlBars[inBar-1].step;
+		pBar->SetValue(m_ctrlBars[inBar-1].pos);
+		Update();
 	}
-	return bOk;
 }
 
 
-LRESULT CDlgProgress::OnProgressOffsetPos(WPARAM wParam, LPARAM lParam)
+void CDlgProgress::OffsetPos(short inBar, int inDelta)
 {
-	BOOL bOk = FALSE;
-	short nBar = static_cast<short>(wParam);
-	CProgressCtrl* pBar = GetBar(nBar);
+	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		bOk = TRUE;
-		pBar->OffsetPos(static_cast<int>(lParam));
+		m_ctrlBars[inBar-1].pos += inDelta;
+		pBar->SetValue(m_ctrlBars[inBar-1].pos);
+		Update();
 	}
-	return bOk;
 }
 
 
-LRESULT CDlgProgress::OnProgressSetPos(WPARAM wParam, LPARAM lParam)
+void CDlgProgress::SetPos(short inBar, int inPos)
 {
-	BOOL bOk = FALSE;
-	short nBar = static_cast<short>(wParam);
-	CProgressCtrl* pBar = GetBar(nBar);
+	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		bOk = TRUE;
-		pBar->SetPos(static_cast<int>(lParam));
-		pBar->UpdateWindow();
+		m_ctrlBars[inBar-1].pos = inPos;
+		pBar->SetValue(m_ctrlBars[inBar-1].pos);
+		Update();
 	}
-	return bOk;
 }
 
 
-LRESULT CDlgProgress::OnProgressGetPos(WPARAM wParam, LPARAM lParam)
+int CDlgProgress::GetPos(short inBar)
 {
-	BOOL bOk = FALSE;
-	short nBar = static_cast<short>(wParam);
-	CProgressCtrl* pBar = GetBar(nBar);
+	int pos = 0;
+	wxGauge* pBar = GetBar(inBar);
 	if (pBar)
 	{
-		bOk = TRUE;
-		*reinterpret_cast<int*>(lParam) = pBar->GetPos();
+		pos = pBar->GetValue();
+		m_ctrlBars[inBar-1].pos = pos;
 	}
-	return bOk;
+	return pos;
 }
 
 
-LRESULT CDlgProgress::OnProgressEnableCancel(WPARAM bEnable, LPARAM)
+void CDlgProgress::EnableCancel(bool bEnable)
 {
 	if (!m_HasCanceled)
-		m_ctrlCancel.EnableWindow(bEnable ? TRUE : FALSE);
-	return 0;
+	{
+		m_ctrlCancel->Enable(bEnable);
+		Update();
+	}
 }
 
 
-LRESULT CDlgProgress::OnProgressHasCanceled(WPARAM, LPARAM)
+bool CDlgProgress::HasCanceled() const
 {
 	return m_HasCanceled;
 }
 
 
-LRESULT CDlgProgress::OnProgressShow(WPARAM wParam, LPARAM)
+void CDlgProgress::ShowProgress(bool bShow)
 {
-	ShowWindow(wParam ? SW_SHOW : SW_HIDE);
-	return 0;
+	Show(bShow);
 }
 
 
-LRESULT CDlgProgress::OnProgressDismiss(WPARAM, LPARAM)
+void CDlgProgress::SetForegroundWindow()
 {
-	if (m_Event != NULL)
-	{
-		// Delay it. We're not done initializing.
-		PostMessage(WM_PROGRESS_DISMISS);
-	}
-	else
-		DestroyWindow();
-	return 0;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CProgressThread : public CWinThread, public IDlgProgress
-{
-	DECLARE_DYNCREATE(CProgressThread)
-public:
-	CProgressThread();
-	~CProgressThread();
-	virtual BOOL InitInstance();
-	virtual BOOL ExitInstance();
-	HWND m_hwndParent;
-	HANDLE m_Wait;
-	CDlgProgress* m_Dialog;
-
-// IDlgProgress
-	// Setup dialog.
-	/// Set the caption of the dialog.
-	virtual void SetCaption(LPCTSTR inCaption);
-	/// Set a visible message.
-	virtual void SetMessage(LPCTSTR inMessage);
-	/// Set the number of progress bars (0,1,2)
-	virtual bool SetNumProgressBars(short nBars);
-
-	// Progress bar interface (these are thin wrappers on the progress bar)
-	virtual bool SetRange(
-			short inBar,
-			int inLower,
-			int inUpper);
-	virtual bool SetStep(
-			short inBar,
-			int inStep);
-	virtual bool StepIt(short inBar);
-	virtual bool OffsetPos(
-			short inBar,
-			int inDelta);
-	virtual bool SetPos(
-			short inBar,
-			int inPos);
-	virtual bool GetPos(
-			short inBar,
-			int& outPos);
-	virtual void EnableCancel(bool bEnable = true);
-	virtual bool HasCanceled() const;
-
-	/// Show/hide the dialog.
-	virtual void Show(bool bShow = true);
-	/// Steal back focus
-	virtual void SetForegroundWindow();
-	/// Shut down (delete) the dialog.
-	virtual void Dismiss();
-};
-
-
-IMPLEMENT_DYNCREATE(CProgressThread, CWinThread)
-
-
-CProgressThread::CProgressThread()
-	: m_Wait(NULL)
-	, m_hwndParent(NULL)
-	, m_Dialog(NULL)
-{
+	SetFocus();
+	Update();
 }
 
 
-CProgressThread::~CProgressThread()
+void CDlgProgress::Dismiss()
 {
-	if (m_hwndParent)
-	{
-		// If we're in here, the progress dialog died off on it's own (without
-		// a 'Dismiss'). That means we never re-enabled the main window, hence
-		// windows will have flipped focus to a different application. After
-		// re-enabling, steal the foreground window back too.
-		::EnableWindow(m_hwndParent, TRUE);
-		::SetForegroundWindow(m_hwndParent);
-	}
-}
-
-
-// Thread2.
-BOOL CProgressThread::InitInstance()
-{
-	// Do not disable the parent window here. We can deadlock otherwise.
-	// Any actions on the parent cause a need for message processing,
-	// and since we are not processing the messages in thread1,
-	// this thread would get stuck.
-	m_Dialog = new CDlgProgress(m_Wait);
-	m_pMainWnd = m_Dialog;
-	m_Dialog->Create(CDlgProgress::IDD, NULL);
-	m_pMainWnd->ShowWindow(SW_SHOW);
-	return TRUE;
-}
-
-
-BOOL CProgressThread::ExitInstance()
-{
-	delete m_Dialog;
-	m_Dialog = NULL;
-	return CWinThread::ExitInstance();
-}
-
-// All these are executed in thread1
-
-void CProgressThread::SetCaption(LPCTSTR pCaption)
-{
-	m_pMainWnd->SendMessage(WM_PROGRESS_SETCAPTION, 0, reinterpret_cast<LPARAM>(pCaption));
-}
-
-
-void CProgressThread::SetMessage(LPCTSTR pMsg)
-{
-	m_pMainWnd->SendMessage(WM_PROGRESS_SETMESSAGE, 0, reinterpret_cast<LPARAM>(pMsg));
-}
-
-
-bool CProgressThread::SetNumProgressBars(short nBars)
-{
-	return m_pMainWnd->SendMessage(WM_PROGRESS_SETNUMBARS, nBars) ? true : false;
-}
-
-
-bool CProgressThread::SetRange(short inBar, int inLower, int inUpper)
-{
-	ProgressSetRangeData data(inBar, inLower, inUpper);
-	return m_pMainWnd->SendMessage(WM_PROGRESS_SETRANGE,
-			0, reinterpret_cast<LPARAM>(&data)) ? true : false;
-}
-
-
-bool CProgressThread::SetStep(short inBar, int inStep)
-{
-	return m_pMainWnd->SendMessage(WM_PROGRESS_SETSTEP, inBar, inStep) ? true : false;
-}
-
-
-bool CProgressThread::StepIt(short inBar)
-{
-	return m_pMainWnd->SendMessage(WM_PROGRESS_STEP, inBar, 0) ? true : false;
-}
-
-
-bool CProgressThread::OffsetPos(short inBar, int inDelta)
-{
-	return m_pMainWnd->SendMessage(WM_PROGRESS_OFFSETPOS, inBar, inDelta) ? true : false;
-}
-
-
-bool CProgressThread::SetPos(short inBar, int inPos)
-{
-	return m_pMainWnd->SendMessage(WM_PROGRESS_SETPOS, inBar, inPos) ? true : false;
-}
-
-
-bool CProgressThread::GetPos(short inBar, int& outPos)
-{
-	return m_pMainWnd->SendMessage(WM_PROGRESS_GETPOS,
-			inBar, reinterpret_cast<LPARAM>(&outPos)) ? true : false;
-}
-
-
-void CProgressThread::EnableCancel(bool bEnable)
-{
-	m_pMainWnd->SendMessage(WM_PROGRESS_ENABLECANCEL, bEnable ? TRUE : FALSE);
-}
-
-
-bool CProgressThread::HasCanceled() const
-{
-	return m_pMainWnd->SendMessage(WM_PROGRESS_HASCANCELED) ? true : false;
-}
-
-
-void CProgressThread::Show(bool bShow)
-{
-	if (m_hwndParent)
-	{
-		if (bShow)
-			::EnableWindow(m_hwndParent, FALSE);
-		else
-		{
-			::EnableWindow(m_hwndParent, TRUE);
-			::SetForegroundWindow(m_hwndParent);
-		}
-	}
-	m_pMainWnd->SendMessage(WM_PROGRESS_SHOW, bShow ? TRUE : FALSE);
-}
-
-
-void CProgressThread::SetForegroundWindow()
-{
-	m_pMainWnd->SetForegroundWindow();
-}
-
-
-void CProgressThread::Dismiss()
-{
-	if (m_hwndParent)
-	{
-		// Before we kill off the progress dialog, re-enable our main window
-		// so focus shifts back to it. Otherwise windows shifts to the next
-		// application in the z-order (which is not us - and hence the call
-		// in the dtor above).
-		::EnableWindow(m_hwndParent, TRUE);
-		m_hwndParent = NULL;
-	}
-	m_pMainWnd->SendMessage(WM_PROGRESS_DISMISS);
+	Destroy();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-IDlgProgress* IDlgProgress::CreateProgress(HWND hwndParent)
+IDlgProgress* IDlgProgress::CreateProgress(short nBars, wxWindow* parent)
 {
-	if (!hwndParent)
-		hwndParent = AfxGetMainWnd()->GetSafeHwnd();
-	if (hwndParent)
-		::EnableWindow(hwndParent, FALSE);
-
-	CProgressThread* pThread = (CProgressThread*)AfxBeginThread(
-		RUNTIME_CLASS(CProgressThread),
-		THREAD_PRIORITY_ABOVE_NORMAL,
-		0,
-		CREATE_SUSPENDED);
-
-	// Set up the object while it's suspended.
-	pThread->m_hwndParent = hwndParent;
-	// The event is required as we cannot allow any interface calls until
-	// the dialog is up and ready. This is used so the dialog can tell us
-	// when it's ready
-	pThread->m_Wait = CreateEvent(NULL, TRUE, FALSE, NULL); // Manual, unsignaled event
-	ASSERT(pThread->m_Wait);
-
-	// Now that it is initialized properly, go...
-	pThread->ResumeThread();
-	// Wait for the dialog to tell us it's okay to go...
-	WaitForSingleObject(pThread->m_Wait, INFINITE);
-	// Cleanup, and start the work.
-	CloseHandle(pThread->m_Wait);
-	pThread->m_Wait = NULL;
-	// And return control.
-	if (hwndParent)
-	{
-		// This seems to be the only way to get the parent frame to repaint.
-		AfxGetApp()->PumpMessage();
-	}
-	return pThread;
+	CDlgProgress* pDlg = new CDlgProgress(nBars, parent);
+	return pDlg;
 }
 
 
 IDlgProgress::~IDlgProgress()
 {
 }
-#endif

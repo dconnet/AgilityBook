@@ -98,7 +98,7 @@ public:
 #ifdef UNICODE
 	void DoUID(std::wstring const& inUID)
 	{
-		DoUID(tstringUtil::Convert(inUID));
+		DoUID(tstringUtil::tstringA(inUID));
 	}
 #endif
 	void DoUID(std::string const& inUID)
@@ -120,15 +120,15 @@ public:
 #ifdef UNICODE
 	void DoSUMMARY(std::wstring const& inStr)
 	{
-		DoSUMMARY(tstringUtil::Convert(inStr));
+		DoSUMMARY(tstringUtil::tstringA(inStr));
 	}
 	void DoLOCATION(std::wstring const& inStr)
 	{
-		DoLOCATION(tstringUtil::Convert(inStr));
+		DoLOCATION(tstringUtil::tstringA(inStr));
 	}
 	void DoDESCRIPTION(std::wstring const& inStr)
 	{
-		DoDESCRIPTION(tstringUtil::Convert(inStr));
+		DoDESCRIPTION(tstringUtil::tstringA(inStr));
 	}
 #endif
 	void DoSUMMARY(std::string const& inStr)
@@ -210,11 +210,7 @@ void ARBiCal::Write(
 			m_ioStream << ";VALUE=DATE";
 		m_ioStream << ':';
 	}
-#ifdef UNICODE
-	m_ioStream << tstringUtil::Convert(inDate.GetString(ARBDate::eYYYYMMDD));
-#else
-	m_ioStream << inDate.GetString(ARBDate::eYYYYMMDD);
-#endif
+	m_ioStream << tstringUtil::tstringA(inDate.GetString(ARBDate::eYYYYMMDD));
 	if (1 == m_Version)
 	{
 		if (inStartOfDay)

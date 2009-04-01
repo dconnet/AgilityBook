@@ -50,7 +50,7 @@ public:
 	 * of a progress, it will reset the tic to the beginning.
 	 * (default is 0 to 10)
 	 */
-	virtual void SetRange(int inLower, int inUpper) = 0;
+	virtual void SetRange(int inRange) = 0;
 
 	/**
 	 * Set the step size. (default is 1)

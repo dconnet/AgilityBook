@@ -251,10 +251,10 @@ void CFontInfo::CreateFont(wxFont& font)
 
 
 void CFontInfo::CreateFont(
-		wxFontDialog const& dlg,
+		wxFontDialog& dlg,
 		wxFont& font)
 {
-        font = const_cast<wxFontDialog&>(dlg).GetFontData().GetChosenFont();
+	font = dlg.GetFontData().GetChosenFont();
 	size = font.GetPointSize();
 	name = font.GetFaceName();
 	italic = (font.GetStyle() & wxFONTFLAG_ITALIC) ? true : false;
@@ -1368,7 +1368,7 @@ CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(wxString const& filen
 		section += filename;
 		wxString str = wxConfig::Get()->Read(section, wxString());
 		if (!str.IsEmpty())
-			ver.Parse(filename, str);
+			ver.Parse(str);
 	}
 	return ver;
 }
@@ -1391,7 +1391,7 @@ void CAgilityBookOptions::SuppressCalSitePermanently(
 		CVersionNum ver;
 		wxString str = wxConfig::Get()->Read(section, wxString());
 		if (!str.IsEmpty())
-			ver.Parse(filename, str);
+			ver.Parse(str);
 		if (ver == inVer)
 			wxConfig::Get()->DeleteEntry(section);
 	}

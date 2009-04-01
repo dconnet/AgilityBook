@@ -58,7 +58,13 @@ public:
 	/**
 	 * Parse a version number, must be in form "n.n.n.n".
 	 */
-	bool Parse(wxString inFileName, wxString inVer);
+	bool Parse(wxString inVer);
+
+	void Assign(
+			unsigned short inMajor,
+			unsigned short inMinor,
+			unsigned short inDot,
+			unsigned short inBuild);
 
 	/**
 	 * Equality is based solely on the version number, not any language aspects.

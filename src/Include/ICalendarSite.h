@@ -47,6 +47,7 @@
  * @li 2007-08-12 DRC Created
  */
 
+class CVersionNum;
 class IProgressMeter;
 
 class ICalendarSite
@@ -63,11 +64,7 @@ public:
 	 * We're not directly parsing VERSIONINFO as that is not platform portable.
 	 * @return Whether the version was returned.
 	 */
-	virtual bool GetVersion(
-			short* pMajor,
-			short* pMinor,
-			short* pDot,
-			short* pBuild) const = 0;
+	virtual bool GetVersion(CVersionNum* ver) const = 0;
 
 	/**
 	 * Release a string returned from GetDescription or Process.

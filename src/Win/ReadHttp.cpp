@@ -105,8 +105,7 @@ bool CReadHttp::ReadHttpFile(
 	{
 		if (++nTrys > 5)
 		{
-#pragma message PRAGMA_MESSAGE("TODO: TranslateError message")
-			outErrMsg = wxT("Time out");
+			outErrMsg = _("IDS_TIMEOUT");
 			return false;
 		}
 		wxSleep(5);

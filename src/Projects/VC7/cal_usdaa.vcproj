@@ -210,6 +210,12 @@
 				RelativePath="..\..\ARB\ARBTypes.h">
 			</File>
 			<File
+				RelativePath="..\..\ARB\VersionNum.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\VersionNum.h">
+			</File>
+			<File
 				RelativePath="..\..\Win\DlgAuthenticate.cpp">
 			</File>
 			<File

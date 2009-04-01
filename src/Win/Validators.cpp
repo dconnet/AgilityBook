@@ -249,10 +249,7 @@ bool CTrimValidator::Validate(wxWindow* parent)
 		ok = false;
 		errormsg = m_ErrMsg;
 		if (errormsg.empty())
-		{
-#pragma message PRAGMA_MESSAGE("TODO: CTrimTextValidator translation")
-			errormsg = wxT("Please enter a value");
-		}
+			errormsg = _("IDS_NEED_VALUE");
 	}
 
 	if (!ok)

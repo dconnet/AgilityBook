@@ -1200,7 +1200,8 @@ bool CAgilityBookDoc::OnNewDocument()
 	m_Records.GetConfig().GetActions().clear();
 	if (0 == m_Records.GetDogs().size())
 	{
-#pragma message PRAGMA_MESSAGE("TODO: Delay message to create dog?")
+// The old MFC code would prompt to create a new dog if this was a new file.
+// I'm not going to implement that in wxWidgets.
 //		if (AfxGetMainWnd() && IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 //			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
 	}
@@ -1305,7 +1306,8 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxGetApp().AutoCheckConfiguration(this);
 	}
 
-#pragma message PRAGMA_MESSAGE("TODO: Delay message to create dog?")
+// The old MFC code would prompt to create a new dog if this was a new file.
+// I'm not going to implement that in wxWidgets.
 	/*
 	if (0 == m_Records.GetDogs().size() && AfxGetMainWnd() && ::IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 	{

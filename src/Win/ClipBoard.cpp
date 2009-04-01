@@ -130,11 +130,7 @@ bool CClipboardDataReader::GetData(
 		wxTextDataObject txtData;
 		txtData.SetFormat(GetClipboardFormat(clpFmt));
 		wxTheClipboard->GetData(txtData);
-#ifdef UNICODE
-		data = tstringUtil::Convert(txtData.GetText().c_str());
-#else
-		data = txtData.GetText().c_str();
-#endif
+		data = tstringUtil::tstringA(txtData.GetText().c_str());
 	}
 	tstring err;
 	bool bOk = outTree->LoadXMLBuffer(data.c_str(), data.length(), err);
@@ -242,12 +238,7 @@ bool CClipboardDataWriter::AddData(
 	{
 		std::ostringstream out;
 		inTree->SaveXML(out);
-#ifdef UNICODE
-		std::wstring tmp = tstringUtil::Convert(out.str());
-		data = tmp.c_str();
-#else
-		data = out.str().c_str();
-#endif
+		data = tstringUtil::TString(out.str());
 	}
 	return AddData(clpFmt, data);
 }
@@ -259,11 +250,7 @@ bool CClipboardDataWriter::AddData(
 {
 	if (eFormatHtml == clpFmt)
 	{
-#ifdef UNICODE
-		std::string data = tstringUtil::Convert(inData.c_str());
-#else
-		std::string data = inData;
-#endif
+		std::string data = tstringUtil::tstringA(inData.c_str());
 		{
 			std::string startHtml("<html><body>\r\n");
 			std::string endHtml("</body>\r\n</html>\r\n");

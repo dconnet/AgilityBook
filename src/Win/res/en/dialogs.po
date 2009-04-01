@@ -951,6 +951,10 @@ msgstr "&Secondary"
 msgid "IDC_POINTS_VIEW_SORT_C3"
 msgstr "&Tertiary"
 
+# DlgProgress
+msgid "IDD_PROGRESS_DLG"
+msgstr "Progress"
+
 # DlgReferenceRun
 msgid "IDD_REF_RUN"
 msgstr "Reference Run"

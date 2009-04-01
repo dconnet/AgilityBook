@@ -164,11 +164,7 @@ bool BinaryData::DecodeString(
 	if (!BinaryData::Decode(inBase64, data, len))
 		return false;
 	// TODO: Better conversion
-#ifdef UNICODE
-	outData = tstringUtil::Convert(reinterpret_cast<char*>(data), len);
-#else
-	outData = tstring(reinterpret_cast<char*>(data), len);
-#endif
+	outData = tstringUtil::TString(reinterpret_cast<char*>(data), len);
 	Release(data);
 	return true;
 }
@@ -185,10 +181,6 @@ bool BinaryData::EncodeString(
 	// the output string - which when streamed, then includes the null. Which
 	// in an ostringstream, terminates the string on output of the stream.
 	// TODO: Better conversion
-#ifdef UNICODE
-	std::string tmp(tstringUtil::Convert(inData));
+	std::string tmp(tstringUtil::tstringA(inData));
 	return BinaryData::Encode(reinterpret_cast<unsigned char const*>(tmp.c_str()), tmp.length(), outBase64);
-#else
-	return BinaryData::Encode(reinterpret_cast<unsigned char const*>(inData.c_str()), inData.length(), outBase64);
-#endif
 }
