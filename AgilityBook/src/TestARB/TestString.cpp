@@ -45,7 +45,7 @@ SUITE(TestString)
 	TEST(Convert_ToWide)
 	{
 		std::string s("narrow");
-		std::wstring s2 = tstringUtil::Convert(s);
+		std::wstring s2 = tstringUtil::tstringW(s);
 		CHECK(L"narrow" == s2);
 	}
 
@@ -53,7 +53,7 @@ SUITE(TestString)
 	TEST(Convert_ToNarrow)
 	{
 		std::wstring s(L"wide");
-		std::string s2 = tstringUtil::Convert(s);
+		std::string s2 = tstringUtil::tstringA(s);
 		CHECK("wide" == s2);
 	}
 
@@ -63,7 +63,7 @@ SUITE(TestString)
 	{
 		wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
 		std::wstring s(1, w);
-		std::string s2 = tstringUtil::Convert(s);
+		std::string s2 = tstringUtil::tstringA(s);
 		CHECK(s.length() == 1);
 		CHECK(s2.length() == 3);
 	}

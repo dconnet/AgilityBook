@@ -38,41 +38,43 @@
 #include "stdafx.h"
 #include "CalendarSites.h"
 
-//#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
-//#include "AgilityBookOptions.h"
-//#include "ARBAgilityRecordBook.h"
-//#include "ARBConfig.h"
-//#include "CheckTreeCtrl.h"
-//#include "DlgAssignColumns.h"
-//#include "DlgBaseDialog.h"
-//#include "DlgCalendarQueryDetail.h"
-//#include "DlgPluginDetails.h"
-//#include "DlgProgress.h"
-//#include "Element.h"
-//#include "ICalendarSite.h"
-//#include "IProgressMeter.h"
-//#include "ReadHttp.h"
-//#include <map>
-//#include <vector>
+#include "AgilityBookOptions.h"
+#include "ARBAgilityRecordBook.h"
+#include "ARBConfig.h"
+#include "CheckTreeCtrl.h"
+#include "DlgAssignColumns.h"
+#include "DlgCalendarQueryDetail.h"
+#include "DlgPluginDetails.h"
+#include "DlgProgress.h"
+#include "Element.h"
+#include "Globals.h"
+#include "ICalendarSite.h"
+#include "IProgressMeter.h"
+#include "ReadHttp.h"
+#include "VersionNum.h"
+#include <map>
+#include <vector>
+#include <wx/dynlib.h>
+#include <wx/filesys.h>
+#include <wx/stdpaths.h>
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CCalendarSites")
-#if 0
 /////////////////////////////////////////////////////////////////////////////
 
-static tstring TranslateCodeMap(std::vector<tstring> const& inCodes)
+static std::string TranslateCodeMap(std::vector<tstring> const& inCodes)
 {
-	otstringstream codes;
+	std::ostringstream codes;
 	for (size_t i = 0; i < inCodes.size(); ++i)
 	{
 		if (0 < i)
 			codes << ':';
-		codes << inCodes[i];
+		codes << tstringUtil::tstringA(inCodes[i]);
 	}
 	return codes.str();
 }
 
 
+/*
 static size_t TranslateCodeMap(
 		std::map<tstring, tstring> const& inMap,
 		std::vector<tstring>& outKeys)
@@ -86,13 +88,14 @@ static size_t TranslateCodeMap(
 	}
 	return outKeys.size();
 }
+*/
 
 /////////////////////////////////////////////////////////////////////////////
 
 class CProgressMeter : public IProgressMeter
 {
 public:
-	CProgressMeter(int nEntries, HWND pParent);
+	CProgressMeter(int nEntries, wxWindow* pParent);
 	~CProgressMeter();
 
 	void SetForegroundWindow();
@@ -100,7 +103,7 @@ public:
 	void StepMe();
 
 	virtual void SetMessage(char const* pMessage);
-	virtual void SetRange(int inLower, int inUpper);
+	virtual void SetRange(int inRange);
 	virtual void SetStep(int inStep);
 	virtual void StepIt();
 	virtual void SetPos(int pos);
@@ -121,7 +124,7 @@ private:
 	CalSiteData(CalSiteData const&);
 	CalSiteData& operator=(CalSiteData const&);
 public:
-	CalSiteData(CString const& pathname, CString const& filename);
+	CalSiteData(wxString const& pathname, wxString const& filename);
 	~CalSiteData();
 
 	void Connect();
@@ -129,26 +132,26 @@ public:
 	bool isValid() const					{return NULL != m_pSite;}
 	void Unload(bool bPermanently = false);
 
-	CString GetName() const							{return m_Name;}
-	CString GetDescription() const					{return m_Desc;}
+	wxString GetName() const						{return m_Name;}
+	wxString GetDescription() const					{return m_Desc;}
 	std::map<tstring, tstring> const& QueryLocationCodes() const
 		{return m_LocCodes;}
 	std::map<tstring, tstring> const& QueryVenueCodes() const
 		{return m_VenueCodes;}
-	CStringA Process(IProgressMeter *progress,
+	std::string Process(IProgressMeter *progress,
 			std::vector<tstring> const& inLocationCodes,
 			std::vector<tstring> const& inVenueCodes);
 
 private:
 	void Clear();
 
-	CString m_Pathname;
-	CString m_FileName;
-	HINSTANCE m_hDllInst;
+	wxString m_Pathname;
+	wxString m_FileName;
+	wxDynamicLibrary* m_hDllInst;
 	CVersionNum m_Version;
 	ICalendarSite* m_pSite;
-	CString m_Name;
-	CString m_Desc;
+	wxString m_Name;
+	wxString m_Desc;
 	std::map<tstring, tstring> m_LocCodes;
 	std::map<tstring, tstring> m_VenueCodes;
 };
@@ -156,16 +159,19 @@ private:
 
 typedef tr1::shared_ptr<CalSiteData> CalSiteDataPtr;
 
+
 /////////////////////////////////////////////////////////////////////////////
 
-class CDlgCalendarPlugins : public CDlgBaseDialog
+class CDlgCalendarPlugins : public wxDialog
 {
 public:
 	CDlgCalendarPlugins(
 			CAgilityBookDoc* pDoc,
-			std::map<CString, CalSiteDataPtr>& directAccess,
-			CWnd* pParent = NULL);
+			std::map<wxString, CalSiteDataPtr>& directAccess,
+			wxWindow* pParent = NULL) {}
 
+	int ShowModal() { return wxID_CANCEL;}
+/*
 private:
 // Dialog Data
 	//{{AFX_DATA(CDlgCalendarPlugins)
@@ -208,23 +214,21 @@ protected:
 	afx_msg void OnPluginDelete();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+	*/
 };
 
 /////////////////////////////////////////////////////////////////////////////
 
-CProgressMeter::CProgressMeter(int nEntries, HWND pParent)
+CProgressMeter::CProgressMeter(int nEntries, wxWindow* pParent)
 	: m_nEntries(nEntries)
 	, m_pProgress(NULL)
 {
-	m_pProgress = IDlgProgress::CreateProgress(pParent);
+	int nBars = 1;
 	if (1 < m_nEntries)
-	{
-		m_pProgress->SetNumProgressBars(2);
-		m_pProgress->SetRange(1, 0, m_nEntries);
-	}
-	else
-		m_pProgress->SetNumProgressBars(1);
-	m_pProgress->Show();
+		nBars = 2;
+	m_pProgress = IDlgProgress::CreateProgress(nBars, pParent);
+	if (1 < m_nEntries)
+		m_pProgress->SetRange(1, m_nEntries);
 }
 
 
@@ -262,20 +266,23 @@ void CProgressMeter::SetMessage(char const* pMessage)
 {
 	if (m_pProgress)
 	{
-		CString msg;
+		wxString msg;
 		if (pMessage)
-			msg = pMessage;
-		m_pProgress->SetMessage((LPCTSTR)msg);
+		{
+			std::string tmp(pMessage);
+			msg = tstringUtil::TString(tmp).c_str();
+		}
+		m_pProgress->SetMessage(msg);
 	}
 }
 
 
-void CProgressMeter::SetRange(int inLower, int inUpper)
+void CProgressMeter::SetRange(int inRange)
 {
 	if (m_pProgress)
 	{
 		short nBar = 1 < m_nEntries ? 2 : 1;
-		m_pProgress->SetRange(nBar, inLower, inUpper);
+		m_pProgress->SetRange(nBar, inRange);
 	}
 }
 
@@ -316,7 +323,7 @@ int CProgressMeter::GetPos()
 	if (m_pProgress)
 	{
 		short nBar = 1 < m_nEntries ? 2 : 1;
-		m_pProgress->GetPos(nBar, pos);
+		pos = m_pProgress->GetPos(nBar);
 	}
 	return pos;
 }
@@ -332,7 +339,7 @@ bool CProgressMeter::HasCanceled() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CalSiteData::CalSiteData(CString const& pathname, CString const& filename)
+CalSiteData::CalSiteData(wxString const& pathname, wxString const& filename)
 	: m_Pathname(pathname)
 	, m_FileName(filename)
 	, m_hDllInst(NULL)
@@ -355,8 +362,8 @@ CalSiteData::~CalSiteData()
 
 void CalSiteData::Clear()
 {
-	m_Name.Empty();
-	m_Desc.Empty();
+	m_Name.clear();
+	m_Desc.clear();
 	m_LocCodes.clear();
 	m_VenueCodes.clear();
 }
@@ -377,47 +384,32 @@ void CalSiteData::Connect()
 	// Load the library.
 	if (!m_hDllInst)
 	{
-		CString path(m_Pathname);
+		wxString path(m_Pathname);
 		path += m_FileName;
-		m_hDllInst = LoadLibrary(path);
-		m_Version = CVersionNum(m_hDllInst);
+		m_hDllInst = new wxDynamicLibrary(path);
+		//m_Version = CVersionNum(m_hDllInst);
 	}
-	if (m_hDllInst && CAgilityBookOptions::IsCalSiteVisible(m_FileName, m_Version))
+	if (m_hDllInst && m_hDllInst->IsLoaded())
 	{
 		// Get the exported interface
-		GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(GetProcAddress(m_hDllInst, "GetCalendarInterface"));
+		GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(m_hDllInst->GetSymbol(wxT("GetCalendarInterface")));
 		if (pApi)
 		{
 			// And call it.
 			m_pSite = pApi();
-			// We now have an object that must be released later.
-			char* pData = NULL;
-			try
+
+			if (!m_pSite->GetVersion(&m_Version)
+			|| CAgilityBookOptions::IsCalSiteVisible(m_FileName, m_Version))
 			{
-				pData = m_pSite->GetName();
-			}
-			catch (...)
-			{
-				pData = NULL;
 				Unload(true);
 			}
-			if (pData)
+			else
 			{
-				m_Name = CStringA(pData);
+				// We now have an object that must be released later.
+				char* pData = NULL;
 				try
 				{
-					m_pSite->releaseBuffer(pData);
-				}
-				catch (...)
-				{
-					Unload(true);
-				}
-			}
-			if (m_pSite)
-			{
-				try
-				{
-					pData = m_pSite->GetDescription();
+					pData = m_pSite->GetName();
 				}
 				catch (...)
 				{
@@ -426,7 +418,7 @@ void CalSiteData::Connect()
 				}
 				if (pData)
 				{
-					m_Desc = CStringA(pData);
+					m_Name = tstringUtil::TString(pData, strlen(pData)).c_str();
 					try
 					{
 						m_pSite->releaseBuffer(pData);
@@ -436,89 +428,109 @@ void CalSiteData::Connect()
 						Unload(true);
 					}
 				}
-			}
-			if (m_pSite)
-			{
-				try
+				if (m_pSite)
 				{
-					pData = m_pSite->GetLocationCodes();
-				}
-				catch (...)
-				{
-					Unload(true);
-					pData = NULL;
-				}
-				if (pData)
-				{
-					CString data1(pData); // For ansi/unicode translation
-					tstring data((LPCTSTR)data1);
-					data1.Empty();
-					std::vector<tstring> fields;
-					if (0 < BreakLine('\n', data, fields))
+					try
 					{
-						for (std::vector<tstring>::iterator i = fields.begin();
-							i != fields.end();
-							++i)
+						pData = m_pSite->GetDescription();
+					}
+					catch (...)
+					{
+						pData = NULL;
+						Unload(true);
+					}
+					if (pData)
+					{
+						m_Desc = tstringUtil::TString(pData, strlen(pData)).c_str();
+						try
 						{
-							std::vector<tstring> subfields;
-							if (2 == BreakLine(':', *i, subfields))
-							{
-								m_LocCodes[subfields[0]] = subfields[1];
-							}
+							m_pSite->releaseBuffer(pData);
+						}
+						catch (...)
+						{
+							Unload(true);
 						}
 					}
+				}
+				if (m_pSite)
+				{
 					try
 					{
-						m_pSite->releaseBuffer(pData);
+						pData = m_pSite->GetLocationCodes();
 					}
 					catch (...)
 					{
 						Unload(true);
+						pData = NULL;
 					}
-				}
-			}
-			if (m_pSite)
-			{
-				try
-				{
-					pData = m_pSite->GetVenueCodes();
-				}
-				catch (...)
-				{
-					Unload(true);
-					pData = NULL;
-				}
-				if (pData)
-				{
-					CString data1(pData);
-					tstring data((LPCTSTR)data1);
-					data1.Empty();
-					std::vector<tstring> fields;
-					if (0 < BreakLine('\n', data, fields))
+					if (pData)
 					{
-						for (std::vector<tstring>::iterator i = fields.begin();
-							i != fields.end();
-							++i)
+						tstring data = tstringUtil::TString(pData, strlen(pData)).c_str();
+						std::vector<tstring> fields;
+						if (0 < BreakLine('\n', data, fields))
 						{
-							std::vector<tstring> subfields;
-							switch (BreakLine(':', *i, subfields))
+							for (std::vector<tstring>::iterator i = fields.begin();
+								i != fields.end();
+								++i)
 							{
-							case 1:
-								m_VenueCodes[subfields[0]] = subfields[0];
-								break;
-							case 2:
-								m_VenueCodes[subfields[0]] = subfields[1];
-								break;
+								std::vector<tstring> subfields;
+								if (2 == BreakLine(':', *i, subfields))
+								{
+									m_LocCodes[subfields[0]] = subfields[1];
+								}
 							}
 						}
+						try
+						{
+							m_pSite->releaseBuffer(pData);
+						}
+						catch (...)
+						{
+							Unload(true);
+						}
 					}
+				}
+				if (m_pSite)
+				{
 					try
 					{
-						m_pSite->releaseBuffer(pData);
+						pData = m_pSite->GetVenueCodes();
 					}
 					catch (...)
 					{
 						Unload(true);
+						pData = NULL;
+					}
+					if (pData)
+					{
+						tstring data = tstringUtil::TString(pData, strlen(pData)).c_str();
+						std::vector<tstring> fields;
+						if (0 < BreakLine('\n', data, fields))
+						{
+							for (std::vector<tstring>::iterator i = fields.begin();
+								i != fields.end();
+								++i)
+							{
+								std::vector<tstring> subfields;
+								switch (BreakLine(':', *i, subfields))
+								{
+								case 1:
+									m_VenueCodes[subfields[0]] = subfields[0];
+									break;
+								case 2:
+									m_VenueCodes[subfields[0]] = subfields[1];
+									break;
+								}
+							}
+						}
+						try
+						{
+							m_pSite->releaseBuffer(pData);
+						}
+						catch (...)
+						{
+							Unload(true);
+						}
 					}
 				}
 			}
@@ -542,7 +554,7 @@ void CalSiteData::Unload(bool bPermanently)
 	}
 	if (m_hDllInst)
 	{
-		FreeLibrary(m_hDllInst);
+		delete m_hDllInst;
 		m_hDllInst = NULL;
 	}
 	if (bPermanently)
@@ -552,24 +564,24 @@ void CalSiteData::Unload(bool bPermanently)
 }
 
 
-CStringA CalSiteData::Process(IProgressMeter *progress,
+std::string CalSiteData::Process(IProgressMeter *progress,
 		std::vector<tstring> const& inLocationCodes,
 		std::vector<tstring> const& inVenueCodes)
 {
-	CStringA data;
+	std::string data;
 	if (m_pSite)
 	{
-		CStringA locCodes(TranslateCodeMap(inLocationCodes).c_str());
-		CStringA venueCodes(TranslateCodeMap(inVenueCodes).c_str());
+		std::string locCodes(TranslateCodeMap(inLocationCodes));
+		std::string venueCodes(TranslateCodeMap(inVenueCodes));
 		char* pData = NULL;
 		try
 		{
 			const char* pLocCodes = NULL;
-			if (!locCodes.IsEmpty())
-				pLocCodes = locCodes;
+			if (!locCodes.empty())
+				pLocCodes = locCodes.c_str();
 			const char* pVenueCodes = NULL;
-			if (!venueCodes.IsEmpty())
-				pVenueCodes = venueCodes;
+			if (!venueCodes.empty())
+				pVenueCodes = venueCodes.c_str();
 			pData = m_pSite->Process(pLocCodes, pVenueCodes, progress);
 		}
 		catch (...)
@@ -577,7 +589,7 @@ CStringA CalSiteData::Process(IProgressMeter *progress,
 			Unload(true);
 		}
 		if (pData)
-			data = CStringA(pData);
+			data = pData;
 		try
 		{
 			m_pSite->releaseBuffer(pData);
@@ -598,29 +610,26 @@ public:
 	CCalendarSitesImpl();
 	~CCalendarSitesImpl();
 
-	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent);
+	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent);
 
 private:
-	CString m_PathName;
+	wxString m_PathName;
 	// Map of filenames to site pointers
-	std::map<CString, CalSiteDataPtr> m_DirectAccess;
+	std::map<wxString, CalSiteDataPtr> m_DirectAccess;
 };
 
 
 CCalendarSitesImpl::CCalendarSitesImpl()
 	: m_PathName()
 {
-	CString exeName;
-	wxChar* pName = exeName.GetBuffer(MAX_PATH);
-	GetModuleFileName(NULL, pName, MAX_PATH);
-	exeName.ReleaseBuffer();
-	int iLastSlash = exeName.ReverseFind('\\');
-	if (0 < iLastSlash)
-		m_PathName = exeName.Left(iLastSlash + 1);
+	wxFileName exeName(wxStandardPaths::Get().GetExecutablePath());
+	m_PathName = exeName.GetPath() + wxFileName::GetPathSeparator();
 
 	// Load auxilary DLLs from the path where the EXE lives.
-	if (!m_PathName.IsEmpty())
+	if (!m_PathName.empty())
 	{
+#pragma message PRAGMA_MESSAGE("TODO: Implement CCalendarSites")
+		/*
 		WIN32_FIND_DATA data;
 		HANDLE hFind = FindFirstFile(m_PathName + _T("cal_*.dll"), &data);
 		if (INVALID_HANDLE_VALUE != hFind)
@@ -643,6 +652,7 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 			while (FindNextFile(hFind, &data));
 			FindClose(hFind);
 		}
+		*/
 	}
 }
 
@@ -653,16 +663,17 @@ CCalendarSitesImpl::~CCalendarSitesImpl()
 }
 
 
-bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, CWnd* pParent)
+bool CCalendarSitesImpl::FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent)
 {
 	CDlgCalendarPlugins dlg(pDoc, m_DirectAccess, pParent);
-	if (IDOK != dlg.DoModal())
+	if (wxID_OK != dlg.ShowModal())
 		return false;
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
+#if 0
 class CPluginBase
 {
 public:
@@ -672,8 +683,8 @@ public:
 	HTREEITEM GetHTreeItem() const		{return m_hItem;}
 	void SetHTreeItem(HTREEITEM hItem)	{m_hItem = hItem;}
 
-	virtual CString GetName() const = 0;
-	virtual CString GetDesc() const = 0;
+	virtual wxString GetName() const = 0;
+	virtual wxString GetDesc() const = 0;
 
 private:
 	HTREEITEM m_hItem;
@@ -702,8 +713,8 @@ public:
 	virtual bool CanDisable() const = 0;
 	virtual void Disable() = 0;
 protected:
-	CString m_Name;
-	CString m_Desc;
+	wxString m_Name;
+	wxString m_Desc;
 	std::vector<tstring> m_LocationCodes;
 	std::vector<tstring> m_VenueCodes;
 };

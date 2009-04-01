@@ -38,7 +38,7 @@
 #include "stdafx.h"
 #include "DlgPageDecode.h"
 
-#include "..\Win\VersionNum.h"
+#include "..\ARB\VersionNum.h"
 #include "ARBHelp.h"
 #include "ARBTypes.h"
 #include "BinaryData.h"

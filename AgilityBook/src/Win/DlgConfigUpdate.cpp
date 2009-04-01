@@ -138,7 +138,6 @@ bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
 		// Translate the XML to a tree form.
 		if (!tree->LoadXMLFile(pFile, errMsg))
 		{
-			//TODO
 			wxString msg = _("AFX_IDP_FAILED_TO_OPEN_DOC");
 			if (0 < errMsg.length())
 			{

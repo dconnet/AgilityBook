@@ -2130,12 +2130,8 @@ bool ElementNode::SaveXML(
 	if (!outFile)
 		return bOk;
 	char const* pFile = NULL;
-#ifdef UNICODE
-	std::string filename = tstringUtil::Convert(std::wstring(outFile));
+	std::string filename = tstringUtil::tstringA(outFile);
 	pFile = filename.c_str();
-#else
-	pFile = outFile;
-#endif
 	std::ofstream output(pFile, std::ios::out | std::ios::binary);
 	output.exceptions(std::ios_base::badbit);
 	if (output.is_open())

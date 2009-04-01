@@ -42,6 +42,7 @@
 #include "IProgressMeter.h"
 #include "../ARB/ARBStructure.h"
 #include "../ARB/Element.h"
+#include "../ARB/VersionNum.h"
 #include "../Win/ReadHttp.h"
 #include "../tidy/include/tidy.h"
 #include <errno.h>
@@ -112,11 +113,7 @@ public:
 	~CCalendarSite();
 
 	virtual void Release();
-	virtual bool GetVersion(
-			short* pMajor,
-			short* pMinor,
-			short* pRelease,
-			short* pBuild) const;
+	virtual bool GetVersion(CVersionNum* pVersion) const;
 	virtual void releaseBuffer(char* pData) const;
 	virtual char* GetName() const;
 	virtual char* GetDescription() const;
@@ -145,20 +142,10 @@ void CCalendarSite::Release()
 }
 
 
-bool CCalendarSite::GetVersion(
-		short* pMajor,
-		short* pMinor,
-		short* pDot,
-		short* pBuild) const
+bool CCalendarSite::GetVersion(CVersionNum* pVersion) const
 {
-	if (pMajor)
-		*pMajor = CAL_VER_MAJOR;
-	if (pMinor)
-		*pMinor = CAL_VER_MINOR;
-	if (pDot)
-		*pDot = CAL_VER_DOT;
-	if (pBuild)
-		*pBuild = CAL_VER_BUILD;
+	if (pVersion)
+		pVersion->Assign(CAL_VER_MAJOR, CAL_VER_MINOR, CAL_VER_DOT, CAL_VER_BUILD);
 	return true;
 }
 
@@ -425,7 +412,7 @@ char* CCalendarSite::Process(
 	{
 		if (progress->HasCanceled())
 			return NULL;
-		progress->SetRange(0, nEntries);
+		progress->SetRange(nEntries);
 	}
 
 	int idxCal = -1;
@@ -449,9 +436,7 @@ char* CCalendarSite::Process(
 			if (progress->HasCanceled())
 				return NULL;
 			std::string msg("Getting detail from ");
-#ifdef UNICODE
-			msg += tstringUtil::Convert(address.c_str());
-#endif
+			msg += tstringUtil::tstringA(address.c_str());
 			progress->SetMessage(msg.c_str());
 		}
 #if GENERATE_TESTDATA || USE_TESTDATA

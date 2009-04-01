@@ -67,7 +67,7 @@ struct CFontInfo
 	bool bold;
 	void CreateFont(wxFont& font);
 	void CreateFont(
-			wxFontDialog const& dlg,
+			wxFontDialog& dlg,
 			wxFont& font);
 };
 

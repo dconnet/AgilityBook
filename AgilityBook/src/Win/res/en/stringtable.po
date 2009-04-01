@@ -18,6 +18,16 @@ msgstr ""
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+# MFCisms
+msgid "AFX_IDP_FAILED_TO_OPEN_DOC"
+msgstr "Failed to open document."
+
+msgid "IDS_TIMEOUT"
+msgstr "Time out"
+
+msgid "IDS_NEED_VALUE"
+msgstr "Please enter a value"
+
 # Begin Columns
 msgid "IDS_COL_ACTUAL_WORK"
 msgstr "Actual Work"

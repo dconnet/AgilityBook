@@ -326,11 +326,7 @@ bool ARBBase64::Encode(
 	if (encoded)
 	{
 		bOk = true;
-#ifdef UNICODE
-		outData = tstringUtil::Convert(reinterpret_cast<char*>(encoded));
-#else
-		outData = reinterpret_cast<char*>(encoded);
-#endif
+		outData = tstringUtil::TString(reinterpret_cast<char*>(encoded));
 		delete [] encoded;
 	}
 	return bOk;

@@ -141,11 +141,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	{
 		for (size_t line = 0; line < file.GetLineCount(); ++line)
 		{
-#ifdef UNICODE
-			data += tstringUtil::Convert(file[line].c_str());
-#else
-			data += file[line];
-#endif
+			data += tstringUtil::tstringA(file[line].c_str());
 			data += '\n';
 		}
 		file.Close();
@@ -182,7 +178,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	if (0 == tmp.Find(idStr))
 	{
 		tmp = tmp.Mid(idStr.length());
-		m_VersionNum.Parse(wxT("version.txt"), tmp);
+		m_VersionNum.Parse(tmp);
 	}
 
 	if (!m_VersionNum.Valid())
@@ -303,7 +299,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					bool bEnable = false;
 					node->GetAttrib(wxT("enable"), bEnable);
 					CVersionNum vernum;
-					vernum.Parse(filename.c_str(), ver.c_str());
+					vernum.Parse(ver.c_str());
 					if (vernum.Valid())
 					{
 						CAgilityBookOptions::SuppressCalSitePermanently(filename.c_str(), vernum, !bEnable);
@@ -360,6 +356,13 @@ bool CUpdateInfo::CheckProgram()
 					break;
 				}
 #else
+// comments from include/wx/platform.h
+//__WXMAC__
+//    __WXMAC_CLASSIC__ means ppc non-carbon builds,
+//    __WXMAC_CARBON__ means carbon API available (mach or cfm builds),
+//    __WXMAC_OSX__ means mach-o builds, running under 10.2 + only
+//
+//__WXOSX__ is a common define to wxMac (Carbon) and wxCocoa ports under OS X.
 #pragma message PRAGMA_MESSAGE("TODO: Add 'os' tag for URL download")
 				// @todo Add appropriate 'os' tag for other OS's
 				// Must agree with website's download.php

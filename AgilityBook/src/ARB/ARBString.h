@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-30 DRC Remove Convert and replaced with tstringA/etc
  * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
  */
@@ -51,10 +52,21 @@ typedef std::basic_ofstream<wxChar, std::char_traits<wxChar> > oftstream;
 class tstringUtil
 {
 public:
-	static std::string Convert(wchar_t const* const inStr, size_t inLen);
-	static std::string Convert(std::wstring const& inStr);
-	static std::wstring Convert(char const* const inStr, size_t inLen);
-	static std::wstring Convert(std::string const& inStr);
+	// Create a tstring, no matter the input
+	static tstring TString(wchar_t const* const inStr, size_t inLen);
+	static tstring TString(std::wstring const& inStr);
+	static tstring TString(char const* const inStr, size_t inLen);
+	static tstring TString(std::string const& inStr);
+	// Construct a string, no matter the input
+	static std::string tstringA(wchar_t const* const inStr, size_t inLen);
+	static std::string tstringA(std::wstring const& inStr);
+	static std::string tstringA(char const* const inStr, size_t inLen);
+	static std::string tstringA(std::string const& inStr);
+	// Construct a wstring, no matter the input
+	static std::wstring tstringW(wchar_t const* const inStr, size_t inLen);
+	static std::wstring tstringW(std::wstring const& inStr);
+	static std::wstring tstringW(char const* const inStr, size_t inLen);
+	static std::wstring tstringW(std::string const& inStr);
 
 	static long atol(tstring const& inStr);
 	static long atol(wxChar const* inStr);

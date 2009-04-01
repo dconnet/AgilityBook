@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-03-30 DRC Remove Convert and replaced with tstringA/etc
  * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
  */
 
@@ -49,19 +50,58 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-std::string tstringUtil::Convert(wchar_t const* const inStr, size_t inLen)
+tstring tstringUtil::TString(wchar_t const* const inStr, size_t inLen)
+{
+#ifdef UNICODE
+	return std::wstring(inStr, inLen);
+#else
+	return tstringA(inStr, inLen);
+#endif
+}
+
+
+tstring tstringUtil::TString(std::wstring const& inStr)
+{
+#ifdef UNICODE
+	return inStr;
+#else
+	return tstringA(inStr);
+#endif
+}
+
+
+tstring tstringUtil::TString(char const* const inStr, size_t inLen)
+{
+#ifdef UNICODE
+	return tstringW(inStr, inLen);
+#else
+	return std::string(inStr, inLen);
+#endif
+}
+
+
+tstring tstringUtil::TString(std::string const& inStr)
+{
+#ifdef UNICODE
+	return tstringW(inStr);
+#else
+	return inStr;
+#endif
+}
+
+std::string tstringUtil::tstringA(wchar_t const* const inStr, size_t inLen)
 {
 	std::string str;
 	if (inStr && *inStr)
 	{
 		// Create a copy because wcstombs doesn't use length.
-		str = Convert(std::wstring(inStr, inLen));
+		str = tstringA(std::wstring(inStr, inLen));
 	}
 	return str;
 }
 
 
-std::string tstringUtil::Convert(std::wstring const& inStr)
+std::string tstringUtil::tstringA(std::wstring const& inStr)
 {
 	std::string str;
 	if (!inStr.empty())
@@ -82,19 +122,43 @@ std::string tstringUtil::Convert(std::wstring const& inStr)
 }
 
 
-std::wstring tstringUtil::Convert(char const* const inStr, size_t inLen)
+std::string tstringUtil::tstringA(char const* const inStr, size_t inLen)
+{
+	return std::string(inStr, inLen);
+}
+
+
+std::string tstringUtil::tstringA(std::string const& inStr)
+{
+	return inStr;
+}
+
+
+std::wstring tstringUtil::tstringW(wchar_t const* const inStr, size_t inLen)
+{
+	return std::wstring(inStr, inLen);
+}
+
+
+std::wstring tstringUtil::tstringW(std::wstring const& inStr)
+{
+	return inStr;
+}
+
+
+std::wstring tstringUtil::tstringW(char const* const inStr, size_t inLen)
 {
 	std::wstring str;
 	if (inStr && *inStr)
 	{
 		// Create a copy because mbstowcs doesn't use length.
-		str = Convert(std::string(inStr, inLen));
+		str = tstringW(std::string(inStr, inLen));
 	}
 	return str;
 }
 
 
-std::wstring tstringUtil::Convert(std::string const& inStr)
+std::wstring tstringUtil::tstringW(std::string const& inStr)
 {
 	std::wstring str;
 	if (!inStr.empty())
