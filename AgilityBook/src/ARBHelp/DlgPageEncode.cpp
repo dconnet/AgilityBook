@@ -48,6 +48,7 @@
 #include <wx/config.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
+#include <wx/platinfo.h>
 #include <wx/stdpaths.h>
 
 
@@ -210,78 +211,48 @@ bool CDlgPageEncode::TransferDataFromWindow()
 
 	// Get system information
 	{
-		otstringstream info;
-#ifdef WIN32
-		OSVERSIONINFO os;
-		os.dwOSVersionInfoSize = sizeof(os);
-		GetVersionEx(&os);
-		switch (os.dwPlatformId)
+		otstringstream str;
+
+		// OS version
+		wxPlatformInfo info;
+		str << wxT("OS: ")
+			<< info.GetOperatingSystemIdName().c_str()
+			<< ' '
+			<< info.GetOSMajorVersion()
+			<< '.'
+			<< info.GetOSMinorVersion()
+			<< std::endl;
+		if (wxPORT_BASE != info.GetPortId())
 		{
-		default: // Win32s
-			info << wxT("Windows32s ")
-				<< os.dwMajorVersion
-				<< '.'
-				<< os.dwMinorVersion
+			str << wxT("Port: ")
+				<< info.GetPortIdName().c_str()
 				<< ' '
-				<< os.szCSDVersion
-				<< wxT("\n");
-			break;
-		case VER_PLATFORM_WIN32_WINDOWS: // Win95/98
-			if (0 == os.dwMinorVersion)
-				info << wxT("Windows 95 ")
-					<< os.dwMajorVersion
-					<< '.'
-					<< os.dwMinorVersion
-					<< '.'
-					<< int(LOWORD(os.dwBuildNumber))
-					<< ' '
-					<< os.szCSDVersion
-					<< wxT("\n");
-			else
-				info << wxT("Windows 98 ")
-					<< os.dwMajorVersion
-					<< '.'
-					<< os.dwMinorVersion
-					<< '.'
-					<< int(LOWORD(os.dwBuildNumber))
-					<< ' '
-					<< os.szCSDVersion
-					<< wxT("\n");
-			break;
-		case VER_PLATFORM_WIN32_NT: // NT/Win2000
-			info << wxT("Windows ")
-				<< os.dwMajorVersion
+				<< info.GetToolkitMajorVersion()
 				<< '.'
-				<< os.dwMinorVersion
-				<< '.'
-				<< os.dwBuildNumber
-				<< ' '
-				<< os.szCSDVersion
-				<< wxT("\n");
-			break;
+				<< info.GetToolkitMinorVersion()
+				<< std::endl;
 		}
-#else
-#error Please implement platform dependent identity code here
-#endif
+		str << wxT("Architecture: ")
+			<< info.GetArchName().c_str()
+			<< wxT(", ")
+			<< info.GetEndiannessName().c_str()
+			<< std::endl;
 
 		// Me.
 		{
-			CVersionNum ver;
-			info << wxStandardPaths::Get().GetExecutablePath().c_str() << wxT(": ");
+			CVersionNum ver(true);
+			str << wxStandardPaths::Get().GetExecutablePath().c_str() << wxT(": ");
 			if (ver.Valid())
-				info << ver.GetVersionString().c_str();
+				str << ver.GetVersionString().c_str();
 			else
-			{
-				wxString badVer = _("IDS_BAD_VERSION");
-				info << badVer.c_str();
-			}
-			info << std::endl;
+				str << _("IDS_BAD_VERSION");
+			str << std::endl;
 		}
 
 		// wxWidgets
-		info << wxVERSION_STRING << std::endl;
+		str << wxVERSION_STRING << std::endl;
 
-		m_Parent->AddSysInfo(info.str());
+		m_Parent->AddSysInfo(str.str());
 	}
 
 	otstringstream data;

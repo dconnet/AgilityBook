@@ -49,7 +49,7 @@ class CDlgProgress : public wxDialog, public IDlgProgress
 {
 public:
 	CDlgProgress(short nBars, wxWindow* parent);
-	~CDlgProgress();
+	virtual ~CDlgProgress();
 
 	virtual bool Show(bool show = true);
 
@@ -116,16 +116,16 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 		nBars = 1;
 	SetExtraStyle(GetExtraStyle() | wxWS_EX_TRANSIENT);
 
-	Create(parent, wxID_ANY, _("IDD_PROGRESS_DLG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+	Create(parent, wxID_ANY, _("IDD_PROGRESS_DLG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
 	m_ctrlMessage = new wxStaticText(this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMessage->Wrap(-1);
 
-	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(300 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(400 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
 	for (int nBar = 1; nBar < nBars; ++nBar)
-		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(300 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
+		m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(400 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
 
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
@@ -138,11 +138,13 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 	m_ctrlCancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
+	m_ctrlCancel->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgProgress::OnCancel), NULL, this);
 
 	SetSizer(bSizer);
 	Layout();
 	GetSizer()->Fit(this);
-	SetSizeHints(GetSize(), wxDefaultSize);
+	wxSize sz = GetSize();
+	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
 	//if (appmodal)
@@ -175,7 +177,10 @@ bool CDlgProgress::Show(bool show)
 void CDlgProgress::ReenableOtherWindows()
 {
 	//if (appmodal)
+	{
 		delete m_winDisabler;
+		m_winDisabler = NULL;
+	}
 	//else
 	//{
 	//	if (m_parentTop)

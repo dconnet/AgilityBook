@@ -1361,7 +1361,7 @@ void CAgilityBookOptions::SuppressCalSite(
 
 CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(wxString const& filename)
 {
-	CVersionNum ver;
+	CVersionNum ver(false);
 	if (!filename.IsEmpty())
 	{
 		wxString section(wxT("CalSites2/"));
@@ -1388,7 +1388,7 @@ void CAgilityBookOptions::SuppressCalSitePermanently(
 	else
 	{
 		// If we're clearing one, make sure we haven't written a different version
-		CVersionNum ver;
+		CVersionNum ver(false);
 		wxString str = wxConfig::Get()->Read(section, wxString());
 		if (!str.IsEmpty())
 			ver.Parse(str);

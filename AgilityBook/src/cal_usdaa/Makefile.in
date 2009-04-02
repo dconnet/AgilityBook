@@ -34,9 +34,7 @@ SHAREDLIBS = libcalusdaa
 # Source files for each target
 ##########
 libcalusdaa_SRCS = \
-	CalendarSite.cpp \
-	../Win/ReadHttp.cpp \
-	../Win/DlgAuthenticate.cpp
+	CalendarSite.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)

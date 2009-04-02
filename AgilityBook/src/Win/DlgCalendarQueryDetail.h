@@ -52,14 +52,14 @@ public:
 			ARBConfig const& inConfig,
 			std::map<tstring, tstring> const& inLocCodes,
 			std::map<tstring, tstring> const& inVenueCodes,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = NULL) {}
 	CDlgCalendarQueryDetail(
 			ARBConfig const& inConfig,
 			std::map<tstring, tstring> const& inLocCodes,
 			std::vector<tstring> const& inSelectedLocCodes,
 			std::map<tstring, tstring> const& inVenueCodes,
 			std::vector<tstring> const& inSelectedVenueCodes,
-			wxWindow* pParent = NULL);
+			wxWindow* pParent = NULL) {}
 	std::map<tstring, tstring> const& GetLocationCodes() const
 	{
 		return m_LocCodes;

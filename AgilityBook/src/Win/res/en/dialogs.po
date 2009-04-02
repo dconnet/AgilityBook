@@ -172,6 +172,34 @@ msgstr "&Location:"
 msgid "IDC_CAL_NOTES"
 msgstr "N&otes"
 
+# DlgCalendarPlugins
+msgid "IDD_CALENDAR_PLUGINS"
+msgstr "Calendar Plugins"
+
+msgid "IDC_PLUGIN_READ"
+msgstr "&Read Entries"
+
+msgid "IDC_PLUGIN_ADD"
+msgstr "&Add Entries"
+
+msgid "IDC_PLUGIN_ENABLE"
+msgstr "&Enable"
+
+msgid "IDC_PLUGIN_QUERYDETAILS"
+msgstr "&Details..."
+
+msgid "IDC_PLUGIN_NEW"
+msgstr "New..."
+
+msgid "IDC_PLUGIN_EDIT"
+msgstr "Edit..."
+
+msgid "IDC_PLUGIN_DELETE"
+msgstr "Delete"
+
+msgid "IDC_PLUGIN_CLOSE"
+msgstr "Close"
+
 # DlgClub
 msgid "IDD_CLUB"
 msgstr "Club"

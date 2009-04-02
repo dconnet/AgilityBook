@@ -56,7 +56,6 @@
 	"..\..\tidy\include\platform.h"\
 	"..\..\tidy\include\tidy.h"\
 	"..\..\tidy\include\tidyenum.h"\
-	"..\..\Win\ReadHttp.h"\
 	
 
 ..\..\stdafx.cpp : \
@@ -328,24 +327,6 @@
 	"..\..\ARB\Element.h"\
 	
 
-..\..\Win\DlgAuthenticate.cpp : \
-	"..\..\..\..\..\..\wx\include\msvc\wx\setup.h"\
-	"..\..\..\..\..\..\wx\include\wx\defs.h"\
-	"..\..\..\..\..\..\wx\include\wx\dlimpexp.h"\
-	"..\..\..\..\..\..\wx\include\wx\event.h"\
-	"..\..\..\..\..\..\wx\include\wx\hashmap.h"\
-	"..\..\..\..\..\..\wx\include\wx\msw\setup.h"\
-	"..\..\..\..\..\..\wx\include\wx\msw\wrapwin.h"\
-	"..\..\..\..\..\..\wx\include\wx\object.h"\
-	"..\..\..\..\..\..\wx\include\wx\sizer.h"\
-	"..\..\..\..\..\..\wx\include\wx\statbox.h"\
-	"..\..\..\..\..\..\wx\include\wx\strconv.h"\
-	"..\..\..\..\..\..\wx\include\wx\stream.h"\
-	"..\..\..\..\..\..\wx\include\wx\valgen.h"\
-	"..\..\..\..\..\..\wx\include\wx\validate.h"\
-	"..\..\Win\DlgAuthenticate.h"\
-	
-
 ..\..\ARB\Element.cpp : \
 	"..\..\..\..\..\..\wx\include\msvc\wx\setup.h"\
 	"..\..\..\..\..\..\wx\include\wx\defs.h"\
@@ -367,29 +348,4 @@
 	"..\..\arb\arbstructure.h"\
 	"..\..\ARB\ARBTypes.h"\
 	"..\..\ARB\Element.h"\
-	
-
-..\..\Win\ReadHttp.cpp : \
-	"..\..\..\..\..\..\wx\include\msvc\wx\setup.h"\
-	"..\..\..\..\..\..\wx\include\wx\defs.h"\
-	"..\..\..\..\..\..\wx\include\wx\dlimpexp.h"\
-	"..\..\..\..\..\..\wx\include\wx\event.h"\
-	"..\..\..\..\..\..\wx\include\wx\gsocket.h"\
-	"..\..\..\..\..\..\wx\include\wx\hashmap.h"\
-	"..\..\..\..\..\..\wx\include\wx\msw\gsockmsw.h"\
-	"..\..\..\..\..\..\wx\include\wx\msw\setup.h"\
-	"..\..\..\..\..\..\wx\include\wx\msw\wrapwin.h"\
-	"..\..\..\..\..\..\wx\include\wx\object.h"\
-	"..\..\..\..\..\..\wx\include\wx\protocol\http.h"\
-	"..\..\..\..\..\..\wx\include\wx\sckaddr.h"\
-	"..\..\..\..\..\..\wx\include\wx\sizer.h"\
-	"..\..\..\..\..\..\wx\include\wx\socket.h"\
-	"..\..\..\..\..\..\wx\include\wx\sstream.h"\
-	"..\..\..\..\..\..\wx\include\wx\statbox.h"\
-	"..\..\..\..\..\..\wx\include\wx\strconv.h"\
-	"..\..\..\..\..\..\wx\include\wx\stream.h"\
-	"..\..\..\..\..\..\wx\include\wx\validate.h"\
-	"..\..\ARB\ARBString.h"\
-	"..\..\Win\DlgAuthenticate.h"\
-	"..\..\Win\ReadHttp.h"\
 	

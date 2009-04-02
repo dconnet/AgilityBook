@@ -1333,7 +1333,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 {
 	wxBusyCursor wait;
 
-	CVersionNum ver;
+	CVersionNum ver(true);
 	tstring verstr = ver.GetVersionString().c_str();
 	bool bAlreadyWarned = false;
 	bool bOk = false;

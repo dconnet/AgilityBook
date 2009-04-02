@@ -45,14 +45,18 @@
 #include "VersionNumber.h"
 
 
-CVersionNum::CVersionNum()
-	: m_Valid(true)
+CVersionNum::CVersionNum(bool bAutoLoad)
+	: m_Valid(false)
 	, m_Version()
 {
-	m_Version.part1 = ARB_VER_MAJOR;
-	m_Version.part2 = ARB_VER_MINOR;
-	m_Version.part3 = ARB_VER_DOT;
-	m_Version.part4 = ARB_VER_BUILD;
+	if (bAutoLoad)
+	{
+		m_Valid = true;
+		m_Version.part1 = ARB_VER_MAJOR;
+		m_Version.part2 = ARB_VER_MINOR;
+		m_Version.part3 = ARB_VER_DOT;
+		m_Version.part4 = ARB_VER_BUILD;
+	}
 }
 
 
@@ -107,6 +111,7 @@ void CVersionNum::Assign(
 		unsigned short inDot,
 		unsigned short inBuild)
 {
+	m_Valid = true;
 	m_Version.part1 = inMajor;
 	m_Version.part2 = inMinor;
 	m_Version.part3 = inDot;

@@ -66,15 +66,17 @@ IMPLEMENT_CLASS(CCheckTreeCtrl, wxTreeCtrl)
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_TREE_CHECK_CHANGED)
 
 
-CCheckTreeCtrl::CCheckTreeCtrl(wxWindow* pParent)
+CCheckTreeCtrl::CCheckTreeCtrl(
+		wxWindow* pParent,
+		const wxPoint& pos,
+		const wxSize& size)
 	: wxTreeCtrl()
 	, m_stateList(16,16)
 	, m_stateNone(-1)
 	, m_stateUnChecked(-1)
 	, m_stateChecked(-1)
 {
-	wxTreeCtrl::Create(pParent, wxID_ANY,
-		wxDefaultPosition, wxDefaultSize,
+	wxTreeCtrl::Create(pParent, wxID_ANY, pos, size,
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
 	Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CCheckTreeCtrl::OnClick), NULL, this);
 	Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CCheckTreeCtrl::OnKeyDown), NULL, this);

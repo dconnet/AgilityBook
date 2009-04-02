@@ -44,7 +44,10 @@ class CCheckTreeCtrl : public wxTreeCtrl
 {
 	DECLARE_CLASS(CCheckTreeCtrl)
 public:
-	CCheckTreeCtrl(wxWindow* pParent);
+	CCheckTreeCtrl(
+			wxWindow* pParent,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize);
 
 	void ShowCheckbox(
 			wxTreeItemId hItem,
