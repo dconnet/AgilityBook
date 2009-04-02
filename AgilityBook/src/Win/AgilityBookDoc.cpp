@@ -168,8 +168,8 @@ BEGIN_EVENT_TABLE(CAgilityBookDoc, wxDocument)
 	EVT_MENU(ID_NOTES_LOCATIONS, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_NOTES_SEARCH, CAgilityBookDoc::OnUpdateCmd)
 	EVT_MENU(ID_NOTES_SEARCH, CAgilityBookDoc::OnCmd)
-	EVT_UPDATE_UI(ID_VIEW_OPTIONS, CAgilityBookDoc::OnUpdateCmd)
-	EVT_MENU(ID_VIEW_OPTIONS, CAgilityBookDoc::OnCmd)
+	EVT_UPDATE_UI(wxID_PREFERENCES, CAgilityBookDoc::OnUpdateCmd)
+	EVT_MENU(wxID_PREFERENCES, CAgilityBookDoc::OnCmd)
 	EVT_UPDATE_UI(ID_VIEW_SORTRUNS, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookDoc::OnUpdateCmd)
 	EVT_UPDATE_UI(ID_VIEW_HIDDEN, CAgilityBookDoc::OnUpdateCmd)
@@ -1507,7 +1507,7 @@ void CAgilityBookDoc::OnUpdateCmd(wxUpdateUIEvent& evt)
 	case ID_NOTES_JUDGES:
 	case ID_NOTES_LOCATIONS:
 	case ID_NOTES_SEARCH:
-	case ID_VIEW_OPTIONS:
+	case wxID_PREFERENCES:
 		evt.Enable(true);
 		break;
 	case ID_VIEW_SORTRUNS:
@@ -1760,7 +1760,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		}
 		break;
 
-	case ID_VIEW_OPTIONS:
+	case wxID_PREFERENCES:
 		{
 			int nPage;
 			CTabView* pTab = GetTabView();

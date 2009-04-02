@@ -65,6 +65,10 @@ void CAgilityBookMenu::CreateMenu(wxDocParentFrame* pFrame, wxDocManager* manage
 	assert(!m_MenuBar);
 	m_Frame = pFrame;
 
+#ifdef __WXMAC__
+	wxApp::s_macHelpMenuTitleName = _("MenuHelp");
+#endif
+
 	m_MenuBar = new wxMenuBar();
 	m_MenuFile.Create(IdMenuFile);
 	m_MenuFileRecent.Create(IdMenuRecentFiles);
@@ -234,7 +238,7 @@ void CAgilityBookMenu::CreateMenu(
 
 	case IdMenuView:
 		title = _("MenuView");
-		DoMenu(handles.menu, bCreate, ID_VIEW_OPTIONS, _("MenuViewOptions"), _("DescViewOptions"));
+		DoMenu(handles.menu, bCreate, wxID_PREFERENCES, _("MenuViewOptions"), _("DescViewOptions"));
 		DoMenu(handles.menu, bCreate, ID_VIEW_CUSTOMIZE, _("MenuViewCustomize"), _("DescViewCustomize"));
 		if (bCreate)
 			handles.menu->AppendSeparator();
@@ -435,7 +439,7 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 	case IdMenuDog:
 		menu->Append(ID_AGILITY_EDIT_DOG,
 				_("MenuDogProperties"), _("DescDogProperties"));
-		menu->Append(ID_VIEW_OPTIONS,
+		menu->Append(wxID_PREFERENCES,
 				_("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(false));
@@ -466,7 +470,7 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 	case IdMenuTrial:
 		menu->Append(ID_AGILITY_EDIT_TRIAL,
 				_("MenuTrialProperties"), _("DescTrialProperties"));
-		menu->Append(ID_VIEW_OPTIONS,
+		menu->Append(wxID_PREFERENCES,
 				_("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(true));
@@ -496,7 +500,7 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 	case IdMenuRun:
 		menu->Append(ID_AGILITY_EDIT_RUN,
 				_("MenuRunProperties"), _("DescRunProperties"));
-		menu->Append(ID_VIEW_OPTIONS,
+		menu->Append(wxID_PREFERENCES,
 				_("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(wxID_ANY, _("MenuNew"), CreateNewMenu(true));
@@ -521,7 +525,7 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 	case IdMenuPoints:
 		menu->Append(ID_DETAILS,
 				_("MenuDetails"), _("DescDetails"));
-		menu->Append(ID_VIEW_OPTIONS,
+		menu->Append(wxID_PREFERENCES,
 				_("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(wxID_COPY,
@@ -536,7 +540,7 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 	case IdMenuCalendar:
 		menu->Append(ID_AGILITY_EDIT_CALENDAR,
 				_("MenuCalendarProperties"), _("DescCalendarProperties"));
-		menu->Append(ID_VIEW_OPTIONS,
+		menu->Append(wxID_PREFERENCES,
 				_("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(ID_AGILITY_NEW_CALENDAR,
@@ -564,7 +568,7 @@ wxMenu* CreatePopup(MenuIdentityPopup idMenu)
 	case IdMenuTraining:
 		menu->Append(ID_AGILITY_EDIT_TRAINING,
 				_("MenuTrainingProperties"), _("DescTrainingProperties"));
-		menu->Append(ID_VIEW_OPTIONS,
+		menu->Append(wxID_PREFERENCES,
 				_("MenuViewOptions"), _("DescViewOptions"));
 		menu->AppendSeparator();
 		menu->Append(ID_AGILITY_NEW_TRAINING,

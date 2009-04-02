@@ -643,7 +643,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 	default:
 		bHandled = false;
 		break;
-	case ID_VIEW_OPTIONS:
+	case wxID_PREFERENCES:
 		{
 			CDlgOptions options(m_pTree->GetDocument(), wxGetApp().GetTopWindow(), CDlgOptions::GetFilterPage());
 			options.ShowModal();
@@ -935,7 +935,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 	default:
 		bHandled = false;
 		break;
-	case ID_VIEW_OPTIONS:
+	case wxID_PREFERENCES:
 		{
 			CDlgOptions options(m_pTree->GetDocument(), wxGetApp().GetTopWindow(), CDlgOptions::GetFilterPage());
 			options.ShowModal();
@@ -1304,7 +1304,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 	default:
 		bHandled = false;
 		break;
-	case ID_VIEW_OPTIONS:
+	case wxID_PREFERENCES:
 		{
 			CDlgOptions options(m_pTree->GetDocument(), wxGetApp().GetTopWindow(), CDlgOptions::GetFilterPage());
 			options.ShowModal();
