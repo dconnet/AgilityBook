@@ -157,27 +157,11 @@ SOURCE=..\..\ARB\ARBTypes.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\Win\DlgAuthenticate.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\DlgAuthenticate.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\ARB\Element.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\ARB\Element.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\ReadHttp.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\Win\ReadHttp.h
 # End Source File
 # Begin Source File
 

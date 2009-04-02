@@ -99,7 +99,7 @@ bool CUpdateInfo::UpdateConfig(
 /////////////////////////////////////////////////////////////////////////////
 
 CUpdateInfo::CUpdateInfo()
-	: m_VersionNum()
+	: m_VersionNum(false)
 	, m_VerConfig(0)
 	, m_FileName()
 	, m_InfoMsg()
@@ -298,7 +298,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					// The 'enable' attribute is in case we prematurely disable
 					bool bEnable = false;
 					node->GetAttrib(wxT("enable"), bEnable);
-					CVersionNum vernum;
+					CVersionNum vernum(false);
 					vernum.Parse(ver.c_str());
 					if (vernum.Valid())
 					{
@@ -385,7 +385,7 @@ bool CUpdateInfo::IsOutOfDate()
 	// If we haven't parsed the internet file yet, assume we're out-of-date.
 	if (!m_VersionNum.Valid())
 		return true;
-	CVersionNum verThis;
+	CVersionNum verThis(true);
 	assert(verThis.Valid());
 	if (verThis < m_VersionNum)
 		return true;

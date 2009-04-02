@@ -216,22 +216,10 @@
 				RelativePath="..\..\ARB\VersionNum.h">
 			</File>
 			<File
-				RelativePath="..\..\Win\DlgAuthenticate.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\DlgAuthenticate.h">
-			</File>
-			<File
 				RelativePath="..\..\ARB\Element.cpp">
 			</File>
 			<File
 				RelativePath="..\..\ARB\Element.h">
-			</File>
-			<File
-				RelativePath="..\..\Win\ReadHttp.cpp">
-			</File>
-			<File
-				RelativePath="..\..\Win\ReadHttp.h">
 			</File>
 		</Filter>
 	</Files>

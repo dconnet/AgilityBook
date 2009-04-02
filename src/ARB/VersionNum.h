@@ -51,7 +51,7 @@ public:
 		unsigned short part4;
 	} VERSION_NUMBER;
 
-	CVersionNum();
+	CVersionNum(bool bAutoLoad);
 	CVersionNum(CVersionNum const& rhs);
 	CVersionNum& operator=(CVersionNum const& rhs);
 

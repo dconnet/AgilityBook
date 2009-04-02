@@ -59,9 +59,7 @@ CLEAN :
 	-@erase "$(INTDIR)\cal_usdaa.pch"
 	-@erase "$(INTDIR)\cal_usdaa.res"
 	-@erase "$(INTDIR)\CalendarSite.obj"
-	-@erase "$(INTDIR)\DlgAuthenticate.obj"
 	-@erase "$(INTDIR)\Element.obj"
-	-@erase "$(INTDIR)\ReadHttp.obj"
 	-@erase "$(INTDIR)\stdafx.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(INTDIR)\vc60.pdb"
@@ -95,9 +93,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\ARBDate.obj" \
 	"$(INTDIR)\ARBString.obj" \
 	"$(INTDIR)\ARBTypes.obj" \
-	"$(INTDIR)\DlgAuthenticate.obj" \
 	"$(INTDIR)\Element.obj" \
-	"$(INTDIR)\ReadHttp.obj" \
 	"$(INTDIR)\cal_usdaa.res" \
 	"$(OUTDIR)\LibTidy.lib"
 
@@ -136,9 +132,7 @@ CLEAN :
 	-@erase "$(INTDIR)\cal_usdaa.pch"
 	-@erase "$(INTDIR)\cal_usdaa.res"
 	-@erase "$(INTDIR)\CalendarSite.obj"
-	-@erase "$(INTDIR)\DlgAuthenticate.obj"
 	-@erase "$(INTDIR)\Element.obj"
-	-@erase "$(INTDIR)\ReadHttp.obj"
 	-@erase "$(INTDIR)\stdafx.obj"
 	-@erase "$(INTDIR)\vc60.idb"
 	-@erase "$(OUTDIR)\cal_usdaa.dll"
@@ -169,9 +163,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\ARBDate.obj" \
 	"$(INTDIR)\ARBString.obj" \
 	"$(INTDIR)\ARBTypes.obj" \
-	"$(INTDIR)\DlgAuthenticate.obj" \
 	"$(INTDIR)\Element.obj" \
-	"$(INTDIR)\ReadHttp.obj" \
 	"$(INTDIR)\cal_usdaa.res" \
 	"$(OUTDIR)\LibTidy.lib"
 
@@ -295,21 +287,9 @@ SOURCE=..\..\ARB\ARBTypes.cpp
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 
-SOURCE=..\..\Win\DlgAuthenticate.cpp
-
-"$(INTDIR)\DlgAuthenticate.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\cal_usdaa.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
 SOURCE=..\..\ARB\Element.cpp
 
 "$(INTDIR)\Element.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\cal_usdaa.pch"
-	$(CPP) $(CPP_PROJ) $(SOURCE)
-
-
-SOURCE=..\..\Win\ReadHttp.cpp
-
-"$(INTDIR)\ReadHttp.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\cal_usdaa.pch"
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 
 

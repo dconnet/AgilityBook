@@ -43,7 +43,6 @@
 #include "../ARB/ARBStructure.h"
 #include "../ARB/Element.h"
 #include "../ARB/VersionNum.h"
-#include "../Win/ReadHttp.h"
 #include "../tidy/include/tidy.h"
 #include <errno.h>
 #include <sstream>
@@ -120,6 +119,7 @@ public:
 	virtual char* GetLocationCodes() const;
 	virtual char* GetVenueCodes() const;
 	virtual char* Process(
+			IReadHttpData* dataReader,
 			char const* inLocCodes,
 			char const* inVenueCodes,
 			IProgressMeter* progress) const;
@@ -183,11 +183,8 @@ char* CCalendarSite::GetVenueCodes() const
 
 
 static ElementNodePtr ReadData(
-#if USE_TESTDATA
+		IReadHttpData* pReader,
 		std::string const& inAddress
-#else
-		wxString const& inAddress
-#endif
 #if GENERATE_TESTDATA
 		, std::string const& outTestData
 #endif
@@ -195,40 +192,20 @@ static ElementNodePtr ReadData(
 {
 	ElementNodePtr tree;
 
-	std::string data;
-#if USE_TESTDATA
-	FILE* fp = fopen(inAddress, "r");
-	if (fp)
-	{
-		char buffer[1001];
-		size_t sz;
-		while (0 < (sz = fread(buffer, 1, 1000, fp)))
-		{
-			buffer[sz] = 0;
-			data += buffer;
-		}
-		fclose(fp);
-	}
-#else
-	CReadHttp http(inAddress, &data);
-#endif
-
-	wxString username, errMsg;
-#if !USE_TESTDATA
-	if (http.ReadHttpFile(username, errMsg))
-#endif
+	char* data = pReader->ReadData(inAddress.c_str());
+	if (data)
 	{
 #if GENERATE_TESTDATA
 {
 std::ofstream raw(outTestData, std::ios::out);
-raw << data.c_str();
+raw << data;
 raw.close();
 }
 #endif
 		TidyDoc tdoc = tidyCreate();
 		tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
 		tidyOptSetBool(tdoc, TidyNumEntities, yes);
-		if (0 > tidyParseString(tdoc, data.c_str()))
+		if (0 > tidyParseString(tdoc, data))
 		{
 			tidyRelease(tdoc);
 			return tree;
@@ -246,7 +223,9 @@ raw.close();
 			return tree;
 		}
 		char* pData = new char[len+1];
-		strcpy(pData, data.c_str());
+		strncpy(pData, data, len);
+		pReader->releaseBuffer(data);
+		data = NULL;
 		if (0 > tidySaveString(tdoc, pData, &len))
 		{
 			tidyRelease(tdoc);
@@ -256,23 +235,20 @@ raw.close();
 		tidyRelease(tdoc);
 		// Note, Tidy does not null terminate the buffer.
 		pData[len] = 0;
-		data = pData;
-		delete [] pData;
-		pData = NULL;
 #ifdef _DEBUG
 //Test code to look at 'tidy'd data
 //{
 //std::string out(inAddress);
 //out += ".out";
 //std::ofstream raw(out, std::ios::out);
-//raw << data.c_str();
+//raw << pData;
 //raw.close();
 //}
 #endif
 
 		tstring err;
 		tree = ElementNode::New();
-		if (!tree->LoadXMLBuffer(data.c_str(), data.length(), err))
+		if (!tree->LoadXMLBuffer(pData, len, err))
 		{
 			tree.reset();
 			wxMessageBox(err.c_str(), wxMessageBoxCaptionStr, wxCENTRE);
@@ -290,6 +266,8 @@ raw.close();
 //}
 #endif
 		}
+		delete [] pData;
+		pData = NULL;
 	}
 	return tree;
 }
@@ -298,6 +276,7 @@ raw.close();
 // The only filtering of calendar events the website has is by type
 // (titling/tourny/etc). So just ignore any supplied codes.
 char* CCalendarSite::Process(
+		IReadHttpData* dataReader,
 		char const* /*inLocCodes*/,
 		char const* /*inVenueCodes*/,
 		IProgressMeter* progress) const
@@ -309,12 +288,12 @@ char* CCalendarSite::Process(
 	std::string testData(TESTDATANAME);
 	testData += ".xml";
 #if USE_TESTDATA
-	ElementNodePtr tree = ReadData(testData);
+	ElementNodePtr tree = ReadData(dataReader, testData);
 #else
-	ElementNodePtr tree = ReadData(wxT("http://www.usdaa.com/events.cfm"), testData);
+	ElementNodePtr tree = ReadData(dataReader, "http://www.usdaa.com/events.cfm", testData);
 #endif
 #else
-	ElementNodePtr tree = ReadData(wxT("http://www.usdaa.com/events.cfm"));
+	ElementNodePtr tree = ReadData(dataReader, "http://www.usdaa.com/events.cfm");
 #endif
 	if (!tree)
 		return NULL;
@@ -429,28 +408,28 @@ char* CCalendarSite::Process(
 		if (detail.empty())
 			continue;
 		cal->SetValue(wxT(""));
-		wxString address(wxT("http://www.usdaa.com/"));
-		address += detail.c_str();
+		std::string address("http://www.usdaa.com/");
+		address += tstringUtil::tstringA(detail);
 		if (progress)
 		{
 			if (progress->HasCanceled())
 				return NULL;
 			std::string msg("Getting detail from ");
-			msg += tstringUtil::tstringA(address.c_str());
+			msg += address;
 			progress->SetMessage(msg.c_str());
 		}
 #if GENERATE_TESTDATA || USE_TESTDATA
 		testData = TESTDATANAME;
-		int idxAddr = address.Find('=');
-		testData += address.Mid(idxAddr+1);
+		int idxAddr = address.find('=');
+		testData += address.substr(idxAddr+1);
 		testData += ".xml";
 #if USE_TESTDATA
-		ElementNodePtr treeDetail = ReadData(testData);
+		ElementNodePtr treeDetail = ReadData(dataReader, testData);
 #else
-		ElementNodePtr treeDetail = ReadData(address, testData);
+		ElementNodePtr treeDetail = ReadData(dataReader, address, testData);
 #endif
 #else
-		ElementNodePtr treeDetail = ReadData(address);
+		ElementNodePtr treeDetail = ReadData(dataReader, address);
 #endif
 		if (treeDetail)
 		{

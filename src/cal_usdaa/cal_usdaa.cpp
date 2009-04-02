@@ -39,21 +39,38 @@
 #include "../ARB/Element.h"
 
 
-HINSTANCE ghInstance = NULL;
+class wxDllApp : public wxApp
+{
+	bool OnInit();
+};
+
+
+IMPLEMENT_APP_NO_MAIN(wxDllApp)
+
+
+bool wxDllApp::OnInit()
+{
+	return true;
+}
+
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
+		wxSetInstance((HINSTANCE)hModule);
 		{
-			ghInstance = (HINSTANCE)hModule;
+			int argc = 0;
+			char** argv = NULL;
+			wxEntryStart(argc, argv);
 			tstring err;
 			Element::Initialize(err);
 		}
 		break;
 	case DLL_PROCESS_DETACH:
 		Element::Terminate();
+		wxEntryCleanup();
 		break;
 	}
     return TRUE;
