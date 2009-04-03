@@ -117,7 +117,7 @@ private:
 	void OnSpeedPoints(wxCommandEvent& evt);
 	void OnItemchangedPlacement(wxListEvent& evt);
 	void OnDblclkPlacement(wxMouseEvent& evt);
-	void OnKeydownPlacement(wxListEvent& evt);
+	void OnKeydownPlacement(wxKeyEvent& evt);
 	void OnPlacementNew(wxCommandEvent& evt);
 	void OnPlacementEdit(wxCommandEvent& evt);
 	void OnPlacementDelete(wxCommandEvent& evt);

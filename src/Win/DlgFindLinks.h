@@ -80,7 +80,7 @@ private:
 	void OnColumnClick(wxListEvent& evt);
 	void OnItemSelected(wxListEvent& evt);
 	void OnDoubleClick(wxMouseEvent& evt);
-	void OnKeyDown(wxListEvent& evt);
+	void OnKeyDown(wxKeyEvent& evt);
 	void OnCopy(wxCommandEvent& evt);
 	void OnEdit(wxCommandEvent& evt);
 	void OnOpen(wxCommandEvent& evt);

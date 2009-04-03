@@ -121,7 +121,7 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnSelectionChanged(wxTreeEvent& evt);
 	void OnDblclk(wxMouseEvent& evt);
-	void OnKeydown(wxTreeEvent& evt);
+	void OnKeydown(wxKeyEvent& evt);
 	void OnNew(wxCommandEvent& evt);
 	void OnDelete(wxCommandEvent& evt);
 	void OnEdit(wxCommandEvent& evt);

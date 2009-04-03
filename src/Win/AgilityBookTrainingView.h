@@ -139,7 +139,7 @@ private:
 	void OnCtrlContextMenu(wxListEvent& evt);
 	void OnCtrlColumnClick(wxListEvent& evt);
 	void OnCtrlDoubleClick(wxMouseEvent& evt);
-	void OnCtrlKeyDown(wxListEvent& evt);
+	void OnCtrlKeyDown(wxKeyEvent& evt);
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);

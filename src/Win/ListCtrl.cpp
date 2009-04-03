@@ -53,8 +53,10 @@
 #include "ListData.h"
 
 #include "res/CalEmpty.xpm"
-#include "res/HdrUp.xpm"
+#include "res/checked.xpm"
 #include "res/HdrDown.xpm"
+#include "res/HdrUp.xpm"
+#include "res/unchecked.xpm"
 
 
 IMPLEMENT_CLASS(CReportListCtrl, wxListView)
@@ -327,4 +329,159 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 		if (iter != m_OwnerData.end())
 			m_OwnerData.erase(iter);
 	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+IMPLEMENT_CLASS(CCheckListCtrl, wxListView)
+
+
+CCheckListCtrl::CCheckListCtrl(
+		wxWindow *parent,
+		const wxPoint& pos,
+		const wxSize& size,
+		bool bHasChecks)
+	: m_HasChecks(bHasChecks)
+	, m_ImageList(16,16)
+	, m_imgEmpty(-1)
+	, m_imgNoCheck(-1)
+	, m_imgChecked(-1)
+{
+	int flags = wxLC_NO_SORT_HEADER | wxLC_REPORT | wxLC_SORT_ASCENDING;
+	if (!bHasChecks)
+		flags |= wxLC_SINGLE_SEL;
+	Create(parent, wxID_ANY, pos, size, flags);
+	if (bHasChecks)
+	{
+		Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CCheckListCtrl::OnClick));
+		Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CCheckListCtrl::OnKeyDown));
+		m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
+		m_imgNoCheck = m_ImageList.Add(wxIcon(unchecked_xpm));
+		m_imgChecked = m_ImageList.Add(wxIcon(checked_xpm));
+		wxListView::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
+	}
+}
+
+
+bool CCheckListCtrl::HasCheck(long item) const
+{
+	if (m_HasChecks)
+	{
+		wxListItem info;
+		info.SetId(item);
+		info.SetColumn(0);
+		info.SetMask(wxLIST_MASK_IMAGE);
+		if (GetItem(info))
+			return info.m_image != m_imgEmpty;
+	}
+	return false;
+}
+
+
+bool CCheckListCtrl::IsChecked(long item) const
+{
+	if (m_HasChecks)
+	{
+		wxListItem info;
+		info.SetId(item);
+		info.SetColumn(0);
+		info.SetMask(wxLIST_MASK_IMAGE);
+		if (GetItem(info))
+			return info.m_image == m_imgChecked;
+	}
+	return false;
+}
+
+
+bool CCheckListCtrl::SetCheck(long item, bool checked)
+{
+	if (m_HasChecks)
+	{
+		wxListItem info;
+		info.SetId(item);
+		info.SetColumn(0);
+		info.SetMask(wxLIST_MASK_IMAGE);
+		info.m_image = checked ? m_imgChecked : m_imgNoCheck;
+		return SetItem(info);
+	}
+	return false;
+}
+
+
+bool CCheckListCtrl::ClearCheck(long item)
+{
+	if (m_HasChecks)
+	{
+		wxListItem info;
+		info.SetId(item);
+		info.SetColumn(0);
+		info.SetMask(wxLIST_MASK_IMAGE);
+		info.m_image = m_imgEmpty;
+		return SetItem(info);
+	}
+	return false;
+}
+
+
+long CCheckListCtrl::InsertItem(long index, const wxString& label)
+{
+	if (m_HasChecks)
+		return InsertItem(index, label, m_imgNoCheck);
+	else
+		return wxListView::InsertItem(index, label);
+}
+
+
+long CCheckListCtrl::InsertItem(long index, const wxString& label, bool checked)
+{
+	return InsertItem(index, label, checked ? m_imgChecked : m_imgNoCheck);
+}
+
+
+long CCheckListCtrl::InsertItem(long index, const wxString& label, int imageIndex)
+{
+	if (m_HasChecks)
+		return wxListView::InsertItem(index, label, imageIndex);
+	else
+		return wxListView::InsertItem(index, label);
+}
+
+
+void CCheckListCtrl::OnClick(wxMouseEvent& evt)
+{
+	if (m_HasChecks)
+	{
+		int flags = 0;
+		long item = HitTest(evt.GetPosition(), flags);
+		if (wxNOT_FOUND != item && (flags & wxLIST_HITTEST_ONITEMICON))
+		{
+			if (HasCheck(item))
+				SetCheck(item, !IsChecked(item));
+		}
+	}
+	evt.Skip();
+}
+
+
+void CCheckListCtrl::OnKeyDown(wxKeyEvent& evt)
+{
+	if (m_HasChecks)
+	{
+		switch (evt.GetKeyCode())
+		{
+		case WXK_SPACE:
+		case WXK_NUMPAD_SPACE:
+			if (0 < GetSelectedItemCount())
+			{
+				long item = -1;
+				while (-1 != (item = GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED)))
+				{
+					if (HasCheck(item))
+						SetCheck(item, !IsChecked(item));
+				}
+			}
+			break;
+		}
+	}
+	evt.Skip();
 }

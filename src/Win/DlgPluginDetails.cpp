@@ -38,37 +38,34 @@
 #include "stdafx.h"
 #include "DlgPluginDetails.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgPluginDetails")
-#if 0
-#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigCalSite.h"
 #include "DlgCalendarQueryDetail.h"
+#include "Validators.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-
-IMPLEMENT_DYNAMIC(CDlgPluginDetails, CDlgBaseDialog)
+BEGIN_EVENT_TABLE(CDlgPluginDetails, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgPluginDetails::OnOk)
+END_EVENT_TABLE()
 
 
 CDlgPluginDetails::CDlgPluginDetails(
 		ARBConfig& inConfig,
 		ARBConfigCalSitePtr calSite,
-		CWnd* pParent)
-	: CDlgBaseDialog(CDlgPluginDetails::IDD, pParent)
+		wxWindow* pParent)
+	: wxDialog()
 	, m_Config(inConfig)
 	, m_OrigCalSite(calSite)
 	, m_CalSite()
 	, m_strName()
 	, m_strDesc()
 	, m_strSearch()
+	, m_ctrlCodes(NULL)
 	, m_strHelp()
 {
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_CALENDAR_PLUGIN_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+
 	if (calSite)
 	{
 		m_CalSite = calSite->Clone();
@@ -79,53 +76,109 @@ CDlgPluginDetails::CDlgPluginDetails(
 	}
 	else
 		m_CalSite = ARBConfigCalSite::New();
+
+	// Controls (these are done first to control tab order)
+
+	wxStaticText* textName = new wxStaticText(this, wxID_ANY,
+		_("IDC_PLUGINDETAIL_NAME"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textName->Wrap(-1);
+
+	m_ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_strName));
+	m_ctrlName->SetHelpText(_("HIDC_PLUGINDETAIL_NAME"));
+	m_ctrlName->SetToolTip(_("HIDC_PLUGINDETAIL_NAME"));
+
+	wxStaticText* textDesc = new wxStaticText(this, wxID_ANY,
+		_("IDC_PLUGINDETAIL_DESC"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textDesc->Wrap(-1);
+
+	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
+		CTrimValidator(&m_strDesc, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlDesc->SetHelpText(_("HIDC_PLUGINDETAIL_DESC"));
+	ctrlDesc->SetToolTip(_("HIDC_PLUGINDETAIL_DESC"));
+
+	wxStaticText* textSearchURL = new wxStaticText(this, wxID_ANY,
+		_("IDC_PLUGINDETAIL_SEARCH"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textSearchURL->Wrap(-1);
+
+	wxTextCtrl* ctrlSearchURL = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_strSearch, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlSearchURL->SetHelpText(_("HIDC_PLUGINDETAIL_SEARCH"));
+	ctrlSearchURL->SetToolTip(_("HIDC_PLUGINDETAIL_SEARCH"));
+
+	wxStaticText* textHelpURL = new wxStaticText(this, wxID_ANY,
+		_("IDC_PLUGINDETAIL_HELP"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textHelpURL->Wrap(-1);
+
+	wxTextCtrl* ctrlHelpURL = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, 0,
+		CTrimValidator(&m_strHelp, TRIMVALIDATOR_TRIM_BOTH));
+	ctrlHelpURL->SetHelpText(_("HIDC_PLUGINDETAIL_HELP"));
+	ctrlHelpURL->SetToolTip(_("HIDC_PLUGINDETAIL_HELP"));
+
+	wxButton* btnCodes = new wxButton(this, wxID_ANY,
+		_("IDC_PLUGINDETAIL_CODES"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	btnCodes->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgPluginDetails::OnPluginDetailCodes), NULL, this);
+	btnCodes->SetHelpText(_("HIDC_PLUGINDETAIL_CODES"));
+	btnCodes->SetToolTip(_("HIDC_PLUGINDETAIL_CODES"));
+
+	m_ctrlCodes = new wxStaticText(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
+	m_ctrlCodes->Wrap(-1);
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerName = new wxBoxSizer(wxHORIZONTAL);
+	sizerName->Add(textName, 0, wxALIGN_CENTER|wxALL, 5);
+	sizerName->Add(m_ctrlName, 1, wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizerName, 0, wxEXPAND, 5);
+	bSizer->Add(textDesc, 0, wxALL, 5);
+	bSizer->Add(ctrlDesc, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(textSearchURL, 0, wxALL, 5);
+	bSizer->Add(ctrlSearchURL, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(textHelpURL, 0, wxALL, 5);
+	bSizer->Add(ctrlHelpURL, 0, wxALL|wxEXPAND, 5);
+	bSizer->Add(btnCodes, 0, wxALL, 5);
+	bSizer->Add(m_ctrlCodes, 0, wxALL|wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz = GetSize();
+	SetSizeHints(sz, wxSize(-1, sz.y));
+	CenterOnParent();
+
+	SetCodeText();
 }
-
-
-CDlgPluginDetails::~CDlgPluginDetails()
-{
-}
-
-
-void CDlgPluginDetails::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_PLUGINDETAIL_NAME, m_strName);
-	DDX_Text(pDX, IDC_PLUGINDETAIL_DESC, m_strDesc);
-	DDX_Text(pDX, IDC_PLUGINDETAIL_SEARCH, m_strSearch);
-	DDX_Text(pDX, IDC_PLUGINDETAIL_HELP, m_strHelp);
-	DDX_Control(pDX, IDC_PLUGINDETAIL_CODES_TEXT, m_ctrlCodes);
-}
-
-
-BEGIN_MESSAGE_MAP(CDlgPluginDetails, CDlgBaseDialog)
-	ON_BN_CLICKED(IDC_PLUGINDETAIL_CODES, OnPluginDetailCodes)
-END_MESSAGE_MAP()
 
 
 void CDlgPluginDetails::SetCodeText()
 {
-	CString str;
-	str.FormatMessage(m_strCodes, static_cast<int>(m_CalSite->LocationCodes().size()), static_cast<int>(m_CalSite->VenueCodes().size()));
-	m_ctrlCodes.SetWindowText(str);
-}
-
-// CDlgPluginDetails message handlers
-
-BOOL CDlgPluginDetails::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-	m_ctrlCodes.GetWindowText(m_strCodes);
-	SetCodeText();
-	return TRUE;	// return TRUE unless you set the focus to a control
-					// EXCEPTION: OCX Property Pages should return FALSE
+	wxString str = wxString::Format(_("IDC_PLUGINDETAIL_CODES_TEXT"),
+		static_cast<int>(m_CalSite->LocationCodes().size()),
+		static_cast<int>(m_CalSite->VenueCodes().size()));
+	m_ctrlCodes->SetLabel(str);
 }
 
 
-void CDlgPluginDetails::OnPluginDetailCodes()
+void CDlgPluginDetails::OnPluginDetailCodes(wxCommandEvent& evt)
 {
 	CDlgCalendarQueryDetail dlg(m_Config, m_CalSite->LocationCodes(), m_CalSite->VenueCodes(), this);
-	if (IDOK == dlg.DoModal())
+	if (wxID_OK == dlg.ShowModal())
 	{
 		m_CalSite->RemoveAllLocationCodes();
 		std::map<tstring, tstring>::const_iterator i;
@@ -143,20 +196,21 @@ void CDlgPluginDetails::OnPluginDetailCodes()
 }
 
 
-void CDlgPluginDetails::OnOK()
+void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!Validate() || !TransferDataFromWindow())
 		return;
-	m_CalSite->SetName((LPCTSTR)m_strName);
-	m_CalSite->SetDescription((LPCTSTR)m_strDesc);
-	m_CalSite->SetSearchURL((LPCTSTR)m_strSearch);
-	m_CalSite->SetHelpURL((LPCTSTR)m_strHelp);
+
+	m_CalSite->SetName(m_strName.c_str());
+	m_CalSite->SetDescription(m_strDesc.c_str());
+	m_CalSite->SetSearchURL(m_strSearch.c_str());
+	m_CalSite->SetHelpURL(m_strHelp.c_str());
 
 	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName())
 	&& m_Config.GetCalSites().FindSite(m_CalSite->GetName()))
 	{
-		AfxMessageBox(IDS_NAME_IN_USE, MB_ICONWARNING);
-		GotoDlgCtrl(GetDlgItem(IDC_PLUGINDETAIL_NAME));
+		wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+		m_ctrlName->SetFocus();
 		return;
 	}
 
@@ -164,6 +218,5 @@ void CDlgPluginDetails::OnOK()
 		*m_OrigCalSite = *m_CalSite;
 	else
 		m_Config.GetCalSites().AddSite(m_CalSite);
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif

@@ -561,7 +561,7 @@ bool CDlgListCtrl::Create(
 	m_imgEnteredTentative = m_ctrlList->AddIcon(wxIcon(CalEnteredTentative_xpm));
 	m_ctrlList->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgListCtrl::OnItemSelected), NULL, this);
 	m_ctrlList->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgListCtrl::OnDoubleClick), NULL, this);
-	m_ctrlList->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgListCtrl::OnKeyDown), NULL, this);
+	m_ctrlList->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgListCtrl::OnKeyDown), NULL, this);
 	m_ctrlList->SetHelpText(_("HIDC_LIST"));
 	m_ctrlList->SetToolTip(_("HIDC_LIST"));
 
@@ -778,7 +778,7 @@ void CDlgListCtrl::OnDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CDlgListCtrl::OnKeyDown(wxListEvent& evt)
+void CDlgListCtrl::OnKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{

@@ -378,7 +378,7 @@ bool CAgilityBookTrainingView::Create(
 	m_Ctrl = new CReportListCtrl(parentCtrl, false);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookTrainingView::OnCtrlColumnClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookTrainingView::OnCtrlDoubleClick), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CAgilityBookTrainingView::OnCtrlKeyDown), NULL, this);
+	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookTrainingView::OnCtrlKeyDown), NULL, this);
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 
@@ -607,7 +607,7 @@ void CAgilityBookTrainingView::OnCtrlDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CAgilityBookTrainingView::OnCtrlKeyDown(wxListEvent& evt)
+void CAgilityBookTrainingView::OnCtrlKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{

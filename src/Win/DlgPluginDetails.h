@@ -38,54 +38,31 @@
  */
 
 #include "ARBConfigCalSite.h"
-//#include "DlgBaseDialog.h"
 class ARBConfig;
 
-class CDlgPluginDetails
+
+class CDlgPluginDetails : public wxDialog
 {
 public:
 	CDlgPluginDetails(
 			ARBConfig& inConfig,
 			ARBConfigCalSitePtr calSite,
-			wxWindow* pParent = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgPluginDetails"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
-class CDlgPluginDetails : public CDlgBaseDialog
-{
-	DECLARE_DYNAMIC(CDlgPluginDetails)
-
-public:
-	CDlgPluginDetails(ARBConfig& inConfig, ARBConfigCalSitePtr calSite, CWnd* pParent = NULL);
-	virtual ~CDlgPluginDetails();
+			wxWindow* pParent = NULL);
 
 private:
-// Dialog Data
-	enum { IDD = IDD_CALENDAR_PLUGIN_DETAIL };
-	CString m_strName;
-	CString m_strDesc;
-	CString m_strSearch;
-	CString m_strHelp;
-	CStatic m_ctrlCodes;
+	void SetCodeText();
+
 	ARBConfig& m_Config;
 	ARBConfigCalSitePtr m_OrigCalSite;
 	ARBConfigCalSitePtr m_CalSite;
-	CString m_strCodes;
+	wxTextCtrl* m_ctrlName;
+	wxString m_strName;
+	wxString m_strDesc;
+	wxString m_strSearch;
+	wxStaticText* m_ctrlCodes;
+	wxString m_strHelp;
 
-	void SetCodeText();
-
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
-	virtual BOOL OnInitDialog();
-	afx_msg void OnPluginDetailCodes();
-	virtual void OnOK();
-
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnPluginDetailCodes(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

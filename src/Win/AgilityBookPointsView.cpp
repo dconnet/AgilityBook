@@ -210,7 +210,7 @@ bool CAgilityBookPointsView::Create(
 {
 	m_Ctrl = new CReportListCtrl(parentCtrl, false, CReportListCtrl::eNoSortHeader);
 	m_Ctrl->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookPointsView::OnCtrlDoubleClick), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CAgilityBookPointsView::OnCtrlKeyDown), NULL, this);
+	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookPointsView::OnCtrlKeyDown), NULL, this);
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 
@@ -388,7 +388,7 @@ void CAgilityBookPointsView::OnCtrlDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CAgilityBookPointsView::OnCtrlKeyDown(wxListEvent& evt)
+void CAgilityBookPointsView::OnCtrlKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{

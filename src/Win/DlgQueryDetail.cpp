@@ -38,146 +38,165 @@
 #include "stdafx.h"
 #include "DlgQueryDetail.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CDlgQueryDetail")
-#if 0
-#include "AgilityBook.h"
 #include "ARBConfig.h"
+#include "ComboBoxes.h"
+#include "Validators.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgQueryDetail dialog
+BEGIN_EVENT_TABLE(CDlgQueryDetail, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgQueryDetail::OnOk)
+END_EVENT_TABLE()
+
 
 CDlgQueryDetail::CDlgQueryDetail(
+		bool bReadOnly,
 		const wxChar* inCode,
 		const wxChar* inName,
-		CWnd* pParent,
+		wxWindow* pParent,
 		ARBConfig const* inConfig)
-	: CDlgBaseDialog(CDlgQueryDetail::IDD, pParent)
-	, m_strCode(inCode)
-	, m_strName(inName)
-	, m_ctrlVenues(true)
-	, m_strVenue(inName)
+	: wxDialog()
+	, m_ReadOnly(bReadOnly)
 	, m_Config(inConfig)
+	, m_strCode(inCode)
+	, m_ctrlCode(NULL)
+	, m_strName(inName)
+	, m_ctrlVenues(NULL)
 	, m_Code(inCode)
 	, m_Name(inName)
 {
-}
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	wxDialog::Create(pParent, wxID_ANY, _("IDD_QUERY_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
+	// Controls (these are done first to control tab order)
 
-void CDlgQueryDetail::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBaseDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDlgQueryDetail)
-	DDX_Control(pDX, IDC_QUERYDETAIL_CODE, m_ctrlCode);
-	DDX_Text(pDX, IDC_QUERYDETAIL_CODE, m_strCode);
-	DDX_Control(pDX, IDC_QUERYDETAIL_NAME_TEXT, m_ctrlNameText);
-	DDX_Control(pDX, IDC_QUERYDETAIL_NAME, m_ctrlName);
-	DDX_Text(pDX, IDC_QUERYDETAIL_NAME, m_strName);
-	DDX_Control(pDX, IDC_QUERYDETAIL_COMBO, m_ctrlVenues);
-	DDX_Text(pDX, IDC_QUERYDETAIL_COMBO, m_strVenue);
-	//}}AFX_DATA_MAP
-}
+	wxStaticText* textCode = new wxStaticText(this, wxID_ANY,
+		_("IDC_QUERYDETAIL_CODE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textCode->Wrap(-1);
 
+	m_ctrlCode = new wxTextCtrl(this, wxID_ANY, m_strCode,
+		wxDefaultPosition, wxDefaultSize, 0);
+	if (bReadOnly)
+		m_ctrlCode->SetEditable(false);
+	else
+		m_ctrlCode->SetValidator(CTrimValidator(&m_strCode, TRIMVALIDATOR_TRIM_BOTH));
+	m_ctrlCode->SetHelpText(_("HIDC_QUERYDETAIL_CODE"));
+	m_ctrlCode->SetToolTip(_("HIDC_QUERYDETAIL_CODE"));
 
-BEGIN_MESSAGE_MAP(CDlgQueryDetail, CDlgBaseDialog)
-	//{{AFX_MSG_MAP(CDlgQueryDetail)
-	ON_CBN_SELCHANGE(IDC_QUERYDETAIL_COMBO, OnCbnSelchangeQuerydetailCombo)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+	wxStaticText* textLocation = new wxStaticText(this, wxID_ANY,
+		m_Config ? _("IDS_COL_VENUE") : _("IDS_COL_LOCATION"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textLocation->Wrap(-1);
 
-/////////////////////////////////////////////////////////////////////////////
-// CDlgQueryDetail message handlers
-
-BOOL CDlgQueryDetail::OnInitDialog()
-{
-	CDlgBaseDialog::OnInitDialog();
-
-	CString str;
-	if (m_Config)
+	wxWindow* ctrlLocationOrVenue = NULL;
+	if (!bReadOnly && m_Config)
 	{
-		str.LoadString(IDS_COL_VENUE);
-		m_ctrlName.ShowWindow(SW_HIDE);
-		m_ctrlVenues.Initialize(m_Config->GetVenues(), m_Name.empty() ? m_Code : m_Name, true);
+		if (m_Name.empty())
+			m_strName = m_strCode;
+		m_ctrlVenues = new CVenueComboBox(this,
+			m_Config->GetVenues(), wxEmptyString, true,
+			CTrimValidator(&m_strName, TRIMVALIDATOR_TRIM_BOTH), true);
+		m_ctrlVenues->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgQueryDetail::OnSelchangeVenues), NULL, this);
+		m_ctrlVenues->SetHelpText(_("HIDC_QUERYDETAIL_COMBO"));
+		m_ctrlVenues->SetToolTip(_("HIDC_QUERYDETAIL_COMBO"));
+		ctrlLocationOrVenue = m_ctrlVenues;
 	}
 	else
 	{
-		str.LoadString(IDS_COL_LOCATION);
-		m_ctrlVenues.ShowWindow(SW_HIDE);
+		wxTextCtrl* ctrlLocation = new wxTextCtrl(this, wxID_ANY, m_strName,
+			wxDefaultPosition, wxSize(200, -1), 0);
+		if (bReadOnly)
+			ctrlLocation->SetEditable(false);
+		else
+			ctrlLocation->SetValidator(CTrimValidator(&m_strName, TRIMVALIDATOR_TRIM_BOTH));
+		ctrlLocation->SetHelpText(_("HIDC_QUERYDETAIL_NAME"));
+		ctrlLocation->SetToolTip(_("HIDC_QUERYDETAIL_NAME"));
+		ctrlLocationOrVenue = ctrlLocation;
 	}
-	m_ctrlNameText.SetWindowText(str);
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerCode = new wxBoxSizer(wxHORIZONTAL);
+	sizerCode->Add(textCode, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerCode->Add(m_ctrlCode, 0, wxALL, 5);
+
+	bSizer->Add(sizerCode, 1, wxEXPAND, 5);
+
+	wxBoxSizer* sizerVenue = new wxBoxSizer(wxHORIZONTAL);
+	sizerVenue->Add(textLocation, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerVenue->Add(ctrlLocationOrVenue, 1, wxALL, 5);
+
+	bSizer->Add(sizerVenue, 1, wxEXPAND, 5);
+
+	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
+	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	Layout();
+	GetSizer()->Fit(this);
+	wxSize sz = GetSize();
+	SetSizeHints(sz, wxSize(-1, sz.y));
+	CenterOnParent();
 }
 
 
-void CDlgQueryDetail::OnCbnSelchangeQuerydetailCombo()
+void CDlgQueryDetail::OnSelchangeVenues(wxCommandEvent& evt)
 {
-	int idx = m_ctrlVenues.GetCurSel();
+	int idx = m_ctrlVenues->GetSelection();
 	if (0 <= idx)
 	{
-		CListData* pRawData = m_ctrlVenues.GetData(idx);
-		CListPtrData<ARBConfigVenuePtr>* pData = dynamic_cast<CListPtrData<ARBConfigVenuePtr>*>(pRawData);
-		if (pData)
+		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(idx);
+		if (pVenue)
 		{
-			if (m_strCode != pData->GetData()->GetName().c_str())
+			if (m_strCode != pVenue->GetName().c_str())
 			{
+				TransferDataFromWindow();
 				// Yes, this will kill the existing code. In general, most
 				// sites will probably use the same acronyms I am. So I'm
 				// just not going to worry about this.
-				m_strCode = pData->GetData()->GetName().c_str();
-				UpdateData(FALSE);
+				m_strCode = pVenue->GetName().c_str();
+				TransferDataToWindow();
 			}
 		}
 	}
 }
 
 
-void CDlgQueryDetail::OnOK()
+void CDlgQueryDetail::OnOk(wxCommandEvent& evt)
 {
-	if (!UpdateData(TRUE))
+	if (!m_ReadOnly)
+	{
+		if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_strCode.TrimRight();
-	m_strCode.TrimLeft();
-	m_strName.TrimRight();
-	m_strName.TrimLeft();
-	m_strVenue.TrimRight();
-	m_strVenue.TrimLeft();
+		if (m_Config && m_strCode.empty())
+			m_strCode = m_strName;
+		if (m_strCode.empty())
+		{
+			wxBell();
+			m_ctrlCode->SetFocus();
+			wxMessageBox(_("IDS_NEED_VALUE"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION);
+			return;
+		}
 
-	if (m_Config && m_strCode.IsEmpty())
-		m_strCode = m_strVenue;
-	if (m_strCode.IsEmpty())
-	{
-		MessageBeep(0);
-		GotoDlgCtrl(GetDlgItem(IDC_QUERYDETAIL_CODE));
-		return;
+		m_Code = m_strCode.c_str();
+		m_Name = m_strName.c_str();
+		if (m_Config)
+		{
+			// If there's no name, use the code.
+			if (m_Name.empty())
+				m_Name = m_Code;
+			// If no code, use the name.
+			if (m_Code.empty())
+				m_Code = m_Name;
+			// Do not verify against our venues. Originally, we set the name
+			// to the code if the code was one of our venues - but it's
+			// possible that the code someone uses may map to one of our
+			// codes, but actually be a different venue.
+		}
 	}
 
-	m_Code = (LPCTSTR)m_strCode;
-	if (m_Config)
-		m_Name = (LPCTSTR)m_strVenue;
-	else
-		m_Name = (LPCTSTR)m_strName;
-	if (m_Config)
-	{
-		// If there's no name, use the code.
-		if (m_Name.empty())
-			m_Name = m_Code;
-		// If no code, use the name.
-		if (m_Code.empty())
-			m_Code = m_Name;
-		// Do not verify against our venues. Originally, we set the name to
-		// the code if the code was one of our venues - but it's possible that
-		// the code someone uses may map to one of our codes, but actually be
-		// a different venue.
-	}
-
-	CDlgBaseDialog::OnOK();
+	EndDialog(wxID_OK);
 }
-#endif

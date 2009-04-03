@@ -195,7 +195,7 @@ CDlgTrial::CDlgTrial(
 		true, CReportListCtrl::eNoSortHeader, true);
 	m_ctrlClubs->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgTrial::OnItemSelectedClubs), NULL, this);
 	m_ctrlClubs->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgTrial::OnDblclkClubs), NULL, this);
-	m_ctrlClubs->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgTrial::OnKeydownClubs), NULL, this);
+	m_ctrlClubs->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgTrial::OnKeydownClubs), NULL, this);
 	m_ctrlClubs->SetHelpText(_("HIDC_TRIAL_CLUBS"));
 	m_ctrlClubs->SetToolTip(_("HIDC_TRIAL_CLUBS"));
 
@@ -419,7 +419,7 @@ void CDlgTrial::OnDblclkClubs(wxMouseEvent& evt)
 }
 
 
-void CDlgTrial::OnKeydownClubs(wxListEvent& evt)
+void CDlgTrial::OnKeydownClubs(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
@@ -430,6 +430,7 @@ void CDlgTrial::OnKeydownClubs(wxListEvent& evt)
 		EditClub();
 		break;
 	}
+	evt.Skip();
 }
 
 

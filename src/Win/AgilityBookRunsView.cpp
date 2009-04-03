@@ -1294,7 +1294,7 @@ bool CAgilityBookRunsView::Create(
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookRunsView::OnCtrlColumnClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CAgilityBookRunsView::OnCtrlItemSelected), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookRunsView::OnCtrlDoubleClick), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CAgilityBookRunsView::OnCtrlKeyDown), NULL, this);
+	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookRunsView::OnCtrlKeyDown), NULL, this);
 	m_imgCourse = m_Ctrl->AddIcon(wxIcon(AgilityBook16_xpm));
 	m_imgMap = m_Ctrl->AddIcon(wxIcon(crcd_xpm));
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
@@ -1608,7 +1608,7 @@ void CAgilityBookRunsView::OnCtrlDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CAgilityBookRunsView::OnCtrlKeyDown(wxListEvent& evt)
+void CAgilityBookRunsView::OnCtrlKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
