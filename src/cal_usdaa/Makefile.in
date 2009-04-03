@@ -28,18 +28,18 @@ INCLUDES = -DWXWIDGETS -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCD
 ##########
 # List of programs and archives to link
 ##########
-SHAREDLIBS = libcalusdaa
+SHAREDLIBS = libcal_usdaa
 
 ##########
 # Source files for each target
 ##########
-libcalusdaa_SRCS = \
+libcal_usdaa_SRCS = \
 	CalendarSite.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-libcalusdaa_LDFLAGS = -ltidy -larb -L$(TOPBUILDDIR)/src/ARB `wx-config --libs`
+libcal_usdaa_LDFLAGS = -ltidy -larb -L$(TOPBUILDDIR)/src/ARB `wx-config --libs`
 
 ##########
 # Precompiled headers
@@ -54,6 +54,10 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 #INSTALL_MAN = prog1.5
 
 @NAM_RULES@
+
+dist: libcal_usdaa.@SHAREDLIBEXT@
+# Mac OS dist
+	cp libcal_usdaa.@SHAREDLIBEXT@  $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/
 
 ################################################################################
 # End of File: Makefile                                                        #
