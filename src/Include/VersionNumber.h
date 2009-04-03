@@ -43,6 +43,13 @@
  * Since this file is only used in the rc2 file, just include it there.
  * This keeps all editors/compilers happy.
  *
+ * The build number is now defined as the number of days since ARB was
+ * born (Dec 28, 2002). This is calculated using CalcBuildNumber.py:
+ *   import datetime
+ *   print (datetime.date.today() - datetime.date(2002,12,28)).days
+ *
+ * IMPORTANT: When updating the version, also update ..\..\configure.in
+ *
  * Revision History
  * @li 2008-01-10 DRC Added note
  * @li 2007-12-25 DRC Created
@@ -55,7 +62,7 @@
 #define ARB_VER_MAJOR					2
 #define ARB_VER_MINOR					0
 #define ARB_VER_DOT						0
-#define ARB_VER_BUILD					0
+#define ARB_VER_BUILD					2288
 
 #define ARB_VER_STR_MAJOR				STR(ARB_VER_MAJOR)
 #define ARB_VER_STR_MINOR				STR(ARB_VER_MINOR)
