@@ -79,7 +79,7 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 	wxTreeCtrl::Create(pParent, wxID_ANY, pos, size,
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
 	Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CCheckTreeCtrl::OnClick), NULL, this);
-	Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CCheckTreeCtrl::OnKeyDown), NULL, this);
+	Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CCheckTreeCtrl::OnKeyDown), NULL, this);
 
 	m_stateNone = m_stateList.Add(wxIcon(CalEmpty_xpm));
 	m_stateUnChecked = m_stateList.Add(wxIcon(unchecked_xpm));
@@ -238,7 +238,7 @@ void CCheckTreeCtrl::OnClick(wxMouseEvent& evt)
 }
 
 
-void CCheckTreeCtrl::OnKeyDown(wxTreeEvent& evt)
+void CCheckTreeCtrl::OnKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
@@ -255,4 +255,5 @@ void CCheckTreeCtrl::OnKeyDown(wxTreeEvent& evt)
 		}
 		break;
 	}
+	evt.Skip();
 }

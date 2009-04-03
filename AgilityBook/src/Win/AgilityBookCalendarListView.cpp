@@ -573,7 +573,7 @@ bool CAgilityBookCalendarListView::Create(
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlColumnClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlItemSelected), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookCalendarListView::OnCtrlDoubleClick), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlKeyDown), NULL, this);
+	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookCalendarListView::OnCtrlKeyDown), NULL, this);
 	m_imgTentative = m_Ctrl->AddIcon(wxIcon(CalTentative_xpm));
 	m_imgPlan = m_Ctrl->AddIcon(wxIcon(CalPlan_xpm));
 	m_imgPlanTentative = m_Ctrl->AddIcon(wxIcon(CalPlanTentative_xpm));
@@ -892,7 +892,7 @@ void CAgilityBookCalendarListView::OnCtrlDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CAgilityBookCalendarListView::OnCtrlKeyDown(wxListEvent& evt)
+void CAgilityBookCalendarListView::OnCtrlKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{

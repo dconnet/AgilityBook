@@ -294,7 +294,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
 	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgConfigVenue::OnSelectionChanged), NULL, this);
 	m_ctrlItems->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigVenue::OnDblclk), NULL, this);
-	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CDlgConfigVenue::OnKeydown), NULL, this);
+	m_ctrlItems->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgConfigVenue::OnKeydown), NULL, this);
 	//m_ctrlItems->SetHelpText(_(""));
 	//m_ctrlItems->SetToolTip(_(""));
 
@@ -504,7 +504,7 @@ void CDlgConfigVenue::OnSelectionChanged(wxTreeEvent& evt)
 }
 
 
-void CDlgConfigVenue::OnKeydown(wxTreeEvent& evt)
+void CDlgConfigVenue::OnKeydown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{

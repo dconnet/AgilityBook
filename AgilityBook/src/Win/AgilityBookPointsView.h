@@ -101,7 +101,7 @@ private:
 
 	DECLARE_EVENT_TABLE()
 	void OnCtrlDoubleClick(wxMouseEvent& evt);
-	void OnCtrlKeyDown(wxListEvent& evt);
+	void OnCtrlKeyDown(wxKeyEvent& evt);
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);

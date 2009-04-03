@@ -355,7 +355,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		true, CReportListCtrl::eNoSortHeader, true);
 	m_ctrlPlacement->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgConfigEventMethod::OnItemchangedPlacement), NULL, this);
 	m_ctrlPlacement->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigEventMethod::OnDblclkPlacement), NULL, this);
-	m_ctrlPlacement->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgConfigEventMethod::OnKeydownPlacement), NULL, this);
+	m_ctrlPlacement->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgConfigEventMethod::OnKeydownPlacement), NULL, this);
 	m_ctrlPlacement->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT"));
 	m_ctrlPlacement->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT"));
 	m_ctrlPlacement->InsertColumn(0, _("IDS_COL_PLACE"));
@@ -800,7 +800,7 @@ void CDlgConfigEventMethod::OnDblclkPlacement(wxMouseEvent& evt)
 }
 
 
-void CDlgConfigEventMethod::OnKeydownPlacement(wxListEvent& evt)
+void CDlgConfigEventMethod::OnKeydownPlacement(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
@@ -811,6 +811,7 @@ void CDlgConfigEventMethod::OnKeydownPlacement(wxListEvent& evt)
 		DoPlacementEdit();
 		break;
 	}
+	evt.Skip();
 }
 
 

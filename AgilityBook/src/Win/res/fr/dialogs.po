@@ -201,6 +201,63 @@ msgstr "Supprimer"
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Quitter"
 
+# DlgPluginDetails
+msgid "IDD_CALENDAR_PLUGIN_DETAIL"
+msgstr "Détails Plugin"
+
+msgid "IDC_PLUGINDETAIL_NAME"
+msgstr "Nom"
+
+msgid "IDC_PLUGINDETAIL_DESC"
+msgstr "Description"
+
+msgid "IDC_PLUGINDETAIL_SEARCH"
+msgstr "Chercher URL\n  !L!: Rajouter les codes endroit sélectionnés: 'code1+code2+...'\n  !V!: Rajouter les codes organisation sélectionnés: 'code1+code2+...'"
+
+msgid "IDC_PLUGINDETAIL_HELP"
+msgstr "Aide URL\n  Si configuré, utilisé pour donner info supplémentaire."
+
+msgid "IDC_PLUGINDETAIL_CODES"
+msgstr "Codes..."
+
+msgid "IDC_PLUGINDETAIL_CODES_TEXT"
+msgstr "%1$d Code(s) Endroit et %2$d Organisation"
+
+# DlgCalendarQueryDetail
+msgid "IDD_CALENDAR_QUERY_DETAIL"
+msgstr "Détails Query"
+
+msgid "IDC_QUERY_LOCATIONS"
+msgstr "Codes Endroit"
+
+msgid "IDC_QUERY_LOCCODE_NEW"
+msgstr "Nouveau..."
+
+msgid "IDC_QUERY_LOCCODE_EDIT"
+msgstr "Édition..."
+
+msgid "IDC_QUERY_LOCCODE_DELETE"
+msgstr "Supprimer"
+
+msgid "IDC_QUERY_VENUES"
+msgstr "Codes Organisation"
+
+msgid "IDC_QUERY_VENUE_NEW"
+msgstr "Nouveau..."
+
+msgid "IDC_QUERY_VENUE_EDIT"
+msgstr "Édition..."
+
+msgid "IDC_QUERY_VENUE_DELETE"
+msgstr "Supprimer"
+
+# DlgQueryDetail
+msgid "IDD_QUERY_DETAIL"
+msgstr "Détails Query"
+
+msgid "IDC_QUERYDETAIL_CODE"
+msgstr "Code"
+
 # DlgClub
 msgid "IDD_CLUB"
 msgstr "Club"

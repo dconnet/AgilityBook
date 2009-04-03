@@ -37,59 +37,14 @@
  * @li 2007-10-05 DRC Created
  */
 
-//#include "DlgBaseDialog.h"
-//#include "ListCtrl.h"
 #include "ARBTypes.h"
 #include <map>
 #include <vector>
 class ARBConfig;
+class CCheckListCtrl;
 
 
-class CDlgCalendarQueryDetail
-{
-public:
-	CDlgCalendarQueryDetail(
-			ARBConfig const& inConfig,
-			std::map<tstring, tstring> const& inLocCodes,
-			std::map<tstring, tstring> const& inVenueCodes,
-			wxWindow* pParent = NULL) {}
-	CDlgCalendarQueryDetail(
-			ARBConfig const& inConfig,
-			std::map<tstring, tstring> const& inLocCodes,
-			std::vector<tstring> const& inSelectedLocCodes,
-			std::map<tstring, tstring> const& inVenueCodes,
-			std::vector<tstring> const& inSelectedVenueCodes,
-			wxWindow* pParent = NULL) {}
-	std::map<tstring, tstring> const& GetLocationCodes() const
-	{
-		return m_LocCodes;
-	}
-	std::map<tstring, tstring> const& GetVenueCodes() const
-	{
-		return m_VenueCodes;
-	}
-	std::vector<tstring> const& GetSelectedLocationCodes() const
-	{
-		return m_Locations;
-	}
-	std::vector<tstring> const& GetSelectedVenueCodes() const
-	{
-		return m_Venues;
-	}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgCalendarQueryDetail"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-private:
-	std::map<tstring, tstring> m_LocCodes;
-	std::map<tstring, tstring> m_VenueCodes;
-	std::vector<tstring> m_Locations;
-	std::vector<tstring> m_Venues;
-};
-
-#if 0
-class CDlgCalendarQueryDetail : public CDlgBaseDialog
+class CDlgCalendarQueryDetail : public wxDialog
 {
 public:
 	// For configuring what codes are available
@@ -97,7 +52,7 @@ public:
 			ARBConfig const& inConfig,
 			std::map<tstring, tstring> const& inLocCodes,
 			std::map<tstring, tstring> const& inVenueCodes,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 	// For selecting from available list
 	CDlgCalendarQueryDetail(
 			ARBConfig const& inConfig,
@@ -105,7 +60,7 @@ public:
 			std::vector<tstring> const& inSelectedLocCodes,
 			std::map<tstring, tstring> const& inVenueCodes,
 			std::vector<tstring> const& inSelectedVenueCodes,
-			CWnd* pParent = NULL);
+			wxWindow* pParent = NULL);
 
 	std::map<tstring, tstring> const& GetLocationCodes() const
 	{
@@ -125,48 +80,36 @@ public:
 	}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgCalendarQueryDetail)
-	enum { IDD = IDD_CALENDAR_QUERY_DETAIL };
-	CListCtrl2	m_ctrlLocations;
-	CListCtrl2	m_ctrlVenues;
-	CButton	m_ctrlNewLoc;
-	CButton	m_ctrlEditLoc;
-	CButton	m_ctrlDeleteLoc;
-	CButton	m_ctrlNewVenue;
-	CButton	m_ctrlEditVenue;
-	CButton	m_ctrlDeleteVenue;
-	//}}AFX_DATA
+	void Create(wxWindow* pParent);
+	void UpdateButtons();
+	void EditLocationCode();
+	void EditVenueCode();
+
 	bool m_EditCodes;
 	ARBConfig const& m_Config;
 	std::map<tstring, tstring> m_LocCodes;
 	std::map<tstring, tstring> m_VenueCodes;
 	std::vector<tstring> m_Locations;
 	std::vector<tstring> m_Venues;
+	CCheckListCtrl* m_ctrlLocations;
+	CCheckListCtrl* m_ctrlVenues;
+	wxButton* m_ctrlNewLoc;
+	wxButton* m_ctrlEditLoc;
+	wxButton* m_ctrlDeleteLoc;
+	wxButton* m_ctrlNewVenue;
+	wxButton* m_ctrlEditVenue;
+	wxButton* m_ctrlDeleteVenue;
 
-	void UpdateButtons();
-
-	//{{AFX_VIRTUAL(CDlgCalendarQueryDetail)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgCalendarQueryDetail)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnNMDblclkQueryLocations(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnLvnItemchangedQueryLocations(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnNMDblclkQueryVenues(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnLvnItemchangedQueryVenues(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnNewLocationCode();
-	afx_msg void OnEditLocationCode();
-	afx_msg void OnDeleteLocationCode();
-	afx_msg void OnNewVenueCode();
-	afx_msg void OnEditVenueCode();
-	afx_msg void OnDeleteVenueCode();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnLocationsItemSelected(wxListEvent& evt);
+	void OnLocationsDoubleClick(wxMouseEvent& evt);
+	void OnVenuesItemSelected(wxListEvent& evt);
+	void OnVenuesDoubleClick(wxMouseEvent& evt);
+	void OnNewLocationCode(wxCommandEvent& evt);
+	void OnEditLocationCode(wxCommandEvent& evt);
+	void OnDeleteLocationCode(wxCommandEvent& evt);
+	void OnNewVenueCode(wxCommandEvent& evt);
+	void OnEditVenueCode(wxCommandEvent& evt);
+	void OnDeleteVenueCode(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

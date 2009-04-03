@@ -37,68 +37,35 @@
  * @li 2007-12-24 DRC Created
  */
 
-//#include "ComboBox.h"
-//#include "DlgBaseDialog.h"
-//#include <map>
+#include "ARBTypes.h"
 class ARBConfig;
+class CVenueComboBox;
 
 
-class CDlgQueryDetail
+class CDlgQueryDetail : public wxDialog
 {
 public:
 	CDlgQueryDetail(
+			bool bReadOnly,
 			wxChar const* inCode,
 			wxChar const* inName,
 			wxWindow* pParent = NULL,
 			ARBConfig const* inConfig = NULL); // Only set when using venues
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CDlgQueryDetail"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
 
-#if 0
-class CDlgQueryDetail : public CDlgBaseDialog
-{
-public:
-	CDlgQueryDetail(
-			const wxChar* inCode,
-			const wxChar* inName,
-			CWnd* pParent = NULL,
-			ARBConfig const* inConfig = NULL); // Only set when using venues
-
-	tstring const& GetCode() const		{return m_Code;}
-	tstring const& GetName() const		{return m_Name;}
+	tstring const& GetDetailCode() const		{return m_Code;}
+	tstring const& GetDetailName() const		{return m_Name;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CDlgQueryDetail)
-	enum { IDD = IDD_QUERY_DETAIL };
-	CEdit m_ctrlCode;
-	CString m_strCode;
-	CStatic m_ctrlNameText;
-	CEdit m_ctrlName;
-	CString m_strName;
-	CVenueComboBox m_ctrlVenues;
-	CString m_strVenue;
-	//}}AFX_DATA
+	bool m_ReadOnly;
 	ARBConfig const* m_Config;
+	wxString m_strCode;
+	wxTextCtrl* m_ctrlCode;
+	wxString m_strName;
+	CVenueComboBox* m_ctrlVenues;
 	tstring m_Code;
 	tstring m_Name;
 
-	//{{AFX_VIRTUAL(CDlgQueryDetail)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDlgQueryDetail)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnCbnSelchangeQuerydetailCombo();
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	DECLARE_EVENT_TABLE()
+	void OnSelchangeVenues(wxCommandEvent& evt);
+	void OnOk(wxCommandEvent& evt);
 };
-#endif

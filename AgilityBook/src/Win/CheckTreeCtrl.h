@@ -80,7 +80,7 @@ private:
 	int m_stateChecked;
 
 	void OnClick(wxMouseEvent& evt);
-	void OnKeyDown(wxTreeEvent& evt);
+	void OnKeyDown(wxKeyEvent& evt);
 };
 
 BEGIN_DECLARE_EVENT_TYPES()

@@ -200,6 +200,63 @@ msgstr "Delete"
 msgid "IDC_PLUGIN_CLOSE"
 msgstr "Close"
 
+# DlgPluginDetails
+msgid "IDD_CALENDAR_PLUGIN_DETAIL"
+msgstr "Plugin Details"
+
+msgid "IDC_PLUGINDETAIL_NAME"
+msgstr "Name"
+
+msgid "IDC_PLUGINDETAIL_DESC"
+msgstr "Description"
+
+msgid "IDC_PLUGINDETAIL_SEARCH"
+msgstr "Search URL\n  !L!: Add selected location codes: 'code1+code2+...'\n  !V!: Add selected venue codes: 'code1+code2+...'"
+
+msgid "IDC_PLUGINDETAIL_HELP"
+msgstr "Help URL\n  If set, used to provide user with additional details"
+
+msgid "IDC_PLUGINDETAIL_CODES"
+msgstr "Codes..."
+
+msgid "IDC_PLUGINDETAIL_CODES_TEXT"
+msgstr "%1$d Location and %2$d Venue Code(s)"
+
+# DlgCalendarQueryDetail
+msgid "IDD_CALENDAR_QUERY_DETAIL"
+msgstr "Query Detail"
+
+msgid "IDC_QUERY_LOCATIONS"
+msgstr "Location Codes"
+
+msgid "IDC_QUERY_LOCCODE_NEW"
+msgstr "New..."
+
+msgid "IDC_QUERY_LOCCODE_EDIT"
+msgstr "Edit..."
+
+msgid "IDC_QUERY_LOCCODE_DELETE"
+msgstr "Delete"
+
+msgid "IDC_QUERY_VENUES"
+msgstr "Venue Codes"
+
+msgid "IDC_QUERY_VENUE_NEW"
+msgstr "New..."
+
+msgid "IDC_QUERY_VENUE_EDIT"
+msgstr "Edit..."
+
+msgid "IDC_QUERY_VENUE_DELETE"
+msgstr "Delete"
+
+# DlgQueryDetail
+msgid "IDD_QUERY_DETAIL"
+msgstr "Query Detail"
+
+msgid "IDC_QUERYDETAIL_CODE"
+msgstr "Code"
+
 # DlgClub
 msgid "IDD_CLUB"
 msgstr "Club"

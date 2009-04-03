@@ -722,7 +722,7 @@ CDlgDog::CDlgDog(
 	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnTitleColumnClick), NULL, this);
 	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnTitleItemSelected), NULL, this);
 	m_ctrlTitles->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgDog::OnTitleDoubleClick), NULL, this);
-	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgDog::OnTitleKeyDown), NULL, this);
+	m_ctrlTitles->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnTitleKeyDown), NULL, this);
 	m_ctrlTitles->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
 	m_ctrlTitles->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
 	m_imgTitlesEmpty = m_ctrlTitles->AddIcon(wxIcon(CalEmpty_xpm));
@@ -776,7 +776,7 @@ CDlgDog::CDlgDog(
 	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnRegNumColumnClick), NULL, this);
 	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnRegNumItemSelected), NULL, this);
 	m_ctrlRegNums->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgDog::OnRegNumDoubleClick), NULL, this);
-	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgDog::OnRegNumKeyDown), NULL, this);
+	m_ctrlRegNums->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnRegNumKeyDown), NULL, this);
 	m_ctrlRegNums->SetHelpText(_("HIDC_DOGNUM_REG_NUMS"));
 	m_ctrlRegNums->SetToolTip(_("HIDC_DOGNUM_REG_NUMS"));
 	for (i = 0; i < nColRegNumInfo; ++i)
@@ -815,7 +815,7 @@ CDlgDog::CDlgDog(
 	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnPointsColumnClick), NULL, this);
 	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnPointsItemSelected), NULL, this);
 	m_ctrlPoints->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgDog::OnPointsDoubleClick), NULL, this);
-	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_KEY_DOWN, wxListEventHandler(CDlgDog::OnPointsKeyDown), NULL, this);
+	m_ctrlPoints->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnPointsKeyDown), NULL, this);
 	m_ctrlPoints->SetHelpText(_("HIDC_DOGPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_DOGPTS_POINTS"));
 	for (i = 0; i < nColExistingPointsInfo; ++i)
@@ -1369,7 +1369,7 @@ void CDlgDog::OnTitleDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CDlgDog::OnTitleKeyDown(wxListEvent& evt)
+void CDlgDog::OnTitleKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
@@ -1443,7 +1443,7 @@ void CDlgDog::OnRegNumDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CDlgDog::OnRegNumKeyDown(wxListEvent& evt)
+void CDlgDog::OnRegNumKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
@@ -1512,7 +1512,7 @@ void CDlgDog::OnPointsDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CDlgDog::OnPointsKeyDown(wxListEvent& evt)
+void CDlgDog::OnPointsKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{

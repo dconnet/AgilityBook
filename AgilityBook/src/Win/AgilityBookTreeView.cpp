@@ -312,7 +312,7 @@ bool CAgilityBookTreeView::Create(
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_ITEM_MENU, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlContextMenu), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlSelectionChanged), NULL, this);
 	m_Ctrl->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookTreeView::OnCtrlDoubleClick), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_TREE_KEY_DOWN, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlKeyDown), NULL, this);
+	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookTreeView::OnCtrlKeyDown), NULL, this);
 	m_Ctrl->SetImageList(&m_ImageList);
 #ifdef WIN32
 	m_Ctrl->SetStateImageList(&m_ImageListStates);
@@ -896,7 +896,7 @@ void CAgilityBookTreeView::OnCtrlDoubleClick(wxMouseEvent& evt)
 }
 
 
-void CAgilityBookTreeView::OnCtrlKeyDown(wxTreeEvent& evt)
+void CAgilityBookTreeView::OnCtrlKeyDown(wxKeyEvent& evt)
 {
 	switch (evt.GetKeyCode())
 	{
@@ -907,7 +907,7 @@ void CAgilityBookTreeView::OnCtrlKeyDown(wxTreeEvent& evt)
 	case WXK_RETURN:
 	case WXK_NUMPAD_ENTER:
 		{
-			CAgilityBookTreeData* pData = GetTreeItem(evt.GetItem());
+			CAgilityBookTreeData* pData = GetCurrentTreeItem();
 			if (pData)
 				pData->Properties();
 		}

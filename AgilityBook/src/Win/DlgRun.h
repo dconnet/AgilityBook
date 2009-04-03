@@ -266,7 +266,7 @@ private:
 	void OnRefRunColumnClick(wxListEvent& evt);
 	void OnRefRunItemSelected(wxListEvent& evt);
 	void OnRefRunDoubleClick(wxMouseEvent& evt);
-	void OnRefRunKeyDown(wxListEvent& evt);
+	void OnRefRunKeyDown(wxKeyEvent& evt);
 	void OnRefRunNew(wxCommandEvent& evt);
 	void OnRefRunAddMe(wxCommandEvent& evt);
 	void OnRefRunEdit(wxCommandEvent& evt);
@@ -279,7 +279,7 @@ private:
 	// Links
 	void OnLinksItemSelected(wxListEvent& evt);
 	void OnLinksDoubleClick(wxMouseEvent& evt);
-	void OnLinksKeyDown(wxListEvent& evt);
+	void OnLinksKeyDown(wxKeyEvent& evt);
 	void OnLinksNew(wxCommandEvent& evt);
 	void OnLinksEdit(wxCommandEvent& evt);
 	void OnLinksDelete(wxCommandEvent& evt);
