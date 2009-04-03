@@ -137,6 +137,8 @@ all:        $(SUBDIRS) $(ALL_TARGETS)
 
 clean::     $(SUBDIRS:%=%/__clean__) clean-default
 
+dist::   $(SUBDIRS:%=%/__dist__) $(ALL_TARGETS)
+
 install::   $(SUBDIRS:%=%/__install__) $(ALL_TARGETS) $(INSTALL_BIN:%=%__install__) $(INSTALL_SBIN:%=%__install__) $(INSTALL_MAN:%=%__install__)
 
 uninstall:: $(SUBDIRS:%=%/__uninstall__) $(INSTALL_BIN:%=%__uninstall__) $(INSTALL_SBIN:%=%__uninstall__) $(INSTALL_MAN:%=%__uninstall__)
@@ -245,7 +247,7 @@ $(INSTALL_MAN:%=%__uninstall__):
 # Echo a nice output of the directory that we enter before entering that 
 # directory and executing make with the required target.
 ##########
-.PHONY: $(SUBDIRS) $(SUBDIRS:%=%/__clean__) $(SUBDIRS:%=%/__install__) $(SUBDIRS:%=%/__uninstall__)
+.PHONY: $(SUBDIRS) $(SUBDIRS:%=%/__clean__) $(SUBDIRS:%=%/__install__) $(SUBDIRS:%=%/__dist__) $(SUBDIRS:%=%/__uninstall__)
 
 $(SUBDIRS)::
 	$(NICE_ECHO) " Making in\t$(OFFSETDIR)$@"
@@ -255,6 +257,11 @@ $(SUBDIRS)::
 $(SUBDIRS:%=%/__clean__): 
 	$(NICE_ECHO) " Cleaning in\t$(OFFSETDIR)`dirname $@`"
 	cd `dirname $@` && $(MAKE) clean
+
+$(SUBDIRS:%=%/__dist__): 
+	$(NICE_ECHO) " Creating distribution from\t$(OFFSETDIR)`dirname $@`"
+	cd `dirname $@` && $(MAKE) dist
+	$(NICE_ECHO) " Leaving\t\t$(OFFSETDIR)`dirname $@`\n"
 
 $(SUBDIRS:%=%/__install__): 
 	$(NICE_ECHO) " Installing from\t$(OFFSETDIR)`dirname $@`"
