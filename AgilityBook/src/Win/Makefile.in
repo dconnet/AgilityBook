@@ -149,7 +149,28 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 #INSTALL_SBIN = prog2
 #INSTALL_MAN = prog1.5
 
+#######
+# Default distribution rules.
+#######
+
 @NAM_RULES@
+resources: agilitybook
+# compile resources
+	echo "LANGDIR $(CURDIR)"
+	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) agilitybook
+
+dist: agilitybook resources
+	mkdir -p $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/Resources/English.lproj
+	mkdir -p $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS
+	cp Info.plist $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/
+	cp version.plist $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/
+#	cp InfoPlist.strings $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/Resources/English.lproj/
+	echo -n '@PACKAGE_NAME@' > $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/PkgInfo
+	cp agilitybook $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/agilitybook
+#	cp $@MacIcons.icns AnotherResource.txt $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/Resources/
+# copy resources into package
+	cp -pR lang $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/
+	cp agilitybook.dat $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/
 
 ################################################################################
 # End of File: Makefile                                                        #

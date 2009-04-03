@@ -183,7 +183,6 @@ $(ARCHIVES:=.a):
 ##########
 $(SHAREDLIBS:=.so):
 	$(NICE_ECHO) "  Creating shared library:\t$@"
-#	$(CXX) -prebind -dynamiclib $($(@:.$(SHAREDLIBEXT)=)_LDFLAGS) -o $@ -lc $($(@:.$(SHAREDLIBEXT)=)_OBJS)
 	$(CXX) $(LDFLAGS) $($(@:.so=)_LDFLAGS) -shared -W1,-soname,$@ -o $@ -lc $($(@:.so=)_OBJS)
 
 $(SHAREDLIBS:=.dylib):

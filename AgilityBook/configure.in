@@ -6,10 +6,14 @@ AC_PREREQ(2.59)
 ################################################################################
 # Initialise autoconf, set package name, version number and contact details.   #
 ################################################################################
-AC_INIT(agilitybook, 1.10.10.13, [help@agilityrecordbook.com])
+AC_INIT(Agility Record Book, 1.10.10.13, [help@agilityrecordbook.com])
 
 AC_CONFIG_SRCDIR(src/stdafx.cpp)
 
+AC_SUBST(PACKAGE_SHORTNAME, "agilitybook")
+AC_SUBST(PACKAGE_COPYRIGHT, "2007-2009 David Connet")
+define([svnversion], esyscmd([sh -c "svnversion|tr -d '\n'"]))dnl
+AC_SUBST(SVN_VERSION, "svnversion")
 ################################################################################
 # Check for programs used to build my_prg                                      #
 ################################################################################
@@ -27,7 +31,6 @@ AC_PROG_INSTALL
 AC_LANG(C++)
 
 AC_ARG_PROGRAM
-
 ##########
 # Check how dependencies are created for the C++ compiler on this system
 ##########
@@ -75,6 +78,6 @@ AC_SUBST_FILE(NAM_RULES)
 # List of files to generate from the corresponding (*.in) files and the        #
 # subsequent command to generate those files.                                  #
 ################################################################################
-AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile  src/ARB/Makefile src/Win/Makefile src/TestARB/Makefile src/cal_usdaa/Makefile])
+AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile  src/ARB/Makefile src/Win/Makefile src/TestARB/Makefile src/cal_usdaa/Makefile src/Win/Info.plist src/Win/version.plist])
 
 AC_OUTPUT
