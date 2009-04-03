@@ -27,7 +27,7 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES =  -DWXWIDGETS -DWXUSE_GUI -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags`
+INCLUDES =  -Wall -DWXWIDGETS -DWXUSE_GUI -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags`
 
 ##########
 # List of programs and archives to link
@@ -159,7 +159,7 @@ resources: agilitybook
 	echo "LANGDIR $(CURDIR)"
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) agilitybook
 
-dist: agilitybook resources
+dist:: agilitybook resources
 	mkdir -p $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/Resources/English.lproj
 	mkdir -p $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS
 	cp Info.plist $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/

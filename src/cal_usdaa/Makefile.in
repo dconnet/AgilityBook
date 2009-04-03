@@ -55,8 +55,9 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
 @NAM_RULES@
 
-dist: libcal_usdaa.@SHAREDLIBEXT@
+dist:: libcal_usdaa.@SHAREDLIBEXT@
 # Mac OS dist
+	mkdir -p $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/
 	cp libcal_usdaa.@SHAREDLIBEXT@  $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/
 
 ################################################################################
