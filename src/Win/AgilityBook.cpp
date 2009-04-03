@@ -215,7 +215,7 @@ bool CAgilityBookApp::OnInit()
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
 	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'WXMB', 'WXMA');
-	wxSystemOptions::SetOptionInt(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+	wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 #endif
 
 	CMainFrame *frame = new CMainFrame(m_manager);
