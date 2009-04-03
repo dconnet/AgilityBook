@@ -1,6 +1,8 @@
 Notes for releasing a new version.
 
 Files to change before marking files for release:
+- Update the version build number (per instructions in VersionNumber.h)
+- Make sure 'configure.in' is updated with the version number.
 - If file version has changed:
   - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
   - Update the version in DefaultConfig.xml
@@ -8,7 +10,6 @@ Files to change before marking files for release:
     If this is missed, the new data will not be merged.
 - If configuration has changed:
   - Same as file version changing above
-- Make sure 'configure.in' is updated with the version number.
 - Update CD Label (SureThing CD Labeler Deluxe v3.12)
 - History.txt
   Update program version and date, along with any comments.
