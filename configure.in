@@ -11,7 +11,7 @@ AC_INIT(Agility Record Book, 2.0.0.2288, [help@agilityrecordbook.com])
 AC_CONFIG_SRCDIR(src/stdafx.cpp)
 
 AC_SUBST(PACKAGE_SHORTNAME, "agilitybook")
-AC_SUBST(PACKAGE_COPYRIGHT, "2007-2009 David Connet")
+AC_SUBST(PACKAGE_COPYRIGHT, "2002-2009 David Connet")
 define([svnversion], esyscmd([sh -c "svnversion|tr -d '\n'"]))dnl
 AC_SUBST(SVN_VERSION, "svnversion")
 ################################################################################
