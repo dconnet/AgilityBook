@@ -65,6 +65,7 @@
 #include <wx/msgdlg.h>
 #include <wx/settings.h>
 #include <wx/stdpaths.h>
+#include <wx/sysopt.h>
 #include <wx/utils.h>
 #include <wx/version.h>
 #include <wx/xrc/xmlres.h>	// XRC XML resources

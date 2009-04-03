@@ -369,8 +369,8 @@ void CDlgCalendarQueryDetail::OnNewVenueCode(wxCommandEvent& evt)
 	CDlgQueryDetail dlg(!m_EditCodes, wxT(""), wxT(""), this, &m_Config);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		wxString code = dlg.GetDetailCode();
-		wxString name = dlg.GetDetailName();
+		tstring code = dlg.GetDetailCode();
+		tstring name = dlg.GetDetailName();
 		if (!code.empty())
 		{
 			long idx = m_ctrlVenues->InsertItem(m_ctrlVenues->GetItemCount(), code.c_str());
