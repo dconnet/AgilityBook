@@ -1,0 +1,13 @@
+Source: agilitybook
+Section: unknown
+Priority: extra
+Maintainer: Steve Schwarz <steve@agilitynerd.com>
+Build-Depends: debhelper (>= 5), autotools-dev, libwxgtk2.8-dev, wx2.8-i18n, wx2.8-headers, tidy, libboost-dev
+Standards-Version: 3.7.2
+
+Package: agilitybook
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Agility Record Book
+ Agility Record Book developed by Dave Connet tracks dog agility records
+ for multiple dogs and agility venues.
