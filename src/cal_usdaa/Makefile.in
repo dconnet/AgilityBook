@@ -33,25 +33,22 @@ SHAREDLIBS = libcal_usdaa
 ##########
 # Source files for each target
 ##########
-libcal_usdaa_SRCS = \
-	CalendarSite.cpp
+libcal_usdaa_SRCS = CalendarSite.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-libcal_usdaa_LDFLAGS = -ltidy -larb -L$(TOPBUILDDIR)/src/ARB `wx-config --libs`
+libcal_usdaa_LDFLAGS = -L$(TOPSRCDIR)/src/tidy  -L$(TOPBUILDDIR)/src/ARB -ltidy -larb `wx-config --libs`
 
 ##########
 # Precompiled headers
 ##########
 PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
-
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = arblib
-#INSTALL_MAN = prog1.5
+INSTALL_BIN = libcal_usdaa
 
 @NAM_RULES@
 
