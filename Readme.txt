@@ -4,8 +4,7 @@ Additional software packages required (all free):
 - wxWidgets
 - gettext
 - wxFormBuilder (optional)
-- UnitTest++
-- HTML Help Workshop
+- UnitTest++ [see note below]
 - Boost libraries (not needed as of VC9+SP1)
 - Windows Installer XML toolset
 - Doxygen (optional)
@@ -57,7 +56,7 @@ To build for VC, see src/Projects/CompileWX.bat
 
 gettext: http://gnuwin32.sourceforge.net/packages/gettext.htm
 This is required in order to create the language stuff.
-Make sure the "\Program Files\GnuWin32\bin" is added to the PATH.
+Make sure the "\Program Files\GnuWin32\bin" is added to the PATH. (windows)
 
 --------------------
 
@@ -77,16 +76,8 @@ All project files have been copied/renamed/modified such that:
  .lib names changed to UnitTest++.VC<vcversion>[S][U][D].lib
  Projects now use common vsprops files
   - common, debug dll, debug lib, debug settings, (and release versions)
-
---------------------
-
-HTML Help Workshop: This is a free download from Microsoft.
-I'm currently using version 4.74.8702, as reported while compiling
-the help file. Add the following directories to the include paths in
-the compiler options (Tools->Options, Directories tab):
-    Include files: "C:\Program Files\HTML Help WorkShop\include"
-    Library files: "C:\Program Files\HTML Help WorkShop\lib"
-(The above is the default location, your's may vary...)
+- This has now been added into the source tree. Follow the UnitTest++
+directions for compiling.
 
 --------------------
 
