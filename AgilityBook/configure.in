@@ -54,7 +54,9 @@ AS_IF(g++ -v -MP 2> /dev/null,
 # Checks for library functions.                                                #
 ################################################################################
 # Add macros to check for library functions here
-AC_CHECK_LIB([tidy], [tidyCreate])
+# We get these libs from our own src/ directories  
+# AC_CHECK_LIB([tidy], [tidyCreate])
+# AC_CHECK_LIB([unittest], [RunAllTests])                     
 case `uname` in
      Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
