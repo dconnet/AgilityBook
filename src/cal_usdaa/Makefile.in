@@ -38,7 +38,7 @@ libcal_usdaa_SRCS = CalendarSite.cpp
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-libcal_usdaa_LDFLAGS = -L$(TOPSRCDIR)/src/tidy  -L$(TOPBUILDDIR)/src/ARB -ltidy -larb `wx-config --libs`
+libcal_usdaa_LDFLAGS = -L$(TOPSRCDIR)/src/tidy/lib  -L$(TOPBUILDDIR)/src/ARB -ltidy -larb `wx-config --libs`
 
 ##########
 # Precompiled headers
