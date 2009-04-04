@@ -43,7 +43,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -109,7 +109,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -125,7 +125,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -177,7 +177,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -193,7 +193,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -244,7 +244,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -260,7 +260,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -311,7 +311,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -327,7 +327,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -377,7 +377,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -393,7 +393,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
@@ -445,7 +445,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -461,7 +461,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_lib_VC9.0s"
 				SubSystem="1"
 			/>
 			<Tool
@@ -512,7 +512,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -528,7 +528,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="..\..\..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
+				AdditionalLibraryDirectories="..\..\UnitTest++\bin\$(PlatformName);$(WXWIN)\lib\vc_amd64_lib_VC9.0s"
 				SubSystem="1"
 				TargetMachine="17"
 			/>
