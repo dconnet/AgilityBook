@@ -1059,7 +1059,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	, m_pDoc(pDoc)
 	, m_DirectAccess(directAccess)
 {
-	Create(pParent, wxID_ANY, _("IDD_CALENDAR_PLUGINS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+	Create(pParent, wxID_ANY, _("IDD_CALENDAR_PLUGINS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
 
@@ -1156,37 +1156,35 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
-	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer* bSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	wxFlexGridSizer* sizerGrid = new wxFlexGridSizer(2, 2, 0, 0);
-	sizerGrid->SetFlexibleDirection(wxBOTH);
-	sizerGrid->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-	sizerGrid->Add(m_ctrlPlugins, 1, wxALL|wxEXPAND, 5);
+	wxBoxSizer* sizerPlugins = new wxBoxSizer(wxVERTICAL);
+	sizerPlugins->Add(m_ctrlPlugins, 1, wxALL|wxEXPAND, 5);
+	sizerPlugins->Add(m_ctrlDetails, 0, wxALL|wxEXPAND, 5);
+
+	bSizer->Add(sizerPlugins, 1, wxEXPAND, 5);
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxVERTICAL);
 	sizerBtns->Add(m_ctrlRead, 0, wxALL, 5);
 	sizerBtns->Add(m_ctrlAdd, 0, wxALL, 5);
 	sizerBtns->Add( 
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxALL, 5);
+		0, wxEXPAND | wxALL, 5 );
 	sizerBtns->Add(m_ctrlEnable, 0, wxALL, 5);
 	sizerBtns->Add(m_ctrlQuery, 0, wxALL, 5);
-	sizerBtns->Add(
+	sizerBtns->Add( 
 		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
-		0, wxEXPAND | wxALL, 5);
+		0, wxEXPAND | wxALL, 5 );
 	sizerBtns->Add(btnNew, 0, wxALL, 5);
 	sizerBtns->Add(m_ctrlEdit, 0, wxALL, 5);
 	sizerBtns->Add(m_ctrlDelete, 0, wxALL, 5);
+	sizerBtns->Add( 
+		new wxStaticLine(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL),
+		0, wxEXPAND | wxALL, 5 );
+	sizerBtns->Add(0, 0, 1, wxEXPAND, 5);
+	sizerBtns->Add(btnClose, 0, wxALL, 5);
 
-	sizerGrid->Add(sizerBtns, 0, wxEXPAND, 5);
-	sizerGrid->Add(m_ctrlDetails, 0, wxALL|wxEXPAND, 5);
-
-	wxBoxSizer* sizerClose = new wxBoxSizer(wxHORIZONTAL);
-	sizerClose->Add(btnClose, 0, wxALIGN_BOTTOM|wxALL, 5);
-
-	sizerGrid->Add(sizerClose, 0, wxEXPAND, 5);
-
-	bSizer->Add(sizerGrid, 1, wxEXPAND, 5);
+	bSizer->Add(sizerBtns, 0, wxEXPAND, 5);
 
 	SetSizer(bSizer);
 	Layout();
