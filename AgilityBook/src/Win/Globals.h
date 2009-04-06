@@ -108,3 +108,20 @@ extern void RefreshTreeItem(
 		wxTreeCtrl* tree,
 		wxTreeItemId item,
 		bool bRecurse = false);
+
+
+/**
+ * Draw text similar to VC DrawText with DT_CALCRECT and DT_WORDBREAK
+ * @param pDC Input device context
+ * @param inStr String to draw
+ * @param rect if drawing, text will be clipped to input, on output (if bBreak), rect needed is returned
+ * @param bBreak Draw with line breaks, else singleline
+ * @param flags Flags to pass to DrawLabel
+ * @param bCalc Determine rectangle or do actual drawing
+ */
+extern void DrawBetterLabel(
+		wxDC* pDC,
+		wxString const& inStr,
+		wxRect& rect,
+		int flags,
+		bool bCalc);

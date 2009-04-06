@@ -38,6 +38,7 @@
 #include "Globals.h"
 
 #include "ListData.h"
+#include <wx/tokenzr.h>
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -149,4 +150,80 @@ void RefreshTreeItem(
 			}
 		}
 	}
+}
+
+
+void DrawBetterLabel(
+		wxDC* pDC,
+		wxString const& inStr,
+		wxRect& rect,
+		int flags,
+		bool bCalc)
+{
+	if (!pDC)
+		return;
+
+	if (!bCalc)
+		pDC->SetClippingRegion(rect.x, rect.y, rect.width, rect.height);
+
+	wxCoord x = rect.x;
+	wxCoord y = rect.y;
+	rect.height = 0;
+
+	wxArrayString lines = wxStringTokenize(inStr, wxT("\n"));
+	for (size_t i = 0; i < lines.GetCount(); ++i)
+	{
+		wxString line;
+		wxCoord width = 0;
+		wxSize szLine;
+
+		wxArrayString words = wxStringTokenize(lines[i], wxT(" "), wxTOKEN_RET_DELIMS);
+		for (size_t k = 0; k < words.GetCount(); ++k)
+		{
+			szLine = pDC->GetTextExtent(words[k]);
+			if ((width += szLine.x) > rect.width)
+			{
+				if (!bCalc)
+					pDC->DrawText(line, x, y);
+				y += szLine.y;
+				rect.height += szLine.y;
+				line = wxT("");
+				width = szLine.x;
+			}
+			if (szLine.x > rect.width)
+			{
+				wxString s;
+				int a = 0;
+				int len = words[k].Length();
+
+				for (int iWord = 0; iWord < len; ++iWord)
+				{
+					wxSize szChar = pDC->GetTextExtent(words[k][iWord]);
+					if ((a += szChar.x) > rect.width)
+					{
+						if (!bCalc)
+							pDC->DrawText(s, x, y);
+						y += szChar.y;
+						rect.height += szChar.y;
+						s = wxT("");
+						a = szChar.x;
+					}
+					s << words[k][iWord];
+				}
+				words[k] = s;
+				width = a;
+			}
+			line << words[k];
+		}
+
+		if (!line.empty())
+		{
+			if (!bCalc)
+				pDC->DrawText(line, x, y);
+			y += szLine.y;
+			rect.height += szLine.y;
+		}
+	}
+	if (!bCalc)
+		pDC->DestroyClippingRegion();
 }

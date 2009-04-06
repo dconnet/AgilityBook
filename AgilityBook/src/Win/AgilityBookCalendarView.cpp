@@ -956,6 +956,12 @@ void CAgilityBookCalendar::GetWorkingAreas(
 		wxSize sz = pDC->GetSize();
 		rClient.width = pDC->DeviceToLogicalXRel(sz.x);
 		rClient.height = pDC->DeviceToLogicalYRel(sz.y);
+		long leftMargin, rightMargin, topMargin, bottomMargin;
+		CAgilityBookOptions::GetPrinterMargins(leftMargin, rightMargin, topMargin, bottomMargin, pDC);
+		rClient.x += leftMargin;
+		rClient.y += topMargin;
+		rClient.width -= (leftMargin + rightMargin);
+		rClient.height -= (topMargin + bottomMargin);
 	}
 
 	// Print month text

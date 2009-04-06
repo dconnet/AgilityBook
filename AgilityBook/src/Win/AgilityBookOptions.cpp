@@ -638,12 +638,22 @@ void CAgilityBookOptions::GetPrinterMargins(
 		long& outLeft,
 		long& outRight,
 		long& outTop,
-		long& outBottom)
+		long& outBottom,
+		wxDC* pDC)
 {
 	outLeft = wxConfig::Get()->Read(wxT("Common/Margins.L"), 50L);
 	outRight = wxConfig::Get()->Read(wxT("Common/Margins.R"), 50L);
 	outTop = wxConfig::Get()->Read(wxT("Common/Margins.T"), 50L);
 	outBottom = wxConfig::Get()->Read(wxT("Common/Margins.B"), 50L);
+	if (pDC)
+	{
+		// Convert to logical
+		wxSize szPPI = pDC->GetPPI();
+		outLeft = pDC->DeviceToLogicalXRel(outLeft / 100.0 * szPPI.x);
+		outRight = pDC->DeviceToLogicalXRel(outRight / 100.0 * szPPI.x);
+		outTop = pDC->DeviceToLogicalYRel(outTop / 100.0 * szPPI.y);
+		outBottom = pDC->DeviceToLogicalYRel(outBottom / 100.0 * szPPI.y);
+	}
 }
 
 

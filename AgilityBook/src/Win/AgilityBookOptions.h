@@ -149,12 +149,13 @@ public:
 			long& outLeft,
 			long& outRight,
 			long& outTop,
-			long& outBottom); // In .01 inches
+			long& outBottom,
+			wxDC* pDC); // Used to convert to logical units
 	static void SetPrinterMargins(
 			long inLeft,
 			long inRight,
 			long inTop,
-			long inBottom);
+			long inBottom); // In .01 inches
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options

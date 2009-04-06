@@ -37,177 +37,85 @@
  */
 
 #include "stdafx.h"
+#include "Globals.h"
+
 #include "AgilityBook.h"
-
-//#include "ARBConfig.h"
-//#include "ARBDog.h"
-//#include "ARBDogRun.h"
-//#include "ARBDogRunOtherPoints.h"
-//#include "ARBDogTrial.h"
+#include "ARBConfig.h"
+#include "ARBDog.h"
+#include "ARBDogRun.h"
+#include "ARBDogRunOtherPoints.h"
+#include "ARBDogTrial.h"
 #include "PointsData.h"
-
-
-#if 0
-/////////////////////////////////////////////////////////////////////////////
-
-// Added '2' to avoid dependencies on class defined (locally) in viewprnt.cpp.
-// In fact, I suspect if I compiled using MFC DLLs, it wouldn't work otherwise.
-// Since I'm statically linking, the OnCancel/... actually resolve when linking
-
-static bool s_bUserAbort = false;
-
-
-class CPrintingDialog2 : public CDialog
-{
-public:
-	//{{AFX_DATA(CPrintingDialog2)
-	enum { IDD = AFX_IDD_PRINTDLG };
-	//}}AFX_DATA
-	CPrintingDialog2::CPrintingDialog2(CWnd* pParent)
-	{
-		Create(CPrintingDialog2::IDD, pParent);      // modeless !
-		s_bUserAbort = false;
-	}
-	virtual ~CPrintingDialog2() { }
-
-	virtual BOOL OnInitDialog();
-	virtual void OnCancel();
-};
-
-
-BOOL CPrintingDialog2::OnInitDialog()
-{
-	SetWindowText(AfxGetAppName());
-	CenterWindow();
-	return CDialog::OnInitDialog();
-}
-
-
-void CPrintingDialog2::OnCancel()
-{
-	s_bUserAbort = true;  // flag that user aborted print
-	CDialog::OnCancel();
-}
-
-
-BOOL CALLBACK AbortProc(HDC, int)
-{
-	MSG msg;
-	while (!s_bUserAbort && ::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
-	{
-#if _MSC_VER >= 1300
-		if (!AfxPumpMessage())
-#else
-		if (!theApp.PumpMessage())
-#endif
-			return FALSE;   // terminate if WM_QUIT received
-	}
-	return !s_bUserAbort;
-}
+#include <wx/print.h>
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CPrintRuns
+class CPrintRuns : public wxPrintout
 {
 public:
 	CPrintRuns(
 			ARBConfig const* inConfig,
 			ARBDogPtr inDog,
-			std::vector<RunInfo> const& inRuns)
-		: m_config(inConfig)
-		, m_dog(inDog)
-		, m_runs(inRuns)
-		, m_cur(0)
-	{
-	}
+			std::vector<RunInfo> const& inRuns);
 
-	BOOL DoPreparePrinting(CPrintInfo* pInfo);
-	BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	void OnPrepareDC(CDC* pDC, CPrintInfo* pInfo = NULL);
-	void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-	void OnPrint(CDC* pDC, CPrintInfo* pInfo);
+	virtual bool HasPage(int page);
+	virtual void GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo);
+	virtual bool OnPrintPage(int pageNum);
 
 private:
 	tstring GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
-	void PrintPage(UINT nCurPage, CDC* pDC, CRect inRect);
+	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
 	ARBConfig const* m_config;
 	ARBDogPtr m_dog;
-	std::vector<RunInfo> const& m_runs;
-	size_t m_cur;
+	std::vector<RunInfo> m_runs; // can't be const& since we're previewing now and actual vector goes out-of-scope
+	int m_maxPage;
+	int m_nPerSheet;
 };
 
 
-BOOL CPrintRuns::DoPreparePrinting(CPrintInfo* pInfo)
+CPrintRuns::CPrintRuns(
+		ARBConfig const* inConfig,
+		ARBDogPtr inDog,
+		std::vector<RunInfo> const& inRuns)
+	: wxPrintout(_("IDS_RUNS"))
+	, m_config(inConfig)
+	, m_dog(inDog)
+	, m_runs(inRuns)
+	, m_maxPage(0)
+	, m_nPerSheet(0)
 {
-	if (pInfo->m_pPD->m_pd.nMinPage > pInfo->m_pPD->m_pd.nMaxPage)
-		pInfo->m_pPD->m_pd.nMaxPage = pInfo->m_pPD->m_pd.nMinPage;
-	// TODO note: don't cast to 'WORD'
-	pInfo->m_pPD->m_pd.nFromPage = (WORD)pInfo->GetMinPage();
-	pInfo->m_pPD->m_pd.nToPage = (WORD)pInfo->GetMaxPage();
-	if (theApp.DoPrintDialog(pInfo->m_pPD) != IDOK)
-		return FALSE;
-	assert(pInfo->m_pPD != NULL);
-	assert(pInfo->m_pPD->m_pd.hDC != NULL);
-	if (pInfo->m_pPD->m_pd.hDC == NULL)
-		return FALSE;
-	pInfo->m_nNumPreviewPages = theApp.m_nNumPreviewPages;
-	pInfo->m_strPageDesc.LoadString(AFX_IDS_PREVIEWPAGEDESC);
-	return TRUE;
 }
 
 
-BOOL CPrintRuns::OnPreparePrinting(CPrintInfo* pInfo)
+bool CPrintRuns::HasPage(int page)
 {
-	pInfo->SetMinPage(1);
+	return 1 <= page && page <= m_maxPage;
+}
+
+
+void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo)
+{
+	*minPage = 1;
 	if (0 == m_runs.size())
-		pInfo->SetMaxPage(2);
-	// Don't bother computing max page - we won't know
-	// the paper orientation until DoPrepare returns.
-	// And that's where we need it!
-	return DoPreparePrinting(pInfo);
-}
-
-
-void CPrintRuns::OnPrepareDC(CDC* pDC, CPrintInfo* pInfo)
-{
-}
-
-
-void CPrintRuns::OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo)
-{
-	UINT nPages = static_cast<UINT>(m_runs.size());
-	if (nPages > 0)
+		*maxPage = 2;
+	else
 	{
-		// Correct the max page based on paper orientation.
-		UINT nRuns = static_cast<UINT>(m_runs.size());
-		nPages = 1;
-		// pInfo->m_rectDraw is not set yet.
-		CRect r(0, 0,
-			pDC->GetDeviceCaps(HORZRES),
-			pDC->GetDeviceCaps(VERTRES));
-		pDC->DPtoLP(&r);
-		if (abs(r.Width()) > abs(r.Height()))
-		{
-			nPages = nRuns / 4;
-			if (0 != nRuns % 4)
-				++nPages;
-		}
+		int nRuns = static_cast<int>(m_runs.size());
+		int nPages = 1;
+		wxSize sz = GetDC()->GetSize();
+		if (abs(sz.x) > abs(sz.y))
+			m_nPerSheet = 4;
 		else
-		{
-			nPages = nRuns / 2;
-			if (0 != nRuns % 2)
-				++nPages;
-		}
-		if (nPages < pInfo->GetMaxPage())
-			pInfo->SetMaxPage(nPages);
+			m_nPerSheet = 2;
+		nPages = nRuns / m_nPerSheet;
+		if (0 != nRuns % m_nPerSheet)
+			++nPages;
+		*maxPage = nPages;
 	}
-}
-
-
-void CPrintRuns::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
-{
+	*pageFrom = *minPage;
+	*pageTo = *maxPage;
+	m_maxPage = *maxPage;
 }
 
 
@@ -260,55 +168,55 @@ void CPrintRuns::OnEndPrinting(CDC* pDC, CPrintInfo* pInfo)
 #define CODE_REF4		46
 
 // Make sure these are ordered by the aboves codes
-static const UINT sc_codes[] =
+static const wxChar* sc_codes[] =
 {
-	IDS_COL_DOG,
-	IDS_COL_DATE,
-	IDS_COL_VENUE,
-	IDS_COL_CLUB,
-	IDS_COL_DIV_LVL_EVT,
-	IDS_COL_LOCATION,
-	IDS_COL_HEIGHT,
-	IDS_COL_JUDGE,
-	IDS_COL_HANDLER,
-	IDS_COL_CONDITIONS,
-	IDS_COL_Q,
-	IDS_COL_SCT,
-	IDS_COL_YARDS,
-	IDS_COL_OPEN_CLOSE,
-	IDS_COL_TIME,
-	IDS_COL_OBSTACLES,
-	IDS_COL_FAULTS,
-	IDS_COL_SCORE,
-	IDS_COL_PLACE,
-	IDS_COL_IN_CLASS,
-	IDS_COL_Q_D,
-	IDS_COL_OTHERPOINTS,
-	IDS_COL_COMMENTS,
-	IDS_COL_PLACE,
-	IDS_COL_Q,
-	IDS_COL_TIME,
-	IDS_COL_SCORE,
-	IDS_COL_HEIGHT,
-	IDS_COL_NAME_BREED_NOTE,
-	IDS_COL_PLACE,
-	IDS_COL_Q,
-	IDS_COL_TIME,
-	IDS_COL_SCORE,
-	IDS_COL_HEIGHT,
-	IDS_COL_NAME_BREED_NOTE,
-	IDS_COL_PLACE,
-	IDS_COL_Q,
-	IDS_COL_TIME,
-	IDS_COL_SCORE,
-	IDS_COL_HEIGHT,
-	IDS_COL_NAME_BREED_NOTE,
-	IDS_COL_PLACE,
-	IDS_COL_Q,
-	IDS_COL_TIME,
-	IDS_COL_SCORE,
-	IDS_COL_HEIGHT,
-	IDS_COL_NAME_BREED_NOTE,
+	wxT("IDS_COL_DOG"),
+	wxT("IDS_COL_DATE"),
+	wxT("IDS_COL_VENUE"),
+	wxT("IDS_COL_CLUB"),
+	wxT("IDS_COL_DIV_LVL_EVT"),
+	wxT("IDS_COL_LOCATION"),
+	wxT("IDS_COL_HEIGHT"),
+	wxT("IDS_COL_JUDGE"),
+	wxT("IDS_COL_HANDLER"),
+	wxT("IDS_COL_CONDITIONS"),
+	wxT("IDS_COL_Q"),
+	wxT("IDS_COL_SCT"),
+	wxT("IDS_COL_YARDS"),
+	wxT("IDS_COL_OPEN_CLOSE"),
+	wxT("IDS_COL_TIME"),
+	wxT("IDS_COL_OBSTACLES"),
+	wxT("IDS_COL_FAULTS"),
+	wxT("IDS_COL_SCORE"),
+	wxT("IDS_COL_PLACE"),
+	wxT("IDS_COL_IN_CLASS"),
+	wxT("IDS_COL_Q_D"),
+	wxT("IDS_COL_OTHERPOINTS"),
+	wxT("IDS_COL_COMMENTS"),
+	wxT("IDS_COL_PLACE"),
+	wxT("IDS_COL_Q"),
+	wxT("IDS_COL_TIME"),
+	wxT("IDS_COL_SCORE"),
+	wxT("IDS_COL_HEIGHT"),
+	wxT("IDS_COL_NAME_BREED_NOTE"),
+	wxT("IDS_COL_PLACE"),
+	wxT("IDS_COL_Q"),
+	wxT("IDS_COL_TIME"),
+	wxT("IDS_COL_SCORE"),
+	wxT("IDS_COL_HEIGHT"),
+	wxT("IDS_COL_NAME_BREED_NOTE"),
+	wxT("IDS_COL_PLACE"),
+	wxT("IDS_COL_Q"),
+	wxT("IDS_COL_TIME"),
+	wxT("IDS_COL_SCORE"),
+	wxT("IDS_COL_HEIGHT"),
+	wxT("IDS_COL_NAME_BREED_NOTE"),
+	wxT("IDS_COL_PLACE"),
+	wxT("IDS_COL_Q"),
+	wxT("IDS_COL_TIME"),
+	wxT("IDS_COL_SCORE"),
+	wxT("IDS_COL_HEIGHT"),
+	wxT("IDS_COL_NAME_BREED_NOTE"),
 };
 #define FOR_TIME	0x1
 #define FOR_PTS		0x2
@@ -322,61 +230,62 @@ static const struct
 	int rowspan;
 	bool bContinuation;
 	int code;
+	bool bWorkBreak;
 	UINT fmt;
 } sc_lines[] =
 {
-	{FOR_BOTH,  0, 0, 2, 1, false, CODE_DOG,        DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  0, 2, 2, 1, false, CODE_DATE,       DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  0, 4, 2, 1, false, CODE_VENUE,      DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  0, 6, 2, 1, false, CODE_LOCATION,   DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  1, 0, 3, 1, false, CODE_DIV,        DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  1, 3, 1, 1, false, CODE_HEIGHT,     DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  1, 4, 4, 2, false, CODE_CLUB,       DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH,  2, 4, 4, 1, true,  CODE_CLUB, 0},
-	{FOR_BOTH,  2, 0, 2, 1, false, CODE_JUDGE,      DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  2, 2, 2, 1, false, CODE_HANDLER,    DT_LEFT | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  3, 0, 7, 1, false, CODE_CONDITIONS, DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH,  3, 7, 1, 1, false, CODE_Q,          DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  4, 0, 1, 1, false, CODE_SCT,        DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_TIME,  4, 1, 1, 1, false, CODE_YARDS,      DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_PTS,   4, 1, 1, 1, false, CODE_OPEN,       DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  4, 2, 1, 1, false, CODE_OBSTACLES,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  4, 3, 1, 1, false, CODE_TIME,       DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_TIME,  4, 4, 1, 1, false, CODE_FAULTS,     DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_PTS,   4, 4, 1, 1, false, CODE_SCORE,      DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  4, 5, 1, 1, false, CODE_PLACE,      DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  4, 6, 1, 1, false, CODE_INCLASS,    DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  4, 7, 1, 1, false, CODE_QD,         DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH,  5, 0, 8, 5, false, CODE_COMMENTS,   DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH,  6, 0, 8, 4, true,  CODE_COMMENTS, 0},
-	{FOR_BOTH,  7, 0, 8, 3, true,  CODE_COMMENTS, 0},
-	{FOR_BOTH,  8, 0, 8, 2, true,  CODE_COMMENTS, 0},
-	{FOR_BOTH,  9, 0, 6, 1, true,  CODE_COMMENTS, 0},
-	{FOR_BOTH,  9, 6, 2, 1, false, CODE_OTHER,      DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 10, 0, 1, 1, false, CODE_REFPLACE1,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 10, 1, 1, 1, false, CODE_REFQ1,      DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 10, 2, 1, 1, false, CODE_REFTIME1,   DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 10, 3, 1, 1, false, CODE_REFSCORE1,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 10, 4, 1, 1, false, CODE_REFHT1,     DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 10, 5, 3, 1, false, CODE_REF1,       DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 11, 0, 1, 1, false, CODE_REFPLACE2,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 11, 1, 1, 1, false, CODE_REFQ2,      DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 11, 2, 1, 1, false, CODE_REFTIME2,   DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 11, 3, 1, 1, false, CODE_REFSCORE2,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 11, 4, 1, 1, false, CODE_REFHT2,     DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 11, 5, 3, 1, false, CODE_REF2,       DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 12, 0, 1, 1, false, CODE_REFPLACE3,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 12, 1, 1, 1, false, CODE_REFQ3,      DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 12, 2, 1, 1, false, CODE_REFTIME3,   DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 12, 3, 1, 1, false, CODE_REFSCORE3,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 12, 4, 1, 1, false, CODE_REFHT3,     DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 12, 5, 3, 1, false, CODE_REF3,       DT_LEFT | DT_WORDBREAK},
-	{FOR_BOTH, 13, 0, 1, 1, false, CODE_REFPLACE4,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 13, 1, 1, 1, false, CODE_REFQ4,      DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 13, 2, 1, 1, false, CODE_REFTIME4,   DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 13, 3, 1, 1, false, CODE_REFSCORE4,  DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 13, 4, 1, 1, false, CODE_REFHT4,     DT_CENTER | DT_SINGLELINE | DT_BOTTOM},
-	{FOR_BOTH, 13, 5, 3, 1, false, CODE_REF4,       DT_LEFT | DT_WORDBREAK},
+	{FOR_BOTH,  0, 0, 2, 1, false, CODE_DOG,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+	{FOR_BOTH,  0, 2, 2, 1, false, CODE_DATE,       false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+	{FOR_BOTH,  0, 4, 2, 1, false, CODE_VENUE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+	{FOR_BOTH,  0, 6, 2, 1, false, CODE_LOCATION,   false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+	{FOR_BOTH,  1, 0, 3, 1, false, CODE_DIV,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+	{FOR_BOTH,  1, 3, 1, 1, false, CODE_HEIGHT,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  1, 4, 4, 2, false, CODE_CLUB,       true,  wxALIGN_LEFT},
+	{FOR_BOTH,  2, 4, 4, 1, true,  CODE_CLUB, false, 0},
+	{FOR_BOTH,  2, 0, 2, 1, false, CODE_JUDGE,      false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+	{FOR_BOTH,  2, 2, 2, 1, false, CODE_HANDLER,    false, wxALIGN_LEFT | wxALIGN_BOTTOM},
+	{FOR_BOTH,  3, 0, 7, 1, false, CODE_CONDITIONS, true,  wxALIGN_LEFT},
+	{FOR_BOTH,  3, 7, 1, 1, false, CODE_Q,          false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  4, 0, 1, 1, false, CODE_SCT,        false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_TIME,  4, 1, 1, 1, false, CODE_YARDS,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_PTS,   4, 1, 1, 1, false, CODE_OPEN,       false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  4, 2, 1, 1, false, CODE_OBSTACLES,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  4, 3, 1, 1, false, CODE_TIME,       false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_TIME,  4, 4, 1, 1, false, CODE_FAULTS,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_PTS,   4, 4, 1, 1, false, CODE_SCORE,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  4, 5, 1, 1, false, CODE_PLACE,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  4, 6, 1, 1, false, CODE_INCLASS,    false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  4, 7, 1, 1, false, CODE_QD,         false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH,  5, 0, 8, 5, false, CODE_COMMENTS,   true,  wxALIGN_LEFT},
+	{FOR_BOTH,  6, 0, 8, 4, true,  CODE_COMMENTS, false, 0},
+	{FOR_BOTH,  7, 0, 8, 3, true,  CODE_COMMENTS, false, 0},
+	{FOR_BOTH,  8, 0, 8, 2, true,  CODE_COMMENTS, false, 0},
+	{FOR_BOTH,  9, 0, 6, 1, true,  CODE_COMMENTS, false, 0},
+	{FOR_BOTH,  9, 6, 2, 1, false, CODE_OTHER,      true,  wxALIGN_LEFT},
+	{FOR_BOTH, 10, 0, 1, 1, false, CODE_REFPLACE1,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 10, 1, 1, 1, false, CODE_REFQ1,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 10, 2, 1, 1, false, CODE_REFTIME1,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 10, 3, 1, 1, false, CODE_REFSCORE1,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 10, 4, 1, 1, false, CODE_REFHT1,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 10, 5, 3, 1, false, CODE_REF1,       true,  wxALIGN_LEFT},
+	{FOR_BOTH, 11, 0, 1, 1, false, CODE_REFPLACE2,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 11, 1, 1, 1, false, CODE_REFQ2,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 11, 2, 1, 1, false, CODE_REFTIME2,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 11, 3, 1, 1, false, CODE_REFSCORE2,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 11, 4, 1, 1, false, CODE_REFHT2,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 11, 5, 3, 1, false, CODE_REF2,       true,  wxALIGN_LEFT},
+	{FOR_BOTH, 12, 0, 1, 1, false, CODE_REFPLACE3,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 12, 1, 1, 1, false, CODE_REFQ3,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 12, 2, 1, 1, false, CODE_REFTIME3,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 12, 3, 1, 1, false, CODE_REFSCORE3,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 12, 4, 1, 1, false, CODE_REFHT3,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 12, 5, 3, 1, false, CODE_REF3,       true,  wxALIGN_LEFT},
+	{FOR_BOTH, 13, 0, 1, 1, false, CODE_REFPLACE4,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 13, 1, 1, 1, false, CODE_REFQ4,      false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 13, 2, 1, 1, false, CODE_REFTIME4,   false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 13, 3, 1, 1, false, CODE_REFSCORE4,  false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 13, 4, 1, 1, false, CODE_REFHT4,     false, wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM},
+	{FOR_BOTH, 13, 5, 3, 1, false, CODE_REF4,       true,  wxALIGN_LEFT},
 };
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
@@ -575,7 +484,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 			{
 				text << run->GetScoring().GetCourseFaults();
 				if (0.0 < timeFaults)
-					text << " + " << ARBDouble::str(timeFaults, 0);
+					text << "+" << ARBDouble::str(timeFaults, 0);
 			}
 		}
 		break;
@@ -669,36 +578,27 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 }
 
 
-void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
+void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect)
 {
-	pDC->SelectStockObject(NULL_BRUSH);
-	pDC->SetBkMode(TRANSPARENT);
-	CFont fontText, fontData;
-	fontText.CreatePointFont(70, wxT("MS Sans Serif"), pDC);
-	LOGFONT lf;
-	memset(&lf, 0, sizeof(LOGFONT));
-	lf.lfHeight = 90;
-	lf.lfWeight = FW_BOLD;
-#if _MSC_VER >= 1400
-	_tcsncpy_s(lf.lfFaceName, LF_FACESIZE, wxT("Arial"), 5);
-#else
-	_tcsncpy(lf.lfFaceName, wxT("Arial"), 5);
-#endif
-	fontData.CreatePointFontIndirect(&lf, pDC);
-	CFont* pOldFont = pDC->SelectObject(&fontText);
-	CPen pen;
-	pen.CreatePen(PS_SOLID, 1, RGB(0,0,0));
-	CPen* pOldPen = pDC->SelectObject(&pen);
+	wxBrush brNull(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW), wxTRANSPARENT);
+	pDC->SetBrush(brNull);
+	pDC->SetBackgroundMode(wxTRANSPARENT);
 
-	int h = inRect.Height() / 29;
-	int w = inRect.Width() / 8;
-	CRect r[2];
+	wxFont fontText(5, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
+	wxFont fontData(8, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
+
+	pDC->SetFont(fontText);
+	pDC->SetPen(*wxBLACK_PEN);
+
+	int h = inRect.height / 28;
+	int w = inRect.width / 8;
+	wxRect r[2];
 	r[0] = inRect;
-	r[1] = inRect;
-	r[0].bottom = r[0].top + h * 14;
-	r[1].top = r[1].bottom - h * 14;
+	r[0].height = h * 14;
+	r[1] = r[0];
+	r[1].y = inRect.GetBottom() - r[1].height;
 
-	for (int iItem = 0; iItem < 2; ++iItem, ++m_cur)
+	for (int iItem = 0; iItem < 2; ++iItem, ++curRun)
 	{
 		ARBDogTrialPtr trial;
 		ARBDogRunPtr run;
@@ -707,14 +607,14 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 		{
 			bPoints = (0 == nCurPage % 2);
 		}
-		else if (m_cur >= m_runs.size())
+		else if (curRun >= m_runs.size())
 		{
 			break;
 		}
 		else
 		{
-			trial = m_runs[m_cur].first;
-			run = m_runs[m_cur].second;
+			trial = m_runs[curRun].first;
+			run = m_runs[curRun].second;
 			if (!run)
 				continue;
 			switch (run->GetScoring().GetType())
@@ -729,7 +629,7 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 			}
 		}
 		// Frame the whole thing
-		pDC->Rectangle(r[iItem]);
+		pDC->DrawRectangle(r[iItem]);
 
 		// Now go thru each box.
 		for (int j = 0; j < sc_nLines; ++j)
@@ -737,66 +637,71 @@ void CPrintRuns::PrintPage(UINT nCurPage, CDC* pDC, CRect inRect)
 			if ((bPoints && (sc_lines[j].type & FOR_PTS))
 			|| (!bPoints && (sc_lines[j].type & FOR_TIME)))
 			{
-				CRect rect;
-				rect.left = r[iItem].left + w * sc_lines[j].box;
-				rect.right = rect.left + w * sc_lines[j].colspan + 1;
+				wxRect rect;
+				rect.x = r[iItem].x + w * sc_lines[j].box;
+				rect.width = w * sc_lines[j].colspan + 1;
 				if (8 == sc_lines[j].box + sc_lines[j].colspan)
-					rect.right = r[iItem].right;
-				rect.top = r[iItem].top + h * sc_lines[j].line;
-				rect.bottom = rect.top + h;
+					rect.SetRight(r[iItem].GetRight());
+				rect.y = r[iItem].y + h * sc_lines[j].line;
+				rect.height = + h;
 				// Draw vertical separator lines (on left)
 				if (0 < sc_lines[j].box)
 				{
-					pDC->MoveTo(rect.left, rect.top);
-					pDC->LineTo(rect.left, rect.bottom);
+					pDC->DrawLine(rect.x, rect.y, rect.x, rect.GetBottom());
 				}
 
-				tstring str = GetFieldText(trial, run, sc_lines[j].code);
+				wxString str = GetFieldText(trial, run, sc_lines[j].code).c_str();
 
 				// Draw horizontal separator lines (on top)
 				if (0 < sc_lines[j].line && (str.empty() || !sc_lines[j].bContinuation))
 				{
-					CPen penGray;
-					CPen* oldPen = NULL;
+					bool bResetPen = false;
 					if (sc_lines[j].bContinuation)
 					{
-						penGray.CreatePen(PS_SOLID, 1, RGB(192,192,192));
-						oldPen = pDC->SelectObject(&penGray);
+						bResetPen = true;
+						pDC->SetPen(*wxGREY_PEN);
 					}
-					pDC->MoveTo(rect.left, rect.top);
-					pDC->LineTo(rect.right, rect.top);
-					if (oldPen)
-						pDC->SelectObject(oldPen);
+					pDC->DrawLine(rect.x, rect.y, rect.GetRight(), rect.y);
+					if (bResetPen)
+						pDC->SetPen(*wxBLACK_PEN);
 				}
 				if (sc_lines[j].bContinuation)
 					str.clear();
 
-				rect.InflateRect(-1, 1);
-				CRect rText(rect);
+				rect.Inflate(-1, 1);
+				int textHeight = 0;
 				if (!sc_lines[j].bContinuation)
 				{
-					CString caption;
-					caption.LoadString(sc_codes[sc_lines[j].code]);
-					pDC->DrawText(caption, rect, DT_LEFT | DT_TOP| DT_NOPREFIX);
-					pDC->DrawText(caption, rText, DT_LEFT | DT_TOP | DT_NOPREFIX | DT_CALCRECT);
+					wxString caption = wxGetTranslation(sc_codes[sc_lines[j].code]);
+					wxDCClipper clip(*pDC, rect);
+					pDC->DrawLabel(caption, rect, wxALIGN_LEFT | wxALIGN_TOP);
+					textHeight = pDC->GetTextExtent(caption).y;
 				}
 				if (!str.empty())
 				{
 					if (1 < sc_lines[j].rowspan)
-						rect.bottom -= rect.Width() * sc_lines[j].rowspan;
-					pDC->SelectObject(&fontData);
-					UINT flags = DT_NOPREFIX | sc_lines[j].fmt;
-					if (!(flags & DT_VCENTER))
-						rect.top = rText.bottom + 1;
-					pDC->DrawText(str.c_str(), -1, rect, flags);
-					pDC->SelectObject(&fontText);
+						rect.SetBottom(rect.GetBottom() + rect.height * sc_lines[j].rowspan);
+					pDC->SetFont(fontData);
+					if (sc_lines[j].bWorkBreak)
+					{
+						rect.y += textHeight;
+						rect.height -= textHeight;
+						DrawBetterLabel(pDC, str, rect, sc_lines[j].fmt, false);
+					}
+					else
+					{
+						wxDCClipper clip(*pDC, rect);
+						pDC->DrawLabel(str, rect, sc_lines[j].fmt);
+					}
+					pDC->SetFont(fontText);
 				}
 			}
 		}
 	}
 
-	pDC->SelectObject(pOldFont);
-	pDC->SelectObject(pOldPen);
+	pDC->SetPen(wxNullPen);
+	pDC->SetFont(wxNullFont);
+	pDC->SetBrush(wxNullBrush);
 }
 
 
@@ -807,60 +712,88 @@ static enum RingBinder
 	eLarge4Ring
 };
 
-static void PrintMark(CDC* pDC, int x, int y)
+static void PrintMark(wxDC* pDC, int x, int y)
 {
-	pDC->MoveTo(x - 5, y - 5);
-	pDC->LineTo(x + 5, y + 5);
-	pDC->MoveTo(x + 5, y - 5);
-	pDC->LineTo(x - 5, y + 5);
+	pDC->DrawLine(x - 5, y - 5, x + 5, y + 5);
+	pDC->DrawLine(x + 5, y - 5, x - 5, y + 5);
 }
 
 // Binder rings (based on US 8.5x11 paper)
-// Rings are inset 3/8 inch
-// sm 3ring: 2.75
-// lg 3ring: 4.25
-// lg 4ring: 1.375/4.25/1.375
+// Rings are inset 3/8 inch [27 twips]
+// sm 3ring: 2.75 [198]
+// lg 3ring: 4.25 [306]
+// lg 4ring: 1.375/4.25/1.375 [99/306/99]
 static void PrintBinderMarkings(
 		RingBinder style,
-		CDC* pDC,
-		CRect rPrinted,
+		wxDC* pDC,
+		wxRect rPrinted,
 		int margin)
 {
-	int x = rPrinted.left - margin + 38;
-	int y = rPrinted.top + rPrinted.Height() / 2; // centered
+	pDC->SetPen(*wxGREY_PEN);
+	int x = rPrinted.x - margin + 27;
+	int y = rPrinted.y + rPrinted.height / 2; // centered
 	switch (style)
 	{
 	default:
 	case eSmall3Ring:
 		PrintMark(pDC, x, y);
-		PrintMark(pDC, x, y - 275);
-		PrintMark(pDC, x, y + 275);
+		PrintMark(pDC, x, y - 198);
+		PrintMark(pDC, x, y + 198);
 		break;
 	case eLarge3Ring:
 		PrintMark(pDC, x, y);
-		PrintMark(pDC, x, y - 425);
-		PrintMark(pDC, x, y + 425);
+		PrintMark(pDC, x, y - 306);
+		PrintMark(pDC, x, y + 306);
 		break;
 	case eLarge4Ring:
-		PrintMark(pDC, x, y - 325); // 1 1/8 + 2 1/8
-		PrintMark(pDC, x, y - 238);
-		PrintMark(pDC, x, y + 238);
-		PrintMark(pDC, x, y + 325);
+		PrintMark(pDC, x, y - 252); // 1 3/8 + 2 1/8 [99 + 153]
+		PrintMark(pDC, x, y - 153); // 2 1/8 [153]
+		PrintMark(pDC, x, y + 153);
+		PrintMark(pDC, x, y + 252);
 		break;
 	}
+	pDC->SetPen(wxNullPen);
 }
 
 
-void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
+bool CPrintRuns::OnPrintPage(int pageNum)
 {
-	int saveDC = pDC->SaveDC();
+	GetDC()->SetMapMode(wxMM_POINTS);
 
-	// Units are .01 inches.
-	pDC->SetMapMode(MM_LOENGLISH);
+	wxRect r(0,0,0,0);
+	wxSize sz = GetDC()->GetSize();
 
-	// Drawing area. Note, located at 0,0.
-	CRect r(pInfo->m_rectDraw);
-	pDC->DPtoLP(r);
+	//float logUnitsFactor = 1.0; // factor to convert points into logical units
+	if (IsPreview())
+	{
+		//TODO: This isn't right
+		int ppiScreenX, ppiScreenY;
+		GetPPIScreen(&ppiScreenX, &ppiScreenY);
+		int ppiPrinterX, ppiPrinterY;
+		GetPPIPrinter(&ppiPrinterX, &ppiPrinterY);
+		float scale = static_cast<float>(ppiPrinterX) / static_cast<float>(ppiScreenX);
+
+		int w, h;
+		GetDC()->GetSize(&w, &h);
+		int pageWidth, pageHeight;
+		GetPageSizePixels(&pageWidth, &pageHeight);
+
+		float overallScale = scale * (static_cast<float>(w) / static_cast<float>(pageWidth));
+		GetDC()->SetUserScale(overallScale, overallScale);
+
+		//logUnitsFactor = static_cast<float>(ppiPrinterX) / (scale*72);
+
+		sz = GetDC()->GetSize();
+		r.width = GetDC()->DeviceToLogicalXRel(sz.x);
+		r.height = GetDC()->DeviceToLogicalYRel(sz.y);
+	}
+	else
+	{
+		r.width = GetDC()->DeviceToLogicalXRel(sz.x);
+		r.height = GetDC()->DeviceToLogicalYRel(sz.y);
+	}
+
+	// (old MFC note, not investigated further in wxWidgets)
 	// Note, we could get the physical size of the page and try and get our
 	// margin at exactly 1/2 inch. But observation has revealed that what the
 	// printer reports as the offset, isn't what the printer prints as the
@@ -868,215 +801,85 @@ void CPrintRuns::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 	// (if printing to a pdf "printer", they are!)
 
 	// Indent 1/2 inch
-	int margin = 50;
+	int margin = 36;
+	size_t curRun = (pageNum - 1) * m_nPerSheet;
 
 	// 'r' is full print area
-	//pDC->Rectangle(r);
-	CPoint pt = r.TopLeft();
+	//GetDC()->DrawRectangle(r);
 	// Landscape
-	if (abs(r.Width()) > abs(r.Height()))
+	if (abs(r.width) > abs(r.height))
 	{
-		//510x817
-		CRect r1(r);
-		r1.left += margin;
-		r1.top -= margin;
-		r1.right = r.left + r.Width() / 2 - margin;
-		r1.bottom += margin;
-		PrintPage(pInfo->m_nCurPage, pDC, r1);
-		// 3ring small
-		PrintBinderMarkings(eSmall3Ring, pDC, r1, margin);
+		//510x817 (old mfc pixels)
+		wxRect r1(r);
+		r1.x += margin;
+		r1.y += margin;
+		r1.width = r.width / 2 - 2 * margin;
+		r1.height -= 2 * margin;
+		PrintPage(pageNum, curRun, GetDC(), r1);
+		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin);
 
-		r1.left = r1.right + margin;
-		pDC->MoveTo(r1.TopLeft());
-		pDC->LineTo(r1.left, r1.bottom);
-		r1.left += margin;
-		r1.right = r.right - margin;
-		PrintPage(pInfo->m_nCurPage, pDC, r1);
-		PrintBinderMarkings(eSmall3Ring, pDC, r1, margin);
+		r1.x += r1.width + margin;
+		GetDC()->DrawLine(r1.x, r1.y, r1.x, r1.GetBottom());
+		r1.x += margin;
+		PrintPage(pageNum, curRun + 2, GetDC(), r1);
+		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin);
 	}
 	// Portrait
 	else
 	{
-		CRect r1(r);
-		r1.left += margin;
-		r1.top -= margin;
-		r1.right -= margin;
-		r1.bottom += margin;
-		PrintPage(pInfo->m_nCurPage, pDC, r1);
-		PrintBinderMarkings(eLarge3Ring, pDC, r1, margin);
-		PrintBinderMarkings(eLarge4Ring, pDC, r1, margin);
+		wxRect r1(r);
+		r1.x += margin;
+		r1.y += margin;
+		r1.width -= 2 * margin;
+		r1.height -= 2 * margin;
+		PrintPage(pageNum, curRun, GetDC(), r1);
+		PrintBinderMarkings(eLarge3Ring, GetDC(), r1, margin);
+		PrintBinderMarkings(eLarge4Ring, GetDC(), r1, margin);
 	}
 
-	pDC->RestoreDC(saveDC);
+	return true;
 }
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
-bool PrintRuns(ARBConfig const* inConfig, ARBDogPtr inDog, std::vector<RunInfo> const& inRuns)
+bool PrintRuns(
+		ARBConfig const* inConfig,
+		ARBDogPtr inDog,
+		std::vector<RunInfo> const& inRuns)
 {
-	wxMessageBox(wxT("PrintRuns"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-#pragma message PRAGMA_MESSAGE("TODO: implement print")
-#if 0
-	CPrintRuns runs(inConfig, inDog, inRuns);
-
-	// Style the printing after CView (code is based on CView::OnFilePrint)
-
-	CPrintInfo printInfo;
-	printInfo.m_rectDraw.SetRectEmpty();
-	assert(printInfo.m_pPD != NULL);    // must be set
-	if (!runs.OnPreparePrinting(&printInfo))
-		return false;
-	// hDC must be set (did you remember to call DoPreparePrinting?)
-	assert(printInfo.m_pPD->m_pd.hDC != NULL);
-
-	CString strTitle;
-	strTitle.LoadString(IDS_RUNS);
-
-	DOCINFO docInfo;
-	memset(&docInfo, 0, sizeof(DOCINFO));
-	docInfo.cbSize = sizeof(DOCINFO);
-	docInfo.lpszDocName = strTitle;
-	docInfo.lpszOutput = NULL;
-	CString strPortName = printInfo.m_pPD->GetPortName();
-
-	CDC dcPrint;
-	dcPrint.Attach(printInfo.m_pPD->m_pd.hDC);  // attach printer dc
-	dcPrint.m_bPrinting = TRUE;
-
-	runs.OnBeginPrinting(&dcPrint, &printInfo);
-
-	dcPrint.SetAbortProc(AbortProc);
-
-	CWnd* hwndTemp = AfxGetMainWnd();
-	assert(hwndTemp);
-	hwndTemp->EnableWindow(FALSE);
-	CPrintingDialog2 dlgPrintStatus(AfxGetMainWnd());
-
-	CString strTemp;
-	dlgPrintStatus.SetDlgItemText(AFX_IDC_PRINT_DOCNAME, strTitle);
-	dlgPrintStatus.SetDlgItemText(AFX_IDC_PRINT_PRINTERNAME, printInfo.m_pPD->GetDeviceName());
-	dlgPrintStatus.SetDlgItemText(AFX_IDC_PRINT_PORTNAME, strPortName);
-	dlgPrintStatus.ShowWindow(SW_SHOW);
-	dlgPrintStatus.UpdateWindow();
-
-	// Initialise print document details
-	// Begin a new print job
-	int jobNumber = dcPrint.StartDoc(&docInfo);
-#if _MSC_VER >= 1300
-	printInfo.m_nJobNumber = jobNumber;
-#endif
-	if (jobNumber == SP_ERROR)
+	wxPrinter printer(wxGetApp().GetPrintData());
+	CPrintRuns printout(inConfig, inDog, inRuns);
+	if (!printer.Print(wxGetApp().GetTopWindow(), &printout, true))
 	{
-		// enable main window before proceeding
-		hwndTemp->EnableWindow(TRUE);
-		// cleanup and show error message
-		runs.OnEndPrinting(&dcPrint, &printInfo);
-		dlgPrintStatus.DestroyWindow();
-		dcPrint.Detach();   // will be cleaned up by CPrintInfo destructor
-		AfxMessageBox(AFX_IDP_FAILED_TO_START_PRINT);
+		if (wxPRINTER_ERROR == wxPrinter::GetLastError())
+		{
+			wxMessageBox(wxT("Problem!"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_ERROR);
+		}
+		else
+		{
+			// Cancelled
+		}
 		return false;
 	}
+	(*wxGetApp().GetPrintData()) = printer.GetPrintDialogData();
 
-	// Guarantee values are in the valid range
-	UINT nEndPage = printInfo.GetToPage();
-	UINT nStartPage = printInfo.GetFromPage();
-
-	if (nEndPage < printInfo.GetMinPage())
-		nEndPage = printInfo.GetMinPage();
-	if (nEndPage > printInfo.GetMaxPage())
-		nEndPage = printInfo.GetMaxPage();
-
-	if (nStartPage < printInfo.GetMinPage())
-		nStartPage = printInfo.GetMinPage();
-	if (nStartPage > printInfo.GetMaxPage())
-		nStartPage = printInfo.GetMaxPage();
-
-	int nStep = (nEndPage >= nStartPage) ? 1 : -1;
-	nEndPage = (nEndPage == 0xffff) ? 0xffff : nEndPage + nStep;
-
-	VERIFY(strTemp.LoadString(AFX_IDS_PRINTPAGENUM));
-
-	bool bError = false;
-
-	for (printInfo.m_nCurPage = nStartPage;
-		printInfo.m_nCurPage != nEndPage;
-		printInfo.m_nCurPage += nStep)
+	/*
+	 * TODO: Implement preview - as is, it works. But the drawing isn't right.
+	 * Have to figure out the scaling.
+	wxPrintPreview *preview = new wxPrintPreview(
+		new CPrintRuns(inConfig, inDog, inRuns), // preview
+		new CPrintRuns(inConfig, inDog, inRuns), // printer
+		wxGetApp().GetPrintData());
+	if (!preview->Ok())
 	{
-		runs.OnPrepareDC(&dcPrint, &printInfo);
-		// check for end of print
-		if (!printInfo.m_bContinuePrinting)
-			break;
-		// write current page
-		wxChar szBuf[80];
-#if _MSC_VER >= 1400
-		ATL_CRT_ERRORCHECK_SPRINTF(_sntprintf_s(szBuf, _countof(szBuf), _countof(szBuf) - 1, strTemp, printInfo.m_nCurPage));
-#else
-		sprintf(szBuf, strTemp, printInfo.m_nCurPage);
-#endif
-		dlgPrintStatus.SetDlgItemText(AFX_IDC_PRINT_PAGENUM, szBuf);
-
-		// set up drawing rect to entire page (in logical coordinates)
-		printInfo.m_rectDraw.SetRect(0, 0,
-			dcPrint.GetDeviceCaps(HORZRES),
-			dcPrint.GetDeviceCaps(VERTRES));
-		dcPrint.DPtoLP(&printInfo.m_rectDraw);
-
-		// attempt to start the current page
-		if (dcPrint.StartPage() < 0)
-		{
-			bError = true;
-			break;
-		}
-
-		// must call OnPrepareDC on newer versions of Windows because
-		// StartPage now resets the device attributes.
-		runs.OnPrepareDC(&dcPrint, &printInfo);
-
-		assert(printInfo.m_bContinuePrinting);
-
-		// page successfully started, so now render the page
-		runs.OnPrint(&dcPrint, &printInfo);
-		if (nStep > 0) // pages are printed in ascending order
-		{
-			// OnPrint may have set the last page
-			// because the end of the document was reached.
-			// The loop must not continue with the next iteration.
-		// Is this a bug in CView? Leaving this here causes it to print all pages.
-		// If there are 5 pages available, and I specified 1-2, this changes it
-		// to print all 5.
-			//nEndPage = printInfo.GetMaxPage() + nStep;
-		}
-
-		// If the user restarts the job when it's spooling, all
-		// subsequent calls to EndPage returns < 0. The first time
-		// GetLastError returns ERROR_PRINT_CANCELLED
-		if (dcPrint.EndPage() < 0 && (GetLastError()!= ERROR_SUCCESS))
-		{
-			// Don't bother. CView does a bunch of stuff. We die.
-			bError = true;
-			break;
-		}
-		if (!AbortProc(dcPrint.m_hDC, 0))
-		{
-			bError = true;
-			break;
-		}
+		delete preview;
+		wxMessageBox(_("Sorry, print preview needs a printer to be installed."));
+		return false;
 	}
-	if (!bError)
-		dcPrint.EndDoc();
-	else
-		dcPrint.AbortDoc();
-
-	hwndTemp->EnableWindow();    // enable main window
-
-	runs.OnEndPrinting(&dcPrint, &printInfo);              // Call your "Clean up" function
-
-	dlgPrintStatus.DestroyWindow();
-	dcPrint.Detach();   // will be cleaned up by CPrintInfo destructor
-
-	return bError;
-#else
-	return false;
-#endif
+	wxPreviewFrame* frame = new wxPreviewFrame(preview, wxGetApp().GetTopWindow(), _("IDS_RUNS"), wxDefaultPosition, wxGetApp().GetTopWindow()->GetSize());
+	frame->Centre(wxBOTH);
+	frame->Initialize();
+	frame->Show(true);
+	*/
+	return true;
 }
