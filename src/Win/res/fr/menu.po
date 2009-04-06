@@ -82,12 +82,6 @@ msgstr "&Aperçu avant Impression\tCtrl+Alt+P"
 msgid "DescFilePrintPreview"
 msgstr "Afficher des pages entières"
 
-msgid "MenuFilePrintSetup"
-msgstr "&Mise en page..."
-
-msgid "DescFilePrintSetup"
-msgstr "Mise en page"
-
 # NEW
 msgid "MenuFileRecent"
 msgstr "Recent &Files"

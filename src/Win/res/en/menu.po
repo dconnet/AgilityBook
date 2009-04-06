@@ -81,12 +81,6 @@ msgstr "Print Pre&view\tCtrl+Alt+P"
 msgid "DescFilePrintPreview"
 msgstr "Print Preview"
 
-msgid "MenuFilePrintSetup"
-msgstr "P&rint Setup..."
-
-msgid "DescFilePrintSetup"
-msgstr "Print Setup"
-
 msgid "MenuFileRecent"
 msgstr "Recent &Files"
 

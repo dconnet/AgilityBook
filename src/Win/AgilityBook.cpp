@@ -87,7 +87,17 @@ public:
 	virtual wxFileHistory* OnCreateFileHistory();
 private:
 	size_t m_History;
+
+	DECLARE_EVENT_TABLE()
+	void OnPrint(wxCommandEvent& evt);
+	void OnPreview(wxCommandEvent& evt);
 };
+
+
+BEGIN_EVENT_TABLE(CAgilityBookDocManager, wxDocManager)
+	EVT_MENU(wxID_PRINT, CAgilityBookDocManager::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookDocManager::OnPreview)
+END_EVENT_TABLE()
 
 
 CAgilityBookDocManager::CAgilityBookDocManager(size_t historySize)
@@ -101,6 +111,47 @@ CAgilityBookDocManager::CAgilityBookDocManager(size_t historySize)
 wxFileHistory* CAgilityBookDocManager::OnCreateFileHistory()
 {
 	return new wxFileHistory(m_History);
+}
+
+
+void CAgilityBookDocManager::OnPrint(wxCommandEvent& WXUNUSED(evt))
+{
+	// Copied wxDocManager implementation so I could put my printer data in
+	wxView *view = GetCurrentView();
+	if (!view)
+		return;
+	wxPrintout *printout = view->OnCreatePrintout();
+	if (printout)
+	{
+		wxPrinter printer(wxGetApp().GetPrintData());
+		printer.Print(view->GetFrame(), printout, true);
+		delete printout;
+	}
+}
+
+
+void CAgilityBookDocManager::OnPreview(wxCommandEvent& WXUNUSED(evt))
+{
+	// Copied wxDocManager implementation so I could put my printer data in
+	wxView *view = GetCurrentView();
+	if (!view)
+		return;
+	wxPrintout *printout = view->OnCreatePrintout();
+	if (printout)
+	{
+		// Pass two printout objects: for preview, and possible printing.
+		wxPrintPreviewBase *preview = new wxPrintPreview(printout, view->OnCreatePrintout(), wxGetApp().GetPrintData());
+		if (!preview->Ok())
+		{
+			delete preview;
+			wxMessageBox(_("Sorry, print preview needs a printer to be installed."));
+			return;
+		}
+		wxPreviewFrame *frame = new wxPreviewFrame(preview, wxGetApp().GetTopWindow(), _("Print Preview"), wxDefaultPosition, wxGetApp().GetTopWindow()->GetSize());
+		frame->Centre(wxBOTH);
+		frame->Initialize();
+		frame->Show(true);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -180,6 +231,8 @@ bool CAgilityBookApp::OnInit()
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	wxXmlResource::Get()->InitAllHandlers();
 	m_LangMgr = new CLanguageManager();
+
+	m_printDialogData.GetPrintData().SetOrientation(wxLANDSCAPE);
 
 	wxString filename;
 	static const wxCmdLineEntryDesc cmdLineDesc[] =

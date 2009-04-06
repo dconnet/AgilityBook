@@ -53,7 +53,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 {
 	CAgilityBookOptions::GetPrinterFontInfo(m_fontPrintInfo);
 	long l, r, t, b;
-	CAgilityBookOptions::GetPrinterMargins(l, r, t, b);
+	CAgilityBookOptions::GetPrinterMargins(l, r, t, b, NULL);
 	m_Left = l / 100.0;
 	m_Right = r / 100.0;
 	m_Top = t / 100.0;
@@ -64,7 +64,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 
 	m_ctrlFontPrint = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_FONT_TEXT"),
-		wxDefaultPosition, wxSize(110 ,55), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
+		wxDefaultPosition, wxSize(110, 55), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
 	m_ctrlFontPrint->SetFont(m_fontPrint);
 	m_ctrlFontPrint->Wrap(-1);
 

@@ -176,7 +176,6 @@ void CAgilityBookMenu::CreateMenu(
 		DoMenu(handles.menu, bCreate, wxID_PRINT, _("MenuFilePrint"), _("DescFilePrint"));
 		DoMenu(handles.menu, bCreate, ID_FILE_PRINT_BLANK_RUNS, _("MenuFilePrintBlank"), _("DescFilePrintBlank"));
 		DoMenu(handles.menu, bCreate, wxID_PREVIEW, _("MenuFilePrintPreview"), _("DescFilePrintPreview"));
-		DoMenu(handles.menu, bCreate, wxID_PRINT_SETUP, _("MenuFilePrintSetup"), _("DescFilePrintSetup"));
 		if (bCreate)
 		{
 			if (manager)
