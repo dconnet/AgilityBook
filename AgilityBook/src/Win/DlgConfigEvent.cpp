@@ -573,6 +573,24 @@ void CDlgConfigEvent::EnableSubnameControls()
 }
 
 
+void CDlgConfigEvent::EditSubname()
+{
+	int idx = m_ctrlSubNames->GetSelection();
+	if (wxNOT_FOUND != idx)
+	{
+		wxString name = m_ctrlSubNames->GetString(idx);
+		CDlgName dlg(name, this);
+		if (wxID_OK == dlg.ShowModal())
+		{
+			m_ctrlSubNames->Delete(idx);
+			m_ctrlSubNames->Insert(dlg.GetName(), idx);
+			m_ctrlSubNames->SetSelection(idx);
+			EnableSubnameControls();
+		}
+	}
+}
+
+
 void CDlgConfigEvent::EnablePointsControls()
 {
 	bool bEnable = false;
@@ -1011,6 +1029,7 @@ void CDlgConfigEvent::OnLbnSelchangeSubnames(wxCommandEvent& evt)
 
 void CDlgConfigEvent::OnLbnDblclkSubnames(wxCommandEvent& evt)
 {
+	EditSubname();
 }
 
 
@@ -1028,19 +1047,7 @@ void CDlgConfigEvent::OnBnClickedSubNamesNew(wxCommandEvent& evt)
 
 void CDlgConfigEvent::OnBnClickedSubNamesEdit(wxCommandEvent& evt)
 {
-	int idx = m_ctrlSubNames->GetSelection();
-	if (wxNOT_FOUND != idx)
-	{
-		wxString name = m_ctrlSubNames->GetString(idx);
-		CDlgName dlg(name, this);
-		if (wxID_OK == dlg.ShowModal())
-		{
-			m_ctrlSubNames->Delete(idx);
-			m_ctrlSubNames->Insert(dlg.GetName(), idx);
-			m_ctrlSubNames->SetSelection(idx);
-			EnableSubnameControls();
-		}
-	}
+	EditSubname();
 }
 
 
