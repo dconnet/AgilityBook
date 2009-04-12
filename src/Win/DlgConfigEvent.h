@@ -69,6 +69,7 @@ private:
 	CConfigEventDataPlaceInfo* GetPlacementData(int index) const;
 	wxString GetListName(ARBConfigScoringPtr pScoring) const;
 	void EnableSubnameControls();
+	void EditSubname();
 	void EnablePointsControls();
 	void FillSubNames(bool bInit = false);
 	void FillControls();
