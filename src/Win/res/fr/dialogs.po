@@ -1334,3 +1334,96 @@ msgstr "&Supprimer"
 
 msgid "IDC_TRIAL_CLUB_INFO"
 msgstr "Notes club"
+
+# WizardStart
+msgid "IDD_WIZARD_START"
+msgstr "Utilitaire d'Importation/Exportation"
+
+msgid "IDC_WIZARD_RADIO_BOX"
+msgstr "Importer/Exporter:"
+
+msgid "IDC_WIZARD_START_EXCEL"
+msgstr "Microsoft Excel (directement)"
+
+msgid "IDC_WIZARD_START_CALC"
+msgstr "OpenOffice Calc (directement)"
+
+msgid "IDC_WIZARD_START_SPREADSHEET"
+msgstr "Feuille de Calcul"
+
+msgid "IDC_WIZARD_START_ARB"
+msgstr "Agility Record Book"
+
+msgid "IDC_WIZARD_START_DESCRIPTION"
+msgstr "Description"
+
+# WizardImport
+msgid "IDD_WIZARD_IMPORT"
+msgstr "Utilitaire d'Importation"
+
+msgid "IDC_WIZARD_IMPORT_ROW"
+msgstr "Importer à partir de la ligne:"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_GROUP"
+msgstr "Limites"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_TAB"
+msgstr "Tabulation"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_SPACE"
+msgstr "Espace"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_COLON"
+msgstr "Point"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_SEMI"
+msgstr "Point-virgule"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_COMMA"
+msgstr "Virgule"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_OTHER"
+msgstr "Autre:"
+
+msgid "IDC_WIZARD_IMPORT_DATE"
+msgstr "Format date:"
+
+msgid "IDC_WIZARD_IMPORT_ASSIGN"
+msgstr "Attribuer Colonnes..."
+
+msgid "IDC_WIZARD_IMPORT_FILE"
+msgstr "Fichier..."
+
+# WizardExport
+msgid "IDD_WIZARD_EXPORT"
+msgstr "Utilitaire d'Exportation"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_GROUP"
+msgstr "Limites"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_TAB"
+msgstr "Tabulation"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_SPACE"
+msgstr "Espace"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_COLON"
+msgstr "Point"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_SEMI"
+msgstr "Point-virgule"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_COMMA"
+msgstr "Virgule"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_OTHER"
+msgstr "Autre:"
+
+msgid "IDC_WIZARD_EXPORT_DATE"
+msgstr "Format date:"
+
+msgid "IDC_WIZARD_EXPORT_ASSIGN"
+msgstr "Attribuer Colonnes..."
+
+msgid "IDC_WIZARD_EXPORT_PREVIEW"
+msgstr "Apreçu"

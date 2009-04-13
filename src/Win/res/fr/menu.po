@@ -434,38 +434,38 @@ msgstr "FR-Type..."
 
 # NEW
 msgid "MenuViewNotebook"
-msgstr "FR-&Notebook\tCtrl-1"
+msgstr "&Notebook\tCtrl-1"
 
 msgid "DescViewNotebook"
-msgstr "FR-Notebook"
+msgstr "Notebook"
 
 # NEW
 msgid "MenuViewListbook"
-msgstr "FR-&Listbook\tCtrl-2"
+msgstr "&Listbook\tCtrl-2"
 
 msgid "DescViewListbook"
-msgstr "FR-Listbook"
+msgstr "Listbook"
 
 # NEW
 msgid "MenuViewChoicebook"
-msgstr "FR-&Choicebook\tCtrl-3"
+msgstr "&Choicebook\tCtrl-3"
 
 msgid "DescViewChoicebook"
-msgstr "FR-Choicebook"
+msgstr "Choicebook"
 
 # NEW
 msgid "MenuViewTreebook"
-msgstr "FR-&Treebook\tCtrl-4"
+msgstr "&Treebook\tCtrl-4"
 
 msgid "DescViewTreebook"
-msgstr "FR-Treebook"
+msgstr "Treebook"
 
 # NEW
 msgid "MenuViewToolbook"
-msgstr "FR-T&oolbook\tCtrl-5"
+msgstr "T&oolbook\tCtrl-5"
 
 msgid "DescViewToolbook"
-msgstr "FR-Toolbook"
+msgstr "Toolbook"
 
 # NEW
 msgid "MenuViewOrientation"
@@ -473,7 +473,7 @@ msgstr "FR-Orientation..."
 
 # NEW
 msgid "DescViewOrientation"
-msgstr "FR-Orientation of control"
+msgstr "FR-Orientation of tab"
 
 # NEW
 msgid "MenuViewTop"

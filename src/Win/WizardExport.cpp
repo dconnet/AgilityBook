@@ -45,14 +45,10 @@
 #include "stdafx.h"
 #include "WizardExport.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CWizardExport")
-#if 0
-#include <fstream>
-#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookViewCalendarList.h"
-#include "AgilityBookViewTraining.h"
+#include "AgilityBookCalendarListView.h"
+#include "AgilityBookTrainingView.h"
 #include "ARBConfigScoring.h"
 #include "ARBDog.h"
 #include "ARBDogRun.h"
@@ -60,85 +56,202 @@
 #include "ARBLocalization.h"
 #include "DlgAssignColumns.h"
 #include "DlgProgress.h"
+#include "Globals.h"
 #include "Wizard.h"
+#include <fstream>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
 // Exporting by array is much faster, but formatting is better by cell.
 //#define EXPORT_BY_ARRAY
 
-/////////////////////////////////////////////////////////////////////////////
-// CWizardExport property page
-
-IMPLEMENT_DYNAMIC(CWizardExport, CDlgBasePropertyPage)
-
 
 CWizardExport::CWizardExport(
 		CWizard* pSheet,
-		CAgilityBookDoc* pDoc)
-	: CDlgBasePropertyPage(CWizardExport::IDD)
-	, m_ctrlDateFormat(false)
-	, m_ctrlPreview(false)
+		CAgilityBookDoc* pDoc,
+		wxWizardPage* prev)
+	: wxWizardPageSimple(pSheet, prev)
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
+	, m_Delim(CAgilityBookOptions::eDelimTab)
+	, m_Delimiter(wxT(":"))
+	, m_ctrlAssign(NULL)
+	, m_ctrlDateFormat(NULL)
+	, m_ctrlPreview(NULL)
 {
-	//{{AFX_DATA_INIT(CWizardExport)
-	m_Delim = -1;
-	m_Delimiter = wxT(":");
-	//}}AFX_DATA_INIT
-	int delim;
-	CAgilityBookOptions::GetImportExportDelimiters(false, delim, m_Delimiter);
-	switch (delim)
+	Connect(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler(CWizardExport::OnWizardChanged));
+	Connect(wxEVT_WIZARD_FINISHED, wxWizardEventHandler(CWizardExport::OnWizardFinish));
+
+	CAgilityBookOptions::GetImportExportDelimiters(false, m_Delim, m_Delimiter);
+
+	bool showDelims = true;
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
+		showDelims = false;
+
+	// Controls (these are done first to control tab order)
+
+	wxRadioButton* ctrlTab = NULL;
+	wxRadioButton* ctrlColon = NULL;
+	wxRadioButton* ctrlComma = NULL;
+	wxRadioButton* ctrlSpace = NULL;
+	wxRadioButton* ctrlSemicolon = NULL;
+	wxRadioButton* ctrlOther = NULL;
+	wxTextCtrl* ctrlOtherChar = NULL;
+
+	if (showDelims)
 	{
-	default:
-	case CAgilityBookOptions::eDelimTab:		m_Delim = 0; break;
-	case CAgilityBookOptions::eDelimSpace:		m_Delim = 1; break;
-	case CAgilityBookOptions::eDelimColon:		m_Delim = 2; break;
-	case CAgilityBookOptions::eDelimSemicolon:	m_Delim = 3; break;
-	case CAgilityBookOptions::eDelimComma:		m_Delim = 4; break;
-	case CAgilityBookOptions::eDelimOther:		m_Delim = 5; break;
+		ctrlTab = new wxRadioButton(this, wxID_ANY,
+			_("IDC_WIZARD_EXPORT_DELIM_TAB"),
+			wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+		ctrlTab->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardExport::OnDelimTab), NULL, this);
+		ctrlTab->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_TAB"));
+		ctrlTab->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_TAB"));
+
+		ctrlColon = new wxRadioButton(this, wxID_ANY,
+			_("IDC_WIZARD_EXPORT_DELIM_COLON"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		ctrlColon->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardExport::OnDelimColon), NULL, this);
+		ctrlColon->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_COLON"));
+		ctrlColon->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_COLON"));
+
+		ctrlComma = new wxRadioButton(this, wxID_ANY,
+			_("IDC_WIZARD_EXPORT_DELIM_COMMA"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		ctrlComma->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardExport::OnDelimComma), NULL, this);
+		ctrlComma->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_COMMA"));
+		ctrlComma->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_COMMA"));
+
+		ctrlSpace = new wxRadioButton(this, wxID_ANY,
+			_("IDC_WIZARD_EXPORT_DELIM_SPACE"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		ctrlSpace->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardExport::OnDelimSpace), NULL, this);
+		ctrlSpace->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_SPACE"));
+		ctrlSpace->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_SPACE"));
+
+		ctrlSemicolon = new wxRadioButton(this, wxID_ANY,
+			_("IDC_WIZARD_EXPORT_DELIM_SEMI"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		ctrlSemicolon->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardExport::OnDelimSemicolon), NULL, this);
+		ctrlSemicolon->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_SEMI"));
+		ctrlSemicolon->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_SEMI"));
+
+		ctrlOther = new wxRadioButton(this, wxID_ANY,
+			_("IDC_WIZARD_EXPORT_DELIM_OTHER"),
+			wxDefaultPosition, wxDefaultSize, 0);
+		ctrlOther->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardExport::OnDelimOther), NULL, this);
+		ctrlOther->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
+		ctrlOther->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
+
+		ctrlOtherChar = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+			wxDefaultPosition, wxSize(30, -1), 0,
+			wxGenericValidator(&m_Delimiter));
+		ctrlOtherChar->SetMaxLength(1); 
+		ctrlOtherChar->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CWizardExport::OnExportDelim), NULL, this);
+		ctrlOtherChar->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM"));
+		ctrlOtherChar->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM"));
 	}
+
+	m_ctrlAssign = new wxButton(this, wxID_ANY,
+		_("IDC_WIZARD_EXPORT_ASSIGN"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlAssign->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CWizardExport::OnExportAssign), NULL, this);
+	m_ctrlAssign->SetHelpText(_("HIDC_WIZARD_EXPORT_ASSIGN"));
+	m_ctrlAssign->SetToolTip(_("HIDC_WIZARD_EXPORT_ASSIGN"));
+
+	wxStaticText* textFormat = new wxStaticText(this, wxID_ANY,
+		_("IDC_WIZARD_EXPORT_DATE"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textFormat->Wrap(-1);
+
+	m_ctrlDateFormat = new wxComboBox(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxDefaultSize,
+		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
+	static struct
+	{
+		wxChar const* uFormat;
+		ARBDate::DateFormat format;
+	} const sc_Dates[] =
+	{
+		{wxT("IDS_DATEFORMAT_DASH_MDY"), ARBDate::eDashMDY},
+		{wxT("IDS_DATEFORMAT_SLASH_MDY"), ARBDate::eSlashMDY},
+		{wxT("IDS_DATEFORMAT_DASH_YMD"), ARBDate::eDashYMD},
+		{wxT("IDS_DATEFORMAT_SLASH_YMD"), ARBDate::eSlashYMD},
+		{wxT("IDS_DATEFORMAT_DASH_DMY"), ARBDate::eDashDMY},
+		{wxT("IDS_DATEFORMAT_SLASH_DMY"), ARBDate::eSlashDMY},
+	};
+	static size_t const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
+	ARBDate::DateFormat format;
+	CAgilityBookOptions::GetImportExportDateFormat(false, format);
+	for (size_t i = 0; i < sc_nDates; ++i)
+	{
+		long index = m_ctrlDateFormat->Append(wxGetTranslation(sc_Dates[i].uFormat));
+		m_ctrlDateFormat->SetClientData(index, (void*)sc_Dates[i].format);
+		if (sc_Dates[i].format == format)
+			m_ctrlDateFormat->SetSelection(index);
+	}
+	m_ctrlDateFormat->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CWizardExport::OnSelchangeDate), NULL, this);
+	m_ctrlDateFormat->SetHelpText(_("HIDC_WIZARD_EXPORT_DATE"));
+	m_ctrlDateFormat->SetToolTip(_("HIDC_WIZARD_EXPORT_DATE"));
+
+	wxStaticText* textPreview = new wxStaticText(this, wxID_ANY,
+		_("IDC_WIZARD_EXPORT_PREVIEW"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textPreview->Wrap(-1);
+
+	m_ctrlPreview = new wxListCtrl(this, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize, wxLC_NO_HEADER|wxLC_REPORT);
+	m_ctrlPreview->SetHelpText(_("HIDC_WIZARD_EXPORT_PREVIEW"));
+	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_EXPORT_PREVIEW"));
+
+	// Sizers (sizer creation is in same order as wxFormBuilder)
+
+	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxBoxSizer* sizerOptions = new wxBoxSizer(wxHORIZONTAL);
+
+	if (showDelims)
+	{
+		wxStaticBoxSizer* sizerDelimiters = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_EXPORT_DELIM_GROUP")), wxVERTICAL);
+
+		wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, 0, 0);
+		sizerDelim2->SetFlexibleDirection(wxBOTH);
+		sizerDelim2->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+		sizerDelim2->Add(ctrlTab, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+		sizerDelim2->Add(ctrlColon, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+		sizerDelim2->Add(ctrlComma, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+		sizerDelim2->Add(ctrlSpace, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+		sizerDelim2->Add(ctrlSemicolon, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+		wxBoxSizer* sizerOther = new wxBoxSizer(wxHORIZONTAL);
+		sizerOther->Add(ctrlOther, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+		sizerOther->Add(ctrlOtherChar, 0, wxALL, 5);
+
+		sizerDelim2->Add(sizerOther, 1, wxEXPAND, 5);
+
+		sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND, 5);
+
+		sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 5);
+	}
+
+	wxBoxSizer* sizerAssign = new wxBoxSizer(wxHORIZONTAL);
+	sizerAssign->Add(m_ctrlAssign, 0, wxALIGN_BOTTOM|wxALL, 5);
+
+	wxBoxSizer* sizerFormat = new wxBoxSizer(wxHORIZONTAL);
+	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerFormat->Add(m_ctrlDateFormat, 0, wxALL, 5);
+
+	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP, 5);
+
+	sizerOptions->Add(sizerAssign, 0, wxEXPAND, 5);
+
+	bSizer->Add(sizerOptions, 0, wxEXPAND, 5);
+	bSizer->Add(textPreview, 0, wxLEFT|wxRIGHT|wxTOP, 5);
+	bSizer->Add(m_ctrlPreview, 1, wxALL|wxEXPAND, 5);
+
+	SetSizer(bSizer);
+	bSizer->Fit(this);
 }
 
-
-CWizardExport::~CWizardExport()
-{
-}
-
-
-void CWizardExport::DoDataExchange(CDataExchange* pDX)
-{
-	CDlgBasePropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CWizardExport)
-	DDX_Radio(pDX, IDC_WIZARD_EXPORT_DELIM_TAB, m_Delim);
-	DDX_Text(pDX, IDC_WIZARD_EXPORT_DELIM, m_Delimiter);
-	DDV_MaxChars(pDX, m_Delimiter, 1);
-	DDX_Control(pDX, IDC_WIZARD_EXPORT_ASSIGN, m_ctrlAssign);
-	DDX_Control(pDX, IDC_WIZARD_EXPORT_DATE, m_ctrlDateFormat);
-	DDX_Control(pDX, IDC_WIZARD_EXPORT_PREVIEW, m_ctrlPreview);
-	//}}AFX_DATA_MAP
-}
-
-
-BEGIN_MESSAGE_MAP(CWizardExport, CDlgBasePropertyPage)
-	//{{AFX_MSG_MAP(CWizardExport)
-	ON_BN_CLICKED(IDC_WIZARD_EXPORT_DELIM_TAB, OnExportDelim)
-	ON_BN_CLICKED(IDC_WIZARD_EXPORT_ASSIGN, OnExportAssign)
-	ON_BN_CLICKED(IDC_WIZARD_EXPORT_DELIM_SPACE, OnExportDelim)
-	ON_BN_CLICKED(IDC_WIZARD_EXPORT_DELIM_COLON, OnExportDelim)
-	ON_BN_CLICKED(IDC_WIZARD_EXPORT_DELIM_SEMI, OnExportDelim)
-	ON_BN_CLICKED(IDC_WIZARD_EXPORT_DELIM_COMMA, OnExportDelim)
-	ON_BN_CLICKED(IDC_WIZARD_EXPORT_DELIM_OTHER, OnExportDelim)
-	ON_EN_CHANGE(IDC_WIZARD_EXPORT_DELIM, OnExportDelim)
-	ON_CBN_SELCHANGE(IDC_WIZARD_EXPORT_DATE, OnSelchangeDate)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
 
 CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 {
@@ -166,31 +279,31 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 }
 
 
-CString CWizardExport::GetDelim() const
+wxString CWizardExport::GetDelim() const
 {
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
-		return wxT("");
-	CString delim;
+		return wxEmptyString;
+	wxString delim;
 	switch (m_Delim)
 	{
-	default: break;
-	case 0: delim = wxT("\t"); break;
-	case 1: delim = wxT(" "); break;
-	case 2: delim = wxT(":"); break;
-	case 3: delim = wxT(";"); break;
-	case 4: delim = wxT(","); break;
-	case 5: delim = m_Delimiter; break;
+	default:
+	case CAgilityBookOptions::eDelimTab: delim = wxT("\t"); break;
+	case CAgilityBookOptions::eDelimSpace: delim = wxT(" "); break;
+	case CAgilityBookOptions::eDelimColon: delim = wxT(":"); break;
+	case CAgilityBookOptions::eDelimSemicolon: delim = wxT(";"); break;
+	case CAgilityBookOptions::eDelimComma: delim = wxT(","); break;
+	case CAgilityBookOptions::eDelimOther: delim = m_Delimiter; break;
 	}
 	return delim;
 }
 
 
-CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
+wxString CWizardExport::PrepFieldOutput(wxChar const* inStr) const
 {
-	CString delim = GetDelim();
+	wxString delim = GetDelim();
 	bool bAddQuotes = false;
-	CString fld(inStr);
+	wxString fld(inStr);
 	if (!delim.IsEmpty() && (0 <= fld.Find(delim) || 0 <= fld.Find('"')))
 	{
 		bAddQuotes = true;
@@ -208,15 +321,14 @@ CString CWizardExport::PrepFieldOutput(LPCTSTR inStr) const
 
 void CWizardExport::UpdateButtons()
 {
-	DWORD dwWiz = PSWIZB_BACK;
 	// Some tests to make sure things are ready
 	bool bOk = false;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		bOk = true;
-	else if (1 == GetDelim().GetLength())
+	else if (1 == GetDelim().length())
 		bOk = true;
-	BOOL bEnable = FALSE;
+	bool bEnable = false;
 	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
 	switch (m_pSheet->GetImportExportItem())
 	{
@@ -240,12 +352,12 @@ void CWizardExport::UpdateButtons()
 	}
 	if (CAgilityBookOptions::eUnknown != order)
 	{
-		bEnable = TRUE;
+		bEnable = true;
 		if (bOk)
 		{
 			for (size_t i = 0; bOk && i < IO_TYPE_MAX; ++i)
 			{
-				std::vector<int> columns;
+				std::vector<long> columns;
 				if (CDlgAssignColumns::GetColumnOrder(order, i, columns))
 				{
 					if (0 == columns.size())
@@ -254,39 +366,27 @@ void CWizardExport::UpdateButtons()
 			}
 		}
 	}
-	int nCmdShow = SW_SHOW;
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
-		nCmdShow = SW_HIDE;
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_GROUP)->ShowWindow(nCmdShow);
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_TAB)->ShowWindow(nCmdShow);
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_SPACE)->ShowWindow(nCmdShow);
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_COLON)->ShowWindow(nCmdShow);
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_SEMI)->ShowWindow(nCmdShow);
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_COMMA)->ShowWindow(nCmdShow);
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM_OTHER)->ShowWindow(nCmdShow);
-    GetDlgItem(IDC_WIZARD_EXPORT_DELIM)->ShowWindow(nCmdShow);
-	m_ctrlAssign.EnableWindow(bEnable);
-	dwWiz |= (bOk ? PSWIZB_FINISH : PSWIZB_DISABLEDFINISH);
-	m_pSheet->SetWizardButtons(dwWiz);
+
+	m_ctrlAssign->Enable(bEnable);
+	m_pSheet->UpdateButtons(bOk);
 }
 
 
-CString CWizardExport::AddPreviewData(
-		int inLine,
-		int inCol,
-		CString inData)
+wxString CWizardExport::AddPreviewData(
+		long inLine,
+		long inCol,
+		wxString inData)
 {
 	// TODO: Add option to allow CRs?
 	inData.Replace(wxT("\n"), wxT(" "));
-	CString data;
+	wxString data;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 		if (0 == inCol)
-			m_ctrlPreview.InsertItem(inLine, inData);
+			m_ctrlPreview->InsertItem(inLine, inData);
 		else
-			m_ctrlPreview.SetItemText(inLine, inCol, inData);
+			SetListColumnText(m_ctrlPreview, inLine, inCol, inData);
 	}
 	else
 	{
@@ -300,52 +400,52 @@ CString CWizardExport::AddPreviewData(
 
 void CWizardExport::UpdatePreview()
 {
-	CWaitCursor wait;
+	wxBusyCursor wait;
 
-	m_ctrlPreview.SetRedraw(FALSE);
+	m_ctrlPreview->Freeze();
 
 	// Clear existing preview data.
-	m_ctrlPreview.DeleteAllItems();
-	int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
-	int iCol;
+	m_ctrlPreview->DeleteAllItems();
+	long nColumnCount = m_ctrlPreview->GetColumnCount();
+	long iCol;
 	for (iCol = 0; iCol < nColumnCount; ++iCol)
-		m_ctrlPreview.DeleteColumn(0);
+		m_ctrlPreview->DeleteColumn(0);
 
 	// Get export info.
 	ARBDate::DateFormat format = ARBDate::eSlashMDY;
-	int idxDateFormat = m_ctrlDateFormat.GetCurSel();
-	if (CB_ERR != idxDateFormat)
-		format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(idxDateFormat));
-	CString delim = GetDelim();
+	long idxDateFormat = m_ctrlDateFormat->GetSelection();
+	if (wxNOT_FOUND != idxDateFormat)
+		format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(idxDateFormat));
+	wxString delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle()
 	&& delim.IsEmpty())
 	{
-		CString nodelim;
-		nodelim.LoadString(IDS_NO_DELIM_SPECIFIED);
-		m_ctrlPreview.InsertColumn(0, wxT(""));
-		m_ctrlPreview.InsertItem(0, nodelim);
-		m_ctrlPreview.SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
-		m_ctrlPreview.SetRedraw(TRUE);
-		m_ctrlPreview.Invalidate();
+		wxString nodelim(_("IDS_NO_DELIM_SPECIFIED"));
+		m_ctrlPreview->InsertColumn(0, wxT(""));
+		m_ctrlPreview->InsertItem(0, nodelim);
+		m_ctrlPreview->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
+		m_ctrlPreview->Thaw();
+		m_ctrlPreview->Refresh();
 		return;
 	}
 
 	// Get export columns.
 	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
 	size_t index;
-	std::vector<int> columns[IO_TYPE_MAX];
+	std::vector<long> columns[IO_TYPE_MAX];
 	for (index = 0; index < IO_TYPE_MAX; ++index)
 	{
 		CDlgAssignColumns::GetColumnOrder(order, index, columns[index]);
 	}
 
 	// Now generate the header information.
-	CString hdrSep(wxT("/"));
+	wxString hdrSep(wxT("/"));
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		hdrSep = wxT("\n");
-	CStringArray cols;
+	std::vector<wxString> cols;
+
 	switch (m_pSheet->GetImportExportItem())
 	{
 	default:
@@ -355,14 +455,14 @@ void CWizardExport::UpdatePreview()
 		{
 			if (0 == columns[index].size())
 				continue;
-			for (iCol = 0; iCol < static_cast<int>(columns[index].size()); ++iCol)
+			for (iCol = 0; iCol < static_cast<long>(columns[index].size()); ++iCol)
 			{
-				CString str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
-				if (iCol >= cols.GetSize())
-					cols.Add(str);
+				wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
+				if (iCol >= static_cast<long>(cols.size()))
+					cols.push_back(str);
 				else
 				{
-					if (cols[iCol] != str && 0 < str.GetLength())
+					if (cols[iCol] != str && 0 < str.length())
 						cols[iCol] += hdrSep + str;
 				}
 			}
@@ -371,58 +471,56 @@ void CWizardExport::UpdatePreview()
 	case WIZ_EXPORT_CALENDAR:
 		for (index = 0; index < columns[IO_TYPE_CALENDAR].size(); ++index)
 		{
-			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][index]);
-			cols.Add(str);
+			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][index]);
+			cols.push_back(str);
 		}
 		break;
 	case WIZ_EXPORT_CALENDAR_APPT:
 		for (index = 0; index < columns[IO_TYPE_CALENDAR_APPT].size(); ++index)
 		{
-			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_APPT][index]);
-			cols.Add(str);
+			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_APPT][index]);
+			cols.push_back(str);
 		}
 		break;
 	case WIZ_EXPORT_CALENDAR_TASK:
 		for (index = 0; index < columns[IO_TYPE_CALENDAR_TASK].size(); ++index)
 		{
-			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_TASK][index]);
-			cols.Add(str);
+			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_TASK][index]);
+			cols.push_back(str);
 		}
 		break;
 
 	case WIZ_EXPORT_LOG:
 		for (index = 0; index < columns[IO_TYPE_TRAINING].size(); ++index)
 		{
-			CString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][index]);
-			cols.Add(str);
+			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][index]);
+			cols.push_back(str);
 		}
 	}
 
 	// Now start writing the data.
-	int iLine = 0;
+	long iLine = 0;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
-		m_ctrlPreview.SuppressTooltipFixing(true);
-		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
-			m_ctrlPreview.InsertColumn(iCol, wxT(""));
-		m_ctrlPreview.SuppressTooltipFixing(false);
-		m_ctrlPreview.InsertItem(iLine, cols[0]);
-		for (iCol = 1; iCol < cols.GetSize(); ++iCol)
-			m_ctrlPreview.SetItemText(iLine, iCol, cols[iCol]);
+		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
+			m_ctrlPreview->InsertColumn(iCol, wxT(""));
+		m_ctrlPreview->InsertItem(iLine, cols[0]);
+		for (iCol = 1; iCol < static_cast<long>(cols.size()); ++iCol)
+			SetListColumnText(m_ctrlPreview, iLine, iCol, cols[iCol]);
 		++iLine;
 	}
 	else
 	{
-		m_ctrlPreview.InsertColumn(0, wxT(""));
-		CString data;
-		for (iCol = 0; iCol < cols.GetSize(); ++iCol)
+		m_ctrlPreview->InsertColumn(0, wxT(""));
+		wxString data;
+		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
 		{
 			if (0 < iCol)
 				data += delim;
 			data += PrepFieldOutput(cols[iCol]);
 		}
-		m_ctrlPreview.InsertItem(iLine, data);
+		m_ctrlPreview->InsertItem(iLine, data);
 		++iLine;
 	}
 
@@ -455,7 +553,7 @@ void CWizardExport::UpdatePreview()
 						assert(pScoring);
 						if (pScoring)
 						{
-							int idxType = -1;
+							long idxType = -1;
 							switch (pScoring->GetScoringStyle())
 							{
 							case ARBConfigScoring::eFaultsThenTime:
@@ -476,8 +574,8 @@ void CWizardExport::UpdatePreview()
 							assert(-1 != idxType);
 							if (0 <= idxType)
 							{
-								CString data;
-								for (int idx = 0; idx < static_cast<int>(columns[idxType].size()); ++idx)
+								wxString data;
+								for (long idx = 0; idx < static_cast<long>(columns[idxType].size()); ++idx)
 								{
 									switch (columns[idxType][idx])
 									{
@@ -492,8 +590,8 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_VENUE:
 										{
-											CString fld;
-											int i = 0;
+											wxString fld;
+											long i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 												iter != pTrial->GetClubs().end();
 												++iter, ++i)
@@ -507,8 +605,8 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_CLUB:
 										{
-											CString fld;
-											int i = 0;
+											wxString fld;
+											long i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 												iter != pTrial->GetClubs().end();
 												++iter, ++i)
@@ -689,7 +787,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_Q:
 										{
-											CString q;
+											wxString q;
 											if (pRun->GetQ().Qualified())
 											{
 												std::vector<ARBConfigMultiQPtr> multiQs;
@@ -704,11 +802,9 @@ void CWizardExport::UpdatePreview()
 												}
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
 												{
-													CString tmp;
-													tmp.LoadString(IDS_SQ);
 													if (!q.IsEmpty())
 														q += wxT('/');
-													q += tmp;
+													q += _("IDS_SQ");
 												}
 											}
 											if (q.IsEmpty())
@@ -738,8 +834,8 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_FAULTS:
 										{
-											CString fld;
-											int i = 0;
+											wxString fld;
+											long i = 0;
 											for (ARBDogFaultList::const_iterator iter = pRun->GetFaults().begin();
 												iter != pRun->GetFaults().end();
 												++iter)
@@ -755,7 +851,7 @@ void CWizardExport::UpdatePreview()
 								}
 								if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 								&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-									m_ctrlPreview.InsertItem(iLine, data);
+									m_ctrlPreview->InsertItem(iLine, data);
 								++iLine;
 							}
 						}
@@ -769,9 +865,9 @@ void CWizardExport::UpdatePreview()
 		{
 			for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin(); iterCal != m_pDoc->Book().GetCalendar().end(); ++iterCal)
 			{
-				CString data;
+				wxString data;
 				ARBCalendarPtr pCal = *iterCal;
-				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR].size()); ++idx)
+				for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_CALENDAR].size()); ++idx)
 				{
 					ARBDate date;
 					switch (columns[IO_TYPE_CALENDAR][idx])
@@ -826,7 +922,7 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview.InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, data);
 				++iLine;
 			}
 		}
@@ -847,9 +943,9 @@ void CWizardExport::UpdatePreview()
 			}
 			for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 			{
-				CString data;
+				wxString data;
 				ARBCalendarPtr pCal = *iterCal;
-				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR_APPT].size()); ++idx)
+				for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_CALENDAR_APPT].size()); ++idx)
 				{
 					ARBDate date;
 					switch (columns[IO_TYPE_CALENDAR_APPT][idx])
@@ -901,7 +997,7 @@ void CWizardExport::UpdatePreview()
 						break;
 					case IO_CAL_APPT_DESCRIPTION:
 						{
-							CString tmp;
+							wxString tmp;
 							if (pCal->IsTentative())
 							{
 								tmp += Localization()->CalendarTentative().c_str();
@@ -965,7 +1061,7 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview.InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, data);
 				++iLine;
 			}
 		}
@@ -986,11 +1082,11 @@ void CWizardExport::UpdatePreview()
 			}
 			for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 			{
-				CString data;
+				wxString data;
 				ARBCalendarPtr pCal = *iterCal;
 				if (ARBCalendar::ePlanning != pCal->GetEntered())
 					continue;
-				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_CALENDAR_TASK].size()); ++idx)
+				for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_CALENDAR_TASK].size()); ++idx)
 				{
 					ARBDate date;
 					ARBDate dateStart = pCal->GetOpeningDate();
@@ -1051,7 +1147,7 @@ void CWizardExport::UpdatePreview()
 						break;
 					case IO_CAL_TASK_NOTES:
 						{
-							CString tmp;
+							wxString tmp;
 							if (pCal->IsTentative())
 							{
 								tmp += Localization()->CalendarTentative().c_str();
@@ -1073,11 +1169,9 @@ void CWizardExport::UpdatePreview()
 								tmp += date.GetString(format).c_str();
 								tmp += wxT(" ");
 							}
-							CString tmp2;
-							tmp2.FormatMessage(IDS_TRIAL_DATES,
+							tmp += wxString::Format(_("IDS_TRIAL_DATES"),
 								pCal->GetStartDate().GetString(format).c_str(),
 								pCal->GetEndDate().GetString(format).c_str());
-							tmp += tmp2;
 							tmp += wxT(" ");
 							tmp += pCal->GetNote().c_str();
 							data += AddPreviewData(iLine, idx, tmp);
@@ -1105,7 +1199,7 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview.InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, data);
 				++iLine;
 			}
 		}
@@ -1115,9 +1209,9 @@ void CWizardExport::UpdatePreview()
 		{
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->Book().GetTraining().begin(); iterLog != m_pDoc->Book().GetTraining().end(); ++iterLog)
 			{
-				CString data;
+				wxString data;
 				ARBTrainingPtr pLog = *iterLog;
-				for (int idx = 0; idx < static_cast<int>(columns[IO_TYPE_TRAINING].size()); ++idx)
+				for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_TRAINING].size()); ++idx)
 				{
 					switch (columns[IO_TYPE_TRAINING][idx])
 					{
@@ -1137,209 +1231,77 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview.InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, data);
 				++iLine;
 			}
 		}
 		break;
 	}
-	for (iCol = 0; iCol < cols.GetSize(); ++iCol)
-		m_ctrlPreview.SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
-	m_ctrlPreview.SetRedraw(TRUE);
-	m_ctrlPreview.Invalidate();
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CWizardExport message handlers
-
-BOOL CWizardExport::OnInitDialog()
-{
-	CDlgBasePropertyPage::OnInitDialog();
-	static struct
-	{
-		UINT uFormat;
-		ARBDate::DateFormat format;
-	} const sc_Dates[] =
-	{
-		{IDS_DATEFORMAT_DASH_MDY, ARBDate::eDashMDY},
-		{IDS_DATEFORMAT_SLASH_MDY, ARBDate::eSlashMDY},
-		{IDS_DATEFORMAT_DASH_YMD, ARBDate::eDashYMD},
-		{IDS_DATEFORMAT_SLASH_YMD, ARBDate::eSlashYMD},
-		{IDS_DATEFORMAT_DASH_DMY, ARBDate::eDashDMY},
-		{IDS_DATEFORMAT_SLASH_DMY, ARBDate::eSlashDMY},
-	};
-	ARBDate::DateFormat format;
-	CAgilityBookOptions::GetImportExportDateFormat(true, format);
-	static int const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
-	for (int i = 0; i < sc_nDates; ++i)
-	{
-		CString tmp;
-		tmp.LoadString(sc_Dates[i].uFormat);
-		int index = m_ctrlDateFormat.AddString(tmp);
-		m_ctrlDateFormat.SetItemData(index, static_cast<DWORD>(sc_Dates[i].format));
-		if (sc_Dates[i].format == format)
-			m_ctrlDateFormat.SetCurSel(index);
-	}
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
+		m_ctrlPreview->SetColumnWidth(iCol, wxLIST_AUTOSIZE_USEHEADER);
+	m_ctrlPreview->Thaw();
+	m_ctrlPreview->Refresh();
 }
 
 
-BOOL CWizardExport::OnSetActive()
+void CWizardExport::OnDelimTab(wxCommandEvent& evt)
 {
-	UpdateButtons();
-	UpdatePreview();
-	return CDlgBasePropertyPage::OnSetActive();
-}
-
-
-LRESULT CWizardExport::OnWizardBack()
-{
-	return IDD_WIZARD_START;
-}
-
-
-BOOL CWizardExport::OnWizardFinish()
-{
-	UpdateData(TRUE);
-	int index = m_ctrlDateFormat.GetCurSel();
-	if (CB_ERR == index)
-	{
-		AfxMessageBox(IDS_SPECIFY_DATEFORMAT, MB_ICONWARNING);
-		GotoDlgCtrl(&m_ctrlDateFormat);
-		return FALSE;
-	}
-	UpdatePreview();
-	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
-	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-	{
-		int delim;
-		switch (m_Delim)
-		{
-		default:
-		case 0: delim = CAgilityBookOptions::eDelimTab; break;
-		case 1: delim = CAgilityBookOptions::eDelimSpace; break;
-		case 2: delim = CAgilityBookOptions::eDelimColon; break;
-		case 3: delim = CAgilityBookOptions::eDelimSemicolon; break;
-		case 4: delim = CAgilityBookOptions::eDelimComma; break;
-		case 5: delim = CAgilityBookOptions::eDelimOther; break;
-		}
-		CAgilityBookOptions::SetImportExportDelimiters(false, delim, m_Delimiter);
-	}
-	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>(m_ctrlDateFormat.GetItemData(index));
-	CAgilityBookOptions::SetImportExportDateFormat(true, format);
-
-	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
-	{
-		IWizardExporterPtr pExporter;
-		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
-		&& m_pSheet->ExcelHelper())
-			pExporter = m_pSheet->ExcelHelper()->GetExporter();
-		else if (WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle()
-		&& m_pSheet->CalcHelper())
-			pExporter = m_pSheet->CalcHelper()->GetExporter();
-		if (pExporter)
-		{
-			CWaitCursor wait;
-			pExporter->AllowAccess(false);
-			int nColumnCount = m_ctrlPreview.GetHeaderCtrl()->GetItemCount();
-#ifdef EXPORT_BY_ARRAY
-			if (pExporter->CreateArray(m_ctrlPreview.GetItemCount(), nColumnCount))
-			{
-#else
-				IDlgProgress* pProgress = IDlgProgress::CreateProgress(GetSafeHwnd());
-				pProgress->EnableCancel(false);
-				CString exporting;
-				exporting.LoadString(IDS_EXPORTING);
-				pProgress->SetMessage(exporting);
-				pProgress->SetRange(1, 0, m_ctrlPreview.GetItemCount() * nColumnCount);
-				pProgress->Show();
-
-#endif
-				for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)
-				{
-					for (int iCol = 0; iCol < nColumnCount; ++iCol)
-					{
-						CString line = m_ctrlPreview.GetItemText(i, iCol);
-#ifdef EXPORT_BY_ARRAY
-						pExporter->InsertArrayData(i, iCol, line);
-#else
-						pExporter->InsertData(i, iCol, line);
-						// Calc is started visibly, so steal focus back.
-						if (0 == i && 0 == iCol)
-							pProgress->SetForegroundWindow();
-						pProgress->StepIt(1);
-#endif
-					}
-				}
-#ifdef EXPORT_BY_ARRAY
-				if (!pExporter->ExportDataArray())
-				{
-					AfxMessageBox(IDS_ERRORS_DURING_EXPORT, MB_ICONEXCLAMATION);
-				}
-			}
-			else
-			{
-				AfxMessageBox(IDS_ERRORS_DURING_EXPORT, MB_ICONEXCLAMATION);
-			}
-#else
-			pExporter->AutoFit(0, nColumnCount-1);
-			pProgress->Dismiss();
-#endif
-			pExporter->AllowAccess(true);
-			// For testing
-			//pExporter->SetBackColor(2,3,RGB(255,0,0));
-			//pExporter->SetTextColor(2,3,RGB(0,255,0));
-			//pExporter->SetItalic(1,1,true);
-			//pExporter->SetBold(1,2,true);
-			return CDlgBasePropertyPage::OnWizardFinish();
-		}
-		else
-		{
-			AfxMessageBox(IDS_EXPORT_FAILED, MB_ICONSTOP);
-			return FALSE;
-		}
-	}
-	else
-	{
-		CString filter;
-		filter.LoadString(IDS_FILEEXT_FILTER_TXTCSV);
-		CFileDialog file(FALSE, wxT(""), wxT(""), OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT|OFN_PATHMUSTEXIST, filter, this);
-		if (IDOK == file.DoModal())
-		{
-			CWaitCursor wait;
-			CStringA filename(file.GetFileName());
-			std::ofstream output(filename, std::ios::out);
-			output.exceptions(std::ios_base::badbit);
-			if (output.is_open())
-			{
-				for (int i = 0; i < m_ctrlPreview.GetItemCount(); ++i)
-				{
-					CString line = m_ctrlPreview.GetItemText(i, 0);
-					output << (LPCTSTR)line << std::endl;
-				}
-				output.close();
-			}
-			return CDlgBasePropertyPage::OnWizardFinish();
-		}
-		else
-			return FALSE;
-	}
-}
-
-
-void CWizardExport::OnExportDelim()
-{
-	UpdateData(TRUE);
+	m_Delim = CAgilityBookOptions::eDelimTab;
 	UpdateButtons();
 	UpdatePreview();
 }
 
 
-void CWizardExport::OnExportAssign()
+void CWizardExport::OnDelimSpace(wxCommandEvent& evt)
 {
-	UpdateData(TRUE);
+	m_Delim = CAgilityBookOptions::eDelimSpace;
+	UpdateButtons();
+	UpdatePreview();
+}
+
+
+void CWizardExport::OnDelimColon(wxCommandEvent& evt)
+{
+	m_Delim = CAgilityBookOptions::eDelimColon;
+	UpdateButtons();
+	UpdatePreview();
+}
+
+
+void CWizardExport::OnDelimSemicolon(wxCommandEvent& evt)
+{
+	m_Delim = CAgilityBookOptions::eDelimSemicolon;
+	UpdateButtons();
+	UpdatePreview();
+}
+
+
+void CWizardExport::OnDelimComma(wxCommandEvent& evt)
+{
+	m_Delim = CAgilityBookOptions::eDelimComma;
+	UpdateButtons();
+	UpdatePreview();
+}
+
+
+void CWizardExport::OnDelimOther(wxCommandEvent& evt)
+{
+	m_Delim = CAgilityBookOptions::eDelimOther;
+	UpdateButtons();
+	UpdatePreview();
+}
+
+
+void CWizardExport::OnExportDelim(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	UpdateButtons();
+	UpdatePreview();
+}
+
+
+void CWizardExport::OnExportAssign(wxCommandEvent& evt)
+{
 	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
 	switch (m_pSheet->GetImportExportItem())
 	{
@@ -1364,7 +1326,7 @@ void CWizardExport::OnExportAssign()
 	if (CAgilityBookOptions::eUnknown != order)
 	{
 		CDlgAssignColumns dlg(order, this);
-		if (IDOK == dlg.DoModal())
+		if (wxID_OK == dlg.ShowModal())
 		{
 			UpdateButtons();
 			UpdatePreview();
@@ -1373,8 +1335,142 @@ void CWizardExport::OnExportAssign()
 }
 
 
-void CWizardExport::OnSelchangeDate()
+void CWizardExport::OnSelchangeDate(wxCommandEvent& evt)
 {
 	UpdatePreview();
 }
+
+
+void CWizardExport::OnWizardChanged(wxWizardEvent& evt)
+{
+	if (evt.GetPage() == static_cast<wxWizardPage*>(this))
+	{
+		m_pSheet->SetLabel(_("IDD_WIZARD_EXPORT"));
+		UpdateButtons();
+		UpdatePreview();
+	}
+	evt.Skip();
+}
+
+
+void CWizardExport::OnWizardFinish(wxWizardEvent& evt)
+{
+	long index = m_ctrlDateFormat->GetSelection();
+	if (wxNOT_FOUND == index)
+	{
+		wxMessageBox(_("IDS_SPECIFY_DATEFORMAT"), wxMessageBoxCaptionStr, wxICON_WARNING);
+		m_ctrlDateFormat->SetFocus();
+		return;
+	}
+	UpdatePreview();
+	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
+	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
+	{
+		CAgilityBookOptions::SetImportExportDelimiters(false, m_Delim, m_Delimiter);
+	}
+	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(index));
+	CAgilityBookOptions::SetImportExportDateFormat(false, format);
+
+	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
+	{
+		IWizardExporterPtr pExporter;
+		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+		&& m_pSheet->ExcelHelper())
+			pExporter = m_pSheet->ExcelHelper()->GetExporter();
+		else if (WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle()
+		&& m_pSheet->CalcHelper())
+			pExporter = m_pSheet->CalcHelper()->GetExporter();
+		if (pExporter)
+		{
+			wxBusyCursor wait;
+			pExporter->AllowAccess(false);
+			long nColumnCount = m_ctrlPreview->GetColumnCount();
+#ifdef EXPORT_BY_ARRAY
+			if (pExporter->CreateArray(m_ctrlPreview->GetItemCount(), nColumnCount))
+			{
+#else
+				IDlgProgress* pProgress = IDlgProgress::CreateProgress(1, this);
+				pProgress->EnableCancel(false);
+				pProgress->SetMessage(_("IDS_EXPORTING"));
+				pProgress->SetRange(1, m_ctrlPreview->GetItemCount() * nColumnCount);
+				pProgress->ShowProgress();
+
 #endif
+				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)
+				{
+					for (long iCol = 0; iCol < nColumnCount; ++iCol)
+					{
+						wxString line = GetListColumnText(m_ctrlPreview, i, iCol);
+#ifdef EXPORT_BY_ARRAY
+						pExporter->InsertArrayData(i, iCol, line);
+#else
+						pExporter->InsertData(i, iCol, line);
+						// Calc is started visibly, so steal focus back.
+						if (0 == i && 0 == iCol)
+							pProgress->SetForegroundWindow();
+						pProgress->StepIt(1);
+#endif
+					}
+				}
+#ifdef EXPORT_BY_ARRAY
+				if (!pExporter->ExportDataArray())
+				{
+					wxMessageBox(_("IDS_ERRORS_DURING_EXPORT"), wxMessageBoxCaptionStr, wxICON_EXCLAMATION);
+				}
+			}
+			else
+			{
+				wxMessageBox(_("IDS_ERRORS_DURING_EXPORT"), wxMessageBoxCaptionStr, wxICON_EXCLAMATION);
+			}
+#else
+			pExporter->AutoFit(0, nColumnCount-1);
+			pProgress->Dismiss();
+#endif
+			pExporter->AllowAccess(true);
+			// For testing
+			//pExporter->SetBackColor(2,3,RGB(255,0,0));
+			//pExporter->SetTextColor(2,3,RGB(0,255,0));
+			//pExporter->SetItalic(1,1,true);
+			//pExporter->SetBold(1,2,true);
+			return;
+		}
+		else
+		{
+			wxMessageBox(_("IDS_EXPORT_FAILED"), wxMessageBoxCaptionStr, wxICON_STOP);
+			evt.Veto();
+			return;
+		}
+	}
+	else
+	{
+		wxFileDialog file(this,
+			wxEmptyString, // caption
+			wxEmptyString, // def dir
+			wxEmptyString,
+			_("IDS_FILEEXT_FILTER_TXTCSV"),
+			wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+		if (wxID_OK == file.ShowModal())
+		{
+			wxBusyCursor wait;
+			std::string filename(tstringUtil::tstringA(file.GetPath().c_str()));
+			std::ofstream output(filename.c_str(), std::ios::out);
+			output.exceptions(std::ios_base::badbit);
+			if (output.is_open())
+			{
+				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)
+				{
+					wxString line = GetListColumnText(m_ctrlPreview, i, 0);
+					output << tstringUtil::tstringA(line.c_str()) << std::endl;
+				}
+				output.close();
+			}
+			return;
+		}
+		else
+		{
+			evt.Veto();
+			return;
+		}
+	}
+}

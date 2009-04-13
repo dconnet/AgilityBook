@@ -39,83 +39,55 @@
  * @li 2003-12-10 DRC Created
  */
 
-//#include <vector>
-//#include "AgilityBookOptions.h"
-//#include "ComboBox.h"
-//#include "DlgBasePropertyPage.h"
-//#include "ListCtrl.h"
+#include "AgilityBookOptions.h"
+#include <vector>
+#include <wx/wizard.h>
 class CAgilityBookDoc;
 class CWizard;
+class wxSpinEvent;
 
 
-class CWizardImport
+class CWizardImport : public wxWizardPageSimple
 {
 public:
 	CWizardImport(
 			CWizard* pSheet,
-			CAgilityBookDoc* pDoc) {}
-	void ResetData() {}
-};
-
-#if 0
-class CWizardImport : public CDlgBasePropertyPage
-{
-	DECLARE_DYNAMIC(CWizardImport)
-
-// Construction
-public:
-	CWizardImport(
-			CWizard* pSheet,
-			CAgilityBookDoc* pDoc);
-	~CWizardImport();
+			CAgilityBookDoc* pDoc,
+			wxWizardPage* prev);
 	void ResetData();
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CWizardImport)
-	enum { IDD = IDD_WIZARD_IMPORT };
-	int		m_Row;
-	CSpinButtonCtrl	m_ctrlSpin;
-	int		m_Delim;
-	CString	m_Delimiter;
-	CButton	m_ctrlAssign;
-	CComboBox2	m_ctrlDateFormat;
-	CStatic	m_ctrlPreviewFile;
-	CListCtrl2	m_ctrlPreview;
-	//}}AFX_DATA
-	CWizard* m_pSheet;
-	CAgilityBookDoc* m_pDoc;
-	CString m_FileName;
-	CStringArray m_FileData; ///< For reading generic text files.
-	std::vector< std::vector<CString> > m_ExcelData; ///< For reading excel directly.
-
-private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
-	CString GetDelim() const;
+	wxString GetDelim() const;
 	void UpdateButtons();
 	void UpdatePreview();
+	bool DoImportFile();
 
-// Overrides
-	//{{AFX_VIRTUAL(CWizardImport)
-	public:
-	virtual BOOL OnSetActive();
-	virtual LRESULT OnWizardBack();
-	virtual BOOL OnWizardFinish();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	CWizard* m_pSheet;
+	CAgilityBookDoc* m_pDoc;
+	wxString m_FileName;
+	std::vector<wxString> m_FileData; ///< For reading generic text files.
+	std::vector< std::vector<wxString> > m_ExcelData; ///< For reading excel directly.
+	long m_Row;
+	wxSpinCtrl* m_ctrlRow;
+	long m_Delim;
+	wxString m_Delimiter;
+	wxTextCtrl* m_ctrlOtherChar;
+	wxButton* m_ctrlAssign;
+	wxComboBox* m_ctrlDateFormat;
+	wxStaticText* m_ctrlPreviewFile;
+	wxListCtrl* m_ctrlPreview;
 
-// Implementation
-protected:
-	// Generated message map functions
-	//{{AFX_MSG(CWizardImport)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnDeltaposImportRowSpin(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnImportKillFocus();
-	afx_msg void OnImportDelim();
-	afx_msg void OnImportAssign();
-	afx_msg void OnImportFile();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnDeltaposImportRowSpin(wxSpinEvent& evt);
+	void OnDelimTab(wxCommandEvent& evt);
+	void OnDelimSpace(wxCommandEvent& evt);
+	void OnDelimColon(wxCommandEvent& evt);
+	void OnDelimSemicolon(wxCommandEvent& evt);
+	void OnDelimComma(wxCommandEvent& evt);
+	void OnDelimOther(wxCommandEvent& evt);
+	void OnImportDelim(wxCommandEvent& evt);
+	void OnImportAssign(wxCommandEvent& evt);
+	void OnImportFile(wxCommandEvent& evt);
+	void OnWizardChanged(wxWizardEvent& evt);
+	void OnWizardFinish(wxWizardEvent& evt);
 };
-#endif

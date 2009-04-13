@@ -39,22 +39,27 @@
 #include "WizardExcel.h"
 
 #pragma message PRAGMA_MESSAGE("TODO: Implement CWizardExcel")
-#if 0
+//#if defined(WIN32) && defined(wxUSE_OLE_AUTOMATION)
+//#define HAS_AUTOMATION	1
+//#else
+#define HAS_AUTOMATION	0
+//#endif
+
+#include "ARBTypes.h"
+#if HAS_AUTOMATION
 #include "AgilityBook.h"
 #include "DlgProgress.h"
+#include <wx/variant.h>
+#include <wx/msw/ole/automtn.h>
 
-#include "excel8.h"
-#if _MSC_VER < 1300
-#define CComVariant COleVariant
-#else
-#include "ooCalc.h"
-#endif
-
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+// Note: Can't use these headers as they use MFC
+//#include "excel8.h"
+//#if _MSC_VER < 1300
+//#define CComVariant COleVariant
+//#else
+//#include "ooCalc.h"
+//#endif
+#endif //HAS_AUTOMATION
 
 // General note about data and formulas - in both Excel and Calc writing
 // individual cells auto-formats (formulas work) and writing of arrays
@@ -78,6 +83,7 @@ IWizardSpreadSheet::~IWizardSpreadSheet()
 
 /////////////////////////////////////////////////////////////////////////////
 
+#if HAS_AUTOMATION
 class CWizardBaseExport : public IWizardExporter
 {
 protected:
@@ -201,7 +207,8 @@ public:
 	virtual IWizardImporterPtr GetImporter() const;
 
 private:
-	mutable Excel8::_Application m_App;
+	bool m_Ok;
+	mutable wxAutomationObject m_App; //Excel8::_Application
 };
 
 
@@ -409,30 +416,12 @@ CWizardExcel* CWizardExcel::Create()
 
 
 CWizardExcel::CWizardExcel()
+	: m_Ok(false)
 {
-	// Get the ClassID from the ProgID.
-	CLSID clsid;
-	if (NOERROR != CLSIDFromProgID(L"Excel.Application", &clsid))
+	if (!m_App.GetInstance(wxT("Excel.Application")))
 	{
-		return;
-	}
-
-	// Get an interface to the running instance.
-	//LPUNKNOWN lpUnk;
-	//LPDISPATCH lpDispatch;
-	//if (NOERROR == GetActiveObject(clsid, NULL, &lpUnk))
-	//{
-	//	HRESULT hr = lpUnk->QueryInterface(IID_IDispatch, (LPVOID*)&lpDispatch);
-	//	lpUnk->Release();
-	//	if (hr == NOERROR)
-	//		m_App.AttachDispatch(lpDispatch, TRUE);
-	//}
-
-	// If dispatch ptr not attached yet, need to create one
-	COleException e;
-	if (m_App.m_lpDispatch == NULL && !m_App.CreateDispatch(clsid, &e))
-	{
-		return;
+		if (!m_App.CreateInstance(wxT("Excel.Application")))
+			return;
 	}
 }
 
@@ -1195,11 +1184,14 @@ bool CWizardCalcImport::GetData(
 
 #endif
 
+#endif //HAS_AUTOMATION
+
 /////////////////////////////////////////////////////////////////////////////
 
 IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
 {
 	IWizardSpreadSheetPtr pInterface;
+#if HAS_AUTOMATION
 	switch (inType)
 	{
 	default:
@@ -1211,6 +1203,7 @@ IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
 		pInterface = IWizardSpreadSheetPtr(CWizardCalc::Create());
 		break;
 	}
+#endif
 	return pInterface;
 }
 
@@ -1218,20 +1211,20 @@ IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
 // static helper functions
 long IWizardSpreadSheet::GetMaxRows()
 {
-	return 65536;
+	return 65536; // Excel limits (I believe later versions of excel/calc may expand this, but we support older versions too)
 }
 
 
 long IWizardSpreadSheet::GetMaxCols()
 {
-	return 256;
+	return 256; // Excel limits
 }
 
 
 bool IWizardSpreadSheet::GetRowCol(
 		long inRow,
 		long inCol,
-		CString& outCell)
+		wxString& outCell)
 {
 	// Lookup tables are nice!
 	static const wxChar* const sc_ColumnNames[256] =
@@ -1282,4 +1275,3 @@ bool IWizardSpreadSheet::GetRowCol(
 		return false;
 	}
 }
-#endif

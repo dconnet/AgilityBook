@@ -1549,8 +1549,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 	{
 	case ID_FILE_EXPORT_WIZARD:
 		{
-			CWizard wiz(this);
-			wiz.ShowModal();
+			new CWizard(this); // There's magic here.
 		}
 		break;
 

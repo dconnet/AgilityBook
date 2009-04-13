@@ -1273,8 +1273,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 				std::vector<ARBCalendarPtr>* exportItems = NULL;
 				if (0 < items.size())
 					exportItems = &items;
-				CWizard wiz(GetDocument(), exportItems);
-				wiz.ShowModal();
+				new CWizard(GetDocument(), exportItems);
 			}
 		}
 		break;
