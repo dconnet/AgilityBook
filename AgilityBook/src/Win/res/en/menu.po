@@ -460,10 +460,10 @@ msgid "DescViewToolbook"
 msgstr "Toolbook"
 
 msgid "MenuViewOrientation"
-msgstr "Orientation..."
+msgstr "Orientation"
 
 msgid "DescViewOrientation"
-msgstr "Orientation of control"
+msgstr "Orientation of tabs"
 
 msgid "MenuViewTop"
 msgstr "&Top"

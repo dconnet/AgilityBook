@@ -33,16 +33,17 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-04-12 DRC Bumped to v2 for wxWidget build
  * @li 2009-02-25 DRC Created
  */
 
 
 #include "VersionNumber.h"
 
-#define CAL_VER_MAJOR					1
+#define CAL_VER_MAJOR					2
 #define CAL_VER_MINOR					0
-#define CAL_VER_DOT						3
-#define CAL_VER_BUILD					12
+#define CAL_VER_DOT						0
+#define CAL_VER_BUILD					2297
 
 #define CAL_VER_STR_MAJOR				STR(CAL_VER_MAJOR)
 #define CAL_VER_STR_MINOR				STR(CAL_VER_MINOR)

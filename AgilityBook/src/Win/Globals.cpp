@@ -194,9 +194,9 @@ void DrawBetterLabel(
 			{
 				wxString s;
 				int a = 0;
-				int len = words[k].Length();
+				size_t len = words[k].Length();
 
-				for (int iWord = 0; iWord < len; ++iWord)
+				for (size_t iWord = 0; iWord < len; ++iWord)
 				{
 					wxSize szChar = pDC->GetTextExtent(words[k][iWord]);
 					if ((a += szChar.x) > rect.width)

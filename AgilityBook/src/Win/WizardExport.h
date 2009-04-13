@@ -40,77 +40,48 @@
  * @li 2003-12-10 DRC Created
  */
 
-//#include "AgilityBookOptions.h"
-//#include "ComboBox.h"
-//#include "DlgBasePropertyPage.h"
-//#include "ListCtrl.h"
+#include "AgilityBookOptions.h"
+#include <wx/wizard.h>
 class CAgilityBookDoc;
 class CWizard;
 
 
-class CWizardExport
+class CWizardExport : public wxWizardPageSimple
 {
 public:
 	CWizardExport(
 			CWizard* pSheet,
-			CAgilityBookDoc* pDoc) {}
-};
-
-#if 0
-class CWizardExport : public CDlgBasePropertyPage
-{
-	DECLARE_DYNAMIC(CWizardExport)
-
-// Construction
-public:
-	CWizardExport(
-			CWizard* pSheet,
-			CAgilityBookDoc* pDoc);
-	~CWizardExport();
-
-private:
-// Dialog Data
-	//{{AFX_DATA(CWizardExport)
-	enum { IDD = IDD_WIZARD_EXPORT };
-	int	m_Delim;
-	CString	m_Delimiter;
-	CButton	m_ctrlAssign;
-	CComboBox2	m_ctrlDateFormat;
-	CListCtrl2	m_ctrlPreview;
-	//}}AFX_DATA
-	CWizard* m_pSheet;
-	CAgilityBookDoc* m_pDoc;
+			CAgilityBookDoc* pDoc,
+			wxWizardPage* prev);
 
 private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
-	CString GetDelim() const;
-	CString PrepFieldOutput(LPCTSTR inStr) const;
+	wxString GetDelim() const;
+	wxString PrepFieldOutput(wxChar const* inStr) const;
 	void UpdateButtons();
-	CString AddPreviewData(
-			int inLine,
-			int inCol,
-			CString inData);
+	wxString AddPreviewData(
+			long inLine,
+			long inCol,
+			wxString inData);
 	void UpdatePreview();
 
-// Overrides
-	//{{AFX_VIRTUAL(CWizardExport)
-	public:
-	virtual BOOL OnSetActive();
-	virtual LRESULT OnWizardBack();
-	virtual BOOL OnWizardFinish();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	CWizard* m_pSheet;
+	CAgilityBookDoc* m_pDoc;
+	long m_Delim;
+	wxString m_Delimiter;
+	wxButton* m_ctrlAssign;
+	wxComboBox* m_ctrlDateFormat;
+	wxListCtrl* m_ctrlPreview;
 
-// Implementation
-protected:
-	// Generated message map functions
-	//{{AFX_MSG(CWizardExport)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnExportDelim();
-	afx_msg void OnExportAssign();
-	afx_msg void OnSelchangeDate();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnDelimTab(wxCommandEvent& evt);
+	void OnDelimSpace(wxCommandEvent& evt);
+	void OnDelimColon(wxCommandEvent& evt);
+	void OnDelimSemicolon(wxCommandEvent& evt);
+	void OnDelimComma(wxCommandEvent& evt);
+	void OnDelimOther(wxCommandEvent& evt);
+	void OnExportDelim(wxCommandEvent& evt);
+	void OnExportAssign(wxCommandEvent& evt);
+	void OnSelchangeDate(wxCommandEvent& evt);
+	void OnWizardChanged(wxWizardEvent& evt);
+	void OnWizardFinish(wxWizardEvent& evt);
 };
-#endif

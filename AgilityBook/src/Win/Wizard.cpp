@@ -39,33 +39,21 @@
 #include "stdafx.h"
 #include "Wizard.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CWizard")
-#if 0
-#include "AgilityBook.h"
 #include "WizardExport.h"
 #include "WizardImport.h"
 #include "WizardStart.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CWizard
-
-IMPLEMENT_DYNAMIC(CWizard, CDlgBaseSheet)
-
-
+#ifdef WIN32
 #pragma warning( push )
 // Disable "warning C4355: 'this' : used in base member initializer list"
 #pragma warning( disable : 4355 )
+#endif
 CWizard::CWizard(
 		CAgilityBookDoc* pDoc,
 		std::vector<ARBCalendarPtr>* pCalEntries,
-		CWnd* pParentWnd)
-	: CDlgBaseSheet(wxT(""), pParentWnd, 0)
+		wxWindow* pParent)
+	: wxWizard()
 	, m_pDoc(pDoc)
 	, m_CalEntries(pCalEntries)
 	, m_pageStart(NULL)
@@ -76,33 +64,41 @@ CWizard::CWizard(
 	, m_ImportExportItem(-1)
 	, m_ImportExportStyle(-1)
 {
-	m_psh.dwFlags |= PSH_WIZARDCONTEXTHELP;
-	SetWizardMode();
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	Create(pParent, wxID_ANY, _("IDD_WIZARD_START"), wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+
+	m_Finish = wxDynamicCast(FindWindow(wxID_FORWARD), wxButton);
+    assert(m_Finish);
+
 	m_Excel = IWizardSpreadSheet::Create(IWizardSpreadSheet::eMicrosoftExcel);
 	m_Calc = IWizardSpreadSheet::Create(IWizardSpreadSheet::eOpenOfficeCalc);
 	// Have to delay these as their ctor will use m_Excel.
 	m_pageStart = new CWizardStart(this, m_pDoc);
-	m_pageImport = new CWizardImport(this, m_pDoc);
-	m_pageExport = new CWizardExport(this, m_pDoc);
-	AddPage(m_pageStart);
-	AddPage(m_pageImport);
-	AddPage(m_pageExport);
+	m_pageImport = new CWizardImport(this, m_pDoc, m_pageStart);
+	m_pageExport = new CWizardExport(this, m_pDoc, m_pageStart);
+
+	GetPageAreaSizer()->Add(m_pageStart);
+	GetPageAreaSizer()->Add(m_pageImport);
+	GetPageAreaSizer()->Add(m_pageExport);
+
+	RunWizard(m_pageStart);
+	Destroy();
 }
+#ifdef WIN32
 #pragma warning( pop )
+#endif
 
 
-CWizard::~CWizard()
+wxWizardPage* CWizard::GetImportPage() const
 {
-	delete m_pageStart;
-	delete m_pageImport;
-	delete m_pageExport;
+	return m_pageImport;
 }
 
 
-BEGIN_MESSAGE_MAP(CWizard, CDlgBaseSheet)
-	//{{AFX_MSG_MAP(CWizard)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
+wxWizardPage* CWizard::GetExportPage() const
+{
+	return m_pageExport;
+}
 
 
 void CWizard::ResetData()
@@ -111,6 +107,14 @@ void CWizard::ResetData()
 		m_pageImport->ResetData();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CWizard message handlers
-#endif
+
+void CWizard::UpdateButtons(bool enableNextOrFinish)
+{
+	bool hasNext = false;
+	wxWizardPage* cur = GetCurrentPage();
+	if (cur)
+		hasNext = (NULL != cur->GetNext());
+	// See <wx>/src/generic/wizard.cpp
+	m_Finish->SetLabel(hasNext ? _("&Next >") : _("&Finish"));
+	m_Finish->Enable(enableNextOrFinish);
+}

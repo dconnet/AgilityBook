@@ -1333,3 +1333,96 @@ msgstr "&Delete"
 
 msgid "IDC_TRIAL_CLUB_INFO"
 msgstr "Club Notes"
+
+# WizardStart
+msgid "IDD_WIZARD_START"
+msgstr "Import / Export Wizard"
+
+msgid "IDC_WIZARD_RADIO_BOX"
+msgstr "Import from / Export to:"
+
+msgid "IDC_WIZARD_START_EXCEL,"
+msgstr "Microsoft Excel (directly)"
+
+msgid "IDC_WIZARD_START_CALC"
+msgstr "OpenOffice Calc (directly)"
+
+msgid "IDC_WIZARD_START_SPREADSHEET"
+msgstr "For a spreadsheet"
+
+msgid "IDC_WIZARD_START_ARB"
+msgstr "Agility Record Book"
+
+msgid "IDC_WIZARD_START_DESCRIPTION"
+msgstr "Description"
+
+# WizardImport
+msgid "IDD_WIZARD_IMPORT"
+msgstr "Import Wizard"
+
+msgid "IDC_WIZARD_IMPORT_ROW"
+msgstr "Start import at row:"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_GROUP"
+msgstr "Delimiters"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_TAB"
+msgstr "Tab"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_SPACE"
+msgstr "Space"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_COLON"
+msgstr "Colon"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_SEMI"
+msgstr "Semicolon"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_COMMA"
+msgstr "Comma"
+
+msgid "IDC_WIZARD_IMPORT_DELIM_OTHER"
+msgstr "Other:"
+
+msgid "IDC_WIZARD_IMPORT_DATE"
+msgstr "Date Format:"
+
+msgid "IDC_WIZARD_IMPORT_ASSIGN"
+msgstr "Assign Columns..."
+
+msgid "IDC_WIZARD_IMPORT_FILE"
+msgstr "File..."
+
+# WizardExport
+msgid "IDD_WIZARD_EXPORT"
+msgstr "Export Wizard"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_GROUP"
+msgstr "Delimiters"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_TAB"
+msgstr "Tab"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_SPACE"
+msgstr "Space"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_COLON"
+msgstr "Colon"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_SEMI"
+msgstr "Semicolon"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_COMMA"
+msgstr "Comma"
+
+msgid "IDC_WIZARD_EXPORT_DELIM_OTHER"
+msgstr "Other:"
+
+msgid "IDC_WIZARD_EXPORT_DATE"
+msgstr "Date Format:"
+
+msgid "IDC_WIZARD_EXPORT_ASSIGN"
+msgstr "Assign Columns..."
+
+msgid "IDC_WIZARD_EXPORT_PREVIEW"
+msgstr "Preview"

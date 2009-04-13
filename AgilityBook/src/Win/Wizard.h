@@ -39,29 +39,14 @@
  */
 
 #include "ARBCalendar.h"
+#include "WizardExcel.h"
 #include <vector>
-//#include "DlgBaseSheet.h"
-//#include "WizardExcel.h"
+#include <wx/wizard.h>
 class CAgilityBookDoc;
-//class CWizardExport;
-//class CWizardImport;
-//class CWizardStart;
+class CWizardExport;
+class CWizardImport;
+class CWizardStart;
 
-class CWizard
-{
-public:
-	CWizard(
-			CAgilityBookDoc* pDoc,
-			std::vector<ARBCalendarPtr>* pCalEntries = NULL,
-			wxWindow* pParentWnd = NULL) {}
-	int ShowModal()
-	{
-		wxMessageBox(wxT("CWizard"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
-		return wxID_CANCEL;
-	}
-};
-
-#if 0
 // These must agree with the order of items in sc_Items in WizardStart.cpp.
 // They are simply for ease-of-coding.
 #define WIZ_IMPORT_RUNS				0
@@ -79,22 +64,22 @@ public:
 #define WIZ_EXPORT_DTD				12
 #define WIZ_EXPORT_XML				13
 
-// Note: These number should not be changed - they are stored in the registry
-#define WIZARD_RADIO_EXCEL			0
-#define WIZARD_RADIO_CALC			3
-#define WIZARD_RADIO_SPREADSHEET	1
-#define WIZARD_RADIO_ARB			2
+// Note: These numbers should not be changed - they are stored in the registry
+#define WIZARD_RADIO_EXCEL			0L
+#define WIZARD_RADIO_CALC			3L
+#define WIZARD_RADIO_SPREADSHEET	1L
+#define WIZARD_RADIO_ARB			2L
 
-class CWizard : public CDlgBaseSheet
+class CWizard : public wxWizard
 {
-	DECLARE_DYNAMIC(CWizard)
-
-// Construction
 public:
 	CWizard(
 			CAgilityBookDoc* pDoc,
 			std::vector<ARBCalendarPtr>* pCalEntries = NULL,
-			CWnd* pParentWnd = NULL);
+			wxWindow* pParent = NULL);
+
+	wxWizardPage* GetImportPage() const;
+	wxWizardPage* GetExportPage() const;
 
 // Attributes
 private:
@@ -107,6 +92,7 @@ private:
 	IWizardSpreadSheetPtr m_Calc;
 	int m_ImportExportItem;
 	int m_ImportExportStyle;
+	wxButton* m_Finish;
 
 // Operations
 public:
@@ -145,18 +131,5 @@ public:
 	 */
 	void ResetData();
 
-// Overrides
-	//{{AFX_VIRTUAL(CWizard)
-	//}}AFX_VIRTUAL
-
-// Implementation
-public:
-	virtual ~CWizard();
-
-	// Generated message map functions
-protected:
-	//{{AFX_MSG(CWizard)
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void UpdateButtons(bool enableNextOrFinish);
 };
-#endif

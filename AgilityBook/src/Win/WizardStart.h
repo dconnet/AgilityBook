@@ -37,66 +37,38 @@
  * @li 2003-12-10 DRC Created
  */
 
-//#include "DlgBasePropertyPage.h"
-//#include "ListBox.h"
+#include <wx/wizard.h>
 class CAgilityBookDoc;
 class CWizard;
 
 
-class CWizardStart
+class CWizardStart : public wxWizardPage
 {
-public:
-	CWizardStart(
-			CWizard* pSheet,
-			CAgilityBookDoc* pDoc) {}
-};
-
-#if 0
-class CWizardStart : public CDlgBasePropertyPage
-{
-	DECLARE_DYNAMIC(CWizardStart)
-
-// Construction
 public:
 	CWizardStart(
 			CWizard* pSheet,
 			CAgilityBookDoc* pDoc);
-	~CWizardStart();
+
+	wxWizardPage* GetPrev() const	{return NULL;}
+	wxWizardPage* GetNext() const	{return m_Next;}
 
 private:
-// Dialog Data
-	//{{AFX_DATA(CWizardStart)
-	enum { IDD = IDD_WIZARD_START };
-	int		m_Style;
-	CListBox2	m_ctrlList;
-	CStatic	m_ctrlDesc;
-	//}}AFX_DATA
+	void UpdateList(bool bInit = false);
+	void DoUpdateExportList(bool bInit = false);
+
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
+	wxListBox* m_ctrlList;
+	wxStaticText* m_ctrlDesc;
+	long m_Style;
+	wxWizardPage* m_Next;
 
-private:
-	void UpdateList();
-	void UpdateButtons();
-
-// Overrides
-	//{{AFX_VIRTUAL(CWizardStart)
-	public:
-	virtual BOOL OnSetActive();
-	virtual LRESULT OnWizardNext();
-	virtual BOOL OnWizardFinish();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	// Generated message map functions
-	//{{AFX_MSG(CWizardStart)
-	virtual BOOL OnInitDialog();
-	afx_msg void OnWizardStyle();
-	afx_msg void OnSelchangeExportList();
-	afx_msg void OnDblclkExportList();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	void OnWizardStyleExcel(wxCommandEvent& evt);
+	void OnWizardStyleCalc(wxCommandEvent& evt);
+	void OnWizardStyleSpread(wxCommandEvent& evt);
+	void OnWizardStyleArb(wxCommandEvent& evt);
+	void OnSelchangeExportList(wxCommandEvent& evt);
+	void OnWizardChanging(wxWizardEvent& evt);
+	void OnWizardChanged(wxWizardEvent& evt);
+	void OnWizardFinish(wxWizardEvent& evt);
 };
-#endif
