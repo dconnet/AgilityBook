@@ -705,12 +705,13 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 }
 
 
-static enum RingBinder
+enum RingBinder
 {
 	eSmall3Ring,
 	eLarge3Ring,
 	eLarge4Ring
 };
+
 
 static void PrintMark(wxDC* pDC, int x, int y)
 {
