@@ -213,7 +213,7 @@ CWizardStart::CWizardStart(
 
 /////////////////////////////////////////////////////////////////////////////
 
-static enum ePage
+enum ePage
 {
 	ePageNone,
 	ePageFinish,

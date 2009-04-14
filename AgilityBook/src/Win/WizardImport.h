@@ -44,6 +44,7 @@
 #include <wx/wizard.h>
 class CAgilityBookDoc;
 class CWizard;
+class wxSpinCtrl;
 class wxSpinEvent;
 
 
