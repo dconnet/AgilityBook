@@ -48,6 +48,16 @@ SUITE(TestDate)
 	}
 
 
+	TEST(wxDate)
+	{
+		ARBDate d(1999, 3, 27);
+		wxDateTime wxD(d.GetDate());
+		CHECK_EQUAL(1999, wxD.GetYear());
+		CHECK_EQUAL(3, wxD.GetMonth() + 1); // 'Month' is an enum, starting at 0
+		CHECK_EQUAL(27, wxD.GetDay());
+	}
+
+
 	TEST(Valid)
 	{
 		ARBDate d(1999, 3, 27);

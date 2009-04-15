@@ -782,7 +782,7 @@ void CDlgExistingPoints::FillSubNames()
 
 void CDlgExistingPoints::OnDateChanged(wxDateEvent& evt)
 {
-	m_Date.SetDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth(), evt.GetDate().GetDay());
+	m_Date.SetDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth() + 1, evt.GetDate().GetDay());
 	FillEvents();
 }
 

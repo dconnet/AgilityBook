@@ -28,6 +28,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -93,6 +94,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -159,6 +161,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -225,6 +228,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

@@ -110,7 +110,7 @@ bool CGenericValidator::TransferFromWindow()
 		{
 			wxDateTime date = pControl->GetValue();
 			if (date.IsValid())
-				m_pDate->SetDate(date.GetYear(), date.GetMonth(), date.GetDay());
+				m_pDate->SetDate(date.GetYear(), date.GetMonth() + 1, date.GetDay());
 			else
 				m_pDate->clear();
 			return true;
