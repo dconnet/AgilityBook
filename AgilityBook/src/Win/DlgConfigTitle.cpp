@@ -340,7 +340,7 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 	if (m_DateFrom)
 	{
 		wxDateTime d = m_ctrlDateFrom->GetValue();
-		date = ARBDate(d.GetYear(), d.GetMonth(), d.GetDay());
+		date = ARBDate(d.GetYear(), d.GetMonth() + 1, d.GetDay());
 	}
 	else
 		date.clear();
@@ -348,7 +348,7 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 	if (m_DateTo)
 	{
 		wxDateTime d = m_ctrlDateTo->GetValue();
-		date = ARBDate(d.GetYear(), d.GetMonth(), d.GetDay());
+		date = ARBDate(d.GetYear(), d.GetMonth() + 1, d.GetDay());
 	}
 	else
 		date.clear();

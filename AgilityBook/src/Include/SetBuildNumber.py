@@ -49,6 +49,7 @@ while 1:
 ver.close()
 verOut.close()
 if update:
+	print "VersionNumber.h updated to " + vMaj + '.' + vMin + '.' + vDot + '.' + vBld
 	os.remove('VersionNumber.h')
 	os.rename('VersionNumber.h.new', 'VersionNumber.h')
 else:
@@ -94,6 +95,7 @@ while 1:
 ver.close()
 verOut.close()
 if update:
+	print "../cal_usdaa/CalVerNum.h updated to " + vMaj + '.' + vMin + '.' + vDot + '.' + vBld
 	os.remove('../cal_usdaa/CalVerNum.h')
 	os.rename('../cal_usdaa/CalVerNum.h.new', '../cal_usdaa/CalVerNum.h')
 else:
@@ -120,6 +122,7 @@ while 1:
 conf.close()
 confOut.close()
 if update:
+	print "../../configure.in updated to " + vMaj + '.' + vMin + '.' + vDot + '.' + vBld
 	os.remove('../../configure.in')
 	os.rename('../../configure.in.new', '../../configure.in')
 else:

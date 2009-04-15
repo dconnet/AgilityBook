@@ -174,7 +174,7 @@ void CDlgTraining::OnOk(wxCommandEvent& evt)
 
 	wxDateTime date = m_datePicker->GetValue();
 
-	m_pTraining->SetDate(ARBDate(date.GetYear(), date.GetMonth(), date.GetDay()));
+	m_pTraining->SetDate(ARBDate(date.GetYear(), date.GetMonth() + 1, date.GetDay()));
 	m_pTraining->SetName(m_Name.c_str());
 	m_pTraining->SetSubName(m_SubName.c_str());
 	m_pTraining->SetNote(m_Notes.c_str());

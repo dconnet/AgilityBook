@@ -2636,7 +2636,7 @@ void CDlgRun::EditLink()
 
 void CDlgRun::OnScoreDateChanged(wxDateEvent& evt)
 {
-	m_Run->SetDate(ARBDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth(), evt.GetDate().GetDay()));
+	m_Run->SetDate(ARBDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth() + 1, evt.GetDate().GetDay()));
 	FillDivisions();
 }
 

@@ -235,7 +235,7 @@ ARBDate CDlgTitle::GetDate()
 	if (m_bEarned)
 	{
 		wxDateTime d = m_ctrlDate->GetValue();
-		date = ARBDate(d.GetYear(), d.GetMonth(), d.GetDay());
+		date = ARBDate(d.GetYear(), d.GetMonth() + 1, d.GetDay());
 	}
 	return date;
 }
