@@ -670,7 +670,7 @@ CDlgDog::CDlgDog(
 
 	m_ctrlAge = new wxStaticText(panelProp, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER);
+		wxDefaultPosition, wxSize(40, -1), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
 	m_ctrlAge->Wrap(-1);
 
 	wxStaticText* textBDay = new wxStaticText(panelProp, wxID_ANY,
@@ -1014,10 +1014,14 @@ CDlgDogDataPointPtr CDlgDog::GetPointDataByData(long index) const
 
 void CDlgDog::UpdateAge()
 {
-	ARBDate current(ARBDate::Today());
-	if (m_IsDeceased)
-		current = m_Deceased;
-	long ageDays = current - m_DOB;
+	long ageDays = 0;
+	if (m_DOB.IsValid())
+	{
+		ARBDate current(ARBDate::Today());
+		if (m_IsDeceased)
+			current = m_Deceased;
+		ageDays = current - m_DOB;
+	}
 	m_ctrlAge->SetLabel(ARBDouble::str(ageDays/365.0, 1).c_str());
 }
 

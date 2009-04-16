@@ -82,9 +82,8 @@ msgstr "&Aperçu avant Impression\tCtrl+Alt+P"
 msgid "DescFilePrintPreview"
 msgstr "Afficher des pages entières"
 
-# NEW
 msgid "MenuFileRecent"
-msgstr "Recent &Files"
+msgstr "&Fichiers récents"
 
 msgid "MenuFileExit"
 msgstr "&Quitter"
@@ -428,80 +427,68 @@ msgstr "Réduire Tout"
 msgid "DescViewCollapseAll"
 msgstr "Réduire Tout"
 
-# NEW
 msgid "MenuViewType"
-msgstr "FR-Type..."
+msgstr "Affichage"
 
-# NEW
 msgid "MenuViewNotebook"
-msgstr "&Notebook\tCtrl-1"
+msgstr "&Notes\tCtrl-1"
 
 msgid "DescViewNotebook"
-msgstr "Notebook"
+msgstr "Notes"
 
-# NEW
 msgid "MenuViewListbook"
-msgstr "&Listbook\tCtrl-2"
+msgstr "&Liste\tCtrl-2"
 
 msgid "DescViewListbook"
-msgstr "Listbook"
+msgstr "Liste"
 
-# NEW
 msgid "MenuViewChoicebook"
-msgstr "&Choicebook\tCtrl-3"
+msgstr "&Choix\tCtrl-3"
 
 msgid "DescViewChoicebook"
-msgstr "Choicebook"
+msgstr "Choix"
 
-# NEW
 msgid "MenuViewTreebook"
-msgstr "&Treebook\tCtrl-4"
+msgstr "&Arbre\tCtrl-4"
 
 msgid "DescViewTreebook"
-msgstr "Treebook"
+msgstr "Arbre"
 
-# NEW
 msgid "MenuViewToolbook"
-msgstr "T&oolbook\tCtrl-5"
+msgstr "&Outils\tCtrl-5"
 
 msgid "DescViewToolbook"
-msgstr "Toolbook"
+msgstr "Outils"
 
-# NEW
 msgid "MenuViewOrientation"
-msgstr "FR-Orientation..."
+msgstr "Orientation..."
 
-# NEW
 msgid "DescViewOrientation"
-msgstr "FR-Orientation of tab"
+msgstr "Orientation des onglets"
 
-# NEW
 msgid "MenuViewTop"
-msgstr "FR-&Top"
+msgstr "En &haut"
 
 msgid "DescViewTop"
-msgstr "FR-Top"
+msgstr "En haut"
 
-# NEW
 msgid "MenuViewBottom"
-msgstr "FR-&Bottom"
+msgstr "En &bas"
 
 msgid "DescViewBottom"
-msgstr "FR-Bottom"
+msgstr "En bas"
 
-# NEW
 msgid "MenuViewLeft"
-msgstr "FR-&Left"
+msgstr "A &gauche"
 
 msgid "DescViewLeft"
-msgstr "FR-Left"
+msgstr "A gauche"
 
-# NEW
 msgid "MenuViewRight"
-msgstr "FR-&Right"
+msgstr "A &droite"
 
 msgid "DescViewRight"
-msgstr "FR-Right"
+msgstr "A droite"
 
 msgid "MenuWindow"
 msgstr "Fenê&tre"
