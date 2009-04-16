@@ -45,6 +45,7 @@
 #include "ClipBoard.h"
 #include "DlgPointsViewSort.h"
 #include "FilterOptions.h"
+#include "MainFrm.h"
 #include "PointsData.h"
 
 
@@ -130,6 +131,12 @@ bool CAgilityBookHtmlView::GetMessage2(wxString& msg) const
 		msg.Empty();
 		return false;
 	}
+}
+
+
+bool CAgilityBookHtmlView::AllowStatusContext(int field) const
+{
+	return STATUS_DOG == field || STATUS_FILTERED == field;
 }
 
 

@@ -64,6 +64,7 @@
 #include "DlgCalendar.h"
 #include "DlgListCtrl.h"
 #include "FilterOptions.h"
+#include "MainFrm.h"
 #include "TabView.h"
 #include <wx/dcbuffer.h>
 
@@ -1270,6 +1271,12 @@ bool CAgilityBookCalendarView::GetMessage2(wxString& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
+}
+
+
+bool CAgilityBookCalendarView::AllowStatusContext(int field) const
+{
+	return STATUS_FILTERED == field;
 }
 
 

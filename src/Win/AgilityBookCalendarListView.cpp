@@ -68,6 +68,7 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "ListData.h"
+#include "MainFrm.h"
 #include "Wizard.h"
 #include <wx/config.h>
 #include <wx/settings.h>
@@ -641,6 +642,12 @@ bool CAgilityBookCalendarListView::GetMessage2(wxString& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
+}
+
+
+bool CAgilityBookCalendarListView::AllowStatusContext(int field) const
+{
+	return STATUS_FILTERED == field;
 }
 
 
