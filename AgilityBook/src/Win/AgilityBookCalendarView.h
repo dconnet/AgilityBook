@@ -82,6 +82,7 @@ public:
 	virtual bool IsFiltered() const;
 	virtual bool GetMessage(wxString& msg) const;
 	virtual bool GetMessage2(wxString& msg) const;
+	virtual bool AllowStatusContext(int field) const;
 
 	virtual bool OnCreate(
 			wxDocument* doc,

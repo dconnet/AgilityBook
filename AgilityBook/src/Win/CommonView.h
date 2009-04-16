@@ -114,6 +114,8 @@ public:
 	// The base class implements, we want to make sure all these classes override
 	virtual void DetachView() = 0;
 
+	virtual bool AllowStatusContext(int field) const = 0;
+
 	virtual void OnActivateView(
 			bool activate,
 			wxView* activeView,

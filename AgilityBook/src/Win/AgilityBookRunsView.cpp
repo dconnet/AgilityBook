@@ -62,18 +62,19 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
-#include "AgilityBookPanels.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookTreeView.h"
+#include "AgilityBookPanels.h"
 #include "AgilityBookTreeData.h"
+#include "AgilityBookTreeView.h"
 #include "ARBTypes.h"
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
 #include "Element.h"
 #include "FilterOptions.h"
-#include "ListData.h"
 #include "Globals.h"
+#include "ListData.h"
+#include "MainFrm.h"
 #include "PointsData.h"
 #include <algorithm>
 #include <wx/config.h>
@@ -1360,6 +1361,12 @@ bool CAgilityBookRunsView::GetMessage2(wxString& msg) const
 		msg.Empty();
 		return false;
 	}
+}
+
+
+bool CAgilityBookRunsView::AllowStatusContext(int field) const
+{
+	return STATUS_DOG == field || STATUS_FILTERED == field;
 }
 
 

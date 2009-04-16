@@ -248,75 +248,79 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 	if (!parent)
 		return false;
 	bool bHandled = false;
-	switch (id)
+	CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+	if (pView && pView->AllowStatusContext(id))
 	{
-	case STATUS_DOG:
-		if (GetTreeView() && 1 < m_Records.GetDogs().size())
+		switch (id)
 		{
-			ARBDogPtr curDog = GetCurrentDog();
-			wxMenu* menu = new wxMenu();
-			int menuId = baseID;
-			CStatusHandler data;
-			ARBDogList::const_iterator iDog;
-			for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
+		case STATUS_DOG:
+			if (GetTreeView() && 1 < m_Records.GetDogs().size())
 			{
-				parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
-				wxString item((*iDog)->GetGenericName().c_str());
-				item.Replace(wxT("&"), wxT("&&"));
-				wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
-				if (*(*iDog) == *curDog)
-					menuitem->Check(true);
-				data.dogs.push_back(*iDog);
-			}
-			bHandled = true;
-			m_StatusData = &data;
-			parent->PopupMenu(menu, point);
-			delete menu;
-			menuId = baseID;
-			for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
-			{
-				parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
-			}
-		}
-		break;
-	case STATUS_STATUS:
-		break;
-	case STATUS_FILTERED:
-		{
-			CStatusHandler data;
-			data.filterOptions.GetAllFilterNames(data.filterNames);
-			if (1 < data.filterNames.size())
-			{
-				std::sort(data.filterNames.begin(), data.filterNames.end());
-				tstring filterName = data.filterOptions.GetCurrentFilter();
+				ARBDogPtr curDog = GetCurrentDog();
 				wxMenu* menu = new wxMenu();
 				int menuId = baseID;
-				std::vector<tstring>::const_iterator iFilter;
-				for (iFilter = data.filterNames.begin();
-					iFilter != data.filterNames.end();
-					++iFilter, ++menuId)
+				CStatusHandler data;
+				ARBDogList::const_iterator iDog;
+				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
-					wxString item((*iFilter).c_str());
+					parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
+					wxString item((*iDog)->GetGenericName().c_str());
 					item.Replace(wxT("&"), wxT("&&"));
 					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
-					if (*iFilter == filterName)
+					if (*(*iDog) == *curDog)
 						menuitem->Check(true);
+					data.dogs.push_back(*iDog);
 				}
 				bHandled = true;
 				m_StatusData = &data;
 				parent->PopupMenu(menu, point);
 				delete menu;
 				menuId = baseID;
-				for (iFilter = data.filterNames.begin();
-					iFilter != data.filterNames.end();
-					++iFilter, ++menuId)
+				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
+					parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
 				}
 			}
+			break;
+		case STATUS_STATUS:
+			break;
+		case STATUS_FILTERED:
+			{
+				CStatusHandler data;
+				data.filterOptions.GetAllFilterNames(data.filterNames);
+				if (1 < data.filterNames.size())
+				{
+					std::sort(data.filterNames.begin(), data.filterNames.end());
+					tstring filterName = data.filterOptions.GetCurrentFilter();
+					wxMenu* menu = new wxMenu();
+					int menuId = baseID;
+					std::vector<tstring>::const_iterator iFilter;
+					for (iFilter = data.filterNames.begin();
+						iFilter != data.filterNames.end();
+						++iFilter, ++menuId)
+					{
+						parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
+						wxString item((*iFilter).c_str());
+						item.Replace(wxT("&"), wxT("&&"));
+						wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
+						if (*iFilter == filterName)
+							menuitem->Check(true);
+					}
+					bHandled = true;
+					m_StatusData = &data;
+					parent->PopupMenu(menu, point);
+					delete menu;
+					menuId = baseID;
+					for (iFilter = data.filterNames.begin();
+						iFilter != data.filterNames.end();
+						++iFilter, ++menuId)
+					{
+						parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
+					}
+				}
+			}
+			break;
 		}
-		break;
 	}
 	return bHandled;
 }

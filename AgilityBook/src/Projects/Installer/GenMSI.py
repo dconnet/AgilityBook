@@ -431,17 +431,17 @@ def main():
 	# Wix
 	if doWiX:
 		productId = genuuid()
-		version, junk = getversion(3)
-		junk, version2 = getversion(4)
+		ver3Dot, junk = getversion(3)
+		ver4Dot, ver4Line = getversion(4)
 		os.environ['PATH'] += ';' + WiXdir
 		if b32:
-			if genWiX(productId, version, version2, code32, tidy):
+			if genWiX(productId, ver3Dot, ver4Line, code32, tidy):
 				b32ok = 1
 		if b64:
-			if genWiX(productId, version, version2, code64, tidy):
+			if genWiX(productId, ver3Dot, ver4Line, code64, tidy):
 				b64ok = 1
 		if b98:
-			if genWiX(productId, version, version2, code98, tidy):
+			if genWiX(productId, ver3Dot, ver4Line, code98, tidy):
 				b98ok = 1
 		if not bTesting and (b32ok or b64ok or b98ok):
 			d = datetime.datetime.now().isoformat(' ')
@@ -453,20 +453,20 @@ def main():
 				installs = "VC9,x64"
 			if b98ok:
 				installs = "VC8,win98"
-			print >>codes, "v" + version + "," + d + "," + productId + "," + UpgradeCode + "," + installs
+			print >>codes, "v" + ver4Dot + "," + d + "," + productId + "," + UpgradeCode + "," + installs
 
 	# Inno
 	if doInno:
-		version, version2 = getversion(4)
+		ver4Dot, ver4Line = getversion(4)
 		os.environ['PATH'] += ';' + ISTool
 		if b32:
-			if genInno(version, version2, code32, tidy):
+			if genInno(ver4Dot, ver4Line, code32, tidy):
 				b32ok = 1
 		if b64:
-			if genInno(version, version2, code64, tidy):
+			if genInno(ver4Dot, ver4Line, code64, tidy):
 				b64ok = 1
 		if b98:
-			if genInno(version, version2, code98, tidy):
+			if genInno(ver4Dot, ver4Line, code98, tidy):
 				b98ok = 1
 
 main()

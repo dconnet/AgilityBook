@@ -68,6 +68,7 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
+#include "MainFrm.h"
 #include <wx/config.h>
 
 #include "res/CalEmpty.xpm"
@@ -429,6 +430,12 @@ bool CAgilityBookTreeView::GetMessage2(wxString& msg) const
 		msg.Empty();
 		return false;
 	}
+}
+
+
+bool CAgilityBookTreeView::AllowStatusContext(int field) const
+{
+	return STATUS_DOG == field || STATUS_FILTERED == field;
 }
 
 

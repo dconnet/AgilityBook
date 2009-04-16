@@ -61,6 +61,7 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "ListData.h"
+#include "MainFrm.h"
 #include <wx/config.h>
 
 
@@ -432,6 +433,12 @@ bool CAgilityBookTrainingView::GetMessage2(wxString& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
+}
+
+
+bool CAgilityBookTrainingView::AllowStatusContext(int field) const
+{
+	return STATUS_FILTERED == field;
 }
 
 
