@@ -38,6 +38,7 @@ DEFS             = @DEFS@
 DEPDIR           = @DEPDIR@
 CPPDEPFLAGS      = @CPPDEPFLAGS@
 DEFAULT_INCLUDES = -I. -I$(SRCDIR)
+LDFLAGS          = @LDFLAGS@
 
 ##########
 # Linker default parameters.
@@ -162,7 +163,8 @@ clean-default:
 ##########
 .cpp.o:
 	$(NICE_ECHO) "  Compiling:\t`echo $< | sed 's|$(SRCDIR)/||'`"
-	$(CXX) $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
+#	$(CXX) $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPDEPFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) -c -o $@ $<
 
 ##########
 # Generic rule to link the executable.

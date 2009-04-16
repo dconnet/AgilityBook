@@ -1,0 +1,35 @@
+		   Universal Binary Build on MacOS
+
+1. Install boost from source - download and then extract to a directory (i.e. boost_1_38_0)
+> cd boost_1_38_0
+> bjam toolset=darwin variant=debug threading=multi link=static architecture=combined
+
+If you don't install them in the system directory set the BOOSTINCLUDE env var to the root of the boost directory:
+export BOOSTINCLUDE=/Users/me/boost_1_38_0
+
+2. Download and install WxMac in a local directory
+This seems to be the preferred install method for wxWidgets and allows you to change settings of the library w/o having to be root and it allows you to have multiple versions simultaneously with different settings
+
+extract the tar to a directory (i.e wxmac)
+> cd wxmac
+> rm -rf build-release
+> mkdir build-release
+> cd build-release
+configure as a statically linked universal binary containing all builtin libs to make easier to deploy:
+> ../configure --disable-shared --enable-unicode --enable-universal-binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin
+>  make
+
+Now you need to put this version of wx-config on your path so when you make agilitybook it picks this version of wxMac
+> export PATH=`pwd`:$PATH
+You can put the above in your .bashrc if you want to make it always available
+
+3. Build agilitybook as universal binary for PPC and Intel 32 bit architectures
+> cd AgilityBook/
+> mkdir build
+> cd build
+> ../configure
+> make -i # the -i is temporarily required until precompiled headers compile again
+
+4. In order to run the binary you need to run it from within the distribution bundle:
+> AgilityRecordBook.app/Contents/MacOS/agilitybook
+
