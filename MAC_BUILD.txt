@@ -21,15 +21,18 @@ configure as a statically linked universal binary containing all builtin libs to
 
 Now you need to put this version of wx-config on your path so when you make agilitybook it picks this version of wxMac
 > export PATH=`pwd`:$PATH
-You can put the above in your .bashrc if you want to make it always available
 
 3. Build agilitybook as universal binary for PPC and Intel 32 bit architectures
 > cd AgilityBook/
 > mkdir build
 > cd build
 > ../configure
-> make -i # the -i is temporarily required until precompiled headers compile again
+> make dist
 
 4. In order to run the binary you need to run it from within the distribution bundle:
 > AgilityRecordBook.app/Contents/MacOS/agilitybook
 
+5. To package the distribution bundle 
+- open /Developer/Applications/Utilities/PackageMaker
+- select the Open menu option and open the Package Maker package build/AgilityRecordBook.pmdoc
+- select the Build option and save the package wherever you like.
