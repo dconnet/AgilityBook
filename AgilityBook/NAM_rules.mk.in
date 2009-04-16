@@ -116,6 +116,10 @@ include $(TOPSRCDIR)/$(MAKEINCLUDE)
 ################################################################################
 # Update variables.                                                            #
 ################################################################################
+NOPRECOMP = @NOPRECOMP@
+ifeq ($(NOPRECOMP),1)
+	PRECOMP_HEADER=
+endif
 ##########
 # Append all targets and precompiled headers to list of files to clean.
 ##########
