@@ -1655,7 +1655,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 				if (pTab)
 					pTab->SetCurTab(IDX_PANE_RUNS);
 				Modify(true);
-				if (!m_Records.GetDogs().AddDog(dog))
+				if (m_Records.GetDogs().AddDog(dog))
 				{
 					CAgilityBookTreeView* pTree = GetTreeView();
 					if (pTree)

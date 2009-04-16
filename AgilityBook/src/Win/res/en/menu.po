@@ -427,7 +427,7 @@ msgid "DescViewCollapseAll"
 msgstr "Collapse All"
 
 msgid "MenuViewType"
-msgstr "Type..."
+msgstr "Type"
 
 msgid "MenuViewNotebook"
 msgstr "&Notebook\tCtrl-1"
