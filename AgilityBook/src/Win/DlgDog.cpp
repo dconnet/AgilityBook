@@ -1568,7 +1568,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
-	if (m_IsDeceased)
+	if (!m_IsDeceased)
 		m_Deceased.clear();
 
 	m_pDog->SetCallName(m_CallName.c_str());
