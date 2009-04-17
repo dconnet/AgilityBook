@@ -1,6 +1,8 @@
 # Generate MSI files
 #
 # Revision History
+# 2009-04-16 DRC Enable v2 to upgrade v1 when the beta period ends.
+#            Removed Inno support since I don't maintain it anymore.
 # 2009-03-01 DRC Made v2 coexist with v1, updated for wxWidgets
 #            Fixed bug where french and arbhelp would always be installed
 # 2008-10-14 DRC Added x64 specific tags
@@ -10,14 +12,12 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/32] [/64] [/w98] [/all] [/notidy] [/wix | /inno] /test
+"""GenMSI.py [/32] [/64] [/w98] [/all] [/notidy] /test
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
 	w98: Create 32bit MBCS msi
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
-	wix: Use WiX installer (default)
-	inno: Use Inno installer
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
 """
 
@@ -29,20 +29,27 @@ import sys
 AgilityBookDir = "..\\..\\.."
 
 WiXdir = r"c:\Tools\wix2"
-ISTool = "c:\\Program Files\\ISTool"
 
 WinSrcDir = AgilityBookDir + "\\src"
 code32 = 1
 code64 = 3
 code98 = 2
 
+# The reason for a different upgrade codes is that is allows beta testing
+# side-by-side. When the next version is actually released, it will upgrade
+# (uninstall) all previous versions.
+
+# When the beta ends, set this flag to 0. That will then include the V1 upgrade
+# code. (Any future open betas will follow this same route - a beta will only
+# upgrade itself)
+beta = 1
+
 # v1 upgrade code
-# (this can no longer generate a v1 install, but keep this here for reference)
-#UpgradeCode = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
+UpgradeCodeV1 = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
 #defFolder = 'Agility Record Book'
 
 # v2 upgrade code
-UpgradeCode = "4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4"
+UpgradeCodeV2 = "4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4"
 defFolder = 'Agility Record Book v2'
 
 
@@ -135,7 +142,7 @@ def genWiX(productId, version, version2, code, tidy):
 	print >>setup, r'<?xml version="1.0" encoding="UTF-8"?>'
 	print >>setup, r'<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">'
 	print >>setup, r'  <Product Id="' + productId + r'"'
-	print >>setup, r'      UpgradeCode="' + UpgradeCode + r'"'
+	print >>setup, r'      UpgradeCode="' + UpgradeCodeV2 + r'"'
 	print >>setup, r'      Name="Agility Record Book ' + version + '"'
 	print >>setup, r'      Language="1033"'
 	print >>setup, r'      Version="' + version + '"'
@@ -163,7 +170,12 @@ def genWiX(productId, version, version2, code, tidy):
 	elif code64 == code:
 		print >>setup, r'    <Condition Message="This application only runs on 64bit Windows systems">VersionNT64</Condition>'
 	print >>setup, r''
-	print >>setup, r'    <Upgrade Id="' + UpgradeCode + '">'
+	if not beta:
+		print >>setup, r'    <Upgrade Id="' + UpgradeCodeV1 + '">'
+		print >>setup, r'      <UpgradeVersion OnlyDetect="no" Property="OLDVERSIONFOUND"'
+		print >>setup, r'          IncludeMinimum="yes" Minimum="0.0.0"/>'
+		print >>setup, r'    </Upgrade>'
+	print >>setup, r'    <Upgrade Id="' + UpgradeCodeV2 + '">'
 	print >>setup, r'      <UpgradeVersion OnlyDetect="no" Property="OLDVERSIONFOUND"'
 	print >>setup, r'          IncludeMinimum="yes" Minimum="0.0.0"/>'
 	print >>setup, r'    </Upgrade>'
@@ -320,75 +332,11 @@ def genWiX(productId, version, version2, code, tidy):
 	return 1
 
 
-def genInno(version, version2, code, tidy):
-	baseDir, outputFile = getoutputvars(code, version2)
-	if tidy and not os.access(baseDir + "AgilityBook.exe", os.F_OK):
-		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
-		return 0
-
-	setup = open(outputFile + ".iss", "w")
-	print >>setup, r'#define ARBName "' + defFolder + '"'
-	print >>setup, r'#define ARBVersion "' + version + '"'
-	print >>setup, r''
-	print >>setup, r'[Setup]'
-	print >>setup, r'AppName={#ARBName}'
-	print >>setup, r'AppId={#ARBName} Setup'
-	print >>setup, r'AppVersion={#ARBVersion}'
-	print >>setup, r'AppVerName={#ARBName} {#ARBVersion}'
-	print >>setup, r'AppPublisher=David Connet'
-	print >>setup, r'AppPublisherURL=http://www.agilityrecordbook.com/'
-	print >>setup, r'AppSupportURL=http://www.agilityrecordbook.com/'
-	print >>setup, r'AppUpdatesURL=http://www.agilityrecordbook.com/'
-	print >>setup, r'DefaultDirName={pf}\dcon Software\{#ARBName}'
-	print >>setup, r'DefaultGroupName={#ARBName}'
-	print >>setup, r'Compression=lzma/ultra'
-	print >>setup, r'InternalCompressLevel=ultra'
-	print >>setup, r'SolidCompression=true'
-	print >>setup, r'UninstallDisplayIcon={app}\AgilityBook.exe'
-	print >>setup, r'SetupIconFile=..\..\win\res\AgilityBook.ico'
-	print >>setup, r'MinVersion=4.90.3000,4.0.1381'
-	print >>setup, r'PrivilegesRequired=none'
-	print >>setup, r'OutputBaseFilename=ARBSetup_{#ARBVersion}'
-	print >>setup, r'OutputDir=InnoSetup'
-	print >>setup, r''
-	print >>setup, r'[Files]'
-	print >>setup, r'Source: ' + baseDir + r'AgilityBook.exe; DestDir: {app}'
-	print >>setup, r'Source: ' + baseDir + r'ARBHelp.exe; DestDir: {app}'
-	print >>setup, r'Source: ' + baseDir + r'lang\en\arb.mo; DestDir: {app}\lang\en'
-	print >>setup, r'Source: ' + baseDir + r'lang\fr\arb.mo; DestDir: {app}\lang\fr'
-	print >>setup, r'Source: ' + baseDir + r'cal_usdaa.dll; DestDir: {app}'
-	print >>setup, r''
-	print >>setup, r'[Icons]'
-	print >>setup, r'Name: {commondesktop}\{#ARBName}; Filename: {app}\AgilityBook.exe'
-	print >>setup, r'Name: {group}\{#ARBName}; Filename: {app}\AgilityBook.exe; IconFilename: {app}\AgilityBook.exe; IconIndex: 0'
-	print >>setup, r'Name: {group}\{#ARBName} Helper; Filename: {app}\ARBHelp.exe; IconFilename: {app}\ARBHelp.exe; IconIndex: 0'
-	print >>setup, r'Name: {group}\{#ARBName} Web Site; Filename: http://www.agilityrecordbook.com/'
-	print >>setup, r'Name: {group}\Yahoo Discussion Group; Filename: http://groups.yahoo.com/group/AgilityRecordBook/'
-	print >>setup, r'Name: "{group}\{cm:UninstallProgram,{#ARBName}}"; Filename: "{uninstallexe}"'
-	print >>setup, r''
-	print >>setup, r'[Run]'
-	print >>setup, r'Filename: "{app}\AgilityBook.exe"; Parameters: "/register"; StatusMsg: "Registering File Associations..."'
-	print >>setup, r''
-	print >>setup, r'[UninstallRun]'
-	print >>setup, r'Filename: "{app}\AgilityBook.exe"; Parameters: "/unregister"; RunOnceId: "RemoveARBAssoc"'
-	setup.close()
-
-	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
-		fullpath = os.getcwd() + '\\' + outputFile + '.iss'
-		runcmd('istool -compile ' + fullpath)
-		if tidy:
-			if os.access(outputFile + ".iss", os.F_OK):
-				os.remove(outputFile + ".iss")
-	return 1
-
-
 def main():
 	b32 = 0
 	b64 = 0
 	b98 = 0
 	tidy = 1
-	doWiX = 1
-	doInno = 0
 	bTesting = 0
 	if 1 == len(sys.argv):
 		b32 = 1
@@ -407,12 +355,6 @@ def main():
 			b98 = 1
 		elif o == "/notidy":
 			tidy = 0
-		elif o == "/wix":
-			doWiX = 1
-			doInno = 0
-		elif o == "/inno":
-			doWiX = 0
-			doInno = 1
 		elif o == "/test":
 			bTesting = 1
 		else:
@@ -429,44 +371,30 @@ def main():
 	b98ok = 0
 
 	# Wix
-	if doWiX:
-		productId = genuuid()
-		ver3Dot, junk = getversion(3)
-		ver4Dot, ver4Line = getversion(4)
-		os.environ['PATH'] += ';' + WiXdir
-		if b32:
-			if genWiX(productId, ver3Dot, ver4Line, code32, tidy):
-				b32ok = 1
-		if b64:
-			if genWiX(productId, ver3Dot, ver4Line, code64, tidy):
-				b64ok = 1
-		if b98:
-			if genWiX(productId, ver3Dot, ver4Line, code98, tidy):
-				b98ok = 1
-		if not bTesting and (b32ok or b64ok or b98ok):
-			d = datetime.datetime.now().isoformat(' ')
-			codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "a")
-			installs = ""
-			if b32ok:
-				installs = "VC9,win32"
-			if b64ok:
-				installs = "VC9,x64"
-			if b98ok:
-				installs = "VC8,win98"
-			print >>codes, "v" + ver4Dot + "," + d + "," + productId + "," + UpgradeCode + "," + installs
+	productId = genuuid()
+	ver3Dot, junk = getversion(3)
+	ver4Dot, ver4Line = getversion(4)
+	os.environ['PATH'] += ';' + WiXdir
+	if b32:
+		if genWiX(productId, ver3Dot, ver4Line, code32, tidy):
+			b32ok = 1
+	if b64:
+		if genWiX(productId, ver3Dot, ver4Line, code64, tidy):
+			b64ok = 1
+	if b98:
+		if genWiX(productId, ver3Dot, ver4Line, code98, tidy):
+			b98ok = 1
+	if not bTesting and (b32ok or b64ok or b98ok):
+		d = datetime.datetime.now().isoformat(' ')
+		codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "a")
+		installs = ""
+		if b32ok:
+			installs = "VC9,win32"
+		if b64ok:
+			installs = "VC9,x64"
+		if b98ok:
+			installs = "VC8,win98"
+		print >>codes, "v" + ver4Dot + "," + d + "," + productId + "," + UpgradeCodeV2 + "," + installs
 
-	# Inno
-	if doInno:
-		ver4Dot, ver4Line = getversion(4)
-		os.environ['PATH'] += ';' + ISTool
-		if b32:
-			if genInno(ver4Dot, ver4Line, code32, tidy):
-				b32ok = 1
-		if b64:
-			if genInno(ver4Dot, ver4Line, code64, tidy):
-				b64ok = 1
-		if b98:
-			if genInno(ver4Dot, ver4Line, code98, tidy):
-				b98ok = 1
 
 main()
