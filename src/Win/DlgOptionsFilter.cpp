@@ -63,9 +63,9 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	, m_timeStart(ARBDate::Today())
 	, m_bDateEnd(false)
 	, m_timeEnd(ARBDate::Today())
-	, m_bNotEntered(true)
-	, m_bPlanning(true)
-	, m_bEntered(true)
+	, m_bNotEntered(m_FilterOptions.FilterCalendarView().ViewNotEntered())
+	, m_bPlanning(m_FilterOptions.FilterCalendarView().ViewPlanning())
+	, m_bEntered(m_FilterOptions.FilterCalendarView().ViewEntered())
 	, m_ctrlFilters(NULL)
 	, m_ctrlDatesAll(NULL)
 	, m_ctrlDatesSome(NULL)
@@ -211,14 +211,14 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	m_ctrlQsQs = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_RUNS_Q"),
-		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlQsQs->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterQs), NULL, this);
 	m_ctrlQsQs->SetHelpText(_("HIDC_OPT_FILTER_RUN_RUNS_Q"));
 	m_ctrlQsQs->SetToolTip(_("HIDC_OPT_FILTER_RUN_RUNS_Q"));
 
 	m_ctrlQsNonQs = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_RUNS_NON_Q"),
-		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
+		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlQsNonQs->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterQs), NULL, this);
 	m_ctrlQsNonQs->SetHelpText(_("HIDC_OPT_FILTER_RUN_RUNS_NON_Q"));
 	m_ctrlQsNonQs->SetToolTip(_("HIDC_OPT_FILTER_RUN_RUNS_NON_Q"));
@@ -238,7 +238,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlVenueSome->SetToolTip(_("HIDC_OPT_FILTER_RUN_VENUES_SELECTED"));
 
 	m_ctrlVenue = new CCheckTreeCtrl(this);
-	m_ctrlVenueSome->Connect(wxEVT_COMMAND_TREE_CHECK_CHANGED, wxTreeEventHandler(CDlgOptionsFilter::OnFilterVenueCheck), NULL, this);
+	m_ctrlVenue->Connect(wxEVT_COMMAND_TREE_CHECK_CHANGED, wxTreeEventHandler(CDlgOptionsFilter::OnFilterVenueCheck), NULL, this);
 	m_ctrlVenue->SetHelpText(_("HIDC_OPT_FILTER_RUN_VENUES"));
 	m_ctrlVenue->SetToolTip(_("HIDC_OPT_FILTER_RUN_VENUES"));
 
@@ -319,6 +319,16 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 void CDlgOptionsFilter::Save()
 {
+	// These aren't updated on-the-fly, so commit now.
+	CCalendarViewFilter calView = m_FilterOptions.FilterCalendarView();
+	calView.Clear();
+	if (m_bNotEntered)
+		calView.AddNotEntered();
+	if (m_bPlanning)
+		calView.AddPlanning();
+	if (m_bEntered)
+		calView.AddEntered();
+	m_FilterOptions.SetFilterCalendarView(calView);
 	// Commit to the registry
 	m_FilterOptions.Save();
 }
@@ -491,7 +501,7 @@ void CDlgOptionsFilter::FillFilter(
 		wxString path,
 		std::vector<CVenueFilter>& outVenues)
 {
-	if (hItem.IsOk())
+	if (hItem.IsOk() && hItem != m_ctrlVenue->GetRootItem())
 	{
 		// Don't worry about enabled. Things are only "disabled" if the parent
 		// checkbox is not set. If that's not set, we won't be calling down

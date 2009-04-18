@@ -101,8 +101,16 @@ wxString GetListColumnText(
 		info.SetId(index);
 		info.SetColumn(col);
 		info.SetMask(wxLIST_MASK_TEXT);
-		if (list->GetItem(info))
-			val = info.GetText();
+		if (-1 == index)
+		{
+			if (list->GetColumn(col, info))
+				val = info.GetText();
+		}
+		else
+		{
+			if (list->GetItem(info))
+				val = info.GetText();
+		}
 	}
 	return val;
 }

@@ -827,21 +827,21 @@ CDlgDog::CDlgDog(
 	wxButton* btnPtsNew = new wxButton(panelPoints, wxID_ANY,
 		_("IDC_DOGPTS_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRegDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsNew), NULL, this);
+	btnPtsNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsNew), NULL, this);
 	btnPtsNew->SetHelpText(_("HIDC_DOGPTS_NEW"));
 	btnPtsNew->SetToolTip(_("HIDC_DOGPTS_NEW"));
 
 	m_ctrlPointsEdit = new wxButton(panelPoints, wxID_ANY,
 		_("IDC_DOGPTS_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRegDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsEdit), NULL, this);
+	m_ctrlPointsEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsEdit), NULL, this);
 	m_ctrlPointsEdit->SetHelpText(_("HIDC_DOGPTS_EDIT"));
 	m_ctrlPointsEdit->SetToolTip(_("HIDC_DOGPTS_EDIT"));
 
 	m_ctrlPointsDelete = new wxButton(panelPoints, wxID_ANY,
 		_("IDC_DOGPTS_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRegDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsDelete), NULL, this);
+	m_ctrlPointsDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsDelete), NULL, this);
 	m_ctrlPointsDelete->SetHelpText(_("HIDC_DOGPTS_DELETE"));
 	m_ctrlPointsDelete->SetToolTip(_("HIDC_DOGPTS_DELETE"));
 

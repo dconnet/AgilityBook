@@ -46,6 +46,10 @@
 #include "Validators.h"
 
 
+BEGIN_EVENT_TABLE(CDlgRegNum, wxDialog)
+	EVT_BUTTON(wxID_OK, CDlgRegNum::OnOk)
+END_EVENT_TABLE()
+
 
 // If pRegNum is NULL, we're creating a new entry. Otherwise, we're editing an existing.
 CDlgRegNum::CDlgRegNum(
@@ -178,9 +182,9 @@ void CDlgRegNum::OnOk(wxCommandEvent& evt)
 		ARBDogRegNumPtr pRegNum;
 		if (m_RegNums.AddRegNum(m_Venue.c_str(), m_RegNum.c_str(), &pRegNum))
 		{
-			m_pRegNum->SetHeight(m_Height.c_str());
-			m_pRegNum->SetReceived(m_bReceived);
-			m_pRegNum->SetNote(m_Note.c_str());
+			pRegNum->SetHeight(m_Height.c_str());
+			pRegNum->SetReceived(m_bReceived);
+			pRegNum->SetNote(m_Note.c_str());
 		}
 	}
 	EndDialog(wxID_OK);

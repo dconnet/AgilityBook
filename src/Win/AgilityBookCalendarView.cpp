@@ -278,8 +278,12 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		for (iDay = 0; iDay < 7; ++iDay)
 		{
 			{
+				// dow is now the index of the day of week.
+				int dow = (weekStart + iDay).GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek());
+				// Now translate back to Sun==0
+				dow = (dow + CAgilityBookOptions::GetFirstDayOfWeek()) % 7;
 				wxDCClipper clip(*pDC, rect);
-				pDC->DrawLabel(m_Days[(weekStart + iDay).GetDayOfWeek(CAgilityBookOptions::GetFirstDayOfWeek())], rect, wxALIGN_CENTRE);
+				pDC->DrawLabel(m_Days[dow], rect, wxALIGN_CENTRE);
 			}
 			pDC->SetPen(penShadow);
 			pDC->DrawLine(rect.GetLeft() + 1, rect.GetBottom(), rect.GetRight(), rect.GetBottom());
