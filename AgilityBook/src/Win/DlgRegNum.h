@@ -60,5 +60,6 @@ private:
 	bool m_bReceived;
 	wxString m_Note;
 
+	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };

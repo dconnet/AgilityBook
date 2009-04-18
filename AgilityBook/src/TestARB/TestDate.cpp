@@ -180,4 +180,14 @@ SUITE(TestDate)
 		s = ARBDate::GetValidDateString(d2, d1);
 		CHECK(wxT("[1999-3-27-*]") == s);
 	}
+
+
+	TEST(DayOfWeek)
+	{
+		ARBDate dSun(2009, 4, 12);
+		ARBDate dMon(2009, 4, 13);
+		CHECK(0 == dSun.GetDayOfWeek(ARBDate::eSunday));
+		CHECK(1 == dMon.GetDayOfWeek(ARBDate::eSunday));
+		CHECK(0 == dMon.GetDayOfWeek(ARBDate::eMonday));
+	}
 }

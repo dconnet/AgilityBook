@@ -82,6 +82,7 @@ extern wxWindow* FindWindowInSizer(
 /**
  * Return the text for a column.
  * This is just a simple wrapper around wxListItem/GetItem
+ * @note index = -1 implies getting the column header text
  */
 extern wxString GetListColumnText(
 		wxListCtrl const* list,

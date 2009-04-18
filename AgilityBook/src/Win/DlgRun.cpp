@@ -1111,7 +1111,7 @@ CDlgRun::CDlgRun(
 	textQ->Wrap(-1);
 
 	m_ctrlQ = new CQualifyingComboBox(m_panelScore, m_Run);
-	m_ctrlQ->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeQ), NULL, this);
+	m_ctrlQ->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeQ), NULL, this);
 	m_ctrlQ->SetHelpText(_("HIDC_RUNSCORE_Q"));
 	m_ctrlQ->SetToolTip(_("HIDC_RUNSCORE_Q"));
 
@@ -1726,7 +1726,10 @@ void CDlgRun::FillDivisions()
 		{
 			index = m_ctrlDivisions->FindString(last, true);
 			if (0 <= index)
+			{
 				m_ctrlDivisions->SetSelection(index);
+				m_Run->SetDivision(last.c_str());
+			}
 		}
 	}
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
@@ -1796,7 +1799,10 @@ void CDlgRun::FillLevels()
 			{
 				int idx = m_ctrlLevels->FindString(last, true);
 				if (0 <= idx)
+				{
 					m_ctrlLevels->SetSelection(idx);
+					m_Run->SetLevel(last.c_str());
+				}
 			}
 		}
 	}
@@ -3145,6 +3151,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 
 	//@todo: Add integrity checks - things like snooker score >=37? is Q set?
 
+	m_Run->SetDate(m_Date);
 	m_Run->SetSubName(m_SubName.c_str());
 	m_Run->SetHeight(m_Height.c_str());
 	m_Run->SetJudge(m_Judge.c_str());
