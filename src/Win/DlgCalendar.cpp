@@ -325,7 +325,7 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlPremiumEntry = new wxButton(this, wxID_ANY,
 		_("IDC_CAL_PREMIUM_ENTRY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlOnlineUrlEntry->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendar::OnPremiumEntry), NULL, this);
+	m_ctrlPremiumEntry->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendar::OnPremiumEntry), NULL, this);
 	m_ctrlPremiumEntry->SetHelpText(_("HIDC_CAL_PREMIUM_ENTRY"));
 	m_ctrlPremiumEntry->SetToolTip(_("HIDC_CAL_PREMIUM_ENTRY"));
 	if (m_PremiumUrl.empty())
