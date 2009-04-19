@@ -964,6 +964,15 @@ msgstr "Example de Police"
 msgid "IDC_OPT_PRINT_FONT"
 msgstr "Choisir Police..."
 
+msgid "IDC_OPT_PRINT_ORIENT"
+msgstr "&Orientation"
+
+msgid "IDC_OPT_PRINT_PORT"
+msgstr "Portrait"
+
+msgid "IDC_OPT_PRINT_LAND"
+msgstr "Paysage"
+
 msgid "IDC_OPT_PRING_MARGIN"
 msgstr "Marges"
 

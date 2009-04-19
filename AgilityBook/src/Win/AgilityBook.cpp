@@ -51,11 +51,12 @@
 #include "Element.h"
 #include "LanguageManager.h"
 #include "MainFrm.h"
+#include "Print.h"
 #include "TabView.h"
 #include <vector>
-
 #include <wx/choicdlg.h>
 #include <wx/cmdline.h>
+#include <wx/cmndata.h>
 #include <wx/config.h>
 #include <wx/display.h>
 #include <wx/docview.h>
@@ -125,6 +126,7 @@ void CAgilityBookDocManager::OnPrint(wxCommandEvent& WXUNUSED(evt))
 	{
 		wxPrinter printer(wxGetApp().GetPrintData());
 		printer.Print(view->GetFrame(), printout, true);
+		wxGetApp().SavePrintData(printer.GetPrintDialogData());
 		delete printout;
 	}
 }
@@ -140,7 +142,7 @@ void CAgilityBookDocManager::OnPreview(wxCommandEvent& WXUNUSED(evt))
 	if (printout)
 	{
 		// Pass two printout objects: for preview, and possible printing.
-		wxPrintPreviewBase *preview = new wxPrintPreview(printout, view->OnCreatePrintout(), wxGetApp().GetPrintData());
+		wxPrintPreviewBase *preview = new CPrintPreview(printout, view->OnCreatePrintout(), wxGetApp().GetPrintData());
 		if (!preview->Ok())
 		{
 			delete preview;
@@ -160,6 +162,7 @@ CAgilityBookApp::CAgilityBookApp()
 	: m_LangMgr(NULL)
 	, m_UpdateInfo()
 	, m_manager(NULL)
+	, m_printDialogData(NULL)
 
 {
 }
@@ -208,6 +211,28 @@ void CAgilityBookApp::SetMessageText2(wxString const& msg)
 }
 
 
+wxPrintDialogData* CAgilityBookApp::GetPrintData()
+{
+	if (!m_printDialogData)
+	{
+		m_printDialogData = new wxPrintDialogData();
+		bool val = true;
+		wxConfig::Get()->Read(wxT("Settings/printLand"), &val);
+		m_printDialogData->GetPrintData().SetOrientation(val ? wxLANDSCAPE : wxPORTRAIT);
+	}
+	return m_printDialogData;
+}
+
+
+void CAgilityBookApp::SavePrintData(wxPrintDialogData const& data)
+{
+	assert(m_printDialogData);
+	*m_printDialogData = data;
+	bool val = (m_printDialogData->GetPrintData().GetOrientation() == wxLANDSCAPE);
+	wxConfig::Get()->Write(wxT("Settings/printLand"), val);
+}
+
+
 bool CAgilityBookApp::OnInit()
 {
 	tstring errMsg;
@@ -231,8 +256,6 @@ bool CAgilityBookApp::OnInit()
 	wxFileSystem::AddHandler(new wxZipFSHandler);
 	wxXmlResource::Get()->InitAllHandlers();
 	m_LangMgr = new CLanguageManager();
-
-	m_printDialogData.GetPrintData().SetOrientation(wxLANDSCAPE);
 
 	wxString filename;
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
@@ -406,6 +429,8 @@ int CAgilityBookApp::OnExit()
 	m_LangMgr = NULL;
 	delete m_manager;
 	m_manager = NULL;
+	delete m_printDialogData;
+	m_printDialogData = NULL;
 	Element::Terminate();
 	return wxApp::OnExit();
 }

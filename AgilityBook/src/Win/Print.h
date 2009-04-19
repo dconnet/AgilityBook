@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2006-2009 David Connet. All Rights Reserved.
+ * Copyright © 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,34 +29,42 @@
 /**
  * @file
  *
- * @brief interface of the CDlgOptionsPrint class
+ * @brief Printing
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-11-22 DRC Moved printing to new page.
+ * @li 2009-04-19 DRC Moved from Globals.h
  */
 
-#include "AgilityBookOptions.h"
+#include "ARBTypes.h"
+#include "PointsData.h"
+#include <vector>
+#include <wx/print.h>
 
 
-class CDlgOptionsPrint : public wxPanel
+class CPrintPreview : public wxPrintPreview
 {
 public:
-	CDlgOptionsPrint(wxWindow* pParent);
-
-	void Save();
-
-private:
-	CFontInfo m_fontPrintInfo;
-	wxFont m_fontPrint;
-	wxPrintDialogData m_PrintData;
-	double m_Left;
-	double m_Right;
-	double m_Top;
-	double m_Bottom;
-	wxStaticText* m_ctrlFontPrint;
-	wxRadioBox* m_Orientation;
-
-	void OnFontPrint(wxCommandEvent& evt);
+	CPrintPreview(
+			wxPrintout* printout,
+			wxPrintout* printoutForPrinting,
+			wxPrintDialogData* data = NULL);
+	// Override so we can close the frame after printing. That's how MFC did
+	// it (note: MFC closed as soon as you clicked print - we wait for success
+	// so we're not fully implmementing the old mfc behavior)
+	bool Print(bool interactive);
 };
+
+
+/**
+ * Print blank pages to enter runs on.
+ * @param inConfig Configuration
+ * @param inDog Dog's runs to print.
+ * @param inRuns Runs to print, if empty, print blank pages.
+ * @return Printed?
+ * @note In Print.cpp
+ */
+extern bool PrintRuns(
+		ARBConfig const* inConfig,
+		ARBDogPtr inDog,
+		std::vector<RunInfo> const& inRuns);

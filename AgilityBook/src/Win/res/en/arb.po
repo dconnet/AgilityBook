@@ -22,14 +22,14 @@ msgid "Agility Record Book"
 msgstr ""
 
 msgid "PanelRuns"
-msgstr "TODO: Help text for Runs"
+msgstr "This panel contains all the information about your runs. This is where you create dogs, trials and runs."
 
 msgid "PanelPoints"
-msgstr "TODO: Help text for Points"
+msgstr "This panel shows some simple statistics about your runs for the current dog. If this file contains more than one dog, you can easily switch the current dog by right-clicking on the dogs name in the status bar."
 
 msgid "PanelCal"
-msgstr "TODO: Help text for Calendar"
+msgstr "This panel contains information about upcoming trials."
 
 msgid "PanelTraining"
-msgstr "TODO: Help text for Training"
+msgstr "This panel contains your training log entries."
 

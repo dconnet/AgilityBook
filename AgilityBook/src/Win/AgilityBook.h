@@ -39,10 +39,10 @@
  */
 
 #include "UpdateInfo.h"
-#include <wx/cmndata.h>
 class CAgilityBookDoc;
 class CAgilityBookDocManager;
 class CLanguageManager;
+class wxPrintDialogData;
 
 
 class CAgilityBookApp : public wxApp
@@ -60,7 +60,8 @@ public:
 			bool bFiltered);
 	void SetMessageText2(wxString const& msg);
 
-	wxPrintDialogData* GetPrintData()	{return &m_printDialogData;}
+	wxPrintDialogData* GetPrintData();
+	void SavePrintData(wxPrintDialogData const& data);
 
 protected:
 	virtual bool OnInit();
@@ -69,7 +70,7 @@ protected:
 	CLanguageManager* m_LangMgr;
 	CUpdateInfo m_UpdateInfo;
 	CAgilityBookDocManager* m_manager;
-	wxPrintDialogData m_printDialogData;
+	wxPrintDialogData* m_printDialogData;
 };
 
 DECLARE_APP(CAgilityBookApp)

@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgOptionsPrint.h"
 
+#include "AgilityBook.h"
 #include "Validators.h"
 
 
@@ -45,11 +46,13 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)
 	, m_fontPrintInfo()
 	, m_fontPrint()
+	, m_PrintData(*wxGetApp().GetPrintData())
 	, m_Left(0.0)
 	, m_Right(0.0)
 	, m_Top(0.0)
 	, m_Bottom(0.0)
 	, m_ctrlFontPrint(NULL)
+	, m_Orientation(NULL)
 {
 	CAgilityBookOptions::GetPrinterFontInfo(m_fontPrintInfo);
 	long l, r, t, b;
@@ -74,6 +77,23 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	btnFont->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsPrint::OnFontPrint), NULL, this);
 	btnFont->SetHelpText(_("HIDC_OPT_PRINT_FONT"));
 	btnFont->SetToolTip(_("HIDC_OPT_PRINT_FONT"));
+
+	wxString m_OrientationChoices[] =
+	{
+		_("IDC_OPT_PRINT_PORT"),
+		_("IDC_OPT_PRINT_LAND")
+	};
+	int m_OrientationNChoices = sizeof(m_OrientationChoices) / sizeof(m_OrientationChoices[0]);
+	m_Orientation = new wxRadioBox(this, wxID_ANY,
+		_("IDC_OPT_PRINT_ORIENT"),
+		wxDefaultPosition, wxDefaultSize,
+		m_OrientationNChoices, m_OrientationChoices, 1, wxRA_SPECIFY_COLS);
+	m_Orientation->SetHelpText(_("HIDC_OPT_PRINT_ORIENT"));
+	m_Orientation->SetToolTip(_("HIDC_OPT_PRINT_ORIENT"));
+	if (m_PrintData.GetPrintData().GetOrientation() == wxLANDSCAPE)
+		m_Orientation->SetSelection(1);
+	else
+		m_Orientation->SetSelection(0);
 
 	wxStaticText* textLeft = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_MARGIN_L"),
@@ -128,6 +148,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	sizerFont->Add(btnFont, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 	sizerPrint->Add(sizerFont, 0, wxALL, 5);
+	sizerPrint->Add(m_Orientation, 0, wxALL, 5);
 
 	wxStaticBoxSizer* sizerMargins = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRING_MARGIN")), wxHORIZONTAL);
 
@@ -162,6 +183,8 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 void CDlgOptionsPrint::Save()
 {
 	CAgilityBookOptions::SetPrinterFontInfo(m_fontPrintInfo);
+	m_PrintData.GetPrintData().SetOrientation(m_Orientation->GetSelection() == 1 ? wxLANDSCAPE : wxPORTRAIT);
+	wxGetApp().SavePrintData(m_PrintData);
 	CAgilityBookOptions::SetPrinterMargins(
 		static_cast<long>(m_Left * 100),
 		static_cast<long>(m_Right * 100),

@@ -216,6 +216,7 @@ Settings:
 	ST lastVerCheck (AgilityBook.cpp/UpdateInfo.cpp)
 	DW lastXpos (AgilityBook.cpp/MainFrm.cpp)
 	DW lastYpos (AgilityBook.cpp/MainFrm.cpp)
+	DW printLand (AgilityBook.cpp)
 	DW showHtml
 	DW ShowSplash
 	ST Splash
