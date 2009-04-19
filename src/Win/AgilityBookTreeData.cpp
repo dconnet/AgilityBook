@@ -83,6 +83,7 @@
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "PointsData.h"
+#include "Print.h"
 #include "TabView.h"
 
 

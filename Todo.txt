@@ -1,4 +1,4 @@
-Last Updated: 12/5/2008
+Last Updated: 4/19/2009
 
 - Add 'YPS' into Reference Run list
   (currently only in dialog to enter Reference Run data).
@@ -14,9 +14,6 @@ Last Updated: 12/5/2008
 
 - Add a way to set the icon for a venue.
   Currently, it's handcoded in the configuration.
-
-- Remember printer page orientation. (See KB166130: "How To Overriding
-  Initial Setting on Print Setup Dialog" (their bad-english, not mine!))
 
 - Add drag-drop support in the runs view to move/copy runs.
 

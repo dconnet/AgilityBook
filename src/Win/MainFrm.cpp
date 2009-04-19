@@ -48,6 +48,7 @@
 #include "DlgMessage.h"
 #include "Globals.h"
 #include "PointsData.h"
+#include "Print.h"
 #include "TabView.h"
 #include <wx/config.h>
 #include <wx/platinfo.h>

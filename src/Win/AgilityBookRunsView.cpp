@@ -76,6 +76,7 @@
 #include "ListData.h"
 #include "MainFrm.h"
 #include "PointsData.h"
+#include "Print.h"
 #include <algorithm>
 #include <wx/config.h>
 

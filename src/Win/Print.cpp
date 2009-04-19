@@ -37,7 +37,7 @@
  */
 
 #include "stdafx.h"
-#include "Globals.h"
+#include "Print.h"
 
 #include "AgilityBook.h"
 #include "ARBConfig.h"
@@ -45,8 +45,36 @@
 #include "ARBDogRun.h"
 #include "ARBDogRunOtherPoints.h"
 #include "ARBDogTrial.h"
+#include "Globals.h"
 #include "PointsData.h"
 #include <wx/print.h>
+
+/////////////////////////////////////////////////////////////////////////////
+
+CPrintPreview::CPrintPreview(
+		wxPrintout* printout,
+		wxPrintout* printoutForPrinting,
+		wxPrintDialogData* data)
+	: wxPrintPreview(printout, printoutForPrinting, data)
+{
+}
+
+
+bool CPrintPreview::Print(bool interactive)
+{
+	bool rc = false;
+	if (GetPrintoutForPrinting())
+	{
+		wxPrinter printer(&GetPrintDialogData());
+		rc = printer.Print(GetFrame(), GetPrintoutForPrinting(), interactive);
+		if (rc)
+		{
+			wxGetApp().SavePrintData(printer.GetPrintDialogData());
+			GetFrame()->Close(true);
+		}
+	}
+	return rc;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -862,12 +890,12 @@ bool PrintRuns(
 		}
 		return false;
 	}
-	(*wxGetApp().GetPrintData()) = printer.GetPrintDialogData();
+	wxGetApp().SavePrintData(printer.GetPrintDialogData());
 
 	/*
 	 * TODO: Implement preview - as is, it works. But the drawing isn't right.
 	 * Have to figure out the scaling.
-	wxPrintPreview *preview = new wxPrintPreview(
+	wxPrintPreviewBase *preview = new wxPrintPreview(
 		new CPrintRuns(inConfig, inDog, inRuns), // preview
 		new CPrintRuns(inConfig, inDog, inRuns), // printer
 		wxGetApp().GetPrintData());

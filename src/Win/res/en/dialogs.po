@@ -963,6 +963,15 @@ msgstr "Printing Text"
 msgid "IDC_OPT_PRINT_FONT"
 msgstr "Set Font..."
 
+msgid "IDC_OPT_PRINT_ORIENT"
+msgstr "&Page Orientation"
+
+msgid "IDC_OPT_PRINT_PORT"
+msgstr "Portrait"
+
+msgid "IDC_OPT_PRINT_LAND"
+msgstr "Landscape"
+
 msgid "IDC_OPT_PRING_MARGIN"
 msgstr "Margins"
 
