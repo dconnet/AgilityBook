@@ -62,6 +62,7 @@ def main():
     if 2 != len(args):
         print 'Usage:', __doc__
         return
+
     executableDir = args[0]
     targetname = args[1]
 
