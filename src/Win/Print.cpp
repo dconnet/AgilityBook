@@ -40,12 +40,14 @@
 #include "Print.h"
 
 #include "AgilityBook.h"
+#include "AgilityBookOptions.h"
 #include "ARBConfig.h"
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogRunOtherPoints.h"
 #include "ARBDogTrial.h"
 #include "Globals.h"
+#include "ListCtrl.h"
 #include "PointsData.h"
 #include <wx/print.h>
 
@@ -86,6 +88,9 @@ public:
 			ARBDogPtr inDog,
 			std::vector<RunInfo> const& inRuns);
 
+	// Sets SetUserScale and m_OneInch (returns oneinch)
+	double ComputeScaling();
+
 	virtual bool HasPage(int page);
 	virtual void GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo);
 	virtual bool OnPrintPage(int pageNum);
@@ -94,6 +99,7 @@ private:
 	tstring GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
 	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
+	double m_OneInch;
 	ARBConfig const* m_config;
 	ARBDogPtr m_dog;
 	std::vector<RunInfo> m_runs; // can't be const& since we're previewing now and actual vector goes out-of-scope
@@ -107,12 +113,39 @@ CPrintRuns::CPrintRuns(
 		ARBDogPtr inDog,
 		std::vector<RunInfo> const& inRuns)
 	: wxPrintout(_("IDS_RUNS"))
+	, m_OneInch(0.0)
 	, m_config(inConfig)
 	, m_dog(inDog)
 	, m_runs(inRuns)
 	, m_maxPage(0)
 	, m_nPerSheet(0)
 {
+}
+
+
+double CPrintRuns::ComputeScaling()
+{
+	// Scaling code was copied from wxWidget print sample
+	wxDC* dc = GetDC();
+
+	int ppiScreenX, ppiScreenY;
+	GetPPIScreen(&ppiScreenX, &ppiScreenY);
+	int ppiPrinterX, ppiPrinterY;
+	GetPPIPrinter(&ppiPrinterX, &ppiPrinterY);
+
+	double scale = (double)ppiPrinterX / (double)ppiScreenX;
+
+	int w, h;
+	dc->GetSize(&w, &h);
+	int pageWidth, pageHeight;
+	GetPageSizePixels(&pageWidth, &pageHeight);
+
+	double overallScale = scale * ((double)w / (double)pageWidth);
+	dc->SetUserScale(overallScale, overallScale);
+
+	m_OneInch = ppiPrinterX / scale;
+
+	return m_OneInch;
 }
 
 
@@ -131,7 +164,7 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 	{
 		int nRuns = static_cast<int>(m_runs.size());
 		int nPages = 1;
-		wxSize sz = GetDC()->GetSize();
+		wxSize sz = GetDC()->GetSize(); // just detemining port/land
 		if (abs(sz.x) > abs(sz.y))
 			m_nPerSheet = 4;
 		else
@@ -696,7 +729,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 				if (sc_lines[j].bContinuation)
 					str.clear();
 
-				rect.Inflate(-1, 1);
+				rect.Inflate(-1, -1);
 				int textHeight = 0;
 				if (!sc_lines[j].bContinuation)
 				{
@@ -741,44 +774,46 @@ enum RingBinder
 };
 
 
-static void PrintMark(wxDC* pDC, int x, int y)
+static void PrintMark(wxDC* pDC, int x, int y, double m_OneInch)
 {
-	pDC->DrawLine(x - 5, y - 5, x + 5, y + 5);
-	pDC->DrawLine(x + 5, y - 5, x - 5, y + 5);
+	int halfLine = m_OneInch / 10;
+	pDC->DrawLine(x - halfLine, y - halfLine, x + halfLine, y + halfLine);
+	pDC->DrawLine(x + halfLine, y - halfLine, x - halfLine, y + halfLine);
 }
 
 // Binder rings (based on US 8.5x11 paper)
-// Rings are inset 3/8 inch [27 twips]
-// sm 3ring: 2.75 [198]
-// lg 3ring: 4.25 [306]
-// lg 4ring: 1.375/4.25/1.375 [99/306/99]
+// Rings are inset 3/8 inch
+// sm 3ring: 2.75
+// lg 3ring: 4.25
+// lg 4ring: 1.375/4.25/1.375
 static void PrintBinderMarkings(
 		RingBinder style,
 		wxDC* pDC,
 		wxRect rPrinted,
-		int margin)
+		int margin,
+		double m_OneInch)
 {
 	pDC->SetPen(*wxGREY_PEN);
-	int x = rPrinted.x - margin + 27;
+	int x = rPrinted.x - margin + .375 * m_OneInch;
 	int y = rPrinted.y + rPrinted.height / 2; // centered
 	switch (style)
 	{
 	default:
 	case eSmall3Ring:
-		PrintMark(pDC, x, y);
-		PrintMark(pDC, x, y - 198);
-		PrintMark(pDC, x, y + 198);
+		PrintMark(pDC, x, y, m_OneInch);
+		PrintMark(pDC, x, y - 2.75 * m_OneInch, m_OneInch);
+		PrintMark(pDC, x, y + 2.75 * m_OneInch, m_OneInch);
 		break;
 	case eLarge3Ring:
-		PrintMark(pDC, x, y);
-		PrintMark(pDC, x, y - 306);
-		PrintMark(pDC, x, y + 306);
+		PrintMark(pDC, x, y, m_OneInch);
+		PrintMark(pDC, x, y - 4.25 * m_OneInch, m_OneInch);
+		PrintMark(pDC, x, y + 4.25 * m_OneInch, m_OneInch);
 		break;
 	case eLarge4Ring:
-		PrintMark(pDC, x, y - 252); // 1 3/8 + 2 1/8 [99 + 153]
-		PrintMark(pDC, x, y - 153); // 2 1/8 [153]
-		PrintMark(pDC, x, y + 153);
-		PrintMark(pDC, x, y + 252);
+		PrintMark(pDC, x, y - 3.5 * m_OneInch, m_OneInch); // 1 3/8 + 2 1/8
+		PrintMark(pDC, x, y - 2.125 * m_OneInch, m_OneInch);
+		PrintMark(pDC, x, y + 2.125 * m_OneInch, m_OneInch);
+		PrintMark(pDC, x, y + 3.5 * m_OneInch, m_OneInch);
 		break;
 	}
 	pDC->SetPen(wxNullPen);
@@ -787,40 +822,8 @@ static void PrintBinderMarkings(
 
 bool CPrintRuns::OnPrintPage(int pageNum)
 {
-	GetDC()->SetMapMode(wxMM_POINTS);
-
-	wxRect r(0,0,0,0);
-	wxSize sz = GetDC()->GetSize();
-
-	//float logUnitsFactor = 1.0; // factor to convert points into logical units
-	if (IsPreview())
-	{
-		//TODO: This isn't right
-		int ppiScreenX, ppiScreenY;
-		GetPPIScreen(&ppiScreenX, &ppiScreenY);
-		int ppiPrinterX, ppiPrinterY;
-		GetPPIPrinter(&ppiPrinterX, &ppiPrinterY);
-		float scale = static_cast<float>(ppiPrinterX) / static_cast<float>(ppiScreenX);
-
-		int w, h;
-		GetDC()->GetSize(&w, &h);
-		int pageWidth, pageHeight;
-		GetPageSizePixels(&pageWidth, &pageHeight);
-
-		float overallScale = scale * (static_cast<float>(w) / static_cast<float>(pageWidth));
-		GetDC()->SetUserScale(overallScale, overallScale);
-
-		//logUnitsFactor = static_cast<float>(ppiPrinterX) / (scale*72);
-
-		sz = GetDC()->GetSize();
-		r.width = GetDC()->DeviceToLogicalXRel(sz.x);
-		r.height = GetDC()->DeviceToLogicalYRel(sz.y);
-	}
-	else
-	{
-		r.width = GetDC()->DeviceToLogicalXRel(sz.x);
-		r.height = GetDC()->DeviceToLogicalYRel(sz.y);
-	}
+	ComputeScaling();
+	wxRect r = GetLogicalPageRect();
 
 	// (old MFC note, not investigated further in wxWidgets)
 	// Note, we could get the physical size of the page and try and get our
@@ -829,8 +832,8 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 	// offset. So pretent the drawing area and physical area are the same.
 	// (if printing to a pdf "printer", they are!)
 
-	// Indent 1/2 inch
-	int margin = 36;
+	// Indent 1/2 inch [these are fixed, don't use the user configured offsets]
+	int margin = m_OneInch / 2;
 	size_t curRun = (pageNum - 1) * m_nPerSheet;
 
 	// 'r' is full print area
@@ -838,20 +841,19 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 	// Landscape
 	if (abs(r.width) > abs(r.height))
 	{
-		//510x817 (old mfc pixels)
 		wxRect r1(r);
 		r1.x += margin;
 		r1.y += margin;
 		r1.width = r.width / 2 - 2 * margin;
 		r1.height -= 2 * margin;
 		PrintPage(pageNum, curRun, GetDC(), r1);
-		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin);
+		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin, m_OneInch);
 
 		r1.x += r1.width + margin;
 		GetDC()->DrawLine(r1.x, r1.y, r1.x, r1.GetBottom());
 		r1.x += margin;
 		PrintPage(pageNum, curRun + 2, GetDC(), r1);
-		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin);
+		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin, m_OneInch);
 	}
 	// Portrait
 	else
@@ -862,10 +864,58 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 		r1.width -= 2 * margin;
 		r1.height -= 2 * margin;
 		PrintPage(pageNum, curRun, GetDC(), r1);
-		PrintBinderMarkings(eLarge3Ring, GetDC(), r1, margin);
-		PrintBinderMarkings(eLarge4Ring, GetDC(), r1, margin);
+		PrintBinderMarkings(eLarge3Ring, GetDC(), r1, margin, m_OneInch);
+		PrintBinderMarkings(eLarge4Ring, GetDC(), r1, margin, m_OneInch);
 	}
 
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
+	: wxHtmlEasyPrinting(wxEmptyString, parent)
+{
+	//SetFooter(wxT("<hr/><p align=\"right\">@TITLE@ (@PAGENUM@/@PAGESCNT@)</p>"), wxPAGE_ALL);
+
+	long leftMargin, rightMargin, topMargin, bottomMargin;
+	CAgilityBookOptions::GetPrinterMarginsMM(leftMargin, rightMargin, topMargin, bottomMargin);
+	wxPageSetupDialogData* pSetup = GetPageSetupData();
+	pSetup->SetMarginTopLeft(wxPoint(leftMargin, topMargin));
+	pSetup->SetMarginBottomRight(wxPoint(rightMargin, bottomMargin));
+
+	CFontInfo info;
+	CAgilityBookOptions::GetPrinterFontInfo(info);
+	SetStandardFonts(info.size, info.name);
+}
+
+
+bool CHtmlEasyPrinting::DoPreview(
+		wxHtmlPrintout* printout1,
+		wxHtmlPrintout* printout2)
+{
+	// Pass two printout objects: for preview, and possible printing.
+	CPrintPreview *preview = new CPrintPreview(printout1, printout2, wxGetApp().GetPrintData());
+	if (!preview->Ok())
+	{
+		delete preview;
+		wxMessageBox(_("Sorry, print preview needs a printer to be installed."));
+		return false;
+	}
+	wxPreviewFrame *frame = new wxPreviewFrame(preview, wxGetApp().GetTopWindow(), _("Print Preview"), wxDefaultPosition, wxGetApp().GetTopWindow()->GetSize()); 
+	frame->Centre(wxBOTH);
+	frame->Initialize();
+	frame->Show(true);
+	return true;
+}
+
+
+bool CHtmlEasyPrinting::DoPrint(wxHtmlPrintout* printout)
+{
+	wxPrinter printer(wxGetApp().GetPrintData());
+	if (!printer.Print(wxGetApp().GetTopWindow(), printout, true))
+		return false;
+	wxGetApp().SavePrintData(printer.GetPrintDialogData());
 	return true;
 }
 
@@ -876,25 +926,6 @@ bool PrintRuns(
 		ARBDogPtr inDog,
 		std::vector<RunInfo> const& inRuns)
 {
-	wxPrinter printer(wxGetApp().GetPrintData());
-	CPrintRuns printout(inConfig, inDog, inRuns);
-	if (!printer.Print(wxGetApp().GetTopWindow(), &printout, true))
-	{
-		if (wxPRINTER_ERROR == wxPrinter::GetLastError())
-		{
-			wxMessageBox(wxT("Problem!"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_ERROR);
-		}
-		else
-		{
-			// Cancelled
-		}
-		return false;
-	}
-	wxGetApp().SavePrintData(printer.GetPrintDialogData());
-
-	/*
-	 * TODO: Implement preview - as is, it works. But the drawing isn't right.
-	 * Have to figure out the scaling.
 	wxPrintPreviewBase *preview = new wxPrintPreview(
 		new CPrintRuns(inConfig, inDog, inRuns), // preview
 		new CPrintRuns(inConfig, inDog, inRuns), // printer
@@ -909,6 +940,5 @@ bool PrintRuns(
 	frame->Centre(wxBOTH);
 	frame->Initialize();
 	frame->Show(true);
-	*/
 	return true;
 }

@@ -192,6 +192,11 @@ private:
 	void ChangeSelection(wxTreeItemId hItem);
 	void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
+	void PrintLine(
+			otstringstream& data,
+			wxTreeItemId id,
+			int indent) const;
+	wxString GetPrintDataAsHtmlTable() const;
 	bool OnCmd(int id);
 	//void PrintLine(
 	//		CDC* pDC,
@@ -221,4 +226,6 @@ private:
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);
+	void OnPrint(wxCommandEvent& evt);
+	void OnPreview(wxCommandEvent& evt);
 };

@@ -1007,7 +1007,7 @@ msgid "HIDC_OPT_CAL_FONT"
 msgstr "Modifier la police utilisée pour afficher les dates du calendrier."
 
 msgid "HIDC_OPT_PRINT_FONT"
-msgstr "Modifier la police utilisée pour imprimer les dates du calendrier."
+msgstr "Modifier la police utilisée pour imprimer."
 
 msgid "HIDC_OPT_PRINT_ORIENT"
 msgstr "Set the default page orientation when printing."

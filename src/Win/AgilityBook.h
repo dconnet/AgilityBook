@@ -41,6 +41,7 @@
 #include "UpdateInfo.h"
 class CAgilityBookDoc;
 class CAgilityBookDocManager;
+class CHtmlEasyPrinting;
 class CLanguageManager;
 class wxPrintDialogData;
 
@@ -62,6 +63,7 @@ public:
 
 	wxPrintDialogData* GetPrintData();
 	void SavePrintData(wxPrintDialogData const& data);
+	CHtmlEasyPrinting* GetHtmlPrinter();
 
 protected:
 	virtual bool OnInit();
@@ -71,6 +73,7 @@ protected:
 	CUpdateInfo m_UpdateInfo;
 	CAgilityBookDocManager* m_manager;
 	wxPrintDialogData* m_printDialogData;
+	CHtmlEasyPrinting* m_Prn;
 };
 
 DECLARE_APP(CAgilityBookApp)

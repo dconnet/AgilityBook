@@ -1006,7 +1006,7 @@ msgid "HIDC_OPT_CAL_FONT"
 msgstr "Set the font to be used when viewing the dates in the calendar."
 
 msgid "HIDC_OPT_PRINT_FONT"
-msgstr "Set the font to be used when printing the dates in the calendar."
+msgstr "Set the font to be used when printing."
 
 msgid "HIDC_OPT_PRINT_ORIENT"
 msgstr "Set the default page orientation when printing."

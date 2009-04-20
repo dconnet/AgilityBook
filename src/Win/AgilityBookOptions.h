@@ -145,12 +145,19 @@ public:
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);
+	// Get margins in .01 inches (or pixels, if DC is set)
 	static void GetPrinterMargins(
 			long& outLeft,
 			long& outRight,
 			long& outTop,
 			long& outBottom,
 			wxDC* pDC); // Used to convert to logical units
+	// Get margins in millimeters
+	static void GetPrinterMarginsMM(
+			long& outLeft,
+			long& outRight,
+			long& outTop,
+			long& outBottom);
 	static void SetPrinterMargins(
 			long inLeft,
 			long inRight,

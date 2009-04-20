@@ -658,6 +658,20 @@ void CAgilityBookOptions::GetPrinterMargins(
 }
 
 
+void CAgilityBookOptions::GetPrinterMarginsMM(
+			long& outLeft,
+			long& outRight,
+			long& outTop,
+			long& outBottom)
+{
+	GetPrinterMargins(outLeft, outRight, outTop, outBottom, NULL);
+	outLeft = static_cast<long>(static_cast<double>(outLeft) * 0.254);
+	outRight = static_cast<long>(static_cast<double>(outRight) * 0.254);
+	outTop = static_cast<long>(static_cast<double>(outTop) * 0.254);
+	outBottom = static_cast<long>(static_cast<double>(outBottom) * 0.254);
+}
+
+
 void CAgilityBookOptions::SetPrinterMargins(
 		long inLeft,
 		long inRight,
