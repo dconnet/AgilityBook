@@ -72,11 +72,11 @@ def main():
 
 	if "x64" == platform:
 		# 64bit on 64bit
-		if os.environ['PROCESSOR_ARCHITECTURE'] == "AMD64":
+		if os.getenv('PROCESSOR_ARCHITECTURE', '') == "AMD64":
 			cmd = [os.path.join(executableDir, targetname + '.exe')]
 			RunCommand(cmd, 0)
 		# 64bit on Wow64 (32bit cmd shell spawned from msdev)
-		elif os.environ['PROCESSOR_ARCHITEW6432'] == "AMD64":
+		elif os.getenv('PROCESSOR_ARCHITEW6432', '') == "AMD64":
 			cmd = [os.path.join(executableDir, targetname + '.exe')]
 			RunCommand(cmd, 0)
 		else:
