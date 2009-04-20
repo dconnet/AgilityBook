@@ -674,12 +674,18 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 		if (dir.IsOpened())
 		{
 			wxString filename;
+#ifdef WIN32
 			bool cont = dir.GetFirst(&filename, _T("cal_*.*"));
+#else
+			bool cont = dir.GetFirst(&filename, _T("libcal_*.*"));
+#endif
 			while (cont)
 			{
 				wxFileName name(m_PathName + filename);
 				filename = name.GetPath() + wxFileName::GetPathSeparator() + name.GetName();
-				// This will append ".dll" on windows, prepend "lib"/append ".so" under linux, etc
+				// This will append ".dll" on windows, prepend "lib"/append
+				// ".so" under linux, etc. We're doing this to weed out "other"
+				// files, like "cal_usdaaReadme.txt".
 				filename = wxDynamicLibrary::CanonicalizeName(filename, wxDL_LIBRARY);
 				// Only load the library if we haven't already loaded it.
 				// (Otherwise we get a memory leak because we overwrite the
