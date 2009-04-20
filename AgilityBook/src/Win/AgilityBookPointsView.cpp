@@ -93,6 +93,7 @@
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "PointsData.h"
+#include "Print.h"
 
 
 // Columns:
@@ -182,6 +183,8 @@ BEGIN_EVENT_TABLE(CAgilityBookPointsView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_HIDDEN, CAgilityBookPointsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookPointsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_LIFETIME_EVENTS, CAgilityBookPointsView::OnViewCmd)
+	EVT_MENU(wxID_PRINT, CAgilityBookPointsView::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookPointsView::OnPreview)
 END_EVENT_TABLE()
 
 
@@ -577,4 +580,16 @@ bool CAgilityBookPointsView::OnCmd(int id)
 void CAgilityBookPointsView::OnViewCmd(wxCommandEvent& evt)
 {
 	OnCmd(evt.GetId());
+}
+
+
+void CAgilityBookPointsView::OnPrint(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
+}
+
+
+void CAgilityBookPointsView::OnPreview(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
 }

@@ -281,6 +281,40 @@ bool CReportListCtrl::SetData(long item, CListDataPtr inData)
 }
 
 
+static void PushData(
+		otstringstream& data,
+		CReportListCtrl const* ctrl,
+		int item,
+		bool bBold)
+{
+	data << wxT("<tr>");
+	std::vector<wxString> line;
+	ctrl->GetPrintLine(item, line);
+	for (std::vector<wxString>::const_iterator i = line.begin(); i != line.end(); ++i)
+	{
+		if (bBold)
+			data << wxT("<td><strong>") << i->c_str() << wxT("</strong></td>\n");
+		else
+			data << wxT("<td>") << i->c_str() << wxT("</td>\n");
+	}
+	data << wxT("</tr>\n");
+}
+
+
+wxString CReportListCtrl::GetPrintDataAsHtmlTable() const
+{
+	otstringstream data;
+	data << wxT("<table border=\"0\">");
+	PushData(data, this, -1, true);
+	for (long item = 0; item < GetItemCount(); ++item)
+	{
+		PushData(data, this, item, false);
+	}
+	data << wxT("</table>\n");
+	return data.str().c_str();
+}
+
+
 // This allows a derived class to print a subset of columns if it wants.
 void CReportListCtrl::GetPrintLine(
 		long item,

@@ -83,7 +83,7 @@ public:
 			wxObject* inHint = NULL);
 
 private:
-	tstring RawHtml(bool bFragment) const;
+	wxString RawHtml(bool bFragment) const;
 	void LoadData();
 
 	wxHtmlWindow* m_Ctrl;
@@ -93,4 +93,6 @@ private:
 	void OnCtrlLinkClicked(wxHtmlLinkEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);
+	void OnPrint(wxCommandEvent& evt);
+	void OnPreview(wxCommandEvent& evt);
 };

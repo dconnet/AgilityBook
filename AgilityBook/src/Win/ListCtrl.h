@@ -128,6 +128,8 @@ public:
 			long item,
 			CListDataPtr inData);
 
+	wxString GetPrintDataAsHtmlTable() const;
+
 	/**
 	 * Returns the data required to print/copy a line.
 	 */

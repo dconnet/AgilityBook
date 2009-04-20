@@ -1251,6 +1251,8 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_RUNS_BY_TRIAL, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_TABLE_IN_YPS, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_TABLE_IN_YPS, CAgilityBookRunsView::OnViewCmd)
+	EVT_MENU(wxID_PRINT, CAgilityBookRunsView::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookRunsView::OnPreview)
 END_EVENT_TABLE()
 
 
@@ -1898,4 +1900,16 @@ bool CAgilityBookRunsView::OnCmd(int id)
 void CAgilityBookRunsView::OnViewCmd(wxCommandEvent& evt)
 {
 	OnCmd(evt.GetId());
+}
+
+
+void CAgilityBookRunsView::OnPrint(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
+}
+
+
+void CAgilityBookRunsView::OnPreview(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
 }

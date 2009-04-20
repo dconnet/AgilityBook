@@ -47,7 +47,9 @@
 #include "FilterOptions.h"
 #include "MainFrm.h"
 #include "PointsData.h"
+#include "Print.h"
 
+/////////////////////////////////////////////////////////////////////////////
 
 IMPLEMENT_CLASS(CAgilityBookHtmlView, CAgilityBookBaseExtraView)
 
@@ -63,6 +65,8 @@ BEGIN_EVENT_TABLE(CAgilityBookHtmlView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_VIEW_HIDDEN, CAgilityBookHtmlView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_LIFETIME_EVENTS, CAgilityBookHtmlView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_LIFETIME_EVENTS, CAgilityBookHtmlView::OnViewCmd)
+	EVT_MENU(wxID_PRINT, CAgilityBookHtmlView::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookHtmlView::OnPreview)
 END_EVENT_TABLE()
 
 
@@ -95,6 +99,7 @@ bool CAgilityBookHtmlView::Create(
 {
 	m_Ctrl = new wxHtmlWindow(parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxHW_SCROLLBAR_AUTO);
 	m_Ctrl->Connect(wxEVT_COMMAND_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(CAgilityBookHtmlView::OnCtrlLinkClicked), NULL, this);
+
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 
@@ -181,7 +186,7 @@ void CAgilityBookHtmlView::OnUpdate(
 }
 
 
-tstring CAgilityBookHtmlView::RawHtml(bool bFragment) const
+wxString CAgilityBookHtmlView::RawHtml(bool bFragment) const
 {
 	ARBDate today(ARBDate::Today());
 	otstringstream data;
@@ -212,7 +217,7 @@ tstring CAgilityBookHtmlView::RawHtml(bool bFragment) const
 		data << wxT("</body></html>");
 	data << std::endl;
 
-	return data.str();
+	return data.str().c_str();
 }
 
 
@@ -221,8 +226,8 @@ void CAgilityBookHtmlView::LoadData()
 	wxBusyCursor wait;
 
 	m_Items->LoadData(m_Ctrl, GetDocument(), GetDocument()->GetCurrentDog());
-	tstring data = RawHtml(false);
-	m_Ctrl->SetPage(data.c_str());
+	wxString data = RawHtml(false);
+	m_Ctrl->SetPage(data);
 
 	if (m_Ctrl->IsShownOnScreen())
 		UpdateMessages();
@@ -320,8 +325,8 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 			CClipboardDataWriter clpData;
 			if (clpData.isOkay())
 			{
-				tstring data = RawHtml(true);
-				clpData.AddData(eFormatHtml, data.c_str());
+				wxString data = RawHtml(true);
+				clpData.AddData(eFormatHtml, data);
 				clpData.AddData(m_Ctrl->ToText().c_str());
 				clpData.CommitData();
 			}
@@ -377,4 +382,18 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 		}
 		break;
 	}
+}
+
+
+void CAgilityBookHtmlView::OnPrint(wxCommandEvent& evt)
+{
+	wxString text(RawHtml(false));
+	wxGetApp().GetHtmlPrinter()->PrintText(text);
+}
+
+
+void CAgilityBookHtmlView::OnPreview(wxCommandEvent& evt)
+{
+	wxString text(RawHtml(false));
+	wxGetApp().GetHtmlPrinter()->PreviewText(text);
 }

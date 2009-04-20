@@ -69,6 +69,7 @@
 #include "FilterOptions.h"
 #include "Globals.h"
 #include "MainFrm.h"
+#include "Print.h"
 #include <wx/config.h>
 
 #include "res/CalEmpty.xpm"
@@ -252,6 +253,8 @@ BEGIN_EVENT_TABLE(CAgilityBookTreeView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_EXPAND_ALL, CAgilityBookTreeView::OnViewCmd)
 	EVT_UPDATE_UI(ID_COLLAPSE_ALL, CAgilityBookTreeView::OnViewUpdateCmd)
 	EVT_MENU(ID_COLLAPSE_ALL, CAgilityBookTreeView::OnViewCmd)
+	EVT_MENU(wxID_PRINT, CAgilityBookTreeView::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookTreeView::OnPreview)
 END_EVENT_TABLE()
 
 
@@ -845,6 +848,38 @@ void CAgilityBookTreeView::LoadData()
 }
 
 
+void CAgilityBookTreeView::PrintLine(
+		otstringstream& data,
+		wxTreeItemId id,
+		int indent) const
+{
+	static wxChar const* const spaces = wxT("&nbsp;&nbsp;&nbsp;");
+	if (id.IsOk() && id != m_Ctrl->GetRootItem())
+	{
+		for (int idx = 0; idx < indent; ++idx)
+			data << spaces;
+		data << m_Ctrl->GetItemText(id).c_str() << wxT("<br />\n"); // Note, wxWidgets needs the space before the slash
+	}
+	wxTreeItemIdValue cookie;
+	wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(id, cookie);
+	while (hChildItem.IsOk())
+	{
+		PrintLine(data, hChildItem, indent + 1);
+		hChildItem = m_Ctrl->GetNextChild(hChildItem, cookie);
+	}
+}
+
+
+wxString CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
+{
+	otstringstream data;
+	data << wxT("<html><body><p>\n");
+	PrintLine(data, m_Ctrl->GetRootItem(), -1);
+	data << wxT("</p></body></html>\n");
+	return data.str().c_str();
+}
+
+
 void CAgilityBookTreeView::OnCtrlSetFocus(wxFocusEvent& evt)
 {
 	// We need this as clicking directly in the control does not change
@@ -1186,4 +1221,16 @@ bool CAgilityBookTreeView::OnCmd(int id)
 void CAgilityBookTreeView::OnViewCmd(wxCommandEvent& evt)
 {
 	OnCmd(evt.GetId());
+}
+
+
+void CAgilityBookTreeView::OnPrint(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PrintText(GetPrintDataAsHtmlTable());
+}
+
+
+void CAgilityBookTreeView::OnPreview(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PreviewText(GetPrintDataAsHtmlTable());
 }

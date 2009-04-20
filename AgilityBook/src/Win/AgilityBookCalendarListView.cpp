@@ -69,6 +69,7 @@
 #include "FilterOptions.h"
 #include "ListData.h"
 #include "MainFrm.h"
+#include "Print.h"
 #include "Wizard.h"
 #include <wx/config.h>
 #include <wx/settings.h>
@@ -523,6 +524,8 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_AGILITY_CREATEENTRY_CALENDAR, CAgilityBookCalendarListView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookCalendarListView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookCalendarListView::OnViewCmd)
+	EVT_MENU(wxID_PRINT, CAgilityBookCalendarListView::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookCalendarListView::OnPreview)
 END_EVENT_TABLE()
 
 
@@ -1312,4 +1315,16 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 void CAgilityBookCalendarListView::OnViewCmd(wxCommandEvent& evt)
 {
 	OnCmd(evt.GetId());
+}
+
+
+void CAgilityBookCalendarListView::OnPrint(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
+}
+
+
+void CAgilityBookCalendarListView::OnPreview(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
 }

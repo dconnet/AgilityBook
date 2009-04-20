@@ -39,6 +39,7 @@
 #include "ARBTypes.h"
 #include "PointsData.h"
 #include <vector>
+#include <wx/html/htmprint.h>
 #include <wx/print.h>
 
 
@@ -53,6 +54,17 @@ public:
 	// it (note: MFC closed as soon as you clicked print - we wait for success
 	// so we're not fully implmementing the old mfc behavior)
 	bool Print(bool interactive);
+};
+
+
+class CHtmlEasyPrinting : public wxHtmlEasyPrinting
+{
+public:
+	CHtmlEasyPrinting(wxWindow* parent);
+	virtual bool DoPreview(
+			wxHtmlPrintout* printout1,
+			wxHtmlPrintout* printout2);
+	virtual bool DoPrint(wxHtmlPrintout* printout);
 };
 
 

@@ -144,4 +144,6 @@ private:
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);
 	void OnViewCmd(wxCommandEvent& evt);
+	void OnPrint(wxCommandEvent& evt);
+	void OnPreview(wxCommandEvent& evt);
 };

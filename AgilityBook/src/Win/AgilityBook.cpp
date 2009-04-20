@@ -163,7 +163,7 @@ CAgilityBookApp::CAgilityBookApp()
 	, m_UpdateInfo()
 	, m_manager(NULL)
 	, m_printDialogData(NULL)
-
+	, m_Prn(NULL)
 {
 }
 
@@ -230,6 +230,14 @@ void CAgilityBookApp::SavePrintData(wxPrintDialogData const& data)
 	*m_printDialogData = data;
 	bool val = (m_printDialogData->GetPrintData().GetOrientation() == wxLANDSCAPE);
 	wxConfig::Get()->Write(wxT("Settings/printLand"), val);
+}
+
+
+CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
+{
+	if (!m_Prn)
+		m_Prn = new CHtmlEasyPrinting(GetTopWindow());
+	return m_Prn;
 }
 
 
@@ -431,6 +439,8 @@ int CAgilityBookApp::OnExit()
 	m_manager = NULL;
 	delete m_printDialogData;
 	m_printDialogData = NULL;
+	delete m_Prn;
+	m_Prn = NULL;
 	Element::Terminate();
 	return wxApp::OnExit();
 }

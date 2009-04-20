@@ -62,6 +62,7 @@
 #include "FilterOptions.h"
 #include "ListData.h"
 #include "MainFrm.h"
+#include "Print.h"
 #include <wx/config.h>
 
 
@@ -339,6 +340,8 @@ BEGIN_EVENT_TABLE(CAgilityBookTrainingView, CAgilityBookBaseExtraView)
 	EVT_MENU(ID_AGILITY_DELETE_TRAINING, CAgilityBookTrainingView::OnViewCmd)
 	EVT_UPDATE_UI(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewUpdateCmd)
 	EVT_MENU(ID_VIEW_CUSTOMIZE, CAgilityBookTrainingView::OnViewCmd)
+	EVT_MENU(wxID_PRINT, CAgilityBookTrainingView::OnPrint)
+	EVT_MENU(wxID_PREVIEW, CAgilityBookTrainingView::OnPreview)
 END_EVENT_TABLE()
 
 
@@ -932,4 +935,16 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 void CAgilityBookTrainingView::OnViewCmd(wxCommandEvent& evt)
 {
 	OnCmd(evt.GetId());
+}
+
+
+void CAgilityBookTrainingView::OnPrint(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
+}
+
+
+void CAgilityBookTrainingView::OnPreview(wxCommandEvent& evt)
+{
+	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
 }
