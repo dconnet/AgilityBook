@@ -540,7 +540,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 					NULL,
 					&pScoring);
 			double timeFaults = run->GetScoring().GetTimeFaults(pScoring);
-			if ((ARB_Q::eQ)run->GetQ() != ARB_Q::eQ_NA
+			if (run->GetQ().AllowTally()
 			|| (0 < run->GetScoring().GetCourseFaults() || 0.0 < timeFaults))
 			{
 				text << run->GetScoring().GetCourseFaults();

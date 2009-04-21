@@ -243,11 +243,5 @@ public:
 			wxChar const* const inMsg = NULL) const = 0;
 };
 
-// Used in ARBTypes.cpp
-#define ARBQ_TYPE_NA	wxT("NA")
-#define ARBQ_TYPE_Q		wxT("Q")
-#define ARBQ_TYPE_NQ	wxT("NQ")
-#define ARBQ_TYPE_E		wxT("E")
-#define ARBQ_TYPE_SQ	wxT("SQ")
 
 extern IARBLocalization const* Localization();

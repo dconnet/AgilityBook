@@ -1,4 +1,10 @@
-3/9/2009: v2.0.0.0 <in development>
+4/20/2009: v2.0.0.0 <in development>
+- Bumped file version to 12.10:
+  - Added 'DNR'
+- New features / Enhancements:
+  - New framework (wxWidgets). Numerous changes throughout.
+- Bug fixes:
+  - Fixed issue decoding binary data that could crash the program.
 
 3/9/2009: Config release on web
 - Bumped Configuration v25:
