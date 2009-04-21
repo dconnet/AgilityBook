@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-04-20 DRC Added DNR.
  * @li 2008-06-29 DRC Moved string stuff to ARBString.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Removed ARBDouble.
@@ -381,6 +382,7 @@ public:
 	typedef enum
 	{
 		eQ_NA,		///< Cannot qualify in this run.
+		eQ_DNR,		///< Did Not Run.
 		eQ_E,		///< Eliminated.
 		eQ_NQ,		///< Not qualified.
 		eQ_Q,		///< Qualified.
@@ -463,6 +465,24 @@ public:
 	bool Qualified() const
 	{
 		return eQ_Q == m_Q || eQ_SuperQ == m_Q;
+	}
+
+	/**
+	 * Do we want to tally statistics about this?
+	 * (It makes no sense to list faults for either of these)
+	 */
+	bool AllowTally() const
+	{
+		return eQ_NA != m_Q && eQ_DNR != m_Q;
+	}
+
+	/**
+	 * Is this type allowed for non-titling runs?
+	 * We only show these types for non-titling runs
+	 */
+	bool AllowForNonTitling() const
+	{
+		return ARB_Q::eQ_E == m_Q || ARB_Q::eQ_DNR == m_Q || ARB_Q::eQ_NA == m_Q;
 	}
 
 	operator eQ() const

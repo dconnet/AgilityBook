@@ -1471,7 +1471,7 @@ void CPointsDataItems::LoadData(
 									if (bRunVisible)
 									{
 										// Don't tally NA runs for titling events.
-										if (pRun->GetQ() == ARB_Q::eQ_NA)
+										if (!pRun->GetQ().AllowTally())
 											continue;
 										matching.push_back(RunInfo(pTrial, pRun));
 										judges.insert(pRun->GetJudge());

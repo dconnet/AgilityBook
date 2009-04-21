@@ -37,6 +37,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2009-04-20 DRC File version 12.10
+ *                    Added 'DNR' to 'Placement' and 'ReferenceRun'
  * @li 2008-02-12 DRC File version 12.9
  *                    Fix metadata bug in dognotes.
  * @li 2008-08-05 DRC File version 12.8
@@ -113,6 +115,8 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
 	static ARBVersion const curVersion(12, 9);
+#pragma message PRAGMA_MESSAGE("TODO: Enable DNR")
+	//static ARBVersion const curVersion(12, 10);
 	return curVersion;
 }
 

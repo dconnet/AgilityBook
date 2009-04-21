@@ -34,6 +34,24 @@ msgstr "This panel contains information about upcoming trials."
 msgid "PanelTraining"
 msgstr "This panel contains your training log entries."
 
+msgid "IDS_QTYPE_NA"
+msgstr "NA"
+
+msgid "IDS_QTYPE_Q"
+msgstr "Q"
+
+msgid "IDS_QTYPE_NQ"
+msgstr "NQ"
+
+msgid "IDS_QTYPE_E"
+msgstr "E"
+
+msgid "IDS_QTYPE_DNR"
+msgstr "DNR"
+
+msgid "IDS_QTYPE_SQ"
+msgstr "SQ"
+
 msgid "January"
 msgstr "janvier"
 

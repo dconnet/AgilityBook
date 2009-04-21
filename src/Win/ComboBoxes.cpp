@@ -172,8 +172,8 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
 		ARB_Q q = ARB_Q::GetValidType(index);
 		if (scoring && ARB_Q::eQ_SuperQ == q && !scoring->HasSuperQ())
 			continue;
-		// Allow non-titling runs to only have 'NA' and 'E'
-		if (!bHasTitling && !(ARB_Q::eQ_E == q || ARB_Q::eQ_NA == q))
+		// Allow non-titling runs to only have certain types.
+		if (!bHasTitling && !q.AllowForNonTitling())
 			continue;
 		int idx = Append(q.str().c_str());
 		SetClientObject(idx, new CQualifyingComboData(q));
