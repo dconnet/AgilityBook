@@ -2081,7 +2081,7 @@ bool ElementNode::SaveXML(
 	if (!inDTD.empty())
 	{
 #ifdef UNICODE
-		std::string rootName = tstringUtil::Convert(GetName());
+		std::string rootName = tstringUtil::tstringA(GetName());
 #else
 		std::string rootName = GetName();
 #endif
