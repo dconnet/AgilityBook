@@ -76,8 +76,8 @@ goto :doit
 :doit
 cd %WXWIN%\build\msw
 
-echo nmake -f makefile.vc BUILD=release            UNICODE=%_DO_UNICODE% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG%%_CFGEND% CPPFLAGS="%_CPPFLAGS%"
-echo nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=%_DO_UNICODE% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG%%_CFGEND% CPPFLAGS="%_CPPFLAGS%"
+nmake -f makefile.vc BUILD=release            UNICODE=%_DO_UNICODE% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG%%_CFGEND% CPPFLAGS="%_CPPFLAGS%"
+nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=%_DO_UNICODE% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% CFG=%_CFG%%_CFGEND% CPPFLAGS="%_CPPFLAGS%"
 
 cd \AgilityBook\src\AgilityBook\src\Projects
 goto done
