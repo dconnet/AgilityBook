@@ -1010,7 +1010,7 @@ msgid "HIDC_OPT_PRINT_FONT"
 msgstr "Modifier la police utilisée pour imprimer."
 
 msgid "HIDC_OPT_PRINT_ORIENT"
-msgstr "Set the default page orientation when printing."
+msgstr "Orientation par défaut de la page à l'impression"
 
 msgid "HIDC_OPT_PRINT_MARGIN_L"
 msgstr "Modifier la marge gauche pour imprimer, en pouce."
