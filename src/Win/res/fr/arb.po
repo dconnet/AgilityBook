@@ -23,19 +23,19 @@ msgid "Agility Record Book"
 msgstr ""
 
 msgid "PanelRuns"
-msgstr "This panel contains all the information about your runs. This is where you create dogs, trials and runs."
+msgstr "Cette fenêtre contient toutes les informations concernant vos parcours. C'est là que vous créez vos chiens, concours et parcours."
 
 msgid "PanelPoints"
-msgstr "This panel shows some simple statistics about your runs for the current dog. If this file contains more than one dog, you can easily switch the current dog by right-clicking on the dogs name in the status bar."
+msgstr "Cette fenêtre montre quelques statistiques simples sur vos parcours pour le chien choisi. Si ce dossier contient plus d'un chien, vous pouvez facilement changer de chien par un click droit sur le nom du chien dans la barre d'état."
 
 msgid "PanelCal"
-msgstr "This panel contains information about upcoming trials."
+msgstr "Cette fenêtre contient des informations concernant les concours à venir."
 
 msgid "PanelTraining"
-msgstr "This panel contains your training log entries."
+msgstr "Cette fenêtre contient toutes les informations concernant vos entrainements."
 
 msgid "IDS_QTYPE_NA"
-msgstr "NA"
+msgstr "INV"
 
 msgid "IDS_QTYPE_Q"
 msgstr "Q"
@@ -47,7 +47,7 @@ msgid "IDS_QTYPE_E"
 msgstr "E"
 
 msgid "IDS_QTYPE_DNR"
-msgstr "DNR"
+msgstr "PC"
 
 msgid "IDS_QTYPE_SQ"
 msgstr "SQ"
