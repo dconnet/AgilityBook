@@ -154,7 +154,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'        Comments="Track all your agility records in one convenient place."'
 	print >>setup,		r'        InstallerVersion="200"'
 	if code64 == code:
-		print >>setup,	r'        Platforms="x64"'
+		print >>setup,	r'        Platform="x64"'
 	print >>setup,		r'        Compressed="yes" />'
 
 	print >>setup,		r'    <Icon Id="IconAgilityBook.ico" SourceFile="..\..\..\src\win\res\AgilityBook.ico" />'
@@ -281,7 +281,10 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'            DiskId="1" />'
 	print >>setup,		r'      </Component>'
 
-	print >>setup,		r'      <Component Id="empty" Guid="" KeyPath="yes" />'
+	if code64 == code:
+		print >>setup,	r'      <Component Id="empty" Guid="" KeyPath="yes" Win64="yes" />'
+	else:
+		print >>setup,	r'      <Component Id="empty" Guid="" KeyPath="yes" />'
 	print >>setup,		r'    </DirectoryRef>'
 
 	print >>setup,		r'    <DirectoryRef Id="dirFR">'
