@@ -1,6 +1,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2009-05-02 DRC Upgraded to wix3.
 # 2009-04-16 DRC Enable v2 to upgrade v1 when the beta period ends.
 #            Removed Inno support since I don't maintain it anymore.
 # 2009-03-01 DRC Made v2 coexist with v1, updated for wxWidgets
@@ -28,7 +29,7 @@ import sys
 
 AgilityBookDir = "..\\..\\.."
 
-WiXdir = r"c:\Tools\wix2"
+WiXdir = r"c:\Tools\wix3"
 
 WinSrcDir = AgilityBookDir + "\\src"
 code32 = 1
@@ -132,203 +133,376 @@ def runcmd(command):
 #  1: Win32/Unicode
 #  2: Win32/MBCS
 #  3: Win64/Unicode
-def genWiX(productId, version, version2, code, tidy):
-	baseDir, outputFile = getoutputvars(code, version2)
+def genWiX(productId, ver3Dot, ver4Line, code, tidy):
+	baseDir, outputFile = getoutputvars(code, ver4Line)
 	if tidy and not os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 		return 0
 
 	setup = open(outputFile + ".wxs", "w")
-	print >>setup, r'<?xml version="1.0" encoding="UTF-8"?>'
-	print >>setup, r'<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">'
-	print >>setup, r'  <Product Id="' + productId + r'"'
-	print >>setup, r'      UpgradeCode="' + UpgradeCodeV2 + r'"'
-	print >>setup, r'      Name="Agility Record Book ' + version + '"'
-	print >>setup, r'      Language="1033"'
-	print >>setup, r'      Version="' + version + '"'
-	print >>setup, r'      Manufacturer="dcon Software">'
-	print >>setup, r'    <Package Id="????????-????-????-????-????????????"'
-	print >>setup, r'        Description="Agility Record Book"'
-	print >>setup, r'        Comments="Track all your agility records in one convenient place."'
-	print >>setup, r'        InstallerVersion="200"'
+	print >>setup,		r'<?xml version="1.0" encoding="utf-8"?>'
+	print >>setup,		r'<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">'
+
+	print >>setup,		r'  <Product Id="' + productId + r'"'
+	print >>setup,		r'      UpgradeCode="' + UpgradeCodeV2 + r'"'
+	print >>setup,		r'      Name="Agility Record Book ' + ver3Dot + '"'
+	print >>setup,		r'      Language="1033"'
+	print >>setup,		r'      Version="' + ver3Dot + '"'
+	print >>setup,		r'      Manufacturer="dcon Software">'
+	print >>setup,		r'    <Package'
+	print >>setup,		r'        Description="Agility Record Book"'
+	print >>setup,		r'        Comments="Track all your agility records in one convenient place."'
+	print >>setup,		r'        InstallerVersion="200"'
 	if code64 == code:
-		print >>setup, r'        Platforms="x64"'
-	print >>setup, r'        Compressed="yes"/>'
-	print >>setup, r''
-	print >>setup, r'    <Property Id="INSTALLLEVEL">100</Property>'
-	print >>setup, r''
-	print >>setup, r'    <Property Id="ARPCOMMENTS">Track all your agility records in one convenient place.</Property>'
-	print >>setup, r'    <Property Id="ARPCONTACT">David Connet</Property>'
-	print >>setup, r'    <Property Id="ARPHELPLINK">http://www.agilityrecordbook.com</Property>'
-	print >>setup, r'    <Property Id="ARPURLINFOABOUT">http://www.agilityrecordbook.com</Property>'
-	print >>setup, r'    <Property Id="ALLUSERS">2</Property>'
-	print >>setup, r''
+		print >>setup,	r'        Platforms="x64"'
+	print >>setup,		r'        Compressed="yes" />'
+
+	print >>setup,		r'    <Icon Id="IconAgilityBook.ico" SourceFile="..\..\..\src\win\res\AgilityBook.ico" />'
+
+	print >>setup,		r'    <Property Id="ARPCOMMENTS">Track all your agility records in one convenient place.</Property>'
+	print >>setup,		r'    <Property Id="ARPCONTACT">David Connet</Property>'
+	print >>setup,		r'    <Property Id="ARPHELPLINK">http://www.agilityrecordbook.com</Property>'
+	print >>setup,		r'    <Property Id="ARPURLINFOABOUT">http://www.agilityrecordbook.com</Property>'
+	print >>setup,		r'    <Property Id="ARPPRODUCTICON" Value="IconAgilityBook.ico" />'
+	# Install to all-users if admin, per-user otherwise
+	print >>setup,		r'    <Property Id="ALLUSERS">2</Property>'
+	# To pick up all features by default
+	print >>setup,		r'    <Property Id="INSTALLLEVEL">100</Property>'
+	print >>setup,		r'    <Property Id="AppName">Agility Record Book</Property>'
+
+	# Launch Conditions
 	if code32 == code:
-		print >>setup, r'    <Condition Message="This application only runs on Windows NT and above">VersionNT</Condition>'
+		print >>setup,	r'    <Condition Message="This application only runs on Windows NT and above">VersionNT</Condition>'
 	elif code98 == code:
-		print >>setup, r'    <Condition Message="This application only runs on Windows ME and above">Version9X&gt;=490 OR VersionNT</Condition>'
+		print >>setup,	r'    <Condition Message="This application only runs on Windows ME and above">Version9X&gt;=490 OR VersionNT</Condition>'
 	elif code64 == code:
-		print >>setup, r'    <Condition Message="This application only runs on 64bit Windows systems">VersionNT64</Condition>'
-	print >>setup, r''
+		print >>setup,	r'    <Condition Message="This application only runs on 64bit Windows systems">VersionNT64</Condition>'
+
 	if not beta:
-		print >>setup, r'    <Upgrade Id="' + UpgradeCodeV1 + '">'
-		print >>setup, r'      <UpgradeVersion OnlyDetect="no" Property="OLDVERSIONFOUND"'
-		print >>setup, r'          IncludeMinimum="yes" Minimum="0.0.0"/>'
-		print >>setup, r'    </Upgrade>'
-	print >>setup, r'    <Upgrade Id="' + UpgradeCodeV2 + '">'
-	print >>setup, r'      <UpgradeVersion OnlyDetect="no" Property="OLDVERSIONFOUND"'
-	print >>setup, r'          IncludeMinimum="yes" Minimum="0.0.0"/>'
-	print >>setup, r'    </Upgrade>'
-	print >>setup, r''
-	print >>setup, r'    <Media Id="1" Cabinet="AgilityRecordBook.cab" EmbedCab="yes" DiskPrompt="Disk 1" VolumeLabel="DISK1"/>'
-	print >>setup, r'    <Property Id="DiskPrompt" Value="[1]"/>'
-	print >>setup, r''
-	print >>setup, r'    <Directory Id="TARGETDIR" Name="SourceDir">'
-	print >>setup, r'      <Directory Id="DesktopFolder"/>'
-	print >>setup, r'      <Directory Id="ProgramMenuFolder">'
-	print >>setup, r'        <Directory Id="ARBMenuFolder" Name="ARB" LongName="' + defFolder + '"/>'
-	print >>setup, r'      </Directory>'
+		print >>setup,	r'    <Upgrade Id="' + UpgradeCodeV1 + '">'
+		print >>setup,	r'      <UpgradeVersion'
+		print >>setup,	r'          OnlyDetect="no"'
+		print >>setup,	r'          Minimum="0.0.0"'
+		print >>setup,	r'          IncludeMinimum="yes"'
+		print >>setup,	r'          Maximum="' + ver3Dot + '"'
+		print >>setup,	r'          Property="OLDVERSIONFOUND" />'
+		print >>setup,	r'    </Upgrade>'
+	print >>setup,		r'    <Upgrade Id="' + UpgradeCodeV2 + '">'
+	print >>setup,		r'      <UpgradeVersion'
+	print >>setup,		r'          OnlyDetect="no"'
+	print >>setup,		r'          Minimum="0.0.0"'
+	print >>setup,		r'          IncludeMinimum="yes"'
+	print >>setup,		r'          Maximum="' + ver3Dot + '"'
+	print >>setup,		r'          Property="OLDVERSIONFOUND" />'
+	print >>setup,		r'      <UpgradeVersion'
+	print >>setup,		r'          OnlyDetect="yes"'
+	print >>setup,		r'          Minimum="' + ver3Dot + '"'
+	print >>setup,		r'          IncludeMinimum="no"'
+	print >>setup,		r'          Property="NEWERVERSIONDETECTED" />'
+	print >>setup,		r'    </Upgrade>'
+
+	print >>setup,		r'    <Condition Message="A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product. Setup will now exit.">NOT NEWERVERSIONDETECTED OR Installed</Condition>'
+
+	print >>setup,		r'    <Media Id="1" Cabinet="AgilityBook.cab" EmbedCab="yes" />'
+
+	print >>setup,		r'    <Directory Id="TARGETDIR" Name="SourceDir">'
+	print >>setup,		r'      <Directory Id="DesktopFolder" />'
+	print >>setup,		r'      <Directory Id="ProgramMenuFolder">'
+	print >>setup,		r'        <Directory Id="ARBMenuFolder" Name="' + defFolder + '" />'
+	print >>setup,		r'      </Directory>'
 	if code64 == code:
-		print >>setup, r'      <Directory Id="ProgramFiles64Folder">'
+		print >>setup,	r'      <Directory Id="ProgramFiles64Folder">'
 	else:
-		print >>setup, r'      <Directory Id="ProgramFilesFolder">'
-	print >>setup, r'        <Directory Id="CompanyFolder" Name="dconSoft" LongName="dcon Software">'
-	print >>setup, r'          <Directory Id="INSTALLDIR" Name="ARB" LongName="' + defFolder + '">'
-	print >>setup, r''
+		print >>setup,	r'      <Directory Id="ProgramFilesFolder">'
+	print >>setup,		r'        <Directory Id="CompanyFolder" Name="dcon Software">'
+	print >>setup,		r'          <Directory Id="APPLICATIONFOLDER" Name="' + defFolder + '">'
+	print >>setup,		r'            <Directory Id="dirLang" Name="lang">'
+	print >>setup,		r'              <Directory Id="dirFR" Name="fr" />'
+	print >>setup,		r'              <Directory Id="dirEN" Name="en" />'
+	print >>setup,		r'            </Directory>'
+	print >>setup,		r'          </Directory>'
+	print >>setup,		r'        </Directory>'
+	print >>setup,		r'      </Directory>'
+	print >>setup,		r'    </Directory>'
+
+	print >>setup,		r'    <DirectoryRef Id="APPLICATIONFOLDER">'
 	if code64 == code:
-		print >>setup, r'            <Component Id="ApplicationCore" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="yes">'
+		print >>setup,	r'      <Component Id="C_AgilityBook.exe" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="yes">'
 	else:
-		print >>setup, r'            <Component Id="ApplicationCore" Guid="55CB5388-14EA-4927-B2A4-96315EA09418">'
-	print >>setup, r'              <File Id="App" Name="ARBexe" LongName="AgilityBook.exe"'
-	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.exe"'
-	print >>setup, r'                    Vital="yes" DiskId="1">'
-	print >>setup, r'                <Shortcut Id="AppDesktop" Name="ARB" LongName="' + defFolder + '" Directory="DesktopFolder" />'
-	print >>setup, r'                <Shortcut Id="AppMenu" Name="ARB" LongName="' + defFolder + '" Directory="ARBMenuFolder" />'
-	print >>setup, r'              </File>'
-	print >>setup, r'              <File Id="ARBData" Name="ARBData" LongName="AgilityBook.dat"'
-	print >>setup, r'                    Source="' + baseDir + r'AgilityBook.dat"'
-	print >>setup, r'                    Vital="yes" DiskId="1">'
-	print >>setup, r'              </File>'
-	print >>setup, r'              <File Id="ARBHelp" Name="ARBHelp" LongName="ARBHelp.exe"'
-	print >>setup, r'                    Source="' + baseDir + r'ARBHelp.exe"'
-	print >>setup, r'                    Vital="yes" DiskId="1">'
-	print >>setup, r'                <Shortcut Id="ARBHelpShortcut" Name="ARBHelp" LongName="ARB Helper" Directory="ARBMenuFolder" />'
-	print >>setup, r'              </File>'
-	print >>setup, r'              <!-- The description is the same since that was what MFC set it to (v1) -->'
-	print >>setup, r'              <ProgId Id="AgilityBook.Document" Description="AgilityBook.Document">'
-	print >>setup, r'                <Extension Id="arb">'
-	print >>setup, r'                  <Verb Id="open" Sequence="1" Command="Open" Target="[!App]" Argument=' + "'\"%1\"'/>"
-	print >>setup, r'                </Extension>'
-	print >>setup, r'              </ProgId>'
-	print >>setup, r'              <Registry Id="AppIcon1" Root="HKCR" Key="AgilityBook.Document\DefaultIcon" Action="write"'
-	print >>setup, r'                        Type="string" Value="[INSTALLDIR]AgilityBook.exe,0" />'
-	print >>setup, r'            </Component>'
+		print >>setup,	r'      <Component Id="C_AgilityBook.exe" Guid="55CB5388-14EA-4927-B2A4-96315EA09418">'
+	print >>setup,		r'        <File Id="_AgilityBook.exe"'
+	print >>setup,		r'            Name="AgilityBook.exe"'
+	print >>setup,		r'            Source="' + baseDir + r'AgilityBook.exe"'
+	print >>setup,		r'            KeyPath="yes"'
+	print >>setup,		r'            Checksum="yes"'
+	print >>setup,		r'            DiskId="1" />'
+	#print >>setup,		r'        <!-- The description is the same since that was what MFC set it to (v1) -->'
+	print >>setup,		r'        <ProgId Id="AgilityBook.Document"'
+	print >>setup,		r'            Description="AgilityBook.Document"'
+	print >>setup,		r'            Icon="_AgilityBook.exe">'
+	print >>setup,		r'          <Extension Id="arb">'
+	print >>setup,		r'            <Verb Id="open"'
+	print >>setup,		r'                Command="Open"'
+	print >>setup,		r'                TargetFile="_AgilityBook.exe"'
+	print >>setup,		r'                Argument="&quot;%1&quot;" />'
+	print >>setup,		r'          </Extension>'
+	print >>setup,		r'        </ProgId>'
+	print >>setup,		r'      </Component>'
 	if code64 == code:
-		print >>setup, r'            <Component Id="CALusdaa" Guid="16F399ED-BA94-4CBF-B85E-D79C737D3232" Win64="yes">'
+		print >>setup,	r'      <Component Id="C_AgilityBook.dat" Guid="C44F2D55-7128-423F-926A-AAE9848D1842" Win64="yes">'
 	else:
-		print >>setup, r'            <Component Id="CALusdaa" Guid="8C9B6F50-7F0A-46AA-B813-A66A8300E421">'
-	print >>setup, r'              <File Id="usdaa" Name="CALusdaa" LongName="cal_usdaa.dll"'
-	print >>setup, r'                    Source="' + baseDir + r'cal_usdaa.dll"'
-	print >>setup, r'                    Vital="no" DiskId="1" />'
-	print >>setup, r'            </Component>'
+		print >>setup,	r'      <Component Id="C_AgilityBook.dat" Guid="007C505E-3872-4A92-AF77-2C6C1BC2A9C7">'
+	print >>setup,		r'        <File Id="_AgilityBook.dat"'
+	print >>setup,		r'            Name="AgilityBook.dat"'
+	print >>setup,		r'            Source="' + baseDir + r'AgilityBook.dat"'
+	print >>setup,		r'            KeyPath="yes"'
+	print >>setup,		r'            DiskId="1" />'
+	print >>setup,		r'      </Component>'
 	if code64 == code:
-		print >>setup, r'            <Component Id="ARBHelp" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="yes">'
+		print >>setup,	r'      <Component Id="C_ARBHelp.exe" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="yes">'
 	else:
-		print >>setup, r'            <Component Id="ARBHelp" Guid="9CB60EE5-C5A3-4219-83C4-A59D2872DC8F">'
-	print >>setup, r'              <File Id="arbhelp" Name="ARBHelp" LongName="ARBHelp.exe"'
-	print >>setup, r'                    Source="' + baseDir + r'ARBHelp.exe"'
-	print >>setup, r'                    Vital="no" DiskId="1" />'
-	print >>setup, r'            </Component>'
-	print >>setup, r''
-	print >>setup, r'            <Directory Id="lang" Name="lang">'
-	print >>setup, r'              <Directory Id="dirFR" Name="fr">'
+		print >>setup,	r'      <Component Id="C_ARBHelp.exe" Guid="9CB60EE5-C5A3-4219-83C4-A59D2872DC8F">'
+	print >>setup,		r'        <File Id="_ARBHelp.exe"'
+	print >>setup,		r'            Name="ARBHelp.exe"'
+	print >>setup,		r'            Source="' + baseDir + r'ARBHelp.exe"'
+	print >>setup,		r'            KeyPath="yes"'
+	print >>setup,		r'            Checksum="yes"'
+	print >>setup,		r'            DiskId="1" />'
+	print >>setup,		r'      </Component>'
 	if code64 == code:
-		print >>setup, r'                <Component Id="langFR" Guid="581CB1F1-0846-4205-8551-5FEE8A03AF62" Win64="yes">'
+		print >>setup,	r'      <Component Id="C_cal_usdaa.dll" Guid="16F399ED-BA94-4CBF-B85E-D79C737D3232" Win64="yes">'
 	else:
-		print >>setup, r'                <Component Id="langFR" Guid="53DA3663-A90A-44AF-A921-5EC0E104ABAD">'
-	print >>setup, r'                  <File Id="ResFR" Name="arb.mo"'
-	print >>setup, r'                        Source="' + baseDir + r'lang\fr\arb.mo"'
-	print >>setup, r'                        Vital="no" DiskId="1" />'
-	print >>setup, r'                </Component>'
-	print >>setup, r'              </Directory>'
-	print >>setup, r'              <Directory Id="dirEN" Name="en">'
+		print >>setup,	r'      <Component Id="C_cal_usdaa.dll" Guid="8C9B6F50-7F0A-46AA-B813-A66A8300E421">'
+	print >>setup,		r'        <File Id="_cal_usdaa.dll"'
+	print >>setup,		r'            Name="cal_usdaa.dll"'
+	print >>setup,		r'            Source="' + baseDir + r'cal_usdaa.dll"'
+	print >>setup,		r'            KeyPath="yes"'
+	print >>setup,		r'            Checksum="yes"'
+	print >>setup,		r'            DiskId="1" />'
+	print >>setup,		r'      </Component>'
+
+	print >>setup,		r'      <Component Id="empty" Guid="" KeyPath="yes" />'
+	print >>setup,		r'    </DirectoryRef>'
+
+	print >>setup,		r'    <DirectoryRef Id="dirFR">'
 	if code64 == code:
-		print >>setup, r'                <Component Id="langEN" Guid="27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6" Win64="yes">'
+		print >>setup,	r'      <Component Id="C_langFR" Guid="581CB1F1-0846-4205-8551-5FEE8A03AF62" Win64="yes">'
 	else:
-		print >>setup, r'                <Component Id="langEN" Guid="9AFD56DF-F038-4877-A35A-00036A508FD8">'
-	print >>setup, r'                  <File Id="ResEN" Name="arb.mo"'
-	print >>setup, r'                        Source="' + baseDir + r'lang\en\arb.mo"'
-	print >>setup, r'                        Vital="yes" DiskId="1">'
-	print >>setup, r'                  </File>'
-	print >>setup, r'                </Component>'
-	print >>setup, r'              </Directory>'
-	print >>setup, r'            </Directory>'
-	print >>setup, r'            <Component Id="empty" Guid="7B73272C-8FB4-4FED-9A73-1C0A534A583C"/>'
-	print >>setup, r'          </Directory>'
-	print >>setup, r'        </Directory>'
-	print >>setup, r'      </Directory>'
-	print >>setup, r'    </Directory>'
-	print >>setup, r''
-	print >>setup, r'    <Feature Id="Complete" Display="expand" Level="1"'
-	print >>setup, r'             AllowAdvertise="no"'
-	print >>setup, r'             Title="Agility Record Book" Description="Main Agility Record Book files" ConfigurableDirectory="INSTALLDIR">'
-	print >>setup, r'      <ComponentRef Id="ApplicationCore"/>'
-	print >>setup, r'      <ComponentRef Id="langEN"/>'
-	print >>setup, r'      <Feature Id="ARBHelp" Display="expand" Level="100"'
-	print >>setup, r'               AllowAdvertise="no"'
-	print >>setup, r'               Title="ARBHelp" Description="Help diagnose problems by assembling necessary files for debugging">'
-	print >>setup, r'          <ComponentRef Id="ARBHelp"/>'
-	print >>setup, r'        </Feature>'
-	print >>setup, r'      <Feature Id="Languages" Display="expand" Level="100"'
-	print >>setup, r'               AllowAdvertise="no"'
-	print >>setup, r'               Title="Languages" Description="Supported languages that can be changed while running the program (English is always available)">'
+		print >>setup,	r'      <Component Id="C_langFR" Guid="53DA3663-A90A-44AF-A921-5EC0E104ABAD">'
+	print >>setup,		r'        <File Id="_fr_arb.mo"'
+	print >>setup,		r'            Name="arb.mo"'
+	print >>setup,		r'            Source="' + baseDir + r'lang\fr\arb.mo"'
+	print >>setup,		r'            KeyPath="yes"'
+	print >>setup,		r'            DiskId="1" />'
+	print >>setup,		r'      </Component>'
+	print >>setup,		r'    </DirectoryRef>'
+
+	print >>setup,		r'    <DirectoryRef Id="dirEN">'
+	if code64 == code:
+		print >>setup,	r'      <Component Id="C_langEN" Guid="27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6" Win64="yes">'
+	else:
+		print >>setup,	r'      <Component Id="C_langEN" Guid="9AFD56DF-F038-4877-A35A-00036A508FD8">'
+	print >>setup,		r'        <File Id="_en_arb.mo"'
+	print >>setup,		r'            Name="arb.mo"'
+	print >>setup,		r'            Source="' + baseDir + r'lang\en\arb.mo"'
+	print >>setup,		r'            KeyPath="yes"'
+	print >>setup,		r'            DiskId="1" />'
+	print >>setup,		r'      </Component>'
+	print >>setup,		r'    </DirectoryRef>'
+
+	print >>setup,		r'    <DirectoryRef Id="ARBMenuFolder">'
+	if code64 == code:
+		print >>setup,	r'      <Component Id="C_MenuShortcutsARB" Guid="74105C3C-0E12-4CE4-B955-DA4551365A97" Win64="yes">'
+	else:
+		print >>setup,	r'      <Component Id="C_MenuShortcutsARB" Guid="9A2365F0-D0F9-4881-BB49-8CC9B0887FC2">'
+	print >>setup,		r'        <RegistryValue'
+	print >>setup,		r'            Root="HKCU"'
+	print >>setup,		r'            Key="Software\[Manufacturer]\[AppName]\Settings"'
+	print >>setup,		r'            Name="inst_help"'
+	print >>setup,		r'            Type="integer"'
+	print >>setup,		r'            Value="1" />'
+	print >>setup,		r'        <Shortcut Id="ShortcutARBExe"'
+	print >>setup,		r'            Name="' + defFolder + '"'
+	print >>setup,		r'            Target="[#_AgilityBook.exe]" />'
+	print >>setup,		r'        <RemoveFolder Id="ARBMenuFolder" On="uninstall" />'
+	print >>setup,		r'      </Component>'
+	if code64 == code:
+		print >>setup,	r'      <Component Id="C_MenuShortcutsHelp" Guid="2F642C5F-5C66-40C8-B548-D7794CBF580A" Win64="yes">'
+	else:
+		print >>setup,	r'      <Component Id="C_MenuShortcutsHelp" Guid="00212137-B9F3-4E3E-BFFB-7F6442F97741">'
+	print >>setup,		r'        <RegistryValue'
+	print >>setup,		r'            Root="HKCU"'
+	print >>setup,		r'            Key="Software\[Manufacturer]\[AppName]\Settings"'
+	print >>setup,		r'            Name="inst_arb"'
+	print >>setup,		r'            Type="integer"'
+	print >>setup,		r'            Value="1" />'
+	print >>setup,		r'        <Shortcut Id="ShortcutARBHelp"'
+	print >>setup,		r'            Name="ARB Helper"'
+	print >>setup,		r'            Target="[#_ARBHelp.exe]" />'
+	print >>setup,		r'      </Component>'
+	print >>setup,		r'    </DirectoryRef>'
+
+	print >>setup,		r'    <DirectoryRef Id="DesktopFolder">'
+	if code64 == code:
+		print >>setup,	r'      <Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="yes">'
+	else:
+		print >>setup,	r'      <Component Id="C_DeskShortcuts" Guid="99C9A5EE-AF6E-4271-98BC-5B8CE9308CBC">'
+	print >>setup,		r'        <RegistryValue'
+	print >>setup,		r'            Root="HKCU"'
+	print >>setup,		r'            Key="Software\[Manufacturer]\[AppName]\Settings"'
+	print >>setup,		r'            Name="inst_desk"'
+	print >>setup,		r'            Type="integer"'
+	print >>setup,		r'            Value="1" />'
+	print >>setup,		r'        <Shortcut Id="AppDesktop"'
+	print >>setup,		r'            Name="' + defFolder + '"'
+	print >>setup,		r'            Target="[#_AgilityBook.exe]" />'
+	print >>setup,		r'      </Component>'
+	print >>setup,		r'    </DirectoryRef>'
+
+	print >>setup,		r'    <Feature Id="Complete"'
+	print >>setup,		r'        Display="expand"'
+	print >>setup,		r'        Level="1"'
+	print >>setup,		r'        AllowAdvertise="no"'
+	print >>setup,		r'        Title="Agility Record Book"'
+	print >>setup,		r'        Description="Main Agility Record Book files"'
+	print >>setup,		r'        ConfigurableDirectory="APPLICATIONFOLDER">'
+	print >>setup,		r'      <ComponentRef Id="C_MenuShortcutsARB" />'
+	print >>setup,		r'      <ComponentRef Id="C_DeskShortcuts" />'
+	print >>setup,		r'      <ComponentRef Id="C_AgilityBook.exe" />'
+	print >>setup,		r'      <ComponentRef Id="C_AgilityBook.dat" />'
+	print >>setup,		r'      <ComponentRef Id="C_langEN" />'
+	print >>setup,		r'      <Feature Id="ARBHelp"'
+	print >>setup,		r'          Display="expand"'
+	print >>setup,		r'          Level="100"'
+	print >>setup,		r'          AllowAdvertise="no"'
+	print >>setup,		r'          Title="ARBHelp"'
+	print >>setup,		r'          Description="Help diagnose problems by assembling necessary files for debugging">'
+	print >>setup,		r'        <ComponentRef Id="C_ARBHelp.exe" />'
+	print >>setup,		r'        <ComponentRef Id="C_MenuShortcutsHelp" />'
+	print >>setup,		r'      </Feature>'
+	print >>setup,		r'      <Feature Id="Languages"'
+	print >>setup,		r'          Display="expand"'
+	print >>setup,		r'          Level="100"'
+	print >>setup,		r'          AllowAdvertise="no"'
+	print >>setup,		r'          Title="Languages" Description="Supported languages that can be changed while running the program (English is always available)">'
+	# Need an empty component to work around a bug with features (empty features add network options)
+	print >>setup,		r'        <ComponentRef Id="empty" />'
+	print >>setup,		r'        <Feature Id="French"'
+	print >>setup,		r'            Level="100"'
+	print >>setup,		r'            AllowAdvertise="no"'
+	print >>setup,		r'            Title="French" Description="French">'
+	print >>setup,		r'          <ComponentRef Id="C_langFR" />'
+	print >>setup,		r'        </Feature>'
+	print >>setup,		r'      </Feature>'
+	print >>setup,		r'      <Feature Id="Plugins"'
+	print >>setup,		r'          Display="expand"'
+	print >>setup,		r'          Level="100"'
+	print >>setup,		r'          AllowAdvertise="no"'
+	print >>setup,		r'          Title="Calendar Addins" Description="Addins to download Calendar data directly from a website">'
 	# Need an empty component to work around a bug with features (to suppress advertising)
-	print >>setup, r'        <ComponentRef Id="empty"/>'
-	print >>setup, r'        <Feature Id="French" Level="100"'
-	print >>setup, r'                 AllowAdvertise="no"'
-	print >>setup, r'                 Title="French" Description="French">'
-	print >>setup, r'          <ComponentRef Id="langFR"/>'
-	print >>setup, r'        </Feature>'
-	print >>setup, r'      </Feature>'
-	print >>setup, r'      <Feature Id="Plugins" Display="expand" Level="100"'
-	print >>setup, r'               AllowAdvertise="no"'
-	print >>setup, r'               Title="Calendar Addins" Description="Addins to download Calendar data directly from a website">'
-	# Need an empty component to work around a bug with features (to suppress advertising)
-	print >>setup, r'        <ComponentRef Id="empty"/>'
-	print >>setup, r'        <Feature Id="Calendar" Level="100"'
-	print >>setup, r'                 AllowAdvertise="no"'
-	print >>setup, r'                 Title="USDAA" Description="Download Calendar entries from usdaa.com">'
-	print >>setup, r'          <ComponentRef Id="CALusdaa"/>'
-	print >>setup, r'        </Feature>'
-	print >>setup, r'      </Feature>'
-	print >>setup, r'    </Feature>'
-	print >>setup, r''
+	print >>setup,		r'        <ComponentRef Id="empty" />'
+	print >>setup,		r'        <Feature Id="Calendar"'
+	print >>setup,		r'            Level="100"'
+	print >>setup,		r'            AllowAdvertise="no"'
+	print >>setup,		r'            Title="USDAA" Description="Download Calendar entries from usdaa.com">'
+	print >>setup,		r'          <ComponentRef Id="C_cal_usdaa.dll" />'
+	print >>setup,		r'        </Feature>'
+	print >>setup,		r'      </Feature>'
+	print >>setup,		r'    </Feature>'
+
 	# Just FYI of how to do this.
-	#print >>setup, r'    <CustomAction Id="LaunchFile" FileKey="App" ExeCommand="/register" Return="ignore"/>'
-	print >>setup, r''
-	print >>setup, r'    <InstallExecuteSequence>'
-	print >>setup, r'      <RemoveExistingProducts After="InstallValidate"/>'
+	#print >>setup,		r'    <CustomAction Id="LaunchFile" FileKey="App" ExeCommand="/register" Return="ignore" />'
+
+	print >>setup,		r'    <InstallExecuteSequence>'
+	print >>setup,		r'      <RemoveExistingProducts After="InstallValidate" />'
 	# FYI
-	#print >>setup, r'      <Custom Action="LaunchFile" After="InstallFinalize">NOT Installed</Custom>'
-	print >>setup, r'    </InstallExecuteSequence>'
-	print >>setup, r''
-	print >>setup, r'    <UIRef Id="WixUI_FeatureTree"/>'
-	print >>setup, r'    <UIRef Id="WixUI_ErrorProgressText"/>'
-	print >>setup, r''
-	print >>setup, r'    <Icon Id="AgilityBook.exe" SourceFile="..\..\..\src\win\res\AgilityBook.ico"/>'
-	print >>setup, r'  </Product>'
-	print >>setup, r'</Wix>'
+	#print >>setup,		r'      <Custom Action="LaunchFile" After="InstallFinalize">NOT Installed</Custom>'
+	print >>setup,		r'    </InstallExecuteSequence>'
+
+	print >>setup,		r'    <UI>'
+	# Copied from WixUI_FeatureTree.wxs (in order to use my exit dialog which makes the 'launch' checkbox prettier
+	print >>setup,		r'      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />'
+	print >>setup,		r'      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />'
+	print >>setup,		r'      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />'
+	print >>setup,		r'      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />'
+	print >>setup,		r'      <Property Id="WixUI_Mode" Value="FeatureTree" />'
+	print >>setup,		r'      <DialogRef Id="ErrorDlg" />'
+	print >>setup,		r'      <DialogRef Id="FatalError" />'
+	print >>setup,		r'      <DialogRef Id="FilesInUse" />'
+	print >>setup,		r'      <DialogRef Id="MsiRMFilesInUse" />'
+	print >>setup,		r'      <DialogRef Id="PrepareDlg" />'
+	print >>setup,		r'      <DialogRef Id="ProgressDlg" />'
+	print >>setup,		r'      <DialogRef Id="ResumeDlg" />'
+	print >>setup,		r'      <DialogRef Id="UserExit" />'
+	print >>setup,		r'      <Publish Dialog="MyExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg">LicenseAccepted = "1"</Publish>'
+	print >>setup,		r'      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>'
+	print >>setup,		r'      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">NOT Installed</Publish>'
+	print >>setup,		r'      <Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">NOT Installed OR WixUI_InstallMode = "Change"</Publish>'
+	print >>setup,		r'      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>'
+	print >>setup,		r'      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>'
+	print >>setup,		r'      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>'
+
+	print >>setup,		r'      <UIRef Id="WixUI_Common" />'
+	print >>setup,		r'      <UIRef Id="WixUI_ErrorProgressText" />'
+
+	# Copied from ExitDialog.wxs and tweaked like http://www.dizzymonkeydesign.com/blog/misc/adding-and-customizing-dlgs-in-wix-3/ suggests
+	print >>setup,		r'      <Dialog Id="MyExitDialog" Width="370" Height="270" Title="!(loc.ExitDialog_Title)">'
+	print >>setup,		r'        <Control Id="Finish" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.WixUIFinish)" />'
+	print >>setup,		r'        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUICancel)" />'
+	print >>setup,		r'        <Control Id="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" TabSkip="no" Text="!(loc.ExitDialogBitmap)" />'
+	print >>setup,		r'        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUIBack)" />'
+	print >>setup,		r'        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />'
+	print >>setup,		r'        <Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />'
+	print >>setup,		r'        <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />'
+	print >>setup,		r'        <Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Hidden="yes" CheckBoxValue="1" Text="Launch [AppName] when setup exits">'
+	print >>setup,		r'          <Condition Action="show">NOT Installed</Condition>'
+	print >>setup,		r'        </Control>'
+	print >>setup,		r'      </Dialog>'
+
+	print >>setup,		r'      <InstallUISequence>'
+	print >>setup,		r'        <Show Dialog="MyExitDialog" OnExit="success" />'
+	print >>setup,		r'      </InstallUISequence>'
+	print >>setup,		r'      <AdminUISequence>'
+	print >>setup,		r'        <Show Dialog="MyExitDialog" OnExit="success" />'
+	print >>setup,		r'      </AdminUISequence>'
+
+	print >>setup,		r'      <Publish Dialog="MyExitDialog"'
+	print >>setup,		r'          Control="Finish"'
+	print >>setup,		r'          Event="DoAction"'
+	print >>setup,		r'          Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>'
+	print >>setup,		r'    </UI>'
+
+	print >>setup,		r'    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />'
+	print >>setup,		r'    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Agility Record Book" />'
+	print >>setup,		r'    <Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />'
+	print >>setup,		r'    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />'
+
+	print >>setup,		r'  </Product>'
+	print >>setup,		r'</Wix>'
 
 	setup.close()
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		runcmd('candle -nologo ' + outputFile + '.wxs')
-		runcmd('light -nologo -b "' + WiXdir + '" -out "' + outputFile + '.msi" ' + outputFile + '.wixobj "' + WiXdir + r'\wixui.wixlib" -loc "' + WiXdir + r'\WixUI_en-us.wxl"')
+		# ICE61: This product should remove only older versions of itself. No Maximum version was detected for the current product. (OLDVERSIONFOUND)
+		#  - No, I want this to install THIS!
+		# ICE69: Mismatched component reference. Entry 'AppDesktop' of the Shortcut table belongs to component 'C_DeskShortcuts'. However, the formatted string in column 'Target' references file '_AgilityBook.exe' which belongs to component 'C_AgilityBook.exe'. Components are in the same feature.
+		#  - This is due to making the shortcuts use [#comp] references rather than [directory]exename
+		runcmd('light -nologo -sice:ICE61 -sice:ICE69 -dWixUILicenseRtf=License.rtf -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -out "' + outputFile + '.msi" "' + outputFile + '.wixobj"')
 		if tidy:
 			if os.access(outputFile + ".wxs", os.F_OK):
 				os.remove(outputFile + ".wxs")
 			if os.access(outputFile + ".wixobj", os.F_OK):
 				os.remove(outputFile + ".wixobj")
+	else:
+		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 	return 1
 
 
