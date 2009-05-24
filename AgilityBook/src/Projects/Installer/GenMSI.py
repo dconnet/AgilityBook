@@ -72,12 +72,12 @@ def getversion(numParts):
 	while (1):
 		line = res.readline()
 		if line:
-			line = string.strip(line)
+			line = line.strip()
 			for i in range(0, 4):
 				pos = line.find(resStr[i])
 				if 0 == pos:
 					found = found + 1
-					version[i] = string.strip(line[pos+len(resStr[i]):])
+					version[i] = line[pos+len(resStr[i]):].strip()
 			if found == 4:
 				break
 		else:
@@ -93,8 +93,8 @@ def getversion(numParts):
 def genuuid():
 	(childin, childout) = os.popen4("uuidgen -c")
 	childin.close()
-	line = string.rstrip(childout.readline())
-	#line = string.upper(line) [-c means upper, leaving in case I change how guids are gotten]
+	line = childout.readline().rstrip()
+	#line = line.upper() [-c means upper, leaving in case I change how guids are gotten]
 	childout.close()
 	return line
 
@@ -133,7 +133,7 @@ def runcmd(command):
 #  1: Win32/Unicode
 #  2: Win32/MBCS
 #  3: Win64/Unicode
-def genWiX(productId, ver3Dot, ver4Line, code, tidy):
+def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	baseDir, outputFile = getoutputvars(code, ver4Line)
 	if tidy and not os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
@@ -147,6 +147,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'      UpgradeCode="' + UpgradeCodeV2 + r'"'
 	print >>setup,		r'      Name="Agility Record Book ' + ver3Dot + '"'
 	print >>setup,		r'      Language="1033"'
+	# MSI only deals in 3dot version numbers.
 	print >>setup,		r'      Version="' + ver3Dot + '"'
 	print >>setup,		r'      Manufacturer="dcon Software">'
 	print >>setup,		r'    <Package'
@@ -174,10 +175,12 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	if code32 == code:
 		print >>setup,	r'    <Condition Message="This application only runs on Windows NT and above">VersionNT</Condition>'
 	elif code98 == code:
-		print >>setup,	r'    <Condition Message="This application only runs on Windows ME and above">Version9X&gt;=490 OR VersionNT</Condition>'
+		print >>setup,	r'    <Condition Message="This application only runs on Windows ME and above">Version9X&gt;=490 Or VersionNT</Condition>'
 	elif code64 == code:
 		print >>setup,	r'    <Condition Message="This application only runs on 64bit Windows systems">VersionNT64</Condition>'
 
+	# During beta, do not remove v1.
+	# (that's why we created a different upgrade code)
 	if not beta:
 		print >>setup,	r'    <Upgrade Id="' + UpgradeCodeV1 + '">'
 		print >>setup,	r'      <UpgradeVersion'
@@ -194,6 +197,15 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'          IncludeMinimum="yes"'
 	print >>setup,		r'          Maximum="' + ver3Dot + '"'
 	print >>setup,		r'          Property="OLDVERSIONFOUND" />'
+	# During testing, don't detect existing versions.
+	if not bTesting:
+		print >>setup,	r'      <UpgradeVersion'
+		print >>setup,	r'          OnlyDetect="yes"'
+		print >>setup,	r'          Minimum="' + ver3Dot + '"'
+		print >>setup,	r'          IncludeMinimum="yes"'
+		print >>setup,	r'          Maximum="' + ver3Dot + '"'
+		print >>setup,	r'          IncludeMaximum="yes"'
+		print >>setup,	r'          Property="FOUNDSAMEVERSION" />'
 	print >>setup,		r'      <UpgradeVersion'
 	print >>setup,		r'          OnlyDetect="yes"'
 	print >>setup,		r'          Minimum="' + ver3Dot + '"'
@@ -201,7 +213,8 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'          Property="NEWERVERSIONDETECTED" />'
 	print >>setup,		r'    </Upgrade>'
 
-	print >>setup,		r'    <Condition Message="A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product. Setup will now exit.">NOT NEWERVERSIONDETECTED OR Installed</Condition>'
+	print >>setup,		r'    <CustomAction Id="ARB_AlreadyUpdated" Error="Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel." />'
+	print >>setup,		r'    <CustomAction Id="ARB_NoDowngrade" Error="A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product." />'
 
 	print >>setup,		r'    <Media Id="1" Cabinet="AgilityBook.cab" EmbedCab="yes" />'
 
@@ -326,7 +339,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'            Value="1" />'
 	print >>setup,		r'        <Shortcut Id="ShortcutARBExe"'
 	print >>setup,		r'            Name="' + defFolder + '"'
-	print >>setup,		r'            Target="[#_AgilityBook.exe]" />'
+	print >>setup,		r'            Target="[APPLICATIONFOLDER]AgilityBook.exe" />'
 	print >>setup,		r'        <RemoveFolder Id="ARBMenuFolder" On="uninstall" />'
 	print >>setup,		r'      </Component>'
 	if code64 == code:
@@ -341,7 +354,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'            Value="1" />'
 	print >>setup,		r'        <Shortcut Id="ShortcutARBHelp"'
 	print >>setup,		r'            Name="ARB Helper"'
-	print >>setup,		r'            Target="[#_ARBHelp.exe]" />'
+	print >>setup,		r'            Target="[APPLICATIONFOLDER]ARBHelp.exe" />'
 	print >>setup,		r'      </Component>'
 	print >>setup,		r'    </DirectoryRef>'
 
@@ -358,7 +371,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'            Value="1" />'
 	print >>setup,		r'        <Shortcut Id="AppDesktop"'
 	print >>setup,		r'            Name="' + defFolder + '"'
-	print >>setup,		r'            Target="[#_AgilityBook.exe]" />'
+	print >>setup,		r'            Target="[APPLICATIONFOLDER]AgilityBook.exe" />'
 	print >>setup,		r'      </Component>'
 	print >>setup,		r'    </DirectoryRef>'
 
@@ -413,13 +426,14 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'      </Feature>'
 	print >>setup,		r'    </Feature>'
 
-	# Just FYI of how to do this.
-	#print >>setup,		r'    <CustomAction Id="LaunchFile" FileKey="App" ExeCommand="/register" Return="ignore" />'
-
+	print >>setup,		r'    <InstallUISequence>'
+	print >>setup,		r'      <Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">FOUNDSAMEVERSION</Custom>'
+	print >>setup,		r'      <Custom Action="ARB_NoDowngrade" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>'
+	print >>setup,		r'    </InstallUISequence>'
 	print >>setup,		r'    <InstallExecuteSequence>'
-	print >>setup,		r'      <RemoveExistingProducts After="InstallValidate" />'
-	# FYI
-	#print >>setup,		r'      <Custom Action="LaunchFile" After="InstallFinalize">NOT Installed</Custom>'
+	print >>setup,		r'      <RemoveExistingProducts After="InstallInitialize" />'
+	print >>setup,		r'      <Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">FOUNDSAMEVERSION</Custom>'
+	print >>setup,		r'      <Custom Action="ARB_NoDowngrade" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>'
 	print >>setup,		r'    </InstallExecuteSequence>'
 
 	print >>setup,		r'    <UI>'
@@ -442,9 +456,9 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>'
 	print >>setup,		r'      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg">LicenseAccepted = "1"</Publish>'
 	print >>setup,		r'      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>'
-	print >>setup,		r'      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">NOT Installed</Publish>'
+	print >>setup,		r'      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">Not Installed</Publish>'
 	print >>setup,		r'      <Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>'
-	print >>setup,		r'      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">NOT Installed OR WixUI_InstallMode = "Change"</Publish>'
+	print >>setup,		r'      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">Not Installed Or WixUI_InstallMode = "Change"</Publish>'
 	print >>setup,		r'      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>'
 	print >>setup,		r'      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>'
 	print >>setup,		r'      <Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>'
@@ -465,7 +479,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'        <Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />'
 	print >>setup,		r'        <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />'
 	print >>setup,		r'        <Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Hidden="yes" CheckBoxValue="1" Text="Launch [AppName] when setup exits">'
-	print >>setup,		r'          <Condition Action="show">NOT Installed</Condition>'
+	print >>setup,		r'          <Condition Action="show">Not Installed</Condition>'
 	print >>setup,		r'        </Control>'
 	print >>setup,		r'      </Dialog>'
 
@@ -479,13 +493,13 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 	print >>setup,		r'      <Publish Dialog="MyExitDialog"'
 	print >>setup,		r'          Control="Finish"'
 	print >>setup,		r'          Event="DoAction"'
-	print >>setup,		r'          Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>'
+	print >>setup,		r'          Value="ARB_LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and Not Installed</Publish>'
 	print >>setup,		r'    </UI>'
 
 	print >>setup,		r'    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />'
 	print >>setup,		r'    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Agility Record Book" />'
 	print >>setup,		r'    <Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />'
-	print >>setup,		r'    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />'
+	print >>setup,		r'    <CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />'
 
 	print >>setup,		r'  </Product>'
 	print >>setup,		r'</Wix>'
@@ -494,16 +508,14 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy):
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		runcmd('candle -nologo ' + outputFile + '.wxs')
-		# ICE61: This product should remove only older versions of itself. No Maximum version was detected for the current product. (OLDVERSIONFOUND)
-		#  - No, I want this to install THIS!
-		# ICE69: Mismatched component reference. Entry 'AppDesktop' of the Shortcut table belongs to component 'C_DeskShortcuts'. However, the formatted string in column 'Target' references file '_AgilityBook.exe' which belongs to component 'C_AgilityBook.exe'. Components are in the same feature.
-		#  - This is due to making the shortcuts use [#comp] references rather than [directory]exename
-		runcmd('light -nologo -sice:ICE61 -sice:ICE69 -dWixUILicenseRtf=License.rtf -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -out "' + outputFile + '.msi" "' + outputFile + '.wixobj"')
+		runcmd('light -nologo -sice:ICE69 -dWixUILicenseRtf=License.rtf -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -out "' + outputFile + '.msi" "' + outputFile + '.wixobj"')
 		if tidy:
 			if os.access(outputFile + ".wxs", os.F_OK):
 				os.remove(outputFile + ".wxs")
 			if os.access(outputFile + ".wixobj", os.F_OK):
 				os.remove(outputFile + ".wixobj")
+			if os.access(outputFile + ".wixpdb", os.F_OK):
+				os.remove(outputFile + ".wixpdb")
 	else:
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 	return 1
@@ -547,19 +559,52 @@ def main():
 	b64ok = 0
 	b98ok = 0
 
-	# Wix
 	productId = genuuid()
-	ver3Dot, junk = getversion(3)
+	ver3Dot, ver3Line = getversion(3)
 	ver4Dot, ver4Line = getversion(4)
+
+	# Get the last generated info. By doing this, we can maintain the same
+	# product id while doing beta builds. This will force the user to uninstall
+	# the existing version first since we're only bumping the build number,
+	# not the actual version number.
+	#
+	# While the detect-same-version CA will do that during install, this has
+	# the added benefit of immediately bailing during the install, rather than
+	# showing the final 'failed' dialog.
+	if not bTesting:
+		codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "r")
+		items = []
+		while (1):
+			#version,date,productid,upgradecode,[vc9,win32,etc]
+			#v2.0.0.2304,2009-04-19 21:13:36.703000,31B601BB-5343-48E1-A96E-79EDEBEED9E0,4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4,VC9,win32
+			line = codes.readline()
+			if line:
+				line = line.strip()
+				if 0 < len(line):
+					tmp = line.split(',', 4)
+					if 5 == len(tmp):
+						items = tmp
+			else:
+				break
+		codes.close()
+		if 0 == len(items):
+			print "Error: Could not parse existing GUIDs!"
+		lastVersion = items[0][1:]
+		lastVersion = lastVersion[0:lastVersion.rindex('.')]
+		# If the version numbers are the same, use the same productId
+		if lastVersion == ver3Dot:
+			productId = items[2]
+
+	# Wix
 	os.environ['PATH'] += ';' + WiXdir
 	if b32:
-		if genWiX(productId, ver3Dot, ver4Line, code32, tidy):
+		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, bTesting):
 			b32ok = 1
 	if b64:
-		if genWiX(productId, ver3Dot, ver4Line, code64, tidy):
+		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, bTesting):
 			b64ok = 1
 	if b98:
-		if genWiX(productId, ver3Dot, ver4Line, code98, tidy):
+		if genWiX(productId, ver3Dot, ver4Line, code98, tidy, bTesting):
 			b98ok = 1
 	if not bTesting and (b32ok or b64ok or b98ok):
 		d = datetime.datetime.now().isoformat(' ')
