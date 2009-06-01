@@ -38,7 +38,7 @@
 #include "stdafx.h"
 #include "WizardExcel.h"
 
-#pragma message PRAGMA_MESSAGE("TODO: Implement CWizardExcel")
+#pragma PRAGMA_TODO("Implement CWizardExcel")
 //#if defined(WIN32) && defined(wxUSE_OLE_AUTOMATION)
 //#define HAS_AUTOMATION	1
 //#else

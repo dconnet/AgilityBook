@@ -962,7 +962,7 @@ void CAgilityBookCalendar::GetWorkingAreas(
 		rClient.width = pDC->DeviceToLogicalXRel(sz.x);
 		rClient.height = pDC->DeviceToLogicalYRel(sz.y);
 		long leftMargin, rightMargin, topMargin, bottomMargin;
-		CAgilityBookOptions::GetPrinterMargins(leftMargin, rightMargin, topMargin, bottomMargin, pDC);
+		CAgilityBookOptions::GetPrinterMargins(false, leftMargin, rightMargin, topMargin, bottomMargin, pDC);
 		rClient.x += leftMargin;
 		rClient.y += topMargin;
 		rClient.width -= (leftMargin + rightMargin);

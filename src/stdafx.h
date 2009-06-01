@@ -38,6 +38,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * @li 2009-05-30 DRC Tweaked pragma message macro.
  * @li 2009-03-09 DRC Added ARB_SET_ERASE_RETURNS_ITERATOR.
  * @li 2005-10-30 DRC Added static xerces library support.
  */
@@ -47,7 +48,10 @@
 #define STRING2(x) #x
 #define STRING(x) STRING2(x)
 //#pragma message ( __FILE__ "(" STRING(__LINE__) ") : message" )
-#define PRAGMA_MESSAGE(x) ( __FILE__ "(" STRING(__LINE__) ") : " x )
+#define FILE_LINE __FILE__ "(" STRING(__LINE__) ") : "
+#define PRAGMA_MESSAGE(x) message( FILE_LINE #x )
+#define PRAGMA_TODO(x) message( FILE_LINE "TODO: " #x )
+#define PRAGMA_FIXME(x) message( FILE_LINE "FIXME: " #x )
 
 
 #if defined(_WIN32)

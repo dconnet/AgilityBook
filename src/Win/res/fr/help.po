@@ -1012,17 +1012,26 @@ msgstr "Modifier la police utilisée pour imprimer."
 msgid "HIDC_OPT_PRINT_ORIENT"
 msgstr "Orientation par défaut de la page à l'impression"
 
+msgid "HIDC_OPT_PRINT_UNITS"
+msgstr "Set the units used for measuring."
+
+msgid "HIDC_OPT_PRINT_RUNPAGE_W"
+msgstr "Set the width of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the width is 0, it will use the actual paper size."
+
+msgid "HIDC_OPT_PRINT_RUNPAGE_H"
+msgstr "Set the height of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the height is 0, it will use the actual paper size."
+
 msgid "HIDC_OPT_PRINT_MARGIN_L"
-msgstr "Modifier la marge gauche pour imprimer, en pouce."
+msgstr "Modifier la marge gauche pour imprimer."
 
 msgid "HIDC_OPT_PRINT_MARGIN_R"
-msgstr "Modifier la marge droite pour imprimer, en pouce."
+msgstr "Modifier la marge droite pour imprimer."
 
 msgid "HIDC_OPT_PRINT_MARGIN_T"
-msgstr "Modifier la marge de haut de page pour imprimer, en pouce."
+msgstr "Modifier la marge de haut de page pour imprimer."
 
 msgid "HIDC_OPT_PRINT_MARGIN_B"
-msgstr "Modifier la marge de bas de page pour imprimer, en pouce."
+msgstr "Modifier la marge de bas de page pour imprimer."
 
 msgid "HIDC_WIZARD_EXPORT_ASSIGN"
 msgstr "Configurer la façon dont les données exportées sont alignées. Quand les champs/colonnes sont assignés, les changements seront affichés dans l'aperçu dessous."

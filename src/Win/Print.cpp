@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-05-31 DRC Added support for creating pages of a specific size.
  * @li 2009-01-27 DRC Ported to wxWidgets.
  * @li 2009-01-21 DRC Leave gray separator line in when text in run is empty.
  * @li 2007-07-13 DRC Created
@@ -105,6 +106,8 @@ private:
 	std::vector<RunInfo> m_runs; // can't be const& since we're previewing now and actual vector goes out-of-scope
 	int m_maxPage;
 	int m_nPerSheet;
+	int m_nPagesX; // Number of pages we can fit across
+	int m_nPagesY;
 };
 
 
@@ -119,6 +122,8 @@ CPrintRuns::CPrintRuns(
 	, m_runs(inRuns)
 	, m_maxPage(0)
 	, m_nPerSheet(0)
+	, m_nPagesX(1)
+	, m_nPagesY(1)
 {
 }
 
@@ -164,11 +169,27 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 	{
 		int nRuns = static_cast<int>(m_runs.size());
 		int nPages = 1;
-		wxSize sz = GetDC()->GetSize(); // just detemining port/land
-		if (abs(sz.x) > abs(sz.y))
-			m_nPerSheet = 4;
+		m_nPagesX = 1;
+		m_nPagesY = 1;
+		int pageW, pageH;
+		GetPageSizeMM(&pageW, &pageH);
+		long width, height;
+		CAgilityBookOptions::GetRunPageSize(true, width, height, NULL);
+		if (0 < width && 0 < height)
+		{
+			m_nPagesX = pageW / width;
+			if (1 > m_nPagesX)
+				m_nPagesX = 1;
+			m_nPagesY = pageH / height;
+			if (1 > m_nPagesY)
+				m_nPagesY = 1;
+		}
 		else
-			m_nPerSheet = 2;
+		{
+			if (abs(pageW) > abs(pageH)) // landscape
+				m_nPagesX = 2;
+		}
+		m_nPerSheet = (m_nPagesX * m_nPagesY) * 2;
 		nPages = nRuns / m_nPerSheet;
 		if (0 != nRuns % m_nPerSheet)
 			++nPages;
@@ -823,51 +844,90 @@ static void PrintBinderMarkings(
 bool CPrintRuns::OnPrintPage(int pageNum)
 {
 	ComputeScaling();
-	wxRect r = GetLogicalPageRect();
+	wxRect r = GetLogicalPageRect(); // 0-normalized
+	wxRect rSheet = GetLogicalPaperRect(); // negative x
 
-	// (old MFC note, not investigated further in wxWidgets)
-	// Note, we could get the physical size of the page and try and get our
-	// margin at exactly 1/2 inch. But observation has revealed that what the
-	// printer reports as the offset, isn't what the printer prints as the
-	// offset. So pretent the drawing area and physical area are the same.
-	// (if printing to a pdf "printer", they are!)
+	long marginL, marginR, marginT, marginB;
+	CAgilityBookOptions::GetPrinterMargins(false, marginL, marginR, marginT, marginB, NULL);
+	marginL = static_cast<long>((marginL * m_OneInch) / 100.0);
+	marginR = static_cast<long>((marginR * m_OneInch) / 100.0);
+	marginT = static_cast<long>((marginT * m_OneInch) / 100.0);
+	marginB = static_cast<long>((marginB * m_OneInch) / 100.0);
 
-	// Indent 1/2 inch [these are fixed, don't use the user configured offsets]
-	int margin = m_OneInch / 2;
-	size_t curRun = (pageNum - 1) * m_nPerSheet;
-
-	// 'r' is full print area
-	//GetDC()->DrawRectangle(r);
-	// Landscape
-	if (abs(r.width) > abs(r.height))
+	bool bPrintBox = false;
+	long width, height;
+	CAgilityBookOptions::GetRunPageSize(false, width, height, NULL);
+	if (0 < width && 0 < height)
 	{
-		wxRect r1(r);
-		r1.x += margin;
-		r1.y += margin;
-		r1.width = r.width / 2 - 2 * margin;
-		r1.height -= 2 * margin;
-		PrintPage(pageNum, curRun, GetDC(), r1);
-		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin, m_OneInch);
-
-		r1.x += r1.width + margin;
-		GetDC()->DrawLine(r1.x, r1.y, r1.x, r1.GetBottom());
-		r1.x += margin;
-		PrintPage(pageNum, curRun + 2, GetDC(), r1);
-		PrintBinderMarkings(eSmall3Ring, GetDC(), r1, margin, m_OneInch);
+		bPrintBox = true;
+		width = static_cast<long>((width * m_OneInch) / 100.0);
+		height = static_cast<long>((height * m_OneInch) / 100.0);
+		if (1 > r.width / width)
+			width = rSheet.width;
+		if (1 > r.height / height)
+			height = rSheet.height;
 	}
-	// Portrait
 	else
 	{
-		wxRect r1(r);
-		r1.x += margin;
-		r1.y += margin;
-		r1.width -= 2 * margin;
-		r1.height -= 2 * margin;
-		PrintPage(pageNum, curRun, GetDC(), r1);
-		PrintBinderMarkings(eLarge3Ring, GetDC(), r1, margin, m_OneInch);
-		PrintBinderMarkings(eLarge4Ring, GetDC(), r1, margin, m_OneInch);
+		width = rSheet.width;
+		height = rSheet.height;
 	}
 
+	size_t curRun = (pageNum - 1) * m_nPerSheet;
+
+	// Make sure our margins are at least as large as the physical printer margins.
+	if (marginL < abs(rSheet.x))
+		marginL = abs(rSheet.x);
+	if (marginR < rSheet.width - r.width + rSheet.x)
+		marginR = rSheet.width - r.width + rSheet.x;
+	if (marginT < abs(rSheet.y))
+		marginT = abs(rSheet.y);
+	if (marginB < rSheet.height - r.height + rSheet.y)
+		marginB = rSheet.height - r.height + rSheet.y;
+
+	for (int iRow = 0; iRow < m_nPagesY; ++iRow)
+	{
+		for (int iCol = 0; iCol < m_nPagesX; ++iCol)
+		{
+			wxRect rPage;
+			rPage.x = rSheet.x + iCol * width;
+			rPage.y = rSheet.y + iRow * height;
+			rPage.width = width;
+			rPage.height = height;
+			if (bPrintBox)
+			{
+				GetDC()->DrawLine(
+					rSheet.x + (iCol + 1) * width,
+					rPage.y + marginT,
+					rSheet.x + (iCol + 1) * width,
+					rPage.y + height - marginB);
+			}
+			rPage.x += marginL;
+			rPage.y += marginT;
+			rPage.width -= (marginL + marginR);
+			rPage.height -= (marginT + marginB);
+			PrintPage(pageNum, curRun, GetDC(), rPage);
+			curRun += 2;
+			if (1 == m_nPagesX && 1 == m_nPagesY)
+			{
+				if (!bPrintBox)
+				{
+					PrintBinderMarkings(eLarge3Ring, GetDC(), rPage, marginL, m_OneInch);
+					PrintBinderMarkings(eLarge4Ring, GetDC(), rPage, marginL, m_OneInch);
+				}
+			}
+			else
+			{
+				PrintBinderMarkings(eSmall3Ring, GetDC(), rPage, marginL, m_OneInch);
+			}
+		}
+		if (bPrintBox)
+			GetDC()->DrawLine(
+				rSheet.x + marginL,
+				rSheet.y + (iRow + 1) * height,
+				rSheet.x + marginL + m_nPagesX * width - (marginL + marginR),
+				rSheet.y + (iRow + 1) * height);
+	}
 	return true;
 }
 
@@ -879,7 +939,7 @@ CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
 	//SetFooter(wxT("<hr/><p align=\"right\">@TITLE@ (@PAGENUM@/@PAGESCNT@)</p>"), wxPAGE_ALL);
 
 	long leftMargin, rightMargin, topMargin, bottomMargin;
-	CAgilityBookOptions::GetPrinterMarginsMM(leftMargin, rightMargin, topMargin, bottomMargin);
+	CAgilityBookOptions::GetPrinterMargins(true, leftMargin, rightMargin, topMargin, bottomMargin, NULL);
 	wxPageSetupDialogData* pSetup = GetPageSetupData();
 	pSetup->SetMarginTopLeft(wxPoint(leftMargin, topMargin));
 	pSetup->SetMarginBottomRight(wxPoint(rightMargin, bottomMargin));

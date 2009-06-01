@@ -145,24 +145,31 @@ public:
 	// Font options
 	static void GetPrinterFontInfo(CFontInfo& info);
 	static void SetPrinterFontInfo(CFontInfo const& info);
-	// Get margins in .01 inches (or pixels, if DC is set)
+	static bool GetUnitsAsMM();
+	static void SetUnitsAsMM(bool bAsMM);
+	// Get margins in .01 inches or MM (or pixels, if DC is set)
 	static void GetPrinterMargins(
+			bool bAsMM, ///< In .01in or millimeters, ignored it DC is set
 			long& outLeft,
 			long& outRight,
 			long& outTop,
 			long& outBottom,
 			wxDC* pDC); // Used to convert to logical units
-	// Get margins in millimeters
-	static void GetPrinterMarginsMM(
-			long& outLeft,
-			long& outRight,
-			long& outTop,
-			long& outBottom);
 	static void SetPrinterMargins(
+			bool bAsMM, ///< In .01 inches or millimeters
 			long inLeft,
 			long inRight,
 			long inTop,
-			long inBottom); // In .01 inches
+			long inBottom);
+	static void GetRunPageSize(
+			bool bAsMM, ///< In .01in or millimeters, ignored it DC is set
+			long& outWidth,
+			long& outHeight,
+			wxDC* pDC); // Used to convert to logical units
+	static void SetRunPageSize(
+			bool bAsMM,
+			long inWidth,
+			long inHeight);
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options

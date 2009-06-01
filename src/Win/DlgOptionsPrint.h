@@ -51,12 +51,19 @@ private:
 	CFontInfo m_fontPrintInfo;
 	wxFont m_fontPrint;
 	wxPrintDialogData m_PrintData;
+	bool m_MetricSizes;
+	double m_PageRunWidth;
+	double m_PageRunHeight;
 	double m_Left;
 	double m_Right;
 	double m_Top;
 	double m_Bottom;
 	wxStaticText* m_ctrlFontPrint;
 	wxRadioBox* m_Orientation;
+	wxRadioBox* m_Metric;
+	int m_idxIn;
+	int m_idxMM;
 
 	void OnFontPrint(wxCommandEvent& evt);
+	void OnUnitsChange(wxCommandEvent& evt);
 };
