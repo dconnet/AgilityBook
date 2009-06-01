@@ -115,7 +115,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
 	static ARBVersion const curVersion(12, 9);
-#pragma message PRAGMA_MESSAGE("TODO: Enable DNR")
+#pragma PRAGMA_TODO("Enable DNR")
 	//static ARBVersion const curVersion(12, 10);
 	return curVersion;
 }

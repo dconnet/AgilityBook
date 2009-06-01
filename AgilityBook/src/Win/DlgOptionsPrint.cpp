@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-05-31 DRC Added options for print page size.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-22 DRC Moved printing to new page.
  */
@@ -40,6 +41,7 @@
 
 #include "AgilityBook.h"
 #include "Validators.h"
+#include <math.h>
 
 
 CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
@@ -47,21 +49,40 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	, m_fontPrintInfo()
 	, m_fontPrint()
 	, m_PrintData(*wxGetApp().GetPrintData())
+	, m_MetricSizes(CAgilityBookOptions::GetUnitsAsMM())
+	, m_PageRunWidth(0.0)
+	, m_PageRunHeight(0.0)
 	, m_Left(0.0)
 	, m_Right(0.0)
 	, m_Top(0.0)
 	, m_Bottom(0.0)
 	, m_ctrlFontPrint(NULL)
 	, m_Orientation(NULL)
+	, m_Metric(NULL)
 {
 	CAgilityBookOptions::GetPrinterFontInfo(m_fontPrintInfo);
-	long l, r, t, b;
-	CAgilityBookOptions::GetPrinterMargins(l, r, t, b, NULL);
-	m_Left = l / 100.0;
-	m_Right = r / 100.0;
-	m_Top = t / 100.0;
-	m_Bottom = b / 100.0;
 	m_fontPrintInfo.CreateFont(m_fontPrint);
+	long l, r, t, b;
+	CAgilityBookOptions::GetPrinterMargins(m_MetricSizes, l, r, t, b, NULL);
+	m_Left = l;
+	m_Right = r;
+	m_Top = t;
+	m_Bottom = b;
+	if (!m_MetricSizes)
+	{
+		m_Left /= 100.0;
+		m_Right /= 100.0;
+		m_Top /= 100.0;
+		m_Bottom /= 100.0;
+	}
+	CAgilityBookOptions::GetRunPageSize(m_MetricSizes, l, r, NULL);
+	m_PageRunWidth = l;
+	m_PageRunHeight = r;
+	if (!m_MetricSizes)
+	{
+		m_PageRunWidth /= 100.0;
+		m_PageRunHeight /= 100.0;
+	}
 
 	// Controls (these are done first to control tab order)
 
@@ -95,13 +116,52 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	else
 		m_Orientation->SetSelection(0);
 
+	wxString m_MetricChoices[] =
+	{
+		_("IDC_OPT_PRINT_INCHES"),
+		_("IDC_OPT_PRINT_METRIC")
+	};
+	int m_MetricNChoices = sizeof(m_MetricChoices) / sizeof(m_MetricChoices[0]);
+	m_idxIn = 0; // Must agree with above
+	m_idxMM = 1;
+	m_Metric = new wxRadioBox(this, wxID_ANY,
+		_("IDC_OPT_PRINT_UNITS"),
+		wxDefaultPosition, wxDefaultSize,
+		m_MetricNChoices, m_MetricChoices, 1, wxRA_SPECIFY_COLS);
+	m_Metric->Connect(wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler(CDlgOptionsPrint::OnUnitsChange), NULL, this);
+	m_Metric->SetHelpText(_("HIDC_OPT_PRINT_UNITS"));
+	m_Metric->SetToolTip(_("HIDC_OPT_PRINT_UNITS"));
+	m_Metric->SetSelection(m_MetricSizes ? m_idxMM : m_idxIn);
+
+	wxStaticText* textWidth = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_PRINT_RUNPAGE_W"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textWidth->Wrap(-1);
+
+	wxTextCtrl* ctrlWidth = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		CGenericValidator(&m_PageRunWidth));
+	ctrlWidth->SetHelpText(_("HIDC_OPT_PRINT_RUNPAGE_W"));
+	ctrlWidth->SetToolTip(_("HIDC_OPT_PRINT_RUNPAGE_W"));
+
+	wxStaticText* textHeight = new wxStaticText(this, wxID_ANY,
+		_("IDC_OPT_PRINT_RUNPAGE_H"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	textHeight->Wrap(-1);
+	
+	wxTextCtrl* ctrlHeight = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		wxDefaultPosition, wxSize(50, -1), 0,
+		CGenericValidator(&m_PageRunHeight));
+	ctrlHeight->SetHelpText(_("HIDC_OPT_PRINT_RUNPAGE_H"));
+	ctrlHeight->SetToolTip(_("HIDC_OPT_PRINT_RUNPAGE_H"));
+
 	wxStaticText* textLeft = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_MARGIN_L"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLeft->Wrap(-1);
 
 	wxTextCtrl* ctrlLeft = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Left));
 	ctrlLeft->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_L"));
 	ctrlLeft->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_L"));
@@ -112,7 +172,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	textRight->Wrap(-1);
 
 	wxTextCtrl* ctrlRight = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Right));
 	ctrlRight->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_R"));
 	ctrlRight->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_R"));
@@ -123,7 +183,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	textTop->Wrap(-1);
 
 	wxTextCtrl* ctrlTop = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Top));
 	ctrlTop->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_T"));
 	ctrlTop->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_T"));
@@ -134,7 +194,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	textBottom->Wrap(-1);
 
 	wxTextCtrl* ctrlBottom = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, 0,
+		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Bottom));
 	ctrlBottom->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_B"));
 	ctrlBottom->SetToolTip(_("HIDC_OPT_PRINT_MARGIN_B"));
@@ -148,9 +208,27 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	sizerFont->Add(btnFont, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 	sizerPrint->Add(sizerFont, 0, wxALL, 5);
-	sizerPrint->Add(m_Orientation, 0, wxALL, 5);
 
-	wxStaticBoxSizer* sizerMargins = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRING_MARGIN")), wxHORIZONTAL);
+	wxBoxSizer* sizerRadio = new wxBoxSizer(wxHORIZONTAL);
+	sizerRadio->Add(m_Orientation, 0, wxALL, 5);
+	sizerRadio->Add(m_Metric, 0, wxALL, 5);
+
+	wxStaticBoxSizer* sizerPageSize = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_RUNPAGE")), wxVERTICAL);
+
+	wxFlexGridSizer* sizerPage = new wxFlexGridSizer(2, 2, 0, 0);
+	sizerPage->SetFlexibleDirection(wxBOTH);
+	sizerPage->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	sizerPage->Add(textWidth, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
+	sizerPage->Add(ctrlWidth, 0, wxALL, 5);
+	sizerPage->Add(textHeight, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5);
+	sizerPage->Add(ctrlHeight, 0, wxALL, 5);
+
+	sizerPageSize->Add(sizerPage, 0, wxEXPAND, 5);
+	sizerRadio->Add(sizerPageSize, 0, wxEXPAND|wxALL, 5);
+
+	sizerPrint->Add(sizerRadio, 0, wxEXPAND, 5);
+
+	wxStaticBoxSizer* sizerMargins = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN")), wxHORIZONTAL);
 
 	wxFlexGridSizer* sizerLT = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerLT->SetFlexibleDirection(wxBOTH);
@@ -185,11 +263,26 @@ void CDlgOptionsPrint::Save()
 	CAgilityBookOptions::SetPrinterFontInfo(m_fontPrintInfo);
 	m_PrintData.GetPrintData().SetOrientation(m_Orientation->GetSelection() == 1 ? wxLANDSCAPE : wxPORTRAIT);
 	wxGetApp().SavePrintData(m_PrintData);
+	if (!m_MetricSizes)
+	{
+		m_PageRunWidth *= 100.0;
+		m_PageRunHeight *= 100.0;
+		m_Left *= 100.0;
+		m_Right *= 100.0;
+		m_Top *= 100.0;
+		m_Bottom *= 100.0;
+	}
+	CAgilityBookOptions::SetUnitsAsMM(m_MetricSizes);
+	CAgilityBookOptions::SetRunPageSize(
+		m_MetricSizes,
+		static_cast<long>(m_PageRunWidth),
+		static_cast<long>(m_PageRunHeight));
 	CAgilityBookOptions::SetPrinterMargins(
-		static_cast<long>(m_Left * 100),
-		static_cast<long>(m_Right * 100),
-		static_cast<long>(m_Top * 100),
-		static_cast<long>(m_Bottom * 100));
+		m_MetricSizes,
+		static_cast<long>(m_Left),
+		static_cast<long>(m_Right),
+		static_cast<long>(m_Top),
+		static_cast<long>(m_Bottom));
 }
 
 
@@ -204,5 +297,38 @@ void CDlgOptionsPrint::OnFontPrint(wxCommandEvent& evt)
 	{
 		m_fontPrintInfo.CreateFont(dlg, m_fontPrint);
 		m_ctrlFontPrint->SetFont(m_fontPrint);
+	}
+}
+
+
+static double ConvertInchesMM(double val, bool bToMM)
+{
+	if (bToMM)
+		val *= 25.4;
+	else
+		val /= 25.4;
+	// Now round in MMs, where we have no decimals.
+	if (bToMM)
+		val = floor(val + 0.5);
+	return val;
+}
+
+
+void CDlgOptionsPrint::OnUnitsChange(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	bool bMetric = false;
+	if (m_Metric->GetSelection() == m_idxMM)
+		bMetric = true;
+	if (bMetric != m_MetricSizes)
+	{
+		m_MetricSizes = bMetric;
+		m_PageRunWidth = ConvertInchesMM(m_PageRunWidth, bMetric);
+		m_PageRunHeight = ConvertInchesMM(m_PageRunHeight, bMetric);
+		m_Left = ConvertInchesMM(m_Left, bMetric);
+		m_Right = ConvertInchesMM(m_Right, bMetric);
+		m_Top = ConvertInchesMM(m_Top, bMetric);
+		m_Bottom = ConvertInchesMM(m_Bottom, bMetric);
+		TransferDataToWindow();
 	}
 }

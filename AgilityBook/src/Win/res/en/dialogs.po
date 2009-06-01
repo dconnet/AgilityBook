@@ -961,7 +961,7 @@ msgid "IDC_OPT_PRINT_FONT_TEXT"
 msgstr "Printing Text"
 
 msgid "IDC_OPT_PRINT_FONT"
-msgstr "Set Font..."
+msgstr "Set &Font..."
 
 msgid "IDC_OPT_PRINT_ORIENT"
 msgstr "&Page Orientation"
@@ -972,20 +972,38 @@ msgstr "Portrait"
 msgid "IDC_OPT_PRINT_LAND"
 msgstr "Landscape"
 
-msgid "IDC_OPT_PRING_MARGIN"
+msgid "IDC_OPT_PRINT_UNITS"
+msgstr "&Units"
+
+msgid "IDC_OPT_PRINT_INCHES"
+msgstr "Inches"
+
+msgid "IDC_OPT_PRINT_METRIC"
+msgstr "Millimeters"
+
+msgid "IDC_OPT_PRINT_RUNPAGE"
+msgstr "Page size for Runs"
+
+msgid "IDC_OPT_PRINT_RUNPAGE_W"
+msgstr "&Width"
+
+msgid "IDC_OPT_PRINT_RUNPAGE_H"
+msgstr "&Height"
+
+msgid "IDC_OPT_PRINT_MARGIN"
 msgstr "Margins"
 
 msgid "IDC_OPT_PRINT_MARGIN_L"
-msgstr "&Left:"
+msgstr "&Left"
 
 msgid "IDC_OPT_PRINT_MARGIN_R"
-msgstr "&Right:"
+msgstr "&Right"
 
 msgid "IDC_OPT_PRINT_MARGIN_T"
-msgstr "&Top:"
+msgstr "&Top"
 
 msgid "IDC_OPT_PRINT_MARGIN_B"
-msgstr "&Bottom:"
+msgstr "&Bottom"
 
 # DlgOptionsProgram
 msgid "IDD_VIEW_OPTIONS_PROGRAM"

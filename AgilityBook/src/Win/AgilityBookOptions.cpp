@@ -118,10 +118,15 @@ Common
 	ST FilterTrainingNames (FilterOptions.cpp)
 	ST FilterVenue (FilterOptions.cpp)
 	DW FirstDayOfWeek
+	DW UnitsAsMM
+	DW Margins.MM
 	DW Margins.B
 	DW Margins.L
 	DW Margins.R
 	DW Margins.T
+	DW RunPage.MM
+	DW RunPage.W
+	DW RunPage.H
 	DW numFilters (FilterOptions.cpp)
 	DW PrintFontListBold
 	DW PrintFontListItalic
@@ -635,17 +640,63 @@ void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 }
 
 
+bool CAgilityBookOptions::GetUnitsAsMM()
+{
+	bool bAsMM = false;
+	wxConfig::Get()->Read(wxT("Common/UnitsAsMM"), &bAsMM);
+	return bAsMM;
+}
+
+
+void CAgilityBookOptions::SetUnitsAsMM(bool bAsMM)
+{
+	wxConfig::Get()->Write(wxT("Common/UnitsAsMM"), bAsMM);
+}
+
+
+static long ConvertMetric(long val, bool bToMM)
+{
+	if (bToMM)
+		return static_cast<long>(static_cast<double>(val) * 0.254);
+	else
+		return static_cast<long>(static_cast<double>(val) / 0.254);
+}
+
+
 void CAgilityBookOptions::GetPrinterMargins(
+		bool bAsMM, // In .01in or millimeters, ignored it DC is set
 		long& outLeft,
 		long& outRight,
 		long& outTop,
 		long& outBottom,
 		wxDC* pDC)
 {
+	bool bInMM = false;
+	wxConfig::Get()->Read(wxT("Common/Margins.MM"), &bInMM);
 	outLeft = wxConfig::Get()->Read(wxT("Common/Margins.L"), 50L);
 	outRight = wxConfig::Get()->Read(wxT("Common/Margins.R"), 50L);
 	outTop = wxConfig::Get()->Read(wxT("Common/Margins.T"), 50L);
 	outBottom = wxConfig::Get()->Read(wxT("Common/Margins.B"), 50L);
+	// Need to convert
+	if (bInMM != bAsMM || (pDC && bInMM))
+	{
+		// Convert to inches
+		if (bInMM)
+		{
+			outLeft = ConvertMetric(outLeft, false);
+			outRight = ConvertMetric(outRight, false);
+			outTop = ConvertMetric(outTop, false);
+			outBottom = ConvertMetric(outBottom, false);
+		}
+		// Convert to MM
+		else
+		{
+			outLeft = ConvertMetric(outLeft, true);
+			outRight = ConvertMetric(outRight, true);
+			outTop = ConvertMetric(outTop, true);
+			outBottom = ConvertMetric(outBottom, true);
+		}
+	}
 	if (pDC)
 	{
 		// Convert to logical
@@ -658,30 +709,62 @@ void CAgilityBookOptions::GetPrinterMargins(
 }
 
 
-void CAgilityBookOptions::GetPrinterMarginsMM(
-			long& outLeft,
-			long& outRight,
-			long& outTop,
-			long& outBottom)
-{
-	GetPrinterMargins(outLeft, outRight, outTop, outBottom, NULL);
-	outLeft = static_cast<long>(static_cast<double>(outLeft) * 0.254);
-	outRight = static_cast<long>(static_cast<double>(outRight) * 0.254);
-	outTop = static_cast<long>(static_cast<double>(outTop) * 0.254);
-	outBottom = static_cast<long>(static_cast<double>(outBottom) * 0.254);
-}
-
-
 void CAgilityBookOptions::SetPrinterMargins(
+		bool bAsMM, // In .01 inches or millimeters
 		long inLeft,
 		long inRight,
 		long inTop,
 		long inBottom)
 {
+	wxConfig::Get()->Write(wxT("Common/Margins.MM"), bAsMM);
 	wxConfig::Get()->Write(wxT("Common/Margins.L"), inLeft);
 	wxConfig::Get()->Write(wxT("Common/Margins.R"), inRight);
 	wxConfig::Get()->Write(wxT("Common/Margins.T"), inTop);
 	wxConfig::Get()->Write(wxT("Common/Margins.B"), inBottom);
+}
+
+
+void CAgilityBookOptions::GetRunPageSize(
+		bool bAsMM,
+		long& outWidth,
+		long& outHeight,
+		wxDC* pDC)
+{
+	bool bInMM = false;
+	wxConfig::Get()->Read(wxT("Common/RunPage.MM"), &bInMM);
+	outWidth = wxConfig::Get()->Read(wxT("Common/RunPage.W"), 0L);
+	outHeight = wxConfig::Get()->Read(wxT("Common/RunPage.H"), 0L);
+	if (bInMM != bAsMM || (pDC && bInMM))
+	{
+		if (bInMM)
+		{
+			outWidth = ConvertMetric(outWidth, false);
+			outHeight = ConvertMetric(outHeight, false);
+		}
+		else
+		{
+			outWidth = ConvertMetric(outWidth, true);
+			outHeight = ConvertMetric(outHeight, true);
+		}
+	}
+	if (pDC)
+	{
+		// Convert to logical
+		wxSize szPPI = pDC->GetPPI();
+		outWidth = pDC->DeviceToLogicalXRel(outWidth / 100.0 * szPPI.x);
+		outHeight = pDC->DeviceToLogicalXRel(outHeight / 100.0 * szPPI.x);
+	}
+}
+
+
+void CAgilityBookOptions::SetRunPageSize(
+		bool bAsMM,
+		long inWidth,
+		long inHeight)
+{
+	wxConfig::Get()->Write(wxT("Common/RunPage.MM"), bAsMM);
+	wxConfig::Get()->Write(wxT("Common/RunPage.W"), inWidth);
+	wxConfig::Get()->Write(wxT("Common/RunPage.H"), inHeight);
 }
 
 

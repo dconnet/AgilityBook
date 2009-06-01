@@ -1011,17 +1011,26 @@ msgstr "Set the font to be used when printing."
 msgid "HIDC_OPT_PRINT_ORIENT"
 msgstr "Set the default page orientation when printing."
 
+msgid "HIDC_OPT_PRINT_UNITS"
+msgstr "Set the units used for measuring."
+
+msgid "HIDC_OPT_PRINT_RUNPAGE_W"
+msgstr "Set the width of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the width is 0, it will use the actual paper size."
+
+msgid "HIDC_OPT_PRINT_RUNPAGE_H"
+msgstr "Set the height of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the height is 0, it will use the actual paper size."
+
 msgid "HIDC_OPT_PRINT_MARGIN_L"
-msgstr "Set the left margin for printing in inches."
+msgstr "Set the left margin for printing."
 
 msgid "HIDC_OPT_PRINT_MARGIN_R"
-msgstr "Set the right margin for printing in inches."
+msgstr "Set the right margin for printing."
 
 msgid "HIDC_OPT_PRINT_MARGIN_T"
-msgstr "Set the top margin for printing in inches."
+msgstr "Set the top margin for printing."
 
 msgid "HIDC_OPT_PRINT_MARGIN_B"
-msgstr "Set the bottom margin for printing in inches."
+msgstr "Set the bottom margin for printing."
 
 msgid "HIDC_WIZARD_EXPORT_ASSIGN"
 msgstr "Configure how the exported data is aligned. When the fields/columns are assigned, changes will be reflected in the preview below."

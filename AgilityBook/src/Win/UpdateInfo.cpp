@@ -363,7 +363,7 @@ bool CUpdateInfo::CheckProgram()
 //    __WXMAC_OSX__ means mach-o builds, running under 10.2 + only
 //
 //__WXOSX__ is a common define to wxMac (Carbon) and wxCocoa ports under OS X.
-#pragma message PRAGMA_MESSAGE("TODO: Add 'os' tag for URL download")
+#pragma PRAGMA_TODO("Add 'os' tag for URL download")
 				// @todo Add appropriate 'os' tag for other OS's
 				// Must agree with website's download.php
 #endif

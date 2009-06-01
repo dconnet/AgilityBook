@@ -1,8 +1,9 @@
-4/20/2009: v2.0.0.0 <in development>
+5/31/2009: v2.0.0.x <in development>
 - Bumped file version to 12.10:
   - Added 'DNR'
 - New features / Enhancements:
   - New framework (wxWidgets). Numerous changes throughout.
+  - Added ability to print runs on a specified page size.
 - Bug fixes:
   - Fixed issue decoding binary data that could crash the program.
 

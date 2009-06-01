@@ -962,7 +962,7 @@ msgid "IDC_OPT_PRINT_FONT_TEXT"
 msgstr "Example de Police"
 
 msgid "IDC_OPT_PRINT_FONT"
-msgstr "Choisir Police..."
+msgstr "Choisir &Police..."
 
 msgid "IDC_OPT_PRINT_ORIENT"
 msgstr "&Orientation"
@@ -973,20 +973,38 @@ msgstr "Portrait"
 msgid "IDC_OPT_PRINT_LAND"
 msgstr "Paysage"
 
-msgid "IDC_OPT_PRING_MARGIN"
+msgid "IDC_OPT_PRINT_UNITS"
+msgstr "&Units"
+
+msgid "IDC_OPT_PRINT_INCHES"
+msgstr "Inches"
+
+msgid "IDC_OPT_PRINT_METRIC"
+msgstr "Millimeters"
+
+msgid "IDC_OPT_PRINT_RUNPAGE"
+msgstr "Page size for Runs"
+
+msgid "IDC_OPT_PRINT_MARGIN"
 msgstr "Marges"
 
+msgid "IDC_OPT_PRINT_RUNPAGE_W"
+msgstr "&Width"
+
+msgid "IDC_OPT_PRINT_RUNPAGE_H"
+msgstr "&Height"
+
 msgid "IDC_OPT_PRINT_MARGIN_L"
-msgstr "&Gauche:"
+msgstr "&Gauche"
 
 msgid "IDC_OPT_PRINT_MARGIN_R"
-msgstr "&Droite:"
+msgstr "&Droite"
 
 msgid "IDC_OPT_PRINT_MARGIN_T"
-msgstr "&Haute:"
+msgstr "&Haute"
 
 msgid "IDC_OPT_PRINT_MARGIN_B"
-msgstr "&Basse:"
+msgstr "&Basse"
 
 # DlgOptionsProgram
 msgid "IDD_VIEW_OPTIONS_PROGRAM"
