@@ -974,25 +974,25 @@ msgid "IDC_OPT_PRINT_LAND"
 msgstr "Paysage"
 
 msgid "IDC_OPT_PRINT_UNITS"
-msgstr "&Units"
+msgstr "&Unités"
 
 msgid "IDC_OPT_PRINT_INCHES"
-msgstr "Inches"
+msgstr "Pouces"
 
 msgid "IDC_OPT_PRINT_METRIC"
-msgstr "Millimeters"
+msgstr "Millimètres"
 
 msgid "IDC_OPT_PRINT_RUNPAGE"
-msgstr "Page size for Runs"
+msgstr "Dimensions de la page pour parcours"
 
 msgid "IDC_OPT_PRINT_MARGIN"
 msgstr "Marges"
 
 msgid "IDC_OPT_PRINT_RUNPAGE_W"
-msgstr "&Width"
+msgstr "&Largeur"
 
 msgid "IDC_OPT_PRINT_RUNPAGE_H"
-msgstr "&Height"
+msgstr "&Hauteur"
 
 msgid "IDC_OPT_PRINT_MARGIN_L"
 msgstr "&Gauche"
