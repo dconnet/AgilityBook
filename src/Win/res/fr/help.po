@@ -1013,13 +1013,13 @@ msgid "HIDC_OPT_PRINT_ORIENT"
 msgstr "Orientation par défaut de la page à l'impression"
 
 msgid "HIDC_OPT_PRINT_UNITS"
-msgstr "Set the units used for measuring."
+msgstr "Définir les unités de mesure."
 
 msgid "HIDC_OPT_PRINT_RUNPAGE_W"
-msgstr "Set the width of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the width is 0, it will use the actual paper size."
+msgstr "Définit la largeur de la page pour l'impression des parcours. Permet la création de pages 5x7 sur papier 8.5x11. Si la largeur est à 0, la véritable largeur sera utilisée."
 
 msgid "HIDC_OPT_PRINT_RUNPAGE_H"
-msgstr "Set the height of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the height is 0, it will use the actual paper size."
+msgstr "Définit la hauteur de la page pour l'impression des parcours. Permet la création de pages 5x7 sur papier 8.5x11. Si la hauteur est à 0, la véritable hauteur sera utilisée."
 
 msgid "HIDC_OPT_PRINT_MARGIN_L"
 msgstr "Modifier la marge gauche pour imprimer."
