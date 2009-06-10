@@ -1016,10 +1016,10 @@ msgid "HIDC_OPT_PRINT_UNITS"
 msgstr "Définir les unités de mesure."
 
 msgid "HIDC_OPT_PRINT_RUNPAGE_W"
-msgstr "Définit la largeur de la page pour l'impression des parcours. Permet la création de pages 5x7 sur papier 8.5x11. Si la largeur est à 0, la véritable largeur sera utilisée."
+msgstr "Définit la largeur de la page pour l'impression des parcours. Permet la création de pages plus petites sur papier standard. Si la largeur est à 0, la véritable largeur sera utilisée."
 
 msgid "HIDC_OPT_PRINT_RUNPAGE_H"
-msgstr "Définit la hauteur de la page pour l'impression des parcours. Permet la création de pages 5x7 sur papier 8.5x11. Si la hauteur est à 0, la véritable hauteur sera utilisée."
+msgstr "Définit la hauteur de la page pour l'impression des parcours. Permet la création de pages plus petites sur papier standard. Si la hauteur est à 0, la véritable hauteur sera utilisée."
 
 msgid "HIDC_OPT_PRINT_MARGIN_L"
 msgstr "Modifier la marge gauche pour imprimer."

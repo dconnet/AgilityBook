@@ -1015,10 +1015,10 @@ msgid "HIDC_OPT_PRINT_UNITS"
 msgstr "Set the units used for measuring."
 
 msgid "HIDC_OPT_PRINT_RUNPAGE_W"
-msgstr "Set the width of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the width is 0, it will use the actual paper size."
+msgstr "Set the width of a page when printing Runs. This allows creating smaller sized pages on normal paper. If the width is 0, it will use the actual paper size."
 
 msgid "HIDC_OPT_PRINT_RUNPAGE_H"
-msgstr "Set the height of a page when printing Runs. This allows creating 5x7 pages on 8.5x11 paper. If the height is 0, it will use the actual paper size."
+msgstr "Set the height of a page when printing Runs. This allows creating smaller sized pages on normal paper. If the height is 0, it will use the actual paper size."
 
 msgid "HIDC_OPT_PRINT_MARGIN_L"
 msgstr "Set the left margin for printing."
