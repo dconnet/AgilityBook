@@ -33,6 +33,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *                    _after_ the dialog is destroyed).
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-10 DRC Place quotes are field on output as needed.
@@ -48,6 +50,7 @@ class CWizard;
 
 class CWizardExport : public wxWizardPageSimple
 {
+	DECLARE_CLASS(CWizardExport)
 public:
 	CWizardExport(
 			CWizard* pSheet,
@@ -64,6 +67,7 @@ private:
 			long inCol,
 			wxString inData);
 	void UpdatePreview();
+	bool DoWizardFinish();
 
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
@@ -82,6 +86,6 @@ private:
 	void OnExportDelim(wxCommandEvent& evt);
 	void OnExportAssign(wxCommandEvent& evt);
 	void OnSelchangeDate(wxCommandEvent& evt);
+	void OnWizardChanging(wxWizardEvent& evt);
 	void OnWizardChanged(wxWizardEvent& evt);
-	void OnWizardFinish(wxWizardEvent& evt);
 };

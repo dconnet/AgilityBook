@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *                    _after_ the dialog is destroyed).
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-08 DRC Added validation during import to make sure names are
@@ -61,6 +63,9 @@
 #include <wx/textfile.h>
 
 
+IMPLEMENT_CLASS(CWizardImport, wxWizardPageSimple)
+
+
 CWizardImport::CWizardImport(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc,
@@ -81,8 +86,8 @@ CWizardImport::CWizardImport(
 	, m_ctrlPreviewFile(NULL)
 	, m_ctrlPreview(NULL)
 {
+	Connect(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler(CWizardImport::OnWizardChanging));
 	Connect(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler(CWizardImport::OnWizardChanged));
-	Connect(wxEVT_WIZARD_FINISHED, wxWizardEventHandler(CWizardImport::OnWizardFinish));
 
 	CAgilityBookOptions::GetImportExportDelimiters(true, m_Delim, m_Delimiter);
 
@@ -116,14 +121,21 @@ CWizardImport::CWizardImport(
 	{
 		wxChar const* uFormat;
 		ARBDate::DateFormat format;
+		ARBDate::DateFormat extendedFormat;
 	} const sc_Dates[] =
 	{
-		{wxT("IDS_DATEFORMAT_DASH_MMDDYYYY"), ARBDate::eDashMMDDYYYY},
-		{wxT("IDS_DATEFORMAT_SLASH_MMDDYYYY"), ARBDate::eSlashMMDDYYYY},
-		{wxT("IDS_DATEFORMAT_DASH_YYYYMMDD"), ARBDate::eDashYYYYMMDD},
-		{wxT("IDS_DATEFORMAT_SLASH_YYYYMMDD"), ARBDate::eSlashYYYYMMDD},
-		{wxT("IDS_DATEFORMAT_DASH_DDMMYYYY"), ARBDate::eDashDDMMYYYY},
-		{wxT("IDS_DATEFORMAT_SLASH_DDMMYYYY"), ARBDate::eSlashDDMMYYYY},
+		{wxT("IDS_DATEFORMAT_DASH_MMDDYYYY"),
+			ARBDate::eDashMMDDYYYY, ARBDate::eDashMDY},
+		{wxT("IDS_DATEFORMAT_SLASH_MMDDYYYY"),
+			ARBDate::eSlashMMDDYYYY, ARBDate::eSlashMDY},
+		{wxT("IDS_DATEFORMAT_DASH_YYYYMMDD"),
+			ARBDate::eDashYYYYMMDD, ARBDate::eDashYMD},
+		{wxT("IDS_DATEFORMAT_SLASH_YYYYMMDD"),
+			ARBDate::eSlashYYYYMMDD, ARBDate::eSlashYMD},
+		{wxT("IDS_DATEFORMAT_DASH_DDMMYYYY"),
+			ARBDate::eDashDDMMYYYY, ARBDate::eDashDMY},
+		{wxT("IDS_DATEFORMAT_SLASH_DDMMYYYY"),
+			ARBDate::eSlashDDMMYYYY, ARBDate::eSlashDMY},
 	};
 	static size_t const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);
 	ARBDate::DateFormat format;
@@ -132,9 +144,11 @@ CWizardImport::CWizardImport(
 	{
 		long index = m_ctrlDateFormat->Append(wxGetTranslation(sc_Dates[i].uFormat));
 		m_ctrlDateFormat->SetClientData(index, (void*)sc_Dates[i].format);
-		if (sc_Dates[i].format == format)
+		if (sc_Dates[i].format == format || sc_Dates[i].extendedFormat == format)
 			m_ctrlDateFormat->SetSelection(index);
 	}
+	if (0 > m_ctrlDateFormat->GetSelection())
+		m_ctrlDateFormat->SetSelection(0);
 	m_ctrlDateFormat->SetHelpText(_("HIDC_WIZARD_IMPORT_DATE"));
 	m_ctrlDateFormat->SetToolTip(_("HIDC_WIZARD_IMPORT_DATE"));
 
@@ -736,6 +750,20 @@ void CWizardImport::OnImportFile(wxCommandEvent& evt)
 }
 
 
+void CWizardImport::OnWizardChanging(wxWizardEvent& evt)
+{
+	if (evt.GetDirection())
+	{
+		if (!DoWizardFinish())
+		{
+			evt.Veto();
+			return;
+		}
+	}
+	evt.Skip();
+}
+
+
 void CWizardImport::OnWizardChanged(wxWizardEvent& evt)
 {
 	if (evt.GetPage() == static_cast<wxWizardPage*>(this))
@@ -752,15 +780,14 @@ void CWizardImport::OnWizardChanged(wxWizardEvent& evt)
 }
 
 
-void CWizardImport::OnWizardFinish(wxWizardEvent& evt)
+bool CWizardImport::DoWizardFinish()
 {
 	long index = m_ctrlDateFormat->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
 		wxMessageBox(_("IDS_SPECIFY_DATEFORMAT"), wxMessageBoxCaptionStr, wxICON_ERROR);
 		m_ctrlDateFormat->SetFocus();
-		evt.Veto();
-		return;
+		return false;
 	}
 	CAgilityBookOptions::SetImportStartRow(m_Row);
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
@@ -1449,4 +1476,5 @@ void CWizardImport::OnWizardFinish(wxWizardEvent& evt)
 		CUpdateHint hint(UPDATE_ALL_VIEW);
 		m_pDoc->UpdateAllViews(NULL, &hint);
 	}
+	return true;
 }

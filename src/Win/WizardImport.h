@@ -33,6 +33,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *                    _after_ the dialog is destroyed).
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-01-04 DRC Implemented import, except for trials/runs.
@@ -50,6 +52,7 @@ class wxSpinEvent;
 
 class CWizardImport : public wxWizardPageSimple
 {
+	DECLARE_CLASS(CWizardImport)
 public:
 	CWizardImport(
 			CWizard* pSheet,
@@ -63,6 +66,7 @@ private:
 	void UpdateButtons();
 	void UpdatePreview();
 	bool DoImportFile();
+	bool DoWizardFinish();
 
 	CWizard* m_pSheet;
 	CAgilityBookDoc* m_pDoc;
@@ -89,6 +93,6 @@ private:
 	void OnImportDelim(wxCommandEvent& evt);
 	void OnImportAssign(wxCommandEvent& evt);
 	void OnImportFile(wxCommandEvent& evt);
+	void OnWizardChanging(wxWizardEvent& evt);
 	void OnWizardChanged(wxWizardEvent& evt);
-	void OnWizardFinish(wxWizardEvent& evt);
 };
