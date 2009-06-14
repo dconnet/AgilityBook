@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
+ *                    _after_ the dialog is destroyed).
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-08-09 DRC When importing ARB files, update regnum and titles
@@ -89,6 +91,9 @@ static const long s_numImportExportChoices = sizeof(s_ImportExportChoices) / siz
 /////////////////////////////////////////////////////////////////////////////
 // CWizardStart property page
 
+IMPLEMENT_CLASS(CWizardStart, wxWizardPage)
+
+
 CWizardStart::CWizardStart(
 		CWizard* pSheet,
 		CAgilityBookDoc* pDoc)
@@ -102,7 +107,6 @@ CWizardStart::CWizardStart(
 {
 	Connect(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler(CWizardStart::OnWizardChanging));
 	Connect(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler(CWizardStart::OnWizardChanged));
-	Connect(wxEVT_WIZARD_FINISHED, wxWizardEventHandler(CWizardStart::OnWizardFinish));
 
 	// Get the last selected choice
 	m_Style = wxConfig::Get()->Read(LAST_STYLE, WIZARD_RADIO_EXCEL);
@@ -460,6 +464,12 @@ void CWizardStart::OnWizardChanging(wxWizardEvent& evt)
 		}
 		int data = (int)m_ctrlList->GetClientData(index);
 		m_pSheet->SetImportExportItem(data, m_Style);
+		if (ePageFinish == sc_Items[data].data[m_Style].nextPage
+		&& !DoWizardFinish())
+		{
+			evt.Veto();
+			return;
+		}
 	}
 	evt.Skip();
 }
@@ -476,7 +486,7 @@ void CWizardStart::OnWizardChanged(wxWizardEvent& evt)
 }
 
 
-void CWizardStart::OnWizardFinish(wxWizardEvent& evt)
+bool CWizardStart::DoWizardFinish()
 {
 	bool bOk = false;
 	int index = m_ctrlList->GetSelection();
@@ -783,6 +793,5 @@ void CWizardStart::OnWizardFinish(wxWizardEvent& evt)
 			break;
 		}
 	}
-	if (!bOk)
-		evt.Veto();
+	return bOk;
 }
