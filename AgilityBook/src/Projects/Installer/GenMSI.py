@@ -53,6 +53,11 @@ UpgradeCodeV1 = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
 UpgradeCodeV2 = "4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4"
 defFolder = 'Agility Record Book v2'
 
+# Name used for filenames, culture name
+supportedLangs = [
+	("en", "en-us"),
+	("fr", "fr-fr")]
+
 
 def getversion(numParts):
 	ver = "0"
@@ -139,6 +144,56 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 		return 0
 
+	setup = open(outputFile + "-en.wxl", "w")
+	print >>setup,		r'<?xml version="1.0" encoding="utf-8"?>'
+	print >>setup,		r'<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">'
+	print >>setup,		r'  <String Id="Comments">Track all your agility records in one convenient place.</String>'
+	print >>setup,		r'  <String Id="OnNT">This application only runs on Windows NT and above</String>'
+	print >>setup,		r'  <String Id="On98">This application only runs on Windows ME and above</String>'
+	print >>setup,		r'  <String Id="On64bit">This application only runs on 64bit Windows systems</String>'
+	print >>setup,		r'  <String Id="ARB_AlreadyUpdated">Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel.</String>'
+	print >>setup,		r'  <String Id="ARB_NoDowngrade">A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product.</String>'
+	print >>setup,		r'  <String Id="FeatureCompleteDesc">Main Agility Record Book files</String>'
+	print >>setup,		r'  <String Id="FeatureArbHelpTitle">ARB Help</String>'
+	print >>setup,		r'  <String Id="FeatureArbHelpDesc">Help diagnose problems by assembling necessary files for debugging</String>'
+	print >>setup,		r'  <String Id="FeatureLangTitle">Languages</String>'
+	print >>setup,		r'  <String Id="FeatureLangDesc">Supported languages that can be changed while running the program (English is always available)</String>'
+	print >>setup,		r'  <String Id="FeatureFrenchTitle">French</String>'
+	print >>setup,		r'  <String Id="FeatureFrenchDesc">French</String>'
+	print >>setup,		r'  <String Id="FeatureCalPluginTitle">Calendar Addins</String>'
+	print >>setup,		r'  <String Id="FeatureCalPluginDesc">Addins to download Calendar data directly from a website</String>'
+	print >>setup,		r'  <String Id="FeatureUSDAATitle">USDAA</String>'
+	print >>setup,		r'  <String Id="FeatureUSDAADesc">Download Calendar entries from usdaa.com</String>'
+	print >>setup,		r'  <String Id="LaunchPgm">Launch [AppName] when setup exits</String>'
+	print >>setup,		r'  <String Id="LaunchPgmText">Launch [AppName]</String>'
+	print >>setup,		r'</WixLocalization>'
+	setup.close()
+
+	setup = open(outputFile + "-fr.wxl", "w")
+	print >>setup,		r'<?xml version="1.0" encoding="utf-8"?>'
+	print >>setup,		r'<WixLocalization Culture="fr-fr" xmlns="http://schemas.microsoft.com/wix/2006/localization">'
+	print >>setup,		r'  <String Id="Comments">Track all your agility records in one convenient place.</String>'
+	print >>setup,		r'  <String Id="OnNT">This application only runs on Windows NT and above</String>'
+	print >>setup,		r'  <String Id="On98">This application only runs on Windows ME and above</String>'
+	print >>setup,		r'  <String Id="On64bit">This application only runs on 64bit Windows systems</String>'
+	print >>setup,		r'  <String Id="ARB_AlreadyUpdated">Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel.</String>'
+	print >>setup,		r'  <String Id="ARB_NoDowngrade">A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product.</String>'
+	print >>setup,		r'  <String Id="FeatureCompleteDesc">Main Agility Record Book files</String>'
+	print >>setup,		r'  <String Id="FeatureArbHelpTitle">ARB Help</String>'
+	print >>setup,		r'  <String Id="FeatureArbHelpDesc">Help diagnose problems by assembling necessary files for debugging</String>'
+	print >>setup,		r'  <String Id="FeatureLangTitle">Languages</String>'
+	print >>setup,		r'  <String Id="FeatureLangDesc">Supported languages that can be changed while running the program (English is always available)</String>'
+	print >>setup,		r'  <String Id="FeatureFrenchTitle">French</String>'
+	print >>setup,		r'  <String Id="FeatureFrenchDesc">French</String>'
+	print >>setup,		r'  <String Id="FeatureCalPluginTitle">Calendar Addins</String>'
+	print >>setup,		r'  <String Id="FeatureCalPluginDesc">Addins to download Calendar data directly from a website</String>'
+	print >>setup,		r'  <String Id="FeatureUSDAATitle">USDAA</String>'
+	print >>setup,		r'  <String Id="FeatureUSDAADesc">Download Calendar entries from usdaa.com</String>'
+	print >>setup,		r'  <String Id="LaunchPgm">Launch [AppName] when setup exits</String>'
+	print >>setup,		r'  <String Id="LaunchPgmText">Launch Agility Record Book</String>'
+	print >>setup,		r'</WixLocalization>'
+	setup.close()
+
 	setup = open(outputFile + ".wxs", "w")
 	print >>setup,		r'<?xml version="1.0" encoding="utf-8"?>'
 	print >>setup,		r'<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">'
@@ -152,15 +207,17 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'      Manufacturer="dcon Software">'
 	print >>setup,		r'    <Package'
 	print >>setup,		r'        Description="Agility Record Book"'
-	print >>setup,		r'        Comments="Track all your agility records in one convenient place."'
+	print >>setup,		r'        Comments="!(loc.Comments)"'
 	print >>setup,		r'        InstallerVersion="200"'
 	if code64 == code:
 		print >>setup,	r'        Platform="x64"'
 	print >>setup,		r'        Compressed="yes" />'
 
+	print >>setup,		r'    <WixVariable Id="WixUIDialogBmp" Value="ArbDialogBmp.bmp" />'
+	print >>setup,		r'    <WixVariable Id="WixUIBannerBmp" Value="ArbBannerBmp.bmp" />'
 	print >>setup,		r'    <Icon Id="IconAgilityBook.ico" SourceFile="..\..\..\src\win\res\AgilityBook.ico" />'
 
-	print >>setup,		r'    <Property Id="ARPCOMMENTS">Track all your agility records in one convenient place.</Property>'
+	print >>setup,		r'    <Property Id="ARPCOMMENTS">!(loc.Comments)</Property>'
 	print >>setup,		r'    <Property Id="ARPCONTACT">David Connet</Property>'
 	print >>setup,		r'    <Property Id="ARPHELPLINK">http://www.agilityrecordbook.com</Property>'
 	print >>setup,		r'    <Property Id="ARPURLINFOABOUT">http://www.agilityrecordbook.com</Property>'
@@ -173,11 +230,11 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 
 	# Launch Conditions
 	if code32 == code:
-		print >>setup,	r'    <Condition Message="This application only runs on Windows NT and above">VersionNT</Condition>'
+		print >>setup,	r'    <Condition Message="!(loc.OnNT)">VersionNT</Condition>'
 	elif code98 == code:
-		print >>setup,	r'    <Condition Message="This application only runs on Windows ME and above">Version9X&gt;=490 Or VersionNT</Condition>'
+		print >>setup,	r'    <Condition Message="!(loc.On98)">Version9X&gt;=490 Or VersionNT</Condition>'
 	elif code64 == code:
-		print >>setup,	r'    <Condition Message="This application only runs on 64bit Windows systems">VersionNT64</Condition>'
+		print >>setup,	r'    <Condition Message="!(loc.On64bit)">VersionNT64</Condition>'
 
 	# During beta, do not remove v1.
 	# (that's why we created a different upgrade code)
@@ -213,8 +270,8 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'          Property="NEWERVERSIONDETECTED" />'
 	print >>setup,		r'    </Upgrade>'
 
-	print >>setup,		r'    <CustomAction Id="ARB_AlreadyUpdated" Error="Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel." />'
-	print >>setup,		r'    <CustomAction Id="ARB_NoDowngrade" Error="A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product." />'
+	print >>setup,		r'    <CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />'
+	print >>setup,		r'    <CustomAction Id="ARB_NoDowngrade" Error="!(loc.ARB_NoDowngrade)" />'
 
 	print >>setup,		r'    <Media Id="1" Cabinet="AgilityBook.cab" EmbedCab="yes" />'
 
@@ -380,7 +437,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'        Level="1"'
 	print >>setup,		r'        AllowAdvertise="no"'
 	print >>setup,		r'        Title="Agility Record Book"'
-	print >>setup,		r'        Description="Main Agility Record Book files"'
+	print >>setup,		r'        Description="!(loc.FeatureCompleteDesc)"'
 	print >>setup,		r'        ConfigurableDirectory="APPLICATIONFOLDER">'
 	print >>setup,		r'      <ComponentRef Id="C_MenuShortcutsARB" />'
 	print >>setup,		r'      <ComponentRef Id="C_DeskShortcuts" />'
@@ -391,8 +448,8 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'          Display="expand"'
 	print >>setup,		r'          Level="100"'
 	print >>setup,		r'          AllowAdvertise="no"'
-	print >>setup,		r'          Title="ARBHelp"'
-	print >>setup,		r'          Description="Help diagnose problems by assembling necessary files for debugging">'
+	print >>setup,		r'          Title="!(loc.FeatureArbHelpTitle)"'
+	print >>setup,		r'          Description="!(loc.FeatureArbHelpDesc)">'
 	print >>setup,		r'        <ComponentRef Id="C_ARBHelp.exe" />'
 	print >>setup,		r'        <ComponentRef Id="C_MenuShortcutsHelp" />'
 	print >>setup,		r'      </Feature>'
@@ -400,13 +457,15 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'          Display="expand"'
 	print >>setup,		r'          Level="100"'
 	print >>setup,		r'          AllowAdvertise="no"'
-	print >>setup,		r'          Title="Languages" Description="Supported languages that can be changed while running the program (English is always available)">'
+	print >>setup,		r'          Title="!(loc.FeatureLangTitle)"'
+	print >>setup,		r'          Description="!(loc.FeatureLangDesc)">'
 	# Need an empty component to work around a bug with features (empty features add network options)
 	print >>setup,		r'        <ComponentRef Id="empty" />'
 	print >>setup,		r'        <Feature Id="French"'
 	print >>setup,		r'            Level="100"'
 	print >>setup,		r'            AllowAdvertise="no"'
-	print >>setup,		r'            Title="French" Description="French">'
+	print >>setup,		r'            Title="!(loc.FeatureFrenchTitle)"'
+	print >>setup,		r'            Description="!(loc.FeatureFrenchDesc)">'
 	print >>setup,		r'          <ComponentRef Id="C_langFR" />'
 	print >>setup,		r'        </Feature>'
 	print >>setup,		r'      </Feature>'
@@ -414,13 +473,15 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'          Display="expand"'
 	print >>setup,		r'          Level="100"'
 	print >>setup,		r'          AllowAdvertise="no"'
-	print >>setup,		r'          Title="Calendar Addins" Description="Addins to download Calendar data directly from a website">'
+	print >>setup,		r'          Title="!(loc.FeatureCalPluginTitle)"'
+	print >>setup,		r'          Description="!(loc.FeatureCalPluginDesc)">'
 	# Need an empty component to work around a bug with features (to suppress advertising)
 	print >>setup,		r'        <ComponentRef Id="empty" />'
 	print >>setup,		r'        <Feature Id="Calendar"'
 	print >>setup,		r'            Level="100"'
 	print >>setup,		r'            AllowAdvertise="no"'
-	print >>setup,		r'            Title="USDAA" Description="Download Calendar entries from usdaa.com">'
+	print >>setup,		r'            Title="!(loc.FeatureUSDAATitle)"'
+	print >>setup,		r'            Description="!(loc.FeatureUSDAADesc)">'
 	print >>setup,		r'          <ComponentRef Id="C_cal_usdaa.dll" />'
 	print >>setup,		r'        </Feature>'
 	print >>setup,		r'      </Feature>'
@@ -478,7 +539,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />'
 	print >>setup,		r'        <Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />'
 	print >>setup,		r'        <Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />'
-	print >>setup,		r'        <Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Hidden="yes" CheckBoxValue="1" Text="Launch [AppName] when setup exits">'
+	print >>setup,		r'        <Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">'
 	print >>setup,		r'          <Condition Action="show">Not Installed</Condition>'
 	print >>setup,		r'        </Control>'
 	print >>setup,		r'      </Dialog>'
@@ -497,7 +558,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'    </UI>'
 
 	print >>setup,		r'    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />'
-	print >>setup,		r'    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Agility Record Book" />'
+	print >>setup,		r'    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchPgmText)" />'
 	print >>setup,		r'    <Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />'
 	print >>setup,		r'    <CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />'
 
@@ -508,14 +569,20 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 
 	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
 		runcmd('candle -nologo ' + outputFile + '.wxs')
-		runcmd('light -nologo -sice:ICE69 -dWixUILicenseRtf=License.rtf -ext WixUIExtension -ext WixUtilExtension -cultures:en-us -out "' + outputFile + '.msi" "' + outputFile + '.wixobj"')
+		for fname, culture in supportedLangs:
+			basename = outputFile + '-' + fname
+			runcmd('light -nologo -dWixUILicenseRtf="License-' + fname + '.rtf" -ext WixUIExtension -ext WixUtilExtension -cultures:' + culture + ' -loc "' + basename + '.wxl" -out "' + basename + '.msi" "' + outputFile + '.wixobj"')
 		if tidy:
 			if os.access(outputFile + ".wxs", os.F_OK):
 				os.remove(outputFile + ".wxs")
 			if os.access(outputFile + ".wixobj", os.F_OK):
 				os.remove(outputFile + ".wixobj")
-			if os.access(outputFile + ".wixpdb", os.F_OK):
-				os.remove(outputFile + ".wixpdb")
+			for fname, culture in supportedLangs:
+				basename = outputFile + '-' + fname
+				if os.access(basename + ".wxl", os.F_OK):
+					os.remove(basename + ".wxl")
+				if os.access(basename + ".wixpdb", os.F_OK):
+					os.remove(basename + ".wixpdb")
 	else:
 		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 	return 1
@@ -571,11 +638,13 @@ def main():
 	# While the detect-same-version CA will do that during install, this has
 	# the added benefit of immediately bailing during the install, rather than
 	# showing the final 'failed' dialog.
-	if not bTesting:
+	if bTesting:
+		print 'Remember, uninstall the old version first. This does not check.'
+	else:
 		codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "r")
 		items = []
 		while (1):
-			#version,date,productid,upgradecode,[vc9,win32,etc]
+			#version,date,productid,upgradecode,compiler,target
 			#v2.0.0.2304,2009-04-19 21:13:36.703000,31B601BB-5343-48E1-A96E-79EDEBEED9E0,4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4,VC9,win32
 			line = codes.readline()
 			if line:
