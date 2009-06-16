@@ -1,3 +1,5 @@
+# coding=utf-8
+#
 # Generate MSI files
 #
 # Revision History
@@ -172,25 +174,25 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	setup = open(outputFile + "-fr.wxl", "w")
 	print >>setup,		r'<?xml version="1.0" encoding="utf-8"?>'
 	print >>setup,		r'<WixLocalization Culture="fr-fr" xmlns="http://schemas.microsoft.com/wix/2006/localization">'
-	print >>setup,		r'  <String Id="Comments">Track all your agility records in one convenient place.</String>'
-	print >>setup,		r'  <String Id="OnNT">This application only runs on Windows NT and above</String>'
-	print >>setup,		r'  <String Id="On98">This application only runs on Windows ME and above</String>'
-	print >>setup,		r'  <String Id="On64bit">This application only runs on 64bit Windows systems</String>'
-	print >>setup,		r'  <String Id="ARB_AlreadyUpdated">Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel.</String>'
-	print >>setup,		r'  <String Id="ARB_NoDowngrade">A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product.</String>'
-	print >>setup,		r'  <String Id="FeatureCompleteDesc">Main Agility Record Book files</String>'
-	print >>setup,		r'  <String Id="FeatureArbHelpTitle">ARB Help</String>'
-	print >>setup,		r'  <String Id="FeatureArbHelpDesc">Help diagnose problems by assembling necessary files for debugging</String>'
-	print >>setup,		r'  <String Id="FeatureLangTitle">Languages</String>'
-	print >>setup,		r'  <String Id="FeatureLangDesc">Supported languages that can be changed while running the program (English is always available)</String>'
-	print >>setup,		r'  <String Id="FeatureFrenchTitle">French</String>'
-	print >>setup,		r'  <String Id="FeatureFrenchDesc">French</String>'
-	print >>setup,		r'  <String Id="FeatureCalPluginTitle">Calendar Addins</String>'
-	print >>setup,		r'  <String Id="FeatureCalPluginDesc">Addins to download Calendar data directly from a website</String>'
+	print >>setup,		 '  <String Id="Comments">Suivez tous vos résultats d\'agility dans un seul endroit.</String>'
+	print >>setup,		r'  <String Id="OnNT">Ce logiciel fonctionne uniquement sous Windows NT ou plus récent.</String>'
+	print >>setup,		r'  <String Id="On98">Ce logiciel fonctionne uniquement sous Windows ME ou plus récent.</String>'
+	print >>setup,		r'  <String Id="On64bit">Ce logiciel fonctionne uniquement sous système Windows 64bit.</String>'
+	print >>setup,		 '  <String Id="ARB_AlreadyUpdated">Un autre version de [ProductName] est déjà installée. L\'installation de cette version ne peut pas continuer. Pour supprimer la version installée, utilisez "Supprimer un programme" dans le panneau de configuration.</String>'
+	print >>setup,		 '  <String Id="ARB_NoDowngrade">Un version plus récente de [ProductName] est déjà installée. Pour installer une version plus ancienne, supprimez d\'abord la version installée.</String>'
+	print >>setup,		r'  <String Id="FeatureCompleteDesc">Fichiers "Agility Record Book" principaux</String>'
+	print >>setup,		r'  <String Id="FeatureArbHelpTitle">ARB Aide</String>'
+	print >>setup,		r'  <String Id="FeatureArbHelpDesc">Aide au diagnostic par assemblage des fichiers nécessaires au débogage</String>'
+	print >>setup,		r'  <String Id="FeatureLangTitle">Langages</String>'
+	print >>setup,		 '  <String Id="FeatureLangDesc">Langages installées qui peuvent être changés en cours d\'utilisation du programme. (Anglais est toujours disponible.)</String>'
+	print >>setup,		r'  <String Id="FeatureFrenchTitle">Français</String>'
+	print >>setup,		r'  <String Id="FeatureFrenchDesc">Français</String>'
+	print >>setup,		r'  <String Id="FeatureCalPluginTitle">Addins Calendrier</String>'
+	print >>setup,		 '  <String Id="FeatureCalPluginDesc">Addins pour télécharger les données d\'un calendrier d\'un site web</String>'
 	print >>setup,		r'  <String Id="FeatureUSDAATitle">USDAA</String>'
-	print >>setup,		r'  <String Id="FeatureUSDAADesc">Download Calendar entries from usdaa.com</String>'
-	print >>setup,		r'  <String Id="LaunchPgm">Launch [AppName] when setup exits</String>'
-	print >>setup,		r'  <String Id="LaunchPgmText">Launch Agility Record Book</String>'
+	print >>setup,		r'  <String Id="FeatureUSDAADesc">Télécharger les données calendrier du site usdaa.com</String>'
+	print >>setup,		 '  <String Id="LaunchPgm">Lancer [AppName] à la fin d\'installation</String>'
+	print >>setup,		r'  <String Id="LaunchPgmText">Lancer [AppName]</String>'
 	print >>setup,		r'</WixLocalization>'
 	setup.close()
 
