@@ -1,5 +1,5 @@
 /*
- * Copyright © 2004-2009 David Connet. All Rights Reserved.
+ * Copyright ï¿½ 2004-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -158,14 +158,12 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 			data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
 #ifdef UNICODE
 			wxString tmp(data.c_str(), wxMBConvUTF8());
+#else
+			wxString tmp = data.c_str();
+#endif
 			if (!errMsg.IsEmpty())
 				tmp += errMsg;
 			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
-#else
-			if (!errMsg.IsEmpty())
-				data += errMsg;
-			wxMessageBox(data, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
-#endif
 		}
 		return false;
 	}

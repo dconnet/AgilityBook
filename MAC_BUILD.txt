@@ -28,7 +28,9 @@ extract the tar to a directory (i.e wxmac)
 > cd build-release
 configure as a statically linked universal binary containing all builtin libs
 to make easier to deploy:
-> ../configure --disable-shared --enable-unicode --enable-universal-binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.3.9 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
+[Note: Due to a bug in wxWidgets, as of 2.8.10, do not use unicode. Formatting
+strings does not work properly]
+> ../configure --disable-shared --disable-unicode --enable-universal-binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.3.9 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
 > make
 
 Now you need to put this version of wx-config on your path so when you make
