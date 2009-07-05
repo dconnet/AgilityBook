@@ -1,5 +1,5 @@
 /*
- * Copyright © 2006-2009 David Connet. All Rights Reserved.
+ * Copyright ï¿½ 2006-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -698,7 +698,7 @@ void CDlgConfigEventMethod::FillLevelList()
 				iterLevel != pDiv->GetLevels().end();
 				++iterLevel)
 			{
-				if (wxNOT_FOUND == m_ctrlLevel->FindString((*iterLevel)->GetName().c_str()), true)
+				if (wxNOT_FOUND == m_ctrlLevel->FindString((*iterLevel)->GetName().c_str(), true))
 				{
 					index = m_ctrlLevel->Append((*iterLevel)->GetName().c_str());
 					if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
