@@ -1,12 +1,13 @@
 		   Universal Binary Build on MacOS
 
 0. gettext package (from MacPorts): http://gettext.darwinports.com/
+   - Also, it's highly recommended to update svn (sudo port install svn)
 
 1. Install boost from source - download and then extract to a directory
 (i.e. boost_1_38_0)
 > cd boost_1_38_0
 > bjam toolset=darwin variant=debug threading=multi link=static architecture=combined
-(Note, there's actually no need to compile boost)
+- Note, there's actually no need to compile boost
 
 If you don't install them in the system directory set the BOOSTINCLUDE env var
 to the root of the boost directory:
@@ -14,6 +15,7 @@ to the root of the boost directory:
 -- This can also be set in ~/.MacOSX/environment.plist (property manager)
 
 2. Download and install WxMac in a local directory
+[see http://wiki.wxwidgets.org/Getting_started_on_OS_X]
 This seems to be the preferred install method for wxWidgets and allows you to
 change settings of the library w/o having to be root and it allows you to have
 multiple versions simultaneously with different settings
