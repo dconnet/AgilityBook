@@ -3,7 +3,7 @@
 #endif
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright Â© 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -214,9 +214,22 @@
 #ifndef wxUSE_DOC_VIEW_ARCHITECTURE
 #error ARB: wxUSE_DOC_VIEW_ARCHITECTURE must be defined in wxWidgets
 #endif
+// We need unix98-style positional parameters
+#ifndef wxUSE_PRINTF_POS_PARAMS
+#error ARB: wxUSE_PRINTF_POS_PARAMS must be defined in wxWidgets
+#endif
 // There's other things that could be checked, but that's good enough for now.
 // If there's other things we need, the compilation will die at that point.
 
+// Make sure UNICODE settings are consistent
+#if defined(wxUSE_UNICODE) && wxUSE_UNICODE
+	#if !defined(UNICODE)
+		#error UNICODE must be defined when using wxUSE_UNICODE
+	#endif
+	#if !defined(_UNICODE)
+		#error _UNICODE must be defined when using wxUSE_UNICODE
+	#endif
+#endif
 
 #include <memory> // To pick up the _HAS_TR1 define
 #if _HAS_TR1
