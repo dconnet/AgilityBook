@@ -1,5 +1,5 @@
 /*
- * Copyright © 2005-2009 David Connet. All Rights Reserved.
+ * Copyright ï¿½ 2005-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -353,8 +353,8 @@ void CDlgConfigMultiQ::OnRemove(wxCommandEvent& evt)
 	{
 		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
 		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
-		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
-		if (m_pMultiQ->RemoveItem(div.c_str(), level.c_str(), evt.c_str()))
+		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
+		if (m_pMultiQ->RemoveItem(div.c_str(), level.c_str(), evnt.c_str()))
 			m_ctrlItems->DeleteItem(idx);
 		else
 			wxBell();
@@ -390,8 +390,8 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	{
 		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
 		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
-		wxString evt = GetListColumnText(m_ctrlItems, idx, 2);
-		m_pMultiQ->AddItem(div.c_str(), level.c_str(), evt.c_str());
+		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
+		m_pMultiQ->AddItem(div.c_str(), level.c_str(), evnt.c_str());
 	}
 	*m_pOrigMultiQ = *m_pMultiQ;
 

@@ -413,7 +413,6 @@ bool CWizardImport::DoImportFile()
 			wxTextFile file;
 			if (file.Open(m_FileName))
 			{
-				wxString str;
 				for (str = file.GetFirstLine(); !file.Eof(); str = file.GetNextLine())
 				{
 					str.Trim(true);

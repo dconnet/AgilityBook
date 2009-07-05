@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright ï¿½ 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -254,7 +254,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 	{
 		outPos.x = rect.GetLeft() + rect.GetWidth() / 3;
 		outPos.y = rect.GetTop() + rect.GetHeight() / 2;
-		wxRect rect = ctrl.GetClientRect();
+		rect = ctrl.GetClientRect();
 		bOk = rect.Contains(outPos);
 	}
 	return bOk;

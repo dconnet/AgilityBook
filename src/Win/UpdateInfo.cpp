@@ -439,13 +439,13 @@ void CUpdateInfo::CheckConfig(
 				tstring errMsg2;
 				if (!tree->LoadXMLBuffer(strConfig.c_str(), strConfig.length(), errMsg2))
 				{
-					wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
+					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
 					if (0 < errMsg2.length())
 					{
-						msg += wxT("\n\n");
-						msg += errMsg2.c_str();
+						msg2 += wxT("\n\n");
+						msg2 += errMsg2.c_str();
 					}
-					wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 				}
 				else if (tree->GetName() == wxT("DefaultConfig"))
 				{

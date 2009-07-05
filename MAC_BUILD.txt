@@ -11,11 +11,13 @@
 If you don't install them in the system directory set the BOOSTINCLUDE env var
 to the root of the boost directory:
 > export BOOSTINCLUDE=/Users/me/boost_1_38_0
+-- This can also be set in ~/.MacOSX/environment.plist (property manager)
 
 2. Download and install WxMac in a local directory
 This seems to be the preferred install method for wxWidgets and allows you to
 change settings of the library w/o having to be root and it allows you to have
 multiple versions simultaneously with different settings
+-- Set WXWIN to point to this directory (makes paths easier to set)
 
 extract the tar to a directory (i.e wxmac)
 > cd wxmac
@@ -24,7 +26,7 @@ extract the tar to a directory (i.e wxmac)
 > cd build-release
 configure as a statically linked universal binary containing all builtin libs
 to make easier to deploy:
-> ../configure --disable-shared --enable-unicode --enable-universal-binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26
+> ../configure --disable-shared --enable-unicode --enable-universal-binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.3.9 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
 > make
 
 Now you need to put this version of wx-config on your path so when you make
