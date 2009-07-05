@@ -300,6 +300,7 @@ bool CAgilityBookApp::OnInit()
 #ifdef __WXMAC__
 	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'WXMB', 'WXMA');
 	wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+	wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), 1);
 #endif
 
 	CMainFrame *frame = new CMainFrame(m_manager);

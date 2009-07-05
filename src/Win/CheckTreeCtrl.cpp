@@ -77,7 +77,7 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 	, m_stateChecked(-1)
 {
 	wxTreeCtrl::Create(pParent, wxID_ANY, pos, size,
-		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
+		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CCheckTreeCtrl::OnClick), NULL, this);
 	Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CCheckTreeCtrl::OnKeyDown), NULL, this);
 
