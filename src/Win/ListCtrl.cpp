@@ -233,7 +233,7 @@ void CReportListCtrl::SetSelection(
 		{
 			Select(index);
 			if (bEnsureVisible)
-				EnsureVisible(index);
+				Focus(index);
 		}
 	}
 }

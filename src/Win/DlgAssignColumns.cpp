@@ -976,7 +976,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlType->Select(idxSelect); // Causes change event that fills columns
 	if (m_eOrder == CAgilityBookOptions::eView)
 		m_ctrlType->SortItems(CompareTypes, 0);
-	m_ctrlType->EnsureVisible(idxSelect);
+	m_ctrlType->Focus(idxSelect);
 	m_ctrlType->SetFocus();
 }
 

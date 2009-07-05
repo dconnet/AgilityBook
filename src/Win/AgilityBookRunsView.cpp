@@ -1195,7 +1195,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 					m_pView->m_Ctrl->Select(l, false);
 				}
 				m_pView->m_Ctrl->Select(index, true);
-				m_pView->m_Ctrl->EnsureVisible(index);
+				m_pView->m_Ctrl->Focus(index);
 				bFound = true;
 			}
 		}
@@ -1532,7 +1532,6 @@ void CAgilityBookRunsView::LoadData()
 				{
 					m_Ctrl->Select(index, true);
 				}
-
 			}
 		}
 	}
@@ -1551,7 +1550,7 @@ void CAgilityBookRunsView::LoadData()
 	else
 		m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn()), m_SortColumn.GetColumn());
 	// Now make sure the selected item is visible.
-	m_Ctrl->EnsureVisible(m_Ctrl->GetFirstSelected());
+	m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
 
 	// Cleanup.
 	m_Ctrl->Thaw();

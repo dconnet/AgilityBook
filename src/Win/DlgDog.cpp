@@ -1090,7 +1090,7 @@ void CDlgDog::ListTitles()
 			if (pTitle && pTitle->GetData() == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlTitles->Select(i, true);
-				m_ctrlTitles->EnsureVisible(i);
+				m_ctrlTitles->Focus(i);
 				break;
 			}
 		}
@@ -1177,7 +1177,7 @@ void CDlgDog::ListRegNums()
 			if (pData && pData->GetData() == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlRegNums->Select(i, true);
-				m_ctrlRegNums->EnsureVisible(i);
+				m_ctrlRegNums->Focus(i);
 				break;
 			}
 		}
@@ -1273,7 +1273,7 @@ void CDlgDog::ListExistingPoints()
 			if (pExistingPoints == pSelected) // compare by ptr is fine.
 			{
 				m_ctrlPoints->Select(i, true);
-				m_ctrlPoints->EnsureVisible(i);
+				m_ctrlPoints->Focus(i);
 				break;
 			}
 		}
