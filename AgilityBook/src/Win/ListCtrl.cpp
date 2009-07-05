@@ -173,11 +173,11 @@ long CReportListCtrl::InsertItem(CListDataPtr inData)
 		long nCols = GetColumnCount();
 		for (long iCol = 1; iCol < nCols; ++iCol)
 		{
-			wxListItem info;
-			info.SetId(item);
-			info.SetColumn(iCol);
-			inData->OnNeedListItem(iCol, info);
-			SetItem(info);
+			wxListItem info2;
+			info2.SetId(item);
+			info2.SetColumn(iCol);
+			inData->OnNeedListItem(iCol, info2);
+			SetItem(info2);
 		}
 	}
 

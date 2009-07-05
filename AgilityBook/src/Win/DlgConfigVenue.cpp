@@ -1,5 +1,5 @@
 /*
- * Copyright © 2004-2009 David Connet. All Rights Reserved.
+ * Copyright ï¿½ 2004-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -183,9 +183,9 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 					//pTitle->SetLongName(dlg.GetLongName());
 					//pTitle->SetDescription(dlg.GetDesc());
 					CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, pTitle);
-					wxTreeItemId title = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+					wxTreeItemId titleId = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
 					pData->AddSubItems();
-					m_pDlg->m_ctrlItems->SelectItem(title);
+					m_pDlg->m_ctrlItems->SelectItem(titleId);
 					bAdded = true;
 				}
 			}

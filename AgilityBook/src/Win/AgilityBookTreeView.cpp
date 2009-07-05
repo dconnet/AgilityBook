@@ -72,8 +72,10 @@
 #include "Print.h"
 #include <wx/config.h>
 
+#ifdef WIN32
 #include "res/CalEmpty.xpm"
 #include "res/CalPlan.xpm"
+#endif
 
 
 /////////////////////////////////////////////////////////////////////////////

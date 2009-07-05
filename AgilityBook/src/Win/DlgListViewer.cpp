@@ -1102,11 +1102,11 @@ CDlgListViewer::CDlgListViewer(
 	std::set<tstring> subNames;
 	std::vector<ARBDogExistingPointsPtr> existingRuns;
 
-	std::list<RunInfo>::const_iterator iter;
-	for (iter = inRuns.begin(); iter != inRuns.end(); ++iter)
+	std::list<RunInfo>::const_iterator iterRuns;
+	for (iterRuns = inRuns.begin(); iterRuns != inRuns.end(); ++iterRuns)
 	{
-		if ((iter->second)->GetSubName().length())
-			subNames.insert((iter->second)->GetSubName());
+		if ((iterRuns->second)->GetSubName().length())
+			subNames.insert((iterRuns->second)->GetSubName());
 	}
 	if (inData)
 	{
@@ -1156,10 +1156,10 @@ CDlgListViewer::CDlgListViewer(
 			m_ctrlList->InsertItem(data);
 		}
 	}
-	for (iter = inRuns.begin(); iter != inRuns.end(); ++iter)
+	for (iterRuns = inRuns.begin(); iterRuns != inRuns.end(); ++iterRuns)
 	{
-		ARBDogTrialPtr pTrial = iter->first;
-		ARBDogRunPtr pRun = iter->second;
+		ARBDogTrialPtr pTrial = iterRuns->first;
+		ARBDogRunPtr pRun = iterRuns->second;
 		if (CFilterOptions::Options().IsFilterEnabled())
 		{
 			if (pRun->IsFiltered())
