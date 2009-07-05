@@ -291,7 +291,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 
 	m_ctrlItems = new wxTreeCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxSize(300, 250),
-		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_ROW_LINES|wxTR_SINGLE);
+		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgConfigVenue::OnSelectionChanged), NULL, this);
 	m_ctrlItems->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigVenue::OnDblclk), NULL, this);
 	m_ctrlItems->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgConfigVenue::OnKeydown), NULL, this);
