@@ -296,7 +296,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->m_Ctrl->Select(index, true);
-				m_pView->m_Ctrl->EnsureVisible(index);
+				m_pView->m_Ctrl->Focus(index);
 				bFound = true;
 			}
 		}
@@ -409,7 +409,7 @@ void CAgilityBookTrainingView::SetCurrentDate(ARBDate const& inDate)
 		}
 	}
 	m_Ctrl->Select(index, true);
-	m_Ctrl->EnsureVisible(index);
+	m_Ctrl->Focus(index);
 }
 
 
@@ -586,7 +586,7 @@ void CAgilityBookTrainingView::LoadData()
 	m_Ctrl->SortItems(CompareTraining, 0);
 	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, m_SortColumn.GetColumn());
 	// Now make sure the selected item is visible.
-	m_Ctrl->EnsureVisible(m_Ctrl->GetFirstSelected());
+	m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
 
 	// Cleanup.
 	m_Ctrl->Thaw();

@@ -375,7 +375,7 @@ void CAgilityBookPointsView::LoadData()
 			if (curData && data->IsEqual(curData))
 			{
 				m_Ctrl->Select(item);
-				m_Ctrl->EnsureVisible(item);
+				m_Ctrl->Focus(item);
 			}
 		}
 	}
