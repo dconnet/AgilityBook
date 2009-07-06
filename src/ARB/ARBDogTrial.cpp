@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-05 DRC Fixed sort predicate so it is really stable.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-09-27 DRC Fixed sorting of trials.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -363,48 +364,56 @@ public:
 	SortTrials(bool bDescending) : m_bDescending(bDescending) {}
 	bool operator()(ARBDogTrialPtr one, ARBDogTrialPtr two) const
 	{
-		// Note: if a club is added with the same location/club/venue as
-		// an existing trial, debug will assert during sort because
-		// a < b and b < a are true.
-		ARBDogClubPtr club1;
-		ARBDogClubPtr club2;
-		one->GetClubs().GetPrimaryClub(&club1);
-		two->GetClubs().GetPrimaryClub(&club2);
-		bool bSorted = !m_bDescending;
+		int iCompare = 0;
 		if (0 < one->GetRuns().size()
 		&& 0 < two->GetRuns().size())
 		{
 			ARBDate d1 = (*(one->GetRuns().begin()))->GetDate();
 			ARBDate d2 = (*(two->GetRuns().begin()))->GetDate();
-			if ((d1 < d2)
-			|| (d1 == d2 && one->GetGenericName() < two->GetGenericName())
-			|| (d1 == d2 && one->GetGenericName() == two->GetGenericName()
-				&& club1 && club2 && club1->GetName() < club2->GetName())
-			|| (d1 == d2 && one->GetGenericName() == two->GetGenericName()
-				&& club1 && club2 && club1->GetName() == club2->GetName()
-				&& club1->GetVenue() < club2->GetVenue()))
-			{
-				bSorted = m_bDescending;
-			}
-
+			if (d1 < d2)
+				iCompare = -1;
+			else if (d1 > d2)
+				iCompare = 1;
 		}
 		else if (0 < one->GetRuns().size())
-			bSorted = !m_bDescending;
+			iCompare = 1;
 		else if (0 < two->GetRuns().size())
-			bSorted = m_bDescending;
-		else
+			iCompare = -1;
+		if (0 == iCompare)
 		{
-			if ((one->GetGenericName() < two->GetGenericName())
-			|| (one->GetGenericName() == two->GetGenericName()
-				&& club1 && club2 && club1->GetName() < club2->GetName())
-			|| (one->GetGenericName() == two->GetGenericName()
-				&& club1 && club2 && club1->GetName() == club2->GetName()
-				&& club1->GetVenue() < club2->GetVenue()))
+			if (one->GetGenericName() < two->GetGenericName())
+				iCompare = -1;
+			else if (one->GetGenericName() > two->GetGenericName())
+				iCompare = 1;
+			else
 			{
-				bSorted = m_bDescending;
+				ARBDogClubPtr club1;
+				one->GetClubs().GetPrimaryClub(&club1);
+				tstring name1, venue1;
+				if (club1)
+				{
+					name1 = club1->GetName();
+					venue1 = club1->GetVenue();
+				}
+				ARBDogClubPtr club2;
+				two->GetClubs().GetPrimaryClub(&club2);
+				tstring name2, venue2;
+				if (club2)
+				{
+					name2 = club2->GetName();
+					venue2 = club2->GetVenue();
+				}
+				if (name1 < name2)
+					iCompare = -1;
+				else if (name1 > name2)
+					iCompare = 1;
+				else if (venue1 < venue2)
+					iCompare = -1;
+				else if (venue1 > venue2)
+					iCompare = 1;
 			}
 		}
-		return bSorted;
+		return m_bDescending ?  iCompare < 0 : iCompare > 0;
 	}
 private:
 	bool m_bDescending;
