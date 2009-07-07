@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2008-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2008-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -115,10 +115,12 @@ public:
 
 	void SetSelection(
 			long index,
-			bool bEnsureVisible = false);
+			bool bEnsureVisible = false,
+			bool bSetFocus = true);
 	void SetSelection(
 			std::vector<long>& indices,
-			bool bEnsureVisible = false);
+			bool bEnsureVisible = false,
+			bool bSetFocus = true);
 
 	/// Return listdata using data value
 	CListDataPtr GetDataByData(long data) const;

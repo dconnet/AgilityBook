@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -471,12 +471,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 				str.MakeLower();
 			if (0 <= str.Find(search))
 			{
-				for (long l = m_pView->m_Ctrl->GetFirstSelected(); 0 <= l; l = m_pView->m_Ctrl->GetNextSelected(l))
-				{
-					m_pView->m_Ctrl->Select(l, false);
-				}
-				m_pView->m_Ctrl->Select(index, true);
-				m_pView->m_Ctrl->Focus(index);
+				m_pView->m_Ctrl->SetSelection(index, true);
 				bFound = true;
 			}
 		}
@@ -843,7 +838,8 @@ void CAgilityBookCalendarListView::LoadData()
 	m_Ctrl->SortItems(CompareCalendar, 0);
 	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, m_SortColumn.GetColumn());
 	// Now make sure the selected item is visible.
-	m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
+	if (0 <= m_Ctrl->GetFirstSelected())
+		m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
 
 	// Cleanup.
 	m_Ctrl->Thaw();
@@ -1256,7 +1252,6 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					if (index >= m_Ctrl->GetItemCount())
 						index = m_Ctrl->GetItemCount() - 1;
 					m_Ctrl->SetSelection(index);
-					m_Ctrl->Focus(index);
 					GetDocument()->Modify(true);
 					CUpdateHint hint(UPDATE_CALENDAR_VIEW);
 					GetDocument()->UpdateAllViews(this, &hint);
