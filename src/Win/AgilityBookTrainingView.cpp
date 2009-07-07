@@ -1,5 +1,5 @@
 /*
- * Copyright © 2003-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2003-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -408,8 +408,11 @@ void CAgilityBookTrainingView::SetCurrentDate(ARBDate const& inDate)
 			break;
 		}
 	}
-	m_Ctrl->Select(index, true);
-	m_Ctrl->Focus(index);
+	if (0 <= index)
+	{
+		m_Ctrl->Select(index, true);
+		m_Ctrl->Focus(index);
+	}
 }
 
 
@@ -586,7 +589,8 @@ void CAgilityBookTrainingView::LoadData()
 	m_Ctrl->SortItems(CompareTraining, 0);
 	m_Ctrl->SetColumnSort(abs(m_SortColumn.GetColumn())-1, m_SortColumn.GetColumn());
 	// Now make sure the selected item is visible.
-	m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
+	if (0 <= m_Ctrl->GetFirstSelected())
+		m_Ctrl->Focus(m_Ctrl->GetFirstSelected());
 
 	// Cleanup.
 	m_Ctrl->Thaw();

@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -62,7 +62,7 @@
 #define ARB_VER_MAJOR					2
 #define ARB_VER_MINOR					0
 #define ARB_VER_DOT						0
-#define ARB_VER_BUILD					2381
+#define ARB_VER_BUILD					2382
 
 #define ARB_VER_STR_MAJOR				STR(ARB_VER_MAJOR)
 #define ARB_VER_STR_MINOR				STR(ARB_VER_MINOR)

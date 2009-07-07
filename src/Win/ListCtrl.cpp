@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -206,17 +206,19 @@ void CReportListCtrl::SelectAll()
 
 void CReportListCtrl::SetSelection(
 		long index,
-		bool bEnsureVisible)
+		bool bEnsureVisible,
+		bool bSetFocus)
 {
 	std::vector<long> indices;
 	indices.push_back(index);
-	SetSelection(indices, bEnsureVisible);
+	SetSelection(indices, bEnsureVisible, bSetFocus);
 }
 
 
 void CReportListCtrl::SetSelection(
 		std::vector<long>& indices,
-		bool bEnsureVisible)
+		bool bEnsureVisible,
+		bool bSetFocus)
 {
 	// Clear everything.
 	long item = GetNextSelected(-1);
@@ -232,7 +234,7 @@ void CReportListCtrl::SetSelection(
 		if (index >= 0 && index < GetItemCount())
 		{
 			Select(index);
-			if (bEnsureVisible)
+			if (bSetFocus)
 				Focus(index);
 		}
 	}
