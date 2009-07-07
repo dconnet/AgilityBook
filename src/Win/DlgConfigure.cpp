@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -445,7 +445,7 @@ wxTreeItemId CDlgConfigure::FindCurrentVenue(
 	wxTreeItemIdValue cookie;
 	for (wxTreeItemId item = m_ctrlItems->GetFirstChild(m_hItemVenues, cookie);
 		item.IsOk();
-		item = m_ctrlItems->GetNextChild(item, cookie))
+		item = m_ctrlItems->GetNextChild(m_hItemVenues, cookie))
 	{
 		CDlgConfigureDataVenue* pData = dynamic_cast<CDlgConfigureDataVenue*>(GetData(item));
 		if (pData && pData->GetVenue() == pVenue)
@@ -472,7 +472,7 @@ wxTreeItemId CDlgConfigure::FindCurrentFault(
 	wxTreeItemIdValue cookie;
 	for (wxTreeItemId item = m_ctrlItems->GetFirstChild(m_hItemFaults, cookie);
 		item.IsOk();
-		item = m_ctrlItems->GetNextChild(item, cookie))
+		item = m_ctrlItems->GetNextChild(m_hItemFaults, cookie))
 	{
 		CDlgConfigureDataFault* pData = dynamic_cast<CDlgConfigureDataFault*>(GetData(item));
 		if (pData && pData->GetFault() == pFault)
@@ -499,7 +499,7 @@ wxTreeItemId CDlgConfigure::FindCurrentOtherPoints(
 	wxTreeItemIdValue cookie;
 	for (wxTreeItemId item = m_ctrlItems->GetFirstChild(m_hItemOtherPts, cookie);
 		item.IsOk();
-		item = m_ctrlItems->GetNextChild(item, cookie))
+		item = m_ctrlItems->GetNextChild(m_hItemOtherPts, cookie))
 	{
 		CDlgConfigureDataOtherPoints* pData = dynamic_cast<CDlgConfigureDataOtherPoints*>(GetData(item));
 		if (pData && pData->GetOtherPoints() == pOther)

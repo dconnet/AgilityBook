@@ -1,5 +1,5 @@
 /*
- * Copyright © 2007-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2007-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -1210,14 +1210,14 @@ void CDlgCalendarPlugins::UpdateControls()
 	wxTreeItemIdValue cookie;
 	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
 		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(hItem, cookie))
+		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		if (m_ctrlPlugins->GetChecked(hItem))
 			++nChecked;
 		wxTreeItemIdValue cookie2;
 		for (wxTreeItemId hCal = m_ctrlPlugins->GetFirstChild(hItem, cookie2);
 			hCal.IsOk();
-			hCal = m_ctrlPlugins->GetNextChild(hCal, cookie2))
+			hCal = m_ctrlPlugins->GetNextChild(hItem, cookie2))
 		{
 			if (m_ctrlPlugins->GetChecked(hCal))
 				++nCalItems;
@@ -1291,7 +1291,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 	wxTreeItemIdValue cookie;
 	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
 		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(hItem, cookie))
+		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		if (m_ctrlPlugins->GetChecked(hItem))
 			++nEntries;
@@ -1302,7 +1302,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 	wxBusyCursor wait;
 	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
 		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(hItem, cookie))
+		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		if (m_ctrlPlugins->GetChecked(hItem))
 		{
@@ -1386,12 +1386,12 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 	wxTreeItemIdValue cookie;
 	for (hItem = m_ctrlPlugins->GetFirstChild(m_ctrlPlugins->GetRootItem(), cookie);
 		hItem.IsOk();
-		hItem = m_ctrlPlugins->GetNextChild(hItem, cookie))
+		hItem = m_ctrlPlugins->GetNextChild(m_ctrlPlugins->GetRootItem(), cookie))
 	{
 		wxTreeItemIdValue cookie2;
 		for (wxTreeItemId hCal = m_ctrlPlugins->GetFirstChild(hItem, cookie2);
 			hCal.IsOk();
-			hCal = m_ctrlPlugins->GetNextChild(hCal, cookie2))
+			hCal = m_ctrlPlugins->GetNextChild(hItem, cookie2))
 		{
 			if (m_ctrlPlugins->GetChecked(hCal))
 			{

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -94,7 +94,7 @@ void CFindTree::FillTree(wxTreeItemId hItem) const
 	while (hChildItem.IsOk())
 	{
 		FillTree(hChildItem);
-		hChildItem = m_pView->m_Ctrl->GetNextChild(hChildItem, cookie);
+		hChildItem = m_pView->m_Ctrl->GetNextChild(hItem, cookie);
 	}
 }
 
@@ -505,7 +505,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		while (hChildItem.IsOk() && !pData)
 		{
 			pData = FindData(hChildItem, pBase);
-			hChildItem = m_Ctrl->GetNextChild(hChildItem, cookie);
+			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
 	return pData;
@@ -534,7 +534,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		while (hChildItem.IsOk() && !pData)
 		{
 			pData = FindData(hChildItem, pDog);
-			hChildItem = m_Ctrl->GetNextChild(hChildItem, cookie);
+			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
 	return pData;
@@ -561,7 +561,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		while (hChildItem.IsOk() && !pData)
 		{
 			pData = FindData(hChildItem, pTrial);
-			hChildItem = m_Ctrl->GetNextChild(hChildItem, cookie);
+			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
 	return pData;
@@ -588,7 +588,7 @@ CAgilityBookTreeData* CAgilityBookTreeView::FindData(
 		while (hChildItem.IsOk() && !pData)
 		{
 			pData = FindData(hChildItem, pRun);
-			hChildItem = m_Ctrl->GetNextChild(hChildItem, cookie);
+			hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 		}
 	}
 	return pData;
@@ -744,7 +744,7 @@ void CAgilityBookTreeView::UpdateData(wxTreeItemId hItem)
 	while (hChildItem.IsOk())
 	{
 		UpdateData(hChildItem);
-		hChildItem = m_Ctrl->GetNextChild(hChildItem, cookie);
+		hChildItem = m_Ctrl->GetNextChild(hItem, cookie);
 	}
 }
 
@@ -867,7 +867,7 @@ void CAgilityBookTreeView::PrintLine(
 	while (hChildItem.IsOk())
 	{
 		PrintLine(data, hChildItem, indent + 1);
-		hChildItem = m_Ctrl->GetNextChild(hChildItem, cookie);
+		hChildItem = m_Ctrl->GetNextChild(id, cookie);
 	}
 }
 
