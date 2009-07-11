@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-11 DRC Change how runs are synced with tree to reduce reloading.
  * @li 2009-02-04 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -1401,16 +1402,41 @@ void CAgilityBookRunsView::OnUpdate(
 	CUpdateHint* hint = NULL;
 	if (inHint)
 		hint = reinterpret_cast<CUpdateHint*>(inHint);
-	if (!hint || hint->IsSet(UPDATE_RUNS_VIEW)
-	|| hint->IsEqual(UPDATE_CONFIG) || hint->IsEqual(UPDATE_OPTIONS))
+	bool bLoad = false;
+	if (hint)
 	{
-		LoadData();
+		if (hint->IsEqual(UPDATE_LANG_CHANGE) || hint->IsEqual(UPDATE_CUSTOMIZE))
+		{
+			SetupColumns();
+			bLoad = true;
+		}
+		else if (hint->IsSet(UPDATE_RUNS_VIEW)
+		|| hint->IsEqual(UPDATE_CONFIG)
+		|| hint->IsEqual(UPDATE_OPTIONS))
+		{
+			bLoad = true;
+		}
+		else if (hint->IsSet(UPDATE_RUNS_SELECTION_VIEW))
+		{
+			ARBDogRunPtr pRun = tr1::dynamic_pointer_cast<ARBDogRun, ARBBase>(hint->GetObj());
+			if (pRun)
+			{
+				for (int i = 0; i < m_Ctrl->GetItemCount(); ++i)
+				{
+					CAgilityBookRunsViewDataPtr pData = GetItemRunData(i);
+					if (pData && pData->GetRun() == pRun)
+					{
+						m_Ctrl->SetSelection(i, true);
+						break;
+					}
+				}
+			}
+		}
 	}
-	else if (hint && (hint->IsEqual(UPDATE_LANG_CHANGE) || hint->IsEqual(UPDATE_CUSTOMIZE)))
-	{
-		SetupColumns();
+	else
+		bLoad = true;
+	if (bLoad)
 		LoadData();
-	}
 }
 
 

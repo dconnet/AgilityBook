@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-11 DRC Change how runs are synced with list to reduce reloading.
  * @li 2009-02-08 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added SelectDog()
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -761,17 +762,31 @@ void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 	if (!m_bSuppressSelect)
 	{
 		CAgilityBookTreeData* pData = GetTreeItem(hItem);
-		ARBDogPtr pDog;
-		unsigned int iHint = UPDATE_RUNS_VIEW;
+		ARBBasePtr pBase;
+		unsigned int iHint = 0;
 		if (pData)
 		{
-			pDog = pData->GetDog();
+			// Set the current dog
+			ARBDogPtr pDog = pData->GetDog();
 			if (!m_pDog || !pDog || m_pDog != pDog)
 				iHint |= UPDATE_POINTS_VIEW;
+			m_pDog = pDog;
+			// Pass the selected run
+			if (CAgilityBookTreeData::eTreeRun == pData->GetType())
+			{
+				pBase = pData->GetRun();
+				iHint |= UPDATE_RUNS_SELECTION_VIEW;
+			}
+			else
+				iHint |= UPDATE_RUNS_VIEW;
 		}
-		m_pDog = pDog;
-		CUpdateHint hint(iHint, m_pDog);
-		GetDocument()->UpdateAllViews(this, &hint);
+		else
+			m_pDog.reset();
+		if (iHint)
+		{
+			CUpdateHint hint(iHint, pBase);
+			GetDocument()->UpdateAllViews(this, &hint);
+		}
 	}
 }
 

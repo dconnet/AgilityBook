@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-11 DRC Added GetType()
  * @li 2009-02-02 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-30 DRC Implemented customized text in tree.
@@ -55,6 +56,10 @@ public:
 	CAgilityBookTreeData(CAgilityBookTreeView* pTree)
 		: m_pTree(pTree)
 	{}
+
+	// This removes a need for a dynamic cast
+	enum CTreeDataType { eTreeDog, eTreeTrial, eTreeRun };
+	virtual CTreeDataType GetType() const = 0;
 
 	virtual CAgilityBookTreeData const* GetParent() const = 0;
 	virtual ARBBasePtr GetARBBase() const
@@ -141,6 +146,11 @@ public:
 			ARBDogPtr pDog);
 	~CAgilityBookTreeDataDog();
 
+	virtual CTreeDataType GetType() const
+	{
+		return CAgilityBookTreeData::eTreeDog;
+	}
+
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
 		return NULL;
@@ -192,6 +202,11 @@ public:
 	CAgilityBookTreeDataTrial(
 			CAgilityBookTreeView* pTree,
 			ARBDogTrialPtr pTrial);
+
+	virtual CTreeDataType GetType() const
+	{
+		return CAgilityBookTreeData::eTreeTrial;
+	}
 
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
@@ -250,6 +265,11 @@ public:
 			CAgilityBookTreeView* pTree,
 			ARBDogRunPtr pRun);
 	~CAgilityBookTreeDataRun();
+
+	virtual CTreeDataType GetType() const
+	{
+		return CAgilityBookTreeData::eTreeRun;
+	}
 
 	virtual CAgilityBookTreeData const* GetParent() const
 	{
