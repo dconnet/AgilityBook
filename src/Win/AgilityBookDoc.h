@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -67,18 +67,19 @@ struct CVenueFilter;
 
 // UpdateAllViews() hints: Only the view bits can be or'd. Each item is
 // considered a single event (consider all views as one)
-#define UPDATE_VIEW_MASK		0x00ff
-#define UPDATE_CALENDAR_VIEW	0x0001
-#define UPDATE_TRAINING_VIEW	0x0002
-#define UPDATE_POINTS_VIEW		0x0004
-#define UPDATE_RUNS_VIEW		0x0008
-#define UPDATE_TREE_VIEW		0x0010
-#define UPDATE_ALL_VIEW			(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
-#define UPDATE_CONFIG			0x0100
-#define UPDATE_OPTIONS			0x0200
-#define UPDATE_NEW_TRIAL		0x0300
-#define UPDATE_LANG_CHANGE		0x0400
-#define UPDATE_CUSTOMIZE		0x0500
+#define UPDATE_VIEW_MASK			0x00ff
+#define UPDATE_CALENDAR_VIEW		0x0001
+#define UPDATE_TRAINING_VIEW		0x0002
+#define UPDATE_POINTS_VIEW			0x0004
+#define UPDATE_RUNS_VIEW			0x0008
+#define UPDATE_RUNS_SELECTION_VIEW	0x0010
+#define UPDATE_TREE_VIEW			0x0020
+#define UPDATE_ALL_VIEW				(UPDATE_CALENDAR_VIEW|UPDATE_TRAINING_VIEW|UPDATE_POINTS_VIEW|UPDATE_RUNS_VIEW|UPDATE_TREE_VIEW)
+#define UPDATE_CONFIG				0x0100
+#define UPDATE_OPTIONS				0x0200
+#define UPDATE_NEW_TRIAL			0x0300
+#define UPDATE_LANG_CHANGE			0x0400
+#define UPDATE_CUSTOMIZE			0x0500
 
 class CUpdateHint : public wxObject
 {
