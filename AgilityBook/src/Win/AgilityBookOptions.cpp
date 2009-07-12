@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -1211,10 +1211,10 @@ void CAgilityBookOptions::GetColumnOrder(
 				break;
 			case IO_TYPE_VIEW_TREE_TRIAL:
 				outValues.push_back(IO_TREE_TRIAL_START);
-				outValues.push_back(IO_TREE_TRIAL_VENUE);
 #ifndef WIN32
 				outValues.push_back(IO_TREE_TRIAL_VERIFIED);
 #endif
+				outValues.push_back(IO_TREE_TRIAL_VENUE);
 				outValues.push_back(IO_TREE_TRIAL_LOCATION);
 				break;
 			case IO_TYPE_VIEW_TREE_RUN:
