@@ -154,6 +154,21 @@ void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 }
 
 
+bool CReportListCtrl::SetColumnWidth(int col, int width)
+{
+#ifndef WIN32
+	if (wxLIST_AUTOSIZE_USEHEADER == width)
+	{
+		// Don't use header on non-windows platforms. According to docs, it
+		// is only set to 80 pixels. On Mac with generic list, it appears to
+		// size to the header text, but not the contents.
+		width = wxLIST_AUTOSIZE;
+	}
+#endif
+	return wxListView::SetColumnWidth(col, width);
+}
+
+
 long CReportListCtrl::InsertItem(CListDataPtr inData)
 {
 	if (!inData)

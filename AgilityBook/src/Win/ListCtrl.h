@@ -77,6 +77,8 @@ public:
 
 	void SetColumnSort(long column, int iconDirection);
 
+	bool SetColumnWidth(int col, int width);
+
     long InsertItem(CListDataPtr inData);
 
 	/**

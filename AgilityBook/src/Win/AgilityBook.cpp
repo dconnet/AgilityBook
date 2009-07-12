@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -300,7 +300,10 @@ bool CAgilityBookApp::OnInit()
 #ifdef __WXMAC__
 	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'WXMB', 'WXMA');
 	wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
+#if wxCHECK_VERSION(2, 8, 10)
+	// Sorting is broken in the native sorting in wx 2.8.10 and earlier
 	wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), 1);
+#endif
 #endif
 
 	CMainFrame *frame = new CMainFrame(m_manager);
