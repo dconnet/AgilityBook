@@ -1,5 +1,5 @@
 /*
- * Copyright © 2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -103,9 +103,9 @@ bool CGenericValidator::TransferFromWindow()
 			return true;
 		}
 	}
-	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrl)))
+	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
 	{
-		wxDatePickerCtrl* pControl = (wxDatePickerCtrl*)m_validatorWindow;
+		wxDatePickerCtrlBase* pControl = (wxDatePickerCtrlBase*)m_validatorWindow;
 		if (m_pDate)
 		{
 			wxDateTime date = pControl->GetValue();
@@ -139,9 +139,9 @@ bool CGenericValidator::TransferToWindow()
 			return true;
 		}
 	}
-	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrl)))
+	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
 	{
-		wxDatePickerCtrl* pControl = (wxDatePickerCtrl*)m_validatorWindow;
+		wxDatePickerCtrlBase* pControl = (wxDatePickerCtrlBase*)m_validatorWindow;
 		if (m_pDate)
 		{
 			if (m_pDate->IsValid())
