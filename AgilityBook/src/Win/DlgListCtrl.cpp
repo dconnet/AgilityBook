@@ -560,7 +560,7 @@ bool CDlgListCtrl::Create(
 	m_imgEntered = m_ctrlList->AddIcon(wxIcon(CalEntered_xpm));
 	m_imgEnteredTentative = m_ctrlList->AddIcon(wxIcon(CalEnteredTentative_xpm));
 	m_ctrlList->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgListCtrl::OnItemSelected), NULL, this);
-	m_ctrlList->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgListCtrl::OnDoubleClick), NULL, this);
+	m_ctrlList->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgListCtrl::OnItemActivated), NULL, this);
 	m_ctrlList->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgListCtrl::OnKeyDown), NULL, this);
 	m_ctrlList->SetHelpText(_("HIDC_LIST"));
 	m_ctrlList->SetToolTip(_("HIDC_LIST"));
@@ -771,7 +771,7 @@ void CDlgListCtrl::OnItemSelected(wxListEvent& /*evt*/)
 }
 
 
-void CDlgListCtrl::OnDoubleClick(wxMouseEvent& evt)
+void CDlgListCtrl::OnItemActivated(wxListEvent& evt)
 {
 	DoEdit();
 	evt.Skip();

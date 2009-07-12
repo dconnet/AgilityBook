@@ -193,7 +193,7 @@ CDlgFindLinks::CDlgFindLinks(
 		true, CReportListCtrl::eSortHeader, true);
 	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgFindLinks::OnColumnClick), NULL, this);
 	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgFindLinks::OnItemSelected), NULL, this);
-	m_ctrlLinks->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgFindLinks::OnDoubleClick), NULL, this);
+	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgFindLinks::OnItemActivated), NULL, this);
 	m_ctrlLinks->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgFindLinks::OnKeyDown), NULL, this);
 	m_imgEmpty = m_ctrlLinks->ImageEmpty();
 	m_imgOk = m_ctrlLinks->AddIcon(wxIcon(CalPlan_xpm));
@@ -385,7 +385,7 @@ void CDlgFindLinks::OnItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgFindLinks::OnDoubleClick(wxMouseEvent& evt)
+void CDlgFindLinks::OnItemActivated(wxListEvent& evt)
 {
 	Edit();
 }

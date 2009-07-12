@@ -74,7 +74,7 @@ private:
 
 	DECLARE_EVENT_TABLE()
 	void OnItemchanged(wxListEvent& evt);
-	void OnDblclkItem(wxMouseEvent& evt);
+	void OnItemActivated(wxListEvent& evt);
 	void OnKeydownItem(wxKeyEvent& evt);
 	void OnClickFrom(wxCommandEvent& evt);
 	void OnClickTo(wxCommandEvent& evt);

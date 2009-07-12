@@ -571,7 +571,7 @@ bool CAgilityBookCalendarListView::Create(
 	m_Ctrl->Connect(wxEVT_COMMAND_SET_FOCUS, wxFocusEventHandler(CAgilityBookCalendarListView::OnCtrlSetFocus), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlColumnClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlItemSelected), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookCalendarListView::OnCtrlDoubleClick), NULL, this);
+	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlItemActivated), NULL, this);
 	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookCalendarListView::OnCtrlKeyDown), NULL, this);
 	m_imgTentative = m_Ctrl->AddIcon(wxIcon(CalTentative_xpm));
 	m_imgPlan = m_Ctrl->AddIcon(wxIcon(CalPlan_xpm));
@@ -891,7 +891,7 @@ void CAgilityBookCalendarListView::OnCtrlItemSelected(wxListEvent& evt)
 }
 
 
-void CAgilityBookCalendarListView::OnCtrlDoubleClick(wxMouseEvent& evt)
+void CAgilityBookCalendarListView::OnCtrlItemActivated(wxListEvent& evt)
 {
 	OnCmd(ID_AGILITY_EDIT_CALENDAR);
 	evt.Skip();

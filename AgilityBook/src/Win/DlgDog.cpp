@@ -721,7 +721,7 @@ CDlgDog::CDlgDog(
 	m_ctrlTitles = new CReportListCtrl(panelTitles, wxDefaultPosition, wxSize(500, -1), true, CReportListCtrl::eSortHeader, true);
 	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnTitleColumnClick), NULL, this);
 	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnTitleItemSelected), NULL, this);
-	m_ctrlTitles->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgDog::OnTitleDoubleClick), NULL, this);
+	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgDog::OnTitleItemActivated), NULL, this);
 	m_ctrlTitles->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnTitleKeyDown), NULL, this);
 	m_ctrlTitles->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
 	m_ctrlTitles->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
@@ -775,7 +775,7 @@ CDlgDog::CDlgDog(
 	m_ctrlRegNums = new CReportListCtrl(panelRegNums, wxDefaultPosition, wxSize(500, -1), true, CReportListCtrl::eSortHeader, true);
 	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnRegNumColumnClick), NULL, this);
 	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnRegNumItemSelected), NULL, this);
-	m_ctrlRegNums->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgDog::OnRegNumDoubleClick), NULL, this);
+	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgDog::OnRegNumItemActivated), NULL, this);
 	m_ctrlRegNums->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnRegNumKeyDown), NULL, this);
 	m_ctrlRegNums->SetHelpText(_("HIDC_DOGNUM_REG_NUMS"));
 	m_ctrlRegNums->SetToolTip(_("HIDC_DOGNUM_REG_NUMS"));
@@ -814,7 +814,7 @@ CDlgDog::CDlgDog(
 	m_ctrlPoints = new CReportListCtrl(panelPoints, wxDefaultPosition, wxSize(500, -1), false, CReportListCtrl::eSortHeader, true);
 	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnPointsColumnClick), NULL, this);
 	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnPointsItemSelected), NULL, this);
-	m_ctrlPoints->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgDog::OnPointsDoubleClick), NULL, this);
+	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgDog::OnPointsItemActivated), NULL, this);
 	m_ctrlPoints->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnPointsKeyDown), NULL, this);
 	m_ctrlPoints->SetHelpText(_("HIDC_DOGPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_DOGPTS_POINTS"));
@@ -1366,7 +1366,7 @@ void CDlgDog::OnTitleItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgDog::OnTitleDoubleClick(wxMouseEvent& evt)
+void CDlgDog::OnTitleItemActivated(wxListEvent& evt)
 {
 	EditTitle();
 	evt.Skip();
@@ -1441,7 +1441,7 @@ void CDlgDog::OnRegNumItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgDog::OnRegNumDoubleClick(wxMouseEvent& evt)
+void CDlgDog::OnRegNumItemActivated(wxListEvent& evt)
 {
 	EditRegNum();
 }
@@ -1510,7 +1510,7 @@ void CDlgDog::OnPointsItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgDog::OnPointsDoubleClick(wxMouseEvent& evt)
+void CDlgDog::OnPointsItemActivated(wxListEvent& evt)
 {
 	EditPoints();
 }

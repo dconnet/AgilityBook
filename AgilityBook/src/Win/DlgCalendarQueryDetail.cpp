@@ -117,7 +117,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 
 	m_ctrlLocations = new CCheckListCtrl(this, wxDefaultPosition, wxSize(300, 120), !m_EditCodes);
 	m_ctrlLocations->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgCalendarQueryDetail::OnLocationsItemSelected), NULL, this);
-	m_ctrlLocations->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgCalendarQueryDetail::OnLocationsDoubleClick), NULL, this);
+	m_ctrlLocations->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgCalendarQueryDetail::OnLocationsItemActivated), NULL, this);
 	m_ctrlLocations->SetHelpText(_("HIDC_QUERY_LOCATIONS"));
 	m_ctrlLocations->SetToolTip(_("HIDC_QUERY_LOCATIONS"));
 	m_ctrlLocations->InsertColumn(0, _("IDS_COL_CODE"));
@@ -166,7 +166,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 
 	m_ctrlVenues = new CCheckListCtrl(this, wxDefaultPosition, wxSize(300, 120), !m_EditCodes);
 	m_ctrlVenues->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgCalendarQueryDetail::OnVenuesItemSelected), NULL, this);
-	m_ctrlVenues->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgCalendarQueryDetail::OnVenuesDoubleClick), NULL, this);
+	m_ctrlVenues->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgCalendarQueryDetail::OnVenuesItemActivated), NULL, this);
 	m_ctrlVenues->SetHelpText(_("HIDC_QUERY_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_QUERY_VENUES"));
 	m_ctrlVenues->InsertColumn(0, _("IDS_COL_CODE"));
@@ -317,7 +317,7 @@ void CDlgCalendarQueryDetail::OnLocationsItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgCalendarQueryDetail::OnLocationsDoubleClick(wxMouseEvent& evt)
+void CDlgCalendarQueryDetail::OnLocationsItemActivated(wxListEvent& evt)
 {
 	EditLocationCode();
 }
@@ -329,7 +329,7 @@ void CDlgCalendarQueryDetail::OnVenuesItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgCalendarQueryDetail::OnVenuesDoubleClick(wxMouseEvent& evt)
+void CDlgCalendarQueryDetail::OnVenuesItemActivated(wxListEvent& evt)
 {
 	EditVenueCode();
 }

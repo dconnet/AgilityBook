@@ -1293,7 +1293,7 @@ bool CAgilityBookRunsView::Create(
 	m_Ctrl->Connect(wxEVT_COMMAND_SET_FOCUS, wxFocusEventHandler(CAgilityBookRunsView::OnCtrlSetFocus), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookRunsView::OnCtrlColumnClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CAgilityBookRunsView::OnCtrlItemSelected), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookRunsView::OnCtrlDoubleClick), NULL, this);
+	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CAgilityBookRunsView::OnCtrlItemActivated), NULL, this);
 	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookRunsView::OnCtrlKeyDown), NULL, this);
 	m_imgCourse = m_Ctrl->AddIcon(wxIcon(AgilityBook16_xpm));
 	m_imgMap = m_Ctrl->AddIcon(wxIcon(crcd_xpm));
@@ -1632,7 +1632,7 @@ void CAgilityBookRunsView::OnCtrlItemSelected(wxListEvent& evt)
 }
 
 
-void CAgilityBookRunsView::OnCtrlDoubleClick(wxMouseEvent& evt)
+void CAgilityBookRunsView::OnCtrlItemActivated(wxListEvent& evt)
 {
 	OnCmd(ID_AGILITY_EDIT_RUN);
 	evt.Skip();

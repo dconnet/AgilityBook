@@ -148,7 +148,7 @@ CDlgConfigure::CDlgConfigure(
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	m_ctrlItems->SetImageList(&m_ImageList);
 	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgConfigure::OnSelectionChanged), NULL, this);
-	m_ctrlItems->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigure::OnDoubleClick), NULL, this);
+	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler(CDlgConfigure::OnItemActivated), NULL, this);
 	m_ctrlItems->SetHelpText(_("HIDC_CONFIG_ITEMS"));
 	m_ctrlItems->SetToolTip(_("HIDC_CONFIG_ITEMS"));
 
@@ -518,7 +518,7 @@ wxTreeItemId CDlgConfigure::FindCurrentOtherPoints(
 }
 
 
-void CDlgConfigure::OnDoubleClick(wxMouseEvent& evt)
+void CDlgConfigure::OnItemActivated(wxTreeEvent& evt)
 {
 	DoEdit();
 }

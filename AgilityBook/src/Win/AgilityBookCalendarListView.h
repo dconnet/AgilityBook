@@ -156,7 +156,7 @@ private:
 	void OnCtrlSetFocus(wxFocusEvent& evt);
 	void OnCtrlColumnClick(wxListEvent& evt);
 	void OnCtrlItemSelected(wxListEvent& evt);
-	void OnCtrlDoubleClick(wxMouseEvent& evt);
+	void OnCtrlItemActivated(wxListEvent& evt);
 	void OnCtrlKeyDown(wxKeyEvent& evt);
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);

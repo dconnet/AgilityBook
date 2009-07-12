@@ -95,7 +95,7 @@ private:
 	wxTreeItemId m_hItemOtherPts;
 
 	DECLARE_EVENT_TABLE()
-	void OnDoubleClick(wxMouseEvent& evt);
+	void OnItemActivated(wxTreeEvent& evt);
 	void OnSelectionChanged(wxTreeEvent& evt);
 	void OnNew(wxCommandEvent& evt);
 	void OnDelete(wxCommandEvent& evt);

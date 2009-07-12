@@ -265,7 +265,7 @@ private:
 	// RefRuns
 	void OnRefRunColumnClick(wxListEvent& evt);
 	void OnRefRunItemSelected(wxListEvent& evt);
-	void OnRefRunDoubleClick(wxMouseEvent& evt);
+	void OnRefRunItemActivated(wxListEvent& evt);
 	void OnRefRunKeyDown(wxKeyEvent& evt);
 	void OnRefRunNew(wxCommandEvent& evt);
 	void OnRefRunAddMe(wxCommandEvent& evt);
@@ -278,7 +278,7 @@ private:
 	void OnCRCDImage(wxCommandEvent& evt);
 	// Links
 	void OnLinksItemSelected(wxListEvent& evt);
-	void OnLinksDoubleClick(wxMouseEvent& evt);
+	void OnLinksItemActivated(wxListEvent& evt);
 	void OnLinksKeyDown(wxKeyEvent& evt);
 	void OnLinksNew(wxCommandEvent& evt);
 	void OnLinksEdit(wxCommandEvent& evt);

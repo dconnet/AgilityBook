@@ -244,7 +244,7 @@ private:
 	std::map<wxString, CalSiteDataPtr>& m_DirectAccess;
 
 	void OnSelectionChanged(wxTreeEvent& evt);
-	void OnDoubleClick(wxMouseEvent& evt);
+	void OnItemActivated(wxTreeEvent& evt);
 	void OnCheckChange(wxTreeEvent& evt);
 	void OnPluginRead(wxCommandEvent& evt);
 	void OnPluginAddCalEntry(wxCommandEvent& evt);
@@ -1071,7 +1071,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 
 	m_ctrlPlugins = new CSortCheckTreeCtrl(this, wxDefaultPosition, wxSize(400, -1));
 	m_ctrlPlugins->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgCalendarPlugins::OnSelectionChanged), NULL, this);
-	m_ctrlPlugins->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CDlgCalendarPlugins::OnDoubleClick), NULL, this);
+	m_ctrlPlugins->Connect(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler(CDlgCalendarPlugins::OnItemActivated), NULL, this);
 	m_ctrlPlugins->Connect(wxEVT_COMMAND_TREE_CHECK_CHANGED, wxTreeEventHandler(CDlgCalendarPlugins::OnCheckChange), NULL, this);
 	m_ctrlPlugins->SetHelpText(_("HIDC_PLUGIN_TREE"));
 	m_ctrlPlugins->SetToolTip(_("HIDC_PLUGIN_TREE"));
@@ -1271,7 +1271,7 @@ void CDlgCalendarPlugins::OnSelectionChanged(wxTreeEvent& evt)
 }
 
 
-void CDlgCalendarPlugins::OnDoubleClick(wxMouseEvent& evt)
+void CDlgCalendarPlugins::OnItemActivated(wxTreeEvent& evt)
 {
 	EditPlugin();
 }
