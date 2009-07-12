@@ -1,0 +1,545 @@
+# Agility Record Book translations from MFC resource file.
+# Copyright (C) 2002-2009 David Connet. All Rights Reserved.
+# This file is distributed under the same license as the Agility Record Book package.
+# David Connet <help@agilityrecordbook.com> 2002-2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Agility Record Book v2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-15 14:27-0700\n"
+"PO-Revision-Date: 2009-02-11 23:15-0800\n"
+"Last-Translator: David Connet <help@agilityrecordbook.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "MenuFile"
+msgstr "&File"
+
+msgid "MenuFileNew"
+msgstr "&New\tCtrl+N"
+
+msgid "DescFileNew"
+msgstr "Create a new document"
+
+msgid "MenuFileOpen"
+msgstr "&Open...\tCtrl+O"
+
+msgid "DescFileOpen"
+msgstr "Open an existing document"
+
+msgid "MenuFileSave"
+msgstr "&Save\tCtrl+S"
+
+msgid "DescFileSave"
+msgstr "Save the active document"
+
+msgid "MenuFileSaveAs"
+msgstr "Save &As...\tF12"
+
+msgid "DescFileSaveAs"
+msgstr "Save the active document with a new name"
+
+msgid "MenuFileLanguage"
+msgstr "&Choose Language..."
+
+msgid "DescFileLanguage"
+msgstr "Choose a language"
+
+msgid "MenuFileImportExport"
+msgstr "&Import and Export...\tCtrl+E"
+
+msgid "DescFileImportExport"
+msgstr "Import and Export Wizard"
+
+msgid "MenuFileLinkedFiles"
+msgstr "&Find all linked files..."
+
+msgid "DescFileLinkedFiles"
+msgstr "Find all linked files"
+
+msgid "MenuFilePrint"
+msgstr "&Print...\tCtrl+P"
+
+msgid "DescFilePrint"
+msgstr "Print the current view"
+
+msgid "MenuFilePrintBlank"
+msgstr "Print &Blank Runs..."
+
+msgid "DescFilePrintBlank"
+msgstr "Print blank sheets for recording runs"
+
+msgid "MenuFilePrintPreview"
+msgstr "Print Pre&view\tCtrl+Alt+P"
+
+msgid "DescFilePrintPreview"
+msgstr "Print Preview"
+
+msgid "MenuFileRecent"
+msgstr "Recent &Files"
+
+msgid "MenuFileExit"
+msgstr "E&xit"
+
+msgid "DescFileExit"
+msgstr "Quit the application; prompts to save documents"
+
+msgid "MenuEdit"
+msgstr "&Edit"
+
+msgid "MenuEditUndo"
+msgstr "&Undo\tCtrl+Z"
+
+msgid "DescEditUndo"
+msgstr "Undo the last action"
+
+msgid "MenuEditDuplicate"
+msgstr "&Duplicate"
+
+msgid "DescEditDuplicate"
+msgstr "Duplicate the current selection"
+
+msgid "MenuEditCut"
+msgstr "Cu&t\tCtrl+X"
+
+msgid "DescEditCut"
+msgstr "Cut the selection and put it on the Clipboard"
+
+msgid "MenuEditCopy"
+msgstr "&Copy\tCtrl+C"
+
+msgid "MenuEditCopySelection"
+msgstr "&Copy Selection\tCtrl+C"
+
+msgid "DescEditCopy"
+msgstr "Copy the selection and put it on the Clipboard"
+
+msgid "MenuEditPaste"
+msgstr "&Paste\tCtrl+V"
+
+msgid "DescEditPaste"
+msgstr "Insert Clipboard contents"
+
+msgid "MenuEditSelectAll"
+msgstr "Select &All\tCtrl+A"
+
+msgid "DescEditSelectAll"
+msgstr "Select all items"
+
+msgid "MenuEditCopyTitles"
+msgstr "Cop&y Titles"
+
+msgid "DescEditCopyTitles"
+msgstr "Copy titles"
+
+msgid "MenuEditReorder"
+msgstr "&Reorder..."
+
+msgid "DescEditReorder"
+msgstr "Reorder items"
+
+msgid "MenuEditFind"
+msgstr "&Find...\tCtrl+F"
+
+msgid "DescEditFind"
+msgstr "Find the specified text"
+
+msgid "MenuEditFindNext"
+msgstr "Find Next\tF3"
+
+msgid "DescEditFindNext"
+msgstr "Find the next specified text"
+
+msgid "MenuEditFindPrev"
+msgstr "Find Previous\tShift+F3"
+
+msgid "DescEditFindPrev"
+msgstr "Find the previous specified text"
+
+msgid "MenuEditConfig"
+msgstr "C&onfiguration..."
+
+msgid "DescEditConfig"
+msgstr "Edit Venue configurations"
+
+msgid "MenuAgility"
+msgstr "&Agility"
+
+msgid "MenuDog"
+msgstr "&Dog"
+
+msgid "MenuDogProperties"
+msgstr "&Properties..."
+
+msgid "DescDogProperties"
+msgstr "Edit a Dog's information"
+
+msgid "MenuNew"
+msgstr "&New..."
+
+msgid "MenuDogNew"
+msgstr "&Dog..."
+
+msgid "DescDogNew"
+msgstr "Create a new Dog"
+
+msgid "MenuDogDelete"
+msgstr "De&lete..."
+
+msgid "DescDogDelete"
+msgstr "Delete a Dog and all its information"
+
+msgid "MenuTitle"
+msgstr "&Title"
+
+msgid "MenuTitleProperties"
+msgstr "&Properties..."
+
+msgid "DescTitleProperties"
+msgstr "Edit a Title's information"
+
+msgid "MenuTitleNew"
+msgstr "&Title..."
+
+msgid "DescTitleNew"
+msgstr "Create a new Title"
+
+msgid "MenuTitleDelete"
+msgstr "De&lete..."
+
+msgid "DescTitleDelete"
+msgstr "Delete a Title"
+
+msgid "MenuTrial"
+msgstr "Tr&ial"
+
+msgid "MenuTrialProperties"
+msgstr "&Properties..."
+
+msgid "DescTrialProperties"
+msgstr "Edit a Trial's information"
+
+msgid "MenuTrialNew"
+msgstr "Tr&ial..."
+
+msgid "DescTrialNew"
+msgstr "Create a new Trial"
+
+msgid "MenuTrialDelete"
+msgstr "De&lete..."
+
+msgid "DescTrialDelete"
+msgstr "Delete a Trial"
+
+msgid "MenuTrialPrintRuns"
+msgstr "Print &Runs..."
+
+msgid "DescTrialPrintRuns"
+msgstr "Print all the runs for the selected trial"
+
+msgid "MenuRun"
+msgstr "&Run"
+
+msgid "MenuRunProperties"
+msgstr "&Properties..."
+
+msgid "DescRunProperties"
+msgstr "Edit a Run's information"
+
+msgid "MenuRunNew"
+msgstr "&Run...\tCtrl+R"
+
+msgid "DescRunNew"
+msgstr "Create a new Run"
+
+msgid "MenuRunDelete"
+msgstr "De&lete..."
+
+msgid "DescRunDelete"
+msgstr "Delete a Run"
+
+msgid "MenuRunPrintRuns"
+msgstr "Print &Runs..."
+
+msgid "DescRunPrintRuns"
+msgstr "Print all the selected runs"
+
+msgid "MenuCalendar"
+msgstr "&Calendar"
+
+msgid "MenuCalendarProperties"
+msgstr "&Properties..."
+
+msgid "DescCalendarProperties"
+msgstr "Edit an upcoming Calendar entry"
+
+msgid "DescCalendarNew"
+msgstr "Create an upcoming Calendar entry"
+
+msgid "MenuCalendarDelete"
+msgstr "De&lete..."
+
+msgid "DescCalendarDelete"
+msgstr "Delete an upcoming Calendar entry"
+
+msgid "MenuCalendarUpdate"
+msgstr "&Update..."
+
+msgid "DescCalendarUpdate"
+msgstr "Update Calendar entries from Online sources"
+
+msgid "MenuCalendarExport"
+msgstr "&Export..."
+
+msgid "DescCalendarExport"
+msgstr "Export Calendar entries"
+
+msgid "MenuCalendarTrialEntry"
+msgstr "&Create Trial Entry..."
+
+msgid "DescCalendarTrialEntry"
+msgstr "Create a Trial entry"
+
+msgid "MenuTraining"
+msgstr "Tr&aining"
+
+msgid "MenuTrainingProperties"
+msgstr "&Properties..."
+
+msgid "DescTrainingProperties"
+msgstr "Edit a Training Log entry"
+
+msgid "DescTrainingNew"
+msgstr "Create a new Training Log entry"
+
+msgid "MenuTrainingDelete"
+msgstr "De&lete..."
+
+msgid "DescTrainingDelete"
+msgstr "Delete a Training Log entry"
+
+msgid "MenuNotes"
+msgstr "&Notes"
+
+msgid "MenuNotesClubs"
+msgstr "&Clubs..."
+
+msgid "DescNotesClubs"
+msgstr "Edit club information"
+
+msgid "MenuNotesJudges"
+msgstr "&Judges...\tCtrl+J"
+
+msgid "DescNotesJudges"
+msgstr "Edit judge information"
+
+msgid "MenuNotesLocations"
+msgstr "&Locations"
+
+msgid "DescNotesLocations"
+msgstr "Edit location information"
+
+msgid "MenuNotesSearch"
+msgstr "&Search Notes..."
+
+msgid "DescNotesSearch"
+msgstr "Search Note Information"
+
+msgid "MenuView"
+msgstr "&View"
+
+msgid "MenuViewOptions"
+msgstr "&Options...\tF7"
+
+msgid "DescViewOptions"
+msgstr "Change viewing options"
+
+msgid "MenuViewCustomize"
+msgstr "&Customize..."
+
+msgid "DescViewCustomize"
+msgstr "Customize column layouts"
+
+msgid "MenuViewNewestTrials"
+msgstr "Show &Newest Trials First"
+
+msgid "DescViewNewestTrials"
+msgstr "Sort newest trials first"
+
+msgid "MenuViewRunsByTrial"
+msgstr "Show &Runs By Trial"
+
+msgid "DescViewRunsByTrial"
+msgstr "Show runs by selected trial"
+
+msgid "MenuViewIncludeTable"
+msgstr "Include Table in &YPS"
+
+msgid "DescViewIncludeTable"
+msgstr "Include the table in the YPS"
+
+msgid "MenuViewSortPoints"
+msgstr "Sort &Points View..."
+
+msgid "DescViewSortPoints"
+msgstr "Sort the Points View by the specified order"
+
+msgid "MenuViewHiddenTitles"
+msgstr "Show &Hidden Titles"
+
+msgid "DescViewHiddenTitles"
+msgstr "Show Titles that have been hidden"
+
+msgid "MenuViewLifePoints"
+msgstr "&Lifetime Points by Event"
+
+msgid "DescViewLifePoints"
+msgstr "View Lifetime Point details by Level or Event"
+
+msgid "MenuViewExpand"
+msgstr "Expand"
+
+msgid "DescViewExpand"
+msgstr "Expand"
+
+msgid "MenuViewCollapse"
+msgstr "Collapse"
+
+msgid "DescViewCollapse"
+msgstr "Collapse"
+
+msgid "MenuViewExpandAll"
+msgstr "Expand All"
+
+msgid "DescViewExpandAll"
+msgstr "Expand All"
+
+msgid "MenuViewCollapseAll"
+msgstr "Collapse All"
+
+msgid "DescViewCollapseAll"
+msgstr "Collapse All"
+
+msgid "MenuViewType"
+msgstr "Type"
+
+msgid "MenuViewNotebook"
+msgstr "&Notebook\tCtrl-1"
+
+msgid "DescViewNotebook"
+msgstr "Notebook"
+
+msgid "MenuViewListbook"
+msgstr "&Listbook\tCtrl-2"
+
+msgid "DescViewListbook"
+msgstr "Listbook"
+
+msgid "MenuViewChoicebook"
+msgstr "&Choicebook\tCtrl-3"
+
+msgid "DescViewChoicebook"
+msgstr "Choicebook"
+
+msgid "MenuViewTreebook"
+msgstr "&Treebook\tCtrl-4"
+
+msgid "DescViewTreebook"
+msgstr "Treebook"
+
+msgid "MenuViewToolbook"
+msgstr "T&oolbook\tCtrl-5"
+
+msgid "DescViewToolbook"
+msgstr "Toolbook"
+
+msgid "MenuViewOrientation"
+msgstr "Orientation"
+
+msgid "DescViewOrientation"
+msgstr "Orientation of tabs"
+
+msgid "MenuViewTop"
+msgstr "&Top"
+
+msgid "DescViewTop"
+msgstr "Top"
+
+msgid "MenuViewBottom"
+msgstr "&Bottom"
+
+msgid "DescViewBottom"
+msgstr "Bottom"
+
+msgid "MenuViewLeft"
+msgstr "&Left"
+
+msgid "DescViewLeft"
+msgstr "Left"
+
+msgid "MenuViewRight"
+msgstr "&Right"
+
+msgid "DescViewRight"
+msgstr "Right"
+
+msgid "MenuWindow"
+msgstr "&Window"
+
+msgid "MenuWindowSplitter"
+msgstr "Adjust &Splitter"
+
+msgid "DescWindowSplitter"
+msgstr "Split the active window into panes"
+
+msgid "MenuWindowNext"
+msgstr "&Next Pane\tF6"
+
+msgid "DescWindowNext"
+msgstr "Switch to the next window pane"
+
+msgid "MenuWindowPrev"
+msgstr "&Previous Pane\tShift+F6"
+
+msgid "DescWindowPrev"
+msgstr "Switch back to the previous window pane"
+
+msgid "MenuHelp"
+msgstr "&Help"
+
+msgid "MenuHelpUpdates"
+msgstr "Check for &Updates..."
+
+msgid "DescHelpUpdates"
+msgstr "Check for Updates"
+
+msgid "MenuHelpSysInfo"
+msgstr "&System Information..."
+
+msgid "DescHelpSysInfo"
+msgstr "Display information about the system"
+
+msgid "MenuHelpSplash"
+msgstr "S&how Splash Screen..."
+
+msgid "DescHelpSplash"
+msgstr "Show the initial splash screen"
+
+msgid "MenuHelpAbout"
+msgstr "&About Agility Record Book..."
+
+msgid "DescHelpAbout"
+msgstr "Display program information, version number and copyright"
+
+msgid "MenuDetails"
+msgstr "&Details..."
+
+msgid "DescDetails"
+msgstr "Display details"
+
