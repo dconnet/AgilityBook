@@ -16,7 +16,7 @@ msgstr ""
 "plural-forms: nplurals=2; plural=n > 1\n"
 "POT-Creation-Date: \n"
 "X-Poedit-Language: French\n"
-"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 msgid "MenuFile"
