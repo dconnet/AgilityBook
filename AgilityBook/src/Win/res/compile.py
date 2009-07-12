@@ -73,7 +73,7 @@ def main():
     if not os.access(langDir, os.F_OK):
         os.mkdir(langDir)
 
-    for file in ('en', 'fr'):
+    for file in ('en_US', 'fr_FR'):
         autogen = os.path.join(file, autogenFile)
         # -t: output encoding
         cmd = ['msgcat', '-t', 'utf-8', '-o', autogen, os.path.join(file, r'arb.po')]

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2007-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2007-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -70,7 +70,7 @@ CLanguageManager::CLanguageManager()
 	{
 		// Translates v1.10 registry
 		if (0x0409 == lastLang)
-			lang = wxLANGUAGE_ENGLISH;
+			lang = wxLANGUAGE_ENGLISH_US;
 		else if (0x040c == lastLang)
 			lang = wxLANGUAGE_FRENCH;
 	}
@@ -86,7 +86,7 @@ CLanguageManager::CLanguageManager()
 		if (wxString(wxT("IDD_LANGUAGE")) == _("IDD_LANGUAGE"))
 		{
 			// ... force English.
-			SetLang(wxLANGUAGE_ENGLISH);
+			SetLang(wxLANGUAGE_ENGLISH_US);
 		}
 		SelectLanguage();
 	}
@@ -166,7 +166,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 		if (wxID_OK == dialog.ShowModal())
 			lang = langId[dialog.GetSelection()];
 		else
-			lang = wxLANGUAGE_ENGLISH;
+			lang = wxLANGUAGE_ENGLISH_US;
 	}
 	wxConfig::Get()->Write(wxT("Settings/Lang2"), lang);
 

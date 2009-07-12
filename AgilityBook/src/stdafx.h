@@ -3,7 +3,7 @@
 #endif
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -207,6 +207,9 @@
 #endif
 #ifndef wxUSE_DATETIME
 #error ARB: wxUSE_DATETIME must be defined in wxWidgets (include/wx/<platform>/setup.)
+#endif
+#ifndef wxUSE_DATEPICKCTRL
+#error ARB: wxUSE_DATEPICKCTRL must be defined in wxWidgets (include/wx/<platform>/setup.)
 #endif
 #ifndef wxUSE_NOTEBOOK
 #error ARB: wxUSE_NOTEBOOK must be defined in wxWidgets (include/wx/<platform>/setup.)

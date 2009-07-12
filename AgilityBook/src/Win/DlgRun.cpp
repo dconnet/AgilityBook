@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -122,6 +122,7 @@
 #include "Validators.h"
 #include <set>
 #include <wx/datectrl.h>
+#include <wx/generic/datectrl.h>
 #include <wx/dateevt.h>
 #include <wx/dcbuffer.h>
 
@@ -795,7 +796,7 @@ CDlgRun::CDlgRun(
 		wxT("Date"), wxDefaultPosition, wxDefaultSize, 0);
 	textDate->Wrap(-1);
 
-	wxDatePickerCtrl* ctrlDate = new wxDatePickerCtrl(m_panelScore, wxID_ANY, wxDefaultDateTime,
+	wxDatePickerCtrlGeneric* ctrlDate = new wxDatePickerCtrlGeneric(m_panelScore, wxID_ANY, wxDefaultDateTime,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_Date));
 	ctrlDate->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgRun::OnScoreDateChanged), NULL, this);

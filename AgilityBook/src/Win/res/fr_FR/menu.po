@@ -1,0 +1,546 @@
+# Agility Record Book translations from MFC resource file.
+# Copyright (C) 2002-2009 David Connet. All Rights Reserved.
+# This file is distributed under the same license as the Agility Record Book package.
+# David Connet <help@agilityrecordbook.com> 2002-2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Agility Record Book v2\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2009-03-01 09:24-0800\n"
+"Last-Translator: David Connet <help@agilityrecordbook.com>\n"
+"Language-Team:  <help@agilityrecordbook.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"plural-forms: nplurals=2; plural=n > 1\n"
+"POT-Creation-Date: \n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "MenuFile"
+msgstr "&Fichier"
+
+msgid "MenuFileNew"
+msgstr "&Nouveau\tCtrl+N"
+
+msgid "DescFileNew"
+msgstr "Créer un nouveau document"
+
+msgid "MenuFileOpen"
+msgstr "&Ouvrir...\tCtrl+O"
+
+msgid "DescFileOpen"
+msgstr "Ouvrir un document existant"
+
+msgid "MenuFileSave"
+msgstr "&Enregistrer\tCtrl+S"
+
+msgid "DescFileSave"
+msgstr "Enregistrer le document actif"
+
+msgid "MenuFileSaveAs"
+msgstr "Enregistrer &Sous...\tF12"
+
+msgid "DescFileSaveAs"
+msgstr "Enregistrer le document actif sous un nouveau nom"
+
+msgid "MenuFileLanguage"
+msgstr "&Choisir langue..."
+
+msgid "DescFileLanguage"
+msgstr "Choisir une langue"
+
+msgid "MenuFileImportExport"
+msgstr "Importer et E&xporter...\tCtrl+E"
+
+msgid "DescFileImportExport"
+msgstr "Guide Import et Export"
+
+msgid "MenuFileLinkedFiles"
+msgstr "&Trouver tous fichiers liés..."
+
+msgid "DescFileLinkedFiles"
+msgstr "Trouver tous fichiers associés"
+
+msgid "MenuFilePrint"
+msgstr "&Imprimer...\tCtrl+P"
+
+msgid "DescFilePrint"
+msgstr "Imprimer le document actif"
+
+msgid "MenuFilePrintBlank"
+msgstr "Imprimer Parcours &Vierges..."
+
+msgid "DescFilePrintBlank"
+msgstr "Emprimer page vierge pour enregistrer parcours"
+
+msgid "MenuFilePrintPreview"
+msgstr "&Aperçu avant Impression\tCtrl+Alt+P"
+
+msgid "DescFilePrintPreview"
+msgstr "Afficher des pages entières"
+
+msgid "MenuFileRecent"
+msgstr "&Fichiers récents"
+
+msgid "MenuFileExit"
+msgstr "&Quitter"
+
+msgid "DescFileExit"
+msgstr "Fermer l'application; propose d'enregistrer les documents"
+
+msgid "MenuEdit"
+msgstr "&Édition"
+
+msgid "MenuEditUndo"
+msgstr "&Annuler\tCtrl+Z"
+
+msgid "DescEditUndo"
+msgstr "Annule la dernière action"
+
+msgid "MenuEditDuplicate"
+msgstr "&Dupliquer"
+
+msgid "DescEditDuplicate"
+msgstr "Dupliquer selection courant"
+
+msgid "MenuEditCut"
+msgstr "Co&uper\tCtrl+X"
+
+msgid "DescEditCut"
+msgstr "Couper la sélection"
+
+msgid "MenuEditCopy"
+msgstr "&Copier\tCtrl+C"
+
+msgid "MenuEditCopySelection"
+msgstr "&Copier la sélection\tCtrl+C"
+
+msgid "DescEditCopy"
+msgstr "Copier la sélection"
+
+msgid "MenuEditPaste"
+msgstr "Co&ller\tCtrl+V"
+
+msgid "DescEditPaste"
+msgstr "Coller"
+
+msgid "MenuEditSelectAll"
+msgstr "&Sélectionner Tout\tCtrl+A"
+
+msgid "DescEditSelectAll"
+msgstr "Sélectionner le document entier"
+
+msgid "MenuEditCopyTitles"
+msgstr "Copier &Récompenses"
+
+msgid "DescEditCopyTitles"
+msgstr "Copier Récompenses"
+
+msgid "MenuEditReorder"
+msgstr "&Trier..."
+
+msgid "DescEditReorder"
+msgstr "Trier objets"
+
+msgid "MenuEditFind"
+msgstr "Rechercher...\tCtrl+F"
+
+msgid "DescEditFind"
+msgstr "Rechercher le texte spécifié"
+
+msgid "MenuEditFindNext"
+msgstr "Rechercher Suivant\tF3"
+
+msgid "DescEditFindNext"
+msgstr "Trouver prochaine texte specifié"
+
+msgid "MenuEditFindPrev"
+msgstr "Rechercher Précédent\tShift+F3"
+
+msgid "DescEditFindPrev"
+msgstr "Trouver texte specifié precedent"
+
+msgid "MenuEditConfig"
+msgstr "Co&nfigurer..."
+
+msgid "DescEditConfig"
+msgstr "Editer configurations organisation"
+
+msgid "MenuAgility"
+msgstr "&Agility"
+
+msgid "MenuDog"
+msgstr "&Chien"
+
+msgid "MenuDogProperties"
+msgstr "&Propriétés..."
+
+msgid "DescDogProperties"
+msgstr "Editer information sur chien"
+
+msgid "MenuNew"
+msgstr "&Nouveau..."
+
+msgid "MenuDogNew"
+msgstr "&Chien..."
+
+msgid "DescDogNew"
+msgstr "Creer nouveau chien"
+
+msgid "MenuDogDelete"
+msgstr "&Supprimer"
+
+msgid "DescDogDelete"
+msgstr "Supprimer chien et tous information associé"
+
+msgid "MenuTitle"
+msgstr "&Récompense"
+
+msgid "MenuTitleProperties"
+msgstr "&Propriétés..."
+
+msgid "DescTitleProperties"
+msgstr "Editer information sur distinction"
+
+msgid "MenuTitleNew"
+msgstr "&Récompense"
+
+msgid "DescTitleNew"
+msgstr "Creer nouveau distinction"
+
+msgid "MenuTitleDelete"
+msgstr "&Supprimer"
+
+msgid "DescTitleDelete"
+msgstr "Supprimer distinction"
+
+msgid "MenuTrial"
+msgstr "C&oncours"
+
+msgid "MenuTrialProperties"
+msgstr "&Propriétés..."
+
+msgid "DescTrialProperties"
+msgstr "Editer l'information sur concours"
+
+msgid "MenuTrialNew"
+msgstr "C&oncours"
+
+msgid "DescTrialNew"
+msgstr "Creer nouveau concours"
+
+msgid "MenuTrialDelete"
+msgstr "&Supprimer"
+
+msgid "DescTrialDelete"
+msgstr "Supprimer concours"
+
+msgid "MenuTrialPrintRuns"
+msgstr "&Imprimer Parcours..."
+
+msgid "DescTrialPrintRuns"
+msgstr "Emprimer tous parcours pour concours selectionné"
+
+msgid "MenuRun"
+msgstr "&Parcours"
+
+msgid "MenuRunProperties"
+msgstr "&Propriétés..."
+
+msgid "DescRunProperties"
+msgstr "Editer information parcours"
+
+msgid "MenuRunNew"
+msgstr "&Parcours\tCtrl+R"
+
+msgid "DescRunNew"
+msgstr "Creer nouveau parcours"
+
+msgid "MenuRunDelete"
+msgstr "&Supprimer"
+
+msgid "DescRunDelete"
+msgstr "Supprimer a Parcours"
+
+msgid "MenuRunPrintRuns"
+msgstr "&Imprimer Parcours..."
+
+msgid "DescRunPrintRuns"
+msgstr "Emprimer tous parcours selectionnés"
+
+msgid "MenuCalendar"
+msgstr "C&alendrier"
+
+msgid "MenuCalendarProperties"
+msgstr "&Propriétés..."
+
+msgid "DescCalendarProperties"
+msgstr "Editer futur entré calendrier"
+
+msgid "DescCalendarNew"
+msgstr "Creer futur entré calendrier"
+
+msgid "MenuCalendarDelete"
+msgstr "&Supprimer"
+
+msgid "DescCalendarDelete"
+msgstr "Supprimer futur entré calendrier"
+
+msgid "MenuCalendarUpdate"
+msgstr "&Mise à jour..."
+
+msgid "DescCalendarUpdate"
+msgstr "Mettre a jour des entrés calendrier d'un source online"
+
+msgid "MenuCalendarExport"
+msgstr "E&xporter..."
+
+msgid "DescCalendarExport"
+msgstr "Exporter des entrés calendrier"
+
+msgid "MenuCalendarTrialEntry"
+msgstr "Créer &Entrée Concours..."
+
+msgid "DescCalendarTrialEntry"
+msgstr "Creer un entré concours"
+
+msgid "MenuTraining"
+msgstr "&Entrainement"
+
+msgid "MenuTrainingProperties"
+msgstr "&Propriétés..."
+
+msgid "DescTrainingProperties"
+msgstr "Editer entré Log Entraînement"
+
+msgid "DescTrainingNew"
+msgstr "Creer un nouveau entré Log Entraînement"
+
+msgid "MenuTrainingDelete"
+msgstr "&Supprimer"
+
+msgid "DescTrainingDelete"
+msgstr "Supprimer un entré Log Entraînement"
+
+msgid "MenuNotes"
+msgstr "&Notes"
+
+msgid "MenuNotesClubs"
+msgstr "&Clubs..."
+
+msgid "DescNotesClubs"
+msgstr "Editer information sur club"
+
+msgid "MenuNotesJudges"
+msgstr "&Juges...\tCtrl+J"
+
+msgid "DescNotesJudges"
+msgstr "Editer information sur juge"
+
+msgid "MenuNotesLocations"
+msgstr "&Endroits"
+
+msgid "DescNotesLocations"
+msgstr "Editer information sur endroit"
+
+msgid "MenuNotesSearch"
+msgstr "&Recherche Notes..."
+
+msgid "DescNotesSearch"
+msgstr "Recherche information note"
+
+msgid "MenuView"
+msgstr "Affi&chage"
+
+msgid "MenuViewOptions"
+msgstr "&Options...\tF7"
+
+msgid "DescViewOptions"
+msgstr "Changer option affichage"
+
+msgid "MenuViewCustomize"
+msgstr "&Customiser..."
+
+msgid "DescViewCustomize"
+msgstr "Personalliser presentation colonnes"
+
+msgid "MenuViewNewestTrials"
+msgstr "Montrer &Dernier Concours en premier"
+
+msgid "DescViewNewestTrials"
+msgstr "Trier avec plus recent concours au debut"
+
+msgid "MenuViewRunsByTrial"
+msgstr "Montrer &Parcours par Concours"
+
+msgid "DescViewRunsByTrial"
+msgstr "Montrer parcours par concours selectioné"
+
+msgid "MenuViewIncludeTable"
+msgstr "Inclure Table en &TPS"
+
+msgid "DescViewIncludeTable"
+msgstr "Inclure temps table dans m/s"
+
+msgid "MenuViewSortPoints"
+msgstr "Trier &Affichage Points..."
+
+msgid "DescViewSortPoints"
+msgstr "Trier points par ordre selectionné"
+
+msgid "MenuViewHiddenTitles"
+msgstr "&Montrer Récompenses Cachées"
+
+msgid "DescViewHiddenTitles"
+msgstr "Montrer distinction cachés"
+
+msgid "MenuViewLifePoints"
+msgstr "Points c&umulatifs par épreuve"
+
+msgid "DescViewLifePoints"
+msgstr "Afficher points cumulatifs triés par degré ou épreuve"
+
+msgid "MenuViewExpand"
+msgstr "Développer"
+
+msgid "DescViewExpand"
+msgstr "Développer"
+
+msgid "MenuViewCollapse"
+msgstr "Réduire"
+
+msgid "DescViewCollapse"
+msgstr "Réduire"
+
+msgid "MenuViewExpandAll"
+msgstr "Développer Tout"
+
+msgid "DescViewExpandAll"
+msgstr "Développer Tout"
+
+msgid "MenuViewCollapseAll"
+msgstr "Réduire Tout"
+
+msgid "DescViewCollapseAll"
+msgstr "Réduire Tout"
+
+msgid "MenuViewType"
+msgstr "Affichage"
+
+msgid "MenuViewNotebook"
+msgstr "&Notes\tCtrl-1"
+
+msgid "DescViewNotebook"
+msgstr "Notes"
+
+msgid "MenuViewListbook"
+msgstr "&Liste\tCtrl-2"
+
+msgid "DescViewListbook"
+msgstr "Liste"
+
+msgid "MenuViewChoicebook"
+msgstr "&Choix\tCtrl-3"
+
+msgid "DescViewChoicebook"
+msgstr "Choix"
+
+msgid "MenuViewTreebook"
+msgstr "&Arbre\tCtrl-4"
+
+msgid "DescViewTreebook"
+msgstr "Arbre"
+
+msgid "MenuViewToolbook"
+msgstr "&Outils\tCtrl-5"
+
+msgid "DescViewToolbook"
+msgstr "Outils"
+
+msgid "MenuViewOrientation"
+msgstr "Orientation..."
+
+msgid "DescViewOrientation"
+msgstr "Orientation des onglets"
+
+msgid "MenuViewTop"
+msgstr "En &haut"
+
+msgid "DescViewTop"
+msgstr "En haut"
+
+msgid "MenuViewBottom"
+msgstr "En &bas"
+
+msgid "DescViewBottom"
+msgstr "En bas"
+
+msgid "MenuViewLeft"
+msgstr "A &gauche"
+
+msgid "DescViewLeft"
+msgstr "A gauche"
+
+msgid "MenuViewRight"
+msgstr "A &droite"
+
+msgid "DescViewRight"
+msgstr "A droite"
+
+msgid "MenuWindow"
+msgstr "Fenê&tre"
+
+msgid "MenuWindowSplitter"
+msgstr "Ajuster &Fractionnement"
+
+msgid "DescWindowSplitter"
+msgstr "Fractionner la fenêtre active en deux volets"
+
+msgid "MenuWindowNext"
+msgstr "Onglet &suivant\tF6"
+
+msgid "DescWindowNext"
+msgstr "Passer au fenêtre suivant"
+
+msgid "MenuWindowPrev"
+msgstr "Onglet &précédent\tShift+F6"
+
+msgid "DescWindowPrev"
+msgstr "Revenir au fenêtre précédent"
+
+msgid "MenuHelp"
+msgstr "Ai&de"
+
+msgid "MenuHelpUpdates"
+msgstr "Recherche de &Mise à jour..."
+
+msgid "DescHelpUpdates"
+msgstr "Cherche mise a jour"
+
+msgid "MenuHelpSysInfo"
+msgstr "Information &Système..."
+
+msgid "DescHelpSysInfo"
+msgstr "Montrer information sur system"
+
+msgid "MenuHelpSplash"
+msgstr "Montrer &Écran Introduction..."
+
+msgid "DescHelpSplash"
+msgstr "Montrer ecran introduction"
+
+msgid "MenuHelpAbout"
+msgstr "&A propos de Agility Record Book..."
+
+msgid "DescHelpAbout"
+msgstr "Afficher info sur le programme, version et copyright"
+
+msgid "MenuDetails"
+msgstr "&Détails..."
+
+msgid "DescDetails"
+msgstr "Montrer details"
+
