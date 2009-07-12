@@ -153,7 +153,7 @@ private:
 	// Titles
 	void OnTitleColumnClick(wxListEvent& evt);
 	void OnTitleItemSelected(wxListEvent& evt);
-	void OnTitleDoubleClick(wxMouseEvent& evt);
+	void OnTitleItemActivated(wxListEvent& evt);
 	void OnTitleKeyDown(wxKeyEvent& evt);
 	void OnTitleNew(wxCommandEvent& evt);
 	void OnTitleEdit(wxCommandEvent& evt);
@@ -162,7 +162,7 @@ private:
 	// RegNums
 	void OnRegNumColumnClick(wxListEvent& evt);
 	void OnRegNumItemSelected(wxListEvent& evt);
-	void OnRegNumDoubleClick(wxMouseEvent& evt);
+	void OnRegNumItemActivated(wxListEvent& evt);
 	void OnRegNumKeyDown(wxKeyEvent& evt);
 	void OnRegNumNew(wxCommandEvent& evt);
 	void OnRegNumEdit(wxCommandEvent& evt);
@@ -170,7 +170,7 @@ private:
 	// Points
 	void OnPointsColumnClick(wxListEvent& evt);
 	void OnPointsItemSelected(wxListEvent& evt);
-	void OnPointsDoubleClick(wxMouseEvent& evt);
+	void OnPointsItemActivated(wxListEvent& evt);
 	void OnPointsKeyDown(wxKeyEvent& evt);
 	void OnPointsNew(wxCommandEvent& evt);
 	void OnPointsEdit(wxCommandEvent& evt);

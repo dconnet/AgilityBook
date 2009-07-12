@@ -79,7 +79,7 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnColumnClick(wxListEvent& evt);
 	void OnItemSelected(wxListEvent& evt);
-	void OnDoubleClick(wxMouseEvent& evt);
+	void OnItemActivated(wxListEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);
 	void OnCopy(wxCommandEvent& evt);
 	void OnEdit(wxCommandEvent& evt);

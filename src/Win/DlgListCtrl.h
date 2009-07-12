@@ -124,7 +124,7 @@ private:
 
 	DECLARE_EVENT_TABLE()
 	void OnItemSelected(wxListEvent& evt);
-	void OnDoubleClick(wxMouseEvent& evt);
+	void OnItemActivated(wxListEvent& evt);
 	void OnKeyDown(wxKeyEvent& evt);
 	void OnNew(wxCommandEvent& evt);
 	void OnEdit(wxCommandEvent& evt);

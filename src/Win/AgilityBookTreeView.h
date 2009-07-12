@@ -221,7 +221,7 @@ private:
 	void OnCtrlSetFocus(wxFocusEvent& evt);
 	void OnCtrlContextMenu(wxTreeEvent& evt);
 	void OnCtrlSelectionChanged(wxTreeEvent& evt);
-	void OnCtrlDoubleClick(wxMouseEvent& evt);
+	void OnCtrlItemActivated(wxTreeEvent& evt);
 	void OnCtrlKeyDown(wxKeyEvent& evt);
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);

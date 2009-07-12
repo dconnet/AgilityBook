@@ -139,7 +139,7 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnCtrlContextMenu(wxListEvent& evt);
 	void OnCtrlColumnClick(wxListEvent& evt);
-	void OnCtrlDoubleClick(wxMouseEvent& evt);
+	void OnCtrlItemActivated(wxListEvent& evt);
 	void OnCtrlKeyDown(wxKeyEvent& evt);
 	void OnViewContextMenu(wxContextMenuEvent& evt);
 	void OnViewUpdateCmd(wxUpdateUIEvent& evt);

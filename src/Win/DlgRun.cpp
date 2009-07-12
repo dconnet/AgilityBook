@@ -1198,7 +1198,7 @@ CDlgRun::CDlgRun(
 		true, CReportListCtrl::eSortHeader, true);
 	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgRun::OnRefRunColumnClick), NULL, this);
 	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgRun::OnRefRunItemSelected), NULL, this);
-	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgRun::OnRefRunDoubleClick), NULL, this);
+	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgRun::OnRefRunItemActivated), NULL, this);
 	m_ctrlRefRuns->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgRun::OnRefRunKeyDown), NULL, this);
 	m_ctrlRefRuns->SetHelpText(_("HIDC_RUNREF_REF_RUNS"));
 	m_ctrlRefRuns->SetToolTip(_("HIDC_RUNREF_REF_RUNS"));
@@ -1308,7 +1308,7 @@ CDlgRun::CDlgRun(
 	m_imgOk = m_ImageList.Add(wxIcon(CalPlan_xpm));
 	m_imgMissing = m_ImageList.Add(wxIcon(CalTentative_xpm));
 	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgRun::OnLinksItemSelected), NULL, this);
-	m_ctrlLinks->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgRun::OnLinksDoubleClick), NULL, this);
+	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgRun::OnLinksItemActivated), NULL, this);
 	m_ctrlLinks->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgRun::OnLinksKeyDown), NULL, this);
 	m_ctrlLinks->SetHelpText(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_RUNLINK_LIST"));
@@ -2866,7 +2866,7 @@ void CDlgRun::OnRefRunItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgRun::OnRefRunDoubleClick(wxMouseEvent& evt)
+void CDlgRun::OnRefRunItemActivated(wxListEvent& evt)
 {
 	EditRefRun();
 }
@@ -3013,7 +3013,7 @@ void CDlgRun::OnLinksItemSelected(wxListEvent& evt)
 }
 
 
-void CDlgRun::OnLinksDoubleClick(wxMouseEvent& evt)
+void CDlgRun::OnLinksItemActivated(wxListEvent& evt)
 {
 	EditLink();
 }

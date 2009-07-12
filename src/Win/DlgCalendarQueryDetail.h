@@ -102,9 +102,9 @@ private:
 
 	DECLARE_EVENT_TABLE()
 	void OnLocationsItemSelected(wxListEvent& evt);
-	void OnLocationsDoubleClick(wxMouseEvent& evt);
+	void OnLocationsItemActivated(wxListEvent& evt);
 	void OnVenuesItemSelected(wxListEvent& evt);
-	void OnVenuesDoubleClick(wxMouseEvent& evt);
+	void OnVenuesItemActivated(wxListEvent& evt);
 	void OnNewLocationCode(wxCommandEvent& evt);
 	void OnEditLocationCode(wxCommandEvent& evt);
 	void OnDeleteLocationCode(wxCommandEvent& evt);

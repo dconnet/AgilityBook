@@ -318,7 +318,7 @@ bool CAgilityBookTreeView::Create(
 	m_Ctrl->Connect(wxEVT_COMMAND_SET_FOCUS, wxFocusEventHandler(CAgilityBookTreeView::OnCtrlSetFocus), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_ITEM_MENU, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlContextMenu), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlSelectionChanged), NULL, this);
-	m_Ctrl->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookTreeView::OnCtrlDoubleClick), NULL, this);
+	m_Ctrl->Connect(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlItemActivated), NULL, this);
 	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookTreeView::OnCtrlKeyDown), NULL, this);
 	m_Ctrl->SetImageList(&m_ImageList);
 #ifdef WIN32
@@ -942,7 +942,7 @@ void CAgilityBookTreeView::OnCtrlSelectionChanged(wxTreeEvent& evt)
 }
 
 
-void CAgilityBookTreeView::OnCtrlDoubleClick(wxMouseEvent& evt)
+void CAgilityBookTreeView::OnCtrlItemActivated(wxTreeEvent& evt)
 {
 	CAgilityBookTreeData* pData = GetCurrentTreeItem();
 	if (pData)

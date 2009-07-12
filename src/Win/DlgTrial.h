@@ -90,7 +90,7 @@ private:
 	void OnSelchangeLocation(wxCommandEvent& evt);
 	void OnKillfocusLocation(wxFocusEvent& evt);
 	void OnItemSelectedClubs(wxListEvent& evt);
-	void OnDblclkClubs(wxMouseEvent& evt);
+	void OnItemActivatedClubs(wxListEvent& evt);
 	void OnKeydownClubs(wxKeyEvent& evt);
 	void OnLocationNotes(wxCommandEvent& evt);
 	void OnClubNotes(wxCommandEvent& evt);

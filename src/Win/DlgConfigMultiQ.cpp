@@ -135,7 +135,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	m_ctrlItems = new wxListView(this, wxID_ANY,
 		wxDefaultPosition, wxSize(300, 95), wxLC_REPORT|wxLC_SINGLE_SEL);
 	m_ctrlItems->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgConfigMultiQ::OnItemchanged), NULL, this);
-	m_ctrlItems->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigMultiQ::OnDblclkItem), NULL, this);
+	m_ctrlItems->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgConfigMultiQ::OnItemActivated), NULL, this);
 	m_ctrlItems->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgConfigMultiQ::OnKeydownItem), NULL, this);
 	m_ctrlItems->SetHelpText(_("HIDC_CONFIG_MULTIQ_ITEMS"));
 	m_ctrlItems->SetToolTip(_("HIDC_CONFIG_MULTIQ_ITEMS"));
@@ -278,7 +278,7 @@ void CDlgConfigMultiQ::OnItemchanged(wxListEvent& evt)
 }
 
 
-void CDlgConfigMultiQ::OnDblclkItem(wxMouseEvent& evt)
+void CDlgConfigMultiQ::OnItemActivated(wxListEvent& evt)
 {
 	EditItem();
 }
