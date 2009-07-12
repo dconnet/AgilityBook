@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>$(PRODUCT_NAME) Version 2.0, (c) 2002-2009 David Connet</string>
 	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>AgilityBook.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.agilityrecordbook.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>

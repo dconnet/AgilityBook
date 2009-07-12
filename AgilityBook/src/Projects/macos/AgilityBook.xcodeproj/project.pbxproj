@@ -283,6 +283,8 @@
 		E158FCBA1001371B00735E7F /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
 		E158FCBC1001371B00735E7F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
 		E1BF78F00FFFE153009B81A7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
+		E1E98E8D100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
+		E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -570,6 +572,7 @@
 		E158FCC01001371B00735E7F /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1BF78EE0FFFE144009B81A7 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../stdafx.h; sourceTree = SOURCE_ROOT; };
 		E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,6 +633,7 @@
 			isa = PBXGroup;
 			children = (
 				20286C2AFDCF999611CA2CEA /* Sources */,
+				E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */,
 				8D0C4E960486CD37000505A6 /* Info.plist */,
 				0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */,
 				1DDD57FA0DA1D07D00B32029 /* main.xib */,
@@ -1014,6 +1018,7 @@
 			files = (
 				8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */,
 				1DDD57FC0DA1D07D00B32029 /* main.xib in Resources */,
+				E1E98E8D100A7E2C00F89E21 /* AgilityBook.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1023,6 +1028,7 @@
 			files = (
 				E158FC311001371B00735E7F /* InfoPlist.strings in Resources */,
 				E158FC321001371B00735E7F /* main.xib in Resources */,
+				E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1341,7 +1347,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 2.0.0;
-				DEAD_CODE_STRIPPING = NO;
+				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = arb_Prefix.pch;
@@ -1357,6 +1363,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
@@ -1403,6 +1410,7 @@
 					"-lpthread",
 					"-liconv",
 				);
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
@@ -1427,6 +1435,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
@@ -1474,7 +1483,7 @@
 					"-lpthread",
 					"-liconv",
 				);
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
@@ -1510,7 +1519,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 2.0.0;
-				DEAD_CODE_STRIPPING = NO;
+				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = arb_Prefix.pch;
@@ -1526,6 +1535,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
@@ -1572,6 +1582,7 @@
 					"-lpthread",
 					"-liconv",
 				);
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
@@ -1596,6 +1607,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
@@ -1643,7 +1655,7 @@
 					"-lpthread",
 					"-liconv",
 				);
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;

@@ -167,6 +167,7 @@ dist:: agilitybook resources
 #	cp InfoPlist.strings $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/Resources/English.lproj/
 	echo -n 'APPL????' > $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/PkgInfo
 	cp agilitybook $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/agilitybook
+	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/Resources/
 #	cp $@MacIcons.icns AnotherResource.txt $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/Resources/
 # copy resources into package
 	cp -pR lang $(TOPBUILDDIR)/AgilityRecordBook.app/Contents/MacOS/

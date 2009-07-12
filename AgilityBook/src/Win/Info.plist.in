@@ -9,7 +9,7 @@
 	<key>CFBundleGetInfoString</key>
 	<string>@PACKAGE_NAME@ version @PACKAGE_VERSION@, (c) @PACKAGE_COPYRIGHT@</string>
 	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>AgilityBook.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.agilityrecordbook.@PACKAGE_SHORTNAME@</string>
 	<key>CFBundleInfoDictionaryVersion</key>
