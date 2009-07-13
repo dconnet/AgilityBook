@@ -122,7 +122,6 @@
 #include "Validators.h"
 #include <set>
 #include <wx/datectrl.h>
-#include <wx/generic/datectrl.h>
 #include <wx/dateevt.h>
 #include <wx/dcbuffer.h>
 
@@ -796,7 +795,7 @@ CDlgRun::CDlgRun(
 		wxT("Date"), wxDefaultPosition, wxDefaultSize, 0);
 	textDate->Wrap(-1);
 
-	wxDatePickerCtrlGeneric* ctrlDate = new wxDatePickerCtrlGeneric(m_panelScore, wxID_ANY, wxDefaultDateTime,
+	wxDatePickerCtrl* ctrlDate = new wxDatePickerCtrl(m_panelScore, wxID_ANY, wxDefaultDateTime,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_Date));
 	ctrlDate->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgRun::OnScoreDateChanged), NULL, this);
