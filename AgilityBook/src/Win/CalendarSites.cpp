@@ -664,8 +664,7 @@ private:
 CCalendarSitesImpl::CCalendarSitesImpl()
 	: m_PathName()
 {
-	wxFileName exeName(wxStandardPaths::Get().GetExecutablePath());
-	m_PathName = exeName.GetPath() + wxFileName::GetPathSeparator();
+	m_PathName = wxStandardPaths::Get().GetPluginsDir() + wxFileName::GetPathSeparator();
 
 	// Load auxilary DLLs from the path where the EXE lives.
 	if (!m_PathName.empty())
