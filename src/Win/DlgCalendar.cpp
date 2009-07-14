@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -230,6 +231,8 @@ CDlgCalendar::CDlgCalendar(
 	ctrlClosesUnknown->SetHelpText(_("HIDC_CAL_DATE_CLOSES_UNKNOWN"));
 	ctrlClosesUnknown->SetToolTip(_("HIDC_CAL_DATE_CLOSES_UNKNOWN"));
 
+	wxStaticBox* boxEntry = new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ENTER"));
+
 	m_ctrlEntryNot = new wxRadioButton(this, wxID_ANY,
 		_("IDC_CAL_ENTER_NOT"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
@@ -279,6 +282,8 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlOnlineUrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgCalendar::OnEnChangeCalOnlineUrl), NULL, this);
 	m_ctrlOnlineUrl->SetHelpText(_("HIDC_CAL_ONLINE_URL"));
 	m_ctrlOnlineUrl->SetToolTip(_("HIDC_CAL_ONLINE_URL"));
+
+	wxStaticBox* boxAccom = new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ACCOM"));
 
 	m_ctrlAccomNot = new wxRadioButton(this, wxID_ANY,
 		_("IDC_CAL_ACCOM_NONE"),
@@ -480,7 +485,7 @@ CDlgCalendar::CDlgCalendar(
 
 	wxBoxSizer* sizer1 = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* sizerEntry = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ENTER")), wxVERTICAL);
+	wxStaticBoxSizer* sizerEntry = new wxStaticBoxSizer(boxEntry, wxVERTICAL);
 	sizerEntry->Add(m_ctrlEntryNot, 0, wxALL, 3);
 	sizerEntry->Add(m_ctrlEntryPlan, 0, wxALL, 3);
 
@@ -524,8 +529,7 @@ CDlgCalendar::CDlgCalendar(
 
 	wxBoxSizer* sizer2 = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* sizerAccom = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_CAL_ACCOM")), wxVERTICAL);
-
+	wxStaticBoxSizer* sizerAccom = new wxStaticBoxSizer(boxAccom, wxVERTICAL);
 	sizerAccom->Add(m_ctrlAccomNot, 0, wxALL, 3);
 	sizerAccom->Add(m_ctrlAccomNeeded, 0, wxALL, 3);
 

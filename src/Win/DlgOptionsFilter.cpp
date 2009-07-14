@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-09-01 DRC Fix setting of 'After' (start) date filter.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -106,6 +107,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 		}
 	}
 
+	wxStaticBox* boxFilters = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES"));
+
 	wxButton* btnSave = new wxButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_NAMES_SAVE"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -119,6 +122,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	btnDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsFilter::OnClickedOptFilterNamesDelete), NULL, this);
 	btnDelete->SetHelpText(_("HIDC_OPT_FILTER_NAMES_DELETE"));
 	btnDelete->SetToolTip(_("HIDC_OPT_FILTER_NAMES_DELETE"));
+
+	wxStaticBox* boxDates = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_DATE"));
 
 	m_ctrlDatesAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_DATE_ALL"),
@@ -160,6 +165,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlDateEnd->SetHelpText(_("HIDC_OPT_FILTER_DATE_END"));
 	m_ctrlDateEnd->SetToolTip(_("HIDC_OPT_FILTER_DATE_END"));
 
+	wxStaticBox* boxCal1 = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_CAL"));
+
 	wxCheckBox* ctrlCalNot = new wxCheckBox(this, wxID_ANY,
 		_("IDC_OPT_FILTER_CAL_NOT_ENTERED"),
 		wxDefaultPosition, wxDefaultSize, 0,
@@ -180,6 +187,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 		wxGenericValidator(&m_bEntered));
 	ctrlCalEntered->SetHelpText(_("HIDC_OPT_FILTER_CAL_ENTERED"));
 	ctrlCalEntered->SetToolTip(_("HIDC_OPT_FILTER_CAL_ENTERED"));
+
+	wxStaticBox* boxLog = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_LOG_NAME"));
 
 	m_ctrlLogAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_LOG_NAME_ALL"),
@@ -202,6 +211,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlNames->SetHelpText(_("HIDC_OPT_FILTER_LOG_NAME"));
 	m_ctrlNames->SetToolTip(_("HIDC_OPT_FILTER_LOG_NAME"));
 
+	wxStaticBox* boxQs = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_RUN_RUNS"));
+
 	m_ctrlQsAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_RUNS_ALL"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
@@ -222,6 +233,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlQsNonQs->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterQs), NULL, this);
 	m_ctrlQsNonQs->SetHelpText(_("HIDC_OPT_FILTER_RUN_RUNS_NON_Q"));
 	m_ctrlQsNonQs->SetToolTip(_("HIDC_OPT_FILTER_RUN_RUNS_NON_Q"));
+
+	wxStaticBox* boxVenue = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_RUN_VENUES"));
 
 	m_ctrlVenueAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_VENUES_ALL"),
@@ -248,7 +261,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	wxBoxSizer* sizerCol1 = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* sizerFilters = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES")), wxVERTICAL);
+	wxStaticBoxSizer* sizerFilters = new wxStaticBoxSizer(boxFilters, wxVERTICAL);
 	sizerFilters->Add(m_ctrlFilters, 0, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerBtns = new wxBoxSizer(wxHORIZONTAL);
@@ -259,7 +272,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	sizerCol1->Add(sizerFilters, 0, wxALL|wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerDates = new wxStaticBoxSizer(new wxStaticBox( this, wxID_ANY, _("IDC_OPT_FILTER_DATE")), wxVERTICAL);
+	wxStaticBoxSizer* sizerDates = new wxStaticBoxSizer(boxDates, wxVERTICAL);
 	sizerDates->Add(m_ctrlDatesAll, 0, wxALL, 5);
 	sizerDates->Add(m_ctrlDatesSome, 0, wxALL, 5);
 
@@ -275,14 +288,14 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	sizerCol1->Add(sizerDates, 0, wxALL|wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerCal1 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_CAL") ), wxVERTICAL);
+	wxStaticBoxSizer* sizerCal1 = new wxStaticBoxSizer(boxCal1, wxVERTICAL);
 	sizerCal1->Add(ctrlCalNot, 0, wxALL, 5);
 	sizerCal1->Add(ctrlCalPlan, 0, wxALL, 5);
 	sizerCal1->Add(ctrlCalEntered, 0, wxALL, 5);
 
 	sizerCol1->Add(sizerCal1, 0, wxALL|wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerLog = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_LOG_NAME")), wxVERTICAL);
+	wxStaticBoxSizer* sizerLog = new wxStaticBoxSizer(boxLog, wxVERTICAL);
 	sizerLog->Add(m_ctrlLogAll, 0, wxALL, 5);
 	sizerLog->Add(m_ctrlLogSome, 0, wxALL, 5);
 	sizerLog->Add(m_ctrlNames, 0, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5);
@@ -293,14 +306,14 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	wxBoxSizer* sizerCol2 = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* m_ctrlQs = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_RUN_RUNS")), wxVERTICAL);
+	wxStaticBoxSizer* m_ctrlQs = new wxStaticBoxSizer(boxQs, wxVERTICAL);
 	m_ctrlQs->Add(m_ctrlQsAll, 0, wxALL, 5);
 	m_ctrlQs->Add(m_ctrlQsQs, 0, wxALL, 5);
 	m_ctrlQs->Add(m_ctrlQsNonQs, 0, wxALL, 5);
 
 	sizerCol2->Add(m_ctrlQs, 0, wxALL|wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerVenue = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_RUN_VENUES")), wxVERTICAL);
+	wxStaticBoxSizer* sizerVenue = new wxStaticBoxSizer(boxVenue, wxVERTICAL);
 	sizerVenue->Add(m_ctrlVenueAll, 0, wxALL, 5);
 	sizerVenue->Add(m_ctrlVenueSome, 0, wxALL, 5);
 	sizerVenue->Add(m_ctrlVenue, 1, wxBOTTOM|wxEXPAND|wxLEFT|wxRIGHT, 5);

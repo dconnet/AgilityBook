@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-31 DRC Changed how QQs are done.
@@ -242,6 +243,8 @@ CDlgExistingPoints::CDlgExistingPoints(
 	ctrlPoints->SetHelpText(_("HIDC_EXISTING_POINTS"));
 	ctrlPoints->SetToolTip(_("HIDC_EXISTING_POINTS"));
 
+	wxStaticBox* boxWhere = new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_POINTS_WHERE"));
+
 	wxStaticText* textVenue = new wxStaticText(this, wxID_ANY,
 		_("IDC_EXISTING_VENUES"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -311,6 +314,8 @@ CDlgExistingPoints::CDlgExistingPoints(
 	m_ctrlOthers->SetHelpText(_("HIDC_EXISTING_OTHERPOINTS"));
 	m_ctrlOthers->SetToolTip(_("HIDC_EXISTING_OTHERPOINTS"));
 
+	wxStaticBox* boxComment = new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_COMMENTS"));
+
 	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(200, 150), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_RIGHT));
@@ -333,7 +338,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	wxBoxSizer* sizerContent = new wxBoxSizer(wxHORIZONTAL);
 
-	wxStaticBoxSizer* sizerWhere = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_POINTS_WHERE")), wxVERTICAL);
+	wxStaticBoxSizer* sizerWhere = new wxStaticBoxSizer(boxWhere, wxVERTICAL);
 
 	wxFlexGridSizer* sizerCombo = new wxFlexGridSizer(6, 2, 0, 0);
 	sizerCombo->SetFlexibleDirection(wxBOTH);
@@ -361,10 +366,8 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	sizerContent->Add(sizerWhere, 1, wxALL|wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerComment = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_COMMENTS")), wxVERTICAL);
-
+	wxStaticBoxSizer* sizerComment = new wxStaticBoxSizer(boxComment, wxVERTICAL);
 	sizerComment->Add(ctrlNote, 1, wxALL|wxEXPAND, 5);
-
 	sizerContent->Add(sizerComment, 1, wxALL|wxEXPAND, 5);
 
 	bSizer->Add(sizerContent, 1, wxEXPAND, 5);

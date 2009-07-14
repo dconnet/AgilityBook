@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-07-29 DRC Method overlap detection was wrong.
  * @li 2007-05-08 DRC Fixed bug when deleting a method.
@@ -217,6 +218,8 @@ CDlgConfigEvent::CDlgConfigEvent(
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_DESC"));
 	ctrlNote->SetToolTip(_("HIDC_CONFIG_EVENT_DESC"));
+
+	wxStaticBox* boxMethods = new wxStaticBox(this, wxID_ANY, _("IDC_CONFIG_EVENT_SCORING"));
 
 	m_ctrlSubNames = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
@@ -402,7 +405,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	bSizer->Add(sizerTop, 0, wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerMethods = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_CONFIG_EVENT_SCORING")), wxVERTICAL);
+	wxStaticBoxSizer* sizerMethods = new wxStaticBoxSizer(boxMethods, wxVERTICAL);
 
 	wxBoxSizer* sizerDefinitions = new wxBoxSizer(wxHORIZONTAL);
 

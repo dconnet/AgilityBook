@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2009-01-11 DRC Fixed a bug that added an 8th day to week.
  * @li 2006-11-22 DRC Turned this into Calendar only, created new Print page.
@@ -103,6 +104,8 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	// Controls (these are done first to control tab order)
 
+	wxStaticBox* boxCalList = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_LIST"));
+
 	wxCheckBox* ctrlWarnOpen = new wxCheckBox(this, wxID_ANY,
 		_("IDC_OPT_CAL_WARN_OPENNEAR"),
 		wxDefaultPosition, wxDefaultSize, 0,
@@ -164,6 +167,8 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	m_ctrlClosingNearSet->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsCalendar::OnCalColorClosingNear), NULL, this);
 	m_ctrlClosingNearSet->SetHelpText(_("HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"));
 	m_ctrlClosingNearSet->SetToolTip(_("HIDC_OPT_CAL_COLOR_CLOSENEAR_SET"));
+
+	wxStaticBox* boxCalView = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_VIEW"));
 
 	wxStaticText* textDOW = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_CAL_DAY_OF_WEEK"),
@@ -286,7 +291,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	wxBoxSizer* sizerCal = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* sizerCalList = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_LIST")), wxVERTICAL);
+	wxStaticBoxSizer* sizerCalList = new wxStaticBoxSizer(boxCalList, wxVERTICAL);
 
 	wxFlexGridSizer* sizerCalListItems = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerCalListItems->SetFlexibleDirection(wxBOTH);
@@ -332,7 +337,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 
 	sizerCal->Add(sizerCalList, 0, 0, 5);
 
-	wxStaticBoxSizer* sizerCalView = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_CAL_VIEW")), wxHORIZONTAL);
+	wxStaticBoxSizer* sizerCalView = new wxStaticBoxSizer(boxCalView, wxHORIZONTAL);
 
 	wxBoxSizer* sizerCalView2 = new wxBoxSizer(wxVERTICAL);
 
