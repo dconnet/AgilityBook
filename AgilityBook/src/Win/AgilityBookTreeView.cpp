@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-13 DRC Changing language didn't update dog's age.
  * @li 2009-07-11 DRC Change how runs are synced with list to reduce reloading.
  * @li 2009-02-08 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added SelectDog()
@@ -404,6 +405,10 @@ void CAgilityBookTreeView::OnUpdate(
 		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_TRIAL, m_Columns[1]);
 		CDlgAssignColumns::GetColumnOrder(CAgilityBookOptions::eView, IO_TYPE_VIEW_TREE_RUN, m_Columns[2]);
 		UpdateData(m_Ctrl->GetRootItem());
+	}
+	else if (hint && hint->IsEqual(UPDATE_LANG_CHANGE))
+	{
+		RefreshTreeItem(m_Ctrl, m_Ctrl->GetRootItem(), true);
 	}
 }
 
