@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
  *                    _after_ the dialog is destroyed).
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -95,6 +96,7 @@ CWizardExport::CWizardExport(
 
 	// Controls (these are done first to control tab order)
 
+	wxStaticBox* boxDelimiters = NULL;
 	wxRadioButton* ctrlTab = NULL;
 	wxRadioButton* ctrlColon = NULL;
 	wxRadioButton* ctrlComma = NULL;
@@ -105,6 +107,8 @@ CWizardExport::CWizardExport(
 
 	if (showDelims)
 	{
+		boxDelimiters = new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_EXPORT_DELIM_GROUP"));
+
 		ctrlTab = new wxRadioButton(this, wxID_ANY,
 			_("IDC_WIZARD_EXPORT_DELIM_TAB"),
 			wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
@@ -225,7 +229,7 @@ CWizardExport::CWizardExport(
 
 	if (showDelims)
 	{
-		wxStaticBoxSizer* sizerDelimiters = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_EXPORT_DELIM_GROUP")), wxVERTICAL);
+		wxStaticBoxSizer* sizerDelimiters = new wxStaticBoxSizer(boxDelimiters, wxVERTICAL);
 
 		wxFlexGridSizer* sizerDelim2 = new wxFlexGridSizer(2, 3, 0, 0);
 		sizerDelim2->SetFlexibleDirection(wxBOTH);

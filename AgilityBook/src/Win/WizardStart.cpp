@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
  *                    _after_ the dialog is destroyed).
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -119,6 +120,7 @@ CWizardStart::CWizardStart(
 
 	// Controls (these are done first to control tab order)
 
+	wxStaticBox* boxImportExport = new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_RADIO_BOX"));
 	wxRadioButton* radioExcel = NULL;
 	if (m_pSheet->ExcelHelper())
 	{
@@ -184,6 +186,8 @@ CWizardStart::CWizardStart(
 	m_ctrlList->SetHelpText(_("HIDC_WIZARD_START_LIST"));
 	m_ctrlList->SetToolTip(_("HIDC_WIZARD_START_LIST"));
 
+	wxStaticBox* boxDesc = new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_START_DESCRIPTION"));
+
 	m_ctrlDesc = new wxStaticText(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(200, -1), wxST_NO_AUTORESIZE);
 	m_ctrlDesc->Wrap(200);
@@ -192,7 +196,7 @@ CWizardStart::CWizardStart(
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* sizerImportExport = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_RADIO_BOX")), wxVERTICAL);
+	wxStaticBoxSizer* sizerImportExport = new wxStaticBoxSizer(boxImportExport, wxVERTICAL);
 	if (radioExcel)
 		sizerImportExport->Add(radioExcel, 0, wxLEFT|wxRIGHT|wxTOP, 5);
 	if (radioCalc)
@@ -204,7 +208,7 @@ CWizardStart::CWizardStart(
 	wxBoxSizer* sizerAction = new wxBoxSizer(wxHORIZONTAL);
 	sizerAction->Add(m_ctrlList, 1, wxALL|wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerDesc = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_WIZARD_START_DESCRIPTION")), wxVERTICAL);
+	wxStaticBoxSizer* sizerDesc = new wxStaticBoxSizer(boxDesc, wxVERTICAL);
 	sizerDesc->Add(m_ctrlDesc, 1, wxALL|wxEXPAND, 5);
 
 	sizerAction->Add(sizerDesc, 1, wxEXPAND|wxLEFT|wxRIGHT, 5);

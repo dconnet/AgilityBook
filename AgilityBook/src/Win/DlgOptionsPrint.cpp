@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-05-31 DRC Added options for print page size.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-22 DRC Moved printing to new page.
@@ -86,6 +87,8 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 
 	// Controls (these are done first to control tab order)
 
+	wxStaticBox* boxFont = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_FONT_GROUP"));
+
 	m_ctrlFontPrint = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_FONT_TEXT"),
 		wxDefaultPosition, wxSize(110, 55), wxALIGN_CENTRE|wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
@@ -133,6 +136,8 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	m_Metric->SetToolTip(_("HIDC_OPT_PRINT_UNITS"));
 	m_Metric->SetSelection(m_MetricSizes ? m_idxMM : m_idxIn);
 
+	wxStaticBox* boxPageSize = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_RUNPAGE"));
+
 	wxStaticText* textWidth = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_RUNPAGE_W"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -154,6 +159,8 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		CGenericValidator(&m_PageRunHeight));
 	ctrlHeight->SetHelpText(_("HIDC_OPT_PRINT_RUNPAGE_H"));
 	ctrlHeight->SetToolTip(_("HIDC_OPT_PRINT_RUNPAGE_H"));
+
+	wxStaticBox* boxMargins = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN"));
 
 	wxStaticText* textLeft = new wxStaticText(this, wxID_ANY,
 		_("IDC_OPT_PRINT_MARGIN_L"),
@@ -203,7 +210,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 
 	wxBoxSizer* sizerPrint = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticBoxSizer* sizerFont = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_FONT_GROUP")), wxVERTICAL);
+	wxStaticBoxSizer* sizerFont = new wxStaticBoxSizer(boxFont, wxVERTICAL);
 	sizerFont->Add(m_ctrlFontPrint, 1, wxALL|wxEXPAND, 5);
 	sizerFont->Add(btnFont, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -213,7 +220,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 	sizerRadio->Add(m_Orientation, 0, wxALL, 5);
 	sizerRadio->Add(m_Metric, 0, wxALL, 5);
 
-	wxStaticBoxSizer* sizerPageSize = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_RUNPAGE")), wxVERTICAL);
+	wxStaticBoxSizer* sizerPageSize = new wxStaticBoxSizer(boxPageSize, wxVERTICAL);
 
 	wxFlexGridSizer* sizerPage = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerPage->SetFlexibleDirection(wxBOTH);
@@ -228,7 +235,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 
 	sizerPrint->Add(sizerRadio, 0, wxEXPAND, 5);
 
-	wxStaticBoxSizer* sizerMargins = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("IDC_OPT_PRINT_MARGIN")), wxHORIZONTAL);
+	wxStaticBoxSizer* sizerMargins = new wxStaticBoxSizer(boxMargins, wxHORIZONTAL);
 
 	wxFlexGridSizer* sizerLT = new wxFlexGridSizer(2, 2, 0, 0);
 	sizerLT->SetFlexibleDirection(wxBOTH);
