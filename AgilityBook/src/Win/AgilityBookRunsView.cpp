@@ -1440,6 +1440,31 @@ void CAgilityBookRunsView::OnUpdate(
 }
 
 
+bool CAgilityBookRunsView::IsTrial(ARBDogTrialPtr pTrial) const
+{
+	if (pTrial)
+	{
+		// Same number of runs... maybe?
+		if (pTrial->GetRuns().size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
+		{
+			// Get the first run in the list and see if that's in the trial.
+			CAgilityBookRunsViewDataPtr pData = GetItemRunData(0);
+			if (pData && pData->GetRun())
+			{
+				for (ARBDogRunList::const_iterator iter = pTrial->GetRuns().begin();
+					iter != pTrial->GetRuns().end();
+					++iter)
+				{
+					if (*iter == pData->GetRun())
+						return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+
 void CAgilityBookRunsView::GetPrintLine(
 		long item,
 		std::vector<wxString>& line) const
