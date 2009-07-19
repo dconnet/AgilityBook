@@ -41,6 +41,7 @@
 #include "DlgOptionsProgram.h"
 
 #include "AgilityBookOptions.h"
+#include <wx/url.h>
 #include <wx/valgen.h>
 
 
@@ -51,7 +52,12 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	, m_Backups(CAgilityBookOptions::GetNumBackupFiles())
 	, m_bAutoShow(CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
 	, m_bShowHtml(CAgilityBookOptions::ShowHtmlPoints())
+	, m_UseProxy(false)
+	, m_Proxy(CAgilityBookOptions::GetProxy())
+	, m_ctrlProxy(NULL)
 {
+	m_UseProxy = !m_Proxy.empty();
+
 	// Controls (these are done first to control tab order)
 
 	wxCheckBox* ctrlUpdates = new wxCheckBox(this, wxID_ANY,
@@ -96,6 +102,21 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	ctrlHtml->SetHelpText(_("HIDC_OPT_PGM_SHOWHTML"));
 	ctrlHtml->SetToolTip(_("HIDC_OPT_PGM_SHOWHTML"));
 
+	wxCheckBox* ctrlUseProxy = new wxCheckBox(this, wxID_ANY,
+		_("IDC_OPT_PGM_USEPROXY"),
+		wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_UseProxy));
+	ctrlUseProxy->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgOptionsProgram::OnUseProxy), NULL, this);
+	ctrlUseProxy->SetHelpText(_("HIDC_OPT_PGM_USEPROXY"));
+	ctrlUseProxy->SetToolTip(_("HIDC_OPT_PGM_USEPROXY"));
+
+	m_ctrlProxy = new wxTextCtrl(this, wxID_ANY,
+		wxEmptyString, wxDefaultPosition, wxDefaultSize, 0,
+		wxGenericValidator(&m_Proxy));
+	m_ctrlProxy->SetHelpText(_("HIDC_OPT_PGM_PROXY"));
+	m_ctrlProxy->SetToolTip(_("HIDC_OPT_PGM_PROXY"));
+	m_ctrlProxy->Enable(m_UseProxy);
+
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
 	wxBoxSizer* sizerPgm = new wxBoxSizer(wxVERTICAL);
@@ -110,10 +131,19 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	sizerPgm->Add(sizerBackups, 0, wxEXPAND, 5);
 	sizerPgm->Add(ctrlShowDog, 0, wxALL, 5);
 	sizerPgm->Add(ctrlHtml, 0, wxALL, 5);
+	sizerPgm->Add(ctrlUseProxy, 0, wxALL, 5);
+	sizerPgm->Add(m_ctrlProxy, 0, wxEXPAND|wxLEFT|wxRIGHT, 20);
 
 	SetSizer(sizerPgm);
 	Layout();
 	sizerPgm->Fit(this);
+}
+
+
+void CDlgOptionsProgram::OnUseProxy(wxCommandEvent& evt)
+{
+	TransferDataFromWindow();
+	m_ctrlProxy->Enable(m_UseProxy);
 }
 
 
@@ -126,5 +156,12 @@ void CDlgOptionsProgram::Save()
 	{
 		m_bResetHtmlView = true;
 		CAgilityBookOptions::SetShowHtmlPoints(m_bShowHtml);
+	}
+	if (!m_UseProxy)
+		m_Proxy.clear();
+	if (CAgilityBookOptions::GetProxy() != m_Proxy)
+	{
+		CAgilityBookOptions::SetProxy(m_Proxy);
+		wxURL::SetDefaultProxy(m_Proxy);
 	}
 }

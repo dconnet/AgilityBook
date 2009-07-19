@@ -53,4 +53,9 @@ private:
 	int m_Backups;
 	bool m_bAutoShow;
 	bool m_bShowHtml;
+	bool m_UseProxy;
+	wxString m_Proxy;
+	wxTextCtrl* m_ctrlProxy;
+
+	void OnUseProxy(wxCommandEvent& evt);
 };

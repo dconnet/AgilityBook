@@ -1028,6 +1028,9 @@ msgstr "Affichage paramètres du chien après l'ajout d'une Récompense"
 msgid "IDC_OPT_PGM_SHOWHTML"
 msgstr "Utiliser HTML dans la vue Points"
 
+msgid "IDC_OPT_PGM_USEPROXY"
+msgstr "Use a proxy server to connect to the Internet (<hostname>:<port number>)"
+
 # DlgOtherPoint
 msgid "IDD_OTHER_POINT"
 msgstr "Autres points"
