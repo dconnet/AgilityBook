@@ -899,7 +899,7 @@ msgid "HIDC_OPT_PGM_USEPROXY"
 msgstr "Some users will need to use a proxy server to connect to the Internet. If you are not sure, look at the settings in your browser."
 
 msgid "HIDC_OPT_PGM_PROXY"
-msgstr "Enter the proxy server and port number to use. For instance: 'http://myproxy.com:80'"
+msgstr "Enter the proxy server and port number to use. For instance: 'myproxy.company.com:80'"
 
 msgid "HIDC_OPT_FILTER_DATE_ALL"
 msgstr "Afficher toutes les dates."
