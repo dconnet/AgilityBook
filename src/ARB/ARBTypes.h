@@ -377,7 +377,7 @@ class ARB_Q
 {
 public:
 	/**
-	 * Types of Qs
+	 * Types of Qs (the enum order determines the sort order)
 	 */
 	typedef enum
 	{

@@ -51,6 +51,8 @@
 #define IDR_XML_CONFIG22_V12_7		10
 #define IDR_XML_CONFIG23_V12_8		11
 #define IDR_XML_CONFIG24_V12_8		12
+#define IDR_XML_CONFIG25_V12_9		13
+// See comments in TestARB.cpp about adding a new config
 
 
 extern ElementNodePtr LoadXMLData(int id);

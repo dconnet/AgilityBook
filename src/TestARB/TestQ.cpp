@@ -39,6 +39,9 @@
 #include "ARBTypes.h"
 #include "Element.h"
 
+#pragma PRAGMA_TODO("Enable DNR")
+// When DNR is enabled, remove NO_DNR define and fix code below
+#define NO_DNR
 
 SUITE(TestARBQ)
 {
@@ -60,11 +63,20 @@ SUITE(TestARBQ)
 		CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(1));
 		CHECK(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(2));
 		CHECK(ARB_Q(ARB_Q::eQ_E) == ARB_Q::GetValidType(3));
+#ifdef NO_DNR
 		CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(4));
+#else
+		CHECK(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(4));
+		CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(5));
+#endif
 
 		std::vector<tstring> types;
 		ARB_Q::GetValidTypes(types);
+#ifdef NO_DNR
 		CHECK_EQUAL(5u, types.size());
+#else
+		CHECK_EQUAL(6u, types.size());
+#endif
 	}
 
 
@@ -85,9 +97,17 @@ SUITE(TestARBQ)
 		ARB_Q q(ARB_Q::eQ_Q);
 		ARB_Q nq(ARB_Q::eQ_NQ);
 		ARB_Q e(ARB_Q::eQ_E);
+#ifndef NO_DNR
+		ARB_Q dnr(ARB_Q::eQ_DNR);
+#endif
 		ARB_Q sq(ARB_Q::eQ_SuperQ);
 
+#ifdef NO_DNR
 		CHECK(na < e);
+#else
+		CHECK(na < dnr);
+		CHECK(dnr < e);
+#endif
 		CHECK(e < nq);
 		CHECK(nq < q);
 		CHECK(q < sq);
@@ -105,6 +125,10 @@ SUITE(TestARBQ)
 		CHECK(!nq.Qualified());
 		ARB_Q e(ARB_Q::eQ_E);
 		CHECK(!e.Qualified());
+#ifndef NO_DNR
+		ARB_Q dnr(ARB_Q::eQ_DNR);
+		CHECK(!dnr.Qualified());
+#endif
 		ARB_Q sq(ARB_Q::eQ_SuperQ);
 		CHECK(sq.Qualified());
 	}
