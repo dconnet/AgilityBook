@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-19 DRC Implement proxy support. 
  * @li 2008-12-24 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Added UserNames
  * @li 2006-07-16 DRC Added PointsViewSort
@@ -256,6 +257,8 @@ public:
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
 	static wxString GetUserName(wxString const& hint);
 	static void SetUserName(wxString const& hint, wxString const& userName);
+	static wxString GetProxy();
+	static void SetProxy(wxString const& inProxy);
 	// -CalSite suppression options
 	static bool IsCalSiteVisible(
 			wxString const& filename,

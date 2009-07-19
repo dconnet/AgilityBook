@@ -67,6 +67,7 @@
 #include <wx/settings.h>
 #include <wx/stdpaths.h>
 #include <wx/sysopt.h>
+#include <wx/url.h>
 #include <wx/utils.h>
 #include <wx/version.h>
 #include <wx/xrc/xmlres.h>	// XRC XML resources
@@ -413,6 +414,10 @@ bool CAgilityBookApp::OnInit()
 	if (0 < state)
 		frame->Maximize();
 	frame->Show(true);
+
+	wxString proxy = CAgilityBookOptions::GetProxy();
+	if (!proxy.empty())
+		wxURL::SetDefaultProxy(proxy);
 
 	// Check for updates every 30 days.
 	if (CAgilityBookOptions::GetAutoUpdateCheck())

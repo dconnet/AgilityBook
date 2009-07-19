@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-19 DRC Implement proxy support. 
  * @li 2008-12-24 DRC Ported to wxWidgets.
  * @li 2008-01-14 DRC Make ViewLifetimeEvents default to true.
  * @li 2007-08-03 DRC Added UserNames
@@ -1430,6 +1431,19 @@ void CAgilityBookOptions::SetUserName(
 	wxConfig::Get()->Write(section, userName);
 }
 
+
+wxString CAgilityBookOptions::GetProxy()
+{
+#pragma PRAGMA_TODO("Implement Proxy")
+	return wxT("");
+}
+
+
+void CAgilityBookOptions::SetProxy(wxString const& inProxy)
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 bool CAgilityBookOptions::IsCalSiteVisible(
 		wxString const& filename,

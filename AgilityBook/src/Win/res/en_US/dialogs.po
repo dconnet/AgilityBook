@@ -1027,6 +1027,9 @@ msgstr "Automatically show Dog Properties after adding a title."
 msgid "IDC_OPT_PGM_SHOWHTML"
 msgstr "Use HTML in Points View."
 
+msgid "IDC_OPT_PGM_USEPROXY"
+msgstr "Use a proxy server to connect to the Internet (<hostname>:<port number>)"
+
 # DlgOtherPoint
 msgid "IDD_OTHER_POINT"
 msgstr "Other Points"
