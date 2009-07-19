@@ -33,13 +33,13 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-19 DRC Changed from wxHTTP to wxURL to handle proxies.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  */
 
 #include "ARBString.h"
-#include <wx/protocol/http.h>
-
+class wxURL;
 
 /**
  * Read data from the internet
@@ -56,6 +56,8 @@ public:
 	CReadHttp(
 			wxString const& inURL,
 			std::string* outData);
+
+	~CReadHttp();
 
 	/**
 	 * Read the HTTP via a 'GET'
@@ -74,10 +76,7 @@ public:
 	bool CheckHttpFile(wxWindow* pParent = NULL);
 
 private:
-	bool m_Valid;
-	wxString m_URL;
-	wxString m_Protocol;
-	wxString m_Host;
-	wxString m_Request;
+	wxString m_address;
+	wxURL* m_URL;
 	std::string* m_Data;
 };
