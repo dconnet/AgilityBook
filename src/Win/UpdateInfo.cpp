@@ -1,5 +1,5 @@
 /*
- * Copyright � 2004-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2004-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -34,8 +34,10 @@
  * line 1:
  *  "ARB Version n1.n2.n3.n4"
  * line 2-n: xml (see below)
+ * --- as of v2, the real version isn't here - see below.
  *
  * Revision History
+ * @li 2009-07-18 DRC Updated version.txt to support different versions/platforms.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-06-29 DRC When looking for language ids, it was searching the wrong node.
  * @li 2008-01-01 DRC Fix a bug parsing Element data (GetElementNode may return null)
@@ -64,12 +66,19 @@
 #endif
 
 #ifdef USE_LOCAL
+#include <wx/filesys.h>
+#include <wx/stdpaths.h>
 #include <wx/textfile.h>
+static wxString FILENAME()
+{
 #ifdef WIN32
-#define FILENAME	wxT("c:/AgilityBook/www/version.txt")
+	// Why this? Just cause that's how my local system is setup.
+	return wxT("c:/AgilityBook/www/version.txt");
 #else
-#define FILENAME	wxT("/AgilityBook/www/version.txt")
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	return fileName.GetPath() + wxFileName::GetPathSeparator() + wxT("version.txt");
 #endif
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -137,7 +146,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 
 #ifdef USE_LOCAL
 	wxTextFile file;
-	if (file.Open(FILENAME))
+	if (file.Open(FILENAME()))
 	{
 		for (size_t line = 0; line < file.GetLineCount(); ++line)
 		{
@@ -179,6 +188,10 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		m_VersionNum.Parse(tmp);
 	}
 
+	// We'll always leave a valid version on line 1.
+	// As of v2, that will be the current windows version (so v1 programs
+	// can correctly show the new version number to the user). The real
+	// version will be in the 'Config' object below.
 	if (!m_VersionNum.Valid())
 	{
 		if (bVerbose)
@@ -198,25 +211,33 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	{
 		// The rest of the file is xml:
 		/*
-		<!ELEMENT Data (Config, Download*, DisableCalPlugin*) >
+		<!ELEMENT Data (Config+, Download*, DisableCalPlugin*) >
 
 		<!--
+		Before v1.10:
 		pcdata is a message that can be displayed to the user explaining
 		the changes. This is only used when doing a config update, not a
 		version update. [version update is 1st line in file]
-		Note: Prior to v1.10, Config had PCDATA. We can change the format
-		of the file since this data is never accessed when there's a pgm
-		version change.
+		v1.10: Moved PCDATA to 'lang' (We can change the format of the file
+		since this data is never accessed when there's a pgm version change.)
+		v2.0: Allow multiple copies of 'Config' for different platforms.
+		If 'platform' is not set, it's the default. This allows creating
+		one entry with 'mac', one with none - then all non-macs default to
+		second.
+		v2.0: Added 'version' to 'Config': This replaces the version in the
+		first line (if not present, line 1 is used).
 		-->
 		<!ELEMENT Config (Lang+) >
 		  <!ATTLIST Config
+		    platform CDATA #IMPLIED
+			version CDATA #IMPLIED
 		    ver CDATA #REQUIRED
 		    file CDATA #REQUIRED
 		    >
 		<!--
 		'id' specified the LANGID of the plugin language DLL, '0' is used
-		for the program default. (mfc)
-		'id2' is gettext lang code. (wxWidgets)
+		for the program default.
+		v2.0: 'id2' is gettext lang code.
 		-->
 		<!ELEMENT Lang (#PCDATA) >
 		  <!ATTLIST Lang id CDATA #REQUIRED >
@@ -260,13 +281,46 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		}
 		else if (tree->GetName() == wxT("Data"))
 		{
+			bool bConfigLoaded = false;
 			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
 			{
 				ElementNodePtr node = tree->GetElementNode(nIndex);
 				if (!node)
 					continue;
-				if (node->GetName() == wxT("Config"))
+				if (!bConfigLoaded && node->GetName() == wxT("Config"))
 				{
+					tstring value;
+					// If not set, all platforms are the same. This 
+					if (ElementNode::eFound == node->GetAttrib(wxT("platform"), value))
+					{
+#ifdef WIN32
+						if (value != wxT("win"))
+						{
+							continue; 
+						}
+#elif __WXMAC__
+						if (value != wxT("mac"))
+						{
+							continue;
+						}
+#else
+						// Unknown platform
+						continue;
+#endif
+					}
+					if (ElementNode::eFound == node->GetAttrib(wxT("version"), value))
+					{
+						m_VersionNum.Parse(value);
+						if (!m_VersionNum.Valid())
+						{
+							if (bVerbose)
+							{
+								wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+							}
+							return false;
+						}
+					}
+					bConfigLoaded = true;
 					node->GetAttrib(wxT("ver"), m_VerConfig);
 					node->GetAttrib(wxT("file"), m_FileName);
 					// Note, before v1.10, we did "m_InfoMsg = node->GetValue();"
@@ -353,7 +407,7 @@ bool CUpdateInfo::CheckProgram()
 					url += wxT("?os=win98");
 					break;
 				}
-#else
+#elif __WXMAC__
 // comments from include/wx/platform.h
 //__WXMAC__
 //    __WXMAC_CLASSIC__ means ppc non-carbon builds,
@@ -361,6 +415,10 @@ bool CUpdateInfo::CheckProgram()
 //    __WXMAC_OSX__ means mach-o builds, running under 10.2 + only
 //
 //__WXOSX__ is a common define to wxMac (Carbon) and wxCocoa ports under OS X.
+				// We currently compile for Universal OSX 10.4. At this time,
+				// there's no need to further determine the OS.
+				url += wxT("?os=mac");
+#else
 #pragma PRAGMA_TODO("Add 'os' tag for URL download")
 				// @todo Add appropriate 'os' tag for other OS's
 				// Must agree with website's download.php

@@ -776,14 +776,18 @@ void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 			if (!m_pDog || !pDog || m_pDog != pDog)
 				iHint |= UPDATE_POINTS_VIEW;
 			m_pDog = pDog;
+			CAgilityBookRunsView* pView = GetDocument()->GetRunsView();
+			if (CAgilityBookOptions::GetViewRunsByTrial()
+			&& !pView->IsTrial(pData->GetTrial()))
+			{
+				iHint |= UPDATE_RUNS_VIEW;
+			}
 			// Pass the selected run
-			if (CAgilityBookTreeData::eTreeRun == pData->GetType())
+			else if (CAgilityBookTreeData::eTreeRun == pData->GetType())
 			{
 				pBase = pData->GetRun();
 				iHint |= UPDATE_RUNS_SELECTION_VIEW;
 			}
-			else
-				iHint |= UPDATE_RUNS_VIEW;
 		}
 		else
 			m_pDog.reset();
