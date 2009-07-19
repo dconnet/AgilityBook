@@ -83,16 +83,27 @@ int main(int /*argc*/, char** /*argv*/)
 	_set_error_mode(_OUT_TO_MSGBOX);
 #endif
 	wxInitializer initializer;
-	wxFileSystem::AddHandler(new wxZipFSHandler);
-
-	static CLocalization localization;
-	IARBLocalization::Init(&localization);
 
 	tstring errs;
 	if (!Element::Initialize(errs))
 	{
 		return 1;
 	}
+
+	wxFileSystem::AddHandler(new wxZipFSHandler);
+
+	// Some names are 'funny' since it's cut/paste from ../Win/
+	static CLocalization m_Localization;
+	IARBLocalization::Init(&m_Localization);
+
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	wxString m_dirLang = fileName.GetPath() + wxFileName::GetPathSeparator() + wxT("lang");
+
+	wxLocale* m_locale = new wxLocale();
+	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
+	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
+	m_locale->AddCatalog(wxT("arb"));
+	m_Localization.Load();
 
 	int rc = UnitTest::RunAllTests();
 
