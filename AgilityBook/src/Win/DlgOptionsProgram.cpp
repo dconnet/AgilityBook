@@ -52,12 +52,10 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	, m_Backups(CAgilityBookOptions::GetNumBackupFiles())
 	, m_bAutoShow(CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
 	, m_bShowHtml(CAgilityBookOptions::ShowHtmlPoints())
-	, m_UseProxy(false)
-	, m_Proxy(CAgilityBookOptions::GetProxy())
+	, m_UseProxy(CAgilityBookOptions::GetUseProxy())
+	, m_Proxy(CAgilityBookOptions::GetProxyServer())
 	, m_ctrlProxy(NULL)
 {
-	m_UseProxy = !m_Proxy.empty();
-
 	// Controls (these are done first to control tab order)
 
 	wxCheckBox* ctrlUpdates = new wxCheckBox(this, wxID_ANY,
@@ -157,11 +155,12 @@ void CDlgOptionsProgram::Save()
 		m_bResetHtmlView = true;
 		CAgilityBookOptions::SetShowHtmlPoints(m_bShowHtml);
 	}
-	if (!m_UseProxy)
-		m_Proxy.clear();
-	if (CAgilityBookOptions::GetProxy() != m_Proxy)
-	{
-		CAgilityBookOptions::SetProxy(m_Proxy);
-		wxURL::SetDefaultProxy(m_Proxy);
-	}
+	wxString oldProxy(CAgilityBookOptions::GetProxy());
+	if (m_Proxy.empty())
+		m_UseProxy = false;
+	CAgilityBookOptions::SetUseProxy(m_UseProxy);
+	CAgilityBookOptions::SetProxyServer(m_Proxy);
+	wxString newProxy = CAgilityBookOptions::GetProxy();
+	if (newProxy != oldProxy)
+		wxURL::SetDefaultProxy(newProxy);
 }

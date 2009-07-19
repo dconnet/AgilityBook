@@ -229,6 +229,7 @@ Settings:
 	ST Splash
 	DW splitCX (AgilityBookPanels.cpp)
 	DW splitCX2 (AgilityBookPanels.cpp)
+	DW useproxy
 	DW View (TabView.cpp)
 	DW ViewOrient (TabView.cpp)
 	DW ViewType (TabView.cpp)
@@ -1435,15 +1436,40 @@ void CAgilityBookOptions::SetUserName(
 }
 
 
-wxString CAgilityBookOptions::GetProxy()
+// Keeping use and proxy strings separate allow us to turn off the proxy
+// without losing the settings.
+
+bool CAgilityBookOptions::GetUseProxy()
+{
+	bool val = true;
+	wxConfig::Get()->Read(wxT("Settings/useproxy"), &val);
+	return val;
+}
+
+
+void CAgilityBookOptions::SetUseProxy(bool inUseProxy)
+{
+	wxConfig::Get()->Write(wxT("Settings/useproxy"), inUseProxy);
+}
+
+
+wxString CAgilityBookOptions::GetProxyServer()
 {
 	return wxConfig::Get()->Read(wxT("Settings/proxy"), wxString());
 }
 
 
-void CAgilityBookOptions::SetProxy(wxString const& inProxy)
+void CAgilityBookOptions::SetProxyServer(wxString const& inProxy)
 {
 	wxConfig::Get()->Write(wxT("Settings/proxy"), inProxy);
+}
+
+
+wxString CAgilityBookOptions::GetProxy()
+{
+	if (CAgilityBookOptions::GetUseProxy())
+		return CAgilityBookOptions::GetProxyServer();
+	return wxEmptyString;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -257,8 +257,11 @@ public:
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
 	static wxString GetUserName(wxString const& hint);
 	static void SetUserName(wxString const& hint, wxString const& userName);
+	static bool GetUseProxy();
+	static void SetUseProxy(bool inUseProxy);
+	static wxString GetProxyServer();
+	static void SetProxyServer(wxString const& inProxy);
 	static wxString GetProxy();
-	static void SetProxy(wxString const& inProxy);
 	// -CalSite suppression options
 	static bool IsCalSiteVisible(
 			wxString const& filename,
