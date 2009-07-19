@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2008-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2008-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-19 DRC Ported to wxWidgets.
  * @li 2008-01-13 DRC Created
  */
 
@@ -88,11 +89,11 @@ public:
 	tstring UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const;
 	tstring UpdateMultiqsReordered() const;
 	tstring UpdateLevels(int nAdded, int nUpdated, int nSkipped) const;
-	virtual tstring UpdateLevelsReordered() const;
+	tstring UpdateLevelsReordered() const;
 	tstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const;
 	tstring UpdateTitlesReordered() const;
 	tstring UpdateSubLevels(int nAdded) const;
-	virtual tstring UpdateSubLevelsReordered() const;
+	tstring UpdateSubLevelsReordered() const;
 	tstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
 	tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const;
 	tstring UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const;
