@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-19 DRC Changed from wxHTTP to wxURL to handle proxies.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-01-01 DRC Fix closing the connection - Close didn't reset null.
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
@@ -41,38 +42,22 @@
 
 #include "DlgAuthenticate.h"
 #include <wx/sstream.h>
+#include <wx/url.h>
 
 
 CReadHttp::CReadHttp(
 		wxString const& inURL,
 		std::string* outData)
-	: m_Valid(false)
-	, m_URL(inURL)
-	, m_Protocol()
-	, m_Host()
-	, m_Request()
+	: m_address(inURL)
+	, m_URL(new wxURL(inURL))
 	, m_Data(outData)
 {
-	wxString url(inURL);
-	int pos = url.Find(wxT(':'));
-	if (wxNOT_FOUND != pos)
-	{
-		m_Protocol = url(0, pos);
-		if (pos + 2 < (int)url.length() && url[pos+1] == wxT('/') && url[pos+2] == wxT('/'))
-		{
-			url = url(pos + 3, url.length() - 2);
-			pos = url.Find(wxT('/'));
-			m_Host = url;
-			m_Request = wxT("/");
-			pos = m_Host.Find(wxT('/'));
-			if (wxNOT_FOUND != pos)
-			{
-				m_Request = m_Host(pos, m_Host.length());
-				m_Host = m_Host(0, pos);
-			}
-			m_Valid = true;
-		}
-	}
+}
+
+
+CReadHttp::~CReadHttp()
+{
+	delete m_URL;
 }
 
 
@@ -84,54 +69,31 @@ bool CReadHttp::ReadHttpFile(
 {
 	if (m_Data)
 		m_Data->erase();
-	if (!m_Valid)
+	if (!m_URL || !m_URL->IsOk())
 	{
 		outErrMsg = _("IDS_HTTP_INVALID_URL");
 		outErrMsg += wxT(": ");
-		outErrMsg += m_URL;
+		outErrMsg += m_address;
 		return false;
 	}
 	outErrMsg.Empty();
 	wxBusyCursor wait;
 
-	wxHTTP http;
-	http.SetHeader(wxT("Content-type"), wxT("text/html; charset=utf-8"));
-	http.SetTimeout(10); // 10 seconds of timeout instead of 10 minutes ...
-
-	// This will wait until the user connects to the internet. It is
-	// important in case of dialup (or ADSL) connections
-	int nTrys = 0;
-	while (!http.Connect(m_Host))
+	wxInputStream* stream = m_URL->GetInputStream();
+	if (!stream || !stream->IsOk())
 	{
-		if (++nTrys > 5)
-		{
-			outErrMsg = _("IDS_TIMEOUT");
-			return false;
-		}
-		wxSleep(5);
-	}
-
-	wxApp::IsMainLoopRunning(); // should return true
-
-	wxInputStream* stream = http.GetInputStream(m_Request);
-	while (wxPROTO_NOERR != http.GetError())
-	{
-		if (stream)
-			delete stream;
-		http.Close();
-		if (bCheckOnly)
-			return false;
+		/* this doesn't work. suggestion is to use wxCURL
+		 * for now, we just don't support authentication
 		CDlgAuthenticate dlg(userName, pParent);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			http.SetUser(dlg.GetUserName());
-			http.SetPassword(dlg.GetPassword());
+			m_URL->GetProtocol().SetUser(dlg.GetUserName());
+			m_URL->GetProtocol().SetPassword(dlg.GetPassword());
+			stream = m_URL->GetInputStream();
 		}
-		else
+		if (!stream || !stream->IsOk())
+		*/
 			return false;
-		while (!http.Connect(m_Host))
-			wxSleep(5);
-		stream = http.GetInputStream(m_Request);
 	}
 
 	wxString res;
@@ -141,7 +103,6 @@ bool CReadHttp::ReadHttpFile(
 		stream->Read(outStream);
 	}
 	delete stream;
-	http.Close();
 	if (m_Data)
 		*m_Data = res.mb_str(wxMBConvUTF8());
 
