@@ -223,6 +223,7 @@ Settings:
 	DW lastXpos (AgilityBook.cpp/MainFrm.cpp)
 	DW lastYpos (AgilityBook.cpp/MainFrm.cpp)
 	DW printLand (AgilityBook.cpp)
+	ST proxy
 	DW showHtml
 	DW ShowSplash
 	ST Splash
@@ -238,6 +239,8 @@ Sorting:
 	DW Calendar (AgilityBookCalendarListView.cpp)
 	DW Runs (AgilityBookRunsView.cpp)
 	DW Training (AgilityBookTrainingView.cpp)
+UserNames:
+   ST <hint>
 Unknown
 	ST col[n]
 */
@@ -1434,13 +1437,13 @@ void CAgilityBookOptions::SetUserName(
 
 wxString CAgilityBookOptions::GetProxy()
 {
-#pragma PRAGMA_TODO("Implement Proxy")
-	return wxT("");
+	return wxConfig::Get()->Read(wxT("Settings/proxy"), wxString());
 }
 
 
 void CAgilityBookOptions::SetProxy(wxString const& inProxy)
 {
+	wxConfig::Get()->Write(wxT("Settings/proxy"), inProxy);
 }
 
 /////////////////////////////////////////////////////////////////////////////
