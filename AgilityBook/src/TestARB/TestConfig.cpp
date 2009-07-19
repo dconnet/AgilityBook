@@ -109,6 +109,7 @@ SUITE(TestConfig)
 
 	TEST(Load)
 	{
+		// See comments in TestARB.cpp about adding a new config.
 		int configs[] = {
 			IDR_XML_CONFIG08_V10_2,
 			IDR_XML_CONFIG09_V11_0,
@@ -120,6 +121,7 @@ SUITE(TestConfig)
 			IDR_XML_CONFIG22_V12_7,
 			IDR_XML_CONFIG23_V12_8,
 			IDR_XML_CONFIG24_V12_8,
+			IDR_XML_CONFIG25_V12_9,
 			0
 		};
 		for (int i = 0; configs[i] != 0; ++i)

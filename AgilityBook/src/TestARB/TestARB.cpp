@@ -113,6 +113,11 @@ int main(int /*argc*/, char** /*argv*/)
 }
 
 
+// When adding a new config:
+//  - Create ID in TestARB.h
+//  - Add case stmt here
+//  - Add test case in TestConfig.cpp
+// RunARBTests.py will automatically pick up all XML files in ./res/
 ElementNodePtr LoadXMLData(int id)
 {
 	tstring errMsg;
@@ -157,6 +162,9 @@ ElementNodePtr LoadXMLData(int id)
 		break;
 	case IDR_XML_CONFIG24_V12_8:
 		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config24_v12_8.xml"), data);
+		break;
+	case IDR_XML_CONFIG25_V12_9:
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config25_v12_9.xml"), data);
 		break;
 	}
 	assert(bOk);

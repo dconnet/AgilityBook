@@ -881,6 +881,26 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\res\Config21_v12_7.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config22_v12_7.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config23_v12_8.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config24_v12_8.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\..\TestARB\res\Config25_v12_9.xml"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestARB.rc"
 				>
 			</File>
