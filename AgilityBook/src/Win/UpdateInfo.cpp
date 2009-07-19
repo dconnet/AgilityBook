@@ -298,7 +298,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 						{
 							continue; 
 						}
-#elif __WXMAC__
+#elif defined(__WXMAC__)
 						if (value != wxT("mac"))
 						{
 							continue;
@@ -310,7 +310,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					}
 					if (ElementNode::eFound == node->GetAttrib(wxT("version"), value))
 					{
-						m_VersionNum.Parse(value);
+						m_VersionNum.Parse(value.c_str());
 						if (!m_VersionNum.Valid())
 						{
 							if (bVerbose)
@@ -407,7 +407,7 @@ bool CUpdateInfo::CheckProgram()
 					url += wxT("?os=win98");
 					break;
 				}
-#elif __WXMAC__
+#elif defined(__WXMAC__)
 // comments from include/wx/platform.h
 //__WXMAC__
 //    __WXMAC_CLASSIC__ means ppc non-carbon builds,
