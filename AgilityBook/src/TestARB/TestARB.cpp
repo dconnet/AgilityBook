@@ -168,7 +168,7 @@ ElementNodePtr LoadXMLData(int id)
 		break;
 	}
 	assert(bOk);
-	if (!tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
+	if (!bOk || !tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
 	{
 		DumpErrorMessage(errMsg);
 		tree.reset();

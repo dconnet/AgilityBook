@@ -127,6 +127,8 @@ SUITE(TestConfig)
 		for (int i = 0; configs[i] != 0; ++i)
 		{
 			ElementNodePtr tree = LoadXMLData(configs[i]);
+			// This probably means a config file is missing.
+			CHECK(tree);
 			ARBConfig config;
 			CHECK(LoadConfigFromTree(tree, config));
 		}
