@@ -8,6 +8,10 @@
 - Bug fixes:
   - Fixed issue decoding binary data that could crash the program.
 
+7/22/2009: Config release on web
+- Bumped Configuration v26:
+  - Added new AKC titles (TQX and TQXP)
+
 3/9/2009: Config release on web
 - Bumped Configuration v25:
   - Updated AAC titles and added 'Challenge'.
