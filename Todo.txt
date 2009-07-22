@@ -1,10 +1,13 @@
-Last Updated: 7/19/2009
+Last Updated: 7/22/2009
 
 - Before v2 release:
   - Update 'version.txt' and remove 'id' tags from 'lang'
   - Add 'version' to 'Config'
   - Add 'mac' to download options on web
-  - Enable DNR (find 'pragma's, including TestARB)
+  - Enable DNR
+    - find 'pragma's, including TestARB
+    - update file version number in ARBAgilityRecordBook.cpp
+    - fix dates associated with file version (^ and res/dtd)
 
 - Add 'YPS' into Reference Run list
   (currently only in dialog to enter Reference Run data).

@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2009-07-22 DRC Configuration version 26.
+               Added AKC TQX and TQXP titles.
 2009-02-25 DRC Configuration version 25.
                Updated AAC titles and Challenge event.
 2008-12-15 DRC Configuration version 24.
@@ -77,7 +79,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-   <Configuration version="25">
+   <Configuration version="26">
       <Action NewName="SSA" OldName="Sweepstakes" Verb="RenameVenue"/>
       <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
       <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
@@ -347,11 +349,13 @@ Revision History:
          <Titles LongName="Open FAST Title" Name="OF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
          <Titles LongName="Excellent FAST Title" Name="XF" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
          <Titles LongName="Master Excellent FAST Title" Name="MXF" ValidFrom="2007-1-1">10 Qs under at least 2 different judges</Titles>
+         <Titles LongName="Triple Q Excellent" Name="TQX" ValidFrom="2010-1-1">10 QQQs (Excellent B Std/JWW/FAST)</Titles>
          <Titles LongName="FAST Century Title" Multiple="1" Name="FTC" ValidFrom="2007-1-1">MXF plus 100 Qs (FTC2 == 200Qs)</Titles>
          <Titles LongName="Novice Preferred FAST Title" Name="NFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
          <Titles LongName="Open Preferred FAST Title" Name="OFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
          <Titles LongName="Excellent Preferred FAST Title" Name="XFP" ValidFrom="2007-1-1">3 Qs under at least 2 different judges</Titles>
          <Titles LongName="Master Preferred Excellent FAST Title" Name="MFP" ValidFrom="2007-1-1">10 Qs under at least 2 different judges</Titles>
+         <Titles LongName="Triple Q Excellent Preferred" Name="TQXP" ValidFrom="2010-1-1">10 QQQs (Excellent B Std/JWW/FAST)</Titles>
          <Titles LongName="FAST Century Preferred Title" Multiple="1" Name="FTCP" ValidFrom="2007-1-1">MFP plus 100 Qs (FTCP2 == 200Qs)</Titles>
          <Division Name="ISC">
             <Level Name="Excellent B"/>
@@ -469,6 +473,16 @@ Revision History:
          <MultiQ Name="Preferred Double Q" SName="QQ">
             <MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
             <MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
+         </MultiQ>
+         <MultiQ Name="Triple Q" SName="QQQ">
+           <MultiQItem Div="Regular" Event="FAST" Level="Excellent B"/>
+           <MultiQItem Div="Regular" Event="JWW" Level="Excellent B"/>
+           <MultiQItem Div="Regular" Event="Standard" Level="Excellent B"/>
+         </MultiQ>
+         <MultiQ Name="Preferred Triple Q" SName="QQQ">
+           <MultiQItem Div="Preferred" Event="FAST" Level="Excellent B"/>
+           <MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
+           <MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
          </MultiQ>
       </Venue>
       <Venue LongName="Australian Shepherd Club of America" Name="ASCA" URL="http://www.asca.org/" icon="5">
