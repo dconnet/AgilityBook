@@ -66,13 +66,13 @@ CWizard::CWizard(
 	, m_ImportExportItem(-1)
 	, m_ImportExportStyle(-1)
 {
-   if (!pParent)
-      pParent = wxGetApp().GetTopWindow();
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	Create(pParent, wxID_ANY, _("IDD_WIZARD_START"), wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	m_Finish = wxDynamicCast(FindWindow(wxID_FORWARD), wxButton);
-    assert(m_Finish);
+	assert(m_Finish);
 
 	m_Excel = IWizardSpreadSheet::Create(IWizardSpreadSheet::eMicrosoftExcel);
 	m_Calc = IWizardSpreadSheet::Create(IWizardSpreadSheet::eOpenOfficeCalc);

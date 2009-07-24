@@ -1371,7 +1371,7 @@ msgstr "Import / Export Wizard"
 msgid "IDC_WIZARD_RADIO_BOX"
 msgstr "Import from / Export to:"
 
-msgid "IDC_WIZARD_START_EXCEL,"
+msgid "IDC_WIZARD_START_EXCEL"
 msgstr "Microsoft Excel (directly)"
 
 msgid "IDC_WIZARD_START_CALC"

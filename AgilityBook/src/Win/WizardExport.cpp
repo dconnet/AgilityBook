@@ -1,5 +1,5 @@
 /*
- * Copyright © 2003-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2003-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-24 DRC Removed (unused) define to export by array.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
  *                    _after_ the dialog is destroyed).
@@ -62,10 +63,6 @@
 #include "Globals.h"
 #include "Wizard.h"
 #include <fstream>
-
-
-// Exporting by array is much faster, but formatting is better by cell.
-//#define EXPORT_BY_ARRAY
 
 
 IMPLEMENT_CLASS(CWizardExport, wxWizardPageSimple)
@@ -1418,47 +1415,27 @@ bool CWizardExport::DoWizardFinish()
 			wxBusyCursor wait;
 			pExporter->AllowAccess(false);
 			long nColumnCount = m_ctrlPreview->GetColumnCount();
-#ifdef EXPORT_BY_ARRAY
-			if (pExporter->CreateArray(m_ctrlPreview->GetItemCount(), nColumnCount))
-			{
-#else
-				IDlgProgress* pProgress = IDlgProgress::CreateProgress(1, this);
-				pProgress->EnableCancel(false);
-				pProgress->SetMessage(_("IDS_EXPORTING"));
-				pProgress->SetRange(1, m_ctrlPreview->GetItemCount() * nColumnCount);
-				pProgress->ShowProgress();
+			IDlgProgress* pProgress = IDlgProgress::CreateProgress(1, this);
+			pProgress->EnableCancel(false);
+			pProgress->SetMessage(_("IDS_EXPORTING"));
+			pProgress->SetRange(1, m_ctrlPreview->GetItemCount() * nColumnCount);
+			pProgress->ShowProgress();
 
-#endif
-				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)
-				{
-					for (long iCol = 0; iCol < nColumnCount; ++iCol)
-					{
-						wxString line = GetListColumnText(m_ctrlPreview, i, iCol);
-#ifdef EXPORT_BY_ARRAY
-						pExporter->InsertArrayData(i, iCol, line);
-#else
-						pExporter->InsertData(i, iCol, line);
-						// Calc is started visibly, so steal focus back.
-						if (0 == i && 0 == iCol)
-							pProgress->SetForegroundWindow();
-						pProgress->StepIt(1);
-#endif
-					}
-				}
-#ifdef EXPORT_BY_ARRAY
-				if (!pExporter->ExportDataArray())
-				{
-					wxMessageBox(_("IDS_ERRORS_DURING_EXPORT"), wxMessageBoxCaptionStr, wxICON_EXCLAMATION);
-				}
-			}
-			else
+			bool bFailed = false;
+			for (long i = 0; !bFailed && i < m_ctrlPreview->GetItemCount(); ++i)
 			{
-				wxMessageBox(_("IDS_ERRORS_DURING_EXPORT"), wxMessageBoxCaptionStr, wxICON_EXCLAMATION);
+				for (long iCol = 0; !bFailed && iCol < nColumnCount; ++iCol)
+				{
+					wxString line = GetListColumnText(m_ctrlPreview, i, iCol);
+					bFailed = !pExporter->InsertData(i, iCol, line);
+					// Calc is started visibly, so steal focus back.
+					if (0 == i && 0 == iCol)
+						pProgress->SetForegroundWindow();
+					pProgress->StepIt(1);
+				}
 			}
-#else
 			pExporter->AutoFit(0, nColumnCount-1);
 			pProgress->Dismiss();
-#endif
 			pExporter->AllowAccess(true);
 			// For testing
 			//pExporter->SetBackColor(2,3,RGB(255,0,0));
