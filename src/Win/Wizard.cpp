@@ -1,5 +1,5 @@
 /*
- * Copyright © 2003-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2003-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-24 DRC Center the wizard on the parent.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-12-10 DRC Created
@@ -39,6 +40,7 @@
 #include "stdafx.h"
 #include "Wizard.h"
 
+#include "AgilityBook.h"
 #include "WizardExport.h"
 #include "WizardImport.h"
 #include "WizardStart.h"
@@ -64,6 +66,8 @@ CWizard::CWizard(
 	, m_ImportExportItem(-1)
 	, m_ImportExportStyle(-1)
 {
+   if (!pParent)
+      pParent = wxGetApp().GetTopWindow();
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	Create(pParent, wxID_ANY, _("IDD_WIZARD_START"), wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
@@ -81,6 +85,7 @@ CWizard::CWizard(
 	GetPageAreaSizer()->Add(m_pageImport);
 	GetPageAreaSizer()->Add(m_pageExport);
 
+	CenterOnParent();
 	RunWizard(m_pageStart);
 	Destroy();
 }
