@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2004-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2004-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-24 DRC Removed option to export by array.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-09-30 DRC Created
  */
@@ -53,18 +54,6 @@ class IWizardExporter
 {
 public:
 	virtual ~IWizardExporter() = 0;
-
-	virtual bool ArrayOkay() const = 0;
-	virtual bool CreateArray(
-			long inRows,
-			long inCols) = 0;
-	virtual bool InsertArrayData(
-			long inRow,
-			long inCol,
-			wxString const& inData) = 0;
-	virtual bool ExportDataArray(
-			long inRowTop = 0,
-			long inColLeft = 0) = 0;
 
 	virtual bool AllowAccess(bool bAllow) = 0;
 
