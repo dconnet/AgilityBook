@@ -1,5 +1,5 @@
 /*
- * Copyright © 2004-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2004-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -120,7 +120,7 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlMessage = new wxStaticText(this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlMessage = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMessage->Wrap(-1);
 
 	m_ctrlBars.push_back(GaugeData(new wxGauge(this, wxID_ANY, 10, wxDefaultPosition, wxSize(400 ,-1), wxGA_HORIZONTAL|wxGA_SMOOTH)));
