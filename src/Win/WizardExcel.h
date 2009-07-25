@@ -81,7 +81,8 @@ public:
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
-			wxString const& inData) = 0;
+			wxString const& inData,
+			bool bFormula = false) = 0;
 
 	virtual bool AutoFit(
 			long inColFrom,

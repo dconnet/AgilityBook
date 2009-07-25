@@ -595,6 +595,7 @@ void CalSiteData::Unload(bool bPermanently)
 	}
 	if (m_hDllInst)
 	{
+		m_hDllInst->Unload();
 		delete m_hDllInst;
 		m_hDllInst = NULL;
 	}

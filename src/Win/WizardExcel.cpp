@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-07-24 DRC Removed option to export by array.
+ * @li 2009-07-24 DRC Removed option to export by array, completed wx port.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-09-30 DRC Created
  */
@@ -39,14 +39,11 @@
 #include "stdafx.h"
 #include "WizardExcel.h"
 
-#define HAS_AUTOMATION	1
-/*
 #if defined(WIN32) && wxUSE_OLE_AUTOMATION
 #define HAS_AUTOMATION	1
 #else
 #define HAS_AUTOMATION	0
 #endif
-*/
 
 #include "ARBTypes.h"
 #if HAS_AUTOMATION
@@ -106,7 +103,7 @@ public:
 	virtual IWizardImporterPtr GetImporter() const;
 
 private:
-	mutable wxAutomationObject m_App; //Excel8::_Application
+	mutable wxAutomationObject m_App;
 };
 
 
@@ -144,7 +141,8 @@ public:
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
-			wxString const& inData);
+			wxString const& inData,
+			bool bFormula = false);
 
 	virtual bool AutoFit(
 			long inColFrom,
@@ -152,7 +150,7 @@ public:
 
 private:
 	wxAutomationObject& m_App;
-	wxAutomationObject m_Worksheet; // Excel8::_Worksheet
+	wxAutomationObject m_Worksheet;
 };
 
 
@@ -171,7 +169,7 @@ public:
 
 private:
 	wxAutomationObject& m_App;
-	wxAutomationObject m_Worksheet; // Excel8::_Worksheet
+	wxAutomationObject m_Worksheet;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -188,7 +186,7 @@ public:
 	virtual IWizardImporterPtr GetImporter() const;
 
 private:
-	mutable wxAutomationObject m_Manager; // ooCalc::CComManagerDriver
+	mutable wxAutomationObject m_Manager;
 	mutable wxAutomationObject m_Desktop;
 };
 
@@ -229,18 +227,19 @@ public:
 	virtual bool InsertData(
 			long inRow,
 			long inCol,
-			wxString const& inData);
+			wxString const& inData,
+			bool bFormula = false);
 
 	virtual bool AutoFit(
 			long inColFrom,
 			long inColTo);
 
 private:
-	wxAutomationObject& GetWorksheet(); // ooCalc::ooXSpreadsheet
+	bool CreateWorksheet();
 
 	wxAutomationObject& m_Desktop;
-	wxAutomationObject m_Document; // ooCalc::ooXSpreadsheetDocument
-	wxAutomationObject m_Worksheet; // ooCalc::ooXSpreadsheet
+	wxAutomationObject m_Document;
+	wxAutomationObject m_Worksheet;
 };
 
 
@@ -261,8 +260,8 @@ public:
 
 private:
 	wxAutomationObject& m_Desktop;
-	wxAutomationObject m_Document; // ooCalc::ooXSpreadsheetDocument
-	wxAutomationObject m_Worksheet; // ooCalc::ooXSpreadsheet
+	wxAutomationObject m_Document;
+	wxAutomationObject m_Worksheet;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -331,56 +330,33 @@ CWizardExcelExport* CWizardExcelExport::Create(wxAutomationObject& ioApp)
 CWizardExcelExport::CWizardExcelExport(wxAutomationObject& ioApp)
 	: m_App(ioApp)
 {
-	//try
-	{
-		// Create a new workbook.
-		//wxAutomationObject books = m_App.GetProperty(wxT("Workbooks")); // Excel8::Workbooks
-		wxAutomationObject book = m_App.CallMethod(wxT("Workbooks.Add")); // Excel8::_Workbook
-		// Get the first sheet.
-		wxAutomationObject sheets = book.GetProperty(wxT("Sheets")); // Excel8::Worksheets
-		wxVariant args[1];
-		args[0] = wxVariant((short)1);
-		sheets.GetObject(m_Worksheet, wxT("Item"), 1, args);
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
+	// Create a new workbook.
+	wxAutomationObject book = m_App.CallMethod(wxT("Workbooks.Add"));
+	// Get the first sheet.
+	wxAutomationObject sheets = book.GetProperty(wxT("Sheets"));
+	wxVariant args[1];
+	args[0] = wxVariant((short)1);
+	sheets.GetObject(m_Worksheet, wxT("Item"), 1, args);
 }
 
 
 CWizardExcelExport::~CWizardExcelExport()
 {
-	//try
-	//{
-		if (NULL != m_Worksheet.GetDispatchPtr() && !m_App.GetProperty(wxT("Visible")).GetBool())
-			m_App.CallMethod(wxT("Quit"));
-	//}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
+	if (NULL != m_Worksheet.GetDispatchPtr() && !m_App.GetProperty(wxT("Visible")).GetBool())
+		m_App.CallMethod(wxT("Quit"));
 }
 
 
 bool CWizardExcelExport::AllowAccess(bool bAllow)
 {
-	//try
+	if (bAllow)
 	{
-		if (bAllow)
-		{
-			m_App.PutProperty(wxT("UserControl"), true);
-			m_App.PutProperty(wxT("Visible"), true);
-		}
-		else
-			m_App.PutProperty(wxT("UserControl"), false);
-		return true;
+		m_App.PutProperty(wxT("UserControl"), true);
+		m_App.PutProperty(wxT("Visible"), true);
 	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	else
+		m_App.PutProperty(wxT("UserControl"), false);
+	return true;
 }
 
 
@@ -392,23 +368,15 @@ bool CWizardExcelExport::SetTextColor(
 	wxString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	//try
-	{
-		wxAutomationObject range; // Excel8::Range
-		wxVariant args[2];
-		args[0] = cell1;
-		args[1] = cell1;
-		m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-		wxAutomationObject font; // Excel8::Font
-		range.GetObject(font, wxT("Font"));
-		font.PutProperty(wxT("Color"), (long)inColor.GetPixel());
-		return true;
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	wxAutomationObject font;
+	range.GetObject(font, wxT("Font"));
+	font.PutProperty(wxT("Color"), (long)inColor.GetPixel());
+	return true;
 }
 
 
@@ -420,23 +388,15 @@ bool CWizardExcelExport::SetBackColor(
 	wxString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	//try
-	{
-		wxAutomationObject range; // Excel8::Range
-		wxVariant args[2];
-		args[0] = cell1;
-		args[1] = cell1;
-		m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-		wxAutomationObject interior; // Excel8::Interior
-		range.GetObject(interior, wxT("Interior"));
-		interior.PutProperty(wxT("Color"), (long)inColor.GetPixel());
-		return true;
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	wxAutomationObject interior;
+	range.GetObject(interior, wxT("Interior"));
+	interior.PutProperty(wxT("Color"), (long)inColor.GetPixel());
+	return true;
 }
 
 
@@ -448,23 +408,15 @@ bool CWizardExcelExport::SetItalic(
 	wxString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	//try
-	{
-		wxAutomationObject range; // Excel8::Range
-		wxVariant args[2];
-		args[0] = cell1;
-		args[1] = cell1;
-		m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-		wxAutomationObject font; // Excel8::Font
-		range.GetObject(font, wxT("Font"));
-		font.PutProperty(wxT("Italic"), static_cast<short>(bItalic));
-		return true;
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	wxAutomationObject font;
+	range.GetObject(font, wxT("Font"));
+	font.PutProperty(wxT("Italic"), static_cast<short>(bItalic));
+	return true;
 }
 
 
@@ -476,23 +428,15 @@ bool CWizardExcelExport::SetBold(
 	wxString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	//try
-	{
-		wxAutomationObject range; // Excel8::Range
-		wxVariant args[2];
-		args[0] = cell1;
-		args[1] = cell1;
-		m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-		wxAutomationObject font; // Excel8::Font
-		range.GetObject(font, wxT("Font"));
-		font.PutProperty(wxT("Bold"), static_cast<short>(bBold));
-		return true;
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	wxAutomationObject font;
+	range.GetObject(font, wxT("Font"));
+	font.PutProperty(wxT("Bold"), static_cast<short>(bBold));
+	return true;
 }
 
 
@@ -504,53 +448,39 @@ bool CWizardExcelExport::InsertData(
 	wxString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	//try
-	{
-		wxAutomationObject range; // Excel8::Range
-		wxVariant args[2];
-		args[0] = cell1;
-		args[1] = cell1;
-		m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-		range.PutProperty(wxT("Value2"), inData);
-		return true;
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	range.PutProperty(wxT("Value2"), inData);
+	return true;
 }
 
 
 bool CWizardExcelExport::InsertData(
 		long inRow,
 		long inCol,
-		wxString const& inData)
+		wxString const& inData,
+		bool bFormula)
 {
 	wxString cell1;
 	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
-	//try
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell1;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	wxString property = bFormula ? wxT("Formula") : wxT("Value2");
+	if (0 < inData.length() && '=' == inData[0])
 	{
-		wxAutomationObject range; // Excel8::Range
-		wxVariant args[2];
-		args[0] = cell1;
-		args[1] = cell1;
-		m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-		if (0 < inData.length() && '=' == inData[0])
-		{
-			wxString data = wxString(wxT("'")) + inData;
-			range.PutProperty(wxT("Value2"), data);
-		}
-		else
-			range.PutProperty(wxT("Value2"), inData);
-		return true;
+		wxString data = wxString(wxT("'")) + inData;
+		range.PutProperty(property, data);
 	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	else
+		range.PutProperty(property, inData);
+	return true;
 }
 
 
@@ -563,23 +493,15 @@ bool CWizardExcelExport::AutoFit(
 		return false;
 	if (!IWizardSpreadSheet::GetRowCol(0, inColTo, cell2))
 		return false;
-	//try
-	{
-		wxAutomationObject range; // Excel8::Range
-		wxVariant args[2];
-		args[0] = cell1;
-		args[1] = cell2;
-		m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-		wxAutomationObject cols; // Excel8::Range
-		range.GetObject(cols, wxT("EntireColumn"));
-		cols.CallMethod(wxT("AutoFit"));
-		return true;
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	wxAutomationObject range;
+	wxVariant args[2];
+	args[0] = cell1;
+	args[1] = cell2;
+	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
+	wxAutomationObject cols;
+	range.GetObject(cols, wxT("EntireColumn"));
+	cols.CallMethod(wxT("AutoFit"));
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -599,37 +521,23 @@ CWizardExcelImport::CWizardExcelImport(wxAutomationObject& ioApp)
 
 CWizardExcelImport::~CWizardExcelImport()
 {
-	//try
-	{
-		if (NULL != m_Worksheet.GetDispatchPtr())
-			m_App.CallMethod(wxT("Quit"));
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
+	if (NULL != m_Worksheet.GetDispatchPtr())
+		m_App.CallMethod(wxT("Quit"));
 }
 
 
 bool CWizardExcelImport::OpenFile(wxString const& inFilename)
 {
-	//try
-	{
-		wxVariant bk = m_App.CallMethod(wxT("Workbooks.Open"), inFilename);
-		wxAutomationObject book((WXIDISPATCH*)bk.GetVoidPtr());
-		if (NULL == book.GetDispatchPtr())
-			return false;
-		m_FileName = inFilename;
-		// Get the first sheet.
-		wxAutomationObject sheets = book.GetProperty(wxT("Sheets")); // Excel8::Worksheets
-		wxVariant args2[1];
-		args2[0] = wxVariant((short)1);
-		sheets.GetObject(m_Worksheet, wxT("Item"), 1, args2);
-	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
+	wxVariant bk = m_App.CallMethod(wxT("Workbooks.Open"), inFilename);
+	wxAutomationObject book((WXIDISPATCH*)bk.GetVoidPtr());
+	if (NULL == book.GetDispatchPtr())
+		return false;
+	m_FileName = inFilename;
+	// Get the first sheet.
+	wxAutomationObject sheets = book.GetProperty(wxT("Sheets"));
+	wxVariant args2[1];
+	args2[0] = wxVariant((short)1);
+	sheets.GetObject(m_Worksheet, wxT("Item"), 1, args2);
 	return NULL != m_Worksheet.GetDispatchPtr();
 }
 
@@ -641,62 +549,58 @@ bool CWizardExcelImport::GetData(
 	outData.clear();
 	if (NULL == m_Worksheet.GetDispatchPtr())
 		return false;
-	//try
+	wxAutomationObject range;
+	m_Worksheet.GetObject(range, wxT("UsedRange"));
+	long iRow = range.GetProperty(wxT("Row")).GetLong();
+	long iCol = range.GetProperty(wxT("Column")).GetLong();
+	wxAutomationObject rangeRows, rangeColumns;
+	range.GetObject(rangeRows, wxT("Rows"));
+	range.GetObject(rangeColumns, wxT("Columns"));
+	long nRows = rangeRows.GetProperty(wxT("Count")).GetLong();
+	long nCols = rangeColumns.GetProperty(wxT("Count")).GetLong();
+	if (0 < nRows && 0 < nCols)
 	{
-		wxAutomationObject range; // Excel8::Range
-		m_Worksheet.GetObject(range, wxT("UsedRange"));
-		long iRow = range.GetProperty(wxT("Row")).GetLong();
-		long iCol = range.GetProperty(wxT("Column")).GetLong();
-		wxAutomationObject rangeRows, rangeColumns;
-		range.GetObject(rangeRows, wxT("Rows"));
-		range.GetObject(rangeColumns, wxT("Columns"));
-		long nRows = rangeRows.GetProperty(wxT("Count")).GetLong();
-		long nCols = rangeColumns.GetProperty(wxT("Count")).GetLong();
-		if (0 < nRows && 0 < nCols)
+		if (ioProgress)
+		{
+			wxFileName filename(m_FileName);
+			wxString msg = filename.GetFullPath();
+			ioProgress->SetCaption(msg);
+			wxString str = wxString::Format(_("IDS_READING_ROWSCOLS"), nRows, nCols);
+			ioProgress->SetMessage(str);
+			ioProgress->SetRange(1, nRows);
+			ioProgress->ShowProgress();
+		}
+		bool bAbort = false;
+		outData.reserve(nRows);
+		for (int iCellRow = 0; !bAbort && iCellRow < nRows; ++iCellRow)
 		{
 			if (ioProgress)
 			{
-				wxFileName filename(m_FileName);
-				wxString msg = filename.GetFullPath();
-				ioProgress->SetCaption(msg);
-				wxString str = wxString::Format(_("IDS_READING_ROWSCOLS"), nRows, nCols);
-				ioProgress->SetMessage(str);
-				ioProgress->SetRange(1, nRows);
-				ioProgress->ShowProgress();
+				ioProgress->StepIt(1);
+				if (ioProgress->HasCanceled())
+					bAbort = true;
 			}
-			bool bAbort = false;
-			outData.reserve(nRows);
-			for (int iCellRow = 0; !bAbort && iCellRow < nRows; ++iCellRow)
+			std::vector<wxString> row;
+			row.reserve(nCols);
+			for (int iCellCol = 0; iCellCol < nCols; ++iCellCol)
 			{
-				if (ioProgress)
-					ioProgress->StepIt(1);
-				std::vector<wxString> row;
-				row.reserve(nCols);
-				for (int iCellCol = 0; iCellCol < nCols; ++iCellCol)
+				wxString cell1;
+				if (!IWizardSpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
 				{
-					wxString cell1;
-					if (!IWizardSpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
-					{
-						bAbort = true;
-						break;
-					}
-					wxAutomationObject range2;
-					wxVariant args[2];
-					args[0] = cell1;
-					args[1] = cell1;
-					range.GetObject(range2, wxT("Range"), 2, args);
-					row.push_back(range2.GetProperty(wxT("Value")).GetString());
+					bAbort = true;
+					break;
 				}
-				outData.push_back(row);
+				wxAutomationObject range2;
+				wxVariant args[2];
+				args[0] = cell1;
+				args[1] = cell1;
+				range.GetObject(range2, wxT("Range"), 2, args);
+				row.push_back(range2.GetProperty(wxT("Value")).GetString());
 			}
+			outData.push_back(row);
 		}
-		return true;
 	}
-	//catch (COleDispatchException* ex)
-	//{
-	//	ex->Delete();
-	//}
-	//return false;
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -774,9 +678,9 @@ CWizardCalcExport::~CWizardCalcExport()
 }
 
 
-wxAutomationObject& CWizardCalcExport::GetWorksheet()
+bool CWizardCalcExport::CreateWorksheet()
 {
-	if (!m_Document.GetDispatchPtr())
+	if (m_Desktop.GetDispatchPtr() && !m_Document.GetDispatchPtr())
 	{
 		wxVariant args;
 		args.NullList();
@@ -791,13 +695,13 @@ wxAutomationObject& CWizardCalcExport::GetWorksheet()
 		wxAutomationObject sheets = m_Document.CallMethod(wxT("getSheets"));
 		m_Worksheet.SetDispatchPtr(sheets.CallMethod(wxT("getByIndex"), 0));
 	}
-	return m_Worksheet;
+	return m_Worksheet.GetDispatchPtr() != NULL;
 }
 
 
 bool CWizardCalcExport::AllowAccess(bool bAllow)
 {
-	// TODO
+	// Calc doesn't seem to support controlling user access like Excel does
 	return false;
 }
 
@@ -807,8 +711,10 @@ bool CWizardCalcExport::SetTextColor(
 		long inCol,
 		wxColour inColor)
 {
-	// TODO
-	return false;
+	wxAutomationObject cell(m_Worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
+	if (!cell.GetDispatchPtr())
+		return false;
+	return cell.PutProperty(wxT("CharColor"), static_cast<long>(inColor.GetPixel()));
 }
 
 
@@ -817,8 +723,10 @@ bool CWizardCalcExport::SetBackColor(
 		long inCol,
 		wxColour inColor)
 {
-	// TODO
-	return false;
+	wxAutomationObject cell(m_Worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
+	if (!cell.GetDispatchPtr())
+		return false; 
+	return cell.PutProperty(wxT("CellBackColor"), static_cast<long>(inColor.GetPixel()));
 }
 
 
@@ -827,8 +735,10 @@ bool CWizardCalcExport::SetItalic(
 		long inCol,
 		bool bItalic)
 {
-	// TODO
-	return false;
+	wxAutomationObject cell(m_Worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
+	if (!cell.GetDispatchPtr())
+		return false;
+	return cell.PutProperty(wxT("CharPosture"), bItalic ? 1L : 0L);
 }
 
 
@@ -837,8 +747,10 @@ bool CWizardCalcExport::SetBold(
 		long inCol,
 		bool bBold)
 {
-	// TODO
-	return false;
+	wxAutomationObject cell(m_Worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
+	if (!cell.GetDispatchPtr())
+		return false;
+	return cell.PutProperty(wxT("CharWeight"), bBold ? 150L : 100L);
 }
 
 
@@ -847,10 +759,9 @@ bool CWizardCalcExport::InsertData(
 		long inCol,
 		double inData)
 {
-	wxAutomationObject& worksheet = GetWorksheet();
-	if (!worksheet.GetDispatchPtr())
+	if (!CreateWorksheet())
 		return false;
-	wxAutomationObject cell(worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
+	wxAutomationObject cell(m_Worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
 	if (!cell.GetDispatchPtr())
 		return false;
 	return cell.PutProperty(wxT("Value"), inData);
@@ -860,15 +771,16 @@ bool CWizardCalcExport::InsertData(
 bool CWizardCalcExport::InsertData(
 		long inRow,
 		long inCol,
-		wxString const& inData)
+		wxString const& inData,
+		bool bFormula)
 {
-	wxAutomationObject& worksheet = GetWorksheet();
-	if (!worksheet.GetDispatchPtr())
+	if (!CreateWorksheet())
 		return false;
-	wxAutomationObject cell(worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
+	wxAutomationObject cell(m_Worksheet.CallMethod(wxT("getCellByPosition"), inCol, inRow));
 	if (!cell.GetDispatchPtr())
 		return false;
-	return cell.PutProperty(wxT("Formula"), inData);
+	wxString property = bFormula ? wxT("Formula") : wxT("String");
+	return cell.PutProperty(property, inData);
 }
 
 
@@ -876,10 +788,9 @@ bool CWizardCalcExport::AutoFit(
 		long inColFrom,
 		long inColTo)
 {
-	wxAutomationObject& worksheet = GetWorksheet();
-	if (!worksheet.GetDispatchPtr())
+	if (!CreateWorksheet())
 		return false;
-	wxAutomationObject range(worksheet.CallMethod(wxT("getCellRangeByPosition"), inColFrom, 0, inColTo, 0));
+	wxAutomationObject range(m_Worksheet.CallMethod(wxT("getCellRangeByPosition"), inColFrom, 0, inColTo, 0));
 	if (!range.GetDispatchPtr())
 		return false;
 	range.PutProperty(wxT("Columns.OptimalWidth"), true);
@@ -911,10 +822,14 @@ bool CWizardCalcImport::OpenFile(wxString const& inFilename)
 {
 	if (!m_Document.GetDispatchPtr())
 	{
+		// 'Calc' doesn't take kindly to wxWidgets FileNameToURL syntax.
+		// Since this is windows only, screw it, just format it the way calc likes.
 		wxString fileName(inFilename);
-		fileName.Replace(wxT("\\"), wxT("/"));
-		fileName = wxT("file:///") + fileName;
-		wxVariant file = m_Desktop.CallMethod(wxT("loadComponentFromURL"), fileName);
+		fileName.Replace(_T("\\"), _T("/"));
+		fileName = _T("file:///") + fileName;
+		wxVariant args;
+		args.NullList();
+		wxVariant file = m_Desktop.CallMethod(wxT("loadComponentFromURL"), fileName, wxT("_blank"), 0, args);
 		if (file.IsNull())
 			return false;
 		m_Document.SetDispatchPtr(file);
@@ -936,84 +851,57 @@ bool CWizardCalcImport::GetData(
 		IDlgProgress* ioProgress)
 {
 	outData.clear();
-	//if (!m_Worksheet.GetDispatchPtr())
+	if (!m_Worksheet.GetDispatchPtr())
 		return false;
-#pragma PRAGMA_TODO("Implement Calc reading")
-#if 0
 
 	wxAutomationObject cursor = m_Worksheet.CallMethod(wxT("createCursor"));
-	if (cursor.GetDispatchPtr())
+	if (!cursor.GetDispatchPtr())
+		return false;
+
+	// Set up the data area
+	// Ignore failure codes
+	// - these are returning failure, but appear to be working correctly.
+	cursor.CallMethod(wxT("gotoStartOfUsedArea"), 0);
+	cursor.CallMethod(wxT("gotoEndOfUsedArea"), 1);
+
+	// This should be a list of lists.
+	wxVariant dataAll = cursor.CallMethod(wxT("getDataArray"));
+	if (!dataAll.IsType(wxT("list")))
+		return false;
+	bool bAbort = false;
+	int nRows = dataAll.GetCount();
+	outData.reserve(nRows);
+	if (ioProgress)
 	{
-		// Set up the data area
-		if (!cursor.CallMethod(wxT("gotoStartOfUsedArea"), false))
-			return false;
-		if (!cursor.CallMethod(wxT("gotoEndOfUsedArea"), true))
-			return false;
+		wxFileName filename(m_FileName);
+		wxString msg = filename.GetFullPath();
+		ioProgress->SetCaption(msg);
+		wxString str = wxString::Format(_("IDS_READING_ROWS"), nRows);
+		ioProgress->SetMessage(str);
+		ioProgress->SetRange(1, nRows);
+		ioProgress->ShowProgress();
 	}
-
-	COleSafeArray dataAll = cursor.getDataArray();
-	DWORD dim = dataAll.GetDim();
-	// Should be only 1 dimension
-	// Open office sets the data as an array of arrays.
-	if (1 == dim)
+	for (int iRow = 0; !bAbort && iRow < nRows; ++iRow)
 	{
-		bool bAbort = false;
-
-		long lbound, ubound;
-		dataAll.GetLBound(1, &lbound);
-		dataAll.GetUBound(1, &ubound);
-		long nRows = ubound - lbound + 1;
-		outData.reserve(nRows);
-
 		if (ioProgress)
 		{
-			wxFileName filename(m_FileName);
-			wxString msg = filename.GetFullPath();
-			ioProgress->SetCaption(msg);
-			wxString str = wxString::Format(_("IDS_READING_ROWS"), nRows);
-			ioProgress->SetMessage(str);
-			ioProgress->SetRange(1, nRows);
-			ioProgress->ShowProgress();
+			ioProgress->StepIt(1);
+			if (ioProgress->HasCanceled())
+				bAbort = true;
 		}
-
-		for (long r = lbound; !bAbort && r <= ubound; ++r)
+		wxVariant vRow = dataAll[iRow];
+		if (!vRow.IsType(wxT("list")))
+			continue;
+		int nCols = vRow.GetCount();
+		std::vector<wxString> row;
+		row.reserve(nCols);
+		for (int iCol = 0; !bAbort && iCol < nCols; ++iCol)
 		{
-			if (ioProgress)
-				ioProgress->StepIt(1);
-
-			long index[2];
-			index[0] = r;
-			index[1] = 0;
-			VARIANT v;
-			dataAll.GetElement(index, &v);
-			COleSafeArray dataRow(v);
-			dim = dataRow.GetDim();
-
-			// Again, should only be one.
-			if (1 == dim)
-			{
-				long lbound2, ubound2;
-				dataRow.GetLBound(1, &lbound2);
-				dataRow.GetUBound(1, &ubound2);
-				long nCols = ubound2 - lbound2 + 1;
-				std::vector<wxString> row;
-				row.reserve(nCols);
-				for (long r2 = lbound2; r2 <= ubound2; ++r2)
-				{
-					index[0] = r2;
-					index[1] = 0;
-					VARIANT v2;
-					dataRow.GetElement(index, &v2);
-					CComVariant col(v2);
-					wxString str(col);
-					row.push_back(str);
-				}
-				outData.push_back(row);
-			}
+			row.push_back(vRow[iCol].GetString());
 		}
+		outData.push_back(row);
 	}
 	return true;
-#endif
 }
 
 #endif //HAS_AUTOMATION

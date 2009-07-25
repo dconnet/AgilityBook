@@ -1,5 +1,5 @@
 /*
- * Copyright © 2007-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2007-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,27 +31,14 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-24 DRC Change wx initialize code. When exiting app, COM was
+ *                hanging in uninitialize.
  * @li 2009-02-25 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
 
 #include "stdafx.h"
 #include "../ARB/Element.h"
-
-
-class wxDllApp : public wxApp
-{
-	bool OnInit();
-};
-
-
-IMPLEMENT_APP_NO_MAIN(wxDllApp)
-
-
-bool wxDllApp::OnInit()
-{
-	return true;
-}
 
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
@@ -61,16 +48,14 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 	case DLL_PROCESS_ATTACH:
 		wxSetInstance((HINSTANCE)hModule);
 		{
-			int argc = 0;
-			char** argv = NULL;
-			wxEntryStart(argc, argv);
+			wxInitialize();
 			tstring err;
 			Element::Initialize(err);
 		}
 		break;
 	case DLL_PROCESS_DETACH:
 		Element::Terminate();
-		wxEntryCleanup();
+		wxUninitialize();
 		break;
 	}
     return TRUE;
