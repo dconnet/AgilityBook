@@ -160,16 +160,13 @@ resources: agilitybook
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) agilitybook
 
 dist:: agilitybook resources
-	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/English.lproj
 	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS
+	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/English.lproj
 	cp Info.plist $(TOPBUILDDIR)/AgilityBook.app/Contents/
 	cp version.plist $(TOPBUILDDIR)/AgilityBook.app/Contents/
-#	cp InfoPlist.strings $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/English.lproj/
 	echo -n 'APPL????' > $(TOPBUILDDIR)/AgilityBook.app/Contents/PkgInfo
 	cp agilitybook $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/agilitybook
 	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
-#	cp $@MacIcons.icns AnotherResource.txt $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
-# copy resources into package
 	cp -pR lang $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/
 	cp agilitybook.dat $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/
 

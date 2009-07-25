@@ -72,8 +72,8 @@
 #include <wx/version.h>
 #include <wx/xrc/xmlres.h>	// XRC XML resources
 
-#if !wxCHECK_VERSION(2, 8, 9)
-// ARB was developed against v2.8.9 - anything earlier is not supported.
+#if !wxCHECK_VERSION(2, 8, 10)
+// ARB was developed against v2.8.10 - anything earlier is not supported.
 #error Unsupported wxWidget version
 #endif
 
@@ -299,7 +299,7 @@ bool CAgilityBookApp::OnInit()
 	(void)new wxDocTemplate(m_manager, wxT("ARB"), wxT("*.arb"), wxT(""), wxT("arb"), wxT("ARB Doc"), wxT("ARB View"),
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
-	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'WXMB', 'WXMA');
+	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'ARBB', 'ARBA');
 	wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 #if wxCHECK_VERSION(2, 8, 10)
 	// Sorting is broken in the native sorting in wx 2.8.10 and earlier

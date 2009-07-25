@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -243,7 +243,7 @@ static bool EditRun(
 		pRun = ARBDogRunPtr(ARBDogRun::New());
 		pRun->SetDate(pTrialData->GetTrial()->GetRuns().GetEndDate());
 	}
-	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetTrial(), pRun, pTree->GetControl());
+	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetTrial(), pRun);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		bOk = true;
