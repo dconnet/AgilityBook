@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-25 DRC Fix status width on Mac.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-09-01 DRC Added multi-monitor support.
@@ -125,6 +126,35 @@ static const struct
 };
 static const int sc_ToolbarSize = sizeof(sc_Toolbar) / sizeof(sc_Toolbar[0]);
 
+/////////////////////////////////////////////////////////////////////////////
+
+static void SetStatusBarWidths(
+		wxStatusBar* statusbar,
+		int col,
+		int* widths)
+{
+	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
+#ifdef __WXMAC__
+	// On the Mac, setting the width is always a bit small.
+	// For instance, we want 36, but it gets set to 32.
+	// So kludge it and force it larger.
+	for (int i = 0; i < NUM_STATUS_FIELDS; ++i)
+	{
+		if ((0 > col || i == col) && 0 < widths[i])
+		{
+			wxRect r;
+			statusbar->GetFieldRect(i, r);
+			if (r.width < widths[i])
+			{
+				widths[i] += 2 * (widths[i] - r.width);
+				statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
+			}
+		}
+	}
+#endif
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, NULL, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
@@ -159,7 +189,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	if (statusbar)
 	{
 		statusbar->Connect(wxEVT_CONTEXT_MENU, wxContextMenuEventHandler(CMainFrame::OnStatusBarContextMenu), NULL, this);
-		wxClientDC dc(GetStatusBar());
+		wxClientDC dc(statusbar);
 		int style[NUM_STATUS_FIELDS];
 		m_Widths[0] = -1;
 		style[0] = wxSB_FLAT;
@@ -189,7 +219,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 			style[i] = wxSB_NORMAL;
 			SetStatusText(str, i);
 		}
-		statusbar->SetStatusWidths(NUM_STATUS_FIELDS, m_Widths);
+		SetStatusBarWidths(statusbar, -1, m_Widths);
 		statusbar->SetStatusStyles(NUM_STATUS_FIELDS, style);
 	}
 }
@@ -227,7 +257,7 @@ void CMainFrame::SetMessage(wxString const& msg, int index, bool bResize)
 	{
 		wxClientDC dc(statusbar);
 		m_Widths[index] = dc.GetTextExtent(msg).x;
-		statusbar->SetStatusWidths(NUM_STATUS_FIELDS, m_Widths);
+		SetStatusBarWidths(statusbar, index, m_Widths);
 	}
 	SetStatusText(msg, index);
 }

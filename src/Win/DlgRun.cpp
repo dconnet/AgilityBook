@@ -98,6 +98,7 @@
 #include "stdafx.h"
 #include "DlgRun.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
@@ -717,6 +718,8 @@ CDlgRun::CDlgRun(
 	, m_ctrlLinkDelete(NULL)
 	, m_ctrlLinkOpen(NULL)
 {
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
 	Create(pParent, wxID_ANY, _("IDS_RUN_PROPERTIES"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 

@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -41,12 +41,12 @@
 #include "AgilityBookMenu.h"
 #include <wx/docview.h>
 
-#define NUM_STATUS_FIELDS	5
 #define STATUS_INFO			0
 #define STATUS_DOG			1
 #define STATUS_STATUS		2
 #define STATUS_FILTERED		3
 #define STATUS_FILLER		4
+#define NUM_STATUS_FIELDS	5
 
 
 class CMainFrame : public wxDocParentFrame
