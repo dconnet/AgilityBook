@@ -11,7 +11,7 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
-2009-04-20 DRC File version 12.10
+2009-07-26 DRC File version 12.10
                Added 'DNR' to 'Placement' and 'ReferenceRun'
 2008-02-12 DRC File version 12.9
                Fix metadata bug in dognotes.

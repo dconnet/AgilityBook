@@ -37,6 +37,7 @@
  * --- as of v2, the real version isn't here - see below.
  *
  * Revision History
+ * @li 2009-07-26 DRC Removed Win98 support.
  * @li 2009-07-18 DRC Updated version.txt to support different versions/platforms.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-06-29 DRC When looking for language ids, it was searching the wrong node.
@@ -223,7 +224,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		v2.0: Allow multiple copies of 'Config' for different platforms.
 		If 'platform' is not set, it's the default. This allows creating
 		one entry with 'mac', one with none - then all non-macs default to
-		second.
+		second. Current recognized values: 'win'/'mac'
 		v2.0: Added 'version' to 'Config': This replaces the version in the
 		first line (if not present, line 1 is used).
 		-->
@@ -237,10 +238,10 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		<!--
 		'id' specified the LANGID of the plugin language DLL, '0' is used
 		for the program default.
-		v2.0: 'id2' is gettext lang code.
+		v2.0: 'id2' is gettext lang code, id no longer used.
 		-->
 		<!ELEMENT Lang (#PCDATA) >
-		  <!ATTLIST Lang id CDATA #REQUIRED >
+		  <!-- <!ATTLIST Lang id CDATA #REQUIRED > -->
 		  <!ATTLIST Lang id2 CDATA #REQUIRED >
 
 		<!--
@@ -368,7 +369,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 /**
  * Check the version against the web.
  */
-bool CUpdateInfo::CheckProgram()
+bool CUpdateInfo::CheckProgram(wxString const& lang)
 {
 	bool bNeedsUpdating = false;
 	ARBDate today = ARBDate::Today();
@@ -401,10 +402,12 @@ bool CUpdateInfo::CheckProgram()
 						else
 #endif
 							url += wxT("?os=win");
+						if (!lang.empty())
+						{
+							url += wxT("-");
+							url += lang;
+						}
 					}
-					break;
-				case VER_PLATFORM_WIN32_WINDOWS: // Win95/98/Me
-					url += wxT("?os=win98");
 					break;
 				}
 #elif defined(__WXMAC__)
@@ -535,10 +538,11 @@ void CUpdateInfo::CheckConfig(
 }
 
 
-void CUpdateInfo::AutoUpdateProgram()
+void CUpdateInfo::AutoUpdateProgram(
+		CLanguageManager const& langMgr)
 {
 	if (ReadVersionFile(false))
-		CheckProgram();
+		CheckProgram(langMgr.CurrentLanguage());
 }
 
 
@@ -564,7 +568,7 @@ void CUpdateInfo::UpdateConfiguration(
 	// AND the version is up-to-date.
 	if (!ReadVersionFile(true))
 		return;
-	if (CheckProgram())
+	if (CheckProgram(langMgr.CurrentLanguage()))
 		return;
 	CheckConfig(pDoc, langMgr, true);
 }

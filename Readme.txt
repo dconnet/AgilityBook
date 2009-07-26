@@ -57,6 +57,15 @@ To build for VC, see src/Projects/CompileWX.bat
 gettext: http://gnuwin32.sourceforge.net/packages/gettext.htm
 This is required in order to create the language stuff.
 Make sure the "\Program Files\GnuWin32\bin" is added to the PATH. (windows)
+When initially developing:
+- mkdir <lang>
+- cd <lang>
+- generate .po file
+  - xgettext -C -n -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -o arb.po ../arbframe.cpp
+   cp ../../locale/<language>.po ./wxstd.po
+   - or -
+   cp ../../locale/wxstd.po .
+This will generate an initial set of strings to translate.
 
 --------------------
 
@@ -84,10 +93,10 @@ directions for compiling.
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.38.0. There is no need
+ARB has been built and tested using Boost version 1.39.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
-[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1, 1.36.0, 1.37.0
+[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1, 1.36.0, 1.37.0, 1.38.0
 however, VC9 requires some tweaks to use versions older than 1.35.1]
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked is boost_1_34_0 (of course,
@@ -97,14 +106,13 @@ to avoid problems in the project files.
 --------------------
 
 Windows Installer XML toolset: http://wix.sourceforge.net/releases/
-Currently using Version 2.0.5805.0 (as of ARB v1.10.0.12).
+Currently using Version 3.0.5419.0 (as of ARB v2.0.1).
 - Install votive [optional]
-- Unzip binaries.zip into "C:\Tools\wix2'
+- Unzip binaries.zip into "C:\Tools\wix3'
   (GenMSI.py assumes WiX is installed here)
 
 During our release process of running BuildAll.bat,
 GenMSI.py will be called which generates the install files.
-By default, it will create installers using WiX.
 (In ...\AgilityBook\src\Projects\Installer)
 
 --------------------

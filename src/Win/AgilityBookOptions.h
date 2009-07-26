@@ -150,25 +150,25 @@ public:
 	static void SetUnitsAsMM(bool bAsMM);
 	// Get margins in .01 inches or MM (or pixels, if DC is set)
 	static void GetPrinterMargins(
-			bool bAsMM, ///< In .01in or millimeters, ignored it DC is set
+			bool bAsMM, // In .01in or millimeters, ignored it DC is set
 			long& outLeft,
 			long& outRight,
 			long& outTop,
 			long& outBottom,
 			wxDC* pDC); // Used to convert to logical units
 	static void SetPrinterMargins(
-			bool bAsMM, ///< In .01 inches or millimeters
+			bool bAsMM, // In .01 inches or millimeters
 			long inLeft,
 			long inRight,
 			long inTop,
 			long inBottom);
 	static void GetRunPageSize(
-			bool bAsMM, ///< In .01in or millimeters, ignored it DC is set
+			bool bAsMM, // In .01in or millimeters, ignored it DC is set
 			long& outWidth,
 			long& outHeight,
 			wxDC* pDC); // Used to convert to logical units
 	static void SetRunPageSize(
-			bool bAsMM,
+			bool bAsMM, // In .01 inches or millimeters
 			long inWidth,
 			long inHeight);
 	static void GetCalendarFontInfo(CFontInfo& info);

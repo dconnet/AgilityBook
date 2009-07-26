@@ -116,7 +116,7 @@ wxFileHistory* CAgilityBookDocManager::OnCreateFileHistory()
 }
 
 
-void CAgilityBookDocManager::OnPrint(wxCommandEvent& WXUNUSED(evt))
+void CAgilityBookDocManager::OnPrint(wxCommandEvent& evt)
 {
 	// Copied wxDocManager implementation so I could put my printer data in
 	wxView *view = GetCurrentView();
@@ -133,7 +133,7 @@ void CAgilityBookDocManager::OnPrint(wxCommandEvent& WXUNUSED(evt))
 }
 
 
-void CAgilityBookDocManager::OnPreview(wxCommandEvent& WXUNUSED(evt))
+void CAgilityBookDocManager::OnPreview(wxCommandEvent& evt)
 {
 	// Copied wxDocManager implementation so I could put my printer data in
 	wxView *view = GetCurrentView();
@@ -429,7 +429,7 @@ bool CAgilityBookApp::OnInit()
 			ARBDate today = ARBDate::Today();
 			date += 30;
 			if (date < today)
-				m_UpdateInfo.AutoUpdateProgram();
+				m_UpdateInfo.AutoUpdateProgram(*m_LangMgr);
 		}
 	}
 

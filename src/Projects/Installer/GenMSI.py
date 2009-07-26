@@ -3,6 +3,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2009-07-26 DRC Removed Win98 support.
 # 2009-05-02 DRC Upgraded to wix3.
 # 2009-04-16 DRC Enable v2 to upgrade v1 when the beta period ends.
 #            Removed Inno support since I don't maintain it anymore.
@@ -15,10 +16,9 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/32] [/64] [/w98] [/all] [/notidy] /test
+"""GenMSI.py [/32] [/64] [/all] [/notidy] /test
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
-	w98: Create 32bit MBCS msi
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
@@ -36,7 +36,6 @@ WiXdir = r"c:\Tools\wix3"
 WinSrcDir = AgilityBookDir + "\\src"
 code32 = 1
 code64 = 3
-code98 = 2
 
 # The reason for a different upgrade codes is that is allows beta testing
 # side-by-side. When the next version is actually released, it will upgrade
@@ -45,7 +44,7 @@ code98 = 2
 # When the beta ends, set this flag to 0. That will then include the V1 upgrade
 # code. (Any future open betas will follow this same route - a beta will only
 # upgrade itself)
-beta = 1
+beta = 0
 
 # v1 upgrade code
 UpgradeCodeV1 = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
@@ -113,9 +112,6 @@ def getoutputvars(code, version):
 	if code32 == code:
 		outputFile = "AgilityBook_" + version + "-win"
 		baseDir = AgilityBookDir + "\\bin\\VC9Win32\\Release\\"
-	elif code98 == code:
-		outputFile = "AgilityBook_" + version + "-win98"
-		baseDir = AgilityBookDir + "\\bin\\VC8Win32\\Release\\"
 	elif code64 == code:
 		outputFile = "AgilityBook_" + version + "-x64"
 		baseDir = AgilityBookDir + "\\bin\\VC9x64\\Release\\"
@@ -151,7 +147,6 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">'
 	print >>setup,		r'  <String Id="Comments">Track all your agility records in one convenient place.</String>'
 	print >>setup,		r'  <String Id="OnNT">This application only runs on Windows NT and above</String>'
-	print >>setup,		r'  <String Id="On98">This application only runs on Windows ME and above</String>'
 	print >>setup,		r'  <String Id="On64bit">This application only runs on 64bit Windows systems</String>'
 	print >>setup,		r'  <String Id="ARB_AlreadyUpdated">Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel.</String>'
 	print >>setup,		r'  <String Id="ARB_NoDowngrade">A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product.</String>'
@@ -176,7 +171,6 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'<WixLocalization Culture="fr-fr" xmlns="http://schemas.microsoft.com/wix/2006/localization">'
 	print >>setup,		 '  <String Id="Comments">Suivez tous vos résultats d\'agility dans un seul endroit.</String>'
 	print >>setup,		r'  <String Id="OnNT">Ce logiciel fonctionne uniquement sous Windows NT ou plus récent.</String>'
-	print >>setup,		r'  <String Id="On98">Ce logiciel fonctionne uniquement sous Windows ME ou plus récent.</String>'
 	print >>setup,		r'  <String Id="On64bit">Ce logiciel fonctionne uniquement sous système Windows 64bit.</String>'
 	print >>setup,		 '  <String Id="ARB_AlreadyUpdated">Un autre version de [ProductName] est déjà installée. L\'installation de cette version ne peut pas continuer. Pour supprimer la version installée, utilisez "Supprimer un programme" dans le panneau de configuration.</String>'
 	print >>setup,		 '  <String Id="ARB_NoDowngrade">Un version plus récente de [ProductName] est déjà installée. Pour installer une version plus ancienne, supprimez d\'abord la version installée.</String>'
@@ -233,8 +227,6 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	# Launch Conditions
 	if code32 == code:
 		print >>setup,	r'    <Condition Message="!(loc.OnNT)">VersionNT</Condition>'
-	elif code98 == code:
-		print >>setup,	r'    <Condition Message="!(loc.On98)">Version9X&gt;=490 Or VersionNT</Condition>'
 	elif code64 == code:
 		print >>setup,	r'    <Condition Message="!(loc.On64bit)">VersionNT64</Condition>'
 
@@ -593,7 +585,6 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 def main():
 	b32 = 0
 	b64 = 0
-	b98 = 0
 	tidy = 1
 	bTesting = 0
 	if 1 == len(sys.argv):
@@ -605,12 +596,9 @@ def main():
 			b32 = 1
 		elif o == "/64":
 			b64 = 1
-		elif o == "/w98":
-			b98 = 1
 		elif o == "/all":
 			b32 = 1
 			b64 = 1
-			b98 = 1
 		elif o == "/notidy":
 			tidy = 0
 		elif o == "/test":
@@ -619,14 +607,12 @@ def main():
 			print "Usage:", __doc__
 			return
 
-	if b32 + b64 + b98 == 0:
+	if b32 + b64 == 0:
 		b32 = 1
 		b64 = 1
-		b98 = 1
 
 	b32ok = 0
 	b64ok = 0
-	b98ok = 0
 
 	productId = genuuid()
 	ver3Dot, ver3Line = getversion(3)
@@ -674,10 +660,7 @@ def main():
 	if b64:
 		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, bTesting):
 			b64ok = 1
-	if b98:
-		if genWiX(productId, ver3Dot, ver4Line, code98, tidy, bTesting):
-			b98ok = 1
-	if not bTesting and (b32ok or b64ok or b98ok):
+	if not bTesting and (b32ok or b64ok):
 		d = datetime.datetime.now().isoformat(' ')
 		codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "a")
 		installs = ""
@@ -685,8 +668,6 @@ def main():
 			installs = "VC9,win32"
 		if b64ok:
 			installs = "VC9,x64"
-		if b98ok:
-			installs = "VC8,win98"
 		print >>codes, "v" + ver4Dot + "," + d + "," + productId + "," + UpgradeCodeV2 + "," + installs
 
 

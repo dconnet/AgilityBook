@@ -1,8 +1,14 @@
-7/19/2009: v2.0.0.x <in development>
+7/26/2009: v2.0.1.2402
+- Win98 is no longer supported. (It can be compiled and run there, but for me
+  to continue supporting it means using VC8 or before [I use VC9+ now]. It also
+  means distributing a separate installer which means more bits to upload and
+  maintain.
 - Bumped file version to 12.10:
-  - Added 'DNR' (note, disabled during beta)
+  - Added 'DNR' to runs.
 - New features / Enhancements:
   - New framework (wxWidgets). Numerous changes throughout.
+  - Many dialogs are now resizeable. If your mouse cursor changing to a
+   "sizing" cursor, the dialog can be resized.
   - Added ability to print runs on a specified page size.
   - Add ability to set a proxy server for connecting to the Internet.
 - Bug fixes:
