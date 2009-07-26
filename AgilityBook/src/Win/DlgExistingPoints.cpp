@@ -43,6 +43,7 @@
 #include "stdafx.h"
 #include "DlgExistingPoints.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBDogExistingPoints.h"
@@ -172,6 +173,8 @@ CDlgExistingPoints::CDlgExistingPoints(
 	, m_TextOther()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_EXISTING_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	if (m_pExistingPoints)

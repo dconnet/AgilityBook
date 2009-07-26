@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgPartner.h"
 
+#include "AgilityBook.h"
 #include "ARBDogRunPartner.h"
 #include "Validators.h"
 
@@ -59,6 +60,8 @@ CDlgPartner::CDlgPartner(
 	, m_Partner(partner)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_PARTNER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	wxArrayString handlers;

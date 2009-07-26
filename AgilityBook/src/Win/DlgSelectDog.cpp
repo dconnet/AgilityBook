@@ -63,6 +63,8 @@ CDlgSelectDog::CDlgSelectDog(
 	, m_checkList(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_DOG_PICKER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());

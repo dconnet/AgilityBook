@@ -225,7 +225,7 @@ void CAgilityBookHtmlView::LoadData()
 {
 	wxBusyCursor wait;
 
-	m_Items->LoadData(m_Ctrl, GetDocument(), GetDocument()->GetCurrentDog());
+	m_Items->LoadData(GetDocument(), GetDocument()->GetCurrentDog());
 	wxString data = RawHtml(false);
 	m_Ctrl->SetPage(data);
 

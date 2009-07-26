@@ -38,6 +38,8 @@
 #include "stdafx.h"
 #include "DlgReorder.h"
 
+#include "AgilityBook.h"
+
 
 CDlgReorder::CDlgReorder(
 		std::vector<ARBBasePtr>& items,
@@ -49,6 +51,8 @@ CDlgReorder::CDlgReorder(
 	, m_ctrlDown(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_REORDER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

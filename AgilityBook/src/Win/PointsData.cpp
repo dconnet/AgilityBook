@@ -143,11 +143,8 @@ OtherPtInfo::~OtherPtInfo()
 
 /////////////////////////////////////////////////////////////////////////////
 
-CPointsDataBase::CPointsDataBase(
-		wxWindow* pParent,
-		CAgilityBookDoc* pDoc)
-	: m_pParent(pParent)
-	, m_pDoc(pDoc)
+CPointsDataBase::CPointsDataBase(CAgilityBookDoc* pDoc)
+	: m_pDoc(pDoc)
 {
 }
 
@@ -159,10 +156,9 @@ CPointsDataBase::~CPointsDataBase()
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataSeparator::CPointsDataSeparator(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inHtml)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_Html(inHtml)
 {
 }
@@ -170,12 +166,11 @@ CPointsDataSeparator::CPointsDataSeparator(
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataText::CPointsDataText(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bUseInHtml,
 		wxChar const* inCol1,
 		wxChar const* inCol2)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_UseInHtml(bUseInHtml)
 	, m_Col1(inCol1)
 	, m_Col2(inCol2)
@@ -220,10 +215,9 @@ bool CPointsDataText::IsEqual(CPointsDataBasePtr /*inData*/)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataDog::CPointsDataDog(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_pDog(pDog)
 {
 }
@@ -284,7 +278,7 @@ void CPointsDataDog::Details() const
 	// CDlgDog will cause an update msg to occur which will delete us.
 	// So we need to cache the document in a stack variable.
 	CAgilityBookDoc* pDoc = m_pDoc;
-	CDlgDog dlg(pDoc, m_pDog, m_pParent, 0);
+	CDlgDog dlg(pDoc, m_pDog, NULL, 0);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		pDoc->Modify(true);
@@ -306,11 +300,10 @@ bool CPointsDataDog::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataVenue::CPointsDataVenue(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog,
 		ARBConfigVenuePtr pVenue)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_pDog(pDog)
 	, m_pVenue(pVenue)
 {
@@ -392,7 +385,7 @@ void CPointsDataVenue::Details() const
 			// CDlgDog will cause an update msg to occur which will delete us.
 			// So we need to cache the document in a stack variable.
 			CAgilityBookDoc* pDoc = m_pDoc;
-			CDlgDog dlg(pDoc, m_pDog, m_pParent, 2);
+			CDlgDog dlg(pDoc, m_pDog, NULL, 2);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				pDoc->Modify(true);
@@ -420,11 +413,10 @@ bool CPointsDataVenue::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataTitle::CPointsDataTitle(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr pDog,
 		ARBDogTitlePtr pTitle)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_pDog(pDog)
 	, m_pTitle(pTitle)
 {
@@ -474,7 +466,7 @@ tstring CPointsDataTitle::GetHtml(size_t nCurLine) const
 
 void CPointsDataTitle::Details() const
 {
-	CDlgTitle dlg(m_pDoc->Book().GetConfig(), m_pDog->GetTitles(), m_pTitle, m_pParent);
+	CDlgTitle dlg(m_pDoc->Book().GetConfig(), m_pDog->GetTitles(), m_pTitle);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_pDoc->Modify(true);
@@ -500,7 +492,6 @@ bool CPointsDataTitle::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataEvent::CPointsDataEvent(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		std::list<RunInfo>& inMatching,
@@ -516,7 +507,7 @@ CPointsDataEvent::CPointsDataEvent(
 		tstring const& inPts,
 		tstring const& inSuperQ,
 		tstring const& inSpeed)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_Dog(inDog)
 	, m_Matching(inMatching)
 	, m_Venue(inVenue)
@@ -605,7 +596,7 @@ void CPointsDataEvent::Details() const
 		<< wxT("/")
 		<< m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
-	CDlgListViewer dlg(m_pDoc, str.str().c_str(), m_Dog ? &data : NULL, m_Matching, m_pParent);
+	CDlgListViewer dlg(m_pDoc, str.str().c_str(), m_Dog ? &data : NULL, m_Matching);
 	dlg.ShowModal();
 }
 
@@ -625,11 +616,10 @@ bool CPointsDataEvent::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataLifetime::CPointsDataLifetime(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
 		ARBConfigVenuePtr inVenue)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_bLifetime(bLifetime)
 	, m_Venue(inVenue)
 	, m_Lifetime(0.0)
@@ -723,7 +713,7 @@ void CPointsDataLifetime::Details() const
 	else
 		str = _("IDS_PLACEMENT_POINTS");
 	caption += wxT(" ") + str;
-	CDlgListViewer dlg(m_pDoc, caption, m_Data, m_pParent);
+	CDlgListViewer dlg(m_pDoc, caption, m_Data);
 	dlg.ShowModal();
 }
 
@@ -740,12 +730,11 @@ bool CPointsDataLifetime::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataLifetimeByName::CPointsDataLifetimeByName(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
 		ARBConfigVenuePtr inVenue,
 		tstring const& inName)
-	: CPointsDataLifetime(pParent, pDoc, bLifetime, inVenue)
+	: CPointsDataLifetime(pDoc, bLifetime, inVenue)
 	, m_Name(inName)
 {
 }
@@ -811,13 +800,12 @@ bool CPointsDataLifetimeByName::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataMultiQs::CPointsDataMultiQs(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		ARBConfigVenuePtr inVenue,
 		ARBConfigMultiQPtr inMultiQ,
 		std::set<MultiQdata> const& inMQs)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_Dog(inDog)
 	, m_Venue(inVenue)
 	, m_MultiQ(inMultiQ)
@@ -872,7 +860,7 @@ tstring CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 void CPointsDataMultiQs::Details() const
 {
 	MultiQInfoData data(m_Dog, m_Venue, m_MultiQ);
-	CDlgListViewer dlg(m_pDoc, m_MultiQ->GetName().c_str(), &data, m_MQs, m_pParent);
+	CDlgListViewer dlg(m_pDoc, m_MultiQ->GetName().c_str(), &data, m_MQs);
 	dlg.ShowModal();
 }
 
@@ -890,11 +878,10 @@ bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataSpeedPts::CPointsDataSpeedPts(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBConfigVenuePtr inVenue,
 		int inPts)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_Venue(inVenue)
 	, m_Pts(inPts)
 {
@@ -935,10 +922,9 @@ bool CPointsDataSpeedPts::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPoints::CPointsDataOtherPoints(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		std::list<OtherPtInfo> const& inRunList)
-	: CPointsDataBase(pParent, pDoc)
+	: CPointsDataBase(pDoc)
 	, m_Score(0.0)
 	, m_RunList(inRunList)
 {
@@ -953,11 +939,10 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inName,
 		std::list<OtherPtInfo> const& inRunList)
-	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
+	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Name(inName)
 {
 }
@@ -1003,7 +988,7 @@ tstring CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 
 void CPointsDataOtherPointsTallyAll::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 }
 
@@ -1020,11 +1005,10 @@ bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
-	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
+	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Event(inEvent)
 {
 }
@@ -1071,7 +1055,7 @@ tstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 
 void CPointsDataOtherPointsTallyAllByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 }
 
@@ -1088,11 +1072,10 @@ bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inLevel,
 		std::list<OtherPtInfo> const& inRunList)
-	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
+	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Level(inLevel)
 {
 }
@@ -1139,7 +1122,7 @@ tstring CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 
 void CPointsDataOtherPointsTallyLevel::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 }
 
@@ -1156,12 +1139,11 @@ bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 /////////////////////////////////////////////////////////////////////////////
 
 CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		tstring const& inLevel,
 		tstring const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
-	: CPointsDataOtherPoints(pParent, pDoc, inRunList)
+	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Level(inLevel)
 	, m_Event(inEvent)
 {
@@ -1213,7 +1195,7 @@ tstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
 
 void CPointsDataOtherPointsTallyLevelByEvent::Details() const
 {
-	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList, m_pParent);
+	CDlgListViewer dlg(m_pDoc, _("IDS_OTHERPOINTS"), m_RunList);
 	dlg.ShowModal();
 }
 
@@ -1281,18 +1263,16 @@ private:
 
 
 void CPointsDataItems::InsertVenueHeader(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog,
 		ARBConfigVenuePtr pVenue)
 {
-	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, false)));
-	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataVenue(pParent, pDoc, inDog, pVenue)));
+	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, false)));
+	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataVenue(pDoc, inDog, pVenue)));
 }
 
 
 void CPointsDataItems::LoadData(
-		wxWindow* pParent,
 		CAgilityBookDoc* pDoc,
 		ARBDogPtr inDog)
 {
@@ -1306,7 +1286,7 @@ void CPointsDataItems::LoadData(
 	CFilterOptions::Options().GetFilterVenue(venues);
 
 	// Put general info about the dog in...
-	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataDog(pParent, pDoc, inDog)));
+	m_Lines.push_back(CPointsDataBasePtr(new CPointsDataDog(pDoc, inDog)));
 
 	// For each venue...
 	for (ARBConfigVenueList::const_iterator iterVenue = pDoc->Book().GetConfig().GetVenues().begin();
@@ -1330,18 +1310,18 @@ void CPointsDataItems::LoadData(
 				if (!bHeaderInserted)
 				{
 					bHeaderInserted = true;
-					InsertVenueHeader(pParent, pDoc, inDog, pVenue);
+					InsertVenueHeader(pDoc, inDog, pVenue);
 					tstring data(wxT("<h3>"));
 					data += _("IDS_TITLES");
 					data += wxT("</h3>");
 					data += s_TableHeader;
-					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
+					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, data)));
 				}
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataTitle(pParent, pDoc, inDog, pTitle)));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataTitle(pDoc, inDog, pTitle)));
 			}
 		}
 		if (bHeaderInserted)
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, wxT("</table>"))));
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table>"))));
 
 		bool bRunsInserted = false;
 		LifeTimePointsList lifetime;
@@ -1366,14 +1346,14 @@ void CPointsDataItems::LoadData(
 			if (!bHeaderInserted)
 			{
 				bHeaderInserted = true;
-				InsertVenueHeader(pParent, pDoc, inDog, pVenue);
+				InsertVenueHeader(pDoc, inDog, pVenue);
 			}
 			bRunsInserted = true;
 			tstring data(wxT("<h3>"));
 			data += _("IDS_RUNS");
 			data += wxT("</h3>");
 			data += s_TableHeader;
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, data)));
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, data)));
 			int speedPts = 0;
 			bool bHasSpeedPts = false;
 			// Show events sorted out by division/level.
@@ -1603,7 +1583,7 @@ void CPointsDataItems::LoadData(
 							{
 								strSpeed = wxString::Format(_("IDS_POINTS_SPEED_SUBTOTAL"), speedPtsEvent);
 							}
-							items.push_back(new CPointsDataEvent(pParent, pDoc,
+							items.push_back(new CPointsDataEvent(pDoc,
 								!ARBDouble::equal(0.0, nExistingPts + nExistingSQ) ? inDog : ARBDogPtr(),
 								allmatching,
 								pVenue,
@@ -1642,7 +1622,7 @@ void CPointsDataItems::LoadData(
 			// Information that is tallied after all a venue's events.
 			if (bHasSpeedPts)
 			{
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSpeedPts(pParent, pDoc, pVenue, speedPts)));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSpeedPts(pDoc, pVenue, speedPts)));
 			}
 
 			// If the venue has multiQs, tally them now.
@@ -1675,7 +1655,7 @@ void CPointsDataItems::LoadData(
 					iter != MQs.end();
 					++iter)
 				{
-					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataMultiQs(pParent, pDoc, inDog, pVenue, (*iter).first, (*iter).second)));
+					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataMultiQs(pDoc, inDog, pVenue, (*iter).first, (*iter).second)));
 				}
 			}
 		}
@@ -1683,7 +1663,7 @@ void CPointsDataItems::LoadData(
 		// Next comes lifetime points.
 		if (0 < lifetime.size())
 		{
-			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, true, pVenue);
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, true, pVenue);
 			typedef std::map<tstring, CPointsDataLifetimeByName*> NamedLifetime;
 			NamedLifetime subgroups;
 			if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
@@ -1736,7 +1716,7 @@ void CPointsDataItems::LoadData(
 				}
 				else
 				{
-					pNameData = new CPointsDataLifetimeByName(pParent, pDoc, true, pVenue, iter->pDiv->GetName());
+					pNameData = new CPointsDataLifetimeByName(pDoc, true, pVenue, iter->pDiv->GetName());
 					subgroups.insert(NamedLifetime::value_type(iter->pDiv->GetName(), pNameData));
 				}
 
@@ -1773,7 +1753,7 @@ void CPointsDataItems::LoadData(
 		}
 		if (0 < placement.size())
 		{
-			CPointsDataLifetime* pData = new CPointsDataLifetime(pParent, pDoc, false, pVenue);
+			CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, false, pVenue);
 			typedef std::map<tstring, CPointsDataLifetimeByName*> NamedLifetime;
 			NamedLifetime subgroups;
 			if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
@@ -1826,7 +1806,7 @@ void CPointsDataItems::LoadData(
 				}
 				else
 				{
-					pNameData = new CPointsDataLifetimeByName(pParent, pDoc, false, pVenue, iter->pDiv->GetName());
+					pNameData = new CPointsDataLifetimeByName(pDoc, false, pVenue, iter->pDiv->GetName());
 					subgroups.insert(NamedLifetime::value_type(iter->pDiv->GetName(), pNameData));
 				}
 
@@ -1861,7 +1841,7 @@ void CPointsDataItems::LoadData(
 			}
 		}
 		if (bRunsInserted)
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, wxT("</table>"))));
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table>"))));
 	}
 
 	// After all the venues, we do 'other points'.
@@ -1875,9 +1855,9 @@ void CPointsDataItems::LoadData(
 		table += wxT("</h2>");
 		table += s_TableHeader;
 
-		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, table)));
-		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, false)));
-		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, false, str)));
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, table)));
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, false)));
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, false, str)));
 		for (ARBConfigOtherPointsList::const_iterator iterOther = other.begin();
 			iterOther != other.end();
 			++iterOther)
@@ -1933,11 +1913,11 @@ void CPointsDataItems::LoadData(
 			{
 			default:
 			case ARBConfigOtherPoints::eTallyAll:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyAll(pParent, pDoc, pOther->GetName(), runs)));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyAll(pDoc, pOther->GetName(), runs)));
 				break;
 
 			case ARBConfigOtherPoints::eTallyAllByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
 				{
 					std::set<tstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -1955,13 +1935,13 @@ void CPointsDataItems::LoadData(
 							if ((*iter).m_Event == (*iterTally))
 								validRuns.push_back(*iter);
 						}
-						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyAllByEvent(pParent, pDoc, (*iterTally), validRuns)));
+						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyAllByEvent(pDoc, (*iterTally), validRuns)));
 					}
 				}
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevel:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
 				{
 					std::set<tstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -1979,13 +1959,13 @@ void CPointsDataItems::LoadData(
 							if ((*iter).m_Level == (*iterTally))
 								validRuns.push_back(*iter);
 						}
-						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyLevel(pParent, pDoc, (*iterTally), validRuns)));
+						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyLevel(pDoc, (*iterTally), validRuns)));
 					}
 				}
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevelByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pParent, pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
 				{
 					typedef std::pair<tstring, tstring> LevelEvent;
 					std::set<LevelEvent> tally;
@@ -2005,13 +1985,13 @@ void CPointsDataItems::LoadData(
 							&& (*iter).m_Event == (*iterTally).second)
 								validRuns.push_back(*iter);
 						}
-						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyLevelByEvent(pParent, pDoc, (*iterTally).first, (*iterTally).second, validRuns)));
+						m_Lines.push_back(CPointsDataBasePtr(new CPointsDataOtherPointsTallyLevelByEvent(pDoc, (*iterTally).first, (*iterTally).second, validRuns)));
 					}
 				}
 				break;
 			}
 		}
-		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pParent, pDoc, wxT("</table></p>"))));
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table></p>"))));
 	}
 }
 

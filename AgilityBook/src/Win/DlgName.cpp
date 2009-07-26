@@ -37,15 +37,18 @@
 #include "stdafx.h"
 #include "DlgName.h"
 
+#include "AgilityBook.h"
 #include "Validators.h"
 
 
 bool CDlgName::Create(
 		wxString const& caption,
-		wxWindow* parent)
+		wxWindow* pParent)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
-	if (!wxDialog::Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
+	if (!wxDialog::Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
 
 	// Controls (these are done first to control tab order)

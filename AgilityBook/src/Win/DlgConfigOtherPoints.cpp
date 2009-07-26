@@ -39,9 +39,9 @@
 #include "stdafx.h"
 #include "DlgConfigOtherPoints.h"
 
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
-
 #include "Validators.h"
 
 
@@ -131,6 +131,8 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	, m_Desc(pOther->GetDescription().c_str())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_OTHERPOINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

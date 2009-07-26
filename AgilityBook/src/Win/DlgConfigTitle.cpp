@@ -42,6 +42,7 @@
 #include "stdafx.h"
 #include "DlgConfigTitle.h"
 
+#include "AgilityBook.h"
 #include "ARBConfigTitle.h"
 #include "Validators.h"
 #include <wx/datectrl.h>
@@ -104,6 +105,8 @@ CDlgConfigTitle::CDlgConfigTitle(
 	, m_ctrlStyle(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

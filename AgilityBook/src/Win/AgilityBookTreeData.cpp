@@ -103,7 +103,7 @@ static bool EditDog(
 		pDog = ARBDogPtr(ARBDog::New());
 	}
 	bool bOk = false;
-	CDlgDog dlg(pTree->GetDocument(), pDog, pTree->GetControl(), nPage);
+	CDlgDog dlg(pTree->GetDocument(), pDog, wxGetApp().GetTopWindow(), nPage);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		bOk = true;
@@ -154,7 +154,7 @@ static bool EditTrial(
 		pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 	}
 	bool bOk = false;
-	CDlgTrial dlg(pTree->GetDocument(), pTrial, pTree->GetControl());
+	CDlgTrial dlg(pTree->GetDocument(), pTrial, wxGetApp().GetTopWindow());
 	if (wxID_OK == dlg.ShowModal())
 	{
 		bOk = true;

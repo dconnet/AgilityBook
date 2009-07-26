@@ -46,6 +46,7 @@
 #include "AgilityBook.h"
 #include "DlgListViewer.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBConfig.h"
@@ -1400,6 +1401,8 @@ bool CDlgListViewer::Create(
 		wxWindow* pParent)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	if (!wxDialog::Create(pParent, wxID_ANY, inCaption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
 

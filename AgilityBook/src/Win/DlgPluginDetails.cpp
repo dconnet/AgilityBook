@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgPluginDetails.h"
 
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigCalSite.h"
 #include "DlgCalendarQueryDetail.h"
@@ -64,6 +65,8 @@ CDlgPluginDetails::CDlgPluginDetails(
 	, m_strHelp()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CALENDAR_PLUGIN_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	if (calSite)

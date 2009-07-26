@@ -56,6 +56,7 @@
 #include "stdafx.h"
 #include "DlgInfoNote.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "DlgName.h"
 #include <algorithm>
@@ -169,6 +170,8 @@ CDlgInfoNote::CDlgInfoNote(
 	}
 
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	wxDialog::Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

@@ -110,6 +110,8 @@ CDlgTrial::CDlgTrial(
 	, m_bRunsDeleted(false)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_TRIAL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	pTrial->GetClubs().Clone(m_Clubs);

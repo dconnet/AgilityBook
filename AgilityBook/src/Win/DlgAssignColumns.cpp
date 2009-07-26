@@ -107,6 +107,7 @@ Training Log:
 #include "stdafx.h"
 #include "DlgAssignColumns.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include <wx/listctrl.h>
@@ -818,6 +819,8 @@ CDlgAssignColumns::CDlgAssignColumns(
 	, m_btnDown(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_ASSIGN_COLUMNS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	for (size_t i = 0; i < IO_TYPE_MAX; ++i)

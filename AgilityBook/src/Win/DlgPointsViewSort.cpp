@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgPointsViewSort.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "Globals.h"
 
@@ -68,6 +69,8 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 	, m_ctrlOk(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_POINTS_VIEW_SORT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	CAgilityBookOptions::GetPointsViewSort(m_Primary, m_Secondary, m_Tertiary);

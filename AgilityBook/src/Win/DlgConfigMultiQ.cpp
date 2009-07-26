@@ -39,6 +39,7 @@
 #include "stdafx.h"
 #include "DlgConfigMultiQ.h"
 
+#include "AgilityBook.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigLevel.h"
@@ -78,6 +79,8 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	, m_ctrlRemove(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_MULTI_Q"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)

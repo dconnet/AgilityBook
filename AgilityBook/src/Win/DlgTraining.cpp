@@ -39,6 +39,7 @@
 #include "stdafx.h"
 #include "DlgTraining.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBTraining.h"
@@ -64,6 +65,8 @@ CDlgTraining::CDlgTraining(
 	, m_Notes(pTraining->GetNote().c_str())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_TRAINING"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxDateTime date(wxDateTime::Now());

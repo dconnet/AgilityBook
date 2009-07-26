@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgReferenceRun.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBDogReferenceRun.h"
@@ -75,6 +76,8 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Notes(m_Ref->GetNote().c_str())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_REF_RUN"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	if (m_Points.empty())

@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgFault.h"
 
+#include "AgilityBook.h"
 #include "Validators.h"
 
 
@@ -49,6 +50,8 @@ CDlgFault::CDlgFault(
 	, m_Fault(fault)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_FAULT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	wxArrayString faults;

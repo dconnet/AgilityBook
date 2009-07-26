@@ -39,6 +39,7 @@
 #include "stdafx.h"
 #include "DlgClub.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBDogClub.h"
 #include "ComboBoxes.h"
@@ -66,6 +67,8 @@ CDlgClub::CDlgClub(
 	, m_Venue()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CLUB"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	if (m_pClub)

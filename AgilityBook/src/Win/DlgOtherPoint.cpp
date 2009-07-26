@@ -38,11 +38,11 @@
 #include "stdafx.h"
 #include "DlgOtherPoint.h"
 
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBDogRunOtherPoints.h"
 #include "DlgConfigOtherPoints.h"
-
 #include "RichEditCtrl2.h"
 #include "Validators.h"
 
@@ -78,6 +78,8 @@ CDlgOtherPoint::CDlgOtherPoint(
 	, m_Points(pRunOther->GetPoints())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_OTHER_POINT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

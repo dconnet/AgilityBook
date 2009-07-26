@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgQueryDetail.h"
 
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
@@ -65,6 +66,8 @@ CDlgQueryDetail::CDlgQueryDetail(
 	, m_Name(inName)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	wxDialog::Create(pParent, wxID_ANY, _("IDD_QUERY_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
