@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-07-25 DRC Set a minimum splitter width.
  * @li 2008-12-14 DRC Created
  */
 
@@ -52,7 +53,9 @@
 
 // Default splitter widths
 #define DEFAULT_RUN_WIDTH	200L
-#define DEFAULT_CAL_WIDTH	200L
+#define MIN_RUN_WIDTH		50L
+#define DEFAULT_CAL_WIDTH	300L
+#define MIN_CAL_WIDTH		50L
 
 
 CBasePanel::CBasePanel(wxWindow* parent, wxString const& helpText)
@@ -182,6 +185,8 @@ CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 {
 	long cx = wxConfig::Get()->Read(wxT("Settings/splitCX"), DEFAULT_RUN_WIDTH);
+	if (cx < MIN_RUN_WIDTH)
+		cx = MIN_RUN_WIDTH;
 	m_splitter->SetSashPosition(cx);
 	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelRuns::SplitterOnIdle), NULL, this);
 }
@@ -275,6 +280,8 @@ CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 {
 	long cx = wxConfig::Get()->Read(wxT("Settings/splitCX2"), DEFAULT_CAL_WIDTH);
+	if (cx < MIN_CAL_WIDTH)
+		cx = MIN_CAL_WIDTH;
 	m_splitter->SetSashPosition(cx);
 	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelCalendar::SplitterOnIdle), NULL, this);
 }
