@@ -1,5 +1,5 @@
 /*
- * Copyright © 2002-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2002-2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
