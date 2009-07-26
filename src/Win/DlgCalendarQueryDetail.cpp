@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgCalendarQueryDetail.h"
 
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "DlgQueryDetail.h"
 #include "Globals.h"
@@ -106,6 +107,8 @@ CDlgCalendarQueryDetail::CDlgCalendarQueryDetail(
 void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	wxDialog::Create(pParent, wxID_ANY, _("IDD_CALENDAR_QUERY_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

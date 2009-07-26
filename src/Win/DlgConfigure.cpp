@@ -48,6 +48,7 @@
 #include "stdafx.h"
 #include "DlgConfigure.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
@@ -137,6 +138,8 @@ CDlgConfigure::CDlgConfigure(
 {
 	m_idxFaults = m_ImageList.Add(wxArtProvider::GetIcon(wxART_WARNING));
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIGURE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	assert(m_pDoc);

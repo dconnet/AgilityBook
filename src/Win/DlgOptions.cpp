@@ -43,6 +43,7 @@
 #include "stdafx.h"
 #include "DlgOptions.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "DlgOptionsCalendar.h"
@@ -65,6 +66,8 @@ CDlgOptions::CDlgOptions(
 	, m_pDoc(pDoc)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDS_VIEWING_OPTIONS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);

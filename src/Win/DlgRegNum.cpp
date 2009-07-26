@@ -40,6 +40,7 @@
 #include "stdafx.h"
 #include "DlgRegNum.h"
 
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBDogRegNum.h"
 #include "ComboBoxes.h"
@@ -67,6 +68,8 @@ CDlgRegNum::CDlgRegNum(
 	, m_Note()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_REG_NUM"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (m_pRegNum)

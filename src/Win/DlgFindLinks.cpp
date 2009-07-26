@@ -40,6 +40,7 @@
 #include "stdafx.h"
 #include "DlgFindLinks.h"
 
+#include "AgilityBook.h"
 #include "ARBDog.h"
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
@@ -181,6 +182,8 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_imgMissing(-1)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_FIND_LINKS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxBusyCursor wait;

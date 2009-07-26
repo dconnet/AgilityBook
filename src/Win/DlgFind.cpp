@@ -36,13 +36,14 @@
  */
 
 #include "stdafx.h"
-#include "AgilityBook.h"
 #include "DlgFind.h"
+
+#include "AgilityBook.h"
 
 
 CDlgFind::CDlgFind(
 		IFindCallback& callback,
-		wxWindow* parent)
+		wxWindow* pParent)
 	: wxDialog()
 	, m_Callback(callback)
 	, m_textCtrl(NULL)
@@ -56,7 +57,9 @@ CDlgFind::CDlgFind(
 	wxString text = m_Callback.Text();
 
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
-	Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
+	Create(pParent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

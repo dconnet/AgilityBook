@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgConfigEventMethod.h"
 
+#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
@@ -175,6 +176,8 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_ClosingPts(m_pScoring->GetRequiredClosingPoints())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_EVENT_METHOD"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Copy the existing scorings.

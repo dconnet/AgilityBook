@@ -363,7 +363,7 @@ void CAgilityBookPointsView::LoadData()
 	m_Ctrl->DeleteAllItems();
 
 	CPointsDataItems items;
-	items.LoadData(m_Ctrl, GetDocument(), GetDocument()->GetCurrentDog());
+	items.LoadData(GetDocument(), GetDocument()->GetCurrentDog());
 
 	size_t nItems = items.NumLines();
 	for (size_t nItem = 0; nItem < nItems; ++nItem)

@@ -43,6 +43,7 @@
 #include "stdafx.h"
 #include "DlgCalendar.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
 #include "ARBCalendar.h"
@@ -113,6 +114,8 @@ CDlgCalendar::CDlgCalendar(
 	, m_ctrlLocationInfo(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CALENDAR"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	if (m_pCal->GetStartDate().IsValid())

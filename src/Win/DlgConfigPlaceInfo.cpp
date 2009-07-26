@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgConfigPlaceInfo.h"
 
+#include "AgilityBook.h"
 #include "Validators.h"
 #include <algorithm>
 #include <wx/valgen.h>
@@ -137,6 +138,8 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	, m_Value(inValue)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_PLACEINFO"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)

@@ -43,6 +43,7 @@
 #include "stdafx.h"
 #include "DlgTitle.h"
 
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBDogTitle.h"
 #include "ComboBoxes.h"
@@ -87,6 +88,8 @@ CDlgTitle::CDlgTitle(
 	, m_bReceived(false)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_TITLE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	wxDateTime date(wxDateTime::Now());

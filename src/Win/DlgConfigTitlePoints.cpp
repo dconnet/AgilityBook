@@ -39,6 +39,7 @@
 #include "stdafx.h"
 #include "DlgConfigTitlePoints.h"
 
+#include "AgilityBook.h"
 #include "ARBConfigVenue.h"
 #include "Validators.h"
 
@@ -60,6 +61,8 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	, m_Points(inPoints)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_TITLE_POINTS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)

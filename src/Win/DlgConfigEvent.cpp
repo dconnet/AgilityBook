@@ -58,6 +58,7 @@
 #include "stdafx.h"
 #include "DlgConfigEvent.h"
 
+#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigEvent.h"
 #include "ARBConfigVenue.h"
@@ -166,6 +167,8 @@ CDlgConfigEvent::CDlgConfigEvent(
 	, m_idxMethod(-1)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_EVENT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	assert(m_pVenue);

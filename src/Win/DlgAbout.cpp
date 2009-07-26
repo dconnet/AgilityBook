@@ -56,7 +56,7 @@ class CHyperlinkCtrl : public wxHyperlinkCtrl
     DECLARE_DYNAMIC_CLASS(CHyperlinkCtrl)
 public:
 	CHyperlinkCtrl() {}
-	CHyperlinkCtrl(wxWindow *parent,
+	CHyperlinkCtrl(wxWindow *pParent,
 			wxWindowID id,
 			const wxString& label, const wxString& url,
 			const wxPoint& pos = wxDefaultPosition,
@@ -79,7 +79,7 @@ BEGIN_EVENT_TABLE(CHyperlinkCtrl, wxHyperlinkCtrl)
 END_EVENT_TABLE()
 
 
-CHyperlinkCtrl::CHyperlinkCtrl(wxWindow *parent,
+CHyperlinkCtrl::CHyperlinkCtrl(wxWindow *pParent,
 		wxWindowID id,
 		const wxString& label, const wxString& url,
 		const wxPoint& pos,
@@ -88,7 +88,7 @@ CHyperlinkCtrl::CHyperlinkCtrl(wxWindow *parent,
 		const wxString& name)
 	: wxHyperlinkCtrl()
 {
-	Create(parent, id, label, url, pos, size, style, name);
+	Create(pParent, id, label, url, pos, size, style, name);
 }
 
 
@@ -121,12 +121,14 @@ void CHyperlinkCtrl::OnFocus(wxFocusEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* parent)
+CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
-	Create(parent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
+	Create(pParent, wxID_ANY, _("IDD_ABOUTBOX"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
 
 	// Controls (these are done first to control tab order)
 

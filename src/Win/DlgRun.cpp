@@ -718,9 +718,9 @@ CDlgRun::CDlgRun(
 	, m_ctrlLinkDelete(NULL)
 	, m_ctrlLinkOpen(NULL)
 {
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
 	Create(pParent, wxID_ANY, _("IDS_RUN_PROPERTIES"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	m_clrBack = GetBackgroundColour();

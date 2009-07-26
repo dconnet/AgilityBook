@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgSelectURL.h"
 
+#include "AgilityBook.h"
 #include "Validators.h"
 
 
@@ -49,6 +50,8 @@ CDlgSelectURL::CDlgSelectURL(
 	, m_textCtrl(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_SELECT_URL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

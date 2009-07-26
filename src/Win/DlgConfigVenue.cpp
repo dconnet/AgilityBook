@@ -55,6 +55,7 @@
 #include "stdafx.h"
 #include "DlgConfigVenue.h"
 
+#include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigVenue.h"
 #include "DlgConfigEvent.h"
@@ -227,6 +228,8 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_ctrlMoveDown(NULL)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	if (!pParent)
+		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_VENUE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	assert(m_pVenueOrig);
