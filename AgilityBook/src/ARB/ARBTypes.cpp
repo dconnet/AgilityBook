@@ -147,8 +147,7 @@ static struct Q2Enum
 	{ATTRIB_QTYPE_Q,   ARB_Q::eQ_Q,      wxT("IDS_QTYPE_Q")},
 	{ATTRIB_QTYPE_NQ,  ARB_Q::eQ_NQ,     wxT("IDS_QTYPE_NQ")},
 	{ATTRIB_QTYPE_E,   ARB_Q::eQ_E,      wxT("IDS_QTYPE_E")},
-#pragma PRAGMA_TODO("Enable DNR")
-	//{ATTRIB_QTYPE_DNR, ARB_Q::eQ_DNR,    wxT("IDS_QTYPE_DNR")},
+	{ATTRIB_QTYPE_DNR, ARB_Q::eQ_DNR,    wxT("IDS_QTYPE_DNR")},
 	{ATTRIB_QTYPE_SQ,  ARB_Q::eQ_SuperQ, wxT("IDS_QTYPE_SQ")}
 }; ///< This is a list of the various types of "Q"s we support.
 static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);

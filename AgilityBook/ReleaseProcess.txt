@@ -3,6 +3,9 @@ Notes for releasing a new version.
 Files to change before marking files for release:
 - Update the version build number (per instructions in VersionNumber.h)
 - Make sure 'configure.in' is updated with the version number.
+  - Note: Version numbers are auto-changed via src/Include/SetBuildNumber.py
+    This is automatically run in the VC9 project - so always build VC9 first
+    when doing a release.
 - If file version has changed:
   - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
   - Update the version in DefaultConfig.xml
@@ -16,8 +19,8 @@ Files to change before marking files for release:
   - Reflect these changes into help/html/HistoryData.html
   - Run "src\UpdateHistory.py -h"
     (note: while a help file is no longer actually generated, continue doing
-	this as the website pulls it's data from this too. And at some point, I
-	may reinstate the help file)
+    this as the website pulls it's data from this too. And at some point, I
+    may reinstate the help file)
 - Todo.txt
   Any necessary changes...
 
@@ -28,12 +31,24 @@ Run Doxygen and fix any warnings/errors it reports.
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
 - BuildAll.bat [runs VC9 and VC8 compiles]
-- Run 'GenMSI.py /all' to create w32/x64/w98 installers and auto-update
+- Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
 - The VC6 and VC7 versions should also be built just to make sure they work.
 
 Commit all changes to SVN.
+
+Pull files onto Mac and build there
+- export PATH=$WIXWIN/build-ansi:$PATH
+- cd agilitybook/AgilityBook
+- autoconf
+- cd build
+- ../configure
+- make dist
+- cd AgilityBook.app/Contents
+- rm -r PlugIns (they're not supported yet)
+- Use the '/Application/Utilities/Disk Utility' to create a dmg file
+  Name it AgilityBook_n_n_n_n-mac.dmg
 
 Tag SubVersion repository
  - https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/tags/vn.n.n.n
@@ -56,15 +71,12 @@ Create the files to be distributed (make sure you archive them too)
 In SourceForge, enter the File Releases section in Admin.
 - At the bottom of the page, 'Add Release' to 'agilitybook' package.
 - Enter all necessary information.
-- ftp to upload.sourceforge.net, cd incoming. Set binary mode.
-- Upload all files.
-- UPDATE: ftp'ing no longer works, use web upload
-  (https://frs.sourceforge.net/webupload)
+- Upload all files (https://frs.sourceforge.net/webupload)
   - Readme1st.vn.n.n.n.txt
   - AgilityBook_n_n_n_n-src.zip
-  - AgilityBook_n_n_n_n-win.zip
-  - AgilityBook_n_n_n_n-win98.zip
-  - AgilityBook_n_n_n_n-x64.zip
+  - AgilityBook_n_n_n_n-win-<lang>.zip
+  - AgilityBook_n_n_n_n-x64-<lang>.zip
+  - AgilityBook_n_n_n_n-mac.dmg
 - Refresh the web page with the button in Step 2.
 - Select the files and press the button again.
 - Update all the fields in Step 3.
@@ -82,7 +94,6 @@ Web Site:
   - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).
   - Update DTD
-  - Update AgilityBook.chm
   - Run "src\UpdateHistory.py -w" (updates history.php)
   - Update bugs.php
 - Push all updated files to server.

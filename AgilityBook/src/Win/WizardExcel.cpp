@@ -869,7 +869,7 @@ bool CWizardCalcImport::GetData(
 	if (!dataAll.IsType(wxT("list")))
 		return false;
 	bool bAbort = false;
-	int nRows = dataAll.GetCount();
+	int nRows = static_cast<int>(dataAll.GetCount());
 	outData.reserve(nRows);
 	if (ioProgress)
 	{
@@ -892,7 +892,7 @@ bool CWizardCalcImport::GetData(
 		wxVariant vRow = dataAll[iRow];
 		if (!vRow.IsType(wxT("list")))
 			continue;
-		int nCols = vRow.GetCount();
+		int nCols = static_cast<int>(vRow.GetCount());
 		std::vector<wxString> row;
 		row.reserve(nCols);
 		for (int iCol = 0; !bAbort && iCol < nCols; ++iCol)

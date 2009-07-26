@@ -43,8 +43,15 @@
 class CConfigHandler : public IARBConfigHandler
 {
 public:
+	/**
+	 * Load a file from a wxWidget archive (zip file)
+	 * @param zipFile Full path name.
+	 * @param archiveFile Name of file in zip file to extract.
+	 * @param outData Data of from archiveFile.
+	 * @return Success
+	 */
 	static bool LoadWxFile(
-			wxString const& zipFile, ///< Full path name
+			wxString const& zipFile,
 			wxString const& archiveFile,
 			std::string& outData);
 

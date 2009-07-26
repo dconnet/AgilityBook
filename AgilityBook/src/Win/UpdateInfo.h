@@ -59,7 +59,7 @@ protected:
 	CUpdateInfo();
 	bool ReadVersionFile(bool bVerbose);
 	bool IsOutOfDate();
-	bool CheckProgram();
+	bool CheckProgram(wxString const& lang);
 	void CheckConfig(
 			CAgilityBookDoc* pDoc,
 			CLanguageManager const& langMgr,
@@ -80,8 +80,10 @@ public:
 	/**
 	 * Called when the program does its monthly auto-check.
 	 * This only checks the program version.
+	 * @param langMgr Language Manager
 	 */
-	void AutoUpdateProgram();
+	void AutoUpdateProgram(
+			CLanguageManager const& langMgr);
 
 	/**
 	 * Called when opening a document. This will not load anything
