@@ -1985,7 +1985,7 @@ void CDlgRun::SetObstacles()
 	{
 		str = ARBDouble::str(ops, 3).c_str();
 	}
-	m_ctrlObstaclesPS->SetLabel(str);
+	m_ctrlObstaclesPS->ChangeValue(str);
 }
 
 
@@ -2050,9 +2050,9 @@ void CDlgRun::SetTitlePoints()
 	}
 	// Doesn't matter if they're hidden,..
 	m_ctrlBonusPts->ChangeValue(strBonus);
-	m_ctrlSpeedPts->SetLabel(strSpeed);
-	m_ctrlTitlePoints->SetLabel(strTitle);
-	m_ctrlScore->SetLabel(strScore);
+	m_ctrlSpeedPts->ChangeValue(strSpeed);
+	m_ctrlTitlePoints->ChangeValue(strTitle);
+	m_ctrlScore->ChangeValue(strScore);
 }
 
 

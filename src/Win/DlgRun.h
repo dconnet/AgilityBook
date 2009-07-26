@@ -136,7 +136,6 @@ private:
 
 	wxPanel* m_panelScore;
 	ARBDate m_Date;
-	//CDateTimeCtrl m_ctrlDate;
 	wxComboBox* m_ctrlDivisions;
 	wxComboBox* m_ctrlLevels;
 	wxComboBox* m_ctrlEvents;
