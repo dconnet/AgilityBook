@@ -849,7 +849,7 @@
     changes in venues (for instance, say the number of faults allowed for a
     given event changes from 10 to 5)
 - Bug fixes
-  - Changed copyright notices from "(c)" to "©" (internal code, not visible)
+  - Changed copyright notices from "(c)" to <sym> (internal code, not visible)
   - Right-clicking on a Calendar entry sets that as the current date before
     popping up the context menu.
   - Cleaned up page scrolling in calendar view.
