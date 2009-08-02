@@ -488,9 +488,6 @@ bool CAgilityBookDoc::CreateTrialFromCalendar(
 				ARBDogTrialPtr pNewTrial = pTrial->Clone();
 				pDog->GetTrials().AddTrial(pNewTrial);
 				Modify(true);
-				// This is pure evil - casting ARBDogTrialPtr* to a CObject*.
-				// On the other side, we reinterpret right back to ARBDogTriaPtrl*
-				// Definite abuse of this parameter.
 				CUpdateHint hint(UPDATE_NEW_TRIAL, pNewTrial);
 				UpdateAllViews(NULL, &hint);
 			}

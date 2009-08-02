@@ -117,7 +117,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run()
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(50, -1),
+		wxDefaultPosition, wxSize(60, -1),
 		0, NULL, 0, validator);
 	ResetContent(ARBConfigScoringPtr());
 }
@@ -132,7 +132,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run(run)
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(50, -1),
+		wxDefaultPosition, wxSize(60, -1),
 		0, NULL, 0, validator);
 	ResetContent(ARBConfigScoringPtr());
 }
@@ -148,7 +148,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run(run)
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(50, -1),
+		wxDefaultPosition, wxSize(60, -1),
 		0, NULL, 0, validator);
 	ResetContent(scoring);
 }
