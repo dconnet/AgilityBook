@@ -54,12 +54,13 @@ REM   LibZlib: no unicode [debug/release=non unicode]
 REM   ParseResourceHeader: unicode only
 REM   TestARB: all
 
-cd ..\src\Projects\VC8
-del bldWin98.txt
+REM We no longer support win98!!!
+REM cd ..\src\Projects\VC8
+REM del bldWin98.txt
 REM Non-unicode, must do in VC8 since VC9 no longer supports win98
 REM (Release == non-unicode)
-call "c:\Program Files\Microsoft Visual Studio 8\VC\vcvarsall.bat" x86
-devenv AgilityBook.sln /out bldWin98.txt /build "Release|Win32"
+REM call "c:\Program Files\Microsoft Visual Studio 8\VC\vcvarsall.bat" x86
+REM devenv AgilityBook.sln /out bldWin98.txt /build "Release|Win32"
 
 cd ..\VC9
 del bldWin32.txt bldWin64.txt
