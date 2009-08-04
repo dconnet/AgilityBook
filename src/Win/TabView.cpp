@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-03 DRC Fix tab setting so view is properly activated.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-11-27 DRC Check that the html view was actually created.
  * @li 2004-06-24 DRC Removed sending initialupdate messages (redundant)
@@ -313,7 +314,7 @@ int CTabView::SetCurTab(int index)
 {
 	if (!m_ctrlBook)
 		return -1;
-	return m_ctrlBook->ChangeSelection(index);
+	return m_ctrlBook->SetSelection(index);
 }
 
 
