@@ -164,7 +164,8 @@ dist:: agilitybook resources
 	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/English.lproj
 	cp Info.plist $(TOPBUILDDIR)/AgilityBook.app/Contents/
 	cp version.plist $(TOPBUILDDIR)/AgilityBook.app/Contents/
-	echo -n 'APPL????' > $(TOPBUILDDIR)/AgilityBook.app/Contents/PkgInfo
+	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
+	echo 'APPL????\c' > $(TOPBUILDDIR)/AgilityBook.app/Contents/PkgInfo
 	cp agilitybook $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/agilitybook
 	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
 	cp -pR lang $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/

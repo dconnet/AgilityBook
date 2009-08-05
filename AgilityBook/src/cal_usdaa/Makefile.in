@@ -54,8 +54,8 @@ INSTALL_BIN = libcal_usdaa
 
 dist:: libcal_usdaa.@SHAREDLIBEXT@
 # Mac OS dist
-	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/PlugIns/
-	cp libcal_usdaa.@SHAREDLIBEXT@  $(TOPBUILDDIR)/AgilityBook.app/Contents/PlugIns/
+	#mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/PlugIns/
+	#cp libcal_usdaa.@SHAREDLIBEXT@  $(TOPBUILDDIR)/AgilityBook.app/Contents/PlugIns/
 
 ################################################################################
 # End of File: Makefile                                                        #
