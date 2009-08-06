@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-06 DRC Fix plugin enabling (full path was being stored in map)
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
@@ -59,6 +60,7 @@
 #include <vector>
 #include <wx/dir.h>
 #include <wx/dynlib.h>
+#include <wx/file.h>
 #include <wx/filesys.h>
 #include <wx/statline.h>
 #include <wx/stdpaths.h>
@@ -428,6 +430,11 @@ void CalSiteData::Connect()
 		wxString path(m_Pathname);
 		path += m_FileName;
 		m_hDllInst = new wxDynamicLibrary(path);
+		if (!m_hDllInst->IsLoaded())
+		{
+			delete m_hDllInst;
+			m_hDllInst = NULL;
+		}
 		//m_Version = CVersionNum(m_hDllInst);
 	}
 	if (m_hDllInst && m_hDllInst->IsLoaded())
@@ -679,24 +686,35 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 #else
 			bool cont = dir.GetFirst(&filename, _T("libcal_*.*"));
 #endif
+			std::set<wxString> tested;
 			while (cont)
 			{
 				wxFileName name(m_PathName + filename);
-				filename = name.GetPath() + wxFileName::GetPathSeparator() + name.GetName();
+				wxString fullFilename = name.GetPath() + wxFileName::GetPathSeparator() + name.GetName();
 				// This will append ".dll" on windows, prepend "lib"/append
 				// ".so" under linux, etc. We're doing this to weed out "other"
 				// files, like "cal_usdaaReadme.txt".
-				filename = wxDynamicLibrary::CanonicalizeName(filename, wxDL_LIBRARY);
-				// Only load the library if we haven't already loaded it.
-				// (Otherwise we get a memory leak because we overwrite the
-				// api pointer)
-				if (m_DirectAccess.end() == m_DirectAccess.find(filename))
+				fullFilename = wxDynamicLibrary::CanonicalizeName(fullFilename, wxDL_LIBRARY);
+				if (wxFile::Exists(fullFilename))
 				{
-					m_DirectAccess[filename] = CalSiteDataPtr(new CalSiteData(filename));
-				}
-				else
-				{
-					m_DirectAccess[filename]->Connect();
+					filename = wxFileName(fullFilename).GetFullName();
+					if (tested.end() == tested.find(filename))
+					{
+						// The 'tested' check is useful in a debugging env
+						// since build files like pdb/lib/etc are there too.
+						tested.insert(filename);
+						// Only load the library if we haven't already loaded it.
+						// (Otherwise we get a memory leak because we overwrite the
+						// api pointer)
+						if (m_DirectAccess.end() == m_DirectAccess.find(filename))
+						{
+							m_DirectAccess[filename] = CalSiteDataPtr(new CalSiteData(fullFilename));
+						}
+						else
+						{
+							m_DirectAccess[filename]->Connect();
+						}
+					}
 				}
 				cont = dir.GetNext(&filename);
 			}
