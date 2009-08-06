@@ -1484,16 +1484,16 @@ bool CAgilityBookOptions::IsCalSiteVisible(
 	bool bVisible = true;
 	wxString section(wxT("CalSites/"));
 	section += filename;
-	bool bSuppress = true;
-	wxConfig::Get()->Read(section, &bSuppress);
-	if (bSuppress)
-		bVisible = false;
-	else
+	bool bCheckStatus = true;
+	wxConfig::Get()->Read(section, &bCheckStatus);
+	if (bCheckStatus)
 	{
 		CVersionNum ver = GetCalSitePermanentStatus(filename);
 		if (ver.Valid() && inVer <= ver)
 			bVisible = false;
 	}
+	else
+		bVisible = false;
 	return bVisible;
 }
 
