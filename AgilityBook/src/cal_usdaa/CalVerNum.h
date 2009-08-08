@@ -43,7 +43,7 @@
 #define CAL_VER_MAJOR					2
 #define CAL_VER_MINOR					0
 #define CAL_VER_DOT						0
-#define CAL_VER_BUILD					2413
+#define CAL_VER_BUILD					2415
 
 #define CAL_VER_STR_MAJOR				STR(CAL_VER_MAJOR)
 #define CAL_VER_STR_MINOR				STR(CAL_VER_MINOR)

@@ -60,6 +60,7 @@ public:
 	size_t GetNumLinks() const		{return m_Data.size();}
 
 private:
+	CDlgFindLinksDataPtr GetItemLinkData(long item);
 	CDlgFindLinksDataPtr GetItemLinkDataByData(long data);
 	int GetImageIndex(tstring const& inLink);
 	void SetColumnHeaders();
