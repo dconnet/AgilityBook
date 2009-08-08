@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-08 DRC Fixed data index lookup when editing an item.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Added 'Open' button.
@@ -304,6 +305,12 @@ CDlgFindLinks::CDlgFindLinks(
 }
 
 
+CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkData(long item)
+{
+	return tr1::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetData(item));
+}
+
+
 CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkDataByData(long data)
 {
 	return tr1::dynamic_pointer_cast<CDlgFindLinksData, CListData>(m_ctrlLinks->GetDataByData(data));
@@ -355,7 +362,7 @@ void CDlgFindLinks::Edit()
 	int nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		CDlgFindLinksDataPtr data = GetItemLinkDataByData(nItem);
+		CDlgFindLinksDataPtr data = GetItemLinkData(nItem);
 		CDlgSelectURL dlg(data->m_Link.c_str(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
@@ -441,7 +448,7 @@ void CDlgFindLinks::OnOpen(wxCommandEvent& evt)
 	int nItem = m_ctrlLinks->GetFirstSelected();
 	if (0 <= nItem)
 	{
-		CDlgFindLinksDataPtr data = GetItemLinkDataByData(nItem);
+		CDlgFindLinksDataPtr data = GetItemLinkData(nItem);
 		if (data)
 			wxLaunchDefaultBrowser(data->m_Link.c_str());
 	}

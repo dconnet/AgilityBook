@@ -1174,7 +1174,9 @@ void CAgilityBookDoc::BackupFile(wxString lpszPathName)
 			wxRenameFile(filename, backup);
 		}
 		wxString backup = lpszPathName + wxT(".bck1");
-		wxCopyFile(lpszPathName, backup, false);
+		// File may not exist if doing a 'save as'
+		if (wxFile::Exists(lpszPathName))
+			wxCopyFile(lpszPathName, backup, false);
 	}
 }
 
