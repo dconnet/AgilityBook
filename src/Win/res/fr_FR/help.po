@@ -895,9 +895,8 @@ msgstr "Chercher un image type BMP pour la fenêtre introduction."
 msgid "HIDC_OPT_PGM_SHOWHTML"
 msgstr "Utiliser HTML pour laffichage des Points. Ceci permet une meilleure qualité à l'affichage et à l'impression."
 
-#TODO
 msgid "HIDC_OPT_PGM_USEPROXY"
-msgstr "Quelques utilisateurs devront employer un proxy server pour se relier à l'Internet. Si vous n'êtes pas sûr, regardez les arrangements en votre navigateur."
+msgstr "Certains utilisateurs passent par un serveur proxy pour se connecter à l'Internet. Si vous ne savez pas, consultez les paramètres de votre navigateur."
 
 msgid "HIDC_OPT_PGM_PROXY"
 msgstr "Entrer l'adresse du serveur proxy et le numéro de port à utiliser. Par exemple: 'myproxy.company.com:80'"
