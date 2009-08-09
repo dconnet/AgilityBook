@@ -33,8 +33,10 @@ import os
 import string
 import sys
 
+# Where top-level AgilityBook directory is relative to this script.
 AgilityBookDir = "..\\..\\.."
 
+# Where is WiX? Can be overriden on command line.
 WiXdir = r"c:\Tools\wix3"
 
 WinSrcDir = AgilityBookDir + "\\src"
@@ -114,10 +116,10 @@ def getoutputvars(code, version):
 	outputFile = ""
 	baseDir = ""
 	if code32 == code:
-		outputFile = "AgilityBook_" + version + "-win"
+		outputFile = "AgilityBook-" + version + "-win"
 		baseDir = AgilityBookDir + "\\bin\\VC9Win32\\Release\\"
 	elif code64 == code:
-		outputFile = "AgilityBook_" + version + "-x64"
+		outputFile = "AgilityBook-" + version + "-x64"
 		baseDir = AgilityBookDir + "\\bin\\VC9x64\\Release\\"
 	else:
 		raise Exception, "Invalid code"
@@ -590,6 +592,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 
 
 def main():
+	global WiXdir
 	b32 = 0
 	b64 = 0
 	tidy = 1

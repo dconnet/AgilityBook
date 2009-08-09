@@ -47,15 +47,6 @@ REM   cal_usdaa: unicode only
 REM   LibTidy: no unicode [debug/release=non unicode]
 REM   TestARB: all
 
-REM We no longer support win98!!!
-REM cd VC8
-REM del bldWin98.txt
-REM Non-unicode, must do in VC8 since VC9 no longer supports win98
-REM (Release == non-unicode)
-REM call "c:\Program Files\Microsoft Visual Studio 8\VC\vcvarsall.bat" x86
-REM devenv AgilityBook.sln /out bldWin98.txt /build "Release|Win32"
-REM cd ..
-
 cd VC9
 del bldWin32.txt bldWin64.txt
 REM Unicode (Release == Unicode)
@@ -64,6 +55,15 @@ devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
 devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"
 cd ..
+
+REM We no longer support win98!!! (we could, but why?)
+REM cd VC8
+REM del bldWin98.txt
+REM Non-unicode, must do in VC8 since VC9 no longer supports win98
+REM (Release == non-unicode)
+REM call "c:\Program Files\Microsoft Visual Studio 8\VC\vcvarsall.bat" x86
+REM devenv AgilityBook.sln /out bldWin98.txt /build "Release|Win32"
+REM cd ..
 
 REM Go back to where we started
 cd Installer

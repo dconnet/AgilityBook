@@ -30,25 +30,23 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
-- BuildAll.bat [runs VC9 and VC8 compiles]
+- BuildAll.bat [runs VC9 compile]
 - Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
-- The VC6 and VC7 versions should also be built just to make sure they work.
+- The VC6, VC7 and VC8 versions should also be built just to make sure they work.
 
 Commit all changes to SVN.
 
-Pull files onto Mac and build there
+Pull files onto Mac and build there (see MAC_BUILD.txt)
 - export PATH=$WIXWIN/build-ansi:$PATH
 - cd agilitybook/AgilityBook
 - autoconf
 - cd build
 - ../configure
 - make dist
-- cd AgilityBook.app/Contents
-- rm -r PlugIns (they're not supported yet)
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
-  Name it AgilityBook_n_n_n_n-mac.dmg
+  Name it AgilityBook-n_n_n_n.dmg
 
 Tag SubVersion repository
  - https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/tags/vn.n.n.n
@@ -56,13 +54,13 @@ Tag SubVersion repository
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
 - Copy a backup of released files to \AgilityBook\test\[vc6/vc7/vc8/vc9/vc9x64]
-  Currently, I only archive vc8/vc9/x64 - the exe's that are released to the wild.
+  Currently, I only archive vc9/x64 - the exe's that are released to the wild.
   [exe,dll,dat,lang/...]
 - Clean out all build artifacts.
   - Everything under bin/...
   - Output files in Project/...
   - .aps/etc in src
-- AgilityBook_n_n_n_n-src.zip
+- AgilityBook-n_n_n_n-src.zip
   - Remove all source control files from zip (just being clean)
   - Copy this to distrib\vN.N.N.N\
 - Readme1st.vn.n.n.n.txt
@@ -73,10 +71,10 @@ In SourceForge, enter the File Releases section in Admin.
 - Enter all necessary information.
 - Upload all files (https://frs.sourceforge.net/webupload)
   - Readme1st.vn.n.n.n.txt
-  - AgilityBook_n_n_n_n-src.zip
-  - AgilityBook_n_n_n_n-win-<lang>.zip
-  - AgilityBook_n_n_n_n-x64-<lang>.zip
-  - AgilityBook_n_n_n_n-mac.dmg
+  - AgilityBook-n_n_n_n-src.zip
+  - AgilityBook-n_n_n_n-win-<lang>.zip
+  - AgilityBook-n_n_n_n-x64-<lang>.zip
+  - AgilityBook-n_n_n_n.dmg
 - Refresh the web page with the button in Step 2.
 - Select the files and press the button again.
 - Update all the fields in Step 3.
