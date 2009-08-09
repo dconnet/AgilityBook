@@ -1,8 +1,11 @@
 # coding=utf-8
+# Above line is for python
 #
 # Generate MSI files
 #
 # Revision History
+# 2009-08-08 DRC Tweaked code to remove ICE61 warning.
+#            Allow user specification of where WiX is (/wix)
 # 2009-07-26 DRC Removed Win98 support.
 # 2009-05-02 DRC Upgraded to wix3.
 # 2009-04-16 DRC Enable v2 to upgrade v1 when the beta period ends.
@@ -16,7 +19,8 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/32] [/64] [/all] [/notidy] /test
+"""GenMSI.py [/wix path] [/32] [/64] [/all] [/notidy] /test
+	wix: Override internal wix path (c:\Tools\wix3)
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
 	all: Create all of them (default)
@@ -46,11 +50,11 @@ code64 = 3
 # upgrade itself)
 beta = 0
 
-# v1 upgrade code
+# v1 upgrade code [used thru v1.10.10]
 UpgradeCodeV1 = "DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB"
 #defFolder = 'Agility Record Book'
 
-# v2 upgrade code
+# v2 upgrade code [started with v2.0.0]
 UpgradeCodeV2 = "4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4"
 defFolder = 'Agility Record Book v2'
 
@@ -233,18 +237,21 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	# During beta, do not remove v1.
 	# (that's why we created a different upgrade code)
 	if not beta:
+		# When checked the v1 guid, include ["0.0.0" < ver < "2.0.0"]
 		print >>setup,	r'    <Upgrade Id="' + UpgradeCodeV1 + '">'
 		print >>setup,	r'      <UpgradeVersion'
 		print >>setup,	r'          OnlyDetect="no"'
 		print >>setup,	r'          Minimum="0.0.0"'
-		print >>setup,	r'          IncludeMinimum="yes"'
-		print >>setup,	r'          Maximum="' + ver3Dot + '"'
-		print >>setup,	r'          Property="OLDVERSIONFOUND" />'
+		print >>setup,	r'          IncludeMinimum="no"'
+		print >>setup,	r'          Maximum="2.0.0"'
+		print >>setup,	r'          IncludeMaximum="no"'
+		print >>setup,	r'          Property="OLDVERSIONFOUND_V1" />'
 		print >>setup,	r'    </Upgrade>'
+	# For current guid, include ["2.0.0" <= ver < CurVer]
 	print >>setup,		r'    <Upgrade Id="' + UpgradeCodeV2 + '">'
 	print >>setup,		r'      <UpgradeVersion'
 	print >>setup,		r'          OnlyDetect="no"'
-	print >>setup,		r'          Minimum="0.0.0"'
+	print >>setup,		r'          Minimum="2.0.0"'
 	print >>setup,		r'          IncludeMinimum="yes"'
 	print >>setup,		r'          Maximum="' + ver3Dot + '"'
 	print >>setup,		r'          Property="OLDVERSIONFOUND" />'
@@ -590,9 +597,17 @@ def main():
 	if 1 == len(sys.argv):
 		b32 = 1
 		bTesting = 1
-	for i in range(1, len(sys.argv)):
+	error = 0
+	i = 1
+	while i < len(sys.argv):
 		o = sys.argv[i]
-		if o == "/32":
+		if o == "/wix":
+			if i == len(sys.argv) - 1:
+				error = 1
+				break;
+			WiXdir = sys.argv[i+1]
+			i += 1
+		elif o == "/32":
 			b32 = 1
 		elif o == "/64":
 			b64 = 1
@@ -604,8 +619,12 @@ def main():
 		elif o == "/test":
 			bTesting = 1
 		else:
-			print "Usage:", __doc__
-			return
+			error = 1
+			break
+		i += 1
+	if error:
+		print "Usage:", __doc__
+		return
 
 	if b32 + b64 == 0:
 		b32 = 1
