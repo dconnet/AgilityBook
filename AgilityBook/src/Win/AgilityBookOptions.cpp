@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-08 DRC Changed default setting for proxy and show dog after title
  * @li 2009-07-19 DRC Implement proxy support. 
  * @li 2008-12-24 DRC Ported to wxWidgets.
  * @li 2008-01-14 DRC Make ViewLifetimeEvents default to true.
@@ -1362,7 +1363,7 @@ void CAgilityBookOptions::SetSplashImage(wxString const& filename)
 
 bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 {
-	bool val = true;
+	bool val = false;
 	wxConfig::Get()->Read(wxT("Settings/autoShowTitle"), &val);
 	return val;
 }
@@ -1441,7 +1442,7 @@ void CAgilityBookOptions::SetUserName(
 
 bool CAgilityBookOptions::GetUseProxy()
 {
-	bool val = true;
+	bool val = false;
 	wxConfig::Get()->Read(wxT("Settings/useproxy"), &val);
 	return val;
 }
