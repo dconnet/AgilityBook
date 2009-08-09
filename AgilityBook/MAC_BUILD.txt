@@ -21,11 +21,11 @@ change settings of the library w/o having to be root and it allows you to have
 multiple versions simultaneously with different settings
 -- Set WXWIN to point to this directory (makes paths easier to set)
 
-extract the tar to a directory (i.e wxmac)
-> cd wxmac
-> rm -rf build-release
-> mkdir build-release
-> cd build-release
+extract the tar to a directory (i.e wxmac [$WXWIN])
+> cd $WXWIN
+> rm -rf build-ansi
+> mkdir build-ansi
+> cd build-ansi
 configure as a statically linked universal binary containing all builtin libs
 to make easier to deploy:
 [Note: Due to a bug in wxWidgets, as of 2.8.10, do not use unicode. Formatting
@@ -35,7 +35,15 @@ strings does not work properly]
 
 Now you need to put this version of wx-config on your path so when you make
 agilitybook it picks this version of wxMac
-> export PATH=`pwd`:$PATH
+> export PATH=$WXWIN/build-ansi:$PATH
+
+Add 
+> export CC="gcc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3.9"
+> export CXX="g++ -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3.9"
+
+I simply created a 'setwxpath' in my root directory and execute:
+> . ./setwxpath
+before building (it has the 3 'export' line above in it).
 
 3. Build agilitybook as universal binary for PPC and Intel 32 bit architectures
 > cd AgilityBook/
@@ -45,11 +53,15 @@ agilitybook it picks this version of wxMac
 > ../configure
 > make dist
 
-4. In order to run the binary you need to run it from within the distribution
-bundle:
-> AgilityRecordBook.app/Contents/MacOS/agilitybook
-
-5. To package the distribution bundle 
+4a. To package the distribution bundle [optional]
 - open /Developer/Applications/Utilities/PackageMaker
 - select the Open menu option and open the Package Maker package build/AgilityRecordBook.pmdoc
 - select the Build option and save the package wherever you like.
+
+4b. To create a disk image:
+- Open /Applications/Utilities/Disk\ Utility
+- Create a new image
+- Selecting a 40MB image is good, 10 is too small.
+- Once mounted, drag AgilityBook.app in. Change the mounted name.
+- Unmount
+- Click 'Convert' (in Disk Utility) and compress.
