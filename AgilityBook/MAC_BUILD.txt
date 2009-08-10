@@ -1,5 +1,16 @@
 		   Universal Binary Build on MacOS
 
+---
+Currently, using these instructions to build a 10.4 binary on 10.5 don't quite
+work right. Using 'otool -L', it can be observed that iconv is version 7.0.0.
+If you use xcode, that properly uses iconv 5.0.0. So, to do an official build,
+use these instructions since they will build the supporting files properly.
+Then use xcode to compile agilitybook. Copy that executable into the output
+directory of the previous build:
+From: .../AgilityBook/src/Projects/macos/build-ansi/Release/agilitybook.app/Contents/MacOS
+To: .../AgilityBook/build/AgilityBook.app/Contents/MacOS
+---
+
 0. gettext package (from MacPorts): http://gettext.darwinports.com/
    - Also, it's highly recommended to update svn (sudo port install svn)
 
@@ -37,13 +48,8 @@ Now you need to put this version of wx-config on your path so when you make
 agilitybook it picks this version of wxMac
 > export PATH=$WXWIN/build-ansi:$PATH
 
-Add 
-> export CC="gcc -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3.9"
-> export CXX="g++ -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3.9"
-
 I simply created a 'setwxpath' in my root directory and execute:
 > . ./setwxpath
-before building (it has the 3 'export' line above in it).
 
 3. Build agilitybook as universal binary for PPC and Intel 32 bit architectures
 > cd AgilityBook/
