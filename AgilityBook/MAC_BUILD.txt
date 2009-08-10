@@ -9,6 +9,8 @@ Then use xcode to compile agilitybook. Copy that executable into the output
 directory of the previous build:
 From: .../AgilityBook/src/Projects/macos/build-ansi/Release/agilitybook.app/Contents/MacOS
 To: .../AgilityBook/build/AgilityBook.app/Contents/MacOS
+[Note, when compiling in xcode, make sure it compiles both architectures, not
+just the active one. In Debug, it's set to active, in Release, that's now off]
 ---
 
 0. gettext package (from MacPorts): http://gettext.darwinports.com/
