@@ -46,37 +46,37 @@ AC_ARG_PROGRAM
 # Checks for library functions.                                                #
 ################################################################################
 # Add macros to check for library functions here
-# We get these libs from our own src/ directories  
+# We get these libs from our own src/ directories
 # AC_CHECK_LIB([tidy], [tidyCreate])
-# AC_CHECK_LIB([unittest], [RunAllTests])                     
+# AC_CHECK_LIB([unittest], [RunAllTests])
 if test "x$BOOSTINCLUDE" != "x"; then
-    echo "BOOSTINCLUDE set to: $BOOSTINCLUDE"
-    AC_SUBST(BOOSTINCLUDE, "-I$BOOSTINCLUDE")
-    AC_SUBST(CXXFLAGS,"$CXXFLAGS $BOOSTINCLUDE")
+	echo "BOOSTINCLUDE set to: $BOOSTINCLUDE"
+	AC_SUBST(BOOSTINCLUDE, "-I$BOOSTINCLUDE")
+	AC_SUBST(CXXFLAGS,"$CXXFLAGS $BOOSTINCLUDE")
 fi
 AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOSTINCLUDE=fullpath to boost install])])
 
 case `uname` in
-     Darwin*)
+Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
-#        build universal binaries on Mac OS
-	AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386") 
-        AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"])
+	# build universal binaries on Mac OS
+	AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3.9 -arch ppc -arch i386")
+	AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"])
 	# dependency generation not supported for g++ for universal binaries
 	# For some reason ./configure --disable-dependency-generation is not supported by autoconf 2.63
-        # so put dependencies checking under non-Darwin builds
+	# so put dependencies checking under non-Darwin builds
 	# Also no precompiled header support for universal binaries
 	AC_SUBST(NOPRECOMP,1)
-#	AC_SUBST(SHAREDLDFLAGS, "-prebind -dynamiclib")
-     	;;                   
-     *)
-        ##########
-        # Check how dependencies are created for the C++ compiler on this system
-        ##########
+	#AC_SUBST(SHAREDLDFLAGS, "-prebind -dynamiclib")
+	;;
+*)
+	##########
+	# Check how dependencies are created for the C++ compiler on this system
+	##########
 	AS_IF(g++ -v -MP 2> /dev/null,
-	      [AC_SUBST(CPPDEPFLAGS, "-MMD -MP -MF \"\`dirname \$@\`/.deps/\`basename \$*\`.d\"")] [AC_SUBST(DEPDIR, ".deps")],
-	      [AC_SUBST(CPPDEPFLAGS, "-MMD")] [AC_SUBST(DEPDIR, ".")])
- 	AC_SUBST(SHAREDLIBEXT, 'so')
+		[AC_SUBST(CPPDEPFLAGS, "-MMD -MP -MF \"\`dirname \$@\`/.deps/\`basename \$*\`.d\"")] [AC_SUBST(DEPDIR, ".deps")],
+		[AC_SUBST(CPPDEPFLAGS, "-MMD")] [AC_SUBST(DEPDIR, ".")])
+	AC_SUBST(SHAREDLIBEXT, 'so')
 #	AC_SUBST(SHAREDLDFLAGS, "-shared -W1,-soname,$(.TARGET)")
 	;;
 esac
