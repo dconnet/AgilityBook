@@ -314,11 +314,13 @@ bool CFilterOptions::SetCurrentFilter(tstring const& inName)
 }
 
 
-void CFilterOptions::AddFilter(tstring const& inName)
+bool CFilterOptions::AddFilter(tstring const& inName)
 {
+	bool bAdded = false;
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter == m_filters.end())
 	{
+		bAdded = true;
 		CFilterOptionData data;
 		data.filterName = inName;
 		iter = m_filters.insert(m_filters.end(), data);
@@ -335,6 +337,7 @@ void CFilterOptions::AddFilter(tstring const& inName)
 	(*iter).eRuns = m_eRuns;
 	(*iter).bViewAllNames = m_bViewAllNames;
 	(*iter).nameFilter = m_nameFilter;
+	return bAdded;
 }
 
 

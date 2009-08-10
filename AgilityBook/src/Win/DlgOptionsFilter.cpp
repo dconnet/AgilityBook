@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-10 DRC One group box was still off, dates are not stored
+ *                correctly, and saving named filters is duplicating names.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-09-01 DRC Fix setting of 'After' (start) date filter.
@@ -86,6 +88,8 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 {
 	// Controls (these are done first to control tab order)
 
+	wxStaticBox* boxFilters = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES"));
+
 	m_ctrlFilters = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
@@ -106,8 +110,6 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 			m_ctrlFilters->SetSelection(idx);
 		}
 	}
-
-	wxStaticBox* boxFilters = new wxStaticBox(this, wxID_ANY, _("IDC_OPT_FILTER_NAMES"));
 
 	wxButton* btnSave = new wxButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_NAMES_SAVE"),
@@ -333,6 +335,13 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 void CDlgOptionsFilter::Save()
 {
 	// These aren't updated on-the-fly, so commit now.
+	/*TODO
+	m_FilterOptions.SetViewAllDates(m_ctrlDatesAll->GetValue());
+	if (m_ctrlDatesAll->GetValue())
+	{
+		if (m_ctrlDateStartCheck->GetValue())
+	}
+	*/
 	CCalendarViewFilter calView = m_FilterOptions.FilterCalendarView();
 	calView.Clear();
 	if (m_bNotEntered)
@@ -604,8 +613,8 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesSave(wxCommandEvent& evt)
 		return;
 	if (!m_FilterName.empty())
 	{
-		m_FilterOptions.AddFilter(m_FilterName.c_str());
-		m_ctrlFilters->Append(m_FilterName);
+		if (m_FilterOptions.AddFilter(m_FilterName.c_str()))
+			m_ctrlFilters->Append(m_FilterName);
 	}
 	else
 		wxMessageBox(_("IDS_NAME_FILTER"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);

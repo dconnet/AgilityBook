@@ -184,7 +184,7 @@ public:
 	}
 	size_t GetAllFilterNames(std::vector<tstring>& outNames) const;
 	bool SetCurrentFilter(tstring const& inName);
-	void AddFilter(tstring const& inName);
+	bool AddFilter(tstring const& inName); ///< Returns if a new one was added
 	bool DeleteFilter(tstring const& inName);
 
 	// Helper functions
