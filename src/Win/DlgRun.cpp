@@ -882,7 +882,12 @@ CDlgRun::CDlgRun(
 	textHeight->Wrap(-1);
 
 	m_ctrlHeight = new wxComboBox(m_panelScore, wxID_ANY,
-		wxEmptyString, wxDefaultPosition, wxSize(50, -1),
+		wxEmptyString, wxDefaultPosition,
+#ifdef __WXMAC__
+		wxSize(100, -1), // Just not wide enough on a Mac...
+#else
+		wxSize(50, -1),
+#endif
 		0, NULL, wxCB_DROPDOWN,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlHeight->SetHelpText(_("HIDC_RUNSCORE_HEIGHT"));
