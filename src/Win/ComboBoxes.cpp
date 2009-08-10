@@ -45,6 +45,13 @@
 #include "ARBDogRun.h"
 
 
+// The combobox for the Q on a Mac is just too small.
+#ifdef __WXMAC__
+#define DEF_Q_WIDTH  70
+#else
+#define DEF_Q_WIDTH  50
+#endif
+
 IMPLEMENT_CLASS(CVenueComboBox, wxComboBox)
 IMPLEMENT_CLASS(CQualifyingComboBox, wxChoice)
 
@@ -117,7 +124,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run()
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(60, -1),
+		wxDefaultPosition, wxSize(DEF_Q_WIDTH, -1),
 		0, NULL, 0, validator);
 	ResetContent(ARBConfigScoringPtr());
 }
@@ -132,7 +139,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run(run)
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(60, -1),
+		wxDefaultPosition, wxSize(DEF_Q_WIDTH, -1),
 		0, NULL, 0, validator);
 	ResetContent(ARBConfigScoringPtr());
 }
@@ -148,7 +155,7 @@ CQualifyingComboBox::CQualifyingComboBox(
 	, m_Run(run)
 {
 	wxChoice::Create(parent, wxID_ANY,
-		wxDefaultPosition, wxSize(60, -1),
+		wxDefaultPosition, wxSize(DEF_Q_WIDTH, -1),
 		0, NULL, 0, validator);
 	ResetContent(scoring);
 }
