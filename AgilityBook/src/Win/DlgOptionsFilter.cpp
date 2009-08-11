@@ -332,16 +332,23 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 }
 
 
+// This is called as part of CDlgOptions::OnOk
 void CDlgOptionsFilter::Save()
 {
 	// These aren't updated on-the-fly, so commit now.
-	/*TODO
-	m_FilterOptions.SetViewAllDates(m_ctrlDatesAll->GetValue());
-	if (m_ctrlDatesAll->GetValue())
+	if (!m_FilterOptions.GetViewAllDates())
 	{
-		if (m_ctrlDateStartCheck->GetValue())
+		if (m_bDateStart && !m_timeStart.IsValid())
+			m_bDateStart = false;
+		if (m_bDateEnd && !m_timeEnd.IsValid())
+			m_bDateEnd = false;
+		if (!m_bDateStart && !m_bDateEnd)
+			m_FilterOptions.SetViewAllDates(true);
+		m_FilterOptions.SetStartFilterDateSet(m_bDateStart);
+		m_FilterOptions.SetStartFilterDate(m_bDateStart);
+		m_FilterOptions.SetEndFilterDateSet(m_bDateEnd);
+		m_FilterOptions.SetEndFilterDate(m_bDateEnd);
 	}
-	*/
 	CCalendarViewFilter calView = m_FilterOptions.FilterCalendarView();
 	calView.Clear();
 	if (m_bNotEntered)
