@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-12 DRC Fix killfocus handling.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
@@ -397,7 +398,6 @@ CDlgCalendar::CDlgCalendar(
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlClub->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgCalendar::OnSelchangeClub), NULL, this);
-	m_ctrlClub->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgCalendar::OnKillfocusClub), NULL, this);
 	m_ctrlClub->SetHelpText(_("HIDC_CAL_CLUB"));
 	m_ctrlClub->SetToolTip(_("HIDC_CAL_CLUB"));
 
@@ -421,7 +421,6 @@ CDlgCalendar::CDlgCalendar(
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlLocation->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgCalendar::OnSelchangeLocation), NULL, this);
-	m_ctrlLocation->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgCalendar::OnKillfocusLocation), NULL, this);
 	m_ctrlLocation->SetHelpText(_("HIDC_CAL_LOCATION"));
 	m_ctrlLocation->SetToolTip(_("HIDC_CAL_LOCATION"));
 
@@ -570,6 +569,10 @@ CDlgCalendar::CDlgCalendar(
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	// Connect killfocus handlers last
+	m_ctrlClub->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgCalendar::OnKillfocusClub), NULL, this);
+	m_ctrlLocation->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgCalendar::OnKillfocusLocation), NULL, this);
 }
 
 
@@ -768,6 +771,7 @@ void CDlgCalendar::OnKillfocusClub(wxFocusEvent& evt)
 {
 	TransferDataFromWindow();
 	UpdateClubInfo(m_Club.c_str());
+	evt.Skip();
 }
 
 
@@ -797,6 +801,7 @@ void CDlgCalendar::OnKillfocusLocation(wxFocusEvent& evt)
 {
 	TransferDataFromWindow();
 	UpdateLocationInfo(m_Location.c_str());
+	evt.Skip();
 }
 
 void CDlgCalendar::OnLocationNotes(wxCommandEvent& evt)

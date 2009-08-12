@@ -646,7 +646,7 @@ wxTreeItemId CAgilityBookTreeView::InsertTrial(
 			idxImage, idxImage,
 			pDataTrial);
 #ifdef WIN32
-		int state = pDataTrial->GetTrial()->IsVerified() ?  m_idxChecked : m_idxEmpty;
+		int state = pDataTrial->GetTrial()->IsVerified() ? m_idxChecked : m_idxEmpty;
 		m_Ctrl->SetState(hTrial, state);
 #endif
 		for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();

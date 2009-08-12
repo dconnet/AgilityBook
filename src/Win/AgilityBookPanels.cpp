@@ -170,9 +170,9 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 
 	m_splitter->SplitVertically(panel1, panel2);
 
-    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
-    sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
-    SetSizer(sizerPanel);
+	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
+	SetSizer(sizerPanel);
 }
 
 
@@ -204,7 +204,7 @@ CAgilityBookPanelPoints::CAgilityBookPanelPoints(
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();
 
-    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
 
 	if (bAttachViews)
 	{
@@ -217,7 +217,7 @@ CAgilityBookPanelPoints::CAgilityBookPanelPoints(
 		m_views.push_back(pView);
 	}
 	m_views[0]->Create(this, this, doc, flags, sizerPanel, 1, wxEXPAND, 0);
-    SetSizer(sizerPanel);
+	SetSizer(sizerPanel);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -265,9 +265,9 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 
 	m_splitter->SplitVertically(panel1, panel2);
 
-    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
-    sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
-    SetSizer(sizerPanel);
+	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	sizerPanel->Add(m_splitter, 1, wxEXPAND, 0);
+	SetSizer(sizerPanel);
 }
 
 
@@ -299,7 +299,7 @@ CAgilityBookPanelTraining::CAgilityBookPanelTraining(
 	m_views = inViews;
 	bool bAttachViews = m_views.empty();
 
-    wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
 	if (bAttachViews)
 	{
 		CAgilityBookBaseExtraView* pView = new CAgilityBookTrainingView(pTabView, doc);
@@ -307,5 +307,5 @@ CAgilityBookPanelTraining::CAgilityBookPanelTraining(
 		m_views.push_back(pView);
 	}
 	m_views[0]->Create(this, this, doc, flags, sizerPanel, 1, wxEXPAND, 0);
-    SetSizer(sizerPanel);
+	SetSizer(sizerPanel);
 }

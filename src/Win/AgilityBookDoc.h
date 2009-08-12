@@ -187,11 +187,11 @@ private:
 	CStatusHandler* m_StatusData;
 
 protected:
-    virtual bool DeleteContents();
+	virtual bool DeleteContents();
 	virtual bool OnNewDocument();
 	virtual bool OnOpenDocument(const wxString& file);
 	virtual bool DoSaveDocument(const wxString& file);
-    virtual bool OnCloseDocument();
+	virtual bool OnCloseDocument();
 
 private:
 	DECLARE_EVENT_TABLE()

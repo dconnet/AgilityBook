@@ -96,7 +96,7 @@ CDlgFind::CDlgFind(
 	m_radioBoxSearch->SetItemToolTip(1, _("HIDC_FIND_VISIBLE"));
 	m_radioBoxSearch->SetSelection(m_Callback.SearchAll() ? 0 : 1);
 	if (!m_Callback.EnableSearch())
-    	m_radioBoxSearch->Enable(false);
+		m_radioBoxSearch->Enable(false);
 
 	wxString radioDirectionFields[] =
 	{
@@ -115,7 +115,7 @@ CDlgFind::CDlgFind(
 	m_radioBoxDir->SetItemToolTip(1, _("HIDC_FIND_DOWN"));
 	m_radioBoxDir->SetSelection(m_Callback.SearchDown() ? 1 : 0);
 	if (!m_Callback.EnableDirection())
-    	m_radioBoxDir->Enable(false);
+		m_radioBoxDir->Enable(false);
 
 	m_btnFind = new wxButton(this, wxID_ANY,
 		_("IDC_FIND_NEXT"),

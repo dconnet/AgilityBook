@@ -555,7 +555,7 @@ tstring CPointsDataEvent::OnNeedText(int inCol) const
 		else if (0 < m_Speed.length())
 			str = m_Speed;
 	case 8: // Only used for SQ AND Speed
-		if (0 < m_SuperQ.length() &&  0 < m_Speed.length())
+		if (0 < m_SuperQ.length() && 0 < m_Speed.length())
 			str = m_Speed;
 		break;
 	}

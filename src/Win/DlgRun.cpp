@@ -2717,7 +2717,7 @@ void CDlgRun::OnBnClickedTableYps(wxCommandEvent& evt)
 {
 	bool bSetTable = false;
 	if (m_ctrlTable->IsShown())
-		bSetTable  = m_ctrlTable->GetValue();
+		bSetTable = m_ctrlTable->GetValue();
 	m_Run->GetScoring().SetHasTable(bSetTable);
 	SetMinYPS();
 	SetYPS();

@@ -253,7 +253,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			{
 				ARBConfigScoringPtr pScoring;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
-                    m_pView->GetDocument()->Book().GetConfig().GetVenues().FindEvent(
+					m_pView->GetDocument()->Book().GetConfig().GetVenues().FindEvent(
 						m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						m_pRun->GetEvent(),
 						m_pRun->GetDivision(),
@@ -427,7 +427,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			{
 				ARBConfigScoringPtr pScoring;
 				if (m_pTrial->GetClubs().GetPrimaryClub())
-                    m_pView->GetDocument()->Book().GetConfig().GetVenues().FindEvent(
+					m_pView->GetDocument()->Book().GetConfig().GetVenues().FindEvent(
 						m_pTrial->GetClubs().GetPrimaryClubVenue(),
 						m_pRun->GetEvent(),
 						m_pRun->GetDivision(),

@@ -644,8 +644,8 @@ void CDlgConfigEvent::FillControls()
 						<< pScoring->TimeFaultMultiplier();
 					break;
 				case ARBConfigScoring::eOCScoreThenTime:
-    				str1 = _("IDS_CONFIGEVENT_REQOPEN");
-    				str2 = _("IDS_CONFIGEVENT_REQCLOSE");
+					str1 = _("IDS_CONFIGEVENT_REQOPEN");
+					str2 = _("IDS_CONFIGEVENT_REQCLOSE");
 					info << str1.c_str() << wxT(": ")
 						<< pScoring->GetRequiredOpeningPoints()
 						<< wxT("; ") << str2.c_str() << wxT(": ")

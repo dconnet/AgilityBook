@@ -36,6 +36,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2009-10-12 DRC Fix killfocus handling.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Add ability to see what was last selected.
  * @li 2008-01-01 DRC Added visible flag.
@@ -207,7 +208,6 @@ CDlgInfoNote::CDlgInfoNote(
 
 	m_ctrlNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(300, 100), wxTE_MULTILINE);
-	m_ctrlNotes->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgInfoNote::OnKillfocusComments), NULL, this);
 	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
 	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));
 
@@ -252,6 +252,9 @@ CDlgInfoNote::CDlgInfoNote(
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	// Connect killfocus handlers last
+	m_ctrlNotes->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgInfoNote::OnKillfocusComments), NULL, this);
 }
 
 
@@ -341,6 +344,7 @@ void CDlgInfoNote::OnKillfocusComments(wxFocusEvent& evt)
 		m_Names[idx].m_bHasData = (!item->GetComment().empty() || !item->IsVisible());
 		UpdateImage(index);
 	}
+	evt.Skip();
 }
 
 

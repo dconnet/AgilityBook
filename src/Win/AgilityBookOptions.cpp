@@ -242,7 +242,7 @@ Sorting:
 	DW Runs (AgilityBookRunsView.cpp)
 	DW Training (AgilityBookTrainingView.cpp)
 UserNames:
-   ST <hint>
+	ST <hint>
 Unknown
 	ST col[n]
 */

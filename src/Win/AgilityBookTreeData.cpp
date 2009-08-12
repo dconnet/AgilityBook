@@ -487,7 +487,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				}
 			}
 			if (!bLoaded && 0 < err.m_ErrMsg.length())
-				wxMessageBox(err.m_ErrMsg.c_str(),  wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+				wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 		}
 	}
 	else if (pDog
