@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-12 DRC Fix killfocus handling.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2007-12-03 DRC Refresh location list after invoking 'notes' button.
@@ -129,7 +130,6 @@ CDlgTrial::CDlgTrial(
 		wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location), _("IDS_ENTER_NAME"));
 	m_ctrlLocation->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgTrial::OnSelchangeLocation), NULL, this);
-	m_ctrlLocation->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgTrial::OnKillfocusLocation), NULL, this);
 	m_ctrlLocation->SetHelpText(_("HIDC_TRIAL_LOCATION"));
 	m_ctrlLocation->SetToolTip(_("HIDC_TRIAL_LOCATION"));
 
@@ -291,6 +291,9 @@ CDlgTrial::CDlgTrial(
 	ListLocations();
 	ListClubs();
 	UpdateNotes(true, true);
+
+	// Connect killfocus handlers last
+	m_ctrlLocation->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgTrial::OnKillfocusLocation), NULL, this);
 }
 
 
@@ -394,6 +397,7 @@ void CDlgTrial::OnKillfocusLocation(wxFocusEvent& evt)
 {
 	TransferDataFromWindow();
 	UpdateNotes(true, false);
+	evt.Skip();
 }
 
 

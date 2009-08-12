@@ -130,7 +130,7 @@
 #define IO_TREE_RUN_HEIGHT			63
 #define IO_LOG_SUBNAME				64
 #define IO_TREE_TRIAL_VERIFIED		65
-#define IO_RUNS_SPEED               66
+#define IO_RUNS_SPEED					66
 #define IO_CAL_APPT_SUBJECT			67
 #define IO_CAL_APPT_START_DATE		68
 #define IO_CAL_APPT_START_TIME		69

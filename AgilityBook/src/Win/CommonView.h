@@ -59,7 +59,7 @@ public:
 	}
 	// Prevent the view from calling wxDocument::DeleteDocument
 	// (wxView override)
-    virtual bool OnClose(bool /*deleteWindow*/)
+	virtual bool OnClose(bool /*deleteWindow*/)
 	{
 		Activate(false);
 		return true;

@@ -57,7 +57,7 @@ public:
 private:
 	void FillControls();
 	void FillFilter(
-			wxTreeItemId  hItem,
+			wxTreeItemId hItem,
 			wxString path,
 			std::vector<CVenueFilter>& outVenues);
 	void UpdateControls();

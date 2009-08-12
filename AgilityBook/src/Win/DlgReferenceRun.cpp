@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-12 DRC Fix killfocus handling.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
@@ -123,7 +124,6 @@ CDlgReferenceRun::CDlgReferenceRun(
 	wxTextCtrl* ctrlTime = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(60, -1), 0,
 		CGenericValidator(&m_Time));
-	ctrlTime->Connect(wxEVT_COMMAND_KILL_FOCUS, wxFocusEventHandler(CDlgReferenceRun::OnKillfocusRefRunTime), NULL, this);
 	ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
 	ctrlTime->SetToolTip(_("HIDC_REFRUN_TIME"));
 
@@ -260,6 +260,9 @@ CDlgReferenceRun::CDlgReferenceRun(
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	// Connect killfocus handlers last
+	ctrlTime->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgReferenceRun::OnKillfocusRefRunTime), NULL, this);
 }
 
 
@@ -277,6 +280,7 @@ void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
 		strYPS.Empty();
 	}
 	m_ctrlYPS->SetLabel(strYPS);
+	evt.Skip();
 }
 
 

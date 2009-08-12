@@ -53,7 +53,7 @@
 // Add a focus rect to the control
 class CHyperlinkCtrl : public wxHyperlinkCtrl
 {
-    DECLARE_DYNAMIC_CLASS(CHyperlinkCtrl)
+	DECLARE_DYNAMIC_CLASS(CHyperlinkCtrl)
 public:
 	CHyperlinkCtrl() {}
 	CHyperlinkCtrl(wxWindow *pParent,
@@ -73,9 +73,9 @@ IMPLEMENT_DYNAMIC_CLASS(CHyperlinkCtrl, wxHyperlinkCtrl)
 
 
 BEGIN_EVENT_TABLE(CHyperlinkCtrl, wxHyperlinkCtrl)
-    EVT_PAINT(CHyperlinkCtrl::OnPaint)
-    EVT_SET_FOCUS(CHyperlinkCtrl::OnFocus)
-    EVT_KILL_FOCUS(CHyperlinkCtrl::OnFocus)
+	EVT_PAINT(CHyperlinkCtrl::OnPaint)
+	EVT_SET_FOCUS(CHyperlinkCtrl::OnFocus)
+	EVT_KILL_FOCUS(CHyperlinkCtrl::OnFocus)
 END_EVENT_TABLE()
 
 
@@ -94,12 +94,12 @@ CHyperlinkCtrl::CHyperlinkCtrl(wxWindow *pParent,
 
 void CHyperlinkCtrl::OnPaint(wxPaintEvent& WXUNUSED(evt))
 {
-    wxPaintDC dc(this);
-    dc.SetFont(GetFont());
-    dc.SetTextForeground(GetForegroundColour());
-    dc.SetTextBackground(GetBackgroundColour());
+	wxPaintDC dc(this);
+	dc.SetFont(GetFont());
+	dc.SetTextForeground(GetForegroundColour());
+	dc.SetTextBackground(GetBackgroundColour());
 
-    dc.DrawText(GetLabel(), GetLabelRect().GetTopLeft());
+	dc.DrawText(GetLabel(), GetLabelRect().GetTopLeft());
 	if (wxWindow::DoFindFocus() == this)
 	{
 		wxBrush br(wxColour(0,0,0), wxTRANSPARENT);

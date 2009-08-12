@@ -79,7 +79,7 @@ public:
 
 	bool SetColumnWidth(int col, int width);
 
-    long InsertItem(CListDataPtr inData);
+	long InsertItem(CListDataPtr inData);
 
 	/**
 	 * Returns the first selected item.
@@ -169,10 +169,10 @@ private:
 	void OnDeleteItem(wxListEvent& evt);
 	// Hide wxListCtrl insertions - note, this will not prevent insertion since
 	// these are NOT virtual! Do not implement.
-    long InsertItem(const wxListItem& info);
-    long InsertItem(long index, const wxString& label);
-    long InsertItem(long index, int imageIndex);
-    long InsertItem(long index, const wxString& label, int imageIndex);
+	long InsertItem(const wxListItem& info);
+	long InsertItem(long index, const wxString& label);
+	long InsertItem(long index, int imageIndex);
+	long InsertItem(long index, const wxString& label, int imageIndex);
 	void SetImageList(wxImageList* imageList, int which);
 };
 

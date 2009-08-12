@@ -490,7 +490,7 @@ ARBDate CAgilityBookCalendar::FirstDayOfVisibleMonth() const
 		int y = date.GetYear();
 		int m = date.GetMonth();
 		y += m_nCurOffset / 12;
-		m += m_nCurOffset  % 12;
+		m += m_nCurOffset % 12;
 		if (m > 12)
 		{
 			++y;

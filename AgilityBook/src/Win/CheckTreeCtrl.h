@@ -71,8 +71,8 @@ private:
 	// These are not virtual, so access via wxTreeCtrl is possible.
 	// Don't do that!
 	// [note, this are specifically not implemented]
-    bool IsItemChecked(const wxTreeItemId& item) const;
-    void SetItemCheck(const wxTreeItemId& item, bool check = true);
+	bool IsItemChecked(const wxTreeItemId& item) const;
+	void SetItemCheck(const wxTreeItemId& item, bool check = true);
 
 	wxImageList m_stateList;
 	int m_stateNone;

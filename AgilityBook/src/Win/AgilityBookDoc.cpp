@@ -1216,8 +1216,8 @@ bool CAgilityBookDoc::OnNewDocument()
 // the document.
 bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 {
-    if (!OnSaveModified())
-        return false;
+	if (!OnSaveModified())
+		return false;
 
 	//
 	// DoOpenDocument stuff
@@ -1279,9 +1279,9 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	// End DoOpenDocument stuff
 	//
 
-    SetFilename(filename, true);
-    Modify(false);
-    m_savedYet = true;
+	SetFilename(filename, true);
+	Modify(false);
+	m_savedYet = true;
 
 	if (CAgilityBookOptions::AutoDeleteCalendarEntries())
 	{
@@ -1319,7 +1319,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	*/
 
 	// Kick the LoadData in every view
-    UpdateAllViews();
+	UpdateAllViews();
 	// Finally, force a status update (currently, the last loaddata is the winner)
 	if (GetDocumentManager())
 	{
