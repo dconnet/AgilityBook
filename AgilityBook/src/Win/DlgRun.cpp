@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-12 DRC Fixed division/level initialization.
  * @li 2009-03-16 DRC Merged DlgRun* into here.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -1734,10 +1735,7 @@ void CDlgRun::FillDivisions()
 		{
 			index = m_ctrlDivisions->FindString(last, true);
 			if (0 <= index)
-			{
 				m_ctrlDivisions->SetSelection(index);
-				m_Run->SetDivision(last.c_str());
-			}
 		}
 	}
 	if (wxNOT_FOUND == m_ctrlDivisions->GetSelection())
@@ -1745,6 +1743,10 @@ void CDlgRun::FillDivisions()
 		if (1 == m_ctrlDivisions->GetCount())
 			m_ctrlDivisions->SetSelection(0);
 	}
+	// Force the division into the run. SetSelection will not cause an update.
+	int idxDiv = m_ctrlDivisions->GetSelection();
+	if (wxNOT_FOUND != idxDiv)
+		m_Run->SetDivision(m_ctrlDivisions->GetString(idxDiv).c_str());
 	FillLevels();
 }
 
@@ -1807,10 +1809,7 @@ void CDlgRun::FillLevels()
 			{
 				int idx = m_ctrlLevels->FindString(last, true);
 				if (0 <= idx)
-				{
 					m_ctrlLevels->SetSelection(idx);
-					m_Run->SetLevel(last.c_str());
-				}
 			}
 		}
 	}
@@ -1819,6 +1818,9 @@ void CDlgRun::FillLevels()
 		if (1 == m_ctrlLevels->GetCount())
 			m_ctrlLevels->SetSelection(0);
 	}
+	int idxLvl = m_ctrlLevels->GetSelection();
+	if (wxNOT_FOUND != idxLvl)
+		m_Run->SetLevel(m_ctrlLevels->GetString(idxLvl).c_str());
 	FillEvents();
 	SetTitlePoints();
 }
