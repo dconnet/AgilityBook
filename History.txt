@@ -2,9 +2,9 @@
 - Bumped Configuration v27:
   - TDAA Standard was scored as time+faults, should be 100-faults.
 - Bug fixes:
+  - Fixed a crash when entering runs in TDAA, FCI, SSA.
   - Filter options was not saving dates.
   - The Filter name combobox wasn't working properly on Macs.
-  - Fixed a crash when entering runs in TDAA, FCI, SSA.
   - Valid From/To dates were improperly set in the event configuration.
 
 8/9/2009: v2.0.1.2426
