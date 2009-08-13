@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-10-12 DRC Fix killfocus handling.
+ * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
  * @li 2007-12-03 DRC Refresh location list after invoking 'notes' button.

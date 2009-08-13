@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2009-08-12 DRC Configuration version 27.
+               Fixed TDAA Standard to be 100-faults.
 2009-07-22 DRC Configuration version 26.
                Added AKC TQX and TQXP titles.
 2009-02-25 DRC Configuration version 25.
@@ -79,7 +81,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-   <Configuration version="26">
+   <Configuration version="27">
       <Action NewName="SSA" OldName="Sweepstakes" Verb="RenameVenue"/>
       <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
       <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
@@ -2831,7 +2833,7 @@ TG3 + 10 Qs in at least 5 games with 3 wins
             <Scoring Division="*" Level="*" type="FaultsThenTime"/>
          </Event>
          <Event Name="Standard" hasTable="y">
-            <Scoring Division="*" Level="*" type="FaultsThenTime">
+            <Scoring Division="*" Level="*" type="Faults100ThenTime">
                <TitlePoints Faults="0" Points="1"/>
             </Scoring>
          </Event>

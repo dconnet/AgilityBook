@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-12 DRC Fix dates on save.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-04 DRC Created.
  */
@@ -885,6 +886,11 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		m_ctrlType->SetFocus();
 		return;
 	}
+
+	if (!m_ctrlValidFrom->GetValue())
+		m_dateFrom.clear();
+	if (!m_ctrlValidTo->GetValue())
+		m_dateTo.clear();
 
 	// Validate that from-to dates are okay.
 	if (m_dateFrom.IsValid() && m_dateTo.IsValid()

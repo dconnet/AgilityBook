@@ -2,6 +2,7 @@
 # and ../../configure.in
 #
 # This assumes the current directory is 'Include'
+# @li 2009-08-12 DRC Make sure full version is the same in configure.in
 # @li 2009-04-12 DRC Added CalVerNum.h to be autoincremented.
 #                Check to see if file actually changed before re-writing
 
@@ -11,10 +12,10 @@ import string
 import sys
 
 update = 0
-vMaj = '0'
-vMin = '0'
-vDot = '0'
-vBld = '0'
+vMajARB = '0'
+vMinARB = '0'
+vDotARB = '0'
+vBldARB = '0'
 ver = open('VersionNumber.h', 'r')
 verOut = open('VersionNumber.h.new', 'w')
 while 1:
@@ -26,20 +27,20 @@ while 1:
 		defineBld = '#define ARB_VER_BUILD'
 		pos = line.find(defineMaj)
 		if 0 == pos:
-			vMaj = string.strip(line[pos+len(defineMaj):])
+			vMajARB = string.strip(line[pos+len(defineMaj):])
 		pos = line.find(defineMin)
 		if 0 == pos:
-			vMin = string.strip(line[pos+len(defineMin):])
+			vMinARB = string.strip(line[pos+len(defineMin):])
 		pos = line.find(defineDot)
 		if 0 == pos:
-			vDot = string.strip(line[pos+len(defineDot):])
+			vDotARB = string.strip(line[pos+len(defineDot):])
 		pos = line.find(defineBld)
 		if 0 == pos:
 			vBldOld = string.strip(line[pos+len(defineBld):])
-			vBld = str((datetime.date.today() - datetime.date(2002,12,28)).days)
-			if not vBldOld == vBld:
+			vBldARB = str((datetime.date.today() - datetime.date(2002,12,28)).days)
+			if not vBldOld == vBldARB:
 				update = 1
-				print >>verOut, defineBld + '\t\t\t\t\t' + vBld
+				print >>verOut, defineBld + '\t\t\t\t\t' + vBldARB
 			else:
 				print >>verOut, line,
 		else:
@@ -49,18 +50,19 @@ while 1:
 ver.close()
 verOut.close()
 if update:
-	print "VersionNumber.h updated to " + vMaj + '.' + vMin + '.' + vDot + '.' + vBld
+	print "VersionNumber.h updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB
 	os.remove('VersionNumber.h')
 	os.rename('VersionNumber.h.new', 'VersionNumber.h')
+	os.remove('VersionNumber.h.new')
 else:
 	print "VersionNumber.h is up-to-date"
 	os.remove('VersionNumber.h.new')
 
 update = 0
-vMaj = '0'
-vMin = '0'
-vDot = '0'
-vBld = '0'
+vMajCAL = '0'
+vMinCAL = '0'
+vDotCAL = '0'
+vBldCAL = '0'
 ver = open('../cal_usdaa/CalVerNum.h', 'r')
 verOut = open('../cal_usdaa/CalVerNum.h.new', 'w')
 while 1:
@@ -72,20 +74,20 @@ while 1:
 		defineBld = '#define CAL_VER_BUILD'
 		pos = line.find(defineMaj)
 		if 0 == pos:
-			vMaj = string.strip(line[pos+len(defineMaj):])
+			vMajCAL = string.strip(line[pos+len(defineMaj):])
 		pos = line.find(defineMin)
 		if 0 == pos:
-			vMin = string.strip(line[pos+len(defineMin):])
+			vMinCAL = string.strip(line[pos+len(defineMin):])
 		pos = line.find(defineDot)
 		if 0 == pos:
-			vDot = string.strip(line[pos+len(defineDot):])
+			vDotCAL = string.strip(line[pos+len(defineDot):])
 		pos = line.find(defineBld)
 		if 0 == pos:
 			vBldOld = string.strip(line[pos+len(defineBld):])
-			vBld = str((datetime.date.today() - datetime.date(2002,12,28)).days)
-			if not vBldOld == vBld:
+			vBldCAL = str((datetime.date.today() - datetime.date(2002,12,28)).days)
+			if not vBldOld == vBldCAL:
 				update = 1
-				print >>verOut, defineBld + '\t\t\t\t\t' + vBld
+				print >>verOut, defineBld + '\t\t\t\t\t' + vBldCAL
 			else:
 				print >>verOut, line,
 		else:
@@ -95,9 +97,10 @@ while 1:
 ver.close()
 verOut.close()
 if update:
-	print "../cal_usdaa/CalVerNum.h updated to " + vMaj + '.' + vMin + '.' + vDot + '.' + vBld
+	print "../cal_usdaa/CalVerNum.h updated to " + vMajCAL + '.' + vMinCAL + '.' + vDotCAL + '.' + vBldCAL
 	os.remove('../cal_usdaa/CalVerNum.h')
 	os.rename('../cal_usdaa/CalVerNum.h.new', '../cal_usdaa/CalVerNum.h')
+	os.remove('../cal_usdaa/CalVerNum.h.new')
 else:
 	print "../cal_usdaa/CalVerNum.h is up-to-date"
 	os.remove('../cal_usdaa/CalVerNum.h.new')
@@ -109,7 +112,7 @@ while 1:
 	line = conf.readline()
 	if line:
 		if 0 == line.find('AC_INIT('):
-			newLine = 'AC_INIT(Agility Record Book, ' + vMaj + '.' + vMin + '.' + vDot + '.' + vBld + ', [help@agilityrecordbook.com])\n'
+			newLine = 'AC_INIT(Agility Record Book, ' + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB + ', [help@agilityrecordbook.com])\n'
 			if not line == newLine:
 				update = 1
 				print >>confOut, newLine,
@@ -122,7 +125,7 @@ while 1:
 conf.close()
 confOut.close()
 if update:
-	print "../../configure.in updated to " + vMaj + '.' + vMin + '.' + vDot + '.' + vBld
+	print "../../configure.in updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB
 	os.remove('../../configure.in')
 	os.rename('../../configure.in.new', '../../configure.in')
 else:

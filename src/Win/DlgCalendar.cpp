@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-10-12 DRC Fix killfocus handling.
+ * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
