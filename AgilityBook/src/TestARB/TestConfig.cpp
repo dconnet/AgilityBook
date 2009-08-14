@@ -123,6 +123,7 @@ SUITE(TestConfig)
 			IDR_XML_CONFIG24_V12_8,
 			IDR_XML_CONFIG25_V12_9,
 			IDR_XML_CONFIG26_V12_9,
+			IDR_XML_CONFIG27_V12_10,
 			0
 		};
 		for (int i = 0; configs[i] != 0; ++i)

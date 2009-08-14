@@ -53,6 +53,7 @@
 #define IDR_XML_CONFIG24_V12_8		12
 #define IDR_XML_CONFIG25_V12_9		13
 #define IDR_XML_CONFIG26_V12_9		14
+#define IDR_XML_CONFIG27_V12_10		15
 // See comments in TestARB.cpp about adding a new config
 
 
