@@ -53,7 +53,6 @@ if update:
 	print "VersionNumber.h updated to " + vMajARB + '.' + vMinARB + '.' + vDotARB + '.' + vBldARB
 	os.remove('VersionNumber.h')
 	os.rename('VersionNumber.h.new', 'VersionNumber.h')
-	os.remove('VersionNumber.h.new')
 else:
 	print "VersionNumber.h is up-to-date"
 	os.remove('VersionNumber.h.new')
@@ -100,7 +99,6 @@ if update:
 	print "../cal_usdaa/CalVerNum.h updated to " + vMajCAL + '.' + vMinCAL + '.' + vDotCAL + '.' + vBldCAL
 	os.remove('../cal_usdaa/CalVerNum.h')
 	os.rename('../cal_usdaa/CalVerNum.h.new', '../cal_usdaa/CalVerNum.h')
-	os.remove('../cal_usdaa/CalVerNum.h.new')
 else:
 	print "../cal_usdaa/CalVerNum.h is up-to-date"
 	os.remove('../cal_usdaa/CalVerNum.h.new')
