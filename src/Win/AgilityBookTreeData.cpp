@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-14 DRC Fixed crash (on Mac) when editing dog.
  * @li 2009-02-02 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -106,6 +107,7 @@ static bool EditDog(
 	CDlgDog dlg(pTree->GetDocument(), pDog, wxGetApp().GetTopWindow(), nPage);
 	if (wxID_OK == dlg.ShowModal())
 	{
+		pDogData = NULL; // Tree may have reloaded.
 		bOk = true;
 		if (bAdd)
 		{
@@ -122,8 +124,14 @@ static bool EditDog(
 					*bTreeSelectionSet = true;
 			}
 		}
-		else
-			pTree->RefreshItem(pDogData->GetId());
+		// No need to refresh item here - CDlgDog::OnOk will call the document
+		// ResetVisibility which causes a tree load. Note: If the dog dlg gets
+		// more intelligent (reset is only needed if changing titles/etc), then
+		// we may need this. The problem is that pDogData may be deleted.
+		// Need a way to track that pDogData is gone...
+		//else
+		//	pTree->RefreshItem(pDogData->GetId());
+
 		// No need to update the tree view here. We don't sort the dogs so
 		// adding a new dog is all set and editing an existing one doesn't
 		// change any ordering.
@@ -145,6 +153,7 @@ static bool EditTrial(
 {
 	assert(pDogData && pDogData->GetDog());
 	bool bAdd = false;
+	ARBDogPtr pDog = pDogData->GetDog();
 	ARBDogTrialPtr pTrial;
 	if (pTrialData)
 		pTrial = pTrialData->GetTrial();
@@ -162,14 +171,14 @@ static bool EditTrial(
 		CFilterOptions::Options().GetFilterVenue(venues);
 		if (bAdd)
 		{
-			if (!pDogData->GetDog()->GetTrials().AddTrial(pTrial))
+			if (!pDog->GetTrials().AddTrial(pTrial))
 			{
 				bOk = false;
 				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
 			}
 			else
 			{
-				pDogData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+				pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 				pTree->GetDocument()->ResetVisibility(venues, pTrial);
 				// Even though we will reset the tree, go ahead and add/select
 				// the item into the tree here. That will make sure when the
@@ -190,7 +199,7 @@ static bool EditTrial(
 		}
 		else
 		{
-			pDogData->GetDog()->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+			pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 			pTree->GetDocument()->ResetVisibility(venues, pTrial);
 			pTree->RefreshItem(pTrialData->GetId());
 			if (dlg.RunsWereDeleted())
