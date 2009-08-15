@@ -147,11 +147,11 @@ msgstr "Juge"
 msgid "IDS_COL_LEVEL"
 msgstr "Degré"
 
-msgid "IDS_COL_LOCATION"
-msgstr "Endroit"
-
 msgid "IDS_COL_LEVELS"
 msgstr "Degrés"
+
+msgid "IDS_COL_LOCATION"
+msgstr "Endroit"
 
 msgid "IDS_COL_MILEAGE"
 msgstr "Distance"
@@ -347,16 +347,6 @@ msgstr "m/s"
 
 msgid "IDS_COL_VERIFIED"
 msgstr "Confirmé"
-
-msgid "IDR_MAINFRAME"
-msgstr ""
-"Agility Record Book\n"
-"\n"
-"AgilityBook\n"
-"Agility Record Book Files (*.arb)\n"
-".arb\n"
-"AgilityBook.Document\n"
-"AgilityBook.Document"
 
 msgid "AFX_IDS_APP_TITLE"
 msgstr "Agility Record Book"
@@ -872,7 +862,7 @@ msgid "IDS_ACTION_DELETE_VENUE"
 msgstr "Action: Suppression organisation [%1$s]"
 
 msgid "IDS_ACTION_RENAME_MULTIQ"
-msgstr "Action: Changer nom %1$s MultiQ [%2$s]pour [%3$s]"
+msgstr "Action: Changer nom %1$s MultiQ [%2$s] pour [%3$s]"
 
 msgid "IDS_ACTION_RENAME_MULTIQ2"
 msgstr ", mise à jours %1$d MultiQs"
@@ -1338,6 +1328,12 @@ msgstr "Options"
 
 msgid "IDS_EXPORTING"
 msgstr "Exporter..."
+
+msgid "IDS_CONFIG_TITLE_NUMBER"
+msgstr "chiffre arabe"
+
+msgid "IDS_CONFIG_TITLE_ROMAN"
+msgstr "chiffre romain"
 
 msgid "IDS_AFFECTED_RUNS"
 msgstr "Parcours effectué par changement configuration"

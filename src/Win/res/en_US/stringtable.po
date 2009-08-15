@@ -146,11 +146,11 @@ msgstr "Judge"
 msgid "IDS_COL_LEVEL"
 msgstr "Level"
 
-msgid "IDS_COL_LOCATION"
-msgstr "Location"
-
 msgid "IDS_COL_LEVELS"
 msgstr "Levels"
+
+msgid "IDS_COL_LOCATION"
+msgstr "Location"
 
 msgid "IDS_COL_MILEAGE"
 msgstr "Mileage"
@@ -346,16 +346,6 @@ msgstr "YPS"
 
 msgid "IDS_COL_VERIFIED"
 msgstr "Verified"
-
-msgid "IDR_MAINFRAME"
-msgstr ""
-"Agility Record Book\n"
-"\n"
-"AgilityBook\n"
-"Agility Record Book Files (*.arb)\n"
-".arb\n"
-"AgilityBook.Document\n"
-"AgilityBook.Document"
 
 msgid "AFX_IDS_APP_TITLE"
 msgstr "Agility Record Book"
@@ -1339,6 +1329,12 @@ msgstr "Options"
 
 msgid "IDS_EXPORTING"
 msgstr "Exporting..."
+
+msgid "IDS_CONFIG_TITLE_NUMBER"
+msgstr "Number"
+
+msgid "IDS_CONFIG_TITLE_ROMAN"
+msgstr "Roman Numeral"
 
 msgid "IDS_AFFECTED_RUNS"
 msgstr "Runs affected by configuration changes"
