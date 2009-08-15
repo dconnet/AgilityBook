@@ -148,25 +148,26 @@ public:
 
 	/**
 	 * Reset the visibility of all objects.
+	 * @return Visibility was changed.
 	 * @post All UI objects will be reset, all pointers to data objects will
 	 *       be deleted. This should not be called from any AgilityBookTreeData
 	 *       object!
 	 */
-	void ResetVisibility();
-	void ResetVisibility(
+	bool ResetVisibility();
+	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
 			ARBDogPtr pDog);
-	void ResetVisibility(
+	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
 			ARBDogTrialPtr pTrial);
-	void ResetVisibility(
+	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun);
-	void ResetVisibility(
+	bool ResetVisibility(
 			std::vector<CVenueFilter>& venues,
 			ARBDogTitlePtr pTitle);
-	void ResetVisibility(
+	bool ResetVisibility(
 			std::set<tstring>& names,
 			ARBTrainingPtr pTraining);
 
@@ -181,7 +182,6 @@ public:
 	void BackupFile(wxString lpszPathName);
 
 private:
-	bool m_SuppressUpdates;
 	ARBAgilityRecordBook m_Records; ///< The real records.
 	CCalendarSites m_CalSites;
 	CStatusHandler* m_StatusData;

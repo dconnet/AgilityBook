@@ -275,16 +275,8 @@ tstring CPointsDataDog::GetHtml(size_t nCurLine) const
 
 void CPointsDataDog::Details() const
 {
-	// CDlgDog will cause an update msg to occur which will delete us.
-	// So we need to cache the document in a stack variable.
-	CAgilityBookDoc* pDoc = m_pDoc;
-	CDlgDog dlg(pDoc, m_pDog, NULL, 0);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		pDoc->Modify(true);
-		CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
-		pDoc->UpdateAllViews(NULL, &hint);
-	}
+	CDlgDog dlg(m_pDoc, m_pDog, NULL, 0);
+	dlg.ShowModal();
 }
 
 
@@ -382,16 +374,8 @@ void CPointsDataVenue::Details() const
 		ARBDogRegNumPtr pRegNum;
 		if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 		{
-			// CDlgDog will cause an update msg to occur which will delete us.
-			// So we need to cache the document in a stack variable.
-			CAgilityBookDoc* pDoc = m_pDoc;
-			CDlgDog dlg(pDoc, m_pDog, NULL, 2);
-			if (wxID_OK == dlg.ShowModal())
-			{
-				pDoc->Modify(true);
-				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
-				pDoc->UpdateAllViews(NULL, &hint);
-			}
+			CDlgDog dlg(m_pDoc, m_pDog, NULL, 2);
+			dlg.ShowModal();
 		}
 		else
 			wxBell();

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-15 DRC Added IsAnyFiltered.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-20 DRC Added different types of filtering.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -104,6 +105,15 @@ public:
 	virtual bool IsFiltered() const
 	{
 		return IsFiltered(eFilter);
+	}
+
+	/**
+	 * Get any filtered state of this object.
+	 * @return The filtered state.
+	 */
+	virtual bool IsAnyFiltered() const
+	{
+		return IsFiltered(eFilter) || IsFiltered(eIgnoreQ);
 	}
 
 	/**
