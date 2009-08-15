@@ -131,15 +131,6 @@ static bool EditDog(
 		// Need a way to track that pDogData is gone...
 		//else
 		//	pTree->RefreshItem(pDogData->GetId());
-
-		// No need to update the tree view here. We don't sort the dogs so
-		// adding a new dog is all set and editing an existing one doesn't
-		// change any ordering.
-		if (bOk)
-		{
-			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
-			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
-		}
 	}
 	return bOk;
 }
@@ -695,12 +686,10 @@ bool CAgilityBookTreeDataDog::OnCmd(
 			bModified = true;
 		break;
 	case ID_AGILITY_EDIT_DOG:
-		if (EditDog(this, m_pTree, bTreeSelectionSet))
-			bModified = true;
+		EditDog(this, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_DOG:
-		if (EditDog(NULL, m_pTree, bTreeSelectionSet))
-			bModified = true;
+		EditDog(NULL, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_TRIAL:
 		if (EditTrial(this, NULL, m_pTree, bTreeSelectionSet))
@@ -993,8 +982,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_DOG:
-		if (EditDog(NULL, m_pTree, bTreeSelectionSet))
-			bModified = true;
+		EditDog(NULL, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_TRIAL:
 		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))
@@ -1361,8 +1349,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			bModified = true;
 		break;
 	case ID_AGILITY_NEW_DOG:
-		if (EditDog(NULL, m_pTree, bTreeSelectionSet))
-			bModified = true;
+		EditDog(NULL, m_pTree, bTreeSelectionSet);
 		break;
 	case ID_AGILITY_NEW_TRIAL:
 		if (EditTrial(GetDataDog(), NULL, m_pTree, bTreeSelectionSet))

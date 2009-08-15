@@ -966,16 +966,6 @@ CDlgDog::CDlgDog(
 
 CDlgDog::~CDlgDog()
 {
-	if (m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
-	{
-		std::vector<CVenueFilter> venues;
-		CFilterOptions::Options().GetFilterVenue(venues);
-		for (ARBDogList::iterator iterDogs = m_pDoc->Book().GetDogs().begin(); iterDogs != m_pDoc->Book().GetDogs().end(); ++iterDogs)
-			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
-				m_pDoc->ResetVisibility(venues, *iterTitle);
-		CUpdateHint hint(UPDATE_POINTS_VIEW);
-		m_pDoc->UpdateAllViews(NULL, &hint);
-	}
 }
 
 
@@ -1574,16 +1564,80 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	if (!m_IsDeceased)
 		m_Deceased.clear();
 
-	m_pDog->SetCallName(m_CallName.c_str());
-	m_pDog->SetDOB(m_DOB);
-	m_pDog->SetDeceased(m_Deceased);
-	m_pDog->SetBreed(m_Breed.c_str());
-	m_pDog->SetRegisteredName(m_RegName.c_str());
-	m_pDog->SetNote(m_Notes.c_str());
-	m_pDog->GetTitles() = m_Titles;
-	m_pDog->GetRegNums() = m_RegNums;
-	m_pDog->GetExistingPoints() = m_ExistingPoints;
-	m_pDoc->ResetVisibility();
+	bool bModified = false;
+	unsigned int hint = 0;
+
+	if (m_pDog->GetCallName() != m_CallName)
+	{
+		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
+		m_pDog->SetCallName(m_CallName.c_str());
+	}
+	if (m_pDog->GetDOB() != m_DOB)
+	{
+		// All we really need to do here is to refresh the tree item. But
+		// that may not be the current one right now, so use the big hammer.
+		hint |= UPDATE_TREE_VIEW;
+		m_pDog->SetDOB(m_DOB);
+	}
+	if (m_pDog->GetDeceased() != m_Deceased)
+	{
+		// big hammer
+		hint |= UPDATE_TREE_VIEW;
+		m_pDog->SetDeceased(m_Deceased);
+	}
+	if (m_pDog->GetBreed() != m_Breed)
+	{
+		bModified = true;
+		m_pDog->SetBreed(m_Breed.c_str());
+	}
+	if (m_pDog->GetRegisteredName() != m_RegName)
+	{
+		hint |= UPDATE_POINTS_VIEW;
+		m_pDog->SetRegisteredName(m_RegName.c_str());
+	}
+	if (m_pDog->GetNote() != m_Notes)
+	{
+		bModified = true;
+		m_pDog->SetNote(m_Notes.c_str());
+	}
+	if (m_pDog->GetTitles() != m_Titles)
+	{
+		hint |= UPDATE_POINTS_VIEW;
+		m_pDog->GetTitles() = m_Titles;
+	}
+	if (m_pDog->GetRegNums() != m_RegNums)
+	{
+		hint |= UPDATE_POINTS_VIEW;
+		m_pDog->GetRegNums() = m_RegNums;
+	}
+	if (m_pDog->GetExistingPoints() != m_ExistingPoints)
+	{
+		hint |= UPDATE_POINTS_VIEW;
+		m_pDog->GetExistingPoints() = m_ExistingPoints;
+	}
+	if (hint)
+		bModified = true;
+
+	if (m_viewHidden != CAgilityBookOptions::GetViewHiddenTitles())
+	{
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+		for (ARBDogList::iterator iterDogs = m_pDoc->Book().GetDogs().begin(); iterDogs != m_pDoc->Book().GetDogs().end(); ++iterDogs)
+			for (ARBDogTitleList::iterator iterTitle = (*iterDogs)->GetTitles().begin(); iterTitle != (*iterDogs)->GetTitles().end(); ++iterTitle)
+			{
+				if (m_pDoc->ResetVisibility(venues, *iterTitle))
+					hint |= UPDATE_POINTS_VIEW;
+			}
+	}
+
+	if (bModified)
+		m_pDoc->Modify(true);
+
+	if (hint)
+	{
+		CUpdateHint updateHint(hint);
+		m_pDoc->UpdateAllViews(NULL, &updateHint);
+	}
 
 	EndDialog(wxID_OK);
 }

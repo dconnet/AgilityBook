@@ -1112,7 +1112,6 @@ bool CAgilityBookTreeView::OnCmd(int id)
 				CDlgDog dlg(GetDocument(), dog);
 				if (wxID_OK == dlg.ShowModal())
 				{
-					GetDocument()->Modify(true);
 					if (GetDocument()->Book().GetDogs().AddDog(dog))
 						InsertDog(dog, true);
 					// For some reason, the first dog isn't showing up.

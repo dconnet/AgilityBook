@@ -39,14 +39,19 @@ Do a full rebuild and verify it.
 Commit all changes to SVN.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
-- export PATH=$WIXWIN/build-ansi:$PATH
-- cd agilitybook/AgilityBook
+- export PATH=$WXWIN/build-ansi:$PATH
+- cd .../AgilityBook
 - autoconf
 - cd build
 - ../configure
 - make dist
+[note: the makefile is not generating the image correctly to run on osx10.4
+So do a release build in xcode and copy that executable into the 'dist'
+generated .app folder]
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
-  Name it AgilityBook-n_n_n_n.dmg
+  - Name it AgilityBook-n_n_n_n-mac.dmg
+  - After dragging in image, rename the mount point.
+  - Unmount and 'Convert' in DU (save as same name) to compress.
 
 Tag SubVersion repository
  - https://agilitybook.svn.sourceforge.net/svnroot/agilitybook/tags/vn.n.n.n
@@ -74,7 +79,7 @@ In SourceForge, enter the File Releases section in Admin.
   - AgilityBook-n_n_n_n-src.zip
   - AgilityBook-n_n_n_n-win-<lang>.zip
   - AgilityBook-n_n_n_n-x64-<lang>.zip
-  - AgilityBook-n_n_n_n.dmg
+  - AgilityBook-n_n_n_n-mac.dmg
 - Refresh the web page with the button in Step 2.
 - Select the files and press the button again.
 - Update all the fields in Step 3.
