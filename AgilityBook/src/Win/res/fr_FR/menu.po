@@ -461,7 +461,7 @@ msgid "DescViewToolbook"
 msgstr "Outils"
 
 msgid "MenuViewOrientation"
-msgstr "Orientation..."
+msgstr "Orientation"
 
 msgid "DescViewOrientation"
 msgstr "Orientation des onglets"
