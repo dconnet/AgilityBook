@@ -1567,7 +1567,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	bool bModified = false;
 	unsigned int hint = 0;
 
-	if (m_pDog->GetCallName() != m_CallName)
+	if (m_pDog->GetCallName() != m_CallName.c_str())
 	{
 		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
 		m_pDog->SetCallName(m_CallName.c_str());
@@ -1585,17 +1585,17 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 		hint |= UPDATE_TREE_VIEW;
 		m_pDog->SetDeceased(m_Deceased);
 	}
-	if (m_pDog->GetBreed() != m_Breed)
+	if (m_pDog->GetBreed() != m_Breed.c_str())
 	{
 		bModified = true;
 		m_pDog->SetBreed(m_Breed.c_str());
 	}
-	if (m_pDog->GetRegisteredName() != m_RegName)
+	if (m_pDog->GetRegisteredName() != m_RegName.c_str())
 	{
 		hint |= UPDATE_POINTS_VIEW;
 		m_pDog->SetRegisteredName(m_RegName.c_str());
 	}
-	if (m_pDog->GetNote() != m_Notes)
+	if (m_pDog->GetNote() != m_Notes.c_str())
 	{
 		bModified = true;
 		m_pDog->SetNote(m_Notes.c_str());
