@@ -1,22 +1,20 @@
 Miscellaneous files:
+AgilityRecordBook.std       CD Label for backing up source code
 AgilityRecordBook-land.doc  Flyer (landscape)
 AgilityRecordBook-port.doc  Flyer (portrait)
-AgilityRecordBook.std       CD Label for backing up source code
 ARB Cards.zdl               Business Card
 arb.gif                     'Agility Record Book' image
 arb.jpg                     'Agility Record Book' image
 arb.tif                     'Agility Record Book' image
-
+InstallGUIDs.csv            List of MSI GUIDs that have been released
 Readme.txt                  This file
-Readme - YahooALT.txt       File copied into Yahoo alternate area as Readme.txt
 Instructions.txt            Readme file for SourceForge releases
-
-Installation/               Directory containing files to modify a standard
-                            WiX installation. See Readme.txt there.
+Translations.xls            A list of all strings that need to be translated.
 
 File Types
-.doc   Microsoft Word 2002
-.std   SureThing CD Labeler Deluxe 3.1
+.doc   Microsoft Word 2003
+.xls   Microsoft Excel 2003
+.std   SureThing CD Labeler Deluxe 3.12
        http://www.surething.com/ST/Category.asp?CatCode=ST4_HOME
 .zdl   Avery DesignPro (free)
        http://www.avery.com/us/Main?action=software.AverySoftwareDetail&catalogcode=WEB01&softwarecode=3200

@@ -1,14 +1,21 @@
 Use this to determine which files to download:
 
-    AgilityBook_<version>-<tag>.zip
-        This is what you want! Download load this file onto your computer
-        and unzip the files. Once unzipped, run the setup.exe program.
-        Once installed, you can delete the setup/msi/cab files.
-		To determine which <tag> you want:
-		- "win"   Windows NT/2000/XP
-		- "win98" Windows 98
-		- "x64"   64 bit Windows
+Windows: AgilityBook-<version>-<tag>-<lang>.zip
+    This is what you want! Download load this file onto your computer
+    and unzip the files. Once unzipped, run the AgilityBook.msi installer.
+    Once installed, you can delete the setup/msi/cab files.
+    <tag> Operating system
+     - "win"  Windows NT/2000/XP/Vista
+     - "x64"  64 bit Windows
+    <lang> Installer Language
+    (all languages are included in the program itself)
+     - "en"   English
+     - "fr"   French
 
-    AgilityBook_<version>-src.zip
-        Source code to create the program. Usually, only developers are
-        interested in this.
+Mac: AgilityBook-<version>.dmg
+    This is what you want! Download load this file onto your computer and
+    mount the image. Simply drag AgilityBook.app to your Application folder.
+
+Any: AgilityBook-<version>-src.zip
+    Source code to create the program.
+    Usually, only developers are interested in this.
