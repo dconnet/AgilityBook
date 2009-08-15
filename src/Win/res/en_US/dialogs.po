@@ -172,7 +172,7 @@ msgstr "&Location:"
 msgid "IDC_CAL_NOTES"
 msgstr "N&otes"
 
-# DlgCalendarPlugins
+# DlgCalendarPlugins (CalendarSites.cpp)
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Calendar Plugins"
 

@@ -173,7 +173,7 @@ msgstr "&Endroit:"
 msgid "IDC_CAL_NOTES"
 msgstr "&Notes"
 
-# DlgCalendarPlugins
+# DlgCalendarPlugins (CalendarSites.cpp)
 msgid "IDD_CALENDAR_PLUGINS"
 msgstr "Plugins calendrier"
 
@@ -985,14 +985,14 @@ msgstr "Millimètres"
 msgid "IDC_OPT_PRINT_RUNPAGE"
 msgstr "Dimensions de la page pour parcours"
 
-msgid "IDC_OPT_PRINT_MARGIN"
-msgstr "Marges"
-
 msgid "IDC_OPT_PRINT_RUNPAGE_W"
 msgstr "&Largeur"
 
 msgid "IDC_OPT_PRINT_RUNPAGE_H"
 msgstr "&Hauteur"
+
+msgid "IDC_OPT_PRINT_MARGIN"
+msgstr "Marges"
 
 msgid "IDC_OPT_PRINT_MARGIN_L"
 msgstr "&Gauche"
