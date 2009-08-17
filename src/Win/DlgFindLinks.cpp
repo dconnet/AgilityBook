@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-10-08 DRC Fixed data index lookup when editing an item.
+ * @li 2009-08-08 DRC Fixed data index lookup when editing an item.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Added 'Open' button.
