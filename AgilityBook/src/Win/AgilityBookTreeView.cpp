@@ -928,27 +928,27 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 	wxPoint point;
 	if (GetMenuPosition(point, *m_Ctrl, evt))
 	{
-		m_bSuppressSelect = true;
-		wxTreeItemId item = m_Ctrl->GetSelection();
-		// On a r-click context, the highlighting is set, but the current item
-		// doesn't change. The wxTreeCtrl api does not appear to have the
-		// concept of the current highlight item like windows does. So we'll
-		// force the current item, then reset. But ignore the changes!
-		// (do not use the changing msg and veto it - that kills the change!)
-		m_Ctrl->SelectItem(evt.GetItem());
 		CAgilityBookTreeData* pData = GetTreeItem(evt.GetItem());
 		if (pData)
 		{
+			bSkip = false;
+			m_bSuppressSelect = true;
+			wxTreeItemId item = m_Ctrl->GetSelection();
+			// On a r-click context, the highlighting is set, but the current item
+			// doesn't change. The wxTreeCtrl api does not appear to have the
+			// concept of the current highlight item like windows does. So we'll
+			// force the current item, then reset. But ignore the changes!
+			// (do not use the changing msg and veto it - that kills the change!)
+			m_Ctrl->SelectItem(evt.GetItem());
 			wxMenu* menu = CreatePopup(pData->GetMenuID());
 			if (menu)
 			{
-				bSkip = false;
 				m_Ctrl->PopupMenu(menu, point);
 				delete menu;
 			}
+			m_Ctrl->SelectItem(item);
+			m_bSuppressSelect = false;
 		}
-		m_Ctrl->SelectItem(item);
-		m_bSuppressSelect = false;
 	}
 	if (bSkip)
 		evt.Skip();
