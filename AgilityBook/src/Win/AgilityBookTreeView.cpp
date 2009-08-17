@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-17 DRC Fix r-click selection issues.
  * @li 2009-07-13 DRC Changing language didn't update dog's age.
  * @li 2009-07-11 DRC Change how runs are synced with list to reduce reloading.
  * @li 2009-02-08 DRC Ported to wxWidgets.
@@ -927,6 +928,14 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 	wxPoint point;
 	if (GetMenuPosition(point, *m_Ctrl, evt))
 	{
+		m_bSuppressSelect = true;
+		wxTreeItemId item = m_Ctrl->GetSelection();
+		// On a r-click context, the highlighting is set, but the current item
+		// doesn't change. The wxTreeCtrl api does not appear to have the
+		// concept of the current highlight item like windows does. So we'll
+		// force the current item, then reset. But ignore the changes!
+		// (do not use the changing msg and veto it - that kills the change!)
+		m_Ctrl->SelectItem(evt.GetItem());
 		CAgilityBookTreeData* pData = GetTreeItem(evt.GetItem());
 		if (pData)
 		{
@@ -938,6 +947,8 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 				delete menu;
 			}
 		}
+		m_Ctrl->SelectItem(item);
+		m_bSuppressSelect = false;
 	}
 	if (bSkip)
 		evt.Skip();
