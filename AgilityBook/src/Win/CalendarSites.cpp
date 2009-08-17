@@ -31,7 +31,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2009-10-06 DRC Fix plugin enabling (full path was being stored in map)
+ * @li 2009-08-06 DRC Fix plugin enabling (full path was being stored in map)
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
