@@ -1346,7 +1346,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.0.0;
+				CURRENT_PROJECT_VERSION = 2.0.3;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1367,14 +1367,16 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
-					"-I$WXWIN/build-ansi/lib/wx/include/mac-ansi-release-static-2.8",
+					"-I$WXWIN/build-debug/lib/wx/include/mac-ansi-debug-static-2.8",
 					"-I$WXWIN/include",
+					"-I$WXWIN/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
-					"-D__WXMAC__\n",
+					"-D__WXDEBUG__",
+					"-D__WXMAC__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXWIN/build-ansi/lib",
+					"-L$WXWIN/build-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1391,22 +1393,22 @@
 					AGL,
 					"-framework",
 					WebKit,
-					"-lwx_mac_richtext-2.8",
-					"-lwx_mac_aui-2.8",
-					"-lwx_mac_xrc-2.8",
-					"-lwx_mac_qa-2.8",
-					"-lwx_mac_html-2.8",
-					"-lwx_mac_adv-2.8",
-					"-lwx_mac_core-2.8",
-					"-lwx_base_carbon_xml-2.8",
-					"-lwx_base_carbon_net-2.8",
-					"-lwx_base_carbon-2.8",
-					"-lwxregex-2.8",
-					"-lwxexpat-2.8",
-					"-lwxtiff-2.8",
-					"-lwxjpeg-2.8",
-					"-lwxpng-2.8",
-					"-lwxzlib-2.8",
+					"-lwx_macd_richtext-2.8",
+					"-lwx_macd_aui-2.8",
+					"-lwx_macd_xrc-2.8",
+					"-lwx_macd_qa-2.8",
+					"-lwx_macd_html-2.8",
+					"-lwx_macd_adv-2.8",
+					"-lwx_macd_core-2.8",
+					"-lwx_base_carbond_xml-2.8",
+					"-lwx_base_carbond_net-2.8",
+					"-lwx_base_carbond-2.8",
+					"-lwxregexd-2.8",
+					"-lwxexpatd-2.8",
+					"-lwxtiffd-2.8",
+					"-lwxjpegd-2.8",
+					"-lwxpngd-2.8",
+					"-lwxzlibd-2.8",
 					"-lpthread",
 					"-liconv",
 				);
@@ -1442,6 +1444,7 @@
 					"-I$BOOSTINCLUDE",
 					"-I$WXWIN/build-ansi/lib/wx/include/mac-ansi-release-static-2.8",
 					"-I$WXWIN/include",
+					"-I$WXWIN/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
 					"-D__WXMAC__\n",

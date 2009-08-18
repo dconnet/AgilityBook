@@ -45,6 +45,12 @@ to make easier to deploy:
 strings does not work properly]
 > ../configure --disable-shared --disable-unicode --enable-universal-binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.3.9 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
 > make
+To enable debug builds in xcode:
+> mkdir build-debug
+> cd build-debug
+> ../configure --enable-debug --enable-debug_gdb --disable-shared --disable-unicode --enable-universal-binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.3.9 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
+> make
+The debug configuration of xcode is based on this.
 
 Now you need to put this version of wx-config on your path so when you make
 agilitybook it picks this version of wxMac
