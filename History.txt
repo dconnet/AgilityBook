@@ -1,4 +1,8 @@
-8/15/2009: v2.0.3 <in development>
+8/19/2009: v2.0.3 <in development>
+- Bug fixes:
+  - Fixed the way runs are printed in landscape with default page size.
+
+8/15/2009: v2.0.3.2422
 - New features / Enhancements:
   - Reduced data reload when editing a dog.
 - Bug fixes:
