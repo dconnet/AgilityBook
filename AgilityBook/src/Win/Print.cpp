@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-19 DRC Fixed printing when page size isn't specified.
  * @li 2009-05-31 DRC Added support for creating pages of a specific size.
  * @li 2009-01-27 DRC Ported to wxWidgets.
  * @li 2009-01-21 DRC Leave gray separator line in when text in run is empty.
@@ -175,6 +176,7 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 		GetPageSizeMM(&pageW, &pageH);
 		long width, height;
 		CAgilityBookOptions::GetRunPageSize(true, width, height, NULL);
+		// This logic should match OnPrintPage
 		if (0 < width && 0 < height)
 		{
 			m_nPagesX = pageW / width;
@@ -857,6 +859,7 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 	bool bPrintBox = false;
 	long width, height;
 	CAgilityBookOptions::GetRunPageSize(false, width, height, NULL);
+	// This logic should match GetPageInfo
 	if (0 < width && 0 < height)
 	{
 		bPrintBox = true;
@@ -871,6 +874,8 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 	{
 		width = rSheet.width;
 		height = rSheet.height;
+		if (abs(width) > abs(height)) // landscape
+			width /= 2;
 	}
 
 	size_t curRun = (pageNum - 1) * m_nPerSheet;
