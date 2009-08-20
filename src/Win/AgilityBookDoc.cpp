@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-19 DRC Create a 'fake' dog when creating a new file.
  * @li 2009-02-05 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -1244,6 +1245,21 @@ bool CAgilityBookDoc::OnNewDocument()
 // I'm not going to implement that in wxWidgets.
 //		if (AfxGetMainWnd() && IsWindow(AfxGetMainWnd()->GetSafeHwnd()))
 //			AfxGetMainWnd()->PostMessage(PM_DELAY_MESSAGE, CREATE_NEWDOG);
+// Instead, just create a "fake" dog.
+		ARBDogPtr dog(ARBDog::New());
+		dog->SetCallName(_("IDS_COL_DOG"));
+		dog->SetDOB(ARBDate::Today());
+		m_Records.GetDogs().AddDog(dog);
+		Modify(false);
+		// Kick the LoadData in every view
+		UpdateAllViews();
+		// Finally, force a status update (currently, the last loaddata is the winner)
+		if (GetDocumentManager())
+		{
+			CAgilityBookBaseExtraView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseExtraView);
+			if (pView)
+				pView->UpdateMessages();
+		}
 	}
 	return true;
 }
