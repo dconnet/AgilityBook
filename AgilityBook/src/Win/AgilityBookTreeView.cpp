@@ -998,6 +998,14 @@ void CAgilityBookTreeView::OnCtrlKeyDown(wxKeyEvent& evt)
 
 void CAgilityBookTreeView::OnViewContextMenu(wxContextMenuEvent& evt)
 {
+#ifdef __WXMAC__
+	// Something is wrong on Mac. A right click generates the context menu
+	// in the control (above), but we get the message here also. When we
+	// right click on the blank view area, windows gets the view message,
+	// but the Mac gets nothing. For now, just don't support the context menu
+	// in the view for the Mac.
+	evt.Skip();
+#else
 	if (!m_Ctrl)
 		return;
 	bool bSkip = true;
@@ -1018,6 +1026,7 @@ void CAgilityBookTreeView::OnViewContextMenu(wxContextMenuEvent& evt)
 	}
 	if (bSkip)
 		evt.Skip();
+#endif
 }
 
 
