@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-25 DRC Make time_t ctors explicit to prevent casts from bools.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added inForceOutput to GetString.
  * @li 2005-07-05 DRC Added a new formatting option.
@@ -110,9 +111,9 @@ public:
 		: m_Julian(rhs.m_Julian)
 	{
 	}
-	ARBDate(time_t inTime);
+	explicit ARBDate(time_t inTime);
 #if defined(ARB_HAS_32_AND_64_BIT_TIMET)
-	ARBDate(__time64_t inTime);
+	explicit ARBDate(__time64_t inTime);
 #endif
 	ARBDate(
 			int inYr,

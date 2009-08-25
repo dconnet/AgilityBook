@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-25 DRC Fixed dates (again). Damn bool->time_t autoconversion.
  * @li 2009-08-10 DRC One group box was still off, dates are not stored
  *                correctly, and saving named filters is duplicating names.
  * @li 2009-07-14 DRC Fixed group box creation order.
@@ -345,9 +346,9 @@ void CDlgOptionsFilter::Save()
 		if (!m_bDateStart && !m_bDateEnd)
 			m_FilterOptions.SetViewAllDates(true);
 		m_FilterOptions.SetStartFilterDateSet(m_bDateStart);
-		m_FilterOptions.SetStartFilterDate(m_bDateStart);
+		m_FilterOptions.SetStartFilterDate(m_timeStart);
 		m_FilterOptions.SetEndFilterDateSet(m_bDateEnd);
-		m_FilterOptions.SetEndFilterDate(m_bDateEnd);
+		m_FilterOptions.SetEndFilterDate(m_timeEnd);
 	}
 	CCalendarViewFilter calView = m_FilterOptions.FilterCalendarView();
 	calView.Clear();
