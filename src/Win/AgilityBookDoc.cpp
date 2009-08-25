@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-25 DRC Refresh properly after changing filter in context menu.
  * @li 2009-08-19 DRC Create a 'fake' dog when creating a new file.
  * @li 2009-02-05 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
@@ -237,7 +238,7 @@ void CAgilityBookDoc::OnStatusFilter(wxCommandEvent& evt)
 		CFilterOptions::Options().Load();
 		if (ResetVisibility())
 		{
-			CUpdateHint hint(UPDATE_POINTS_VIEW);
+			CUpdateHint hint(UPDATE_ALL_VIEW);
 			UpdateAllViews(NULL, &hint);
 		}
 	}
