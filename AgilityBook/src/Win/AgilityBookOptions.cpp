@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-26 DRC Changed auto update check to false in debug mode.
  * @li 2009-08-08 DRC Changed default setting for proxy and show dog after title
  * @li 2009-07-19 DRC Implement proxy support. 
  * @li 2008-12-24 DRC Ported to wxWidgets.
@@ -1312,7 +1313,11 @@ void CAgilityBookOptions::SetMRUFileCount(long nFiles)
 bool CAgilityBookOptions::GetAutoUpdateCheck()
 {
 	bool val = true;
+#ifdef _DEBUG
+	val = false;
+#else
 	wxConfig::Get()->Read(wxT("Settings/autoCheck"), &val);
+#endif
 	return val;
 }
 
