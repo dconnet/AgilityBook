@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-26 DRC Fix file autoload failure so it opens new document.
  * @li 2008-12-14 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-19 DRC Fixed a problem with CFile::GetStatus (see AgilityBook.cpp).
@@ -406,10 +407,14 @@ bool CAgilityBookApp::OnInit()
 			filename.clear();
 		}
 	}
-	if (filename.empty())
+	bool bNew = true;
+	if (!filename.empty())
+	{
+		if (m_manager->CreateDocument(filename, wxDOC_SILENT))
+			bNew = false;
+	}
+	if (bNew)
 		m_manager->CreateDocument(wxEmptyString, wxDOC_NEW);
-	else
-		m_manager->CreateDocument(filename, wxDOC_SILENT);
 
 	if (0 < state)
 		frame->Maximize();
