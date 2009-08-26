@@ -1,4 +1,4 @@
-8/25/2009: v2.0.4 <in development>
+8/26/2009: v2.0.4 <in development>
 - New features / Enhancements:
   - When a new file is created, create a dog. This gives the user a clue
     of where to start.
@@ -7,6 +7,7 @@
   - Fixed the context menu in the tree.
   - Refresh properly after changing filter in context menu.
   - Fixed date filters.
+  - Fix file autoload failure so it opens new document.
 
 8/15/2009: v2.0.3.2422
 - New features / Enhancements:
