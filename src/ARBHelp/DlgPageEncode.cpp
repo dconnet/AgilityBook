@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2008-01-12 DRC Dump reg data in .reg format
  * @li 2007-01-02 DRC Created
@@ -150,13 +151,13 @@ void CDlgPageEncode::DumpGroup(
 			{
 			default:
 				if (data)
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" unknown") << std::endl;
+					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" unknown") << std::endl;
 				break;
 			case wxConfigBase::Type_String:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" string") << std::endl;
-					*data << wxConfig::Get()->Read(str, wxEmptyString) << std::endl;
+					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" string") << std::endl;
+					*data << wxConfig::Get()->Read(str, wxEmptyString).c_str() << std::endl;
 				}
 				else if (items)
 					items->push_back(wxConfig::Get()->Read(str, wxEmptyString));
@@ -164,7 +165,7 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Boolean:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" bool") << std::endl;
+					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" bool") << std::endl;
 					bool b;
 					wxConfig::Get()->Read(str, &b);
 					*data << b << std::endl;
@@ -173,14 +174,14 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Integer:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" int") << std::endl;
+					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" int") << std::endl;
 					*data << wxConfig::Get()->Read(str, 0L) << std::endl;
 				}
 				break;
 			case wxConfigBase::Type_Float:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" float") << std::endl;
+					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" float") << std::endl;
 					double d;
 					wxConfig::Get()->Read(str, &d);
 					*data << d << std::endl;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  */
 

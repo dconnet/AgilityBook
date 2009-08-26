@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-01-02 DRC Created
  */
@@ -172,7 +173,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 					// Now decode
 					BinaryData::DecodeString(dataIn, dataOut);
 					dataIn.clear();
-					editData << dataOut << sc_sections[idx].end << wxT("\n\n");
+					editData << dataOut.c_str() << sc_sections[idx].end << wxT("\n\n");
 					dataOut.clear();
 				}
 			}
@@ -206,7 +207,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				if ((output.rdstate() & std::ios::failbit))
 				{
 					editData << STREAM_FILE_BEGIN << wxT("\n")
-						<< dataOut
+						<< dataOut.c_str()
 						<< STREAM_FILE_END << wxT("\n\n");
 				}
 				else
