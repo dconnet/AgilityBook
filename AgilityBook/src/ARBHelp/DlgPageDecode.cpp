@@ -32,6 +32,7 @@
  *
  * Revision History
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
+ *                    Fixed decoding binary files.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2007-01-02 DRC Created
  */
@@ -46,6 +47,7 @@
 #include "DlgARBHelp.h"
 #include <algorithm>
 #include <fstream>
+#include <wx/ffile.h>
 #include <wx/filename.h>
 
 
@@ -197,26 +199,28 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				data = data.Mid(posEnd + lstrlen(STREAM_FILE_END));
 				data.Trim(false);
 				// Now decode
-				BinaryData::DecodeString(dataIn, dataOut);
+				unsigned char* binData = NULL;
+				size_t nBytes = 0;
+				BinaryData::Decode(dataIn, binData, nBytes);
 				dataIn.clear();
 				// Generate a temp file name
 				wxString tempname = wxFileName::CreateTempFileName(wxT("arb"));
 				m_TmpFiles.push_back(tempname);
-				oftstream output(tempname.c_str(), std::ios::out | std::ios::binary);
-				output.exceptions(std::ios_base::badbit);
-				if ((output.rdstate() & std::ios::failbit))
+				wxFFile output;
+				if (output.Open(tempname.c_str(), wxT("wb")))
 				{
-					editData << STREAM_FILE_BEGIN << wxT("\n")
-						<< dataOut.c_str()
-						<< STREAM_FILE_END << wxT("\n\n");
+					output.Write(binData, nBytes);
+					output.Close();
+					editData << wxT("File written to: ") << tempname.c_str() << wxT("\n\n");
 				}
 				else
 				{
-					output << dataOut;
-					output.close();
-					editData << wxT("File written to: ") << tempname.c_str() << wxT("\n\n");
+					std::string tmp(reinterpret_cast<char*>(binData), nBytes);
+					editData << STREAM_FILE_BEGIN << wxT("\n")
+						<< tstringUtil::TString(tmp).c_str()
+						<< STREAM_FILE_END << wxT("\n\n");
 				}
-				dataOut.clear();
+				BinaryData::Release(binData);
 			}
 		}
 		editData << data.c_str();

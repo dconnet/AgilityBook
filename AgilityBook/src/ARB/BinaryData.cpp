@@ -164,8 +164,9 @@ bool BinaryData::DecodeString(
 	if (!BinaryData::Decode(inBase64, data, len))
 		return false;
 	// TODO: Better conversion
-	outData = tstringUtil::TString(reinterpret_cast<char*>(data), len);
+	std::string tmp(reinterpret_cast<char*>(data), len);
 	Release(data);
+	outData = tstringUtil::TString(tmp);
 	return true;
 }
 

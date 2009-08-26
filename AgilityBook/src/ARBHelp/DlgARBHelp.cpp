@@ -32,6 +32,7 @@
  *
  * Revision History
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
+ *                    Fixed reading binary files. Added some timestamps.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  */
 
@@ -107,6 +108,7 @@ wxString CDlgARBHelp::GetEncodedData()
 	{
 		otstringstream rawdata;
 
+		// System information.
 		{
 			tstring data;
 			BinaryData::EncodeString(m_SysInfo, data);
@@ -115,6 +117,7 @@ wxString CDlgARBHelp::GetEncodedData()
 				<< wxT("\n") << STREAM_SYSTEM_END << wxT("\n");
 		}
 
+		// Registry information.
 		{
 			tstring data;
 			BinaryData::EncodeString(m_RegInfo, data);
@@ -123,15 +126,23 @@ wxString CDlgARBHelp::GetEncodedData()
 				<< wxT("\n") << STREAM_REGISTRY_END << wxT("\n");
 		}
 
+		// Data files.
 		for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 		{
 			rawdata << wxT("\n") << (*iFile).first.c_str();
 			if ((*iFile).second)
 			{
 				wxFFile file;
-				if (file.Open((*iFile).first))
+				if (file.Open((*iFile).first, wxT("rb")))
 				{
 					tstring data;
+					wxFileName fileName((*iFile).first);
+					wxDateTime dtMod, dtCreate;
+					if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
+					{
+						rawdata << wxT("\nCreated: ") << dtCreate.Format().c_str()
+							<< wxT("\nModified: ") << dtMod.Format().c_str();
+					}
 					BinaryData::Encode(file, data);
 					rawdata << wxT("\n") << STREAM_FILE_BEGIN << wxT("\n")
 						<< data
