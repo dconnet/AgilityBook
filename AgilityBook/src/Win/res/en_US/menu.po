@@ -183,6 +183,9 @@ msgstr "Edit a Dog's information"
 msgid "MenuNew"
 msgstr "&New..."
 
+msgid "MenuNewRun"
+msgstr "&New...\tCtrl+R"
+
 msgid "MenuDogNew"
 msgstr "&Dog..."
 

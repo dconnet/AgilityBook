@@ -30,7 +30,11 @@
  * @brief Wrapper for menus to ease i18n and menu ids
  * @author David Connet
  *
+ * Important: For accelerators to work, they must be in the main menu.
+ * If they are only in a context menu, the accelerator will not work.
+ *
  * Revision History
+ * @li 2009-09-09 DRC Fix Ctrl+R. See note above.
  * @li 2008-12-14 DRC Created
  */
 
@@ -335,7 +339,7 @@ void CAgilityBookMenu::CreateSubMenu(wxMenu* parent, MenuHandles& handles, bool 
 		DoMenu(handles.menu, bCreate, ID_AGILITY_EDIT_RUN, _("MenuRunProperties"), _("DescRunProperties"));
 		if (bCreate)
 			handles.menu->AppendSeparator();
-		DoMenu(handles.menu, bCreate, ID_AGILITY_NEW_RUN, _("MenuNew"), _("DescRunNew"));
+		DoMenu(handles.menu, bCreate, ID_AGILITY_NEW_RUN, _("MenuNewRun"), _("DescRunNew"));
 		DoMenu(handles.menu, bCreate, ID_AGILITY_DELETE_RUN, _("MenuRunDelete"), _("DescRunDelete"));
 		if (bCreate)
 			handles.menu->AppendSeparator();
