@@ -1,4 +1,4 @@
-9/9/2009: v2.0.4 <in development>
+9/10/2009: v2.0.4.2448
 - New features / Enhancements:
   - When a new file is created, create a dog. This gives the user a clue
     of where to start.
