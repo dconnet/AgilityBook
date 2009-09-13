@@ -11,6 +11,8 @@ if ("%PROCESSOR_ARCHITECTURE%")==("AMD64") set _PFILES=c:\Program Files (x86)
 rem 64bit on Wow64 (32bit cmd shell spawned from msdev)
 if ("%PROCESSOR_ARCHITEW6432%")==("AMD64") set _PFILES=c:\Program Files (x86)
 
+if not exist "%WXWIN%" echo WXWIN doesn't exist && goto done
+
 set _PROGNAME=%0
 set _COMMENT=
 rem For wxWidgets 2.9+, set this to 1
@@ -61,7 +63,7 @@ if ("%_DO_UNICODE%")==("1") echo Error: VC6 doesn't do unicode && goto usage
 if ("%_SHARED%")==("0") echo Error: VC6 doesn't do static && goto usage
 title VC6
 call "%_PFILES%\Microsoft Visual Studio\VC98\bin\vcvars32.bat"
-if ERRORLEVEL 1 goto error
+rem if ERRORLEVEL 1 goto error
 if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc60
 if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC60
 set _CPPFLAGS=
@@ -71,7 +73,7 @@ goto :doit
 if not exist "%_PFILES%\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat" echo VC7.1 not installed && goto done
 title VC7
 call "%_PFILES%\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat"
-if ERRORLEVEL 1 goto error
+rem if ERRORLEVEL 1 goto error
 if ("%_DO_UNICODE%")==("1") echo Error: VC7 doesn't do unicode && goto usage
 if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc71
 if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC71
