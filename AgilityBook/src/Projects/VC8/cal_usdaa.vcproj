@@ -55,7 +55,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -123,7 +123,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -192,7 +192,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -261,7 +261,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool

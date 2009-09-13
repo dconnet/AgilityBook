@@ -21,8 +21,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;c:/wx/include;c:/wx/include/msvc"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;WXWIDGETS"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -42,7 +42,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC7.1s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC71"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"/>
 			<Tool
@@ -83,8 +83,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;c:/wx/include;c:/wx/include/msvc"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;WXWIDGETS"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="FALSE"
@@ -99,7 +99,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC7.1s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC71"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
