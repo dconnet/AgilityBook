@@ -105,7 +105,7 @@ Changes to 2.8.10:
 #else
 	#define wxLIB_ARCH
 #endif
-    #ifdef _WINDLL
+    #ifdef WXUSINGDLL
         #define wxLIB_SUBDIR wxCONCAT4(vc, wxLIB_ARCH, _dll, wxLIB_SUFFIX)
     #else // !DLL
 		#define wxLIB_SUBDIR wxCONCAT4(vc, wxLIB_ARCH, _lib, wxLIB_SUFFIX)
