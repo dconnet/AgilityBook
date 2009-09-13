@@ -54,7 +54,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -189,7 +189,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -257,7 +257,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC8.0s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC80"
 			/>
 			<Tool
 				Name="VCALinkTool"

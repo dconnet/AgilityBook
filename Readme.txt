@@ -26,13 +26,98 @@ Once the above software is unpacked, the directory structure should look like:
 wxWidgets: http://www.wxwidgets.org/
 I'm currently using version 2.8.10.
 Make sure WXWIN is set to wxWidgets root directory.
-There are a couple changes I've made:
+
+Changes to 2.9.0:
+- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - WXWIN_COMPATIBILITY_2_8 0
+- include/msvc/wx/setup.h:
+  - Change the wxLIB_SUBDIR (5 lines) to:
+===begin
+#if _MSC_VER == 1200
+	#define wxLIB_BASEDIR	vc60_
+#elif _MSC_VER == 1310
+	#define wxLIB_BASEDIR	vc71_
+#elif _MSC_VER == 1400
+	#define wxLIB_BASEDIR	vc80_
+#elif _MSC_VER == 1500
+	#define wxLIB_BASEDIR	vc90_
+#else
+	#define wxLIB_BASEDIR	vc_
+#endif
+#if defined(_M_X64)
+	#define wxLIB_ARCH	_amd64
+#else
+	#define wxLIB_ARCH
+#endif
+    #ifdef WXUSINGDLL
+        #define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _dll)
+    #else // !DLL
+        #define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _lib)
+    #endif // DLL/!DLL
+#endif
+===end
+- src/msw/stdpaths.cpp
+  - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
+    directory from the appdir, which causes problems.
+
+Changes to 2.8.10:
 - in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_6 0
 - include/msvc/wx/setup.h:
-  This is hardcoded to include vc_lib/msw[u][d]/wx/setup.h,
-  - Change it to include "wx/msw/setup.h"
-    [unicode and nonunicode] (gets rid of all the ifdef sections)
+  Add the following lines after the first ifdef:
+===begin
+    #include "wx/version.h"
+    #include "wx/cpp.h"
+#define wxCONCAT3(x1, x2, x3) wxCONCAT(wxCONCAT(x1, x2), x3)
+#define wxCONCAT4(x1, x2, x3, x4) wxCONCAT(wxCONCAT3(x1, x2, x3), x4)
+#define wxCONCAT5(x1, x2, x3, x4, x5) wxCONCAT(wxCONCAT4(x1, x2, x3, x4), x5)
+    // notice that wxSUFFIX_DEBUG is a string but wxSUFFIX itself must be an
+    // identifier as string concatenation is not done inside #include where we
+    // need it
+    #ifdef _DEBUG
+        #define wxSUFFIX_DEBUG "d"
+        #ifdef _UNICODE
+            #define wxSUFFIX ud
+        #else // !_UNICODE
+            #define wxSUFFIX d
+        #endif // _UNICODE/!_UNICODE
+    #else
+        #define wxSUFFIX_DEBUG ""
+        #ifdef _UNICODE
+            #define wxSUFFIX u
+        #else // !_UNICODE
+            #define wxSUFFIX
+        #endif // _UNICODE/!_UNICODE
+    #endif
+#if _MSC_VER == 1200
+	#define wxLIB_SUFFIX	_VC60
+#elif _MSC_VER == 1310
+	#define wxLIB_SUFFIX	_VC71
+#elif _MSC_VER == 1400
+	#define wxLIB_SUFFIX	_VC80
+#elif _MSC_VER == 1500
+	#define wxLIB_SUFFIX	_VC90
+#else
+	#define wxLIB_SUFFIX
+#endif
+#if defined(_M_X64)
+	#define wxLIB_ARCH	_amd64
+#else
+	#define wxLIB_ARCH
+#endif
+    #ifdef _WINDLL
+        #define wxLIB_SUBDIR wxCONCAT4(vc, wxLIB_ARCH, _dll, wxLIB_SUFFIX)
+    #else // !DLL
+		#define wxLIB_SUBDIR wxCONCAT4(vc, wxLIB_ARCH, _lib, wxLIB_SUFFIX)
+    #endif // DLL/!DLL
+    // the real setup.h header file we need is in the build-specific directory,
+    // construct the path to it
+    #define wxSETUPH_PATH \
+        wxCONCAT5(../../../lib/, wxLIB_SUBDIR, /msw, wxSUFFIX, /wx/setup.h)
+    #define wxSETUPH_PATH_STR wxSTRINGIZE(wxSETUPH_PATH)
+    #include wxSETUPH_PATH_STR
+===end
+  Delete all other #includes
 - src/msw/stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
     directory from the appdir, which causes problems.

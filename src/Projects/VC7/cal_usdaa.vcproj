@@ -21,8 +21,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../Include;../../cal_usdaa;../../ARB;../../../../boost;c:/wx/include;c:/wx/include/msvc"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;WXWIDGETS"
+				AdditionalIncludeDirectories="../..;../../Include;../../cal_usdaa;../../ARB;../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -43,7 +43,7 @@
 				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib ws2_32.lib"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC7.1s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC71"
 				IgnoreDefaultLibraryNames="libcmtd"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 				GenerateDebugInformation="TRUE"
@@ -62,7 +62,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="../../Include;c:/wx/include"/>
+				AdditionalIncludeDirectories="../../Include;$(WXWIN)/include"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -86,8 +86,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../Include;../../cal_usdaa;../../ARB;../../../../boost;c:/wx/include;c:/wx/include/msvc"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;WXWIDGETS"
+				AdditionalIncludeDirectories="../..;../../Include;../../cal_usdaa;../../ARB;../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
 				TreatWChar_tAsBuiltInType="FALSE"
@@ -103,7 +103,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib ws2_32.lib"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="C:\wx\lib\vc_lib_VC7.1s"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC71"
 				IgnoreDefaultLibraryNames="libcmt"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 				GenerateDebugInformation="TRUE"
@@ -124,7 +124,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="../../Include;c:/wx/include"/>
+				AdditionalIncludeDirectories="../../Include;$(WXWIN)/include"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
