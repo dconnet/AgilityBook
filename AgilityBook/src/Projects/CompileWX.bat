@@ -27,6 +27,9 @@ call :args static unicode vc9x64
 goto done
 
 :args
+set _PATH=%PATH%
+set _LIBPATH=%LIBPATH%
+
 rem Just set the compiler environment
 if ("%1")==("env") set _COMMENT=rem&& shift
 
@@ -136,6 +139,9 @@ goto done
 echo %_PROGNAME%: ERROR!!!
 
 :done
+if not ("%_PATH%")==("") set PATH=%_PATH%&& set _PATH=
+if not ("%_LIBPATH%")==("") set LIBPATH=%_LIBPATH%&& set _LIBPATH=
+
 set _CFG=
 set _COMMENT=
 set _CPPFLAGS=
