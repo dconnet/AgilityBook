@@ -658,7 +658,7 @@ wxString CPointsDataLifetime::OnNeedText(int inCol) const
 wxString CPointsDataLifetime::GetHtml(size_t nCurLine) const
 {
 	wxString data;
-	data << wxT("<tr><td>&nbsp;</td</tr>\n")
+	data << wxT("<tr><td>&nbsp;</td></tr>\n")
 		<< wxT("<tr>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
@@ -1945,7 +1945,7 @@ void CPointsDataItems::LoadData(
 				break;
 			}
 		}
-		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table></p>"))));
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table></html>"))));
 	}
 }
 
