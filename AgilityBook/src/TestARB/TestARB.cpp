@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-11 DRC Created
  */
 
@@ -84,7 +85,7 @@ int main(int /*argc*/, char** /*argv*/)
 #endif
 	wxInitializer initializer;
 
-	tstring errs;
+	wxString errs;
 	if (!Element::Initialize(errs))
 	{
 		return 1;
@@ -100,9 +101,9 @@ int main(int /*argc*/, char** /*argv*/)
 	wxString m_dirLang = fileName.GetPath() + wxFileName::GetPathSeparator() + wxT("lang");
 
 	wxLocale* m_locale = new wxLocale();
-	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
 	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
-	m_locale->AddCatalog(wxT("arb"));
+	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
+	m_locale->AddCatalog(wxT("arb"), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 	m_Localization.Load();
 
 	int rc = UnitTest::RunAllTests();
@@ -120,7 +121,7 @@ int main(int /*argc*/, char** /*argv*/)
 // RunARBTests.py will automatically pick up all XML files in ./res/
 ElementNodePtr LoadXMLData(int id)
 {
-	tstring errMsg;
+	wxString errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
@@ -195,7 +196,7 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
 	int idx = tree->FindElement(TREE_CONFIG);
 	assert(0 <= idx);
-	tstring errMsg;
+	wxString errMsg;
 	ARBErrorCallback err(errMsg);
 	return config.Load(tree->GetElementNode(idx), version, err);
 }
@@ -288,7 +289,7 @@ ElementNodePtr CreateActionList()
 </RootNode>";
 
 	ElementNodePtr actions = ElementNode::New();
-	tstring errmsg;
+	wxString errmsg;
 	bool bParse = actions->LoadXMLBuffer(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{

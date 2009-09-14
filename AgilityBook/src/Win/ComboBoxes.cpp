@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-20 DRC Ported to wxWidgets.
  * @li 2008-01-05 DRC Added CVenueComboBox
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -87,11 +88,11 @@ CVenueComboBox::CVenueComboBox(
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		int index;
 		if (useLongName)
-			index = Append(pVenue->GetLongName().c_str());
+			index = Append(pVenue->GetLongName());
 		else
-			index = Append(pVenue->GetName().c_str());
+			index = Append(pVenue->GetName());
 		SetClientObject(index, new CVenueComboData(pVenue));
-		if (!inSelectVenue.empty() && pVenue->GetName() == inSelectVenue.c_str())
+		if (!inSelectVenue.empty() && pVenue->GetName() == inSelectVenue)
 			SetSelection(index);
 	}
 }
@@ -182,7 +183,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
 		// Allow non-titling runs to only have certain types.
 		if (!bHasTitling && !q.AllowForNonTitling())
 			continue;
-		int idx = Append(q.str().c_str());
+		int idx = Append(q.str());
 		SetClientObject(idx, new CQualifyingComboData(q));
 		if (curQ == q)
 			SetSelection(idx);

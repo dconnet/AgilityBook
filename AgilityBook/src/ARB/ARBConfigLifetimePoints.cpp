@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-10-06 DRC Added as part of file version 10.
  */
@@ -115,7 +116,7 @@ bool ARBConfigLifetimePoints::operator==(ARBConfigLifetimePoints const& rhs) con
 }
 
 
-tstring ARBConfigLifetimePoints::GetGenericName() const
+wxString ARBConfigLifetimePoints::GetGenericName() const
 {
 	return Localization()->LifetimePointsNameFormat(m_Points, m_Faults);
 }

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  *                    Fixed decoding binary files.
  * @li 2009-03-01 DRC Ported to wxWidgets.
@@ -131,9 +132,9 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		data.Trim(true);
 		data.Trim(false);
 
-		tstring dataIn(data.c_str());
+		wxString dataIn(data);
 		data.Empty();
-		tstring dataOut;
+		wxString dataOut;
 		BinaryData::DecodeString(dataIn, dataOut);
 		dataIn.clear();
 		data = dataOut.c_str();

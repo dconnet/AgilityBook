@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -92,18 +93,18 @@ SUITE(TestConfigCalSite)
 	TEST(GetFormattedURL)
 	{
 		TODO_TEST
-		//tstring GetFormattedURL(
-		//		std::vector<tstring> const& inLocCodes,
-		//		std::vector<tstring> const& inVenueCodes) const;
+		//wxString GetFormattedURL(
+		//		std::vector<wxString> const& inLocCodes,
+		//		std::vector<wxString> const& inVenueCodes) const;
 	}
 
 
 	TEST(LocationCodes)
 	{
 		TODO_TEST
-		//bool HasLocationCode(tstring const& inCode) const;
-		//bool AddLocationCode(tstring const& inCode, tstring const& inName);
-		//bool RemoveLocationCode(tstring const& inCode);
+		//bool HasLocationCode(wxString const& inCode) const;
+		//bool AddLocationCode(wxString const& inCode, wxString const& inName);
+		//bool RemoveLocationCode(wxString const& inCode);
 		//bool RemoveAllLocationCodes();
 	}
 
@@ -111,9 +112,9 @@ SUITE(TestConfigCalSite)
 	TEST(VenueCodes)
 	{
 		TODO_TEST
-		//bool HasVenueCode(tstring const& inCode) const;
-		//bool AddVenueCode(tstring const& inCode, tstring const& inVenue);
-		//bool RemoveVenueCode(tstring const& inCode);
+		//bool HasVenueCode(wxString const& inCode) const;
+		//bool AddVenueCode(wxString const& inCode, wxString const& inVenue);
+		//bool RemoveVenueCode(wxString const& inCode);
 		//bool RemoveAllVenueCodes();
 	}
 }
@@ -142,7 +143,7 @@ SUITE(TestConfigCalSiteList)
 	{
 		TODO_TEST
 		//bool FindSite(
-		//		tstring const& inSite,
+		//		wxString const& inSite,
 		//		ARBConfigCalSitePtr* outSite = NULL) const;
 	}
 
@@ -151,9 +152,9 @@ SUITE(TestConfigCalSiteList)
 	{
 		TODO_TEST
 		//bool AddSite(
-		//		tstring const& inSite,
+		//		wxString const& inSite,
 		//		ARBConfigCalSitePtr* outSite = NULL);
 		//bool AddSite(ARBConfigCalSitePtr inSite);
-		//int DeleteSite(tstring const& inSite);
+		//int DeleteSite(wxString const& inSite);
 	}
 }

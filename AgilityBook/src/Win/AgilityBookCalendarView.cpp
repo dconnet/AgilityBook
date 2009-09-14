@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-12-21 DRC Localize months/days (because of static link CRT)
  * @li 2007-01-13 DRC Fixed a problem with scroll bar not appearing.
@@ -362,32 +363,32 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 						for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
 						{
 							if (0 < iCol)
-								str += ' ';
+								str += wxT(" ");
 							switch (m_Columns[iCol])
 							{
 							case IO_CAL_LOCATION:
 								if (pCal->GetLocation().empty())
-									str += '?';
+									str += wxT("?");
 								else
-									str += pCal->GetLocation().c_str();
+									str += pCal->GetLocation();
 								break;
 							case IO_CAL_CLUB:
 								if (pCal->GetClub().empty())
-									str += '?';
+									str += wxT("?");
 								else
-									str += pCal->GetClub().c_str();
+									str += pCal->GetClub();
 								break;
 							case IO_CAL_VENUE:
 								if (pCal->GetVenue().empty())
-									str += '?';
+									str += wxT("?");
 								else
-									str += pCal->GetVenue().c_str();
+									str += pCal->GetVenue();
 								break;
 							case IO_CAL_NOTES:
 								if (pCal->GetNote().empty())
-									str += '?';
+									str += wxT("?");
 								else
-									str += pCal->GetNote().c_str();
+									str += pCal->GetNote();
 								break;
 							}
 						}
@@ -688,7 +689,7 @@ void CAgilityBookCalendar::OnCopy()
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr cal = *iter;
-		tstring items[scNumColumns];
+		wxString items[scNumColumns];
 		items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
 		items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
 		items[COL_LOCATION] = cal->GetLocation();
@@ -696,9 +697,9 @@ void CAgilityBookCalendar::OnCopy()
 		items[COL_VENUE] = cal->GetVenue();
 		items[COL_OPENS] = cal->GetOpeningDate().GetString(dFmt);
 		items[COL_CLOSES] = cal->GetClosingDate().GetString(dFmt);
-		wxString tmp = cal->GetNote().c_str();
+		wxString tmp = cal->GetNote();
 		tmp.Replace(wxT("\n"), wxT(" "));
-		items[COL_NOTES] = tmp.c_str();
+		items[COL_NOTES] = tmp;
 		wxString tentative(wxT("  "));
 		if (cal->IsTentative())
 			tentative = wxT("? ");

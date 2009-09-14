@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -75,7 +76,7 @@ SUITE(TestDogExistingPoints)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -100,7 +101,7 @@ SUITE(TestDogExistingPoints)
 	TEST(GetPointTypeName)
 	{
 		TODO_TEST
-	//	static tstring GetPointTypeName(PointType inType);
+	//	static wxString GetPointTypeName(PointType inType);
 	}
 }
 
@@ -134,7 +135,7 @@ SUITE(TestDogExistingPointsList)
 	TEST(HasPoints)
 	{
 		TODO_TEST
-	//	bool HasPoints(tstring const& inVenue) const;
+	//	bool HasPoints(wxString const& inVenue) const;
 	//	bool HasPoints(
 	//			ARBConfigVenuePtr inVenue,
 	//			ARBConfigDivisionPtr inDiv,
@@ -164,7 +165,7 @@ SUITE(TestDogExistingPointsList)
 	TEST(NumExistingPointsInVenue)
 	{
 		TODO_TEST
-	//	int NumExistingPointsInVenue(tstring const& inVenue) const;
+	//	int NumExistingPointsInVenue(wxString const& inVenue) const;
 	}
 
 
@@ -172,15 +173,15 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int RenameVenue(
-	//			tstring const& inOldVenue,
-	//			tstring const& inNewVenue);
+	//			wxString const& inOldVenue,
+	//			wxString const& inNewVenue);
 	}
 
 
 	TEST(DeleteVenue)
 	{
 		TODO_TEST
-	//	int DeleteVenue(tstring const& inVenue);
+	//	int DeleteVenue(wxString const& inVenue);
 	}
 
 
@@ -189,7 +190,7 @@ SUITE(TestDogExistingPointsList)
 		TODO_TEST
 	//	int NumExistingPointsInDivision(
 	//			ARBConfigVenuePtr inVenue,
-	//			tstring const& inDiv) const;
+	//			wxString const& inDiv) const;
 	}
 
 
@@ -197,9 +198,9 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int RenameDivision(
-	//			tstring const& inVenue,
-	//			tstring const& inOldDiv,
-	//			tstring const& inNewDiv);
+	//			wxString const& inVenue,
+	//			wxString const& inOldDiv,
+	//			wxString const& inNewDiv);
 	}
 
 
@@ -207,8 +208,8 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int DeleteDivision(
-	//			tstring const& inVenue,
-	//			tstring const& inDiv);
+	//			wxString const& inVenue,
+	//			wxString const& inDiv);
 	}
 
 
@@ -216,9 +217,9 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int NumLevelsInUse(
-	//			tstring const& inVenue,
-	//			tstring const& inDiv,
-	//			tstring const& inLevel) const;
+	//			wxString const& inVenue,
+	//			wxString const& inDiv,
+	//			wxString const& inLevel) const;
 	}
 
 
@@ -226,10 +227,10 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int RenameLevel(
-	//			tstring const& inVenue,
-	//			tstring const& inDiv,
-	//			tstring const& inOldLevel,
-	//			tstring const& inNewLevel);
+	//			wxString const& inVenue,
+	//			wxString const& inDiv,
+	//			wxString const& inOldLevel,
+	//			wxString const& inNewLevel);
 	}
 
 
@@ -237,9 +238,9 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int DeleteLevel(
-	//			tstring const& inVenue,
-	//			tstring const& inDiv,
-	//			tstring const& inLevel);
+	//			wxString const& inVenue,
+	//			wxString const& inDiv,
+	//			wxString const& inLevel);
 	}
 
 
@@ -247,8 +248,8 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int NumEventsInUse(
-	//			tstring const& inVenue,
-	//			tstring const& inEvent) const;
+	//			wxString const& inVenue,
+	//			wxString const& inEvent) const;
 	}
 
 
@@ -256,9 +257,9 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int RenameEvent(
-	//			tstring const& inVenue,
-	//			tstring const& inOldEvent,
-	//			tstring const& inNewEvent);
+	//			wxString const& inVenue,
+	//			wxString const& inOldEvent,
+	//			wxString const& inNewEvent);
 	}
 
 
@@ -266,15 +267,15 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int DeleteEvent(
-	//			tstring const& inVenue,
-	//			tstring const& inEvent);
+	//			wxString const& inVenue,
+	//			wxString const& inEvent);
 	}
 
 
 	TEST(NumOtherPointsInUse)
 	{
 		TODO_TEST
-	//	int NumOtherPointsInUse(tstring const& inOther) const;
+	//	int NumOtherPointsInUse(wxString const& inOther) const;
 	}
 
 
@@ -282,15 +283,15 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int RenameOtherPoints(
-	//			tstring const& inOldOther,
-	//			tstring const& inNewOther);
+	//			wxString const& inOldOther,
+	//			wxString const& inNewOther);
 	}
 
 
 	TEST(DeleteOtherPoints)
 	{
 		TODO_TEST
-	//	int DeleteOtherPoints(tstring const& inOther);
+	//	int DeleteOtherPoints(wxString const& inOther);
 	}
 
 
@@ -298,8 +299,8 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int NumMultiQsInUse(
-	//			tstring const& inVenue,
-	//			tstring const& inMultiQ) const;
+	//			wxString const& inVenue,
+	//			wxString const& inMultiQ) const;
 	}
 
 
@@ -307,9 +308,9 @@ SUITE(TestDogExistingPointsList)
 	{
 		TODO_TEST
 	//	int RenameMultiQs(
-	//			tstring const& inVenue,
-	//			tstring const& inOldMultiQ,
-	//			tstring const& inNewMultiQ);
+	//			wxString const& inVenue,
+	//			wxString const& inOldMultiQ,
+	//			wxString const& inNewMultiQ);
 	}
 
 
@@ -318,7 +319,7 @@ SUITE(TestDogExistingPointsList)
 		TODO_TEST
 	//	int DeleteMultiQs(
 	//			ARBConfig const& inConfig,
-	//			tstring const& inVenue);
+	//			wxString const& inVenue);
 	}
 
 

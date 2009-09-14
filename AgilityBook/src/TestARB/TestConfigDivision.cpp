@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -82,7 +83,7 @@ SUITE(TestConfigDivision)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -110,7 +111,7 @@ SUITE(TestConfigDivision)
 	//	bool Update(
 	//			int indent,
 	//			ARBConfigDivisionPtr inDivNew,
-	//			tstring& ioInfo);
+	//			wxString& ioInfo);
 	}
 }
 
@@ -140,8 +141,8 @@ SUITE(TestConfigDivisionList)
 	{
 		TODO_TEST
 	//	bool VerifyLevel(
-	//			tstring const& inDiv,
-	//			tstring const& inLevel) const;
+	//			wxString const& inDiv,
+	//			wxString const& inLevel) const;
 	}
 
 
@@ -149,7 +150,7 @@ SUITE(TestConfigDivisionList)
 	{
 		TODO_TEST
 	//	bool FindDivision(
-	//			tstring const& inDiv,
+	//			wxString const& inDiv,
 	//			ARBConfigDivisionPtr* outDiv = NULL) const;
 	}
 
@@ -158,11 +159,11 @@ SUITE(TestConfigDivisionList)
 	{
 		TODO_TEST
 	//	bool AddDivision(
-	//			tstring const& inDiv,
+	//			wxString const& inDiv,
 	//			ARBConfigDivisionPtr* outDiv = NULL);
 	//	bool AddDivision(ARBConfigDivisionPtr inDiv);
 	//	int DeleteDivision(
-	//			tstring const& inDiv,
+	//			wxString const& inDiv,
 	//			ARBConfigEventList& ioEvents);
 	}
 }

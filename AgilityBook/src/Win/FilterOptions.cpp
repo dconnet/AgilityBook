@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2006-03-02 DRC Separated filter options from main options.
  */
@@ -79,13 +80,13 @@ static void FilterVenue(
 				{
 				default:
 				case 3:
-					filter.level = rawFilter[2].c_str();
+					filter.level = rawFilter[2];
 					// fallthru
 				case 2:
-					filter.division = rawFilter[1].c_str();
+					filter.division = rawFilter[1];
 					// fallthru
 				case 1:
-					filter.venue = rawFilter[0].c_str();
+					filter.venue = rawFilter[0];
 				}
 				venues.push_back(filter);
 			}
@@ -102,40 +103,40 @@ static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 		++iter)
 	{
 		if (!venue.IsEmpty())
-			venue += wxT(':');
-		venue += (*iter).venue.c_str();
+			venue += wxT(":");
+		venue += (*iter).venue;
 		venue += wxT("/");
-		venue += (*iter).division.c_str();
+		venue += (*iter).division;
 		venue += wxT("/");
-		venue += (*iter).level.c_str();
+		venue += (*iter).level;
 	}
 	return venue;
 }
 
 
-static void TrainingNames(wxString inNames, std::set<tstring>& outNames)
+static void TrainingNames(wxString inNames, std::set<wxString>& outNames)
 {
 	if (!inNames.IsEmpty())
 	{
 		int pos;
 		while (0 <= (pos = inNames.Find(':')))
 		{
-			outNames.insert(inNames.Left(pos).c_str());
+			outNames.insert(inNames.Left(pos));
 			inNames = inNames.Mid(pos+1);
 		}
-		outNames.insert(inNames.c_str());
+		outNames.insert(inNames);
 	}
 }
 
 
-static wxString TrainingNames(std::set<tstring> const& inNames)
+static wxString TrainingNames(std::set<wxString> const& inNames)
 {
 	wxString names;
-	for (std::set<tstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
+	for (std::set<wxString>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
 		if (!names.IsEmpty())
-			names += ':';
-		names += (*iter).c_str();
+			names += wxT(":");
+		names += *iter;
 	}
 	return names;
 }
@@ -180,7 +181,7 @@ void CFilterOptions::Load()
 	m_nameFilter.clear();
 	TrainingNames(val, m_nameFilter);
 
-	m_curFilter = wxConfig::Get()->Read(wxT("Common/CurrentFilter"), wxEmptyString).c_str();
+	m_curFilter = wxConfig::Get()->Read(wxT("Common/CurrentFilter"), wxEmptyString);
 	m_nFilters = wxConfig::Get()->Read(wxT("Common/numFilters"), 0L);
 	m_filters.clear();
 	for (int idx = 0; idx < m_nFilters; ++idx)
@@ -236,7 +237,7 @@ void CFilterOptions::Save()
 	val = TrainingNames(m_nameFilter);
 	wxConfig::Get()->Write(wxT("Common/FilterTrainingNames"), val);
 
-	wxConfig::Get()->Write(wxT("Common/CurrentFilter"), m_curFilter.c_str());
+	wxConfig::Get()->Write(wxT("Common/CurrentFilter"), m_curFilter);
 
 	int nFilters = static_cast<int>(m_filters.size());
 	if (nFilters < m_nFilters)
@@ -260,7 +261,7 @@ void CFilterOptions::Save()
 
 
 std::vector<CFilterOptions::CFilterOptionData>::iterator
-CFilterOptions::FindFilter(tstring const& inName)
+CFilterOptions::FindFilter(wxString const& inName)
 {
 	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin();
 		i != m_filters.end();
@@ -273,7 +274,7 @@ CFilterOptions::FindFilter(tstring const& inName)
 }
 
 
-size_t CFilterOptions::GetAllFilterNames(std::vector<tstring>& outNames) const
+size_t CFilterOptions::GetAllFilterNames(std::vector<wxString>& outNames) const
 {
 	outNames.clear();
 	if (0 < m_filters.size())
@@ -290,7 +291,7 @@ size_t CFilterOptions::GetAllFilterNames(std::vector<tstring>& outNames) const
 }
 
 
-bool CFilterOptions::SetCurrentFilter(tstring const& inName)
+bool CFilterOptions::SetCurrentFilter(wxString const& inName)
 {
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter != m_filters.end())
@@ -314,7 +315,7 @@ bool CFilterOptions::SetCurrentFilter(tstring const& inName)
 }
 
 
-bool CFilterOptions::AddFilter(tstring const& inName)
+bool CFilterOptions::AddFilter(wxString const& inName)
 {
 	bool bAdded = false;
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
@@ -341,7 +342,7 @@ bool CFilterOptions::AddFilter(tstring const& inName)
 }
 
 
-bool CFilterOptions::DeleteFilter(tstring const& inName)
+bool CFilterOptions::DeleteFilter(wxString const& inName)
 {
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter != m_filters.end())
@@ -399,7 +400,7 @@ bool CFilterOptions::IsTitleVisible(
 
 bool CFilterOptions::IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
-		tstring const& venue)
+		wxString const& venue)
 {
 	if (!m_bViewAllVenues)
 	{
@@ -418,8 +419,8 @@ bool CFilterOptions::IsVenueVisible(
 
 bool CFilterOptions::IsVenueDivisionVisible(
 		std::vector<CVenueFilter> const& venues,
-		tstring const& venue,
-		tstring const& div)
+		wxString const& venue,
+		wxString const& div)
 {
 	if (!m_bViewAllVenues)
 	{
@@ -439,9 +440,9 @@ bool CFilterOptions::IsVenueDivisionVisible(
 
 bool CFilterOptions::IsVenueLevelVisible(
 		std::vector<CVenueFilter> const& venues,
-		tstring const& venue,
-		tstring const& div,
-		tstring const& level)
+		wxString const& venue,
+		wxString const& div,
+		wxString const& level)
 {
 	if (!m_bViewAllVenues)
 	{
@@ -613,7 +614,7 @@ bool CFilterOptions::IsCalendarVisible(
 
 
 bool CFilterOptions::IsTrainingLogVisible(
-		std::set<tstring> const& names,
+		std::set<wxString> const& names,
 		ARBTrainingPtr pTraining)
 {
 	if (!m_bAllDates)
@@ -633,7 +634,7 @@ bool CFilterOptions::IsTrainingLogVisible(
 	if (!m_bViewAllNames)
 	{
 		bVisible = false;
-		for (std::set<tstring>::const_iterator iter = names.begin();
+		for (std::set<wxString>::const_iterator iter = names.begin();
 			iter != names.end();
 			++iter)
 		{
@@ -649,9 +650,9 @@ bool CFilterOptions::IsTrainingLogVisible(
 
 
 bool CFilterOptions::FilterExists(
-		tstring const& inVenue,
-		tstring const& inDiv,
-		tstring const& inLevel) const
+		wxString const& inVenue,
+		wxString const& inDiv,
+		wxString const& inLevel) const
 {
 	for (std::vector<CVenueFilter>::const_iterator iter = m_venueFilter.begin();
 		iter != m_venueFilter.end();
@@ -700,7 +701,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 {
 	wxString section = wxString::Format(wxT("Filter%d/"), index);
 
-	filterName = wxConfig::Get()->Read(section + wxT("Name"), filterName.c_str()).c_str();
+	filterName = wxConfig::Get()->Read(section + wxT("Name"), filterName);
 	calView.m_Filter = static_cast<CCalendarViewFilter::eViewFilter>(wxConfig::Get()->Read(section + wxT("Cal"), static_cast<long>(calView.m_Filter)));
 	wxConfig::Get()->Read(section + wxT("AllDates"), &bAllDates, bAllDates);
 	wxConfig::Get()->Read(section + wxT("Start"), &bStartDate, bStartDate);
@@ -763,7 +764,7 @@ bool CFilterOptions::CFilterOptionData::Save(int index)
 {
 	wxString section = wxString::Format(wxT("Filter%d/"), index);
 
-	wxConfig::Get()->Write(section + wxT("Name"), filterName.c_str());
+	wxConfig::Get()->Write(section + wxT("Name"), filterName);
 	wxConfig::Get()->Write(section + wxT("Cal"), static_cast<long>(calView.m_Filter));
 	wxConfig::Get()->Write(section + wxT("AllDates"), bAllDates);
 	wxConfig::Get()->Write(section + wxT("Start"), bStartDate);

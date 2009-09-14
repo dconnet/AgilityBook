@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
@@ -159,9 +160,9 @@ public:
 	 * @param inTitle Name of title.
 	 * @return Nice name (longname) of a title.
 	 */
-	tstring GetTitleNiceName(
-			tstring const& inVenue,
-			tstring const& inTitle) const;
+	wxString GetTitleNiceName(
+			wxString const& inVenue,
+			wxString const& inTitle) const;
 
 	/**
 	 * Convenience function to get the complete name of a title.
@@ -169,7 +170,7 @@ public:
 	 * @param bAbbrevFirst List Name before or after Longname.
 	 * @return Complete name of title (name + longname).
 	 */
-	tstring GetTitleCompleteName(
+	wxString GetTitleCompleteName(
 			ARBDogTitlePtr inTitle,
 			bool bAbbrevFirst = true) const;
 
@@ -183,7 +184,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			otstringstream& ioInfo);
+			wxString& ioInfo);
 
 	/*
 	 * Getters.

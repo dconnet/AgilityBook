@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
  *                    _after_ the dialog is destroyed).
@@ -59,7 +60,6 @@
 #include "DlgProgress.h"
 #include "Globals.h"
 #include "Wizard.h"
-#include <fstream>
 #include <wx/spinctrl.h>
 #include <wx/textfile.h>
 
@@ -632,11 +632,11 @@ static ARBDogRunPtr CreateRun(
 }
 
 
-static tstring GetPrimaryVenue(tstring const& venues)
+static wxString GetPrimaryVenue(wxString const& venues)
 {
-	tstring venue;
-	tstring::size_type pos = venues.find('/');
-	if (tstring::npos != pos)
+	wxString venue;
+	wxString::size_type pos = venues.find('/');
+	if (wxString::npos != pos)
 		venue = venues.substr(0, pos);
 	else
 		venue = venues;
@@ -810,7 +810,7 @@ bool CWizardImport::DoWizardFinish()
 		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
 	}
 	wxString loadstr;
-	otstringstream errLog;
+	wxString errLog;
 	long nAdded = 0;
 	long nUpdated = 0;
 	long nDuplicate = 0;
@@ -818,12 +818,11 @@ bool CWizardImport::DoWizardFinish()
 	long nColumns = m_ctrlPreview->GetColumnCount();
 	for (long nItem = 0; nItem < m_ctrlPreview->GetItemCount(); ++nItem)
 	{
-		std::vector<tstring> entry;
+		std::vector<wxString> entry;
 		entry.reserve(nColumns);
 		for (long i = 0; i < nColumns; ++i)
 		{
-			wxString str = GetListColumnText(m_ctrlPreview, nItem, i);
-			entry.push_back(str.c_str());
+			entry.push_back(GetListColumnText(m_ctrlPreview, nItem, i));
 		}
 		switch (m_pSheet->GetImportExportItem())
 		{
@@ -888,7 +887,7 @@ bool CWizardImport::DoWizardFinish()
 				if (!pScoring)
 				{
 					loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), nItem + 1);
-					errLog << loadstr.c_str() << '\n';
+					errLog << loadstr << wxT("\n");
 					++nSkipped;
 					continue;
 				}
@@ -912,8 +911,8 @@ bool CWizardImport::DoWizardFinish()
 				}
 				assert(0 <= i);
 
-				tstring nameReg, nameCall;
-				tstring trialVenue, trialClub, trialLocation, trialNotes;
+				wxString nameReg, nameCall;
+				wxString trialVenue, trialClub, trialLocation, trialNotes;
 				ARBDogRunPtr pRun;
 				for (iCol = 0; iCol < entry.size() && iCol < columns[i].size(); ++iCol)
 				{
@@ -942,7 +941,7 @@ bool CWizardImport::DoWizardFinish()
 									nItem + 1,
 									static_cast<long>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr.c_str() << '\n';
+								errLog << loadstr << wxT("\n");
 								if (pRun)
 									pRun.reset();
 								iCol = columns[i].size();
@@ -1075,7 +1074,7 @@ bool CWizardImport::DoWizardFinish()
 					case IO_RUNS_FAULTS:
 						{
 							pRun = CreateRun(pRun, pScoring);
-							tstring str = pRun->GetNote();
+							wxString str = pRun->GetNote();
 							if (0 < str.length())
 								str += wxT("\n");
 							str += entry[iCol];
@@ -1100,7 +1099,7 @@ bool CWizardImport::DoWizardFinish()
 							_("IDS_IMPORT_BAD_VENUE"),
 							nItem + 1,
 							trialVenue.c_str());
-						errLog << loadstr.c_str() << '\n';
+						errLog << loadstr << wxT("\n");
 						pRun.reset();
 					}
 					else if (!m_pDoc->Book().GetConfig().GetVenues().FindEvent(
@@ -1111,7 +1110,7 @@ bool CWizardImport::DoWizardFinish()
 						pRun->GetDate()))
 					{
 						loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), nItem + 1);
-						errLog << loadstr.c_str() << '\n';
+						errLog << loadstr << wxT("\n");
 						pRun.reset();
 					}
 				}
@@ -1165,8 +1164,8 @@ bool CWizardImport::DoWizardFinish()
 					assert(pDog);
 
 					// Find the trial
-					std::vector<tstring> venues;
-					std::vector<tstring> clubs;
+					std::vector<wxString> venues;
+					std::vector<wxString> clubs;
 					if (0 < trialVenue.length())
 						BreakLine('/', trialVenue, venues);
 					if (0 < trialClub.length())
@@ -1259,7 +1258,7 @@ bool CWizardImport::DoWizardFinish()
 									nItem + 1,
 									static_cast<long>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr.c_str() << '\n';
+								errLog << loadstr << wxT("\n");
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1281,7 +1280,7 @@ bool CWizardImport::DoWizardFinish()
 									nItem + 1,
 									static_cast<long>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr.c_str() << '\n';
+								errLog << loadstr << wxT("\n");
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1315,7 +1314,7 @@ bool CWizardImport::DoWizardFinish()
 								nItem + 1,
 								static_cast<long>(iCol + 1),
 								entry[iCol].c_str());
-							errLog << loadstr.c_str() << '\n';
+							errLog << loadstr << wxT("\n");
 							if (pCal)
 								pCal.reset();
 							iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1348,7 +1347,7 @@ bool CWizardImport::DoWizardFinish()
 									nItem + 1,
 									static_cast<long>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr.c_str() << '\n';
+								errLog << loadstr << wxT("\n");
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1370,7 +1369,7 @@ bool CWizardImport::DoWizardFinish()
 									nItem + 1,
 									static_cast<long>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr.c_str() << '\n';
+								errLog << loadstr << wxT("\n");
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1429,7 +1428,7 @@ bool CWizardImport::DoWizardFinish()
 									nItem + 1,
 									static_cast<long>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr.c_str() << '\n';
+								errLog << loadstr << wxT("\n");
 								if (pLog)
 									pLog.reset();
 								iCol = columns[IO_TYPE_TRAINING].size();
@@ -1467,11 +1466,11 @@ bool CWizardImport::DoWizardFinish()
 			break;
 		}
 	}
-	if (0 < errLog.tellp())
+	if (!errLog.empty())
 		errLog << wxT("\n");
 	loadstr = wxString::Format(_("IDS_IMPORT_STATS"), nAdded, nUpdated, nDuplicate, nSkipped);
-	errLog << loadstr.c_str();
-	CDlgMessage dlg(errLog.str().c_str(), this);
+	errLog << loadstr;
+	CDlgMessage dlg(errLog, this);
 	dlg.ShowModal();
 	if (0 < nAdded)
 	{

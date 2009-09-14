@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -82,7 +83,7 @@ SUITE(TestConfigTitle)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -113,14 +114,14 @@ SUITE(TestConfigTitle)
 	TEST(GetNiceName)
 	{
 		TODO_TEST
-	//	tstring const& GetNiceName() const
+	//	wxString const& GetNiceName() const
 	}
 
 
 	TEST(GetCompleteName)
 	{
 		TODO_TEST
-	//	tstring GetCompleteName(
+	//	wxString GetCompleteName(
 	//			short inInstance = 0,
 	//			bool bShowInstance = false,
 	//			bool bAbbrevFirst = true,
@@ -154,7 +155,7 @@ SUITE(TestConfigTitleList)
 	{
 		TODO_TEST
 	//	bool FindTitleCompleteName(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			short inInstance,
 	//			bool bShowInstance,
 	//			bool bAbbrevFirst = true,
@@ -166,7 +167,7 @@ SUITE(TestConfigTitleList)
 	{
 		TODO_TEST
 	//	bool FindTitle(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			ARBConfigTitlePtr* outTitle = NULL) const;
 	}
 
@@ -175,9 +176,9 @@ SUITE(TestConfigTitleList)
 	{
 		TODO_TEST
 	//	bool AddTitle(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			ARBConfigTitlePtr* outTitle = NULL);
 	//	bool AddTitle(ARBConfigTitlePtr inTitle);
-	//	bool DeleteTitle(tstring const& inName);
+	//	bool DeleteTitle(wxString const& inName);
 	}
 }

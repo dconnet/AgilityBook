@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-30 DRC Created.
@@ -65,8 +66,8 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	, m_pVenue(inVenue)
 	, m_pOrigMultiQ(inMultiQ)
 	, m_pMultiQ(inMultiQ->Clone())
-	, m_Name(inMultiQ->GetName().c_str())
-	, m_ShortName(inMultiQ->GetShortName().c_str())
+	, m_Name(inMultiQ->GetName())
+	, m_ShortName(inMultiQ->GetShortName())
 	, m_bFrom(inMultiQ->GetValidFrom().IsValid())
 	, m_ctrlDateFrom(NULL)
 	, m_DateFrom(inMultiQ->GetValidFrom())
@@ -208,12 +209,12 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	size_t n = m_pMultiQ->GetNumItems();
 	for (size_t i = 0; i < n; ++i)
 	{
-		tstring div, level, evt;
+		wxString div, level, evt;
 		if (m_pMultiQ->GetItem(i, div, level, evt))
 		{
-			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), div.c_str());
-			SetListColumnText(m_ctrlItems, idx, 1, level.c_str());
-			SetListColumnText(m_ctrlItems, idx, 2, evt.c_str());
+			int idx = m_ctrlItems->InsertItem(static_cast<int>(i), div);
+			SetListColumnText(m_ctrlItems, idx, 1, level);
+			SetListColumnText(m_ctrlItems, idx, 2, evt);
 		}
 	}
 	m_ctrlItems->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
@@ -256,9 +257,9 @@ void CDlgConfigMultiQ::EditItem()
 		CDlgEventSelect dlg(m_pVenue, date, div, level, evt, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			if (m_pMultiQ->RemoveItem(div.c_str(), level.c_str(), evt.c_str()))
+			if (m_pMultiQ->RemoveItem(div, level, evt))
 				m_ctrlItems->DeleteItem(idx);
-			if (m_pMultiQ->AddItem(dlg.GetDivision().c_str(), dlg.GetLevel().c_str(), dlg.GetEvent().c_str()))
+			if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 			{
 				idx = m_ctrlItems->InsertItem(idx, dlg.GetDivision());
 				SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
@@ -327,7 +328,7 @@ void CDlgConfigMultiQ::OnAdd(wxCommandEvent& evt)
 	CDlgEventSelect dlg(m_pVenue, date, wxEmptyString, wxEmptyString, wxEmptyString, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		if (m_pMultiQ->AddItem(dlg.GetDivision().c_str(), dlg.GetLevel().c_str(), dlg.GetEvent().c_str()))
+		if (m_pMultiQ->AddItem(dlg.GetDivision(), dlg.GetLevel(), dlg.GetEvent()))
 		{
 			int idx = m_ctrlItems->InsertItem(m_ctrlItems->GetItemCount(), dlg.GetDivision());
 			SetListColumnText(m_ctrlItems, idx, 1, dlg.GetLevel());
@@ -357,7 +358,7 @@ void CDlgConfigMultiQ::OnRemove(wxCommandEvent& evt)
 		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
 		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
 		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
-		if (m_pMultiQ->RemoveItem(div.c_str(), level.c_str(), evnt.c_str()))
+		if (m_pMultiQ->RemoveItem(div, level, evnt))
 			m_ctrlItems->DeleteItem(idx);
 		else
 			wxBell();
@@ -370,9 +371,9 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	if (m_pMultiQ->GetName() != m_Name.c_str())
+	if (m_pMultiQ->GetName() != m_Name)
 	{
-		if (m_pVenue->GetMultiQs().FindMultiQ(m_Name.c_str()))
+		if (m_pVenue->GetMultiQs().FindMultiQ(m_Name))
 		{
 			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 			m_ctrlName->SetFocus();
@@ -380,8 +381,8 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 		}
 	}
 
-	m_pMultiQ->SetName(m_Name.c_str());
-	m_pMultiQ->SetShortName(m_ShortName.c_str());
+	m_pMultiQ->SetName(m_Name);
+	m_pMultiQ->SetShortName(m_ShortName);
 	if (!m_bFrom)
 		m_DateFrom.clear();
 	m_pMultiQ->SetValidFrom(m_DateFrom);
@@ -394,7 +395,7 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 		wxString div = GetListColumnText(m_ctrlItems, idx, 0);
 		wxString level = GetListColumnText(m_ctrlItems, idx, 1);
 		wxString evnt = GetListColumnText(m_ctrlItems, idx, 2);
-		m_pMultiQ->AddItem(div.c_str(), level.c_str(), evnt.c_str());
+		m_pMultiQ->AddItem(div, level, evnt);
 	}
 	*m_pOrigMultiQ = *m_pMultiQ;
 

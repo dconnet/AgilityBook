@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-22 DRC Added wildcard placement points (for UK Warrant points)
  * @li 2006-11-03 DRC Created
  */
@@ -122,7 +123,7 @@ bool ARBConfigPlaceInfo::operator==(ARBConfigPlaceInfo const& rhs) const
 }
 
 
-tstring ARBConfigPlaceInfo::GetGenericName() const
+wxString ARBConfigPlaceInfo::GetGenericName() const
 {
 	return Localization()->PlacementPointsNameFormat(m_Value, m_Place);
 }
@@ -148,7 +149,7 @@ bool ARBConfigPlaceInfo::Load(
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_PLACE_INFO_MUSTQ, m_MustQ))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_MUSTQ, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACE_INFO, ATTRIB_PLACE_INFO_MUSTQ, Localization()->ValidValuesBool()));
 		return false;
 	}
 	return true;

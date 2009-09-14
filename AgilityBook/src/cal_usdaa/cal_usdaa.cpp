@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-24 DRC Change wx initialize code. When exiting app, COM was
  *                hanging in uninitialize.
  * @li 2009-02-25 DRC Ported to wxWidgets.
@@ -49,7 +50,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 		wxSetInstance((HINSTANCE)hModule);
 		{
 			wxInitialize();
-			tstring err;
+			wxString err;
 			Element::Initialize(err);
 		}
 		break;

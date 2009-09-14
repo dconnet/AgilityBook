@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -74,7 +75,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -84,7 +85,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		return 0;
 	}
@@ -120,16 +121,16 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigLevelPtr inLevelNew,
-			tstring& ioInfo);
+			wxString& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
@@ -143,7 +144,7 @@ public:
 	}
 
 private:
-	tstring m_Name;
+	wxString m_Name;
 	ARBConfigSubLevelList m_SubLevels;
 };
 
@@ -182,7 +183,7 @@ public:
 	 * @return Whether there is a level that matches.
 	 */
 	bool VerifyLevel(
-			tstring const& inName,
+			wxString const& inName,
 			bool inAllowWildCard = true) const;
 
 	/**
@@ -192,7 +193,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLevel(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigLevelPtr* outLevel = NULL) const;
 
 	/**
@@ -203,7 +204,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindSubLevel(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigLevelPtr* outLevel = NULL) const;
 
 	/**
@@ -213,7 +214,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLevel(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigLevelPtr* outLevel = NULL);
 
 	/**
@@ -231,8 +232,8 @@ public:
 	 * @return Whether level was deleted or not.
 	 */
 	bool DeleteLevel(
-			tstring const& inDiv,
-			tstring const& inName,
+			wxString const& inDiv,
+			wxString const& inName,
 			ARBConfigEventList& ioEvents);
 
 	/**
@@ -243,6 +244,6 @@ public:
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
 	bool DeleteSubLevel(
-			tstring const& inName,
+			wxString const& inName,
 			bool& outLevelModified);
 };

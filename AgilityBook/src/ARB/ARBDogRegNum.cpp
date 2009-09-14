@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -115,7 +116,7 @@ bool ARBDogRegNum::operator==(ARBDogRegNum const& rhs) const
 }
 
 
-size_t ARBDogRegNum::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBDogRegNum::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	ioStrings.insert(GetGenericName());
 	ioStrings.insert(GetNote());
@@ -166,15 +167,15 @@ bool ARBDogRegNum::Load(
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_REG_NUM_RECEIVED, m_bReceived))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_RECEIVED, Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 	{
-		tstring msg(Localization()->InvalidVenueName());
+		wxString msg(Localization()->InvalidVenueName());
 		msg += m_Venue;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_REG_NUM, ATTRIB_REG_NUM_VENUE, msg));
 		return false;
 	}
 
@@ -234,7 +235,7 @@ void ARBDogRegNumList::sort()
 }
 
 
-int ARBDogRegNumList::NumRegNumsInVenue(tstring const& inVenue) const
+int ARBDogRegNumList::NumRegNumsInVenue(wxString const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -247,8 +248,8 @@ int ARBDogRegNumList::NumRegNumsInVenue(tstring const& inVenue) const
 
 
 int ARBDogRegNumList::RenameVenue(
-		tstring const& inOldVenue,
-		tstring const& inNewVenue)
+		wxString const& inOldVenue,
+		wxString const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -263,9 +264,9 @@ int ARBDogRegNumList::RenameVenue(
 }
 
 
-int ARBDogRegNumList::DeleteVenue(tstring const& inVenue)
+int ARBDogRegNumList::DeleteVenue(wxString const& inVenue)
 {
-	tstring venue(inVenue);
+	wxString venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -282,7 +283,7 @@ int ARBDogRegNumList::DeleteVenue(tstring const& inVenue)
 
 
 bool ARBDogRegNumList::FindRegNum(
-		tstring const& inVenue,
+		wxString const& inVenue,
 		ARBDogRegNumPtr* outRegNum) const
 {
 	if (outRegNum)
@@ -301,8 +302,8 @@ bool ARBDogRegNumList::FindRegNum(
 
 
 bool ARBDogRegNumList::AddRegNum(
-		tstring const& inVenue,
-		tstring const& inNumber,
+		wxString const& inVenue,
+		wxString const& inNumber,
 		ARBDogRegNumPtr* outRegNum)
 {
 	ARBDogRegNumPtr pRegNum(ARBDogRegNum::New());
@@ -328,11 +329,11 @@ bool ARBDogRegNumList::AddRegNum(ARBDogRegNumPtr inRegNum)
 
 
 int ARBDogRegNumList::DeleteRegNum(
-		tstring const& inVenue,
-		tstring const& inNumber)
+		wxString const& inVenue,
+		wxString const& inNumber)
 {
-	tstring venue(inVenue);
-	tstring number(inNumber);
+	wxString venue(inVenue);
+	wxString number(inNumber);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{

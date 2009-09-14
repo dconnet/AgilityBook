@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-30 DRC Created.
@@ -188,10 +189,10 @@ CDlgEventSelect::CDlgEventSelect(
 		++iterDiv)
 	{
 		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		int index = m_ctrlDivisions->Append(pDiv->GetName().c_str());
+		int index = m_ctrlDivisions->Append(pDiv->GetName());
 		m_ctrlDivisions->SetClientObject(index,
 			new CDlgDivSelectData(pDiv));
-		if (pDiv->GetName() == inDivision.c_str())
+		if (pDiv->GetName() == inDivision)
 			m_ctrlDivisions->SetSelection(index);
 	}
 	FillLevels();
@@ -254,19 +255,19 @@ void CDlgEventSelect::FillLevels()
 					++iterSub)
 				{
 					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-					int idx = m_ctrlLevels->Append(pSubLevel->GetName().c_str());
+					int idx = m_ctrlLevels->Append(pSubLevel->GetName());
 					m_ctrlLevels->SetClientObject(idx,
 						new CDlgEventSelectData(pLevel, pSubLevel));
-					if (level == pSubLevel->GetName().c_str())
+					if (level == pSubLevel->GetName())
 						m_ctrlLevels->SetSelection(idx);
 				}
 			}
 			else
 			{
-				int idx = m_ctrlLevels->Append(pLevel->GetName().c_str());
+				int idx = m_ctrlLevels->Append(pLevel->GetName());
 				m_ctrlLevels->SetClientObject(idx,
 					new CDlgEventSelectData(pLevel));
-				if (level == pLevel->GetName().c_str())
+				if (level == pLevel->GetName())
 					m_ctrlLevels->SetSelection(idx);
 			}
 		}
@@ -305,8 +306,8 @@ void CDlgEventSelect::FillEvents()
 				ARBConfigEventPtr pEvent = (*iter);
 				if (pEvent->FindEvent(pData->m_pDiv->GetName(), pEvtData->m_pLevel->GetName(), m_Date))
 				{
-					int idx = m_ctrlEvents->Append(pEvent->GetName().c_str());
-					if (evt == pEvent->GetName().c_str())
+					int idx = m_ctrlEvents->Append(pEvent->GetName());
+					if (evt == pEvent->GetName())
 					{
 						m_ctrlEvents->SetSelection(idx);
 					}

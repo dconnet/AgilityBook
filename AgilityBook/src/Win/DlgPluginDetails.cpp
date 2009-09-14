@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-12-24 DRC Created
  */
@@ -38,7 +39,7 @@
 #include "stdafx.h"
 #include "DlgPluginDetails.h"
 
-#include "AgilityBook.h"
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigCalSite.h"
 #include "DlgCalendarQueryDetail.h"
@@ -72,10 +73,10 @@ CDlgPluginDetails::CDlgPluginDetails(
 	if (calSite)
 	{
 		m_CalSite = calSite->Clone();
-		m_strName = calSite->GetName().c_str();
-		m_strDesc = calSite->GetDescription().c_str();
-		m_strSearch = calSite->GetSearchURL().c_str();
-		m_strHelp = calSite->GetHelpURL().c_str();
+		m_strName = calSite->GetName();
+		m_strDesc = calSite->GetDescription();
+		m_strSearch = calSite->GetSearchURL();
+		m_strHelp = calSite->GetHelpURL();
 	}
 	else
 		m_CalSite = ARBConfigCalSite::New();
@@ -184,7 +185,7 @@ void CDlgPluginDetails::OnPluginDetailCodes(wxCommandEvent& evt)
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_CalSite->RemoveAllLocationCodes();
-		std::map<tstring, tstring>::const_iterator i;
+		std::map<wxString, wxString>::const_iterator i;
 		for (i = dlg.GetLocationCodes().begin(); i != dlg.GetLocationCodes().end(); ++i)
 		{
 			m_CalSite->AddLocationCode(i->first, i->second);
@@ -204,10 +205,10 @@ void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_CalSite->SetName(m_strName.c_str());
-	m_CalSite->SetDescription(m_strDesc.c_str());
-	m_CalSite->SetSearchURL(m_strSearch.c_str());
-	m_CalSite->SetHelpURL(m_strHelp.c_str());
+	m_CalSite->SetName(m_strName);
+	m_CalSite->SetDescription(m_strDesc);
+	m_CalSite->SetSearchURL(m_strSearch);
+	m_CalSite->SetHelpURL(m_strHelp);
 
 	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName())
 	&& m_Config.GetCalSites().FindSite(m_CalSite->GetName()))

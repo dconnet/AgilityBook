@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-15 DRC Added IsAnyFiltered.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-20 DRC Added different types of filtering.
@@ -58,14 +59,14 @@ public:
 	 * without knowing what the objects actually are.
 	 * @return Name of the object.
 	 */
-	virtual tstring GetGenericName() const = 0;
+	virtual wxString GetGenericName() const = 0;
 
 	/**
 	 * Get all the strings to search in an object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const = 0;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const = 0;
 
 	// Filtered state
 	typedef enum

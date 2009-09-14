@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-11 DRC Merged separate club/judge/location classes.
@@ -78,7 +79,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -88,7 +89,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load a items entry
@@ -103,7 +104,7 @@ public:
 			ElementNodePtr inTree,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback,
-			tstring const& inItemName);
+			wxString const& inItemName);
 
 	/**
 	 * Save a items entry
@@ -112,24 +113,24 @@ public:
 	 */
 	bool Save(
 			ElementNodePtr ioTree,
-			tstring const& inItemName) const;
+			wxString const& inItemName) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring const& GetComment() const
+	wxString const& GetComment() const
 	{
 		return m_Comment;
 	}
-	void SetComment(tstring const& inComment)
+	void SetComment(wxString const& inComment)
 	{
 		m_Comment = inComment;
 	}
@@ -143,8 +144,8 @@ public:
 	}
 
 private:
-	tstring m_Name;
-	tstring m_Comment;
+	wxString m_Name;
+	wxString m_Comment;
 	bool m_Visible;
 };
 
@@ -160,11 +161,11 @@ public:
 	 * Construct a club/judge/location info object.
 	 * @param inItemName Name of elements to be loaded.
 	 */
-	ARBInfoItemList(tstring const& inItemName);
+	ARBInfoItemList(wxString const& inItemName);
 	ARBInfoItemList(ARBInfoItemList const& rhs);
 	ARBInfoItemList& operator=(ARBInfoItemList const& rhs);
 
-	tstring const& GetItemName() const
+	wxString const& GetItemName() const
 	{
 		return m_ItemName;
 	}
@@ -199,13 +200,13 @@ public:
 	 * @param inVisibleOnly Only get the visible names.
 	 * @return Number of items in list.
 	 */
-	size_t GetAllItems(std::set<tstring>& outNames, bool inVisibleOnly) const;
+	size_t GetAllItems(std::set<wxString>& outNames, bool inVisibleOnly) const;
 
 	/**
 	 * Remove entries from list that are in use but have no associated comments.
 	 * @param inNamesInUse Names of items from runs.
 	 */
-	void CondenseContent(std::set<tstring> const& inNamesInUse);
+	void CondenseContent(std::set<wxString> const& inNamesInUse);
 
 	/**
 	 * Find a item.
@@ -214,7 +215,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindItem(
-			tstring const& inName,
+			wxString const& inName,
 			ARBInfoItemPtr* outItem = NULL) const;
 
 	/**
@@ -224,7 +225,7 @@ public:
 	 * @return Whether object was added.
 	 */
 	bool AddItem(
-			tstring const& inItem,
+			wxString const& inItem,
 			ARBInfoItemPtr* outItem = NULL);
 
 	/**
@@ -242,5 +243,5 @@ public:
 	bool DeleteItem(ARBInfoItemPtr inItem);
 
 private:
-	tstring m_ItemName;
+	wxString m_ItemName;
 };

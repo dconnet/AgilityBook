@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -82,7 +83,7 @@ SUITE(TestConfigVenue)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -110,7 +111,7 @@ SUITE(TestConfigVenue)
 	//	bool Update(
 	//			int indent,
 	//			ARBConfigVenuePtr inVenueNew,
-	//			tstring& ioInfo);
+	//			wxString& ioInfo);
 	}
 }
 
@@ -138,7 +139,7 @@ SUITE(TestConfigVenueList)
 	TEST(VerifyVenue)
 	{
 		TODO_TEST
-	//	bool VerifyVenue(tstring const& inVenue) const
+	//	bool VerifyVenue(wxString const& inVenue) const
 	}
 
 
@@ -146,8 +147,8 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool VerifyMultiQ(
-	//			tstring const& inVenue,
-	//			tstring const& inMultiQ,
+	//			wxString const& inVenue,
+	//			wxString const& inMultiQ,
 	//			bool inUseShortName = false) const;
 	}
 
@@ -156,9 +157,9 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool VerifyLevel(
-	//			tstring const& inVenue,
-	//			tstring const& inDivision,
-	//			tstring const& inLevel) const;
+	//			wxString const& inVenue,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel) const;
 	}
 
 
@@ -166,10 +167,10 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool VerifyEvent(
-	//			tstring const& inVenue,
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
-	//			tstring const& inEvent,
+	//			wxString const& inVenue,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
+	//			wxString const& inEvent,
 	//			ARBDate const& inDate) const;
 	}
 
@@ -178,8 +179,8 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool FindTitleCompleteName(
-	//			tstring const& inVenue,
-	//			tstring const& inName,
+	//			wxString const& inVenue,
+	//			wxString const& inName,
 	//			bool bShowInstance,
 	//			bool bAbbrevFirst = true,
 	//			ARBConfigTitlePtr* outTitle = NULL) const;
@@ -190,8 +191,8 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool FindTitle(
-	//			tstring const& inVenue,
-	//			tstring const& inTitle,
+	//			wxString const& inVenue,
+	//			wxString const& inTitle,
 	//			ARBConfigTitlePtr* outTitle = NULL) const;
 	}
 
@@ -199,7 +200,7 @@ SUITE(TestConfigVenueList)
 	TEST(DeleteTitle)
 	{
 		TODO_TEST
-	//	bool DeleteTitle(tstring const& inTitle);
+	//	bool DeleteTitle(wxString const& inTitle);
 	}
 
 
@@ -207,7 +208,7 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool FindVenue(
-	//			tstring const& inVenue,
+	//			wxString const& inVenue,
 	//			ARBConfigVenuePtr* outVenue = NULL) const;
 	}
 
@@ -216,10 +217,10 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool FindEvent(
-	//			tstring const& inVenue,
-	//			tstring const& inEvent,
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inVenue,
+	//			wxString const& inEvent,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate,
 	//			ARBConfigEventPtr* outEvent = NULL,
 	//			ARBConfigScoringPtr* outScoring = NULL) const;
@@ -230,9 +231,9 @@ SUITE(TestConfigVenueList)
 	{
 		TODO_TEST
 	//	bool AddVenue(
-	//			tstring const& inVenue,
+	//			wxString const& inVenue,
 	//			ARBConfigVenuePtr* outVenue = NULL);
 	//	bool AddVenue(ARBConfigVenuePtr inVenue);
-	//	int DeleteVenue(tstring const& inVenue);
+	//	int DeleteVenue(wxString const& inVenue);
 	}
 }

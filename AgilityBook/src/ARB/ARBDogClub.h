@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -70,7 +71,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -80,7 +81,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load a club.
@@ -108,26 +109,26 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring const& GetVenue() const
+	wxString const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(tstring const& inVenue)
+	void SetVenue(wxString const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
 
 private:
-	tstring m_Name;
-	tstring m_Venue;
+	wxString m_Name;
+	wxString m_Venue;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -167,13 +168,13 @@ public:
 	 * Get the primary club's name.
 	 * @return Name of primary club, empty is none.
 	 */
-	tstring GetPrimaryClubName() const;
+	wxString GetPrimaryClubName() const;
 
 	/**
 	 * Get the primary club's venue.
 	 * @return Venue of primary club, empty is none.
 	 */
-	tstring GetPrimaryClubVenue() const;
+	wxString GetPrimaryClubVenue() const;
 
 	/**
 	 * Find the first scoring style to match.
@@ -190,9 +191,9 @@ public:
 	 */
 	bool FindEvent(
 			ARBConfig const& inConfig,
-			tstring const& inEvent,
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inEvent,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate,
 			ARBErrorCallback& ioCallback,
 			ARBConfigEventPtr* outEvent = NULL,
@@ -205,7 +206,7 @@ public:
 	 * @return Whether the club was found.
 	 */
 	bool FindVenue(
-			tstring const& inVenue,
+			wxString const& inVenue,
 			ARBDogClubPtr* outClub = NULL) const;
 
 	/**
@@ -216,8 +217,8 @@ public:
 	 * @return Whether the club was added.
 	 */
 	bool AddClub(
-			tstring const& inName,
-			tstring const& inVenue,
+			wxString const& inName,
+			wxString const& inVenue,
 			ARBDogClubPtr* outClub = NULL);
 
 	/**
@@ -227,6 +228,6 @@ public:
 	 * @return Whether club was deleted.
 	 */
 	bool DeleteClub(
-			tstring const& inName,
-			tstring const& inVenue);
+			wxString const& inName,
+			wxString const& inVenue);
 };

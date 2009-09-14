@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
  * @li 2006-05-08 DRC Changing the date unselected a title.
@@ -103,7 +104,7 @@ CDlgTitle::CDlgTitle(
 			m_bHidden = true;
 		if (m_pTitle->GetReceived())
 			m_bReceived = true;
-		m_Venue = m_pTitle->GetVenue().c_str();
+		m_Venue = m_pTitle->GetVenue();
 	}
 
 	// Controls (these are done first to control tab order)
@@ -269,7 +270,7 @@ void CDlgTitle::FillTitles(bool bIniting)
 			{
 				if (pTitle->IsValidOn(date))
 				{
-					int idx = m_ctrlTitles->Append(pTitle->GetCompleteName().c_str());
+					int idx = m_ctrlTitles->Append(pTitle->GetCompleteName());
 					m_ctrlTitles->SetClientObject(idx, new CTitleTitleData(pTitle));
 					if ((bIniting && m_pTitle && m_pTitle->GetRawName() == pTitle->GetName())
 					|| (!bIniting && pSelTitle && pSelTitle->GetName() == pTitle->GetName()))
@@ -291,7 +292,7 @@ void CDlgTitle::FillTitleInfo()
 	if (wxNOT_FOUND != index)
 	{
 		ARBConfigTitlePtr pTitle = GetTitleData(index);
-		str = pTitle->GetDescription().c_str();
+		str = pTitle->GetDescription();
 	}
 	m_ctrlDesc->SetValue(str);
 }

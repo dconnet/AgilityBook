@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-19 DRC Ported to wxWidgets.
  * @li 2008-01-13 DRC Created
  */
@@ -45,217 +46,217 @@ public:
 	CLocalization();
 	void Load();
 
-	tstring UnknownVersion() const				{return m_UnknownVersion;}
-	tstring WarningNewerDoc() const				{return m_WarningNewerDoc;}
-	tstring InvalidDocStructure() const			{return m_InvalidDocStructure;}
-	tstring InvalidFileFormat() const			{return m_InvalidFileFormat;}
-	tstring InvalidFileMissingAttrib() const	{return m_InvalidFileMissingAttrib;}
-	tstring InvalidFileBadAttrib() const		{return m_InvalidFileBadAttrib;}
-	tstring InvalidDate() const					{return m_InvalidDate;}
-	tstring InvalidDivLevel() const				{return m_InvalidDivLevel;}
-	tstring InvalidEventName() const			{return m_InvalidEventName;}
-	tstring InvalidRoot() const					{return m_InvalidRoot;}
-	tstring MissingConfig() const				{return m_MissingConfig;}
-	tstring InvalidConfig() const				{return m_InvalidConfig;}
-	tstring InvalidVenueConfig() const			{return m_InvalidVenueConfig;}
-	tstring InvalidDivName() const				{return m_InvalidDivName;}
-	tstring InvalidVenueName() const			{return m_InvalidVenueName;}
-	tstring InvalidOtherPtsName() const			{return m_InvalidOtherPtsName;}
-	tstring InvalidMultiqName() const			{return m_InvalidMultiqName;}
-	tstring InvalidMultiqConversion() const		{return m_InvalidMultiqConversion;}
-	tstring InvalidEvent() const				{return m_InvalidEvent;}
-	tstring InvalidTitle() const				{return m_InvalidTitle;}
-	tstring ValidValues() const					{return m_ValidValues;}
-	tstring ValidValuesBool() const				{return m_ValidValuesBool;}
-	tstring CalendarTentative() const			{return m_CalendarTentative;}
-	tstring CalendarNotEntered() const			{return m_CalendarNotEntered;}
-	tstring CalendarEntered() const				{return m_CalendarEntered;}
-	tstring CalendarPlanning() const			{return m_CalendarPlanning;}
-	tstring CalendarStatusN() const				{return m_CalendarStatusN;}
-	tstring CalendarStatusE() const				{return m_CalendarStatusE;}
-	tstring CalendarStatusP() const				{return m_CalendarStatusP;}
-	tstring CalendarOpens() const				{return m_CalendarOpens;}
-	tstring CalendarDraw() const				{return m_CalendarDraw;}
-	tstring CalendarCloses() const				{return m_CalendarCloses;}
+	wxString UnknownVersion() const				{return m_UnknownVersion;}
+	wxString WarningNewerDoc() const			{return m_WarningNewerDoc;}
+	wxString InvalidDocStructure() const		{return m_InvalidDocStructure;}
+	wxString InvalidFileFormat() const			{return m_InvalidFileFormat;}
+	wxString InvalidFileMissingAttrib() const	{return m_InvalidFileMissingAttrib;}
+	wxString InvalidFileBadAttrib() const		{return m_InvalidFileBadAttrib;}
+	wxString InvalidDate() const				{return m_InvalidDate;}
+	wxString InvalidDivLevel() const			{return m_InvalidDivLevel;}
+	wxString InvalidEventName() const			{return m_InvalidEventName;}
+	wxString InvalidRoot() const				{return m_InvalidRoot;}
+	wxString MissingConfig() const				{return m_MissingConfig;}
+	wxString InvalidConfig() const				{return m_InvalidConfig;}
+	wxString InvalidVenueConfig() const			{return m_InvalidVenueConfig;}
+	wxString InvalidDivName() const				{return m_InvalidDivName;}
+	wxString InvalidVenueName() const			{return m_InvalidVenueName;}
+	wxString InvalidOtherPtsName() const		{return m_InvalidOtherPtsName;}
+	wxString InvalidMultiqName() const			{return m_InvalidMultiqName;}
+	wxString InvalidMultiqConversion() const	{return m_InvalidMultiqConversion;}
+	wxString InvalidEvent() const				{return m_InvalidEvent;}
+	wxString InvalidTitle() const				{return m_InvalidTitle;}
+	wxString ValidValues() const				{return m_ValidValues;}
+	wxString ValidValuesBool() const			{return m_ValidValuesBool;}
+	wxString CalendarTentative() const			{return m_CalendarTentative;}
+	wxString CalendarNotEntered() const			{return m_CalendarNotEntered;}
+	wxString CalendarEntered() const			{return m_CalendarEntered;}
+	wxString CalendarPlanning() const			{return m_CalendarPlanning;}
+	wxString CalendarStatusN() const			{return m_CalendarStatusN;}
+	wxString CalendarStatusE() const			{return m_CalendarStatusE;}
+	wxString CalendarStatusP() const			{return m_CalendarStatusP;}
+	wxString CalendarOpens() const				{return m_CalendarOpens;}
+	wxString CalendarDraw() const				{return m_CalendarDraw;}
+	wxString CalendarCloses() const				{return m_CalendarCloses;}
 
-	tstring UpdateCalSites(int nNew, int nUpdated, int nSkipped) const;
-	tstring UpdateFaults(int nNew, int nSkipped) const;
-	tstring UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const;
-	tstring UpdateVenues(int nNew, int nUpdated, int nSkipped) const;
-	tstring UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const;
-	tstring UpdateDivisionsReordered() const;
-	tstring UpdateEvents(int nAdded, int nUpdated, int nSkipped) const;
-	tstring UpdateEventsReordered() const;
-	tstring UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const;
-	tstring UpdateMultiqsReordered() const;
-	tstring UpdateLevels(int nAdded, int nUpdated, int nSkipped) const;
-	tstring UpdateLevelsReordered() const;
-	tstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const;
-	tstring UpdateTitlesReordered() const;
-	tstring UpdateSubLevels(int nAdded) const;
-	tstring UpdateSubLevelsReordered() const;
-	tstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
-	tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const;
-	tstring UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const;
-	tstring UpdateTableRuns(int nRuns) const;
+	wxString UpdateCalSites(int nNew, int nUpdated, int nSkipped) const;
+	wxString UpdateFaults(int nNew, int nSkipped) const;
+	wxString UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const;
+	wxString UpdateVenues(int nNew, int nUpdated, int nSkipped) const;
+	wxString UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const;
+	wxString UpdateDivisionsReordered() const;
+	wxString UpdateEvents(int nAdded, int nUpdated, int nSkipped) const;
+	wxString UpdateEventsReordered() const;
+	wxString UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const;
+	wxString UpdateMultiqsReordered() const;
+	wxString UpdateLevels(int nAdded, int nUpdated, int nSkipped) const;
+	wxString UpdateLevelsReordered() const;
+	wxString UpdateTitles(int nAdded, int nUpdated, int nSkipped) const;
+	wxString UpdateTitlesReordered() const;
+	wxString UpdateSubLevels(int nAdded) const;
+	wxString UpdateSubLevelsReordered() const;
+	wxString UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
+	wxString WarnDeletedRuns(int nRuns, wxString const& inRunsMsg) const;
+	wxString UpdateTeamRuns(int nRuns, wxString const& inRunsMsg) const;
+	wxString UpdateTableRuns(int nRuns) const;
 
-	tstring ActionDeleteCalPlugin(tstring const& name) const;
-	tstring ActionRenameOtherPoints(
-			tstring const& oldName,
-			tstring const& newName,
+	wxString ActionDeleteCalPlugin(wxString const& name) const;
+	wxString ActionRenameOtherPoints(
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const;
-	tstring ActionPreDeleteOtherPoints(
-			tstring const& name,
+	wxString ActionPreDeleteOtherPoints(
+			wxString const& name,
 			int nChanges) const;
-	tstring ActionDeleteOtherPoints(tstring const& name) const;
-	tstring ActionRenameVenue(
-			tstring const& oldName,
-			tstring const& newName,
+	wxString ActionDeleteOtherPoints(wxString const& name) const;
+	wxString ActionRenameVenue(
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const;
-	tstring ActionPreDeleteVenue(
-			tstring const& name,
+	wxString ActionPreDeleteVenue(
+			wxString const& name,
 			int nChanges) const;
-	tstring ActionDeleteVenue(tstring const& name) const;
-	tstring ActionRenameMultiQ(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	wxString ActionDeleteVenue(wxString const& name) const;
+	wxString ActionRenameMultiQ(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const;
-	tstring ActionPreDeleteMultiQ(
-			tstring const& venue,
-			tstring const& name,
+	wxString ActionPreDeleteMultiQ(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const;
-	tstring ActionDeleteMultiQ(
-			tstring const& venue,
-			tstring const& name) const;
-	tstring ActionRenameDivision(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	wxString ActionDeleteMultiQ(
+			wxString const& venue,
+			wxString const& name) const;
+	wxString ActionRenameDivision(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const;
-	tstring ActionPreDeleteDivision(
-			tstring const& venue,
-			tstring const& name,
+	wxString ActionPreDeleteDivision(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const;
-	tstring ActionDeleteDivision(
-			tstring const& venue,
-			tstring const& name) const;
-	tstring ActionRenameLevel(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	wxString ActionDeleteDivision(
+			wxString const& venue,
+			wxString const& name) const;
+	wxString ActionRenameLevel(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const;
-	tstring ActionPreDeleteLevel(
-			tstring const& venue,
-			tstring const& name,
+	wxString ActionPreDeleteLevel(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const;
-	tstring ActionDeleteLevel(
-			tstring const& venue,
-			tstring const& name) const;
-	tstring ActionRenameTitle(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	wxString ActionDeleteLevel(
+			wxString const& venue,
+			wxString const& name) const;
+	wxString ActionRenameTitle(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const;
-	tstring ActionPreDeleteTitle(
-			tstring const& venue,
-			tstring const& name,
+	wxString ActionPreDeleteTitle(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const;
-	tstring ActionDeleteTitle(
-			tstring const& venue,
-			tstring const& name) const;
-	tstring ActionRenameEvent(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	wxString ActionDeleteTitle(
+			wxString const& venue,
+			wxString const& name) const;
+	wxString ActionRenameEvent(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const;
-	tstring ActionPreDeleteEvent(
-			tstring const& venue,
-			tstring const& name,
+	wxString ActionPreDeleteEvent(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const;
-	tstring ActionDeleteEvent(
-			tstring const& venue,
-			tstring const& name) const;
+	wxString ActionDeleteEvent(
+			wxString const& venue,
+			wxString const& name) const;
 
-	tstring TitlePointsNameFormat(double points, double faults) const;
-	tstring LifetimePointsNameFormat(double points, double faults) const;
-	tstring PlacementPointsNameFormat(double points, short place) const;
+	wxString TitlePointsNameFormat(double points, double faults) const;
+	wxString LifetimePointsNameFormat(double points, double faults) const;
+	wxString PlacementPointsNameFormat(double points, short place) const;
 
-	tstring ScoreStyleUnknown() const			{return m_ScoreStyleUnknown;}
-	tstring ScoreStyleFaultsTime() const		{return m_ScoreStyleFaultsTime;}
-	tstring ScoreStyleFaults100Time() const		{return m_ScoreStyleFaults100Time;}
-	tstring ScoreStyleFaults200Time() const		{return m_ScoreStyleFaults200Time;}
-	tstring ScoreStyleOCScoreTime() const		{return m_ScoreStyleOCScoreTime;}
-	tstring ScoreStyleScoreTime() const			{return m_ScoreStyleScoreTime;}
-	tstring ScoreStyleTimePlusFaults() const	{return m_ScoreStyleTimePlusFaults;}
+	wxString ScoreStyleUnknown() const			{return m_ScoreStyleUnknown;}
+	wxString ScoreStyleFaultsTime() const		{return m_ScoreStyleFaultsTime;}
+	wxString ScoreStyleFaults100Time() const	{return m_ScoreStyleFaults100Time;}
+	wxString ScoreStyleFaults200Time() const	{return m_ScoreStyleFaults200Time;}
+	wxString ScoreStyleOCScoreTime() const		{return m_ScoreStyleOCScoreTime;}
+	wxString ScoreStyleScoreTime() const		{return m_ScoreStyleScoreTime;}
+	wxString ScoreStyleTimePlusFaults() const	{return m_ScoreStyleTimePlusFaults;}
 
-	tstring ExistingPointsOther() const			{return m_ExistingPointsOther;}
-	tstring ExistingPointsRun() const			{return m_ExistingPointsRun;}
-	tstring ExistingPointsSpeed() const			{return m_ExistingPointsSpeed;}
-	tstring ExistingPointsMQ() const			{return m_ExistingPointsMQ;}
-	tstring ExistingPointsSQ() const			{return m_ExistingPointsSQ;}
+	wxString ExistingPointsOther() const		{return m_ExistingPointsOther;}
+	wxString ExistingPointsRun() const			{return m_ExistingPointsRun;}
+	wxString ExistingPointsSpeed() const		{return m_ExistingPointsSpeed;}
+	wxString ExistingPointsMQ() const			{return m_ExistingPointsMQ;}
+	wxString ExistingPointsSQ() const			{return m_ExistingPointsSQ;}
 
-	tstring ErrorInvalidDocStructure(wxChar const* const inMsg) const;
-	tstring ErrorMissingAttribute(
+	wxString ErrorInvalidDocStructure(wxChar const* const inMsg) const;
+	wxString ErrorMissingAttribute(
 			wxChar const* const inElement,
 			wxChar const* const inAttrib,
 			wxChar const* const inMsg = NULL) const;
-	tstring ErrorInvalidAttributeValue(
+	wxString ErrorInvalidAttributeValue(
 			wxChar const* const inElement,
 			wxChar const* const inAttrib,
 			wxChar const* const inMsg = NULL) const;
 
 private:
-	tstring m_UnknownVersion;
-	tstring m_WarningNewerDoc;
-	tstring m_InvalidDocStructure;
-	tstring m_InvalidFileFormat;
-	tstring m_InvalidFileMissingAttrib;
-	tstring m_InvalidFileBadAttrib;
-	tstring m_InvalidDate;
-	tstring m_InvalidDivLevel;
-	tstring m_InvalidEventName;
-	tstring m_InvalidRoot;
-	tstring m_MissingConfig;
-	tstring m_InvalidConfig;
-	tstring m_InvalidVenueConfig;
-	tstring m_InvalidDivName;
-	tstring m_InvalidVenueName;
-	tstring m_InvalidOtherPtsName;
-	tstring m_InvalidMultiqName;
-	tstring m_InvalidMultiqConversion;
-	tstring m_InvalidEvent;
-	tstring m_InvalidTitle;
-	tstring m_ValidValues;
-	tstring m_ValidValuesBool;
-	tstring m_CalendarTentative;
-	tstring m_CalendarNotEntered;
-	tstring m_CalendarEntered;
-	tstring m_CalendarPlanning;
-	tstring m_CalendarStatusN;
-	tstring m_CalendarStatusE;
-	tstring m_CalendarStatusP;
-	tstring m_CalendarOpens;
-	tstring m_CalendarDraw;
-	tstring m_CalendarCloses;
+	wxString m_UnknownVersion;
+	wxString m_WarningNewerDoc;
+	wxString m_InvalidDocStructure;
+	wxString m_InvalidFileFormat;
+	wxString m_InvalidFileMissingAttrib;
+	wxString m_InvalidFileBadAttrib;
+	wxString m_InvalidDate;
+	wxString m_InvalidDivLevel;
+	wxString m_InvalidEventName;
+	wxString m_InvalidRoot;
+	wxString m_MissingConfig;
+	wxString m_InvalidConfig;
+	wxString m_InvalidVenueConfig;
+	wxString m_InvalidDivName;
+	wxString m_InvalidVenueName;
+	wxString m_InvalidOtherPtsName;
+	wxString m_InvalidMultiqName;
+	wxString m_InvalidMultiqConversion;
+	wxString m_InvalidEvent;
+	wxString m_InvalidTitle;
+	wxString m_ValidValues;
+	wxString m_ValidValuesBool;
+	wxString m_CalendarTentative;
+	wxString m_CalendarNotEntered;
+	wxString m_CalendarEntered;
+	wxString m_CalendarPlanning;
+	wxString m_CalendarStatusN;
+	wxString m_CalendarStatusE;
+	wxString m_CalendarStatusP;
+	wxString m_CalendarOpens;
+	wxString m_CalendarDraw;
+	wxString m_CalendarCloses;
 
-	tstring m_ScoreStyleUnknown;
-	tstring m_ScoreStyleFaultsTime;
-	tstring m_ScoreStyleFaults100Time;
-	tstring m_ScoreStyleFaults200Time;
-	tstring m_ScoreStyleOCScoreTime;
-	tstring m_ScoreStyleScoreTime;
-	tstring m_ScoreStyleTimePlusFaults;
+	wxString m_ScoreStyleUnknown;
+	wxString m_ScoreStyleFaultsTime;
+	wxString m_ScoreStyleFaults100Time;
+	wxString m_ScoreStyleFaults200Time;
+	wxString m_ScoreStyleOCScoreTime;
+	wxString m_ScoreStyleScoreTime;
+	wxString m_ScoreStyleTimePlusFaults;
 
-	tstring m_QTypeNA;
-	tstring m_QTypeQ;
-	tstring m_QTypeNQ;
-	tstring m_QTypeE;
-	tstring m_QTypeSQ;
+	wxString m_QTypeNA;
+	wxString m_QTypeQ;
+	wxString m_QTypeNQ;
+	wxString m_QTypeE;
+	wxString m_QTypeSQ;
 
-	tstring m_ExistingPointsOther;
-	tstring m_ExistingPointsRun;
-	tstring m_ExistingPointsSpeed;
-	tstring m_ExistingPointsMQ;
-	tstring m_ExistingPointsSQ;
+	wxString m_ExistingPointsOther;
+	wxString m_ExistingPointsRun;
+	wxString m_ExistingPointsSpeed;
+	wxString m_ExistingPointsMQ;
+	wxString m_ExistingPointsSQ;
 };

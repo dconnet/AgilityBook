@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -88,7 +89,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Date.GetString(ARBDate::eSlashMDY);
 	}
@@ -98,7 +99,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load a training entry
@@ -132,36 +133,36 @@ public:
 	{
 		m_Date = inDate;
 	}
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring const& GetSubName() const
+	wxString const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(tstring const& inName)
+	void SetSubName(wxString const& inName)
 	{
 		m_SubName = inName;
 	}
-	tstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(tstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
 	ARBDate m_Date;
-	tstring m_Name;
-	tstring m_SubName;
-	tstring m_Note;
+	wxString m_Name;
+	wxString m_SubName;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -195,14 +196,14 @@ public:
 	 * @param outNames A list of the unique training names.
 	 * @return Number of unique names.
 	 */
-	size_t GetAllNames(std::set<tstring>& outNames) const;
+	size_t GetAllNames(std::set<wxString>& outNames) const;
 
 	/**
 	 * Get a list of all the different sub-names in the list.
 	 * @param outSubNames A list of the unique training sub-names.
 	 * @return Number of unique sub-names.
 	 */
-	size_t GetAllSubNames(std::set<tstring>& outSubNames) const;
+	size_t GetAllSubNames(std::set<wxString>& outSubNames) const;
 
 	/**
 	 * Find a training object.

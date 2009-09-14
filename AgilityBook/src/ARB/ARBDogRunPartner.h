@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -69,7 +70,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Dog;
 	}
@@ -79,7 +80,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load a partner.
@@ -107,35 +108,35 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetHandler() const
+	wxString const& GetHandler() const
 	{
 		return m_Handler;
 	}
-	void SetHandler(tstring const& inHandler)
+	void SetHandler(wxString const& inHandler)
 	{
 		m_Handler = inHandler;
 	}
-	tstring const& GetDog() const
+	wxString const& GetDog() const
 	{
 		return m_Dog;
 	}
-	void SetDog(tstring const& inDog)
+	void SetDog(wxString const& inDog)
 	{
 		m_Dog = inDog;
 	}
-	tstring const& GetRegNum() const
+	wxString const& GetRegNum() const
 	{
 		return m_RegNum;
 	}
-	void SetRegNum(tstring const& inRegNum)
+	void SetRegNum(wxString const& inRegNum)
 	{
 		m_RegNum = inRegNum;
 	}
 
 private:
-	tstring m_Handler;
-	tstring m_Dog;
-	tstring m_RegNum;
+	wxString m_Handler;
+	wxString m_Dog;
+	wxString m_RegNum;
 };
 
 /////////////////////////////////////////////////////////////////////////////

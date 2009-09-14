@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2007-08-02 DRC Created
  */
 
@@ -83,70 +84,70 @@ public:
 	/**
 	 * Get the formatted URL to use to request data.
 	 */
-	tstring GetFormattedURL(
-			std::vector<tstring> const& inLocCodes,
-			std::vector<tstring> const& inVenueCodes) const;
+	wxString GetFormattedURL(
+			std::vector<wxString> const& inLocCodes,
+			std::vector<wxString> const& inVenueCodes) const;
 
 	/*
 	 * Getters/setters.
 	 */
-	tstring GetName() const
+	wxString GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring GetDescription() const
+	wxString GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(tstring const& inDesc)
+	void SetDescription(wxString const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
-	tstring GetSearchURL() const
+	wxString GetSearchURL() const
 	{
 		return m_urlSearch;
 	}
-	void SetSearchURL(tstring const& inURL)
+	void SetSearchURL(wxString const& inURL)
 	{
 		m_urlSearch = inURL;
 	}
-	tstring GetHelpURL() const
+	wxString GetHelpURL() const
 	{
 		return m_urlHelp;
 	}
-	void SetHelpURL(tstring const& inURL)
+	void SetHelpURL(wxString const& inURL)
 	{
 		m_urlHelp = inURL;
 	}
-	std::map<tstring, tstring> const& LocationCodes() const
+	std::map<wxString, wxString> const& LocationCodes() const
 	{
 		return m_Locations;
 	}
-	std::map<tstring, tstring> const& VenueCodes() const
+	std::map<wxString, wxString> const& VenueCodes() const
 	{
 		return m_Venues;
 	}
 
-	bool HasLocationCode(tstring const& inCode) const;
-	bool AddLocationCode(tstring const& inCode, tstring const& inName);
-	bool RemoveLocationCode(tstring const& inCode);
+	bool HasLocationCode(wxString const& inCode) const;
+	bool AddLocationCode(wxString const& inCode, wxString const& inName);
+	bool RemoveLocationCode(wxString const& inCode);
 	bool RemoveAllLocationCodes();
-	bool HasVenueCode(tstring const& inCode) const;
-	bool AddVenueCode(tstring const& inCode, tstring const& inVenue);
-	bool RemoveVenueCode(tstring const& inCode);
+	bool HasVenueCode(wxString const& inCode) const;
+	bool AddVenueCode(wxString const& inCode, wxString const& inVenue);
+	bool RemoveVenueCode(wxString const& inCode);
 	bool RemoveAllVenueCodes();
 
 private:
-	tstring m_Name;
-	tstring m_Desc;
-	tstring m_urlSearch;
-	tstring m_urlHelp;
-	std::map<tstring, tstring> m_Locations;
-	std::map<tstring, tstring> m_Venues;
+	wxString m_Name;
+	wxString m_Desc;
+	wxString m_urlSearch;
+	wxString m_urlHelp;
+	std::map<wxString, wxString> m_Locations;
+	std::map<wxString, wxString> m_Venues;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -182,7 +183,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindSite(
-			tstring const& inSite,
+			wxString const& inSite,
 			ARBConfigCalSitePtr* outSite = NULL) const;
 
 	/**
@@ -192,7 +193,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddSite(
-			tstring const& inSite,
+			wxString const& inSite,
 			ARBConfigCalSitePtr* outSite = NULL);
 
 	/**
@@ -207,5 +208,5 @@ public:
 	 * @param inSite Name of site to delete.
 	 * @return Number of sites deleted (0 or 1).
 	 */
-	int DeleteSite(tstring const& inSite);
+	int DeleteSite(wxString const& inSite);
 };

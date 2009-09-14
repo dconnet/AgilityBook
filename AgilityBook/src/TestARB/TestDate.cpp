@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-11 DRC Created
  */
 
@@ -172,7 +173,7 @@ SUITE(TestDate)
 	{
 		ARBDate d1(1999, 3, 30);
 		ARBDate d2(1999, 3, 27);
-		tstring s = ARBDate::GetValidDateString(d1, d2);
+		wxString s = ARBDate::GetValidDateString(d1, d2);
 		CHECK(wxT("[1999-3-30-1999-3-27]") == s);
 		d1.clear();
 		s = ARBDate::GetValidDateString(d1, d2);

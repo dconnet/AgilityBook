@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-30 DRC Remove Convert and replaced with tstringA/etc
  * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
  */
@@ -50,17 +51,17 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-tstring tstringUtil::TString(wchar_t const* const inStr, size_t inLen)
+wxString tstringUtil::TString(wchar_t const* const inStr, size_t inLen)
 {
 #ifdef UNICODE
-	return std::wstring(inStr, inLen);
+	return wxString(inStr, inLen);
 #else
 	return tstringA(inStr, inLen);
 #endif
 }
 
 
-tstring tstringUtil::TString(std::wstring const& inStr)
+wxString tstringUtil::TString(std::wstring const& inStr)
 {
 #ifdef UNICODE
 	return inStr;
@@ -70,17 +71,17 @@ tstring tstringUtil::TString(std::wstring const& inStr)
 }
 
 
-tstring tstringUtil::TString(char const* const inStr, size_t inLen)
+wxString tstringUtil::TString(char const* const inStr, size_t inLen)
 {
 #ifdef UNICODE
 	return tstringW(inStr, inLen);
 #else
-	return std::string(inStr, inLen);
+	return wxString(inStr, inLen);
 #endif
 }
 
 
-tstring tstringUtil::TString(std::string const& inStr)
+wxString tstringUtil::TString(std::string const& inStr)
 {
 #ifdef UNICODE
 	return tstringW(inStr);
@@ -88,6 +89,7 @@ tstring tstringUtil::TString(std::string const& inStr)
 	return inStr;
 #endif
 }
+
 
 std::string tstringUtil::tstringA(wchar_t const* const inStr, size_t inLen)
 {
@@ -179,38 +181,32 @@ std::wstring tstringUtil::tstringW(std::string const& inStr)
 }
 
 
-long tstringUtil::atol(tstring const& inStr)
+long tstringUtil::atol(wxString const& inStr)
 {
 	long l;
-	wxString s(inStr.c_str());
-	s.ToLong(&l);
+#if wxCHECK_VERSION(2, 9, 0)
+	if (!inStr.ToCLong(&l))
+	{
+		// The above fails for "123-45". Before it returned 123.
+		// That's the behavior I'm relying on.
+		std::basic_istringstream<wxChar> str(inStr.wx_str());
+		str >> l;
+	}
+#else
+	inStr.ToLong(&l);
+#endif
 	return l;
 }
 
 
-long tstringUtil::atol(wxChar const* inStr)
-{
-	long l;
-	wxString s(inStr);
-	s.ToLong(&l);
-	return l;
-}
-
-
-double tstringUtil::strtod(tstring const& inStr)
+double tstringUtil::strtod(wxString const& inStr)
 {
 	double d;
-	wxString s(inStr.c_str());
-	s.ToDouble(&d);
-	return d;
-}
-
-
-double tstringUtil::strtod(wxChar const* inStr)
-{
-	double d;
-	wxString s(inStr);
-	s.ToDouble(&d);
+#if wxCHECK_VERSION(2, 9, 0)
+	inStr.ToCDouble(&d);
+#else
+	inStr.ToDouble(&d);
+#endif
 	return d;
 }
 

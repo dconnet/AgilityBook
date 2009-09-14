@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -75,7 +76,7 @@ SUITE(TestConfigSubLevel)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -112,7 +113,7 @@ SUITE(TestConfigSubLevelList)
 	TEST(Find)
 	{
 		TODO_TEST
-	//	bool FindSubLevel(tstring const& inName) const;
+	//	bool FindSubLevel(wxString const& inName) const;
 	}
 
 
@@ -120,8 +121,8 @@ SUITE(TestConfigSubLevelList)
 	{
 		TODO_TEST
 	//	bool AddSubLevel(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			ARBConfigSubLevelPtr* outLevel = NULL);
-	//	bool DeleteSubLevel(tstring const& inName);
+	//	bool DeleteSubLevel(wxString const& inName);
 	}
 }

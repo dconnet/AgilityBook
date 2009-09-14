@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2007-03-14 DRC Change accumulation to work by event, not method.
  *                    This removes the multiple listings in the view.
@@ -65,12 +66,12 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static const tstring s_TableHeader(wxT("<table border=\"2\" cellspacing=\"0\" cellpadding=\"2\">"));
+static const wxString s_TableHeader(wxT("<table border=\"2\" cellspacing=\"0\" cellpadding=\"2\">"));
 
 
-static tstring Sanitize(tstring const& inRawData, bool nbsp = false)
+static wxString Sanitize(wxString const& inRawData, bool nbsp = false)
 {
-	tstring data = SanitizeStringForHTML(inRawData);
+	wxString data = SanitizeStringForHTML(inRawData);
 	if (nbsp && data.empty())
 		data = wxT("&nbsp;");
 	return data;
@@ -79,8 +80,8 @@ static tstring Sanitize(tstring const& inRawData, bool nbsp = false)
 /////////////////////////////////////////////////////////////////////////////
 
 LifeTimePointInfoPtr LifeTimePointInfo::New(
-		tstring const& inSort1,
-		tstring const& inSort2,
+		wxString const& inSort1,
+		wxString const& inSort2,
 		double inPoints,
 		double inFiltered)
 {
@@ -89,8 +90,8 @@ LifeTimePointInfoPtr LifeTimePointInfo::New(
 
 
 LifeTimePointInfo::LifeTimePointInfo(
-		tstring const& inSort1,
-		tstring const& inSort2,
+		wxString const& inSort1,
+		wxString const& inSort2,
 		double inPoints,
 		double inFiltered)
 	: sort1(inSort1)
@@ -157,7 +158,7 @@ CPointsDataBase::~CPointsDataBase()
 
 CPointsDataSeparator::CPointsDataSeparator(
 		CAgilityBookDoc* pDoc,
-		tstring const& inHtml)
+		wxString const& inHtml)
 	: CPointsDataBase(pDoc)
 	, m_Html(inHtml)
 {
@@ -180,7 +181,7 @@ CPointsDataText::CPointsDataText(
 }
 
 
-tstring CPointsDataText::OnNeedText(int inCol) const
+wxString CPointsDataText::OnNeedText(int inCol) const
 {
 	switch (inCol)
 	{
@@ -194,16 +195,16 @@ tstring CPointsDataText::OnNeedText(int inCol) const
 }
 
 
-tstring CPointsDataText::GetHtml(size_t /*nCurLine*/) const
+wxString CPointsDataText::GetHtml(size_t /*nCurLine*/) const
 {
-	otstringstream data;
+	wxString data;
 	if (m_UseInHtml)
 	{
-		data << wxT("<tr>") << std::endl
-			<< wxT("<td>") << Sanitize(m_Col2, true) << wxT("</td>") << std::endl
-			<< wxT("</tr>") << std::endl;
+		data << wxT("<tr>\n")
+			<< wxT("<td>") << Sanitize(m_Col2, true) << wxT("</td>\n")
+			<< wxT("</tr>\n");
 	}
-	return data.str();
+	return data;
 }
 
 
@@ -223,9 +224,9 @@ CPointsDataDog::CPointsDataDog(
 }
 
 
-tstring CPointsDataDog::OnNeedText(int inCol) const
+wxString CPointsDataDog::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	if (m_pDog)
 	{
 		switch (inCol)
@@ -245,9 +246,9 @@ tstring CPointsDataDog::OnNeedText(int inCol) const
 }
 
 
-tstring CPointsDataDog::GetHtml(size_t nCurLine) const
+wxString CPointsDataDog::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
+	wxString data;
 	if (m_pDog)
 	{
 		data << wxT("<h1 align=\"center\">") << _("IDS_TITLING_POINTS") << wxT(" ")
@@ -266,10 +267,10 @@ tstring CPointsDataDog::GetHtml(size_t nCurLine) const
 				<< Sanitize(m_pDog->GetRegisteredName())
 				<< wxT("]");
 		}
-		data << wxT("</h1>") << std::endl;
+		data << wxT("</h1>\n");
 
 	}
-	return data.str();
+	return data;
 }
 
 
@@ -302,9 +303,9 @@ CPointsDataVenue::CPointsDataVenue(
 }
 
 
-tstring CPointsDataVenue::OnNeedText(int inCol) const
+wxString CPointsDataVenue::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	if (m_pVenue)
 	{
 		switch (inCol)
@@ -328,9 +329,9 @@ tstring CPointsDataVenue::OnNeedText(int inCol) const
 }
 
 
-tstring CPointsDataVenue::GetHtml(size_t nCurLine) const
+wxString CPointsDataVenue::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
+	wxString data;
 	if (m_pVenue)
 	{
 		data << wxT("<h2>");
@@ -358,12 +359,12 @@ tstring CPointsDataVenue::GetHtml(size_t nCurLine) const
 					<< nCurLine
 #endif
 					<< wxT("\">") << Sanitize(pRegNum->GetNumber())
-					<< wxT("</a>]") << std::endl;
+					<< wxT("</a>]\n");
 			}
 		}
-		data << wxT("</h2>") << std::endl;
+		data << wxT("</h2>\n");
 	}
-	return data.str();
+	return data;
 }
 
 
@@ -407,9 +408,9 @@ CPointsDataTitle::CPointsDataTitle(
 }
 
 
-tstring CPointsDataTitle::OnNeedText(int inCol) const
+wxString CPointsDataTitle::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	if (m_pTitle)
 	{
 		switch (inCol)
@@ -428,23 +429,23 @@ tstring CPointsDataTitle::OnNeedText(int inCol) const
 }
 
 
-tstring CPointsDataTitle::GetHtml(size_t nCurLine) const
+wxString CPointsDataTitle::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
+	wxString data;
 	if (m_pTitle)
 	{
-		data << wxT("<tr>") << std::endl
-			<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
+		data << wxT("<tr>\n")
+			<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
 			<< wxT("<td><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 			<< static_cast<unsigned int>(nCurLine)
 #else
 			<< nCurLine
 #endif
-			<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>") << std::endl
-			<< wxT("</tr>") << std::endl;
+			<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>\n")
+			<< wxT("</tr>\n");
 	}
-	return data.str();
+	return data;
 }
 
 
@@ -486,11 +487,11 @@ CPointsDataEvent::CPointsDataEvent(
 		int inLevelIdx,
 		ARBConfigEventPtr inEvent,
 		int inEventIdx,
-		tstring const& inRunCount,
-		tstring const& inQcount,
-		tstring const& inPts,
-		tstring const& inSuperQ,
-		tstring const& inSpeed)
+		wxString const& inRunCount,
+		wxString const& inQcount,
+		wxString const& inPts,
+		wxString const& inSuperQ,
+		wxString const& inSpeed)
 	: CPointsDataBase(pDoc)
 	, m_Dog(inDog)
 	, m_Matching(inMatching)
@@ -510,9 +511,9 @@ CPointsDataEvent::CPointsDataEvent(
 }
 
 
-tstring CPointsDataEvent::OnNeedText(int inCol) const
+wxString CPointsDataEvent::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	switch (inCol)
 	{
 	case 1: // Division
@@ -547,32 +548,32 @@ tstring CPointsDataEvent::OnNeedText(int inCol) const
 }
 
 
-tstring CPointsDataEvent::GetHtml(size_t nCurLine) const
+wxString CPointsDataEvent::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>") << std::endl
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>\n")
 		<< wxT("<td><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< wxT("\">") << Sanitize(OnNeedText(4)) << wxT("</a></td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(5), true) << wxT("</td>") << std::endl
-		<< wxT("<td align=\"right\">") << Sanitize(OnNeedText(6), true) << wxT("</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(8), true) << wxT("</td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+		<< wxT("\">") << Sanitize(OnNeedText(4)) << wxT("</a></td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(5), true) << wxT("</td>\n")
+		<< wxT("<td align=\"right\">") << Sanitize(OnNeedText(6), true) << wxT("</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(8), true) << wxT("</td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
 void CPointsDataEvent::Details() const
 {
-	otstringstream str;
+	wxString str;
 	str << _("IDS_RUNS") << wxT(": ")
 		<< m_Div->GetName()
 		<< wxT("/")
@@ -580,7 +581,7 @@ void CPointsDataEvent::Details() const
 		<< wxT("/")
 		<< m_Event->GetName();
 	RunInfoData data(m_Dog, m_Venue, m_Div, m_Level, m_Event);
-	CDlgListViewer dlg(m_pDoc, str.str().c_str(), m_Dog ? &data : NULL, m_Matching);
+	CDlgListViewer dlg(m_pDoc, str, m_Dog ? &data : NULL, m_Matching);
 	dlg.ShowModal();
 }
 
@@ -613,8 +614,8 @@ CPointsDataLifetime::CPointsDataLifetime(
 
 
 void CPointsDataLifetime::AddLifetimeInfo(
-		tstring const& inDiv,
-		tstring const& inLevel,
+		wxString const& inDiv,
+		wxString const& inLevel,
 		double inLifetime,
 		double inFiltered)
 {
@@ -624,72 +625,63 @@ void CPointsDataLifetime::AddLifetimeInfo(
 }
 
 
-tstring CPointsDataLifetime::OnNeedText(int inCol) const
+wxString CPointsDataLifetime::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	switch (inCol)
 	{
 	case 1:
+		if (m_bLifetime)
 		{
-			wxString str2;
-			if (m_bLifetime)
-			{
-				wxString lifetime;
-				if (m_Venue->HasLifetimeName())
-					lifetime = m_Venue->GetLifetimeName().c_str();
-				else
-					lifetime = _("IDS_TITLEPOINT_LIFETIME");
-				str2 = wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str());
-			}
+			wxString lifetime;
+			if (m_Venue->HasLifetimeName())
+				lifetime = m_Venue->GetLifetimeName();
 			else
-				str2 = _("IDS_PLACEMENT_POINTS");
-			str = str2.c_str();
+				lifetime = _("IDS_TITLEPOINT_LIFETIME");
+			str = wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str());
 		}
+		else
+			str = _("IDS_PLACEMENT_POINTS");
 		break;
 	case 2:
-		{
-			wxString total(_("IDS_TOTAL"));
-			otstringstream str2;
-			str2 << total.c_str() << wxT(": ");
-			if (0 < m_Filtered)
-				str2 << m_Lifetime - m_Filtered << wxT(" (") << m_Lifetime << ')';
-			else
-				str2 << m_Lifetime;
-			str = str2.str();
-		}
+		str << _("IDS_TOTAL") << wxT(": ");
+		if (0 < m_Filtered)
+			str << m_Lifetime - m_Filtered << wxT(" (") << m_Lifetime << wxT(")");
+		else
+			str << m_Lifetime;
 		break;
 	}
 	return str;
 }
 
 
-tstring CPointsDataLifetime::GetHtml(size_t nCurLine) const
+wxString CPointsDataLifetime::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr><td>&nbsp;</td</tr>") << std::endl
-		<< wxT("<tr>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
+	wxString data;
+	data << wxT("<tr><td>&nbsp;</td</tr>\n")
+		<< wxT("<tr>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<unsigned int>(nCurLine)
 #else
 		<< nCurLine
 #endif
-		<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+		<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
 void CPointsDataLifetime::Details() const
 {
-	wxString caption(m_Venue->GetName().c_str());
+	wxString caption(m_Venue->GetName());
 	wxString str;
 	if (m_bLifetime)
 	{
 		wxString lifetime;
 		if (m_Venue->HasLifetimeName())
-			lifetime = m_Venue->GetLifetimeName().c_str();
+			lifetime = m_Venue->GetLifetimeName();
 		else
 			lifetime = _("IDS_TITLEPOINT_LIFETIME");
 		str = wxString::Format(_("IDS_LIFETIME_POINTS"), lifetime.c_str());
@@ -717,7 +709,7 @@ CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 		CAgilityBookDoc* pDoc,
 		bool bLifetime,
 		ARBConfigVenuePtr inVenue,
-		tstring const& inName)
+		wxString const& inName)
 	: CPointsDataLifetime(pDoc, bLifetime, inVenue)
 	, m_Name(inName)
 {
@@ -725,8 +717,8 @@ CPointsDataLifetimeByName::CPointsDataLifetimeByName(
 
 
 void CPointsDataLifetimeByName::AddLifetimeInfo(
-		tstring const& inSort1,
-		tstring const& inSort2,
+		wxString const& inSort1,
+		wxString const& inSort2,
 		double inLifetime,
 		double inFiltered)
 {
@@ -739,35 +731,31 @@ void CPointsDataLifetimeByName::AddLifetimeInfo(
 }
 
 
-tstring CPointsDataLifetimeByName::OnNeedText(int inCol) const
+wxString CPointsDataLifetimeByName::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	switch (inCol)
 	{
 	case 2:
-		{
-			otstringstream str2;
-			str2 << m_Name << wxT(": ");
-			if (0 < m_Filtered)
-				str2 << m_Lifetime - m_Filtered << wxT(" (") << m_Lifetime << ')';
-			else
-				str2 << m_Lifetime;
-			str = str2.str();
-		}
+		str << m_Name << wxT(": ");
+		if (0 < m_Filtered)
+			str << m_Lifetime - m_Filtered << wxT(" (") << m_Lifetime << wxT(")");
+		else
+			str << m_Lifetime;
 		break;
 	}
 	return str;
 }
 
 
-tstring CPointsDataLifetimeByName::GetHtml(size_t nCurLine) const
+wxString CPointsDataLifetimeByName::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td>&nbsp;</td>") << std::endl
-		<< wxT("<td align=\"right\">") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td>&nbsp;</td>\n")
+		<< wxT("<td align=\"right\">") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
@@ -810,24 +798,22 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 }
 
 
-tstring CPointsDataMultiQs::OnNeedText(int inCol) const
+wxString CPointsDataMultiQs::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	if (7 == inCol)
 	{
-		otstringstream str2;
-		str2 << m_ExistingDblQs + m_MQs.size() << ' ' << m_MultiQ->GetShortName();
-		str = str2.str();
+		str << m_ExistingDblQs + m_MQs.size() << wxT(" ") << m_MultiQ->GetShortName();
 	}
 	return str;
 }
 
 
-tstring CPointsDataMultiQs::GetHtml(size_t nCurLine) const
+wxString CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td colspan=\"6\"/>") << std::endl
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td colspan=\"6\"/>\n")
 		<< wxT("<td><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<unsigned int>(nCurLine)
@@ -835,16 +821,16 @@ tstring CPointsDataMultiQs::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< wxT("\">")
-		<< Sanitize(OnNeedText(7)) << wxT("</a></td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+		<< Sanitize(OnNeedText(7)) << wxT("</a></td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
 void CPointsDataMultiQs::Details() const
 {
 	MultiQInfoData data(m_Dog, m_Venue, m_MultiQ);
-	CDlgListViewer dlg(m_pDoc, m_MultiQ->GetName().c_str(), &data, m_MQs);
+	CDlgListViewer dlg(m_pDoc, m_MultiQ->GetName(), &data, m_MQs);
 	dlg.ShowModal();
 }
 
@@ -872,25 +858,25 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 }
 
 
-tstring CPointsDataSpeedPts::OnNeedText(int inCol) const
+wxString CPointsDataSpeedPts::OnNeedText(int inCol) const
 {
 	wxString str;
 	if (7 == inCol)
 	{
 		str = wxString::Format(_("IDS_POINTS_SPEED"), m_Pts);
 	}
-	return str.c_str();
+	return str;
 }
 
 
-tstring CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
+wxString CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td colspan=\"6\"/>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td colspan=\"6\"/>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
@@ -924,7 +910,7 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 
 CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
 		CAgilityBookDoc* pDoc,
-		tstring const& inName,
+		wxString const& inName,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Name(inName)
@@ -932,31 +918,27 @@ CPointsDataOtherPointsTallyAll::CPointsDataOtherPointsTallyAll(
 }
 
 
-tstring CPointsDataOtherPointsTallyAll::OnNeedText(int inCol) const
+wxString CPointsDataOtherPointsTallyAll::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	switch (inCol)
 	{
 	case 1:
 		str = m_Name;
 		break;
 	case 2:
-		{
-			otstringstream str2;
-			str2<< m_Score;
-			str = str2.str();
-		}
+		str << m_Score;
 		break;
 	}
 	return str;
 }
 
 
-tstring CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>") << std::endl
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<unsigned int>(nCurLine)
@@ -964,9 +946,9 @@ tstring CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< wxT("\">")
-		<< Sanitize(OnNeedText(2)) << wxT("</a></td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+		<< Sanitize(OnNeedText(2)) << wxT("</a></td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
@@ -990,7 +972,7 @@ bool CPointsDataOtherPointsTallyAll::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 		CAgilityBookDoc* pDoc,
-		tstring const& inEvent,
+		wxString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Event(inEvent)
@@ -998,32 +980,28 @@ CPointsDataOtherPointsTallyAllByEvent::CPointsDataOtherPointsTallyAllByEvent(
 }
 
 
-tstring CPointsDataOtherPointsTallyAllByEvent::OnNeedText(int inCol) const
+wxString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	switch (inCol)
 	{
 	case 2: // Event
 		str = m_RunList.begin()->m_Event;
 		break;
 	case 3:
-		{
-			otstringstream str2;
-			str2 << m_Score;
-			str = str2.str();
-		}
+		str << m_Score;
 		break;
 	}
 	return str;
 }
 
 
-tstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td>&nbsp;</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td>&nbsp;</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<unsigned int>(nCurLine)
@@ -1031,9 +1009,9 @@ tstring CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< wxT("\">")
-		<< Sanitize(OnNeedText(3)) << wxT("</a></td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+		<< Sanitize(OnNeedText(3)) << wxT("</a></td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
@@ -1057,7 +1035,7 @@ bool CPointsDataOtherPointsTallyAllByEvent::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 		CAgilityBookDoc* pDoc,
-		tstring const& inLevel,
+		wxString const& inLevel,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Level(inLevel)
@@ -1065,32 +1043,28 @@ CPointsDataOtherPointsTallyLevel::CPointsDataOtherPointsTallyLevel(
 }
 
 
-tstring CPointsDataOtherPointsTallyLevel::OnNeedText(int inCol) const
+wxString CPointsDataOtherPointsTallyLevel::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	switch (inCol)
 	{
 	case 2: // Level
 		str = m_RunList.begin()->m_Level;
 		break;
 	case 3:
-		{
-			otstringstream str2;
-			str2 << m_Score;
-			str = str2.str();
-		}
+		str << m_Score;
 		break;
 	}
 	return str;
 }
 
 
-tstring CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td>&nbsp;</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td>&nbsp;</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<unsigned int>(nCurLine)
@@ -1098,9 +1072,9 @@ tstring CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< wxT("\">")
-		<< Sanitize(OnNeedText(3)) << wxT("</a></td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+		<< Sanitize(OnNeedText(3)) << wxT("</a></td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
@@ -1124,8 +1098,8 @@ bool CPointsDataOtherPointsTallyLevel::IsEqual(CPointsDataBasePtr inData)
 
 CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent(
 		CAgilityBookDoc* pDoc,
-		tstring const& inLevel,
-		tstring const& inEvent,
+		wxString const& inLevel,
+		wxString const& inEvent,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataOtherPoints(pDoc, inRunList)
 	, m_Level(inLevel)
@@ -1134,9 +1108,9 @@ CPointsDataOtherPointsTallyLevelByEvent::CPointsDataOtherPointsTallyLevelByEvent
 }
 
 
-tstring CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(int inCol) const
+wxString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(int inCol) const
 {
-	tstring str;
+	wxString str;
 	switch (inCol)
 	{
 	case 2: // Level
@@ -1146,24 +1120,20 @@ tstring CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(int inCol) const
 		str = m_RunList.begin()->m_Event;
 		break;
 	case 4:
-		{
-			otstringstream str2;
-			str2 << m_Score;
-			str = str2.str();
-		}
+		str << m_Score;
 		break;
 	}
 	return str;
 }
 
 
-tstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
 {
-	otstringstream data;
-	data << wxT("<tr>") << std::endl
-		<< wxT("<td>&nbsp;</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>") << std::endl
-		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>") << std::endl
+	wxString data;
+	data << wxT("<tr>\n")
+		<< wxT("<td>&nbsp;</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>\n")
 		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
 		<< static_cast<unsigned int>(nCurLine)
@@ -1171,9 +1141,9 @@ tstring CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
 		<< nCurLine
 #endif
 		<< wxT("\">")
-		<< Sanitize(OnNeedText(4)) << wxT("</a></td>") << std::endl
-		<< wxT("</tr>") << std::endl;
-	return data.str();
+		<< Sanitize(OnNeedText(4)) << wxT("</a></td>\n")
+		<< wxT("</tr>\n");
+	return data;
 }
 
 
@@ -1295,7 +1265,7 @@ void CPointsDataItems::LoadData(
 				{
 					bHeaderInserted = true;
 					InsertVenueHeader(pDoc, inDog, pVenue);
-					tstring data(wxT("<h3>"));
+					wxString data(wxT("<h3>"));
 					data += _("IDS_TITLES");
 					data += wxT("</h3>");
 					data += s_TableHeader;
@@ -1333,7 +1303,7 @@ void CPointsDataItems::LoadData(
 				InsertVenueHeader(pDoc, inDog, pVenue);
 			}
 			bRunsInserted = true;
-			tstring data(wxT("<h3>"));
+			wxString data(wxT("<h3>"));
 			data += _("IDS_RUNS");
 			data += wxT("</h3>");
 			data += s_TableHeader;
@@ -1387,10 +1357,10 @@ void CPointsDataItems::LoadData(
 						double nExistingPts = 0;
 						int nExistingSQ = 0;
 						std::list<RunInfo> allmatching;
-						std::set<tstring> judges;
-						std::set<tstring> judgesQ;
-						std::set<tstring> partners;
-						std::set<tstring> partnersQ;
+						std::set<wxString> judges;
+						std::set<wxString> judgesQ;
+						std::set<wxString> partners;
+						std::set<wxString> partnersQ;
 						for (ARBVector<ARBConfigScoringPtr>::iterator iterScoring = scoringItems.begin();
 							iterScoring != scoringItems.end();
 							++iterScoring)
@@ -1457,7 +1427,7 @@ void CPointsDataItems::LoadData(
 												iterPartner != pRun->GetPartners().end();
 												++iterPartner)
 											{
-												tstring p = (*iterPartner)->GetDog();
+												wxString p = (*iterPartner)->GetDog();
 												p += (*iterPartner)->GetRegNum();
 												partners.insert(p);
 												if (pRun->GetQ().Qualified())
@@ -1554,7 +1524,7 @@ void CPointsDataItems::LoadData(
 							{
 								strQcount += wxString::Format(_("IDS_POINTS_PARTNERS"), partnersQ.size());
 							}
-							otstringstream strPts;
+							wxString strPts;
 							wxString strSuperQ;
 							strPts << points + nExistingSQ;
 							if (hasSQs)
@@ -1574,11 +1544,11 @@ void CPointsDataItems::LoadData(
 								pDiv, idxDiv,
 								pLevel, idxLevel,
 								pEvent, idxEvent,
-								strRunCount.c_str(),
-								strQcount.c_str(),
-								strPts.str().c_str(),
-								strSuperQ.c_str(),
-								strSpeed.c_str()));
+								strRunCount,
+								strQcount,
+								strPts,
+								strSuperQ,
+								strSpeed));
 						}
 					}
 					if (bHasSpeedPts)
@@ -1648,12 +1618,12 @@ void CPointsDataItems::LoadData(
 		if (0 < lifetime.size())
 		{
 			CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, true, pVenue);
-			typedef std::map<tstring, CPointsDataLifetimeByName*> NamedLifetime;
+			typedef std::map<wxString, CPointsDataLifetimeByName*> NamedLifetime;
 			NamedLifetime subgroups;
 			if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 			{
 				// Gather event names
-				std::set<tstring> names;
+				std::set<wxString> names;
 				for (LifeTimePointsList::iterator iter = lifetime.begin();
 					iter != lifetime.end();
 					++iter)
@@ -1665,7 +1635,7 @@ void CPointsDataItems::LoadData(
 						names.insert(iter2->eventName);
 					}
 				}
-				for (std::set<tstring>::iterator iName = names.begin(); iName != names.end(); ++iName)
+				for (std::set<wxString>::iterator iName = names.begin(); iName != names.end(); ++iName)
 				{
 					double pts2 = 0.0;
 					double ptFiltered2 = 0;
@@ -1685,7 +1655,7 @@ void CPointsDataItems::LoadData(
 							}
 						}
 					}
-					pData->AddLifetimeInfo(*iName, tstring(), pts2, ptFiltered2);
+					pData->AddLifetimeInfo(*iName, wxString(), pts2, ptFiltered2);
 				}
 			}
 			for (LifeTimePointsList::iterator iter = lifetime.begin();
@@ -1738,12 +1708,12 @@ void CPointsDataItems::LoadData(
 		if (0 < placement.size())
 		{
 			CPointsDataLifetime* pData = new CPointsDataLifetime(pDoc, false, pVenue);
-			typedef std::map<tstring, CPointsDataLifetimeByName*> NamedLifetime;
+			typedef std::map<wxString, CPointsDataLifetimeByName*> NamedLifetime;
 			NamedLifetime subgroups;
 			if (CAgilityBookOptions::GetViewLifetimePointsByEvent())
 			{
 				// Gather event names
-				std::set<tstring> names;
+				std::set<wxString> names;
 				for (LifeTimePointsList::iterator iter = lifetime.begin();
 					iter != lifetime.end();
 					++iter)
@@ -1755,7 +1725,7 @@ void CPointsDataItems::LoadData(
 						names.insert(iter2->eventName);
 					}
 				}
-				for (std::set<tstring>::iterator iName = names.begin(); iName != names.end(); ++iName)
+				for (std::set<wxString>::iterator iName = names.begin(); iName != names.end(); ++iName)
 				{
 					double pts2 = 0.0;
 					double ptFiltered2 = 0;
@@ -1775,7 +1745,7 @@ void CPointsDataItems::LoadData(
 							}
 						}
 					}
-					pData->AddLifetimeInfo(*iName, tstring(), pts2, ptFiltered2);
+					pData->AddLifetimeInfo(*iName, wxString(), pts2, ptFiltered2);
 				}
 			}
 			for (LifeTimePointsList::iterator iter = placement.begin();
@@ -1833,9 +1803,9 @@ void CPointsDataItems::LoadData(
 	if (0 < other.size())
 	{
 		wxString str(_("IDS_OTHERPOINTS"));
-		tstring table;
+		wxString table;
 		table = wxT("<h2>");
-		table += str.c_str();
+		table += str;
 		table += wxT("</h2>");
 		table += s_TableHeader;
 
@@ -1901,15 +1871,15 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyAllByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName())));
 				{
-					std::set<tstring> tally;
+					std::set<wxString> tally;
 					std::list<OtherPtInfo>::iterator iter;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						tally.insert((*iter).m_Event);
 					}
-					for (std::set<tstring>::iterator iterTally = tally.begin();
+					for (std::set<wxString>::iterator iterTally = tally.begin();
 						iterTally != tally.end();
 						++iterTally)
 					{
@@ -1925,15 +1895,15 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevel:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName())));
 				{
-					std::set<tstring> tally;
+					std::set<wxString> tally;
 					std::list<OtherPtInfo>::iterator iter;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)
 					{
 						tally.insert((*iter).m_Level);
 					}
-					for (std::set<tstring>::iterator iterTally = tally.begin();
+					for (std::set<wxString>::iterator iterTally = tally.begin();
 						iterTally != tally.end();
 						++iterTally)
 					{
@@ -1949,9 +1919,9 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevelByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName())));
 				{
-					typedef std::pair<tstring, tstring> LevelEvent;
+					typedef std::pair<wxString, wxString> LevelEvent;
 					std::set<LevelEvent> tally;
 					std::list<OtherPtInfo>::iterator iter;
 					for (iter = runs.begin(); iter != runs.end(); ++iter)

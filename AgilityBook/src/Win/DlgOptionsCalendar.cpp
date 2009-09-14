@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2009-01-11 DRC Fixed a bug that added an 8th day to week.
@@ -424,12 +425,12 @@ wxString CDlgOptionsCalendar::GetCalText(
 	switch (type)
 	{
 	case CAgilityBookOptions::eCalColorNotEntered:
-		text += Localization()->CalendarNotEntered().c_str();
+		text += Localization()->CalendarNotEntered();
 		if (bForDisplay)
 			text += wxT(" Text");
 		break;
 	case CAgilityBookOptions::eCalColorPlanning:
-		text += Localization()->CalendarPlanning().c_str();
+		text += Localization()->CalendarPlanning();
 		if (bForDisplay)
 			text += wxT(" Text");
 		break;
@@ -448,7 +449,7 @@ wxString CDlgOptionsCalendar::GetCalText(
 			text += wxT(" Text");
 		break;
 	case CAgilityBookOptions::eCalColorEntered:
-		text += Localization()->CalendarEntered().c_str();
+		text += Localization()->CalendarEntered();
 		if (bForDisplay)
 			text += wxT(" Text");
 		break;
@@ -490,7 +491,7 @@ void CDlgOptionsCalendar::SetRichText()
 		++iColor)
 	{
 		data += GetCalText((*iColor).first, true);
-		data += wxT('\n');
+		data += wxT("\n");
 		endLines.push_back(static_cast<long>(data.length()));
 	}
 

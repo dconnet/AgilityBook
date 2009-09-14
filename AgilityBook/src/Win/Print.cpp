@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-19 DRC Fixed printing when page size isn't specified.
  * @li 2009-05-31 DRC Added support for creating pages of a specific size.
  * @li 2009-01-27 DRC Ported to wxWidgets.
@@ -98,7 +99,7 @@ public:
 	virtual bool OnPrintPage(int pageNum);
 
 private:
-	tstring GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
+	wxString GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
 	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
 	double m_OneInch;
@@ -374,7 +375,7 @@ static const struct
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
 
-static void RefRunHelper(otstringstream& text, ARBDogReferenceRunPtr ref, int code)
+static void RefRunHelper(wxString& text, ARBDogReferenceRunPtr ref, int code)
 {
 	switch (code)
 	{
@@ -420,17 +421,17 @@ static void RefRunHelper(otstringstream& text, ARBDogReferenceRunPtr ref, int co
 	case CODE_REF4:
 		text << ref->GetName();
 		if (!ref->GetBreed().empty())
-			text << "/" << ref->GetBreed();
+			text << wxT("/") << ref->GetBreed();
 		if (!ref->GetNote().empty())
-			text << "/" << ref->GetNote();
+			text << wxT("/") << ref->GetNote();
 		break;
 	}
 }
 
 
-tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code)
+wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code)
 {
-	otstringstream text;
+	wxString text;
 	switch (code)
 	{
 	default:
@@ -452,7 +453,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << "/";
+					text << wxT("/");
 				text << (*iter)->GetVenue();
 			}
 			break;
@@ -466,7 +467,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << "/";
+					text << wxT("/");
 				text << (*iter)->GetName();
 			}
 			break;
@@ -475,8 +476,8 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 		if (run)
 		{
 			text << run->GetDivision()
-				<< "/" << run->GetLevel()
-				<< "/" << run->GetEvent();
+				<< wxT("/") << run->GetLevel()
+				<< wxT("/") << run->GetEvent();
 		}
 		break;
 	case CODE_LOCATION:
@@ -530,7 +531,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < run->GetScoring().GetNeedOpenPts())
 					text << run->GetScoring().GetNeedOpenPts();
-				text << " / ";
+				text << wxT(" / ");
 				if (0 < run->GetScoring().GetNeedClosePts())
 					text << run->GetScoring().GetNeedClosePts();
 				break;
@@ -568,7 +569,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 			{
 				text << run->GetScoring().GetCourseFaults();
 				if (0.0 < timeFaults)
-					text << "+" << ARBDouble::str(timeFaults, 0);
+					text << wxT("+") << ARBDouble::str(timeFaults, 0);
 			}
 		}
 		break;
@@ -580,7 +581,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < run->GetScoring().GetOpenPts())
 					text << run->GetScoring().GetOpenPts();
-				text << " / ";
+				text << wxT(" / ");
 				if (0 < run->GetScoring().GetClosePts())
 					text << run->GetScoring().GetClosePts();
 				break;
@@ -616,8 +617,8 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << " ";
-				text << (*iter)->GetName() << ":" << (*iter)->GetPoints();
+					text << wxT(" ");
+				text << (*iter)->GetName() << wxT(":") << (*iter)->GetPoints();
 			}
 		}
 		break;
@@ -658,7 +659,7 @@ tstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int cod
 			RefRunHelper(text, run->GetReferenceRuns()[3], code);
 		break;
 	}
-	return text.str();
+	return text;
 }
 
 
@@ -734,7 +735,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 					pDC->DrawLine(rect.x, rect.y, rect.x, rect.GetBottom());
 				}
 
-				wxString str = GetFieldText(trial, run, sc_lines[j].code).c_str();
+				wxString str = GetFieldText(trial, run, sc_lines[j].code);
 
 				// Draw horizontal separator lines (on top)
 				if (0 < sc_lines[j].line && (str.empty() || !sc_lines[j].bContinuation))

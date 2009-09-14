@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-04 DRC Ported to wxWidgets.
  * @li 2006-05-29 DRC Sync cal view when item date changes.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -115,7 +116,7 @@ private:
 
 wxString CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 {
-	tstring str;
+	wxString str;
 	if (m_pCal)
 	{
 		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
@@ -149,11 +150,12 @@ wxString CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 				str = m_pCal->GetClosingDate().GetString(dFmt);
 			break;
 		case IO_CAL_NOTES:
-			str = tstringUtil::Replace(m_pCal->GetNote(), wxT("\n"), wxT(" "));
+			str = m_pCal->GetNote();
+			str.Replace(wxT("\n"), wxT(" "));
 			break;
 		}
 	}
-	return str.c_str();
+	return str;
 }
 
 
@@ -444,7 +446,7 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<tstring> strings;
+		std::set<wxString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookCalendarListViewDataPtr pData = m_pView->GetItemCalData(index);
@@ -461,12 +463,12 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 				info.SetMask(wxLIST_MASK_TEXT);
 				info.SetColumn(i);
 				m_pView->m_Ctrl->GetItem(info);
-				strings.insert(info.GetText().c_str());
+				strings.insert(info.GetText());
 			}
 		}
-		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter).c_str());
+			wxString str((*iter));
 			if (!MatchCase())
 				str.MakeLower();
 			if (0 <= str.Find(search))

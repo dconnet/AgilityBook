@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
@@ -45,7 +46,7 @@ class CDlgFault : public wxDialog
 {
 public:
 	CDlgFault(
-			std::set<tstring>& faults,
+			std::set<wxString>& faults,
 			wxString const& fault,
 			wxWindow* pParent = NULL);
 	wxString GetFault() const		{return m_Fault;}

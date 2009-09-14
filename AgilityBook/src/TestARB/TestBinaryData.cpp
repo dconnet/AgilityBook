@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-13 DRC Created
  */
 
@@ -56,11 +57,11 @@ SUITE(TestBinaryData)
 		186,  35,   0,  59
 	};
 	// compressed, encoded gif file (Note, '\n' is just formatting - but needed to check for equality)
-	static const tstring EncodedData(wxT("eJxz93SzsExkZWBl2MwAAg1g3ACmGsCsAwcONDQ0/AcK/Gf4D6b+g1lAoAPSAdLLwMIpcOK7ygKx\n87uUGawBGnIbbQ=="));
+	static const wxString EncodedData(wxT("eJxz93SzsExkZWBl2MwAAg1g3ACmGsCsAwcONDQ0/AcK/Gf4D6b+g1lAoAPSAdLLwMIpcOK7ygKx\n87uUGawBGnIbbQ=="));
 	// String
-	static const tstring RawString(wxT("This is a test of a string"));
+	static const wxString RawString(wxT("This is a test of a string"));
 	// compressed, encoded string
-	static const tstring EncodedString(wxT("eJwLycgsVgCiRIWS1OIShfw0IKu4pCgzLx0AeIAJIw=="));
+	static const wxString EncodedString(wxT("eJwLycgsVgCiRIWS1OIShfw0IKu4pCgzLx0AeIAJIw=="));
 
 
 	TEST(RawDecode)
@@ -77,18 +78,18 @@ SUITE(TestBinaryData)
 
 	TEST(RawEncode)
 	{
-		tstring str;
+		wxString str;
 		CHECK(BinaryData::Encode(RawData, RawDataSize, str));
 		CHECK(EncodedData == str);
 	}
 
 
-	//TODO: Test Encode(FILE*, tstring& outdata)
+	//TODO: Test Encode(FILE*, wxString& outdata)
 
 
 	TEST(StringDecode)
 	{
-		tstring str;
+		wxString str;
 		CHECK(BinaryData::DecodeString(EncodedString, str));
 		CHECK(RawString == str);
 	}
@@ -96,17 +97,17 @@ SUITE(TestBinaryData)
 
 	TEST(StringEncode)
 	{
-		tstring str;
+		wxString str;
 		CHECK(BinaryData::EncodeString(RawString, str));
 		CHECK(EncodedString == str);
 	}
 
 	TEST(RoundTrip)
 	{
-		tstring str;
+		wxString str;
 		CHECK(BinaryData::EncodeString(RawString, str));
 		CHECK(EncodedString == str);
-		tstring str2;
+		wxString str2;
 		CHECK(BinaryData::DecodeString(str, str2));
 		CHECK(RawString == str2);
 	}

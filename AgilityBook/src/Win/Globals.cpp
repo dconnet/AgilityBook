@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-14 DRC Separated from AgilityBook.cpp
  */
 
@@ -45,12 +46,12 @@
 
 size_t BreakLine(
 		char inSep,
-		tstring inStr,
-		std::vector<tstring>& outFields)
+		wxString inStr,
+		std::vector<wxString>& outFields)
 {
 	outFields.clear();
-	tstring::size_type pos = inStr.find(inSep);
-	while (tstring::npos != pos)
+	wxString::size_type pos = inStr.find(inSep);
+	while (wxString::npos != pos)
 	{
 		outFields.push_back(inStr.substr(0, pos));
 		inStr = inStr.substr(pos+1);

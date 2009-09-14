@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
@@ -156,13 +157,13 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
 		++iterOther)
 	{
 		ARBConfigOtherPointsPtr pOther = (*iterOther);
-		int index = m_ctrlOtherPoints->Append(pOther->GetName().c_str());
+		int index = m_ctrlOtherPoints->Append(pOther->GetName());
 		m_ctrlOtherPoints->SetClientObject(index, new COtherPointData(pOther));
 		if ((!inOther && pOther->GetName() == m_pRunOther->GetName())
 		|| (inOther && *inOther == *pOther))
 		{
 			m_ctrlOtherPoints->SetSelection(index);
-			m_ctrlDesc->SetValue(pOther->GetDescription().c_str());
+			m_ctrlDesc->SetValue(pOther->GetDescription());
 			m_Points = pOther->GetDefault();
 			TransferDataToWindow();
 		}
@@ -176,7 +177,7 @@ void CDlgOtherPoint::OnSelchangeOtherpoints(wxCommandEvent& evt)
 	if (wxNOT_FOUND != index)
 	{
 		COtherPointData* pData = dynamic_cast<COtherPointData*>(m_ctrlOtherPoints->GetClientObject(index));
-		m_ctrlDesc->SetValue(pData->pOther->GetDescription().c_str());
+		m_ctrlDesc->SetValue(pData->pOther->GetDescription());
 		m_Points = pData->pOther->GetDefault();
 		TransferDataToWindow();
 	}

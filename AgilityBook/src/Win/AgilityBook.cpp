@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fix file autoload failure so it opens new document.
  * @li 2008-12-14 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -245,10 +246,10 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 
 bool CAgilityBookApp::OnInit()
 {
-	tstring errMsg;
+	wxString errMsg;
 	if (!Element::Initialize(errMsg))
 	{
-		wxMessageBox(errMsg.c_str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);
+		wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);
 		return false;
 	}
 
@@ -270,7 +271,11 @@ bool CAgilityBookApp::OnInit()
 	wxString filename;
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
+#if wxCHECK_VERSION(2, 9, 0)
+		{wxCMD_LINE_PARAM, NULL, NULL, "input file", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
+#else
 		{wxCMD_LINE_PARAM, NULL, NULL, wxT("input file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
+#endif
 		{wxCMD_LINE_NONE}
 	};
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
@@ -428,7 +433,7 @@ bool CAgilityBookApp::OnInit()
 	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
 		wxString ver = wxConfig::Get()->Read(wxT("Settings/lastVerCheck"), wxT(""));
-		ARBDate date = ARBDate::FromString(ver.c_str(), ARBDate::eDashYYYYMMDD);
+		ARBDate date = ARBDate::FromString(ver, ARBDate::eDashYYYYMMDD);
 		if (date.IsValid())
 		{
 			ARBDate today = ARBDate::Today();

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -76,7 +77,7 @@ public:
 	/**
 	 * Translate the enum to a string.
 	 */
-	static tstring GetScoringStyleStr(ScoringStyle inStyle);
+	static wxString GetScoringStyleStr(ScoringStyle inStyle);
 
 protected:
 	ARBConfigScoring();
@@ -99,7 +100,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Division + wxT(" ") + m_Level;
 	}
@@ -109,7 +110,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		return 0;
 	}
@@ -171,19 +172,19 @@ public:
 	{
 		m_ValidTo = inDate;
 	}
-	tstring const& GetDivision() const
+	wxString const& GetDivision() const
 	{
 		return m_Division;
 	}
-	void SetDivision(tstring const& inDiv)
+	void SetDivision(wxString const& inDiv)
 	{
 		m_Division = inDiv;
 	}
-	tstring const& GetLevel() const
+	wxString const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(tstring const& inLevel)
+	void SetLevel(wxString const& inLevel)
 	{
 		m_Level = inLevel;
 	}
@@ -191,7 +192,7 @@ public:
 	{
 		return m_Style;
 	}
-	tstring GetScoringStyleStr() const
+	wxString GetScoringStyleStr() const
 	{
 		return GetScoringStyleStr(m_Style);
 	}
@@ -267,11 +268,11 @@ public:
 	{
 		m_ClosingPts = inPoints;
 	}
-	tstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(tstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -344,8 +345,8 @@ public:
 private:
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
-	tstring m_Division;
-	tstring m_Level;
+	wxString m_Division;
+	wxString m_Level;
 	ScoringStyle m_Style;
 	bool m_bDropFractions;
 	bool m_bCleanQ;
@@ -353,7 +354,7 @@ private:
 	bool m_bTimeFaultsOver;
 	bool m_bSubtractTimeFaults;
 	short m_TimeFaultMultiplier;
-	tstring m_Note;
+	wxString m_Note;
 	short m_OpeningPts;
 	short m_ClosingPts;
 	bool m_bSuperQ;
@@ -399,8 +400,8 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoringPtr>& outList) const;
@@ -414,8 +415,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigScoringPtr* outEvent = NULL) const;
 
@@ -427,8 +428,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate) const;
 
 	/**

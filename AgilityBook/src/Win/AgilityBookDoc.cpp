@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Refresh properly after changing filter in context menu.
  * @li 2009-08-19 DRC Create a 'fake' dog when creating a new file.
  * @li 2009-02-05 DRC Ported to wxWidgets.
@@ -205,7 +206,7 @@ public:
 	std::vector<ARBDogPtr> dogs;
 	// For filter menu
 	CFilterOptions filterOptions;
-	std::vector<tstring> filterNames;
+	std::vector<wxString> filterNames;
 };
 
 
@@ -269,7 +270,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
 					parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
-					wxString item((*iDog)->GetGenericName().c_str());
+					wxString item((*iDog)->GetGenericName());
 					item.Replace(wxT("&"), wxT("&&"));
 					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
 					if (*(*iDog) == *curDog)
@@ -296,16 +297,16 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				if (1 < data.filterNames.size())
 				{
 					std::sort(data.filterNames.begin(), data.filterNames.end());
-					tstring filterName = data.filterOptions.GetCurrentFilter();
+					wxString filterName = data.filterOptions.GetCurrentFilter();
 					wxMenu* menu = new wxMenu();
 					int menuId = baseID;
-					std::vector<tstring>::const_iterator iFilter;
+					std::vector<wxString>::const_iterator iFilter;
 					for (iFilter = data.filterNames.begin();
 						iFilter != data.filterNames.end();
 						++iFilter, ++menuId)
 					{
 						parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
-						wxString item((*iFilter).c_str());
+						wxString item((*iFilter));
 						item.Replace(wxT("&"), wxT("&&"));
 						wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
 						if (*iFilter == filterName)
@@ -518,14 +519,14 @@ class CConfigActionCallback : public IConfigActionCallback
 {
 public:
 	CConfigActionCallback() {}
-	virtual void PreDelete(tstring const& inMsg);
-	virtual void PostDelete(tstring const& inMsg) const;
+	virtual void PreDelete(wxString const& inMsg);
+	virtual void PostDelete(wxString const& inMsg) const;
 };
 
 
-void CConfigActionCallback::PreDelete(tstring const& inMsg)
+void CConfigActionCallback::PreDelete(wxString const& inMsg)
 {
-	wxString msg(inMsg.c_str());
+	wxString msg(inMsg);
 	msg += wxT("\n\n");
 	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
 	if (wxID_NO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO))
@@ -535,19 +536,19 @@ void CConfigActionCallback::PreDelete(tstring const& inMsg)
 }
 
 
-void CConfigActionCallback::PostDelete(tstring const& msg) const
+void CConfigActionCallback::PostDelete(wxString const& msg) const
 {
-	wxMessageBox(msg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+	wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 }
 
 
 void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 {
-	otstringstream info;
+	wxString info;
 	CConfigActionCallback callback;
 	if (m_Records.Update(0, update, info, callback))
 	{
-		CDlgMessage dlg(info.str().c_str(), wxGetApp().GetTopWindow());
+		CDlgMessage dlg(info, wxGetApp().GetTopWindow());
 		dlg.ShowModal();
 		Modify(true);
 		CUpdateHint hint(UPDATE_CONFIG);
@@ -591,7 +592,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 	if (book.Load(inTree, false, false, true, true, true, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		int countDog = 0;
 		int countRegNumsAdded = 0;
 		int countRegNumsUpdated = 0;
@@ -769,19 +770,19 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 		}
 		if (0 < countClubs)
 		{
-			std::set<tstring> namesInUse;
+			std::set<wxString> namesInUse;
 			m_Records.GetAllClubNames(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eClubInfo).CondenseContent(namesInUse);
 		}
 		if (0 < countJudges)
 		{
-			std::set<tstring> namesInUse;
+			std::set<wxString> namesInUse;
 			m_Records.GetAllJudges(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eJudgeInfo).CondenseContent(namesInUse);
 		}
 		if (0 < countLocations)
 		{
-			std::set<tstring> namesInUse;
+			std::set<wxString> namesInUse;
 			m_Records.GetAllTrialLocations(namesInUse, false, false);
 			m_Records.GetInfo().GetInfo(ARBInfo::eLocationInfo).CondenseContent(namesInUse);
 		}
@@ -872,7 +873,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -885,7 +886,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 	if (book.Load(inTree, true, false, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		int nAdded = 0;
 		int nUpdated = 0;
 		for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -918,7 +919,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -931,7 +932,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 	if (book.Load(inTree, false, true, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 		int count = 0;
 		for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
 		{
@@ -954,7 +955,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -964,7 +965,7 @@ bool CAgilityBookDoc::ResetVisibility()
 	bool bChanged = false;
 	std::vector<CVenueFilter> venues;
 	CFilterOptions::Options().GetFilterVenue(venues);
-	std::set<tstring> names;
+	std::set<wxString> names;
 	CFilterOptions::Options().GetTrainingFilterNames(names);
 
 	for (ARBDogList::iterator iterDogs = m_Records.GetDogs().begin(); iterDogs != m_Records.GetDogs().end(); ++iterDogs)
@@ -1070,7 +1071,7 @@ bool CAgilityBookDoc::ResetVisibility(
 
 
 bool CAgilityBookDoc::ResetVisibility(
-		std::set<tstring>& names,
+		std::set<wxString>& names,
 		ARBTrainingPtr pTraining)
 {
 	bool bChanged = false;
@@ -1286,7 +1287,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	}
 	wxBusyCursor wait;
 
-	tstring err;
+	wxString err;
 	ElementNodePtr tree(ElementNode::New());
 	// Translate the XML to a tree form.
 	if (!tree->LoadXMLFile(filename, err))
@@ -1297,7 +1298,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		if (0 < err.length())
 		{
 			msg += wxT("\n\n");
-			msg += err.c_str();
+			msg += err;
 		}
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 		return false;
@@ -1311,7 +1312,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		if (0 < callback.m_ErrMsg.length())
 		{
 			msg += wxT("\n\n");
-			msg += callback.m_ErrMsg.c_str();
+			msg += callback.m_ErrMsg;
 		}
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 		return false;
@@ -1320,7 +1321,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	{
 		wxString msg(_("IDS_NONFATAL_MSGS"));
 		msg += wxT("\n\n");
-		msg += callback.m_ErrMsg.c_str();
+		msg += callback.m_ErrMsg;
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 	}
 	SortDates();
@@ -1389,7 +1390,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 	wxBusyCursor wait;
 
 	CVersionNum ver(true);
-	tstring verstr = ver.GetVersionString().c_str();
+	wxString verstr = ver.GetVersionString();
 	bool bAlreadyWarned = false;
 	bool bOk = false;
 	ElementNodePtr tree(ElementNode::New());
@@ -1422,7 +1423,7 @@ bool CAgilityBookDoc::OnCloseDocument()
 {
 	ARBDogPtr pDog = GetCurrentDog();
 	if (pDog)
-		wxConfig::Get()->Write(wxT("Settings/LastDog"), pDog->GetCallName().c_str());
+		wxConfig::Get()->Write(wxT("Settings/LastDog"), pDog->GetCallName());
 	else
 		wxConfig::Get()->Write(wxT("Settings/LastDog"), wxEmptyString);
 	return wxDocument::OnCloseDocument();
@@ -1447,7 +1448,7 @@ private:
 	void Search(
 			wxString const& search,
 			ARBInfo::eInfoType inType,
-			std::set<tstring> const& inUse,
+			std::set<wxString> const& inUse,
 			ARBInfo const& info) const;
 };
 
@@ -1459,7 +1460,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	if (!MatchCase())
 		search.MakeLower();
 	ARBInfo& info = m_pDoc->Book().GetInfo();
-	std::set<tstring> inUse;
+	std::set<wxString> inUse;
 	m_pDoc->Book().GetAllClubNames(inUse, false, false);
 	Search(search, ARBInfo::eClubInfo, inUse, info);
 	m_pDoc->Book().GetAllJudges(inUse, false, false);
@@ -1483,12 +1484,12 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 void CFindInfo::Search(
 		wxString const& search,
 		ARBInfo::eInfoType inType,
-		std::set<tstring> const& inUse,
+		std::set<wxString> const& inUse,
 		ARBInfo const& info) const
 {
-	for (std::set<tstring>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
+	for (std::set<wxString>::const_iterator iter = inUse.begin(); iter != inUse.end(); ++iter)
 	{
-		wxString str((*iter).c_str());
+		wxString str((*iter));
 		if (!MatchCase())
 			str.MakeLower();
 		if (0 <= str.Find(search))
@@ -1505,12 +1506,12 @@ void CFindInfo::Search(
 		iterItem != info.GetInfo(inType).end();
 		++iterItem)
 	{
-		std::set<tstring> strings;
+		std::set<wxString> strings;
 		if (0 < (*iterItem)->GetSearchStrings(strings))
 		{
-			for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+			for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 			{
-				wxString str((*iter).c_str());
+				wxString str((*iter));
 				if (!MatchCase())
 					str.MakeLower();
 				if (0 <= str.Find(search))
@@ -1626,14 +1627,14 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 				std::vector<CVenueFilter> venues;
 				CFilterOptions::Options().GetFilterVenue(venues);
 
-				tstring preTitles, postTitles;
+				wxString preTitles, postTitles;
 				for (ARBConfigVenueList::const_iterator iVenue = m_Records.GetConfig().GetVenues().begin();
 					iVenue != m_Records.GetConfig().GetVenues().end();
 					++iVenue)
 				{
 					if (!CFilterOptions::Options().IsVenueVisible(venues, (*iVenue)->GetName()))
 						continue;
-					tstring preTitles2, postTitles2;
+					wxString preTitles2, postTitles2;
 					for (ARBConfigTitleList::const_iterator iTitle = (*iVenue)->GetTitles().begin();
 						iTitle != (*iVenue)->GetTitles().end();
 						++iTitle)
@@ -1647,13 +1648,13 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 								if ((*iTitle)->GetPrefix())
 								{
 									if (!preTitles2.empty())
-										preTitles2 += ' ';
+										preTitles2 += wxT(" ");
 									preTitles2 += pTitle->GetGenericName();
 								}
 								else
 								{
 									if (!postTitles2.empty())
-										postTitles2 += ' ';
+										postTitles2 += wxT(" ");
 									postTitles2 += pTitle->GetGenericName();
 								}
 							}
@@ -1662,7 +1663,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					if (!preTitles2.empty())
 					{
 						if (!preTitles.empty())
-							preTitles += ' ';
+							preTitles += wxT(" ");
 						preTitles += preTitles2;
 					}
 					if (!postTitles2.empty())
@@ -1673,14 +1674,14 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					}
 				}
 
-				wxString data(preTitles.c_str());
+				wxString data(preTitles);
 				if (!data.IsEmpty())
-					data += ' ';
-				data += pDog->GetCallName().c_str();
+					data += wxT(" ");
+				data += pDog->GetCallName();
 				if (!postTitles.empty())
 				{
 					data += wxT(": ");
-					data += postTitles.c_str();
+					data += postTitles;
 				}
 				CClipboardDataWriter clpData;
 				if (clpData.isOkay())
@@ -1773,7 +1774,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			wxString select;
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
-				select = pTrial->GetClubs().GetPrimaryClubName().c_str();
+				select = pTrial->GetClubs().GetPrimaryClubName();
 			CDlgInfoNote dlg(this, ARBInfo::eClubInfo, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
@@ -1784,7 +1785,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			wxString select;
 			ARBDogRunPtr pRun = GetCurrentRun();
 			if (pRun)
-				select = pRun->GetJudge().c_str();
+				select = pRun->GetJudge();
 			CDlgInfoNote dlg(this, ARBInfo::eJudgeInfo, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}
@@ -1795,7 +1796,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 			wxString select;
 			ARBDogTrialPtr pTrial = GetCurrentTrial();
 			if (pTrial)
-				select = pTrial->GetLocation().c_str();
+				select = pTrial->GetLocation();
 			CDlgInfoNote dlg(this, ARBInfo::eLocationInfo, select, wxGetApp().GetTopWindow());
 			dlg.ShowModal();
 		}

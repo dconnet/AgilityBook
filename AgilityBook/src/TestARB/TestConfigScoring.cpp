@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -46,7 +47,7 @@ SUITE(TestConfigScoring)
 	TEST(GetScoringStyleStr)
 	{
 		TODO_TEST
-	//	static tstring GetScoringStyleStr(ScoringStyle inStyle);
+	//	static wxString GetScoringStyleStr(ScoringStyle inStyle);
 	}
 
 
@@ -82,7 +83,7 @@ SUITE(TestConfigScoring)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -129,8 +130,8 @@ SUITE(TestConfigScoringList)
 	{
 		TODO_TEST
 	//	size_t FindAllEvents(
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate,
 	//			bool inTitlePoints,
 	//			ARBVector<ARBConfigScoringPtr>& outList) const;
@@ -141,8 +142,8 @@ SUITE(TestConfigScoringList)
 	{
 		TODO_TEST
 	//	bool FindEvent(
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate,
 	//			ARBConfigScoringPtr* outEvent = NULL) const;
 	}
@@ -152,8 +153,8 @@ SUITE(TestConfigScoringList)
 	{
 		TODO_TEST
 	//	bool VerifyEvent(
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate) const;
 	}
 

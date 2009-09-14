@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -75,7 +76,7 @@ SUITE(TestConfigMultiQ)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -110,15 +111,15 @@ SUITE(TestConfigMultiQ)
 	{
 		TODO_TEST
 	//	int RenameDivision(
-	//			tstring const& inOldDiv,
-	//			tstring const& inNewDiv);
+	//			wxString const& inOldDiv,
+	//			wxString const& inNewDiv);
 	}
 
 
 	TEST(DeleteDivision)
 	{
 		TODO_TEST
-	//	int DeleteDivision(tstring const& inDiv);
+	//	int DeleteDivision(wxString const& inDiv);
 	}
 
 
@@ -126,16 +127,16 @@ SUITE(TestConfigMultiQ)
 	{
 		TODO_TEST
 	//	int RenameLevel(
-	//			tstring const& inDiv,
-	//			tstring const& inOldLevel,
-	//			tstring const& inNewLevel);
+	//			wxString const& inDiv,
+	//			wxString const& inOldLevel,
+	//			wxString const& inNewLevel);
 	}
 
 
 	TEST(DeleteLevel)
 	{
 		TODO_TEST
-	//	int DeleteLevel(tstring const& inLevel);
+	//	int DeleteLevel(wxString const& inLevel);
 	}
 
 
@@ -143,15 +144,15 @@ SUITE(TestConfigMultiQ)
 	{
 		TODO_TEST
 	//	int RenameEvent(
-	//			tstring const& inOldEvent,
-	//			tstring const& inNewEvent);
+	//			wxString const& inOldEvent,
+	//			wxString const& inNewEvent);
 	}
 
 
 	TEST(DeleteEvent)
 	{
 		TODO_TEST
-	//	int DeleteEvent(tstring const& inEvent);
+	//	int DeleteEvent(wxString const& inEvent);
 	}
 
 
@@ -159,13 +160,13 @@ SUITE(TestConfigMultiQ)
 	{
 		TODO_TEST
 	//	bool AddItem(
-	//			tstring const& inDiv,
-	//			tstring const& inLevel,
-	//			tstring const& inEvent);
+	//			wxString const& inDiv,
+	//			wxString const& inLevel,
+	//			wxString const& inEvent);
 	//	bool RemoveItem(
-	//			tstring const& inDiv,
-	//			tstring const& inLevel,
-	//			tstring const& inEvent);
+	//			wxString const& inDiv,
+	//			wxString const& inLevel,
+	//			wxString const& inEvent);
 	//	bool RemoveAllItems();
 	}
 }
@@ -188,7 +189,7 @@ SUITE(TestConfigMultiQList)
 	{
 		TODO_TEST
 	//	bool FindMultiQ(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			bool inUseShortName = false,
 	//			ARBConfigMultiQPtr* outMultiQ = NULL) const;
 	//	bool FindMultiQ(
@@ -201,15 +202,15 @@ SUITE(TestConfigMultiQList)
 	{
 		TODO_TEST
 	//	int RenameDivision(
-	//			tstring const& inOldDiv,
-	//			tstring const& inNewDiv);
+	//			wxString const& inOldDiv,
+	//			wxString const& inNewDiv);
 	}
 
 
 	TEST(DeleteDivision)
 	{
 		TODO_TEST
-	//	int DeleteDivision(tstring const& inDiv);
+	//	int DeleteDivision(wxString const& inDiv);
 	}
 
 
@@ -217,16 +218,16 @@ SUITE(TestConfigMultiQList)
 	{
 		TODO_TEST
 	//	int RenameLevel(
-	//			tstring const& inDiv,
-	//			tstring const& inOldLevel,
-	//			tstring const& inNewLevel);
+	//			wxString const& inDiv,
+	//			wxString const& inOldLevel,
+	//			wxString const& inNewLevel);
 	}
 
 
 	TEST(DeleteLevel)
 	{
 		TODO_TEST
-	//	int DeleteLevel(tstring const& inLevel);
+	//	int DeleteLevel(wxString const& inLevel);
 	}
 
 
@@ -234,15 +235,15 @@ SUITE(TestConfigMultiQList)
 	{
 		TODO_TEST
 	//	int RenameEvent(
-	//			tstring const& inOldEvent,
-	//			tstring const& inNewEvent);
+	//			wxString const& inOldEvent,
+	//			wxString const& inNewEvent);
 	}
 
 
 	TEST(DeleteEvent)
 	{
 		TODO_TEST
-	//	int DeleteEvent(tstring const& inEvent);
+	//	int DeleteEvent(wxString const& inEvent);
 	}
 
 

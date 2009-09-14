@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
  *                    _after_ the dialog is destroyed).
@@ -376,9 +377,9 @@ void CWizardStart::UpdateList(bool bInit)
 		if (wxNOT_FOUND != index)
 			m_ctrlList->SetClientData(index, (void*)i);
 	}
-	otstringstream str;
+	wxString str;
 	str << LAST_STYLEITEM << m_Style;
-	long idx = wxConfig::Get()->Read(str.str().c_str(), -1L);
+	long idx = wxConfig::Get()->Read(str, -1L);
 	m_ctrlList->SetSelection(idx);
 	DoUpdateExportList(bInit);
 }
@@ -416,9 +417,9 @@ void CWizardStart::DoUpdateExportList(bool bInit)
 	wxString msg = wxGetTranslation(sc_Items[idx].data[m_Style].desc);
 	m_ctrlDesc->SetLabel(msg);
 
-	otstringstream str;
+	wxString str;
 	str << LAST_STYLEITEM << m_Style;
-	wxConfig::Get()->Write(str.str().c_str(), index);
+	wxConfig::Get()->Write(str, index);
 }
 
 
@@ -515,7 +516,7 @@ bool CWizardStart::DoWizardFinish()
 					//if (AfxGetMainWnd())
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
-					tstring errMsg;
+					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
 					{
@@ -523,7 +524,7 @@ bool CWizardStart::DoWizardFinish()
 						if (0 < errMsg.length())
 						{
 							msg += wxT("\n\n");
-							msg += errMsg.c_str();
+							msg += errMsg;
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -546,7 +547,7 @@ bool CWizardStart::DoWizardFinish()
 					//if (AfxGetMainWnd())
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
-					tstring errMsg;
+					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
 					{
@@ -554,7 +555,7 @@ bool CWizardStart::DoWizardFinish()
 						if (0 < errMsg.length())
 						{
 							msg += wxT("\n\n");
-							msg += errMsg.c_str();
+							msg += errMsg;
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -578,7 +579,7 @@ bool CWizardStart::DoWizardFinish()
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					tstring verstr = ver.GetVersionString().c_str();
+					wxString verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, false, false, false, false))
 					{
@@ -625,7 +626,7 @@ bool CWizardStart::DoWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					std::string filename(tstringUtil::tstringA(file.GetPath().c_str()));
+					std::string filename(file.GetPath().ToUTF8());
 					std::ofstream output(filename.c_str(), std::ios::out | std::ios::binary);
 					output.exceptions(std::ios_base::badbit);
 					if (output.is_open())
@@ -658,7 +659,7 @@ bool CWizardStart::DoWizardFinish()
 					//if (AfxGetMainWnd())
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
-					tstring errMsg;
+					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
 					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
 					{
@@ -666,7 +667,7 @@ bool CWizardStart::DoWizardFinish()
 						if (0 < errMsg.length())
 						{
 							msg += wxT("\n\n");
-							msg += errMsg.c_str();
+							msg += errMsg;
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -690,7 +691,7 @@ bool CWizardStart::DoWizardFinish()
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					tstring verstr = ver.GetVersionString().c_str();
+					wxString verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, true, false, false, false))
 					{
@@ -721,7 +722,7 @@ bool CWizardStart::DoWizardFinish()
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					tstring verstr = ver.GetVersionString().c_str();
+					wxString verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, false, false, true, false, false))
 					{
@@ -745,7 +746,7 @@ bool CWizardStart::DoWizardFinish()
 					//if (AfxGetMainWnd())
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
-					std::string filename(tstringUtil::tstringA(file.GetPath().c_str()));
+					std::string filename(file.GetPath().ToUTF8());
 					std::ofstream output(filename.c_str(), std::ios::out | std::ios::binary);
 					output.exceptions(std::ios_base::badbit);
 					if (output.is_open())
@@ -784,7 +785,7 @@ bool CWizardStart::DoWizardFinish()
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					tstring verstr = ver.GetVersionString().c_str();
+					wxString verstr = ver.GetVersionString();
 					ElementNodePtr tree(ElementNode::New());
 					if (m_pDoc->Book().Save(tree, verstr, true, true, true, true, true))
 					{

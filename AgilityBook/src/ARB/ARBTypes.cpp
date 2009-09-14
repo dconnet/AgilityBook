@@ -31,6 +31,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9.
  * @li 2008-06-29 DRC Moved string stuff to ARBString.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Removed ARBDouble.
@@ -60,7 +62,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine)
+void DumpErrorMessage(wxString const& inMsg, bool bIncNewLine)
 {
 #if defined(_MFC_VER)
 	if (bIncNewLine)
@@ -69,27 +71,38 @@ void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine)
 		// Yes, this looks odd, but TRACE0 does exactly this.
 		TRACE(wxT("%s"), inMsg.c_str());
 #else
+#if wxCHECK_VERSION(2, 9, 0)
 	if (bIncNewLine)
-		TCERR << inMsg << std::endl;
+		TCERR << inMsg.wx_str() << std::endl;
 	else
-		TCERR << inMsg;
+		TCERR << inMsg.wx_str();
+#else
+	if (bIncNewLine)
+		TCERR << inMsg.c_str() << std::endl;
+	else
+		TCERR << inMsg.c_str();
+#endif
 #endif
 }
 
 
-tstring SanitizeStringForHTML(
-		tstring const& inRawData,
+wxString SanitizeStringForHTML(
+		wxString const& inRawData,
 		bool bConvertCR)
 {
-	tstring::size_type pos = inRawData.find_first_of(wxT("&<>"));
-	if (tstring::npos == pos && bConvertCR)
+	wxString::size_type pos = inRawData.find_first_of(wxT("&<>"));
+	if (wxString::npos == pos && bConvertCR)
 		pos = inRawData.find_first_of(wxT("\r\n"));
-	if (tstring::npos == pos)
+	if (wxString::npos == pos)
 		return inRawData;
-	otstringstream data;
+	wxString data;
 	for (size_t nChar = 0; nChar < inRawData.length(); ++nChar)
 	{
+#if wxCHECK_VERSION(2, 9, 0)
+		switch (inRawData[nChar].GetValue())
+#else
 		switch (inRawData[nChar])
+#endif
 		{
 		case wxT('&'):
 			data << wxT("&amp;");
@@ -122,16 +135,16 @@ tstring SanitizeStringForHTML(
 			break;
 		}
 	}
-	return data.str();
+	return data;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-tstring ARBVersion::str() const
+wxString ARBVersion::str() const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << Major() << wxT(".") << Minor();
-	return buffer.str();
+	return buffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -153,9 +166,9 @@ static struct Q2Enum
 static int const sc_nQs = sizeof(sc_Qs) / sizeof(sc_Qs[0]);
 
 
-tstring ARB_Q::GetValidTypes()
+wxString ARB_Q::GetValidTypes()
 {
-	tstring types;
+	wxString types;
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (0 < i)
@@ -166,7 +179,7 @@ tstring ARB_Q::GetValidTypes()
 }
 
 
-void ARB_Q::GetValidTypes(std::vector<tstring>& outTypes)
+void ARB_Q::GetValidTypes(std::vector<wxString>& outTypes)
 {
 	outTypes.clear();
 	for (int i = 0; i < sc_nQs; ++i)
@@ -193,9 +206,9 @@ ARB_Q ARB_Q::GetValidType(int inIndex)
 }
 
 
-tstring ARB_Q::str() const
+wxString ARB_Q::str() const
 {
-	tstring s(wxT("?"));
+	wxString s(wxT("?"));
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (sc_Qs[i].q == m_Q)
@@ -209,7 +222,7 @@ tstring ARB_Q::str() const
 
 
 bool ARB_Q::Load(
-		tstring const& inAttrib,
+		wxString const& inAttrib,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback)
 {
@@ -235,7 +248,7 @@ bool ARB_Q::Save(
 	// it will be written as "NA".
 	assert(inAttribName != NULL);
 	bool bOk = false;
-	tstring q(wxT("NA"));
+	wxString q(wxT("NA"));
 	for (int i = 0; i < sc_nQs; ++i)
 	{
 		if (m_Q == sc_Qs[i].q)
@@ -252,7 +265,7 @@ bool ARB_Q::Save(
 
 // Trailing zeros are trimmed unless inPrec=2.
 // Then they are only trimmed if all zero (and inPrec=2).
-tstring ARBDouble::str(
+wxString ARBDouble::str(
 		double inValue,
 		int inPrec)
 {
@@ -260,9 +273,9 @@ tstring ARBDouble::str(
 	if (0 < inPrec)
 		str.precision(inPrec);
 	str << std::fixed << inValue;
-	tstring retVal = str.str();
-	tstring::size_type pos = retVal.find('.');
-	if (tstring::npos != pos)
+	wxString retVal = str.str();
+	wxString::size_type pos = retVal.find('.');
+	if (wxString::npos != pos)
 	{
 		// Strip trailing zeros iff they are all 0.
 		if (2 == inPrec)

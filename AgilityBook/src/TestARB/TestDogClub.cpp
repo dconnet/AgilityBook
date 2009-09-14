@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -75,7 +76,7 @@ SUITE(TestDogClub)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -127,14 +128,14 @@ SUITE(TestDogClubList)
 	TEST(GetPrimaryClubName)
 	{
 		TODO_TEST
-	//	tstring GetPrimaryClubName() const;
+	//	wxString GetPrimaryClubName() const;
 	}
 
 
 	TEST(GetPrimaryClubVenue)
 	{
 		TODO_TEST
-	//	tstring GetPrimaryClubVenue() const;
+	//	wxString GetPrimaryClubVenue() const;
 	}
 
 
@@ -143,9 +144,9 @@ SUITE(TestDogClubList)
 		TODO_TEST
 	//	bool FindEvent(
 	//			ARBConfig const& inConfig,
-	//			tstring const& inEvent,
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inEvent,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate,
 	//			ARBErrorCallback& ioCallback,
 	//			ARBConfigEventPtr* outEvent = NULL,
@@ -157,7 +158,7 @@ SUITE(TestDogClubList)
 	{
 		TODO_TEST
 	//	bool FindVenue(
-	//			tstring const& inVenue,
+	//			wxString const& inVenue,
 	//			ARBDogClubPtr* outClub = NULL) const;
 	}
 
@@ -166,11 +167,11 @@ SUITE(TestDogClubList)
 	{
 		TODO_TEST
 	//	bool AddClub(
-	//			tstring const& inName,
-	//			tstring const& inVenue,
+	//			wxString const& inName,
+	//			wxString const& inVenue,
 	//			ARBDogClubPtr* outClub = NULL);
 	//	bool DeleteClub(
-	//			tstring const& inName,
-	//			tstring const& inVenue);
+	//			wxString const& inName,
+	//			wxString const& inVenue);
 	}
 }

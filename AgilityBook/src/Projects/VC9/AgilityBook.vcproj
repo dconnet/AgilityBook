@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -124,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -190,7 +190,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -255,7 +255,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -320,7 +320,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -385,7 +385,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -452,7 +452,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -518,7 +518,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
 				TargetMachine="17"
 			/>
 			<Tool

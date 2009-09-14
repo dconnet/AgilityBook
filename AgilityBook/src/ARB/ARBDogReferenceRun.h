@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -68,7 +69,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -78,7 +79,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -122,27 +123,27 @@ public:
 	{
 		m_Place = inPlace;
 	}
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring const& GetHeight() const
+	wxString const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(tstring const& inHeight)
+	void SetHeight(wxString const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	tstring const& GetBreed() const
+	wxString const& GetBreed() const
 	{
 		return m_Breed;
 	}
-	void SetBreed(tstring const& inBreed)
+	void SetBreed(wxString const& inBreed)
 	{
 		m_Breed = inBreed;
 	}
@@ -154,19 +155,19 @@ public:
 	{
 		m_Time = inTime;
 	}
-	tstring const& GetScore() const
+	wxString const& GetScore() const
 	{
 		return m_Score;
 	}
-	void SetScore(tstring const& inScore)
+	void SetScore(wxString const& inScore)
 	{
 		m_Score = inScore;
 	}
-	tstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(tstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -174,12 +175,12 @@ public:
 private:
 	ARB_Q m_Q;
 	short m_Place;
-	tstring m_Name;
-	tstring m_Height;
-	tstring m_Breed;
+	wxString m_Name;
+	wxString m_Height;
+	wxString m_Breed;
 	double m_Time;
-	tstring m_Score;
-	tstring m_Note;
+	wxString m_Score;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////

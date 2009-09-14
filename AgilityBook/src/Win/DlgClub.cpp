@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Only modify existing club, don't add a new one (caller does).
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -73,10 +74,10 @@ CDlgClub::CDlgClub(
 
 	if (m_pClub)
 	{
-		m_Club = m_pClub->GetName().c_str();
-		m_Venue = m_pClub->GetVenue().c_str();
+		m_Club = m_pClub->GetName();
+		m_Venue = m_pClub->GetVenue();
 	}
-	std::set<tstring> clubnames;
+	std::set<wxString> clubnames;
 	for (ARBDogClubList::const_iterator iClub = inClubs.begin(); iClub != inClubs.end(); ++iClub)
 		clubnames.insert((*iClub)->GetName());
 	m_pDoc->Book().GetAllClubNames(clubnames, true, true);
@@ -84,9 +85,9 @@ CDlgClub::CDlgClub(
 		clubnames.insert(m_pClub->GetName());
 
 	wxArrayString clubs;
-	for (std::set<tstring>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
+	for (std::set<wxString>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
 	{
-		clubs.Add((*iter).c_str());
+		clubs.Add((*iter));
 	}
 	clubs.Sort();
 
@@ -151,8 +152,8 @@ void CDlgClub::OnOk(wxCommandEvent& evt)
 		return;
 	if (m_pClub)
 	{
-		m_pClub->SetName(m_Club.c_str());
-		m_pClub->SetVenue(m_Venue.c_str());
+		m_pClub->SetName(m_Club);
+		m_pClub->SetVenue(m_Venue);
 	}
 	EndDialog(wxID_OK);
 }

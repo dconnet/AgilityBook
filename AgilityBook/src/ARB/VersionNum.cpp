@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-10-24 DRC Changed ctor and added <= operators
@@ -84,19 +85,19 @@ bool CVersionNum::Parse(wxString inVer)
 	int pos = inVer.Find('.');
 	if (0 <= pos)
 	{
-		m_Version.part1 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
+		m_Version.part1 = static_cast<unsigned short>(tstringUtil::atol(inVer));
 		inVer = inVer.Mid(pos+1);
 		pos = inVer.Find('.');
 		if (0 <= pos)
 		{
-			m_Version.part2 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
+			m_Version.part2 = static_cast<unsigned short>(tstringUtil::atol(inVer));
 			inVer = inVer.Mid(pos+1);
 			pos = inVer.Find('.');
 			if (0 <= pos)
 			{
-				m_Version.part3 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
+				m_Version.part3 = static_cast<unsigned short>(tstringUtil::atol(inVer));
 				inVer = inVer.Mid(pos+1);
-				m_Version.part4 = static_cast<unsigned short>(tstringUtil::atol(inVer.c_str()));
+				m_Version.part4 = static_cast<unsigned short>(tstringUtil::atol(inVer));
 				m_Valid = true;
 			}
 		}
@@ -188,12 +189,12 @@ void CVersionNum::clear()
 
 wxString CVersionNum::GetVersionString() const
 {
-	otstringstream str;
+	wxString str;
 	str << m_Version.part1
-		<< '.' << m_Version.part2
-		<< '.' << m_Version.part3
-		<< '.' << m_Version.part4;
-	return str.str().c_str();
+		<< wxT(".") << m_Version.part2
+		<< wxT(".") << m_Version.part3
+		<< wxT(".") << m_Version.part4;
+	return str;
 }
 
 

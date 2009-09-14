@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix dates on save.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-04 DRC Created.
@@ -88,7 +89,7 @@ protected:
 
 wxString CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 {
-	otstringstream str;
+	wxString str;
 	switch (iColumn)
 	{
 	default:
@@ -100,7 +101,7 @@ wxString CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 		str << m_Value;
 		break;
 	}
-	return str.str().c_str();
+	return str;
 }
 
 
@@ -208,7 +209,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		++iterDiv)
 	{
 		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		index = m_ctrlDivision->Append(pDiv->GetName().c_str());
+		index = m_ctrlDivision->Append(pDiv->GetName());
 		m_ctrlDivision->SetClientObject(index, new CDlgConfigureMethodDataDivision(pDiv));
 		if (m_pScoring->GetDivision() == pDiv->GetName())
 			m_ctrlDivision->SetSelection(index);
@@ -304,8 +305,8 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
 	for (index = 0; index < nStyles; ++index)
 	{
-		tstring str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
-		int idx = m_ctrlType->Append(str.c_str());
+		wxString str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
+		int idx = m_ctrlType->Append(str);
 		m_ctrlType->SetClientData(idx, reinterpret_cast<void*>(Styles[index]));
 	}
 
@@ -702,9 +703,9 @@ void CDlgConfigEventMethod::FillLevelList()
 				iterLevel != pDiv->GetLevels().end();
 				++iterLevel)
 			{
-				if (wxNOT_FOUND == m_ctrlLevel->FindString((*iterLevel)->GetName().c_str(), true))
+				if (wxNOT_FOUND == m_ctrlLevel->FindString((*iterLevel)->GetName(), true))
 				{
-					index = m_ctrlLevel->Append((*iterLevel)->GetName().c_str());
+					index = m_ctrlLevel->Append((*iterLevel)->GetName());
 					if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
 						m_ctrlLevel->SetSelection(index);
 				}
@@ -718,7 +719,7 @@ void CDlgConfigEventMethod::FillLevelList()
 			iterLevel != pDiv->m_Div->GetLevels().end();
 			++iterLevel)
 		{
-			index = m_ctrlLevel->Append((*iterLevel)->GetName().c_str());
+			index = m_ctrlLevel->Append((*iterLevel)->GetName());
 			if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
 				m_ctrlLevel->SetSelection(index);
 		}
@@ -924,12 +925,12 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 		str = WILDCARD_DIVISION;
 	else
 		str = m_ctrlDivision->GetString(idxDiv);
-	m_pScoring->SetDivision(str.c_str());
+	m_pScoring->SetDivision(str);
 	if (0 == idxLevel)
 		str = WILDCARD_LEVEL;
 	else
 		str = m_ctrlLevel->GetString(idxLevel);
-	m_pScoring->SetLevel(str.c_str());
+	m_pScoring->SetLevel(str);
 
 	m_pScoring->SetDropFractions(m_DropFractions);
 	m_pScoring->SetHasBonusPts(m_Bonus);

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2007-07-01 DRC Fixed a problem with table flag on a run.
  * @li 2007-02-14 DRC Fixed a problem in YPS table file conversion.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -182,10 +183,10 @@ bool ARBDogRunScoring::Load(
 	|| inTree->GetName() == TREE_BY_POINTS))
 		return false;
 
-	tstring attrib;
+	wxString attrib;
 
 	m_bRoundTimeFaults = inEventScoring->DropFractions();
-	tstring const& name = inTree->GetName();
+	wxString const& name = inTree->GetName();
 	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
@@ -224,7 +225,7 @@ bool ARBDogRunScoring::Load(
 			{
 				if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
 				{
-					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool().c_str()));
+					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool()));
 					// Report the error, but keep going.
 					m_Table = false;
 				}

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2007-08-11 DRC Changed usage of FindCalendar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added vCalendar support, finished iCalendar.
@@ -83,7 +84,7 @@ public:
 			int inVersion);
 	virtual ~ARBiCal()
 	{
-		m_ioStream << wxT("END:VCALENDAR\r\n");
+		m_ioStream << "END:VCALENDAR\r\n";
 	}
 
 	virtual void Release()
@@ -93,15 +94,9 @@ public:
 
 	void BeginEvent()
 	{
-		m_ioStream << wxT("BEGIN:VEVENT\r\n");
+		m_ioStream << "BEGIN:VEVENT\r\n";
 	}
-#ifdef UNICODE
-	void DoUID(std::wstring const& inUID)
-	{
-		DoUID(tstringUtil::tstringA(inUID));
-	}
-#endif
-	void DoUID(std::string const& inUID)
+	void DoUID(wxString const& inUID)
 	{
 		WriteText("UID", inUID, false);
 	}
@@ -117,29 +112,15 @@ public:
 			inDate += 1;
 		Write("DTEND", inDate, false);
 	}
-#ifdef UNICODE
-	void DoSUMMARY(std::wstring const& inStr)
-	{
-		DoSUMMARY(tstringUtil::tstringA(inStr));
-	}
-	void DoLOCATION(std::wstring const& inStr)
-	{
-		DoLOCATION(tstringUtil::tstringA(inStr));
-	}
-	void DoDESCRIPTION(std::wstring const& inStr)
-	{
-		DoDESCRIPTION(tstringUtil::tstringA(inStr));
-	}
-#endif
-	void DoSUMMARY(std::string const& inStr)
+	void DoSUMMARY(wxString const& inStr)
 	{
 		WriteText("SUMMARY", inStr, true);
 	}
-	void DoLOCATION(std::string const& inStr)
+	void DoLOCATION(wxString const& inStr)
 	{
 		WriteText("LOCATION", inStr, true);
 	}
-	void DoDESCRIPTION(std::string const& inStr)
+	void DoDESCRIPTION(wxString const& inStr)
 	{
 		WriteText("DESCRIPTION", inStr, true);
 	}
@@ -167,7 +148,7 @@ private:
 	void WriteSafeChar(std::string const& inText);
 	void WriteText(
 			char const* const inToken,
-			std::string const& inText,
+			wxString const& inText,
 			bool bQuotedPrint);
 
 	std::ostream& m_ioStream;
@@ -210,7 +191,7 @@ void ARBiCal::Write(
 			m_ioStream << ";VALUE=DATE";
 		m_ioStream << ':';
 	}
-	m_ioStream << tstringUtil::tstringA(inDate.GetString(ARBDate::eYYYYMMDD));
+	m_ioStream << inDate.GetString(ARBDate::eYYYYMMDD);
 	if (1 == m_Version)
 	{
 		if (inStartOfDay)
@@ -258,7 +239,7 @@ void ARBiCal::WriteSafeChar(std::string const& inText)
 
 void ARBiCal::WriteText(
 		char const* const inToken,
-		std::string const& inText,
+		wxString const& inText,
 		bool bQuotedPrint)
 {
 	if (0 < inText.length())
@@ -272,7 +253,7 @@ void ARBiCal::WriteText(
 		}
 		m_ioStream << ':';
 		// "Fold" a long line. RFC 2445, section 4.1
-		std::string tmp(inText);
+		std::string tmp(inText.ToUTF8());
 		while (nLineLength < tmp.length())
 		{
 			// Version 1 stuff is a best-guess.
@@ -450,9 +431,9 @@ bool ARBCalendar::operator==(ARBCalendar const& rhs) const
 }
 
 
-tstring ARBCalendar::GetUID(eUidType inType) const
+wxString ARBCalendar::GetUID(eUidType inType) const
 {
-	otstringstream str;
+	wxString str;
 	switch (inType)
 	{
 	default:
@@ -471,11 +452,11 @@ tstring ARBCalendar::GetUID(eUidType inType) const
 	str << m_DateOpening.GetString(ARBDate::eYYYYMMDD, true);
 	str << m_DateDraw.GetString(ARBDate::eYYYYMMDD, true);
 	str << m_DateClosing.GetString(ARBDate::eYYYYMMDD, true);
-	return str.str();
+	return str;
 }
 
 
-size_t ARBCalendar::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBCalendar::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -570,11 +551,11 @@ bool ARBCalendar::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			tstring attrib;
+			wxString attrib;
 			inTree->GetAttrib(ATTRIB_CAL_START, attrib);
-			tstring msg(Localization()->InvalidDate());
+			wxString msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_START, msg));
 		}
 		return false;
 	}
@@ -586,48 +567,48 @@ bool ARBCalendar::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			tstring attrib;
+			wxString attrib;
 			inTree->GetAttrib(ATTRIB_CAL_END, attrib);
-			tstring msg(Localization()->InvalidDate());
+			wxString msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_END, msg));
 			return false;
 		}
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_OPENING, m_DateOpening))
 	{
-		tstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_CAL_OPENING, attrib);
-		tstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_OPENING, msg));
 		return false;
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_DRAW, m_DateDraw))
 	{
-		tstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_CAL_DRAW, attrib);
-		tstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_DRAW, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_DRAW, msg));
 		return false;
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_CLOSING, m_DateClosing))
 	{
-		tstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_CAL_CLOSING, attrib);
-		tstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_CLOSING, msg));
 		return false;
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CAL_MAYBE, m_bTentative))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_MAYBE, Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -637,7 +618,7 @@ bool ARBCalendar::Load(
 
 	if (inVersion == ARBVersion(1,0))
 	{
-		tstring attrib;
+		wxString attrib;
 		if (ElementNode::eFound == inTree->GetAttrib(wxT("PlanOn"), attrib))
 		{
 			if (attrib == wxT("y"))
@@ -648,7 +629,7 @@ bool ARBCalendar::Load(
 	}
 	else if (inVersion >= ARBVersion(2,0))
 	{
-		tstring attrib;
+		wxString attrib;
 		if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_CAL_ENTERED, attrib))
 		{
 			if (attrib == ENTRY_ENTERED)
@@ -659,13 +640,13 @@ bool ARBCalendar::Load(
 				m_eEntered = eNot;
 			else
 			{
-				tstring msg(Localization()->ValidValues());
+				wxString msg(Localization()->ValidValues());
 				msg += ENTRY_ENTERED;
 				msg += wxT(", ");
 				msg += ENTRY_PLANNING;
 				msg += wxT(", ");
 				msg += ENTRY_NOT;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, msg));
 				return false;
 			}
 		}
@@ -680,13 +661,13 @@ bool ARBCalendar::Load(
 				m_eAccommodations = eAccomConfirmed;
 			else
 			{
-				tstring msg(Localization()->ValidValues());
+				wxString msg(Localization()->ValidValues());
 				msg += ACCOM_NONE;
 				msg += wxT(", ");
 				msg += ACCOM_TODO;
 				msg += wxT(", ");
 				msg += ACCOM_CONFIRMED;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, msg));
 				return false;
 			}
 		}
@@ -767,7 +748,7 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	ioStream->DoSUMMARY(GetGenericName());
 	ioStream->DoLOCATION(m_Location);
 	{
-		otstringstream str;
+		wxString str;
 		if (IsTentative())
 			str << Localization()->CalendarTentative() << wxT(" ");
 		switch (GetEntered())
@@ -802,7 +783,7 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 				<< wxT(" ");
 		}
 		str << GetNote();
-		ioStream->DoDESCRIPTION(str.str());
+		ioStream->DoDESCRIPTION(str);
 	}
 	if (ePlanning == m_eEntered && m_DateOpening.IsValid())
 		inAlarm += m_DateStart - m_DateOpening;

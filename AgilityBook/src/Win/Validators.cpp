@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-15 DRC Created
  */
 
@@ -134,8 +135,7 @@ bool CGenericValidator::TransferToWindow()
 		}
 		else if (m_pDouble)
 		{
-			tstring str = ARBDouble::str(*m_pDouble, m_Prec);
-			pControl->SetValue(str.c_str());
+			pControl->SetValue(ARBDouble::str(*m_pDouble, m_Prec));
 			return true;
 		}
 	}
@@ -303,7 +303,7 @@ bool CQualifyingValidator::TransferToWindow()
 		CQualifyingComboBox* pControl = (CQualifyingComboBox*)m_validatorWindow;
 		if (m_pQ)
 		{
-			int idx = pControl->FindString(m_pQ->str().c_str(), true);
+			int idx = pControl->FindString(m_pQ->str(), true);
 			pControl->SetSelection(idx);
 			return true;
 		}

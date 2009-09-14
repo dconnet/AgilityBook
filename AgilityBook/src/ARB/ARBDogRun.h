@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-10 DRC Only sort runs one way, the UI handles everything else.
@@ -76,14 +77,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const;
+	virtual wxString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load a run.
@@ -116,7 +117,7 @@ public:
 	 * @param inOther Name of item to look for.
 	 * @return Number of objects, not points.
 	 */
-	int NumOtherPointsInUse(tstring const& inOther) const;
+	int NumOtherPointsInUse(wxString const& inOther) const;
 
 	/**
 	 * Rename an OtherPoint, rename any dependent objects.
@@ -125,15 +126,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameOtherPoints(
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	/**
 	 * Delete an OtherPoint, remove any dependent objects.
 	 * @param inName OtherPoint name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteOtherPoints(tstring const& inName);
+	int DeleteOtherPoints(wxString const& inName);
 
 	/**
 	 * Get the number of Speed points earned in this run.
@@ -177,67 +178,67 @@ public:
 	{
 		m_Date = inDate;
 	}
-	tstring const& GetDivision() const
+	wxString const& GetDivision() const
 	{
 		return m_Division;
 	}
-	void SetDivision(tstring const& inDiv)
+	void SetDivision(wxString const& inDiv)
 	{
 		m_Division = inDiv;
 	}
-	tstring const& GetLevel() const
+	wxString const& GetLevel() const
 	{
 		return m_Level;
 	}
-	void SetLevel(tstring const& inLevel)
+	void SetLevel(wxString const& inLevel)
 	{
 		m_Level = inLevel;
 	}
-	tstring const& GetEvent() const
+	wxString const& GetEvent() const
 	{
 		return m_Event;
 	}
-	void SetEvent(tstring const& inEvent)
+	void SetEvent(wxString const& inEvent)
 	{
 		m_Event = inEvent;
 	}
-	tstring const& GetSubName() const
+	wxString const& GetSubName() const
 	{
 		return m_SubName;
 	}
-	void SetSubName(tstring const& inSubName)
+	void SetSubName(wxString const& inSubName)
 	{
 		m_SubName = inSubName;
 	}
-	tstring const& GetHeight() const
+	wxString const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(tstring const& inHeight)
+	void SetHeight(wxString const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	tstring const& GetConditions() const
+	wxString const& GetConditions() const
 	{
 		return m_Conditions;
 	}
-	void SetConditions(tstring const& inConditions)
+	void SetConditions(wxString const& inConditions)
 	{
 		m_Conditions = inConditions;
 	}
-	tstring const& GetJudge() const
+	wxString const& GetJudge() const
 	{
 		return m_Judge;
 	}
-	void SetJudge(tstring const& inJudge)
+	void SetJudge(wxString const& inJudge)
 	{
 		m_Judge = inJudge;
 	}
-	tstring const& GetHandler() const
+	wxString const& GetHandler() const
 	{
 		return m_Handler;
 	}
-	void SetHandler(tstring const& inHandler)
+	void SetHandler(wxString const& inHandler)
 	{
 		m_Handler = inHandler;
 	}
@@ -297,15 +298,15 @@ public:
 	{
 		return m_Notes.GetFaults();
 	}
-	tstring const& GetCRCD() const
+	wxString const& GetCRCD() const
 	{
 		return m_Notes.GetCRCD();
 	}
-	void SetCRCD(tstring const& inCRCD)
+	void SetCRCD(wxString const& inCRCD)
 	{
 		m_Notes.SetCRCD(inCRCD);
 	}
-	tstring const& GetCRCDRawMetaData() const
+	wxString const& GetCRCDRawMetaData() const
 	{
 		return m_Notes.GetCRCDRawMetaData();
 	}
@@ -317,11 +318,11 @@ public:
 	{
 		m_Notes.SetCRCDMetaData(inCRCDMeta, inBytes);
 	}
-	tstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Notes.GetNote();
 	}
-	void SetNote(tstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Notes.SetNote(inNote);
 	}
@@ -345,22 +346,22 @@ public:
 	{
 		return m_Links.size();
 	}
-	size_t GetLinks(std::set<tstring>& outLinks) const;
-	bool HasLink(tstring const& inLink) const;
-	void AddLink(tstring const& inLink);
-	void RemoveLink(tstring const& inLink);
+	size_t GetLinks(std::set<wxString>& outLinks) const;
+	bool HasLink(wxString const& inLink) const;
+	void AddLink(wxString const& inLink);
+	void RemoveLink(wxString const& inLink);
 
 private:
 	std::set<tr1::weak_ptr<ARBConfigMultiQ> > m_pMultiQs; //< Not persisted.
 	ARBDate m_Date;
-	tstring m_Division;
-	tstring m_Level;
-	tstring m_Height;
-	tstring m_Event;
-	tstring m_SubName; //< Only used if the config supports it.
-	tstring m_Conditions;
-	tstring m_Judge;
-	tstring m_Handler;
+	wxString m_Division;
+	wxString m_Level;
+	wxString m_Height;
+	wxString m_Event;
+	wxString m_SubName; //< Only used if the config supports it.
+	wxString m_Conditions;
+	wxString m_Judge;
+	wxString m_Handler;
 	ARBDogRunPartnerList m_Partners;
 	ARBDogRunScoring m_Scoring;
 	ARB_Q m_Q;
@@ -370,7 +371,7 @@ private:
 	ARBDogRunOtherPointsList m_OtherPoints;
 	ARBDogNotes m_Notes;
 	ARBDogReferenceRunList m_RefRuns;
-	typedef std::set<tstring> ARBDogRunLinks;
+	typedef std::set<wxString> ARBDogRunLinks;
 	ARBDogRunLinks m_Links;
 };
 

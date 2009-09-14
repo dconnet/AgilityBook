@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-06 DRC Fix plugin enabling (full path was being stored in map)
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
@@ -70,25 +71,25 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static std::string TranslateCodeMap(std::vector<tstring> const& inCodes)
+static std::string TranslateCodeMap(std::vector<wxString> const& inCodes)
 {
 	std::ostringstream codes;
 	for (size_t i = 0; i < inCodes.size(); ++i)
 	{
 		if (0 < i)
 			codes << ':';
-		codes << tstringUtil::tstringA(inCodes[i]);
+		codes << inCodes[i].ToUTF8();
 	}
 	return codes.str();
 }
 
 
 static size_t TranslateCodeMap(
-		std::map<tstring, tstring> const& inMap,
-		std::vector<tstring>& outKeys)
+		std::map<wxString, wxString> const& inMap,
+		std::vector<wxString>& outKeys)
 {
 	outKeys.clear();
-	for (std::map<tstring, tstring>::const_iterator iMap = inMap.begin();
+	for (std::map<wxString, wxString>::const_iterator iMap = inMap.begin();
 		iMap != inMap.end();
 		++iMap)
 	{
@@ -193,13 +194,13 @@ public:
 
 	wxString GetName() const						{return m_Name;}
 	wxString GetDescription() const					{return m_Desc;}
-	std::map<tstring, tstring> const& QueryLocationCodes() const
+	std::map<wxString, wxString> const& QueryLocationCodes() const
 		{return m_LocCodes;}
-	std::map<tstring, tstring> const& QueryVenueCodes() const
+	std::map<wxString, wxString> const& QueryVenueCodes() const
 		{return m_VenueCodes;}
 	std::string Process(IProgressMeter *progress,
-			std::vector<tstring> const& inLocationCodes,
-			std::vector<tstring> const& inVenueCodes);
+			std::vector<wxString> const& inLocationCodes,
+			std::vector<wxString> const& inVenueCodes);
 
 private:
 	void Clear();
@@ -211,8 +212,8 @@ private:
 	ICalendarSite* m_pSite;
 	wxString m_Name;
 	wxString m_Desc;
-	std::map<tstring, tstring> m_LocCodes;
-	std::map<tstring, tstring> m_VenueCodes;
+	std::map<wxString, wxString> m_LocCodes;
+	std::map<wxString, wxString> m_VenueCodes;
 };
 
 
@@ -513,15 +514,15 @@ void CalSiteData::Connect()
 					}
 					if (pData)
 					{
-						tstring data = tstringUtil::TString(pData, strlen(pData)).c_str();
-						std::vector<tstring> fields;
+						wxString data = tstringUtil::TString(pData, strlen(pData)).c_str();
+						std::vector<wxString> fields;
 						if (0 < BreakLine('\n', data, fields))
 						{
-							for (std::vector<tstring>::iterator i = fields.begin();
+							for (std::vector<wxString>::iterator i = fields.begin();
 								i != fields.end();
 								++i)
 							{
-								std::vector<tstring> subfields;
+								std::vector<wxString> subfields;
 								if (2 == BreakLine(':', *i, subfields))
 								{
 									m_LocCodes[subfields[0]] = subfields[1];
@@ -551,15 +552,15 @@ void CalSiteData::Connect()
 					}
 					if (pData)
 					{
-						tstring data = tstringUtil::TString(pData, strlen(pData)).c_str();
-						std::vector<tstring> fields;
+						wxString data = tstringUtil::TString(pData, strlen(pData)).c_str();
+						std::vector<wxString> fields;
 						if (0 < BreakLine('\n', data, fields))
 						{
-							for (std::vector<tstring>::iterator i = fields.begin();
+							for (std::vector<wxString>::iterator i = fields.begin();
 								i != fields.end();
 								++i)
 							{
-								std::vector<tstring> subfields;
+								std::vector<wxString> subfields;
 								switch (BreakLine(':', *i, subfields))
 								{
 								case 1:
@@ -614,8 +615,8 @@ void CalSiteData::Unload(bool bPermanently)
 
 
 std::string CalSiteData::Process(IProgressMeter *progress,
-		std::vector<tstring> const& inLocationCodes,
-		std::vector<tstring> const& inVenueCodes)
+		std::vector<wxString> const& inLocationCodes,
+		std::vector<wxString> const& inVenueCodes)
 {
 	std::string data;
 	if (m_pSite)
@@ -762,10 +763,10 @@ public:
 	virtual bool Edit(wxWindow* pParent)			{return false;}
 	virtual bool CanDelete() const					{return false;}
 	virtual bool Delete()							{return false;}
-	virtual std::map<tstring, tstring> const& QueryLocationCodes() const = 0;
-	virtual std::map<tstring, tstring> const& QueryVenueCodes() const = 0;
-	virtual std::vector<tstring>& LocationCodes()	{return m_LocationCodes;}
-	virtual std::vector<tstring>& VenueCodes()		{return m_VenueCodes;}
+	virtual std::map<wxString, wxString> const& QueryLocationCodes() const = 0;
+	virtual std::map<wxString, wxString> const& QueryVenueCodes() const = 0;
+	virtual std::vector<wxString>& LocationCodes()	{return m_LocationCodes;}
+	virtual std::vector<wxString>& VenueCodes()		{return m_VenueCodes;}
 	virtual bool isValid() const = 0;
 	virtual bool Enable() = 0;
 	virtual bool CanDisable() const = 0;
@@ -773,8 +774,8 @@ public:
 protected:
 	wxString m_Name;
 	wxString m_Desc;
-	std::vector<tstring> m_LocationCodes;
-	std::vector<tstring> m_VenueCodes;
+	std::vector<wxString> m_LocationCodes;
+	std::vector<wxString> m_VenueCodes;
 };
 
 
@@ -807,12 +808,12 @@ public:
 	virtual bool CanDelete() const		{return true;}
 	virtual bool Delete();
 
-	virtual std::map<tstring, tstring> const& QueryLocationCodes() const
+	virtual std::map<wxString, wxString> const& QueryLocationCodes() const
 	{
 		return m_Site->LocationCodes();
 	}
 
-	virtual std::map<tstring, tstring> const& QueryVenueCodes() const
+	virtual std::map<wxString, wxString> const& QueryVenueCodes() const
 	{
 		return m_Site->VenueCodes();
 	}
@@ -849,8 +850,8 @@ private:
 std::string CPluginConfigData::Process(IProgressMeter *progress)
 {
 	wxBusyCursor wait;
-	tstring url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
-	std::string data(tstringUtil::tstringA(url));
+	wxString url = m_Site->GetFormattedURL(m_LocationCodes, m_VenueCodes);
+	std::string data(url.ToUTF8());
 	progress->SetMessage(data.c_str());
 	data.erase();
 	CReadHttp http(url.c_str(), &data);
@@ -916,12 +917,12 @@ public:
 		return 1 < m_CalData->QueryLocationCodes().size() || 1 < m_CalData->QueryVenueCodes().size();
 	}
 
-	virtual std::map<tstring, tstring> const& QueryLocationCodes() const
+	virtual std::map<wxString, wxString> const& QueryLocationCodes() const
 	{
 		return m_CalData->QueryLocationCodes();
 	}
 
-	virtual std::map<tstring, tstring> const& QueryVenueCodes() const
+	virtual std::map<wxString, wxString> const& QueryVenueCodes() const
 	{
 		return m_CalData->QueryVenueCodes();
 	}
@@ -984,44 +985,42 @@ public:
 		: m_Cal(cal)
 	{
 		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
-		otstringstream name;
-		name << m_Cal->GetStartDate().GetString(dFmt)
-			<< ' '
+		m_Name << m_Cal->GetStartDate().GetString(dFmt)
+			<< wxT(" ")
 			<< m_Cal->GetEndDate().GetString(dFmt)
 			<< wxT(": ")
 			<< m_Cal->GetVenue()
-			<< ' '
+			<< wxT(" ")
 			<< m_Cal->GetLocation()
-			<< ' '
+			<< wxT(" ")
 			<< m_Cal->GetClub();
-		m_Name = name.str().c_str();
-		otstringstream desc;
-		desc << m_Cal->GetSecEmail() << '\n';
+		wxString desc;
+		desc << m_Cal->GetSecEmail() << wxT("\n");
 		if (m_Cal->GetOpeningDate().IsValid())
 		{
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
 			desc << str.c_str()
-				<< ' '
+				<< wxT(" ")
 				<< m_Cal->GetOpeningDate().GetString(dFmt)
-				<< '\n';
+				<< wxT("\n");
 		}
 		if (m_Cal->GetDrawDate().IsValid())
 		{
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
 			desc << str.c_str()
-				<< ' '
+				<< wxT(" ")
 				<< m_Cal->GetDrawDate().GetString(dFmt)
-				<< '\n';
+				<< wxT("\n");
 		}
 		if (m_Cal->GetClosingDate().IsValid())
 		{
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
-			desc << str.c_str()
-				<< ' '
+			desc << str
+				<< wxT(" ")
 				<< m_Cal->GetClosingDate().GetString(dFmt)
-				<< '\n';
+				<< wxT("\n");
 		}
-		m_Desc = desc.str().c_str();
+		m_Desc = desc;
 	}
 
 	virtual wxString OnNeedText() const	{return m_Name;}
@@ -1334,7 +1333,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 				{
 					progress.SetForegroundWindow();
 					ElementNodePtr tree(ElementNode::New());
-					tstring errMsg;
+					wxString errMsg;
 					bool bOk = false;
 					if (!data.empty())
 					{

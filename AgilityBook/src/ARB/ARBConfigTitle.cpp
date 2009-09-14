@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-14 DRC Added option to prefix a title.
  * @li 2005-01-11 DRC Allow titles to be optionally entered multiple times.
@@ -76,11 +77,11 @@ static short RomanDigit(wxChar digit)
 		return 0;
 	}
 }
-static short RomanToShort(tstring number)
+static short RomanToShort(wxString number)
 {
 	short result = 0;
 	short oldValue = 1000;
-	for (tstring::const_iterator index = number.begin(); index != number.end(); ++index)
+	for (wxString::const_iterator index = number.begin(); index != number.end(); ++index)
 	{
 		short newValue = RomanDigit(*index);
 		if (newValue > oldValue)
@@ -92,7 +93,7 @@ static short RomanToShort(tstring number)
 	return result;
 }
 */
-static tstring ShortToRoman(short value)
+static wxString ShortToRoman(short value)
 {
 	static const wxChar* romanDigits[9][4] =
 	{
@@ -106,7 +107,7 @@ static tstring ShortToRoman(short value)
 		{NULL,       wxT("DCCC"), wxT("LXXX"), wxT("VIII")},
 		{NULL,       wxT("CM"),   wxT("XC"),   wxT("IX")  }
 	};
-	otstringstream result;
+	wxString result;
 	for (int index = 0; index < 4; ++index)
 	{
 		short power = static_cast<short>(pow(10.0, 3 - index));
@@ -115,25 +116,24 @@ static tstring ShortToRoman(short value)
 		if (digit > 0)
 			result << romanDigits[digit-1][index];
 	}
-	return result.str();
+	return result;
 }
 
 
-tstring ARBTitleInstance::TitleInstance(
+wxString ARBTitleInstance::TitleInstance(
 		bool bShowInstanceOne,
 		short instance,
 		ARBTitleStyle style) const
 {
+	wxString str;
 	if (bShowInstanceOne || 1 < instance)
 	{
-		otstringstream str;
 		if (eTitleRoman == style)
-			str << '-' << ShortToRoman(instance);
+			str << wxT("-") << ShortToRoman(instance);
 		else
 			str << instance;
-		return str.str();
 	}
-	return wxT("");
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -246,26 +246,26 @@ bool ARBConfigTitle::Load(
 		m_MultipleStyle = static_cast<ARBTitleStyle>(tmp);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_PREFIX, m_Prefix))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_PREFIX, Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, m_ValidFrom))
 	{
-		tstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDFROM, attrib);
-		tstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDFROM, msg));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, m_ValidTo))
 	{
-		tstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_TITLES_VALIDTO, attrib);
-		tstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TITLES, ATTRIB_TITLES_VALIDTO, msg));
 		return false;
 	}
 
@@ -299,21 +299,20 @@ bool ARBConfigTitle::Save(ElementNodePtr ioTree) const
 }
 
 
-tstring ARBConfigTitle::GetCompleteName(
+wxString ARBConfigTitle::GetCompleteName(
 		short inInstance,
 		bool bShowInstance,
 		bool bAbbrevFirst,
 		bool bAddDates) const
 {
-	tstring buffer = TitleInstance(bShowInstance, inInstance, m_MultipleStyle);
+	wxString buffer = TitleInstance(bShowInstance, inInstance, m_MultipleStyle);
 	// Special formatting used in configuration dialogs.
 	if (0 > inInstance && 0 < m_Multiple)
 	{
-		otstringstream str;
-		str << wxT("+");
-		buffer = str.str();
+		buffer.erase();
+		buffer << wxT("+");
 	}
-	otstringstream name;
+	wxString name;
 	if (0 < m_LongName.length())
 	{
 		if (bAbbrevFirst)
@@ -340,11 +339,11 @@ tstring ARBConfigTitle::GetCompleteName(
 	}
 	if (bAddDates)
 	{
-		tstring dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
+		wxString dates = ARBDate::GetValidDateString(m_ValidFrom, m_ValidTo);
 		if (!dates.empty())
 			name << wxT(" ") << dates;
 	}
-	return name.str();
+	return name;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -393,7 +392,7 @@ void ARBConfigTitleList::ReorderBy(ARBConfigTitleList const& inList)
 
 
 bool ARBConfigTitleList::FindTitleCompleteName(
-		tstring const& inName,
+		wxString const& inName,
 		short inInstance,
 		bool bShowInstance,
 		bool bAbbrevFirst,
@@ -415,7 +414,7 @@ bool ARBConfigTitleList::FindTitleCompleteName(
 
 
 bool ARBConfigTitleList::FindTitle(
-		tstring const& inName,
+		wxString const& inName,
 		ARBConfigTitlePtr* outTitle) const
 {
 	if (outTitle)
@@ -434,7 +433,7 @@ bool ARBConfigTitleList::FindTitle(
 
 
 bool ARBConfigTitleList::AddTitle(
-		tstring const& inName,
+		wxString const& inName,
 		ARBConfigTitlePtr* outTitle)
 {
 	if (outTitle)
@@ -463,9 +462,9 @@ bool ARBConfigTitleList::AddTitle(ARBConfigTitlePtr inTitle)
 }
 
 
-bool ARBConfigTitleList::DeleteTitle(tstring const& inName)
+bool ARBConfigTitleList::DeleteTitle(wxString const& inName)
 {
-	tstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

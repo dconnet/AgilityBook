@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-13 DRC Created
  */
 
@@ -115,7 +116,7 @@ SUITE(TestCalendar)
 	TEST_FIXTURE(CalData, Compare)
 	{
 		ARBCalendarPtr cal = ARBCalendar::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		cal->Load(CalData2, ARBVersion(2, 0), callback);
 		ARBCalendarPtr cal2 = cal->Clone();
@@ -145,11 +146,11 @@ SUITE(TestCalendar)
 	TEST_FIXTURE(CalData, Load1)
 	{
 		ARBCalendarPtr cal = ARBCalendar::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(cal->Load(CalData1, ARBVersion(1, 0), callback));
 		CHECK_EQUAL(ARBCalendar::ePlanning, cal->GetEntered());
-		tstring name = cal->GetGenericName();
+		wxString name = cal->GetGenericName();
 		CHECK(!name.empty());
 	}
 
@@ -157,7 +158,7 @@ SUITE(TestCalendar)
 	TEST_FIXTURE(CalData, Load2)
 	{
 		ARBCalendarPtr cal = ARBCalendar::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(cal->Load(CalData2, ARBVersion(2, 0), callback));
 		CHECK_EQUAL(ARBCalendar::ePlanning, cal->GetEntered());
@@ -167,7 +168,7 @@ SUITE(TestCalendar)
 	TEST_FIXTURE(CalData, Load3)
 	{
 		ARBCalendarPtr cal = ARBCalendar::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(cal->Load(CalData1a, ARBVersion(1, 0), callback));
 		// These are not equal as 'Entered' isn't parsed in 1.0.
@@ -178,7 +179,7 @@ SUITE(TestCalendar)
 	TEST_FIXTURE(CalData, Save)
 	{
 		ARBCalendarPtr cal = ARBCalendar::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		cal->Load(CalData2, ARBVersion(2, 0), callback);
 		ElementNodePtr ele = ElementNode::New();
@@ -274,7 +275,7 @@ SUITE(TestCalendarList)
 	TEST_FIXTURE(CalData, Load)
 	{
 		ARBCalendarList callist;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
 		CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));
@@ -294,7 +295,7 @@ SUITE(TestCalendarList)
 	TEST_FIXTURE(CalData, Load2)
 	{
 		ARBCalendarList callist;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(callist.Load(CalData1, ARBVersion(1, 0), callback));
 		CHECK(callist.Load(CalData2, ARBVersion(2, 0), callback));

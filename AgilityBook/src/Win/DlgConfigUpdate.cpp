@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-01-26 DRC Display errors on non-fatal load.
@@ -135,7 +136,7 @@ bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
 	}
 	else
 	{
-		tstring errMsg;
+		wxString errMsg;
 		ElementNodePtr tree(ElementNode::New());
 		// Translate the XML to a tree form.
 		if (!tree->LoadXMLFile(pFile, errMsg))
@@ -144,7 +145,7 @@ bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
 			if (0 < errMsg.length())
 			{
 				msg += wxT("\n\n");
-				msg += errMsg.c_str();
+				msg += errMsg;
 			}
 			wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 			return false;
@@ -153,11 +154,11 @@ bool CDlgConfigUpdate::LoadConfig(wxChar const* pFile)
 		if (!m_Book.Load(tree, false, false, true, false, false, err))
 		{
 			if (0 < err.m_ErrMsg.length())
-				wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+				wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		else if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 	}
 	return true;
 }

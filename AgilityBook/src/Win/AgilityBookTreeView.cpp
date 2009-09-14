@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-17 DRC Fix r-click selection issues.
  * @li 2009-07-13 DRC Changing language didn't update dog's age.
  * @li 2009-07-11 DRC Change how runs are synced with list to reduce reloading.
@@ -75,7 +76,7 @@
 #include "Print.h"
 #include <wx/config.h>
 
-#ifdef WIN32
+#ifdef WX_TREE_HAS_STATE
 #include "res/CalEmpty.xpm"
 #include "res/CalPlan.xpm"
 #endif
@@ -160,7 +161,7 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	while (!bFound && hItem.IsOk())
 	{
-		std::set<tstring> strings;
+		std::set<wxString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTreeData* pData = m_pView->GetTreeItem(hItem);
@@ -169,11 +170,11 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 		}
 		else
 		{
-			strings.insert(m_pView->m_Ctrl->GetItemText(hItem).c_str());
+			strings.insert(m_pView->m_Ctrl->GetItemText(hItem));
 		}
-		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter).c_str());
+			wxString str((*iter));
 			if (!MatchCase())
 				str.MakeLower();
 			if (0 <= str.Find(search))
@@ -273,7 +274,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	: CAgilityBookBaseExtraView(pTabView, doc)
 	, m_Ctrl(NULL)
 	, m_ImageList()
-#ifdef WIN32
+#ifdef WX_TREE_HAS_STATE
 	, m_ImageListStates(16,16)
 	, m_idxEmpty(-1)
 	, m_idxChecked(-1)
@@ -284,7 +285,7 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_Callback(this)
 	, m_pDog()
 {
-#ifdef WIN32
+#ifdef WX_TREE_HAS_STATE
 	// Note: Position 0 cannot be used.
 	m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
 	m_idxEmpty = m_ImageListStates.Add(wxIcon(CalEmpty_xpm));
@@ -315,7 +316,7 @@ bool CAgilityBookTreeView::Create(
 		int sizerFlags,
 		int border)
 {
-	m_Ctrl = new wxTreeCtrl(parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+	m_Ctrl = new CTreeCtrl(parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize,
 		wxTR_SINGLE|wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxNO_BORDER, wxDefaultValidator);
 	m_Ctrl->Connect(wxEVT_COMMAND_SET_FOCUS, wxFocusEventHandler(CAgilityBookTreeView::OnCtrlSetFocus), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_ITEM_MENU, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlContextMenu), NULL, this);
@@ -323,7 +324,7 @@ bool CAgilityBookTreeView::Create(
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlItemActivated), NULL, this);
 	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookTreeView::OnCtrlKeyDown), NULL, this);
 	m_Ctrl->SetImageList(&m_ImageList);
-#ifdef WIN32
+#ifdef WX_TREE_HAS_STATE
 	m_Ctrl->SetStateImageList(&m_ImageListStates);
 #endif
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
@@ -434,7 +435,7 @@ bool CAgilityBookTreeView::GetMessage2(wxString& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
-		msg = GetDocument()->GetCurrentDog()->GetCallName().c_str();
+		msg = GetDocument()->GetCurrentDog()->GetCallName();
 		return true;
 	}
 	else
@@ -646,9 +647,9 @@ wxTreeItemId CAgilityBookTreeView::InsertTrial(
 			pDataTrial->OnNeedText(),
 			idxImage, idxImage,
 			pDataTrial);
-#ifdef WIN32
+#ifdef WX_TREE_HAS_STATE
 		int state = pDataTrial->GetTrial()->IsVerified() ? m_idxChecked : m_idxEmpty;
-		m_Ctrl->SetState(hTrial, state);
+		m_Ctrl->SetItemState(hTrial, state);
 #endif
 		for (ARBDogRunList::const_iterator iterRun = pTrial->GetRuns().begin();
 			iterRun != pTrial->GetRuns().end();
@@ -719,7 +720,7 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 					}
 				}
 				else if (0 < err.m_ErrMsg.length())
-					wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+					wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 		return true;
@@ -812,7 +813,7 @@ void CAgilityBookTreeView::LoadData()
 
 	wxBusyCursor wait;
 	// Remember the currently selected item.
-	tstring strCallName;
+	wxString strCallName;
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
 	if (!pData)
 	{
@@ -876,16 +877,16 @@ void CAgilityBookTreeView::LoadData()
 
 
 void CAgilityBookTreeView::PrintLine(
-		otstringstream& data,
+		wxString& data,
 		wxTreeItemId id,
 		int indent) const
 {
-	static wxChar const* const spaces = wxT("&nbsp;&nbsp;&nbsp;");
+	static wxString const spaces(wxT("&nbsp;&nbsp;&nbsp;"));
 	if (id.IsOk() && id != m_Ctrl->GetRootItem())
 	{
 		for (int idx = 0; idx < indent; ++idx)
 			data << spaces;
-		data << m_Ctrl->GetItemText(id).c_str() << wxT("<br />\n"); // Note, wxWidgets needs the space before the slash
+		data << m_Ctrl->GetItemText(id) << wxT("<br />\n"); // Note, wxWidgets needs the space before the slash
 	}
 	wxTreeItemIdValue cookie;
 	wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(id, cookie);
@@ -899,11 +900,11 @@ void CAgilityBookTreeView::PrintLine(
 
 wxString CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
 {
-	otstringstream data;
+	wxString data;
 	data << wxT("<html><body><p>\n");
 	PrintLine(data, m_Ctrl->GetRootItem(), -1);
 	data << wxT("</p></body></html>\n");
-	return data.str().c_str();
+	return data;
 }
 
 

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -143,7 +144,7 @@ bool ARBConfigFaultList::Load(
 
 
 bool ARBConfigFaultList::FindFault(
-		tstring const& inName,
+		wxString const& inName,
 		ARBConfigFaultPtr* outFault) const
 {
 	if (outFault)
@@ -162,7 +163,7 @@ bool ARBConfigFaultList::FindFault(
 
 
 bool ARBConfigFaultList::AddFault(
-		tstring const& inName,
+		wxString const& inName,
 		ARBConfigFaultPtr* outFault)
 {
 	if (outFault)
@@ -178,9 +179,9 @@ bool ARBConfigFaultList::AddFault(
 }
 
 
-bool ARBConfigFaultList::DeleteFault(tstring const& inName)
+bool ARBConfigFaultList::DeleteFault(wxString const& inName)
 {
-	tstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

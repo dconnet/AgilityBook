@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-13 DRC Created
  */
 
@@ -129,10 +130,10 @@ SUITE(TestInfoItem)
 	TEST_FIXTURE(TestInfoItemData, Load)
 	{
 		ARBInfoItemPtr info = ARBInfoItem::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(info->Load(data, ARBVersion(1, 0), callback, TREE_CLUBINFO));
-		tstring name = info->GetGenericName();
+		wxString name = info->GetGenericName();
 		CHECK(!name.empty());
 	}
 
@@ -140,7 +141,7 @@ SUITE(TestInfoItem)
 	TEST_FIXTURE(TestInfoItemData, Save)
 	{
 		ARBInfoItemPtr info = ARBInfoItem::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(info->Load(data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
 		ElementNodePtr ele = ElementNode::New();
@@ -154,7 +155,7 @@ SUITE(TestInfoItemList)
 	TEST_FIXTURE(TestInfoItemData, Load)
 	{
 		ARBInfoItemList infolist(TREE_CLUBINFO);
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(infolist.Load(data, ARBVersion(2, 0), callback));
 		ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
@@ -170,7 +171,7 @@ SUITE(TestInfoItemList)
 		ElementNodePtr ele = ElementNode::New(wxT("InfoItem"));
 		ele->SetValue(wxT("These are some notes"));
 		ARBInfoItemList infolist(TREE_CLUBINFO);
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
 	}
@@ -198,10 +199,10 @@ SUITE(TestInfoItemList)
 	TEST_FIXTURE(TestInfoItemData, GetAllItems)
 	{
 		ARBInfo info;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-		std::set<tstring> items;
+		std::set<wxString> items;
 		CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
 	}
 
@@ -209,10 +210,10 @@ SUITE(TestInfoItemList)
 	TEST_FIXTURE(TestInfoItemData, CondenseContent)
 	{
 		ARBInfo info;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-		std::set<tstring> items;
+		std::set<wxString> items;
 		items.insert(wxT("Club1"));
 		items.insert(wxT("Club3"));
 		info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
@@ -224,7 +225,7 @@ SUITE(TestInfoItemList)
 	TEST_FIXTURE(TestInfoItemData, Find)
 	{
 		ARBInfo info;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
 		CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(wxT("Club3")));
@@ -272,7 +273,7 @@ SUITE(TestInfo)
 	TEST_FIXTURE(TestInfoItemData, Load)
 	{
 		ARBInfo info;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(info.Load(tree, ARBVersion(1, 0), callback));
 		CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).size());

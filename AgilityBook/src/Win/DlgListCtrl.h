@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-12-26 DRC Made dialog resizable.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -81,8 +82,8 @@ public:
 			wxWindow* pParent = NULL);
 
 	void GetAllPartners(
-			std::set<tstring>& ioPartners,
-			std::set<tstring>& ioDogs) const;
+			std::set<wxString>& ioPartners,
+			std::set<wxString>& ioDogs) const;
 
 private:
 	bool Create(

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-25 DRC Fix status width on Mac.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
@@ -468,48 +469,48 @@ void CMainFrame::OnPrevPane(wxCommandEvent& evt)
 
 void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 {
-	otstringstream str;
+	wxString str;
 
 	// OS version
 	wxPlatformInfo info;
 	str << wxT("OS: ")
-		<< info.GetOperatingSystemIdName().c_str()
-		<< ' '
+		<< info.GetOperatingSystemIdName()
+		<< wxT(" ")
 		<< info.GetOSMajorVersion()
-		<< '.'
+		<< wxT(".")
 		<< info.GetOSMinorVersion()
-		<< std::endl;
+		<< wxT("\n");
 	if (wxPORT_BASE != info.GetPortId())
 	{
 		str << wxT("Port: ")
-			<< info.GetPortIdName().c_str()
-			<< ' '
+			<< info.GetPortIdName()
+			<< wxT(" ")
 			<< info.GetToolkitMajorVersion()
-			<< '.'
+			<< wxT(".")
 			<< info.GetToolkitMinorVersion()
-			<< std::endl;
+			<< wxT("\n");
 	}
 	str << wxT("Architecture: ")
-		<< info.GetArchName().c_str()
+		<< info.GetArchName()
 		<< wxT(", ")
-		<< info.GetEndiannessName().c_str()
-		<< std::endl;
+		<< info.GetEndiannessName()
+		<< wxT("\n");
 
 	// Me.
 	{
 		CVersionNum ver(true);
-		str << wxStandardPaths::Get().GetExecutablePath().c_str() << wxT(": ");
+		str << wxStandardPaths::Get().GetExecutablePath() << wxT(": ");
 		if (ver.Valid())
-			str << ver.GetVersionString().c_str();
+			str << ver.GetVersionString();
 		else
 			str << _("IDS_BAD_VERSION");
-		str << std::endl;
+		str << wxT("\n");
 	}
 
 	// wxWidgets
-	str << wxVERSION_STRING << std::endl;
+	str << wxVERSION_STRING << wxT("\n");
 
-	wxString msg(str.str().c_str());
+	wxString msg(str);
 	CDlgMessage dlg(msg, this);
 	dlg.ShowModal();
 }

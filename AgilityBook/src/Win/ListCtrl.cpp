@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-02-20 DRC Added subitem editing to lists.
  * @li 2007-02-26 DRC Fix a problem redrawing list columns.
@@ -299,7 +300,7 @@ bool CReportListCtrl::SetData(long item, CListDataPtr inData)
 
 
 static void PushData(
-		otstringstream& data,
+		wxString& data,
 		CReportListCtrl const* ctrl,
 		int item,
 		bool bBold)
@@ -310,9 +311,9 @@ static void PushData(
 	for (std::vector<wxString>::const_iterator i = line.begin(); i != line.end(); ++i)
 	{
 		if (bBold)
-			data << wxT("<td><strong>") << i->c_str() << wxT("</strong></td>\n");
+			data << wxT("<td><strong>") << *i << wxT("</strong></td>\n");
 		else
-			data << wxT("<td>") << i->c_str() << wxT("</td>\n");
+			data << wxT("<td>") << *i << wxT("</td>\n");
 	}
 	data << wxT("</tr>\n");
 }
@@ -320,7 +321,7 @@ static void PushData(
 
 wxString CReportListCtrl::GetPrintDataAsHtmlTable() const
 {
-	otstringstream data;
+	wxString data;
 	data << wxT("<table border=\"0\">");
 	PushData(data, this, -1, true);
 	for (long item = 0; item < GetItemCount(); ++item)
@@ -328,7 +329,7 @@ wxString CReportListCtrl::GetPrintDataAsHtmlTable() const
 		PushData(data, this, item, false);
 	}
 	data << wxT("</table>\n");
-	return data.str().c_str();
+	return data;
 }
 
 

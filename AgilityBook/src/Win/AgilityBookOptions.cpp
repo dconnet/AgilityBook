@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Changed auto update check to false in debug mode.
  * @li 2009-08-08 DRC Changed default setting for proxy and show dog after title
  * @li 2009-07-19 DRC Implement proxy support. 
@@ -1004,25 +1005,25 @@ void CAgilityBookOptions::GetColumnOrder(
 	outValues.clear();
 	if (!bDefaultValues)
 	{
-		otstringstream item;
+		wxString item;
 		item << GetColumnName(eOrder)
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 			<< wxT("/col") << static_cast<unsigned int>(idxColumn);
 #else
 			<< wxT("/col") << idxColumn;
 #endif
-		wxString data = wxConfig::Get()->Read(item.str().c_str(), wxString());
+		wxString data = wxConfig::Get()->Read(item, wxEmptyString);
 		int idx = data.Find(',');
 		while (0 <= idx)
 		{
-			int val = tstringUtil::atol(data.c_str());
+			int val = tstringUtil::atol(data);
 			outValues.push_back(val);
 			data = data.Mid(idx+1);
 			idx = data.Find(',');
 		}
 		if (0 < data.length())
 		{
-			long val = tstringUtil::atol(data.c_str());
+			long val = tstringUtil::atol(data);
 			outValues.push_back(val);
 		}
 	}
@@ -1278,21 +1279,21 @@ void CAgilityBookOptions::SetColumnOrder(
 		size_t idxColumn,
 		std::vector<long> const& inValues)
 {
-	otstringstream data;
+	wxString data;
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
 		if (0 < i)
 			data << wxT(",");
 		data << inValues[i];
 	}
-	otstringstream item;
+	wxString item;
 	item << GetColumnName(eOrder)
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 		<< wxT("/col") << static_cast<unsigned int>(idxColumn);
 #else
 		<< wxT("/col") << idxColumn;
 #endif
-	wxConfig::Get()->Write(item.str().c_str(), data.str().c_str());
+	wxConfig::Get()->Write(item, data);
 }
 
 
@@ -1382,7 +1383,7 @@ void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 
 ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 {
-	otstringstream section;
+	wxString section;
 	section << wxT("Settings/dateFormat") << static_cast<int>(inItem);
 	ARBDate::DateFormat def;
 	switch (inItem)
@@ -1395,7 +1396,7 @@ ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
 	case eCalendar: def = ARBDate::eDashYMD; break;
 	case eTraining: def = ARBDate::eDashYMD; break;
 	}
-	return static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section.str().c_str(), static_cast<long>(def)));
+	return static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section, static_cast<long>(def)));
 }
 
 
@@ -1403,9 +1404,9 @@ void CAgilityBookOptions::SetDateFormat(
 		FormattedDate inItem,
 		ARBDate::DateFormat inFormat)
 {
-	otstringstream section;
+	wxString section;
 	section << wxT("Settings/dateFormat") << static_cast<int>(inItem);
-	wxConfig::Get()->Write(section.str().c_str(), static_cast<long>(inFormat));
+	wxConfig::Get()->Write(section, static_cast<long>(inFormat));
 }
 
 

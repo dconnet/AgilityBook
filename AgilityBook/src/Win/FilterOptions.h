@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2006-03-02 DRC Separated filter options from main options.
  */
@@ -45,9 +46,9 @@
 
 struct CVenueFilter
 {
-	tstring venue;
-	tstring division;
-	tstring level;
+	wxString venue;
+	wxString division;
+	wxString level;
 	bool operator==(CVenueFilter const& rhs) const
 	{
 		return venue == rhs.venue
@@ -140,7 +141,7 @@ public:
 		CFilterOptionData& operator=(CFilterOptionData const& rhs);
 		bool Save(int index);
 
-		tstring filterName;
+		wxString filterName;
 		CCalendarViewFilter calView;
 		bool bAllDates;
 		bool bStartDate;
@@ -151,7 +152,7 @@ public:
 		std::vector<CVenueFilter> venueFilter;
 		eViewRuns eRuns;
 		bool bViewAllNames;
-		std::set<tstring> nameFilter;
+		std::set<wxString> nameFilter;
 	};
 
 private:
@@ -165,27 +166,27 @@ private:
 	std::vector<CVenueFilter> m_venueFilter;
 	eViewRuns m_eRuns;
 	bool m_bViewAllNames;
-	std::set<tstring> m_nameFilter;
+	std::set<wxString> m_nameFilter;
 
-	tstring m_curFilter;
+	wxString m_curFilter;
 	long m_nFilters;
 	std::vector<CFilterOptionData> m_filters;
 
-	std::vector<CFilterOptionData>::iterator FindFilter(tstring const& inName);
+	std::vector<CFilterOptionData>::iterator FindFilter(wxString const& inName);
 
 public:
 	static CFilterOptions& Options();
 	CFilterOptions(); ///< Should only be used in options dialog
 	void Load();
 	void Save();
-	tstring GetCurrentFilter() const
+	wxString GetCurrentFilter() const
 	{
 		return m_curFilter;
 	}
-	size_t GetAllFilterNames(std::vector<tstring>& outNames) const;
-	bool SetCurrentFilter(tstring const& inName);
-	bool AddFilter(tstring const& inName); ///< Returns if a new one was added
-	bool DeleteFilter(tstring const& inName);
+	size_t GetAllFilterNames(std::vector<wxString>& outNames) const;
+	bool SetCurrentFilter(wxString const& inName);
+	bool AddFilter(wxString const& inName); ///< Returns if a new one was added
+	bool DeleteFilter(wxString const& inName);
 
 	// Helper functions
 	bool IsFilterEnabled();
@@ -197,16 +198,16 @@ public:
 			ARBDogTitlePtr pTitle);
 	bool IsVenueVisible(
 			std::vector<CVenueFilter> const& venues,
-			tstring const& venue);
+			wxString const& venue);
 	bool IsVenueDivisionVisible(
 			std::vector<CVenueFilter> const& venues,
-			tstring const& venue,
-			tstring const& div);
+			wxString const& venue,
+			wxString const& div);
 	bool IsVenueLevelVisible(
 			std::vector<CVenueFilter> const& venues,
-			tstring const& venue,
-			tstring const& div,
-			tstring const& level);
+			wxString const& venue,
+			wxString const& div,
+			wxString const& level);
 	bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBDogTrialPtr pTrial);
@@ -223,7 +224,7 @@ public:
 			std::vector<CVenueFilter> const& venues,
 			ARBCalendarPtr pCal);
 	bool IsTrainingLogVisible(
-			std::set<tstring> const& names,
+			std::set<wxString> const& names,
 			ARBTrainingPtr pTraining);
 
 	// Filtering: Calendar
@@ -296,9 +297,9 @@ public:
 		m_venueFilter = venues;
 	}
 	bool FilterExists(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel) const;
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inLevel) const;
 
 	eViewRuns GetViewRuns() const
 	{
@@ -318,11 +319,11 @@ public:
 	{
 		m_bViewAllNames = bViewAll;
 	}
-	void GetTrainingFilterNames(std::set<tstring>& outNames) const
+	void GetTrainingFilterNames(std::set<wxString>& outNames) const
 	{
 		outNames = m_nameFilter;
 	}
-	void SetTrainingFilterNames(std::set<tstring> const& inNames)
+	void SetTrainingFilterNames(std::set<wxString> const& inNames)
 	{
 		m_nameFilter = inNames;
 	}

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-10-05 DRC Created
  */
@@ -50,31 +51,31 @@ public:
 	// For configuring what codes are available
 	CDlgCalendarQueryDetail(
 			ARBConfig const& inConfig,
-			std::map<tstring, tstring> const& inLocCodes,
-			std::map<tstring, tstring> const& inVenueCodes,
+			std::map<wxString, wxString> const& inLocCodes,
+			std::map<wxString, wxString> const& inVenueCodes,
 			wxWindow* pParent = NULL);
 	// For selecting from available list
 	CDlgCalendarQueryDetail(
 			ARBConfig const& inConfig,
-			std::map<tstring, tstring> const& inLocCodes,
-			std::vector<tstring> const& inSelectedLocCodes,
-			std::map<tstring, tstring> const& inVenueCodes,
-			std::vector<tstring> const& inSelectedVenueCodes,
+			std::map<wxString, wxString> const& inLocCodes,
+			std::vector<wxString> const& inSelectedLocCodes,
+			std::map<wxString, wxString> const& inVenueCodes,
+			std::vector<wxString> const& inSelectedVenueCodes,
 			wxWindow* pParent = NULL);
 
-	std::map<tstring, tstring> const& GetLocationCodes() const
+	std::map<wxString, wxString> const& GetLocationCodes() const
 	{
 		return m_LocCodes;
 	}
-	std::map<tstring, tstring> const& GetVenueCodes() const
+	std::map<wxString, wxString> const& GetVenueCodes() const
 	{
 		return m_VenueCodes;
 	}
-	std::vector<tstring> const& GetSelectedLocationCodes() const
+	std::vector<wxString> const& GetSelectedLocationCodes() const
 	{
 		return m_Locations;
 	}
-	std::vector<tstring> const& GetSelectedVenueCodes() const
+	std::vector<wxString> const& GetSelectedVenueCodes() const
 	{
 		return m_Venues;
 	}
@@ -87,10 +88,10 @@ private:
 
 	bool m_EditCodes;
 	ARBConfig const& m_Config;
-	std::map<tstring, tstring> m_LocCodes;
-	std::map<tstring, tstring> m_VenueCodes;
-	std::vector<tstring> m_Locations;
-	std::vector<tstring> m_Venues;
+	std::map<wxString, wxString> m_LocCodes;
+	std::map<wxString, wxString> m_VenueCodes;
+	std::vector<wxString> m_Locations;
+	std::vector<wxString> m_Venues;
 	CCheckListCtrl* m_ctrlLocations;
 	CCheckListCtrl* m_ctrlVenues;
 	wxButton* m_ctrlNewLoc;

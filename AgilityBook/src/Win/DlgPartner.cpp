@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
@@ -50,13 +51,13 @@ END_EVENT_TABLE()
 
 CDlgPartner::CDlgPartner(
 		ARBDogRunPartnerPtr partner,
-		std::set<tstring> const& inHandlers,
-		std::set<tstring> const& inDogs,
+		std::set<wxString> const& inHandlers,
+		std::set<wxString> const& inDogs,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_Handler(partner->GetHandler().c_str())
-	, m_Dog(partner->GetDog().c_str())
-	, m_RegNum(partner->GetRegNum().c_str())
+	, m_Handler(partner->GetHandler())
+	, m_Dog(partner->GetDog())
+	, m_RegNum(partner->GetRegNum())
 	, m_Partner(partner)
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
@@ -65,17 +66,17 @@ CDlgPartner::CDlgPartner(
 	Create(pParent, wxID_ANY, _("IDD_PARTNER"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	wxArrayString handlers;
-	std::set<tstring>::const_iterator iter;
+	std::set<wxString>::const_iterator iter;
 	for (iter = inHandlers.begin(); iter != inHandlers.end(); ++iter)
 	{
-		handlers.Add((*iter).c_str());
+		handlers.Add((*iter));
 	}
 	handlers.Sort();
 
 	wxArrayString dogs;
 	for (iter = inDogs.begin(); iter != inDogs.end(); ++iter)
 	{
-		dogs.Add((*iter).c_str());
+		dogs.Add((*iter));
 	}
 	dogs.Sort();
 
@@ -157,8 +158,8 @@ void CDlgPartner::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_Partner->SetHandler(m_Handler.c_str());
-	m_Partner->SetDog(m_Dog.c_str());
-	m_Partner->SetRegNum(m_RegNum.c_str());
+	m_Partner->SetHandler(m_Handler);
+	m_Partner->SetDog(m_Dog);
+	m_Partner->SetRegNum(m_RegNum);
 	EndDialog(wxID_OK);
 }

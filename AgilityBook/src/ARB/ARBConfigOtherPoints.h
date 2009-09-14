@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -59,7 +60,7 @@ public:
 		eTallyLevelByEvent	///< Separate runs by event and level.
 	} eOtherPointsTally;
 
-	static void GetTallyValidValues(std::vector<tstring>& outValues);
+	static void GetTallyValidValues(std::vector<wxString>& outValues);
 
 protected:
 	ARBConfigOtherPoints();
@@ -87,7 +88,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return GetName();
 	}
@@ -97,7 +98,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		return 0;
 	}
@@ -126,19 +127,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring const& GetDescription() const
+	wxString const& GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(tstring const& inDesc)
+	void SetDescription(wxString const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -160,9 +161,9 @@ public:
 	}
 
 private:
-	tstring m_Name;
+	wxString m_Name;
 	eOtherPointsTally m_Tally;
-	tstring m_Desc;
+	wxString m_Desc;
 	short m_Default;
 };
 
@@ -192,7 +193,7 @@ public:
 	 * @param inName Name to verify.
 	 * @return Whether the OtherPoints exists.
 	 */
-	bool VerifyOtherPoints(tstring const& inName) const;
+	bool VerifyOtherPoints(wxString const& inName) const;
 
 	/**
 	 * Find an otherpoints object.
@@ -201,7 +202,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindOtherPoints(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigOtherPointsPtr* outPoints = NULL) const;
 
 	/**
@@ -216,5 +217,5 @@ public:
 	 * @param inName Name of object to delete.
 	 * @return Whether the object was deleted or not.
 	 */
-	bool DeleteOtherPoints(tstring const& inName);
+	bool DeleteOtherPoints(wxString const& inName);
 };

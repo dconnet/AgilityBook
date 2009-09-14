@@ -37,6 +37,7 @@
  * --- as of v2, the real version isn't here - see below.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-26 DRC Removed Win98 support.
  * @li 2009-07-18 DRC Updated version.txt to support different versions/platforms.
  * @li 2009-01-06 DRC Ported to wxWidgets.
@@ -151,7 +152,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	{
 		for (size_t line = 0; line < file.GetLineCount(); ++line)
 		{
-			data += tstringUtil::tstringA(file[line].c_str());
+			data += file[line].ToUTF8();
 			data += '\n';
 		}
 		file.Close();
@@ -263,7 +264,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		    enable (0|1) '1'
 		    >
 		*/
-		tstring errMsg2;
+		wxString errMsg2;
 		ElementNodePtr tree(ElementNode::New());
 		if (!tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg2))
 		{
@@ -290,7 +291,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					continue;
 				if (!bConfigLoaded && node->GetName() == wxT("Config"))
 				{
-					tstring value;
+					wxString value;
 					// If not set, all platforms are the same. This 
 					if (ElementNode::eFound == node->GetAttrib(wxT("platform"), value))
 					{
@@ -333,7 +334,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 							continue;
 						if (lang->GetName() == wxT("Lang"))
 						{
-							tstring langIdStr;
+							wxString langIdStr;
 							lang->GetAttrib(wxT("id2"), langIdStr);
 							m_InfoMsg[langIdStr] = lang->GetValue();
 						}
@@ -345,7 +346,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				}
 				else if (node->GetName() == wxT("DisableCalPlugin"))
 				{
-					tstring filename, ver;
+					wxString filename, ver;
 					node->GetAttrib(wxT("file"), filename);
 					node->GetAttrib(wxT("ver"), ver);
 					// The 'enable' attribute is in case we prematurely disable
@@ -376,7 +377,7 @@ bool CUpdateInfo::CheckProgram(wxString const& lang)
 	if (IsOutOfDate())
 	{
 		bNeedsUpdating = true;
-		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
+		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD));
 		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
 		{
@@ -431,7 +432,7 @@ bool CUpdateInfo::CheckProgram(wxString const& lang)
 		}
 	}
 	else
-		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD).c_str());
+		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD));
 	return bNeedsUpdating;
 }
 
@@ -467,9 +468,9 @@ void CUpdateInfo::CheckConfig(
 		wxString msg;
 		if (0 < m_InfoMsg.size())
 		{
-			std::map<tstring, tstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage().c_str());
+			std::map<wxString, wxString>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage().c_str());
 			if (iMsg == m_InfoMsg.end())
-				iMsg = m_InfoMsg.find(0);
+				iMsg = m_InfoMsg.begin();
 			if (iMsg != m_InfoMsg.end() && 0 < iMsg->second.length())
 			{
 				// If the info contains a note, append it.
@@ -495,7 +496,7 @@ void CUpdateInfo::CheckConfig(
 			{
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				ElementNodePtr tree(ElementNode::New());
-				tstring errMsg2;
+				wxString errMsg2;
 				if (!tree->LoadXMLBuffer(strConfig.c_str(), strConfig.length(), errMsg2))
 				{
 					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());

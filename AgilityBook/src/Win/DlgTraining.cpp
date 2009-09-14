@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2003-09-21 DRC Created
@@ -60,9 +61,9 @@ CDlgTraining::CDlgTraining(
 	, m_pTraining(pTraining)
 	, m_pDoc(pDoc)
 	, m_datePicker(NULL)
-	, m_Name(pTraining->GetName().c_str())
-	, m_SubName(pTraining->GetSubName().c_str())
-	, m_Notes(pTraining->GetNote().c_str())
+	, m_Name(pTraining->GetName())
+	, m_SubName(pTraining->GetSubName())
+	, m_Notes(pTraining->GetNote())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	if (!pParent)
@@ -75,18 +76,18 @@ CDlgTraining::CDlgTraining(
 
 	wxArrayString names, subnames;
 
-	std::set<tstring> items;
+	std::set<wxString> items;
 	m_pDoc->Book().GetTraining().GetAllNames(items);
-	std::set<tstring>::iterator iter;
+	std::set<wxString>::iterator iter;
 	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		names.Add((*iter).c_str());
+		names.Add(*iter);
 	}
 	names.Sort();
 	m_pDoc->Book().GetTraining().GetAllSubNames(items);
 	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
-		subnames.Add((*iter).c_str());
+		subnames.Add(*iter);
 	}
 	subnames.Sort();
 
@@ -178,9 +179,9 @@ void CDlgTraining::OnOk(wxCommandEvent& evt)
 	wxDateTime date = m_datePicker->GetValue();
 
 	m_pTraining->SetDate(ARBDate(date.GetYear(), date.GetMonth() + 1, date.GetDay()));
-	m_pTraining->SetName(m_Name.c_str());
-	m_pTraining->SetSubName(m_SubName.c_str());
-	m_pTraining->SetNote(m_Notes.c_str());
+	m_pTraining->SetName(m_Name);
+	m_pTraining->SetSubName(m_SubName);
+	m_pTraining->SetNote(m_Notes);
 
 	EndDialog(wxID_OK);
 }

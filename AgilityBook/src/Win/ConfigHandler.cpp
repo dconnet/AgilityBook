@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-03 DRC Ported to wxWidgets.
  * @li 2008-10-31 DRC Created
  */
@@ -83,7 +84,7 @@ CConfigHandler::CConfigHandler()
 ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 {
 	bool bOk = false;
-	tstring errMsg;
+	wxString errMsg;
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 

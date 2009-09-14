@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -75,7 +76,7 @@ SUITE(TestDogRegNum)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -121,7 +122,7 @@ SUITE(TestDogRegNumList)
 	TEST(NumRegNumsInVenue)
 	{
 		TODO_TEST
-	//	int NumRegNumsInVenue(tstring const& inVenue) const;
+	//	int NumRegNumsInVenue(wxString const& inVenue) const;
 	}
 
 
@@ -129,15 +130,15 @@ SUITE(TestDogRegNumList)
 	{
 		TODO_TEST
 	//	int RenameVenue(
-	//			tstring const& inOldVenue,
-	//			tstring const& inNewVenue);
+	//			wxString const& inOldVenue,
+	//			wxString const& inNewVenue);
 	}
 
 
 	TEST(DeleteVenue)
 	{
 		TODO_TEST
-	//	int DeleteVenue(tstring const& inVenue);
+	//	int DeleteVenue(wxString const& inVenue);
 	}
 
 
@@ -145,7 +146,7 @@ SUITE(TestDogRegNumList)
 	{
 		TODO_TEST
 	//	bool FindRegNum(
-	//			tstring const& inVenue,
+	//			wxString const& inVenue,
 	//			ARBDogRegNumPtr* outRegNum = NULL) const;
 	}
 
@@ -154,12 +155,12 @@ SUITE(TestDogRegNumList)
 	{
 		TODO_TEST
 	//	bool AddRegNum(
-	//			tstring const& inVenue,
-	//			tstring const& inNumber,
+	//			wxString const& inVenue,
+	//			wxString const& inNumber,
 	//			ARBDogRegNumPtr* outRegNum = NULL);
 	//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
 	//	int DeleteRegNum(
-	//			tstring const& inVenue,
-	//			tstring const& inNumber);
+	//			wxString const& inVenue,
+	//			wxString const& inNumber);
 	}
 }

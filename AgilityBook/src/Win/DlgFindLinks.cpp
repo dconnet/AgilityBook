@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-08 DRC Fixed data index lookup when editing an item.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -63,7 +64,7 @@ public:
 			ARBDogPtr pDog,
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
-			tstring const& inLink,
+			wxString const& inLink,
 			int image)
 		: m_pDog(pDog)
 		, m_pTrial(pTrial)
@@ -79,8 +80,8 @@ public:
 	ARBDogPtr m_pDog;
 	ARBDogTrialPtr m_pTrial;
 	ARBDogRunPtr m_pRun;
-	tstring m_OldLink;
-	tstring m_Link;
+	wxString m_OldLink;
+	wxString m_Link;
 	int m_Image;
 };
 
@@ -92,13 +93,13 @@ wxString CDlgFindLinksData::OnNeedText(long iCol) const
 	default:
 		assert(0);
 	case 0:
-		return m_Link.c_str();
+		return m_Link;
 	case 1:
-		return m_pTrial->GetGenericName().c_str();
+		return m_pTrial->GetGenericName();
 	case 2:
-		return m_pDog->GetGenericName().c_str();
+		return m_pDog->GetGenericName();
 	case 3:
-		return m_pRun->GetGenericName().c_str();
+		return m_pRun->GetGenericName();
 	}
 }
 
@@ -277,9 +278,9 @@ CDlgFindLinks::CDlgFindLinks(
 				++iterRun)
 			{
 				ARBDogRunPtr pRun = *iterRun;
-				std::set<tstring> links;
+				std::set<wxString> links;
 				pRun->GetLinks(links);
-				for (std::set<tstring>::iterator iter = links.begin();
+				for (std::set<wxString>::iterator iter = links.begin();
 					iter != links.end();
 					++iter)
 				{
@@ -317,7 +318,7 @@ CDlgFindLinksDataPtr CDlgFindLinks::GetItemLinkDataByData(long data)
 }
 
 
-int CDlgFindLinks::GetImageIndex(tstring const& inLink)
+int CDlgFindLinks::GetImageIndex(wxString const& inLink)
 {
 	wxBusyCursor wait;
 	int img = m_imgEmpty;
@@ -336,12 +337,12 @@ void CDlgFindLinks::SetColumnHeaders()
 {
 	for (int i = 0; i < nColLinkInfo; ++i)
 	{
-		otstringstream str;
+		wxString str;
 		str << wxGetTranslation(colLinkInfo[i])
-			<< wxT(" (") << m_sortLinks.FindColumnOrder(i) + 1 << ')';
+			<< wxT(" (") << m_sortLinks.FindColumnOrder(i) + 1 << wxT(")");
 		wxListItem item;
 		item.SetMask(wxLIST_MASK_TEXT);
-		item.SetText(str.str().c_str());
+		item.SetText(str);
 		m_ctrlLinks->SetColumn(i, item);
 		m_ctrlLinks->SetColumnSort(i, m_sortLinks.IsDescending(i) ? -1 : 1);
 	}
@@ -363,10 +364,10 @@ void CDlgFindLinks::Edit()
 	if (0 <= nItem)
 	{
 		CDlgFindLinksDataPtr data = GetItemLinkData(nItem);
-		CDlgSelectURL dlg(data->m_Link.c_str(), this);
+		CDlgSelectURL dlg(data->m_Link, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			tstring newName = dlg.GetName().c_str();
+			wxString newName = dlg.GetName();
 			if (data->m_Link != newName)
 			{
 				data->m_Link = newName;
@@ -427,7 +428,7 @@ void CDlgFindLinks::OnCopy(wxCommandEvent& evt)
 		wxString data;
 		for (size_t i = 0; i < m_Data.size(); ++i)
 		{
-			data += m_Data[i]->m_OldLink.c_str();
+			data += m_Data[i]->m_OldLink;
 			data += wxT("\r\n");
 		}
 
@@ -450,7 +451,7 @@ void CDlgFindLinks::OnOpen(wxCommandEvent& evt)
 	{
 		CDlgFindLinksDataPtr data = GetItemLinkData(nItem);
 		if (data)
-			wxLaunchDefaultBrowser(data->m_Link.c_str());
+			wxLaunchDefaultBrowser(data->m_Link);
 	}
 }
 

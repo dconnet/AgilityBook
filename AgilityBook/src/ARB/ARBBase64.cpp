@@ -36,6 +36,7 @@
  * Note: The original code wrote lines with "\r\n". We don't.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-12 DRC Encoding/decoding 0 bytes should fail.
  * @li 2004-04-27 DRC Decoding: Did not properly compute the data length.
  *                    Encoding: Problem encoding 1 and 2 byte buffers.
@@ -111,7 +112,7 @@ ARBBase64::ARBBase64()
 
 
 bool ARBBase64::Decode(
-		tstring const& inBase64,
+		wxString const& inBase64,
 		unsigned char*& outBinData,
 		size_t& outBytes)
 {
@@ -147,7 +148,11 @@ bool ARBBase64::Decode(
 		}
 
 		//add the base64 char to std...
+#if wxCHECK_VERSION(2, 9, 0)
+		std |= base64map[inBase64[nChar++].GetValue() & 0xFF];
+#else
 		std |= base64map[inBase64[nChar++] & 0xFF];
+#endif
 		std <<= 6;
 		if (count % 4 == 0) //we have 3 more real chars...
 		{
@@ -208,7 +213,7 @@ void ARBBase64::Release(unsigned char*& inBinData)
 bool ARBBase64::Encode(
 		unsigned char const* inBinData,
 		size_t inBytes,
-		tstring& outData)
+		wxString& outData)
 {
 	outData.erase();
 	if (0 == inBytes || !inBinData || !*inBinData)

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  */
 
@@ -47,7 +48,7 @@ class CDlgARBHelp : public wxWizard
 public:
 	CDlgARBHelp();
 
-	void AddSysInfo(tstring const& inData);
+	void AddSysInfo(wxString const& inData);
 	void AddRegistryInfo(wxChar const* inData);
 	void SetARBFileStatus(wxString const& inFileName, bool bInclude = true);
 
@@ -57,7 +58,7 @@ public:
 	wxString GetEncodedData();
 
 protected:
-	tstring m_SysInfo;
-	tstring m_RegInfo;
+	wxString m_SysInfo;
+	wxString m_RegInfo;
 	FileMap m_IncFile;
 };
