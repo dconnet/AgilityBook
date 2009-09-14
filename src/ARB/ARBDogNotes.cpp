@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-12 DRC Clearing the metadata encoded a 0-length string
  *                causing the program to think it still had metadata.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -127,7 +128,7 @@ bool ARBDogNotes::operator==(ARBDogNotes const& rhs) const
 }
 
 
-size_t ARBDogNotes::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBDogNotes::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 	for (ARBDogFaultList::const_iterator iter = m_Faults.begin(); iter != m_Faults.end(); ++iter)
@@ -173,7 +174,7 @@ bool ARBDogNotes::Load(
 		else if (element->GetName() == TREE_CRCD_META)
 		{
 			// Replaced by TREE_CRCD_META2, this translates.
-			tstring tmp = element->GetValue();
+			wxString tmp = element->GetValue();
 			unsigned char* data;
 			size_t bytes;
 			if (ARBBase64::Decode(tmp, data, bytes))

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-04 DRC Ported to wxWidgets.
  * @li 2006-07-16 DRC Let user specify how to sort events within a venue.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -127,7 +128,7 @@ public:
 	}
 	virtual wxString OnNeedText(long index) const
 	{
-		return m_Data->OnNeedText(index).c_str();
+		return m_Data->OnNeedText(index);
 	}
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 	virtual bool HasDetails() const
@@ -243,7 +244,7 @@ bool CAgilityBookPointsView::GetMessage2(wxString& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
-		msg = GetDocument()->GetCurrentDog()->GetCallName().c_str();
+		msg = GetDocument()->GetCurrentDog()->GetCallName();
 		return true;
 	}
 	else

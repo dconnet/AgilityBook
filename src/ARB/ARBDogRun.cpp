@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-06-11 DRC Still not right - runs with 0 SCT should allow title pts.
  * @li 2008-03-03 DRC Title point computation on T+F runs was wrong.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -191,19 +192,19 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 }
 
 
-tstring ARBDogRun::GetGenericName() const
+wxString ARBDogRun::GetGenericName() const
 {
-	tstring name = m_Date.GetString(ARBDate::eDashYMD) + wxT(' ');
-	name += m_Division + wxT(' ') + m_Level + wxT(' ') + m_Event;
+	wxString name = m_Date.GetString(ARBDate::eDashYMD) + wxT(" ");
+	name += m_Division + wxT(" ") + m_Level + wxT(" ") + m_Event;
 	if (0 < m_SubName.length())
 	{
-		name += wxT(' ') + m_SubName;
+		name += wxT(" ") + m_SubName;
 	}
 	return name;
 }
 
 
-size_t ARBDogRun::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBDogRun::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -287,11 +288,11 @@ bool ARBDogRun::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			tstring attrib;
+			wxString attrib;
 			inTree->GetAttrib(ATTRIB_RUN_DATE, attrib);
-			tstring msg(Localization()->InvalidDate());
+			wxString msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_DATE, msg));
 			return false;
 		}
 	}
@@ -334,7 +335,7 @@ bool ARBDogRun::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		tstring const& name = element->GetName();
+		wxString const& name = element->GetName();
 		if (name == TREE_CONDITIONS)
 		{
 			m_Conditions = element->GetValue();
@@ -361,7 +362,7 @@ bool ARBDogRun::Load(
 		}
 		else if (name == TREE_PLACEMENT)
 		{
-			tstring attrib;
+			wxString attrib;
 			if (ElementNode::eFound != element->GetAttrib(ATTRIB_PLACEMENT_Q, attrib)
 			|| 0 == attrib.length())
 			{
@@ -370,9 +371,9 @@ bool ARBDogRun::Load(
 			}
 			if (!m_Q.Load(attrib, inVersion, ioCallback))
 			{
-				tstring msg(Localization()->ValidValues());
+				wxString msg(Localization()->ValidValues());
 				msg += ARB_Q::GetValidTypes();
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg.c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_PLACEMENT, ATTRIB_PLACEMENT_Q, msg));
 				return false;
 			}
 			element->GetAttrib(ATTRIB_PLACEMENT_PLACE, m_Place);
@@ -464,7 +465,7 @@ bool ARBDogRun::Save(ElementNodePtr ioTree) const
 }
 
 
-int ARBDogRun::NumOtherPointsInUse(tstring const& inOther) const
+int ARBDogRun::NumOtherPointsInUse(wxString const& inOther) const
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::const_iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -477,8 +478,8 @@ int ARBDogRun::NumOtherPointsInUse(tstring const& inOther) const
 
 
 int ARBDogRun::RenameOtherPoints(
-		tstring const& inOldName,
-		tstring const& inNewName)
+		wxString const& inOldName,
+		wxString const& inNewName)
 {
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); ++iter)
@@ -493,9 +494,9 @@ int ARBDogRun::RenameOtherPoints(
 }
 
 
-int ARBDogRun::DeleteOtherPoints(tstring const& inName)
+int ARBDogRun::DeleteOtherPoints(wxString const& inName)
 {
-	tstring name(inName);
+	wxString name(inName);
 	int count = 0;
 	for (ARBDogRunOtherPointsList::iterator iter = m_OtherPoints.begin(); iter != m_OtherPoints.end(); )
 	{
@@ -719,7 +720,7 @@ void ARBDogRun::AddMultiQ(ARBConfigMultiQPtr inMultiQ)
 }
 
 
-size_t ARBDogRun::GetLinks(std::set<tstring>& outLinks) const
+size_t ARBDogRun::GetLinks(std::set<wxString>& outLinks) const
 {
 	outLinks.clear();
 	outLinks = m_Links;
@@ -727,19 +728,19 @@ size_t ARBDogRun::GetLinks(std::set<tstring>& outLinks) const
 }
 
 
-bool ARBDogRun::HasLink(tstring const& inLink) const
+bool ARBDogRun::HasLink(wxString const& inLink) const
 {
 	return m_Links.find(inLink) != m_Links.end();
 }
 
 
-void ARBDogRun::AddLink(tstring const& inLink)
+void ARBDogRun::AddLink(wxString const& inLink)
 {
 	m_Links.insert(inLink);
 }
 
 
-void ARBDogRun::RemoveLink(tstring const& inLink)
+void ARBDogRun::RemoveLink(wxString const& inLink)
 {
 	ARBDogRunLinks::iterator iter = m_Links.find(inLink);
 	if (iter != m_Links.end())

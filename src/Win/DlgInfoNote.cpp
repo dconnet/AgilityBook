@@ -36,6 +36,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Add ability to see what was last selected.
@@ -78,7 +79,7 @@ CDlgInfoNote::NameInfo::NameInfo()
 }
 
 
-CDlgInfoNote::NameInfo::NameInfo(tstring const& inName)
+CDlgInfoNote::NameInfo::NameInfo(wxString const& inName)
 	: m_Name(inName)
 	, m_eInUse(eNotInUse)
 	, m_bHasData(false)
@@ -132,7 +133,7 @@ CDlgInfoNote::CDlgInfoNote(
 	, m_NoteAdded(NoteNoteAdded_xpm)
 {
 	wxString caption = _("IDD_JUDGE_INFO");
-	std::set<tstring> names;
+	std::set<wxString> names;
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
@@ -154,7 +155,7 @@ CDlgInfoNote::CDlgInfoNote(
 	m_InfoOrig.Clone(m_Info);
 
 	m_Names.reserve(names.size());
-	for (std::set<tstring>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	for (std::set<wxString>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
@@ -215,7 +216,7 @@ CDlgInfoNote::CDlgInfoNote(
 	for (size_t idx = 0; idx < m_Names.size(); ++idx)
 	{
 		// Combo box is ownerdraw.
-		int index = m_ctrlNames->Append(m_Names[idx].m_Name.c_str());
+		int index = m_ctrlNames->Append(m_Names[idx].m_Name);
 		m_ctrlNames->SetClientData(index, (void*)idx);
 		UpdateImage(index);
 		if (!bSet && 0 < m_Select.length())
@@ -292,7 +293,7 @@ void CDlgInfoNote::UpdateData()
 		if (m_Info.FindItem(m_Names[idx].m_Name, &item))
 		{
 			checked = item->IsVisible();
-			data = item->GetComment().c_str();
+			data = item->GetComment();
 		}
 		if (m_NamesInUse.end() == m_NamesInUse.find(m_Names[idx].m_Name))
 			bEnable = true;
@@ -340,7 +341,7 @@ void CDlgInfoNote::OnKillfocusComments(wxFocusEvent& evt)
 			m_Info.AddItem(m_Names[idx].m_Name, &item);
 		if (!item)
 			return;
-		item->SetComment(data.c_str());
+		item->SetComment(data);
 		m_Names[idx].m_bHasData = (!item->GetComment().empty() || !item->IsVisible());
 		UpdateImage(index);
 	}
@@ -363,12 +364,12 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 		caption = _("IDS_COL_LOCATION");
 		break;
 	}
-	CDlgName dlg(m_Select.c_str(), caption, this);
+	CDlgName dlg(m_Select, caption, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		int index = -1;
 		m_Select.erase();
-		tstring name = dlg.GetName().c_str();
+		wxString name = dlg.GetName();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
 		if (iter != m_Names.end())
@@ -380,7 +381,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 			{
 				m_Names[idx].m_eInUse = NameInfo::eNotInUse;
 				++m_nAdded;
-				index = m_ctrlNames->Append(m_Names[idx].m_Name.c_str());
+				index = m_ctrlNames->Append(m_Names[idx].m_Name);
 				m_ctrlNames->SetClientData(index, (void*)idx);
 				m_ctrlVisible->SetValue(true);
 				m_ctrlNotes->SetValue(wxT(""));
@@ -396,7 +397,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 			m_Names.push_back(data);
 			size_t idx = m_Names.size() - 1;
 			++m_nAdded;
-			index = m_ctrlNames->Append(m_Names[idx].m_Name.c_str());
+			index = m_ctrlNames->Append(m_Names[idx].m_Name);
 			m_ctrlNames->SetClientData(index, (void*)idx);
 			m_ctrlVisible->SetValue(true);
 			m_ctrlNotes->SetValue(wxT(""));
@@ -449,7 +450,7 @@ void CDlgInfoNote::OnOk(wxCommandEvent& evt)
 	if (0 <= index)
 	{
 		size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		m_CurSel = m_Names[idx].m_Name.c_str();
+		m_CurSel = m_Names[idx].m_Name;
 	}
 	m_Info.CondenseContent(m_NamesInUse);
 	if (m_Info != m_InfoOrig)

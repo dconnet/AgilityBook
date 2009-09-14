@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-30 DRC Remove Convert and replaced with tstringA/etc
  * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
@@ -39,12 +40,9 @@
 
 #include <string>
 #include <sstream>
+#include <wx/string.h>
 
-// We use wxChar now - it's either 'char' or 'wchar_t'
 typedef std::basic_ostringstream<wxChar> otstringstream;
-typedef std::basic_string<wxChar> tstring;
-typedef std::basic_ostream<wxChar, std::char_traits<wxChar> > otstream;
-typedef std::basic_ofstream<wxChar, std::char_traits<wxChar> > oftstream;
 
 /**
  * Convert between ansi/unicode
@@ -52,11 +50,11 @@ typedef std::basic_ofstream<wxChar, std::char_traits<wxChar> > oftstream;
 class tstringUtil
 {
 public:
-	// Create a tstring, no matter the input
-	static tstring TString(wchar_t const* const inStr, size_t inLen);
-	static tstring TString(std::wstring const& inStr);
-	static tstring TString(char const* const inStr, size_t inLen);
-	static tstring TString(std::string const& inStr);
+	static wxString TString(wchar_t const* const inStr, size_t inLen);
+	static wxString TString(std::wstring const& inStr);
+	static wxString TString(char const* const inStr, size_t inLen);
+	static wxString TString(std::string const& inStr);
+
 	// Construct a string, no matter the input
 	static std::string tstringA(wchar_t const* const inStr, size_t inLen);
 	static std::string tstringA(std::wstring const& inStr);
@@ -68,10 +66,8 @@ public:
 	static std::wstring tstringW(char const* const inStr, size_t inLen);
 	static std::wstring tstringW(std::string const& inStr);
 
-	static long atol(tstring const& inStr);
-	static long atol(wxChar const* inStr);
-	static double strtod(tstring const& inStr);
-	static double strtod(wxChar const* inStr);
+	static long atol(wxString const& inStr);
+	static double strtod(wxString const& inStr);
 
 	// Some CString-style functions
 	static std::string Trim(std::string const& inStr);

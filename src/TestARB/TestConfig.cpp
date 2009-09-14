@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -73,7 +74,7 @@ SUITE(TestConfig)
 	{
 		ElementNodePtr data = ElementNode::New();
 		ARBConfig config;
-		tstring err;
+		wxString err;
 		ARBErrorCallback callback(err);
 		CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(1,0), callback));
 		CHECK(!config.LoadFault(ElementNodePtr(), ARBVersion(2,0), callback));
@@ -92,7 +93,7 @@ SUITE(TestConfig)
 	{
 		ElementNodePtr data = ElementNode::New();
 		ARBConfig config;
-		tstring err;
+		wxString err;
 		ARBErrorCallback callback(err);
 		CHECK(!config.LoadOtherPoints(ElementNodePtr(), ARBVersion(1,0), callback));
 		CHECK(!config.LoadOtherPoints(data, ARBVersion(1,0), callback));
@@ -197,7 +198,7 @@ SUITE(TestConfig)
 		ARBConfig config;
 		CConfigHandler handler;
 		config.Default(&handler);
-		tstring nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
+		wxString nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
 		CHECK(0 != nice.length());
 	}
 
@@ -210,12 +211,12 @@ SUITE(TestConfig)
 		ARBDogTitlePtr title = ARBDogTitle::New();
 		title->SetVenue(wxT("AKC"));
 		title->SetName(wxT("MX"), 1, false, eTitleNumber);
-		tstring name1 = config.GetTitleCompleteName(title);
+		wxString name1 = config.GetTitleCompleteName(title);
 		CHECK(0 != name1.length());
-		tstring name2 = config.GetTitleCompleteName(title, false);
+		wxString name2 = config.GetTitleCompleteName(title, false);
 		CHECK(0 != name2.length());
 		CHECK(name1 != name2);
-		tstring nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
+		wxString nice = config.GetTitleNiceName(wxT("AKC"), wxT("MX"));
 		nice += wxT(" [MX]");
 		CHECK(nice == name2);
 	}

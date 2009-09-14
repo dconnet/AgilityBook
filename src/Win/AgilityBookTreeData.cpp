@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-14 DRC Fixed crash (on Mac) when editing dog.
  * @li 2009-02-02 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -61,7 +62,6 @@
  */
 
 #include "stdafx.h"
-#include <sstream>
 #include "AgilityBookTreeData.h"
 
 #include "AgilityBook.h"
@@ -487,7 +487,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				}
 			}
 			if (!bLoaded && 0 < err.m_ErrMsg.length())
-				wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+				wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 		}
 	}
 	else if (pDog
@@ -538,7 +538,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 				}
 				else if (0 < err.m_ErrMsg.length())
-					wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+					wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 			}
 		}
 	}
@@ -762,20 +762,20 @@ wxString CAgilityBookTreeDataDog::OnNeedText() const
 	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			str += ' ';
+			str += wxT(" ");
 		switch (GetDogColumns()[idx])
 		{
 		case IO_TREE_DOG_REGNAME:
-			str += m_pDog->GetRegisteredName().c_str();
+			str += m_pDog->GetRegisteredName();
 			break;
 		case IO_TREE_DOG_CALLNAME:
-			str += m_pDog->GetCallName().c_str();
+			str += m_pDog->GetCallName();
 			break;
 		case IO_TREE_DOG_BREED:
-			str += m_pDog->GetBreed().c_str();
+			str += m_pDog->GetBreed();
 			break;
 		case IO_TREE_DOG_DOB:
-			str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+			str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 			break;
 		case IO_TREE_DOG_AGE:
 			{
@@ -1045,11 +1045,11 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
-						str += '-';
+						str += wxT("-");
 					else
-						str += ' ';
+						str += wxT(" ");
 				}
-				str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+				str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 				bNeedSpace = true;
 			}
 			break;
@@ -1059,17 +1059,17 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1])
-						str += '-';
+						str += wxT("-");
 					else
-						str += ' ';
+						str += wxT(" ");
 				}
-				str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+				str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 				bNeedSpace = true;
 			}
 			break;
 		case IO_TREE_TRIAL_VERIFIED:
 			if (bNeedSpace)
-				str += ' ';
+				str += wxT(" ");
 			if (m_pTrial->IsVerified())
 				str += wxT("*");
 			else
@@ -1079,7 +1079,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 		case IO_TREE_TRIAL_CLUB:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str += ' ';
+					str += wxT(" ");
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
@@ -1087,7 +1087,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				{
 					if (0 < i)
 						str += wxT("/");
-					str += (*iter)->GetName().c_str();
+					str += (*iter)->GetName();
 					bNeedSpace = true;
 				}
 			}
@@ -1095,7 +1095,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 		case IO_TREE_TRIAL_VENUE:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str += ' ';
+					str += wxT(" ");
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
@@ -1103,7 +1103,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 				{
 					if (0 < i)
 						str += wxT("/");
-					str += (*iter)->GetVenue().c_str();
+					str += (*iter)->GetVenue();
 					bNeedSpace = true;
 				}
 			}
@@ -1112,8 +1112,8 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetLocation().empty())
 			{
 				if (bNeedSpace)
-					str += ' ';
-				str += m_pTrial->GetLocation().c_str();
+					str += wxT(" ");
+				str += m_pTrial->GetLocation();
 				bNeedSpace = true;
 			}
 			break;
@@ -1121,9 +1121,9 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetNote().empty())
 			{
 				if (bNeedSpace)
-					str += ' ';
-				str += m_pTrial->GetNote().c_str();
-				str = tstringUtil::Replace(str.c_str(), wxT("\n"), wxT(" ")).c_str();
+					str += wxT(" ");
+				str += m_pTrial->GetNote();
+				str.Replace(wxT("\n"), wxT(" "));
 				bNeedSpace = true;
 			}
 			break;
@@ -1400,11 +1400,11 @@ wxString CAgilityBookTreeDataRun::OnNeedText() const
 	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			str += ' ';
+			str += wxT(" ");
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
-			str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree)).c_str();
+			str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
 			break;
 		case IO_TREE_RUN_Q:
 			{
@@ -1417,34 +1417,34 @@ wxString CAgilityBookTreeDataRun::OnNeedText() const
 						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 						{
 							if (!q.empty())
-								q += wxT('/');
-							q += (*iMultiQ)->GetShortName().c_str();
+								q += wxT("/");
+							q += (*iMultiQ)->GetShortName();
 						}
 					}
 					if (ARB_Q::eQ_SuperQ == m_pRun->GetQ())
 					{
 						wxString tmp(_("IDS_SQ"));
 						if (!q.empty())
-							q += wxT('/');
-						q += tmp.c_str();
+							q += wxT("/");
+						q += tmp;
 					}
 				}
 				if (q.empty())
-					q = m_pRun->GetQ().str().c_str();
+					q = m_pRun->GetQ().str();
 				str += q;
 			}
 			break;
 		case IO_TREE_RUN_EVENT:
-			str += m_pRun->GetEvent().c_str();
+			str += m_pRun->GetEvent();
 			break;
 		case IO_TREE_RUN_DIVISION:
-			str += m_pRun->GetDivision().c_str();
+			str += m_pRun->GetDivision();
 			break;
 		case IO_TREE_RUN_LEVEL:
-			str += m_pRun->GetLevel().c_str();
+			str += m_pRun->GetLevel();
 			break;
 		case IO_TREE_RUN_HEIGHT:
-			str += m_pRun->GetHeight().c_str();
+			str += m_pRun->GetHeight();
 			break;
 		}
 	}

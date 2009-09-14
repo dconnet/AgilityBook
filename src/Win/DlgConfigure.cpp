@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-19 DRC Simplified UI layout into a single tree.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -392,12 +393,12 @@ void CDlgConfigure::DoEdit()
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			bool done = false;
-			tstring oldName = pFaultData->GetFault()->GetName();
-			tstring name(oldName);
+			wxString oldName = pFaultData->GetFault()->GetName();
+			wxString name(oldName);
 			while (!done)
 			{
 				done = true;
-				CDlgName dlg(name.c_str(), _("IDS_FAULT_TYPE_NAME"), this);
+				CDlgName dlg(name, _("IDS_FAULT_TYPE_NAME"), this);
 				if (wxID_OK == dlg.ShowModal())
 				{
 					name = dlg.GetName();
@@ -422,7 +423,7 @@ void CDlgConfigure::DoEdit()
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			tstring oldName = pOtherData->GetOtherPoints()->GetName();
+			wxString oldName = pOtherData->GetOtherPoints()->GetName();
 			CDlgConfigOtherPoints dlg(m_Config, pOtherData->GetOtherPoints(), this);
 			if (wxID_OK == dlg.ShowModal())
 			{
@@ -571,7 +572,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 				if (0 < name.length())
 				{
 					ARBConfigFaultPtr pNewFault;
-					if (m_Config.GetFaults().AddFault(name.c_str(), &pNewFault))
+					if (m_Config.GetFaults().AddFault(name, &pNewFault))
 					{
 						CDlgConfigureDataFault* pData = new CDlgConfigureDataFault(pNewFault);
 						m_ctrlItems->AppendItem(
@@ -624,7 +625,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			tstring venue = pVenueData->GetVenue()->GetName();
+			wxString venue = pVenueData->GetVenue()->GetName();
 			// If we were able to delete it...
 			if (m_Config.GetVenues().DeleteVenue(venue))
 			{
@@ -648,7 +649,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			tstring otherPoints = pOtherData->GetOtherPoints()->GetName();
+			wxString otherPoints = pOtherData->GetOtherPoints()->GetName();
 			if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
 			{
 				m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(otherPoints));
@@ -678,11 +679,10 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			tstring name(pVenueData->GetVenue()->GetName());
+			wxString name(pVenueData->GetVenue()->GetName());
 			while (m_Config.GetVenues().FindVenue(name))
 			{
-				wxString copyOf = wxString::Format(_("IDS_COPYOF"), name.c_str());
-				name = copyOf.c_str();
+				name = wxString::Format(_("IDS_COPYOF"), name.c_str());
 			}
 			ARBConfigVenuePtr pNewVenue;
 			if (m_Config.GetVenues().AddVenue(name, &pNewVenue))
@@ -704,7 +704,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case eFaults:
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
-			tstring name(pFaultData->GetFault()->GetName());
+			wxString name(pFaultData->GetFault()->GetName());
 			ARBConfigFaultPtr pNewFault;
 			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
@@ -723,11 +723,10 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			tstring name(pOtherData->GetOtherPoints()->GetName());
+			wxString name(pOtherData->GetOtherPoints()->GetName());
 			while (m_Config.GetOtherPoints().FindOtherPoints(name))
 			{
-				wxString copyOf = wxString::Format(_("IDS_COPYOF"), name.c_str());
-				name = copyOf.c_str();
+				name = wxString::Format(_("IDS_COPYOF"), name.c_str());
 			}
 			ARBConfigOtherPointsPtr pOther = pOtherData->GetOtherPoints()->Clone();
 			pOther->SetName(name);
@@ -753,8 +752,8 @@ class CDlgConfigCallback : public IConfigActionCallback
 {
 public:
 	CDlgConfigCallback() {}
-	virtual void PreDelete(tstring const& inMsg) {}
-	void PostDelete(tstring const& inMsg) const {}
+	virtual void PreDelete(wxString const& inMsg) {}
+	void PostDelete(wxString const& inMsg) const {}
 };
 
 
@@ -767,7 +766,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		ARBConfig& update = dlg.GetConfig();
 		// Update our current config (not runs, later)
 		bool bUpdated = false;
-		otstringstream info;
+		wxString info;
 		CDlgConfigCallback callback;
 		if (0 < update.GetActions().Apply(m_Config, NULL, info, callback))
 		{
@@ -780,7 +779,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		// Update the config.
 		if (m_Config.Update(0, update, info) || bUpdated)
 		{
-			CDlgMessage dlgMsg(info.str().c_str(), this);
+			CDlgMessage dlgMsg(info, this);
 			dlgMsg.ShowModal();
 			LoadData(eVenues);
 			LoadData(eFaults);

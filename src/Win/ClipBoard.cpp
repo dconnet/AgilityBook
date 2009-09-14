@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
  */
@@ -130,13 +131,13 @@ bool CClipboardDataReader::GetData(
 		wxTextDataObject txtData;
 		txtData.SetFormat(GetClipboardFormat(clpFmt));
 		wxTheClipboard->GetData(txtData);
-		data = tstringUtil::tstringA(txtData.GetText().c_str());
+		data = txtData.GetText().ToUTF8();
 	}
-	tstring err;
+	wxString err;
 	bool bOk = outTree->LoadXMLBuffer(data.c_str(), data.length(), err);
 	if (!bOk && 0 < err.length())
 	{
-		wxMessageBox(err.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(err, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;
 }
@@ -188,7 +189,7 @@ void CClipboardDataTable::EndLine()
 void CClipboardDataTable::Cell(int iCol, wxString const& inData)
 {
 	if (0 < iCol)
-		m_ioText += '\t';
+		m_ioText += wxT("\t");
 	m_ioText += inData;
 	m_ioHtml += wxT("<TD>");
 	m_ioHtml += inData;
@@ -250,7 +251,7 @@ bool CClipboardDataWriter::AddData(
 {
 	if (eFormatHtml == clpFmt)
 	{
-		std::string data = tstringUtil::tstringA(inData.c_str());
+		std::string data = inData.ToUTF8();
 		{
 			std::string startHtml("<html><body>\r\n");
 			std::string endHtml("</body>\r\n</html>\r\n");

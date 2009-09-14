@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -82,7 +83,7 @@ SUITE(TestConfigLevel)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -109,7 +110,7 @@ SUITE(TestConfigLevel)
 	//	bool Update(
 	//			int indent,
 	//			ARBConfigLevelPtr inLevelNew,
-	//			tstring& ioInfo);
+	//			wxString& ioInfo);
 	}
 }
 
@@ -130,7 +131,7 @@ SUITE(TestConfigLevelList)
 	{
 		TODO_TEST
 	//	bool VerifyLevel(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			bool inAllowWildCard = true) const;
 	}
 
@@ -139,7 +140,7 @@ SUITE(TestConfigLevelList)
 	{
 		TODO_TEST
 	//	bool FindLevel(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			ARBConfigLevelPtr* outLevel = NULL);
 	}
 
@@ -148,7 +149,7 @@ SUITE(TestConfigLevelList)
 	{
 		TODO_TEST
 	//	bool FindSubLevel(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			ARBConfigLevelPtr* outLevel = NULL) const;
 	}
 
@@ -157,15 +158,15 @@ SUITE(TestConfigLevelList)
 	{
 		TODO_TEST
 	//	bool AddLevel(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			ARBConfigLevelPtr* outLevel = NULL);
 	//	bool AddLevel(ARBConfigLevelPtr inLevel);
 	//	bool DeleteLevel(
-	//			tstring const& inDiv,
-	//			tstring const& inName,
+	//			wxString const& inDiv,
+	//			wxString const& inName,
 	//			ARBConfigEventList& ioEvents);
 	//	bool DeleteSubLevel(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			bool& outLevelModified);
 	}
 }

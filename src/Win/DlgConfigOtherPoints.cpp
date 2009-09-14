@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-05-22 DRC Fixed CRNL sequences.
@@ -125,10 +126,10 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	: wxDialog()
 	, m_Config(config)
 	, m_pOther(pOther)
-	, m_Name(pOther->GetName().c_str())
+	, m_Name(pOther->GetName())
 	, m_ctrlTally(NULL)
 	, m_Default(pOther->GetDefault())
-	, m_Desc(pOther->GetDescription().c_str())
+	, m_Desc(pOther->GetDescription())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	if (!pParent)
@@ -228,8 +229,8 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 
 bool CDlgConfigOtherPoints::IsNameOkay(wxString const& name) const
 {
-	if (m_pOther->GetName() != name.c_str()
-	&& m_Config.GetOtherPoints().FindOtherPoints(name.c_str()))
+	if (m_pOther->GetName() != name
+	&& m_Config.GetOtherPoints().FindOtherPoints(name))
 	{
 		return false;
 	}
@@ -242,13 +243,13 @@ void CDlgConfigOtherPoints::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_pOther->SetName(m_Name.c_str());
+	m_pOther->SetName(m_Name);
 	m_pOther->SetDefault(m_Default);
 	int index = m_ctrlTally->GetSelection();
 	if (index != wxNOT_FOUND)
 	{
 		m_pOther->SetTally(dynamic_cast<DlgConfigOtherPointData*>(m_ctrlTally->GetClientObject(index))->m_Tally);
 	}
-	m_pOther->SetDescription(m_Desc.c_str());
+	m_pOther->SetDescription(m_Desc);
 	EndDialog(wxID_OK);
 }

@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-13 DRC Created
  */
 
@@ -114,7 +115,7 @@ SUITE(TestTraining)
 	TEST_FIXTURE(TestTrainingData, Compare)
 	{
 		ARBTrainingPtr train = ARBTraining::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(train->Load(TrainingData, ARBVersion(2, 0), callback));
 		ARBTrainingPtr train2 = train->Clone();
@@ -139,10 +140,10 @@ SUITE(TestTraining)
 	TEST_FIXTURE(TestTrainingData, Load)
 	{
 		ARBTrainingPtr train = ARBTraining::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(train->Load(TrainingData, ARBVersion(1, 0), callback));
-		tstring name = train->GetGenericName();
+		wxString name = train->GetGenericName();
 		CHECK(!name.empty());
 	}
 
@@ -150,7 +151,7 @@ SUITE(TestTraining)
 	TEST_FIXTURE(TestTrainingData, Save)
 	{
 		ARBTrainingPtr train = ARBTraining::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(train->Load(TrainingData, ARBVersion(2, 0), callback));
 		ElementNodePtr ele = ElementNode::New();
@@ -164,7 +165,7 @@ SUITE(TestTrainingList)
 	TEST_FIXTURE(TestTrainingData, Load)
 	{
 		ARBTrainingList train;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(train.Load(TrainingData, ARBVersion(1, 0), callback));
 		CHECK(train.Load(TrainingData, ARBVersion(2, 0), callback));
@@ -185,7 +186,7 @@ SUITE(TestTrainingList)
 		ele->AddAttrib(ATTRIB_TRAINING_NAME, wxT("Hollister, CA"));
 		ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, wxT("PASA"));
 		ARBTrainingList train;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(!train.Load(ele, ARBVersion(2, 0), callback));
 		ele->AddAttrib(ATTRIB_TRAINING_DATE, wxT("2008-1-13"));
@@ -220,7 +221,7 @@ SUITE(TestTrainingList)
 	{
 		ARBTrainingList trainlist;
 		CreateTrainingList(trainlist);
-		std::set<tstring> names;
+		std::set<wxString> names;
 		CHECK_EQUAL(2u, trainlist.GetAllNames(names));
 	}
 
@@ -229,7 +230,7 @@ SUITE(TestTrainingList)
 	{
 		ARBTrainingList trainlist;
 		CreateTrainingList(trainlist);
-		std::set<tstring> names;
+		std::set<wxString> names;
 		CHECK_EQUAL(3u, trainlist.GetAllSubNames(names));
 	}
 

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -74,11 +75,11 @@ CDlgRegNum::CDlgRegNum(
 
 	if (m_pRegNum)
 	{
-		m_Venue = m_pRegNum->GetVenue().c_str();
-		m_RegNum = m_pRegNum->GetNumber().c_str();
-		m_Height = m_pRegNum->GetHeight().c_str();
+		m_Venue = m_pRegNum->GetVenue();
+		m_RegNum = m_pRegNum->GetNumber();
+		m_Height = m_pRegNum->GetHeight();
 		m_bReceived = m_pRegNum->GetReceived();
-		m_Note = m_pRegNum->GetNote().c_str();
+		m_Note = m_pRegNum->GetNote();
 	}
 
 	// Controls (these are done first to control tab order)
@@ -174,20 +175,20 @@ void CDlgRegNum::OnOk(wxCommandEvent& evt)
 
 	if (m_pRegNum)
 	{
-		m_pRegNum->SetNumber(m_RegNum.c_str());
-		m_pRegNum->SetVenue(m_Venue.c_str());
-		m_pRegNum->SetHeight(m_Height.c_str());
+		m_pRegNum->SetNumber(m_RegNum);
+		m_pRegNum->SetVenue(m_Venue);
+		m_pRegNum->SetHeight(m_Height);
 		m_pRegNum->SetReceived(m_bReceived);
-		m_pRegNum->SetNote(m_Note.c_str());
+		m_pRegNum->SetNote(m_Note);
 	}
 	else
 	{
 		ARBDogRegNumPtr pRegNum;
-		if (m_RegNums.AddRegNum(m_Venue.c_str(), m_RegNum.c_str(), &pRegNum))
+		if (m_RegNums.AddRegNum(m_Venue, m_RegNum, &pRegNum))
 		{
-			pRegNum->SetHeight(m_Height.c_str());
+			pRegNum->SetHeight(m_Height);
 			pRegNum->SetReceived(m_bReceived);
-			pRegNum->SetNote(m_Note.c_str());
+			pRegNum->SetNote(m_Note);
 		}
 	}
 	EndDialog(wxID_OK);

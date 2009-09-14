@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-12-11 DRC Merged separate club/judge/location classes.
@@ -106,7 +107,7 @@ bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 }
 
 
-size_t ARBInfoItem::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBInfoItem::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -127,19 +128,19 @@ bool ARBInfoItem::Load(
 		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
-		tstring const& inItemName)
+		wxString const& inItemName)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != inItemName)
 		return false;
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(inItemName, ATTRIB_INFO_NAME));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_INFO_VISIBLE, m_Visible))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(inItemName.c_str(), ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(inItemName, ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool()));
 		return false;
 	}
 	m_Comment = inTree->GetValue();
@@ -149,7 +150,7 @@ bool ARBInfoItem::Load(
 
 bool ARBInfoItem::Save(
 		ElementNodePtr ioTree,
-		tstring const& inItemName) const
+		wxString const& inItemName) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -165,7 +166,7 @@ bool ARBInfoItem::Save(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBInfoItemList::ARBInfoItemList(tstring const& inItemName)
+ARBInfoItemList::ARBInfoItemList(wxString const& inItemName)
 	: m_ItemName(inItemName)
 {
 }
@@ -236,7 +237,7 @@ void ARBInfoItemList::sort()
 
 
 size_t ARBInfoItemList::GetAllItems(
-		std::set<tstring>& outNames,
+		std::set<wxString>& outNames,
 		bool inVisibleOnly) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -246,7 +247,7 @@ size_t ARBInfoItemList::GetAllItems(
 			outNames.insert(info->GetName());
 		else if (inVisibleOnly && !info->IsVisible())
 		{
-			std::set<tstring>::iterator i = outNames.find(info->GetName());
+			std::set<wxString>::iterator i = outNames.find(info->GetName());
 			if (i != outNames.end())
 				outNames.erase(i);
 		}
@@ -255,7 +256,7 @@ size_t ARBInfoItemList::GetAllItems(
 }
 
 
-void ARBInfoItemList::CondenseContent(std::set<tstring> const& inNamesInUse)
+void ARBInfoItemList::CondenseContent(std::set<wxString> const& inNamesInUse)
 {
 	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
@@ -276,7 +277,7 @@ void ARBInfoItemList::CondenseContent(std::set<tstring> const& inNamesInUse)
 
 
 bool ARBInfoItemList::FindItem(
-		tstring const& inName,
+		wxString const& inName,
 		ARBInfoItemPtr* outItem) const
 {
 	if (outItem)
@@ -296,7 +297,7 @@ bool ARBInfoItemList::FindItem(
 
 
 bool ARBInfoItemList::AddItem(
-		tstring const& inItem,
+		wxString const& inItem,
 		ARBInfoItemPtr* outItem)
 {
 	if (outItem)

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-12-03 DRC Complete re-write of action class.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added optional 'Div' to DeleteTitle.
@@ -53,7 +54,7 @@ public:
 	 * Gives the user a chance to abort by setting m_bContinue to false.
 	 * @param inMsg Message generated in Apply about what is being deleted.
 	 */
-	virtual void PreDelete(tstring const& inMsg) = 0;
+	virtual void PreDelete(wxString const& inMsg) = 0;
 
 	/**
 	 * Callback made during Update after data loss. This can occur when
@@ -62,7 +63,7 @@ public:
 	 * config has been merged.
 	 * @param inMsg Message generated in Apply about what is being deleted.
 	 */
-	virtual void PostDelete(tstring const& inMsg) const = 0;
+	virtual void PostDelete(wxString const& inMsg) const = 0;
 
 	/**
 	 * Should we continue processing?
@@ -96,7 +97,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return wxT("");
 	}
@@ -107,7 +108,7 @@ public:
 	 * @return Number of strings accumulated in this object.
 	 * @note There are no strings to search in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		return 0;
 	}
@@ -123,7 +124,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const = 0;
 };
 
@@ -133,23 +134,23 @@ class ARBConfigActionDeleteCalPlugin : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionDeleteCalPlugin(
-			tstring const& inName);
+			wxString const& inName);
 	ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inName);
+			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Name;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -158,26 +159,26 @@ class ARBConfigActionRenameOtherPoints : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionRenameOtherPoints(
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionRenameOtherPoints(ARBConfigActionRenameOtherPoints const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 
@@ -185,23 +186,23 @@ class ARBConfigActionDeleteOtherPoints : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionDeleteOtherPoints(
-			tstring const& inName);
+			wxString const& inName);
 	ARBConfigActionDeleteOtherPoints(ARBConfigActionDeleteOtherPoints const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inName);
+			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Name;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -210,26 +211,26 @@ class ARBConfigActionRenameVenue : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameVenue(
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionRenameVenue(ARBConfigActionRenameVenue const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 private:
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 
@@ -237,23 +238,23 @@ class ARBConfigActionDeleteVenue : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteVenue(
-			tstring const& inName);
+			wxString const& inName);
 	ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenue const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inName);
+			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 private:
-	tstring m_Name;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -262,29 +263,29 @@ class ARBConfigActionRenameMultiQ : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameMultiQ(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionRenameMultiQ(ARBConfigActionRenameMultiQ const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_Venue;
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 
@@ -292,26 +293,26 @@ class ARBConfigActionDeleteMultiQ : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteMultiQ(
-			tstring const& inVenue,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inName);
 	ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_Name;
+	wxString m_Venue;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -320,29 +321,29 @@ class ARBConfigActionRenameDivision : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameDivision(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionRenameDivision(ARBConfigActionRenameDivision const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_Venue;
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 
@@ -350,26 +351,26 @@ class ARBConfigActionDeleteDivision : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteDivision(
-			tstring const& inVenue,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inName);
 	ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_Name;
+	wxString m_Venue;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -378,41 +379,41 @@ class ARBConfigActionRenameLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inLevel,
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionRenameLevel(ARBConfigActionRenameLevel const& rhs);
 
 public:
 	static ARBConfigActionPtr NewLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	static ARBConfigActionPtr NewSubLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inLevel,
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_Div;
-	tstring m_Level; ///< Only used on sublevels.
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_Venue;
+	wxString m_Div;
+	wxString m_Level; ///< Only used on sublevels.
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 
@@ -420,37 +421,37 @@ class ARBConfigActionDeleteLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inLevel,
+			wxString const& inName);
 	ARBConfigActionDeleteLevel(ARBConfigActionDeleteLevel const& rhs);
 
 public:
 	static ARBConfigActionPtr NewLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inName);
 
 	static ARBConfigActionPtr NewSubLevel(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inLevel,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inLevel,
+			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_Div;
-	tstring m_Level; ///< Only used on sublevels.
-	tstring m_Name;
+	wxString m_Venue;
+	wxString m_Div;
+	wxString m_Level; ///< Only used on sublevels.
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -459,29 +460,29 @@ class ARBConfigActionRenameTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameTitle(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionRenameTitle(ARBConfigActionRenameTitle const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_Venue;
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 
@@ -489,32 +490,32 @@ class ARBConfigActionDeleteTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteTitle(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitle const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inDiv,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inDiv,
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_Div;
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_Venue;
+	wxString m_Div;
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -523,29 +524,29 @@ class ARBConfigActionRenameEvent : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameEvent(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 	ARBConfigActionRenameEvent(ARBConfigActionRenameEvent const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inOldName,
-			tstring const& inNewName);
+			wxString const& inVenue,
+			wxString const& inOldName,
+			wxString const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_OldName;
-	tstring m_NewName;
+	wxString m_Venue;
+	wxString m_OldName;
+	wxString m_NewName;
 };
 
 
@@ -553,26 +554,26 @@ class ARBConfigActionDeleteEvent : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteEvent(
-			tstring const& inVenue,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inName);
 	ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			tstring const& inVenue,
-			tstring const& inName);
+			wxString const& inVenue,
+			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	tstring m_Venue;
-	tstring m_Name;
+	wxString m_Venue;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -599,6 +600,6 @@ public:
 	int Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 };

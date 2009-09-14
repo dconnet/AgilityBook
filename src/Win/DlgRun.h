@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-16 DRC Merged DlgRun* into here.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -115,14 +116,14 @@ private:
 	void UpdateRefRunButtons();
 	void SetRefRunColumnHeaders();
 	void ListRefRuns();
-	void GetAllHeights(std::set<tstring>& outNames);
-	void GetAllCallNames(std::set<tstring>& outNames);
-	void GetAllBreeds(std::set<tstring>& outNames);
+	void GetAllHeights(std::set<wxString>& outNames);
+	void GetAllCallNames(std::set<wxString>& outNames);
+	void GetAllBreeds(std::set<wxString>& outNames);
 	void EditRefRun();
 	void UpdateCRCDButtons();
 	void UpdateLinksButtons();
 	void ListLinkFiles(wxChar const* pItem);
-	int GetImageIndex(tstring const& inLink);
+	int GetImageIndex(wxString const& inLink);
 	void EditLink();
 
 	CAgilityBookDoc* m_pDoc;

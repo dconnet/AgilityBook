@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -125,7 +126,7 @@ bool ARBDogReferenceRun::operator==(ARBDogReferenceRun const& rhs) const
 }
 
 
-size_t ARBDogReferenceRun::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBDogReferenceRun::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -167,7 +168,7 @@ bool ARBDogReferenceRun::Load(
 	if (!inTree || inTree->GetName() != TREE_REF_RUN)
 		return false;
 
-	tstring attrib;
+	wxString attrib;
 
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_REF_RUN_Q, attrib))
 	{

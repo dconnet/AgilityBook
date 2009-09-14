@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -181,7 +182,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	{
 		m_Date = m_pExistingPoints->GetDate();
 		m_Points = m_pExistingPoints->GetPoints();
-		m_Comments = m_pExistingPoints->GetComment().c_str();
+		m_Comments = m_pExistingPoints->GetComment();
 		// Do not initialize the text for the other combos.
 		// Otherwise the validators will try to select before we're ready.
 	}
@@ -213,7 +214,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	int nTypes = sizeof(types) / sizeof(types[0]);
 	for (int i = 0; i < nTypes; ++i)
 	{
-		int index = m_ctrlType->Append(ARBDogExistingPoints::GetPointTypeName(types[i]).c_str());
+		int index = m_ctrlType->Append(ARBDogExistingPoints::GetPointTypeName(types[i]));
 		m_ctrlType->SetClientData(index, reinterpret_cast<void*>(types[i]));
 		if (m_pExistingPoints && m_pExistingPoints->GetType() == types[i])
 			m_ctrlType->SetSelection(index);
@@ -388,7 +389,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (0 < pVenue->GetMultiQs().size())
 		{
-			int index = m_ctrlType->Append(ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::eMQ).c_str());
+			int index = m_ctrlType->Append(ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::eMQ));
 			m_ctrlType->SetClientData(index, reinterpret_cast<void*>(ARBDogExistingPoints::eMQ));
 			if (m_pExistingPoints && m_pExistingPoints->GetType() == ARBDogExistingPoints::eMQ)
 				m_ctrlType->SetSelection(index);
@@ -402,7 +403,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		++iterOther)
 	{
 		ARBConfigOtherPointsPtr pOther = (*iterOther);
-		int index = m_ctrlOthers->Append(pOther->GetName().c_str());
+		int index = m_ctrlOthers->Append(pOther->GetName());
 		m_ctrlOthers->SetClientObject(index, new CDlgPointsOtherPtData(pOther));
 		if (m_pExistingPoints && ARBDogExistingPoints::eOtherPoints == m_pExistingPoints->GetType())
 		{
@@ -588,7 +589,7 @@ void CDlgExistingPoints::FillVenues()
 	if (wxNOT_FOUND != index)
 		venue = m_ctrlVenues->GetString(index);
 	else if (m_pExistingPoints)
-		venue = m_pExistingPoints->GetVenue().c_str();
+		venue = m_pExistingPoints->GetVenue();
 	m_ctrlVenues->Clear();
 
 	ARBDogExistingPoints::PointType type = GetCurrentType();
@@ -600,9 +601,9 @@ void CDlgExistingPoints::FillVenues()
 		ARBConfigVenuePtr pVenue = (*iterVenue);
 		if (ARBDogExistingPoints::eMQ != type || 0 < pVenue->GetMultiQs().size())
 		{
-			int idx = m_ctrlVenues->Append(pVenue->GetName().c_str());
+			int idx = m_ctrlVenues->Append(pVenue->GetName());
 			m_ctrlVenues->SetClientObject(idx, new CDlgPointsVenueData(pVenue));
-			if (m_pExistingPoints && venue == pVenue->GetName().c_str())
+			if (m_pExistingPoints && venue == pVenue->GetName())
 				m_ctrlVenues->SetSelection(idx);
 		}
 	}
@@ -620,9 +621,9 @@ void CDlgExistingPoints::FillDivMultiQ()
 	else if (m_pExistingPoints)
 	{
 		if (ARBDogExistingPoints::eMQ == type)
-			divMultiQ = m_pExistingPoints->GetMultiQ().c_str();
+			divMultiQ = m_pExistingPoints->GetMultiQ();
 		else
-			divMultiQ = m_pExistingPoints->GetDivision().c_str();
+			divMultiQ = m_pExistingPoints->GetDivision();
 	}
 	m_ctrlDivMultiQs->Clear();
 
@@ -638,9 +639,9 @@ void CDlgExistingPoints::FillDivMultiQ()
 				++iterQ)
 			{
 				ARBConfigMultiQPtr pMulti = *iterQ;
-				int idx = m_ctrlDivMultiQs->Append(pMulti->GetName().c_str());
+				int idx = m_ctrlDivMultiQs->Append(pMulti->GetName());
 				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsMultiQData(pMulti));
-				if (m_pExistingPoints && divMultiQ == pMulti->GetName().c_str())
+				if (m_pExistingPoints && divMultiQ == pMulti->GetName())
 					m_ctrlDivMultiQs->SetSelection(idx);
 			}
 		}
@@ -651,9 +652,9 @@ void CDlgExistingPoints::FillDivMultiQ()
 				++iterDiv)
 			{
 				ARBConfigDivisionPtr pDiv = (*iterDiv);
-				int idx = m_ctrlDivMultiQs->Append(pDiv->GetName().c_str());
+				int idx = m_ctrlDivMultiQs->Append(pDiv->GetName());
 				m_ctrlDivMultiQs->SetClientObject(idx, new CDlgPointsDivisionData(pDiv));
-				if (m_pExistingPoints && divMultiQ == pDiv->GetName().c_str())
+				if (m_pExistingPoints && divMultiQ == pDiv->GetName())
 					m_ctrlDivMultiQs->SetSelection(idx);
 			}
 		}
@@ -670,7 +671,7 @@ void CDlgExistingPoints::FillLevels()
 	if (wxNOT_FOUND != index)
 		level = m_ctrlLevels->GetString(index);
 	else if (m_pExistingPoints)
-		level = m_pExistingPoints->GetLevel().c_str();
+		level = m_pExistingPoints->GetLevel();
 
 	m_ctrlLevels->Clear();
 	int idxDiv = m_ctrlDivMultiQs->GetSelection();
@@ -690,18 +691,18 @@ void CDlgExistingPoints::FillLevels()
 				{
 					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
 					CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel, pSubLevel);
-					int idx = m_ctrlLevels->Append(pSubLevel->GetName().c_str());
+					int idx = m_ctrlLevels->Append(pSubLevel->GetName());
 					m_ctrlLevels->SetClientObject(idx, pData);
-					if (level == pSubLevel->GetName().c_str())
+					if (level == pSubLevel->GetName())
 						m_ctrlLevels->SetSelection(idx);
 				}
 			}
 			else
 			{
 				CDlgPointsLevelData* pData = new CDlgPointsLevelData(pLevel);
-				int idx = m_ctrlLevels->Append(pLevel->GetName().c_str());
+				int idx = m_ctrlLevels->Append(pLevel->GetName());
 				m_ctrlLevels->SetClientObject(idx, pData);
-				if (level == pLevel->GetName().c_str())
+				if (level == pLevel->GetName())
 					m_ctrlLevels->SetSelection(idx);
 			}
 		}
@@ -717,7 +718,7 @@ void CDlgExistingPoints::FillEvents()
 	if (wxNOT_FOUND != index)
 		evt = m_ctrlEvents->GetString(index);
 	else if (m_pExistingPoints)
-		evt = m_pExistingPoints->GetEvent().c_str();
+		evt = m_pExistingPoints->GetEvent();
 	m_ctrlEvents->Clear();
 
 	int idxVenue = m_ctrlVenues->GetSelection();
@@ -739,9 +740,9 @@ void CDlgExistingPoints::FillEvents()
 					ARBConfigEventPtr pEvent = (*iter);
 					if (pEvent->FindEvent(pDiv->GetName(), pData->m_Level->GetName(), m_Date))
 					{
-						int idx = m_ctrlEvents->Append(pEvent->GetName().c_str());
+						int idx = m_ctrlEvents->Append(pEvent->GetName());
 						m_ctrlEvents->SetClientObject(idx, new CDlgPointsEventData(pEvent));
-						if (evt == pEvent->GetName().c_str())
+						if (evt == pEvent->GetName())
 							m_ctrlEvents->SetSelection(idx);
 					}
 				}
@@ -770,13 +771,13 @@ void CDlgExistingPoints::FillSubNames()
 	if (pEvent->HasSubNames())
 	{
 		m_ctrlSubNames->Enable(true);
-		std::set<tstring> names;
+		std::set<wxString> names;
 		m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
-		for (std::set<tstring>::const_iterator iter = names.begin();
+		for (std::set<wxString>::const_iterator iter = names.begin();
 			iter != names.end();
 			++iter)
 		{
-			index = m_ctrlSubNames->Append(iter->c_str());
+			index = m_ctrlSubNames->Append(*iter);
 			if (m_pExistingPoints && *iter == m_pExistingPoints->GetSubName())
 				m_ctrlSubNames->SetSelection(index);
 		}
@@ -830,13 +831,13 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		return;
 
 	ARBDogExistingPoints::PointType type = GetCurrentType();
-	tstring other;
-	tstring venue;
-	tstring div;
-	tstring level;
-	tstring eventName;
-	tstring subName;
-	tstring multiQ;
+	wxString other;
+	wxString venue;
+	wxString div;
+	wxString level;
+	wxString eventName;
+	wxString subName;
+	wxString multiQ;
 	switch (type)
 	{
 	//  OtherPts Venue    Division Level Event
@@ -886,7 +887,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		m_pExistingPoints->SetLevel(level);
 		m_pExistingPoints->SetEvent(eventName);
 		m_pExistingPoints->SetSubName(subName);
-		m_pExistingPoints->SetComment(m_Comments.c_str());
+		m_pExistingPoints->SetComment(m_Comments);
 		m_pExistingPoints->SetPoints(m_Points);
 	}
 	else
@@ -903,7 +904,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 			pPoints->SetLevel(level);
 			pPoints->SetEvent(eventName);
 			pPoints->SetSubName(subName);
-			pPoints->SetComment(m_Comments.c_str());
+			pPoints->SetComment(m_Comments);
 			pPoints->SetPoints(m_Points);
 		}
 	}

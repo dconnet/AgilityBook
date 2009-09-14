@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-10-14 DRC Added option to prefix a title.
@@ -168,11 +169,11 @@ bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 bool ARBConfigDivision::Update(
 		int indent,
 		ARBConfigDivisionPtr inDivNew,
-		tstring& ioInfo)
+		wxString& ioInfo)
 {
-	tstring info;
+	wxString info;
 
-	tstring indentBuffer, indentName;
+	wxString indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
 		indentName += wxT("   ");
 	indentBuffer = indentName + wxT("   ");
@@ -181,7 +182,7 @@ bool ARBConfigDivision::Update(
 	// If the order is different, we will fall into this...
 	if (GetLevels() != inDivNew->GetLevels())
 	{
-		tstring info2;
+		wxString info2;
 		int nChanged, nAdded, nSkipped;
 		nChanged = nAdded = nSkipped = 0;
 		for (ARBConfigLevelList::const_iterator iterLevel = inDivNew->GetLevels().begin();
@@ -279,8 +280,8 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 
 
 bool ARBConfigDivisionList::VerifyLevel(
-		tstring const& inDiv,
-		tstring const& inLevel) const
+		wxString const& inDiv,
+		wxString const& inLevel) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
 	bool bWildCard = (inDiv == WILDCARD_DIVISION);
@@ -299,7 +300,7 @@ bool ARBConfigDivisionList::VerifyLevel(
 
 
 bool ARBConfigDivisionList::FindDivision(
-		tstring const& inDiv,
+		wxString const& inDiv,
 		ARBConfigDivisionPtr* outDiv) const
 {
 	if (outDiv)
@@ -318,7 +319,7 @@ bool ARBConfigDivisionList::FindDivision(
 
 
 bool ARBConfigDivisionList::AddDivision(
-		tstring const& inDiv,
+		wxString const& inDiv,
 		ARBConfigDivisionPtr* outDiv)
 {
 	if (outDiv)
@@ -348,10 +349,10 @@ bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr inDiv)
 
 
 int ARBConfigDivisionList::DeleteDivision(
-		tstring const& inDiv,
+		wxString const& inDiv,
 		ARBConfigEventList& ioEvents)
 {
-	tstring div(inDiv);
+	wxString div(inDiv);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == div)

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-28 DRC Ported to wxWidgets.
  */
 
@@ -90,7 +91,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_order[i] = tstringUtil::atol(str.c_str());
+		m_order[i] = tstringUtil::atol(str);
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);
@@ -102,7 +103,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_bDescending[i] = tstringUtil::atol(str.c_str()) == 0 ? false : true;
+		m_bDescending[i] = tstringUtil::atol(str) == 0 ? false : true;
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);
@@ -116,26 +117,26 @@ bool CColumnOrder::Initialize(int nColumns)
 void CColumnOrder::Save()
 {
 	{
-		otstringstream str;
+		wxString str;
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				str << ',';
+				str << wxT(",");
 			str << m_order[i];
 		}
 		wxString item = wxT("Sorting/") + m_Item + wxT("Order");
-		wxConfig::Get()->Write(item, str.str().c_str());
+		wxConfig::Get()->Write(item, str);
 	}
 	{
-		otstringstream str;
+		wxString str;
 		for (int i = 0; i < m_nColumns; ++i)
 		{
 			if (0 < i)
-				str << ',';
+				str << wxT(",");
 			str << static_cast<int>(m_bDescending[i]);
 		}
 		wxString item = wxT("Sorting/") + m_Item + wxT("Sort");
-		wxConfig::Get()->Write(item, str.str().c_str());
+		wxConfig::Get()->Write(item, str);
 	}
 }
 

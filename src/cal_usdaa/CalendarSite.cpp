@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-25 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
  */
@@ -72,10 +73,10 @@ static char* Allocate(std::string const& inStr)
 }
 
 
-static tstring mdy2ymd(tstring const& inDate)
+static wxString mdy2ymd(wxString const& inDate)
 {
-	tstring date;
-	tstring::size_type pos = 0;
+	wxString date;
+	wxString::size_type pos = 0;
 	while (pos < inDate.length() && inDate[pos] == ' ')
 		++pos;
 	if (pos + 10 <= inDate.length())
@@ -93,12 +94,16 @@ static tstring mdy2ymd(tstring const& inDate)
 }
 
 
-static void StripNewlines(tstring& inStr)
+static void StripNewlines(wxString& inStr)
 {
-	tstring::size_type pos = inStr.find_first_of(wxT("\n"));
-	while (tstring::npos != pos)
+	wxString::size_type pos = inStr.find_first_of(wxT("\n"));
+	while (wxString::npos != pos)
 	{
+#if wxCHECK_VERSION(2, 9, 0)
+		inStr.replace(pos, 1, 1, wxUniChar(' '));
+#else
 		inStr.replace(pos, 1, 1, ' ');
+#endif
 		pos = inStr.find_first_of(wxT("\n"));
 	}
 }
@@ -246,7 +251,7 @@ raw.close();
 //}
 #endif
 
-		tstring err;
+		wxString err;
 		tree = ElementNode::New();
 		if (!tree->LoadXMLBuffer(pData, len, err))
 		{
@@ -316,8 +321,8 @@ char* CCalendarSite::Process(
 	int nEntries = 0;
 	ElementNodePtr parentElement;
 	int idxEventCalH4tag = -1;
-	static const tstring tag(wxT("h4"));
-	static const tstring name(wxT("Event Calendar"));
+	static const wxString tag(wxT("h4"));
+	static const wxString name(wxT("Event Calendar"));
 	if (tree->FindElementDeep(parentElement, idxEventCalH4tag, tag, &name))
 	{
 		int idxTable = parentElement->FindElement(wxT("table"), idxEventCalH4tag+1);
@@ -335,7 +340,7 @@ char* CCalendarSite::Process(
 					continue;
 				if (4 <= tr->GetNodeCount(Element::Element_Node))
 				{
-					tstring dates, club, detail, location;
+					wxString dates, club, detail, location;
 					int idx = 0;
 					for (int td = 0; td < tr->GetElementCount(); ++td)
 					{
@@ -370,8 +375,8 @@ char* CCalendarSite::Process(
 						}
 						++idx;
 					}
-					tstring::size_type pos = dates.find(wxT("-"));
-					if (tstring::npos == pos)
+					wxString::size_type pos = dates.find(wxT("-"));
+					if (wxString::npos == pos)
 						continue;
 					bOk = true;
 					ElementNodePtr cal = calTree->AddElementNode(TREE_CALENDAR);
@@ -404,12 +409,12 @@ char* CCalendarSite::Process(
 			progress->StepIt();
 		}
 		ElementNodePtr cal = calTree->GetElementNode(idxCal);
-		tstring detail = cal->GetValue();
+		wxString detail = cal->GetValue();
 		if (detail.empty())
 			continue;
 		cal->SetValue(wxT(""));
 		std::string address("http://www.usdaa.com/");
-		address += tstringUtil::tstringA(detail);
+		address += detail.ToUTF8();
 		if (progress)
 		{
 			if (progress->HasCanceled())
@@ -433,8 +438,8 @@ char* CCalendarSite::Process(
 #endif
 		if (treeDetail)
 		{
-			static const tstring tag2(wxT("h3"));
-			static const tstring name2(wxT("General Event Information"));
+			static const wxString tag2(wxT("h3"));
+			static const wxString name2(wxT("General Event Information"));
 			ElementNodePtr parent;
 			int idxEventCalH3tag = -1;
 			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
@@ -476,7 +481,7 @@ char* CCalendarSite::Process(
 									iTD = table->GetElementNode(i)->FindElement(wxT("td"), iTD+1);
 									if (0 <= iTD)
 									{
-										tstring date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
+										wxString date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
 										cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
 									}
 								}
@@ -499,7 +504,7 @@ char* CCalendarSite::Process(
 										iTD = td->FindElement(wxT("a"));
 										if (0 <= iTD)
 										{
-											tstring email;
+											wxString email;
 											td->GetElementNode(iTD)->GetAttrib(wxT("href"), email);
 											cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 										}

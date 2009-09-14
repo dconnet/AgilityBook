@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-11 DRC Change how runs are synced with tree to reduce reloading.
  * @li 2009-02-04 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -122,7 +123,7 @@ protected:
 wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 {
 	short val;
-	otstringstream str;
+	wxString str;
 	if (0 < iCol && m_pRun)
 	{
 		// Col 0 is special: it has the icons. Instead of saving it,
@@ -149,7 +150,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << wxT('/');
+						str << wxT("/");
 					str << (*iter)->GetVenue();
 				}
 			}
@@ -162,7 +163,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << wxT('/');
+						str << wxT("/");
 					str << (*iter)->GetName();
 				}
 			}
@@ -304,23 +305,23 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 		case IO_RUNS_PLACE:
 			val = m_pRun->GetPlace();
 			if (0 > val)
-				str << wxT('?');
+				str << wxT("?");
 			else if (0 == val)
-				str << wxT('-');
+				str << wxT("-");
 			else
 				str << val;
 			break;
 		case IO_RUNS_IN_CLASS:
 			val = m_pRun->GetInClass();
 			if (0 >= val)
-				str << wxT('?');
+				str << wxT("?");
 			else
 				str << val;
 			break;
 		case IO_RUNS_DOGSQD:
 			val = m_pRun->GetDogsQd();
 			if (0 > val)
-				str << wxT('?');
+				str << wxT("?");
 			else
 				str << m_pRun->GetDogsQd();
 			break;
@@ -329,14 +330,14 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				bool bSet = false;
 				if (m_pRun->GetQ().Qualified())
 				{
-					tstring q;
+					wxString q;
 					std::vector<ARBConfigMultiQPtr> multiQs;
 					if (0 < m_pRun->GetMultiQs(multiQs))
 					{
 						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 						{
 							if (!q.empty())
-								q += wxT('/');
+								q += wxT("/");
 							q += (*iMultiQ)->GetShortName();
 						}
 					}
@@ -344,7 +345,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					{
 						bSet = true;
 						if (!q.empty())
-							str << q << wxT('/');
+							str << q << wxT("/");
 						str << _("IDS_SQ");
 					}
 					else
@@ -405,9 +406,9 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			break;
 		case IO_RUNS_COMMENTS:
 			{
-				wxString str2(m_pRun->GetNote().c_str());
+				wxString str2(m_pRun->GetNote());
 				str2.Replace(wxT("\n"), wxT(" "));
-				str << str2.c_str();
+				str << str2;
 			}
 			break;
 		case IO_RUNS_FAULTS:
@@ -446,7 +447,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			break;
 		}
 	}
-	return str.str().c_str();
+	return str;
 }
 
 
@@ -574,7 +575,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 		break;
 	case IO_RUNS_VENUE:
 		{
-			tstring str1, str2;
+			wxString str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->GetTrial()->GetClubs().begin();
@@ -601,7 +602,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 		break;
 	case IO_RUNS_CLUB:
 		{
-			tstring str1, str2;
+			wxString str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->GetTrial()->GetClubs().begin();
@@ -1073,7 +1074,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 		break;
 	case IO_RUNS_FAULTS:
 		{
-			tstring str1, str2;
+			wxString str1, str2;
 			ARBDogFaultList::const_iterator iter;
 			int i = 0;
 			for (iter = pRun1->GetRun()->GetFaults().begin();
@@ -1164,7 +1165,7 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<tstring> strings;
+		std::set<wxString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookRunsViewDataPtr pData = m_pView->GetItemRunData(index);
@@ -1181,12 +1182,12 @@ bool CFindRuns::Search(CDlgFind* pDlg) const
 				info.SetMask(wxLIST_MASK_TEXT);
 				info.SetColumn(i);
 				m_pView->m_Ctrl->GetItem(info);
-				strings.insert(info.GetText().c_str());
+				strings.insert(info.GetText());
 			}
 		}
-		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter).c_str());
+			wxString str((*iter));
 			if (!MatchCase())
 				str.MakeLower();
 			if (0 <= str.Find(search))
@@ -1352,7 +1353,7 @@ bool CAgilityBookRunsView::GetMessage2(wxString& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
-		msg = GetDocument()->GetCurrentDog()->GetCallName().c_str();
+		msg = GetDocument()->GetCurrentDog()->GetCallName();
 		return true;
 	}
 	else

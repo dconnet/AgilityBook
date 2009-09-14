@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -75,7 +76,7 @@ SUITE(TestConfigEvent)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -103,7 +104,7 @@ SUITE(TestConfigEvent)
 	//	bool Update(
 	//			int indent,
 	//			ARBConfigEventPtr inEventNew,
-	//			tstring& ioInfo);
+	//			wxString& ioInfo);
 	}
 
 
@@ -111,8 +112,8 @@ SUITE(TestConfigEvent)
 	{
 		TODO_TEST
 	//	size_t FindAllEvents(
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate,
 	//			bool inTitlePoints,
 	//			ARBVector<ARBConfigScoringPtr>& outList) const
@@ -123,8 +124,8 @@ SUITE(TestConfigEvent)
 	{
 		TODO_TEST
 	//	bool VerifyEvent(
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate) const
 	}
 
@@ -133,8 +134,8 @@ SUITE(TestConfigEvent)
 	{
 		TODO_TEST
 	//	bool FindEvent(
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate,
 	//			ARBConfigScoringPtr* outScoring = NULL) const
 	}
@@ -166,9 +167,9 @@ SUITE(TestConfigEventList)
 	{
 		TODO_TEST
 	//	bool VerifyEvent(
-	//			tstring const& inEvent,
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inEvent,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate) const;
 	}
 
@@ -177,14 +178,14 @@ SUITE(TestConfigEventList)
 	{
 		TODO_TEST
 	//	 bool FindEvent(
-	//			tstring const& inEvent,
-	//			tstring const& inDivision,
-	//			tstring const& inLevel,
+	//			wxString const& inEvent,
+	//			wxString const& inDivision,
+	//			wxString const& inLevel,
 	//			ARBDate const& inDate,
 	//			ARBConfigEventPtr* outEvent = NULL,
 	//			ARBConfigScoringPtr* outScoring = NULL) const;
 	//	bool FindEvent(
-	//			tstring const& inEvent,
+	//			wxString const& inEvent,
 	//			ARBConfigEventPtr* outEvent = NULL) const;
 	}
 
@@ -193,15 +194,15 @@ SUITE(TestConfigEventList)
 	{
 		TODO_TEST
 	//	int RenameDivision(
-	//			tstring const& inOldDiv,
-	//			tstring const& inNewDiv);
+	//			wxString const& inOldDiv,
+	//			wxString const& inNewDiv);
 	}
 
 
 	TEST(DeleteDivision)
 	{
 		TODO_TEST
-	//	int DeleteDivision(tstring const& inDiv);
+	//	int DeleteDivision(wxString const& inDiv);
 	}
 
 
@@ -209,9 +210,9 @@ SUITE(TestConfigEventList)
 	{
 		TODO_TEST
 	//	int RenameLevel(
-	//			tstring const& inOldDiv,
-	//			tstring const& inOldLevel,
-	//			tstring const& inNewLevel);
+	//			wxString const& inOldDiv,
+	//			wxString const& inOldLevel,
+	//			wxString const& inNewLevel);
 	}
 
 
@@ -219,8 +220,8 @@ SUITE(TestConfigEventList)
 	{
 		TODO_TEST
 	//	int DeleteLevel(
-	//			tstring const& inDiv,
-	//			tstring const& inLevel);
+	//			wxString const& inDiv,
+	//			wxString const& inLevel);
 	}
 
 
@@ -228,6 +229,6 @@ SUITE(TestConfigEventList)
 	{
 		TODO_TEST
 	//	bool AddEvent(ARBConfigEventPtr inEvent);
-	//	bool DeleteEvent(tstring const& inEvent);
+	//	bool DeleteEvent(wxString const& inEvent);
 	}
 }

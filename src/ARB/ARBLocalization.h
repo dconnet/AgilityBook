@@ -32,6 +32,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
+ * @li 2009-09-13 DRC Move to wxStrings throughout.
  * @li 2007-09-12 DRC Moved hardcoded strings out of ARBAgilityRecordBook.h
  */
 
@@ -53,160 +55,160 @@ public:
 	static void Init(IARBLocalization const* pLocalization);
 
 	// Used when loading data.
-	virtual tstring UnknownVersion() const = 0;
-	virtual tstring WarningNewerDoc() const = 0;
-	virtual tstring InvalidDocStructure() const = 0;
-	virtual tstring InvalidFileFormat() const = 0;
-	virtual tstring InvalidFileMissingAttrib() const = 0;
-	virtual tstring InvalidFileBadAttrib() const = 0;
-	virtual tstring InvalidDate() const = 0;
-	virtual tstring InvalidDivLevel() const = 0;
-	virtual tstring InvalidEventName() const = 0;
-	virtual tstring InvalidRoot() const = 0;
-	virtual tstring MissingConfig() const = 0;
-	virtual tstring InvalidConfig() const = 0;
-	virtual tstring InvalidVenueConfig() const = 0;
-	virtual tstring InvalidDivName() const = 0;
-	virtual tstring InvalidVenueName() const = 0;
-	virtual tstring InvalidOtherPtsName() const = 0;
-	virtual tstring InvalidMultiqName() const = 0;
-	virtual tstring InvalidMultiqConversion() const = 0;
-	virtual tstring InvalidEvent() const = 0;
-	virtual tstring InvalidTitle() const = 0;
-	virtual tstring ValidValues() const = 0;
-	virtual tstring ValidValuesBool() const = 0;
-	virtual tstring CalendarTentative() const = 0;
-	virtual tstring CalendarNotEntered() const = 0;
-	virtual tstring CalendarEntered() const	 = 0;
-	virtual tstring CalendarPlanning() const = 0;
-	virtual tstring CalendarStatusN() const = 0;
-	virtual tstring CalendarStatusE() const = 0;
-	virtual tstring CalendarStatusP() const = 0;
-	virtual tstring CalendarOpens() const = 0;
-	virtual tstring CalendarDraw() const = 0;
-	virtual tstring CalendarCloses() const = 0;
+	virtual wxString UnknownVersion() const = 0;
+	virtual wxString WarningNewerDoc() const = 0;
+	virtual wxString InvalidDocStructure() const = 0;
+	virtual wxString InvalidFileFormat() const = 0;
+	virtual wxString InvalidFileMissingAttrib() const = 0;
+	virtual wxString InvalidFileBadAttrib() const = 0;
+	virtual wxString InvalidDate() const = 0;
+	virtual wxString InvalidDivLevel() const = 0;
+	virtual wxString InvalidEventName() const = 0;
+	virtual wxString InvalidRoot() const = 0;
+	virtual wxString MissingConfig() const = 0;
+	virtual wxString InvalidConfig() const = 0;
+	virtual wxString InvalidVenueConfig() const = 0;
+	virtual wxString InvalidDivName() const = 0;
+	virtual wxString InvalidVenueName() const = 0;
+	virtual wxString InvalidOtherPtsName() const = 0;
+	virtual wxString InvalidMultiqName() const = 0;
+	virtual wxString InvalidMultiqConversion() const = 0;
+	virtual wxString InvalidEvent() const = 0;
+	virtual wxString InvalidTitle() const = 0;
+	virtual wxString ValidValues() const = 0;
+	virtual wxString ValidValuesBool() const = 0;
+	virtual wxString CalendarTentative() const = 0;
+	virtual wxString CalendarNotEntered() const = 0;
+	virtual wxString CalendarEntered() const	 = 0;
+	virtual wxString CalendarPlanning() const = 0;
+	virtual wxString CalendarStatusN() const = 0;
+	virtual wxString CalendarStatusE() const = 0;
+	virtual wxString CalendarStatusP() const = 0;
+	virtual wxString CalendarOpens() const = 0;
+	virtual wxString CalendarDraw() const = 0;
+	virtual wxString CalendarCloses() const = 0;
 
 	// Strings for formatting the information returned when updating configurations.
-	virtual tstring UpdateCalSites(int nNew, int nUpdated, int nSkipped) const = 0;
-	virtual tstring UpdateFaults(int nNew, int nSkipped) const = 0;
-	virtual tstring UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const = 0;
-	virtual tstring UpdateVenues(int nNew, int nUpdated, int nSkipped) const = 0;
-	virtual tstring UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const = 0;
-	virtual tstring UpdateDivisionsReordered() const = 0;
-	virtual tstring UpdateEvents(int nAdded, int nUpdated, int nSkipped) const = 0;
-	virtual tstring UpdateEventsReordered() const = 0;
-	virtual tstring UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const = 0;
-	virtual tstring UpdateMultiqsReordered() const = 0;
-	virtual tstring UpdateLevels(int nAdded, int nUpdated, int nSkipped) const = 0;
-	virtual tstring UpdateLevelsReordered() const = 0;
-	virtual tstring UpdateTitles(int nAdded, int nUpdated, int nSkipped) const = 0;
-	virtual tstring UpdateTitlesReordered() const = 0;
-	virtual tstring UpdateSubLevels(int nAdded) const = 0;
-	virtual tstring UpdateSubLevelsReordered() const = 0;
-	virtual tstring UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const = 0;
-	virtual tstring WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const = 0;
-	virtual tstring UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const = 0;
-	virtual tstring UpdateTableRuns(int nRuns) const = 0;
+	virtual wxString UpdateCalSites(int nNew, int nUpdated, int nSkipped) const = 0;
+	virtual wxString UpdateFaults(int nNew, int nSkipped) const = 0;
+	virtual wxString UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const = 0;
+	virtual wxString UpdateVenues(int nNew, int nUpdated, int nSkipped) const = 0;
+	virtual wxString UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const = 0;
+	virtual wxString UpdateDivisionsReordered() const = 0;
+	virtual wxString UpdateEvents(int nAdded, int nUpdated, int nSkipped) const = 0;
+	virtual wxString UpdateEventsReordered() const = 0;
+	virtual wxString UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const = 0;
+	virtual wxString UpdateMultiqsReordered() const = 0;
+	virtual wxString UpdateLevels(int nAdded, int nUpdated, int nSkipped) const = 0;
+	virtual wxString UpdateLevelsReordered() const = 0;
+	virtual wxString UpdateTitles(int nAdded, int nUpdated, int nSkipped) const = 0;
+	virtual wxString UpdateTitlesReordered() const = 0;
+	virtual wxString UpdateSubLevels(int nAdded) const = 0;
+	virtual wxString UpdateSubLevelsReordered() const = 0;
+	virtual wxString UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const = 0;
+	virtual wxString WarnDeletedRuns(int nRuns, wxString const& inRunsMsg) const = 0;
+	virtual wxString UpdateTeamRuns(int nRuns, wxString const& inRunsMsg) const = 0;
+	virtual wxString UpdateTableRuns(int nRuns) const = 0;
 
 	// Used in ARBConfigAction.cpp
-	virtual tstring ActionDeleteCalPlugin(tstring const& name) const = 0;
-	virtual tstring ActionRenameOtherPoints(
-			tstring const& oldName,
-			tstring const& newName,
+	virtual wxString ActionDeleteCalPlugin(wxString const& name) const = 0;
+	virtual wxString ActionRenameOtherPoints(
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const = 0;
-	virtual tstring ActionPreDeleteOtherPoints(
-			tstring const& name,
+	virtual wxString ActionPreDeleteOtherPoints(
+			wxString const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteOtherPoints(tstring const& name) const = 0;
-	virtual tstring ActionRenameVenue(
-			tstring const& oldName,
-			tstring const& newName,
+	virtual wxString ActionDeleteOtherPoints(wxString const& name) const = 0;
+	virtual wxString ActionRenameVenue(
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const = 0;
-	virtual tstring ActionPreDeleteVenue(
-			tstring const& name,
+	virtual wxString ActionPreDeleteVenue(
+			wxString const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteVenue(tstring const& name) const = 0;
-	virtual tstring ActionRenameMultiQ(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	virtual wxString ActionDeleteVenue(wxString const& name) const = 0;
+	virtual wxString ActionRenameMultiQ(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const = 0;
-	virtual tstring ActionPreDeleteMultiQ(
-			tstring const& venue,
-			tstring const& name,
+	virtual wxString ActionPreDeleteMultiQ(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteMultiQ(
-			tstring const& venue,
-			tstring const& name) const = 0;
-	virtual tstring ActionRenameDivision(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	virtual wxString ActionDeleteMultiQ(
+			wxString const& venue,
+			wxString const& name) const = 0;
+	virtual wxString ActionRenameDivision(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const = 0;
-	virtual tstring ActionPreDeleteDivision(
-			tstring const& venue,
-			tstring const& name,
+	virtual wxString ActionPreDeleteDivision(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteDivision(
-			tstring const& venue,
-			tstring const& name) const = 0;
-	virtual tstring ActionRenameLevel(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	virtual wxString ActionDeleteDivision(
+			wxString const& venue,
+			wxString const& name) const = 0;
+	virtual wxString ActionRenameLevel(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const = 0;
-	virtual tstring ActionPreDeleteLevel(
-			tstring const& venue,
-			tstring const& name,
+	virtual wxString ActionPreDeleteLevel(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteLevel(
-			tstring const& venue,
-			tstring const& name) const = 0;
-	virtual tstring ActionRenameTitle(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	virtual wxString ActionDeleteLevel(
+			wxString const& venue,
+			wxString const& name) const = 0;
+	virtual wxString ActionRenameTitle(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const = 0;
-	virtual tstring ActionPreDeleteTitle(
-			tstring const& venue,
-			tstring const& name,
+	virtual wxString ActionPreDeleteTitle(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteTitle(
-			tstring const& venue,
-			tstring const& name) const = 0;
-	virtual tstring ActionRenameEvent(
-			tstring const& venue,
-			tstring const& oldName,
-			tstring const& newName,
+	virtual wxString ActionDeleteTitle(
+			wxString const& venue,
+			wxString const& name) const = 0;
+	virtual wxString ActionRenameEvent(
+			wxString const& venue,
+			wxString const& oldName,
+			wxString const& newName,
 			int nChanges) const = 0;
-	virtual tstring ActionPreDeleteEvent(
-			tstring const& venue,
-			tstring const& name,
+	virtual wxString ActionPreDeleteEvent(
+			wxString const& venue,
+			wxString const& name,
 			int nChanges) const = 0;
-	virtual tstring ActionDeleteEvent(
-			tstring const& venue,
-			tstring const& name) const = 0;
+	virtual wxString ActionDeleteEvent(
+			wxString const& venue,
+			wxString const& name) const = 0;
 
 	// Used in ARBConfigTitlePoints.cpp
-	virtual tstring TitlePointsNameFormat(double points, double faults) const = 0;
-	virtual tstring LifetimePointsNameFormat(double points, double faults) const = 0;
-	virtual tstring PlacementPointsNameFormat(double points, short place) const = 0;
+	virtual wxString TitlePointsNameFormat(double points, double faults) const = 0;
+	virtual wxString LifetimePointsNameFormat(double points, double faults) const = 0;
+	virtual wxString PlacementPointsNameFormat(double points, short place) const = 0;
 
 	// Used in ARBConfigScoring.cpp
-	virtual tstring ScoreStyleUnknown() const = 0;
-	virtual tstring ScoreStyleFaultsTime() const = 0;
-	virtual tstring ScoreStyleFaults100Time() const = 0;
-	virtual tstring ScoreStyleFaults200Time() const = 0;
-	virtual tstring ScoreStyleOCScoreTime() const = 0;
-	virtual tstring ScoreStyleScoreTime() const = 0;
-	virtual tstring ScoreStyleTimePlusFaults() const = 0;
+	virtual wxString ScoreStyleUnknown() const = 0;
+	virtual wxString ScoreStyleFaultsTime() const = 0;
+	virtual wxString ScoreStyleFaults100Time() const = 0;
+	virtual wxString ScoreStyleFaults200Time() const = 0;
+	virtual wxString ScoreStyleOCScoreTime() const = 0;
+	virtual wxString ScoreStyleScoreTime() const = 0;
+	virtual wxString ScoreStyleTimePlusFaults() const = 0;
 
 	// Used in ARBDogExistingPoints.cpp
-	virtual tstring ExistingPointsOther() const = 0;
-	virtual tstring ExistingPointsRun() const = 0;
-	virtual tstring ExistingPointsSpeed() const = 0;
-	virtual tstring ExistingPointsMQ() const = 0;
-	virtual tstring ExistingPointsSQ() const = 0;
+	virtual wxString ExistingPointsOther() const = 0;
+	virtual wxString ExistingPointsRun() const = 0;
+	virtual wxString ExistingPointsSpeed() const = 0;
+	virtual wxString ExistingPointsMQ() const = 0;
+	virtual wxString ExistingPointsSQ() const = 0;
 
 	/**
 	 * Return an error message about invalid document structure.
@@ -214,7 +216,7 @@ public:
 	 * @param inMsg Additional error information.
 	 * @return Message with newline.
 	 */
-	virtual tstring ErrorInvalidDocStructure(wxChar const* const inMsg) const = 0;
+	virtual wxString ErrorInvalidDocStructure(wxChar const* const inMsg) const = 0;
 
 	/**
 	 * Return an error message about a missing required attribute.
@@ -224,7 +226,7 @@ public:
 	 * @param inMsg Additional error information.
 	 * @return Message with newline.
 	 */
-	virtual tstring ErrorMissingAttribute(
+	virtual wxString ErrorMissingAttribute(
 			wxChar const* const inElement,
 			wxChar const* const inAttrib,
 			wxChar const* const inMsg = NULL) const = 0;
@@ -237,7 +239,7 @@ public:
 	 * @param inMsg Additional error information.
 	 * @return Message with newline.
 	 */
-	virtual tstring ErrorInvalidAttributeValue(
+	virtual wxString ErrorInvalidAttributeValue(
 			wxChar const* const inElement,
 			wxChar const* const inAttrib,
 			wxChar const* const inMsg = NULL) const = 0;

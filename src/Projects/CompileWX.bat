@@ -40,6 +40,8 @@ REM Runtime library (usually always same as shared)
 set _RUNTIME_LIBS=static
 set _DO_UNICODE=1
 
+if ("%1")==("hasprefix") set _HAS_COMPILER_PREFIX=1&& shift
+
 if ("%1")==("static") set _DO_SHIFT=1
 if ("%1")==("dynamic") set _RUNTIME_LIBS=dynamic&& set _SHARED=1&& set _DO_SHIFT=1
 if ("%_DO_SHIFT%")==("1") shift && set _DO_SHIFT=0
@@ -132,7 +134,7 @@ goto done
 :usage
 echo Usage: %_PROGNAME% all
 echo Usage: %_PROGNAME% env vc6/vc7/vc8/vc9/vc9x64
-echo Usage: %_PROGNAME% [dynamic/static] [mbcs/unicode] vc6/vc7/vc8/vc9/vc9x64
+echo Usage: %_PROGNAME% [hasprefix] [dynamic/static] [mbcs/unicode] vc6/vc7/vc8/vc9/vc9x64
 goto done
 
 :error

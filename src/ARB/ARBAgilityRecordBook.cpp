@@ -37,6 +37,7 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-26 DRC File version 12.10
  *                    Added 'DNR' to 'Placement' and 'ReferenceRun'
  * @li 2008-02-12 DRC File version 12.9
@@ -156,7 +157,7 @@ bool ARBAgilityRecordBook::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_BOOK)
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidRoot().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidRoot()));
 		return false;
 	}
 
@@ -171,12 +172,12 @@ bool ARBAgilityRecordBook::Load(
 	{
 		if (version.Major() == GetCurrentDocVersion().Major())
 		{
-			if (!ioCallback.OnError(Localization()->WarningNewerDoc().c_str()))
+			if (!ioCallback.OnError(Localization()->WarningNewerDoc()))
 				return false;
 		}
 		else
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, Localization()->UnknownVersion().c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_BOOK, ATTRIB_BOOK_VERSION, Localization()->UnknownVersion()));
 			return false;
 		}
 	}
@@ -237,7 +238,7 @@ bool ARBAgilityRecordBook::Load(
 				// Make sure there's only one.
 				if (-1 != nConfig)
 				{
-					ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidConfig().c_str()));
+					ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->InvalidConfig()));
 					return false;
 				}
 				nConfig = i;
@@ -246,7 +247,7 @@ bool ARBAgilityRecordBook::Load(
 		// Oops. No config.
 		if (0 > nConfig)
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->MissingConfig().c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidDocStructure(Localization()->MissingConfig()));
 			return false;
 		}
 		// Load the config.
@@ -298,7 +299,7 @@ bool ARBAgilityRecordBook::Load(
 #endif
 #endif
 
-static tstring GetTimeStamp()
+static wxString GetTimeStamp()
 {
 	time_t t;
 	time(&t);
@@ -315,12 +316,12 @@ static tstring GetTimeStamp()
 	{
 		szBuffer[0] = '\0';
 	}
-	return tstring(szBuffer);
+	return wxString(szBuffer);
 }
 
 
 bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
-		tstring const& inPgmVer,
+		wxString const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -384,7 +385,7 @@ void ARBAgilityRecordBook::Default(IARBConfigHandler* inHandler)
 bool ARBAgilityRecordBook::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		otstringstream& ioInfo,
+		wxString& ioInfo,
 		IConfigActionCallback& ioCallBack)
 {
 	int curConfigVersion = m_Config.GetVersion();
@@ -434,7 +435,7 @@ bool ARBAgilityRecordBook::Update(
 		// This actually just synchronizes multiQs.
 		m_Dogs.DeleteMultiQs(m_Config, (*iterVenue)->GetName());
 	}
-	otstringstream msgPairsRuns, msgDelRuns;
+	wxString msgPairsRuns, msgDelRuns;
 	int nUpdatedPairsRuns = 0;
 	int nDeletedRuns = 0;
 	for (ARBDogList::iterator iterDog = m_Dogs.begin();
@@ -459,7 +460,7 @@ bool ARBAgilityRecordBook::Update(
 			ARBDogTrialPtr pTrial = *iterTrial;
 			if (!pTrial->GetClubs().GetPrimaryClub())
 				continue;
-			tstring venue = pTrial->GetClubs().GetPrimaryClubVenue();
+			wxString venue = pTrial->GetClubs().GetPrimaryClubVenue();
 			for (ARBDogRunList::iterator iterRun = pTrial->GetRuns().begin();
 				iterRun != pTrial->GetRuns().end();
 				)
@@ -522,13 +523,13 @@ bool ARBAgilityRecordBook::Update(
 	if (0 < nUpdatedPairsRuns)
 	{
 		nChanges += nUpdatedPairsRuns;
-		tstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, msgPairsRuns.str());
+		wxString msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, msgPairsRuns);
 		ioInfo << wxT("\n") << msg << wxT("\n");
 	}
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
-		tstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, msgDelRuns.str());
+		wxString msg = Localization()->WarnDeletedRuns(nDeletedRuns, msgDelRuns);
 		ioCallBack.PostDelete(msg);
 		ioInfo << wxT("\n") << msg << wxT("\n");
 	}
@@ -608,7 +609,7 @@ bool ARBAgilityRecordBook::Update(
 
 
 size_t ARBAgilityRecordBook::GetAllClubNames(
-		std::set<tstring>& outClubs,
+		std::set<wxString>& outClubs,
 		bool bInfo,
 		bool bVisibleOnly) const
 {
@@ -648,7 +649,7 @@ size_t ARBAgilityRecordBook::GetAllClubNames(
 
 
 size_t ARBAgilityRecordBook::GetAllTrialLocations(
-		std::set<tstring>& outLocations,
+		std::set<wxString>& outLocations,
 		bool bInfo,
 		bool bVisibleOnly) const
 {
@@ -682,9 +683,9 @@ size_t ARBAgilityRecordBook::GetAllTrialLocations(
 
 
 size_t ARBAgilityRecordBook::GetAllEventSubNames(
-		tstring const& inVenue,
+		wxString const& inVenue,
 		ARBConfigEventPtr inEvent,
-		std::set<tstring>& outNames) const
+		std::set<wxString>& outNames) const
 {
 	outNames.clear();
 	if (!inEvent || !inEvent->HasSubNames())
@@ -720,7 +721,7 @@ size_t ARBAgilityRecordBook::GetAllEventSubNames(
 }
 
 
-size_t ARBAgilityRecordBook::GetAllHeights(std::set<tstring>& outHeights) const
+size_t ARBAgilityRecordBook::GetAllHeights(std::set<wxString>& outHeights) const
 {
 	outHeights.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -755,7 +756,7 @@ size_t ARBAgilityRecordBook::GetAllHeights(std::set<tstring>& outHeights) const
 }
 
 
-size_t ARBAgilityRecordBook::GetAllCallNames(std::set<tstring>& outNames) const
+size_t ARBAgilityRecordBook::GetAllCallNames(std::set<wxString>& outNames) const
 {
 	outNames.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -789,7 +790,7 @@ size_t ARBAgilityRecordBook::GetAllCallNames(std::set<tstring>& outNames) const
 }
 
 
-size_t ARBAgilityRecordBook::GetAllBreeds(std::set<tstring>& outBreeds) const
+size_t ARBAgilityRecordBook::GetAllBreeds(std::set<wxString>& outBreeds) const
 {
 	outBreeds.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -825,7 +826,7 @@ size_t ARBAgilityRecordBook::GetAllBreeds(std::set<tstring>& outBreeds) const
 
 
 size_t ARBAgilityRecordBook::GetAllJudges(
-		std::set<tstring>& outJudges,
+		std::set<wxString>& outJudges,
 		bool bInfo,
 		bool bVisibleOnly) const
 {
@@ -856,7 +857,7 @@ size_t ARBAgilityRecordBook::GetAllJudges(
 }
 
 
-size_t ARBAgilityRecordBook::GetAllHandlers(std::set<tstring>& outHandlers) const
+size_t ARBAgilityRecordBook::GetAllHandlers(std::set<wxString>& outHandlers) const
 {
 	outHandlers.clear();
 	for (ARBDogList::const_iterator iterDog = m_Dogs.begin();
@@ -884,8 +885,8 @@ size_t ARBAgilityRecordBook::GetAllHandlers(std::set<tstring>& outHandlers) cons
 
 
 void ARBAgilityRecordBook::GetAllPartners(
-		std::set<tstring>& outPartners,
-		std::set<tstring>& outDogs) const
+		std::set<wxString>& outPartners,
+		std::set<wxString>& outDogs) const
 {
 	outPartners.clear();
 	outDogs.clear();
@@ -920,7 +921,7 @@ void ARBAgilityRecordBook::GetAllPartners(
 }
 
 
-size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<tstring>& outFaults) const
+size_t ARBAgilityRecordBook::GetAllFaultTypes(std::set<wxString>& outFaults) const
 {
 	outFaults.clear();
 	for (ARBConfigFaultList::const_iterator iterFault = m_Config.GetFaults().begin();

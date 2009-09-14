@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-06-02 DRC Added 'Open' button.
@@ -62,7 +63,7 @@ public:
 private:
 	CDlgFindLinksDataPtr GetItemLinkData(long item);
 	CDlgFindLinksDataPtr GetItemLinkDataByData(long data);
-	int GetImageIndex(tstring const& inLink);
+	int GetImageIndex(wxString const& inLink);
 	void SetColumnHeaders();
 	void UpdateButtons();
 	void Edit();

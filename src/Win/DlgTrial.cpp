@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Make 'Notes' button change selection.
@@ -80,9 +81,9 @@ wxString CListTrialData::OnNeedText(long iCol) const
 		assert(0);
 		return wxT("");
 	case 0:
-		return m_Club->GetName().c_str();
+		return m_Club->GetName();
 	case 1:
-		return m_Club->GetVenue().c_str();
+		return m_Club->GetVenue();
 	}
 }
 
@@ -98,9 +99,9 @@ CDlgTrial::CDlgTrial(
 		ARBDogTrialPtr pTrial,
 		wxWindow* pParent)
 	: wxDialog()
-	, m_Location(pTrial->GetLocation().c_str())
+	, m_Location(pTrial->GetLocation())
 	, m_Verified(pTrial->IsVerified())
-	, m_Notes(pTrial->GetNote().c_str())
+	, m_Notes(pTrial->GetNote())
 	, m_ctrlLocationInfo(NULL)
 	, m_ctrlEdit(NULL)
 	, m_ctrlDelete(NULL)
@@ -314,9 +315,9 @@ void CDlgTrial::UpdateNotes(
 	{
 		wxString str;
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(m_Location.c_str(), &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(m_Location, &pItem))
 		{
-			str = pItem->GetComment().c_str();
+			str = pItem->GetComment();
 		}
 		m_ctrlLocationInfo->SetValue(str);
 	}
@@ -329,7 +330,7 @@ void CDlgTrial::UpdateNotes(
 			ARBInfoItemPtr pItem;
 			if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub->GetName(), &pItem))
 			{
-				str = pItem->GetComment().c_str();
+				str = pItem->GetComment();
 			}
 		}
 		m_ctrlClubInfo->SetValue(str);
@@ -339,17 +340,17 @@ void CDlgTrial::UpdateNotes(
 
 void CDlgTrial::ListLocations()
 {
-	std::set<tstring> locations;
+	std::set<wxString> locations;
 	m_pDoc->Book().GetAllTrialLocations(locations, true, true);
 	if (!m_pTrial->GetLocation().empty())
 		locations.insert(m_pTrial->GetLocation());
-	tstring loc(m_Location.c_str());
+	wxString loc(m_Location);
 	if (m_Location.empty())
 		loc = m_pTrial->GetLocation();
 	m_ctrlLocation->Clear();
-	for (std::set<tstring>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
+	for (std::set<wxString>::const_iterator iter = locations.begin(); iter != locations.end(); ++iter)
 	{
-		int index = m_ctrlLocation->Append((*iter).c_str());
+		int index = m_ctrlLocation->Append(*iter);
 		if ((*iter) == loc)
 			m_ctrlLocation->SetSelection(index);
 	}
@@ -444,7 +445,7 @@ void CDlgTrial::OnLocationNotes(wxCommandEvent& evt)
 {
 	if (TransferDataFromWindow())
 	{
-		CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, m_Location.c_str(), this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfo::eLocationInfo, m_Location, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_Location = dlg.CurrentSelection();
@@ -462,12 +463,12 @@ void CDlgTrial::OnClubNotes(wxCommandEvent& evt)
 	if (0 <= index)
 	{
 		ARBDogClubPtr pClub = GetClubData(index);
-		CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName().c_str(), this);
+		CDlgInfoNote dlg(m_pDoc, ARBInfo::eClubInfo, pClub->GetName(), this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			if (pClub->GetName() != dlg.CurrentSelection().c_str())
+			if (pClub->GetName() != dlg.CurrentSelection())
 			{
-				pClub->SetName(dlg.CurrentSelection().c_str());
+				pClub->SetName(dlg.CurrentSelection());
 				ListClubs(&pClub);
 			}
 			else
@@ -483,7 +484,7 @@ void CDlgTrial::OnClubNew(wxCommandEvent& evt)
 	if (wxID_OK == dlg.ShowModal())
 	{
 		ARBDogClubPtr club;
-		if (m_Clubs.AddClub(dlg.Club().c_str(), dlg.Venue().c_str(), &club))
+		if (m_Clubs.AddClub(dlg.Club(), dlg.Venue(), &club))
 			ListClubs(&club);
 	}
 }
@@ -518,8 +519,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 	m_bRunsDeleted = false;
 	if (0 < m_pTrial->GetRuns().size())
 	{
-		std::set<tstring> oldVenues;
-		std::set<tstring> newVenues;
+		std::set<wxString> oldVenues;
+		std::set<wxString> newVenues;
 		ARBDogClubList::iterator iterClub;
 		for (iterClub = m_pTrial->GetClubs().begin(); iterClub != m_pTrial->GetClubs().end(); ++iterClub)
 		{
@@ -532,7 +533,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			newVenues.insert(pClub->GetVenue());
 		}
 		bool bAllThere = true;
-		for (std::set<tstring>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
+		for (std::set<wxString>::iterator iterVenues = oldVenues.begin(); iterVenues != oldVenues.end(); ++iterVenues)
 		{
 			if (newVenues.end() == newVenues.find((*iterVenues)))
 			{
@@ -549,7 +550,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			{
 				ARBDogRunPtr pRun = *iterRun;
 				bool bFound = false;
-				for (std::set<tstring>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
+				for (std::set<wxString>::iterator iterVenues = newVenues.begin(); iterVenues != newVenues.end(); ++iterVenues)
 				{
 					if (m_pDoc->Book().GetConfig().GetVenues().FindEvent(
 						(*iterVenues),
@@ -578,8 +579,8 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 		}
 	}
 
-	m_pTrial->SetLocation(m_Location.c_str());
-	m_pTrial->SetNote(m_Notes.c_str());
+	m_pTrial->SetLocation(m_Location);
+	m_pTrial->SetNote(m_Notes);
 	m_pTrial->SetVerified(m_Verified);
 	m_pTrial->GetClubs() = m_Clubs;
 	EndDialog(wxID_OK);

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -57,9 +58,9 @@ END_EVENT_TABLE()
 CDlgReferenceRun::CDlgReferenceRun(
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr inRun,
-		std::set<tstring> const& inHeights,
-		std::set<tstring> const& inNames,
-		std::set<tstring> const& inBreeds,
+		std::set<wxString> const& inHeights,
+		std::set<wxString> const& inNames,
+		std::set<wxString> const& inBreeds,
 		ARBDogReferenceRunPtr ref,
 		wxWindow* pParent)
 	: wxDialog()
@@ -70,11 +71,11 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Q(ARB_Q::eQ_NA)
 	, m_Time(m_Ref->GetTime())
 	, m_ctrlYPS(NULL)
-	, m_Points(m_Ref->GetScore().c_str())
-	, m_Height(m_Ref->GetHeight().c_str())
-	, m_Name(m_Ref->GetName().c_str())
-	, m_Breed(m_Ref->GetBreed().c_str())
-	, m_Notes(m_Ref->GetNote().c_str())
+	, m_Points(m_Ref->GetScore())
+	, m_Height(m_Ref->GetHeight())
+	, m_Name(m_Ref->GetName())
+	, m_Breed(m_Ref->GetBreed())
+	, m_Notes(m_Ref->GetNote())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	if (!pParent)
@@ -90,7 +91,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
-		strYPS = ARBDouble::str(yps, 3).c_str();
+		strYPS = ARBDouble::str(yps, 3);
 	}
 
 	// Controls (these are done first to control tab order)
@@ -154,10 +155,10 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textHt->Wrap(-1);
 
 	wxArrayString choices;
-	std::set<tstring>::const_iterator iter;
+	std::set<wxString>::const_iterator iter;
 	for (iter = inHeights.begin(); iter != inHeights.end(); ++iter)
 	{
-		choices.Add((*iter).c_str());
+		choices.Add((*iter));
 	}
 	choices.Sort();
 	wxComboBox* ctrlHt = new wxComboBox(this, wxID_ANY, wxEmptyString,
@@ -175,7 +176,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	choices.Clear();
 	for (iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
-		choices.Add((*iter).c_str());
+		choices.Add((*iter));
 	}
 	choices.Sort();
 	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY,
@@ -193,7 +194,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	choices.Clear();
 	for (iter = inBreeds.begin(); iter != inBreeds.end(); ++iter)
 	{
-		choices.Add((*iter).c_str());
+		choices.Add((*iter));
 	}
 	choices.Sort();
 	wxComboBox* ctrlBreed = new wxComboBox(this, wxID_ANY, wxEmptyString,
@@ -273,7 +274,7 @@ void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
-		strYPS = ARBDouble::str(yps, 3).c_str();
+		strYPS = ARBDouble::str(yps, 3);
 	}
 	else
 	{
@@ -293,12 +294,12 @@ void CDlgReferenceRun::OnOk(wxCommandEvent& evt)
 
 	m_Ref->SetQ(m_Q);
 	m_Ref->SetPlace(m_Place);
-	m_Ref->SetScore(m_Points.c_str());
+	m_Ref->SetScore(m_Points);
 	m_Ref->SetTime(m_Time); // Letting the prec default to 2 is fine.
-	m_Ref->SetName(m_Name.c_str());
-	m_Ref->SetHeight(m_Height.c_str());
-	m_Ref->SetBreed(m_Breed.c_str());
-	m_Ref->SetNote(m_Notes.c_str());
+	m_Ref->SetName(m_Name);
+	m_Ref->SetHeight(m_Height);
+	m_Ref->SetBreed(m_Breed);
+	m_Ref->SetNote(m_Notes);
 
 	EndDialog(wxID_OK);
 }

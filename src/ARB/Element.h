@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2007-09-06 DRC Added GetNthElementNode
  * @li 2007-08-15 DRC Modified to support mixed text/nodes.
@@ -69,7 +70,7 @@ public:
 	 * @param outMsg In case of failure, error message.
 	 * @return Initialization success.
 	 */
-	static bool Initialize(tstring& outMsg);
+	static bool Initialize(wxString& outMsg);
 
 	/**
 	 * Call once (at program termination) to cleanup XML subsystem.
@@ -94,18 +95,18 @@ public:
 	/**
 	 * Get the name of this element.
 	 */
-	virtual tstring const& GetName() const = 0;
+	virtual wxString const& GetName() const = 0;
 
 	/**
 	 * Set the name of this element.
 	 * @param inName New name for this element.
 	 */
-	virtual void SetName(tstring const& inName) = 0;
+	virtual void SetName(wxString const& inName) = 0;
 
 	/**
 	 * Get the value of this element. This will concatenate all text nodes.
 	 */
-	virtual tstring GetValue() const = 0;
+	virtual wxString GetValue() const = 0;
 
 	/**
 	 * Set the value of this element. If this element has text nodes, they
@@ -113,7 +114,7 @@ public:
 	 * @pre GetElementCount() must be 0.
 	 * @param inValue New value for this element.
 	 */
-	virtual void SetValue(tstring const& inValue) = 0;
+	virtual void SetValue(wxString const& inValue) = 0;
 	virtual void SetValue(wxChar const* const inValue) = 0;
 	virtual void SetValue(short inValue) = 0;
 	virtual void SetValue(long inValue) = 0;
@@ -133,20 +134,20 @@ class ElementNode : public Element
 {
 private:
 	ElementNode();
-	ElementNode(tstring const& inName);
+	ElementNode(wxString const& inName);
 	ElementNode(ElementNode const&); // Not implemented
 	ElementNode& operator=(ElementNode const&); // Not implemented
 
 public:
 	static ElementNodePtr New();
-	static ElementNodePtr New(tstring const& inName);
+	static ElementNodePtr New(wxString const& inName);
 
 	virtual void Dump(int inLevel = 0) const;
 	virtual Element::ElementType GetType() const;
-	virtual tstring const& GetName() const;
-	virtual void SetName(tstring const& inName);
-	virtual tstring GetValue() const;
-	virtual void SetValue(tstring const& inValue);
+	virtual wxString const& GetName() const;
+	virtual void SetName(wxString const& inName);
+	virtual wxString GetValue() const;
+	virtual void SetValue(wxString const& inValue);
 	virtual void SetValue(wxChar const* const inValue);
 	virtual void SetValue(short inValue);
 	virtual void SetValue(long inValue);
@@ -184,8 +185,8 @@ public:
 	 */
 	AttribLookup GetNthAttrib(
 			int inIndex,
-			tstring& outName,
-			tstring& outValue) const;
+			wxString& outName,
+			wxString& outValue) const;
 
 	/**
 	 * Get the value of an attribute.
@@ -194,25 +195,25 @@ public:
 	 * @return Result of lookup.
 	 */
 	AttribLookup GetAttrib(
-			tstring const& inName,
-			tstring& outValue) const;
+			wxString const& inName,
+			wxString& outValue) const;
 	AttribLookup GetAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			ARBVersion& outValue) const;
 	AttribLookup GetAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			ARBDate& outValue) const;
 	AttribLookup GetAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			bool& outValue) const;
 	AttribLookup GetAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			short& outValue) const;
 	AttribLookup GetAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			long& outValue) const;
 	AttribLookup GetAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			double& outValue) const;
 
 	/**
@@ -223,25 +224,25 @@ public:
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(
-			tstring const& inName,
-			tstring const& inValue);
+			wxString const& inName,
+			wxString const& inValue);
 	bool AddAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			wxChar const* const inValue);
 	bool AddAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			ARBVersion const& inValue);
 	bool AddAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			ARBDate const& inValue);
 	bool AddAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			bool inValue);
 	bool AddAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			short inValue);
 	bool AddAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			long inValue);
 
 	/**
@@ -253,7 +254,7 @@ public:
 	 * @post If inName already exists, the previous value will be overwritten.
 	 */
 	bool AddAttrib(
-			tstring const& inName,
+			wxString const& inName,
 			double inValue,
 			int inPrec = 2);
 
@@ -262,7 +263,7 @@ public:
 	 * @param inName Attribute to remove
 	 * @return Whether or not the attribute was removed.
 	 */
-	bool RemoveAttrib(tstring const& inName);
+	bool RemoveAttrib(wxString const& inName);
 
 	/**
 	 * Remove all attributes.
@@ -320,7 +321,7 @@ public:
 	 * @return The new element.
 	 */
 	ElementNodePtr AddElementNode(
-			tstring const& inName,
+			wxString const& inName,
 			int inAt = -1);
 
 	/**
@@ -333,7 +334,7 @@ public:
 	 * @return The new element.
 	 */
 	ElementTextPtr AddElementText(
-			tstring const& inText,
+			wxString const& inText,
 			int inAt = -1);
 
 	/**
@@ -355,7 +356,7 @@ public:
 	 * @return Index of the first element to match the search.
 	 */
 	int FindElement(
-			tstring const& inName,
+			wxString const& inName,
 			int inStartFrom = 0) const;
 
 	/**
@@ -370,8 +371,8 @@ public:
 	bool FindElementDeep(
 			ElementNodePtr& outParentNode,
 			int& outElementIndex,
-			tstring const& inName,
-			tstring const* inValue = NULL) const;
+			wxString const& inName,
+			wxString const* inValue = NULL) const;
 
 	/**
 	 * Populate this element from the given buffer.
@@ -383,7 +384,7 @@ public:
 	bool LoadXMLBuffer(
 			char const* inData,
 			size_t nData,
-			tstring& ioErrMsg);
+			wxString& ioErrMsg);
 
 	/**
 	 * Populate this element from the given file.
@@ -393,7 +394,7 @@ public:
 	 */
 	bool LoadXMLFile(
 			wxChar const* inFileName,
-			tstring& ioErrMsg);
+			wxString& ioErrMsg);
 
 	/**
 	 * Save this element to the given output stream.
@@ -437,9 +438,9 @@ protected:
 	void RemoveAllTextNodes();
 
 	ElementNodeWPtr m_Me;
-	tstring m_Name;
-	typedef std::map<tstring, tstring> MyAttributes;
-	tstring m_Value;
+	wxString m_Name;
+	typedef std::map<wxString, wxString> MyAttributes;
+	wxString m_Value;
 	MyAttributes m_Attribs;
 	std::vector<ElementPtr> m_Elements;
 };
@@ -448,20 +449,20 @@ class ElementText : public Element
 {
 private:
 	ElementText();
-	ElementText(tstring const& inText);
+	ElementText(wxString const& inText);
 	ElementText(ElementText const&); // Not implemented
 	ElementText& operator=(ElementText const&); // Not implemented
 
 public:
 	static ElementTextPtr New();
-	static ElementTextPtr New(tstring const& inText);
+	static ElementTextPtr New(wxString const& inText);
 
 	virtual void Dump(int inLevel = 0) const;
 	virtual Element::ElementType GetType() const;
-	virtual tstring const& GetName() const;
-	virtual void SetName(tstring const& inName);
-	virtual tstring GetValue() const;
-	virtual void SetValue(tstring const& inValue);
+	virtual wxString const& GetName() const;
+	virtual void SetName(wxString const& inName);
+	virtual wxString GetValue() const;
+	virtual void SetValue(wxString const& inValue);
 	virtual void SetValue(wxChar const* const inValue);
 	virtual void SetValue(short inValue);
 	virtual void SetValue(long inValue);
@@ -469,5 +470,5 @@ public:
 
 protected:
 	ElementTextWPtr m_Me;
-	tstring m_Value;
+	wxString m_Value;
 };

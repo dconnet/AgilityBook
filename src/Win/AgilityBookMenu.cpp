@@ -34,6 +34,7 @@
  * If they are only in a context menu, the accelerator will not work.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-09-09 DRC Fix Ctrl+R. See note above.
  * @li 2008-12-14 DRC Created
  */
@@ -402,7 +403,11 @@ void CAgilityBookMenu::CreateSubMenu(wxMenu* parent, MenuHandles& handles, bool 
 	if (bCreate)
 		parent->Append(wxID_ANY, title, handles.menu);
 	else
+#if wxCHECK_VERSION(2, 9, 0)
+		parent->FindItemByPosition(handles.idx)->SetItemLabel(title);
+#else
 		parent->FindItemByPosition(handles.idx)->SetText(title);
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////

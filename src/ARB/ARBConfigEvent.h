@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2005-01-02 DRC Added subnames to events.
@@ -76,7 +77,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -86,7 +87,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		return 0;
 	}
@@ -124,7 +125,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigEventPtr inEventNew,
-			tstring& ioInfo);
+			wxString& ioInfo);
 
 	/**
 	 * Find all the scoring methods that match.
@@ -136,8 +137,8 @@ public:
 	 * @return Number of items found.
 	 */
 	size_t FindAllEvents(
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate,
 			bool inTitlePoints,
 			ARBVector<ARBConfigScoringPtr>& outList) const
@@ -153,8 +154,8 @@ public:
 	 * @return true if FindAllEvents() > 0.
 	 */
 	bool VerifyEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate) const
 	{
 		return m_Scoring.VerifyEvent(inDivision, inLevel, inDate);
@@ -169,8 +170,8 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigScoringPtr* outScoring = NULL) const
 	{
@@ -180,19 +181,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring const& GetDesc() const
+	wxString const& GetDesc() const
 	{
 		return m_Desc;
 	}
-	void SetDesc(tstring const& inDesc)
+	void SetDesc(wxString const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
@@ -220,8 +221,8 @@ public:
 	{
 		m_bHasSubNames = inHas;
 	}
-	size_t GetSubNames(std::set<tstring>& outNames) const;
-	void SetSubNames(std::set<tstring> const& inNames);
+	size_t GetSubNames(std::set<wxString>& outNames) const;
+	void SetSubNames(std::set<wxString> const& inNames);
 	ARBConfigScoringList const& GetScorings() const
 	{
 		return m_Scoring;
@@ -232,12 +233,12 @@ public:
 	}
 
 private:
-	tstring m_Name;
-	tstring m_Desc;
+	wxString m_Name;
+	wxString m_Desc;
 	bool m_bTable;
 	bool m_bHasPartner;
 	bool m_bHasSubNames;
-	std::set<tstring> m_SubNames;
+	std::set<wxString> m_SubNames;
 	ARBConfigScoringList m_Scoring;
 };
 
@@ -279,9 +280,9 @@ public:
 	 * @return Event exists.
 	 */
 	bool VerifyEvent(
-			tstring const& inEvent,
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inEvent,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate) const;
 
 	/**
@@ -295,9 +296,9 @@ public:
 	 * @return Whether the event was found.
 	 */
 	 bool FindEvent(
-			tstring const& inEvent,
-			tstring const& inDivision,
-			tstring const& inLevel,
+			wxString const& inEvent,
+			wxString const& inDivision,
+			wxString const& inLevel,
 			ARBDate const& inDate,
 			ARBConfigEventPtr* outEvent = NULL,
 			ARBConfigScoringPtr* outScoring = NULL) const;
@@ -309,15 +310,15 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameDivision(
-			tstring const& inOldDiv,
-			tstring const& inNewDiv);
+			wxString const& inOldDiv,
+			wxString const& inNewDiv);
 
 	/**
 	 * Delete a division.
 	 * @param inDiv Division name being deleted.
 	 * @return Number of ARBConfigScoring items removed.
 	 */
-	int DeleteDivision(tstring const& inDiv);
+	int DeleteDivision(wxString const& inDiv);
 
 	/**
 	 * Rename a level.
@@ -327,9 +328,9 @@ public:
 	 * @return Number of ARBConfigScoring items updated.
 	 */
 	int RenameLevel(
-			tstring const& inOldDiv,
-			tstring const& inOldLevel,
-			tstring const& inNewLevel);
+			wxString const& inOldDiv,
+			wxString const& inOldLevel,
+			wxString const& inNewLevel);
 
 	/**
 	 * Delete a level.
@@ -338,8 +339,8 @@ public:
 	 * @return Number of ARBConfigScoring items removed.
 	 */
 	int DeleteLevel(
-			tstring const& inDiv,
-			tstring const& inLevel);
+			wxString const& inDiv,
+			wxString const& inLevel);
 
 	/**
 	 * Find an event.
@@ -348,7 +349,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindEvent(
-			tstring const& inEvent,
+			wxString const& inEvent,
 			ARBConfigEventPtr* outEvent = NULL) const;
 
 	/**
@@ -363,5 +364,5 @@ public:
 	 * @param inEvent Name of event to delete.
 	 * @return Whether event was deleted or not.
 	 */
-	bool DeleteEvent(tstring const& inEvent);
+	bool DeleteEvent(wxString const& inEvent);
 };

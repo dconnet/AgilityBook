@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-04-20 DRC Added DNR.
  * @li 2008-06-29 DRC Moved string stuff to ARBString.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -116,7 +117,7 @@ ARB_TYPEDEF2(ElementText)
  * @param inMsg String to dump
  * @param bIncNewLine Add a newline
  */
-void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine = true);
+void DumpErrorMessage(wxString const& inMsg, bool bIncNewLine = true);
 
 
 /**
@@ -124,8 +125,8 @@ void DumpErrorMessage(tstring const& inMsg, bool bIncNewLine = true);
  * @param inRawData String to sanitize
  * @param bConvertCR Convert \n to html-breaks.
  */
-tstring SanitizeStringForHTML(
-		tstring const& inRawData,
+wxString SanitizeStringForHTML(
+		wxString const& inRawData,
 		bool bConvertCR = true);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -188,7 +189,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		size_t nItems = 0;
 		for (typename ARBVector<T>::const_iterator iter = ARBVector<T>::begin();
@@ -265,7 +266,7 @@ public:
 class ARBErrorCallback
 {
 public:
-	ARBErrorCallback(tstring& ioErrMsg)
+	ARBErrorCallback(wxString& ioErrMsg)
 		: m_ErrMsg(ioErrMsg)
 	{
 	}
@@ -284,13 +285,13 @@ public:
 	/**
 	 * Log an error message.
 	 */
-	virtual void LogMessage(tstring const& inMsg)
+	virtual void LogMessage(wxString const& inMsg)
 	{
 		m_ErrMsg += inMsg;
 	}
 
 protected:
-	tstring& m_ErrMsg;
+	wxString& m_ErrMsg;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -360,7 +361,7 @@ public:
 	{
 		return static_cast<unsigned short>(m_Version & 0xff);
 	}
-	tstring str() const;
+	wxString str() const;
 
 private:
 	unsigned long m_Version;
@@ -394,12 +395,12 @@ public:
 	/**
 	 * Get a single string listing all valid types.
 	 */
-	static tstring GetValidTypes();
+	static wxString GetValidTypes();
 
 	/**
 	 * Get a list of all valid types.
 	 */
-	static void GetValidTypes(std::vector<tstring>& outTypes);
+	static void GetValidTypes(std::vector<wxString>& outTypes);
 
 	/**
 	 * Get the number of valid types.
@@ -493,7 +494,7 @@ public:
 	/**
 	 * Translate the enum value to a string
 	 */
-	tstring str() const;
+	wxString str() const;
 
 	/**
 	 * Load a Q
@@ -503,7 +504,7 @@ public:
 	 * @return Success
 	 */
 	bool Load(
-			tstring const& inAttrib,
+			wxString const& inAttrib,
 			ARBVersion const& inVersion,
 			ARBErrorCallback& ioCallback);
 
@@ -531,7 +532,7 @@ class ARBDouble
 	ARBDouble();
 	~ARBDouble();
 public:
-	static tstring str(
+	static wxString str(
 			double inValue,
 			int inPrec = 2);
 

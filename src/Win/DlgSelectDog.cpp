@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-02-18 DRC Remember selected dogs.
@@ -69,15 +70,15 @@ CDlgSelectDog::CDlgSelectDog(
 
 	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
 
-	std::set<tstring> selection;
+	std::set<wxString> selection;
 	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);
 	for (long iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		otstringstream item;
+		wxString item;
 		item << wxT("Selection/Dog") << iDog;
-		wxString dog = wxConfig::Get()->Read(item.str().c_str(), wxT(""));
+		wxString dog = wxConfig::Get()->Read(item, wxEmptyString);
 		if (!dog.empty())
-			selection.insert(dog.c_str());
+			selection.insert(dog);
 	}
 
 	// Controls (these are done first to control tab order)
@@ -85,7 +86,7 @@ CDlgSelectDog::CDlgSelectDog(
 	wxArrayString checkListChoices;
 	for (ARBDogList::const_iterator iter = m_Dogs.begin(); iter != m_Dogs.end(); ++iter)
 	{
-		checkListChoices.Add((*iter)->GetCallName().c_str());
+		checkListChoices.Add((*iter)->GetCallName());
 	}
 	m_checkList = new wxCheckListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
@@ -136,9 +137,9 @@ void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		otstringstream item;
+		wxString item;
 		item << wxT("Selection/Dog") << iDog;
-		wxConfig::Get()->DeleteEntry(item.str().c_str());
+		wxConfig::Get()->DeleteEntry(item);
 	}
 	// Now commit the selection.
 	nDogs = 0;
@@ -149,9 +150,9 @@ void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 		{
 			m_outDogs.push_back(m_Dogs[index]);
 			++nDogs;
-			otstringstream item;
+			wxString item;
 			item << wxT("Selection/Dog") << nDogs;
-			wxConfig::Get()->Write(item.str().c_str(), m_Dogs[index]->GetCallName().c_str());
+			wxConfig::Get()->Write(item, m_Dogs[index]->GetCallName());
 		}
 	}
 	wxConfig::Get()->Write(wxT("Selection/nDogs"), nDogs);

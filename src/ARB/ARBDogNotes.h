@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2004-03-03 DRC Added CRCDMetaFile, string of Windows Enhanced Metafile.
@@ -43,7 +44,7 @@
 #include <vector>
 #include "ARBTypes.h"
 
-typedef std::vector<tstring> ARBDogFaultList;
+typedef std::vector<wxString> ARBDogFaultList;
 
 class ARBMetaData;
 typedef tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
@@ -85,7 +86,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -121,32 +122,32 @@ public:
 	{
 		return m_Faults;
 	}
-	tstring const& GetCRCD() const
+	wxString const& GetCRCD() const
 	{
 		return m_CRCD;
 	}
-	void SetCRCD(tstring const& inCRCD)
+	void SetCRCD(wxString const& inCRCD)
 	{
 		m_CRCD = inCRCD;
 	}
-	tstring const& GetCRCDRawMetaData() const
+	wxString const& GetCRCDRawMetaData() const
 	{
 		return m_CRCDMeta;
 	}
 	ARBMetaDataPtr GetCRCDMetaData() const;
 	void SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes);
-	tstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(tstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
 	ARBDogFaultList m_Faults;
-	tstring m_CRCD;
-	tstring m_CRCDMeta;
-	tstring m_Note;
+	wxString m_CRCD;
+	wxString m_CRCDMeta;
+	wxString m_Note;
 };

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -113,7 +114,7 @@ bool ARBTraining::operator==(ARBTraining const& rhs) const
 }
 
 
-size_t ARBTraining::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBTraining::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -157,11 +158,11 @@ bool ARBTraining::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			tstring attrib;
+			wxString attrib;
 			inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);
-			tstring msg(Localization()->InvalidDate());
+			wxString msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg));
 		}
 		return false;
 	}
@@ -224,7 +225,7 @@ void ARBTrainingList::sort()
 }
 
 
-size_t ARBTrainingList::GetAllNames(std::set<tstring>& outNames) const
+size_t ARBTrainingList::GetAllNames(std::set<wxString>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -237,7 +238,7 @@ size_t ARBTrainingList::GetAllNames(std::set<tstring>& outNames) const
 }
 
 
-size_t ARBTrainingList::GetAllSubNames(std::set<tstring>& outSubNames) const
+size_t ARBTrainingList::GetAllSubNames(std::set<wxString>& outSubNames) const
 {
 	outSubNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)

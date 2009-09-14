@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-05 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added context menus to status bar.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -110,7 +111,7 @@ class CErrorCallback : public ARBErrorCallback
 public:
 	CErrorCallback();
 	virtual bool OnError(wxChar const* const pMsg);
-	tstring m_ErrMsg;
+	wxString m_ErrMsg;
 };
 
 
@@ -168,7 +169,7 @@ public:
 			std::vector<CVenueFilter>& venues,
 			ARBDogTitlePtr pTitle);
 	bool ResetVisibility(
-			std::set<tstring>& names,
+			std::set<wxString>& names,
 			ARBTrainingPtr pTraining);
 
 	bool ShowPointsAsHtml(bool bHtml);

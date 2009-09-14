@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  *                    Fixed reading binary files. Added some timestamps.
  * @li 2009-03-01 DRC Ported to wxWidgets.
@@ -77,7 +78,7 @@ CDlgARBHelp::CDlgARBHelp()
 }
 
 
-void CDlgARBHelp::AddSysInfo(tstring const& inData)
+void CDlgARBHelp::AddSysInfo(wxString const& inData)
 {
 	m_SysInfo.clear();
 	if (!inData.empty())
@@ -110,7 +111,7 @@ wxString CDlgARBHelp::GetEncodedData()
 
 		// System information.
 		{
-			tstring data;
+			wxString data;
 			BinaryData::EncodeString(m_SysInfo, data);
 			rawdata << wxT("\n") << STREAM_SYSTEM_BEGIN << wxT("\n")
 				<< data
@@ -119,7 +120,7 @@ wxString CDlgARBHelp::GetEncodedData()
 
 		// Registry information.
 		{
-			tstring data;
+			wxString data;
 			BinaryData::EncodeString(m_RegInfo, data);
 			rawdata << wxT("\n") << STREAM_REGISTRY_BEGIN << wxT("\n")
 				<< data
@@ -135,7 +136,7 @@ wxString CDlgARBHelp::GetEncodedData()
 				wxFFile file;
 				if (file.Open((*iFile).first, wxT("rb")))
 				{
-					tstring data;
+					wxString data;
 					wxFileName fileName((*iFile).first);
 					wxDateTime dtMod, dtCreate;
 					if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
@@ -157,7 +158,7 @@ wxString CDlgARBHelp::GetEncodedData()
 			}
 		}
 
-		tstring data;
+		wxString data;
 		BinaryData::EncodeString(rawdata.str(), data);
 		otstringstream encodedData;
 		encodedData << wxT("\n") << STREAM_DATA_BEGIN << wxT("\n")

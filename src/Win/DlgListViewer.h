@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-28 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-03-14 DRC Show a summary of lifetime points in the list viewer.
@@ -132,7 +133,7 @@ public:
 struct CFindItemInfo
 {
 	ARBInfo::eInfoType type;
-	tstring name;
+	wxString name;
 	ARBInfoItemPtr pItem;
 };
 

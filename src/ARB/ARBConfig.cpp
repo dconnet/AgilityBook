@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
  * @li 2005-01-10 DRC Allow titles to be optionally entered multiple times.
@@ -178,7 +179,7 @@ bool ARBConfig::Load(
 		return false;
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_CONFIG_UPDATE, m_bUpdate))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CONFIG, ATTRIB_CONFIG_UPDATE, Localization()->ValidValuesBool()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_CONFIG_VERSION, m_Version);
@@ -187,7 +188,7 @@ bool ARBConfig::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		tstring const& name = element->GetName();
+		wxString const& name = element->GetName();
 		if (name == TREE_ACTION)
 		{
 			// Ignore any errors...
@@ -258,7 +259,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler)
 			int config = tree->FindElement(TREE_CONFIG);
 			if (0 <= config)
 			{
-				tstring errMsg;
+				wxString errMsg;
 				ARBErrorCallback err(errMsg);
 				Load(tree->GetElementNode(config), version, err);
 			}
@@ -278,14 +279,14 @@ std::string ARBConfig::GetDTD(
 }
 
 
-tstring ARBConfig::GetTitleNiceName(
-		tstring const& inVenue,
-		tstring const& inTitle) const
+wxString ARBConfig::GetTitleNiceName(
+		wxString const& inVenue,
+		wxString const& inTitle) const
 {
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inVenue, inTitle, &pTitle))
 	{
-		tstring name = pTitle->GetNiceName();
+		wxString name = pTitle->GetNiceName();
 		return name;
 	}
 	else
@@ -293,7 +294,7 @@ tstring ARBConfig::GetTitleNiceName(
 }
 
 
-tstring ARBConfig::GetTitleCompleteName(
+wxString ARBConfig::GetTitleCompleteName(
 		ARBDogTitlePtr inTitle,
 		bool bAbbrevFirst) const
 {
@@ -310,7 +311,7 @@ tstring ARBConfig::GetTitleCompleteName(
 bool ARBConfig::Update(
 		int indent,
 		ARBConfig const& inConfigNew,
-		otstringstream& ioInfo)
+		wxString& ioInfo)
 {
 	int nChanges = 0; // A simple count of changes that have occurred.
 	// Update CalSites. (existing ones are never removed except by an action)
@@ -410,7 +411,7 @@ bool ARBConfig::Update(
 	nNew = 0;
 	nUpdated = 0;
 	nSkipped = 0;
-	tstring venueInfo;
+	wxString venueInfo;
 	for (ARBConfigVenueList::const_iterator iterVenue = inConfigNew.GetVenues().begin();
 	iterVenue != inConfigNew.GetVenues().end();
 	++iterVenue)

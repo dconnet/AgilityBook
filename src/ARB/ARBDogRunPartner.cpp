@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -106,7 +107,7 @@ bool ARBDogRunPartner::operator==(ARBDogRunPartner const& rhs) const
 }
 
 
-size_t ARBDogRunPartner::GetSearchStrings(std::set<tstring>& ioStrings) const
+size_t ARBDogRunPartner::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;
 

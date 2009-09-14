@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-12-24 DRC Created
  */
@@ -38,7 +39,7 @@
 #include "stdafx.h"
 #include "DlgQueryDetail.h"
 
-#include "AgilityBook.h"
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
@@ -153,13 +154,13 @@ void CDlgQueryDetail::OnSelchangeVenues(wxCommandEvent& evt)
 		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(idx);
 		if (pVenue)
 		{
-			if (m_strCode != pVenue->GetName().c_str())
+			if (m_strCode != pVenue->GetName())
 			{
 				TransferDataFromWindow();
 				// Yes, this will kill the existing code. In general, most
 				// sites will probably use the same acronyms I am. So I'm
 				// just not going to worry about this.
-				m_strCode = pVenue->GetName().c_str();
+				m_strCode = pVenue->GetName();
 				TransferDataToWindow();
 			}
 		}
@@ -184,8 +185,8 @@ void CDlgQueryDetail::OnOk(wxCommandEvent& evt)
 			return;
 		}
 
-		m_Code = m_strCode.c_str();
-		m_Name = m_strName.c_str();
+		m_Code = m_strCode;
+		m_Name = m_strName;
 		if (m_Config)
 		{
 			// If there's no name, use the code.

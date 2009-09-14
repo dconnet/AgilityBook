@@ -31,10 +31,11 @@
  * @brief Base64/zlib encoding/decoding class.
  * @author David Connet
  *
- * Note, we are using tstring's mainly for consistency.
+ * Note, we are using wxString's mainly for consistency.
  * The actual contained data is still 8bit chars.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2007-01-03 DRC Created
  */
 
@@ -54,7 +55,7 @@ public:
 	 * @post outBinData must be deallocated using Release()
 	 */
 	static bool Decode(
-			tstring const& inBase64,
+			wxString const& inBase64,
 			unsigned char*& outBinData,
 			size_t& outBytes);
 
@@ -73,15 +74,15 @@ public:
 	static bool Encode(
 			unsigned char const* inBinData,
 			size_t inBytes,
-			tstring& outBase64);
+			wxString& outBase64);
 	static bool Encode(
 			wxFFile& inData,
-			tstring& outBase64);
+			wxString& outBase64);
 
 	static bool DecodeString(
-			tstring const& inBase64,
-			tstring& outData);
+			wxString const& inBase64,
+			wxString& outData);
 	static bool EncodeString(
-			tstring const& inData,
-			tstring& outBase64);
+			wxString const& inData,
+			wxString& outBase64);
 };

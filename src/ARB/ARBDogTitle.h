@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -74,14 +75,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const;
+	virtual wxString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load a title.
@@ -123,15 +124,15 @@ public:
 		if (!m_Date.IsValid())
 			m_bHidden = true;
 	}
-	tstring const& GetVenue() const
+	wxString const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(tstring const& inVenue)
+	void SetVenue(wxString const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
-	tstring const& GetRawName() const
+	wxString const& GetRawName() const
 	{
 		return m_Name;
 	}
@@ -148,7 +149,7 @@ public:
 		return m_MultipleStyle;
 	}
 	void SetName(
-			tstring const& inName,
+			wxString const& inName,
 			short inInstance,
 			bool bShowInstance,
 			ARBTitleStyle style)
@@ -182,8 +183,8 @@ public:
 
 private:
 	ARBDate m_Date;
-	tstring m_Venue;
-	tstring m_Name;
+	wxString m_Venue;
+	wxString m_Name;
 	bool m_bShowInstanceOne;
 	short m_Instance;
 	ARBTitleStyle m_MultipleStyle;
@@ -225,7 +226,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of objects.
 	 */
-	int NumTitlesInVenue(tstring const& inVenue) const;
+	int NumTitlesInVenue(wxString const& inVenue) const;
 
 	/**
 	 * Find a title
@@ -234,8 +235,8 @@ public:
 	 * @param outTitle Pointer to found title.
 	 */
 	bool FindTitle(
-			tstring const& inVenue,
-			tstring const& inTitle,
+			wxString const& inVenue,
+			wxString const& inTitle,
 			ARBDogTitlePtr* outTitle = NULL) const;
 
 	/**
@@ -244,8 +245,8 @@ public:
 	 * @param inTitle Name of title.
 	 */
 	short FindMaxInstance(
-			tstring const& inVenue,
-			tstring const& inTitle) const;
+			wxString const& inVenue,
+			wxString const& inTitle) const;
 
 	/**
 	 * Rename a venue, rename any dependent objects.
@@ -254,15 +255,15 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameVenue(
-			tstring const& inOldVenue,
-			tstring const& inNewVenue);
+			wxString const& inOldVenue,
+			wxString const& inNewVenue);
 
 	/**
 	 * Delete a venue, remove any dependent objects.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(tstring const& inVenue);
+	int DeleteVenue(wxString const& inVenue);
 
 	/**
 	 * Number of titles in use.
@@ -272,8 +273,8 @@ public:
 	 * @return Number of objects.
 	 */
 	int NumTitlesInUse(
-			tstring const& inVenue,
-			tstring const& inTitle) const;
+			wxString const& inVenue,
+			wxString const& inTitle) const;
 
 	/**
 	 * Rename a title, rename any dependent objects.
@@ -283,9 +284,9 @@ public:
 	 * @return Number of items changed.
 	 */
 	int RenameTitle(
-			tstring const& inVenue,
-			tstring const& inOldTitle,
-			tstring const& inNewTitle);
+			wxString const& inVenue,
+			wxString const& inOldTitle,
+			wxString const& inNewTitle);
 
 	/**
 	 * Add a title.

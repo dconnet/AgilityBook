@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-12-27 DRC Replace local LoadTree with LoadXMLData
  * @li 2008-01-11 DRC Created
  */
@@ -55,7 +56,7 @@ SUITE(TestElement)
 	TEST(Value)
 	{
 		ElementNodePtr ele = ElementNode::New(wxT("name"));
-		tstring str = wxT("This random & text @#$@()<>");
+		wxString str = wxT("This random & text @#$@()<>");
 		ele->SetValue(str);
 		CHECK(str == ele->GetValue());
 	}
@@ -69,7 +70,7 @@ SUITE(TestElement)
 		ElementNode::AttribLookup rc = ele->GetAttrib(wxT("name"), b);
 		CHECK_EQUAL(ElementNode::eFound, rc);
 		CHECK(b);
-		tstring s;
+		wxString s;
 		rc = ele->GetAttrib(wxT("name"), s);
 		CHECK_EQUAL(ElementNode::eFound, rc);
 		CHECK(wxT("y") == s);
@@ -81,7 +82,7 @@ SUITE(TestElement)
 		ElementNodePtr ele = ElementNode::New(wxT("name"));
 		short i = 42;
 		ele->AddAttrib(wxT("test"), i);
-		tstring s;
+		wxString s;
 		ele->GetAttrib(wxT("test"), s);
 		CHECK(wxT("42") == s);
 		i = 0;
@@ -95,7 +96,7 @@ SUITE(TestElement)
 		ElementNodePtr ele = ElementNode::New(wxT("name"));
 		long i = 42;
 		ele->AddAttrib(wxT("test"), i);
-		tstring s;
+		wxString s;
 		ele->GetAttrib(wxT("test"), s);
 		CHECK(wxT("42") == s);
 		i = 0;
@@ -109,7 +110,7 @@ SUITE(TestElement)
 		ElementNodePtr ele = ElementNode::New(wxT("name"));
 		double i = 42.446;
 		ele->AddAttrib(wxT("test"), i);
-		tstring s;
+		wxString s;
 		ele->GetAttrib(wxT("test"), s);
 		CHECK(wxT("42.45") == s);
 		i = 0.0;
@@ -161,7 +162,7 @@ SUITE(TestElement)
 	TEST(ReallyBadAttrib)
 	{
 		ElementNodePtr ele = ElementNode::New(wxT("name"));
-		tstring attrib;
+		wxString attrib;
 		CHECK(!ele->AddAttrib(attrib, wxT("test")));
 	}
 
@@ -267,7 +268,7 @@ SUITE(TestElement)
 		CHECK(tree->SaveXML(tmp1));
 
 		ElementNodePtr tree2(ElementNode::New());
-		tstring errs;
+		wxString errs;
 		CHECK(tree2->LoadXMLFile(tmpFile, errs));
 
 		wxRemoveFile(tmpFile);

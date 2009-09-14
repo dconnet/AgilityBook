@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -68,7 +69,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -78,7 +79,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		return 0;
 	}
@@ -107,17 +108,17 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
 
 private:
-	tstring m_Name;
+	wxString m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -148,7 +149,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindFault(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigFaultPtr* outFault = NULL) const;
 
 	/**
@@ -158,7 +159,7 @@ public:
 	 * @return Whether the fault was added.
 	 */
 	bool AddFault(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigFaultPtr* outFault = NULL);
 
 	/**
@@ -166,5 +167,5 @@ public:
 	 * @param inName Name of fault to delete.
 	 * @return Whether fault was deleted.
 	 */
-	bool DeleteFault(tstring const& inName);
+	bool DeleteFault(wxString const& inName);
 };

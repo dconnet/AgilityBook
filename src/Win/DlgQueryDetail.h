@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2007-12-24 DRC Created
  */
@@ -52,8 +53,8 @@ public:
 			wxWindow* pParent = NULL,
 			ARBConfig const* inConfig = NULL); // Only set when using venues
 
-	tstring const& GetDetailCode() const		{return m_Code;}
-	tstring const& GetDetailName() const		{return m_Name;}
+	wxString const& GetDetailCode() const		{return m_Code;}
+	wxString const& GetDetailName() const		{return m_Name;}
 
 private:
 	bool m_ReadOnly;
@@ -62,8 +63,8 @@ private:
 	wxTextCtrl* m_ctrlCode;
 	wxString m_strName;
 	CVenueComboBox* m_ctrlVenues;
-	tstring m_Code;
-	tstring m_Name;
+	wxString m_Code;
+	wxString m_Name;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeVenues(wxCommandEvent& evt);

@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-26 DRC Added option to prevent auto-update user query.
@@ -108,8 +109,8 @@ public:
 private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
-	tstring m_FileName;
-	std::map<tstring, tstring> m_InfoMsg;
+	wxString m_FileName;
+	std::map<wxString, wxString> m_InfoMsg;
 	wxString m_UpdateDownload;
 	wxString m_usernameHint;
 	std::vector<CVersionNum> m_CalSiteSuppression;

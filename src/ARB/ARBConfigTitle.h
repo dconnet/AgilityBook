@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-08-05 DRC Added Roman numbers
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-10-14 DRC Added option to prefix a title.
@@ -58,7 +59,7 @@ enum ARBTitleStyle
 class ARBTitleInstance
 {
 protected:
-	virtual tstring TitleInstance(
+	virtual wxString TitleInstance(
 			bool bShowInstanceOne,
 			short instance,
 			ARBTitleStyle style) const;
@@ -97,7 +98,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return GetNiceName();
 	}
@@ -107,7 +108,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
 	{
 		return 0;
 	}
@@ -152,7 +153,7 @@ public:
 	 * Get the nice (long) name.
 	 * @return the nice (long) name.
 	 */
-	tstring const& GetNiceName() const
+	wxString const& GetNiceName() const
 	{
 		if (0 == m_LongName.length())
 			return m_Name;
@@ -168,7 +169,7 @@ public:
 	 * @param bAddDates Add the valid date ranges, if applicable.
 	 * @return The complete name.
 	 */
-	tstring GetCompleteName(
+	wxString GetCompleteName(
 			short inInstance = 0,
 			bool bShowInstance = false,
 			bool bAbbrevFirst = true,
@@ -177,19 +178,19 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetName() const
+	wxString const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(tstring const& inName)
+	void SetName(wxString const& inName)
 	{
 		m_Name = inName;
 	}
-	tstring const& GetLongName() const
+	wxString const& GetLongName() const
 	{
 		return m_LongName;
 	}
-	void SetLongName(tstring const& inName)
+	void SetLongName(wxString const& inName)
 	{
 		m_LongName = inName;
 	}
@@ -233,24 +234,24 @@ public:
 	{
 		m_ValidTo = inDate;
 	}
-	tstring const& GetDescription() const
+	wxString const& GetDescription() const
 	{
 		return m_Desc;
 	}
-	void SetDescription(tstring const& inDesc)
+	void SetDescription(wxString const& inDesc)
 	{
 		m_Desc = inDesc;
 	}
 
 private:
-	tstring m_Name;
-	tstring m_LongName;
+	wxString m_Name;
+	wxString m_LongName;
 	short m_Multiple;
 	ARBTitleStyle m_MultipleStyle;
 	bool m_Prefix;
 	ARBDate m_ValidFrom;
 	ARBDate m_ValidTo;
-	tstring m_Desc;
+	wxString m_Desc;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -293,7 +294,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitleCompleteName(
-			tstring const& inName,
+			wxString const& inName,
 			short inInstance,
 			bool bShowInstance,
 			bool bAbbrevFirst = true,
@@ -306,7 +307,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindTitle(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigTitlePtr* outTitle = NULL) const;
 
 	/**
@@ -316,7 +317,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddTitle(
-			tstring const& inName,
+			wxString const& inName,
 			ARBConfigTitlePtr* outTitle = NULL);
 
 	/**
@@ -331,5 +332,5 @@ public:
 	 * @param inName Name of title to delete.
 	 * @return Whether title was deleted.
 	 */
-	bool DeleteTitle(tstring const& inName);
+	bool DeleteTitle(wxString const& inName);
 };

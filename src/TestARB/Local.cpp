@@ -39,6 +39,7 @@
  * this.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-19 DRC Ported to wxWidgets.
  * @li 2008-01-13 DRC Created
  */
@@ -109,531 +110,530 @@ void CLocalization::Load()
 }
 
 
-tstring CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateCalSites(int nNew, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_UPDATE_CALSITES")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateFaults(int nNew, int nSkipped) const
+wxString CLocalization::UpdateFaults(int nNew, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_FAULTS")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateOtherPts(int nNew, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_OTHERPOINTS")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateVenues(int nNew, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_VENUES")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nNew)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateDivisions(int nAdded, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_DIVISIONS")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateDivisionsReordered() const
+wxString CLocalization::UpdateDivisionsReordered() const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_DIVISIONS")
 		<< wxT(": ")
 		<< _("IDS_REORDERED");
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateEvents(int nAdded, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_EVENTS")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateEventsReordered() const
+wxString CLocalization::UpdateEventsReordered() const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_EVENTS")
 		<< wxT(": ")
 		<< _("IDS_REORDERED");
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const
+wxString CLocalization::UpdateMultiqs(int nAdded, int nDeleted, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_MULTIQS")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_DELETED"), nDeleted).c_str()
+		<< wxString::Format(_("IDS_UPDATE_DELETED"), nDeleted)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateMultiqsReordered() const
+wxString CLocalization::UpdateMultiqsReordered() const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_MULTIQS")
 		<< wxT(": ")
 		<< _("IDS_REORDERED");
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateLevels(int nAdded, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_LEVELS")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateLevelsReordered() const
+wxString CLocalization::UpdateLevelsReordered() const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_LEVELS")
 		<< wxT(": ")
 		<< _("IDS_REORDERED");
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateTitles(int nAdded, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_TITLES")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateTitlesReordered() const
+wxString CLocalization::UpdateTitlesReordered() const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_TITLES")
 		<< wxT(": ")
 		<< _("IDS_REORDERED");
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateSubLevels(int nAdded) const
+wxString CLocalization::UpdateSubLevels(int nAdded) const
 {
-	return wxString::Format(_("IDS_UPDATE_NEWSUBLEVELS"), nAdded).c_str();
+	return wxString::Format(_("IDS_UPDATE_NEWSUBLEVELS"), nAdded);
 }
 
 
-tstring CLocalization::UpdateSubLevelsReordered() const
+wxString CLocalization::UpdateSubLevelsReordered() const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << _("IDS_COL_LEVELS")
 		<< wxT(": ")
 		<< _("IDS_REORDERED");
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const
+wxString CLocalization::UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << wxT(" ")
 		<< _("IDS_UPDATE_RULES")
 		<< wxT(": ")
-		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded).c_str()
+		<< wxString::Format(_("IDS_UPDATE_ADDED"), nAdded)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_DELETED"), nDeleted).c_str()
+		<< wxString::Format(_("IDS_UPDATE_DELETED"), nDeleted)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated).c_str()
+		<< wxString::Format(_("IDS_UPDATE_UPDATED"), nUpdated)
 		<< wxT(", ")
-		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped).c_str();
-	return buffer.str();
+		<< wxString::Format(_("IDS_UPDATE_IDENTICAL"), nSkipped);
+	return buffer;
 }
 
 
-tstring CLocalization::ActionDeleteCalPlugin(tstring const& name) const
+wxString CLocalization::ActionDeleteCalPlugin(wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_CALPLUGIN"), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_CALPLUGIN"), name.c_str());
 }
 
 
-tstring CLocalization::ActionRenameOtherPoints(
-		tstring const& oldName,
-		tstring const& newName,
+wxString CLocalization::ActionRenameOtherPoints(
+		wxString const& oldName,
+		wxString const& newName,
 		int nChanges) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_ACTION_RENAME_OTHERPTS"), oldName.c_str(), newName.c_str()).c_str();
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_ACTION_RENAME_OTHERPTS"), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
 		buffer << wxString::Format(_("IDS_ACTION_RENAME_OTHERPTS2"), nChanges).c_str();
 	}
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::ActionPreDeleteOtherPoints(
-		tstring const& name,
+wxString CLocalization::ActionPreDeleteOtherPoints(
+		wxString const& name,
 		int nChanges) const
 {
-	return wxString::Format(_("IDS_ACTION_PREDELETE_OTHERPTS"), name.c_str(), nChanges).c_str();
+	return wxString::Format(_("IDS_ACTION_PREDELETE_OTHERPTS"), name.c_str(), nChanges);
 }
 
 
-tstring CLocalization::ActionDeleteOtherPoints(tstring const& name) const
+wxString CLocalization::ActionDeleteOtherPoints(wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_OTHERPTS"), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_OTHERPTS"), name.c_str());
 }
 
 
-tstring CLocalization::ActionRenameVenue(
-		tstring const& oldName,
-		tstring const& newName,
+wxString CLocalization::ActionRenameVenue(
+		wxString const& oldName,
+		wxString const& newName,
 		int nChanges) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_ACTION_RENAME_VENUE"), oldName.c_str(), newName.c_str()).c_str();
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_ACTION_RENAME_VENUE"), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
-		buffer << wxString::Format(_("IDS_ACTION_RENAME_VENUE2"), nChanges).c_str();
+		buffer << wxString::Format(_("IDS_ACTION_RENAME_VENUE2"), nChanges);
 	}
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::ActionPreDeleteVenue(
-		tstring const& name,
+wxString CLocalization::ActionPreDeleteVenue(
+		wxString const& name,
 		int nChanges) const
 {
-	return wxString::Format(_("IDS_ACTION_PREDELETE_VENUE"), name.c_str(), nChanges).c_str();
+	return wxString::Format(_("IDS_ACTION_PREDELETE_VENUE"), name.c_str(), nChanges);
 }
 
 
-tstring CLocalization::ActionDeleteVenue(tstring const& name) const
+wxString CLocalization::ActionDeleteVenue(wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_VENUE"), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_VENUE"), name.c_str());
 }
 
 
-tstring CLocalization::ActionRenameMultiQ(
-		tstring const& venue,
-		tstring const& oldName,
-		tstring const& newName,
+wxString CLocalization::ActionRenameMultiQ(
+		wxString const& venue,
+		wxString const& oldName,
+		wxString const& newName,
 		int nChanges) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_ACTION_RENAME_MULTIQ"), venue.c_str(), oldName.c_str(), newName.c_str()).c_str();
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_ACTION_RENAME_MULTIQ"), venue.c_str(), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
-		buffer << wxString::Format(_("IDS_ACTION_RENAME_MULTIQ2"), nChanges).c_str();
+		buffer << wxString::Format(_("IDS_ACTION_RENAME_MULTIQ2"), nChanges);
 	}
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::ActionPreDeleteMultiQ(
-		tstring const& venue,
-		tstring const& name,
+wxString CLocalization::ActionPreDeleteMultiQ(
+		wxString const& venue,
+		wxString const& name,
 		int nChanges) const
 {
-	return wxString::Format(_("IDS_ACTION_PREDELETE_MULTIQ"), venue.c_str(), name.c_str(), nChanges).c_str();
+	return wxString::Format(_("IDS_ACTION_PREDELETE_MULTIQ"), venue.c_str(), name.c_str(), nChanges);
 }
 
 
-tstring CLocalization::ActionDeleteMultiQ(
-		tstring const& venue,
-		tstring const& name) const
+wxString CLocalization::ActionDeleteMultiQ(
+		wxString const& venue,
+		wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_MULTIQ"), venue.c_str(), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_MULTIQ"), venue.c_str(), name.c_str());
 }
 
 
-tstring CLocalization::ActionRenameDivision(
-		tstring const& venue,
-		tstring const& oldName,
-		tstring const& newName,
+wxString CLocalization::ActionRenameDivision(
+		wxString const& venue,
+		wxString const& oldName,
+		wxString const& newName,
 		int nChanges) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_ACTION_RENAME_DIV"), venue.c_str(), oldName.c_str(), newName.c_str()).c_str();
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_ACTION_RENAME_DIV"), venue.c_str(), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
-		buffer << wxString::Format(_("IDS_ACTION_RENAME_DIV2"), nChanges).c_str();
+		buffer << wxString::Format(_("IDS_ACTION_RENAME_DIV2"), nChanges);
 	}
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::ActionPreDeleteDivision(
-		tstring const& venue,
-		tstring const& name,
+wxString CLocalization::ActionPreDeleteDivision(
+		wxString const& venue,
+		wxString const& name,
 		int nChanges) const
 {
-	return wxString::Format(_("IDS_ACTION_PREDELETE_DIV"), venue.c_str(), name.c_str(), nChanges).c_str();
+	return wxString::Format(_("IDS_ACTION_PREDELETE_DIV"), venue.c_str(), name.c_str(), nChanges);
 }
 
 
-tstring CLocalization::ActionDeleteDivision(
-		tstring const& venue,
-		tstring const& name) const
+wxString CLocalization::ActionDeleteDivision(
+		wxString const& venue,
+		wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_DIV"), venue.c_str(), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_DIV"), venue.c_str(), name.c_str());
 }
 
 
-tstring CLocalization::ActionRenameLevel(
-		tstring const& venue,
-		tstring const& oldName,
-		tstring const& newName,
+wxString CLocalization::ActionRenameLevel(
+		wxString const& venue,
+		wxString const& oldName,
+		wxString const& newName,
 		int nChanges) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_ACTION_RENAME_LEVEL"), venue.c_str(), oldName.c_str(), newName.c_str()).c_str();
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_ACTION_RENAME_LEVEL"), venue.c_str(), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
-		buffer << wxString::Format(_("IDS_ACTION_RENAME_LEVEL2"), nChanges).c_str();
+		buffer << wxString::Format(_("IDS_ACTION_RENAME_LEVEL2"), nChanges);
 	}
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::ActionPreDeleteLevel(
-		tstring const& venue,
-		tstring const& name,
+wxString CLocalization::ActionPreDeleteLevel(
+		wxString const& venue,
+		wxString const& name,
 		int nChanges) const
 {
-	return wxString::Format(_("IDS_ACTION_PREDELETE_LEVEL"), venue.c_str(), name.c_str(), nChanges).c_str();
+	return wxString::Format(_("IDS_ACTION_PREDELETE_LEVEL"), venue.c_str(), name.c_str(), nChanges);
 }
 
 
-tstring CLocalization::ActionDeleteLevel(
-		tstring const& venue,
-		tstring const& name) const
+wxString CLocalization::ActionDeleteLevel(
+		wxString const& venue,
+		wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_LEVEL"), venue.c_str(), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_LEVEL"), venue.c_str(), name.c_str());
 }
 
 
-tstring CLocalization::ActionRenameTitle(
-		tstring const& venue,
-		tstring const& oldName,
-		tstring const& newName,
+wxString CLocalization::ActionRenameTitle(
+		wxString const& venue,
+		wxString const& oldName,
+		wxString const& newName,
 		int nChanges) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_ACTION_RENAME_TITLE"), venue.c_str(), oldName.c_str(), newName.c_str()).c_str();
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_ACTION_RENAME_TITLE"), venue.c_str(), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
-		buffer << wxString::Format(_("IDS_ACTION_RENAME_TITLE2"), nChanges).c_str();
+		buffer << wxString::Format(_("IDS_ACTION_RENAME_TITLE2"), nChanges);
 	}
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::ActionPreDeleteTitle(
-		tstring const& venue,
-		tstring const& name,
+wxString CLocalization::ActionPreDeleteTitle(
+		wxString const& venue,
+		wxString const& name,
 		int nChanges) const
 {
-	return wxString::Format(_("IDS_ACTION_PREDELETE_TITLE"), venue.c_str(), name.c_str(), nChanges).c_str();
+	return wxString::Format(_("IDS_ACTION_PREDELETE_TITLE"), venue.c_str(), name.c_str(), nChanges);
 }
 
 
-tstring CLocalization::ActionDeleteTitle(
-		tstring const& venue,
-		tstring const& name) const
+wxString CLocalization::ActionDeleteTitle(
+		wxString const& venue,
+		wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_TITLE"), venue.c_str(), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_TITLE"), venue.c_str(), name.c_str());
 }
 
 
-tstring CLocalization::ActionRenameEvent(
-		tstring const& venue,
-		tstring const& oldName,
-		tstring const& newName,
+wxString CLocalization::ActionRenameEvent(
+		wxString const& venue,
+		wxString const& oldName,
+		wxString const& newName,
 		int nChanges) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_ACTION_RENAME_EVENT"), venue.c_str(), oldName.c_str(), newName.c_str()).c_str();
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_ACTION_RENAME_EVENT"), venue.c_str(), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
-		buffer << wxString::Format(_("IDS_ACTION_RENAME_EVENT2"), nChanges).c_str();
+		buffer << wxString::Format(_("IDS_ACTION_RENAME_EVENT2"), nChanges);
 	}
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::ActionPreDeleteEvent(
-		tstring const& venue,
-		tstring const& name,
+wxString CLocalization::ActionPreDeleteEvent(
+		wxString const& venue,
+		wxString const& name,
 		int nChanges) const
 {
-	return wxString::Format(_("IDS_ACTION_PREDELETE_EVENT"), venue.c_str(), name.c_str(), nChanges).c_str();
+	return wxString::Format(_("IDS_ACTION_PREDELETE_EVENT"), venue.c_str(), name.c_str(), nChanges);
 }
 
 
-tstring CLocalization::ActionDeleteEvent(
-		tstring const& venue,
-		tstring const& name) const
+wxString CLocalization::ActionDeleteEvent(
+		wxString const& venue,
+		wxString const& name) const
 {
-	return wxString::Format(_("IDS_ACTION_DELETE_EVENT"), venue.c_str(), name.c_str()).c_str();
+	return wxString::Format(_("IDS_ACTION_DELETE_EVENT"), venue.c_str(), name.c_str());
 }
 
 
-tstring CLocalization::TitlePointsNameFormat(double points, double faults) const
+wxString CLocalization::TitlePointsNameFormat(double points, double faults) const
 {
 	otstringstream dbl1, dbl2;
 	dbl1 << points;
 	dbl2 << faults;
-	return wxString::Format(_("IDS_TITLEPOINTSNAME"), dbl1.str().c_str(), dbl2.str().c_str()).c_str();
+	return wxString::Format(_("IDS_TITLEPOINTSNAME"), dbl1.str().c_str(), dbl2.str().c_str());
 }
 
 
-tstring CLocalization::LifetimePointsNameFormat(double points, double faults) const
+wxString CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
 	otstringstream dbl1, dbl2;
 	dbl1 << points;
 	dbl2 << faults;
-	return wxString::Format(_("IDS_LIFETITLEPOINTSNAME"), dbl1.str().c_str(), dbl2.str().c_str()).c_str();
+	return wxString::Format(_("IDS_LIFETITLEPOINTSNAME"), dbl1.str().c_str(), dbl2.str().c_str());
 }
 
 
-tstring CLocalization::PlacementPointsNameFormat(double points, short place) const
+wxString CLocalization::PlacementPointsNameFormat(double points, short place) const
 {
 	otstringstream dbl1;
 	dbl1 << points;
-	return wxString::Format(_("IDS_PLACEMENTPOINTSNAME"), dbl1.str().c_str(), (int)place).c_str();
+	return wxString::Format(_("IDS_PLACEMENTPOINTSNAME"), dbl1.str().c_str(), (int)place);
 }
 
 
-tstring CLocalization::WarnDeletedRuns(int nRuns, tstring const& inRunsMsg) const
+wxString CLocalization::WarnDeletedRuns(int nRuns, wxString const& inRunsMsg) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_WARN_DELETED_RUNS"), nRuns).c_str()
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_WARN_DELETED_RUNS"), nRuns)
 		<< wxT("\n") << inRunsMsg;
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateTeamRuns(int nRuns, tstring const& inRunsMsg) const
+wxString CLocalization::UpdateTeamRuns(int nRuns, wxString const& inRunsMsg) const
 {
-	otstringstream buffer;
-	buffer << wxString::Format(_("IDS_UPDATE_TEAM_RUNS"), nRuns).c_str()
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_UPDATE_TEAM_RUNS"), nRuns)
 		<< wxT("\n") << inRunsMsg;
-	return buffer.str();
+	return buffer;
 }
 
 
-tstring CLocalization::UpdateTableRuns(int nRuns) const
+wxString CLocalization::UpdateTableRuns(int nRuns) const
 {
-	return wxString::Format(_("IDS_UPDATE_TABLE_RUNS"), nRuns).c_str();
+	return wxString::Format(_("IDS_UPDATE_TABLE_RUNS"), nRuns);
 }
 
 
-tstring CLocalization::ErrorInvalidDocStructure(wxChar const* const inMsg) const
+wxString CLocalization::ErrorInvalidDocStructure(wxChar const* const inMsg) const
 {
-	otstringstream buffer;
-	buffer << m_InvalidDocStructure;
+	wxString buffer = m_InvalidDocStructure;
 	if (inMsg)
-		buffer << ": " << inMsg << std::endl;
-	return buffer.str();
+		buffer << wxT(": ") << inMsg << wxT("\n");
+	return buffer;
 }
 
 
-tstring CLocalization::ErrorMissingAttribute(
+wxString CLocalization::ErrorMissingAttribute(
 		wxChar const* const inElement,
 		wxChar const* const inAttrib,
 		wxChar const* const inMsg) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << m_InvalidFileFormat
 		<< inElement
 		<< m_InvalidFileMissingAttrib
 		<< inAttrib
-		<< "'.";
+		<< wxT("'.");
 	if (inMsg)
-		buffer << " " << inMsg << std::endl;
-	return buffer.str();
+		buffer << wxT(" ") << inMsg << wxT("\n");
+	return buffer;
 }
 
 
-tstring CLocalization::ErrorInvalidAttributeValue(
+wxString CLocalization::ErrorInvalidAttributeValue(
 		wxChar const* const inElement,
 		wxChar const* const inAttrib,
 		wxChar const* const inMsg) const
 {
-	otstringstream buffer;
+	wxString buffer;
 	buffer << m_InvalidFileFormat
 		<< inElement
 		<< m_InvalidFileBadAttrib
 		<< inAttrib
-		<< "'.";
+		<< wxT("'.");
 	if (inMsg)
-		buffer << " " << inMsg << std::endl;
-	return buffer.str();
+		buffer << wxT(" ") << inMsg << wxT("\n");
+	return buffer;
 }

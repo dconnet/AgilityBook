@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -69,7 +70,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return GetVenue() + wxT(" ") + GetNumber();
 	}
@@ -79,7 +80,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -107,27 +108,27 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	tstring const& GetVenue() const
+	wxString const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(tstring const& inVenue)
+	void SetVenue(wxString const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
-	tstring const& GetNumber() const
+	wxString const& GetNumber() const
 	{
 		return m_Number;
 	}
-	void SetNumber(tstring const& inNumber)
+	void SetNumber(wxString const& inNumber)
 	{
 		m_Number = inNumber;
 	}
-	tstring const& GetHeight() const
+	wxString const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(tstring const& inHeight)
+	void SetHeight(wxString const& inHeight)
 	{
 		m_Height = inHeight;
 	}
@@ -139,21 +140,21 @@ public:
 	{
 		m_bReceived = inReceived;
 	}
-	tstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(tstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
-	tstring m_Venue;
-	tstring m_Number;
-	tstring m_Height;
+	wxString m_Venue;
+	wxString m_Number;
+	wxString m_Height;
 	bool m_bReceived;
-	tstring m_Note;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -189,7 +190,7 @@ public:
 	 * @param inVenue Venue to tally.
 	 * @return Number of registration numbers found.
 	 */
-	int NumRegNumsInVenue(tstring const& inVenue) const;
+	int NumRegNumsInVenue(wxString const& inVenue) const;
 
 	/**
 	 * Rename a venue.
@@ -198,15 +199,15 @@ public:
 	 * @return Number of items updated.
 	 */
 	int RenameVenue(
-			tstring const& inOldVenue,
-			tstring const& inNewVenue);
+			wxString const& inOldVenue,
+			wxString const& inNewVenue);
 
 	/**
 	 * Delete a venue.
 	 * @param inVenue Venue name being deleted.
 	 * @return Number of items removed.
 	 */
-	int DeleteVenue(tstring const& inVenue);
+	int DeleteVenue(wxString const& inVenue);
 
 	/**
 	 * Find a registration number.
@@ -215,7 +216,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindRegNum(
-			tstring const& inVenue,
+			wxString const& inVenue,
 			ARBDogRegNumPtr* outRegNum = NULL) const;
 
 	/**
@@ -226,8 +227,8 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddRegNum(
-			tstring const& inVenue,
-			tstring const& inNumber,
+			wxString const& inVenue,
+			wxString const& inNumber,
 			ARBDogRegNumPtr* outRegNum = NULL);
 
 	/**
@@ -244,6 +245,6 @@ public:
 	 * @return Number of objects deleted.
 	 */
 	int DeleteRegNum(
-			tstring const& inVenue,
-			tstring const& inNumber);
+			wxString const& inVenue,
+			wxString const& inNumber);
 };

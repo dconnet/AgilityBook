@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -164,7 +165,7 @@ void ARBConfigSubLevelList::ReorderBy(ARBConfigSubLevelList const& inList)
 
 
 bool ARBConfigSubLevelList::FindSubLevel(
-		tstring const& inName,
+		wxString const& inName,
 		ARBConfigSubLevelPtr* outLevel) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -181,7 +182,7 @@ bool ARBConfigSubLevelList::FindSubLevel(
 
 
 bool ARBConfigSubLevelList::AddSubLevel(
-		tstring const& inName,
+		wxString const& inName,
 		ARBConfigSubLevelPtr* outLevel)
 {
 	if (outLevel)
@@ -198,9 +199,9 @@ bool ARBConfigSubLevelList::AddSubLevel(
 }
 
 
-bool ARBConfigSubLevelList::DeleteSubLevel(tstring const& inName)
+bool ARBConfigSubLevelList::DeleteSubLevel(wxString const& inName)
 {
-	tstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

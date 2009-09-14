@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -45,7 +46,7 @@ SUITE(TestConfigOtherPoints)
 	TEST(GetTallyValidValues)
 	{
 		TODO_TEST
-	//	static void GetTallyValidValues(std::vector<tstring>& outValues);
+	//	static void GetTallyValidValues(std::vector<wxString>& outValues);
 	}
 
 
@@ -88,7 +89,7 @@ SUITE(TestConfigOtherPoints)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -125,7 +126,7 @@ SUITE(TestConfigOtherPointsList)
 	TEST(VerifyOtherPoints)
 	{
 		TODO_TEST
-	//	bool VerifyOtherPoints(tstring const& inName) const;
+	//	bool VerifyOtherPoints(wxString const& inName) const;
 	}
 
 
@@ -133,7 +134,7 @@ SUITE(TestConfigOtherPointsList)
 	{
 		TODO_TEST
 	//	bool FindOtherPoints(
-	//			tstring const& inName,
+	//			wxString const& inName,
 	//			ARBConfigOtherPointsPtr* outPoints = NULL) const;
 	}
 
@@ -142,6 +143,6 @@ SUITE(TestConfigOtherPointsList)
 	{
 		TODO_TEST
 	//	bool AddOtherPoints(ARBConfigOtherPointsPtr inOther);
-	//	bool DeleteOtherPoints(tstring const& inName);
+	//	bool DeleteOtherPoints(wxString const& inName);
 	}
 }

@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -87,7 +88,7 @@ SUITE(TestAgilityRecordBook)
 		TODO_TEST
 	//	bool Save(
 	//		ElementNodePtr outTree,
-	//		tstring const& inPgmVer,
+	//		wxString const& inPgmVer,
 	//		bool inCalendar,
 	//		bool inTraining,
 	//		bool inConfig,
@@ -118,7 +119,7 @@ SUITE(TestAgilityRecordBook)
 	{
 		TODO_TEST
 	//	size_t GetAllClubNames(
-	//			std::set<tstring>& outClubs,
+	//			std::set<wxString>& outClubs,
 	//			bool bInfo,
 	//			bool bVisibleOnly) const;
 	}
@@ -128,7 +129,7 @@ SUITE(TestAgilityRecordBook)
 	{
 		TODO_TEST
 	//	size_t GetAllTrialLocations(
-	//			std::set<tstring>& outLocations,
+	//			std::set<wxString>& outLocations,
 	//			bool bInfo,
 	//			bool bVisibleOnly) const;
 	}
@@ -138,30 +139,30 @@ SUITE(TestAgilityRecordBook)
 	{
 		TODO_TEST
 	//	size_t GetAllEventSubNames(
-	//			tstring const& inVenue,
+	//			wxString const& inVenue,
 	//			ARBConfigEventPtr inEvent,
-	//			std::set<tstring>& outNames) const;
+	//			std::set<wxString>& outNames) const;
 	}
 
 
 	TEST(GetAllHeights)
 	{
 		TODO_TEST
-	//	size_t GetAllHeights(std::set<tstring>& outHeights) const;
+	//	size_t GetAllHeights(std::set<wxString>& outHeights) const;
 	}
 
 
 	TEST(GetAllCallNames)
 	{
 		TODO_TEST
-	//	size_t GetAllCallNames(std::set<tstring>& outNames) const;
+	//	size_t GetAllCallNames(std::set<wxString>& outNames) const;
 	}
 
 
 	TEST(GetAllBreeds)
 	{
 		TODO_TEST
-	//	size_t GetAllBreeds(std::set<tstring>& outBreeds) const;
+	//	size_t GetAllBreeds(std::set<wxString>& outBreeds) const;
 	}
 
 
@@ -169,7 +170,7 @@ SUITE(TestAgilityRecordBook)
 	{
 		TODO_TEST
 	//	size_t GetAllJudges(
-	//			std::set<tstring>& outJudges,
+	//			std::set<wxString>& outJudges,
 	//			bool bInfo,
 	//			bool bVisibleOnly) const;
 	}
@@ -178,7 +179,7 @@ SUITE(TestAgilityRecordBook)
 	TEST(GetAllHandlers)
 	{
 		TODO_TEST
-	//	size_t GetAllHandlers(std::set<tstring>& outHandlers) const;
+	//	size_t GetAllHandlers(std::set<wxString>& outHandlers) const;
 	}
 
 
@@ -186,14 +187,14 @@ SUITE(TestAgilityRecordBook)
 	{
 		TODO_TEST
 	//	void GetAllPartners(
-	//			std::set<tstring>& outPartners,
-	//			std::set<tstring>& outDogs) const;
+	//			std::set<wxString>& outPartners,
+	//			std::set<wxString>& outDogs) const;
 	}
 
 
 	TEST(GetAllFaultTypes)
 	{
 		TODO_TEST
-	//	size_t GetAllFaultTypes(std::set<tstring>& outFaults) const;
+	//	size_t GetAllFaultTypes(std::set<wxString>& outFaults) const;
 	}
 }

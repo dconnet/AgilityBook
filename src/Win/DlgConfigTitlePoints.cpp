@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-10-06 DRC Removed ARB classes so it could be used to lifetime pts.
@@ -108,7 +109,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 			break;
 		case eTitleLifetime:
 			if (m_Venue->HasLifetimeName())
-				types.Add(m_Venue->GetLifetimeName().c_str());
+				types.Add(m_Venue->GetLifetimeName());
 			else
 				types.Add(_("IDS_TITLEPOINT_LIFETIME"));
 			break;

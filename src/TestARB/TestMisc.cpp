@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-12 DRC Created
  */
 
@@ -43,13 +44,20 @@ SUITE(TestMisc)
 {
 	TEST(Html_Sanitize)
 	{
-		tstring s(wxT("<&amp>"));
-		tstring s2 = SanitizeStringForHTML(s);
+		wxString s(wxT("<&amp>"));
+		wxString s2 = SanitizeStringForHTML(s);
 		CHECK(wxT("&lt;&amp;amp&gt;") == s2);
 		s = wxT("1\r\n2\n3");
 		s2 = SanitizeStringForHTML(s, true);
 		CHECK(wxT("1<br/>2<br/>3") == s2);
 		s2 = SanitizeStringForHTML(s, false);
 		CHECK(wxT("1\r\n2\n3") == s2);
+	}
+
+	TEST(Localization)
+	{
+		wxString s1(wxT("IDS_ARB_UNKNOWN_VERSION"));
+		wxString s2(_("IDS_ARB_UNKNOWN_VERSION"));
+		CHECK(s1 != s2);
 	}
 }

@@ -28,7 +28,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -94,7 +94,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -126,7 +126,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -161,7 +161,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -193,7 +193,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool
@@ -228,7 +228,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -260,7 +260,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
 				ModuleDefinitionFile="..\..\cal_usdaa\cal_usdaa.def"
 			/>
 			<Tool

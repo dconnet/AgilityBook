@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-28 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -186,18 +187,14 @@ typedef tr1::shared_ptr<CDlgListViewerDataExisting> CDlgListViewerDataExistingPt
 
 wxString CDlgListViewerDataExisting::OnNeedText(long iCol) const
 {
-	tstring str;
+	wxString str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
 		str = m_Existing->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
-		{
-			otstringstream tmp;
-			tmp << m_Existing->GetPoints();
-			str = tmp.str();
-		}
+		str << m_Existing->GetPoints();
 		break;
 	case COL_RUN_MQ_VENUE:
 		str = m_Existing->GetVenue();
@@ -218,7 +215,7 @@ wxString CDlgListViewerDataExisting::OnNeedText(long iCol) const
 		str = _("IDS_EXISTING_POINTS");
 		break;
 	}
-	return str.c_str();
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -265,7 +262,7 @@ typedef tr1::shared_ptr<CDlgListViewerDataRun> CDlgListViewerDataRunPtr;
 
 wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
 {
-	otstringstream str;
+	wxString str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -295,7 +292,7 @@ wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
 		if (m_Run->GetQ().Qualified() && m_Scoring)
 			str << m_Run->GetTitlePoints(m_Scoring);
 		else
-			str << '0';
+			str << wxT("0");
 		break;
 	case COL_RUN_MQ_VENUE:
 		str << m_Trial->GetClubs().GetPrimaryClubVenue();
@@ -342,13 +339,13 @@ wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
 		{
 			if (iter2 != m_Run->GetPartners().begin())
 				str << wxT(", ");
-			str << (*iter2)->GetHandler().c_str();
+			str << (*iter2)->GetHandler();
 			str << wxT("/");
-			str << (*iter2)->GetDog().c_str();
+			str << (*iter2)->GetDog();
 		}
 		break;
 	}
-	return str.str().c_str();
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -382,7 +379,7 @@ typedef tr1::shared_ptr<CDlgListViewerDataMultiQ> CDlgListViewerDataMultiQPtr;
 
 wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 {
-	tstring str;
+	wxString str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
@@ -399,7 +396,7 @@ wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 			str = m_Trial->GetClubs().GetPrimaryClubName();
 		break;
 	}
-	return str.c_str();
+	return str;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -703,7 +700,7 @@ typedef tr1::shared_ptr<CDlgListViewerDataLifetime> CDlgListViewerDataLifetimePt
 
 wxString CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 {
-	otstringstream str;
+	wxString str;
 	if (m_info)
 	{
 		switch (m_ColData->GetIndex(iCol))
@@ -716,13 +713,13 @@ wxString CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 			break;
 		case COL_OTHER_PTS:
 			if (0 < m_info->filtered)
-				str << m_info->points - m_info->filtered << wxT(" (") << m_info->points << ')';
+				str << m_info->points - m_info->filtered << wxT(" (") << m_info->points << wxT(")");
 			else
 				str << m_info->points;
 			break;
 		}
 	}
-	return str.str().c_str();
+	return str;
 }
 
 
@@ -733,7 +730,7 @@ int CDlgListViewerDataLifetime::Compare(
 	CDlgListViewerDataLifetimePtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
-	tstring str1, str2;
+	wxString str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -788,7 +785,7 @@ typedef tr1::shared_ptr<CDlgListViewerDataOther> CDlgListViewerDataOtherPtr;
 
 wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 {
-	otstringstream str;
+	wxString str;
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_OTHER_DATE:
@@ -805,7 +802,7 @@ wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 		break;
 	case COL_OTHER_CLUB:
 		if (m_info.m_pExisting)
-			str << wxT('[') << _("IDS_EXISTING_POINTS") << wxT(']');
+			str << wxT("[") << _("IDS_EXISTING_POINTS") << wxT("]");
 		else if (m_info.m_pTrial->GetClubs().GetPrimaryClub())
 			str << m_info.m_pTrial->GetClubs().GetPrimaryClubName();
 		break;
@@ -825,7 +822,7 @@ wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 		str << m_info.m_Score;
 		break;
 	}
-	return str.str().c_str();
+	return str;
 }
 
 
@@ -836,7 +833,7 @@ int CDlgListViewerDataOther::Compare(
 	CDlgListViewerDataOtherPtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
-	tstring str1, str2;
+	wxString str1, str2;
 	switch (m_ColData->GetIndex(inCol))
 	{
 	default:
@@ -954,12 +951,12 @@ wxString CDlgListViewerDataItem::OnNeedText(long iCol) const
 		break;
 
 	case COL_ITEM_NAME:
-		str = m_info.name.c_str();
+		str = m_info.name;
 		break;
 
 	case COL_ITEM_COMMENT:
 		if (m_info.pItem)
-			str = m_info.pItem->GetComment().c_str();
+			str = m_info.pItem->GetComment();
 		break;
 	}
 	return str;
@@ -1005,15 +1002,15 @@ int CDlgListViewerDataItem::Compare(
 		break;
 
 	case COL_ITEM_NAME:
-		str1 = m_info.name.c_str();
-		str2 = pData->m_info.name.c_str();
+		str1 = m_info.name;
+		str2 = pData->m_info.name;
 		break;
 
 	case COL_ITEM_COMMENT:
 		if (m_info.pItem)
-			str1 = m_info.pItem->GetComment().c_str();
+			str1 = m_info.pItem->GetComment();
 		if (pData->m_info.pItem)
-			str1 = pData->m_info.pItem->GetComment().c_str();
+			str1 = pData->m_info.pItem->GetComment();
 		break;
 	}
 	if (str1 < str2)
@@ -1100,7 +1097,7 @@ CDlgListViewer::CDlgListViewer(
 {
 	Create(inCaption, pParent);
 
-	std::set<tstring> subNames;
+	std::set<wxString> subNames;
 	std::vector<ARBDogExistingPointsPtr> existingRuns;
 
 	std::list<RunInfo>::const_iterator iterRuns;
@@ -1188,7 +1185,7 @@ CDlgListViewer::CDlgListViewer(
 {
 	Create(inCaption, pParent);
 
-	std::set<tstring> subNames;
+	std::set<wxString> subNames;
 	std::list<ScoringRunInfo>::const_iterator iter;
 	for (iter = inScoringRuns.begin(); iter != inScoringRuns.end(); ++iter)
 	{

@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2007-08-14 DRC Separated DTD defines into ARBStructure.h
  * @li 2007-08-02 DRC Added 'show' to 'Title', 'timestamp' to 'AgilityBook'
  *                    Added 'CalSite' to config. 'SecEmail'/etc to 'Calendar'
@@ -138,7 +139,7 @@ public:
 	 */
 	bool Save(
 		ElementNodePtr outTree,
-		tstring const& inPgmVer,
+		wxString const& inPgmVer,
 		bool inCalendar,
 		bool inTraining,
 		bool inConfig,
@@ -165,7 +166,7 @@ public:
 	bool Update(
 			int indent,
 			ARBConfig const& inConfigNew,
-			otstringstream& ioInfo,
+			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack);
 
 	//
@@ -180,7 +181,7 @@ public:
 	 * @return Number of clubs.
 	 */
 	size_t GetAllClubNames(
-			std::set<tstring>& outClubs,
+			std::set<wxString>& outClubs,
 			bool bInfo,
 			bool bVisibleOnly) const;
 
@@ -192,7 +193,7 @@ public:
 	 * @return Number of locations.
 	 */
 	size_t GetAllTrialLocations(
-			std::set<tstring>& outLocations,
+			std::set<wxString>& outLocations,
 			bool bInfo,
 			bool bVisibleOnly) const;
 
@@ -204,30 +205,30 @@ public:
 	 * @return Number of subnames.
 	 */
 	size_t GetAllEventSubNames(
-			tstring const& inVenue,
+			wxString const& inVenue,
 			ARBConfigEventPtr inEvent,
-			std::set<tstring>& outNames) const;
+			std::set<wxString>& outNames) const;
 
 	/**
 	 * Get all heights in use from existing runs.
 	 * @param outHeights List of heights.
 	 * @return Number of heights.
 	 */
-	size_t GetAllHeights(std::set<tstring>& outHeights) const;
+	size_t GetAllHeights(std::set<wxString>& outHeights) const;
 
 	/**
 	 * Get all callnames in use from existing runs.
 	 * @param outNames List of names.
 	 * @return Number of names.
 	 */
-	size_t GetAllCallNames(std::set<tstring>& outNames) const;
+	size_t GetAllCallNames(std::set<wxString>& outNames) const;
 
 	/**
 	 * Get all breeds in use from existing runs.
 	 * @param outBreeds List of breeds.
 	 * @return Number of breeds.
 	 */
-	size_t GetAllBreeds(std::set<tstring>& outBreeds) const;
+	size_t GetAllBreeds(std::set<wxString>& outBreeds) const;
 
 	/**
 	 * Get all judges in use from existing runs and Judges information.
@@ -237,7 +238,7 @@ public:
 	 * @return Number of judges.
 	 */
 	size_t GetAllJudges(
-			std::set<tstring>& outJudges,
+			std::set<wxString>& outJudges,
 			bool bInfo,
 			bool bVisibleOnly) const;
 
@@ -246,7 +247,7 @@ public:
 	 * @param outHandlers List of handlers.
 	 * @return Number of handlers.
 	 */
-	size_t GetAllHandlers(std::set<tstring>& outHandlers) const;
+	size_t GetAllHandlers(std::set<wxString>& outHandlers) const;
 
 	/**
 	 * Get all pairs partners in use from existing runs.
@@ -254,15 +255,15 @@ public:
 	 * @param outDogs List of dogs.
 	 */
 	void GetAllPartners(
-			std::set<tstring>& outPartners,
-			std::set<tstring>& outDogs) const;
+			std::set<wxString>& outPartners,
+			std::set<wxString>& outDogs) const;
 
 	/**
 	 * Get all fault types in use from existing runs and configuration.
 	 * @param outFaults List of faults.
 	 * @return Number of faults.
 	 */
-	size_t GetAllFaultTypes(std::set<tstring>& outFaults) const;
+	size_t GetAllFaultTypes(std::set<wxString>& outFaults) const;
 
 	/*
 	 * Getters.

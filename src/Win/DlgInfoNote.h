@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Add ability to see what was last selected.
  * @li 2008-01-01 DRC Added visible flag.
@@ -64,8 +65,8 @@ private:
 
 	CAgilityBookDoc* m_pDoc;
 	ARBInfo::eInfoType m_Type;
-	tstring m_Select;
-	std::set<tstring> m_NamesInUse;
+	wxString m_Select;
+	std::set<wxString> m_NamesInUse;
 	ARBInfoItemList const& m_InfoOrig;
 	ARBInfoItemList m_Info;
 	class NameInfo
@@ -78,10 +79,10 @@ private:
 			eDeleted
 		} eUsage;
 		NameInfo();
-		NameInfo(tstring const& inName);
+		NameInfo(wxString const& inName);
 		NameInfo(NameInfo const& rhs);
 		bool operator==(NameInfo const& rhs);
-		tstring m_Name;
+		wxString m_Name;
 		eUsage m_eInUse;
 		bool m_bHasData;
 	};

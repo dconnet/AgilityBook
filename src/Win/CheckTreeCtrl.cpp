@@ -44,6 +44,7 @@
  * [wxWidgets] The above comments are still pertinent.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  */
 
 #include "stdafx.h"
@@ -53,14 +54,13 @@
 #include "res/checked.xpm"
 #include "res/unchecked.xpm"
 
-#ifdef WIN32
-// GetState/SetState for state image lists only seems to work for Windows.
-// So we'll use the normal image list on other platforms.
-#define WX_TREE_HAS_STATE
-#endif
+
+IMPLEMENT_CLASS(CTreeCtrl, wxTreeCtrl)
 
 
-IMPLEMENT_CLASS(CCheckTreeCtrl, wxTreeCtrl)
+/////////////////////////////////////////////////////////////////////////////
+
+IMPLEMENT_CLASS(CCheckTreeCtrl, CTreeCtrl)
 
 
 DEFINE_EVENT_TYPE(wxEVT_COMMAND_TREE_CHECK_CHANGED)
@@ -70,13 +70,13 @@ CCheckTreeCtrl::CCheckTreeCtrl(
 		wxWindow* pParent,
 		const wxPoint& pos,
 		const wxSize& size)
-	: wxTreeCtrl()
+	: CTreeCtrl()
 	, m_stateList(16,16)
 	, m_stateNone(-1)
 	, m_stateUnChecked(-1)
 	, m_stateChecked(-1)
 {
-	wxTreeCtrl::Create(pParent, wxID_ANY, pos, size,
+	CTreeCtrl::Create(pParent, wxID_ANY, pos, size,
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CCheckTreeCtrl::OnClick), NULL, this);
 	Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CCheckTreeCtrl::OnKeyDown), NULL, this);
@@ -98,29 +98,21 @@ void CCheckTreeCtrl::ShowCheckbox(
 {
 	if (IsCheckVisible(hItem) && !bShow)
 	{
-#ifdef WX_TREE_HAS_STATE
-		wxTreeCtrl::SetState(hItem, m_stateNone);
-#else
-		wxTreeCtrl::SetItemImage(hItem, m_stateNone);
-#endif
+		SetItemState(hItem, m_stateNone);
 	}
 	else if (!IsCheckVisible(hItem) && bShow)
 	{
-#ifdef WX_TREE_HAS_STATE
-		wxTreeCtrl::SetState(hItem, m_stateUnChecked);
-#else
-		wxTreeCtrl::SetItemImage(hItem, m_stateUnChecked);
-#endif
+		SetItemState(hItem, m_stateUnChecked);
 	}
 }
 
 
 bool CCheckTreeCtrl::IsCheckVisible(wxTreeItemId hItem)
 {
+	int index = GetItemState(hItem);
 #ifdef WX_TREE_HAS_STATE
-	return wxTreeCtrl::GetState(hItem) != m_stateNone;
+	return index != m_stateNone;
 #else
-	int index = wxTreeCtrl::GetItemImage(hItem);
 	return index == m_stateChecked || index == m_stateUnChecked;
 #endif
 }
@@ -128,11 +120,7 @@ bool CCheckTreeCtrl::IsCheckVisible(wxTreeItemId hItem)
 
 bool CCheckTreeCtrl::GetChecked(wxTreeItemId hItem)
 {
-#ifdef WX_TREE_HAS_STATE
-	return wxTreeCtrl::GetState(hItem) == m_stateChecked;
-#else
-	return wxTreeCtrl::GetItemImage(hItem) == m_stateChecked;
-#endif
+	return GetItemState(hItem) == m_stateChecked;
 }
 
 
@@ -157,11 +145,7 @@ bool CCheckTreeCtrl::SetChecked(
 			if (bCascade)
 				Cascade(hItem, false);
 		}
-#ifdef WX_TREE_HAS_STATE
-		wxTreeCtrl::SetState(hItem, icon);
-#else
-		wxTreeCtrl::SetItemImage(hItem, icon);
-#endif
+		SetItemState(hItem, icon);
 		return true;
 	}
 	else

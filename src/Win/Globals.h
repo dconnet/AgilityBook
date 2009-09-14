@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-14 DRC Moved from AgilityBook.h
  */
 
@@ -51,8 +52,8 @@
  */
 extern size_t BreakLine(
 		char inSep,
-		tstring inStr,
-		std::vector<tstring>& outFields);
+		wxString inStr,
+		std::vector<wxString>& outFields);
 
 
 /**

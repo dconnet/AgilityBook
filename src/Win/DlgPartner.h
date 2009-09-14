@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
@@ -46,8 +47,8 @@ class CDlgPartner : public wxDialog
 public:
 	CDlgPartner(
 			ARBDogRunPartnerPtr partner,
-			std::set<tstring> const& inHandlers,
-			std::set<tstring> const& inDogs,
+			std::set<wxString> const& inHandlers,
+			std::set<wxString> const& inDogs,
 			wxWindow* pParent = NULL);
 
 private:

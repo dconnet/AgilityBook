@@ -33,6 +33,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-08 DRC Ported to wxWidgets.
  * @li 2008-11-19 DRC Added SelectDog()
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -48,12 +49,12 @@
  */
 
 #include "ARBBase.h"
+#include "CheckTreeCtrl.h"
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "IconList.h"
 #include <vector>
 #include <wx/docview.h>
-#include <wx/treectrl.h>
 class CAgilityBookTreeData;
 class CAgilityBookTreeView;
 
@@ -193,7 +194,7 @@ private:
 	void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
 	void PrintLine(
-			otstringstream& data,
+			wxString& data,
 			wxTreeItemId id,
 			int indent) const;
 	wxString GetPrintDataAsHtmlTable() const;
@@ -204,9 +205,9 @@ private:
 	//		wxTreeItemId hItem,
 	//		int indent) const;
 
-	wxTreeCtrl* m_Ctrl;
+	CTreeCtrl* m_Ctrl;
 	CIconList m_ImageList;
-#ifdef WIN32
+#ifdef WX_TREE_HAS_STATE
 	wxImageList m_ImageListStates;
 	int m_idxEmpty;
 	int m_idxChecked;

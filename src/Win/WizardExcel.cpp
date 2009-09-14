@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-24 DRC Removed option to export by array, completed wx port.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-09-30 DRC Created
@@ -984,9 +985,7 @@ bool IWizardSpreadSheet::GetRowCol(
 	};
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
-		otstringstream str;
-		str << sc_ColumnNames[inCol] << inRow + 1;
-		outCell = str.str().c_str();
+		outCell << sc_ColumnNames[inCol] << inRow + 1;
 		return true;
 	}
 	else

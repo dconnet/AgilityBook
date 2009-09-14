@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-07 DRC Created
@@ -114,7 +115,7 @@ bool ARBInfo::Load(
 		ElementNodePtr element = inTree->GetElementNode(i);
 		if (!element)
 			continue;
-		tstring const& name = element->GetName();
+		wxString const& name = element->GetName();
 		if (name == TREE_CLUBINFO)
 		{
 			// Ignore any errors.

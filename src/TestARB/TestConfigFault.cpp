@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -102,10 +103,10 @@ SUITE(TestConfigFault)
 	TEST_FIXTURE(ConfigFaultData, Load1)
 	{
 		ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(fault1->Load(ConfigFault1, ARBVersion(1, 0), callback));
-		tstring name = fault1->GetGenericName();
+		wxString name = fault1->GetGenericName();
 		CHECK(!name.empty());
 	}
 
@@ -113,10 +114,10 @@ SUITE(TestConfigFault)
 	TEST_FIXTURE(ConfigFaultData, Load2)
 	{
 		ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(fault1->Load(ConfigFault2, ARBVersion(2, 0), callback));
-		tstring name = fault1->GetGenericName();
+		wxString name = fault1->GetGenericName();
 		CHECK(!name.empty());
 	}
 
@@ -124,10 +125,10 @@ SUITE(TestConfigFault)
 	TEST_FIXTURE(ConfigFaultData, Load3)
 	{
 		ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(!fault1->Load(ConfigFault2, ARBVersion(1, 0), callback));
-		tstring name = fault1->GetGenericName();
+		wxString name = fault1->GetGenericName();
 		CHECK(name.empty());
 	}
 
@@ -135,7 +136,7 @@ SUITE(TestConfigFault)
 	TEST_FIXTURE(ConfigFaultData, Save)
 	{
 		ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		fault1->Load(ConfigFault2, ARBVersion(2, 0), callback);
 		ElementNodePtr ele = ElementNode::New();
@@ -149,7 +150,7 @@ SUITE(TestConfigFaultList)
 	TEST_FIXTURE(ConfigFaultData, Load1)
 	{
 		ARBConfigFaultList faultlist;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 		CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
@@ -163,7 +164,7 @@ SUITE(TestConfigFaultList)
 	TEST_FIXTURE(ConfigFaultData, Find)
 	{
 		ARBConfigFaultList faultlist;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 		CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
@@ -175,7 +176,7 @@ SUITE(TestConfigFaultList)
 	TEST(AddDelete)
 	{
 		ARBConfigFaultList faultlist;
-		tstring errs;
+		wxString errs;
 		ARBErrorCallback callback(errs);
 		CHECK(faultlist.AddFault(wxT("fault")));
 		CHECK_EQUAL(1u, faultlist.size());

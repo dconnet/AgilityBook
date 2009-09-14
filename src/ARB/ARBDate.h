@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Make time_t ctors explicit to prevent casts from bools.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added inForceOutput to GetString.
@@ -83,7 +84,7 @@ public:
 	 * @return Parsed date, if parse fails, date is invalid.
 	 */
 	static ARBDate FromString(
-			tstring const& inDate,
+			wxString const& inDate,
 			DateFormat inFormat);
 
 	/**
@@ -93,7 +94,7 @@ public:
 	 * @param inFormat Date format.
 	 * @return Date range string
 	 */
-	static tstring GetValidDateString(
+	static wxString GetValidDateString(
 			ARBDate const& inFrom,
 			ARBDate const& inTo,
 			DateFormat inFormat = eDashYMD);
@@ -285,7 +286,7 @@ public:
 	 * @param inForceOutput Always return a string, even if the date is not valid.
 	 * @return Date in the format defined by inFormat.
 	 */
-	tstring GetString(
+	wxString GetString(
 			DateFormat inFormat,
 			bool inForceOutput = false) const;
 

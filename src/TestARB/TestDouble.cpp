@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-12 DRC Created
  */
 
@@ -45,7 +46,7 @@ SUITE(TestDouble)
 	{
 		double p = 3.14159265358979323846;
 
-		tstring s = ARBDouble::str(p);
+		wxString s = ARBDouble::str(p);
 		CHECK(wxT("3.14") == s);
 		s = ARBDouble::str(p, 4);
 		CHECK(wxT("3.1416") == s);

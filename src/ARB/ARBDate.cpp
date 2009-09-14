@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added inForceOutput to GetString.
  * @li 2005-07-05 DRC Added a new formatting option.
@@ -182,21 +183,21 @@ ARBDate ARBDate::Today()
 
 
 static int ParseFields(
-		tstring inDate,
+		wxString inDate,
 		char sep,
 		int& val1,
 		int& val2,
 		int& val3)
 {
 	int nVals = 0;
-	tstring::size_type pos = inDate.find(sep);
-	if (tstring::npos != pos)
+	wxString::size_type pos = inDate.find(sep);
+	if (wxString::npos != pos)
 	{
 		val1 = static_cast<short>(tstringUtil::atol(inDate));
 		++nVals;
 		inDate = inDate.substr(pos+1);
 		pos = inDate.find(sep);
-		if (tstring::npos != pos)
+		if (wxString::npos != pos)
 		{
 			val2 = static_cast<short>(tstringUtil::atol(inDate));
 			++nVals;
@@ -211,11 +212,11 @@ static int ParseFields(
 
 // static
 ARBDate ARBDate::FromString(
-		tstring const& inDate,
+		wxString const& inDate,
 		ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
-	tstring value(inDate);
+	wxString value(inDate);
 	if (0 < inDate.length())
 	{
 		int val1 = 0, val2 = 0, val3 = 0;
@@ -271,22 +272,22 @@ ARBDate ARBDate::FromString(
 
 
 // static
-tstring ARBDate::GetValidDateString(
+wxString ARBDate::GetValidDateString(
 		ARBDate const& inFrom,
 		ARBDate const& inTo,
 		DateFormat inFormat)
 {
-	tstring str;
+	wxString str;
 	if (inFrom.IsValid() || inTo.IsValid())
 	{
 		str += wxT("[");
 		if (inFrom.IsValid())
-			str += inFrom.GetString(inFormat).c_str();
+			str += inFrom.GetString(inFormat);
 		else
 			str += wxT("*");
 		str += wxT("-");
 		if (inTo.IsValid())
-			str += inTo.GetString(inFormat).c_str();
+			str += inTo.GetString(inFormat);
 		else
 			str += wxT("*");
 		str += wxT("]");
@@ -371,105 +372,61 @@ bool ARBDate::SetDate(
 }
 
 
-tstring ARBDate::GetString(
+wxString ARBDate::GetString(
 	DateFormat inFormat,
 	bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
 		return wxT("");
-	tstring date;
+	wxString date;
 	int yr = 0;
 	int mon = 0;
 	int day = 0;
 	if (IsValid())
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
-	otstringstream str;
 	switch (inFormat)
 	{
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
-		str.fill('0');
-		str.width(2);
-		str << mon << wxT("-");
-		str.width(2);
-		str << day << wxT("-");
-		str.width(4);
-		str << yr;
+		date = wxString::Format(wxT("%02d-%02d-%04d"), mon, day, yr);
 		break;
 	case eYYYYMMDD:
-		str.fill('0');
-		str.width(4);
-		str << yr;
-		str.width(2);
-		str << mon;
-		str.width(2);
-		str << day;
+		date = wxString::Format(wxT("%04d%02d%02d"), yr, mon, day);
 		break;
 	default:				///< YYYY-MM-DD or MM/DD/YYYY
 	case eSlashMMDDYYYY:	///< MM/DD/YYYY
-		str.fill('0');
-		str.width(2);
-		str << mon << wxT("/");
-		str.width(2);
-		str << day << wxT("/");
-		str.width(4);
-		str << yr;
+		date = wxString::Format(wxT("%02d/%02d/%04d"), mon, day, yr);
 		break;
 	case eDashYYYYMMDD:		///< YYYY-MM-DD
-		str.fill('0');
-		str.width(4);
-		str << yr << wxT("-");
-		str.width(2);
-		str << mon << wxT("-");
-		str.width(2);
-		str << day;
+		date = wxString::Format(wxT("%04d-%02d-%02d"), yr, mon, day);
 		break;
 	case eSlashYYYYMMDD:	///< YYYY/MM/DD
-		str.fill('0');
-		str.width(4);
-		str << yr << wxT("/");
-		str.width(2);
-		str << mon << wxT("/");
-		str.width(2);
-		str << day;
+		date = wxString::Format(wxT("%04d/%02d/%02d"), yr, mon, day);
 		break;
 	case eDashDDMMYYYY:		///< DD-MM-YYYY
-		str.fill('0');
-		str.width(2);
-		str << day << wxT("-");
-		str.width(2);
-		str << mon << wxT("-");
-		str.width(4);
-		str << yr;
+		date = wxString::Format(wxT("%02d-%02d-%04d"), day, mon, yr);
 		break;
 	case eSlashDDMMYYYY:	///< DD/MM/YYYY
-		str.fill('0');
-		str.width(2);
-		str << day << wxT("/");
-		str.width(2);
-		str << mon << wxT("/");
-		str.width(4);
-		str << yr;
+		date = wxString::Format(wxT("%02d/%02d/%04d"), day, mon, yr);
 		break;
 	case eDashMDY:	///< M-D-Y
-		str << mon << wxT("-") << day << wxT("-") << yr;
+		date = wxString::Format(wxT("%d-%d-%d"), mon, day, yr);
 		break;
 	case eSlashMDY:	///< M/D/Y
-		str << mon << wxT("/") << day << wxT("/") << yr;
+		date = wxString::Format(wxT("%d/%d/%d"), mon, day, yr);
 		break;
 	case eDashYMD:	///< Y-M-D
-		str << yr << wxT("-") << mon << wxT("-") << day;
+		date = wxString::Format(wxT("%d-%d-%d"), yr, mon, day);
 		break;
 	case eSlashYMD:	///< Y/M/D
-		str << yr << wxT("/") << mon << wxT("/") << day;
+		date = wxString::Format(wxT("%d/%d/%d"), yr, mon, day);
 		break;
 	case eDashDMY:	///< D-M-Y
-		str << day << wxT("-") << mon << wxT("-") << yr;
+		date = wxString::Format(wxT("%d-%d-%d"), day, mon, yr);
 		break;
 	case eSlashDMY:	///< D/M/Y
-		str << day << wxT("/") << mon << wxT("/") << yr;
+		date = wxString::Format(wxT("%d/%d/%d"), day, mon, yr);
 		break;
 	}
-	date = str.str();
 	return date;
 }
 

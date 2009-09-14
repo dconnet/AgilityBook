@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-05 DRC Added iCalendar support.
  * @li 2005-06-25 DRC Cleaned up reference counting when returning a pointer.
@@ -145,13 +146,13 @@ public:
 	 * Get a UID. Used when generating iCalendar entries.
 	 * @param inType UID type to generate.
 	 */
-	tstring GetUID(eUidType inType) const;
+	wxString GetUID(eUidType inType) const;
 
 	/**
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual tstring GetGenericName() const
+	virtual wxString GetGenericName() const
 	{
 		return m_Venue + wxT(" ") + m_Club + wxT(" ") + m_Location;
 	}
@@ -161,7 +162,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<tstring>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
 
 	/**
 	 * Load a calendar entry
@@ -300,27 +301,27 @@ public:
 	{
 		m_bTentative = inTentative;
 	}
-	tstring const& GetLocation() const
+	wxString const& GetLocation() const
 	{
 		return m_Location;
 	}
-	void SetLocation(tstring const& inLocation)
+	void SetLocation(wxString const& inLocation)
 	{
 		m_Location = inLocation;
 	}
-	tstring const& GetClub() const
+	wxString const& GetClub() const
 	{
 		return m_Club;
 	}
-	void SetClub(tstring const& inClub)
+	void SetClub(wxString const& inClub)
 	{
 		m_Club = inClub;
 	}
-	tstring const& GetVenue() const
+	wxString const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(tstring const& inVenue)
+	void SetVenue(wxString const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
@@ -340,43 +341,43 @@ public:
 	{
 		m_eAccommodations = inAccom;
 	}
-	tstring const& GetConfirmation() const
+	wxString const& GetConfirmation() const
 	{
 		return m_Confirmation;
 	}
-	void SetConfirmation(tstring const& inConfirmation)
+	void SetConfirmation(wxString const& inConfirmation)
 	{
 		m_Confirmation = inConfirmation;
 	}
-	tstring const& GetSecEmail() const
+	wxString const& GetSecEmail() const
 	{
 		return m_SecEmail;
 	}
-	void SetSecEmail(tstring const& inAddr)
+	void SetSecEmail(wxString const& inAddr)
 	{
 		m_SecEmail = inAddr;
 	}
-	tstring const& GetPremiumURL() const
+	wxString const& GetPremiumURL() const
 	{
 		return m_PremiumURL;
 	}
-	void SetPremiumURL(tstring const& inURL)
+	void SetPremiumURL(wxString const& inURL)
 	{
 		m_PremiumURL = inURL;
 	}
-	tstring const& GetOnlineURL() const
+	wxString const& GetOnlineURL() const
 	{
 		return m_OnlineURL;
 	}
-	void SetOnlineURL(tstring const& inURL)
+	void SetOnlineURL(wxString const& inURL)
 	{
 		m_OnlineURL = inURL;
 	}
-	tstring const& GetNote() const
+	wxString const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(tstring const& inNote)
+	void SetNote(wxString const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -388,16 +389,16 @@ private:
 	ARBDate m_DateDraw;
 	ARBDate m_DateClosing;
 	bool m_bTentative;
-	tstring m_Location;
-	tstring m_Club;
-	tstring m_Venue;
+	wxString m_Location;
+	wxString m_Club;
+	wxString m_Venue;
 	eEntry m_eEntered;
 	eAccommodations m_eAccommodations;
-	tstring m_Confirmation;
-	tstring m_SecEmail;
-	tstring m_PremiumURL;
-	tstring m_OnlineURL;
-	tstring m_Note;
+	wxString m_Confirmation;
+	wxString m_SecEmail;
+	wxString m_PremiumURL;
+	wxString m_OnlineURL;
+	wxString m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////

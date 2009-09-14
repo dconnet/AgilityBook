@@ -39,6 +39,7 @@
  * (Plus, the paranoia checking should be done when the file is loaded.)
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-14 DRC Moved 'Titles' to 'Venue'.
@@ -92,14 +93,14 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 {
 	bool bAdded = false;
 	bool done = false;
-	tstring name;
+	wxString name;
 	switch (m_Action)
 	{
 	case CDlgConfigVenue::eDivisions:
 		while (!done)
 		{
 			done = true;
-			CDlgName dlg(name.c_str(), _("IDS_DIVISION_NAME"), m_pDlg);
+			CDlgName dlg(name, _("IDS_DIVISION_NAME"), m_pDlg);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				name = dlg.GetName();
@@ -214,11 +215,11 @@ CDlgConfigVenue::CDlgConfigVenue(
 	, m_pVenueOrig(pVenue)
 	, m_pVenue(pVenue->Clone())
 	, m_DlgFixup()
-	, m_Name(m_pVenue->GetName().c_str())
-	, m_LongName(m_pVenue->GetLongName().c_str())
-	, m_URL(m_pVenue->GetURL().c_str())
-	, m_LifetimeName(m_pVenue->GetLifetimeName().c_str())
-	, m_Desc(m_pVenue->GetDesc().c_str())
+	, m_Name(m_pVenue->GetName())
+	, m_LongName(m_pVenue->GetLongName())
+	, m_URL(m_pVenue->GetURL())
+	, m_LifetimeName(m_pVenue->GetLifetimeName())
+	, m_Desc(m_pVenue->GetDesc())
 	, m_ctrlItems(NULL)
 	, m_ctrlNew(NULL)
 	, m_ctrlEdit(NULL)
@@ -617,8 +618,8 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 		return;
 	m_URL.Replace(wxT("\""), wxT(""));
 
-	tstring name(m_Name.c_str());
-	tstring oldName = m_pVenue->GetName();
+	wxString name(m_Name);
+	wxString oldName = m_pVenue->GetName();
 	if (oldName != name)
 	{
 		if (m_Config.GetVenues().FindVenue(name))
@@ -629,10 +630,10 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 		m_pVenue->SetName(name);
 	}
 
-	m_pVenue->SetLongName(m_LongName.c_str());
-	m_pVenue->SetURL(m_URL.c_str());
-	m_pVenue->SetDesc(m_Desc.c_str());
-	m_pVenue->SetLifetimeName(m_LifetimeName.c_str());
+	m_pVenue->SetLongName(m_LongName);
+	m_pVenue->SetURL(m_URL);
+	m_pVenue->SetDesc(m_Desc);
+	m_pVenue->SetLifetimeName(m_LifetimeName);
 
 	if (oldName != name)
 		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(oldName, name));

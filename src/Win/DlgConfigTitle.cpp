@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-09-06 DRC Added roman numeral support
  * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
@@ -91,10 +92,10 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Title(inTitle)
-	, m_Name(inTitle->GetName().c_str())
+	, m_Name(inTitle->GetName())
 	, m_Prefix(inTitle->GetPrefix())
-	, m_LongName(inTitle->GetLongName().c_str())
-	, m_Desc(inTitle->GetDescription().c_str())
+	, m_LongName(inTitle->GetLongName())
+	, m_Desc(inTitle->GetDescription())
 	, m_AllowMany(0 < inTitle->GetMultiple())
 	, m_Multiple(inTitle->GetMultiple())
 	, m_DateFrom(inTitle->GetValidFrom().IsValid())
@@ -329,9 +330,9 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 		m_Multiple = 0;
 	}
 
-	m_Title->SetName(m_Name.c_str());
-	m_Title->SetLongName(m_LongName.c_str());
-	m_Title->SetDescription(m_Desc.c_str());
+	m_Title->SetName(m_Name);
+	m_Title->SetLongName(m_LongName);
+	m_Title->SetDescription(m_Desc);
 	m_Title->SetPrefix(m_Prefix);
 	m_Title->SetMultiple(m_Multiple);
 	if (0 <= m_ctrlStyle->GetSelection())

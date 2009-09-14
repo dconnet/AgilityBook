@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-12-14 DRC Ported to wxWidgets.
  * @li 2006-12-10 DRC Simplified download links.
  * @li 2005-02-08 DRC Added another link.
@@ -238,9 +239,9 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 void CDlgAbout::OnHelpEmail(wxHyperlinkEvent& evt)
 {
 	wxString url = evt.GetURL();
-	otstringstream str;
-	str << ARB_VER_MAJOR << '.' << ARB_VER_MINOR << '.' << ARB_VER_DOT;
-	url.Replace(wxT("%VERSION%"), str.str().c_str());
+	wxString str;
+	str << ARB_VER_MAJOR << wxT(".") << ARB_VER_MINOR << wxT(".") << ARB_VER_DOT;
+	url.Replace(wxT("%VERSION%"), str);
 	wxLaunchDefaultBrowser(url);
 }
 

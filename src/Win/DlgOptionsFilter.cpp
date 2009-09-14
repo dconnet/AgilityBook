@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Fixed dates (again). Damn bool->time_t autoconversion.
  * @li 2009-08-10 DRC One group box was still off, dates are not stored
  *                correctly, and saving named filters is duplicating names.
@@ -98,16 +99,16 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlFilters->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnSelchangeFilterNames), NULL, this);
 	m_ctrlFilters->SetHelpText(_("HIDC_OPT_FILTER_NAMES"));
 	m_ctrlFilters->SetToolTip(_("HIDC_OPT_FILTER_NAMES"));
-	std::vector<tstring> filterNames;
+	std::vector<wxString> filterNames;
 	m_FilterOptions.GetAllFilterNames(filterNames);
-	for (std::vector<tstring>::iterator iterName = filterNames.begin();
+	for (std::vector<wxString>::iterator iterName = filterNames.begin();
 		iterName != filterNames.end();
 		++iterName)
 	{
-		int idx = m_ctrlFilters->Append((*iterName).c_str());
+		int idx = m_ctrlFilters->Append((*iterName));
 		if ((*iterName) == m_FilterOptions.GetCurrentFilter())
 		{
-			m_FilterName = m_FilterOptions.GetCurrentFilter().c_str();
+			m_FilterName = m_FilterOptions.GetCurrentFilter();
 			m_ctrlFilters->SetSelection(idx);
 		}
 	}
@@ -383,12 +384,12 @@ void CDlgOptionsFilter::FillControls()
 
 	// This is reset everytime just to make checking items easier
 	m_ctrlNames->Clear();
-	std::set<tstring> allLogNames;
+	std::set<wxString> allLogNames;
 	m_pDoc->Book().GetTraining().GetAllNames(allLogNames);
-	std::set<tstring> names;
+	std::set<wxString> names;
 	m_FilterOptions.GetTrainingFilterNames(names);
 	bool bFix = false;
-	for (std::set<tstring>::iterator iter = names.begin();
+	for (std::set<wxString>::iterator iter = names.begin();
 		iter != names.end();
 		)
 	{
@@ -406,11 +407,11 @@ void CDlgOptionsFilter::FillControls()
 	}
 	if (bFix)
 		m_FilterOptions.SetTrainingFilterNames(names);
-	for (std::set<tstring>::iterator iterLog = allLogNames.begin();
+	for (std::set<wxString>::iterator iterLog = allLogNames.begin();
 		iterLog != allLogNames.end();
 		++iterLog)
 	{
-		int item = m_ctrlNames->Append((*iterLog).c_str());
+		int item = m_ctrlNames->Append((*iterLog));
 		if (names.end() != names.find((*iterLog)))
 			m_ctrlNames->Check(item, true);
 	}
@@ -442,7 +443,7 @@ void CDlgOptionsFilter::FillControls()
 			++iVenue)
 		{
 			ARBConfigVenuePtr pVenue = (*iVenue);
-			wxTreeItemId hVenue = m_ctrlVenue->AppendItem(root, pVenue->GetName().c_str());
+			wxTreeItemId hVenue = m_ctrlVenue->AppendItem(root, pVenue->GetName());
 			m_ctrlVenue->ShowCheckbox(hVenue, true);
 			if (m_FilterOptions.FilterExists(pVenue->GetName(), wxT(""), wxT("")))
 				m_ctrlVenue->SetChecked(hVenue, true);
@@ -451,7 +452,7 @@ void CDlgOptionsFilter::FillControls()
 				++iterDiv)
 			{
 				ARBConfigDivisionPtr pDiv = *iterDiv;
-				wxTreeItemId hDiv = m_ctrlVenue->AppendItem(hVenue, pDiv->GetName().c_str());
+				wxTreeItemId hDiv = m_ctrlVenue->AppendItem(hVenue, pDiv->GetName());
 				m_ctrlVenue->ShowCheckbox(hDiv, true);
 				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), wxT("")))
 				{
@@ -463,7 +464,7 @@ void CDlgOptionsFilter::FillControls()
 					++iterLevel)
 				{
 					ARBConfigLevelPtr pLevel = *iterLevel;
-					wxTreeItemId hLevel = m_ctrlVenue->AppendItem(hDiv, pLevel->GetName().c_str());
+					wxTreeItemId hLevel = m_ctrlVenue->AppendItem(hDiv, pLevel->GetName());
 					if (0 < pLevel->GetSubLevels().size())
 					{
 						m_ctrlVenue->ShowCheckbox(hLevel, false);
@@ -472,7 +473,7 @@ void CDlgOptionsFilter::FillControls()
 							++iterSubLevel)
 						{
 							ARBConfigSubLevelPtr pSubLevel = *iterSubLevel;
-							wxTreeItemId hSubLevel = m_ctrlVenue->AppendItem(hLevel, pSubLevel->GetName().c_str());
+							wxTreeItemId hSubLevel = m_ctrlVenue->AppendItem(hLevel, pSubLevel->GetName());
 							m_ctrlVenue->ShowCheckbox(hSubLevel, true);
 							if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), pSubLevel->GetName()))
 							{
@@ -565,13 +566,13 @@ void CDlgOptionsFilter::FillFilter(
 			{
 			default:
 			case 3:
-				filter.level = rawFilter[2].c_str();
+				filter.level = rawFilter[2];
 				// fallthru
 			case 2:
-				filter.division = rawFilter[1].c_str();
+				filter.division = rawFilter[1];
 				// fallthru
 			case 1:
-				filter.venue = rawFilter[0].c_str();
+				filter.venue = rawFilter[0];
 			}
 			outVenues.push_back(filter);
 		}
@@ -605,8 +606,7 @@ void CDlgOptionsFilter::OnSelchangeFilterNames(wxCommandEvent& evt)
 	int idx = m_ctrlFilters->GetSelection();
 	if (0 <= idx)
 	{
-		wxString str = m_ctrlFilters->GetString(idx);
-		m_FilterOptions.SetCurrentFilter(str.c_str());
+		m_FilterOptions.SetCurrentFilter(m_ctrlFilters->GetString(idx));
 		FillControls();
 		TransferDataToWindow();
 	}
@@ -621,7 +621,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesSave(wxCommandEvent& evt)
 		return;
 	if (!m_FilterName.empty())
 	{
-		if (m_FilterOptions.AddFilter(m_FilterName.c_str()))
+		if (m_FilterOptions.AddFilter(m_FilterName))
 			m_ctrlFilters->Append(m_FilterName);
 	}
 	else
@@ -638,7 +638,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesDelete(wxCommandEvent& evt)
 		int idx = m_ctrlFilters->FindString(m_FilterName, true);
 		if (0 <= idx)
 		{
-			tstring name = m_FilterName.c_str();
+			wxString name = m_FilterName;
 			m_FilterOptions.DeleteFilter(name);
 			m_ctrlFilters->Delete(idx);
 			m_FilterName.clear();
@@ -694,13 +694,12 @@ void CDlgOptionsFilter::OnFilterLog(wxCommandEvent& evt)
 void CDlgOptionsFilter::OnFilterLogNames(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	std::set<tstring> names;
+	std::set<wxString> names;
 	for (unsigned int item = 0; item < m_ctrlNames->GetCount(); ++item)
 	{
 		if (m_ctrlNames->IsChecked(item))
 		{
-			wxString str = m_ctrlNames->GetString(item);
-			names.insert(str.c_str());
+			names.insert(m_ctrlNames->GetString(item));
 		}
 	}
 	m_FilterOptions.SetTrainingFilterNames(names);

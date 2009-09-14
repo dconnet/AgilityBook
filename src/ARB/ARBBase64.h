@@ -35,10 +35,11 @@
  *  http://www.codeproject.com/string/ammimeutils.asp
  *  AMMimeUtils, posted 3/23/2001 by Anders Molin
  *
- * Note, we are using tstring's mainly for consistency.
+ * Note, we are using wxString's mainly for consistency.
  * The actual contained data is still 8bit chars.
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2004-03-06 DRC Created
  */
 
@@ -57,7 +58,7 @@ public:
 	 * @note User must call Release() on outBinData
 	 */
 	static bool Decode(
-			tstring const& inBase64,
+			wxString const& inBase64,
 			unsigned char*& outBinData,
 			size_t& outBytes);
 
@@ -77,5 +78,5 @@ public:
 	static bool Encode(
 			unsigned char const* inBinData,
 			size_t inBytes,
-			tstring& outData);
+			wxString& outData);
 };

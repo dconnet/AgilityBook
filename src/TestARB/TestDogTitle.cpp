@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -75,7 +76,7 @@ SUITE(TestDogTitle)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const;
+	//	virtual wxString GetGenericName() const;
 	}
 
 
@@ -127,7 +128,7 @@ SUITE(TestDogTitleList)
 	TEST(NumTitlesInVenue)
 	{
 		TODO_TEST
-	//	int NumTitlesInVenue(tstring const& inVenue) const;
+	//	int NumTitlesInVenue(wxString const& inVenue) const;
 	}
 
 
@@ -135,8 +136,8 @@ SUITE(TestDogTitleList)
 	{
 		TODO_TEST
 	//	bool FindTitle(
-	//			tstring const& inVenue,
-	//			tstring const& inTitle,
+	//			wxString const& inVenue,
+	//			wxString const& inTitle,
 	//			ARBDogTitlePtr* outTitle = NULL) const;
 	}
 
@@ -145,8 +146,8 @@ SUITE(TestDogTitleList)
 	{
 		TODO_TEST
 	//	short FindMaxInstance(
-	//			tstring const& inVenue,
-	//			tstring const& inTitle) const;
+	//			wxString const& inVenue,
+	//			wxString const& inTitle) const;
 	}
 
 
@@ -154,15 +155,15 @@ SUITE(TestDogTitleList)
 	{
 		TODO_TEST
 	//	int RenameVenue(
-	//			tstring const& inOldVenue,
-	//			tstring const& inNewVenue);
+	//			wxString const& inOldVenue,
+	//			wxString const& inNewVenue);
 	}
 
 
 	TEST(DeleteVenue)
 	{
 		TODO_TEST
-	//	int DeleteVenue(tstring const& inVenue);
+	//	int DeleteVenue(wxString const& inVenue);
 	}
 
 
@@ -170,8 +171,8 @@ SUITE(TestDogTitleList)
 	{
 		TODO_TEST
 	//	int NumTitlesInUse(
-	//			tstring const& inVenue,
-	//			tstring const& inTitle) const;
+	//			wxString const& inVenue,
+	//			wxString const& inTitle) const;
 	}
 
 
@@ -179,9 +180,9 @@ SUITE(TestDogTitleList)
 	{
 		TODO_TEST
 	//	int RenameTitle(
-	//			tstring const& inVenue,
-	//			tstring const& inOldTitle,
-	//			tstring const& inNewTitle);
+	//			wxString const& inVenue,
+	//			wxString const& inOldTitle,
+	//			wxString const& inNewTitle);
 	}
 
 

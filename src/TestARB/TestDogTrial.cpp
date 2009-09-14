@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -76,7 +77,7 @@ SUITE(TestDogTrial)
 	TEST(GenName)
 	{
 		TODO_TEST
-	//	virtual tstring GetGenericName() const
+	//	virtual wxString GetGenericName() const
 	}
 
 
@@ -110,15 +111,15 @@ SUITE(TestDogTrial)
 		TODO_TEST
 	//	short GetSpeedPoints(
 	//			ARBConfig const& inConfig,
-	//			tstring const& inDiv,
-	//			tstring const& inLevel) const;
+	//			wxString const& inDiv,
+	//			wxString const& inLevel) const;
 	}
 
 
 	TEST(HasVenue)
 	{
 		TODO_TEST
-	//	bool HasVenue(tstring const& inVenue) const;
+	//	bool HasVenue(wxString const& inVenue) const;
 	}
 }
 
@@ -152,7 +153,7 @@ SUITE(TestDogTrialList)
 	TEST(NumTrialsInVenue)
 	{
 		TODO_TEST
-	//	int NumTrialsInVenue(tstring const& inVenue) const;
+	//	int NumTrialsInVenue(wxString const& inVenue) const;
 	}
 
 
@@ -160,22 +161,22 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int RenameVenue(
-	//			tstring const& inOldVenue,
-	//			tstring const& inNewVenue);
+	//			wxString const& inOldVenue,
+	//			wxString const& inNewVenue);
 	}
 
 
 	TEST(DeleteVenue)
 	{
 		TODO_TEST
-	//	int DeleteVenue(tstring const& inVenue);
+	//	int DeleteVenue(wxString const& inVenue);
 	}
 
 
 	TEST(NumOtherPointsInUse)
 	{
 		TODO_TEST
-	//	int NumOtherPointsInUse(tstring const& inOther) const;
+	//	int NumOtherPointsInUse(wxString const& inOther) const;
 	}
 
 
@@ -183,15 +184,15 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int RenameOtherPoints(
-	//			tstring const& inOldOther,
-	//			tstring const& inNewOther);
+	//			wxString const& inOldOther,
+	//			wxString const& inNewOther);
 	}
 
 
 	TEST(DeleteOtherPoints)
 	{
 		TODO_TEST
-	//	int DeleteOtherPoints(tstring const& inOther);
+	//	int DeleteOtherPoints(wxString const& inOther);
 	}
 
 
@@ -200,8 +201,8 @@ SUITE(TestDogTrialList)
 		TODO_TEST
 	//	int NumMultiHostedTrialsInDivision(
 	//			ARBConfig const& inConfig,
-	//			tstring const& inVenue,
-	//			tstring const& inDiv) const;
+	//			wxString const& inVenue,
+	//			wxString const& inDiv) const;
 	}
 
 
@@ -210,7 +211,7 @@ SUITE(TestDogTrialList)
 		TODO_TEST
 	//	int NumRunsInDivision(
 	//			ARBConfigVenuePtr inVenue,
-	//			tstring const& inDiv) const;
+	//			wxString const& inDiv) const;
 	}
 
 
@@ -219,8 +220,8 @@ SUITE(TestDogTrialList)
 		TODO_TEST
 	//	int RenameDivision(
 	//			ARBConfigVenuePtr inVenue,
-	//			tstring const& inOldDiv,
-	//			tstring const& inNewDiv);
+	//			wxString const& inOldDiv,
+	//			wxString const& inNewDiv);
 	}
 
 
@@ -229,8 +230,8 @@ SUITE(TestDogTrialList)
 		TODO_TEST
 	//	int DeleteDivision(
 	//			ARBConfig const& inConfig,
-	//			tstring const& inVenue,
-	//			tstring const& inDiv);
+	//			wxString const& inVenue,
+	//			wxString const& inDiv);
 	}
 
 
@@ -238,9 +239,9 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int NumLevelsInUse(
-	//			tstring const& inVenue,
-	//			tstring const& inDiv,
-	//			tstring const& inLevel) const;
+	//			wxString const& inVenue,
+	//			wxString const& inDiv,
+	//			wxString const& inLevel) const;
 	}
 
 
@@ -248,10 +249,10 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int RenameLevel(
-	//			tstring const& inVenue,
-	//			tstring const& inDiv,
-	//			tstring const& inOldLevel,
-	//			tstring const& inNewLevel);
+	//			wxString const& inVenue,
+	//			wxString const& inDiv,
+	//			wxString const& inOldLevel,
+	//			wxString const& inNewLevel);
 	}
 
 
@@ -259,9 +260,9 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int DeleteLevel(
-	//			tstring const& inVenue,
-	//			tstring const& inDiv,
-	//			tstring const& inLevel);
+	//			wxString const& inVenue,
+	//			wxString const& inDiv,
+	//			wxString const& inLevel);
 	}
 
 
@@ -269,8 +270,8 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int NumEventsInUse(
-	//			tstring const& inVenue,
-	//			tstring const& inEvent) const;
+	//			wxString const& inVenue,
+	//			wxString const& inEvent) const;
 	}
 
 
@@ -278,9 +279,9 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int RenameEvent(
-	//			tstring const& inVenue,
-	//			tstring const& inOldEvent,
-	//			tstring const& inNewEvent);
+	//			wxString const& inVenue,
+	//			wxString const& inOldEvent,
+	//			wxString const& inNewEvent);
 	}
 
 
@@ -288,8 +289,8 @@ SUITE(TestDogTrialList)
 	{
 		TODO_TEST
 	//	int DeleteEvent(
-	//			tstring const& inVenue,
-	//			tstring const& inEvent);
+	//			wxString const& inVenue,
+	//			wxString const& inEvent);
 	}
 
 

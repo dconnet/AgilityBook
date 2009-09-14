@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
  * @li 2003-12-28 DRC Added GetSearchStrings.
@@ -55,7 +56,7 @@
 #define OTHERPTS_COUNT_LEVEL		wxT("Level")
 #define OTHERPTS_COUNT_LEVELBYEVENT	wxT("LevelByEvent")
 
-void ARBConfigOtherPoints::GetTallyValidValues(std::vector<tstring>& outValues)
+void ARBConfigOtherPoints::GetTallyValidValues(std::vector<wxString>& outValues)
 {
 	outValues.clear();
 	outValues.push_back(OTHERPTS_COUNT_ALL);
@@ -147,7 +148,7 @@ bool ARBConfigOtherPoints::Load(
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_OTHERPTS_DEFAULT, m_Default);
-	tstring attrib;
+	wxString attrib;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_OTHERPTS_COUNT, attrib)
 	|| 0 == attrib.length())
 	{
@@ -164,7 +165,7 @@ bool ARBConfigOtherPoints::Load(
 		m_Tally = eTallyLevelByEvent;
 	else
 	{
-		tstring msg(Localization()->ValidValues());
+		wxString msg(Localization()->ValidValues());
 		msg += OTHERPTS_COUNT_ALL;
 		msg += wxT(", ");
 		msg += OTHERPTS_COUNT_ALLBYEVENT;
@@ -172,7 +173,7 @@ bool ARBConfigOtherPoints::Load(
 		msg += OTHERPTS_COUNT_LEVEL;
 		msg += wxT(", ");
 		msg += OTHERPTS_COUNT_LEVELBYEVENT;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg));
 		return false;
 	}
 	m_Desc = inTree->GetValue();
@@ -224,7 +225,7 @@ bool ARBConfigOtherPointsList::Load(
 }
 
 
-bool ARBConfigOtherPointsList::VerifyOtherPoints(tstring const& inName) const
+bool ARBConfigOtherPointsList::VerifyOtherPoints(wxString const& inName) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -236,7 +237,7 @@ bool ARBConfigOtherPointsList::VerifyOtherPoints(tstring const& inName) const
 
 
 bool ARBConfigOtherPointsList::FindOtherPoints(
-		tstring const& inName,
+		wxString const& inName,
 		ARBConfigOtherPointsPtr* outPoints) const
 {
 	if (outPoints)
@@ -267,9 +268,9 @@ bool ARBConfigOtherPointsList::AddOtherPoints(ARBConfigOtherPointsPtr inOther)
 }
 
 
-bool ARBConfigOtherPointsList::DeleteOtherPoints(tstring const& inName)
+bool ARBConfigOtherPointsList::DeleteOtherPoints(wxString const& inName)
 {
-	tstring name(inName);
+	wxString name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

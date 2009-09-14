@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-12-26 DRC Made dialog resizable.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -144,22 +145,22 @@ wxString CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 	switch (iCol)
 	{
 	case 1: // Start Date
-		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD).c_str();
+		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD);
 		break;
 	case 2: // End Date
-		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD).c_str();
+		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD);
 		break;
 	case 3: // Location
-		str = m_pCal->GetLocation().c_str();
+		str = m_pCal->GetLocation();
 		break;
 	case 4: // Club
-		str = m_pCal->GetClub().c_str();
+		str = m_pCal->GetClub();
 		break;
 	case 5: // Venue
-		str = m_pCal->GetVenue().c_str();
+		str = m_pCal->GetVenue();
 		break;
 	case 6: // Notes
-		str = m_pCal->GetNote().c_str();
+		str = m_pCal->GetNote();
 		str.Replace(wxT("\n"), wxT(" "));
 		break;
 	}
@@ -193,25 +194,25 @@ public:
 			CReportListCtrl* ctrl,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
-			std::set<tstring>& faults);
+			std::set<wxString>& faults);
 	CDlgListCtrlDataFaults(
 			CReportListCtrl* list,
 			CAgilityBookDoc* pDoc,
 			ARBDogRunPtr pRun,
-			tstring fault)
+			wxString fault)
 		: CDlgListCtrlData(list)
 		, m_pDoc(pDoc)
 		, m_pRun(pRun)
 		, m_Fault(fault)
 	{
 	}
-	virtual wxString OnNeedText(long iCol) const	{return m_Fault.c_str();}
+	virtual wxString OnNeedText(long iCol) const	{return m_Fault;}
 	virtual bool OnEdit();
 	virtual void Apply();
 private:
 	CAgilityBookDoc* m_pDoc;
 	ARBDogRunPtr m_pRun;
-	tstring m_Fault;
+	wxString m_Fault;
 };
 typedef tr1::shared_ptr<CDlgListCtrlDataFaults> CDlgListCtrlDataFaultsPtr;
 
@@ -220,7 +221,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		CReportListCtrl* ctrl,
 		CAgilityBookDoc* pDoc,
 		ARBDogRunPtr pRun,
-		std::set<tstring>& faults)
+		std::set<wxString>& faults)
 {
 	faults.clear();
 	pDoc->Book().GetAllFaultTypes(faults);
@@ -238,22 +239,22 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		wxListItem info;
 		info.SetMask(wxLIST_MASK_TEXT);
 		ctrl->GetColumn(index, info);
-		faults.insert(info.GetText().c_str());
+		faults.insert(info.GetText());
 	}
 }
 
 
 bool CDlgListCtrlDataFaults::OnEdit()
 {
-	std::set<tstring> faults;
+	std::set<wxString> faults;
 	CDlgListCtrlDataFaults::GetAllFaults(m_List, m_pDoc, m_pRun, faults);
-	CDlgFault dlg(faults, m_Fault.c_str());
+	CDlgFault dlg(faults, m_Fault);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		wxString fault = dlg.GetFault();
 		fault.Trim(true);
 		fault.Trim(false);
-		m_Fault = fault.c_str();
+		m_Fault = fault;
 		return true;
 	}
 	else
@@ -301,14 +302,10 @@ wxString CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
 	{
 	default:
 	case 0:
-		str = m_Other->GetName().c_str();
+		str = m_Other->GetName();
 		break;
 	case 1:
-		{
-			otstringstream tmp;
-			tmp << m_Other->GetPoints();
-			str = tmp.str().c_str();
-		}
+		str << m_Other->GetPoints();
 		break;
 	}
 	return str;
@@ -359,7 +356,7 @@ typedef tr1::shared_ptr<CDlgListCtrlDataPartners> CDlgListCtrlDataPartnersPtr;
 
 wxString CDlgListCtrlDataPartners::OnNeedText(long iCol) const
 {
-	tstring str;
+	wxString str;
 	switch (iCol)
 	{
 	default:
@@ -373,13 +370,13 @@ wxString CDlgListCtrlDataPartners::OnNeedText(long iCol) const
 		str = m_Partner->GetHandler();
 		break;
 	}
-	return str.c_str();
+	return str;
 }
 
 
 bool CDlgListCtrlDataPartners::OnEdit()
 {
-	std::set<tstring> handlers, dogs;
+	std::set<wxString> handlers, dogs;
 	m_pDlg->GetAllPartners(handlers, dogs);
 	CDlgPartner dlg(m_Partner, handlers, dogs);
 	if (wxID_OK == dlg.ShowModal())
@@ -748,8 +745,8 @@ void CDlgListCtrl::DoEdit()
 
 
 void CDlgListCtrl::GetAllPartners(
-		std::set<tstring>& ioPartners,
-		std::set<tstring>& ioDogs) const
+		std::set<wxString>& ioPartners,
+		std::set<wxString>& ioDogs) const
 {
 	if (m_pDoc)
 	{
@@ -759,8 +756,8 @@ void CDlgListCtrl::GetAllPartners(
 			CDlgListCtrlDataPtr pData = GetItemListData(index);
 			if (pData)
 			{
-				ioPartners.insert(pData->OnNeedText(2).c_str());
-				ioDogs.insert(pData->OnNeedText(0).c_str());
+				ioPartners.insert(pData->OnNeedText(2));
+				ioDogs.insert(pData->OnNeedText(0));
 			}
 		}
 	}
@@ -823,13 +820,13 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 
 	case eFaults:
 		{
-			std::set<tstring> faults;
+			std::set<wxString> faults;
 			CDlgListCtrlDataFaults::GetAllFaults(m_ctrlList, m_pDoc, m_pRun, faults);
 			CDlgFault dlg(faults, wxEmptyString, this);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				bUpdate = true;
-				CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, dlg.GetFault().c_str()));
+				CDlgListCtrlDataFaultsPtr pData(new CDlgListCtrlDataFaults(m_ctrlList, m_pDoc, m_pRun, dlg.GetFault()));
 				m_ctrlList->Select(m_ctrlList->InsertItem(pData));
 			}
 		}
@@ -851,7 +848,7 @@ void CDlgListCtrl::OnNew(wxCommandEvent& evt)
 	case ePartners:
 		{
 			ARBDogRunPartnerPtr partner(ARBDogRunPartner::New());
-			std::set<tstring> handlers, dogs;
+			std::set<wxString> handlers, dogs;
 			GetAllPartners(handlers, dogs);
 			CDlgPartner dlg(partner, handlers, dogs);
 			if (wxID_OK == dlg.ShowModal())

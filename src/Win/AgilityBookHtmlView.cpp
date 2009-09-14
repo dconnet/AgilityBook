@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-09-10 DRC Created
  */
@@ -128,7 +129,7 @@ bool CAgilityBookHtmlView::GetMessage2(wxString& msg) const
 {
 	if (GetDocument()->GetCurrentDog())
 	{
-		msg = GetDocument()->GetCurrentDog()->GetCallName().c_str();
+		msg = GetDocument()->GetCurrentDog()->GetCallName();
 		return true;
 	}
 	else
@@ -189,18 +190,16 @@ void CAgilityBookHtmlView::OnUpdate(
 wxString CAgilityBookHtmlView::RawHtml(bool bFragment) const
 {
 	ARBDate today(ARBDate::Today());
-	otstringstream data;
+	wxString data;
 
 	wxString title = _("IDS_TITLING_POINTS");
 
-	data << wxT("<html>") << std::endl;
+	data << wxT("<html>\n");
 	if (!bFragment)
-		data << wxT("<head><title>") << title.c_str() << wxT(" ")
+		data << wxT("<head><title>") << title << wxT(" ")
 			<< today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
-			<< wxT("</title></head>")
-			<< std::endl
-			<< wxT("<body>")
-			<< std::endl;
+			<< wxT("</title></head>\n")
+			<< wxT("<body>\n");
 
 	size_t nItems = m_Items->NumLines();
 	if (0 < nItems)
@@ -215,9 +214,9 @@ wxString CAgilityBookHtmlView::RawHtml(bool bFragment) const
 	}
 	if (!bFragment)
 		data << wxT("</body></html>");
-	data << std::endl;
+	data << wxT("\n");
 
-	return data.str().c_str();
+	return data;
 }
 
 
@@ -327,7 +326,7 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 			{
 				wxString data = RawHtml(true);
 				clpData.AddData(eFormatHtml, data);
-				clpData.AddData(m_Ctrl->ToText().c_str());
+				clpData.AddData(m_Ctrl->ToText());
 				clpData.CommitData();
 			}
 		}

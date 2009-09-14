@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
 
@@ -45,8 +46,8 @@ class ActionCallbackStop : public IConfigActionCallback
 {
 public:
 	ActionCallbackStop() {}
-	virtual void PreDelete(tstring const& inMsg) {}
-	virtual void PostDelete(tstring const& inMsg) const {}
+	virtual void PreDelete(wxString const& inMsg) {}
+	virtual void PostDelete(wxString const& inMsg) const {}
 	virtual bool CanContinue() const	{return false;}
 };
 
@@ -55,8 +56,8 @@ class ActionCallbackContinue : public IConfigActionCallback
 {
 public:
 	ActionCallbackContinue() {}
-	virtual void PreDelete(tstring const& inMsg) {}
-	virtual void PostDelete(tstring const& inMsg) const {}
+	virtual void PreDelete(wxString const& inMsg) {}
+	virtual void PostDelete(wxString const& inMsg) const {}
 	virtual bool CanContinue() const	{return true;}
 };
 
@@ -486,7 +487,7 @@ SUITE(TestConfigAction)
 	{
 		ElementNodePtr actions = CreateActionList();
 		ARBConfigActionList lst;
-		tstring err;
+		wxString err;
 		ARBErrorCallback callback(err);
 		for (int i = 0; i < actions->GetElementCount(); ++i)
 		{

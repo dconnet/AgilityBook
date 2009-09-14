@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
  * @li 2006-12-24 DRC When finding events, only insert it once.
  * @li 2006-11-05 DRC Fix FindAllEvents to allow searching with wildcards.
@@ -76,9 +77,9 @@
 #define SCORING_TYPE_ST		wxT("ScoreThenTime")
 #define SCORING_TYPE_TF		wxT("TimePlusFaults")
 
-tstring ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
+wxString ARBConfigScoring::GetScoringStyleStr(ScoringStyle inStyle)
 {
-	tstring style;
+	wxString style;
 	switch (inStyle)
 	{
 	default:
@@ -256,20 +257,20 @@ bool ARBConfigScoring::Load(
 		inTree->GetAttrib(wxT("Date"), m_ValidFrom);
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, m_ValidFrom))
 	{
-		tstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_SCORING_VALIDFROM, attrib);
-		tstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDFROM, msg));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, m_ValidTo))
 	{
-		tstring attrib;
+		wxString attrib;
 		inTree->GetAttrib(ATTRIB_SCORING_VALIDTO, attrib);
-		tstring msg(Localization()->InvalidDate());
+		wxString msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_VALIDTO, msg));
 		return false;
 	}
 
@@ -288,15 +289,15 @@ bool ARBConfigScoring::Load(
 	}
 	if (!inDivisions.VerifyLevel(m_Division, m_Level))
 	{
-		tstring msg(Localization()->InvalidDivLevel());
+		wxString msg(Localization()->InvalidDivLevel());
 		msg += m_Division;
 		msg += wxT("/");
 		msg += m_Level;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_LEVEL, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_LEVEL, msg));
 		return false;
 	}
 
-	tstring attrib;
+	wxString attrib;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_SCORING_TYPE, attrib)
 	|| 0 == attrib.length())
 	{
@@ -321,7 +322,7 @@ bool ARBConfigScoring::Load(
 		m_Style = eTimePlusFaults;
 	else
 	{
-		tstring msg(Localization()->ValidValues());
+		wxString msg(Localization()->ValidValues());
 		msg += SCORING_TYPE_FT;
 		msg += wxT(", ");
 		msg += SCORING_TYPE_FT100;
@@ -333,7 +334,7 @@ bool ARBConfigScoring::Load(
 		msg += SCORING_TYPE_ST;
 		msg += wxT(", ");
 		msg += SCORING_TYPE_TF;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, msg.c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE, msg));
 		return false;
 	}
 
@@ -342,34 +343,34 @@ bool ARBConfigScoring::Load(
 	// Not advisable, but it doesn't hurt anything either.
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_DROPFRACTIONS, m_bDropFractions))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_DROPFRACTIONS, Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, m_bCleanQ))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_CLEAN_Q, Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_UNDER, m_bTimeFaultsUnder))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_UNDER, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_UNDER, Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TIMEFAULTS_OVER, Localization()->ValidValuesBool()));
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, Localization()->ValidValuesBool()));
 		return false;
 	}
 	inTree->GetAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SUPERQ, m_bSuperQ))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SUPERQ, Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -377,20 +378,20 @@ bool ARBConfigScoring::Load(
 	{
 		if (ElementNode::eInvalidValue == inTree->GetAttrib(wxT("doubleQ"), m_bDoubleQ))
 		{
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, wxT("doubleQ"), Localization()->ValidValuesBool().c_str()));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, wxT("doubleQ"), Localization()->ValidValuesBool()));
 			return false;
 		}
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_SPEEDPTS, m_bSpeedPts))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SPEEDPTS, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_SPEEDPTS, Localization()->ValidValuesBool()));
 		return false;
 	}
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_bBonusPts))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_BONUSPTS, Localization()->ValidValuesBool().c_str()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_BONUSPTS, Localization()->ValidValuesBool()));
 		return false;
 	}
 
@@ -401,7 +402,7 @@ bool ARBConfigScoring::Load(
 		{
 			if (ElementNode::eInvalidValue == inTree->GetAttrib(wxT("machPts"), m_bSpeedPts))
 			{
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, wxT("machPts"), Localization()->ValidValuesBool().c_str()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, wxT("machPts"), Localization()->ValidValuesBool()));
 				return false;
 			}
 		}
@@ -589,8 +590,8 @@ bool ARBConfigScoringList::Load(
 
 
 size_t ARBConfigScoringList::FindAllEvents(
-		tstring const& inDivision,
-		tstring const& inLevel,
+		wxString const& inDivision,
+		wxString const& inLevel,
 		ARBDate const& inDate,
 		bool inTitlePoints,
 		ARBVector<ARBConfigScoringPtr>& outList) const
@@ -671,8 +672,8 @@ size_t ARBConfigScoringList::FindAllEvents(
 
 
 bool ARBConfigScoringList::FindEvent(
-		tstring const& inDivision,
-		tstring const& inLevel,
+		wxString const& inDivision,
+		wxString const& inLevel,
 		ARBDate const& inDate,
 		ARBConfigScoringPtr* outEvent) const
 {
@@ -720,8 +721,8 @@ bool ARBConfigScoringList::FindEvent(
 
 
 bool ARBConfigScoringList::VerifyEvent(
-		tstring const& inDivision,
-		tstring const& inLevel,
+		wxString const& inDivision,
+		wxString const& inLevel,
 		ARBDate const& inDate) const
 {
 	ARBVector<ARBConfigScoringPtr> items;

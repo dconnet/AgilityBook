@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-11 DRC Created
  */
 
@@ -63,7 +64,7 @@ SUITE(TestARBQ)
 		CHECK(ARB_Q(ARB_Q::eQ_DNR) == ARB_Q::GetValidType(4));
 		CHECK(ARB_Q(ARB_Q::eQ_SuperQ) == ARB_Q::GetValidType(5));
 
-		std::vector<tstring> types;
+		std::vector<wxString> types;
 		ARB_Q::GetValidTypes(types);
 		CHECK_EQUAL(6u, types.size());
 	}
@@ -118,7 +119,7 @@ SUITE(TestARBQ)
 	TEST(Load)
 	{
 		ARB_Q q;
-		tstring errmsg;
+		wxString errmsg;
 		ARBErrorCallback callback(errmsg);
 		ARBVersion ver(1, 0);
 		CHECK(q.Load(wxT("SQ"), ver, callback));
@@ -129,7 +130,7 @@ SUITE(TestARBQ)
 	TEST(LoadFail)
 	{
 		ARB_Q q(ARB_Q::eQ_Q);
-		tstring errmsg;
+		wxString errmsg;
 		ARBErrorCallback callback(errmsg);
 		ARBVersion ver(1, 0);
 		CHECK(!q.Load(wxT("attrib"), ver, callback));
@@ -142,7 +143,7 @@ SUITE(TestARBQ)
 		ARB_Q q;
 		ElementNodePtr ele = ElementNode::New(wxT("test"));
 		CHECK(q.Save(ele, wxT("attrib")));
-		tstring str;
+		wxString str;
 		CHECK(ElementNode::eFound == ele->GetAttrib(wxT("attrib"), str));
 		CHECK(wxT("NA") == str);
 	}

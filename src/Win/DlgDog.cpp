@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-14 DRC Merged DlgRun* into here.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -180,18 +181,18 @@ wxString CDlgDogDataTitle::OnNeedText(long iCol) const
 	{
 	case 1:
 		if (m_Title->GetDate().IsValid())
-			text = m_Title->GetDate().GetString(ARBDate::eDashYYYYMMDD).c_str();
+			text = m_Title->GetDate().GetString(ARBDate::eDashYYYYMMDD);
 		else
 			text = _("IDS_UNEARNED");
 		break;
 	case 2:
-		text = m_Title->GetVenue().c_str();
+		text = m_Title->GetVenue();
 		break;
 	case 3:
-		text = m_Title->GetGenericName().c_str();
+		text = m_Title->GetGenericName();
 		break;
 	case 4:
-		text = m_pDlg->m_pDoc->Book().GetConfig().GetTitleNiceName(m_Title->GetVenue(), m_Title->GetRawName()).c_str();
+		text = m_pDlg->m_pDoc->Book().GetConfig().GetTitleNiceName(m_Title->GetVenue(), m_Title->GetRawName());
 		break;
 	}
 	return text;
@@ -272,8 +273,8 @@ int wxCALLBACK CompareTitles(long item1, long item2, long sortData)
 			break;
 		case 3: // name
 			{
-				tstring n1 = pTitle1->GetGenericName();
-				tstring n2 = pTitle2->GetGenericName();
+				wxString n1 = pTitle1->GetGenericName();
+				wxString n2 = pTitle2->GetGenericName();
 				if (n1 < n2)
 					rc = -1;
 				else if (n1 > n2)
@@ -282,8 +283,8 @@ int wxCALLBACK CompareTitles(long item1, long item2, long sortData)
 			break;
 		case 4: // nice name
 			{
-				tstring name1 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
-				tstring name2 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
+				wxString name1 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle1->GetVenue(), pTitle1->GetRawName());
+				wxString name2 = s_SortInfo.pDoc->Book().GetConfig().GetTitleNiceName(pTitle2->GetVenue(), pTitle2->GetRawName());
 				if (name1 < name2)
 					rc = -1;
 				else if (name1 > name2)
@@ -327,19 +328,19 @@ wxString CDlgDogDataRegNum::OnNeedText(long iCol) const
 	switch (iCol)
 	{
 	case 0:
-		text = m_RegNum->GetVenue().c_str();
+		text = m_RegNum->GetVenue();
 		break;
 	case 1:
-		text = m_RegNum->GetNumber().c_str();
+		text = m_RegNum->GetNumber();
 		break;
 	case 2:
-		text = m_RegNum->GetHeight().c_str();
+		text = m_RegNum->GetHeight();
 		break;
 	case 3:
 		text = m_RegNum->GetReceived() ? wxT("x") : wxT("");
 		break;
 	case 4:
-		text = m_RegNum->GetNote().c_str();
+		text = m_RegNum->GetNote();
 		text.Replace(wxT("\n"), wxT(" "));
 		break;
 	}
@@ -427,41 +428,37 @@ wxString CDlgDogDataPoint::OnNeedText(long iCol) const
 	switch (iCol)
 	{
 	case 0:
-		text = m_Pts->GetDate().GetString(ARBDate::eDashYMD).c_str();
+		text = m_Pts->GetDate().GetString(ARBDate::eDashYMD);
 		break;
 	case 1: // Type
-		text = ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType()).c_str();
+		text = ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());
 		break;
 	case 2: // Points
-		{
-			otstringstream tmp;
-			tmp << m_Pts->GetPoints();
-			text = tmp.str().c_str();
-		}
+		text << m_Pts->GetPoints();
 		break;
 	case 3: // Other Points
-		text = m_Pts->GetOtherPoints().c_str();
+		text = m_Pts->GetOtherPoints();
 		break;
 	case 4: // Venue
-		text = m_Pts->GetVenue().c_str();
+		text = m_Pts->GetVenue();
 		break;
 	case 5: // MultiQ
-		text = m_Pts->GetMultiQ().c_str();
+		text = m_Pts->GetMultiQ();
 		break;
 	case 6: // Division
-		text = m_Pts->GetDivision().c_str();
+		text = m_Pts->GetDivision();
 		break;
 	case 7: // Level
-		text = m_Pts->GetLevel().c_str();
+		text = m_Pts->GetLevel();
 		break;
 	case 8: // Event
-		text = m_Pts->GetEvent().c_str();
+		text = m_Pts->GetEvent();
 		break;
 	case 9: // SubName
-		text = m_Pts->GetSubName().c_str();
+		text = m_Pts->GetSubName();
 		break;
 	case 10: // Comment
-		text = m_Pts->GetComment().c_str();
+		text = m_Pts->GetComment();
 		text.Replace(wxT("\n"), wxT(" "));
 		break;
 	}
@@ -582,13 +579,13 @@ CDlgDog::CDlgDog(
 	, m_imgTitlesHidden(-1)
 	, m_imgTitlesTitledHidden(-1)
 	, m_imgTitlesTitledHiddenReceived(-1)
-	, m_CallName(pDog->GetCallName().c_str())
-	, m_Breed(pDog->GetBreed().c_str())
-	, m_RegName(pDog->GetRegisteredName().c_str())
+	, m_CallName(pDog->GetCallName())
+	, m_Breed(pDog->GetBreed())
+	, m_RegName(pDog->GetRegisteredName())
 	, m_DOB(pDog->GetDOB())
 	, m_IsDeceased(pDog->GetDeceased().IsValid())
 	, m_Deceased(pDog->GetDeceased())
-	, m_Notes(pDog->GetNote().c_str())
+	, m_Notes(pDog->GetNote())
 	, m_ctrlAge(NULL)
 	, m_ctrlDDay(NULL)
 	, m_ctrlTitles(NULL)
@@ -1015,7 +1012,7 @@ void CDlgDog::UpdateAge()
 			current = m_Deceased;
 		ageDays = current - m_DOB;
 	}
-	m_ctrlAge->SetLabel(ARBDouble::str(ageDays/365.0, 1).c_str());
+	m_ctrlAge->SetLabel(ARBDouble::str(ageDays/365.0, 1));
 }
 
 
@@ -1030,14 +1027,14 @@ void CDlgDog::SetColumnTitleHeaders()
 {
 	for (int i = 0; i < nColTitleInfo; ++i)
 	{
-		otstringstream tmp;
+		wxString tmp;
 		if (colTitleInfo[i].idText)
-			tmp << wxGetTranslation(colTitleInfo[i].idText) << ' ';
-		tmp << '(' << m_sortTitles.FindColumnOrder(i) + 1 << ')';
+			tmp << wxGetTranslation(colTitleInfo[i].idText) << wxT(" ");
+		tmp << wxT("(") << m_sortTitles.FindColumnOrder(i) + 1 << wxT(")");
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
-		col.SetText(tmp.str().c_str());
+		col.SetText(tmp);
 		m_ctrlTitles->SetColumn(i, col);
 		m_ctrlTitles->SetColumnSort(i, m_sortTitles.IsDescending(i) ? -1 : 1);
 	}
@@ -1124,14 +1121,14 @@ void CDlgDog::SetColumnRegNumHeaders()
 {
 	for (int i = 0; i < nColRegNumInfo; ++i)
 	{
-		otstringstream tmp;
+		wxString tmp;
 		if (colRegNumInfo[i].idText)
-			tmp << wxGetTranslation(colRegNumInfo[i].idText) << ' ';
-		tmp << '(' << m_sortRegNums.FindColumnOrder(i) + 1 << ')';
+			tmp << wxGetTranslation(colRegNumInfo[i].idText) << wxT(" ");
+		tmp << wxT("(") << m_sortRegNums.FindColumnOrder(i) + 1 << wxT(")");
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
-		col.SetText(tmp.str().c_str());
+		col.SetText(tmp);
 		m_ctrlRegNums->SetColumn(i, col);
 		m_ctrlRegNums->SetColumnSort(i, m_sortRegNums.IsDescending(i) ? -1 : 1);
 	}
@@ -1214,14 +1211,14 @@ void CDlgDog::SetColumnPointsHeaders()
 {
 	for (int i = 0; i < nColExistingPointsInfo; ++i)
 	{
-		otstringstream tmp;
+		wxString tmp;
 		if (colExistingPointsInfo[i].idText)
-			tmp << wxGetTranslation(colExistingPointsInfo[i].idText) << ' ';
-		tmp << '(' << m_sortPoints.FindColumnOrder(i) + 1 << ')';
+			tmp << wxGetTranslation(colExistingPointsInfo[i].idText) << wxT(" ");
+		tmp << wxT("(") << m_sortPoints.FindColumnOrder(i) + 1 << wxT(")");
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
-		col.SetText(tmp.str().c_str());
+		col.SetText(tmp);
 		m_ctrlPoints->SetColumn(i, col);
 		m_ctrlPoints->SetColumnSort(i, m_sortPoints.IsDescending(i) ? -1 : 1);
 	}
@@ -1303,9 +1300,7 @@ void CDlgDog::UpdatePointsButtons()
 			if (pData)
 				total += pData->GetData()->GetPoints();
 		}
-		otstringstream tmp;
-		tmp << total;
-		str = tmp.str().c_str();
+		str << total;
 	}
 	m_ctrlSelectedPts->SetLabel(str);
 }
@@ -1567,10 +1562,10 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	bool bModified = false;
 	unsigned int hint = 0;
 
-	if (m_pDog->GetCallName() != m_CallName.c_str())
+	if (m_pDog->GetCallName() != m_CallName)
 	{
 		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
-		m_pDog->SetCallName(m_CallName.c_str());
+		m_pDog->SetCallName(m_CallName);
 	}
 	if (m_pDog->GetDOB() != m_DOB)
 	{
@@ -1585,20 +1580,20 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 		hint |= UPDATE_TREE_VIEW;
 		m_pDog->SetDeceased(m_Deceased);
 	}
-	if (m_pDog->GetBreed() != m_Breed.c_str())
+	if (m_pDog->GetBreed() != m_Breed)
 	{
 		bModified = true;
-		m_pDog->SetBreed(m_Breed.c_str());
+		m_pDog->SetBreed(m_Breed);
 	}
-	if (m_pDog->GetRegisteredName() != m_RegName.c_str())
+	if (m_pDog->GetRegisteredName() != m_RegName)
 	{
 		hint |= UPDATE_POINTS_VIEW;
-		m_pDog->SetRegisteredName(m_RegName.c_str());
+		m_pDog->SetRegisteredName(m_RegName);
 	}
-	if (m_pDog->GetNote() != m_Notes.c_str())
+	if (m_pDog->GetNote() != m_Notes)
 	{
 		bModified = true;
-		m_pDog->SetNote(m_Notes.c_str());
+		m_pDog->SetNote(m_Notes);
 	}
 	if (m_pDog->GetTitles() != m_Titles)
 	{

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-04 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-25 DRC Remember the sort column between program invocations.
@@ -98,7 +99,7 @@ private:
 
 wxString CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 {
-	tstring str;
+	wxString str;
 	if (m_pTraining)
 	{
 		switch (m_pView->m_Columns[iCol])
@@ -113,11 +114,12 @@ wxString CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 			str = m_pTraining->GetSubName();
 			break;
 		case IO_LOG_NOTES:
-			str = tstringUtil::Replace(m_pTraining->GetNote(), wxT("\n"), wxT(" "));
+			str = m_pTraining->GetNote();
+			str.Replace(wxT("\n"), wxT(" "));
 			break;
 		}
 	}
-	return str.c_str();
+	return str;
 }
 
 
@@ -268,7 +270,7 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 		search.MakeLower();
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<tstring> strings;
+		std::set<wxString> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTrainingViewDataPtr pData = m_pView->GetItemTrainingData(index);
@@ -285,12 +287,12 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 				info.SetMask(wxLIST_MASK_TEXT);
 				info.SetColumn(i);
 				m_pView->m_Ctrl->GetItem(info);
-				strings.insert(info.GetText().c_str());
+				strings.insert(info.GetText());
 			}
 		}
-		for (std::set<tstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter).c_str());
+			wxString str((*iter));
 			if (!MatchCase())
 				str.MakeLower();
 			if (0 <= str.Find(search))
