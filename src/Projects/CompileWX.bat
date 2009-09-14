@@ -141,8 +141,8 @@ goto done
 echo %_PROGNAME%: ERROR!!!
 
 :done
-if not ("%_PATH%")==("") set PATH=%_PATH%&& set _PATH=
-if not ("%_LIBPATH%")==("") set LIBPATH=%_LIBPATH%&& set _LIBPATH=
+%_COMMENT% if not ("%_PATH%")==("") set PATH=%_PATH%&& set _PATH=
+%_COMMENT% if not ("%_LIBPATH%")==("") set LIBPATH=%_LIBPATH%&& set _LIBPATH=
 
 set _CFG=
 set _COMMENT=
