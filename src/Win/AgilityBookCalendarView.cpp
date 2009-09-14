@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-14 DRC Removed wxScrollWindow - scroll wasn't used.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-12-21 DRC Localize months/days (because of static link CRT)
@@ -73,7 +74,7 @@
 #define DAY_TEXT_INSET		2
 
 
-class CAgilityBookCalendar : public wxScrolledWindow
+class CAgilityBookCalendar : public wxWindow
 {
 	DECLARE_CLASS(CAgilityBookCalendar)
 public:
@@ -159,10 +160,10 @@ private:
 };
 
 
-IMPLEMENT_CLASS(CAgilityBookCalendar, wxScrolledWindow)
+IMPLEMENT_CLASS(CAgilityBookCalendar, wxWindow)
 
 
-BEGIN_EVENT_TABLE(CAgilityBookCalendar, wxScrolledWindow)
+BEGIN_EVENT_TABLE(CAgilityBookCalendar, wxWindow)
 	EVT_PAINT(CAgilityBookCalendar::OnPaint)
 	EVT_SET_FOCUS(CAgilityBookCalendar::OnSetFocus)
 	EVT_KILL_FOCUS(CAgilityBookCalendar::OnKillFocus)
@@ -188,7 +189,7 @@ CAgilityBookCalendar::CAgilityBookCalendar(
 	, m_fontMonth()
 	, m_fontText()
 {
-	if (!wxScrolledWindow::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER | wxWANTS_CHARS | wxFULL_REPAINT_ON_RESIZE | wxVSCROLL))
+	if (!wxWindow::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER | wxWANTS_CHARS | wxFULL_REPAINT_ON_RESIZE))
 		return;
 	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 	SetInitialSize(wxDefaultSize);
