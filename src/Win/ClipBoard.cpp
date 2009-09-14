@@ -315,8 +315,8 @@ bool CClipboardDataWriter::AddData(
 
 bool CClipboardDataWriter::AddData(wxString const& inData)
 {
-		if (!m_Object)
-			m_Object = new wxDataObjectComposite();
+	if (!m_Object)
+		m_Object = new wxDataObjectComposite();
 	m_Object->Add(new wxTextDataObject(inData));
 	return true;
 }
