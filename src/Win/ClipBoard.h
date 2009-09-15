@@ -107,7 +107,7 @@ public:
 	void StartLine();
 	void EndLine();
 	void Cell(int nCol, wxString const& inData);
-	bool Write(CClipboardDataWriter& writer);
+	bool Write(CClipboardDataWriter& writer, bool bCommit);
 private:
 	bool m_Closed;
 	wxString& m_ioText;
