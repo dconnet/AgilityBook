@@ -233,15 +233,15 @@ void ElementNode::Dump(int inLevel) const
 	int i;
 	otstringstream msg;
 	msg.width(inLevel);
-	msg << wxT(" ") << m_Name.c_str();
+	msg << wxT(" ") << m_Name.wx_str();
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		wxString name, value;
 		GetNthAttrib(i, name, value);
 		msg << wxT(" ")
-			<< name.c_str()
+			<< name.wx_str()
 			<< wxT("=\"")
-			<< value.c_str()
+			<< value.wx_str()
 			<< wxT("\"");
 	}
 	DumpErrorMessage(msg.str().c_str());
@@ -914,11 +914,11 @@ void ElementText::Dump(int inLevel) const
 {
 	otstringstream msg;
 	msg.width(inLevel);
-	msg << wxT(" ") << GetName();
+	msg << wxT(" ") << GetName().wx_str();
 	if (0 < m_Value.length())
 	{
 		msg << wxT(": ")
-			<< m_Value.c_str();
+			<< m_Value.wx_str();
 	}
 	DumpErrorMessage(msg.str().c_str());
 }
