@@ -39,7 +39,7 @@
 #include "stdafx.h"
 #include "DlgQueryDetail.h"
 
-#include "AgilityBook.h"
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ComboBoxes.h"
 #include "Validators.h"

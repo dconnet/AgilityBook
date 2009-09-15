@@ -273,7 +273,7 @@ wxString ARBDouble::str(
 	if (0 < inPrec)
 		str.precision(inPrec);
 	str << std::fixed << inValue;
-	wxString retVal = str.str();
+	wxString retVal = str.str().c_str();
 	wxString::size_type pos = retVal.find('.');
 	if (wxString::npos != pos)
 	{

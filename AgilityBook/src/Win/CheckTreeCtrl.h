@@ -71,7 +71,7 @@ public:
 		return wxTreeCtrl::GetState(item);
 	#endif
 #else
-		return wxTreeCtrl::GetItemImage(hItem);
+		return wxTreeCtrl::GetItemImage(item);
 #endif
 	}
     void SetItemState(const wxTreeItemId& item, int state)
@@ -83,7 +83,7 @@ public:
 		wxTreeCtrl::SetState(item, state);
 	#endif
 #else
-		wxTreeCtrl::SetItemImage(hItem, state);
+		wxTreeCtrl::SetItemImage(item, state);
 #endif
 	}
 };
