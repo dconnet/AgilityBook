@@ -197,16 +197,20 @@ void CClipboardDataTable::Cell(int iCol, wxString const& inData)
 }
 
 
-bool CClipboardDataTable::Write(CClipboardDataWriter& writer)
+bool CClipboardDataTable::Write(CClipboardDataWriter& writer, bool bCommit)
 {
+	bool rc = false;
 	if (!m_Closed)
 	{
 		m_ioHtml += wxT("</table>");
 		m_Closed = true;
 	}
-	writer.AddData(eFormatHtml, m_ioHtml);
-	writer.AddData(m_ioText);
-	return writer.CommitData();
+	rc |= writer.AddData(eFormatHtml, m_ioHtml);
+	rc |= writer.AddData(m_ioText);
+	if (bCommit)
+		return writer.CommitData();
+	else
+		return rc;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -324,7 +328,7 @@ bool CClipboardDataWriter::AddData(wxString const& inData)
 
 bool CClipboardDataWriter::AddData(CClipboardDataTable& inData)
 {
-	return inData.Write(*this);
+	return inData.Write(*this, false);
 }
 
 
