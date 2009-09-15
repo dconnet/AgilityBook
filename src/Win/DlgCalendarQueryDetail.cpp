@@ -39,7 +39,7 @@
 #include "stdafx.h"
 #include "DlgCalendarQueryDetail.h"
 
-#include "AgilityBook.h"
+#include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "DlgQueryDetail.h"
 #include "Globals.h"

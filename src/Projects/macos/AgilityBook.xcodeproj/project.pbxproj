@@ -1364,7 +1364,6 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
 					"-I$WXWIN/build-debug/lib/wx/include/mac-ansi-debug-static-2.8",
@@ -1412,7 +1411,6 @@
 					"-lpthread",
 					"-liconv",
 				);
-				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;

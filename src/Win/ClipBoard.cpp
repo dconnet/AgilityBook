@@ -255,7 +255,7 @@ bool CClipboardDataWriter::AddData(
 {
 	if (eFormatHtml == clpFmt)
 	{
-		std::string data = inData.ToUTF8();
+		std::string data = tstringUtil::tstringA(inData.c_str(), inData.length());
 		{
 			std::string startHtml("<html><body>\r\n");
 			std::string endHtml("</body>\r\n</html>\r\n");

@@ -1186,8 +1186,8 @@ void CWizardExport::UpdatePreview()
 								tmp += wxT(" ");
 							}
 							tmp += wxString::Format(_("IDS_TRIAL_DATES"),
-								pCal->GetStartDate().GetString(format),
-								pCal->GetEndDate().GetString(format));
+								pCal->GetStartDate().GetString(format).c_str(),
+								pCal->GetEndDate().GetString(format).c_str());
 							tmp += wxT(" ");
 							tmp += pCal->GetNote();
 							data += AddPreviewData(iLine, idx, tmp);

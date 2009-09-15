@@ -403,11 +403,11 @@ void CAgilityBookMenu::CreateSubMenu(wxMenu* parent, MenuHandles& handles, bool 
 	if (bCreate)
 		parent->Append(wxID_ANY, title, handles.menu);
 	else
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 0)
 		parent->FindItemByPosition(handles.idx)->SetItemLabel(title);
-#else
+#else
 		parent->FindItemByPosition(handles.idx)->SetText(title);
-#endif
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////

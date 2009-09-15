@@ -244,7 +244,7 @@ void ElementNode::Dump(int inLevel) const
 			<< value.c_str()
 			<< wxT("\"");
 	}
-	DumpErrorMessage(msg.str());
+	DumpErrorMessage(msg.str().c_str());
 	for (i = 0; i < GetElementCount(); ++i)
 	{
 		GetElement(i)->Dump(inLevel+1);
@@ -920,7 +920,7 @@ void ElementText::Dump(int inLevel) const
 		msg << wxT(": ")
 			<< m_Value.c_str();
 	}
-	DumpErrorMessage(msg.str());
+	DumpErrorMessage(msg.str().c_str());
 }
 
 
