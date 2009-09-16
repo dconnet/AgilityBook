@@ -132,7 +132,11 @@ bool ARBBase64::Decode(
 	while (count <= bufsize && inBase64[nChar] != '=')
 	{
 		//check to see if it's a legal base64 char...
+#if wxCHECK_VERSION(2, 9, 0)
+		while (SKIP == base64map[inBase64[nChar].GetValue()])
+#else
 		while (SKIP == base64map[inBase64[nChar]])
+#endif
 		{
 			if (inBase64[nChar] != '\r' && inBase64[nChar] != '\n')
 			{
