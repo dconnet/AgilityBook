@@ -61,8 +61,8 @@
 #include "Element.h"
 #include "Wizard.h"
 #include "VersionNum.h"
-#include <fstream>
 #include <wx/config.h>
+#include <wx/wfstream.h>
 
 
 // Registry settings in "Last"
@@ -626,10 +626,8 @@ bool CWizardStart::DoWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					std::string filename(file.GetPath().ToUTF8());
-					std::ofstream output(filename.c_str(), std::ios::out | std::ios::binary);
-					output.exceptions(std::ios_base::badbit);
-					if (output.is_open())
+					wxFFileOutputStream output(file.GetPath(), wxT("wb"));
+					if (output.IsOk())
 					{
 						int nWarning = CAgilityBookOptions::CalendarOpeningNear();
 						ICalendar* iCalendar = ICalendar::iCalendarBegin(output, (WIZ_EXPORT_CALENDAR_VCAL == data) ? 1 : 2);
@@ -639,7 +637,7 @@ bool CWizardStart::DoWizardFinish()
 							pCal->iCalendar(iCalendar, nWarning);
 						}
 						iCalendar->Release();
-						output.close();
+						output.Close();
 					}
 					bOk = true;
 				}
@@ -746,14 +744,13 @@ bool CWizardStart::DoWizardFinish()
 					//if (AfxGetMainWnd())
 					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
-					std::string filename(file.GetPath().ToUTF8());
-					std::ofstream output(filename.c_str(), std::ios::out | std::ios::binary);
-					output.exceptions(std::ios_base::badbit);
-					if (output.is_open())
+					wxFFileOutputStream output(file.GetPath(), wxT("wb"));
+					if (output.IsOk())
 					{
 						CConfigHandler handler;
-						output << ARBConfig::GetDTD(&handler, false);
-						output.close();
+						std::string dtd = ARBConfig::GetDTD(&handler, false);
+						output.Write(dtd.c_str(), dtd.length());
+						output.Close();
 					}
 					bOk = true;
 				}

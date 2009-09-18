@@ -40,8 +40,8 @@
 #include "ConfigHandler.h"
 
 #include "Element.h"
-#include <sstream>
 #include <wx/filesys.h>
+#include <wx/mstream.h>
 #include <wx/stdpaths.h>
 
 
@@ -57,7 +57,6 @@ bool CConfigHandler::LoadWxFile(
 	wxFSFile* file = filesys.OpenFile(zipfile);
 	if (file)
 	{
-		std::ostringstream data;
 		size_t size = 0;
 		wxInputStream* input = file->GetStream();
 		while (input->CanRead())
@@ -65,11 +64,10 @@ bool CConfigHandler::LoadWxFile(
 			char buffer[1024];
 			size_t num = 1024;
 			input->Read(buffer, num);
-			data.write(buffer, static_cast<std::streamsize>(input->LastRead()));
+			outData.append(buffer, static_cast<std::streamsize>(input->LastRead()));
 			size += input->LastRead();
 		}
 		delete file;
-		outData = data.str();
 		return true;
 	}
 	return false;

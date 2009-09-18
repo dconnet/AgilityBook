@@ -37,12 +37,12 @@
  */
 
 #include "stdafx.h"
-#include <sstream>
-#include "AgilityBook.h"
 #include "ClipBoard.h"
 
+#include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "Element.h"
+#include <wx/mstream.h>
 
 #ifdef _DEBUG
 #include <assert.h>
@@ -241,9 +241,9 @@ bool CClipboardDataWriter::AddData(
 
 	wxString data;
 	{
-		std::ostringstream out;
+		wxMemoryOutputStream out;
 		inTree->SaveXML(out);
-		data = tstringUtil::TString(out.str()).c_str();
+		data = tstringUtil::TString(tstringUtil::tstringA(out));
 	}
 	return AddData(clpFmt, data);
 }

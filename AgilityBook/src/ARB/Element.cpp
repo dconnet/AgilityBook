@@ -52,8 +52,6 @@
 
 #include "stdafx.h"
 #include "Element.h"
-#include <fstream>
-#include <iostream>
 #include <list>
 #include <map>
 
@@ -63,6 +61,7 @@
 
 #include <wx/mstream.h>
 #include <wx/stream.h>
+#include <wx/wfstream.h>
 #include <wx/xml/xml.h>
 #pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
 
@@ -834,7 +833,7 @@ bool ElementNode::LoadXMLFile(
 }
 
 
-bool ElementNode::SaveXML(std::ostream& outOutput) const
+bool ElementNode::SaveXML(wxOutputStream& outOutput) const
 {
 	std::string dtd;
 	return SaveXML(outOutput, dtd);
@@ -842,7 +841,7 @@ bool ElementNode::SaveXML(std::ostream& outOutput) const
 
 
 bool ElementNode::SaveXML(
-		std::ostream& outOutput,
+		wxOutputStream& outOutput,
 		std::string const& inDTD) const
 {
 	wxXmlDocument doc;
@@ -852,8 +851,7 @@ bool ElementNode::SaveXML(
 	doc.SetRoot(root);
 	// TODO: Insert DTD
 	CreateDoc(root, *this);
-	CWrapSTLStream output(outOutput);
-	return doc.Save(output, 1);
+	return doc.Save(outOutput, 1);
 }
 
 
@@ -871,13 +869,11 @@ bool ElementNode::SaveXML(
 	bool bOk = false;
 	if (outFile.empty())
 		return bOk;
-	std::string filename = tstringUtil::tstringA(outFile);
-	std::ofstream output(filename.c_str(), std::ios::out | std::ios::binary);
-	output.exceptions(std::ios_base::badbit);
-	if (output.is_open())
+	wxFFileOutputStream output(outFile, wxT("wb"));
+	if (output.IsOk())
 	{
 		bOk = SaveXML(output, inDTD);
-		output.close();
+		output.Close();
 	}
 	return bOk;
 }

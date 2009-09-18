@@ -73,6 +73,7 @@
 #include "Print.h"
 #include "Wizard.h"
 #include <wx/config.h>
+#include <wx/mstream.h>
 #include <wx/settings.h>
 
 #include "res/AccConfirm.xpm"
@@ -1079,7 +1080,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					table.EndLine();
 				}
 
-				std::ostringstream iCal;
+				wxMemoryOutputStream iCal;
 				ElementNodePtr tree(ElementNode::New(CLIPDATA));
 
 				// Now all the data.
@@ -1106,7 +1107,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 
 				clpData.AddData(eFormatCalendar, tree);
 				clpData.AddData(table);
-				clpData.AddData(eFormatiCalendar, wxString(tstringUtil::TString(iCal.str()).c_str()));
+				clpData.AddData(eFormatiCalendar, tstringUtil::TString(tstringUtil::tstringA(iCal)));
 				clpData.CommitData();
 			}
 		}
