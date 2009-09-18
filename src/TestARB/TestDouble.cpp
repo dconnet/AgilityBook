@@ -42,14 +42,30 @@
 
 SUITE(TestDouble)
 {
-	TEST(str)
+	TEST(strPrec)
 	{
+		// ARBDouble always strips 0s unless prec ==2, unless =".00"
 		double p = 3.14159265358979323846;
-
 		wxString s = ARBDouble::str(p);
 		CHECK(wxT("3.14") == s);
 		s = ARBDouble::str(p, 4);
 		CHECK(wxT("3.1416") == s);
+
+		p = 2.1;
+		s = ARBDouble::str(p);
+		CHECK(wxT("2.10") == s);
+		s = ARBDouble::str(p, 0);
+		CHECK(wxT("2.1") == s);
+		s = ARBDouble::str(p, 3);
+		CHECK(wxT("2.1") == s);
+
+		p = 2;
+		s = ARBDouble::str(p);
+		CHECK(wxT("2") == s);
+		s = ARBDouble::str(p, 0);
+		CHECK(wxT("2") == s);
+		s = ARBDouble::str(p, 1);
+		CHECK(wxT("2") == s);
 	}
 
 

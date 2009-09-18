@@ -56,7 +56,6 @@
 #include "ARBLocalization.h"
 #include "ARBTypes.h"
 #include "Element.h"
-#include <sstream>
 #include <wx/mstream.h>
 
 #if defined(_MFC_VER) && defined(_DEBUG)
@@ -130,13 +129,11 @@ public:
 	{
 		if (1 < m_Version)
 		{
-			std::stringstream str;
-			str << "BEGIN:VALARM\r\n"
-				<< "ACTION:DISPLAY\r\n"
-				<< "TRIGGER:-PT" << inDaysBefore * 24 * 60 << "M\r\n"
-				<< "DESCRIPTION:Reminder\r\n"
-				<< "END:VALARM\r\n";
-			Write(str.str());
+			char buffer[100];
+			Write("BEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER:-PT");
+			sprintf(buffer, "%d", inDaysBefore * 24 * 60);
+			Write(buffer);
+			Write("M\r\nDESCRIPTION:Reminder\r\nEND:VALARM\r\n");
 		}
 	}
 	void EndEvent()
@@ -315,23 +312,15 @@ void ARBiCal::DoDTSTAMP()
 #else
 		struct tm* pTime = localtime(&t);
 #endif
-		std::ostringstream str;
-		str.fill('0');
-		str.width(4);
-		str << pTime->tm_year + 1900;
-		str.width(2);
-		str << pTime->tm_mon + 1;
-		str.width(2);
-		str << pTime->tm_mday << 'T';
-		str.width(2);
-		str << pTime->tm_hour;
-		str.width(2);
-		str << pTime->tm_min;
-		str.width(2);
-		str << pTime->tm_sec;
-		Write("DTSTAMP:");
-		Write(str.str());
-		Write("\r\n");
+		char buffer[50];
+		sprintf(buffer, "DTSTAMP:%04d%02d%02dT%02d%02d%02d\r\n",
+			pTime->tm_year + 1900,
+			pTime->tm_mon + 1,
+			pTime->tm_mday,
+			pTime->tm_hour,
+			pTime->tm_min,
+			pTime->tm_sec);
+		Write(buffer);
 	}
 }
 
