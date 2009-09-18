@@ -86,7 +86,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -113,7 +113,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -140,7 +140,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -167,7 +167,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -194,7 +194,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -221,7 +221,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -248,7 +248,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -275,7 +275,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -302,7 +302,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -336,7 +336,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -370,7 +370,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -397,7 +397,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -424,7 +424,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -451,7 +451,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -478,7 +478,7 @@ SUITE(TestConfigAction)
 		//virtual bool Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 
@@ -504,7 +504,7 @@ SUITE(TestConfigAction)
 		//int Apply(
 		//		ARBConfig& ioConfig,
 		//		ARBDogList* ioDogs,
-		//		otstringstream& ioInfo,
+		//		wxString& ioInfo,
 		//		IConfigActionCallback& ioCallBack) const;
 	}
 }

@@ -127,22 +127,6 @@ static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 }
 
 
-class CWrapSTLStream : public wxOutputStream
-{
-public:
-	CWrapSTLStream(std::ostream& output) : m_output(output) {}
-    
-    virtual wxOutputStream& Write(const void *buffer, size_t size)
-	{
-		m_output.write((const char*)buffer, static_cast<std::streamsize>(size));
-		return *this;
-	}
-
-private:
-	std::ostream& m_output;
-};
-
-
 static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 {
 	int i;
@@ -230,13 +214,7 @@ void ElementNode::RemoveAllTextNodes()
 void ElementNode::Dump(int inLevel) const
 {
 	int i;
-	wxString msg;
-	{
-		otstringstream tmp;
-		tmp.width(inLevel);
-		tmp << wxT(" ") << m_Name.wx_str();
-		msg = tmp.str().c_str();
-	}
+	wxString msg = wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), m_Name.c_str());
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		wxString name, value;
@@ -910,13 +888,7 @@ ElementText::ElementText(wxString const& inText)
 
 void ElementText::Dump(int inLevel) const
 {
-	wxString msg;
-	{
-		otstringstream tmp;
-		tmp.width(inLevel);
-		tmp << wxT(" ") << GetName().wx_str();
-		msg = tmp.str().c_str();
-	}
+	wxString msg = wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), GetName().c_str());
 	if (0 < m_Value.length())
 	{
 		msg << wxT(": ") << m_Value;

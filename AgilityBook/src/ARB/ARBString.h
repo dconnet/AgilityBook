@@ -39,11 +39,9 @@
  */
 
 #include <string>
-#include <sstream>
 #include <wx/string.h>
-
 class wxMemoryOutputStream;
-typedef std::basic_ostringstream<wxChar> otstringstream;
+
 
 /**
  * String utility functions

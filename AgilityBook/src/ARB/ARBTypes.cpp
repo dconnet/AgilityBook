@@ -43,6 +43,7 @@
 #include "stdafx.h"
 #include "ARBTypes.h"
 #include <iostream>
+#include <sstream>
 #include <math.h>
 #include <time.h>
 
@@ -64,7 +65,8 @@
 
 void DumpErrorMessage(wxString const& inMsg, bool bIncNewLine)
 {
-	otstringstream buffer;
+#pragma PRAGMA_TODO("Use wxLogs")
+	std::basic_ostringstream<wxChar> buffer;
 #if wxCHECK_VERSION(2, 9, 0)
 	buffer << inMsg.wx_str();
 #else
@@ -264,11 +266,11 @@ wxString ARBDouble::str(
 		double inValue,
 		int inPrec)
 {
-	otstringstream str;
+	wxString retVal;
 	if (0 < inPrec)
-		str.precision(inPrec);
-	str << std::fixed << inValue;
-	wxString retVal = str.str().c_str();
+		retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
+	else
+		retVal = wxString::Format(wxT("%g"), inValue);
 	wxString::size_type pos = retVal.find('.');
 	if (wxString::npos != pos)
 	{

@@ -110,7 +110,7 @@ SUITE(TestAgilityRecordBook)
 	//	bool Update(
 	//			int indent,
 	//			ARBConfig const& inConfigNew,
-	//			otstringstream& ioInfo,
+	//			wxString& ioInfo,
 	//			IConfigActionCallback& ioCallBack);
 	}
 
