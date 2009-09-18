@@ -421,7 +421,7 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
-	bool SaveXML(wxChar const* outFile) const;
+	bool SaveXML(wxString const& outFile) const;
 
 	/**
 	 * Save this element to the given file.
@@ -431,7 +431,7 @@ public:
 	 * @retval false Tree failed to save.
 	 */
 	bool SaveXML(
-			wxChar const* outFile,
+			wxString const& outFile,
 			std::string const& inDTD) const;
 
 protected:

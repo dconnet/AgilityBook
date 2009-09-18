@@ -45,7 +45,6 @@
 #include "ARBTypes.h"
 #include "DlgARBHelp.h"
 #include <set>
-#include <sstream>
 #include <wx/config.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
@@ -134,7 +133,7 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 
 
 void CDlgPageEncode::DumpGroup(
-		otstringstream* data,
+		wxString* data,
 		wxString const& group,
 		std::vector<wxString>* items)
 {
@@ -151,13 +150,13 @@ void CDlgPageEncode::DumpGroup(
 			{
 			default:
 				if (data)
-					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" unknown") << std::endl;
+					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" unknown\n");
 				break;
 			case wxConfigBase::Type_String:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" string") << std::endl;
-					*data << wxConfig::Get()->Read(str, wxEmptyString).c_str() << std::endl;
+					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" string\n");
+					*data << wxConfig::Get()->Read(str, wxEmptyString) << wxT("\n");
 				}
 				else if (items)
 					items->push_back(wxConfig::Get()->Read(str, wxEmptyString));
@@ -165,26 +164,26 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Boolean:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" bool") << std::endl;
+					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" bool\n");
 					bool b;
 					wxConfig::Get()->Read(str, &b);
-					*data << b << std::endl;
+					*data << b << wxT("\n");
 				}
 				break;
 			case wxConfigBase::Type_Integer:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" int") << std::endl;
-					*data << wxConfig::Get()->Read(str, 0L) << std::endl;
+					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" int\n");
+					*data << wxConfig::Get()->Read(str, 0L) << wxT("\n");
 				}
 				break;
 			case wxConfigBase::Type_Float:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().c_str() << '/' << str.c_str() << wxT(" float") << std::endl;
+					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" float\n");
 					double d;
 					wxConfig::Get()->Read(str, &d);
-					*data << d << std::endl;
+					*data << d << wxT("\n");
 				}
 				break;
 			}
@@ -217,48 +216,48 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		// OS version
 		wxPlatformInfo info;
 		str << wxT("OS: ")
-			<< info.GetOperatingSystemIdName().c_str()
+			<< info.GetOperatingSystemIdName()
 			<< ' '
 			<< info.GetOSMajorVersion()
 			<< '.'
 			<< info.GetOSMinorVersion()
-			<< std::endl;
+			<< wxT("\n");
 		if (wxPORT_BASE != info.GetPortId())
 		{
 			str << wxT("Port: ")
-				<< info.GetPortIdName().c_str()
+				<< info.GetPortIdName()
 				<< ' '
 				<< info.GetToolkitMajorVersion()
 				<< '.'
 				<< info.GetToolkitMinorVersion()
-				<< std::endl;
+				<< wxT("\n");
 		}
 		str << wxT("Architecture: ")
-			<< info.GetArchName().c_str()
+			<< info.GetArchName()
 			<< wxT(", ")
-			<< info.GetEndiannessName().c_str()
-			<< std::endl;
+			<< info.GetEndiannessName()
+			<< wxT("\n");
 
 		// Me.
 		{
 			CVersionNum ver(true);
-			str << wxStandardPaths::Get().GetExecutablePath().c_str() << wxT(": ");
+			str << wxStandardPaths::Get().GetExecutablePath() << wxT(": ");
 			if (ver.Valid())
-				str << ver.GetVersionString().c_str();
+				str << ver.GetVersionString();
 			else
 				str << _("IDS_BAD_VERSION");
-			str << std::endl;
+			str << wxT("\n");
 		}
 
 		// wxWidgets
-		str << wxVERSION_STRING << std::endl;
+		str << wxVERSION_STRING << wxT("\n");
 
 		m_Parent->AddSysInfo(str.str());
 	}
 
-	otstringstream data;
+	wxString data;
 	DumpGroup(&data, wxEmptyString, NULL);
-	m_Parent->AddRegistryInfo(data.str().c_str());
+	m_Parent->AddRegistryInfo(data);
 
 	std::set<wxString> directories;
 	// exe

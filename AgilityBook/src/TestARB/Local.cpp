@@ -68,10 +68,10 @@ void CLocalization::Load()
 	m_InvalidDivLevel = _("IDS_INVALID_DIV_LEVEL");
 	m_InvalidEventName = _("IDS_INVALID_EVENT_NAME");
 
-	m_InvalidRoot = wxString::Format(_("IDS_INVALID_ROOT"), TREE_BOOK).c_str();
-	m_MissingConfig = wxString::Format(_("IDS_MISSING_CONFIG"), TREE_CONFIG).c_str();
-	m_InvalidConfig = wxString::Format(_("IDS_INVALID_CONFIG"), TREE_CONFIG).c_str();
-	m_InvalidVenueConfig = wxString::Format(_("IDS_INVALID_VENUE_CONFIG"), TREE_DIVISION, TREE_EVENT).c_str();
+	m_InvalidRoot = wxString::Format(_("IDS_INVALID_ROOT"), TREE_BOOK);
+	m_MissingConfig = wxString::Format(_("IDS_MISSING_CONFIG"), TREE_CONFIG);
+	m_InvalidConfig = wxString::Format(_("IDS_INVALID_CONFIG"), TREE_CONFIG);
+	m_InvalidVenueConfig = wxString::Format(_("IDS_INVALID_VENUE_CONFIG"), TREE_DIVISION, TREE_EVENT);
 	m_InvalidDivName = _("IDS_INVALID_DIV_NAME");
 	m_InvalidVenueName = _("IDS_INVALID_VENUE_NAME");
 	m_InvalidOtherPtsName = _("IDS_INVALID_OTHER_PTS_NAME");
@@ -332,7 +332,7 @@ wxString CLocalization::ActionRenameOtherPoints(
 	buffer << wxString::Format(_("IDS_ACTION_RENAME_OTHERPTS"), oldName.c_str(), newName.c_str());
 	if (0 < nChanges)
 	{
-		buffer << wxString::Format(_("IDS_ACTION_RENAME_OTHERPTS2"), nChanges).c_str();
+		buffer << wxString::Format(_("IDS_ACTION_RENAME_OTHERPTS2"), nChanges);
 	}
 	return buffer;
 }
@@ -598,7 +598,7 @@ wxString CLocalization::UpdateTableRuns(int nRuns) const
 
 wxString CLocalization::ErrorInvalidDocStructure(wxChar const* const inMsg) const
 {
-	wxString buffer = m_InvalidDocStructure;
+	wxString buffer(m_InvalidDocStructure);
 	if (inMsg)
 		buffer << wxT(": ") << inMsg << wxT("\n");
 	return buffer;

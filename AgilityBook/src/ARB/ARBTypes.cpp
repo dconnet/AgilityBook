@@ -64,24 +64,19 @@
 
 void DumpErrorMessage(wxString const& inMsg, bool bIncNewLine)
 {
-#if defined(_MFC_VER)
-	if (bIncNewLine)
-		TRACE(wxT("%s\n"), inMsg.c_str());
-	else
-		// Yes, this looks odd, but TRACE0 does exactly this.
-		TRACE(wxT("%s"), inMsg.c_str());
-#else
+	otstringstream buffer;
 #if wxCHECK_VERSION(2, 9, 0)
-	if (bIncNewLine)
-		TCERR << inMsg.wx_str() << std::endl;
-	else
-		TCERR << inMsg.wx_str();
+	buffer << inMsg.wx_str();
 #else
-	if (bIncNewLine)
-		TCERR << inMsg.c_str() << std::endl;
-	else
-		TCERR << inMsg.c_str();
+	buffer << inMsg.c_str();
 #endif
+	if (bIncNewLine)
+		buffer << wxT("\n");
+#if defined(_MFC_VER)
+	// Yes, this looks odd, but TRACE0 does exactly this.
+	TRACE(wxT("%s"), buffer.str().c_str());
+#else
+	TCERR << buffer.str();
 #endif
 }
 
