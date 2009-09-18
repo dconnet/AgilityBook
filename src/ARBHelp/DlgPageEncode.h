@@ -51,7 +51,7 @@ public:
 
 private:
 	void DumpGroup(
-			otstringstream* data,
+			wxString* data,
 			wxString const& group,
 			std::vector<wxString>* items);
 

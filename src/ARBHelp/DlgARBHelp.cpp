@@ -45,7 +45,6 @@
 #include "DlgPageEncode.h"
 #include "DlgPageEncodeFiles.h"
 #include "DlgPageEncodeFinish.h"
-#include <sstream>
 #include <wx/ffile.h>
 
 #include "../Win/res/AgilityBook16.xpm"
@@ -104,68 +103,64 @@ void CDlgARBHelp::SetARBFileStatus(wxString const& inFileName, bool bInclude)
 // DlgPageDecode (decoder)
 wxString CDlgARBHelp::GetEncodedData()
 {
-	// Scoping done to minimize memory usage.
-	wxString arbData;
+	wxString rawdata;
+
+	// System information.
 	{
-		otstringstream rawdata;
-
-		// System information.
-		{
-			wxString data;
-			BinaryData::EncodeString(m_SysInfo, data);
-			rawdata << wxT("\n") << STREAM_SYSTEM_BEGIN << wxT("\n")
-				<< data
-				<< wxT("\n") << STREAM_SYSTEM_END << wxT("\n");
-		}
-
-		// Registry information.
-		{
-			wxString data;
-			BinaryData::EncodeString(m_RegInfo, data);
-			rawdata << wxT("\n") << STREAM_REGISTRY_BEGIN << wxT("\n")
-				<< data
-				<< wxT("\n") << STREAM_REGISTRY_END << wxT("\n");
-		}
-
-		// Data files.
-		for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
-		{
-			rawdata << wxT("\n") << (*iFile).first.c_str();
-			if ((*iFile).second)
-			{
-				wxFFile file;
-				if (file.Open((*iFile).first, wxT("rb")))
-				{
-					wxString data;
-					wxFileName fileName((*iFile).first);
-					wxDateTime dtMod, dtCreate;
-					if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
-					{
-						rawdata << wxT("\nCreated: ") << dtCreate.Format().c_str()
-							<< wxT("\nModified: ") << dtMod.Format().c_str();
-					}
-					BinaryData::Encode(file, data);
-					rawdata << wxT("\n") << STREAM_FILE_BEGIN << wxT("\n")
-						<< data
-						<< wxT("\n") << STREAM_FILE_END << wxT("\n");
-				}
-				else
-					rawdata << wxT(": Error: Cannot read file\n");
-			}
-			else
-			{
-				rawdata << wxT(": Skipped\n");
-			}
-		}
-
 		wxString data;
-		BinaryData::EncodeString(rawdata.str(), data);
-		otstringstream encodedData;
-		encodedData << wxT("\n") << STREAM_DATA_BEGIN << wxT("\n")
+		BinaryData::EncodeString(m_SysInfo, data);
+		rawdata << wxT("\n") << STREAM_SYSTEM_BEGIN << wxT("\n")
 			<< data
-			<< wxT("\n") << STREAM_DATA_END << wxT("\n");
-		arbData = encodedData.str().c_str();
+			<< wxT("\n") << STREAM_SYSTEM_END << wxT("\n");
 	}
 
-	return arbData;
+	// Registry information.
+	{
+		wxString data;
+		BinaryData::EncodeString(m_RegInfo, data);
+		rawdata << wxT("\n") << STREAM_REGISTRY_BEGIN << wxT("\n")
+			<< data
+			<< wxT("\n") << STREAM_REGISTRY_END << wxT("\n");
+	}
+
+	// Data files.
+	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
+	{
+		rawdata << wxT("\n") << (*iFile).first;
+		if ((*iFile).second)
+		{
+			wxFFile file;
+			if (file.Open((*iFile).first, wxT("rb")))
+			{
+				wxString data;
+				wxFileName fileName((*iFile).first);
+				wxDateTime dtMod, dtCreate;
+				if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
+				{
+					rawdata << wxT("\nCreated: ") << dtCreate.Format()
+						<< wxT("\nModified: ") << dtMod.Format();
+				}
+				BinaryData::Encode(file, data);
+				rawdata << wxT("\n") << STREAM_FILE_BEGIN << wxT("\n")
+					<< data
+					<< wxT("\n") << STREAM_FILE_END << wxT("\n");
+			}
+			else
+				rawdata << wxT(": Error: Cannot read file\n");
+		}
+		else
+		{
+			rawdata << wxT(": Skipped\n");
+		}
+	}
+
+	wxString data;
+	BinaryData::EncodeString(rawdata, data);
+	rawdata.clear();
+
+	rawdata << wxT("\n") << STREAM_DATA_BEGIN << wxT("\n")
+		<< data
+		<< wxT("\n") << STREAM_DATA_END << wxT("\n");
+
+	return rawdata;
 }

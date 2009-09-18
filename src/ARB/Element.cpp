@@ -231,20 +231,24 @@ void ElementNode::RemoveAllTextNodes()
 void ElementNode::Dump(int inLevel) const
 {
 	int i;
-	otstringstream msg;
-	msg.width(inLevel);
-	msg << wxT(" ") << m_Name.wx_str();
+	wxString msg;
+	{
+		otstringstream tmp;
+		tmp.width(inLevel);
+		tmp << wxT(" ") << m_Name.wx_str();
+		msg = tmp.str().c_str();
+	}
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		wxString name, value;
 		GetNthAttrib(i, name, value);
 		msg << wxT(" ")
-			<< name.wx_str()
+			<< name
 			<< wxT("=\"")
-			<< value.wx_str()
+			<< value
 			<< wxT("\"");
 	}
-	DumpErrorMessage(msg.str().c_str());
+	DumpErrorMessage(msg);
 	for (i = 0; i < GetElementCount(); ++i)
 	{
 		GetElement(i)->Dump(inLevel+1);
@@ -853,7 +857,7 @@ bool ElementNode::SaveXML(
 }
 
 
-bool ElementNode::SaveXML(wxChar const* outFile) const
+bool ElementNode::SaveXML(wxString const& outFile) const
 {
 	std::string dtd;
 	return SaveXML(outFile, dtd);
@@ -861,16 +865,14 @@ bool ElementNode::SaveXML(wxChar const* outFile) const
 
 
 bool ElementNode::SaveXML(
-		wxChar const* outFile,
+		wxString const& outFile,
 		std::string const& inDTD) const
 {
 	bool bOk = false;
-	if (!outFile)
+	if (outFile.empty())
 		return bOk;
-	char const* pFile = NULL;
 	std::string filename = tstringUtil::tstringA(outFile);
-	pFile = filename.c_str();
-	std::ofstream output(pFile, std::ios::out | std::ios::binary);
+	std::ofstream output(filename.c_str(), std::ios::out | std::ios::binary);
 	output.exceptions(std::ios_base::badbit);
 	if (output.is_open())
 	{
@@ -912,15 +914,18 @@ ElementText::ElementText(wxString const& inText)
 
 void ElementText::Dump(int inLevel) const
 {
-	otstringstream msg;
-	msg.width(inLevel);
-	msg << wxT(" ") << GetName().wx_str();
+	wxString msg;
+	{
+		otstringstream tmp;
+		tmp.width(inLevel);
+		tmp << wxT(" ") << GetName().wx_str();
+		msg = tmp.str().c_str();
+	}
 	if (0 < m_Value.length())
 	{
-		msg << wxT(": ")
-			<< m_Value.wx_str();
+		msg << wxT(": ") << m_Value;
 	}
-	DumpErrorMessage(msg.str().c_str());
+	DumpErrorMessage(msg);
 }
 
 

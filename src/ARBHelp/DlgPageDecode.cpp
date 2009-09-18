@@ -47,7 +47,6 @@
 #include "BinaryData.h"
 #include "DlgARBHelp.h"
 #include <algorithm>
-#include <fstream>
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
@@ -117,7 +116,7 @@ CDlgPageDecode::CDlgPageDecode()
 void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 {
 	wxBusyCursor wait;
-	otstringstream editData;
+	wxString editData;
 	wxString data = m_ctrlEncoded->GetValue();
 
 	// Make sure this is synchronized (order of decoding) with
@@ -134,11 +133,8 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 
 		wxString dataIn(data);
 		data.Empty();
-		wxString dataOut;
-		BinaryData::DecodeString(dataIn, dataOut);
+		BinaryData::DecodeString(dataIn, data);
 		dataIn.clear();
-		data = dataOut.c_str();
-		dataOut.clear();
 		data.Trim(true);
 		data.Trim(false);
 
@@ -146,14 +142,14 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 
 		static const struct
 		{
-			wxChar const* begin;
-			wxChar const* end;
+			wxString begin;
+			wxString end;
 		} sc_sections[] = {
 			{STREAM_SYSTEM_BEGIN, STREAM_SYSTEM_END},
 			{STREAM_REGISTRY_BEGIN, STREAM_REGISTRY_END},
-			{NULL, NULL}
+			{wxT(""), wxT("")}
 		};
-		for (int idx = 0; sc_sections[idx].begin; ++idx)
+		for (int idx = 0; !sc_sections[idx].begin.empty(); ++idx)
 		{
 			pos = data.Find(sc_sections[idx].begin);
 			if (0 <= pos)
@@ -161,22 +157,23 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				int posEnd = data.Find(sc_sections[idx].end);
 				if (pos < posEnd)
 				{
-					int posData = pos + lstrlen(sc_sections[idx].begin);
+					int posData = pos + sc_sections[idx].begin.Length();
 					// Dump the preceding data.
-					editData << data.Left(posData).c_str() << wxT("\n");
+					editData << data.Left(posData) << wxT("\n");
 					// Trim preceding
 					data = data.Mid(posData);
 					data.Trim(false);
 					// Get the data to decode
 					posEnd = data.Find(sc_sections[idx].end); // Recompute - we just changed the string
-					dataIn = data.Left(posEnd).c_str();
+					dataIn = data.Left(posEnd);
 					// Strip that from main data.
-					data = data.Mid(posEnd + lstrlen(sc_sections[idx].end));
+					data = data.Mid(posEnd + sc_sections[idx].end.Length());
 					data.Trim(false);
 					// Now decode
+					wxString dataOut;
 					BinaryData::DecodeString(dataIn, dataOut);
 					dataIn.clear();
-					editData << dataOut.c_str() << sc_sections[idx].end << wxT("\n\n");
+					editData << dataOut << sc_sections[idx].end << wxT("\n\n");
 					dataOut.clear();
 				}
 			}
@@ -189,13 +186,13 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 			{
 				int posData = pos + lstrlen(STREAM_FILE_BEGIN);
 				// Dump the preceding data (but not identifier.
-				editData << data.Left(pos).c_str(); // New line included
+				editData << data.Left(pos); // New line included
 				// Trim preceding
 				data = data.Mid(posData);
 				data.Trim(false);
 				// Get the data to decode
 				posEnd = data.Find(STREAM_FILE_END); // Recompute - we just changed the string
-				dataIn = data.Left(posEnd).c_str();
+				dataIn = data.Left(posEnd);
 				// Strip that from main data.
 				data = data.Mid(posEnd + lstrlen(STREAM_FILE_END));
 				data.Trim(false);
@@ -208,23 +205,23 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				wxString tempname = wxFileName::CreateTempFileName(wxT("arb"));
 				m_TmpFiles.push_back(tempname);
 				wxFFile output;
-				if (output.Open(tempname.c_str(), wxT("wb")))
+				if (output.Open(tempname, wxT("wb")))
 				{
 					output.Write(binData, nBytes);
 					output.Close();
-					editData << wxT("File written to: ") << tempname.c_str() << wxT("\n\n");
+					editData << wxT("File written to: ") << tempname << wxT("\n\n");
 				}
 				else
 				{
 					std::string tmp(reinterpret_cast<char*>(binData), nBytes);
 					editData << STREAM_FILE_BEGIN << wxT("\n")
-						<< tstringUtil::TString(tmp).c_str()
+						<< tstringUtil::TString(tmp)
 						<< STREAM_FILE_END << wxT("\n\n");
 				}
 				BinaryData::Release(binData);
 			}
 		}
-		editData << data.c_str();
+		editData << data;
 	}
 
 	else
@@ -232,7 +229,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		editData << wxT("Error in data: Unable to find ") << STREAM_DATA_BEGIN;
 	}
 
-	m_ctrlDecoded->SetValue(editData.str().c_str());
+	m_ctrlDecoded->SetValue(editData);
 }
 
 

@@ -37,17 +37,18 @@
 #include "TestARB.h"
 
 #include "ARBString.h"
-#include <iostream>
 
 
 SUITE(TestString)
 {
+	/*
 	TEST(Convert_ToWide)
 	{
 		std::string s("narrow");
 		std::wstring s2 = tstringUtil::tstringW(s);
 		CHECK(L"narrow" == s2);
 	}
+	*/
 
 
 	TEST(Convert_ToNarrow)
@@ -69,131 +70,31 @@ SUITE(TestString)
 	}
 
 
-	TEST(TrimA)
+	TEST(Atol)
 	{
-		std::string s(" \tstr\t\r\n ");
-		std::string s1 = tstringUtil::Trim(s, ' ');
-		CHECK("\tstr\t\r\n" == s1);
-		std::string s2 = tstringUtil::TrimLeft(s, ' ');
-		CHECK("\tstr\t\r\n " == s2);
-		std::string s3 = tstringUtil::TrimRight(s, ' ');
-		CHECK(" \tstr\t\r\n" == s3);
+		wxString s1(wxT("123"));
+		long a1 = tstringUtil::atol(s1);
+		CHECK(a1 == 123);
+		wxString s2(wxT("12-3"));
+		long a2 = tstringUtil::atol(s2);
+		CHECK(a2 == 12);
 	}
 
 
-	TEST(TrimA2)
+	TEST(Atod)
 	{
-		std::string s(" \tstr\t\r\n ");
-		std::string s1 = tstringUtil::Trim(s);
-		CHECK("str" == s1);
-		std::string s2 = tstringUtil::TrimLeft(s);
-		CHECK("str\t\r\n " == s2);
-		std::string s3 = tstringUtil::TrimRight(s);
-		CHECK(" \tstr" == s3);
-	}
-
-
-	TEST(TrimW)
-	{
-		std::wstring s(L" \tstr\t\r\n ");
-		std::wstring s1 = tstringUtil::Trim(s, ' ');
-		CHECK(L"\tstr\t\r\n" == s1);
-		std::wstring s2 = tstringUtil::TrimLeft(s, ' ');
-		CHECK(L"\tstr\t\r\n " == s2);
-		std::wstring s3 = tstringUtil::TrimRight(s, ' ');
-		CHECK(L" \tstr\t\r\n" == s3);
-	}
-
-
-	TEST(TrimW2)
-	{
-		std::wstring s(L" \tstr\t\r\n ");
-		std::wstring s1 = tstringUtil::Trim(s);
-		CHECK(L"str" == s1);
-		std::wstring s2 = tstringUtil::TrimLeft(s);
-		CHECK(L"str\t\r\n " == s2);
-		std::wstring s3 = tstringUtil::TrimRight(s);
-		CHECK(L" \tstr" == s3);
-	}
-
-
-	TEST(TrimNone)
-	{
-		std::string s("This is a test");
-		std::string s1 = tstringUtil::Trim(s);
-		CHECK(s == s1);
-		std::string s2 = tstringUtil::TrimLeft(s);
-		CHECK(s == s2);
-		std::string s3 = tstringUtil::TrimRight(s);
-		CHECK(s == s3);
-	}
-
-
-	TEST(TrimNoneW)
-	{
-		std::wstring s(L"This is a test");
-		std::wstring s1 = tstringUtil::Trim(s);
-		CHECK(s == s1);
-		std::wstring s2 = tstringUtil::TrimLeft(s);
-		CHECK(s == s2);
-		std::wstring s3 = tstringUtil::TrimRight(s);
-		CHECK(s == s3);
-	}
-
-
-	TEST(TrimAll)
-	{
-		std::string s("\t  \t\r\n");
-		std::string s1 = tstringUtil::Trim(s);
-		CHECK(0 == s1.length());
-		std::string s2 = tstringUtil::TrimLeft(s);
-		CHECK(0 == s2.length());
-		std::string s3 = tstringUtil::TrimRight(s);
-		CHECK(0 == s3.length());
-	}
-
-
-	TEST(TrimAllW)
-	{
-		std::wstring s(L"\t  \t\r\n");
-		std::wstring s1 = tstringUtil::Trim(s);
-		CHECK(0 == s1.length());
-		std::wstring s2 = tstringUtil::TrimLeft(s);
-		CHECK(0 == s2.length());
-		std::wstring s3 = tstringUtil::TrimRight(s);
-		CHECK(0 == s3.length());
-	}
-
-
-	TEST(ToLowerA)
-	{
-		std::string s("As");
-		std::string s2 = tstringUtil::ToLower(s);
-		CHECK("as" == s2);
-	}
-
-
-	TEST(ToLowerW)
-	{
-		std::wstring s(L"As");
-		std::wstring s2 = tstringUtil::ToLower(s);
-		CHECK(L"as" == s2);
-	}
-
-
-	TEST(ToUpperA)
-	{
-		std::string s("As");
-		std::string s2 = tstringUtil::ToUpper(s);
-		CHECK("AS" == s2);
-	}
-
-
-	TEST(ToUpperW)
-	{
-		std::wstring s(L"As");
-		std::wstring s2 = tstringUtil::ToUpper(s);
-		CHECK(L"AS" == s2);
+		wxString s1(wxT("12.3"));
+		double a1 = tstringUtil::strtod(s1);
+		CHECK(a1 == 12.3);
+		wxString s2(wxT("1.3-12"));
+		bool bParsed;
+		double a2 = tstringUtil::strtod(s2, &bParsed);
+#if wxCHECK_VERSION(2, 9, 0)
+		CHECK(a2 == 0.0);
+		CHECK(!bParsed);
+#else
+		CHECK(a2 == 1.3);
+#endif
 	}
 
 

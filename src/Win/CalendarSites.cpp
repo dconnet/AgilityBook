@@ -125,7 +125,7 @@ char* CReadHttpData::ReadData(char const* inURL) const
 		fclose(fp);
 	}
 #else
-	wxString url(tstringUtil::TString(inURL).c_str());
+	wxString url(tstringUtil::TString(inURL, strlen(inURL)));
 	CReadHttp http(url, &data);
 #endif
 
@@ -309,10 +309,7 @@ void CProgressMeter::SetMessage(char const* pMessage)
 	{
 		wxString msg;
 		if (pMessage)
-		{
-			std::string tmp(pMessage);
-			msg = tstringUtil::TString(tmp).c_str();
-		}
+			msg = tstringUtil::TString(pMessage, strlen(pMessage));
 		m_pProgress->SetMessage(msg);
 	}
 }
@@ -467,7 +464,7 @@ void CalSiteData::Connect()
 				}
 				if (pData)
 				{
-					m_Name = tstringUtil::TString(pData, strlen(pData)).c_str();
+					m_Name = tstringUtil::TString(pData, strlen(pData));
 					try
 					{
 						m_pSite->releaseBuffer(pData);
@@ -490,7 +487,7 @@ void CalSiteData::Connect()
 					}
 					if (pData)
 					{
-						m_Desc = tstringUtil::TString(pData, strlen(pData)).c_str();
+						m_Desc = tstringUtil::TString(pData, strlen(pData));
 						try
 						{
 							m_pSite->releaseBuffer(pData);
@@ -514,7 +511,7 @@ void CalSiteData::Connect()
 					}
 					if (pData)
 					{
-						wxString data = tstringUtil::TString(pData, strlen(pData)).c_str();
+						wxString data = tstringUtil::TString(pData, strlen(pData));
 						std::vector<wxString> fields;
 						if (0 < BreakLine('\n', data, fields))
 						{
@@ -552,7 +549,7 @@ void CalSiteData::Connect()
 					}
 					if (pData)
 					{
-						wxString data = tstringUtil::TString(pData, strlen(pData)).c_str();
+						wxString data = tstringUtil::TString(pData, strlen(pData));
 						std::vector<wxString> fields;
 						if (0 < BreakLine('\n', data, fields))
 						{
@@ -788,8 +785,8 @@ public:
 		, m_Site(inSite->Clone())
 		, m_Enabled(true)
 	{
-		m_Name = m_Site->GetName().c_str();
-		m_Desc = m_Site->GetDescription().c_str();
+		m_Name = m_Site->GetName();
+		m_Desc = m_Site->GetDescription();
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 	}
@@ -854,7 +851,7 @@ std::string CPluginConfigData::Process(IProgressMeter *progress)
 	std::string data(url.ToUTF8());
 	progress->SetMessage(data.c_str());
 	data.erase();
-	CReadHttp http(url.c_str(), &data);
+	CReadHttp http(url, &data);
 	wxString username, errMsg;
 	if (!http.ReadHttpFile(username, errMsg, wxGetApp().GetTopWindow()))
 		data.erase();
@@ -867,8 +864,8 @@ bool CPluginConfigData::Edit(wxWindow* pParent)
 	CDlgPluginDetails dlg(m_pDoc->Book().GetConfig(), m_Site, pParent);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		m_Name = m_Site->GetName().c_str();
-		m_Desc = m_Site->GetDescription().c_str();
+		m_Name = m_Site->GetName();
+		m_Desc = m_Site->GetDescription();
 		TranslateCodeMap(QueryLocationCodes(), m_LocationCodes);
 		TranslateCodeMap(QueryVenueCodes(), m_VenueCodes);
 		*m_OrigSite = *m_Site;
@@ -999,7 +996,7 @@ public:
 		if (m_Cal->GetOpeningDate().IsValid())
 		{
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
-			desc << str.c_str()
+			desc << str
 				<< wxT(" ")
 				<< m_Cal->GetOpeningDate().GetString(dFmt)
 				<< wxT("\n");
@@ -1007,7 +1004,7 @@ public:
 		if (m_Cal->GetDrawDate().IsValid())
 		{
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
-			desc << str.c_str()
+			desc << str
 				<< wxT(" ")
 				<< m_Cal->GetDrawDate().GetString(dFmt)
 				<< wxT("\n");
@@ -1350,7 +1347,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						{
 							if (0 < err.m_ErrMsg.length())
 							{
-								wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
 								progress.SetForegroundWindow();
 							}
 							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -1370,7 +1367,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						if (!errMsg.empty())
 						{
 							err += wxT(":\n\t");
-							err += errMsg.c_str();
+							err += errMsg;
 						}
 						int flags = wxCENTRE | wxICON_WARNING;
 						if (pData->CanDisable())

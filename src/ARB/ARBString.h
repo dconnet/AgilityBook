@@ -45,7 +45,7 @@
 typedef std::basic_ostringstream<wxChar> otstringstream;
 
 /**
- * Convert between ansi/unicode
+ * String utility functions
  */
 class tstringUtil
 {
@@ -54,38 +54,11 @@ public:
 	static wxString TString(std::wstring const& inStr);
 	static wxString TString(char const* const inStr, size_t inLen);
 	static wxString TString(std::string const& inStr);
+	static std::string tstringA(wxString const& inStr);
 
-	// Construct a string, no matter the input
-	static std::string tstringA(wchar_t const* const inStr, size_t inLen);
-	static std::string tstringA(std::wstring const& inStr);
-	static std::string tstringA(char const* const inStr, size_t inLen);
-	static std::string tstringA(std::string const& inStr);
-	// Construct a wstring, no matter the input
-	static std::wstring tstringW(wchar_t const* const inStr, size_t inLen);
-	static std::wstring tstringW(std::wstring const& inStr);
-	static std::wstring tstringW(char const* const inStr, size_t inLen);
-	static std::wstring tstringW(std::string const& inStr);
+	static long atol(wxString const& inStr, bool* bParsedOk = NULL);
+	static double strtod(wxString const& inStr, bool* bParsedOk = NULL);
 
-	static long atol(wxString const& inStr);
-	static double strtod(wxString const& inStr);
-
-	// Some CString-style functions
-	static std::string Trim(std::string const& inStr);
-	static std::wstring Trim(std::wstring const& inStr);
-	static std::string Trim(std::string const& inStr, char toTrim);
-	static std::wstring Trim(std::wstring const& inStr, wchar_t toTrim);
-	static std::string TrimLeft(std::string const& inStr);
-	static std::wstring TrimLeft(std::wstring const& inStr);
-	static std::string TrimLeft(std::string const& inStr, char toTrim);
-	static std::wstring TrimLeft(std::wstring const& inStr, wchar_t toTrim);
-	static std::string TrimRight(std::string const& inStr);
-	static std::wstring TrimRight(std::wstring const& inStr);
-	static std::string TrimRight(std::string const& inStr, char toTrim);
-	static std::wstring TrimRight(std::wstring const& inStr, wchar_t toTrim);
-	static std::string ToLower(std::string const& inStr);
-	static std::wstring ToLower(std::wstring const& inStr);
-	static std::string ToUpper(std::string const& inStr);
-	static std::wstring ToUpper(std::wstring const& inStr);
 	static std::string Replace(
 			std::string const& inStr,
 			std::string const& inReplace,

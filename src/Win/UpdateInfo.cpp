@@ -167,11 +167,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		if (bVerbose)
 		{
 			data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
-#ifdef UNICODE
-			wxString tmp(data.c_str(), wxMBConvUTF8());
-#else
-			wxString tmp = data.c_str();
-#endif
+			wxString tmp = tstringUtil::TString(data);
 			if (!errMsg.IsEmpty())
 				tmp += errMsg;
 			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
@@ -274,7 +270,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				if (0 < errMsg2.length())
 				{
 					msg += wxT("\n\n");
-					msg += errMsg2.c_str();
+					msg += errMsg2;
 				}
 				wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 				// Even tho we failed, we'll still report success.
@@ -312,7 +308,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					}
 					if (ElementNode::eFound == node->GetAttrib(wxT("version"), value))
 					{
-						m_VersionNum.Parse(value.c_str());
+						m_VersionNum.Parse(value);
 						if (!m_VersionNum.Valid())
 						{
 							if (bVerbose)
@@ -342,7 +338,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				}
 				else if (node->GetName() == wxT("Download"))
 				{
-					m_UpdateDownload = node->GetValue().c_str();
+					m_UpdateDownload = node->GetValue();
 				}
 				else if (node->GetName() == wxT("DisableCalPlugin"))
 				{
@@ -353,10 +349,10 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 					bool bEnable = false;
 					node->GetAttrib(wxT("enable"), bEnable);
 					CVersionNum vernum(false);
-					vernum.Parse(ver.c_str());
+					vernum.Parse(ver);
 					if (vernum.Valid())
 					{
-						CAgilityBookOptions::SuppressCalSitePermanently(filename.c_str(), vernum, !bEnable);
+						CAgilityBookOptions::SuppressCalSitePermanently(filename, vernum, !bEnable);
 					}
 				}
 			}
@@ -468,7 +464,7 @@ void CUpdateInfo::CheckConfig(
 		wxString msg;
 		if (0 < m_InfoMsg.size())
 		{
-			std::map<wxString, wxString>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage().c_str());
+			std::map<wxString, wxString>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
 			if (iMsg == m_InfoMsg.end())
 				iMsg = m_InfoMsg.begin();
 			if (iMsg != m_InfoMsg.end() && 0 < iMsg->second.length())
@@ -479,7 +475,7 @@ void CUpdateInfo::CheckConfig(
 				// titling pts were removed from Tournament Jumpers and
 				// Snooker to allow for non-titling runs. In case the
 				// user saved some that way, we need to warn them.
-				msg += iMsg->second.c_str();
+				msg += iMsg->second;
 			}
 		}
 		if (UpdateConfig(pDoc, msg))
@@ -487,7 +483,7 @@ void CUpdateInfo::CheckConfig(
 			// Load the config.
 			wxString url = _("IDS_HELP_UPDATE");
 			url += wxT("/");
-			url += m_FileName.c_str();
+			url += m_FileName;
 			std::string strConfig;
 			wxString errMsg;
 			CReadHttp file(url, &strConfig);
@@ -503,7 +499,7 @@ void CUpdateInfo::CheckConfig(
 					if (0 < errMsg2.length())
 					{
 						msg2 += wxT("\n\n");
-						msg2 += errMsg2.c_str();
+						msg2 += errMsg2;
 					}
 					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -520,7 +516,7 @@ void CUpdateInfo::CheckConfig(
 						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 						{
 							if (0 < err.m_ErrMsg.length())
-								wxMessageBox(err.m_ErrMsg.c_str(), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
 						}
 						else
 						{
