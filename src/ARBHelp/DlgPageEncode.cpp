@@ -207,11 +207,9 @@ bool CDlgPageEncode::TransferDataFromWindow()
 {
 	wxBusyCursor wait;
 
-	wxString msg, tmp;
-
 	// Get system information
 	{
-		otstringstream str;
+		wxString str;
 
 		// OS version
 		wxPlatformInfo info;
@@ -252,7 +250,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		// wxWidgets
 		str << wxVERSION_STRING << wxT("\n");
 
-		m_Parent->AddSysInfo(str.str());
+		m_Parent->AddSysInfo(str);
 	}
 
 	wxString data;
@@ -278,18 +276,19 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		if (path.empty())
 			continue;
 		wxFileName name(path);
-#ifdef WIN32
 		bool bFound = false;
-		for (std::set<wxString>::iterator iDir = directories.begin(); iDir != directories.end(); ++iDir)
+		if (!wxFileName::IsCaseSensitive())
 		{
-			if (0 == name.GetPath().CmpNoCase(*iDir))
-				bFound = true;
+			for (std::set<wxString>::iterator iDir = directories.begin();
+					!bFound && iDir != directories.end();
+					++iDir)
+			{
+				if (0 == name.GetPath().CmpNoCase(*iDir))
+					bFound = true;
+			}
 		}
 		if (!bFound)
 			directories.insert(name.GetPath());
-#else
-		directories.insert(name.GetPath());
-#endif
 	}
 
 	for (std::set<wxString>::iterator i = directories.begin(); i != directories.end(); ++i)

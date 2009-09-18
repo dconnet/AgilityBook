@@ -46,17 +46,15 @@
 #include "../ARB/VersionNum.h"
 #include "../tidy/include/tidy.h"
 #include <errno.h>
-#include <sstream>
+#include <wx/ffile.h>
+#include <wx/mstream.h>
+#include <wx/wfstream.h>
 
 #define GENERATE_TESTDATA	0
 #define USE_TESTDATA 		0
 #define TESTDATANAME		"c:\\AgilityBook\\testdata\\usdaa-raw"
 #if GENERATE_TESTDATA && USE_TESTDATA
 #error "Choose one!"
-#endif
-
-#if GENERATE_TESTDATA || USE_TESTDATA
-#include <fstream>
 #endif
 
 
@@ -202,9 +200,8 @@ static ElementNodePtr ReadData(
 	{
 #if GENERATE_TESTDATA
 {
-std::ofstream raw(outTestData, std::ios::out);
-raw << data;
-raw.close();
+wxFFile raw(tstringUtil::TString(outTestData), wxT("wb"));
+raw.Write(data, strlen(data));
 }
 #endif
 		TidyDoc tdoc = tidyCreate();
@@ -245,9 +242,8 @@ raw.close();
 //{
 //std::string out(inAddress);
 //out += ".out";
-//std::ofstream raw(out, std::ios::out);
-//raw << pData;
-//raw.close();
+//wxFFile raw(tstringUtil::TString(out), wxT("wb"));
+//raw.Write(pData, strlen(pData));
 //}
 #endif
 
@@ -256,7 +252,7 @@ raw.close();
 		if (!tree->LoadXMLBuffer(pData, len, err))
 		{
 			tree.reset();
-			wxMessageBox(err.c_str(), wxMessageBoxCaptionStr, wxCENTRE);
+			wxMessageBox(err, wxMessageBoxCaptionStr, wxCENTRE);
 		}
 		else
 		{
@@ -265,9 +261,8 @@ raw.close();
 //{
 //std::string out(inAddress);
 //out += ".tree";
-//std::ofstream raw(out, std::ios::out);
+//wxFFileOutputStream raw(tstringUtil::TString(out), wxT("wb"));
 //tree->SaveXML(raw);
-//raw.close();
 //}
 #endif
 		}
@@ -524,14 +519,14 @@ char* CCalendarSite::Process(
 #ifdef _DEBUG
 //Test code to look at generated calendar data
 //{
-//std::ofstream raw("c:\\events-caltree.xml", std::ios::out);
+//wxFFileOutputStream raw(wxT("c:\\events-caltree.xml"), wxT("wb"));
 //calTree->SaveXML(raw);
-//raw.close();
 //}
 #endif
-		std::ostringstream s;
+		wxMemoryOutputStream s;
 		calTree->SaveXML(s);
-		return Allocate(s.str());
+		std::string data = tstringUtil::tstringA(s);
+		return Allocate(data);
 	}
 	return NULL;
 }

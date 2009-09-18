@@ -56,6 +56,8 @@
 #include "ARBLocalization.h"
 #include "ARBTypes.h"
 #include "Element.h"
+#include <sstream>
+#include <wx/mstream.h>
 
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
@@ -80,11 +82,11 @@ class ARBiCal : public ICalendar
 {
 public:
 	ARBiCal(
-			std::ostream& ioStream,
+			wxOutputStream& ioStream,
 			int inVersion);
 	virtual ~ARBiCal()
 	{
-		m_ioStream << "END:VCALENDAR\r\n";
+		Write("END:VCALENDAR\r\n");
 	}
 
 	virtual void Release()
@@ -94,7 +96,7 @@ public:
 
 	void BeginEvent()
 	{
-		m_ioStream << "BEGIN:VEVENT\r\n";
+		Write("BEGIN:VEVENT\r\n");
 	}
 	void DoUID(wxString const& inUID)
 	{
@@ -128,19 +130,24 @@ public:
 	{
 		if (1 < m_Version)
 		{
-			m_ioStream << "BEGIN:VALARM\r\n"
+			std::stringstream str;
+			str << "BEGIN:VALARM\r\n"
 				<< "ACTION:DISPLAY\r\n"
 				<< "TRIGGER:-PT" << inDaysBefore * 24 * 60 << "M\r\n"
 				<< "DESCRIPTION:Reminder\r\n"
 				<< "END:VALARM\r\n";
+			Write(str.str());
 		}
 	}
 	void EndEvent()
 	{
-		m_ioStream << "END:VEVENT\r\n";
+		Write("END:VEVENT\r\n");
 	}
 
 private:
+	void Write(char inVal);
+	void Write(char const* const inVal);
+	void Write(std::string const& inVal);
 	void Write(
 			char const* const inVal,
 			ARBDate inDate,
@@ -151,31 +158,54 @@ private:
 			wxString const& inText,
 			bool bQuotedPrint);
 
-	std::ostream& m_ioStream;
+	wxOutputStream& m_ioStream;
 	int m_Version;
 };
 
 
 ARBiCal::ARBiCal(
-		std::ostream& ioStream,
+		wxOutputStream& ioStream,
 		int inVersion)
 	: m_ioStream(ioStream)
 	, m_Version(inVersion)
 {
 	// All V1.0 syntax was figured out by exporting an entry from Outlook2003.
-	m_ioStream << "BEGIN:VCALENDAR\r\n";
-	m_ioStream << "PRODID:-//dcon Software//Agility Record Book//EN\r\n";
+	Write("BEGIN:VCALENDAR\r\n");
+	Write("PRODID:-//dcon Software//Agility Record Book//EN\r\n");
 	switch (m_Version)
 	{
 	case 1:
-		m_ioStream << "VERSION:1.0\r\n";
+		Write("VERSION:1.0\r\n");
 		break;
 	case 2:
-		m_ioStream << "VERSION:2.0\r\n";
+		Write("VERSION:2.0\r\n");
 		// Figured this out thru trial/error with Outlook2003.
-		m_ioStream << "METHOD:PUBLISH\r\n";
+		Write("METHOD:PUBLISH\r\n");
 		break;
 	}
+}
+
+
+void ARBiCal::Write(char inVal)
+{
+	m_ioStream.Write(&inVal, 1);
+}
+
+
+void ARBiCal::Write(char const* const inVal)
+{
+	if (inVal && *inVal)
+	{
+		size_t len = strlen(inVal);
+		m_ioStream.Write(inVal, len);
+	}
+}
+
+
+void ARBiCal::Write(std::string const& inVal)
+{
+	if (!inVal.empty())
+		m_ioStream.Write(inVal.c_str(), inVal.length());
 }
 
 
@@ -186,21 +216,21 @@ void ARBiCal::Write(
 {
 	if (inVal)
 	{
-		m_ioStream << inVal;
+		Write(inVal);
 		if (1 < m_Version)
-			m_ioStream << ";VALUE=DATE";
-		m_ioStream << ':';
+			Write(";VALUE=DATE");
+		Write(':');
 	}
-	m_ioStream << inDate.GetString(ARBDate::eYYYYMMDD).mb_str();
+	Write(inDate.GetString(ARBDate::eYYYYMMDD).mb_str());
 	if (1 == m_Version)
 	{
 		if (inStartOfDay)
-			m_ioStream << "T070000";
+			Write("T070000");
 		else
-			m_ioStream << "T180000";
+			Write("T180000");
 	}
 	if (inVal)
-		m_ioStream << "\r\n";
+		Write("\r\n");
 }
 
 
@@ -217,22 +247,22 @@ void ARBiCal::WriteSafeChar(std::string const& inText)
 		|| 0x20 == c || 0x09 == c) // WSP
 		{
 			if (1 == m_Version && '=' == c)
-				m_ioStream << "=3D";
+				Write("=3D");
 			else if (1 < m_Version
 			&& (';' == c || ',' == c || '\\' == c))
-				m_ioStream << '\\';
+				Write('\\');
 			else
-				m_ioStream << c;
+				Write(c);
 		}
 		else if ('\n' == c)
 		{
 			if (1 == m_Version)
-				m_ioStream << "=0A";
+				Write("=0A");
 			else
-				m_ioStream << "\\n";
+				Write("\\n");
 		}
 		else
-			m_ioStream << '?';
+			Write('?');
 	}
 }
 
@@ -245,13 +275,13 @@ void ARBiCal::WriteText(
 	if (0 < inText.length())
 	{
 		size_t nLineLength = 75 - strlen(inToken);
-		m_ioStream << inToken;
+		Write(inToken);
 		if (1 == m_Version && bQuotedPrint)
 		{
-			m_ioStream << ";ENCODING=QUOTED-PRINTABLE";
+			Write(";ENCODING=QUOTED-PRINTABLE");
 			nLineLength -= 26;
 		}
-		m_ioStream << ':';
+		Write(':');
 		// "Fold" a long line. RFC 2445, section 4.1
 		std::string tmp(inText.ToUTF8());
 		while (nLineLength < tmp.length())
@@ -259,15 +289,15 @@ void ARBiCal::WriteText(
 			// Version 1 stuff is a best-guess.
 			WriteSafeChar(tmp.substr(0, nLineLength));
 			if (1 == m_Version)
-				m_ioStream << "=\r\n";
+				Write("=\r\n");
 			else
-				m_ioStream << "\r\n\t";
+				Write("\r\n\t");
 			tmp = tmp.substr(nLineLength);
 			nLineLength = 75;
 		}
 		if (0 < tmp.length())
 			WriteSafeChar(tmp);
-		m_ioStream << "\r\n";
+		Write("\r\n");
 	}
 }
 
@@ -299,7 +329,9 @@ void ARBiCal::DoDTSTAMP()
 		str << pTime->tm_min;
 		str.width(2);
 		str << pTime->tm_sec;
-		m_ioStream << "DTSTAMP:" << str.str() << "\r\n";
+		Write("DTSTAMP:");
+		Write(str.str());
+		Write("\r\n");
 	}
 }
 
@@ -315,7 +347,7 @@ ICalendar::~ICalendar()
 
 
 ICalendar* ICalendar::iCalendarBegin(
-		std::ostream& ioStream,
+		wxOutputStream& ioStream,
 		int inVersion)
 {
 	ICalendar* pCal = NULL;

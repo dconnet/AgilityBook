@@ -42,6 +42,7 @@
 #include "ARBStructure.h"
 #include "Element.h"
 #include <wx/filefn.h>
+#include <wx/mstream.h>
 
 
 SUITE(TestElement)
@@ -262,8 +263,8 @@ SUITE(TestElement)
 	{
 		ElementNodePtr tree = LoadXMLData(IDR_XML_DEFAULT_CONFIG);
 
-		wxChar const* const tmpFile = wxT("data.tmp");
-		std::ostringstream tmp1;
+		wxString tmpFile(wxT("data.tmp"));
+		wxMemoryOutputStream tmp1;
 		CHECK(tree->SaveXML(tmpFile));
 		CHECK(tree->SaveXML(tmp1));
 
@@ -273,9 +274,11 @@ SUITE(TestElement)
 
 		wxRemoveFile(tmpFile);
 
-		std::ostringstream tmp2;
+		wxMemoryOutputStream tmp2;
 		CHECK(tree2->SaveXML(tmp2));
 
-		CHECK(tmp1.str() == tmp2.str());
+		std::string tmp1data = tstringUtil::tstringA(tmp1);
+		std::string tmp2data = tstringUtil::tstringA(tmp2);
+		CHECK(tmp1data == tmp2data);
 	}
 }

@@ -402,7 +402,7 @@ public:
 	 * @retval true Tree successfully written.
 	 * @retval false Tree failed to save.
 	 */
-	bool SaveXML(std::ostream& outStream) const;
+	bool SaveXML(wxOutputStream& outStream) const;
 
 	/**
 	 * Save this element to the given output stream.
@@ -412,7 +412,7 @@ public:
 	 * @retval false Tree failed to save.
 	 */
 	bool SaveXML(
-			std::ostream& outStream,
+			wxOutputStream& outStream,
 			std::string const& inDTD) const;
 
 	/**

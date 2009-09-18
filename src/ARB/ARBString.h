@@ -42,6 +42,7 @@
 #include <sstream>
 #include <wx/string.h>
 
+class wxMemoryOutputStream;
 typedef std::basic_ostringstream<wxChar> otstringstream;
 
 /**
@@ -54,6 +55,7 @@ public:
 	static wxString TString(std::wstring const& inStr);
 	static wxString TString(char const* const inStr, size_t inLen);
 	static wxString TString(std::string const& inStr);
+	static std::string tstringA(wxMemoryOutputStream const& inStr);
 	static std::string tstringA(wxString const& inStr);
 
 	static long atol(wxString const& inStr, bool* bParsedOk = NULL);

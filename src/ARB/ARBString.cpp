@@ -40,6 +40,7 @@
 #include "ARBString.h"
 
 #include <algorithm>
+#include <wx/mstream.h>
 #include <wx/strconv.h>
 
 #ifdef UNICODE
@@ -79,6 +80,21 @@ wxString tstringUtil::TString(char const* const inStr, size_t inLen)
 wxString tstringUtil::TString(std::string const& inStr)
 {
 	return TString(inStr.c_str(), inStr.length());
+}
+
+
+std::string tstringUtil::tstringA(wxMemoryOutputStream const& inStr)
+{
+	if (inStr.IsOk())
+	{
+		wxFileOffset len = inStr.GetLength();
+		char* buffer = new char[len+1];
+		inStr.CopyTo(buffer, len);
+		buffer[len] = 0;
+		return std::string(buffer, len);
+	}
+	else
+		return std::string();
 }
 
 
