@@ -225,7 +225,7 @@ void ElementNode::Dump(int inLevel) const
 			<< value
 			<< wxT("\"");
 	}
-	wxLogMessage(wxT("%s"), msg);
+	wxLogMessage(wxT("%s"), msg.c_str());
 	for (i = 0; i < GetElementCount(); ++i)
 	{
 		GetElement(i)->Dump(inLevel+1);
@@ -893,7 +893,7 @@ void ElementText::Dump(int inLevel) const
 	{
 		msg << wxT(": ") << m_Value;
 	}
-	wxLogMessage(wxT("%s"), msg);
+	wxLogMessage(wxT("%s"), msg.c_str());
 }
 
 
