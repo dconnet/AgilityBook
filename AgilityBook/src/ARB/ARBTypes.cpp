@@ -46,6 +46,7 @@
 #include <sstream>
 #include <math.h>
 #include <time.h>
+#include <wx/log.h>
 
 #include "ARBLocalization.h"
 #include "ARBStructure.h"
@@ -62,26 +63,6 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-void DumpErrorMessage(wxString const& inMsg, bool bIncNewLine)
-{
-#pragma PRAGMA_TODO("Use wxLogs")
-	std::basic_ostringstream<wxChar> buffer;
-#if wxCHECK_VERSION(2, 9, 0)
-	buffer << inMsg.wx_str();
-#else
-	buffer << inMsg.c_str();
-#endif
-	if (bIncNewLine)
-		buffer << wxT("\n");
-#if defined(_MFC_VER)
-	// Yes, this looks odd, but TRACE0 does exactly this.
-	TRACE(wxT("%s"), buffer.str().c_str());
-#else
-	TCERR << buffer.str();
-#endif
-}
-
 
 wxString SanitizeStringForHTML(
 		wxString const& inRawData,

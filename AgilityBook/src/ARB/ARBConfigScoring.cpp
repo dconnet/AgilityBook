@@ -506,7 +506,7 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 	default:
 		assert(0);
 #ifdef _DEBUG
-		DumpErrorMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE), true);
+		wxLogError(wxT("%s"), Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_TYPE));
 #endif
 		return false;
 	case eFaultsThenTime:
@@ -704,7 +704,7 @@ bool ARBConfigScoringList::FindEvent(
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
 #ifdef _DEBUG
-			DumpErrorMessage(wxT("Warning: Overlapping date ranges"), true);
+			wxLogWarning(wxT("Overlapping date ranges"));
 #endif
 			pEvent = *(items.begin());
 		}

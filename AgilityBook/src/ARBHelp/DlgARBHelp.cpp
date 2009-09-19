@@ -46,6 +46,7 @@
 #include "DlgPageEncodeFiles.h"
 #include "DlgPageEncodeFinish.h"
 #include <wx/ffile.h>
+#include <wx/filename.h>
 
 #include "../Win/res/AgilityBook16.xpm"
 #include "../Win/res/AgilityBook32.xpm"

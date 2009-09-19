@@ -64,6 +64,8 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ColumnOrder.h"
+#include <wx/notebook.h>
+#include <wx/listctrl.h>
 class CAgilityBookDoc;
 class CDlgDogDivData;
 class CDlgDogLevelData;
@@ -71,6 +73,7 @@ class CMetaDataDisplay;
 class CQualifyingComboBox;
 class CReportListCtrl;
 class CRichEditCtrl2;
+class wxCheckBox;
 class wxDateEvent;
 
 class CDlgDogRefRunData;

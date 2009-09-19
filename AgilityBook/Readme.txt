@@ -34,15 +34,15 @@ Changes to 2.9.0:
   - Change the wxLIB_SUBDIR (5 lines) to:
 ===begin
 #if _MSC_VER == 1200
-	#define wxLIB_BASEDIR	vc60_
+	#define wxLIB_BASEDIR	vc60
 #elif _MSC_VER == 1310
-	#define wxLIB_BASEDIR	vc71_
+	#define wxLIB_BASEDIR	vc71
 #elif _MSC_VER == 1400
-	#define wxLIB_BASEDIR	vc80_
+	#define wxLIB_BASEDIR	vc80
 #elif _MSC_VER == 1500
-	#define wxLIB_BASEDIR	vc90_
+	#define wxLIB_BASEDIR	vc90
 #else
-	#define wxLIB_BASEDIR	vc_
+	#define wxLIB_BASEDIR	vc
 #endif
 #if defined(_M_X64)
 	#define wxLIB_ARCH	_amd64
@@ -54,7 +54,6 @@ Changes to 2.9.0:
     #else // !DLL
         #define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _lib)
     #endif // DLL/!DLL
-#endif
 ===end
 - src/msw/stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'

@@ -46,6 +46,7 @@
 #include <wx/wizard.h>
 class CAgilityBookDoc;
 class CWizard;
+class wxListCtrl;
 
 
 class CWizardExport : public wxWizardPageSimple

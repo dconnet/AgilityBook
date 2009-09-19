@@ -41,6 +41,7 @@
 #include "ARBTypes.h"
 #include <map>
 #include <vector>
+#include <wx/listctrl.h>
 class ARBConfig;
 class CCheckListCtrl;
 

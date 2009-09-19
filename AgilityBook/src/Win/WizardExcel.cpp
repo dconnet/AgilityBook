@@ -50,6 +50,7 @@
 #if HAS_AUTOMATION
 #include "AgilityBook.h"
 #include "DlgProgress.h"
+#include <wx/filename.h>
 #include <wx/list.h>
 #include <wx/variant.h>
 #include <wx/msw/ole/automtn.h>

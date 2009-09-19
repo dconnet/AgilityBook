@@ -37,6 +37,9 @@
  * @li 2007-01-02 DRC Created
  */
 
+#include <vector>
+
+
 class CDlgPageDecode : public wxDialog
 {
 public:

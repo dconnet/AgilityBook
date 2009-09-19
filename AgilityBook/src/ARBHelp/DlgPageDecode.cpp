@@ -157,7 +157,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				int posEnd = data.Find(sc_sections[idx].end);
 				if (pos < posEnd)
 				{
-					int posData = pos + sc_sections[idx].begin.Length();
+					size_t posData = pos + sc_sections[idx].begin.Length();
 					// Dump the preceding data.
 					editData << data.Left(posData) << wxT("\n");
 					// Trim preceding

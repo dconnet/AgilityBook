@@ -40,6 +40,7 @@
 #include "ARBString.h"
 
 #include <algorithm>
+#include <sstream>
 #include <wx/mstream.h>
 #include <wx/strconv.h>
 

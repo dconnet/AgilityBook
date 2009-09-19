@@ -64,7 +64,7 @@ bool CConfigHandler::LoadWxFile(
 			char buffer[1024];
 			size_t num = 1024;
 			input->Read(buffer, num);
-			outData.append(buffer, static_cast<std::streamsize>(input->LastRead()));
+			outData.append(buffer, input->LastRead());
 			size += input->LastRead();
 		}
 		delete file;
