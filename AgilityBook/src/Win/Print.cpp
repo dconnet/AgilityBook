@@ -316,7 +316,7 @@ static const struct
 	bool bContinuation;
 	int code;
 	bool bWorkBreak;
-	UINT fmt;
+	unsigned int fmt;
 } sc_lines[] =
 {
 	{FOR_BOTH,  0, 0, 2, 1, false, CODE_DOG,        false, wxALIGN_LEFT | wxALIGN_BOTTOM},
