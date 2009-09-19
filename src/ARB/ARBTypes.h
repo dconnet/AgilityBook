@@ -112,14 +112,6 @@ ARB_TYPEDEF2(ElementText)
 
 
 /**
- * Dump a string to cerr or TRACE
- * @param inMsg String to dump
- * @param bIncNewLine Add a newline
- */
-void DumpErrorMessage(wxString const& inMsg, bool bIncNewLine = true);
-
-
-/**
  * Make a string safe for HTML viewing.
  * @param inRawData String to sanitize
  * @param bConvertCR Convert \n to html-breaks.

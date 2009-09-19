@@ -49,6 +49,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
 #include <wx/colordlg.h>
+#include <wx/valgen.h>
 
 
 CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)

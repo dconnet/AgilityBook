@@ -42,6 +42,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
 #include "Element.h"
+#include <sstream>
 #include <wx/mstream.h>
 
 #ifdef _DEBUG

@@ -56,7 +56,7 @@
 
 #if defined(_WIN32)
 
-// _MSCVER
+// _MSC_VER
 // http://support.microsoft.com/kb/65472 (define values thru vc6)
 //  600: C Compiler version 6.0                  
 //  700: C/C++ compiler version 7.0              
@@ -82,8 +82,8 @@
 	#endif
 	// Turn off some warnings in vc6.
 	#pragma warning ( disable : 4786 )	// identifier was truncated to '255' characters in the debug information
-	#pragma warning ( disable : 4503 ) // decorated name length exceeded, name was truncated
-	#pragma warning ( disable : 4018 ) // '<' : signed/unsigned mismatch
+	#pragma warning ( disable : 4503 )	// decorated name length exceeded, name was truncated
+	#pragma warning ( disable : 4018 )	// '<' : signed/unsigned mismatch
 
 // VC7
 #elif _MSC_VER >= 1300 && _MSC_VER < 1400
@@ -101,11 +101,12 @@
 #endif // End VC-elifs
 
 #ifndef VC_EXTRALEAN
-	#define VC_EXTRALEAN		/// Exclude rarely-used stuff from Windows headers
+	#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 #endif
 
-// Modify the following defines if you have to target a platform prior to the ones specified below.
-// Refer to MSDN for the latest info on corresponding values for different platforms.
+// Modify the following defines if you have to target a platform prior to the
+// ones specified below. Refer to MSDN for the latest info on corresponding
+// values for different platforms.
 
 // Minimum system
 // Vista              _WIN32_WINNT >= 0x0600  WINVER >= 0x0600
@@ -128,7 +129,7 @@
 // IE3.0, 3.01, 3.02 _WIN32_IE >= 0x0300
 
 #ifndef _WIN32_IE
-	#define _WIN32_IE 0x0500	/// Minimum IE, 5.0
+	#define _WIN32_IE 0x0500	// Minimum IE, 5.0
 #endif
 
 #ifndef WINVER
@@ -179,10 +180,8 @@
 
 #else // _WIN32
 
-// There really shouldn't be any UINT usage - but just in case...
-#ifndef UINT
-#define UINT uint
-#endif
+// Any non-windows system checking should go here.
+
 #endif // _WIN32
 
 
@@ -279,9 +278,9 @@ namespace tr1 = boost;
 #endif
 
 // Some often used includes for speeding the build
+#ifndef WIN32
 #include <map>
 #include <set>
-#include <sstream>
 #include <string>
 #include <vector>
 
@@ -303,3 +302,4 @@ namespace tr1 = boost;
 #include <wx/treectrl.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
+#endif

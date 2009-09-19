@@ -548,27 +548,24 @@ wxString CLocalization::ActionDeleteEvent(
 
 wxString CLocalization::TitlePointsNameFormat(double points, double faults) const
 {
-	otstringstream dbl1, dbl2;
-	dbl1 << points;
-	dbl2 << faults;
-	return wxString::Format(_("IDS_TITLEPOINTSNAME"), dbl1.str().c_str(), dbl2.str().c_str());
+	wxString dbl1 = wxString::Format(wxT("%g"), points);
+	wxString dbl2 = wxString::Format(wxT("%g"), faults);
+	return wxString::Format(_("IDS_TITLEPOINTSNAME"), dbl1.c_str(), dbl2.c_str());
 }
 
 
 wxString CLocalization::LifetimePointsNameFormat(double points, double faults) const
 {
-	otstringstream dbl1, dbl2;
-	dbl1 << points;
-	dbl2 << faults;
-	return wxString::Format(_("IDS_LIFETITLEPOINTSNAME"), dbl1.str().c_str(), dbl2.str().c_str());
+	wxString dbl1 = wxString::Format(wxT("%g"), points);
+	wxString dbl2 = wxString::Format(wxT("%g"), faults);
+	return wxString::Format(_("IDS_LIFETITLEPOINTSNAME"), dbl1.c_str(), dbl2.c_str());
 }
 
 
 wxString CLocalization::PlacementPointsNameFormat(double points, short place) const
 {
-	otstringstream dbl1;
-	dbl1 << points;
-	return wxString::Format(_("IDS_PLACEMENTPOINTSNAME"), dbl1.str().c_str(), (int)place);
+	wxString dbl1 = wxString::Format(wxT("%g"), points);
+	return wxString::Format(_("IDS_PLACEMENTPOINTSNAME"), dbl1.c_str(), (int)place);
 }
 
 

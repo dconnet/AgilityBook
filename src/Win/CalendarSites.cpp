@@ -73,14 +73,14 @@
 
 static std::string TranslateCodeMap(std::vector<wxString> const& inCodes)
 {
-	std::ostringstream codes;
+	wxString codes;
 	for (size_t i = 0; i < inCodes.size(); ++i)
 	{
 		if (0 < i)
 			codes << ':';
-		codes << inCodes[i].ToUTF8();
+		codes << inCodes[i];
 	}
-	return codes.str();
+	return std::string(codes.ToUTF8());
 }
 
 

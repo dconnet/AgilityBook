@@ -63,7 +63,8 @@
 #include "DlgProgress.h"
 #include "Globals.h"
 #include "Wizard.h"
-#include <fstream>
+#include <wx/valgen.h>
+#include <wx/wfstream.h>
 
 
 IMPLEMENT_CLASS(CWizardExport, wxWizardPageSimple)
@@ -1462,17 +1463,17 @@ bool CWizardExport::DoWizardFinish()
 		if (wxID_OK == file.ShowModal())
 		{
 			wxBusyCursor wait;
-			std::string filename(file.GetPath().ToUTF8());
-			std::ofstream output(filename.c_str(), std::ios::out);
-			output.exceptions(std::ios_base::badbit);
-			if (output.is_open())
+			wxFFileOutputStream output(file.GetPath(), wxT("wb"));
+			if (output.IsOk())
 			{
 				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)
 				{
 					wxString line = GetListColumnText(m_ctrlPreview, i, 0);
-					output << line.ToUTF8() << wxT("\n");
+					line << wxT("\n");
+					std::string utf8(tstringUtil::tstringA(line));
+					output.Write(line.c_str(), line.length());
 				}
-				output.close();
+				output.Close();
 			}
 			return true;
 		}

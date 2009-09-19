@@ -177,7 +177,7 @@ ElementNodePtr LoadXMLData(int id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
 	{
-		DumpErrorMessage(errMsg);
+		wxLogError(wxT("%s"), errMsg);
 		tree.reset();
 	}
 	return tree;
@@ -293,7 +293,7 @@ ElementNodePtr CreateActionList()
 	bool bParse = actions->LoadXMLBuffer(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		DumpErrorMessage(errmsg);
+		wxLogError(wxT("%s"), errmsg);
 	}
 	assert(bParse);
 	return actions;
