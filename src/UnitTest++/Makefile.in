@@ -49,8 +49,8 @@ libUnitTest_SRCS = src/AssertException.cpp \
 	src/DeferredTestResult.cpp \
 	src/XmlTestReporter.cpp \
 	src/CurrentTest.cpp \
-	src/SignalTranslator.cpp \
-	src/TimeHelpers.cpp
+	src/posix_SignalTranslator.cpp \
+	src/posix_TimeHelpers.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)

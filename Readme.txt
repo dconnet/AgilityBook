@@ -161,7 +161,7 @@ Useful for figuring out how a lay a dialog out.
 UnitTest++: http://unittest-cpp.sourceforge.net/
 I'm currently using version 1.4
 If you don't want to run the unit tests, this is not required.
-All project files have been copied/renamed/modified such that:
+All VC project files have been copied/renamed/modified such that:
  "vsnet..." to "VC..."
  OutputDirectory: $(SolutionDir)\bin\$(PlatformName)
  IntermediateDirectory: $(OutDir)\$(ConfigurationName)\$(ProjectName)
@@ -169,8 +169,13 @@ All project files have been copied/renamed/modified such that:
  .lib names changed to UnitTest++.VC<vcversion>[S][U][D].lib
  Projects now use common vsprops files
   - common, debug dll, debug lib, debug settings, (and release versions)
+- The original makefile has been renamed to Makefile.orig and Makefile.in
+  has been added so it can easily be compiled on Mac.
+- In addition, the .cpp files in Posix/ have been copied into the root
+  src directory as posix_*.cpp to avoid subdirectory make issues.
 - This has now been added into the source tree. Follow the UnitTest++
-directions for compiling.
+  directions for compiling. [On Windows, you must specifically compile this.
+  On Mac, it is included in the current make process]
 
 --------------------
 
