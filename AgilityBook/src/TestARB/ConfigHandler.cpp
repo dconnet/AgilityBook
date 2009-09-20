@@ -70,6 +70,11 @@ bool CConfigHandler::LoadWxFile(
 		delete file;
 		return true;
 	}
+	else
+	{
+		wxLogMessage(zipfile);
+		assert(file);
+	}
 	return false;
 }
 
@@ -86,8 +91,14 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 
+#ifdef __WXMAC__
+	// Command line programs on Mac are acting like unix. GetResourcesDir
+	// returns /usr/local/share. And GetExecutablePath is returning nothing.
+	wxString datafile = wxT("./testarb.dat");
+#else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+#endif
 	std::string data;
 	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
 		bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
@@ -98,8 +109,14 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 
 std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 {
+#ifdef __WXMAC__
+	// Command line programs on Mac are acting like unix. GetResourcesDir
+	// returns /usr/local/share. And GetExecutablePath is returning nothing.
+	wxString datafile = wxT("./testarb.dat");
+#else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+#endif
 
 	std::string dtd;
 	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);

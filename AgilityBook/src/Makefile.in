@@ -23,8 +23,8 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Recursively make in these subdirectories
 ##########
-#SUBDIRS = ARB TestARB cal_usdaa Win
-SUBDIRS = ARB cal_usdaa Win
+SUBDIRS = UnitTest++ ARB TestARB cal_usdaa Win
+#SUBDIRS = ARB cal_usdaa Win
 
 ##########
 # Compile flags, list include directories
