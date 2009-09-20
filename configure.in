@@ -60,7 +60,7 @@ case `uname` in
 Darwin*)
 	AC_SUBST(SHAREDLIBEXT, 'dylib')
 	# build universal binaries on Mac OS
-	AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3.9 -arch ppc -arch i386")
+	AC_SUBST(CXXFLAGS, "$CXXFLAGS -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4 -arch ppc -arch i386")
 	AC_SUBST(LDFLAGS, ["-W1,syslibroot,/Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"])
 	# dependency generation not supported for g++ for universal binaries
 	# For some reason ./configure --disable-dependency-generation is not supported by autoconf 2.63
@@ -93,6 +93,6 @@ AC_SUBST_FILE(NAM_RULES)
 # List of files to generate from the corresponding (*.in) files and the        #
 # subsequent command to generate those files.                                  #
 ################################################################################
-AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile  src/ARB/Makefile src/Win/Makefile src/TestARB/Makefile src/cal_usdaa/Makefile src/Win/Info.plist src/Win/version.plist])
+AC_CONFIG_FILES([NAM_rules.mk Makefile src/Makefile  src/UnitTest++/Makefile src/ARB/Makefile src/Win/Makefile src/TestARB/Makefile src/cal_usdaa/Makefile src/Win/Info.plist src/Win/version.plist])
 
 AC_OUTPUT
