@@ -541,7 +541,11 @@ static struct
 } s_SortInfo;
 
 
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK CompareRuns(long item1, long item2, wxIntPtr sortData)
+#else
 int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
+#endif
 {
 	CAgilityBookRunsViewDataPtr pRun1 = s_SortInfo.pThis->GetItemRunDataByData(item1);
 	CAgilityBookRunsViewDataPtr pRun2 = s_SortInfo.pThis->GetItemRunDataByData(item2);

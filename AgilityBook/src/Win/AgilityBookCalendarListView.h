@@ -72,7 +72,11 @@ private:
 
 class CAgilityBookCalendarListView : public CAgilityBookBaseExtraView
 {
+#if wxCHECK_VERSION(2,9,1)
+	friend int wxCALLBACK CompareCalendar(long item1, long item2, wxIntPtr sortData);
+#else
 	friend int wxCALLBACK CompareCalendar(long item1, long item2, long sortData);
+#endif
 	friend class CAgilityBookCalendarListViewData;
 	friend class CFindCalendar;
 	DECLARE_CLASS(CAgilityBookCalendarListView)

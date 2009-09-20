@@ -237,7 +237,11 @@ void CDlgDogDataTitle::OnNeedListItem(long iCol, wxListItem& info) const
 }
 
 
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK CompareTitles(long item1, long item2, wxIntPtr sortData)
+#else
 int wxCALLBACK CompareTitles(long item1, long item2, long sortData)
+#endif
 {
 	CDlgDogDataTitlePtr pData1 = s_SortInfo.pThis->GetTitleDataByData(item1);
 	CDlgDogDataTitlePtr pData2 = s_SortInfo.pThis->GetTitleDataByData(item2);
@@ -348,7 +352,11 @@ wxString CDlgDogDataRegNum::OnNeedText(long iCol) const
 }
 
 
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK CompareRegNums(long item1, long item2, wxIntPtr sortData)
+#else
 int wxCALLBACK CompareRegNums(long item1, long item2, long sortData)
+#endif
 {
 	CDlgDogDataRegNumPtr pData1 = s_SortInfo.pThis->GetRegNumDataByData(item1);
 	CDlgDogDataRegNumPtr pData2 = s_SortInfo.pThis->GetRegNumDataByData(item2);
@@ -466,7 +474,11 @@ wxString CDlgDogDataPoint::OnNeedText(long iCol) const
 }
 
 
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK ComparePoints(long item1, long item2, wxIntPtr sortData)
+#else
 int wxCALLBACK ComparePoints(long item1, long item2, long sortData)
+#endif
 {
 	CDlgDogDataPointPtr pData1 = s_SortInfo.pThis->GetPointDataByData(item1);
 	CDlgDogDataPointPtr pData2 = s_SortInfo.pThis->GetPointDataByData(item2);

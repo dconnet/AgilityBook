@@ -331,14 +331,18 @@ long CAgilityBookCalendarListView::CSortColumn::LookupColumn(long iCol) const
 // The wx functions take a 'long'. Which means we can't pass pointers on 64bit.
 // So, we use a global. Since this is only used in one place, we don't have
 // any threading issues.
+// NOTE: As of wx2.9.1, looks like this is fixed.
 static struct
 {
 	CAgilityBookCalendarListView* pThis;
 	int nCol;
 } s_SortInfo;
 
-
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK CompareCalendar(long item1, long item2, wxIntPtr sortData)
+#else
 int wxCALLBACK CompareCalendar(long item1, long item2, long sortData)
+#endif
 {
 	if (0 == s_SortInfo.nCol)
 		return 0;

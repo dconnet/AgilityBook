@@ -89,7 +89,9 @@ SUITE(TestString)
 		wxString s2(wxT("1.3-12"));
 		bool bParsed;
 		double a2 = tstringUtil::strtod(s2, &bParsed);
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 1)
+		CHECK(a2 == 1.3);
+#elif wxCHECK_VERSION(2, 9, 0)
 		CHECK(a2 == 0.0);
 		CHECK(!bParsed);
 #else

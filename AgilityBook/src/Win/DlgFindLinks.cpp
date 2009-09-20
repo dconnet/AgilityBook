@@ -135,10 +135,11 @@ static struct
 } s_SortInfo;
 
 
-int wxCALLBACK CompareLinks(
-		long item1,
-		long item2,
-		long sortData)
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK CompareLinks(long item1, long item2, wxIntPtr sortData)
+#else
+int wxCALLBACK CompareLinks(long item1, long item2, long sortData)
+#endif
 {
 	int rc = 0;
 	CDlgFindLinksDataPtr pData1 = s_SortInfo.pThis->GetItemLinkDataByData(item1);
