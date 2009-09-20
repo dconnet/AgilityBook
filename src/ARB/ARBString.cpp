@@ -113,7 +113,8 @@ long tstringUtil::atol(wxString const& inStr, bool* bParsedOk)
 	{
 		// The above fails for "123-45". Before it returned 123.
 		// That's the behavior I'm relying on. (Needed when reading dates)
-		std::basic_istringstream<wxChar> str(inStr.wx_str());
+		std::string tmp(tstringUtil::tstringA(inStr.wx_str()));
+		std::istringstream str(tmp);
 		str >> l;
 	}
 	bool bParsed = true;
