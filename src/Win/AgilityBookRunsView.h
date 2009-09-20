@@ -69,7 +69,11 @@ private:
 
 class CAgilityBookRunsView : public CAgilityBookBaseExtraView
 {
+#if wxCHECK_VERSION(2,9,1)
+	friend int wxCALLBACK CompareRuns(long item1, long item2, wxIntPtr sortData);
+#else
 	friend int wxCALLBACK CompareRuns(long item1, long item2, long sortData);
+#endif
 	friend class CAgilityBookRunsViewData;
 	friend class CFindRuns;
 	DECLARE_CLASS(CAgilityBookRunsView)

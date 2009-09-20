@@ -52,7 +52,11 @@ typedef tr1::shared_ptr<CDlgFindLinksData> CDlgFindLinksDataPtr;
 
 class CDlgFindLinks : public wxDialog
 {
+#if wxCHECK_VERSION(2,9,1)
+	friend int wxCALLBACK CompareLinks(long item1, long item2, wxIntPtr sortData);
+#else
 	friend int wxCALLBACK CompareLinks(long item1, long item2, long sortData);
+#endif
 public:
 	CDlgFindLinks(
 			ARBDogList& inDogs,

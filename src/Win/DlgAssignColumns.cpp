@@ -780,7 +780,11 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // CDlgAssignColumns dialog
 
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK CompareTypes(long lParam1, long lParam2, wxIntPtr lParam3)
+#else
 int wxCALLBACK CompareTypes(long lParam1, long lParam2, long lParam3)
+#endif
 {
 	if (lParam1 >= 0 && lParam1 < IO_TYPE_MAX
 	&& lParam2 >= 0 && lParam2 < IO_TYPE_MAX)

@@ -27,10 +27,19 @@ wxWidgets: http://www.wxwidgets.org/
 I'm currently using version 2.8.10.
 Make sure WXWIN is set to wxWidgets root directory.
 
-Changes to 2.9.0:
-- in include/wx/msw/setup.h, enable everything to compile, plus:
+Changes to <trunk> [2.9.1]:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_8 0
-- include/msvc/wx/setup.h:
+  - Set wxDEBUG_LEVEL to 0 on NDEBUG
+-[win]- include/msvc/wx/setup.h:
+  [below]
+-[all]- src/common/intl.cpp
+  - AddCatalog (ln 2561): Delete the lines testing msgIdLanguage == m_language
+
+Changes to 2.9.0:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - WXWIN_COMPATIBILITY_2_8 0
+-[win]- include/msvc/wx/setup.h:
   - Change the wxLIB_SUBDIR (5 lines) to:
 ===begin
 #if _MSC_VER == 1200
@@ -55,14 +64,16 @@ Changes to 2.9.0:
         #define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _lib)
     #endif // DLL/!DLL
 ===end
-- src/msw/stdpaths.cpp
+-[win]- src/msw/stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
     directory from the appdir, which causes problems.
+-[all]- src/common/intl.cpp
+  - AddCatalog (ln 2561): Delete the lines testing msgIdLanguage == m_language
 
 Changes to 2.8.10:
-- in include/wx/msw/setup.h, enable everything to compile, plus:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_6 0
-- include/msvc/wx/setup.h:
+-[win]- include/msvc/wx/setup.h:
   Add the following lines after the first ifdef:
 ===begin
     #include "wx/version.h"
@@ -117,10 +128,10 @@ Changes to 2.8.10:
     #include wxSETUPH_PATH_STR
 ===end
   Delete all other #includes
-- src/msw/stdpaths.cpp
+-[win]- src/msw/stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
     directory from the appdir, which causes problems.
-- include/wx/choicebk.h:
+-[all]- include/wx/choicebk.h:
 Line 97:
     void UpdateSelectedPage(size_t newsel)
     {

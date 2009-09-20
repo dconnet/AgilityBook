@@ -251,7 +251,11 @@ wxString CDlgDogRefRunData::OnNeedText(long iCol) const
 }
 
 
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK CompareRefRuns(long item1, long item2, wxIntPtr sortData)
+#else
 int wxCALLBACK CompareRefRuns(long item1, long item2, long sortData)
+#endif
 {
 	CDlgDogRefRunDataPtr pData1 = s_SortInfo.pThis->GetReferenceDataByData(item1);
 	CDlgDogRefRunDataPtr pData2 = s_SortInfo.pThis->GetReferenceDataByData(item2);

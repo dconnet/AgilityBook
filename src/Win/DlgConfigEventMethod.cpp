@@ -111,10 +111,11 @@ static struct
 } s_SortInfo;
 
 
-int wxCALLBACK ComparePlacement(
-		long item1,
-		long item2,
-		long sortData)
+#if wxCHECK_VERSION(2,9,1)
+int wxCALLBACK ComparePlacement(long item1, long item2, wxIntPtr sortData)
+#else
+int wxCALLBACK ComparePlacement(long item1, long item2, long sortData)
+#endif
 {
 	CDlgConfigureDataPlacementPtr place1 = s_SortInfo.pThis->GetPlacementDataByData(item1);
 	CDlgConfigureDataPlacementPtr place2 = s_SortInfo.pThis->GetPlacementDataByData(item2);
