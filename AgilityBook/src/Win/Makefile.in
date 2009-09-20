@@ -168,8 +168,8 @@ dist:: agilitybook resources
 	echo 'APPL????\c' > $(TOPBUILDDIR)/AgilityBook.app/Contents/PkgInfo
 	cp agilitybook $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/agilitybook
 	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
-	cp -pR lang $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/
-	cp agilitybook.dat $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS/
+	cp -pR lang $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
+	cp agilitybook.dat $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #

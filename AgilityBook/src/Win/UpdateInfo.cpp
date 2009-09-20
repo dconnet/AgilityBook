@@ -77,8 +77,7 @@ static wxString FILENAME()
 	// Why this? Just cause that's how my local system is setup.
 	return wxT("c:/AgilityBook/www/version.txt");
 #else
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	return fileName.GetPath() + wxFileName::GetPathSeparator() + wxT("version.txt");
+	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("version.txt");
 #endif
 }
 #endif
