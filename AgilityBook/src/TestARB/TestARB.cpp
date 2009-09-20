@@ -307,7 +307,7 @@ ElementNodePtr CreateActionList()
 	bool bParse = actions->LoadXMLBuffer(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		wxLogError(wxT("%s"), errmsg);
+		wxLogError(wxT("%s"), errmsg.c_str());
 	}
 	assert(bParse);
 	return actions;
