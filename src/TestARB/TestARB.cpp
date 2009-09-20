@@ -124,12 +124,21 @@ ElementNodePtr LoadXMLData(int id)
 	ARBErrorCallback err(errMsg);
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
+#ifdef __WXMAC__
+	// Command line programs on Mac are acting like unix. GetResourcesDir
+	// returns /usr/local/share. And GetExecutablePath is returning nothing.
+	wxString datafile = wxT("./testarb.dat");
+#else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
+#endif
 	bool bOk = false;
 	std::string data;
 	switch (id)
 	{
+	default:
+		assert(0);
+		// fallthru
 	case IDR_XML_DEFAULT_CONFIG:
 		bOk = CConfigHandler::LoadWxFile(datafile, wxT("DefaultConfig.xml"), data);
 		break;
@@ -176,7 +185,7 @@ ElementNodePtr LoadXMLData(int id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
 	{
-		wxLogError(wxT("%s"), errMsg);
+		wxLogError(wxT("%s"), errMsg.c_str());
 		tree.reset();
 	}
 	return tree;

@@ -1,7 +1,7 @@
 ################################################################################
 # File: Makefile                                                               #
 ################################################################################
-# Makefile for the TestARB                                                     #
+# Makefile for the ARB subdirectory                                            #
 ################################################################################
 
 ################################################################################
@@ -23,86 +23,54 @@ TOPBUILDDIR = ./@top_builddir@
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB -I$(TOPSRCDIR)/src/UnitTest++/src `wx-config --cppflags`
+INCLUDES = `wx-config --cppflags`
 
 ##########
 # List of programs and archives to link
 ##########
-PROGRAMS = testarb
+ARCHIVES = libUnitTest
 
 ##########
 # Source files for each target
 ##########
-testarb_SRCS = ConfigHandler.cpp \
-	Local.cpp \
-	TestAgilityRecordBook.cpp \
-	TestARB.cpp \
-	TestBinaryData.cpp \
-	TestCalendar.cpp \
-	TestConfigAction.cpp \
-	TestConfigCalSite.cpp \
-	TestConfig.cpp \
-	TestConfigDivision.cpp \
-	TestConfigEvent.cpp \
-	TestConfigFault.cpp \
-	TestConfigLevel.cpp \
-	TestConfigLifetimePoints.cpp \
-	TestConfigMultiQ.cpp \
-	TestConfigOtherPoints.cpp \
-	TestConfigPlaceInfo.cpp \
-	TestConfigScoring.cpp \
-	TestConfigSubLevel.cpp \
-	TestConfigTitle.cpp \
-	TestConfigTitlePoints.cpp \
-	TestConfigVenue.cpp \
-	TestDate.cpp \
-	TestDogClub.cpp \
-	TestDog.cpp \
-	TestDogExistingPoints.cpp \
-	TestDogNotes.cpp \
-	TestDogReferenceRun.cpp \
-	TestDogRegNum.cpp \
-	TestDogRun.cpp \
-	TestDogRunOtherPoints.cpp \
-	TestDogRunPartner.cpp \
-	TestDogRunScoring.cpp \
-	TestDogTitle.cpp \
-	TestDogTrial.cpp \
-	TestDouble.cpp \
-	TestElement.cpp \
-	TestErrorCallback.cpp \
-	TestInfoItem.cpp \
-	TestMisc.cpp \
-	TestQ.cpp \
-	TestString.cpp \
-	TestTraining.cpp \
-	TestVersion.cpp
+libUnitTest_SRCS = src/AssertException.cpp \
+	src/Test.cpp \
+	src/Checks.cpp \
+	src/TestRunner.cpp \
+	src/TestResults.cpp \
+	src/TestReporter.cpp \
+	src/TestReporterStdout.cpp \
+	src/ReportAssert.cpp \
+	src/TestList.cpp \
+	src/TimeConstraint.cpp \
+	src/TestDetails.cpp \
+	src/MemoryOutStream.cpp \
+	src/DeferredTestReporter.cpp \
+	src/DeferredTestResult.cpp \
+	src/XmlTestReporter.cpp \
+	src/CurrentTest.cpp \
+	src/SignalTranslator.cpp \
+	src/TimeHelpers.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-testarb_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb -L$(TOPBUILDDIR)/src/UnitTest++ -lUnitTest `wx-config --libs`
+#UnitTest_LIBS = `wx-config --libs`
+# prog1_LDFLAGS = -L/path/to/extralib
 
 ##########
 # Precompiled headers
 ##########
 PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
+
 ##########
 # Stuff to install
 ##########
-INSTALL_BIN = testarb
+#INSTALL_BIN = libUnitTest
+#INSTALL_MAN = prog1.5
 
 @NAM_RULES@
-resources: testarb
-# compile resources
-	echo "LANGDIR $(CURDIR)"
-	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) testarb
-
-all: testarb resources tests
-
-tests: $(PHONY)
-	python $(TOPSRCDIR)/src/Projects/VC9/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) testarb Mac
 
 ################################################################################
 # End of File: Makefile                                                        #

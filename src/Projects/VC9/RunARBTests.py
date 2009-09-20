@@ -10,8 +10,9 @@
 #
 # Revision History
 # 2009-03-05 DRC Moved bat file to python (removes dependency on wzzip)
-"""RunARBTests.py TargetDirectory TargetName PlatformName
-PlatformName = Win32 x64"""
+"""RunARBTests.py SourceDir TargetDirectory TargetName PlatformName
+SourceDir = .../AgilityBook/src
+PlatformName = Win32 x64 Mac"""
 
 import glob
 import os, os.path
@@ -43,22 +44,23 @@ def RunCommand(command, toastErr):
 
 
 def main():
-	if 4 != len(sys.argv):
+	if 5 != len(sys.argv):
 		print 'Usage:', __doc__
 		return
-	executableDir = sys.argv[1]
-	targetname = sys.argv[2]
-	platform = sys.argv[3]
+	srcDir = sys.argv[1]
+	executableDir = sys.argv[2]
+	targetname = sys.argv[3]
+	platform = sys.argv[4]
 
-	if not "Win32" == platform and not "x64" == platform:
+	if not "Win32" == platform and not "x64" == platform and not "Mac" == platform:
 		print 'Unknown platform:', platform
 		return
 
 	# Create "TestARB.dat"
 	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
-	zip.write(r'..\..\Win\res\DefaultConfig.xml', 'DefaultConfig.xml')
-	zip.write(r'..\..\Win\res\AgilityRecordBook.dtd', 'AgilityRecordBook.dtd')
-	for file in glob.glob(r'..\..\TestARB\res\*.xml'):
+	zip.write(srcDir + r'/Win/res/DefaultConfig.xml', 'DefaultConfig.xml')
+	zip.write(srcDir + r'/Win/res/AgilityRecordBook.dtd', 'AgilityRecordBook.dtd')
+	for file in glob.glob(srcDir + r'/TestARB/res/*.xml'):
 		zip.write(file, os.path.basename(file))
 	zip.close()
 
@@ -81,6 +83,10 @@ def main():
 			RunCommand(cmd, 0)
 		else:
 			print 'WARNING: Unable to run ' + platform + ' binary on ' + os.environ['PROCESSOR_ARCHITECTURE']
+	
+	if "Mac" == platform:
+		cmd = [os.path.join(executableDir, targetname)]
+		RunCommand(cmd, 0)
 
 
 main()
