@@ -54,33 +54,25 @@
 
 wxString tstringUtil::TString(wchar_t const* const inStr, size_t inLen)
 {
-#ifdef UNICODE
-	return wxString(inStr, inLen);
-#else
-	return wxString(inStr);
-#endif
+	return wxString(inStr, wxConvUTF8, inLen);
 }
 
 
 wxString tstringUtil::TString(std::wstring const& inStr)
 {
-	return TString(inStr.c_str(), inStr.length());
+	return wxString(inStr.c_str(), wxConvUTF8, inStr.length());
 }
 
 
 wxString tstringUtil::TString(char const* const inStr, size_t inLen)
 {
-#ifdef UNICODE
-	return wxString(inStr, wxMBConvUTF8());
-#else
-	return wxString(inStr, inLen);
-#endif
+	return wxString(inStr, wxConvUTF8, inLen);
 }
 
 
 wxString tstringUtil::TString(std::string const& inStr)
 {
-	return TString(inStr.c_str(), inStr.length());
+	return wxString(inStr.c_str(), wxConvUTF8, inStr.length());
 }
 
 
