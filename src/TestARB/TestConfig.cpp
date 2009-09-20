@@ -189,7 +189,17 @@ SUITE(TestConfig)
 		CHECK(0 != dtd.length());
 		std::string dtd2 = ARBConfig::GetDTD(&handler, false);
 		CHECK(0 != dtd2.length());
-		CHECK(dtd != dtd2);
+		std::string::size_type pos = dtd2.find("\r\n");
+		// Expectations: dtd should be in OS-specific line ending (if SVN is set right)
+#ifdef WIN32
+		CHECK(pos != std::string::npos);
+#else
+		CHECK(pos == std::string::npos);
+#endif
+		if (pos != std::string::npos)
+			CHECK(dtd != dtd2);
+		else
+			CHECK(dtd == dtd2);
 	}
 
 
