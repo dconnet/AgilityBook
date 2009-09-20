@@ -57,7 +57,7 @@ wxString tstringUtil::TString(wchar_t const* const inStr, size_t inLen)
 #ifdef UNICODE
 	return wxString(inStr, inLen);
 #else
-	return TString(std::wstring(inStr, inLen));
+	return wxString(inStr);
 #endif
 }
 
