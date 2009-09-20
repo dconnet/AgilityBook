@@ -34,6 +34,7 @@
  * If they are only in a context menu, the accelerator will not work.
  *
  * Revision History
+ * @li 2009-09-19 DRC Fix IdMenuRecentFiles on language switch.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-09-09 DRC Fix Ctrl+R. See note above.
  * @li 2008-12-14 DRC Created
@@ -191,6 +192,10 @@ void CAgilityBookMenu::CreateMenu(
 				manager->FileHistoryAddFilesToMenu();
 			}
 			handles.menu->AppendSeparator();
+		}
+		else
+		{
+			CreateSubMenu(handles.menu, m_MenuFileRecent, bCreate);
 		}
 		DoMenu(handles.menu, bCreate, wxID_EXIT, _("MenuFileExit"), _("DescFileExit"));
 		break;

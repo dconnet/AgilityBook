@@ -117,7 +117,7 @@ bool CLanguageManager::SetLang(int langId)
 	{
 		//return false;
 	}
-	m_locale->AddCatalog(wxT("arb"));
+	m_locale->AddCatalog(wxT("arb"), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 
 	m_dirLoadedLang = m_locale->GetCanonicalName();
 	if (2 < m_dirLoadedLang.length())
