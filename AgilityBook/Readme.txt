@@ -50,11 +50,11 @@ Changes to <trunk> [2.9.1]:
 #else
 	#define wxLIB_ARCH
 #endif
-    #ifdef WXUSINGDLL
-        #define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _dll)
-    #else // !DLL
-        #define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _lib)
-    #endif // DLL/!DLL
+#ifdef WXUSINGDLL
+	#define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _dll)
+#else // !DLL
+	#define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _lib)
+#endif // DLL/!DLL
 ===end
 
 wx2.9.0: Not supported
