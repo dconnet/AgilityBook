@@ -118,4 +118,13 @@ SUITE(TestString)
 		s2 = tstringUtil::Replace(s2, L" test", L"good");
 		CHECK(L"This good" == s2);
 	}
+
+
+	TEST(Formatting)
+	{
+		wxString one(wxT("one"));
+		wxString two(wxT("two"));
+		wxString fmt = wxString::Format(wxT("%2$s %1$s"), one.c_str(), two.c_str());
+		CHECK(fmt == wxT("two one"));
+	}
 }
