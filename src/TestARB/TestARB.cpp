@@ -97,7 +97,13 @@ int main(int /*argc*/, char** /*argv*/)
 	static CLocalization m_Localization;
 	IARBLocalization::Init(&m_Localization);
 
+#ifdef __WXMAC__
+	// Command line programs on Mac are acting like unix. GetResourcesDir
+	// returns /usr/local/share. And GetExecutablePath is returning nothing.
+	wxString m_dirLang = wxT("./lang");
+#else
 	wxString m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+#endif
 
 	wxLocale* m_locale = new wxLocale();
 	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
