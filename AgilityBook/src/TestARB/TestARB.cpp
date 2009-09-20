@@ -46,6 +46,7 @@
 #include <wx/filesys.h>
 #include <wx/fs_zip.h>
 #include <wx/stdpaths.h>
+#include "TestReporterStdout.h"
 
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
 #define UT_NAME			"UnitTest++.VC7"
@@ -78,11 +79,49 @@
 #pragma comment(lib, UT_NAME UT_STATIC_RTL UT_UNICODE UT_DEBUG ".lib")
 
 
-int main(int /*argc*/, char** /*argv*/)
+class CReporterVerbose : public UnitTest::TestReporterStdout
+{
+public:
+	CReporterVerbose(bool bVerbose)
+		: m_bVerbose(bVerbose)
+	{}
+    virtual void ReportTestStart(UnitTest::TestDetails const& test);
+    virtual void ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed);
+private:
+	bool m_bVerbose;
+};
+
+
+void CReporterVerbose::ReportTestStart(UnitTest::TestDetails const& test)
+{
+	if (m_bVerbose)
+		printf("%s:%d: %s:%s started\n", test.filename, test.lineNumber, test.suiteName, test.testName);
+}
+
+
+void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float /*secondsElapsed*/)
+{
+	if (m_bVerbose)
+		printf("%s:%d: %s:%s finished\n", test.filename, test.lineNumber, test.suiteName, test.testName);
+}
+
+
+int main(int argc, char** argv)
 {
 #ifdef _WIN32
 	_set_error_mode(_OUT_TO_MSGBOX);
 #endif
+	bool bVerbose = false;
+	if (argc >= 2)
+	{
+		if (0 == strcmp(argv[1], "verbose"))
+			bVerbose = true;
+		else
+		{
+			fprintf(stderr, "Usage: %s [verbose]\n", argv[0]);
+		}
+	}
+
 	wxInitializer initializer;
 
 	wxString errs;
@@ -111,7 +150,9 @@ int main(int /*argc*/, char** /*argv*/)
 	m_locale->AddCatalog(wxT("arb"), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 	m_Localization.Load();
 
-	int rc = UnitTest::RunAllTests();
+	CReporterVerbose reporter(bVerbose);
+	UnitTest::TestRunner runner(reporter);
+	int rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), NULL, UnitTest::True(), 0);
 
 	Element::Terminate();
 
