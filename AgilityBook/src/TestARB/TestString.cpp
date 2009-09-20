@@ -61,7 +61,7 @@ SUITE(TestString)
 		CHECK("wide" == s2);
 		*/
 		wxString s2 = tstringUtil::TString(s);
-		CHECK(wxT("narrow") == s2);
+		CHECK(wxT("wide") == s2);
 	}
 
 
@@ -72,8 +72,9 @@ SUITE(TestString)
 		std::wstring s(1, w);
 		//std::string s2 = tstringUtil::tstringA(s);
 		wxString s2 = tstringUtil::TString(s);
+		std::string s3 = tstringUtil::tstringA(s2);
 		CHECK(s.length() == 1);
-		CHECK(s2.length() == 3);
+		CHECK(s3.length() == 3);
 	}
 
 
