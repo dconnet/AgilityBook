@@ -97,8 +97,7 @@ int main(int /*argc*/, char** /*argv*/)
 	static CLocalization m_Localization;
 	IARBLocalization::Init(&m_Localization);
 
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString m_dirLang = fileName.GetPath() + wxFileName::GetPathSeparator() + wxT("lang");
+	wxString m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
 
 	wxLocale* m_locale = new wxLocale();
 	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
@@ -126,7 +125,7 @@ ElementNodePtr LoadXMLData(int id)
 	ElementNodePtr tree(ElementNode::New());
 	assert(tree);
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = fileName.GetPath() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
 	bool bOk = false;
 	std::string data;
 	switch (id)

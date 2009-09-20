@@ -1346,7 +1346,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.0.3;
+				CURRENT_PROJECT_VERSION = 2.1.0;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1366,16 +1366,16 @@
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
-					"-I$WXWIN/build-debug/lib/wx/include/mac-ansi-debug-static-2.8",
-					"-I$WXWIN/include",
-					"-I$WXWIN/contrib/include",
+					"-I/Users/dconnet/wx/wxMac-2.8.10/build-ansi-debug/lib/wx/include/mac-ansi-debug-static-2.8",
+					"-I/Users/dconnet/wx/wxMac-2.8.10/include",
+					"-I/Users/dconnet/wx/wxMac-2.8.10/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
 					"-D__WXDEBUG__",
 					"-D__WXMAC__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXWIN/build-debug/lib",
+					"-L/Users/dconnet/wx/wxMac-2.8.10/build-ansi-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1422,7 +1422,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.0.0;
+				CURRENT_PROJECT_VERSION = 2.1.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1440,15 +1440,15 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
-					"-I$WXWIN/build-ansi/lib/wx/include/mac-ansi-release-static-2.8",
-					"-I$WXWIN/include",
-					"-I$WXWIN/contrib/include",
+					"-I/Users/dconnet/wx/wxMac-2.8.10/build-ansi/lib/wx/include/mac-ansi-release-static-2.8",
+					"-I/Users/dconnet/wx/wxMac-2.8.10/include",
+					"-I/Users/dconnet/wx/wxMac-2.8.10/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
-					"-D__WXMAC__\n",
+					"-D__WXMAC__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXWIN/build-ansi/lib",
+					"-L/Users/dconnet/wx/wxMac-2.8.10/build-ansi/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1519,7 +1519,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.0.0;
+				CURRENT_PROJECT_VERSION = 2.1.0;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1540,14 +1540,15 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
-					"-I$WXWIN/build-unicode/lib/wx/include/mac-unicode-release-static-2.8",
-					"-I$WXWIN/include",
+					"-I/Users/dconnet/wx/trunk/build-unicode-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
+					"-I/Users/dconnet/wx/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
-					"-D_LARGE_FILES",
-					"-D__WXMAC__\n",
+					"-D__WXOSX_CARBON__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXWIN/build-unicode/lib",
+					"-L/Users/dconnet/wx/trunk/build-unicode-debug/lib",
+					"-framework",
+					QuickTime,
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1555,31 +1556,29 @@
 					"-framework",
 					Cocoa,
 					"-framework",
-					System,
+					AudioToolbox,
 					"-framework",
-					QuickTime,
+					System,
 					"-framework",
 					OpenGL,
 					"-framework",
 					AGL,
 					"-framework",
 					WebKit,
-					"-lwx_macu_richtext-2.8",
-					"-lwx_macu_aui-2.8",
-					"-lwx_macu_xrc-2.8",
-					"-lwx_macu_qa-2.8",
-					"-lwx_macu_html-2.8",
-					"-lwx_macu_adv-2.8",
-					"-lwx_macu_core-2.8",
-					"-lwx_base_carbonu_xml-2.8",
-					"-lwx_base_carbonu_net-2.8",
-					"-lwx_base_carbonu-2.8",
-					"-lwxregexu-2.8",
-					"-lwxexpat-2.8",
-					"-lwxtiff-2.8",
-					"-lwxjpeg-2.8",
-					"-lwxpng-2.8",
-					"-lwxzlib-2.8",
+					"-lwx_osx_carbonu_xrc-2.9",
+					"-lwx_osx_carbonu_html-2.9",
+					"-lwx_osx_carbonu_qa-2.9",
+					"-lwx_osx_carbonu_adv-2.9",
+					"-lwx_osx_carbonu_core-2.9",
+					"-lwx_baseu_xml-2.9",
+					"-lwx_baseu_net-2.9",
+					"-lwx_baseu-2.9",
+					"-lwxregexu-2.9",
+					"-lwxexpat-2.9",
+					"-lwxtiff-2.9",
+					"-lwxjpeg-2.9",
+					"-lwxpng-2.9",
+					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
 				);
@@ -1595,7 +1594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.0.0;
+				CURRENT_PROJECT_VERSION = 2.1.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1610,17 +1609,18 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-I$BOOSTINCLUDE",
-					"-I$WXWIN/build-unicode/lib/wx/include/mac-unicode-release-static-2.8",
-					"-I$WXWIN/include",
+					"-I/Users/dconnet/wx/trunk/build-unicode/lib/wx/include/osx_carbon-unicode-static-2.9",
+					"-I/Users/dconnet/wx/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
-					"-D_LARGE_FILES",
-					"-D__WXMAC__\n",
+					"-D__WXOSX_CARBON__",
 				);
 				OTHER_LDFLAGS = (
-					"-L$WXWIN/build-unicode/lib",
+					"-L/Users/dconnet/wx/trunk/build-unicode/lib",
+					"-framework",
+					QuickTime,
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1628,31 +1628,27 @@
 					"-framework",
 					Cocoa,
 					"-framework",
-					System,
+					AudioToolbox,
 					"-framework",
-					QuickTime,
+					System,
 					"-framework",
 					OpenGL,
 					"-framework",
-					AGL,
-					"-framework",
 					WebKit,
-					"-lwx_macu_richtext-2.8",
-					"-lwx_macu_aui-2.8",
-					"-lwx_macu_xrc-2.8",
-					"-lwx_macu_qa-2.8",
-					"-lwx_macu_html-2.8",
-					"-lwx_macu_adv-2.8",
-					"-lwx_macu_core-2.8",
-					"-lwx_base_carbonu_xml-2.8",
-					"-lwx_base_carbonu_net-2.8",
-					"-lwx_base_carbonu-2.8",
-					"-lwxregexu-2.8",
-					"-lwxexpat-2.8",
-					"-lwxtiff-2.8",
-					"-lwxjpeg-2.8",
-					"-lwxpng-2.8",
-					"-lwxzlib-2.8",
+					"-lwx_osx_carbonu_xrc-2.9",
+					"-lwx_osx_carbonu_html-2.9",
+					"-lwx_osx_carbonu_qa-2.9",
+					"-lwx_osx_carbonu_adv-2.9",
+					"-lwx_osx_carbonu_core-2.9",
+					"-lwx_osx_baseu_xml-2.9",
+					"-lwx_osx_baseu_net-2.9",
+					"-lwx_osx_baseu-2.9",
+					"-lwxregexu-2.9",
+					"-lwxexpat-2.9",
+					"-lwxtiff-2.9",
+					"-lwxjpeg-2.9",
+					"-lwxpng-2.9",
+					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
 				);
