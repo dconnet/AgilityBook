@@ -86,6 +86,14 @@ public:
 		wxTreeCtrl::SetItemImage(item, state);
 #endif
 	}
+protected:
+	// When first starting up on windows, this returns the size of the
+	// fully expanded tree. This size is then retained and all views think
+	// they're much bigger than they actually are. (and resizing the window
+	// doesn't fix it) The other odd effect, when we open a new document,
+	// the tree would then behave correctly. It's only the very first time
+	// the application starts, on windows, with wx2.9.
+	virtual wxSize DoGetBestSize() const {return wxSize(10,10);}
 };
 
 
