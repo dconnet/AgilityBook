@@ -217,6 +217,7 @@ Settings:
 			eTraining	= 5,
 		}
 	DW Lang2 [added 2.0.0.0] (LanguageManager.cpp)
+	ST Lang3 [added 2.1.0.0] (LanguageManager.cpp)
 	DW lastCX (AgilityBook.cpp/MainFrm.cpp)
 	DW lastCY (AgilityBook.cpp/MainFrm.cpp)
 	ST LastDog (AgilityBookDoc.cpp/AgilityBookTreeView.cpp)
@@ -236,7 +237,8 @@ Settings:
 	DW View (TabView.cpp)
 	DW ViewOrient (TabView.cpp)
 	DW ViewType (TabView.cpp)
-	Obsolete(2.0.0.0) DW Lang (F.cppilterOptions)
+	Obsolete(2.0.0.0) DW Lang (LanguageManager)
+	Obsolete(2.1.0.0) DW Lang2 (LanguageManager)
 Sorting:
 	ST [key]Order (ColumnOrder.cpp)
 	ST [key]Sort (ColumnOrder.cpp)
