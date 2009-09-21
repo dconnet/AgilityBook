@@ -56,6 +56,8 @@ Changes to <trunk> [2.9.1]:
 	#define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _lib)
 #endif // DLL/!DLL
 ===end
+-[win]- src/msw/stdpaths.cpp
+ - Comment out IgnoreAppBuildSubDirs content (line 294)
 
 wx2.9.0: Not supported
 

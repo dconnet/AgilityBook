@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-20 DRC wxLANGUAGE is not consistent between releases.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-19 DRC Make sure the catalog is intialized before calling dlg.
  * @li 2009-01-01 DRC Ported to wxWidgets.
@@ -61,18 +62,35 @@ CLanguageManager::CLanguageManager()
 	m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
 
 	int lang = m_CurLang;
-	long lastLang;
-	if (wxConfig::Get()->Read(wxT("Settings/Lang2"), &lastLang, 0) && 0 != lastLang)
+	// Introduced in 2.1.
+	wxString langStr = wxConfig::Get()->Read(wxT("Settings/Lang3"), wxEmptyString);
+	if (langStr.empty())
 	{
-		lang = lastLang;
+		// Introduced in 2.0 - turns out the wxLANGUAGE enum may change between releases.
+		// (and did between 2.8 and 2.9)
+		long lastLang;
+		if (wxConfig::Get()->Read(wxT("Settings/Lang2"), &lastLang, 0) && 0 != lastLang)
+		{
+			// As of 2.0, we only supported 2 languages, so remapping is easy (whew!)
+			if (58 == lastLang)
+				langStr = wxT("en_US");
+			else if (78 == lastLang)
+				langStr = wxT("fr_FR");
+		}
+		else if (wxConfig::Get()->Read(wxT("Settings/Lang"), &lastLang, 0) && 0 != lastLang)
+		{
+			// Translates v1.10 registry
+			if (0x0409 == lastLang)
+				langStr = wxT("en_US");
+			else if (0x040c == lastLang)
+				langStr = wxT("fr_FR");
+		}
 	}
-	else if (wxConfig::Get()->Read(wxT("Settings/Lang"), &lastLang, 0) && 0 != lastLang)
+	if (!langStr.empty())
 	{
-		// Translates v1.10 registry
-		if (0x0409 == lastLang)
-			lang = wxLANGUAGE_ENGLISH_US;
-		else if (0x040c == lastLang)
-			lang = wxLANGUAGE_FRENCH;
+		const wxLanguageInfo* langInfo = wxLocale::FindLanguageInfo(langStr);
+		if (langInfo)
+			lang = langInfo->Language;
 	}
 
 	if (lang == wxLANGUAGE_DEFAULT)
@@ -168,7 +186,9 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 		else
 			lang = wxLANGUAGE_ENGLISH_US;
 	}
-	wxConfig::Get()->Write(wxT("Settings/Lang2"), lang);
+	wxLanguageInfo const* langInfo = wxLocale::GetLanguageInfo(lang);
+	if (langInfo)
+		wxConfig::Get()->Write(wxT("Settings/Lang3"), langInfo->CanonicalName);
 
 	return lang;
 }
