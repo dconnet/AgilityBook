@@ -129,6 +129,11 @@ CTabView::~CTabView()
 		m_ctrlBook->Destroy();
 		m_ctrlBook = NULL;
 	}
+	if (m_frame && m_sizerFrame)
+	{
+		m_frame->SetSizer(NULL);
+		m_sizerFrame = NULL;
+	}
 }
 
 
