@@ -134,7 +134,7 @@ goto done
 :usage
 echo Usage: %_PROGNAME% all
 echo Usage: %_PROGNAME% env vc6/vc7/vc8/vc9/vc9x64
-echo Usage: %_PROGNAME% [hasprefix] [dynamic/static] [mbcs/unicode] vc6/vc7/vc8/vc9/vc9x64
+echo Usage: %_PROGNAME% [hasprefix] [dynamic/static*] [mbcs/unicode*] vc6/vc7/vc8/vc9/vc9x64
 goto done
 
 :error
