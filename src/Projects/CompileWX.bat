@@ -1,6 +1,7 @@
 @echo off
 rem This is my quick-and-easy way to compile wxWidgets on Windows.
 rem
+rem 09/26/2009 DRC Tweak compile options
 rem 09/12/2009 DRC Fix dll creation
 
 rem Where is 'Program Files'?
@@ -125,8 +126,21 @@ goto :doit
 :doit
 cd %WXWIN%\build\msw
 
-%_COMMENT% nmake -f makefile.vc BUILD=release            UNICODE=%_DO_UNICODE% SHARED=%_SHARED% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% %_CFG% CPPFLAGS="%_CPPFLAGS%" %_VENDOR%
-%_COMMENT% nmake -f makefile.vc BUILD=debug DEBUG_INFO=1 UNICODE=%_DO_UNICODE% SHARED=%_SHARED% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% %_CFG% CPPFLAGS="%_CPPFLAGS%" %_VENDOR%
+set _BUILD_REL=BUILD=release
+set _BUILD_DBG=BUILD=debug DEBUG_INFO=1
+rem In 2.9, wxDEBUG_LEVEL defaults to 1
+rem disable release mode later, for now, hasprefix infers the active wx trunk
+rem if ("%_HAS_COMPILER_PREFIX%")==("1") set _DEBUG_REL=%_DEBUG_REL% wxDEBUG_LEVEL=0
+if ("%_HAS_COMPILER_PREFIX%")==("1") set _DEBUG_DBG=%_DEBUG_DBG% wxDEBUG_LEVEL=2
+
+set _BUILD_FLAGS=UNICODE=%_DO_UNICODE% SHARED=%_SHARED% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% %_CFG% CPPFLAGS="%_CPPFLAGS%" %_VENDOR%
+
+%_COMMENT% nmake -f makefile.vc %_BUILD_REL% %_BUILD_FLAGS%
+%_COMMENT% nmake -f makefile.vc %_BUILD_DBG% %_BUILD_FLAGS%
+
+set _BUILD_REL=
+set _BUILD_DBG=
+set _BUILD_FLAGS=
 
 cd \AgilityBook\src\AgilityBook\src\Projects
 goto done
