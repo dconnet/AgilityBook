@@ -124,14 +124,15 @@ goto :doit
 
 
 :doit
-cd %WXWIN%\build\msw
+if ("%2")==("sample") cd %WXWIN%\samples\%3
+if not ("%2")==("sample") cd %WXWIN%\build\msw
 
 set _BUILD_REL=BUILD=release
 set _BUILD_DBG=BUILD=debug DEBUG_INFO=1
-rem In 2.9, wxDEBUG_LEVEL defaults to 1
-rem disable release mode later, for now, hasprefix infers the active wx trunk
-rem if ("%_HAS_COMPILER_PREFIX%")==("1") set _DEBUG_REL=%_DEBUG_REL% wxDEBUG_LEVEL=0
-if ("%_HAS_COMPILER_PREFIX%")==("1") set _DEBUG_DBG=%_DEBUG_DBG% wxDEBUG_LEVEL=2
+rem In 2.9, wxDEBUG_LEVEL defaults to 1 (hasprefix infers the active wx trunk)
+rem Set to '2' for more debugging (datepicker asserts alot tho)
+if ("%_HAS_COMPILER_PREFIX%")==("1") set _DEBUG_REL=%_DEBUG_REL% wxDEBUG_LEVEL=0
+if ("%_HAS_COMPILER_PREFIX%")==("1") set _DEBUG_DBG=%_DEBUG_DBG% wxDEBUG_LEVEL=1
 
 set _BUILD_FLAGS=UNICODE=%_DO_UNICODE% SHARED=%_SHARED% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% %_CFG% CPPFLAGS="%_CPPFLAGS%" %_VENDOR%
 
@@ -148,7 +149,7 @@ goto done
 :usage
 echo Usage: %_PROGNAME% all
 echo Usage: %_PROGNAME% env vc6/vc7/vc8/vc9/vc9x64
-echo Usage: %_PROGNAME% [hasprefix] [dynamic/static*] [mbcs/unicode*] vc6/vc7/vc8/vc9/vc9x64
+echo Usage: %_PROGNAME% [hasprefix] [dynamic/static*] [mbcs/unicode*] vc6/vc7/vc8/vc9/vc9x64 [sample samplename]
 goto done
 
 :error
