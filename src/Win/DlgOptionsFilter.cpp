@@ -334,10 +334,9 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 }
 
 
-// This is called as part of CDlgOptions::OnOk
-void CDlgOptionsFilter::Save()
+// Dates and calendar options aren't updated on-the-fly, so commit now.
+void CDlgOptionsFilter::CommitChanges()
 {
-	// These aren't updated on-the-fly, so commit now.
 	if (!m_FilterOptions.GetViewAllDates())
 	{
 		if (m_bDateStart && !m_timeStart.IsValid())
@@ -360,6 +359,13 @@ void CDlgOptionsFilter::Save()
 	if (m_bEntered)
 		calView.AddEntered();
 	m_FilterOptions.SetFilterCalendarView(calView);
+}
+
+
+// This is called as part of CDlgOptions::OnOk
+void CDlgOptionsFilter::Save()
+{
+	CommitChanges();
 	// Commit to the registry
 	m_FilterOptions.Save();
 }
@@ -619,6 +625,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesSave(wxCommandEvent& evt)
 {
 	if (!TransferDataFromWindow())
 		return;
+	CommitChanges();
 	if (!m_FilterName.empty())
 	{
 		if (m_FilterOptions.AddFilter(m_FilterName))
@@ -665,21 +672,6 @@ void CDlgOptionsFilter::OnFilterDates(wxCommandEvent& evt)
 		m_FilterOptions.SetEndFilterDateSet(m_bDateEnd);
 	}
 	UpdateControls();
-}
-
-
-void CDlgOptionsFilter::OnFilterCal(wxCommandEvent& evt)
-{
-	TransferDataFromWindow();
-	CCalendarViewFilter calView = m_FilterOptions.FilterCalendarView();
-	calView.Clear();
-	if (m_bNotEntered)
-		calView.AddNotEntered();
-	if (m_bPlanning)
-		calView.AddPlanning();
-	if (m_bEntered)
-		calView.AddEntered();
-	m_FilterOptions.SetFilterCalendarView(calView);
 }
 
 
