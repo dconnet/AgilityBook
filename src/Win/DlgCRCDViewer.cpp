@@ -71,16 +71,15 @@ CMetaDataStatic::CMetaDataStatic(
 	wxStaticText::Create(pParent, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxSize(450, 450), wxSUNKEN_BORDER);
+	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 }
 
 
 void CMetaDataStatic::OnPaint(wxPaintEvent& evt)
 {
 	wxBufferedPaintDC dc(this);
-	wxBrush br(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
-	dc.SetBrush(br);
+	dc.SetBackground(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 	dc.Clear();
-	dc.SetBrush(wxNullBrush);
 	if (m_MetaFile)
 	{
 		wxSize sz = GetClientSize();

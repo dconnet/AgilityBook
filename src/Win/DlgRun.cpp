@@ -396,6 +396,7 @@ CMetaDataDisplay::CMetaDataDisplay(
 	wxTextCtrl::Create(parent, wxID_ANY,
 		m_Run->GetCRCD(),
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY);
+	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 
 #ifdef HAS_ENHMETAFILE
 	if (0 < m_Run->GetCRCDRawMetaData().length())
@@ -585,10 +586,8 @@ void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
 	else
 	{
 		wxBufferedPaintDC dc(this);
-		wxBrush br(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
-		dc.SetBrush(br);
+		dc.SetBackground(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 		dc.Clear();
-		dc.SetBrush(wxNullBrush);
 #ifdef HAS_ENHMETAFILE
 		wxSize sz = GetClientSize();
 		RECT r;

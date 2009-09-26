@@ -1115,10 +1115,9 @@ void CAgilityBookCalendar::GetDateFromPoint(
 void CAgilityBookCalendar::OnPaint(wxPaintEvent& evt)
 {
 	wxBufferedPaintDC dc(this);
-	wxBrush br(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
-	dc.SetBrush(br);
+	PrepareDC(dc);
+	dc.SetBackground(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 	dc.Clear();
-	dc.SetBrush(wxNullBrush);
 	OnDraw(&dc);
 }
 
