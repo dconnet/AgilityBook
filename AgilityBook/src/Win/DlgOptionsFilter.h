@@ -61,6 +61,7 @@ private:
 			wxString path,
 			std::vector<CVenueFilter>& outVenues);
 	void UpdateControls();
+	void CommitChanges();
 
 	CAgilityBookDoc* m_pDoc;
 	CFilterOptions m_FilterOptions;
@@ -94,7 +95,6 @@ private:
 	void OnClickedOptFilterNamesSave(wxCommandEvent& evt);
 	void OnClickedOptFilterNamesDelete(wxCommandEvent& evt);
 	void OnFilterDates(wxCommandEvent& evt);
-	void OnFilterCal(wxCommandEvent& evt);
 	void OnFilterLog(wxCommandEvent& evt);
 	void OnFilterLogNames(wxCommandEvent& evt);
 	void OnFilterQs(wxCommandEvent& evt);

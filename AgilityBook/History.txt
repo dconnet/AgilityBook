@@ -1,8 +1,9 @@
-9/13/2009: v2.1.0.* <in development>
+9/26/2009: v2.1.0.* <in development>
 - New features / Enhancements:
   - Start adding support for wxWidgets 2.9, deprecate 'tstring'.
 - Bug fixes:
   - Fixed copying of calendar entries to clipboard.
+  - Fixed date filters with named filters.
 
 9/10/2009: v2.0.4.2448
 - New features / Enhancements:
