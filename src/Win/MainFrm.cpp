@@ -135,7 +135,8 @@ static void SetStatusBarWidths(
 		int* widths)
 {
 	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
-#ifdef __WXMAC__
+#if defined(__WXMAC__) && !wxCHECK_VERSION(2, 9, 0)
+	//TODO: Need to verify on Mac with 2.9
 	// On the Mac, setting the width is always a bit small.
 	// For instance, we want 36, but it gets set to 32.
 	// So kludge it and force it larger.
@@ -160,6 +161,7 @@ static void SetStatusBarWidths(
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, NULL, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
 	, m_MenuBar()
+	, m_fontStatusBar(8, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Ariel"))
 {
 	wxIconBundle icons;
 	icons.AddIcon(wxIcon(AgilityBook16_xpm));
@@ -189,8 +191,10 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
 	if (statusbar)
 	{
+		statusbar->SetFont(m_fontStatusBar);
 		statusbar->Connect(wxEVT_CONTEXT_MENU, wxContextMenuEventHandler(CMainFrame::OnStatusBarContextMenu), NULL, this);
 		wxClientDC dc(statusbar);
+		dc.SetFont(statusbar->GetFont());
 		int style[NUM_STATUS_FIELDS];
 		m_Widths[0] = -1;
 		style[0] = wxSB_FLAT;
@@ -211,12 +215,16 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 			case STATUS_FILTERED:
 				str = _("ID_INDICATOR_FILTERED");
 				break;
+#if !wxCHECK_VERSION(2, 9, 0)
 			case STATUS_FILLER:
 				str = wxT("   "); // Filler for where the grabber is
 				break;
+#endif
 			}
-			wxSize sz = dc.GetTextExtent(str);
-			m_Widths[i] = sz.x;
+			m_Widths[i] = dc.GetTextExtent(str).x;
+#if !wxCHECK_VERSION(2, 9, 0)
+			m_Widths[i] += 4;
+#endif
 			style[i] = wxSB_NORMAL;
 			SetStatusText(str, i);
 		}
@@ -257,7 +265,11 @@ void CMainFrame::SetMessage(wxString const& msg, int index, bool bResize)
 	if (bResize)
 	{
 		wxClientDC dc(statusbar);
+		dc.SetFont(statusbar->GetFont());
 		m_Widths[index] = dc.GetTextExtent(msg).x;
+#if !wxCHECK_VERSION(2, 9, 0)
+		m_Widths[index] += 4;
+#endif
 		SetStatusBarWidths(statusbar, index, m_Widths);
 	}
 	SetStatusText(msg, index);

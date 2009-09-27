@@ -259,10 +259,12 @@ void CFontInfo::CreateFont(wxFont& font)
 	font.SetPointSize(size);
 	int style = wxFONTSTYLE_NORMAL;
 	if (italic)
-		style |= wxFONTFLAG_ITALIC;
+		style = wxFONTSTYLE_ITALIC;
+	int weight = wxFONTWEIGHT_NORMAL;
 	if (bold)
-		style |= wxFONTFLAG_BOLD;
+		weight = wxFONTWEIGHT_BOLD;
 	font.SetStyle(style);
+	font.SetWeight(weight);
 }
 
 
