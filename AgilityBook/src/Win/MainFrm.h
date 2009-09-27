@@ -45,8 +45,12 @@
 #define STATUS_DOG			1
 #define STATUS_STATUS		2
 #define STATUS_FILTERED		3
+#if wxCHECK_VERSION(2, 9, 0)
+#define NUM_STATUS_FIELDS	4
+#else
 #define STATUS_FILLER		4
 #define NUM_STATUS_FIELDS	5
+#endif
 
 
 class CMainFrame : public wxDocParentFrame
@@ -66,6 +70,7 @@ private:
 	void SetMessage(wxString const& msg, int index, bool bResize);
 
 	CAgilityBookMenu m_MenuBar;
+	wxFont m_fontStatusBar;
 	int m_Widths[NUM_STATUS_FIELDS];
 
 private:
