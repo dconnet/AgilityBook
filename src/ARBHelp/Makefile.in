@@ -43,7 +43,8 @@ arbhelp_SRCS = ARBHelp.cpp \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-arbhelp_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb `wx-config --libs`
+arbhelp_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb
+arbhelp_LDFLAGS = `wx-config --libs`
 
 ##########
 # Precompiled headers
@@ -53,7 +54,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 ##########
 # Stuff to install
 ##########
-INSTALL_BIN = arbhelp
+#INSTALL_BIN = arbhelp
 
 @NAM_RULES@
 resources: arbhelp
@@ -61,7 +62,17 @@ resources: arbhelp
 	echo "LANGDIR $(CURDIR)"
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) arbhelp
 
-all: arbhelp resources
+dist:: arbhelp resources
+	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS
+	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/English.lproj
+	cp Info.plist $(TOPBUILDDIR)/ARBHelp.app/Contents/
+	cp version.plist $(TOPBUILDDIR)/ARBHelp.app/Contents/
+	# Note: "echo -n 'APPL????'" puts the '-n' in the file too (on Mac).
+	echo 'APPL????\c' > $(TOPBUILDDIR)/ARBHelp.app/Contents/PkgInfo
+	cp arbhelp $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS/arbhelp
+	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/
+	cp -pR lang $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/
+	cp arbhelp.dat $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #
