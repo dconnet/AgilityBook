@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-09-28 DRC Fix abs() on Mac.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9.
  * @li 2008-06-29 DRC Moved string stuff to ARBString.
@@ -298,6 +299,13 @@ bool ARBDouble::equal(
 		return false;
 
 	double epsilon = ldexp(inPrec, mag1);
+#ifdef __WXMAC__
+	// On Mac, I'm getting 'int abs(int)'. Doesn't seem to be a double version.
+	double diff = inVal1 - inVal2;
+	if (0.0 > diff)
+		diff *= -1.0;
+#else
 	double diff = abs(inVal1 - inVal2);
+#endif
 	return diff <= epsilon;
 }
