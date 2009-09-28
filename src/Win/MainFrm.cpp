@@ -135,8 +135,7 @@ static void SetStatusBarWidths(
 		int* widths)
 {
 	statusbar->SetStatusWidths(NUM_STATUS_FIELDS, widths);
-#if defined(__WXMAC__) && !wxCHECK_VERSION(2, 9, 0)
-	//TODO: Need to verify on Mac with 2.9
+#if defined(__WXMAC__)
 	// On the Mac, setting the width is always a bit small.
 	// For instance, we want 36, but it gets set to 32.
 	// So kludge it and force it larger.

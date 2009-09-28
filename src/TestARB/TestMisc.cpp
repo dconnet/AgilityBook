@@ -63,6 +63,7 @@ SUITE(TestMisc)
 	}
 
 
+#ifdef WIN32
 	TEST(VerifyColor)
 	{
 		CHECK(wxSYS_COLOUR_SCROLLBAR == COLOR_SCROLLBAR);
@@ -98,4 +99,5 @@ SUITE(TestMisc)
 		//CHECK(wxSYS_COLOUR_MENUBAR == );
 		//CHECK(wxSYS_COLOUR_LISTBOXTEXT == );
 	}
+#endif
 }
