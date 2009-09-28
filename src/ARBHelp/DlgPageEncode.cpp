@@ -40,7 +40,7 @@
 #include "stdafx.h"
 #include "DlgPageEncode.h"
 
-#include "..\ARB\VersionNum.h"
+#include "../ARB/VersionNum.h"
 #include "ARBHelp.h"
 #include "ARBTypes.h"
 #include "DlgARBHelp.h"

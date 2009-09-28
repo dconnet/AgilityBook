@@ -1,7 +1,7 @@
 ################################################################################
 # File: Makefile                                                               #
 ################################################################################
-# Makefile for the                                               #
+# Makefile for ARBHelp                                                         #
 ################################################################################
 
 ################################################################################
@@ -21,46 +21,47 @@ VPATH       = @srcdir@
 TOPBUILDDIR = ./@top_builddir@
 
 ##########
-# Recursively make in these subdirectories
-##########
-SUBDIRS = UnitTest++ ARB TestARB ARBHelp cal_usdaa Win
-#SUBDIRS = ARB cal_usdaa Win
-
-##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -DWXWIDGETS # -I$(TOPSRCDIR)/src/ARB
+INCLUDES = -I$(TOPSRCDIR)/src -I$(TOPSRCDIR)/src/Include -I$(TOPSRCDIR)/src/ARB `wx-config --cppflags`
 
 ##########
 # List of programs and archives to link
 ##########
-#PROGRAMS = arb testarb
-#ARCHIVES = arblib
+PROGRAMS = arbhelp
 
 ##########
 # Source files for each target
 ##########
-
+arbhelp_SRCS = ARBHelp.cpp \
+	DlgARBHelp.cpp \
+	DlgPageDecode.cpp \
+	DlgPageEncode.cpp \
+	DlgPageEncodeFiles.cpp \
+	DlgPageEncodeFinish.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-# prog1_LIBS = -lextralib
-# prog1_LDFLAGS = -L/path/to/extralib
+arbhelp_LIBS = -L$(TOPBUILDDIR)/src/ARB/ -larb `wx-config --libs`
 
 ##########
 # Precompiled headers
 ##########
-PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h 
+PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
 ##########
 # Stuff to install
 ##########
-#INSTALL_BIN = arb
-#INSTALL_SBIN = prog2
-#INSTALL_MAN = prog1.5
+INSTALL_BIN = arbhelp
 
 @NAM_RULES@
+resources: arbhelp
+# compile resources
+	echo "LANGDIR $(CURDIR)"
+	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) arbhelp
+
+all: arbhelp resources
 
 ################################################################################
 # End of File: Makefile                                                        #
