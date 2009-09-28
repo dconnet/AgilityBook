@@ -41,7 +41,7 @@
 #include "stdafx.h"
 #include "DlgPageDecode.h"
 
-#include "..\ARB\VersionNum.h"
+#include "../ARB/VersionNum.h"
 #include "ARBHelp.h"
 #include "ARBTypes.h"
 #include "BinaryData.h"
@@ -124,7 +124,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 	int pos = data.Find(STREAM_DATA_BEGIN);
 	if (0 <= pos)
 	{
-		data = data.Mid(pos + lstrlen(STREAM_DATA_BEGIN));
+		data = data.Mid(pos + wxString(STREAM_DATA_BEGIN).length());
 		pos = data.Find(STREAM_DATA_END);
 		if (0 <= pos)
 			data = data.Left(pos);
@@ -184,7 +184,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 			int posEnd = data.Find(STREAM_FILE_END);
 			if (0 < posEnd && posEnd > pos)
 			{
-				int posData = pos + lstrlen(STREAM_FILE_BEGIN);
+				int posData = pos + wxString(STREAM_FILE_BEGIN).length();
 				// Dump the preceding data (but not identifier.
 				editData << data.Left(pos); // New line included
 				// Trim preceding
@@ -194,7 +194,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				posEnd = data.Find(STREAM_FILE_END); // Recompute - we just changed the string
 				dataIn = data.Left(posEnd);
 				// Strip that from main data.
-				data = data.Mid(posEnd + lstrlen(STREAM_FILE_END));
+				data = data.Mid(posEnd + wxString(STREAM_FILE_END).length());
 				data.Trim(false);
 				// Now decode
 				unsigned char* binData = NULL;
