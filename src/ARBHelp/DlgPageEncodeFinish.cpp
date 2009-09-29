@@ -48,15 +48,23 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
 		wxT("Now that the information is gathered, send an email to help@agilityrecordbook.com with this data."),
 		wxDefaultPosition, wxDefaultSize, 0);
-	text1->Wrap(500);
+#ifndef __WXMAC__
+	// For some reason, this causes 2.9.x sizers to go nuts on a mac
+	text1->Wrap(600);
+#endif
+
+	wxFont font = GetFont();
+	wxFont fontFixed(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight());
+	wxClientDC dc(this);
+	dc.SetFont(fontFixed);
+	wxSize sz(dc.GetCharWidth()*80, wxDefaultCoord);
 
 	m_ctrlText = new wxTextCtrl(this, wxID_ANY,
 		wxEmptyString,
-		wxDefaultPosition, wxDefaultSize,
+		wxDefaultPosition, sz,
 		wxTE_MULTILINE|wxTE_READONLY);
 	m_ctrlText->SetMaxLength(0);
-	wxFont font = m_ctrlText->GetFont();
-	m_ctrlText->SetFont(wxFont(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight()));
+	m_ctrlText->SetFont(fontFixed);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxALL|wxEXPAND, 5);
