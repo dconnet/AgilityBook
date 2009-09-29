@@ -70,8 +70,6 @@ CDlgARBHelp::CDlgARBHelp()
 	wxWizardPageSimple::Chain(page2, page3);
 
 	GetPageAreaSizer()->Add(m_pageEncode);
-	GetPageAreaSizer()->Add(page2);
-	GetPageAreaSizer()->Add(page3);
 
 	RunWizard(m_pageEncode);
 	Destroy();
