@@ -180,7 +180,6 @@ bool CFindTree::Search(CDlgFind* pDlg) const
 			if (0 <= str.Find(search))
 			{
 				m_pView->ChangeSelection(hItem);
-				m_pView->m_Ctrl->EnsureVisible(hItem);
 				bFound = true;
 			}
 		}
@@ -282,6 +281,8 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_Columns()
 	, m_bReset(false)
 	, m_bSuppressSelect(false)
+	, m_bInPopup(false)
+	, m_itemPopup()
 	, m_Callback(this)
 	, m_pDog()
 {
@@ -399,7 +400,6 @@ void CAgilityBookTreeView::OnUpdate(
 		CAgilityBookTreeData* pData = FindData(pTrial);
 		assert(pData);
 		ChangeSelection(pData->GetId());
-		m_Ctrl->EnsureVisible(pData->GetId());
 	}
 	else if (hint && hint->IsEqual(UPDATE_CUSTOMIZE))
 	{
@@ -626,7 +626,6 @@ wxTreeItemId CAgilityBookTreeView::InsertDog(
 		if (bSelect)
 		{
 			ChangeSelection(hItem);
-			m_Ctrl->EnsureVisible(hItem);
 		}
 	}
 	return hItem;
@@ -757,16 +756,27 @@ void CAgilityBookTreeView::UpdateData(wxTreeItemId hItem)
 }
 
 
-void CAgilityBookTreeView::ChangeSelection(wxTreeItemId hItem)
+void CAgilityBookTreeView::ChangeSelection(
+		wxTreeItemId hItem,
+		bool bEnsureVisible)
 {
 	m_Ctrl->SelectItem(hItem);
+	if (bEnsureVisible)
+		m_Ctrl->EnsureVisible(hItem);
 	DoSelectionChange(hItem);
 }
 
 
 void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 {
-	if (!m_bSuppressSelect)
+	if (m_bSuppressSelect)
+	{
+		if (m_bInPopup)
+		{
+			m_itemPopup = hItem;
+		}
+	}
+	else
 	{
 		CAgilityBookTreeData* pData = GetTreeItem(hItem);
 		ARBBasePtr pBase;
@@ -944,8 +954,17 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 			wxMenu* menu = CreatePopup(pData->GetMenuID());
 			if (menu)
 			{
+				m_bInPopup = true;
 				m_Ctrl->PopupMenu(menu, point);
+				m_bInPopup = false;
 				delete menu;
+			}
+			if (m_itemPopup.IsOk())
+			{
+				// Override the select and force an item
+				item = m_itemPopup;
+				m_itemPopup = wxTreeItemId();
+				m_bSuppressSelect = false;
 			}
 			m_Ctrl->SelectItem(item);
 			m_bSuppressSelect = false;

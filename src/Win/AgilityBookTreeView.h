@@ -131,7 +131,7 @@ public:
 	void ExpandAllChildren(wxTreeItemId item)	{m_Ctrl->ExpandAllChildren(item);}
 	void Collapse(wxTreeItemId item)			{m_Ctrl->Collapse(item);}
 	void CollapseAllChildren(wxTreeItemId item)	{m_Ctrl->CollapseAllChildren(item);}
-	void SelectItem(wxTreeItemId item)			{ChangeSelection(item);}
+	void SelectItem(wxTreeItemId item)			{ChangeSelection(item, true);}
 	void EnsureVisible(wxTreeItemId item)		{m_Ctrl->EnsureVisible(item);}
 	bool ItemHasChildren(wxTreeItemId item) const
 		{return m_Ctrl->ItemHasChildren(item);}
@@ -190,7 +190,9 @@ public:
 
 private:
 	void UpdateData(wxTreeItemId hItem);
-	void ChangeSelection(wxTreeItemId hItem);
+	void ChangeSelection(
+			wxTreeItemId hItem,
+			bool bEnsureVisible = true);
 	void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
 	void PrintLine(
@@ -215,6 +217,8 @@ private:
 	std::vector<long> m_Columns[3];
 	bool m_bReset;
 	bool m_bSuppressSelect;
+	bool m_bInPopup;
+	wxTreeItemId m_itemPopup; // Tried to select item during menu - delay
 	CFindTree m_Callback;
 	ARBDogPtr m_pDog;
 
