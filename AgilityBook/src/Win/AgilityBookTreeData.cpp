@@ -119,7 +119,6 @@ static bool EditDog(
 			{
 				wxTreeItemId hItem = pTree->InsertDog(pDog);
 				pTree->SelectItem(hItem);
-				pTree->EnsureVisible(hItem);
 				if (bTreeSelectionSet)
 					*bTreeSelectionSet = true;
 			}
@@ -182,7 +181,6 @@ static bool EditTrial(
 				else
 				{
 					pTree->SelectItem(hItem);
-					pTree->EnsureVisible(hItem);
 					if (bTreeSelectionSet)
 						*bTreeSelectionSet = true;
 				}
@@ -277,7 +275,6 @@ static bool EditRun(
 				else
 				{
 					pTree->SelectItem(hItem);
-					pTree->EnsureVisible(hItem);
 					if (bTreeSelectionSet)
 						*bTreeSelectionSet = true;
 				}
@@ -475,7 +472,6 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					else
 					{
 						m_pTree->SelectItem(hItem);
-						m_pTree->EnsureVisible(hItem);
 						if (bTreeSelectionSet)
 							*bTreeSelectionSet = true;
 					}
@@ -526,7 +522,6 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						else
 						{
 							m_pTree->SelectItem(hItem);
-							m_pTree->EnsureVisible(hItem);
 							if (bTreeSelectionSet)
 								*bTreeSelectionSet = true;
 						}
