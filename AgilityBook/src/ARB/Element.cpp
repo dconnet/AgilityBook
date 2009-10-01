@@ -829,6 +829,9 @@ bool ElementNode::SaveXML(
 	doc.SetRoot(root);
 	// TODO: Insert DTD
 	CreateDoc(root, *this);
+	// Note: Documentation implies this will put out 1 space per level.
+	// In reality, it does 2 due to code in <wx>/src/xml/xml.cpp: Line 888.
+	// (writes 2*indentstep spaces)
 	return doc.Save(outOutput, 1);
 }
 
