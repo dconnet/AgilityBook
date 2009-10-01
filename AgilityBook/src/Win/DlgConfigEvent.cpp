@@ -884,8 +884,7 @@ bool CDlgConfigEvent::SaveControls()
 		CConfigEventDataScoring* pScoringData = GetScoringData(m_idxMethod);
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		// Point/faults are already up-to-date.
-		wxString str;
-		m_ctrlNote->SetValue(str);
+		wxString str = m_ctrlNote->GetValue();
 		str.Trim(true);
 		pScoring->SetNote(str);
 	}

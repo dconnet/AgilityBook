@@ -234,7 +234,6 @@ Revision History:
          <Titles LongName="Special Masters Jumpers Dog of Canada" Name="SMJDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
          <Titles LongName="Special Masters Snooker Dog of Canada" Name="SMSDC" ValidTo="2008-12-31">3 qualifying scores under at least 2 different judges</Titles>
          <Titles LongName="Special Agility Trial Champion of Canada" Name="SATChC" Prefix="y" ValidTo="2008-12-31">Master Agility Dog of Canada, Masters Jumpers, Masters Gamblers, Masters Snooker, and Masters Team Relay titles</Titles>
-
          <Division Name="Regular">
             <Level Name="Starters"/>
             <Level Name="Advanced"/>
@@ -477,14 +476,14 @@ Revision History:
             <MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
          </MultiQ>
          <MultiQ Name="Triple Q" SName="QQQ">
-           <MultiQItem Div="Regular" Event="FAST" Level="Excellent B"/>
-           <MultiQItem Div="Regular" Event="JWW" Level="Excellent B"/>
-           <MultiQItem Div="Regular" Event="Standard" Level="Excellent B"/>
+            <MultiQItem Div="Regular" Event="FAST" Level="Excellent B"/>
+            <MultiQItem Div="Regular" Event="JWW" Level="Excellent B"/>
+            <MultiQItem Div="Regular" Event="Standard" Level="Excellent B"/>
          </MultiQ>
          <MultiQ Name="Preferred Triple Q" SName="QQQ">
-           <MultiQItem Div="Preferred" Event="FAST" Level="Excellent B"/>
-           <MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
-           <MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
+            <MultiQItem Div="Preferred" Event="FAST" Level="Excellent B"/>
+            <MultiQItem Div="Preferred" Event="JWW" Level="Excellent B"/>
+            <MultiQItem Div="Preferred" Event="Standard" Level="Excellent B"/>
          </MultiQ>
       </Venue>
       <Venue LongName="Australian Shepherd Club of America" Name="ASCA" URL="http://www.asca.org/" icon="5">
@@ -3315,7 +3314,10 @@ TG3 + 10 Qs in at least 5 games with 3 wins
             <Scoring Division="Performance" Level="PI" OpeningPts="37" ValidTo="2003-12-31" type="ScoreThenTime"/>
          </Event>
          <Event Name="Team" hasPartner="y">
-            <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
+            <Desc>This tracks the Team's overall status for all 5 events. (Use 'Pairs' for the individual relay event.)</Desc>
+            <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults">
+               <Note>DAM Team</Note>
+            </Scoring>
             <Scoring Division="Championship" Level="Tournament" ValidFrom="1999-1-1" type="TimePlusFaults">
                <Note>DAM Team</Note>
                <TitlePoints Faults="0" Points="1"/>
@@ -3335,8 +3337,12 @@ TG3 + 10 Qs in at least 5 games with 3 wins
             </Scoring>
          </Event>
          <Event Name="Pairs" hasPartner="y">
-            <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults"/>
-            <Scoring Division="Championship" Level="Tournament" type="TimePlusFaults"/>
+            <Scoring Division="Championship" Level="Nationals" type="TimePlusFaults">
+               <Note>DAM relay event</Note>
+            </Scoring>
+            <Scoring Division="Championship" Level="Tournament" type="TimePlusFaults">
+               <Note>DAM relay event</Note>
+            </Scoring>
             <Scoring Division="Championship" Level="Masters" type="TimePlusFaults">
                <TitlePoints Faults="0" Points="1"/>
                <LifeTime Faults="0" Points="1"/>
@@ -3348,8 +3354,12 @@ TG3 + 10 Qs in at least 5 games with 3 wins
                <TitlePoints Faults="0" Points="1"/>
             </Scoring>
             <Scoring Division="Championship" Level="Novice" ValidTo="2003-12-31" type="TimePlusFaults"/>
-            <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
-            <Scoring Division="Performance" Level="Tournament" type="TimePlusFaults"/>
+            <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults">
+               <Note>DAM relay event</Note>
+            </Scoring>
+            <Scoring Division="Performance" Level="Tournament" type="TimePlusFaults">
+               <Note>DAM relay event</Note>
+            </Scoring>
             <Scoring Division="Performance" Level="PIII" ValidFrom="2007-1-1" type="TimePlusFaults">
                <TitlePoints Faults="0" Points="1"/>
                <LifeTime Faults="0" Points="1"/>
