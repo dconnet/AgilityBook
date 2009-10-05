@@ -196,7 +196,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90"
+				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
