@@ -157,7 +157,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				int posEnd = data.Find(sc_sections[idx].end);
 				if (pos < posEnd)
 				{
-					size_t posData = pos + sc_sections[idx].begin.Length();
+					size_t posData = pos + static_cast<int>(sc_sections[idx].begin.Length());
 					// Dump the preceding data.
 					editData << data.Left(posData) << wxT("\n");
 					// Trim preceding
@@ -184,7 +184,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 			int posEnd = data.Find(STREAM_FILE_END);
 			if (0 < posEnd && posEnd > pos)
 			{
-				int posData = pos + wxString(STREAM_FILE_BEGIN).length();
+				int posData = pos + static_cast<int>(wxString(STREAM_FILE_BEGIN).length());
 				// Dump the preceding data (but not identifier.
 				editData << data.Left(pos); // New line included
 				// Trim preceding
