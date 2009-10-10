@@ -100,6 +100,7 @@ resources: testarb
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) testarb
 
 all: testarb resources tests
+dist:: all
 
 tests: $(PHONY)
 	python $(TOPSRCDIR)/src/Projects/VC9/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) testarb Mac
