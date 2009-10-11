@@ -647,7 +647,7 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textCallName->Wrap(-1);
 
-	wxTextCtrl* ctrlName = new wxTextCtrl(panelProp, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlName = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_CallName, _("IDS_BLANK_CALLNAME")));
 	ctrlName->SetHelpText(_("HIDC_DOG_CALLNAME"));
@@ -658,7 +658,7 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textBreed->Wrap(-1);
 
-	wxTextCtrl* ctrlBreed = new wxTextCtrl(panelProp, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlBreed = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_Breed, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlBreed->SetHelpText(_("HIDC_DOG_BREED"));
@@ -669,7 +669,7 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textRegName->Wrap(-1);
 
-	wxTextCtrl* ctrlRegName = new wxTextCtrl(panelProp, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlRegName = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_RegName, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlRegName->SetHelpText(_("HIDC_DOG_REG_NAME"));
@@ -719,7 +719,7 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	wxTextCtrl* ctrlNotes = new wxTextCtrl(panelProp, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlNotes = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 180), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_DOG_NOTES"));

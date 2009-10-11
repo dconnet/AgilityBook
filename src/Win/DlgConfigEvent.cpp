@@ -69,6 +69,7 @@
 #include "DlgName.h"
 #include "ListData.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <algorithm>
 #include <wx/statline.h>
 
@@ -184,7 +185,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	m_ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
 	m_ctrlName->SetHelpText(_("HIDC_CONFIG_EVENT"));
@@ -217,7 +218,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNote->Wrap(-1);
 
-	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlNote = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_DESC"));
@@ -367,7 +368,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textMethodNote->Wrap(-1);
 
-	m_ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlNote = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
 	m_ctrlNote->SetHelpText(_("HIDC_CONFIG_EVENT_NOTES"));
 	m_ctrlNote->SetToolTip(_("HIDC_CONFIG_EVENT_NOTES"));

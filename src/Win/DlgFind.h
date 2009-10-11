@@ -38,6 +38,7 @@
  */
 
 class CDlgFind;
+class CTextCtrl;
 
 class IFindCallback
 {
@@ -87,7 +88,7 @@ public:
 
 private:
 	IFindCallback& m_Callback;
-	wxTextCtrl* m_textCtrl;
+	CTextCtrl* m_textCtrl;
 	wxCheckBox* m_checkBox;
 	wxRadioBox* m_radioBoxSearch;
 	wxRadioBox* m_radioBoxDir;

@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgPageEncodeFinish.h"
 
+#include "../Win/Widgets.h"
 #include "DlgARBHelp.h"
 
 
@@ -59,7 +60,7 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	dc.SetFont(fontFixed);
 	wxSize sz(dc.GetCharWidth()*80, wxDefaultCoord);
 
-	m_ctrlText = new wxTextCtrl(this, wxID_ANY,
+	m_ctrlText = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, sz,
 		wxTE_MULTILINE|wxTE_READONLY);

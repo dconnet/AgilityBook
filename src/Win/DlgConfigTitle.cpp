@@ -46,6 +46,7 @@
 #include "AgilityBook.h"
 #include "ARBConfigTitle.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <wx/datectrl.h>
 
 
@@ -69,7 +70,7 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 {
 	if (!CGenericValidator::Validate(parent))
 		return false;
-	wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
 	short val = static_cast<short>(wxAtoi(pControl->GetValue()));
 	if (m_ctrlAllowMany->GetValue() && 1 > val)
 	{
@@ -117,7 +118,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_TITLE_NAME"));
@@ -135,7 +136,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLong->Wrap(-1);
 
-	wxTextCtrl* ctrlLongName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlLongName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_LongName, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlLongName->SetHelpText(_("HIDC_CONFIG_TITLE_LONG_NAME"));
@@ -146,7 +147,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 110), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlDesc->SetHelpText(_("HIDC_CONFIG_TITLE_DESC"));
@@ -165,7 +166,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textStart->Wrap(-1);
 
-	m_ctrlMultiple = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlMultiple = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CMultipleValidator(ctrlAllowMany, &m_Multiple));
 	m_ctrlMultiple->Enable(m_AllowMany);

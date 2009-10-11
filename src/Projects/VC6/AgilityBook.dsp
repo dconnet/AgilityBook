@@ -448,6 +448,10 @@ SOURCE=..\..\Win\Validators.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\Win\Widgets.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\Win\Wizard.cpp
 # End Source File
 # Begin Source File
@@ -845,6 +849,10 @@ SOURCE=..\..\Win\UpdateInfo.h
 # Begin Source File
 
 SOURCE=..\..\Win\Validators.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\Win\Widgets.h
 # End Source File
 # Begin Source File
 

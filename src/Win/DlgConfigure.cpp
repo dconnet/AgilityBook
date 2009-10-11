@@ -54,16 +54,16 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
-#include "CheckTreeCtrl.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigUpdate.h"
-#include "DlgConfigVenue.h"
 #include "DlgConfigureData.h"
+#include "DlgConfigVenue.h"
 #include "DlgListViewer.h"
 #include "DlgMessage.h"
 #include "DlgMessageBox.h"
 #include "DlgName.h"
 #include "Globals.h"
+#include "Widgets.h"
 #include <wx/artprov.h>
 
 /////////////////////////////////////////////////////////////////////////////

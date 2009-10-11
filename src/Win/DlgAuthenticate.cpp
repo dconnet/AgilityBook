@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "DlgAuthenticate.h"
 
+#include "Widgets.h"
 #include <wx/sizer.h>
 #include <wx/statbox.h>
 #include <wx/valgen.h>
@@ -63,7 +64,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textUserName->Wrap(-1);
 
-	wxTextCtrl* ctrlUsername = new wxTextCtrl(this, wxID_ANY, userName,
+	CTextCtrl* ctrlUsername = new CTextCtrl(this, wxID_ANY, userName,
 		wxDefaultPosition, wxSize(180, -1), 0,
 		wxGenericValidator(&m_Name));
 
@@ -71,7 +72,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPassword->Wrap(-1);
 
-	wxTextCtrl* ctrlPassword = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlPassword = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(180, -1), wxTE_PASSWORD,
 		wxGenericValidator(&m_Password));
 

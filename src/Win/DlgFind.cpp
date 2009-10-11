@@ -39,6 +39,7 @@
 #include "DlgFind.h"
 
 #include "AgilityBook.h"
+#include "Widgets.h"
 
 
 CDlgFind::CDlgFind(
@@ -68,7 +69,7 @@ CDlgFind::CDlgFind(
 		wxDefaultPosition, wxDefaultSize, 0);
 	staticText->Wrap(-1);
 
-	m_textCtrl = new wxTextCtrl(this, wxID_ANY, text,
+	m_textCtrl = new CTextCtrl(this, wxID_ANY, text,
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgFind::OnChangeName), NULL, this);
 	m_textCtrl->SetHelpText(_("HIDC_FIND_NAME"));

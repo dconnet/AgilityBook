@@ -37,6 +37,8 @@
 #include "stdafx.h"
 #include "DlgMessage.h"
 
+#include "Widgets.h"
+
 
 CDlgMessage::CDlgMessage(
 		wxString const& msg,
@@ -46,7 +48,7 @@ CDlgMessage::CDlgMessage(
 {
 	// Controls (these are done first to control tab order)
 
-	wxTextCtrl* textCtrl = new wxTextCtrl(this, wxID_ANY, msg,
+	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, msg,
 		wxDefaultPosition, wxSize(450, 300),
 		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
 

@@ -43,6 +43,7 @@
 #include "ARBConfig.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 BEGIN_EVENT_TABLE(CDlgQueryDetail, wxDialog)
@@ -78,7 +79,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textCode->Wrap(-1);
 
-	m_ctrlCode = new wxTextCtrl(this, wxID_ANY, m_strCode,
+	m_ctrlCode = new CTextCtrl(this, wxID_ANY, m_strCode,
 		wxDefaultPosition, wxDefaultSize, 0);
 	if (bReadOnly)
 		m_ctrlCode->SetEditable(false);
@@ -107,7 +108,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 	}
 	else
 	{
-		wxTextCtrl* ctrlLocation = new wxTextCtrl(this, wxID_ANY, m_strName,
+		CTextCtrl* ctrlLocation = new CTextCtrl(this, wxID_ANY, m_strName,
 			wxDefaultPosition, wxSize(200, -1), 0);
 		if (bReadOnly)
 			ctrlLocation->SetEditable(false);

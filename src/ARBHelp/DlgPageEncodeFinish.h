@@ -39,6 +39,7 @@
 
 #include <wx/wizard.h>
 class CDlgARBHelp;
+class CTextCtrl;
 
 
 class CDlgPageEncodeFinish : public wxWizardPageSimple
@@ -50,5 +51,5 @@ public:
 
 private:
 	CDlgARBHelp* m_Parent;
-	wxTextCtrl* m_ctrlText;
+	CTextCtrl* m_ctrlText;
 };

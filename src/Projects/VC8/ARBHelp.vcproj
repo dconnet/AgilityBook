@@ -358,6 +358,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="..\..\Win\Widgets.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -448,6 +452,10 @@
 			</File>
 			<File
 				RelativePath="..\..\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\Widgets.h"
 				>
 			</File>
 		</Filter>

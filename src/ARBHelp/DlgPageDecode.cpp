@@ -42,6 +42,7 @@
 #include "DlgPageDecode.h"
 
 #include "../ARB/VersionNum.h"
+#include "../Win/Widgets.h"
 #include "ARBHelp.h"
 #include "ARBTypes.h"
 #include "BinaryData.h"
@@ -71,13 +72,13 @@ CDlgPageDecode::CDlgPageDecode()
 		wxDefaultPosition, wxDefaultSize, 0);
 	staticText->Wrap(600);
 
-	m_ctrlEncoded = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlEncoded = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
 	m_ctrlEncoded->SetMaxLength(0);
 	wxFont font = m_ctrlEncoded->GetFont();
 	m_ctrlEncoded->SetFont(wxFont(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight()));
 
-	m_ctrlDecoded = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlDecoded = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 200),
 		wxHSCROLL|wxTE_MULTILINE|wxTE_READONLY);
 	m_ctrlDecoded->SetMaxLength(0);

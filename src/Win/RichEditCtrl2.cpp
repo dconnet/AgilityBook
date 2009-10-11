@@ -46,11 +46,9 @@ CRichEditCtrl2::CRichEditCtrl2(
 		const wxString& value,
 		const wxPoint& pos,
 		const wxSize& size,
-		bool bReadOnly,
-		const wxValidator& validator)
-	: wxTextCtrl(parent, id, value, pos, size,
-	wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH | (bReadOnly ? wxTE_READONLY : 0),
-		validator)
+		bool bReadOnly)
+	: CTextCtrl(parent, id, value, pos, size,
+		wxTE_AUTO_URL|wxTE_MULTILINE|wxTE_RICH | (bReadOnly ? wxTE_READONLY : 0))
 {
 	Connect(wxEVT_COMMAND_TEXT_URL, wxTextUrlEventHandler(CRichEditCtrl2::OnUrl));
 	if (bReadOnly)
@@ -64,7 +62,7 @@ void CRichEditCtrl2::SetEditable(bool editable)
 {
 	if (editable != IsEditable())
 	{
-		wxTextCtrl::SetEditable(editable);
+		CTextCtrl::SetEditable(editable);
 		if (editable)
 			SetBackgroundColour(wxNullColour); // reset to default
 		else

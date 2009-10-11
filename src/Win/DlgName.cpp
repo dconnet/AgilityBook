@@ -39,6 +39,7 @@
 
 #include "AgilityBook.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 bool CDlgName::Create(
@@ -53,7 +54,7 @@ bool CDlgName::Create(
 
 	// Controls (these are done first to control tab order)
 
-	wxTextCtrl* textCtrl = new wxTextCtrl(this, wxID_ANY, m_Name,
+	CTextCtrl* textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
 		wxDefaultPosition, wxSize(300, -1), 0,
 		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
 	textCtrl->SetHelpText(_("HIDC_NAME"));

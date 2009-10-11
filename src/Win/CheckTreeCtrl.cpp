@@ -55,11 +55,6 @@
 #include "res/unchecked.xpm"
 
 
-IMPLEMENT_CLASS(CTreeCtrl, wxTreeCtrl)
-
-
-/////////////////////////////////////////////////////////////////////////////
-
 IMPLEMENT_CLASS(CCheckTreeCtrl, CTreeCtrl)
 
 

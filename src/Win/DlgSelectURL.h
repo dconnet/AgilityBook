@@ -37,6 +37,9 @@
  * @li 2004-03-30 DRC Created.
  */
 
+class CTextCtrl;
+
+
 class CDlgSelectURL : public wxDialog
 {
 public:
@@ -47,7 +50,7 @@ public:
 
 private:
 	wxString m_Name;
-	wxTextCtrl* m_textCtrl;
+	CTextCtrl* m_textCtrl;
 
 	void OnFilename(wxCommandEvent& evt);
 };

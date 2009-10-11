@@ -49,10 +49,10 @@
  */
 
 #include "ARBBase.h"
-#include "CheckTreeCtrl.h"
 #include "CommonView.h"
 #include "DlgFind.h"
 #include "IconList.h"
+#include "Widgets.h"
 #include <vector>
 #include <wx/docview.h>
 class CAgilityBookTreeData;

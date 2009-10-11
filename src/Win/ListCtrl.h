@@ -39,32 +39,11 @@
 
 #include "ARBString.h"
 #include "ARBTypes.h"
-#include "Globals.h" // For WXWINDOW_FIX_INITIAL_SIZER
+#include "Widgets.h"
 #include <map>
 #include <wx/imaglist.h>
-#include <wx/listctrl.h>
 
 ARB_TYPEDEF(CListData)
-
-
-class CListCtrl : public wxListView
-{
-	WXWINDOW_FIX_INITIAL_SIZER
-	DECLARE_CLASS(CListCtrl)
-public:
-	CListCtrl() {}
-	CListCtrl::CListCtrl(
-			wxWindow* parent,
-			wxWindowID id,  
-			const wxPoint& pos = wxDefaultPosition,  
-			const wxSize& size = wxDefaultSize,  
-			long style = wxLC_ICON,  
-			const wxValidator& validator = wxDefaultValidator,  
-			const wxString& name = wxListCtrlNameStr) 
-		: wxListView(parent, id, pos, size, style, validator, name)
-	{
-	}
-};
 
 
 // wxListView adds some convenient functions to wxListCtrl

@@ -39,8 +39,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookPanels.h"
-#include "CheckTreeCtrl.h"
-#include "ListCtrl.h"
+#include "Widgets.h"
 
 
 IMPLEMENT_CLASS(CAgilityBookBaseView, wxView)

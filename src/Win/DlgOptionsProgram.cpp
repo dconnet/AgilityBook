@@ -41,6 +41,7 @@
 #include "DlgOptionsProgram.h"
 
 #include "AgilityBookOptions.h"
+#include "Widgets.h"
 #include <wx/url.h>
 #include <wx/valgen.h>
 
@@ -75,7 +76,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textBackups->Wrap(-1);
 
-	wxTextCtrl* ctrlBackups = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlBackups = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		wxGenericValidator(&m_Backups));
 	ctrlBackups->SetHelpText(_("HIDC_OPT_PGM_EDIT"));
@@ -108,7 +109,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	ctrlUseProxy->SetHelpText(_("HIDC_OPT_PGM_USEPROXY"));
 	ctrlUseProxy->SetToolTip(_("HIDC_OPT_PGM_USEPROXY"));
 
-	m_ctrlProxy = new wxTextCtrl(this, wxID_ANY,
+	m_ctrlProxy = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_Proxy));
 	m_ctrlProxy->SetHelpText(_("HIDC_OPT_PGM_PROXY"));

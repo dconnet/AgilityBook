@@ -39,6 +39,7 @@
 
 #include "ARBConfigCalSite.h"
 class ARBConfig;
+class CTextCtrl;
 
 
 class CDlgPluginDetails : public wxDialog
@@ -55,7 +56,7 @@ private:
 	ARBConfig& m_Config;
 	ARBConfigCalSitePtr m_OrigCalSite;
 	ARBConfigCalSitePtr m_CalSite;
-	wxTextCtrl* m_ctrlName;
+	CTextCtrl* m_ctrlName;
 	wxString m_strName;
 	wxString m_strDesc;
 	wxString m_strSearch;

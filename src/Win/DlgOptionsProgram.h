@@ -39,6 +39,9 @@
  * @li 2004-04-08 DRC Created
  */
 
+class CTextCtrl;
+
+
 class CDlgOptionsProgram : public wxPanel
 {
 public:
@@ -55,7 +58,7 @@ private:
 	bool m_bShowHtml;
 	bool m_UseProxy;
 	wxString m_Proxy;
-	wxTextCtrl* m_ctrlProxy;
+	CTextCtrl* m_ctrlProxy;
 
 	void OnUseProxy(wxCommandEvent& evt);
 };

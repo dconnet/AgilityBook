@@ -38,6 +38,7 @@
  */
 
 #include <vector>
+class CTextCtrl;
 
 
 class CDlgPageDecode : public wxDialog
@@ -46,8 +47,8 @@ public:
 	CDlgPageDecode();
 
 private:
-	wxTextCtrl* m_ctrlEncoded;
-	wxTextCtrl* m_ctrlDecoded;
+	CTextCtrl* m_ctrlEncoded;
+	CTextCtrl* m_ctrlDecoded;
 	std::vector<wxString> m_TmpFiles;
 
 	DECLARE_EVENT_TABLE()

@@ -103,7 +103,7 @@ CWizardExport::CWizardExport(
 	wxRadioButton* ctrlSpace = NULL;
 	wxRadioButton* ctrlSemicolon = NULL;
 	wxRadioButton* ctrlOther = NULL;
-	wxTextCtrl* ctrlOtherChar = NULL;
+	CTextCtrl* ctrlOtherChar = NULL;
 
 	if (showDelims)
 	{
@@ -151,7 +151,7 @@ CWizardExport::CWizardExport(
 		ctrlOther->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
 		ctrlOther->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
 
-		ctrlOtherChar = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		ctrlOtherChar = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 			wxDefaultPosition, wxSize(30, -1), 0,
 			wxGenericValidator(&m_Delimiter));
 		ctrlOtherChar->SetMaxLength(1); 

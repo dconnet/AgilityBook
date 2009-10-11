@@ -236,7 +236,7 @@ private:
 	void EditPlugin();
 
 	CSortCheckTreeCtrl* m_ctrlPlugins;
-	wxTextCtrl* m_ctrlDetails;
+	CTextCtrl* m_ctrlDetails;
 	wxButton* m_ctrlRead;
 	wxButton* m_ctrlAdd;
 	wxButton* m_ctrlEnable;
@@ -1090,7 +1090,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	m_ctrlPlugins->SetHelpText(_("HIDC_PLUGIN_TREE"));
 	m_ctrlPlugins->SetToolTip(_("HIDC_PLUGIN_TREE"));
 
-	m_ctrlDetails = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlDetails = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 75),
 		wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP);
 	m_ctrlDetails->SetBackgroundColour(GetBackgroundColour());

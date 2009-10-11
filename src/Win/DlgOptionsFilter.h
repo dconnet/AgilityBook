@@ -39,8 +39,8 @@
  * @li 2003-08-09 DRC Moved fonts to new page.
  */
 
-#include "CheckTreeCtrl.h"
 #include "FilterOptions.h"
+#include <wx/treectrl.h>
 class CAgilityBookDoc;
 class CCheckTreeCtrl;
 class wxDatePickerCtrl;

@@ -64,8 +64,8 @@
 #include "ARBDate.h"
 #include "ARBTypes.h"
 #include "ColumnOrder.h"
-#include <wx/notebook.h>
 #include <wx/listctrl.h>
+#include <wx/notebook.h>
 class CAgilityBookDoc;
 class CDlgDogDivData;
 class CDlgDogLevelData;
@@ -74,6 +74,7 @@ class CMetaDataDisplay;
 class CQualifyingComboBox;
 class CReportListCtrl;
 class CRichEditCtrl2;
+class CTextCtrl;
 class wxCheckBox;
 class wxDateEvent;
 
@@ -109,7 +110,7 @@ private:
 	void SetObstacles();
 	void SetTotalFaults();
 	void SetTitlePoints();
-	void SetReadOnlyFlag(wxTextCtrl* ctrl, bool bReadOnly);
+	void SetReadOnlyFlag(CTextCtrl* ctrl, bool bReadOnly);
 	void FixScoreLayout();
 	void UpdateControls(bool bOnEventChange = false);
 
@@ -156,16 +157,16 @@ private:
 	//CNoteButton m_ctrlJudgeNotes;
 	wxComboBox* m_ctrlHandler;
 	wxString m_Handler;
-	wxTextCtrl* m_ctrlConditions;
+	CTextCtrl* m_ctrlConditions;
 	wxString m_Conditions;
 	CRichEditCtrl2* m_ctrlDesc;
 	wxButton* m_ctrlPartnerEdit;
-	wxTextCtrl* m_ctrlPartner;
+	CTextCtrl* m_ctrlPartner;
 	wxStaticText* m_ctrlSCTText;
-	wxTextCtrl* m_ctrlSCT;
+	CTextCtrl* m_ctrlSCT;
 	double m_SCT;
 	wxStaticText* m_textYardsReqOpeningPts;
-	wxTextCtrl* m_ctrlYardsReqOpeningPts;
+	CTextCtrl* m_ctrlYardsReqOpeningPts;
 		//CStatic m_ctrlOpeningText;
 		//CEdit m_ctrlOpening;
 		short m_Opening;
@@ -173,50 +174,50 @@ private:
 		//CEdit m_ctrlYards;
 		double m_Yards;
 	wxStaticText* m_textMinYPSClosingTime;
-	wxTextCtrl* m_ctrlMinYPSClosingTime;
+	CTextCtrl* m_ctrlMinYPSClosingTime;
 		//CStatic m_ctrlSCT2Text;
 		//CEdit m_ctrlSCT2;
 		double m_SCT2;
 		//CStatic m_ctrlMinYPSText;
 	wxStaticText* m_ctrlClosingText;
-	wxTextCtrl* m_ctrlClosing;
+	CTextCtrl* m_ctrlClosing;
 	short m_Closing;
-	wxTextCtrl* m_ctrlObstacles;
+	CTextCtrl* m_ctrlObstacles;
 	short m_Obstacles;
 	wxStaticText* m_ctrlTimeText;
-	wxTextCtrl* m_ctrlTime;
+	CTextCtrl* m_ctrlTime;
 	double m_Time;
 	wxStaticText* m_ctrlFaultsText;
-	wxTextCtrl* m_ctrlFaults;
+	CTextCtrl* m_ctrlFaults;
 	short m_Faults;
 	wxStaticText* m_textYPSOpeningPts;
-	wxTextCtrl* m_ctrlYPSOpeningPts;
+	CTextCtrl* m_ctrlYPSOpeningPts;
 		//CStatic m_ctrlOpenText;
 		//CEdit m_ctrlOpen;
 		short m_Open;
 		//CStatic m_ctrlYPSText;
 	wxStaticText* m_textClosingPtsTotalFaults;
-	wxTextCtrl* m_ctrlClosingPtsTotalFaults;
+	CTextCtrl* m_ctrlClosingPtsTotalFaults;
 		//CStatic m_ctrlCloseText;
 		//CEdit m_ctrlClose;
 		short m_Close;
 		//CStatic m_ctrlTotalFaultsText;
-	wxTextCtrl* m_ctrlObstaclesPS;
-	wxTextCtrl* m_ctrlPlace;
+	CTextCtrl* m_ctrlObstaclesPS;
+	CTextCtrl* m_ctrlPlace;
 	short m_Place;
-	wxTextCtrl* m_ctrlInClass;
+	CTextCtrl* m_ctrlInClass;
 	short m_InClass;
-	wxTextCtrl* m_ctrlDogsQd;
+	CTextCtrl* m_ctrlDogsQd;
 	short m_DogsQd;
 	CQualifyingComboBox* m_ctrlQ;
 	wxStaticText* m_ctrlBonusPtsText;
-	wxTextCtrl* m_ctrlBonusPts;
+	CTextCtrl* m_ctrlBonusPts;
 	short m_BonusPts;
 	wxStaticText* m_ctrlSpeedPtsText;
-	wxTextCtrl* m_ctrlSpeedPts;
+	CTextCtrl* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlTitlePointsText;
-	wxTextCtrl* m_ctrlTitlePoints;
-	wxTextCtrl* m_ctrlScore;
+	CTextCtrl* m_ctrlTitlePoints;
+	CTextCtrl* m_ctrlScore;
 
 	wxString m_Comments;
 	CColumnOrder m_sortRefRuns;

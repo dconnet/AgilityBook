@@ -47,6 +47,7 @@
 #include "ARBTypes.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <set>
 
 
@@ -101,7 +102,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPlace->Wrap(-1);
 
-	wxTextCtrl* ctrlPlace = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlPlace = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(40, -1), 0,
 		CGenericValidator(&m_Place));
 	ctrlPlace->SetHelpText(_("HIDC_REFRUN_PLACE"));
@@ -122,7 +123,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textTime->Wrap(-1);
 
-	wxTextCtrl* ctrlTime = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlTime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(60, -1), 0,
 		CGenericValidator(&m_Time));
 	ctrlTime->SetHelpText(_("HIDC_REFRUN_TIME"));
@@ -143,7 +144,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textScore->Wrap(-1);
 
-	wxTextCtrl* ctrlScore = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlScore = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(40, -1), 0,
 		CTrimValidator(&m_Points, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlScore->SetHelpText(_("HIDC_REFRUN_POINTS"));
@@ -209,7 +210,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	wxTextCtrl* ctrlNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 70), 0,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_REFRUN_NOTES"));

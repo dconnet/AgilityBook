@@ -40,6 +40,7 @@
 
 #include "ARBTypes.h"
 class ARBConfig;
+class CTextCtrl;
 class CVenueComboBox;
 
 
@@ -60,7 +61,7 @@ private:
 	bool m_ReadOnly;
 	ARBConfig const* m_Config;
 	wxString m_strCode;
-	wxTextCtrl* m_ctrlCode;
+	CTextCtrl* m_ctrlCode;
 	wxString m_strName;
 	CVenueComboBox* m_ctrlVenues;
 	wxString m_Code;

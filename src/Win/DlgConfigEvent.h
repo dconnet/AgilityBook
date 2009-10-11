@@ -47,6 +47,7 @@ class CConfigEventDataLifetimePoints;
 class CConfigEventDataPlaceInfo;
 class CConfigEventDataScoring;
 class CConfigEventDataTitlePoints;
+class CTextCtrl;
 
 
 class CDlgConfigEvent : public wxDialog
@@ -89,7 +90,7 @@ private:
 	bool m_bHasPartners;
 	bool m_bHasSubNames;
 	wxString m_Desc;
-	wxTextCtrl* m_ctrlName;
+	CTextCtrl* m_ctrlName;
 	wxListBox* m_ctrlSubNames;
 	wxButton* m_ctrlSubNamesNew;
 	wxButton* m_ctrlSubNamesEdit;
@@ -107,7 +108,7 @@ private:
 	wxButton* m_ctrlPointsNew;
 	wxButton* m_ctrlPointsEdit;
 	wxButton* m_ctrlPointsDelete;
-	wxTextCtrl* m_ctrlNote;
+	CTextCtrl* m_ctrlNote;
 	int m_idxMethod;
 
 	DECLARE_EVENT_TABLE()

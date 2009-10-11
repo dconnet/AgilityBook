@@ -60,7 +60,6 @@
 #include "res/unchecked.xpm"
 
 
-IMPLEMENT_CLASS(CListCtrl, wxListView)
 IMPLEMENT_CLASS(CReportListCtrl, CListCtrl)
 
 

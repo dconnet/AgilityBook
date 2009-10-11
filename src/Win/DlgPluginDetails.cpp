@@ -44,6 +44,7 @@
 #include "ARBConfigCalSite.h"
 #include "DlgCalendarQueryDetail.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 BEGIN_EVENT_TABLE(CDlgPluginDetails, wxDialog)
@@ -88,7 +89,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	m_ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_strName));
 	m_ctrlName->SetHelpText(_("HIDC_PLUGINDETAIL_NAME"));
@@ -99,7 +100,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_strDesc, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlDesc->SetHelpText(_("HIDC_PLUGINDETAIL_DESC"));
@@ -110,7 +111,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textSearchURL->Wrap(-1);
 
-	wxTextCtrl* ctrlSearchURL = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlSearchURL = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_strSearch, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlSearchURL->SetHelpText(_("HIDC_PLUGINDETAIL_SEARCH"));
@@ -121,7 +122,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHelpURL->Wrap(-1);
 
-	wxTextCtrl* ctrlHelpURL = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlHelpURL = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_strHelp, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHelpURL->SetHelpText(_("HIDC_PLUGINDETAIL_HELP"));

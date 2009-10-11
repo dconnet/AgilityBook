@@ -414,6 +414,9 @@
 				RelativePath="..\..\Win\Validators.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\Widgets.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\Wizard.cpp">
 			</File>
 			<File
@@ -698,6 +701,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\Validators.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\Widgets.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\Wizard.h">

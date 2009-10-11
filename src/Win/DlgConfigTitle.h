@@ -40,6 +40,7 @@
  */
 
 #include "ARBTypes.h"
+class CTextCtrl;
 class wxDatePickerCtrl;
 
 
@@ -60,7 +61,7 @@ private:
 	short m_Multiple;
 	bool m_DateFrom;
 	bool m_DateTo;
-	wxTextCtrl* m_ctrlMultiple;
+	CTextCtrl* m_ctrlMultiple;
 	wxDatePickerCtrl* m_ctrlDateFrom;
 	wxDatePickerCtrl* m_ctrlDateTo;
 	wxComboBox* m_ctrlStyle;

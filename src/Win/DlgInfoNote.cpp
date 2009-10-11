@@ -61,6 +61,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "DlgName.h"
+#include "Widgets.h"
 #include <algorithm>
 #include <wx/bmpcbox.h>
 
@@ -207,7 +208,7 @@ CDlgInfoNote::CDlgInfoNote(
 	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
 	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
-	m_ctrlNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(300, 100), wxTE_MULTILINE);
 	m_ctrlNotes->SetHelpText(_("HIDC_INFONOTE_COMMENTS"));
 	m_ctrlNotes->SetToolTip(_("HIDC_INFONOTE_COMMENTS"));

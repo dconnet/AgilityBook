@@ -37,6 +37,7 @@
  */
 
 #include "ARBAgilityRecordBook.h"
+class CTextCtrl;
 
 
 class CDlgConfigUpdate : public wxDialog
@@ -57,7 +58,7 @@ private:
 	wxRadioButton* m_radioDefault;
 	wxRadioButton* m_radioExisting;
 	wxButton* m_btnPick;
-	wxTextCtrl* m_FileName;
+	CTextCtrl* m_FileName;
 	//CEdit	m_ctrlFileNameEdit;
 	//CString	m_FileName;
 	//CButton	m_ctrlFileName;

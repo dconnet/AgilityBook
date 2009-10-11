@@ -44,6 +44,7 @@
 class CAgilityBookDoc;
 class CNoteButton;
 class CRichEditCtrl2;
+class CTextCtrl;
 class CVenueComboBox;
 class wxDateEvent;
 class wxDatePickerCtrl;
@@ -91,13 +92,13 @@ private:
 	wxRadioButton* m_ctrlEntryPlan;
 	wxRadioButton* m_ctrlEntryEntered;
 	wxButton* m_ctrlOnlineUrlEntry;
-	wxTextCtrl* m_ctrlOnlineUrl;
+	CTextCtrl* m_ctrlOnlineUrl;
 	wxRadioButton* m_ctrlAccomNot;
 	wxRadioButton* m_ctrlAccomNeeded;
 	wxRadioButton* m_ctrlAccomMade;
-	wxTextCtrl* m_ctrlConfirmation;
+	CTextCtrl* m_ctrlConfirmation;
 	wxButton* m_ctrlPremiumEntry;
-	wxTextCtrl* m_ctrlPremiumUrl;
+	CTextCtrl* m_ctrlPremiumUrl;
 	wxButton* m_ctrlEMailSec;
 	wxComboBox* m_ctrlEMailSecAddr;
 	CVenueComboBox* m_ctrlVenue;

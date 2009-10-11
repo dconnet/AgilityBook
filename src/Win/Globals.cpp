@@ -38,9 +38,8 @@
 #include "stdafx.h"
 #include "Globals.h"
 
-#include "CheckTreeCtrl.h"
-#include "ListCtrl.h"
 #include "ListData.h"
+#include "Widgets.h"
 #include <wx/tokenzr.h>
 
 
