@@ -110,7 +110,7 @@ CDlgOtherPoint::CDlgOtherPoint(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPoints->Wrap(-1);
 
-	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlPoints = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CGenericValidator(&m_Points));
 	ctrlPoints->SetHelpText(_("HIDC_OTHER_POINTS"));

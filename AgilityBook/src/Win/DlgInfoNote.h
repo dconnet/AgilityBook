@@ -42,9 +42,10 @@
  */
 
 #include "ARBInfo.h"
-#include <vector>
 #include <set>
+#include <vector>
 class CAgilityBookDoc;
+class CTextCtrl;
 class wxBitmapComboBox;
 
 
@@ -92,7 +93,7 @@ private:
 	wxBitmapComboBox* m_ctrlNames;
 	wxButton* m_ctrlDelete;
 	wxCheckBox* m_ctrlVisible;
-	wxTextCtrl* m_ctrlNotes;
+	CTextCtrl* m_ctrlNotes;
 	wxBitmap m_None;
 	wxBitmap m_Note;
 	wxBitmap m_Added;

@@ -59,7 +59,6 @@
 #include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigVenue.h"
-#include "CheckTreeCtrl.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigTitle.h"
@@ -67,6 +66,7 @@
 #include "DlgName.h"
 #include "Globals.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -243,7 +243,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_Name, _("IDS_INVALID_NAME")));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_VENUE"));
@@ -254,7 +254,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textURL->Wrap(-1);
 
-	wxTextCtrl* ctrlURL = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlURL = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_URL, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlURL->SetHelpText(_("HIDC_CONFIG_VENUE_URL"));
@@ -265,7 +265,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLongName->Wrap(-1);
 
-	wxTextCtrl* ctrlLongName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlLongName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_LongName, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlLongName->SetHelpText(_("HIDC_CONFIG_VENUE_LONGNAME"));
@@ -276,7 +276,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLifetime->Wrap(-1);
 
-	wxTextCtrl* ctrlLifetime = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlLifetime = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_LifetimeName, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlLifetime->SetHelpText(_("HIDC_CONFIG_VENUE_LIFETIME_NAME"));
@@ -287,7 +287,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 70), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlDesc->SetHelpText(_("HIDC_CONFIG_VENUE_DESC"));

@@ -329,7 +329,7 @@ int wxCALLBACK CompareRefRuns(long item1, long item2, long sortData)
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CMetaDataDisplay : public wxTextCtrl
+class CMetaDataDisplay : public CTextCtrl
 {
 public:
 	CMetaDataDisplay(
@@ -377,7 +377,7 @@ private:
 };
 
 
-BEGIN_EVENT_TABLE(CMetaDataDisplay, wxTextCtrl)
+BEGIN_EVENT_TABLE(CMetaDataDisplay, CTextCtrl)
 	EVT_PAINT(CMetaDataDisplay::OnPaint)
 END_EVENT_TABLE()
 
@@ -393,10 +393,11 @@ CMetaDataDisplay::CMetaDataDisplay(
 	, m_ViewText(true)
 	, m_Insert(pRun->GetCRCD().empty())
 {
-	wxTextCtrl::Create(parent, wxID_ANY,
+	CTextCtrl::Create(parent, wxID_ANY,
 		m_Run->GetCRCD(),
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY);
 	SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+	AllowMultilineTabstop(true);
 
 #ifdef HAS_ENHMETAFILE
 	if (0 < m_Run->GetCRCDRawMetaData().length())
@@ -940,7 +941,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textConditions->Wrap(-1);
 
-	m_ctrlConditions = new wxTextCtrl(m_panelScore, wxID_ANY,
+	m_ctrlConditions = new CTextCtrl(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxSize(-1, 50),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Conditions, TRIMVALIDATOR_TRIM_BOTH));
@@ -959,7 +960,7 @@ CDlgRun::CDlgRun(
 	m_ctrlPartnerEdit->SetHelpText(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
 	m_ctrlPartnerEdit->SetToolTip(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
 
-	m_ctrlPartner = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlPartner = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(200, -1), wxTE_READONLY);
 	m_ctrlPartner->SetBackgroundColour(m_clrBack);
 	m_ctrlPartner->SetHelpText(_("HIDC_RUNSCORE_PARTNER"));
@@ -970,7 +971,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlSCTText->Wrap(-1);
 
-	m_ctrlSCT = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlSCT = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_SCT));
 	m_ctrlSCT->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnSCTChange), NULL, this);
@@ -982,7 +983,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textYardsReqOpeningPts->Wrap(-1);
 
-	m_ctrlYardsReqOpeningPts = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlYardsReqOpeningPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
 	m_ctrlYardsReqOpeningPts->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnReqOpeningYPSChange), NULL, this);
 	m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPENING_PTS"));
@@ -993,7 +994,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textMinYPSClosingTime->Wrap(-1);
 
-	m_ctrlMinYPSClosingTime = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlMinYPSClosingTime = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
 	m_ctrlMinYPSClosingTime->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnClosingTimeChange), NULL, this);
 	m_ctrlMinYPSClosingTime->SetHelpText(_("HIDC_RUNSCORE_SCT2"));
@@ -1004,7 +1005,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlClosingText->Wrap(-1);
 
-	m_ctrlClosing = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlClosing = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Closing));
 	m_ctrlClosing->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnReqClosingChange), NULL, this);
@@ -1016,7 +1017,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	ctrlObstaclesText->Wrap(-1);
 
-	m_ctrlObstacles = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlObstacles = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Obstacles));
 	m_ctrlObstacles->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnNumObsChange), NULL, this);
@@ -1028,7 +1029,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlTimeText->Wrap(-1);
 
-	m_ctrlTime = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlTime = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Time));
 	m_ctrlTime->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnTimeChange), NULL, this);
@@ -1040,7 +1041,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlFaultsText->Wrap(-1);
 
-	m_ctrlFaults = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlFaults = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Faults));
 	m_ctrlFaults->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnFaultsChange), NULL, this);
@@ -1052,7 +1053,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textYPSOpeningPts->Wrap(-1);
 
-	m_ctrlYPSOpeningPts = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlYPSOpeningPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
 	m_ctrlYPSOpeningPts->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnOpenChange), NULL, this);
 	m_ctrlYPSOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPEN_PTS"));
@@ -1063,7 +1064,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textClosingPtsTotalFaults->Wrap(-1);
 
-	m_ctrlClosingPtsTotalFaults = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlClosingPtsTotalFaults = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
 	m_ctrlClosingPtsTotalFaults->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnCloseChange), NULL, this);
 	m_ctrlClosingPtsTotalFaults->SetHelpText(_("HIDC_RUNSCORE_CLOSE_PTS"));
@@ -1074,7 +1075,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	ctrlObstaclesPSText->Wrap(-1);
 
-	m_ctrlObstaclesPS = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlObstaclesPS = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
 	m_ctrlObstaclesPS->SetBackgroundColour(m_clrBack);
 	m_ctrlObstaclesPS->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES_PER_SEC"));
@@ -1085,7 +1086,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPlace->Wrap(-1);
 
-	m_ctrlPlace = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlPlace = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_Place));
 	m_ctrlPlace->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnPlaceChange), NULL, this);
@@ -1097,7 +1098,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPlaceOf->Wrap(-1);
 
-	m_ctrlInClass = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlInClass = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_InClass));
 	m_ctrlInClass->SetHelpText(_("HIDC_RUNSCORE_IN_CLASS"));
@@ -1108,7 +1109,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDogsQd->Wrap(-1);
 
-	m_ctrlDogsQd = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlDogsQd = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_DogsQd));
 	m_ctrlDogsQd->SetHelpText(_("HIDC_RUNSCORE_DOGS_QD"));
@@ -1129,7 +1130,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlBonusPtsText->Wrap(-1);
 
-	m_ctrlBonusPts = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlBonusPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_BonusPts));
 	m_ctrlBonusPts->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnBonusChange), NULL, this);
@@ -1141,7 +1142,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlSpeedPtsText->Wrap(-1);
 
-	m_ctrlSpeedPts = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlSpeedPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
 	m_ctrlSpeedPts->SetBackgroundColour(m_clrBack);
 
@@ -1150,7 +1151,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlTitlePointsText->Wrap(-1);
 
-	m_ctrlTitlePoints = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlTitlePoints = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
 	m_ctrlTitlePoints->SetBackgroundColour(m_clrBack);
 
@@ -1159,7 +1160,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textScore->Wrap(-1);
 
-	m_ctrlScore = new wxTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
+	m_ctrlScore = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), wxTE_READONLY);
 	m_ctrlScore->SetBackgroundColour(m_clrBack);
 
@@ -1179,7 +1180,7 @@ CDlgRun::CDlgRun(
 	wxPanel* panelComments = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	wxTextCtrl* ctrlComments = new wxTextCtrl(panelComments, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlComments = new CTextCtrl(panelComments, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlComments->SetHelpText(_("HIDC_RUNCOMMENT_COMMENTS"));
@@ -2054,7 +2055,7 @@ void CDlgRun::SetTitlePoints()
 }
 
 
-void CDlgRun::SetReadOnlyFlag(wxTextCtrl* ctrl, bool bReadOnly)
+void CDlgRun::SetReadOnlyFlag(CTextCtrl* ctrl, bool bReadOnly)
 {
 	if (!ctrl)
 		return;

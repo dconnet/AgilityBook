@@ -45,6 +45,7 @@
 #include "ARBConfig.h"
 #include "ARBTraining.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <wx/datectrl.h>
 
 
@@ -128,7 +129,7 @@ CDlgTraining::CDlgTraining(
 	ctrlSubname->SetHelpText(_("HIDC_TRAINING_SUBNAME"));
 	ctrlSubname->SetToolTip(_("HIDC_TRAINING_SUBNAME"));
 
-	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, m_Notes,
+	CTextCtrl* ctrlNote = new CTextCtrl(this, wxID_ANY, m_Notes,
 		wxDefaultPosition, wxSize(370,210),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_RIGHT));

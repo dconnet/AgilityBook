@@ -40,6 +40,7 @@
 
 #include "AgilityBook.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 CDlgSelectURL::CDlgSelectURL(
@@ -56,7 +57,7 @@ CDlgSelectURL::CDlgSelectURL(
 
 	// Controls (these are done first to control tab order)
 
-	m_textCtrl = new wxTextCtrl(this, wxID_ANY, m_Name,
+	m_textCtrl = new CTextCtrl(this, wxID_ANY, m_Name,
 		wxDefaultPosition, wxSize(300, -1), 0,
 		CTrimValidator(&m_Name, TRIMVALIDATOR_TRIM_BOTH));
 	m_textCtrl->SetHelpText(_("HIDC_SELECTURL_NAME"));

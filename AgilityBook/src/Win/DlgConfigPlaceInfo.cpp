@@ -40,6 +40,7 @@
 
 #include "AgilityBook.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <algorithm>
 #include <wx/valgen.h>
 
@@ -70,7 +71,7 @@ private:
 bool CPlaceValidator::Validate(wxWindow* parent)
 {
 	// We know...
-	wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
 	short val = static_cast<short>(wxAtoi(pControl->GetValue()));
 
 	if (val != m_origPlace)
@@ -111,7 +112,7 @@ private:
 bool CValueValidator::Validate(wxWindow* parent)
 {
 	// We know...
-	wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
 	double val;
 	pControl->GetValue().ToDouble(&val);
 
@@ -154,7 +155,7 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPlace->Wrap(-1);
 
-	wxTextCtrl* ctrlPlace = new wxTextCtrl(this, wxID_ANY,
+	CTextCtrl* ctrlPlace = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CPlaceValidator(inExistingPlaces, &m_Place));
@@ -166,7 +167,7 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textValue->Wrap(-1);
 
-	wxTextCtrl* ctrlValue = new wxTextCtrl(this, wxID_ANY,
+	CTextCtrl* ctrlValue = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CValueValidator(&m_Value));

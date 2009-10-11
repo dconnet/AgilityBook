@@ -37,59 +37,8 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
-#include <wx/treectrl.h>
+#include "Widgets.h"
 #include <wx/imaglist.h>
-#include "Globals.h" // For WXWINDOW_FIX_INITIAL_SIZER
-
-
-#ifdef WIN32
-// GetState/SetState for state image lists only seems to work for Windows.
-// So we'll use the normal image list on other platforms.
-#define WX_TREE_HAS_STATE
-#endif
-
-
-class CTreeCtrl : public wxTreeCtrl
-{
-	DECLARE_CLASS(CTreeCtrl)
-public:
-	CTreeCtrl() {}
-	CTreeCtrl(wxWindow* parent, wxWindowID id = wxID_ANY,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			long style = wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT,
-			const wxValidator& validator = wxDefaultValidator,
-			const wxString& name = wxTreeCtrlNameStr)
-		: wxTreeCtrl(parent, id, pos, size, style, validator, name)
-	{
-	}
-    int GetItemState(const wxTreeItemId& item)
-	{
-#ifdef WX_TREE_HAS_STATE
-	#if wxCHECK_VERSION(2, 9, 0)
-		return wxTreeCtrl::DoGetItemState(item);
-	#else
-		return wxTreeCtrl::GetState(item);
-	#endif
-#else
-		return wxTreeCtrl::GetItemImage(item);
-#endif
-	}
-    void SetItemState(const wxTreeItemId& item, int state)
-	{
-#ifdef WX_TREE_HAS_STATE
-	#if wxCHECK_VERSION(2, 9, 0)
-		wxTreeCtrl::DoSetItemState(item, state);
-	#else
-		wxTreeCtrl::SetState(item, state);
-	#endif
-#else
-		wxTreeCtrl::SetItemImage(item, state);
-#endif
-	}
-protected:
-	WXWINDOW_FIX_INITIAL_SIZER
-};
 
 
 class CCheckTreeCtrl : public CTreeCtrl

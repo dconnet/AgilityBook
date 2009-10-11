@@ -92,7 +92,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	m_ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
 	m_ctrlName->SetHelpText(_("HIDC_CONFIG_MULTIQ_NAME"));
@@ -103,7 +103,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textAbbrev->Wrap(-1);
 
-	wxTextCtrl* ctrlAbbrev = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlAbbrev = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_ShortName, _("IDS_ENTER_SHORTNAME")));
 	ctrlAbbrev->SetHelpText(_("HIDC_CONFIG_MULTIQ_SHORTNAME"));

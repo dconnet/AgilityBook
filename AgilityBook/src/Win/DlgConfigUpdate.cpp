@@ -46,6 +46,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ConfigHandler.h"
 #include "Element.h"
+#include "Widgets.h"
 #include <wx/filedlg.h>
 
 
@@ -90,7 +91,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	m_btnPick->SetHelpText(_("HIDC_CONFIG_UPDATE_NAME"));
 	m_btnPick->SetToolTip(_("HIDC_CONFIG_UPDATE_NAME"));
 
-	m_FileName = new wxTextCtrl(this, wxID_ANY,
+	m_FileName = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_FileName->SetHelpText(_("HIDC_CONFIG_UPDATE_FILENAME"));

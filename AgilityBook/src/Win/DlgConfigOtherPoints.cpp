@@ -44,6 +44,7 @@
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -143,7 +144,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textName->Wrap(-1);
 
-	wxTextCtrl* ctrlName = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CNameValidator(this, &m_Name));
 	ctrlName->SetHelpText(_("HIDC_CONFIG_OTHER_NAME"));
@@ -174,7 +175,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPoints->Wrap(-1);
 
-	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlPoints = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Default));
 	ctrlPoints->SetHelpText(_("HIDC_CONFIG_OTHER_DEFAULT"));
@@ -185,7 +186,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDesc->Wrap(-1);
 
-	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(210, 110),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Desc, TRIMVALIDATOR_TRIM_BOTH));

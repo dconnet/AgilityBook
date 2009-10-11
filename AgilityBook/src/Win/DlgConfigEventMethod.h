@@ -41,6 +41,7 @@
 class ARBAgilityRecordBook;
 class CDlgFixup;
 class CReportListCtrl;
+class CTextCtrl;
 class wxDatePickerCtrl;
 class wxListEvent;
 
@@ -85,7 +86,7 @@ private:
 	wxCheckBox* m_ctrlSuperQ;
 	wxCheckBox* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlMultiplyText;
-	wxTextCtrl* m_ctrlMultiply;
+	CTextCtrl* m_ctrlMultiply;
 	wxStaticText* m_ctrlPlacementText;
 	CReportListCtrl* m_ctrlPlacement;
 	wxButton* m_ctrlPlacementNew;
@@ -96,9 +97,9 @@ private:
 	wxCheckBox* m_ctrlTimeFaultsOver;
 	wxCheckBox* m_ctrlSubtractTimeFaults;
 	wxStaticText* m_ctrlPointsOpeningText;
-	wxTextCtrl* m_ctrlPointsOpening;
+	CTextCtrl* m_ctrlPointsOpening;
 	wxStaticText* m_ctrlPointsClosingText;
-	wxTextCtrl* m_ctrlPointsClosing;
+	CTextCtrl* m_ctrlPointsClosing;
 	ARBDate m_dateFrom;
 	ARBDate m_dateTo;
 	bool m_DropFractions;

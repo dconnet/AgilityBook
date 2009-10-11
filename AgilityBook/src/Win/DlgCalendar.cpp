@@ -281,7 +281,7 @@ CDlgCalendar::CDlgCalendar(
 	if (ARBCalendar::ePlanning != m_pCal->GetEntered() || m_OnlineUrl.empty())
 		m_ctrlOnlineUrlEntry->Enable(false);
 
-	m_ctrlOnlineUrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlOnlineUrl = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_OnlineUrl, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlOnlineUrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgCalendar::OnEnChangeCalOnlineUrl), NULL, this);
@@ -325,7 +325,7 @@ CDlgCalendar::CDlgCalendar(
 		break;
 	}
 
-	m_ctrlConfirmation = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlConfirmation = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_Confirmation, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlConfirmation->SetHelpText(_("HIDC_CAL_ACCOM_CONFIRMATION"));
@@ -341,7 +341,7 @@ CDlgCalendar::CDlgCalendar(
 	if (m_PremiumUrl.empty())
 		m_ctrlPremiumEntry->Enable(false);
 
-	m_ctrlPremiumUrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlPremiumUrl = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_PremiumUrl, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlPremiumUrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgCalendar::OnEnChangeCalPremiumUrl), NULL, this);
@@ -440,7 +440,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	wxTextCtrl* ctrlNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 75), wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_CAL_NOTES"));

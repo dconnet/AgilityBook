@@ -43,6 +43,7 @@
 #include "AgilityBook.h"
 #include "ARBConfigVenue.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 CDlgConfigTitlePoints::CDlgConfigTitlePoints(
@@ -74,7 +75,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textValue->Wrap(-1);
 
-	m_ctrlValue = new wxTextCtrl(this, wxID_ANY,
+	m_ctrlValue = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0);
 	if (eTitlePlacement == m_Type)
@@ -89,7 +90,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPoints->Wrap(-1);
 
-	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY,
+	CTextCtrl* ctrlPoints = new CTextCtrl(this, wxID_ANY,
 		wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CGenericValidator(&m_Points));

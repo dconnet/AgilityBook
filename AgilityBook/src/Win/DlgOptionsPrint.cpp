@@ -42,6 +42,7 @@
 
 #include "AgilityBook.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <math.h>
 
 
@@ -143,7 +144,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textWidth->Wrap(-1);
 
-	wxTextCtrl* ctrlWidth = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlWidth = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_PageRunWidth));
 	ctrlWidth->SetHelpText(_("HIDC_OPT_PRINT_RUNPAGE_W"));
@@ -154,7 +155,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHeight->Wrap(-1);
 	
-	wxTextCtrl* ctrlHeight = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlHeight = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_PageRunHeight));
 	ctrlHeight->SetHelpText(_("HIDC_OPT_PRINT_RUNPAGE_H"));
@@ -167,7 +168,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textLeft->Wrap(-1);
 
-	wxTextCtrl* ctrlLeft = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlLeft = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Left));
 	ctrlLeft->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_L"));
@@ -178,7 +179,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textRight->Wrap(-1);
 
-	wxTextCtrl* ctrlRight = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlRight = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Right));
 	ctrlRight->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_R"));
@@ -189,7 +190,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textTop->Wrap(-1);
 
-	wxTextCtrl* ctrlTop = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlTop = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Top));
 	ctrlTop->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_T"));
@@ -200,7 +201,7 @@ CDlgOptionsPrint::CDlgOptionsPrint(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textBottom->Wrap(-1);
 
-	wxTextCtrl* ctrlBottom = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlBottom = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Bottom));
 	ctrlBottom->SetHelpText(_("HIDC_OPT_PRINT_MARGIN_B"));

@@ -208,7 +208,7 @@ CWizardImport::CWizardImport(
 		ctrlOther->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_OTHER"));
 		ctrlOther->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_OTHER"));
 
-		m_ctrlOtherChar = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+		m_ctrlOtherChar = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 			wxDefaultPosition, wxSize(30, -1), 0);
 		m_ctrlOtherChar->SetMaxLength(1); 
 		m_ctrlOtherChar->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CWizardImport::OnImportDelim), NULL, this);

@@ -46,6 +46,7 @@
 #include "ARBDogRegNum.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 BEGIN_EVENT_TABLE(CDlgRegNum, wxDialog)
@@ -100,7 +101,7 @@ CDlgRegNum::CDlgRegNum(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textRegNum->Wrap(-1);
 
-	wxTextCtrl* ctrlRegNum = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlRegNum = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_RegNum));
 	ctrlRegNum->SetHelpText(_("HIDC_REGNUM_REG_NUM"));
@@ -111,7 +112,7 @@ CDlgRegNum::CDlgRegNum(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textHeight->Wrap(-1);
 
-	wxTextCtrl* ctrlHeight = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlHeight = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
 		CTrimValidator(&m_Height, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlHeight->SetHelpText(_("HIDC_REGNUM_HEIGHT"));
@@ -124,7 +125,7 @@ CDlgRegNum::CDlgRegNum(
 	checkReceived->SetHelpText(_("HIDC_REGNUM_RECEIVED"));
 	checkReceived->SetToolTip(_("HIDC_REGNUM_RECEIVED"));
 
-	wxTextCtrl* ctrlDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlDesc = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(350, 100),
 		wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Note, TRIMVALIDATOR_TRIM_RIGHT));

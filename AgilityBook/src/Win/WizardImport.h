@@ -46,6 +46,7 @@
 #include <wx/wizard.h>
 class CAgilityBookDoc;
 class CListCtrl;
+class CTextCtrl;
 class CWizard;
 class wxSpinCtrl;
 class wxSpinEvent;
@@ -78,7 +79,7 @@ private:
 	wxSpinCtrl* m_ctrlRow;
 	long m_Delim;
 	wxString m_Delimiter;
-	wxTextCtrl* m_ctrlOtherChar;
+	CTextCtrl* m_ctrlOtherChar;
 	wxButton* m_ctrlAssign;
 	wxComboBox* m_ctrlDateFormat;
 	wxStaticText* m_ctrlPreviewFile;

@@ -48,7 +48,6 @@
 #include "ARBConfig.h"
 #include "ARBConfigDivision.h"
 #include "ARBConfigVenue.h"
-#include "CheckTreeCtrl.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigOtherPoints.h"
@@ -58,6 +57,7 @@
 #include "DlgName.h"
 #include "DlgReorder.h"
 #include "Globals.h"
+#include "Widgets.h"
 
 
 ////////////////////////////////////////////////////////////////////////////

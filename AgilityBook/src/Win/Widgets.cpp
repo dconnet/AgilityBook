@@ -1,7 +1,5 @@
-#pragma once
-
 /*
- * Copyright (c) 2005-2009 David Connet. All Rights Reserved.
+ * Copyright (c) 2009 David Connet. All Rights Reserved.
  *
  * Permission to use, copy, modify and distribute this software and its
  * documentation for any purpose and without fee is hereby granted, provided
@@ -29,58 +27,17 @@
 /**
  * @file
  *
- * @brief interface of the CDlgConfigMultiQ class
+ * @brief Change certain default wxWidget behaviors.
  * @author David Connet
  *
  * Revision History
- * @li 2009-02-11 DRC Ported to wxWidgets.
- * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
- * @li 2005-07-30 DRC Created.
+ * @li 2009-10-11 DRC Created.
  */
 
-#include "ARBDate.h"
-class CListCtrl;
-class CTextCtrl;
-class wxDatePickerCtrl;
-class wxListEvent;
+#include "stdafx.h"
+#include "Widgets.h"
 
 
-class CDlgConfigMultiQ : public wxDialog
-{
-public:
-	CDlgConfigMultiQ(
-			ARBConfigVenuePtr inVenue,
-			ARBConfigMultiQPtr inMultiQ,
-			wxWindow* pParent = NULL);
-
-private:
-	void UpdateControls();
-	void EditItem();
-
-	ARBConfigVenuePtr m_pVenue;
-	ARBConfigMultiQPtr m_pOrigMultiQ;
-	ARBConfigMultiQPtr m_pMultiQ;
-	wxString m_Name;
-	wxString m_ShortName;
-	bool m_bFrom;
-	wxDatePickerCtrl* m_ctrlDateFrom;
-	ARBDate	m_DateFrom;
-	bool	m_bTo;
-	wxDatePickerCtrl* m_ctrlDateTo;
-	ARBDate	m_DateTo;
-	CTextCtrl* m_ctrlName;
-	CListCtrl* m_ctrlItems;
-	wxButton* m_ctrlEdit;
-	wxButton* m_ctrlRemove;
-
-	DECLARE_EVENT_TABLE()
-	void OnItemchanged(wxListEvent& evt);
-	void OnItemActivated(wxListEvent& evt);
-	void OnKeydownItem(wxKeyEvent& evt);
-	void OnClickFrom(wxCommandEvent& evt);
-	void OnClickTo(wxCommandEvent& evt);
-	void OnAdd(wxCommandEvent& evt);
-	void OnEdit(wxCommandEvent& evt);
-	void OnRemove(wxCommandEvent& evt);
-	void OnOk(wxCommandEvent& evt);
-};
+IMPLEMENT_CLASS(CListCtrl, wxListView)
+IMPLEMENT_CLASS(CTreeCtrl, wxTreeCtrl)
+IMPLEMENT_CLASS(CTextCtrl, wxTextCtrl)

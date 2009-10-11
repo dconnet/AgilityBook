@@ -345,7 +345,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlMultiplyText->Wrap(-1);
 
-	m_ctrlMultiply = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlMultiply = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_Multiply));
 	m_ctrlMultiply->SetHelpText(_("HIDC_CONFIG_EVENT_TF_MULTIPLY"));
@@ -434,7 +434,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPointsOpeningText->Wrap(-1);
 
-	m_ctrlPointsOpening = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlPointsOpening = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_OpeningPts));
 	m_ctrlPointsOpening->SetHelpText(_("HIDC_CONFIG_EVENT_OPENING_PTS"));
@@ -445,7 +445,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPointsClosingText->Wrap(-1);
 
-	m_ctrlPointsClosing = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlPointsClosing = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_ClosingPts));
 	m_ctrlPointsClosing->SetHelpText(_("HIDC_CONFIG_EVENT_CLOSING_PTS"));

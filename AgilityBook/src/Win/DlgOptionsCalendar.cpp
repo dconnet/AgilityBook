@@ -48,6 +48,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
+#include "Widgets.h"
 #include <wx/colordlg.h>
 #include <wx/valgen.h>
 
@@ -116,7 +117,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	ctrlWarnOpen->SetHelpText(_("HIDC_OPT_CAL_WARN_OPENNEAR"));
 	ctrlWarnOpen->SetToolTip(_("HIDC_OPT_CAL_WARN_OPENNEAR"));
 
-	m_ctrlOpeningNear = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlOpeningNear = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		wxGenericValidator(&m_nOpeningNear));
 	m_ctrlOpeningNear->SetHelpText(_("HIDC_OPT_CAL_OPENNEAR"));
@@ -147,7 +148,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	ctrlWarnClose->SetHelpText(_("HIDC_OPT_CAL_WARN_CLOSENEAR"));
 	ctrlWarnClose->SetToolTip(_("HIDC_OPT_CAL_WARN_CLOSENEAR"));
 
-	m_ctrlClosingNear = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlClosingNear = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		wxGenericValidator(&m_nClosingNear));
 	m_ctrlClosingNear->SetHelpText(_("HIDC_OPT_CAL_CLOSENEAR"));
@@ -215,7 +216,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPast1->Wrap(-1);
 
-	wxTextCtrl* ctrlPast = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlPast = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		wxGenericValidator(&m_Days));
 	ctrlPast->SetHelpText(_("HIDC_OPT_CAL_OLD_ENTRY_DAYS"));
@@ -276,7 +277,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	btnColor->SetHelpText(_("HIDC_OPT_CAL_COLOR_SET"));
 	btnColor->SetToolTip(_("HIDC_OPT_CAL_COLOR_SET"));
 
-	m_ctrlCalView = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlCalView = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH);
 	m_ctrlCalView->SetFont(m_fontCalView);

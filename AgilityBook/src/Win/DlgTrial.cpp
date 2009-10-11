@@ -146,7 +146,7 @@ CDlgTrial::CDlgTrial(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	wxTextCtrl* ctrlTrialNotes = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlTrialNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(260, 65), 0,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlTrialNotes->SetHelpText(_("HIDC_TRIAL_NOTES"));

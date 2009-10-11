@@ -42,6 +42,7 @@
 #include "AgilityBook.h"
 #include "ARBDogRunPartner.h"
 #include "Validators.h"
+#include "Widgets.h"
 
 
 BEGIN_EVENT_TABLE(CDlgPartner, wxDialog)
@@ -111,7 +112,7 @@ CDlgPartner::CDlgPartner(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNumber->Wrap(-1);
 
-	wxTextCtrl* ctrlNumber = new wxTextCtrl(this, wxID_ANY, m_RegNum,
+	CTextCtrl* ctrlNumber = new CTextCtrl(this, wxID_ANY, m_RegNum,
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_RegNum));
 	ctrlNumber->SetHelpText(_("HIDC_PARTNER_REG_NUM"));

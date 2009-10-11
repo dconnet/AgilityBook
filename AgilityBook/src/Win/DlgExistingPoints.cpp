@@ -50,6 +50,7 @@
 #include "ARBDogExistingPoints.h"
 #include "Globals.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 
@@ -241,7 +242,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPoints->Wrap(-1);
 
-	wxTextCtrl* ctrlPoints = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlPoints = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Points));
 	ctrlPoints->SetHelpText(_("HIDC_EXISTING_POINTS"));
@@ -320,7 +321,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 
 	wxStaticBox* boxComment = new wxStaticBox(this, wxID_ANY, _("IDC_EXISTING_COMMENTS"));
 
-	wxTextCtrl* ctrlNote = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlNote = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(200, 150), wxTE_MULTILINE|wxTE_WORDWRAP,
 		CTrimValidator(&m_Comments, TRIMVALIDATOR_TRIM_RIGHT));
 	ctrlNote->SetHelpText(_("HIDC_EXISTING_COMMENTS"));

@@ -41,6 +41,7 @@
  */
 
 #include "AgilityBookOptions.h"
+class CTextCtrl;
 
 
 class CDlgOptionsCalendar : public wxPanel
@@ -74,16 +75,16 @@ private:
 	bool m_bHideOverlapping;
 	bool m_bOpening;
 	bool m_bClosing;
-	wxTextCtrl* m_ctrlOpeningNear;
+	CTextCtrl* m_ctrlOpeningNear;
 	wxStaticText* m_ctrlOpeningNearColor;
 	wxButton* m_ctrlOpeningNearSet;
-	wxTextCtrl* m_ctrlClosingNear;
+	CTextCtrl* m_ctrlClosingNear;
 	wxStaticText* m_ctrlClosingNearColor;
 	wxButton* m_ctrlClosingNearSet;
 	wxChoice* m_ctrlDayOfWeek;
 	wxChoice* m_ctrlCalEntries;
 	wxStaticText* m_ctrlColor;
-	wxTextCtrl* m_ctrlCalView;
+	CTextCtrl* m_ctrlCalView;
 
 	void OnSelchangeCalEntries(wxCommandEvent& evt);
 	void OnCalNear(wxCommandEvent& evt);

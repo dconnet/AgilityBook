@@ -39,6 +39,7 @@
  */
 
 #include "ARBTypes.h"
+class CTextCtrl;
 
 
 class CDlgConfigTitlePoints : public wxDialog
@@ -69,7 +70,7 @@ private:
 	ARBConfigVenuePtr m_Venue;
 	int m_Type;
 	wxStaticText* m_textValue;
-	wxTextCtrl* m_ctrlValue;
+	CTextCtrl* m_ctrlValue;
 	wxChoice* m_ctrlType;
 	double m_Faults;
 	short m_Place;

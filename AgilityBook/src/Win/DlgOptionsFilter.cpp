@@ -54,6 +54,7 @@
 #include "ARBConfigVenue.h"
 #include "CheckTreeCtrl.h"
 #include "Validators.h"
+#include "Widgets.h"
 #include <wx/datectrl.h>
 
 
