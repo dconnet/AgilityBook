@@ -48,6 +48,7 @@
 #include "ARBConfigVenue.h"
 #include "DlgEventSelect.h"
 #include "Globals.h"
+#include "ListCtrl.h"
 #include "Validators.h"
 #include <wx/datectrl.h>
 #include <wx/listctrl.h>
@@ -136,7 +137,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 	m_ctrlDateTo->SetHelpText(_("HIDC_CONFIG_MULTIQ_DATE_END"));
 	m_ctrlDateTo->SetToolTip(_("HIDC_CONFIG_MULTIQ_DATE_END"));
 
-	m_ctrlItems = new wxListView(this, wxID_ANY,
+	m_ctrlItems = new CListCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxSize(300, 95), wxLC_REPORT|wxLC_SINGLE_SEL);
 	m_ctrlItems->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgConfigMultiQ::OnItemchanged), NULL, this);
 	m_ctrlItems->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgConfigMultiQ::OnItemActivated), NULL, this);

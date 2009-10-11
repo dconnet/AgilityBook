@@ -45,8 +45,8 @@
 #include <vector>
 #include <wx/wizard.h>
 class CAgilityBookDoc;
+class CListCtrl;
 class CWizard;
-class wxListCtrl;
 class wxSpinCtrl;
 class wxSpinEvent;
 
@@ -82,7 +82,7 @@ private:
 	wxButton* m_ctrlAssign;
 	wxComboBox* m_ctrlDateFormat;
 	wxStaticText* m_ctrlPreviewFile;
-	wxListCtrl* m_ctrlPreview;
+	CListCtrl* m_ctrlPreview;
 
 	void OnDeltaposImportRowSpin(wxSpinEvent& evt);
 	void OnDelimTab(wxCommandEvent& evt);

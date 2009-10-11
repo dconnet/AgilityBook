@@ -45,8 +45,8 @@
 #include "AgilityBookOptions.h"
 #include <wx/wizard.h>
 class CAgilityBookDoc;
+class CListCtrl;
 class CWizard;
-class wxListCtrl;
 
 
 class CWizardExport : public wxWizardPageSimple
@@ -76,7 +76,7 @@ private:
 	wxString m_Delimiter;
 	wxButton* m_ctrlAssign;
 	wxComboBox* m_ctrlDateFormat;
-	wxListCtrl* m_ctrlPreview;
+	CListCtrl* m_ctrlPreview;
 
 	void OnDelimTab(wxCommandEvent& evt);
 	void OnDelimSpace(wxCommandEvent& evt);

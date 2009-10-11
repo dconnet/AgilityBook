@@ -69,6 +69,7 @@
 class CAgilityBookDoc;
 class CDlgDogDivData;
 class CDlgDogLevelData;
+class CListCtrl;
 class CMetaDataDisplay;
 class CQualifyingComboBox;
 class CReportListCtrl;
@@ -230,7 +231,7 @@ private:
 	wxButton* m_ctrlCRCDView;
 	wxButton* m_ctrlCRCDCopy;
 	wxCheckBox* m_ctrlIncImage;
-	wxListView* m_ctrlLinks;
+	CListCtrl* m_ctrlLinks;
 	wxImageList m_ImageList;
 	int m_imgEmpty;
 	int m_imgOk;

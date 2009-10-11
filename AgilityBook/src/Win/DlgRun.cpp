@@ -1309,7 +1309,7 @@ CDlgRun::CDlgRun(
 	wxPanel* panelLinks = new wxPanel(notebook, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
-	m_ctrlLinks = new wxListView(panelLinks, wxID_ANY,
+	m_ctrlLinks = new CListCtrl(panelLinks, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
 		wxLC_NO_HEADER|wxLC_REPORT|wxLC_SINGLE_SEL);
 	m_ctrlLinks->SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);

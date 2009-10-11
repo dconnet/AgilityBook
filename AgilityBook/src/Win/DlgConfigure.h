@@ -45,6 +45,7 @@
 class ARBAgilityRecordBook;
 class CAgilityBookDoc;
 class CDlgConfigureDataBase;
+class CTreeCtrl;
 
 
 class CDlgConfigure : public wxDialog
@@ -85,7 +86,7 @@ private:
 	ARBConfig m_Config;
 	CIconList m_ImageList;
 	int m_idxFaults;
-	wxTreeCtrl* m_ctrlItems;
+	CTreeCtrl* m_ctrlItems;
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;

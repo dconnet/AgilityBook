@@ -54,6 +54,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
+#include "CheckTreeCtrl.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigVenue.h"
@@ -147,7 +148,7 @@ CDlgConfigure::CDlgConfigure(
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlItems = new wxTreeCtrl(this, wxID_ANY,
+	m_ctrlItems = new CTreeCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxSize(375, 400),
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	m_ctrlItems->SetImageList(&m_ImageList);

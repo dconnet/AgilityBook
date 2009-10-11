@@ -38,6 +38,8 @@
 #include "stdafx.h"
 #include "Globals.h"
 
+#include "CheckTreeCtrl.h"
+#include "ListCtrl.h"
 #include "ListData.h"
 #include <wx/tokenzr.h>
 
@@ -91,7 +93,7 @@ wxWindow* FindWindowInSizer(
 
 
 wxString GetListColumnText(
-		wxListCtrl const* list,
+		CListCtrl const* list,
 		long index,
 		long col)
 {
@@ -118,7 +120,7 @@ wxString GetListColumnText(
 
 
 bool SetListColumnText(
-		wxListCtrl* list,
+		CListCtrl* list,
 		long index,
 		long col,
 		wxString const& text)
@@ -134,7 +136,7 @@ bool SetListColumnText(
 
 
 void RefreshTreeItem(
-		wxTreeCtrl* tree,
+		CTreeCtrl* tree,
 		wxTreeItemId item,
 		bool bRecurse)
 {
