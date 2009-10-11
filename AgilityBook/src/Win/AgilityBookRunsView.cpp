@@ -1658,14 +1658,12 @@ void CAgilityBookRunsView::OnCtrlItemSelected(wxListEvent& evt)
 			}
 		}
 	}
-	evt.Skip();
 }
 
 
 void CAgilityBookRunsView::OnCtrlItemActivated(wxListEvent& evt)
 {
 	OnCmd(ID_AGILITY_EDIT_RUN);
-	evt.Skip();
 }
 
 
@@ -1674,6 +1672,7 @@ void CAgilityBookRunsView::OnCtrlKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
@@ -1682,7 +1681,6 @@ void CAgilityBookRunsView::OnCtrlKeyDown(wxKeyEvent& evt)
 		OnCmd(ID_AGILITY_EDIT_RUN);
 		break;
 	}
-	evt.Skip();
 }
 
 

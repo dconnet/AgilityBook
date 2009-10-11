@@ -623,7 +623,6 @@ void CAgilityBookTrainingView::OnCtrlColumnClick(wxListEvent& evt)
 void CAgilityBookTrainingView::OnCtrlItemActivated(wxListEvent& evt)
 {
 	OnCmd(ID_AGILITY_EDIT_TRAINING);
-	evt.Skip();
 }
 
 
@@ -632,6 +631,7 @@ void CAgilityBookTrainingView::OnCtrlKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
@@ -640,7 +640,6 @@ void CAgilityBookTrainingView::OnCtrlKeyDown(wxKeyEvent& evt)
 		OnCmd(ID_AGILITY_EDIT_TRAINING);
 		break;
 	}
-	evt.Skip();
 }
 
 

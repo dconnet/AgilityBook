@@ -293,13 +293,13 @@ void CDlgConfigMultiQ::OnKeydownItem(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		EditItem();
 		break;
 	}
-	evt.Skip();
 }
 
 
