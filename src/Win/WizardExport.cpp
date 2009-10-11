@@ -50,9 +50,9 @@
 #include "stdafx.h"
 #include "WizardExport.h"
 
+#include "AgilityBookCalendarListView.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
-#include "AgilityBookCalendarListView.h"
 #include "AgilityBookTrainingView.h"
 #include "ARBConfigScoring.h"
 #include "ARBDog.h"
@@ -62,6 +62,7 @@
 #include "DlgAssignColumns.h"
 #include "DlgProgress.h"
 #include "Globals.h"
+#include "ListCtrl.h"
 #include "Wizard.h"
 #include <wx/valgen.h>
 #include <wx/wfstream.h>
@@ -215,7 +216,7 @@ CWizardExport::CWizardExport(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPreview->Wrap(-1);
 
-	m_ctrlPreview = new wxListCtrl(this, wxID_ANY,
+	m_ctrlPreview = new CListCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxLC_NO_HEADER|wxLC_REPORT);
 	m_ctrlPreview->SetHelpText(_("HIDC_WIZARD_EXPORT_PREVIEW"));
 	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_EXPORT_PREVIEW"));

@@ -39,9 +39,9 @@
 #include "AgilityBookDoc.h"
 #include <wx/docview.h>
 class CBasePanel;
+class CListCtrl;
+class CTreeCtrl;
 class wxListEvent;
-class wxListView;
-class wxTreeCtrl;
 class wxTreeEvent;
 
 
@@ -132,19 +132,19 @@ protected:
 	// Returns points in client coordinates
 	bool GetMenuPosition(
 			wxPoint& outPos,
-			wxListView& ctrl,
+			CListCtrl& ctrl,
 			wxContextMenuEvent const& evt);
 	bool GetMenuPosition(
 			wxPoint& outPos,
-			wxListView& ctrl,
+			CListCtrl& ctrl,
 			wxListEvent const& evt);
 	bool GetMenuPosition(
 			wxPoint& outPos,
-			wxTreeCtrl& ctrl,
+			CTreeCtrl& ctrl,
 			wxContextMenuEvent const& evt);
 	bool GetMenuPosition(
 			wxPoint& outPos,
-			wxTreeCtrl& ctrl,
+			CTreeCtrl& ctrl,
 			wxTreeEvent const& evt);
 	bool GetMenuPosition(
 			wxPoint& outPos,

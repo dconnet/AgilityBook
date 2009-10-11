@@ -59,6 +59,7 @@
 #include "DlgMessage.h"
 #include "DlgProgress.h"
 #include "Globals.h"
+#include "ListCtrl.h"
 #include "Wizard.h"
 #include <wx/spinctrl.h>
 #include <wx/textfile.h>
@@ -233,7 +234,7 @@ CWizardImport::CWizardImport(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPreviewFile->Wrap(-1);
 
-	m_ctrlPreview = new wxListCtrl(this, wxID_ANY,
+	m_ctrlPreview = new CListCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, wxLC_REPORT);
 	m_ctrlPreview->SetHelpText(_("HIDC_WIZARD_IMPORT_PREVIEW"));
 	m_ctrlPreview->SetToolTip(_("HIDC_WIZARD_IMPORT_PREVIEW"));

@@ -41,7 +41,7 @@
 #include "ARBConfigScoring.h"
 class ARBAgilityRecordBook;
 class CDlgConfigureDataBase;
-class wxTreeCtrl;
+class CTreeCtrl;
 class wxTreeEvent;
 class wxTreeItemId;
 
@@ -110,7 +110,7 @@ private:
 	wxString m_URL;
 	wxString m_LifetimeName;
 	wxString m_Desc;
-	wxTreeCtrl* m_ctrlItems;
+	CTreeCtrl* m_ctrlItems;
 	wxButton* m_ctrlNew;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;

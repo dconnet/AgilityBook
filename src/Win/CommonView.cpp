@@ -39,8 +39,8 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookPanels.h"
-#include <wx/listctrl.h>
-#include <wx/treectrl.h>
+#include "CheckTreeCtrl.h"
+#include "ListCtrl.h"
 
 
 IMPLEMENT_CLASS(CAgilityBookBaseView, wxView)
@@ -114,7 +114,7 @@ void CAgilityBookBaseExtraView::UpdateMessages()
 
 bool CAgilityBookBaseExtraView::GetMenuPosition(
 		wxPoint& outPos,
-		wxListView& ctrl,
+		CListCtrl& ctrl,
 		wxContextMenuEvent const& evt)
 {
 	bool bOk = true;
@@ -153,7 +153,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 
 bool CAgilityBookBaseExtraView::GetMenuPosition(
 		wxPoint& outPos,
-		wxListView& ctrl,
+		CListCtrl& ctrl,
 		wxListEvent const& evt)
 {
 	bool bOk = true;
@@ -191,7 +191,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 
 bool CAgilityBookBaseExtraView::GetMenuPosition(
 		wxPoint& outPos,
-		wxTreeCtrl& ctrl,
+		CTreeCtrl& ctrl,
 		wxContextMenuEvent const& evt)
 {
 	bool bOk = true;
@@ -230,7 +230,7 @@ bool CAgilityBookBaseExtraView::GetMenuPosition(
 
 bool CAgilityBookBaseExtraView::GetMenuPosition(
 		wxPoint& outPos,
-		wxTreeCtrl& ctrl,
+		CTreeCtrl& ctrl,
 		wxTreeEvent const& evt)
 {
 	bool bOk = true;

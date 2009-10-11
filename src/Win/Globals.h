@@ -40,6 +40,18 @@
 #include "ARBTypes.h"
 #include "PointsData.h"
 #include <vector>
+class CListCtrl;
+class CTreeCtrl;
+
+
+// When first starting up, the sizers just aren't sizing correctly on
+// wx 2.9. On Windows, the tree control causes issues. On Mac, the list
+// controls are. The behavior of each is slightly different. On Windows,
+// the controls think they have much more real estate then they really do,
+// so they size themselves huge. On Mac, it starts correctly, but as the
+// window is sized larger than smaller, the control never shrinks.
+#define WXWINDOW_FIX_INITIAL_SIZER \
+	protected: virtual wxSize DoGetBestSize() const {return wxSize(1,1);}
 
 
 /**
@@ -73,7 +85,7 @@ extern wxWindow* FindWindowInSizer(
  * @note index = -1 implies getting the column header text
  */
 extern wxString GetListColumnText(
-		wxListCtrl const* list,
+		CListCtrl const* list,
 		long index,
 		long col);
 
@@ -83,7 +95,7 @@ extern wxString GetListColumnText(
  * This is just a simple wrapper around wxListItem/SetItem
  */
 extern bool SetListColumnText(
-		wxListCtrl* list,
+		CListCtrl* list,
 		long index,
 		long col,
 		wxString const& text);
@@ -94,7 +106,7 @@ extern bool SetListColumnText(
  * work. So the old code that simply invalidated the window no longer works.
  */
 extern void RefreshTreeItem(
-		wxTreeCtrl* tree,
+		CTreeCtrl* tree,
 		wxTreeItemId item,
 		bool bRecurse = false);
 

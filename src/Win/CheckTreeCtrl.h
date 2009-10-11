@@ -39,6 +39,7 @@
 
 #include <wx/treectrl.h>
 #include <wx/imaglist.h>
+#include "Globals.h" // For WXWINDOW_FIX_INITIAL_SIZER
 
 
 #ifdef WIN32
@@ -87,14 +88,7 @@ public:
 #endif
 	}
 protected:
-	// When first starting up on windows, this returns the size of the
-	// fully expanded tree. This size is then retained and all views think
-	// they're much bigger than they actually are. (and resizing the window
-	// doesn't fix it) The other odd effect, when we open a new document,
-	// the tree still behaves wrong - iff the initial tree has a bunch of
-	// items. But the other views are now behaving correctly.
-	// This only affects on windows with wx2.9. (2.8 was ok)
-	virtual wxSize DoGetBestSize() const {return wxSize(10,10);}
+	WXWINDOW_FIX_INITIAL_SIZER
 };
 
 

@@ -110,6 +110,7 @@ Training Log:
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "ListCtrl.h"
 #include <wx/listctrl.h>
 
 /////////////////////////////////////////////////////////////////////////////
@@ -845,7 +846,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	// Controls (these are done first to control tab order)
 
-	m_ctrlType = new wxListView(this, wxID_ANY,
+	m_ctrlType = new CListCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
 	m_ctrlType->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgAssignColumns::OnItemchanged), NULL, this);
 	m_ctrlType->SetHelpText(_("HIDC_ASSIGN_TYPE"));

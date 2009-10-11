@@ -60,7 +60,8 @@
 #include "res/unchecked.xpm"
 
 
-IMPLEMENT_CLASS(CReportListCtrl, wxListView)
+IMPLEMENT_CLASS(CListCtrl, wxListView)
+IMPLEMENT_CLASS(CReportListCtrl, CListCtrl)
 
 
 CReportListCtrl::CReportListCtrl(
@@ -69,7 +70,7 @@ CReportListCtrl::CReportListCtrl(
 		SortHeader sortHeader,
 		bool bHasBorder,
 		bool bHasImageList)
-	: wxListView()
+	: CListCtrl()
 	, m_ImageList(16,16)
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
@@ -88,7 +89,7 @@ CReportListCtrl::CReportListCtrl(
 		SortHeader sortHeader,
 		bool bHasBorder,
 		bool bHasImageList)
-	: wxListView()
+	: CListCtrl()
 	, m_ImageList(16,16)
 	, m_imgEmpty(-1)
 	, m_imgSortUp(-1)
@@ -108,7 +109,7 @@ bool CReportListCtrl::Create(
 		bool bHasBorder,
 		bool bHasImageList)
 {
-	if (!wxListView::Create(parent, wxID_ANY, pos, size, wxLC_REPORT
+	if (!CListCtrl::Create(parent, wxID_ANY, pos, size, wxLC_REPORT
 		| (bSingleSel ? wxLC_SINGLE_SEL : 0)
 		| ((sortHeader == eSortHeader) ? 0 : (sortHeader == eNoSortHeader) ? wxLC_NO_SORT_HEADER : wxLC_NO_HEADER)
 		| (bHasBorder ? wxBORDER : wxNO_BORDER)))
@@ -123,7 +124,7 @@ bool CReportListCtrl::Create(
 		m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
 		m_imgSortUp = m_ImageList.Add(wxIcon(HdrUp_xpm));
 		m_imgSortDn = m_ImageList.Add(wxIcon(HdrDown_xpm));
-		wxListView::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
+		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 	return true;
 }
@@ -166,7 +167,7 @@ bool CReportListCtrl::SetColumnWidth(int col, int width)
 		width = wxLIST_AUTOSIZE;
 	}
 #endif
-	return wxListView::SetColumnWidth(col, width);
+	return CListCtrl::SetColumnWidth(col, width);
 }
 
 
@@ -182,7 +183,7 @@ long CReportListCtrl::InsertItem(CListDataPtr inData)
 	++m_NextId;
 	inData->OnNeedListItem(0, info);
 
-	long item = wxListView::InsertItem(info);
+	long item = CListCtrl::InsertItem(info);
 
 	if (0 <= item)
 	{
@@ -385,7 +386,7 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_CLASS(CCheckListCtrl, wxListView)
+IMPLEMENT_CLASS(CCheckListCtrl, CListCtrl)
 
 
 CCheckListCtrl::CCheckListCtrl(
@@ -410,7 +411,7 @@ CCheckListCtrl::CCheckListCtrl(
 		m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
 		m_imgNoCheck = m_ImageList.Add(wxIcon(unchecked_xpm));
 		m_imgChecked = m_ImageList.Add(wxIcon(checked_xpm));
-		wxListView::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
+		CListCtrl::SetImageList(&m_ImageList, wxIMAGE_LIST_SMALL);
 	}
 }
 
@@ -480,7 +481,7 @@ long CCheckListCtrl::InsertItem(long index, const wxString& label)
 	if (m_HasChecks)
 		return InsertItem(index, label, m_imgNoCheck);
 	else
-		return wxListView::InsertItem(index, label);
+		return CListCtrl::InsertItem(index, label);
 }
 
 
@@ -493,9 +494,9 @@ long CCheckListCtrl::InsertItem(long index, const wxString& label, bool checked)
 long CCheckListCtrl::InsertItem(long index, const wxString& label, int imageIndex)
 {
 	if (m_HasChecks)
-		return wxListView::InsertItem(index, label, imageIndex);
+		return CListCtrl::InsertItem(index, label, imageIndex);
 	else
-		return wxListView::InsertItem(index, label);
+		return CListCtrl::InsertItem(index, label);
 }
 
 

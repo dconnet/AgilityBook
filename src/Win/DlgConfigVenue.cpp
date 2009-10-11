@@ -59,6 +59,7 @@
 #include "AgilityBook.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfigVenue.h"
+#include "CheckTreeCtrl.h"
 #include "DlgConfigEvent.h"
 #include "DlgConfigMultiQ.h"
 #include "DlgConfigTitle.h"
@@ -66,7 +67,6 @@
 #include "DlgName.h"
 #include "Globals.h"
 #include "Validators.h"
-#include <wx/treectrl.h>
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -293,7 +293,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	ctrlDesc->SetHelpText(_("HIDC_CONFIG_VENUE_DESC"));
 	ctrlDesc->SetToolTip(_("HIDC_CONFIG_VENUE_DESC"));
 
-	m_ctrlItems = new wxTreeCtrl(this, wxID_ANY,
+	m_ctrlItems = new CTreeCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxSize(300, 250),
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	m_ctrlItems->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgConfigVenue::OnSelectionChanged), NULL, this);

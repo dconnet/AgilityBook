@@ -184,9 +184,9 @@
 #include <vector>
 #include "AgilityBookOptions.h"
 class CAgilityBookDoc;
+class CListCtrl;
 class ColumnData;
 class wxListEvent;
-class wxListView;
 
 
 class CDlgAssignColumns : public wxDialog
@@ -216,7 +216,7 @@ private:
 	long m_initSelection;
 	bool m_bIncludeBlank;
 	std::vector<long> m_Columns[IO_TYPE_MAX];
-	wxListView* m_ctrlType;
+	CListCtrl* m_ctrlType;
 	wxListBox* m_ctrlAvailable;
 	wxListBox* m_ctrlColumns;
 	wxButton* m_btnAdd;

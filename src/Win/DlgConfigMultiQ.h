@@ -39,8 +39,8 @@
  */
 
 #include "ARBDate.h"
+class CListCtrl;
 class wxDatePickerCtrl;
-class wxListView;
 class wxListEvent;
 
 
@@ -68,7 +68,7 @@ private:
 	wxDatePickerCtrl* m_ctrlDateTo;
 	ARBDate	m_DateTo;
 	wxTextCtrl* m_ctrlName;
-	wxListView* m_ctrlItems;
+	CListCtrl* m_ctrlItems;
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlRemove;
 
