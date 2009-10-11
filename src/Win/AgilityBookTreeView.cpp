@@ -978,7 +978,6 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 void CAgilityBookTreeView::OnCtrlSelectionChanged(wxTreeEvent& evt)
 {
 	DoSelectionChange(evt.GetItem());
-	evt.Skip();
 }
 
 
@@ -1000,6 +999,7 @@ void CAgilityBookTreeView::OnCtrlKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
@@ -1012,7 +1012,6 @@ void CAgilityBookTreeView::OnCtrlKeyDown(wxKeyEvent& evt)
 		}
 		break;
 	}
-	evt.Skip();
 }
 
 

@@ -1369,7 +1369,6 @@ void CDlgDog::OnTitleItemSelected(wxListEvent& evt)
 void CDlgDog::OnTitleItemActivated(wxListEvent& evt)
 {
 	EditTitle();
-	evt.Skip();
 }
 
 
@@ -1378,13 +1377,13 @@ void CDlgDog::OnTitleKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		EditTitle();
 		break;
 	}
-	evt.Skip();
 }
 
 
@@ -1452,13 +1451,13 @@ void CDlgDog::OnRegNumKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		EditRegNum();
 		break;
 	}
-	evt.Skip();
 }
 
 
@@ -1521,13 +1520,13 @@ void CDlgDog::OnPointsKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		EditPoints();
 		break;
 	}
-	evt.Skip();
 }
 
 

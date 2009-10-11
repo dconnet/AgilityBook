@@ -894,14 +894,12 @@ void CAgilityBookCalendarListView::OnCtrlItemSelected(wxListEvent& evt)
 			pCalView->SetCurrentDate(pData->GetCalendar()->GetStartDate(), true);
 		}
 	}
-	evt.Skip();
 }
 
 
 void CAgilityBookCalendarListView::OnCtrlItemActivated(wxListEvent& evt)
 {
 	OnCmd(ID_AGILITY_EDIT_CALENDAR);
-	evt.Skip();
 }
 
 
@@ -910,6 +908,7 @@ void CAgilityBookCalendarListView::OnCtrlKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
@@ -918,7 +917,6 @@ void CAgilityBookCalendarListView::OnCtrlKeyDown(wxKeyEvent& evt)
 		OnCmd(ID_AGILITY_EDIT_CALENDAR);
 		break;
 	}
-	evt.Skip();
 }
 
 

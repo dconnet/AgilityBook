@@ -2878,13 +2878,13 @@ void CDlgRun::OnRefRunKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		EditRefRun();
 		break;
 	}
-	evt.Skip();
 }
 
 
@@ -3025,13 +3025,13 @@ void CDlgRun::OnLinksKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		EditLink();
 		break;
 	}
-	evt.Skip();
 }
 
 

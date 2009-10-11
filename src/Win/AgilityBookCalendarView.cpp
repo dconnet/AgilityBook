@@ -1379,7 +1379,8 @@ void CAgilityBookCalendarView::OnCtrlMouseEvent(wxMouseEvent& evt)
 	{
 		m_Ctrl->OnEdit(GetDocument());
 	}
-	evt.Skip();
+	else
+		evt.Skip();
 }
 
 
@@ -1388,7 +1389,8 @@ void CAgilityBookCalendarView::OnCtrlMouseWheel(wxMouseEvent& evt)
 {
 	if (m_Ctrl)
 		m_Ctrl->OnWheel(evt.GetWheelRotation());
-	evt.Skip();
+	else
+		evt.Skip();
 }
 #endif
 

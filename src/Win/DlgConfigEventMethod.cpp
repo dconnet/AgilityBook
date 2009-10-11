@@ -811,13 +811,13 @@ void CDlgConfigEventMethod::OnKeydownPlacement(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		DoPlacementEdit();
 		break;
 	}
-	evt.Skip();
 }
 
 

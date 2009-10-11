@@ -404,6 +404,7 @@ void CAgilityBookPointsView::OnCtrlKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
@@ -412,7 +413,6 @@ void CAgilityBookPointsView::OnCtrlKeyDown(wxKeyEvent& evt)
 		OnCmd(ID_DETAILS);
 		break;
 	}
-	evt.Skip();
 }
 
 

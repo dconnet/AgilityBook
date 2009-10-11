@@ -773,7 +773,6 @@ void CDlgListCtrl::OnItemSelected(wxListEvent& /*evt*/)
 void CDlgListCtrl::OnItemActivated(wxListEvent& evt)
 {
 	DoEdit();
-	evt.Skip();
 }
 
 
@@ -782,13 +781,13 @@ void CDlgListCtrl::OnKeyDown(wxKeyEvent& evt)
 	switch (evt.GetKeyCode())
 	{
 	default:
+		evt.Skip();
 		break;
 	case WXK_SPACE:
 	case WXK_NUMPAD_SPACE:
 		DoEdit();
 		break;
 	}
-	evt.Skip();
 }
 
 
