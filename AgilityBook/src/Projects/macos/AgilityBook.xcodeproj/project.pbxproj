@@ -10,6 +10,148 @@
 		1DDD57FC0DA1D07D00B32029 /* main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD57FA0DA1D07D00B32029 /* main.xib */; };
 		8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
 		8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		E1144E6810813B4F00356F61 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
+		E1144E6910813B4F00356F61 /* main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD57FA0DA1D07D00B32029 /* main.xib */; };
+		E1144E6A10813B4F00356F61 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
+		E1144E6C10813B4F00356F61 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
+		E1144E6D10813B4F00356F61 /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
+		E1144E6E10813B4F00356F61 /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
+		E1144E6F10813B4F00356F61 /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A310000B1200B7074A /* AgilityBookCalendarView.cpp */; };
+		E1144E7010813B4F00356F61 /* AgilityBookDoc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A510000B1200B7074A /* AgilityBookDoc.cpp */; };
+		E1144E7110813B4F00356F61 /* AgilityBookHtmlView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A710000B1200B7074A /* AgilityBookHtmlView.cpp */; };
+		E1144E7210813B4F00356F61 /* AgilityBookMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A910000B1200B7074A /* AgilityBookMenu.cpp */; };
+		E1144E7310813B4F00356F61 /* AgilityBookOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597AB10000B1200B7074A /* AgilityBookOptions.cpp */; };
+		E1144E7410813B4F00356F61 /* AgilityBookPanels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597AD10000B1200B7074A /* AgilityBookPanels.cpp */; };
+		E1144E7510813B4F00356F61 /* AgilityBookPointsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597AF10000B1200B7074A /* AgilityBookPointsView.cpp */; };
+		E1144E7610813B4F00356F61 /* AgilityBookRunsView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597B110000B1200B7074A /* AgilityBookRunsView.cpp */; };
+		E1144E7710813B4F00356F61 /* AgilityBookTrainingView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597B310000B1200B7074A /* AgilityBookTrainingView.cpp */; };
+		E1144E7810813B4F00356F61 /* AgilityBookTreeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597B510000B1200B7074A /* AgilityBookTreeData.cpp */; };
+		E1144E7910813B4F00356F61 /* AgilityBookTreeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597B710000B1200B7074A /* AgilityBookTreeView.cpp */; };
+		E1144E7A10813B4F00356F61 /* CalendarSites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597B910000B1200B7074A /* CalendarSites.cpp */; };
+		E1144E7B10813B4F00356F61 /* CheckLink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597BB10000B1200B7074A /* CheckLink.cpp */; };
+		E1144E7C10813B4F00356F61 /* CheckTreeCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597BD10000B1200B7074A /* CheckTreeCtrl.cpp */; };
+		E1144E7D10813B4F00356F61 /* ClipBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597BF10000B1200B7074A /* ClipBoard.cpp */; };
+		E1144E7E10813B4F00356F61 /* ColumnOrder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C110000B1200B7074A /* ColumnOrder.cpp */; };
+		E1144E7F10813B4F00356F61 /* ComboBoxes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C310000B1200B7074A /* ComboBoxes.cpp */; };
+		E1144E8010813B4F00356F61 /* CommonView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C510000B1200B7074A /* CommonView.cpp */; };
+		E1144E8110813B4F00356F61 /* ConfigHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C710000B1200B7074A /* ConfigHandler.cpp */; };
+		E1144E8210813B4F00356F61 /* DlgAbout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597C910000B1200B7074A /* DlgAbout.cpp */; };
+		E1144E8310813B4F00356F61 /* DlgAssignColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597CB10000B1200B7074A /* DlgAssignColumns.cpp */; };
+		E1144E8410813B4F00356F61 /* DlgAuthenticate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597CD10000B1200B7074A /* DlgAuthenticate.cpp */; };
+		E1144E8510813B4F00356F61 /* DlgCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597CF10000B1200B7074A /* DlgCalendar.cpp */; };
+		E1144E8610813B4F00356F61 /* DlgCalendarQueryDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597D110000B1200B7074A /* DlgCalendarQueryDetail.cpp */; };
+		E1144E8710813B4F00356F61 /* DlgClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597D310000B1200B7074A /* DlgClub.cpp */; };
+		E1144E8810813B4F00356F61 /* DlgConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597D510000B1200B7074A /* DlgConfigEvent.cpp */; };
+		E1144E8910813B4F00356F61 /* DlgConfigEventMethod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597D710000B1200B7074A /* DlgConfigEventMethod.cpp */; };
+		E1144E8A10813B4F00356F61 /* DlgConfigMultiQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597D910000B1200B7074A /* DlgConfigMultiQ.cpp */; };
+		E1144E8B10813B4F00356F61 /* DlgConfigOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597DB10000B1200B7074A /* DlgConfigOtherPoints.cpp */; };
+		E1144E8C10813B4F00356F61 /* DlgConfigPlaceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597DD10000B1200B7074A /* DlgConfigPlaceInfo.cpp */; };
+		E1144E8D10813B4F00356F61 /* DlgConfigTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597DF10000B1200B7074A /* DlgConfigTitle.cpp */; };
+		E1144E8E10813B4F00356F61 /* DlgConfigTitlePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597E110000B1200B7074A /* DlgConfigTitlePoints.cpp */; };
+		E1144E8F10813B4F00356F61 /* DlgConfigUpdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597E310000B1200B7074A /* DlgConfigUpdate.cpp */; };
+		E1144E9010813B4F00356F61 /* DlgConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597E510000B1200B7074A /* DlgConfigure.cpp */; };
+		E1144E9110813B4F00356F61 /* DlgConfigureData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597E710000B1200B7074A /* DlgConfigureData.cpp */; };
+		E1144E9210813B4F00356F61 /* DlgConfigVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597E910000B1200B7074A /* DlgConfigVenue.cpp */; };
+		E1144E9310813B4F00356F61 /* DlgCRCDViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597EB10000B1200B7074A /* DlgCRCDViewer.cpp */; };
+		E1144E9410813B4F00356F61 /* DlgDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597ED10000B1200B7074A /* DlgDog.cpp */; };
+		E1144E9510813B4F00356F61 /* DlgEventSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597EF10000B1200B7074A /* DlgEventSelect.cpp */; };
+		E1144E9610813B4F00356F61 /* DlgExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597F110000B1200B7074A /* DlgExistingPoints.cpp */; };
+		E1144E9710813B4F00356F61 /* DlgFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597F310000B1200B7074A /* DlgFault.cpp */; };
+		E1144E9810813B4F00356F61 /* DlgFind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597F510000B1200B7074A /* DlgFind.cpp */; };
+		E1144E9910813B4F00356F61 /* DlgFindLinks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597F710000B1200B7074A /* DlgFindLinks.cpp */; };
+		E1144E9A10813B4F00356F61 /* DlgInfoNote.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597F910000B1200B7074A /* DlgInfoNote.cpp */; };
+		E1144E9B10813B4F00356F61 /* DlgListCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597FB10000B1200B7074A /* DlgListCtrl.cpp */; };
+		E1144E9C10813B4F00356F61 /* DlgListViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597FD10000B1200B7074A /* DlgListViewer.cpp */; };
+		E1144E9D10813B4F00356F61 /* DlgMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597FF10000B1200B7074A /* DlgMessage.cpp */; };
+		E1144E9E10813B4F00356F61 /* DlgMessageBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980110000B1200B7074A /* DlgMessageBox.cpp */; };
+		E1144E9F10813B4F00356F61 /* DlgName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980310000B1200B7074A /* DlgName.cpp */; };
+		E1144EA010813B4F00356F61 /* DlgOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980510000B1200B7074A /* DlgOptions.cpp */; };
+		E1144EA110813B4F00356F61 /* DlgOptionsCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980710000B1200B7074A /* DlgOptionsCalendar.cpp */; };
+		E1144EA210813B4F00356F61 /* DlgOptionsFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980910000B1200B7074A /* DlgOptionsFilter.cpp */; };
+		E1144EA310813B4F00356F61 /* DlgOptionsPrint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980B10000B1200B7074A /* DlgOptionsPrint.cpp */; };
+		E1144EA410813B4F00356F61 /* DlgOptionsProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980D10000B1200B7074A /* DlgOptionsProgram.cpp */; };
+		E1144EA510813B4F00356F61 /* DlgOtherPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155980F10000B1200B7074A /* DlgOtherPoint.cpp */; };
+		E1144EA610813B4F00356F61 /* DlgPartner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981110000B1200B7074A /* DlgPartner.cpp */; };
+		E1144EA710813B4F00356F61 /* DlgPluginDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981310000B1200B7074A /* DlgPluginDetails.cpp */; };
+		E1144EA810813B4F00356F61 /* DlgPointsViewSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981510000B1200B7074A /* DlgPointsViewSort.cpp */; };
+		E1144EA910813B4F00356F61 /* DlgProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981710000B1200B7074A /* DlgProgress.cpp */; };
+		E1144EAA10813B4F00356F61 /* DlgQueryDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981910000B1200B7074A /* DlgQueryDetail.cpp */; };
+		E1144EAB10813B4F00356F61 /* DlgReferenceRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981B10000B1200B7074A /* DlgReferenceRun.cpp */; };
+		E1144EAC10813B4F00356F61 /* DlgRegNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981D10000B1200B7074A /* DlgRegNum.cpp */; };
+		E1144EAD10813B4F00356F61 /* DlgReorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155981F10000B1200B7074A /* DlgReorder.cpp */; };
+		E1144EAE10813B4F00356F61 /* DlgRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155982110000B1200B7074A /* DlgRun.cpp */; };
+		E1144EAF10813B4F00356F61 /* DlgSelectDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155982310000B1200B7074A /* DlgSelectDog.cpp */; };
+		E1144EB010813B4F00356F61 /* DlgSelectURL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155982510000B1200B7074A /* DlgSelectURL.cpp */; };
+		E1144EB110813B4F00356F61 /* DlgTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155982710000B1200B7074A /* DlgTitle.cpp */; };
+		E1144EB210813B4F00356F61 /* DlgTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155982910000B1200B7074A /* DlgTraining.cpp */; };
+		E1144EB310813B4F00356F61 /* DlgTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155982B10000B1200B7074A /* DlgTrial.cpp */; };
+		E1144EB410813B4F00356F61 /* FilterOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155982E10000B1200B7074A /* FilterOptions.cpp */; };
+		E1144EB510813B4F00356F61 /* Globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155983010000B1200B7074A /* Globals.cpp */; };
+		E1144EB610813B4F00356F61 /* IconList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155983210000B1200B7074A /* IconList.cpp */; };
+		E1144EB710813B4F00356F61 /* LanguageManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155983510000B1200B7074A /* LanguageManager.cpp */; };
+		E1144EB810813B4F00356F61 /* ListCtrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155983710000B1200B7074A /* ListCtrl.cpp */; };
+		E1144EB910813B4F00356F61 /* ListData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155983910000B1200B7074A /* ListData.cpp */; };
+		E1144EBA10813B4F00356F61 /* Localization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155983B10000B1200B7074A /* Localization.cpp */; };
+		E1144EBB10813B4F00356F61 /* MainFrm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155983D10000B1200B7074A /* MainFrm.cpp */; };
+		E1144EBC10813B4F00356F61 /* NoteButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155984010000B1200B7074A /* NoteButton.cpp */; };
+		E1144EBD10813B4F00356F61 /* PointsData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155984310000B1200B7074A /* PointsData.cpp */; };
+		E1144EBE10813B4F00356F61 /* Print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155984510000B1200B7074A /* Print.cpp */; };
+		E1144EBF10813B4F00356F61 /* ReadHttp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155984710000B1200B7074A /* ReadHttp.cpp */; };
+		E1144EC010813B4F00356F61 /* RichEditCtrl2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155989D10000B1200B7074A /* RichEditCtrl2.cpp */; };
+		E1144EC110813B4F00356F61 /* TabView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155989F10000B1200B7074A /* TabView.cpp */; };
+		E1144EC210813B4F00356F61 /* UpdateInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A110000B1200B7074A /* UpdateInfo.cpp */; };
+		E1144EC310813B4F00356F61 /* Validators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A310000B1200B7074A /* Validators.cpp */; };
+		E1144EC410813B4F00356F61 /* Wizard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A610000B1200B7074A /* Wizard.cpp */; };
+		E1144EC510813B4F00356F61 /* WizardExcel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598A810000B1200B7074A /* WizardExcel.cpp */; };
+		E1144EC610813B4F00356F61 /* WizardExport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AA10000B1200B7074A /* WizardExport.cpp */; };
+		E1144EC710813B4F00356F61 /* WizardImport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AC10000B1200B7074A /* WizardImport.cpp */; };
+		E1144EC810813B4F00356F61 /* WizardStart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15598AE10000B1200B7074A /* WizardStart.cpp */; };
+		E1144EC910813B4F00356F61 /* ARBAgilityRecordBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155996310000B3100B7074A /* ARBAgilityRecordBook.cpp */; };
+		E1144ECA10813B4F00356F61 /* ARBBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155996510000B3100B7074A /* ARBBase.cpp */; };
+		E1144ECB10813B4F00356F61 /* ARBBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155996710000B3100B7074A /* ARBBase64.cpp */; };
+		E1144ECC10813B4F00356F61 /* ARBCalendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155996910000B3100B7074A /* ARBCalendar.cpp */; };
+		E1144ECD10813B4F00356F61 /* ARBConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155996B10000B3100B7074A /* ARBConfig.cpp */; };
+		E1144ECE10813B4F00356F61 /* ARBConfigAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155996D10000B3100B7074A /* ARBConfigAction.cpp */; };
+		E1144ECF10813B4F00356F61 /* ARBConfigCalSite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155996F10000B3100B7074A /* ARBConfigCalSite.cpp */; };
+		E1144ED010813B4F00356F61 /* ARBConfigDivision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997110000B3100B7074A /* ARBConfigDivision.cpp */; };
+		E1144ED110813B4F00356F61 /* ARBConfigEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997310000B3100B7074A /* ARBConfigEvent.cpp */; };
+		E1144ED210813B4F00356F61 /* ARBConfigFault.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997510000B3100B7074A /* ARBConfigFault.cpp */; };
+		E1144ED310813B4F00356F61 /* ARBConfigLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997710000B3100B7074A /* ARBConfigLevel.cpp */; };
+		E1144ED410813B4F00356F61 /* ARBConfigLifetimePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997910000B3100B7074A /* ARBConfigLifetimePoints.cpp */; };
+		E1144ED510813B4F00356F61 /* ARBConfigMultiQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997B10000B3100B7074A /* ARBConfigMultiQ.cpp */; };
+		E1144ED610813B4F00356F61 /* ARBConfigOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997D10000B3100B7074A /* ARBConfigOtherPoints.cpp */; };
+		E1144ED710813B4F00356F61 /* ARBConfigPlaceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155997F10000B3100B7074A /* ARBConfigPlaceInfo.cpp */; };
+		E1144ED810813B4F00356F61 /* ARBConfigScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998110000B3100B7074A /* ARBConfigScoring.cpp */; };
+		E1144ED910813B4F00356F61 /* ARBConfigSubLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998310000B3100B7074A /* ARBConfigSubLevel.cpp */; };
+		E1144EDA10813B4F00356F61 /* ARBConfigTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998510000B3100B7074A /* ARBConfigTitle.cpp */; };
+		E1144EDB10813B4F00356F61 /* ARBConfigTitlePoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998710000B3100B7074A /* ARBConfigTitlePoints.cpp */; };
+		E1144EDC10813B4F00356F61 /* ARBConfigVenue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998910000B3100B7074A /* ARBConfigVenue.cpp */; };
+		E1144EDD10813B4F00356F61 /* ARBDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998B10000B3100B7074A /* ARBDate.cpp */; };
+		E1144EDE10813B4F00356F61 /* ARBDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998D10000B3100B7074A /* ARBDog.cpp */; };
+		E1144EDF10813B4F00356F61 /* ARBDogClub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155998F10000B3100B7074A /* ARBDogClub.cpp */; };
+		E1144EE010813B4F00356F61 /* ARBDogExistingPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999110000B3100B7074A /* ARBDogExistingPoints.cpp */; };
+		E1144EE110813B4F00356F61 /* ARBDogNotes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999310000B3100B7074A /* ARBDogNotes.cpp */; };
+		E1144EE210813B4F00356F61 /* ARBDogReferenceRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999510000B3100B7074A /* ARBDogReferenceRun.cpp */; };
+		E1144EE310813B4F00356F61 /* ARBDogRegNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999710000B3100B7074A /* ARBDogRegNum.cpp */; };
+		E1144EE410813B4F00356F61 /* ARBDogRun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999910000B3100B7074A /* ARBDogRun.cpp */; };
+		E1144EE510813B4F00356F61 /* ARBDogRunOtherPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999B10000B3100B7074A /* ARBDogRunOtherPoints.cpp */; };
+		E1144EE610813B4F00356F61 /* ARBDogRunPartner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999D10000B3100B7074A /* ARBDogRunPartner.cpp */; };
+		E1144EE710813B4F00356F61 /* ARBDogRunScoring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155999F10000B3100B7074A /* ARBDogRunScoring.cpp */; };
+		E1144EE810813B4F00356F61 /* ARBDogTitle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A110000B3100B7074A /* ARBDogTitle.cpp */; };
+		E1144EE910813B4F00356F61 /* ARBDogTrial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A310000B3100B7074A /* ARBDogTrial.cpp */; };
+		E1144EEA10813B4F00356F61 /* ARBInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A510000B3100B7074A /* ARBInfo.cpp */; };
+		E1144EEB10813B4F00356F61 /* ARBInfoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A710000B3100B7074A /* ARBInfoItem.cpp */; };
+		E1144EEC10813B4F00356F61 /* ARBLocalization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599A910000B3100B7074A /* ARBLocalization.cpp */; };
+		E1144EED10813B4F00356F61 /* ARBString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AB10000B3100B7074A /* ARBString.cpp */; };
+		E1144EEE10813B4F00356F61 /* ARBTraining.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599AE10000B3100B7074A /* ARBTraining.cpp */; };
+		E1144EEF10813B4F00356F61 /* ARBTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B010000B3100B7074A /* ARBTypes.cpp */; };
+		E1144EF010813B4F00356F61 /* BinaryData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B210000B3100B7074A /* BinaryData.cpp */; };
+		E1144EF110813B4F00356F61 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B410000B3100B7074A /* Element.cpp */; };
+		E1144EF210813B4F00356F61 /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
+		E1144EF410813B4F00356F61 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		E1144F5E1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
+		E1144F5F1082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
+		E1144F601082880800356F61 /* Widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1144F5C1082880800356F61 /* Widgets.cpp */; };
 		E15598B110000B1200B7074A /* AgilityBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E155979E10000B1200B7074A /* AgilityBook.cpp */; };
 		E15598B310000B1200B7074A /* AgilityBookCalendarListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */; };
 		E15598B410000B1200B7074A /* AgilityBookCalendarView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15597A310000B1200B7074A /* AgilityBookCalendarView.cpp */; };
@@ -295,6 +437,10 @@
 		5048396E09E3307300765E4B /* arbTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = arbTarget.xcconfig; sourceTree = "<group>"; };
 		508344B209E5C41E0093A071 /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1144EF810813B4F00356F61 /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1144EFA10813B4F00356F61 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
+		E1144F5C1082880800356F61 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
+		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		E155979E10000B1200B7074A /* AgilityBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBook.cpp; sourceTree = "<group>"; };
 		E155979F10000B1200B7074A /* AgilityBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilityBook.h; sourceTree = "<group>"; };
 		E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBookCalendarListView.cpp; sourceTree = "<group>"; };
@@ -584,6 +730,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E1144EF310813B4F00356F61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1144EF410813B4F00356F61 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E158FCBB1001371B00735E7F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -600,6 +754,7 @@
 			children = (
 				508344B209E5C41E0093A071 /* agilitybook.app */,
 				E158FCC01001371B00735E7F /* agilitybook.app */,
+				E1144EF810813B4F00356F61 /* agilitybook.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -637,6 +792,7 @@
 				8D0C4E960486CD37000505A6 /* Info.plist */,
 				0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */,
 				1DDD57FA0DA1D07D00B32029 /* main.xib */,
+				E1144EFA10813B4F00356F61 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -661,6 +817,8 @@
 		E155979C10000B1200B7074A /* Win */ = {
 			isa = PBXGroup;
 			children = (
+				E1144F5C1082880800356F61 /* Widgets.cpp */,
+				E1144F5D1082880800356F61 /* Widgets.h */,
 				E155979E10000B1200B7074A /* AgilityBook.cpp */,
 				E155979F10000B1200B7074A /* AgilityBook.h */,
 				E15597A110000B1200B7074A /* AgilityBookCalendarListView.cpp */,
@@ -975,6 +1133,24 @@
 			productReference = 508344B209E5C41E0093A071 /* agilitybook.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E1144E6610813B4F00356F61 /* AgilityBook (trunk-ansi) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-ansi)" */;
+			buildPhases = (
+				E1144E6710813B4F00356F61 /* Resources */,
+				E1144E6B10813B4F00356F61 /* Sources */,
+				E1144EF310813B4F00356F61 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AgilityBook (trunk-ansi)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = arb;
+			productReference = E1144EF810813B4F00356F61 /* agilitybook.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E158FC2F1001371B00735E7F /* AgilityBook (unicode) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (unicode)" */;
@@ -1007,6 +1183,7 @@
 			targets = (
 				8D0C4E890486CD37000505A6 /* AgilityBook (ansi) */,
 				E158FC2F1001371B00735E7F /* AgilityBook (unicode) */,
+				E1144E6610813B4F00356F61 /* AgilityBook (trunk-ansi) */,
 			);
 		};
 /* End PBXProject section */
@@ -1019,6 +1196,16 @@
 				8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */,
 				1DDD57FC0DA1D07D00B32029 /* main.xib in Resources */,
 				E1E98E8D100A7E2C00F89E21 /* AgilityBook.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1144E6710813B4F00356F61 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1144E6810813B4F00356F61 /* InfoPlist.strings in Resources */,
+				E1144E6910813B4F00356F61 /* main.xib in Resources */,
+				E1144E6A10813B4F00356F61 /* AgilityBook.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1361,150 @@
 				E15599E010000B3100B7074A /* BinaryData.cpp in Sources */,
 				E15599E110000B3100B7074A /* Element.cpp in Sources */,
 				E15599E310000B3100B7074A /* VersionNum.cpp in Sources */,
+				E1144F5E1082880800356F61 /* Widgets.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E1144E6B10813B4F00356F61 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1144E6C10813B4F00356F61 /* stdafx.cpp in Sources */,
+				E1144E6D10813B4F00356F61 /* AgilityBook.cpp in Sources */,
+				E1144E6E10813B4F00356F61 /* AgilityBookCalendarListView.cpp in Sources */,
+				E1144E6F10813B4F00356F61 /* AgilityBookCalendarView.cpp in Sources */,
+				E1144E7010813B4F00356F61 /* AgilityBookDoc.cpp in Sources */,
+				E1144E7110813B4F00356F61 /* AgilityBookHtmlView.cpp in Sources */,
+				E1144E7210813B4F00356F61 /* AgilityBookMenu.cpp in Sources */,
+				E1144E7310813B4F00356F61 /* AgilityBookOptions.cpp in Sources */,
+				E1144E7410813B4F00356F61 /* AgilityBookPanels.cpp in Sources */,
+				E1144E7510813B4F00356F61 /* AgilityBookPointsView.cpp in Sources */,
+				E1144E7610813B4F00356F61 /* AgilityBookRunsView.cpp in Sources */,
+				E1144E7710813B4F00356F61 /* AgilityBookTrainingView.cpp in Sources */,
+				E1144E7810813B4F00356F61 /* AgilityBookTreeData.cpp in Sources */,
+				E1144E7910813B4F00356F61 /* AgilityBookTreeView.cpp in Sources */,
+				E1144E7A10813B4F00356F61 /* CalendarSites.cpp in Sources */,
+				E1144E7B10813B4F00356F61 /* CheckLink.cpp in Sources */,
+				E1144E7C10813B4F00356F61 /* CheckTreeCtrl.cpp in Sources */,
+				E1144E7D10813B4F00356F61 /* ClipBoard.cpp in Sources */,
+				E1144E7E10813B4F00356F61 /* ColumnOrder.cpp in Sources */,
+				E1144E7F10813B4F00356F61 /* ComboBoxes.cpp in Sources */,
+				E1144E8010813B4F00356F61 /* CommonView.cpp in Sources */,
+				E1144E8110813B4F00356F61 /* ConfigHandler.cpp in Sources */,
+				E1144E8210813B4F00356F61 /* DlgAbout.cpp in Sources */,
+				E1144E8310813B4F00356F61 /* DlgAssignColumns.cpp in Sources */,
+				E1144E8410813B4F00356F61 /* DlgAuthenticate.cpp in Sources */,
+				E1144E8510813B4F00356F61 /* DlgCalendar.cpp in Sources */,
+				E1144E8610813B4F00356F61 /* DlgCalendarQueryDetail.cpp in Sources */,
+				E1144E8710813B4F00356F61 /* DlgClub.cpp in Sources */,
+				E1144E8810813B4F00356F61 /* DlgConfigEvent.cpp in Sources */,
+				E1144E8910813B4F00356F61 /* DlgConfigEventMethod.cpp in Sources */,
+				E1144E8A10813B4F00356F61 /* DlgConfigMultiQ.cpp in Sources */,
+				E1144E8B10813B4F00356F61 /* DlgConfigOtherPoints.cpp in Sources */,
+				E1144E8C10813B4F00356F61 /* DlgConfigPlaceInfo.cpp in Sources */,
+				E1144E8D10813B4F00356F61 /* DlgConfigTitle.cpp in Sources */,
+				E1144E8E10813B4F00356F61 /* DlgConfigTitlePoints.cpp in Sources */,
+				E1144E8F10813B4F00356F61 /* DlgConfigUpdate.cpp in Sources */,
+				E1144E9010813B4F00356F61 /* DlgConfigure.cpp in Sources */,
+				E1144E9110813B4F00356F61 /* DlgConfigureData.cpp in Sources */,
+				E1144E9210813B4F00356F61 /* DlgConfigVenue.cpp in Sources */,
+				E1144E9310813B4F00356F61 /* DlgCRCDViewer.cpp in Sources */,
+				E1144E9410813B4F00356F61 /* DlgDog.cpp in Sources */,
+				E1144E9510813B4F00356F61 /* DlgEventSelect.cpp in Sources */,
+				E1144E9610813B4F00356F61 /* DlgExistingPoints.cpp in Sources */,
+				E1144E9710813B4F00356F61 /* DlgFault.cpp in Sources */,
+				E1144E9810813B4F00356F61 /* DlgFind.cpp in Sources */,
+				E1144E9910813B4F00356F61 /* DlgFindLinks.cpp in Sources */,
+				E1144E9A10813B4F00356F61 /* DlgInfoNote.cpp in Sources */,
+				E1144E9B10813B4F00356F61 /* DlgListCtrl.cpp in Sources */,
+				E1144E9C10813B4F00356F61 /* DlgListViewer.cpp in Sources */,
+				E1144E9D10813B4F00356F61 /* DlgMessage.cpp in Sources */,
+				E1144E9E10813B4F00356F61 /* DlgMessageBox.cpp in Sources */,
+				E1144E9F10813B4F00356F61 /* DlgName.cpp in Sources */,
+				E1144EA010813B4F00356F61 /* DlgOptions.cpp in Sources */,
+				E1144EA110813B4F00356F61 /* DlgOptionsCalendar.cpp in Sources */,
+				E1144EA210813B4F00356F61 /* DlgOptionsFilter.cpp in Sources */,
+				E1144EA310813B4F00356F61 /* DlgOptionsPrint.cpp in Sources */,
+				E1144EA410813B4F00356F61 /* DlgOptionsProgram.cpp in Sources */,
+				E1144EA510813B4F00356F61 /* DlgOtherPoint.cpp in Sources */,
+				E1144EA610813B4F00356F61 /* DlgPartner.cpp in Sources */,
+				E1144EA710813B4F00356F61 /* DlgPluginDetails.cpp in Sources */,
+				E1144EA810813B4F00356F61 /* DlgPointsViewSort.cpp in Sources */,
+				E1144EA910813B4F00356F61 /* DlgProgress.cpp in Sources */,
+				E1144EAA10813B4F00356F61 /* DlgQueryDetail.cpp in Sources */,
+				E1144EAB10813B4F00356F61 /* DlgReferenceRun.cpp in Sources */,
+				E1144EAC10813B4F00356F61 /* DlgRegNum.cpp in Sources */,
+				E1144EAD10813B4F00356F61 /* DlgReorder.cpp in Sources */,
+				E1144EAE10813B4F00356F61 /* DlgRun.cpp in Sources */,
+				E1144EAF10813B4F00356F61 /* DlgSelectDog.cpp in Sources */,
+				E1144EB010813B4F00356F61 /* DlgSelectURL.cpp in Sources */,
+				E1144EB110813B4F00356F61 /* DlgTitle.cpp in Sources */,
+				E1144EB210813B4F00356F61 /* DlgTraining.cpp in Sources */,
+				E1144EB310813B4F00356F61 /* DlgTrial.cpp in Sources */,
+				E1144EB410813B4F00356F61 /* FilterOptions.cpp in Sources */,
+				E1144EB510813B4F00356F61 /* Globals.cpp in Sources */,
+				E1144EB610813B4F00356F61 /* IconList.cpp in Sources */,
+				E1144EB710813B4F00356F61 /* LanguageManager.cpp in Sources */,
+				E1144EB810813B4F00356F61 /* ListCtrl.cpp in Sources */,
+				E1144EB910813B4F00356F61 /* ListData.cpp in Sources */,
+				E1144EBA10813B4F00356F61 /* Localization.cpp in Sources */,
+				E1144EBB10813B4F00356F61 /* MainFrm.cpp in Sources */,
+				E1144EBC10813B4F00356F61 /* NoteButton.cpp in Sources */,
+				E1144EBD10813B4F00356F61 /* PointsData.cpp in Sources */,
+				E1144EBE10813B4F00356F61 /* Print.cpp in Sources */,
+				E1144EBF10813B4F00356F61 /* ReadHttp.cpp in Sources */,
+				E1144EC010813B4F00356F61 /* RichEditCtrl2.cpp in Sources */,
+				E1144EC110813B4F00356F61 /* TabView.cpp in Sources */,
+				E1144EC210813B4F00356F61 /* UpdateInfo.cpp in Sources */,
+				E1144EC310813B4F00356F61 /* Validators.cpp in Sources */,
+				E1144EC410813B4F00356F61 /* Wizard.cpp in Sources */,
+				E1144EC510813B4F00356F61 /* WizardExcel.cpp in Sources */,
+				E1144EC610813B4F00356F61 /* WizardExport.cpp in Sources */,
+				E1144EC710813B4F00356F61 /* WizardImport.cpp in Sources */,
+				E1144EC810813B4F00356F61 /* WizardStart.cpp in Sources */,
+				E1144EC910813B4F00356F61 /* ARBAgilityRecordBook.cpp in Sources */,
+				E1144ECA10813B4F00356F61 /* ARBBase.cpp in Sources */,
+				E1144ECB10813B4F00356F61 /* ARBBase64.cpp in Sources */,
+				E1144ECC10813B4F00356F61 /* ARBCalendar.cpp in Sources */,
+				E1144ECD10813B4F00356F61 /* ARBConfig.cpp in Sources */,
+				E1144ECE10813B4F00356F61 /* ARBConfigAction.cpp in Sources */,
+				E1144ECF10813B4F00356F61 /* ARBConfigCalSite.cpp in Sources */,
+				E1144ED010813B4F00356F61 /* ARBConfigDivision.cpp in Sources */,
+				E1144ED110813B4F00356F61 /* ARBConfigEvent.cpp in Sources */,
+				E1144ED210813B4F00356F61 /* ARBConfigFault.cpp in Sources */,
+				E1144ED310813B4F00356F61 /* ARBConfigLevel.cpp in Sources */,
+				E1144ED410813B4F00356F61 /* ARBConfigLifetimePoints.cpp in Sources */,
+				E1144ED510813B4F00356F61 /* ARBConfigMultiQ.cpp in Sources */,
+				E1144ED610813B4F00356F61 /* ARBConfigOtherPoints.cpp in Sources */,
+				E1144ED710813B4F00356F61 /* ARBConfigPlaceInfo.cpp in Sources */,
+				E1144ED810813B4F00356F61 /* ARBConfigScoring.cpp in Sources */,
+				E1144ED910813B4F00356F61 /* ARBConfigSubLevel.cpp in Sources */,
+				E1144EDA10813B4F00356F61 /* ARBConfigTitle.cpp in Sources */,
+				E1144EDB10813B4F00356F61 /* ARBConfigTitlePoints.cpp in Sources */,
+				E1144EDC10813B4F00356F61 /* ARBConfigVenue.cpp in Sources */,
+				E1144EDD10813B4F00356F61 /* ARBDate.cpp in Sources */,
+				E1144EDE10813B4F00356F61 /* ARBDog.cpp in Sources */,
+				E1144EDF10813B4F00356F61 /* ARBDogClub.cpp in Sources */,
+				E1144EE010813B4F00356F61 /* ARBDogExistingPoints.cpp in Sources */,
+				E1144EE110813B4F00356F61 /* ARBDogNotes.cpp in Sources */,
+				E1144EE210813B4F00356F61 /* ARBDogReferenceRun.cpp in Sources */,
+				E1144EE310813B4F00356F61 /* ARBDogRegNum.cpp in Sources */,
+				E1144EE410813B4F00356F61 /* ARBDogRun.cpp in Sources */,
+				E1144EE510813B4F00356F61 /* ARBDogRunOtherPoints.cpp in Sources */,
+				E1144EE610813B4F00356F61 /* ARBDogRunPartner.cpp in Sources */,
+				E1144EE710813B4F00356F61 /* ARBDogRunScoring.cpp in Sources */,
+				E1144EE810813B4F00356F61 /* ARBDogTitle.cpp in Sources */,
+				E1144EE910813B4F00356F61 /* ARBDogTrial.cpp in Sources */,
+				E1144EEA10813B4F00356F61 /* ARBInfo.cpp in Sources */,
+				E1144EEB10813B4F00356F61 /* ARBInfoItem.cpp in Sources */,
+				E1144EEC10813B4F00356F61 /* ARBLocalization.cpp in Sources */,
+				E1144EED10813B4F00356F61 /* ARBString.cpp in Sources */,
+				E1144EEE10813B4F00356F61 /* ARBTraining.cpp in Sources */,
+				E1144EEF10813B4F00356F61 /* ARBTypes.cpp in Sources */,
+				E1144EF010813B4F00356F61 /* BinaryData.cpp in Sources */,
+				E1144EF110813B4F00356F61 /* Element.cpp in Sources */,
+				E1144EF210813B4F00356F61 /* VersionNum.cpp in Sources */,
+				E1144F601082880800356F61 /* Widgets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1316,6 +1647,7 @@
 				E158FCB81001371B00735E7F /* BinaryData.cpp in Sources */,
 				E158FCB91001371B00735E7F /* Element.cpp in Sources */,
 				E158FCBA1001371B00735E7F /* VersionNum.cpp in Sources */,
+				E1144F5F1082880800356F61 /* Widgets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,6 +1846,152 @@
 			};
 			name = Release;
 		};
+		E1144EF610813B4F00356F61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2.1.0;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = arb_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_GLIBCXX_DEBUG=1",
+					"_GLIBCXX_DEBUG_PEDANTIC=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/dconnet/agilitybook/AgilityBook/src/Projects/macos/Info copy.plist";
+				OTHER_CFLAGS = (
+					"-I$BOOSTINCLUDE",
+					"-I/Users/dconnet/wx/trunk/build-ansi-debug/lib/wx/include/osx_carbon-ansi-static-2.9",
+					"-I/Users/dconnet/wx/trunk/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_CARBON__",
+				);
+				OTHER_LDFLAGS = (
+					"-L/Users/dconnet/wx/trunk/build-ansi-debug/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					QuickTime,
+					"-framework",
+					OpenGL,
+					"-framework",
+					WebKit,
+					"-lwx_osx_carbon_xrc-2.9",
+					"-lwx_osx_carbon_html-2.9",
+					"-lwx_osx_carbon_qa-2.9",
+					"-lwx_osx_carbon_adv-2.9",
+					"-lwx_osx_carbon_core-2.9",
+					"-lwx_base_xml-2.9",
+					"-lwx_base_net-2.9",
+					"-lwx_base-2.9",
+					"-lwxregex-2.9",
+					"-lwxexpat-2.9",
+					"-lwxtiff-2.9",
+					"-lwxjpeg-2.9",
+					"-lwxpng-2.9",
+					"-lwxzlib-2.9",
+					"-lpthread",
+					"-liconv",
+				);
+				PRODUCT_NAME = agilitybook;
+				SDKROOT = macosx10.4;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				SYMROOT = "build-trunk-ansi";
+			};
+			name = Debug;
+		};
+		E1144EF710813B4F00356F61 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CURRENT_PROJECT_VERSION = 2.1.0;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_PREFIX_HEADER = arb_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "/Users/dconnet/agilitybook/AgilityBook/src/Projects/macos/Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-I$BOOSTINCLUDE",
+					"-I/Users/dconnet/wx/trunk/build-ansi/lib/wx/include/osx_carbon-ansi-static-2.9",
+					"-I/Users/dconnet/wx/trunk/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_CARBON__",
+				);
+				OTHER_LDFLAGS = (
+					"-L/Users/dconnet/wx/trunk/build-ansi/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					QuickTime,
+					"-framework",
+					OpenGL,
+					"-framework",
+					WebKit,
+					"-lwx_osx_carbon_xrc-2.9",
+					"-lwx_osx_carbon_html-2.9",
+					"-lwx_osx_carbon_qa-2.9",
+					"-lwx_osx_carbon_adv-2.9",
+					"-lwx_osx_carbon_core-2.9",
+					"-lwx_base_xml-2.9",
+					"-lwx_base_net-2.9",
+					"-lwx_base-2.9",
+					"-lwxregex-2.9",
+					"-lwxexpat-2.9",
+					"-lwxtiff-2.9",
+					"-lwxjpeg-2.9",
+					"-lwxpng-2.9",
+					"-lwxzlib-2.9",
+					"-lpthread",
+					"-liconv",
+				);
+				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
+				PRODUCT_NAME = agilitybook;
+				SDKROOT = macosx10.4;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				SYMROOT = "build-trunk-ansi";
+			};
+			name = Release;
+		};
 		E158FCBE1001371B00735E7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1677,6 +2155,15 @@
 			buildConfigurations = (
 				C0E91ACA08A95435008D54AB /* Debug */,
 				C0E91ACB08A95435008D54AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-ansi)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1144EF610813B4F00356F61 /* Debug */,
+				E1144EF710813B4F00356F61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
