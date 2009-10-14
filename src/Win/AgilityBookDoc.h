@@ -124,10 +124,12 @@ public:
 
 	bool StatusBarContextMenu(wxWindow* parent, int id, wxPoint const& point);
 
+	wxString AddDogToCaption(wxString const& caption) const;
+
 	// Data
-	ARBDogPtr GetCurrentDog();
-	ARBDogTrialPtr GetCurrentTrial();
-	ARBDogRunPtr GetCurrentRun();
+	ARBDogPtr GetCurrentDog() const;
+	ARBDogTrialPtr GetCurrentTrial() const;
+	ARBDogRunPtr GetCurrentRun() const;
 	ARBAgilityRecordBook& Book()			{return m_Records;}
 
 	// These are called from the Runs view so the tree view can do the add.

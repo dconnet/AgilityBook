@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-14 DRC Add dog's name to dialog caption.
  * @li 2009-10-14 DRC Fix initialization of opening pts in eScoreThenTime.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fixed division/level initialization.
@@ -724,7 +725,9 @@ CDlgRun::CDlgRun(
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDS_RUN_PROPERTIES"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(pParent, wxID_ANY, pDoc->AddDogToCaption(_("IDS_RUN_PROPERTIES")),
+			wxDefaultPosition, wxDefaultSize,
+			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	m_clrBack = GetBackgroundColour();
 
