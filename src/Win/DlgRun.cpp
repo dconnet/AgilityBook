@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-14 DRC Fix initialization of opening pts in eScoreThenTime.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fixed division/level initialization.
  * @li 2009-03-16 DRC Merged DlgRun* into here.
@@ -2296,6 +2297,8 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_textYPSOpeningPts->Show(true);
 		m_ctrlYPSOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPEN_PTS"));
 		m_ctrlYPSOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPEN_PTS"));
+		str.Printf(wxT("%hd"), m_Open);
+		m_ctrlYPSOpeningPts->ChangeValue(str);
 		m_ctrlYPSOpeningPts->Show(true);
 		SetReadOnlyFlag(m_ctrlYPSOpeningPts, false);
 		break;
