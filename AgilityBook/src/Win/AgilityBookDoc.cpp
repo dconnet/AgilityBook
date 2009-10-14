@@ -332,10 +332,19 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 }
 
 
+wxString CAgilityBookDoc::AddDogToCaption(wxString const& caption) const
+{
+	if (GetCurrentDog())
+		return GetCurrentDog()->GetCallName() + wxT(": ") + caption;
+	else
+		return caption;
+}
+
+
 /**
  * Return the dog associated with the currently selected item in the tree.
  */
-ARBDogPtr CAgilityBookDoc::GetCurrentDog()
+ARBDogPtr CAgilityBookDoc::GetCurrentDog() const
 {
 	ARBDogPtr pDog;
 	CAgilityBookTreeView* pTree = GetTreeView();
@@ -348,7 +357,7 @@ ARBDogPtr CAgilityBookDoc::GetCurrentDog()
 /**
  * Return the trial associated with the currently selected item in the tree.
  */
-ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial()
+ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial() const
 {
 	ARBDogTrialPtr pTrial;
 	CAgilityBookTreeView* pTree = GetTreeView();
@@ -362,7 +371,7 @@ ARBDogTrialPtr CAgilityBookDoc::GetCurrentTrial()
 /**
  * Return the run associated with the currently selected item in the tree.
  */
-ARBDogRunPtr CAgilityBookDoc::GetCurrentRun()
+ARBDogRunPtr CAgilityBookDoc::GetCurrentRun() const
 {
 	ARBDogRunPtr pRun;
 	CAgilityBookTreeView* pTree = GetTreeView();

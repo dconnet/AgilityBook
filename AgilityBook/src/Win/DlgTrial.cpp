@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-14 DRC Add dog's name to dialog caption.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-02-09 DRC Ported to wxWidgets.
@@ -114,7 +115,9 @@ CDlgTrial::CDlgTrial(
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	Create(pParent, wxID_ANY, _("IDD_TRIAL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
+	Create(pParent, wxID_ANY, pDoc->AddDogToCaption(_("IDD_TRIAL")),
+			wxDefaultPosition, wxDefaultSize,
+			wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	pTrial->GetClubs().Clone(m_Clubs);
 

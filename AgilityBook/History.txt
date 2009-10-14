@@ -1,6 +1,7 @@
 10/14/2009: v2.1.0.* <in development>
 - New features / Enhancements:
   - Start adding support for wxWidgets 2.9, deprecate 'tstring'.
+  - Add dog's name to Trial and Run dialog caption.
 - Bug fixes:
   - Fixed copying of calendar entries to clipboard.
   - Fixed date filters with named filters.
