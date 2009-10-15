@@ -653,6 +653,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesDelete(wxCommandEvent& evt)
 			m_FilterOptions.DeleteFilter(name);
 			m_ctrlFilters->Delete(idx);
 			m_FilterName.clear();
+			m_ctrlFilters->SetSelection(wxNOT_FOUND);
 		}
 	}
 }
