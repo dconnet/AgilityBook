@@ -631,6 +631,9 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesSave(wxCommandEvent& evt)
 	{
 		if (m_FilterOptions.AddFilter(m_FilterName))
 			m_ctrlFilters->Append(m_FilterName);
+		// After saving, reset in case anything was changed.
+		FillControls();
+		TransferDataToWindow();
 	}
 	else
 		wxMessageBox(_("IDS_NAME_FILTER"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
@@ -658,9 +661,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesDelete(wxCommandEvent& evt)
 void CDlgOptionsFilter::OnFilterDates(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	bool bAllDates = m_ctrlDatesAll->GetValue();
-	if (bAllDates
-	|| (!bAllDates && !m_bDateStart && !m_bDateEnd))
+	if (m_ctrlDatesAll->GetValue())
 	{
 		m_FilterOptions.SetViewAllDates(true);
 	}

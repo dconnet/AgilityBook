@@ -160,7 +160,9 @@ static void SetStatusBarWidths(
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, NULL, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
 	, m_MenuBar()
+#ifdef WIN32
 	, m_fontStatusBar(8, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Ariel"))
+#endif
 {
 	wxIconBundle icons;
 	icons.AddIcon(wxIcon(AgilityBook16_xpm));
@@ -190,7 +192,9 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
 	if (statusbar)
 	{
+#ifdef WIN32
 		statusbar->SetFont(m_fontStatusBar);
+#endif
 		statusbar->Connect(wxEVT_CONTEXT_MENU, wxContextMenuEventHandler(CMainFrame::OnStatusBarContextMenu), NULL, this);
 		wxClientDC dc(statusbar);
 		dc.SetFont(statusbar->GetFont());

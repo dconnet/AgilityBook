@@ -70,7 +70,9 @@ private:
 	void SetMessage(wxString const& msg, int index, bool bResize);
 
 	CAgilityBookMenu m_MenuBar;
+#ifdef WIN32
 	wxFont m_fontStatusBar;
+#endif
 	int m_Widths[NUM_STATUS_FIELDS];
 
 private:
