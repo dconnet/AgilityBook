@@ -4,6 +4,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2009-10-19 DRC Added 'create' option.
 # 2009-08-08 DRC Tweaked code to remove ICE61 warning.
 #            Allow user specification of where WiX is (/wix)
 # 2009-07-26 DRC Removed Win98 support.
@@ -19,13 +20,14 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/wix path] [/32] [/64] [/all] [/notidy] /test
+"""GenMSI.py [/wix path] [/32] [/64] [/all] [/notidy] [/test] [/create]
 	wix: Override internal wix path (c:\Tools\wix3)
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
-	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
+	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv or check for existing versions)
+	create: Only create the wix files, do not compile.
 """
 
 import datetime
@@ -43,7 +45,7 @@ WinSrcDir = AgilityBookDir + "\\src"
 code32 = 1
 code64 = 3
 
-# The reason for a different upgrade codes is that is allows beta testing
+# The reason for different upgrade codes is that it allows beta testing
 # side-by-side. When the next version is actually released, it will upgrade
 # (uninstall) all previous versions.
 
@@ -258,7 +260,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 	print >>setup,		r'          Maximum="' + ver3Dot + '"'
 	print >>setup,		r'          Property="OLDVERSIONFOUND" />'
 	# During testing, don't detect existing versions.
-	if not bTesting:
+	if bTesting == 0:
 		print >>setup,	r'      <UpgradeVersion'
 		print >>setup,	r'          OnlyDetect="yes"'
 		print >>setup,	r'          Minimum="' + ver3Dot + '"'
@@ -570,24 +572,25 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 
 	setup.close()
 
-	if os.access(baseDir + "AgilityBook.exe", os.F_OK):
-		runcmd('candle -nologo ' + outputFile + '.wxs')
-		for fname, culture in supportedLangs:
-			basename = outputFile + '-' + fname
-			runcmd('light -nologo -dWixUILicenseRtf="License-' + fname + '.rtf" -ext WixUIExtension -ext WixUtilExtension -cultures:' + culture + ' -loc "' + basename + '.wxl" -out "' + basename + '.msi" "' + outputFile + '.wixobj"')
-		if tidy:
-			if os.access(outputFile + ".wxs", os.F_OK):
-				os.remove(outputFile + ".wxs")
-			if os.access(outputFile + ".wixobj", os.F_OK):
-				os.remove(outputFile + ".wixobj")
+	if not bTesting == 2:
+		if os.access(baseDir + "AgilityBook.exe", os.F_OK):
+			runcmd('candle -nologo ' + outputFile + '.wxs')
 			for fname, culture in supportedLangs:
 				basename = outputFile + '-' + fname
-				if os.access(basename + ".wxl", os.F_OK):
-					os.remove(basename + ".wxl")
-				if os.access(basename + ".wixpdb", os.F_OK):
-					os.remove(basename + ".wixpdb")
-	else:
-		print baseDir + "AgilityBook.exe does not exist, MSI skipped"
+				runcmd('light -nologo -dWixUILicenseRtf="License-' + fname + '.rtf" -ext WixUIExtension -ext WixUtilExtension -cultures:' + culture + ' -loc "' + basename + '.wxl" -out "' + basename + '.msi" "' + outputFile + '.wixobj"')
+			if tidy:
+				if os.access(outputFile + ".wxs", os.F_OK):
+					os.remove(outputFile + ".wxs")
+				if os.access(outputFile + ".wixobj", os.F_OK):
+					os.remove(outputFile + ".wixobj")
+				for fname, culture in supportedLangs:
+					basename = outputFile + '-' + fname
+					if os.access(basename + ".wxl", os.F_OK):
+						os.remove(basename + ".wxl")
+					if os.access(basename + ".wixpdb", os.F_OK):
+						os.remove(basename + ".wixpdb")
+		else:
+			print baseDir + "AgilityBook.exe does not exist, MSI skipped"
 	return 1
 
 
@@ -621,6 +624,9 @@ def main():
 			tidy = 0
 		elif o == "/test":
 			bTesting = 1
+		elif o == "/create":
+			bTesting = 2
+			tidy = 0
 		else:
 			error = 1
 			break
@@ -648,7 +654,7 @@ def main():
 	# While the detect-same-version CA will do that during install, this has
 	# the added benefit of immediately bailing during the install, rather than
 	# showing the final 'failed' dialog.
-	if bTesting:
+	if bTesting == 1:
 		print 'Remember, uninstall the old version first. This does not check.'
 	else:
 		codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "r")
@@ -682,7 +688,7 @@ def main():
 	if b64:
 		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, bTesting):
 			b64ok = 1
-	if not bTesting and (b32ok or b64ok):
+	if bTesting == 0 and (b32ok or b64ok):
 		d = datetime.datetime.now().isoformat(' ')
 		codes = open(AgilityBookDir + r"\Misc\InstallGUIDs.csv", "a")
 		installs = ""
