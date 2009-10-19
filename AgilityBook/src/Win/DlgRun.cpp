@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-18 DRC Fix prepending of '0' to title points.
  * @li 2009-10-14 DRC Add dog's name to dialog caption.
  * @li 2009-10-14 DRC Fix initialization of opening pts in eScoreThenTime.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -2036,12 +2037,15 @@ void CDlgRun::SetTitlePoints()
 		{
 			if (pScoring->HasBonusPts())
 			{
+				strBonus.clear();
 				strBonus << m_Run->GetScoring().GetBonusPts();
 			}
 			if (pScoring->HasSpeedPts())
 			{
+				strSpeed.clear();
 				strSpeed << m_Run->GetSpeedPoints(pScoring);
 			}
+			strTitle.clear();
 			strTitle << m_Run->GetTitlePoints(pScoring);
 		}
 		// 8/17/03: Only compute score on Q and NQ runs.
