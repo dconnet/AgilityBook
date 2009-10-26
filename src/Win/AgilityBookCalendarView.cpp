@@ -516,8 +516,12 @@ bool CAgilityBookCalendar::SetCurrentDate(
 	ARBDate dateLastVisible(m_Last.GetYear(), m_Last.GetMonth(), 1);
 	dateLastVisible = FirstDayOfWeek(dateLastVisible);
 	dateLastVisible += WEEKS_PER_PAGE * 7 - 1;
+	// TODO
+	// It appears letting the end date run free is ok.
+	// However, freeing the start date doesn't work as well.
+	// The date changes, but the calendar won't scroll up.
 	if (date != m_Current
-	&& dateFirstVisible <= date && date <= dateLastVisible)
+	&& dateFirstVisible <= date /*&& date <= dateLastVisible*/)
 	{
 		bSet = true;
 		// Invalidate the current date.
