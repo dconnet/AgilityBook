@@ -145,10 +145,10 @@ wxString CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 	switch (iCol)
 	{
 	case 1: // Start Date
-		str = m_pCal->GetStartDate().GetString(ARBDate::eDashYMD);
+		str = m_pCal->GetStartDate().GetString();
 		break;
 	case 2: // End Date
-		str = m_pCal->GetEndDate().GetString(ARBDate::eDashYMD);
+		str = m_pCal->GetEndDate().GetString();
 		break;
 	case 3: // Location
 		str = m_pCal->GetLocation();

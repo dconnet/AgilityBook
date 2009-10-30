@@ -181,7 +181,7 @@ wxString CDlgDogDataTitle::OnNeedText(long iCol) const
 	{
 	case 1:
 		if (m_Title->GetDate().IsValid())
-			text = m_Title->GetDate().GetString(ARBDate::eDashYYYYMMDD);
+			text = m_Title->GetDate().GetString();
 		else
 			text = _("IDS_UNEARNED");
 		break;
@@ -436,7 +436,7 @@ wxString CDlgDogDataPoint::OnNeedText(long iCol) const
 	switch (iCol)
 	{
 	case 0:
-		text = m_Pts->GetDate().GetString(ARBDate::eDashYMD);
+		text = m_Pts->GetDate().GetString();
 		break;
 	case 1: // Type
 		text = ARBDogExistingPoints::GetPointTypeName(m_Pts->GetType());

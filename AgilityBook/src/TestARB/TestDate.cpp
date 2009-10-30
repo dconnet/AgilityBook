@@ -30,6 +30,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-11 DRC Created
  */
@@ -106,7 +107,14 @@ SUITE(TestDate)
 	TEST(String)
 	{
 		ARBDate d(1999, 3, 2);
-		CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eDefault));
+		{
+			wxLocale locale(wxLANGUAGE_ENGLISH_UK);
+			CHECK(wxT("02/03/1999") == d.GetString(ARBDate::eCurrentLocale));
+		}
+		{
+			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+			CHECK(wxT("3/2/1999") == d.GetString(ARBDate::eCurrentLocale));
+		}
 		CHECK(wxT("03-02-1999") == d.GetString(ARBDate::eDashMMDDYYYY));
 		CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eSlashMMDDYYYY));
 		CHECK(wxT("1999-03-02") == d.GetString(ARBDate::eDashYYYYMMDD));
@@ -157,15 +165,29 @@ SUITE(TestDate)
 		CHECK(d.IsValid());
 		ARBDate d2(1999, 3, 27);
 		CHECK(d == d2);
-		d = ARBDate::FromString(wxT("1999-3-27"), ARBDate::eDefault);
-		CHECK(d == d2);
-		CHECK(d.IsValid());
-		d = ARBDate::FromString(wxT("3/27/1999"), ARBDate::eDefault);
-		CHECK(d.IsValid());
-		CHECK(d == d2);
 		d = ARBDate::FromString(wxT("1999-3-27"), ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
 		CHECK(!d.IsValid());
 		//TODO: Add more complete tests (test each format, bad formats, etc)
+	}
+
+
+	TEST(FromStringUK)
+	{
+		ARBDate d2(1999, 3, 27);
+		wxLocale locale(wxLANGUAGE_ENGLISH_UK);
+		ARBDate d = ARBDate::FromString(wxT("27/3/1999"), ARBDate::eCurrentLocale);
+		CHECK(d.IsValid());
+		CHECK(d == d2);
+	}
+
+
+	TEST(FromStringUS)
+	{
+		ARBDate d2(1999, 3, 27);
+		wxLocale locale(wxLANGUAGE_ENGLISH_US);
+		ARBDate d = ARBDate::FromString(wxT("3/27/1999"), ARBDate::eCurrentLocale);
+		CHECK(d.IsValid());
+		CHECK(d == d2);
 	}
 
 

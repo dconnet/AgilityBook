@@ -140,7 +140,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			str << m_pDog->GetCallName();
 			break;
 		case IO_RUNS_DATE:
-			str << m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunList));
+			str << m_pRun->GetDate().GetString();
 			break;
 		case IO_RUNS_VENUE:
 			{

@@ -207,7 +207,7 @@ Settings:
 	DW autoCheck
 	DW autoShowTitle
 	DW BackupFiles
-	DW dateFormat[n]
+	Obsolete(2.1.0.0) DW dateFormat[n]
 		{
 			eRunTree	= 0,
 			eRunList	= 1,
@@ -216,7 +216,8 @@ Settings:
 			eCalendar	= 4,
 			eTraining	= 5,
 		}
-	DW Lang2 [added 2.0.0.0] (LanguageManager.cpp)
+	Obsolete(2.0.0.0) DW Lang (LanguageManager.cpp)
+	Obsolete(2.1.0.0) DW Lang2 [added 2.0.0.0] (LanguageManager.cpp)
 	ST Lang3 [added 2.1.0.0] (LanguageManager.cpp)
 	DW lastCX (AgilityBook.cpp/MainFrm.cpp)
 	DW lastCY (AgilityBook.cpp/MainFrm.cpp)
@@ -237,8 +238,6 @@ Settings:
 	DW View (TabView.cpp)
 	DW ViewOrient (TabView.cpp)
 	DW ViewType (TabView.cpp)
-	Obsolete(2.0.0.0) DW Lang (LanguageManager)
-	Obsolete(2.1.0.0) DW Lang2 (LanguageManager)
 Sorting:
 	ST [key]Order (ColumnOrder.cpp)
 	ST [key]Sort (ColumnOrder.cpp)
@@ -955,7 +954,7 @@ void CAgilityBookOptions::GetImportExportDateFormat(
 		section = wxT("Import/");
 	else
 		section = wxT("Export/");
-	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + wxT("dateformat"), static_cast<long>(ARBDate::eDashYYYYMMDD)));
+	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + wxT("dateformat"), static_cast<long>(ARBDate::eISO)));
 }
 
 
@@ -1382,35 +1381,6 @@ bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
 	wxConfig::Get()->Write(wxT("Settings/autoShowTitle"), bShow);
-}
-
-
-ARBDate::DateFormat CAgilityBookOptions::GetDateFormat(FormattedDate inItem)
-{
-	wxString section;
-	section << wxT("Settings/dateFormat") << static_cast<int>(inItem);
-	ARBDate::DateFormat def;
-	switch (inItem)
-	{
-	default:
-	case eRunTree: def = ARBDate::eDashYYYYMMDD; break;
-	case eRunList: def = ARBDate::eSlashMDY; break;
-	case ePoints: def = ARBDate::eSlashMDY; break;
-	case eCalList: def = ARBDate::eDashYMD; break;
-	case eCalendar: def = ARBDate::eDashYMD; break;
-	case eTraining: def = ARBDate::eDashYMD; break;
-	}
-	return static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section, static_cast<long>(def)));
-}
-
-
-void CAgilityBookOptions::SetDateFormat(
-		FormattedDate inItem,
-		ARBDate::DateFormat inFormat)
-{
-	wxString section;
-	section << wxT("Settings/dateFormat") << static_cast<int>(inItem);
-	wxConfig::Get()->Write(section, static_cast<long>(inFormat));
 }
 
 

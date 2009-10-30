@@ -105,7 +105,7 @@ wxString CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_LOG_DATE:
-			str = m_pTraining->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eTraining));
+			str = m_pTraining->GetDate().GetString();
 			break;
 		case IO_LOG_NAME:
 			str = m_pTraining->GetName();

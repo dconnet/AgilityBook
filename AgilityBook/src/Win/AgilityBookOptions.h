@@ -238,19 +238,6 @@ public:
 	static void SetSplashImage(wxString const& filename);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
-	typedef enum
-	{
-		eRunTree	= 0,
-		eRunList	= 1,
-		ePoints		= 2,
-		eCalList	= 3,
-		eCalendar	= 4,
-		eTraining	= 5,
-	} FormattedDate;
-	static ARBDate::DateFormat GetDateFormat(FormattedDate inItem);
-	static void SetDateFormat(
-			FormattedDate inItem,
-			ARBDate::DateFormat inFormat);
 	static bool ShowHtmlPoints();
 	static void SetShowHtmlPoints(bool bSet);
 	// Internet things

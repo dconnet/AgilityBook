@@ -74,7 +74,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // Static functions (for iCalendar/vCalender)
-// See RFC2445.
+// See RFC2445. (http://tools.ietf.org/html/rfc2445)
 // Note: EOL sequence is defined as "\r\n"
 
 class ARBiCal : public ICalendar
@@ -788,19 +788,19 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 		if (m_DateOpening.IsValid())
 		{
 			str << Localization()->CalendarOpens()
-				<< m_DateOpening.GetString(ARBDate::eDefault)
+				<< m_DateOpening.GetString(ARBDate::eISO)
 				<< wxT(" ");
 		}
 		if (m_DateDraw.IsValid())
 		{
 			str << Localization()->CalendarDraw()
-				<< m_DateDraw.GetString(ARBDate::eDefault)
+				<< m_DateDraw.GetString(ARBDate::eISO)
 				<< wxT(" ");
 		}
 		if (m_DateClosing.IsValid())
 		{
 			str << Localization()->CalendarCloses()
-				<< m_DateClosing.GetString(ARBDate::eDefault)
+				<< m_DateClosing.GetString(ARBDate::eISO)
 				<< wxT(" ");
 		}
 		str << GetNote();

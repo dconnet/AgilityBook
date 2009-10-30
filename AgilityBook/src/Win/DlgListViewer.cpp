@@ -191,7 +191,7 @@ wxString CDlgListViewerDataExisting::OnNeedText(long iCol) const
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
-		str = m_Existing->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
+		str = m_Existing->GetDate().GetString();
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
 		str << m_Existing->GetPoints();
@@ -266,7 +266,7 @@ wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
-		str << m_Run->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
+		str << m_Run->GetDate().GetString();
 		break;
 	case COL_RUN_MQ_STATUS: // Only happens for scoring detail items.
 		switch (m_ScoringDetail)
@@ -383,7 +383,7 @@ wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 	switch (m_ColData->GetIndex(iCol))
 	{
 	case COL_RUN_MQ_DATE:
-		str = m_Date.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
+		str = m_Date.GetString();
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
 		str = wxT("1");
@@ -790,9 +790,9 @@ wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 	{
 	case COL_OTHER_DATE:
 		if (m_info.m_pExisting)
-			str << m_info.m_pExisting->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
+			str << m_info.m_pExisting->GetDate().GetString();
 		else
-			str << m_info.m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
+			str << m_info.m_pRun->GetDate().GetString();
 		break;
 	case COL_OTHER_NAME: // Trial/Existing Points
 		if (m_info.m_pExisting)

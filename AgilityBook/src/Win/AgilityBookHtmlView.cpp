@@ -197,7 +197,7 @@ wxString CAgilityBookHtmlView::RawHtml(bool bFragment) const
 	data << wxT("<html>\n");
 	if (!bFragment)
 		data << wxT("<head><title>") << title << wxT(" ")
-			<< today.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints))
+			<< today.GetString()
 			<< wxT("</title></head>\n")
 			<< wxT("<body>\n");
 

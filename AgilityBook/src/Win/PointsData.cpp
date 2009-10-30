@@ -238,7 +238,7 @@ wxString CPointsDataDog::OnNeedText(int inCol) const
 			str = m_pDog->GetRegisteredName();
 			break;
 		case 7: // Current date
-			str = ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
+			str = ARBDate::Today().GetString();
 			break;
 		}
 	}
@@ -252,7 +252,7 @@ wxString CPointsDataDog::GetHtml(size_t nCurLine) const
 	if (m_pDog)
 	{
 		data << wxT("<h1 align=\"center\">") << _("IDS_TITLING_POINTS") << wxT(" ")
-			<< Sanitize(ARBDate::Today().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints)))
+			<< Sanitize(ARBDate::Today().GetString())
 			<< wxT("</h1>")
 			<< wxT("<h1><a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
@@ -416,7 +416,7 @@ wxString CPointsDataTitle::OnNeedText(int inCol) const
 		switch (inCol)
 		{
 		case 1:
-			str = m_pTitle->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::ePoints));
+			str = m_pTitle->GetDate().GetString();
 			break;
 		case 2:
 			str = m_pDoc->Book().GetConfig().GetTitleCompleteName(m_pTitle, false);

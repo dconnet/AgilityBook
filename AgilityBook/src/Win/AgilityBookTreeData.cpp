@@ -770,7 +770,7 @@ wxString CAgilityBookTreeDataDog::OnNeedText() const
 			str += m_pDog->GetBreed();
 			break;
 		case IO_TREE_DOG_DOB:
-			str += m_pDog->GetDOB().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+			str += m_pDog->GetDOB().GetString();
 			break;
 		case IO_TREE_DOG_AGE:
 			{
@@ -1044,7 +1044,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 					else
 						str += wxT(" ");
 				}
-				str += m_pTrial->GetRuns().GetStartDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+				str += m_pTrial->GetRuns().GetStartDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
@@ -1058,7 +1058,7 @@ wxString CAgilityBookTreeDataTrial::OnNeedText() const
 					else
 						str += wxT(" ");
 				}
-				str += m_pTrial->GetRuns().GetEndDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+				str += m_pTrial->GetRuns().GetEndDate().GetString();
 				bNeedSpace = true;
 			}
 			break;
@@ -1399,7 +1399,7 @@ wxString CAgilityBookTreeDataRun::OnNeedText() const
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
-			str += m_pRun->GetDate().GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eRunTree));
+			str += m_pRun->GetDate().GetString();
 			break;
 		case IO_TREE_RUN_Q:
 			{
