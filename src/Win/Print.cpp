@@ -442,7 +442,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 		break;
 	case CODE_DATE:
 		if (run)
-			text << run->GetDate().GetString(ARBDate::eDashYYYYMMDD);
+			text << run->GetDate().GetString();
 		break;
 	case CODE_VENUE:
 		if (trial)

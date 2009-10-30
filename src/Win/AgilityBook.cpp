@@ -436,7 +436,7 @@ bool CAgilityBookApp::OnInit()
 	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
 		wxString ver = wxConfig::Get()->Read(wxT("Settings/lastVerCheck"), wxT(""));
-		ARBDate date = ARBDate::FromString(ver, ARBDate::eDashYYYYMMDD);
+		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
 		if (date.IsValid())
 		{
 			ARBDate today = ARBDate::Today();

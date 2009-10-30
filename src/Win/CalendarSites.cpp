@@ -981,10 +981,9 @@ public:
 	CPluginCalData(ARBCalendarPtr cal)
 		: m_Cal(cal)
 	{
-		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
-		m_Name << m_Cal->GetStartDate().GetString(dFmt)
+		m_Name << m_Cal->GetStartDate().GetString()
 			<< wxT(" ")
-			<< m_Cal->GetEndDate().GetString(dFmt)
+			<< m_Cal->GetEndDate().GetString()
 			<< wxT(": ")
 			<< m_Cal->GetVenue()
 			<< wxT(" ")
@@ -998,7 +997,7 @@ public:
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
 			desc << str
 				<< wxT(" ")
-				<< m_Cal->GetOpeningDate().GetString(dFmt)
+				<< m_Cal->GetOpeningDate().GetString()
 				<< wxT("\n");
 		}
 		if (m_Cal->GetDrawDate().IsValid())
@@ -1006,7 +1005,7 @@ public:
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
 			desc << str
 				<< wxT(" ")
-				<< m_Cal->GetDrawDate().GetString(dFmt)
+				<< m_Cal->GetDrawDate().GetString()
 				<< wxT("\n");
 		}
 		if (m_Cal->GetClosingDate().IsValid())
@@ -1014,7 +1013,7 @@ public:
 			wxString str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
 			desc << str
 				<< wxT(" ")
-				<< m_Cal->GetClosingDate().GetString(dFmt)
+				<< m_Cal->GetClosingDate().GetString()
 				<< wxT("\n");
 		}
 		m_Desc = desc;

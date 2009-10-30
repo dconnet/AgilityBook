@@ -472,7 +472,7 @@ bool ARBAgilityRecordBook::Update(
 					// Move pairs run to new team
 					pRun->SetEvent(wxT("Team"));
 					msgPairsRuns << wxT("   ")
-						<< pRun->GetDate().GetString(ARBDate::eDashYYYYMMDD)
+						<< pRun->GetDate().GetString(ARBDate::eISO)
 						<< wxT(" ")
 						<< venue
 						<< wxT(" ")
@@ -504,7 +504,7 @@ bool ARBAgilityRecordBook::Update(
 				else
 				{
 					msgDelRuns << wxT("   ")
-						<< pRun->GetDate().GetString(ARBDate::eDashYYYYMMDD)
+						<< pRun->GetDate().GetString(ARBDate::eISO)
 						<< wxT(" ")
 						<< venue
 						<< wxT(" ")

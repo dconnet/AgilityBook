@@ -32,6 +32,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Make time_t ctors explicit to prevent casts from bools.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -58,11 +59,12 @@ public:
 	 */
 	typedef enum
 	{
+		eLocale			= 0,	///< System locale (output only)
 		// Leading zeros
-		eDefault		= 0,	///< YYYY-MM-DD or MM/DD/YYYY (input), =2 (output)
 		eDashMMDDYYYY	= 1,	///< MM-DD-YYYY
 		eSlashMMDDYYYY	= 2,	///< MM/DD/YYYY
-		eDashYYYYMMDD	= 3,	///< YYYY-MM-DD
+		eDashYYYYMMDD	= 3,	///< YYYY-MM-DD, ISO 8601
+		eISO			= 3,
 		eSlashYYYYMMDD	= 4,	///< YYYY/MM/DD
 		eDashDDMMYYYY	= 5,	///< DD-MM-YYYY
 		eSlashDDMMYYYY	= 6,	///< DD/MM/YYYY
@@ -75,6 +77,7 @@ public:
 		eSlashDMY		= 12,	///< D/M/Y
 		// New formats...
 		eYYYYMMDD		= 13,	///< YYYYMMDD (output only)
+		eCurrentLocale	= 14,	///< Current locale (output only)
 	} DateFormat;
 
 	/**
@@ -287,7 +290,7 @@ public:
 	 * @return Date in the format defined by inFormat.
 	 */
 	wxString GetString(
-			DateFormat inFormat,
+			DateFormat inFormat = eLocale,
 			bool inForceOutput = false) const;
 
 	/**

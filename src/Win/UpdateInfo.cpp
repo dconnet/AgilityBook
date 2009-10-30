@@ -372,7 +372,7 @@ bool CUpdateInfo::CheckProgram(wxString const& lang)
 	if (IsOutOfDate())
 	{
 		bNeedsUpdating = true;
-		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD));
+		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eISO));
 		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
 		{
@@ -427,7 +427,7 @@ bool CUpdateInfo::CheckProgram(wxString const& lang)
 		}
 	}
 	else
-		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eDashYMD));
+		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eISO));
 	return bNeedsUpdating;
 }
 

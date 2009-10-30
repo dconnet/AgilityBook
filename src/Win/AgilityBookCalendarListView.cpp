@@ -120,14 +120,13 @@ wxString CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 	wxString str;
 	if (m_pCal)
 	{
-		ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
 		switch (m_pView->m_Columns[iCol])
 		{
 		case IO_CAL_START_DATE:
-			str = m_pCal->GetStartDate().GetString(dFmt);
+			str = m_pCal->GetStartDate().GetString();
 			break;
 		case IO_CAL_END_DATE:
-			str = m_pCal->GetEndDate().GetString(dFmt);
+			str = m_pCal->GetEndDate().GetString();
 			break;
 		case IO_CAL_LOCATION:
 			str = m_pCal->GetLocation();
@@ -140,15 +139,15 @@ wxString CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 			break;
 		case IO_CAL_OPENS:
 			if (m_pCal->GetOpeningDate().IsValid())
-				str = m_pCal->GetOpeningDate().GetString(dFmt);
+				str = m_pCal->GetOpeningDate().GetString();
 			break;
 		case IO_CAL_DRAWS:
 			if (m_pCal->GetDrawDate().IsValid())
-				str = m_pCal->GetDrawDate().GetString(dFmt);
+				str = m_pCal->GetDrawDate().GetString();
 			break;
 		case IO_CAL_CLOSES:
 			if (m_pCal->GetClosingDate().IsValid())
-				str = m_pCal->GetClosingDate().GetString(dFmt);
+				str = m_pCal->GetClosingDate().GetString();
 			break;
 		case IO_CAL_NOTES:
 			str = m_pCal->GetNote();

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-07-13 DRC Added inForceOutput to GetString.
@@ -43,6 +44,9 @@
 #include "stdafx.h"
 #include "ARBDate.h"
 #include <time.h>
+
+#include "wx/datetime.h"
+#include "wx/intl.h"
 
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
@@ -216,49 +220,58 @@ ARBDate ARBDate::FromString(
 		ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
-	wxString value(inDate);
-	if (0 < inDate.length())
+	if (eLocale == inFormat || eCurrentLocale == inFormat)
+	{
+		wxLocale* locale = NULL;
+		if (eLocale == inFormat)
+			locale = new wxLocale(wxLANGUAGE_DEFAULT);
+		wxDateTime dt;
+		if (dt.ParseDate(inDate))
+			date.SetDate(dt.GetYear(), static_cast<int>(dt.GetMonth())+1, dt.GetDay());
+		delete locale;
+	}
+	else if (0 < inDate.length())
 	{
 		int val1 = 0, val2 = 0, val3 = 0;
 		int nDash = ParseFields(inDate, '-', val1, val2, val3);
 		int nSlash = ParseFields(inDate, '/', val1, val2, val3);
 		int yr = 0, mon = 0, day = 0;
-		if (0 == inFormat)
-		{
-			if (3 == nDash)
-				inFormat = eDashYYYYMMDD;
-			else if (3 == nSlash)
-				inFormat = eSlashMMDDYYYY;
-		}
 		if ((3 == nDash &&
-		(eDashMMDDYYYY == inFormat || eDashYYYYMMDD == inFormat || eDashDDMMYYYY == inFormat))
+		(eDashMMDDYYYY == inFormat || eDashYYYYMMDD == inFormat || eDashDDMMYYYY == inFormat
+			|| eDashMDY == inFormat || eDashYMD == inFormat || eDashDMY == inFormat))
 		|| (3 == nSlash &&
-		(eSlashMMDDYYYY == inFormat || eSlashYYYYMMDD == inFormat || eSlashDDMMYYYY == inFormat)))
+		(eSlashMMDDYYYY == inFormat || eSlashYYYYMMDD == inFormat || eSlashDDMMYYYY == inFormat
+			|| eSlashMDY == inFormat || eSlashYMD == inFormat || eSlashDMY == inFormat)))
 		{
-
 			switch (inFormat)
 			{
 			case eDashMMDDYYYY:
+			case eDashMDY:
 			case eSlashMMDDYYYY:
+			case eSlashMDY:
 				mon = val1;
 				day = val2;
 				yr = val3;
 				break;
-			case eDashYYYYMMDD:
+			case eDashYYYYMMDD: // eISO
+			case eDashYMD:
 			case eSlashYYYYMMDD:
+			case eSlashYMD:
 				yr = val1;
 				mon = val2;
 				day = val3;
 				break;
 			case eDashDDMMYYYY:
+			case eDashDMY:
 			case eSlashDDMMYYYY:
+			case eSlashDMY:
 				day = val1;
 				mon = val2;
 				yr = val3;
 				break;
 			}
+			date.SetDate(yr, mon, day);
 		}
-		date.SetDate(yr, mon, day);
 		if (date.IsValid())
 		{
 			int yr2, mon2, day2;
@@ -386,6 +399,19 @@ wxString ARBDate::GetString(
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
 	switch (inFormat)
 	{
+	case eLocale:
+		{
+			wxLocale locale(wxLANGUAGE_DEFAULT);
+			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
+			date = dt.FormatDate();
+		}
+		break;
+	case eCurrentLocale:
+		{
+			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
+			date = dt.FormatDate();
+		}
+		break;
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
 		date = wxString::Format(wxT("%02d-%02d-%04d"), mon, day, yr);
 		break;

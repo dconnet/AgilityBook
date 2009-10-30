@@ -394,7 +394,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		ARBDate date = ARBDate::FromString(value, ARBDate::eDefault);
+		ARBDate date = ARBDate::FromString(value, ARBDate::eDashYMD);
 		if (date.IsValid())
 			outValue = date;
 		else

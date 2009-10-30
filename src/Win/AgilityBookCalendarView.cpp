@@ -342,7 +342,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 				}
 
 				// Display date (only day now, not full date)
-				//wxString str(day.GetString(CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalendar)));
+				//wxString str(day.GetString());
 				str = wxString::Format(wxT("%d"), day.GetDay());
 				{
 					wxDCClipper clip(*pDC, rect);
@@ -648,14 +648,13 @@ void CAgilityBookCalendar::OnCopy()
 		columns[index] = str;
 	}
 	std::vector<ARBCalendarPtr>::const_iterator iter;
-	ARBDate::DateFormat dFmt = CAgilityBookOptions::GetDateFormat(CAgilityBookOptions::eCalList);
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr cal = *iter;
-		size_t len = cal->GetStartDate().GetString(dFmt).length();
+		size_t len = cal->GetStartDate().GetString().length();
 		if (len > maxLen[COL_START_DATE])
 			maxLen[COL_START_DATE] = len;
-		len = cal->GetEndDate().GetString(dFmt).length();
+		len = cal->GetEndDate().GetString().length();
 		if (len > maxLen[COL_END_DATE])
 			maxLen[COL_END_DATE] = len;
 		len = cal->GetLocation().length();
@@ -667,10 +666,10 @@ void CAgilityBookCalendar::OnCopy()
 		len = cal->GetVenue().length();
 		if (len > maxLen[COL_VENUE])
 			maxLen[COL_VENUE] = len;
-		len = cal->GetOpeningDate().GetString(dFmt).length();
+		len = cal->GetOpeningDate().GetString().length();
 		if (len > maxLen[COL_OPENS])
 			maxLen[COL_OPENS] = len;
-		len = cal->GetClosingDate().GetString(dFmt).length();
+		len = cal->GetClosingDate().GetString().length();
 		if (len > maxLen[COL_CLOSES])
 			maxLen[COL_CLOSES] = len;
 		len = cal->GetNote().length();
@@ -695,13 +694,13 @@ void CAgilityBookCalendar::OnCopy()
 	{
 		ARBCalendarPtr cal = *iter;
 		wxString items[scNumColumns];
-		items[COL_START_DATE] = cal->GetStartDate().GetString(dFmt);
-		items[COL_END_DATE] = cal->GetEndDate().GetString(dFmt);
+		items[COL_START_DATE] = cal->GetStartDate().GetString();
+		items[COL_END_DATE] = cal->GetEndDate().GetString();
 		items[COL_LOCATION] = cal->GetLocation();
 		items[COL_CLUB] = cal->GetClub();
 		items[COL_VENUE] = cal->GetVenue();
-		items[COL_OPENS] = cal->GetOpeningDate().GetString(dFmt);
-		items[COL_CLOSES] = cal->GetClosingDate().GetString(dFmt);
+		items[COL_OPENS] = cal->GetOpeningDate().GetString();
+		items[COL_CLOSES] = cal->GetClosingDate().GetString();
 		wxString tmp = cal->GetNote();
 		tmp.Replace(wxT("\n"), wxT(" "));
 		items[COL_NOTES] = tmp;
