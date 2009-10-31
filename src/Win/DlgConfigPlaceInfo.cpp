@@ -72,7 +72,7 @@ bool CPlaceValidator::Validate(wxWindow* parent)
 {
 	// We know...
 	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
-	short val = static_cast<short>(wxAtoi(pControl->GetValue()));
+	short val = static_cast<short>(wxAtol(pControl->GetValue()));
 
 	if (val != m_origPlace)
 	{

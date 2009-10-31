@@ -71,7 +71,7 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 	if (!CGenericValidator::Validate(parent))
 		return false;
 	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
-	short val = static_cast<short>(wxAtoi(pControl->GetValue()));
+	short val = static_cast<short>(wxAtol(pControl->GetValue()));
 	if (m_ctrlAllowMany->GetValue() && 1 > val)
 	{
 		wxBell();
