@@ -74,7 +74,7 @@ Create the files to be distributed (make sure you archive them too)
 In SourceForge, enter the File Releases section in Admin.
 - At the bottom of the page, 'Add Release' to 'agilitybook' package.
 - Enter all necessary information.
-- Upload all files (https://frs.sourceforge.net/webupload)
+- Upload all files (https://sourceforge.net/project/admin/explorer.php?group_id=86294)
   - Readme1st.vn.n.n.n.txt
   - AgilityBook-n_n_n_n-src.zip
   - AgilityBook-n_n_n_n-win-<lang>.zip
