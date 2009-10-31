@@ -95,7 +95,7 @@ bool CGenericValidator::TransferFromWindow()
 		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
 		if (m_pShort)
 		{
-			*m_pShort = static_cast<short>(wxAtoi(pControl->GetValue()));
+			*m_pShort = static_cast<short>(wxAtol(pControl->GetValue()));
 			return true;
 		}
 		else if (m_pDouble)
