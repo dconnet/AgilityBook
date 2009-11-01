@@ -40,32 +40,56 @@
 #include "ARBTypes.h"
 
 
+static wxString FormNumber(wxString const& d1, wxString const& dec, wxString const& d2)
+{
+	wxString val;
+	val << d1 << dec << d2;
+	return val;
+}
+
+
+static void RunDblTests()
+{
+	wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+
+	// ARBDouble always strips 0s unless prec ==2, unless =".00"
+	double p = 3.14159265358979323846;
+	wxString s = ARBDouble::str(p);
+	CHECK(FormNumber(wxT("3"), decimalPt, wxT("14")) == s);
+	s = ARBDouble::str(p, 4);
+	CHECK(FormNumber(wxT("3"), decimalPt, wxT("1416")) == s);
+
+	p = 2.1;
+	s = ARBDouble::str(p);
+	CHECK(FormNumber(wxT("2"), decimalPt, wxT("10")) == s);
+	s = ARBDouble::str(p, 0);
+	CHECK(FormNumber(wxT("2"), decimalPt, wxT("1")) == s);
+	s = ARBDouble::str(p, 3);
+	CHECK(FormNumber(wxT("2"), decimalPt, wxT("1")) == s);
+
+	p = 2;
+	s = ARBDouble::str(p);
+	CHECK(wxT("2") == s);
+	s = ARBDouble::str(p, 0);
+	CHECK(wxT("2") == s);
+	s = ARBDouble::str(p, 1);
+	CHECK(wxT("2") == s);
+}
+
+
 SUITE(TestDouble)
 {
-	TEST(strPrec)
+	TEST(strPrecUS)
 	{
-		// ARBDouble always strips 0s unless prec ==2, unless =".00"
-		double p = 3.14159265358979323846;
-		wxString s = ARBDouble::str(p);
-		CHECK(wxT("3.14") == s);
-		s = ARBDouble::str(p, 4);
-		CHECK(wxT("3.1416") == s);
+		wxLocale locale(wxLANGUAGE_ENGLISH_US);
+		RunDblTests();
+	}
 
-		p = 2.1;
-		s = ARBDouble::str(p);
-		CHECK(wxT("2.10") == s);
-		s = ARBDouble::str(p, 0);
-		CHECK(wxT("2.1") == s);
-		s = ARBDouble::str(p, 3);
-		CHECK(wxT("2.1") == s);
 
-		p = 2;
-		s = ARBDouble::str(p);
-		CHECK(wxT("2") == s);
-		s = ARBDouble::str(p, 0);
-		CHECK(wxT("2") == s);
-		s = ARBDouble::str(p, 1);
-		CHECK(wxT("2") == s);
+	TEST(strPrecFR)
+	{
+		wxLocale locale(wxLANGUAGE_FRENCH);
+		RunDblTests();
 	}
 
 
