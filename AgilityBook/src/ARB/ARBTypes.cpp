@@ -253,13 +253,19 @@ wxString ARBDouble::str(
 		retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
 	else
 		retVal = wxString::Format(wxT("%g"), inValue);
-	wxString::size_type pos = retVal.find('.');
+	wxUniChar pt = '.';
+	wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+	if (0 < decimalPt.length())
+		pt = decimalPt.GetChar(0);
+	wxString::size_type pos = retVal.find(pt);
 	if (wxString::npos != pos)
 	{
 		// Strip trailing zeros iff they are all 0.
 		if (2 == inPrec)
 		{
-			if (retVal.substr(pos) == wxT(".00"))
+			wxString twoZeros(decimalPt);
+			twoZeros += wxT("00");
+			if (retVal.substr(pos) == twoZeros)
 			{
 				// Input is ".00", so simplify
 				if (0 == pos)
@@ -276,7 +282,7 @@ wxString ARBDouble::str(
 			size_t oldLen = len;
 			while (0 < len && retVal[len-1] == '0')
 				--len;
-			if (0 < len && retVal[len-1] == '.')
+			if (0 < len && retVal[len-1] == pt)
 				--len;
 			if (len != oldLen)
 				retVal = retVal.substr(0, len);

@@ -87,11 +87,7 @@ SUITE(TestString)
 		long a2 = tstringUtil::ToCLong(s2);
 		CHECK(a2 == 12);
 		CHECK(!tstringUtil::ToCLong(s2, a2));
-#if wxCHECK_VERSION(2, 9, 0)
-		CHECK(a2 == 0);
-#else
 		CHECK(a2 == 12);
-#endif
 		CHECK(!tstringUtil::ToCLong(s2, a2, true));
 		CHECK(a2 == 12);
 	}
@@ -104,16 +100,13 @@ SUITE(TestString)
 		CHECK(a1 == 12.3);
 		wxString s2(wxT("1.3-12"));
 		double a2;
-		bool bParsed = tstringUtil::ToCDouble(s2, a2);
+		CHECK(!tstringUtil::ToCDouble(s2, a2));
 #if wxCHECK_VERSION(2, 9, 1)
 		CHECK(a2 == 1.3);
-		CHECK(!bParsed);
 #elif wxCHECK_VERSION(2, 9, 0)
 		CHECK(a2 == 0.0);
-		CHECK(!bParsed);
 #else
 		CHECK(a2 == 1.3);
-		CHECK(!bParsed);
 #endif
 	}
 
