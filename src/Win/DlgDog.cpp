@@ -1024,7 +1024,7 @@ void CDlgDog::UpdateAge()
 			current = m_Deceased;
 		ageDays = current - m_DOB;
 	}
-	m_ctrlAge->SetLabel(ARBDouble::str(ageDays/365.0, 1));
+	m_ctrlAge->SetLabel(ARBDouble::ToString(ageDays/365.0, 1));
 }
 
 

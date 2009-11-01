@@ -199,13 +199,13 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			str << m_pRun->GetScoring().GetCourseFaults();
 			break;
 		case IO_RUNS_TIME:
-			str << ARBDouble::str(m_pRun->GetScoring().GetTime());
+			str << ARBDouble::ToString(m_pRun->GetScoring().GetTime());
 			break;
 		case IO_RUNS_YARDS:
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetYards())
 			{
-				str << ARBDouble::str(m_pRun->GetScoring().GetYards(), 0);
+				str << ARBDouble::ToString(m_pRun->GetScoring().GetYards(), 0);
 			}
 			break;
 		case IO_RUNS_MIN_YPS:
@@ -213,7 +213,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				double yps;
 				if (m_pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 				{
-					str << ARBDouble::str(yps, 3);
+					str << ARBDouble::ToString(yps, 3);
 				}
 			}
 			break;
@@ -222,7 +222,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				double yps;
 				if (m_pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 				{
-					str << ARBDouble::str(yps, 3);
+					str << ARBDouble::ToString(yps, 3);
 				}
 			}
 			break;
@@ -238,7 +238,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				double ops;
 				if (m_pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
 				{
-					str << ARBDouble::str(ops, 3);
+					str << ARBDouble::ToString(ops, 3);
 				}
 			}
 			break;
@@ -246,7 +246,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			if (ARBDogRunScoring::eTypeByTime == m_pRun->GetScoring().GetType()
 			&& 0.0 < m_pRun->GetScoring().GetSCT())
 			{
-				str << ARBDouble::str(m_pRun->GetScoring().GetSCT());
+				str << ARBDouble::ToString(m_pRun->GetScoring().GetSCT());
 			}
 			break;
 		case IO_RUNS_TOTAL_FAULTS:
@@ -263,7 +263,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						NULL,
 						&pScoring);
 				double faults = m_pRun->GetScoring().GetCourseFaults() + m_pRun->GetScoring().GetTimeFaults(pScoring);
-				str << ARBDouble::str(faults, 0);
+				str << ARBDouble::ToString(faults, 0);
 			}
 			break;
 		case IO_RUNS_REQ_OPENING:
@@ -377,7 +377,7 @@ wxString CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						&pScoring);
 				if (pScoring)
 				{
-					str << ARBDouble::str(m_pRun->GetScore(pScoring));
+					str << ARBDouble::ToString(m_pRun->GetScore(pScoring));
 				}
 			}
 			break;

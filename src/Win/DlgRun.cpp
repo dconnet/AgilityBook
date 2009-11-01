@@ -234,7 +234,7 @@ wxString CDlgDogRefRunData::OnNeedText(long iCol) const
 		str = m_RefRun->GetScore();
 		break;
 	case 3: // Time
-		str = ARBDouble::str(m_RefRun->GetTime());
+		str = ARBDouble::ToString(m_RefRun->GetTime());
 		break;
 	case 4: // Name
 		str = m_RefRun->GetName();
@@ -1967,7 +1967,7 @@ void CDlgRun::SetMinYPS()
 		double yps;
 		if (m_Run->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 		{
-			str = ARBDouble::str(yps, 3);
+			str = ARBDouble::ToString(yps, 3);
 		}
 		m_ctrlMinYPSClosingTime->ChangeValue(str);
 	}
@@ -1982,7 +1982,7 @@ void CDlgRun::SetYPS()
 		double yps;
 		if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 		{
-			str = ARBDouble::str(yps, 3);
+			str = ARBDouble::ToString(yps, 3);
 		}
 		m_ctrlYPSOpeningPts->ChangeValue(str);
 	}
@@ -1995,7 +1995,7 @@ void CDlgRun::SetObstacles()
 	double ops;
 	if (m_Run->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
 	{
-		str = ARBDouble::str(ops, 3);
+		str = ARBDouble::ToString(ops, 3);
 	}
 	m_ctrlObstaclesPS->ChangeValue(str);
 }
@@ -2009,7 +2009,7 @@ void CDlgRun::SetTotalFaults()
 		ARBConfigScoringPtr pScoring;
 		GetScoring(&pScoring);
 		double faults = m_Run->GetScoring().GetCourseFaults() + m_Run->GetScoring().GetTimeFaults(pScoring);
-		total = ARBDouble::str(faults, 3);
+		total = ARBDouble::ToString(faults, 3);
 		m_ctrlClosingPtsTotalFaults->ChangeValue(total);
 	}
 }
@@ -2053,7 +2053,7 @@ void CDlgRun::SetTitlePoints()
 		if (q.Qualified()
 		|| ARB_Q::eQ_NQ == q
 		|| (ARB_Q::eQ_NA == q && ARBDouble::equal(0.0, static_cast<double>(pScoring->GetTitlePoints().size()))))
-			strScore = ARBDouble::str(m_Run->GetScore(pScoring));
+			strScore = ARBDouble::ToString(m_Run->GetScore(pScoring));
 	}
 	// Doesn't matter if they're hidden,..
 	m_ctrlBonusPts->ChangeValue(strBonus);
@@ -2193,7 +2193,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_textYardsReqOpeningPts->Show(true);
 		m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_YARDS"));
 		m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_YARDS"));
-		m_ctrlYardsReqOpeningPts->ChangeValue(ARBDouble::str(m_Yards));
+		m_ctrlYardsReqOpeningPts->ChangeValue(ARBDouble::ToString(m_Yards));
 		m_ctrlYardsReqOpeningPts->Show(true);
 		m_textMinYPSClosingTime->SetLabel(_("IDC_RUNSCORE_MIN_YPS"));
 		m_textMinYPSClosingTime->Show(true);
@@ -2249,7 +2249,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_ctrlMinYPSClosingTime->Show(true);
 		m_ctrlMinYPSClosingTime->SetHelpText(_("HIDC_RUNSCORE_SCT2"));
 		m_ctrlMinYPSClosingTime->SetToolTip(_("HIDC_RUNSCORE_SCT2"));
-		m_ctrlMinYPSClosingTime->ChangeValue(ARBDouble::str(m_SCT2));
+		m_ctrlMinYPSClosingTime->ChangeValue(ARBDouble::ToString(m_SCT2));
 		SetReadOnlyFlag(m_ctrlMinYPSClosingTime, false);
 		m_ctrlClosingText->Show(true);
 		str.Printf(wxT("%hd"), m_Closing);
@@ -2408,7 +2408,7 @@ void CDlgRun::CreateRefRunMe()
 		NULL,
 		&pScoring))
 	{
-		m_pRefRunMe->SetScore(ARBDouble::str(m_Run->GetScore(pScoring)));
+		m_pRefRunMe->SetScore(ARBDouble::ToString(m_Run->GetScore(pScoring)));
 	}
 
 	// Now see if I'm already in there.
@@ -2742,7 +2742,7 @@ void CDlgRun::OnSelchangeQ(wxCommandEvent& evt)
 
 void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 {
-	m_ctrlSCT->GetValue().ToDouble(&m_SCT);
+	tstringUtil::ToDouble(m_ctrlSCT->GetValue(), m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetMinYPS();
 	SetObstacles();
@@ -2753,7 +2753,7 @@ void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 
 void CDlgRun::OnClosingTimeChange(wxCommandEvent& evt)
 {
-	m_ctrlMinYPSClosingTime->GetValue().ToDouble(&m_SCT2);
+	tstringUtil::ToDouble(m_ctrlMinYPSClosingTime->GetValue(), m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
 	SetObstacles();
 }
@@ -2803,7 +2803,7 @@ void CDlgRun::OnReqClosingChange(wxCommandEvent& evt)
 
 void CDlgRun::OnTimeChange(wxCommandEvent& evt)
 {
-	m_ctrlTime->GetValue().ToDouble(&m_Time);
+	tstringUtil::ToDouble(m_ctrlTime->GetValue(), m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
 	SetYPS();
 	SetObstacles();

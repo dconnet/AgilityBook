@@ -1,3 +1,7 @@
+10/31/2009: v2.1.1.* <in development>
+- New features / Enhancements:
+  - Better localization support.
+
 10/31/2009: v2.1.0.2499
 - New features / Enhancements:
   - Start adding support for wxWidgets 2.9, deprecate 'tstring'.

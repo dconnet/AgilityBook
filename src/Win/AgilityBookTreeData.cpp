@@ -779,7 +779,7 @@ wxString CAgilityBookTreeDataDog::OnNeedText() const
 				if (m_pDog->GetDeceased().IsValid())
 					current = wxDateTime(m_pDog->GetDeceased().GetDate());
 				wxTimeSpan age = current - dob;
-				str += wxString::Format(_("IDS_YEARS"), ARBDouble::str(age.GetDays()/365.0, 1).c_str());
+				str += wxString::Format(_("IDS_YEARS"), ARBDouble::ToString(age.GetDays()/365.0, 1).c_str());
 			}
 			break;
 		}
