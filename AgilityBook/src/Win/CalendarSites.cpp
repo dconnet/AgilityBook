@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-11-01 DRC Fixed canonical parsing of dll names on unix.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-06 DRC Fix plugin enabling (full path was being stored in map)
  * @li 2009-02-10 DRC Ported to wxWidgets.
@@ -688,11 +689,13 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 			while (cont)
 			{
 				wxFileName name(m_PathName + filename);
-				wxString fullFilename = name.GetPath() + wxFileName::GetPathSeparator() + name.GetName();
-				// This will append ".dll" on windows, prepend "lib"/append
-				// ".so" under linux, etc. We're doing this to weed out "other"
-				// files, like "cal_usdaaReadme.txt".
-				fullFilename = wxDynamicLibrary::CanonicalizeName(fullFilename, wxDL_LIBRARY);
+				// This will append ".dll" on windows, append ".so" under
+				// linux, etc. We're doing this to weed out "other" files,
+				// like "cal_usdaaReadme.txt". (By using 'module', we
+				// avoid prepending 'lib' on unix)
+				wxString fullFilename = name.GetPath()
+					+ wxFileName::GetPathSeparator()
+					+ wxDynamicLibrary::CanonicalizeName(name.GetName(), wxDL_MODULE);
 				if (wxFile::Exists(fullFilename))
 				{
 					filename = wxFileName(fullFilename).GetFullName();
