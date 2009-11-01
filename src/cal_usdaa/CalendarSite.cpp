@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-11-01 DRC Change how initialization is done.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-25 DRC Ported to wxWidgets.
  * @li 2007-08-12 DRC Created
@@ -111,6 +112,13 @@ static void StripNewlines(wxString& inStr)
 class CCalendarSite : public ICalendarSite
 {
 public:
+	// In general, you load the library once and call GetCalendarInterface
+	// once. So there shouldn't be any thread issues. If you have multiple
+	// threads loading the plugin, you will likely have issues. And we can't
+	// really use wxCriticalSection - we haven't initialized wxWidgets yet.
+	static void Initialize(); ///< Not thread-safe
+	static void Terminate(); ///< Not thread-safe
+
 	CCalendarSite();
 	~CCalendarSite();
 
@@ -126,16 +134,46 @@ public:
 			char const* inLocCodes,
 			char const* inVenueCodes,
 			IProgressMeter* progress) const;
+private:
+	static int m_RefCount;
 };
+
+
+int CCalendarSite::m_RefCount = 0;
+
+
+void CCalendarSite::Initialize()
+{
+	++m_RefCount;
+	if (1 == m_RefCount)
+	{
+		wxInitialize();
+		wxString err;
+		Element::Initialize(err);
+	}
+}
+
+
+void CCalendarSite::Terminate()
+{
+	--m_RefCount;
+	if (0 == m_RefCount)
+	{
+		Element::Terminate();
+		wxUninitialize();
+	}
+}
 
 
 CCalendarSite::CCalendarSite()
 {
+	CCalendarSite::Initialize();
 }
 
 
 CCalendarSite::~CCalendarSite()
 {
+	CCalendarSite::Terminate();
 }
 
 
@@ -533,6 +571,10 @@ char* CCalendarSite::Process(
 
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @note Important: You must release this interface before the application
+ *       exits. If not (at least on Windows), you will crash.
+ */
 extern "C"
 #ifdef _MSC_VER
 __declspec(dllexport)
