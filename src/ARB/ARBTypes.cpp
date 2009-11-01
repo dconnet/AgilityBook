@@ -249,18 +249,22 @@ wxString ARBDouble::ToString(
 		int inPrec,
 		LocaleType eUseDefaultLocale)
 {
-	wxString retVal;
-	if (0 < inPrec)
-		retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
-	else
-		retVal = wxString::Format(wxT("%g"), inValue);
 #if wxCHECK_VERSION(2, 9, 0)
 	wxUniChar pt = '.';
 #else
 	wxChar pt = '.';
 #endif
 	wxLocale* locale = NULL;
-	if (eNone != eUseDefaultLocale)
+	if (eNone == eUseDefaultLocale)
+	{
+		// Somehow on Mac, then running TestARB, French is still the current
+		// language, which caused Format (below) to use a comma for the
+		// decimal. Which then caused the rest of the test to fail, as we
+		// were expecting '.'s. This didn't happen on Windows.
+		// So force in English to get '.' for separators.
+		locale = new wxLocale(wxLANGUAGE_ENGLISH_US);
+	}
+	else
 	{
 		if (eDefault == eUseDefaultLocale)
 			locale = new wxLocale(wxLANGUAGE_DEFAULT);
@@ -268,6 +272,11 @@ wxString ARBDouble::ToString(
 		if (0 < decimalPt.length())
 			pt = decimalPt.GetChar(0);
 	}
+	wxString retVal;
+	if (0 < inPrec)
+		retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
+	else
+		retVal = wxString::Format(wxT("%g"), inValue);
 	wxString::size_type pos = retVal.find(pt);
 	if (wxString::npos != pos)
 	{
