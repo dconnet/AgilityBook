@@ -97,31 +97,31 @@ std::string tstringUtil::tstringA(wxString const& inStr)
 }
 
 
-bool tstringUtil::ToLong(wxString const& inStr, long& outValue)
-{
-	return inStr.ToLong(&outValue);
-}
-
-
-long tstringUtil::ToLong(wxString const& inStr)
-{
-	long val = 0;
-	ToLong(inStr, val);
-	return val;
-}
-
-
 bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
 {
-	return inStr.ToDouble(&outValue);
-}
-
-
-double tstringUtil::ToDouble(wxString const& inStr)
-{
-	double val = 0.0;
-	ToDouble(inStr, val);
-	return val;
+	bool rc = inStr.ToDouble(&outValue);
+	if (!rc)
+	{
+		// This may have failed for 2 reasons:
+		// - Bad data.
+		// - Different decimal point from Locale.
+#if wxCHECK_VERSION(2, 9, 0)
+		wxUniChar pt = '.';
+#else
+		wxChar pt = '.';
+#endif
+		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+		if (0 < decimalPt.length())
+			pt = decimalPt.GetChar(0);
+		// So we only reparse if the incoming string does not contain
+		// the locale's decimal point.
+		if (pt != wxT('.') && wxString::npos == inStr.find(pt))
+		{
+			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+			rc = inStr.ToDouble(&outValue);
+		}
+	}
+	return rc;
 }
 
 
@@ -138,17 +138,11 @@ bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 		str >> outValue;
 	}
 #else
+	// Ideally, this would be the c-locale. Not sure how to do that in 2.8.
+	wxLocale locale(wxLANGUAGE_ENGLISH_US);
 	bool bOk = inStr.ToLong(&outValue);
 #endif
 	return bOk;
-}
-
-
-int tstringUtil::ToCLong(wxString const& inStr)
-{
-	long val = 0;
-	ToCLong(inStr, val, true);
-	return static_cast<int>(val);
 }
 
 
@@ -159,16 +153,9 @@ bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
 	// is for parsing an actual number in Element.
 	return inStr.ToCDouble(&outValue);
 #else
+	wxLocale locale(wxLANGUAGE_ENGLISH_US);
 	return inStr.ToDouble(&outValue);
 #endif
-}
-
-
-double tstringUtil::ToCDouble(wxString const& inStr)
-{
-	double val = 0.0;
-	ToCDouble(inStr, val);
-	return val;
 }
 
 
