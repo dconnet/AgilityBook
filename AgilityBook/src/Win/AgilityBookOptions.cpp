@@ -1019,14 +1019,16 @@ void CAgilityBookOptions::GetColumnOrder(
 		int idx = data.Find(',');
 		while (0 <= idx)
 		{
-			int val = tstringUtil::atol(data);
+			long val;
+			tstringUtil::ToCLong(data, val, true);
 			outValues.push_back(val);
 			data = data.Mid(idx+1);
 			idx = data.Find(',');
 		}
 		if (0 < data.length())
 		{
-			long val = tstringUtil::atol(data);
+			long val;
+			tstringUtil::ToCLong(data, val, true);
 			outValues.push_back(val);
 		}
 	}

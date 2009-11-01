@@ -372,13 +372,13 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 		wxString::size_type pos = value.find('.');
 		if (wxString::npos != pos)
 		{
-			major = static_cast<unsigned short>(tstringUtil::atol(value));
+			major = static_cast<unsigned short>(tstringUtil::ToCLong(value));
 			value = value.substr(pos+1);
-			minor = static_cast<unsigned short>(tstringUtil::atol(value));
+			minor = static_cast<unsigned short>(tstringUtil::ToCLong(value));
 		}
 		else
 		{
-			major = static_cast<unsigned short>(tstringUtil::atol(value));
+			major = static_cast<unsigned short>(tstringUtil::ToCLong(value));
 		}
 		outValue = ARBVersion(major, minor);
 	}
@@ -432,7 +432,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = static_cast<short>(tstringUtil::atol(value));
+			outValue = static_cast<short>(tstringUtil::ToCLong(value));
 		else
 			rc = eInvalidValue;
 	}
@@ -449,7 +449,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = tstringUtil::atol(value);
+		{
+			if (!tstringUtil::ToCLong(value, outValue))
+				rc = eInvalidValue;
+		}
 		else
 			rc = eInvalidValue;
 	}
@@ -466,7 +469,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = tstringUtil::strtod(value);
+		{
+			if (!tstringUtil::ToCDouble(value, outValue))
+				rc = eInvalidValue;
+		}
 		else
 			rc = eInvalidValue;
 	}
