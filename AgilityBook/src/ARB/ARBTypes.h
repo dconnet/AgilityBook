@@ -523,9 +523,16 @@ class ARBDouble
 	ARBDouble();
 	~ARBDouble();
 public:
-	static wxString str(
+	enum LocaleType
+	{
+		eNone,		///< Use '.' in numbers always.
+		eCurrent,	///< Use current locale.
+		eDefault	///< Use default (system) locale.
+	};
+	static wxString ToString(
 			double inValue,
-			int inPrec = 2);
+			int inPrec = 2,
+			LocaleType eUseDefaultLocale = eDefault);
 
 	/**
 	 * Compare two doubles, allowing for 'prec' error.

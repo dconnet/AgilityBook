@@ -671,17 +671,17 @@ void CWizardExport::UpdatePreview()
 										}
 										break;
 									case IO_RUNS_TIME:
-										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetTime()));
+										data += AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScoring().GetTime()));
 										break;
 									case IO_RUNS_YARDS:
-										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetYards(), 3));
+										data += AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScoring().GetYards(), 3));
 										break;
 									case IO_RUNS_MIN_YPS:
 										{
 											double yps;
 											if (pRun->GetScoring().GetMinYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 											{
-												data += AddPreviewData(iLine, idx, ARBDouble::str(yps, 3));
+												data += AddPreviewData(iLine, idx, ARBDouble::ToString(yps, 3));
 											}
 										}
 										break;
@@ -690,7 +690,7 @@ void CWizardExport::UpdatePreview()
 											double yps;
 											if (pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 											{
-												data += AddPreviewData(iLine, idx, ARBDouble::str(yps, 3));
+												data += AddPreviewData(iLine, idx, ARBDouble::ToString(yps, 3));
 											}
 										}
 										break;
@@ -710,19 +710,19 @@ void CWizardExport::UpdatePreview()
 											double ops;
 											if (pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
 											{
-												data += AddPreviewData(iLine, idx, ARBDouble::str(ops, 3));
+												data += AddPreviewData(iLine, idx, ARBDouble::ToString(ops, 3));
 											}
 										}
 										break;
 									case IO_RUNS_SCT:
-										data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScoring().GetSCT()));
+										data += AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScoring().GetSCT()));
 										break;
 									case IO_RUNS_TOTAL_FAULTS:
 										{
 											if (ARBDogRunScoring::eTypeByTime == pRun->GetScoring().GetType())
 											{
 												double faults = pRun->GetScoring().GetCourseFaults() + pRun->GetScoring().GetTimeFaults(pScoring);
-												data += AddPreviewData(iLine, idx, ARBDouble::str(faults, 3));
+												data += AddPreviewData(iLine, idx, ARBDouble::ToString(faults, 3));
 											}
 										}
 										break;
@@ -834,7 +834,7 @@ void CWizardExport::UpdatePreview()
 										if (pRun->GetQ().Qualified()
 										|| ARB_Q::eQ_NQ == pRun->GetQ())
 										{
-											data += AddPreviewData(iLine, idx, ARBDouble::str(pRun->GetScore(pScoring)));
+											data += AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScore(pScoring)));
 										}
 										break;
 									case IO_RUNS_TITLE_POINTS:

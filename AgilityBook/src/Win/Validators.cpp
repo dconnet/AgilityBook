@@ -95,13 +95,15 @@ bool CGenericValidator::TransferFromWindow()
 		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
 		if (m_pShort)
 		{
-			*m_pShort = static_cast<short>(wxAtol(pControl->GetValue()));
+			long val;
+			if (!tstringUtil::ToLong(pControl->GetValue(), val))
+				return false;
+			*m_pShort = static_cast<short>(val);
 			return true;
 		}
 		else if (m_pDouble)
 		{
-			pControl->GetValue().ToDouble(m_pDouble);
-			return true;
+			return tstringUtil::ToDouble(pControl->GetValue(), *m_pDouble);
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
@@ -135,7 +137,7 @@ bool CGenericValidator::TransferToWindow()
 		}
 		else if (m_pDouble)
 		{
-			pControl->SetValue(ARBDouble::str(*m_pDouble, m_Prec));
+			pControl->SetValue(ARBDouble::ToString(*m_pDouble, m_Prec));
 			return true;
 		}
 	}

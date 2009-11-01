@@ -244,9 +244,10 @@ bool ARB_Q::Save(
 
 // Trailing zeros are trimmed unless inPrec=2.
 // Then they are only trimmed if all zero (and inPrec=2).
-wxString ARBDouble::str(
+wxString ARBDouble::ToString(
 		double inValue,
-		int inPrec)
+		int inPrec,
+		LocaleType eUseDefaultLocale)
 {
 	wxString retVal;
 	if (0 < inPrec)
@@ -258,16 +259,22 @@ wxString ARBDouble::str(
 #else
 	wxChar pt = '.';
 #endif
-	wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
-	if (0 < decimalPt.length())
-		pt = decimalPt.GetChar(0);
+	wxLocale* locale = NULL;
+	if (eNone != eUseDefaultLocale)
+	{
+		if (eDefault == eUseDefaultLocale)
+			locale = new wxLocale(wxLANGUAGE_DEFAULT);
+		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+		if (0 < decimalPt.length())
+			pt = decimalPt.GetChar(0);
+	}
 	wxString::size_type pos = retVal.find(pt);
 	if (wxString::npos != pos)
 	{
 		// Strip trailing zeros iff they are all 0.
 		if (2 == inPrec)
 		{
-			wxString twoZeros(decimalPt);
+			wxString twoZeros(pt);
 			twoZeros += wxT("00");
 			if (retVal.substr(pos) == twoZeros)
 			{
@@ -292,6 +299,7 @@ wxString ARBDouble::str(
 				retVal = retVal.substr(0, len);
 		}
 	}
+	delete locale;
 	return retVal;
 }
 

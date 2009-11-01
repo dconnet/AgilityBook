@@ -566,7 +566,7 @@ bool ElementNode::AddAttrib(
 {
 	if (inName.empty())
 		return false;
-	m_Attribs[inName] = ARBDouble::str(inValue, inPrec);
+	m_Attribs[inName] = ARBDouble::ToString(inValue, inPrec, ARBDouble::eNone);
 	return true;
 }
 
@@ -958,5 +958,5 @@ void ElementText::SetValue(
 		double inValue,
 		int inPrec)
 {
-	m_Value = ARBDouble::str(inValue, inPrec);
+	m_Value = ARBDouble::ToString(inValue, inPrec, ARBDouble::eNone);
 }

@@ -400,7 +400,7 @@ static void RefRunHelper(wxString& text, ARBDogReferenceRunPtr ref, int code)
 		{
 			double val = ref->GetTime();
 			if (0.0 < val)
-				text << ARBDouble::str(val);
+				text << ARBDouble::ToString(val);
 		}
 		break;
 	case CODE_REFSCORE1:
@@ -512,7 +512,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 		{
 			double val = run->GetScoring().GetSCT();
 			if (0.0 < val)
-				text << ARBDouble::str(val);
+				text << ARBDouble::ToString(val);
 		}
 		break;
 	case CODE_YARDS:
@@ -520,7 +520,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 		{
 			double val = run->GetScoring().GetYards();
 			if (0.0 < val)
-				text << ARBDouble::str(val, 0);
+				text << ARBDouble::ToString(val, 0);
 		}
 		break;
 	case CODE_OPEN:
@@ -547,7 +547,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 		{
 			double val = run->GetScoring().GetTime();
 			if (0.0 < val)
-				text << ARBDouble::str(val);
+				text << ARBDouble::ToString(val);
 		}
 		break;
 	case CODE_FAULTS:
@@ -569,7 +569,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 			{
 				text << run->GetScoring().GetCourseFaults();
 				if (0.0 < timeFaults)
-					text << wxT("+") << ARBDouble::str(timeFaults, 0);
+					text << wxT("+") << ARBDouble::ToString(timeFaults, 0);
 			}
 		}
 		break;

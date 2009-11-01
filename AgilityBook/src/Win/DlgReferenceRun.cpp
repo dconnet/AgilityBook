@@ -92,7 +92,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
-		strYPS = ARBDouble::str(yps, 3);
+		strYPS = ARBDouble::ToString(yps, 3);
 	}
 
 	// Controls (these are done first to control tab order)
@@ -275,7 +275,7 @@ void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
 	double yps;
 	if (m_Run->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), m_Time, yps))
 	{
-		strYPS = ARBDouble::str(yps, 3);
+		strYPS = ARBDouble::ToString(yps, 3);
 	}
 	else
 	{
