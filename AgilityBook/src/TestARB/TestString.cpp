@@ -118,6 +118,36 @@ SUITE(TestString)
 	}
 
 
+#if wxCHECK_VERSION(2, 9, 1)
+	TEST(AtodUS)
+	{
+		wxLocale locale(wxLANGUAGE_ENGLISH_US);
+		wxString s1(wxT("12.3"));
+		double a1 = tstringUtil::ToDouble(s1);
+		CHECK(a1 == 12.3);
+		wxString s2(wxT("1.3-12"));
+		double a2;
+		bool bParsed = tstringUtil::ToDouble(s2, a2);
+		CHECK(a2 == 1.3);
+		CHECK(!bParsed);
+	}
+
+
+	TEST(AtodFR)
+	{
+		wxLocale locale(wxLANGUAGE_FRENCH);
+		wxString s1(wxT("12,3"));
+		double a1 = tstringUtil::ToDouble(s1);
+		CHECK(a1 == 12.3);
+		wxString s2(wxT("1,3-12"));
+		double a2;
+		bool bParsed = tstringUtil::ToDouble(s2, a2);
+		CHECK(a2 == 1.3);
+		CHECK(!bParsed);
+	}
+#endif
+
+
 	TEST(ReplaceA)
 	{
 		std::string s("This is a test");
