@@ -253,7 +253,11 @@ wxString ARBDouble::str(
 		retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
 	else
 		retVal = wxString::Format(wxT("%g"), inValue);
+#if wxCHECK_VERSION(2, 9, 0)
 	wxUniChar pt = '.';
+#else
+	wxChar pt = '.';
+#endif
 	wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
 	if (0 < decimalPt.length())
 		pt = decimalPt.GetChar(0);
