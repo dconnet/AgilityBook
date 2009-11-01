@@ -97,41 +97,78 @@ std::string tstringUtil::tstringA(wxString const& inStr)
 }
 
 
-long tstringUtil::atol(wxString const& inStr, bool* bParsedOk)
+bool tstringUtil::ToLong(wxString const& inStr, long& outValue)
 {
-	long l = 0;
-#if wxCHECK_VERSION(2, 9, 0)
-	if (!inStr.ToCLong(&l))
-	{
-		// The above fails for "123-45". Before it returned 123.
-		// That's the behavior I'm relying on. (Needed when reading dates)
-		std::string tmp(tstringUtil::tstringA(inStr.wx_str()));
-		std::istringstream str(tmp);
-		str >> l;
-	}
-	bool bParsed = true;
-#else
-	bool bParsed = inStr.ToLong(&l);
-#endif
-	if (bParsedOk)
-		*bParsedOk = bParsed;
-	return l;
+	return inStr.ToLong(&outValue);
 }
 
 
-double tstringUtil::strtod(wxString const& inStr, bool* bParsedOk)
+long tstringUtil::ToLong(wxString const& inStr)
 {
-	double d = 0.0;
+	long val = 0;
+	ToLong(inStr, val);
+	return val;
+}
+
+
+bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
+{
+	return inStr.ToDouble(&outValue);
+}
+
+
+double tstringUtil::ToDouble(wxString const& inStr)
+{
+	double val = 0.0;
+	ToDouble(inStr, val);
+	return val;
+}
+
+
+bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
+{
+#if wxCHECK_VERSION(2, 9, 0)
+	bool bOk = inStr.ToCLong(&outValue);
+	// The above fails for "123-45" and returns 0. Before it returned 123.
+	// That's the behavior I'm relying on. (Needed when reading dates)
+	if (!bOk && bRetry)
+	{
+		std::string tmp(tstringUtil::tstringA(inStr.wx_str()));
+		std::istringstream str(tmp);
+		str >> outValue;
+	}
+#else
+	bool bOk = inStr.ToLong(&outValue);
+#endif
+	return bOk;
+}
+
+
+int tstringUtil::ToCLong(wxString const& inStr)
+{
+	long val = 0;
+	ToCLong(inStr, val, true);
+	return static_cast<int>(val);
+}
+
+
+bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
+{
 #if wxCHECK_VERSION(2, 9, 0)
 	// This will fail on "1.2-3". That's ok. The only time this is used
-	// is for parsing an actual number.
-	bool bParsed = inStr.ToCDouble(&d);
+	// is for parsing an actual number in Element.
+	return inStr.ToCDouble(&outValue);
 #else
-	bool bParsed = inStr.ToDouble(&d);
+	return inStr.ToDouble(&outValue);
 #endif
-	if (bParsedOk)
-		*bParsedOk = bParsed;
-	return d;
+}
+
+
+double tstringUtil::ToCDouble(wxString const& inStr)
+{
+	double val = 0.0;
+	ToCDouble(inStr, val);
+	return val;
 }
 
 

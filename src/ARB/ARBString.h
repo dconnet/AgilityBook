@@ -56,8 +56,19 @@ public:
 	static std::string tstringA(wxMemoryOutputStream const& inStr);
 	static std::string tstringA(wxString const& inStr);
 
-	static long atol(wxString const& inStr, bool* bParsedOk = NULL);
-	static double strtod(wxString const& inStr, bool* bParsedOk = NULL);
+	// These functions mimic wx2.9.x. They enable wx2.8 usage.
+	// The To<type> uses locales.
+	// The ToC<type> use the "C" locale.
+	// Typically, the "ToC" routines are only used in Element.
+	static bool ToLong(wxString const& inStr, long& outValue);
+	static long ToLong(wxString const& inStr);
+	static bool ToDouble(wxString const& inStr, double& outValue);
+	static double ToDouble(wxString const& inStr);
+	// bRetry is for wx2.9+: It fails on "123-23" now. Old behavior returned "123".
+	static bool ToCLong(wxString const& inStr, long& outValue, bool bRetry = false);
+	static int ToCLong(wxString const& inStr);
+	static bool ToCDouble(wxString const& inStr, double& outValue);
+	static double ToCDouble(wxString const& inStr);
 
 	static std::string Replace(
 			std::string const& inStr,

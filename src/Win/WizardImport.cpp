@@ -991,68 +991,68 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_RUNS_COURSE_FAULTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetCourseFaults(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetCourseFaults(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_TIME:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetTime(tstringUtil::strtod(entry[iCol]));
+						pRun->GetScoring().SetTime(tstringUtil::ToDouble(entry[iCol]));
 						break;
 					case IO_RUNS_YARDS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetYards(tstringUtil::strtod(entry[iCol]));
+						pRun->GetScoring().SetYards(tstringUtil::ToDouble(entry[iCol]));
 						break;
 					case IO_RUNS_YPS:
 						// Computed
 						break;
 					case IO_RUNS_OBSTACLES:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetObstacles(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetObstacles(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_OPS:
 						// Computed
 						break;
 					case IO_RUNS_SCT:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetSCT(tstringUtil::strtod(entry[iCol]));
+						pRun->GetScoring().SetSCT(tstringUtil::ToDouble(entry[iCol]));
 						break;
 					case IO_RUNS_TOTAL_FAULTS:
 						// Computed.
 						break;
 					case IO_RUNS_REQ_OPENING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_REQ_CLOSING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedClosePts(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetNeedClosePts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_OPENING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetOpenPts(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_CLOSING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetClosePts(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetClosePts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_REQ_POINTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_POINTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetOpenPts(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->GetScoring().SetOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_PLACE:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetPlace(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->SetPlace(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_IN_CLASS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetInClass(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->SetInClass(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_DOGSQD:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetDogsQd(static_cast<short>(tstringUtil::atol(entry[iCol])));
+						pRun->SetDogsQd(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_Q:
 						{

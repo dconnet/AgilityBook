@@ -189,24 +189,24 @@ ARBDate ARBDate::Today()
 static int ParseFields(
 		wxString inDate,
 		char sep,
-		int& val1,
-		int& val2,
-		int& val3)
+		unsigned short& val1,
+		unsigned short& val2,
+		unsigned short& val3)
 {
 	int nVals = 0;
 	wxString::size_type pos = inDate.find(sep);
 	if (wxString::npos != pos)
 	{
-		val1 = static_cast<short>(tstringUtil::atol(inDate));
+		val1 = static_cast<unsigned short>(tstringUtil::ToCLong(inDate));
 		++nVals;
 		inDate = inDate.substr(pos+1);
 		pos = inDate.find(sep);
 		if (wxString::npos != pos)
 		{
-			val2 = static_cast<short>(tstringUtil::atol(inDate));
+			val2 = static_cast<unsigned short>(tstringUtil::ToCLong(inDate));
 			++nVals;
 			inDate = inDate.substr(pos+1);
-			val3 = static_cast<short>(tstringUtil::atol(inDate));
+			val3 = static_cast<unsigned short>(tstringUtil::ToCLong(inDate));
 			++nVals;
 		}
 	}
@@ -232,7 +232,7 @@ ARBDate ARBDate::FromString(
 	}
 	else if (0 < inDate.length())
 	{
-		int val1 = 0, val2 = 0, val3 = 0;
+		unsigned short val1 = 0, val2 = 0, val3 = 0;
 		int nDash = ParseFields(inDate, '-', val1, val2, val3);
 		int nSlash = ParseFields(inDate, '/', val1, val2, val3);
 		int yr = 0, mon = 0, day = 0;

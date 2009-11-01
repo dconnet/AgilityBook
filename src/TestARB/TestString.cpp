@@ -81,10 +81,18 @@ SUITE(TestString)
 	TEST(Atol)
 	{
 		wxString s1(wxT("123"));
-		long a1 = tstringUtil::atol(s1);
+		long a1 = tstringUtil::ToCLong(s1);
 		CHECK(a1 == 123);
 		wxString s2(wxT("12-3"));
-		long a2 = tstringUtil::atol(s2);
+		long a2 = tstringUtil::ToCLong(s2);
+		CHECK(a2 == 12);
+		CHECK(!tstringUtil::ToCLong(s2, a2));
+#if wxCHECK_VERSION(2, 9, 0)
+		CHECK(a2 == 0);
+#else
+		CHECK(a2 == 12);
+#endif
+		CHECK(!tstringUtil::ToCLong(s2, a2, true));
 		CHECK(a2 == 12);
 	}
 
@@ -92,18 +100,20 @@ SUITE(TestString)
 	TEST(Atod)
 	{
 		wxString s1(wxT("12.3"));
-		double a1 = tstringUtil::strtod(s1);
+		double a1 = tstringUtil::ToCDouble(s1);
 		CHECK(a1 == 12.3);
 		wxString s2(wxT("1.3-12"));
-		bool bParsed;
-		double a2 = tstringUtil::strtod(s2, &bParsed);
+		double a2;
+		bool bParsed = tstringUtil::ToCDouble(s2, a2);
 #if wxCHECK_VERSION(2, 9, 1)
 		CHECK(a2 == 1.3);
+		CHECK(!bParsed);
 #elif wxCHECK_VERSION(2, 9, 0)
 		CHECK(a2 == 0.0);
 		CHECK(!bParsed);
 #else
 		CHECK(a2 == 1.3);
+		CHECK(!bParsed);
 #endif
 	}
 
