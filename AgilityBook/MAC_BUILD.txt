@@ -17,14 +17,14 @@ just the active one. In Debug, it's set to active, in Release, that's now off]
    - Also, it's highly recommended to update svn (sudo port install svn)
 
 1. Install boost from source - download and then extract to a directory
-(i.e. boost_1_38_0)
-> cd boost_1_38_0
+(i.e. boost_1_40_0)
+> cd boost_1_40_0
 - Optionally, you can build this - don't need to though.
 > bjam toolset=darwin variant=debug threading=multi link=static architecture=combined
 
 If you don't install them in the system directory set the BOOSTINCLUDE env var
 to the root of the boost directory:
-> export BOOSTINCLUDE=/Users/me/boost_1_38_0
+> export BOOSTINCLUDE=/Users/me/boost_1_40_0
 -- This can also be set in ~/.MacOSX/environment.plist (property manager)
 
 2. Download and install WxMac (wxWidgets) in a local directory
@@ -42,17 +42,18 @@ extract the tar to a directory (i.e ~/wx/wxWidgets-n.n.n [$WXWIN])
 configure as a statically linked universal binary containing all builtin libs
 to make easier to deploy:
 [Note: Due to a bug in wxWidgets, as of 2.8.10, do not use unicode. Formatting
-strings does not work properly]
-> ../configure --disable-shared --disable-unicode --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
-[2.9.1+] ["build-ansi" -> "build-unicode"]
-> ../configure --disable-shared --disable-debug_flag --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat28 --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
+strings using positional formatting does not work properly]
+> ../configure --disable-shared --disable-debug_flag --disable-unicode --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
+[2.9.1+]
+> ../configure --disable-shared --disable-debug_flag --disable-unicode --disable-debug_flag --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat28 --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
 > make
+
 To enable debug builds in xcode:
 > mkdir build-debug
 > cd build-debug
-> ../configure --enable-debug --enable-debug_gdb --disable-shared --disable-unicode --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.3.9 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
+> ../configure --enable-debug --enable-debug_gdb --disable-shared --disable-unicode --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat26 --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
 [2.9.1+]
-> ../configure --enable-debug --enable-debug_gdb --disable-shared --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat28 --with-macosx-version-min=10.3.9 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
+> ../configure --enable-debug --enable-debug_gdb --disable-shared --disable-unicode --disable-debug_flag --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --disable-compat28 --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
 > make
 The debug configuration of xcode is based on this.
 
@@ -62,16 +63,17 @@ agilitybook it picks this version of wxMac
 
 I simply created a 'setwxpath' in my root directory and execute:
 > . ./setwxpath
+(This (and setupwx) can be found in .../AgilityBook/build/)
 
 3. Build agilitybook as universal binary for PPC and Intel 32 bit architectures
 > cd AgilityBook/
 > autoconf
-> mkdir build
-> cd build
+> mkdir build-ansi
+> cd build-ansi
 > ../configure
 > make dist
 
-4a. To package the distribution bundle [optional]
+4a. To package the distribution bundle [optional] [note, I do not do this]
 - open /Developer/Applications/Utilities/PackageMaker
 - select the Open menu option and open the Package Maker package build/AgilityRecordBook.pmdoc
 - select the Build option and save the package wherever you like.

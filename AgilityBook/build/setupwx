@@ -1,0 +1,53 @@
+# A script I use on the Mac to help manage multiple build environments.
+# This allows working with the released 2.8 version and also testing using
+# the current SourceForge trunk. (Use svn to manage that)
+#
+# This will clean and configure the build directory for a wxWidget build.
+# (I put this script in my home dir)
+
+export BUILDDIR
+export DEBUG
+export UNICODESETTING
+export VERSION=
+export WXWIN=
+USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
+
+if test "x$1" = "xtrunk"; then
+	WXWIN=~/wx/trunk
+	VERSION="--disable-compat28"
+elif test "x$1" = "x2.8"; then
+	WXWIN=~/wx/wxMac-2.8.10
+	VERSION="--disable-compat26"
+else
+	echo $USAGE
+	exit
+fi
+BUILDDIR="$WXWIN/build"
+
+if test "x$2" = "xunicode"; then
+	BUILDDIR+="-unicode"
+	UNICODESETTING="--enable-unicode"
+elif test "x$2" = "xansi"; then
+	BUILDDIR+="-ansi"
+	UNICODESETTING="--disable-unicode"
+else
+	echo $USAGE
+	exit
+fi
+
+if test "x$3" = "xdebug"; then
+	DEBUG="--enable-debug --enable-debug_gdb"
+	BUILDDIR+="-debug"
+elif test "x$3" = "xrelease"; then
+	DEBUG="--disable-debug_flag"
+else
+	$0 $1 $2 debug
+	$0 $1 $2 release
+	exit
+fi
+
+rm -rf $BUILDDIR
+mkdir $BUILDDIR
+cd $BUILDDIR
+
+../configure --disable-shared $DEBUG $UNICODESETTING $VERSION --enable-universal_binary --with-libjpeg=builtin --with-libpng=builtin --with-regex=builtin --with-libtiff=builtin --with-zlib=builtin --with-expat=builtin --with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk
