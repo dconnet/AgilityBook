@@ -113,7 +113,11 @@ SUITE(TestDate)
 		}
 		{
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+#ifdef __WXMAC__
+			CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eCurrentLocale));
+#else
 			CHECK(wxT("3/2/1999") == d.GetString(ARBDate::eCurrentLocale));
+#endif
 		}
 		CHECK(wxT("03-02-1999") == d.GetString(ARBDate::eDashMMDDYYYY));
 		CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eSlashMMDDYYYY));
