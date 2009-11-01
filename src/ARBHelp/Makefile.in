@@ -38,7 +38,8 @@ arbhelp_SRCS = ARBHelp.cpp \
 	DlgPageDecode.cpp \
 	DlgPageEncode.cpp \
 	DlgPageEncodeFiles.cpp \
-	DlgPageEncodeFinish.cpp
+	DlgPageEncodeFinish.cpp \
+	../Win/Widgets.cpp
 
 ##########
 # Extra libraries for link stage (only if needed)
