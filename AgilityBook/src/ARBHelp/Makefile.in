@@ -63,7 +63,8 @@ resources: arbhelp
 	echo "LANGDIR $(CURDIR)"
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) arbhelp
 
-dist:: arbhelp resources
+all: arbhelp resources
+dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS
 	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/English.lproj
 	cp Info.plist $(TOPBUILDDIR)/ARBHelp.app/Contents/

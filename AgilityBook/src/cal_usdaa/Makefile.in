@@ -52,10 +52,11 @@ INSTALL_BIN = libcal_usdaa
 
 @NAM_RULES@
 
-dist:: libcal_usdaa.@SHAREDLIBEXT@
-# Mac OS dist
+all: libcal_usdaa.@SHAREDLIBEXT@
+dist:: all
+	#once the plugin will load, we can uncomment these
 	#mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/PlugIns/
-	#cp libcal_usdaa.@SHAREDLIBEXT@  $(TOPBUILDDIR)/AgilityBook.app/Contents/PlugIns/
+	#cp libcal_usdaa.@SHAREDLIBEXT@  $(TOPBUILDDIR)/AgilityBook.app/Contents/PlugIns/libcal_usdaa.bundle
 
 ################################################################################
 # End of File: Makefile                                                        #

@@ -160,7 +160,8 @@ resources: agilitybook
 	echo "LANGDIR $(CURDIR)"
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) agilitybook
 
-dist:: agilitybook resources
+all: agilitybook resources
+dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS
 	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/English.lproj
 	cp Info.plist $(TOPBUILDDIR)/AgilityBook.app/Contents/
