@@ -58,12 +58,13 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 #INSTALL_BIN = arbhelp
 
 @NAM_RULES@
+
 resources: arbhelp
-# compile resources
 	echo "LANGDIR $(CURDIR)"
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) arbhelp
 
 all: arbhelp resources
+
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS
 	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/English.lproj

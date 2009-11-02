@@ -94,16 +94,15 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 INSTALL_BIN = testarb
 
 @NAM_RULES@
+
 resources: testarb
-# compile resources
 	echo "LANGDIR $(CURDIR)"
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) testarb
 
-all: testarb resources tests
-dist:: testarb resources
-
-tests: $(PHONY)
+all: testarb resources
 	python $(TOPSRCDIR)/src/Projects/VC9/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) testarb Mac
+
+dist:: testarb resources
 
 ################################################################################
 # End of File: Makefile                                                        #

@@ -155,12 +155,13 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 #######
 
 @NAM_RULES@
+
 resources: agilitybook
-# compile resources
 	echo "LANGDIR $(CURDIR)"
 	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) agilitybook
 
 all: agilitybook resources
+
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/MacOS
 	mkdir -p $(TOPBUILDDIR)/AgilityBook.app/Contents/Resources/English.lproj
