@@ -59,7 +59,7 @@ class CListCtrl : public wxListView
 	DECLARE_CLASS(CListCtrl)
 public:
 	CListCtrl() {}
-	CListCtrl::CListCtrl(
+	CListCtrl(
 			wxWindow* parent,
 			wxWindowID id,  
 			const wxPoint& pos = wxDefaultPosition,  
