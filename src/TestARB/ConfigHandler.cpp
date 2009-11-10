@@ -97,7 +97,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	wxString datafile = wxT("./testarb.dat");
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 #endif
 	std::string data;
 	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
@@ -115,7 +115,7 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 	wxString datafile = wxT("./testarb.dat");
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 #endif
 
 	std::string dtd;

@@ -87,7 +87,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 	ElementNodePtr tree(ElementNode::New());
 
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 	std::string data;
 	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
 		bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
@@ -99,7 +99,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 {
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");;
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 
 	std::string dtd;
 	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);

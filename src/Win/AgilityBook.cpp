@@ -75,7 +75,7 @@
 #include <wx/xrc/xmlres.h>	// XRC XML resources
 
 #if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER == 0
-#error v2.9.0 doesn't work right
+#error v2.9.0 does not work right
 #endif
 #if !wxCHECK_VERSION(2, 8, 10)
 // ARB was developed against v2.8.10 - anything earlier is not supported.
