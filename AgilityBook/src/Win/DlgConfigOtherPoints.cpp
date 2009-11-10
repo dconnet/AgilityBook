@@ -91,7 +91,7 @@ bool CNameValidator::Validate(wxWindow* parent)
 
 static struct
 {
-	wxChar* idDesc;
+	wxChar const* idDesc;
 	ARBConfigOtherPoints::eOtherPointsTally tally;
 } const sc_Tally[] =
 {
