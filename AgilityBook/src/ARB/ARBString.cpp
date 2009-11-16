@@ -191,6 +191,15 @@ template <typename T, typename S> T ReplaceImpl(
 }
 
 
+wxString tstringUtil::Trim(wxString const& inStr)
+{
+	wxString str(inStr);
+	str.Trim(true);
+	str.Trim(false);
+	return str;
+}
+
+
 std::string tstringUtil::Replace(
 		std::string const& inStr,
 		std::string const& inReplace,

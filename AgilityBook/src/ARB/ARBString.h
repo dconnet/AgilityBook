@@ -56,7 +56,7 @@ public:
 	static std::string tstringA(wxMemoryOutputStream const& inStr);
 	static std::string tstringA(wxString const& inStr);
 
-	// For consistency wit "ToC" routines
+	// For consistency with "ToC" routines
 	static bool ToLong(wxString const& inStr, long& outValue)
 	{
 		return inStr.ToLong(&outValue);
@@ -96,6 +96,8 @@ public:
 		ToCDouble(inStr, val);
 		return val;
 	}
+
+	static wxString Trim(wxString const& inStr);
 
 	static std::string Replace(
 			std::string const& inStr,
