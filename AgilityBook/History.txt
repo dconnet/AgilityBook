@@ -1,3 +1,7 @@
+11/24/2009: v2.1.2.x <development>
+- New features / Enhancements:
+  - Fix some performance problems with loading/saving arb files.
+
 11/1/2009: v2.1.1.2500 <beta>
 - New features / Enhancements:
   - Better localization support.
