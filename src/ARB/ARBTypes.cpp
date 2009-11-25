@@ -263,7 +263,7 @@ wxString ARBDouble::ToString(
 		if (0 < inPrec)
 			str.precision(inPrec);
 		str << std::fixed << inValue;
-		retVal = str.str();
+		retVal = str.str().c_str();
 	}
 	else
 	{
