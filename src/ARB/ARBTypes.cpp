@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
  * @li 2009-09-28 DRC Fix abs() on Mac.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9.
@@ -249,34 +250,35 @@ wxString ARBDouble::ToString(
 		int inPrec,
 		LocaleType eUseDefaultLocale)
 {
+	wxString retVal;
 #if wxCHECK_VERSION(2, 9, 0)
 	wxUniChar pt = '.';
 #else
 	wxChar pt = '.';
 #endif
-	wxLocale* locale = NULL;
 	if (eNone == eUseDefaultLocale)
 	{
-		// Somehow on Mac, then running TestARB, French is still the current
-		// language, which caused Format (below) to use a comma for the
-		// decimal. Which then caused the rest of the test to fail, as we
-		// were expecting '.'s. This didn't happen on Windows.
-		// So force in English to get '.' for separators.
-		locale = new wxLocale(wxLANGUAGE_ENGLISH_US);
+		// When we don't want locales, avoid the wx functions as they use them.
+		std::basic_ostringstream<wxChar> str;
+		if (0 < inPrec)
+			str.precision(inPrec);
+		str << std::fixed << inValue;
+		retVal = str.str();
 	}
 	else
 	{
+		wxLocale* locale = NULL;
 		if (eDefault == eUseDefaultLocale)
 			locale = new wxLocale(wxLANGUAGE_DEFAULT);
 		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
 		if (0 < decimalPt.length())
 			pt = decimalPt.GetChar(0);
+		if (0 < inPrec)
+			retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
+		else
+			retVal = wxString::Format(wxT("%g"), inValue);
+		delete locale;
 	}
-	wxString retVal;
-	if (0 < inPrec)
-		retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
-	else
-		retVal = wxString::Format(wxT("%g"), inValue);
 	wxString::size_type pos = retVal.find(pt);
 	if (wxString::npos != pos)
 	{
@@ -308,7 +310,6 @@ wxString ARBDouble::ToString(
 				retVal = retVal.substr(0, len);
 		}
 	}
-	delete locale;
 	return retVal;
 }
 

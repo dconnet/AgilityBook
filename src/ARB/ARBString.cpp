@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-30 DRC Remove Convert and replaced with tstringA/etc
  * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
@@ -49,6 +50,18 @@
 #else
 #define TCERR std::cerr
 #endif
+
+#if defined(_WIN32)
+#if _MSC_VER < 1300
+#define _tstol		_ttol
+#endif
+#else // WIN32
+// Need to have _tstol and _tcstod defined for other platforms.
+// These are atol/strtod functions and need to take wxString::wx_str
+// as a parameter (either char or wchar_t depending on compile options)
+#define _tstol		atol
+#define _tcstod		strtod
+#endif // WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -137,12 +150,11 @@ bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 		std::istringstream str(tmp);
 		str >> outValue;
 	}
-#else
-	// Ideally, this would be the c-locale. Not sure how to do that in 2.8.
-	wxLocale locale(wxLANGUAGE_ENGLISH_US);
-	bool bOk = inStr.ToLong(&outValue);
-#endif
 	return bOk;
+#else
+	outValue = _tstol(inStr.wx_str());
+	return true;
+#endif
 }
 
 
@@ -153,8 +165,8 @@ bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
 	// is for parsing an actual number in Element.
 	return inStr.ToCDouble(&outValue);
 #else
-	wxLocale locale(wxLANGUAGE_ENGLISH_US);
-	return inStr.ToDouble(&outValue);
+	outValue = _tcstod(inStr.wx_str(), NULL);
+	return true;
 #endif
 }
 
