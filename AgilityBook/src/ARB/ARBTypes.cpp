@@ -269,7 +269,7 @@ wxString ARBDouble::ToString(
 	{
 		wxLocale* locale = NULL;
 		if (eDefault == eUseDefaultLocale)
-			locale = new wxLocale(wxLANGUAGE_DEFAULT);
+			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
 		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
 		if (0 < decimalPt.length())
 			pt = decimalPt.GetChar(0);
