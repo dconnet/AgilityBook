@@ -224,7 +224,7 @@ ARBDate ARBDate::FromString(
 	{
 		wxLocale* locale = NULL;
 		if (eLocale == inFormat)
-			locale = new wxLocale(wxLANGUAGE_DEFAULT);
+			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
 		wxDateTime dt;
 		if (dt.ParseDate(inDate))
 			date.SetDate(dt.GetYear(), static_cast<int>(dt.GetMonth())+1, dt.GetDay());
@@ -401,7 +401,7 @@ wxString ARBDate::GetString(
 	{
 	case eLocale:
 		{
-			wxLocale locale(wxLANGUAGE_DEFAULT);
+			wxLocale locale(wxLANGUAGE_DEFAULT, 0);
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
 			date = dt.FormatDate();
 		}

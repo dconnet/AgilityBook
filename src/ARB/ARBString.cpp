@@ -130,7 +130,7 @@ bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
 		// the locale's decimal point.
 		if (pt != wxT('.') && wxString::npos == inStr.find(pt))
 		{
-			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+			wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
 			rc = inStr.ToDouble(&outValue);
 		}
 	}
@@ -152,8 +152,8 @@ bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 	}
 	return bOk;
 #else
-	outValue = _tstol(inStr.wx_str());
-	return true;
+	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
+	return inStr.ToLong(&outValue);
 #endif
 }
 
@@ -165,8 +165,8 @@ bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
 	// is for parsing an actual number in Element.
 	return inStr.ToCDouble(&outValue);
 #else
-	outValue = _tcstod(inStr.wx_str(), NULL);
-	return true;
+	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
+	return inStr.ToDouble(&outValue);
 #endif
 }
 
