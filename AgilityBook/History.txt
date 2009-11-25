@@ -1,4 +1,4 @@
-11/24/2009: v2.1.2.x <development>
+11/25/2009: v2.1.2.2524 <beta>
 - New features / Enhancements:
   - Fix some performance problems with loading/saving arb files.
 
