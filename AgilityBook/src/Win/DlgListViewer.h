@@ -49,7 +49,7 @@ class CAgilityBookDoc;
 class CReportListCtrl;
 
 class CDlgListViewerData;
-typedef tr1::shared_ptr<CDlgListViewerData> CDlgListViewerDataPtr;
+typedef std::tr1::shared_ptr<CDlgListViewerData> CDlgListViewerDataPtr;
 
 
 class ScoringRunInfo

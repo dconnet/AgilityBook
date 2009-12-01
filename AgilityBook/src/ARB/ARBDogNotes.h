@@ -47,7 +47,7 @@
 typedef std::vector<wxString> ARBDogFaultList;
 
 class ARBMetaData;
-typedef tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
+typedef std::tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
 class ARBMetaData
 {
 	friend class ARBDogNotes;

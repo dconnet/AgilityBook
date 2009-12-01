@@ -71,7 +71,7 @@ public:
 private:
 	ARBDogClubPtr	m_Club;
 };
-typedef tr1::shared_ptr<CListTrialData> CListTrialDataPtr;
+typedef std::tr1::shared_ptr<CListTrialData> CListTrialDataPtr;
 
 
 wxString CListTrialData::OnNeedText(long iCol) const
@@ -303,7 +303,7 @@ CDlgTrial::CDlgTrial(
 
 ARBDogClubPtr CDlgTrial::GetClubData(long index) const
 {
-	CListTrialDataPtr pData = tr1::dynamic_pointer_cast<CListTrialData, CListData>(m_ctrlClubs->GetData(index));
+	CListTrialDataPtr pData = std::tr1::dynamic_pointer_cast<CListTrialData, CListData>(m_ctrlClubs->GetData(index));
 	if (pData)
 		return pData->GetClub();
 	return ARBDogClubPtr();

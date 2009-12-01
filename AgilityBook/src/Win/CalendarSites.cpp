@@ -218,7 +218,7 @@ private:
 };
 
 
-typedef tr1::shared_ptr<CalSiteData> CalSiteDataPtr;
+typedef std::tr1::shared_ptr<CalSiteData> CalSiteDataPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 

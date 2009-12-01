@@ -395,7 +395,7 @@ void CAgilityBookTreeView::OnUpdate(
 	else if (hint && hint->IsEqual(UPDATE_NEW_TRIAL))
 	{
 		LoadData();
-		ARBDogTrialPtr pTrial = tr1::dynamic_pointer_cast<ARBDogTrial, ARBBase>(hint->GetObj());
+		ARBDogTrialPtr pTrial = std::tr1::dynamic_pointer_cast<ARBDogTrial, ARBBase>(hint->GetObj());
 		assert(pTrial);
 		CAgilityBookTreeData* pData = FindData(pTrial);
 		assert(pData);

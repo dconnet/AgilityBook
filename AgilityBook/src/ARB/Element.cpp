@@ -637,13 +637,13 @@ ElementPtr ElementNode::GetElement(int inIndex)
 
 ElementNodePtr ElementNode::GetElementNode(int inIndex) const
 {
-	return tr1::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
+	return std::tr1::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
 }
 
 
 ElementNodePtr ElementNode::GetElementNode(int inIndex)
 {
-	return tr1::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
+	return std::tr1::dynamic_pointer_cast<ElementNode, Element>(m_Elements[inIndex]);
 }
 
 

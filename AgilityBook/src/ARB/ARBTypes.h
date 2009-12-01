@@ -51,15 +51,15 @@
 class ARBConfig;
 #define ARB_TYPEDEF(name) \
 	class name;\
-	typedef tr1::shared_ptr<name> name##Ptr;
+	typedef std::tr1::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF2(name) \
 	class name;\
-	typedef tr1::weak_ptr<name> name##WPtr;\
-	typedef tr1::shared_ptr<name> name##Ptr;
+	typedef std::tr1::weak_ptr<name> name##WPtr;\
+	typedef std::tr1::shared_ptr<name> name##Ptr;
 #define ARB_TYPEDEF_LIST(name) \
 	class name;\
 	class name##List;\
-	typedef tr1::shared_ptr<name> name##Ptr;
+	typedef std::tr1::shared_ptr<name> name##Ptr;
 
 ARB_TYPEDEF(ARBConfigActionDeleteDivision)
 ARB_TYPEDEF(ARBConfigActionDeleteEvent)

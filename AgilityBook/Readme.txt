@@ -184,13 +184,12 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.39.0. There is no need
+ARB has been built and tested using Boost version 1.41.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
-[also tested against 1.33.1, 1.34.0, 1.34.1, 1.35.1, 1.36.0, 1.37.0, 1.38.0
-however, VC9 requires some tweaks to use versions older than 1.35.1]
+[Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_34_0 (of course,
+above. The default directory when unpacked is boost_1_41_0 (of course,
 this will vary based on boost version). This should be renamed to 'boost'
 to avoid problems in the project files.
 
