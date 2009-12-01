@@ -134,7 +134,7 @@ public:
 private:
 	std::vector<int> m_Columns;
 };
-typedef tr1::shared_ptr<CDlgListViewerDataColumns> CDlgListViewerDataColumnsPtr;
+typedef std::tr1::shared_ptr<CDlgListViewerDataColumns> CDlgListViewerDataColumnsPtr;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -182,7 +182,7 @@ private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	ARBDogExistingPointsPtr m_Existing;
 };
-typedef tr1::shared_ptr<CDlgListViewerDataExisting> CDlgListViewerDataExistingPtr;
+typedef std::tr1::shared_ptr<CDlgListViewerDataExisting> CDlgListViewerDataExistingPtr;
 
 
 wxString CDlgListViewerDataExisting::OnNeedText(long iCol) const
@@ -257,7 +257,7 @@ private:
 	ARBConfigScoringPtr m_Scoring;
 	ScoringRunInfo::eScoringDetail m_ScoringDetail;
 };
-typedef tr1::shared_ptr<CDlgListViewerDataRun> CDlgListViewerDataRunPtr;
+typedef std::tr1::shared_ptr<CDlgListViewerDataRun> CDlgListViewerDataRunPtr;
 
 
 wxString CDlgListViewerDataRun::OnNeedText(long iCol) const
@@ -374,7 +374,7 @@ private:
 	ARBDate m_Date;
 	ARBDogTrialPtr m_Trial;
 };
-typedef tr1::shared_ptr<CDlgListViewerDataMultiQ> CDlgListViewerDataMultiQPtr;
+typedef std::tr1::shared_ptr<CDlgListViewerDataMultiQ> CDlgListViewerDataMultiQPtr;
 
 
 wxString CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
@@ -405,9 +405,9 @@ int CDlgListViewerDataExisting::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataRunPtr pDataRun = tr1::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataMultiQPtr pDataMultiQ = tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataRunPtr pDataRun = std::tr1::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataMultiQPtr pDataMultiQ = std::tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pDataRun && !pDataMultiQ)
 		return 0;
 	wxString str1, str2;
@@ -490,8 +490,8 @@ int CDlgListViewerDataRun::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataRunPtr pDataRun = tr1::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataRunPtr pDataRun = std::tr1::dynamic_pointer_cast<CDlgListViewerDataRun, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pDataRun)
 		return 0;
 	wxString str1, str2;
@@ -635,8 +635,8 @@ int CDlgListViewerDataMultiQ::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataExistingPtr pDataExisting = tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
-	CDlgListViewerDataMultiQPtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataExistingPtr pDataExisting = std::tr1::dynamic_pointer_cast<CDlgListViewerDataExisting, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataMultiQPtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataMultiQ, CDlgListViewerData>(pRow2);
 	if (!pDataExisting && !pData)
 		return 0;
 	wxString str1, str2;
@@ -695,7 +695,7 @@ private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	LifeTimePointInfoPtr m_info;
 };
-typedef tr1::shared_ptr<CDlgListViewerDataLifetime> CDlgListViewerDataLifetimePtr;
+typedef std::tr1::shared_ptr<CDlgListViewerDataLifetime> CDlgListViewerDataLifetimePtr;
 
 
 wxString CDlgListViewerDataLifetime::OnNeedText(long iCol) const
@@ -727,7 +727,7 @@ int CDlgListViewerDataLifetime::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataLifetimePtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataLifetimePtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataLifetime, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
 	wxString str1, str2;
@@ -780,7 +780,7 @@ private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	OtherPtInfo m_info;
 };
-typedef tr1::shared_ptr<CDlgListViewerDataOther> CDlgListViewerDataOtherPtr;
+typedef std::tr1::shared_ptr<CDlgListViewerDataOther> CDlgListViewerDataOtherPtr;
 
 
 wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
@@ -830,7 +830,7 @@ int CDlgListViewerDataOther::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataOtherPtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataOtherPtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataOther, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
 	wxString str1, str2;
@@ -925,7 +925,7 @@ private:
 	CDlgListViewerDataColumnsPtr m_ColData;
 	CFindItemInfo m_info;
 };
-typedef tr1::shared_ptr<CDlgListViewerDataItem> CDlgListViewerDataItemPtr;
+typedef std::tr1::shared_ptr<CDlgListViewerDataItem> CDlgListViewerDataItemPtr;
 
 
 wxString CDlgListViewerDataItem::OnNeedText(long iCol) const
@@ -967,7 +967,7 @@ int CDlgListViewerDataItem::Compare(
 		CDlgListViewerDataPtr pRow2,
 		int inCol) const
 {
-	CDlgListViewerDataItemPtr pData = tr1::dynamic_pointer_cast<CDlgListViewerDataItem, CDlgListViewerData>(pRow2);
+	CDlgListViewerDataItemPtr pData = std::tr1::dynamic_pointer_cast<CDlgListViewerDataItem, CDlgListViewerData>(pRow2);
 	if (!pData)
 		return 0;
 	wxString str1, str2;
@@ -1390,7 +1390,7 @@ CDlgListViewer::CDlgListViewer(
 
 CDlgListViewerDataPtr CDlgListViewer::GetDataByData(long data) const
 {
-	return tr1::dynamic_pointer_cast<CDlgListViewerData, CListData>(m_ctrlList->GetDataByData(data));
+	return std::tr1::dynamic_pointer_cast<CDlgListViewerData, CListData>(m_ctrlList->GetDataByData(data));
 }
 
 

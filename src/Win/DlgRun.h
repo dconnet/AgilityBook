@@ -79,7 +79,7 @@ class wxCheckBox;
 class wxDateEvent;
 
 class CDlgDogRefRunData;
-typedef tr1::shared_ptr<CDlgDogRefRunData> CDlgDogRefRunDataPtr;
+typedef std::tr1::shared_ptr<CDlgDogRefRunData> CDlgDogRefRunDataPtr;
 
 
 class CDlgRun : public wxDialog

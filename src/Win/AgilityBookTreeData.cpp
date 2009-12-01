@@ -315,7 +315,7 @@ static bool ReOrderDogs(
 		dogs.clear();
 		for (std::vector<ARBBasePtr>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
 		{
-			ARBDogPtr pDog = tr1::dynamic_pointer_cast<ARBDog, ARBBase>(*iter2);
+			ARBDogPtr pDog = std::tr1::dynamic_pointer_cast<ARBDog, ARBBase>(*iter2);
 			dogs.AddDog(pDog);
 		}
 		CAgilityBookDoc* pDoc = pTree->GetDocument();
@@ -350,7 +350,7 @@ static bool ReOrderTrial(
 			pTrial->GetRuns().clear();
 			for (std::vector<ARBBasePtr>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
 			{
-				ARBDogRunPtr pRun = tr1::dynamic_pointer_cast<ARBDogRun, ARBBase>(*iter2);
+				ARBDogRunPtr pRun = std::tr1::dynamic_pointer_cast<ARBDogRun, ARBBase>(*iter2);
 				pTrial->GetRuns().AddRun(pRun);
 			}
 			pTrial->GetRuns().sort();

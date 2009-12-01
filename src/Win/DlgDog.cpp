@@ -980,37 +980,37 @@ CDlgDog::~CDlgDog()
 
 CDlgDogDataTitlePtr CDlgDog::GetTitleData(long index) const
 {
-	return tr1::dynamic_pointer_cast<CDlgDogDataTitle, CListData>(m_ctrlTitles->GetData(index));
+	return std::tr1::dynamic_pointer_cast<CDlgDogDataTitle, CListData>(m_ctrlTitles->GetData(index));
 }
 
 
 CDlgDogDataTitlePtr CDlgDog::GetTitleDataByData(long index) const
 {
-	return tr1::dynamic_pointer_cast<CDlgDogDataTitle, CListData>(m_ctrlTitles->GetDataByData(index));
+	return std::tr1::dynamic_pointer_cast<CDlgDogDataTitle, CListData>(m_ctrlTitles->GetDataByData(index));
 }
 
 
 CDlgDogDataRegNumPtr CDlgDog::GetRegNumData(long index) const
 {
-	return tr1::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(m_ctrlRegNums->GetData(index));
+	return std::tr1::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(m_ctrlRegNums->GetData(index));
 }
 
 
 CDlgDogDataRegNumPtr CDlgDog::GetRegNumDataByData(long index) const
 {
-	return tr1::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(m_ctrlRegNums->GetDataByData(index));
+	return std::tr1::dynamic_pointer_cast<CDlgDogDataRegNum, CListData>(m_ctrlRegNums->GetDataByData(index));
 }
 
 
 CDlgDogDataPointPtr CDlgDog::GetPointData(long index) const
 {
-	return tr1::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(m_ctrlPoints->GetData(index));
+	return std::tr1::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(m_ctrlPoints->GetData(index));
 }
 
 
 CDlgDogDataPointPtr CDlgDog::GetPointDataByData(long index) const
 {
-	return tr1::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(m_ctrlPoints->GetDataByData(index));
+	return std::tr1::dynamic_pointer_cast<CDlgDogDataPoint, CListData>(m_ctrlPoints->GetDataByData(index));
 }
 
 

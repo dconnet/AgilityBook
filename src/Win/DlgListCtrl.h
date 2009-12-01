@@ -47,7 +47,7 @@ class CTabView;
 class wxListEvent;
 
 class CDlgListCtrlData;
-typedef tr1::shared_ptr<CDlgListCtrlData> CDlgListCtrlDataPtr;
+typedef std::tr1::shared_ptr<CDlgListCtrlData> CDlgListCtrlDataPtr;
 
 
 class CDlgListCtrl : public wxDialog

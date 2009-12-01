@@ -71,16 +71,7 @@
 #include <wx/sysopt.h>
 #include <wx/url.h>
 #include <wx/utils.h>
-#include <wx/version.h>
 #include <wx/xrc/xmlres.h>	// XRC XML resources
-
-#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER == 0
-#error v2.9.0 does not work right
-#endif
-#if !wxCHECK_VERSION(2, 8, 10)
-// ARB was developed against v2.8.10 - anything earlier is not supported.
-#error Unsupported wxWidget version
-#endif
 
 
 IMPLEMENT_APP(CAgilityBookApp)
@@ -310,10 +301,8 @@ bool CAgilityBookApp::OnInit()
 #ifdef __WXMAC__
 	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'ARBB', 'ARBA');
 	wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
-#if wxCHECK_VERSION(2, 8, 10)
 	// Sorting is broken in the native sorting in wx 2.8.10 and earlier
 	wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), 1);
-#endif
 #endif
 
 	CMainFrame *frame = new CMainFrame(m_manager);

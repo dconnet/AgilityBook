@@ -41,11 +41,11 @@
 #include <vector>
 class IDlgProgress;
 class IWizardExporter;
-typedef tr1::shared_ptr<IWizardExporter> IWizardExporterPtr;
+typedef std::tr1::shared_ptr<IWizardExporter> IWizardExporterPtr;
 class IWizardImporter;
-typedef tr1::shared_ptr<IWizardImporter> IWizardImporterPtr;
+typedef std::tr1::shared_ptr<IWizardImporter> IWizardImporterPtr;
 class IWizardSpreadSheet;
-typedef tr1::shared_ptr<IWizardSpreadSheet> IWizardSpreadSheetPtr;
+typedef std::tr1::shared_ptr<IWizardSpreadSheet> IWizardSpreadSheetPtr;
 
 /**
  * Interface for exporting to a spreadsheet.

@@ -197,6 +197,14 @@
 #include "wx/wxchar.h"
 #include "wx/wx.h"
 #endif
+// ARB was developed against v2.8.10 - anything earlier is not supported.
+#include <wx/version.h>
+#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER == 0
+#error v2.9.0 does not work right
+#endif
+#if !wxCHECK_VERSION(2, 8, 10)
+#error Unsupported wxWidget version
+#endif
 // Some sanity checking
 #ifndef wxUSE_WCHAR_T
 #error ARB: wxUSE_WCHAR_T must be defined in wxWidgets (include/wx/<platform>/setup.)
@@ -233,13 +241,23 @@
 	#endif
 #endif
 
-#include <memory> // To pick up the _HAS_TR1 define
-#if _HAS_TR1
-namespace tr1 = std::tr1;
-#else
-#include <boost/weak_ptr.hpp>
-#include <boost/shared_ptr.hpp>
-namespace tr1 = boost;
+// VC9 defines _HAS_TR1 if tr1 is present.
+#include <memory>
+// If not present, pick up boost's. Now we can use std::tr1::shared_ptr
+#if !_HAS_TR1
+// Boost can also be included by tweaking the include path and
+// including <memory>:
+//  boost-root/boost/tr1/tr1
+//  boost-root
+//  other standard library replacements (like STLport)
+//  your regular standard library
+// (see <boost>/doc/html/boost_tr1/usage.html)
+// Including memory.hpp is the preferred method over include path order.
+#include <boost/version.hpp>
+#if BOOST_VERSION < 103800
+#error Minimum supported version of Boost: 1.38.0
+#endif
+#include <boost/tr1/memory.hpp>
 #endif
 
 #include <assert.h>
