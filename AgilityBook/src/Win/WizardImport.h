@@ -79,6 +79,13 @@ private:
 	wxSpinCtrl* m_ctrlRow;
 	long m_Delim;
 	wxString m_Delimiter;
+	wxStaticBox* m_boxDelimiters;
+	wxRadioButton* m_ctrlTab;
+	wxRadioButton* m_ctrlColon;
+	wxRadioButton* m_ctrlComma;
+	wxRadioButton* m_ctrlSpace;
+	wxRadioButton* m_ctrlSemicolon;
+	wxRadioButton* m_ctrlOther;
 	CTextCtrl* m_ctrlOtherChar;
 	wxButton* m_ctrlAssign;
 	wxComboBox* m_ctrlDateFormat;
