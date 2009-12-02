@@ -62,7 +62,7 @@ agilitybook it picks this version of wxMac
 > export PATH=$WXWIN/build-ansi:$PATH
 
 I simply created a 'setwxpath' in my root directory and execute:
-> . ./setwxpath
+> . ./setwxpath 2.8 ansi
 (This (and setupwx) can be found in .../AgilityBook/build/)
 
 3. Build agilitybook as universal binary for PPC and Intel 32 bit architectures

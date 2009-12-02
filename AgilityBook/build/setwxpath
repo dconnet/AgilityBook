@@ -1,23 +1,30 @@
-# A script I use on the Mac to help manage multiple build environments.
-# This sets the PATH based on the currently set WXWIN. I create my build
-# directories as "build-<unicode/ansi>[-debug]"
-#
-# This script should be used as: . ./setwxpath [options]
-# It is used to enable building of ARB (I put this script in my home dir)
-
 export UNICODESETTING
 export DEBUG
+export WXWIN
 
-if test "x$1" = "xunicode"; then
-	UNICODESETTING="-unicode"
-elif test "x$1" = "xansi"; then
-	UNICODESETTING="-ansi"
+USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
+
+if test "x$1" = "xtrunk"; then
+	WXWIN=~/wx/trunk
+elif test "x$1" = "x2.8"; then
+	WXWIN=~/wx/wxMac-2.8.10
 else
-	echo "Usage $0 unicode|ansi [debug]"
+	echo $USAGE
+	return
 fi
 
-if test "x$2" = "xdebug"; then
+if test "x$2" = "xunicode"; then
+	UNICODESETTING="-unicode"
+elif test "x$2" = "xansi"; then
+	UNICODESETTING="-ansi"
+else
+	echo $USAGE
+	return
+fi
+
+if test "x$3" = "xdebug"; then
 	DEBUG="-debug"
 fi
 
 export PATH=$WXWIN/build${UNICODESETTING}${DEBUG}:$PATH
+echo $PATH
