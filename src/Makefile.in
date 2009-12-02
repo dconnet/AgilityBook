@@ -29,7 +29,7 @@ SUBDIRS = UnitTest++ ARB TestARB ARBHelp cal_usdaa Win
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -DWXWIDGETS # -I$(TOPSRCDIR)/src/ARB
+INCLUDES = -DWXWIDGETS -I$(BOOSTINCLUDE)
 
 ##########
 # List of programs and archives to link
