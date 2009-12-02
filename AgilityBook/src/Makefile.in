@@ -24,12 +24,11 @@ TOPBUILDDIR = ./@top_builddir@
 # Recursively make in these subdirectories
 ##########
 SUBDIRS = UnitTest++ ARB TestARB ARBHelp cal_usdaa Win
-#SUBDIRS = ARB cal_usdaa Win
 
 ##########
 # Compile flags, list include directories
 ##########
-INCLUDES = -DWXWIDGETS -I$(BOOSTINCLUDE)
+INCLUDES = -DWXWIDGETS
 
 ##########
 # List of programs and archives to link
