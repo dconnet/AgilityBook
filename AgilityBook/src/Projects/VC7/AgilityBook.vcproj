@@ -21,7 +21,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;$(BOOST_ROOT);$(WXWIN)/include;$(WXWIN)/include/msvc"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -83,7 +83,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
+				AdditionalIncludeDirectories="../..;../../Include;../../ARB;../../Win;$(BOOST_ROOT);$(WXWIN)/include;$(WXWIN)/include/msvc"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"

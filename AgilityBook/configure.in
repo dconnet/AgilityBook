@@ -50,12 +50,12 @@ AC_ARG_PROGRAM
 # We get these libs from our own src/ directories
 # AC_CHECK_LIB([tidy], [tidyCreate])
 # AC_CHECK_LIB([unittest], [RunAllTests])
-if test "x$BOOSTINCLUDE" != "x"; then
-	echo "BOOSTINCLUDE set to: $BOOSTINCLUDE"
-	AC_SUBST(BOOSTINCLUDE, "-I$BOOSTINCLUDE")
-	AC_SUBST(CXXFLAGS,"$CXXFLAGS $BOOSTINCLUDE")
+if test "x$BOOST_ROOT" != "x"; then
+	echo "BOOST_ROOT set to: $BOOST_ROOT"
+	AC_SUBST(BOOST_ROOT, "-I$BOOST_ROOT")
+	AC_SUBST(CXXFLAGS,"$CXXFLAGS $BOOST_ROOT")
 fi
-AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOSTINCLUDE=fullpath to boost install])])
+AC_CHECK_HEADERS(boost/weak_ptr.hpp, ,[AC_MSG_ERROR([boost/weak_ptr.hpp not found. export BOOST_ROOT=fullpath to boost install])])
 
 case `uname` in
 Darwin*)

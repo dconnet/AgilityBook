@@ -8,7 +8,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="../../../../boost;$(WXWIN)/include;$(WXWIN)/include/msvc"
+		AdditionalIncludeDirectories="$(BOOST_ROOT);$(WXWIN)/include;$(WXWIN)/include/msvc"
 		StringPooling="true"
 		UsePrecompiledHeader="2"
 		WarningLevel="4"

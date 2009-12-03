@@ -1697,7 +1697,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = (
-					"-I$BOOSTINCLUDE",
+					"-I$BOOST_ROOT",
 					"-I/Users/dconnet/wx/wxMac-2.8.10/build-ansi-debug/lib/wx/include/mac-ansi-debug-static-2.8",
 					"-I/Users/dconnet/wx/wxMac-2.8.10/include",
 					"-I/Users/dconnet/wx/wxMac-2.8.10/contrib/include",
@@ -1770,7 +1770,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-I$BOOSTINCLUDE",
+					"-I$BOOST_ROOT",
 					"-I/Users/dconnet/wx/wxMac-2.8.10/build-ansi/lib/wx/include/mac-ansi-release-static-2.8",
 					"-I/Users/dconnet/wx/wxMac-2.8.10/include",
 					"-I/Users/dconnet/wx/wxMac-2.8.10/contrib/include",
@@ -1868,7 +1868,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "/Users/dconnet/agilitybook/AgilityBook/src/Projects/macos/Info copy.plist";
 				OTHER_CFLAGS = (
-					"-I$BOOSTINCLUDE",
+					"-I$BOOST_ROOT",
 					"-I/Users/dconnet/wx/trunk/build-ansi-debug/lib/wx/include/osx_carbon-ansi-static-2.9",
 					"-I/Users/dconnet/wx/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -1938,7 +1938,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-I$BOOSTINCLUDE",
+					"-I$BOOST_ROOT",
 					"-I/Users/dconnet/wx/trunk/build-ansi/lib/wx/include/osx_carbon-ansi-static-2.9",
 					"-I/Users/dconnet/wx/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -2013,7 +2013,7 @@
 				INFOPLIST_FILE = Info.plist;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-					"-I$BOOSTINCLUDE",
+					"-I$BOOST_ROOT",
 					"-I/Users/dconnet/wx/trunk/build-unicode-debug/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I/Users/dconnet/wx/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
@@ -2083,7 +2083,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
-					"-I$BOOSTINCLUDE",
+					"-I$BOOST_ROOT",
 					"-I/Users/dconnet/wx/trunk/build-unicode/lib/wx/include/osx_carbon-unicode-static-2.9",
 					"-I/Users/dconnet/wx/trunk/include",
 					"-D_FILE_OFFSET_BITS=64",
