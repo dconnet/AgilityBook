@@ -190,8 +190,8 @@ weak_ptr templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked is boost_1_41_0 (of course,
-this will vary based on boost version). This should be renamed to 'boost'
-to avoid problems in the project files.
+this will vary based on boost version). Set BOOST_ROOT to point to this
+directory. This projects use this environment variable.
 
 --------------------
 
