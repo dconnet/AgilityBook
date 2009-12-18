@@ -94,7 +94,7 @@
 
 	<DirectoryRef Id="APPLICATIONFOLDER">
 
-		<Component Id="C_AgilityBook.exe" Guid="$(var.C_AgilityBook.exe.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_AgilityBook.exe" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="$(var.Win64)" >
 			<File Id="_AgilityBook.exe"
 				Name="AgilityBook.exe"
 				Source="$(var.BASEDIR)\AgilityBook.exe"
@@ -114,7 +114,7 @@
 			</ProgId>
 		</Component>
 
-		<Component Id="C_AgilityBook.dat" Guid="$(var.C_AgilityBook.dat.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_AgilityBook.dat" Guid="C44F2D55-7128-423F-926A-AAE9848D1842" Win64="$(var.Win64)" >
 			<File Id="_AgilityBook.dat"
 				Name="AgilityBook.dat"
 				Source="$(var.BASEDIR)\AgilityBook.dat"
@@ -122,7 +122,7 @@
 				DiskId="1" />
 		</Component>
 
-		<Component Id="C_ARBHelp.exe" Guid="$(var.C_ARBHelp.exe.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_ARBHelp.exe" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="$(var.Win64)" >
 			<File Id="_ARBHelp.exe"
 				Name="ARBHelp.exe"
 				Source="$(var.BASEDIR)\ARBHelp.exe"
@@ -131,7 +131,7 @@
 				DiskId="1" />
 		</Component>
 
-		<Component Id="C_cal_usdaa.dll" Guid="$(var.C_cal_usdaa.dll.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_cal_usdaa.dll" Guid="16F399ED-BA94-4CBF-B85E-D79C737D3232" Win64="$(var.Win64)" >
 			<File Id="_cal_usdaa.dll"
 				Name="cal_usdaa.dll"
 				Source="$(var.BASEDIR)\cal_usdaa.dll"
@@ -145,7 +145,7 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="dirFR">
-		<Component Id="C_langFR" Guid="$(var.C_langFR.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_langFR" Guid="581CB1F1-0846-4205-8551-5FEE8A03AF62" Win64="$(var.Win64)" >
 			<File Id="_fr_arb.mo"
 				Name="arb.mo"
 				Source="$(var.BASEDIR)\lang\fr_FR\arb.mo"
@@ -155,7 +155,7 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="dirEN">
-		<Component Id="C_langEN" Guid="$(var.C_langEN.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_langEN" Guid="27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6" Win64="$(var.Win64)" >
 			<File Id="_en_arb.mo"
 				Name="arb.mo"
 				Source="$(var.BASEDIR)\lang\en_US\arb.mo"
@@ -165,7 +165,7 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="ARBMenuFolder">
-		<Component Id="C_MenuShortcutsARB" Guid="$(var.C_MenuShortcutsARB.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_MenuShortcutsARB" Guid="74105C3C-0E12-4CE4-B955-DA4551365A97" Win64="$(var.Win64)" >
 			<RegistryValue
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
@@ -178,7 +178,7 @@
 			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
 		</Component>
 
-		<Component Id="C_MenuShortcutsHelp" Guid="$(var.C_MenuShortcutsHelp.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_MenuShortcutsHelp" Guid="2F642C5F-5C66-40C8-B548-D7794CBF580A" Win64="$(var.Win64)" >
 			<RegistryValue
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
@@ -192,7 +192,7 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="DesktopFolder">
-		<Component Id="C_DeskShortcuts" Guid="$(var.C_DeskShortcuts.guid)" Win64="$(var.Win64)" >
+		<Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="$(var.Win64)" >
 			<RegistryValue
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
