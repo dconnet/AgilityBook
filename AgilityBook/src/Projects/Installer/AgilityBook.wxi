@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+	<!--
+		The reason for different upgrade codes is that it allows beta testing
+		side-by-side. When the next version is actually released, it will
+		upgrade (uninstall) all previous versions.
+		IMPORTANT: The default directory must be different!
+
+		When a beta ends, undef BETA. That will then include the V1 upgrade 
+		ode. To start a beta, define BETA, define a new upgrade code and new
+		default folder. Also adjust the wxs code to support another code.
+		Non-betas will upgrade all other codes, BETAs will only upgrade itself.
+	-->
+
+	<?ifdef BETA?>
+		<?undef BETA?>
+	<?endif?>
+
+	<!-- v1 upgrade code [used thru v1.10.10] -->
+	<?define DEFFOLDERv1=Agility Record Book?>
+	<?define UPGRADECODEv1=DD9A3E2B-5363-4BA7-9870-B5E1D227E7DB?>
+	<!-- v2 upgrade code [started with v2.0.0] -->
+	<?define DEFFOLDERv2=Agility Record Book v2?>
+	<?define UPGRADECODEv2=4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4?>
+
+	<?define DEFFOLDER=$(var.DEFFOLDERv2)?>
+	<?define UPGRADECODE=$(var.UPGRADECODEv2)?>
+
+	<?if $(sys.BUILDARCH) = x64 ?>
+		<?define Win64=yes?>
+		<?define ProgramFilesFolder="ProgramFiles64Folder"?>
+		<!-- Currently, all GUIDs are defined here. We actually support
+		installing both the 32 and 64-bit versions on 64-bit OSs. May want to
+		rethink this... -->
+		<?define C_AgilityBook.exe.guid=B48C351B-3E9C-4C66-AC0B-150D26047499?>
+		<?define C_AgilityBook.dat.guid=C44F2D55-7128-423F-926A-AAE9848D1842?>
+		<?define C_ARBHelp.exe.guid=6E5D1584-06A0-4024-A197-84B9E0326EA1?>
+		<?define C_cal_usdaa.dll.guid=16F399ED-BA94-4CBF-B85E-D79C737D3232?>
+		<?define C_langFR.guid=581CB1F1-0846-4205-8551-5FEE8A03AF62?>
+		<?define C_langEN.guid=27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6?>
+		<?define C_MenuShortcutsARB.guid=74105C3C-0E12-4CE4-B955-DA4551365A97?>
+		<?define C_MenuShortcutsHelp.guid=2F642C5F-5C66-40C8-B548-D7794CBF580A?>
+		<?define C_DeskShortcuts.guid=988854A1-81B4-4B57-A51D-5C08BE963E5F?>
+	<?elseif $(sys.BUILDARCH) = x86 ?>
+		<?define Win64=no?>
+		<?define ProgramFilesFolder="ProgramFilesFolder"?>
+		<?define C_AgilityBook.exe.guid=55CB5388-14EA-4927-B2A4-96315EA09418?>
+		<?define C_AgilityBook.dat.guid=007C505E-3872-4A92-AF77-2C6C1BC2A9C7?>
+		<?define C_ARBHelp.exe.guid=9CB60EE5-C5A3-4219-83C4-A59D2872DC8F?>
+		<?define C_cal_usdaa.dll.guid=8C9B6F50-7F0A-46AA-B813-A66A8300E421?>
+		<?define C_langFR.guid=53DA3663-A90A-44AF-A921-5EC0E104ABAD?>
+		<?define C_langEN.guid=9AFD56DF-F038-4877-A35A-00036A508FD8?>
+		<?define C_MenuShortcutsARB.guid=9A2365F0-D0F9-4881-BB49-8CC9B0887FC2?>
+		<?define C_MenuShortcutsHelp.guid=00212137-B9F3-4E3E-BFFB-7F6442F97741?>
+		<?define C_DeskShortcuts.guid=99C9A5EE-AF6E-4271-98BC-5B8CE9308CBC?>
+	<?endif?>
+
+</Include>

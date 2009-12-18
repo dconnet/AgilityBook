@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+	<?include AgilityBook.wxi?>
+
+	<Product Id="$(var.PRODUCTID)"
+		UpgradeCode="$(var.UPGRADECODE)"
+		Name="Agility Record Book $(var.CURRENT_VERSION)"
+		Language="1033"
+		Version="$(var.CURRENT_VERSION)"
+		Manufacturer="dcon Software">
+	<Package
+		Description="Agility Record Book"
+		Comments="!(loc.Comments)"
+		InstallerVersion="200"
+		Compressed="yes" />
+
+	<WixVariable Id="WixUIDialogBmp" Value="ArbDialogBmp.bmp" />
+	<WixVariable Id="WixUIBannerBmp" Value="ArbBannerBmp.bmp" />
+
+	<Icon Id="IconAgilityBook.ico" SourceFile="..\..\..\src\win\res\AgilityBook.ico" />
+
+	<Property Id="ARPCOMMENTS">!(loc.Comments)</Property>
+	<Property Id="ARPCONTACT">David Connet</Property>
+	<Property Id="ARPHELPLINK">http://www.agilityrecordbook.com</Property>
+	<Property Id="ARPURLINFOABOUT">http://www.agilityrecordbook.com</Property>
+	<Property Id="ARPPRODUCTICON" Value="IconAgilityBook.ico" />
+	<!-- Install to all-users if admin, per-user otherwise -->
+	<Property Id="ALLUSERS">2</Property>
+	<!-- To pick up all features by default -->
+	<Property Id="INSTALLLEVEL">100</Property>
+	<Property Id="AppName">Agility Record Book</Property>
+
+	<!-- Launch Conditions -->
+<?if $(sys.BUILDARCH)=x64?>
+	<Condition Message="!(loc.On64NT)">VersionNT64</Condition>
+<?else?>
+	<Condition Message="!(loc.OnNT)">VersionNT</Condition>
+<?endif?>
+
+	<!-- During beta, do not remove v1.
+	(that's why we created a different upgrade code) -->
+<?ifndef var.BETA?>
+	<!-- When checked the v1 guid, include ["0.0.0" < ver < "2.0.0"] -->
+	<Upgrade Id="$(var.UPGRADECODEv1)">
+		<UpgradeVersion
+			OnlyDetect="no"
+			Minimum="0.0.0"
+			IncludeMinimum="no"
+			Maximum="2.0.0"
+			IncludeMaximum="no"
+			Property="OLDVERSIONFOUND_V1" />
+	</Upgrade>
+<?endif?>
+	<!-- For current guid, include ["2.0.0" <= ver < CurVer] -->
+	<Upgrade Id="$(var.UPGRADECODEv2)">
+		<UpgradeVersion
+			OnlyDetect="no"
+			Minimum="2.0.0"
+			IncludeMinimum="yes"
+			Maximum="$(var.CURRENT_VERSION)"
+			Property="OLDVERSIONFOUND" />
+<?ifdef var.TESTING?>
+	<!-- During testing, don't detect existing versions. -->
+		<UpgradeVersion
+			OnlyDetect="yes"
+			Minimum="$(var.CURRENT_VERSION)"
+			IncludeMinimum="no"
+			Property="NEWERVERSIONDETECTED" />
+<?endif?>
+	</Upgrade>
+
+	<CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />
+	<CustomAction Id="ARB_NoDowngrade" Error="!(loc.ARB_NoDowngrade)" />
+
+	<Media Id="1" Cabinet="AgilityBook.cab" EmbedCab="yes" />
+
+	<Directory Id="TARGETDIR" Name="SourceDir">
+		<Directory Id="DesktopFolder" />
+		<Directory Id="ProgramMenuFolder">
+			<Directory Id="ARBMenuFolder" Name="$(var.DEFFOLDER)" />
+		</Directory>
+		<Directory Id="$(var.ProgramFilesFolder)">
+			<Directory Id="CompanyFolder" Name="dcon Software">
+				<Directory Id="APPLICATIONFOLDER" Name="$(var.DEFFOLDER)">
+					<Directory Id="dirLang" Name="lang">
+						<Directory Id="dirFR" Name="fr_FR" />
+						<Directory Id="dirEN" Name="en_US" />
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Directory>
+
+	<DirectoryRef Id="APPLICATIONFOLDER">
+
+		<Component Id="C_AgilityBook.exe" Guid="$(var.C_AgilityBook.exe.guid)" Win64="$(var.Win64)" >
+			<File Id="_AgilityBook.exe"
+				Name="AgilityBook.exe"
+				Source="$(var.BASEDIR)\AgilityBook.exe"
+				KeyPath="yes"
+				Checksum="yes"
+				DiskId="1" />
+			<!-- The description is the same since that was what MFC set it to (v1) -->
+			<ProgId Id="AgilityBook.Document"
+				Description="AgilityBook.Document"
+				Icon="_AgilityBook.exe">
+				<Extension Id="arb">
+					<Verb Id="open"
+						Command="Open"
+						TargetFile="_AgilityBook.exe"
+						Argument="&quot;%1&quot;" />
+				</Extension>
+			</ProgId>
+		</Component>
+
+		<Component Id="C_AgilityBook.dat" Guid="$(var.C_AgilityBook.dat.guid)" Win64="$(var.Win64)" >
+			<File Id="_AgilityBook.dat"
+				Name="AgilityBook.dat"
+				Source="$(var.BASEDIR)\AgilityBook.dat"
+				KeyPath="yes"
+				DiskId="1" />
+		</Component>
+
+		<Component Id="C_ARBHelp.exe" Guid="$(var.C_ARBHelp.exe.guid)" Win64="$(var.Win64)" >
+			<File Id="_ARBHelp.exe"
+				Name="ARBHelp.exe"
+				Source="$(var.BASEDIR)\ARBHelp.exe"
+				KeyPath="yes"
+				Checksum="yes"
+				DiskId="1" />
+		</Component>
+
+		<Component Id="C_cal_usdaa.dll" Guid="$(var.C_cal_usdaa.dll.guid)" Win64="$(var.Win64)" >
+			<File Id="_cal_usdaa.dll"
+				Name="cal_usdaa.dll"
+				Source="$(var.BASEDIR)\cal_usdaa.dll"
+				KeyPath="yes"
+				Checksum="yes"
+				DiskId="1" />
+		</Component>
+
+		<!-- Needed for creating Features with no components -->
+		<Component Id="empty" Guid="" KeyPath="yes" />
+	</DirectoryRef>
+
+	<DirectoryRef Id="dirFR">
+		<Component Id="C_langFR" Guid="$(var.C_langFR.guid)" Win64="$(var.Win64)" >
+			<File Id="_fr_arb.mo"
+				Name="arb.mo"
+				Source="$(var.BASEDIR)\lang\fr_FR\arb.mo"
+				KeyPath="yes"
+				DiskId="1" />
+		</Component>
+	</DirectoryRef>
+
+	<DirectoryRef Id="dirEN">
+		<Component Id="C_langEN" Guid="$(var.C_langEN.guid)" Win64="$(var.Win64)" >
+			<File Id="_en_arb.mo"
+				Name="arb.mo"
+				Source="$(var.BASEDIR)\lang\en_US\arb.mo"
+				KeyPath="yes"
+				DiskId="1" />
+		</Component>
+	</DirectoryRef>
+
+	<DirectoryRef Id="ARBMenuFolder">
+		<Component Id="C_MenuShortcutsARB" Guid="$(var.C_MenuShortcutsARB.guid)" Win64="$(var.Win64)" >
+			<RegistryValue
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings"
+				Name="inst_help"
+				Type="integer"
+				Value="1" />
+			<Shortcut Id="ShortcutARBExe"
+				Name="$(var.DEFFOLDER)"
+				Target="[APPLICATIONFOLDER]AgilityBook.exe" />
+			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
+		</Component>
+
+		<Component Id="C_MenuShortcutsHelp" Guid="$(var.C_MenuShortcutsHelp.guid)" Win64="$(var.Win64)" >
+			<RegistryValue
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings"
+				Name="inst_arb"
+				Type="integer"
+				Value="1" />
+			<Shortcut Id="ShortcutARBHelp"
+				Name="ARB Helper"
+				Target="[APPLICATIONFOLDER]ARBHelp.exe" />
+		</Component>
+	</DirectoryRef>
+
+	<DirectoryRef Id="DesktopFolder">
+		<Component Id="C_DeskShortcuts" Guid="$(var.C_DeskShortcuts.guid)" Win64="$(var.Win64)" >
+			<RegistryValue
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings"
+				Name="inst_desk"
+				Type="integer"
+				Value="1" />
+			<Shortcut Id="AppDesktop"
+				Name="$(var.DEFFOLDER)"
+				Target="[APPLICATIONFOLDER]AgilityBook.exe" />
+		</Component>
+	</DirectoryRef>
+
+	<Feature Id="Complete"
+		Display="expand"
+		Level="1"
+		AllowAdvertise="no"
+		Title="Agility Record Book"
+		Description="!(loc.FeatureCompleteDesc)"
+		ConfigurableDirectory="APPLICATIONFOLDER">
+		<ComponentRef Id="C_MenuShortcutsARB" />
+		<ComponentRef Id="C_DeskShortcuts" />
+		<ComponentRef Id="C_AgilityBook.exe" />
+		<ComponentRef Id="C_AgilityBook.dat" />
+		<ComponentRef Id="C_langEN" />
+
+		<Feature Id="ARBHelp"
+			Display="expand"
+			Level="100"
+			AllowAdvertise="no"
+			Title="!(loc.FeatureArbHelpTitle)"
+			Description="!(loc.FeatureArbHelpDesc)">
+			<ComponentRef Id="C_ARBHelp.exe" />
+			<ComponentRef Id="C_MenuShortcutsHelp" />
+		</Feature>
+
+		<Feature Id="Languages"
+			Display="expand"
+			Level="100"
+			AllowAdvertise="no"
+			Title="!(loc.FeatureLangTitle)"
+			Description="!(loc.FeatureLangDesc)">
+			<!-- Need an empty component to work around a bug with features (empty features add network options) -->
+			<ComponentRef Id="empty" />
+			<Feature Id="French"
+				Level="100"
+				AllowAdvertise="no"
+				Title="!(loc.FeatureFrenchTitle)"
+				Description="!(loc.FeatureFrenchDesc)">
+				<ComponentRef Id="C_langFR" />
+			</Feature>
+		</Feature>
+
+		<Feature Id="Plugins"
+			Display="expand"
+			Level="100"
+			AllowAdvertise="no"
+			Title="!(loc.FeatureCalPluginTitle)"
+			Description="!(loc.FeatureCalPluginDesc)">
+			<ComponentRef Id="empty" />
+			<Feature Id="Calendar"
+				Level="100"
+				AllowAdvertise="no"
+				Title="!(loc.FeatureUSDAATitle)"
+				Description="!(loc.FeatureUSDAADesc)">
+				<ComponentRef Id="C_cal_usdaa.dll" />
+			</Feature>
+		</Feature>
+	</Feature>
+
+	<InstallUISequence>
+		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">FOUNDSAMEVERSION</Custom>
+		<Custom Action="ARB_NoDowngrade" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
+	</InstallUISequence>
+
+	<InstallExecuteSequence>
+		<RemoveExistingProducts After="InstallInitialize" />
+		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">FOUNDSAMEVERSION</Custom>
+		<Custom Action="ARB_NoDowngrade" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
+	</InstallExecuteSequence>
+
+	<UI>
+		<!-- Copied from WixUI_FeatureTree.wxs (in order to use my exit dialog which makes the 'launch' checkbox prettier -->
+		<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+		<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+		<TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+		<Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+		<Property Id="WixUI_Mode" Value="FeatureTree" />
+
+		<DialogRef Id="ErrorDlg" />
+		<DialogRef Id="FatalError" />
+		<DialogRef Id="FilesInUse" />
+		<DialogRef Id="MsiRMFilesInUse" />
+		<DialogRef Id="PrepareDlg" />
+		<DialogRef Id="ProgressDlg" />
+		<DialogRef Id="ResumeDlg" />
+		<DialogRef Id="UserExit" />
+
+		<Publish Dialog="MyExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+		<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+		<Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg">LicenseAccepted = "1"</Publish>
+		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>
+		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">Not Installed</Publish>
+		<Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">Not Installed Or WixUI_InstallMode = "Change"</Publish>
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>
+		<Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+		<UIRef Id="WixUI_Common" />
+		<UIRef Id="WixUI_ErrorProgressText" />
+
+		<!-- Copied from ExitDialog.wxs and tweaked like http://www.dizzymonkeydesign.com/blog/misc/adding-and-customizing-dlgs-in-wix-3/ suggests -->
+		<Dialog Id="MyExitDialog" Width="370" Height="270" Title="!(loc.ExitDialog_Title)">
+			<Control Id="Finish" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.WixUIFinish)" />
+			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUICancel)" />
+			<Control Id="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" TabSkip="no" Text="!(loc.ExitDialogBitmap)" />
+			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUIBack)" />
+			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+			<Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />
+			<Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />
+			<Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
+			<Condition Action="show">Not Installed</Condition>
+			</Control>
+		</Dialog>
+
+		<InstallUISequence>
+			<Show Dialog="MyExitDialog" OnExit="success" />
+		</InstallUISequence>
+
+		<AdminUISequence>
+			<Show Dialog="MyExitDialog" OnExit="success" />
+		</AdminUISequence>
+
+		<Publish Dialog="MyExitDialog"
+			Control="Finish"
+			Event="DoAction"
+			Value="ARB_LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and Not Installed</Publish>
+		</UI>
+
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchPgmText)" />
+		<Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />
+
+		<CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+	</Product>
+</Wix>
