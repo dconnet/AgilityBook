@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="fr-fr" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="Comments">Suivez tous vos résultats d'agility dans un seul endroit.</String>
+  <String Id="OnNT">Ce logiciel fonctionne uniquement sous Windows NT ou plus récent.</String>
+  <String Id="On64NT">Ce logiciel fonctionne uniquement sous système Windows 64bit.</String>
+  <String Id="ARB_AlreadyUpdated">Un autre version de [ProductName] est déjà installée. L'installation de cette version ne peut pas continuer. Pour supprimer la version installée, utilisez "Supprimer un programme" dans le panneau de configuration.</String>
+  <String Id="ARB_NoDowngrade">Un version plus récente de [ProductName] est déjà installée. Pour installer une version plus ancienne, supprimez d'abord la version installée.</String>
+  <String Id="FeatureCompleteDesc">Fichiers "Agility Record Book" principaux</String>
+  <String Id="FeatureArbHelpTitle">ARB Aide</String>
+  <String Id="FeatureArbHelpDesc">Aide au diagnostic par assemblage des fichiers nécessaires au débogage</String>
+  <String Id="FeatureLangTitle">Langages</String>
+  <String Id="FeatureLangDesc">Langages installées qui peuvent être changés en cours d'utilisation du programme. (Anglais est toujours disponible.)</String>
+  <String Id="FeatureFrenchTitle">Français</String>
+  <String Id="FeatureFrenchDesc">Français</String>
+  <String Id="FeatureCalPluginTitle">Addins Calendrier</String>
+  <String Id="FeatureCalPluginDesc">Addins pour télécharger les données d'un calendrier d'un site web</String>
+  <String Id="FeatureUSDAATitle">USDAA</String>
+  <String Id="FeatureUSDAADesc">Télécharger les données calendrier du site usdaa.com</String>
+  <String Id="LaunchPgm">Lancer [AppName] à la fin d'installation</String>
+  <String Id="LaunchPgmText">Lancer [AppName]</String>
+</WixLocalization>

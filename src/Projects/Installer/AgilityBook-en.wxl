@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="Comments">Track all your agility records in one convenient place.</String>
+  <String Id="OnNT">This application only runs on Windows NT and above</String>
+  <String Id="On64NT">This application only runs on 64bit Windows systems</String>
+  <String Id="ARB_AlreadyUpdated">Another version of [ProductName] is already installed. Installation of this version cannot continue. To remove the existing version of [ProductName], use Add/Remove Programs on the Control Panel.</String>
+  <String Id="ARB_NoDowngrade">A later version of [ProductName] is already installed. In order to install an older version, you must first uninstall the current product.</String>
+  <String Id="FeatureCompleteDesc">Main Agility Record Book files</String>
+  <String Id="FeatureArbHelpTitle">ARB Help</String>
+  <String Id="FeatureArbHelpDesc">Help diagnose problems by assembling necessary files for debugging</String>
+  <String Id="FeatureLangTitle">Languages</String>
+  <String Id="FeatureLangDesc">Supported languages that can be changed while running the program (English is always available)</String>
+  <String Id="FeatureFrenchTitle">French</String>
+  <String Id="FeatureFrenchDesc">French</String>
+  <String Id="FeatureCalPluginTitle">Calendar Addins</String>
+  <String Id="FeatureCalPluginDesc">Addins to download Calendar data directly from a website</String>
+  <String Id="FeatureUSDAATitle">USDAA</String>
+  <String Id="FeatureUSDAADesc">Download Calendar entries from usdaa.com</String>
+  <String Id="LaunchPgm">Launch [AppName] when setup exits</String>
+  <String Id="LaunchPgmText">Launch [AppName]</String>
+</WixLocalization>
