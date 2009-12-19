@@ -71,9 +71,11 @@ public:
 	wxString CalendarTentative() const			{return m_CalendarTentative;}
 	wxString CalendarNotEntered() const			{return m_CalendarNotEntered;}
 	wxString CalendarEntered() const			{return m_CalendarEntered;}
+	wxString CalendarPending() const			{return m_CalendarPending;}
 	wxString CalendarPlanning() const			{return m_CalendarPlanning;}
 	wxString CalendarStatusN() const			{return m_CalendarStatusN;}
 	wxString CalendarStatusE() const			{return m_CalendarStatusE;}
+	wxString CalendarStatusO() const			{return m_CalendarStatusO;}
 	wxString CalendarStatusP() const			{return m_CalendarStatusP;}
 	wxString CalendarOpens() const				{return m_CalendarOpens;}
 	wxString CalendarDraw() const				{return m_CalendarDraw;}
@@ -232,9 +234,11 @@ private:
 	wxString m_CalendarTentative;
 	wxString m_CalendarNotEntered;
 	wxString m_CalendarEntered;
+	wxString m_CalendarPending;
 	wxString m_CalendarPlanning;
 	wxString m_CalendarStatusN;
 	wxString m_CalendarStatusE;
+	wxString m_CalendarStatusO;
 	wxString m_CalendarStatusP;
 	wxString m_CalendarOpens;
 	wxString m_CalendarDraw;
