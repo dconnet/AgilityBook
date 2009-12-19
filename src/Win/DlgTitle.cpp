@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-12-19 DRC Make side effects of an unearned title more obvious.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2007-06-25 DRC Allow "1" as the start for recurring titles.
@@ -81,6 +82,7 @@ CDlgTitle::CDlgTitle(
 	, m_ctrlDate(NULL)
 	, m_ctrlReceived(NULL)
 	, m_ctrlVenues(NULL)
+	, m_ctrlHide(NULL)
 	, m_ctrlTitles(NULL)
 	, m_ctrlDesc(NULL)
 	, m_Venue()
@@ -137,12 +139,12 @@ CDlgTitle::CDlgTitle(
 	m_ctrlVenues->SetHelpText(_("HIDC_TITLE_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_TITLE_VENUES"));
 
-	wxCheckBox* checkHide = new wxCheckBox(this, wxID_ANY,
+	m_ctrlHide = new wxCheckBox(this, wxID_ANY,
 		_("IDC_TITLE_HIDDEN"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_bHidden));
-	checkHide->SetHelpText(_("HIDC_TITLE_HIDDEN"));
-	checkHide->SetToolTip(_("HIDC_TITLE_HIDDEN"));
+	m_ctrlHide->SetHelpText(_("HIDC_TITLE_HIDDEN"));
+	m_ctrlHide->SetToolTip(_("HIDC_TITLE_HIDDEN"));
 
 	m_ctrlReceived = new wxCheckBox(this, wxID_ANY,
 		_("IDC_TITLE_RECEIVED"),
@@ -196,7 +198,7 @@ CDlgTitle::CDlgTitle(
 	sizerTop2Rows->Add(sizerDateVenue, 0, wxEXPAND, 5);
 
 	wxBoxSizer* sizerChecks = new wxBoxSizer(wxVERTICAL);
-	sizerChecks->Add(checkHide, 0, wxALL, 5);
+	sizerChecks->Add(m_ctrlHide, 0, wxALL, 5);
 	sizerChecks->Add(m_ctrlReceived, 0, wxALL, 5);
 
 	sizerTop2Rows->Add(sizerChecks, 0, wxEXPAND, 5);
@@ -308,15 +310,22 @@ void CDlgTitle::OnTitleDateChanged(wxDateEvent& evt)
 void CDlgTitle::OnClickedEarned(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
+	static bool bLastHidden = false;
+	static bool bLastReceived = false;
+	m_ctrlDate->Enable(m_bEarned);
+	m_ctrlHide->Enable(m_bEarned);
+	m_ctrlReceived->Enable(m_bEarned);
 	if (m_bEarned)
 	{
-		m_ctrlDate->Enable(m_bEarned);
-		m_ctrlReceived->Enable(m_bEarned);
+		m_ctrlHide->SetValue(bLastHidden);
+		m_ctrlReceived->SetValue(bLastReceived);
 	}
 	else
 	{
-		m_ctrlDate->Enable(m_bEarned);
-		m_ctrlReceived->Enable(m_bEarned);
+		bLastHidden = m_bHidden;
+		bLastReceived = m_bReceived;
+		m_ctrlHide->SetValue(true);
+		m_ctrlReceived->SetValue(false);
 	}
 	FillTitles();
 }

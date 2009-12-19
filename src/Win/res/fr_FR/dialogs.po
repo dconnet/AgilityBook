@@ -134,14 +134,14 @@ msgstr "Inscription"
 msgid "IDC_CAL_ENTER_NOT"
 msgstr "Pas &actuellement"
 
-msgid "IDC_CAL_ENTER_PENDING"
-msgstr "Pending"
-
 msgid "IDC_CAL_ENTER_PLANNING"
 msgstr "P&révision"
 
+msgid "IDC_CAL_ENTER_PENDING"
+msgstr "Entered (Pending)"
+
 msgid "IDC_CAL_ENTER_ENTERED"
-msgstr "&Inscrit"
+msgstr "&Inscrit (Confirmed)"
 
 msgid "IDC_CAL_ONLINE_ENTRY"
 msgstr "Inscription en ligne"

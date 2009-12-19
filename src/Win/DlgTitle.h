@@ -65,6 +65,7 @@ private:
 	wxDatePickerCtrl* m_ctrlDate;
 	wxCheckBox* m_ctrlReceived;
 	CVenueComboBox* m_ctrlVenues;
+	wxCheckBox* m_ctrlHide;
 	wxComboBox* m_ctrlTitles;
 	CRichEditCtrl2* m_ctrlDesc;
 	wxString m_Venue;

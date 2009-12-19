@@ -240,7 +240,7 @@ CWizardExport::CWizardExport(
 	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 5);
 
 	wxBoxSizer* sizerAssign = new wxBoxSizer(wxHORIZONTAL);
-	sizerAssign->Add(m_ctrlAssign, 0, wxALIGN_BOTTOM|wxALL, 5);
+	sizerAssign->Add(m_ctrlAssign, 0, wxALL, 5);
 
 	wxBoxSizer* sizerFormat = new wxBoxSizer(wxHORIZONTAL);
 	sizerFormat->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -248,7 +248,6 @@ CWizardExport::CWizardExport(
 
 	sizerAssign->Add(sizerFormat, 0, wxALIGN_TOP, 5);
 
-#pragma PRAGMA_TODO("Fix layout")
 	sizerOptions->Add(0, 0, 1, wxEXPAND, 5);
 	sizerOptions->Add(sizerAssign, 0, wxEXPAND, 5);
 

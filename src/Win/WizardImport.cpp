@@ -239,6 +239,7 @@ CWizardImport::CWizardImport(
 	sizerStart->Add(m_ctrlRow, 0, wxALL, 5);
 
 	sizerStart->Add(0, 0, 1, wxEXPAND, 5);
+	sizerStart->Add(m_ctrlAssign, 0, wxALL, 5);
 	sizerStart->Add(textFormat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	sizerStart->Add(m_ctrlDateFormat, 0, wxALL, 5);
 
@@ -266,9 +267,6 @@ CWizardImport::CWizardImport(
 	sizerDelimiters->Add(sizerDelim2, 1, wxEXPAND, 5);
 
 	sizerOptions->Add(sizerDelimiters, 0, wxEXPAND, 5);
-
-#pragma PRAGMA_TODO("Fix layout")
-	sizerOptions->Add(m_ctrlAssign, 0, wxALIGN_BOTTOM|wxALL, 5);
 
 	bSizer->Add(sizerOptions, 0, wxEXPAND, 5);
 

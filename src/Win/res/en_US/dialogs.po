@@ -137,10 +137,10 @@ msgid "IDC_CAL_ENTER_PLANNING"
 msgstr "&Planning"
 
 msgid "IDC_CAL_ENTER_PENDING"
-msgstr "Pend&ing"
+msgstr "Entered (Pend&ing)"
 
 msgid "IDC_CAL_ENTER_ENTERED"
-msgstr "&Entered"
+msgstr "&Entered (Confirmed)"
 
 msgid "IDC_CAL_ONLINE_ENTRY"
 msgstr "Enter Online"
