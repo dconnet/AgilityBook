@@ -79,16 +79,16 @@ msgid "HIDC_CAL_DATE_START"
 msgstr "Date the trial begins."
 
 msgid "HIDC_CAL_ENTER_ENTERED"
-msgstr "Your entry status on this trial. Currently entered."
+msgstr "Your entry status in this trial. Currently entered and confirmed."
 
 msgid "HIDC_CAL_ENTER_NOT"
-msgstr "Your entry status on this trial. Not entered."
+msgstr "Your entry status in this trial. Not entered."
 
 msgid "HIDC_CAL_ENTER_PENDING"
-msgstr "Your entry status on this trial. Currently entered, not confirmed."
+msgstr "Your entry status on this trial. Currently entered but not confirmed."
 
 msgid "HIDC_CAL_ENTER_PLANNING"
-msgstr "Your entry status on this trial. Planning on entering."
+msgstr "Your entry status in this trial. Planning on entering."
 
 msgid "HIDC_CAL_LOCATION"
 msgstr "Location this trial is being held."

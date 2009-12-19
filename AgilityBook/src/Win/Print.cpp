@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2009-12-19 DRC Fix blank page layout in landscape.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-19 DRC Fixed printing when page size isn't specified.
  * @li 2009-05-31 DRC Added support for creating pages of a specific size.
@@ -164,35 +165,38 @@ bool CPrintRuns::HasPage(int page)
 
 void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pageTo)
 {
-	*minPage = 1;
-	if (0 == m_runs.size())
-		*maxPage = 2;
+	int nRuns = static_cast<int>(m_runs.size());
+	int nPages = 1;
+	m_nPagesX = 1;
+	m_nPagesY = 1;
+	int pageW, pageH;
+	GetPageSizeMM(&pageW, &pageH);
+	long width, height;
+	CAgilityBookOptions::GetRunPageSize(true, width, height, NULL);
+	// This logic should match OnPrintPage
+	if (0 < width && 0 < height)
+	{
+		m_nPagesX = pageW / width;
+		if (1 > m_nPagesX)
+			m_nPagesX = 1;
+		m_nPagesY = pageH / height;
+		if (1 > m_nPagesY)
+			m_nPagesY = 1;
+	}
 	else
 	{
-		int nRuns = static_cast<int>(m_runs.size());
-		int nPages = 1;
-		m_nPagesX = 1;
-		m_nPagesY = 1;
-		int pageW, pageH;
-		GetPageSizeMM(&pageW, &pageH);
-		long width, height;
-		CAgilityBookOptions::GetRunPageSize(true, width, height, NULL);
-		// This logic should match OnPrintPage
-		if (0 < width && 0 < height)
-		{
-			m_nPagesX = pageW / width;
-			if (1 > m_nPagesX)
-				m_nPagesX = 1;
-			m_nPagesY = pageH / height;
-			if (1 > m_nPagesY)
-				m_nPagesY = 1;
-		}
-		else
-		{
-			if (abs(pageW) > abs(pageH)) // landscape
-				m_nPagesX = 2;
-		}
-		m_nPerSheet = (m_nPagesX * m_nPagesY) * 2;
+		if (abs(pageW) > abs(pageH)) // landscape
+			m_nPagesX = 2;
+	}
+	m_nPerSheet = (m_nPagesX * m_nPagesY) * 2;
+
+	*minPage = 1;
+	if (0 == nRuns)
+	{
+		*maxPage = 2;
+	}
+	else
+	{
 		nPages = nRuns / m_nPerSheet;
 		if (0 != nRuns % m_nPerSheet)
 			++nPages;
