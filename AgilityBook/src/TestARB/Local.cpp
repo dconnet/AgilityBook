@@ -87,10 +87,12 @@ void CLocalization::Load()
 	m_CalendarTentative = _("IDS_CALENDAR_TENTATIVE");
 	m_CalendarNotEntered = _("IDS_CALENDAR_NOTENTERED");
 	m_CalendarEntered = _("IDS_CALENDAR_ENTERED");
+	m_CalendarPending = _("IDS_CALENDAR_PENDING");
 	m_CalendarPlanning = _("IDS_CALENDAR_PLANNING");
-	m_CalendarStatusN = m_CalendarStatusE = m_CalendarStatusP = _("IDS_CALENDAR_STATUS");
+	m_CalendarStatusN = m_CalendarStatusE = m_CalendarStatusO = m_CalendarStatusP = _("IDS_CALENDAR_STATUS");
 	m_CalendarStatusN += m_CalendarNotEntered;
 	m_CalendarStatusE += m_CalendarEntered;
+	m_CalendarStatusO += m_CalendarPending;
 	m_CalendarStatusP += m_CalendarPlanning;
 	m_CalendarOpens = _("IDS_CALENDAR_OPENS");
 	m_CalendarDraw = _("IDS_CALENDAR_DRAW");
