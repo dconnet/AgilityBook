@@ -226,9 +226,10 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		CCalendarViewFilter filter = CFilterOptions::Options().FilterCalendarView();
 		wxColour clrNotEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorNotEntered);
 		wxColour clrPlanning = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPlanning);
+		wxColour clrPending = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorPending);
+		wxColour clrEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered);
 		wxColour clrOpening = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorOpening);
 		wxColour clrClosing = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorClosing);
-		wxColour clrEntered = CAgilityBookOptions::CalendarColor(CAgilityBookOptions::eCalColorEntered);
 
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
@@ -420,6 +421,10 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 							case ARBCalendar::ePlanning:
 								bReset = true;
 								pDC->SetTextForeground(clrPlanning);
+								break;
+							case ARBCalendar::ePending:
+								bReset = true;
+								pDC->SetTextForeground(clrPending);
 								break;
 							case ARBCalendar::eEntered:
 								bReset = true;
@@ -1031,7 +1036,8 @@ size_t CAgilityBookCalendar::GetEntriesOn(
 		if (pCal->InRange(date)
 		&& ((ARBCalendar::eNot == pCal->GetEntered() && filter.ViewNotEntered())
 		|| (ARBCalendar::ePlanning == pCal->GetEntered() && filter.ViewPlanning())
-		|| (ARBCalendar::eEntered == pCal->GetEntered() && filter.ViewEntered())))
+		|| ((ARBCalendar::ePending == pCal->GetEntered() || ARBCalendar::eEntered == pCal->GetEntered())
+		&& filter.ViewEntered())))
 		{
 			entries.push_back((*iter));
 		}

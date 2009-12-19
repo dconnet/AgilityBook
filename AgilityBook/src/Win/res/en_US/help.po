@@ -84,6 +84,9 @@ msgstr "Your entry status on this trial. Currently entered."
 msgid "HIDC_CAL_ENTER_NOT"
 msgstr "Your entry status on this trial. Not entered."
 
+msgid "HIDC_CAL_ENTER_PENDING"
+msgstr "Your entry status on this trial. Currently entered, not confirmed."
+
 msgid "HIDC_CAL_ENTER_PLANNING"
 msgstr "Your entry status on this trial. Planning on entering."
 

@@ -746,6 +746,9 @@ msgstr "Not entered"
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Entered"
 
+msgid "IDS_CALENDAR_PENDING"
+msgstr "Pending"
+
 msgid "IDS_CALENDAR_PLANNING"
 msgstr "Planning"
 

@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2009-12-18 DRC File version 12.11
+               Added 'O' to 'Entry'.
 2009-07-26 DRC File version 12.10
                Added 'DNR' to 'Placement' and 'ReferenceRun'
 2008-02-12 DRC File version 12.9
@@ -102,7 +104,7 @@ Revision History:
 
 <!--
 This section defines the rules for the calendar cribsheet.
- Entered: E==Entered, P==Planning, N==Not
+ Entered: E==Entered, O=Pending, P==Planning, N==Not
 -->
 <!ELEMENT Calendar (#PCDATA) >
 	<!ATTLIST Calendar
@@ -115,7 +117,7 @@ This section defines the rules for the calendar cribsheet.
 		Location CDATA #REQUIRED
 		Club CDATA #REQUIRED
 		Venue CDATA #REQUIRED
-		Entered (E|P|N) 'N'
+		Entered (E|O|P|N) 'N'
 		Acc (N|T|C) 'N'
 		Confirm CDATA #IMPLIED
 		SecEmail CDATA #IMPLIED

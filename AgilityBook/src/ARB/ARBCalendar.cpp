@@ -66,6 +66,7 @@
 
 #define ENTRY_NOT		wxT("N")
 #define ENTRY_ENTERED	wxT("E")
+#define ENTRY_PENDING	wxT("O")
 #define ENTRY_PLANNING	wxT("P")
 
 #define ACCOM_NONE		wxT("N")
@@ -655,6 +656,8 @@ bool ARBCalendar::Load(
 		{
 			if (attrib == ENTRY_ENTERED)
 				m_eEntered = eEntered;
+			else if (attrib == ENTRY_PENDING)
+				m_eEntered = ePending;
 			else if (attrib == ENTRY_PLANNING)
 				m_eEntered = ePlanning;
 			else if (attrib == ENTRY_NOT)
@@ -728,6 +731,9 @@ bool ARBCalendar::Save(ElementNodePtr ioTree) const
 	case eEntered:
 		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_ENTERED);
 		break;
+	case ePending:
+		cal->AddAttrib(ATTRIB_CAL_PENDING, ENTRY_PENDING);
+		break;
 	case ePlanning:
 		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_PLANNING);
 		break;
@@ -781,6 +787,9 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 		case ARBCalendar::eEntered:
 			str << Localization()->CalendarStatusE() << wxT(" ");
 			break;
+		case ARBCalendar::ePending:
+			str << Localization()->CalendarStatusO() << wxT(" ");
+			break;
 		case ARBCalendar::ePlanning:
 			str << Localization()->CalendarStatusP() << wxT(" ");
 			break;
@@ -808,7 +817,7 @@ void ARBCalendar::iCalendar(ICalendar* inIoStream, int inAlarm) const
 	}
 	if (ePlanning == m_eEntered && m_DateOpening.IsValid())
 		inAlarm += m_DateStart - m_DateOpening;
-	if (ePlanning == m_eEntered || eEntered == m_eEntered)
+	if (ePlanning == m_eEntered || ePending == m_eEntered || eEntered == m_eEntered)
 		ioStream->DoAlarm(inAlarm);
 	ioStream->EndEvent();
 }
@@ -943,7 +952,8 @@ size_t ARBCalendarList::GetAllEntered(std::vector<ARBCalendarPtr>& outEntered) c
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		ARBCalendarPtr pCal = (*iter);
-		if (ARBCalendar::eEntered == pCal->GetEntered())
+		if (ARBCalendar::ePending == pCal->GetEntered()
+		|| ARBCalendar::eEntered == pCal->GetEntered())
 			outEntered.push_back(pCal);
 	}
 	return outEntered.size();

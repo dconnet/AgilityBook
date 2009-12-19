@@ -96,6 +96,7 @@ CDlgCalendar::CDlgCalendar(
 	, m_ctrlCloses(NULL)
 	, m_ctrlEntryNot(NULL)
 	, m_ctrlEntryPlan(NULL)
+	, m_ctrlEntryPending(NULL)
 	, m_ctrlEntryEntered(NULL)
 	, m_ctrlOnlineUrlEntry(NULL)
 	, m_ctrlOnlineUrl(NULL)
@@ -252,6 +253,13 @@ CDlgCalendar::CDlgCalendar(
 	m_ctrlEntryPlan->SetHelpText(_("HIDC_CAL_ENTER_PLANNING"));
 	m_ctrlEntryPlan->SetToolTip(_("HIDC_CAL_ENTER_PLANNING"));
 
+	m_ctrlEntryPending = new wxRadioButton(this, wxID_ANY,
+		_("IDC_CAL_ENTER_PENDING"),
+		wxDefaultPosition, wxDefaultSize, 0);
+	m_ctrlEntryPending->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgCalendar::OnCalEntry), NULL, this);
+	m_ctrlEntryPending->SetHelpText(_("HIDC_CAL_ENTER_PENDING"));
+	m_ctrlEntryPending->SetToolTip(_("HIDC_CAL_ENTER_PENDING"));
+
 	m_ctrlEntryEntered = new wxRadioButton(this, wxID_ANY,
 		_("IDC_CAL_ENTER_ENTERED"),
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -266,6 +274,9 @@ CDlgCalendar::CDlgCalendar(
 		break;
 	case ARBCalendar::ePlanning:
 		m_ctrlEntryPlan->SetValue(true);
+		break;
+	case ARBCalendar::ePending:
+		m_ctrlEntryPending->SetValue(true);
 		break;
 	case ARBCalendar::eEntered:
 		m_ctrlEntryEntered->SetValue(true);
@@ -498,6 +509,7 @@ CDlgCalendar::CDlgCalendar(
 	sizerOnline->Add(m_ctrlOnlineUrl, 1, wxALL, 5);
 
 	sizerEntry->Add(sizerOnline, 0, wxEXPAND, 5);
+	sizerEntry->Add(m_ctrlEntryPending, 0, wxALL, 3);
 	sizerEntry->Add(m_ctrlEntryEntered, 0, wxALL, 3);
 
 	sizer1->Add(sizerEntry, 0, wxEXPAND, 5);
@@ -863,6 +875,8 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 		m_pCal->SetEntered(ARBCalendar::eNot);
 	else if (m_ctrlEntryPlan->GetValue())
 		m_pCal->SetEntered(ARBCalendar::ePlanning);
+	else if (m_ctrlEntryPending->GetValue())
+		m_pCal->SetEntered(ARBCalendar::ePending);
 	else if (m_ctrlEntryEntered->GetValue())
 		m_pCal->SetEntered(ARBCalendar::eEntered);
 	m_pCal->SetIsTentative(m_bTentative);

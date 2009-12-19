@@ -81,6 +81,8 @@
 #include "res/AccTodo.xpm"
 #include "res/CalEntered.xpm"
 #include "res/CalEnteredTentative.xpm"
+#include "res/CalPending.xpm"
+#include "res/CalPendingTentative.xpm"
 #include "res/CalPlan.xpm"
 #include "res/CalPlanTentative.xpm"
 #include "res/CalTentative.xpm"
@@ -181,6 +183,12 @@ void CAgilityBookCalendarListViewData::OnNeedListItem(long iCol, wxListItem& inf
 					idxImage = m_pView->m_imgPlanTentative;
 				else
 					idxImage = m_pView->m_imgPlan;
+				break;
+			case ARBCalendar::ePending:
+				if (m_pCal->IsTentative())
+					idxImage = m_pView->m_imgPendingTentative;
+				else
+					idxImage = m_pView->m_imgPending;
 				break;
 			case ARBCalendar::eEntered:
 				if (m_pCal->IsTentative())
@@ -542,6 +550,8 @@ CAgilityBookCalendarListView::CAgilityBookCalendarListView(
 	, m_imgTentative(-1)
 	, m_imgPlan(-1)
 	, m_imgPlanTentative(-1)
+	, m_imgPending(-1)
+	, m_imgPendingTentative(-1)
 	, m_imgEntered(-1)
 	, m_imgEnteredTentative(-1)
 	, m_imgAccomNone(-1)
@@ -582,6 +592,8 @@ bool CAgilityBookCalendarListView::Create(
 	m_imgTentative = m_Ctrl->AddIcon(wxIcon(CalTentative_xpm));
 	m_imgPlan = m_Ctrl->AddIcon(wxIcon(CalPlan_xpm));
 	m_imgPlanTentative = m_Ctrl->AddIcon(wxIcon(CalPlanTentative_xpm));
+	m_imgPending = m_Ctrl->AddIcon(wxIcon(CalPending_xpm));
+	m_imgPendingTentative = m_Ctrl->AddIcon(wxIcon(CalPendingTentative_xpm));
 	m_imgEntered = m_Ctrl->AddIcon(wxIcon(CalEntered_xpm));
 	m_imgEnteredTentative = m_Ctrl->AddIcon(wxIcon(CalEnteredTentative_xpm));
 	m_imgAccomNone = m_Ctrl->AddIcon(wxIcon(AccNone_xpm));
@@ -614,6 +626,8 @@ void CAgilityBookCalendarListView::DetachView()
 	m_imgTentative = -1;
 	m_imgPlan = -1;
 	m_imgPlanTentative = -1;
+	m_imgPending = -1;
+	m_imgPendingTentative = -1;
 	m_imgEntered = -1;
 	m_imgEnteredTentative = -1;
 	m_imgAccomNone = -1;
@@ -787,14 +801,16 @@ void CAgilityBookCalendarListView::LoadData()
 		// Additional filtering
 		if (!((ARBCalendar::eNot == pCal->GetEntered() && filter.ViewNotEntered())
 		|| (ARBCalendar::ePlanning == pCal->GetEntered() && filter.ViewPlanning())
-		|| (ARBCalendar::eEntered == pCal->GetEntered() && filter.ViewEntered())))
+		|| ((ARBCalendar::ePending == pCal->GetEntered() || ARBCalendar::eEntered == pCal->GetEntered())
+		&& filter.ViewEntered())))
 			continue;
 		if (!bViewAll)
 		{
 			if (pCal->IsBefore(today))
 				continue;
 		}
-		if (bHide && ARBCalendar::eEntered != pCal->GetEntered())
+		if (bHide && (ARBCalendar::ePending != pCal->GetEntered()
+		|| ARBCalendar::eEntered != pCal->GetEntered()))
 		{
 			bool bSuppress = false;
 			for (std::vector<ARBCalendarPtr>::const_iterator iterE = entered.begin();
@@ -1027,7 +1043,8 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 					// This will happen if the source is marked as entered and they have
 					// selected the option to hide dates.
 					ARBCalendarPtr cal = (*iter)->GetCalendar()->Clone();
-					if ((*iter)->GetCalendar()->GetEntered() == ARBCalendar::eEntered
+					if (((*iter)->GetCalendar()->GetEntered() == ARBCalendar::ePending
+					|| (*iter)->GetCalendar()->GetEntered() == ARBCalendar::eEntered)
 					&& CAgilityBookOptions::HideOverlappingCalendarEntries())
 					{
 						++nNewIsNotVisible;

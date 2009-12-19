@@ -98,6 +98,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPlanning, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorOpening, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorClosing, wxColour()));
+	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorPending, wxColour()));
 	m_CalColors.push_back(tColorInfo(CAgilityBookOptions::eCalColorEntered, wxColour()));
 	std::vector<tColorInfo>::iterator iColor;
 	for (iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
@@ -447,6 +448,11 @@ wxString CDlgOptionsCalendar::GetCalText(
 		if (!bForDisplay)
 			text += wxT("  ");
 		text += _("IDS_COL_CLOSING");
+		if (bForDisplay)
+			text += wxT(" Text");
+		break;
+	case CAgilityBookOptions::eCalColorPending:
+		text += Localization()->CalendarPending();
 		if (bForDisplay)
 			text += wxT(" Text");
 		break;

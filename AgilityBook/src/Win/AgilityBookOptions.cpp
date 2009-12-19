@@ -376,12 +376,14 @@ static wxChar const* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 		return wxT("NotEnteredColor");
 	case CAgilityBookOptions::eCalColorPlanning:
 		return wxT("PlanningColor");
+	case CAgilityBookOptions::eCalColorPending:
+		return wxT("PendingColor");
+	case CAgilityBookOptions::eCalColorEntered:
+		return wxT("EnteredColor");
 	case CAgilityBookOptions::eCalColorOpening:
 		return wxT("OpenColor");
 	case CAgilityBookOptions::eCalColorClosing:
 		return wxT("CloseColor");
-	case CAgilityBookOptions::eCalColorEntered:
-		return wxT("EnteredColor");
 	}
 	assert(0);
 	return wxT("");
@@ -396,12 +398,14 @@ static wxColour CalItemColor(CAgilityBookOptions::CalendarColorItem inItem)
 		return wxColour(0,0,0); // Black
 	case CAgilityBookOptions::eCalColorPlanning:
 		return wxColour(255,128,0); // Orange
+	case CAgilityBookOptions::eCalColorPending:
+		return wxColour(128,0,255); // Blue-ish
+	case CAgilityBookOptions::eCalColorEntered:
+		return wxColour(0,0,255); // Blue
 	case CAgilityBookOptions::eCalColorOpening:
 		return wxColour(0,128,0); // Dk Green
 	case CAgilityBookOptions::eCalColorClosing:
 		return wxColour(255,0,0); // Red
-	case CAgilityBookOptions::eCalColorEntered:
-		return wxColour(0,0,255); // Blue
 	}
 	assert(0);
 	return wxColour(0,0,0);

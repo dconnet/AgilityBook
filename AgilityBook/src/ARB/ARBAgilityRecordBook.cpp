@@ -37,7 +37,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
+ * @li 2009-12-18 DRC File version 12.11
+ *                    Added 'O' to 'Entry'.
  * @li 2009-07-26 DRC File version 12.10
  *                    Added 'DNR' to 'Placement' and 'ReferenceRun'
  * @li 2008-02-12 DRC File version 12.9
@@ -115,7 +116,7 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 	// Note, when bumping to the next version - DO NOT bump to a 7.x.
 	// V0.9.3.7 can read 7.x files, but will not issue the warning about
 	// possible data loss.
-	static ARBVersion const curVersion(12, 10);
+	static ARBVersion const curVersion(12, 11);
 	return curVersion;
 }
 

@@ -80,9 +80,11 @@ public:
 	virtual wxString CalendarTentative() const = 0;
 	virtual wxString CalendarNotEntered() const = 0;
 	virtual wxString CalendarEntered() const	 = 0;
+	virtual wxString CalendarPending() const = 0;
 	virtual wxString CalendarPlanning() const = 0;
 	virtual wxString CalendarStatusN() const = 0;
 	virtual wxString CalendarStatusE() const = 0;
+	virtual wxString CalendarStatusO() const = 0;
 	virtual wxString CalendarStatusP() const = 0;
 	virtual wxString CalendarOpens() const = 0;
 	virtual wxString CalendarDraw() const = 0;

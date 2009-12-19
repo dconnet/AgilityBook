@@ -350,6 +350,10 @@ SUITE(TestCalendarList)
 		CHECK_EQUAL(0u, callist.GetAllEntered(lst));
 		cal1->SetEntered(ARBCalendar::ePlanning);
 		CHECK_EQUAL(0u, callist.GetAllEntered(lst));
+		cal1->SetEntered(ARBCalendar::ePending);
+		CHECK_EQUAL(1u, callist.GetAllEntered(lst));
+		cal1->SetEntered(ARBCalendar::ePlanning);
+		CHECK_EQUAL(0u, callist.GetAllEntered(lst));
 		cal1->SetEntered(ARBCalendar::eEntered);
 		CHECK_EQUAL(1u, callist.GetAllEntered(lst));
 	}

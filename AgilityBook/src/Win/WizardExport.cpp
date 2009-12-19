@@ -900,6 +900,9 @@ void CWizardExport::UpdatePreview()
 						case ARBCalendar::eEntered:
 							data += AddPreviewData(iLine, idx, Localization()->CalendarEntered());
 							break;
+						case ARBCalendar::ePending:
+							data += AddPreviewData(iLine, idx, Localization()->CalendarPending());
+							break;
 						case ARBCalendar::ePlanning:
 							data += AddPreviewData(iLine, idx, Localization()->CalendarPlanning());
 							break;
@@ -1021,6 +1024,10 @@ void CWizardExport::UpdatePreview()
 								break;
 							case ARBCalendar::eEntered:
 								tmp += Localization()->CalendarStatusE();
+								tmp += wxT(" ");
+								break;
+							case ARBCalendar::ePending:
+								tmp += Localization()->CalendarStatusO();
 								tmp += wxT(" ");
 								break;
 							case ARBCalendar::ePlanning:
