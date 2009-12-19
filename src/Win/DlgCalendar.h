@@ -90,6 +90,7 @@ private:
 	wxDatePickerCtrl* m_ctrlCloses;
 	wxRadioButton* m_ctrlEntryNot;
 	wxRadioButton* m_ctrlEntryPlan;
+	wxRadioButton* m_ctrlEntryPending;
 	wxRadioButton* m_ctrlEntryEntered;
 	wxButton* m_ctrlOnlineUrlEntry;
 	CTextCtrl* m_ctrlOnlineUrl;

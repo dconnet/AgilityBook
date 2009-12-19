@@ -93,9 +93,10 @@ public:
 	{
 		eCalColorNotEntered,
 		eCalColorPlanning,
+		eCalColorPending,
+		eCalColorEntered,
 		eCalColorOpening,
 		eCalColorClosing,
-		eCalColorEntered
 	} CalendarColorItem;
 	static wxColour CalendarColor(CalendarColorItem inItem);
 	static void SetCalendarColor(

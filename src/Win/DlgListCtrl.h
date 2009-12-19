@@ -120,6 +120,8 @@ private:
 	int m_imgTentative;
 	int m_imgPlan;
 	int m_imgPlanTentative;
+	int m_imgPending;
+	int m_imgPendingTentative;
 	int m_imgEntered;
 	int m_imgEnteredTentative;
 

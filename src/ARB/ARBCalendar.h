@@ -91,6 +91,7 @@ public:
 	{
 		eNot,		///< Not entered
 		eEntered,	///< Entered
+		ePending,	///< Entered, not confirmed
 		ePlanning	///< Not entered, but planning on it soon
 	} eEntry;
 

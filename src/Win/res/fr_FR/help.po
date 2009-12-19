@@ -85,6 +85,9 @@ msgstr "Votre statut pour ce concours. Actuellement inscrit."
 msgid "HIDC_CAL_ENTER_NOT"
 msgstr "Votre statut pour ce concours. Pas inscrit."
 
+msgid "HIDC_CAL_ENTER_PENDING"
+msgstr "Your entry status on this trial. Currently entered, not confirmed."
+
 msgid "HIDC_CAL_ENTER_PLANNING"
 msgstr "Votre statut pour ce concours. Inscription prévue."
 

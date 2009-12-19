@@ -136,6 +136,9 @@ msgstr "&Not currently"
 msgid "IDC_CAL_ENTER_PLANNING"
 msgstr "&Planning"
 
+msgid "IDC_CAL_ENTER_PENDING"
+msgstr "Pend&ing"
+
 msgid "IDC_CAL_ENTER_ENTERED"
 msgstr "&Entered"
 

@@ -65,6 +65,8 @@
 #include "res/CalTentative.xpm"
 #include "res/CalPlan.xpm"
 #include "res/CalPlanTentative.xpm"
+#include "res/CalPending.xpm"
+#include "res/CalPendingTentative.xpm"
 #include "res/CalEntered.xpm"
 #include "res/CalEnteredTentative.xpm"
 
@@ -133,6 +135,8 @@ int CDlgListCtrlDataCalendar::OnNeedIcon() const
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgTentative : m_Parent->m_imgEmpty;
 	case ARBCalendar::ePlanning:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgPlanTentative : m_Parent->m_imgPlan;
+	case ARBCalendar::ePending:
+		return GetCalendar()->IsTentative() ? m_Parent->m_imgPendingTentative : m_Parent->m_imgPending;
 	case ARBCalendar::eEntered:
 		return GetCalendar()->IsTentative() ? m_Parent->m_imgEnteredTentative : m_Parent->m_imgEntered;
 	}
@@ -556,6 +560,8 @@ bool CDlgListCtrl::Create(
 	m_imgTentative = m_ctrlList->AddIcon(wxIcon(CalTentative_xpm));
 	m_imgPlan = m_ctrlList->AddIcon(wxIcon(CalPlan_xpm));
 	m_imgPlanTentative = m_ctrlList->AddIcon(wxIcon(CalPlanTentative_xpm));
+	m_imgPending = m_ctrlList->AddIcon(wxIcon(CalPending_xpm));
+	m_imgPendingTentative = m_ctrlList->AddIcon(wxIcon(CalPendingTentative_xpm));
 	m_imgEntered = m_ctrlList->AddIcon(wxIcon(CalEntered_xpm));
 	m_imgEnteredTentative = m_ctrlList->AddIcon(wxIcon(CalEnteredTentative_xpm));
 	m_ctrlList->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgListCtrl::OnItemSelected), NULL, this);

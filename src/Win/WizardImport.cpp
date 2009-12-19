@@ -1306,12 +1306,17 @@ bool CWizardImport::DoWizardFinish()
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eNot);
 						}
-						else if (wxT("P") == entry[iCol] || wxT("Planning") == entry[iCol])
+						else if (wxT("P") == entry[iCol] || _("IDS_CALENDAR_PLANNING") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::ePlanning);
 						}
-						else if (wxT("E") == entry[iCol] || wxT("Entered") == entry[iCol])
+						else if (wxT("O") == entry[iCol] || _("IDS_CALENDAR_PENDING") == entry[iCol])
+						{
+							pCal = CreateCal(pCal);
+							pCal->SetEntered(ARBCalendar::ePending);
+						}
+						else if (wxT("E") == entry[iCol] || _("IDS_CALENDAR_ENTERED") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eEntered);

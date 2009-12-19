@@ -134,6 +134,9 @@ msgstr "Inscription"
 msgid "IDC_CAL_ENTER_NOT"
 msgstr "Pas &actuellement"
 
+msgid "IDC_CAL_ENTER_PENDING"
+msgstr "Pending"
+
 msgid "IDC_CAL_ENTER_PLANNING"
 msgstr "P&révision"
 
