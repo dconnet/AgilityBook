@@ -1,3 +1,4 @@
+@echo off
 set OLDPATH=%PATH%
 set OLDINCLUDE=%INCLUDE%
 set OLDLIB=%LIB%
@@ -9,7 +10,18 @@ set OLDFrameworkVersion=%FrameworkVersion%
 set OLDVCINSTALLDIR=%VCINSTALLDIR%
 set OLDVSINSTALLDIR=%VSINSTALLDIR%
 set OLDWindowsSdkDir=%WindowsSdkDir%
+set SETBUILDNUMBER_UPDATE=-x
 
+if ("%1")==("") goto clean
+if ("%1")==("fullupdate") goto fullupdate
+if ("%1")==("clean") goto clean
+if ("%1")==("dirty") goto cleanDone
+echo Usage: %0 [fullupdate or clean or dirty]
+goto done
+
+:fullupdate
+set SETBUILDNUMBER_UPDATE=
+:clean
 cd ..\..\..\bin
 rd /q/s VC6
 rd /q/s VC7
@@ -17,7 +29,10 @@ rd /q/s VC8Win32
 rd /q/s VC8x64
 rd /q/s VC9Win32
 rd /q/s VC9x64
-cd ..\src\Projects
+cd ..\src\Projects\Installer
+
+:cleanDone
+cd ..
 
 REM Targets:
 REM VC6
@@ -50,8 +65,8 @@ REM   TestARB: all
 cd VC9
 del bldWin32.txt bldWin64.txt
 REM Unicode (Release == Unicode)
-call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64
-devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"
+rem call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64
+rem devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
 devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"
 cd ..
@@ -68,6 +83,7 @@ REM cd ..
 REM Go back to where we started
 cd Installer
 
+:done
 set PATH=%OLDPATH%
 set INCLUDE=%OLDINCLUDE%
 set LIB=%OLDLIB%
@@ -90,3 +106,4 @@ set OLDFrameworkVersion=
 set OLDVCINSTALLDIR=
 set OLDVSINSTALLDIR=
 set OLDWindowsSdkDir=
+set SETBUILDNUMBER_UPDATE=

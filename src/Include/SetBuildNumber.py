@@ -2,6 +2,7 @@
 # and ../../configure.in
 #
 # This assumes the current directory is 'Include'
+# @li 2009-12-20 DRC Added -x argument
 # @li 2009-10-06 DRC Add multiprocessing awareness. Kind of.
 # @li 2009-08-12 DRC Make sure full version is the same in configure.in
 # @li 2009-04-12 DRC Added CalVerNum.h to be autoincremented.
@@ -134,15 +135,19 @@ def doWork():
 
 
 if __name__ == '__main__':
-	# Not sure how to get locking across invokations. The multiprocessing lock
-	# stuff seems aimed at spawned processes. This takes a crude path - there's
-	# definitely still a window of opportunity.
-	lockfile = 'SetBuildNumber.lck'
-	if not os.access(lockfile, os.F_OK):
-		lck = open(lockfile, 'wb')
-		print >>lck, 'Locked'
-		lck.close()
-		doWork()
-		os.remove(lockfile)
+	if 2 == len(sys.argv) and sys.argv[1] == "-x":
+		print "SetBuildNumber skipped"
 	else:
-		print "SetBuildNumber is locked"
+		# Not sure how to get locking across invokations.
+		# The multiprocessing lock stuff seems aimed at spawned processes.
+		# This takes a crude path - there's definitely still a window of
+		# opportunity.
+		lockfile = 'SetBuildNumber.lck'
+		if not os.access(lockfile, os.F_OK):
+			lck = open(lockfile, 'wb')
+			print >>lck, 'Locked'
+			lck.close()
+			doWork()
+			os.remove(lockfile)
+		else:
+			print "SetBuildNumber is locked"
