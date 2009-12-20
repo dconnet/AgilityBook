@@ -20,7 +20,6 @@ rem For wxWidgets 2.9+, set this to 1
 set _HAS_COMPILER_PREFIX=0
 
 if not ("%1")==("all") goto :args
-call :args dynamic mbcs vc6
 call :args static mbcs vc7
 call :args static mbcs vc8
 call :args static unicode vc9
@@ -56,24 +55,11 @@ if ("%_RUNTIME_LIBS%")==("dynamic") set _VENDOR=VENDOR=dconsoft
 set INCLUDE=
 set LIB=
 
-if ("%1")==("vc6") goto vc6
 if ("%1")==("vc7") goto vc7
 if ("%1")==("vc8") goto vc8
 if ("%1")==("vc9") goto vc9
 if ("%1")==("vc9x64") goto vc9x64
 goto usage
-
-:vc6
-if not exist "%_PFILES%\Microsoft Visual Studio\VC98\bin\vcvars32.bat" echo VC6 not installed && goto done
-if ("%_DO_UNICODE%")==("1") echo Error: VC6 doesn't do unicode && goto usage
-if ("%_SHARED%")==("0") echo Error: VC6 doesn't do static && goto usage
-title VC6
-call "%_PFILES%\Microsoft Visual Studio\VC98\bin\vcvars32.bat"
-rem if ERRORLEVEL 1 goto error
-if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc60
-if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC60
-set _CPPFLAGS=
-goto :doit
 
 :vc7
 if not exist "%_PFILES%\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat" echo VC7.1 not installed && goto done
@@ -148,8 +134,8 @@ goto done
 
 :usage
 echo Usage: %_PROGNAME% all
-echo Usage: %_PROGNAME% env vc6/vc7/vc8/vc9/vc9x64
-echo Usage: %_PROGNAME% [hasprefix] [dynamic/static*] [mbcs/unicode*] vc6/vc7/vc8/vc9/vc9x64 [sample samplename]
+echo Usage: %_PROGNAME% env vc7/vc8/vc9/vc9x64
+echo Usage: %_PROGNAME% [hasprefix] [dynamic/static*] [mbcs/unicode*] vc7/vc8/vc9/vc9x64 [sample samplename]
 goto done
 
 :error

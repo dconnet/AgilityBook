@@ -23,7 +23,6 @@ goto done
 set SETBUILDNUMBER_UPDATE=
 :clean
 cd ..\..\..\bin
-rd /q/s VC6
 rd /q/s VC7
 rd /q/s VC8Win32
 rd /q/s VC8x64
@@ -35,10 +34,6 @@ cd ..\src\Projects\Installer
 cd ..
 
 REM Targets:
-REM VC6
-REM  Configuration: 'Release'/'Debug' (non-unicode)
-REM  Platform: Win32
-REM  Targets: AgilityBook, cal_usdaa, LibTidy
 REM VC7.1
 REM  Configuration: 'Release'/'Debug' (non-unicode)
 REM  Platform: Win32
