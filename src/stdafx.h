@@ -77,13 +77,7 @@
 
 // VC6
 #if _MSC_VER < 1300
-	#if defined(UNICODE) || defined(_UNICODE)
-		#error In order to compile with UNICODE in VC6, the code needs a lot of work!
-	#endif
-	// Turn off some warnings in vc6.
-	#pragma warning ( disable : 4786 )	// identifier was truncated to '255' characters in the debug information
-	#pragma warning ( disable : 4503 )	// decorated name length exceeded, name was truncated
-	#pragma warning ( disable : 4018 )	// '<' : signed/unsigned mismatch
+	#error VC6 is not supported.
 
 // VC7
 #elif _MSC_VER >= 1300 && _MSC_VER < 1400

@@ -65,10 +65,6 @@
 #include <wx/xml/xml.h>
 #pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
 
-#if _MSC_VER < 1300
-using namespace std;
-#endif
-
 #if defined(_MFC_VER) && defined(_DEBUG)
 #define new DEBUG_NEW
 #endif

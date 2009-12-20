@@ -34,9 +34,7 @@ Changes to <trunk> [2.9.1]:
 -[win]- include/msvc/wx/setup.h:
   - Change the wxLIB_SUBDIR (5 lines) to:
 ===begin
-#if _MSC_VER == 1200
-	#define wxLIB_BASEDIR	vc60
-#elif _MSC_VER == 1310
+#if _MSC_VER == 1310
 	#define wxLIB_BASEDIR	vc71
 #elif _MSC_VER == 1400
 	#define wxLIB_BASEDIR	vc80
@@ -90,9 +88,7 @@ Changes to 2.8.10:
             #define wxSUFFIX
         #endif // _UNICODE/!_UNICODE
     #endif
-#if _MSC_VER == 1200
-	#define wxLIB_SUFFIX	_VC60
-#elif _MSC_VER == 1310
+#if _MSC_VER == 1310
 	#define wxLIB_SUFFIX	_VC71
 #elif _MSC_VER == 1400
 	#define wxLIB_SUFFIX	_VC80
@@ -221,11 +217,11 @@ Used to create source code documentation. AgilityBook.dox uses v2.14.1.
 Compiler notes
 ==============
 
-Microsoft Visual Studio 6 + Service Pack 5 (VC6)
-================================================
-   Make sure you have updated the STL files with the patches noted at
-   http://www.dinkumware.com/vc_fixes.html. (Last updated Nov 10, 2002)
-   [x86: MBCS only]
+Microsoft Visual Studio 6
+=========================
+   Not supported.
+   It just can't handle namespaces well. I'm not going
+   to keep mangling the source code to support this.
 
 Microsoft Visual Studio .NET (VC7)
 ==================================

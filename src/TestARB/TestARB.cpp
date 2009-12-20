@@ -48,14 +48,16 @@
 #include <wx/stdpaths.h>
 #include "TestReporterStdout.h"
 
+#ifdef _MSC_VER
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
 #define UT_NAME			"UnitTest++.VC7"
 #elif _MSC_VER >= 1400 && _MSC_VER < 1500
 #define UT_NAME			"UnitTest++.VC8"
 #elif _MSC_VER >= 1500
 #define UT_NAME			"UnitTest++.VC9"
-// SAS #else
-// SAS #error Unsupported compiler
+#else
+#error Unsupported compiler
+#endif
 #endif
 
 // Note, if using static runtime, swap comments on following 2 defines
