@@ -58,10 +58,10 @@ REM   LibTidy: no unicode [debug/release=non unicode]
 REM   TestARB: all
 
 cd VC9
-del bldWin32.txt bldWin64.txt
+del /q bldWin32.txt bldWin64.txt
 REM Unicode (Release == Unicode)
-rem call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64
-rem devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"
+call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64
+devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"
 call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
 devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"
 cd ..
