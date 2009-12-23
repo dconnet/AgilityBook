@@ -16,10 +16,8 @@ Once the above software is unpacked, the directory structure should look like:
     - src/
     - Readme.txt
     - ...
-  - boost/
+  - boost_<ver>/ [BOOST_ROOT points to this]
       - ...(Boost structure)
-  - UnitTest++/
-      - ... (UnitTest structure)
 
 --------------------
 
@@ -187,7 +185,7 @@ weak_ptr templates are used.)
 When the library is unpacked, it should be located according to the map
 above. The default directory when unpacked is boost_1_41_0 (of course,
 this will vary based on boost version). Set BOOST_ROOT to point to this
-directory. This projects use this environment variable.
+directory. The projects use this environment variable.
 
 --------------------
 
