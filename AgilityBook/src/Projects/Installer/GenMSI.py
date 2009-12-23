@@ -4,6 +4,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2009-12-23 DRC Auto-detect current WiX installation (%WIX%)
 # 2009-10-19 DRC Added 'create' option.
 # 2009-08-08 DRC Tweaked code to remove ICE61 warning.
 #            Allow user specification of where WiX is (/wix)
@@ -39,6 +40,7 @@ import sys
 AgilityBookDir = r'..\..\..'
 
 # Where is WiX? Can be overriden on command line.
+# This is initially set to %WIX%/bin, if WiX is actually installed.
 WiXdir = r'c:\Tools\wix3'
 
 WinSrcDir = AgilityBookDir + r'\src'
@@ -167,6 +169,9 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 
 def main():
 	global WiXdir
+	# When WiX is installed, it sets "WIX" to point to the top-level directory
+	if os.environ.has_key('WIX'):
+		WiXdir = os.environ['WIX'] + r'\bin'
 	b32 = 0
 	b64 = 0
 	tidy = 1
