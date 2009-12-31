@@ -2,7 +2,7 @@ export UNICODESETTING
 export DEBUG
 export WXWIN
 
-USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
+USAGE="Usage $0 trunk|2.8 unicode|ansi [debug]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
