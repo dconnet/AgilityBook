@@ -90,7 +90,6 @@ msgstr "Chercher des mises à jours..."
 msgid "IDD_AUTHENTICATE"
 msgstr "Authentification"
 
-# "Zone Protégée par Mot de Passe" (in MFC, this was static text above user/pw)
 msgid "User Name"
 msgstr "Nom d'utilisateur"
 
@@ -137,9 +136,11 @@ msgstr "Pas &actuellement"
 msgid "IDC_CAL_ENTER_PLANNING"
 msgstr "P&révision"
 
+# TODO
 msgid "IDC_CAL_ENTER_PENDING"
-msgstr "Entered (Pending)"
+msgstr "Inscrit (Pending)"
 
+# TODO
 msgid "IDC_CAL_ENTER_ENTERED"
 msgstr "&Inscrit (Confirmed)"
 
@@ -557,11 +558,11 @@ msgstr "Desc&ription"
 msgid "IDC_CONFIG_VENUE_NEW"
 msgstr "&Nouveau..."
 
-msgid "IDC_CONFIG_VENUE_DELETE"
-msgstr "&Supprimer"
-
 msgid "IDC_CONFIG_VENUE_EDIT"
 msgstr "&Édition..."
+
+msgid "IDC_CONFIG_VENUE_DELETE"
+msgstr "&Supprimer"
 
 msgid "IDC_CONFIG_VENUE_COPY"
 msgstr "&Copier..."

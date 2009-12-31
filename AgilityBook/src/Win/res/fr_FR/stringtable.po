@@ -747,6 +747,7 @@ msgstr "Pas inscrit"
 msgid "IDS_CALENDAR_ENTERED"
 msgstr "Inscrit"
 
+# TODO
 msgid "IDS_CALENDAR_PENDING"
 msgstr "Pending"
 
