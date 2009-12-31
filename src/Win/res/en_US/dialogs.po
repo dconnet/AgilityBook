@@ -10,7 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2008-06-15 14:27-0700\n"
 "PO-Revision-Date: 2009-02-11 23:15-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
-"Language-Team: \n"
+"Language-Team:  <help@agilityrecordbook.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -89,7 +89,6 @@ msgstr "Check for Updates..."
 msgid "IDD_AUTHENTICATE"
 msgstr "Authentication"
 
-# "Password Protected Area" (in MFC, this was static text above user/pw)
 msgid "User Name"
 msgstr "User Name"
 
@@ -556,11 +555,11 @@ msgstr "De&scription"
 msgid "IDC_CONFIG_VENUE_NEW"
 msgstr "&New..."
 
-msgid "IDC_CONFIG_VENUE_DELETE"
-msgstr "&Delete"
-
 msgid "IDC_CONFIG_VENUE_EDIT"
 msgstr "&Edit..."
+
+msgid "IDC_CONFIG_VENUE_DELETE"
+msgstr "&Delete"
 
 msgid "IDC_CONFIG_VENUE_COPY"
 msgstr "&Copy..."
