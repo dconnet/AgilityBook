@@ -1,6 +1,8 @@
 @echo off
 rem This is my quick-and-easy way to compile wxWidgets on Windows.
 rem
+rem 12/31/2009 DRC Changed 'hasprefix' to 'noprefix'.
+rem                (2.8 is rarely rebuilt, default to the active build)
 rem 09/26/2009 DRC Tweak compile options
 rem 09/12/2009 DRC Fix dll creation
 
@@ -16,12 +18,10 @@ if not exist "%WXWIN%" echo WXWIN doesn't exist && goto done
 
 set _PROGNAME=%0
 set _COMMENT=
-rem For wxWidgets 2.9+, set this to 1
-set _HAS_COMPILER_PREFIX=0
+rem For wxWidgets 2.8 and before, set this to 0
+set _HAS_COMPILER_PREFIX=1
 
 if not ("%1")==("all") goto :args
-call :args static mbcs vc7
-call :args static mbcs vc8
 call :args static unicode vc9
 call :args static unicode vc9x64
 goto done
@@ -40,7 +40,7 @@ REM Runtime library (usually always same as shared)
 set _RUNTIME_LIBS=static
 set _DO_UNICODE=1
 
-if ("%1")==("hasprefix") set _HAS_COMPILER_PREFIX=1&& shift
+if ("%1")==("noprefix") set _HAS_COMPILER_PREFIX=1&& shift
 
 if ("%1")==("static") set _DO_SHIFT=1
 if ("%1")==("dynamic") set _RUNTIME_LIBS=dynamic&& set _SHARED=1&& set _DO_SHIFT=1
@@ -135,7 +135,7 @@ goto done
 :usage
 echo Usage: %_PROGNAME% all
 echo Usage: %_PROGNAME% env vc7/vc8/vc9/vc9x64
-echo Usage: %_PROGNAME% [hasprefix] [dynamic/static*] [mbcs/unicode*] vc7/vc8/vc9/vc9x64 [sample samplename]
+echo Usage: %_PROGNAME% [noprefix] [dynamic/static*] [mbcs/unicode*] vc7/vc8/vc9/vc9x64 [sample samplename]
 goto done
 
 :error
