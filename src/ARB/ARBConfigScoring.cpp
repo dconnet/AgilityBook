@@ -704,7 +704,7 @@ bool ARBConfigScoringList::FindEvent(
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
 #ifdef _DEBUG
-			wxLogWarning(wxT("Overlapping date ranges"));
+			wxLogWarning(wxT("FindEvent: Overlapping date ranges"));
 #endif
 			pEvent = *(items.begin());
 		}
