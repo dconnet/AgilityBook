@@ -21,14 +21,13 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/wix path] [/32] [/64] [/all] [/notidy] [/test] [/create]
+"""GenMSI.py [/wix path] [/32] [/64] [/all] [/notidy] [/test]
 	wix: Override internal wix path (c:\Tools\wix3)
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv or check for existing versions)
-	create: Only create the wix files, do not compile.
 """
 
 import datetime
@@ -139,31 +138,32 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 		return 0
 
-	if not bTesting == 2:
-		if os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
-			candleCmd = 'candle -nologo'
-			candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
-			if code == code64:
-				candleCmd += ' -arch x64'
-			else:
-				candleCmd += ' -arch x86'
-			if bTesting:
-				candleCmd += ' -dTESTING'
-			candleCmd += ' -dBASEDIR="' + baseDir + '"'
-			candleCmd += ' -dPRODUCTID=' + productId
-			runcmd(candleCmd + ' AgilityBook.wxs')
-			lightCmd = 'light -nologo -ext WixUIExtension -ext WixUtilExtension '
-			for fname, culture in supportedLangs:
-				basename = outputFile + '-' + fname
-				runcmd(lightCmd + '-dWixUILicenseRtf=License-' + fname + '.rtf -cultures:' + culture + ' -loc AgilityBook-' + fname + '.wxl -out ' + basename + '.msi AgilityBook.wixobj')
-				if tidy:
-					if os.access(basename + '.wixpdb', os.F_OK):
-						os.remove(basename + '.wixpdb')
-		if tidy:
-			if os.access('AgilityBook.wixobj', os.F_OK):
-				os.remove('AgilityBook.wixobj')
+	if os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
+		candleCmd = 'candle -nologo'
+		candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
+		if code == code64:
+			candleCmd += ' -arch x64'
 		else:
-			print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
+			candleCmd += ' -arch x86'
+		if bTesting:
+			candleCmd += ' -dTESTING'
+		candleCmd += ' -dBASEDIR="' + baseDir + '"'
+		candleCmd += ' -dPRODUCTID=' + productId
+		runcmd(candleCmd + ' AgilityBook.wxs')
+		lightCmd = 'light -nologo -ext WixUIExtension -ext WixUtilExtension '
+		for fname, culture in supportedLangs:
+			basename = outputFile + '-' + fname
+			runcmd(lightCmd + '-dWixUILicenseRtf=License-' + fname + '.rtf -cultures:' + culture + ' -loc AgilityBook-' + fname + '.wxl -out ' + basename + '.msi AgilityBook.wixobj')
+			if tidy:
+				if os.access(basename + '.wixpdb', os.F_OK):
+					os.remove(basename + '.wixpdb')
+
+	if tidy:
+		if os.access('AgilityBook.wixobj', os.F_OK):
+			os.remove('AgilityBook.wixobj')
+	else:
+		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
+
 	return 1
 
 
@@ -200,9 +200,6 @@ def main():
 			tidy = 0
 		elif o == '/test':
 			bTesting = 1
-		elif o == '/create':
-			bTesting = 2
-			tidy = 0
 		else:
 			error = 1
 			break
@@ -230,7 +227,7 @@ def main():
 	# While the detect-same-version CA will do that during install, this has
 	# the added benefit of immediately bailing during the install, rather than
 	# showing the final 'failed' dialog.
-	if bTesting == 1:
+	if bTesting:
 		print 'Remember, uninstall the old version first. This does not check.'
 	else:
 		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'r')
@@ -264,7 +261,7 @@ def main():
 	if b64:
 		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, bTesting):
 			b64ok = 1
-	if bTesting == 0 and (b32ok or b64ok):
+	if not bTesting and (b32ok or b64ok):
 		d = datetime.datetime.now().isoformat(' ')
 		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'a')
 		installs = ''
