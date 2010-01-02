@@ -1,12 +1,7 @@
 Notes for releasing a new version.
 
 Files to change before marking files for release:
-- Update the version build number (per instructions in VersionNumber.h)
-- Make sure 'configure.in' is updated with the version number.
-  - Note: Version numbers are auto-changed via src/Include/SetBuildNumber.py
-    This is automatically run in the VC9 project - so always build VC9 first
-    when doing a release.
-- If file version has changed:
+- If file version has changed (arb version, not build number):
   - Update comments in src/Win/res/AgilityRecordBook.dtd (update website too)
   - Update the version in DefaultConfig.xml
   - Plus: Make sure that the Update() methods have been updated!
@@ -30,7 +25,11 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
-- BuildAll.bat [runs VC9 compile]
+- 'BuildAll.bat fullupdate' [runs VC9 compile]
+  - BuildAll options:
+    'fullupdate': Update build number + 'clean'.
+    'clean': Delete all output and do a full build.
+    'dirty': Incremental build.
 - Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
