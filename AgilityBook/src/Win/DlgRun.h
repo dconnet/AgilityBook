@@ -98,9 +98,9 @@ private:
 	CDlgDogLevelData* GetLevelData(int index) const;
 	bool GetEvent(ARBConfigEventPtr* outEvent) const;
 	bool GetScoring(ARBConfigScoringPtr* outScoring) const;
-	void FillDivisions();
-	void FillLevels();
-	void FillEvents();
+	void FillDivisions(bool bOnEventChange);
+	void FillLevels(bool bOnEventChange);
+	void FillEvents(bool bOnEventChange);
 	void FillSubNames();
 	void FillJudges();
 	void SetEventDesc(ARBConfigEventPtr inEvent);
@@ -112,7 +112,7 @@ private:
 	void SetTitlePoints();
 	void SetReadOnlyFlag(CTextCtrl* ctrl, bool bReadOnly);
 	void FixScoreLayout();
-	void UpdateControls(bool bOnEventChange = false);
+	void UpdateControls(bool bOnEventChange);
 
 	void SetFaultsText();
 	CDlgDogRefRunDataPtr GetReferenceData(long index) const;

@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-01-02 DRC Fix initialization of date for a new run.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-14 DRC Fixed crash (on Mac) when editing dog.
  * @li 2009-02-02 DRC Ported to wxWidgets.
@@ -239,7 +240,11 @@ static bool EditRun(
 		}
 		bAdd = true;
 		pRun = ARBDogRunPtr(ARBDogRun::New());
-		pRun->SetDate(pTrialData->GetTrial()->GetRuns().GetEndDate());
+		ARBDate date = pTrialData->GetTrial()->GetRuns().GetEndDate();
+		// If this is the first run, the date won't be set.
+		if (!date.IsValid())
+			date.SetToday();
+		pRun->SetDate(date);
 	}
 	CDlgRun dlg(pTree->GetDocument(), pTrialData->GetTrial(), pRun);
 	if (wxID_OK == dlg.ShowModal())

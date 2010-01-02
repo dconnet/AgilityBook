@@ -31,6 +31,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-01-02 DRC Fix setting of required points with level changes.
  * @li 2009-10-18 DRC Fix prepending of '0' to title points.
  * @li 2009-10-14 DRC Add dog's name to dialog caption.
  * @li 2009-10-14 DRC Fix initialization of opening pts in eScoreThenTime.
@@ -1621,7 +1622,7 @@ CDlgRun::CDlgRun(
 	wxSizer* sdbSizer = CreateButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
-	FillDivisions(); // This will call UpdateControls();
+	FillDivisions(false); // This will call UpdateControls();
 	FillJudges();
 	SetPartnerText();
 	SetFaultsText();
@@ -1693,7 +1694,7 @@ bool CDlgRun::GetScoring(ARBConfigScoringPtr* outScoring) const
 }
 
 
-void CDlgRun::FillDivisions()
+void CDlgRun::FillDivisions(bool bOnEventChange)
 {
 	wxString div;
 	long index = m_ctrlDivisions->GetSelection();
@@ -1752,11 +1753,11 @@ void CDlgRun::FillDivisions()
 	int idxDiv = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != idxDiv)
 		m_Run->SetDivision(m_ctrlDivisions->GetString(idxDiv));
-	FillLevels();
+	FillLevels(bOnEventChange);
 }
 
 
-void CDlgRun::FillLevels()
+void CDlgRun::FillLevels(bool bOnEventChange)
 {
 	wxString level;
 	int index = m_ctrlLevels->GetSelection();
@@ -1826,12 +1827,12 @@ void CDlgRun::FillLevels()
 	int idxLvl = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != idxLvl)
 		m_Run->SetLevel(m_ctrlLevels->GetString(idxLvl));
-	FillEvents();
+	FillEvents(bOnEventChange);
 	SetTitlePoints();
 }
 
 
-void CDlgRun::FillEvents()
+void CDlgRun::FillEvents(bool bOnEventChange)
 {
 	wxString evt;
 	int index = m_ctrlEvents->GetSelection();
@@ -1868,7 +1869,7 @@ void CDlgRun::FillEvents()
 		}
 	}
 	FillSubNames();
-	UpdateControls();
+	UpdateControls(bOnEventChange);
 }
 
 
@@ -2222,16 +2223,12 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByOpenClose, pScoring->DropFractions());
 		if (bOnEventChange)
 		{
-			if (ARBDogRunScoring::eTypeByOpenClose == m_pRealRun->GetScoring().GetType())
-			{
-				m_Opening = m_Run->GetScoring().GetNeedOpenPts();
-				m_Closing = m_Run->GetScoring().GetNeedClosePts();
-			}
-			else
-			{
-				m_Opening = pScoring->GetRequiredOpeningPoints();
-				m_Closing = pScoring->GetRequiredClosingPoints();
-			}
+			m_Opening = pScoring->GetRequiredOpeningPoints();
+			if (0 != m_Opening)
+				m_Run->GetScoring().SetNeedOpenPts(m_Opening);
+			m_Closing = pScoring->GetRequiredClosingPoints();
+			if (0 != m_Closing)
+				m_Run->GetScoring().SetNeedClosePts(m_Closing);
 		}
 		// Do not push these (above) back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
@@ -2280,10 +2277,9 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_Run->GetScoring().SetType(ARBDogRunScoring::eTypeByPoints, pScoring->DropFractions());
 		if (bOnEventChange)
 		{
-			if (ARBDogRunScoring::eTypeByPoints == m_pRealRun->GetScoring().GetType())
-				m_Opening = m_Run->GetScoring().GetNeedOpenPts();
-			else
-				m_Opening = pScoring->GetRequiredOpeningPoints();
+			m_Opening = pScoring->GetRequiredOpeningPoints();
+			if (0 != m_Opening)
+				m_Run->GetScoring().SetNeedOpenPts(m_Opening);
 		}
 		// Do not push this back into the run.
 		// Otherwise this will overwrite valid values during OnInit.
@@ -2655,7 +2651,7 @@ void CDlgRun::EditLink()
 void CDlgRun::OnScoreDateChanged(wxDateEvent& evt)
 {
 	m_Run->SetDate(ARBDate(evt.GetDate().GetYear(), evt.GetDate().GetMonth() + 1, evt.GetDate().GetDay()));
-	FillDivisions();
+	FillDivisions(true);
 }
 
 
@@ -2664,7 +2660,7 @@ void CDlgRun::OnSelchangeDivision(wxCommandEvent& evt)
 	int index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND != index)
 		m_Run->SetDivision(m_ctrlDivisions->GetString(index));
-	FillLevels();
+	FillLevels(true);
 }
 
 
@@ -2673,7 +2669,7 @@ void CDlgRun::OnSelchangeLevel(wxCommandEvent& evt)
 	int index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
 		m_Run->SetLevel(m_ctrlLevels->GetString(index));
-	FillEvents();
+	FillEvents(true);
 }
 
 
