@@ -136,13 +136,11 @@ msgstr "Pas &actuellement"
 msgid "IDC_CAL_ENTER_PLANNING"
 msgstr "P&révision"
 
-# TODO
 msgid "IDC_CAL_ENTER_PENDING"
-msgstr "Inscrit (Pending)"
+msgstr "In&scrit, pas confirmé"
 
-# TODO
 msgid "IDC_CAL_ENTER_ENTERED"
-msgstr "&Inscrit (Confirmed)"
+msgstr "&Inscrit, confirmé"
 
 msgid "IDC_CAL_ONLINE_ENTRY"
 msgstr "Inscription en ligne"

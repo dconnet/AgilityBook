@@ -79,16 +79,14 @@ msgstr "La date de début du concours n'est pas connue ou ne s'applique pas."
 msgid "HIDC_CAL_DATE_START"
 msgstr "Date de début du concours."
 
-# TODO
 msgid "HIDC_CAL_ENTER_ENTERED"
-msgstr "Votre statut pour ce concours. Currently entered and confirmed."
+msgstr "Etat de votre inscription. Inscrit et confirmé."
 
 msgid "HIDC_CAL_ENTER_NOT"
 msgstr "Votre statut pour ce concours. Pas inscrit."
 
-# TODO
 msgid "HIDC_CAL_ENTER_PENDING"
-msgstr "Votre statut pour ce concours. Currently entered but not confirmed."
+msgstr "Etat de votre inscription. Inscrit, pas encore confirmé."
 
 msgid "HIDC_CAL_ENTER_PLANNING"
 msgstr "Votre statut pour ce concours. Inscription prévue."
