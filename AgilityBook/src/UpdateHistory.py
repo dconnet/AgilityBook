@@ -1,20 +1,23 @@
 # Update the history files in the help and web.
 # The file Help/html/HistoryData.html is used with:
-#   \AgilityBook\www\templateHistory.php
-#  Help/html/HistoryTemplate.html
+#   \dcon\www\agilityrecordbook\template\templateHistory.php
 # to produce:
-#   \AgilityBook\www\history.php
+#   \dcon\www\agilityrecordbook\history.php
 #   Help\html\History.html
 #
 # Revision History
+# 2010-01-05 DRC Updated comments and www directory.
 # 2005-01-23 DRC Created
 
 """UpdateHistory -h -w -p path
--h      Generate Help file History.html (Help\html\History.html)
--w      Generate history file for web (\AgilityBook\www\history.php)
--p path Path to where web files are (default "\AgilityBook\www")
-This program should be run from the ...\AgilityBook\src directory.
+-h      Generate Help file History.html (Help\\html\\History.html)
+-w      Generate history file for web (\\dcon\\www\\agilityrecordbook\\history.php)
+-p path Path to where web files are (default "\\dcon\\www\\agilityrecordbook")
+This program should be run from the ...\\AgilityBook\\src directory.
 """
+
+# Path to arb web files
+defAgilityBookWeb = r"\dcon\www\agilityrecordbook"
 
 # This line must exist in any template file.
 gTrigger = "<!-- Just copy the help file's HistoryData.html into here -->\n"
@@ -54,8 +57,8 @@ def GenerateFile(data, inFilename, outFilename):
 def main():
 	bHelpfile = 0
 	bWebfile = 0
-	webPath = "\\AgilityBook\\www"
-	rawData = "Help\\html\\HistoryData.html"
+	webPath = defAgilityBookWeb
+	rawData = r"Help\html\HistoryData.html"
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], "hwp:")
 	except getopt.error, msg:
@@ -89,9 +92,9 @@ def main():
 		return
 
 	if bHelpfile:
-		GenerateFile(data, "Help\\html\\HistoryTemplate.html", "Help\\html\\History.html")
+		GenerateFile(data, r"Help\html\HistoryTemplate.html", r"Help\html\History.html")
 
 	if bWebfile:
-		GenerateFile(data, webPath + "\\template\\templateHistory.php", webPath + "\\history.php")
+		GenerateFile(data, webPath + r"\template\templateHistory.php", webPath + r"\history.php")
 
 main()
