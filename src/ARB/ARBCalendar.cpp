@@ -712,7 +712,7 @@ bool ARBCalendar::Save(ElementNodePtr ioTree) const
 		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_ENTERED);
 		break;
 	case ePending:
-		cal->AddAttrib(ATTRIB_CAL_PENDING, ENTRY_PENDING);
+		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_PENDING);
 		break;
 	case ePlanning:
 		cal->AddAttrib(ATTRIB_CAL_ENTERED, ENTRY_PLANNING);

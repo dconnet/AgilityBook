@@ -6,7 +6,7 @@
 ################################################################################
 # Initialise autoconf, set package name, version number and contact details.   #
 ################################################################################
-AC_INIT(Agility Record Book, 2.1.3.2565, [help@agilityrecordbook.com])
+AC_INIT(Agility Record Book, 2.1.4.2567, [help@agilityrecordbook.com])
 
 AC_CONFIG_SRCDIR(src/stdafx.cpp)
 

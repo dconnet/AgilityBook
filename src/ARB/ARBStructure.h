@@ -99,7 +99,6 @@
 #define ATTRIB_CAL_LOCATION					wxT("Location")
 #define ATTRIB_CAL_CLUB						wxT("Club")
 #define ATTRIB_CAL_VENUE					wxT("Venue")
-#define ATTRIB_CAL_PENDING					wxT("Pending")
 #define ATTRIB_CAL_ENTERED					wxT("Entered")
 #define ATTRIB_CAL_ACCOMMODATION			wxT("Acc")
 #define ATTRIB_CAL_CONFIRMATION				wxT("Confirm")
