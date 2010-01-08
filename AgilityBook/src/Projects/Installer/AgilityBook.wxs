@@ -174,7 +174,9 @@
 				Value="1" />
 			<Shortcut Id="ShortcutARBExe"
 				Name="$(var.DEFFOLDER)"
-				Target="[APPLICATIONFOLDER]AgilityBook.exe" />
+				Target="[APPLICATIONFOLDER]AgilityBook.exe">
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0"/>
+			</Shortcut>
 			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
 		</Component>
 
@@ -187,7 +189,9 @@
 				Value="1" />
 			<Shortcut Id="ShortcutARBHelp"
 				Name="ARB Helper"
-				Target="[APPLICATIONFOLDER]ARBHelp.exe" />
+				Target="[APPLICATIONFOLDER]ARBHelp.exe">
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="1"/>
+			</Shortcut>
 		</Component>
 	</DirectoryRef>
 
@@ -201,7 +205,9 @@
 				Value="1" />
 			<Shortcut Id="AppDesktop"
 				Name="$(var.DEFFOLDER)"
-				Target="[APPLICATIONFOLDER]AgilityBook.exe" />
+				Target="[APPLICATIONFOLDER]AgilityBook.exe">
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0"/>
+			</Shortcut>
 		</Component>
 	</DirectoryRef>
 
