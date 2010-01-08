@@ -1,6 +1,7 @@
 # Update the history files in the help and web.
 # The file Help/html/HistoryData.html is used with:
 #   \dcon\www\agilityrecordbook\template\templateHistory.php
+#   Help\html\HistoryTemplate.html
 # to produce:
 #   \dcon\www\agilityrecordbook\history.php
 #   Help\html\History.html
