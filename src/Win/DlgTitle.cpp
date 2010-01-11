@@ -11,6 +11,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-01-10 DRC Forcing hidden title didn't update internal flags.
+ *                    Unearned titles didn't disable Hide Checkbox.
  * @li 2009-12-19 DRC Make side effects of an unearned title more obvious.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-09 DRC Ported to wxWidgets.
@@ -125,6 +127,8 @@ CDlgTitle::CDlgTitle(
 		wxGenericValidator(&m_bHidden));
 	m_ctrlHide->SetHelpText(_("HIDC_TITLE_HIDDEN"));
 	m_ctrlHide->SetToolTip(_("HIDC_TITLE_HIDDEN"));
+	if (!m_bEarned)
+		m_ctrlHide->Enable(false);
 
 	m_ctrlReceived = new wxCheckBox(this, wxID_ANY,
 		_("IDC_TITLE_RECEIVED"),
@@ -303,9 +307,11 @@ void CDlgTitle::OnClickedEarned(wxCommandEvent& evt)
 	else
 	{
 		bLastHidden = m_bHidden;
+		m_bHidden = true;
+		m_ctrlHide->SetValue(m_bHidden);
 		bLastReceived = m_bReceived;
-		m_ctrlHide->SetValue(true);
-		m_ctrlReceived->SetValue(false);
+		m_bReceived = false;
+		m_ctrlReceived->SetValue(m_bReceived);
 	}
 	FillTitles();
 }

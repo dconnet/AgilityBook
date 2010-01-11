@@ -1,3 +1,9 @@
+1/10/2010: v2.1.5.x
+- Bug fixes:
+  - Creating a new title and setting it to unearned didn't properly store
+    hidden flag.
+  - Unearned titles didn't disable Hide Checkbox when initially showing dialog.
+
 1/7/2010: v2.1.4.2567
 - Bug fixes:
   - The new Pending flag on a Calendar entry was written to the ARB file wrong.
