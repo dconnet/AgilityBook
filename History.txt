@@ -1,4 +1,6 @@
 1/10/2010: v2.1.5.x
+- Bumped Configuration v28:
+  - Removed SSA (Sweepstakes). No longer available.
 - Bug fixes:
   - Creating a new title and setting it to unearned didn't properly store
     hidden flag.
