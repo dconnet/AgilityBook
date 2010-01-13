@@ -105,6 +105,7 @@ SUITE(TestConfig)
 			IDR_XML_CONFIG25_V12_9,
 			IDR_XML_CONFIG26_V12_9,
 			IDR_XML_CONFIG27_V12_10,
+			IDR_XML_CONFIG28_V12_11,
 			0
 		};
 		for (int i = 0; configs[i] != 0; ++i)
@@ -142,10 +143,10 @@ SUITE(TestConfig)
 		CConfigHandler handler;
 		config.Default(&handler);
 		CHECK_EQUAL(0u, config.GetCalSites().size());
-		CHECK_EQUAL(81u, config.GetActions().size());
+		CHECK_EQUAL(82u, config.GetActions().size());
 		CHECK_EQUAL(0u, config.GetFaults().size());
 		CHECK_EQUAL(5u, config.GetOtherPoints().size());
-		CHECK_EQUAL(13u, config.GetVenues().size());
+		CHECK_EQUAL(12u, config.GetVenues().size());
 		CHECK(config.GetVenues().FindVenue(wxT("AAC")));
 		CHECK(config.GetVenues().FindVenue(wxT("AKC")));
 		CHECK(config.GetVenues().FindVenue(wxT("ASCA")));
@@ -155,7 +156,6 @@ SUITE(TestConfig)
 		CHECK(config.GetVenues().FindVenue(wxT("FCI")));
 		CHECK(config.GetVenues().FindVenue(wxT("NADAC")));
 		CHECK(config.GetVenues().FindVenue(wxT("SCC")));
-		CHECK(config.GetVenues().FindVenue(wxT("SSA")));
 		CHECK(config.GetVenues().FindVenue(wxT("TDAA")));
 		CHECK(config.GetVenues().FindVenue(wxT("UKC")));
 		CHECK(config.GetVenues().FindVenue(wxT("USDAA")));

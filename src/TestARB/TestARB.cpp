@@ -210,6 +210,9 @@ ElementNodePtr LoadXMLData(int id)
 	case IDR_XML_CONFIG27_V12_10:
 		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config27_v12_10.xml"), data);
 		break;
+	case IDR_XML_CONFIG28_V12_11:
+		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config28_v12_11.xml"), data);
+		break;
 	}
 	assert(bOk);
 	if (!bOk || !tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
