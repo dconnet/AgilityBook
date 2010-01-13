@@ -6,6 +6,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2010-01-12 DRC Configuration version 28.
                Removed Sweepstakes (no longer available).
+               Removed ASCA ATCH-OP/SP. Now ATCH-II/ATCH-III.
 2009-08-12 DRC Configuration version 27.
                Fixed TDAA Standard to be 100-faults.
 2009-07-22 DRC Configuration version 26.
@@ -83,12 +84,14 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-   <Configuration version="27">
+   <Configuration version="28">
       <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
       <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
       <Action NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
       <Action NewName="ATCH-OP" OldName="V-ATCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
       <Action NewName="ATCH-SP" OldName="V-ATCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
+      <Action NewName="ATCH" OldName="ATCH-OP" Venue="ASCA" Verb="RenameTitle"/>
+      <Action NewName="ATCH" OldName="ATCH-SP" Venue="ASCA" Verb="RenameTitle"/>
       <Action NewName="Regular" OldName="Standard" Venue="CPE" Verb="RenameDivision"/>
       <Action NewName="Regular" OldName="Junior" Venue="CPE" Verb="RenameDivision"/>
       <Action NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
@@ -515,10 +518,7 @@ Revision History:
          <Titles LongName="Elite Regular Superior Performance" Name="RS-E-SP">400 Points</Titles>
          <Titles LongName="Elite Jumpers Superior Performance" Name="JS-E-SP">200 Points</Titles>
          <Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP">200 Points</Titles>
-         <Titles LongName="Agility Trial Champion" Multiple="4" Name="ATCH" Prefix="y" Style="1">R*-E plus 200 pts, G*-E plus 100 pts, J*-E plus 100 pts
-Multiple copies start at 4 because of the -OP and -SP titles.</Titles>
-         <Titles LongName="Outstanding Performance Agility Trial Champion" Name="ATCH-OP" Prefix="y">R*-E plus 400 pts, G*-E plus 200 pts, J*-E plus 200 pts</Titles>
-         <Titles LongName="Superior Performance Agility Trial Champion" Name="ATCH-SP" Prefix="y">R*-E plus 600 pts, G*-E plus 300 pts, J*-E plus 300 pts</Titles>
+         <Titles LongName="Agility Trial Champion" Multiple="2" Name="ATCH" Prefix="y" Style="1">R*-E plus 200 pts, G*-E plus 100 pts, J*-E plus 100 pts</Titles>
          <Titles LongName="Novice Regular" Name="RV-N">30 Points</Titles>
          <Titles LongName="Novice Jumpers" Name="JV-N">20 Points</Titles>
          <Titles LongName="Novice Gamblers" Name="GV-N">20 Points</Titles>
