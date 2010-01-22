@@ -1,6 +1,9 @@
-1/21/2010: v2.1.5.x
+1/22/2010: v2.1.5.x
 - Bumped Configuration v28:
   - Removed SSA (Sweepstakes). No longer available.
+- New features / Enhancements:
+  - When installing on Windows, set the initial language (based on which msi
+    was used. This avoids an initial dialog asking for language.
 - Bug fixes:
   - Fixed a bug that caused fonts (bold/italic) to be improperly configured.
   - Creating a new title and setting it to unearned didn't properly store

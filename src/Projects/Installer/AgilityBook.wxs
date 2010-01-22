@@ -114,6 +114,23 @@
 			</ProgId>
 		</Component>
 
+		<Component Id="C_RegistryEntries" Guid="B5864F95-CB30-41B0-81F6-2E672423482C" Win64="$(var.Win64)" >
+			<!--
+			We only create (not remove) since none of the other registry
+			entries created by the program are removed. (This is created too,
+			just added here to remove an initial language selection dialog)
+			-->
+			<RegistryKey
+				Action="create"
+				Root="HKCU"
+				Key="Software\[Manufacturer]\[AppName]\Settings">
+				<RegistryValue
+					Name="Lang3"
+					Type="string"
+					Value="!(loc.Lang3)" />
+			</RegistryKey>
+		</Component>
+
 		<Component Id="C_AgilityBook.dat" Guid="C44F2D55-7128-423F-926A-AAE9848D1842" Win64="$(var.Win64)" >
 			<File Id="_AgilityBook.dat"
 				Name="AgilityBook.dat"
@@ -220,6 +237,7 @@
 		ConfigurableDirectory="APPLICATIONFOLDER">
 		<ComponentRef Id="C_MenuShortcutsARB" />
 		<ComponentRef Id="C_DeskShortcuts" />
+		<ComponentRef Id="C_RegistryEntries" />
 		<ComponentRef Id="C_AgilityBook.exe" />
 		<ComponentRef Id="C_AgilityBook.dat" />
 		<ComponentRef Id="C_langEN" />

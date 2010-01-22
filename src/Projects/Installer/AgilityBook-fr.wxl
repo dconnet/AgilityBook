@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WixLocalization Culture="fr-fr" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="Lang3">fr_FR</String>
   <String Id="Comments">Suivez tous vos résultats d'agility dans un seul endroit.</String>
   <String Id="OnNT">Ce logiciel fonctionne uniquement sous Windows NT ou plus récent.</String>
   <String Id="On64NT">Ce logiciel fonctionne uniquement sous système Windows 64bit.</String>
