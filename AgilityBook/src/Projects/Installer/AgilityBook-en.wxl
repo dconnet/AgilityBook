@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="Lang3">en_US</String>
   <String Id="Comments">Track all your agility records in one convenient place.</String>
   <String Id="OnNT">This application only runs on Windows NT and above</String>
   <String Id="On64NT">This application only runs on 64bit Windows systems</String>
