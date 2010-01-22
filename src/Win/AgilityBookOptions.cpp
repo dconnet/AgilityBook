@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-01-21 DRC Fixed font flag parsing.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Changed auto update check to false in debug mode.
  * @li 2009-08-08 DRC Changed default setting for proxy and show dog after title
@@ -254,8 +255,8 @@ void CFontInfo::CreateFont(
 	font = dlg.GetFontData().GetChosenFont();
 	size = font.GetPointSize();
 	name = font.GetFaceName();
-	italic = (font.GetStyle() & wxFONTFLAG_ITALIC) ? true : false;
-	bold = (font.GetStyle() & wxFONTFLAG_BOLD) ? true : false;
+	italic = (font.GetStyle() == wxFONTSTYLE_ITALIC);
+	bold = (font.GetWeight() == wxFONTWEIGHT_BOLD);
 }
 
 /////////////////////////////////////////////////////////////////////////////

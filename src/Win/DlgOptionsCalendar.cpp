@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-01-21 DRC Fixed calendar font selection.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -560,10 +561,13 @@ void CDlgOptionsCalendar::OnFontCalView(wxCommandEvent& evt)
 	wxFontData data;
 	data.SetAllowSymbols(false);
 	data.SetInitialFont(m_fontCalView);
+	data.EnableEffects(false);
 	wxFontDialog dlg(this, data);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_fontCalViewInfo.CreateFont(dlg, m_fontCalView);
 		m_ctrlCalView->SetFont(m_fontCalView);
+		SetCalColor();
+		SetRichText();
 	}
 }
