@@ -807,8 +807,8 @@ bool CWizardCalcImport::OpenFile(wxString const& inFilename)
 		// 'Calc' doesn't take kindly to wxWidgets FileNameToURL syntax.
 		// Since this is windows only, screw it, just format it the way calc likes.
 		wxString fileName(inFilename);
-		fileName.Replace(_T("\\"), _T("/"));
-		fileName = _T("file:///") + fileName;
+		fileName.Replace(wxT("\\"), wxT("/"));
+		fileName = wxT("file:///") + fileName;
 		wxVariant args;
 		args.NullList();
 		wxVariant file = m_Desktop.CallMethod(wxT("loadComponentFromURL"), fileName, wxT("_blank"), 0, args);

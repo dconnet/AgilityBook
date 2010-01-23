@@ -661,9 +661,9 @@ CCalendarSitesImpl::CCalendarSitesImpl()
 		{
 			wxString filename;
 #ifdef WIN32
-			bool cont = dir.GetFirst(&filename, _T("cal_*.*"));
+			bool cont = dir.GetFirst(&filename, wxT("cal_*.*"));
 #else
-			bool cont = dir.GetFirst(&filename, _T("libcal_*.*"));
+			bool cont = dir.GetFirst(&filename, wxT("libcal_*.*"));
 #endif
 			std::set<wxString> tested;
 			while (cont)
