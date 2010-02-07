@@ -7,16 +7,67 @@
 /**
  * @file
  *
- * @brief Parse and cache "version.txt" on www.agilityrecordbook.com
+ * @brief Parse and cache "version2.xml" on www.agilityrecordbook.com
  * @author David Connet
  *
- * The format of the version.txt file is:
+ * (post v2.1.4): Changed to version2.xml.
+ *  See comments in code (where it's parsed).
+ *
+ * [v2.1.4 and earlier: version.txt]
  * line 1:
  *  "ARB Version n1.n2.n3.n4"
- * line 2-n: xml (see below)
- * --- as of v2, the real version isn't here - see below.
+ * --- as of v2, the real version isn't here - it's in 'Config'
+ * line 2-n: xml
+ *  <!ELEMENT Data (Config+, Download*, DisableCalPlugin*) >
+ *  <!--
+ *  Before v1.10:
+ *  pcdata is a message that can be displayed to the user explaining
+ *  the changes. This is only used when doing a config update, not a
+ *  version update. [version update is 1st line in file]
+ *  v1.10: Moved PCDATA to 'lang' (We can change the format of the file
+ *  since this data is never accessed when there's a pgm version change.)
+ *  v2.0: Allow multiple copies of 'Config' for different platforms.
+ *  If 'platform' is not set, it's the default. This allows creating
+ *  one entry with 'mac', one with none - then all non-macs default to
+ *  second. Current recognized values: 'win'/'mac'
+ *  v2.0: Added 'version' to 'Config': This replaces the version in the
+ *  first line (if not present, line 1 is used).
+ *  -->
+ *  <!ELEMENT Config (Lang+) >
+ *    <!ATTLIST Config
+ *      platform CDATA #IMPLIED
+ *      version CDATA #IMPLIED
+ *      ver CDATA #REQUIRED
+ *      file CDATA #REQUIRED
+ *      >
+ *  <!--
+ *  'id' specified the LANGID of the plugin language DLL, '0' is used
+ *  for the program default.
+ *  v2.0: 'id2' is gettext lang code, id no longer used.
+ *  -->
+ *  <!ELEMENT Lang (#PCDATA) >
+ *    <!-- <!ATTLIST Lang id CDATA #REQUIRED > -->
+ *    <!ATTLIST Lang id2 CDATA #REQUIRED >
+ *  <!--
+ *  if Download is not set, defaults to 'LinkArbDownloadUrl',
+ *  which is http://www.agilityrecordbook.com/download.php
+ *  -->
+ *  <!ELEMENT Download (#PCDATA) >
+ *  <!--
+ *  When we know a calendar plugin is obsolete due to website changes,
+ *  use this to force the plugin to disable. Only disables the specified
+ *  version. If we prematurely disabled the plugin, the 'enable' flag
+ *  will reenable. [disabling info is stored in the registry]
+ *  -->
+ *  <!ELEMENT DisableCalPlugin EMPTY >
+ *    <!ATTLIST DisableCalPlugin
+ *      file CDATA #REQUIRED
+ *      ver CDATA #REQUIRED
+ *      enable (0|1) '1'
+ *      >
  *
  * Revision History
+ * @li 2010-02-07 DRC Changed to version2.xml.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-26 DRC Removed Win98 support.
  * @li 2009-07-18 DRC Updated version.txt to support different versions/platforms.
@@ -42,10 +93,46 @@
 #include "ReadHttp.h"
 #include "VersionNum.h"
 #include <wx/config.h>
+#include <wx/filename.h>
 
 #ifdef _DEBUG
 #define USE_LOCAL
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
+
+// These are the strings we recognize as platforms.
+// Every platform we support for download must be listed here.
+// It must also be present in the version2.xml file (that creates an
+// arch/lang to filename mapping).
+static wxString Arch()
+{
+#if defined(WIN64)
+	return wxT("x64");
+#elif defined(WIN32)
+	return wxT("x86");
+#elif defined(__WXMAC__)
+	return wxT("mac");
+#else
+#pragma PRAGMA_TODO("Define platform arch in version file for download")
+	return wxEmptyString;
+#endif
+}
+
+
+static wxString VersionFile()
+{
+	return wxT("version2.xml");
+}
+
+
+#if defined(WIN32)
+static wxString UpdateFile()
+{
+	return wxFileName::GetTempDir() + wxFileName::GetPathSeparator() + wxT("ARBUpdate.exe");
+}
+#endif
+
 
 #ifdef USE_LOCAL
 #include <wx/filesys.h>
@@ -55,9 +142,9 @@ static wxString FILENAME()
 {
 #ifdef WIN32
 	// Why this? Just cause that's how my local system is setup.
-	return wxT("c:/AgilityBook/www/version.txt");
+	return wxT("c:/dcon/www/agilityrecordbook/") + VersionFile();
 #else
-	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("version.txt");
+	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + VersionFile();
 #endif
 }
 #endif
@@ -86,12 +173,26 @@ bool CUpdateInfo::UpdateConfig(
 	return b;
 }
 
+
+void CUpdateInfo::CleanupUpdate()
+{
+#if defined(WIN32)
+	wxString updateFile = UpdateFile();
+	if (wxFileName::FileExists(updateFile))
+	{
+		::wxRemoveFile(updateFile);
+	}
+#endif
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CUpdateInfo::CUpdateInfo()
 	: m_VersionNum(false)
 	, m_VerConfig(0)
-	, m_FileName()
+	, m_md5()
+	, m_NewFile()
+	, m_ConfigFileName()
 	, m_InfoMsg()
 	, m_UpdateDownload()
 	, m_usernameHint(wxT("default"))
@@ -101,16 +202,20 @@ CUpdateInfo::CUpdateInfo()
 
 
 /**
- * This will read the version.txt file and cache it.
+ * This will read the version2.xml file and cache it.
  * In addition, it will ask to update if a newer version is found.
  * @param bVerbose Show error message.
  */
-bool CUpdateInfo::ReadVersionFile(bool bVerbose)
+bool CUpdateInfo::ReadVersionFile(
+		bool bVerbose,
+		CLanguageManager const& langMgr)
 {
 	// Clear everything.
 	m_VersionNum.clear();
 	m_VerConfig = 0;
-	m_FileName.erase();
+	m_md5.erase();
+	m_NewFile.erase();
+	m_ConfigFileName.erase();
 	m_InfoMsg.clear();
 	m_UpdateDownload.Empty();
 	m_usernameHint = wxT("default");
@@ -121,7 +226,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 
 	// Read the file.
 	wxString url(_("IDS_HELP_UPDATE"));
-	url += wxT("/version.txt");
+	url += wxT("/") + VersionFile();
 	std::string data; // must be 'char' for XML parsing
 	wxString errMsg;
 
@@ -155,105 +260,57 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 	}
 #endif
 
-	// Now parse it into the object.
-	wxString tmp(data.c_str(), wxMBConvUTF8());
-	// This is a static string in "version.txt"
-	static wxString const idStr(wxT("ARB Version "));
-	if (0 == tmp.Find(idStr))
-	{
-		tmp = tmp.Mid(idStr.length());
-		m_VersionNum.Parse(tmp);
-	}
-
-	// We'll always leave a valid version on line 1.
-	// As of v2, that will be the current windows version (so v1 programs
-	// can correctly show the new version number to the user). The real
-	// version will be in the 'Config' object below.
-	if (!m_VersionNum.Valid())
-	{
-		if (bVerbose)
-		{
-			wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
-		}
-		return false;
-	}
-
-	// Skip the first line, that's the version.
-	std::string::size_type n = data.find('\n');
-	if (std::string::npos != n)
-		data = data.substr(n+1);
-	else
-		data.erase();
+	bool bLoadedVersion = false;
 	if (!data.empty())
 	{
-		// The rest of the file is xml:
 		/*
-		<!ELEMENT Data (Config+, Download*, DisableCalPlugin*) >
-
-		<!--
-		Before v1.10:
-		pcdata is a message that can be displayed to the user explaining
-		the changes. This is only used when doing a config update, not a
-		version update. [version update is 1st line in file]
-		v1.10: Moved PCDATA to 'lang' (We can change the format of the file
-		since this data is never accessed when there's a pgm version change.)
-		v2.0: Allow multiple copies of 'Config' for different platforms.
-		If 'platform' is not set, it's the default. This allows creating
-		one entry with 'mac', one with none - then all non-macs default to
-		second. Current recognized values: 'win'/'mac'
-		v2.0: Added 'version' to 'Config': This replaces the version in the
-		first line (if not present, line 1 is used).
-		-->
-		<!ELEMENT Config (Lang+) >
-		  <!ATTLIST Config
-		    platform CDATA #IMPLIED
-			version CDATA #IMPLIED
-		    ver CDATA #REQUIRED
-		    file CDATA #REQUIRED
-		    >
-		<!--
-		'id' specified the LANGID of the plugin language DLL, '0' is used
-		for the program default.
-		v2.0: 'id2' is gettext lang code, id no longer used.
-		-->
-		<!ELEMENT Lang (#PCDATA) >
-		  <!-- <!ATTLIST Lang id CDATA #REQUIRED > -->
-		  <!ATTLIST Lang id2 CDATA #REQUIRED >
-
-		<!--
-		if Download is not set, defaults to 'LinkArbDownloadUrl',
-		which is http://www.agilityrecordbook.com/download.php
-		-->
-		<!ELEMENT Download (#PCDATA) >
-
-		<!--
-		When we know a calendar plugin is obsolete due to website changes,
-		use this to force the plugin to disable. Only disables the specified
-		version. If we prematurely disabled the plugin, the 'enable' flag
-		will reenable. [disabling info is stored in the registry]
-		-->
-		<!ELEMENT DisableCalPlugin EMPTY >
-		  <!ATTLIST DisableCalPlugin
-		    file CDATA #REQUIRED
-		    ver CDATA #REQUIRED
-		    enable (0|1) '1'
-		    >
-		*/
+		 * <!ELEMENT Data (Platform, Config, Download*, DisableCalPlugin*) >
+		 * <!ELEMENT Platform (EMPTY) >
+		 *   <!ATTLIST Platform
+		 *     arch CDATA (x86,x64,mac)
+		 *     ver CDATA #REQUIRED
+		 *     lang CDATA #IMPLIED <!-- installer gettext lang code -->
+		 *     config CDATA #REQUIRED
+		 *     md5 CDATA #REQUIRED
+		 *     file CDATA #REQUIRED >
+		 * <!ELEMENT Config (Lang+) >
+		 *   <!ATTLIST Config
+		 *     ver CDATA #REQUIRED
+		 *     file CDATA #REQUIRED
+		 *     >
+		 * <!ELEMENT Lang (#PCDATA) >
+		 *   <!ATTLIST Lang id2 CDATA #REQUIRED >
+		 *  <!--
+		 *  if Download is not set, defaults to 'LinkArbDownloadUrl',
+		 *  which is http://www.agilityrecordbook.com/download.php
+		 *  -->
+		 *  <!ELEMENT Download (#PCDATA) >
+		 *  <!--
+		 *  When we know a calendar plugin is obsolete due to website changes,
+		 *  use this to force the plugin to disable. Only disables the specified
+		 *  version. If we prematurely disabled the plugin, the 'enable' flag
+		 *  will reenable. [disabling info is stored in the registry]
+		 *  -->
+		 *  <!ELEMENT DisableCalPlugin EMPTY >
+		 *    <!ATTLIST DisableCalPlugin
+		 *      file CDATA #REQUIRED
+		 *      ver CDATA #REQUIRED
+		 *      enable (0|1) '1'
+		 *      >
+		 */
 		wxString errMsg2;
 		ElementNodePtr tree(ElementNode::New());
 		if (!tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg2))
 		{
 			if (bVerbose)
 			{
-				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), wxT("version.txt"));
+				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile());
 				if (0 < errMsg2.length())
 				{
 					msg += wxT("\n\n");
 					msg += errMsg2;
 				}
 				wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
-				// Even tho we failed, we'll still report success.
-				// The return code is really whether we loaded the pgm verno.
 			}
 		}
 		else if (tree->GetName() == wxT("Data"))
@@ -264,54 +321,73 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 				ElementNodePtr node = tree->GetElementNode(nIndex);
 				if (!node)
 					continue;
-				if (!bConfigLoaded && node->GetName() == wxT("Config"))
+				if (!bLoadedVersion && node->GetName() == wxT("Platform"))
 				{
+					bool bSkip = true;
 					wxString value;
-					// If not set, all platforms are the same. This 
-					if (ElementNode::eFound == node->GetAttrib(wxT("platform"), value))
+					if (ElementNode::eFound == node->GetAttrib(wxT("arch"), value))
 					{
-#ifdef WIN32
-						if (value != wxT("win"))
+						if (Arch() == value)
 						{
-							continue; 
+							bSkip = false;
 						}
-#elif defined(__WXMAC__)
-						if (value != wxT("mac"))
-						{
-							continue;
-						}
-#else
-						// Unknown platform
-						continue;
-#endif
 					}
-					if (ElementNode::eFound == node->GetAttrib(wxT("version"), value))
+					// Wrong architecture
+					if (bSkip)
+						continue;
+					bSkip = true;
+					if (ElementNode::eFound == node->GetAttrib(wxT("lang"), value))
+					{
+						if (value.empty() || value == wxT("*")
+						|| value == langMgr.CurrentLanguage())
+							bSkip = false;
+					}
+					else
+						bSkip = false;
+					// Wrong language
+					if (bSkip)
+						continue;
+					if (ElementNode::eFound == node->GetAttrib(wxT("ver"), value))
 					{
 						m_VersionNum.Parse(value);
-						if (!m_VersionNum.Valid())
-						{
-							if (bVerbose)
-							{
-								wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
-							}
-							return false;
-						}
+						if (m_VersionNum.Valid())
+							bLoadedVersion = true;
 					}
-					bConfigLoaded = true;
-					node->GetAttrib(wxT("ver"), m_VerConfig);
-					node->GetAttrib(wxT("file"), m_FileName);
-					// Note, before v1.10, we did "m_InfoMsg = node->GetValue();"
-					// In 1.10, we changed the format of version.txt.
-					for (int nLang = 0; nLang < node->GetElementCount(); ++nLang)
+					if (ElementNode::eFound != node->GetAttrib(wxT("config"), m_VerConfig)
+					|| ElementNode::eFound != node->GetAttrib(wxT("md5"), m_md5)
+					|| ElementNode::eFound != node->GetAttrib(wxT("file"), m_NewFile))
 					{
-						ElementNodePtr lang = node->GetElementNode(nLang);
-						if (!lang)
-							continue;
-						if (lang->GetName() == wxT("Lang"))
+						bLoadedVersion = false;
+					}
+					if (!bLoadedVersion)
+					{
+						if (bVerbose)
 						{
-							wxString langIdStr;
-							lang->GetAttrib(wxT("id2"), langIdStr);
-							m_InfoMsg[langIdStr] = lang->GetValue();
+							wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+						}
+						return false;
+					}
+				}
+				else if (!bConfigLoaded && node->GetName() == wxT("Config"))
+				{
+					short config;
+					node->GetAttrib(wxT("ver"), config);
+					if (config == m_VerConfig)
+					{
+						wxString value;
+						bConfigLoaded = true;
+						node->GetAttrib(wxT("file"), m_ConfigFileName);
+						for (int nLang = 0; nLang < node->GetElementCount(); ++nLang)
+						{
+							ElementNodePtr lang = node->GetElementNode(nLang);
+							if (!lang)
+								continue;
+							if (lang->GetName() == wxT("Lang"))
+							{
+								wxString langIdStr;
+								lang->GetAttrib(wxT("id2"), langIdStr);
+								m_InfoMsg[langIdStr] = lang->GetValue();
+							}
 						}
 					}
 				}
@@ -338,7 +414,7 @@ bool CUpdateInfo::ReadVersionFile(bool bVerbose)
 		}
 	}
 
-	return true;
+	return bLoadedVersion;
 }
 
 
@@ -356,6 +432,25 @@ bool CUpdateInfo::CheckProgram(wxString const& lang)
 		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
 		{
+//TODO: new auto-update (OS specific)
+// - mac:
+//   - Prompt for location
+//   - download file (m_NewFile)
+//   - verify md5 (m_md5)
+//   - 'downloaded, go do it now'
+// - windows:
+//   - download file (m_NewFile) to TEMP
+//   - verify md5 (m_md5)
+//   - copy arbupdate.exe from resources to TEMP
+//   - launch 'arbupdate.exe <m_NewFile>'
+//   - close arb
+//   - [arbupdate] extract from zip
+//   - [arbupdate] delete zip
+//   - [arbupdate] run "<name>.msi /qb" (or /qr, need to experiment)
+//   - [arbupdate] run 'arb.exe'
+//   - [arbupdate] exit
+//   * arb: cleanup temp, run as normal
+//TODO: Redo here down
 			wxString url(m_UpdateDownload);
 			wxString suffix = url.Right(4);
 			suffix.MakeUpper();
@@ -437,7 +532,7 @@ void CUpdateInfo::CheckConfig(
 	// If the parse was successful, check for the posted config version.
 	bool bUpToDate = true;
 	// Cool! New config!
-	if (0 < m_FileName.length() && m_VerConfig > pDoc->Book().GetConfig().GetVersion())
+	if (0 < m_ConfigFileName.length() && m_VerConfig > pDoc->Book().GetConfig().GetVersion())
 	{
 		bUpToDate = false;
 		wxString msg;
@@ -462,7 +557,7 @@ void CUpdateInfo::CheckConfig(
 			// Load the config.
 			wxString url = _("IDS_HELP_UPDATE");
 			url += wxT("/");
-			url += m_FileName;
+			url += m_ConfigFileName;
 			std::string strConfig;
 			wxString errMsg;
 			CReadHttp file(url, &strConfig);
@@ -517,7 +612,7 @@ void CUpdateInfo::CheckConfig(
 void CUpdateInfo::AutoUpdateProgram(
 		CLanguageManager const& langMgr)
 {
-	if (ReadVersionFile(false))
+	if (ReadVersionFile(false, langMgr))
 		CheckProgram(langMgr.CurrentLanguage());
 }
 
@@ -542,7 +637,7 @@ void CUpdateInfo::UpdateConfiguration(
 {
 	// Only continue if we parsed the version.txt file
 	// AND the version is up-to-date.
-	if (!ReadVersionFile(true))
+	if (!ReadVersionFile(true, langMgr))
 		return;
 	if (CheckProgram(langMgr.CurrentLanguage()))
 		return;

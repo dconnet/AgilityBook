@@ -38,7 +38,9 @@ protected:
 	friend class CAgilityBookApp;
 
 	CUpdateInfo();
-	bool ReadVersionFile(bool bVerbose);
+	bool ReadVersionFile(
+			bool bVerbose,
+			CLanguageManager const& langMgr);
 	bool IsOutOfDate();
 	bool CheckProgram(wxString const& lang);
 	void CheckConfig(
@@ -57,6 +59,11 @@ public:
 	static bool UpdateConfig(
 			CAgilityBookDoc* ioDoc,
 			wxChar const* inMsg = NULL);
+
+	/**
+	 * Cleanup any files from the auto-update.
+	 */
+	static void CleanupUpdate();
 
 	/**
 	 * Called when the program does its monthly auto-check.
@@ -89,7 +96,9 @@ public:
 private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
-	wxString m_FileName;
+	wxString m_md5;
+	wxString m_NewFile;
+	wxString m_ConfigFileName;
 	std::map<wxString, wxString> m_InfoMsg;
 	wxString m_UpdateDownload;
 	wxString m_usernameHint;

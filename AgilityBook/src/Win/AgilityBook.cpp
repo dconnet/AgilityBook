@@ -414,6 +414,8 @@ bool CAgilityBookApp::OnInit()
 				m_UpdateInfo.AutoUpdateProgram(*m_LangMgr);
 		}
 	}
+	// Cleanup left over files if this was an auto-update.
+	CUpdateInfo::CleanupUpdate();
 
 	return true;
 }
