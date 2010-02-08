@@ -96,6 +96,7 @@ public:
 private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
+	long m_size;
 	wxString m_md5;
 	wxString m_NewFile;
 	wxString m_ConfigFileName;

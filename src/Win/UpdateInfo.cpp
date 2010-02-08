@@ -190,6 +190,7 @@ void CUpdateInfo::CleanupUpdate()
 CUpdateInfo::CUpdateInfo()
 	: m_VersionNum(false)
 	, m_VerConfig(0)
+	, m_size(0)
 	, m_md5()
 	, m_NewFile()
 	, m_ConfigFileName()
@@ -213,6 +214,7 @@ bool CUpdateInfo::ReadVersionFile(
 	// Clear everything.
 	m_VersionNum.clear();
 	m_VerConfig = 0;
+	m_size = 0;
 	m_md5.erase();
 	m_NewFile.erase();
 	m_ConfigFileName.erase();
@@ -354,6 +356,7 @@ bool CUpdateInfo::ReadVersionFile(
 							bLoadedVersion = true;
 					}
 					if (ElementNode::eFound != node->GetAttrib(wxT("config"), m_VerConfig)
+					|| ElementNode::eFound != node->GetAttrib(wxT("size"), m_size)
 					|| ElementNode::eFound != node->GetAttrib(wxT("md5"), m_md5)
 					|| ElementNode::eFound != node->GetAttrib(wxT("file"), m_NewFile))
 					{
