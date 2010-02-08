@@ -355,6 +355,14 @@
 			Name="ARB"
 			>
 			<File
+				RelativePath="..\..\ARB\ARBMsgDigest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBMsgDigest.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBString.cpp"
 				>
 			</File>

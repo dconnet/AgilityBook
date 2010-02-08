@@ -1086,6 +1086,12 @@
 				RelativePath="..\..\ARB\ARBLocalization.h">
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARBMsgDigest.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBMsgDigest.h">
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBString.cpp">
 			</File>
 			<File

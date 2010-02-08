@@ -805,6 +805,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestMD5.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestMisc.cpp"
 				>
 			</File>
@@ -1198,6 +1202,14 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\ARBLocalization.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBMsgDigest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBMsgDigest.h"
 				>
 			</File>
 			<File
