@@ -9,13 +9,7 @@
   <String Id="FeatureCompleteDesc">Main Agility Record Book files</String>
   <String Id="FeatureArbHelpTitle">ARB Help</String>
   <String Id="FeatureArbHelpDesc">Help diagnose problems by assembling necessary files for debugging</String>
-  <String Id="FeatureLangTitle">Languages</String>
-  <String Id="FeatureLangDesc">Supported languages that can be changed while running the program (English is always available)</String>
-  <String Id="FeatureFrenchTitle">French</String>
-  <String Id="FeatureFrenchDesc">French</String>
-  <String Id="FeatureCalPluginTitle">Calendar Addins</String>
-  <String Id="FeatureCalPluginDesc">Addins to download Calendar data directly from a website</String>
-  <String Id="FeatureUSDAATitle">USDAA</String>
+  <String Id="FeatureUSDAATitle">USDAA Calender Addin</String>
   <String Id="FeatureUSDAADesc">Download Calendar entries from usdaa.com</String>
   <String Id="LaunchPgm">Launch [AppName] when setup exits</String>
   <String Id="LaunchPgmText">Launch [AppName]</String>

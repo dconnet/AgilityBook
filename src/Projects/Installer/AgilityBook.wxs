@@ -31,6 +31,11 @@
 	<Property Id="INSTALLLEVEL">100</Property>
 	<Property Id="AppName">Agility Record Book</Property>
 
+	<!-- For success dialog in order to launch program -->
+	<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+	<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchPgmText)" />
+	<Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />
+
 	<!-- Launch Conditions -->
 <?if $(sys.BUILDARCH)=x64?>
 	<Condition Message="!(loc.On64NT)">VersionNT64</Condition>
@@ -72,6 +77,7 @@
 
 	<CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />
 	<CustomAction Id="ARB_NoDowngrade" Error="!(loc.ARB_NoDowngrade)" />
+	<CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 
 	<Media Id="1" Cabinet="AgilityBook.cab" EmbedCab="yes" />
 
@@ -93,7 +99,6 @@
 	</Directory>
 
 	<DirectoryRef Id="APPLICATIONFOLDER">
-
 		<Component Id="C_AgilityBook.exe" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="$(var.Win64)" >
 			<File Id="_AgilityBook.exe"
 				Name="AgilityBook.exe"
@@ -156,9 +161,6 @@
 				Checksum="yes"
 				DiskId="1" />
 		</Component>
-
-		<!-- Needed for creating Features with no components -->
-		<Component Id="empty" Guid="" KeyPath="yes" />
 	</DirectoryRef>
 
 	<DirectoryRef Id="dirFR">
@@ -241,6 +243,7 @@
 		<ComponentRef Id="C_AgilityBook.exe" />
 		<ComponentRef Id="C_AgilityBook.dat" />
 		<ComponentRef Id="C_langEN" />
+		<ComponentRef Id="C_langFR" />
 
 		<Feature Id="ARBHelp"
 			Display="expand"
@@ -252,37 +255,13 @@
 			<ComponentRef Id="C_MenuShortcutsHelp" />
 		</Feature>
 
-		<Feature Id="Languages"
-			Display="expand"
-			Level="100"
-			AllowAdvertise="no"
-			Title="!(loc.FeatureLangTitle)"
-			Description="!(loc.FeatureLangDesc)">
-			<!-- Need an empty component to work around a bug with features (empty features add network options) -->
-			<ComponentRef Id="empty" />
-			<Feature Id="French"
-				Level="100"
-				AllowAdvertise="no"
-				Title="!(loc.FeatureFrenchTitle)"
-				Description="!(loc.FeatureFrenchDesc)">
-				<ComponentRef Id="C_langFR" />
-			</Feature>
-		</Feature>
-
 		<Feature Id="Plugins"
 			Display="expand"
 			Level="100"
 			AllowAdvertise="no"
-			Title="!(loc.FeatureCalPluginTitle)"
-			Description="!(loc.FeatureCalPluginDesc)">
-			<ComponentRef Id="empty" />
-			<Feature Id="Calendar"
-				Level="100"
-				AllowAdvertise="no"
-				Title="!(loc.FeatureUSDAATitle)"
-				Description="!(loc.FeatureUSDAADesc)">
+			Title="!(loc.FeatureUSDAATitle)"
+			Description="!(loc.FeatureUSDAADesc)">
 				<ComponentRef Id="C_cal_usdaa.dll" />
-			</Feature>
 		</Feature>
 	</Feature>
 
@@ -295,6 +274,11 @@
 		<RemoveExistingProducts After="InstallInitialize" />
 		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">FOUNDSAMEVERSION</Custom>
 		<Custom Action="ARB_NoDowngrade" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
+		<!--
+		START_APP should only be set on the command line during auto-upgrading.
+		If set during full UI, it will cause ARB to be launched before the installer is done.
+		-->
+		<Custom Action="ARB_LaunchApplication" After="InstallFinalize">START_APP And Not Installed</Custom>
 	</InstallExecuteSequence>
 
 	<UI>
@@ -343,7 +327,7 @@
 			<Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />
 			<Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />
 			<Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
-			<Condition Action="show">Not Installed</Condition>
+				<Condition Action="show">Not START_APP And Not Installed</Condition>
 			</Control>
 		</Dialog>
 
@@ -358,14 +342,8 @@
 		<Publish Dialog="MyExitDialog"
 			Control="Finish"
 			Event="DoAction"
-			Value="ARB_LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and Not Installed</Publish>
-		</UI>
-
-		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
-		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchPgmText)" />
-		<Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />
-
-		<CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+			Value="ARB_LaunchApplication">Not START_APP And WIXUI_EXITDIALOGOPTIONALCHECKBOX=1 And Not Installed</Publish>
+	</UI>
 
 	</Product>
 </Wix>
