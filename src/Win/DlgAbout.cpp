@@ -232,7 +232,7 @@ void CDlgAbout::OnCheckForUpdates(wxCommandEvent& evt)
 	wxGetApp().UpdateConfiguration(m_pDoc, close);
 	if (close)
 	{
-		EndModal(IDOK);
+		EndModal(wxID_OK);
 		wxGetApp().GetTopWindow()->Close(true);
 	}
 }
