@@ -1696,3 +1696,9 @@ msgstr "ERROR: Unexpected file format, expected MSI file."
 msgid "IDS_ERROR_AUTOUPDATE"
 msgstr "ERROR: Internal error during update process. Procedure was cancelled."
 
+msgid "IDS_DOWNLOADING"
+msgstr "Downloading..."
+
+msgid "IDS_VALIDATING"
+msgstr "Validating..."
+

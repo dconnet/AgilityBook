@@ -504,6 +504,7 @@ bool CUpdateInfo::CheckProgram(
 					else
 					{
 						IDlgProgress* progress = IDlgProgress::CreateProgress(1, wxGetApp().GetTopWindow());
+						progress->SetCaption(_("IDS_DOWNLOADING"));
 						progress->SetRange(1, m_size);
 						progress->SetMessage(name.GetFullName());
 						progress->ShowProgress();
@@ -521,17 +522,20 @@ bool CUpdateInfo::CheckProgram(
 								errMsg += err;
 							}
 						}
-						progress->Dismiss();
-						if (!bGotoWeb && !m_md5.empty()
-						&& ARBMsgDigest::ComputeFile(filename) != m_md5)
+						if (!bGotoWeb && !m_md5.empty())
 						{
-							bGotoWeb = true;
-							if (!errMsg.empty())
-								errMsg += wxT("\n\n");
-							errMsg += _("IDS_ERROR_DOWNLOAD");
+							progress->SetCaption(_("IDS_VALIDATING"));
+							if (ARBMsgDigest::ComputeFile(filename) != m_md5)
+							{
+								bGotoWeb = true;
+								if (!errMsg.empty())
+									errMsg += wxT("\n\n");
+								errMsg += _("IDS_ERROR_DOWNLOAD");
+							}
 						}
 						if (bGotoWeb)
 							::wxRemoveFile(filename);
+						progress->Dismiss();
 					}
 					if (!errMsg.empty() && bGotoWeb)
 					{
