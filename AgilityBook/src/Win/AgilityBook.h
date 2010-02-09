@@ -34,7 +34,7 @@ public:
 
 	bool SelectLanguage(wxWindow* parent = NULL);
 	void AutoCheckConfiguration(CAgilityBookDoc* pDoc);
-	void UpdateConfiguration(CAgilityBookDoc* pDoc);
+	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
 
 	void SetMessageText(
 			wxString const& msg,

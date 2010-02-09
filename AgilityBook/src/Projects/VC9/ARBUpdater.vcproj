@@ -370,14 +370,6 @@
 				RelativePath="..\..\ARB\ARBString.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\ARB\VersionNum.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\VersionNum.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

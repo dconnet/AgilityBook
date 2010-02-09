@@ -1683,3 +1683,15 @@ msgstr ""
 "%3$d duplicats (pas rajoutés)\n"
 "%4$d entrés passés"
 
+msgid "IDS_ERROR_DOWNLOAD"
+msgstr "ERROR: The downloaded file is corrupt."
+
+msgid "IDS_DOWNLOAD_AND_RESTART"
+msgstr "%1$s is now downloaded. Agility Record Book will now close so you can install it."
+
+msgid "IDS_ERROR_UNEXPECTED"
+msgstr "ERROR: Unexpected file format, expected MSI file."
+
+msgid "IDS_ERROR_AUTOUPDATE"
+msgstr "ERROR: Internal error during update process. Procedure was cancelled."
+
