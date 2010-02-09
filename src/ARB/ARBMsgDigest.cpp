@@ -394,7 +394,7 @@ wxString ARBMsgDigest::ComputeBuffer(
 {
 	MD5_CTX context;
 	MD5Init(&context); 
-	MD5Update(&context, reinterpret_cast<unsigned char const*>(inData), nData);
+	MD5Update(&context, reinterpret_cast<unsigned char const*>(inData), static_cast<unsigned int>(nData));
 	unsigned char digest[16];
 	MD5Final(digest, &context);
 	return ConvertBuffer(digest);

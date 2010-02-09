@@ -47,23 +47,57 @@ bool CARBUpdaterApp::OnInit()
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
 #if wxCHECK_VERSION(2, 9, 0)
-		{wxCMD_LINE_SWITCH, "t", "tmp",  "Temp file, delete when done"},
-		{wxCMD_LINE_OPTION, "f", "file", "Downloaded file"},
+		{wxCMD_LINE_SWITCH, "g", "generate",
+			"Ignore all other options and display a dialog allowing MD5 generation"},
+		{wxCMD_LINE_OPTION, "f", "file",
+			"Downloaded file"},
 #else
-		{wxCMD_LINE_SWITCH, wxT("t"), wxT("tmp"),  wxT("Temp file, delete when done")},
-		{wxCMD_LINE_OPTION, wxT("f"), wxT("file"), wxT("Downloaded file")},
+		{wxCMD_LINE_SWITCH, wxT("g"), wxT("generate"),
+			wxT("Ignore all other options and display a dialog allowing MD5 generation")},
+		{wxCMD_LINE_OPTION, wxT("f"), wxT("file"),
+			wxT("Downloaded file")},
 #endif
 		{wxCMD_LINE_NONE}
 	};
 	wxCmdLineParser cmdline(cmdLineDesc, argc, argv);
 	if (0 != cmdline.Parse(true))
+	{
 		return false;
+	}
 
-//   - [arbupdate] extract from zip
-//   - [arbupdate] delete zip
-//   - [arbupdate] run "<name>.msi /qb" (or /qr, need to experiment)
-//   - [arbupdate] run 'arb.exe'
-//   - [arbupdate] exit
-
+	wxString file;
+	if (cmdline.Found(wxT("generate")))
+	{
+		wxMessageBox(wxT("TODO: generate"));
+	}
+	else if (cmdline.Found(wxT("file"), &file))
+	{
+		if (file.length() > 1 && file[0] == '"')
+		{
+			file = file.SubString(1, file.length()-2);
+		}
+		file.Trim(true);
+		SHELLEXECUTEINFO info;
+		ZeroMemory(&info, sizeof(info));
+		info.cbSize = sizeof(info);
+		info.fMask = SEE_MASK_NOCLOSEPROCESS;
+		info.lpVerb = _T("open");
+		info.lpFile = file.wx_str();
+		info.lpParameters = _T("/qb START_APP=1");
+		if (ShellExecuteEx(&info))
+		{
+			WaitForSingleObject(info.hProcess, INFINITE);
+			CloseHandle(info.hProcess);
+			wxRemoveFile(file);
+		}
+		else
+		{
+			DWORD x = GetLastError();
+			wxMessageBox(wxString::Format(wxT("\"%s\" failed: %08x"), file.wx_str(), x));
+		}
+		// In theory, there could be timing issue here - if ARB starts really
+		// quickly, it could try deleting the file before we exit. ARB will
+		// handle that by sleeping for a moment and trying again.
+	}
 	return false;
 }

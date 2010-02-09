@@ -1,4 +1,4 @@
-2/7/2010: v2.1.5.x
+2/8/2010: v2.1.5.x
 - Bumped Configuration v28:
   - Removed SSA (Sweepstakes). No longer available.
   - Renamed ATCH-OP/SP to ATCH-II/III.
@@ -6,6 +6,8 @@
   - When installing on Windows, set the initial language (based on which msi
     was used. This avoids an initial dialog asking for language.
   - Changed how version updating is checked. This allows future auto-updating.
+  - Added auto-update feature. This won't actually come into play until the
+    next release.
 - Bug fixes:
   - Fixed a bug that caused fonts (bold/italic) to be improperly configured.
   - Creating a new title and setting it to unearned didn't properly store

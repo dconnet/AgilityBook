@@ -228,5 +228,11 @@ void CDlgAbout::OnHelpEmail(wxHyperlinkEvent& evt)
 
 void CDlgAbout::OnCheckForUpdates(wxCommandEvent& evt)
 {
-	wxGetApp().UpdateConfiguration(m_pDoc);
+	bool close = false;
+	wxGetApp().UpdateConfiguration(m_pDoc, close);
+	if (close)
+	{
+		EndModal(IDOK);
+		wxGetApp().GetTopWindow()->Close(true);
+	}
 }

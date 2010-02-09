@@ -96,6 +96,7 @@ def main():
     zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
     zip.write('DefaultConfig.xml')
     zip.write('AgilityRecordBook.dtd')
+    zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
     zip.close()
 
 main()

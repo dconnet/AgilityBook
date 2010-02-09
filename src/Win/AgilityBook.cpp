@@ -159,10 +159,12 @@ void CAgilityBookApp::AutoCheckConfiguration(CAgilityBookDoc* pDoc)
 }
 
 
-void CAgilityBookApp::UpdateConfiguration(CAgilityBookDoc* pDoc)
+void CAgilityBookApp::UpdateConfiguration(
+		CAgilityBookDoc* pDoc,
+		bool& outClose)
 {
 	assert(m_LangMgr);
-	m_UpdateInfo.UpdateConfiguration(pDoc, *m_LangMgr);
+	m_UpdateInfo.UpdateConfiguration(pDoc, *m_LangMgr, outClose);
 }
 
 
@@ -411,10 +413,17 @@ bool CAgilityBookApp::OnInit()
 			ARBDate today = ARBDate::Today();
 			date += 30;
 			if (date < today)
-				m_UpdateInfo.AutoUpdateProgram(*m_LangMgr);
+			{
+				bool close = false;
+				m_UpdateInfo.AutoUpdateProgram(NULL, *m_LangMgr, close);
+				if (close)
+				{
+					// Must close so installation will work.
+					return false;
+				}
+			}
 		}
 	}
-	// Cleanup left over files if this was an auto-update.
 	CUpdateInfo::CleanupUpdate();
 
 	return true;

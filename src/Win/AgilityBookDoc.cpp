@@ -1838,7 +1838,14 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		break;
 
 	case ID_HELP_UPDATE:
-		wxGetApp().UpdateConfiguration(this);
+		{
+			bool close = false;
+			wxGetApp().UpdateConfiguration(this, close);
+			if (close)
+			{
+				wxGetApp().GetTopWindow()->Close(true);
+			}
+		}
 		break;
 	}
 }

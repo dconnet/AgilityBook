@@ -13,12 +13,15 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-02-08 DRC Added new interfaces to support streaming to a file.
  * @li 2009-07-19 DRC Changed from wxHTTP to wxURL to handle proxies.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
  */
 
 #include "ARBString.h"
+class IDlgProgress;
+class wxOutputStream;
 class wxURL;
 
 /**
@@ -36,6 +39,10 @@ public:
 	CReadHttp(
 			wxString const& inURL,
 			std::string* outData);
+	CReadHttp(
+			wxString const& inURL,
+			wxOutputStream& outStream,
+			IDlgProgress* pProgress = NULL);
 
 	~CReadHttp();
 
@@ -53,10 +60,17 @@ public:
 			wxWindow* pParent = NULL,
 			bool bCheckOnly = false);
 
+	bool ReadHttpFile(
+			wxString& outErrMsg,
+			wxWindow* pParent = NULL,
+			bool bCheckOnly = false);
+
 	bool CheckHttpFile(wxWindow* pParent = NULL);
 
 private:
 	wxString m_address;
 	wxURL* m_URL;
 	std::string* m_Data;
+	wxOutputStream* m_Stream;
+	IDlgProgress* m_pProgress;
 };
