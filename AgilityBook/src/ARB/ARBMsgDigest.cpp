@@ -402,8 +402,11 @@ wxString ARBMsgDigest::ComputeBuffer(
 
 
 wxString ARBMsgDigest::ComputeFile(
-		wxString const& inFileName)
+		wxString const& inFileName,
+		size_t* outSize)
 {
+	if (outSize)
+		*outSize = 0;
 	wxFile file;
 	if (!file.Open(inFileName))
 		return wxEmptyString;
@@ -413,6 +416,8 @@ wxString ARBMsgDigest::ComputeFile(
 	unsigned char buffer[1024];
 	while (0 < (bytes = file.Read(buffer, sizeof(buffer))))
 	{
+		if (outSize)
+			*outSize += bytes;
 		MD5Update(&context, buffer, bytes);
 	}
 	unsigned char digest[16];

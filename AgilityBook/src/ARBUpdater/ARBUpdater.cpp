@@ -17,6 +17,7 @@
  */
 
 #include "stdafx.h"
+#include "DlgDigest.h"
 
 #include <wx/cmdline.h>
 #include <wx/config.h>
@@ -66,17 +67,23 @@ bool CARBUpdaterApp::OnInit()
 	}
 
 	wxString file;
-	if (cmdline.Found(wxT("generate")))
-	{
-		wxMessageBox(wxT("TODO: generate"));
-	}
-	else if (cmdline.Found(wxT("file"), &file))
+	bool bHasFile = cmdline.Found(wxT("file"), &file);
+	if (bHasFile)
 	{
 		if (file.length() > 1 && file[0] == '"')
 		{
 			file = file.SubString(1, file.length()-2);
 		}
 		file.Trim(true);
+	}
+
+	if (cmdline.Found(wxT("generate")) || !bHasFile)
+	{
+		CDlgDigest dlg(file);
+		dlg.ShowModal();
+	}
+	else if (bHasFile)
+	{
 		SHELLEXECUTEINFO info;
 		ZeroMemory(&info, sizeof(info));
 		info.cbSize = sizeof(info);

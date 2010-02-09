@@ -21,6 +21,7 @@
 #include "stdafx.h"
 #include "ReadHttp.h"
 
+#include "AgilityBook.h"
 #include "DlgAuthenticate.h"
 #include "DlgProgress.h"
 #include <wx/sstream.h>
@@ -93,6 +94,7 @@ bool CReadHttp::ReadHttpFile(
 			return false;
 	}
 
+	bool bOk = true;
 	wxString res;
 	if (m_Data)
 	{
@@ -106,6 +108,12 @@ bool CReadHttp::ReadHttpFile(
 			unsigned char buffer[4096];
 			while (!stream->Eof())
 			{
+				wxGetApp().Yield();
+				if (m_pProgress->HasCanceled())
+				{
+					bOk = false;
+					break;
+				}
 				stream->Read(buffer, sizeof(buffer));
 				size_t read = stream->LastRead();
 				m_pProgress->OffsetPos(1, static_cast<int>(read));
@@ -121,7 +129,7 @@ bool CReadHttp::ReadHttpFile(
 	if (m_Data)
 		*m_Data = res.mb_str(wxMBConvUTF8());
 
-	return true;
+	return bOk;
 }
 
 

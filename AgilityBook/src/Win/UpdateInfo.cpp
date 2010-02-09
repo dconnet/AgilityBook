@@ -513,19 +513,25 @@ bool CUpdateInfo::CheckProgram(
 						if (!http.ReadHttpFile(err))
 						{
 							bGotoWeb = true;
-							if (!errMsg.empty())
-								errMsg += wxT("\n\n");
-							errMsg += err;
+							// If user canceled, no message is generated.
+							if (!err.empty())
+							{
+								if (!errMsg.empty())
+									errMsg += wxT("\n\n");
+								errMsg += err;
+							}
 						}
 						progress->Dismiss();
-						if (!m_md5.empty() && ARBMsgDigest::ComputeFile(filename) != m_md5)
+						if (!bGotoWeb && !m_md5.empty()
+						&& ARBMsgDigest::ComputeFile(filename) != m_md5)
 						{
 							bGotoWeb = true;
 							if (!errMsg.empty())
 								errMsg += wxT("\n\n");
 							errMsg += _("IDS_ERROR_DOWNLOAD");
-							::wxRemoveFile(filename);
 						}
+						if (bGotoWeb)
+							::wxRemoveFile(filename);
 					}
 					if (!errMsg.empty() && bGotoWeb)
 					{
