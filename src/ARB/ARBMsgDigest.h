@@ -25,5 +25,6 @@ public:
 			char const* inData,
 			size_t nData);
 	static wxString ComputeFile(
-			wxString const& inFileName);
+			wxString const& inFileName,
+			size_t* outSize = NULL);
 };
