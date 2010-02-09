@@ -329,7 +329,7 @@ bool CUpdateInfo::ReadVersionFile(
 		{
 			if (bVerbose)
 			{
-				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile());
+				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile().c_str());
 				if (0 < errMsg2.length())
 				{
 					msg += wxT("\n\n");
