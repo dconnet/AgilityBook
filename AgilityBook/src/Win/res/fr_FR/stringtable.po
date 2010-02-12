@@ -1684,20 +1684,20 @@ msgstr ""
 "%4$d entrés passés"
 
 msgid "IDS_ERROR_DOWNLOAD"
-msgstr "ERROR: The downloaded file is corrupt."
+msgstr "ERREUR: Le fichier téléchargé est corrompu."
 
 msgid "IDS_DOWNLOAD_AND_RESTART"
-msgstr "%1$s is now downloaded. Agility Record Book will now close so you can install it."
+msgstr "%1$s a fini de télécharger. Agility Record Book va fermer pour vous laisser l'installer."
 
 msgid "IDS_ERROR_UNEXPECTED"
-msgstr "ERROR: Unexpected file format, expected MSI file."
+msgstr "ERREUR: Format de fichier non reconnu, fichier MSI attendu."
 
 msgid "IDS_ERROR_AUTOUPDATE"
-msgstr "ERROR: Internal error during update process. Procedure was cancelled."
+msgstr "ERREUR: Erreur interne pendant la mise à jour. Procédure annulée."
 
 msgid "IDS_DOWNLOADING"
-msgstr "Downloading..."
+msgstr "Téléchargement en cours..."
 
 msgid "IDS_VALIDATING"
-msgstr "Validating..."
+msgstr "Validation en cours..."
 
