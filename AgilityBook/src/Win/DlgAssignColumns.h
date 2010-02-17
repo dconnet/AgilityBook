@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-02-17 DRC Added SubName to runs view.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-01 DRC Renamed MachPts to SpeedPts.
@@ -110,7 +111,7 @@
 #define IO_TREE_RUN_HEIGHT			63
 #define IO_LOG_SUBNAME				64
 #define IO_TREE_TRIAL_VERIFIED		65
-#define IO_RUNS_SPEED					66
+#define IO_RUNS_SPEED				66
 #define IO_CAL_APPT_SUBJECT			67
 #define IO_CAL_APPT_START_DATE		68
 #define IO_CAL_APPT_START_TIME		69
@@ -159,7 +160,8 @@
 #define IO_CAL_DRAWS				112
 #define IO_RUNS_OBSTACLES			113
 #define IO_RUNS_OPS					114
-#define IO_MAX						115
+#define IO_RUNS_SUBNAME				115
+#define IO_MAX						116
 
 #include <vector>
 #include "AgilityBookOptions.h"
