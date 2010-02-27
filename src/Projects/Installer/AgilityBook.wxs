@@ -31,6 +31,8 @@
 	<Property Id="INSTALLLEVEL">100</Property>
 	<Property Id="AppName">Agility Record Book</Property>
 
+	<Property Id="INSTALLDESKTOPSHORTCUT">1</Property>
+
 	<!-- For success dialog in order to launch program -->
 	<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
 	<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchPgmText)" />
@@ -216,6 +218,7 @@
 
 	<DirectoryRef Id="DesktopFolder">
 		<Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="$(var.Win64)" >
+			<Condition>INSTALLDESKTOPSHORTCUT</Condition>
 			<RegistryValue
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
