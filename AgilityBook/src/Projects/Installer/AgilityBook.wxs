@@ -3,12 +3,12 @@
 
 	<?include AgilityBook.wxi?>
 
-	<Product Id="$(var.PRODUCTID)"
-		UpgradeCode="$(var.UPGRADECODE)"
-		Name="Agility Record Book $(var.CURRENT_VERSION)"
-		Language="1033"
-		Version="$(var.CURRENT_VERSION)"
-		Manufacturer="dcon Software">
+<Product Id="$(var.PRODUCTID)"
+	UpgradeCode="$(var.UPGRADECODE)"
+	Name="Agility Record Book $(var.CURRENT_VERSION)"
+	Language="1033"
+	Version="$(var.CURRENT_VERSION)"
+	Manufacturer="dcon Software">
 	<Package
 		Description="Agility Record Book"
 		Comments="!(loc.Comments)"
@@ -31,11 +31,10 @@
 	<Property Id="INSTALLLEVEL">100</Property>
 	<Property Id="AppName">Agility Record Book</Property>
 
-	<Property Id="INSTALLDESKTOPSHORTCUT">1</Property>
+	<Property Id="INSTALLDESKTOPSHORTCUT" Value="1" />
+	<Property Id="LAUNCHPROGRAM" Value="1" />
 
 	<!-- For success dialog in order to launch program -->
-	<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
-	<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="!(loc.LaunchPgmText)" />
 	<Property Id="WixShellExecTarget" Value="[#_AgilityBook.exe]" />
 
 	<!-- Launch Conditions -->
@@ -68,7 +67,7 @@
 			Maximum="$(var.CURRENT_VERSION)"
 			Property="OLDVERSIONFOUND" />
 <?ifdef var.TESTING?>
-	<!-- During testing, don't detect existing versions. -->
+		<!-- During testing, don't detect existing versions. -->
 		<UpgradeVersion
 			OnlyDetect="yes"
 			Minimum="$(var.CURRENT_VERSION)"
@@ -101,7 +100,7 @@
 	</Directory>
 
 	<DirectoryRef Id="APPLICATIONFOLDER">
-		<Component Id="C_AgilityBook.exe" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="$(var.Win64)" >
+		<Component Id="C_AgilityBook.exe" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="$(var.Win64)">
 			<File Id="_AgilityBook.exe"
 				Name="AgilityBook.exe"
 				Source="$(var.BASEDIR)\AgilityBook.exe"
@@ -121,7 +120,7 @@
 			</ProgId>
 		</Component>
 
-		<Component Id="C_RegistryEntries" Guid="B5864F95-CB30-41B0-81F6-2E672423482C" Win64="$(var.Win64)" >
+		<Component Id="C_RegistryEntries" Guid="B5864F95-CB30-41B0-81F6-2E672423482C" Win64="$(var.Win64)">
 			<!--
 			We only create (not remove) since none of the other registry
 			entries created by the program are removed. (This is created too,
@@ -138,7 +137,7 @@
 			</RegistryKey>
 		</Component>
 
-		<Component Id="C_AgilityBook.dat" Guid="C44F2D55-7128-423F-926A-AAE9848D1842" Win64="$(var.Win64)" >
+		<Component Id="C_AgilityBook.dat" Guid="C44F2D55-7128-423F-926A-AAE9848D1842" Win64="$(var.Win64)">
 			<File Id="_AgilityBook.dat"
 				Name="AgilityBook.dat"
 				Source="$(var.BASEDIR)\AgilityBook.dat"
@@ -146,7 +145,7 @@
 				DiskId="1" />
 		</Component>
 
-		<Component Id="C_ARBHelp.exe" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="$(var.Win64)" >
+		<Component Id="C_ARBHelp.exe" Guid="6E5D1584-06A0-4024-A197-84B9E0326EA1" Win64="$(var.Win64)">
 			<File Id="_ARBHelp.exe"
 				Name="ARBHelp.exe"
 				Source="$(var.BASEDIR)\ARBHelp.exe"
@@ -155,7 +154,7 @@
 				DiskId="1" />
 		</Component>
 
-		<Component Id="C_cal_usdaa.dll" Guid="16F399ED-BA94-4CBF-B85E-D79C737D3232" Win64="$(var.Win64)" >
+		<Component Id="C_cal_usdaa.dll" Guid="16F399ED-BA94-4CBF-B85E-D79C737D3232" Win64="$(var.Win64)">
 			<File Id="_cal_usdaa.dll"
 				Name="cal_usdaa.dll"
 				Source="$(var.BASEDIR)\cal_usdaa.dll"
@@ -166,7 +165,7 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="dirFR">
-		<Component Id="C_langFR" Guid="581CB1F1-0846-4205-8551-5FEE8A03AF62" Win64="$(var.Win64)" >
+		<Component Id="C_langFR" Guid="581CB1F1-0846-4205-8551-5FEE8A03AF62" Win64="$(var.Win64)">
 			<File Id="_fr_arb.mo"
 				Name="arb.mo"
 				Source="$(var.BASEDIR)\lang\fr_FR\arb.mo"
@@ -176,7 +175,7 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="dirEN">
-		<Component Id="C_langEN" Guid="27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6" Win64="$(var.Win64)" >
+		<Component Id="C_langEN" Guid="27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6" Win64="$(var.Win64)">
 			<File Id="_en_arb.mo"
 				Name="arb.mo"
 				Source="$(var.BASEDIR)\lang\en_US\arb.mo"
@@ -186,7 +185,7 @@
 	</DirectoryRef>
 
 	<DirectoryRef Id="ARBMenuFolder">
-		<Component Id="C_MenuShortcutsARB" Guid="74105C3C-0E12-4CE4-B955-DA4551365A97" Win64="$(var.Win64)" >
+		<Component Id="C_MenuShortcutsARB" Guid="74105C3C-0E12-4CE4-B955-DA4551365A97" Win64="$(var.Win64)">
 			<RegistryValue
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
@@ -196,12 +195,12 @@
 			<Shortcut Id="ShortcutARBExe"
 				Name="$(var.DEFFOLDER)"
 				Target="[APPLICATIONFOLDER]AgilityBook.exe">
-				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0"/>
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
 			</Shortcut>
 			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
 		</Component>
 
-		<Component Id="C_MenuShortcutsHelp" Guid="2F642C5F-5C66-40C8-B548-D7794CBF580A" Win64="$(var.Win64)" >
+		<Component Id="C_MenuShortcutsHelp" Guid="2F642C5F-5C66-40C8-B548-D7794CBF580A" Win64="$(var.Win64)">
 			<RegistryValue
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
@@ -211,13 +210,13 @@
 			<Shortcut Id="ShortcutARBHelp"
 				Name="ARB Helper"
 				Target="[APPLICATIONFOLDER]ARBHelp.exe">
-				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="1"/>
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="1" />
 			</Shortcut>
 		</Component>
 	</DirectoryRef>
 
 	<DirectoryRef Id="DesktopFolder">
-		<Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="$(var.Win64)" >
+		<Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="$(var.Win64)">
 			<Condition>INSTALLDESKTOPSHORTCUT</Condition>
 			<RegistryValue
 				Root="HKCU"
@@ -228,7 +227,7 @@
 			<Shortcut Id="AppDesktop"
 				Name="$(var.DEFFOLDER)"
 				Target="[APPLICATIONFOLDER]AgilityBook.exe">
-				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0"/>
+				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
 			</Shortcut>
 		</Component>
 	</DirectoryRef>
@@ -264,7 +263,7 @@
 			AllowAdvertise="no"
 			Title="!(loc.FeatureUSDAATitle)"
 			Description="!(loc.FeatureUSDAADesc)">
-				<ComponentRef Id="C_cal_usdaa.dll" />
+			<ComponentRef Id="C_cal_usdaa.dll" />
 		</Feature>
 	</Feature>
 
@@ -280,12 +279,13 @@
 		<!--
 		START_APP should only be set on the command line during auto-upgrading.
 		If set during full UI, it will cause ARB to be launched before the installer is done.
+		So, only allow on silent and basic UI.
 		-->
-		<Custom Action="ARB_LaunchApplication" After="InstallFinalize">START_APP And Not Installed</Custom>
+		<Custom Action="ARB_LaunchApplication" After="InstallFinalize">START_APP And UILevel&lt;4</Custom>
 	</InstallExecuteSequence>
 
 	<UI>
-		<!-- Copied from WixUI_FeatureTree.wxs (in order to use my exit dialog which makes the 'launch' checkbox prettier -->
+		<!-- Copied from WixUI_FeatureTree.wxs -->
 		<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
 		<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
 		<TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
@@ -302,51 +302,51 @@
 		<DialogRef Id="ResumeDlg" />
 		<DialogRef Id="UserExit" />
 
-		<Publish Dialog="MyExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
 		<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
 		<Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
 		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg">LicenseAccepted = "1"</Publish>
-		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>
-		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">Not Installed</Publish>
-		<Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">Not Installed Or WixUI_InstallMode = "Change"</Publish>
-		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>
 		<Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
 		<Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>
 		<Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
 		<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-		<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>
+		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">Not Installed</Publish>
+		<Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="1">Installed</Publish>
+		<Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="OptionsDlg" Order="2">Not Installed</Publish>
+		<Publish Dialog="OptionsDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg">1</Publish>
+		<Publish Dialog="OptionsDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="OptionsDlg" Order="1">Not Installed And WixUI_InstallMode&lt;&gt;"Change"</Publish>
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="2">Installed And WixUI_InstallMode="Change"</Publish>
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="3">Installed And WixUI_InstallMode&lt;&gt;"Change"</Publish>
+		<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
 
 		<UIRef Id="WixUI_Common" />
 		<UIRef Id="WixUI_ErrorProgressText" />
 
-		<!-- Copied from ExitDialog.wxs and tweaked like http://www.dizzymonkeydesign.com/blog/misc/adding-and-customizing-dlgs-in-wix-3/ suggests -->
-		<Dialog Id="MyExitDialog" Width="370" Height="270" Title="!(loc.ExitDialog_Title)">
-			<Control Id="Finish" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.WixUIFinish)" />
-			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUICancel)" />
-			<Control Id="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" TabSkip="no" Text="!(loc.ExitDialogBitmap)" />
-			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Disabled="yes" Text="!(loc.WixUIBack)" />
+		<!-- CustomizeDlg_Title == "[ProductName] Setup" -->
+		<Dialog Id="OptionsDlg" Width="370" Height="270" Title="!(loc.CustomizeDlg_Title)" KeepModeless="yes">
+			<Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+			<Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
 			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-			<Control Id="Description" Type="Text" X="135" Y="70" Width="220" Height="40" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogDescription)" />
-			<Control Id="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Transparent="yes" NoPrefix="yes" Text="!(loc.ExitDialogTitle)" />
-			<Control Id="LaunchCheckBox" Type="CheckBox" X="10" Y="243" Width="170" Height="17" Property="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
+			<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Transparent="yes" NoPrefix="yes" Text="!(loc.OptionsDlgDescription)" />
+			<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.OptionsDlgTitle)" />
+			<Control Id="DesktopShortcut" Type="CheckBox" X="20" Y="60" Width="330" Height="16" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="!(loc.DesktopShortcutText)" />
+			<Control Id="LaunchCheckBox" Type="CheckBox" X="20" Y="90" Width="330" Height="16" Property="LAUNCHPROGRAM" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
 				<Condition Action="show">Not START_APP And Not Installed</Condition>
+			</Control>
+			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+			<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
+			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+				<Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
 			</Control>
 		</Dialog>
 
-		<InstallUISequence>
-			<Show Dialog="MyExitDialog" OnExit="success" />
-		</InstallUISequence>
-
-		<AdminUISequence>
-			<Show Dialog="MyExitDialog" OnExit="success" />
-		</AdminUISequence>
-
-		<Publish Dialog="MyExitDialog"
+		<Publish Dialog="ExitDialog"
 			Control="Finish"
 			Event="DoAction"
-			Value="ARB_LaunchApplication">Not START_APP And WIXUI_EXITDIALOGOPTIONALCHECKBOX=1 And Not Installed</Publish>
+			Value="ARB_LaunchApplication">Not START_APP And LAUNCHPROGRAM And Not Installed</Publish>
 	</UI>
 
-	</Product>
+</Product>
 </Wix>
