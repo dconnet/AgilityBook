@@ -98,6 +98,7 @@
 #include <wx/config.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
+#include <wx/filesys.h>
 #include <wx/stdpaths.h>
 #include <wx/wfstream.h>
 #include <wx/zipstrm.h>
@@ -148,7 +149,6 @@ static wxString UpdateFile()
 
 
 #ifdef USE_LOCAL
-#include <wx/filesys.h>
 #include <wx/stdpaths.h>
 #include <wx/textfile.h>
 static wxString FILENAME()
