@@ -55,6 +55,9 @@ if ("%_RUNTIME_LIBS%")==("dynamic") set _VENDOR=VENDOR=dconsoft
 set INCLUDE=
 set LIB=
 
+rem Used in wx2.9.1+, not used earlier so won't hurt anything
+set _COMMON_CPPFLAGS=/DwxMSVC_VERSION_AUTO=1
+
 if ("%1")==("vc7") goto vc7
 if ("%1")==("vc8") goto vc8
 if ("%1")==("vc9") goto vc9
@@ -69,7 +72,7 @@ rem if ERRORLEVEL 1 goto error
 if ("%_DO_UNICODE%")==("1") echo Error: VC7 doesn't do unicode && goto usage
 if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc71
 if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC71
-set _CPPFLAGS=
+set _CPPFLAGS=%_COMMON_CPPFLAGS%
 goto :doit
 
 :vc8
@@ -80,7 +83,7 @@ rem vc8 seems to always return 1
 rem if ERRORLEVEL 1 goto error
 if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc80
 if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC80
-set _CPPFLAGS=
+set _CPPFLAGS=%_COMMON_CPPFLAGS%
 goto :doit
 
 :vc9
@@ -90,7 +93,7 @@ call "%_PFILES%\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
 if ERRORLEVEL 1 goto error
 if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc90
 if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC90
-set _CPPFLAGS=/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
+set _CPPFLAGS=%_COMMON_CPPFLAGS% /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
 goto :doit
 
 :vc9x64
@@ -104,7 +107,7 @@ if ERRORLEVEL 1 goto error
 set _TARGET_CPU=TARGET_CPU=amd64
 if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc90
 if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC90
-set _CPPFLAGS=/D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
+set _CPPFLAGS=%_COMMON_CPPFLAGS% /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
 set _ARCHTYPE=
 goto :doit
 
@@ -147,6 +150,7 @@ echo %_PROGNAME%: ERROR!!!
 
 set _CFG=
 set _COMMENT=
+set _COMMON_CPPFLAGS=
 set _CPPFLAGS=
 set _DO_SHIFT=
 set _DO_UNICODE=
