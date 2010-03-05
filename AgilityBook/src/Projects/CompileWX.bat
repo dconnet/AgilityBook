@@ -40,7 +40,7 @@ REM Runtime library (usually always same as shared)
 set _RUNTIME_LIBS=static
 set _DO_UNICODE=1
 
-if ("%1")==("noprefix") set _HAS_COMPILER_PREFIX=1&& shift
+if ("%1")==("noprefix") set _HAS_COMPILER_PREFIX=0&& shift
 
 if ("%1")==("static") set _DO_SHIFT=1
 if ("%1")==("dynamic") set _RUNTIME_LIBS=dynamic&& set _SHARED=1&& set _DO_SHIFT=1
