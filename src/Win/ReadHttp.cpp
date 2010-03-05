@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-03-05 DRC Workaround a memory leak in wxURL with proxies.
  * @li 2010-02-08 DRC Added new interfaces to support streaming to a file.
  * @li 2009-07-19 DRC Changed from wxHTTP to wxURL to handle proxies.
  * @li 2009-01-06 DRC Ported to wxWidgets.
@@ -22,6 +23,7 @@
 #include "ReadHttp.h"
 
 #include "AgilityBook.h"
+#include "AgilityBookOptions.h"
 #include "DlgAuthenticate.h"
 #include "DlgProgress.h"
 #include <wx/sstream.h>
@@ -33,23 +35,46 @@ CReadHttp::CReadHttp(
 		wxString const& inURL,
 		std::string* outData)
 	: m_address(inURL)
-	, m_URL(new wxURL(inURL))
+	, m_URL(NULL)
 	, m_Data(outData)
 	, m_Stream(NULL)
 	, m_pProgress(NULL)
 {
+	// 2.8.10 has a memory leak if you use the static proxy method
+	//TODO: verify that 2.9 is ok
+#if !wxCHECK_VERSION(2, 9, 0)
+	wxString proxy = CAgilityBookOptions::GetProxy();
+	if (!proxy.empty())
+		wxURL::SetDefaultProxy(wxEmptyString);
+#endif
+	m_URL = new wxURL(inURL);
+#if !wxCHECK_VERSION(2, 9, 0)
+	if (!proxy.empty())
+		m_URL->SetProxy(proxy);
+#endif
 }
+
 
 CReadHttp::CReadHttp(
 		wxString const& inURL,
 		wxOutputStream& outStream,
 		IDlgProgress* pProgress)
 	: m_address(inURL)
-	, m_URL(new wxURL(inURL))
+	, m_URL(NULL)
 	, m_Data(NULL)
 	, m_Stream(&outStream)
 	, m_pProgress(pProgress)
 {
+#if !wxCHECK_VERSION(2, 9, 0)
+	wxString proxy = CAgilityBookOptions::GetProxy();
+	if (!proxy.empty())
+		wxURL::SetDefaultProxy(wxEmptyString);
+#endif
+	m_URL = new wxURL(inURL);
+#if !wxCHECK_VERSION(2, 9, 0)
+	if (!proxy.empty())
+		m_URL->SetProxy(proxy);
+#endif
 }
 
 
@@ -91,7 +116,10 @@ bool CReadHttp::ReadHttpFile(
 		}
 		if (!stream || !stream->IsOk())
 		*/
+		{
+			delete stream;
 			return false;
+		}
 	}
 
 	bool bOk = true;
