@@ -9,6 +9,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		AdditionalIncludeDirectories="$(BOOST_ROOT);$(WXWIN)/include;$(WXWIN)/include/msvc"
+		PreprocessorDefinitions="wxMSVC_VERSION_AUTO=1"
 		StringPooling="true"
 		UsePrecompiledHeader="2"
 		WarningLevel="4"
