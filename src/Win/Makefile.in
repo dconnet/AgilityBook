@@ -52,6 +52,7 @@ agilitybook_SRCS = \
 	AgilityBookTreeData.cpp \
 	AgilityBookTreeView.cpp \
 	CalendarSites.cpp \
+	CalendarSiteUSDAA.cpp \
 	CheckLink.cpp \
 	CheckTreeCtrl.cpp \
 	ClipBoard.cpp \
@@ -135,7 +136,7 @@ agilitybook_SRCS = \
 ##########
 # Extra libraries for link stage (only if needed)
 ##########
-agilitybook_LIBS = -L$(TOPBUILDDIR)/src/ARB -larb
+agilitybook_LIBS = -L$(TOPBUILDDIR)/src/tidy/lib -L$(TOPBUILDDIR)/src/ARB -ltidy -larb
 agilitybook_LDFLAGS = -L$(TOPSRCDIR) `wx-config --libs`
 
 ##########
