@@ -26,104 +26,143 @@ SUITE(TestDogRun)
 {
 	TEST(New)
 	{
-		TODO_TEST
-	//	static ARBDogRunPtr New();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	static ARBDogRunPtr New();
+		}
 	}
 
 
 	TEST(Clone)
 	{
-		TODO_TEST
-	//	ARBDogRunPtr Clone() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogRunPtr Clone() const;
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBDogRun& operator=(ARBDogRun const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogRun& operator=(ARBDogRun const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBDogRun const& rhs) const;
-	//	bool operator!=(ARBDogRun const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBDogRun const& rhs) const;
+		//	bool operator!=(ARBDogRun const& rhs) const
+		}
 	}
 
 
 	TEST(GenName)
 	{
-		TODO_TEST
-	//	virtual wxString GetGenericName() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	virtual wxString GetGenericName() const;
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfig const& inConfig,
-	//			ARBDogClubList const& inClubs,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfig const& inConfig,
+		//			ARBDogClubList const& inClubs,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 
 
 	TEST(NumOtherPointsInUse)
 	{
-		TODO_TEST
-	//	int NumOtherPointsInUse(wxString const& inOther) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	int NumOtherPointsInUse(wxString const& inOther) const;
+		}
 	}
 
 
 	TEST(RenameOtherPoints)
 	{
-		TODO_TEST
-	//	int RenameOtherPoints(
-	//			wxString const& inOldName,
-	//			wxString const& inNewName);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	int RenameOtherPoints(
+		//			wxString const& inOldName,
+		//			wxString const& inNewName);
+		}
 	}
 
 
 	TEST(DeleteOtherPoints)
 	{
-		TODO_TEST
-	//	int DeleteOtherPoints(wxString const& inName);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	int DeleteOtherPoints(wxString const& inName);
+		}
 	}
 
 
 	TEST(GetSpeedPoints)
 	{
-		TODO_TEST
-	//	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	short GetSpeedPoints(ARBConfigScoringPtr inScoring) const;
+		}
 	}
 
 
 	TEST(GetTitlePoints)
 	{
-		TODO_TEST
-	//	double GetTitlePoints(
-	//			ARBConfigScoringPtr inScoring,
-	//			bool* outClean = NULL,
-	//			double* outLifeTime = NULL,
-	//			double* outPlacement = NULL) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	double GetTitlePoints(
+		//			ARBConfigScoringPtr inScoring,
+		//			bool* outClean = NULL,
+		//			double* outLifeTime = NULL,
+		//			double* outPlacement = NULL) const;
+		}
 	}
 
 
 	TEST(GetScore)
 	{
-		TODO_TEST
-	//	double GetScore(ARBConfigScoringPtr inScoring) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	double GetScore(ARBConfigScoringPtr inScoring) const;
+		}
 	}
 }
 
@@ -132,53 +171,74 @@ SUITE(TestDogRunList)
 {
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfig const& inConfig,
-	//			ARBDogClubList const& inClubs,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfig const& inConfig,
+		//			ARBDogClubList const& inClubs,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		}
 	}
 
 
 	TEST(sort)
 	{
-		TODO_TEST
-	//	void sort();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void sort();
+		}
 	}
 
 
 	TEST(GetStartDate)
 	{
-		TODO_TEST
-	//	ARBDate GetStartDate() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDate GetStartDate() const;
+		}
 	}
 
 
 	TEST(GetEndDate)
 	{
-		TODO_TEST
-	//	ARBDate GetEndDate() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDate GetEndDate() const;
+		}
 	}
 
 
 	TEST(AddRun)
 	{
-		TODO_TEST
-	//	bool AddRun(ARBDogRunPtr inRun);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool AddRun(ARBDogRunPtr inRun);
+		}
 	}
 
 
 	TEST(DeleteRun)
 	{
-		TODO_TEST
-	//	bool DeleteRun(ARBDogRunPtr inRun);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool DeleteRun(ARBDogRunPtr inRun);
+		}
 	}
 }

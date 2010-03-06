@@ -42,6 +42,8 @@
 // See comments in TestARB.cpp about adding a new config
 
 
+extern bool g_bMicroTest;
+
 extern ElementNodePtr LoadXMLData(int id);
 
 extern bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config);

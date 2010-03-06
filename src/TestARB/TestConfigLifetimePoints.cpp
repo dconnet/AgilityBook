@@ -26,55 +26,76 @@ SUITE(TestConfigLifetimePoints)
 {
 	TEST(New)
 	{
-		TODO_TEST
-	//	static ARBConfigLifetimePointsPtr New();
-	//	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	static ARBConfigLifetimePointsPtr New();
+		//	static ARBConfigLifetimePointsPtr New(double inPoints, double inFaults);
+		}
 	}
 
 
 	TEST(Clone)
 	{
-		TODO_TEST
-	//	ARBConfigLifetimePointsPtr Clone() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBConfigLifetimePointsPtr Clone() const;
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBConfigLifetimePoints& operator=(ARBConfigLifetimePoints const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBConfigLifetimePoints const& rhs) const;
-	//	bool operator!=(ARBConfigLifetimePoints const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBConfigLifetimePoints const& rhs) const;
+		//	bool operator!=(ARBConfigLifetimePoints const& rhs) const
+		}
 	}
 
 
 	TEST(GenName)
 	{
-		TODO_TEST
-	//	virtual wxString GetGenericName() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	virtual wxString GetGenericName() const;
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 }
 
@@ -83,44 +104,59 @@ SUITE(TestConfigLifetimePointsList)
 {
 	TEST(New)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(sort)
 	{
-		TODO_TEST
-	//	void sort();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void sort();
+		}
 	}
 
 
 	TEST(GetLifetimePoints)
 	{
-		TODO_TEST
-	//	double GetLifetimePoints(double inFaults) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	double GetLifetimePoints(double inFaults) const;
+		}
 	}
 
 
 	TEST(Find)
 	{
-		TODO_TEST
-	//	bool FindLifetimePoints(
-	//			double inFaults,
-	//			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool FindLifetimePoints(
+		//			double inFaults,
+		//			ARBConfigLifetimePointsPtr* outPoints = NULL) const;
+		}
 	}
 
 
 	TEST(AddDelete)
 	{
-		TODO_TEST
-	//	bool AddLifetimePoints(
-	//			double inPoints,
-	//			double inFaults,
-	//			ARBConfigLifetimePointsPtr* outPoints = NULL);
-	//	bool DeleteLifetimePoints(double inFaults);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool AddLifetimePoints(
+		//			double inPoints,
+		//			double inFaults,
+		//			ARBConfigLifetimePointsPtr* outPoints = NULL);
+		//	bool DeleteLifetimePoints(double inFaults);
+		}
 	}
 }

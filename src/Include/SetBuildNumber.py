@@ -2,6 +2,7 @@
 # and ../../configure.in
 #
 # This assumes the current directory is 'Include'
+# @li 2010-03-05 DRC Removed CalVerNum
 # @li 2009-12-20 DRC Added -x argument
 # @li 2009-10-06 DRC Add multiprocessing awareness. Kind of.
 # @li 2009-08-12 DRC Make sure full version is the same in configure.in
@@ -59,52 +60,6 @@ def doWork():
 	else:
 		print "VersionNumber.h is up-to-date"
 		os.remove('VersionNumber.h.new')
-
-	update = 0
-	vMajCAL = '0'
-	vMinCAL = '0'
-	vDotCAL = '0'
-	vBldCAL = '0'
-	ver = open('../cal_usdaa/CalVerNum.h', 'r')
-	verOut = open('../cal_usdaa/CalVerNum.h.new', 'w')
-	while 1:
-		line = ver.readline()
-		if line:
-			defineMaj = '#define CAL_VER_MAJOR'
-			defineMin = '#define CAL_VER_MINOR'
-			defineDot = '#define CAL_VER_DOT'
-			defineBld = '#define CAL_VER_BUILD'
-			pos = line.find(defineMaj)
-			if 0 == pos:
-				vMajCAL = string.strip(line[pos+len(defineMaj):])
-			pos = line.find(defineMin)
-			if 0 == pos:
-				vMinCAL = string.strip(line[pos+len(defineMin):])
-			pos = line.find(defineDot)
-			if 0 == pos:
-				vDotCAL = string.strip(line[pos+len(defineDot):])
-			pos = line.find(defineBld)
-			if 0 == pos:
-				vBldOld = string.strip(line[pos+len(defineBld):])
-				vBldCAL = str((datetime.date.today() - datetime.date(2002,12,28)).days)
-				if not vBldOld == vBldCAL:
-					update = 1
-					print >>verOut, defineBld + '\t\t\t\t\t' + vBldCAL
-				else:
-					print >>verOut, line,
-			else:
-				print >>verOut, line,
-		else:
-			break
-	ver.close()
-	verOut.close()
-	if update:
-		print "../cal_usdaa/CalVerNum.h updated to " + vMajCAL + '.' + vMinCAL + '.' + vDotCAL + '.' + vBldCAL
-		os.remove('../cal_usdaa/CalVerNum.h')
-		os.rename('../cal_usdaa/CalVerNum.h.new', '../cal_usdaa/CalVerNum.h')
-	else:
-		print "../cal_usdaa/CalVerNum.h is up-to-date"
-		os.remove('../cal_usdaa/CalVerNum.h.new')
 
 	update = 0
 	conf = open('../../configure.in', 'r')

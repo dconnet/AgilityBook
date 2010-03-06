@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-03-05 DRC Changed architecture of ICalendarSite.
  * @li 2009-11-01 DRC Fixed canonical parsing of dll names on unix.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-06 DRC Fix plugin enabling (full path was being stored in map)
@@ -26,6 +27,7 @@
 #include "AgilityBookOptions.h"
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
+#include "CalendarSiteUSDAA.h"
 #include "CheckTreeCtrl.h"
 #include "DlgAssignColumns.h"
 #include "DlgCalendarQueryDetail.h"
@@ -47,23 +49,13 @@
 #include <wx/statline.h>
 #include <wx/stdpaths.h>
 
-// This should agree with cal_usdaa/CalendarSite.cpp
-#define USE_TESTDATA 		0
-
 /////////////////////////////////////////////////////////////////////////////
 
-static std::string TranslateCodeMap(std::vector<wxString> const& inCodes)
+ICalendarSite::~ICalendarSite()
 {
-	wxString codes;
-	for (size_t i = 0; i < inCodes.size(); ++i)
-	{
-		if (0 < i)
-			codes << ':';
-		codes << inCodes[i];
-	}
-	return std::string(codes.ToUTF8());
 }
 
+/////////////////////////////////////////////////////////////////////////////
 
 static size_t TranslateCodeMap(
 		std::map<wxString, wxString> const& inMap,
@@ -78,58 +70,6 @@ static size_t TranslateCodeMap(
 	}
 	return outKeys.size();
 }
-
-/////////////////////////////////////////////////////////////////////////////
-
-class CReadHttpData : public IReadHttpData
-{
-public:
-	virtual char* ReadData(char const* inURL) const;
-	virtual void releaseBuffer(char* pData) const;
-};
-
-
-char* CReadHttpData::ReadData(char const* inURL) const
-{
-	std::string data;
-#if USE_TESTDATA
-	FILE* fp = fopen(inURL, "r");
-	if (fp)
-	{
-		char buffer[1001];
-		size_t sz;
-		while (0 < (sz = fread(buffer, 1, 1000, fp)))
-		{
-			buffer[sz] = 0;
-			data += buffer;
-		}
-		fclose(fp);
-	}
-#else
-	wxString url(tstringUtil::TString(inURL, strlen(inURL)));
-	CReadHttp http(url, &data);
-#endif
-
-	char* rawData = NULL;
-	wxString username, errMsg;
-#if !USE_TESTDATA
-	if (http.ReadHttpFile(username, errMsg))
-#endif
-	{
-		rawData = new char[data.length() + 1];
-		strcpy(rawData, data.c_str());
-	}
-	data.erase();
-
-	return rawData;
-}
-
-
-void CReadHttpData::releaseBuffer(char* pData) const
-{
-	delete [] pData;
-}
-
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -165,16 +105,17 @@ private:
 	CalSiteData(CalSiteData const&);
 	CalSiteData& operator=(CalSiteData const&);
 public:
-	CalSiteData(wxString const& filename); // filename is full path
+	CalSiteData(ICalendarSite* pSite);
 	~CalSiteData();
 
 	void Connect();
 
-	bool isValid() const					{return NULL != m_pSite;}
+	bool isValid() const							{return NULL != m_pSite;}
 	void Unload(bool bPermanently = false);
 
-	wxString GetName() const						{return m_Name;}
-	wxString GetDescription() const					{return m_Desc;}
+	wxString GetID() const							{return m_pSite->GetID();}
+	wxString GetName() const						{return m_pSite->GetName();}
+	wxString GetDescription() const					{return m_pSite->GetDescription();}
 	std::map<wxString, wxString> const& QueryLocationCodes() const
 		{return m_LocCodes;}
 	std::map<wxString, wxString> const& QueryVenueCodes() const
@@ -184,19 +125,12 @@ public:
 			std::vector<wxString> const& inVenueCodes);
 
 private:
-	void Clear();
-
-	wxString m_Pathname;
-	wxString m_FileName;
-	wxDynamicLibrary* m_hDllInst;
-	CVersionNum m_Version;
 	ICalendarSite* m_pSite;
-	wxString m_Name;
-	wxString m_Desc;
+	wxString m_id;
+	CVersionNum m_Version;
 	std::map<wxString, wxString> m_LocCodes;
 	std::map<wxString, wxString> m_VenueCodes;
 };
-
 
 typedef std::tr1::shared_ptr<CalSiteData> CalSiteDataPtr;
 
@@ -209,7 +143,7 @@ class CDlgCalendarPlugins : public wxDialog
 public:
 	CDlgCalendarPlugins(
 			CAgilityBookDoc* pDoc,
-			std::map<wxString, CalSiteDataPtr>& directAccess,
+			std::vector<CalSiteDataPtr>& directAccess,
 			wxWindow* pParent = NULL);
 
 private:
@@ -225,7 +159,7 @@ private:
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlDelete;
 	CAgilityBookDoc* m_pDoc;
-	std::map<wxString, CalSiteDataPtr>& m_DirectAccess;
+	std::vector<CalSiteDataPtr>& m_DirectAccess;
 
 	void OnSelectionChanged(wxTreeEvent& evt);
 	void OnItemActivated(wxTreeEvent& evt);
@@ -358,20 +292,13 @@ bool CProgressMeter::HasCanceled() const
 
 /////////////////////////////////////////////////////////////////////////////
 
-CalSiteData::CalSiteData(wxString const& filename)
-	: m_Pathname()
-	, m_FileName()
-	, m_hDllInst(NULL)
+CalSiteData::CalSiteData(ICalendarSite* pSite)
+	: m_pSite(pSite)
+	, m_id()
 	, m_Version(false)
-	, m_pSite(NULL)
-	, m_Name()
-	, m_Desc()
 	, m_LocCodes()
 	, m_VenueCodes()
 {
-	wxFileName name(filename);
-	m_Pathname = name.GetPath() + wxFileName::GetPathSeparator();
-	m_FileName = name.GetFullName();
 	Connect();
 }
 
@@ -379,215 +306,36 @@ CalSiteData::CalSiteData(wxString const& filename)
 CalSiteData::~CalSiteData()
 {
 	Unload();
-}
-
-
-void CalSiteData::Clear()
-{
-	m_Name.clear();
-	m_Desc.clear();
-	m_LocCodes.clear();
-	m_VenueCodes.clear();
+	delete m_pSite;
+	m_pSite = NULL;
 }
 
 
 void CalSiteData::Connect()
 {
-	if (isValid())
-	{
-		// Conditions may have changed.
-		if (!CAgilityBookOptions::IsCalSiteVisible(m_FileName, m_Version))
-		{
-			Unload(true);
-		}
+	if (!isValid())
 		return;
-	}
-	Clear();
-	// Load the library.
-	if (!m_hDllInst)
+	m_id = m_pSite->GetID();
+	m_LocCodes.clear();
+	m_VenueCodes.clear();
+	if (!m_pSite->GetVersion(m_Version)
+	|| !CAgilityBookOptions::IsCalSiteVisible(m_id, m_Version))
 	{
-		wxString path(m_Pathname);
-		path += m_FileName;
-		m_hDllInst = new wxDynamicLibrary(path);
-		if (!m_hDllInst->IsLoaded())
-		{
-			delete m_hDllInst;
-			m_hDllInst = NULL;
-		}
-		//m_Version = CVersionNum(m_hDllInst);
+		Unload(true);
 	}
-	if (m_hDllInst && m_hDllInst->IsLoaded())
+	else
 	{
-		// Get the exported interface
-		GETCALENDARINTERFACE pApi = reinterpret_cast<GETCALENDARINTERFACE>(m_hDllInst->GetSymbol(wxT("GetCalendarInterface")));
-		if (pApi)
-		{
-			// And call it.
-			m_pSite = pApi();
-
-			if (!m_pSite->GetVersion(&m_Version)
-			|| !CAgilityBookOptions::IsCalSiteVisible(m_FileName, m_Version))
-			{
-				Unload(true);
-			}
-			else
-			{
-				// We now have an object that must be released later.
-				char* pData = NULL;
-				try
-				{
-					pData = m_pSite->GetName();
-				}
-				catch (...)
-				{
-					pData = NULL;
-					Unload(true);
-				}
-				if (pData)
-				{
-					m_Name = tstringUtil::TString(pData, strlen(pData));
-					try
-					{
-						m_pSite->releaseBuffer(pData);
-					}
-					catch (...)
-					{
-						Unload(true);
-					}
-				}
-				if (m_pSite)
-				{
-					try
-					{
-						pData = m_pSite->GetDescription();
-					}
-					catch (...)
-					{
-						pData = NULL;
-						Unload(true);
-					}
-					if (pData)
-					{
-						m_Desc = tstringUtil::TString(pData, strlen(pData));
-						try
-						{
-							m_pSite->releaseBuffer(pData);
-						}
-						catch (...)
-						{
-							Unload(true);
-						}
-					}
-				}
-				if (m_pSite)
-				{
-					try
-					{
-						pData = m_pSite->GetLocationCodes();
-					}
-					catch (...)
-					{
-						Unload(true);
-						pData = NULL;
-					}
-					if (pData)
-					{
-						wxString data = tstringUtil::TString(pData, strlen(pData));
-						std::vector<wxString> fields;
-						if (0 < BreakLine('\n', data, fields))
-						{
-							for (std::vector<wxString>::iterator i = fields.begin();
-								i != fields.end();
-								++i)
-							{
-								std::vector<wxString> subfields;
-								if (2 == BreakLine(':', *i, subfields))
-								{
-									m_LocCodes[subfields[0]] = subfields[1];
-								}
-							}
-						}
-						try
-						{
-							m_pSite->releaseBuffer(pData);
-						}
-						catch (...)
-						{
-							Unload(true);
-						}
-					}
-				}
-				if (m_pSite)
-				{
-					try
-					{
-						pData = m_pSite->GetVenueCodes();
-					}
-					catch (...)
-					{
-						Unload(true);
-						pData = NULL;
-					}
-					if (pData)
-					{
-						wxString data = tstringUtil::TString(pData, strlen(pData));
-						std::vector<wxString> fields;
-						if (0 < BreakLine('\n', data, fields))
-						{
-							for (std::vector<wxString>::iterator i = fields.begin();
-								i != fields.end();
-								++i)
-							{
-								std::vector<wxString> subfields;
-								switch (BreakLine(':', *i, subfields))
-								{
-								case 1:
-									m_VenueCodes[subfields[0]] = subfields[0];
-									break;
-								case 2:
-									m_VenueCodes[subfields[0]] = subfields[1];
-									break;
-								}
-							}
-						}
-						try
-						{
-							m_pSite->releaseBuffer(pData);
-						}
-						catch (...)
-						{
-							Unload(true);
-						}
-					}
-				}
-			}
-		}
+		m_pSite->GetLocationCodes(m_LocCodes);
+		m_pSite->GetVenueCodes(m_VenueCodes);
 	}
 }
 
 
 void CalSiteData::Unload(bool bPermanently)
 {
-	if (m_pSite)
-	{
-		try
-		{
-			m_pSite->Release();
-		}
-		catch(...)
-		{
-		}
-		m_pSite = NULL;
-	}
-	if (m_hDllInst)
-	{
-		m_hDllInst->Unload();
-		delete m_hDllInst;
-		m_hDllInst = NULL;
-	}
 	if (bPermanently)
 	{
-		CAgilityBookOptions::SuppressCalSite(m_FileName, true);
+		CAgilityBookOptions::SuppressCalSite(m_id, true);
 	}
 }
 
@@ -596,39 +344,7 @@ std::string CalSiteData::Process(IProgressMeter *progress,
 		std::vector<wxString> const& inLocationCodes,
 		std::vector<wxString> const& inVenueCodes)
 {
-	std::string data;
-	if (m_pSite)
-	{
-		std::string locCodes(TranslateCodeMap(inLocationCodes));
-		std::string venueCodes(TranslateCodeMap(inVenueCodes));
-		char* pData = NULL;
-		try
-		{
-			const char* pLocCodes = NULL;
-			if (!locCodes.empty())
-				pLocCodes = locCodes.c_str();
-			const char* pVenueCodes = NULL;
-			if (!venueCodes.empty())
-				pVenueCodes = venueCodes.c_str();
-			CReadHttpData reader;
-			pData = m_pSite->Process(&reader, pLocCodes, pVenueCodes, progress);
-		}
-		catch (...)
-		{
-			Unload(true);
-		}
-		if (pData)
-			data = pData;
-		try
-		{
-			m_pSite->releaseBuffer(pData);
-		}
-		catch (...)
-		{
-			Unload(true);
-		}
-	}
-	return data;
+	return m_pSite->Process(inLocationCodes, inVenueCodes, progress);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -642,65 +358,14 @@ public:
 	bool FindEntries(CAgilityBookDoc* pDoc, ARBCalendarList& inCalendar, wxWindow* pParent);
 
 private:
-	wxString m_PathName;
-	// Map of filenames to site pointers
-	std::map<wxString, CalSiteDataPtr> m_DirectAccess;
+	std::vector<CalSiteDataPtr> m_DirectAccess;
 };
 
 
 CCalendarSitesImpl::CCalendarSitesImpl()
-	: m_PathName()
+	: m_DirectAccess()
 {
-	m_PathName = wxStandardPaths::Get().GetPluginsDir() + wxFileName::GetPathSeparator();
-
-	// Load auxilary DLLs from the path where the EXE lives.
-	if (!m_PathName.empty())
-	{
-		wxDir dir(m_PathName);
-		if (dir.IsOpened())
-		{
-			wxString filename;
-#ifdef WIN32
-			bool cont = dir.GetFirst(&filename, wxT("cal_*.*"));
-#else
-			bool cont = dir.GetFirst(&filename, wxT("libcal_*.*"));
-#endif
-			std::set<wxString> tested;
-			while (cont)
-			{
-				wxFileName name(m_PathName + filename);
-				// This will append ".dll" on windows, append ".so" under
-				// linux, etc. We're doing this to weed out "other" files,
-				// like "cal_usdaaReadme.txt". (By using 'module', we
-				// avoid prepending 'lib' on unix)
-				wxString fullFilename = name.GetPath()
-					+ wxFileName::GetPathSeparator()
-					+ wxDynamicLibrary::CanonicalizeName(name.GetName(), wxDL_MODULE);
-				if (wxFile::Exists(fullFilename))
-				{
-					filename = wxFileName(fullFilename).GetFullName();
-					if (tested.end() == tested.find(filename))
-					{
-						// The 'tested' check is useful in a debugging env
-						// since build files like pdb/lib/etc are there too.
-						tested.insert(filename);
-						// Only load the library if we haven't already loaded it.
-						// (Otherwise we get a memory leak because we overwrite the
-						// api pointer)
-						if (m_DirectAccess.end() == m_DirectAccess.find(filename))
-						{
-							m_DirectAccess[filename] = CalSiteDataPtr(new CalSiteData(fullFilename));
-						}
-						else
-						{
-							m_DirectAccess[filename]->Connect();
-						}
-					}
-				}
-				cont = dir.GetNext(&filename);
-			}
-		}
-	}
+	m_DirectAccess.push_back(CalSiteDataPtr(new CalSiteData(new CCalendarSiteUSDAA())));
 }
 
 
@@ -875,9 +540,8 @@ bool CPluginConfigData::Delete()
 class CPluginDllData : public CPluginData
 {
 public:
-	CPluginDllData(wxString const& filename, CalSiteDataPtr calData)
-		: m_Filename(filename)
-		, m_CalData(calData)
+	CPluginDllData(CalSiteDataPtr calData)
+		: m_CalData(calData)
 	{
 		assert(m_CalData);
 		SetNameDesc();
@@ -914,7 +578,7 @@ public:
 		bool bStatusChange = false;
 		if (!m_CalData->isValid())
 		{
-			CAgilityBookOptions::SuppressCalSite(m_Filename, false);
+			CAgilityBookOptions::SuppressCalSite(m_CalData->GetID(), false);
 			m_CalData->Connect();
 			if (m_CalData->isValid())
 			{
@@ -1047,7 +711,7 @@ int CSortCheckTreeCtrl::OnCompareItems(
 
 CDlgCalendarPlugins::CDlgCalendarPlugins(
 		CAgilityBookDoc* pDoc,
-		std::map<wxString, CalSiteDataPtr>& directAccess,
+		std::vector<CalSiteDataPtr>& directAccess,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_ctrlPlugins(NULL)
@@ -1144,15 +808,15 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 		m_ctrlPlugins->SetChecked(hItem, true, false);
 	}
 
-	for (std::map<wxString, CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
+	for (std::vector<CalSiteDataPtr>::iterator i = m_DirectAccess.begin();
 		i != m_DirectAccess.end();
 		++i)
 	{
-		CPluginDllData* pData = new CPluginDllData((*i).first, (*i).second);
+		CPluginDllData* pData = new CPluginDllData(*i);
 		wxTreeItemId hItem = m_ctrlPlugins->AppendItem(root,
 			pData->OnNeedText(), -1, -1, pData);
-		m_ctrlPlugins->ShowCheckbox(hItem, (*i).second->isValid());
-		if ((*i).second->isValid())
+		m_ctrlPlugins->ShowCheckbox(hItem, (*i)->isValid());
+		if ((*i)->isValid())
 			m_ctrlPlugins->SetChecked(hItem, true, false);
 	}
 

@@ -28,7 +28,10 @@ SUITE(TestMsgDigest)
 
 	TEST(RawDecode)
 	{
-		wxString digest = ARBMsgDigest::ComputeBuffer(RawString, strlen(RawString));
-		CHECK(digest == DigestString);
+		if (!g_bMicroTest)
+		{
+			wxString digest = ARBMsgDigest::ComputeBuffer(RawString, strlen(RawString));
+			CHECK(digest == DigestString);
+		}
 	}
 }

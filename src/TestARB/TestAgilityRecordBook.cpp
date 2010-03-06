@@ -26,155 +26,237 @@ SUITE(TestAgilityRecordBook)
 {
 	TEST(GetCurrentDocVersion)
 	{
-		TODO_TEST
-		//static ARBVersion const& GetCurrentDocVersion();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//static ARBVersion const& GetCurrentDocVersion();
+		}
 	}
 
 
 	TEST(ctor)
 	{
-		TODO_TEST
-	//	ARBAgilityRecordBook();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBAgilityRecordBook();
+		}
 	}
 
 
 	TEST(clear)
 	{
-		TODO_TEST
-	//	void clear();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void clear();
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//		ElementNodePtr inTree,
-	//		bool inCalendar,
-	//		bool inTraining,
-	//		bool inConfig,
-	//		bool inInfo,
-	//		bool inDogs,
-	//		ARBErrorCallback& ioCallback);
-	//	bool Load(ElementNodePtr inTree, ARBErrorCallback& ioCallback)
-	//	{
-	//		return Load(inTree, true, true, true, true, true, ioCallback);
-	//	}
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//		ElementNodePtr inTree,
+		//		bool inCalendar,
+		//		bool inTraining,
+		//		bool inConfig,
+		//		bool inInfo,
+		//		bool inDogs,
+		//		ARBErrorCallback& ioCallback);
+		//	bool Load(ElementNodePtr inTree, ARBErrorCallback& ioCallback)
+		//	{
+		//		return Load(inTree, true, true, true, true, true, ioCallback);
+		//	}
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(
-	//		ElementNodePtr outTree,
-	//		wxString const& inPgmVer,
-	//		bool inCalendar,
-	//		bool inTraining,
-	//		bool inConfig,
-	//		bool inInfo,
-	//		bool inDogs) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(
+		//		ElementNodePtr outTree,
+		//		wxString const& inPgmVer,
+		//		bool inCalendar,
+		//		bool inTraining,
+		//		bool inConfig,
+		//		bool inInfo,
+		//		bool inDogs) const;
+		}
 	}
 
 
 	TEST(Default)
 	{
-		TODO_TEST
-	//	void Default();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void Default();
+		}
 	}
 
 
 	TEST(Update)
 	{
-		TODO_TEST
-	//	bool Update(
-	//			int indent,
-	//			ARBConfig const& inConfigNew,
-	//			wxString& ioInfo,
-	//			IConfigActionCallback& ioCallBack);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Update(
+		//			int indent,
+		//			ARBConfig const& inConfigNew,
+		//			wxString& ioInfo,
+		//			IConfigActionCallback& ioCallBack);
+		}
 	}
 
 
 	TEST(GetAllClubNames)
 	{
-		TODO_TEST
-	//	size_t GetAllClubNames(
-	//			std::set<wxString>& outClubs,
-	//			bool bInfo,
-	//			bool bVisibleOnly) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllClubNames(
+		//			std::set<wxString>& outClubs,
+		//			bool bInfo,
+		//			bool bVisibleOnly) const;
+		}
 	}
 
 
 	TEST(GetAllTrialLocations)
 	{
-		TODO_TEST
-	//	size_t GetAllTrialLocations(
-	//			std::set<wxString>& outLocations,
-	//			bool bInfo,
-	//			bool bVisibleOnly) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllTrialLocations(
+		//			std::set<wxString>& outLocations,
+		//			bool bInfo,
+		//			bool bVisibleOnly) const;
+		}
 	}
 
 
 	TEST(GetAllEventSubNames)
 	{
-		TODO_TEST
-	//	size_t GetAllEventSubNames(
-	//			wxString const& inVenue,
-	//			ARBConfigEventPtr inEvent,
-	//			std::set<wxString>& outNames) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllEventSubNames(
+		//			wxString const& inVenue,
+		//			ARBConfigEventPtr inEvent,
+		//			std::set<wxString>& outNames) const;
+		}
 	}
 
 
 	TEST(GetAllHeights)
 	{
-		TODO_TEST
-	//	size_t GetAllHeights(std::set<wxString>& outHeights) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllHeights(std::set<wxString>& outHeights) const;
+		}
 	}
 
 
 	TEST(GetAllCallNames)
 	{
-		TODO_TEST
-	//	size_t GetAllCallNames(std::set<wxString>& outNames) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllCallNames(std::set<wxString>& outNames) const;
+		}
 	}
 
 
 	TEST(GetAllBreeds)
 	{
-		TODO_TEST
-	//	size_t GetAllBreeds(std::set<wxString>& outBreeds) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllBreeds(std::set<wxString>& outBreeds) const;
+		}
 	}
 
 
 	TEST(GetAllJudges)
 	{
-		TODO_TEST
-	//	size_t GetAllJudges(
-	//			std::set<wxString>& outJudges,
-	//			bool bInfo,
-	//			bool bVisibleOnly) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllJudges(
+		//			std::set<wxString>& outJudges,
+		//			bool bInfo,
+		//			bool bVisibleOnly) const;
+		}
 	}
 
 
 	TEST(GetAllHandlers)
 	{
-		TODO_TEST
-	//	size_t GetAllHandlers(std::set<wxString>& outHandlers) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllHandlers(std::set<wxString>& outHandlers) const;
+		}
 	}
 
 
 	TEST(GetAllPartners)
 	{
-		TODO_TEST
-	//	void GetAllPartners(
-	//			std::set<wxString>& outPartners,
-	//			std::set<wxString>& outDogs) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void GetAllPartners(
+		//			std::set<wxString>& outPartners,
+		//			std::set<wxString>& outDogs) const;
+		}
 	}
 
 
 	TEST(GetAllFaultTypes)
 	{
-		TODO_TEST
-	//	size_t GetAllFaultTypes(std::set<wxString>& outFaults) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	size_t GetAllFaultTypes(std::set<wxString>& outFaults) const;
+		}
 	}
 }
+
+
+#if 0
+#include <wx/sstream.h>
+#include <wx/url.h>
+#define CHECK_LEAK 1
+
+SUITE(TestHttp)
+{
+	TEST(Read)
+	{
+		if (g_bMicroTest)
+		{
+#if CHECK_LEAK
+			wxURL::SetDefaultProxy(wxT("proxy.eng.vmware.com:3128"));
+#endif
+			wxURL url(wxT("http://www.agilityrecordbook.com/version.txt"));
+#if !CHECK_LEAK
+			url.SetProxy(wxT("proxy.eng.vmware.com:3128"));
+#endif
+			wxInputStream* stream = url.GetInputStream();
+			CHECK(stream && stream->IsOk());
+			wxString res;
+			wxStringOutputStream outStream(&res);
+			stream->Read(outStream);
+			delete stream;
+			CHECK(!res.empty());
+		}
+	}
+}
+#endif

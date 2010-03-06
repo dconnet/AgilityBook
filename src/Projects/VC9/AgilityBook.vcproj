@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
@@ -610,6 +610,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\CalendarSiteUSDAA.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\CheckLink.cpp"
 				>
 			</File>
@@ -1053,6 +1057,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\CalendarSites.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Win\CalendarSiteUSDAA.h"
 				>
 			</File>
 			<File

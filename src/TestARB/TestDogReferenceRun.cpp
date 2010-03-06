@@ -26,55 +26,76 @@ SUITE(TestDogReferenceRun)
 {
 	TEST(New)
 	{
-		TODO_TEST
-	//	static ARBDogReferenceRunPtr New();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	static ARBDogReferenceRunPtr New();
+		}
 	}
 
 
 	TEST(Clone)
 	{
-		TODO_TEST
-	//	ARBDogReferenceRunPtr Clone() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogReferenceRunPtr Clone() const;
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogReferenceRun& operator=(ARBDogReferenceRun const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBDogReferenceRun const& rhs) const;
-	//	bool operator!=(ARBDogReferenceRun const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBDogReferenceRun const& rhs) const;
+		//	bool operator!=(ARBDogReferenceRun const& rhs) const
+		}
 	}
 
 
 	TEST(GenName)
 	{
-		TODO_TEST
-	//	virtual wxString GetGenericName() const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	virtual wxString GetGenericName() const
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfig const& inConfig,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfig const& inConfig,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 }
 
@@ -83,19 +104,25 @@ SUITE(TestDogReferenceRunList)
 {
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfig const& inConfig,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfig const& inConfig,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(AddDelete)
 	{
-		TODO_TEST
-	//	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
-	//	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool AddReferenceRun(ARBDogReferenceRunPtr inRef);
+		//	bool DeleteReferenceRun(ARBDogReferenceRunPtr inRef);
+		}
 	}
 }

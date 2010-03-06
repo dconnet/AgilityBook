@@ -26,54 +26,75 @@ SUITE(TestConfigSubLevel)
 {
 	TEST(New)
 	{
-		TODO_TEST
-	//	static ARBConfigSubLevelPtr New();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	static ARBConfigSubLevelPtr New();
+		}
 	}
 
 
 	TEST(Clone)
 	{
-		TODO_TEST
-	//	ARBConfigSubLevelPtr Clone() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBConfigSubLevelPtr Clone() const;
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBConfigSubLevel& operator=(ARBConfigSubLevel const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBConfigSubLevel const& rhs) const;
-	//	bool operator!=(ARBConfigSubLevel const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBConfigSubLevel const& rhs) const;
+		//	bool operator!=(ARBConfigSubLevel const& rhs) const
+		}
 	}
 
 
 	TEST(GenName)
 	{
-		TODO_TEST
-	//	virtual wxString GetGenericName() const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	virtual wxString GetGenericName() const
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 }
 
@@ -82,27 +103,36 @@ SUITE(TestConfigSubLevelList)
 {
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Find)
 	{
-		TODO_TEST
-	//	bool FindSubLevel(wxString const& inName) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool FindSubLevel(wxString const& inName) const;
+		}
 	}
 
 
 	TEST(AddDelete)
 	{
-		TODO_TEST
-	//	bool AddSubLevel(
-	//			wxString const& inName,
-	//			ARBConfigSubLevelPtr* outLevel = NULL);
-	//	bool DeleteSubLevel(wxString const& inName);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool AddSubLevel(
+		//			wxString const& inName,
+		//			ARBConfigSubLevelPtr* outLevel = NULL);
+		//	bool DeleteSubLevel(wxString const& inName);
+		}
 	}
 }

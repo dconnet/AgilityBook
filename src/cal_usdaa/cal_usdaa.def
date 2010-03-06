@@ -1,6 +1,0 @@
-; cal_usdaa.def : Declares the module parameters for the DLL.
-
-LIBRARY      "cal_usdaa"
-
-EXPORTS
-    ; Explicit exports can go here
