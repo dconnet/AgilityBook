@@ -26,72 +26,99 @@ SUITE(TestConfigDivision)
 {
 	TEST(New)
 	{
-		TODO_TEST
-		//static ARBConfigDivisionPtr New();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//static ARBConfigDivisionPtr New();
+		}
 	}
 
 
 	TEST(Clone)
 	{
-		TODO_TEST
-		//ARBConfigDivisionPtr Clone() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//ARBConfigDivisionPtr Clone() const;
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBConfigDivision& operator=(ARBConfigDivision const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBConfigDivision const& rhs) const;
-	//	bool operator!=(ARBConfigDivision const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBConfigDivision const& rhs) const;
+		//	bool operator!=(ARBConfigDivision const& rhs) const
+		}
 	}
 
 
 	TEST(Clear)
 	{
-		TODO_TEST
-	//	void clear();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void clear();
+		}
 	}
 
 
 	TEST(GenName)
 	{
-		TODO_TEST
-	//	virtual wxString GetGenericName() const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	virtual wxString GetGenericName() const
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfigVenue& ioVenue,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfigVenue& ioVenue,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 
 
 	TEST(Update)
 	{
-		TODO_TEST
-	//	bool Update(
-	//			int indent,
-	//			ARBConfigDivisionPtr inDivNew,
-	//			wxString& ioInfo);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Update(
+		//			int indent,
+		//			ARBConfigDivisionPtr inDivNew,
+		//			wxString& ioInfo);
+		}
 	}
 }
 
@@ -100,50 +127,65 @@ SUITE(TestConfigDivisionList)
 {
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfigVenue& ioVenue,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfigVenue& ioVenue,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Reorder)
 	{
-		TODO_TEST
-	//	void ReorderBy(ARBConfigDivisionList const& inList);
-		// Make sure the target config has a division that the source config does not
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void ReorderBy(ARBConfigDivisionList const& inList);
+			// Make sure the target config has a division that the source config does not
+		}
 	}
 
 
 	TEST(VerifyLevel)
 	{
-		TODO_TEST
-	//	bool VerifyLevel(
-	//			wxString const& inDiv,
-	//			wxString const& inLevel) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool VerifyLevel(
+		//			wxString const& inDiv,
+		//			wxString const& inLevel) const;
+		}
 	}
 
 
 	TEST(Find)
 	{
-		TODO_TEST
-	//	bool FindDivision(
-	//			wxString const& inDiv,
-	//			ARBConfigDivisionPtr* outDiv = NULL) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool FindDivision(
+		//			wxString const& inDiv,
+		//			ARBConfigDivisionPtr* outDiv = NULL) const;
+		}
 	}
 
 
 	TEST(AddDelete)
 	{
-		TODO_TEST
-	//	bool AddDivision(
-	//			wxString const& inDiv,
-	//			ARBConfigDivisionPtr* outDiv = NULL);
-	//	bool AddDivision(ARBConfigDivisionPtr inDiv);
-	//	int DeleteDivision(
-	//			wxString const& inDiv,
-	//			ARBConfigEventList& ioEvents);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool AddDivision(
+		//			wxString const& inDiv,
+		//			ARBConfigDivisionPtr* outDiv = NULL);
+		//	bool AddDivision(ARBConfigDivisionPtr inDiv);
+		//	int DeleteDivision(
+		//			wxString const& inDiv,
+		//			ARBConfigEventList& ioEvents);
+		}
 	}
 }

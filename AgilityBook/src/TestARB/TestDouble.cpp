@@ -61,25 +61,34 @@ SUITE(TestDouble)
 {
 	TEST(strPrecUS)
 	{
-		wxLocale locale(wxLANGUAGE_ENGLISH_US);
-		RunDblTests();
+		if (!g_bMicroTest)
+		{
+			wxLocale locale(wxLANGUAGE_ENGLISH_US);
+			RunDblTests();
+		}
 	}
 
 
 	TEST(strPrecFR)
 	{
-		wxLocale locale(wxLANGUAGE_FRENCH);
-		RunDblTests();
+		if (!g_bMicroTest)
+		{
+			wxLocale locale(wxLANGUAGE_FRENCH);
+			RunDblTests();
+		}
 	}
 
 
 	TEST(equal)
 	{
-		double p1 = 3.14159265;
-		double p2 = 3.141592;
-		double p3 = 3.141592657;
-		CHECK(ARBDouble::equal(p1, p2, 0.00001));
-		CHECK(!ARBDouble::equal(p1, p2, 0.00000001));
-		CHECK(ARBDouble::equal(p1, p3, 0.00000001));
+		if (!g_bMicroTest)
+		{
+			double p1 = 3.14159265;
+			double p2 = 3.141592;
+			double p3 = 3.141592657;
+			CHECK(ARBDouble::equal(p1, p2, 0.00001));
+			CHECK(!ARBDouble::equal(p1, p2, 0.00000001));
+			CHECK(ARBDouble::equal(p1, p3, 0.00000001));
+		}
 	}
 }

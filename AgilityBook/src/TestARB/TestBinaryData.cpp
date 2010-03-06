@@ -46,21 +46,27 @@ SUITE(TestBinaryData)
 
 	TEST(RawDecode)
 	{
-		unsigned char* outData = NULL;
-		size_t bytes;
-		CHECK(BinaryData::Decode(EncodedData, outData, bytes));
-		CHECK(outData != NULL);
-		CHECK_EQUAL(RawDataSize, bytes);
-		CHECK_EQUAL(0, memcmp(RawData, outData, bytes));
-		BinaryData::Release(outData);
+		if (!g_bMicroTest)
+		{
+			unsigned char* outData = NULL;
+			size_t bytes;
+			CHECK(BinaryData::Decode(EncodedData, outData, bytes));
+			CHECK(outData != NULL);
+			CHECK_EQUAL(RawDataSize, bytes);
+			CHECK_EQUAL(0, memcmp(RawData, outData, bytes));
+			BinaryData::Release(outData);
+		}
 	}
 
 
 	TEST(RawEncode)
 	{
-		wxString str;
-		CHECK(BinaryData::Encode(RawData, RawDataSize, str));
-		CHECK(EncodedData == str);
+		if (!g_bMicroTest)
+		{
+			wxString str;
+			CHECK(BinaryData::Encode(RawData, RawDataSize, str));
+			CHECK(EncodedData == str);
+		}
 	}
 
 
@@ -69,26 +75,35 @@ SUITE(TestBinaryData)
 
 	TEST(StringDecode)
 	{
-		wxString str;
-		CHECK(BinaryData::DecodeString(EncodedString, str));
-		CHECK(RawString == str);
+		if (!g_bMicroTest)
+		{
+			wxString str;
+			CHECK(BinaryData::DecodeString(EncodedString, str));
+			CHECK(RawString == str);
+		}
 	}
 
 
 	TEST(StringEncode)
 	{
-		wxString str;
-		CHECK(BinaryData::EncodeString(RawString, str));
-		CHECK(EncodedString == str);
+		if (!g_bMicroTest)
+		{
+			wxString str;
+			CHECK(BinaryData::EncodeString(RawString, str));
+			CHECK(EncodedString == str);
+		}
 	}
 
 	TEST(RoundTrip)
 	{
-		wxString str;
-		CHECK(BinaryData::EncodeString(RawString, str));
-		CHECK(EncodedString == str);
-		wxString str2;
-		CHECK(BinaryData::DecodeString(str, str2));
-		CHECK(RawString == str2);
+		if (!g_bMicroTest)
+		{
+			wxString str;
+			CHECK(BinaryData::EncodeString(RawString, str));
+			CHECK(EncodedString == str);
+			wxString str2;
+			CHECK(BinaryData::DecodeString(str, str2));
+			CHECK(RawString == str2);
+		}
 	}
 }

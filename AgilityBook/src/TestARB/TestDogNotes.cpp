@@ -26,50 +26,68 @@ SUITE(TestDogNotes)
 {
 	TEST(MetaData)
 	{
-		TODO_TEST
-	//	static ARBMetaDataPtr MetaData();
-	//	size_t length() const				{return m_Bytes;}
-	//	unsigned char const* data() const	{return m_Data;}
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	static ARBMetaDataPtr MetaData();
+		//	size_t length() const				{return m_Bytes;}
+		//	unsigned char const* data() const	{return m_Data;}
+		}
 	}
 
 
 	TEST(ctor)
 	{
-		TODO_TEST
-	//	ARBDogNotes();
-	//	ARBDogNotes(ARBDogNotes const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogNotes();
+		//	ARBDogNotes(ARBDogNotes const& rhs);
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBDogNotes& operator=(ARBDogNotes const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogNotes& operator=(ARBDogNotes const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBDogNotes const& rhs) const;
-	//	bool operator!=(ARBDogNotes const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBDogNotes const& rhs) const;
+		//	bool operator!=(ARBDogNotes const& rhs) const
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfig const& inConfig,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfig const& inConfig,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 }

@@ -41,19 +41,25 @@ SUITE(TestErrorCallback)
 {
 	TEST(Callback)
 	{
-		wxString msg;
-		ARBErrorCallback err(msg);
-		err.LogMessage(wxT("Testing1"));
-		CHECK(msg == wxT("Testing1"));
+		if (!g_bMicroTest)
+		{
+			wxString msg;
+			ARBErrorCallback err(msg);
+			err.LogMessage(wxT("Testing1"));
+			CHECK(msg == wxT("Testing1"));
+		}
 	}
 
 
 	TEST(Derived)
 	{
-		wxString msg;
-		ErrorCallback err(msg);
-		err.LogMessage(wxT("Testing1"));
-		CHECK(msg == err.m_Msg);
-		CHECK(msg == wxT("Testing1"));
+		if (!g_bMicroTest)
+		{
+			wxString msg;
+			ErrorCallback err(msg);
+			err.LogMessage(wxT("Testing1"));
+			CHECK(msg == err.m_Msg);
+			CHECK(msg == wxT("Testing1"));
+		}
 	}
 }

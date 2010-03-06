@@ -26,91 +26,124 @@ SUITE(TestDog)
 {
 	TEST(New)
 	{
-		TODO_TEST
-		//static ARBDogPtr New();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//static ARBDogPtr New();
+		}
 	}
 
 
 	TEST(Clone)
 	{
-		TODO_TEST
-		//ARBDogPtr Clone() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//ARBDogPtr Clone() const;
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-		//ARBDog& operator=(ARBDog const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//ARBDog& operator=(ARBDog const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-		//bool operator==(ARBDog const& rhs) const;
-		//bool operator!=(ARBDog const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//bool operator==(ARBDog const& rhs) const;
+			//bool operator!=(ARBDog const& rhs) const
+		}
 	}
 
 
 	TEST(GenName)
 	{
-		TODO_TEST
-		//virtual wxString GetGenericName() const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//virtual wxString GetGenericName() const
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-		//bool Load(
-		//		ARBConfig const& inConfig,
-		//		ElementNodePtr inTree,
-		//		ARBVersion const& inVersion,
-		//		ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//bool Load(
+			//		ARBConfig const& inConfig,
+			//		ElementNodePtr inTree,
+			//		ARBVersion const& inVersion,
+			//		ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-		//bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 
 
 	TEST(RenameVenue)
 	{
-		TODO_TEST
-		//int RenameVenue(
-		//		wxString const& inOldVenue,
-		//		wxString const& inNewVenue);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameVenue(
+			//		wxString const& inOldVenue,
+			//		wxString const& inNewVenue);
+		}
 	}
 
 
 	TEST(DeleteVenue)
 	{
-		TODO_TEST
-		//int DeleteVenue(wxString const& inVenue);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteVenue(wxString const& inVenue);
+		}
 	}
 
 
 	TEST(RenameDivision)
 	{
-		TODO_TEST
-		//int RenameDivision(
-		//		ARBConfigVenuePtr inVenue,
-		//		wxString const& inOldDiv,
-		//		wxString const& inNewDiv);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameDivision(
+			//		ARBConfigVenuePtr inVenue,
+			//		wxString const& inOldDiv,
+			//		wxString const& inNewDiv);
+		}
 	}
 
 
 	TEST(DeleteDivision)
 	{
-		TODO_TEST
-		//int DeleteDivision(
-		//		ARBConfig const& inConfig,
-		//		wxString const& inVenue,
-		//		wxString const& inDiv);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteDivision(
+			//		ARBConfig const& inConfig,
+			//		wxString const& inVenue,
+			//		wxString const& inDiv);
+		}
 	}
 }
 
@@ -119,261 +152,351 @@ SUITE(TestDogList)
 {
 	TEST(Load)
 	{
-		TODO_TEST
-		//bool Load(
-		//		ARBConfig const& inConfig,
-		//		ElementNodePtr inTree,
-		//		ARBVersion const& inVersion,
-		//		ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//bool Load(
+			//		ARBConfig const& inConfig,
+			//		ElementNodePtr inTree,
+			//		ARBVersion const& inVersion,
+			//		ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		}
 	}
 
 
 	TEST(SetMultiQs)
 	{
-		TODO_TEST
-		//void SetMultiQs(ARBConfig const& inConfig);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//void SetMultiQs(ARBConfig const& inConfig);
+		}
 	}
 
 
 	TEST(NumExistingPointsInVenue)
 	{
-		TODO_TEST
-		//int NumExistingPointsInVenue(wxString const& inVenue) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumExistingPointsInVenue(wxString const& inVenue) const;
+		}
 	}
 
 
 	TEST(NumRegNumsInVenue)
 	{
-		TODO_TEST
-		//int NumRegNumsInVenue(wxString const& inVenue) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumRegNumsInVenue(wxString const& inVenue) const;
+		}
 	}
 
 
 	TEST(NumTitlesInVenue)
 	{
-		TODO_TEST
-		//int NumTitlesInVenue(wxString const& inVenue) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumTitlesInVenue(wxString const& inVenue) const;
+		}
 	}
 
 
 	TEST(NumTrialsInVenue)
 	{
-		TODO_TEST
-		//int NumTrialsInVenue(wxString const& inVenue) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumTrialsInVenue(wxString const& inVenue) const;
+		}
 	}
 
 
 	TEST(RenameVenue)
 	{
-		TODO_TEST
-		//int RenameVenue(
-		//		wxString const& inOldVenue,
-		//		wxString const& inNewVenue);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameVenue(
+			//		wxString const& inOldVenue,
+			//		wxString const& inNewVenue);
+		}
 	}
 
 
 	TEST(DeleteVenue)
 	{
-		TODO_TEST
-		//int DeleteVenue(wxString const& inVenue);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteVenue(wxString const& inVenue);
+		}
 	}
 
 
 	TEST(NumOtherPointsInUse)
 	{
-		TODO_TEST
-		//int NumOtherPointsInUse(wxString const& inOther) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumOtherPointsInUse(wxString const& inOther) const;
+		}
 	}
 
 
 	TEST(RenameOtherPoints)
 	{
-		TODO_TEST
-		//int RenameOtherPoints(
-		//		wxString const& inOldOther,
-		//		wxString const& inNewOther);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameOtherPoints(
+			//		wxString const& inOldOther,
+			//		wxString const& inNewOther);
+		}
 	}
 
 
 	TEST(DeleteOtherPoints)
 	{
-		TODO_TEST
-		//int DeleteOtherPoints(wxString const& inOther);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteOtherPoints(wxString const& inOther);
+		}
 	}
 
 
 	TEST(NumMultiQsInUse)
 	{
-		TODO_TEST
-		//int NumMultiQsInUse(
-		//		wxString const& inVenue,
-		//		wxString const& inMultiQ) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumMultiQsInUse(
+			//		wxString const& inVenue,
+			//		wxString const& inMultiQ) const;
+		}
 	}
 
 
 	TEST(RenameMultiQs)
 	{
-		TODO_TEST
-		//int RenameMultiQs(
-		//		wxString const& inVenue,
-		//		wxString const& inOldMultiQ,
-		//		wxString const& inNewMultiQ);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameMultiQs(
+			//		wxString const& inVenue,
+			//		wxString const& inOldMultiQ,
+			//		wxString const& inNewMultiQ);
+		}
 	}
 
 
 	TEST(DeleteMultiQs)
 	{
-		TODO_TEST
-		//int DeleteMultiQs(
-		//		ARBConfig const& inConfig,
-		//		wxString const& inVenue);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteMultiQs(
+			//		ARBConfig const& inConfig,
+			//		wxString const& inVenue);
+		}
 	}
 
 
 	TEST(NumMultiHostedTrialsInDivision)
 	{
-		TODO_TEST
-		//int NumMultiHostedTrialsInDivision(
-		//		ARBConfig const& inConfig,
-		//		wxString const& inVenue,
-		//		wxString const& inDiv) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumMultiHostedTrialsInDivision(
+			//		ARBConfig const& inConfig,
+			//		wxString const& inVenue,
+			//		wxString const& inDiv) const;
+		}
 	}
 
 
 	TEST(NumExistingPointsInDivision)
 	{
-		TODO_TEST
-		//int NumExistingPointsInDivision(
-		//		ARBConfigVenuePtr inVenue,
-		//		wxString const& inDiv) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumExistingPointsInDivision(
+			//		ARBConfigVenuePtr inVenue,
+			//		wxString const& inDiv) const;
+		}
 	}
 
 
 	TEST(NumRunsInDivision)
 	{
-		TODO_TEST
-		//int NumRunsInDivision(
-		//		ARBConfigVenuePtr inVenue,
-		//		wxString const& inDiv) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumRunsInDivision(
+			//		ARBConfigVenuePtr inVenue,
+			//		wxString const& inDiv) const;
+		}
 	}
 
 
 	TEST(RenameDivision)
 	{
-		TODO_TEST
-		//int RenameDivision(
-		//		ARBConfigVenuePtr inVenue,
-		//		wxString const& inOldDiv,
-		//		wxString const& inNewDiv);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameDivision(
+			//		ARBConfigVenuePtr inVenue,
+			//		wxString const& inOldDiv,
+			//		wxString const& inNewDiv);
+		}
 	}
 
 
 	TEST(DeleteDivision)
 	{
-		TODO_TEST
-		//int DeleteDivision(
-		//		ARBConfig const& inConfig,
-		//		wxString const& inVenue,
-		//		wxString const& inDiv);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteDivision(
+			//		ARBConfig const& inConfig,
+			//		wxString const& inVenue,
+			//		wxString const& inDiv);
+		}
 	}
 
 
 	TEST(NumLevelsInUse)
 	{
-		TODO_TEST
-		//int NumLevelsInUse(
-		//		wxString const& inVenue,
-		//		wxString const& inDiv,
-		//		wxString const& inLevel) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumLevelsInUse(
+			//		wxString const& inVenue,
+			//		wxString const& inDiv,
+			//		wxString const& inLevel) const;
+		}
 	}
 
 
 	TEST(RenameLevel)
 	{
-		TODO_TEST
-		//int RenameLevel(
-		//		wxString const& inVenue,
-		//		wxString const& inDiv,
-		//		wxString const& inOldLevel,
-		//		wxString const& inNewLevel);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameLevel(
+			//		wxString const& inVenue,
+			//		wxString const& inDiv,
+			//		wxString const& inOldLevel,
+			//		wxString const& inNewLevel);
+		}
 	}
 
 
 	TEST(DeleteLevel)
 	{
-		TODO_TEST
-		//int DeleteLevel(
-		//		wxString const& inVenue,
-		//		wxString const& inDiv,
-		//		wxString const& inLevel);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteLevel(
+			//		wxString const& inVenue,
+			//		wxString const& inDiv,
+			//		wxString const& inLevel);
+		}
 	}
 
 
 	TEST(NumTitlesInUse)
 	{
-		TODO_TEST
-		//int NumTitlesInUse(
-		//		wxString const& inVenue,
-		//		wxString const& inTitle) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumTitlesInUse(
+			//		wxString const& inVenue,
+			//		wxString const& inTitle) const;
+		}
 	}
 
 
 	TEST(RenameTitle)
 	{
-		TODO_TEST
-		//int RenameTitle(
-		//		wxString const& inVenue,
-		//		wxString const& inOldTitle,
-		//		wxString const& inNewTitle);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameTitle(
+			//		wxString const& inVenue,
+			//		wxString const& inOldTitle,
+			//		wxString const& inNewTitle);
+		}
 	}
 
 
 	TEST(DeleteTitle)
 	{
-		TODO_TEST
-		//int DeleteTitle(
-		//		wxString const& inVenue,
-		//		wxString const& inTitle);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteTitle(
+			//		wxString const& inVenue,
+			//		wxString const& inTitle);
+		}
 	}
 
 
 	TEST(NumEventsInUse)
 	{
-		TODO_TEST
-		//int NumEventsInUse(
-		//		wxString const& inVenue,
-		//		wxString const& inEvent) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int NumEventsInUse(
+			//		wxString const& inVenue,
+			//		wxString const& inEvent) const;
+		}
 	}
 
 
 	TEST(RenameEvent)
 	{
-		TODO_TEST
-		//int RenameEvent(
-		//		wxString const& inVenue,
-		//		wxString const& inOldEvent,
-		//		wxString const& inNewEvent);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int RenameEvent(
+			//		wxString const& inVenue,
+			//		wxString const& inOldEvent,
+			//		wxString const& inNewEvent);
+		}
 	}
 
 
 	TEST(DeleteEvent)
 	{
-		TODO_TEST
-		//int DeleteEvent(
-		//		wxString const& inVenue,
-		//		wxString const& inEvent);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//int DeleteEvent(
+			//		wxString const& inVenue,
+			//		wxString const& inEvent);
+		}
 	}
 
 
 	TEST(AddDelete)
 	{
-		TODO_TEST
-		//bool AddDog(ARBDogPtr inDog);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+			//bool AddDog(ARBDogPtr inDog);
+		}
 	}
 }

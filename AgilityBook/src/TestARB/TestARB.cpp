@@ -88,6 +88,9 @@ void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float
 }
 
 
+bool g_bMicroTest = false;
+
+
 int main(int argc, char** argv)
 {
 #ifdef _WIN32
@@ -96,11 +99,19 @@ int main(int argc, char** argv)
 	bool bVerbose = false;
 	if (argc >= 2)
 	{
-		if (0 == strcmp(argv[1], "verbose"))
-			bVerbose = true;
-		else
+		for (int i = 1; i < argc; ++i)
 		{
-			fprintf(stderr, "Usage: %s [verbose]\n", argv[0]);
+			if (0 == strcmp(argv[i], "verbose"))
+			{
+				bVerbose = true;
+				continue;
+			}
+			if (0 == strcmp(argv[i], "micro"))
+			{
+				g_bMicroTest = true;
+				continue;
+			}
+			fprintf(stderr, "Usage: %s [micro] [verbose]\n", argv[0]);
 		}
 	}
 
@@ -137,6 +148,7 @@ int main(int argc, char** argv)
 	int rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), NULL, UnitTest::True(), 0);
 
 	Element::Terminate();
+	delete m_locale;
 
 	return rc;
 }

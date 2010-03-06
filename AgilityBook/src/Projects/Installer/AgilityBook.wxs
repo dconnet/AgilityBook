@@ -153,15 +153,6 @@
 				Checksum="yes"
 				DiskId="1" />
 		</Component>
-
-		<Component Id="C_cal_usdaa.dll" Guid="16F399ED-BA94-4CBF-B85E-D79C737D3232" Win64="$(var.Win64)">
-			<File Id="_cal_usdaa.dll"
-				Name="cal_usdaa.dll"
-				Source="$(var.BASEDIR)\cal_usdaa.dll"
-				KeyPath="yes"
-				Checksum="yes"
-				DiskId="1" />
-		</Component>
 	</DirectoryRef>
 
 	<DirectoryRef Id="dirFR">
@@ -255,15 +246,6 @@
 			Description="!(loc.FeatureArbHelpDesc)">
 			<ComponentRef Id="C_ARBHelp.exe" />
 			<ComponentRef Id="C_MenuShortcutsHelp" />
-		</Feature>
-
-		<Feature Id="Plugins"
-			Display="expand"
-			Level="100"
-			AllowAdvertise="no"
-			Title="!(loc.FeatureUSDAATitle)"
-			Description="!(loc.FeatureUSDAADesc)">
-			<ComponentRef Id="C_cal_usdaa.dll" />
 		</Feature>
 	</Feature>
 

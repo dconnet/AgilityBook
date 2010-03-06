@@ -26,55 +26,76 @@ SUITE(TestDogRegNum)
 {
 	TEST(New)
 	{
-		TODO_TEST
-	//	static ARBDogRegNumPtr New();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	static ARBDogRegNumPtr New();
+		}
 	}
 
 
 	TEST(Clone)
 	{
-		TODO_TEST
-	//	ARBDogRegNumPtr Clone() const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogRegNumPtr Clone() const;
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogRegNum& operator=(ARBDogRegNum const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBDogRegNum const& rhs) const;
-	//	bool operator!=(ARBDogRegNum const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBDogRegNum const& rhs) const;
+		//	bool operator!=(ARBDogRegNum const& rhs) const
+		}
 	}
 
 
 	TEST(GenName)
 	{
-		TODO_TEST
-	//	virtual wxString GetGenericName() const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	virtual wxString GetGenericName() const
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfig const& inConfig,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfig const& inConfig,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 }
 
@@ -83,64 +104,85 @@ SUITE(TestDogRegNumList)
 {
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			ARBConfig const& inConfig,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			ARBConfig const& inConfig,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(sort)
 	{
-		TODO_TEST
-	//	void sort();
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	void sort();
+		}
 	}
 
 
 	TEST(NumRegNumsInVenue)
 	{
-		TODO_TEST
-	//	int NumRegNumsInVenue(wxString const& inVenue) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	int NumRegNumsInVenue(wxString const& inVenue) const;
+		}
 	}
 
 
 	TEST(RenameVenue)
 	{
-		TODO_TEST
-	//	int RenameVenue(
-	//			wxString const& inOldVenue,
-	//			wxString const& inNewVenue);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	int RenameVenue(
+		//			wxString const& inOldVenue,
+		//			wxString const& inNewVenue);
+		}
 	}
 
 
 	TEST(DeleteVenue)
 	{
-		TODO_TEST
-	//	int DeleteVenue(wxString const& inVenue);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	int DeleteVenue(wxString const& inVenue);
+		}
 	}
 
 
 	TEST(FindRegNum)
 	{
-		TODO_TEST
-	//	bool FindRegNum(
-	//			wxString const& inVenue,
-	//			ARBDogRegNumPtr* outRegNum = NULL) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool FindRegNum(
+		//			wxString const& inVenue,
+		//			ARBDogRegNumPtr* outRegNum = NULL) const;
+		}
 	}
 
 
 	TEST(AddDelete)
 	{
-		TODO_TEST
-	//	bool AddRegNum(
-	//			wxString const& inVenue,
-	//			wxString const& inNumber,
-	//			ARBDogRegNumPtr* outRegNum = NULL);
-	//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
-	//	int DeleteRegNum(
-	//			wxString const& inVenue,
-	//			wxString const& inNumber);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool AddRegNum(
+		//			wxString const& inVenue,
+		//			wxString const& inNumber,
+		//			ARBDogRegNumPtr* outRegNum = NULL);
+		//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
+		//	int DeleteRegNum(
+		//			wxString const& inVenue,
+		//			wxString const& inNumber);
+		}
 	}
 }

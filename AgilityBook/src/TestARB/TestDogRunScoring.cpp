@@ -25,82 +25,112 @@ SUITE(TestDogRunScoring)
 {
 	TEST(TranslateConfigScoring)
 	{
-		TODO_TEST
-	//	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	static ARBDogRunScoring::ScoringType TranslateConfigScoring(ARBConfigScoring::ScoringStyle inType);
+		}
 	}
 
 
 	TEST(ctor)
 	{
-		TODO_TEST
-	//	ARBDogRunScoring();
-	//	ARBDogRunScoring(ARBDogRunScoring const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogRunScoring();
+		//	ARBDogRunScoring(ARBDogRunScoring const& rhs);
+		}
 	}
 
 
 	TEST(OpEqual)
 	{
-		TODO_TEST
-	//	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	ARBDogRunScoring& operator=(ARBDogRunScoring const& rhs);
+		}
 	}
 
 
 	TEST(Compare)
 	{
-		TODO_TEST
-	//	bool operator==(ARBDogRunScoring const& rhs) const;
-	//	bool operator!=(ARBDogRunScoring const& rhs) const
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool operator==(ARBDogRunScoring const& rhs) const;
+		//	bool operator!=(ARBDogRunScoring const& rhs) const
+		}
 	}
 
 
 	TEST(Load)
 	{
-		TODO_TEST
-	//	bool Load(
-	//			short inConfigVersion,
-	//			ARBConfigEventPtr inEvent,
-	//			ARBConfigScoringPtr inEventScoring,
-	//			ElementNodePtr inTree,
-	//			ARBVersion const& inVersion,
-	//			ARBErrorCallback& ioCallback);
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Load(
+		//			short inConfigVersion,
+		//			ARBConfigEventPtr inEvent,
+		//			ARBConfigScoringPtr inEventScoring,
+		//			ElementNodePtr inTree,
+		//			ARBVersion const& inVersion,
+		//			ARBErrorCallback& ioCallback);
+		}
 	}
 
 
 	TEST(Save)
 	{
-		TODO_TEST
-	//	bool Save(ElementNodePtr ioTree) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool Save(ElementNodePtr ioTree) const;
+		}
 	}
 
 
 	TEST(GetMinYPS)
 	{
-		TODO_TEST
-	//	bool GetMinYPS(
-	//			bool inTableInYPS,
-	//			double& outYPS) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool GetMinYPS(
+		//			bool inTableInYPS,
+		//			double& outYPS) const;
+		}
 	}
 
 
 	TEST(GetYPS)
 	{
-		TODO_TEST
-	//	bool GetYPS(
-	//			bool inTableInYPS,
-	//			double& outYPS) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool GetYPS(
+		//			bool inTableInYPS,
+		//			double& outYPS) const;
+		}
 	}
 
 
 	TEST(GetObstaclesPS)
 	{
-		TODO_TEST
-	//	bool GetObstaclesPS(bool inTableInYPS, double& outOPS) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	bool GetObstaclesPS(bool inTableInYPS, double& outOPS) const;
+		}
 	}
 
 
 	TEST(GetTimeFaults)
 	{
-		TODO_TEST
-	//	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
+		if (!g_bMicroTest)
+		{
+			TODO_TEST
+		//	double GetTimeFaults(ARBConfigScoringPtr inScoring) const;
+		}
 	}
 }

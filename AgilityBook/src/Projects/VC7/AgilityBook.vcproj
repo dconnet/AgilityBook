@@ -180,6 +180,9 @@
 				RelativePath="..\..\Win\CalendarSites.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\CalendarSiteUSDAA.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\CheckLink.cpp">
 			</File>
 			<File
@@ -476,6 +479,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\CalendarSites.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\CalendarSiteUSDAA.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\CheckLink.h">
