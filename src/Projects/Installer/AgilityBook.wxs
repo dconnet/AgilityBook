@@ -89,7 +89,7 @@
 		</Directory>
 		<Directory Id="$(var.ProgramFilesFolder)">
 			<Directory Id="CompanyFolder" Name="dcon Software">
-				<Directory Id="APPLICATIONFOLDER" Name="$(var.DEFFOLDER)">
+				<Directory Id="INSTALLDIR" Name="$(var.DEFFOLDER)">
 					<Directory Id="dirLang" Name="lang">
 						<Directory Id="dirFR" Name="fr_FR" />
 						<Directory Id="dirEN" Name="en_US" />
@@ -99,7 +99,7 @@
 		</Directory>
 	</Directory>
 
-	<DirectoryRef Id="APPLICATIONFOLDER">
+	<DirectoryRef Id="INSTALLDIR">
 		<Component Id="C_AgilityBook.exe" Guid="B48C351B-3E9C-4C66-AC0B-150D26047499" Win64="$(var.Win64)">
 			<File Id="_AgilityBook.exe"
 				Name="AgilityBook.exe"
@@ -185,7 +185,7 @@
 				Value="1" />
 			<Shortcut Id="ShortcutARBExe"
 				Name="$(var.DEFFOLDER)"
-				Target="[APPLICATIONFOLDER]AgilityBook.exe">
+				Target="[INSTALLDIR]AgilityBook.exe">
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
 			</Shortcut>
 			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
@@ -200,7 +200,7 @@
 				Value="1" />
 			<Shortcut Id="ShortcutARBHelp"
 				Name="ARB Helper"
-				Target="[APPLICATIONFOLDER]ARBHelp.exe">
+				Target="[INSTALLDIR]ARBHelp.exe">
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="1" />
 			</Shortcut>
 		</Component>
@@ -217,7 +217,7 @@
 				Value="1" />
 			<Shortcut Id="AppDesktop"
 				Name="$(var.DEFFOLDER)"
-				Target="[APPLICATIONFOLDER]AgilityBook.exe">
+				Target="[INSTALLDIR]AgilityBook.exe">
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
 			</Shortcut>
 		</Component>
@@ -229,7 +229,7 @@
 		AllowAdvertise="no"
 		Title="Agility Record Book"
 		Description="!(loc.FeatureCompleteDesc)"
-		ConfigurableDirectory="APPLICATIONFOLDER">
+		ConfigurableDirectory="INSTALLDIR">
 		<ComponentRef Id="C_MenuShortcutsARB" />
 		<ComponentRef Id="C_DeskShortcuts" />
 		<ComponentRef Id="C_RegistryEntries" />
@@ -267,14 +267,18 @@
 	</InstallExecuteSequence>
 
 	<UI>
-		<!-- Copied from WixUI_FeatureTree.wxs -->
+		<!-- Copied from WixUI_InstallDir.wxs -->
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
 		<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
 		<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
 		<TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
 
 		<Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
-		<Property Id="WixUI_Mode" Value="FeatureTree" />
+		<Property Id="WixUI_Mode" Value="InstallDir" />
 
+		<DialogRef Id="BrowseDlg" />
+		<DialogRef Id="DiskCostDlg" />
 		<DialogRef Id="ErrorDlg" />
 		<DialogRef Id="FatalError" />
 		<DialogRef Id="FilesInUse" />
@@ -284,39 +288,48 @@
 		<DialogRef Id="ResumeDlg" />
 		<DialogRef Id="UserExit" />
 
-		<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
-		<Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
-		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg">LicenseAccepted = "1"</Publish>
-		<Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
-		<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
-		<Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>
-		<Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-		<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>
-		<Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">Not Installed</Publish>
-		<Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="1">Installed</Publish>
-		<Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="OptionsDlg" Order="2">Not Installed</Publish>
-		<Publish Dialog="OptionsDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg">1</Publish>
-		<Publish Dialog="OptionsDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
-		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="OptionsDlg" Order="1">Not Installed And WixUI_InstallMode&lt;&gt;"Change"</Publish>
-		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="2">Installed And WixUI_InstallMode="Change"</Publish>
-		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="3">Installed And WixUI_InstallMode&lt;&gt;"Change"</Publish>
+		<Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
+		<Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+
 		<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
 
-		<UIRef Id="WixUI_Common" />
-		<UIRef Id="WixUI_ErrorProgressText" />
+		<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
 
-		<!-- CustomizeDlg_Title == "[ProductName] Setup" -->
-		<Dialog Id="OptionsDlg" Width="370" Height="270" Title="!(loc.CustomizeDlg_Title)" KeepModeless="yes">
+		<Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+		<Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="MyInstallDirDlg">LicenseAccepted = "1"</Publish>
+
+		<Publish Dialog="MyInstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+		<Publish Dialog="MyInstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+		
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MyInstallDirDlg" Order="1">NOT Installed</Publish>
+		<Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>
+
+		<Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+		<Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+		<Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+
+		<Property Id="ARPNOMODIFY" Value="1" />
+
+		<Dialog Id="MyInstallDirDlg" Width="370" Height="270" Title="!(loc.InstallDirDlg_Title)">
 			<Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+			<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgTitle)" />
+			<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.InstallDirDlgDescription)" />
 			<Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
-			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
-			<Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Transparent="yes" NoPrefix="yes" Text="!(loc.OptionsDlgDescription)" />
-			<Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="!(loc.OptionsDlgTitle)" />
-			<Control Id="DesktopShortcut" Type="CheckBox" X="20" Y="60" Width="330" Height="16" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="!(loc.DesktopShortcutText)" />
-			<Control Id="LaunchCheckBox" Type="CheckBox" X="20" Y="90" Width="330" Height="16" Property="LAUNCHPROGRAM" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
+			<Control Id="FolderLabel" Type="Text" X="20" Y="60" Width="290" Height="30" NoPrefix="yes" Text="!(loc.InstallDirDlgFolderLabel)" />
+			<Control Id="Folder" Type="PathEdit" X="20" Y="100" Width="320" Height="18" Property="WIXUI_INSTALLDIR" Indirect="yes" />
+			<Control Id="ChangeFolder" Type="PushButton" X="20" Y="120" Width="56" Height="17" Text="!(loc.InstallDirDlgChange)" />
+			<Control Id="DesktopShortcut" Type="CheckBox" X="20" Y="170" Width="330" Height="16" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="!(loc.DesktopShortcutText)" />
+			<Control Id="LaunchCheckBox" Type="CheckBox" X="20" Y="200" Width="330" Height="16" Property="LAUNCHPROGRAM" Hidden="yes" CheckBoxValue="1" Text="!(loc.LaunchPgm)">
 				<Condition Action="show">Not START_APP And Not Installed</Condition>
 			</Control>
+			<Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
 			<Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
 			<Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" />
 			<Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
