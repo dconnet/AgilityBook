@@ -9,9 +9,7 @@
   <String Id="FeatureCompleteDesc">Fichiers "Agility Record Book" principaux</String>
   <String Id="FeatureArbHelpTitle">ARB Aide</String>
   <String Id="FeatureArbHelpDesc">Aide au diagnostic par assemblage des fichiers nécessaires au débogage</String>
-  <String Id="OptionsDlgTitle">{\WixUI_Font_Title}Installation Options</String>
-  <String Id="OptionsDlgDescription">Set installation options</String>
-  <String Id="DesktopShortcutText">Install a shortcut on the desktop</String>
+  <String Id="DesktopShortcutText">Mettre un raccourcis sur le bureau</String>
   <String Id="LaunchPgm">Lancer [AppName] à la fin d'installation</String>
   <String Id="LaunchPgmText">Lancer [AppName]</String>
 </WixLocalization>
