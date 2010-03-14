@@ -748,7 +748,7 @@ static int const* sc_Fields[IO_TYPE_MAX] =
 
 /////////////////////////////////////////////////////////////////////////////
 
-class ColumnData: public wxClientData 
+class ColumnData: public wxClientData
 {
 public:
 	ColumnData(
@@ -834,6 +834,32 @@ CDlgAssignColumns::CDlgAssignColumns(
 	}
 
 	// Controls (these are done first to control tab order)
+
+	wxStaticText* textNames = new wxStaticText(this, wxID_ANY,
+			_("IDC_ASSIGN_NAMES"),
+			wxDefaultPosition, wxDefaultSize, 0);
+	textNames->Wrap(-1);
+// TODO: enable settings
+textNames->Show(false);
+
+	wxComboBox* m_ctrlConfig = new wxComboBox(this, wxID_ANY,
+			wxEmptyString,
+			wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
+m_ctrlConfig->Show(false);
+
+	wxButton* m_btnSave = new wxButton(this, wxID_ANY,
+			_("IDC_ASSIGN_NAMES_SAVE"),
+			wxDefaultPosition, wxDefaultSize, 0);
+	m_btnSave->SetHelpText(_("HIDC_ASSIGN_NAMES_SAVE"));
+	m_btnSave->SetToolTip(_("HIDC_ASSIGN_NAMES_SAVE"));
+m_btnSave->Show(false);
+
+	wxButton* m_btnDelete = new wxButton(this, wxID_ANY,
+			_("IDC_ASSIGN_NAMES_DELETE"),
+			wxDefaultPosition, wxDefaultSize, 0);
+	m_btnDelete->SetHelpText(_("HIDC_ASSIGN_NAMES_DELETE"));
+	m_btnDelete->SetToolTip(_("HIDC_ASSIGN_NAMES_DELETE"));
+m_btnDelete->Show(false);
 
 	m_ctrlType = new CListCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
@@ -931,6 +957,14 @@ CDlgAssignColumns::CDlgAssignColumns(
 	// Sizers (sizer creation is in same order as wxFormBuilder)
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
+	bSizer->Add(textNames, 0, wxLEFT|wxTOP, 5);
+
+	wxBoxSizer* sizerSettings = new wxBoxSizer(wxHORIZONTAL);
+	sizerSettings->Add(m_ctrlConfig, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerSettings->Add(m_btnSave, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	sizerSettings->Add(m_btnDelete, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	bSizer->Add(sizerSettings, 0, wxEXPAND, 0);
 	bSizer->Add(m_ctrlType, 0, wxALL|wxEXPAND, 5);
 
 	wxBoxSizer* sizerFields = new wxBoxSizer(wxHORIZONTAL);

@@ -39,6 +39,15 @@ msgstr "Move the selected field down in the order."
 msgid "HIDC_ASSIGN_MOVE_UP"
 msgstr "Move the selected field up in the order."
 
+msgid "HIDC_ASSIGN_NAMES"
+msgstr "List of pre-defined settings."
+
+msgid "HIDC_ASSIGN_NAMES_SAVE"
+msgstr "Save the current settings as the specified name. Note, you must press the save button to save a setting."
+
+msgid "HIDC_ASSIGN_NAMES_DELETE"
+msgstr "Delete the selected setting."
+
 msgid "HIDC_ASSIGN_RESET"
 msgstr "Reset the current selection's fields to the program's defaults."
 
@@ -961,7 +970,7 @@ msgid "HIDC_OPT_FILTER_NAMES"
 msgstr "List of pre-defined filters."
 
 msgid "HIDC_OPT_FILTER_NAMES_SAVE"
-msgstr "Save the current filter settings as the specified name. Note, you must press the save button to save a filter settings."
+msgstr "Save the current filter settings as the specified name. Note, you must press the save button to save a filter setting."
 
 msgid "HIDC_OPT_FILTER_NAMES_DELETE"
 msgstr "Delete the selected filter."
