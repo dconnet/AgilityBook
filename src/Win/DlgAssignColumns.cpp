@@ -883,10 +883,9 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlAvailable->SetHelpText(_("HIDC_ASSIGN_AVAILABLE"));
 	m_ctrlAvailable->SetToolTip(_("HIDC_ASSIGN_AVAILABLE"));
 
-	wxStaticText* textSpacer = new wxStaticText(this, wxID_ANY, wxT("Hidden"),
+	wxStaticText* textSpacer = new wxStaticText(this, wxID_ANY, wxT(""),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textSpacer->Wrap(-1);
-	textSpacer->Show(false);
 
 	m_btnAdd = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_ADD"),
 		wxDefaultPosition, wxDefaultSize, 0);
