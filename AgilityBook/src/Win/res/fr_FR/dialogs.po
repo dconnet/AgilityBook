@@ -20,6 +20,15 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 # DlgAssignColumns
+msgid "IDC_ASSIGN_NAMES"
+msgstr "Named Settings"
+
+msgid "IDC_ASSIGN_NAMES_SAVE"
+msgstr "Sauvegarder"
+
+msgid "IDC_ASSIGN_NAMES_DELETE"
+msgstr "Supprimer"
+
 msgid "IDD_ASSIGN_COLUMNS"
 msgstr "Attribuer Colonnes"
 

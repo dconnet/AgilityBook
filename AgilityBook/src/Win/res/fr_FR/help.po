@@ -40,6 +40,15 @@ msgstr "Descendre le champ sélectionné dans l'ordre."
 msgid "HIDC_ASSIGN_MOVE_UP"
 msgstr "Monter le champ sélectionné dans l'ordre."
 
+msgid "HIDC_ASSIGN_NAMES"
+msgstr "List of pre-defined settings."
+
+msgid "HIDC_ASSIGN_NAMES_SAVE"
+msgstr "Save the current settings as the specified name. Note, you must press the save button to save a setting."
+
+msgid "HIDC_ASSIGN_NAMES_DELETE"
+msgstr "Delete the selected setting."
+
 msgid "HIDC_ASSIGN_RESET"
 msgstr "Réinitialise la sélection à la valeur par défaut."
 
