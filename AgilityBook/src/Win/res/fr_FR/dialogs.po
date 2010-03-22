@@ -21,7 +21,7 @@ msgstr ""
 
 # DlgAssignColumns
 msgid "IDC_ASSIGN_NAMES"
-msgstr "Named Settings"
+msgstr "Configurations enregistrées"
 
 msgid "IDC_ASSIGN_NAMES_SAVE"
 msgstr "Sauvegarder"
