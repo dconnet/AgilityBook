@@ -29,29 +29,6 @@ Changes to <trunk> [2.9.1]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_8 0
   - Set wxDEBUG_LEVEL to 0 on NDEBUG
--[win]- include/msvc/wx/setup.h:
-  - Change the wxLIB_SUBDIR (5 lines) to:
-===begin
-#if _MSC_VER == 1310
-	#define wxLIB_BASEDIR	vc71
-#elif _MSC_VER == 1400
-	#define wxLIB_BASEDIR	vc80
-#elif _MSC_VER == 1500
-	#define wxLIB_BASEDIR	vc90
-#else
-	#define wxLIB_BASEDIR	vc
-#endif
-#if defined(_M_X64)
-	#define wxLIB_ARCH	_amd64
-#else
-	#define wxLIB_ARCH
-#endif
-#ifdef WXUSINGDLL
-	#define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _dll)
-#else // !DLL
-	#define wxLIB_SUBDIR wxCONCAT3(wxLIB_BASEDIR, wxLIB_ARCH, _lib)
-#endif // DLL/!DLL
-===end
 -[win]- src/msw/stdpaths.cpp
  - Comment out IgnoreAppBuildSubDirs content (line 294)
 
@@ -178,7 +155,7 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.41.0. There is no need
+ARB has been built and tested using Boost version 1.42.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
@@ -202,13 +179,15 @@ GenMSI.py will be called which generates the install files.
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.5.8.
+Used to create source code documentation. AgilityBook.dox uses v1.6.3.
+Earlier versions may work.
 [Install to default location]
 
 --------------------
 
 GraphViz: http://www.graphviz.org
-Used to create source code documentation. AgilityBook.dox uses v2.14.1.
+Used to create source code documentation. AgilityBook.dox uses v2.26.3
+Earlier versions may work. (I used 2.14.1 with no problems for a while)
 [Install to default location]
 
 
