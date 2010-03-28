@@ -1170,6 +1170,18 @@ msgstr "Exporter Fichier comme XML"
 msgid "IDS_WIZ_EXPORT_XML_ARB"
 msgstr "Exporter votre fichier data comme fichier XML. Le DTD serais contenu dans ce fichier."
 
+msgid "IDS_WIZ_IMPORT_SETTINGS"
+msgstr "Import Program Settings"
+
+msgid "IDS_WIZ_IMPORT_SETTINGS_ARB"
+msgstr "Import your program settings from another computer or a backup."
+
+msgid "IDS_WIZ_EXPORT_SETTINGS"
+msgstr "Export Program Settings"
+
+msgid "IDS_WIZ_EXPORT_SETTINGS_ARB"
+msgstr "Export your program settings for use on another computer, or simply for backup purposes."
+
 msgid "IDS_RUNS"
 msgstr "Parcours"
 

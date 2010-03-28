@@ -1,7 +1,7 @@
 /*
  * Copyright (c) David Connet. All Rights Reserved.
  *
- * License: See Licence.txt
+ * License: See License.txt
  */
 
 /**
@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-03-28 DRC Added ability to import/export program settings.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
@@ -325,6 +326,22 @@ static struct
 		{ePageFinish, _("IDS_WIZ_EXPORT_XML"), _("IDS_WIZ_EXPORT_XML_ARB")},
 		{ePageNone, NULL, NULL},
 	} },
+	/*
+	{WIZ_IMPORT_SETTINGS,
+	{
+		{ePageNone, NULL, NULL},
+		{ePageNone, NULL, NULL},
+		{ePageFinish, _("IDS_WIZ_IMPORT_SETTINGS"), _("IDS_WIZ_IMPORT_SETTINGS_ARB")},
+		{ePageNone, NULL, NULL},
+	} },
+	{WIZ_EXPORT_SETTINGS,
+	{
+		{ePageNone, NULL, NULL},
+		{ePageNone, NULL, NULL},
+		{ePageFinish, _("IDS_WIZ_EXPORT_SETTINGS"), _("IDS_WIZ_EXPORT_XML_SETTINGS")},
+		{ePageNone, NULL, NULL},
+	} },
+	*/
 };
 static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
@@ -771,6 +788,18 @@ bool CWizardStart::DoWizardFinish()
 					}
 					bOk = true;
 				}
+			}
+			break;
+
+		case WIZ_IMPORT_SETTINGS:
+			{
+#pragma PRAGMA_TODO(Import settings)
+			}
+			break;
+
+		case WIZ_EXPORT_SETTINGS:
+			{
+#pragma PRAGMA_TODO(Export settings)
 			}
 			break;
 		}

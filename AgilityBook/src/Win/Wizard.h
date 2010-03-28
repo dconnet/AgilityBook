@@ -3,7 +3,7 @@
 /*
  * Copyright (c) David Connet. All Rights Reserved.
  *
- * License: See Licence.txt
+ * License: See License.txt
  */
 
 /**
@@ -43,6 +43,8 @@ class CWizardStart;
 #define WIZ_EXPORT_CONFIGURATION	11
 #define WIZ_EXPORT_DTD				12
 #define WIZ_EXPORT_XML				13
+#define WIZ_IMPORT_SETTINGS			14
+#define WIZ_EXPORT_SETTINGS			15
 
 // Note: These numbers should not be changed - they are stored in the registry
 #define WIZARD_RADIO_EXCEL			0L
