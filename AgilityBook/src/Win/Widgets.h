@@ -12,27 +12,18 @@
  * @brief Change certain default wxWidget behaviors.
  * @author David Connet
  *
- * List Controls: Override DoGetBestSize.
- * Tree Controls: Override DoGetBestSize, add window support for states.
+ * List Controls: Override SetColumnWidth.
+ * Tree Controls: Add window support for states.
  * Text Controls: Turn off tabstops on multiline readonly controls.
  *
  * Revision History
- * @li 2010-03-28 DRC Fixed a problem with list sizing on Mac.
+ * @li 2010-03-28 DRC Moved SetColumnWidth override from CReportListCtrl.
+ *                    Removed wx2.9 kludges (was causing problems on Mac).
  * @li 2009-10-11 DRC Created.
  */
 
 #include <wx/listctrl.h>
 #include <wx/treectrl.h>
-
-
-// When first starting up, the sizers just aren't sizing correctly on
-// wx 2.9. On Windows, the tree control causes issues. On Mac, the list
-// controls are. The behavior of each is slightly different. On Windows,
-// the controls think they have much more real estate then they really do,
-// so they size themselves huge. On Mac, it starts correctly, but as the
-// window is sized larger than smaller, the control never shrinks.
-#define WXWINDOW_FIX_INITIAL_SIZER \
-	protected: virtual wxSize DoGetBestSize() const {return wxSize(1,1);}
 
 
 class CListCtrl : public wxListView
@@ -50,30 +41,20 @@ public:
 			const wxString& name = wxListCtrlNameStr)
 		: wxListView(parent, id, pos, size, style, validator, name)
 	{
-#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
-		// On Mac, when I set a minimal size for lists, that list will often
-		// be sized to 1 pixel. So fix it. This has been fixed in 2.9
-		if (wxDefaultSize != size)
-			SetMinSize(size);
-#endif
 	}
-#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
-	bool Create(
-			wxWindow* parent,
-			wxWindowID id = wxID_ANY,
-			const wxPoint& pos = wxDefaultPosition,
-			const wxSize& size = wxDefaultSize,
-			long style = wxLC_ICON,
-			const wxValidator& validator = wxDefaultValidator,
-			const wxString& name = wxListCtrlNameStr)
+	bool SetColumnWidth(int col, int width)
 	{
-		bool rc = wxListView::Create(parent, id, pos, size, style, validator, name);
-		if (wxDefaultSize != size)
-			SetMinSize(size);
-		return rc;
-	}
+#ifndef WIN32
+		if (wxLIST_AUTOSIZE_USEHEADER == width)
+		{
+			// Don't use header on non-windows platforms. According to docs, it
+			// is only set to 80 pixels. On Mac with generic list, it appears to
+			// size to the header text, but not the contents.
+			width = wxLIST_AUTOSIZE;
+		}
 #endif
-	WXWINDOW_FIX_INITIAL_SIZER
+		return wxListView::SetColumnWidth(col, width);
+	}
 };
 
 
@@ -122,7 +103,6 @@ public:
 		wxTreeCtrl::SetItemImage(item, state);
 #endif
 	}
-	WXWINDOW_FIX_INITIAL_SIZER
 };
 
 

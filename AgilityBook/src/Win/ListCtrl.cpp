@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-03-28 DRC Moved SetColumnWidth override to CListCtrl.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-02-20 DRC Added subitem editing to lists.
@@ -132,21 +133,6 @@ void CReportListCtrl::SetColumnSort(long column, int iconDirection)
 	}
 	if (bSet)
 		SetColumn(column, item);
-}
-
-
-bool CReportListCtrl::SetColumnWidth(int col, int width)
-{
-#ifndef WIN32
-	if (wxLIST_AUTOSIZE_USEHEADER == width)
-	{
-		// Don't use header on non-windows platforms. According to docs, it
-		// is only set to 80 pixels. On Mac with generic list, it appears to
-		// size to the header text, but not the contents.
-		width = wxLIST_AUTOSIZE;
-	}
-#endif
-	return CListCtrl::SetColumnWidth(col, width);
 }
 
 
