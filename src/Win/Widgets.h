@@ -17,6 +17,7 @@
  * Text Controls: Turn off tabstops on multiline readonly controls.
  *
  * Revision History
+ * @li 2010-03-28 DRC Fixed a problem with list sizing on Mac.
  * @li 2009-10-11 DRC Created.
  */
 
@@ -41,14 +42,20 @@ public:
 	CListCtrl() {}
 	CListCtrl(
 			wxWindow* parent,
-			wxWindowID id,  
-			const wxPoint& pos = wxDefaultPosition,  
-			const wxSize& size = wxDefaultSize,  
-			long style = wxLC_ICON,  
-			const wxValidator& validator = wxDefaultValidator,  
-			const wxString& name = wxListCtrlNameStr) 
+			wxWindowID id,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxLC_ICON,
+			const wxValidator& validator = wxDefaultValidator,
+			const wxString& name = wxListCtrlNameStr)
 		: wxListView(parent, id, pos, size, style, validator, name)
 	{
+#ifdef __WXMAC__
+		// On Mac, when I set a minimal size for lists, that list will often
+		// be sized to 1 pixel. So fix it.
+		if (wxDefaultSize != size)
+			SetMinSize(size);
+#endif
 	}
 	WXWINDOW_FIX_INITIAL_SIZER
 };
