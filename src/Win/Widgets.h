@@ -50,14 +50,14 @@ public:
 			const wxString& name = wxListCtrlNameStr)
 		: wxListView(parent, id, pos, size, style, validator, name)
 	{
-#ifdef __WXMAC__
+#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
 		// On Mac, when I set a minimal size for lists, that list will often
-		// be sized to 1 pixel. So fix it.
+		// be sized to 1 pixel. So fix it. This has been fixed in 2.9
 		if (wxDefaultSize != size)
 			SetMinSize(size);
 #endif
 	}
-#ifdef __WXMAC__
+#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
 	bool Create(
 			wxWindow* parent,
 			wxWindowID id = wxID_ANY,
