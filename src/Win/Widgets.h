@@ -57,6 +57,23 @@ public:
 			SetMinSize(size);
 #endif
 	}
+#ifdef __WXMAC__
+	bool Create(
+			wxWindow* parent,
+			wxWindowID id = wxID_ANY,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxLC_ICON,
+			const wxValidator& validator,
+			const wxValidator& validator = wxDefaultValidator,
+			const wxString& name = wxListCtrlNameStr)
+	{
+		bool rc = wxListView::Create(parent, id, pos, size, style, validator, name);
+		if (wxDefaultSize != size)
+			SetMinSize(size);
+		return rc;
+	}
+#endif
 	WXWINDOW_FIX_INITIAL_SIZER
 };
 
@@ -82,7 +99,7 @@ public:
 		: wxTreeCtrl(parent, id, pos, size, style, validator, name)
 	{
 	}
-    int GetItemState(const wxTreeItemId& item)
+	int GetItemState(const wxTreeItemId& item)
 	{
 #ifdef WX_TREE_HAS_STATE
 	#if wxCHECK_VERSION(2, 9, 0)
@@ -94,7 +111,7 @@ public:
 		return wxTreeCtrl::GetItemImage(item);
 #endif
 	}
-    void SetItemState(const wxTreeItemId& item, int state)
+	void SetItemState(const wxTreeItemId& item, int state)
 	{
 #ifdef WX_TREE_HAS_STATE
 	#if wxCHECK_VERSION(2, 9, 0)
