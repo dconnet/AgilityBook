@@ -41,7 +41,29 @@ public:
 			const wxString& name = wxListCtrlNameStr)
 		: wxListView(parent, id, pos, size, style, validator, name)
 	{
+#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
+		// On Mac, when I set a minimal size for lists, that list will often
+		// be sized wrong. So fix it. This has been fixed in 2.9.1.
+		if (wxDefaultSize != size)
+			SetMinSize(size);
+#endif
 	}
+#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
+	bool Create(
+			wxWindow* parent,
+			wxWindowID id = wxID_ANY,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxLC_ICON,
+			const wxValidator& validator = wxDefaultValidator,
+			const wxString& name = wxListCtrlNameStr)
+	{
+		bool rc = wxListView::Create(parent, id, pos, size, style, validator, name);
+		if (wxDefaultSize != size)
+			SetMinSize(size);
+		return rc;
+	}
+#endif
 	bool SetColumnWidth(int col, int width)
 	{
 #ifndef WIN32
