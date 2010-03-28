@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-03-28 DRC Moved SetColumnWidth override to CListCtrl.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2008-12-14 DRC Created
  */
@@ -56,8 +57,6 @@ public:
 	}
 
 	void SetColumnSort(long column, int iconDirection);
-
-	bool SetColumnWidth(int col, int width);
 
 	long InsertItem(CListDataPtr inData);
 
