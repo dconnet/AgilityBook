@@ -3,7 +3,7 @@
 /*
  * Copyright (c) David Connet. All Rights Reserved.
  *
- * License: See Licence.txt
+ * License: See License.txt
  */
 
 /**
