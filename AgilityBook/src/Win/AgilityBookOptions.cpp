@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-03-28 DRC Added ability to import/export program settings.
  * @li 2010-01-21 DRC Fixed font flag parsing.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Changed auto update check to false in debug mode.
@@ -95,6 +96,13 @@ CalSites2 - used for permanently disabling a version
 	ST (DLL names in EXE directory)
 Columns
 	ST col[n]
+ColumnInfo (NamedColumns.cpp)
+	ST CurrentConfig (NamedColumns.cpp)
+	DW numConfigs (NamedColumns.cpp)
+	Config[n] (NamedColumns.cpp)
+		ST name (NamedColumns.cpp)
+		[key] (NamedColumns.cpp)
+			ST col[n] (NamedColumns.cpp)
 Common
 	DW CRCDImage
 	ST CurrentFilter (FilterOptions.cpp)
@@ -231,6 +239,27 @@ Unknown
 	ST col[n]
 */
 
+
+bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
+{
+#pragma PRAGMA_TODO(Import settings)
+	wxMessageBox(wxT("TODO"), wxT("TODO"), wxCENTRE | wxICON_EXCLAMATION);
+	return false;
+}
+
+
+ElementNodePtr CAgilityBookOptions::ExportSettings()
+{
+	wxBusyCursor wait;
+	CVersionNum ver(true);
+	wxString verstr = ver.GetVersionString();
+	//ElementNodePtr tree(ElementNode::New());
+#pragma PRAGMA_TODO(Export settings)
+	wxMessageBox(wxT("TODO"), wxT("TODO"), wxCENTRE | wxICON_EXCLAMATION);
+	return ElementNodePtr();
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 void CFontInfo::CreateFont(wxFont& font)
 {
@@ -987,6 +1016,7 @@ static wxChar const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder
 void CAgilityBookOptions::GetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
+		wxString const& namedColumn,
 		std::vector<long>& outValues,
 		bool bDefaultValues)
 {
@@ -994,6 +1024,8 @@ void CAgilityBookOptions::GetColumnOrder(
 	if (!bDefaultValues)
 	{
 		wxString item;
+		if (!namedColumn.empty())
+			item << wxT('/') << namedColumn;
 		item << GetColumnName(eOrder)
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
 			<< wxT("/col") << static_cast<unsigned int>(idxColumn);
@@ -1267,6 +1299,7 @@ void CAgilityBookOptions::GetColumnOrder(
 void CAgilityBookOptions::SetColumnOrder(
 		ColumnOrder eOrder,
 		size_t idxColumn,
+		wxString const& namedColumn,
 		std::vector<long> const& inValues)
 {
 	wxString data;
@@ -1277,15 +1310,16 @@ void CAgilityBookOptions::SetColumnOrder(
 		data << inValues[i];
 	}
 	wxString item;
-	item << GetColumnName(eOrder)
+	if (!namedColumn.empty())
+		item << wxT('/') << namedColumn;
+	item << GetColumnName(eOrder);
 #if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-		<< wxT("/col") << static_cast<unsigned int>(idxColumn);
+	item << wxT("/col") << static_cast<unsigned int>(idxColumn);
 #else
-		<< wxT("/col") << idxColumn;
+	item << wxT("/col") << idxColumn;
 #endif
 	wxConfig::Get()->Write(item, data);
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 

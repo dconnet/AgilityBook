@@ -194,7 +194,7 @@ void CFilterOptions::Save()
 			|| filter.bViewAllNames != m_bViewAllNames
 			|| filter.nameFilter != m_nameFilter)
 			{
-				m_curFilter.erase();
+				m_curFilter.clear();
 			}
 		}
 	}

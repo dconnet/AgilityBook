@@ -605,6 +605,15 @@ msgstr "*.dtd"
 msgid "IDS_FILEEXT_FILTER_DTD"
 msgstr "DTD Files (*.dtd)|*.dtd|All Files (*.*)|*.*||"
 
+msgid "IDS_FILEEXT_DEF_SETTINGS"
+msgstr "arbdata"
+
+msgid "IDS_FILEEXT_FNAME_SETTINGS"
+msgstr "*.arbdata"
+
+msgid "IDS_FILEEXT_FILTER_SETTINGS"
+msgstr "Agility Record Book settings (*.arbdata)|*.arbdata|All Files (*.*)|*.*||"
+
 msgid "IDS_FILEEXT_DEF_XML"
 msgstr "xml"
 

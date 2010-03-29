@@ -326,7 +326,6 @@ static struct
 		{ePageFinish, _("IDS_WIZ_EXPORT_XML"), _("IDS_WIZ_EXPORT_XML_ARB")},
 		{ePageNone, NULL, NULL},
 	} },
-	/*
 	{WIZ_IMPORT_SETTINGS,
 	{
 		{ePageNone, NULL, NULL},
@@ -341,7 +340,6 @@ static struct
 		{ePageFinish, _("IDS_WIZ_EXPORT_SETTINGS"), _("IDS_WIZ_EXPORT_XML_SETTINGS")},
 		{ePageNone, NULL, NULL},
 	} },
-	*/
 };
 static int const sc_nItems = sizeof(sc_Items) / sizeof(sc_Items[0]);
 
@@ -510,8 +508,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
@@ -541,8 +537,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
@@ -572,8 +566,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
 					wxString verstr = ver.GetVersionString();
@@ -609,8 +601,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					std::vector<ARBCalendarPtr> allEntries;
 					std::vector<ARBCalendarPtr>* entries = m_pSheet->GetCalendarEntries();
@@ -651,8 +641,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
@@ -682,8 +670,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
 					wxString verstr = ver.GetVersionString();
@@ -713,8 +699,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
 					wxString verstr = ver.GetVersionString();
@@ -738,8 +722,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					wxFFileOutputStream output(file.GetPath(), wxT("wb"));
 					if (output.IsOk())
@@ -758,14 +740,20 @@ bool CWizardStart::DoWizardFinish()
 			{
 				wxString name = m_pDoc->GetFilename();
 				if (name.empty())
-					name = wxT("AgilityRecordBook.xml");
+				{
+					name = wxT("AgilityRecordBook.");
+					name += _("IDS_FILEEXT_DEF_XML");
+				}
 				else
 				{
 					int iDot = name.Find('.', true);
 					if (0 <= iDot)
-						name = name.Left(name.Find('.', true)) + wxT(".xml");
+						name = name.Left(iDot+1) + _("IDS_FILEEXT_DEF_XML");
 					else
-						name += wxT(".xml");
+					{
+						name += wxT(".");
+						name += _("IDS_FILEEXT_DEF_XML");
+					}
 				}
 				wxFileDialog file(this,
 					wxEmptyString, // caption
@@ -775,8 +763,6 @@ bool CWizardStart::DoWizardFinish()
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 				if (wxID_OK == file.ShowModal())
 				{
-					//if (AfxGetMainWnd())
-					//	AfxGetMainWnd()->UpdateWindow();
 					wxBusyCursor wait;
 					CVersionNum ver(true);
 					wxString verstr = ver.GetVersionString();
@@ -793,13 +779,72 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_IMPORT_SETTINGS:
 			{
-#pragma PRAGMA_TODO(Import settings)
+				wxFileDialog file(this,
+					wxEmptyString, // caption
+					wxEmptyString, // def dir
+					_("IDS_FILEEXT_FNAME_SETTINGS"),
+					_("IDS_FILEEXT_FILTER_SETTINGS"),
+					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+				if (wxID_OK == file.ShowModal())
+				{
+					wxBusyCursor wait;
+					wxString errMsg;
+					ElementNodePtr tree(ElementNode::New());
+					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
+					{
+						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
+						if (0 < errMsg.length())
+						{
+							msg += wxT("\n\n");
+							msg += errMsg;
+						}
+						wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					}
+					else
+					{
+						bOk = CAgilityBookOptions::ImportSettings(tree);
+					}
+				}
 			}
 			break;
 
 		case WIZ_EXPORT_SETTINGS:
 			{
-#pragma PRAGMA_TODO(Export settings)
+				wxString name = m_pDoc->GetFilename();
+				if (name.empty())
+				{
+					name = wxT("AgilityRecordBook.");
+					name += _("IDS_FILEEXT_DEF_SETTINGS");
+				}
+				else
+				{
+					int iDot = name.Find('.', true);
+					if (0 <= iDot)
+						name = name.Left(iDot+1) + _("IDS_FILEEXT_DEF_SETTINGS");
+					else
+					{
+						name += wxT(".");
+						name += _("IDS_FILEEXT_DEF_SETTINGS");
+					}
+				}
+				wxFileDialog file(this,
+					wxEmptyString, // caption
+					wxEmptyString, // def dir
+					name,
+					_("IDS_FILEEXT_FILTER_SETTINGS"),
+					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+				if (wxID_OK == file.ShowModal())
+				{
+					wxBusyCursor wait;
+					CVersionNum ver(true);
+					wxString verstr = ver.GetVersionString();
+					ElementNodePtr settings = CAgilityBookOptions::ExportSettings();
+					if (settings)
+					{
+						settings->SaveXML(file.GetPath());
+						bOk = true;
+					}
+				}
 			}
 			break;
 		}

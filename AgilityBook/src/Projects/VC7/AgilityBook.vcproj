@@ -378,6 +378,9 @@
 				RelativePath="..\..\Win\MainFrm.cpp">
 			</File>
 			<File
+				RelativePath="..\..\Win\NamedColumns.cpp">
+			</File>
+			<File
 				RelativePath="..\..\Win\NoteButton.cpp">
 			</File>
 			<File
@@ -680,6 +683,9 @@
 			</File>
 			<File
 				RelativePath="..\..\Win\MainFrm.h">
+			</File>
+			<File
+				RelativePath="..\..\Win\NamedColumns.h">
 			</File>
 			<File
 				RelativePath="..\..\Win\NoteButton.h">

@@ -1,4 +1,4 @@
-3/5/2010: v2.2.0.x
+3/28/2010: v2.2.0.x
 - Bumped Configuration v28:
   - Removed SSA (Sweepstakes). No longer available.
   - Renamed ATCH-OP/SP to ATCH-II/III.
@@ -10,11 +10,13 @@
     next release.
   - Add event subname to view customization (and import/export).
   - Changed Calendar plugin architecture, it now works on Mac.
+  - Added named column customization.
 - Bug fixes:
   - Fixed a bug that caused fonts (bold/italic) to be improperly configured.
   - Creating a new title and setting it to unearned didn't properly store
     hidden flag.
   - Unearned titles didn't disable Hide Checkbox when initially showing dialog.
+  - Fixed a problem with sizing lists on Mac.
 
 1/7/2010: v2.1.4.2567
 - Bug fixes:
