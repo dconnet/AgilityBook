@@ -427,6 +427,15 @@
 		E1BF78F00FFFE153009B81A7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
 		E1E98E8D100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
 		E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
+		E1FA1A08115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */; };
+		E1FA1A09115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */; };
+		E1FA1A0A115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */; };
+		E1FA1A0E115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */; };
+		E1FA1A0F115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */; };
+		E1FA1A10115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */; };
+		E1FA1B5611602EA300FAFD0F /* NamedColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */; };
+		E1FA1B5711602EA300FAFD0F /* NamedColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */; };
+		E1FA1B5811602EA300FAFD0F /* NamedColumns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -719,6 +728,12 @@
 		E1BF78EE0FFFE144009B81A7 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../stdafx.h; sourceTree = SOURCE_ROOT; };
 		E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
+		E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigest.cpp; sourceTree = "<group>"; };
+		E1FA1A07115FF3FD00FAFD0F /* ARBMsgDigest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMsgDigest.h; sourceTree = "<group>"; };
+		E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalendarSiteUSDAA.cpp; sourceTree = "<group>"; };
+		E1FA1A0D115FF44200FAFD0F /* CalendarSiteUSDAA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarSiteUSDAA.h; sourceTree = "<group>"; };
+		E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NamedColumns.cpp; sourceTree = "<group>"; };
+		E1FA1B5511602EA300FAFD0F /* NamedColumns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamedColumns.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -817,6 +832,10 @@
 		E155979C10000B1200B7074A /* Win */ = {
 			isa = PBXGroup;
 			children = (
+				E1FA1B5411602EA300FAFD0F /* NamedColumns.cpp */,
+				E1FA1B5511602EA300FAFD0F /* NamedColumns.h */,
+				E1FA1A0C115FF44200FAFD0F /* CalendarSiteUSDAA.cpp */,
+				E1FA1A0D115FF44200FAFD0F /* CalendarSiteUSDAA.h */,
 				E1144F5C1082880800356F61 /* Widgets.cpp */,
 				E1144F5D1082880800356F61 /* Widgets.h */,
 				E155979E10000B1200B7074A /* AgilityBook.cpp */,
@@ -1011,6 +1030,8 @@
 		E155996210000B3100B7074A /* ARB */ = {
 			isa = PBXGroup;
 			children = (
+				E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */,
+				E1FA1A07115FF3FD00FAFD0F /* ARBMsgDigest.h */,
 				E155996310000B3100B7074A /* ARBAgilityRecordBook.cpp */,
 				E155996410000B3100B7074A /* ARBAgilityRecordBook.h */,
 				E155996510000B3100B7074A /* ARBBase.cpp */,
@@ -1362,6 +1383,9 @@
 				E15599E110000B3100B7074A /* Element.cpp in Sources */,
 				E15599E310000B3100B7074A /* VersionNum.cpp in Sources */,
 				E1144F5E1082880800356F61 /* Widgets.cpp in Sources */,
+				E1FA1A08115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */,
+				E1FA1A0E115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
+				E1FA1B5611602EA300FAFD0F /* NamedColumns.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1505,6 +1529,9 @@
 				E1144EF110813B4F00356F61 /* Element.cpp in Sources */,
 				E1144EF210813B4F00356F61 /* VersionNum.cpp in Sources */,
 				E1144F601082880800356F61 /* Widgets.cpp in Sources */,
+				E1FA1A0A115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */,
+				E1FA1A10115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
+				E1FA1B5811602EA300FAFD0F /* NamedColumns.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1648,6 +1675,9 @@
 				E158FCB91001371B00735E7F /* Element.cpp in Sources */,
 				E158FCBA1001371B00735E7F /* VersionNum.cpp in Sources */,
 				E1144F5F1082880800356F61 /* Widgets.cpp in Sources */,
+				E1FA1A09115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */,
+				E1FA1A0F115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
+				E1FA1B5711602EA300FAFD0F /* NamedColumns.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1741,6 +1771,7 @@
 					"-lz",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
@@ -1813,6 +1844,7 @@
 					"-lz",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
@@ -1909,6 +1941,7 @@
 					"-lz",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
@@ -1979,6 +2012,7 @@
 					"-lz",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
@@ -2053,6 +2087,7 @@
 					"-lz",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
@@ -2123,6 +2158,7 @@
 					"-lz",
 					"-lpthread",
 					"-liconv",
+					"-ltidy",
 				);
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = NO;
 				PRODUCT_NAME = agilitybook;
