@@ -165,6 +165,7 @@
 
 #include <vector>
 #include "AgilityBookOptions.h"
+#include "NamedColumns.h"
 class CAgilityBookDoc;
 class CListCtrl;
 class ColumnData;
@@ -181,11 +182,19 @@ public:
 			size_t idxColumn,
 			std::vector<long>& values,
 			bool bDefaultValues = false);
+	static bool GetColumnOrder(
+			CAgilityBookOptions::ColumnOrder eOrder,
+			size_t idxColumn,
+			wxString const& namedColumn,
+			std::vector<long>& values,
+			bool bDefaultValues = false);
 	static bool SetColumnOrder(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			size_t idxColumn,
+			wxString const& namedColumn,
 			std::vector<long> const& values);
 
+public:
 	CDlgAssignColumns(
 			CAgilityBookOptions::ColumnOrder eOrder,
 			wxWindow* pParent = NULL,
@@ -194,10 +203,11 @@ public:
 
 private:
 	CAgilityBookDoc* m_pDoc;
-	CAgilityBookOptions::ColumnOrder m_eOrder;
+	CNamedColumns m_Configs;
 	long m_initSelection;
 	bool m_bIncludeBlank;
-	std::vector<long> m_Columns[IO_TYPE_MAX];
+	wxString m_ConfigName;
+	wxComboBox* m_ctrlConfig;
 	CListCtrl* m_ctrlType;
 	wxListBox* m_ctrlAvailable;
 	wxListBox* m_ctrlColumns;
@@ -215,6 +225,9 @@ private:
 
 protected:
 	DECLARE_EVENT_TABLE()
+	void OnSelchangeNames(wxCommandEvent& evt);
+	void OnClickedOptNamesSave(wxCommandEvent& evt);
+	void OnClickedOptNamesDelete(wxCommandEvent& evt);
 	void OnItemchanged(wxListEvent& evt);
 	void OnSelchangeAvailable(wxCommandEvent& evt);
 	void OnSelchangeColumns(wxCommandEvent& evt);

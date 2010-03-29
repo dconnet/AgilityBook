@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-03-28 DRC Added ability to import/export program settings.
  * @li 2009-07-19 DRC Implement proxy support. 
  * @li 2008-12-24 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Added UserNames
@@ -56,6 +57,9 @@ struct CFontInfo
 class CAgilityBookOptions
 {
 public:
+	static bool ImportSettings(ElementNodePtr tree);
+	static ElementNodePtr ExportSettings();
+
 	// Calendar options
 	static bool AutoDeleteCalendarEntries();
 	static void SetAutoDeleteCalendarEntries(bool bAuto);
@@ -249,10 +253,12 @@ protected:
 	static void GetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,
+			wxString const& namedColumn,
 			std::vector<long>& outValues,
 			bool bDefaultValues = false);
 	static void SetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,
+			wxString const& namedColumn,
 			std::vector<long> const& inValues);
 };
