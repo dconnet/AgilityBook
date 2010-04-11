@@ -59,6 +59,7 @@
 #include "MainFrm.h"
 #include "PointsData.h"
 #include "Print.h"
+#include "RegItems.h"
 #include <algorithm>
 #include <wx/config.h>
 
@@ -466,7 +467,7 @@ CAgilityBookRunsView::CSortColumn::CSortColumn(std::vector<long>& inColumns)
 void CAgilityBookRunsView::CSortColumn::Initialize()
 {
 	long realCol = IO_RUNS_DATE;
-	realCol = wxConfig::Get()->Read(wxT("Sorting/Runs"), realCol);
+	realCol = wxConfig::Get()->Read(CFG_SORTING_RUNS, realCol);
 	long neg = 1;
 	if (0 > realCol)
 	{
@@ -493,7 +494,7 @@ void CAgilityBookRunsView::CSortColumn::SetColumn(long iCol)
 		col = iCol * -1;
 	}
 	long realCol = m_Columns[col-1] * neg;
-	wxConfig::Get()->Write(wxT("Sorting/Runs"), realCol);
+	wxConfig::Get()->Write(CFG_SORTING_RUNS, realCol);
 }
 
 

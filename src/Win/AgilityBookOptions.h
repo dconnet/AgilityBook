@@ -209,6 +209,7 @@ public:
 		eLogImport		= 0x0040,
 		eLogExport		= 0x0080,
 		eView			= 0x0100,
+		eAllColumns		= 0x01ff
 	} ColumnOrder;
 	// General program options
 	static long GetMRUFileCount();
@@ -217,10 +218,6 @@ public:
 	static void SetAutoUpdateCheck(bool bSet);
 	static long GetNumBackupFiles();
 	static void SetNumBackupFiles(long nFiles);
-	static bool AutoShowSplashScreen();
-	static void AutoShowSplashScreen(bool bAutoShow);
-	static wxString GetSplashImage();
-	static void SetSplashImage(wxString const& filename);
 	static bool AutoShowPropertiesOnNewTitle();
 	static void AutoShowPropertiesOnNewTitle(bool bShow);
 	static bool ShowHtmlPoints();

@@ -31,6 +31,7 @@
 #include "Globals.h"
 #include "PointsData.h"
 #include "Print.h"
+#include "RegItems.h"
 #include "TabView.h"
 #include <wx/config.h>
 #include <wx/platinfo.h>
@@ -315,12 +316,12 @@ void CMainFrame::OnClose(wxCloseEvent& evt)
 	else
 	{
 		wxRect r = GetScreenRect();
-		wxConfig::Get()->Write(wxT("Settings/lastXpos"), r.x);
-		wxConfig::Get()->Write(wxT("Settings/lastYpos"), r.y);
-		wxConfig::Get()->Write(wxT("Settings/lastCX"), r.width);
-		wxConfig::Get()->Write(wxT("Settings/lastCY"), r.height);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTXPOS, r.x);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTYPOS, r.y);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTCX, r.width);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTCY, r.height);
 	}
-	wxConfig::Get()->Write(wxT("Settings/lastState"), state);
+	wxConfig::Get()->Write(CFG_SETTINGS_LASTSTATE, state);
 	evt.Skip();
 }
 

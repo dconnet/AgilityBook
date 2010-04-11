@@ -81,6 +81,7 @@
 #include "Element.h"
 #include "FilterOptions.h"
 #include "MainFrm.h"
+#include "RegItems.h"
 #include "TabView.h"
 #include "UpdateInfo.h"
 #include "VersionNum.h"
@@ -1226,7 +1227,7 @@ bool CAgilityBookDoc::OnNewDocument()
 {
 	if (!wxDocument::OnNewDocument())
 		return false;
-	wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
+	wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 	CConfigHandler handler;
 	m_Records.Default(&handler);
 	m_Records.GetConfig().GetActions().clear();
@@ -1269,7 +1270,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 
 	if (!wxFile::Exists(filename))
 	{
-		wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 		wxMessageBox(_("Sorry, could not open this file."),
 			wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 		return false;
@@ -1281,7 +1282,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	// Translate the XML to a tree form.
 	if (!tree->LoadXMLFile(filename, err))
 	{
-		wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 		// This string is in fr/fr.po
 		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
 		if (0 < err.length())
@@ -1296,7 +1297,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	CErrorCallback callback;
 	if (!m_Records.Load(tree, callback))
 	{
-		wxConfig::Get()->Write(wxT("Settings/LastFile"), wxEmptyString);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
 		if (0 < callback.m_ErrMsg.length())
 		{
@@ -1333,7 +1334,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			Modify(true);
 	}
 
-	wxConfig::Get()->Write(wxT("Settings/LastFile"), filename);
+	wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
 
 	// Check our internal config.
 	if (GetCurrentConfigVersion() > m_Records.GetConfig().GetVersion()
@@ -1390,7 +1391,7 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 		// Then we can stream that tree out as XML.
 		if (tree->SaveXML(filename))
 		{
-			wxConfig::Get()->Write(wxT("Settings/LastFile"), filename);
+			wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, filename);
 			bOk = true;
 		}
 		else
@@ -1412,9 +1413,9 @@ bool CAgilityBookDoc::OnCloseDocument()
 {
 	ARBDogPtr pDog = GetCurrentDog();
 	if (pDog)
-		wxConfig::Get()->Write(wxT("Settings/LastDog"), pDog->GetCallName());
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTDOG, pDog->GetCallName());
 	else
-		wxConfig::Get()->Write(wxT("Settings/LastDog"), wxEmptyString);
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTDOG, wxEmptyString);
 	return wxDocument::OnCloseDocument();
 }
 

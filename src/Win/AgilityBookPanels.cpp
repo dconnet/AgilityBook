@@ -27,6 +27,7 @@
 #include "AgilityBookTrainingView.h"
 #include "AgilityBookTreeView.h"
 #include "CommonView.h"
+#include "RegItems.h"
 #include <wx/config.h>
 #include <wx/object.h>
 #include <wx/splitter.h>
@@ -158,13 +159,13 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 
 CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 {
-	wxConfig::Get()->Write(wxT("Settings/splitCX"), m_splitter->GetSashPosition());
+	wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, m_splitter->GetSashPosition());
 }
 
 
 void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 {
-	long cx = wxConfig::Get()->Read(wxT("Settings/splitCX"), DEFAULT_RUN_WIDTH);
+	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX, DEFAULT_RUN_WIDTH);
 	if (cx < MIN_RUN_WIDTH)
 		cx = MIN_RUN_WIDTH;
 	m_splitter->SetSashPosition(cx);
@@ -253,13 +254,13 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 
 CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 {
-	wxConfig::Get()->Write(wxT("Settings/splitCX2"), m_splitter->GetSashPosition());
+	wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, m_splitter->GetSashPosition());
 }
 
 
 void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 {
-	long cx = wxConfig::Get()->Read(wxT("Settings/splitCX2"), DEFAULT_CAL_WIDTH);
+	long cx = wxConfig::Get()->Read(CFG_SETTINGS_SPLITCX2, DEFAULT_CAL_WIDTH);
 	if (cx < MIN_CAL_WIDTH)
 		cx = MIN_CAL_WIDTH;
 	m_splitter->SetSashPosition(cx);

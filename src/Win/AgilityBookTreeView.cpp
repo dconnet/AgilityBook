@@ -54,6 +54,7 @@
 #include "Globals.h"
 #include "MainFrm.h"
 #include "Print.h"
+#include "RegItems.h"
 #include <wx/config.h>
 
 #ifdef WX_TREE_HAS_STATE
@@ -807,7 +808,7 @@ void CAgilityBookTreeView::LoadData()
 	CAgilityBookTreeData const* pData = GetCurrentTreeItem();
 	if (!pData)
 	{
-		strCallName = wxConfig::Get()->Read(wxT("Settings/LastDog"), wxString());
+		strCallName = wxConfig::Get()->Read(CFG_SETTINGS_LASTDOG, wxString());
 	}
 	std::list<ARBBasePtr> baseItems;
 	while (pData)

@@ -51,6 +51,7 @@
 #include "ListData.h"
 #include "MainFrm.h"
 #include "Print.h"
+#include "RegItems.h"
 #include "Wizard.h"
 #include <wx/config.h>
 #include <wx/mstream.h>
@@ -270,7 +271,7 @@ CAgilityBookCalendarListView::CSortColumn::CSortColumn(std::vector<long>& inColu
 void CAgilityBookCalendarListView::CSortColumn::Initialize()
 {
 	long realCol = IO_CAL_START_DATE;
-	realCol = wxConfig::Get()->Read(wxT("Sorting/Calendar"), realCol);
+	realCol = wxConfig::Get()->Read(CFG_SORTING_CALENDAR, realCol);
 	long neg = 1;
 	if (0 > realCol)
 	{
@@ -297,7 +298,7 @@ void CAgilityBookCalendarListView::CSortColumn::SetColumn(long iCol)
 		col = iCol * -1;
 	}
 	long realCol = m_Columns[col-1] * neg;
-	wxConfig::Get()->Write(wxT("Sorting/Calendar"), realCol);
+	wxConfig::Get()->Write(CFG_SORTING_CALENDAR, realCol);
 }
 
 

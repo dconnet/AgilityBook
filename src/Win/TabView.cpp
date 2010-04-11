@@ -27,6 +27,7 @@
 #include "AgilityBookPanels.h"
 #include "AgilityBookTreeView.h"
 #include "MainFrm.h"
+#include "RegItems.h"
 #include <wx/choicebk.h>
 #include <wx/config.h>
 #include <wx/listbook.h>
@@ -74,7 +75,7 @@ CTabView::CTabView()
 	m_imageList.Add(wxIcon(points_xpm));
 	m_imageList.Add(wxIcon(calendar_xpm));
 	m_imageList.Add(wxIcon(training_xpm));
-	m_type = wxConfig::Get()->Read(wxT("Settings/ViewType"), m_type);
+	m_type = wxConfig::Get()->Read(CFG_SETTINGS_VIEWTYPE, m_type);
 	switch (m_type)
 	{
 	default:
@@ -93,7 +94,7 @@ CTabView::CTabView()
 #endif
 		break;
 	}
-	m_orient = wxConfig::Get()->Read(wxT("Settings/ViewOrient"), m_orient);
+	m_orient = wxConfig::Get()->Read(CFG_SETTINGS_VIEWORIENT, m_orient);
 	if (m_orient < ID_ORIENT_FIRST || m_orient >= ID_ORIENT_LAST)
 		m_orient = ID_ORIENT_FIRST;
 }
@@ -103,9 +104,9 @@ CTabView::~CTabView()
 {
 	if (m_ctrlBook)
 	{
-		wxConfig::Get()->Write(wxT("Settings/ViewType"), m_type);
-		wxConfig::Get()->Write(wxT("Settings/ViewOrient"), m_orient);
-		wxConfig::Get()->Write(wxT("Settings/View"), m_ctrlBook->GetSelection());
+		wxConfig::Get()->Write(CFG_SETTINGS_VIEWTYPE, m_type);
+		wxConfig::Get()->Write(CFG_SETTINGS_VIEWORIENT, m_orient);
+		wxConfig::Get()->Write(CFG_SETTINGS_VIEW, m_ctrlBook->GetSelection());
 		m_ctrlBook->Destroy();
 		m_ctrlBook = NULL;
 	}
@@ -223,7 +224,7 @@ void CTabView::RecreateBook(wxDocument* doc, long inFlags, bool bOnCreate)
 		oldBook->Destroy();
 	}
 	else
-		sel = wxConfig::Get()->Read(wxT("Settings/View"), 0L);
+		sel = wxConfig::Get()->Read(CFG_SETTINGS_VIEW, 0L);
 
 	CBasePanel* pages[4];
 	m_ctrlBook->AddPage(

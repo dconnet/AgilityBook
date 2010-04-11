@@ -337,7 +337,7 @@ static struct
 	{
 		{ePageNone, NULL, NULL},
 		{ePageNone, NULL, NULL},
-		{ePageFinish, _("IDS_WIZ_EXPORT_SETTINGS"), _("IDS_WIZ_EXPORT_XML_SETTINGS")},
+		{ePageFinish, _("IDS_WIZ_EXPORT_SETTINGS"), _("IDS_WIZ_EXPORT_SETTINGS_ARB")},
 		{ePageNone, NULL, NULL},
 	} },
 };
@@ -779,10 +779,12 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_IMPORT_SETTINGS:
 			{
+				wxString name = wxT("AgilityRecordBook.");
+				name += _("IDS_FILEEXT_DEF_SETTINGS");
 				wxFileDialog file(this,
 					wxEmptyString, // caption
 					wxEmptyString, // def dir
-					_("IDS_FILEEXT_FNAME_SETTINGS"),
+					name,
 					_("IDS_FILEEXT_FILTER_SETTINGS"),
 					wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 				if (wxID_OK == file.ShowModal())
@@ -790,7 +792,12 @@ bool CWizardStart::DoWizardFinish()
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
+					if (tree->LoadXMLFile(file.GetPath(), errMsg)
+					&& CAgilityBookOptions::ImportSettings(tree))
+					{
+						bOk = true;
+					}
+					else
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.length())
@@ -800,33 +807,14 @@ bool CWizardStart::DoWizardFinish()
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
 					}
-					else
-					{
-						bOk = CAgilityBookOptions::ImportSettings(tree);
-					}
 				}
 			}
 			break;
 
 		case WIZ_EXPORT_SETTINGS:
 			{
-				wxString name = m_pDoc->GetFilename();
-				if (name.empty())
-				{
-					name = wxT("AgilityRecordBook.");
-					name += _("IDS_FILEEXT_DEF_SETTINGS");
-				}
-				else
-				{
-					int iDot = name.Find('.', true);
-					if (0 <= iDot)
-						name = name.Left(iDot+1) + _("IDS_FILEEXT_DEF_SETTINGS");
-					else
-					{
-						name += wxT(".");
-						name += _("IDS_FILEEXT_DEF_SETTINGS");
-					}
-				}
+				wxString name = wxT("AgilityRecordBook.");
+				name += _("IDS_FILEEXT_DEF_SETTINGS");
 				wxFileDialog file(this,
 					wxEmptyString, // caption
 					wxEmptyString, // def dir
