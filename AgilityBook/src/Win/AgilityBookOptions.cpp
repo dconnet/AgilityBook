@@ -11,7 +11,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2010-03-28 DRC Added ability to import/export program settings.
+ * @li 2010-03-28 DRC Added ability to import/export program settings (v2.2.0).
  * @li 2010-01-21 DRC Fixed font flag parsing.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Changed auto update check to false in debug mode.
@@ -48,203 +48,151 @@
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
 #include "DlgAssignColumns.h"
+#include "Element.h"
+#include "RegItems.h"
 #include "VersionNum.h"
 
 #include <wx/config.h>
 
 
-/* Registry entries (all referenced in the file, unless noted otherwise)
- * DW == dword, ST == string
-Calendar
-	DW AutoDelete
-	DW CloseColor
-	DW CloseNear
-	DW CloseNearColor
-	DW EnteredColor
-	DW Filter (FilterOptions.cpp)
-	DW FontTextBold
-	DW FontTextItalic
-	ST FontTextName
-	DW FontTextSize
-	DW HideOverlapping
-	DW NotEnteredColor
-	DW OpenColor
-	DW OpenNear
-	DW OpenNearColor
-	DW PastEntry
-	DW PlanningColor
-	DW ViewAll
-	DW ViewClose
-	DW ViewOpen
-	Obsolete(1.7.6.12) DW EntrySize.cx
-	Obsolete(1.7.6.12) DW EntrySize.cy
-	Obsolete DW FontDateBold
-	Obsolete DW FontDateItalic
-	Obsolete ST FontDateName
-	Obsolete DW FontDateSize
-	Obsolete DW PrintFontDateBold
-	Obsolete DW PrintFontDateItalic
-	Obsolete ST PrintFontDateName
-	Obsolete DW PrintFontDateSize
-	Obsolete DW PrintFontTextBold
-	Obsolete DW PrintFontTextItalic
-	Obsolete ST PrintFontTextName
-	Obsolete DW PrintFontTextSize
-CalSites
-	DW (DLL names in EXE directory)
-CalSites2 - used for permanently disabling a version
-	ST (DLL names in EXE directory)
-Columns
-	ST col[n]
-ColumnInfo (NamedColumns.cpp)
-	ST CurrentConfig (NamedColumns.cpp)
-	DW numConfigs (NamedColumns.cpp)
-	Config[n] (NamedColumns.cpp)
-		ST name (NamedColumns.cpp)
-		[key] (NamedColumns.cpp)
-			ST col[n] (NamedColumns.cpp)
-Common
-	DW CRCDImage
-	ST CurrentFilter (FilterOptions.cpp)
-	DW EndFilter (FilterOptions.cpp)
-	DW EndFilterJDay (FilterOptions.cpp)
-	ST FilterTrainingNames (FilterOptions.cpp)
-	ST FilterVenue (FilterOptions.cpp)
-	DW FirstDayOfWeek
-	DW UnitsAsMM
-	DW Margins.MM
-	DW Margins.B
-	DW Margins.L
-	DW Margins.R
-	DW Margins.T
-	DW RunPage.MM
-	DW RunPage.W
-	DW RunPage.H
-	DW numFilters (FilterOptions.cpp)
-	DW PrintFontListBold
-	DW PrintFontListItalic
-	ST PrintFontListName
-	DW PrintFontListSize
-	DW sortPtVw1
-	DW sortPtVw2
-	DW sortPtVw3
-	DW StartFilter (FilterOptions.cpp)
-	DW StartFilterJDay (FilterOptions.cpp)
-	DW TableInYPS
-	DW ViewAllDates (FilterOptions.cpp)
-	DW ViewAllNames (FilterOptions.cpp)
-	DW ViewAllVenues (FilterOptions.cpp)
-	DW ViewHiddenTitles
-	DW ViewLifetimeEvents
-	DW ViewNewestFirst
-	DW ViewRuns (FilterOptions.cpp)
-	DW ViewRunsByTrial
-	Obsolete DW TrainingEndFilter
-	Obsolete DW TrainingEndFilterJDay
-	Obsolete DW TrainingStartFilter
-	Obsolete DW TrainingStartFilterJDay
-	Obsolete DW TrainingViewAllDates
-	Obsolete DW ViewAllRuns
-	Obsolete DW ViewQRuns
-Export
-	ST col[n]
-	DW dateformat
-	DW delim
-	ST delimiter
-ExportCal
-	ST col[n]
-ExportCalAppt
-	ST col[n]
-ExportCalTask
-	ST col[n]
-ExportLog
-	ST col[n]
-Filter[number]
-	DW AllDates (FilterOptions.cpp)
-	DW AllNames (FilterOptions.cpp)
-	DW AllVenues (FilterOptions.cpp)
-	DW Cal (FilterOptions.cpp)
-	DW End (FilterOptions.cpp)
-	DW EndJDay (FilterOptions.cpp)
-	ST FilterNames (FilterOptions.cpp)
-	ST FilterVenue (FilterOptions.cpp)
-	ST Name (FilterOptions.cpp)
-	DW Start (FilterOptions.cpp)
-	DW StartJDay (FilterOptions.cpp)
-	DW ViewRuns (FilterOptions.cpp)
-Import
-	ST col[n]
-	DW dateformat
-	DW delim
-	ST delimiter
-	DW row
-ImportCal
-	ST col[n]
-ImportLog
-	ST col[n]
-Last
-	ST Division
-	ST Handler
-	ST Height
-	ST Judge
-	ST Level
-	ST RefHeight
-Selection:
-	DW nDogs (DlgSelectDog.cpp)
-	ST <dog name> (DlgSelectDog.cpp)
-Settings:
-	DW autoCheck
-	DW autoShowTitle
-	DW BackupFiles
-	Obsolete(2.1.0.0) DW dateFormat[n]
+static void CopyConfig(ElementNodePtr tree)
+{
+	wxString type;
+	if (ElementNode::eFound != tree->GetAttrib(wxT("type"), type))
+		return;
+	if (wxT("g") == type)
+	{
+		wxString path = wxConfig::Get()->GetPath();
+		wxConfig::Get()->SetPath(tree->GetName());
+		for (int i = 0; i < tree->GetElementCount(); ++i)
 		{
-			eRunTree	= 0,
-			eRunList	= 1,
-			ePoints		= 2,
-			eCalList	= 3,
-			eCalendar	= 4,
-			eTraining	= 5,
+			if (Element::Element_Node == tree->GetElement(i)->GetType())
+			{
+				CopyConfig(tree->GetElementNode(i));
+			}
 		}
-	Obsolete(2.0.0.0) DW Lang (LanguageManager.cpp)
-	Obsolete(2.1.0.0) DW Lang2 [added 2.0.0.0] (LanguageManager.cpp)
-	ST Lang3 [added 2.1.0.0] (LanguageManager.cpp)
-	DW lastCX (AgilityBook.cpp/MainFrm.cpp)
-	DW lastCY (AgilityBook.cpp/MainFrm.cpp)
-	ST LastDog (AgilityBookDoc.cpp/AgilityBookTreeView.cpp)
-	ST LastFile (AgilityBook.cpp/AgilityBookDoc.cpp)
-	DW lastState (AgilityBook.cpp/MainFrm.cpp)
-	ST lastVerCheck (AgilityBook.cpp/UpdateInfo.cpp)
-	DW lastXpos (AgilityBook.cpp/MainFrm.cpp)
-	DW lastYpos (AgilityBook.cpp/MainFrm.cpp)
-	DW printLand (AgilityBook.cpp)
-	ST proxy
-	DW showHtml
-	DW ShowSplash
-	ST Splash
-	DW splitCX (AgilityBookPanels.cpp)
-	DW splitCX2 (AgilityBookPanels.cpp)
-	DW useproxy
-	DW View (TabView.cpp)
-	DW ViewOrient (TabView.cpp)
-	DW ViewType (TabView.cpp)
-Sorting:
-	ST [key]Order (ColumnOrder.cpp)
-	ST [key]Sort (ColumnOrder.cpp)
-	DW Calendar (AgilityBookCalendarListView.cpp)
-	DW Runs (AgilityBookRunsView.cpp)
-	DW Training (AgilityBookTrainingView.cpp)
-UserNames:
-	ST <hint>
-Unknown
-	ST col[n]
-*/
+		wxConfig::Get()->SetPath(path);
+	}
+	else if (wxT("s") == type)
+	{
+		wxConfig::Get()->Write(tree->GetName(), tree->GetValue());
+	}
+	else if (wxT("b") == type)
+	{
+		bool val;
+		tree->GetAttrib(wxT("val"), val);
+		wxConfig::Get()->Write(tree->GetName(), val);
+	}
+	else if (wxT("i") == type)
+	{
+		long val;
+		tree->GetAttrib(wxT("val"), val);
+		wxConfig::Get()->Write(tree->GetName(), val);
+	}
+	else if (wxT("f") == type)
+	{
+		double val;
+		tree->GetAttrib(wxT("val"), val);
+		wxConfig::Get()->Write(tree->GetName(), val);
+	}
+}
+
+
+static void CopyConfigItem(wxString const& entry, ElementNodePtr tree)
+{
+	switch (wxConfig::Get()->GetEntryType(entry))
+	{
+	default:
+		break;
+	case wxConfigBase::Type_String:
+		{
+			ElementNodePtr item = tree->AddElementNode(entry);
+			item->AddAttrib(wxT("type"), wxT("s"));
+			item->SetValue(wxConfig::Get()->Read(entry, wxEmptyString));
+		}
+		break;
+	case wxConfigBase::Type_Boolean:
+		{
+			ElementNodePtr item = tree->AddElementNode(entry);
+			item->AddAttrib(wxT("type"), wxT("b"));
+			bool val;
+			wxConfig::Get()->Read(entry, &val);
+			item->AddAttrib(wxT("val"), val);
+		}
+		break;
+	case wxConfigBase::Type_Integer:
+		{
+			ElementNodePtr item = tree->AddElementNode(entry);
+			item->AddAttrib(wxT("type"), wxT("i"));
+			long val;
+			wxConfig::Get()->Read(entry, &val);
+			item->AddAttrib(wxT("val"), val);
+		}
+		break;
+	case wxConfigBase::Type_Float:
+		{
+			ElementNodePtr item = tree->AddElementNode(entry);
+			item->AddAttrib(wxT("type"), wxT("f"));
+			double val;
+			wxConfig::Get()->Read(entry, &val);
+			item->AddAttrib(wxT("val"), val);
+		}
+		break;
+	}
+}
+
+
+static void CopyConfig(wxString const& key, ElementNodePtr root)
+{
+	if (!wxConfig::Get()->HasGroup(key))
+		return;
+
+	ElementNodePtr tree = root->AddElementNode(key);
+	tree->AddAttrib(wxT("type"), wxT("g"));
+
+	wxString path = wxConfig::Get()->GetPath();
+	wxConfig::Get()->SetPath(key);
+
+	wxString entry;
+	long index = 0;
+	if (wxConfig::Get()->GetFirstEntry(entry, index))
+	{
+		do
+		{
+			CopyConfigItem(entry, tree);
+		} while (wxConfig::Get()->GetNextEntry(entry, index));
+	}
+	if (wxConfig::Get()->GetFirstGroup(entry, index))
+	{
+		do
+		{
+			CopyConfig(entry, tree);
+		} while (wxConfig::Get()->GetNextGroup(entry, index));
+	}
+
+	wxConfig::Get()->SetPath(path);
+}
 
 
 bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
 {
-#pragma PRAGMA_TODO(Import settings)
-	wxMessageBox(wxT("TODO"), wxT("TODO"), wxCENTRE | wxICON_EXCLAMATION);
-	return false;
+	if (!tree || tree->GetName() != wxT("AgilityBookSettings"))
+		return false;
+	// Version numbers aren't needed yet.
+	ARBVersion version;
+	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_VERSION, version))
+		return false;
+	wxString pgmVersion;
+	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
+		return false;
+	for (int i = 0; i < tree->GetElementCount(); ++i)
+	{
+		ElementNodePtr ele = tree->GetElementNode(i);
+		if (!ele)
+			continue;
+		CopyConfig(ele);
+	}
+	return true;
 }
 
 
@@ -253,10 +201,62 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	wxBusyCursor wait;
 	CVersionNum ver(true);
 	wxString verstr = ver.GetVersionString();
-	//ElementNodePtr tree(ElementNode::New());
-#pragma PRAGMA_TODO(Export settings)
-	wxMessageBox(wxT("TODO"), wxT("TODO"), wxCENTRE | wxICON_EXCLAMATION);
-	return ElementNodePtr();
+	ElementNodePtr tree(ElementNode::New(wxT("AgilityBookSettings")));
+	tree->AddAttrib(ATTRIB_BOOK_VERSION, ARBAgilityRecordBook::GetCurrentDocVersion());
+	tree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, verstr);
+
+	// These sections are copied complete.
+	static wxChar const* const sections[] = {
+		wxT("Calendar"),
+		wxT("Columns"),
+		wxT("ColumnInfo"),
+		wxT("Common"),
+		wxT("Export"),
+		wxT("ExportCal"),
+		wxT("ExportCalAppt"),
+		wxT("ExportCalTask"),
+		wxT("ExportLog"),
+		wxT("Import"),
+		wxT("ImportCal"),
+		wxT("ImportLog"),
+		wxT("Sorting"),
+		NULL
+	};
+	for (int i = 0; sections[i]; ++i)
+	{
+		CopyConfig(sections[i], tree);
+	}
+
+	// Copy all the filters complete.
+	int nFilters = wxConfig::Get()->Read(CFG_COMMON_NUMFILTERS, 0L);
+	for (int i = 0; i < nFilters; ++i)
+	{
+		CopyConfig(CFG_KEY_FILTER(i, false), tree);
+	}
+
+	// And pick/choose in Settings.
+	ElementNodePtr settings = tree->AddElementNode(wxT("Settings"));
+	settings->AddAttrib(wxT("type"), wxT("g"));
+	wxString path = wxConfig::Get()->GetPath();
+	wxConfig::Get()->SetPath(wxT("Settings"));
+	static wxChar const* const items[] = {
+		wxT("autoCheck"),
+		wxT("autoShowTitle"),
+		wxT("printLand"),
+		wxT("proxy"),
+		wxT("showHtml"),
+		wxT("useproxy"),
+		wxT("View"),
+		wxT("ViewOrient"),
+		wxT("ViewType"),
+		NULL
+	};
+	for (int i = 0; items[i]; ++i)
+	{
+		CopyConfigItem(items[i], settings);
+	}
+	wxConfig::Get()->SetPath(path);
+	return tree;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -294,14 +294,14 @@ void CFontInfo::CreateFont(
 bool CAgilityBookOptions::AutoDeleteCalendarEntries()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Calendar/AutoDelete"), &val);
+	wxConfig::Get()->Read(CFG_CAL_AUTODELETE, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetAutoDeleteCalendarEntries(bool bAuto)
 {
-	wxConfig::Get()->Write(wxT("Calendar/AutoDelete"), bAuto);
+	wxConfig::Get()->Write(CFG_CAL_AUTODELETE, bAuto);
 }
 
 
@@ -309,49 +309,49 @@ void CAgilityBookOptions::SetAutoDeleteCalendarEntries(bool bAuto)
 bool CAgilityBookOptions::ViewAllCalendarEntries()
 {
 	bool val = true;
-	wxConfig::Get()->Read(wxT("Calendar/ViewAll"), &val);
+	wxConfig::Get()->Read(CFG_CAL_VIEWALL, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetViewAllCalendarEntries(bool bView)
 {
-	wxConfig::Get()->Write(wxT("Calendar/ViewAll"), bView);
+	wxConfig::Get()->Write(CFG_CAL_VIEWALL, bView);
 }
 
 
 bool CAgilityBookOptions::ViewAllCalendarOpening()
 {
 	bool val = true;
-	wxConfig::Get()->Read(wxT("Calendar/ViewOpen"), &val);
+	wxConfig::Get()->Read(CFG_CAL_VIEWOPEN, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetViewAllCalendarOpening(bool bView)
 {
-	wxConfig::Get()->Write(wxT("Calendar/ViewOpen"), bView);
+	wxConfig::Get()->Write(CFG_CAL_VIEWOPEN, bView);
 }
 
 
 bool CAgilityBookOptions::ViewAllCalendarClosing()
 {
 	bool val = true;
-	wxConfig::Get()->Read(wxT("Calendar/ViewClose"), &val);
+	wxConfig::Get()->Read(CFG_CAL_VIEWCLOSE, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetViewAllCalendarClosing(bool bView)
 {
-	wxConfig::Get()->Write(wxT("Calendar/ViewClose"), bView);
+	wxConfig::Get()->Write(CFG_CAL_VIEWCLOSE, bView);
 }
 
 
 long CAgilityBookOptions::DaysTillEntryIsPast()
 {
 	long val = 5;
-	wxConfig::Get()->Read(wxT("Calendar/PastEntry"), &val);
+	wxConfig::Get()->Read(CFG_CAL_PASTENTRY, &val);
 	return val;
 }
 
@@ -360,21 +360,21 @@ void CAgilityBookOptions::SetDaysTillEntryIsPast(long nDays)
 {
 	if (0 > nDays)
 		nDays = 0;
-	wxConfig::Get()->Write(wxT("Calendar/PastEntry"), nDays);
+	wxConfig::Get()->Write(CFG_CAL_PASTENTRY, nDays);
 }
 
 
 bool CAgilityBookOptions::HideOverlappingCalendarEntries()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Calendar/HideOverlapping"), &val);
+	wxConfig::Get()->Read(CFG_CAL_HIDEOVERLAPPING, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetHideOverlappingCalendarEntries(bool bHide)
 {
-	wxConfig::Get()->Write(wxT("Calendar/HideOverlapping"), bHide);
+	wxConfig::Get()->Write(CFG_CAL_HIDEOVERLAPPING, bHide);
 }
 
 
@@ -383,17 +383,17 @@ static wxChar const* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 	switch (inItem)
 	{
 	case CAgilityBookOptions::eCalColorNotEntered:
-		return wxT("NotEnteredColor");
+		return CFG_CAL_ITEM_NOTENTEREDCOLOR;
 	case CAgilityBookOptions::eCalColorPlanning:
-		return wxT("PlanningColor");
+		return CFG_CAL_ITEM_PLANNINGCOLOR;
 	case CAgilityBookOptions::eCalColorPending:
-		return wxT("PendingColor");
+		return CFG_CAL_ITEM_PENDINGCOLOR;
 	case CAgilityBookOptions::eCalColorEntered:
-		return wxT("EnteredColor");
+		return CFG_CAL_ITEM_ENTEREDCOLOR;
 	case CAgilityBookOptions::eCalColorOpening:
-		return wxT("OpenColor");
+		return CFG_CAL_ITEM_OPENCOLOR;
 	case CAgilityBookOptions::eCalColorClosing:
-		return wxT("CloseColor");
+		return CFG_CAL_ITEM_CLOSECOLOR;
 	}
 	assert(0);
 	return wxT("");
@@ -446,7 +446,7 @@ static void WriteColor(wxString const& key, wxColour const& inColor)
 
 wxColour CAgilityBookOptions::CalendarColor(CalendarColorItem inItem)
 {
-	wxString key(wxT("Calendar/"));
+	wxString key(CFG_KEY_CALENDAR);
 	key += CalItemName(inItem);
 	return ReadColor(key, CalItemColor(inItem));
 }
@@ -454,7 +454,7 @@ wxColour CAgilityBookOptions::CalendarColor(CalendarColorItem inItem)
 
 void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, wxColour inColor)
 {
-	wxString key(wxT("Calendar/"));
+	wxString key(CFG_KEY_CALENDAR);
 	key += CalItemName(inItem);
 	WriteColor(key, inColor);
 }
@@ -463,52 +463,52 @@ void CAgilityBookOptions::SetCalendarColor(CalendarColorItem inItem, wxColour in
 long CAgilityBookOptions::CalendarOpeningNear()
 {
 	long val = 4;
-	wxConfig::Get()->Read(wxT("Calendar/OpenNear"), &val);
+	wxConfig::Get()->Read(CFG_CAL_OPENNEAR, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetCalendarOpeningNear(long inDays)
 {
-	wxConfig::Get()->Write(wxT("Calendar/OpenNear"), inDays);
+	wxConfig::Get()->Write(CFG_CAL_OPENNEAR, inDays);
 }
 
 
 long CAgilityBookOptions::CalendarClosingNear()
 {
 	long val = 10;
-	wxConfig::Get()->Read(wxT("Calendar/CloseNear"), &val);
+	wxConfig::Get()->Read(CFG_CAL_CLOSENEAR, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetCalendarClosingNear(long inDays)
 {
-	wxConfig::Get()->Write(wxT("Calendar/CloseNear"), inDays);
+	wxConfig::Get()->Write(CFG_CAL_CLOSENEAR, inDays);
 }
 
 
 wxColour CAgilityBookOptions::CalendarOpeningNearColor()
 {
-	return ReadColor(wxT("Calendar/OpenNearColor"), wxColour(0,0,255));
+	return ReadColor(CFG_CAL_OPENNEARCOLOR, wxColour(0,0,255));
 }
 
 
 void CAgilityBookOptions::SetCalendarOpeningNearColor(wxColour inColor)
 {
-	WriteColor(wxT("Calendar/OpenNearColor"), inColor);
+	WriteColor(CFG_CAL_OPENNEARCOLOR, inColor);
 }
 
 
 wxColour CAgilityBookOptions::CalendarClosingNearColor()
 {
-	return ReadColor(wxT("Calendar/CloseNearColor"), wxColour(255,0,0));
+	return ReadColor(CFG_CAL_CLOSENEARCOLOR, wxColour(255,0,0));
 }
 
 
 void CAgilityBookOptions::SetCalendarClosingNearColor(wxColour inColor)
 {
-	WriteColor(wxT("Calendar/CloseNearColor"), inColor);
+	WriteColor(CFG_CAL_CLOSENEARCOLOR, inColor);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -517,7 +517,7 @@ void CAgilityBookOptions::SetCalendarClosingNearColor(wxColour inColor)
 ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 {
 	long val = static_cast<long>(ARBDate::eSunday);
-	wxConfig::Get()->Read(wxT("Common/FirstDayOfWeek"), &val);
+	wxConfig::Get()->Read(CFG_COMMON_FIRSTDAYOFWEEK, &val);
 	if (val < 0 || val > 6)
 		val = static_cast<long>(ARBDate::eSunday);
 	return static_cast<ARBDate::DayOfWeek>(val);
@@ -526,7 +526,7 @@ ARBDate::DayOfWeek CAgilityBookOptions::GetFirstDayOfWeek()
 
 void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 {
-	wxConfig::Get()->Write(wxT("Common/FirstDayOfWeek"), static_cast<long>(day));
+	wxConfig::Get()->Write(CFG_COMMON_FIRSTDAYOFWEEK, static_cast<long>(day));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -535,28 +535,28 @@ void CAgilityBookOptions::SetFirstDayOfWeek(ARBDate::DayOfWeek day)
 bool CAgilityBookOptions::GetViewRunsByTrial()
 {
 	bool val = true;
-	wxConfig::Get()->Read(wxT("Common/ViewRunsByTrial"), &val);
+	wxConfig::Get()->Read(CFG_COMMON_VIEWRUNSBYTRIAL, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetViewRunsByTrial(bool bView)
 {
-	wxConfig::Get()->Write(wxT("Common/ViewRunsByTrial"),bView);
+	wxConfig::Get()->Write(CFG_COMMON_VIEWRUNSBYTRIAL,bView);
 }
 
 
 bool CAgilityBookOptions::GetNewestDatesFirst()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Common/ViewNewestFirst"), &val);
+	wxConfig::Get()->Read(CFG_COMMON_VIEWNEWESTFIRST, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetNewestDatesFirst(bool bNewest)
 {
-	wxConfig::Get()->Write(wxT("Common/ViewNewestFirst"), bNewest);
+	wxConfig::Get()->Write(CFG_COMMON_VIEWNEWESTFIRST, bNewest);
 }
 
 
@@ -565,9 +565,9 @@ void CAgilityBookOptions::GetPointsViewSort(
 		PointsViewSort& outSecondary,
 		PointsViewSort& outTertiary)
 {
-	outPrimary = static_cast<PointsViewSort>(wxConfig::Get()->Read(wxT("Common/sortPtVw1"), static_cast<long>(ePointsViewSortDivision)));
-	outSecondary = static_cast<PointsViewSort>(wxConfig::Get()->Read(wxT("Common/sortPtVw2"), static_cast<long>(ePointsViewSortLevel)));
-	outTertiary = static_cast<PointsViewSort>(wxConfig::Get()->Read(wxT("Common/sortPtVw3"), static_cast<long>(ePointsViewSortEvent)));
+	outPrimary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW1, static_cast<long>(ePointsViewSortDivision)));
+	outSecondary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW2, static_cast<long>(ePointsViewSortLevel)));
+	outTertiary = static_cast<PointsViewSort>(wxConfig::Get()->Read(CFG_COMMON_SORTPTVW3, static_cast<long>(ePointsViewSortEvent)));
 }
 
 
@@ -576,65 +576,65 @@ void CAgilityBookOptions::SetPointsViewSort(
 		PointsViewSort inSecondary,
 		PointsViewSort inTertiary)
 {
-	wxConfig::Get()->Write(wxT("Common/sortPtVw1"), static_cast<long>(inPrimary));
-	wxConfig::Get()->Write(wxT("Common/sortPtVw2"), static_cast<long>(inSecondary));
-	wxConfig::Get()->Write(wxT("Common/sortPtVw3"), static_cast<long>(inTertiary));
+	wxConfig::Get()->Write(CFG_COMMON_SORTPTVW1, static_cast<long>(inPrimary));
+	wxConfig::Get()->Write(CFG_COMMON_SORTPTVW2, static_cast<long>(inSecondary));
+	wxConfig::Get()->Write(CFG_COMMON_SORTPTVW3, static_cast<long>(inTertiary));
 }
 
 
 bool CAgilityBookOptions::GetViewHiddenTitles()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Common/ViewHiddenTitles"), &val);
+	wxConfig::Get()->Read(CFG_COMMON_VIEWHIDDENTITLES, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetViewHiddenTitles(bool bSet)
 {
-	wxConfig::Get()->Write(wxT("Common/ViewHiddenTitles"), bSet);
+	wxConfig::Get()->Write(CFG_COMMON_VIEWHIDDENTITLES, bSet);
 }
 
 
 bool CAgilityBookOptions::GetViewLifetimePointsByEvent()
 {
 	bool val = true;
-	wxConfig::Get()->Read(wxT("Common/ViewLifetimeEvents"), &val);
+	wxConfig::Get()->Read(CFG_COMMON_VIEWLIFETIMEEVENTS, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetViewLifetimePointsByEvent(bool bSet)
 {
-	wxConfig::Get()->Write(wxT("Common/ViewLifetimeEvents"), bSet);
+	wxConfig::Get()->Write(CFG_COMMON_VIEWLIFETIMEEVENTS, bSet);
 }
 
 
 bool CAgilityBookOptions::GetTableInYPS()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Common/TableInYPS"), &val);
+	wxConfig::Get()->Read(CFG_COMMON_TABLEINYPS, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetTableInYPS(bool bSet)
 {
-	wxConfig::Get()->Write(wxT("Common/TableInYPS"), bSet);
+	wxConfig::Get()->Write(CFG_COMMON_TABLEINYPS, bSet);
 }
 
 
 bool CAgilityBookOptions::GetIncludeCRCDImage()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Common/CRCDImage"), &val);
+	wxConfig::Get()->Read(CFG_COMMON_CRCDIMAGE, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
 {
-	wxConfig::Get()->Write(wxT("Common/CRCDImage"), bSet);
+	wxConfig::Get()->Write(CFG_COMMON_CRCDIMAGE, bSet);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -648,34 +648,34 @@ void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	info.name = wxConfig::Get()->Read(wxT("Common/PrintFontListName"), info.name);
-	wxConfig::Get()->Read(wxT("Common/PrintFontListSize"), &info.size, info.size);
-	wxConfig::Get()->Read(wxT("Common/PrintFontListItalic"), &info.italic, info.italic);
-	wxConfig::Get()->Read(wxT("Common/PrintFontListBold"), &info.bold, info.bold);
+	info.name = wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTNAME, info.name);
+	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTSIZE, &info.size, info.size);
+	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTITALIC, &info.italic, info.italic);
+	wxConfig::Get()->Read(CFG_COMMON_PRINTFONTLISTBOLD, &info.bold, info.bold);
 	info.size /= 10;
 }
 
 
 void CAgilityBookOptions::SetPrinterFontInfo(CFontInfo const& info)
 {
-	wxConfig::Get()->Write(wxT("Common/PrintFontListName"), info.name);
-	wxConfig::Get()->Write(wxT("Common/PrintFontListSize"), info.size * 10);
-	wxConfig::Get()->Write(wxT("Common/PrintFontListItalic"), info.italic);
-	wxConfig::Get()->Write(wxT("Common/PrintFontListBold"), info.bold);
+	wxConfig::Get()->Write(CFG_COMMON_PRINTFONTLISTNAME, info.name);
+	wxConfig::Get()->Write(CFG_COMMON_PRINTFONTLISTSIZE, info.size * 10);
+	wxConfig::Get()->Write(CFG_COMMON_PRINTFONTLISTITALIC, info.italic);
+	wxConfig::Get()->Write(CFG_COMMON_PRINTFONTLISTBOLD, info.bold);
 }
 
 
 bool CAgilityBookOptions::GetUnitsAsMM()
 {
 	bool bAsMM = false;
-	wxConfig::Get()->Read(wxT("Common/UnitsAsMM"), &bAsMM);
+	wxConfig::Get()->Read(CFG_COMMON_UNITSASMM, &bAsMM);
 	return bAsMM;
 }
 
 
 void CAgilityBookOptions::SetUnitsAsMM(bool bAsMM)
 {
-	wxConfig::Get()->Write(wxT("Common/UnitsAsMM"), bAsMM);
+	wxConfig::Get()->Write(CFG_COMMON_UNITSASMM, bAsMM);
 }
 
 
@@ -697,11 +697,11 @@ void CAgilityBookOptions::GetPrinterMargins(
 		wxDC* pDC)
 {
 	bool bInMM = false;
-	wxConfig::Get()->Read(wxT("Common/Margins.MM"), &bInMM);
-	outLeft = wxConfig::Get()->Read(wxT("Common/Margins.L"), 50L);
-	outRight = wxConfig::Get()->Read(wxT("Common/Margins.R"), 50L);
-	outTop = wxConfig::Get()->Read(wxT("Common/Margins.T"), 50L);
-	outBottom = wxConfig::Get()->Read(wxT("Common/Margins.B"), 50L);
+	wxConfig::Get()->Read(CFG_COMMON_MARGINS_MM, &bInMM);
+	outLeft = wxConfig::Get()->Read(CFG_COMMON_MARGINS_L, 50L);
+	outRight = wxConfig::Get()->Read(CFG_COMMON_MARGINS_R, 50L);
+	outTop = wxConfig::Get()->Read(CFG_COMMON_MARGINS_T, 50L);
+	outBottom = wxConfig::Get()->Read(CFG_COMMON_MARGINS_B, 50L);
 	// Need to convert
 	if (bInMM != bAsMM || (pDC && bInMM))
 	{
@@ -741,11 +741,11 @@ void CAgilityBookOptions::SetPrinterMargins(
 		long inTop,
 		long inBottom)
 {
-	wxConfig::Get()->Write(wxT("Common/Margins.MM"), bAsMM);
-	wxConfig::Get()->Write(wxT("Common/Margins.L"), inLeft);
-	wxConfig::Get()->Write(wxT("Common/Margins.R"), inRight);
-	wxConfig::Get()->Write(wxT("Common/Margins.T"), inTop);
-	wxConfig::Get()->Write(wxT("Common/Margins.B"), inBottom);
+	wxConfig::Get()->Write(CFG_COMMON_MARGINS_MM, bAsMM);
+	wxConfig::Get()->Write(CFG_COMMON_MARGINS_L, inLeft);
+	wxConfig::Get()->Write(CFG_COMMON_MARGINS_R, inRight);
+	wxConfig::Get()->Write(CFG_COMMON_MARGINS_T, inTop);
+	wxConfig::Get()->Write(CFG_COMMON_MARGINS_B, inBottom);
 }
 
 
@@ -756,9 +756,9 @@ void CAgilityBookOptions::GetRunPageSize(
 		wxDC* pDC)
 {
 	bool bInMM = false;
-	wxConfig::Get()->Read(wxT("Common/RunPage.MM"), &bInMM);
-	outWidth = wxConfig::Get()->Read(wxT("Common/RunPage.W"), 0L);
-	outHeight = wxConfig::Get()->Read(wxT("Common/RunPage.H"), 0L);
+	wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_MM, &bInMM);
+	outWidth = wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_W, 0L);
+	outHeight = wxConfig::Get()->Read(CFG_COMMON_RUNPAGE_H, 0L);
 	if (bInMM != bAsMM || (pDC && bInMM))
 	{
 		if (bInMM)
@@ -787,9 +787,9 @@ void CAgilityBookOptions::SetRunPageSize(
 		long inWidth,
 		long inHeight)
 {
-	wxConfig::Get()->Write(wxT("Common/RunPage.MM"), bAsMM);
-	wxConfig::Get()->Write(wxT("Common/RunPage.W"), inWidth);
-	wxConfig::Get()->Write(wxT("Common/RunPage.H"), inHeight);
+	wxConfig::Get()->Write(CFG_COMMON_RUNPAGE_MM, bAsMM);
+	wxConfig::Get()->Write(CFG_COMMON_RUNPAGE_W, inWidth);
+	wxConfig::Get()->Write(CFG_COMMON_RUNPAGE_H, inHeight);
 }
 
 
@@ -799,20 +799,20 @@ void CAgilityBookOptions::GetCalendarFontInfo(CFontInfo& info)
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
-	info.name = wxConfig::Get()->Read(wxT("Calendar/FontTextName"), info.name);
-	wxConfig::Get()->Read(wxT("Calendar/FontTextSize"), &info.size, info.size);
-	wxConfig::Get()->Read(wxT("Calendar/FontTextItalic"), &info.italic, info.italic);
-	wxConfig::Get()->Read(wxT("Calendar/FontTextBold"), &info.bold, info.bold);
+	info.name = wxConfig::Get()->Read(CFG_CAL_FONTTEXTNAME, info.name);
+	wxConfig::Get()->Read(CFG_CAL_FONTTEXTSIZE, &info.size, info.size);
+	wxConfig::Get()->Read(CFG_CAL_FONTTEXTITALIC, &info.italic, info.italic);
+	wxConfig::Get()->Read(CFG_CAL_FONTTEXTBOLD, &info.bold, info.bold);
 	info.size /= 10;
 }
 
 
 void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 {
-	wxConfig::Get()->Write(wxT("Calendar/FontTextName"), info.name);
-	wxConfig::Get()->Write(wxT("Calendar/FontTextSize"), info.size * 10);
-	wxConfig::Get()->Write(wxT("Calendar/FontTextItalic"), info.italic);
-	wxConfig::Get()->Write(wxT("Calendar/FontTextBold"), info.bold);
+	wxConfig::Get()->Write(CFG_CAL_FONTTEXTNAME, info.name);
+	wxConfig::Get()->Write(CFG_CAL_FONTTEXTSIZE, info.size * 10);
+	wxConfig::Get()->Write(CFG_CAL_FONTTEXTITALIC, info.italic);
+	wxConfig::Get()->Write(CFG_CAL_FONTTEXTBOLD, info.bold);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -820,91 +820,91 @@ void CAgilityBookOptions::SetCalendarFontInfo(CFontInfo const& info)
 
 wxString CAgilityBookOptions::GetLastEnteredDivision()
 {
-	return wxConfig::Get()->Read(wxT("Last/Division"), wxString());
+	return wxConfig::Get()->Read(CFG_LAST_DIVISION, wxString());
 }
 
 
 void CAgilityBookOptions::SetLastEnteredDivision(wxChar const* inLast)
 {
 	if (inLast)
-		wxConfig::Get()->Write(wxT("Last/Division"), inLast);
+		wxConfig::Get()->Write(CFG_LAST_DIVISION, inLast);
 	else
-		wxConfig::Get()->DeleteEntry(wxT("Last/Division"));
+		wxConfig::Get()->DeleteEntry(CFG_LAST_DIVISION);
 }
 
 
 wxString CAgilityBookOptions::GetLastEnteredLevel()
 {
-	return wxConfig::Get()->Read(wxT("Last/Level"), wxString());
+	return wxConfig::Get()->Read(CFG_LAST_LEVEL, wxString());
 }
 
 
 void CAgilityBookOptions::SetLastEnteredLevel(wxChar const* inLast)
 {
 	if (inLast)
-		wxConfig::Get()->Write(wxT("Last/Level"), inLast);
+		wxConfig::Get()->Write(CFG_LAST_LEVEL, inLast);
 	else
-		wxConfig::Get()->DeleteEntry(wxT("Last/Level"));
+		wxConfig::Get()->DeleteEntry(CFG_LAST_LEVEL);
 }
 
 
 wxString CAgilityBookOptions::GetLastEnteredHeight()
 {
-	return wxConfig::Get()->Read(wxT("Last/Height"), wxString());
+	return wxConfig::Get()->Read(CFG_LAST_HEIGHT, wxString());
 }
 
 
 void CAgilityBookOptions::SetLastEnteredHeight(wxChar const* inLast)
 {
 	if (inLast)
-		wxConfig::Get()->Write(wxT("Last/Height"), inLast);
+		wxConfig::Get()->Write(CFG_LAST_HEIGHT, inLast);
 	else
-		wxConfig::Get()->DeleteEntry(wxT("Last/Height"));
+		wxConfig::Get()->DeleteEntry(CFG_LAST_HEIGHT);
 }
 
 
 wxString CAgilityBookOptions::GetLastEnteredRefHeight()
 {
-	return wxConfig::Get()->Read(wxT("Last/RefHeight"), wxString());
+	return wxConfig::Get()->Read(CFG_LAST_REFHEIGHT, wxString());
 }
 
 
 void CAgilityBookOptions::SetLastEnteredRefHeight(wxChar const* inLast)
 {
 	if (inLast)
-		wxConfig::Get()->Write(wxT("Last/RefHeight"), inLast);
+		wxConfig::Get()->Write(CFG_LAST_REFHEIGHT, inLast);
 	else
-		wxConfig::Get()->DeleteEntry(wxT("Last/RefHeight"));
+		wxConfig::Get()->DeleteEntry(CFG_LAST_REFHEIGHT);
 }
 
 
 wxString CAgilityBookOptions::GetLastEnteredJudge()
 {
-	return wxConfig::Get()->Read(wxT("Last/Judge"), wxString());
+	return wxConfig::Get()->Read(CFG_LAST_JUDGE, wxString());
 }
 
 
 void CAgilityBookOptions::SetLastEnteredJudge(wxChar const* inLast)
 {
 	if (inLast)
-		wxConfig::Get()->Write(wxT("Last/Judge"), inLast);
+		wxConfig::Get()->Write(CFG_LAST_JUDGE, inLast);
 	else
-		wxConfig::Get()->DeleteEntry(wxT("Last/Judge"));
+		wxConfig::Get()->DeleteEntry(CFG_LAST_JUDGE);
 }
 
 
 wxString CAgilityBookOptions::GetLastEnteredHandler()
 {
-	return wxConfig::Get()->Read(wxT("Last/Handler"), wxString());
+	return wxConfig::Get()->Read(CFG_LAST_HANDLER, wxString());
 }
 
 
 void CAgilityBookOptions::SetLastEnteredHandler(wxChar const* inLast)
 {
 	if (inLast)
-		wxConfig::Get()->Write(wxT("Last/Handler"), inLast);
+		wxConfig::Get()->Write(CFG_LAST_HANDLER, inLast);
 	else
-		wxConfig::Get()->DeleteEntry(wxT("Last/Handler"));
+		wxConfig::Get()->DeleteEntry(CFG_LAST_HANDLER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -912,7 +912,7 @@ void CAgilityBookOptions::SetLastEnteredHandler(wxChar const* inLast)
 
 long CAgilityBookOptions::GetImportStartRow()
 {
-	long row = wxConfig::Get()->Read(wxT("Import/row"), 1L);
+	long row = wxConfig::Get()->Read(CFG_IMPORT_ROW, 1L);
 	if (0 > row)
 		row = 1;
 	return row;
@@ -921,7 +921,7 @@ long CAgilityBookOptions::GetImportStartRow()
 
 void CAgilityBookOptions::SetImportStartRow(long row)
 {
-	wxConfig::Get()->Write(wxT("Import/row"), row);
+	wxConfig::Get()->Write(CFG_IMPORT_ROW, row);
 }
 
 
@@ -932,13 +932,13 @@ void CAgilityBookOptions::GetImportExportDelimiters(
 {
 	wxString section;
 	if (bImport)
-		section = wxT("Import/");
+		section = CFG_KEY_IMPORT;
 	else
-		section = wxT("Export/");
+		section = CFG_KEY_EXPORT;
 	delim = eDelimTab;
 	delimiter.Empty();
-	delim = wxConfig::Get()->Read(section + wxT("delim"), delim);
-	delimiter = wxConfig::Get()->Read(section + wxT("delimiter"), delimiter);
+	delim = wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIM, delim);
+	delimiter = wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter);
 	if (1 < delimiter.length())
 		delimiter = delimiter.Left(1);
 }
@@ -951,11 +951,11 @@ void CAgilityBookOptions::SetImportExportDelimiters(
 {
 	wxString section;
 	if (bImport)
-		section = wxT("Import/");
+		section = CFG_KEY_IMPORT;
 	else
-		section = wxT("Export/");
-	wxConfig::Get()->Write(section + wxT("delim"), delim);
-	wxConfig::Get()->Write(section + wxT("delimiter"), delimiter);
+		section = CFG_KEY_EXPORT;
+	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DELIM, delim);
+	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DELIMITER, delimiter);
 }
 
 
@@ -965,10 +965,10 @@ void CAgilityBookOptions::GetImportExportDateFormat(
 {
 	wxString section;
 	if (bImport)
-		section = wxT("Import/");
+		section = CFG_KEY_IMPORT;
 	else
-		section = wxT("Export/");
-	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + wxT("dateformat"), static_cast<long>(ARBDate::eISO)));
+		section = CFG_KEY_EXPORT;
+	outFormat = static_cast<ARBDate::DateFormat>(wxConfig::Get()->Read(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(ARBDate::eISO)));
 }
 
 
@@ -978,10 +978,10 @@ void CAgilityBookOptions::SetImportExportDateFormat(
 {
 	wxString section;
 	if (bImport)
-		section = wxT("Import/");
+		section = CFG_KEY_IMPORT;
 	else
-		section = wxT("Export/");
-	wxConfig::Get()->Write(section + wxT("dateformat"), static_cast<long>(inFormat));
+		section = CFG_KEY_EXPORT;
+	wxConfig::Get()->Write(section + CFG_IMPORT_EXPORT_DATEFORMAT, static_cast<long>(inFormat));
 }
 
 
@@ -990,25 +990,25 @@ static wxChar const* const GetColumnName(CAgilityBookOptions::ColumnOrder eOrder
 	switch (eOrder)
 	{
 	default:
-		return wxT("Unknown");
+		return CFG_KEY_UNKNOWN;
 	case CAgilityBookOptions::eRunsImport:
-		return wxT("Import");
+		return CFG_KEY_IMPORT;
 	case CAgilityBookOptions::eRunsExport:
-		return wxT("Export");
+		return CFG_KEY_EXPORT;
 	case CAgilityBookOptions::eCalImport:
-		return wxT("ImportCal");
+		return CFG_KEY_IMPORTCAL;
 	case CAgilityBookOptions::eCalExport:
-		return wxT("ExportCal");
+		return CFG_KEY_EXPORTCAL;
 	case CAgilityBookOptions::eCalExportAppt:
-		return wxT("ExportCalAppt");
+		return CFG_KEY_EXPORTCALAPPT;
 	case CAgilityBookOptions::eCalExportTask:
-		return wxT("ExportCalTask");
+		return CFG_KEY_EXPORTCALTASK;
 	case CAgilityBookOptions::eLogImport:
-		return wxT("ImportLog");
+		return CFG_KEY_IMPORTLOG;
 	case CAgilityBookOptions::eLogExport:
-		return wxT("ExportLog");
+		return CFG_KEY_EXPORTLOG;
 	case CAgilityBookOptions::eView:
-		return wxT("Columns");
+		return CFG_KEY_COLUMNS;
 	}
 }
 
@@ -1026,12 +1026,7 @@ void CAgilityBookOptions::GetColumnOrder(
 		wxString item;
 		if (!namedColumn.empty())
 			item << wxT('/') << namedColumn;
-		item << GetColumnName(eOrder)
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-			<< wxT("/col") << static_cast<unsigned int>(idxColumn);
-#else
-			<< wxT("/col") << idxColumn;
-#endif
+		item << GetColumnName(eOrder) << CFG_COL_BASENAME(idxColumn);
 		wxString data = wxConfig::Get()->Read(item, wxEmptyString);
 		int idx = data.Find(',');
 		while (0 <= idx)
@@ -1312,12 +1307,7 @@ void CAgilityBookOptions::SetColumnOrder(
 	wxString item;
 	if (!namedColumn.empty())
 		item << wxT('/') << namedColumn;
-	item << GetColumnName(eOrder);
-#if _MSC_VER >= 1300 && _MSC_VER < 1400 // VC7 casting warning
-	item << wxT("/col") << static_cast<unsigned int>(idxColumn);
-#else
-	item << wxT("/col") << idxColumn;
-#endif
+	item << GetColumnName(eOrder) << CFG_COL_BASENAME(idxColumn);
 	wxConfig::Get()->Write(item, data);
 }
 
@@ -1341,7 +1331,7 @@ bool CAgilityBookOptions::GetAutoUpdateCheck()
 #ifdef _DEBUG
 	val = false;
 #else
-	wxConfig::Get()->Read(wxT("Settings/autoCheck"), &val);
+	wxConfig::Get()->Read(CFG_SETTINGS_AUTOCHECK, &val);
 #endif
 	return val;
 }
@@ -1349,80 +1339,54 @@ bool CAgilityBookOptions::GetAutoUpdateCheck()
 
 void CAgilityBookOptions::SetAutoUpdateCheck(bool bSet)
 {
-	wxConfig::Get()->Write(wxT("Settings/autoCheck"), bSet);
+	wxConfig::Get()->Write(CFG_SETTINGS_AUTOCHECK, bSet);
 }
 
 
 long CAgilityBookOptions::GetNumBackupFiles()
 {
-	return wxConfig::Get()->Read(wxT("Settings/BackupFiles"), 3L);
+	return wxConfig::Get()->Read(CFG_SETTINGS_BACKUPFILES, 3L);
 }
 
 
 void CAgilityBookOptions::SetNumBackupFiles(long nFiles)
 {
-	wxConfig::Get()->Write(wxT("Settings/BackupFiles"), nFiles);
-}
-
-
-bool CAgilityBookOptions::AutoShowSplashScreen()
-{
-	bool val = true;
-	wxConfig::Get()->Read(wxT("Settings/ShowSplash"), &val);
-	return val;
-}
-
-
-void CAgilityBookOptions::AutoShowSplashScreen(bool bAutoShow)
-{
-	wxConfig::Get()->Write(wxT("Settings/ShowSplash"), bAutoShow);
-}
-
-
-wxString CAgilityBookOptions::GetSplashImage()
-{
-	return wxConfig::Get()->Read(wxT("Settings/Splash"), wxString());
-}
-
-
-void CAgilityBookOptions::SetSplashImage(wxString const& filename)
-{
-	wxConfig::Get()->Write(wxT("Settings/Splash"), filename);
+	wxConfig::Get()->Write(CFG_SETTINGS_BACKUPFILES, nFiles);
 }
 
 
 bool CAgilityBookOptions::AutoShowPropertiesOnNewTitle()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Settings/autoShowTitle"), &val);
+	wxConfig::Get()->Read(CFG_SETTINGS_AUTOSHOWTITLE, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::AutoShowPropertiesOnNewTitle(bool bShow)
 {
-	wxConfig::Get()->Write(wxT("Settings/autoShowTitle"), bShow);
+	wxConfig::Get()->Write(CFG_SETTINGS_AUTOSHOWTITLE, bShow);
 }
 
 
 bool CAgilityBookOptions::ShowHtmlPoints()
 {
 	bool val = true;
-	wxConfig::Get()->Read(wxT("Settings/showHtml"), &val);
+	wxConfig::Get()->Read(CFG_SETTINGS_SHOWHTML, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetShowHtmlPoints(bool bSet)
 {
-	wxConfig::Get()->Write(wxT("Settings/showHtml"), bSet);
+	wxConfig::Get()->Write(CFG_SETTINGS_SHOWHTML, bSet);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 wxString CAgilityBookOptions::GetUserName(wxString const& hint)
 {
-	wxString section(wxT("UserNames/"));
+	wxString section(CFG_KEY_USERNAMES);
 	section += hint;
 	return wxConfig::Get()->Read(section, wxString());
 }
@@ -1432,7 +1396,7 @@ void CAgilityBookOptions::SetUserName(
 		wxString const& hint,
 		wxString const& userName)
 {
-	wxString section(wxT("UserNames/"));
+	wxString section(CFG_KEY_USERNAMES);
 	section += hint;
 	wxConfig::Get()->Write(section, userName);
 }
@@ -1444,26 +1408,26 @@ void CAgilityBookOptions::SetUserName(
 bool CAgilityBookOptions::GetUseProxy()
 {
 	bool val = false;
-	wxConfig::Get()->Read(wxT("Settings/useproxy"), &val);
+	wxConfig::Get()->Read(CFG_SETTINGS_USEPROXY, &val);
 	return val;
 }
 
 
 void CAgilityBookOptions::SetUseProxy(bool inUseProxy)
 {
-	wxConfig::Get()->Write(wxT("Settings/useproxy"), inUseProxy);
+	wxConfig::Get()->Write(CFG_SETTINGS_USEPROXY, inUseProxy);
 }
 
 
 wxString CAgilityBookOptions::GetProxyServer()
 {
-	return wxConfig::Get()->Read(wxT("Settings/proxy"), wxString());
+	return wxConfig::Get()->Read(CFG_SETTINGS_PROXY, wxString());
 }
 
 
 void CAgilityBookOptions::SetProxyServer(wxString const& inProxy)
 {
-	wxConfig::Get()->Write(wxT("Settings/proxy"), inProxy);
+	wxConfig::Get()->Write(CFG_SETTINGS_PROXY, inProxy);
 }
 
 
@@ -1484,7 +1448,7 @@ bool CAgilityBookOptions::IsCalSiteVisible(
 	if (filename.IsEmpty())
 		return true;
 	bool bVisible = true;
-	wxString section(wxT("CalSites/"));
+	wxString section(CFG_KEY_CALSITES);
 	section += filename;
 	bool bCheckStatus = true;
 	wxConfig::Get()->Read(section, &bCheckStatus);
@@ -1506,7 +1470,7 @@ void CAgilityBookOptions::SuppressCalSite(
 {
 	if (filename.IsEmpty())
 		return;
-	wxString section(wxT("CalSites/"));
+	wxString section(CFG_KEY_CALSITES);
 	section += filename;
 	wxConfig::Get()->Write(section, !bSuppress);
 }
@@ -1517,7 +1481,7 @@ CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(wxString const& filen
 	CVersionNum ver(false);
 	if (!filename.IsEmpty())
 	{
-		wxString section(wxT("CalSites2/"));
+		wxString section(CFG_KEY_CALSITES2);
 		section += filename;
 		wxString str = wxConfig::Get()->Read(section, wxString());
 		if (!str.IsEmpty())
@@ -1534,7 +1498,7 @@ void CAgilityBookOptions::SuppressCalSitePermanently(
 {
 	if (filename.IsEmpty())
 		return;
-	wxString section(wxT("CalSites2/"));
+	wxString section(CFG_KEY_CALSITES2);
 	section += filename;
 	if (bSuppress)
 		wxConfig::Get()->Write(section, inVer.GetVersionString());

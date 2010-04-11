@@ -34,6 +34,7 @@
 #include "LanguageManager.h"
 #include "MainFrm.h"
 #include "Print.h"
+#include "RegItems.h"
 #include "TabView.h"
 #include <vector>
 #include <wx/choicdlg.h>
@@ -196,7 +197,7 @@ wxPrintDialogData* CAgilityBookApp::GetPrintData()
 	{
 		m_printDialogData = new wxPrintDialogData();
 		bool val = true;
-		wxConfig::Get()->Read(wxT("Settings/printLand"), &val);
+		wxConfig::Get()->Read(CFG_SETTINGS_PRINTLAND, &val);
 		m_printDialogData->GetPrintData().SetOrientation(val ? wxLANDSCAPE : wxPORTRAIT);
 	}
 	return m_printDialogData;
@@ -208,7 +209,7 @@ void CAgilityBookApp::SavePrintData(wxPrintDialogData const& data)
 	assert(m_printDialogData);
 	*m_printDialogData = data;
 	bool val = (m_printDialogData->GetPrintData().GetOrientation() == wxLANDSCAPE);
-	wxConfig::Get()->Write(wxT("Settings/printLand"), val);
+	wxConfig::Get()->Write(CFG_SETTINGS_PRINTLAND, val);
 }
 
 
@@ -294,11 +295,11 @@ bool CAgilityBookApp::OnInit()
 	frame->GetSize(&width, &height);
 	int defWidth = width;
 	int defHeight = height;
-	wxConfig::Get()->Read(wxT("Settings/lastXpos"), &x, x);
-	wxConfig::Get()->Read(wxT("Settings/lastYpos"), &y, y);
-	wxConfig::Get()->Read(wxT("Settings/lastCX"), &width, width);
-	wxConfig::Get()->Read(wxT("Settings/lastCY"), &height, height);
-	long state = wxConfig::Get()->Read(wxT("Settings/lastState"), 0L);
+	wxConfig::Get()->Read(CFG_SETTINGS_LASTXPOS, &x, x);
+	wxConfig::Get()->Read(CFG_SETTINGS_LASTYPOS, &y, y);
+	wxConfig::Get()->Read(CFG_SETTINGS_LASTCX, &width, width);
+	wxConfig::Get()->Read(CFG_SETTINGS_LASTCY, &height, height);
+	long state = wxConfig::Get()->Read(CFG_SETTINGS_LASTSTATE, 0L);
 	bool bCompute = false;
 	wxMouseState mouseState = ::wxGetMouseState();
 	if (wxDefaultCoord != x)
@@ -372,7 +373,7 @@ bool CAgilityBookApp::OnInit()
 		// Don't open it if the shift key is down.
 		if (!::wxGetKeyState(WXK_SHIFT))
 		{
-			filename = wxConfig::Get()->Read(wxT("Settings/LastFile"), wxT(""));
+			filename = wxConfig::Get()->Read(CFG_SETTINGS_LASTFILE, wxT(""));
 		}
 	}
 	// If a file is being opened, verify it exists first!
@@ -406,7 +407,7 @@ bool CAgilityBookApp::OnInit()
 	// Check for updates every 30 days.
 	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
-		wxString ver = wxConfig::Get()->Read(wxT("Settings/lastVerCheck"), wxT(""));
+		wxString ver = wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, wxT(""));
 		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
 		if (date.IsValid())
 		{

@@ -1,4 +1,4 @@
-Last Updated: 7/26/2009
+Last Updated: 4/11/2010
 
 - Make Mac dmg nicer for install (like Firefox)
 
@@ -18,8 +18,6 @@ Last Updated: 7/26/2009
   Currently, it's handcoded in the configuration.
 
 - Add drag-drop support in the runs view to move/copy runs.
-
-- Create named import/export settings.
 
 - Add display name to configuration items.
 

@@ -24,6 +24,7 @@
 #include "ARBDog.h"
 #include "ARBTypes.h"
 #include "AgilityBookDoc.h"
+#include "RegItems.h"
 #include <algorithm>
 #include <wx/config.h>
 
@@ -51,12 +52,10 @@ CDlgSelectDog::CDlgSelectDog(
 	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
 
 	std::set<wxString> selection;
-	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);
+	long nDogs = wxConfig::Get()->Read(CFG_SELECTION_NDOGS, 0L);
 	for (long iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		wxString item;
-		item << wxT("Selection/Dog") << iDog;
-		wxString dog = wxConfig::Get()->Read(item, wxEmptyString);
+		wxString dog = wxConfig::Get()->Read(CFG_SELECTION_DOG(iDog), wxEmptyString);
 		if (!dog.empty())
 			selection.insert(dog);
 	}
@@ -114,12 +113,10 @@ int CDlgSelectDog::ShowModal()
 void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 {
 	// Erase existing.
-	long nDogs = wxConfig::Get()->Read(wxT("Selection/nDogs"), 0L);
+	long nDogs = wxConfig::Get()->Read(CFG_SELECTION_NDOGS, 0L);
 	for (int iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		wxString item;
-		item << wxT("Selection/Dog") << iDog;
-		wxConfig::Get()->DeleteEntry(item);
+		wxConfig::Get()->DeleteEntry(CFG_SELECTION_DOG(iDog));
 	}
 	// Now commit the selection.
 	nDogs = 0;
@@ -130,11 +127,9 @@ void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 		{
 			m_outDogs.push_back(m_Dogs[index]);
 			++nDogs;
-			wxString item;
-			item << wxT("Selection/Dog") << nDogs;
-			wxConfig::Get()->Write(item, m_Dogs[index]->GetCallName());
+			wxConfig::Get()->Write(CFG_SELECTION_DOG(nDogs), m_Dogs[index]->GetCallName());
 		}
 	}
-	wxConfig::Get()->Write(wxT("Selection/nDogs"), nDogs);
+	wxConfig::Get()->Write(CFG_SELECTION_NDOGS, nDogs);
 	EndDialog(wxID_OK);
 }

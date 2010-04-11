@@ -94,6 +94,7 @@
 #include "Element.h"
 #include "LanguageManager.h"
 #include "ReadHttp.h"
+#include "RegItems.h"
 #include "VersionNum.h"
 #include <wx/config.h>
 #include <wx/filedlg.h>
@@ -463,7 +464,7 @@ bool CUpdateInfo::CheckProgram(
 			// Return that it needs updating, but don't record that we checked.
 			return bNeedsUpdating;
 		}
-		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eISO));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO));
 		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
 		{
@@ -691,7 +692,7 @@ bool CUpdateInfo::CheckProgram(
 		}
 	}
 	else
-		wxConfig::Get()->Write(wxT("Settings/lastVerCheck"), today.GetString(ARBDate::eISO));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO));
 	return bNeedsUpdating;
 }
 

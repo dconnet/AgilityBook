@@ -21,6 +21,7 @@
 #include "stdafx.h"
 #include "LanguageManager.h"
 
+#include "RegItems.h"
 #include <wx/cshelp.h>
 #include <wx/dir.h>
 #include <wx/html/helpctrl.h>
@@ -43,13 +44,13 @@ CLanguageManager::CLanguageManager()
 
 	int lang = m_CurLang;
 	// Introduced in 2.1.
-	wxString langStr = wxConfig::Get()->Read(wxT("Settings/Lang3"), wxEmptyString);
+	wxString langStr = wxConfig::Get()->Read(CFG_SETTINGS_LANG3, wxEmptyString);
 	if (langStr.empty())
 	{
 		// Introduced in 2.0 - turns out the wxLANGUAGE enum may change between releases.
 		// (and did between 2.8 and 2.9)
 		long lastLang;
-		if (wxConfig::Get()->Read(wxT("Settings/Lang2"), &lastLang, 0) && 0 != lastLang)
+		if (wxConfig::Get()->Read(CFG_SETTINGS_LANG2, &lastLang, 0) && 0 != lastLang)
 		{
 			// As of 2.0, we only supported 2 languages, so remapping is easy (whew!)
 			if (58 == lastLang)
@@ -57,7 +58,7 @@ CLanguageManager::CLanguageManager()
 			else if (78 == lastLang)
 				langStr = wxT("fr_FR");
 		}
-		else if (wxConfig::Get()->Read(wxT("Settings/Lang"), &lastLang, 0) && 0 != lastLang)
+		else if (wxConfig::Get()->Read(CFG_SETTINGS_LANG, &lastLang, 0) && 0 != lastLang)
 		{
 			// Translates v1.10 registry
 			if (0x0409 == lastLang)
@@ -168,7 +169,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 	}
 	wxLanguageInfo const* langInfo = wxLocale::GetLanguageInfo(lang);
 	if (langInfo)
-		wxConfig::Get()->Write(wxT("Settings/Lang3"), langInfo->CanonicalName);
+		wxConfig::Get()->Write(CFG_SETTINGS_LANG3, langInfo->CanonicalName);
 
 	return lang;
 }

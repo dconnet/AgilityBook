@@ -44,6 +44,7 @@
 #include "ListData.h"
 #include "MainFrm.h"
 #include "Print.h"
+#include "RegItems.h"
 #include <wx/config.h>
 
 
@@ -130,7 +131,7 @@ CAgilityBookTrainingView::CSortColumn::CSortColumn(std::vector<long>& inColumns)
 void CAgilityBookTrainingView::CSortColumn::Initialize()
 {
 	long realCol = IO_LOG_DATE;
-	realCol = wxConfig::Get()->Read(wxT("Sorting/Training"), realCol);
+	realCol = wxConfig::Get()->Read(CFG_SORTING_TRAINING, realCol);
 	long neg = 1;
 	if (0 > realCol)
 	{
@@ -157,7 +158,7 @@ void CAgilityBookTrainingView::CSortColumn::SetColumn(long iCol)
 		col = iCol * -1;
 	}
 	long realCol = m_Columns[col-1] * neg;
-	wxConfig::Get()->Write(wxT("Sorting/Training"), realCol);
+	wxConfig::Get()->Write(CFG_SORTING_TRAINING, realCol);
 }
 
 

@@ -20,6 +20,7 @@
 #include "ColumnOrder.h"
 
 #include "ARBTypes.h"
+#include "RegItems.h"
 #include <wx/config.h>
 
 /////////////////////////////////////////////////////////////////////////////
@@ -65,8 +66,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	}
 	bool rc = false;
 	// Load last settings.
-	wxString item = wxT("Sorting/") + m_Item + wxT("Order");
-	wxString str = wxConfig::Get()->Read(item, wxT(""));
+	wxString str = wxConfig::Get()->Read(CFG_SORTING_ORDER(m_Item), wxT(""));
 	int i;
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
@@ -78,8 +78,7 @@ bool CColumnOrder::Initialize(int nColumns)
 		else
 			str.Empty();
 	}
-	item = wxT("Sorting/") + m_Item + wxT("Sort");
-	str = wxConfig::Get()->Read(item, wxT(""));
+	str = wxConfig::Get()->Read(CFG_SORTING_SORT(m_Item), wxT(""));
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
@@ -104,8 +103,7 @@ void CColumnOrder::Save()
 				str << wxT(",");
 			str << m_order[i];
 		}
-		wxString item = wxT("Sorting/") + m_Item + wxT("Order");
-		wxConfig::Get()->Write(item, str);
+		wxConfig::Get()->Write(CFG_SORTING_ORDER(m_Item), str);
 	}
 	{
 		wxString str;
@@ -115,8 +113,7 @@ void CColumnOrder::Save()
 				str << wxT(",");
 			str << static_cast<int>(m_bDescending[i]);
 		}
-		wxString item = wxT("Sorting/") + m_Item + wxT("Sort");
-		wxConfig::Get()->Write(item, str);
+		wxConfig::Get()->Write(CFG_SORTING_SORT(m_Item), str);
 	}
 }
 

@@ -1344,6 +1344,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Win\RegItems.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Win\RichEditCtrl2.h"
 				>
 			</File>

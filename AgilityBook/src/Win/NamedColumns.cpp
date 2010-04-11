@@ -21,6 +21,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "AgilityBookOptions.h"
+#include "RegItems.h"
 #include <wx/config.h>
 
 
@@ -34,16 +35,15 @@ CNamedColumns::CNamedColumns(CAgilityBookOptions::ColumnOrder eOrder)
 	for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		CDlgAssignColumns::GetColumnOrder(m_eOrder, i, m_Columns[i]);
 
-	m_numConfigs = wxConfig::Get()->Read(wxT("ColumnInfo/numConfigs"), 0L);
-	m_curConfig = wxConfig::Get()->Read(wxT("ColumnInfo/CurrentConfig"), wxEmptyString);
+	m_numConfigs = wxConfig::Get()->Read(CFG_CI_NUMCONFIGS, 0L);
+	m_curConfig = wxConfig::Get()->Read(CFG_CI_CURRENTCONFIG, wxEmptyString);
 
 	m_Configs.clear();
 	for (int index = 0; index < m_numConfigs; ++index)
 	{
 		CNamedColumnsData data;
-		wxString name(wxT("ColumnInfo/Config"));
-		name << index << wxT('/');
-		data.configName = wxConfig::Get()->Read(name + wxT("name"), wxEmptyString);
+		wxString name(CFG_CI_KEY_CONFIG(index));
+		data.configName = wxConfig::Get()->Read(name + CFG_CI_CONFIG_NAME, wxEmptyString);
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
 			wxString configname(name);
@@ -78,15 +78,14 @@ void CNamedColumns::Save()
 		CDlgAssignColumns::SetColumnOrder(m_eOrder, i, wxEmptyString, m_Columns[i]);
 	}
 
-	wxConfig::Get()->Write(wxT("ColumnInfo/CurrentConfig"), m_curConfig);
+	wxConfig::Get()->Write(CFG_CI_CURRENTCONFIG, m_curConfig);
 
 	int nConfigs = static_cast<int>(m_Configs.size());
 	if (nConfigs < m_numConfigs)
 	{
 		for (int n = nConfigs; n < m_numConfigs; ++n)
 		{
-			wxString val(wxT("ColumnInfo/Config"));
-			val << n;
+			wxString val(CFG_CI_KEY_CONFIG(n, false));
 			wxConfig::Get()->DeleteGroup(val);
 		}
 	}
@@ -95,9 +94,8 @@ void CNamedColumns::Save()
 		iConfig != m_Configs.end();
 		++index, ++iConfig)
 	{
-		wxString name(wxT("ColumnInfo/Config"));
-		name << index << wxT('/');
-		wxConfig::Get()->Write(name + wxT("name"), (*iConfig).configName);
+		wxString name(CFG_CI_KEY_CONFIG(index));
+		wxConfig::Get()->Write(name + CFG_CI_CONFIG_NAME, (*iConfig).configName);
 		for (size_t i = 0; i < IO_TYPE_MAX; ++i)
 		{
 			wxString configname(name);
@@ -106,7 +104,7 @@ void CNamedColumns::Save()
 		}
 	}
 	m_numConfigs = nConfigs;
-	wxConfig::Get()->Write(wxT("ColumnInfo/numConfigs"), m_numConfigs);
+	wxConfig::Get()->Write(CFG_CI_NUMCONFIGS, m_numConfigs);
 }
 
 
