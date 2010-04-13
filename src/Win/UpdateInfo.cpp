@@ -10,6 +10,25 @@
  * @brief Parse and cache "version2.xml" on www.agilityrecordbook.com
  * @author David Connet
  *
+ * File Format: See below.
+ *
+ * Revision History
+ * @li 2010-02-07 DRC Changed to version2.xml.
+ * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
+ * @li 2009-07-26 DRC Removed Win98 support.
+ * @li 2009-07-18 DRC Updated version.txt to support different versions/platforms.
+ * @li 2009-01-06 DRC Ported to wxWidgets.
+ * @li 2008-06-29 DRC When looking for language ids, it was searching the wrong node.
+ * @li 2008-01-01 DRC Fix a bug parsing Element data (GetElementNode may return null)
+ * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
+ * @li 2005-10-26 DRC Added option to prevent auto-update user query.
+ * @li 2005-09-09 DRC Modified URL parsing to handle redirection.
+ *                    I can now advertise the url as "www.agilityrecordbook.com"
+ * @li 2004-09-28 DRC Changed how error reporting is done when loading.
+ * @li 2004-08-03 DRC Created
+ */
+
+/*
  * (post v2.1.4): Changed to version2.xml.
  *  See comments in code (where it's parsed).
  *
@@ -65,21 +84,6 @@
  *      ver CDATA #REQUIRED
  *      enable (0|1) '1'
  *      >
- *
- * Revision History
- * @li 2010-02-07 DRC Changed to version2.xml.
- * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-07-26 DRC Removed Win98 support.
- * @li 2009-07-18 DRC Updated version.txt to support different versions/platforms.
- * @li 2009-01-06 DRC Ported to wxWidgets.
- * @li 2008-06-29 DRC When looking for language ids, it was searching the wrong node.
- * @li 2008-01-01 DRC Fix a bug parsing Element data (GetElementNode may return null)
- * @li 2007-08-03 DRC Separated HTTP reading code from UpdateInfo.cpp
- * @li 2005-10-26 DRC Added option to prevent auto-update user query.
- * @li 2005-09-09 DRC Modified URL parsing to handle redirection.
- *                    I can now advertise the url as "www.agilityrecordbook.com"
- * @li 2004-09-28 DRC Changed how error reporting is done when loading.
- * @li 2004-08-03 DRC Created
  */
 
 #include "stdafx.h"
@@ -230,6 +234,7 @@ CUpdateInfo::CUpdateInfo()
  * This will read the version2.xml file and cache it.
  * In addition, it will ask to update if a newer version is found.
  * @param bVerbose Show error message.
+ * @param langMgr Language manager.
  */
 bool CUpdateInfo::ReadVersionFile(
 		bool bVerbose,
