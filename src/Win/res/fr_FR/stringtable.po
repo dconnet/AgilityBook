@@ -610,7 +610,7 @@ msgid "IDS_FILEEXT_DEF_SETTINGS"
 msgstr "arbsettings"
 
 msgid "IDS_FILEEXT_FILTER_SETTINGS"
-msgstr "Agility Record Book settings (*.arbsettings)|*.arbsettings|Tous fichiers (*.*)|*.*||"
+msgstr "Paramètres Agility Record Book (*.arbsettings)|*.arbsettings|Tous fichiers (*.*)|*.*||"
 
 msgid "IDS_FILEEXT_DEF_XML"
 msgstr "xml"
@@ -1177,16 +1177,16 @@ msgid "IDS_WIZ_EXPORT_XML_ARB"
 msgstr "Exporter votre fichier data comme fichier XML. Le DTD serais contenu dans ce fichier."
 
 msgid "IDS_WIZ_IMPORT_SETTINGS"
-msgstr "Import Program Settings"
+msgstr "Importer les paramètres programme"
 
 msgid "IDS_WIZ_IMPORT_SETTINGS_ARB"
-msgstr "Import your program settings from another computer or a backup."
+msgstr "Importer vos paramètres programme à partir d'un autre ordinateur ou backup."
 
 msgid "IDS_WIZ_EXPORT_SETTINGS"
-msgstr "Export Program Settings"
+msgstr "Exporter les paramètres programme"
 
 msgid "IDS_WIZ_EXPORT_SETTINGS_ARB"
-msgstr "Export your program settings for use on another computer, or simply for backup purposes."
+msgstr "Exporter vos paramètres programme vers un autre ordinateur ou pour backup."
 
 msgid "IDS_RUNS"
 msgstr "Parcours"
