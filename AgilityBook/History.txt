@@ -1,4 +1,4 @@
-4/11/2010: v2.2.0.x
+4/19/2010: v2.2.0.2669
 - Bumped Configuration v28:
   - Removed SSA (Sweepstakes). No longer available.
   - Renamed ATCH-OP/SP to ATCH-II/III.
