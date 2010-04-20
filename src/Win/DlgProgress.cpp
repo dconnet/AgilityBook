@@ -49,7 +49,7 @@ public:
 			short inBar,
 			int inPos);
 	virtual int GetPos(short inBar);
-	virtual void EnableCancel(bool bEnable = true);
+	virtual bool EnableCancel(bool bEnable = true);
 	virtual bool HasCanceled() const;
 	virtual void ShowProgress(bool bShow = true);
 	virtual void SetForegroundWindow();
@@ -261,13 +261,15 @@ int CDlgProgress::GetPos(short inBar)
 }
 
 
-void CDlgProgress::EnableCancel(bool bEnable)
+bool CDlgProgress::EnableCancel(bool bEnable)
 {
+	bool bCancelEnabled = m_ctrlCancel ? m_ctrlCancel->IsEnabled() : false;
 	if (!m_HasCanceled)
 	{
 		m_ctrlCancel->Enable(bEnable);
 		Update();
 	}
+	return bCancelEnabled;
 }
 
 
