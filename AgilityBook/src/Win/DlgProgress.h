@@ -47,7 +47,8 @@ public:
 			short inBar,
 			int inPos) = 0;
 	virtual int GetPos(short inBar) = 0;
-	virtual void EnableCancel(bool bEnable = true) = 0;
+	// Returns state before trying to change state.
+	virtual bool EnableCancel(bool bEnable = true) = 0;
 	virtual bool HasCanceled() const = 0;
 
 	/// Show/hide the dialog.

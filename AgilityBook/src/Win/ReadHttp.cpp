@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-04-19 DRC Calling Yield (for cancel dlg) results in corrupted downloads.
  * @li 2010-03-05 DRC Workaround a memory leak in wxURL with proxies.
  * @li 2010-02-08 DRC Added new interfaces to support streaming to a file.
  * @li 2009-07-19 DRC Changed from wxHTTP to wxURL to handle proxies.
@@ -133,20 +134,16 @@ bool CReadHttp::ReadHttpFile(
 	{
 		if (m_pProgress)
 		{
+			bool bCancelEnable = m_pProgress->EnableCancel(false);
 			unsigned char buffer[4096];
 			while (!stream->Eof())
 			{
-				wxGetApp().Yield();
-				if (m_pProgress->HasCanceled())
-				{
-					bOk = false;
-					break;
-				}
 				stream->Read(buffer, sizeof(buffer));
 				size_t read = stream->LastRead();
 				m_pProgress->OffsetPos(1, static_cast<int>(read));
 				m_Stream->Write(buffer, read);
 			}
+			m_pProgress->EnableCancel(bCancelEnable);
 		}
 		else
 		{
