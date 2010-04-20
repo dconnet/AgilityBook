@@ -528,6 +528,7 @@ bool CUpdateInfo::CheckProgram(
 								errMsg += err;
 							}
 						}
+						output.Close();
 						if (!bGotoWeb && !m_md5.empty())
 						{
 							progress->SetCaption(_("IDS_VALIDATING"));
