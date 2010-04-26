@@ -25,16 +25,25 @@ wxWidgets: http://www.wxwidgets.org/
 I'm currently using version 2.8.10.
 Make sure WXWIN is set to wxWidgets root directory.
 
-Changes to <trunk> [2.9.1]:
+=== Changes to <trunk> [2.9.1]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_8 0
   - Set wxDEBUG_LEVEL to 0 on NDEBUG
 -[win]- src/msw/stdpaths.cpp
  - Comment out IgnoreAppBuildSubDirs content (line 294)
 
-wx2.9.0: Not supported
+=== wx2.9.0: Not supported
 
-Changes to 2.8.10:
+=== Changes to 2.8.11:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - WXWIN_COMPATIBILITY_2_6 0
+-[win]- include/msvc/wx/setup.h:
+  [same as 2.8..10]
+-[win]- src/msw/stdpaths.cpp
+  - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
+    directory from the appdir, which causes problems.
+
+=== Changes to 2.8.10:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_6 0
 -[win]- include/msvc/wx/setup.h:
