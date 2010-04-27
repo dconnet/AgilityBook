@@ -22,7 +22,8 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 2.8.10.
+I'm currently using version 2.8.11. Previously released with 2.8.10.
+Also, kept current with development trunk of 2.9.x.
 Make sure WXWIN is set to wxWidgets root directory.
 
 === Changes to <trunk> [2.9.1]:
