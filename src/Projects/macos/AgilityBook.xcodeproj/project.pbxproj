@@ -1708,7 +1708,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.1.0;
+				CURRENT_PROJECT_VERSION = 2.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1728,16 +1728,16 @@
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = (
 					"-I$BOOST_ROOT",
-					"-I/Users/dconnet/wx/wxMac-2.8.10/build-ansi-debug/lib/wx/include/mac-ansi-debug-static-2.8",
-					"-I/Users/dconnet/wx/wxMac-2.8.10/include",
-					"-I/Users/dconnet/wx/wxMac-2.8.10/contrib/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.11/build-ansi-debug/lib/wx/include/mac-ansi-debug-static-2.8",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.11/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.11/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
 					"-D__WXDEBUG__",
 					"-D__WXMAC__",
 				);
 				OTHER_LDFLAGS = (
-					"-L/Users/dconnet/wx/wxMac-2.8.10/build-ansi-debug/lib",
+					"-L/Users/dconnet/wx/wxWidgets-2.8.11/build-ansi-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1764,11 +1764,12 @@
 					"-lwx_base_carbond_xml-2.8",
 					"-lwx_base_carbond_net-2.8",
 					"-lwx_base_carbond-2.8",
+					"-lwxregexd-2.8",
 					"-lwxexpatd-2.8",
 					"-lwxtiffd-2.8",
 					"-lwxjpegd-2.8",
 					"-lwxpngd-2.8",
-					"-lz",
+					"-lwxzlibd-2.8",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
@@ -1784,7 +1785,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.1.0;
+				CURRENT_PROJECT_VERSION = 2.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1802,15 +1803,15 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-I$BOOST_ROOT",
-					"-I/Users/dconnet/wx/wxMac-2.8.10/build-ansi/lib/wx/include/mac-ansi-release-static-2.8",
-					"-I/Users/dconnet/wx/wxMac-2.8.10/include",
-					"-I/Users/dconnet/wx/wxMac-2.8.10/contrib/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.11/build-ansi/lib/wx/include/mac-ansi-release-static-2.8",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.11/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.11/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
 					"-D_LARGE_FILES",
 					"-D__WXMAC__",
 				);
 				OTHER_LDFLAGS = (
-					"-L/Users/dconnet/wx/wxMac-2.8.10/build-ansi/lib",
+					"-L/Users/dconnet/wx/wxWidgets-2.8.11/build-ansi/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1837,11 +1838,12 @@
 					"-lwx_base_carbon_xml-2.8",
 					"-lwx_base_carbon_net-2.8",
 					"-lwx_base_carbon-2.8",
+					"-lwxregex-2.8",
 					"-lwxexpat-2.8",
 					"-lwxtiff-2.8",
 					"-lwxjpeg-2.8",
 					"-lwxpng-2.8",
-					"-lz",
+					"-lwxzlib-2.8",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
@@ -1881,7 +1883,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.1.0;
+				CURRENT_PROJECT_VERSION = 2.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1934,11 +1936,12 @@
 					"-lwx_base_xml-2.9",
 					"-lwx_base_net-2.9",
 					"-lwx_base-2.9",
+					"-lwxregex-2.9",
 					"-lwxexpat-2.9",
 					"-lwxtiff-2.9",
 					"-lwxjpeg-2.9",
 					"-lwxpng-2.9",
-					"-lz",
+					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
@@ -1954,7 +1957,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.1.0;
+				CURRENT_PROJECT_VERSION = 2.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2005,11 +2008,12 @@
 					"-lwx_base_xml-2.9",
 					"-lwx_base_net-2.9",
 					"-lwx_base-2.9",
+					"-lregex-2.9",
 					"-lwxexpat-2.9",
 					"-lwxtiff-2.9",
 					"-lwxjpeg-2.9",
 					"-lwxpng-2.9",
-					"-lz",
+					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
@@ -2027,7 +2031,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.1.0;
+				CURRENT_PROJECT_VERSION = 2.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2084,7 +2088,7 @@
 					"-lwxtiff-2.9",
 					"-lwxjpeg-2.9",
 					"-lwxpng-2.9",
-					"-lz",
+					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
@@ -2101,7 +2105,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.1.0;
+				CURRENT_PROJECT_VERSION = 2.2.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2155,7 +2159,7 @@
 					"-lwxtiff-2.9",
 					"-lwxjpeg-2.9",
 					"-lwxpng-2.9",
-					"-lz",
+					"-lwxzlib-2.9",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
