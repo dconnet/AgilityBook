@@ -7,7 +7,8 @@ USAGE="Usage $0 trunk|2.8 unicode|ansi [debug]"
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
 elif test "x$1" = "x2.8"; then
-	WXWIN=~/wx/wxMac-2.8.10
+	#WXWIN=~/wx/wxMac-2.8.10
+	WXWIN=~/wx/wxWidgets-2.8.11
 else
 	echo $USAGE
 	return
