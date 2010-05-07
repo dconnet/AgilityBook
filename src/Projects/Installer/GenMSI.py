@@ -4,6 +4,7 @@
 # Generate MSI files
 #
 # Revision History
+# 2010-05-07 DRC Added /user option (default: perMachine)
 # 2009-12-23 DRC Auto-detect current WiX installation (%WIX%)
 # 2009-10-19 DRC Added 'create' option.
 # 2009-08-08 DRC Tweaked code to remove ICE61 warning.
@@ -21,7 +22,7 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/wix path] [/32] [/64] [/all] [/notidy] [/test]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test]
 	wix: Override internal wix path (c:\Tools\wix3)
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
@@ -132,7 +133,7 @@ def runcmd(command):
 #  1: Win32/Unicode
 #  2: Win32/MBCS
 #  3: Win64/Unicode
-def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
+def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, bTesting):
 	baseDir, outputFile = getoutputvars(code, ver4Line)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
@@ -149,6 +150,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, bTesting):
 			candleCmd += ' -dTESTING'
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
 		candleCmd += ' -dPRODUCTID=' + productId
+		candleCmd += ' -dINSTALL_SCOPE=' + perUser
 		runcmd(candleCmd + ' AgilityBook.wxs')
 		lightCmd = 'light -nologo -ext WixUIExtension -ext WixUtilExtension '
 		for fname, culture in supportedLangs:
@@ -172,6 +174,7 @@ def main():
 	# When WiX is installed, it sets "WIX" to point to the top-level directory
 	if os.environ.has_key('WIX'):
 		WiXdir = os.environ['WIX'] + r'\bin'
+	perUser = "perMachine"
 	b32 = 0
 	b64 = 0
 	tidy = 1
@@ -189,6 +192,8 @@ def main():
 				break;
 			WiXdir = sys.argv[i+1]
 			i += 1
+		elif o == '/user':
+			perUser = "perUser"
 		elif o == '/32':
 			b32 = 1
 		elif o == '/64':
@@ -256,10 +261,10 @@ def main():
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
 	if b32:
-		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, bTesting):
+		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, perUser, bTesting):
 			b32ok = 1
 	if b64:
-		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, bTesting):
+		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, perUser, bTesting):
 			b64ok = 1
 	if not bTesting and (b32ok or b64ok):
 		d = datetime.datetime.now().isoformat(' ')
