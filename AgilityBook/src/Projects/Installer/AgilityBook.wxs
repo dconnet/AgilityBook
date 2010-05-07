@@ -12,7 +12,7 @@
 	<Package
 		Description="Agility Record Book"
 		Comments="!(loc.Comments)"
-		InstallScope="perUser"
+		InstallScope="$(var.INSTALL_SCOPE)"
 		InstallerVersion="200"
 		Compressed="yes" />
 
@@ -28,8 +28,10 @@
 	<Property Id="ARPPRODUCTICON" Value="IconAgilityBook.ico" />
 	<!-- Install to all-users if admin, per-user otherwise -->
 	<Property Id="ALLUSERS">2</Property>
+<?if $(var.INSTALL_SCOPE)=perUser?>
 	<!-- Using in WindowsInstaller 5.0 -->
 	<Property Id="MSIINSTALLPERUSER">1</Property>
+<?endif?>
 	<!-- To pick up all features by default -->
 	<Property Id="INSTALLLEVEL">100</Property>
 	<Property Id="AppName">Agility Record Book</Property>
