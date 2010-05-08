@@ -43,13 +43,17 @@ configure as a statically linked universal binary containing all builtin libs
 to make it easier to deploy:
 [Note: Due to a bug in wxWidgets, as of 2.8.10, do not use unicode. Formatting
 strings using positional formatting does not work properly]
-> ../configure --disable-shared --disable-unicode --enable-universal_binary \
+> ../configure \
+	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
+	--disable-shared --disable-unicode --enable-universal_binary \
 	--with-regex=builtin --with-zlib=builtin \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat26 \
 	--disable-debug_flag
 [2.9.1+]
-> ../configure --disable-shared --disable-unicode --enable-universal_binary \
+> ../configure \
+	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
+	--disable-shared --disable-unicode --enable-universal_binary \
 	--with-regex=builtin --with-zlib=builtin \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat28 \
@@ -60,13 +64,17 @@ strings using positional formatting does not work properly]
 To enable debug builds in xcode:
 > mkdir build-debug
 > cd build-debug
-> ../configure --disable-shared --disable-unicode --enable-universal_binary \
+> ../configure \
+	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
+	--disable-shared --disable-unicode --enable-universal_binary \
 	--with-regex=builtin --with-zlib=builtin \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat26 \
 	--enable-debug --enable-debug_gdb
 [2.9.1+]
-> ../configure --disable-shared --disable-unicode --enable-universal_binary \
+> ../configure \
+	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
+	--disable-shared --disable-unicode --enable-universal_binary \
 	--with-regex=builtin --with-zlib=builtin \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat28 \

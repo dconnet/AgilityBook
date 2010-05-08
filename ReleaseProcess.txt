@@ -49,6 +49,8 @@ Pull files onto Mac and build there (see MAC_BUILD.txt)
 [note: the makefile is not generating the image correctly to run on osx10.4
 So do a release build in xcode and copy that executable into the 'dist'
 generated .app folder - MAKE SURE TO UPDATE Project Version in xcode project]
+TODO: check if above comment is still correct when using CC/CXX/LD definitions
+during 'configure'
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
   - Name it AgilityBook-n_n_n_n-mac.dmg
   - After dragging in image, rename the mount point. (AgilityBook x.y.z)
@@ -94,7 +96,8 @@ Web Site:
   - Export columns as 'Excel 2000'
   - Delete old rows (so query returns actual number of downloads for current version)
     - note, leave last item so next download auto-increments id
-- Update version.txt
+- Update version2.xml
+  - Run 'ARBUpdater /g' and generate new size and md5 tags for each file.
   - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).
   - Update DTD

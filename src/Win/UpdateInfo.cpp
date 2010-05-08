@@ -13,6 +13,8 @@
  * File Format: See below.
  *
  * Revision History
+ * @li 2010-05-07 DRC Removed 'lang' from 'Platform'. (Finally figured out how
+ *                    to create transforms and embed in msi.)
  * @li 2010-02-07 DRC Changed to version2.xml.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-26 DRC Removed Win98 support.
@@ -300,7 +302,6 @@ bool CUpdateInfo::ReadVersionFile(
 		 *   <!ATTLIST Platform
 		 *     arch CDATA (x86,x64,mac)
 		 *     ver CDATA #REQUIRED
-		 *     lang CDATA #IMPLIED <!-- installer gettext lang code -->
 		 *     config CDATA #REQUIRED
 		 *     md5 CDATA #REQUIRED
 		 *     file CDATA #REQUIRED >
@@ -364,18 +365,6 @@ bool CUpdateInfo::ReadVersionFile(
 						}
 					}
 					// Wrong architecture
-					if (bSkip)
-						continue;
-					bSkip = true;
-					if (ElementNode::eFound == node->GetAttrib(wxT("lang"), value))
-					{
-						if (value.empty() || value == wxT("*")
-						|| value == langMgr.CurrentLanguage())
-							bSkip = false;
-					}
-					else
-						bSkip = false;
-					// Wrong language
 					if (bSkip)
 						continue;
 					if (ElementNode::eFound == node->GetAttrib(wxT("ver"), value))
