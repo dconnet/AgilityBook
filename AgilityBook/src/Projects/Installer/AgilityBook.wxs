@@ -6,15 +6,29 @@
 <Product Id="$(var.PRODUCTID)"
 	UpgradeCode="$(var.UPGRADECODE)"
 	Name="Agility Record Book $(var.CURRENT_VERSION)"
-	Language="1033"
+	Language="!(loc.LANG)"
 	Version="$(var.CURRENT_VERSION)"
 	Manufacturer="dcon Software">
+<!--
+Note: This is separate was setting InstallScope to perMachine has the side
+effect of also setting ALLUSERS to 1. I want 2. (See below)
+In the future, I may change to peruser by default - need to test what the
+repurcussions of a per-user upgrade on a per-machine install are...
+-->
+<?if $(var.INSTALL_SCOPE)=perUser?>
 	<Package
 		Description="Agility Record Book"
 		Comments="!(loc.Comments)"
-		InstallScope="$(var.INSTALL_SCOPE)"
+		InstallScope="perUser"
 		InstallerVersion="200"
 		Compressed="yes" />
+<?else?>
+	<Package
+		Description="Agility Record Book"
+		Comments="!(loc.Comments)"
+		InstallerVersion="200"
+		Compressed="yes" />
+<?endif?>
 
 	<WixVariable Id="WixUIDialogBmp" Value="ArbDialogBmp.bmp" />
 	<WixVariable Id="WixUIBannerBmp" Value="ArbBannerBmp.bmp" />
@@ -23,17 +37,19 @@
 
 	<Property Id="ARPCOMMENTS">!(loc.Comments)</Property>
 	<Property Id="ARPCONTACT">David Connet</Property>
+	<Property Id="ARPPRODUCTICON" Value="IconAgilityBook.ico" />
 	<Property Id="ARPHELPLINK">http://www.agilityrecordbook.com</Property>
 	<Property Id="ARPURLINFOABOUT">http://www.agilityrecordbook.com</Property>
-	<Property Id="ARPPRODUCTICON" Value="IconAgilityBook.ico" />
-	<!-- Install to all-users if admin, per-user otherwise -->
+	<!--
+	Install to all-users if admin, per-user otherwise. Note, this still will
+	require elevation on Vista+ since the installer itself wasn't marked as
+	not needing it.
+	-->
 	<Property Id="ALLUSERS">2</Property>
 <?if $(var.INSTALL_SCOPE)=perUser?>
-	<!-- Using in WindowsInstaller 5.0 -->
+	<!-- Used in WindowsInstaller 5.0 -->
 	<Property Id="MSIINSTALLPERUSER">1</Property>
 <?endif?>
-	<!-- To pick up all features by default -->
-	<Property Id="INSTALLLEVEL">100</Property>
 	<Property Id="AppName">Agility Record Book</Property>
 
 	<Property Id="INSTALLDESKTOPSHORTCUT" Value="1" />
@@ -81,6 +97,7 @@
 <?endif?>
 	</Upgrade>
 
+	<CustomAction Id="ARB_SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[INSTALLDIR]" />
 	<CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />
 	<CustomAction Id="ARB_NoDowngrade" Error="!(loc.ARB_NoDowngrade)" />
 	<CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
@@ -245,7 +262,7 @@
 
 		<Feature Id="ARBHelp"
 			Display="expand"
-			Level="100"
+			Level="1"
 			AllowAdvertise="no"
 			Title="!(loc.FeatureArbHelpTitle)"
 			Description="!(loc.FeatureArbHelpDesc)">
@@ -261,6 +278,7 @@
 
 	<InstallExecuteSequence>
 		<RemoveExistingProducts After="InstallInitialize" />
+		<Custom Action="ARB_SetARPINSTALLLOCATION" After="InstallValidate" />
 		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">FOUNDSAMEVERSION</Custom>
 		<Custom Action="ARB_NoDowngrade" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
 		<!--

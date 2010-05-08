@@ -3,8 +3,12 @@
 #
 # Generate MSI files
 #
+# vbs scripts copied from:
+# C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
+#
 # Revision History
 # 2010-05-07 DRC Added /user option (default: perMachine)
+#            Merge languages into one msi.
 # 2009-12-23 DRC Auto-detect current WiX installation (%WIX%)
 # 2009-10-19 DRC Added 'create' option.
 # 2009-08-08 DRC Tweaked code to remove ICE61 warning.
@@ -24,6 +28,7 @@
 
 """GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test]
 	wix: Override internal wix path (c:\Tools\wix3)
+	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
 	all: Create all of them (default)
@@ -48,13 +53,13 @@ code32 = 1
 code64 = 3
 
 # This is only used to update the InstallGUIDs file. Make sure it stays in
-# sync with the current code in AgilityBook.wxi
+# sync with the current code in AgilityBook.wxi (UPGRADECODE)
 UpgradeCode = '4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4'
 
-# Name used for filenames, culture name
+# Name used for filenames, culture name, language id
 supportedLangs = [
-	('en', 'en-us'),
-	('fr', 'fr-fr')]
+	('en', 'en-US', '1033'),
+	('fr', 'fr-FR', '1036')]
 
 
 def getversion(numParts):
@@ -152,19 +157,43 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, bTesting):
 		candleCmd += ' -dPRODUCTID=' + productId
 		candleCmd += ' -dINSTALL_SCOPE=' + perUser
 		runcmd(candleCmd + ' AgilityBook.wxs')
-		lightCmd = 'light -nologo -ext WixUIExtension -ext WixUtilExtension '
-		for fname, culture in supportedLangs:
-			basename = outputFile + '-' + fname
-			runcmd(lightCmd + '-dWixUILicenseRtf=License-' + fname + '.rtf -cultures:' + culture + ' -loc AgilityBook-' + fname + '.wxl -out ' + basename + '.msi AgilityBook.wixobj')
+		processing = 0
+		baseMsi = ''
+		sumInfoStream = ''
+		for fname, culture, langId in supportedLangs:
+			processing += 1
+			basename = outputFile
+			if processing > 1:
+				basename += '-' + fname
+			lightCmd = 'light -nologo -ext WixUIExtension -ext WixUtilExtension'
+			lightCmd += ' -dWixUILicenseRtf=License-' + fname + '.rtf'
+			lightCmd += ' -cultures:' + culture
+			lightCmd += ' -loc AgilityBook-' + fname + '.wxl'
+			lightCmd += ' -out ' + basename + '.msi'
+			runcmd(lightCmd + ' AgilityBook.wixobj')
+			if processing == 1:
+				baseMsi = basename + '.msi'
+				sumInfoStream += langId
+			else:
+				sumInfoStream += ',' + langId
+				runcmd('torch -nologo -p -t language ' + baseMsi + ' ' + basename + '.msi -out ' + langId + '.mst')
+				runcmd('cscript /nologo WiSubStg.vbs ' + baseMsi + ' ' + langId + '.mst ' + langId)
 			if tidy:
 				if os.access(basename + '.wixpdb', os.F_OK):
 					os.remove(basename + '.wixpdb')
+				if os.access(langId + '.mst', os.F_OK):
+					os.remove(langId + '.mst')
+				if processing > 1:
+					if os.access(basename + '.msi', os.F_OK):
+						os.remove(basename + '.msi')
+		if processing > 1:
+			runcmd('cscript /nologo WiLangId.vbs ' + baseMsi + ' Package ' + sumInfoStream)
+	else:
+		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 
 	if tidy:
 		if os.access('AgilityBook.wixobj', os.F_OK):
 			os.remove('AgilityBook.wixobj')
-	else:
-		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 
 	return 1
 

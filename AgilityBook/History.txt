@@ -1,6 +1,7 @@
-4/26/2010: v2.2.2.x <in development>
+5/7/2010: v2.2.2.x <in development>
 - New features / Enhancements:
   - Updated to wxWidgets 2.8.11.
+  - Merged all languages into a single msi.
 
 4/19/2010: v2.2.1.2669
 - Bumped Configuration v28:
