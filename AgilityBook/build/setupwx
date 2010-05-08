@@ -88,4 +88,4 @@ cd $BUILDDIR
 
 MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk"
 
-../configure --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary --with-regex=builtin --with-zlib=builtin $MINSDK
+../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary --with-regex=builtin --with-zlib=builtin --with-libiconv=no $MINSDK
