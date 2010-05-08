@@ -138,7 +138,11 @@ int main(int argc, char** argv)
 #endif
 
 	wxLocale* m_locale = new wxLocale();
+#if wxCHECK_VERSION(2,9,0)
+	m_locale->Init(wxLANGUAGE_ENGLISH_US, 0);
+#else
 	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
+#endif
 	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
 	m_locale->AddCatalog(wxT("arb"), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 	m_Localization.Load();
