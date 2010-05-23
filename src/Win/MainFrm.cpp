@@ -149,7 +149,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	SetIcons(icons);
 //#if wxUSE_HELP
 // Note: do not set help on the frame. Help will disable the min/max buttons.
-//	SetExtraStyle(wxFRAME_EX_CONTEXTHELP);
+//	SetExtraStyle(wxFRAME_EX_CONTEXTHELP | GetExtraStyle());
 //#endif
 
 	m_MenuBar.CreateMenu(this, manager);

@@ -45,7 +45,7 @@ CDlgOptions::CDlgOptions(
 	: wxDialog()
 	, m_pDoc(pDoc)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDS_VIEWING_OPTIONS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

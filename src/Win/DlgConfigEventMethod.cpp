@@ -158,7 +158,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	, m_OpeningPts(m_pScoring->GetRequiredOpeningPoints())
 	, m_ClosingPts(m_pScoring->GetRequiredClosingPoints())
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_EVENT_METHOD"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

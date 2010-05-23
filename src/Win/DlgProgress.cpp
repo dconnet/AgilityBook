@@ -94,7 +94,7 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 {
 	if (1 > nBars)
 		nBars = 1;
-	SetExtraStyle(GetExtraStyle() | wxWS_EX_TRANSIENT);
+	SetExtraStyle(wxWS_EX_TRANSIENT | GetExtraStyle());
 	Create(parent, wxID_ANY, _("IDD_PROGRESS_DLG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)

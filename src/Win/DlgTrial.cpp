@@ -92,7 +92,7 @@ CDlgTrial::CDlgTrial(
 	, m_Clubs()
 	, m_bRunsDeleted(false)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, pDoc->AddDogToCaption(_("IDD_TRIAL")),

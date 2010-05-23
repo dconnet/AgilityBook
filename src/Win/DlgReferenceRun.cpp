@@ -59,7 +59,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Breed(ref->GetBreed())
 	, m_Notes(ref->GetNote())
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_REF_RUN"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
