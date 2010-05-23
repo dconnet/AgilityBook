@@ -11,6 +11,9 @@ From: .../AgilityBook/src/Projects/macos/build-ansi/Release/agilitybook.app/Cont
 To: .../AgilityBook/build/AgilityBook.app/Contents/MacOS
 [Note, when compiling in xcode, make sure it compiles both architectures, not
 just the active one. In Debug, it's set to active, in Release, that's now off]
+
+-- Recommended configure options now include turning off iconv, so the above
+step shouldn't be necessary anymore
 ---
 
 0. gettext package (from MacPorts): http://gettext.darwinports.com/
@@ -46,7 +49,7 @@ strings using positional formatting does not work properly]
 > ../configure \
 	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
 	--disable-shared --disable-unicode --enable-universal_binary \
-	--with-regex=builtin --with-zlib=builtin \
+	--with-regex=builtin --with-zlib=builtin --with-libiconv=no \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat26 \
 	--disable-debug_flag
@@ -54,7 +57,7 @@ strings using positional formatting does not work properly]
 > ../configure \
 	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
 	--disable-shared --disable-unicode --enable-universal_binary \
-	--with-regex=builtin --with-zlib=builtin \
+	--with-regex=builtin --with-zlib=builtin --with-libiconv=no \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat28 \
 	--disable-debug_flag
@@ -67,7 +70,7 @@ To enable debug builds in xcode:
 > ../configure \
 	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
 	--disable-shared --disable-unicode --enable-universal_binary \
-	--with-regex=builtin --with-zlib=builtin \
+	--with-regex=builtin --with-zlib=builtin --with-libiconv=no \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat26 \
 	--enable-debug --enable-debug_gdb
@@ -75,7 +78,7 @@ To enable debug builds in xcode:
 > ../configure \
 	CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 \
 	--disable-shared --disable-unicode --enable-universal_binary \
-	--with-regex=builtin --with-zlib=builtin \
+	--with-regex=builtin --with-zlib=builtin --with-libiconv=no \
 	--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk \
 	--disable-compat28 \
 	--enable-debug --enable-debug_gdb
@@ -95,7 +98,7 @@ I simply created a 'setwxpath' in my root directory and execute:
 > autoconf
 > mkdir build-ansi
 > cd build-ansi
-> ../configure
+> ../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0
 > make dist
 
 4a. To package the distribution bundle [optional] [note, I do not do this]

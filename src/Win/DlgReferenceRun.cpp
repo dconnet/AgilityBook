@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-05-22 DRC Fix initialization of Q.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -48,15 +49,15 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_pDoc(pDoc)
 	, m_Run(inRun)
 	, m_Ref(ref)
-	, m_Place(m_Ref->GetPlace())
-	, m_Q(ARB_Q::eQ_NA)
-	, m_Time(m_Ref->GetTime())
+	, m_Place(ref->GetPlace())
+	, m_Q(ref->GetQ())
+	, m_Time(ref->GetTime())
 	, m_ctrlYPS(NULL)
-	, m_Points(m_Ref->GetScore())
-	, m_Height(m_Ref->GetHeight())
-	, m_Name(m_Ref->GetName())
-	, m_Breed(m_Ref->GetBreed())
-	, m_Notes(m_Ref->GetNote())
+	, m_Points(ref->GetScore())
+	, m_Height(ref->GetHeight())
+	, m_Name(ref->GetName())
+	, m_Breed(ref->GetBreed())
+	, m_Notes(ref->GetNote())
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
 	if (!pParent)

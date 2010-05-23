@@ -7,6 +7,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2010-05-22 DRC Added /test2 option.
 # 2010-05-07 DRC Added /user option (default: perMachine)
 #            Merge languages into one msi.
 # 2009-12-23 DRC Auto-detect current WiX installation (%WIX%)
@@ -26,14 +27,15 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/test2]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
 	64: Create 64bit Unicode msi
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
-	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv or check for existing versions)
+	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
+	test2: Generate .msi for test purposes (don't write to InstallGUIDs.csv or check for existing versions)
 """
 
 import datetime
@@ -138,7 +140,7 @@ def runcmd(command):
 #  1: Win32/Unicode
 #  2: Win32/MBCS
 #  3: Win64/Unicode
-def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, bTesting):
+def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing):
 	baseDir, outputFile = getoutputvars(code, ver4Line)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
@@ -151,7 +153,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, bTesting):
 			candleCmd += ' -arch x64'
 		else:
 			candleCmd += ' -arch x86'
-		if bTesting:
+		if testing == 2:
 			candleCmd += ' -dTESTING'
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
 		candleCmd += ' -dPRODUCTID=' + productId
@@ -203,14 +205,15 @@ def main():
 	# When WiX is installed, it sets "WIX" to point to the top-level directory
 	if os.environ.has_key('WIX'):
 		WiXdir = os.environ['WIX'] + r'\bin'
+	# This must be set to a valid Package/@InstallScope value.
 	perUser = "perMachine"
 	b32 = 0
 	b64 = 0
 	tidy = 1
-	bTesting = 0
+	testing = 0
 	if 1 == len(sys.argv):
 		b32 = 1
-		bTesting = 1
+		testing = 1
 	error = 0
 	i = 1
 	while i < len(sys.argv):
@@ -233,7 +236,9 @@ def main():
 		elif o == '/notidy':
 			tidy = 0
 		elif o == '/test':
-			bTesting = 1
+			testing = 1
+		elif o == '/test2':
+			testing = 2
 		else:
 			error = 1
 			break
@@ -261,7 +266,7 @@ def main():
 	# While the detect-same-version CA will do that during install, this has
 	# the added benefit of immediately bailing during the install, rather than
 	# showing the final 'failed' dialog.
-	if bTesting:
+	if testing == 2:
 		print 'Remember, uninstall the old version first. This does not check.'
 	else:
 		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'r')
@@ -290,12 +295,12 @@ def main():
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
 	if b32:
-		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, perUser, bTesting):
+		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, perUser, testing):
 			b32ok = 1
 	if b64:
-		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, perUser, bTesting):
+		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, perUser, testing):
 			b64ok = 1
-	if not bTesting and (b32ok or b64ok):
+	if not testing and (b32ok or b64ok):
 		d = datetime.datetime.now().isoformat(' ')
 		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'a')
 		installs = ''

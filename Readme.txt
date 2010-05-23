@@ -165,7 +165,7 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.42.0. There is no need
+ARB has been built and tested using Boost version 1.43.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
@@ -181,6 +181,8 @@ Currently using Version 3.0.5419.0 (as of ARB v2.0.1).
 - Install votive [optional]
 - Unzip binaries.zip into "C:\Tools\wix3'
   (GenMSI.py assumes WiX is installed here)
+- Or, run WiX installer. That will set the environment variable WIX.
+  (GenMSI.py looks for "WIX" and appends "\bin")
 
 During our release process of running BuildAll.bat,
 GenMSI.py will be called which generates the install files.
