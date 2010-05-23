@@ -90,7 +90,7 @@ CDlgEventSelect::CDlgEventSelect(
 	, m_pVenue(inVenue)
 	, m_Date(inDate)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_EVENT_SELECT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

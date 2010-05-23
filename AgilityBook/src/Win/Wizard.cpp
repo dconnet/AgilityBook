@@ -48,7 +48,7 @@ CWizard::CWizard(
 {
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	Create(pParent, wxID_ANY, _("IDD_WIZARD_START"), wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	m_Finish = wxDynamicCast(FindWindow(wxID_FORWARD), wxButton);

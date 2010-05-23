@@ -41,7 +41,7 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	, m_radioExisting(NULL)
 	, m_btnPick(NULL)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, _("IDD_CONFIG_UPDATE"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE);

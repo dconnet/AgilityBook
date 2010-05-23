@@ -704,7 +704,7 @@ CDlgRun::CDlgRun(
 	, m_ctrlLinkDelete(NULL)
 	, m_ctrlLinkOpen(NULL)
 {
-	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP|wxWS_EX_VALIDATE_RECURSIVELY);
+	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
 	Create(pParent, wxID_ANY, pDoc->AddDogToCaption(_("IDS_RUN_PROPERTIES")),

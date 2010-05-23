@@ -8,6 +8,7 @@
   - Handle per-user installs nicely on XP and Win7. (Vista does per-machine)
 - Bug fixes:
   - Fixed initialization of Q status in Reference Run dialog.
+  - Fixed a problem with dialogs and context menus.
 
 4/19/2010: v2.2.1.2669
 - Bumped Configuration v28:
