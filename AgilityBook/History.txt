@@ -1,7 +1,13 @@
-5/7/2010: v2.2.2.x <in development>
+5/22/2010: v2.2.2.x <in development>
+- Bumped Configuration v29:
+  - Added new AKC titles and T2B class.
+  - Added USDAA Accomplished Relay titles.
 - New features / Enhancements:
   - Updated to wxWidgets 2.8.11.
   - Merged all languages into a single msi.
+  - Handle per-user installs nicely on XP and Win7. (Vista does per-machine)
+- Bug fixes:
+  - Fixed initialization of Q status in Reference Run dialog.
 
 4/19/2010: v2.2.1.2669
 - Bumped Configuration v28:
