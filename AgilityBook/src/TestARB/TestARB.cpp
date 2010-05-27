@@ -33,8 +33,10 @@
 #define UT_NAME			"UnitTest++.VC7"
 #elif _MSC_VER >= 1400 && _MSC_VER < 1500
 #define UT_NAME			"UnitTest++.VC8"
-#elif _MSC_VER >= 1500
+#elif _MSC_VER >= 1500 && _MSC_VER < 1600
 #define UT_NAME			"UnitTest++.VC9"
+#elif _MSC_VER >= 1600
+#define UT_NAME			"UnitTest++.VC10"
 #else
 #error Unsupported compiler
 #endif

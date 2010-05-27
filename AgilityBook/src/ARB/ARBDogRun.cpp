@@ -678,11 +678,13 @@ double ARBDogRun::GetScore(ARBConfigScoringPtr inScoring) const
 size_t ARBDogRun::GetMultiQs(std::vector<ARBConfigMultiQPtr>& outMultiQs) const
 {
 	outMultiQs.clear();
-	for (std::set<std::tr1::weak_ptr<ARBConfigMultiQ> >::const_iterator i = m_pMultiQs.begin();
+	//for (std::set<std::tr1::weak_ptr<ARBConfigMultiQ> >::const_iterator i = m_pMultiQs.begin();
+	for (std::set<ARBConfigMultiQPtr>::const_iterator i = m_pMultiQs.begin();
 		i != m_pMultiQs.end();
 		++i)
 	{
-		outMultiQs.push_back((*i).lock());
+		//outMultiQs.push_back((*i).lock());
+		outMultiQs.push_back(*i);
 	}
 	return outMultiQs.size();
 }

@@ -237,3 +237,12 @@ Microsoft Visual Studio .NET 2008 (VC9) + SP1
    It works, no additional notes.
    [x86: UNICODE and MBCS]
    [x64: UNICODE only]
+
+Microsoft Visual Studio .NET 2010 (VC10)
+========================================
+   - Only tested with C++ Express version
+   - Must install Win7-.Net4 SDK first, in order to get x64 compiler
+     (project won't open otherwise)
+   It works, no additional notes.
+   [x86: UNICODE and MBCS]
+   [x64: UNICODE only]

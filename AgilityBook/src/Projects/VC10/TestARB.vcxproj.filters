@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{718D9CED-72EB-4A38-8517-BC03AE844060}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{9DF372DE-C31D-44D4-BDB1-28D168BD0C30}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{E1B4C1A5-7666-48C3-AF3F-66FC44216E3B}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="ARB Files">
+      <UniqueIdentifier>{5457139d-a348-45f8-96cc-f01c9370c4ae}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\TestARB\ConfigHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\Local.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestAgilityRecordBook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestARB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestBinaryData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestCalendar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigCalSite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigDivision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigFault.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigLifetimePoints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigMultiQ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigOtherPoints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigPlaceInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigScoring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigSubLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigTitle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigTitlePoints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestConfigVenue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogClub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogExistingPoints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogNotes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogReferenceRun.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogRegNum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogRun.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogRunOtherPoints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogRunPartner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogRunScoring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogTitle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDogTrial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestDouble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestErrorCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestInfoItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestMD5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestMisc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestQ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestTraining.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestVersion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBBase.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBBase64.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBCalendar.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfig.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigAction.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigCalSite.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigDivision.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigEvent.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigFault.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigLevel.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigLifetimePoints.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigMultiQ.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigOtherPoints.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigPlaceInfo.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigScoring.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigSubLevel.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigTitle.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigTitlePoints.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBConfigVenue.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDate.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDog.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogClub.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogExistingPoints.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogNotes.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogReferenceRun.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogRegNum.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogRun.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogRunOtherPoints.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogRunPartner.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogRunScoring.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogTitle.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBDogTrial.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBInfo.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBInfoItem.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBLocalization.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBMsgDigest.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBString.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBTraining.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBTypes.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\BinaryData.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\Element.cpp">
+      <Filter>ARB Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\TestARB\ConfigHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\TestARB\Local.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\TestARB\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\TestARB\TestARB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBAgilityRecordBook.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBBase.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBBase64.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBCalendar.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfig.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigAction.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigCalSite.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigDivision.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigEvent.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigFault.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigLevel.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigLifetimePoints.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigMultiQ.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigOtherPoints.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigPlaceInfo.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigScoring.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigSubLevel.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigTitle.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigTitlePoints.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBConfigVenue.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDate.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDog.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogClub.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogExistingPoints.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogNotes.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogReferenceRun.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogRegNum.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogRun.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogRunOtherPoints.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogRunPartner.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogRunScoring.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogTitle.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBDogTrial.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBInfo.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBInfoItem.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBLocalization.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBMsgDigest.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBString.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBStructure.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBTraining.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBTypes.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\BinaryData.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\Element.h">
+      <Filter>ARB Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\TestARB\res\Config08_v10_2.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config09_v11_0.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config12_v12_1.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config14_v12_2.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config19_v12_5.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config20_v12_6.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config21_v12_7.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config22_v12_7.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config23_v12_8.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config24_v12_8.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\Config25_v12_9.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\TestARB\res\TestARB.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\TestARB\TestARB.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
