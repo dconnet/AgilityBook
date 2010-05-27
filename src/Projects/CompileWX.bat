@@ -62,6 +62,8 @@ if ("%1")==("vc7") goto vc7
 if ("%1")==("vc8") goto vc8
 if ("%1")==("vc9") goto vc9
 if ("%1")==("vc9x64") goto vc9x64
+if ("%1")==("vc10") goto vc10
+if ("%1")==("vc10x64") goto vc10x64
 goto usage
 
 :vc7
@@ -111,6 +113,31 @@ set _CPPFLAGS=%_COMMON_CPPFLAGS% /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_
 set _ARCHTYPE=
 goto :doit
 
+:vc10
+if not exist "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" echo VC10 not installed && goto done
+title VC10
+call "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86
+if ERRORLEVEL 1 goto error
+if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc100
+if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC100
+set _CPPFLAGS=%_COMMON_CPPFLAGS% /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
+goto :doit
+
+:vc10x64
+if not exist "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" echo VC10 not installed && goto done
+if ("%_DO_UNICODE%")==("0") echo Error: VC10x64 doesn't do mbcs && goto usage
+set _ARCHTYPE=x86_amd64
+if ("%PROCESSOR_ARCHITECTURE%")==("AMD64") set _ARCHTYPE=amd64
+title VC10 %_ARCHTYPE%
+call "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" %_ARCHTYPE%
+if ERRORLEVEL 1 goto error
+set _TARGET_CPU=TARGET_CPU=amd64
+if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc100
+if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC100
+set _CPPFLAGS=%_COMMON_CPPFLAGS% /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
+set _ARCHTYPE=
+goto :doit
+
 
 :doit
 if ("%2")==("sample") cd %WXWIN%\samples\%3
@@ -137,8 +164,8 @@ goto done
 
 :usage
 echo Usage: %_PROGNAME% all
-echo Usage: %_PROGNAME% env vc7/vc8/vc9/vc9x64
-echo Usage: %_PROGNAME% [noprefix] [dynamic/static*] [mbcs/unicode*] vc7/vc8/vc9/vc9x64 [sample samplename]
+echo Usage: %_PROGNAME% env vc7/vc8/vc9/vc9x64/vc10/vc10x64
+echo Usage: %_PROGNAME% [noprefix] [dynamic/static*] [mbcs/unicode*] vc7/vc8/vc9/vc9x64/vc10/vc10x64 [sample samplename]
 goto done
 
 :error
