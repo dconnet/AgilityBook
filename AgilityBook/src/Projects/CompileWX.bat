@@ -9,6 +9,7 @@ rem 09/12/2009 DRC Fix dll creation
 rem Where is 'Program Files'?
 rem default: 32bit on 32bit
 set _PFILES=c:\Program Files
+set _PFILES64=c:\Program Files
 rem 64bit on 64bit
 if ("%PROCESSOR_ARCHITECTURE%")==("AMD64") set _PFILES=c:\Program Files (x86)
 rem 64bit on Wow64 (32bit cmd shell spawned from msdev)
@@ -18,6 +19,7 @@ if not exist "%WXWIN%" echo WXWIN doesn't exist && goto done
 
 set _PROGNAME=%0
 set _COMMENT=
+set _COMMENT_MAKE=
 rem For wxWidgets 2.8 and before, set this to 0
 set _HAS_COMPILER_PREFIX=1
 
@@ -32,6 +34,7 @@ set _LIBPATH=%LIBPATH%
 
 rem Just set the compiler environment
 if ("%1")==("env") set _COMMENT=rem&& shift
+if ("%1")==("env") set _COMMENT_MAKE=rem&& shift
 
 set _DO_SHIFT=0
 REM Lib (or Dll)
@@ -124,13 +127,21 @@ set _CPPFLAGS=%_COMMON_CPPFLAGS% /D_BIND_TO_CURRENT_VCLIBS_VERSION=1
 goto :doit
 
 :vc10x64
-if not exist "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" echo VC10 not installed && goto done
+rem if exist "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" goto v10_cont
+if not exist "%_PFILES64%\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" echo VC10 not installed && goto done
+set _COMMENT_MAKE=echo
+echo VC10 Express: can not easily set env from cmd line - open sdk shell
+echo and use 'setenv /release /x64' and 'setenv /debug /x64' and compile
+goto v10_cont
+:v10_cont
 if ("%_DO_UNICODE%")==("0") echo Error: VC10x64 doesn't do mbcs && goto usage
 set _ARCHTYPE=x86_amd64
 if ("%PROCESSOR_ARCHITECTURE%")==("AMD64") set _ARCHTYPE=amd64
 title VC10 %_ARCHTYPE%
-call "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" %_ARCHTYPE%
-if ERRORLEVEL 1 goto error
+if exist "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" call "%_PFILES%\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" %_ARCHTYPE% & goto vc10_next
+if exist "%_PFILES64%\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" echo VC10 not installed && goto done
+rem if ERRORLEVEL 1 goto error
+:vc10_next
 set _TARGET_CPU=TARGET_CPU=amd64
 if ("%_HAS_COMPILER_PREFIX%")==("1") set _CFG=COMPILER_PREFIX=vc100
 if ("%_HAS_COMPILER_PREFIX%")==("0") set _CFG=CFG=_VC100
@@ -152,8 +163,8 @@ if ("%_HAS_COMPILER_PREFIX%")==("1") set _DEBUG_DBG=%_DEBUG_DBG% wxDEBUG_LEVEL=1
 
 set _BUILD_FLAGS=UNICODE=%_DO_UNICODE% SHARED=%_SHARED% RUNTIME_LIBS=%_RUNTIME_LIBS% %_TARGET_CPU% %_CFG% CPPFLAGS="%_CPPFLAGS%" %_VENDOR%
 
-%_COMMENT% nmake -f makefile.vc %_BUILD_REL% %_BUILD_FLAGS%
-%_COMMENT% nmake -f makefile.vc %_BUILD_DBG% %_BUILD_FLAGS%
+%_COMMENT_MAKE% nmake -f makefile.vc %_BUILD_REL% %_BUILD_FLAGS%
+%_COMMENT_MAKE% nmake -f makefile.vc %_BUILD_DBG% %_BUILD_FLAGS%
 
 set _BUILD_REL=
 set _BUILD_DBG=
@@ -177,6 +188,7 @@ echo %_PROGNAME%: ERROR!!!
 
 set _CFG=
 set _COMMENT=
+set _COMMENT_MAKE=
 set _COMMON_CPPFLAGS=
 set _CPPFLAGS=
 set _DO_SHIFT=
