@@ -243,6 +243,9 @@ Microsoft Visual Studio .NET 2010 (VC10)
    - Only tested with C++ Express version
    - Must install Win7-.Net4 SDK first, in order to get x64 compiler
      (project won't open otherwise)
+   - Turn on Expert Settings (Tools->Settings->Expert Settings)
+   - Make sure you set the SDK in Platform Toolset (project properties)
+     [this is done for ARB]
    It works, no additional notes.
    [x86: UNICODE and MBCS]
    [x64: UNICODE only]
