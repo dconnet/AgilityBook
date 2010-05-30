@@ -127,6 +127,7 @@ def main():
 			RmMinusRF('../../../bin/VC9Win32')
 		remove(r'../VC9/bldWin32.txt')
 		cmds = (
+			r'title VC9 Release Win32',
 			r'cd ..\VC9',
 			r'call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86',
 			r'devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"')
@@ -138,6 +139,7 @@ def main():
 			RmMinusRF('../../../bin/VC9x64')
 		remove(r'../VC9/bldWin64.txt')
 		cmds = (
+			r'title VC9 Release x64',
 			r'cd ..\VC9',
 			r'call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64',
 			r'devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"')
@@ -150,6 +152,7 @@ def main():
 		if clean:
 			RmMinusRF('../../../bin/VC10Win32')
 		cmds = (
+			r'title VC10 Release Win32',
 			r'cd ..\VC10',
 			r'call "C:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86',
 			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
@@ -160,6 +163,7 @@ def main():
 		if clean:
 			RmMinusRF('../../../bin/VC10x64')
 		cmds = (
+			r'title VC10 Release x64',
 			r'cd ..\VC10',
 			r'call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /release /x64 /xp',
 			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
