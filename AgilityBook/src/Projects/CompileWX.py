@@ -39,7 +39,7 @@ hasPrefix = True
 useStatic = True
 useUnicode = True
 
-vc6Base     = r'\Microsoft Visual Studio'
+vc6Base     = ProgramFiles + r'\Microsoft Visual Studio'
 vc7Base     = r'\Microsoft Visual Studio .NET 2003'
 vc8Base     = r'\Microsoft Visual Studio 8'
 vc9Base     = r'\Microsoft Visual Studio 9.0'
@@ -70,12 +70,12 @@ def GetWindowsSdkDir(vcinstalldir):
 
 # 7.1, 8.0, 9.0, 10.0 (as observed on my machine)
 def GetVSDir(version):
-	vsdir = GetRegString(win32con.HKEY_LOCALMACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
-	if 0 == len(common):
+	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
+	if 0 == len(vsdir):
 		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
-	if 0 == len(common):
-		vsdir = GetRegString(win32con.HKEY_LOCALMACHINE, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
-	if 0 == len(common):
+	if 0 == len(vsdir):
+		vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
+	if 0 == len(vsdir):
 		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
 	return vsdir
 
@@ -91,22 +91,22 @@ def AddCompiler(compilers, c):
 		if useStatic:
 			print 'ERROR: VC6 does not do static libraries'
 			return False
-		baseDir = ProgramFiles + vc6Base
+		baseDir = vc6Base
 		testFile = baseDir + r'\VC98\bin\vcvars32.bat'
 	elif c == 'vc7':
 		if useUnicode:
 			print 'ERROR: VC7 does not do UNICODE'
 			return False
 		vc7Base = GetVSDir("7.1")
-		baseDir = ProgramFiles + vc7Base
+		baseDir = vc7Base
 		testFile = baseDir + r'\Common7\Tools\vsvars32.bat'
 	elif c == 'vc8':
 		vc8Base = GetVSDir("8.0")
-		baseDir = ProgramFiles + vc8Base
+		baseDir = vc8Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 	elif c == 'vc9':
 		vc9Base = GetVSDir("9.0")
-		baseDir = ProgramFiles + vc9Base
+		baseDir = vc9Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 	elif c == 'vc9x64':
 		vc9Base = GetVSDir("9.0")
@@ -114,18 +114,18 @@ def AddCompiler(compilers, c):
 			# Well, it might. I don't.
 			print 'ERROR: VC9x64 does not do MBCS'
 			return False
-		baseDir = ProgramFiles + vc9Base
+		baseDir = vc9Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 	elif c == 'vc10':
 		vc10Base = GetVSDir("10.0")
-		baseDir = ProgramFiles + vc10Base
+		baseDir = vc10Base
 		testFile = baseDir + r'\VC\vcvarsall.bat'
 	elif c == 'vc10x64':
 		vc10Base = GetVSDir("10.0")
 		if not useUnicode:
 			print 'ERROR: VC10x64 does not do MBCS'
 			return False
-		baseDir = ProgramFiles + vc10Base
+		baseDir = vc10Base
 		# Doesn't matter what the "current" sdk is. We must have 7.1.
 		testFile = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
 	else:
@@ -226,7 +226,7 @@ def main():
 		cppflags = ''
 
 		if compiler == 'vc6':
-			setenv_rel = 'call "' + ProgramFiles + vc6Base + r'\VC98\bin\vcvars32.bat"'
+			setenv_rel = 'call "' + vc6Base + r'\VC98\bin\vcvars32.bat"'
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc60 '
 			else:
@@ -234,7 +234,7 @@ def main():
 			cppflags = common_cppflags
 
 		elif compiler == 'vc7':
-			setenv_rel = 'call "' + ProgramFiles + vc7Base + r'\Common7\Tools\vsvars32.bat"'
+			setenv_rel = 'call "' + vc7Base + r'\Common7\Tools\vsvars32.bat"'
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc71 '
 			else:
@@ -242,7 +242,7 @@ def main():
 			cppflags = common_cppflags
 
 		elif compiler == 'vc8':
-			setenv_rel = 'call "' + ProgramFiles + vc8Base + r'\VC\vcvarsall.bat"'
+			setenv_rel = 'call "' + vc8Base + r'\VC\vcvarsall.bat"'
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc80 '
 			else:
@@ -250,7 +250,7 @@ def main():
 			cppflags = common_cppflags
 
 		elif compiler == 'vc9':
-			setenv_rel = 'call "' + ProgramFiles + vc9Base + r'\VC\vcvarsall.bat" x86'
+			setenv_rel = 'call "' + vc9Base + r'\VC\vcvarsall.bat" x86'
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc90 '
 			else:
@@ -258,8 +258,8 @@ def main():
 			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc9x64':
-			setenv_rel = 'call "' + ProgramFiles + vc9Base + r'\VC\vcvarsall.bat" ',
-			if bit64on64:
+			setenv_rel = 'call "' + vc9Base + r'\VC\vcvarsall.bat" '
+			if not bit64on64:
 				setenv_rel += 'x86_amd64'
 			else:
 				setenv_rel += 'amd64'
@@ -271,7 +271,7 @@ def main():
 			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10':
-			setenv_rel = 'call "' + ProgramFiles + vc10Base + r'\VC\vcvarsall.bat" x86'
+			setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" x86'
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc100 '
 			else:
