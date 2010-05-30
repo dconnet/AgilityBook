@@ -274,8 +274,8 @@ def main():
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10x64':
-			setenv_rel = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd /release /x64 /xp'
-			setenv_dbg = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd /debug /x64 /xp'
+			setenv_rel = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /release /x64 /xp'
+			setenv_dbg = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /debug /x64 /xp'
 			target_cpu = 'TARGET_CPU=amd64 '
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc100 '
