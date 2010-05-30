@@ -74,23 +74,25 @@ Make sure WXWIN is set to wxWidgets root directory.
         #endif // _UNICODE/!_UNICODE
     #endif
 #if _MSC_VER == 1310
-	#define wxLIB_SUFFIX	_VC71
+    #define wxLIB_SUFFIX _VC71
 #elif _MSC_VER == 1400
-	#define wxLIB_SUFFIX	_VC80
+    #define wxLIB_SUFFIX _VC80
 #elif _MSC_VER == 1500
-	#define wxLIB_SUFFIX	_VC90
+    #define wxLIB_SUFFIX _VC90
+#elif _MSC_VER == 1600
+    #define wxLIB_SUFFIX _VC100
 #else
-	#define wxLIB_SUFFIX
+    #define wxLIB_SUFFIX
 #endif
 #if defined(_M_X64)
-	#define wxLIB_ARCH	_amd64
+    #define wxLIB_ARCH _amd64
 #else
-	#define wxLIB_ARCH
+    #define wxLIB_ARCH
 #endif
     #ifdef WXUSINGDLL
         #define wxLIB_SUBDIR wxCONCAT4(vc, wxLIB_ARCH, _dll, wxLIB_SUFFIX)
     #else // !DLL
-		#define wxLIB_SUBDIR wxCONCAT4(vc, wxLIB_ARCH, _lib, wxLIB_SUFFIX)
+        #define wxLIB_SUBDIR wxCONCAT4(vc, wxLIB_ARCH, _lib, wxLIB_SUFFIX)
     #endif // DLL/!DLL
     // the real setup.h header file we need is in the build-specific directory,
     // construct the path to it
@@ -244,6 +246,10 @@ Microsoft Visual Studio .NET 2010 (VC10)
    - Must install Win7-.Net4 SDK first, in order to get x64 compiler
      (project won't open otherwise)
    - Turn on Expert Settings (Tools->Settings->Expert Settings)
+   - Modify \Program Files\Microsoft Visual Studio 10.0\Common7\Tools\VCVarsQueryRegistry.bat:
+     In the function GetWindowsSdkDirHelper, remove the "\7.0A" from the key
+     path and change the value name to "CurrentInstallFolder". This will
+     properly bring in the current SDK version.
    - Make sure you set the SDK in Platform Toolset (project properties)
      [this is done for ARB]
    It works, no additional notes.
