@@ -25,11 +25,11 @@ Run Doxygen and fix any warnings/errors it reports.
 
 Do a full rebuild and verify it.
 - cd src\Projects\Installer
-- 'BuildAll.bat fullupdate' [runs VC9 compile]
-  - BuildAll options:
+- 'BuildAll.py fullupdate' [runs VC9 and/or VC10 compile]
+  - BuildAll options: [fullupdate | clean] [vc9 | vc10]
     'fullupdate': Update build number + 'clean'.
     'clean': Delete all output and do a full build.
-    'dirty': Incremental build.
+    default: Incremental build, both vc9+10
 - Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.

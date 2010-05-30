@@ -186,10 +186,6 @@ Currently using Version 3.0.5419.0 (as of ARB v2.0.1).
 - Or, run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
 
-During our release process of running BuildAll.bat,
-GenMSI.py will be called which generates the install files.
-(In ...\AgilityBook\src\Projects\Installer)
-
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen

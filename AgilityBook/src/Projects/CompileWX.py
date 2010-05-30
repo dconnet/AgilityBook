@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2010-05-30 DRC Add '/xp' option to vc10 setenv.cmd
 # 2010-05-29 DRC Converted .bat to .py
 # 2009-12-31 DRC Changed 'hasprefix' to 'noprefix'.
 #                (2.8 is rarely rebuilt, default to the active build)
@@ -65,7 +66,7 @@ def GetWindowsSdkDir(vcinstalldir):
 		WindowsSdkDir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\Microsoft SDKs\Windows', 'CurrentInstallFolder')
 	if 0 == len(WindowsSdkDir):
 		WindowsSdkDir = vcinstalldir + '\\PlatformSDK\\'
-	return WindowsSdkDir 
+	return WindowsSdkDir
 
 
 # 7.1, 8.0, 9.0, 10.0 (as observed on my machine)
@@ -200,12 +201,6 @@ def main():
 	# Used in wx2.9.1+, not used earlier so won't hurt anything
 	common_cppflags = '/DwxMSVC_VERSION_AUTO=1'
 
-	#compileIt = True
-	#useStatic = True
-	#useUnicode = True
-	#samples = set()
-	#compilers = set()
-
 	os.environ['INCLUDE'] = ''
 	os.environ['LIB'] = ''
 
@@ -279,8 +274,8 @@ def main():
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10x64':
-			setenv_rel = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd /release /x64'
-			setenv_dbg = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd /debug /x64'
+			setenv_rel = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd /release /x64 /xp'
+			setenv_dbg = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd /debug /x64 /xp'
 			target_cpu = 'TARGET_CPU=amd64 '
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc100 '
