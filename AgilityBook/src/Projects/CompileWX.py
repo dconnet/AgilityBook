@@ -219,6 +219,7 @@ def main():
 		cfg = ''
 		target_cpu = ''
 		cppflags = ''
+		resetColor = False
 
 		if compiler == 'vc6':
 			setenv_rel = 'call "' + vc6Base + r'\VC98\bin\vcvars32.bat"'
@@ -274,6 +275,7 @@ def main():
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10x64':
+			resetColor = True
 			setenv_rel = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /release /x64 /xp'
 			setenv_dbg = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /debug /x64 /xp'
 			target_cpu = 'TARGET_CPU=amd64 '
@@ -329,6 +331,9 @@ def main():
 		else:
 			proc = subprocess.Popen('cmd /c type ' + tmpfile, env=newenv)
 		proc.wait()
+		if compileIt and resetColor:
+			proc = subprocess.Popen('cmd /c color')
+			proc.wait()
 		os.remove(tmpfile)
 
 
