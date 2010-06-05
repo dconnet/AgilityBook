@@ -324,6 +324,8 @@ def main():
 			print >>bat, build_rel + ' ' + build_flags
 			print >>bat, setenv_dbg
 			print >>bat, build_dbg + ' ' + build_flags
+		if resetColor:
+			print >>bat, 'color 07'
 
 		bat.close()
 		if compileIt:
@@ -331,9 +333,6 @@ def main():
 		else:
 			proc = subprocess.Popen('cmd /c type ' + tmpfile, env=newenv)
 		proc.wait()
-		if compileIt and resetColor:
-			proc = subprocess.Popen('cmd /c color')
-			proc.wait()
 		os.remove(tmpfile)
 
 
