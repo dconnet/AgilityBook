@@ -7,6 +7,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2010-06-11 DRC Convert vbs scripts to python
 # 2010-05-22 DRC Added /test2 option.
 # 2010-05-07 DRC Added /user option (default: perMachine)
 #            Merge languages into one msi.
@@ -42,6 +43,7 @@ import datetime
 import os
 import string
 import sys
+import msilib
 
 # Where top-level AgilityBook directory is relative to this script.
 AgilityBookDir = r'..\..\..'
@@ -136,6 +138,39 @@ def runcmd(command):
 			break
 
 
+# This is the old WiSubStg.vbs script
+#runcmd('cscript /nologo WiSubStg.vbs ' + baseMsi + ' ' + langId + '.mst ' + langId)
+# No error checking - just let the exception kill it.
+def WiSubStg(baseMsi, langId):
+	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_TRANSACT)
+	view = database.OpenView("SELECT `Name`,`Data` FROM _Storages")
+	record = msilib.CreateRecord(2)
+	record.SetString(1, langId)
+	view.Execute(record)
+	record.SetStream(2, langId + '.mst')
+	view.Modify(msilib.MSIMODIFY_ASSIGN, record)
+	database.Commit()
+	view = None
+	database = None
+
+
+# This is the old WiLangId.vbs script
+#runcmd('cscript /nologo WiLangId.vbs ' + baseMsi + ' Package ' + sumInfoStream)
+# No error checking - just let the exception kill it.
+def WiLangId(baseMsi, sumInfoStream):
+	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_TRANSACT)
+	sumInfo = database.GetSummaryInformation(1)
+	template = sumInfo.GetProperty(7)
+	iDelim = template.find(';')
+	platform = ';'
+	if 0 <= iDelim:
+		platform = template[0:iDelim+1]
+	sumInfo.SetProperty(7, platform + sumInfoStream)
+	sumInfo.Persist()
+	database.Commit()
+	database = None
+
+
 # Code:
 #  1: Win32/Unicode
 #  2: Win32/MBCS
@@ -179,7 +214,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing):
 			else:
 				sumInfoStream += ',' + langId
 				runcmd('torch -nologo -p -t language ' + baseMsi + ' ' + basename + '.msi -out ' + langId + '.mst')
-				runcmd('cscript /nologo WiSubStg.vbs ' + baseMsi + ' ' + langId + '.mst ' + langId)
+				WiSubStg(baseMsi, langId)
 			if tidy:
 				if os.access(basename + '.wixpdb', os.F_OK):
 					os.remove(basename + '.wixpdb')
@@ -189,7 +224,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing):
 					if os.access(basename + '.msi', os.F_OK):
 						os.remove(basename + '.msi')
 		if processing > 1:
-			runcmd('cscript /nologo WiLangId.vbs ' + baseMsi + ' Package ' + sumInfoStream)
+			WiLangId(baseMsi, sumInfoStream)
 	else:
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 
