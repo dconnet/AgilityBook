@@ -2,6 +2,7 @@
 # Above line is for python
 #
 # Revision History
+# 2010-06-11 DRC Support building on x64 OS
 # 2010-05-30 DRC Converted .bat to .py (keeps environment clean!)
 """BuildAll.py [fullupdate | clean] [vc9 | vc10]
    Default is to do a dirty build
@@ -13,6 +14,9 @@ import stat
 import string
 import subprocess
 import sys
+
+ProgramFiles = r'c:\Program Files'
+ProgramFiles64 = r'c:\Program Files'
 
 
 def errprint(*args):
@@ -66,6 +70,18 @@ def main():
 	if len(sys.argv) > 3:
 		print 'Usage:', __doc__
 		return
+
+	global ProgramFiles, ProgramFiles64
+	bit64on64 = False
+	if os.environ.has_key('ProgramFiles'):
+		ProgramFiles = os.environ['ProgramFiles']
+	# 64bit on 64bit
+	if os.environ.has_key('PROCESSOR_ARCHITECTURE') and os.environ['PROCESSOR_ARCHITECTURE'] == 'AMD64':
+		bit64on64 = True
+		ProgramFiles = r'c:\Program Files (x86)'
+	# 64bit on Wow64 (32bit cmd shell spawned from msdev)
+	if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
+		ProgramFiles = r'c:\Program Files (x86)'
 
 	buildVC9 = True
 	buildVC10 = True
@@ -129,7 +145,7 @@ def main():
 		cmds = (
 			r'title VC9 Release Win32',
 			r'cd ..\VC9',
-			r'call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86',
+			r'call "' + ProgramFiles + r'\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86',
 			r'devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC9Win32/Release/AgilityBook.exe', os.F_OK):
@@ -141,7 +157,7 @@ def main():
 		cmds = (
 			r'title VC9 Release x64',
 			r'cd ..\VC9',
-			r'call "C:\Program Files\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64',
+			r'call "' + ProgramFiles + r'\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64',
 			r'devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC9x64/Release/AgilityBook.exe', os.F_OK):
@@ -154,7 +170,7 @@ def main():
 		cmds = (
 			r'title VC10 Release Win32',
 			r'cd ..\VC10',
-			r'call "C:\Program Files\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86',
+			r'call "' + ProgramFiles + r'\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86',
 			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC10Win32/Release/AgilityBook.exe', os.F_OK):
@@ -165,7 +181,7 @@ def main():
 		cmds = (
 			r'title VC10 Release x64',
 			r'cd ..\VC10',
-			r'call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /release /x64 /xp',
+			r'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /release /x64 /xp',
 			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC10x64/Release/AgilityBook.exe', os.F_OK):
