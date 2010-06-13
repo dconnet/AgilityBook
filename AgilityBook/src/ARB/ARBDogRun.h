@@ -332,7 +332,6 @@ public:
 	void RemoveLink(wxString const& inLink);
 
 private:
-	//std::set<std::tr1::weak_ptr<ARBConfigMultiQ> > m_pMultiQs; //< Not persisted.
 	std::set<ARBConfigMultiQPtr> m_pMultiQs; //< Not persisted.
 	ARBDate m_Date;
 	wxString m_Division;
