@@ -272,7 +272,7 @@ def main():
 				cfg = 'COMPILER_PREFIX=vc100 '
 			else:
 				cfg = 'CFG=_VC100 '
-			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
+			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10x64':
 			resetColor = True
@@ -283,7 +283,7 @@ def main():
 				cfg = 'COMPILER_PREFIX=vc100 '
 			else:
 				cfg = 'CFG=_VC100 '
-			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
+			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		build_rel = ''
 		build_dbg = ''
