@@ -88,7 +88,6 @@ public:
 	 * Get the processed data. The returned data should be in the form of
 	 * a valid ARB file. If this were to be saved as a file, we could then
 	 * directly import it in ARB.
-	 * @param dataReader Use to read data from a URL.
 	 * @param inLocCodes List of location codes, may be empty.
 	 * @param inVenueCodes List of venue codes, may be empty.
 	 * @param progress Allow the plugin to update the progress

@@ -28,7 +28,7 @@
  *   import datetime
  *   print (datetime.date.today() - datetime.date(2002,12,28)).days
  *
- * IMPORTANT: When updating the version, also update ..\..\configure.in
+ * IMPORTANT: When updating the version, also update ../../configure.in
  * (The actual version number is auto-updated, but the copyright is not)
  *
  * Revision History

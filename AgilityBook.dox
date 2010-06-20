@@ -581,6 +581,7 @@ WARN_LOGFILE           = DoxWarnings.log
 # with spaces.
 
 INPUT                  = src/ARB \
+                         src/Include \
                          src/Win \
                          src/stdafx.h \
                          src/stdafx.cpp
