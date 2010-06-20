@@ -481,7 +481,7 @@ MAX_INITIALIZER_LINES  = 30
 # at the bottom of the documentation of classes and structs. If set to YES the 
 # list will mention the files that were used to generate the documentation.
 
-SHOW_USED_FILES        = YES
+SHOW_USED_FILES        = NO
 
 # If the sources in your project are distributed over multiple directories 
 # then setting the SHOW_DIRECTORIES tag to YES will show the directory hierarchy 
@@ -499,7 +499,7 @@ SHOW_FILES             = YES
 # Namespaces page.  This will remove the Namespaces entry from the Quick Index 
 # and from the Folder Tree View (if specified). The default is YES.
 
-SHOW_NAMESPACES        = YES
+SHOW_NAMESPACES        = NO
 
 # The FILE_VERSION_FILTER tag can be used to specify a program or script that 
 # doxygen should invoke to get the current version for each file (typically from 
@@ -613,7 +613,7 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = 
+EXCLUDE                = *.py
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix filesystem feature) are excluded 
@@ -852,7 +852,7 @@ DOCSET_FEEDNAME        = "Doxygen generated docs"
 # reverse domain-name style string, e.g. com.mycompany.MyDocSet. Doxygen 
 # will append .docset to the name.
 
-DOCSET_BUNDLE_ID       = org.doxygen.Project
+DOCSET_BUNDLE_ID       = com.agilityrecordbook.doxygen
 
 # If the GENERATE_HTMLHELP tag is set to YES, additional index files 
 # will be generated that can be used as input for tools like the 
@@ -915,7 +915,7 @@ QCH_FILE               =
 # Qt Help Project output. For more information please see 
 # http://doc.trolltech.com/qthelpproject.html#namespace
 
-QHP_NAMESPACE          = org.doxygen.Project
+QHP_NAMESPACE          = com.agilityrecordbook.doxygen
 
 # The QHP_VIRTUAL_FOLDER tag specifies the namespace to use when generating 
 # Qt Help Project output. For more information please see 
@@ -962,7 +962,7 @@ GENERATE_ECLIPSEHELP   = NO
 # the directory name containing the HTML and XML files should also have 
 # this name.
 
-ECLIPSE_DOC_ID         = org.doxygen.Project
+ECLIPSE_DOC_ID         = com.agilityrecordbook.doxygen
 
 # The DISABLE_INDEX tag can be used to turn on/off the condensed index at 
 # top of each HTML page. The value NO (the default) enables the index and 
