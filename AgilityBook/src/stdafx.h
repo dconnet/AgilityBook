@@ -199,7 +199,7 @@
 #error ARB: wxUSE_DOC_VIEW_ARCHITECTURE must be defined in wxWidgets
 #endif
 // We need unix98-style positional parameters
-#ifndef wxUSE_PRINTF_POS_PARAMS
+#if !defined(wxUSE_PRINTF_POS_PARAMS) || !wxUSE_PRINTF_POS_PARAMS
 #error ARB: wxUSE_PRINTF_POS_PARAMS must be defined in wxWidgets
 #endif
 // There's other things that could be checked, but that's good enough for now.
