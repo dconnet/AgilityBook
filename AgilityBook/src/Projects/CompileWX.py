@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2010-07-17 DRC Convert to VC10Pro (no need for SDK now)
 # 2010-05-30 DRC Add '/xp' option to vc10 setenv.cmd
 # 2010-05-29 DRC Converted .bat to .py
 # 2009-12-31 DRC Changed 'hasprefix' to 'noprefix'.
@@ -275,9 +276,15 @@ def main():
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10x64':
-			resetColor = True
-			setenv_rel = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /release /x64 /xp'
-			setenv_dbg = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /debug /x64 /xp'
+			setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" '
+			if not bit64on64:
+				setenv_rel += 'x86_amd64'
+			else:
+				setenv_rel += 'amd64'
+			# The commented out lines are for VC10 Express
+			#resetColor = True
+			#setenv_rel = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /release /x64 /xp'
+			#setenv_dbg = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /debug /x64 /xp'
 			target_cpu = 'TARGET_CPU=amd64 '
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc100 '
