@@ -238,6 +238,10 @@ Microsoft Visual Studio .NET 2008 (VC9) + SP1
 
 Microsoft Visual Studio .NET 2010 (VC10)
 ========================================
+   It works, no additional notes.
+   [x86: UNICODE and MBCS]
+   [x64: UNICODE only]
+-- Old Express notes (ARB has moved to VC10Pro)
    - Only tested with C++ Express version
    - Must install Win7-.Net4 SDK first, in order to get x64 compiler
      (project won't open otherwise)
@@ -248,6 +252,3 @@ Microsoft Visual Studio .NET 2010 (VC10)
      properly bring in the current SDK version.
    - Make sure you set the SDK in Platform Toolset (project properties)
      [this is done for ARB]
-   It works, no additional notes.
-   [x86: UNICODE and MBCS]
-   [x64: UNICODE only]
