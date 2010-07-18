@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-07-17 DRC When returning time_t, adjust for DST.
  * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -445,6 +446,13 @@ time_t ARBDate::GetDate() const
 		int yr, mon, day;
 		SdnToGregorian(m_Julian, &yr, &mon, &day);
 		struct tm tim;
+		// This initializes tm_isdst properly.
+		time_t inTime = time(NULL);
+#if defined(ARB_HAS_SECURE_LOCALTIME)
+		_localtime64_s(&tim, &inTime);
+#else
+		tim = *localtime(&inTime);
+#endif
 		tim.tm_sec = 0;
 		tim.tm_min = 0;
 		tim.tm_hour = 0;
@@ -453,7 +461,6 @@ time_t ARBDate::GetDate() const
 		tim.tm_year = yr - 1900;
 		tim.tm_wday = 0;
 		tim.tm_yday = 0;
-		tim.tm_isdst = 0;
 		t = mktime(&tim);
 	}
 	return t;
