@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2010-05-22 DRC Configuration version 29.
+2010-07-18 DRC Configuration version 29.
                Added new AKC titles and T2B class.
+               Updated TDAA titles descriptions.
                Added USDAA Accomplished Relay titles.
 2010-01-12 DRC Configuration version 28.
                Removed Sweepstakes (no longer available).
@@ -2820,15 +2821,15 @@ Was called Wild Card briefly.</Desc>
       </Event>
     </Venue>
     <Venue LongName="Teacup Dogs Agility Association" Name="TDAA" URL="http://www.k9tdaa.com/" icon="11">
-      <Titles LongName="Teacup Beginner Agility Dog" Name="TBAD">3 Qs in standard courses under 2 different judges</Titles>
-      <Titles LongName="Teacup Intermediate Agility Dog" Name="TIAD">3 Qs in standard courses under 2 different judges</Titles>
-      <Titles LongName="Teacup Superior Agility Dog" Name="TSAD">5 Qs in standard courses under 3 different judges</Titles>
-      <Titles LongName="Teacup Games I" Name="TG1">3 Qs in at least 2 different games under 2 different judges</Titles>
-      <Titles LongName="Teacup Games II" Name="TG2">3 Qs in at least 3 different games under 2 different judges</Titles>
-      <Titles LongName="Teacup Games III" Name="TG3">5 Qs in at least 5 different games under 3 different judges</Titles>
-      <Titles LongName="Teacup Agile Dog Champion" Multiple="2" Name="TACh" Prefix="y">TSAD + 10 Qs in Superior with 3 wins
-TG3 + 10 Qs in at least 5 games with 3 wins
-(Each successive title is +5Qs and +2 wins</Titles>
+      <Titles LongName="Teacup Beginner Agile Dog" Name="TBAD">3 Qs in standard courses</Titles>
+      <Titles LongName="Teacup Intermediate Agile Dog" Name="TIAD">3 Qs in standard courses</Titles>
+      <Titles LongName="Teacup Superior Agile Dog" Name="TSAD">5 Qs in standard courses</Titles>
+      <Titles LongName="Teacup Games I" Name="TG1">3 Qs in at least 2 different games</Titles>
+      <Titles LongName="Teacup Games II" Name="TG2">3 Qs in at least 3 different games</Titles>
+      <Titles LongName="Teacup Games III" Name="TG3">5 Qs in at least 5 different games</Titles>
+      <Titles LongName="Teacup Agile Dog Champion" Multiple="2" Name="TACh" Prefix="y">TSAD + 10 Qs in Superior
+TG3 + 10 Qs in at least 5 games
+(Each successive title is +5Qs</Titles>
       <Titles LongName="Teacup Master Agility Dog" Multiple="2" Name="TMAD">TSAD + 10 Qs</Titles>
       <Titles LongName="Teacup Master Agility Games Dog" Multiple="2" Name="TMAG">TG3 + 10 Qs</Titles>
       <Division Name="Standard">
