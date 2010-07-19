@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DefaultConfig Book="12.11">
-   <!--
+<!--
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
@@ -424,7 +424,8 @@ Revision History:
         <Scoring Division="Regular" Level="Excellent B" ValidFrom="2011-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>PACH points start accumulated 1-Jan-2013 and are retroactive.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
@@ -451,7 +452,8 @@ Revision History:
         <Scoring Division="Regular" Level="Excellent B" ValidFrom="2011-7-1" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
-        <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" timeFault="3" type="Faults100ThenTime">
+        <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
+          <Note>PACH points start accumulated 1-Jan-2013 and are retroactive.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">

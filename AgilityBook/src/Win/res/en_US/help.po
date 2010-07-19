@@ -244,7 +244,7 @@ msgid "HIDC_CONFIG_EVENT_POINTS_NEW"
 msgstr "Create a new titling point item."
 
 msgid "HIDC_CONFIG_EVENT_SPEED"
-msgstr "Does this scoring method have Speed points? (In AKC, these are MACH points.) Speed points are computed as full seconds under SCT. First place earns 2x. Second place earns 1.5x. All other places earn 1 point per second."
+msgstr "Does this scoring method have Speed points? (In AKC, these are MACH points.) Speed points are computed as full seconds under SCT."
 
 msgid "HIDC_CONFIG_EVENT_BONUS"
 msgstr "Does this scoring method have extra titling points? This would apply to venues like NADAC that have a bonus feature that allows the dog to earn 15 point Qs."
