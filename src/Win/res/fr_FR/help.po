@@ -245,7 +245,7 @@ msgid "HIDC_CONFIG_EVENT_POINTS_NEW"
 msgstr "Créer un nouvel point qualifiant."
 
 msgid "HIDC_CONFIG_EVENT_SPEED"
-msgstr "Cette méthode a-t-elle des points de vitesse? (Dans AKC, ce sont les points de MACH.) Les points de vitesse sont calculés comme les secondes pleines sous TPS. Le premier Classement gagne 2x. Le deuxième Classement gagne 1.5x. Tous autres Classements gagnent 1 point par seconde."
+msgstr "Cette méthode a-t-elle des points de vitesse? (Dans AKC, ce sont les points de MACH.) Les points de vitesse sont calculés comme les secondes pleines sous TPS."
 
 msgid "HIDC_CONFIG_EVENT_BONUS"
 msgstr "Cette méthode a-t-elle es points qualifiants supplémentaires? Ceci s'appliquerait aux organisations comme NADAC qui utilisent des bonus qui permettent au chien de gagner 15 points Q supplémentaires."
