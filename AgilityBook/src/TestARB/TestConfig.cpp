@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-08-13 DRC Updated for config 29.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
  */
@@ -120,6 +121,7 @@ SUITE(TestConfig)
 				IDR_XML_CONFIG26_V12_9,
 				IDR_XML_CONFIG27_V12_10,
 				IDR_XML_CONFIG28_V12_11,
+				IDR_XML_CONFIG29_V12_11,
 				0
 			};
 			for (int i = 0; configs[i] != 0; ++i)
@@ -166,7 +168,7 @@ SUITE(TestConfig)
 			CHECK_EQUAL(82u, config.GetActions().size());
 			CHECK_EQUAL(0u, config.GetFaults().size());
 			CHECK_EQUAL(5u, config.GetOtherPoints().size());
-			CHECK_EQUAL(12u, config.GetVenues().size());
+			CHECK_EQUAL(13u, config.GetVenues().size());
 			CHECK(config.GetVenues().FindVenue(wxT("AAC")));
 			CHECK(config.GetVenues().FindVenue(wxT("AKC")));
 			CHECK(config.GetVenues().FindVenue(wxT("ASCA")));
@@ -178,6 +180,7 @@ SUITE(TestConfig)
 			CHECK(config.GetVenues().FindVenue(wxT("SCC")));
 			CHECK(config.GetVenues().FindVenue(wxT("TDAA")));
 			CHECK(config.GetVenues().FindVenue(wxT("UKC")));
+			CHECK(config.GetVenues().FindVenue(wxT("UKI")));
 			CHECK(config.GetVenues().FindVenue(wxT("USDAA")));
 		}
 	}

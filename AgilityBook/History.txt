@@ -1,7 +1,9 @@
-5/22/2010: v2.2.2.x <in development>
+8/13/2010: v2.2.2.x <in development>
 - Bumped Configuration v29:
   - Added new AKC titles and T2B class.
+  - Updated TDAA titles descriptions.
   - Added USDAA Accomplished Relay titles.
+  - Added UKI, but no placement point info.
 - New features / Enhancements:
   - Updated to wxWidgets 2.8.11.
   - Merged all languages into a single msi.
