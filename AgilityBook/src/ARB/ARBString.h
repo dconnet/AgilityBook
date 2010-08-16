@@ -63,11 +63,11 @@ public:
 	// Typically, the "ToC" routines are only used in Element.
 	// bRetry is for wx2.9+: It fails on "123-23" now. Old behavior returned "123".
 	static bool ToCLong(wxString const& inStr, long& outValue, bool bRetry = false);
-	static int ToCLong(wxString const& inStr)
+	static long ToCLong(wxString const& inStr)
 	{
 		long val = 0;
 		ToCLong(inStr, val, true);
-		return static_cast<int>(val);
+		return val;
 	}
 	static bool ToCDouble(wxString const& inStr, double& outValue);
 	static double ToCDouble(wxString const& inStr)
