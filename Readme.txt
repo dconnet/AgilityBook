@@ -167,12 +167,12 @@ All VC project files have been copied/renamed/modified such that:
 Boost: http://www.boost.org.
 - Boost is no longer required when using VC9+SP1 (or VC9FeaturePack). Note, the
   included project files now assume the Service Pack is installed with VS2008.
-ARB has been built and tested using Boost version 1.43.0. There is no need
+ARB has been built and tested using Boost version 1.44.0. There is no need
 to actually build the Boost libraries. (Currently, only the smart_ptr and
 weak_ptr templates are used.)
 [Minimum Boost version supported (for TR1): 1.38.0]
 When the library is unpacked, it should be located according to the map
-above. The default directory when unpacked is boost_1_41_0 (of course,
+above. The default directory when unpacked is boost_1_44_0 (of course,
 this will vary based on boost version). Set BOOST_ROOT to point to this
 directory. The projects use this environment variable.
 
@@ -181,15 +181,15 @@ directory. The projects use this environment variable.
 Windows Installer XML toolset: http://wix.sourceforge.net/releases/
 Currently using Version 3.0.5419.0 (as of ARB v2.0.1).
 - Install votive [optional]
-- Unzip binaries.zip into "C:\Tools\wix3'
-  (GenMSI.py assumes WiX is installed here)
-- Or, run WiX installer. That will set the environment variable WIX.
+- (1) Unzip binaries.zip into "C:\Tools\wix3'
+  (GenMSI.py assumes WiX is installed here, unless WIX env var is set)
+- Or (2), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
 
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.6.3.
+Used to create source code documentation. AgilityBook.dox uses v1.7.1.
 Earlier versions may work.
 [Install to default location]
 
@@ -242,7 +242,6 @@ Microsoft Visual Studio .NET 2010 (VC10)
    [x86: UNICODE and MBCS]
    [x64: UNICODE only]
 -- Old Express notes (ARB has moved to VC10Pro)
-   - Only tested with C++ Express version
    - Must install Win7-.Net4 SDK first, in order to get x64 compiler
      (project won't open otherwise)
    - Turn on Expert Settings (Tools->Settings->Expert Settings)

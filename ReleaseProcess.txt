@@ -12,10 +12,10 @@ Files to change before marking files for release:
 - History.txt
   Update program version and date, along with any comments.
   - Reflect these changes into help/html/HistoryData.html
-  - Run "src\UpdateHistory.py -h"
+  - Run "src\UpdateHistory.py -h -w"
     (note: while a help file is no longer actually generated, continue doing
     this as the website pulls it's data from this too. And at some point, I
-    may reinstate the help file)
+    may reinstate the help file [-h: arbhelp, -w: website])
 - Todo.txt
   Any necessary changes...
 
@@ -101,7 +101,6 @@ Web Site:
   - Update config file (ConfigN.txt)
 - Make sure things are current (ongoing task!).
   - Update DTD
-  - Run "src\UpdateHistory.py -w" (updates history.php)
   - Update bugs.php
 - Push all updated files to server.
 
