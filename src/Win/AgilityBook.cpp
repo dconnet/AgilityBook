@@ -223,6 +223,13 @@ CHtmlEasyPrinting* CAgilityBookApp::GetHtmlPrinter()
 
 bool CAgilityBookApp::OnInit()
 {
+#if defined(WIN32) && wxCHECK_VERSION(2, 9, 1)
+	// By default, the path directories are tweaked to remove debug/release.
+	// I assume my files are in the same location as the binary.
+	// Now I don't need to tweak the wx source!
+	wxStandardPaths::Get().DontIgnoreAppSubDir();
+#endif
+
 	wxString errMsg;
 	if (!Element::Initialize(errMsg))
 	{

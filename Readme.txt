@@ -29,9 +29,7 @@ Make sure WXWIN is set to wxWidgets root directory.
 === Changes to <trunk> [2.9.1]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_8 0
-  - Set wxDEBUG_LEVEL to 0 on NDEBUG
--[win]- src/msw/stdpaths.cpp
- - Comment out IgnoreAppBuildSubDirs content (line 294)
+  - Set wxDEBUG_LEVEL to 0 on NDEBUG (done via CompileWX.py script)
 
 === wx2.9.0: Not supported
 
