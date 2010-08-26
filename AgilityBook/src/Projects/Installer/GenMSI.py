@@ -1,4 +1,3 @@
-# coding=utf-8
 # Above line is for python
 #
 # Generate MSI files
@@ -7,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2010-08-25 DRC Stop using old prodcode. Detect same version as old.
 # 2010-06-11 DRC Convert vbs scripts to python
 # 2010-05-22 DRC Added /test2 option.
 # 2010-05-07 DRC Added /user option (default: perMachine)
@@ -28,7 +28,7 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/test2]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
@@ -36,7 +36,6 @@
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
-	test2: Generate .msi for test purposes (don't write to InstallGUIDs.csv or check for existing versions)
 """
 
 import datetime
@@ -188,8 +187,6 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing):
 			candleCmd += ' -arch x64'
 		else:
 			candleCmd += ' -arch x86'
-		if testing == 2:
-			candleCmd += ' -dTESTING'
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
 		candleCmd += ' -dPRODUCTID=' + productId
 		candleCmd += ' -dINSTALL_SCOPE=' + perUser
@@ -272,8 +269,6 @@ def main():
 			tidy = 0
 		elif o == '/test':
 			testing = 1
-		elif o == '/test2':
-			testing = 2
 		else:
 			error = 1
 			break
@@ -292,40 +287,6 @@ def main():
 	productId = genuuid()
 	ver3Dot, ver3Line = getversion(3)
 	ver4Dot, ver4Line = getversion(4)
-
-	# Get the last generated info. By doing this, we can maintain the same
-	# product id while doing beta builds. This will force the user to uninstall
-	# the existing version first since we're only bumping the build number,
-	# not the actual version number.
-	#
-	# While the detect-same-version CA will do that during install, this has
-	# the added benefit of immediately bailing during the install, rather than
-	# showing the final 'failed' dialog.
-	if testing == 2:
-		print 'Remember, uninstall the old version first. This does not check.'
-	else:
-		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'r')
-		items = []
-		while (1):
-			#version,date,productid,upgradecode,compiler,target
-			#v2.0.0.2304,2009-04-19 21:13:36.703000,31B601BB-5343-48E1-A96E-79EDEBEED9E0,4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4,VC9,win32
-			line = codes.readline()
-			if line:
-				line = line.strip()
-				if 0 < len(line):
-					tmp = line.split(',', 4)
-					if 5 == len(tmp):
-						items = tmp
-			else:
-				break
-		codes.close()
-		if 0 == len(items):
-			print 'Error: Could not parse existing GUIDs!'
-		lastVersion = items[0][1:]
-		lastVersion = lastVersion[0:lastVersion.rindex('.')]
-		# If the version numbers are the same, use the same productId
-		if lastVersion == ver3Dot:
-			productId = items[2]
 
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
