@@ -21,6 +21,7 @@ Command line options
    ("" to suppress)
 
 Revision History
+2010-08-25 DRC Detect same version as old in upgrade table.
 2010-05-22 DRC Added comment block!
                Added a user/machine install option. Default to per-machine
                install. The INSTALL_SCOPE macro is _not_ used for this.
@@ -90,22 +91,20 @@ Revision History
 			Property="OLDVERSIONFOUND_V1" />
 	</Upgrade>
 <?endif?>
-	<!-- For current guid, include ["2.0.0" <= ver < CurVer] -->
+	<!-- For current guid, include ["2.0.0" <= ver <= CurVer] -->
 	<Upgrade Id="$(var.UPGRADECODEv2)">
 		<UpgradeVersion
 			OnlyDetect="no"
 			Minimum="2.0.0"
 			IncludeMinimum="yes"
 			Maximum="$(var.CURRENT_VERSION)"
+			IncludeMaximum="yes"
 			Property="OLDVERSIONFOUND" />
-<?ifdef var.TESTING?>
-		<!-- During testing, don't detect existing versions. -->
 		<UpgradeVersion
 			OnlyDetect="yes"
 			Minimum="$(var.CURRENT_VERSION)"
 			IncludeMinimum="no"
 			Property="NEWERVERSIONDETECTED" />
-<?endif?>
 	</Upgrade>
 
 	<Media Id="1" Cabinet="AgilityBook.cab" EmbedCab="yes" />
