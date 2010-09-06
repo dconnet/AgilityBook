@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-09-06 DRC Fix a bug when adjusting for DST.
  * @li 2010-07-17 DRC When returning time_t, adjust for DST.
  * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -453,6 +454,7 @@ time_t ARBDate::GetDate() const
 #else
 		tim = *localtime(&inTime);
 #endif
+		int dst = tim.tm_isdst;
 		tim.tm_sec = 0;
 		tim.tm_min = 0;
 		tim.tm_hour = 0;
@@ -462,6 +464,19 @@ time_t ARBDate::GetDate() const
 		tim.tm_wday = 0;
 		tim.tm_yday = 0;
 		t = mktime(&tim);
+		// If DST changes, recompute - otherwise we can end up 1 day early.
+		if (dst != tim.tm_isdst)
+		{
+			tim.tm_sec = 0;
+			tim.tm_min = 0;
+			tim.tm_hour = 0;
+			tim.tm_mday = day;
+			tim.tm_mon = mon - 1;
+			tim.tm_year = yr - 1900;
+			tim.tm_wday = 0;
+			tim.tm_yday = 0;
+			t = mktime(&tim);
+		}
 	}
 	return t;
 }
