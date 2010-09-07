@@ -242,4 +242,15 @@ SUITE(TestDate)
 			CHECK(0 == dMon.GetDayOfWeek(ARBDate::eMonday));
 		}
 	}
+
+
+	TEST(DSTDate)
+	{
+		ARBDate d1(2010, 6, 1); // A date in DST
+		ARBDate d2(2010, 12, 1); // A date not.
+		time_t t1 = d1.GetDate();
+		time_t t2 = d2.GetDate();
+		CHECK(d1 == ARBDate(t1));
+		CHECK(d2 == ARBDate(t2));
+	}
 }
