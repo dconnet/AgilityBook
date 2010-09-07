@@ -1,3 +1,10 @@
+9/6/2010: v2.2.3.2809
+- Bug fixes:
+  - When editing any date, when you try to edit that date a second time, the
+    date may be off by one day. This happens when the date you are looking at
+    falls after daylight savings time ends and you are currently in daylight
+    savings time.
+
 8/21/2010: v2.2.2.2793
 - Bumped Configuration v29:
   - Added new AKC titles and T2B class.
