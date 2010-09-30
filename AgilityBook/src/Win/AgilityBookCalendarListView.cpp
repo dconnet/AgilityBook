@@ -862,6 +862,7 @@ void CAgilityBookCalendarListView::OnCtrlSetFocus(wxFocusEvent& evt)
 		m_parentPanel->OnActivateView(this);
 		Activate(true);
 	}
+	evt.Skip();
 }
 
 
