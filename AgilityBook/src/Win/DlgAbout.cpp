@@ -98,6 +98,7 @@ void CHyperlinkCtrl::OnPaint(wxPaintEvent& WXUNUSED(evt))
 void CHyperlinkCtrl::OnFocus(wxFocusEvent& evt)
 {
 	Refresh();
+	evt.Skip();
 }
 
 /////////////////////////////////////////////////////////////////////////////
