@@ -1122,12 +1122,14 @@ void CAgilityBookCalendar::OnSetFocus(wxFocusEvent& evt)
 		m_parentPanel->OnActivateView(m_parentView);
 		m_parentView->Activate(true);
 	}
+	evt.Skip();
 }
 
 
 void CAgilityBookCalendar::OnKillFocus(wxFocusEvent& evt)
 {
 	RefreshCurrentDate();
+	evt.Skip();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1368,8 +1370,7 @@ void CAgilityBookCalendarView::OnCtrlMouseEvent(wxMouseEvent& evt)
 	{
 		m_Ctrl->OnEdit(GetDocument());
 	}
-	else
-		evt.Skip();
+	evt.Skip();
 }
 
 
@@ -1378,8 +1379,7 @@ void CAgilityBookCalendarView::OnCtrlMouseWheel(wxMouseEvent& evt)
 {
 	if (m_Ctrl)
 		m_Ctrl->OnWheel(evt.GetWheelRotation());
-	else
-		evt.Skip();
+	evt.Skip();
 }
 #endif
 
