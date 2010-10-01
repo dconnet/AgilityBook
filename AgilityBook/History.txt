@@ -1,4 +1,6 @@
 9/30/2010: v2.2.4.xxxx <in development>
+- New features / Enhancements:
+  - Allow 'space' to activate a hyperlink in the about dialog.
 - Bug fixes:
   - F6 was not shifting between views properly on Calendar tab.
   - Fixed context menu on all lists and Calendar View on Mac (focus issue).
