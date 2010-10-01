@@ -565,7 +565,7 @@ bool CAgilityBookCalendarListView::Create(
 		int border)
 {
 	m_Ctrl = new CReportListCtrl(parentCtrl, false);
-	m_Ctrl->Connect(wxEVT_COMMAND_SET_FOCUS, wxFocusEventHandler(CAgilityBookCalendarListView::OnCtrlSetFocus), NULL, this);
+	m_Ctrl->Connect(wxEVT_SET_FOCUS, wxFocusEventHandler(CAgilityBookCalendarListView::OnCtrlSetFocus), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlColumnClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlItemSelected), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CAgilityBookCalendarListView::OnCtrlItemActivated), NULL, this);

@@ -1276,7 +1276,7 @@ bool CAgilityBookRunsView::Create(
 		int border)
 {
 	m_Ctrl = new CReportListCtrl(parentCtrl, false);
-	m_Ctrl->Connect(wxEVT_COMMAND_SET_FOCUS, wxFocusEventHandler(CAgilityBookRunsView::OnCtrlSetFocus), NULL, this);
+	m_Ctrl->Connect(wxEVT_SET_FOCUS, wxFocusEventHandler(CAgilityBookRunsView::OnCtrlSetFocus), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookRunsView::OnCtrlColumnClick), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CAgilityBookRunsView::OnCtrlItemSelected), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CAgilityBookRunsView::OnCtrlItemActivated), NULL, this);

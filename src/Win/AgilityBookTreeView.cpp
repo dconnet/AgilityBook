@@ -300,7 +300,7 @@ bool CAgilityBookTreeView::Create(
 {
 	m_Ctrl = new CTreeCtrl(parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize,
 		wxTR_SINGLE|wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxNO_BORDER, wxDefaultValidator);
-	m_Ctrl->Connect(wxEVT_COMMAND_SET_FOCUS, wxFocusEventHandler(CAgilityBookTreeView::OnCtrlSetFocus), NULL, this);
+	m_Ctrl->Connect(wxEVT_SET_FOCUS, wxFocusEventHandler(CAgilityBookTreeView::OnCtrlSetFocus), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_ITEM_MENU, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlContextMenu), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlSelectionChanged), NULL, this);
 	m_Ctrl->Connect(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler(CAgilityBookTreeView::OnCtrlItemActivated), NULL, this);
