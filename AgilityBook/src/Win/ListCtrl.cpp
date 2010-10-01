@@ -347,6 +347,7 @@ void CReportListCtrl::OnDeleteItem(wxListEvent& evt)
 		if (iter != m_OwnerData.end())
 			m_OwnerData.erase(iter);
 	}
+	evt.Skip();
 }
 
 /////////////////////////////////////////////////////////////////////////////
