@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-09-30 DRC Allow 'space' to activate a hyperlink.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-12-14 DRC Ported to wxWidgets.
  * @li 2006-12-10 DRC Simplified download links.
@@ -47,6 +48,7 @@ public:
 	DECLARE_EVENT_TABLE()
 	void OnPaint(wxPaintEvent& WXUNUSED(evt));
 	void OnFocus(wxFocusEvent& evt);
+	void OnKeyDown(wxKeyEvent& evt);
 };
 
 
@@ -57,6 +59,7 @@ BEGIN_EVENT_TABLE(CHyperlinkCtrl, wxHyperlinkCtrl)
 	EVT_PAINT(CHyperlinkCtrl::OnPaint)
 	EVT_SET_FOCUS(CHyperlinkCtrl::OnFocus)
 	EVT_KILL_FOCUS(CHyperlinkCtrl::OnFocus)
+	EVT_KEY_DOWN(CHyperlinkCtrl::OnKeyDown)
 END_EVENT_TABLE()
 
 
@@ -99,6 +102,33 @@ void CHyperlinkCtrl::OnFocus(wxFocusEvent& evt)
 {
 	Refresh();
 	evt.Skip();
+}
+
+
+void CHyperlinkCtrl::OnKeyDown(wxKeyEvent& evt)
+{
+	switch (evt.GetKeyCode())
+	{
+	default:
+		evt.Skip();
+		break;
+	case WXK_SPACE:
+	case WXK_NUMPAD_SPACE:
+		{
+			SetVisited();
+			// Copied from wxHyperlinkCtrlBase::SendEvent()
+			wxString url = GetURL();
+			wxHyperlinkEvent linkEvent(this, GetId(), url);
+			if (!GetEventHandler()->ProcessEvent(linkEvent))     // was the event skipped ?
+			{
+				if (!wxLaunchDefaultBrowser(url))
+				{
+					wxLogWarning(wxT("Could not launch the default browser with url '%s' !"), url.c_str());
+				}
+			}
+		}
+		break;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
