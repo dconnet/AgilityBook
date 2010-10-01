@@ -1,5 +1,6 @@
 9/30/2010: v2.2.4.xxxx <in development>
 - Bug fixes:
+  - F6 was not shifting between views properly on Calendar tab.
   - Fixed context menu for Calendar View on Mac (focus issue).
     (Almost have lists working too - it's a focus issue - mouse click isn't setting focus properly)
 

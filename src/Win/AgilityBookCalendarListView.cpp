@@ -587,7 +587,7 @@ bool CAgilityBookCalendarListView::Create(
 bool CAgilityBookCalendarListView::PrevPane()
 {
 	if (m_parentPanel)
-		return m_parentPanel->ActivateView(0);
+		return m_parentPanel->ActivateView(1);
 	return false;
 }
 
@@ -595,7 +595,7 @@ bool CAgilityBookCalendarListView::PrevPane()
 bool CAgilityBookCalendarListView::NextPane()
 {
 	if (m_parentPanel)
-		return m_parentPanel->ActivateView(0);
+		return m_parentPanel->ActivateView(1);
 	return false;
 }
 
