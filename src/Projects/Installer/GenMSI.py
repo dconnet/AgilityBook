@@ -7,6 +7,7 @@
 #
 # Revision History
 # 2010-10-08 DRC Suppress wixpdb creation.
+#            Allow packaging to pull from specified VC build (8/9/10)
 # 2010-08-25 DRC Stop using old prodcode. Detect same version as old.
 # 2010-06-11 DRC Convert vbs scripts to python
 # 2010-05-22 DRC Added /test2 option.
@@ -29,7 +30,7 @@
 # 2007-10-31 DRC Changed from WiX to InnoSetup
 # 2007-03-07 DRC Created
 
-"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test]
+"""GenMSI.py [/wix path] [/user] [/32] [/64] [/all] [/notidy] [/test] [/VC[8|9|10]]
 	wix: Override internal wix path (c:\Tools\wix3)
 	user: Create msi as a per-user install (default: per-machine)
 	32: Create 32bit Unicode msi
@@ -37,6 +38,7 @@
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
+	VC: Generate msi using specified vc version (Default: 9)
 """
 
 import datetime
@@ -112,15 +114,15 @@ def genuuid():
 
 
 # returns baseDir, outputFile
-def getoutputvars(code, version):
+def getoutputvars(code, version, vcver):
 	outputFile = ''
 	baseDir = ''
 	if code32 == code:
 		outputFile = 'AgilityBook-' + version + '-win'
-		baseDir = AgilityBookDir + r'\bin\VC9Win32\Release'
+		baseDir = AgilityBookDir + r'\bin\VC' + vcver + 'Win32\Release'
 	elif code64 == code:
 		outputFile = 'AgilityBook-' + version + '-x64'
-		baseDir = AgilityBookDir + r'\bin\VC9x64\Release'
+		baseDir = AgilityBookDir + r'\bin\VC' + vcver + 'x64\Release'
 	else:
 		raise Exception, 'Invalid code'
 	return baseDir, outputFile
@@ -175,8 +177,8 @@ def WiLangId(baseMsi, sumInfoStream):
 #  1: Win32/Unicode
 #  2: Win32/MBCS
 #  3: Win64/Unicode
-def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing):
-	baseDir, outputFile = getoutputvars(code, ver4Line)
+def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
+	baseDir, outputFile = getoutputvars(code, ver4Line, vcver)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 		return 0
@@ -243,6 +245,7 @@ def main():
 	b64 = 0
 	tidy = 1
 	testing = 0
+	vcver = '9'
 	if 1 == len(sys.argv):
 		b32 = 1
 		testing = 1
@@ -269,6 +272,12 @@ def main():
 			tidy = 0
 		elif o == '/test':
 			testing = 1
+		elif o == '/VC8':
+			vcver = '8'
+		elif o == '/VC9':
+			vcver = '9'
+		elif o == '/VC10':
+			vcver = '10'
 		else:
 			error = 1
 			break
@@ -291,19 +300,19 @@ def main():
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
 	if b32:
-		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, perUser, testing):
+		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, perUser, testing, vcver):
 			b32ok = 1
 	if b64:
-		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, perUser, testing):
+		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, perUser, testing, vcver):
 			b64ok = 1
 	if not testing and (b32ok or b64ok):
 		d = datetime.datetime.now().isoformat(' ')
 		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'a')
 		installs = ''
 		if b32ok:
-			installs = 'VC9,win32'
+			installs = 'VC' + vcver + ',win32'
 		if b64ok:
-			installs = 'VC9,x64'
+			installs = 'VC' + vcver + ',x64'
 		print >>codes, 'v' + ver4Dot + ',' + d + ',' + productId + ',' + UpgradeCode + ',' + installs
 
 
