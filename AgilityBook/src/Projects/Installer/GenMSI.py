@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2010-10-08 DRC Suppress wixpdb creation.
 # 2010-08-25 DRC Stop using old prodcode. Detect same version as old.
 # 2010-06-11 DRC Convert vbs scripts to python
 # 2010-05-22 DRC Added /test2 option.
@@ -199,7 +200,8 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing):
 			basename = outputFile
 			if processing > 1:
 				basename += '-' + fname
-			lightCmd = 'light -nologo -ext WixUIExtension -ext WixUtilExtension'
+			lightCmd = 'light -nologo -spdb'
+			lightCmd += ' -ext WixUIExtension -ext WixUtilExtension'
 			lightCmd += ' -dWixUILicenseRtf=License-' + fname + '.rtf'
 			lightCmd += ' -cultures:' + culture
 			lightCmd += ' -loc AgilityBook-' + fname + '.wxl'
@@ -213,8 +215,6 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing):
 				runcmd('torch -nologo -p -t language ' + baseMsi + ' ' + basename + '.msi -out ' + langId + '.mst')
 				WiSubStg(baseMsi, langId)
 			if tidy:
-				if os.access(basename + '.wixpdb', os.F_OK):
-					os.remove(basename + '.wixpdb')
 				if os.access(langId + '.mst', os.F_OK):
 					os.remove(langId + '.mst')
 				if processing > 1:
