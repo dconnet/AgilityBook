@@ -271,7 +271,7 @@ void CAgilityBookPointsView::OnUpdate(
 {
 	CUpdateHint* hint = NULL;
 	if (inHint)
-		hint = reinterpret_cast<CUpdateHint*>(inHint);
+		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_POINTS_VIEW)
 	|| hint->IsEqual(UPDATE_CONFIG) || hint->IsEqual(UPDATE_OPTIONS))
 	{

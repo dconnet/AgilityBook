@@ -336,7 +336,7 @@ void CTabView::OnUpdate(wxView* sender, wxObject* inHint)
 {
 	CUpdateHint* hint = NULL;
 	if (inHint)
-		hint = reinterpret_cast<CUpdateHint*>(inHint);
+		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (hint && hint->IsEqual(UPDATE_LANG_CHANGE))
 	{
 		m_ctrlBook->SetPageText(IDX_PANE_RUNS, _("IDS_RUNS"));

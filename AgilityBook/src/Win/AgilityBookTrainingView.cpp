@@ -467,7 +467,7 @@ void CAgilityBookTrainingView::OnUpdate(
 		return;
 	CUpdateHint* hint = NULL;
 	if (inHint)
-		hint = reinterpret_cast<CUpdateHint*>(inHint);
+		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_TRAINING_VIEW)
 	|| hint->IsEqual(UPDATE_OPTIONS))
 	{

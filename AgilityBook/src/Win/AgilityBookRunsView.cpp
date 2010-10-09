@@ -1387,7 +1387,7 @@ void CAgilityBookRunsView::OnUpdate(
 		return;
 	CUpdateHint* hint = NULL;
 	if (inHint)
-		hint = reinterpret_cast<CUpdateHint*>(inHint);
+		hint = wxDynamicCast(inHint, CUpdateHint);
 	bool bLoad = false;
 	if (hint)
 	{
