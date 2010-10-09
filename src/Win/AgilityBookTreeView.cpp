@@ -367,7 +367,7 @@ void CAgilityBookTreeView::OnUpdate(
 		return;
 	CUpdateHint* hint = NULL;
 	if (inHint)
-		hint = reinterpret_cast<CUpdateHint*>(inHint);
+		hint = wxDynamicCast(inHint, CUpdateHint);
 	if (!hint || hint->IsSet(UPDATE_TREE_VIEW)
 	|| hint->IsEqual(UPDATE_CONFIG) || hint->IsEqual(UPDATE_OPTIONS))
 	{
