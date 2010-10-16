@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2010-10-16 DRC Added -w option
 # 2010-07-17 DRC Convert to VC10Pro (no need for SDK now)
 # 2010-05-30 DRC Add '/xp' option to vc10 setenv.cmd
 # 2010-05-29 DRC Converted .bat to .py
@@ -12,7 +13,8 @@
 #                (2.8 is rarely rebuilt, default to the active build)
 # 2009-09-26 DRC Tweak compile options
 # 2009-09-12 DRC Fix dll creation
-"""CompileWX.py [-e] [-a] [-p] [-d] [-m] [-s name]* compiler*
+"""CompileWX.py [-w wxwin] [-e] [-a] [-p] [-d] [-m] [-s name]* compiler*
+	-w wxwin: Override WXWIN env variable
 	-e:       Just show the environment, don't do it
 	-a:       Compile all (vc9, vc9x64)
 	-p:       No prefix (2.8.x and before) (default: hasPrefix)
@@ -35,6 +37,7 @@ tmpfile = 'tmpcomp.bat'
 
 ProgramFiles = r'c:\Program Files'
 ProgramFiles64 = r'c:\Program Files'
+wxwin = ''
 
 compileIt = True
 hasPrefix = True
@@ -46,6 +49,7 @@ vc7Base     = r'\Microsoft Visual Studio .NET 2003'
 vc8Base     = r'\Microsoft Visual Studio 8'
 vc9Base     = r'\Microsoft Visual Studio 9.0'
 vc10Base    = r'\Microsoft Visual Studio 10.0'
+useVC10SDK = False
 
 
 def GetRegString(hkey, path, value):
@@ -129,7 +133,10 @@ def AddCompiler(compilers, c):
 			return False
 		baseDir = vc10Base
 		# Doesn't matter what the "current" sdk is. We must have 7.1.
-		testFile = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
+		if useVC10SDK:
+			testFile = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
+		else:
+			testFile = baseDir + r'\VC\vcvarsall.bat'
 	else:
 		return False
 	if not os.access(baseDir, os.F_OK) or not os.access(testFile, os.F_OK):
@@ -140,7 +147,7 @@ def AddCompiler(compilers, c):
 
 
 def main():
-	global ProgramFiles, ProgramFiles64
+	global ProgramFiles, ProgramFiles64, wxwin
 	global compileIt, hasPrefix, useStatic, useUnicode
 
 	bit64on64 = False
@@ -154,18 +161,10 @@ def main():
 	if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
 		ProgramFiles = r'c:\Program Files (x86)'
 
-	if not os.environ.has_key('WXWIN'):
-		print 'ERROR: WXWIN environment variable is not set'
-		return
-
-	if not os.access(os.environ['WXWIN'], os.F_OK):
-		print 'ERROR: ' + os.environ['WXWIN'] + ' doesn\'t exist'
-		return
-
 	samples = set()
 	compilers = set()
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'eapdms:')
+		opts, args = getopt.getopt(sys.argv[1:], 'w:eapdms:')
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
@@ -173,6 +172,8 @@ def main():
 	for o, a in opts:
 		if '-e' == o:
 			compileIt = False
+		elif '-w' == o:
+			wxwin = a
 		elif '-a' == o:
 			AddCompiler(compilers, 'vc9')
 			AddCompiler(compilers, 'vc9x64')
@@ -184,6 +185,16 @@ def main():
 			useUnicode = False
 		elif '-s' == o:
 			samples.add(a)
+
+	if 0 == len(wxwin):
+		if not os.environ.has_key('WXWIN'):
+			print 'ERROR: WXWIN environment variable is not set'
+			return
+		wxwin = os.environ['WXWIN']
+
+	if not os.access(wxwin, os.F_OK):
+		print 'ERROR: ' + wxwin + ' doesn\'t exist'
+		return
 
 	for c in args:
 		if not AddCompiler(compilers, c):
@@ -206,7 +217,7 @@ def main():
 	os.environ['LIB'] = ''
 
 	if 0 == len(samples):
-		os.chdir(os.environ['WXWIN'] + r'\build\msw')
+		os.chdir(wxwin + r'\build\msw')
 
 	for compiler in compilers:
 		newenv = os.environ.copy()
@@ -276,15 +287,16 @@ def main():
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10x64':
-			setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" '
-			if not bit64on64:
-				setenv_rel += 'x86_amd64'
+			if useVC10SDK:
+				resetColor = True
+				setenv_rel = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /release /x64 /xp'
+				setenv_dbg = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /debug /x64 /xp'
 			else:
-				setenv_rel += 'amd64'
-			# The commented out lines are for VC10 Express
-			#resetColor = True
-			#setenv_rel = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /release /x64 /xp'
-			#setenv_dbg = 'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd" /debug /x64 /xp'
+				setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" '
+				if not bit64on64:
+					setenv_rel += 'x86_amd64'
+				else:
+					setenv_rel += 'amd64'
 			target_cpu = 'TARGET_CPU=amd64 '
 			if hasPrefix:
 				cfg = 'COMPILER_PREFIX=vc100 '
@@ -318,8 +330,8 @@ def main():
 
 		if 0 < len(samples):
 			for s in samples:
-				if os.access(os.environ['WXWIN'] + '\\samples\\' + s, os.F_OK):
-					print >>bat, 'cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"'
+				if os.access(wxwin + '\\samples\\' + s, os.F_OK):
+					print >>bat, 'cd /d "' + wxwin + '\\samples\\' + s + '"'
 					print >>bat, setenv_rel
 					print >>bat, build_rel + ' ' + build_flags
 					print >>bat, setenv_dbg
