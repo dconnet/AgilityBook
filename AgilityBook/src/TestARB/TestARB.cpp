@@ -45,8 +45,11 @@
 // Note, if using static runtime, swap comments on following 2 defines
 // I don't know if there's a compiler define that tells us which runtime
 // we're linking with...
+#ifdef _DLL
+#define UT_STATIC_RTL	""
+#else
 #define UT_STATIC_RTL	"S"
-//#define UT_STATIC_RTL	""
+#endif
 
 #ifdef _UNICODE
 #define UT_UNICODE		"U"
