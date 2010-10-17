@@ -368,8 +368,8 @@ bool ARBDate::SetDate(
 
 
 wxString ARBDate::GetString(
-	DateFormat inFormat,
-	bool inForceOutput) const
+		DateFormat inFormat,
+		bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
 		return wxT("");
