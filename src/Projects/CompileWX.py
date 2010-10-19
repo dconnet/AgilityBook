@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2010-10-19 DRC Remove all debug info from release build
 # 2010-10-16 DRC Added -w option
 # 2010-07-17 DRC Convert to VC10Pro (no need for SDK now)
 # 2010-05-30 DRC Add '/xp' option to vc10 setenv.cmd
@@ -37,7 +38,6 @@ tmpfile = 'tmpcomp.bat'
 
 ProgramFiles = r'c:\Program Files'
 ProgramFiles64 = r'c:\Program Files'
-wxwin = ''
 
 compileIt = True
 hasPrefix = True
@@ -147,7 +147,7 @@ def AddCompiler(compilers, c):
 
 
 def main():
-	global ProgramFiles, ProgramFiles64, wxwin
+	global ProgramFiles, ProgramFiles64
 	global compileIt, hasPrefix, useStatic, useUnicode
 
 	bit64on64 = False
@@ -173,7 +173,7 @@ def main():
 		if '-e' == o:
 			compileIt = False
 		elif '-w' == o:
-			wxwin = a
+			os.environ['WXWIN'] = a
 		elif '-a' == o:
 			AddCompiler(compilers, 'vc9')
 			AddCompiler(compilers, 'vc9x64')
@@ -186,14 +186,12 @@ def main():
 		elif '-s' == o:
 			samples.add(a)
 
-	if 0 == len(wxwin):
-		if not os.environ.has_key('WXWIN'):
-			print 'ERROR: WXWIN environment variable is not set'
-			return
-		wxwin = os.environ['WXWIN']
+	if not os.environ.has_key('WXWIN'):
+		print 'ERROR: WXWIN environment variable is not set'
+		return
 
-	if not os.access(wxwin, os.F_OK):
-		print 'ERROR: ' + wxwin + ' doesn\'t exist'
+	if not os.access(os.environ['WXWIN'], os.F_OK):
+		print 'ERROR: ' + os.environ['WXWIN'] + ' doesn\'t exist'
 		return
 
 	for c in args:
@@ -217,7 +215,7 @@ def main():
 	os.environ['LIB'] = ''
 
 	if 0 == len(samples):
-		os.chdir(wxwin + r'\build\msw')
+		os.chdir(os.environ['WXWIN'] + r'\build\msw')
 
 	for compiler in compilers:
 		newenv = os.environ.copy()
@@ -310,12 +308,14 @@ def main():
 			build_rel += 'echo '
 			build_dbg += 'echo '
 		build_rel += 'nmake -f makefile.vc BUILD=release'
-		build_dbg += 'nmake -f makefile.vc BUILD=debug DEBUG_INFO=1'
-		# In 2.9, wxDEBUG_LEVEL defaults to 1 (hasprefix infers the active wx
+		build_dbg += 'nmake -f makefile.vc BUILD=debug'
+		# In 2.9, DEBUG_FLAG defaults to 1 (hasprefix infers the active wx
 		# trunk) Set to '2' for more debugging (datepicker asserts alot tho)
 		if hasPrefix:
-			build_rel += ' wxDEBUG_LEVEL=0'
-			build_dbg += ' wxDEBUG_LEVEL=1'
+			build_rel += ' DEBUG_INFO=0 DEBUG_FLAG=0'
+			build_dbg += ' DEBUG_FLAG=1'
+		else:
+			build_dbg += ' DEBUG_INFO=1'
 		build_flags = 'UNICODE='
 		if useUnicode:
 			build_flags += '1'
@@ -330,8 +330,8 @@ def main():
 
 		if 0 < len(samples):
 			for s in samples:
-				if os.access(wxwin + '\\samples\\' + s, os.F_OK):
-					print >>bat, 'cd /d "' + wxwin + '\\samples\\' + s + '"'
+				if os.access(os.environ['WXWIN'] + '\\samples\\' + s, os.F_OK):
+					print >>bat, 'cd /d "' + os.environ['WXWIN'] + '\\samples\\' + s + '"'
 					print >>bat, setenv_rel
 					print >>bat, build_rel + ' ' + build_flags
 					print >>bat, setenv_dbg
