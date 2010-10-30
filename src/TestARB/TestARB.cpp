@@ -121,6 +121,12 @@ int main(int argc, char** argv)
 	}
 
 	wxInitializer initializer;
+#if defined(WIN32) && wxCHECK_VERSION(2, 9, 1)
+	// By default, the path directories are tweaked to remove debug/release.
+	// I assume my files are in the same location as the binary.
+	// Now I don't need to tweak the wx source!
+	wxStandardPaths::Get().DontIgnoreAppSubDir();
+#endif
 
 	wxString errs;
 	if (!Element::Initialize(errs))
@@ -143,12 +149,12 @@ int main(int argc, char** argv)
 #endif
 
 	wxLocale* m_locale = new wxLocale();
+	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
 #if wxCHECK_VERSION(2,9,0)
 	m_locale->Init(wxLANGUAGE_ENGLISH_US, 0);
 #else
 	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
 #endif
-	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
 	m_locale->AddCatalog(wxT("arb"), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 	m_Localization.Load();
 
