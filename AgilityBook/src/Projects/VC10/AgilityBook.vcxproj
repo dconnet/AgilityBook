@@ -520,6 +520,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
     <ClCompile Include="..\..\ARB\ARBTypes.cpp" />
     <ClCompile Include="..\..\ARB\BinaryData.cpp" />
+    <ClCompile Include="..\..\ARB\BreakLine.cpp" />
     <ClCompile Include="..\..\ARB\Element.cpp" />
     <ClCompile Include="..\..\ARB\VersionNum.cpp" />
   </ItemGroup>
@@ -662,6 +663,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     <ClInclude Include="..\..\ARB\ARBTraining.h" />
     <ClInclude Include="..\..\ARB\ARBTypes.h" />
     <ClInclude Include="..\..\ARB\BinaryData.h" />
+    <ClInclude Include="..\..\ARB\BreakLine.h" />
     <ClInclude Include="..\..\ARB\Element.h" />
     <ClInclude Include="..\..\ARB\VersionNum.h" />
   </ItemGroup>

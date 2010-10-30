@@ -435,6 +435,9 @@
     <ClCompile Include="..\..\ARB\VersionNum.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ARB\BreakLine.cpp">
+      <Filter>ARB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Win\AgilityBook.h">
@@ -855,6 +858,9 @@
       <Filter>ARB</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ARB\VersionNum.h">
+      <Filter>ARB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\BreakLine.h">
       <Filter>ARB</Filter>
     </ClInclude>
   </ItemGroup>

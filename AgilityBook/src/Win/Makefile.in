@@ -51,6 +51,7 @@ agilitybook_SRCS = \
 	AgilityBookTrainingView.cpp \
 	AgilityBookTreeData.cpp \
 	AgilityBookTreeView.cpp \
+	BreakLine.cpp \
 	CalendarSites.cpp \
 	CalendarSiteUSDAA.cpp \
 	CheckLink.cpp \

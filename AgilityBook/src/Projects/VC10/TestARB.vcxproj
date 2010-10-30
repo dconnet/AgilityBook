@@ -343,6 +343,7 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
     <ClCompile Include="..\..\TestARB\TestAgilityRecordBook.cpp" />
     <ClCompile Include="..\..\TestARB\TestARB.cpp" />
     <ClCompile Include="..\..\TestARB\TestBinaryData.cpp" />
+    <ClCompile Include="..\..\TestARB\TestBreakLine.cpp" />
     <ClCompile Include="..\..\TestARB\TestCalendar.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfig.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigAction.cpp" />
@@ -424,6 +425,7 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
     <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
     <ClCompile Include="..\..\ARB\ARBTypes.cpp" />
     <ClCompile Include="..\..\ARB\BinaryData.cpp" />
+    <ClCompile Include="..\..\ARB\BreakLine.cpp" />
     <ClCompile Include="..\..\ARB\Element.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -474,6 +476,7 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
     <ClInclude Include="..\..\ARB\ARBTraining.h" />
     <ClInclude Include="..\..\ARB\ARBTypes.h" />
     <ClInclude Include="..\..\ARB\BinaryData.h" />
+    <ClInclude Include="..\..\ARB\BreakLine.h" />
     <ClInclude Include="..\..\ARB\Element.h" />
   </ItemGroup>
   <ItemGroup>
