@@ -1134,6 +1134,12 @@
 				RelativePath="..\..\ARB\BinaryData.h">
 			</File>
 			<File
+				RelativePath="..\..\ARB\BreakLine.cpp">
+			</File>
+			<File
+				RelativePath="..\..\ARB\BreakLine.h">
+			</File>
+			<File
 				RelativePath="..\..\ARB\Element.cpp">
 			</File>
 			<File

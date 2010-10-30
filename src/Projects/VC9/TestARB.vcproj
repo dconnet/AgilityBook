@@ -669,6 +669,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestBreakLine.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestCalendar.cpp"
 				>
 			</File>
@@ -1246,6 +1250,14 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\BinaryData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\BreakLine.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\BreakLine.h"
 				>
 			</File>
 			<File

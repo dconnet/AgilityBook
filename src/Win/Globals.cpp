@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-10-30 DRC Moved BreakLine to a separate file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-14 DRC Separated from AgilityBook.cpp
  */
@@ -21,26 +22,6 @@
 #include "ListData.h"
 #include "Widgets.h"
 #include <wx/tokenzr.h>
-
-
-/////////////////////////////////////////////////////////////////////////////
-
-size_t BreakLine(
-		char inSep,
-		wxString inStr,
-		std::vector<wxString>& outFields)
-{
-	outFields.clear();
-	wxString::size_type pos = inStr.find(inSep);
-	while (wxString::npos != pos)
-	{
-		outFields.push_back(inStr.substr(0, pos));
-		inStr = inStr.substr(pos+1);
-		pos = inStr.find(inSep);
-	}
-	outFields.push_back(inStr);
-	return outFields.size();
-}
 
 
 wxWindow* FindWindowInSizer(

@@ -38,6 +38,7 @@ testarb_SRCS = ConfigHandler.cpp \
 	TestAgilityRecordBook.cpp \
 	TestARB.cpp \
 	TestBinaryData.cpp \
+	TestBreakLine.cpp \
 	TestCalendar.cpp \
 	TestConfigAction.cpp \
 	TestConfigCalSite.cpp \

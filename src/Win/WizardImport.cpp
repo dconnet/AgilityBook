@@ -35,6 +35,7 @@
 
 #include "AgilityBookDoc.h"
 #include "AgilityBookOptions.h"
+#include "BreakLine.h"
 #include "DlgAssignColumns.h"
 #include "DlgMessage.h"
 #include "DlgProgress.h"

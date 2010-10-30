@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-10-30 DRC Moved BreakLine to a separate file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-14 DRC Moved from AgilityBook.h
  */
@@ -22,20 +23,6 @@
 #include <vector>
 class CListCtrl;
 class CTreeCtrl;
-
-
-/**
- * Separate a line into substrings. Very simply routine that has no escape chars
- * @param inSep Separator character
- * @param inStr String to separate
- * @param outFields Separated pieces
- * @return Number of fields
- * @note In Globals.cpp
- */
-extern size_t BreakLine(
-		char inSep,
-		wxString inStr,
-		std::vector<wxString>& outFields);
 
 
 /**
