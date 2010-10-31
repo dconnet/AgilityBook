@@ -39,6 +39,7 @@
 #include "ARBDogRun.h"
 #include "ARBDogTrial.h"
 #include "ARBLocalization.h"
+#include "BreakLine.h"
 #include "DlgAssignColumns.h"
 #include "DlgProgress.h"
 #include "Globals.h"
@@ -123,7 +124,30 @@ CWizardExport::CWizardExport(
 	m_ctrlOther->SetHelpText(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
 	m_ctrlOther->SetToolTip(_("HIDC_WIZARD_EXPORT_DELIM_OTHER"));
 
-	m_ctrlOtherChar = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	switch (m_Delim)
+	{
+	default:
+	case CAgilityBookOptions::eDelimTab:
+		m_ctrlTab->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimSpace:
+		m_ctrlSpace->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimColon:
+		m_ctrlColon->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimSemicolon:
+		m_ctrlSemicolon->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimComma:
+		m_ctrlComma->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimOther:
+		m_ctrlOther->SetValue(true);
+		break;
+	}
+
+	m_ctrlOtherChar = new CTextCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(30, -1), 0,
 		wxGenericValidator(&m_Delimiter));
 	m_ctrlOtherChar->SetMaxLength(1); 
@@ -143,7 +167,7 @@ CWizardExport::CWizardExport(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textFormat->Wrap(-1);
 
-	m_ctrlDateFormat = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlDateFormat = new wxComboBox(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
 	static struct
@@ -266,44 +290,25 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 }
 
 
-wxString CWizardExport::GetDelim() const
+wxChar CWizardExport::GetDelim() const
 {
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
-		return wxEmptyString;
-	wxString delim;
+		return 0;
 	switch (m_Delim)
 	{
 	default:
-	case CAgilityBookOptions::eDelimTab: delim = wxT("\t"); break;
-	case CAgilityBookOptions::eDelimSpace: delim = wxT(" "); break;
-	case CAgilityBookOptions::eDelimColon: delim = wxT(":"); break;
-	case CAgilityBookOptions::eDelimSemicolon: delim = wxT(";"); break;
-	case CAgilityBookOptions::eDelimComma: delim = wxT(","); break;
-	case CAgilityBookOptions::eDelimOther: delim = m_Delimiter; break;
+	case CAgilityBookOptions::eDelimTab:       return wxT('\t');
+	case CAgilityBookOptions::eDelimSpace:     return wxT(' ');
+	case CAgilityBookOptions::eDelimColon:     return wxT(':');
+	case CAgilityBookOptions::eDelimSemicolon: return wxT(';');
+	case CAgilityBookOptions::eDelimComma:     return wxT(',');
+	case CAgilityBookOptions::eDelimOther:
+		if (1 == m_Delimiter.length())
+			return m_Delimiter[0];
+		else
+			return 0;
 	}
-	return delim;
-}
-
-
-wxString CWizardExport::PrepFieldOutput(wxChar const* inStr) const
-{
-	wxString delim = GetDelim();
-	bool bAddQuotes = false;
-	wxString fld(inStr);
-	if (!delim.IsEmpty()
-	&& (0 <= fld.Find(delim) || 0 <= fld.Find('"') || 0 <= fld.Find('\n')))
-	{
-		bAddQuotes = true;
-		if (0 <= fld.Find('"'))
-			fld.Replace(wxT("\""), wxT("\"\""));
-	}
-	if (bAddQuotes)
-	{
-		fld = wxT("\"") + fld;
-		fld += wxT("\"");
-	}
-	return fld;
 }
 
 
@@ -314,7 +319,7 @@ void CWizardExport::UpdateButtons()
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		bOk = true;
-	else if (1 == GetDelim().length())
+	else if (0 != GetDelim())
 		bOk = true;
 	bool bEnable = false;
 	CAgilityBookOptions::ColumnOrder order = CAgilityBookOptions::eUnknown;
@@ -365,8 +370,6 @@ wxString CWizardExport::AddPreviewData(
 		long inCol,
 		wxString inData)
 {
-	// TODO: Add option to allow CRs?
-	//inData.Replace(wxT("\n"), wxT(" "));
 	wxString data;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
@@ -380,7 +383,7 @@ wxString CWizardExport::AddPreviewData(
 	{
 		if (0 < inCol)
 			data += GetDelim();
-		data += PrepFieldOutput(inData);
+		data += WriteCSVField(GetDelim(), inData);
 	}
 	return data;
 }
@@ -404,10 +407,10 @@ void CWizardExport::UpdatePreview()
 	long idxDateFormat = m_ctrlDateFormat->GetSelection();
 	if (wxNOT_FOUND != idxDateFormat)
 		format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(idxDateFormat));
-	wxString delim = GetDelim();
+	wxChar delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle()
-	&& delim.IsEmpty())
+	&& 0 == delim)
 	{
 		wxString nodelim(_("IDS_NO_DELIM_SPECIFIED"));
 		m_ctrlPreview->InsertColumn(0, wxT(""));
@@ -506,7 +509,7 @@ void CWizardExport::UpdatePreview()
 		{
 			if (0 < iCol)
 				data += delim;
-			data += PrepFieldOutput(cols[iCol]);
+			data += WriteCSVField(delim, cols[iCol]);
 		}
 		m_ctrlPreview->InsertItem(iLine, data);
 		++iLine;
@@ -1452,9 +1455,9 @@ bool CWizardExport::DoWizardFinish()
 	else
 	{
 		wxFileDialog file(this,
-			wxEmptyString, // caption
-			wxEmptyString, // def dir
-			wxEmptyString,
+			wxString(), // caption
+			wxString(), // def dir
+			wxString(),
 			_("IDS_FILEEXT_FILTER_TXTCSV"),
 			wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 		if (wxID_OK == file.ShowModal())

@@ -48,13 +48,18 @@ typedef enum
  * @param ioFields Parsed fields
  * @param bContinuation If true, the first field parsed will be appended to
  *                      last existing one.
+ * @param newLine On continuation, append this.
  * @return Status of whether more data is needed (due to quoting multiline data)
+ *
+ * The RFC actually specifies \r\n as the newline in a continued field.
+ * By default, this only uses \n.
  */
 extern ReadStatus ReadCSV(
 		wxChar const inSep,
 		wxString inRecord,
 		std::vector<wxString>& ioFields,
-		bool bContinuation = false);
+		bool bContinuation = false,
+		wxString newLine = wxT("\n"));
 
 
 /**
@@ -62,7 +67,21 @@ extern ReadStatus ReadCSV(
  * @param inSep Separator character
  * @param inFields Fields to write
  * @return A string that can be written to a file. (not newline terminated)
+ *
+ * The RFC actually specifies \r\n as the newline in a continued field.
+ * This code makes no checks. It simply writes out the data found.
  */
 extern wxString WriteCSV(
 		wxChar const inSep,
 		std::vector<wxString> const& inFields);
+
+
+/**
+ * Write a field for a CSV file [Based on RFC 4180 (October 2005)]
+ * @param inSep Separator character
+ * @param inFields Fields to write
+ * @return A string that can be written to a file. (not newline terminated)
+ */
+extern wxString WriteCSVField(
+		wxChar const inSep,
+		wxString const& inField);

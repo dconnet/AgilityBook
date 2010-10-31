@@ -41,8 +41,7 @@ public:
 
 private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
-	wxString GetDelim() const;
-	wxString PrepFieldOutput(wxChar const* inStr) const;
+	wxChar GetDelim() const;
 	void UpdateButtons();
 	wxString AddPreviewData(
 			long inLine,

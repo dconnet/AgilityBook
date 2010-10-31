@@ -10,7 +10,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2010-02-07 DRC Created
+ * @li 2010-10-17 DRC Created
  */
 
 #include "stdafx.h"
@@ -54,9 +54,10 @@ SUITE(TestBreakLine)
 	static wxChar const* record4 = wxT("fld;fld;;fld");
 	static wxChar const* record7 = wxT("fld;fld;;fld;f\"f;f6;f7");
 	static wxChar const* record5 = wxT("fld;\"line\r\n;line\";\"\"\"quote\"\" here\";;");
-	static wxChar const* recordMore1 = wxT("fld;\"line\r\n");
-	static wxChar const* recordMore2 = wxT(";line\";\"\"\"quote\"\" here\";;");
-
+	static wxChar const* recordMore1a = wxT("fld;\"line");
+	static wxChar const* recordMore2a = wxT(";line\";\"\"\"quote\"\" here\";;");
+	static wxChar const* recordMore1b = wxT("2010-10-30;Name;\"Subname\";\"Line 1");
+	static wxChar const* recordMore2b = wxT("Line 2\"");
 
 	TEST(BreakLine)
 	{
@@ -79,13 +80,36 @@ SUITE(TestBreakLine)
 			GetFields(fields2);
 			CHECK(VerifyFields(fields, fields2));
 		}
-		CHECK(DataNeedMore == ReadCSV(';', recordMore1, fields));
-		CHECK(DataOk == ReadCSV(';', recordMore2, fields, true));
+	}
+
+
+	TEST(ReadCSVMultiLine1)
+	{
+		std::vector<wxString> fields;
+		CHECK(DataNeedMore == ReadCSV(';', recordMore1a, fields));
+		CHECK(DataOk == ReadCSV(';', recordMore2a, fields, true));
+		CHECK(5 == fields.size());
 		if (5 == fields.size())
 		{
 			std::vector<wxString> fields2;
 			GetFields(fields2);
 			CHECK(VerifyFields(fields, fields2));
+		}
+	}
+
+
+	TEST(ReadCSVMultiLine2)
+	{
+		std::vector<wxString> fields;
+		CHECK(DataNeedMore == ReadCSV(';', recordMore1b, fields));
+		CHECK(DataOk == ReadCSV(';', recordMore2b, fields, true));
+		CHECK(4 == fields.size());
+		if (4 == fields.size())
+		{
+			CHECK(fields[0] == wxT("2010-10-30"));
+			CHECK(fields[1] == wxT("Name"));
+			CHECK(fields[2] == wxT("Subname"));
+			CHECK(fields[3] == wxT("Line 1\r\nLine 2"));
 		}
 	}
 

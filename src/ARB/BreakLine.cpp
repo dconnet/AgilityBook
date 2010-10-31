@@ -61,7 +61,8 @@ ReadStatus ReadCSV(
 		wxChar const inSep,
 		wxString inRecord,
 		std::vector<wxString>& ioFields,
-		bool bContinuation)
+		bool bContinuation,
+		wxString newLine)
 {
 	if (!bContinuation)
 		ioFields.clear();
@@ -76,7 +77,10 @@ ReadStatus ReadCSV(
 			wxString::size_type posQuote = inRecord.find(wxT('"'), bContinuation ? 0 : 1);
 			if (wxString::npos == posQuote)
 			{
-				str = inRecord;
+				if (bContinuation)
+					str = inRecord;
+				else
+					str = inRecord.substr(1);
 				inRecord.clear();
 				status = DataNeedMore;
 			}
@@ -128,7 +132,6 @@ ReadStatus ReadCSV(
 				else
 					inRecord = wxString(iStr, inRecord.end());
 			}
-			bContinuation = false;
 		}
 		else
 		{
@@ -150,9 +153,10 @@ ReadStatus ReadCSV(
 				return DataError;
 		}
 		if (bContinuation && 0 < ioFields.size())
-			ioFields[ioFields.size()-1] += str;
+			ioFields[ioFields.size()-1] += newLine + str;
 		else
 			ioFields.push_back(str);
+		bContinuation = false;
 	}
 	if (bAddEmpty)
 		ioFields.push_back(wxString());
@@ -172,31 +176,41 @@ wxString WriteCSV(
 	{
 		if (0 < fld)
 			val << inSep;
-		if (wxString::npos != i->find(wxT('"'))
-		|| wxString::npos != i->find(wxT('\n'))
-		|| wxString::npos != i->find(inSep))
-		{
-			wxString str(*i);
-			val << wxT('"');
-			while (!str.empty())
-			{
-				wxString::size_type pos = str.find(wxT('"'));
-				if (wxString::npos == pos)
-				{
-					val << str;
-					str.clear();
-				}
-				else
-				{
-					val << str.substr(0, pos);
-					val << wxT("\"\"");
-					str = str.substr(pos + 1);
-				}
-			}
-			val << wxT('"');
-		}
-		else
-			val << *i;
+		val << WriteCSVField(inSep, *i);
 	}
+	return val;
+}
+
+
+wxString WriteCSVField(
+		wxChar const inSep,
+		wxString const& inField)
+{
+	wxString val;
+	if (wxString::npos != inField.find(wxT('"'))
+	|| wxString::npos != inField.find(wxT('\n'))
+	|| wxString::npos != inField.find(inSep))
+	{
+		wxString str(inField);
+		val << wxT('"');
+		while (!str.empty())
+		{
+			wxString::size_type pos = str.find(wxT('"'));
+			if (wxString::npos == pos)
+			{
+				val << str;
+				str.clear();
+			}
+			else
+			{
+				val << str.substr(0, pos);
+				val << wxT("\"\"");
+				str = str.substr(pos + 1);
+			}
+		}
+		val << wxT('"');
+	}
+	else
+		val << inField;
 	return val;
 }
