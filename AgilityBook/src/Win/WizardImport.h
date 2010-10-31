@@ -44,7 +44,7 @@ public:
 
 private:
 	CAgilityBookOptions::ColumnOrder GetColumnInfo() const;
-	wxString GetDelim() const;
+	wxChar GetDelim() const;
 	void UpdateButtons();
 	void UpdatePreview();
 	bool DoImportFile();

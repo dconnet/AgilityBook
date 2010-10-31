@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-10-30 DRC Implemented proper CSV exporting. Fix init radio check.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
  * @li 2009-06-14 DRC Fix wizard finish (wxEVT_WIZARD_FINISHED is only invoked
@@ -88,7 +89,7 @@ CWizardImport::CWizardImport(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textRow->Wrap(-1);
 
-	m_ctrlRow = new wxSpinCtrl(this, wxID_ANY, wxEmptyString,
+	m_ctrlRow = new wxSpinCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 100, m_Row);
 	m_ctrlRow->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler(CWizardImport::OnDeltaposImportRowSpin), NULL, this);
 	m_ctrlRow->SetHelpText(_("HIDC_WIZARD_IMPORT_ROW"));
@@ -99,7 +100,7 @@ CWizardImport::CWizardImport(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textFormat->Wrap(-1);
 
-	m_ctrlDateFormat = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	m_ctrlDateFormat = new wxComboBox(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
 	static struct
@@ -181,7 +182,30 @@ CWizardImport::CWizardImport(
 	m_ctrlOther->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_OTHER"));
 	m_ctrlOther->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_OTHER"));
 
-	m_ctrlOtherChar = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	switch (m_Delim)
+	{
+	default:
+	case CAgilityBookOptions::eDelimTab:
+		m_ctrlTab->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimSpace:
+		m_ctrlSpace->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimColon:
+		m_ctrlColon->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimSemicolon:
+		m_ctrlSemicolon->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimComma:
+		m_ctrlComma->SetValue(true);
+		break;
+	case CAgilityBookOptions::eDelimOther:
+		m_ctrlOther->SetValue(true);
+		break;
+	}
+
+	m_ctrlOtherChar = new CTextCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(30, -1), 0);
 	m_ctrlOtherChar->SetMaxLength(1); 
 	m_ctrlOtherChar->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CWizardImport::OnImportDelim), NULL, this);
@@ -202,7 +226,7 @@ CWizardImport::CWizardImport(
 	btnFile->SetHelpText(_("HIDC_WIZARD_IMPORT_FILE"));
 	btnFile->SetToolTip(_("HIDC_WIZARD_IMPORT_FILE"));
 
-	m_ctrlPreviewFile = new wxStaticText(this, wxID_ANY, wxEmptyString,
+	m_ctrlPreviewFile = new wxStaticText(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_ctrlPreviewFile->Wrap(-1);
 
@@ -285,20 +309,22 @@ CAgilityBookOptions::ColumnOrder CWizardImport::GetColumnInfo() const
 }
 
 
-wxString CWizardImport::GetDelim() const
+wxChar CWizardImport::GetDelim() const
 {
-	wxString delim;
 	switch (m_Delim)
 	{
 	default:
-	case CAgilityBookOptions::eDelimTab: delim = wxT("\t"); break;
-	case CAgilityBookOptions::eDelimSpace: delim = wxT(" "); break;
-	case CAgilityBookOptions::eDelimColon: delim = wxT(":"); break;
-	case CAgilityBookOptions::eDelimSemicolon: delim = wxT(";"); break;
-	case CAgilityBookOptions::eDelimComma: delim = wxT(","); break;
-	case CAgilityBookOptions::eDelimOther: delim = m_Delimiter; break;
+	case CAgilityBookOptions::eDelimTab:       return wxT('\t');
+	case CAgilityBookOptions::eDelimSpace:     return wxT(' ');
+	case CAgilityBookOptions::eDelimColon:     return wxT(':');
+	case CAgilityBookOptions::eDelimSemicolon: return wxT(';');
+	case CAgilityBookOptions::eDelimComma:     return wxT(',');
+	case CAgilityBookOptions::eDelimOther:
+		if (1 == m_Delimiter.length())
+			return m_Delimiter[0];
+		else
+			return 0;
 	}
-	return delim;
 }
 
 
@@ -309,7 +335,7 @@ void CWizardImport::UpdateButtons()
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		bOk = true;
-	else if (1 == GetDelim().length())
+	else if (0 != GetDelim())
 		bOk = true;
 	bool bEnable = false;
 	CAgilityBookOptions::ColumnOrder order = GetColumnInfo();
@@ -345,9 +371,9 @@ bool CWizardImport::DoImportFile()
 	else
 		filter = _("IDS_FILEEXT_FILTER_TXTCSV");
 	wxFileDialog dlg(this,
-		wxEmptyString, // caption
-		wxEmptyString, // def dir
-		wxEmptyString,
+		wxString(), // caption
+		wxString(), // def dir
+		wxString(),
 		filter,
 		wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 	if (wxID_OK == dlg.ShowModal())
@@ -402,64 +428,6 @@ bool CWizardImport::DoImportFile()
 }
 
 
-static bool GetField(
-		const wxString& delim,
-		wxString& ioStr,
-		wxString& outFld,
-		size_t curFld,
-		size_t maxFlds)
-{
-	outFld.erase();
-	if (ioStr.empty())
-		return false;
-
-	assert(delim.length() == 1);
-
-	size_t pos;
-	size_t nLen = ioStr.length();
-	long quoteCount = 0;
-	for (pos = 0; pos < nLen; ++pos)
-	{
-		if ('"' == ioStr[pos])
-			++quoteCount;
-		else
-			break;
-	}
-	bool inQuote = false;
-	if (quoteCount % 2 == 1)
-	{
-		inQuote = true;
-		pos = 1;
-	}
-	else
-		pos = 0;
-
-	for (; pos < nLen; ++pos)
-	{
-		if (!inQuote && curFld < maxFlds - 1 && delim[0] == ioStr[pos])
-		{
-			ioStr = ioStr.Mid(pos+1);
-			break;
-		}
-		if ('"' == ioStr[pos])
-		{
-			if (pos < nLen + 1 && '"' == ioStr[pos+1])
-			{
-				outFld += ioStr[pos];
-				++pos;
-			}
-			else
-				inQuote = false;
-		}
-		else
-			outFld += ioStr[pos];
-	}
-	if (pos == nLen || curFld >= maxFlds - 1)
-		ioStr.erase();
-	return true;
-}
-
-
 void CWizardImport::UpdatePreview()
 {
 	wxBusyCursor wait;
@@ -472,12 +440,12 @@ void CWizardImport::UpdatePreview()
 	for (iCol = 0; iCol < nColumnCount; ++iCol)
 		m_ctrlPreview->DeleteColumn(0);
 
-	wxString delim = GetDelim();
+	wxChar delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 	}
-	else if (1 != delim.length())
+	else if (0 == delim)
 	{
 		m_ctrlPreview->Thaw();
 		m_ctrlPreview->Refresh();
@@ -562,22 +530,29 @@ void CWizardImport::UpdatePreview()
 	}
 	else
 	{
-		for (long iLine = m_Row - 1; iLine < static_cast<long>(m_FileData.size()); ++iLine)
+		long iLine = 0;
+		for (long iFileLine = m_Row - 1;
+			iFileLine < static_cast<long>(m_FileData.size());
+			++iLine, ++iFileLine)
 		{
-			wxString str = m_FileData[iLine];
-			wxString fld;
-			iCol = 0;
-			while (GetField(delim, str, fld, iCol, cols.size()))
+			std::vector<wxString> fields;
+			ReadStatus status = ReadCSV(delim, m_FileData[iFileLine], fields);
+			while (DataNeedMore == status && iFileLine + 1 < static_cast<long>(m_FileData.size()))
 			{
-				if (0 == iCol)
-					m_ctrlPreview->InsertItem(iLine-(m_Row-1), fld);
-				else
-					SetListColumnText(m_ctrlPreview, iLine-(m_Row-1), iCol, fld);
-				++iCol;
+				++iFileLine;
+				status = ReadCSV(delim, m_FileData[iFileLine], fields, true);
+			}
+			if (DataOk == status && 0 < fields.size())
+			{
+				m_ctrlPreview->InsertItem(iLine, fields[0]);
+				for (size_t iCol = 1; iCol < fields.size(); ++iCol)
+				{
+					SetListColumnText(m_ctrlPreview, iLine, iCol, fields[iCol]);
+				}
 			}
 			// Failed - means a blank row
-			if (0 == iCol)
-				m_ctrlPreview->InsertItem(iLine-(m_Row-1), wxEmptyString);
+			else
+				m_ctrlPreview->InsertItem(iLine, wxString());
 		}
 	}
 	for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
