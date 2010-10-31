@@ -282,6 +282,12 @@
     <ClCompile Include="..\..\ARB\Element.cpp">
       <Filter>ARB Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\TestARB\TestBreakLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ARB\BreakLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\TestARB\ConfigHandler.h">
@@ -427,6 +433,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ARB\Element.h">
       <Filter>ARB Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\BreakLine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

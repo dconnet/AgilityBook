@@ -24,7 +24,7 @@ void GetFields(std::vector<wxString>& fields)
 	fields.clear();
 	// This is the same as field5 and fieldMore[12]
 	fields.push_back(wxT("fld"));
-	fields.push_back(wxT("line\r\n;line"));
+	fields.push_back(wxT("line\n;line"));
 	fields.push_back(wxT("\"quote\" here"));
 	fields.push_back(wxString());
 	fields.push_back(wxT(""));
@@ -53,7 +53,7 @@ SUITE(TestBreakLine)
 	// String
 	static wxChar const* record4 = wxT("fld;fld;;fld");
 	static wxChar const* record7 = wxT("fld;fld;;fld;f\"f;f6;f7");
-	static wxChar const* record5 = wxT("fld;\"line\r\n;line\";\"\"\"quote\"\" here\";;");
+	static wxChar const* record5 = wxT("fld;\"line\n;line\";\"\"\"quote\"\" here\";;");
 	static wxChar const* recordMore1a = wxT("fld;\"line");
 	static wxChar const* recordMore2a = wxT(";line\";\"\"\"quote\"\" here\";;");
 	static wxChar const* recordMore1b = wxT("2010-10-30;Name;\"Subname\";\"Line 1");
@@ -109,7 +109,7 @@ SUITE(TestBreakLine)
 			CHECK(fields[0] == wxT("2010-10-30"));
 			CHECK(fields[1] == wxT("Name"));
 			CHECK(fields[2] == wxT("Subname"));
-			CHECK(fields[3] == wxT("Line 1\r\nLine 2"));
+			CHECK(fields[3] == wxT("Line 1\nLine 2"));
 		}
 	}
 
