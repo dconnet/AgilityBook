@@ -148,15 +148,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <Link>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -178,15 +173,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <Link>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC100;$(WXWIN)\lib\vc100_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -208,15 +198,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <Link>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -238,15 +223,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <Link>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC100;$(WXWIN)\lib\vc100_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -268,15 +248,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <Link>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -299,15 +274,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC100;$(WXWIN)\lib\vc100_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -329,15 +299,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <Link>
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -360,15 +325,10 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
       <AdditionalLibraryDirectories>$(WXWIN)\lib\vc_amd64_lib_VC100;$(WXWIN)\lib\vc100_amd64_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
 python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>

@@ -138,14 +138,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'">Link</CustomBuildAfterTargets>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Link</CustomBuildAfterTargets>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'">Link</CustomBuildAfterTargets>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Link</CustomBuildAfterTargets>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'">Link</CustomBuildAfterTargets>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Link</CustomBuildAfterTargets>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'">Link</CustomBuildAfterTargets>
-    <CustomBuildAfterTargets Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Link</CustomBuildAfterTargets>
+    <CustomBuildAfterTargets>Link</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -160,11 +153,13 @@
       <AdditionalLibraryDirectories>..\..\UnitTest++\bin\$(Platform);$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -183,11 +178,13 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -205,11 +202,13 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
       <AdditionalLibraryDirectories>..\..\UnitTest++\bin\$(Platform);$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -228,11 +227,13 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -250,11 +251,13 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
       <AdditionalLibraryDirectories>..\..\UnitTest++\bin\$(Platform);$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -273,11 +276,13 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -295,11 +300,13 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
       <AdditionalLibraryDirectories>..\..\UnitTest++\bin\$(Platform);$(WXWIN)\lib\vc_lib_VC100;$(WXWIN)\lib\vc100_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -318,11 +325,13 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(Target
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(ProjectDir)..\..\Win\res"
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+    </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
