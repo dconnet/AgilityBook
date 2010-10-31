@@ -52,8 +52,8 @@ typedef enum
  * @param newLine On continuation, append this.
  * @return Status of whether more data is needed (due to quoting multiline data)
  *
- * The RFC actually specifies \r\n as the newline in a continued field.
- * By default, this only uses \n.
+ * The RFC actually specifies \\r\\n as the newline in a continued field.
+ * By default, this only uses \\n.
  */
 extern ReadStatus ReadCSV(
 		wxChar const inSep,
@@ -69,7 +69,7 @@ extern ReadStatus ReadCSV(
  * @param inFields Fields to write
  * @return A string that can be written to a file. (not newline terminated)
  *
- * The RFC actually specifies \r\n as the newline in a continued field.
+ * The RFC actually specifies \\r\\n as the newline in a continued field.
  * This code makes no checks. It simply writes out the data found.
  */
 extern wxString WriteCSV(
