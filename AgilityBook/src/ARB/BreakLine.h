@@ -21,7 +21,8 @@
 
 
 /**
- * Separate a line into substrings. Very simply routine that has no escape chars
+ * Separate a line into substrings.
+ * Very simple routine that has no escape chars
  * @param inSep Separator character
  * @param inStr String to separate
  * @param outFields Separated pieces
@@ -79,7 +80,7 @@ extern wxString WriteCSV(
 /**
  * Write a field for a CSV file [Based on RFC 4180 (October 2005)]
  * @param inSep Separator character
- * @param inFields Fields to write
+ * @param inField Fields to write
  * @return A string that can be written to a file. (not newline terminated)
  */
 extern wxString WriteCSVField(
