@@ -74,6 +74,7 @@ libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBTraining.cpp \
 	ARBTypes.cpp \
 	BinaryData.cpp \
+	BreakLine.cpp \
 	Element.cpp \
 	VersionNum.cpp
 
