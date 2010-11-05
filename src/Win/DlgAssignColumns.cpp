@@ -72,6 +72,7 @@ Training Log:
 
  *
  * Revision History
+ * @li 2010-11-04 DRC When adding items, add after the current selection.
  * @li 2010-02-17 DRC Added SubName to runs view.
  * @li 2009-03-12 DRC Fixed a bug that assumed items in sc_Fields lists had ids
  *                that were in ascending order. Adding verified broke that.
@@ -1214,7 +1215,18 @@ void CDlgAssignColumns::OnAdd(wxCommandEvent& evt)
 	{
 		wxString str = m_ctrlAvailable->GetString(idxAvail);
 		ColumnData* pData = GetAvailableData(idxAvail);
-		int idxCol = m_ctrlColumns->Append(str);
+		int idxCol = -1;
+		int idxCur = m_ctrlColumns->GetSelection();
+		if (0 <= idxCur)
+		{
+#if wxCHECK_VERSION(2, 9, 1)
+			idxCol = m_ctrlColumns->Insert(str, idxCur + 1);
+#else
+			idxCol = m_ctrlColumns->wxControlWithItems::Insert(str, idxCur + 1);
+#endif
+		}
+		else
+			idxCol = m_ctrlColumns->Append(str);
 		if (0 <= idxCol)
 		{
 			m_ctrlColumns->SetClientObject(idxCol, new ColumnData(*pData));
