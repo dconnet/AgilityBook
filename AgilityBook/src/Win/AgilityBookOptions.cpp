@@ -232,6 +232,8 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 			}
 		}
 	}
+	if (0 < added)
+		wxConfig::Get()->Write(CFG_CI_NUMCONFIGS, numExistingConfigs + added);
 	return false;
 }
 
