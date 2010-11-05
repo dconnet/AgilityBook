@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-11-04 DRC Change importing program settings to merge columninfo.
  * @li 2010-03-28 DRC Added ability to import/export program settings (v2.2.0).
  * @li 2010-01-21 DRC Fixed font flag parsing.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -55,50 +56,7 @@
 #include <wx/config.h>
 
 
-static void CopyConfig(ElementNodePtr tree)
-{
-	wxString type;
-	if (ElementNode::eFound != tree->GetAttrib(wxT("type"), type))
-		return;
-	if (wxT("g") == type)
-	{
-		wxString path = wxConfig::Get()->GetPath();
-		wxConfig::Get()->SetPath(tree->GetName());
-		for (int i = 0; i < tree->GetElementCount(); ++i)
-		{
-			if (Element::Element_Node == tree->GetElement(i)->GetType())
-			{
-				CopyConfig(tree->GetElementNode(i));
-			}
-		}
-		wxConfig::Get()->SetPath(path);
-	}
-	else if (wxT("s") == type)
-	{
-		wxConfig::Get()->Write(tree->GetName(), tree->GetValue());
-	}
-	else if (wxT("b") == type)
-	{
-		bool val;
-		tree->GetAttrib(wxT("val"), val);
-		wxConfig::Get()->Write(tree->GetName(), val);
-	}
-	else if (wxT("i") == type)
-	{
-		long val;
-		tree->GetAttrib(wxT("val"), val);
-		wxConfig::Get()->Write(tree->GetName(), val);
-	}
-	else if (wxT("f") == type)
-	{
-		double val;
-		tree->GetAttrib(wxT("val"), val);
-		wxConfig::Get()->Write(tree->GetName(), val);
-	}
-}
-
-
-static void CopyConfigItem(wxString const& entry, ElementNodePtr tree)
+static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
 {
 	switch (wxConfig::Get()->GetEntryType(entry))
 	{
@@ -142,7 +100,7 @@ static void CopyConfigItem(wxString const& entry, ElementNodePtr tree)
 }
 
 
-static void CopyConfig(wxString const& key, ElementNodePtr root)
+static void ExportConfig(wxString const& key, ElementNodePtr root)
 {
 	if (!wxConfig::Get()->HasGroup(key))
 		return;
@@ -159,18 +117,179 @@ static void CopyConfig(wxString const& key, ElementNodePtr root)
 	{
 		do
 		{
-			CopyConfigItem(entry, tree);
+			ExportConfigItem(entry, tree);
 		} while (wxConfig::Get()->GetNextEntry(entry, index));
 	}
 	if (wxConfig::Get()->GetFirstGroup(entry, index))
 	{
 		do
 		{
-			CopyConfig(entry, tree);
+			ExportConfig(entry, tree);
 		} while (wxConfig::Get()->GetNextGroup(entry, index));
 	}
 
 	wxConfig::Get()->SetPath(path);
+}
+
+
+static ElementNodePtr FindConfigName(
+		ElementNodePtr tree,
+		long numConfigs,
+		wxString const& name)
+{
+	for (long i = 0; i < numConfigs; ++i)
+	{
+		wxString configName = wxString::Format(wxT("Config%d"), i);
+		int idxConfig = tree->FindElement(configName);
+		if (0 <= idxConfig
+		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
+		{
+			ElementNodePtr nodeConfig = tree->GetElementNode(idxConfig);
+			int idxName = nodeConfig->FindElement(wxT("name"));
+			if (0 <= idxName
+			&& name == nodeConfig->GetElementNode(idxName)->GetValue())
+			{
+				return nodeConfig;
+			}
+		}
+	}
+	return ElementNodePtr();
+}
+
+
+static void ImportConfig(ElementNodePtr tree);
+
+
+// Return true to invoke clobber code below.
+static bool ImportColumnInfo(ElementNodePtr tree)
+{
+	// Only "Config#" are merged (unless we clobber).
+	int idxNum = tree->FindElement(wxT("numConfigs"));
+	if (0 > idxNum)
+		return false;
+	long numConfigs = 0;
+	tree->GetElementNode(idxNum)->GetAttrib(wxT("val"), numConfigs);
+	if (0 >= numConfigs)
+		return false;
+
+	// If there are no existing configs, just bail and clobber.
+	ElementNodePtr root(ElementNode::New(wxT("Top")));
+	wxString path = wxConfig::Get()->GetPath();
+	wxConfig::Get()->SetPath(wxT("/"));
+	ExportConfig(wxT("ColumnInfo"), root);
+	wxConfig::Get()->SetPath(path);
+	if (1 != root->GetElementCount())
+		return true;
+	ElementNodePtr existing = root->GetElementNode(0);
+	if (!existing)
+		return true;
+	idxNum = existing->FindElement(wxT("numConfigs"));
+	if (0 > idxNum)
+		return true;
+	long numExistingConfigs = 0;
+	existing->GetElementNode(idxNum)->GetAttrib(wxT("val"), numExistingConfigs);
+	if (0 >= numExistingConfigs)
+		return true;
+
+	long added = 0;
+	for (long i = 0; i < numConfigs; ++i)
+	{
+		wxString configName = wxString::Format(wxT("Config%ld"), i);
+		int idxConfig = tree->FindElement(configName);
+		if (0 <= idxConfig
+		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
+		{
+			ElementNodePtr nodeConfig = tree->GetElementNode(idxConfig);
+			int idxName = nodeConfig->FindElement(wxT("name"));
+			if (0 > idxName)
+				continue; // Ignore no-name configs.
+			wxString name = nodeConfig->GetElementNode(idxName)->GetValue();
+			ElementNodePtr existingConfig = FindConfigName(existing, numExistingConfigs, name);
+			if (existingConfig)
+			{
+				path = wxConfig::Get()->GetPath();
+				wxConfig::Get()->SetPath(existingConfig->GetName());
+				for (int iCfg = 0; iCfg < nodeConfig->GetElementCount(); ++iCfg)
+				{
+					ElementNodePtr node = nodeConfig->GetElementNode(iCfg);
+					if (!node)
+						continue;
+					if (node->GetName() != wxT("name"))
+					{
+						ImportConfig(node);
+					}
+				}
+				wxConfig::Get()->SetPath(path);
+			}
+			else
+			{
+				name = nodeConfig->GetName();
+				wxString newName = wxString::Format(wxT("Config%ld"), numExistingConfigs + added);
+				++added;
+				nodeConfig->SetName(newName);
+				ImportConfig(nodeConfig);
+				nodeConfig->SetName(name);
+			}
+		}
+	}
+	return false;
+}
+
+
+static void ImportConfig(ElementNodePtr tree)
+{
+	wxString type;
+	if (ElementNode::eFound != tree->GetAttrib(wxT("type"), type))
+		return;
+	if (wxT("g") == type)
+	{
+		wxString path = wxConfig::Get()->GetPath();
+		wxConfig::Get()->SetPath(tree->GetName());
+		// When importing config info, treat ColumnInfo differently.
+		// We don't want to wipe out existing items. We want to add the new
+		// names. If we find an existing name, the specified format will
+		// be clobbered. But any existing ones won't. This allows us to
+		// import only "Import" data and not touch "Export" (depending on
+		// what's in the file we're reading, of course!)
+		bool bClobber = true;
+		if (tree->GetName() == wxT("ColumnInfo"))
+		{
+			bClobber = ImportColumnInfo(tree);
+		}
+		if (bClobber)
+		{
+			for (int i = 0; i < tree->GetElementCount(); ++i)
+			{
+				if (Element::Element_Node == tree->GetElement(i)->GetType())
+				{
+					ImportConfig(tree->GetElementNode(i));
+				}
+			}
+		}
+		wxConfig::Get()->SetPath(path);
+	}
+	else if (wxT("s") == type)
+	{
+		wxConfig::Get()->Write(tree->GetName(), tree->GetValue());
+	}
+	else if (wxT("b") == type)
+	{
+		bool val;
+		tree->GetAttrib(wxT("val"), val);
+		wxConfig::Get()->Write(tree->GetName(), val);
+	}
+	else if (wxT("i") == type)
+	{
+		long val;
+		tree->GetAttrib(wxT("val"), val);
+		wxConfig::Get()->Write(tree->GetName(), val);
+	}
+	else if (wxT("f") == type)
+	{
+		double val;
+		tree->GetAttrib(wxT("val"), val);
+		wxConfig::Get()->Write(tree->GetName(), val);
+	}
 }
 
 
@@ -190,7 +309,7 @@ bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
 		ElementNodePtr ele = tree->GetElementNode(i);
 		if (!ele)
 			continue;
-		CopyConfig(ele);
+		ImportConfig(ele);
 	}
 	return true;
 }
@@ -224,14 +343,14 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	};
 	for (int i = 0; sections[i]; ++i)
 	{
-		CopyConfig(sections[i], tree);
+		ExportConfig(sections[i], tree);
 	}
 
 	// Copy all the filters complete.
 	int nFilters = wxConfig::Get()->Read(CFG_COMMON_NUMFILTERS, 0L);
 	for (int i = 0; i < nFilters; ++i)
 	{
-		CopyConfig(CFG_KEY_FILTER(i, false), tree);
+		ExportConfig(CFG_KEY_FILTER(i, false), tree);
 	}
 
 	// And pick/choose in Settings.
@@ -253,7 +372,7 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	};
 	for (int i = 0; items[i]; ++i)
 	{
-		CopyConfigItem(items[i], settings);
+		ExportConfigItem(items[i], settings);
 	}
 	wxConfig::Get()->SetPath(path);
 	return tree;
