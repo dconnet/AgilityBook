@@ -49,7 +49,7 @@ USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
 
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
-	VERSION="--disable-compat28"
+	VERSION="--disable-compat28 --disable-uiactionsim"
 elif test "x$1" = "x2.8"; then
 	#WXWIN=~/wx/wxMac-2.8.10
 	WXWIN=~/wx/wxWidgets-2.8.11
