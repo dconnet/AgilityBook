@@ -1,4 +1,4 @@
-11/4/2010: v2.2.4.xxxx <in development>
+11/5/2010: v2.2.4.xxxx <in development>
 - New features / Enhancements:
   - Allow 'space' to activate a hyperlink in the about dialog.
   - In the Assign Column dialog, add items after the current selection,
@@ -9,6 +9,7 @@
   - Fixed context menu on all lists and Calendar View on Mac (focus issue).
   - Added better CSV support.
   - Fixed current CSV separator selection (current separator wasn't selected).
+  - Updated USDAA calendar import to handle new html layout.
 
 9/6/2010: v2.2.3.2809
 - Bug fixes:
