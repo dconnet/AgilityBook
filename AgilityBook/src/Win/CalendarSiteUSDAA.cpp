@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-11-05 DRC Bump to 2.2.0: USDAA changed the detail page layout.
  * @li 2009-11-01 DRC Change how initialization is done.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-25 DRC Ported to wxWidgets.
@@ -22,6 +23,7 @@
 
 #include "../tidy/include/tidy.h"
 #include "ARBStructure.h"
+#include "BreakLine.h"
 #include "Element.h"
 #include "ICalendarSite.h"
 #include "IProgressMeter.h"
@@ -33,7 +35,7 @@
 #include <wx/wfstream.h>
 
 #define CAL_VER_MAJOR		2
-#define CAL_VER_MINOR		1
+#define CAL_VER_MINOR		2
 #define CAL_VER_DOT			0
 
 #define GENERATE_TESTDATA	0
@@ -172,10 +174,10 @@ static ElementNodePtr ReadData(
 	wxString username, errMsg;
 #if !USE_TESTDATA
 	if (!http.ReadHttpFile(username, errMsg))
-#endif
 	{
 		data.erase();
 	}
+#endif
 
 	if (!data.empty())
 	{
@@ -338,8 +340,23 @@ std::string CCalendarSiteUSDAA::Process(
 							}
 							break;
 						case 2:
-							location = tr->GetElement(td)->GetValue();
+							location = tstringUtil::Trim(tr->GetElement(td)->GetValue());
 							StripNewlines(location);
+							// Cleanup location
+							{
+								std::vector<wxString> fields;
+								size_t n = BreakLine(wxT(','), location, fields);
+								if (0 < n)
+								{
+									location.clear();
+									for (size_t i = 0; i < n; ++i)
+									{
+										if (0 < i)
+											location << wxT(", ");
+										location << tstringUtil::Trim(fields[i]);
+									}
+								}
+							}
 							break;
 						case 3:
 							// <td><a>type</a></td>
@@ -417,6 +434,68 @@ std::string CCalendarSiteUSDAA::Process(
 			int idxEventCalH3tag = -1;
 			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
 			{
+				int idxFieldset;
+				ElementNodePtr parentFieldset;
+				if (parent->FindElementDeep(parentFieldset, idxFieldset, wxT("fieldset")))
+				{
+					ElementNodePtr fieldset = parentFieldset->GetElementNode(idxFieldset);
+					// Newlines have been compressed, along with some attributes
+					// Not all entries have all fields - I've seen 4 and 6
+					// <div><p>Event Dates:</p><span>11/20/2010 - 11/21/2010</span></div>
+					// <div><p>Club Name:</p><span>Y Agility</span></div>
+					// <div><p>Location:</p><div>The Pines Farm<br/>272 Dug Road<br/>South Glastonbury, CT United States</div></div>
+					// <div><p>Closing date:</p><span>11/01/2010</span></div>
+					// <div><p>2nd Closing Date:</p><span>11/15/2010</span></div>
+					// <div><p>Event Secretary:</p><div><a href="mailto:yagility@nycap.rr.com">Donna Young</a><br/>4 Haber Way<br/>Castleton, NY 12033 United States</div></div>
+					if (4 <= fieldset->GetNodeCount(Element::Element_Node))
+					{
+						int idx = 0;
+						for (int i = 0; i < fieldset->GetElementCount(); ++i)
+						{
+							if (Element::Element_Node != fieldset->GetElement(i)->GetType())
+								continue;
+							ElementNodePtr div = fieldset->GetElementNode(i);
+							switch (idx)
+							{
+							case 0: // Dates
+								break;
+							case 1: // Club name
+								break;
+							case 2: // Location
+								break;
+							case 3: // Closing date
+								{
+									int idxDate;
+									ElementNodePtr parentCloseDate;
+									if (div->FindElementDeep(parentCloseDate, idxDate, wxT("span")))
+									{
+										ElementNodePtr closeDate = parentCloseDate->GetElementNode(idxDate);
+										wxString date = closeDate->GetValue();
+										cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
+									}
+								}
+								break;
+							case 4: // 2nd closing
+								break;
+							case 5: // Secretary
+								{
+									int idxHref;
+									ElementNodePtr parentTagA;
+									if (div->FindElementDeep(parentTagA, idxHref, wxT("a")))
+									{
+										ElementNodePtr tagA = parentTagA->GetElementNode(idxHref);
+										wxString email;
+										tagA->GetAttrib(wxT("href"), email);
+										cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
+									}
+								}
+								break;
+							}
+							++idx;
+						}
+					}
+				}
+#if OLD_USDAA_FORMAT // Changed Late-Oct 2010
 				int idxTable = parent->FindElement(wxT("table"), idxEventCalH3tag+1);
 				if (0 <= idxTable)
 				{
@@ -489,6 +568,7 @@ std::string CCalendarSiteUSDAA::Process(
 						}
 					}
 				}
+#endif
 			}
 		}
 	}
