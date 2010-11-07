@@ -2,10 +2,11 @@
 # Above line is for python
 #
 # Revision History
+# 2010-11-07 DRC Updated to use vc10pro or sdk
 # 2010-06-11 DRC Support building on x64 OS
 # 2010-05-30 DRC Converted .bat to .py (keeps environment clean!)
 """BuildAll.py [fullupdate | clean] [vc9 | vc10]
-   Default is to do a dirty build
+   Default is to do a dirty build with both compilers
 """
 
 import glob
@@ -14,9 +15,12 @@ import stat
 import string
 import subprocess
 import sys
+import win32api
+import win32con
 
 ProgramFiles = r'c:\Program Files'
 ProgramFiles64 = r'c:\Program Files'
+useVC10SDK = False
 
 
 def errprint(*args):
@@ -64,6 +68,30 @@ def RunCmds(cmds):
 	proc = subprocess.Popen(filename)
 	proc.wait()
 	os.remove(filename)
+
+
+def GetRegString(hkey, path, value):
+	key = None
+	try:
+		key = win32api.RegOpenKeyEx(hkey, path, 0, win32con.KEY_READ)
+	except Exception, msg:
+		return ""
+	try:
+		return win32api.RegQueryValueEx(key, value)[0]
+	except Exception, msg:
+		return ""
+
+
+# 7.1, 8.0, 9.0, 10.0 (as observed on my machine)
+def GetVSDir(version):
+	vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
+	if 0 == len(vsdir):
+		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Microsoft\VisualStudio\SxS\VS7', version)
+	if 0 == len(vsdir):
+		vsdir = GetRegString(win32con.HKEY_LOCAL_MACHINE, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
+	if 0 == len(vsdir):
+		vsdir = GetRegString(win32con.HKEY_CURRENT_USER, r'SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7', version)
+	return vsdir
 
 
 def main():
@@ -118,7 +146,9 @@ def main():
 	# VC7.1
 	#  Configuration: 'Release'/'Debug' (non-unicode)
 	#  Platform: Win32
-	#  Targets: AgilityBook, cal_usdaa, LibTidy
+	#  Targets:
+	#   AgilityBook: all
+	#   LibTidy: all
 	# VC8
 	#  Configuration: 'Release'/'Debug'/'Unicode Release'/'Unicode Debug'
 	#  Platform: Win32, x64
@@ -126,7 +156,6 @@ def main():
 	#  Targets:
 	#   AgilityBook: all
 	#   ARBHelp: no unicode
-	#   cal_usdaa: all
 	#   LibTidy: no unicode
 	# VC9/VC10
 	#  Configuration: 'Release'/'Debug'/'Release - No Unicode'/'Debug - No Unicode'
@@ -134,18 +163,22 @@ def main():
 	#  Targets:
 	#   AgilityBook: unicode only
 	#   ARBHelp: unicode only
-	#   cal_usdaa: unicode only
 	#   LibTidy: no unicode [debug/release=non unicode]
 	#   TestARB: all
 
 	if buildVC9:
+		vc9Base = GetVSDir("9.0")
+		setvcvars = vc9Base + r'\VC\vcvarsall.bat'
+		if not os.access(vc9Base, os.F_OK) or not os.access(setvcvars, os.F_OK):
+			print 'ERROR: "' + vc9Base + '" does not exist'
+			return
 		if clean:
 			RmMinusRF('../../../bin/VC9Win32')
 		remove(r'../VC9/bldWin32.txt')
 		cmds = (
 			r'title VC9 Release Win32',
 			r'cd ..\VC9',
-			r'call "' + ProgramFiles + r'\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86',
+			r'call "' + setvcvars + r'" x86',
 			r'devenv AgilityBook.sln /out bldWin32.txt /build "Release|Win32"')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC9Win32/Release/AgilityBook.exe', os.F_OK):
@@ -157,7 +190,7 @@ def main():
 		cmds = (
 			r'title VC9 Release x64',
 			r'cd ..\VC9',
-			r'call "' + ProgramFiles + r'\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86_amd64',
+			r'call "' + setvcvars + r'" x86_amd64',
 			r'devenv AgilityBook.sln /out bldWin64.txt /build "Release|x64"')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC9x64/Release/AgilityBook.exe', os.F_OK):
@@ -165,24 +198,46 @@ def main():
 			return
 
 	if buildVC10:
+		vc10Base = GetVSDir("10.0")
+		if useVC10SDK:
+			setvcvars = ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\bin\setenv.cmd'
+		else:
+			setvcvars = vc10Base + r'\VC\vcvarsall.bat'
+		if not os.access(vc10Base, os.F_OK) or not os.access(setvcvars, os.F_OK):
+			print 'ERROR: "' + vc10Base + '" does not exist'
+			return
 		if clean:
 			RmMinusRF('../../../bin/VC10Win32')
 		cmds = (
 			r'title VC10 Release Win32',
 			r'cd ..\VC10',
-			r'call "' + ProgramFiles + r'\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" x86',
+			r'call "' + setvcvars + r'" x86',
 			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
-		RunCmds(cmds)
-		if not os.access('../../../bin/VC10Win32/Release/AgilityBook.exe', os.F_OK):
-			print 'ERROR: Compile failed, bailing out'
-			return
+		#RunCmds(cmds)
+		#if not os.access('../../../bin/VC10Win32/Release/AgilityBook.exe', os.F_OK):
+		#	print 'ERROR: Compile failed, bailing out'
+		#	return
 		if clean:
 			RmMinusRF('../../../bin/VC10x64')
-		cmds = (
-			r'title VC10 Release x64',
-			r'cd ..\VC10',
-			r'call "' + ProgramFiles + r'\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /release /x64 /xp',
-			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
+		if useVC10SDK:
+			cmds = (
+				r'title VC10 Release x64',
+				r'cd ..\VC10',
+				r'call "' + setvcvars + r'" /release /x64 /xp',
+				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64',
+				r'color 07')
+		elif bit64on64:
+			cmds = (
+				r'title VC10 Release x64',
+				r'cd ..\VC10',
+				r'call "' + setvcvars + r'" amd64',
+				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
+		else:
+			cmds = (
+				r'title VC10 Release x64',
+				r'cd ..\VC10',
+				r'call "' + setvcvars + r'" x86_amd64',
+				r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=x64')
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC10x64/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
