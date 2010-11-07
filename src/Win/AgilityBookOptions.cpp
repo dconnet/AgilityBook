@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-11-07 DRC Merge filters on program settings import also.
  * @li 2010-11-04 DRC Change importing program settings to merge columninfo.
  * @li 2010-03-28 DRC Added ability to import/export program settings (v2.2.0).
  * @li 2010-01-21 DRC Fixed font flag parsing.
@@ -132,14 +133,16 @@ static void ExportConfig(wxString const& key, ElementNodePtr root)
 }
 
 
-static ElementNodePtr FindConfigName(
+static ElementNodePtr FindElementName(
 		ElementNodePtr tree,
 		long numConfigs,
-		wxString const& name)
+		wxString const& name,
+		const wxChar *const eleItem,
+		const wxChar *const eleName)
 {
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		wxString configName = wxString::Format(wxT("Config%d"), i);
+		wxString configName = wxString::Format(wxT("%s%d"), eleItem, i);
 		int idxConfig = tree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
@@ -157,7 +160,7 @@ static ElementNodePtr FindConfigName(
 }
 
 
-static void ImportConfig(ElementNodePtr tree);
+static void ImportConfig(ElementNodePtr tree, bool bClobberFilters);
 
 
 // Return true to invoke clobber code below.
@@ -204,7 +207,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 			if (0 > idxName)
 				continue; // Ignore no-name configs.
 			wxString name = nodeConfig->GetElementNode(idxName)->GetValue();
-			ElementNodePtr existingConfig = FindConfigName(existing, numExistingConfigs, name);
+			ElementNodePtr existingConfig = FindElementName(existing, numExistingConfigs, name, wxT("Config"), wxT("name"));
 			if (existingConfig)
 			{
 				path = wxConfig::Get()->GetPath();
@@ -216,7 +219,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 						continue;
 					if (node->GetName() != wxT("name"))
 					{
-						ImportConfig(node);
+						ImportConfig(node, false);
 					}
 				}
 				wxConfig::Get()->SetPath(path);
@@ -227,7 +230,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 				wxString newName = wxString::Format(wxT("Config%ld"), numExistingConfigs + added);
 				++added;
 				nodeConfig->SetName(newName);
-				ImportConfig(nodeConfig);
+				ImportConfig(nodeConfig, false);
 				nodeConfig->SetName(name);
 			}
 		}
@@ -238,7 +241,87 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 }
 
 
-static void ImportConfig(ElementNodePtr tree)
+// We will not merge the current named filter selection
+static bool MergeFilters(ElementNodePtr tree)
+{
+	int idx = tree->FindElement(wxT("Common"));
+	if (0 > idx)
+		return false;
+	ElementNodePtr nodeCommon = tree->GetElementNode(idx);
+	if (!nodeCommon)
+		return false;
+	idx = nodeCommon->FindElement(wxT("numFilters"));
+	if (0 > idx)
+		return false;
+	long numFilters = 0;
+	nodeCommon->GetElementNode(idx)->GetAttrib(wxT("val"), numFilters);
+	if (0 >= numFilters)
+		return false;
+
+	// If there are no existing filters, just bail and clobber.
+	int numExistingFilters = wxConfig::Get()->Read(CFG_COMMON_NUMFILTERS, 0L);
+	if (0 > numExistingFilters)
+		return true;
+	// If there are no existing configs, just bail and clobber.
+	ElementNodePtr root(ElementNode::New(wxT("Top")));
+	wxString path = wxConfig::Get()->GetPath();
+	wxConfig::Get()->SetPath(wxT("/"));
+	for (int i = 0; i < numExistingFilters; ++i)
+	{
+		ExportConfig(CFG_KEY_FILTER(i, false), root);
+	}
+	wxConfig::Get()->SetPath(path);
+	if (numExistingFilters != root->GetElementCount())
+		return true;
+
+	long added = 0;
+	for (long i = 0; i < numFilters; ++i)
+	{
+		wxString configName = wxString::Format(wxT("Filter%ld"), i);
+		int idxFilter = tree->FindElement(configName);
+		if (0 <= idxFilter
+		&& Element::Element_Node == tree->GetElement(idxFilter)->GetType())
+		{
+			ElementNodePtr nodeFilter = tree->GetElementNode(idxFilter);
+			int idxName = nodeFilter->FindElement(wxT("Name"));
+			if (0 > idxName)
+				continue; // Ignore no-name filters.
+			wxString name = nodeFilter->GetElementNode(idxName)->GetValue();
+			ElementNodePtr existingFilter = FindElementName(root, numExistingFilters, name, wxT("Filter"), wxT("Name"));
+			if (existingFilter)
+			{
+				path = wxConfig::Get()->GetPath();
+				wxConfig::Get()->SetPath(existingFilter->GetName());
+				for (int iCfg = 0; iCfg < nodeFilter->GetElementCount(); ++iCfg)
+				{
+					ElementNodePtr node = nodeFilter->GetElementNode(iCfg);
+					if (!node)
+						continue;
+					if (node->GetName() != wxT("Name"))
+					{
+						ImportConfig(node, true);
+					}
+				}
+				wxConfig::Get()->SetPath(path);
+			}
+			else
+			{
+				name = nodeFilter->GetName();
+				wxString newName = wxString::Format(wxT("Filter%ld"), numExistingFilters + added);
+				++added;
+				nodeFilter->SetName(newName);
+				ImportConfig(nodeFilter, true);
+				nodeFilter->SetName(name);
+			}
+		}
+	}
+	if (0 < added)
+		wxConfig::Get()->Write(CFG_COMMON_NUMFILTERS, numExistingFilters + added);
+	return false;
+}
+
+
+static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 {
 	wxString type;
 	if (ElementNode::eFound != tree->GetAttrib(wxT("type"), type))
@@ -258,14 +341,27 @@ static void ImportConfig(ElementNodePtr tree)
 		{
 			bClobber = ImportColumnInfo(tree);
 		}
+		else if (!bClobberFilters && tree->GetName().StartsWith(wxT("Filter")))
+		{
+			bClobber = false;
+		}
 		if (bClobber)
 		{
+			bool bCommon = (tree->GetName() == wxT("Common"));
 			for (int i = 0; i < tree->GetElementCount(); ++i)
 			{
-				if (Element::Element_Node == tree->GetElement(i)->GetType())
+				ElementNodePtr node = tree->GetElementNode(i);
+				if (!node)
+					continue;
+				bool bSkip = false;
+				if (!bClobberFilters && bCommon
+				&& (node->GetName() == wxT("numFilters")
+				|| node->GetName() == wxT("CurrentFilter")))
 				{
-					ImportConfig(tree->GetElementNode(i));
+					bSkip = true;
 				}
+				if (!bSkip)
+					ImportConfig(node, bClobberFilters);
 			}
 		}
 		wxConfig::Get()->SetPath(path);
@@ -306,12 +402,13 @@ bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
 	wxString pgmVersion;
 	if (ElementNode::eFound != tree->GetAttrib(ATTRIB_BOOK_PGM_VERSION, pgmVersion))
 		return false;
+	bool bClobberFilters = MergeFilters(tree);
 	for (int i = 0; i < tree->GetElementCount(); ++i)
 	{
 		ElementNodePtr ele = tree->GetElementNode(i);
 		if (!ele)
 			continue;
-		ImportConfig(ele);
+		ImportConfig(ele, bClobberFilters);
 	}
 	return true;
 }
