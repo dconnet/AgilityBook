@@ -424,6 +424,9 @@
 		E158FCB91001371B00735E7F /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B410000B3100B7074A /* Element.cpp */; };
 		E158FCBA1001371B00735E7F /* VersionNum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E15599B710000B3100B7074A /* VersionNum.cpp */; };
 		E158FCBC1001371B00735E7F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		E1AE409D12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
+		E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
+		E1AE409F12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
 		E1BF78F00FFFE153009B81A7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
 		E1E98E8D100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
 		E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
@@ -725,6 +728,8 @@
 		E15599F910000CEC00B7074A /* arb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arb_Prefix.pch; sourceTree = "<group>"; };
 		E158FC261001333500735E7F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		E158FCC01001371B00735E7F /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1AE409B12873800003BFF9F /* BreakLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BreakLine.cpp; sourceTree = "<group>"; };
+		E1AE409C12873800003BFF9F /* BreakLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakLine.h; sourceTree = "<group>"; };
 		E1BF78EE0FFFE144009B81A7 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../stdafx.h; sourceTree = SOURCE_ROOT; };
 		E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
@@ -1030,6 +1035,8 @@
 		E155996210000B3100B7074A /* ARB */ = {
 			isa = PBXGroup;
 			children = (
+				E1AE409B12873800003BFF9F /* BreakLine.cpp */,
+				E1AE409C12873800003BFF9F /* BreakLine.h */,
 				E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */,
 				E1FA1A07115FF3FD00FAFD0F /* ARBMsgDigest.h */,
 				E155996310000B3100B7074A /* ARBAgilityRecordBook.cpp */,
@@ -1386,6 +1393,7 @@
 				E1FA1A08115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */,
 				E1FA1A0E115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
 				E1FA1B5611602EA300FAFD0F /* NamedColumns.cpp in Sources */,
+				E1AE409D12873800003BFF9F /* BreakLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1532,6 +1540,7 @@
 				E1FA1A0A115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */,
 				E1FA1A10115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
 				E1FA1B5811602EA300FAFD0F /* NamedColumns.cpp in Sources */,
+				E1AE409F12873800003BFF9F /* BreakLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1678,6 +1687,7 @@
 				E1FA1A09115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */,
 				E1FA1A0F115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
 				E1FA1B5711602EA300FAFD0F /* NamedColumns.cpp in Sources */,
+				E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
