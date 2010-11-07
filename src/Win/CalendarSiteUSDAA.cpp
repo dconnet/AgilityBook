@@ -349,11 +349,11 @@ std::string CCalendarSiteUSDAA::Process(
 								if (0 < n)
 								{
 									location.clear();
-									for (size_t i = 0; i < n; ++i)
+									for (size_t iFld = 0; iFld < n; ++iFld)
 									{
-										if (0 < i)
+										if (0 < iFld)
 											location << wxT(", ");
-										location << tstringUtil::Trim(fields[i]);
+										location << tstringUtil::Trim(fields[iFld]);
 									}
 								}
 							}
