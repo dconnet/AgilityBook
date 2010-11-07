@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2010-11-07 DRC Removed DEBUG_FLAG from build - set in setup.h instead.
 # 2010-10-19 DRC Remove all debug info from release build
 # 2010-10-16 DRC Added -w option
 # 2010-07-17 DRC Convert to VC10Pro (no need for SDK now)
@@ -206,7 +207,7 @@ def main():
 
 	vendor = ''
 	if not useStatic:
-		vendor = 'VENDOR=dconsoft'
+		vendor = ' VENDOR=dconsoft'
 
 	# Used in wx2.9.1+, not used earlier so won't hurt anything
 	common_cppflags = '/DwxMSVC_VERSION_AUTO=1'
@@ -234,33 +235,33 @@ def main():
 		if compiler == 'vc6':
 			setenv_rel = 'call "' + vc6Base + r'\VC98\bin\vcvars32.bat"'
 			if hasPrefix:
-				cfg = 'COMPILER_PREFIX=vc60 '
+				cfg = ' COMPILER_PREFIX=vc60'
 			else:
-				cfg = 'CFG=_VC60 '
+				cfg = ' CFG=_VC60'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc7':
 			setenv_rel = 'call "' + vc7Base + r'\Common7\Tools\vsvars32.bat"'
 			if hasPrefix:
-				cfg = 'COMPILER_PREFIX=vc71 '
+				cfg = ' COMPILER_PREFIX=vc71'
 			else:
-				cfg = 'CFG=_VC71 '
+				cfg = ' CFG=_VC71'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc8':
 			setenv_rel = 'call "' + vc8Base + r'\VC\vcvarsall.bat"'
 			if hasPrefix:
-				cfg = 'COMPILER_PREFIX=vc80 '
+				cfg = ' COMPILER_PREFIX=vc80'
 			else:
-				cfg = 'CFG=_VC80 '
+				cfg = ' CFG=_VC80'
 			cppflags = common_cppflags
 
 		elif compiler == 'vc9':
 			setenv_rel = 'call "' + vc9Base + r'\VC\vcvarsall.bat" x86'
 			if hasPrefix:
-				cfg = 'COMPILER_PREFIX=vc90 '
+				cfg = ' COMPILER_PREFIX=vc90'
 			else:
-				cfg = 'CFG=_VC90 '
+				cfg = ' CFG=_VC90'
 			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc9x64':
@@ -269,19 +270,19 @@ def main():
 				setenv_rel += 'x86_amd64'
 			else:
 				setenv_rel += 'amd64'
-			target_cpu = 'TARGET_CPU=amd64 '
+			target_cpu = ' TARGET_CPU=amd64'
 			if hasPrefix:
-				cfg = 'COMPILER_PREFIX=vc90 '
+				cfg = ' COMPILER_PREFIX=vc90'
 			else:
-				cfg = 'CFG=_VC90 '
+				cfg = ' CFG=_VC90'
 			cppflags = common_cppflags + r' /D_SECURE_SCL=1 /D_SECURE_SCL_THROWS=1 /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10':
 			setenv_rel = 'call "' + vc10Base + r'\VC\vcvarsall.bat" x86'
 			if hasPrefix:
-				cfg = 'COMPILER_PREFIX=vc100 '
+				cfg = ' COMPILER_PREFIX=vc100'
 			else:
-				cfg = 'CFG=_VC100 '
+				cfg = ' CFG=_VC100'
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		elif compiler == 'vc10x64':
@@ -295,11 +296,11 @@ def main():
 					setenv_rel += 'x86_amd64'
 				else:
 					setenv_rel += 'amd64'
-			target_cpu = 'TARGET_CPU=amd64 '
+			target_cpu = ' TARGET_CPU=amd64'
 			if hasPrefix:
-				cfg = 'COMPILER_PREFIX=vc100 '
+				cfg = ' COMPILER_PREFIX=vc100'
 			else:
-				cfg = 'CFG=_VC100 '
+				cfg = ' CFG=_VC100'
 			cppflags = common_cppflags + r' /D_BIND_TO_CURRENT_VCLIBS_VERSION=1'
 
 		build_rel = ''
@@ -311,22 +312,24 @@ def main():
 		build_dbg += 'nmake -f makefile.vc BUILD=debug'
 		# In 2.9, DEBUG_FLAG defaults to 1 (hasprefix infers the active wx
 		# trunk) Set to '2' for more debugging (datepicker asserts alot tho)
+		# Note: Setting DEBUG_FLAG here sets wxDEBUG_LEVEL during the library
+		# compile but has no effect on users of the library - make sure
+		# wx/msw/setup.h is set. (This is not 'configure'!)
 		if hasPrefix:
-			build_rel += ' DEBUG_INFO=0 DEBUG_FLAG=0'
-			build_dbg += ' DEBUG_FLAG=1'
+			build_rel += ' DEBUG_INFO=0'
 		else:
 			build_dbg += ' DEBUG_INFO=1'
-		build_flags = 'UNICODE='
+		build_flags = ' UNICODE='
 		if useUnicode:
 			build_flags += '1'
 		else:
 			build_flags += '0'
 		build_flags += ' SHARED='
 		if useStatic:
-			build_flags += '0 RUNTIME_LIBS=static '
+			build_flags += '0 RUNTIME_LIBS=static'
 		else:
-			build_flags += '1 RUNTIME_LIBS=dynamic '
-		build_flags += target_cpu + cfg + 'CPPFLAGS="' + cppflags + '" ' + vendor
+			build_flags += '1 RUNTIME_LIBS=dynamic'
+		build_flags += target_cpu + cfg + ' CPPFLAGS="' + cppflags + '"' + vendor
 
 		if 0 < len(samples):
 			for s in samples:
