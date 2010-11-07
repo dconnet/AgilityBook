@@ -545,7 +545,7 @@ void CWizardImport::UpdatePreview()
 			if (DataOk == status && 0 < fields.size())
 			{
 				m_ctrlPreview->InsertItem(iLine, fields[0]);
-				for (long iCol = 1; iCol < static_cast<long>(fields.size()); ++iCol)
+				for (iCol = 1; iCol < static_cast<long>(fields.size()); ++iCol)
 				{
 					SetListColumnText(m_ctrlPreview, iLine, iCol, fields[iCol]);
 				}
