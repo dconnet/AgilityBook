@@ -168,7 +168,10 @@ void CFilterOptions::Load()
 	for (int idx = 0; idx < m_nFilters; ++idx)
 	{
 		CFilterOptionData data(idx);
-		m_filters.push_back(idx);
+		// Protect against bad filters. When writing, we'll fix things up since
+		// we already know how many we think we have.
+		if (!data.filterName.empty())
+			m_filters.push_back(idx);
 	}
 }
 
