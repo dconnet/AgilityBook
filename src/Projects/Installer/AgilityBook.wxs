@@ -122,7 +122,7 @@ Revision History
 		<Directory Id="ProgramMenuFolder">
 			<Directory Id="ARBMenuFolder" Name="$(var.DEFFOLDER)" />
 		</Directory>
-		<Directory Id="$(var.ProgramFilesFolder)">
+		<Directory Id="ProgramFiles64Folder">
 			<Directory Id="CompanyFolder" Name="dcon Software">
 				<Directory Id="INSTALLDIR" Name="$(var.DEFFOLDER)">
 					<Directory Id="dirLang" Name="lang">
