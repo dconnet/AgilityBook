@@ -166,6 +166,7 @@ Revision History
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings">
 				<RegistryValue
+					KeyPath="yes"
 					Name="Lang3"
 					Type="string"
 					Value="!(loc.Lang3)" />
@@ -213,6 +214,7 @@ Revision History
 	<DirectoryRef Id="ARBMenuFolder">
 		<Component Id="C_MenuShortcutsARB" Guid="74105C3C-0E12-4CE4-B955-DA4551365A97" Win64="$(var.Win64)">
 			<RegistryValue
+				KeyPath="yes"
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
 				Name="inst_help"
@@ -228,6 +230,7 @@ Revision History
 
 		<Component Id="C_MenuShortcutsHelp" Guid="2F642C5F-5C66-40C8-B548-D7794CBF580A" Win64="$(var.Win64)">
 			<RegistryValue
+				KeyPath="yes"
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
 				Name="inst_arb"
@@ -245,6 +248,7 @@ Revision History
 		<Component Id="C_DeskShortcuts" Guid="988854A1-81B4-4B57-A51D-5C08BE963E5F" Win64="$(var.Win64)">
 			<Condition>INSTALLDESKTOPSHORTCUT</Condition>
 			<RegistryValue
+				KeyPath="yes"
 				Root="HKCU"
 				Key="Software\[Manufacturer]\[AppName]\Settings"
 				Name="inst_desk"
