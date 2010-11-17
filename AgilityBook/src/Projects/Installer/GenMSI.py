@@ -6,7 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
-# 2010-11-16 DRC Turned on pedantic warnings.
+# 2010-11-16 DRC Turned on pedantic warnings, changed how languages are handled.
 # 2010-10-08 DRC Suppress wixpdb creation.
 #            Allow packaging to pull from specified VC build (8/9/10)
 # 2010-08-25 DRC Stop using old prodcode. Detect same version as old.
@@ -67,6 +67,7 @@ UpgradeCode = '4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4'
 supportedLangs = [
 	('en', 'en-US', '1033'),
 	('fr', 'fr-FR', '1036')]
+langNames = 'en_US;fr_FR'
 
 
 def getversion(numParts):
@@ -193,6 +194,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			candleCmd += ' -arch x86'
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
 		candleCmd += ' -dPRODUCTID=' + productId
+		candleCmd += ' -dSUPPORTED_LANGS=' + langNames
 		candleCmd += ' -dINSTALL_SCOPE=' + perUser
 		runcmd(candleCmd + ' AgilityBook.wxs')
 		processing = 0
