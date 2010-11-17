@@ -29,8 +29,10 @@
 
 	<?if $(sys.BUILDARCH) = x64 ?>
 		<?define Win64=yes?>
+		<?define ProgramFilesFolder="ProgramFiles64Folder"?>
 	<?elseif $(sys.BUILDARCH) = x86 ?>
 		<?define Win64=no?>
+		<?define ProgramFilesFolder="ProgramFilesFolder"?>
 	<?endif?>
 
 </Include>

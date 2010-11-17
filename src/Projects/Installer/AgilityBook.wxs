@@ -21,6 +21,7 @@ Command line options
    ("" to suppress)
 
 Revision History
+2010-11-16 DRC Put supported languages into a foreach loop.
 2010-11-01 DRC No, don't. (Detect same version as old in upgrade table.)
 2010-08-25 DRC Detect same version as old in upgrade table.
 2010-05-22 DRC Added comment block!
@@ -122,12 +123,22 @@ Revision History
 		<Directory Id="ProgramMenuFolder">
 			<Directory Id="ARBMenuFolder" Name="$(var.DEFFOLDER)" />
 		</Directory>
-		<Directory Id="ProgramFiles64Folder">
+		<Directory Id="$(var.ProgramFilesFolder)">
 			<Directory Id="CompanyFolder" Name="dcon Software">
 				<Directory Id="INSTALLDIR" Name="$(var.DEFFOLDER)">
 					<Directory Id="dirLang" Name="lang">
-						<Directory Id="dirFR" Name="fr_FR" />
-						<Directory Id="dirEN" Name="en_US" />
+<?foreach langVar in $(var.SUPPORTED_LANGS)?>
+						<Directory Id="dir.$(var.langVar)" Name="$(var.langVar)">
+
+							<Component Id="C_$(var.langVar)" Guid="*" Win64="$(var.Win64)">
+								<File Id="_$(var.langVar).mo"
+									Name="arb.mo"
+									Source="$(var.BASEDIR)\lang\$(var.langVar)\arb.mo"
+									KeyPath="yes"
+									DiskId="1" />
+							</Component>
+						</Directory>
+<?endforeach?>
 					</Directory>
 				</Directory>
 			</Directory>
@@ -187,26 +198,6 @@ Revision History
 				Source="$(var.BASEDIR)\ARBHelp.exe"
 				KeyPath="yes"
 				Checksum="yes"
-				DiskId="1" />
-		</Component>
-	</DirectoryRef>
-
-	<DirectoryRef Id="dirFR">
-		<Component Id="C_langFR" Guid="581CB1F1-0846-4205-8551-5FEE8A03AF62" Win64="$(var.Win64)">
-			<File Id="_fr_arb.mo"
-				Name="arb.mo"
-				Source="$(var.BASEDIR)\lang\fr_FR\arb.mo"
-				KeyPath="yes"
-				DiskId="1" />
-		</Component>
-	</DirectoryRef>
-
-	<DirectoryRef Id="dirEN">
-		<Component Id="C_langEN" Guid="27FF13B7-5D71-414B-9BA6-1C6D04DE0BA6" Win64="$(var.Win64)">
-			<File Id="_en_arb.mo"
-				Name="arb.mo"
-				Source="$(var.BASEDIR)\lang\en_US\arb.mo"
-				KeyPath="yes"
 				DiskId="1" />
 		</Component>
 	</DirectoryRef>
@@ -274,8 +265,9 @@ Revision History
 		<ComponentRef Id="C_RegistryEntries" />
 		<ComponentRef Id="C_AgilityBook.exe" />
 		<ComponentRef Id="C_AgilityBook.dat" />
-		<ComponentRef Id="C_langEN" />
-		<ComponentRef Id="C_langFR" />
+<?foreach langVar in $(var.SUPPORTED_LANGS)?>
+		<ComponentRef Id="C_$(var.langVar)" />
+<?endforeach?>
 
 		<Feature Id="ARBHelp"
 			Display="expand"
