@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2010-11-16 DRC Turned on pedantic warnings.
 # 2010-10-08 DRC Suppress wixpdb creation.
 #            Allow packaging to pull from specified VC build (8/9/10)
 # 2010-08-25 DRC Stop using old prodcode. Detect same version as old.
@@ -184,7 +185,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 		return 0
 
 	if os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
-		candleCmd = 'candle -nologo'
+		candleCmd = 'candle -nologo -pedantic'
 		candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
 		if code == code64:
 			candleCmd += ' -arch x64'
