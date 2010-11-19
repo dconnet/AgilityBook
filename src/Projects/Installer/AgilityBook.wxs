@@ -38,6 +38,7 @@ Revision History
 <Product Id="$(var.PRODUCTID)"
 	UpgradeCode="$(var.UPGRADECODE)"
 	Name="Agility Record Book $(var.CURRENT_VERSION)"
+	Codepage="0"
 	Language="!(loc.LANG)"
 	Version="$(var.CURRENT_VERSION)"
 	Manufacturer="dcon Software">
