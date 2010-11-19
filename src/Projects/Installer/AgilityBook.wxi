@@ -25,6 +25,7 @@
 	<?define UPGRADECODEv2=4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4?>
 
 	<?define DEFFOLDER=$(var.DEFFOLDERv2)?>
+	<!-- Make sure this is the same as in GenMSI.py -->
 	<?define UPGRADECODE=$(var.UPGRADECODEv2)?>
 
 	<?if $(sys.BUILDARCH) = x64 ?>
