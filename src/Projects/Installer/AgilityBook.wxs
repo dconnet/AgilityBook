@@ -21,6 +21,7 @@ Command line options
    ("" to suppress)
 
 Revision History
+2010-11-19 DRC Added NeverOverwrite to Lang3 registry setting.
 2010-11-16 DRC Put supported languages into a foreach loop.
 2010-11-01 DRC No, don't. (Detect same version as old in upgrade table.)
 2010-08-25 DRC Detect same version as old in upgrade table.
@@ -43,10 +44,11 @@ Revision History
 	Version="$(var.CURRENT_VERSION)"
 	Manufacturer="dcon Software">
 	<Package
-		Description="Agility Record Book"
+		Description="!(loc.Description)"
 		Comments="!(loc.Comments)"
 		InstallScope="$(var.INSTALL_SCOPE)"
 		InstallerVersion="200"
+		SummaryCodepage="!(loc.CODEPAGE)"
 		Compressed="yes" />
 
 	<WixVariable Id="WixUIDialogBmp" Value="ArbDialogBmp.bmp" />
@@ -167,7 +169,11 @@ Revision History
 			</ProgId>
 		</Component>
 
-		<Component Id="C_RegistryEntries" Guid="B5864F95-CB30-41B0-81F6-2E672423482C" Win64="$(var.Win64)">
+		<Component
+			Id="C_RegistryEntries"
+			Guid="B5864F95-CB30-41B0-81F6-2E672423482C"
+			NeverOverwrite="yes"
+			Win64="$(var.Win64)">
 			<!--
 			We only create (not remove) since none of the other registry
 			entries created by the program are removed. (This is created too,

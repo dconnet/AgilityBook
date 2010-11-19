@@ -68,9 +68,10 @@ UpgradeCode = '4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4'
 
 # Name used for (filenames, culture name, language id) when building msi.
 supportedLangs = [
-	('en', 'en-US', '1033'),
-	('fr', 'fr-FR', '1036')]
-# List of mo files to be included in installer.
+	('en', 'en-us', '1033'),
+	('fr', 'fr-fr', '1036')]
+# List of mo files to be included in installer in xx_YY format.
+# (xx is ISO 639 language code, YY is ISO 3166 country code)
 langNames = 'en_US;fr_FR'
 
 
