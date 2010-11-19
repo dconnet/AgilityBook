@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2010-11-18 DRC Optimize the build by caching the cab file.
 # 2010-11-16 DRC Turned on pedantic warnings, changed how languages are handled.
 # 2010-10-08 DRC Suppress wixpdb creation.
 #            Allow packaging to pull from specified VC build (8/9/10)
@@ -43,10 +44,12 @@
 """
 
 import datetime
+import glob
+import msilib
 import os
+import stat
 import string
 import sys
-import msilib
 
 # Where top-level AgilityBook directory is relative to this script.
 AgilityBookDir = r'..\..\..'
@@ -63,11 +66,42 @@ code64 = 3
 # sync with the current code in AgilityBook.wxi (UPGRADECODE)
 UpgradeCode = '4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4'
 
-# Name used for filenames, culture name, language id
+# Name used for (filenames, culture name, language id) when building msi.
 supportedLangs = [
 	('en', 'en-US', '1033'),
 	('fr', 'fr-FR', '1036')]
+# List of mo files to be included in installer.
 langNames = 'en_US;fr_FR'
+
+
+def errprint(*args):
+	# Used to print exception messages
+    strings = map(str, args)
+    msg = ' '.join(strings)
+    if msg[-1:] != '\n':
+        msg += '\n'
+    sys.stderr.write(msg)
+
+
+# Kill an entire directory
+def RmMinusRF(name):
+	if os.access(name, os.F_OK):
+		mode = os.stat(name)[stat.ST_MODE]
+		if stat.S_ISDIR(mode):
+			curDir = os.getcwd()
+			os.chdir(name)
+			for file in glob.glob('./*'):
+				RmMinusRF(file)
+			os.chdir(curDir)
+			os.rmdir(name)
+		else:
+			if not os.access(name, os.W_OK):
+				os.chmod(name, 0666)
+			if os.access(name, os.W_OK):
+				try:
+					os.remove(name)
+				except OSError, msg:
+					errprint('os.remove:', msg)
 
 
 def getversion(numParts):
@@ -186,6 +220,8 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 		return 0
 
 	if os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
+		cabcache = 'cabcache'
+		RmMinusRF(cabcache)
 		candleCmd = 'candle -nologo -pedantic'
 		candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
 		if code == code64:
@@ -205,7 +241,12 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			basename = outputFile
 			if processing > 1:
 				basename += '-' + fname
-			lightCmd = 'light -nologo -spdb'
+			# -sadmin: Suppress Admin[UI|Execute]Sequence tables
+			# -sadv: Suppress AdvtExecuteSequence table
+			lightCmd = 'light -nologo -pedantic -spdb -sadmin -sadv'
+			lightCmd += ' -dcl:high -cc ' + cabcache
+			if not processing == 1:
+				lightCmd += ' -reusecab'
 			lightCmd += ' -ext WixUIExtension -ext WixUtilExtension'
 			lightCmd += ' -dWixUILicenseRtf=License-' + fname + '.rtf'
 			lightCmd += ' -cultures:' + culture
@@ -227,6 +268,8 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 						os.remove(basename + '.msi')
 		if processing > 1:
 			WiLangId(baseMsi, sumInfoStream)
+		if tidy:
+			RmMinusRF(cabcache)
 	else:
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 
