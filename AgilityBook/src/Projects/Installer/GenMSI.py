@@ -66,10 +66,10 @@ code64 = 3
 # sync with the current code in AgilityBook.wxi (UPGRADECODE)
 UpgradeCode = '4D018FAD-2CBC-4A92-B6AC-4BAAECEED8F4'
 
-# Name used for (filenames, culture name, language id) when building msi.
+# Name used for (wix culture name, language id) when building msi.
 supportedLangs = [
-	('en', 'en-us', '1033'),
-	('fr', 'fr-fr', '1036')]
+	('en-us', '1033'),
+	('fr-fr', '1036')]
 # List of mo files to be included in installer in xx_YY format.
 # (xx is ISO 639 language code, YY is ISO 3166 country code)
 langNames = 'en_US;fr_FR'
@@ -237,11 +237,11 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 		processing = 0
 		baseMsi = ''
 		sumInfoStream = ''
-		for fname, culture, langId in supportedLangs:
+		for culture, langId in supportedLangs:
 			processing += 1
 			basename = outputFile
 			if processing > 1:
-				basename += '-' + fname
+				basename += '_' + culture
 			# -sadmin: Suppress Admin[UI|Execute]Sequence tables
 			# -sadv: Suppress AdvtExecuteSequence table
 			lightCmd = 'light -nologo -pedantic -spdb -sadmin -sadv'
@@ -249,9 +249,9 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			if not processing == 1:
 				lightCmd += ' -reusecab'
 			lightCmd += ' -ext WixUIExtension -ext WixUtilExtension'
-			lightCmd += ' -dWixUILicenseRtf=License-' + fname + '.rtf'
+			lightCmd += ' -dWixUILicenseRtf=License_' + culture + '.rtf'
 			lightCmd += ' -cultures:' + culture
-			lightCmd += ' -loc AgilityBook-' + fname + '.wxl'
+			lightCmd += ' -loc AgilityBook_' + culture + '.wxl'
 			lightCmd += ' -out ' + basename + '.msi'
 			runcmd(lightCmd + ' AgilityBook.wixobj')
 			if processing == 1:
