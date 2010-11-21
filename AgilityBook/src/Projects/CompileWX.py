@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2010-11-20 DRC Automatically determine hasprefix support.
 # 2010-11-07 DRC Removed DEBUG_FLAG from build - set in setup.h instead.
 # 2010-10-19 DRC Remove all debug info from release build
 # 2010-10-16 DRC Added -w option
@@ -19,7 +20,6 @@
 	-w wxwin: Override WXWIN env variable
 	-e:       Just show the environment, don't do it
 	-a:       Compile all (vc9, vc9x64)
-	-p:       No prefix (2.8.x and before) (default: hasPrefix)
 	-d:       Compile as DLLs (default: static)
 	-m:       Compile as MBCS (default: Unicode)
 	-s name:  Compile sample 'name'
@@ -147,6 +147,38 @@ def AddCompiler(compilers, c):
 	return True
 
 
+def getversion(file):
+	numParts = 4
+	ver = '0'
+	ver2 = '0'
+	for i in range(1, numParts):
+		ver = ver + '.0'
+		ver2 = ver2 + '_0'
+	resStr = [
+		'#define wxMAJOR_VERSION',
+		'#define wxMINOR_VERSION',
+		'#define wxRELEASE_NUMBER',
+		'#define wxSUBRELEASE_NUMBER'
+		]
+	found = 0;
+	version = ['0', '0', '0', '0']
+	res = open(file, 'r')
+	while (1):
+		line = res.readline()
+		if line:
+			line = line.strip()
+			for i in range(0, 4):
+				pos = line.find(resStr[i])
+				if 0 == pos:
+					found = found + 1
+					version[i] = line[pos+len(resStr[i]):].strip()
+			if found == 4:
+				break
+		else:
+			break
+	return version
+
+
 def main():
 	global ProgramFiles, ProgramFiles64
 	global compileIt, hasPrefix, useStatic, useUnicode
@@ -165,7 +197,7 @@ def main():
 	samples = set()
 	compilers = set()
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'w:eapdms:')
+		opts, args = getopt.getopt(sys.argv[1:], 'w:eadms:')
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
@@ -178,8 +210,6 @@ def main():
 		elif '-a' == o:
 			AddCompiler(compilers, 'vc9')
 			AddCompiler(compilers, 'vc9x64')
-		elif '-p' == o:
-			hasPrefix = False
 		elif '-d' == o:
 			useStatic = False
 		elif '-m' == o:
@@ -194,6 +224,14 @@ def main():
 	if not os.access(os.environ['WXWIN'], os.F_OK):
 		print 'ERROR: ' + os.environ['WXWIN'] + ' doesn\'t exist'
 		return
+
+	wxInclude = os.environ['WXWIN'] + r'\include\wx\version.h'
+	if not os.access(wxInclude, os.F_OK):
+		print 'ERROR: ' + wxInclude + ' doesn\'t exist'
+		return
+	version = getversion(wxInclude)
+	if version[0] == '2' and version[1] == '8':
+		hasPrefix = False
 
 	for c in args:
 		if not AddCompiler(compilers, c):
