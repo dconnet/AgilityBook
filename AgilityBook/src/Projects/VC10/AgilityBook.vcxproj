@@ -640,16 +640,6 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
   <ItemGroup>
     <ResourceCompile Include="..\..\Win\AgilityBook.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="ARBUpdater.vcxproj">
-      <Project>{e7cffcf1-c043-4443-9f24-8ccbebfba690}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="LibTidy.vcxproj">
-      <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
