@@ -45,6 +45,9 @@
 #error "Choose one!"
 #endif
 
+#if defined(_MSC_VER) && _MSC_VER >= 1600
+#pragma comment(lib, "LibTidy.lib")
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
