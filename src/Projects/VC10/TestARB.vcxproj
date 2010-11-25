@@ -155,7 +155,7 @@
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
@@ -180,7 +180,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
@@ -204,7 +204,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
@@ -229,7 +229,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
@@ -253,7 +253,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
@@ -278,7 +278,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
@@ -302,7 +302,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
@@ -327,7 +327,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     </Link>
     <PostBuildEvent>
       <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir)." "$(TargetName)" $(Platform)</Command>
+python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
       <Command>cd "$(ProjectDir)..\..\Win\res"
