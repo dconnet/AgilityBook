@@ -11,6 +11,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-12-05 DRC Fixed crash on Mac when more columns in import data than
+ *                    configured columns. Also, set DOB for a new dog.
  * @li 2010-10-30 DRC Implemented proper CSV exporting. Fix init radio check.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-14 DRC Fixed group box creation order.
@@ -545,7 +547,9 @@ void CWizardImport::UpdatePreview()
 			if (DataOk == status && 0 < fields.size())
 			{
 				m_ctrlPreview->InsertItem(iLine, fields[0]);
-				for (iCol = 1; iCol < static_cast<long>(fields.size()); ++iCol)
+				for (iCol = 1;
+					iCol < static_cast<long>(fields.size()) && iCol < static_cast<long>(cols.size());
+					++iCol)
 				{
 					SetListColumnText(m_ctrlPreview, iLine, iCol, fields[iCol]);
 				}
@@ -1104,6 +1108,7 @@ bool CWizardImport::DoWizardFinish()
 						if (!pDog)
 						{
 							pDog = ARBDogPtr(ARBDog::New());
+							pDog->SetDOB(ARBDate::Today());
 							if (0 < nameReg.length())
 								pDog->SetRegisteredName(nameReg);
 							if (0 < nameCall.length())
