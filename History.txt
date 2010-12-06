@@ -1,4 +1,6 @@
-11/20/2010: v2.2.5.<development>
+12/5/2010: v2.2.5.<development>
+- Bumped Configuration v30:
+  - Added new USDAA International classes (Std/Jmp).
 - New features / Enhancements:
   - Internal build: Enhanced MSI creation
 
