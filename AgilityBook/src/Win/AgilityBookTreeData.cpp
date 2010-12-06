@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-12-05 DRC DOB can be invalid (on import). Don't show in tree.
  * @li 2010-01-02 DRC Fix initialization of date for a new run.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-14 DRC Fixed crash (on Mac) when editing dog.
@@ -755,9 +756,11 @@ wxString CAgilityBookTreeDataDog::OnNeedText() const
 			str += m_pDog->GetBreed();
 			break;
 		case IO_TREE_DOG_DOB:
-			str += m_pDog->GetDOB().GetString();
+			if (m_pDog->GetDOB().IsValid())
+				str += m_pDog->GetDOB().GetString();
 			break;
 		case IO_TREE_DOG_AGE:
+			if (m_pDog->GetDOB().IsValid())
 			{
 				wxDateTime dob(m_pDog->GetDOB().GetDate());
 				wxDateTime current = wxDateTime::Now();
