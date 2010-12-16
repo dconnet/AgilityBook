@@ -213,10 +213,10 @@ def main():
 			r'cd ..\VC10',
 			r'call "' + setvcvars + r'" x86',
 			r'msbuild AgilityBook.sln /t:Build /p:Configuration=Release;Platform=Win32')
-		#RunCmds(cmds)
-		#if not os.access('../../../bin/VC10Win32/Release/AgilityBook.exe', os.F_OK):
-		#	print 'ERROR: Compile failed, bailing out'
-		#	return
+		RunCmds(cmds)
+		if not os.access('../../../bin/VC10Win32/Release/AgilityBook.exe', os.F_OK):
+			print 'ERROR: Compile failed, bailing out'
+			return
 		if clean:
 			RmMinusRF('../../../bin/VC10x64')
 		if useVC10SDK:
