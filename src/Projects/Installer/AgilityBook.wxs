@@ -21,6 +21,7 @@ Command line options
    ("" to suppress)
 
 Revision History
+2010-12-23 DRC Minor tweak to change type51CA+Seq to SetProperty element.
 2010-11-19 DRC Added NeverOverwrite to Lang3 registry setting.
 2010-11-16 DRC Put supported languages into a foreach loop.
 2010-11-01 DRC No, don't. (Detect same version as old in upgrade table.)
@@ -287,21 +288,26 @@ Revision History
 		</Feature>
 	</Feature>
 
-	<CustomAction Id="ARB_SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[INSTALLDIR]" />
-	<CustomAction Id="ARB_HasPerUserSupport" Property="ARBHasPerUserSupport" Value="1" />
+	<SetProperty Id="ARPINSTALLLOCATION"
+		Sequence="execute"
+		After="InstallValidate"
+		Value="[INSTALLDIR]" />
+	<SetProperty Id="ARBHasPerUserSupport"
+		Sequence="ui"
+		After="FindRelatedProducts"
+		Value="1">(VersionNT&lt;600 And Privileged) Or VersionNT&gt;=601</SetProperty>
+
 	<CustomAction Id="ARB_AlreadyUpdated" Error="!(loc.ARB_AlreadyUpdated)" />
 	<CustomAction Id="ARB_NoDowngrade" Error="!(loc.ARB_NoDowngrade)" />
 	<CustomAction Id="ARB_LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 
 	<InstallUISequence>
-		<Custom Action="ARB_HasPerUserSupport" After="FindRelatedProducts">(VersionNT&lt;600 And Privileged) Or VersionNT&gt;=601</Custom>
 		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">SAMEVERSIONDETECTED</Custom>
 		<Custom Action="ARB_NoDowngrade" After="ARB_AlreadyUpdated">NEWERVERSIONDETECTED</Custom>
 	</InstallUISequence>
 
 	<InstallExecuteSequence>
 		<RemoveExistingProducts After="InstallInitialize" />
-		<Custom Action="ARB_SetARPINSTALLLOCATION" After="InstallValidate" />
 		<Custom Action="ARB_AlreadyUpdated" After="FindRelatedProducts">SAMEVERSIONDETECTED</Custom>
 		<Custom Action="ARB_NoDowngrade" After="ARB_AlreadyUpdated">NEWERVERSIONDETECTED</Custom>
 		<!--
