@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-12-24 DRC Accumulate speed points by division.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2007-03-14 DRC Change accumulation to work by event, not method.
@@ -830,9 +831,11 @@ bool CPointsDataMultiQs::IsEqual(CPointsDataBasePtr inData)
 CPointsDataSpeedPts::CPointsDataSpeedPts(
 		CAgilityBookDoc* pDoc,
 		ARBConfigVenuePtr inVenue,
+		ARBConfigDivisionPtr inDiv,
 		int inPts)
 	: CPointsDataBase(pDoc)
 	, m_Venue(inVenue)
+	, m_Div(inDiv)
 	, m_Pts(inPts)
 {
 }
@@ -841,9 +844,14 @@ CPointsDataSpeedPts::CPointsDataSpeedPts(
 wxString CPointsDataSpeedPts::OnNeedText(int inCol) const
 {
 	wxString str;
-	if (7 == inCol)
+	switch (inCol)
 	{
+	case 1:
+		str = m_Div->GetName();
+		break;
+	case 7:
 		str = wxString::Format(_("IDS_POINTS_SPEED"), m_Pts);
+		break;
 	}
 	return str;
 }
@@ -853,7 +861,8 @@ wxString CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
-		<< wxT("<td colspan=\"6\"/>\n")
+		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
+		<< wxT("<td colspan=\"5\"/>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
@@ -1288,8 +1297,7 @@ void CPointsDataItems::LoadData(
 			data += wxT("</h3>");
 			data += s_TableHeader;
 			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, data)));
-			int speedPts = 0;
-			bool bHasSpeedPts = false;
+			std::vector<CPointsDataBasePtr> speedPtsData;
 			// Show events sorted out by division/level.
 			std::vector<CPointsDataEvent*> items;
 			int idxDiv = 0;
@@ -1297,6 +1305,8 @@ void CPointsDataItems::LoadData(
 				iterDiv != pVenue->GetDivisions().end();
 				++idxDiv, ++iterDiv)
 			{
+				bool bHasSpeedPts = false;
+				int speedPts = 0;
 				ARBConfigDivisionPtr pDiv = (*iterDiv);
 				int idxLevel = 0;
 				for (ARBConfigLevelList::const_iterator iterLevel = pDiv->GetLevels().begin();
@@ -1541,8 +1551,12 @@ void CPointsDataItems::LoadData(
 						lifetime.push_back(pts);
 					if (0 < pts.ptPlacement.size())
 						placement.push_back(pts);
+				} // level loop
+				if (bHasSpeedPts)
+				{
+					speedPtsData.push_back(CPointsDataBasePtr(new CPointsDataSpeedPts(pDoc, pVenue, pDiv, speedPts)));
 				}
-			}
+			} // division loop
 			if (1 < items.size())
 				std::stable_sort(items.begin(), items.end(), SortPointItems());
 			for (std::vector<CPointsDataEvent*>::iterator i = items.begin();
@@ -1554,9 +1568,9 @@ void CPointsDataItems::LoadData(
 			items.clear();
 
 			// Information that is tallied after all a venue's events.
-			if (bHasSpeedPts)
+			if (!speedPtsData.empty())
 			{
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSpeedPts(pDoc, pVenue, speedPts)));
+				m_Lines.insert(m_Lines.end(), speedPtsData.begin(), speedPtsData.end());
 			}
 
 			// If the venue has multiQs, tally them now.

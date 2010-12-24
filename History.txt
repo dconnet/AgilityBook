@@ -1,10 +1,12 @@
-12/5/2010: v2.2.5.<development>
+12/24/2010: v2.2.5.2918
 - Bumped Configuration v30:
   - Added new USDAA International classes (Std/Jmp).
 - New features / Enhancements:
   - Internal build: Enhanced MSI creation
+  - Dropped VC7/VC8 support
 - Bug fixes:
   - Fixed crash on Mac when more columns in import data than configured columns.
+  - Accumulate speed points by division in Points page.
 
 11/7/2010: v2.2.4.2871
 - New features / Enhancements:

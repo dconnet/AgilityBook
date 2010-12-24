@@ -33,7 +33,6 @@ Do a full rebuild and verify it.
 - Run 'GenMSI.py /all' to create w32/x64 installers and auto-update
   Misc\Installations\InstallGUIDs.csv
   - Copy .msi files to \AgilityBook\distrib\vN.N.N.N, zip them.
-- The VC7 and VC8 versions should also be built just to make sure they work.
 
 Commit all changes to SVN.
 
@@ -61,7 +60,7 @@ Tag SubVersion repository
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup of released files to \AgilityBook\test\[vc7/vc8/vc9/vc9x64]
+- Copy a backup of released files to \AgilityBook\test\[vc9/vc9x64]
   Currently, I only archive vc9/x64 - the exe's that are released to the wild.
   [exe,dll,dat,lang/...]
 - Clean out all build artifacts.

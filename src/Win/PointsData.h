@@ -388,6 +388,7 @@ public:
 	CPointsDataSpeedPts(
 			CAgilityBookDoc* pDoc,
 			ARBConfigVenuePtr inVenue,
+			ARBConfigDivisionPtr inDiv,
 			int inPts);
 
 	virtual wxString OnNeedText(int inCol) const;
@@ -396,6 +397,7 @@ public:
 
 protected:
 	ARBConfigVenuePtr m_Venue;
+	ARBConfigDivisionPtr m_Div;
 	int m_Pts;
 };
 typedef std::tr1::shared_ptr<CPointsDataSpeedPts> CPointsDataSpeedPtsPtr;
