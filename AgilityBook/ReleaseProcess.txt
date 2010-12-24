@@ -73,23 +73,17 @@ Create the files to be distributed (make sure you archive them too)
 - Readme1st.vn.n.n.n.txt
   - Copy Misc/Instructions.txt to Readme1st.vn.n.n.n.txt and modify [if needed]
 
-In SourceForge, enter the File Releases section in Admin.
-- At the bottom of the page, 'Add Release' to 'agilitybook' package.
-- Enter all necessary information.
+SourceForge:
 - Upload all files (https://sourceforge.net/projects/agilitybook/files/)
   - Readme1st.vn.n.n.n.txt
   - AgilityBook-n_n_n_n-src.zip
   - AgilityBook-n_n_n_n-win.zip
   - AgilityBook-n_n_n_n-x64.zip
   - AgilityBook-n_n_n_n-mac.dmg
-- Refresh the web page with the button in Step 2.
-- Select the files and press the button again.
-- Update all the fields in Step 3.
-- Done.
+- Set default file information (sets up file to auto-download)
 
 Web Site:
 - Upload zip files (not src) to files/
-- Delete old zip files.
 - Update "$fileversion" and "$fileVerNo" in func.php
   - Login to php(mysql) http://agilityrecordbook.com/phpAdmin/main.php
   - Export columns as 'Excel 2000'
@@ -102,6 +96,8 @@ Web Site:
   - Update DTD
   - Update bugs.php
 - Push all updated files to server.
+- Verify downloads are good.
+- Delete old zip files.
 
 In Yahoo
 - Note: Files are no longer released on Yahoo (as of v1.8)
