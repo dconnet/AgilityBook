@@ -21,6 +21,7 @@ Command line options
    ("" to suppress)
 
 Revision History
+2010-12-24 DRC Oops, Using NeverOverwrite breaks on upgrade.
 2010-12-23 DRC Minor tweak to change type51CA+Seq to SetProperty element.
 2010-11-19 DRC Added NeverOverwrite to Lang3 registry setting.
 2010-11-16 DRC Put supported languages into a foreach loop.
@@ -58,6 +59,21 @@ Revision History
 	<Icon Id="IconAgilityBook.ico" SourceFile="..\..\..\src\win\res\AgilityBook.ico" />
 
 	<Property Id="AppName" Value="Agility Record Book" />
+	<!--
+	I forgot - using the NeverOverwrite (added 11/19/2010) causes issues at
+	upgrade. During costing, the entry is seen, hence marked for not adding.
+	But RemoveExistingProducts then takes it out. So turn that off, get
+	the previous value and use that to set the registry.
+	-->
+	<Property Id="LANG3" Value="!(loc.Lang3)">
+		<RegistrySearch
+			Id="regLang3"
+			Root="HKCU"
+			Key="Software\[Manufacturer]\[AppName]\Settings"
+			Name="Lang3"
+			Type="raw"
+			Win64="$(var.Win64)" />
+	</Property>
 
 	<Property Id="ARPCOMMENTS" Value="!(loc.Comments)" />
 	<Property Id="ARPCONTACT" Value="David Connet" />
@@ -173,7 +189,6 @@ Revision History
 		<Component
 			Id="C_RegistryEntries"
 			Guid="B5864F95-CB30-41B0-81F6-2E672423482C"
-			NeverOverwrite="yes"
 			Win64="$(var.Win64)">
 			<!--
 			We only create (not remove) since none of the other registry
@@ -188,7 +203,7 @@ Revision History
 					KeyPath="yes"
 					Name="Lang3"
 					Type="string"
-					Value="!(loc.Lang3)" />
+					Value="[LANG3]" />
 			</RegistryKey>
 		</Component>
 

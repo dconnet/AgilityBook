@@ -1,3 +1,7 @@
+12/24/2010: v2.2.6.<in development>
+- Bug fixes:
+  - Upgrading from older version improperly clears the language setting.
+
 12/24/2010: v2.2.5.2918
 - Bumped Configuration v30:
   - Added new USDAA International classes (Std/Jmp).
