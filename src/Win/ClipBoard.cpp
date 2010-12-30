@@ -315,9 +315,13 @@ bool CClipboardDataWriter::AddData(CClipboardDataTable& inData)
 
 bool CClipboardDataWriter::CommitData()
 {
+	bool bOk = false;
 	if (!m_Object)
-		return false;
-	wxTheClipboard->SetData(m_Object);
+		return bOk;
+	if (wxTheClipboard->SetData(m_Object))
+		bOk = true;
+	else
+		delete m_Object;
 	m_Object = NULL;
-	return true;
+	return bOk;
 }
