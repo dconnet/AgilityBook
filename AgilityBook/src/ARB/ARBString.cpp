@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-12-30 DRC Fix a memory leak when transforming a stream.
  * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-30 DRC Remove Convert and replaced with tstringA/etc
@@ -67,16 +68,17 @@ wxString tstringUtil::TString(std::string const& inStr)
 
 std::string tstringUtil::tstringA(wxMemoryOutputStream const& inStr)
 {
+	std::string str;
 	if (inStr.IsOk())
 	{
 		wxFileOffset len = inStr.GetLength();
 		char* buffer = new char[len+1];
 		inStr.CopyTo(buffer, len);
 		buffer[len] = 0;
-		return std::string(buffer, len);
+		str = std::string(buffer, len);
+		delete [] buffer;
 	}
-	else
-		return std::string();
+	return str;
 }
 
 

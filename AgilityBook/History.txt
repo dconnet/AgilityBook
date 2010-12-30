@@ -2,6 +2,7 @@
 - Bug fixes:
   - Upgrading from older version improperly clears the language setting.
   - After copying/deleting runs, update multi-Q status.
+  - Fixed a memory leak when copying items in the tree view.
 
 12/24/2010: v2.2.5.2918
 - Bumped Configuration v30:
