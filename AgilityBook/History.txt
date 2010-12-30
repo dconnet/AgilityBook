@@ -1,6 +1,7 @@
-12/24/2010: v2.2.6.<in development>
+12/30/2010: v2.2.6.<in development>
 - Bug fixes:
   - Upgrading from older version improperly clears the language setting.
+  - After copying/deleting runs, update multi-Q status.
 
 12/24/2010: v2.2.5.2918
 - Bumped Configuration v30:
