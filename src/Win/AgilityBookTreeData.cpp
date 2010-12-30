@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2010-12-30 DRC After copying/deleting runs, update multi-Q status.
  * @li 2010-12-05 DRC DOB can be invalid (on import). Don't show in tree.
  * @li 2010-01-02 DRC Fix initialization of date for a new run.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -463,6 +464,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 					if (bOk)
 					{
+						pTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
 						CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 						m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 					}
@@ -513,6 +515,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						}
 						if (bOk)
 						{
+							pNewTrial->SetMultiQs(m_pTree->GetDocument()->Book().GetConfig());
 							CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
 							m_pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 						}
@@ -1354,9 +1357,11 @@ bool CAgilityBookTreeDataRun::OnCmd(
 			if (GetId().IsOk() && GetTrial()->GetRuns().DeleteRun(m_pRun))
 			{
 				CAgilityBookDoc* pDoc = m_pTree->GetDocument();
+				ARBDogTrialPtr pTrial = GetTrial();
 				// Delete() will cause this object to be deleted.
 				m_pTree->Delete(GetId());
 				bModified = true;
+				pTrial->SetMultiQs(pDoc->Book().GetConfig());
 				CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW);
 				pDoc->UpdateAllViews(NULL, &hint);
 			}
