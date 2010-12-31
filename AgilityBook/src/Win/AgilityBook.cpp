@@ -372,8 +372,6 @@ bool CAgilityBookApp::OnInit()
 	frame->SetSize(x, y, width, height);
 	frame->DragAcceptFiles(true);
 
-	SetTopWindow(frame);
-
 	// Should we open the last open file?
 	if (filename.empty())
 	{
