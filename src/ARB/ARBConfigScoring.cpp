@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-01-08 DRC Added test around a debug message.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
  * @li 2006-12-24 DRC When finding events, only insert it once.
@@ -684,7 +685,9 @@ bool ARBConfigScoringList::FindEvent(
 			// Umm, this means they have items with overlapping ranges...
 			// Which may occur when creating the methods.
 #ifdef _DEBUG
-			wxLogWarning(wxT("FindEvent: Overlapping date ranges"));
+			// If date is not valid, we will have multiple items.
+			if (inDate.IsValid())
+				wxLogWarning(wxT("FindEvent: Overlapping date ranges"));
 #endif
 			pEvent = *(items.begin());
 		}

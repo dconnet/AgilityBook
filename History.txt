@@ -1,8 +1,19 @@
-12/30/2010: v2.2.6.<in development>
+1/8/2011: v2.2.6.<in development>
+- New features / Enhancements:
+  - Fix importing to group runs on consecutive days into one trial.
+    Note, if runs are imported as "day1, day3, day2",
+    they will not be grouped in 1 trial.
 - Bug fixes:
   - Upgrading from older version improperly clears the language setting.
   - After copying/deleting runs, update multi-Q status.
   - Fixed a memory leak when copying items in the tree view.
+  - Fixed text export:
+    - Columns didn't always line up (which broke re-importing).
+    - File was written in the wrong format (unicode instead of utf8).
+  - Fixed import:
+    - Direct import from Excel was not parsing dates properly. (This was due
+      to how Excel exported the date)
+    - Fix trial sorting (honor user selection).
 
 12/24/2010: v2.2.5.2918
 - Bumped Configuration v30:
