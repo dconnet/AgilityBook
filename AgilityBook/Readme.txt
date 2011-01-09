@@ -41,6 +41,9 @@ Make sure WXWIN is set to wxWidgets root directory.
 -[win]- src/msw/stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
     directory from the appdir, which causes problems.
+-[win]- src/msw/ole/automtn.cpp:
+  - Line 716: Move to after date.Set call.
+  [This probably applies to all prior versions of wx, just found in 2.8.11]
 
 === Changes to 2.8.10:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:

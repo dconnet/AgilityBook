@@ -1,4 +1,6 @@
-1/8/2011: v2.2.6.<in development>
+1/9/2011: v2.2.6.<in development>
+- Bumped Configuration v31:
+  - Added AKC T2B official start date.
 - New features / Enhancements:
   - Fix importing to group runs on consecutive days into one trial.
     Note, if runs are imported as "day1, day3, day2",
@@ -12,7 +14,7 @@
     - File was written in the wrong format (unicode instead of utf8).
   - Fixed import:
     - Direct import from Excel was not parsing dates properly. (This was due
-      to how Excel exported the date)
+      to how Excel exported the date[wx2.9]. Fixed bug in date import in wx2.8.)
     - Fix trial sorting (honor user selection).
 
 12/24/2010: v2.2.5.2918
