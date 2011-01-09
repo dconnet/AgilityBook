@@ -11,6 +11,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-01-08 DRC Fixed export (was writing unicode instead of utf8)
+ *                    Also columns didn't always line up.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-24 DRC Removed (unused) define to export by array.
  * @li 2009-07-14 DRC Fixed group box creation order.
@@ -568,8 +570,13 @@ void CWizardExport::UpdatePreview()
 								wxString data;
 								for (long idx = 0; idx < static_cast<long>(columns[idxType].size()); ++idx)
 								{
+									// Note: All columns must have data written
+									// or export columns won't line up.
 									switch (columns[idxType][idx])
 									{
+									default:
+										data += AddPreviewData(iLine, idx, wxString());
+										break;
 									case IO_RUNS_REG_NAME:
 										data += AddPreviewData(iLine, idx, pDog->GetRegisteredName());
 										break;
@@ -656,6 +663,10 @@ void CWizardExport::UpdatePreview()
 											{
 												data += AddPreviewData(iLine, idx, ARBDouble::ToString(yps, 3));
 											}
+											else
+											{
+												data += AddPreviewData(iLine, idx, wxString());
+											}
 										}
 										break;
 									case IO_RUNS_YPS:
@@ -664,6 +675,10 @@ void CWizardExport::UpdatePreview()
 											if (pRun->GetScoring().GetYPS(CAgilityBookOptions::GetTableInYPS(), yps))
 											{
 												data += AddPreviewData(iLine, idx, ARBDouble::ToString(yps, 3));
+											}
+											else
+											{
+												data += AddPreviewData(iLine, idx, wxString());
 											}
 										}
 										break;
@@ -676,6 +691,10 @@ void CWizardExport::UpdatePreview()
 												str << ob;
 												data += AddPreviewData(iLine, idx, str);
 											}
+											else
+											{
+												data += AddPreviewData(iLine, idx, wxString());
+											}
 										}
 										break;
 									case IO_RUNS_OPS:
@@ -684,6 +703,10 @@ void CWizardExport::UpdatePreview()
 											if (pRun->GetScoring().GetObstaclesPS(CAgilityBookOptions::GetTableInYPS(), ops))
 											{
 												data += AddPreviewData(iLine, idx, ARBDouble::ToString(ops, 3));
+											}
+											else
+											{
+												data += AddPreviewData(iLine, idx, wxString());
 											}
 										}
 										break;
@@ -696,6 +719,10 @@ void CWizardExport::UpdatePreview()
 											{
 												double faults = pRun->GetScoring().GetCourseFaults() + pRun->GetScoring().GetTimeFaults(pScoring);
 												data += AddPreviewData(iLine, idx, ARBDouble::ToString(faults, 3));
+											}
+											else
+											{
+												data += AddPreviewData(iLine, idx, wxString());
 											}
 										}
 										break;
@@ -808,6 +835,10 @@ void CWizardExport::UpdatePreview()
 										|| ARB_Q::eQ_NQ == pRun->GetQ())
 										{
 											data += AddPreviewData(iLine, idx, ARBDouble::ToString(pRun->GetScore(pScoring)));
+										}
+										else
+										{
+											data += AddPreviewData(iLine, idx, wxString());
 										}
 										break;
 									case IO_RUNS_TITLE_POINTS:
@@ -1471,7 +1502,7 @@ bool CWizardExport::DoWizardFinish()
 					wxString line = GetListColumnText(m_ctrlPreview, i, 0);
 					line << wxT("\n");
 					std::string utf8(tstringUtil::tstringA(line));
-					output.Write(line.c_str(), line.length());
+					output.Write(utf8.c_str(), utf8.length());
 				}
 				output.Close();
 			}

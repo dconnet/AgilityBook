@@ -11,6 +11,9 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-01-08 DRC Fix importing dates directly from Excel (time was
+ *                    included). Fix importing to group runs into one trial.
+ *                    Fix trial sorting (honor user selection).
  * @li 2010-12-05 DRC Fixed crash on Mac when more columns in import data than
  *                    configured columns. Also, set DOB for a new dog.
  * @li 2010-10-30 DRC Implemented proper CSV exporting. Fix init radio check.
@@ -896,6 +899,21 @@ bool CWizardImport::DoWizardFinish()
 					case IO_RUNS_DATE:
 						{
 							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							if (!date.IsValid()
+							&& (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
+							|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle()))
+							{
+								// Excel mangles the date. It adds time too.
+								// Even if you enter "1/8/2011" in excel, it
+								// "knows" it's a date so when you access it via
+								// COM, you get "1/8/2011 12:00AM" even though
+								// you never see that in excel!
+								// [Not sure if OOcalc mangles too, leave this]
+								wxDateTime d;
+								wxString::const_iterator end;
+								if (d.ParseDateTime(entry[iCol], &end))
+									date.SetDate(d.GetYear(), d.GetMonth() + 1, d.GetDay());
+							}
 							if (date.IsValid())
 							{
 								pRun = CreateRun(pRun, pScoring);
@@ -1147,31 +1165,48 @@ bool CWizardImport::DoWizardFinish()
 							clubs.push_back(clubs[clubs.size()-1]);
 					}
 					ARBDogTrialPtr pTrial;
-					for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin(); iterTrial != pDog->GetTrials().end(); ++iterTrial)
+					// Loop two times - first time, try to match.
+					// Then stradle the date. We're trying to put multiple
+					// days into a single trial.
+					for (int iLoop = 0; !pTrial && iLoop < 2; ++iLoop)
 					{
-						ARBDogTrialPtr pTrialTmp = *iterTrial;
-						if (pTrialTmp->GetClubs().size() == venues.size()
-						&& pTrialTmp->GetLocation() == trialLocation
-						&& pRun->GetDate().isBetween(pTrialTmp->GetRuns().GetStartDate(), pTrialTmp->GetRuns().GetEndDate()))
+						for (ARBDogTrialList::iterator iterTrial = pDog->GetTrials().begin();
+							iterTrial != pDog->GetTrials().end();
+							++iterTrial)
 						{
-							bool bOk = true;
-							size_t idx = 0;
-							for (ARBDogClubList::iterator iterClub = pTrialTmp->GetClubs().begin(); iterClub != pTrialTmp->GetClubs().end(); ++iterClub)
+							ARBDogTrialPtr pTrialTmp = *iterTrial;
+							ARBDate startDate = pTrialTmp->GetRuns().GetStartDate();
+							ARBDate endDate = pTrialTmp->GetRuns().GetEndDate();
+							if (1 == iLoop)
 							{
-								ARBDogClubPtr pClub(ARBDogClub::New());
-								pClub->SetName(clubs[idx]);
-								pClub->SetVenue(venues[idx]);
-								if (*pClub != *(*(iterClub)))
+								--startDate;
+								++endDate;
+							}
+							if (pTrialTmp->GetClubs().size() == venues.size()
+							&& pTrialTmp->GetLocation() == trialLocation
+							&& pRun->GetDate().isBetween(startDate, endDate))
+							{
+								bool bOk = true;
+								size_t idx = 0;
+								for (ARBDogClubList::iterator iterClub = pTrialTmp->GetClubs().begin();
+									iterClub != pTrialTmp->GetClubs().end();
+									++iterClub)
 								{
-									bOk = false;
+									ARBDogClubPtr pClub(ARBDogClub::New());
+									pClub->SetName(clubs[idx]);
+									pClub->SetVenue(venues[idx]);
+									if (*pClub != *(*(iterClub)))
+									{
+										bOk = false;
+										break;
+									}
+									++idx;
+								}
+								if (bOk)
+								{
+									pTrial = pTrialTmp;
 									break;
 								}
-								++idx;
-							}
-							if (bOk)
-							{
-								pTrial = pTrialTmp;
-								break;
 							}
 						}
 					}
@@ -1180,7 +1215,7 @@ bool CWizardImport::DoWizardFinish()
 						// Couldn't find a trial, so make one.
 						pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 						pDog->GetTrials().AddTrial(pTrial);
-						pDog->GetTrials().sort(true);
+						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						for (size_t idx = 0; idx < venues.size(); ++idx)
 						{
 							pTrial->GetClubs().AddClub(clubs[idx], venues[idx]);
