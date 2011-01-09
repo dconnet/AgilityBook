@@ -910,8 +910,12 @@ bool CWizardImport::DoWizardFinish()
 								// you never see that in excel!
 								// [Not sure if OOcalc mangles too, leave this]
 								wxDateTime d;
+#if wxCHECK_VERSION(2, 9, 2)
 								wxString::const_iterator end;
 								if (d.ParseDateTime(entry[iCol], &end))
+#else
+								if (d.ParseDateTime(entry[iCol]))
+#endif
 									date.SetDate(d.GetYear(), d.GetMonth() + 1, d.GetDay());
 							}
 							if (date.IsValid())
