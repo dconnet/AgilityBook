@@ -171,6 +171,10 @@
 #include "wx/wxchar.h"
 #include "wx/wx.h"
 #endif
+#ifdef __WXMSW__
+// MS debugging macros
+#include <wx/msw/msvcrt.h>
+#endif
 // ARB was developed against v2.8.10 - anything earlier is not supported.
 #include <wx/version.h>
 #if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER == 0
