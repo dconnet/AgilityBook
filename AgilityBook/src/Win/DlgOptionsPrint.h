@@ -18,6 +18,7 @@
  */
 
 #include "AgilityBookOptions.h"
+#include <wx/cmndata.h>
 
 
 class CDlgOptionsPrint : public wxPanel
