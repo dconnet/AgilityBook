@@ -1,6 +1,7 @@
-1/9/2011: v2.2.6.<in development>
+1/13/2011: v2.2.6.<in development>
 - Bumped Configuration v31:
   - Added AKC T2B official start date.
+  - Added USDAA Veterans division.
 - New features / Enhancements:
   - Fix importing to group runs on consecutive days into one trial.
     Note, if runs are imported as "day1, day3, day2",
