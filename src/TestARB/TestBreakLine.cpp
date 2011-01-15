@@ -18,6 +18,10 @@
 
 #include "BreakLine.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 void GetFields(std::vector<wxString>& fields)
 {

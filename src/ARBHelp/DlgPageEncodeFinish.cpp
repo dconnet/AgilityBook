@@ -21,6 +21,10 @@
 #include "../Win/Widgets.h"
 #include "DlgARBHelp.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	: wxWizardPageSimple(pParent)

@@ -25,6 +25,10 @@
 #include <wx/url.h>
 #include <wx/valgen.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)

@@ -116,6 +116,10 @@
 #include "res/CalPlan.xpm"
 #include "res/CalTentative.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 #ifdef WIN32
 // You can currently only enable this on Win32. I directly use the win32
 // apis to play the metafile into a dc. In theory, I could use wxWidgets

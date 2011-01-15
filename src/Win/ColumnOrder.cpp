@@ -23,6 +23,10 @@
 #include "RegItems.h"
 #include <wx/config.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 // CColumnOrder
 //  m_order is a list of the column numbers in the order of importance

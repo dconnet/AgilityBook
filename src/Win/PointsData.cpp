@@ -45,6 +45,10 @@
 #include "FilterOptions.h"
 #include <wx/utils.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 static const wxString s_TableHeader(wxT("<table border=\"2\" cellspacing=\"0\" cellpadding=\"2\">"));

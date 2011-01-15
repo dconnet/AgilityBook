@@ -30,6 +30,10 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 /*
 // Roman number conversion (modified from C# code on CodeProject)

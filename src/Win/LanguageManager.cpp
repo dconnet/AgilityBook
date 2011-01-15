@@ -27,6 +27,10 @@
 #include <wx/html/helpctrl.h>
 #include <wx/stdpaths.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CLanguageManager::CLanguageManager()
 	: m_dirLang()

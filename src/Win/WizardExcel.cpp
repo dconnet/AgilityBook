@@ -36,6 +36,10 @@
 #include <wx/msw/ole/automtn.h>
 #endif //HAS_AUTOMATION
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 // General note about data and formulas - in both Excel and Calc writing
 // individual cells auto-formats (formulas work) and writing of arrays
 // acts like raw data - even if you call the put_Formula method.

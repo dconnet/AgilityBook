@@ -33,6 +33,10 @@
 #include <wx/datectrl.h>
 #include <wx/listctrl.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgConfigMultiQ, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigMultiQ::OnOk)

@@ -34,6 +34,10 @@
 #include <wx/mstream.h>
 #include <wx/wfstream.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 #define CAL_VER_MAJOR		2
 #define CAL_VER_MINOR		2
 #define CAL_VER_DOT			0

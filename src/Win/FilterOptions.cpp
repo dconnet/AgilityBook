@@ -29,6 +29,10 @@
 #include "RegItems.h"
 #include <wx/config.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 static void FilterVenue(
 		wxString inVenue,

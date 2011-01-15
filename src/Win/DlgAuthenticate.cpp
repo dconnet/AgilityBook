@@ -23,6 +23,10 @@
 #include <wx/statbox.h>
 #include <wx/valgen.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgAuthenticate::CDlgAuthenticate(
 		wxString const& userName,

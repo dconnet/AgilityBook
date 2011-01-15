@@ -25,6 +25,10 @@
 #include "ARBDogReferenceRun.h"
 #include "ARBDogRun.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 // The combobox for the Q on a Mac is just too small.
 #ifdef __WXMAC__

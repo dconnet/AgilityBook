@@ -50,6 +50,10 @@
 #include "TabView.h"
 #include <wx/dcbuffer.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 #define WEEKS_PER_PAGE		6
 #define DAY_TEXT_INSET		2
 

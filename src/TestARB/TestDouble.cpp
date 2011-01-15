@@ -19,6 +19,10 @@
 
 #include "ARBTypes.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 static wxString FormNumber(wxString const& d1, wxString const& dec, wxString const& d2)
 {

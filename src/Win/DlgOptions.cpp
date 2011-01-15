@@ -32,6 +32,10 @@
 #include "DlgOptionsProgram.h"
 #include <wx/notebook.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgOptions, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgOptions::OnOk)

@@ -22,6 +22,10 @@
 #include <wx/cmdline.h>
 #include <wx/config.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 class CARBUpdaterApp : public wxApp
 {

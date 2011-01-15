@@ -33,6 +33,10 @@
 #include <wx/colordlg.h>
 #include <wx/valgen.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL)

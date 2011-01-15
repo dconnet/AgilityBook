@@ -28,6 +28,10 @@
 #include <wx/stdpaths.h>
 #include "TestReporterStdout.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 #ifdef _MSC_VER
 #if _MSC_VER >= 1300 && _MSC_VER < 1400
 #define UT_NAME			"UnitTest++.VC7"

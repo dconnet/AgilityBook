@@ -23,6 +23,10 @@
 #include <wx/valgen.h>
 #include <wx/valtext.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 class CLongValidator : public wxValidator

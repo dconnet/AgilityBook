@@ -18,6 +18,10 @@
 
 #include "ARBMsgDigest.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 SUITE(TestMsgDigest)
 {

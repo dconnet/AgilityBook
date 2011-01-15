@@ -21,6 +21,10 @@
 #include "ARBStructure.h"
 #include "Element.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 static ElementNodePtr CreateNode()
 {

@@ -21,6 +21,10 @@
 #include "AgilityBook.h"
 #include "Widgets.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgFind::CDlgFind(
 		IFindCallback& callback,

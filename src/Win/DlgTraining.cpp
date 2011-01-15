@@ -28,6 +28,10 @@
 #include "Widgets.h"
 #include <wx/datectrl.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgTraining, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgTraining::OnOk)

@@ -70,6 +70,10 @@
 #include "res/title-visible-have.xpm"
 #include "res/title-visible.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 static struct

@@ -62,6 +62,9 @@
 #include "res/CalPlan.xpm"
 #endif
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // Find

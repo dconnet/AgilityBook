@@ -32,6 +32,10 @@
 #include "../Win/res/AgilityBook32.xpm"
 #include "../Win/res/AgilityBook48.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgARBHelp::CDlgARBHelp()
 	: wxWizard(NULL, wxID_ANY, wxT("Agility Record Book Helper"), wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
