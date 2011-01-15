@@ -26,6 +26,10 @@
 #include "MainFrm.h"
 #include <wx/config.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CAgilityBookMenu::CAgilityBookMenu()
 	: m_Frame(NULL)

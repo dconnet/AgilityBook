@@ -31,6 +31,10 @@
 #include <wx/platinfo.h>
 #include <wx/stdpaths.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Dump registry information

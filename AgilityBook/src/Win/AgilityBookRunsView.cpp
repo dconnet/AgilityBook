@@ -66,6 +66,9 @@
 #include "res/AgilityBook16.xpm"
 #include "res/crcd.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CAgilityBookRunsViewData

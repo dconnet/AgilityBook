@@ -25,6 +25,10 @@
 #include "ARBTypes.h"
 #include "VersionNumber.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CVersionNum::CVersionNum(bool bAutoLoad)
 	: m_Valid(false)

@@ -76,6 +76,10 @@
 #include "PointsData.h"
 #include "Print.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 // Columns:
 // 1: Venue

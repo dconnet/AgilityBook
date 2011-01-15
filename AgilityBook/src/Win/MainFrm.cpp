@@ -57,6 +57,10 @@
 #include "res/toolbarPrint.xpm"
 #include "res/toolbarAbout.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_CLOSE(CMainFrame::OnClose)

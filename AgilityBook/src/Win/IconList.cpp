@@ -37,6 +37,10 @@
 #include "res/venue-ukc.xpm"
 #include "res/venue-usdaa.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CIconList::CIconList()
 	: wxImageList(16, 16)

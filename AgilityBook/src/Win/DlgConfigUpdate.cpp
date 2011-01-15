@@ -29,6 +29,10 @@
 #include "Widgets.h"
 #include <wx/filedlg.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgConfigUpdate, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgConfigUpdate::OnOk)

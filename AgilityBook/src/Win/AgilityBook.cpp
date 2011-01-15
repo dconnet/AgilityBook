@@ -54,6 +54,10 @@
 #include <wx/utils.h>
 #include <wx/xrc/xmlres.h>	// XRC XML resources
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 IMPLEMENT_APP(CAgilityBookApp)
 

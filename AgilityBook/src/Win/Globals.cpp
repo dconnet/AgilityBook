@@ -23,6 +23,10 @@
 #include "Widgets.h"
 #include <wx/tokenzr.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 wxWindow* FindWindowInSizer(
 		wxSizer* sizer,

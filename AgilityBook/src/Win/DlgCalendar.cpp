@@ -39,6 +39,10 @@
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgCalendar, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgCalendar::OnOk)

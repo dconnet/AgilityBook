@@ -22,6 +22,10 @@
 #include "AgilityBook.h"
 #include "Validators.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgFault::CDlgFault(
 		std::set<wxString>& inFaults,

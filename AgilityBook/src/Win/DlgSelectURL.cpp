@@ -22,6 +22,10 @@
 #include "Validators.h"
 #include "Widgets.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CDlgSelectURL::CDlgSelectURL(
 		wxString const& name,

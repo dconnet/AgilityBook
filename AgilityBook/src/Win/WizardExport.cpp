@@ -50,6 +50,10 @@
 #include <wx/valgen.h>
 #include <wx/wfstream.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 IMPLEMENT_CLASS(CWizardExport, wxWizardPageSimple)
 

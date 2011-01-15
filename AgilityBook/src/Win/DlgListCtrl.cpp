@@ -50,6 +50,10 @@
 #include "res/CalEntered.xpm"
 #include "res/CalEnteredTentative.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 class CDlgListCtrlData : public CListData
 {

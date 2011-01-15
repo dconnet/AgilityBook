@@ -40,6 +40,10 @@
 #include "res/calendar.xpm"
 #include "res/training.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 IMPLEMENT_DYNAMIC_CLASS(CTabView, wxView)
 

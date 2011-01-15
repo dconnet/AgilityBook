@@ -19,6 +19,10 @@
 #include "stdafx.h"
 #include "RichEditCtrl2.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 CRichEditCtrl2::CRichEditCtrl2(
 		wxWindow* parent,

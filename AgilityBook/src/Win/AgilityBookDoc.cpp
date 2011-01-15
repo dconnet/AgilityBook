@@ -92,6 +92,10 @@
 #include <wx/file.h>
 #include <wx/filefn.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 IMPLEMENT_DYNAMIC_CLASS(CAgilityBookDoc, wxDocument)
 

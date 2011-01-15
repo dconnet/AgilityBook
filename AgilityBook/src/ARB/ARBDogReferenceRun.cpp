@@ -27,8 +27,8 @@
 #include "ARBLocalization.h"
 #include "Element.h"
 
-#if defined(_MFC_VER) && defined(_DEBUG)
-#define new DEBUG_NEW
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

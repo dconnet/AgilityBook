@@ -23,6 +23,10 @@
 #include "ComboBoxes.h"
 #include <wx/datectrl.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 IMPLEMENT_CLASS(CGenericValidator, wxValidator)
 IMPLEMENT_CLASS(CTrimValidator, wxGenericValidator)

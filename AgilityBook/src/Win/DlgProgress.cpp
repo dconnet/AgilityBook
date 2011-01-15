@@ -22,6 +22,10 @@
 #include "Globals.h"
 #include <wx/utils.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 // I used the wxProgressDialog as a guide
 

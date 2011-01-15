@@ -50,6 +50,10 @@
 #include "res/NoteAdded.xpm"
 #include "res/NoteNoteAdded.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 CDlgInfoNote::NameInfo::NameInfo()

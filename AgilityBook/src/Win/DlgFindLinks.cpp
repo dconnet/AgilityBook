@@ -35,6 +35,10 @@
 #include "res/CalPlan.xpm"
 #include "res/CalTentative.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 class CDlgFindLinksData : public CListData

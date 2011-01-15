@@ -31,6 +31,10 @@
 
 #include "res/AgilityBook32.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 // Add a focus rect to the control
 class CHyperlinkCtrl : public wxHyperlinkCtrl

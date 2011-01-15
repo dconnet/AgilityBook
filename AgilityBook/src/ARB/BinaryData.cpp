@@ -24,8 +24,8 @@
 #include <wx/wfstream.h>
 #include <wx/zstream.h>
 
-#if defined(_MFC_VER) && defined(_DEBUG)
-#define new DEBUG_NEW
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
 #endif
 
 #define CHUNK	131072

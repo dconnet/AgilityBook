@@ -25,6 +25,10 @@
 #include "WizardImport.h"
 #include "WizardStart.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 #ifdef WIN32
 #pragma warning( push )

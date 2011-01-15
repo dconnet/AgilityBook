@@ -24,6 +24,10 @@
 #include "Validators.h"
 #include "Widgets.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgPartner, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgPartner::OnOk)

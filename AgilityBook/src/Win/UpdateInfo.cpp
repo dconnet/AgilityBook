@@ -114,6 +114,15 @@
 #define USE_LOCAL
 #endif
 
+#ifdef USE_LOCAL
+#include <wx/stdpaths.h>
+#include <wx/textfile.h>
+#endif
+
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 // These are the strings we recognize as platforms.
@@ -156,8 +165,6 @@ static wxString UpdateFile()
 
 
 #ifdef USE_LOCAL
-#include <wx/stdpaths.h>
-#include <wx/textfile.h>
 static wxString FILENAME()
 {
 #ifdef WIN32

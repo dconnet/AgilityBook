@@ -27,6 +27,10 @@
 #include <algorithm>
 #include <wx/listctrl.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgCalendarQueryDetail, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgCalendarQueryDetail::OnOk)

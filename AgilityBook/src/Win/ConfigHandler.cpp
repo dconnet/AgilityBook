@@ -24,6 +24,10 @@
 #include <wx/mstream.h>
 #include <wx/stdpaths.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 bool CConfigHandler::LoadWxFile(
 		wxString const& zipFile,

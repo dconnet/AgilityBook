@@ -172,16 +172,6 @@
 #include "wx/wx.h"
 #endif
 
-#ifdef __WXMSW__
-// Turns out in VC9, this breaks std::set<wxString> usage.
-//  error C2061: syntax error : identifier '_Wherenode'
-// Works fine in VC10.
-#if _MSC_VER >= 1600
-// MS debugging macros
-#include <wx/msw/msvcrt.h>
-#endif
-#endif
-
 // ARB was developed against v2.8.10 - anything earlier is not supported.
 #include <wx/version.h>
 #if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER == 0

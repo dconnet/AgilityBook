@@ -31,6 +31,10 @@
 #include "Widgets.h"
 #include <set>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgReferenceRun, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgReferenceRun::OnOk)

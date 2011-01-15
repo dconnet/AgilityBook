@@ -19,6 +19,10 @@
 
 #include <wx/tokenzr.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 size_t BreakLine(
 		wxChar inSep,

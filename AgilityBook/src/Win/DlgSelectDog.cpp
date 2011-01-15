@@ -28,6 +28,10 @@
 #include <algorithm>
 #include <wx/config.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 BEGIN_EVENT_TABLE(CDlgSelectDog, wxDialog)
 	EVT_BUTTON(wxID_OK, CDlgSelectDog::OnOk)

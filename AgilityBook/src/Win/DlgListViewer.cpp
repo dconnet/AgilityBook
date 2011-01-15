@@ -40,6 +40,10 @@
 #include "ListCtrl.h"
 #include "FilterOptions.h"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 /////////////////////////////////////////////////////////////////////////////
 
 // Run/MQ are shared in the DataExisting class, hence they need to use

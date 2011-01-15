@@ -32,6 +32,10 @@
 #include <wx/object.h>
 #include <wx/splitter.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 // Default splitter widths
 #define DEFAULT_RUN_WIDTH	200L
 #define MIN_RUN_WIDTH		50L

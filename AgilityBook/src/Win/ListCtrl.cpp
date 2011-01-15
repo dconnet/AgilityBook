@@ -40,6 +40,10 @@
 #include "res/HdrUp.xpm"
 #include "res/unchecked.xpm"
 
+#ifdef __WXMSW__
+#include <wx/msw/msvcrt.h>
+#endif
+
 
 IMPLEMENT_CLASS(CReportListCtrl, CListCtrl)
 
