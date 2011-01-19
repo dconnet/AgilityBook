@@ -201,7 +201,7 @@ def main():
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
-		return
+		return 1
 	for o, a in opts:
 		if '-e' == o:
 			compileIt = False
@@ -219,16 +219,16 @@ def main():
 
 	if not os.environ.has_key('WXWIN'):
 		print 'ERROR: WXWIN environment variable is not set'
-		return
+		return 1
 
 	if not os.access(os.environ['WXWIN'], os.F_OK):
 		print 'ERROR: ' + os.environ['WXWIN'] + ' doesn\'t exist'
-		return
+		return 1
 
 	wxInclude = os.environ['WXWIN'] + r'\include\wx\version.h'
 	if not os.access(wxInclude, os.F_OK):
 		print 'ERROR: ' + wxInclude + ' doesn\'t exist'
-		return
+		return 1
 	version = getversion(wxInclude)
 	if version[0] == '2' and version[1] == '8':
 		hasPrefix = False
@@ -237,11 +237,11 @@ def main():
 		if not AddCompiler(compilers, c):
 			print 'Unknown compiler:', c
 			print 'Usage:', __doc__
-			return
+			return 1
 
 	if 0 == len(compilers):
 		print 'Usage:', __doc__
-		return
+		return 1
 
 	vendor = ''
 	if not useStatic:
@@ -395,5 +395,7 @@ def main():
 		proc.wait()
 		os.remove(tmpfile)
 
+	return 0
 
-main()
+
+sys.exit(main())

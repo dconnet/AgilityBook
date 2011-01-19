@@ -331,7 +331,7 @@ def main():
 		i += 1
 	if error:
 		print 'Usage:', __doc__
-		return
+		return 1
 
 	if b32 + b64 == 0:
 		b32 = 1
@@ -362,5 +362,7 @@ def main():
 			installs = 'VC' + vcver + ',x64'
 		print >>codes, 'v' + ver4Dot + ',' + d + ',' + productId + ',' + UpgradeCode + ',' + installs
 
+	return 0
 
-main()
+
+sys.exit(main())

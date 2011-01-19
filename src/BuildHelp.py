@@ -43,7 +43,7 @@ def RunCommand(cmd):
 def main():
 	if len(sys.argv) != 3 and len(sys.argv) != 4:
 		print >>sys.stderr, "Usage: ", __doc__
-		return
+		return 1
 
 	bChmFile = 0
 	bin = ""
@@ -53,7 +53,7 @@ def main():
 		bin = "..\\bin\\" + sys.argv[2]
 	else:
 		print >>sys.stderr, "Usage: ", __doc__
-		return
+		return 1
 	if len(sys.argv) == 4 and sys.argv[3] == "win":
 		bChmFile = 1
 
@@ -67,13 +67,13 @@ def main():
 		bin = bin + "\\" + sys.argv[1]
 	else:
 		print >>sys.stderr, "Usage: ", __doc__
-		return
+		return 1
 
 	parseHeader = bin + "\\ParseResourceHeader.exe"
 
 	if not os.access(parseHeader, os.F_OK):
 		print >>sys.stderr, "Error: " + parseHeader + " is missing"
-		return
+		return 1
 
 	print "Build Help file..."
 
@@ -111,5 +111,7 @@ def main():
 					os.mkdir(dir + '\\lang\\' + langdir)
 				RunCommand(r'copy /b/y Help\AgilityBook-' + langdir + r'.htb ' + dir + '\\lang\\' + langdir + r'\AgilityBook.htb')
 
+	return 0
 
-main()
+
+sys.exit(main())

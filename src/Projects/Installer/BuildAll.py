@@ -97,7 +97,7 @@ def GetVSDir(version):
 def main():
 	if len(sys.argv) > 3:
 		print 'Usage:', __doc__
-		return
+		return 1
 
 	global ProgramFiles, ProgramFiles64
 	bit64on64 = False
@@ -137,7 +137,7 @@ def main():
 				buildVC9 = False
 		if error:
 			print 'Usage:', __doc__
-			return
+			return 1
 
 	if not updateBuildNumber:
 		os.environ['SETBUILDNUMBER_UPDATE'] = '-x'
@@ -171,7 +171,7 @@ def main():
 		setvcvars = vc9Base + r'\VC\vcvarsall.bat'
 		if not os.access(vc9Base, os.F_OK) or not os.access(setvcvars, os.F_OK):
 			print 'ERROR: "' + vc9Base + '" does not exist'
-			return
+			return 1
 		if clean:
 			RmMinusRF('../../../bin/VC9Win32')
 		remove(r'../VC9/bldWin32.txt')
@@ -183,7 +183,7 @@ def main():
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC9Win32/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
-			return
+			return 1
 		if clean:
 			RmMinusRF('../../../bin/VC9x64')
 		remove(r'../VC9/bldWin64.txt')
@@ -195,7 +195,7 @@ def main():
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC9x64/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
-			return
+			return 1
 
 	if buildVC10:
 		vc10Base = GetVSDir("10.0")
@@ -205,7 +205,7 @@ def main():
 			setvcvars = vc10Base + r'\VC\vcvarsall.bat'
 		if not os.access(vc10Base, os.F_OK) or not os.access(setvcvars, os.F_OK):
 			print 'ERROR: "' + vc10Base + '" does not exist'
-			return
+			return 1
 		if clean:
 			RmMinusRF('../../../bin/VC10Win32')
 		cmds = (
@@ -216,7 +216,7 @@ def main():
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC10Win32/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
-			return
+			return 1
 		if clean:
 			RmMinusRF('../../../bin/VC10x64')
 		if useVC10SDK:
@@ -241,7 +241,7 @@ def main():
 		RunCmds(cmds)
 		if not os.access('../../../bin/VC10x64/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
-			return
+			return 1
 
 
-main()
+sys.exit(main())
