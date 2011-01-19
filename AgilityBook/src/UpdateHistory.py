@@ -65,7 +65,7 @@ def main():
 	except getopt.error, msg:
 		errprint(msg)
 		errprint("Usage: ", __doc__)
-		return
+		return 1
 	for o, a in opts:
 		if "-h" == o:
 			bHelpfile = 1
@@ -75,7 +75,7 @@ def main():
 			webPath = a
 	if 0 != len(args):
 		errprint("Usage:", __doc__)
-		return
+		return 1
 
 	# Load the raw data.
 	data = {}
@@ -90,7 +90,7 @@ def main():
 		file.close()
 	except:
 		errprint("Error: Cannot read " + rawData)
-		return
+		return 1
 
 	if bHelpfile:
 		GenerateFile(data, r"Help\html\HistoryTemplate.html", r"Help\html\History.html")
@@ -98,4 +98,7 @@ def main():
 	if bWebfile:
 		GenerateFile(data, webPath + r"\template\templateHistory.php", webPath + r"\history.php")
 
-main()
+	return 0
+
+
+sys.exit(main())

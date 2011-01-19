@@ -47,7 +47,7 @@ def RunCommand(command, toastErr):
 def main():
 	if 5 != len(sys.argv):
 		print 'Usage:', __doc__
-		return
+		return 1
 	srcDir = string.strip(sys.argv[1])
 	executableDir = string.strip(sys.argv[2])
 	targetname = string.strip(sys.argv[3])
@@ -55,7 +55,7 @@ def main():
 
 	if not "Win32" == platform and not "x64" == platform and not "Mac" == platform:
 		print 'Unknown platform:', platform
-		return
+		return 1
 
 	# Create "TestARB.dat"
 	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
@@ -89,5 +89,7 @@ def main():
 		cmd = [os.path.join(executableDir, targetname)]
 		RunCommand(cmd, 0)
 
+	return 0
 
-main()
+
+sys.exit(main())

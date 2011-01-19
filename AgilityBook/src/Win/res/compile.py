@@ -55,13 +55,13 @@ def main():
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
-		return
+		return 1
 	for o, a in opts:
 		if '-d' == o:
 			bDebug = 1
 	if 2 != len(args):
 		print 'Usage:', __doc__
-		return
+		return 1
 
 	executableDir = args[0]
 	targetname = args[1]
@@ -100,4 +100,7 @@ def main():
 		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
 	zip.close()
 
-main()
+	return 0
+
+
+sys.exit(main())
