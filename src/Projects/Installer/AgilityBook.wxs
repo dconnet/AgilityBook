@@ -21,6 +21,7 @@ Command line options
    ("" to suppress)
 
 Revision History
+2011-01-18 DRC Update VersionNT checks to agree with how code is compiled.
 2010-12-24 DRC Oops, Using NeverOverwrite breaks on upgrade.
 2010-12-23 DRC Minor tweak to change type51CA+Seq to SetProperty element.
 2010-11-19 DRC Added NeverOverwrite to Lang3 registry setting.
@@ -94,9 +95,9 @@ Revision History
 
 	<!-- Launch Conditions -->
 <?if $(sys.BUILDARCH)=x64?>
-	<Condition Message="!(loc.On64NT)">VersionNT64</Condition>
+	<Condition Message="!(loc.On64NT)">VersionNT64&gt;=501</Condition>
 <?else?>
-	<Condition Message="!(loc.OnNT)">VersionNT</Condition>
+	<Condition Message="!(loc.OnNT)">VersionNT&gt;=500</Condition>
 <?endif?>
 
 	<!-- During beta, do not remove v1.
