@@ -42,6 +42,7 @@ def RunCommand(command, toastErr):
 		# Map stderr to stdout
 		p = subprocess.Popen(command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
 	ReadPipe(sys.stdout, p.stdout)
+	return p.returncode
 
 
 def main():
@@ -69,27 +70,30 @@ def main():
 		# 32bit on 32bit
 		if os.environ['PROCESSOR_ARCHITECTURE'] == "x86":
 			cmd = [os.path.join(executableDir, targetname + '.exe')]
-			RunCommand(cmd, 0)
+			return RunCommand(cmd, 0)
 		else:
 			print 'WARNING: Unable to run ' + platform + ' binary on ' + os.environ['PROCESSOR_ARCHITECTURE']
+			return 0
 
-	if "x64" == platform:
+	elif "x64" == platform:
 		# 64bit on 64bit
 		if os.getenv('PROCESSOR_ARCHITECTURE', '') == "AMD64":
 			cmd = [os.path.join(executableDir, targetname + '.exe')]
-			RunCommand(cmd, 0)
+			return RunCommand(cmd, 0)
 		# 64bit on Wow64 (32bit cmd shell spawned from msdev)
 		elif os.getenv('PROCESSOR_ARCHITEW6432', '') == "AMD64":
 			cmd = [os.path.join(executableDir, targetname + '.exe')]
-			RunCommand(cmd, 0)
+			return RunCommand(cmd, 0)
 		else:
 			print 'WARNING: Unable to run ' + platform + ' binary on ' + os.environ['PROCESSOR_ARCHITECTURE']
+			return 0
 	
-	if "Mac" == platform:
+	elif "Mac" == platform:
 		cmd = [os.path.join(executableDir, targetname)]
-		RunCommand(cmd, 0)
+		return RunCommand(cmd, 0)
 
-	return 0
+	print 'Unknown platform:', platform
+	return 1
 
 
 sys.exit(main())
