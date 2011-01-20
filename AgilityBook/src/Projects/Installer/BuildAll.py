@@ -68,6 +68,7 @@ def RunCmds(cmds):
 	proc = subprocess.Popen(filename)
 	proc.wait()
 	os.remove(filename)
+	return proc.returncode
 
 
 def GetRegString(hkey, path, value):
@@ -242,6 +243,8 @@ def main():
 		if not os.access('../../../bin/VC10x64/Release/AgilityBook.exe', os.F_OK):
 			print 'ERROR: Compile failed, bailing out'
 			return 1
+
+	return 0
 
 
 sys.exit(main())
