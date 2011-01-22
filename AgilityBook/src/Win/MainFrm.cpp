@@ -41,7 +41,7 @@
 #include "res/AgilityBook16.xpm"
 #include "res/AgilityBook32.xpm"
 #include "res/AgilityBook48.xpm"
-#include "res/AgilityBook128.xpm"
+#include "res/AgilityBook256.xpm"
 #include "res/toolbarNew.xpm"
 #include "res/toolbarOpen.xpm"
 #include "res/toolbarSave.xpm"
@@ -151,7 +151,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	icons.AddIcon(wxIcon(AgilityBook16_xpm));
 	icons.AddIcon(wxIcon(AgilityBook32_xpm));
 	icons.AddIcon(wxIcon(AgilityBook48_xpm));
-	icons.AddIcon(wxIcon(AgilityBook128_xpm));
+	icons.AddIcon(wxIcon(AgilityBook256_xpm));
 	SetIcons(icons);
 //#if wxUSE_HELP
 // Note: do not set help on the frame. Help will disable the min/max buttons.
