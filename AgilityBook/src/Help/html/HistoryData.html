@@ -1,11 +1,49 @@
 <ul type="circle">
 
+	<li><b><a name="v2.2.6">1/22/2011: v2.2.6</a></b>
+	<ul>
+		<li>Bumped Configuration v31
+		<ul type="disc">
+			<li>Added AKC T2B official start date, updated level (only one).</li>
+			<li>Added USDAA Veterans division.</li>
+		</li>
+		</ul>
+		<li>New features / Enhancements:
+		<ul type="disc">
+			<li>Fix importing to group runs on consecutive days into one trial.
+			Note, if runs are imported as "day1, day3, day2",
+			they will not be grouped in 1 trial.</li>
+		</ul>
+		</li>
+		<li>Bug fixes
+		<ul type="disc">
+			<li>Upgrading from older version improperly clears the language setting.</li>
+			<li>After copying/deleting runs, update multi-Q status.</li>
+			<li>Fixed text export:
+			<ul>
+				<li>Columns didn't always line up (which broke re-importing).</li>
+				<li>File was written in the wrong format (unicode instead of utf8).</li>
+			</ul>
+			</li>
+			<li>Fixed import:
+			<ul>
+				<li>Direct import from Excel was not parsing dates properly.
+				(This was due to how Excel exported the date[wx2.9].
+				Fixed bug in date import in wx2.8.)</li>
+				<li>Fix trial sorting (honor user selection).</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+
 	<li><b><a name="v2.2.5">12/24/2010: v2.2.5</a></b>
 	<ul>
 		<li>Bumped Configuration v30
 		<ul type="disc">
-		</ul>
 			<li>Added new USDAA International classes (Std/Jmp).</li>
+		</ul>
 		</li>
 		<li>Bug fixes
 		<ul type="disc">
@@ -16,17 +54,16 @@
 		</li>
 	</ul>
 	</li>
-
 	<li><b><a name="v2.2.4">11/7/2010: v2.2.4</a></b>
 	<ul>
 		<li>New features / Enhancements
 		<ul type="disc">
-		</ul>
 			<li>Allow 'space' to activate a hyperlink in the about dialog.</li>
 			<li>In the Assign Column dialog, add items after the current
 			selection, not at the end.</li>
 			<li>Make importing of program settings more tolerant of existing
 			column and filter settings.</li>
+		</ul>
 		</li>
 		<li>Bug fixes
 		<ul type="disc">
