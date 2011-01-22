@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-01-22 DRC Defer sorting of imported items until the end.
  * @li 2011-01-08 DRC Fix importing dates directly from Excel (time was
  *                    included). Fix importing to group runs into one trial.
  *                    Fix trial sorting (honor user selection).
@@ -790,6 +791,9 @@ bool CWizardImport::DoWizardFinish()
 	long nDuplicate = 0;
 	long nSkipped = 0;
 	long nColumns = m_ctrlPreview->GetColumnCount();
+	std::set<ARBDogPtr> sortTrials;
+	bool bSortCal = false;
+	bool bSortLog = false;
 	for (long nItem = 0; nItem < m_ctrlPreview->GetItemCount(); ++nItem)
 	{
 		std::vector<wxString> entry;
@@ -1223,6 +1227,7 @@ bool CWizardImport::DoWizardFinish()
 						// Couldn't find a trial, so make one.
 						pTrial = ARBDogTrialPtr(ARBDogTrial::New());
 						pDog->GetTrials().AddTrial(pTrial);
+						sortTrials.insert(pDog);
 						pDog->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
 						for (size_t idx = 0; idx < venues.size(); ++idx)
 						{
@@ -1404,7 +1409,7 @@ bool CWizardImport::DoWizardFinish()
 					if (!m_pDoc->Book().GetCalendar().FindCalendar(pCal, false, &cal))
 					{
 						m_pDoc->Book().GetCalendar().AddCalendar(pCal);
-						m_pDoc->Book().GetCalendar().sort();
+						bSortCal = true;
 						++nAdded;
 					}
 					else
@@ -1470,7 +1475,7 @@ bool CWizardImport::DoWizardFinish()
 					if (!m_pDoc->Book().GetTraining().FindTraining(pLog))
 					{
 						m_pDoc->Book().GetTraining().AddTraining(pLog);
-						m_pDoc->Book().GetTraining().sort();
+						bSortLog = true;
 						++nAdded;
 					}
 					else
@@ -1482,6 +1487,16 @@ bool CWizardImport::DoWizardFinish()
 			break;
 		}
 	}
+	for (std::set<ARBDogPtr>::iterator iterDog = sortTrials.begin();
+		iterDog != sortTrials.end();
+		++iterDog)
+	{
+		(*iterDog)->GetTrials().sort(!CAgilityBookOptions::GetNewestDatesFirst());
+	}
+	if (bSortCal)
+		m_pDoc->Book().GetCalendar().sort();
+	if (bSortLog)
+		m_pDoc->Book().GetTraining().sort();
 	if (!errLog.empty())
 		errLog << wxT("\n");
 	loadstr = wxString::Format(_("IDS_IMPORT_STATS"), nAdded, nUpdated, nDuplicate, nSkipped);
