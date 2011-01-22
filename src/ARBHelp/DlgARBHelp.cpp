@@ -31,6 +31,7 @@
 #include "../Win/res/AgilityBook16.xpm"
 #include "../Win/res/AgilityBook32.xpm"
 #include "../Win/res/AgilityBook48.xpm"
+#include "../Win/res/AgilityBook128.xpm"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -44,6 +45,7 @@ CDlgARBHelp::CDlgARBHelp()
 	icons.AddIcon(wxIcon(AgilityBook16_xpm));
 	icons.AddIcon(wxIcon(AgilityBook32_xpm));
 	icons.AddIcon(wxIcon(AgilityBook48_xpm));
+	icons.AddIcon(wxIcon(AgilityBook128_xpm));
 	SetIcons(icons);
 
 	CDlgPageEncode* m_pageEncode = new CDlgPageEncode(this);
