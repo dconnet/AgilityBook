@@ -9,6 +9,7 @@
 # run via the post-build. So we pad a blank in the quotes and strip it here.
 #
 # Revision History
+# 2011-01-22 DRC Allow 32bit to run on 64bit.
 # 2009-03-05 DRC Moved bat file to python (removes dependency on wzzip)
 """RunARBTests.py SourceDir TargetDirectory TargetName PlatformName
 SourceDir = .../AgilityBook/src
@@ -67,13 +68,8 @@ def main():
 	zip.close()
 
 	if "Win32" == platform:
-		# 32bit on 32bit
-		if os.environ['PROCESSOR_ARCHITECTURE'] == "x86":
-			cmd = [os.path.join(executableDir, targetname + '.exe')]
-			return RunCommand(cmd, 0)
-		else:
-			print 'WARNING: Unable to run ' + platform + ' binary on ' + os.environ['PROCESSOR_ARCHITECTURE']
-			return 0
+		cmd = [os.path.join(executableDir, targetname + '.exe')]
+		return RunCommand(cmd, 0)
 
 	elif "x64" == platform:
 		# 64bit on 64bit
