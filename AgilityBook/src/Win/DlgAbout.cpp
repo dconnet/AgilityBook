@@ -41,7 +41,7 @@ class CHyperlinkCtrl : public wxHyperlinkCtrl
 {
 	DECLARE_DYNAMIC_CLASS(CHyperlinkCtrl)
 public:
-	CHyperlinkCtrl() {}
+	CHyperlinkCtrl();
 	CHyperlinkCtrl(wxWindow *pParent,
 			wxWindowID id,
 			const wxString& label, const wxString& url,
@@ -65,6 +65,11 @@ BEGIN_EVENT_TABLE(CHyperlinkCtrl, wxHyperlinkCtrl)
 	EVT_KILL_FOCUS(CHyperlinkCtrl::OnFocus)
 	EVT_KEY_DOWN(CHyperlinkCtrl::OnKeyDown)
 END_EVENT_TABLE()
+
+
+CHyperlinkCtrl::CHyperlinkCtrl()
+{
+}
 
 
 CHyperlinkCtrl::CHyperlinkCtrl(wxWindow *pParent,
