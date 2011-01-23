@@ -42,7 +42,7 @@
 
 #define ARB_VER_MAJOR					2
 #define ARB_VER_MINOR					2
-#define ARB_VER_DOT						6
+#define ARB_VER_DOT						7
 #define ARB_VER_BUILD					2947
 
 #define ARB_VER_STR_MAJOR				STR(ARB_VER_MAJOR)
@@ -55,5 +55,5 @@
 
 #define ARB_VERSION_CompanyName			"dcon Software"
 #define ARB_VERSION_FileDescription		"Agility Record Book"
-#define ARB_VERSION_LegalCopyright		"Copyright (c) 2002-2010 David Connet. All Rights Reserved."
+#define ARB_VERSION_LegalCopyright		"Copyright (c) 2002-2011 David Connet. All Rights Reserved."
 #define ARB_VERSION_ProductName			"Agility Record Book"

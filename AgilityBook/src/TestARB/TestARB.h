@@ -24,28 +24,14 @@
 #define FAIL_TODO_TEST	0
 
 #define IDR_DTD_AGILITYRECORDBOOK	1
-#define IDR_XML_DEFAULT_CONFIG		2
-#define IDR_XML_CONFIG08_V10_2		3
-#define IDR_XML_CONFIG09_V11_0		4
-#define IDR_XML_CONFIG12_V12_1		5
-#define IDR_XML_CONFIG14_V12_2		6
-#define IDR_XML_CONFIG19_V12_5		7
-#define IDR_XML_CONFIG20_V12_6		8
-#define IDR_XML_CONFIG21_V12_7		9
-#define IDR_XML_CONFIG22_V12_7		10
-#define IDR_XML_CONFIG23_V12_8		11
-#define IDR_XML_CONFIG24_V12_8		12
-#define IDR_XML_CONFIG25_V12_9		13
-#define IDR_XML_CONFIG26_V12_9		14
-#define IDR_XML_CONFIG27_V12_10		15
-#define IDR_XML_CONFIG28_V12_11		16
-#define IDR_XML_CONFIG29_V12_11		17
-// See comments in TestARB.cpp about adding a new config
+
+extern const wxChar* const gc_Configs[];
+extern size_t gc_NumConfigs;
 
 
 extern bool g_bMicroTest;
 
-extern ElementNodePtr LoadXMLData(int id);
+extern ElementNodePtr LoadXMLData(size_t id = 0); // 0 is default config
 
 extern bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config);
 extern ElementNodePtr CreateActionList();
