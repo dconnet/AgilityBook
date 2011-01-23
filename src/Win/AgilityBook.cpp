@@ -65,6 +65,7 @@ IMPLEMENT_APP(CAgilityBookApp)
 
 class CAgilityBookDocManager : public wxDocManager
 {
+	CAgilityBookDocManager(); // not implemented
 public:
 	CAgilityBookDocManager(size_t historySize);
 	virtual wxFileHistory* OnCreateFileHistory();
