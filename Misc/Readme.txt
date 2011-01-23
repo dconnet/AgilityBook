@@ -1,4 +1,5 @@
 Miscellaneous files:
+AgilityRecordBook.lsl       CD Label for backing up source code
 AgilityRecordBook.ncd       CD Label for backing up source code
 AgilityRecordBook.std       CD Label for backing up source code
 AgilityRecordBook-land.doc  Flyer (landscape)
@@ -15,6 +16,7 @@ Translations.xls            A list of all strings that need to be translated.
 File Types
 .doc   Microsoft Word 2003
 .xls   Microsoft Excel 2003
+.lsl   LightScribe Template Labeler (v1.18.15.1)
 .ncd   Nero CD Cover Document 3.3.3.0 (for Lightscribe)
        (came with Lightscribe device)
 .std   SureThing CD Labeler Deluxe 3.12

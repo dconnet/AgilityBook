@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-01-22 DRC Simplified how configs are added (all in TestConfig.cpp).
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-11 DRC Created
  */
@@ -173,12 +174,7 @@ int main(int argc, char** argv)
 }
 
 
-// When adding a new config:
-//  - Create ID in TestARB.h
-//  - Add case stmt here
-//  - Add test case in TestConfig.cpp
-// RunARBTests.py will automatically pick up all XML files in ./res/
-ElementNodePtr LoadXMLData(int id)
+ElementNodePtr LoadXMLData(size_t id)
 {
 	wxString errMsg;
 	ARBErrorCallback err(errMsg);
@@ -192,62 +188,9 @@ ElementNodePtr LoadXMLData(int id)
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
 	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
 #endif
-	bool bOk = false;
+	assert(id < gc_NumConfigs);
 	std::string data;
-	switch (id)
-	{
-	default:
-		assert(0);
-		// fallthru
-	case IDR_XML_DEFAULT_CONFIG:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("DefaultConfig.xml"), data);
-		break;
-	case IDR_XML_CONFIG08_V10_2:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config08_v10_2.xml"), data);
-		break;
-	case IDR_XML_CONFIG09_V11_0:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config09_v11_0.xml"), data);
-		break;
-	case IDR_XML_CONFIG12_V12_1:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config12_v12_1.xml"), data);
-		break;
-	case IDR_XML_CONFIG14_V12_2:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config14_v12_2.xml"), data);
-		break;
-	case IDR_XML_CONFIG19_V12_5:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config19_v12_5.xml"), data);
-		break;
-	case IDR_XML_CONFIG20_V12_6:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config20_v12_6.xml"), data);
-		break;
-	case IDR_XML_CONFIG21_V12_7:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config21_v12_7.xml"), data);
-		break;
-	case IDR_XML_CONFIG22_V12_7:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config22_v12_7.xml"), data);
-		break;
-	case IDR_XML_CONFIG23_V12_8:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config23_v12_8.xml"), data);
-		break;
-	case IDR_XML_CONFIG24_V12_8:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config24_v12_8.xml"), data);
-		break;
-	case IDR_XML_CONFIG25_V12_9:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config25_v12_9.xml"), data);
-		break;
-	case IDR_XML_CONFIG26_V12_9:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config26_v12_9.xml"), data);
-		break;
-	case IDR_XML_CONFIG27_V12_10:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config27_v12_10.xml"), data);
-		break;
-	case IDR_XML_CONFIG28_V12_11:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config28_v12_11.xml"), data);
-		break;
-	case IDR_XML_CONFIG29_V12_11:
-		bOk = CConfigHandler::LoadWxFile(datafile, wxT("Config29_v12_11.xml"), data);
-		break;
-	}
+	bool bOk = CConfigHandler::LoadWxFile(datafile, gc_Configs[id], data);
 	assert(bOk);
 	if (!bOk || !tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
 	{

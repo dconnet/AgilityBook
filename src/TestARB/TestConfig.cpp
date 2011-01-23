@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-01-22 DRC Simplified how configs are added.
  * @li 2010-08-13 DRC Updated for config 29.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-18 DRC Created empty file
@@ -28,6 +29,35 @@
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
+
+
+// When adding a new config:
+//  - Create ID in TestARB.h
+//  - Add entry here
+//  - Add test case in TestConfig.cpp
+// RunARBTests.py will automatically pick up all XML files in ./res/
+const wxChar* const gc_Configs[] =
+{
+	wxT("DefaultConfig.xml"),
+	wxT("Config08_v10_2.xml"),
+	wxT("Config09_v11_0.xml"),
+	wxT("Config12_v12_1.xml"),
+	wxT("Config14_v12_2.xml"),
+	wxT("Config19_v12_5.xml"),
+	wxT("Config20_v12_6.xml"),
+	wxT("Config21_v12_7.xml"),
+	wxT("Config22_v12_7.xml"),
+	wxT("Config23_v12_8.xml"),
+	wxT("Config24_v12_8.xml"),
+	wxT("Config25_v12_9.xml"),
+	wxT("Config26_v12_9.xml"),
+	wxT("Config27_v12_10.xml"),
+	wxT("Config28_v12_11.xml"),
+	wxT("Config29_v12_11.xml"),
+	wxT("Config30_v12_11.xml"),
+	wxT("Config31_v12_11.xml"),
+};
+extern size_t gc_NumConfigs = _countof(gc_Configs);
 
 
 SUITE(TestConfig)
@@ -109,28 +139,9 @@ SUITE(TestConfig)
 	{
 		if (!g_bMicroTest)
 		{
-			// See comments in TestARB.cpp about adding a new config.
-			int configs[] = {
-				IDR_XML_CONFIG08_V10_2,
-				IDR_XML_CONFIG09_V11_0,
-				IDR_XML_CONFIG12_V12_1,
-				IDR_XML_CONFIG14_V12_2,
-				IDR_XML_CONFIG19_V12_5,
-				IDR_XML_CONFIG20_V12_6,
-				IDR_XML_CONFIG21_V12_7,
-				IDR_XML_CONFIG22_V12_7,
-				IDR_XML_CONFIG23_V12_8,
-				IDR_XML_CONFIG24_V12_8,
-				IDR_XML_CONFIG25_V12_9,
-				IDR_XML_CONFIG26_V12_9,
-				IDR_XML_CONFIG27_V12_10,
-				IDR_XML_CONFIG28_V12_11,
-				IDR_XML_CONFIG29_V12_11,
-				0
-			};
-			for (int i = 0; configs[i] != 0; ++i)
+			for (size_t i = 1; i < gc_NumConfigs; ++i)
 			{
-				ElementNodePtr tree = LoadXMLData(configs[i]);
+				ElementNodePtr tree = LoadXMLData(i);
 				// This probably means a config file is missing.
 				CHECK(tree);
 				ARBConfig config;

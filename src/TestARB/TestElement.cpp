@@ -287,7 +287,7 @@ SUITE(TestElement)
 	{
 		if (!g_bMicroTest)
 		{
-			ElementNodePtr tree = LoadXMLData(IDR_XML_DEFAULT_CONFIG);
+			ElementNodePtr tree = LoadXMLData();
 
 			CHECK(wxT("DefaultConfig") == tree->GetName());
 			CHECK_EQUAL(1, tree->GetAttribCount());
@@ -301,7 +301,7 @@ SUITE(TestElement)
 	{
 		if (!g_bMicroTest)
 		{
-			ElementNodePtr tree = LoadXMLData(IDR_XML_DEFAULT_CONFIG);
+			ElementNodePtr tree = LoadXMLData();
 
 			wxString tmpFile(wxT("data.tmp"));
 			wxMemoryOutputStream tmp1;
