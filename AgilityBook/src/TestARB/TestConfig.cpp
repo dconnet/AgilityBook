@@ -57,7 +57,7 @@ const wxChar* const gc_Configs[] =
 	wxT("Config30_v12_11.xml"),
 	wxT("Config31_v12_11.xml"),
 };
-extern size_t gc_NumConfigs = _countof(gc_Configs);
+size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
 
 SUITE(TestConfig)
