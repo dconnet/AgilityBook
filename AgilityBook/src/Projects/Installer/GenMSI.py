@@ -77,11 +77,11 @@ langNames = 'en_US;fr_FR'
 
 def errprint(*args):
 	# Used to print exception messages
-    strings = map(str, args)
-    msg = ' '.join(strings)
-    if msg[-1:] != '\n':
-        msg += '\n'
-    sys.stderr.write(msg)
+	strings = map(str, args)
+	msg = ' '.join(strings)
+	if msg[-1:] != '\n':
+		msg += '\n'
+	sys.stderr.write(msg)
 
 
 # Kill an entire directory

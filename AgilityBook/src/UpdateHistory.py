@@ -29,11 +29,11 @@ import sys
 
 def errprint(*args):
 	# Used to print exception messages
-    strings = map(str, args)
-    msg = ' '.join(strings)
-    if msg[-1:] != '\n':
-        msg += '\n'
-    sys.stderr.write(msg)
+	strings = map(str, args)
+	msg = ' '.join(strings)
+	if msg[-1:] != '\n':
+		msg += '\n'
+	sys.stderr.write(msg)
 
 def GenerateFile(data, inFilename, outFilename):
 	fileTemplate = open(inFilename, "r")
