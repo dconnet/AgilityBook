@@ -25,11 +25,11 @@ useVC10SDK = False
 
 def errprint(*args):
 	# Used to print exception messages
-    strings = map(str, args)
-    msg = ' '.join(strings)
-    if msg[-1:] != '\n':
-        msg += '\n'
-    sys.stderr.write(msg)
+	strings = map(str, args)
+	msg = ' '.join(strings)
+	if msg[-1:] != '\n':
+		msg += '\n'
+	sys.stderr.write(msg)
 
 
 # Quietly remove a file
