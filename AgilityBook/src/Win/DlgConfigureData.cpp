@@ -184,7 +184,7 @@ bool CDlgConfigureDataDivision::DoAdd()
 			if (m_Div->GetLevels().FindSubLevel(name))
 			{
 				done = false;
-				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				continue;
 			}
 			ARBConfigLevelPtr pNewLevel;
@@ -206,7 +206,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 	wxString name(oldName);
 	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), name))
 	{
-		if (wxYES != wxMessageBox(_("IDS_CHANGEDIV_ISSUES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+		if (wxYES != wxMessageBox(_("IDS_CHANGEDIV_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 			return false;
 	}
 	bool bEdited = false;
@@ -223,7 +223,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 				if (m_pDlg->m_pVenue->GetDivisions().FindDivision(name))
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				m_Div->SetName(name);
@@ -317,7 +317,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 			if (m_Division->GetLevels().FindSubLevel(name))
 			{
 				done = false;
-				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				continue;
 			}
 			ARBConfigSubLevelPtr pNewSubLevel;
@@ -347,7 +347,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 	{
 		if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
 		{
-			if (wxYES != wxMessageBox(_("IDS_CHANGELEVEL_ISSUES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+			if (wxYES != wxMessageBox(_("IDS_CHANGELEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 				return false;
 		}
 	}
@@ -375,7 +375,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 				if (bInUse)
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				m_Level->SetName(name);
@@ -460,7 +460,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 	wxString name(oldName);
 	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
 	{
-		if (wxYES != wxMessageBox(_("IDS_CHANGESUBLEVEL_ISSUES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+		if (wxYES != wxMessageBox(_("IDS_CHANGESUBLEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 			return false;
 	}
 	while (!done)
@@ -475,7 +475,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 				if (m_Division->GetLevels().FindSubLevel(name))
 				{
 					done = false;
-					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					continue;
 				}
 				m_SubLevel->SetName(name);
@@ -574,7 +574,7 @@ bool CDlgConfigureDataTitle::DoEdit()
 					bool bInUse = true;
 					if (0 < nTitles)
 					{
-						if (wxYES == wxMessageBox(_("IDS_NAME_IN_USE_MERGE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+						if (wxYES == wxMessageBox(_("IDS_NAME_IN_USE_MERGE"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 						{
 							bInUse = false;
 							m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pDlg->m_pVenue->GetName(), oldName, name));
@@ -588,7 +588,7 @@ bool CDlgConfigureDataTitle::DoEdit()
 					if (bInUse)
 					{
 						done = false;
-						wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+						wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
 					continue;
 				}

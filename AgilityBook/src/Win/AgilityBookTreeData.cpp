@@ -151,7 +151,7 @@ static bool EditTrial(
 			if (!pDog->GetTrials().AddTrial(pTrial))
 			{
 				bOk = false;
-				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+				wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 			}
 			else
 			{
@@ -163,7 +163,7 @@ static bool EditTrial(
 				wxTreeItemId hItem = pTree->InsertTrial(pTrial, pDogData->GetId());
 				if (!hItem.IsOk())
 				{
-					wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+					wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 				}
 				else
 				{
@@ -215,13 +215,13 @@ static bool EditRun(
 		ARBDogClubPtr pClub;
 		if (!pTrialData->GetTrial()->GetClubs().GetPrimaryClub(&pClub))
 		{
-			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_NEED_CLUB"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			return false;
 		}
 		if (!pTree->GetDocument()->Book().GetConfig().GetVenues().FindVenue(pClub->GetVenue()))
 		{
 			wxMessageBox(wxString::Format(_("IDS_VENUE_CONFIG_MISSING"), pClub->GetVenue().c_str()),
-				wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+				wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 			return false;
 		}
 		bAdd = true;
@@ -243,7 +243,7 @@ static bool EditRun(
 			if (!pTrialData->GetTrial()->GetRuns().AddRun(pRun))
 			{
 				bOk = false;
-				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+				wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 			}
 			else
 			{
@@ -261,7 +261,7 @@ static bool EditRun(
 				if (!hItem.IsOk())
 				{
 					if (CFilterOptions::Options().IsFilterEnabled())
-						wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+						wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 				}
 				else
 				{
@@ -433,7 +433,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					if (!pTrial->GetRuns().AddRun(pRun))
 					{
 						++nFailed;
-						wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+						wxMessageBox(_("IDS_CREATERUN_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
 						m_pTree->GetDocument()->ResetVisibility(venues, pTrial, pRun);
@@ -458,7 +458,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					{
 						bOk = false;
 						if (CFilterOptions::Options().IsFilterEnabled())
-							wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+							wxMessageBox(_("IDS_CREATERUN_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
 					{
@@ -475,7 +475,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 				}
 			}
 			if (!bLoaded && 0 < err.m_ErrMsg.length())
-				wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+				wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 		}
 	}
 	else if (pDog
@@ -495,7 +495,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					if (!pDog->GetTrials().AddTrial(pNewTrial))
 					{
 						bLoaded = false;
-						wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+						wxMessageBox(_("IDS_CREATETRIAL_FAILED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 					}
 					else
 					{
@@ -509,7 +509,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 						if (!hItem.IsOk())
 						{
 							bOk = false;
-							wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+							wxMessageBox(_("IDS_CREATETRIAL_FILTERED"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 						}
 						else
 						{
@@ -526,7 +526,7 @@ bool CAgilityBookTreeData::DoPaste(bool* bTreeSelectionSet)
 					}
 				}
 				else if (0 < err.m_ErrMsg.length())
-					wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+					wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 	}
@@ -689,7 +689,7 @@ bool CAgilityBookTreeDataDog::OnCmd(
 		break;
 	case ID_AGILITY_DELETE_DOG:
 		if (!bPrompt
-		|| wxYES == wxMessageBox(_("IDS_DELETE_DOG_DATA"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO | wxNO_DEFAULT))
+		|| wxYES == wxMessageBox(_("IDS_DELETE_DOG_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 		{
 			if (GetId().IsOk() && m_pTree->GetDocument()->Book().GetDogs().DeleteDog(m_pDog))
 			{
@@ -989,7 +989,7 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		break;
 	case ID_AGILITY_DELETE_TRIAL:
 		if (!bPrompt
-		|| wxYES == wxMessageBox(_("IDS_DELETE_TRIAL_DATA"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO | wxNO_DEFAULT))
+		|| wxYES == wxMessageBox(_("IDS_DELETE_TRIAL_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 		{
 			if (GetId() && GetDog()->GetTrials().DeleteTrial(m_pTrial))
 			{
@@ -1356,7 +1356,7 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		break;
 	case ID_AGILITY_DELETE_RUN:
 		if (!bPrompt
-		|| wxYES == wxMessageBox(_("IDS_DELETE_EVENT_DATA"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO | wxNO_DEFAULT))
+		|| wxYES == wxMessageBox(_("IDS_DELETE_EVENT_DATA"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_QUESTION))
 		{
 			if (GetId().IsOk() && GetTrial()->GetRuns().DeleteRun(m_pRun))
 			{

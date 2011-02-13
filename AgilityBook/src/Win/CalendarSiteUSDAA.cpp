@@ -240,7 +240,7 @@ raw.Write(data.c_str(), data.length());
 		if (!tree->LoadXMLBuffer(pData, len, err))
 		{
 			tree.reset();
-			wxMessageBox(err, wxMessageBoxCaptionStr, wxCENTRE);
+			wxMessageBox(err, wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 		}
 		else
 		{

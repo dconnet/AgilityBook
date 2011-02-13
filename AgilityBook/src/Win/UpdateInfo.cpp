@@ -189,7 +189,7 @@ bool CUpdateInfo::UpdateConfig(
 		msg += inMsg;
 	}
 
-	bool b = (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO));
+	bool b = (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION));
 	/* TODO: Change to include 'never' option
 	if (!b)
 	{
@@ -294,7 +294,7 @@ bool CUpdateInfo::ReadVersionFile(
 			wxString tmp = tstringUtil::TString(data);
 			if (!errMsg.IsEmpty())
 				tmp += errMsg;
-			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		}
 		return false;
 	}
@@ -349,7 +349,7 @@ bool CUpdateInfo::ReadVersionFile(
 					msg += wxT("\n\n");
 					msg += errMsg2;
 				}
-				wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
 		}
 		else if (tree->GetName() == wxT("Data"))
@@ -391,7 +391,7 @@ bool CUpdateInfo::ReadVersionFile(
 					{
 						if (bVerbose)
 						{
-							wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+							wxMessageBox(_("IDS_UPDATE_UNKNOWN"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						}
 						return false;
 					}
@@ -467,7 +467,7 @@ bool CUpdateInfo::CheckProgram(
 		}
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO));
 		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
-		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_QUESTION | wxYES_NO))
+		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
 			bool bGotoWeb = false;
 			if (m_NewFile.empty())
@@ -767,7 +767,7 @@ void CUpdateInfo::CheckConfig(
 						msg2 += wxT("\n\n");
 						msg2 += errMsg2;
 					}
-					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
 				else if (tree->GetName() == wxT("DefaultConfig"))
 				{
@@ -782,7 +782,7 @@ void CUpdateInfo::CheckConfig(
 						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 						{
 							if (0 < err.m_ErrMsg.length())
-								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 						}
 						else
 						{
@@ -796,7 +796,7 @@ void CUpdateInfo::CheckConfig(
 	}
 	if (bUpToDate && bVerbose)
 	{
-		wxMessageBox(_("IDS_UPDATE_CURRENT"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(_("IDS_UPDATE_CURRENT"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 }
 

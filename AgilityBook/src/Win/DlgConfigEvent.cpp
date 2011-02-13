@@ -963,17 +963,17 @@ void CDlgConfigEvent::EditPoints()
 					case CDlgConfigTitlePoints::eTitleNormal:
 						bOk = pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults());
 						if (!bOk)
-							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitleLifetime:
 						bOk = pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults());
 						if (!bOk)
-							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					case CDlgConfigTitlePoints::eTitlePlacement:
 						bOk = pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true);
 						if (!bOk)
-							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
 					}
 					if (bOk && type != dlg.Type())
@@ -1235,15 +1235,15 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 					assert(0);
 				case CDlgConfigTitlePoints::eTitleNormal:
 					if (!pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults()))
-						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case CDlgConfigTitlePoints::eTitleLifetime:
 					if (!pScoring->GetLifetimePoints().AddLifetimePoints(dlg.Points(), dlg.Faults()))
-						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				case CDlgConfigTitlePoints::eTitlePlacement:
 					if (!pScoring->GetPlacements().AddPlaceInfo(dlg.Place(), dlg.Points(), true))
-						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+						wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					break;
 				}
 				FillTitlePoints(pScoring);
@@ -1412,7 +1412,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	}
 	if (bOverlap)
 	{
-		if (wxYES != wxMessageBox(_("IDS_CONFIGEVENT_OVERLAPDATES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO | wxNO_DEFAULT))
+		if (wxYES != wxMessageBox(_("IDS_CONFIGEVENT_OVERLAPDATES"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 			return;
 	}
 
@@ -1421,7 +1421,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 	{
 		if (m_pVenue->GetEvents().FindEvent(m_Name))
 		{
-			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			m_ctrlName->SetFocus();
 			return;
 		}

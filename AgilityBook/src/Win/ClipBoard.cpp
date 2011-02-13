@@ -122,7 +122,7 @@ bool CClipboardDataReader::GetData(
 	bool bOk = outTree->LoadXMLBuffer(data.c_str(), data.length(), err);
 	if (!bOk && 0 < err.length())
 	{
-		wxMessageBox(err, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(err, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;
 }

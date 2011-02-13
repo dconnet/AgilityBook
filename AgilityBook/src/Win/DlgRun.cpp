@@ -3093,7 +3093,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	int index = m_ctrlDivisions->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SELECT_DIVISION"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_DIVISION"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlDivisions->SetFocus();
 		return;
 	}
@@ -3102,7 +3102,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SELECT_LEVEL"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_LEVEL"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlLevels->SetFocus();
 		return;
 	}
@@ -3112,7 +3112,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND == index)
 	{
-		wxMessageBox(_("IDS_SELECT_EVENT"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_EVENT"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlEvents->SetFocus();
 		return;
 	}
@@ -3122,21 +3122,21 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 	m_pVenue->GetEvents().FindEvent(curEvent, &pEvent);
 	if (!pEvent)
 	{
-		wxMessageBox(_("IDS_BAD_EVENT"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_BAD_EVENT"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlEvents->SetFocus();
 		return;
 	}
 
 	if (!pEvent->FindEvent(curDiv, pLevel->m_pLevel->GetName(), m_Run->GetDate()))
 	{
-		wxMessageBox(_("IDS_BAD_SCORINGMETHOD"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_BAD_SCORINGMETHOD"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlLevels->SetFocus();
 		return;
 	}
 
 	if (wxNOT_FOUND == m_ctrlQ->GetSelection())
 	{
-		wxMessageBox(_("IDS_SELECT_Q"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_SELECT_Q"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 		m_ctrlQ->SetFocus();
 		return;
 	}
@@ -3161,7 +3161,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 		assert(NULL != pEvent.get());
 		if (!pEvent->HasTable())
 			if (m_Run->GetScoring().HasTable())
-				wxMessageBox(wxT("Poof!"), wxMessageBoxCaptionStr, wxCENTRE);
+				wxMessageBox(wxT("Poof!"), wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 	}
 #endif
 	//End TODO
