@@ -34,6 +34,7 @@
 #include "RegItems.h"
 #include "TabView.h"
 #include <wx/config.h>
+#include <wx/dnd.h>
 #include <wx/platinfo.h>
 #include <wx/stdpaths.h>
 #include <wx/version.h>
@@ -62,6 +63,37 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CFileDropTarget : public wxFileDropTarget
+{
+public:
+	CFileDropTarget(wxDocManager* docMgr)
+		: m_docMgr(docMgr)
+	{
+	}
+	virtual bool OnDropFiles(
+			wxCoord x,
+			wxCoord y,
+			wxArrayString const& filenames);
+private:
+	wxDocManager* m_docMgr;
+};
+
+
+bool CFileDropTarget::OnDropFiles(
+		wxCoord x,
+		wxCoord y,
+		wxArrayString const& filenames)
+{
+	if (1 != filenames.size())
+		return false;
+	m_docMgr->CreateDocument(filenames[0]);
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 
 BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_CLOSE(CMainFrame::OnClose)
@@ -219,6 +251,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 		SetStatusBarWidths(statusbar, -1, m_Widths);
 		statusbar->SetStatusStyles(NUM_STATUS_FIELDS, style);
 	}
+	SetDropTarget(new CFileDropTarget(manager));
 }
 
 

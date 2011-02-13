@@ -64,6 +64,7 @@ typedef std::tr1::shared_ptr<CDlgDogRefRunData> CDlgDogRefRunDataPtr;
 
 class CDlgRun : public wxDialog
 {
+	friend class CLinkDropTarget;
 public:
 	CDlgRun(
 			CAgilityBookDoc* pDoc,

@@ -375,7 +375,6 @@ bool CAgilityBookApp::OnInit()
 			height = rect.GetHeight();
 	}
 	frame->SetSize(x, y, width, height);
-	frame->DragAcceptFiles(true);
 
 	// Should we open the last open file?
 	if (filename.empty())
