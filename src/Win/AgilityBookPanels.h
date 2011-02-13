@@ -61,6 +61,7 @@ public:
 	~CAgilityBookPanelRuns();
 
 private:
+	bool m_bInit;
 	wxSplitterWindow* m_splitter;
 	void SplitterOnIdle(wxIdleEvent&);
 };
@@ -90,6 +91,7 @@ public:
 	~CAgilityBookPanelCalendar();
 
 private:
+	bool m_bInit;
 	wxSplitterWindow* m_splitter;
 	void SplitterOnIdle(wxIdleEvent&);
 };
