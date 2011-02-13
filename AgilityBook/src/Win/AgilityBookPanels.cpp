@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-02-12 DRC Don't save sash position if it hasn't been initialized.
  * @li 2009-07-25 DRC Set a minimum splitter width.
  * @li 2008-12-14 DRC Created
  */
@@ -117,6 +118,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 		long flags,
 		std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, _("PanelRuns"))
+	, m_bInit(false)
 	, m_splitter(NULL)
 {
 	m_views = inViews;
@@ -163,7 +165,10 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 
 CAgilityBookPanelRuns::~CAgilityBookPanelRuns()
 {
-	wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, m_splitter->GetSashPosition());
+	if (m_bInit)
+	{
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX, m_splitter->GetSashPosition());
+	}
 }
 
 
@@ -173,6 +178,7 @@ void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 	if (cx < MIN_RUN_WIDTH)
 		cx = MIN_RUN_WIDTH;
 	m_splitter->SetSashPosition(cx);
+	m_bInit = true;
 	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelRuns::SplitterOnIdle), NULL, this);
 }
 
@@ -214,6 +220,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 		long flags,
 		std::vector<CAgilityBookBaseExtraView*> const& inViews)
 	: CBasePanel(parent, _("PanelCal"))
+	, m_bInit(false)
 	, m_splitter(NULL)
 {
 	m_views = inViews;
@@ -258,7 +265,10 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 
 CAgilityBookPanelCalendar::~CAgilityBookPanelCalendar()
 {
-	wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, m_splitter->GetSashPosition());
+	if (m_bInit)
+	{
+		wxConfig::Get()->Write(CFG_SETTINGS_SPLITCX2, m_splitter->GetSashPosition());
+	}
 }
 
 
@@ -268,6 +278,7 @@ void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 	if (cx < MIN_CAL_WIDTH)
 		cx = MIN_CAL_WIDTH;
 	m_splitter->SetSashPosition(cx);
+	m_bInit = true;
 	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelCalendar::SplitterOnIdle), NULL, this);
 }
 
