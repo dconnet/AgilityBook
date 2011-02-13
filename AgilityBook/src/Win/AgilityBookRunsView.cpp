@@ -1286,6 +1286,9 @@ bool CAgilityBookRunsView::Create(
 	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookRunsView::OnCtrlKeyDown), NULL, this);
 	m_imgCourse = m_Ctrl->AddIcon(wxIcon(AgilityBook16_xpm));
 	m_imgMap = m_Ctrl->AddIcon(wxIcon(crcd_xpm));
+#if defined(__WXMAC__)
+	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
+#endif
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 

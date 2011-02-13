@@ -19,6 +19,7 @@
  */
 
 #include "AgilityBookMenu.h"
+#include <wx/dnd.h>
 #include <wx/docview.h>
 
 #define STATUS_INFO			0
@@ -31,6 +32,22 @@
 #define STATUS_FILLER		4
 #define NUM_STATUS_FIELDS	5
 #endif
+
+
+class CFileDropTarget : public wxFileDropTarget
+{
+public:
+	CFileDropTarget(wxDocManager* docMgr)
+		: m_docMgr(docMgr)
+	{
+	}
+	virtual bool OnDropFiles(
+			wxCoord x,
+			wxCoord y,
+			wxArrayString const& filenames);
+private:
+	wxDocManager* m_docMgr;
+};
 
 
 class CMainFrame : public wxDocParentFrame
@@ -49,6 +66,7 @@ public:
 private:
 	void SetMessage(wxString const& msg, int index, bool bResize);
 
+	wxDocManager* m_manager;
 	CAgilityBookMenu m_MenuBar;
 #ifdef WIN32
 	wxFont m_fontStatusBar;
@@ -59,6 +77,9 @@ private:
 	DECLARE_EVENT_TABLE()
 	void OnStatusBarContextMenu(wxContextMenuEvent& evt);
 	void OnClose(wxCloseEvent& evt);
+#if defined(__WXMAC__)
+	void OnIdle(wxIdleEvent& evt);
+#endif
 	void OnUpdateCmd(wxUpdateUIEvent& evt);
 	void OnFileLanguageChoose(wxCommandEvent& evt);
 	void OnPrintBlankRuns(wxCommandEvent& evt);
