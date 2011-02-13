@@ -1206,6 +1206,9 @@ bool CAgilityBookCalendarView::Create(
 	m_Ctrl->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(CAgilityBookCalendarView::OnCtrlMouseWheel), NULL, this);
 #endif
 	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookCalendarView::OnCtrlKeyDown), NULL, this);
+#if defined(__WXMAC__)
+	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
+#endif
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 

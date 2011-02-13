@@ -583,6 +583,9 @@ bool CAgilityBookCalendarListView::Create(
 	m_imgAccomNone = m_Ctrl->AddIcon(wxIcon(AccNone_xpm));
 	m_imgAccomTodo = m_Ctrl->AddIcon(wxIcon(AccTodo_xpm));
 	m_imgAccomConfirm = m_Ctrl->AddIcon(wxIcon(AccConfirm_xpm));
+#if defined(__WXMAC__)
+	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
+#endif
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 

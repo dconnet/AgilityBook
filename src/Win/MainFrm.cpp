@@ -66,21 +66,9 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CFileDropTarget : public wxFileDropTarget
-{
-public:
-	CFileDropTarget(wxDocManager* docMgr)
-		: m_docMgr(docMgr)
-	{
-	}
-	virtual bool OnDropFiles(
-			wxCoord x,
-			wxCoord y,
-			wxArrayString const& filenames);
-private:
-	wxDocManager* m_docMgr;
-};
-
+#if defined(__WXMAC__)
+static wxString m_idleOpen;
+#endif
 
 bool CFileDropTarget::OnDropFiles(
 		wxCoord x,
@@ -89,7 +77,16 @@ bool CFileDropTarget::OnDropFiles(
 {
 	if (1 != filenames.size())
 		return false;
-	m_docMgr->CreateDocument(filenames[0]);
+#if defined(__WXMAC__)
+	m_idleOpen = filenames[0];
+#else
+	// Doing this on the Mac causes a crash. On Mac, registering this on the
+	// mainframe doesn't work. If has to be registered on the topmost window.
+	// When this is called, it causes the drop target to be deleted, but things
+	// aren't fully cleaned up, so as this call unwinds, the object it was in
+	// has been deleted, and it dies.
+	m_docMgr->CreateDocument(filenames[0], wxDOC_SILENT);
+#endif
 	return true;
 }
 
@@ -97,6 +94,9 @@ bool CFileDropTarget::OnDropFiles(
 
 BEGIN_EVENT_TABLE(CMainFrame, wxDocParentFrame)
 	EVT_CLOSE(CMainFrame::OnClose)
+#if defined(__WXMAC__)
+	EVT_IDLE(CMainFrame::OnIdle)
+#endif
 	EVT_UPDATE_UI(wxID_DUPLICATE, CMainFrame::OnUpdateCmd)
 	EVT_UPDATE_UI(wxID_CUT, CMainFrame::OnUpdateCmd)
 	EVT_UPDATE_UI(wxID_COPY, CMainFrame::OnUpdateCmd)
@@ -177,6 +177,7 @@ static void SetStatusBarWidths(
 
 CMainFrame::CMainFrame(wxDocManager* manager)
 	: wxDocParentFrame(manager, NULL, wxID_ANY, _("Agility Record Book"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE)
+	, m_manager(manager)
 	, m_MenuBar()
 {
 	wxIconBundle icons;
@@ -251,7 +252,9 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 		SetStatusBarWidths(statusbar, -1, m_Widths);
 		statusbar->SetStatusStyles(NUM_STATUS_FIELDS, style);
 	}
+#if !defined(__WXMAC__)
 	SetDropTarget(new CFileDropTarget(manager));
+#endif
 }
 
 
@@ -363,6 +366,19 @@ void CMainFrame::OnClose(wxCloseEvent& evt)
 	wxConfig::Get()->Write(CFG_SETTINGS_LASTSTATE, state);
 	evt.Skip();
 }
+
+
+#if defined(__WXMAC__)
+void CMainFrame::OnIdle(wxIdleEvent& evt)
+{
+	if (!m_idleOpen.empty())
+	{
+		wxString file(m_idleOpen);
+		m_idleOpen.clear();
+		m_manager->CreateDocument(file, wxDOC_SILENT);
+	}
+}
+#endif
 
 
 void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)

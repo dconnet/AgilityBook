@@ -200,6 +200,9 @@ bool CAgilityBookPointsView::Create(
 	m_Ctrl = new CReportListCtrl(parentCtrl, false, CReportListCtrl::eNoSortHeader);
 	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CAgilityBookPointsView::OnCtrlItemActivated), NULL, this);
 	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookPointsView::OnCtrlKeyDown), NULL, this);
+#if defined(__WXMAC__)
+	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
+#endif
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 

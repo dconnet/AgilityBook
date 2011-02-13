@@ -312,6 +312,9 @@ bool CAgilityBookTreeView::Create(
 #ifdef WX_TREE_HAS_STATE
 	m_Ctrl->SetStateImageList(&m_ImageListStates);
 #endif
+#if defined(__WXMAC__)
+	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
+#endif
 	return CAgilityBookBaseExtraView::Create(parentView, parentCtrl, doc, flags, sizer, proportion, sizerFlags, border);
 }
 
