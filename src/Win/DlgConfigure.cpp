@@ -392,7 +392,7 @@ void CDlgConfigure::DoEdit()
 						if (m_Config.GetFaults().FindFault(name))
 						{
 							done = false;
-							wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+							wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 							continue;
 						}
 						pFaultData->GetFault()->SetName(name);
@@ -771,7 +771,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 			LoadData(eOtherPoints);
 		}
 		else
-			wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 }
 

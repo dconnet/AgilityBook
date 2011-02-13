@@ -1045,7 +1045,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 				if (0 < nNewIsNotVisible)
 				{
 					wxString msg = wxString::Format(_("IDS_NOT_VISIBLE"), nNewIsNotVisible);
-					wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+					wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 				}
 			}
 		}

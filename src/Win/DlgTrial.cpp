@@ -558,7 +558,7 @@ void CDlgTrial::OnOk(wxCommandEvent& evt)
 			if (0 < nDelete)
 			{
 				wxString msg = wxString::Format(_("IDS_CONFIG_DELETE_RUNS"), m_pTrial->GetRuns().size());
-				if (wxYES != wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO | wxNO_DEFAULT))
+				if (wxYES != wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 					return;
 				m_pTrial->GetRuns().clear();
 				m_bRunsDeleted = true;

@@ -360,7 +360,7 @@ void CDlgConfigMultiQ::OnOk(wxCommandEvent& evt)
 	{
 		if (m_pVenue->GetMultiQs().FindMultiQ(m_Name))
 		{
-			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(_("IDS_NAME_IN_USE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			m_ctrlName->SetFocus();
 			return;
 		}

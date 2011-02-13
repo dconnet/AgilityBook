@@ -834,13 +834,13 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	{
 		if (!m_bOpeningUnknown && m_dateOpens > m_dateDraws)
 		{
-			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			m_ctrlDraws->SetFocus();
 			return;
 		}
 		if (!m_bClosingUnknown && m_dateDraws > m_dateCloses)
 		{
-			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+			wxMessageBox(_("IDS_BAD_DRAWDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			m_ctrlDraws->SetFocus();
 			return;
 		}
@@ -849,7 +849,7 @@ void CDlgCalendar::OnOk(wxCommandEvent& evt)
 	today -= CAgilityBookOptions::DaysTillEntryIsPast();
 	if (CAgilityBookOptions::AutoDeleteCalendarEntries() && m_dateEnd < today)
 	{
-		if (wxYES != wxMessageBox(_("IDS_AUTODELETE_CAL"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO | wxNO_DEFAULT))
+		if (wxYES != wxMessageBox(_("IDS_AUTODELETE_CAL"), wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_WARNING))
 			return;
 	}
 

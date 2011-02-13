@@ -61,13 +61,13 @@ bool CPlaceValidator::Validate(wxWindow* parent)
 	{
 		if (m_ExistingPlaces.end() != std::find(m_ExistingPlaces.begin(), m_ExistingPlaces.end(), val))
 		{
-			wxMessageBox(_("IDS_CONFIG_PLACE_UNIQUE"), _("Validation conflict"), wxICON_WARNING, parent);
+			wxMessageBox(_("IDS_CONFIG_PLACE_UNIQUE"), _("Validation conflict"), wxOK | wxICON_WARNING, parent);
 			return false;
 		}
 	}
 	if (0 > val)
 	{
-		wxMessageBox(_("IDS_CONFIG_PLACE_TOOSMALL"), _("Validation conflict"), wxICON_WARNING, parent);
+		wxMessageBox(_("IDS_CONFIG_PLACE_TOOSMALL"), _("Validation conflict"), wxOK | wxICON_WARNING, parent);
 		return false;
 	}
 	return true;
@@ -102,7 +102,7 @@ bool CValueValidator::Validate(wxWindow* parent)
 	{
 		// Note: In Win-version, this was a yesno question. But the text
 		// doesn't support that. Not sure why it was yesno...
-		wxMessageBox(_("IDS_CONFIG_CHECK_VALUE"), _("Validation conflict"), wxICON_WARNING, parent);
+		wxMessageBox(_("IDS_CONFIG_CHECK_VALUE"), _("Validation conflict"), wxOK | wxICON_WARNING, parent);
 		return false;
 	}
 	return true;

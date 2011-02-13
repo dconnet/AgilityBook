@@ -126,7 +126,7 @@ CErrorCallback::CErrorCallback()
 
 bool CErrorCallback::OnError(wxChar const* const pMsg)
 {
-	return wxYES == wxMessageBox(pMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION | wxYES_NO | wxNO_DEFAULT);
+	return wxYES == wxMessageBox(pMsg, wxMessageBoxCaptionStr, wxYES_NO | wxNO_DEFAULT | wxCENTRE | wxICON_EXCLAMATION);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -523,7 +523,7 @@ void CConfigActionCallback::PreDelete(wxString const& inMsg)
 	wxString msg(inMsg);
 	msg += wxT("\n\n");
 	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
-	if (wxID_NO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING | wxYES_NO))
+	if (wxID_NO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_WARNING))
 	{
 		m_bContinue = false;
 	}
@@ -532,7 +532,7 @@ void CConfigActionCallback::PreDelete(wxString const& inMsg)
 
 void CConfigActionCallback::PostDelete(wxString const& msg) const
 {
-	wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+	wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 }
 
 
@@ -549,7 +549,7 @@ void CAgilityBookDoc::ImportConfiguration(ARBConfig& update)
 		UpdateAllViews(NULL, &hint);
 	}
 	else
-		wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(_("IDS_CONFIG_NO_UPDATE"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 }
 
 
@@ -586,7 +586,7 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 	if (book.Load(inTree, false, false, true, true, true, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		int countDog = 0;
 		int countRegNumsAdded = 0;
 		int countRegNumsUpdated = 0;
@@ -863,11 +863,11 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_TITLES"), countTitlesUpdated);
 		}
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -880,7 +880,7 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 	if (book.Load(inTree, true, false, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		int nAdded = 0;
 		int nUpdated = 0;
 		for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -909,11 +909,11 @@ bool CAgilityBookDoc::ImportARBCalData(ElementNodePtr inTree, wxWindow* pParent)
 			Modify(true);
 		}
 		wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -926,7 +926,7 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 	if (book.Load(inTree, false, true, false, false, false, err))
 	{
 		if (0 < err.m_ErrMsg.length())
-			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+			wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		int count = 0;
 		for (ARBTrainingList::iterator iter = book.GetTraining().begin(); iter != book.GetTraining().end(); ++iter)
 		{
@@ -945,11 +945,11 @@ bool CAgilityBookDoc::ImportARBLogData(ElementNodePtr inTree, wxWindow* pParent)
 			Modify(true);
 		}
 		wxString str = wxString::Format(_("IDS_ADDED_TRAINING_ITEMS"), count);
-		wxMessageBox(str, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		bOk = true;
 	}
 	else if (0 < err.m_ErrMsg.length())
-		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_WARNING);
+		wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 	return bOk;
 }
 
@@ -1276,7 +1276,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	{
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 		wxMessageBox(_("Sorry, could not open this file."),
-			wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		return false;
 	}
 	wxBusyCursor wait;
@@ -1294,7 +1294,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			msg += wxT("\n\n");
 			msg += err;
 		}
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		return false;
 	}
 	// Translate the tree to a class structure.
@@ -1308,7 +1308,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 			msg += wxT("\n\n");
 			msg += callback.m_ErrMsg;
 		}
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		return false;
 	}
 	else if (0 < callback.m_ErrMsg.length())
@@ -1316,7 +1316,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxString msg(_("IDS_NONFATAL_MSGS"));
 		msg += wxT("\n\n");
 		msg += callback.m_ErrMsg;
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	SortDates();
 
@@ -1402,12 +1402,12 @@ bool CAgilityBookDoc::DoSaveDocument(const wxString& filename)
 		{
 			bAlreadyWarned = true;
 			wxString errMsg = wxString::Format(_("IDS_CANNOT_OPEN"), filename.c_str());
-			wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_EXCLAMATION);
+			wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		}
 	}
 	if (!bOk && !bAlreadyWarned)
 	{
-		wxMessageBox(_("IDS_INTERNAL_ERROR"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_STOP);
+		wxMessageBox(_("IDS_INTERNAL_ERROR"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_STOP);
 	}
 	return bOk;
 }
@@ -1469,7 +1469,7 @@ bool CFindInfo::Search(CDlgFind* pDlg) const
 	else
 	{
 		wxString msg = wxString::Format(_("IDS_CANNOT_FIND"), m_strSearch.c_str());
-		wxMessageBox(msg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 		return false;
 	}
 }
@@ -1607,7 +1607,7 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 		{
 			CDlgFindLinks dlg(m_Records.GetDogs(), wxGetApp().GetTopWindow());
 			if (0 == dlg.GetNumLinks())
-				wxMessageBox(_("IDS_NO_LINKED_FILES"), wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+				wxMessageBox(_("IDS_NO_LINKED_FILES"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 			else
 				dlg.ShowModal();
 		}

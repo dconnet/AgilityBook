@@ -997,7 +997,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						{
 							if (0 < err.m_ErrMsg.length())
 							{
-								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 								progress.SetForegroundWindow();
 							}
 							for (ARBCalendarList::iterator iter = book.GetCalendar().begin(); iter != book.GetCalendar().end(); ++iter)
@@ -1026,6 +1026,8 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 							err += wxT("\n\n");
 							err += _("IDS_USE_PLUGIN");
 						}
+						else
+							flags |= wxOK;
 						if (wxNO == wxMessageBox(err, wxMessageBoxCaptionStr, flags))
 							pData->Disable();
 						progress.SetForegroundWindow();
@@ -1094,7 +1096,7 @@ void CDlgCalendarPlugins::OnPluginAddCalEntry(wxCommandEvent& evt)
 		m_pDoc->Modify(true);
 	}
 	wxString str = wxString::Format(_("IDS_UPDATED_CAL_ITEMS"), nAdded, nUpdated);
-	wxMessageBox(str, wxMessageBoxCaptionStr, wxCENTRE | wxICON_INFORMATION);
+	wxMessageBox(str, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	UpdateControls();
 }
 
