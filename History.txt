@@ -1,6 +1,9 @@
-1/22/2011: v2.2.7.2947 <in development>
+2/12/2011: v2.2.7.<in development>
 - Bug fixes:
   - Include v30/31 configs in test program.
+- New features / Enhancements:
+  - Add DnD support for opening files.
+  - Add DnD support for adding linked files to a run.
 
 1/22/2011: v2.2.6.2947
 - Bumped Configuration v31:

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-02-12 DRC Add DnD support for linked files.
  * @li 2010-01-02 DRC Fix setting of required points with level changes.
  * @li 2009-10-18 DRC Fix prepending of '0' to title points.
  * @li 2009-10-14 DRC Add dog's name to dialog caption.
@@ -111,6 +112,7 @@
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 #include <wx/dcbuffer.h>
+#include <wx/dnd.h>
 
 #include "res/CalEmpty.xpm"
 #include "res/CalPlan.xpm"
@@ -128,6 +130,38 @@
 // the clipboard.
 #define HAS_ENHMETAFILE
 #endif
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+class CLinkDropTarget : public wxFileDropTarget
+{
+public:
+	CLinkDropTarget(CDlgRun* dlg)
+		: m_dlg(dlg)
+	{
+	}
+	virtual bool OnDropFiles(
+			wxCoord x,
+			wxCoord y,
+			wxArrayString const& filenames);
+private:
+	CDlgRun* m_dlg;
+};
+
+
+bool CLinkDropTarget::OnDropFiles(
+		wxCoord x,
+		wxCoord y,
+		wxArrayString const& filenames)
+{
+	for (size_t n = 0; n < filenames.size(); ++n)
+	{
+		m_dlg->m_Run->AddLink(filenames[n]);
+		m_dlg->ListLinkFiles(filenames[n]);
+	}
+	return true;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1313,6 +1347,7 @@ CDlgRun::CDlgRun(
 	m_ctrlLinks->SetHelpText(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->InsertColumn(0, wxT(""));
+	m_ctrlLinks->SetDropTarget(new CLinkDropTarget(this));
 
 	wxButton* btnLinkNew = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_NEW"),
