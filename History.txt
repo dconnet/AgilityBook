@@ -1,4 +1,6 @@
-2/12/2011: v2.2.7.<in development>
+2/25/2011: v2.2.7.<in development>
+- Bumped Configuration v32:
+  - Added USDAA Veteran titles (guess at acronyms)
 - Bug fixes:
   - Include v30/31 configs in test program.
 - New features / Enhancements:
