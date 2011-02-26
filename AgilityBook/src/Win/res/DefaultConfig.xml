@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2011-02-25 DRC Configuration version 32.
+               Added USDAA Veteran titles (guess at acronyms)
 2011-01-18 DRC Configuration version 31.
                Added AKC T2B official start date, updated level (only one).
                Added USDAA Veterans division.
@@ -94,7 +96,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="31">
+  <Configuration version="32">
     <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -3299,6 +3301,31 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="JH - Elementary Agility" Name="Elementary Agility"/>
       <Titles LongName="JH - Intermediate Agility" Name="Intermediate Agility"/>
       <Titles LongName="JH - Senior Agility" Name="Senior Agility"/>
+      <Titles LongName="Veteran Standard Dog" Name="VSD">5 qualifying scores.</Titles>
+      <Titles LongName="Veteran Jumpers Dog" Name="VJD">5 qualifying scores.</Titles>
+      <Titles LongName="Veteran Gamblers Dog" Name="VGD">5 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog" Name="VSD">5 qualifying scores.</Titles>
+      <Titles LongName="Veteran Versatility Dog" Name="VVD">VSD, VJD, VGD, VSD</Titles>
+      <Titles LongName="Veteran Standard Dog - Bronze" Name="VSD-Bronze">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Jumpers Dog - Bronze" Name="VJD-Bronze">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Gamblers Dog - Bronze" Name="VGD-Bronze">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Bronze" Name="VSD-Bronze">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Versatility Dog - Bronze" Name="VVD-Bronze">All Bronze titles</Titles>
+      <Titles LongName="Veteran Standard Dog - Silver" Name="VSD-Silver">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Jumpers Dog - Silver" Name="VJD-Silver">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Gamblers Dog - Silver" Name="VGD-Silver">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Silver" Name="VSD-Silver">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Versatility Dog - Silver" Name="VVD-Silver">All Silver titles</Titles>
+      <Titles LongName="Veteran Standard Dog - Gold" Name="VSD-Gold">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Jumpers Dog - Gold" Name="VJD-Gold">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Gamblers Dog - Gold" Name="VGD-Gold">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Gold" Name="VSD-Gold">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Versatility Dog - Gold" Name="VVD-Gold">All Gold titles</Titles>
+      <Titles LongName="Veteran Standard Dog - Platinum" Name="VSD-Platinum">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Jumpers Dog - Platinum" Name="VJD-Platinum">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Gamblers Dog - Platinum" Name="VGD-Platinum">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Platinum" Name="VSD-Platinum">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Versatility Dog - Platinum" Name="VVD-Platinum">All Platinum titles</Titles>
       <Division Name="Championship">
         <Level Name="International"/>
         <Level Name="Nationals"/>
