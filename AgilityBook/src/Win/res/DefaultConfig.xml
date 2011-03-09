@@ -6,6 +6,7 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2011-02-25 DRC Configuration version 32.
                Added USDAA Veteran titles (guess at acronyms)
+               Updated AKC PACH title start.
 2011-01-18 DRC Configuration version 31.
                Added AKC T2B official start date, updated level (only one).
                Added USDAA Veterans division.
@@ -398,7 +399,7 @@ Revision History:
       <Titles LongName="Master Bronze FAST Preferred Title" Name="MFPB" ValidFrom="2012-7-1">25 Qs</Titles>
       <Titles LongName="Master Silver FAST Preferred Title" Name="MFPS" ValidFrom="2012-7-1">50 Qs</Titles>
       <Titles LongName="Master Gold FAST Preferred Title" Name="MFPG" ValidFrom="2012-7-1">75 Qs</Titles>
-      <Titles LongName="Preferred Agility Champion" Multiple="2" Name="PACH" Prefix="y" ValidFrom="2013-1-1">20 Double Qs, 750 championship points</Titles>
+      <Titles LongName="Preferred Agility Champion" Multiple="2" Name="PACH" Prefix="y" ValidFrom="2011-7-1">20 Double Qs, 750 championship points</Titles>
       <Division Name="ISC">
         <Level Name="Excellent B"/>
       </Division>
@@ -435,7 +436,7 @@ Revision History:
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
-          <Note>PACH points start accumulated 1-Jan-2013 and are retroactive.</Note>
+          <Note>PACH title starts 7-Jul-2011 and points are retroactive.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
@@ -463,7 +464,7 @@ Revision History:
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Preferred" Level="Excellent B" dropFractions="y" speedPts="y" timeFault="3" type="Faults100ThenTime">
-          <Note>PACH points start accumulated 1-Jan-2013 and are retroactive.</Note>
+          <Note>PACH title starts 7-Jul-2011 and points are retroactive.</Note>
           <TitlePoints Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="*" Level="Excellent A" dropFractions="y" timeFault="3" type="Faults100ThenTime">
