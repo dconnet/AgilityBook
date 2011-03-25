@@ -2582,6 +2582,15 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler" Multiple="4" Name="JH-NATCH" Prefix="y" ValidTo="2005-12-9">Points are the same as NATCH.</Titles>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Outstanding Performance" Name="O-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
       <Titles LongName="NADAC Agility Trial Champion-Jr. Handler Superior Performance" Name="S-JH-NATCH" Prefix="y" ValidTo="2005-12-9"/>
+      <Titles LongName="Extreme Chances" Name="XCC">300 points</Titles>
+      <Titles LongName="Outstanding Extreme Chances" Name="O-XCC">600 points</Titles>
+      <Titles LongName="Superior Extreme Chances" Name="S-XCC">1000 points</Titles>
+      <Titles LongName="Extreme Hoopers" Name="XHP">300 points</Titles>
+      <Titles LongName="Outstanding Extreme Hoopers" Name="O-XHP">600 points</Titles>
+      <Titles LongName="Superior Extreme Hoopers" Name="S-XHP">1000 points</Titles>
+      <Titles LongName="Extreme Tunnelers" Name="XTN">300 points</Titles>
+      <Titles LongName="Outstanding Extreme Tunnelers" Name="O-XTN">600 points</Titles>
+      <Titles LongName="Superior Extreme Tunnelers" Name="S-XTN">1000 points</Titles>
       <Division Name="Proficient">
         <Level Name="Novice">
           <SubLevel Name="Novice A"/>
