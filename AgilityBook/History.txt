@@ -3,6 +3,7 @@
   - Added USDAA Veteran titles (guess at acronyms)
   - Updated USDAA Performance titles
   - Updated AKC PACH title start.
+  - Added NADAC Extreme games.
 - Bug fixes:
   - Include v30/31 configs in test program.
 - New features / Enhancements:
