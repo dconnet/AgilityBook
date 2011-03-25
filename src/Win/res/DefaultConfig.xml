@@ -8,6 +8,7 @@ Revision History:
                Added USDAA Veteran titles (guess at acronyms)
                Updated USDAA Performance titles
                Updated AKC PACH title start.
+               Added NADAC Extreme games.
 2011-01-18 DRC Configuration version 31.
                Added AKC T2B official start date, updated level (only one).
                Added USDAA Veterans division.
@@ -2796,6 +2797,33 @@ Was called Wild Card briefly.</Desc>
         <Scoring Division="Skilled" Level="*" ValidFrom="2006-1-1" bonusPts="y" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="10"/>
           <LifeTime Faults="0" Points="10"/>
+        </Scoring>
+      </Event>
+      <Event Name="Extreme Chances">
+        <Desc>Use Bonus Points to enter earned points</Desc>
+        <Scoring Division="Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Extreme Hoopers">
+        <Desc>Use Bonus Points to enter earned points</Desc>
+        <Scoring Division="Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+      </Event>
+      <Event Name="Extreme Tunnelers">
+        <Desc>Use Bonus Points to enter earned points</Desc>
+        <Scoring Division="Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
+        </Scoring>
+        <Scoring Division="Skilled" Level="*" bonusPts="y" type="TimePlusFaults">
+          <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
     </Venue>
