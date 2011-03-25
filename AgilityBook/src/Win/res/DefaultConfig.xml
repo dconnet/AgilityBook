@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2011-02-25 DRC Configuration version 32.
+2011-03-24 DRC Configuration version 32.
                Added USDAA Veteran titles (guess at acronyms)
+               Updated USDAA Performance titles
                Updated AKC PACH title start.
 2011-01-18 DRC Configuration version 31.
                Added AKC T2B official start date, updated level (only one).
@@ -117,7 +118,59 @@ Revision History:
     <Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCH" OldName="APD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCH-Bronze" OldName="APD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCH-Silver" OldName="APD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCH-Gold" OldName="APD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCH-Platinum" OldName="APD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTM" OldName="ATD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTM-Bronze" OldName="ATD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTM-Silver" OldName="ATD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTM-Gold" OldName="ATD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTM-Platinum" OldName="ATD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCH" OldName="ASD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCH-Bronze" OldName="ASD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCH-Silver" OldName="ASD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCH-Gold" OldName="ASD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCH-Platinum" OldName="ASD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCH" OldName="AJD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCH-Bronze" OldName="AJD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCH-Silver" OldName="AJD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCH-Gold" OldName="AJD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCH-Platinum" OldName="AJD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCH" OldName="AGD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCH-Bronze" OldName="AGD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCH-Silver" OldName="AGD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCH-Gold" OldName="AGD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCH-Platinum" OldName="AGD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCH" OldName="AKD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCH-Bronze" OldName="AKD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCH-Silver" OldName="AKD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCH-Gold" OldName="AKD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCH-Platinum" OldName="AKD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCH" OldName="ARD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCH-Bronze" OldName="ARD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCH-Silver" OldName="ARD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCH-Gold" OldName="ARD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCH-Platinum" OldName="ARD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PD" OldName="PD1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPS" OldName="PS1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPJ" OldName="PJ1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPG" OldName="PG1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPK" OldName="PK1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPR" OldName="PR1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APD" OldName="PD2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APS" OldName="PS2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APJ" OldName="PJ2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APG" OldName="PG2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APK" OldName="PK2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APR" OldName="PR2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="MPD" OldName="PD3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSM" OldName="PS3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJM" OldName="PJ3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGM" OldName="PG3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKM" OldName="PK3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRM" OldName="PR3" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
     <Action NewName="Triple Superior-Novice" OldName="Novice Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
     <Action NewName="Triple Superior-Open" OldName="Open Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
@@ -3240,64 +3293,83 @@ TG3 + 10 Qs in at least 5 games
 [Before 1/1/2007, minimums had to come from Ch]</Titles>
       <Titles LongName="Lifetime Achievement Award Platinum" Name="LAA Platinum">500 points qualifying scores among standand and nonstandard classes and Grand Prix of Dog Agility tournment classes (Championship and Performance), with a minimum of 50 qualifying scores in each standard and nonstandard classes.
 [Before 1/1/2007, minimums had to come from Ch]</Titles>
-      <Titles LongName="Performance Dog I" Name="PD1">Performance Standard I title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.
+      <Titles LongName="Performance Dog" Name="PD">SPS title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.
+[Name change 1/1/2011] From PD1
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
-      <Titles LongName="Performance Standard I" Name="PS1">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Jumpers I" Name="PJ1">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Gamblers I" Name="PG1">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Snooker I" Name="PK1">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Relay I" Name="PR1">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Dog II" Name="PD2">Performance Standard II title plus 1 qualifying score in each of the 3 Performance I nonstandard classes.
+      <Titles LongName="Starters Performance Standard" Name="SPS">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PS1</Titles>
+      <Titles LongName="Starters Performance Jumper" Name="SPJ">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PJ1</Titles>
+      <Titles LongName="Starters Performance Gambler" Name="SPG">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PG1</Titles>
+      <Titles LongName="Starters Performance Snooker" Name="SPK">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PK1</Titles>
+      <Titles LongName="Starters Performance Relay" Name="SPR">3 qualifying scores with 3 different partners under at least 2 different judges.
+[Name change 1/1/2011] From PR1</Titles>
+      <Titles LongName="Advanced Performance Dog" Name="APD">APS title plus 1 qualifying score in each of the 3 Performance II nonstandard classes.
+[Name change 1/1/2011] From PD2
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
-      <Titles LongName="Performance Standard II" Name="PS2">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Gamblers II" Name="PG2">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Jumpers II" Name="PJ2">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Snooker II" Name="PK2">3 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Relay II" Name="PR2">3 qualifying scores with 3 different partners under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Dog III" Name="PD3">3 qualifying scores in the Performance III Standard class plus 1 qualifying score in each of the 3 Performance III nonstandard classes.
+      <Titles LongName="Advanced Performance Standard" Name="APS">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PS2</Titles>
+      <Titles LongName="Advanced Performance Jumper" Name="APJ">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PJ2</Titles>
+      <Titles LongName="Advanced Performance Gambler" Name="APG">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PG2</Titles>
+      <Titles LongName="Advanced Performance Snooker" Name="APK">3 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PK2</Titles>
+      <Titles LongName="Advanced Performance Relay" Name="APR">3 qualifying scores with 3 different partners under at least 2 different judges.
+[Name change 1/1/2011] From PR2</Titles>
+      <Titles LongName="Masters Performance Dog" Name="MPD">3 qualifying scores in the PSM class plus 1 qualifying score in each of the 3 Performance III nonstandard classes.
+[Name change 1/1/2011] From PD3
 [Before 1/1/2004] 3 Qs earned from at least 2 different judges</Titles>
-      <Titles LongName="Performance Standard III" Name="PS3">5 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Gambler III" Name="PG3">5 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Jumper III" Name="PJ3">5 qualifying scores earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Snooker III" Name="PK3">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.</Titles>
-      <Titles LongName="Performance Relay III" Name="PR3">5 qualifying scores with 5 different partners under at least 2 different judges.</Titles>
-      <Titles LongName="Accomplished Performance Dog" Name="APD" Prefix="y">PS3, PG3, PJ3, PK3, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament
+      <Titles LongName="Performance Standard Master" Name="PSM">5 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PS3</Titles>
+      <Titles LongName="Performance Jumper Master" Name="PJM">5 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PJ3</Titles>
+      <Titles LongName="Performance Gambler Master" Name="PGM">5 qualifying scores earned under at least 2 different judges.
+[Name change 1/1/2011] From PG3</Titles>
+      <Titles LongName="Performance Snooker Master" Name="PKM">5 qualifying scores with at least 3 Super Qs earned under at least 2 different judges.
+[Name change 1/1/2011] From PK3</Titles>
+      <Titles LongName="Performance Relay Master" Name="PRM">5 qualifying scores with 5 different partners under at least 2 different judges.
+[Name change 1/1/2011] From PR3</Titles>
+      <Titles LongName="Performance Dog Champion" Name="PDCH" Prefix="y">PSM, PGM, PJM, PKM, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament
+[Name change 1/1/2011] From APD
 [Earned PD3 before 1/1/2005] PD3, PG3, PJ3, PK3, plus 2 Standard Qs
 [Earned PD3 before 1/1/2000] PD3</Titles>
-      <Titles LongName="Accomplished Performance Dog - Bronze" Name="APD-Bronze" Prefix="y">All Bronze titles</Titles>
-      <Titles LongName="Accomplished Performance Dog - Silver" Name="APD-Silver" Prefix="y">All Silver titles</Titles>
-      <Titles LongName="Accomplished Performance Dog - Gold" Name="APD-Gold" Prefix="y">All Gold titles</Titles>
-      <Titles LongName="Accomplished Performance Dog - Platinum" Name="APD-Platinum" Prefix="y">All Platinum titles</Titles>
-      <Titles LongName="Accomplished Standard Dog" Name="ASD">PS3 plus 5 additional qualifying scores in Performance III Standard class</Titles>
-      <Titles LongName="Accomplished Standard Dog - Bronze" Name="ASD-Bronze">15 qualifying scores in Performance III Standard</Titles>
-      <Titles LongName="Accomplished Standard Dog - Silver" Name="ASD-Silver">25 qualifying scores in Performance III Standard</Titles>
-      <Titles LongName="Accomplished Standard Dog - Gold" Name="ASD-Gold">35 qualifying scores in Performance III Standard</Titles>
-      <Titles LongName="Accomplished Standard Dog - Platinum" Name="ASD-Platinum">50 qualifying scores in Performance III Standard</Titles>
-      <Titles LongName="Accomplished Jumpers Dog" Name="AJD">PJ3 plus 5 additional qualifying scores in Performance III Jumpers class</Titles>
-      <Titles LongName="Accomplished Jumpers Dog - Bronze" Name="AJD-Bronze">15 qualifying scores in Performance III Jumpers</Titles>
-      <Titles LongName="Accomplished Jumpers Dog - Silver" Name="AJD-Silver">25 qualifying scores in Performance III Jumpers</Titles>
-      <Titles LongName="Accomplished Jumpers Dog - Gold" Name="AJD-Gold">35 qualifying scores in Performance III Jumpers</Titles>
-      <Titles LongName="Accomplished Jumpers Dog - Platinum" Name="AJD-Platinum">50 qualifying scores in Performance III Jumpers</Titles>
-      <Titles LongName="Accomplished Gamblers Dog" Name="AGD">PG3 plus 5 additional qualifying scores in Performance III Gamblers class</Titles>
-      <Titles LongName="Accomplished Gamblers Dog - Bronze" Name="AGD-Bronze">15 qualifying scores in Performance III Gamblers</Titles>
-      <Titles LongName="Accomplished Gamblers Dog - Silver" Name="AGD-Silver">25 qualifying scores in Performance III Gamblers</Titles>
-      <Titles LongName="Accomplished Gamblers Dog - Gold" Name="AGD-Gold">35 qualifying scores in Performance III Gamblers</Titles>
-      <Titles LongName="Accomplished Gamblers Dog - Platinum" Name="AGD-Platinum">50 qualifying scores in Performance III Gamblers</Titles>
-      <Titles LongName="Accomplished Snooker Dog" Name="AKD">PK3 plus 5 additional qualifying scores in Performance III Snooker class</Titles>
-      <Titles LongName="Accomplished Snooker Dog - Bronze" Name="AKD-Bronze">15 qualifying scores in Performance III Snooker</Titles>
-      <Titles LongName="Accomplished Snooker Dog - Silver" Name="AKD-Silver">25 qualifying scores in Performance III Snooker</Titles>
-      <Titles LongName="Accomplished Snooker Dog - Gold" Name="AKD-Gold">35 qualifying scores in Performance III Snooker</Titles>
-      <Titles LongName="Accomplished Snooker Dog - Platinum" Name="AKD-Platinum">50 qualifying scores in Performance III Snooker</Titles>
-      <Titles LongName="Accomplished Relay Dog" Name="ARD">10 qualifying scores in Performance III Relay class</Titles>
-      <Titles LongName="Accomplished Relay Dog - Bronze" Name="ARD-Bronze">15 qualifying scores in Performance III Relay class</Titles>
-      <Titles LongName="Accomplished Relay Dog - Silver" Name="ARD-Silver">25 qualifying scores in Performance III Relay class</Titles>
-      <Titles LongName="Accomplished Relay Dog - Gold" Name="ARD-Gold">35 qualifying scores in Performance III Relay class</Titles>
-      <Titles LongName="Accomplished Relay Dog - Platinum" Name="ARD-Platinum">50 qualifying scores in Performance III Relay class</Titles>
-      <Titles LongName="Accomplished Tournament Dog" Name="ATD">10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
-      <Titles LongName="Accomplished Tournament Dog - Bronze" Name="ATD-Bronze">15 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Accomplished Tournament Dog - Silver" Name="ATD-Silver">25 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Accomplished Tournament Dog - Gold" Name="ATD-Gold">35 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Accomplished Tournament Dog - Platinum" Name="ATD-Platinum">50 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Champion Dog - Bronze" Name="PDCH-Bronze" Prefix="y">All Bronze titles</Titles>
+      <Titles LongName="Performance Champion Dog - Silver" Name="PDCH-Silver" Prefix="y">All Silver titles</Titles>
+      <Titles LongName="Performance Champion Dog - Gold" Name="PDCH-Gold" Prefix="y">All Gold titles</Titles>
+      <Titles LongName="Performance Champion Dog - Platinum" Name="PDCH-Platinum" Prefix="y">All Platinum titles</Titles>
+      <Titles LongName="Performance Standard Champion" Name="PSCH">PSM plus 5 additional qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Bronze" Name="PSCH-Bronze">15 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Silver" Name="PSCH-Silver">25 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Gold" Name="PSCH-Gold">35 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Platinum" Name="PSCH-Platinum">50 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Jumpers Champion" Name="PJCH">PJM plus 5 additional qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Bronze" Name="PJCH-Bronze">15 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Silver" Name="PJCH-Silver">25 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Gold" Name="PJCH-Gold">35 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Platinum" Name="PJCH-Platinum">50 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Gamblers Champion" Name="PGCH">PGM plus 5 additional qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Bronze" Name="PGCH-Bronze">15 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Silver" Name="PGCH-Silver">25 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Gold" Name="PGCH-Gold">35 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Platinum" Name="PGCH-Platinum">50 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Snooker Champion" Name="PKCH">PKM plus 5 additional qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Bronze" Name="PKCH-Bronze">15 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Silver" Name="PKCH-Silver">25 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Gold" Name="PKCH-Gold">35 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Platinum" Name="PKCH-Platinum">50 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Relay Champion" Name="PRCH">10 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Bronze" Name="PRCH-Bronze">15 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Silver" Name="PRCH-Silver">25 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Gold" Name="PRCH-Gold">35 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Platinum" Name="PRCH-Platinum">50 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Tournament Master" Name="PTM">10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
+      <Titles LongName="Performance Tournament Master - Bronze" Name="PTM-Bronze">15 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Silver" Name="PTM-Silver">25 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Gold" Name="PTM-Gold">35 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Platinum" Name="PTM-Platinum">50 qualifying scores in Performance Grand Prix</Titles>
       <Titles LongName="JH - Beginners Agility" Name="Beginners Agility"/>
       <Titles LongName="JH - Elementary Agility" Name="Elementary Agility"/>
       <Titles LongName="JH - Intermediate Agility" Name="Intermediate Agility"/>
@@ -3305,27 +3377,27 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Veteran Standard Dog" Name="VSD">5 qualifying scores.</Titles>
       <Titles LongName="Veteran Jumpers Dog" Name="VJD">5 qualifying scores.</Titles>
       <Titles LongName="Veteran Gamblers Dog" Name="VGD">5 qualifying scores.</Titles>
-      <Titles LongName="Veteran Snooker Dog" Name="VSD">5 qualifying scores.</Titles>
-      <Titles LongName="Veteran Versatility Dog" Name="VVD">VSD, VJD, VGD, VSD</Titles>
+      <Titles LongName="Veteran Snooker Dog" Name="VKD">5 qualifying scores.</Titles>
+      <Titles LongName="Veteran Versatility Dog" Name="VVD">VSD, VJD, VGD, VKD</Titles>
       <Titles LongName="Veteran Standard Dog - Bronze" Name="VSD-Bronze">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Jumpers Dog - Bronze" Name="VJD-Bronze">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Gamblers Dog - Bronze" Name="VGD-Bronze">15 qualifying scores.</Titles>
-      <Titles LongName="Veteran Snooker Dog - Bronze" Name="VSD-Bronze">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Bronze" Name="VKD-Bronze">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Versatility Dog - Bronze" Name="VVD-Bronze">All Bronze titles</Titles>
       <Titles LongName="Veteran Standard Dog - Silver" Name="VSD-Silver">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Jumpers Dog - Silver" Name="VJD-Silver">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Gamblers Dog - Silver" Name="VGD-Silver">15 qualifying scores.</Titles>
-      <Titles LongName="Veteran Snooker Dog - Silver" Name="VSD-Silver">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Silver" Name="VKD-Silver">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Versatility Dog - Silver" Name="VVD-Silver">All Silver titles</Titles>
       <Titles LongName="Veteran Standard Dog - Gold" Name="VSD-Gold">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Jumpers Dog - Gold" Name="VJD-Gold">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Gamblers Dog - Gold" Name="VGD-Gold">15 qualifying scores.</Titles>
-      <Titles LongName="Veteran Snooker Dog - Gold" Name="VSD-Gold">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Gold" Name="VKD-Gold">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Versatility Dog - Gold" Name="VVD-Gold">All Gold titles</Titles>
       <Titles LongName="Veteran Standard Dog - Platinum" Name="VSD-Platinum">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Jumpers Dog - Platinum" Name="VJD-Platinum">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Gamblers Dog - Platinum" Name="VGD-Platinum">15 qualifying scores.</Titles>
-      <Titles LongName="Veteran Snooker Dog - Platinum" Name="VSD-Platinum">15 qualifying scores.</Titles>
+      <Titles LongName="Veteran Snooker Dog - Platinum" Name="VKD-Platinum">15 qualifying scores.</Titles>
       <Titles LongName="Veteran Versatility Dog - Platinum" Name="VVD-Platinum">All Platinum titles</Titles>
       <Division Name="Championship">
         <Level Name="International"/>
