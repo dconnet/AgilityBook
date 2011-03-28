@@ -22,7 +22,7 @@ Once the above software is unpacked, the directory structure should look like:
 --------------------
 
 wxWidgets: http://www.wxwidgets.org/
-I'm currently using version 2.8.11. Previously released with 2.8.10.
+I'm currently using version 2.8.12. Previously released with 2.8.10/.11.
 Also, kept current with development trunk of 2.9.x.
 Make sure WXWIN is set to wxWidgets root directory.
 
@@ -33,6 +33,15 @@ Make sure WXWIN is set to wxWidgets root directory.
     the library is compiled one way and the users do something different.
 
 === wx2.9.0: Not supported
+
+=== Changes to 2.8.12:
+-[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
+  - WXWIN_COMPATIBILITY_2_6 0
+-[win]- include/msvc/wx/setup.h:
+  [same as 2.8..10]
+-[win]- src/msw/stdpaths.cpp
+  - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
+    directory from the appdir, which causes problems.
 
 === Changes to 2.8.11:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
@@ -121,7 +130,7 @@ to:
         GetChoiceCtrl()->Select(m_selection);  <-----
     }
 
-To build for VC, see src/Projects/CompileWX.bat
+To build for VC, see src/Projects/CompileWX.py
 
 --------------------
 
