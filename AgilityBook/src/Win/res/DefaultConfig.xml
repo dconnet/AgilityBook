@@ -4,7 +4,7 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2011-03-24 DRC Configuration version 32.
+2011-03-29 DRC Configuration version 32.
                Added USDAA Veteran titles (guess at acronyms)
                Updated USDAA Performance titles
                Updated AKC PACH title start.
@@ -120,40 +120,40 @@ Revision History:
     <Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PDCH" OldName="APD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PDCH-Bronze" OldName="APD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PDCH-Silver" OldName="APD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PDCH-Gold" OldName="APD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PDCH-Platinum" OldName="APD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHB" OldName="APD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHS" OldName="APD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHG" OldName="APD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHP" OldName="APD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PTM" OldName="ATD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PTM-Bronze" OldName="ATD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PTM-Silver" OldName="ATD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PTM-Gold" OldName="ATD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PTM-Platinum" OldName="ATD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMB" OldName="ATD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMS" OldName="ATD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMG" OldName="ATD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMP" OldName="ATD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PSCH" OldName="ASD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PSCH-Bronze" OldName="ASD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PSCH-Silver" OldName="ASD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PSCH-Gold" OldName="ASD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PSCH-Platinum" OldName="ASD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHB" OldName="ASD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHS" OldName="ASD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHG" OldName="ASD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHP" OldName="ASD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PJCH" OldName="AJD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PJCH-Bronze" OldName="AJD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PJCH-Silver" OldName="AJD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PJCH-Gold" OldName="AJD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PJCH-Platinum" OldName="AJD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHB" OldName="AJD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHS" OldName="AJD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHG" OldName="AJD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHP" OldName="AJD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PGCH" OldName="AGD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PGCH-Bronze" OldName="AGD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PGCH-Silver" OldName="AGD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PGCH-Gold" OldName="AGD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PGCH-Platinum" OldName="AGD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHB" OldName="AGD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHS" OldName="AGD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHG" OldName="AGD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHP" OldName="AGD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PKCH" OldName="AKD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PKCH-Bronze" OldName="AKD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PKCH-Silver" OldName="AKD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PKCH-Gold" OldName="AKD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PKCH-Platinum" OldName="AKD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHB" OldName="AKD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHS" OldName="AKD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHG" OldName="AKD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHP" OldName="AKD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PRCH" OldName="ARD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PRCH-Bronze" OldName="ARD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PRCH-Silver" OldName="ARD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PRCH-Gold" OldName="ARD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action NewName="PRCH-Platinum" OldName="ARD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHB" OldName="ARD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHS" OldName="ARD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHG" OldName="ARD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHP" OldName="ARD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="PD" OldName="PD1" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="SPS" OldName="PS1" Venue="USDAA" Verb="RenameTitle"/>
     <Action NewName="SPJ" OldName="PJ1" Venue="USDAA" Verb="RenameTitle"/>
@@ -3373,40 +3373,40 @@ TG3 + 10 Qs in at least 5 games
 [Name change 1/1/2011] From APD
 [Earned PD3 before 1/1/2005] PD3, PG3, PJ3, PK3, plus 2 Standard Qs
 [Earned PD3 before 1/1/2000] PD3</Titles>
-      <Titles LongName="Performance Champion Dog - Bronze" Name="PDCH-Bronze" Prefix="y">All Bronze titles</Titles>
-      <Titles LongName="Performance Champion Dog - Silver" Name="PDCH-Silver" Prefix="y">All Silver titles</Titles>
-      <Titles LongName="Performance Champion Dog - Gold" Name="PDCH-Gold" Prefix="y">All Gold titles</Titles>
-      <Titles LongName="Performance Champion Dog - Platinum" Name="PDCH-Platinum" Prefix="y">All Platinum titles</Titles>
+      <Titles LongName="Performance Champion Dog - Bronze" Name="PDCHB" Prefix="y">All Bronze titles</Titles>
+      <Titles LongName="Performance Champion Dog - Silver" Name="PDCHS" Prefix="y">All Silver titles</Titles>
+      <Titles LongName="Performance Champion Dog - Gold" Name="PDCHG" Prefix="y">All Gold titles</Titles>
+      <Titles LongName="Performance Champion Dog - Platinum" Name="PDCHP" Prefix="y">All Platinum titles</Titles>
       <Titles LongName="Performance Standard Champion" Name="PSCH">PSM plus 5 additional qualifying scores in PSM</Titles>
-      <Titles LongName="Performance Standard Champion - Bronze" Name="PSCH-Bronze">15 qualifying scores in PSM</Titles>
-      <Titles LongName="Performance Standard Champion - Silver" Name="PSCH-Silver">25 qualifying scores in PSM</Titles>
-      <Titles LongName="Performance Standard Champion - Gold" Name="PSCH-Gold">35 qualifying scores in PSM</Titles>
-      <Titles LongName="Performance Standard Champion - Platinum" Name="PSCH-Platinum">50 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Bronze" Name="PSCHB">15 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Silver" Name="PSCHS">25 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Gold" Name="PSCHG">35 qualifying scores in PSM</Titles>
+      <Titles LongName="Performance Standard Champion - Platinum" Name="PSCHP">50 qualifying scores in PSM</Titles>
       <Titles LongName="Performance Jumpers Champion" Name="PJCH">PJM plus 5 additional qualifying scores in PJM</Titles>
-      <Titles LongName="Performance Jumpers Champion - Bronze" Name="PJCH-Bronze">15 qualifying scores in PJM</Titles>
-      <Titles LongName="Performance Jumpers Champion - Silver" Name="PJCH-Silver">25 qualifying scores in PJM</Titles>
-      <Titles LongName="Performance Jumpers Champion - Gold" Name="PJCH-Gold">35 qualifying scores in PJM</Titles>
-      <Titles LongName="Performance Jumpers Champion - Platinum" Name="PJCH-Platinum">50 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Bronze" Name="PJCHB">15 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Silver" Name="PJCHS">25 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Gold" Name="PJCHG">35 qualifying scores in PJM</Titles>
+      <Titles LongName="Performance Jumpers Champion - Platinum" Name="PJCHP">50 qualifying scores in PJM</Titles>
       <Titles LongName="Performance Gamblers Champion" Name="PGCH">PGM plus 5 additional qualifying scores in PGM</Titles>
-      <Titles LongName="Performance Gamblers Champion - Bronze" Name="PGCH-Bronze">15 qualifying scores in PGM</Titles>
-      <Titles LongName="Performance Gamblers Champion - Silver" Name="PGCH-Silver">25 qualifying scores in PGM</Titles>
-      <Titles LongName="Performance Gamblers Champion - Gold" Name="PGCH-Gold">35 qualifying scores in PGM</Titles>
-      <Titles LongName="Performance Gamblers Champion - Platinum" Name="PGCH-Platinum">50 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Bronze" Name="PGCHB">15 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Silver" Name="PGCHS">25 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Gold" Name="PGCHG">35 qualifying scores in PGM</Titles>
+      <Titles LongName="Performance Gamblers Champion - Platinum" Name="PGCHP">50 qualifying scores in PGM</Titles>
       <Titles LongName="Performance Snooker Champion" Name="PKCH">PKM plus 5 additional qualifying scores in PKM</Titles>
-      <Titles LongName="Performance Snooker Champion - Bronze" Name="PKCH-Bronze">15 qualifying scores in PKM</Titles>
-      <Titles LongName="Performance Snooker Champion - Silver" Name="PKCH-Silver">25 qualifying scores in PKM</Titles>
-      <Titles LongName="Performance Snooker Champion - Gold" Name="PKCH-Gold">35 qualifying scores in PKM</Titles>
-      <Titles LongName="Performance Snooker Champion - Platinum" Name="PKCH-Platinum">50 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Bronze" Name="PKCHB">15 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Silver" Name="PKCHS">25 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Gold" Name="PKCHG">35 qualifying scores in PKM</Titles>
+      <Titles LongName="Performance Snooker Champion - Platinum" Name="PKCHP">50 qualifying scores in PKM</Titles>
       <Titles LongName="Performance Relay Champion" Name="PRCH">10 qualifying scores in PRM</Titles>
-      <Titles LongName="Performance Relay Champion - Bronze" Name="PRCH-Bronze">15 qualifying scores in PRM</Titles>
-      <Titles LongName="Performance Relay Champion - Silver" Name="PRCH-Silver">25 qualifying scores in PRM</Titles>
-      <Titles LongName="Performance Relay Champion - Gold" Name="PRCH-Gold">35 qualifying scores in PRM</Titles>
-      <Titles LongName="Performance Relay Champion - Platinum" Name="PRCH-Platinum">50 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Bronze" Name="PRCHB">15 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Silver" Name="PRCHS">25 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Gold" Name="PRCHG">35 qualifying scores in PRM</Titles>
+      <Titles LongName="Performance Relay Champion - Platinum" Name="PRCHP">50 qualifying scores in PRM</Titles>
       <Titles LongName="Performance Tournament Master" Name="PTM">10 qualifying scores in Performance Grand Prix of Dog Agility® tournament.</Titles>
-      <Titles LongName="Performance Tournament Master - Bronze" Name="PTM-Bronze">15 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Silver" Name="PTM-Silver">25 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Gold" Name="PTM-Gold">35 qualifying scores in Performance Grand Prix</Titles>
-      <Titles LongName="Performance Tournament Master - Platinum" Name="PTM-Platinum">50 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Bronze" Name="PTMB">15 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Silver" Name="PTMS">25 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Gold" Name="PTMG">35 qualifying scores in Performance Grand Prix</Titles>
+      <Titles LongName="Performance Tournament Master - Platinum" Name="PTMP">50 qualifying scores in Performance Grand Prix</Titles>
       <Titles LongName="JH - Beginners Agility" Name="Beginners Agility"/>
       <Titles LongName="JH - Elementary Agility" Name="Elementary Agility"/>
       <Titles LongName="JH - Intermediate Agility" Name="Intermediate Agility"/>
