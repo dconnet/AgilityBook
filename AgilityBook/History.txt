@@ -1,5 +1,6 @@
-3/24/2011: v2.2.7.<in development>
+4/4/2011: v2.2.7.<in development>
 - Bumped Configuration v32:
+  - Added USDAA Intro (guess at acronyms)
   - Added USDAA Veteran titles (guess at acronyms)
   - Updated USDAA Performance titles
   - Updated AKC PACH title start.
