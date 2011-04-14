@@ -21,6 +21,7 @@ Command line options
    ("" to suppress)
 
 Revision History
+2011-04-14 DRC Add System.AppUserModel.ID to support recent used files.
 2011-01-18 DRC Update VersionNT checks to agree with how code is compiled.
 2010-12-24 DRC Oops, Using NeverOverwrite breaks on upgrade.
 2010-12-23 DRC Minor tweak to change type51CA+Seq to SetProperty element.
@@ -239,6 +240,7 @@ Revision History
 				Name="$(var.DEFFOLDER)"
 				Target="[INSTALLDIR]AgilityBook.exe">
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
+				<ShortcutProperty Key="System.AppUserModel.ID" Value="[Manufacturer].[AppName]" />
 			</Shortcut>
 			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
 		</Component>
