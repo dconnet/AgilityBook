@@ -35,6 +35,7 @@ public:
 	CGenericValidator(CGenericValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CGenericValidator(*this);}
+	bool Copy(CGenericValidator const& val);
 
 	virtual bool TransferFromWindow();
 	virtual bool TransferToWindow();
@@ -68,6 +69,8 @@ public:
 	CTrimValidator(CTrimValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CTrimValidator(*this);}
+	bool Copy(CTrimValidator const& val);
+
 	virtual bool TransferFromWindow();
 	virtual bool Validate(wxWindow* parent);
 

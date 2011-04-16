@@ -71,6 +71,17 @@ CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
 }
 
 
+bool CGenericValidator::Copy(CGenericValidator const& val)
+{
+	wxValidator::Copy(val);
+	m_pShort = val.m_pShort;
+	m_pDouble = val.m_pDouble;
+	m_Prec = val.m_Prec;
+	m_pDate = val.m_pDate;
+	return true;
+}
+
+
 bool CGenericValidator::TransferFromWindow()
 {
 	// Following the example of wxGenericValidator
@@ -180,6 +191,16 @@ CTrimValidator::CTrimValidator(CTrimValidator const& rhs)
 	: wxGenericValidator(rhs)
 	, m_TrimStyle(rhs.m_TrimStyle)
 {
+	Copy(rhs);
+}
+
+
+bool CTrimValidator::Copy(CTrimValidator const& val)
+{
+	wxGenericValidator::Copy(val);
+	m_TrimStyle = val.m_TrimStyle;
+	m_ErrMsg = val.m_ErrMsg;
+	return true;
 }
 
 
