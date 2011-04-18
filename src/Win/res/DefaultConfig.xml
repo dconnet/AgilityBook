@@ -4,12 +4,13 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2011-04-04 DRC Configuration version 32.
+2011-04-18 DRC Configuration version 32.
                Added USDAA Intro (guess at acronyms)
                Added USDAA Veteran titles (guess at acronyms)
                Updated USDAA Performance titles
                Updated AKC PACH title start.
                Added NADAC Extreme games.
+               Updated PDCH description (way out of date)
 2011-01-18 DRC Configuration version 31.
                Added AKC T2B official start date, updated level (only one).
                Added USDAA Veterans division.
@@ -3370,8 +3371,9 @@ TG3 + 10 Qs in at least 5 games
 [Name change 1/1/2011] From PK3</Titles>
       <Titles LongName="Performance Relay Master" Name="PRM">5 qualifying scores with 5 different partners under at least 2 different judges.
 [Name change 1/1/2011] From PR3</Titles>
-      <Titles LongName="Performance Dog Champion" Name="PDCH" Prefix="y">PSM, PGM, PJM, PKM, plus 5 qualifying scores in Performance Grand Prix of Dog Agility® tournament
+      <Titles LongName="Performance Dog Champion" Name="PDCH" Prefix="y">PSM, PGM, PJM, PKM, plus 5 qualifying scores in Performance tournament competition with at least 1 qualifying score in each tournament
 [Name change 1/1/2011] From APD
+[Earned PDCH before 9/23/2006] PD3, PG3, PJ3, PK3, plus 5 PGP
 [Earned PD3 before 1/1/2005] PD3, PG3, PJ3, PK3, plus 2 Standard Qs
 [Earned PD3 before 1/1/2000] PD3</Titles>
       <Titles LongName="Performance Champion Dog - Bronze" Name="PDCHB" Prefix="y">All Bronze titles</Titles>
