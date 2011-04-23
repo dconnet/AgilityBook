@@ -68,13 +68,9 @@ Create the files to be distributed (make sure you archive them too)
 - Copy a backup of released files to \AgilityBook\test\[vc9/vc9x64]
   Currently, I only archive vc9/x64 - the exe's that are released to the wild.
   [exe,dll,dat,lang/...]
-- Clean out all build artifacts.
-  - Everything under bin/...
-  - Output files in Project/...
-  - .aps/etc in src
-- AgilityBook-n_n_n_n-src.zip
-  - Remove all source control files from zip (just being clean)
-  - Copy this to distrib\vN.N.N.N\
+- Use SVN to export AgilityBook\ to distrib directory
+  - Zip AgilityBook to AgilityBook-n_n_n_n-src.zip
+  - Delete AgilityBook directory
 - Readme1st.vn.n.n.n.txt
   - Copy Misc/Instructions.txt to Readme1st.vn.n.n.n.txt and modify [if needed]
 
