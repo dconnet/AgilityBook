@@ -190,18 +190,20 @@ directory. The projects use this environment variable.
 --------------------
 
 Windows Installer XML toolset: http://wix.sourceforge.net/releases/
-Currently using Version 3.0.5419.0 (as of ARB v2.0.1).
+Currently using Version 3.5.2519.0 (as of ARB v2.2.6).
 - Install votive [optional]
-- (1) Unzip binaries.zip into "C:\Tools\wix3'
-  (GenMSI.py assumes WiX is installed here, unless WIX env var is set)
-- Or (2), run WiX installer. That will set the environment variable WIX.
+- (1), run WiX installer. That will set the environment variable WIX.
   (GenMSI.py looks for "WIX" and appends "\bin")
+- Or (2) Unzip binaries.zip into "C:\Tools\wix3'
+  (GenMSI.py assumes WiX is installed here, unless WIX env var is set)
+  [I actually have c:\wix\wix<version>\ so I can test multiple versions]
 
 --------------------
 
 Doxygen: http://www.stack.nl/~dimitri/doxygen
-Used to create source code documentation. AgilityBook.dox uses v1.7.1.
-Earlier versions may work.
+Used to create source code documentation. AgilityBook.dox uses v1.7.4.
+Earlier versions may work. (started using v1.6.?, but the dox file has been
+updated since)
 [Install to default location]
 
 --------------------
@@ -242,13 +244,13 @@ Microsoft Visual Studio .NET 2008 (VC9)
 Microsoft Visual Studio .NET 2008 (VC9) + SP1
 =============================================
    It works, no additional notes.
-   [x86: UNICODE and MBCS]
+   [x86: UNICODE and MBCS] [note: MBCS support has been dropped]
    [x64: UNICODE only]
 
 Microsoft Visual Studio .NET 2010 (VC10)
 ========================================
    It works, no additional notes.
-   [x86: UNICODE and MBCS]
+   [x86: UNICODE and MBCS] [note: MBCS support has been dropped]
    [x64: UNICODE only]
 -- Old Express notes (ARB has moved to VC10Pro)
    - Must install Win7-.Net4 SDK first, in order to get x64 compiler
