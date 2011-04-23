@@ -20,6 +20,10 @@ Command line options
  INSTALLDESKTOPSHORTCUT: Set to any value to install a desktop shortcut
    ("" to suppress)
 
+Note: For System.AppUserModel.ID to work on Win7,
+      HKCU\Software\Microsoft\CurrentVersion\Explorer\Advanced\Start_TrackDocs
+      must be enabled. This is done in the Properties of the Start menu.
+
 Revision History
 2011-04-14 DRC Add System.AppUserModel.ID to support recent used files.
 2011-01-18 DRC Update VersionNT checks to agree with how code is compiled.
