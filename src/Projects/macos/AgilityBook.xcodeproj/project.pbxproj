@@ -1179,9 +1179,9 @@
 			productReference = E1144EF810813B4F00356F61 /* agilitybook.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E158FC2F1001371B00735E7F /* AgilityBook (unicode) */ = {
+		E158FC2F1001371B00735E7F /* AgilityBook (trunk-unicode) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (unicode)" */;
+			buildConfigurationList = E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-unicode)" */;
 			buildPhases = (
 				E158FC301001371B00735E7F /* Resources */,
 				E158FC331001371B00735E7F /* Sources */,
@@ -1191,7 +1191,7 @@
 			);
 			dependencies = (
 			);
-			name = "AgilityBook (unicode)";
+			name = "AgilityBook (trunk-unicode)";
 			productInstallPath = "$(HOME)/Applications";
 			productName = arb;
 			productReference = E158FCC01001371B00735E7F /* agilitybook.app */;
@@ -1210,7 +1210,7 @@
 			projectRoot = "";
 			targets = (
 				8D0C4E890486CD37000505A6 /* AgilityBook (ansi) */,
-				E158FC2F1001371B00735E7F /* AgilityBook (unicode) */,
+				E158FC2F1001371B00735E7F /* AgilityBook (trunk-unicode) */,
 				E1144E6610813B4F00356F61 /* AgilityBook (trunk-ansi) */,
 			);
 		};
@@ -2212,7 +2212,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (unicode)" */ = {
+		E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-unicode)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E158FCBE1001371B00735E7F /* Debug */,
