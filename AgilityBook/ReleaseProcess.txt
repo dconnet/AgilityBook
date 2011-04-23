@@ -1,6 +1,6 @@
 Notes for releasing a new version.
 
-[On new year, update License.txt and src/Include/VersionNumber.h.
+[On new year, update License.txt and src/Include/VersionNumber.h.]
 
 Files to change before marking files for release:
 - If file version has changed (arb version, not build number):

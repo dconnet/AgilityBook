@@ -1,15 +1,16 @@
-4/4/2011: v2.2.7.<in development>
+4/23/2011: v2.2.7.3038
 - Bumped Configuration v32:
   - Added USDAA Intro (guess at acronyms)
   - Added USDAA Veteran titles (guess at acronyms)
   - Updated USDAA Performance titles
   - Updated AKC PACH title start.
   - Added NADAC Extreme games.
-- Bug fixes:
-  - Include v30/31 configs in test program.
 - New features / Enhancements:
   - Add DnD support for opening files.
   - Add DnD support for adding linked files to a run.
+  - Updated to wx2.8.12
+- Bug fixes:
+  - Include v30/31 configs in test program.
 
 1/22/2011: v2.2.6.2947
 - Bumped Configuration v31:
