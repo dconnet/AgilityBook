@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-04-26 DRC wx2.9.2 added native hyperlinks and generic support.
  * @li 2010-09-30 DRC Allow 'space' to activate a hyperlink.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-12-14 DRC Ported to wxWidgets.
@@ -35,6 +36,13 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
+
+#if wxCHECK_VERSION(2, 9, 2)
+// 2.9 now supports the below code in the generic version.
+// And in some cases (like msw), the hyperlink is native.
+typedef wxHyperlinkCtrl CHyperlinkCtrl;
+
+#else
 
 // Add a focus rect to the control
 class CHyperlinkCtrl : public wxHyperlinkCtrl
@@ -139,6 +147,8 @@ void CHyperlinkCtrl::OnKeyDown(wxKeyEvent& evt)
 		break;
 	}
 }
+
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 
