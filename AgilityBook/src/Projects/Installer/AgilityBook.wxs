@@ -25,6 +25,7 @@ Note: For System.AppUserModel.ID to work on Win7,
       must be enabled. This is done in the Properties of the Start menu.
 
 Revision History
+2011-04-27 DRC Generate unique prodcodes for each architecture.
 2011-04-14 DRC Add System.AppUserModel.ID to support recent used files.
 2011-01-18 DRC Update VersionNT checks to agree with how code is compiled.
 2010-12-24 DRC Oops, Using NeverOverwrite breaks on upgrade.
@@ -44,7 +45,7 @@ Revision History
 
 	<?include AgilityBook.wxi?>
 
-<Product Id="$(var.PRODUCTID)"
+<Product Id="*"
 	UpgradeCode="$(var.UPGRADECODE)"
 	Name="Agility Record Book $(var.CURRENT_VERSION)"
 	Codepage="0"
