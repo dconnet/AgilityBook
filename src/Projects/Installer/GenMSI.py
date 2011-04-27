@@ -6,6 +6,8 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2011-04-27 DRC Generate unique prodcodes for each architecture.
+#            Also discovered script wasn't writing the cvs file correctly.
 # 2010-11-18 DRC Optimize the build by caching the cab file.
 # 2010-11-16 DRC Turned on pedantic warnings, changed how languages are handled.
 # 2010-10-08 DRC Suppress wixpdb creation.
@@ -59,6 +61,11 @@ AgilityBookDir = r'..\..\..'
 WiXdir = r'c:\Tools\wix3'
 
 WinSrcDir = AgilityBookDir + r'\src'
+
+# Code:
+#  1: Win32/Unicode
+#  2: Win32/MBCS
+#  3: Win64/Unicode
 code32 = 1
 code64 = 3
 
@@ -141,15 +148,6 @@ def getversion(numParts):
 	return ver, ver2
 
 
-def genuuid():
-	(childin, childout) = os.popen4('uuidgen -c')
-	childin.close()
-	line = childout.readline().rstrip()
-	#line = line.upper() [-c means upper, leaving in case I change how guids are gotten]
-	childout.close()
-	return line
-
-
 # returns baseDir, outputFile
 def getoutputvars(code, version, vcver):
 	outputFile = ''
@@ -210,11 +208,28 @@ def WiLangId(baseMsi, sumInfoStream):
 	database = None
 
 
-# Code:
-#  1: Win32/Unicode
-#  2: Win32/MBCS
-#  3: Win64/Unicode
-def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
+def WriteCode(testing, baseMsi, ver4Dot, code, vcver):
+	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_READONLY)
+	view = database.OpenView("SELECT `Value` FROM Property WHERE `Property`='ProductCode'")
+	record = msilib.CreateRecord(1)
+	view.Execute(record)
+	data = view.Fetch()
+	view = None
+	database = None
+	prodcode = data.GetString(1)
+
+	if len(prodcode) > 0:
+		d = datetime.datetime.now().isoformat(' ')
+		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'a')
+		installs = ''
+		if code == code64:
+			installs = 'VC' + vcver + ',x64'
+		else:
+			installs = 'VC' + vcver + ',win32'
+		print >>codes, 'v' + ver4Dot + ',' + d + ',' + prodcode + ',' + UpgradeCode + ',' + installs
+
+
+def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 	baseDir, outputFile = getoutputvars(code, ver4Line, vcver)
 	if tidy and not os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
@@ -230,7 +245,6 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 		else:
 			candleCmd += ' -arch x86'
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
-		candleCmd += ' -dPRODUCTID=' + productId
 		candleCmd += ' -dSUPPORTED_LANGS=' + langNames
 		candleCmd += ' -dINSTALL_SCOPE=' + perUser
 		runcmd(candleCmd + ' AgilityBook.wxs')
@@ -271,6 +285,7 @@ def genWiX(productId, ver3Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			WiLangId(baseMsi, sumInfoStream)
 		if tidy:
 			RmMinusRF(cabcache)
+		WriteCode(testing, baseMsi, ver4Dot, code, vcver)
 	else:
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 
@@ -294,6 +309,7 @@ def main():
 	testing = 0
 	vcver = '9'
 	if 1 == len(sys.argv):
+		print 'Setting /32 /testing'
 		b32 = 1
 		testing = 1
 	error = 0
@@ -337,30 +353,15 @@ def main():
 		b32 = 1
 		b64 = 1
 
-	b32ok = 0
-	b64ok = 0
-
-	productId = genuuid()
 	ver3Dot, ver3Line = getversion(3)
 	ver4Dot, ver4Line = getversion(4)
 
 	# Wix
 	os.environ['PATH'] += ';' + WiXdir
 	if b32:
-		if genWiX(productId, ver3Dot, ver4Line, code32, tidy, perUser, testing, vcver):
-			b32ok = 1
+		genWiX(ver3Dot, ver4Dot, ver4Line, code32, tidy, perUser, testing, vcver)
 	if b64:
-		if genWiX(productId, ver3Dot, ver4Line, code64, tidy, perUser, testing, vcver):
-			b64ok = 1
-	if not testing and (b32ok or b64ok):
-		d = datetime.datetime.now().isoformat(' ')
-		codes = open(AgilityBookDir + r'\Misc\InstallGUIDs.csv', 'a')
-		installs = ''
-		if b32ok:
-			installs = 'VC' + vcver + ',win32'
-		if b64ok:
-			installs = 'VC' + vcver + ',x64'
-		print >>codes, 'v' + ver4Dot + ',' + d + ',' + productId + ',' + UpgradeCode + ',' + installs
+		genWiX(ver3Dot, ver4Dot, ver4Line, code64, tidy, perUser, testing, vcver)
 
 	return 0
 
