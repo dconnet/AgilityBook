@@ -25,6 +25,7 @@ Note: For System.AppUserModel.ID to work on Win7,
       must be enabled. This is done in the Properties of the Start menu.
 
 Revision History
+2011-05-11 DRC Add System.AppUserModel.ID to desktop shortcut too.
 2011-04-27 DRC Generate unique prodcodes for each architecture.
 2011-04-14 DRC Add System.AppUserModel.ID to support recent used files.
 2011-01-18 DRC Update VersionNT checks to agree with how code is compiled.
@@ -280,6 +281,7 @@ Revision History
 				Name="$(var.DEFFOLDER)"
 				Target="[INSTALLDIR]AgilityBook.exe">
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
+				<ShortcutProperty Key="System.AppUserModel.ID" Value="[Manufacturer].[AppName]" />
 			</Shortcut>
 		</Component>
 	</DirectoryRef>
