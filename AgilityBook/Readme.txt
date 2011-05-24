@@ -42,6 +42,10 @@ Make sure WXWIN is set to wxWidgets root directory.
 -[win]- src/msw/stdpaths.cpp
   - GetAppDir (ln 254): Delete the __WXDEBUG__ section. This strips the 'debug'
     directory from the appdir, which causes problems.
+-[all]- src/generic/odcombo.cpp
+  - In wxVListBoxComboPopup::Insert, add the following after m_strings.Insert
+	m_clientDatas.Insert(0,pos);
+  [This probably applies to all prior versions of wx, just found in 2.8.12]
 
 === Changes to 2.8.11:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
