@@ -1,4 +1,7 @@
-4/23/2011: v2.2.8.<in development>
+5/23/2011: v2.2.8.<in development>
+- Bug fixes:
+  - Found a bug in the framework that causes the Note feature to do weird
+    things.
 
 4/23/2011: v2.2.7.3038
 - Bumped Configuration v32:
