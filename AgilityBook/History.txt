@@ -1,4 +1,4 @@
-5/23/2011: v2.2.8.<in development>
+5/30/2011: v2.2.8.3075
 - Bug fixes:
   - Found a bug in the framework that causes the Note feature to do weird
     things.
