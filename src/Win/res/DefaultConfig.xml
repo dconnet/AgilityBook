@@ -238,10 +238,10 @@ Revision History:
     <Action OldName="Outstanding Elite Versatility" Venue="NADAC" Verb="DeleteTitle"/>
     <Action NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
     <Action OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
-    <Action OldName="XTN" NewName="XGT" Verb="RenameTitle" />
-    <Action OldName="O-XTN" NewName="O-XGT" Verb="RenameTitle" />
-    <Action OldName="S-XTN" NewName="S-XGT" Verb="RenameTitle" />
-    <Action OldName="Extreme Tunnelers" NewName="Extreme Gators" Verb="RenameEvent" />
+    <Action OldName="XTN" NewName="XGT" Venue="NADAC" Verb="RenameTitle" />
+    <Action OldName="O-XTN" NewName="O-XGT" Venue="NADAC" Verb="RenameTitle" />
+    <Action OldName="S-XTN" NewName="S-XGT" Venue="NADAC" Verb="RenameTitle" />
+    <Action OldName="Extreme Tunnelers" NewName="Extreme Gators" Venue="NADAC" Verb="RenameEvent" />
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
       <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 3 games (jumpers, gamblers, snooker) under at least 2 different judges in each game
