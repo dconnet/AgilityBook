@@ -59,7 +59,14 @@ IConfigActionCallback::~IConfigActionCallback()
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBConfigAction::ARBConfigAction()
+ARBConfigAction::ARBConfigAction(short configVersion)
+	: m_configVersion(configVersion)
+{
+}
+
+
+ARBConfigAction::ARBConfigAction(ARBConfigAction const& rhs)
+	: m_configVersion(rhs.m_configVersion)
 {
 }
 
@@ -79,13 +86,15 @@ ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(
 
 ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(
 		wxString const& inName)
-	: m_Name(inName)
+	: ARBConfigAction(0)
+	, m_Name(inName)
 {
 }
 
 
 ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs)
-	: m_Name(rhs.m_Name)
+	: ARBConfigAction(rhs)
+	, m_Name(rhs.m_Name)
 {
 }
 
@@ -114,26 +123,31 @@ bool ARBConfigActionDeleteCalPlugin::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::New(
+		short configVersion,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameOtherPoints(
+		configVersion,
 		inOldName,
 		inNewName));
 }
 
 
 ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(
+		short configVersion,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_OldName(inOldName)
+	: ARBConfigAction(configVersion)
+	, m_OldName(inOldName)
 	, m_NewName(inNewName)
 {
 }
 
 
 ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(ARBConfigActionRenameOtherPoints const& rhs)
-	: m_OldName(rhs.m_OldName)
+	: ARBConfigAction(rhs)
+	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
 }
@@ -141,7 +155,10 @@ ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(ARBConfigActi
 
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameOtherPoints(m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameOtherPoints(
+		m_configVersion,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -177,28 +194,36 @@ bool ARBConfigActionRenameOtherPoints::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(
+		short configVersion,
 		wxString const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(inName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(
+		configVersion,
+		inName));
 }
 
 
 ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(
+		short configVersion,
 		wxString const& inName)
-	: m_Name(inName)
+	: ARBConfigAction(configVersion)
+	, m_Name(inName)
 {
 }
 
 
 ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(ARBConfigActionDeleteOtherPoints const& rhs)
-	: m_Name(rhs.m_Name)
+	: ARBConfigAction(rhs)
+	, m_Name(rhs.m_Name)
 {
 }
 
 
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(m_Name));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(
+		m_configVersion,
+		m_Name));
 }
 
 
@@ -235,24 +260,31 @@ bool ARBConfigActionDeleteOtherPoints::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionRenameVenue::New(
+		short configVersion,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(inOldName, inNewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(
+		configVersion,
+		inOldName,
+		inNewName));
 }
 
 
 ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(
+		short configVersion,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_OldName(inOldName)
+	: ARBConfigAction(configVersion)
+	, m_OldName(inOldName)
 	, m_NewName(inNewName)
 {
 }
 
 
 ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(ARBConfigActionRenameVenue const& rhs)
-	: m_OldName(rhs.m_OldName)
+	: ARBConfigAction(rhs)
+	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
 }
@@ -260,7 +292,10 @@ ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(ARBConfigActionRenameVenu
 
 ARBConfigActionPtr ARBConfigActionRenameVenue::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(
+		m_configVersion,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -301,28 +336,36 @@ bool ARBConfigActionRenameVenue::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteVenue::New(
+		short configVersion,
 		wxString const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(inName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(
+		configVersion,
+		inName));
 }
 
 
 ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(
+		short configVersion,
 		wxString const& inName)
-	: m_Name(inName)
+	: ARBConfigAction(configVersion)
+	, m_Name(inName)
 {
 }
 
 
 ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenue const& rhs)
-	: m_Name(rhs.m_Name)
+	: ARBConfigAction(rhs)
+	, m_Name(rhs.m_Name)
 {
 }
 
 
 ARBConfigActionPtr ARBConfigActionDeleteVenue::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(m_Name));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(
+		m_configVersion,
+		m_Name));
 }
 
 
@@ -363,19 +406,26 @@ bool ARBConfigActionDeleteVenue::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(inVenue, inOldName, inNewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(
+		configVersion,
+		inVenue,
+		inOldName,
+		inNewName));
 }
 
 
 ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
 {
@@ -383,7 +433,8 @@ ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(
 
 
 ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(ARBConfigActionRenameMultiQ const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
@@ -392,7 +443,11 @@ ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(ARBConfigActionRenameMu
 
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(m_Venue, m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(
+		m_configVersion,
+		m_Venue,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -433,24 +488,31 @@ bool ARBConfigActionRenameMultiQ::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(inVenue, inName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(
+		configVersion,
+		inVenue,
+		inName));
 }
 
 
 ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_Name(inName)
 {
 }
 
 
 ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
 {
 }
@@ -458,7 +520,10 @@ ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMu
 
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(m_Venue, m_Name));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(
+		m_configVersion,
+		m_Venue,
+		m_Name));
 }
 
 
@@ -499,11 +564,13 @@ bool ARBConfigActionDeleteMultiQ::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionRenameDivision::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameDivision(
+		configVersion,
 		inVenue,
 		inOldName,
 		inNewName));
@@ -511,10 +578,12 @@ ARBConfigActionPtr ARBConfigActionRenameDivision::New(
 
 
 ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
 {
@@ -522,7 +591,8 @@ ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(
 
 
 ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(ARBConfigActionRenameDivision const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
@@ -531,7 +601,11 @@ ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(ARBConfigActionRena
 
 ARBConfigActionPtr ARBConfigActionRenameDivision::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameDivision(m_Venue, m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameDivision(
+		m_configVersion,
+		m_Venue,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -575,24 +649,31 @@ bool ARBConfigActionRenameDivision::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteDivision::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(inVenue, inName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(
+		configVersion,
+		inVenue,
+		inName));
 }
 
 
 ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_Name(inName)
 {
 }
 
 
 ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
 {
 }
@@ -600,7 +681,10 @@ ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(ARBConfigActionDele
 
 ARBConfigActionPtr ARBConfigActionDeleteDivision::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(m_Venue, m_Name));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(
+		m_configVersion,
+		m_Venue,
+		m_Name));
 }
 
 
@@ -645,33 +729,49 @@ bool ARBConfigActionDeleteDivision::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(inVenue, inDiv, wxString(), inOldName, inNewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
+		configVersion,
+		inVenue,
+		inDiv,
+		wxString(),
+		inOldName,
+		inNewName));
 }
 
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inLevel,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(inVenue, inDiv, inLevel, inOldName, inNewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
+		configVersion,
+		inVenue,
+		inDiv,
+		inLevel,
+		inOldName,
+		inNewName));
 }
 
 
 ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inLevel,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_Div(inDiv)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
@@ -680,7 +780,8 @@ ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(
 
 
 ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(ARBConfigActionRenameLevel const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_Div(rhs.m_Div)
 	, m_Level(rhs.m_Level)
 	, m_OldName(rhs.m_OldName)
@@ -691,7 +792,13 @@ ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(ARBConfigActionRenameLeve
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(m_Venue, m_Div, m_Level, m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
+		m_configVersion,
+		m_Venue,
+		m_Div,
+		m_Level,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -763,30 +870,44 @@ bool ARBConfigActionRenameLevel::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewLevel(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(inVenue, inDiv, wxString(), inName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
+		configVersion,
+		inVenue,
+		inDiv,
+		wxString(),
+		inName));
 }
 
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inLevel,
 		wxString const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(inVenue, inDiv, inLevel, inName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
+		configVersion,
+		inVenue,
+		inDiv,
+		inLevel,
+		inName));
 }
 
 
 ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inLevel,
 		wxString const& inName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_Div(inDiv)
 	, m_Level(inLevel)
 	, m_Name(inName)
@@ -795,7 +916,8 @@ ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(
 
 
 ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(ARBConfigActionDeleteLevel const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_Div(rhs.m_Div)
 	, m_Level(rhs.m_Level)
 	, m_Name(rhs.m_Name)
@@ -805,7 +927,12 @@ ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(ARBConfigActionDeleteLeve
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(m_Venue, m_Div, m_Level, m_Name));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
+		m_configVersion,
+		m_Venue,
+		m_Div,
+		m_Level,
+		m_Name));
 }
 
 
@@ -899,19 +1026,26 @@ bool ARBConfigActionDeleteLevel::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionRenameTitle::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(inVenue, inOldName, inNewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(
+		configVersion,
+		inVenue,
+		inOldName,
+		inNewName));
 }
 
 
 ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
 {
@@ -919,7 +1053,8 @@ ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(
 
 
 ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(ARBConfigActionRenameTitle const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
@@ -928,7 +1063,11 @@ ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(ARBConfigActionRenameTitl
 
 ARBConfigActionPtr ARBConfigActionRenameTitle::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(m_Venue, m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(
+		m_configVersion,
+		m_Venue,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -978,21 +1117,29 @@ bool ARBConfigActionRenameTitle::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(inVenue, inDiv, inOldName, inNewName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(
+		configVersion,
+		inVenue,
+		inDiv,
+		inOldName,
+		inNewName));
 }
 
 
 ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inDiv,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_Div(inDiv)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
@@ -1001,7 +1148,8 @@ ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(
 
 
 ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitle const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_Div(rhs.m_Div)
 	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
@@ -1011,7 +1159,12 @@ ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitl
 
 ARBConfigActionPtr ARBConfigActionDeleteTitle::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(m_Venue, m_Div, m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(
+		m_configVersion,
+		m_Venue,
+		m_Div,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -1068,19 +1221,26 @@ bool ARBConfigActionDeleteTitle::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionRenameEvent::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(inVenue, inOldName, inNewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(
+		configVersion,
+		inVenue,
+		inOldName,
+		inNewName));
 }
 
 
 ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inOldName,
 		wxString const& inNewName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
 {
@@ -1088,7 +1248,8 @@ ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(
 
 
 ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(ARBConfigActionRenameEvent const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_OldName(rhs.m_OldName)
 	, m_NewName(rhs.m_NewName)
 {
@@ -1097,7 +1258,11 @@ ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(ARBConfigActionRenameEven
 
 ARBConfigActionPtr ARBConfigActionRenameEvent::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(m_Venue, m_OldName, m_NewName));
+	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(
+		m_configVersion,
+		m_Venue,
+		m_OldName,
+		m_NewName));
 }
 
 
@@ -1140,24 +1305,31 @@ bool ARBConfigActionRenameEvent::Apply(
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteEvent::New(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inName)
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(inVenue, inName));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(
+		configVersion,
+		inVenue,
+		inName));
 }
 
 
 ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(
+		short configVersion,
 		wxString const& inVenue,
 		wxString const& inName)
-	: m_Venue(inVenue)
+	: ARBConfigAction(configVersion)
+	, m_Venue(inVenue)
 	, m_Name(inName)
 {
 }
 
 
 ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs)
-	: m_Venue(rhs.m_Venue)
+	: ARBConfigAction(rhs)
+	, m_Venue(rhs.m_Venue)
 	, m_Name(rhs.m_Name)
 {
 }
@@ -1165,7 +1337,10 @@ ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(ARBConfigActionDeleteEven
 
 ARBConfigActionPtr ARBConfigActionDeleteEvent::Clone() const
 {
-	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(m_Venue, m_Name));
+	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(
+		m_configVersion,
+		m_Venue,
+		m_Name));
 }
 
 
@@ -1223,6 +1398,19 @@ bool ARBConfigActionList::Load(
 		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_VERB));
 		return false;
 	}
+	short configVer;
+	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_ACTION_CONFIG, configVer))
+	{
+		if (inVersion < ARBVersion(12, 12))
+		{
+			configVer = 0;
+		}
+		else
+		{
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_ACTION, ATTRIB_ACTION_CONFIG));
+			return false;
+		}
+	}
 	wxString venue, div, oldName, newName;
 	inTree->GetAttrib(ATTRIB_ACTION_VENUE, venue);
 	inTree->GetAttrib(ATTRIB_ACTION_DIVISION, div);
@@ -1236,27 +1424,27 @@ bool ARBConfigActionList::Load(
 	}
 	else if (ACTION_VERB_DELETE_TITLE == verb)
 	{
-		item = ARBConfigActionDeleteTitle::New(venue, div, oldName, newName);
+		item = ARBConfigActionDeleteTitle::New(configVer, venue, div, oldName, newName);
 	}
 	else if (ACTION_VERB_RENAME_TITLE == verb)
 	{
-		item = ARBConfigActionRenameTitle::New(venue, oldName, newName);
+		item = ARBConfigActionRenameTitle::New(configVer, venue, oldName, newName);
 	}
 	else if (ACTION_VERB_DELETE_EVENT == verb)
 	{
-		item = ARBConfigActionDeleteEvent::New(venue, oldName);
+		item = ARBConfigActionDeleteEvent::New(configVer, venue, oldName);
 	}
 	else if (ACTION_VERB_RENAME_EVENT == verb)
 	{
-		item = ARBConfigActionRenameEvent::New(venue, oldName, newName);
+		item = ARBConfigActionRenameEvent::New(configVer, venue, oldName, newName);
 	}
 	else if (ACTION_VERB_RENAME_DIV == verb)
 	{
-		item = ARBConfigActionRenameDivision::New(venue, oldName, newName);
+		item = ARBConfigActionRenameDivision::New(configVer, venue, oldName, newName);
 	}
 	else if (ACTION_VERB_RENAME_VENUE == verb)
 	{
-		item = ARBConfigActionRenameVenue::New(oldName, newName);
+		item = ARBConfigActionRenameVenue::New(configVer, oldName, newName);
 	}
 	else
 	{
@@ -1297,6 +1485,8 @@ int ARBConfigActionList::Apply(
 			iterAction != end();
 			++iterAction)
 	{
+		if (0 != (*iterAction)->GetVersion() && ioConfig.GetVersion() >= (*iterAction)->GetVersion())
+			continue;
 		if ((*iterAction)->Apply(ioConfig, ioDogs, ioInfo, ioCallBack))
 			++nChanges;
 		if (!ioCallBack.CanContinue())

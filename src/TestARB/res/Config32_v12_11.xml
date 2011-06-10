@@ -4,8 +4,6 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2011-06-09 DRC Configuration version 33.
-               Changed NADAC Extreme Tunnelers to Extreme Gaters.
 2011-04-18 DRC Configuration version 32.
                Added USDAA Intro (guess at acronyms)
                Added USDAA Veteran titles (guess at acronyms)
@@ -103,145 +101,141 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="33">
-    <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
-    <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
-    <Action Config="32" NewName="ATCH-OP" OldName="V-ATCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
-    <Action Config="32" NewName="ATCH-SP" OldName="V-ATCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
-    <Action Config="32" NewName="ATCH" OldName="ATCH-OP" Venue="ASCA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="ATCH" OldName="ATCH-SP" Venue="ASCA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Regular" OldName="Standard" Venue="CPE" Verb="RenameDivision"/>
-    <Action Config="32" NewName="Regular" OldName="Junior" Venue="CPE" Verb="RenameDivision"/>
-    <Action Config="32" NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="UAGII" OldName="UAgII" Venue="UKC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="UAGIII" OldName="UAgIII" Venue="UKC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="ADCH" OldName="ADCh" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PD1" OldName="PDI" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PD2" OldName="PDII" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PD3" OldName="PDIII" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PDCH" OldName="APD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PDCHB" OldName="APD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PDCHS" OldName="APD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PDCHG" OldName="APD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PDCHP" OldName="APD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PTM" OldName="ATD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PTMB" OldName="ATD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PTMS" OldName="ATD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PTMG" OldName="ATD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PTMP" OldName="ATD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PSCH" OldName="ASD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PSCHB" OldName="ASD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PSCHS" OldName="ASD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PSCHG" OldName="ASD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PSCHP" OldName="ASD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PJCH" OldName="AJD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PJCHB" OldName="AJD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PJCHS" OldName="AJD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PJCHG" OldName="AJD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PJCHP" OldName="AJD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PGCH" OldName="AGD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PGCHB" OldName="AGD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PGCHS" OldName="AGD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PGCHG" OldName="AGD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PGCHP" OldName="AGD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PKCH" OldName="AKD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PKCHB" OldName="AKD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PKCHS" OldName="AKD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PKCHG" OldName="AKD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PKCHP" OldName="AKD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PRCH" OldName="ARD" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PRCHB" OldName="ARD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PRCHS" OldName="ARD-Silver" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PRCHG" OldName="ARD-Gold" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PRCHP" OldName="ARD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PD" OldName="PD1" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="SPS" OldName="PS1" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="SPJ" OldName="PJ1" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="SPG" OldName="PG1" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="SPK" OldName="PK1" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="SPR" OldName="PR1" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="APD" OldName="PD2" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="APS" OldName="PS2" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="APJ" OldName="PJ2" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="APG" OldName="PG2" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="APK" OldName="PK2" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="APR" OldName="PR2" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="MPD" OldName="PD3" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PSM" OldName="PS3" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PJM" OldName="PJ3" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PGM" OldName="PG3" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PKM" OldName="PK3" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="PRM" OldName="PR3" Venue="USDAA" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Triple Superior-Novice" OldName="Novice Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Triple Superior-Open" OldName="Open Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Triple Superior-Elite" OldName="Elite Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Triple Triple" OldName="Triple Triple Superior Performance" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Vers-NATCH" OldName="Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="O-Vers-NATCH" OldName="Outstanding Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Vers-NATCH" OldName="O-Vers-NATCH" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="S-Vers-NATCH" OldName="Superior Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Vers-NATCH" OldName="S-Vers-NATCH" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="NADAC Medal" OldName="Bronze Medal" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="NADAC Medal" OldName="Silver Medal" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="NADAC Medal" OldName="Gold Medal" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="NATCH" OldName="O-NATCH" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="NATCH" OldName="S-NATCH" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Platinum Speed Star" OldName="Platinum Medal" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Platinum Versatility Speed Star" OldName="Platinum Versatility Medal" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Purple Achievement Cup" OldName="Purple Medal" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" NewName="Purple Versatility Achievement Cup" OldName="Purple Versatility Medal" Venue="NADAC" Verb="RenameTitle"/>
-    <Action Config="32" OldName="NAS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="NJS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="NGS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-NAS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-NJS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-NGS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-NAS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-NJS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-NGS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="OAS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="OJS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="OGS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-OAS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-OJS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-OGS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="O-WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-OAS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-OJS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-OGS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="S-WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="CHC" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="CHS" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="Outstanding Novice Versatility" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="Outstanding Open Versatility" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" OldName="Outstanding Elite Versatility" Venue="NADAC" Verb="DeleteTitle"/>
-    <Action Config="32" NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
-    <Action Config="32" OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
-    <Action Config="33" OldName="XTN" NewName="XGT" Venue="NADAC" Verb="RenameTitle" />
-    <Action Config="33" OldName="O-XTN" NewName="O-XGT" Venue="NADAC" Verb="RenameTitle" />
-    <Action Config="33" OldName="S-XTN" NewName="S-XGT" Venue="NADAC" Verb="RenameTitle" />
-    <Action Config="33" OldName="Extreme Tunnelers" NewName="Extreme Gaters" Venue="NADAC" Verb="RenameEvent" />
+  <Configuration version="32">
+    <Action NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
+    <Action NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
+    <Action NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
+    <Action NewName="ATCH-OP" OldName="V-ATCH-OP" Venue="ASCA" Verb="DeleteTitle"/>
+    <Action NewName="ATCH-SP" OldName="V-ATCH-SP" Venue="ASCA" Verb="DeleteTitle"/>
+    <Action NewName="ATCH" OldName="ATCH-OP" Venue="ASCA" Verb="RenameTitle"/>
+    <Action NewName="ATCH" OldName="ATCH-SP" Venue="ASCA" Verb="RenameTitle"/>
+    <Action NewName="Regular" OldName="Standard" Venue="CPE" Verb="RenameDivision"/>
+    <Action NewName="Regular" OldName="Junior" Venue="CPE" Verb="RenameDivision"/>
+    <Action NewName="UAGI" OldName="UAgI" Venue="UKC" Verb="RenameTitle"/>
+    <Action NewName="UAGII" OldName="UAgII" Venue="UKC" Verb="RenameTitle"/>
+    <Action NewName="UAGIII" OldName="UAgIII" Venue="UKC" Verb="RenameTitle"/>
+    <Action NewName="ADCH" OldName="ADCh" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PD1" OldName="PDI" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PD2" OldName="PDII" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PD3" OldName="PDIII" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJ3" OldName="PJ" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PG3" OldName="PG" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PK3" OldName="PS" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCH" OldName="APD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHB" OldName="APD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHS" OldName="APD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHG" OldName="APD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PDCHP" OldName="APD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTM" OldName="ATD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMB" OldName="ATD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMS" OldName="ATD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMG" OldName="ATD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PTMP" OldName="ATD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCH" OldName="ASD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHB" OldName="ASD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHS" OldName="ASD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHG" OldName="ASD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSCHP" OldName="ASD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCH" OldName="AJD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHB" OldName="AJD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHS" OldName="AJD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHG" OldName="AJD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJCHP" OldName="AJD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCH" OldName="AGD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHB" OldName="AGD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHS" OldName="AGD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHG" OldName="AGD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGCHP" OldName="AGD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCH" OldName="AKD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHB" OldName="AKD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHS" OldName="AKD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHG" OldName="AKD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKCHP" OldName="AKD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCH" OldName="ARD" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHB" OldName="ARD-Bronze" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHS" OldName="ARD-Silver" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHG" OldName="ARD-Gold" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRCHP" OldName="ARD-Platinum" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PD" OldName="PD1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPS" OldName="PS1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPJ" OldName="PJ1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPG" OldName="PG1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPK" OldName="PK1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="SPR" OldName="PR1" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APD" OldName="PD2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APS" OldName="PS2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APJ" OldName="PJ2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APG" OldName="PG2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APK" OldName="PK2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="APR" OldName="PR2" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="MPD" OldName="PD3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PSM" OldName="PS3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PJM" OldName="PJ3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PGM" OldName="PG3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PKM" OldName="PK3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="PRM" OldName="PR3" Venue="USDAA" Verb="RenameTitle"/>
+    <Action NewName="Novice Triple Superior Performance Dog" OldName="Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Triple Superior-Novice" OldName="Novice Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Triple Superior-Open" OldName="Open Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Triple Superior-Elite" OldName="Elite Triple Superior Performance Dog" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Triple Triple" OldName="Triple Triple Superior Performance" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Vers-NATCH" OldName="Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="O-Vers-NATCH" OldName="Outstanding Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Vers-NATCH" OldName="O-Vers-NATCH" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="S-Vers-NATCH" OldName="Superior Versatility NATCH" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Vers-NATCH" OldName="S-Vers-NATCH" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="NADAC Medal" OldName="Bronze Medal" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="NADAC Medal" OldName="Silver Medal" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="NADAC Medal" OldName="Gold Medal" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="NATCH" OldName="O-NATCH" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="NATCH" OldName="S-NATCH" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Platinum Speed Star" OldName="Platinum Medal" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Platinum Versatility Speed Star" OldName="Platinum Versatility Medal" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Purple Achievement Cup" OldName="Purple Medal" Venue="NADAC" Verb="RenameTitle"/>
+    <Action NewName="Purple Versatility Achievement Cup" OldName="Purple Versatility Medal" Venue="NADAC" Verb="RenameTitle"/>
+    <Action OldName="NAS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="NJS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="NGS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-NAS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-NJS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-NGS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-NAS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-NJS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-NGS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-TNS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-TGS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-WVS-N" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="OAS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="OJS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="OGS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-OAS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-OJS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-OGS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="O-WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-OAS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-OJS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-OGS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-TNS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-TGS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="S-WVS-O" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="CHC" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="CHS" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="Outstanding Novice Versatility" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="Outstanding Open Versatility" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action OldName="Outstanding Elite Versatility" Venue="NADAC" Verb="DeleteTitle"/>
+    <Action NewName="Chances" OldName="Wild Card" Venue="NADAC" Verb="RenameEvent"/>
+    <Action OldName="Championship" Venue="NADAC" Verb="DeleteEvent"/>
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
       <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 3 games (jumpers, gamblers, snooker) under at least 2 different judges in each game
@@ -2596,9 +2590,9 @@ There is no RI calculated for Chances but as of 2007 there now can be Bonus Boxe
       <Titles LongName="Extreme Hoopers" Name="XHP">300 points</Titles>
       <Titles LongName="Outstanding Extreme Hoopers" Name="O-XHP">600 points</Titles>
       <Titles LongName="Superior Extreme Hoopers" Name="S-XHP">1000 points</Titles>
-      <Titles LongName="Extreme Gaters" Name="XGT">300 points</Titles>
-      <Titles LongName="Outstanding Extreme Gaters" Name="O-XGT">600 points</Titles>
-      <Titles LongName="Superior Extreme Gaters" Name="S-XGT">1000 points</Titles>
+      <Titles LongName="Extreme Tunnelers" Name="XTN">300 points</Titles>
+      <Titles LongName="Outstanding Extreme Tunnelers" Name="O-XTN">600 points</Titles>
+      <Titles LongName="Superior Extreme Tunnelers" Name="S-XTN">1000 points</Titles>
       <Division Name="Proficient">
         <Level Name="Novice">
           <SubLevel Name="Novice A"/>
@@ -2834,7 +2828,7 @@ Was called Wild Card briefly.</Desc>
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
       </Event>
-      <Event Name="Extreme Gaters">
+      <Event Name="Extreme Tunnelers">
         <Desc>Use Bonus Points to enter earned points</Desc>
         <Scoring Division="Proficient" Level="*" bonusPts="y" type="TimePlusFaults">
           <TitlePoints Faults="0" Points="0"/>

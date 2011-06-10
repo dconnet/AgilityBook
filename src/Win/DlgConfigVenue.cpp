@@ -619,7 +619,7 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 	m_pVenue->SetLifetimeName(m_LifetimeName);
 
 	if (oldName != name)
-		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(oldName, name));
+		m_DlgFixup.push_back(ARBConfigActionRenameVenue::New(0, oldName, name));
 
 	// Push the copy back.
 	*m_pVenueOrig = *m_pVenue;

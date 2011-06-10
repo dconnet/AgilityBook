@@ -88,7 +88,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(0, wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -98,7 +98,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameOtherPoints::New(0, wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -124,7 +124,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(0, wxT("name"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -134,7 +134,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteOtherPoints::New(0, wxT("name"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -160,7 +160,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(0, wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -170,7 +170,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameVenue::New(0, wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -196,7 +196,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(0, wxT("name"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -206,7 +206,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteVenue::New(0, wxT("name"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -232,7 +232,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -242,7 +242,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameMultiQ::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -268,7 +268,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(wxT("venue"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(0, wxT("venue"), wxT("name"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -278,7 +278,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(wxT("venue"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteMultiQ::New(0, wxT("venue"), wxT("name"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -304,7 +304,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -314,7 +314,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameDivision::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -340,7 +340,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(wxT("venue"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(0, wxT("venue"), wxT("name"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -350,7 +350,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(wxT("venue"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteDivision::New(0, wxT("venue"), wxT("name"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -376,9 +376,9 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(0, wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
-			obj = ARBConfigActionRenameLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("oldname"), wxT("newname"));
+			obj = ARBConfigActionRenameLevel::NewSubLevel(0, wxT("venue"), wxT("div"), wxT("level"), wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -388,12 +388,12 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameLevel::NewLevel(0, wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
 
-			obj = ARBConfigActionRenameLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("oldname"), wxT("newname"));
+			obj = ARBConfigActionRenameLevel::NewSubLevel(0, wxT("venue"), wxT("div"), wxT("level"), wxT("oldname"), wxT("newname"));
 			obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -419,9 +419,9 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(wxT("venue"), wxT("div"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(0, wxT("venue"), wxT("div"), wxT("name"));
 			CHECK(NULL != obj.get());
-			obj = ARBConfigActionDeleteLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("name"));
+			obj = ARBConfigActionDeleteLevel::NewSubLevel(0, wxT("venue"), wxT("div"), wxT("level"), wxT("name"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -431,12 +431,12 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(wxT("venue"), wxT("div"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteLevel::NewLevel(0, wxT("venue"), wxT("div"), wxT("name"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
 
-			obj = ARBConfigActionDeleteLevel::NewSubLevel(wxT("venue"), wxT("div"), wxT("level"), wxT("name"));
+			obj = ARBConfigActionDeleteLevel::NewSubLevel(0, wxT("venue"), wxT("div"), wxT("level"), wxT("name"));
 			obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -462,7 +462,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -472,7 +472,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameTitle::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -498,7 +498,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(0, wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -508,7 +508,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteTitle::New(0, wxT("venue"), wxT("div"), wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -534,7 +534,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -544,7 +544,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(wxT("venue"), wxT("oldname"), wxT("newname"));
+			ARBConfigActionPtr obj = ARBConfigActionRenameEvent::New(0, wxT("venue"), wxT("oldname"), wxT("newname"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());
@@ -570,7 +570,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(wxT("venue"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(0, wxT("venue"), wxT("name"));
 			CHECK(NULL != obj.get());
 		}
 	}
@@ -580,7 +580,7 @@ SUITE(TestConfigAction)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(wxT("venue"), wxT("name"));
+			ARBConfigActionPtr obj = ARBConfigActionDeleteEvent::New(0, wxT("venue"), wxT("name"));
 			ARBConfigActionPtr obj2 = obj->Clone();
 			CHECK(NULL != obj2.get());
 			CHECK(obj.get() != obj2.get());

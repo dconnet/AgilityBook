@@ -114,6 +114,7 @@
 #define ATTRIB_ACTION_DIVISION				wxT("Div")
 #define ATTRIB_ACTION_OLDNAME				wxT("OldName")
 #define ATTRIB_ACTION_NEWNAME				wxT("NewName")
+#define ATTRIB_ACTION_CONFIG				wxT("Config")
 #define ATTRIB_VENUE_NAME					wxT("Name")
 #define ATTRIB_VENUE_LONGNAME				wxT("LongName")
 #define ATTRIB_VENUE_URL					wxT("URL")

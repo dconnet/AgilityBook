@@ -32,10 +32,9 @@
 
 
 // When adding a new config:
-//  - Create ID in TestARB.h
-//  - Add entry here
-//  - Add test case in TestConfig.cpp
+//  - Add entry here. That's it.
 // RunARBTests.py will automatically pick up all XML files in ./res/
+// Also, update "Default" test if venues/actions/etc changed.
 const wxChar* const gc_Configs[] =
 {
 	wxT("DefaultConfig.xml"),
@@ -56,6 +55,8 @@ const wxChar* const gc_Configs[] =
 	wxT("Config29_v12_11.xml"),
 	wxT("Config30_v12_11.xml"),
 	wxT("Config31_v12_11.xml"),
+	wxT("Config32_v12_11.xml"),
+	wxT("Config33_v12_12.xml"),
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
@@ -180,7 +181,7 @@ SUITE(TestConfig)
 			CConfigHandler handler;
 			config.Default(&handler);
 			CHECK_EQUAL(0u, config.GetCalSites().size());
-			CHECK_EQUAL(134u, config.GetActions().size());
+			CHECK_EQUAL(138u, config.GetActions().size());
 			CHECK_EQUAL(0u, config.GetFaults().size());
 			CHECK_EQUAL(5u, config.GetOtherPoints().size());
 			CHECK_EQUAL(13u, config.GetVenues().size());
