@@ -229,7 +229,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 				m_Div->SetName(name);
 				m_pDlg->m_pVenue->GetEvents().RenameDivision(oldName, name);
 				m_pDlg->m_pVenue->GetMultiQs().RenameDivision(oldName, name);
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameDivision::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameDivision::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 				bEdited = true;
 			}
@@ -246,7 +246,7 @@ bool CDlgConfigureDataDivision::DoDelete()
 	if (m_pDlg->m_pVenue->GetDivisions().DeleteDivision(div, m_pDlg->m_pVenue->GetEvents()))
 	{
 		m_pDlg->m_pVenue->GetMultiQs().DeleteDivision(div);
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteDivision::New(m_pDlg->m_pVenue->GetName(), div));
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteDivision::New(0, m_pDlg->m_pVenue->GetName(), div));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}
@@ -388,7 +388,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 						m_Division->GetName(),
 						oldName, name);
 				}
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewLevel(0,
 					m_pDlg->m_pVenue->GetName(),
 					m_Division->GetName(),
 					oldName, m_Level->GetName()));
@@ -407,7 +407,7 @@ bool CDlgConfigureDataLevel::DoDelete()
 	if (m_Division->GetLevels().DeleteLevel(m_Division->GetName(), level, m_pDlg->m_pVenue->GetEvents()))
 	{
 		m_pDlg->m_pVenue->GetMultiQs().DeleteLevel(level);
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewLevel(
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewLevel(0,
 			m_pDlg->m_pVenue->GetName(),
 			m_Division->GetName(),
 			level));
@@ -483,7 +483,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 				m_pDlg->m_pVenue->GetMultiQs().RenameLevel(
 					m_Division->GetName(),
 					oldName, m_SubLevel->GetName());
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameLevel::NewSubLevel(0,
 					m_pDlg->m_pVenue->GetName(),
 					m_Division->GetName(),
 					m_Level->GetName(),
@@ -508,7 +508,7 @@ bool CDlgConfigureDataSubLevel::DoDelete()
 		// Note, if deleting the sublevel caused the level's name
 		// to change, just leave it. It causes more trouble to
 		// try modifing the name to the old sublevel name.
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteLevel::NewSubLevel(0,
 			m_pDlg->m_pVenue->GetName(),
 			m_Division->GetName(),
 			level, subLevel));
@@ -577,7 +577,7 @@ bool CDlgConfigureDataTitle::DoEdit()
 						if (wxYES == wxMessageBox(_("IDS_NAME_IN_USE_MERGE"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 						{
 							bInUse = false;
-							m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+							m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 							if (m_pDlg->m_pVenue->GetTitles().DeleteTitle(oldName))
 							{
 								m_pDlg->m_ctrlItems->Delete(GetId());
@@ -599,7 +599,7 @@ bool CDlgConfigureDataTitle::DoEdit()
 			if (name != oldName || longname != oldLongName)
 			{
 				if (name != oldName)
-					m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+					m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 				RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 			}
 			bEdited = true;
@@ -614,7 +614,7 @@ bool CDlgConfigureDataTitle::DoDelete()
 	wxString title = m_Title->GetName();
 	if (m_pDlg->m_pVenue->GetTitles().DeleteTitle(title))
 	{
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteTitle::New(m_pDlg->m_pVenue->GetName(), wxString(), title, wxString()));
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteTitle::New(0, m_pDlg->m_pVenue->GetName(), wxString(), title, wxString()));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}
@@ -699,7 +699,7 @@ bool CDlgConfigureDataEvent::DoDelete()
 	if (m_pDlg->m_pVenue->GetEvents().DeleteEvent(evt))
 	{
 		m_pDlg->m_pVenue->GetMultiQs().DeleteEvent(evt);
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteEvent::New(m_pDlg->m_pVenue->GetName(), evt));
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteEvent::New(0, m_pDlg->m_pVenue->GetName(), evt));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}
@@ -772,7 +772,7 @@ bool CDlgConfigureDataMultiQ::DoEdit()
 		{
 			wxString name = m_MultiQ->GetName();
 			if (name != oldName)
-				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameMultiQ::New(m_pDlg->m_pVenue->GetName(), oldName, name));
+				m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameMultiQ::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
 			RefreshTreeItem(m_pDlg->m_ctrlItems, GetId());
 			bEdited = true;
 		}
@@ -786,7 +786,7 @@ bool CDlgConfigureDataMultiQ::DoDelete()
 	wxString multiQ = m_MultiQ->GetName();
 	if (m_pDlg->m_pVenue->GetMultiQs().DeleteMultiQ(m_MultiQ))
 	{
-		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteMultiQ::New(m_pDlg->m_pVenue->GetName(), multiQ));
+		m_pDlg->m_DlgFixup.push_back(ARBConfigActionDeleteMultiQ::New(0, m_pDlg->m_pVenue->GetName(), multiQ));
 		m_pDlg->m_ctrlItems->Delete(GetId());
 		return true;
 	}

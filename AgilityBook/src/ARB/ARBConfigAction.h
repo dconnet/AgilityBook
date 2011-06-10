@@ -67,11 +67,21 @@ protected:
 class ARBConfigAction : public ARBBase
 {
 protected:
-	ARBConfigAction();
+	ARBConfigAction(short configVersion);
+	ARBConfigAction(ARBConfigAction const& rhs);
 
 public:
 	virtual ~ARBConfigAction();
 	virtual ARBConfigActionPtr Clone() const = 0;
+
+	/**
+	 * Get the version of the config this action can be applied against.
+	 * @return version, or 0 for all
+	 */
+	short GetVersion() const
+	{
+		return m_configVersion;
+	}
 
 	/**
 	 * Get the generic name of this object.
@@ -106,6 +116,12 @@ public:
 			ARBDogList* ioDogs,
 			wxString& ioInfo,
 			IConfigActionCallback& ioCallBack) const = 0;
+
+protected:
+	// Apply action up to this configuration. Basically, this is when the action
+	// was added. Once we're past that configuration, there's no need to apply
+	// this action again.
+	short m_configVersion;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -139,12 +155,14 @@ class ARBConfigActionRenameOtherPoints : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionRenameOtherPoints(
+			short configVersion,
 			wxString const& inOldName,
 			wxString const& inNewName);
 	ARBConfigActionRenameOtherPoints(ARBConfigActionRenameOtherPoints const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inOldName,
 			wxString const& inNewName);
 
@@ -166,11 +184,13 @@ class ARBConfigActionDeleteOtherPoints : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionDeleteOtherPoints(
+			short configVersion,
 			wxString const& inName);
 	ARBConfigActionDeleteOtherPoints(ARBConfigActionDeleteOtherPoints const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
@@ -191,12 +211,14 @@ class ARBConfigActionRenameVenue : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameVenue(
+			short configVersion,
 			wxString const& inOldName,
 			wxString const& inNewName);
 	ARBConfigActionRenameVenue(ARBConfigActionRenameVenue const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inOldName,
 			wxString const& inNewName);
 
@@ -218,11 +240,13 @@ class ARBConfigActionDeleteVenue : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteVenue(
+			short configVersion,
 			wxString const& inName);
 	ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenue const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
@@ -243,6 +267,7 @@ class ARBConfigActionRenameMultiQ : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameMultiQ(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -250,6 +275,7 @@ protected:
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -273,12 +299,14 @@ class ARBConfigActionDeleteMultiQ : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteMultiQ(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inName);
 	ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inName);
 
@@ -301,6 +329,7 @@ class ARBConfigActionRenameDivision : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameDivision(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -308,6 +337,7 @@ protected:
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -331,12 +361,14 @@ class ARBConfigActionDeleteDivision : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteDivision(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inName);
 	ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inName);
 
@@ -359,6 +391,7 @@ class ARBConfigActionRenameLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameLevel(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inLevel,
@@ -368,12 +401,14 @@ protected:
 
 public:
 	static ARBConfigActionPtr NewLevel(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inOldName,
 			wxString const& inNewName);
 
 	static ARBConfigActionPtr NewSubLevel(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inLevel,
@@ -401,6 +436,7 @@ class ARBConfigActionDeleteLevel : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteLevel(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inLevel,
@@ -409,11 +445,13 @@ protected:
 
 public:
 	static ARBConfigActionPtr NewLevel(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inName);
 
 	static ARBConfigActionPtr NewSubLevel(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inLevel,
@@ -440,6 +478,7 @@ class ARBConfigActionRenameTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameTitle(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -447,6 +486,7 @@ protected:
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -470,6 +510,7 @@ class ARBConfigActionDeleteTitle : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteTitle(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inOldName,
@@ -478,6 +519,7 @@ protected:
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inDiv,
 			wxString const& inOldName,
@@ -504,6 +546,7 @@ class ARBConfigActionRenameEvent : public ARBConfigAction
 {
 protected:
 	ARBConfigActionRenameEvent(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -511,6 +554,7 @@ protected:
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inOldName,
 			wxString const& inNewName);
@@ -534,12 +578,14 @@ class ARBConfigActionDeleteEvent : public ARBConfigAction
 {
 protected:
 	ARBConfigActionDeleteEvent(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inName);
 	ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
+			short configVersion,
 			wxString const& inVenue,
 			wxString const& inName);
 

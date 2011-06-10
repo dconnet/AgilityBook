@@ -1426,7 +1426,7 @@ void CDlgConfigEvent::OnOk(wxCommandEvent& evt)
 			return;
 		}
 		if (!m_bNewEntry)
-			m_DlgFixup.push_back(ARBConfigActionRenameEvent::New(m_pVenue->GetName(), m_pEvent->GetName(), m_Name));
+			m_DlgFixup.push_back(ARBConfigActionRenameEvent::New(0, m_pVenue->GetName(), m_pEvent->GetName(), m_Name));
 		m_pEvent->SetName(m_Name);
 	}
 	// m_Book is only valid when editing an existing entry.

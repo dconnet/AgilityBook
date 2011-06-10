@@ -415,7 +415,7 @@ void CDlgConfigure::DoEdit()
 				if (pOtherData->GetOtherPoints()->GetName() != oldName)
 				{
 					// Other things may have changed, but we only care about the name for fixup.
-					m_Config.GetActions().push_back(ARBConfigActionRenameOtherPoints::New(oldName, pOtherData->GetOtherPoints()->GetName()));
+					m_Config.GetActions().push_back(ARBConfigActionRenameOtherPoints::New(0, oldName, pOtherData->GetOtherPoints()->GetName()));
 					RefreshTreeItem(m_ctrlItems, current);
 					m_ctrlItems->SortChildren(m_hItemOtherPts);
 				}
@@ -614,7 +614,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 			// If we were able to delete it...
 			if (m_Config.GetVenues().DeleteVenue(venue))
 			{
-				m_Config.GetActions().push_back(ARBConfigActionDeleteVenue::New(venue));
+				m_Config.GetActions().push_back(ARBConfigActionDeleteVenue::New(0, venue));
 				m_ctrlItems->Delete(current);
 			}
 		}
@@ -637,7 +637,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 			wxString otherPoints = pOtherData->GetOtherPoints()->GetName();
 			if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
 			{
-				m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(otherPoints));
+				m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(0, otherPoints));
 				m_ctrlItems->Delete(current);
 			}
 		}

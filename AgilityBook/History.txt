@@ -1,6 +1,10 @@
 6/9/2011: v2.2.9.<in development>
 - Bumped Configuration v33:
   - Changed NADAC Extreme Tunnelers to Extreme Gaters.
+- Bug fixes:
+  - Configuration fixup actions need to be limited or we attempt to rename
+    things we shouldn't. (In config32, we changed USDAA APD->PDCH and PD2->APD.
+	In this config, it was attempting to rename APD again.)
 
 5/30/2011: v2.2.8.3075
 - Bug fixes:
