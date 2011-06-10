@@ -241,7 +241,7 @@ Revision History:
     <Action OldName="XTN" NewName="XGT" Venue="NADAC" Verb="RenameTitle" />
     <Action OldName="O-XTN" NewName="O-XGT" Venue="NADAC" Verb="RenameTitle" />
     <Action OldName="S-XTN" NewName="S-XGT" Venue="NADAC" Verb="RenameTitle" />
-    <Action OldName="Extreme Tunnelers" NewName="Extreme Gators" Venue="NADAC" Verb="RenameEvent" />
+    <Action OldName="Extreme Tunnelers" NewName="Extreme Gaters" Venue="NADAC" Verb="RenameEvent" />
     <Venue LongName="Agility Association of Canada" Name="AAC" URL="http://www.aac.ca/" icon="3">
       <Titles LongName="Agility Dog of Canada" Name="ADC">3 qualifying scores in Standard under at least 2 different judges</Titles>
       <Titles LongName="Starters Games Dog of Canada" Name="SGDC">2 qualifying scores in each of the 3 games (jumpers, gamblers, snooker) under at least 2 different judges in each game
