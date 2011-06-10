@@ -1,4 +1,6 @@
-5/30/2011: v2.2.9.<in development>
+6/9/2011: v2.2.9.<in development>
+- Bumped Configuration v33:
+  - Changed NADAC Extreme Tunnelers to Extreme Gaters.
 
 5/30/2011: v2.2.8.3075
 - Bug fixes:
