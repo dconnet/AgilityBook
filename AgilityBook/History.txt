@@ -1,6 +1,8 @@
-6/9/2011: v2.2.9.<in development>
+6/30/2011: v2.2.9.<in development>
 - Bumped Configuration v33:
   - Changed NADAC Extreme Tunnelers to Extreme Gaters.
+- New features / Enhancements:
+  - Changed build environment to created .lib for sharing between projects.
 - Bug fixes:
   - Configuration fixup actions need to be limited or we attempt to rename
     things we shouldn't. (In config32, we changed USDAA APD->PDCH and PD2->APD.

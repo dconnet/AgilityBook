@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug - No Unicode|Win32">
+      <Configuration>Debug - No Unicode</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug - No Unicode|x64">
+      <Configuration>Debug - No Unicode</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - No Unicode|Win32">
+      <Configuration>Release - No Unicode</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - No Unicode|x64">
+      <Configuration>Release - No Unicode</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{09C48F16-0C9D-4A44-925D-7C02E33341DD}</ProjectGuid>
+    <RootNamespace>ARBLib</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Release Settings.props" />
+    <Import Project="$(SolutionDir)/Win32 Support.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Release Settings.props" />
+    <Import Project="$(SolutionDir)/Win32 Support.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Debug Settings.props" />
+    <Import Project="$(SolutionDir)/Win32 Support.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Debug Settings.props" />
+    <Import Project="$(SolutionDir)/Win32 Support.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Release Settings.props" />
+    <Import Project="$(SolutionDir)/x64 Support.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Release Settings.props" />
+    <Import Project="$(SolutionDir)/x64 Support.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Debug Settings.props" />
+    <Import Project="$(SolutionDir)/x64 Support.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)/Debug Settings.props" />
+    <Import Project="$(SolutionDir)/x64 Support.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'">
+    <PreBuildEvent>
+      <Command>cd $(ProjectDir)\..\..\Include
+python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
+</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp" />
+    <ClCompile Include="..\..\ARB\ARBBase.cpp" />
+    <ClCompile Include="..\..\ARB\ARBBase64.cpp" />
+    <ClCompile Include="..\..\ARB\ARBCalendar.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfig.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigAction.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigCalSite.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigDivision.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigEvent.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigFault.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigLevel.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigLifetimePoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigMultiQ.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigOtherPoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigPlaceInfo.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigScoring.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigSubLevel.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigTitle.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigTitlePoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBConfigVenue.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDate.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDog.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogClub.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogExistingPoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogNotes.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogReferenceRun.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRegNum.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRun.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRunOtherPoints.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRunPartner.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogRunScoring.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogTitle.cpp" />
+    <ClCompile Include="..\..\ARB\ARBDogTrial.cpp" />
+    <ClCompile Include="..\..\ARB\ARBInfo.cpp" />
+    <ClCompile Include="..\..\ARB\ARBInfoItem.cpp" />
+    <ClCompile Include="..\..\ARB\ARBLocalization.cpp" />
+    <ClCompile Include="..\..\ARB\ARBMsgDigest.cpp" />
+    <ClCompile Include="..\..\ARB\ARBString.cpp" />
+    <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
+    <ClCompile Include="..\..\ARB\ARBTypes.cpp" />
+    <ClCompile Include="..\..\ARB\BinaryData.cpp" />
+    <ClCompile Include="..\..\ARB\BreakLine.cpp" />
+    <ClCompile Include="..\..\ARB\Element.cpp" />
+    <ClCompile Include="..\..\ARB\VersionNum.cpp" />
+    <ClCompile Include="..\..\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug - No Unicode|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release - No Unicode|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ARB\ARBAgilityRecordBook.h" />
+    <ClInclude Include="..\..\ARB\ARBBase.h" />
+    <ClInclude Include="..\..\ARB\ARBBase64.h" />
+    <ClInclude Include="..\..\ARB\ARBCalendar.h" />
+    <ClInclude Include="..\..\ARB\ARBConfig.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigAction.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigCalSite.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigDivision.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigEvent.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigFault.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigLevel.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigLifetimePoints.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigMultiQ.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigOtherPoints.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigPlaceInfo.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigScoring.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigSubLevel.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigTitle.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigTitlePoints.h" />
+    <ClInclude Include="..\..\ARB\ARBConfigVenue.h" />
+    <ClInclude Include="..\..\ARB\ARBDate.h" />
+    <ClInclude Include="..\..\ARB\ARBDog.h" />
+    <ClInclude Include="..\..\ARB\ARBDogClub.h" />
+    <ClInclude Include="..\..\ARB\ARBDogExistingPoints.h" />
+    <ClInclude Include="..\..\ARB\ARBDogNotes.h" />
+    <ClInclude Include="..\..\ARB\ARBDogReferenceRun.h" />
+    <ClInclude Include="..\..\ARB\ARBDogRegNum.h" />
+    <ClInclude Include="..\..\ARB\ARBDogRun.h" />
+    <ClInclude Include="..\..\ARB\ARBDogRunOtherPoints.h" />
+    <ClInclude Include="..\..\ARB\ARBDogRunPartner.h" />
+    <ClInclude Include="..\..\ARB\ARBDogRunScoring.h" />
+    <ClInclude Include="..\..\ARB\ARBDogTitle.h" />
+    <ClInclude Include="..\..\ARB\ARBDogTrial.h" />
+    <ClInclude Include="..\..\ARB\ARBInfo.h" />
+    <ClInclude Include="..\..\ARB\ARBInfoItem.h" />
+    <ClInclude Include="..\..\ARB\ARBLocalization.h" />
+    <ClInclude Include="..\..\ARB\ARBMsgDigest.h" />
+    <ClInclude Include="..\..\ARB\ARBString.h" />
+    <ClInclude Include="..\..\ARB\ARBStructure.h" />
+    <ClInclude Include="..\..\ARB\ARBTraining.h" />
+    <ClInclude Include="..\..\ARB\ARBTypes.h" />
+    <ClInclude Include="..\..\ARB\BinaryData.h" />
+    <ClInclude Include="..\..\ARB\BreakLine.h" />
+    <ClInclude Include="..\..\ARB\Element.h" />
+    <ClInclude Include="..\..\ARB\VersionNum.h" />
+    <ClInclude Include="..\..\stdafx.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

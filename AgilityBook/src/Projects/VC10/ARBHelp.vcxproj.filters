@@ -42,18 +42,6 @@
     <ClCompile Include="..\..\Win\Widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ARB\ARBBase64.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ARB\ARBString.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ARB\BinaryData.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ARB\VersionNum.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico">
@@ -66,18 +54,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ARB\ARBBase64.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBString.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\BinaryData.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\VersionNum.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ARBHelp\ARBHelp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
