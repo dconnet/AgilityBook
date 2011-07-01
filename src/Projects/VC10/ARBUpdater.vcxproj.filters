@@ -27,12 +27,6 @@
     <ClCompile Include="..\..\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ARB\ARBMsgDigest.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ARB\ARBString.cpp">
-      <Filter>ARB</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Win\Globals.cpp">
       <Filter>ARB</Filter>
     </ClCompile>
@@ -48,12 +42,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ARB\ARBMsgDigest.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ARB\ARBString.h">
-      <Filter>ARB</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Win\Globals.h">
       <Filter>ARB</Filter>
     </ClInclude>

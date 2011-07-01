@@ -44,7 +44,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 				DisableSpecificWarnings="4100"
@@ -111,7 +110,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
@@ -178,7 +176,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 				DisableSpecificWarnings="4100"
@@ -246,7 +243,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
@@ -358,22 +354,6 @@
 		<Filter
 			Name="ARB"
 			>
-			<File
-				RelativePath="..\..\ARB\ARBMsgDigest.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBMsgDigest.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBString.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBString.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\Win\Globals.cpp"
 				>

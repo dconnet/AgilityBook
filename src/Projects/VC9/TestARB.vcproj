@@ -43,7 +43,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -109,7 +109,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -177,7 +177,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -244,7 +244,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -311,7 +311,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -377,7 +377,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="1"
 			/>
@@ -445,7 +445,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -512,7 +512,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../UnitTest++/src;../../Include;../../ARB;../../TestARB"
+				AdditionalIncludeDirectories="../../UnitTest++/src;../../TestARB"
 				PreprocessorDefinitions="_CONSOLE"
 				RuntimeLibrary="0"
 			/>
@@ -914,358 +914,6 @@
 			</File>
 			<File
 				RelativePath="..\..\TestARB\res\TestARB.rc2"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="ARB Files"
-			>
-			<File
-				RelativePath="..\..\ARB\ARBAgilityRecordBook.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBAgilityRecordBook.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBBase.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBBase.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBBase64.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBBase64.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBCalendar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBCalendar.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfig.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfig.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigAction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigCalSite.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigCalSite.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigDivision.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigDivision.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigEvent.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigEvent.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigFault.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigFault.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigLevel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigLevel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigLifetimePoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigLifetimePoints.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigMultiQ.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigMultiQ.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigOtherPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigOtherPoints.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigPlaceInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigPlaceInfo.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigScoring.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigScoring.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigSubLevel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigSubLevel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigTitle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigTitle.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigTitlePoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigTitlePoints.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigVenue.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBConfigVenue.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDate.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDog.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDog.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogClub.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogClub.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogExistingPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogExistingPoints.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogNotes.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogNotes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogReferenceRun.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogReferenceRun.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRegNum.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRegNum.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRun.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRun.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRunOtherPoints.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRunOtherPoints.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRunPartner.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRunPartner.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRunScoring.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogRunScoring.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogTitle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogTitle.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogTrial.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBDogTrial.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBInfo.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBInfoItem.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBInfoItem.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBLocalization.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBLocalization.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBMsgDigest.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBMsgDigest.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBString.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBString.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBStructure.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBTraining.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBTraining.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBTypes.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBTypes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\BinaryData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\BinaryData.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\BreakLine.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\BreakLine.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\Element.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\Element.h"
 				>
 			</File>
 		</Filter>

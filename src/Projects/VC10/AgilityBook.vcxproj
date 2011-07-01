@@ -139,7 +139,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -164,7 +164,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -189,7 +189,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -214,7 +214,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -239,7 +239,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -264,7 +264,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -290,7 +290,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -315,7 +315,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -440,50 +440,6 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     <ClCompile Include="..\..\Win\WizardExport.cpp" />
     <ClCompile Include="..\..\Win\WizardImport.cpp" />
     <ClCompile Include="..\..\Win\WizardStart.cpp" />
-    <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp" />
-    <ClCompile Include="..\..\ARB\ARBBase.cpp" />
-    <ClCompile Include="..\..\ARB\ARBBase64.cpp" />
-    <ClCompile Include="..\..\ARB\ARBCalendar.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfig.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigAction.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigCalSite.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigDivision.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigEvent.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigFault.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigLevel.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigLifetimePoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigMultiQ.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigOtherPoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigPlaceInfo.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigScoring.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigSubLevel.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigTitle.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigTitlePoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBConfigVenue.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDate.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDog.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogClub.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogExistingPoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogNotes.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogReferenceRun.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRegNum.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRun.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRunOtherPoints.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRunPartner.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogRunScoring.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogTitle.cpp" />
-    <ClCompile Include="..\..\ARB\ARBDogTrial.cpp" />
-    <ClCompile Include="..\..\ARB\ARBInfo.cpp" />
-    <ClCompile Include="..\..\ARB\ARBInfoItem.cpp" />
-    <ClCompile Include="..\..\ARB\ARBLocalization.cpp" />
-    <ClCompile Include="..\..\ARB\ARBMsgDigest.cpp" />
-    <ClCompile Include="..\..\ARB\ARBString.cpp" />
-    <ClCompile Include="..\..\ARB\ARBTraining.cpp" />
-    <ClCompile Include="..\..\ARB\ARBTypes.cpp" />
-    <ClCompile Include="..\..\ARB\BinaryData.cpp" />
-    <ClCompile Include="..\..\ARB\BreakLine.cpp" />
-    <ClCompile Include="..\..\ARB\Element.cpp" />
-    <ClCompile Include="..\..\ARB\VersionNum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Win\AgilityBook.h" />
@@ -582,51 +538,6 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     <ClInclude Include="..\..\Win\WizardExport.h" />
     <ClInclude Include="..\..\Win\WizardImport.h" />
     <ClInclude Include="..\..\Win\WizardStart.h" />
-    <ClInclude Include="..\..\ARB\ARBAgilityRecordBook.h" />
-    <ClInclude Include="..\..\ARB\ARBBase.h" />
-    <ClInclude Include="..\..\ARB\ARBBase64.h" />
-    <ClInclude Include="..\..\ARB\ARBCalendar.h" />
-    <ClInclude Include="..\..\ARB\ARBConfig.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigAction.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigCalSite.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigDivision.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigEvent.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigFault.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigLevel.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigLifetimePoints.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigMultiQ.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigOtherPoints.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigPlaceInfo.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigScoring.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigSubLevel.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigTitle.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigTitlePoints.h" />
-    <ClInclude Include="..\..\ARB\ARBConfigVenue.h" />
-    <ClInclude Include="..\..\ARB\ARBDate.h" />
-    <ClInclude Include="..\..\ARB\ARBDog.h" />
-    <ClInclude Include="..\..\ARB\ARBDogClub.h" />
-    <ClInclude Include="..\..\ARB\ARBDogExistingPoints.h" />
-    <ClInclude Include="..\..\ARB\ARBDogNotes.h" />
-    <ClInclude Include="..\..\ARB\ARBDogReferenceRun.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRegNum.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRun.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRunOtherPoints.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRunPartner.h" />
-    <ClInclude Include="..\..\ARB\ARBDogRunScoring.h" />
-    <ClInclude Include="..\..\ARB\ARBDogTitle.h" />
-    <ClInclude Include="..\..\ARB\ARBDogTrial.h" />
-    <ClInclude Include="..\..\ARB\ARBInfo.h" />
-    <ClInclude Include="..\..\ARB\ARBInfoItem.h" />
-    <ClInclude Include="..\..\ARB\ARBLocalization.h" />
-    <ClInclude Include="..\..\ARB\ARBMsgDigest.h" />
-    <ClInclude Include="..\..\ARB\ARBString.h" />
-    <ClInclude Include="..\..\ARB\ARBStructure.h" />
-    <ClInclude Include="..\..\ARB\ARBTraining.h" />
-    <ClInclude Include="..\..\ARB\ARBTypes.h" />
-    <ClInclude Include="..\..\ARB\BinaryData.h" />
-    <ClInclude Include="..\..\ARB\BreakLine.h" />
-    <ClInclude Include="..\..\ARB\Element.h" />
-    <ClInclude Include="..\..\ARB\VersionNum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico" />
@@ -639,6 +550,14 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Win\AgilityBook.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="LibARB.vcxproj">
+      <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="LibTidy.vcxproj">
+      <Project>{05967875-9726-4f06-8ec8-db6170c00bf3}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

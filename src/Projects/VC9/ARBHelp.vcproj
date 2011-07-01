@@ -44,7 +44,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 				DisableSpecificWarnings="4100"
@@ -111,7 +110,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="1"
 			/>
@@ -178,7 +176,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 				DisableSpecificWarnings="4100"
@@ -246,7 +243,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../Include;../../ARB"
 				PreprocessorDefinitions="_WINDOWS"
 				RuntimeLibrary="0"
 			/>
@@ -372,42 +368,6 @@
 			</File>
 			<File
 				RelativePath="..\..\ARBHelp\ARBHelp.rc"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="ARB"
-			>
-			<File
-				RelativePath="..\..\ARB\ARBBase64.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBBase64.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBString.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\ARBString.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\BinaryData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\BinaryData.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\VersionNum.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\ARB\VersionNum.h"
 				>
 			</File>
 		</Filter>

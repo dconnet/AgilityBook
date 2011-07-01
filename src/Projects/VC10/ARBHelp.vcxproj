@@ -84,7 +84,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -104,7 +104,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -123,7 +123,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -143,7 +143,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>../../Include;../../ARB;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -169,10 +169,6 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\Win\Widgets.cpp" />
-    <ClCompile Include="..\..\ARB\ARBBase64.cpp" />
-    <ClCompile Include="..\..\ARB\ARBString.cpp" />
-    <ClCompile Include="..\..\ARB\BinaryData.cpp" />
-    <ClCompile Include="..\..\ARB\VersionNum.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Win\res\AgilityBook.ico" />
@@ -181,10 +177,6 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ResourceCompile Include="..\..\ARBHelp\ARBHelp.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ARB\ARBBase64.h" />
-    <ClInclude Include="..\..\ARB\ARBString.h" />
-    <ClInclude Include="..\..\ARB\BinaryData.h" />
-    <ClInclude Include="..\..\ARB\VersionNum.h" />
     <ClInclude Include="..\..\ARBHelp\ARBHelp.h" />
     <ClInclude Include="..\..\ARBHelp\DlgARBHelp.h" />
     <ClInclude Include="..\..\ARBHelp\DlgPageDecode.h" />
@@ -193,6 +185,11 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClInclude Include="..\..\ARBHelp\DlgPageEncodeFinish.h" />
     <ClInclude Include="..\..\stdafx.h" />
     <ClInclude Include="..\..\Win\Widgets.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="LibARB.vcxproj">
+      <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
