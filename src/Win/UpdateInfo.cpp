@@ -13,6 +13,7 @@
  * File Format: See below.
  *
  * Revision History
+ * @li 2011-07-26 DRC Moved 'Arch' to ARBAgilityRecordBook.
  * @li 2010-05-07 DRC Removed 'lang' from 'Platform'. (Finally figured out how
  *                    to create transforms and embed in msi.)
  * @li 2010-02-07 DRC Changed to version2.xml.
@@ -124,25 +125,6 @@
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-
-// These are the strings we recognize as platforms.
-// Every platform we support for download must be listed here.
-// It must also be present in the version2.xml file (that creates an
-// arch/lang to filename mapping).
-static wxString Arch()
-{
-#if defined(WIN64)
-	return wxT("x64");
-#elif defined(WIN32)
-	return wxT("x86");
-#elif defined(__WXMAC__)
-	return wxT("mac");
-#else
-#pragma PRAGMA_TODO("Define platform arch in version file for download")
-	return wxEmptyString;
-#endif
-}
-
 
 static wxString VersionFile()
 {
@@ -366,7 +348,7 @@ bool CUpdateInfo::ReadVersionFile(
 					wxString value;
 					if (ElementNode::eFound == node->GetAttrib(wxT("arch"), value))
 					{
-						if (Arch() == value)
+						if (ARBAgilityRecordBook::GetArch() == value)
 						{
 							bSkip = false;
 						}

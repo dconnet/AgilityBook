@@ -11,6 +11,8 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2011-07-26 DRC File version 12.13
+               Added 'platform','os' to 'AgilityBook'
 2011-06-09 DRC File version 12.12
                Added 'Config' to 'Action'.
 2009-12-18 DRC File version 12.11
@@ -95,12 +97,16 @@ Revision History:
  Book is a simple integer in versions 1 thru 7.
  It then changes to a more complex value ("major.minor"), starting with "8.0"
  ver: Version of program that created file. Used for debugging purposes.
+ platform: Platform/architecture of program. Used for debugging purposes.
+ os: Platform/architecture of os. Used for debugging purposes.
  timestamp: time stamp when file was written. For debugging purposes.
 -->
 <!ELEMENT AgilityBook (Calendar*, Training*, Configuration, Info?, Dog*) >
 	<!ATTLIST AgilityBook
 		Book CDATA #REQUIRED
 		ver CDATA #IMPLIED
+		platform CDATA #IMPLIED
+		os CDATA #IMPLIED
 		timestamp CDATA #IMPLIED
 		>
 
