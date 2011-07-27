@@ -17,6 +17,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
+ * @li 2011-07-26 DRC File version 12.13
+ *                    Added 'platform','os' to 'AgilityBook'
  * @li 2011-06-09 DRC File version 12.11
  *                    Added 'Config' to 'Action'.
  * @li 2009-12-18 DRC File version 12.11
@@ -87,6 +89,7 @@
 #include "ARBTypes.h"
 #include "Element.h"
 
+#include <wx/utils.h>
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
@@ -95,11 +98,27 @@
 
 ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 {
-	// Note, when bumping to the next version - DO NOT bump to a 7.x.
-	// V0.9.3.7 can read 7.x files, but will not issue the warning about
-	// possible data loss.
-	static ARBVersion const curVersion(12, 12);
+	static ARBVersion const curVersion(12, 13);
 	return curVersion;
+}
+
+
+// These are the strings we recognize as platforms.
+// Every platform we support for download must be listed here.
+// It must also be present in the version2.xml file (that creates an
+// arch/lang to filename mapping). (see Win/UpdateInfo.cpp)
+wxString ARBAgilityRecordBook::GetArch()
+{
+#if defined(WIN64)
+	return wxT("x64");
+#elif defined(WIN32)
+	return wxT("x86");
+#elif defined(__WXMAC__)
+	return wxT("mac");
+#else
+#pragma PRAGMA_TODO("Define platform arch in version file for download")
+	return wxEmptyString;
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -318,6 +337,8 @@ bool ARBAgilityRecordBook::Save(ElementNodePtr outTree,
 	outTree->SetName(TREE_BOOK);
 	outTree->AddAttrib(ATTRIB_BOOK_VERSION, GetCurrentDocVersion());
 	outTree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, inPgmVer);
+	outTree->AddAttrib(ATTRIB_BOOK_PGM_PLATFORM, GetArch());
+	outTree->AddAttrib(ATTRIB_BOOK_PGM_OS, ::wxGetOsDescription());
 	outTree->AddAttrib(ATTRIB_BOOK_TIMESTAMP, GetTimeStamp());
 	if (inCalendar)
 	{

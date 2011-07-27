@@ -87,6 +87,8 @@
 #define TREE_REF_NOTE						wxT("Note")
 #define ATTRIB_BOOK_VERSION					wxT("Book")
 #define ATTRIB_BOOK_PGM_VERSION				wxT("ver")
+#define ATTRIB_BOOK_PGM_PLATFORM			wxT("platform")
+#define ATTRIB_BOOK_PGM_OS					wxT("os")
 #define ATTRIB_BOOK_TIMESTAMP				wxT("timestamp")
 #define ATTRIB_CONFIG_VERSION				wxT("version")
 #define ATTRIB_CONFIG_UPDATE				wxT("update")
