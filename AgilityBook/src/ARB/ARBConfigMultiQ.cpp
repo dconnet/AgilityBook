@@ -440,7 +440,7 @@ bool ARBConfigMultiQ::AddItem(
 	bool bInserted = false;
 	if (0 < inDiv.length() && 0 < inLevel.length() && 0 < inEvent.length())
 	{
-        MultiQItem item;
+		MultiQItem item;
 		item.m_Div = inDiv;
 		item.m_Level = inLevel;
 		item.m_Event = inEvent;
@@ -458,7 +458,7 @@ bool ARBConfigMultiQ::RemoveItem(
 	bool bRemoved = false;
 	if (0 < inDiv.length() && 0 < inLevel.length() && 0 < inEvent.length())
 	{
-        MultiQItem item;
+		MultiQItem item;
 		item.m_Div = inDiv;
 		item.m_Level = inLevel;
 		item.m_Event = inEvent;
