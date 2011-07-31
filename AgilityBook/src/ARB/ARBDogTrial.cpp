@@ -394,7 +394,7 @@ public:
 					iCompare = 1;
 			}
 		}
-		return m_bDescending ?  iCompare < 0 : iCompare > 0;
+		return m_bDescending ? iCompare < 0 : iCompare > 0;
 	}
 private:
 	bool m_bDescending;
