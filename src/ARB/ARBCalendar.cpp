@@ -869,7 +869,7 @@ bool ARBCalendar::Update(ARBCalendarPtr inCal)
 		bChanged = true;
 		m_Venue = inCal->GetVenue();
 	}
-	if  (!inCal->GetSecEmail().empty() && m_SecEmail != inCal->GetSecEmail())
+	if (!inCal->GetSecEmail().empty() && m_SecEmail != inCal->GetSecEmail())
 	{
 		bChanged = true;
 		m_SecEmail = inCal->GetSecEmail();
