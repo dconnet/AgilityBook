@@ -396,6 +396,8 @@ it will ask if you really mean that.
 
 If there are no 'TitlePoints', then the class is non-titling.
 
+Placements is used to count the number of places earned (used in FCI, SCC)
+
  Integer: OpeningPts,ClosingPts,Points,Faults
 -->
 <!ELEMENT Event (Desc?, SubName*, Scoring+) >
