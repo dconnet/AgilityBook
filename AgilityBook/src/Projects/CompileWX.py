@@ -5,6 +5,7 @@
 # It assumes the default install location of c:\progfiles
 #
 # Revision History
+# 2011-07-30 DRC Require -w option.
 # 2010-11-20 DRC Automatically determine hasprefix support.
 # 2010-11-07 DRC Removed DEBUG_FLAG from build - set in setup.h instead.
 # 2010-10-19 DRC Remove all debug info from release build
@@ -16,8 +17,8 @@
 #                (2.8 is rarely rebuilt, default to the active build)
 # 2009-09-26 DRC Tweak compile options
 # 2009-09-12 DRC Fix dll creation
-"""CompileWX.py [-w wxwin] [-e] [-a] [-p] [-d] [-m] [-s name]* compiler*
-	-w wxwin: Override WXWIN env variable
+"""CompileWX.py -w wxwin [-e] [-a] [-p] [-d] [-m] [-s name]* compiler*
+	-w wxwin: Root of wx tree, normally %WXWIN%
 	-e:       Just show the environment, don't do it
 	-a:       Compile all (vc9, vc9x64)
 	-d:       Compile as DLLs (default: static)
@@ -194,6 +195,7 @@ def main():
 	if os.environ.has_key('PROCESSOR_ARCHITEW6432') and os.environ['PROCESSOR_ARCHITEW6432'] == 'AMD64':
 		ProgramFiles = r'c:\Program Files (x86)'
 
+	wxwin = ''
 	samples = set()
 	compilers = set()
 	try:
@@ -206,7 +208,7 @@ def main():
 		if '-e' == o:
 			compileIt = False
 		elif '-w' == o:
-			os.environ['WXWIN'] = a
+			wxwin = a
 		elif '-a' == o:
 			AddCompiler(compilers, 'vc9')
 			AddCompiler(compilers, 'vc9x64')
@@ -216,6 +218,12 @@ def main():
 			useUnicode = False
 		elif '-s' == o:
 			samples.add(a)
+
+	# Made -w required since normal WXWIN rarely needs rebuilding.
+	if len(wxwin) == 0:
+		print 'ERROR: -w option not specified'
+		return 1
+	os.environ['WXWIN'] = wxwin
 
 	if not os.environ.has_key('WXWIN'):
 		print 'ERROR: WXWIN environment variable is not set'
