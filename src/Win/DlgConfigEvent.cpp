@@ -919,28 +919,33 @@ void CDlgConfigEvent::EditPoints()
 			double value;
 			double points;
 			CDlgConfigTitlePoints::ETitlePointType type;
+			ARBPointsType typeNorm;
 			if (pTitle)
 			{
 				value = pTitle->GetFaults();
 				points = pTitle->GetPoints();
 				type = CDlgConfigTitlePoints::eTitleNormal;
+				typeNorm = pTitle->GetCalc()->GetType();
 			}
 			else if (pLife)
 			{
 				value = pLife->GetFaults();
 				points = pLife->GetPoints();
 				type = CDlgConfigTitlePoints::eTitleLifetime;
+				typeNorm = ePointsTypeMax;
 			}
 			else
 			{
 				value = pPlace->GetPlace();
 				points = pPlace->GetValue();
 				type = CDlgConfigTitlePoints::eTitlePlacement;
+				typeNorm = ePointsTypeMax;
 			}
-			CDlgConfigTitlePoints dlg(m_pVenue, value, points, type);
+			CDlgConfigTitlePoints dlg(m_pVenue, value, points, type, typeNorm);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				if (type != dlg.Type()
+				|| typeNorm != dlg.TypeNormal()
 				|| (pTitle && pTitle->GetFaults() != dlg.Faults())
 				|| (pLife && pLife->GetFaults() != dlg.Faults())
 				|| (pPlace && pPlace->GetPlace() != dlg.Place()))
@@ -949,7 +954,7 @@ void CDlgConfigEvent::EditPoints()
 					if (type == dlg.Type())
 					{
 						if (pTitle)
-							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
+							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 						else if (pLife)
 							pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
 						else
@@ -961,7 +966,17 @@ void CDlgConfigEvent::EditPoints()
 					default:
 						assert(0);
 					case CDlgConfigTitlePoints::eTitleNormal:
-						bOk = pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults());
+						{
+							ARBCalcPointsPtr calc = pScoring->GetTitlePoints().GetCalc();
+							if (!calc || dlg.TypeNormal() != calc->GetType())
+							{
+								bOk = true;
+								pScoring->GetTitlePoints().SetType(dlg.TypeNormal());
+								calc = pScoring->GetTitlePoints().GetCalc();
+							}
+							if (!calc || calc->AllowConfiguration())
+								bOk = pScoring->GetTitlePoints().AddTitlePoints(dlg.Points(), dlg.Faults());
+						}
 						if (!bOk)
 							wxMessageBox(_("IDS_TITLEPTS_EXISTS"), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 						break;
@@ -979,7 +994,7 @@ void CDlgConfigEvent::EditPoints()
 					if (bOk && type != dlg.Type())
 					{
 						if (pTitle)
-							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
+							pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 						else if (pLife)
 							pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
 						else
@@ -1225,7 +1240,7 @@ void CDlgConfigEvent::OnPointsNew(wxCommandEvent& evt)
 		ARBConfigScoringPtr pScoring = pScoringData->GetData();
 		if (pScoring)
 		{
-			CDlgConfigTitlePoints dlg(m_pVenue, 0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, this);
+			CDlgConfigTitlePoints dlg(m_pVenue, 0.0, 0.0, CDlgConfigTitlePoints::eTitleNormal, ePointsTypeNormal, this);
 			if (wxID_OK == dlg.ShowModal())
 			{
 				// The only reason this fails is if the faults entry exists.
@@ -1285,7 +1300,7 @@ void CDlgConfigEvent::OnPointsDelete(wxCommandEvent& evt)
 		if (pScoring && (pTitle || pLife || pPlace))
 		{
 			if (pTitle)
-				pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetFaults());
+				pScoring->GetTitlePoints().DeleteTitlePoints(pTitle->GetCalc()->GetType(), pTitle->GetFaults());
 			else if (pLife)
 				pScoring->GetLifetimePoints().DeleteLifetimePoints(pLife->GetFaults());
 			else

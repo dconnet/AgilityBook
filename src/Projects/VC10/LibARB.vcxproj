@@ -223,6 +223,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClCompile Include="..\..\ARB\ARBAgilityRecordBook.cpp" />
     <ClCompile Include="..\..\ARB\ARBBase.cpp" />
     <ClCompile Include="..\..\ARB\ARBBase64.cpp" />
+    <ClCompile Include="..\..\ARB\ARBCalcPoints.cpp" />
     <ClCompile Include="..\..\ARB\ARBCalendar.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfig.cpp" />
     <ClCompile Include="..\..\ARB\ARBConfigAction.cpp" />
@@ -279,6 +280,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ClInclude Include="..\..\ARB\ARBAgilityRecordBook.h" />
     <ClInclude Include="..\..\ARB\ARBBase.h" />
     <ClInclude Include="..\..\ARB\ARBBase64.h" />
+    <ClInclude Include="..\..\ARB\ARBCalcPoints.h" />
     <ClInclude Include="..\..\ARB\ARBCalendar.h" />
     <ClInclude Include="..\..\ARB\ARBConfig.h" />
     <ClInclude Include="..\..\ARB\ARBConfigAction.h" />

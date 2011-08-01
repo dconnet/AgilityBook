@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-07-31 DRC Allow a time fault multipler of 0.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-12-04 DRC Added support for NADAC bonus titling points.
@@ -229,7 +230,7 @@ public:
 	void SetTimeFaultMultiplier(short inMultiplier)
 	{
 		m_TimeFaultMultiplier = inMultiplier;
-		if (0 >= m_TimeFaultMultiplier)
+		if (0 > m_TimeFaultMultiplier)
 			m_TimeFaultMultiplier = 1;
 	}
 	short GetRequiredOpeningPoints() const ///< Only valid for point-based

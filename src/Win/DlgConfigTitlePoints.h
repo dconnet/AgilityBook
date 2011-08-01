@@ -19,6 +19,7 @@
  */
 
 #include "ARBTypes.h"
+#include "ARBCalcPoints.h"
 class CTextCtrl;
 
 
@@ -39,19 +40,31 @@ public:
 			double inValue, // Faults or Place
 			double inPoints,
 			ETitlePointType inType,
+			ARBPointsType inTypeNormal,
 			wxWindow* pParent = NULL);
 
-	double Faults() const			{return m_Faults;}
-	short Place() const				{return m_Place;}
-	double Points() const			{return m_Points;}
-	ETitlePointType Type() const	{return static_cast<ETitlePointType>(m_Type);}
+	double Faults() const	{return m_Faults;}
+	short Place() const		{return m_Place;}
+	double Points() const	{return m_Points;}
+	ETitlePointType Type() const
+	{
+		return static_cast<ETitlePointType>(m_Type);
+	}
+	ARBPointsType TypeNormal() const
+	{
+		return static_cast<ARBPointsType>(m_TypeNormal);
+	}
 
 private:
 	ARBConfigVenuePtr m_Venue;
 	int m_Type;
+	int m_TypeNormal;
 	wxStaticText* m_textValue;
 	CTextCtrl* m_ctrlValue;
+	wxStaticText* m_textPoints;
+	CTextCtrl* m_ctrlPoints;
 	wxChoice* m_ctrlType;
+	wxChoice* m_ctrlTypeNormal;
 	double m_Faults;
 	short m_Place;
 	double m_Points;

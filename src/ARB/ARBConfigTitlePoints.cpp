@@ -35,6 +35,44 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+static struct PointsEnum
+{
+	wxChar const* pPoints;	///< Actual text in file
+	ARBPointsType type;		///< Enum type
+} const sc_Points[] =
+{
+	{ATTRIB_TITLE_POINTS_TYPE_NORMAL, ePointsTypeNormal},
+	{ATTRIB_TITLE_POINTS_TYPE_T2B, ePointsTypeT2B},
+	{ATTRIB_TITLE_POINTS_TYPE_UKI, ePointsTypeUKI}
+};
+static size_t const sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
+
+
+static ARBPointsType PointsToType(wxString const& str)
+{
+	for (size_t n = 0; n < sc_nPoints; ++n)
+	{
+		if (str == sc_Points[n].pPoints)
+			return sc_Points[n].type;
+	}
+	assert(0);
+	return ePointsTypeNormal;
+}
+
+
+static wxString TypeToPoints(ARBPointsType type)
+{
+	for (size_t n = 0; n < sc_nPoints; ++n)
+	{
+		if (type == sc_Points[n].type)
+			return sc_Points[n].pPoints;
+	}
+	assert(0);
+	return wxString();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 {
 	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints());
@@ -43,24 +81,28 @@ ARBConfigTitlePointsPtr ARBConfigTitlePoints::New()
 
 ARBConfigTitlePointsPtr ARBConfigTitlePoints::New(
 		double inPoints,
-		double inFaults)
+		double inFaults,
+		ARBPointsType inType)
 {
-	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults));
+	return ARBConfigTitlePointsPtr(new ARBConfigTitlePoints(inPoints, inFaults, inType));
 }
 
 
 ARBConfigTitlePoints::ARBConfigTitlePoints()
 	: m_Points(0.0)
 	, m_Faults(0.0)
+	, m_Calc(ARBCalcPointsNormal::New())
 {
 }
 
 
 ARBConfigTitlePoints::ARBConfigTitlePoints(
 		double inPoints,
-		double inFaults)
+		double inFaults,
+		ARBPointsType inType)
 	: m_Points(inPoints)
 	, m_Faults(inFaults)
+	, m_Calc(ARBCalcPoints::New(inType))
 {
 }
 
@@ -68,6 +110,7 @@ ARBConfigTitlePoints::ARBConfigTitlePoints(
 ARBConfigTitlePoints::ARBConfigTitlePoints(ARBConfigTitlePoints const& rhs)
 	: m_Points(rhs.m_Points)
 	, m_Faults(rhs.m_Faults)
+	, m_Calc(rhs.m_Calc)
 {
 }
 
@@ -89,6 +132,7 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 	{
 		m_Points = rhs.m_Points;
 		m_Faults = rhs.m_Faults;
+		m_Calc = rhs.m_Calc;
 	}
 	return *this;
 }
@@ -97,13 +141,14 @@ ARBConfigTitlePoints& ARBConfigTitlePoints::operator=(ARBConfigTitlePoints const
 bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 {
 	return m_Points == rhs.m_Points
-		&& m_Faults == rhs.m_Faults;
+		&& m_Faults == rhs.m_Faults
+		&& m_Calc->GetType() == rhs.m_Calc->GetType();
 }
 
 
 wxString ARBConfigTitlePoints::GetGenericName() const
 {
-	return Localization()->TitlePointsNameFormat(m_Points, m_Faults);
+	return m_Calc->GetGenericName(m_Points, m_Faults);
 }
 
 
@@ -116,24 +161,32 @@ bool ARBConfigTitlePoints::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TITLE_POINTS)
 		return false;
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
+	wxString type;
+	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_TITLE_POINTS_TYPE, type))
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS));
-		return false;
+		m_Calc = ARBCalcPoints::New(PointsToType(type));
 	}
-	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
+	if (ePointsTypeNormal == m_Calc->GetType())
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
-		return false;
-	}
-	if (inVersion < ARBVersion(10,0))
-	{
-		bool bLifetime;
-		if (ElementNode::eFound == inTree->GetAttrib(wxT("LifeTime"), bLifetime))
+		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points))
 		{
-			if (bLifetime)
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_POINTS));
+			return false;
+		}
+		if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults))
+		{
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_TITLE_POINTS, ATTRIB_TITLE_POINTS_FAULTS));
+			return false;
+		}
+		if (inVersion < ARBVersion(10,0))
+		{
+			bool bLifetime;
+			if (ElementNode::eFound == inTree->GetAttrib(wxT("LifeTime"), bLifetime))
 			{
-				ioLifetimePoints.AddLifetimePoints(m_Points, m_Faults);
+				if (bLifetime)
+				{
+					ioLifetimePoints.AddLifetimePoints(m_Points, m_Faults);
+				}
 			}
 		}
 	}
@@ -147,9 +200,28 @@ bool ARBConfigTitlePoints::Save(ElementNodePtr ioTree) const
 	if (!ioTree)
 		return false;
 	ElementNodePtr title = ioTree->AddElementNode(TREE_TITLE_POINTS);
-	title->AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points, 0);
-	title->AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults, 0);
+	if (ePointsTypeNormal == m_Calc->GetType())
+	{
+		title->AddAttrib(ATTRIB_TITLE_POINTS_POINTS, m_Points, 0);
+		title->AddAttrib(ATTRIB_TITLE_POINTS_FAULTS, m_Faults, 0);
+	}
+	else
+	{
+		title->AddAttrib(ATTRIB_TITLE_POINTS_TYPE, TypeToPoints(m_Calc->GetType()));
+	}
 	return true;
+}
+
+
+bool ARBConfigTitlePoints::SetPoints(double inPoints)
+{
+	bool bSet = false;
+	if (m_Calc->AllowConfiguration())
+	{
+		bSet = true;
+		m_Points = inPoints;
+	}
+	return bSet;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -187,31 +259,85 @@ void ARBConfigTitlePointsList::sort()
 }
 
 
-double ARBConfigTitlePointsList::GetTitlePoints(double inFaults) const
+ARBCalcPointsPtr ARBConfigTitlePointsList::GetCalc() const
 {
+	if (0 < size())
+		return (*begin())->GetCalc();
+	return ARBCalcPointsPtr();
+}
+
+
+ARBPointsType ARBConfigTitlePointsList::GetType() const
+{
+	ARBCalcPointsPtr calc = GetCalc();
+	if (calc)
+		return calc->GetType();
+	return ePointsTypeNormal;
+}
+
+
+void ARBConfigTitlePointsList::SetType(ARBPointsType inType)
+{
+	if (GetType() != inType)
+	{
+		clear();
+		switch (inType)
+		{
+		default:
+			assert(0);
+			// Fall through
+		case ePointsTypeNormal:
+			break;
+		case ePointsTypeT2B:
+		case ePointsTypeUKI:
+			push_back(ARBConfigTitlePoints::New(0.0, 0.0, inType));
+			break;
+		}
+	}
+}
+
+
+double ARBConfigTitlePointsList::GetTitlePoints(
+		double inFaults,
+		double inTime,
+		double inSCT,
+		short inPlace,
+		short inClass) const
+{
+	double pts = 0.0;
 	// This is why we keep the list sorted!
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
 		if (inFaults <= (*iter)->GetFaults())
-			return (*iter)->GetPoints();
+		{
+			pts = (*iter)->GetPoints();
+			break;
+		}
 	}
-	return 0;
+	ARBCalcPointsPtr calc = GetCalc();
+	if (calc)
+		pts = calc->GetPoints(pts, inTime, inSCT, inPlace, inClass);
+	return pts;
 }
 
 
 bool ARBConfigTitlePointsList::FindTitlePoints(
 		double inFaults,
-		ARBConfigTitlePointsPtr* outTitle) const
+		ARBConfigTitlePointsPtr* outPoints) const
 {
-	if (outTitle)
-		outTitle->reset();
-	for (const_iterator iter = begin(); iter != end(); ++iter)
+	if (outPoints)
+		outPoints->reset();
+	ARBCalcPointsPtr calc = GetCalc();
+	if (!calc || calc->AllowConfiguration())
 	{
-		if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
+		for (const_iterator iter = begin(); iter != end(); ++iter)
 		{
-			if (outTitle)
-				*outTitle = *iter;
-			return true;
+			if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
+			{
+				if (outPoints)
+					*outPoints = *iter;
+				return true;
+			}
 		}
 	}
 	return false;
@@ -221,30 +347,42 @@ bool ARBConfigTitlePointsList::FindTitlePoints(
 bool ARBConfigTitlePointsList::AddTitlePoints(
 		double inPoints,
 		double inFaults,
-		ARBConfigTitlePointsPtr* outTitle)
+		ARBConfigTitlePointsPtr* outPoints)
 {
-	if (outTitle)
-		outTitle->reset();
-	if (FindTitlePoints(inFaults))
+	if (outPoints)
+		outPoints->reset();
+	ARBCalcPointsPtr calc = GetCalc();
+	if ((calc && !calc->AllowConfiguration())
+	|| FindTitlePoints(inFaults))
 		return false;
-	ARBConfigTitlePointsPtr pTitle(ARBConfigTitlePoints::New(inPoints, inFaults));
+	ARBConfigTitlePointsPtr pTitle(ARBConfigTitlePoints::New(inPoints, inFaults, ePointsTypeNormal));
 	push_back(pTitle);
 	sort();
-	if (outTitle)
-		*outTitle = pTitle;
+	if (outPoints)
+		*outPoints = pTitle;
 	return true;
 }
 
 
-bool ARBConfigTitlePointsList::DeleteTitlePoints(double inFaults)
+bool ARBConfigTitlePointsList::DeleteTitlePoints(
+		ARBPointsType inType,
+		double inFaults)
 {
-	for (iterator iter = begin(); iter != end(); ++iter)
+	ARBCalcPointsPtr calc = GetCalc();
+	if (!calc || calc->AllowConfiguration())
 	{
-		if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
+		for (iterator iter = begin(); iter != end(); ++iter)
 		{
-			erase(iter);
-			return true;
+			if (ARBDouble::equal((*iter)->GetFaults(), inFaults))
+			{
+				erase(iter);
+				return true;
+			}
 		}
+	}
+	else if (calc && calc->GetType() != ePointsTypeNormal && 1 == size())
+	{
+		clear();
 	}
 	return false;
 }
