@@ -341,7 +341,7 @@ msgid "HIDC_CONFIG_TITLEPTS_TITLE_POINTS"
 msgstr "Choisir le type de points Récompense: Normal (points gagnés sur le parcours), Cumulatif (points accumulés pour la vie, normalement pareil comme Normal), Classement (points gagnés basé sur Classement, traité comme Cumulatif)"
 
 msgid "HIDC_CONFIG_TITLEPTS_CALC"
-msgstr "Select the type of calculation for titling points."
+msgstr "Sélectionnez le type de calcul pour les points de titrage."
 
 msgid "HIDC_CONFIG_PLACEINFO_PLACE"
 msgstr "Entrez l'endroit qui a un multiplicateur. Le multiplicateur augmentera les points de Récompense gagnés basés sur le Classement du chien."
