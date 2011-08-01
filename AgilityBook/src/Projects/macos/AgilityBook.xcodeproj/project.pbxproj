@@ -428,6 +428,9 @@
 		E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
 		E1AE409F12873800003BFF9F /* BreakLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1AE409B12873800003BFF9F /* BreakLine.cpp */; };
 		E1BF78F00FFFE153009B81A7 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */; };
+		E1D5510313E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
+		E1D5510413E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
+		E1D5510513E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */; };
 		E1E98E8D100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
 		E1E98E8E100A7E2C00F89E21 /* AgilityBook.icns in Resources */ = {isa = PBXBuildFile; fileRef = E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */; };
 		E1FA1A08115FF3FD00FAFD0F /* ARBMsgDigest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */; };
@@ -732,6 +735,8 @@
 		E1AE409C12873800003BFF9F /* BreakLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BreakLine.h; sourceTree = "<group>"; };
 		E1BF78EE0FFFE144009B81A7 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../stdafx.h; sourceTree = SOURCE_ROOT; };
 		E1BF78EF0FFFE153009B81A7 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stdafx.cpp; path = ../../stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBCalcPoints.cpp; sourceTree = "<group>"; };
+		E1D5510213E6859E00EB1F5B /* ARBCalcPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBCalcPoints.h; sourceTree = "<group>"; };
 		E1E98E8C100A7E2C00F89E21 /* AgilityBook.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AgilityBook.icns; path = ../../Win/res/AgilityBook.icns; sourceTree = "<group>"; };
 		E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ARBMsgDigest.cpp; sourceTree = "<group>"; };
 		E1FA1A07115FF3FD00FAFD0F /* ARBMsgDigest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARBMsgDigest.h; sourceTree = "<group>"; };
@@ -1035,6 +1040,8 @@
 		E155996210000B3100B7074A /* ARB */ = {
 			isa = PBXGroup;
 			children = (
+				E1D5510113E6859E00EB1F5B /* ARBCalcPoints.cpp */,
+				E1D5510213E6859E00EB1F5B /* ARBCalcPoints.h */,
 				E1AE409B12873800003BFF9F /* BreakLine.cpp */,
 				E1AE409C12873800003BFF9F /* BreakLine.h */,
 				E1FA1A06115FF3FD00FAFD0F /* ARBMsgDigest.cpp */,
@@ -1394,6 +1401,7 @@
 				E1FA1A0E115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
 				E1FA1B5611602EA300FAFD0F /* NamedColumns.cpp in Sources */,
 				E1AE409D12873800003BFF9F /* BreakLine.cpp in Sources */,
+				E1D5510313E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1541,6 +1549,7 @@
 				E1FA1A10115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
 				E1FA1B5811602EA300FAFD0F /* NamedColumns.cpp in Sources */,
 				E1AE409F12873800003BFF9F /* BreakLine.cpp in Sources */,
+				E1D5510513E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1688,6 +1697,7 @@
 				E1FA1A0F115FF44200FAFD0F /* CalendarSiteUSDAA.cpp in Sources */,
 				E1FA1B5711602EA300FAFD0F /* NamedColumns.cpp in Sources */,
 				E1AE409E12873800003BFF9F /* BreakLine.cpp in Sources */,
+				E1D5510413E6859E00EB1F5B /* ARBCalcPoints.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
