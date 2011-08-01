@@ -36,6 +36,7 @@ ARCHIVES = libarb
 libarb_SRCS = ARBAgilityRecordBook.cpp \
 	ARBBase64.cpp \
 	ARBBase.cpp \
+	ARBCalcPoints.cpp \
 	ARBCalendar.cpp \
 	ARBConfigAction.cpp \
 	ARBConfigCalSite.cpp \
