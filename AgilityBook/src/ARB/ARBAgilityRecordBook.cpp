@@ -17,8 +17,8 @@
  * src/Win/res/DefaultConfig.xml and src/Win/res/AgilityRecordBook.dtd.
  *
  * Revision History
- * @li 2011-07-26 DRC File version 12.13
- *                    Added 'platform','os' to 'AgilityBook'
+ * @li 2011-07-31 DRC File version 12.13
+ *                    Added 'platform','os' to 'AgilityBook', modified TitlePoints.
  * @li 2011-06-09 DRC File version 12.11
  *                    Added 'Config' to 'Action'.
  * @li 2009-12-18 DRC File version 12.11

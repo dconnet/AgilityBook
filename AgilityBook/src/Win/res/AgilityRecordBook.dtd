@@ -12,7 +12,7 @@ see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
 2011-07-26 DRC File version 12.13
-               Added 'platform','os' to 'AgilityBook'
+               Added 'platform','os' to 'AgilityBook', modified TitlePoints.
 2011-06-09 DRC File version 12.12
                Added 'Config' to 'Action'.
 2009-12-18 DRC File version 12.11
@@ -393,6 +393,7 @@ Entries in 'TitlePoints' determines if a Q should/not be awarded. When
 data is entered in the program, the program will perform certain tests.
 If it thinks you should/not Q and you enter data differently,
 it will ask if you really mean that.
+Type: Norm, T2B, UKI
 
 If there are no 'TitlePoints', then the class is non-titling.
 
@@ -438,6 +439,7 @@ Placements is used to count the number of places earned (used in FCI, SCC)
 	<!ATTLIST TitlePoints
 		Points CDATA #REQUIRED
 		Faults CDATA #REQUIRED
+		Type CDATA #IMPLIED
 		>
 <!ELEMENT LifeTime EMPTY >
 	<!ATTLIST LifeTime

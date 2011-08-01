@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-07-31 DRC Allow a time fault multipler of 0.
  * @li 2011-01-08 DRC Added test around a debug message.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-11-21 DRC Enable tallying runs that have only lifetime points.
@@ -450,7 +451,7 @@ bool ARBConfigScoring::Load(
 		}
 		if (0 < ptsWhenClean)
 		{
-			m_TitlePoints.AddTitlePoints(ptsWhenClean, 0);
+			m_TitlePoints.AddTitlePoints(ptsWhenClean, 0.0);
 		}
 
 		short faultsAllowed = 0;
@@ -519,7 +520,10 @@ bool ARBConfigScoring::Save(ElementNodePtr ioTree) const
 		scoring->AddAttrib(ATTRIB_SCORING_TIMEFAULTS_OVER, m_bTimeFaultsOver);
 	if (m_bSubtractTimeFaults)
 		scoring->AddAttrib(ATTRIB_SCORING_SUBTRACT_TIMEFAULTS, m_bSubtractTimeFaults);
-	if (1 < m_TimeFaultMultiplier)
+	// Don't write this if it's 1 for backwards compatibility.
+	// It wouldn't hurt to write it, but it causes changes in almost every
+	// scoring configuration otherwise.
+	if (0 <= m_TimeFaultMultiplier && 1 != m_TimeFaultMultiplier)
 		scoring->AddAttrib(ATTRIB_SCORING_TF_MULTIPLIER, m_TimeFaultMultiplier);
 	if (0 < m_Note.length())
 	{
@@ -669,6 +673,9 @@ bool ARBConfigScoringList::FindEvent(
 		pEvent = *(items.begin());
 	else
 	{
+#ifdef _DEBUG
+		size_t wildcard = 0;
+#endif
 		ARBVector<ARBConfigScoringPtr>::iterator iter;
 		for (iter = items.begin(); iter != items.end(); )
 		{
@@ -676,7 +683,14 @@ bool ARBConfigScoringList::FindEvent(
 			if (!pScoring->IsValidOn(inDate))
 				iter = items.erase(iter);
 			else
+			{
+#ifdef _DEBUG
+				if (pScoring->GetDivision() == WILDCARD_DIVISION
+				|| pScoring->GetLevel() == WILDCARD_LEVEL)
+					++wildcard;
+#endif
 				++iter;
+			}
 		}
 		if (1 == items.size())
 			pEvent = *(items.begin());
@@ -686,7 +700,7 @@ bool ARBConfigScoringList::FindEvent(
 			// Which may occur when creating the methods.
 #ifdef _DEBUG
 			// If date is not valid, we will have multiple items.
-			if (inDate.IsValid())
+			if (inDate.IsValid() && items.size() - wildcard > 1)
 				wxLogWarning(wxT("FindEvent: Overlapping date ranges"));
 #endif
 			pEvent = *(items.begin());

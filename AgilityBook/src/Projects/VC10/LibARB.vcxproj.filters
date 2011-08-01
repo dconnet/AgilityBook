@@ -150,6 +150,9 @@
     <ClCompile Include="..\..\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ARB\ARBCalcPoints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ARB\ARBAgilityRecordBook.h">
@@ -288,6 +291,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ARB\ARBCalcPoints.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

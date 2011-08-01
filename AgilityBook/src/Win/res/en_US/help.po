@@ -339,6 +339,9 @@ msgstr "Number of points that will be earned."
 msgid "HIDC_CONFIG_TITLEPTS_TITLE_POINTS"
 msgstr "Select the type of titling points: Normal (points awarded per run), Lifetime (points accumulated towards lifetime, normally the same as Normal), Placement (points accumulated based on placement, treated like lifetime)"
 
+msgid "HIDC_CONFIG_TITLEPTS_CALC"
+msgstr "Select the type of calculation for titling points."
+
 msgid "HIDC_CONFIG_PLACEINFO_PLACE"
 msgstr "Enter the place that has a multiplier. The multiplier will increase title points earned based on the dog's placement."
 

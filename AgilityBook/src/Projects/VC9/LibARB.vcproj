@@ -479,6 +479,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\ARB\ARBCalcPoints.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\ARB\ARBCalendar.h"
 				>
 			</File>
@@ -665,6 +669,10 @@
 			</File>
 			<File
 				RelativePath="..\..\ARB\ARBBase64.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\ARB\ARBCalcPoints.cpp"
 				>
 			</File>
 			<File

@@ -1329,6 +1329,15 @@ msgstr "Normal"
 msgid "IDS_TITLEPOINT_PLACEMENT"
 msgstr "Classement"
 
+msgid "IDS_TITLEPOINT_NORMAL_NORMAL"
+msgstr "Normal"
+
+msgid "IDS_TITLEPOINT_NORMAL_T2B"
+msgstr "AKC / Time 2 Beat"
+
+msgid "IDS_TITLEPOINT_NORMAL_UKI"
+msgstr "UKI"
+
 msgid "IDS_TITLES"
 msgstr "Distinctions"
 
