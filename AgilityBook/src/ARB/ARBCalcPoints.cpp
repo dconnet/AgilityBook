@@ -113,8 +113,19 @@ double ARBCalcPointsT2B::GetPoints(
 		return 10.0;
 	for (long i = 1; i <= 9; ++i)
 	{
-		// Formula from p65 of the Sept 2011 AKC rule book
-		long t = static_cast<long>((0.1 * i) * inSCT + inSCT);
+		// Formula from p65 of the Sept 2011 AKC rule book:
+		// The formula for the upper end of the percentage range is:
+		// (Fastest time in a jump height multiplied by the percentage)
+		long t = static_cast<long>((0.1 * i) * inSCT
+		// plus the fastest time in the jump height.
+		// Both the low and high end of the percentage range are truncated.
+		//  [static_cast takes care of that]
+			+ inSCT);
+		// Each dog’s time gets truncated.
+		// A dog’s time falls into a percentage range if it is greater than
+		// the low end and less than or equal to the high end of the range.
+		//  [since we check from top/bottom, we only need to test one end of
+		//  the range]
 		if (static_cast<long>(inTime) <= t)
 			return 10.0 - i;
 	}
