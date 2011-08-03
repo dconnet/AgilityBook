@@ -29,18 +29,24 @@
 
 ARBCalcPointsPtr ARBCalcPoints::New(ARBPointsType type)
 {
+	ARBCalcPointsPtr p;
 	switch (type)
 	{
 	default:
 		assert(0);
-		// fall thru
+	case ePointsTypeMax:
+		break;
 	case ePointsTypeNormal:
-		return ARBCalcPointsNormal::New();
+		p = ARBCalcPointsNormal::New();
+		break;
 	case ePointsTypeT2B:
-		return ARBCalcPointsT2B::New();
+		p = ARBCalcPointsT2B::New();
+		break;
 	case ePointsTypeUKI:
-		return ARBCalcPointsUKI::New();
+		p = ARBCalcPointsUKI::New();
+		break;
 	}
+	return p;
 }
 
 

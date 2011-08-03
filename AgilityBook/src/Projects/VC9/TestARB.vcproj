@@ -673,6 +673,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\TestARB\TestCalcPoints.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\TestARB\TestCalendar.cpp"
 				>
 			</File>

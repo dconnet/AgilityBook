@@ -353,6 +353,7 @@ python "$(ProjectDir)..\..\Win\res\compile.py" "$(OutDir)." "$(TargetName)"</Com
     <ClCompile Include="..\..\TestARB\TestARB.cpp" />
     <ClCompile Include="..\..\TestARB\TestBinaryData.cpp" />
     <ClCompile Include="..\..\TestARB\TestBreakLine.cpp" />
+    <ClCompile Include="..\..\TestARB\TestCalcPoints.cpp" />
     <ClCompile Include="..\..\TestARB\TestCalendar.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfig.cpp" />
     <ClCompile Include="..\..\TestARB\TestConfigAction.cpp" />
