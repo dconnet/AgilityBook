@@ -222,6 +222,7 @@ def main():
 	# Made -w required since normal WXWIN rarely needs rebuilding.
 	if len(wxwin) == 0:
 		print 'ERROR: -w option not specified'
+		print 'Usage:', __doc__
 		return 1
 	os.environ['WXWIN'] = wxwin
 
