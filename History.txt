@@ -1,10 +1,11 @@
-7/31/2011: v2.2.9.<in development>
+8/2/2011: v2.3.0.<in development>
 - Bumped Configuration v33:
   - Changed NADAC Extreme Tunnelers to Extreme Gaters.
   - Set T2B time fault multiplier to 0 to remove time fault computation.
   - Support T2B and UKI title point generation.
-- Bumped file version to 12.13:
-  - Added 'platform','os' to 'AgilityBook', modified TitlePoints.
+- Bumped file version to 13.1:
+  - Added 'platform','os' to 'AgilityBook'
+  - Modified TitlePoints to support T2B/UKI (this caused the major file version)
 - New features / Enhancements:
   - Changed build environment to created .lib for sharing between projects.
   - Allow a time fault multiplier of 0 in event configuration.

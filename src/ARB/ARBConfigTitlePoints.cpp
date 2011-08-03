@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-07-31 DRC Added 'Type' to configuration.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2004-09-28 DRC Changed how error reporting is done when loading.
@@ -161,6 +162,8 @@ bool ARBConfigTitlePoints::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_TITLE_POINTS)
 		return false;
+	// Added in ARBVersion 13.1. Made this a backwards incompatible change
+	// as the configuration will be damaged if this were saved in a 12.x form.
 	wxString type;
 	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_TITLE_POINTS_TYPE, type))
 	{

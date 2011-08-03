@@ -56,7 +56,7 @@ const wxChar* const gc_Configs[] =
 	wxT("Config30_v12_11.xml"),
 	wxT("Config31_v12_11.xml"),
 	wxT("Config32_v12_11.xml"),
-	wxT("Config33_v12_12.xml"),
+	wxT("Config33_v13_1.xml"),
 };
 size_t gc_NumConfigs = sizeof(gc_Configs) / sizeof(gc_Configs[0]);
 
