@@ -26,11 +26,12 @@ I'm currently using version 2.8.12. Previously released with 2.8.10/.11.
 Also, kept current with development trunk of 2.9.x.
 Make sure WXWIN is set to wxWidgets root directory.
 
-=== Changes to <trunk> [2.9.1]:
+=== Changes to <trunk> [2.9.2]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_8 0
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
+- Note: as of 8/8/2011, unicode doesn't work on Mac due to positional parameters.
 
 === wx2.9.0: Not supported
 
@@ -46,6 +47,75 @@ Make sure WXWIN is set to wxWidgets root directory.
   - In wxVListBoxComboPopup::Insert, add the following after m_strings.Insert
 	m_clientDatas.Insert(0,pos);
   [This probably applies to all prior versions of wx, just found in 2.8.12]
+-[mac]- src/common/wxchar.cpp
+  - This fixes positional parameter formatting on Mac. Now possible to use unicode.
+Output of "diff -c" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+*** wxchar.cpp.orig	Tue Mar 22 04:59:42 2011
+--- wxchar.cpp	Mon Aug 08 18:58:26 2011
+***************
+*** 1499,1513 ****
+      {
+          if ( CopyFmtChar(*format++) == _T('%') )
+          {
+!             // skip any flags
+!             while ( IsFlagChar(*format) )
+!                 CopyFmtChar(*format++);
+  
+!             // and possible width
+!             if ( *format == _T('*') )
+!                 CopyFmtChar(*format++);
+!             else
+!                 SkipDigits(&format);
+  
+              // precision?
+              if ( *format == _T('.') )
+--- 1499,1542 ----
+      {
+          if ( CopyFmtChar(*format++) == _T('%') )
+          {
+! #if wxUSE_PRINTF_POS_PARAMS 
+!             if( *format >= '0' && *format <= '9' ) 
+!             { 
+!                 SkipDigits(&format); 
+!                 if( *format == '$' ) 
+!                 { 
+!                     // It was a positional printf argument 
+!  
+!                     CopyFmtChar(*format++); 
+!  
+!                     // skip any flags 
+!                     while ( IsFlagChar(*format) ) 
+!                         CopyFmtChar(*format++); 
+!  
+!                     // and possible width 
+!                     if ( *format == _T('*') ) 
+!                         CopyFmtChar(*format++); 
+!                     else 
+!                         SkipDigits(&format); 
+!                 } 
+!                 else 
+!                 { 
+!                     // Must have been width 
+!                 } 
+!             } 
+!             else 
+! #endif 
+!             {
+!                 // skip any flags
+!                 while ( IsFlagChar(*format) )
+!                     CopyFmtChar(*format++);
+  
+!                 // and possible width
+!                 if ( *format == _T('*') )
+!                     CopyFmtChar(*format++);
+!                 else
+!                     SkipDigits(&format);
+!             }
+  
+              // precision?
+              if ( *format == _T('.') )
+end Output of "diff -c" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 === Changes to 2.8.11:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
