@@ -43,19 +43,19 @@ Do a full rebuild and verify it.
 Commit all changes to SVN.
 
 Pull files onto Mac and build there (see MAC_BUILD.txt)
-- export PATH=$WXWIN/build-ansi:$PATH
+- export PATH=$WXWIN/build-unicode:$PATH
 - cd .../AgilityBook
 - autoconf
-- rm -rf build-ansi
-- mkdir build-ansi
-- cd build-ansi
-- ../configure
+- rm -rf build-unicode
+- mkdir build-unicode
+- cd build-unicode
+- ../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0
 - make dist
 [note: the makefile is not generating the image correctly to run on osx10.4
 So do a release build in xcode and copy that executable into the 'dist'
 generated .app folder - MAKE SURE TO UPDATE Project Version in xcode project]
 TODO: check if above comment is still correct when using CC/CXX/LD definitions
-during 'configure'
+during 'configure' [doesn't seem like it. sigh.]
 - Use the '/Application/Utilities/Disk Utility' to create a dmg file
   - Name it AgilityBook-n_n_n_n-mac.dmg
   - After dragging in image, rename the mount point. (AgilityBook x.y.z)
