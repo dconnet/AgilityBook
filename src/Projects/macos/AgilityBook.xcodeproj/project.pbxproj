@@ -453,7 +453,6 @@
 		508344B209E5C41E0093A071 /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1144EF810813B4F00356F61 /* agilitybook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agilitybook.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1144EFA10813B4F00356F61 /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
 		E1144F5C1082880800356F61 /* Widgets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widgets.cpp; sourceTree = "<group>"; };
 		E1144F5D1082880800356F61 /* Widgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widgets.h; sourceTree = "<group>"; };
 		E155979E10000B1200B7074A /* AgilityBook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgilityBook.cpp; sourceTree = "<group>"; };
@@ -817,7 +816,6 @@
 				8D0C4E960486CD37000505A6 /* Info.plist */,
 				0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */,
 				1DDD57FA0DA1D07D00B32029 /* main.xib */,
-				E1144EFA10813B4F00356F61 /* Info copy.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1168,9 +1166,9 @@
 			productReference = 508344B209E5C41E0093A071 /* agilitybook.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E1144E6610813B4F00356F61 /* AgilityBook (trunk-ansi) */ = {
+		E1144E6610813B4F00356F61 /* AgilityBook (unicode) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-ansi)" */;
+			buildConfigurationList = E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (unicode)" */;
 			buildPhases = (
 				E1144E6710813B4F00356F61 /* Resources */,
 				E1144E6B10813B4F00356F61 /* Sources */,
@@ -1180,15 +1178,15 @@
 			);
 			dependencies = (
 			);
-			name = "AgilityBook (trunk-ansi)";
+			name = "AgilityBook (unicode)";
 			productInstallPath = "$(HOME)/Applications";
 			productName = arb;
 			productReference = E1144EF810813B4F00356F61 /* agilitybook.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E158FC2F1001371B00735E7F /* AgilityBook (trunk-unicode) */ = {
+		E158FC2F1001371B00735E7F /* AgilityBook (unicode-trunk) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-unicode)" */;
+			buildConfigurationList = E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (unicode-trunk)" */;
 			buildPhases = (
 				E158FC301001371B00735E7F /* Resources */,
 				E158FC331001371B00735E7F /* Sources */,
@@ -1198,7 +1196,7 @@
 			);
 			dependencies = (
 			);
-			name = "AgilityBook (trunk-unicode)";
+			name = "AgilityBook (unicode-trunk)";
 			productInstallPath = "$(HOME)/Applications";
 			productName = arb;
 			productReference = E158FCC01001371B00735E7F /* agilitybook.app */;
@@ -1216,9 +1214,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				E1144E6610813B4F00356F61 /* AgilityBook (unicode) */,
 				8D0C4E890486CD37000505A6 /* AgilityBook (ansi) */,
-				E158FC2F1001371B00735E7F /* AgilityBook (trunk-unicode) */,
-				E1144E6610813B4F00356F61 /* AgilityBook (trunk-ansi) */,
+				E158FC2F1001371B00735E7F /* AgilityBook (unicode-trunk) */,
 			);
 		};
 /* End PBXProject section */
@@ -1728,7 +1726,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.2.8;
+				CURRENT_PROJECT_VERSION = 2.3.0;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1805,7 +1803,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.2.8;
+				CURRENT_PROJECT_VERSION = 2.3.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1903,7 +1901,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.2.8;
+				CURRENT_PROJECT_VERSION = 2.3.0;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1920,18 +1918,19 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "/Users/dconnet/agilitybook/AgilityBook/src/Projects/macos/Info copy.plist";
+				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = (
 					"-I$BOOST_ROOT",
-					"-I/Users/dconnet/wx/trunk/build-ansi-debug/lib/wx/include/osx_carbon-ansi-static-2.9",
-					"-I/Users/dconnet/wx/trunk/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.12/build-unicode-debug/lib/wx/include/mac-unicode-debug-static-2.8",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.12/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.12/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
+					"-D_LARGE_FILES",
+					"-D__WXDEBUG__",
 					"-D__WXMAC__",
-					"-D__WXOSX__",
-					"-D__WXOSX_CARBON__",
 				);
 				OTHER_LDFLAGS = (
-					"-L/Users/dconnet/wx/trunk/build-ansi-debug/lib",
+					"-L/Users/dconnet/wx/wxWidgets-2.8.12/build-unicode-debug/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -1939,29 +1938,31 @@
 					"-framework",
 					Cocoa,
 					"-framework",
-					AudioToolbox,
-					"-framework",
 					System,
 					"-framework",
 					OpenGL,
 					"-framework",
 					QuickTime,
 					"-framework",
+					AGL,
+					"-framework",
 					WebKit,
-					"-lwx_osx_carbon_xrc-2.9",
-					"-lwx_osx_carbon_html-2.9",
-					"-lwx_osx_carbon_qa-2.9",
-					"-lwx_osx_carbon_adv-2.9",
-					"-lwx_osx_carbon_core-2.9",
-					"-lwx_base_xml-2.9",
-					"-lwx_base_net-2.9",
-					"-lwx_base-2.9",
-					"-lwxregex-2.9",
-					"-lwxexpat-2.9",
-					"-lwxtiff-2.9",
-					"-lwxjpeg-2.9",
-					"-lwxpng-2.9",
-					"-lwxzlib-2.9",
+					"-lwx_macu_richtext-2.8",
+					"-lwx_macu_aui-2.8",
+					"-lwx_macu_xrc-2.8",
+					"-lwx_macu_qa-2.8",
+					"-lwx_macu_html-2.8",
+					"-lwx_macu_adv-2.8",
+					"-lwx_macu_core-2.8",
+					"-lwx_base_carbonu_xml-2.8",
+					"-lwx_base_carbonu_net-2.8",
+					"-lwx_base_carbonu-2.8",
+					"-lwxregexu-2.8",
+					"-lwxexpat-2.8",
+					"-lwxtiff-2.8",
+					"-lwxjpeg-2.8",
+					"-lwxpng-2.8",
+					"-lwxzlib-2.8",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
@@ -1969,7 +1970,7 @@
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-trunk-ansi";
+				SYMROOT = "build-unicode";
 			};
 			name = Debug;
 		};
@@ -1977,7 +1978,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.2.8;
+				CURRENT_PROJECT_VERSION = 2.3.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -1990,20 +1991,20 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "/Users/dconnet/agilitybook/AgilityBook/src/Projects/macos/Info copy.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-I$BOOST_ROOT",
-					"-I/Users/dconnet/wx/trunk/build-ansi/lib/wx/include/osx_carbon-ansi-static-2.9",
-					"-I/Users/dconnet/wx/trunk/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.12/build-unicode/lib/wx/include/mac-unicode-release-static-2.8",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.12/include",
+					"-I/Users/dconnet/wx/wxWidgets-2.8.12/contrib/include",
 					"-D_FILE_OFFSET_BITS=64",
+					"-D_LARGE_FILES",
 					"-D__WXMAC__",
-					"-D__WXOSX__",
-					"-D__WXOSX_CARBON__",
 				);
 				OTHER_LDFLAGS = (
-					"-L/Users/dconnet/wx/trunk/build-ansi/lib",
+					"-L/Users/dconnet/wx/wxWidgets-2.8.12/build-unicode/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -2011,29 +2012,31 @@
 					"-framework",
 					Cocoa,
 					"-framework",
-					AudioToolbox,
-					"-framework",
 					System,
 					"-framework",
 					OpenGL,
 					"-framework",
 					QuickTime,
 					"-framework",
+					AGL,
+					"-framework",
 					WebKit,
-					"-lwx_osx_carbon_xrc-2.9",
-					"-lwx_osx_carbon_html-2.9",
-					"-lwx_osx_carbon_qa-2.9",
-					"-lwx_osx_carbon_adv-2.9",
-					"-lwx_osx_carbon_core-2.9",
-					"-lwx_base_xml-2.9",
-					"-lwx_base_net-2.9",
-					"-lwx_base-2.9",
-					"-lregex-2.9",
-					"-lwxexpat-2.9",
-					"-lwxtiff-2.9",
-					"-lwxjpeg-2.9",
-					"-lwxpng-2.9",
-					"-lwxzlib-2.9",
+					"-lwx_macu_richtext-2.8",
+					"-lwx_macu_aui-2.8",
+					"-lwx_macu_xrc-2.8",
+					"-lwx_macu_qa-2.8",
+					"-lwx_macu_html-2.8",
+					"-lwx_macu_adv-2.8",
+					"-lwx_macu_core-2.8",
+					"-lwx_base_carbonu_xml-2.8",
+					"-lwx_base_carbonu_net-2.8",
+					"-lwx_base_carbonu-2.8",
+					"-lwxregexu-2.8",
+					"-lwxexpat-2.8",
+					"-lwxtiff-2.8",
+					"-lwxjpeg-2.8",
+					"-lwxpng-2.8",
+					"-lwxzlib-2.8",
 					"-lpthread",
 					"-liconv",
 					"-ltidy",
@@ -2042,7 +2045,7 @@
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-trunk-ansi";
+				SYMROOT = "build-unicode";
 			};
 			name = Release;
 		};
@@ -2051,7 +2054,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.2.8;
+				CURRENT_PROJECT_VERSION = 2.3.0;
 				DEAD_CODE_STRIPPING = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2117,7 +2120,7 @@
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-unicode";
+				SYMROOT = "build-trunk-unicode";
 			};
 			name = Debug;
 		};
@@ -2125,7 +2128,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CURRENT_PROJECT_VERSION = 2.2.8;
+				CURRENT_PROJECT_VERSION = 2.3.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2188,7 +2191,7 @@
 				PRODUCT_NAME = agilitybook;
 				SDKROOT = macosx10.4;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
-				SYMROOT = "build-unicode";
+				SYMROOT = "build-trunk-unicode";
 			};
 			name = Release;
 		};
@@ -2213,7 +2216,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-ansi)" */ = {
+		E1144EF510813B4F00356F61 /* Build configuration list for PBXNativeTarget "AgilityBook (unicode)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E1144EF610813B4F00356F61 /* Debug */,
@@ -2222,7 +2225,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (trunk-unicode)" */ = {
+		E158FCBD1001371B00735E7F /* Build configuration list for PBXNativeTarget "AgilityBook (unicode-trunk)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E158FCBE1001371B00735E7F /* Debug */,

@@ -13,9 +13,9 @@
 	<key>CSResourcesFileMapped</key>
 	<true/>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>2.3</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.3</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleIconFile</key>
@@ -40,16 +40,16 @@
 		</dict>
 	</array>
 	<key>CFBundleGetInfoString</key>
-	<string>$(PRODUCT_NAME) Version 2.0, (c) 2002-2009 David Connet</string>
+	<string>$(PRODUCT_NAME) Version 2.3, (c) 2002-2011 David Connet</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.agilityrecordbook.${PRODUCT_NAME:identifier}</string>
 	<key>CFBundleLongVersionString</key>
-	<string>2.0, (c) 2002-2009 David Connet</string>
+	<string>2.3, (c) 2002-2011 David Connet</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>LSRequiresCarbon</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2002-2009 David Connet</string>
+	<string>Copyright 2002-2011 David Connet</string>
 </dict>
 </plist>
