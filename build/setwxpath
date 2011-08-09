@@ -8,7 +8,7 @@ if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
 elif test "x$1" = "x2.8"; then
 	#WXWIN=~/wx/wxMac-2.8.10
-	WXWIN=~/wx/wxWidgets-2.8.11
+	WXWIN=~/wx/wxWidgets-2.8.12
 else
 	echo $USAGE
 	return

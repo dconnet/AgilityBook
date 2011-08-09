@@ -50,9 +50,11 @@ USAGE="Usage $0 trunk|2.8 unicode|ansi [debug|release]"
 if test "x$1" = "xtrunk"; then
 	WXWIN=~/wx/trunk
 	VERSION="--disable-compat28 --disable-uiactionsim"
+elif test "x$1" = "xtrunk5"; then
+	WXWIN=~/wx/trunk
+	VERSION="--disable-compat28"
 elif test "x$1" = "x2.8"; then
-	#WXWIN=~/wx/wxMac-2.8.10
-	WXWIN=~/wx/wxWidgets-2.8.11
+	WXWIN=~/wx/wxWidgets-2.8.12
 	VERSION="--disable-compat26"
 else
 	echo $USAGE
@@ -81,13 +83,22 @@ else
 	$0 $1 $2 release
 	exit
 fi
+if test "x$1" = "xtrunk5"; then
+	BUILDDIR+="-10.5"
+fi
 
 rm -rf $BUILDDIR
 mkdir $BUILDDIR
 cd $BUILDDIR
 
-MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk"
+if test "x$1" = "xtrunk5"; then
+	COMPILERS=
+	MINSDK="--with-macosx-version-min=10.5 --with-macosx-sdk=/Developer/SDKs/MacOSX10.5.sdk"
+else
+	COMPILERS="CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0"
+	MINSDK="--with-macosx-version-min=10.4 --with-macosx-sdk=/Developer/SDKs/MacOSX10.4u.sdk"
+fi
 
-echo "Running: ../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary --with-regex=builtin --with-zlib=builtin --with-libiconv=no $MINSDK"
+echo "Running: ../configure $COMPILERS --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary --with-regex=builtin --with-zlib=builtin --with-libiconv=no $MINSDK"
 
-../configure CC=gcc-4.0 CXX=g++-4.0 LD=g++-4.0 --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary --with-regex=builtin --with-zlib=builtin --with-libiconv=no $MINSDK
+../configure $COMPILERS --disable-shared $DEBUG $VERSION $UNICODESETTING --enable-universal_binary --with-regex=builtin --with-zlib=builtin --with-libiconv=no $MINSDK
