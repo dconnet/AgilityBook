@@ -1,4 +1,4 @@
-8/8/2011: v2.3.0.<in development>
+8/10/2011: v2.3.0.<in development>
 - Bumped Configuration v33:
   - Changed NADAC Extreme Tunnelers to Extreme Gaters.
   - Set T2B time fault multiplier to 0 to remove time fault computation.
@@ -9,6 +9,7 @@
 - New features / Enhancements:
   - Changed build environment to created .lib for sharing between projects.
   - Allow a time fault multiplier of 0 in event configuration.
+  - Added builtin support for an 'all' filter.
 - Bug fixes:
   - Configuration fixup actions need to be limited or we attempt to rename
     things we shouldn't. (In config32, we changed USDAA APD->PDCH and PD2->APD.

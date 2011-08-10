@@ -79,13 +79,13 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 
 	m_ctrlFilters = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
-		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
+		0, NULL, wxCB_DROPDOWN,
 		CTrimValidator(&m_FilterName, TRIMVALIDATOR_TRIM_BOTH));
 	m_ctrlFilters->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnSelchangeFilterNames), NULL, this);
 	m_ctrlFilters->SetHelpText(_("HIDC_OPT_FILTER_NAMES"));
 	m_ctrlFilters->SetToolTip(_("HIDC_OPT_FILTER_NAMES"));
 	std::vector<wxString> filterNames;
-	m_FilterOptions.GetAllFilterNames(filterNames);
+	m_FilterOptions.GetAllFilterNames(filterNames, true);
 	for (std::vector<wxString>::iterator iterName = filterNames.begin();
 		iterName != filterNames.end();
 		++iterName)

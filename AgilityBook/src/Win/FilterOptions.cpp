@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-10 DRC Added builtin support for an 'all' filter.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2006-03-02 DRC Separated filter options from main options.
@@ -27,6 +28,7 @@
 #include "ARBDogTrial.h"
 #include "AgilityBookOptions.h"
 #include "RegItems.h"
+#include <algorithm>
 #include <wx/config.h>
 
 #ifdef __WXMSW__
@@ -144,6 +146,7 @@ CFilterOptions::CFilterOptions()
 void CFilterOptions::Load()
 {
 	wxString val;
+	wxString all(_("IDS_ALL"));
 
 	m_calView.m_Filter = static_cast<CCalendarViewFilter::eViewFilter>(wxConfig::Get()->Read(CFG_CAL_FILTER, static_cast<long>(CCalendarViewFilter::eViewNormal)));
 	wxConfig::Get()->Read(CFG_COMMON_VIEWALLDATES, &m_bAllDates, true);
@@ -172,6 +175,16 @@ void CFilterOptions::Load()
 	for (int idx = 0; idx < m_nFilters; ++idx)
 	{
 		CFilterOptionData data(idx);
+		// As of v2.3, check for the special name "<All>". We now automatically
+		// create this.
+		if (data.filterName == all)
+		{
+			// And since this may have been any kind of filter before, make
+			// sure we don't leave it as current.
+			if (m_curFilter == all)
+				m_curFilter.clear();
+			continue;
+		}
 		// Protect against bad filters. When writing, we'll fix things up since
 		// we already know how many we think we have.
 		if (!data.filterName.empty())
@@ -184,7 +197,7 @@ void CFilterOptions::Save()
 {
 	wxString val;
 
-	if (!m_curFilter.empty())
+	if (!m_curFilter.empty() && m_curFilter != _("IDS_ALL"))
 	{
 		std::vector<CFilterOptionData>::iterator iFilter = FindFilter(m_curFilter);
 		if (iFilter != m_filters.end())
@@ -261,7 +274,9 @@ CFilterOptions::FindFilter(wxString const& inName)
 }
 
 
-size_t CFilterOptions::GetAllFilterNames(std::vector<wxString>& outNames) const
+size_t CFilterOptions::GetAllFilterNames(
+		std::vector<wxString>& outNames,
+		bool bForEditing) const
 {
 	outNames.clear();
 	if (0 < m_filters.size())
@@ -274,36 +289,51 @@ size_t CFilterOptions::GetAllFilterNames(std::vector<wxString>& outNames) const
 			outNames.push_back((*i).filterName);
 		}
 	}
+	std::sort(outNames.begin(), outNames.end());
+	if (!bForEditing)
+	{
+		if (0 < outNames.size() || IsFilterEnabled())
+			outNames.insert(outNames.begin(), _("IDS_ALL"));
+	}
 	return outNames.size();
 }
 
 
 bool CFilterOptions::SetCurrentFilter(wxString const& inName)
 {
+	wxString all(_("IDS_ALL"));
+	CFilterOptions::CFilterOptionData data;
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
-	if (iter != m_filters.end())
+	if (inName.empty() || inName == all)
+	{
+		m_curFilter = all;
+	}
+	else if (iter != m_filters.end())
 	{
 		m_curFilter = inName;
-		m_calView = (*iter).calView;
-		m_bAllDates = (*iter).bAllDates;
-		m_bStartDate = (*iter).bStartDate;
-		m_dateStartDate = (*iter).dateStartDate;
-		m_bEndDate = (*iter).bEndDate;
-		m_dateEndDate = (*iter).dateEndDate;
-		m_bViewAllVenues = (*iter).bViewAllVenues;
-		m_venueFilter = (*iter).venueFilter;
-		m_eRuns = (*iter).eRuns;
-		m_bViewAllNames = (*iter).bViewAllNames;
-		m_nameFilter = (*iter).nameFilter;
-		return true;
+		data = *iter;
 	}
 	else
 		return false;
+	m_calView = data.calView;
+	m_bAllDates = data.bAllDates;
+	m_bStartDate = data.bStartDate;
+	m_dateStartDate = data.dateStartDate;
+	m_bEndDate = data.bEndDate;
+	m_dateEndDate = data.dateEndDate;
+	m_bViewAllVenues = data.bViewAllVenues;
+	m_venueFilter = data.venueFilter;
+	m_eRuns = data.eRuns;
+	m_bViewAllNames = data.bViewAllNames;
+	m_nameFilter = data.nameFilter;
+	return true;
 }
 
 
 bool CFilterOptions::AddFilter(wxString const& inName)
 {
+	if (inName == _("IDS_ALL"))
+		return false;
 	bool bAdded = false;
 	std::vector<CFilterOptionData>::iterator iter = FindFilter(inName);
 	if (iter == m_filters.end())
@@ -336,7 +366,7 @@ bool CFilterOptions::DeleteFilter(wxString const& inName)
 	{
 		m_filters.erase(iter);
 		if (inName == m_curFilter)
-			m_curFilter.erase();
+			m_curFilter.clear();
 		return true;
 	}
 	else
@@ -346,7 +376,7 @@ bool CFilterOptions::DeleteFilter(wxString const& inName)
 /////////////////////////////////////////////////////////////////////////////
 // Helper functions
 
-bool CFilterOptions::IsFilterEnabled()
+bool CFilterOptions::IsFilterEnabled() const
 {
 	if (m_bAllDates
 	&& m_bViewAllVenues
@@ -359,7 +389,7 @@ bool CFilterOptions::IsFilterEnabled()
 
 bool CFilterOptions::IsDateVisible(
 		ARBDate const& startDate,
-		ARBDate const& endDate)
+		ARBDate const& endDate) const
 {
 	if (!m_bAllDates)
 	{
@@ -374,7 +404,7 @@ bool CFilterOptions::IsDateVisible(
 
 bool CFilterOptions::IsTitleVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTitlePtr pTitle)
+		ARBDogTitlePtr pTitle) const
 {
 	if (!CAgilityBookOptions::GetViewHiddenTitles() && pTitle->IsHidden())
 		return false;
@@ -387,7 +417,7 @@ bool CFilterOptions::IsTitleVisible(
 
 bool CFilterOptions::IsVenueVisible(
 		std::vector<CVenueFilter> const& venues,
-		wxString const& venue)
+		wxString const& venue) const
 {
 	if (!m_bViewAllVenues)
 	{
@@ -407,7 +437,7 @@ bool CFilterOptions::IsVenueVisible(
 bool CFilterOptions::IsVenueDivisionVisible(
 		std::vector<CVenueFilter> const& venues,
 		wxString const& venue,
-		wxString const& div)
+		wxString const& div) const
 {
 	if (!m_bViewAllVenues)
 	{
@@ -429,7 +459,7 @@ bool CFilterOptions::IsVenueLevelVisible(
 		std::vector<CVenueFilter> const& venues,
 		wxString const& venue,
 		wxString const& div,
-		wxString const& level)
+		wxString const& level) const
 {
 	if (!m_bViewAllVenues)
 	{
@@ -450,7 +480,7 @@ bool CFilterOptions::IsVenueLevelVisible(
 
 bool CFilterOptions::IsTrialVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBDogTrialPtr pTrial)
+		ARBDogTrialPtr pTrial) const
 {
 	// Yes, it seems backwards, but it is correct.
 	if (!IsDateVisible(pTrial->GetRuns().GetEndDate(), pTrial->GetRuns().GetStartDate()))
@@ -474,7 +504,7 @@ bool CFilterOptions::IsTrialVisible(
 unsigned short CFilterOptions::IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun)
+		ARBDogRunPtr pRun) const
 {
 	unsigned short nVisible = 0;
 	if (!IsDateVisible(pRun->GetDate(), pRun->GetDate()))
@@ -538,7 +568,7 @@ bool CFilterOptions::IsRunVisible(
 		std::vector<CVenueFilter> const& venues,
 		ARBConfigVenuePtr pVenue,
 		ARBDogTrialPtr pTrial,
-		ARBDogRunPtr pRun)
+		ARBDogRunPtr pRun) const
 {
 	if (1 >= pTrial->GetClubs().size())
 		return true;
@@ -566,7 +596,7 @@ bool CFilterOptions::IsRunVisible(
 
 bool CFilterOptions::IsCalendarVisible(
 		std::vector<CVenueFilter> const& venues,
-		ARBCalendarPtr pCal)
+		ARBCalendarPtr pCal) const
 {
 	if (!m_bAllDates)
 	{
@@ -602,7 +632,7 @@ bool CFilterOptions::IsCalendarVisible(
 
 bool CFilterOptions::IsTrainingLogVisible(
 		std::set<wxString> const& names,
-		ARBTrainingPtr pTraining)
+		ARBTrainingPtr pTraining) const
 {
 	if (!m_bAllDates)
 	{
