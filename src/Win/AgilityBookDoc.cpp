@@ -279,9 +279,8 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 			{
 				CStatusHandler data;
 				data.filterOptions.GetAllFilterNames(data.filterNames);
-				if (1 < data.filterNames.size())
+				if (0 < data.filterNames.size())
 				{
-					std::sort(data.filterNames.begin(), data.filterNames.end());
 					wxString filterName = data.filterOptions.GetCurrentFilter();
 					wxMenu* menu = new wxMenu();
 					int menuId = baseID;

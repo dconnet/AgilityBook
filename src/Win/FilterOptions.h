@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-10 DRC Added builtin support for an 'all' filter.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2006-03-02 DRC Separated filter options from main options.
@@ -112,6 +113,7 @@ public:
 		eViewRunsNQs = 2,
 	} eViewRuns;
 
+private:
 	class CFilterOptionData
 	{
 	public:
@@ -135,7 +137,6 @@ public:
 		std::set<wxString> nameFilter;
 	};
 
-private:
 	CCalendarViewFilter m_calView;
 	bool m_bAllDates;
 	bool m_bStartDate;
@@ -163,49 +164,51 @@ public:
 	{
 		return m_curFilter;
 	}
-	size_t GetAllFilterNames(std::vector<wxString>& outNames) const;
+	size_t GetAllFilterNames(
+			std::vector<wxString>& outNames,
+			bool bForEditing = false) const;
 	bool SetCurrentFilter(wxString const& inName);
 	bool AddFilter(wxString const& inName); ///< Returns if a new one was added
 	bool DeleteFilter(wxString const& inName);
 
 	// Helper functions
-	bool IsFilterEnabled();
+	bool IsFilterEnabled() const;
 	bool IsDateVisible(
 			ARBDate const& startDate,
-			ARBDate const& endDate);
+			ARBDate const& endDate) const;
 	bool IsTitleVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTitlePtr pTitle);
+			ARBDogTitlePtr pTitle) const;
 	bool IsVenueVisible(
 			std::vector<CVenueFilter> const& venues,
-			wxString const& venue);
+			wxString const& venue) const;
 	bool IsVenueDivisionVisible(
 			std::vector<CVenueFilter> const& venues,
 			wxString const& venue,
-			wxString const& div);
+			wxString const& div) const;
 	bool IsVenueLevelVisible(
 			std::vector<CVenueFilter> const& venues,
 			wxString const& venue,
 			wxString const& div,
-			wxString const& level);
+			wxString const& level) const;
 	bool IsTrialVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBDogTrialPtr pTrial);
+			ARBDogTrialPtr pTrial) const;
 	unsigned short IsRunVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun);
+			ARBDogRunPtr pRun) const;
 	bool IsRunVisible(
 			std::vector<CVenueFilter> const& venues,
 			ARBConfigVenuePtr pVenue,
 			ARBDogTrialPtr pTrial,
-			ARBDogRunPtr pRun);
+			ARBDogRunPtr pRun) const;
 	bool IsCalendarVisible(
 			std::vector<CVenueFilter> const& venues,
-			ARBCalendarPtr pCal);
+			ARBCalendarPtr pCal) const;
 	bool IsTrainingLogVisible(
 			std::set<wxString> const& names,
-			ARBTrainingPtr pTraining);
+			ARBTrainingPtr pTraining) const;
 
 	// Filtering: Calendar
 	CCalendarViewFilter FilterCalendarView() const
