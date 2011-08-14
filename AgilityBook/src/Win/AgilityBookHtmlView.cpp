@@ -173,7 +173,9 @@ void CAgilityBookHtmlView::OnUpdate(
 }
 
 
-wxString CAgilityBookHtmlView::RawHtml(bool bFragment) const
+wxString CAgilityBookHtmlView::RawHtml(
+		bool bFragment,
+		bool bNoInternalLinks) const
 {
 	ARBDate today(ARBDate::Today());
 	wxString data;
@@ -191,12 +193,12 @@ wxString CAgilityBookHtmlView::RawHtml(bool bFragment) const
 	if (0 < nItems)
 	{
 		CPointsDataBasePtr item = m_Items->GetLine(0);
-		data << item->GetHtml(0);
+		data << item->GetHtml(0, bNoInternalLinks);
 	}
 	for (size_t nItem = 1; nItem < nItems; ++nItem)
 	{
 		CPointsDataBasePtr item = m_Items->GetLine(nItem);
-		data << item->GetHtml(nItem);
+		data << item->GetHtml(nItem, bNoInternalLinks);
 	}
 	if (!bFragment)
 		data << wxT("</body></html>");
@@ -211,7 +213,7 @@ void CAgilityBookHtmlView::LoadData()
 	wxBusyCursor wait;
 
 	m_Items->LoadData(GetDocument(), GetDocument()->GetCurrentDog());
-	wxString data = RawHtml(false);
+	wxString data = RawHtml(false, false);
 	m_Ctrl->SetPage(data);
 
 	if (m_Ctrl->IsShownOnScreen())
@@ -310,7 +312,7 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 			CClipboardDataWriter clpData;
 			if (clpData.isOkay())
 			{
-				wxString data = RawHtml(true);
+				wxString data = RawHtml(true, true);
 				clpData.AddData(eFormatHtml, data);
 				clpData.AddData(m_Ctrl->ToText());
 				clpData.CommitData();
@@ -372,13 +374,13 @@ void CAgilityBookHtmlView::OnViewCmd(wxCommandEvent& evt)
 
 void CAgilityBookHtmlView::OnPrint(wxCommandEvent& evt)
 {
-	wxString text(RawHtml(false));
+	wxString text(RawHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PrintText(text);
 }
 
 
 void CAgilityBookHtmlView::OnPreview(wxCommandEvent& evt)
 {
-	wxString text(RawHtml(false));
+	wxString text(RawHtml(false, true));
 	wxGetApp().GetHtmlPrinter()->PreviewText(text);
 }

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-13 DRC Don't copy internal url links to the clipboard.
  * @li 2010-12-24 DRC Accumulate speed points by division.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-26 DRC Ported to wxWidgets.
@@ -180,7 +181,9 @@ wxString CPointsDataText::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataText::GetHtml(size_t /*nCurLine*/) const
+wxString CPointsDataText::GetHtml(
+		size_t /*nCurLine*/,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	if (m_UseInHtml)
@@ -231,7 +234,9 @@ wxString CPointsDataDog::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataDog::GetHtml(size_t nCurLine) const
+wxString CPointsDataDog::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	if (m_pDog)
@@ -239,16 +244,23 @@ wxString CPointsDataDog::GetHtml(size_t nCurLine) const
 		data << wxT("<h1 align=\"center\">") << _("IDS_TITLING_POINTS") << wxT(" ")
 			<< Sanitize(ARBDate::Today().GetString())
 			<< wxT("</h1>")
-			<< wxT("<h1><a href=\"") << ARB_PROTOCOL
+			<< wxT("<h1>");
+		if (!bNoInternalLinks)
+		{
+			data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-			<< static_cast<unsigned int>(nCurLine)
+				<< static_cast<unsigned int>(nCurLine)
 #else
-			<< nCurLine
+				<< nCurLine
 #endif
-			<< wxT("\">") << Sanitize(m_pDog->GetCallName());
+				<< wxT("\">");
+		}
+		data << Sanitize(m_pDog->GetCallName());
+		if (!bNoInternalLinks)
+			data << wxT("</a>");
 		if (!m_pDog->GetRegisteredName().empty())
 		{
-			data << wxT("</a> [")
+			data << wxT(" [")
 				<< Sanitize(m_pDog->GetRegisteredName())
 				<< wxT("]");
 		}
@@ -314,7 +326,9 @@ wxString CPointsDataVenue::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataVenue::GetHtml(size_t nCurLine) const
+wxString CPointsDataVenue::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	if (m_pVenue)
@@ -337,14 +351,21 @@ wxString CPointsDataVenue::GetHtml(size_t nCurLine) const
 			ARBDogRegNumPtr pRegNum;
 			if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 			{
-				data << wxT(" [<a href=\"") << ARB_PROTOCOL
+				data << wxT(" [");
+				if (!bNoInternalLinks)
+				{
+					data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-					<< static_cast<unsigned int>(nCurLine)
+						<< static_cast<unsigned int>(nCurLine)
 #else
-					<< nCurLine
+						<< nCurLine
 #endif
-					<< wxT("\">") << Sanitize(pRegNum->GetNumber())
-					<< wxT("</a>]\n");
+						<< wxT("\">");
+				}
+				data << Sanitize(pRegNum->GetNumber());
+				if (!bNoInternalLinks)
+					data << wxT("</a>");
+				data << wxT("]\n");
 			}
 		}
 		data << wxT("</h2>\n");
@@ -414,20 +435,30 @@ wxString CPointsDataTitle::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataTitle::GetHtml(size_t nCurLine) const
+wxString CPointsDataTitle::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	if (m_pTitle)
 	{
 		data << wxT("<tr>\n")
 			<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
-			<< wxT("<td><a href=\"") << ARB_PROTOCOL
+			<< wxT("<td>");
+		if (!bNoInternalLinks)
+		{
+			data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-			<< static_cast<unsigned int>(nCurLine)
+				<< static_cast<unsigned int>(nCurLine)
 #else
-			<< nCurLine
+				<< nCurLine
 #endif
-			<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>\n")
+				<< wxT("\">");
+		}
+		data << Sanitize(OnNeedText(2));
+		if (!bNoInternalLinks)
+			data << wxT("</a>");
+		data << wxT("</td>\n")
 			<< wxT("</tr>\n");
 	}
 	return data;
@@ -533,20 +564,30 @@ wxString CPointsDataEvent::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataEvent::GetHtml(size_t nCurLine) const
+wxString CPointsDataEvent::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>\n")
-		<< wxT("<td><a href=\"") << ARB_PROTOCOL
+		<< wxT("<td>");
+	if (!bNoInternalLinks)
+	{
+		data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<unsigned int>(nCurLine)
+			<< static_cast<unsigned int>(nCurLine)
 #else
-		<< nCurLine
+			<< nCurLine
 #endif
-		<< wxT("\">") << Sanitize(OnNeedText(4)) << wxT("</a></td>\n")
+			<< wxT("\">");
+	}
+	data << Sanitize(OnNeedText(4));
+	if (!bNoInternalLinks)
+		data << wxT("</a>");
+	data << wxT("</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(5), true) << wxT("</td>\n")
 		<< wxT("<td align=\"right\">") << Sanitize(OnNeedText(6), true) << wxT("</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>\n")
@@ -640,19 +681,29 @@ wxString CPointsDataLifetime::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataLifetime::GetHtml(size_t nCurLine) const
+wxString CPointsDataLifetime::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr><td>&nbsp;</td></tr>\n")
 		<< wxT("<tr>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
-		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+		<< wxT("<td align=\"right\">");
+	if (!bNoInternalLinks)
+	{
+		data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<unsigned int>(nCurLine)
+			<< static_cast<unsigned int>(nCurLine)
 #else
-		<< nCurLine
+			<< nCurLine
 #endif
-		<< wxT("\">") << Sanitize(OnNeedText(2)) << wxT("</a></td>\n")
+			<< wxT("\">");
+	}
+	data << Sanitize(OnNeedText(2));
+	if (!bNoInternalLinks)
+		data << wxT("</a>");
+	data << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
 }
@@ -733,7 +784,9 @@ wxString CPointsDataLifetimeByName::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataLifetimeByName::GetHtml(size_t nCurLine) const
+wxString CPointsDataLifetimeByName::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
@@ -794,19 +847,28 @@ wxString CPointsDataMultiQs::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataMultiQs::GetHtml(size_t nCurLine) const
+wxString CPointsDataMultiQs::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
 		<< wxT("<td colspan=\"6\"/>\n")
-		<< wxT("<td><a href=\"") << ARB_PROTOCOL
+		<< wxT("<td>");
+	if (!bNoInternalLinks)
+	{
+		data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<unsigned int>(nCurLine)
+			<< static_cast<unsigned int>(nCurLine)
 #else
-		<< nCurLine
+			<< nCurLine
 #endif
-		<< wxT("\">")
-		<< Sanitize(OnNeedText(7)) << wxT("</a></td>\n")
+			<< wxT("\">");
+	}
+	data << Sanitize(OnNeedText(7));
+	if (!bNoInternalLinks)
+		data << wxT("</a>");
+	data << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
 }
@@ -861,7 +923,9 @@ wxString CPointsDataSpeedPts::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataSpeedPts::GetHtml(size_t nCurLine) const
+wxString CPointsDataSpeedPts::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
@@ -927,19 +991,28 @@ wxString CPointsDataOtherPointsTallyAll::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataOtherPointsTallyAll::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyAll::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
-		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+		<< wxT("<td align=\"right\">");
+	if (!bNoInternalLinks)
+	{
+		data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<unsigned int>(nCurLine)
+			<< static_cast<unsigned int>(nCurLine)
 #else
-		<< nCurLine
+			<< nCurLine
 #endif
-		<< wxT("\">")
-		<< Sanitize(OnNeedText(2)) << wxT("</a></td>\n")
+			<< wxT("\">");
+	}
+	data << Sanitize(OnNeedText(2));
+	if (!bNoInternalLinks)
+		data << wxT("</a>");
+	data << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
 }
@@ -989,20 +1062,29 @@ wxString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataOtherPointsTallyAllByEvent::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyAllByEvent::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
 		<< wxT("<td>&nbsp;</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
-		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+		<< wxT("<td align=\"right\">");
+	if (!bNoInternalLinks)
+	{
+		data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<unsigned int>(nCurLine)
+			<< static_cast<unsigned int>(nCurLine)
 #else
-		<< nCurLine
+			<< nCurLine
 #endif
-		<< wxT("\">")
-		<< Sanitize(OnNeedText(3)) << wxT("</a></td>\n")
+			<< wxT("\">");
+	}
+	data << Sanitize(OnNeedText(3));
+	if (!bNoInternalLinks)
+		data << wxT("</a>");
+	data << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
 }
@@ -1052,20 +1134,29 @@ wxString CPointsDataOtherPointsTallyLevel::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataOtherPointsTallyLevel::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyLevel::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
 		<< wxT("<td>&nbsp;</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
-		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+		<< wxT("<td align=\"right\">");
+	if (!bNoInternalLinks)
+	{
+		data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<unsigned int>(nCurLine)
+			<< static_cast<unsigned int>(nCurLine)
 #else
-		<< nCurLine
+			<< nCurLine
 #endif
-		<< wxT("\">")
-		<< Sanitize(OnNeedText(3)) << wxT("</a></td>\n")
+			<< wxT("\">");
+	}
+	data << Sanitize(OnNeedText(3));
+	if (!bNoInternalLinks)
+		data << wxT("</a>");
+	data << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
 }
@@ -1120,21 +1211,30 @@ wxString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(int inCol) const
 }
 
 
-wxString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(size_t nCurLine) const
+wxString CPointsDataOtherPointsTallyLevelByEvent::GetHtml(
+		size_t nCurLine,
+		bool bNoInternalLinks) const
 {
 	wxString data;
 	data << wxT("<tr>\n")
 		<< wxT("<td>&nbsp;</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(2), true) << wxT("</td>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(3), true) << wxT("</td>\n")
-		<< wxT("<td align=\"right\"><a href=\"") << ARB_PROTOCOL
+		<< wxT("<td align=\"right\">");
+	if (!bNoInternalLinks)
+	{
+		data << wxT("<a href=\"") << ARB_PROTOCOL
 #if defined(_MSC_VER) && _MSC_VER < 1400 // VC7 casting warning
-		<< static_cast<unsigned int>(nCurLine)
+			<< static_cast<unsigned int>(nCurLine)
 #else
-		<< nCurLine
+			<< nCurLine
 #endif
-		<< wxT("\">")
-		<< Sanitize(OnNeedText(4)) << wxT("</a></td>\n")
+			<< wxT("\">");
+	}
+	data << Sanitize(OnNeedText(4));
+	if (!bNoInternalLinks)
+		data << wxT("</a>");
+	data << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
 }
