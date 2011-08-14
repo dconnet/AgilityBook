@@ -1,4 +1,4 @@
-8/13/2011: v2.3.0.<in development>
+8/13/2011: v2.3.0.3150
 - Bumped Configuration v33:
   - Changed NADAC Extreme Tunnelers to Extreme Gaters.
   - Set T2B time fault multiplier to 0 to remove time fault computation.
@@ -10,11 +10,13 @@
   - Changed build environment to created .lib for sharing between projects.
   - Allow a time fault multiplier of 0 in event configuration.
   - Added builtin support for an 'all' filter.
+  - Changing default windows release to vc10.
 - Bug fixes:
   - Configuration fixup actions need to be limited or we attempt to rename
     things we shouldn't. (In config32, we changed USDAA APD->PDCH and PD2->APD.
     In this config, it was attempting to rename APD again.)
-  - Compile wx as unicode on Mac (2.8.12 has been patched!)
+  - Compile wx as unicode on Mac (2.8.12 has been patched!). This
+    fixed a file corruption problem there.</li>
   - Don't copy the internal URLs used to display dialogs on the Points view.
 
 5/30/2011: v2.2.8.3075

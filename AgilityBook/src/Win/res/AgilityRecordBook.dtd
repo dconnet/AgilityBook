@@ -11,6 +11,9 @@ Note: When updating the file version number,
 see notes in src/ARB/ARBAgilityRecordBook.cpp.
 
 Revision History:
+2011-07-31 DRC File version 13.1
+               Added 'platform','os' to 'AgilityBook', modified
+               TitlePoints (see ARBConfigTitlePoints.cpp).
 2011-07-26 DRC File version 12.13
                Added 'platform','os' to 'AgilityBook', modified TitlePoints.
 2011-06-09 DRC File version 12.12
