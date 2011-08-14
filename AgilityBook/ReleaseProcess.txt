@@ -68,8 +68,8 @@ Tag SubVersion repository
 
 Create the files to be distributed (make sure you archive them too)
 - Any extra readme files required
-- Copy a backup of released files to \AgilityBook\test\[vc9/vc9x64]
-  Currently, I only archive vc9/x64 - the exe's that are released to the wild.
+- Copy a backup of released files to \AgilityBook\test\[vc10/vc10x64]
+  Currently, I only archive vc10/x64 - the exe's that are released to the wild.
   [exe,dll,dat,lang/...]
 - Use SVN to export AgilityBook\ to distrib directory
   - Zip AgilityBook to AgilityBook-n_n_n_n-src.zip

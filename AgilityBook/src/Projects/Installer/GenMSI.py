@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2011-08-13 DRC Change to vc10 for default.
 # 2011-04-27 DRC Generate unique prodcodes for each architecture.
 #            Also discovered script wasn't writing the cvs file correctly.
 # 2010-11-18 DRC Optimize the build by caching the cab file.
@@ -42,7 +43,7 @@
 	all: Create all of them (default)
 	notidy: Do not clean up generated files
 	test: Generate .msi for test purposes (don't write to InstallGUIDs.csv)
-	VC: Generate msi using specified vc version (Default: 9)
+	VC: Generate msi using specified vc version (Default: 10)
 """
 
 import datetime
@@ -307,7 +308,7 @@ def main():
 	b64 = 0
 	tidy = 1
 	testing = 0
-	vcver = '9'
+	vcver = '10'
 	if 1 == len(sys.argv):
 		print 'Setting /32 /testing'
 		b32 = 1
