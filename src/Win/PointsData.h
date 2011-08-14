@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-13 DRC Don't copy internal url links to the clipboard.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2006-07-15 DRC Add option to sort by event instead of division.
@@ -105,7 +106,7 @@ public:
 	/// Get a particular column of text (used for listctrl)
 	virtual wxString OnNeedText(int inCol) const = 0;
 	/// Get html for a line
-	virtual wxString GetHtml(size_t nCurLine) const = 0;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const = 0;
 	/// Is this entry visible? (used for special html processing)
 	virtual bool IsVisible() const	{return true;}
 	/// This entry has details (dbl-click works)
@@ -128,7 +129,10 @@ public:
 			wxString const& inHtml);
 
 	virtual wxString OnNeedText(int inCol) const	{return wxT("");}
-	virtual wxString GetHtml(size_t nCurLine) const	{return m_Html;}
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const
+	{
+		return m_Html;
+	}
 	virtual bool IsVisible() const						{return false;}
 	virtual bool IsEqual(CPointsDataBasePtr /*inData*/)	{return false;}
 
@@ -148,7 +152,7 @@ public:
 			wxChar const* inCol2 = wxT(""));
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 private:
@@ -171,7 +175,7 @@ public:
 			ARBDogPtr pDog);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -195,7 +199,7 @@ public:
 			ARBConfigVenuePtr pVenue);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -220,7 +224,7 @@ public:
 			ARBDogTitlePtr pTitle);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -258,7 +262,7 @@ public:
 			wxString const& inSpeed);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -305,7 +309,7 @@ public:
 			double inFiltered);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -339,7 +343,7 @@ public:
 			double inFiltered);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
@@ -363,7 +367,7 @@ public:
 			std::set<MultiQdata> const& inMQs);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -392,7 +396,7 @@ public:
 			int inPts);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
 
 protected:
@@ -429,7 +433,7 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -448,7 +452,7 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -467,7 +471,7 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);
@@ -487,7 +491,7 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 	virtual wxString OnNeedText(int inCol) const;
-	virtual wxString GetHtml(size_t nCurLine) const;
+	virtual wxString GetHtml(size_t nCurLine, bool bNoInternalLinks) const;
 	virtual bool HasDetails() const {return true;}
 	virtual void Details() const;
 	virtual bool IsEqual(CPointsDataBasePtr inData);

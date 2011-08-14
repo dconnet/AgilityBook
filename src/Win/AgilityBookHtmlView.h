@@ -63,7 +63,9 @@ public:
 			wxObject* inHint = NULL);
 
 private:
-	wxString RawHtml(bool bFragment) const;
+	wxString RawHtml(
+			bool bFragment,
+			bool bNoInternalLinks) const;
 	void LoadData();
 
 	wxHtmlWindow* m_Ctrl;

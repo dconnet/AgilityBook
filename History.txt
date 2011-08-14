@@ -1,4 +1,4 @@
-8/10/2011: v2.3.0.<in development>
+8/13/2011: v2.3.0.<in development>
 - Bumped Configuration v33:
   - Changed NADAC Extreme Tunnelers to Extreme Gaters.
   - Set T2B time fault multiplier to 0 to remove time fault computation.
@@ -15,6 +15,7 @@
     things we shouldn't. (In config32, we changed USDAA APD->PDCH and PD2->APD.
     In this config, it was attempting to rename APD again.)
   - Compile wx as unicode on Mac (2.8.12 has been patched!)
+  - Don't copy the internal URLs used to display dialogs on the Points view.
 
 5/30/2011: v2.2.8.3075
 - Bug fixes:
