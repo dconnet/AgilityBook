@@ -1,6 +1,42 @@
 <ul type="circle">
 
-	<li><b><a name="v2.2.7">5/30/2011: v2.2.8</a></b>
+	<li><b><a name="v2.3.0">5/30/2011: v2.3.0</a></b>
+	<ul>
+		<li>Bumped Configuration v33
+		<ul type="disc">
+			<li>Changed NADAC Extreme Tunnelers to Extreme Gaters.</li>
+			<li>Set T2B time fault multiplier to 0 to remove time fault
+			computation.</li>
+			<li>Support T2B and UKI title point generation.</li>
+		</ul>
+		</li>
+		<li>Bumped file version to 13.1
+		<ul type="disc">
+			<li>Added 'platform','os' to 'AgilityBook'</li>
+			<li>Modified TitlePoints to support T2B/UKI (this caused the major
+			file version)</li>
+		</ul>
+		</li>
+		<li>New features / Enhancements
+		<ul type="disc">
+			<li>Allow a time fault multiplier of 0 in event configuration.</li>
+			<li>Added builtin support for an 'all' filter.</li>
+		</ul>
+		</li>
+		<li>Bug fixes
+		<ul type="disc">
+			<li>Configuration fixup actions need to be limited or we attempt to
+			rename things we shouldn't.</li>
+			<li>Compile wx as unicode on Mac (2.8.12 has been patched!). This
+			fixed a file corruption problem there.</li>
+			<li>Don't copy the internal URLs used to display dialogs on the
+			Points view.</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+
+	<li><b><a name="v2.2.8">5/30/2011: v2.2.8</a></b>
 	<ul>
 		<li>Bug fixes
 		<ul type="disc">
@@ -10,7 +46,6 @@
 		</li>
 	</ul>
 	</li>
-
 	<li><b><a name="v2.2.7">4/23/2011: v2.2.7</a></b>
 	<ul>
 		<li>Bumped Configuration v32
