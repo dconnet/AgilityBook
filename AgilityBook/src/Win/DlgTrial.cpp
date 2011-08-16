@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-16 DRC Make trial notes multi-line.
  * @li 2009-10-14 DRC Add dog's name to dialog caption.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
@@ -134,7 +135,7 @@ CDlgTrial::CDlgTrial(
 	textNotes->Wrap(-1);
 
 	CTextCtrl* ctrlTrialNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxSize(260, 65), 0,
+		wxDefaultPosition, wxSize(260, 65), wxTE_MULTILINE,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlTrialNotes->SetHelpText(_("HIDC_TRIAL_NOTES"));
 	ctrlTrialNotes->SetToolTip(_("HIDC_TRIAL_NOTES"));

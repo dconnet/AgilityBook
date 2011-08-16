@@ -1,4 +1,6 @@
-8/14/2011: v2.3.1.<in development>
+8/16/2011: v2.3.1.<in development>
+- Bug fixes:
+  - The Trial Properties dialog did not allow a newline in the notes.
 
 8/13/2011: v2.3.0.3150
 - Bumped Configuration v33:
