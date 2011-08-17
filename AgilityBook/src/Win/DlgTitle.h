@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-17 DRC Add support to get newly created title.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
@@ -34,6 +35,9 @@ public:
 			ARBDogTitlePtr pTitle,
 			wxWindow* pParent = NULL);
 
+	// Returns existing title or the newly created one.
+	ARBDogTitlePtr GetNewTitle() const	{return m_newTitle;}
+
 private:
 	ARBConfigTitlePtr GetTitleData(int index) const;
 	ARBDate GetDate();
@@ -42,6 +46,7 @@ private:
 
 	ARBDogTitleList& m_Titles;
 	ARBDogTitlePtr m_pTitle;
+	ARBDogTitlePtr m_newTitle;
 	wxDatePickerCtrl* m_ctrlDate;
 	wxCheckBox* m_ctrlReceived;
 	CVenueComboBox* m_ctrlVenues;

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-17 DRC Add support to get newly created title.
  * @li 2010-01-10 DRC Forcing hidden title didn't update internal flags.
  *                    Unearned titles didn't disable Hide Checkbox.
  * @li 2009-12-19 DRC Make side effects of an unearned title more obvious.
@@ -65,6 +66,7 @@ CDlgTitle::CDlgTitle(
 	: wxDialog()
 	, m_Titles(titles)
 	, m_pTitle(pTitle)
+	, m_newTitle()
 	, m_ctrlDate(NULL)
 	, m_ctrlReceived(NULL)
 	, m_ctrlVenues(NULL)
@@ -392,5 +394,6 @@ void CDlgTitle::OnOk(wxCommandEvent& evt)
 	}
 	else
 		m_Titles.AddTitle(title);
+	m_newTitle = title;
 	EndDialog(wxID_OK);
 }
