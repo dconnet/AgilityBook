@@ -355,14 +355,57 @@ static bool ReOrderTrial(
 }
 
 
+static void UpdateFutureTrials(
+		ARBConfig const& config,
+		ARBDogPtr pDog,
+		ARBDogTitlePtr title)
+{
+	// Find all trials in the future in the same venue.
+	std::vector<ARBDogTrialPtr> trials;
+	for (ARBDogTrialList::iterator i = pDog->GetTrials().begin();
+		i != pDog->GetTrials().end();
+		++i)
+	{
+		if ((*i)->HasVenue(title->GetVenue())
+		&& 0 < (*i)->GetRuns().size())
+		{
+			ARBDate d1 = (*((*i)->GetRuns().begin()))->GetDate();
+			if (d1 > ARBDate::Today())
+			{
+				trials.push_back(*i);
+			}
+		}
+	}
+	if (0 < trials.size())
+	{
+		/*
+		Interesting problem. Level order can be implied by the actual order in
+		the config. But what does moveup mean? I could be moving from (USDAA)
+		Ch to Pf.
+		- Need user option to suppress moveup if in top level
+		- Need to add info to a title for what events it affects (or determining
+		  if a moveup can happen can't be done)
+		- more than one event may be a move (USDAA AD implies everything goes up
+		Oh. Even more complicated. Earning NovA means NovB moveOVER.
+		*/
+#pragma PRAGMA_TODO("Add dialog to update future trials")
+		/*
+		Thought 2. Maybe we just fly an info dialog here 'You are entered in
+		N upcoming trials (list). Please check for moveups.'
+		*/
+	}
+}
+
+
 static bool AddTitle(
 		CAgilityBookTreeDataDog* pDogData,
 		CAgilityBookTreeView* pTree)
 {
 	assert(pDogData && pDogData->GetDog());
-	CDlgTitle dlg(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog()->GetTitles(), ARBDogTitlePtr(), pTree->GetControl());
+	CDlgTitle dlg(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog()->GetTitles(), ARBDogTitlePtr());
 	if (wxID_OK == dlg.ShowModal())
 	{
+		UpdateFutureTrials(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog(), dlg.GetNewTitle());
 		CUpdateHint hint(UPDATE_POINTS_VIEW);
 		pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		if (CAgilityBookOptions::AutoShowPropertiesOnNewTitle())
