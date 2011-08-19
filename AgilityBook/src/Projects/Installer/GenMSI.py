@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2011-08-19 DRC Fixed /test option (it was always writing the csv file)
 # 2011-08-13 DRC Change to vc10 for default.
 # 2011-04-27 DRC Generate unique prodcodes for each architecture.
 #            Also discovered script wasn't writing the cvs file correctly.
@@ -209,7 +210,7 @@ def WiLangId(baseMsi, sumInfoStream):
 	database = None
 
 
-def WriteCode(testing, baseMsi, ver4Dot, code, vcver):
+def WriteCode(baseMsi, ver4Dot, code, vcver):
 	database = msilib.OpenDatabase(baseMsi, msilib.MSIDBOPEN_READONLY)
 	view = database.OpenView("SELECT `Value` FROM Property WHERE `Property`='ProductCode'")
 	record = msilib.CreateRecord(1)
@@ -286,7 +287,8 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			WiLangId(baseMsi, sumInfoStream)
 		if tidy:
 			RmMinusRF(cabcache)
-		WriteCode(testing, baseMsi, ver4Dot, code, vcver)
+		if not testing:
+			WriteCode(baseMsi, ver4Dot, code, vcver)
 	else:
 		print baseDir + r'\AgilityBook.exe does not exist, MSI skipped'
 
@@ -310,7 +312,7 @@ def main():
 	testing = 0
 	vcver = '10'
 	if 1 == len(sys.argv):
-		print 'Setting /32 /testing'
+		print 'Setting /32 /test'
 		b32 = 1
 		testing = 1
 	error = 0
