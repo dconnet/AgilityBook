@@ -2,6 +2,8 @@
 # and ../../configure.in
 #
 # This assumes the current directory is 'Include'
+#
+# @li 2011-08-20 DRC Added a nicer file lock.
 # @li 2010-03-05 DRC Removed CalVerNum
 # @li 2009-12-20 DRC Added -x argument
 # @li 2009-10-06 DRC Add multiprocessing awareness. Kind of.
@@ -13,6 +15,36 @@ import datetime
 import os
 import string
 import sys
+
+
+class LockFile:
+	def __init__(self, filename):
+		self.m_filename = filename
+		self.m_fd = None
+		self.m_pid = os.getpid()
+
+	def __del__(self):
+		self.release()
+
+	def acquire(self):
+		try:
+			self.m_fd = os.open(self.m_filename, os.O_CREAT|os.O_EXCL|os.O_RDWR)
+			os.write(self.m_fd, "%d" % self.m_pid)
+			return 1
+		except OSError:
+			self.m_fd = None
+			return 0
+
+	def release(self):
+		if not self.m_fd:
+			return 0
+		try:
+			os.close(self.m_fd)
+			os.remove(self.m_filename)
+			return 1
+		except OSError:
+			return 0
+
 
 def doWork():
 	update = 0
@@ -88,21 +120,17 @@ def doWork():
 		print "../../configure.in is up-to-date"
 		os.remove('../../configure.in.new')
 
+	return 0
+
 
 if __name__ == '__main__':
 	if 2 == len(sys.argv) and sys.argv[1] == "-x":
 		print "SetBuildNumber skipped"
 	else:
-		# Not sure how to get locking across invokations.
-		# The multiprocessing lock stuff seems aimed at spawned processes.
-		# This takes a crude path - there's definitely still a window of
-		# opportunity.
-		lockfile = 'SetBuildNumber.lck'
-		if not os.access(lockfile, os.F_OK):
-			lck = open(lockfile, 'wb')
-			print >>lck, 'Locked'
-			lck.close()
+		lockfile = LockFile("SetBuildNumber.lck")
+		if lockfile.acquire():
 			doWork()
-			os.remove(lockfile)
+			lockfile.release()
 		else:
 			print "SetBuildNumber is locked"
+	sys.exit(0)
