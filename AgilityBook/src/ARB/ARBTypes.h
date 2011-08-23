@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-04-20 DRC Added DNR.
  * @li 2008-06-29 DRC Moved string stuff to ARBString.
@@ -286,7 +287,7 @@ public:
 	ARBVersion(
 			unsigned short major,
 			unsigned short minor)
-		: m_Version((major<<8) | minor)
+		: m_Version((major<<16) | minor)
 	{
 	}
 
@@ -326,11 +327,11 @@ public:
 
 	unsigned short Major() const
 	{
-		return static_cast<unsigned short>(m_Version >> 8);
+		return static_cast<unsigned short>(m_Version >> 16);
 	}
 	unsigned short Minor() const
 	{
-		return static_cast<unsigned short>(m_Version & 0xff);
+		return static_cast<unsigned short>(m_Version & 0xffff);
 	}
 	wxString str() const;
 
