@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-22 DRC ARBVersion was only using 16 instead of 32bits.
  * @li 2008-01-12 DRC Created
  */
 
@@ -60,6 +61,19 @@ SUITE(TestVersion)
 			ARBVersion v1(1, 2);
 			ARBVersion v2(2, 1);
 			CHECK(v1 < v2);
+		}
+	}
+
+
+	TEST(Bounds)
+	{
+		if (!g_bMicroTest)
+		{
+			unsigned short maj = 0xefff;
+			unsigned short min = 0xeffe;
+			ARBVersion v1(maj, min);
+			CHECK(v1.Major() == maj);
+			CHECK(v1.Minor() == min);
 		}
 	}
 }
