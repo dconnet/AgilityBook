@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-08-31 DRC Column headings were wrong.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-08 DRC Fixed data index lookup when editing an item.
  * @li 2009-02-10 DRC Ported to wxWidgets.
@@ -69,6 +70,10 @@ public:
 	int m_Image;
 };
 
+#define COL_LINK	0
+#define COL_DOG		1
+#define COL_TRIAL	2
+#define COL_RUN		3
 
 wxString CDlgFindLinksData::OnNeedText(long iCol) const
 {
@@ -76,13 +81,13 @@ wxString CDlgFindLinksData::OnNeedText(long iCol) const
 	{
 	default:
 		assert(0);
-	case 0:
+	case COL_LINK:
 		return m_Link;
-	case 1:
+	case COL_TRIAL:
 		return m_pTrial->GetGenericName();
-	case 2:
+	case COL_DOG:
 		return m_pDog->GetGenericName();
-	case 3:
+	case COL_RUN:
 		return m_pRun->GetGenericName();
 	}
 }
@@ -102,12 +107,16 @@ void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 
 /////////////////////////////////////////////////////////////////////////////
 
-static wxChar const* colLinkInfo[] =
+static struct
 {
-	wxT("IDS_COL_NAME"),
-	wxT("IDS_COL_DOG"),
-	wxT("IDS_COL_TRIAL"),
-	wxT("IDS_COL_EVENT"),
+	int col;
+	wxChar const* info;
+} colLinkInfo[] =
+{
+	{COL_LINK, wxT("IDS_COL_NAME")},
+	{COL_DOG, wxT("IDS_COL_DOG")},
+	{COL_TRIAL, wxT("IDS_COL_TRIAL")},
+	{COL_RUN, wxT("IDS_COL_EVENT")},
 };
 static int const nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
 
@@ -245,7 +254,8 @@ CDlgFindLinks::CDlgFindLinks(
 
 	for (int i = 0; i < nColLinkInfo; ++i)
 	{
-		m_ctrlLinks->InsertColumn(i, wxGetTranslation(colLinkInfo[i]));
+		assert(i == colLinkInfo[i].col);
+		m_ctrlLinks->InsertColumn(i, wxGetTranslation(colLinkInfo[i].info));
 	}
 
 	for (ARBDogList::iterator iterDog = inDogs.begin();
@@ -323,7 +333,7 @@ void CDlgFindLinks::SetColumnHeaders()
 	for (int i = 0; i < nColLinkInfo; ++i)
 	{
 		wxString str;
-		str << wxGetTranslation(colLinkInfo[i])
+		str << wxGetTranslation(colLinkInfo[i].info)
 			<< wxT(" (") << m_sortLinks.FindColumnOrder(i) + 1 << wxT(")");
 		wxListItem item;
 		item.SetMask(wxLIST_MASK_TEXT);
