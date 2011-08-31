@@ -123,6 +123,19 @@ bool ARBDogTrial::operator==(ARBDogTrial const& rhs) const
 }
 
 
+wxString ARBDogTrial::GetGenericName() const
+{
+	wxString name;
+	ARBDogClubPtr pClub;
+	if (m_Clubs.GetPrimaryClub(&pClub))
+	{
+		name << pClub->GetVenue() << wxT(" ");
+	}
+	name << m_Location;
+	return name;
+}
+
+
 size_t ARBDogTrial::GetSearchStrings(std::set<wxString>& ioStrings) const
 {
 	size_t nItems = 0;

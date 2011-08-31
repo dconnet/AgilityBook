@@ -53,10 +53,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
-	{
-		return m_Location;
-	}
+	virtual wxString GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
