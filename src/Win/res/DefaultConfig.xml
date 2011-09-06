@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2011-09-06 DRC Configuration version 34.
+               Tweaked some ASCA title comments and AKC T2B description.
 2011-07-31 DRC Configuration version 33.
                Changed NADAC Extreme Tunnelers to Extreme Gaters.
                Set T2B time fault multiplier to 0.
@@ -105,7 +107,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="33">
+  <Configuration version="34">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -584,7 +586,8 @@ Revision History:
         </Scoring>
       </Event>
       <Event Name="T2B">
-        <Desc>Time 2 Beat</Desc>
+        <Desc>Time 2 Beat
+You must enter the SCT (1st place) and your placement to generate the titling points.</Desc>
         <Scoring Division="Regular" Level="T2B" ValidFrom="2010-1-1" ValidTo="2011-6-30" timeFault="0" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="0"/>
         </Scoring>
@@ -621,85 +624,85 @@ Revision History:
       <Titles LongName="Novice Regular" Name="RS-N">30 Points</Titles>
       <Titles LongName="Novice Jumpers" Name="JS-N">20 Points</Titles>
       <Titles LongName="Novice Gamblers" Name="GS-N">20 Points</Titles>
-      <Titles LongName="Novice Regular Outstanding Performance" Name="RS-N-OP">100 Points</Titles>
-      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JS-N-OP">50 Points</Titles>
-      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GS-N-OP">50 Points</Titles>
-      <Titles LongName="Novice Regular Superior Performance" Name="RS-N-SP">200 Points</Titles>
-      <Titles LongName="Novice Jumpers Superior Performance" Name="JS-N-SP">100 Points</Titles>
-      <Titles LongName="Novice Gamblers Superior Performance" Name="GS-N-SP">100 Points</Titles>
+      <Titles LongName="Novice Regular Outstanding Performance" Name="RS-N-OP">RS-N plus 100 Points</Titles>
+      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JS-N-OP">JS-N plus 50 Points</Titles>
+      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GS-N-OP">GS-N plus 50 Points</Titles>
+      <Titles LongName="Novice Regular Superior Performance" Name="RS-N-SP">RS-N plus 200 Points</Titles>
+      <Titles LongName="Novice Jumpers Superior Performance" Name="JS-N-SP">JS-N plus 100 Points</Titles>
+      <Titles LongName="Novice Gamblers Superior Performance" Name="GS-N-SP">GS-N plus 100 Points</Titles>
       <Titles LongName="Open Regular" Name="RS-O">30 Points</Titles>
       <Titles LongName="Open Jumpers" Name="JS-O">20 Points</Titles>
       <Titles LongName="Open Gamblers" Name="GS-O">20 Points</Titles>
-      <Titles LongName="Open Regular Outstanding Performance" Name="RS-O-OP">100 Points</Titles>
-      <Titles LongName="Open Jumpers Outstanding Performance" Name="JS-O-OP">50 Points</Titles>
-      <Titles LongName="Open Gamblers Outstanding Performance" Name="GS-O-OP">50 Points</Titles>
-      <Titles LongName="Open Regular Superior Performance" Name="RS-O-SP">200 Points</Titles>
-      <Titles LongName="Open Jumpers Superior Performance" Name="JS-O-SP">100 Points</Titles>
-      <Titles LongName="Open Gamblers Superior Performance" Name="GS-O-SP">100 Points</Titles>
+      <Titles LongName="Open Regular Outstanding Performance" Name="RS-O-OP">RS-O plus 100 Points</Titles>
+      <Titles LongName="Open Jumpers Outstanding Performance" Name="JS-O-OP">JS-O plus 50 Points</Titles>
+      <Titles LongName="Open Gamblers Outstanding Performance" Name="GS-O-OP">GS-O plus 50 Points</Titles>
+      <Titles LongName="Open Regular Superior Performance" Name="RS-O-SP">RS-O plus 200 Points</Titles>
+      <Titles LongName="Open Jumpers Superior Performance" Name="JS-O-SP">JS-O plus 100 Points</Titles>
+      <Titles LongName="Open Gamblers Superior Performance" Name="GS-O-SP">GS-O plus 100 Points</Titles>
       <Titles LongName="Elite Regular" Name="RS-E">30 Points</Titles>
       <Titles LongName="Elite Jumpers" Name="JS-E">20 Points</Titles>
       <Titles LongName="Elite Gamblers" Name="GS-E">20 Points</Titles>
-      <Titles LongName="Elite Regular Outstanding Performance" Name="RS-E-OP">200 Points</Titles>
-      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JS-E-OP">100 Points</Titles>
-      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GS-E-OP">100 Points</Titles>
-      <Titles LongName="Elite Regular Superior Performance" Name="RS-E-SP">400 Points</Titles>
-      <Titles LongName="Elite Jumpers Superior Performance" Name="JS-E-SP">200 Points</Titles>
-      <Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP">200 Points</Titles>
+      <Titles LongName="Elite Regular Outstanding Performance" Name="RS-E-OP">RS-E plus 200 Points</Titles>
+      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JS-E-OP">JS-E plus 100 Points</Titles>
+      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GS-E-OP">GS-E plus 100 Points</Titles>
+      <Titles LongName="Elite Regular Superior Performance" Name="RS-E-SP">RS-E plus 400 Points</Titles>
+      <Titles LongName="Elite Jumpers Superior Performance" Name="JS-E-SP">JS-E plus 200 Points</Titles>
+      <Titles LongName="Elite Gamblers Superior Performance" Name="GS-E-SP">GS-E plus 200 Points</Titles>
       <Titles LongName="Agility Trial Champion" Multiple="2" Name="ATCH" Prefix="y" Style="1">R*-E plus 200 pts, G*-E plus 100 pts, J*-E plus 100 pts</Titles>
       <Titles LongName="Novice Regular" Name="RV-N">30 Points</Titles>
       <Titles LongName="Novice Jumpers" Name="JV-N">20 Points</Titles>
       <Titles LongName="Novice Gamblers" Name="GV-N">20 Points</Titles>
-      <Titles LongName="Novice Regular Outstanding Performance" Name="RV-N-OP">100 Points</Titles>
-      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JV-N-OP">50 Points</Titles>
-      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GV-N-OP">50 Points</Titles>
-      <Titles LongName="Novice Regular Superior Performance" Name="RV-N-SP">200 Points</Titles>
-      <Titles LongName="Novice Jumpers Superior Performance" Name="JV-N-SP">100 Points</Titles>
-      <Titles LongName="Novice Gamblers Superior Performance" Name="GV-N-SP">100 Points</Titles>
+      <Titles LongName="Novice Regular Outstanding Performance" Name="RV-N-OP">RV-N plus 100 Points</Titles>
+      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JV-N-OP">JV-N plus 50 Points</Titles>
+      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GV-N-OP">GV-N plus 50 Points</Titles>
+      <Titles LongName="Novice Regular Superior Performance" Name="RV-N-SP">RV-N plus 200 Points</Titles>
+      <Titles LongName="Novice Jumpers Superior Performance" Name="JV-N-SP">JV-N plus 100 Points</Titles>
+      <Titles LongName="Novice Gamblers Superior Performance" Name="GV-N-SP">GV-N plus 100 Points</Titles>
       <Titles LongName="Open Regular" Name="RV-O">30 Points</Titles>
       <Titles LongName="Open Jumpers" Name="JV-O">20 Points</Titles>
       <Titles LongName="Open Gamblers" Name="GV-O">20 Points</Titles>
-      <Titles LongName="Open Regular Outstanding Performance" Name="RV-O-OP">100 Points</Titles>
-      <Titles LongName="Open Jumpers Outstanding Performance" Name="JV-O-OP">50 Points</Titles>
-      <Titles LongName="Open Gamblers Outstanding Performance" Name="GV-O-OP">50 Points</Titles>
-      <Titles LongName="Open Regular Superior Performance" Name="RV-O-SP">200 Points</Titles>
-      <Titles LongName="Open Jumpers Superior Performance" Name="JV-O-SP">100 Points</Titles>
-      <Titles LongName="Open Gamblers Superior Performance" Name="GV-O-SP">100 Points</Titles>
+      <Titles LongName="Open Regular Outstanding Performance" Name="RV-O-OP">RV-O plus 100 Points</Titles>
+      <Titles LongName="Open Jumpers Outstanding Performance" Name="JV-O-OP">JV-O plus 50 Points</Titles>
+      <Titles LongName="Open Gamblers Outstanding Performance" Name="GV-O-OP">GV-O plus 50 Points</Titles>
+      <Titles LongName="Open Regular Superior Performance" Name="RV-O-SP">RV-O plus 200 Points</Titles>
+      <Titles LongName="Open Jumpers Superior Performance" Name="JV-O-SP">JV-O plus 100 Points</Titles>
+      <Titles LongName="Open Gamblers Superior Performance" Name="GV-O-SP">GV-O plus 100 Points</Titles>
       <Titles LongName="Elite Regular" Name="RV-E">30 Points</Titles>
       <Titles LongName="Elite Jumpers" Name="JV-E">20 Points</Titles>
       <Titles LongName="Elite Gamblers" Name="GV-E">20 Points</Titles>
-      <Titles LongName="Elite Regular Outstanding Performance" Name="RV-E-OP">200 Points</Titles>
-      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JV-E-OP">100 Points</Titles>
-      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GV-E-OP">100 Points</Titles>
-      <Titles LongName="Elite Regular Superior Performance" Name="RV-E-SP">400 Points</Titles>
-      <Titles LongName="Elite Jumpers Superior Performance" Name="JV-E-SP">200 Points</Titles>
-      <Titles LongName="Elite Gamblers Superior Performance" Name="GV-E-SP">200 Points</Titles>
+      <Titles LongName="Elite Regular Outstanding Performance" Name="RV-E-OP">RV-E plus 200 Points</Titles>
+      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JV-E-OP">JV-E plus 100 Points</Titles>
+      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GV-E-OP">GV-E plus 100 Points</Titles>
+      <Titles LongName="Elite Regular Superior Performance" Name="RV-E-SP">RV-E plus 400 Points</Titles>
+      <Titles LongName="Elite Jumpers Superior Performance" Name="JV-E-SP">JV-E plus 200 Points</Titles>
+      <Titles LongName="Elite Gamblers Superior Performance" Name="GV-E-SP">GV-E plus 200 Points</Titles>
       <Titles LongName="Novice Regular" Name="RJ-N">30 Points</Titles>
       <Titles LongName="Novice Jumpers" Name="JJ-N">20 Points</Titles>
       <Titles LongName="Novice Gamblers" Name="GJ-N">20 Points</Titles>
-      <Titles LongName="Novice Regular Outstanding Performance" Name="RJ-N-OP">100 Points</Titles>
-      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JJ-N-OP">50 Points</Titles>
-      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GJ-N-OP">50 Points</Titles>
-      <Titles LongName="Novice Regular Superior Performance" Name="RJ-N-SP">200 Points</Titles>
-      <Titles LongName="Novice Jumpers Superior Performance" Name="JJ-N-SP">100 Points</Titles>
-      <Titles LongName="Novice Gamblers Superior Performance" Name="GJ-N-SP">100 Points</Titles>
+      <Titles LongName="Novice Regular Outstanding Performance" Name="RJ-N-OP">RJ-N plus 100 Points</Titles>
+      <Titles LongName="Novice Jumpers Outstanding Performance" Name="JJ-N-OP">JJ-N plus 50 Points</Titles>
+      <Titles LongName="Novice Gamblers Outstanding Performance" Name="GJ-N-OP">GJ-N plus 50 Points</Titles>
+      <Titles LongName="Novice Regular Superior Performance" Name="RJ-N-SP">RJ-N plus 200 Points</Titles>
+      <Titles LongName="Novice Jumpers Superior Performance" Name="JJ-N-SP">JJ-N plus 100 Points</Titles>
+      <Titles LongName="Novice Gamblers Superior Performance" Name="GJ-N-SP">GJ-N plus 100 Points</Titles>
       <Titles LongName="Open Regular" Name="RJ-O">30 Points</Titles>
       <Titles LongName="Open Jumpers" Name="JJ-O">20 Points</Titles>
       <Titles LongName="Open Gamblers" Name="GJ-O">20 Points</Titles>
-      <Titles LongName="Open Regular Outstanding Performance" Name="RJ-O-OP">100 Points</Titles>
-      <Titles LongName="Open Jumpers Outstanding Performance" Name="JJ-O-OP">50 Points</Titles>
-      <Titles LongName="Open Gamblers Outstanding Performance" Name="GJ-O-OP">50 Points</Titles>
-      <Titles LongName="Open Regular Superior Performance" Name="RJ-O-SP">200 Points</Titles>
-      <Titles LongName="Open Jumpers Superior Performance" Name="JJ-O-SP">100 Points</Titles>
-      <Titles LongName="Open Gamblers Superior Performance" Name="GJ-O-SP">100 Points</Titles>
+      <Titles LongName="Open Regular Outstanding Performance" Name="RJ-O-OP">RJ-O plus 100 Points</Titles>
+      <Titles LongName="Open Jumpers Outstanding Performance" Name="JJ-O-OP">JJ-O plus 50 Points</Titles>
+      <Titles LongName="Open Gamblers Outstanding Performance" Name="GJ-O-OP">GJ-O plus 50 Points</Titles>
+      <Titles LongName="Open Regular Superior Performance" Name="RJ-O-SP">RJ-O plus 200 Points</Titles>
+      <Titles LongName="Open Jumpers Superior Performance" Name="JJ-O-SP">JJ-O plus 100 Points</Titles>
+      <Titles LongName="Open Gamblers Superior Performance" Name="GJ-O-SP">GJ-O plus 100 Points</Titles>
       <Titles LongName="Elite Regular" Name="RJ-E">30 Points</Titles>
       <Titles LongName="Elite Jumpers" Name="JJ-E">20 Points</Titles>
       <Titles LongName="Elite Gamblers" Name="GJ-E">20 Points</Titles>
-      <Titles LongName="Elite Regular Outstanding Performance" Name="RJ-E-OP">200 Points</Titles>
-      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JJ-E-OP">100 Points</Titles>
-      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GJ-E-OP">100 Points</Titles>
-      <Titles LongName="Elite Regular Superior Performance" Name="RJ-E-SP">400 Points</Titles>
-      <Titles LongName="Elite Jumpers Superior Performance" Name="JJ-E-SP">200 Points</Titles>
-      <Titles LongName="Elite Gamblers Superior Performance" Name="GJ-E-SP">200 Points</Titles>
+      <Titles LongName="Elite Regular Outstanding Performance" Name="RJ-E-OP">RJ-E plus 200 Points</Titles>
+      <Titles LongName="Elite Jumpers Outstanding Performance" Name="JJ-E-OP">JJ-E plus 100 Points</Titles>
+      <Titles LongName="Elite Gamblers Outstanding Performance" Name="GJ-E-OP">GJ-E plus 100 Points</Titles>
+      <Titles LongName="Elite Regular Superior Performance" Name="RJ-E-SP">RJ-E plus 400 Points</Titles>
+      <Titles LongName="Elite Jumpers Superior Performance" Name="JJ-E-SP">JJ-E plus 200 Points</Titles>
+      <Titles LongName="Elite Gamblers Superior Performance" Name="GJ-E-SP">GJ-E plus 200 Points</Titles>
       <Division Name="Standard">
         <Level Name="Novice">
           <SubLevel Name="Novice A"/>
