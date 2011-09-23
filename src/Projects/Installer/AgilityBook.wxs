@@ -452,7 +452,7 @@ Revision History
 		<Publish Dialog="ExitDialog"
 			Control="Finish"
 			Event="DoAction"
-			Value="ARB_LaunchApplication">Not START_APP And LAUNCHPROGRAM And Not Installed</Publish>
+			Value="ARB_LaunchApplication">ACTION&lt;&gt;"ADMIN" And Not START_APP And LAUNCHPROGRAM And Not Installed</Publish>
 	</UI>
 
 </Product>
