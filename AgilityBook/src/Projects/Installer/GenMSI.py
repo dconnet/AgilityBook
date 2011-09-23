@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2011-09-23 DRC Allow support of admin installs "msiexec /a msi"
 # 2011-08-19 DRC Fixed /test option (it was always writing the csv file)
 # 2011-08-13 DRC Change to vc10 for default.
 # 2011-04-27 DRC Generate unique prodcodes for each architecture.
@@ -258,9 +259,8 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			basename = outputFile
 			if processing > 1:
 				basename += '_' + culture
-			# -sadmin: Suppress Admin[UI|Execute]Sequence tables
 			# -sadv: Suppress AdvtExecuteSequence table
-			lightCmd = 'light -nologo -pedantic -spdb -sadmin -sadv'
+			lightCmd = 'light -nologo -pedantic -spdb -sadv'
 			lightCmd += ' -dcl:high -cc ' + cabcache
 			if not processing == 1:
 				lightCmd += ' -reusecab'
