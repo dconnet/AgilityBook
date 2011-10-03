@@ -4,8 +4,9 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
-2011-09-06 DRC Configuration version 34.
+2011-10-03 DRC Configuration version 34.
                Tweaked some ASCA title comments and AKC T2B description.
+               Fixed start date for T2B titles.
 2011-07-31 DRC Configuration version 33.
                Changed NADAC Extreme Tunnelers to Extreme Gaters.
                Set T2B time fault multiplier to 0.
@@ -441,8 +442,8 @@ Revision History:
       <Titles LongName="Master Preferred Excellent FAST Title" Name="MFP" ValidFrom="2007-1-1">10 Qs under at least 2 different judges</Titles>
       <Titles LongName="Triple Q Excellent Preferred" Name="TQXP" ValidFrom="2010-1-1">10 QQQs (Excellent B Std/JWW/FAST)</Titles>
       <Titles LongName="FAST Century Preferred Title" Multiple="1" Name="FTCP" ValidFrom="2007-1-1">MFP plus 100 Qs (FTCP2 == 200Qs)</Titles>
-      <Titles LongName="Time 2 Beat" Multiple="2" Name="T2B" ValidFrom="2012-1-1">15 Qs and 100 points</Titles>
-      <Titles LongName="Time 2 Beat Preferred" Multiple="2" Name="T2BP" ValidFrom="2012-1-1">15 Qs and 100 points</Titles>
+      <Titles LongName="Time 2 Beat" Multiple="2" Name="T2B" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
+      <Titles LongName="Time 2 Beat Preferred" Multiple="2" Name="T2BP" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
       <Titles LongName="Master Bronze Agility Title" Name="MXB" ValidFrom="2012-7-1">25 Qs</Titles>
       <Titles LongName="Master Silver Agility Title" Name="MXS" ValidFrom="2012-7-1">50 Qs</Titles>
       <Titles LongName="Master Gold Agility Title" Name="MXG" ValidFrom="2012-7-1">75 Qs</Titles>
