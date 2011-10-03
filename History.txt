@@ -1,4 +1,7 @@
-8/31/2011: v2.3.1.<in development>
+10/3/2011: v2.3.1.<in development>
+- Bumped Configuration v34:
+  - Tweaked some ASCA title comments and AKC T2B description in configuration.
+  - Fixed start date for T2B titles.
 - Bug fixes:
   - The Trial Properties dialog did not allow a newline in the notes.
   - The column headings were wrong in the File Links dialog.
