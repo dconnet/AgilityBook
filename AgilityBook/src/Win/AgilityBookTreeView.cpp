@@ -267,6 +267,8 @@ CAgilityBookTreeView::CAgilityBookTreeView(
 	, m_bReset(false)
 	, m_bSuppressSelect(false)
 	, m_bInPopup(false)
+	, m_bInDelete(false)
+	, m_bDeleteChanged(false)
 	, m_itemPopup()
 	, m_Callback(this)
 	, m_pDog()
@@ -762,6 +764,8 @@ void CAgilityBookTreeView::DoSelectionChange(wxTreeItemId hItem)
 		if (m_bInPopup)
 		{
 			m_itemPopup = hItem;
+			if (m_bInDelete)
+				m_bDeleteChanged = true;
 		}
 	}
 	else
@@ -934,15 +938,22 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 			bSkip = false;
 			m_bSuppressSelect = true;
 			wxTreeItemId item = m_Ctrl->GetSelection();
-			// If it's the same one, don't reset (or we die on delete on a Mac).
 			if (item == evt.GetItem())
+			{
+				// If it's the same one, don't reset.
+				// (or we die on delete on a Mac)
 				item = wxTreeItemId();
-			// On a r-click context, the highlighting is set, but the current
-			// item doesn't change. The wxTreeCtrl api does not appear to have
-			// the concept of the current highlight item like windows does. So
-			// we'll force the current item, then reset. But ignore the changes!
-			// (do not use the changing msg and veto it - that kills the change!)
-			m_Ctrl->SelectItem(evt.GetItem());
+			}
+			else
+			{
+				// On a r-click context, the highlighting is set, but the
+				// current item doesn't change. The wxTreeCtrl api does not
+				// appear to have the concept of the current highlight item
+				// like windows does. So we'll force the current item, then
+				// reset. But ignore the changes! (do not use the changing msg
+				// and veto it - that kills the change!)
+				m_Ctrl->SelectItem(evt.GetItem());
+			}
 			wxMenu* menu = CreatePopup(pData->GetMenuID());
 			if (menu)
 			{
@@ -951,11 +962,15 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 				m_bInPopup = false;
 				delete menu;
 			}
-			if (m_itemPopup.IsOk())
+			if (m_itemPopup.IsOk() && m_itemPopup != item)
 			{
-				// Override the select and force an item
-				item = m_itemPopup;
-				m_itemPopup = wxTreeItemId();
+				// Override the select and force an item if we're not deleting.
+				// But we need to actively reselect on delete still.
+				if (!m_bDeleteChanged)
+				{
+					item = m_itemPopup;
+					m_itemPopup = wxTreeItemId();
+				}
 				m_bSuppressSelect = false;
 			}
 			if (item.IsOk())
@@ -1130,6 +1145,12 @@ bool CAgilityBookTreeView::OnCmd(int id)
 	{
 	default:
 		{
+			m_bInDelete = (id == ID_AGILITY_DELETE_DOG
+				|| id == ID_AGILITY_DELETE_TITLE
+				|| id == ID_AGILITY_DELETE_TRIAL
+				|| id == ID_AGILITY_DELETE_RUN
+				|| id == ID_AGILITY_DELETE_CALENDAR
+				|| id == ID_AGILITY_DELETE_TRAINING);
 			CAgilityBookTreeData* pData = GetCurrentTreeItem();
 			if (pData)
 			{
@@ -1158,6 +1179,7 @@ bool CAgilityBookTreeView::OnCmd(int id)
 				bool bLoaded = false;
 				PasteDog(bLoaded);
 			}
+			m_bInDelete = false;
 		}
 		break;
 
