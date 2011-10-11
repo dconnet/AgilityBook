@@ -198,6 +198,8 @@ private:
 	bool m_bReset;
 	bool m_bSuppressSelect;
 	bool m_bInPopup;
+	bool m_bInDelete;
+	bool m_bDeleteChanged; // Used with m_itemPopup
 	wxTreeItemId m_itemPopup; // Tried to select item during menu - delay
 	CFindTree m_Callback;
 	ARBDogPtr m_pDog;
