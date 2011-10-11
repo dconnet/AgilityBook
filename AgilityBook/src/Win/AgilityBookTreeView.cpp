@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-10-11 DRC Fixed bug on Mac when deleting via context menu.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-17 DRC Fix r-click selection issues.
  * @li 2009-07-13 DRC Changing language didn't update dog's age.
@@ -933,10 +934,13 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 			bSkip = false;
 			m_bSuppressSelect = true;
 			wxTreeItemId item = m_Ctrl->GetSelection();
-			// On a r-click context, the highlighting is set, but the current item
-			// doesn't change. The wxTreeCtrl api does not appear to have the
-			// concept of the current highlight item like windows does. So we'll
-			// force the current item, then reset. But ignore the changes!
+			// If it's the same one, don't reset (or we die on delete on a Mac).
+			if (item == evt.GetItem())
+				item = wxTreeItemId();
+			// On a r-click context, the highlighting is set, but the current
+			// item doesn't change. The wxTreeCtrl api does not appear to have
+			// the concept of the current highlight item like windows does. So
+			// we'll force the current item, then reset. But ignore the changes!
 			// (do not use the changing msg and veto it - that kills the change!)
 			m_Ctrl->SelectItem(evt.GetItem());
 			wxMenu* menu = CreatePopup(pData->GetMenuID());
@@ -954,7 +958,8 @@ void CAgilityBookTreeView::OnCtrlContextMenu(wxTreeEvent& evt)
 				m_itemPopup = wxTreeItemId();
 				m_bSuppressSelect = false;
 			}
-			m_Ctrl->SelectItem(item);
+			if (item.IsOk())
+				m_Ctrl->SelectItem(item);
 			m_bSuppressSelect = false;
 		}
 	}
