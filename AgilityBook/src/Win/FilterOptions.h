@@ -121,6 +121,12 @@ private:
 		CFilterOptionData(int index);
 		CFilterOptionData(CFilterOptionData const& rhs);
 		CFilterOptionData& operator=(CFilterOptionData const& rhs);
+		// Equality does not look at name.
+		bool operator==(CFilterOptionData const& rhs) const;
+		bool operator!=(CFilterOptionData const& rhs) const
+		{
+			return !operator==(rhs);
+		}
 		bool Save(int index);
 
 		wxString filterName;

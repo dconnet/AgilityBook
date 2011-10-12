@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-10-12 DRC Added better filter change detection.
  * @li 2011-08-10 DRC Added builtin support for an 'all' filter.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-01 DRC Ported to wxWidgets.
@@ -197,27 +198,36 @@ void CFilterOptions::Save()
 {
 	wxString val;
 
-	if (!m_curFilter.empty() && m_curFilter != _("IDS_ALL"))
+	CFilterOptionData data;
+	data.calView = m_calView;
+	data.bAllDates = m_bAllDates;
+	data.bStartDate = m_bStartDate;
+	data.dateStartDate = m_dateStartDate;
+	data.bEndDate = m_bEndDate;
+	data.dateEndDate = m_dateEndDate;
+	data.bViewAllVenues = m_bViewAllVenues;
+	data.venueFilter = m_venueFilter;
+	data.eRuns = m_eRuns;
+	data.bViewAllNames = m_bViewAllNames;
+	data.nameFilter = m_nameFilter;
+
+	bool bFound = false;
+	for (std::vector<CFilterOptionData>::iterator i = m_filters.begin();
+		i != m_filters.end();
+		++i)
 	{
-		std::vector<CFilterOptionData>::iterator iFilter = FindFilter(m_curFilter);
-		if (iFilter != m_filters.end())
+		if (*i== data)
 		{
-			CFilterOptionData const& filter = *iFilter;
-			if (filter.calView.m_Filter != m_calView.m_Filter
-			|| filter.bAllDates != m_bAllDates
-			|| filter.bStartDate != m_bStartDate
-			|| filter.dateStartDate != m_dateStartDate
-			|| filter.bEndDate != m_bEndDate
-			|| filter.dateEndDate != m_dateEndDate
-			|| filter.bViewAllVenues != m_bViewAllVenues
-			|| filter.venueFilter != m_venueFilter
-			|| filter.eRuns != m_eRuns
-			|| filter.bViewAllNames != m_bViewAllNames
-			|| filter.nameFilter != m_nameFilter)
-			{
-				m_curFilter.clear();
-			}
+			bFound = true;
+			m_curFilter = (*i).filterName;
 		}
+	}
+	if (!bFound)
+	{
+		if (IsFilterEnabled())
+			m_curFilter.clear();
+		else
+			m_curFilter = _("IDS_ALL");
 	}
 
 	wxConfig::Get()->Write(CFG_CAL_FILTER, static_cast<long>(m_calView.m_Filter));
@@ -774,6 +784,23 @@ CFilterOptions::CFilterOptionData& CFilterOptions::CFilterOptionData::operator=(
 		nameFilter = rhs.nameFilter;
 	}
 	return *this;
+}
+
+
+bool CFilterOptions::CFilterOptionData::operator==(
+		CFilterOptions::CFilterOptionData const& rhs) const
+{
+	return !(calView.m_Filter != rhs.calView.m_Filter
+	|| eRuns != rhs.eRuns
+	|| bAllDates != rhs.bAllDates
+	|| (!bAllDates
+		&& (bStartDate != rhs.bStartDate || bEndDate != rhs.bEndDate))
+	|| (bStartDate && dateStartDate != rhs.dateStartDate)
+	|| (bEndDate && dateEndDate != rhs.dateEndDate)
+	|| bViewAllVenues != rhs.bViewAllVenues
+	|| (!bViewAllVenues && venueFilter != rhs.venueFilter)
+	|| bViewAllNames != rhs.bViewAllNames
+	|| (!bViewAllNames && nameFilter != rhs.nameFilter));
 }
 
 
