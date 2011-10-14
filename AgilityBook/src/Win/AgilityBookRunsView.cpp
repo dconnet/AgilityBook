@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-10-14 DRC Add run reordering support.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-11 DRC Change how runs are synced with tree to reduce reloading.
  * @li 2009-02-04 DRC Ported to wxWidgets.
@@ -52,6 +53,7 @@
 #include "ClipBoard.h"
 #include "DlgAssignColumns.h"
 #include "DlgFind.h"
+#include "DlgReorder.h"
 #include "Element.h"
 #include "FilterOptions.h"
 #include "Globals.h"
@@ -1210,6 +1212,8 @@ BEGIN_EVENT_TABLE(CAgilityBookRunsView, CAgilityBookBaseExtraView)
 	EVT_MENU(wxID_PASTE, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_SELECTALL, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(wxID_SELECTALL, CAgilityBookRunsView::OnViewCmd)
+	EVT_UPDATE_UI(ID_REORDER, CAgilityBookRunsView::OnViewUpdateCmd)
+	EVT_MENU(ID_REORDER, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(wxID_FIND, CAgilityBookRunsView::OnViewUpdateCmd)
 	EVT_MENU(wxID_FIND, CAgilityBookRunsView::OnViewCmd)
 	EVT_UPDATE_UI(ID_EDIT_FIND_NEXT, CAgilityBookRunsView::OnViewUpdateCmd)
@@ -1701,6 +1705,18 @@ void CAgilityBookRunsView::OnViewUpdateCmd(wxUpdateUIEvent& evt)
 	case wxID_SELECTALL:
 		evt.Enable(m_Ctrl->CanSelectAll());
 		break;
+	case ID_REORDER:
+		{
+			bool bEnable = false;
+			std::vector<long> indices;
+			if (1 == m_Ctrl->GetSelection(indices))
+			{
+				CAgilityBookRunsViewDataPtr pData = GetItemRunData(indices[0]);
+				bEnable = pData && pData->GetTrial();
+			}
+			evt.Enable(bEnable);
+		}
+		break;
 	case wxID_FIND:
 	case ID_EDIT_FIND_NEXT:
 	case ID_EDIT_FIND_PREVIOUS:
@@ -1813,6 +1829,21 @@ bool CAgilityBookRunsView::OnCmd(int id)
 
 	case wxID_SELECTALL:
 		m_Ctrl->SelectAll();
+		break;
+
+	case ID_REORDER:
+		{
+			std::vector<long> indices;
+			if (1 == m_Ctrl->GetSelection(indices))
+			{
+				CAgilityBookRunsViewDataPtr pData = GetItemRunData(indices[0]);
+				if (pData->GetTrial())
+				{
+					CDlgReorder dlg(GetDocument(), pData->GetTrial());
+					dlg.ShowModal();
+				}
+			}
+		}
 		break;
 
 	case wxID_FIND:
