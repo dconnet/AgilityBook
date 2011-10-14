@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-10-14 DRC Modify how reorder dialog is invoked.
  * @li 2010-12-30 DRC After copying/deleting runs, update multi-Q status.
  * @li 2010-12-05 DRC DOB can be invalid (on import). Don't show in tree.
  * @li 2010-01-02 DRC Fix initialization of date for a new run.
@@ -281,73 +282,6 @@ static bool EditRun(
 		if (bOk)
 		{
 			CUpdateHint hint(UPDATE_POINTS_VIEW | UPDATE_RUNS_VIEW | UPDATE_TREE_VIEW);
-			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
-		}
-	}
-	return bOk;
-}
-
-
-static bool ReOrderDogs(
-		ARBDogList& dogs,
-		CAgilityBookTreeView* pTree)
-{
-	bool bOk = false;
-	std::vector<ARBBasePtr> items;
-	for (ARBDogList::iterator iter = dogs.begin(); iter != dogs.end(); ++iter)
-	{
-		ARBDogPtr pDog = *iter;
-		items.push_back(pDog);
-	}
-	CDlgReorder dlg(items);
-	if (wxID_OK == dlg.ShowModal())
-	{
-		bOk = true;
-		dogs.clear();
-		for (std::vector<ARBBasePtr>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
-		{
-			ARBDogPtr pDog = std::tr1::dynamic_pointer_cast<ARBDog, ARBBase>(*iter2);
-			dogs.AddDog(pDog);
-		}
-		CAgilityBookDoc* pDoc = pTree->GetDocument();
-		pDoc->Modify(true);
-		CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
-		pTree->GetDocument()->UpdateAllViews(NULL, &hint);
-	}
-	return bOk;
-}
-
-
-static bool ReOrderTrial(
-		ARBDogTrialPtr pTrial,
-		CAgilityBookTreeView* pTree)
-{
-	bool bOk = false;
-	if (pTrial)
-	{
-		ARBDogRunPtr pTmpRun;
-		std::vector<ARBBasePtr> items;
-		for (ARBDogRunList::iterator iter = pTrial->GetRuns().begin(); iter != pTrial->GetRuns().end(); ++iter)
-		{
-			ARBDogRunPtr pRun = *iter;
-			if (!pTmpRun)
-				pTmpRun = pRun;
-			items.push_back(pRun);
-		}
-		CDlgReorder dlg(items);
-		if (wxID_OK == dlg.ShowModal())
-		{
-			bOk = true;
-			pTrial->GetRuns().clear();
-			for (std::vector<ARBBasePtr>::iterator iter2 = items.begin(); iter2 != items.end(); ++iter2)
-			{
-				ARBDogRunPtr pRun = std::tr1::dynamic_pointer_cast<ARBDogRun, ARBBase>(*iter2);
-				pTrial->GetRuns().AddRun(pRun);
-			}
-			pTrial->GetRuns().sort();
-			CAgilityBookDoc* pDoc = pTree->GetDocument();
-			pDoc->Modify(true);
-			CUpdateHint hint(UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW);
 			pTree->GetDocument()->UpdateAllViews(NULL, &hint);
 		}
 	}
@@ -748,7 +682,10 @@ bool CAgilityBookTreeDataDog::OnCmd(
 
 	case ID_REORDER:
 		if (m_pTree)
-			ReOrderDogs(m_pTree->GetDocument()->Book().GetDogs(), m_pTree);
+		{
+			CDlgReorder dlg(m_pTree->GetDocument(), &(m_pTree->GetDocument()->Book().GetDogs()));
+			dlg.ShowModal();
+		}
 		break;
 
 	case ID_EXPAND:
@@ -1046,7 +983,11 @@ bool CAgilityBookTreeDataTrial::OnCmd(
 		}
 		break;
 	case ID_REORDER:
-		ReOrderTrial(GetTrial(), m_pTree);
+		if (GetTrial())
+		{
+			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial());
+			dlg.ShowModal();
+		}
 		break;
 	case ID_AGILITY_PRINT_TRIAL:
 		if (GetTrial() && 0 < GetTrial()->GetRuns().size())
@@ -1415,7 +1356,11 @@ bool CAgilityBookTreeDataRun::OnCmd(
 		}
 		break;
 	case ID_REORDER:
-		ReOrderTrial(GetTrial(), m_pTree);
+		if (GetTrial())
+		{
+			CDlgReorder dlg(m_pTree->GetDocument(), GetTrial());
+			dlg.ShowModal();
+		}
 		break;
 	case ID_AGILITY_PRINT_RUNS:
 		{
