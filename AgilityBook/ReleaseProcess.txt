@@ -14,7 +14,6 @@ Files to change before marking files for release:
 - Update CD Labels
   - lsl: LightScribe Template Labeler
   - ncd: Nero CD Cover
-  - std: SureThing CD Labeler Deluxe v3.12
 - History.txt
   Update program version and date, along with any comments.
   - Reflect these changes into help/html/HistoryData.html
