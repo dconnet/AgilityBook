@@ -1,3 +1,5 @@
+10/15/2011: v2.3.2.<in development>
+
 10/15/2011: v2.3.1.3213
 - Bumped Configuration v34:
   - Tweaked some ASCA title comments and AKC T2B description in configuration.
