@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-10-19 DRC Add timestamp info on skipped files. Add file size.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  *                    Fixed reading binary files. Added some timestamps.
@@ -114,30 +115,32 @@ wxString CDlgARBHelp::GetEncodedData()
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
 		rawdata << wxT("\n") << (*iFile).first;
+		wxFileName fileName((*iFile).first);
+		wxDateTime dtMod, dtCreate;
+		if (!(*iFile).second)
+			rawdata << wxT(": Skipped");
+		rawdata << wxT("\n");
+		if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
+		{
+			rawdata << wxT("Created: ") << dtCreate.Format() << wxT("\n")
+				<< wxT("Modified: ") << dtMod.Format() << wxT("\n");
+		}
+		wxULongLong size = fileName.GetSize();
+		if (wxInvalidSize != size)
+			rawdata << wxT("\nSize: ") << size << wxT("\n");
 		if ((*iFile).second)
 		{
 			wxFFile file;
 			if (file.Open((*iFile).first, wxT("rb")))
 			{
 				wxString data;
-				wxFileName fileName((*iFile).first);
-				wxDateTime dtMod, dtCreate;
-				if (fileName.GetTimes(NULL, &dtMod, &dtCreate))
-				{
-					rawdata << wxT("\nCreated: ") << dtCreate.Format()
-						<< wxT("\nModified: ") << dtMod.Format();
-				}
 				BinaryData::Encode(file, data);
-				rawdata << wxT("\n") << STREAM_FILE_BEGIN << wxT("\n")
+				rawdata << STREAM_FILE_BEGIN << wxT("\n")
 					<< data
 					<< wxT("\n") << STREAM_FILE_END << wxT("\n");
 			}
 			else
-				rawdata << wxT(": Error: Cannot read file\n");
-		}
-		else
-		{
-			rawdata << wxT(": Skipped\n");
+				rawdata << wxT("Error: Cannot read file\n");
 		}
 	}
 
