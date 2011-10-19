@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-10-19 DRC Wrap '/' wit wxT() so it's not output as int.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2008-01-12 DRC Dump reg data in .reg format
@@ -134,12 +135,12 @@ void CDlgPageEncode::DumpGroup(
 			{
 			default:
 				if (data)
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" unknown\n");
+					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" unknown\n");
 				break;
 			case wxConfigBase::Type_String:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" string\n");
+					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" string\n");
 					*data << wxConfig::Get()->Read(str, wxEmptyString) << wxT("\n");
 				}
 				else if (items)
@@ -148,7 +149,7 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Boolean:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" bool\n");
+					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" bool\n");
 					bool b;
 					wxConfig::Get()->Read(str, &b);
 					*data << b << wxT("\n");
@@ -157,14 +158,14 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Integer:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" int\n");
+					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" int\n");
 					*data << wxConfig::Get()->Read(str, 0L) << wxT("\n");
 				}
 				break;
 			case wxConfigBase::Type_Float:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << '/' << str << wxT(" float\n");
+					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" float\n");
 					double d;
 					wxConfig::Get()->Read(str, &d);
 					*data << d << wxT("\n");
