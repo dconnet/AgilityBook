@@ -92,6 +92,7 @@ void CDlgARBHelp::SetARBFileStatus(wxString const& inFileName, bool bInclude)
 wxString CDlgARBHelp::GetEncodedData()
 {
 	wxString rawdata;
+	wxLogNull logSuppressor;
 
 	// System information.
 	{
@@ -127,7 +128,7 @@ wxString CDlgARBHelp::GetEncodedData()
 		}
 		wxULongLong size = fileName.GetSize();
 		if (wxInvalidSize != size)
-			rawdata << wxT("\nSize: ") << size << wxT("\n");
+			rawdata << wxT("Size: ") << size << wxT("\n");
 		if ((*iFile).second)
 		{
 			wxFFile file;
