@@ -33,6 +33,7 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
 		wxT("Now that the information is gathered, send an email to help@agilityrecordbook.com with this data."),
 		wxDefaultPosition, wxDefaultSize, 0);
+#pragma PRAGMA_TODO("Add option to create a compressed file")
 #ifndef __WXMAC__
 	// For some reason, this causes 2.9.x sizers to go nuts on a mac
 	text1->Wrap(600);
