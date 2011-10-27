@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-10-27 DRC Add the MultiQ name to the Points view, span columns.
  * @li 2011-08-13 DRC Don't copy internal url links to the clipboard.
  * @li 2010-12-24 DRC Accumulate speed points by division.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -839,9 +840,14 @@ CPointsDataMultiQs::CPointsDataMultiQs(
 wxString CPointsDataMultiQs::OnNeedText(int inCol) const
 {
 	wxString str;
-	if (7 == inCol)
+	switch (inCol)
 	{
+	case 1:
+		str = m_MultiQ->GetName();
+		break;
+	case 7:
 		str << m_ExistingDblQs + m_MQs.size() << wxT(" ") << m_MultiQ->GetShortName();
+		break;
 	}
 	return str;
 }
@@ -853,7 +859,8 @@ wxString CPointsDataMultiQs::GetHtml(
 {
 	wxString data;
 	data << wxT("<tr>\n")
-		<< wxT("<td colspan=\"6\"/>\n")
+		<< wxT("<td colspan=\"2\">") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
+		<< wxT("<td colspan=\"4\"/>\n")
 		<< wxT("<td>");
 	if (!bNoInternalLinks)
 	{
@@ -929,8 +936,8 @@ wxString CPointsDataSpeedPts::GetHtml(
 {
 	wxString data;
 	data << wxT("<tr>\n")
-		<< wxT("<td>") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
-		<< wxT("<td colspan=\"5\"/>\n")
+		<< wxT("<td colspan=\"2\">") << Sanitize(OnNeedText(1), true) << wxT("</td>\n")
+		<< wxT("<td colspan=\"4\"/>\n")
 		<< wxT("<td>") << Sanitize(OnNeedText(7), true) << wxT("</td>\n")
 		<< wxT("</tr>\n");
 	return data;
