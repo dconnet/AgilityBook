@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -209,7 +209,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -274,7 +274,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -339,7 +339,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -405,7 +405,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -471,7 +471,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -538,7 +538,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py &quot;$(OutDir)&quot; &quot;$(TargetName)&quot;&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Win\res&#x0D;&#x0A;python compile.py . arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 	</Configurations>
@@ -1407,7 +1407,6 @@
 				>
 			</File>
 		</Filter>
-
 		<File
 			RelativePath="..\..\..\History.txt"
 			>
