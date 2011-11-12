@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-11-11 DRC Make .mo name same as exe name.
  * @li 2009-09-20 DRC wxLANGUAGE is not consistent between releases.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-19 DRC Make sure the catalog is intialized before calling dlg.
@@ -123,7 +124,8 @@ bool CLanguageManager::SetLang(int langId)
 	{
 		//return false;
 	}
-	m_locale->AddCatalog(wxT("arb"), wxLANGUAGE_USER_DEFINED, wxEmptyString);
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 
 	m_dirLoadedLang = m_locale->GetCanonicalName();
 	if (2 < m_dirLoadedLang.length())
