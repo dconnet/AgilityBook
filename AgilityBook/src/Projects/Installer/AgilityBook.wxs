@@ -164,7 +164,7 @@ Revision History
 							<Component Id="C_$(var.langVar)" Guid="*" Win64="$(var.Win64)">
 								<File Id="_$(var.langVar).mo"
 									Name="AgilityBook.mo"
-									Source="$(var.BASEDIR)\lang\$(var.langVar)\arb.mo"
+									Source="$(var.BASEDIR)\lang\$(var.langVar)\AgilityBook.mo"
 									KeyPath="yes"
 									DiskId="1" />
 							</Component>
