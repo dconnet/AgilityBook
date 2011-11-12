@@ -90,7 +90,7 @@ def main():
 
 	for langName in langs:
 		srcPath = os.path.join(sourceDir, langName)
-		autogen = os.path.join(langName, autogenFile)
+		autogen = os.path.join(srcPath, autogenFile)
 		# -t: output encoding
 		cmd = ['msgcat', '-t', 'utf-8', '-o', autogen, os.path.join(srcPath, firstFile)]
 		for po in glob.glob(os.path.join(srcPath, r'*.po')):
@@ -110,8 +110,8 @@ def main():
 			os.remove(autogen)
 
 	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
-	zip.write('DefaultConfig.xml')
-	zip.write('AgilityRecordBook.dtd')
+	zip.write(os.path.join(sourceDir, 'DefaultConfig.xml'))
+	zip.write(os.path.join(sourceDir, 'AgilityRecordBook.dtd'))
 	if os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
 		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
 	zip.close()
