@@ -29,6 +29,8 @@ SUITE(TestARBQ)
 {
 	TEST(ctor)
 	{
+		// Note: If this fails, it's likely the language catalog is not
+		// properly setup.
 		if (!g_bMicroTest)
 		{
 			ARB_Q q;

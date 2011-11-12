@@ -160,7 +160,8 @@ int main(int argc, char** argv)
 #else
 	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
 #endif
-	m_locale->AddCatalog(wxT("AgilityBook"), wxLANGUAGE_USER_DEFINED, wxEmptyString);
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
 	m_Localization.Load();
 
 	CReporterVerbose reporter(bVerbose);
