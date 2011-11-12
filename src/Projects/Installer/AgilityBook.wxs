@@ -25,6 +25,7 @@ Note: For System.AppUserModel.ID to work on Win7,
       must be enabled. This is done in the Properties of the Start menu.
 
 Revision History
+2011-11-12 DRC Update .mo file name.
 2011-08-19 DRC Fix System.AppUserModel.ID name. Still doesn't fix uninstall.
 2011-05-11 DRC Add System.AppUserModel.ID to desktop shortcut too.
 2011-04-27 DRC Generate unique prodcodes for each architecture.
@@ -162,7 +163,7 @@ Revision History
 
 							<Component Id="C_$(var.langVar)" Guid="*" Win64="$(var.Win64)">
 								<File Id="_$(var.langVar).mo"
-									Name="arb.mo"
+									Name="AgilityBook.mo"
 									Source="$(var.BASEDIR)\lang\$(var.langVar)\arb.mo"
 									KeyPath="yes"
 									DiskId="1" />

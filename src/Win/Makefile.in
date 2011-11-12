@@ -160,7 +160,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
 resources: agilitybook
 	echo "LANGDIR $(CURDIR)"
-	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) agilitybook
+	python $(TOPSRCDIR)/src/Win/res/compile.py $(TOPSRCDIR)/src/Win/res arb.po $(CURDIR) agilitybook fr_FR
 
 all: agilitybook resources
 
