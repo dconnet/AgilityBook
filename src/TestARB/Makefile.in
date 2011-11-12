@@ -99,7 +99,7 @@ INSTALL_BIN = testarb
 
 resources: testarb
 	echo "LANGDIR $(CURDIR)"
-	cd $(TOPSRCDIR)/src/Win/res && python compile.py $(CURDIR) testarb
+	python $(TOPSRCDIR)/src/Win/res/compile.py $(TOPSRCDIR)/src/Win/res arb.po $(CURDIR) testarb fr_FR
 
 all: testarb resources
 	python $(TOPSRCDIR)/src/Projects/VC9/RunARBTests.py $(TOPSRCDIR)/src $(CURDIR) testarb Mac
