@@ -13,9 +13,6 @@
       <UniqueIdentifier>{E1B4C1A5-7666-48C3-AF3F-66FC44216E3B}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="ARB Files">
-      <UniqueIdentifier>{5457139d-a348-45f8-96cc-f01c9370c4ae}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\TestARB\ConfigHandler.cpp">
