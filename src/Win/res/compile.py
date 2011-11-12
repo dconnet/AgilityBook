@@ -13,7 +13,7 @@
 sourceDir: Directory where .po files are
 firstFile: First .po file to process
 executableDir: Directory where executable is (where 'lang' dir is created)
-targetname: Name of .mo file to generate
+targetname: Name of .mo and .dat files to generate
 lang: Addition semi-colon separated languages (like 'fr_FR')
 """
 
@@ -103,7 +103,7 @@ def main():
 		# -v: verbose
 		# -c: perform all checks (format,header,domain)
 		# -f: Use fuzzy entres in output
-		cmd = ['msgfmt', '-v', '-c', '-f', '--strict', '-o', os.path.join(installPath, r'arb.mo'), autogen]
+		cmd = ['msgfmt', '-v', '-c', '-f', '--strict', '-o', os.path.join(installPath, targetname + r'.mo'), autogen]
 		# msgfmt generates interesting messages to stderr, don't toast them.
 		RunCommand(cmd, 0)
 		if not bDebug and os.access(autogen, os.F_OK):
