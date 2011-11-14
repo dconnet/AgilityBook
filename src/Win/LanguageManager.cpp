@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-11-14 DRC Fix canceling language selection (in Fr, resets to En)
  * @li 2011-11-11 DRC Make .mo name same as exe name.
  * @li 2009-09-20 DRC wxLANGUAGE is not consistent between releases.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -117,8 +118,9 @@ bool CLanguageManager::SetLang(int langId)
 	m_locale = new wxLocale();
 	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
 #if wxCHECK_VERSION(2,9,0)
-	if (!m_locale->Init(m_CurLang, 0))
+	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
 #else
+
 	if (!m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING))
 #endif
 	{
@@ -175,7 +177,12 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 		if (wxID_OK == dialog.ShowModal())
 			lang = langId[dialog.GetSelection()];
 		else
-			lang = wxLANGUAGE_ENGLISH_US;
+		{
+			if (wxLANGUAGE_DEFAULT == m_CurLang)
+				lang = wxLANGUAGE_ENGLISH_US;
+			else
+				lang = m_CurLang;
+		}
 	}
 	wxLanguageInfo const* langInfo = wxLocale::GetLanguageInfo(lang);
 	if (langInfo)
