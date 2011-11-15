@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2011-11-14 DRC Treat wix warnings as errors
 # 2011-09-23 DRC Allow support of admin installs "msiexec /a msi"
 # 2011-08-19 DRC Fixed /test option (it was always writing the csv file)
 # 2011-08-13 DRC Change to vc10 for default.
@@ -241,7 +242,8 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 	if os.access(baseDir + r'\AgilityBook.exe', os.F_OK):
 		cabcache = 'cabcache'
 		RmMinusRF(cabcache)
-		candleCmd = 'candle -nologo -pedantic'
+		# -wx: Treat warnings as errors
+		candleCmd = 'candle -nologo -wx -pedantic'
 		candleCmd += ' -dCURRENT_VERSION=' + ver3Dot
 		if code == code64:
 			candleCmd += ' -arch x64'
@@ -259,8 +261,9 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			basename = outputFile
 			if processing > 1:
 				basename += '_' + culture
+			# -wx: Treat warnings as errors
 			# -sadv: Suppress AdvtExecuteSequence table
-			lightCmd = 'light -nologo -pedantic -spdb -sadv'
+			lightCmd = 'light -nologo -wx -pedantic -spdb -sadv'
 			lightCmd += ' -dcl:high -cc ' + cabcache
 			if not processing == 1:
 				lightCmd += ' -reusecab'
