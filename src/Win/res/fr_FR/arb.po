@@ -109,3 +109,11 @@ msgstr "vendredi"
 msgid "Saturday"
 msgstr "samedi"
 
+# Description strings returned by wxWidgets wxLocale.
+# Keep each one in the native form (like Win7's display language selection)
+msgid "English (U.S.)"
+msgstr "English"
+
+msgid "French"
+msgstr "français"
+

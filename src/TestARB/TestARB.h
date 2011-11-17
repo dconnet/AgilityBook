@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-11-17 DRC Add ability to switch languages
  * @li 2009-09-20 DRC Default TODO_TEST to non-failure
  * @li 2008-12-11 DRC Made TODO_TEST have a better failure message
  * @li 2008-01-11 DRC Created
@@ -30,6 +31,7 @@ extern size_t gc_NumConfigs;
 
 
 extern bool g_bMicroTest;
+extern void SetLang(int langId);
 
 extern ElementNodePtr LoadXMLData(size_t id = 0); // 0 is default config
 

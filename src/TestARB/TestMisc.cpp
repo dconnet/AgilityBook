@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-11-17 DRC Add localization test.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-12 DRC Created
  */
@@ -22,6 +23,8 @@
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
 #endif
+
+#define MAX_LANGS	2
 
 
 SUITE(TestMisc)
@@ -49,6 +52,65 @@ SUITE(TestMisc)
 			wxString s1(wxT("IDS_ARB_UNKNOWN_VERSION"));
 			wxString s2(_("IDS_ARB_UNKNOWN_VERSION"));
 			CHECK(s1 != s2);
+		}
+	}
+
+
+	TEST(LocalizationDesc)
+	{
+		if (!g_bMicroTest)
+		{
+			// Update as more languages are added.
+			static struct {
+				wxChar const* lang;
+				int langid;
+			} langs[MAX_LANGS] = {
+				{wxT("en_US"), wxLANGUAGE_FRENCH},
+				{wxT("fr_FR"), wxLANGUAGE_ENGLISH_US}
+			};
+			struct
+			{
+				wxString Desc[MAX_LANGS];
+				wxString ArbDesc[MAX_LANGS];
+			} langdata[MAX_LANGS];
+			wxString out;
+			for (size_t i = 0; i < MAX_LANGS; ++i)
+			{
+				SetLang(langs[i].langid);
+				for (size_t j = 0; j < MAX_LANGS; ++j)
+				{
+					wxLanguageInfo const* info = wxLocale::FindLanguageInfo(langs[j].lang);
+					CHECK(info);
+					if (info)
+					{
+						langdata[i].Desc[j] = info->Description;
+						langdata[i].ArbDesc[j] = wxGetTranslation(info->Description);
+						out << i << wxT(" ") << j << wxT(" ")
+							<< langdata[i].Desc[j] << wxT(" ") << langdata[i].ArbDesc[j] << wxT("\n");
+					}
+				}
+			}
+			SetLang(wxLANGUAGE_ENGLISH_US); // Reset
+			// Sanity check that wx is still returning the same (english) value
+			// Check that we have the same value for a language in all languages
+			for (size_t i = 0; i < MAX_LANGS; ++i)
+			{
+				for (size_t j = 1; j < MAX_LANGS; ++j)
+				{
+					CHECK(langdata[0].Desc[i] == langdata[j].Desc[i]);
+					CHECK(langdata[0].ArbDesc[i] == langdata[j].ArbDesc[i]);
+				}
+			}
+			// Check that our value is different than wx (this test may need
+			// to change in the future, depending on things like changing
+			// "English" back to "English (U.S.)"
+			for (size_t i = 0; i < MAX_LANGS; ++i)
+			{
+				for (size_t j = 0; j < MAX_LANGS; ++j)
+				{
+					CHECK(langdata[i].Desc[j] != langdata[i].ArbDesc[j]);
+				}
+			}
 		}
 	}
 
