@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-11-17 DRC Add ability to switch languages
  * @li 2011-01-22 DRC Simplified how configs are added (all in TestConfig.cpp).
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-01-11 DRC Created
@@ -77,8 +78,8 @@ public:
 	CReporterVerbose(bool bVerbose)
 		: m_bVerbose(bVerbose)
 	{}
-    virtual void ReportTestStart(UnitTest::TestDetails const& test);
-    virtual void ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed);
+	virtual void ReportTestStart(UnitTest::TestDetails const& test);
+	virtual void ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed);
 private:
 	bool m_bVerbose;
 };
@@ -99,6 +100,72 @@ void CReporterVerbose::ReportTestFinish(UnitTest::TestDetails const& test, float
 
 
 bool g_bMicroTest = false;
+
+class CLanguageManager
+{
+public:
+	CLanguageManager(CLocalization& localization)
+		: m_Localization(localization)
+		, m_dirLang()
+		, m_CurLang(wxLANGUAGE_DEFAULT)
+		, m_locale(NULL)
+	{
+#ifdef __WXMAC__
+		// Command line programs on Mac are acting like unix. GetResourcesDir
+		// returns /usr/local/share. And GetExecutablePath is returning nothing.
+		m_dirLang = wxT("./lang");
+#else
+		m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+#endif
+	}
+	~CLanguageManager()
+	{
+		delete m_locale;
+	}
+
+	bool SetLang(int langId);
+
+	CLocalization& m_Localization;
+	wxString m_dirLang;
+	int m_CurLang;
+	wxLocale* m_locale;
+};
+static CLanguageManager* g_LangMgr = NULL;
+
+
+bool CLanguageManager::SetLang(int langId)
+{
+	if (langId == m_CurLang)
+		return false;
+
+	m_CurLang = langId;
+	if (m_locale)
+		delete m_locale;
+	m_locale = new wxLocale();
+	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
+#if wxCHECK_VERSION(2,9,0)
+	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
+#else
+
+	if (!m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING))
+#endif
+	{
+		//return false;
+	}
+	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
+	m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
+
+	m_Localization.Load();
+
+	return true;
+}
+
+
+void SetLang(int langId)
+{
+	if (g_LangMgr)
+		g_LangMgr->SetLang(langId);
+}
 
 
 int main(int argc, char** argv)
@@ -145,31 +212,16 @@ int main(int argc, char** argv)
 	static CLocalization m_Localization;
 	IARBLocalization::Init(&m_Localization);
 
-#ifdef __WXMAC__
-	// Command line programs on Mac are acting like unix. GetResourcesDir
-	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	wxString m_dirLang = wxT("./lang");
-#else
-	wxString m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
-#endif
-
-	wxLocale* m_locale = new wxLocale();
-	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
-#if wxCHECK_VERSION(2,9,0)
-	m_locale->Init(wxLANGUAGE_ENGLISH_US, 0);
-#else
-	m_locale->Init(wxLANGUAGE_ENGLISH_US, wxLOCALE_CONV_ENCODING);
-#endif
-	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	m_locale->AddCatalog(fileName.GetName(), wxLANGUAGE_USER_DEFINED, wxEmptyString);
-	m_Localization.Load();
+	g_LangMgr = new CLanguageManager(m_Localization);
+	SetLang(wxLANGUAGE_ENGLISH_US);
 
 	CReporterVerbose reporter(bVerbose);
 	UnitTest::TestRunner runner(reporter);
 	int rc = runner.RunTestsIf(UnitTest::Test::GetTestList(), NULL, UnitTest::True(), 0);
 
 	Element::Terminate();
-	delete m_locale;
+	delete g_LangMgr;
+	g_LangMgr = NULL;
 
 	return rc;
 }

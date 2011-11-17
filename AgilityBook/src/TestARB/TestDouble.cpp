@@ -77,6 +77,7 @@ SUITE(TestDouble)
 	{
 		if (!g_bMicroTest)
 		{
+			// Using French since the default decimal separator is a comma.
 			wxLocale locale(wxLANGUAGE_FRENCH);
 			RunDblTests();
 		}

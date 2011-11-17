@@ -157,7 +157,7 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 			wxLanguageInfo const* info = wxLocale::FindLanguageInfo(filename);
 			if (info)
 			{
-				choices.Add(info->Description);
+				choices.Add(wxGetTranslation(info->Description));
 				langId.push_back(info->Language);
 				if (info->Language == lang)
 					idxLang = static_cast<int>(langId.size()) - 1;
