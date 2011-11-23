@@ -6,6 +6,7 @@
 # C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Samples\SysMgmt\Msi\Scripts
 #
 # Revision History
+# 2011-11-23 DRC Add internet shortcut to start menu
 # 2011-11-14 DRC Treat wix warnings as errors
 # 2011-09-23 DRC Allow support of admin installs "msiexec /a msi"
 # 2011-08-19 DRC Fixed /test option (it was always writing the csv file)
@@ -249,6 +250,7 @@ def genWiX(ver3Dot, ver4Dot, ver4Line, code, tidy, perUser, testing, vcver):
 			candleCmd += ' -arch x64'
 		else:
 			candleCmd += ' -arch x86'
+		candleCmd += ' -ext WixUIExtension -ext WixUtilExtension'
 		candleCmd += ' -dBASEDIR="' + baseDir + '"'
 		candleCmd += ' -dSUPPORTED_LANGS=' + langNames
 		candleCmd += ' -dINSTALL_SCOPE=' + perUser
