@@ -25,6 +25,7 @@ Note: For System.AppUserModel.ID to work on Win7,
       must be enabled. This is done in the Properties of the Start menu.
 
 Revision History
+2011-11-23 DRC Add internet shortcut to start menu
 2011-11-12 DRC Update .mo file name.
 2011-08-19 DRC Fix System.AppUserModel.ID name. Still doesn't fix uninstall.
 2011-05-11 DRC Add System.AppUserModel.ID to desktop shortcut too.
@@ -44,7 +45,8 @@ Revision History
                be marked as not requiring UAC.
 -->
 
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 
 	<?include AgilityBook.wxi?>
 
@@ -251,6 +253,11 @@ Revision History
 				<ShortcutProperty Key="System.AppUserModel.PreventPinning" Value="0" />
 				<ShortcutProperty Key="System.AppUserModel.ID" Value="[AppUserModelId]" />
 			</Shortcut>
+			<util:InternetShortcut
+				Id="wwwArb"
+				Name="www.agilityrecordbook.com"
+				Target="http://www.agilityrecordbook.com"
+				Type="url" />
 			<RemoveFolder Id="ARBMenuFolder" On="uninstall" />
 		</Component>
 
