@@ -1,4 +1,13 @@
-Last Updated: 4/11/2010
+Last Updated: 12/7/2011
+
+- Detect peruser/permachine installs to prevent 'bad' upgrades from happening.
+  From an email on 'wix-users' list:
+  "Products like InstallShield use an early-scheduled custom action to detect
+  installed products and, if an old version is found, sets ALLUSERS to the
+  correct value before the rest of the installation proceeds. The dialog is
+  also disabled in this case.
+  There's sample code for such a custom action in this thread
+  http://windows-installer-xml-wix-toolset.687559.n2.nabble.com/detecting-previous-version-s-ALLUSERS-property-td695163.html#a695164"
 
 - Make Mac dmg nicer for install (like Firefox)
 
