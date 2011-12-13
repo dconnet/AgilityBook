@@ -80,6 +80,8 @@ public:
 	OtherPtInfo(
 			ARBDogTrialPtr pTrial,
 			ARBDogRunPtr pRun,
+			double points,
+			bool bScore, // m_Score is valid
 			double score);
 	OtherPtInfo(ARBDogExistingPointsPtr pExisting);
 	~OtherPtInfo();
@@ -90,6 +92,8 @@ public:
 	wxString m_Div;
 	wxString m_Level;
 	wxString m_Event;
+	double m_Points;
+	bool m_bScore;
 	double m_Score;
 };
 
@@ -419,7 +423,7 @@ public:
 			std::list<OtherPtInfo> const& inRunList);
 
 protected:
-	double m_Score;
+	double m_Points;
 	std::list<OtherPtInfo> m_RunList;
 };
 typedef std::tr1::shared_ptr<CPointsDataOtherPoints> CPointsDataOtherPointsPtr;
