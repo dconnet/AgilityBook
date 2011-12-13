@@ -93,10 +93,14 @@ LifeTimePointInfo::LifeTimePointInfo(
 OtherPtInfo::OtherPtInfo(
 		ARBDogTrialPtr pTrial,
 		ARBDogRunPtr pRun,
+		double points,
+		bool bScore,
 		double score)
 	: m_pTrial(pTrial)
 	, m_pRun(pRun)
 	, m_pExisting()
+	, m_Points(points)
+	, m_bScore(bScore)
 	, m_Score(score)
 {
 	if (m_pTrial)
@@ -120,7 +124,9 @@ OtherPtInfo::OtherPtInfo(ARBDogExistingPointsPtr pExisting)
 	, m_Div(pExisting->GetDivision())
 	, m_Level(pExisting->GetLevel())
 	, m_Event(pExisting->GetEvent())
-	, m_Score(pExisting->GetPoints())
+	, m_Points(pExisting->GetPoints())
+	, m_bScore(false)
+	, m_Score(0.0)
 {
 }
 
@@ -959,14 +965,14 @@ CPointsDataOtherPoints::CPointsDataOtherPoints(
 		CAgilityBookDoc* pDoc,
 		std::list<OtherPtInfo> const& inRunList)
 	: CPointsDataBase(pDoc)
-	, m_Score(0.0)
+	, m_Points(0.0)
 	, m_RunList(inRunList)
 {
 	for (std::list<OtherPtInfo>::iterator iter = m_RunList.begin();
 		iter != m_RunList.end();
 		++iter)
 	{
-		m_Score += (*iter).m_Score;
+		m_Points += (*iter).m_Points;
 	}
 }
 
@@ -991,7 +997,7 @@ wxString CPointsDataOtherPointsTallyAll::OnNeedText(int inCol) const
 		str = m_Name;
 		break;
 	case 2:
-		str << m_Score;
+		str << m_Points;
 		break;
 	}
 	return str;
@@ -1062,7 +1068,7 @@ wxString CPointsDataOtherPointsTallyAllByEvent::OnNeedText(int inCol) const
 		str = m_RunList.begin()->m_Event;
 		break;
 	case 3:
-		str << m_Score;
+		str << m_Points;
 		break;
 	}
 	return str;
@@ -1134,7 +1140,7 @@ wxString CPointsDataOtherPointsTallyLevel::OnNeedText(int inCol) const
 		str = m_RunList.begin()->m_Level;
 		break;
 	case 3:
-		str << m_Score;
+		str << m_Points;
 		break;
 	}
 	return str;
@@ -1211,7 +1217,7 @@ wxString CPointsDataOtherPointsTallyLevelByEvent::OnNeedText(int inCol) const
 		str = m_RunList.begin()->m_Event;
 		break;
 	case 4:
-		str << m_Score;
+		str << m_Points;
 		break;
 	}
 	return str;
@@ -1946,7 +1952,26 @@ void CPointsDataItems::LoadData(
 								ARBDogRunOtherPointsPtr pOtherPts = (*iterOtherPts);
 								if (pOtherPts->GetName() == pOther->GetName())
 								{
-									runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints()));
+									bool bScore = false;
+									double score = 0.0;
+									ARBConfigScoringPtr pScoring;
+									if (pTrial->GetClubs().GetPrimaryClub())
+									{
+										pDoc->Book().GetConfig().GetVenues().FindEvent(
+											pTrial->GetClubs().GetPrimaryClubVenue(),
+											pRun->GetEvent(),
+											pRun->GetDivision(),
+											pRun->GetLevel(),
+											pRun->GetDate(),
+											NULL,
+											&pScoring);
+									}
+									if (pScoring)
+									{
+										bScore = true;
+										score = pRun->GetScore(pScoring);
+									}
+									runs.push_back(OtherPtInfo(pTrial, pRun, pOtherPts->GetPoints(), bScore, score));
 								}
 							}
 						}

@@ -74,6 +74,7 @@
 #define COL_OTHER_LEVEL			5
 #define COL_OTHER_EVENT			6
 #define COL_OTHER_PTS			7
+#define COL_OTHER_SCORE			8 // Run score
 #define COL_ITEM_TYPE			0
 #define COL_ITEM_NAME			1
 #define COL_ITEM_COMMENT		2
@@ -803,7 +804,11 @@ wxString CDlgListViewerDataOther::OnNeedText(long iCol) const
 		str << m_info.m_Event;
 		break;
 	case COL_OTHER_PTS:
-		str << m_info.m_Score;
+		str << m_info.m_Points;
+		break;
+	case COL_OTHER_SCORE:
+		if (m_info.m_bScore)
+			str << m_info.m_Score;
 		break;
 	}
 	return str;
@@ -872,9 +877,25 @@ int CDlgListViewerDataOther::Compare(
 		str2 = pData->m_info.m_Event;
 		break;
 	case COL_OTHER_PTS:
-		if (m_info.m_Score < pData->m_info.m_Score)
+		if (m_info.m_Points < pData->m_info.m_Points)
 			return -1;
-		else if (m_info.m_Score > pData->m_info.m_Score)
+		else if (m_info.m_Points > pData->m_info.m_Points)
+			return 1;
+		else
+			return 0;
+	case COL_OTHER_SCORE:
+		if (m_info.m_bScore && pData->m_info.m_bScore)
+		{
+			if (m_info.m_Score < pData->m_info.m_Score)
+				return -1;
+			else if (m_info.m_Score > pData->m_info.m_Score)
+				return 1;
+			else
+				return 0;
+		}
+		else if (!m_info.m_bScore && pData->m_info.m_bScore)
+			return -1;
+		else if (m_info.m_bScore && !pData->m_info.m_bScore)
 			return 1;
 		else
 			return 0;
@@ -1329,6 +1350,7 @@ CDlgListViewer::CDlgListViewer(
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_LEVEL, _("IDS_COL_LEVEL"));
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_EVENT, _("IDS_COL_EVENT"));
 	pColData->InsertColumn(m_ctrlList, COL_OTHER_PTS, _("IDS_COL_POINTS"));
+	pColData->InsertColumn(m_ctrlList, COL_OTHER_SCORE, _("IDS_COL_SCORE"));
 	for (std::list<OtherPtInfo>::const_iterator iter = inRunList.begin();
 		iter != inRunList.end();
 		++iter)
