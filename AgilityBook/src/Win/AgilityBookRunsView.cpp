@@ -528,7 +528,7 @@ static struct
 
 
 #if wxCHECK_VERSION(2,9,1)
-int wxCALLBACK CompareRuns(long item1, long item2, wxIntPtr sortData)
+int wxCALLBACK CompareRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 #endif

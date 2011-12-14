@@ -790,7 +790,7 @@ public:
 // CDlgAssignColumns dialog
 
 #if wxCHECK_VERSION(2,9,1)
-int wxCALLBACK CompareTypes(long lParam1, long lParam2, wxIntPtr lParam3)
+int wxCALLBACK CompareTypes(wxIntPtr lParam1, wxIntPtr lParam2, wxIntPtr lParam3)
 #else
 int wxCALLBACK CompareTypes(long lParam1, long lParam2, long lParam3)
 #endif
