@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,7 +144,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -209,7 +209,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -274,7 +274,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -339,7 +339,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -405,7 +405,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -471,7 +471,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 		<Configuration
@@ -538,7 +538,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python compile.py &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
 			/>
 		</Configuration>
 	</Configurations>
