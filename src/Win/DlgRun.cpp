@@ -274,7 +274,7 @@ wxString CDlgDogRefRunData::OnNeedText(long iCol) const
 
 
 #if wxCHECK_VERSION(2,9,1)
-int wxCALLBACK CompareRefRuns(long item1, long item2, wxIntPtr sortData)
+int wxCALLBACK CompareRefRuns(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 #else
 int wxCALLBACK CompareRefRuns(long item1, long item2, long sortData)
 #endif
