@@ -4,11 +4,13 @@
 # Requires gettext (msgcat/msgfmt) in PATH
 #
 # Revision History
+# 2011-12-17 DRC Add -x option.
 # 2011-11-11 DRC Made generic for easy use in other projects.
 # 2009-03-05 DRC Fixed some parameter passing issues (spaces/hyphens in names)
 # 2009-03-01 DRC Support multiple po files (by using msgcat)
 # 2009-01-02 DRC Updated to support creation of data files
-"""compile.py [-d] sourceDir firstFile executableDir targetname [lang;lang...]
+"""compile.py [-x] [-d] sourceDir firstFile executableDir targetname [lang;lang...]
+-x: Exclude ARBUpdater (not needed in test program)
 -d: Debugging mode (does not delete generated autogen.po file)
 sourceDir: Directory where .po files are
 firstFile: First .po file to process
@@ -52,9 +54,10 @@ def RunCommand(command, toastErr):
 
 
 def main():
+	bIncUpdater = 1
 	bDebug = 0
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'd')
+		opts, args = getopt.getopt(sys.argv[1:], 'dx')
 	except getopt.error, msg:
 		print msg
 		print 'Usage:', __doc__
@@ -62,6 +65,8 @@ def main():
 	for o, a in opts:
 		if '-d' == o:
 			bDebug = 1
+		if '-x' == o:
+			bIncUpdater = 0
 	if len(args) < 4 or len(args) > 5:
 		print 'Usage:', __doc__
 		return 1
@@ -112,7 +117,7 @@ def main():
 	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
 	zip.write(os.path.join(sourceDir, 'DefaultConfig.xml'))
 	zip.write(os.path.join(sourceDir, 'AgilityRecordBook.dtd'))
-	if os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
+	if bIncUpdater and os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
 		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
 	zip.close()
 
