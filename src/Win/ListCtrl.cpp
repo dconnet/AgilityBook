@@ -100,7 +100,7 @@ bool CReportListCtrl::Create(
 	{
 		return false;
 	}
-	Connect(wxEVT_COMMAND_LIST_DELETE_ITEM, wxListEventHandler(CReportListCtrl::OnDeleteItem));
+	BIND_OR_CONNECT(wxEVT_COMMAND_LIST_DELETE_ITEM, wxListEventHandler, CReportListCtrl::OnDeleteItem);
 	// Make the blank one the 1st icon so if an icon isn't set in a list
 	// it will use this by default
 	if (bHasImageList || sortHeader == eSortHeader)
@@ -376,8 +376,8 @@ CCheckListCtrl::CCheckListCtrl(
 	Create(parent, wxID_ANY, pos, size, flags);
 	if (bHasChecks)
 	{
-		Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CCheckListCtrl::OnClick));
-		Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CCheckListCtrl::OnKeyDown));
+		BIND_OR_CONNECT(wxEVT_LEFT_DOWN, wxMouseEventHandler, CCheckListCtrl::OnClick);
+		BIND_OR_CONNECT(wxEVT_KEY_DOWN, wxKeyEventHandler, CCheckListCtrl::OnKeyDown);
 		m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
 		m_imgNoCheck = m_ImageList.Add(wxIcon(unchecked_xpm));
 		m_imgChecked = m_ImageList.Add(wxIcon(checked_xpm));

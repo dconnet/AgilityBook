@@ -81,7 +81,7 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN,
 		CTrimValidator(&m_FilterName, TRIMVALIDATOR_TRIM_BOTH));
-	m_ctrlFilters->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnSelchangeFilterNames), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlFilters, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnSelchangeFilterNames);
 	m_ctrlFilters->SetHelpText(_("HIDC_OPT_FILTER_NAMES"));
 	m_ctrlFilters->SetToolTip(_("HIDC_OPT_FILTER_NAMES"));
 	std::vector<wxString> filterNames;
@@ -101,14 +101,14 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	wxButton* btnSave = new wxButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_NAMES_SAVE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnSave->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsFilter::OnClickedOptFilterNamesSave), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnSave, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgOptionsFilter::OnClickedOptFilterNamesSave);
 	btnSave->SetHelpText(_("HIDC_OPT_FILTER_NAMES_SAVE"));
 	btnSave->SetToolTip(_("HIDC_OPT_FILTER_NAMES_SAVE"));
 
 	wxButton* btnDelete = new wxButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_NAMES_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOptionsFilter::OnClickedOptFilterNamesDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgOptionsFilter::OnClickedOptFilterNamesDelete);
 	btnDelete->SetHelpText(_("HIDC_OPT_FILTER_NAMES_DELETE"));
 	btnDelete->SetToolTip(_("HIDC_OPT_FILTER_NAMES_DELETE"));
 
@@ -117,14 +117,14 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlDatesAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_DATE_ALL"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-	m_ctrlDatesAll->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterDates), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDatesAll, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterDates);
 	m_ctrlDatesAll->SetHelpText(_("HIDC_OPT_FILTER_DATE_ALL"));
 	m_ctrlDatesAll->SetToolTip(_("HIDC_OPT_FILTER_DATE_ALL"));
 
 	m_ctrlDatesSome = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_DATE_RANGE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlDatesSome->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterDates), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDatesSome, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterDates);
 	m_ctrlDatesSome->SetHelpText(_("HIDC_OPT_FILTER_DATE_RANGE"));
 	m_ctrlDatesSome->SetToolTip(_("HIDC_OPT_FILTER_DATE_RANGE"));
 
@@ -182,21 +182,21 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlLogAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_LOG_NAME_ALL"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-	m_ctrlLogAll->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterLog), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLogAll, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterLog);
 	m_ctrlLogAll->SetHelpText(_("HIDC_OPT_FILTER_LOG_NAME_ALL"));
 	m_ctrlLogAll->SetToolTip(_("HIDC_OPT_FILTER_LOG_NAME_ALL"));
 
 	m_ctrlLogSome = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_LOG_NAME_SELECTED"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlLogSome->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterLog), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLogSome, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterLog);
 	m_ctrlLogSome->SetHelpText(_("HIDC_OPT_FILTER_LOG_NAME_SELECTED"));
 	m_ctrlLogSome->SetToolTip(_("HIDC_OPT_FILTER_LOG_NAME_SELECTED"));
 
 	m_ctrlNames = new wxCheckListBox(this, wxID_ANY,
 		wxDefaultPosition, wxSize(-1, 80),
 		0, NULL, wxLB_SORT);
-	m_ctrlNames->Connect(wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterLogNames), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlNames, wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterLogNames);
 	m_ctrlNames->SetHelpText(_("HIDC_OPT_FILTER_LOG_NAME"));
 	m_ctrlNames->SetToolTip(_("HIDC_OPT_FILTER_LOG_NAME"));
 
@@ -205,21 +205,21 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlQsAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_RUNS_ALL"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-	m_ctrlQsAll->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterQs), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlQsAll, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterQs);
 	m_ctrlQsAll->SetHelpText(_("HIDC_OPT_FILTER_RUN_RUNS_ALL"));
 	m_ctrlQsAll->SetToolTip(_("HIDC_OPT_FILTER_RUN_RUNS_ALL"));
 
 	m_ctrlQsQs = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_RUNS_Q"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlQsQs->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterQs), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlQsQs, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterQs);
 	m_ctrlQsQs->SetHelpText(_("HIDC_OPT_FILTER_RUN_RUNS_Q"));
 	m_ctrlQsQs->SetToolTip(_("HIDC_OPT_FILTER_RUN_RUNS_Q"));
 
 	m_ctrlQsNonQs = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_RUNS_NON_Q"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlQsNonQs->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterQs), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlQsNonQs, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterQs);
 	m_ctrlQsNonQs->SetHelpText(_("HIDC_OPT_FILTER_RUN_RUNS_NON_Q"));
 	m_ctrlQsNonQs->SetToolTip(_("HIDC_OPT_FILTER_RUN_RUNS_NON_Q"));
 
@@ -228,19 +228,19 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 	m_ctrlVenueAll = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_VENUES_ALL"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-	m_ctrlVenueAll->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterVenues), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlVenueAll, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterVenues);
 	m_ctrlVenueAll->SetHelpText(_("HIDC_OPT_FILTER_RUN_VENUES_ALL"));
 	m_ctrlVenueAll->SetToolTip(_("HIDC_OPT_FILTER_RUN_VENUES_ALL"));
 
 	m_ctrlVenueSome = new wxRadioButton(this, wxID_ANY,
 		_("IDC_OPT_FILTER_RUN_VENUES_SELECTED"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlVenueSome->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CDlgOptionsFilter::OnFilterVenues), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlVenueSome, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CDlgOptionsFilter::OnFilterVenues);
 	m_ctrlVenueSome->SetHelpText(_("HIDC_OPT_FILTER_RUN_VENUES_SELECTED"));
 	m_ctrlVenueSome->SetToolTip(_("HIDC_OPT_FILTER_RUN_VENUES_SELECTED"));
 
 	m_ctrlVenue = new CCheckTreeCtrl(this);
-	m_ctrlVenue->Connect(wxEVT_COMMAND_TREE_CHECK_CHANGED, wxTreeEventHandler(CDlgOptionsFilter::OnFilterVenueCheck), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlVenue, wxEVT_COMMAND_TREE_CHECK_CHANGED, wxEventHandler, CDlgOptionsFilter::OnFilterVenueCheck);
 	m_ctrlVenue->SetHelpText(_("HIDC_OPT_FILTER_RUN_VENUES"));
 	m_ctrlVenue->SetToolTip(_("HIDC_OPT_FILTER_RUN_VENUES"));
 
@@ -706,7 +706,7 @@ void CDlgOptionsFilter::OnFilterVenues(wxCommandEvent& evt)
 }
 
 
-void CDlgOptionsFilter::OnFilterVenueCheck(wxTreeEvent& evt)
+void CDlgOptionsFilter::OnFilterVenueCheck(wxEvent& evt)
 {
 	// We could probably do this by just watching what changed. but this
 	// is way easier - no state to keep track of!

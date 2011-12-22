@@ -92,8 +92,8 @@ CWizardStart::CWizardStart(
 	, m_Style(-1)
 	, m_Next(NULL)
 {
-	Connect(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler(CWizardStart::OnWizardChanging));
-	Connect(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler(CWizardStart::OnWizardChanged));
+	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler, CWizardStart::OnWizardChanging);
+	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler, CWizardStart::OnWizardChanged);
 
 	// Get the last selected choice
 	m_Style = wxConfig::Get()->Read(LAST_STYLE, WIZARD_RADIO_EXCEL);
@@ -113,7 +113,7 @@ CWizardStart::CWizardStart(
 		radioExcel = new wxRadioButton(this, wxID_ANY,
 			_("IDC_WIZARD_START_EXCEL"),
 			wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-		radioExcel->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardStart::OnWizardStyleExcel), NULL, this);
+		BIND_OR_CONNECT_CTRL(radioExcel, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardStart::OnWizardStyleExcel);
 		radioExcel->SetHelpText(_("HIDC_WIZARD_START_EXCEL"));
 		radioExcel->SetToolTip(_("HIDC_WIZARD_START_EXCEL"));
 	}
@@ -124,7 +124,7 @@ CWizardStart::CWizardStart(
 		radioCalc = new wxRadioButton(this, wxID_ANY,
 			_("IDC_WIZARD_START_CALC"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		radioCalc->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardStart::OnWizardStyleCalc), NULL, this);
+		BIND_OR_CONNECT_CTRL(radioCalc, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardStart::OnWizardStyleCalc);
 		radioCalc->SetHelpText(_("HIDC_WIZARD_START_CALC"));
 		radioCalc->SetToolTip(_("HIDC_WIZARD_START_CALC"));
 	}
@@ -132,14 +132,14 @@ CWizardStart::CWizardStart(
 	wxRadioButton* radioSpread = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_START_SPREADSHEET"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	radioSpread->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardStart::OnWizardStyleSpread), NULL, this);
+	BIND_OR_CONNECT_CTRL(radioSpread, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardStart::OnWizardStyleSpread);
 	radioSpread->SetHelpText(_("HIDC_WIZARD_START_SPREADSHEET"));
 	radioSpread->SetToolTip(_("HIDC_WIZARD_START_SPREADSHEET"));
 
 	wxRadioButton* radioArb = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_START_ARB"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	radioArb->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardStart::OnWizardStyleArb), NULL, this);
+	BIND_OR_CONNECT_CTRL(radioArb, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardStart::OnWizardStyleArb);
 	radioArb->SetHelpText(_("HIDC_WIZARD_START_ARB"));
 	radioArb->SetToolTip(_("HIDC_WIZARD_START_ARB"));
 
@@ -168,7 +168,7 @@ CWizardStart::CWizardStart(
 	m_ctrlList = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxSize(200, -1),
 		0, NULL, wxLB_HSCROLL|wxLB_SINGLE);
-	m_ctrlList->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CWizardStart::OnSelchangeExportList), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CWizardStart::OnSelchangeExportList);
 	m_ctrlList->SetHelpText(_("HIDC_WIZARD_START_LIST"));
 	m_ctrlList->SetToolTip(_("HIDC_WIZARD_START_LIST"));
 

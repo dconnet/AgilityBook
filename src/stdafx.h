@@ -18,6 +18,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * @li 2011-12-22 DRC Add a macro to make using Bind() easier.
  * @li 2009-05-30 DRC Tweaked pragma message macro.
  * @li 2009-03-09 DRC Added ARB_SET_ERASE_RETURNS_ITERATOR.
  * @li 2005-10-30 DRC Added static xerces library support.
@@ -295,4 +296,25 @@
 #include <wx/treectrl.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
+#endif
+
+
+/*
+ * Bind is only available on wx2.9+.
+ * Rather than ifdef each instance of Connect, hide behind an evil macro.
+ */
+#if wxCHECK_VERSION(2, 9, 0)
+	#define BIND_OR_CONNECT(evt, cast, func) \
+		Bind(evt, &func, this)
+	#define BIND_OR_CONNECT_CTRL(ctrl, evt, cast, func) \
+		ctrl->Bind(evt, &func, this)
+	#define BIND_OR_CONNECT_ID(ctrl, id, evt, cast, func) \
+		ctrl->Bind(evt, &func, this, id)
+#else
+	#define BIND_OR_CONNECT(evt, cast, func) \
+		Connect(evt, cast(func))
+	#define BIND_OR_CONNECT_CTRL(ctrl, evt, cast, func) \
+		ctrl->Connect(evt, cast(func), NULL, this)
+	#define BIND_OR_CONNECT_ID(ctrl, id, evt, cast, func) \
+		ctrl->Connect(id, evt, cast(func), NULL, this)
 #endif

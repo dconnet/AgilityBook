@@ -1283,11 +1283,11 @@ bool CAgilityBookRunsView::Create(
 		int border)
 {
 	m_Ctrl = new CReportListCtrl(parentCtrl, false);
-	m_Ctrl->Connect(wxEVT_SET_FOCUS, wxFocusEventHandler(CAgilityBookRunsView::OnCtrlSetFocus), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CAgilityBookRunsView::OnCtrlColumnClick), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CAgilityBookRunsView::OnCtrlItemSelected), NULL, this);
-	m_Ctrl->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CAgilityBookRunsView::OnCtrlItemActivated), NULL, this);
-	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookRunsView::OnCtrlKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_SET_FOCUS, wxFocusEventHandler, CAgilityBookRunsView::OnCtrlSetFocus);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CAgilityBookRunsView::OnCtrlColumnClick);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemSelected);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CAgilityBookRunsView::OnCtrlItemActivated);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookRunsView::OnCtrlKeyDown);
 	m_imgCourse = m_Ctrl->AddIcon(wxIcon(AgilityBook16_xpm));
 	m_imgMap = m_Ctrl->AddIcon(wxIcon(crcd_xpm));
 #if defined(__WXMAC__)

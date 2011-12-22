@@ -50,7 +50,7 @@ CDlgSelectURL::CDlgSelectURL(
 	wxButton* btnSelect = new wxButton(this, wxID_ANY,
 		_("IDC_SELECTURL_FILENAME"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnSelect->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgSelectURL::OnFilename), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnSelect, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgSelectURL::OnFilename);
 	btnSelect->SetHelpText(_("HIDC_SELECTURL_FILENAME"));
 	btnSelect->SetToolTip(_("HIDC_SELECTURL_FILENAME"));
 

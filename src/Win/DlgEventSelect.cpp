@@ -110,7 +110,7 @@ CDlgEventSelect::CDlgEventSelect(
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_Division));
-	m_ctrlDivisions->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgEventSelect::OnSelchangeDivision), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDivisions, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgEventSelect::OnSelchangeDivision);
 	m_ctrlDivisions->SetHelpText(_("HIDC_EVENT_SELECT_DIVISION"));
 	m_ctrlDivisions->SetToolTip(_("HIDC_EVENT_SELECT_DIVISION"));
 
@@ -124,7 +124,7 @@ CDlgEventSelect::CDlgEventSelect(
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_Level));
-	m_ctrlLevels->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgEventSelect::OnSelchangeLevel), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLevels, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgEventSelect::OnSelchangeLevel);
 	m_ctrlLevels->SetHelpText(_("HIDC_EVENT_SELECT_LEVEL"));
 	m_ctrlLevels->SetToolTip(_("HIDC_EVENT_SELECT_LEVEL"));
 
@@ -136,7 +136,7 @@ CDlgEventSelect::CDlgEventSelect(
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY,
 		wxGenericValidator(&m_Event));
-	m_ctrlEvents->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgEventSelect::OnSelchangeEvent), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEvents, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgEventSelect::OnSelchangeEvent);
 	m_ctrlEvents->SetHelpText(_("HIDC_EVENT_SELECT_EVENT"));
 	m_ctrlEvents->SetToolTip(_("HIDC_EVENT_SELECT_EVENT"));
 

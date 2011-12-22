@@ -83,7 +83,7 @@ bool CAgilityBookHtmlView::Create(
 		int border)
 {
 	m_Ctrl = new wxHtmlWindow(parentCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER|wxHW_SCROLLBAR_AUTO);
-	m_Ctrl->Connect(wxEVT_COMMAND_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(CAgilityBookHtmlView::OnCtrlLinkClicked), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_HTML_LINK_CLICKED, wxHtmlLinkEventHandler, CAgilityBookHtmlView::OnCtrlLinkClicked);
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

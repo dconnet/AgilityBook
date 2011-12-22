@@ -678,7 +678,7 @@ CDlgDog::CDlgDog(
 		wxDefaultDateTime, wxDefaultPosition, wxDefaultSize,
 		wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_DOB));
-	ctrlBDay->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgDog::OnDateChanged), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlBDay, wxEVT_DATE_CHANGED, wxDateEventHandler, CDlgDog::OnDateChanged);
 	ctrlBDay->SetHelpText(_("HIDC_DOG_DOB"));
 	ctrlBDay->SetToolTip(_("HIDC_DOG_DOB"));
 
@@ -686,7 +686,7 @@ CDlgDog::CDlgDog(
 		_("IDC_DOG_IS_DECEASED"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_IsDeceased));
-	ctrlDeceased->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgDog::OnDeceased), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlDeceased, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgDog::OnDeceased);
 	ctrlDeceased->SetHelpText(_("HIDC_DOG_IS_DECEASED"));
 	ctrlDeceased->SetToolTip(_("HIDC_DOG_IS_DECEASED"));
 
@@ -694,7 +694,7 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize,
 		wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_Deceased));
-	m_ctrlDDay->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgDog::OnDateChanged), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDDay, wxEVT_DATE_CHANGED, wxDateEventHandler, CDlgDog::OnDateChanged);
 	m_ctrlDDay->SetHelpText(_("HIDC_DOG_DECEASED"));
 	m_ctrlDDay->SetToolTip(_("HIDC_DOG_DECEASED"));
 
@@ -715,10 +715,10 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
 	m_ctrlTitles = new CReportListCtrl(panelTitles, wxDefaultPosition, wxSize(500, -1), true, CReportListCtrl::eSortHeader, true);
-	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnTitleColumnClick), NULL, this);
-	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnTitleItemSelected), NULL, this);
-	m_ctrlTitles->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgDog::OnTitleItemActivated), NULL, this);
-	m_ctrlTitles->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnTitleKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgDog::OnTitleColumnClick);
+	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgDog::OnTitleItemSelected);
+	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgDog::OnTitleItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlTitles, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgDog::OnTitleKeyDown);
 	m_ctrlTitles->SetHelpText(_("HIDC_DOG_TITLE_TITLES"));
 	m_ctrlTitles->SetToolTip(_("HIDC_DOG_TITLE_TITLES"));
 	m_imgTitlesEmpty = m_ctrlTitles->AddIcon(wxIcon(CalEmpty_xpm));
@@ -737,21 +737,21 @@ CDlgDog::CDlgDog(
 	wxButton* btnTitleNew = new wxButton(panelTitles, wxID_ANY,
 		_("IDC_DOG_TITLE_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnTitleNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnTitleNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnTitleNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnTitleNew);
 	btnTitleNew->SetHelpText(_("HIDC_DOG_TITLE_NEW"));
 	btnTitleNew->SetToolTip(_("HIDC_DOG_TITLE_NEW"));
 
 	m_ctrlTitleEdit = new wxButton(panelTitles, wxID_ANY,
 		_("IDC_DOG_TITLE_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlTitleEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnTitleEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTitleEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnTitleEdit);
 	m_ctrlTitleEdit->SetHelpText(_("HIDC_DOG_TITLE_EDIT"));
 	m_ctrlTitleEdit->SetToolTip(_("HIDC_DOG_TITLE_EDIT"));
 
 	m_ctrlTitleDelete = new wxButton(panelTitles, wxID_ANY,
 		_("IDC_DOG_TITLE_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlTitleDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnTitleDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTitleDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnTitleDelete);
 	m_ctrlTitleDelete->SetHelpText(_("HIDC_DOG_TITLE_DELETE"));
 	m_ctrlTitleDelete->SetToolTip(_("HIDC_DOG_TITLE_DELETE"));
 
@@ -759,7 +759,7 @@ CDlgDog::CDlgDog(
 		_("IDC_DOG_TITLE_HIDDEN"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_ViewHiddenTitles));
-	ctrlHidden->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgDog::OnTitleHidden), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlHidden, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgDog::OnTitleHidden);
 	ctrlHidden->SetHelpText(_("HIDC_DOG_TITLE_HIDDEN"));
 	ctrlHidden->SetToolTip(_("HIDC_DOG_TITLE_HIDDEN"));
 
@@ -769,10 +769,10 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
 	m_ctrlRegNums = new CReportListCtrl(panelRegNums, wxDefaultPosition, wxSize(500, -1), true, CReportListCtrl::eSortHeader, true);
-	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnRegNumColumnClick), NULL, this);
-	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnRegNumItemSelected), NULL, this);
-	m_ctrlRegNums->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgDog::OnRegNumItemActivated), NULL, this);
-	m_ctrlRegNums->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnRegNumKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRegNums, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgDog::OnRegNumColumnClick);
+	BIND_OR_CONNECT_CTRL(m_ctrlRegNums, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgDog::OnRegNumItemSelected);
+	BIND_OR_CONNECT_CTRL(m_ctrlRegNums, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgDog::OnRegNumItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlRegNums, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgDog::OnRegNumKeyDown);
 	m_ctrlRegNums->SetHelpText(_("HIDC_DOGNUM_REG_NUMS"));
 	m_ctrlRegNums->SetToolTip(_("HIDC_DOGNUM_REG_NUMS"));
 	for (i = 0; i < nColRegNumInfo; ++i)
@@ -784,21 +784,21 @@ CDlgDog::CDlgDog(
 	wxButton* btnRegNew = new wxButton(panelRegNums, wxID_ANY,
 		_("IDC_DOGNUM_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnRegNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnRegNumNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnRegNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnRegNumNew);
 	btnRegNew->SetHelpText(_("HIDC_DOGNUM_NEW"));
 	btnRegNew->SetToolTip(_("HIDC_DOGNUM_NEW"));
 
 	m_ctrlRegEdit = new wxButton(panelRegNums, wxID_ANY,
 		_("IDC_DOGNUM_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRegEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnRegNumEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRegEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnRegNumEdit);
 	m_ctrlRegEdit->SetHelpText(_("HIDC_DOGNUM_EDIT"));
 	m_ctrlRegEdit->SetToolTip(_("HIDC_DOGNUM_EDIT"));
 
 	m_ctrlRegDelete = new wxButton(panelRegNums, wxID_ANY,
 		_("IDC_DOGNUM_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRegDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnRegNumDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRegDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnRegNumDelete);
 	m_ctrlRegDelete->SetHelpText(_("HIDC_DOGNUM_DELETE"));
 	m_ctrlRegDelete->SetToolTip(_("HIDC_DOGNUM_DELETE"));
 
@@ -808,10 +808,10 @@ CDlgDog::CDlgDog(
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
 	m_ctrlPoints = new CReportListCtrl(panelPoints, wxDefaultPosition, wxSize(500, -1), false, CReportListCtrl::eSortHeader, true);
-	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgDog::OnPointsColumnClick), NULL, this);
-	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgDog::OnPointsItemSelected), NULL, this);
-	m_ctrlPoints->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgDog::OnPointsItemActivated), NULL, this);
-	m_ctrlPoints->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgDog::OnPointsKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPoints, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgDog::OnPointsColumnClick);
+	BIND_OR_CONNECT_CTRL(m_ctrlPoints, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgDog::OnPointsItemSelected);
+	BIND_OR_CONNECT_CTRL(m_ctrlPoints, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgDog::OnPointsItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlPoints, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgDog::OnPointsKeyDown);
 	m_ctrlPoints->SetHelpText(_("HIDC_DOGPTS_POINTS"));
 	m_ctrlPoints->SetToolTip(_("HIDC_DOGPTS_POINTS"));
 	for (i = 0; i < nColExistingPointsInfo; ++i)
@@ -823,21 +823,21 @@ CDlgDog::CDlgDog(
 	wxButton* btnPtsNew = new wxButton(panelPoints, wxID_ANY,
 		_("IDC_DOGPTS_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnPtsNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnPtsNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnPointsNew);
 	btnPtsNew->SetHelpText(_("HIDC_DOGPTS_NEW"));
 	btnPtsNew->SetToolTip(_("HIDC_DOGPTS_NEW"));
 
 	m_ctrlPointsEdit = new wxButton(panelPoints, wxID_ANY,
 		_("IDC_DOGPTS_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlPointsEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPointsEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnPointsEdit);
 	m_ctrlPointsEdit->SetHelpText(_("HIDC_DOGPTS_EDIT"));
 	m_ctrlPointsEdit->SetToolTip(_("HIDC_DOGPTS_EDIT"));
 
 	m_ctrlPointsDelete = new wxButton(panelPoints, wxID_ANY,
 		_("IDC_DOGPTS_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlPointsDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgDog::OnPointsDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPointsDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgDog::OnPointsDelete);
 	m_ctrlPointsDelete->SetHelpText(_("HIDC_DOGPTS_DELETE"));
 	m_ctrlPointsDelete->SetToolTip(_("HIDC_DOGPTS_DELETE"));
 

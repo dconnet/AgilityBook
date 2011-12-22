@@ -813,7 +813,7 @@ CDlgRun::CDlgRun(
 
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, 0);
-	notebook->Connect(wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler(CDlgRun::OnPageChanged), NULL, this);
+	BIND_OR_CONNECT_CTRL(notebook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler, CDlgRun::OnPageChanged);
 
 	// Score
 
@@ -827,7 +827,7 @@ CDlgRun::CDlgRun(
 	wxDatePickerCtrl* ctrlDate = new wxDatePickerCtrl(m_panelScore, wxID_ANY, wxDefaultDateTime,
 		wxDefaultPosition, wxDefaultSize, wxDP_DROPDOWN|wxDP_SHOWCENTURY,
 		CGenericValidator(&m_Date));
-	ctrlDate->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(CDlgRun::OnScoreDateChanged), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlDate, wxEVT_DATE_CHANGED, wxDateEventHandler, CDlgRun::OnScoreDateChanged);
 	ctrlDate->SetHelpText(_("HIDC_RUNSCORE_DATE"));
 	ctrlDate->SetToolTip(_("HIDC_RUNSCORE_DATE"));
 
@@ -854,7 +854,7 @@ CDlgRun::CDlgRun(
 	m_ctrlDivisions = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
-	m_ctrlDivisions->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeDivision), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDivisions, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgRun::OnSelchangeDivision);
 	m_ctrlDivisions->SetHelpText(_("HIDC_RUNSCORE_DIVISION"));
 	m_ctrlDivisions->SetToolTip(_("HIDC_RUNSCORE_DIVISION"));
 
@@ -866,7 +866,7 @@ CDlgRun::CDlgRun(
 	m_ctrlLevels = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
-	m_ctrlLevels->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeLevel), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLevels, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgRun::OnSelchangeLevel);
 	m_ctrlLevels->SetHelpText(_("HIDC_RUNSCORE_LEVEL"));
 	m_ctrlLevels->SetToolTip(_("HIDC_RUNSCORE_LEVEL"));
 
@@ -878,7 +878,7 @@ CDlgRun::CDlgRun(
 	m_ctrlEvents = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY);
-	m_ctrlEvents->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeEvent), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEvents, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgRun::OnSelchangeEvent);
 	m_ctrlEvents->SetHelpText(_("HIDC_RUNSCORE_EVENT"));
 	m_ctrlEvents->SetToolTip(_("HIDC_RUNSCORE_EVENT"));
 
@@ -898,7 +898,7 @@ CDlgRun::CDlgRun(
 		_("IDC_RUNSCORE_TABLE"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_Table));
-	m_ctrlTable->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgRun::OnBnClickedTableYps), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTable, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgRun::OnBnClickedTableYps);
 	m_ctrlTable->SetHelpText(_("HIDC_RUNSCORE_TABLE"));
 	m_ctrlTable->SetToolTip(_("HIDC_RUNSCORE_TABLE"));
 
@@ -939,7 +939,7 @@ CDlgRun::CDlgRun(
 	m_ctrlJudge->SetToolTip(_("HIDC_RUNSCORE_JUDGE"));
 
 	CNoteButton* ctrlJudgeNote = new CNoteButton(m_panelScore);
-	ctrlJudgeNote->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnJudgeNotes), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlJudgeNote, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnJudgeNotes);
 	ctrlJudgeNote->SetHelpText(_("HIDC_RUNSCORE_JUDGE_NOTES"));
 	ctrlJudgeNote->SetToolTip(_("HIDC_RUNSCORE_JUDGE_NOTES"));
 
@@ -980,7 +980,7 @@ CDlgRun::CDlgRun(
 	m_ctrlPartnerEdit = new wxButton(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_PARTNERS_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlPartnerEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnPartnersEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPartnerEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnPartnersEdit);
 	m_ctrlPartnerEdit->SetHelpText(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
 	m_ctrlPartnerEdit->SetToolTip(_("HIDC_RUNSCORE_PARTNERS_EDIT"));
 
@@ -998,7 +998,7 @@ CDlgRun::CDlgRun(
 	m_ctrlSCT = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_SCT));
-	m_ctrlSCT->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnSCTChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSCT, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnSCTChange);
 	m_ctrlSCT->SetHelpText(_("HIDC_RUNSCORE_SCT"));
 	m_ctrlSCT->SetToolTip(_("HIDC_RUNSCORE_SCT"));
 
@@ -1009,7 +1009,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlYardsReqOpeningPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
-	m_ctrlYardsReqOpeningPts->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnReqOpeningYPSChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlYardsReqOpeningPts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnReqOpeningYPSChange);
 	m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPENING_PTS"));
 	m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPENING_PTS"));
 
@@ -1020,7 +1020,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlMinYPSClosingTime = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
-	m_ctrlMinYPSClosingTime->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnClosingTimeChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlMinYPSClosingTime, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnClosingTimeChange);
 	m_ctrlMinYPSClosingTime->SetHelpText(_("HIDC_RUNSCORE_SCT2"));
 	m_ctrlMinYPSClosingTime->SetToolTip(_("HIDC_RUNSCORE_SCT2"));
 
@@ -1032,7 +1032,7 @@ CDlgRun::CDlgRun(
 	m_ctrlClosing = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Closing));
-	m_ctrlClosing->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnReqClosingChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlClosing, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnReqClosingChange);
 	m_ctrlClosing->SetHelpText(_("HIDC_RUNSCORE_CLOSING_PTS"));
 	m_ctrlClosing->SetToolTip(_("HIDC_RUNSCORE_CLOSING_PTS"));
 
@@ -1044,7 +1044,7 @@ CDlgRun::CDlgRun(
 	m_ctrlObstacles = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Obstacles));
-	m_ctrlObstacles->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnNumObsChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlObstacles, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnNumObsChange);
 	m_ctrlObstacles->SetHelpText(_("HIDC_RUNSCORE_OBSTACLES"));
 	m_ctrlObstacles->SetToolTip(_("HIDC_RUNSCORE_OBSTACLES"));
 
@@ -1056,7 +1056,7 @@ CDlgRun::CDlgRun(
 	m_ctrlTime = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Time));
-	m_ctrlTime->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnTimeChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTime, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnTimeChange);
 	m_ctrlTime->SetHelpText(_("HIDC_RUNSCORE_TIME"));
 	m_ctrlTime->SetToolTip(_("HIDC_RUNSCORE_TIME"));
 
@@ -1068,7 +1068,7 @@ CDlgRun::CDlgRun(
 	m_ctrlFaults = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_Faults));
-	m_ctrlFaults->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnFaultsChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlFaults, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnFaultsChange);
 	m_ctrlFaults->SetHelpText(_("HIDC_RUNSCORE_FAULTS"));
 	m_ctrlFaults->SetToolTip(_("HIDC_RUNSCORE_FAULTS"));
 
@@ -1079,7 +1079,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlYPSOpeningPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
-	m_ctrlYPSOpeningPts->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnOpenChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlYPSOpeningPts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnOpenChange);
 	m_ctrlYPSOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPEN_PTS"));
 	m_ctrlYPSOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPEN_PTS"));
 
@@ -1090,7 +1090,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlClosingPtsTotalFaults = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0);
-	m_ctrlClosingPtsTotalFaults->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnCloseChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlClosingPtsTotalFaults, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnCloseChange);
 	m_ctrlClosingPtsTotalFaults->SetHelpText(_("HIDC_RUNSCORE_CLOSE_PTS"));
 	m_ctrlClosingPtsTotalFaults->SetToolTip(_("HIDC_RUNSCORE_CLOSE_PTS"));
 
@@ -1113,7 +1113,7 @@ CDlgRun::CDlgRun(
 	m_ctrlPlace = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
 		CGenericValidator(&m_Place));
-	m_ctrlPlace->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnPlaceChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlace, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnPlaceChange);
 	m_ctrlPlace->SetHelpText(_("HIDC_RUNSCORE_PLACE"));
 	m_ctrlPlace->SetToolTip(_("HIDC_RUNSCORE_PLACE"));
 
@@ -1145,7 +1145,7 @@ CDlgRun::CDlgRun(
 	textQ->Wrap(-1);
 
 	m_ctrlQ = new CQualifyingComboBox(m_panelScore, m_Run);
-	m_ctrlQ->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(CDlgRun::OnSelchangeQ), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlQ, wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler, CDlgRun::OnSelchangeQ);
 	m_ctrlQ->SetHelpText(_("HIDC_RUNSCORE_Q"));
 	m_ctrlQ->SetToolTip(_("HIDC_RUNSCORE_Q"));
 
@@ -1157,7 +1157,7 @@ CDlgRun::CDlgRun(
 	m_ctrlBonusPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
 		CGenericValidator(&m_BonusPts));
-	m_ctrlBonusPts->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgRun::OnBonusChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlBonusPts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnBonusChange);
 	m_ctrlBonusPts->SetHelpText(_("HIDC_RUNSCORE_BONUSPTS"));
 	m_ctrlBonusPts->SetToolTip(_("HIDC_RUNSCORE_BONUSPTS"));
 
@@ -1191,7 +1191,7 @@ CDlgRun::CDlgRun(
 	wxButton* btnOtherPoints = new wxButton(m_panelScore, wxID_ANY,
 		_("IDC_RUNSCORE_OTHERPOINTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnOtherPoints->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnOtherpoints), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnOtherPoints, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnOtherpoints);
 	btnOtherPoints->SetHelpText(_("HIDC_RUNSCORE_OTHERPOINTS"));
 	btnOtherPoints->SetToolTip(_("HIDC_RUNSCORE_OTHERPOINTS"));
 	if (0 < m_pDoc->Book().GetConfig().GetOtherPoints().size())
@@ -1219,7 +1219,7 @@ CDlgRun::CDlgRun(
 	wxButton* btnFaults = new wxButton(panelComments, wxID_ANY,
 		_("IDC_RUNCOMMENT_COMMENTS_FAULTS"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnFaults->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCommentsFaults), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnFaults, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnCommentsFaults);
 	btnFaults->SetHelpText(_("HIDC_RUNCOMMENT_COMMENTS_FAULTS"));
 	btnFaults->SetToolTip(_("HIDC_RUNCOMMENT_COMMENTS_FAULTS"));
 
@@ -1230,10 +1230,10 @@ CDlgRun::CDlgRun(
 
 	m_ctrlRefRuns = new CReportListCtrl(panelRefRuns,
 		true, CReportListCtrl::eSortHeader, true);
-	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgRun::OnRefRunColumnClick), NULL, this);
-	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgRun::OnRefRunItemSelected), NULL, this);
-	m_ctrlRefRuns->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgRun::OnRefRunItemActivated), NULL, this);
-	m_ctrlRefRuns->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgRun::OnRefRunKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRefRuns, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgRun::OnRefRunColumnClick);
+	BIND_OR_CONNECT_CTRL(m_ctrlRefRuns, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgRun::OnRefRunItemSelected);
+	BIND_OR_CONNECT_CTRL(m_ctrlRefRuns, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgRun::OnRefRunItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlRefRuns, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgRun::OnRefRunKeyDown);
 	m_ctrlRefRuns->SetHelpText(_("HIDC_RUNREF_REF_RUNS"));
 	m_ctrlRefRuns->SetToolTip(_("HIDC_RUNREF_REF_RUNS"));
 	int index;
@@ -1248,28 +1248,28 @@ CDlgRun::CDlgRun(
 	wxButton* btnRefNew = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnRefNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnRefNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnRefRunNew);
 	btnRefNew->SetHelpText(_("HIDC_RUNREF_NEW"));
 	btnRefNew->SetToolTip(_("HIDC_RUNREF_NEW"));
 
 	m_ctrlRefAddMe = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_ADDDOG"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRefAddMe->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunAddMe), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRefAddMe, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnRefRunAddMe);
 	m_ctrlRefAddMe->SetHelpText(_("HIDC_RUNREF_ADDDOG"));
 	m_ctrlRefAddMe->SetToolTip(_("HIDC_RUNREF_ADDDOG"));
 
 	m_ctrlRefEdit = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRefEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRefEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnRefRunEdit);
 	m_ctrlRefEdit->SetHelpText(_("HIDC_RUNREF_EDIT"));
 	m_ctrlRefEdit->SetToolTip(_("HIDC_RUNREF_EDIT"));
 
 	m_ctrlRefDelete = new wxButton(panelRefRuns, wxID_ANY,
 		_("IDC_RUNREF_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRefDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnRefRunDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRefDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnRefRunDelete);
 	m_ctrlRefDelete->SetHelpText(_("HIDC_RUNREF_DELETE"));
 	m_ctrlRefDelete->SetToolTip(_("HIDC_RUNREF_DELETE"));
 
@@ -1290,14 +1290,14 @@ CDlgRun::CDlgRun(
 		m_ctrlCourse = new wxButton(panelCRCD, wxID_ANY,
 			_("IDC_RUNCRCD_EDIT"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		m_ctrlCourse->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDEdit), NULL, this);
+		BIND_OR_CONNECT_CTRL(m_ctrlCourse, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnCRCDEdit);
 		m_ctrlCourse->SetHelpText(_("HIDC_RUNCRCD_EDIT"));
 		m_ctrlCourse->SetToolTip(_("HIDC_RUNCRCD_EDIT"));
 
 		m_ctrlCRCDView = new wxButton(panelCRCD, wxID_ANY,
 			_("IDC_RUNCRCD_VIEW"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		m_ctrlCRCDView->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDView), NULL, this);
+		BIND_OR_CONNECT_CTRL(m_ctrlCRCDView, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnCRCDView);
 		m_ctrlCRCDView->SetHelpText(_("HIDC_RUNCRCD_VIEW"));
 		m_ctrlCRCDView->SetToolTip(_("HIDC_RUNCRCD_VIEW"));
 	}
@@ -1305,7 +1305,7 @@ CDlgRun::CDlgRun(
 	m_ctrlCRCDCopy = new wxButton(panelCRCD, wxID_ANY,
 		_("IDC_RUNCRCD_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlCRCDCopy->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDCopy), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlCRCDCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnCRCDCopy);
 	m_ctrlCRCDCopy->SetHelpText(_("HIDC_RUNCRCD_COPY"));
 	m_ctrlCRCDCopy->SetToolTip(_("HIDC_RUNCRCD_COPY"));
 
@@ -1315,7 +1315,7 @@ CDlgRun::CDlgRun(
 		m_ctrlIncImage = new wxCheckBox(panelCRCD, wxID_ANY,
 			_("IDC_RUNCRCD_IMAGE"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		m_ctrlIncImage->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgRun::OnCRCDImage), NULL, this);
+		BIND_OR_CONNECT_CTRL(m_ctrlIncImage, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgRun::OnCRCDImage);
 		m_ctrlIncImage->SetHelpText(_("HIDC_RUNCRCD_IMAGE"));
 		m_ctrlIncImage->SetToolTip(_("HIDC_RUNCRCD_IMAGE"));
 		bool setCheck = CAgilityBookOptions::GetIncludeCRCDImage();
@@ -1341,9 +1341,9 @@ CDlgRun::CDlgRun(
 	m_imgEmpty = m_ImageList.Add(wxIcon(CalEmpty_xpm));
 	m_imgOk = m_ImageList.Add(wxIcon(CalPlan_xpm));
 	m_imgMissing = m_ImageList.Add(wxIcon(CalTentative_xpm));
-	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgRun::OnLinksItemSelected), NULL, this);
-	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgRun::OnLinksItemActivated), NULL, this);
-	m_ctrlLinks->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgRun::OnLinksKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgRun::OnLinksItemSelected);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgRun::OnLinksItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgRun::OnLinksKeyDown);
 	m_ctrlLinks->SetHelpText(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->InsertColumn(0, wxT(""));
@@ -1352,28 +1352,28 @@ CDlgRun::CDlgRun(
 	wxButton* btnLinkNew = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnLinkNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnLinkNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnLinksNew);
 	btnLinkNew->SetHelpText(_("HIDC_RUNLINK_NEW"));
 	btnLinkNew->SetToolTip(_("HIDC_RUNLINK_NEW"));
 
 	m_ctrlLinkEdit = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlLinkEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinkEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnLinksEdit);
 	m_ctrlLinkEdit->SetHelpText(_("HIDC_RUNLINK_EDIT"));
 	m_ctrlLinkEdit->SetToolTip(_("HIDC_RUNLINK_EDIT"));
 
 	m_ctrlLinkDelete = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlLinkDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinkDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnLinksDelete);
 	m_ctrlLinkDelete->SetHelpText(_("HIDC_RUNLINK_DELETE"));
 	m_ctrlLinkDelete->SetToolTip(_("HIDC_RUNLINK_DELETE"));
 
 	m_ctrlLinkOpen = new wxButton(panelLinks, wxID_ANY,
 		_("IDC_RUNLINK_OPEN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlLinkOpen->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgRun::OnLinksOpen), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinkOpen, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgRun::OnLinksOpen);
 	m_ctrlLinkOpen->SetHelpText(_("HIDC_RUNLINK_OPEN"));
 	m_ctrlLinkOpen->SetToolTip(_("HIDC_RUNLINK_OPEN"));
 

@@ -184,11 +184,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 		wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE);
 	link2->SetToolTip(_("LinkHelpUrl"));
 	link2->SetHelpText(_("LinkHelpUrl"));
-#if wxCHECK_VERSION(2, 9, 0)
-	link2->Bind(wxEVT_COMMAND_HYPERLINK, &CDlgAbout::OnHelpEmail, this);
-#else
-	link2->Connect(wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler(CDlgAbout::OnHelpEmail), NULL, this);
-#endif
+	BIND_OR_CONNECT_CTRL(link2, wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler, CDlgAbout::OnHelpEmail);
 
 	wxStaticText* usefulLinks = new wxStaticText(this, wxID_ANY,
 		_("UsefulLinks"),
@@ -210,11 +206,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 	wxButton* updates = new wxButton(this, wxID_ANY,
 		_("CheckForUpdates"),
 		wxDefaultPosition, wxDefaultSize, 0);
-#if wxCHECK_VERSION(2, 9, 0)
-	updates->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CDlgAbout::OnCheckForUpdates, this);
-#else
-	updates->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAbout::OnCheckForUpdates), NULL, this);
-#endif
+	BIND_OR_CONNECT_CTRL(updates, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAbout::OnCheckForUpdates);
 	updates->SetHelpText(_("HIDC_ABOUT_UPDATE"));
 
 	wxButton* ok = new wxButton(this, wxID_OK);

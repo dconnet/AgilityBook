@@ -55,7 +55,7 @@ CDlgFind::CDlgFind(
 
 	m_textCtrl = new CTextCtrl(this, wxID_ANY, text,
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_textCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CDlgFind::OnChangeName), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_textCtrl, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgFind::OnChangeName);
 	m_textCtrl->SetHelpText(_("HIDC_FIND_NAME"));
 
 	m_checkBox = new wxCheckBox(this, wxID_ANY,
@@ -107,7 +107,7 @@ CDlgFind::CDlgFind(
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_btnFind->SetDefault();
 	m_btnFind->Enable(0 < text.length());
-	m_btnFind->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgFind::OnFind), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_btnFind, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgFind::OnFind);
 
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL,
 		_("IDC_FIND_CLOSE"),

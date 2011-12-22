@@ -86,7 +86,7 @@ CDlgMessageBox::CDlgMessageBox(
 	{
 		ctrlDetails = new wxButton(this, wxID_ANY, _("IDC_MESSAGE_BOX_DETAILS"),
 			wxDefaultPosition, wxDefaultSize, 0);
-		ctrlDetails->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgMessageBox::OnDetails), NULL, this);
+		BIND_OR_CONNECT_CTRL(ctrlDetails, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgMessageBox::OnDetails);
 	}
 
 	long btnFlags = inFlags & (wxOK | wxCANCEL | wxYES | wxNO | wxHELP | wxNO_DEFAULT);

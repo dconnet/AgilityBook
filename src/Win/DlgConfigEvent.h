@@ -106,7 +106,7 @@ private:
 	void OnBnClickedCopy(wxCommandEvent& evt);
 	void OnBnClickedUp(wxCommandEvent& evt);
 	void OnBnClickedDown(wxCommandEvent& evt);
-	void OnDblclickConfigInfo(wxMouseEvent& evt);
+	void OnDblclickConfigInfo(wxCommandEvent& evt);
 	void OnSelchangePoints(wxCommandEvent& evt);
 	void OnDblclkPoints(wxCommandEvent& evt);
 	void OnPointsNew(wxCommandEvent& evt);

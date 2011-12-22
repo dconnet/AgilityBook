@@ -71,7 +71,7 @@ CDlgPageDecode::CDlgPageDecode()
 
 	wxButton* btnDecode = new wxButton(this, wxID_ANY, wxT("Decode"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnDecode->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgPageDecode::OnDecode), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnDecode, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageDecode::OnDecode);
 
 	wxButton* btnClose = new wxButton(this, wxID_CANCEL, wxT("Close"),
 		wxDefaultPosition, wxDefaultSize, 0);

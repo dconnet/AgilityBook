@@ -41,11 +41,11 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 
 	wxButton* btnAll = new wxButton(this, wxID_ANY, wxT("Check All"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnAll->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgPageEncodeFiles::OnCheckAll), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnAll, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageEncodeFiles::OnCheckAll);
 
 	wxButton* btnNone = new wxButton(this, wxID_ANY, wxT("Uncheck All"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnNone->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgPageEncodeFiles::OnCheckNone), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnNone, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageEncodeFiles::OnCheckNone);
 
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 	bSizer->Add(text1, 0, wxALL, 5);

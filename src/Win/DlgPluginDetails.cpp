@@ -115,7 +115,7 @@ CDlgPluginDetails::CDlgPluginDetails(
 	wxButton* btnCodes = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGINDETAIL_CODES"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnCodes->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgPluginDetails::OnPluginDetailCodes), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnCodes, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPluginDetails::OnPluginDetailCodes);
 	btnCodes->SetHelpText(_("HIDC_PLUGINDETAIL_CODES"));
 	btnCodes->SetToolTip(_("HIDC_PLUGINDETAIL_CODES"));
 

@@ -548,9 +548,9 @@ bool CDlgListCtrl::Create(
 	m_imgPendingTentative = m_ctrlList->AddIcon(wxIcon(CalPendingTentative_xpm));
 	m_imgEntered = m_ctrlList->AddIcon(wxIcon(CalEntered_xpm));
 	m_imgEnteredTentative = m_ctrlList->AddIcon(wxIcon(CalEnteredTentative_xpm));
-	m_ctrlList->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgListCtrl::OnItemSelected), NULL, this);
-	m_ctrlList->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgListCtrl::OnItemActivated), NULL, this);
-	m_ctrlList->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgListCtrl::OnKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgListCtrl::OnItemSelected);
+	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgListCtrl::OnItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlList, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgListCtrl::OnKeyDown);
 	m_ctrlList->SetHelpText(_("HIDC_LIST"));
 	m_ctrlList->SetToolTip(_("HIDC_LIST"));
 
@@ -561,42 +561,42 @@ bool CDlgListCtrl::Create(
 	m_ctrlUp = new wxButton(this, wxID_ANY,
 		_("IDC_LIST_MOVE_UP"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlUp->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgListCtrl::OnMoveUp), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlUp, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgListCtrl::OnMoveUp);
 	m_ctrlUp->SetHelpText(_("HIDC_LIST_MOVE_UP"));
 	m_ctrlUp->SetToolTip(_("HIDC_LIST_MOVE_UP"));
 
 	m_ctrlDown = new wxButton(this, wxID_ANY,
 		_("IDC_LIST_MOVE_DOWN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgListCtrl::OnMoveDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDown, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgListCtrl::OnMoveDown);
 	m_ctrlDown->SetHelpText(_("HIDC_LIST_MOVE_DOWN"));
 	m_ctrlDown->SetToolTip(_("HIDC_LIST_MOVE_DOWN"));
 
 	m_ctrlNew = new wxButton(this, wxID_ANY,
 		_("IDC_LIST_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgListCtrl::OnNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgListCtrl::OnNew);
 	m_ctrlNew->SetHelpText(_("HIDC_LIST_NEW"));
 	m_ctrlNew->SetToolTip(_("HIDC_LIST_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_LIST_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgListCtrl::OnEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgListCtrl::OnEdit);
 	m_ctrlEdit->SetHelpText(_("HIDC_LIST_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_LIST_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_LIST_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgListCtrl::OnDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgListCtrl::OnDelete);
 	m_ctrlDelete->SetHelpText(_("HIDC_LIST_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_LIST_DELETE"));
 
 	m_ctrlCreateTrial = new wxButton(this, wxID_ANY,
 		_("IDC_LIST_TRIAL"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlCreateTrial->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgListCtrl::OnCreateTrial), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlCreateTrial, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgListCtrl::OnCreateTrial);
 	m_ctrlCreateTrial->SetHelpText(_("HIDC_LIST_TRIAL"));
 	m_ctrlCreateTrial->SetToolTip(_("HIDC_LIST_TRIAL"));
 	m_ctrlCreateTrial->Show(false);

@@ -79,5 +79,5 @@ private:
 	void OnFilterLogNames(wxCommandEvent& evt);
 	void OnFilterQs(wxCommandEvent& evt);
 	void OnFilterVenues(wxCommandEvent& evt);
-	void OnFilterVenueCheck(wxTreeEvent& evt);
+	void OnFilterVenueCheck(wxEvent& evt);
 };
