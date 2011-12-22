@@ -106,7 +106,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	assert(types.size() == eTitleMax);
 	m_ctrlType = new wxChoice(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, types, 0);
-	m_ctrlType->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(CDlgConfigTitlePoints::OnSelchangeTitlePoints), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler, CDlgConfigTitlePoints::OnSelchangeTitlePoints);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_TITLEPTS_TITLE_POINTS"));
 	m_ctrlType->SetSelection(m_Type);
@@ -118,7 +118,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	assert(typesNorm.size() == ePointsTypeMax);
 	m_ctrlTypeNormal = new wxChoice(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, typesNorm, 0);
-	m_ctrlTypeNormal->Connect(wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(CDlgConfigTitlePoints::OnSelchangeTitlePoints), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTypeNormal, wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler, CDlgConfigTitlePoints::OnSelchangeTitlePoints);
 	m_ctrlTypeNormal->SetHelpText(_("HIDC_CONFIG_TITLEPTS_CALC"));
 	m_ctrlTypeNormal->SetToolTip(_("HIDC_CONFIG_TITLEPTS_CALC"));
 	m_ctrlTypeNormal->SetSelection(m_TypeNormal);

@@ -72,6 +72,7 @@ Training Log:
 
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2010-11-04 DRC When adding items, add after the current selection.
  * @li 2010-02-17 DRC Added SubName to runs view.
  * @li 2009-03-12 DRC Fixed a bug that assumed items in sc_Fields lists had ids
@@ -862,7 +863,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_ConfigName, TRIMVALIDATOR_TRIM_BOTH));
-	m_ctrlConfig->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgAssignColumns::OnSelchangeNames), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlConfig, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeNames);
 	m_ctrlConfig->SetHelpText(_("HIDC_ASSIGN_NAMES"));
 	m_ctrlConfig->SetToolTip(_("HIDC_ASSIGN_NAMES"));
 	std::vector<wxString> configNames;
@@ -882,20 +883,20 @@ CDlgAssignColumns::CDlgAssignColumns(
 	wxButton* btnSave = new wxButton(this, wxID_ANY,
 		_("IDC_ASSIGN_NAMES_SAVE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnSave->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnClickedOptNamesSave), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnSave, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAssignColumns::OnClickedOptNamesSave);
 	btnSave->SetHelpText(_("HIDC_ASSIGN_NAMES_SAVE"));
 	btnSave->SetToolTip(_("HIDC_ASSIGN_NAMES_SAVE"));
 
 	wxButton* btnDelete = new wxButton(this, wxID_ANY,
 		_("IDC_ASSIGN_NAMES_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnClickedOptNamesDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAssignColumns::OnClickedOptNamesDelete);
 	btnDelete->SetHelpText(_("HIDC_ASSIGN_NAMES_DELETE"));
 	btnDelete->SetToolTip(_("HIDC_ASSIGN_NAMES_DELETE"));
 
 	m_ctrlType = new CListCtrl(this, wxID_ANY,
 		wxDefaultPosition, wxSize(-1, 100), wxLC_REPORT|wxLC_SINGLE_SEL|wxBORDER);
-	m_ctrlType->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgAssignColumns::OnItemchanged), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgAssignColumns::OnItemchanged);
 	m_ctrlType->SetHelpText(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_ASSIGN_TYPE"));
 	m_ctrlType->InsertColumn(0, _("IDS_COL_RUNTYPE"));
@@ -937,7 +938,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	m_ctrlAvailable = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
-	m_ctrlAvailable->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgAssignColumns::OnSelchangeAvailable), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlAvailable, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeAvailable);
 	m_ctrlAvailable->SetHelpText(_("HIDC_ASSIGN_AVAILABLE"));
 	m_ctrlAvailable->SetToolTip(_("HIDC_ASSIGN_AVAILABLE"));
 
@@ -947,31 +948,31 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	m_btnAdd = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_ADD"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_btnAdd->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnAdd), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_btnAdd, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAssignColumns::OnAdd);
 	m_btnAdd->SetHelpText(_("HIDC_ASSIGN_ADD"));
 	m_btnAdd->SetToolTip(_("HIDC_ASSIGN_ADD"));
 
 	m_btnRemove = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_btnRemove->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnRemove), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_btnRemove, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAssignColumns::OnRemove);
 	m_btnRemove->SetHelpText(_("HIDC_ASSIGN_DELETE"));
 	m_btnRemove->SetToolTip(_("HIDC_ASSIGN_DELETE"));
 
 	m_btnUp = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_MOVE_UP"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_btnUp->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnMoveUp), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_btnUp, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAssignColumns::OnMoveUp);
 	m_btnUp->SetHelpText(_("HIDC_ASSIGN_MOVE_UP"));
 	m_btnUp->SetToolTip(_("HIDC_ASSIGN_MOVE_UP"));
 
 	m_btnDown = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_MOVE_DOWN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_btnDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnMoveDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_btnDown, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAssignColumns::OnMoveDown);
 	m_btnDown->SetHelpText(_("HIDC_ASSIGN_MOVE_DOWN"));
 	m_btnDown->SetToolTip(_("HIDC_ASSIGN_MOVE_DOWN"));
 
 	wxButton* btnReset = new wxButton(this, wxID_ANY, _("IDC_ASSIGN_RESET"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnReset->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgAssignColumns::OnReset), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnReset, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgAssignColumns::OnReset);
 	btnReset->SetHelpText(_("HIDC_ASSIGN_RESET"));
 	btnReset->SetToolTip(_("HIDC_ASSIGN_RESET"));
 
@@ -982,7 +983,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 
 	m_ctrlColumns = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxSize(-1, 250), 0, NULL, 0);
-	m_ctrlColumns->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgAssignColumns::OnSelchangeColumns), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlColumns, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgAssignColumns::OnSelchangeColumns);
 	m_ctrlColumns->SetHelpText(_("HIDC_ASSIGN_COLUMNS"));
 	m_ctrlColumns->SetToolTip(_("HIDC_ASSIGN_COLUMNS"));
 

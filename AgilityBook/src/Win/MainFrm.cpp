@@ -213,7 +213,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 		m_fontStatusBar = statusbar->GetFont();
 		statusbar->SetFont(m_fontStatusBar);
 #endif
-		statusbar->Connect(wxEVT_CONTEXT_MENU, wxContextMenuEventHandler(CMainFrame::OnStatusBarContextMenu), NULL, this);
+		BIND_OR_CONNECT_CTRL(statusbar, wxEVT_CONTEXT_MENU, wxContextMenuEventHandler, CMainFrame::OnStatusBarContextMenu);
 		wxClientDC dc(statusbar);
 		dc.SetFont(statusbar->GetFont());
 		int style[NUM_STATUS_FIELDS];

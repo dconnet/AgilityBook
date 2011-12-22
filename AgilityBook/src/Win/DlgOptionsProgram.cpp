@@ -89,7 +89,7 @@ CDlgOptionsProgram::CDlgOptionsProgram(wxWindow* parent)
 		_("IDC_OPT_PGM_USEPROXY"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_UseProxy));
-	ctrlUseProxy->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgOptionsProgram::OnUseProxy), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlUseProxy, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgOptionsProgram::OnUseProxy);
 	ctrlUseProxy->SetHelpText(_("HIDC_OPT_PGM_USEPROXY"));
 	ctrlUseProxy->SetToolTip(_("HIDC_OPT_PGM_USEPROXY"));
 

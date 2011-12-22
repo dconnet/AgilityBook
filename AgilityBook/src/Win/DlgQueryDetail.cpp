@@ -85,7 +85,7 @@ CDlgQueryDetail::CDlgQueryDetail(
 		m_ctrlVenues = new CVenueComboBox(this,
 			m_Config->GetVenues(), wxEmptyString, true,
 			CTrimValidator(&m_strName, TRIMVALIDATOR_TRIM_BOTH), true);
-		m_ctrlVenues->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgQueryDetail::OnSelchangeVenues), NULL, this);
+		BIND_OR_CONNECT_CTRL(m_ctrlVenues, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgQueryDetail::OnSelchangeVenues);
 		m_ctrlVenues->SetHelpText(_("HIDC_QUERYDETAIL_COMBO"));
 		m_ctrlVenues->SetToolTip(_("HIDC_QUERYDETAIL_COMBO"));
 		ctrlLocationOrVenue = m_ctrlVenues;

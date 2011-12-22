@@ -87,8 +87,8 @@ CWizardImport::CWizardImport(
 	, m_ctrlPreviewFile(NULL)
 	, m_ctrlPreview(NULL)
 {
-	Connect(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler(CWizardImport::OnWizardChanging));
-	Connect(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler(CWizardImport::OnWizardChanged));
+	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler, CWizardImport::OnWizardChanging);
+	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler, CWizardImport::OnWizardChanged);
 
 	CAgilityBookOptions::GetImportExportDelimiters(true, m_Delim, m_Delimiter);
 
@@ -101,7 +101,7 @@ CWizardImport::CWizardImport(
 
 	m_ctrlRow = new wxSpinCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 100, m_Row);
-	m_ctrlRow->Connect(wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler(CWizardImport::OnDeltaposImportRowSpin), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRow, wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler, CWizardImport::OnDeltaposImportRowSpin);
 	m_ctrlRow->SetHelpText(_("HIDC_WIZARD_IMPORT_ROW"));
 	m_ctrlRow->SetToolTip(_("HIDC_WIZARD_IMPORT_ROW"));
 
@@ -153,42 +153,42 @@ CWizardImport::CWizardImport(
 	m_ctrlTab = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_DELIM_TAB"),
 		wxDefaultPosition, wxDefaultSize, wxRB_GROUP);
-	m_ctrlTab->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardImport::OnDelimTab), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTab, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardImport::OnDelimTab);
 	m_ctrlTab->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_TAB"));
 	m_ctrlTab->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_TAB"));
 
 	m_ctrlColon = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_DELIM_COLON"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlColon->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardImport::OnDelimColon), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlColon, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardImport::OnDelimColon);
 	m_ctrlColon->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_COLON"));
 	m_ctrlColon->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_COLON"));
 
 	m_ctrlComma = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_DELIM_COMMA"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlComma->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardImport::OnDelimComma), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlComma, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardImport::OnDelimComma);
 	m_ctrlComma->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_COMMA"));
 	m_ctrlComma->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_COMMA"));
 
 	m_ctrlSpace = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_DELIM_SPACE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlSpace->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardImport::OnDelimSpace), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSpace, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardImport::OnDelimSpace);
 	m_ctrlSpace->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_SPACE"));
 	m_ctrlSpace->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_SPACE"));
 
 	m_ctrlSemicolon = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_DELIM_SEMI"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlSemicolon->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardImport::OnDelimSemicolon), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSemicolon, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardImport::OnDelimSemicolon);
 	m_ctrlSemicolon->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_SEMI"));
 	m_ctrlSemicolon->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_SEMI"));
 
 	m_ctrlOther = new wxRadioButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_DELIM_OTHER"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlOther->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(CWizardImport::OnDelimOther), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlOther, wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler, CWizardImport::OnDelimOther);
 	m_ctrlOther->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM_OTHER"));
 	m_ctrlOther->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM_OTHER"));
 
@@ -218,21 +218,21 @@ CWizardImport::CWizardImport(
 	m_ctrlOtherChar = new CTextCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(30, -1), 0);
 	m_ctrlOtherChar->SetMaxLength(1); 
-	m_ctrlOtherChar->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(CWizardImport::OnImportDelim), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlOtherChar, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CWizardImport::OnImportDelim);
 	m_ctrlOtherChar->SetHelpText(_("HIDC_WIZARD_IMPORT_DELIM"));
 	m_ctrlOtherChar->SetToolTip(_("HIDC_WIZARD_IMPORT_DELIM"));
 
 	m_ctrlAssign = new wxButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_ASSIGN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlAssign->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CWizardImport::OnImportAssign), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlAssign, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CWizardImport::OnImportAssign);
 	m_ctrlAssign->SetHelpText(_("HIDC_WIZARD_IMPORT_ASSIGN"));
 	m_ctrlAssign->SetToolTip(_("HIDC_WIZARD_IMPORT_ASSIGN"));
 
 	wxButton* btnFile = new wxButton(this, wxID_ANY,
 		_("IDC_WIZARD_IMPORT_FILE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnFile->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CWizardImport::OnImportFile), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnFile, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CWizardImport::OnImportFile);
 	btnFile->SetHelpText(_("HIDC_WIZARD_IMPORT_FILE"));
 	btnFile->SetToolTip(_("HIDC_WIZARD_IMPORT_FILE"));
 

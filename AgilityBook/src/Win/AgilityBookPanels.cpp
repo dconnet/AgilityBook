@@ -125,7 +125,7 @@ CAgilityBookPanelRuns::CAgilityBookPanelRuns(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
-	m_splitter->Connect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelRuns::SplitterOnIdle), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizer1 = new wxBoxSizer(wxVERTICAL);
@@ -227,7 +227,7 @@ CAgilityBookPanelCalendar::CAgilityBookPanelCalendar(
 	bool bAttachViews = m_views.empty();
 
 	m_splitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D);
-	m_splitter->Connect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelCalendar::SplitterOnIdle), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);
 
 	wxPanel* panel1 = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizer1 = new wxBoxSizer(wxVERTICAL);

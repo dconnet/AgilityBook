@@ -167,7 +167,7 @@ private:
 
 	void OnSelectionChanged(wxTreeEvent& evt);
 	void OnItemActivated(wxTreeEvent& evt);
-	void OnCheckChange(wxTreeEvent& evt);
+	void OnCheckChange(wxEvent& evt);
 	void OnPluginRead(wxCommandEvent& evt);
 	void OnPluginAddCalEntry(wxCommandEvent& evt);
 	void OnPluginEnable(wxCommandEvent& evt);
@@ -734,9 +734,9 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	// Controls (these are done first to control tab order)
 
 	m_ctrlPlugins = new CSortCheckTreeCtrl(this, wxDefaultPosition, wxSize(400, -1));
-	m_ctrlPlugins->Connect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgCalendarPlugins::OnSelectionChanged), NULL, this);
-	m_ctrlPlugins->Connect(wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler(CDlgCalendarPlugins::OnItemActivated), NULL, this);
-	m_ctrlPlugins->Connect(wxEVT_COMMAND_TREE_CHECK_CHANGED, wxTreeEventHandler(CDlgCalendarPlugins::OnCheckChange), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgCalendarPlugins::OnSelectionChanged);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgCalendarPlugins::OnItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlugins, wxEVT_COMMAND_TREE_CHECK_CHANGED, wxEventHandler, CDlgCalendarPlugins::OnCheckChange);
 	m_ctrlPlugins->SetHelpText(_("HIDC_PLUGIN_TREE"));
 	m_ctrlPlugins->SetToolTip(_("HIDC_PLUGIN_TREE"));
 
@@ -750,49 +750,49 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 	m_ctrlRead = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_READ"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlRead->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendarPlugins::OnPluginRead), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlRead, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginRead);
 	m_ctrlRead->SetHelpText(_("HIDC_PLUGIN_READ"));
 	m_ctrlRead->SetToolTip(_("HIDC_PLUGIN_READ"));
 
 	m_ctrlAdd = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_ADD"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlAdd->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendarPlugins::OnPluginAddCalEntry), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlAdd, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginAddCalEntry);
 	m_ctrlAdd->SetHelpText(_("HIDC_PLUGIN_ADD"));
 	m_ctrlAdd->SetToolTip(_("HIDC_PLUGIN_ADD"));
 
 	m_ctrlEnable = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_ENABLE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlEnable->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendarPlugins::OnPluginEnable), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEnable, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginEnable);
 	m_ctrlEnable->SetHelpText(_("HIDC_PLUGIN_ENABLE"));
 	m_ctrlEnable->SetToolTip(_("HIDC_PLUGIN_ENABLE"));
 
 	m_ctrlQuery = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_QUERYDETAILS"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlQuery->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendarPlugins::OnPluginQueryDetails), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlQuery, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginQueryDetails);
 	m_ctrlQuery->SetHelpText(_("HIDC_PLUGIN_QUERYDETAILS"));
 	m_ctrlQuery->SetToolTip(_("HIDC_PLUGIN_QUERYDETAILS"));
 
 	wxButton* btnNew = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendarPlugins::OnPluginNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginNew);
 	btnNew->SetHelpText(_("HIDC_PLUGIN_NEW"));
 	btnNew->SetToolTip(_("HIDC_PLUGIN_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendarPlugins::OnPluginEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginEdit);
 	m_ctrlEdit->SetHelpText(_("HIDC_PLUGIN_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_PLUGIN_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_PLUGIN_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgCalendarPlugins::OnPluginDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgCalendarPlugins::OnPluginDelete);
 	m_ctrlDelete->SetHelpText(_("HIDC_PLUGIN_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_PLUGIN_DELETE"));
 
@@ -941,7 +941,7 @@ void CDlgCalendarPlugins::OnItemActivated(wxTreeEvent& evt)
 }
 
 
-void CDlgCalendarPlugins::OnCheckChange(wxTreeEvent& evt)
+void CDlgCalendarPlugins::OnCheckChange(wxEvent& evt)
 {
 	// Check state of a button just changed.
 	UpdateControls();

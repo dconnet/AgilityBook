@@ -181,7 +181,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlDivision = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, 0);
-	m_ctrlDivision->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgConfigEventMethod::OnSelchangeDivision), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDivision, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgConfigEventMethod::OnSelchangeDivision);
 	m_ctrlDivision->SetHelpText(_("HIDC_CONFIG_EVENT_DIVISION"));
 	m_ctrlDivision->SetToolTip(_("HIDC_CONFIG_EVENT_DIVISION"));
 	wxString all = _("IDS_ALL");
@@ -213,7 +213,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlValidFrom = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_DATE_VALID_FROM"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT);
-	m_ctrlValidFrom->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgConfigEventMethod::OnValidFrom), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlValidFrom, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnValidFrom);
 	m_ctrlValidFrom->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_VALID_FROM"));
 	m_ctrlValidFrom->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_VALID_FROM"));
 
@@ -240,7 +240,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlValidTo = new wxCheckBox(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_DATE_VALID_TO"),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT);
-	m_ctrlValidTo->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgConfigEventMethod::OnValidTo), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlValidTo, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnValidTo);
 	m_ctrlValidTo->SetHelpText(_("HIDC_CONFIG_EVENT_DATE_VALID_TO"));
 	m_ctrlValidTo->SetToolTip(_("HIDC_CONFIG_EVENT_DATE_VALID_TO"));
 
@@ -272,7 +272,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlType = new wxComboBox(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
-	m_ctrlType->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgConfigEventMethod::OnSelchangeType), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlType, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgConfigEventMethod::OnSelchangeType);
 	m_ctrlType->SetHelpText(_("HIDC_CONFIG_EVENT_TYPE"));
 	m_ctrlType->SetToolTip(_("HIDC_CONFIG_EVENT_TYPE"));
 	// If any additional types are added in ARBConfigScoring,
@@ -319,7 +319,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		_("IDC_CONFIG_EVENT_SPEED"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_SpeedPts));
-	m_ctrlSpeedPts->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgConfigEventMethod::OnSpeedPoints), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSpeedPts, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnSpeedPoints);
 	m_ctrlSpeedPts->SetHelpText(_("HIDC_CONFIG_EVENT_SPEED"));
 	m_ctrlSpeedPts->SetToolTip(_("HIDC_CONFIG_EVENT_SPEED"));
 
@@ -342,9 +342,9 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacement = new CReportListCtrl(this,
 		wxDefaultPosition, wxDefaultSize,
 		true, CReportListCtrl::eNoSortHeader, true);
-	m_ctrlPlacement->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgConfigEventMethod::OnItemchangedPlacement), NULL, this);
-	m_ctrlPlacement->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgConfigEventMethod::OnItemActivatedPlacement), NULL, this);
-	m_ctrlPlacement->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgConfigEventMethod::OnKeydownPlacement), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgConfigEventMethod::OnItemchangedPlacement);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgConfigEventMethod::OnItemActivatedPlacement);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlacement, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgConfigEventMethod::OnKeydownPlacement);
 	m_ctrlPlacement->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT"));
 	m_ctrlPlacement->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT"));
 	m_ctrlPlacement->InsertColumn(0, _("IDS_COL_PLACE"));
@@ -366,21 +366,21 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	m_ctrlPlacementNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlPlacementNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEventMethod::OnPlacementNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlacementNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementNew);
 	m_ctrlPlacementNew->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
 	m_ctrlPlacementNew->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_NEW"));
 
 	m_ctrlPlacementEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_EDIT"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlPlacementEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEventMethod::OnPlacementEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlacementEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementEdit);
 	m_ctrlPlacementEdit->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
 	m_ctrlPlacementEdit->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_EDIT"));
 
 	m_ctrlPlacementDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_PLACEMENT_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlPlacementDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEventMethod::OnPlacementDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPlacementDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEventMethod::OnPlacementDelete);
 	m_ctrlPlacementDelete->SetHelpText(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
 	m_ctrlPlacementDelete->SetToolTip(_("HIDC_CONFIG_EVENT_PLACEMENT_DELETE"));
 

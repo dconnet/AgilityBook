@@ -167,28 +167,28 @@ CDlgInfoNote::CDlgInfoNote(
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
-	m_ctrlNames->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgInfoNote::OnSelchangeName), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlNames, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgInfoNote::OnSelchangeName);
 	m_ctrlNames->SetHelpText(_("HIDC_INFONOTE"));
 	m_ctrlNames->SetToolTip(_("HIDC_INFONOTE"));
 
 	wxButton* ctrlNew = new wxButton(this, wxID_ANY,
 		_("IDC_INFONOTE_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgInfoNote::OnNewItem), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgInfoNote::OnNewItem);
 	ctrlNew->SetHelpText(_("HIDC_INFONOTE_NEW"));
 	ctrlNew->SetToolTip(_("HIDC_INFONOTE_NEW"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_INFONOTE_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgInfoNote::OnDeleteItem), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgInfoNote::OnDeleteItem);
 	m_ctrlDelete->SetHelpText(_("HIDC_INFONOTE_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_INFONOTE_DELETE"));
 
 	m_ctrlVisible = new wxCheckBox(this, wxID_ANY,
 		_("IDC_INFONOTE_VISIBLE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlVisible->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgInfoNote::OnClickedJudgeVisible), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlVisible, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgInfoNote::OnClickedJudgeVisible);
 	m_ctrlVisible->SetHelpText(_("HIDC_INFONOTE_VISIBLE"));
 	m_ctrlVisible->SetToolTip(_("HIDC_INFONOTE_VISIBLE"));
 
@@ -239,8 +239,8 @@ CDlgInfoNote::CDlgInfoNote(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	// Connect killfocus handlers last
-	m_ctrlNotes->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgInfoNote::OnKillfocusComments), NULL, this);
+	// Bind killfocus handlers last
+	BIND_OR_CONNECT_CTRL(m_ctrlNotes, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgInfoNote::OnKillfocusComments);
 }
 
 

@@ -121,7 +121,7 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 	m_ctrlCancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
-	m_ctrlCancel->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgProgress::OnCancel), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlCancel, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgProgress::OnCancel);
 
 	SetSizer(bSizer);
 	Layout();

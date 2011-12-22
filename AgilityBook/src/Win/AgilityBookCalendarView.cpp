@@ -1199,13 +1199,13 @@ bool CAgilityBookCalendarView::Create(
 		int border)
 {
 	m_Ctrl = new CAgilityBookCalendar(this, parentView, parentCtrl);
-	m_Ctrl->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CAgilityBookCalendarView::OnCtrlMouseEvent), NULL, this);
-	m_Ctrl->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(CAgilityBookCalendarView::OnCtrlMouseEvent), NULL, this);
-	m_Ctrl->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CAgilityBookCalendarView::OnCtrlMouseEvent), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEFT_DOWN, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_RIGHT_DOWN, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_LEFT_DCLICK, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseEvent);
 #if wxUSE_MOUSEWHEEL
-	m_Ctrl->Connect(wxEVT_MOUSEWHEEL, wxMouseEventHandler(CAgilityBookCalendarView::OnCtrlMouseWheel), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_MOUSEWHEEL, wxMouseEventHandler, CAgilityBookCalendarView::OnCtrlMouseWheel);
 #endif
-	m_Ctrl->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CAgilityBookCalendarView::OnCtrlKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookCalendarView::OnCtrlKeyDown);
 #if defined(__WXMAC__)
 	m_Ctrl->SetDropTarget(new CFileDropTarget(doc->GetDocumentManager()));
 #endif

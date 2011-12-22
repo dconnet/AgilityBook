@@ -254,7 +254,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				ARBDogList::const_iterator iDog;
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
+					BIND_OR_CONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
 					wxString item((*iDog)->GetGenericName());
 					item.Replace(wxT("&"), wxT("&&"));
 					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
@@ -289,7 +289,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 						iFilter != data.filterNames.end();
 						++iFilter, ++menuId)
 					{
-						parent->Connect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
+						BIND_OR_CONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
 						wxString item((*iFilter));
 						item.Replace(wxT("&"), wxT("&&"));
 						wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);

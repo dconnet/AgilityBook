@@ -190,10 +190,10 @@ CDlgFindLinks::CDlgFindLinks(
 	m_ctrlLinks = new CReportListCtrl(this,
 		wxDefaultPosition, wxSize(400,150),
 		true, CReportListCtrl::eSortHeader, true);
-	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler(CDlgFindLinks::OnColumnClick), NULL, this);
-	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgFindLinks::OnItemSelected), NULL, this);
-	m_ctrlLinks->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgFindLinks::OnItemActivated), NULL, this);
-	m_ctrlLinks->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgFindLinks::OnKeyDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler, CDlgFindLinks::OnColumnClick);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgFindLinks::OnItemSelected);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgFindLinks::OnItemActivated);
+	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgFindLinks::OnKeyDown);
 	m_imgEmpty = m_ctrlLinks->ImageEmpty();
 	m_imgOk = m_ctrlLinks->AddIcon(wxIcon(CalPlan_xpm));
 	m_imgMissing = m_ctrlLinks->AddIcon(wxIcon(CalTentative_xpm));
@@ -207,21 +207,21 @@ CDlgFindLinks::CDlgFindLinks(
 	wxButton* btnCopy = new wxButton(this, wxID_ANY,
 		_("IDC_FINDLINKS_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	btnCopy->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgFindLinks::OnCopy), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgFindLinks::OnCopy);
 	btnCopy->SetHelpText(_("HIDC_FINDLINKS_COPY"));
 	btnCopy->SetToolTip(_("HIDC_FINDLINKS_COPY"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_FINDLINKS_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgFindLinks::OnEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgFindLinks::OnEdit);
 	m_ctrlEdit->SetHelpText(_("HIDC_FINDLINKS_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_FINDLINKS_EDIT"));
 
 	m_ctrlOpen = new wxButton(this, wxID_ANY,
 		_("IDC_FINDLINKS_OPEN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlOpen->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgFindLinks::OnOpen), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlOpen, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgFindLinks::OnOpen);
 	m_ctrlOpen->SetHelpText(_("HIDC_FINDLINKS_OPEN"));
 	m_ctrlOpen->SetToolTip(_("HIDC_FINDLINKS_OPEN"));
 

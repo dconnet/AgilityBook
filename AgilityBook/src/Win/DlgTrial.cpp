@@ -118,7 +118,7 @@ CDlgTrial::CDlgTrial(
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location), _("IDS_ENTER_NAME"));
-	m_ctrlLocation->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgTrial::OnSelchangeLocation), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgTrial::OnSelchangeLocation);
 	m_ctrlLocation->SetHelpText(_("HIDC_TRIAL_LOCATION"));
 	m_ctrlLocation->SetToolTip(_("HIDC_TRIAL_LOCATION"));
 
@@ -141,7 +141,7 @@ CDlgTrial::CDlgTrial(
 	ctrlTrialNotes->SetToolTip(_("HIDC_TRIAL_NOTES"));
 
 	m_ctrlLocationNotes = new CNoteButton(this);
-	m_ctrlLocationNotes->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgTrial::OnLocationNotes), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlLocationNotes, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnLocationNotes);
 	m_ctrlLocationNotes->SetHelpText(_("HIDC_TRIAL_LOCATION_NOTES"));
 	m_ctrlLocationNotes->SetToolTip(_("HIDC_TRIAL_LOCATION_NOTES"));
 
@@ -163,35 +163,35 @@ CDlgTrial::CDlgTrial(
 	wxButton* btnNew = new wxButton(this, wxID_ANY,
 		_("IDC_TRIAL_CLUB_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	btnNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgTrial::OnClubNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(btnNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubNew);
 	btnNew->SetHelpText(_("HIDC_TRIAL_CLUB_NEW"));
 	btnNew->SetToolTip(_("HIDC_TRIAL_CLUB_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_TRIAL_CLUB_EDIT"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgTrial::OnClubEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubEdit);
 	m_ctrlEdit->SetHelpText(_("HIDC_TRIAL_CLUB_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_TRIAL_CLUB_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_TRIAL_CLUB_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgTrial::OnClubDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubDelete);
 	m_ctrlDelete->SetHelpText(_("HIDC_TRIAL_CLUB_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_TRIAL_CLUB_DELETE"));
 
 	m_ctrlClubs = new CReportListCtrl(this,
 		wxDefaultPosition, wxDefaultSize,
 		true, CReportListCtrl::eNoSortHeader, true);
-	m_ctrlClubs->Connect(wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler(CDlgTrial::OnItemSelectedClubs), NULL, this);
-	m_ctrlClubs->Connect(wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler(CDlgTrial::OnItemActivatedClubs), NULL, this);
-	m_ctrlClubs->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(CDlgTrial::OnKeydownClubs), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler, CDlgTrial::OnItemSelectedClubs);
+	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_COMMAND_LIST_ITEM_ACTIVATED, wxListEventHandler, CDlgTrial::OnItemActivatedClubs);
+	BIND_OR_CONNECT_CTRL(m_ctrlClubs, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgTrial::OnKeydownClubs);
 	m_ctrlClubs->SetHelpText(_("HIDC_TRIAL_CLUBS"));
 	m_ctrlClubs->SetToolTip(_("HIDC_TRIAL_CLUBS"));
 
 	m_ctrlClubNotes = new CNoteButton(this);
-	m_ctrlClubNotes->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgTrial::OnClubNotes), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlClubNotes, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgTrial::OnClubNotes);
 	m_ctrlClubNotes->SetHelpText(_("HIDC_TRIAL_CLUB_NOTES"));
 	m_ctrlClubNotes->SetToolTip(_("HIDC_TRIAL_CLUB_NOTES"));
 
@@ -281,8 +281,8 @@ CDlgTrial::CDlgTrial(
 	ListClubs();
 	UpdateNotes(true, true);
 
-	// Connect killfocus handlers last
-	m_ctrlLocation->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgTrial::OnKillfocusLocation), NULL, this);
+	// Bind killfocus handlers last
+	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgTrial::OnKillfocusLocation);
 }
 
 

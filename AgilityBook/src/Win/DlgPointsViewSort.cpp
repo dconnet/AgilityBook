@@ -70,7 +70,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY);
-	m_ctrlPrimary->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgPointsViewSort::OnSelchangePrimary), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPrimary, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgPointsViewSort::OnSelchangePrimary);
 	m_ctrlPrimary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C1"));
 	m_ctrlPrimary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C1"));
 
@@ -83,7 +83,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY);
-	m_ctrlSecondary->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgPointsViewSort::OnSelchangeSecondary), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSecondary, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgPointsViewSort::OnSelchangeSecondary);
 	m_ctrlSecondary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C2"));
 	m_ctrlSecondary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C2"));
 
@@ -96,7 +96,7 @@ CDlgPointsViewSort::CDlgPointsViewSort(wxWindow* pParent)
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY);
-	m_ctrlTertiary->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgPointsViewSort::OnSelchangeTertiary), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlTertiary, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgPointsViewSort::OnSelchangeTertiary);
 	m_ctrlTertiary->SetHelpText(_("HIDC_POINTS_VIEW_SORT_C3"));
 	m_ctrlTertiary->SetToolTip(_("HIDC_POINTS_VIEW_SORT_C3"));
 

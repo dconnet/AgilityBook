@@ -248,8 +248,8 @@ CDlgReferenceRun::CDlgReferenceRun(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	// Connect killfocus handlers last
-	ctrlTime->Connect(wxEVT_KILL_FOCUS, wxFocusEventHandler(CDlgReferenceRun::OnKillfocusRefRunTime), NULL, this);
+	// Bind killfocus handlers last
+	BIND_OR_CONNECT_CTRL(ctrlTime, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgReferenceRun::OnKillfocusRefRunTime);
 }
 
 

@@ -73,14 +73,14 @@ CDlgOtherPoint::CDlgOtherPoint(
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL,
 		wxCB_DROPDOWN|wxCB_READONLY|wxCB_SORT);
-	m_ctrlOtherPoints->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler(CDlgOtherPoint::OnSelchangeOtherpoints), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlOtherPoints, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgOtherPoint::OnSelchangeOtherpoints);
 	m_ctrlOtherPoints->SetHelpText(_("HIDC_OTHER_OTHERPOINTS"));
 	m_ctrlOtherPoints->SetToolTip(_("HIDC_OTHER_OTHERPOINTS"));
 
 	wxButton* ctrlNew = new wxButton(this, wxID_ANY,
 		_("IDC_OTHER_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgOtherPoint::OnOtherNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgOtherPoint::OnOtherNew);
 	ctrlNew->SetHelpText(_("HIDC_OTHER_NEW"));
 	ctrlNew->SetToolTip(_("HIDC_OTHER_NEW"));
 

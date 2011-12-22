@@ -194,7 +194,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 		_("IDC_CONFIG_EVENT_HAS_SUBNAMES"),
 		wxDefaultPosition, wxDefaultSize, 0,
 		wxGenericValidator(&m_bHasSubNames));
-	ctrlHasSubnames->Connect(wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnClickedSubNames), NULL, this);
+	BIND_OR_CONNECT_CTRL(ctrlHasSubnames, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnClickedSubNames);
 	ctrlHasSubnames->SetHelpText(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
 	ctrlHasSubnames->SetToolTip(_("HIDC_CONFIG_EVENT_HAS_SUBNAMES"));
 
@@ -214,29 +214,29 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_ctrlSubNames = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxLB_SINGLE|wxLB_SORT);
-	m_ctrlSubNames->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgConfigEvent::OnLbnSelchangeSubnames), NULL, this);
-	m_ctrlSubNames->Connect(wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler(CDlgConfigEvent::OnLbnDblclkSubnames), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSubNames, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgConfigEvent::OnLbnSelchangeSubnames);
+	BIND_OR_CONNECT_CTRL(m_ctrlSubNames, wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler, CDlgConfigEvent::OnLbnDblclkSubnames);
 	m_ctrlSubNames->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES"));
 	m_ctrlSubNames->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES"));
 
 	m_ctrlSubNamesNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_SUBNAMES_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlSubNamesNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedSubNamesNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSubNamesNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedSubNamesNew);
 	m_ctrlSubNamesNew->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES_NEW"));
 	m_ctrlSubNamesNew->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES_NEW"));
 
 	m_ctrlSubNamesEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_SUBNAMES_EDIT"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlSubNamesEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedSubNamesEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSubNamesEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedSubNamesEdit);
 	m_ctrlSubNamesEdit->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES_EDIT"));
 	m_ctrlSubNamesEdit->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES_EDIT"));
 
 	m_ctrlSubNamesDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_SUBNAMES_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlSubNamesDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedSubNamesDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlSubNamesDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedSubNamesDelete);
 	m_ctrlSubNamesDelete->SetHelpText(_("HIDC_CONFIG_EVENT_SUBNAMES_DELETE"));
 	m_ctrlSubNamesDelete->SetToolTip(_("HIDC_CONFIG_EVENT_SUBNAMES_DELETE"));
 
@@ -248,50 +248,50 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_ctrlMethods = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, 0);
-	m_ctrlMethods->Connect(wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler(CDlgConfigEvent::OnLbnDblclkMethods), NULL, this);
-	m_ctrlMethods->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgConfigEvent::OnLbnSelchangeMethods), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlMethods, wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler, CDlgConfigEvent::OnLbnDblclkMethods);
+	BIND_OR_CONNECT_CTRL(m_ctrlMethods, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgConfigEvent::OnLbnSelchangeMethods);
 	m_ctrlMethods->SetHelpText(_("HIDC_CONFIG_EVENT_METHODS"));
 	m_ctrlMethods->SetToolTip(_("HIDC_CONFIG_EVENT_METHODS"));
 
 	m_ctrlNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_NEW"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedNew);
 	m_ctrlNew->SetHelpText(_("HIDC_CONFIG_EVENT_NEW"));
 	m_ctrlNew->SetToolTip(_("HIDC_CONFIG_EVENT_NEW"));
 
 	m_ctrlEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_EDIT"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedEdit);
 	m_ctrlEdit->SetHelpText(_("HIDC_CONFIG_EVENT_EDIT"));
 	m_ctrlEdit->SetToolTip(_("HIDC_CONFIG_EVENT_EDIT"));
 
 	m_ctrlDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_DELETE"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedDelete);
 	m_ctrlDelete->SetHelpText(_("HIDC_CONFIG_EVENT_DELETE"));
 	m_ctrlDelete->SetToolTip(_("HIDC_CONFIG_EVENT_DELETE"));
 
 	m_ctrlCopy = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_COPY"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlCopy->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedCopy), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlCopy, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedCopy);
 	m_ctrlCopy->SetHelpText(_("HIDC_CONFIG_EVENT_COPY"));
 	m_ctrlCopy->SetToolTip(_("HIDC_CONFIG_EVENT_COPY"));
  
 	m_ctrlUp = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_MOVE_UP"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlUp->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedUp), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlUp, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedUp);
 	m_ctrlUp->SetHelpText(_("HIDC_CONFIG_EVENT_MOVE_UP"));
 	m_ctrlUp->SetToolTip(_("HIDC_CONFIG_EVENT_MOVE_UP"));
 
 	m_ctrlDown = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_MOVE_DOWN"),
 		wxDefaultPosition, wxDefaultSize, 0);
-	m_ctrlDown->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnBnClickedDown), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlDown, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnBnClickedDown);
 	m_ctrlDown->SetHelpText(_("HIDC_CONFIG_EVENT_MOVE_DOWN"));
 	m_ctrlDown->SetToolTip(_("HIDC_CONFIG_EVENT_MOVE_DOWN"));
 
@@ -309,7 +309,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	m_ctrlInfo = new wxStaticText(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(-1, 50), wxST_NO_AUTORESIZE|wxSUNKEN_BORDER);
-	m_ctrlInfo->Connect(wxEVT_COMMAND_LEFT_DCLICK, wxMouseEventHandler(CDlgConfigEvent::OnDblclickConfigInfo), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlInfo, wxEVT_COMMAND_LEFT_DCLICK, wxCommandEventHandler, CDlgConfigEvent::OnDblclickConfigInfo);
 	m_ctrlInfo->Wrap(-1);
 	m_ctrlInfo->SetHelpText(_("HIDC_CONFIG_EVENT_INFO"));
 	m_ctrlInfo->SetToolTip(_("HIDC_CONFIG_EVENT_INFO"));
@@ -322,29 +322,29 @@ CDlgConfigEvent::CDlgConfigEvent(
 	m_ctrlPointsList = new wxListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxLB_SINGLE);
-	m_ctrlPointsList->Connect(wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler(CDlgConfigEvent::OnSelchangePoints), NULL, this);
-	m_ctrlPointsList->Connect(wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler(CDlgConfigEvent::OnDblclkPoints), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPointsList, wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler, CDlgConfigEvent::OnSelchangePoints);
+	BIND_OR_CONNECT_CTRL(m_ctrlPointsList, wxEVT_COMMAND_LISTBOX_DOUBLECLICKED, wxCommandEventHandler, CDlgConfigEvent::OnDblclkPoints);
 	m_ctrlPointsList->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS"));
 	m_ctrlPointsList->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS"));
 
 	m_ctrlPointsNew = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_POINTS_NEW"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlPointsNew->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnPointsNew), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPointsNew, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnPointsNew);
 	m_ctrlPointsNew->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS_NEW"));
 	m_ctrlPointsNew->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS_NEW"));
 
 	m_ctrlPointsEdit = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_POINTS_EDIT"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlPointsEdit->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnPointsEdit), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPointsEdit, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnPointsEdit);
 	m_ctrlPointsEdit->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS_EDIT"));
 	m_ctrlPointsEdit->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS_EDIT"));
 
 	m_ctrlPointsDelete = new wxButton(this, wxID_ANY,
 		_("IDC_CONFIG_EVENT_POINTS_DELETE"),
 		wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-	m_ctrlPointsDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(CDlgConfigEvent::OnPointsDelete), NULL, this);
+	BIND_OR_CONNECT_CTRL(m_ctrlPointsDelete, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgConfigEvent::OnPointsDelete);
 	m_ctrlPointsDelete->SetHelpText(_("HIDC_CONFIG_EVENT_POINTS_DELETE"));
 	m_ctrlPointsDelete->SetToolTip(_("HIDC_CONFIG_EVENT_POINTS_DELETE"));
 
@@ -1212,7 +1212,7 @@ void CDlgConfigEvent::OnBnClickedDown(wxCommandEvent& evt)
 }
 
 
-void CDlgConfigEvent::OnDblclickConfigInfo(wxMouseEvent& evt)
+void CDlgConfigEvent::OnDblclickConfigInfo(wxCommandEvent& evt)
 {
 	EditMethod();
 }
