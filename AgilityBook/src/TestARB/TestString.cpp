@@ -99,13 +99,7 @@ SUITE(TestString)
 			wxString s2(wxT("1.3-12"));
 			double a2;
 			CHECK(!tstringUtil::ToCDouble(s2, a2));
-#if wxCHECK_VERSION(2, 9, 1)
 			CHECK(a2 == 1.3);
-#elif wxCHECK_VERSION(2, 9, 0)
-			CHECK(a2 == 0.0);
-#else
-			CHECK(a2 == 1.3);
-#endif
 		}
 	}
 

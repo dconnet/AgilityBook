@@ -143,7 +143,7 @@ bool CLanguageManager::SetLang(int langId)
 		delete m_locale;
 	m_locale = new wxLocale();
 	m_locale->AddCatalogLookupPathPrefix(m_dirLang);
-#if wxCHECK_VERSION(2,9,0)
+#if wxCHECK_VERSION(2, 9, 3)
 	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
 #else
 
@@ -193,7 +193,7 @@ int main(int argc, char** argv)
 	}
 
 	wxInitializer initializer(argc, argv);
-#if defined(WIN32) && wxCHECK_VERSION(2, 9, 1)
+#if defined(WIN32) && wxCHECK_VERSION(2, 9, 3)
 	// By default, the path directories are tweaked to remove debug/release.
 	// I assume my files are in the same location as the binary.
 	// Now I don't need to tweak the wx source!

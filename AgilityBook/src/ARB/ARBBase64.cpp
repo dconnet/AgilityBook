@@ -112,7 +112,7 @@ bool ARBBase64::Decode(
 	while (count <= bufsize && inBase64[nChar] != '=')
 	{
 		//check to see if it's a legal base64 char...
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 		while (SKIP == base64map[inBase64[nChar].GetValue()])
 #else
 		while (SKIP == base64map[inBase64[nChar]])
@@ -132,7 +132,7 @@ bool ARBBase64::Decode(
 		}
 
 		//add the base64 char to std...
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 		std |= base64map[inBase64[nChar++].GetValue() & 0xFF];
 #else
 		std |= base64map[inBase64[nChar++] & 0xFF];

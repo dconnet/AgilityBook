@@ -100,7 +100,7 @@ bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
 		// This may have failed for 2 reasons:
 		// - Bad data.
 		// - Different decimal point from Locale.
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 		wxUniChar pt = '.';
 #else
 		wxChar pt = '.';
@@ -122,7 +122,7 @@ bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
 
 bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 {
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	bool bOk = inStr.ToCLong(&outValue);
 	// The above fails for "123-45" and returns 0. Before it returned 123.
 	// That's the behavior I'm relying on. (Needed when reading dates)
@@ -142,7 +142,7 @@ bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 
 bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
 {
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	// This will fail on "1.2-3". That's ok. The only time this is used
 	// is for parsing an actual number in Element.
 	return inStr.ToCDouble(&outValue);

@@ -47,13 +47,13 @@ CReadHttp::CReadHttp(
 {
 	// 2.8.10 has a memory leak if you use the static proxy method
 	//TODO: verify that 2.9 is ok
-#if !wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	wxString proxy = CAgilityBookOptions::GetProxy();
 	if (!proxy.empty())
 		wxURL::SetDefaultProxy(wxEmptyString);
 #endif
 	m_URL = new wxURL(inURL);
-#if !wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	if (!proxy.empty())
 		m_URL->SetProxy(proxy);
 #endif
@@ -70,13 +70,13 @@ CReadHttp::CReadHttp(
 	, m_Stream(&outStream)
 	, m_pProgress(pProgress)
 {
-#if !wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	wxString proxy = CAgilityBookOptions::GetProxy();
 	if (!proxy.empty())
 		wxURL::SetDefaultProxy(wxEmptyString);
 #endif
 	m_URL = new wxURL(inURL);
-#if !wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	if (!proxy.empty())
 		m_URL->SetProxy(proxy);
 #endif

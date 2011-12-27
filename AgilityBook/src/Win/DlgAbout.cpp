@@ -38,7 +38,7 @@
 #endif
 
 
-#if wxCHECK_VERSION(2, 9, 2)
+#if wxCHECK_VERSION(2, 9, 3)
 // 2.9 now supports the below code in the generic version.
 // And in some cases (like msw), the hyperlink is native.
 typedef wxHyperlinkCtrl CHyperlinkCtrl;

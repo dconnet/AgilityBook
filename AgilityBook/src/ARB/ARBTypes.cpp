@@ -58,7 +58,7 @@ wxString SanitizeStringForHTML(
 	wxString data;
 	for (size_t nChar = 0; nChar < inRawData.length(); ++nChar)
 	{
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 		switch (inRawData[nChar].GetValue())
 #else
 		switch (inRawData[nChar])
@@ -231,7 +231,7 @@ wxString ARBDouble::ToString(
 		LocaleType eUseDefaultLocale)
 {
 	wxString retVal;
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	wxUniChar pt = '.';
 #else
 	wxChar pt = '.';

@@ -77,7 +77,7 @@ static void StripNewlines(wxString& inStr)
 	wxString::size_type pos = inStr.find_first_of(wxT("\n"));
 	while (wxString::npos != pos)
 	{
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 		inStr.replace(pos, 1, 1, wxUniChar(' '));
 #else
 		inStr.replace(pos, 1, 1, ' ');
