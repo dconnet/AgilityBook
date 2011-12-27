@@ -174,9 +174,10 @@
 #endif
 
 // ARB was developed against v2.8.10 - anything earlier is not supported.
+// And specifically exclude 2.9.0-2.9.2 (.3 had api changes/fixes)
 #include <wx/version.h>
-#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER == 0
-#error v2.9.0 does not work right
+#if wxMAJOR_VERSION == 2 && wxMINOR_VERSION == 9 && wxRELEASE_NUMBER < 3
+#error pre-v2.9.3 not supported
 #endif
 #if !wxCHECK_VERSION(2, 8, 10)
 #error Unsupported wxWidget version
@@ -303,7 +304,7 @@
  * Bind is only available on wx2.9+.
  * Rather than ifdef each instance of Connect, hide behind an evil macro.
  */
-#if wxCHECK_VERSION(2, 9, 0)
+#if wxCHECK_VERSION(2, 9, 3)
 	#define BIND_OR_CONNECT(evt, cast, func) \
 		Bind(evt, &func, this)
 	#define BIND_OR_CONNECT_CTRL(ctrl, evt, cast, func) \

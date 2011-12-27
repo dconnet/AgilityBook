@@ -41,14 +41,14 @@ public:
 			const wxString& name = wxListCtrlNameStr)
 		: wxListView(parent, id, pos, size, style, validator, name)
 	{
-#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
+#if !wxCHECK_VERSION(2, 9, 3) && defined(__WXMAC__)
 		// On Mac, when I set a minimal size for lists, that list will often
 		// be sized wrong. So fix it. This has been fixed in 2.9.1.
 		if (wxDefaultSize != size)
 			SetMinSize(size);
 #endif
 	}
-#if !wxCHECK_VERSION(2, 9, 1) && defined(__WXMAC__)
+#if !wxCHECK_VERSION(2, 9, 3) && defined(__WXMAC__)
 	bool Create(
 			wxWindow* parent,
 			wxWindowID id = wxID_ANY,
@@ -104,7 +104,7 @@ public:
 	int GetItemState(const wxTreeItemId& item)
 	{
 #ifdef WX_TREE_HAS_STATE
-	#if wxCHECK_VERSION(2, 9, 0)
+	#if wxCHECK_VERSION(2, 9, 3)
 		return wxTreeCtrl::DoGetItemState(item);
 	#else
 		return wxTreeCtrl::GetState(item);
@@ -116,7 +116,7 @@ public:
 	void SetItemState(const wxTreeItemId& item, int state)
 	{
 #ifdef WX_TREE_HAS_STATE
-	#if wxCHECK_VERSION(2, 9, 0)
+	#if wxCHECK_VERSION(2, 9, 3)
 		wxTreeCtrl::DoSetItemState(item, state);
 	#else
 		wxTreeCtrl::SetState(item, state);
