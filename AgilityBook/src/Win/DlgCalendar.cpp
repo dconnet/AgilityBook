@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-30 DRC Fixed CGenericValidator.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-07-14 DRC Fixed group box creation order.
@@ -393,7 +394,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Club, TRIMVALIDATOR_TRIM_BOTH));
-	BIND_OR_CONNECT_CTRL(m_ctrlClub, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgCalendar::OnSelchangeClub);
+	BIND_OR_CONNECT_CTRL(m_ctrlClub, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgCalendar::OnSelchangeClub);
 	m_ctrlClub->SetHelpText(_("HIDC_CAL_CLUB"));
 	m_ctrlClub->SetToolTip(_("HIDC_CAL_CLUB"));
 
@@ -416,7 +417,7 @@ CDlgCalendar::CDlgCalendar(
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Location, TRIMVALIDATOR_TRIM_BOTH));
-	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler, CDlgCalendar::OnSelchangeLocation);
+	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgCalendar::OnSelchangeLocation);
 	m_ctrlLocation->SetHelpText(_("HIDC_CAL_LOCATION"));
 	m_ctrlLocation->SetToolTip(_("HIDC_CAL_LOCATION"));
 
@@ -573,13 +574,13 @@ CDlgCalendar::CDlgCalendar(
 }
 
 
-void CDlgCalendar::UpdateLocationInfo(wxChar const* pLocation)
+void CDlgCalendar::UpdateLocationInfo(wxString const& location)
 {
 	wxString str;
-	if (pLocation && *pLocation)
+	if (!location.empty())
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(pLocation, &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eLocationInfo).FindItem(location, &pItem))
 		{
 			str = pItem->GetComment();
 		}
@@ -604,19 +605,19 @@ void CDlgCalendar::ListLocations()
 		if ((*iter) == loc)
 		{
 			m_ctrlLocation->SetSelection(index);
-			UpdateLocationInfo((*iter));
+			UpdateLocationInfo(*iter);
 		}
 	}
 }
 
 
-void CDlgCalendar::UpdateClubInfo(wxChar const* pClub)
+void CDlgCalendar::UpdateClubInfo(wxString const& club)
 {
 	wxString str;
-	if (pClub && *pClub)
+	if (!club.empty())
 	{
 		ARBInfoItemPtr pItem;
-		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(pClub, &pItem))
+		if (m_pDoc->Book().GetInfo().GetInfo(ARBInfo::eClubInfo).FindItem(club, &pItem))
 		{
 			str = pItem->GetComment();
 		}
@@ -684,21 +685,15 @@ void CDlgCalendar::OnDateClosesUnknown(wxCommandEvent& evt)
 
 void CDlgCalendar::OnCalEntry(wxCommandEvent& evt)
 {
-	wxString s = m_ctrlOnlineUrl->GetValue();
-	if (!m_ctrlEntryPlan->GetValue() || s.empty())
-		m_ctrlOnlineUrlEntry->Enable(false);
-	else
-		m_ctrlOnlineUrlEntry->Enable(true);
+	TransferDataFromWindow();
+	m_ctrlOnlineUrlEntry->Enable(!m_OnlineUrl.empty());
 }
 
 
 void CDlgCalendar::OnEnChangeCalOnlineUrl(wxCommandEvent& evt)
 {
-	wxString s = m_ctrlOnlineUrl->GetValue();
-	if (!m_ctrlEntryPlan->GetValue() || s.empty())
-		m_ctrlOnlineUrlEntry->Enable(false);
-	else
-		m_ctrlOnlineUrlEntry->Enable(true);
+	TransferDataFromWindow();
+	m_ctrlOnlineUrlEntry->Enable(!m_OnlineUrl.empty());
 }
 
 
@@ -711,10 +706,8 @@ void CDlgCalendar::OnOnlineEntry(wxCommandEvent& evt)
 
 void CDlgCalendar::OnEnChangeCalPremiumUrl(wxCommandEvent& evt)
 {
-	if (m_ctrlPremiumUrl->GetValue().empty())
-		m_ctrlPremiumEntry->Enable(false);
-	else
-		m_ctrlPremiumEntry->Enable(true);
+	TransferDataFromWindow();
+	m_ctrlPremiumEntry->Enable(!m_PremiumUrl.empty());
 }
 
 
@@ -727,14 +720,8 @@ void CDlgCalendar::OnPremiumEntry(wxCommandEvent& evt)
 
 void CDlgCalendar::OnEnChangeCalEmailSecAddr(wxCommandEvent& evt)
 {
-	int idx = m_ctrlEMailSecAddr->GetSelection();
-	wxString str;
-	if (wxNOT_FOUND != idx)
-		str = m_ctrlEMailSecAddr->GetString(idx);
-	if (str.empty())
-		m_ctrlEMailSec->Enable(false);
-	else
-		m_ctrlEMailSec->Enable(true);
+	TransferDataFromWindow();
+	m_ctrlEMailSec->Enable(!m_EMailSecAddr.empty());
 }
 
 
@@ -756,11 +743,8 @@ void CDlgCalendar::OnAccommodation(wxCommandEvent& evt)
 
 void CDlgCalendar::OnSelchangeClub(wxCommandEvent& evt)
 {
-	int idx = m_ctrlClub->GetSelection();
-	wxString str;
-	if (wxNOT_FOUND != idx)
-		str = m_ctrlClub->GetString(idx);
-	UpdateClubInfo(str);
+	TransferDataFromWindow();
+	UpdateClubInfo(m_Club);
 }
 
 
@@ -786,11 +770,8 @@ void CDlgCalendar::OnClubNotes(wxCommandEvent& evt)
 
 void CDlgCalendar::OnSelchangeLocation(wxCommandEvent& evt)
 {
-	int idx = m_ctrlLocation->GetSelection();
-	wxString str;
-	if (wxNOT_FOUND != idx)
-		str = m_ctrlLocation->GetString(idx);
-	UpdateLocationInfo(str);
+	TransferDataFromWindow();
+	UpdateLocationInfo(m_Location);
 }
 
 
