@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-30 DRC Use ChangeValue on textctrl to prevent change message.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-15 DRC Created
  */
@@ -127,12 +128,12 @@ bool CGenericValidator::TransferToWindow()
 		{
 			wxString str;
 			str.Printf(wxT("%hd"), *m_pShort);
-			pControl->SetValue(str);
+			pControl->ChangeValue(str);
 			return true;
 		}
 		else if (m_pDouble)
 		{
-			pControl->SetValue(ARBDouble::ToString(*m_pDouble, m_Prec));
+			pControl->ChangeValue(ARBDouble::ToString(*m_pDouble, m_Prec));
 			return true;
 		}
 	}
@@ -244,7 +245,7 @@ bool CTrimValidator::Validate(wxWindow* parent)
 	if (val != orig)
 	{
 		if (textCtrl)
-			textCtrl->SetValue(val);
+			textCtrl->ChangeValue(val);
 		else if (comboCtrl)
 			comboCtrl->SetValue(val);
 	}

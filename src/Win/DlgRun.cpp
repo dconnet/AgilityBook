@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-30 DRC Fixed CGenericValidator.
  * @li 2011-02-12 DRC Add DnD support for linked files.
  * @li 2010-01-02 DRC Fix setting of required points with level changes.
  * @li 2009-10-18 DRC Fix prepending of '0' to title points.
@@ -2757,7 +2758,7 @@ void CDlgRun::OnSelchangeQ(wxCommandEvent& evt)
 
 void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 {
-	tstringUtil::ToDouble(m_ctrlSCT->GetValue(), m_SCT);
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetMinYPS();
 	SetObstacles();
@@ -2768,7 +2769,7 @@ void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 
 void CDlgRun::OnClosingTimeChange(wxCommandEvent& evt)
 {
-	tstringUtil::ToDouble(m_ctrlMinYPSClosingTime->GetValue(), m_SCT2);
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetSCT2(m_SCT2);
 	SetObstacles();
 }
@@ -2776,7 +2777,7 @@ void CDlgRun::OnClosingTimeChange(wxCommandEvent& evt)
 
 void CDlgRun::OnNumObsChange(wxCommandEvent& evt)
 {
-	m_Obstacles = static_cast<short>(wxAtol(m_ctrlObstacles->GetValue()));
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetObstacles(m_Obstacles);
 	SetObstacles();
 }
@@ -2810,7 +2811,7 @@ void CDlgRun::OnReqOpeningYPSChange(wxCommandEvent& evt)
 
 void CDlgRun::OnReqClosingChange(wxCommandEvent& evt)
 {
-	m_Closing = static_cast<short>(wxAtol(m_ctrlClosing->GetValue()));
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetNeedClosePts(m_Closing);
 	SetTitlePoints();
 }
@@ -2818,7 +2819,7 @@ void CDlgRun::OnReqClosingChange(wxCommandEvent& evt)
 
 void CDlgRun::OnTimeChange(wxCommandEvent& evt)
 {
-	tstringUtil::ToDouble(m_ctrlTime->GetValue(), m_Time);
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetTime(m_Time);
 	SetYPS();
 	SetObstacles();
@@ -2829,7 +2830,7 @@ void CDlgRun::OnTimeChange(wxCommandEvent& evt)
 
 void CDlgRun::OnFaultsChange(wxCommandEvent& evt)
 {
-	m_Faults = static_cast<short>(wxAtol(m_ctrlFaults->GetValue()));
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetCourseFaults(m_Faults);
 	SetTotalFaults();
 	SetTitlePoints();
@@ -2838,7 +2839,7 @@ void CDlgRun::OnFaultsChange(wxCommandEvent& evt)
 
 void CDlgRun::OnOpenChange(wxCommandEvent& evt)
 {
-	m_Open = static_cast<short>(wxAtol(m_ctrlYPSOpeningPts->GetValue()));
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetOpenPts(m_Open);
 	SetTitlePoints();
 }
@@ -2846,7 +2847,7 @@ void CDlgRun::OnOpenChange(wxCommandEvent& evt)
 
 void CDlgRun::OnCloseChange(wxCommandEvent& evt)
 {
-	m_Close = static_cast<short>(wxAtol(m_ctrlClosingPtsTotalFaults->GetValue()));
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetClosePts(m_Close);
 	SetTitlePoints();
 }
@@ -2854,7 +2855,7 @@ void CDlgRun::OnCloseChange(wxCommandEvent& evt)
 
 void CDlgRun::OnPlaceChange(wxCommandEvent& evt)
 {
-	m_Place = static_cast<short>(wxAtol(m_ctrlPlace->GetValue()));
+	TransferDataFromWindow();
 	m_Run->SetPlace(m_Place);
 	SetTitlePoints();
 }
@@ -2862,7 +2863,7 @@ void CDlgRun::OnPlaceChange(wxCommandEvent& evt)
 
 void CDlgRun::OnBonusChange(wxCommandEvent& evt)
 {
-	m_BonusPts = static_cast<short>(wxAtol(m_ctrlBonusPts->GetValue()));
+	TransferDataFromWindow();
 	m_Run->GetScoring().SetBonusPts(m_BonusPts);
 	SetTitlePoints();
 }

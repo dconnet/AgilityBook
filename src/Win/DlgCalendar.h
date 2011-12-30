@@ -39,9 +39,9 @@ public:
 			wxWindow* pParent = NULL);
 
 private:
-	void UpdateLocationInfo(wxChar const* pLocation);
+	void UpdateLocationInfo(wxString const& location);
 	void ListLocations();
-	void UpdateClubInfo(wxChar const* pClub);
+	void UpdateClubInfo(wxString const& club);
 	void ListClubs();
 
 	ARBCalendarPtr m_pCal;
