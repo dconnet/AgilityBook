@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-10-14 DRC Changed how reorder dlg is used, made run reorder a tree.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-09 DRC Ported to wxWidgets.

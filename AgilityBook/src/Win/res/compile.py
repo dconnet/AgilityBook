@@ -115,8 +115,8 @@ def main():
 			os.remove(autogen)
 
 	zip = zipfile.ZipFile(os.path.join(executableDir, targetname + '.dat'), 'w')
-	zip.write(os.path.join(sourceDir, 'DefaultConfig.xml'))
-	zip.write(os.path.join(sourceDir, 'AgilityRecordBook.dtd'))
+	zip.write(os.path.join(sourceDir, 'DefaultConfig.xml'), 'DefaultConfig.xml')
+	zip.write(os.path.join(sourceDir, 'AgilityRecordBook.dtd'), 'AgilityRecordBook.dtd')
 	if bIncUpdater and os.access(executableDir + r'\ARBUpdater.exe', os.F_OK):
 		zip.write(executableDir + r'\ARBUpdater.exe', 'ARBUpdater.exe')
 	zip.close()

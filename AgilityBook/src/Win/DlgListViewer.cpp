@@ -11,6 +11,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
+ * @li 2011-12-12 DRC Added Score to Other points list.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-28 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.

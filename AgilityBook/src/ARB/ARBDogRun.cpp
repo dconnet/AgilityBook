@@ -548,7 +548,7 @@ double ARBDogRun::GetTitlePoints(
 		else
 			*outPlacement = 0.0;
 	}
-	short bonusPts = inScoring->HasBonusPts() ? m_Scoring.GetBonusPts() : 0;
+	double bonusPts = inScoring->HasBonusPts() ? m_Scoring.GetBonusPts() : 0.0;
 	switch (m_Scoring.GetType())
 	{
 	default:

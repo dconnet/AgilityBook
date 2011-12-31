@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
  * @li 2007-08-19 DRC Simplified UI layout into a single tree.
@@ -231,7 +232,7 @@ CDlgConfigure::~CDlgConfigure()
 	// Unhook the selection event. DeleteAllItems triggers this and wxWidgets
 	// apparently didn't clean something up - the virtual root is trying
 	// to access GetParam() [via our GetData] whichs dies horribly.
-	m_ctrlItems->Disconnect(wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler(CDlgConfigure::OnSelectionChanged), NULL, this);
+	UNBIND_OR_DISCONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigure::OnSelectionChanged);
 }
 
 

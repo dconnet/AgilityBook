@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-12-26 DRC Made dialog resizable.
@@ -293,7 +294,7 @@ wxString CDlgListCtrlDataOtherPoints::OnNeedText(long iCol) const
 		str = m_Other->GetName();
 		break;
 	case 1:
-		str << m_Other->GetPoints();
+		str << ARBDouble::ToString(m_Other->GetPoints(), -1);
 		break;
 	}
 	return str;

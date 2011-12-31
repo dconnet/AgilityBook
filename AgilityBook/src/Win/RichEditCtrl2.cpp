@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-02-19 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  * @li 2005-01-30 DRC Created

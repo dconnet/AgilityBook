@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-08-17 DRC Add support to get newly created title.
  * @li 2010-01-10 DRC Forcing hidden title didn't update internal flags.
  *                    Unearned titles didn't disable Hide Checkbox.

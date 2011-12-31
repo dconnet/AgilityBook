@@ -95,18 +95,18 @@ public:
 	{
 		m_Name = inName;
 	}
-	short GetPoints() const
+	double GetPoints() const
 	{
 		return m_Points;
 	}
-	void SetPoints(short inPts)
+	void SetPoints(double inPts)
 	{
 		m_Points = inPts;
 	}
 
 private:
 	wxString m_Name;
-	short m_Points;
+	double m_Points;
 };
 
 /////////////////////////////////////////////////////////////////////////////

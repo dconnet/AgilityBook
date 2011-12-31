@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-09-05 DRC Put progress dialog into separate UI thread
  * @li 2004-10-01 DRC Created

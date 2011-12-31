@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-08-03 DRC Fix tab setting so view is properly activated.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-11-27 DRC Check that the html view was actually created.

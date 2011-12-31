@@ -57,7 +57,7 @@ ARBConfigOtherPoints::ARBConfigOtherPoints()
 	: m_Name()
 	, m_Tally(ARBConfigOtherPoints::eTallyAll)
 	, m_Desc()
-	, m_Default(0)
+	, m_Default(0.0)
 {
 }
 
@@ -109,7 +109,7 @@ void ARBConfigOtherPoints::clear()
 	m_Name.erase();
 	m_Tally = ARBConfigOtherPoints::eTallyAll;
 	m_Desc.erase();
-	m_Default = 0;
+	m_Default = 0.0;
 }
 
 

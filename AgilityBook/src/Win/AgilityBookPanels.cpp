@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-02-12 DRC Don't save sash position if it hasn't been initialized.
  * @li 2009-07-25 DRC Set a minimum splitter width.
  * @li 2008-12-14 DRC Created
@@ -179,7 +180,7 @@ void CAgilityBookPanelRuns::SplitterOnIdle(wxIdleEvent&)
 		cx = MIN_RUN_WIDTH;
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
-	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelRuns::SplitterOnIdle), NULL, this);
+	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelRuns::SplitterOnIdle);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -279,7 +280,7 @@ void CAgilityBookPanelCalendar::SplitterOnIdle(wxIdleEvent&)
 		cx = MIN_CAL_WIDTH;
 	m_splitter->SetSashPosition(cx);
 	m_bInit = true;
-	m_splitter->Disconnect(wxEVT_IDLE, wxIdleEventHandler(CAgilityBookPanelCalendar::SplitterOnIdle), NULL, this);
+	UNBIND_OR_DISCONNECT_CTRL(m_splitter, wxEVT_IDLE, wxIdleEventHandler, CAgilityBookPanelCalendar::SplitterOnIdle);
 }
 
 /////////////////////////////////////////////////////////////////////////////
