@@ -36,7 +36,7 @@ private:
 	ARBDogRunOtherPointsPtr m_pRunOther;
 	wxComboBox* m_ctrlOtherPoints;
 	CRichEditCtrl2* m_ctrlDesc;
-	short m_Points;
+	double m_Points;
 
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeOtherpoints(wxCommandEvent& evt);

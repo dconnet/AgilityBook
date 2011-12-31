@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-01-22 DRC Defer sorting of imported items until the end.
  * @li 2011-01-08 DRC Fix importing dates directly from Excel (time was
  *                    included). Fix importing to group runs into one trial.

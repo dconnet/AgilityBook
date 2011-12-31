@@ -16,6 +16,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-02-10 DRC Ported to wxWidgets.

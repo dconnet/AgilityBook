@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-02-09 DRC Ported to wxWidgets.
  * @li 2006-07-16 DRC Created
  */

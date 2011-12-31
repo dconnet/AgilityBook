@@ -193,7 +193,7 @@ private:
 	CQualifyingComboBox* m_ctrlQ;
 	wxStaticText* m_ctrlBonusPtsText;
 	CTextCtrl* m_ctrlBonusPts;
-	short m_BonusPts;
+	double m_BonusPts;
 	wxStaticText* m_ctrlSpeedPtsText;
 	CTextCtrl* m_ctrlSpeedPts;
 	wxStaticText* m_ctrlTitlePointsText;

@@ -24,6 +24,7 @@
  * [wxWidgets] The above comments are still pertinent.
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  */
 

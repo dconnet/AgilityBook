@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2004-08-31 DRC Added option to disable splash screen.
  * @li 2004-07-23 DRC Auto-check the config version on document open.

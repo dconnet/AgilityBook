@@ -77,7 +77,7 @@ ARBDogRunScoring::ARBDogRunScoring()
 	, m_NeedClosePts(0)
 	, m_OpenPts(0)
 	, m_ClosePts(0)
-	, m_BonusPts(0)
+	, m_BonusPts(0.0)
 {
 }
 

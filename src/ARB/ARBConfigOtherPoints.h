@@ -131,11 +131,11 @@ public:
 	{
 		m_Tally = inTally;
 	}
-	short GetDefault() const
+	double GetDefault() const
 	{
 		return m_Default;
 	}
-	void SetDefault(short inDef)
+	void SetDefault(double inDef)
 	{
 		m_Default = inDef;
 	}
@@ -144,7 +144,7 @@ private:
 	wxString m_Name;
 	eOtherPointsTally m_Tally;
 	wxString m_Desc;
-	short m_Default;
+	double m_Default;
 };
 
 /////////////////////////////////////////////////////////////////////////////

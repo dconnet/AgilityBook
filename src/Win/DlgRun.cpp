@@ -12,6 +12,7 @@
  *
  * Revision History
  * @li 2011-12-30 DRC Fixed CGenericValidator.
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-02-12 DRC Add DnD support for linked files.
  * @li 2010-01-02 DRC Fix setting of required points with level changes.
  * @li 2009-10-18 DRC Fix prepending of '0' to title points.
@@ -1157,7 +1158,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlBonusPts = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(50, -1), 0,
-		CGenericValidator(&m_BonusPts));
+		CGenericValidator(&m_BonusPts, -1));
 	BIND_OR_CONNECT_CTRL(m_ctrlBonusPts, wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler, CDlgRun::OnBonusChange);
 	m_ctrlBonusPts->SetHelpText(_("HIDC_RUNSCORE_BONUSPTS"));
 	m_ctrlBonusPts->SetToolTip(_("HIDC_RUNSCORE_BONUSPTS"));

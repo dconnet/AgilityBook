@@ -4,6 +4,7 @@
   - Add the MultiQ name to the Points view (needed for Reg/Pref AKC QQQs)
   - Add a URL shortcut to start menu.
   - Add a run's score to the Other Point data details dialog.
+  - Change Bonus and Other points from short to double.
   - Fixed CGenericValidator recursion WRT text controls.
 - Bug fixes:
   - ARBHelp was dumping registry names wrong.

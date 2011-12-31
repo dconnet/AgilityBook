@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Refresh properly after changing filter in context menu.
  * @li 2009-08-19 DRC Create a 'fake' dog when creating a new file.
@@ -269,7 +270,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				menuId = baseID;
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
-					parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusDog), NULL, this);
+					UNBIND_OR_DISCONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
 				}
 			}
 			break;
@@ -305,7 +306,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 						iFilter != data.filterNames.end();
 						++iFilter, ++menuId)
 					{
-						parent->Disconnect(menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CAgilityBookDoc::OnStatusFilter), NULL, this);
+						UNBIND_OR_DISCONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
 					}
 				}
 			}

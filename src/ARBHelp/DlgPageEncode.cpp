@@ -11,7 +11,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2011-10-19 DRC Wrap '/' wit wxT() so it's not output as int.
+ * @li 2011-10-19 DRC Wrap '/' with wxT() so it's not output as int.
  * @li 2009-08-26 DRC Fixed streaming wxString to otstringstream.
  * @li 2009-03-01 DRC Ported to wxWidgets.
  * @li 2008-01-12 DRC Dump reg data in .reg format

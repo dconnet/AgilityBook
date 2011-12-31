@@ -12,6 +12,7 @@
  *
  * Revision History
  * @li 2011-12-30 DRC Fixed CGenericValidator.
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
  * @li 2009-07-14 DRC Fixed group box creation order.

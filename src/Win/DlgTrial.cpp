@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-08-16 DRC Make trial notes multi-line.
  * @li 2009-10-14 DRC Add dog's name to dialog caption.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
