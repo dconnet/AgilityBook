@@ -11,7 +11,7 @@
  * @author David Connet
  *
  * Revision History
- * @li 2011-11-14 DRC Fix canceling language selection (in Fr, resets to En)
+ * @li 2011-11-14 DRC Fix canceling language selection (in Fr, it reset to En)
  * @li 2011-11-11 DRC Make .mo name same as exe name.
  * @li 2009-09-20 DRC wxLANGUAGE is not consistent between releases.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
