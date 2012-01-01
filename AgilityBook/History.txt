@@ -1,4 +1,4 @@
-12/30/2011: v2.3.2.<in development>
+1/1/2012: v2.3.2.3291
 - New features / Enhancements:
   - ARBHelp: Write timestamps/size for skipped files.
   - Add the MultiQ name to the Points view (needed for Reg/Pref AKC QQQs)
@@ -8,7 +8,7 @@
   - Fixed CGenericValidator recursion WRT text controls.
 - Bug fixes:
   - ARBHelp was dumping registry names wrong.
-  - Fix canceling language selection (in Fr, resets to En)
+  - Fix canceling language selection (in Fr, it reset to En)
 
 10/15/2011: v2.3.1.3213
 - Bumped Configuration v34:
