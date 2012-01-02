@@ -27,8 +27,8 @@
 #include "ARBDate.h"
 #include <time.h>
 
-#include "wx/datetime.h"
-#include "wx/intl.h"
+#include <wx/datetime.h>
+#include <wx/intl.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
