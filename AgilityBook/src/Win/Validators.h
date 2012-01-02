@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-02 DRC Change validator to support default value on empty field.
  * @li 2009-02-15 DRC Created
  */
 
@@ -31,10 +32,14 @@ DECLARE_CLASS(CGenericValidator)
 public:
 	CGenericValidator(
 			short* val,
+			short defVal = 0,
+			bool bUseDefOnEmpty = true, // If field is empty, use default
 			wxChar const* errMsg = NULL); // Message to use when validation fails
 	CGenericValidator(
 			double* val,
 			int inPrec = 2,
+			double defVal = 0.0,
+			bool bUseDefOnEmpty = true, // If field is empty, use default
 			wxChar const* errMsg = NULL); // Message to use when validation fails
 	CGenericValidator(
 			ARBDate* val,
@@ -52,6 +57,12 @@ private:
 	short* m_pShort;
 	double* m_pDouble;
 	int m_Prec;
+	union
+	{
+		short s;
+		double dbl;
+	} m_Default;
+	bool m_bUseDefOnEmpty;
 	ARBDate* m_pDate;
 	wxString m_ErrMsg;
 };
