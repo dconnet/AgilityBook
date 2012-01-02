@@ -514,7 +514,6 @@ public:
 			double inValue,
 			int inPrec = 2,
 			LocaleType eUseDefaultLocale = eDefault);
-
 	/**
 	 * Compare two doubles, allowing for 'prec' error.
 	 */
