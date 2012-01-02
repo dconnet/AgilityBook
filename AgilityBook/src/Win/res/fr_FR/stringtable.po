@@ -29,6 +29,9 @@ msgstr "Time out"
 msgid "IDS_NEED_VALUE"
 msgstr "Renseignez le champ, svp."
 
+msgid "IDS_NEED_NUMBER"
+msgstr "Please enter a valid number"
+
 # Begin Columns
 msgid "IDS_COL_ACTUAL_WORK"
 msgstr "Travail actuel"

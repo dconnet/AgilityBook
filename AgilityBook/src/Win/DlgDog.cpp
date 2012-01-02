@@ -621,6 +621,7 @@ CDlgDog::CDlgDog(
 
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, 0);
+	BIND_OR_CONNECT_CTRL(notebook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, wxNotebookEventHandler, CDlgDog::OnPageChanging);
 
 	// Properties
 
@@ -634,7 +635,7 @@ CDlgDog::CDlgDog(
 
 	CTextCtrl* ctrlName = new CTextCtrl(panelProp, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_CallName, _("IDS_BLANK_CALLNAME")));
+		CTrimValidator(&m_CallName, TRIMVALIDATOR_DEFAULT, _("IDS_BLANK_CALLNAME")));
 	ctrlName->SetHelpText(_("HIDC_DOG_CALLNAME"));
 	ctrlName->SetToolTip(_("HIDC_DOG_CALLNAME"));
 
@@ -960,6 +961,20 @@ CDlgDog::CDlgDog(
 
 CDlgDog::~CDlgDog()
 {
+}
+
+
+void CDlgDog::OnPageChanging(wxNotebookEvent& evt)
+{
+	if (wxNOT_FOUND != evt.GetOldSelection())
+	{
+		if (!Validate() || !TransferDataFromWindow())
+		{
+			evt.Veto();
+			return;
+		}
+	}
+	evt.Skip();
 }
 
 

@@ -223,6 +223,7 @@ private:
 	wxButton* m_ctrlLinkOpen;
 
 	DECLARE_EVENT_TABLE()
+	void OnPageChanging(wxNotebookEvent& evt);
 	void OnPageChanged(wxNotebookEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 	// Score

@@ -173,7 +173,7 @@ CDlgConfigEvent::CDlgConfigEvent(
 
 	m_ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
+		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	m_ctrlName->SetHelpText(_("HIDC_CONFIG_EVENT"));
 	m_ctrlName->SetToolTip(_("HIDC_CONFIG_EVENT"));
 

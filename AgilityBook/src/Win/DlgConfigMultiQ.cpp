@@ -79,7 +79,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 
 	m_ctrlName = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_Name, _("IDS_ENTER_NAME")));
+		CTrimValidator(&m_Name, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_NAME")));
 	m_ctrlName->SetHelpText(_("HIDC_CONFIG_MULTIQ_NAME"));
 	m_ctrlName->SetToolTip(_("HIDC_CONFIG_MULTIQ_NAME"));
 
@@ -90,7 +90,7 @@ CDlgConfigMultiQ::CDlgConfigMultiQ(
 
 	CTextCtrl* ctrlAbbrev = new CTextCtrl(this, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxDefaultSize, 0,
-		CTrimValidator(&m_ShortName, _("IDS_ENTER_SHORTNAME")));
+		CTrimValidator(&m_ShortName, TRIMVALIDATOR_DEFAULT, _("IDS_ENTER_SHORTNAME")));
 	ctrlAbbrev->SetHelpText(_("HIDC_CONFIG_MULTIQ_SHORTNAME"));
 	ctrlAbbrev->SetToolTip(_("HIDC_CONFIG_MULTIQ_SHORTNAME"));
 

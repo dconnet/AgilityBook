@@ -42,6 +42,7 @@
 #include "ARBTypes.h"
 #include "ColumnOrder.h"
 #include <wx/listctrl.h>
+#include <wx/notebook.h>
 class CAgilityBookDoc;
 class CDlgDogDataTitle;
 class CReportListCtrl;
@@ -127,6 +128,7 @@ private:
 	CColumnOrder m_sortPoints;
 
 	DECLARE_EVENT_TABLE()
+	void OnPageChanging(wxNotebookEvent& evt);
 	void OnOk(wxCommandEvent& evt);
 	// Properties
 	void OnDateChanged(wxDateEvent& evt);
