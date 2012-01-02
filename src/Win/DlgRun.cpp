@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-02 DRC Change validator to support default value on empty field.
  * @li 2012-01-01 DRC Add validation dialogs, page change vetoing.
  * @li 2011-12-30 DRC Fixed CGenericValidator.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
@@ -1139,7 +1140,7 @@ CDlgRun::CDlgRun(
 
 	m_ctrlDogsQd = new CTextCtrl(m_panelScore, wxID_ANY, wxEmptyString,
 		wxDefaultPosition, wxSize(30, -1), 0,
-		CGenericValidator(&m_DogsQd));
+		CGenericValidator(&m_DogsQd, -1));
 	m_ctrlDogsQd->SetHelpText(_("HIDC_RUNSCORE_DOGS_QD"));
 	m_ctrlDogsQd->SetToolTip(_("HIDC_RUNSCORE_DOGS_QD"));
 

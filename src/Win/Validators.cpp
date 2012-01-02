@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-02 DRC Change validator to support default value on empty field.
  * @li 2011-12-30 DRC Use ChangeValue on textctrl to prevent change message.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-15 DRC Created
@@ -37,13 +38,18 @@ IMPLEMENT_CLASS(CQualifyingValidator, wxValidator)
 
 CGenericValidator::CGenericValidator(
 		short* val,
+		short defVal,
+		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
 	: m_pShort(val)
 	, m_pDouble(NULL)
 	, m_Prec(0)
+	, m_Default()
+	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(NULL)
 	, m_ErrMsg()
 {
+	m_Default.s = defVal;
 	if (errMsg)
 		m_ErrMsg = errMsg;
 }
@@ -52,13 +58,18 @@ CGenericValidator::CGenericValidator(
 CGenericValidator::CGenericValidator(
 		double* val,
 		int inPrec,
+		double defVal,
+		bool bUseDefOnEmpty,
 		wxChar const* errMsg)
 	: m_pShort(NULL)
 	, m_pDouble(val)
 	, m_Prec(inPrec)
+	, m_Default()
+	, m_bUseDefOnEmpty(bUseDefOnEmpty)
 	, m_pDate(NULL)
 	, m_ErrMsg()
 {
+	m_Default.dbl = defVal;
 	if (errMsg)
 		m_ErrMsg = errMsg;
 }
@@ -70,6 +81,8 @@ CGenericValidator::CGenericValidator(
 	: m_pShort(NULL)
 	, m_pDouble(NULL)
 	, m_Prec(0)
+	, m_Default()
+	, m_bUseDefOnEmpty(false)
 	, m_pDate(val)
 	, m_ErrMsg()
 {
@@ -82,6 +95,8 @@ CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
 	: m_pShort(rhs.m_pShort)
 	, m_pDouble(rhs.m_pDouble)
 	, m_Prec(rhs.m_Prec)
+	, m_Default(rhs.m_Default)
+	, m_bUseDefOnEmpty(rhs.m_bUseDefOnEmpty)
 	, m_pDate(rhs.m_pDate)
 	, m_ErrMsg(rhs.m_ErrMsg)
 {
@@ -95,6 +110,8 @@ bool CGenericValidator::Copy(CGenericValidator const& val)
 	m_pShort = val.m_pShort;
 	m_pDouble = val.m_pDouble;
 	m_Prec = val.m_Prec;
+	m_Default = val.m_Default;
+	m_bUseDefOnEmpty= val.m_bUseDefOnEmpty;
 	m_pDate = val.m_pDate;
 	m_ErrMsg = val.m_ErrMsg;
 	return true;
@@ -106,18 +123,33 @@ bool CGenericValidator::TransferFromWindow()
 	// Following the example of wxGenericValidator
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+		wxTextCtrl* pTextControl = (wxTextCtrl*)m_validatorWindow;
+		wxString textVal = pTextControl->GetValue();
 		if (m_pShort)
 		{
-			long val;
-			if (!tstringUtil::ToLong(pControl->GetValue(), val))
-				return false;
-			*m_pShort = static_cast<short>(val);
-			return true;
+			if (textVal.empty() && m_bUseDefOnEmpty)
+			{
+				*m_pShort = m_Default.s;
+				return true;
+			}
+			else
+			{
+				long val = 0;
+				if (!tstringUtil::ToLong(textVal, val))
+					return false;
+				*m_pShort = static_cast<short>(val);
+				return true;
+			}
 		}
 		else if (m_pDouble)
 		{
-			return tstringUtil::ToDouble(pControl->GetValue(), *m_pDouble);
+			if (textVal.empty() && m_bUseDefOnEmpty)
+			{
+				*m_pDouble = m_Default.dbl;
+				return true;
+			}
+			else
+				return tstringUtil::ToDouble(textVal, *m_pDouble);
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
@@ -141,17 +173,17 @@ bool CGenericValidator::TransferToWindow()
 {
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
-		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+		wxTextCtrl* pTextControl = (wxTextCtrl*)m_validatorWindow;
 		if (m_pShort)
 		{
 			wxString str;
 			str.Printf(wxT("%hd"), *m_pShort);
-			pControl->ChangeValue(str);
+			pTextControl->ChangeValue(str);
 			return true;
 		}
 		else if (m_pDouble)
 		{
-			pControl->ChangeValue(ARBDouble::ToString(*m_pDouble, m_Prec));
+			pTextControl->ChangeValue(ARBDouble::ToString(*m_pDouble, m_Prec));
 			return true;
 		}
 	}
@@ -196,10 +228,17 @@ bool CGenericValidator::Validate(wxWindow* parent)
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
 		pTextControl = (wxTextCtrl*)m_validatorWindow;
+		wxString textVal = pTextControl->GetValue();
 		if (m_pShort)
 		{
 			long val;
-			if (!tstringUtil::ToLong(pTextControl->GetValue(), val))
+			if (textVal.empty() && m_bUseDefOnEmpty)
+			{
+				wxString str;
+				str.Printf(wxT("%hd"), m_Default.s);
+				pTextControl->ChangeValue(str);
+			}
+			else if (!tstringUtil::ToLong(textVal, val))
 			{
 				ok = false;
 				if (errormsg.empty())
@@ -209,7 +248,11 @@ bool CGenericValidator::Validate(wxWindow* parent)
 		else if (m_pDouble)
 		{
 			double dbl;
-			if (!tstringUtil::ToDouble(pTextControl->GetValue(), dbl))
+			if (textVal.empty() && m_bUseDefOnEmpty)
+			{
+				pTextControl->ChangeValue(ARBDouble::ToString(m_Default.dbl, m_Prec));
+			}
+			else if (!tstringUtil::ToDouble(textVal, dbl))
 			{
 				ok = false;
 				if (errormsg.empty())
