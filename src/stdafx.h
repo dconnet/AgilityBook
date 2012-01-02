@@ -161,16 +161,16 @@
 
 
 // Pre-compiled header setup
-#include "wx/wxprec.h"
+#include <wx/wxprec.h>
 #ifdef __BORLANDC__
 #   pragma hdrstop
 #endif
 // Compiler doesn't support precompiled headers,
 // pull in the headers that wxprec includes.
 #ifndef WX_PRECOMP
-#include "wx/defs.h"
-#include "wx/wxchar.h"
-#include "wx/wx.h"
+#include <wx/defs.h>
+#include <wx/wxchar.h>
+#include <wx/wx.h>
 #endif
 
 // ARB was developed against v2.8.10 - anything earlier is not supported.
