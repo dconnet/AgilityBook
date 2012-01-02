@@ -120,7 +120,6 @@ bool CLanguageManager::SetLang(int langId)
 #if wxCHECK_VERSION(2, 9, 3)
 	if (!m_locale->Init(m_CurLang, wxLOCALE_DONT_LOAD_DEFAULT))
 #else
-
 	if (!m_locale->Init(m_CurLang, wxLOCALE_CONV_ENCODING))
 #endif
 	{
