@@ -35,30 +35,46 @@ IMPLEMENT_CLASS(CQualifyingValidator, wxValidator)
 
 /////////////////////////////////////////////////////////////////////////////
 
-CGenericValidator::CGenericValidator(short* val)
+CGenericValidator::CGenericValidator(
+		short* val,
+		wxChar const* errMsg)
 	: m_pShort(val)
 	, m_pDouble(NULL)
 	, m_Prec(0)
 	, m_pDate(NULL)
+	, m_ErrMsg()
 {
+	if (errMsg)
+		m_ErrMsg = errMsg;
 }
 
 
-CGenericValidator::CGenericValidator(double* val, int inPrec)
+CGenericValidator::CGenericValidator(
+		double* val,
+		int inPrec,
+		wxChar const* errMsg)
 	: m_pShort(NULL)
 	, m_pDouble(val)
 	, m_Prec(inPrec)
 	, m_pDate(NULL)
+	, m_ErrMsg()
 {
+	if (errMsg)
+		m_ErrMsg = errMsg;
 }
 
 
-CGenericValidator::CGenericValidator(ARBDate* val)
+CGenericValidator::CGenericValidator(
+		ARBDate* val,
+		wxChar const* errMsg)
 	: m_pShort(NULL)
 	, m_pDouble(NULL)
 	, m_Prec(0)
 	, m_pDate(val)
+	, m_ErrMsg()
 {
+	if (errMsg)
+		m_ErrMsg = errMsg;
 }
 
 
@@ -67,6 +83,7 @@ CGenericValidator::CGenericValidator(CGenericValidator const& rhs)
 	, m_pDouble(rhs.m_pDouble)
 	, m_Prec(rhs.m_Prec)
 	, m_pDate(rhs.m_pDate)
+	, m_ErrMsg(rhs.m_ErrMsg)
 {
 	Copy(rhs);
 }
@@ -79,6 +96,7 @@ bool CGenericValidator::Copy(CGenericValidator const& val)
 	m_pDouble = val.m_pDouble;
 	m_Prec = val.m_Prec;
 	m_pDate = val.m_pDate;
+	m_ErrMsg = val.m_ErrMsg;
 	return true;
 }
 
@@ -166,31 +184,73 @@ bool CGenericValidator::TransferToWindow()
 	return false;
 }
 
+
+bool CGenericValidator::Validate(wxWindow* parent)
+{
+	if (!m_validatorWindow->IsEnabled())
+		return true;
+
+	wxString errormsg(m_ErrMsg);
+	wxTextCtrl* pTextControl = NULL;
+	bool ok = true;
+	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
+	{
+		pTextControl = (wxTextCtrl*)m_validatorWindow;
+		if (m_pShort)
+		{
+			long val;
+			if (!tstringUtil::ToLong(pTextControl->GetValue(), val))
+			{
+				ok = false;
+				if (errormsg.empty())
+					errormsg = _("IDS_NEED_NUMBER");
+			}
+		}
+		else if (m_pDouble)
+		{
+			double dbl;
+			if (!tstringUtil::ToDouble(pTextControl->GetValue(), dbl))
+			{
+				ok = false;
+				if (errormsg.empty())
+					errormsg = _("IDS_NEED_NUMBER");
+			}
+		}
+	}
+	// Ignore date control, they're ok.
+
+	if (!ok)
+	{
+		if (errormsg.empty())
+			errormsg = _("IDS_NEED_VALUE");
+
+		if (pTextControl)
+			pTextControl->SelectAll();
+		m_validatorWindow->SetFocus();
+		wxMessageBox(errormsg, _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
+	}
+	return ok;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 CTrimValidator::CTrimValidator(
 		wxString* valPtr,
-		long trimStyle)
+		long trimStyle,
+		wxChar const* errMsg)
 	: wxGenericValidator(valPtr)
 	, m_TrimStyle(trimStyle)
 	, m_ErrMsg()
 {
-}
-
-
-CTrimValidator::CTrimValidator(
-		wxString* valPtr,
-		wxString const& errMsg)
-	: wxGenericValidator(valPtr)
-	, m_TrimStyle(TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY)
-	, m_ErrMsg(errMsg)
-{
+	if (errMsg)
+		m_ErrMsg = errMsg;
 }
 
 
 CTrimValidator::CTrimValidator(CTrimValidator const& rhs)
 	: wxGenericValidator(rhs)
 	, m_TrimStyle(rhs.m_TrimStyle)
+	, m_ErrMsg(rhs.m_ErrMsg)
 {
 	Copy(rhs);
 }

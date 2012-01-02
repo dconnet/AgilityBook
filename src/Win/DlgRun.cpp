@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-01 DRC Add validation dialogs, page change vetoing.
  * @li 2011-12-30 DRC Fixed CGenericValidator.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2011-02-12 DRC Add DnD support for linked files.
@@ -815,6 +816,7 @@ CDlgRun::CDlgRun(
 
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, 0);
+	BIND_OR_CONNECT_CTRL(notebook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, wxNotebookEventHandler, CDlgRun::OnPageChanging);
 	BIND_OR_CONNECT_CTRL(notebook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler, CDlgRun::OnPageChanged);
 
 	// Score
@@ -936,7 +938,7 @@ CDlgRun::CDlgRun(
 	m_ctrlJudge = new wxComboBox(m_panelScore, wxID_ANY,
 		wxEmptyString, wxDefaultPosition, wxDefaultSize,
 		0, NULL, wxCB_DROPDOWN,
-		CTrimValidator(&m_Judge, _("IDS_SELECT_JUDGE")));
+		CTrimValidator(&m_Judge, TRIMVALIDATOR_DEFAULT, _("IDS_SELECT_JUDGE")));
 	m_ctrlJudge->SetHelpText(_("HIDC_RUNSCORE_JUDGE"));
 	m_ctrlJudge->SetToolTip(_("HIDC_RUNSCORE_JUDGE"));
 
@@ -3104,6 +3106,20 @@ void CDlgRun::OnLinksOpen(wxCommandEvent& evt)
 		wxString name = GetListColumnText(m_ctrlLinks, nItem, 0);
 		wxLaunchDefaultBrowser(name);
 	}
+}
+
+
+void CDlgRun::OnPageChanging(wxNotebookEvent& evt)
+{
+	if (wxNOT_FOUND != evt.GetOldSelection())
+	{
+		if (!Validate() || !TransferDataFromWindow())
+		{
+			evt.Veto();
+			return;
+		}
+	}
+	evt.Skip();
 }
 
 

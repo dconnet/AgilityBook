@@ -57,6 +57,7 @@ CDlgOptions::CDlgOptions(
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxNotebook* notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
+	BIND_OR_CONNECT_CTRL(notebook, wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, wxNotebookEventHandler, CDlgOptions::OnPageChanging);
 
 	m_pageProgram = new CDlgOptionsProgram(notebook);
 	m_pageFilter = new CDlgOptionsFilter(notebook, m_pDoc);
@@ -80,6 +81,20 @@ CDlgOptions::CDlgOptions(
 	CenterOnParent();
 
 	notebook->SetSelection(iSelectPage);
+}
+
+
+void CDlgOptions::OnPageChanging(wxNotebookEvent& evt)
+{
+	if (wxNOT_FOUND != evt.GetOldSelection())
+	{
+		if (!Validate() || !TransferDataFromWindow())
+		{
+			evt.Veto();
+			return;
+		}
+	}
+	evt.Skip();
 }
 
 

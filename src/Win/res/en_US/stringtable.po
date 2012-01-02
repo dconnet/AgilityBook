@@ -28,6 +28,9 @@ msgstr "Time out"
 msgid "IDS_NEED_VALUE"
 msgstr "Please enter a value"
 
+msgid "IDS_NEED_NUMBER"
+msgstr "Please enter a valid number"
+
 # Begin Columns
 msgid "IDS_COL_ACTUAL_WORK"
 msgstr "Actual Work"
@@ -175,9 +178,6 @@ msgstr "Note"
 
 msgid "IDS_COL_NOTES"
 msgstr "Notes"
-
-msgid "IDS_COL_NUMBER"
-msgstr "Number"
 
 msgid "IDS_COL_NAME_BREED_NOTE"
 msgstr "Name/Breed/Notes"
@@ -1272,6 +1272,9 @@ msgstr "Location Information"
 
 msgid "IDS_INVALID_NAME"
 msgstr "Invalid name"
+
+msgid "IDS_INVALID_NUMBER"
+msgstr "Invalid number"
 
 msgid "IDS_LEVEL_NAME"
 msgstr "Level"

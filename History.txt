@@ -1,4 +1,6 @@
 1/1/2012: v2.3.3.<in development>
+- New features / Enhancements:
+  - Add validation error dialogs.
 
 1/1/2012: v2.3.2.3291
 - New features / Enhancements:

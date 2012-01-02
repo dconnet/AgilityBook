@@ -29,9 +29,16 @@ class CGenericValidator : public wxValidator
 {
 DECLARE_CLASS(CGenericValidator)
 public:
-	CGenericValidator(short* val);
-	CGenericValidator(double* val, int inPrec = 2);
-	CGenericValidator(ARBDate* val);
+	CGenericValidator(
+			short* val,
+			wxChar const* errMsg = NULL); // Message to use when validation fails
+	CGenericValidator(
+			double* val,
+			int inPrec = 2,
+			wxChar const* errMsg = NULL); // Message to use when validation fails
+	CGenericValidator(
+			ARBDate* val,
+			wxChar const* errMsg = NULL); // Message to use when validation fails
 	CGenericValidator(CGenericValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CGenericValidator(*this);}
@@ -39,13 +46,14 @@ public:
 
 	virtual bool TransferFromWindow();
 	virtual bool TransferToWindow();
-	virtual bool Validate(wxWindow* parent)	{return true;}
+	virtual bool Validate(wxWindow* parent);
 
 private:
 	short* m_pShort;
 	double* m_pDouble;
 	int m_Prec;
 	ARBDate* m_pDate;
+	wxString m_ErrMsg;
 };
 
 
@@ -54,6 +62,7 @@ private:
 #define TRIMVALIDATOR_TRIM_RIGHT	0x0002
 #define TRIMVALIDATOR_TRIM_BOTH		(TRIMVALIDATOR_TRIM_LEFT | TRIMVALIDATOR_TRIM_RIGHT)
 #define TRIMVALIDATOR_NONEMPTY		0x0004
+#define TRIMVALIDATOR_DEFAULT		(TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY)
 
 
 class CTrimValidator : public wxGenericValidator
@@ -62,10 +71,8 @@ DECLARE_CLASS(CTrimValidator)
 public:
 	CTrimValidator(
 			wxString* valPtr = NULL,
-			long trimStyle = TRIMVALIDATOR_TRIM_BOTH | TRIMVALIDATOR_NONEMPTY);
-	CTrimValidator(
-			wxString* valPtr,
-			wxString const& errMsg); // Message to use when validation fails
+			long trimStyle = TRIMVALIDATOR_DEFAULT,
+			wxChar const* errMsg = NULL); // Message to use when validation fails
 	CTrimValidator(CTrimValidator const& rhs);
 
 	virtual wxObject *Clone() const {return new CTrimValidator(*this);}

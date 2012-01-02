@@ -45,7 +45,7 @@ public:
 	virtual wxObject *Clone() const {return new CLongValidator(*this);}
 	virtual bool TransferFromWindow();
 	virtual bool TransferToWindow();
-	virtual bool Validate(wxWindow* parent)	{return true;}
+	virtual bool Validate(wxWindow* parent);
 private:
 	long* m_pLong;
 };
@@ -85,6 +85,24 @@ bool CLongValidator::TransferToWindow()
 		}
 	}
 	return false;
+}
+
+
+bool CLongValidator::Validate(wxWindow* parent)
+{
+	if (!m_validatorWindow->IsEnabled())
+		return true;
+	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
+	{
+		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
+		if (m_pLong)
+		{
+			long val;
+			if (!tstringUtil::ToLong(pControl->GetValue(), val))
+				return false;
+		}
+	}
+	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
