@@ -315,7 +315,7 @@ bool ARBBase64::Encode(
 	if (encoded)
 	{
 		bOk = true;
-		outData = tstringUtil::TString(reinterpret_cast<char*>(encoded));
+		outData = tstringUtil::WXString(reinterpret_cast<char*>(encoded));
 		delete [] encoded;
 	}
 	return bOk;

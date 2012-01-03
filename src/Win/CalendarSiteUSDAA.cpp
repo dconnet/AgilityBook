@@ -170,7 +170,7 @@ static ElementNodePtr ReadData(
 		fclose(fp);
 	}
 #else
-	wxString url(tstringUtil::TString(inAddress));
+	wxString url(tstringUtil::WXString(inAddress));
 	CReadHttp http(url, &data);
 #endif
 
@@ -186,7 +186,7 @@ static ElementNodePtr ReadData(
 	{
 #if GENERATE_TESTDATA
 {
-wxFFile raw(tstringUtil::TString(outTestData), wxT("wb"));
+wxFFile raw(tstringUtil::WXString(outTestData), wxT("wb"));
 raw.Write(data.c_str(), data.length());
 }
 #endif
@@ -227,7 +227,7 @@ raw.Write(data.c_str(), data.length());
 //{
 //std::string out(inAddress);
 //out += ".out";
-//wxFFile raw(tstringUtil::TString(out), wxT("wb"));
+//wxFFile raw(tstringUtil::WXString(out), wxT("wb"));
 //raw.Write(pData, strlen(pData));
 //}
 #endif
@@ -245,7 +245,7 @@ raw.Write(data.c_str(), data.length());
 //{
 //std::string out(inAddress);
 //out += ".tree";
-//wxFFileOutputStream raw(tstringUtil::TString(out), wxT("wb"));
+//wxFFileOutputStream raw(tstringUtil::WXString(out), wxT("wb"));
 //tree->SaveXML(raw);
 //}
 #endif

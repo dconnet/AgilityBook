@@ -46,25 +46,25 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxString tstringUtil::TString(wchar_t const* const inStr, size_t inLen)
+wxString tstringUtil::WXString(wchar_t const* const inStr, size_t inLen)
 {
 	return wxString(inStr, wxConvUTF8, inLen);
 }
 
 
-wxString tstringUtil::TString(std::wstring const& inStr)
+wxString tstringUtil::WXString(std::wstring const& inStr)
 {
 	return wxString(inStr.c_str(), wxConvUTF8, inStr.length());
 }
 
 
-wxString tstringUtil::TString(char const* const inStr, size_t inLen)
+wxString tstringUtil::WXString(char const* const inStr, size_t inLen)
 {
 	return wxString(inStr, wxConvUTF8, inLen);
 }
 
 
-wxString tstringUtil::TString(std::string const& inStr)
+wxString tstringUtil::WXString(std::string const& inStr)
 {
 	return wxString(inStr.c_str(), wxConvUTF8, inStr.length());
 }
@@ -89,6 +89,20 @@ std::string tstringUtil::tstringA(wxMemoryOutputStream const& inStr)
 std::string tstringUtil::tstringA(wxString const& inStr)
 {
 	return std::string(inStr.ToUTF8());
+}
+
+
+bool tstringUtil::ToLong(wxString const& inStr, long& outValue)
+{
+	return inStr.ToLong(&outValue);
+}
+
+
+long tstringUtil::ToLong(wxString const& inStr)
+{
+	long val = 0;
+	ToLong(inStr, val);
+	return val;
 }
 
 
@@ -120,6 +134,14 @@ bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
 }
 
 
+double tstringUtil::ToDouble(wxString const& inStr)
+{
+	double val = 0.0;
+	ToDouble(inStr, val);
+	return val;
+}
+
+
 bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 {
 #if wxCHECK_VERSION(2, 9, 3)
@@ -140,6 +162,14 @@ bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 }
 
 
+long tstringUtil::ToCLong(wxString const& inStr)
+{
+	long val = 0;
+	ToCLong(inStr, val, true);
+	return val;
+}
+
+
 bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
 {
 #if wxCHECK_VERSION(2, 9, 3)
@@ -150,6 +180,14 @@ bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
 	wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
 	return inStr.ToDouble(&outValue);
 #endif
+}
+
+
+double tstringUtil::ToCDouble(wxString const& inStr)
+{
+	double val = 0.0;
+	ToCDouble(inStr, val);
+	return val;
 }
 
 

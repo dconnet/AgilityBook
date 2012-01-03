@@ -273,7 +273,7 @@ bool CUpdateInfo::ReadVersionFile(
 		if (bVerbose)
 		{
 			data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
-			wxString tmp = tstringUtil::TString(data);
+			wxString tmp = tstringUtil::WXString(data);
 			if (!errMsg.IsEmpty())
 				tmp += errMsg;
 			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
