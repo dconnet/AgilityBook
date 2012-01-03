@@ -147,7 +147,7 @@ bool BinaryData::DecodeString(
 	// TODO: Better conversion
 	std::string tmp(reinterpret_cast<char*>(data), len);
 	Release(data);
-	outData = tstringUtil::TString(tmp);
+	outData = tstringUtil::WXString(tmp);
 	return true;
 }
 

@@ -228,7 +228,7 @@ bool CClipboardDataWriter::AddData(
 	{
 		wxMemoryOutputStream out;
 		inTree->SaveXML(out);
-		data = tstringUtil::TString(tstringUtil::tstringA(out));
+		data = tstringUtil::WXString(tstringUtil::tstringA(out));
 	}
 	return AddData(clpFmt, data);
 }
