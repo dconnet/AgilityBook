@@ -11,6 +11,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-03 DRC Fix field updating (some fields didn't have validator
+ *                    associated variables tied to them)
  * @li 2012-01-02 DRC Change validator to support default value on empty field.
  * @li 2012-01-01 DRC Add validation dialogs, page change vetoing.
  * @li 2011-12-30 DRC Fixed CGenericValidator.
@@ -2773,7 +2775,7 @@ void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 
 void CDlgRun::OnClosingTimeChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	tstringUtil::ToDouble(m_ctrlMinYPSClosingTime->GetValue(), m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
 	SetObstacles();
 }
@@ -2843,7 +2845,7 @@ void CDlgRun::OnFaultsChange(wxCommandEvent& evt)
 
 void CDlgRun::OnOpenChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	m_Open = static_cast<short>(wxAtol(m_ctrlYPSOpeningPts->GetValue()));
 	m_Run->GetScoring().SetOpenPts(m_Open);
 	SetTitlePoints();
 }
@@ -2851,7 +2853,7 @@ void CDlgRun::OnOpenChange(wxCommandEvent& evt)
 
 void CDlgRun::OnCloseChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	m_Close = static_cast<short>(wxAtol(m_ctrlClosingPtsTotalFaults->GetValue()));
 	m_Run->GetScoring().SetClosePts(m_Close);
 	SetTitlePoints();
 }
