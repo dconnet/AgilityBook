@@ -4,6 +4,8 @@
 See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 
 Revision History:
+2012-01-03 DRC Configuration version 35.
+               Added USDAA Masters Challenge classes.
 2011-10-03 DRC Configuration version 34.
                Tweaked some ASCA title comments and AKC T2B description.
                Fixed start date for T2B titles.
@@ -108,7 +110,7 @@ Revision History:
                Added versioning to configuration to allow auto-upgrades.
                Added new Config/Action: DeleteTitle
 -->
-  <Configuration version="34">
+  <Configuration version="35">
     <Action Config="32" NewName="MXF" OldName="MF" Venue="AKC" Verb="RenameTitle"/>
     <Action Config="32" NewName="Regular" OldName="Standard" Venue="AKC" Verb="RenameDivision"/>
     <Action Config="32" NewName="ATCH" OldName="V-ATCH" Venue="ASCA" Verb="DeleteTitle"/>
@@ -3464,6 +3466,12 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Intro Snooker Dog - Silver" Name="IKDS">9 qualifying scores.</Titles>
       <Titles LongName="Intro Snooker Dog - Gold" Name="IKDG">12 qualifying scores.</Titles>
       <Titles LongName="Intro Versatility Dog" Name="IVD">3 Standard, 1 Jumpers, 1 Gamblers, 1 Snooker</Titles>
+	  <!-- Holding off for verification on acronym
+      <Titles LongName="MC Standard Agility Champion" Name="MCS">10 Standard</Titles>
+      <Titles LongName="MC Jumpers Champion" Name="MCJ">10 Jumpers</Titles>
+      <Titles LongName="MC Performance Standard Champion" Name="MCPS">10 Standard</Titles>
+      <Titles LongName="MC Performance Jumpers Champion" Name="MCJS">10 Jumpers</Titles>
+	  -->
       <Division Name="Championship">
         <Level Name="International"/>
         <Level Name="Nationals"/>
@@ -3474,6 +3482,7 @@ TG3 + 10 Qs in at least 5 games
         </Level>
         <Level Name="Advanced"/>
         <Level Name="Masters"/>
+        <Level Name="Masters Challenge"/>
       </Division>
       <Division Name="Performance">
         <Level Name="International"/>
@@ -3482,6 +3491,7 @@ TG3 + 10 Qs in at least 5 games
         <Level Name="PI"/>
         <Level Name="PII"/>
         <Level Name="PIII"/>
+        <Level Name="Masters Challenge"/>
       </Division>
       <Division Name="Junior">
         <Level Name="Beginners"/>
@@ -3502,6 +3512,10 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3516,6 +3530,10 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
@@ -3546,6 +3564,10 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Championship" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
+        <Scoring Division="Championship" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
         <Scoring Division="Championship" Level="Masters" type="FaultsThenTime">
           <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
@@ -3561,6 +3583,10 @@ TG3 + 10 Qs in at least 5 games
         <Scoring Division="Performance" Level="Nationals" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidTo="2008-9-18" type="TimePlusFaults"/>
         <Scoring Division="Performance" Level="Tournament" ValidFrom="2008-9-19" type="TimePlusFaults">
+          <LifeTime Faults="0" Points="1"/>
+        </Scoring>
+        <Scoring Division="Performance" Level="Masters Challenge" ValidFrom="2012-1-1" type="FaultsThenTime">
+          <TitlePoints Faults="0" Points="1"/>
           <LifeTime Faults="0" Points="1"/>
         </Scoring>
         <Scoring Division="Performance" Level="PIII" type="FaultsThenTime">
