@@ -865,7 +865,7 @@ bool CWizardImport::DoWizardFinish()
 				// rows/cols has that much overlap, it's just not worth it.
 				if (!pScoring)
 				{
-					loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), nItem + 1);
+					loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1));
 					errLog << loadstr << wxT("\n");
 					++nSkipped;
 					continue;
@@ -936,8 +936,8 @@ bool CWizardImport::DoWizardFinish()
 							{
 								loadstr = wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_RUN"),
-									nItem + 1,
-									static_cast<long>(iCol + 1),
+									static_cast<int>(nItem + 1),
+									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
 								errLog << loadstr << wxT("\n");
 								if (pRun)
@@ -1095,7 +1095,7 @@ bool CWizardImport::DoWizardFinish()
 					{
 						loadstr = wxString::Format(
 							_("IDS_IMPORT_BAD_VENUE"),
-							nItem + 1,
+							static_cast<int>(nItem + 1),
 							trialVenue.c_str());
 						errLog << loadstr << wxT("\n");
 						pRun.reset();
@@ -1107,7 +1107,7 @@ bool CWizardImport::DoWizardFinish()
 						pRun->GetLevel(),
 						pRun->GetDate()))
 					{
-						loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), nItem + 1);
+						loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1));
 						errLog << loadstr << wxT("\n");
 						pRun.reset();
 					}
@@ -1272,8 +1272,8 @@ bool CWizardImport::DoWizardFinish()
 							{
 								loadstr = wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALSTART"),
-									nItem + 1,
-									static_cast<long>(iCol + 1),
+									static_cast<int>(nItem + 1),
+									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
 								errLog << loadstr << wxT("\n");
 								if (pCal)
@@ -1294,8 +1294,8 @@ bool CWizardImport::DoWizardFinish()
 							{
 								loadstr = wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALEND"),
-									nItem + 1,
-									static_cast<long>(iCol + 1),
+									static_cast<int>(nItem + 1),
+									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
 								errLog << loadstr << wxT("\n");
 								if (pCal)
@@ -1333,8 +1333,8 @@ bool CWizardImport::DoWizardFinish()
 						{
 							loadstr = wxString::Format(
 								_("IDS_IMPORT_BAD_CAL_VALUE"),
-								nItem + 1,
-								static_cast<long>(iCol + 1),
+								static_cast<int>(nItem + 1),
+								static_cast<int>(iCol + 1),
 								entry[iCol].c_str());
 							errLog << loadstr << wxT("\n");
 							if (pCal)
@@ -1366,8 +1366,8 @@ bool CWizardImport::DoWizardFinish()
 							{
 								loadstr = wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALOPEN"),
-									nItem + 1,
-									static_cast<long>(iCol + 1),
+									static_cast<int>(nItem + 1),
+									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
 								errLog << loadstr << wxT("\n");
 								if (pCal)
@@ -1388,8 +1388,8 @@ bool CWizardImport::DoWizardFinish()
 							{
 								loadstr = wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALCLOSE"),
-									nItem + 1,
-									static_cast<long>(iCol + 1),
+									static_cast<int>(nItem + 1),
+									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
 								errLog << loadstr << wxT("\n");
 								if (pCal)
@@ -1447,8 +1447,8 @@ bool CWizardImport::DoWizardFinish()
 							{
 								loadstr = wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_LOG"),
-									nItem + 1,
-									static_cast<long>(iCol + 1),
+									static_cast<int>(nItem + 1),
+									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
 								errLog << loadstr << wxT("\n");
 								if (pLog)
@@ -1500,7 +1500,11 @@ bool CWizardImport::DoWizardFinish()
 		m_pDoc->Book().GetTraining().sort();
 	if (!errLog.empty())
 		errLog << wxT("\n");
-	loadstr = wxString::Format(_("IDS_IMPORT_STATS"), nAdded, nUpdated, nDuplicate, nSkipped);
+	loadstr = wxString::Format(_("IDS_IMPORT_STATS"),
+		static_cast<int>(nAdded),
+		static_cast<int>(nUpdated),
+		static_cast<int>(nDuplicate),
+		static_cast<int>(nSkipped));
 	errLog << loadstr;
 	CDlgMessage dlg(errLog, this);
 	dlg.ShowModal();

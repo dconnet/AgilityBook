@@ -1607,11 +1607,12 @@ void CPointsDataItems::LoadData(
 						if (0 < points || 0 < allmatching.size())
 						{
 							wxString strRunCount = wxString::Format(_("IDS_POINTS_RUNS_JUDGES"),
-								allmatching.size(),
-								judges.size());
+								static_cast<int>(allmatching.size()),
+								static_cast<int>(judges.size()));
 							if (pEvent->HasPartner() && 0 < partners.size())
 							{
-								strRunCount += wxString::Format(_("IDS_POINTS_PARTNERS"), partners.size());
+								strRunCount += wxString::Format(_("IDS_POINTS_PARTNERS"),
+									static_cast<int>(partners.size()));
 							}
 							double percentQs = 0.0;
 							if (0 < allmatching.size())
@@ -1625,11 +1626,13 @@ void CPointsDataItems::LoadData(
 							}
 							if (0 < judgesQ.size())
 							{
-								strQcount += wxString::Format(_("IDS_POINTS_JUDGES"), judgesQ.size());
+								strQcount += wxString::Format(_("IDS_POINTS_JUDGES"),
+									static_cast<int>(judgesQ.size()));
 							}
 							if (pEvent->HasPartner() && 0 < partnersQ.size())
 							{
-								strQcount += wxString::Format(_("IDS_POINTS_PARTNERS"), partnersQ.size());
+								strQcount += wxString::Format(_("IDS_POINTS_PARTNERS"),
+									static_cast<int>(partnersQ.size()));
 							}
 							wxString strPts;
 							wxString strSuperQ;

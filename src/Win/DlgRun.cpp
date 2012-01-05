@@ -1662,7 +1662,7 @@ CDlgRun::CDlgRun(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	notebook->SetSelection(iSelectPage);
+	notebook->ChangeSelection(iSelectPage);
 }
 
 

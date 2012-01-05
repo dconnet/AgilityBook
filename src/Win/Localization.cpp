@@ -551,7 +551,7 @@ wxString CLocalization::LifetimePointsNameFormat(double points, double faults) c
 wxString CLocalization::PlacementPointsNameFormat(double points, short place) const
 {
 	wxString dbl1 = wxString::Format(wxT("%g"), points);
-	return wxString::Format(_("IDS_PLACEMENTPOINTSNAME"), dbl1.c_str(), (int)place);
+	return wxString::Format(_("IDS_PLACEMENTPOINTSNAME"), dbl1.c_str(), static_cast<int>(place));
 }
 
 
