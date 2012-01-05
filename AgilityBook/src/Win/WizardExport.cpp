@@ -1328,7 +1328,8 @@ void CWizardExport::OnDelimOther(wxCommandEvent& evt)
 
 void CWizardExport::OnExportDelim(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	if (m_ctrlOtherChar)
+		m_Delimiter = m_ctrlOtherChar->GetValue();
 	UpdateButtons();
 	UpdatePreview();
 }

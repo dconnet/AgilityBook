@@ -1,3 +1,7 @@
+1/5/2012: v2.3.4.3295
+- Bug fixes:
+  - Still some lingering validation issues. (now actually understood!)
+
 1/4/2012: v2.3.3.3294
 - Bumped Configuration v35:
   - Added USDAA Masters Challenge classes (but not titles yet)

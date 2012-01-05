@@ -693,8 +693,14 @@ void CDlgCalendar::OnCalEntry(wxCommandEvent& evt)
 
 void CDlgCalendar::OnEnChangeCalOnlineUrl(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
-	m_ctrlOnlineUrlEntry->Enable(m_ctrlEntryPlan->GetValue() && !m_OnlineUrl.empty());
+	// Note: Do not call TransferDataFromWindow from any text change event.
+	// wxGenericValidator uses SetValue to change a value which generates
+	// another event. During dialog initialization, this means we would then
+	// force the data from the controls into the variables at the same time
+	// we're updating the controls from the variables. This is really just
+	// an issue during dialog startup.
+	wxString s = m_ctrlOnlineUrl->GetValue();
+	m_ctrlOnlineUrlEntry->Enable(m_ctrlEntryPlan->GetValue() && !s.empty());
 }
 
 
@@ -707,8 +713,8 @@ void CDlgCalendar::OnOnlineEntry(wxCommandEvent& evt)
 
 void CDlgCalendar::OnEnChangeCalPremiumUrl(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
-	m_ctrlPremiumEntry->Enable(!m_PremiumUrl.empty());
+	wxString s = m_ctrlPremiumUrl->GetValue();
+	m_ctrlPremiumEntry->Enable(!s.empty());
 }
 
 
@@ -721,8 +727,8 @@ void CDlgCalendar::OnPremiumEntry(wxCommandEvent& evt)
 
 void CDlgCalendar::OnEnChangeCalEmailSecAddr(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
-	m_ctrlEMailSec->Enable(!m_EMailSecAddr.empty());
+	wxString s = m_ctrlEMailSecAddr->GetValue();
+	m_ctrlEMailSec->Enable(!s.empty());
 }
 
 
@@ -744,8 +750,8 @@ void CDlgCalendar::OnAccommodation(wxCommandEvent& evt)
 
 void CDlgCalendar::OnSelchangeClub(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
-	UpdateClubInfo(m_Club);
+	wxString s = m_ctrlClub->GetValue();
+	UpdateClubInfo(s);
 }
 
 
@@ -771,8 +777,8 @@ void CDlgCalendar::OnClubNotes(wxCommandEvent& evt)
 
 void CDlgCalendar::OnSelchangeLocation(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
-	UpdateLocationInfo(m_Location);
+	wxString s = m_ctrlLocation->GetValue();
+	UpdateLocationInfo(s);
 }
 
 
