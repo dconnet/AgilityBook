@@ -30,7 +30,7 @@ msgid "IDS_NEED_VALUE"
 msgstr "Renseignez le champ, svp."
 
 msgid "IDS_NEED_NUMBER"
-msgstr "Entrer un numéro valide, svp."
+msgstr "Merci d'enter un nombre valide."
 
 # Begin Columns
 msgid "IDS_COL_ACTUAL_WORK"
