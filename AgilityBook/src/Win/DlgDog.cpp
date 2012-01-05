@@ -955,7 +955,7 @@ CDlgDog::CDlgDog(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	notebook->SetSelection(iSelectPage);
+	notebook->ChangeSelection(iSelectPage);
 }
 
 

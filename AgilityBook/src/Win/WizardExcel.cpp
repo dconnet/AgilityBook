@@ -551,7 +551,9 @@ bool CWizardExcelImport::GetData(
 			wxFileName filename(m_FileName);
 			wxString msg = filename.GetFullPath();
 			ioProgress->SetCaption(msg);
-			wxString str = wxString::Format(_("IDS_READING_ROWSCOLS"), nRows, nCols);
+			wxString str = wxString::Format(_("IDS_READING_ROWSCOLS"),
+				static_cast<int>(nRows),
+				static_cast<int>(nCols));
 			ioProgress->SetMessage(str);
 			ioProgress->SetRange(1, nRows);
 			ioProgress->ShowProgress();

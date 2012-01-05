@@ -146,7 +146,7 @@ static ElementNodePtr FindElementName(
 {
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		wxString configName = wxString::Format(wxT("%s%d"), eleItem, i);
+		wxString configName = wxString::Format(wxT("%s%ld"), eleItem, i);
 		int idxConfig = tree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
