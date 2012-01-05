@@ -13,7 +13,6 @@ Files to change before marking files for release:
   - Make sure it is added to TestARB
 - Update CD Labels
   - lsl: LightScribe Template Labeler
-  - ncd: Nero CD Cover
 - History.txt
   Update program version and date, along with any comments.
   - Reflect these changes into help/html/HistoryData.html

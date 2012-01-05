@@ -687,14 +687,14 @@ void CDlgCalendar::OnDateClosesUnknown(wxCommandEvent& evt)
 void CDlgCalendar::OnCalEntry(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	m_ctrlOnlineUrlEntry->Enable(!m_OnlineUrl.empty());
+	m_ctrlOnlineUrlEntry->Enable(m_ctrlEntryPlan->GetValue() && !m_OnlineUrl.empty());
 }
 
 
 void CDlgCalendar::OnEnChangeCalOnlineUrl(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
-	m_ctrlOnlineUrlEntry->Enable(!m_OnlineUrl.empty());
+	m_ctrlOnlineUrlEntry->Enable(m_ctrlEntryPlan->GetValue() && !m_OnlineUrl.empty());
 }
 
 
