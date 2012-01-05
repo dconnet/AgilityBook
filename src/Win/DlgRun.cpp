@@ -2764,7 +2764,8 @@ void CDlgRun::OnSelchangeQ(wxCommandEvent& evt)
 
 void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	// See DlgCalendar.cpp on why TransferDataFromWindow is bad here!
+	tstringUtil::ToDouble(m_ctrlSCT->GetValue(), m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetMinYPS();
 	SetObstacles();
@@ -2783,7 +2784,7 @@ void CDlgRun::OnClosingTimeChange(wxCommandEvent& evt)
 
 void CDlgRun::OnNumObsChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	m_Obstacles = static_cast<short>(wxAtol(m_ctrlObstacles->GetValue()));
 	m_Run->GetScoring().SetObstacles(m_Obstacles);
 	SetObstacles();
 }
@@ -2817,7 +2818,7 @@ void CDlgRun::OnReqOpeningYPSChange(wxCommandEvent& evt)
 
 void CDlgRun::OnReqClosingChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	m_Closing = static_cast<short>(wxAtol(m_ctrlClosing->GetValue()));
 	m_Run->GetScoring().SetNeedClosePts(m_Closing);
 	SetTitlePoints();
 }
@@ -2825,7 +2826,7 @@ void CDlgRun::OnReqClosingChange(wxCommandEvent& evt)
 
 void CDlgRun::OnTimeChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	tstringUtil::ToDouble(m_ctrlTime->GetValue(), m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
 	SetYPS();
 	SetObstacles();
@@ -2836,7 +2837,7 @@ void CDlgRun::OnTimeChange(wxCommandEvent& evt)
 
 void CDlgRun::OnFaultsChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	m_Faults = static_cast<short>(wxAtol(m_ctrlFaults->GetValue()));
 	m_Run->GetScoring().SetCourseFaults(m_Faults);
 	SetTotalFaults();
 	SetTitlePoints();
@@ -2861,7 +2862,7 @@ void CDlgRun::OnCloseChange(wxCommandEvent& evt)
 
 void CDlgRun::OnPlaceChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	m_Place = static_cast<short>(wxAtol(m_ctrlPlace->GetValue()));
 	m_Run->SetPlace(m_Place);
 	SetTitlePoints();
 }
@@ -2869,7 +2870,7 @@ void CDlgRun::OnPlaceChange(wxCommandEvent& evt)
 
 void CDlgRun::OnBonusChange(wxCommandEvent& evt)
 {
-	TransferDataFromWindow();
+	m_BonusPts = static_cast<short>(wxAtol(m_ctrlBonusPts->GetValue()));
 	m_Run->GetScoring().SetBonusPts(m_BonusPts);
 	SetTitlePoints();
 }

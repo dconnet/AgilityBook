@@ -350,7 +350,13 @@ bool CTrimValidator::Validate(wxWindow* parent)
 		if (textCtrl)
 			textCtrl->ChangeValue(val);
 		else if (comboCtrl)
+		{
+#if wxCHECK_VERSION(2, 9, 3)
+			comboCtrl->ChangeValue(val);
+#else
 			comboCtrl->SetValue(val);
+#endif
+		}
 	}
 
 	bool ok = true;
