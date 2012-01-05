@@ -1,7 +1,5 @@
 Miscellaneous files:
 AgilityRecordBook.lsl       CD Label for backing up source code
-AgilityRecordBook.ncd       CD Label for backing up source code
-AgilityRecordBook.std       CD Label for backing up source code
 AgilityRecordBook-land.doc  Flyer (landscape)
 AgilityRecordBook-port.doc  Flyer (portrait)
 ARB Cards.zdl               Business Card
@@ -17,9 +15,5 @@ File Types
 .doc   Microsoft Word 2003
 .xls   Microsoft Excel 2003
 .lsl   LightScribe Template Labeler (v1.18.15.1)
-.ncd   Nero CD Cover Document 3.3.3.0 (for Lightscribe)
-       (came with Lightscribe device)
-.std   SureThing CD Labeler Deluxe 3.12
-       http://www.surething.com/ST/Category.asp?CatCode=ST4_HOME
 .zdl   Avery DesignPro (free)
        http://www.avery.com/us/Main?action=software.AverySoftwareDetail&catalogcode=WEB01&softwarecode=3200

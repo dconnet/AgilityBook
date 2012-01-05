@@ -1,4 +1,6 @@
-1/3/2012: v2.3.3.<in development>
+1/4/2012: v2.3.3.3294
+- Bumped Configuration v35:
+  - Added USDAA Masters Challenge classes (but not titles yet)
 - New features / Enhancements:
   - Add validation error dialogs.
 - Bug fixes:
