@@ -1,4 +1,12 @@
-Last Updated: 12/7/2011
+Last Updated: 1/6/2012
+
+- USDAA top-10 calculations:
+  - Number of places
+    - 1-3 dogs: 1
+    - 4-5 dogs: 2
+    - 6-10 dogs: 3
+    - >10: ((NumDogs - 1) / 10) + 3 [integer truncation]
+  - Points: (NumDogs - Place) * 2 + 1
 
 - Detect peruser/permachine installs to prevent 'bad' upgrades from happening.
   From an email on 'wix-users' list:
