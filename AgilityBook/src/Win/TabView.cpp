@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-07 DRC Fix tab type/orientation persistence.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-08-03 DRC Fix tab setting so view is properly activated.
  * @li 2009-01-06 DRC Ported to wxWidgets.
@@ -69,8 +70,8 @@ static long GetDefaultBook()
 
 CTabView::CTabView()
 	: m_frame(NULL)
-	, m_type(GetDefaultBook())
-	, m_orient(ID_ORIENT_TOP)
+	, m_type(GetDefaultBook() - ID_BOOK_FIRST)
+	, m_orient(ID_ORIENT_TOP - ID_ORIENT_FIRST)
 	, m_sizerFrame(NULL)
 	, m_ctrlBook(NULL)
 	, m_imageList(16,16)
@@ -81,27 +82,21 @@ CTabView::CTabView()
 	m_imageList.Add(wxIcon(calendar_xpm));
 	m_imageList.Add(wxIcon(training_xpm));
 	m_type = wxConfig::Get()->Read(CFG_SETTINGS_VIEWTYPE, m_type);
-	switch (m_type)
+	if (m_type < 0 || m_type > ID_BOOK_LAST - ID_BOOK_FIRST)
 	{
-	default:
-		m_type = GetDefaultBook();
-		break;
-#if wxUSE_NOTEBOOK
-	case ID_BOOK_NOTEBOOK:
-#elif wxUSE_LISTBOOK
-	case ID_BOOK_LISTBOOK:
-#elif wxUSE_CHOICEBOOK
-	case ID_BOOK_CHOICEBOOK:
-#elif wxUSE_TREEBOOK
-	case ID_BOOK_TREEBOOK:
-#elif wxUSE_TOOLBOOK
-	case ID_BOOK_TOOLBOOK:
-#endif
-		break;
+		// Backwards compatibility fix. Since menu ids might change by adding
+		// a new item, we need to normalize. We don't know what the offset was.
+		m_type = GetDefaultBook() - ID_BOOK_FIRST;
 	}
+	m_type += ID_BOOK_FIRST; // Restore to internal menu id.
 	m_orient = wxConfig::Get()->Read(CFG_SETTINGS_VIEWORIENT, m_orient);
-	if (m_orient < ID_ORIENT_FIRST || m_orient >= ID_ORIENT_LAST)
-		m_orient = ID_ORIENT_FIRST;
+	if (m_orient < 0 || m_orient > ID_ORIENT_LAST - ID_ORIENT_FIRST)
+	{
+		// Backwards compatibility fix. Since menu ids might change by adding
+		// a new item, we need to normalize. We don't know what the offset was.
+		m_orient = ID_ORIENT_TOP - ID_ORIENT_FIRST;
+	}
+	m_orient += ID_ORIENT_FIRST; // Restore to internal menu id.
 }
 
 
@@ -109,8 +104,8 @@ CTabView::~CTabView()
 {
 	if (m_ctrlBook)
 	{
-		wxConfig::Get()->Write(CFG_SETTINGS_VIEWTYPE, m_type);
-		wxConfig::Get()->Write(CFG_SETTINGS_VIEWORIENT, m_orient);
+		wxConfig::Get()->Write(CFG_SETTINGS_VIEWTYPE, m_type - ID_BOOK_FIRST);
+		wxConfig::Get()->Write(CFG_SETTINGS_VIEWORIENT, m_orient - ID_ORIENT_FIRST);
 		wxConfig::Get()->Write(CFG_SETTINGS_VIEW, m_ctrlBook->GetSelection());
 		m_ctrlBook->Destroy();
 		m_ctrlBook = NULL;

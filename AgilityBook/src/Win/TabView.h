@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-07 DRC Fix tab type/orientation persistence.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  */
 
@@ -46,6 +47,10 @@ public:
 	virtual bool OnCreate(wxDocument* doc, long flags);
 	virtual void OnDraw(wxDC* dc);
 	virtual void OnUpdate(wxView* sender, wxObject* inHint = NULL);
+
+	// Menu ids
+	int GetType() const		{return m_type;}
+	int GetOrient() const	{return m_orient;}
 
 	void OnType(int id);
 	void OnOrient(int id);
