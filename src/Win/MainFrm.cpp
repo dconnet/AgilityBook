@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-07 DRC Fix tab type/orientation persistence.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-25 DRC Fix status width on Mac.
@@ -392,7 +393,17 @@ void CMainFrame::OnUpdateCmd(wxUpdateUIEvent& evt)
 		if ((ID_BOOK_FIRST <= evt.GetId() && evt.GetId() < ID_BOOK_LAST)
 		|| (ID_ORIENT_FIRST <= evt.GetId() && evt.GetId() < ID_ORIENT_LAST))
 		{
+			CAgilityBookDoc* pDoc = wxDynamicCast(GetDocumentManager()->GetCurrentDocument(), CAgilityBookDoc);
+			assert(pDoc);
+			CTabView* pView = pDoc->GetTabView();
+			assert(pView);
 			bEnable = true;
+			bool bCheck = false;
+			if (ID_BOOK_FIRST <= evt.GetId() && evt.GetId() < ID_BOOK_LAST)
+				bCheck = pView->GetType() == evt.GetId();
+			else
+				bCheck = pView->GetOrient() == evt.GetId();
+			evt.Check(bCheck);
 		}
 		break;
 	case ID_FILE_LANGUAGE_CHOOSE:
