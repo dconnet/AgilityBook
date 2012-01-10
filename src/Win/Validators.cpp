@@ -228,35 +228,38 @@ bool CGenericValidator::Validate(wxWindow* parent)
 	if (m_validatorWindow->IsKindOf(CLASSINFO(wxTextCtrl)))
 	{
 		pTextControl = (wxTextCtrl*)m_validatorWindow;
-		wxString textVal = pTextControl->GetValue();
-		if (m_pShort)
+		if (pTextControl->IsEditable())
 		{
-			long val;
-			if (textVal.empty() && m_bUseDefOnEmpty)
+			wxString textVal = pTextControl->GetValue();
+			if (m_pShort)
 			{
-				wxString str;
-				str.Printf(wxT("%hd"), m_Default.s);
-				pTextControl->ChangeValue(str);
+				long val;
+				if (textVal.empty() && m_bUseDefOnEmpty)
+				{
+					wxString str;
+					str.Printf(wxT("%hd"), m_Default.s);
+					pTextControl->ChangeValue(str);
+				}
+				else if (!tstringUtil::ToLong(textVal, val))
+				{
+					ok = false;
+					if (errormsg.empty())
+						errormsg = _("IDS_NEED_NUMBER");
+				}
 			}
-			else if (!tstringUtil::ToLong(textVal, val))
+			else if (m_pDouble)
 			{
-				ok = false;
-				if (errormsg.empty())
-					errormsg = _("IDS_NEED_NUMBER");
-			}
-		}
-		else if (m_pDouble)
-		{
-			double dbl;
-			if (textVal.empty() && m_bUseDefOnEmpty)
-			{
-				pTextControl->ChangeValue(ARBDouble::ToString(m_Default.dbl, m_Prec));
-			}
-			else if (!tstringUtil::ToDouble(textVal, dbl))
-			{
-				ok = false;
-				if (errormsg.empty())
-					errormsg = _("IDS_NEED_NUMBER");
+				double dbl;
+				if (textVal.empty() && m_bUseDefOnEmpty)
+				{
+					pTextControl->ChangeValue(ARBDouble::ToString(m_Default.dbl, m_Prec));
+				}
+				else if (!tstringUtil::ToDouble(textVal, dbl))
+				{
+					ok = false;
+					if (errormsg.empty())
+						errormsg = _("IDS_NEED_NUMBER");
+				}
 			}
 		}
 	}
@@ -332,7 +335,11 @@ bool CTrimValidator::Validate(wxWindow* parent)
 		return true;
 
 	wxTextCtrl* textCtrl = wxDynamicCast(m_validatorWindow, wxTextCtrl);
+	if (textCtrl && !textCtrl->IsEditable())
+		return true;
 	wxComboBox* comboCtrl = wxDynamicCast(m_validatorWindow, wxComboBox);
+	if (comboCtrl && !comboCtrl->IsEditable())
+		return true;
 	wxString val;
 	if (textCtrl)
 		val = textCtrl->GetValue();
