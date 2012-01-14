@@ -18,7 +18,7 @@
  * @li 2004-03-06 DRC Created
  */
 
-#ifdef WIN32
+#ifdef __WXMSW__
 
 // Metafiles are only available on Windows
 class CDlgCRCDViewer : public wxDialog

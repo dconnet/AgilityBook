@@ -68,7 +68,7 @@ private:
 
 	wxDocManager* m_manager;
 	CAgilityBookMenu m_MenuBar;
-#ifdef WIN32
+#ifdef __WXMSW__
 	wxFont m_fontStatusBar;
 #endif
 	int m_Widths[NUM_STATUS_FIELDS];

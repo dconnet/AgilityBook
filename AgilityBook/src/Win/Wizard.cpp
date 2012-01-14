@@ -30,7 +30,7 @@
 #endif
 
 
-#ifdef WIN32
+#ifdef ARB_HAS_PRAGMAPUSHPOP
 #pragma warning( push )
 // Disable "warning C4355: 'this' : used in base member initializer list"
 #pragma warning( disable : 4355 )
@@ -73,7 +73,7 @@ CWizard::CWizard(
 	RunWizard(m_pageStart);
 	Destroy();
 }
-#ifdef WIN32
+#ifdef ARB_HAS_PRAGMAPUSHPOP
 #pragma warning( pop )
 #endif
 

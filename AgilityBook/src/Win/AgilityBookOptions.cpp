@@ -1458,7 +1458,7 @@ void CAgilityBookOptions::GetColumnOrder(
 				break;
 			case IO_TYPE_VIEW_TREE_TRIAL:
 				outValues.push_back(IO_TREE_TRIAL_START);
-#ifndef WIN32
+#ifndef __WXMSW__
 				outValues.push_back(IO_TREE_TRIAL_VERIFIED);
 #endif
 				outValues.push_back(IO_TREE_TRIAL_VENUE);

@@ -281,7 +281,7 @@ public:
 	 */
 	time_t GetDate() const;
 
-#ifdef WIN32
+#ifdef _WIN32
 	/**
 	 * Convert the date to a time.
 	 */

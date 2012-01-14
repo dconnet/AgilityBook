@@ -246,7 +246,7 @@
 // This define means the compiler has 2 time_ts
 // time_t: 32bits
 // __time64_t: 64bits
-#if _WIN32 && _MSC_VER >= 1300 && _MSC_VER < 1400
+#if _MSC_VER >= 1300 && _MSC_VER < 1400
 // VC6: time_t is 32bits
 // VC7: time_t is 32bits, and __time64_t is 64
 // VC8+: time_t is 64bit
@@ -272,8 +272,22 @@
 #define ARB_SET_ERASE_RETURNS_ITERATOR
 #endif
 
+// ARB_HAS_GETSYSTEMINFO
+//  Has GetSystemInfo in order to check for x64.
+#if !defined(_MSC_VER) || _MSC_VER >= 1300
+#define ARB_HAS_GETSYSTEMINFO
+#endif
+
+// ARB_HAS_PRAGMAPUSHPOP
+//  Supports push/pop/warnings
+//   #pragma warning (push)
+//   #pragma warning (disable : 4355)
+#ifdef _MSC_VER
+#define ARB_HAS_PRAGMAPUSHPOP
+#endif
+
 // Some often used includes for speeding the build
-#ifndef WIN32
+#ifndef _WIN32
 #include <map>
 #include <set>
 #include <string>

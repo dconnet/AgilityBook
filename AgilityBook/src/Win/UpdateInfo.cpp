@@ -132,7 +132,7 @@ static wxString VersionFile()
 }
 
 
-#if defined(WIN32)
+#if defined(__WXMSW__)
 static wxString ARBUpdater()
 {
 	return wxT("ARBUpdater.exe");
@@ -149,7 +149,7 @@ static wxString UpdateFile()
 #ifdef USE_LOCAL
 static wxString FILENAME()
 {
-#ifdef WIN32
+#ifdef __WXMSW__
 	// Why this? Just cause that's how my local system is setup.
 	return wxT("c:/dcon/www/agilityrecordbook/") + VersionFile();
 #else
@@ -185,7 +185,7 @@ bool CUpdateInfo::UpdateConfig(
 
 void CUpdateInfo::CleanupUpdate()
 {
-#if defined(WIN32)
+#if defined(__WXMSW__)
 	wxString updateFile = UpdateFile();
 	if (wxFileName::FileExists(updateFile))
 	{
@@ -473,7 +473,7 @@ bool CUpdateInfo::CheckProgram(
 				{
 					bGotoWeb = true;
 				}
-#elif defined(WIN32) // includes x64
+#elif defined(__WXMSW__)
 				filename = wxFileName::GetTempDir() + wxFileName::GetPathSeparator() + name.GetFullName();
 #endif
 				if (!bGotoWeb)
@@ -532,7 +532,7 @@ bool CUpdateInfo::CheckProgram(
 #if defined(__WXMAC__)
 					outClose = true;
 					wxMessageBox(wxString::Format(_("IDS_DOWNLOAD_AND_RESTART"), filename.c_str()));
-#elif defined(WIN32) // includes x64
+#elif defined(__WXMSW__)
 					wxString msiFilename;
 					{ // Can't remove file until stream is closed.
 						wxFileInputStream inStream(filename);
@@ -629,7 +629,7 @@ bool CUpdateInfo::CheckProgram(
 				suffix.MakeUpper();
 				if (suffix == wxT(".PHP"))
 				{
-#ifdef WIN32
+#ifdef __WXMSW__
 					OSVERSIONINFO os;
 					os.dwOSVersionInfoSize = sizeof(os);
 					GetVersionEx(&os);
@@ -638,7 +638,7 @@ bool CUpdateInfo::CheckProgram(
 					default:
 					case VER_PLATFORM_WIN32_NT: // NT/Win2000/XP/Vista
 						{
-#if _MSC_VER >= 1300
+#ifdef ARB_HAS_GETSYSTEMINFO
 							SYSTEM_INFO info;
 							GetSystemInfo(&info);
 							if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
