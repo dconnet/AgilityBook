@@ -115,7 +115,7 @@ SUITE(TestMisc)
 	}
 
 
-#ifdef WIN32
+#ifdef __WXMSW__
 	TEST(VerifyColor)
 	{
 		if (!g_bMicroTest)

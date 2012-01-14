@@ -110,9 +110,9 @@ ARBVersion const& ARBAgilityRecordBook::GetCurrentDocVersion()
 // arch/lang to filename mapping). (see Win/UpdateInfo.cpp)
 wxString ARBAgilityRecordBook::GetArch()
 {
-#if defined(WIN64)
+#if defined(_WIN64)
 	return wxT("x64");
-#elif defined(WIN32)
+#elif defined(_WIN32)
 	return wxT("x86");
 #elif defined(__WXMAC__)
 	return wxT("mac");

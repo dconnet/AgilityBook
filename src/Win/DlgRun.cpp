@@ -128,7 +128,7 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#ifdef WIN32
+#ifdef __WXMSW__
 // You can currently only enable this on Win32. I directly use the win32
 // apis to play the metafile into a dc. In theory, I could use wxWidgets
 // to play them - but I still need the direct win32 access to copy a

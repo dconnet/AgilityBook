@@ -25,7 +25,7 @@
 #endif
 
 
-#ifdef WIN32
+#ifdef __WXMSW__
 
 class CMetaDataStatic : public wxStaticText
 {

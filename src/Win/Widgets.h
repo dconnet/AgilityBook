@@ -66,7 +66,7 @@ public:
 #endif
 	bool SetColumnWidth(int col, int width)
 	{
-#ifndef WIN32
+#ifndef __WXMSW__
 		if (wxLIST_AUTOSIZE_USEHEADER == width)
 		{
 			// Don't use header on non-windows platforms. According to docs, it
@@ -80,7 +80,7 @@ public:
 };
 
 
-#ifdef WIN32
+#ifdef __WXMSW__
 // GetState/SetState for state image lists only seems to work for Windows.
 // So we'll use the normal image list on other platforms.
 #define WX_TREE_HAS_STATE

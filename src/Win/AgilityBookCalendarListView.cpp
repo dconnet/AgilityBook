@@ -523,7 +523,7 @@ BEGIN_EVENT_TABLE(CAgilityBookCalendarListView, CAgilityBookBaseExtraView)
 END_EVENT_TABLE()
 
 
-#ifdef _MSC_VER
+#ifdef ARB_HAS_PRAGMAPUSHPOP
 #pragma warning (push)
 #pragma warning (disable : 4355)
 #endif
@@ -548,7 +548,7 @@ CAgilityBookCalendarListView::CAgilityBookCalendarListView(
 	, m_SortColumn(m_Columns)
 {
 }
-#ifdef _MSC_VER
+#ifdef ARB_HAS_PRAGMAPUSHPOP
 #pragma warning (pop)
 #endif
 

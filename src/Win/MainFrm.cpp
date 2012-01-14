@@ -211,7 +211,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 	wxStatusBar* statusbar = CreateStatusBar(NUM_STATUS_FIELDS);
 	if (statusbar)
 	{
-#ifdef WIN32
+#ifdef __WXMSW__
 		m_fontStatusBar = statusbar->GetFont();
 		statusbar->SetFont(m_fontStatusBar);
 #endif

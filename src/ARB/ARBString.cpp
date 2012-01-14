@@ -36,14 +36,6 @@
 #define TCERR std::cerr
 #endif
 
-#if !defined(_WIN32)
-// Need to have _tstol and _tcstod defined for other platforms.
-// These are atol/strtod functions and need to take wxString::wx_str
-// as a parameter (either char or wchar_t depending on compile options)
-#define _tstol		atol
-#define _tcstod		strtod
-#endif // WIN32
-
 /////////////////////////////////////////////////////////////////////////////
 
 wxString tstringUtil::WXString(wchar_t const* const inStr, size_t inLen)

@@ -20,7 +20,7 @@
 #include "stdafx.h"
 #include "WizardExcel.h"
 
-#if defined(WIN32) && wxUSE_OLE_AUTOMATION
+#if defined(__WXMSW__) && wxUSE_OLE_AUTOMATION
 #define HAS_AUTOMATION	1
 #else
 #define HAS_AUTOMATION	0
