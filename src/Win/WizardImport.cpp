@@ -398,7 +398,7 @@ bool CWizardImport::DoImportFile()
 		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 		|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 		{
-			IWizardImporterPtr pImporter;
+			ISpreadSheetImporterPtr pImporter;
 			if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 			&& m_pSheet->ExcelHelper())
 				pImporter = m_pSheet->ExcelHelper()->GetImporter();

@@ -18,22 +18,21 @@
  * @li 2004-09-30 DRC Created
  */
 
+#include "ARBTypes.h"
 #include <vector>
 class IDlgProgress;
-class IWizardExporter;
-typedef std::tr1::shared_ptr<IWizardExporter> IWizardExporterPtr;
-class IWizardImporter;
-typedef std::tr1::shared_ptr<IWizardImporter> IWizardImporterPtr;
-class IWizardSpreadSheet;
-typedef std::tr1::shared_ptr<IWizardSpreadSheet> IWizardSpreadSheetPtr;
+ARB_TYPEDEF(ISpreadSheet)
+ARB_TYPEDEF(ISpreadSheetExporter)
+ARB_TYPEDEF(ISpreadSheetImporter)
+
 
 /**
  * Interface for exporting to a spreadsheet.
  */
-class IWizardExporter
+class ISpreadSheetExporter
 {
 public:
-	virtual ~IWizardExporter() = 0;
+	virtual ~ISpreadSheetExporter() = 0;
 
 	virtual bool AllowAccess(bool bAllow) = 0;
 
@@ -72,10 +71,10 @@ public:
 /**
  * Interface for importing from a spreadsheet.
  */
-class IWizardImporter
+class ISpreadSheetImporter
 {
 public:
-	virtual ~IWizardImporter() = 0;
+	virtual ~ISpreadSheetImporter() = 0;
 	virtual bool OpenFile(wxString const& inFilename) = 0;
 	virtual bool GetData(
 			std::vector< std::vector<wxString> >& outData,
@@ -84,7 +83,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class IWizardSpreadSheet
+class ISpreadSheet
 {
 public:
 	typedef enum
@@ -95,7 +94,7 @@ public:
 	/**
 	 * Create a new spreadsheet manager, must 'delete' the returned pointer.
 	 */
-	static IWizardSpreadSheetPtr Create(eType inType);
+	static ISpreadSheetPtr Create(eType inType);
 
 	/// Get the maximum number of rows Excel can handle.
 	static long GetMaxRows();
@@ -107,7 +106,7 @@ public:
 			long inCol,
 			wxString& outCell);
 
-	virtual ~IWizardSpreadSheet() = 0;
-	virtual IWizardExporterPtr GetExporter() const = 0;
-	virtual IWizardImporterPtr GetImporter() const = 0;
+	virtual ~ISpreadSheet() = 0;
+	virtual ISpreadSheetExporterPtr GetExporter() const = 0;
+	virtual ISpreadSheetImporterPtr GetImporter() const = 0;
 };

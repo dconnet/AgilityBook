@@ -46,17 +46,17 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-IWizardExporter::~IWizardExporter()
+ISpreadSheetExporter::~ISpreadSheetExporter()
 {
 }
 
 
-IWizardImporter::~IWizardImporter()
+ISpreadSheetImporter::~ISpreadSheetImporter()
 {
 }
 
 
-IWizardSpreadSheet::~IWizardSpreadSheet()
+ISpreadSheet::~ISpreadSheet()
 {
 }
 
@@ -64,7 +64,7 @@ IWizardSpreadSheet::~IWizardSpreadSheet()
 
 #if HAS_AUTOMATION
 
-class CWizardBaseImport : public IWizardImporter
+class CWizardBaseImport : public ISpreadSheetImporter
 {
 public:
 	CWizardBaseImport()
@@ -77,7 +77,7 @@ protected:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CWizardExcel : public IWizardSpreadSheet
+class CWizardExcel : public ISpreadSheet
 {
 protected:
 	CWizardExcel();
@@ -85,15 +85,15 @@ public:
 	static CWizardExcel* Create();
 	virtual ~CWizardExcel();
 
-	virtual IWizardExporterPtr GetExporter() const;
-	virtual IWizardImporterPtr GetImporter() const;
+	virtual ISpreadSheetExporterPtr GetExporter() const;
+	virtual ISpreadSheetImporterPtr GetImporter() const;
 
 private:
 	mutable wxAutomationObject m_App;
 };
 
 
-class CWizardExcelExport : public IWizardExporter
+class CWizardExcelExport : public ISpreadSheetExporter
 {
 protected:
 	CWizardExcelExport(wxAutomationObject& ioApp);
@@ -160,7 +160,7 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
-class CWizardCalc : public IWizardSpreadSheet
+class CWizardCalc : public ISpreadSheet
 {
 protected:
 	CWizardCalc();
@@ -168,8 +168,8 @@ public:
 	static CWizardCalc* Create();
 	virtual ~CWizardCalc();
 
-	virtual IWizardExporterPtr GetExporter() const;
-	virtual IWizardImporterPtr GetImporter() const;
+	virtual ISpreadSheetExporterPtr GetExporter() const;
+	virtual ISpreadSheetImporterPtr GetImporter() const;
 
 private:
 	mutable wxAutomationObject m_Manager;
@@ -177,7 +177,7 @@ private:
 };
 
 
-class CWizardCalcExport : public IWizardExporter
+class CWizardCalcExport : public ISpreadSheetExporter
 {
 protected:
 	CWizardCalcExport(
@@ -292,15 +292,15 @@ CWizardExcel::~CWizardExcel()
 }
 
 
-IWizardExporterPtr CWizardExcel::GetExporter() const
+ISpreadSheetExporterPtr CWizardExcel::GetExporter() const
 {
-	return IWizardExporterPtr(CWizardExcelExport::Create(m_App));
+	return ISpreadSheetExporterPtr(CWizardExcelExport::Create(m_App));
 }
 
 
-IWizardImporterPtr CWizardExcel::GetImporter() const
+ISpreadSheetImporterPtr CWizardExcel::GetImporter() const
 {
-	return IWizardImporterPtr(CWizardExcelImport::Create(m_App));
+	return ISpreadSheetImporterPtr(CWizardExcelImport::Create(m_App));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -352,7 +352,7 @@ bool CWizardExcelExport::SetTextColor(
 		wxColour inColor)
 {
 	wxString cell1;
-	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
 	wxVariant args[2];
@@ -372,7 +372,7 @@ bool CWizardExcelExport::SetBackColor(
 		wxColour inColor)
 {
 	wxString cell1;
-	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
 	wxVariant args[2];
@@ -392,7 +392,7 @@ bool CWizardExcelExport::SetItalic(
 		bool bItalic)
 {
 	wxString cell1;
-	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
 	wxVariant args[2];
@@ -412,7 +412,7 @@ bool CWizardExcelExport::SetBold(
 		bool bBold)
 {
 	wxString cell1;
-	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
 	wxVariant args[2];
@@ -432,7 +432,7 @@ bool CWizardExcelExport::InsertData(
 		double inData)
 {
 	wxString cell1;
-	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
 	wxVariant args[2];
@@ -451,7 +451,7 @@ bool CWizardExcelExport::InsertData(
 		bool bFormula)
 {
 	wxString cell1;
-	if (!IWizardSpreadSheet::GetRowCol(inRow, inCol, cell1))
+	if (!ISpreadSheet::GetRowCol(inRow, inCol, cell1))
 		return false;
 	wxAutomationObject range;
 	wxVariant args[2];
@@ -475,9 +475,9 @@ bool CWizardExcelExport::AutoFit(
 		long inColTo)
 {
 	wxString cell1, cell2;
-	if (!IWizardSpreadSheet::GetRowCol(0, inColFrom, cell1))
+	if (!ISpreadSheet::GetRowCol(0, inColFrom, cell1))
 		return false;
-	if (!IWizardSpreadSheet::GetRowCol(0, inColTo, cell2))
+	if (!ISpreadSheet::GetRowCol(0, inColTo, cell2))
 		return false;
 	wxAutomationObject range;
 	wxVariant args[2];
@@ -573,7 +573,7 @@ bool CWizardExcelImport::GetData(
 			for (int iCellCol = 0; iCellCol < nCols; ++iCellCol)
 			{
 				wxString cell1;
-				if (!IWizardSpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
+				if (!ISpreadSheet::GetRowCol(iRow + iCellRow - 1, iCol + iCellCol - 1, cell1))
 				{
 					bAbort = true;
 					break;
@@ -634,15 +634,15 @@ CWizardCalc::~CWizardCalc()
 }
 
 
-IWizardExporterPtr CWizardCalc::GetExporter() const
+ISpreadSheetExporterPtr CWizardCalc::GetExporter() const
 {
-	return IWizardExporterPtr(CWizardCalcExport::Create(m_Desktop));
+	return ISpreadSheetExporterPtr(CWizardCalcExport::Create(m_Desktop));
 }
 
 
-IWizardImporterPtr CWizardCalc::GetImporter() const
+ISpreadSheetImporterPtr CWizardCalc::GetImporter() const
 {
-	return IWizardImporterPtr(CWizardCalcImport::Create(m_Desktop));
+	return ISpreadSheetImporterPtr(CWizardCalcImport::Create(m_Desktop));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -896,19 +896,19 @@ bool CWizardCalcImport::GetData(
 
 /////////////////////////////////////////////////////////////////////////////
 
-IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
+ISpreadSheetPtr ISpreadSheet::Create(eType inType)
 {
-	IWizardSpreadSheetPtr pInterface;
+	ISpreadSheetPtr pInterface;
 #if HAS_AUTOMATION
 	switch (inType)
 	{
 	default:
 		break;
 	case eMicrosoftExcel:
-		pInterface = IWizardSpreadSheetPtr(CWizardExcel::Create());
+		pInterface = ISpreadSheetPtr(CWizardExcel::Create());
 		break;
 	case eOpenOfficeCalc:
-		pInterface = IWizardSpreadSheetPtr(CWizardCalc::Create());
+		pInterface = ISpreadSheetPtr(CWizardCalc::Create());
 		break;
 	}
 #endif
@@ -917,19 +917,19 @@ IWizardSpreadSheetPtr IWizardSpreadSheet::Create(eType inType)
 
 
 // static helper functions
-long IWizardSpreadSheet::GetMaxRows()
+long ISpreadSheet::GetMaxRows()
 {
 	return 65536; // Excel limits (I believe later versions of excel/calc may expand this, but we support older versions too)
 }
 
 
-long IWizardSpreadSheet::GetMaxCols()
+long ISpreadSheet::GetMaxCols()
 {
 	return 256; // Excel limits
 }
 
 
-bool IWizardSpreadSheet::GetRowCol(
+bool ISpreadSheet::GetRowCol(
 		long inRow,
 		long inCol,
 		wxString& outCell)

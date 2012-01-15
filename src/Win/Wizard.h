@@ -70,8 +70,8 @@ private:
 	CWizardStart* m_pageStart;
 	CWizardImport* m_pageImport;
 	CWizardExport* m_pageExport;
-	IWizardSpreadSheetPtr m_Excel;
-	IWizardSpreadSheetPtr m_Calc;
+	ISpreadSheetPtr m_Excel;
+	ISpreadSheetPtr m_Calc;
 	int m_ImportExportItem;
 	int m_ImportExportStyle;
 	wxButton* m_Finish;
@@ -88,11 +88,11 @@ public:
 	/**
 	 * Get the Excel wrapper.
 	 */
-	IWizardSpreadSheetPtr ExcelHelper()			{return m_Excel;}
+	ISpreadSheetPtr ExcelHelper()			{return m_Excel;}
 	/**
 	 * Get the Excel wrapper.
 	 */
-	IWizardSpreadSheetPtr CalcHelper()			{return m_Calc;}
+	ISpreadSheetPtr CalcHelper()			{return m_Calc;}
 	/**
 	 * This lets CWizardImport/Export know what data is being processed.
 	 */
