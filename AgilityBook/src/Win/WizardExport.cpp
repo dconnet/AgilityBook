@@ -1442,7 +1442,7 @@ bool CWizardExport::DoWizardFinish()
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
-		IWizardExporterPtr pExporter;
+		ISpreadSheetExporterPtr pExporter;
 		if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 		&& m_pSheet->ExcelHelper())
 			pExporter = m_pSheet->ExcelHelper()->GetExporter();
