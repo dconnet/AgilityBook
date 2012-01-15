@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-01-14 DRC Change creation to only create one worksheet.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-24 DRC Removed option to export by array, completed wx port.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -97,6 +98,35 @@ class CWizardExcelExport : public ISpreadSheetExporter
 {
 protected:
 	CWizardExcelExport(wxAutomationObject& ioApp);
+	// Copied from C# code that used reflection.
+	enum XlWBATemplate
+	{
+		xlWBATChart = -4109,
+		xlWBATExcel4IntlMacroSheet = 4,
+		xlWBATExcel4MacroSheet = 3,
+		xlWBATWorksheet = -4167,
+	};
+	enum XlSheetType
+	{
+		xlChart = -4109,
+		xlDialogSheet = -4116,
+		xlExcel4IntlMacroSheet = 4,
+		xlExcel4MacroSheet = 3,
+		xlWorksheet = -4167,
+	};
+	// object.HorizontalAlignment = XlHAlign.type
+	// similar to object.Font.Bold = 1
+	enum XlHAlign
+	{
+		xlHAlignCenter = -4108,
+		xlHAlignCenterAcrossSelection = 7,
+		xlHAlignDistributed = -4117,
+		xlHAlignFill = 5,
+		xlHAlignGeneral = 1,
+		xlHAlignJustify = -4130,
+		xlHAlignLeft = -4131,
+		xlHAlignRight = -4152,
+	};
 public:
 	static CWizardExcelExport* Create(wxAutomationObject& ioApp);
 	virtual ~CWizardExcelExport();
@@ -317,7 +347,7 @@ CWizardExcelExport::CWizardExcelExport(wxAutomationObject& ioApp)
 	: m_App(ioApp)
 {
 	// Create a new workbook.
-	wxAutomationObject book = m_App.CallMethod(wxT("Workbooks.Add"));
+	wxAutomationObject book = m_App.CallMethod(wxT("Workbooks.Add"), xlWBATWorksheet);
 	// Get the first sheet.
 	wxAutomationObject sheets = book.GetProperty(wxT("Sheets"));
 	wxVariant args[1];
