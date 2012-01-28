@@ -25,6 +25,8 @@ wxWidgets: http://www.wxwidgets.org/
 I'm currently using version 2.8.12. Previously released with 2.8.10/.11.
 Also, kept current with development trunk of 2.9.x.
 Make sure WXWIN is set to wxWidgets root directory.
+-- Note, when changing version used during release, update fr.po (see Readme
+   in src/Win/res/fr_FR)
 
 === Changes to <trunk> [2.9.2]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:

@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-15 14:27-0700\n"
-"PO-Revision-Date: 2009-02-11 23:15-0800\n"
+"PO-Revision-Date: 2012-01-28 11:38-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 msgid "Agility Record Book"
-msgstr ""
+msgstr "Agility Record Book"
 
 msgid "PanelRuns"
 msgstr "This panel contains all the information about your runs. This is where you create dogs, trials and runs."
@@ -52,61 +52,61 @@ msgid "IDS_QTYPE_SQ"
 msgstr "SQ"
 
 msgid "January"
-msgstr ""
+msgstr "January"
 
 msgid "February"
-msgstr ""
+msgstr "February"
 
 msgid "March"
-msgstr ""
+msgstr "March"
 
 msgid "April"
-msgstr ""
+msgstr "April"
 
 msgid "May"
-msgstr ""
+msgstr "May"
 
 msgid "June"
-msgstr ""
+msgstr "June"
 
 msgid "July"
-msgstr ""
+msgstr "July"
 
 msgid "August"
-msgstr ""
+msgstr "August"
 
 msgid "September"
-msgstr ""
+msgstr "September"
 
 msgid "October"
-msgstr ""
+msgstr "October"
 
 msgid "November"
-msgstr ""
+msgstr "November"
 
 msgid "December"
-msgstr ""
+msgstr "December"
 
 msgid "Sunday"
-msgstr ""
+msgstr "Sunday"
 
 msgid "Monday"
-msgstr ""
+msgstr "Monday"
 
 msgid "Tuesday"
-msgstr ""
+msgstr "Tuesday"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "Wednesday"
 
 msgid "Thursday"
-msgstr ""
+msgstr "Thursday"
 
 msgid "Friday"
-msgstr ""
+msgstr "Friday"
 
 msgid "Saturday"
-msgstr ""
+msgstr "Saturday"
 
 # Description strings returned by wxWidgets wxLocale.
 # Keep each one in the native form (like Win7's display language selection)
