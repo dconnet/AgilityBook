@@ -1,17 +1,14 @@
-# Agility Record Book translations from MFC resource file.
-# Copyright (C) 2002-2009 David Connet. All Rights Reserved.
-# This file is distributed under the same license as the Agility Record Book package.
-# David Connet <help@agilityrecordbook.com> 2002-2009.
-#
+# Initial translation by Stephane Junique <pttlapinblanc@chez.com>
+# Updated by Nicolas Velin <nsv@fr.st>
 msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2009-03-01 09:24-0800\n"
+"PO-Revision-Date: 2012-01-28 12:09-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "plural-forms: nplurals=2; plural=n > 1\n"
 "POT-Creation-Date: \n"
@@ -945,9 +942,8 @@ msgid "A debug report has been generated in the directory\n"
 msgstr "Un rapport de débogage a été créé dans le dossier\n"
 
 #: ../src/common/debugrpt.cpp:565
-#, fuzzy
 msgid "A debug report has been generated. It can be found in"
-msgstr "Un rapport de débogage a été créé dans le dossier"
+msgstr "A debug report has been generated. It can be found in"
 
 #: ../src/common/xtixml.cpp:406
 msgid "A non empty collection must consist of 'element' nodes"
@@ -2688,7 +2684,7 @@ msgid "Failed to connect: no ISP to dial."
 msgstr "Échec de la connexion : pas de FAI à appeler."
 
 #: ../src/common/textfile.cpp:177
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to convert file \"%s\" to Unicode."
 msgstr "La conversion du contenu du fichier \"%s\" en Unicode a échoué."
 
@@ -4150,7 +4146,7 @@ msgstr ""
 "(sinon le texte avec ce codage n'apparaîtra pas correctement) ?"
 
 #: ../src/dfb/fontmgr.cpp:156
-#, fuzzy, c-format
+#, c-format
 msgid "No fonts found in %s."
 msgstr "Aucune entrée trouvée (%s)."
 
@@ -5854,7 +5850,7 @@ msgid "Validation conflict"
 msgstr "Conflit de validation"
 
 #: ../src/mac/carbon/aboutdlg.cpp:73
-#, fuzzy, c-format
+#, c-format
 msgid "Version %s"
 msgstr "Version %s"
 
@@ -6903,67 +6899,92 @@ msgstr "~"
 
 #~ msgid "*** A debug report has been generated\n"
 #~ msgstr "*** Un rapport de débogage a été créé\n"
+
 #~ msgid "*** It can be found in \"%s\"\n"
 #~ msgstr "*** Il peut être trouvé dans « %s »\n"
+
 #~ msgid "Formatting"
 #~ msgstr "Mise en forme"
+
 #~ msgid "Go back to the previous HTML page"
 #~ msgstr "Retourner à la page HTML précédente"
+
 #~ msgid "Go forward to the next HTML page"
 #~ msgstr "Aller vers la page HTML suivante"
+
 #~ msgid "Help : %s"
 #~ msgstr "Aide : %s"
+
 #~ msgid "Preparing help window..."
 #~ msgstr "Préparation de la fenêtre d'aide..."
+
 #~ msgid "Search!"
 #~ msgstr "Chercher !"
+
 #~ msgid "wxSearchEngine::LookFor must be called before scanning!"
 #~ msgstr "wxSearchEngine::LookFor doit être appelé avant de scanner !"
+
 #~ msgid "."
 #~ msgstr "."
+
 #~ msgid ".."
 #~ msgstr ".."
+
 #~ msgid "Cannot open URL '%s'"
 #~ msgstr "Impossible d'ouvrir le lien « %s »"
+
 #~ msgid "Error "
 #~ msgstr "Erreur "
+
 #~ msgid "Failed to create directory %s/.gnome."
 #~ msgstr "Échec de la création du répertoire %s/.gnome."
+
 #~ msgid "Failed to create directory %s/mime-info."
 #~ msgstr "Échec de la création du répertoire %s/mime-info."
+
 #~ msgid ""
 #~ "Failed to get stack backtrace:\n"
 #~ "%s"
 #~ msgstr ""
 #~ "Échec de l'obtention de la pile d'appel :\n"
 #~ "%s"
+
 #~ msgid "Loading Grey Ascii PNM image is not yet implemented."
 #~ msgstr ""
 #~ "Le chargement d'une image PNM ASCII en niveau de gris n'est pas encore "
 #~ "implémenté."
+
 #~ msgid "Loading Grey Raw PNM image is not yet implemented."
 #~ msgstr ""
 #~ "Le chargement d'une image PNM source en niveau de gris n'est pas encore "
 #~ "implémenté."
+
 #~ msgid "MP Thread Support is not available on this System"
 #~ msgstr "Gestion des processus MP non disponible sur ce système"
+
 #~ msgid "Mailcap file %s, line %d: incomplete entry ignored."
 #~ msgstr "Fichier mailcap %s, ligne %d : entrée incomplète ignorée."
+
 #~ msgid "Mime.types file %s, line %d: unterminated quoted string."
 #~ msgstr ""
 #~ "Fichier mime.types %s, ligne %d : chaîne entre guillemets non terminée."
+
 #~ msgid "Unknown field in file %s, line %d: '%s'."
 #~ msgstr "Champ inconnu dans le fichier %s, ligne %d : « %s »."
+
 #~ msgid "bold "
 #~ msgstr "gras "
+
 #~ msgid "can't query for GUI plugins name in console applications"
 #~ msgstr ""
 #~ "ne peut chercher des noms de greffon graphique dans les applications en "
 #~ "console"
+
 #~ msgid "light "
 #~ msgstr "léger "
+
 #~ msgid "underlined "
 #~ msgstr "souligné "
+
 #~ msgid "unsupported zip archive"
 #~ msgstr "archive zip non gérée"
-
