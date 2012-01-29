@@ -169,7 +169,7 @@ CDlgAbout::CDlgAbout(CAgilityBookDoc* pDoc, wxWindow* pParent)
 		wxPoint(5, 5), wxDefaultSize, 0);
 
 	wxStaticText* version = new wxStaticText(this, wxID_ANY,
-		wxString::Format(_("Version"), wxString::From8BitData(ARB_VERSION_STRING).c_str(), _("Agility Record Book")),
+		wxString::Format(_("AboutVersion"), wxString::From8BitData(ARB_VERSION_STRING).c_str(), _("Agility Record Book")),
 		wxDefaultPosition, wxDefaultSize, 0);
 	version->Wrap(400);
 

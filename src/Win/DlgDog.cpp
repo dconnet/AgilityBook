@@ -93,10 +93,10 @@ static struct
 } const colTitleInfo[] =
 {
 	{wxLIST_FORMAT_LEFT, 10, NULL},
-	{wxLIST_FORMAT_LEFT, 50, wxT("IDS_COL_DATE")},
-	{wxLIST_FORMAT_LEFT, 50, wxT("IDS_COL_VENUE")},
-	{wxLIST_FORMAT_LEFT, 50, wxT("IDS_COL_TITLE")},
-	{wxLIST_FORMAT_LEFT, 50, wxT("IDS_COL_NAME")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DATE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_TITLE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_NAME")},
 };
 static int const nColTitleInfo = sizeof(colTitleInfo) / sizeof(colTitleInfo[0]);
 
@@ -108,11 +108,11 @@ static struct
 	wxChar const* idText;
 } const colRegNumInfo[] =
 {
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_VENUE")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_NUMBER")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_HEIGHT")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_RECEIVED")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_NOTE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_NUMBER")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_HEIGHT")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_RECEIVED")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_NOTE")},
 };
 static int const nColRegNumInfo = sizeof(colRegNumInfo) / sizeof(colRegNumInfo[0]);
 
@@ -124,17 +124,17 @@ static struct
 	wxChar const* idText;
 } const colExistingPointsInfo[] =
 {
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_DATE")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_TYPE")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_POINTS")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_OTHERPOINTS")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_VENUE")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_MULTIQ")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_DIVISION")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_LEVEL")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_EVENT")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_SUBNAME")},
-	{wxLIST_FORMAT_LEFT, 50, _("IDS_COL_COMMENTS")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DATE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_TYPE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_POINTS")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_OTHERPOINTS")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_VENUE")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_MULTIQ")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_DIVISION")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_LEVEL")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_EVENT")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_SUBNAME")},
+	{wxLIST_FORMAT_LEFT, 50, arbT("IDS_COL_COMMENTS")},
 };
 static int const nColExistingPointsInfo = sizeof(colExistingPointsInfo) / sizeof(colExistingPointsInfo[0]);
 

@@ -3,6 +3,7 @@ Setting up the build environment
 Additional software packages required (all free):
 - wxWidgets
 - gettext
+- poedit
 - wxFormBuilder (optional)
 - UnitTest++ [see note below]
 - Boost libraries (not needed as of VC9+SP1)
@@ -216,12 +217,19 @@ Make sure the "\Program Files\GnuWin32\bin" is added to the PATH. (windows)
 When initially developing:
 - mkdir <lang>
 - cd <lang>
-- generate .po file
+- generate .po file [update: see poedit]
   - xgettext -C -n -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -o arb.po ../arbframe.cpp
    cp ../../locale/<language>.po ./wxstd.po
    - or -
    cp ../../locale/wxstd.po .
 This will generate an initial set of strings to translate.
+
+--------------------
+
+poedit: http://www.poedit.net
+Cross platform editor for modifying .po files. Currently using 1.4.6.
+(makes use of gettext)
+Use this to keep the catalog in sync with the source code.
 
 --------------------
 

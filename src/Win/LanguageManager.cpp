@@ -156,6 +156,12 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 			wxLanguageInfo const* info = wxLocale::FindLanguageInfo(filename);
 			if (info)
 			{
+				// Trigger poedit to capture these.
+				// These are the strings wx returns.
+#if 0
+				wxChar* x1 = _("English (U.S.)");
+				wxChar* x1 = _("French");
+#endif
 				choices.Add(wxGetTranslation(info->Description));
 				langId.push_back(info->Language);
 				if (info->Language == lang)

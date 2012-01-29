@@ -609,14 +609,14 @@ void CAgilityBookCalendar::OnCopy()
 
 	static const wxChar* scColumns[] =
 	{
-		wxT("IDS_COL_START_DATE"),
-		wxT("IDS_COL_END_DATE"),
-		wxT("IDS_COL_VENUE"),
-		wxT("IDS_COL_LOCATION"),
-		wxT("IDS_COL_CLUB"),
-		wxT("IDS_COL_OPENS"),
-		wxT("IDS_COL_CLOSES"),
-		wxT("IDS_COL_NOTES"),
+		arbT("IDS_COL_START_DATE"),
+		arbT("IDS_COL_END_DATE"),
+		arbT("IDS_COL_VENUE"),
+		arbT("IDS_COL_LOCATION"),
+		arbT("IDS_COL_CLUB"),
+		arbT("IDS_COL_OPENS"),
+		arbT("IDS_COL_CLOSES"),
+		arbT("IDS_COL_NOTES"),
 	};
 	static int const scNumColumns = sizeof(scColumns) / sizeof(scColumns[0]);
 #define COL_START_DATE	0

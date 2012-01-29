@@ -114,10 +114,10 @@ static struct
 	wxChar const* info;
 } colLinkInfo[] =
 {
-	{COL_LINK, wxT("IDS_COL_NAME")},
-	{COL_DOG, wxT("IDS_COL_DOG")},
-	{COL_TRIAL, wxT("IDS_COL_TRIAL")},
-	{COL_RUN, wxT("IDS_COL_EVENT")},
+	{COL_LINK, arbT("IDS_COL_NAME")},
+	{COL_DOG, arbT("IDS_COL_DOG")},
+	{COL_TRIAL, arbT("IDS_COL_TRIAL")},
+	{COL_RUN, arbT("IDS_COL_EVENT")},
 };
 static int const nColLinkInfo = sizeof(colLinkInfo) / sizeof(colLinkInfo[0]);
 

@@ -79,7 +79,7 @@ CDlgTraining::CDlgTraining(
 	// Controls (these are done first to control tab order)
 
 	wxStaticText* textDate = new wxStaticText(this, wxID_ANY,
-		_("HIDC_TRAINING_DATE"),
+		_("IDC_TRAINING_DATE"),
 		wxDefaultPosition, wxDefaultSize, 0);
 	textDate->Wrap(-1);
 
