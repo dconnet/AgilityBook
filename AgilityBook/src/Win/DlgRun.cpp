@@ -176,14 +176,14 @@ static struct
 	int fmt;
 	wxChar const* idText;
 } const scRefRunColumns[] = {
-	{wxLIST_FORMAT_CENTRE, _("IDS_COL_Q")},
-	{wxLIST_FORMAT_CENTRE, _("IDS_COL_PLACE")},
-	{wxLIST_FORMAT_CENTRE, _("IDS_COL_SCORE")},
-	{wxLIST_FORMAT_LEFT, _("IDS_COL_TIME")},
-	{wxLIST_FORMAT_LEFT, _("IDS_COL_NAME")},
-	{wxLIST_FORMAT_LEFT, _("IDS_COL_HEIGHT")},
-	{wxLIST_FORMAT_LEFT, _("IDS_COL_BREED")},
-	{wxLIST_FORMAT_LEFT, _("IDS_COL_NOTE")},
+	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_Q")},
+	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_PLACE")},
+	{wxLIST_FORMAT_CENTRE, arbT("IDS_COL_SCORE")},
+	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_TIME")},
+	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_NAME")},
+	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_HEIGHT")},
+	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_BREED")},
+	{wxLIST_FORMAT_LEFT, arbT("IDS_COL_NOTE")},
 };
 static int const scNumRefRunColumns = sizeof(scRefRunColumns) / sizeof(scRefRunColumns[0]);
 
@@ -828,7 +828,7 @@ CDlgRun::CDlgRun(
 		wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 
 	wxStaticText* textDate = new wxStaticText(m_panelScore, wxID_ANY,
-		wxT("Date"), wxDefaultPosition, wxDefaultSize, 0);
+		_("IDC_RUNSCORE_DATE"), wxDefaultPosition, wxDefaultSize, 0);
 	textDate->Wrap(-1);
 
 	wxDatePickerCtrl* ctrlDate = new wxDatePickerCtrl(m_panelScore, wxID_ANY, wxDefaultDateTime,

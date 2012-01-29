@@ -118,7 +118,7 @@ CDlgInfoNote::CDlgInfoNote(
 	, m_Added(NoteAdded_xpm)
 	, m_NoteAdded(NoteNoteAdded_xpm)
 {
-	wxString caption = _("IDD_JUDGE_INFO");
+	wxString caption = wxT("?");
 	std::set<wxString> names;
 	switch (m_Type)
 	{

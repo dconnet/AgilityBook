@@ -121,17 +121,17 @@ CWizardImport::CWizardImport(
 		ARBDate::DateFormat extendedFormat;
 	} const sc_Dates[] =
 	{
-		{wxT("IDS_DATEFORMAT_DASH_MMDDYYYY"),
+		{arbT("IDS_DATEFORMAT_DASH_MMDDYYYY"),
 			ARBDate::eDashMMDDYYYY, ARBDate::eDashMDY},
-		{wxT("IDS_DATEFORMAT_SLASH_MMDDYYYY"),
+		{arbT("IDS_DATEFORMAT_SLASH_MMDDYYYY"),
 			ARBDate::eSlashMMDDYYYY, ARBDate::eSlashMDY},
-		{wxT("IDS_DATEFORMAT_DASH_YYYYMMDD"),
+		{arbT("IDS_DATEFORMAT_DASH_YYYYMMDD"),
 			ARBDate::eDashYYYYMMDD, ARBDate::eDashYMD},
-		{wxT("IDS_DATEFORMAT_SLASH_YYYYMMDD"),
+		{arbT("IDS_DATEFORMAT_SLASH_YYYYMMDD"),
 			ARBDate::eSlashYYYYMMDD, ARBDate::eSlashYMD},
-		{wxT("IDS_DATEFORMAT_DASH_DDMMYYYY"),
+		{arbT("IDS_DATEFORMAT_DASH_DDMMYYYY"),
 			ARBDate::eDashDDMMYYYY, ARBDate::eDashDMY},
-		{wxT("IDS_DATEFORMAT_SLASH_DDMMYYYY"),
+		{arbT("IDS_DATEFORMAT_SLASH_DDMMYYYY"),
 			ARBDate::eSlashDDMMYYYY, ARBDate::eSlashDMY},
 	};
 	static size_t const sc_nDates = sizeof(sc_Dates) / sizeof(sc_Dates[0]);

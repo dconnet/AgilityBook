@@ -313,6 +313,13 @@
 #include <wx/valtext.h>
 #endif
 
+// For _() usage when used indirectly.
+// poedit is configured to also look for these.
+#if wxUSE_UNICODE
+#define arbT(x)	L##x
+#else
+#define arbT(x)	x
+#endif
 
 /*
  * Bind is only available on wx2.9+.

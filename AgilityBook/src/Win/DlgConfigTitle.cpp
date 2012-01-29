@@ -202,8 +202,8 @@ CDlgConfigTitle::CDlgConfigTitle(
 		wxChar const* idRes;
 		ARBTitleStyle style;
 	} styles[] = {
-		{wxT("IDS_CONFIG_TITLE_NUMBER"), eTitleNumber},
-		{wxT("IDS_CONFIG_TITLE_ROMAN"), eTitleRoman},
+		{arbT("IDS_CONFIG_TITLE_NUMBER"), eTitleNumber},
+		{arbT("IDS_CONFIG_TITLE_ROMAN"), eTitleRoman},
 	};
 	static int nStyles = sizeof(styles) / sizeof(styles[0]);
 	for (int n = 0; n < nStyles; ++n)

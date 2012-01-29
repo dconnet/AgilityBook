@@ -78,10 +78,10 @@ static struct
 	ARBConfigOtherPoints::eOtherPointsTally tally;
 } const sc_Tally[] =
 {
-	{wxT("IDS_OTHERPTS_ALL"), ARBConfigOtherPoints::eTallyAll},
-	{wxT("IDS_OTHERPTS_EVENT"), ARBConfigOtherPoints::eTallyAllByEvent},
-	{wxT("IDS_OTHERPTS_LEVEL"), ARBConfigOtherPoints::eTallyLevel},
-	{wxT("IDS_OTHERPTS_EVENT_LEVEL"), ARBConfigOtherPoints::eTallyLevelByEvent}
+	{arbT("IDS_OTHERPTS_ALL"), ARBConfigOtherPoints::eTallyAll},
+	{arbT("IDS_OTHERPTS_EVENT"), ARBConfigOtherPoints::eTallyAllByEvent},
+	{arbT("IDS_OTHERPTS_LEVEL"), ARBConfigOtherPoints::eTallyLevel},
+	{arbT("IDS_OTHERPTS_EVENT_LEVEL"), ARBConfigOtherPoints::eTallyLevelByEvent}
 };
 static int const sc_numTally = sizeof(sc_Tally) / sizeof(sc_Tally[0]);
 
