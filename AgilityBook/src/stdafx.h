@@ -18,6 +18,7 @@
  * include files that are used frequently, but are changed infrequently
  *
  * Revision History
+ * @li 2012-01-29 DRC Add macro to ease selecting all text on dialog init.
  * @li 2011-12-22 DRC Add a macro to make using Bind() easier.
  * @li 2009-05-30 DRC Tweaked pragma message macro.
  * @li 2009-03-09 DRC Added ARB_SET_ERASE_RETURNS_ITERATOR.
@@ -357,3 +358,29 @@
 	#define UNBIND_OR_DISCONNECT_ID(ctrl, id, evt, cast, func) \
 		ctrl->Disconnect(id, evt, cast(func), NULL, this)
 #endif
+
+
+/**
+ * Macros to enable easy first control focus.
+ */
+#define DECLARE_ON_INIT() \
+		wxWindow* m_Focus; \
+		void OnInit(wxInitDialogEvent& evt);
+#define IMPLEMENT_ON_INIT(cls, ctrl) \
+		BIND_OR_CONNECT(wxEVT_INIT_DIALOG, wxInitDialogEvent, cls##::OnInit); \
+		m_Focus = ctrl;
+#define DEFINE_ON_INIT(cls) \
+	void cls##::OnInit(wxInitDialogEvent& evt) \
+	{ \
+		/* wxWindowBase::OnInitDialog */ \
+		TransferDataToWindow(); \
+		UpdateWindowUI(wxUPDATE_UI_RECURSE); \
+		/* end wxWindowBase */ \
+		if (m_Focus) \
+		{ \
+			m_Focus->SetFocus(); \
+			wxTextCtrl* pText = wxDynamicCast(m_Focus, wxTextCtrl); \
+			if (pText) \
+				pText->SelectAll(); \
+		} \
+	}
