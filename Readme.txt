@@ -29,14 +29,15 @@ Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
 
-=== Changes to <trunk> [2.9.2]:
+=== Changes to <trunk> [2.9.4]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
   - WXWIN_COMPATIBILITY_2_8 0
   - Specifically set wxDEBUG_LEVEL (uncomment ifdef/define items) (Otherwise
     the library is compiled one way and the users do something different.
 - Note: as of 8/8/2011, unicode doesn't work on Mac due to positional parameters.
 
-=== wx2.9.0: Not supported
+=== wx2.9.x pre.3: Not supported
+- There were API changes in .3, so I simply don't support .0, .1, or .2.
 
 === Changes to 2.8.12:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:
