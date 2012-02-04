@@ -79,6 +79,7 @@ public:
 	wxString UpdateSubLevelsReordered() const;
 	wxString UpdateRules(int nAdded, int nDeleted, int nUpdated, int nSkipped) const;
 	wxString WarnDeletedRuns(int nRuns, wxString const& inRunsMsg) const;
+	wxString UpdateTeamRuns(int nRuns, wxString const& inRunsMsg) const;
 	wxString UpdateTableRuns(int nRuns) const;
 
 	wxString ActionDeleteCalPlugin(wxString const& name) const;

@@ -564,6 +564,15 @@ wxString CLocalization::WarnDeletedRuns(int nRuns, wxString const& inRunsMsg) co
 }
 
 
+wxString CLocalization::UpdateTeamRuns(int nRuns, wxString const& inRunsMsg) const
+{
+	wxString buffer;
+	buffer << wxString::Format(_("IDS_UPDATE_TEAM_RUNS"), nRuns)
+		<< wxT("\n") << inRunsMsg;
+	return buffer;
+}
+
+
 wxString CLocalization::UpdateTableRuns(int nRuns) const
 {
 	return wxString::Format(_("IDS_UPDATE_TABLE_RUNS"), nRuns);

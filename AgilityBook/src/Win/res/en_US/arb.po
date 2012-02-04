@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-29 15:00-0800\n"
-"PO-Revision-Date: 2012-01-29 15:00-0800\n"
+"POT-Creation-Date: 2012-02-04 09:15-0800\n"
+"PO-Revision-Date: 2012-02-04 09:19-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "MIME-Version: 1.0\n"
@@ -465,6 +465,10 @@ msgid "IDS_WARN_DELETED_RUNS"
 msgstr ""
 "WARNING: %1$d run(s) deleted due to configuration changes.\n"
 "(Date, Venue, Event, Division/Level)"
+
+#: TestARB/Local.cpp:570
+msgid "IDS_UPDATE_TEAM_RUNS"
+msgstr "Updated %1$d Team runs."
 
 #: TestARB/Local.cpp:578
 msgid "IDS_UPDATE_TABLE_RUNS"

@@ -181,10 +181,13 @@ SUITE(TestString)
 	{
 		if (!g_bMicroTest)
 		{
+			/*
 			wxString one(wxT("one"));
 			wxString two(wxT("two"));
 			wxString fmt = wxString::Format(wxT("%2$s %1$s"), one.c_str(), two.c_str());
 			CHECK(fmt == wxT("two one"));
+			*/
+			CHECK(wxT("two one") == wxString::Format(wxT("%2$s %1$s"), wxT("one"), wxT("two")));
 		}
 	}
 }
