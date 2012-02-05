@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-04 Clear data in GetRowCol. Fix writing formulas.
  * @li 2012-01-14 DRC Change creation to only create one worksheet.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-24 DRC Removed option to export by array, completed wx port.
@@ -488,14 +489,14 @@ bool CWizardExcelExport::InsertData(
 	args[0] = cell1;
 	args[1] = cell1;
 	m_Worksheet.GetObject(range, wxT("Range"), 2, args);
-	wxString property = bFormula ? wxT("Formula") : wxT("Value2");
-	if (0 < inData.length() && '=' == inData[0])
+	wxString prop = bFormula ? wxT("Formula") : wxT("Value2");
+	if (0 < inData.length() && '=' == inData[0] && !bFormula)
 	{
 		wxString data = wxString(wxT("'")) + inData;
-		range.PutProperty(property, data);
+		range.PutProperty(prop, data);
 	}
 	else
-		range.PutProperty(property, inData);
+		range.PutProperty(prop, inData);
 	return true;
 }
 
@@ -1000,14 +1001,12 @@ bool ISpreadSheet::GetRowCol(
 		wxT("IG"),wxT("IH"),wxT("II"),wxT("IJ"),wxT("IK"),wxT("IL"),wxT("IM"),wxT("IN"),
 		wxT("IO"),wxT("IP"),wxT("IQ"),wxT("IR"),wxT("IS"),wxT("IT"),wxT("IU"),wxT("IV"),
 	};
+	bool bOk = false;
+	outCell.Empty();
 	if (inRow < GetMaxRows() && inCol < GetMaxCols())
 	{
 		outCell << sc_ColumnNames[inCol] << inRow + 1;
-		return true;
+		bOk = true;
 	}
-	else
-	{
-		outCell.Empty();
-		return false;
-	}
+	return bOk;
 }
