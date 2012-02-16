@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-01-06 DRC Ported to wxWidgets.
  * @li 2007-08-03 DRC Created
  */
@@ -97,7 +98,10 @@ CDlgAuthenticate::CDlgAuthenticate(
 	CenterOnParent();
 
 	if (userName.empty())
-		ctrlUsername->SetFocus();
+		IMPLEMENT_ON_INIT(CDlgAuthenticate, ctrlUsername)
 	else
-		ctrlPassword->SetFocus();
+		IMPLEMENT_ON_INIT(CDlgAuthenticate, ctrlPassword)
 }
+
+
+DEFINE_ON_INIT(CDlgAuthenticate)

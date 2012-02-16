@@ -49,6 +49,7 @@ private:
 protected:
 	void UpdateButtons();
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnAllowMultiple(wxCommandEvent& evt);
 	void OnCheck(wxCommandEvent& evt);

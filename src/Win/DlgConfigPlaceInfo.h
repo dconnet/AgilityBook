@@ -36,4 +36,6 @@ private:
 	short m_Place;
 	double m_Value;
 	double m_origValue;
+
+	DECLARE_ON_INIT()
 };

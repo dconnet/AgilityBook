@@ -98,6 +98,7 @@ private:
 	wxButton* m_ctrlMoveUp;
 	wxButton* m_ctrlMoveDown;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnSelectionChanged(wxTreeEvent& evt);
 	void OnItemActivated(wxTreeEvent& evt);

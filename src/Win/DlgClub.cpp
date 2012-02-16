@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2008-02-01 DRC Only modify existing club, don't add a new one (caller does).
@@ -126,8 +127,11 @@ CDlgClub::CDlgClub(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	m_ctrlClubs->SetFocus();
+	IMPLEMENT_ON_INIT(CDlgClub, m_ctrlClubs)
 }
+
+
+DEFINE_ON_INIT(CDlgClub)
 
 
 void CDlgClub::OnOk(wxCommandEvent& evt)

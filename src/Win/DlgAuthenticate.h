@@ -32,4 +32,6 @@ public:
 private:
 	wxString m_Name;
 	wxString m_Password;
+
+	DECLARE_ON_INIT()
 };
