@@ -43,6 +43,7 @@ private:
 	wxString m_Club;
 	wxString m_Venue;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };

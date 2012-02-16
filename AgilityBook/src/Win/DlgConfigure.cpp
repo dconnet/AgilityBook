@@ -224,6 +224,8 @@ CDlgConfigure::CDlgConfigure(
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	m_ctrlItems->SetFocus();
 }
 
 

@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-10 DRC Ported to wxWidgets.
@@ -107,6 +108,8 @@ CDlgConfigUpdate::CDlgConfigUpdate(wxWindow* pParent)
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	m_radioDefault->SetFocus();
 
 	EnableControls();
 }

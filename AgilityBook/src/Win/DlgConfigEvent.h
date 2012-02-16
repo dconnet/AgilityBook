@@ -91,6 +91,7 @@ private:
 	CTextCtrl* m_ctrlNote;
 	int m_idxMethod;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnClickedSubNames(wxCommandEvent& evt);
 	void OnLbnSelchangeSubnames(wxCommandEvent& evt);

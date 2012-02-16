@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-11-04 DRC Created.
  */
@@ -182,5 +183,8 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	textPlace->SetFocus();
+	IMPLEMENT_ON_INIT(CDlgConfigPlaceInfo, textPlace)
 }
+
+
+DEFINE_ON_INIT(CDlgConfigPlaceInfo)

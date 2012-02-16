@@ -40,14 +40,14 @@
 
 // _MSC_VER
 // http://support.microsoft.com/kb/65472 (define values thru vc6)
-//  600: C Compiler version 6.0                  
-//  700: C/C++ compiler version 7.0              
-//  800: Visual C++, Windows, version 1.0        
-//  800: Visual C++, 32-bit, version 1.0         
-//  900: Visual C++, Windows, version 2.0        
-//  900: Visual C++, 32-bit, version 2.x         
-// 1000: Visual C++, 32-bit, version 4.0         
-// 1100: Visual C++, 32-bit, version 5.0         
+//  600: C Compiler version 6.0
+//  700: C/C++ compiler version 7.0
+//  800: Visual C++, Windows, version 1.0
+//  800: Visual C++, 32-bit, version 1.0
+//  900: Visual C++, Windows, version 2.0
+//  900: Visual C++, 32-bit, version 2.x
+// 1000: Visual C++, 32-bit, version 4.0
+// 1100: Visual C++, 32-bit, version 5.0
 // 1200: Visual C++, 32-bit, version 6.0
 // 1300: VC7.0
 // 1310: VC7.1 http://msdn2.microsoft.com/en-us/library/b0084kay(VS.71).aspx
@@ -367,8 +367,10 @@
 		wxWindow* m_Focus; \
 		void OnInit(wxInitDialogEvent& evt);
 #define IMPLEMENT_ON_INIT(cls, ctrl) \
-		BIND_OR_CONNECT(wxEVT_INIT_DIALOG, wxInitDialogEventHandler, cls##::OnInit); \
-		m_Focus = ctrl;
+		{ \
+			BIND_OR_CONNECT(wxEVT_INIT_DIALOG, wxInitDialogEventHandler, cls##::OnInit); \
+			m_Focus = ctrl; \
+		}
 #define DEFINE_ON_INIT(cls) \
 	void cls##::OnInit(wxInitDialogEvent& evt) \
 	{ \

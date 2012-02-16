@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -154,8 +155,11 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	SetSizeHints(sz, sz);
 	CenterOnParent();
 
-	m_ctrlValue->SetFocus();
+	IMPLEMENT_ON_INIT(CDlgConfigTitlePoints, m_ctrlValue)
 }
+
+
+DEFINE_ON_INIT(CDlgConfigTitlePoints)
 
 
 void CDlgConfigTitlePoints::OnSelchangeTitlePoints(wxCommandEvent& evt)

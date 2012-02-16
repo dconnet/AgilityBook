@@ -53,6 +53,7 @@ private:
 	wxButton* m_ctrlEdit;
 	wxButton* m_ctrlRemove;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnItemchanged(wxListEvent& evt);
 	void OnItemActivated(wxListEvent& evt);

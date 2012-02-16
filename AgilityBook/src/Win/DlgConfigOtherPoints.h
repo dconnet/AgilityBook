@@ -38,6 +38,7 @@ private:
 	short m_Default;
 	wxString m_Desc;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnOk(wxCommandEvent& evt);
 };

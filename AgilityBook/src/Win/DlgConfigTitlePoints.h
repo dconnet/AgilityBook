@@ -69,5 +69,6 @@ private:
 	short m_Place;
 	double m_Points;
 
+	DECLARE_ON_INIT()
 	void OnSelchangeTitlePoints(wxCommandEvent& evt);
 };

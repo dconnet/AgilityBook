@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -97,7 +98,7 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 		pParent = wxGetApp().GetTopWindow();
 	wxDialog::Create(pParent, wxID_ANY, _("IDD_CALENDAR_QUERY_DETAIL"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
-	// Controls (these are done first to control tab order)
+	// Controls (these are done first                to control tab order)
 
 	wxStaticText* textLocCodes = new wxStaticText(this, wxID_ANY,
 		_("IDC_QUERY_LOCATIONS"),
@@ -123,6 +124,8 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	}
 	m_ctrlLocations->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlLocations->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
+	if (0 < m_LocCodes.size())
+		m_ctrlLocations->Select(0);
 
 	if (m_EditCodes)
 	{
@@ -170,6 +173,8 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	}
 	m_ctrlVenues->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 	m_ctrlVenues->SetColumnWidth(1, wxLIST_AUTOSIZE_USEHEADER);
+	if (0 < m_VenueCodes.size())
+		m_ctrlVenues->Select(0);
 
 	if (m_EditCodes)
 	{
@@ -249,6 +254,11 @@ void CDlgCalendarQueryDetail::Create(wxWindow* pParent)
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	if (m_ctrlNewLoc)
+		m_ctrlNewLoc->SetFocus();
+	else
+		m_ctrlLocations->SetFocus();
 
 	UpdateButtons();
 }

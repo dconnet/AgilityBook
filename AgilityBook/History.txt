@@ -1,6 +1,8 @@
-2/6/2012: v2.3.5.<in development>
+2/16/2012: v2.3.5.<in development>
 - Bumped Configuration v36:
   - Remove start date from PACH title.
+- New features / Enhancements:
+  - Fix initial focus in dialogs.
 - Bug fixes:
   - IDS_COL_NUMBER wasn't set for English.
   - Fix tab type/orientation persistence.

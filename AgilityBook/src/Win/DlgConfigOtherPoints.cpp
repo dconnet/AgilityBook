@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -208,7 +209,12 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	IMPLEMENT_ON_INIT(CDlgConfigOtherPoints, ctrlName)
 }
+
+
+DEFINE_ON_INIT(CDlgConfigOtherPoints)
 
 
 bool CDlgConfigOtherPoints::IsNameOkay(wxString const& name) const
