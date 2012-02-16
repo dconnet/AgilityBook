@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Set focus to first control.
  * @li 2011-12-30 DRC Fixed CGenericValidator.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -568,6 +569,8 @@ CDlgCalendar::CDlgCalendar(
 	GetSizer()->Fit(this);
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
+
+	ctrlStart->SetFocus();
 
 	// Bind killfocus handlers last
 	BIND_OR_CONNECT_CTRL(m_ctrlClub, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgCalendar::OnKillfocusClub);
