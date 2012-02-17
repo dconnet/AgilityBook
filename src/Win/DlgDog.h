@@ -127,6 +127,7 @@ private:
 	ARBDogExistingPointsList m_ExistingPoints;
 	CColumnOrder m_sortPoints;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxNotebookEvent& evt);
 	void OnOk(wxCommandEvent& evt);

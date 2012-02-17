@@ -272,7 +272,6 @@ CDlgTrial::CDlgTrial(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	m_ctrlClubs->SetFocus();
 	m_ctrlClubs->InsertColumn(0, _("IDS_COL_CLUB"));
 	m_ctrlClubs->InsertColumn(1, _("IDS_COL_VENUE"));
 	m_ctrlEdit->Enable(false);
@@ -282,9 +281,14 @@ CDlgTrial::CDlgTrial(
 	ListClubs();
 	UpdateNotes(true, true);
 
+	IMPLEMENT_ON_INIT(CDlgTrial, m_ctrlLocation)
+
 	// Bind killfocus handlers last
 	BIND_OR_CONNECT_CTRL(m_ctrlLocation, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgTrial::OnKillfocusLocation);
 }
+
+
+DEFINE_ON_INIT(CDlgTrial)
 
 
 ARBDogClubPtr CDlgTrial::GetClubData(long index) const
@@ -357,6 +361,8 @@ void CDlgTrial::ListClubs(ARBDogClubPtr* inClub)
 		if (inClub && *(*inClub) == *pClub)
 			m_ctrlClubs->Select(idx);
 	}
+	if (1 == m_ctrlClubs->GetItemCount())
+		m_ctrlClubs->Select(0);
 	int nColumns = m_ctrlClubs->GetColumnCount();
 	for (int i = 0; i < nColumns ; ++i)
 		m_ctrlClubs->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);

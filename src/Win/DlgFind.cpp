@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2003-12-27 DRC Created
@@ -144,8 +145,11 @@ CDlgFind::CDlgFind(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	m_textCtrl->SetFocus();
+	IMPLEMENT_ON_INIT(CDlgFind, m_textCtrl)
 }
+
+
+DEFINE_ON_INIT(CDlgFind)
 
 
 void CDlgFind::OnChangeName(wxCommandEvent& evt)

@@ -32,5 +32,6 @@ private:
 	wxString m_Name;
 	CTextCtrl* m_textCtrl;
 
+	DECLARE_ON_INIT()
 	void OnFilename(wxCommandEvent& evt);
 };

@@ -33,4 +33,6 @@ public:
 
 private:
 	wxString m_Fault;
+
+	DECLARE_ON_INIT()
 };

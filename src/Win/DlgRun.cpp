@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2012-01-03 DRC Fix field updating (some fields didn't have validator
  *                    associated variables tied to them)
  * @li 2012-01-02 DRC Change validator to support default value on empty field.
@@ -1662,8 +1663,19 @@ CDlgRun::CDlgRun(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
+	std::vector<wxWindow*> ctrls;
+	ctrls.push_back(ctrlDate);
+	ctrls.push_back(ctrlComments);
+	ctrls.push_back(m_ctrlRefRuns);
+	ctrls.push_back(m_CRCDDisplay);
+	ctrls.push_back(m_ctrlLinks);
+	IMPLEMENT_ON_INIT(CDlgRun, ctrls[iSelectPage])
+
 	notebook->ChangeSelection(iSelectPage);
 }
+
+
+DEFINE_ON_INIT(CDlgRun)
 
 
 CDlgDogDivData* CDlgRun::GetDivisionData(int index) const

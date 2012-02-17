@@ -7,6 +7,8 @@
   - IDS_COL_NUMBER wasn't set for English.
   - Fix tab type/orientation persistence.
   - Updated fr.po to 2.8.12 version, cleaned up po files with poedit.
+  - Fixed an issue in detecting co-sanctioned trials. (Trials with multiple
+    clubs in the same venue were wrongly detected)
 
 1/5/2012: v2.3.4.3295
 - Bug fixes:

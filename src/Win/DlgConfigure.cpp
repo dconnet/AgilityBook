@@ -72,6 +72,8 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////
 
+// TODO: This doesn't seem to be used. Can it be deleted?
+// Also affects DlgMessageBox.*
 class CDetails : public IMessageBoxCallback
 {
 public:
