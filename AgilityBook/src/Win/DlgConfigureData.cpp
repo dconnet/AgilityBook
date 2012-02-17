@@ -206,7 +206,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 	wxString name(oldName);
 	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), name))
 	{
-		if (wxYES != wxMessageBox(_("IDS_CHANGEDIV_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
+		if (wxYES != wxMessageBox(_("IDS_CHANGEDIV_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 			return false;
 	}
 	bool bEdited = false;
@@ -347,7 +347,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 	{
 		if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
 		{
-			if (wxYES != wxMessageBox(_("IDS_CHANGELEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
+			if (wxYES != wxMessageBox(_("IDS_CHANGELEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 				return false;
 		}
 	}
@@ -460,7 +460,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 	wxString name(oldName);
 	if (0 < m_pDlg->m_Book.GetDogs().NumMultiHostedTrialsInDivision(m_pDlg->m_Book.GetConfig(), m_pDlg->m_pVenue->GetName(), m_Division->GetName()))
 	{
-		if (wxYES != wxMessageBox(_("IDS_CHANGESUBLEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
+		if (wxYES != wxMessageBox(_("IDS_CHANGESUBLEVEL_ISSUES"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 			return false;
 	}
 	while (!done)
@@ -574,7 +574,7 @@ bool CDlgConfigureDataTitle::DoEdit()
 					bool bInUse = true;
 					if (0 < nTitles)
 					{
-						if (wxYES == wxMessageBox(_("IDS_NAME_IN_USE_MERGE"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
+						if (wxYES == wxMessageBox(_("IDS_NAME_IN_USE_MERGE"), wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_EXCLAMATION))
 						{
 							bInUse = false;
 							m_pDlg->m_DlgFixup.push_back(ARBConfigActionRenameTitle::New(0, m_pDlg->m_pVenue->GetName(), oldName, name));
