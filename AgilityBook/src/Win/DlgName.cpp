@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  */
 
@@ -59,7 +60,10 @@ bool CDlgName::Create(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	textCtrl->SetFocus();
+	IMPLEMENT_ON_INIT(CDlgName, textCtrl)
 
 	return true;
 }
+
+
+DEFINE_ON_INIT(CDlgName)

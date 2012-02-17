@@ -44,4 +44,6 @@ public:
 
 private:
 	wxString m_Name;
+
+	DECLARE_ON_INIT()
 };

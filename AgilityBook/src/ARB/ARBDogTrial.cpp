@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fixed an issue in co-sanctioned trial detection.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-07-05 DRC Fixed sort predicate so it is really stable.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -541,9 +542,14 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 		if ((*iter)->GetClubs().FindVenue(inVenue)
 		&& 1 < (*iter)->GetClubs().size())
 		{
+			wxString venue1 = (*iter)->GetClubs()[1]->GetVenue();
 			int nDivCount = 0;
 			for (ARBDogClubList::const_iterator iterClub = (*iter)->GetClubs().begin(); iterClub != (*iter)->GetClubs().end(); ++iterClub)
 			{
+				// If all the clubs are in the same venue, it really isn't a
+				// multi-hosted trial. (This is really for asca/nadac)
+				if ((*iterClub)->GetVenue() == venue1)
+					continue;
 				ARBConfigVenuePtr pVenue;
 				if (inConfig.GetVenues().FindVenue((*iterClub)->GetVenue(), &pVenue))
 				{
@@ -551,7 +557,7 @@ int ARBDogTrialList::NumMultiHostedTrialsInDivision(
 						++nDivCount;
 				}
 			}
-			if (1 < nDivCount)
+			if (0 < nDivCount)
 				++count;
 		}
 	}

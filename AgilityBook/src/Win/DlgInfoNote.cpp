@@ -16,6 +16,7 @@
  * Remember, when adding an entry, it is only saved if there is a comment.
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-12 DRC Fix killfocus handling.
@@ -240,9 +241,14 @@ CDlgInfoNote::CDlgInfoNote(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
+	IMPLEMENT_ON_INIT(CDlgInfoNote, m_ctrlNames)
+
 	// Bind killfocus handlers last
 	BIND_OR_CONNECT_CTRL(m_ctrlNotes, wxEVT_KILL_FOCUS, wxFocusEventHandler, CDlgInfoNote::OnKillfocusComments);
 }
+
+
+DEFINE_ON_INIT(CDlgInfoNote)
 
 
 void CDlgInfoNote::UpdateImage(int index)

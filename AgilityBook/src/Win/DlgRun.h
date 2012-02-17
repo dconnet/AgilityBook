@@ -222,6 +222,7 @@ private:
 	wxButton* m_ctrlLinkDelete;
 	wxButton* m_ctrlLinkOpen;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnPageChanging(wxNotebookEvent& evt);
 	void OnPageChanged(wxNotebookEvent& evt);

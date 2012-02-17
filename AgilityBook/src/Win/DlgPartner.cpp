@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
@@ -134,8 +135,11 @@ CDlgPartner::CDlgPartner(
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
 
-	ctrlHandler->SetFocus();
+	IMPLEMENT_ON_INIT(CDlgPartner, ctrlHandler)
 }
+
+
+DEFINE_ON_INIT(CDlgPartner)
 
 
 void CDlgPartner::OnOk(wxCommandEvent& evt)

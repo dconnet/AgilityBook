@@ -49,6 +49,7 @@ private:
 	wxString m_Breed;
 	wxString m_Notes;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnKillfocusRefRunTime(wxFocusEvent& evt);
 	void OnOk(wxCommandEvent& evt);

@@ -79,6 +79,7 @@ private:
 	wxBitmap m_Added;
 	wxBitmap m_NoteAdded;
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeName(wxCommandEvent& evt);
 	void OnNewItem(wxCommandEvent& evt);

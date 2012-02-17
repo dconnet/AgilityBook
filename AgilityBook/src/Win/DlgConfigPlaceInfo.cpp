@@ -183,7 +183,7 @@ CDlgConfigPlaceInfo::CDlgConfigPlaceInfo(
 	SetSizeHints(GetSize(), wxDefaultSize);
 	CenterOnParent();
 
-	IMPLEMENT_ON_INIT(CDlgConfigPlaceInfo, textPlace)
+	IMPLEMENT_ON_INIT(CDlgConfigPlaceInfo, ctrlPlace)
 }
 
 

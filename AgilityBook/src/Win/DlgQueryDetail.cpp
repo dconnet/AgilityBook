@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-16 DRC Fix initial focus.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-11 DRC Ported to wxWidgets.
@@ -129,7 +130,12 @@ CDlgQueryDetail::CDlgQueryDetail(
 	wxSize sz = GetSize();
 	SetSizeHints(sz, wxSize(-1, sz.y));
 	CenterOnParent();
+
+	IMPLEMENT_ON_INIT(CDlgQueryDetail, m_ctrlCode)
 }
+
+
+DEFINE_ON_INIT(CDlgQueryDetail)
 
 
 void CDlgQueryDetail::OnSelchangeVenues(wxCommandEvent& evt)

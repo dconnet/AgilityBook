@@ -66,6 +66,7 @@ private:
 	void ListClubs(ARBDogClubPtr* inClub = NULL);
 	void EditClub();
 
+	DECLARE_ON_INIT()
 	DECLARE_EVENT_TABLE()
 	void OnSelchangeLocation(wxCommandEvent& evt);
 	void OnKillfocusLocation(wxFocusEvent& evt);
