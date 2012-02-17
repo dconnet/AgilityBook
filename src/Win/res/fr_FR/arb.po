@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Agility Record Book v2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-04 09:22-0800\n"
-"PO-Revision-Date: 2012-02-04 09:22-0800\n"
+"PO-Revision-Date: 2012-02-17 12:53-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team:  <help@agilityrecordbook.com>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,9 @@ msgstr "Version document inconnu"
 #: TestARB/Local.cpp:46
 msgid "IDS_WARNING_NEWER_DOC"
 msgstr ""
-"Attention: Ce fichier a etais crée avec un version Agility Databook plus recent. Si vous le sauvegarde avec ce version, des data serais perdu.\n"
+"ATTENTION\n"
+"\n"
+"Ce fichier a etais crée avec un version Agility Databook plus recent. Si vous le sauvegarde avec ce version, des data serais perdu.\n"
 "\n"
 " Voulez-vous continuer?"
 
@@ -462,7 +464,10 @@ msgstr "%1$s points avec rang %2$d"
 
 #: TestARB/Local.cpp:561
 msgid "IDS_WARN_DELETED_RUNS"
-msgstr "ATTENTION: %1$d parcour(s) suprimmé a cause de changement configuration."
+msgstr ""
+"ATTENTION\n"
+"\n"
+"%1$d parcour(s) suprimmé a cause de changement configuration."
 
 #: TestARB/Local.cpp:570
 msgid "IDS_UPDATE_TEAM_RUNS"
@@ -1581,7 +1586,9 @@ msgstr "Attention: Le parcours juste creé ne peut pas etre montré a cause des 
 #: Win/AgilityBookTreeData.cpp:669
 msgid "IDS_DELETE_DOG_DATA"
 msgstr ""
-"Attention: Le suppression d'un Chien supprime aussi tous les data assoicié, ca que ne peut pas etre annulée.\n"
+"ATTENTION\n"
+"\n"
+"Le suppression d'un Chien supprime aussi tous les data assoicié, ca que ne peut pas etre annulée.\n"
 "\n"
 "Etes-vous sur de continuer?"
 
@@ -1592,14 +1599,18 @@ msgstr "%1$s ans"
 #: Win/AgilityBookTreeData.cpp:972
 msgid "IDS_DELETE_TRIAL_DATA"
 msgstr ""
-"Attention: Le suppression d'un concours supprime aussi tous les data assoicié, ca que ne peut pas etre annulée.\n"
+"ATTENTION\n"
+"\n"
+"Le suppression d'un concours supprime aussi tous les data assoicié, ca que ne peut pas etre annulée.\n"
 "\n"
 "Etes-vous sur de continuer?"
 
 #: Win/AgilityBookTreeData.cpp:1343
 msgid "IDS_DELETE_EVENT_DATA"
 msgstr ""
-"Attention: La suppression d'un epreuve ne peut pas etre annulée.\n"
+"ATTENTION\n"
+"\n"
+"La suppression d'un epreuve ne peut pas etre annulée.\n"
 "\n"
 "Etes-vous sur de continuer?"
 
@@ -2994,7 +3005,9 @@ msgstr "Il y a deja un entré pour ces fautes"
 #: Win/DlgConfigEvent.cpp:1431
 msgid "IDS_CONFIGEVENT_OVERLAPDATES"
 msgstr ""
-"Attention: Il y a plusieurs methods pour calculer les points pour les meme dates. Seulement le premiere method trouvé par le systeme va etre utilisé.\n"
+"ATTENTION\n"
+"\n"
+"Il y a plusieurs methods pour calculer les points pour les meme dates. Seulement le premiere method trouvé par le systeme va etre utilisé.\n"
 "\n"
 "Etes-vous sur de enregistrer?"
 
@@ -3709,7 +3722,9 @@ msgstr "Degré"
 #: Win/DlgConfigureData.cpp:209
 msgid "IDS_CHANGEDIV_ISSUES"
 msgstr ""
-"Attention: Changer le nom du cathegorie peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les categories ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n"
+"ATTENTION\n"
+"\n"
+"Changer le nom du cathegorie peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les categories ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n"
 "\n"
 "Etes-vous sur de continuer?"
 
@@ -3726,14 +3741,18 @@ msgstr "SousDegré"
 #: Win/DlgConfigureData.cpp:350
 msgid "IDS_CHANGELEVEL_ISSUES"
 msgstr ""
-"Attention: Changer le nom du degré peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les degrés ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n"
+"ATTENTION\n"
+"\n"
+"Changer le nom du degré peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les degrés ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n"
 "\n"
 "Etes-vous sur de continuer?"
 
 #: Win/DlgConfigureData.cpp:463
 msgid "IDS_CHANGESUBLEVEL_ISSUES"
 msgstr ""
-"Attention: Changer le nom du degré peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les degrés ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n"
+"ATTENTION\n"
+"\n"
+"Changer le nom du degré peux avoir des consequences a cause des concours avec plusieur organisateurs. Si les degrés ont les meme noms dans plusieurs organisations les resultats peuvent etre mal listé. \n"
 "\n"
 "Etes-vous sur de continuer?"
 
