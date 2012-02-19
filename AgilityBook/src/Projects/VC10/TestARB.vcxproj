@@ -154,11 +154,10 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -178,11 +177,10 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(Target
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -201,11 +199,10 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(Target
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -225,11 +222,10 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(Target
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -248,11 +244,10 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(Target
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -272,11 +267,10 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(Target
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -295,11 +289,10 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(Target
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>
@@ -319,11 +312,10 @@ python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(Target
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>cd "$(ProjectDir)..\..\Win\res"
-python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)..\.." "$(OutDir) " "$(TargetName) " $(Platform)</Command>
+      <Command>python "$(ProjectDir)RunARBTests.py" "$(ProjectDir)\..\.." "$(OutDir) " "$(TargetName) " $(PlatformName)</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" -x "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -x -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File and Running Tests</Message>
     </CustomBuildStep>

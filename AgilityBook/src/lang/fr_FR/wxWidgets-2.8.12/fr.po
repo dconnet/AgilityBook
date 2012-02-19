@@ -5,13 +5,13 @@ msgstr ""
 "Project-Id-Version: wxWidgets-2.8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-24 09:56+0200\n"
-"PO-Revision-Date: 2012-01-29 12:53-0800\n"
+"PO-Revision-Date: 2012-02-19 11:00-0800\n"
 "Last-Translator: David Connet <help@agilityrecordbook.com>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1\n"
+"plural-forms: nplurals=2; plural=n > 1\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -942,8 +942,9 @@ msgid "A debug report has been generated in the directory\n"
 msgstr "Un rapport de débogage a été créé dans le dossier\n"
 
 #: ../src/common/debugrpt.cpp:565
+#, fuzzy
 msgid "A debug report has been generated. It can be found in"
-msgstr "A debug report has been generated. It can be found in"
+msgstr "Un rapport de débogage a été créé dans le dossier\n"
 
 #: ../src/common/xtixml.cpp:406
 msgid "A non empty collection must consist of 'element' nodes"
@@ -2684,9 +2685,9 @@ msgid "Failed to connect: no ISP to dial."
 msgstr "Échec de la connexion : pas de FAI à appeler."
 
 #: ../src/common/textfile.cpp:177
-#, c-format
+#, fuzzy, c-format
 msgid "Failed to convert file \"%s\" to Unicode."
-msgstr "La conversion du contenu du fichier \"%s\" en Unicode a échoué."
+msgstr "La conversion du contenu du fichier en Unicode a échoué."
 
 #: ../src/msw/registry.cpp:632
 #, c-format
@@ -4146,9 +4147,9 @@ msgstr ""
 "(sinon le texte avec ce codage n'apparaîtra pas correctement) ?"
 
 #: ../src/dfb/fontmgr.cpp:156
-#, c-format
+#, fuzzy, c-format
 msgid "No fonts found in %s."
-msgstr "Aucune entrée trouvée (%s)."
+msgstr "Aucune entrée trouvée."
 
 #: ../src/xrc/xmlres.cpp:715
 #, c-format
@@ -5850,9 +5851,9 @@ msgid "Validation conflict"
 msgstr "Conflit de validation"
 
 #: ../src/mac/carbon/aboutdlg.cpp:73
-#, c-format
+#, fuzzy, c-format
 msgid "Version %s"
-msgstr "Version %s"
+msgstr "Version "
 
 #: ../contrib/src/mmedia/vidbase.cpp:62
 msgid "Video Output"
