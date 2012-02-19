@@ -4,6 +4,7 @@
 # Requires gettext (msgcat/msgfmt) in PATH
 #
 # Revision History
+# 2012-02-19 DRC Remove --use-fuzzy option.
 # 2012-01-29 DRC Change msgfmt options to not do header checks
 # 2011-12-17 DRC Add -x option.
 # 2011-11-11 DRC Made generic for easy use in other projects.
@@ -106,7 +107,7 @@ def main():
 		installPath = os.path.join(langDir, langName)
 		if not os.access(installPath, os.F_OK):
 			os.mkdir(installPath)
-		cmd = ['msgfmt', '--verbose', '--check-format', '--check-domain', '--use-fuzzy', '--strict', '-o', os.path.join(installPath, targetname + r'.mo'), autogen]
+		cmd = ['msgfmt', '--verbose', '--check-format', '--check-domain', '--strict', '-o', os.path.join(installPath, targetname + r'.mo'), autogen]
 		# msgfmt generates interesting messages to stderr, don't toast them.
 		RunCommand(cmd, 0)
 		if not bDebug and os.access(autogen, os.F_OK):
