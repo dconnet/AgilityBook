@@ -151,7 +151,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -175,7 +175,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -199,7 +199,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -223,7 +223,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -247,7 +247,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -272,7 +272,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -296,7 +296,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>
@@ -321,7 +321,7 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     </Link>
     <PostBuildEvent />
     <CustomBuildStep>
-      <Command>python "$(ProjectDir)..\..\Win\res\compile.py" "$(ProjectDir)..\..\Win\res" arb.po "$(OutDir)." "$(TargetName)" fr_FR</Command>
+      <Command>python "$(ProjectDir)..\..\lang\CompileDatafile.py" -f "$(ProjectDir)..\..\lang\CompileDatList.txt" $(ProjectDir)..\..\lang arb.po "$(OutDir)." "$(TargetName)"</Command>
       <Outputs>$(OutDir)$(TargetName).dat</Outputs>
       <Message>Generating Data File</Message>
     </CustomBuildStep>

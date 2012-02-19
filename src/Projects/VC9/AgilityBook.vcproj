@@ -27,6 +27,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -80,7 +81,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -91,6 +92,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -144,7 +146,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -156,6 +158,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -209,7 +212,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -221,6 +224,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -274,7 +278,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -285,7 +289,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -339,7 +343,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -350,7 +354,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -405,7 +409,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -417,7 +421,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -471,7 +475,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -483,7 +487,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)&#x0D;&#x0A;"
+				CommandLine="cd $(ProjectDir)\..\..\Include&#x0D;&#x0A;python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -538,7 +542,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="python &quot;$(ProjectDir)\..\..\Win\res\compile.py&quot; &quot;$(ProjectDir)\..\..\Win\res&quot; arb.po &quot;$(OutDir)&quot; &quot;$(TargetName)&quot; fr_FR"
+				CommandLine="python &quot;$(ProjectDir)..\..\lang\CompileDatafile.py&quot; -f &quot;$(ProjectDir)..\..\lang\CompileDatList.txt&quot; $(ProjectDir)..\..\lang arb.po &quot;$(OutDir).&quot; &quot;$(TargetName)&quot;"
 			/>
 		</Configuration>
 	</Configurations>
