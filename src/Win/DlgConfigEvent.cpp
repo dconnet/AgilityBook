@@ -583,7 +583,7 @@ void CDlgConfigEvent::EditSubname()
 		if (wxID_OK == dlg.ShowModal())
 		{
 			m_ctrlSubNames->Delete(idx);
-			m_ctrlSubNames->Insert(dlg.GetName(), idx);
+			m_ctrlSubNames->Insert(dlg.Name(), idx);
 			m_ctrlSubNames->SetSelection(idx);
 			EnableSubnameControls();
 		}
@@ -1052,7 +1052,7 @@ void CDlgConfigEvent::OnBnClickedSubNamesNew(wxCommandEvent& evt)
 	CDlgName dlg(wxT(""), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		int idx = m_ctrlSubNames->Append(dlg.GetName());
+		int idx = m_ctrlSubNames->Append(dlg.Name());
 		m_ctrlSubNames->SetSelection(idx);
 		EnableSubnameControls();
 	}

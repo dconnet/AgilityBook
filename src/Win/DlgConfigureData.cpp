@@ -180,7 +180,7 @@ bool CDlgConfigureDataDivision::DoAdd()
 		CDlgName dlg(name, _("IDS_LEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			name = dlg.GetName();
+			name = dlg.Name();
 			if (m_Div->GetLevels().FindSubLevel(name))
 			{
 				done = false;
@@ -217,7 +217,7 @@ bool CDlgConfigureDataDivision::DoEdit()
 		CDlgName dlg(name, _("IDS_DIVISION_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			name = dlg.GetName();
+			name = dlg.Name();
 			if (oldName != name)
 			{
 				if (m_pDlg->m_pVenue->GetDivisions().FindDivision(name))
@@ -313,7 +313,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 		CDlgName dlg(name, _("IDS_SUBLEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			name = dlg.GetName();
+			name = dlg.Name();
 			if (m_Division->GetLevels().FindSubLevel(name))
 			{
 				done = false;
@@ -357,7 +357,7 @@ bool CDlgConfigureDataLevel::DoEdit()
 		CDlgName dlg(name, _("IDS_LEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			name = dlg.GetName();
+			name = dlg.Name();
 			// If the name hasn't changed, don't do the inuse verification.
 			if (oldName != name)
 			{
@@ -469,7 +469,7 @@ bool CDlgConfigureDataSubLevel::DoEdit()
 		CDlgName dlg(name, _("IDS_SUBLEVEL_NAME"), m_pDlg);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			name = dlg.GetName();
+			name = dlg.Name();
 			if (oldName != name)
 			{
 				if (m_Division->GetLevels().FindSubLevel(name))

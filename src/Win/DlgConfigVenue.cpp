@@ -88,7 +88,7 @@ bool CDlgConfigVenueDataRoot::DoAdd()
 			CDlgName dlg(name, _("IDS_DIVISION_NAME"), m_pDlg);
 			if (wxID_OK == dlg.ShowModal())
 			{
-				name = dlg.GetName();
+				name = dlg.Name();
 				if (m_pDlg->m_pVenue->GetDivisions().FindDivision(name))
 				{
 					done = false;

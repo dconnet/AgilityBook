@@ -361,7 +361,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 	{
 		int index = -1;
 		m_Select.erase();
-		wxString name = dlg.GetName();
+		wxString name = dlg.Name();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
 		if (iter != m_Names.end())

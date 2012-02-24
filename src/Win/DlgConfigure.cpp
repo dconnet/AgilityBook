@@ -391,7 +391,7 @@ void CDlgConfigure::DoEdit()
 				CDlgName dlg(name, _("IDS_FAULT_TYPE_NAME"), this);
 				if (wxID_OK == dlg.ShowModal())
 				{
-					name = dlg.GetName();
+					name = dlg.Name();
 					if (oldName != name)
 					{
 						if (m_Config.GetFaults().FindFault(name))
@@ -555,7 +555,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 			CDlgName dlg(wxEmptyString, _("IDS_FAULT_TYPE_NAME"), this);
 			if (wxID_OK == dlg.ShowModal())
 			{
-				wxString name = dlg.GetName();
+				wxString name = dlg.Name();
 				// We could check for uniqueness, but if the user wants 2
 				// strings the same, why argue! Afterall, these strings
 				// are only "helper" items to fill in other data.

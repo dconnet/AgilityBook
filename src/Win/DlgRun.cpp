@@ -2673,7 +2673,7 @@ void CDlgRun::EditLink()
 		CDlgSelectURL dlg(name, this);
 		if (wxID_OK == dlg.ShowModal())
 		{
-			wxString newName = dlg.GetName();
+			wxString newName = dlg.Name();
 			if (name != newName)
 			{
 				m_Run->RemoveLink(name);
@@ -3086,7 +3086,7 @@ void CDlgRun::OnLinksNew(wxCommandEvent& evt)
 	CDlgSelectURL dlg(wxT(""), this);
 	if (wxID_OK == dlg.ShowModal())
 	{
-		wxString newName = dlg.GetName();
+		wxString newName = dlg.Name();
 		if (0 < newName.length())
 		{
 			m_Run->AddLink(newName);
