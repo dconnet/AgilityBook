@@ -311,7 +311,6 @@ bool CAgilityBookTreeView::Create(
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_TREE_ITEM_MENU, wxTreeEventHandler, CAgilityBookTreeView::OnCtrlContextMenu);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CAgilityBookTreeView::OnCtrlSelectionChanged);
 	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CAgilityBookTreeView::OnCtrlItemActivated);
-	BIND_OR_CONNECT_CTRL(m_Ctrl, wxEVT_KEY_DOWN, wxKeyEventHandler, CAgilityBookTreeView::OnCtrlKeyDown);
 	m_Ctrl->SetImageList(&m_ImageList);
 #ifdef WX_TREE_HAS_STATE
 	m_Ctrl->SetStateImageList(&m_ImageListStates);
