@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-02-24 DRC Changed GetName to Name (GetName is wxDialog api)
  * @li 2009-02-11 DRC Ported to wxWidgets.
  */
 
@@ -40,7 +41,7 @@ public:
 			wxString const& caption,
 			wxWindow* pParent = NULL);
 
-	wxString GetName() const	{return m_Name;}
+	wxString Name() const	{return m_Name;}
 
 private:
 	wxString m_Name;
