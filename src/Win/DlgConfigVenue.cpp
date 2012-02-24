@@ -283,7 +283,6 @@ CDlgConfigVenue::CDlgConfigVenue(
 		wxTR_FULL_ROW_HIGHLIGHT|wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT|wxTR_SINGLE);
 	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler, CDlgConfigVenue::OnSelectionChanged);
 	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_COMMAND_TREE_ITEM_ACTIVATED, wxTreeEventHandler, CDlgConfigVenue::OnItemActivated);
-	BIND_OR_CONNECT_CTRL(m_ctrlItems, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgConfigVenue::OnKeydown);
 	//m_ctrlItems->SetHelpText(_(""));
 	//m_ctrlItems->SetToolTip(_(""));
 
