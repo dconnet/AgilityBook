@@ -4,6 +4,7 @@
 # Requires gettext (msgcat/msgfmt) in PATH
 #
 # Revision History
+# 2012-03-03 DRC Fixed writing file into dat file.
 # 2012-02-19 DRC Remove --use-fuzzy option, reoganized how po files.
 # 2012-01-29 DRC Change msgfmt options to not do header checks
 # 2011-12-17 DRC Add -x option.
@@ -136,9 +137,10 @@ def main():
 			line = files.readline()
 			if line:
 				line = line.rstrip()
-				inputfile = os.path.join(basepath, line)
+				inputfile = os.path.abspath(os.path.join(basepath, line))
+				filename = os.path.split(inputfile)[1]
 				if os.access(inputfile, os.F_OK):
-					zip.write(inputfile, line)
+					zip.write(inputfile, filename)
 				else:
 					print 'ERROR: File "' + inputfile + '" in "' + filelist + '" does not exist!'
 					return 1
