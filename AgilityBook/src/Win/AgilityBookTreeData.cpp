@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-03 DRC Fixed new unearned titles from showing up in view.
  * @li 2011-10-14 DRC Modify how reorder dialog is invoked.
  * @li 2010-12-30 DRC After copying/deleting runs, update multi-Q status.
  * @li 2010-12-05 DRC DOB can be invalid (on import). Don't show in tree.
@@ -339,6 +340,9 @@ static bool AddTitle(
 	CDlgTitle dlg(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog()->GetTitles(), ARBDogTitlePtr());
 	if (wxID_OK == dlg.ShowModal())
 	{
+		std::vector<CVenueFilter> venues;
+		CFilterOptions::Options().GetFilterVenue(venues);
+		pTree->GetDocument()->ResetVisibility(venues, dlg.GetNewTitle());
 		UpdateFutureTrials(pTree->GetDocument()->Book().GetConfig(), pDogData->GetDog(), dlg.GetNewTitle());
 		CUpdateHint hint(UPDATE_POINTS_VIEW);
 		pTree->GetDocument()->UpdateAllViews(NULL, &hint);

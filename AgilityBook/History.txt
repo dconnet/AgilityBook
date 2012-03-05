@@ -1,4 +1,4 @@
-2/17/2012: v2.3.5.<in development>
+3/3/2012: v2.3.5.<in development>
 - Bumped Configuration v36:
   - Remove start date from PACH title.
 - New features / Enhancements:
@@ -10,6 +10,7 @@
   - Updated fr.po to 2.8.12 version, cleaned up po files with poedit.
   - Fixed an issue in detecting co-sanctioned trials. (Trials with multiple
     clubs in the same venue were wrongly detected)
+  - Fixed new unearned titles from showing up in view.
 
 1/5/2012: v2.3.4.3295
 - Bug fixes:
