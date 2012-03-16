@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Refresh properly after changing filter in context menu.
@@ -1284,7 +1285,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	wxString err;
 	ElementNodePtr tree(ElementNode::New());
 	// Translate the XML to a tree form.
-	if (!tree->LoadXMLFile(filename, err))
+	if (!tree->LoadXML(filename, err))
 	{
 		wxConfig::Get()->Write(CFG_SETTINGS_LASTFILE, wxEmptyString);
 		// This string is in fr/fr.po

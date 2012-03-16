@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-11-17 DRC Add ability to switch languages
  * @li 2011-01-22 DRC Simplified how configs are added (all in TestConfig.cpp).
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -245,7 +246,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	std::string data;
 	bool bOk = CConfigHandler::LoadWxFile(datafile, gc_Configs[id], data);
 	assert(bOk);
-	if (!bOk || !tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg))
+	if (!bOk || !tree->LoadXML(data.c_str(), data.length(), errMsg))
 	{
 		wxLogError(wxT("%s"), errMsg.c_str());
 		tree.reset();
@@ -360,7 +361,7 @@ ElementNodePtr CreateActionList()
 
 	ElementNodePtr actions = ElementNode::New();
 	wxString errmsg;
-	bool bParse = actions->LoadXMLBuffer(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
+	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
 		wxLogError(wxT("%s"), errmsg.c_str());

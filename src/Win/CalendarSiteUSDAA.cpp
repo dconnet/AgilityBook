@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2010-11-05 DRC Bump to 2.2.0: USDAA changed the detail page layout.
  * @li 2009-11-01 DRC Change how initialization is done.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -233,7 +234,7 @@ raw.Write(data.c_str(), data.length());
 #endif
 		wxString err;
 		tree = ElementNode::New();
-		if (!tree->LoadXMLBuffer(pData, len, err))
+		if (!tree->LoadXML(pData, len, err))
 		{
 			tree.reset();
 			wxMessageBox(err, wxMessageBoxCaptionStr, wxOK | wxCENTRE);

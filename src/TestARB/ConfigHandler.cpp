@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-04 DRC Ported to wxWidgets.
  * @li 2008-10-31 DRC Created
@@ -85,7 +86,7 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 #endif
 	std::string data;
 	if (LoadWxFile(datafile, wxT("DefaultConfig.xml"), data))
-		bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
+		bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
 
 	return bOk ? tree : ElementNodePtr();
 }

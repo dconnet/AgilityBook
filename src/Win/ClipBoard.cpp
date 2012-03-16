@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-26 DRC Ported to wxWidgets.
  * @li 2004-06-06 DRC Separated from AgilityBookTreeData.cpp
@@ -119,7 +120,7 @@ bool CClipboardDataReader::GetData(
 		data = txtData.GetText().ToUTF8();
 	}
 	wxString err;
-	bool bOk = outTree->LoadXMLBuffer(data.c_str(), data.length(), err);
+	bool bOk = outTree->LoadXML(data.c_str(), data.length(), err);
 	if (!bOk && 0 < err.length())
 	{
 		wxMessageBox(err, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);

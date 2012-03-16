@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2010-03-05 DRC Changed architecture of ICalendarSite.
  * @li 2009-11-01 DRC Fixed canonical parsing of dll names on unix.
@@ -985,7 +986,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 					bool bOk = false;
 					if (!data.empty())
 					{
-						bOk = tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg);
+						bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
 						data.erase();
 					}
 					if (bOk)

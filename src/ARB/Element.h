@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2007-09-06 DRC Added GetNthElementNode
@@ -355,13 +356,23 @@ public:
 			wxString const* inValue = NULL) const;
 
 	/**
+	 * Populate this element from the given stream.
+	 * @param inStream XML stream to load.
+	 * @param ioErrMsg Accumulated error messages.
+	 * @return Whether file loaded successfully.
+	 */
+	bool LoadXML(
+			wxInputStream& inStream,
+			wxString& ioErrMsg);
+
+	/**
 	 * Populate this element from the given buffer.
 	 * @param inData XML data to load.
 	 * @param nData Length of inData buffer.
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Whether file loaded successfully.
 	 */
-	bool LoadXMLBuffer(
+	bool LoadXML(
 			char const* inData,
 			size_t nData,
 			wxString& ioErrMsg);
@@ -372,7 +383,7 @@ public:
 	 * @param ioErrMsg Accumulated error messages.
 	 * @return Whether file loaded successfully.
 	 */
-	bool LoadXMLFile(
+	bool LoadXML(
 			wxChar const* inFileName,
 			wxString& ioErrMsg);
 
