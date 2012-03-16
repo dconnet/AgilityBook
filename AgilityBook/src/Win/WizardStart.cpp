@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-12-22 DRC Switch to using Bind on wx2.9+.
  * @li 2010-03-28 DRC Added ability to import/export program settings.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -516,7 +517,7 @@ bool CWizardStart::DoWizardFinish()
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
+					if (!tree->LoadXML(file.GetPath(), errMsg))
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.length())
@@ -545,7 +546,7 @@ bool CWizardStart::DoWizardFinish()
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
+					if (!tree->LoadXML(file.GetPath(), errMsg))
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.length())
@@ -649,7 +650,7 @@ bool CWizardStart::DoWizardFinish()
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (!tree->LoadXMLFile(file.GetPath(), errMsg))
+					if (!tree->LoadXML(file.GetPath(), errMsg))
 					{
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.length())
@@ -797,7 +798,7 @@ bool CWizardStart::DoWizardFinish()
 					wxBusyCursor wait;
 					wxString errMsg;
 					ElementNodePtr tree(ElementNode::New());
-					if (tree->LoadXMLFile(file.GetPath(), errMsg)
+					if (tree->LoadXML(file.GetPath(), errMsg)
 					&& CAgilityBookOptions::ImportSettings(tree))
 					{
 						bOk = true;

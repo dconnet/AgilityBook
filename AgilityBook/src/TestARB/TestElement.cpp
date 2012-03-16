@@ -10,6 +10,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2008-12-27 DRC Replace local LoadTree with LoadXMLData
  * @li 2008-01-11 DRC Created
@@ -310,7 +311,7 @@ SUITE(TestElement)
 
 			ElementNodePtr tree2(ElementNode::New());
 			wxString errs;
-			CHECK(tree2->LoadXMLFile(tmpFile, errs));
+			CHECK(tree2->LoadXML(tmpFile, errs));
 
 			wxRemoveFile(tmpFile);
 

@@ -13,6 +13,7 @@
  * Actual reading and writing of XML is done using Xerces (or wxWidgets)
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
  * @li 2009-02-08 DRC Fix wxWidget xml creation
@@ -754,7 +755,7 @@ bool ElementNode::FindElementDeep(
 }
 
 
-static bool LoadXML(
+static bool LoadXMLNode(
 		ElementNodePtr node,
 		wxXmlDocument& inSource,
 		wxString& ioErrMsg)
@@ -769,27 +770,37 @@ static bool LoadXML(
 }
 
 
-bool ElementNode::LoadXMLBuffer(
+bool ElementNode::LoadXML(
+		wxInputStream& inStream,
+		wxString& ioErrMsg)
+{
+	wxXmlDocument source;
+	if (!source.Load(inStream))
+		return false;
+	return LoadXMLNode(m_Me.lock(), source, ioErrMsg);
+}
+
+
+bool ElementNode::LoadXML(
 		char const* inData,
 		size_t nData,
 		wxString& ioErrMsg)
 {
 	wxXmlDocument source;
 	wxMemoryInputStream input(inData, nData);
-	if (!source.Load(input))
-		return false;
-	return LoadXML(m_Me.lock(), source, ioErrMsg);
+	return LoadXML(input, ioErrMsg);
 }
 
 
-bool ElementNode::LoadXMLFile(
+bool ElementNode::LoadXML(
 		wxChar const* inFileName,
 		wxString& ioErrMsg)
 {
 	wxXmlDocument source;
-	if (!source.Load(inFileName))
+	wxFileInputStream stream(inFileName);
+	if (!stream.IsOk())
 		return false;
-	return LoadXML(m_Me.lock(), source, ioErrMsg);
+	return LoadXML(stream, ioErrMsg);
 }
 
 

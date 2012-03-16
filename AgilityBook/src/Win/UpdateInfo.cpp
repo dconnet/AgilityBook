@@ -13,6 +13,7 @@
  * File Format: See below.
  *
  * Revision History
+ * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2011-07-26 DRC Moved 'Arch' to ARBAgilityRecordBook.
  * @li 2010-05-07 DRC Removed 'lang' from 'Platform'. (Finally figured out how
  *                    to create transforms and embed in msi.)
@@ -321,7 +322,7 @@ bool CUpdateInfo::ReadVersionFile(
 		 */
 		wxString errMsg2;
 		ElementNodePtr tree(ElementNode::New());
-		if (!tree->LoadXMLBuffer(data.c_str(), data.length(), errMsg2))
+		if (!tree->LoadXML(data.c_str(), data.length(), errMsg2))
 		{
 			if (bVerbose)
 			{
@@ -741,7 +742,7 @@ void CUpdateInfo::CheckConfig(
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				ElementNodePtr tree(ElementNode::New());
 				wxString errMsg2;
-				if (!tree->LoadXMLBuffer(strConfig.c_str(), strConfig.length(), errMsg2))
+				if (!tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2))
 				{
 					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
 					if (0 < errMsg2.length())
