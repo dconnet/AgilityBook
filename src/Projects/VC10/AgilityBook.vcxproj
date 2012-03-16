@@ -544,6 +544,9 @@ python SetBuildNumber.py $(SETBUILDNUMBER_UPDATE)
     <ResourceCompile Include="..\..\Win\AgilityBook.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="ARBUpdater.vcxproj">
+      <Project>{e7cffcf1-c043-4443-9f24-8ccbebfba690}</Project>
+    </ProjectReference>
     <ProjectReference Include="LibARB.vcxproj">
       <Project>{09c48f16-0c9d-4a44-925d-7c02e33341dd}</Project>
     </ProjectReference>
