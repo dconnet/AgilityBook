@@ -6,6 +6,8 @@ See the comments in AgilityRecordBook.dtd for file structure ('Book') changes.
 Revision History:
 2012-01-06 DRC Configuration version 36.
                Remove start date from PACH title.
+               Remove start date from AKC lifetime titles.
+               Added USDAA Masters Challenge titles.
 2012-01-03 DRC Configuration version 35.
                Added USDAA Masters Challenge classes.
 2011-10-03 DRC Configuration version 34.
@@ -448,28 +450,28 @@ Revision History:
       <Titles LongName="FAST Century Preferred Title" Multiple="1" Name="FTCP" ValidFrom="2007-1-1">MFP plus 100 Qs (FTCP2 == 200Qs)</Titles>
       <Titles LongName="Time 2 Beat" Multiple="2" Name="T2B" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
       <Titles LongName="Time 2 Beat Preferred" Multiple="2" Name="T2BP" ValidFrom="2011-7-1">15 Qs and 100 points</Titles>
-      <Titles LongName="Master Bronze Agility Title" Name="MXB" ValidFrom="2012-7-1">25 Qs</Titles>
-      <Titles LongName="Master Silver Agility Title" Name="MXS" ValidFrom="2012-7-1">50 Qs</Titles>
-      <Titles LongName="Master Gold Agility Title" Name="MXG" ValidFrom="2012-7-1">75 Qs</Titles>
-      <Titles LongName="Master Centery Agility Title" Name="MXC" ValidFrom="2012-7-1">100 Qs</Titles>
-      <Titles LongName="Master Bronze JWW Title" Name="MJB" ValidFrom="2012-7-1">25 Qs</Titles>
-      <Titles LongName="Master Silver JWW Title" Name="MJS" ValidFrom="2012-7-1">50 Qs</Titles>
-      <Titles LongName="Master Gold JWW Title" Name="MJG" ValidFrom="2012-7-1">75 Qs</Titles>
-      <Titles LongName="Master Centery JWW Title" Name="MFC" ValidFrom="2012-7-1">100 Qs</Titles>
-      <Titles LongName="Master Bronze FAST Title" Name="MFB" ValidFrom="2012-7-1">25 Qs</Titles>
-      <Titles LongName="Master Silver FAST Title" Name="MFS" ValidFrom="2012-7-1">50 Qs</Titles>
-      <Titles LongName="Master Gold FAST Title" Name="MFG" ValidFrom="2012-7-1">75 Qs</Titles>
-      <Titles LongName="Master Bronze Agility Preferred Title" Name="MXPB" ValidFrom="2012-7-1">25 Qs</Titles>
-      <Titles LongName="Master Silver Agility Preferred Title" Name="MXPS" ValidFrom="2012-7-1">50 Qs</Titles>
-      <Titles LongName="Master Gold Agility Preferred Title" Name="MXPG" ValidFrom="2012-7-1">75 Qs</Titles>
-      <Titles LongName="Master Centery Agility Preferred Title" Name="MXPC" ValidFrom="2012-7-1">100 Qs</Titles>
-      <Titles LongName="Master Bronze JWW Preferred Title" Name="MJPB" ValidFrom="2012-7-1">25 Qs</Titles>
-      <Titles LongName="Master Silver JWW Preferred Title" Name="MJPS" ValidFrom="2012-7-1">50 Qs</Titles>
-      <Titles LongName="Master Gold JWW Preferred Title" Name="MJPG" ValidFrom="2012-7-1">75 Qs</Titles>
-      <Titles LongName="Master Centery JWW Preferred Title" Name="MFPC" ValidFrom="2012-7-1">100 Qs</Titles>
-      <Titles LongName="Master Bronze FAST Preferred Title" Name="MFPB" ValidFrom="2012-7-1">25 Qs</Titles>
-      <Titles LongName="Master Silver FAST Preferred Title" Name="MFPS" ValidFrom="2012-7-1">50 Qs</Titles>
-      <Titles LongName="Master Gold FAST Preferred Title" Name="MFPG" ValidFrom="2012-7-1">75 Qs</Titles>
+      <Titles LongName="Master Bronze Agility Title" Name="MXB">25 Qs</Titles>
+      <Titles LongName="Master Silver Agility Title" Name="MXS">50 Qs</Titles>
+      <Titles LongName="Master Gold Agility Title" Name="MXG">75 Qs</Titles>
+      <Titles LongName="Master Centery Agility Title" Name="MXC">100 Qs</Titles>
+      <Titles LongName="Master Bronze JWW Title" Name="MJB">25 Qs</Titles>
+      <Titles LongName="Master Silver JWW Title" Name="MJS">50 Qs</Titles>
+      <Titles LongName="Master Gold JWW Title" Name="MJG">75 Qs</Titles>
+      <Titles LongName="Master Centery JWW Title" Name="MFC">100 Qs</Titles>
+      <Titles LongName="Master Bronze FAST Title" Name="MFB">25 Qs</Titles>
+      <Titles LongName="Master Silver FAST Title" Name="MFS">50 Qs</Titles>
+      <Titles LongName="Master Gold FAST Title" Name="MFG">75 Qs</Titles>
+      <Titles LongName="Master Bronze Agility Preferred Title" Name="MXPB">25 Qs</Titles>
+      <Titles LongName="Master Silver Agility Preferred Title" Name="MXPS">50 Qs</Titles>
+      <Titles LongName="Master Gold Agility Preferred Title" Name="MXPG">75 Qs</Titles>
+      <Titles LongName="Master Centery Agility Preferred Title" Name="MXPC">100 Qs</Titles>
+      <Titles LongName="Master Bronze JWW Preferred Title" Name="MJPB">25 Qs</Titles>
+      <Titles LongName="Master Silver JWW Preferred Title" Name="MJPS">50 Qs</Titles>
+      <Titles LongName="Master Gold JWW Preferred Title" Name="MJPG">75 Qs</Titles>
+      <Titles LongName="Master Centery JWW Preferred Title" Name="MFPC">100 Qs</Titles>
+      <Titles LongName="Master Bronze FAST Preferred Title" Name="MFPB">25 Qs</Titles>
+      <Titles LongName="Master Silver FAST Preferred Title" Name="MFPS">50 Qs</Titles>
+      <Titles LongName="Master Gold FAST Preferred Title" Name="MFPG">75 Qs</Titles>
       <Titles LongName="Preferred Agility Champion" Multiple="2" Name="PACH" Prefix="y">20 Double Qs, 750 championship points</Titles>
       <Division Name="ISC">
         <Level Name="Excellent B"/>
@@ -3468,12 +3470,10 @@ TG3 + 10 Qs in at least 5 games
       <Titles LongName="Intro Snooker Dog - Silver" Name="IKDS">9 qualifying scores.</Titles>
       <Titles LongName="Intro Snooker Dog - Gold" Name="IKDG">12 qualifying scores.</Titles>
       <Titles LongName="Intro Versatility Dog" Name="IVD">3 Standard, 1 Jumpers, 1 Gamblers, 1 Snooker</Titles>
-	  <!-- Holding off for verification on acronym
-      <Titles LongName="MC Standard Agility Champion" Name="MCS">10 Standard</Titles>
-      <Titles LongName="MC Jumpers Champion" Name="MCJ">10 Jumpers</Titles>
-      <Titles LongName="MC Performance Standard Champion" Name="MCPS">10 Standard</Titles>
-      <Titles LongName="MC Performance Jumpers Champion" Name="MCJS">10 Jumpers</Titles>
-	  -->
+      <Titles LongName="MC Standard Agility Champion" Name="MCSAC">10 Standard</Titles>
+      <Titles LongName="MC Jumpers Champion" Name="MCJC">10 Jumpers</Titles>
+      <Titles LongName="MC Performance Standard Champion" Name="MCPSC">10 Standard</Titles>
+      <Titles LongName="MC Performance Jumpers Champion" Name="MCPJC">10 Jumpers</Titles>
       <Division Name="Championship">
         <Level Name="International"/>
         <Level Name="Nationals"/>
