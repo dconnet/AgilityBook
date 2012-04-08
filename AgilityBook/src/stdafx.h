@@ -373,11 +373,11 @@
 		void OnInit(wxInitDialogEvent& evt);
 #define IMPLEMENT_ON_INIT(cls, ctrl) \
 		{ \
-			BIND_OR_CONNECT(wxEVT_INIT_DIALOG, wxInitDialogEventHandler, cls##::OnInit); \
+			BIND_OR_CONNECT(wxEVT_INIT_DIALOG, wxInitDialogEventHandler, cls::OnInit); \
 			m_Focus = ctrl; \
 		}
 #define DEFINE_ON_INIT(cls) \
-	void cls##::OnInit(wxInitDialogEvent& evt) \
+	void cls::OnInit(wxInitDialogEvent& evt) \
 	{ \
 		/* wxWindowBase::OnInitDialog */ \
 		TransferDataToWindow(); \
