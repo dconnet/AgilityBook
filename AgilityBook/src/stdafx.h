@@ -51,8 +51,9 @@
 // 1200: Visual C++, 32-bit, version 6.0
 // 1300: VC7.0
 // 1310: VC7.1 http://msdn2.microsoft.com/en-us/library/b0084kay(VS.71).aspx
-// 1400: VC8.0 http://msdn2.microsoft.com/en-us/library/b0084kay(VS.80).aspx
-// 1500: VC9.0 http://msdn2.microsoft.com/en-us/library/b0084kay.aspx
+// 1400: VC8.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.80%29.aspx
+// 1500: VC9.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.90%29.aspx
+// 1600: VC10.0 http://msdn.microsoft.com/en-us/library/b0084kay%28v=vs.100%29.aspx
 // _M_IX86: Defined for x86 (value specifies processor)
 // _M_X64: Defined for x64 processors
 // _M_IA64: Defined for Itanium processor family
@@ -114,7 +115,9 @@
 	#elif defined(_M_X64)
 		#define WINVER	0x0501
 	#else //x86
-		#if _MSC_VER >= 1500
+		#if _MSC_VER >= 1600
+			#define WINVER	0x0501
+		#elif _MSC_VER >= 1500
 			#define WINVER	0x0500
 		#else
 			#define WINVER	0x0400
@@ -130,28 +133,30 @@
 	#error WINVER is different than _WIN32_WINNT
 #endif
 
-// Note VC6 hard-codes this define to ME. So we'll follow suit...
-// (unset if VC9+)
-#ifndef _WIN32_WINDOWS
-	#if _MSC_VER < 1500 && !defined(UNICODE)
-		#define _WIN32_WINDOWS	0x0500
-	#else
-		#undef _WIN32_WINDOWS
-	#endif
+// Win9x not supported
+#ifdef _WIN32_WINDOWS
+	#undef _WIN32_WINDOWS
 #endif
 
 // Error checking
-// Minimum system: x86 - Win2000, x64 - XP, Itanium - Server 2003
-#if _MSC_VER >= 1500 && WINVER < 0x0500
-	#error VC9 minimum version is 0x0500
-#elif defined(_M_IA64) && WINVER < 0x0502
-	#error Itanium minimum version is 0x0502
-#elif defined(_M_X64) && WINVER < 0x0501
-	#error Itanium minimum version is 0x0501
-#endif
-
-#if defined(_WIN32_WINDOWS) && defined(UNICODE)
-	#error We do not support UNICODE builds for Win98
+// VC9: Minimum system: x86 - Win2000, x64 - XP, Itanium - Server 2003
+// VC10: Minimum system: x86 - XP SP2, x64 - XP, Itanium - Server 2003 SP1
+#if _MSC_VER >= 1600
+	#if defined(_M_IA64) && WINVER < 0x0502
+		#error Itanium minimum version is 0x0502
+	#elif defined(_M_X64) && WINVER < 0x0501
+		#error x64 minimum version is 0x0501
+	#elif WINVER < 0x0501
+		#error VC10 minimum version is 0x0501
+	#endif
+#elif _MSC_VER >= 1500
+	#if defined(_M_IA64) && WINVER < 0x0502
+		#error Itanium minimum version is 0x0502
+	#elif defined(_M_X64) && WINVER < 0x0501
+		#error x64 minimum version is 0x0501
+	#elif WINVER < 0x0500
+		#error VC9 minimum version is 0x0500
+	#endif
 #endif
 
 #else // _WIN32

@@ -25,6 +25,7 @@ Note: For System.AppUserModel.ID to work on Win7,
       must be enabled. This is done in the Properties of the Start menu.
 
 Revision History
+2012-04-08 DRC Fix min OS conditions (using VC10 now)
 2011-11-23 DRC Add internet shortcut to start menu
 2011-11-12 DRC Update .mo file name.
 2011-08-19 DRC Fix System.AppUserModel.ID name. Still doesn't fix uninstall.
@@ -107,9 +108,9 @@ Revision History
 
 	<!-- Launch Conditions -->
 <?if $(sys.BUILDARCH)=x64?>
-	<Condition Message="!(loc.On64NT)">VersionNT64&gt;=501</Condition>
+	<Condition Message="!(loc.On64NT)">VersionNT&gt;=600 Or (VersionNT=502 And ServicePackLevel&gt;=1)</Condition>
 <?else?>
-	<Condition Message="!(loc.OnNT)">VersionNT&gt;=500</Condition>
+	<Condition Message="!(loc.OnNT)">VersionNT&gt;=600 Or (VersionNT=501 And ServicePackLevel&gt;=2) Or (VersionNT=502 And ServicePackLevel&gt;=1)</Condition>
 <?endif?>
 
 	<!-- During beta, do not remove v1.
