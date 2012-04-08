@@ -70,8 +70,6 @@ dist:: all $(PHONY)
 	echo 'APPL????\c' > $(TOPBUILDDIR)/ARBHelp.app/Contents/PkgInfo
 	cp arbhelp $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS/arbhelp
 	cp $(TOPSRCDIR)/src/Win/res/AgilityBook.icns $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/
-	cp -pR lang $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/
-	cp arbhelp.dat $(TOPBUILDDIR)/ARBHelp.app/Contents/Resources/
 
 ################################################################################
 # End of File: Makefile                                                        #
