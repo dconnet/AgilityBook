@@ -59,11 +59,7 @@ PRECOMP_HEADER = $(TOPSRCDIR)/src/stdafx.h
 
 @NAM_RULES@
 
-resources: arbhelp
-	echo "LANGDIR $(CURDIR)"
-	python $(TOPSRCDIR)/src/Win/res/compile.py $(TOPSRCDIR)/src/Win/res arb.po $(CURDIR) arbhelp
-
-all: arbhelp resources
+all: arbhelp
 
 dist:: all $(PHONY)
 	mkdir -p $(TOPBUILDDIR)/ARBHelp.app/Contents/MacOS
