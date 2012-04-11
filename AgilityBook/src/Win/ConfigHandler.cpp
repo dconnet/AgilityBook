@@ -90,6 +90,6 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 	LoadWxFile(datafile, wxT("AgilityRecordBook.dtd"), dtd);
 
 	if (bNormalizeCRNL)
-		dtd = tstringUtil::Replace(dtd, "\r\n", "\n");
+		dtd = StringUtil::Replace(dtd, "\r\n", "\n");
 	return dtd;
 }

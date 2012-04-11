@@ -416,7 +416,7 @@ bool CAgilityBookApp::OnInit()
 	// Check for updates every 30 days.
 	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
-		wxString ver = wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, wxT(""));
+		std::wstring ver = wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, wxT("")).wx_str();
 		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
 		if (date.IsValid())
 		{

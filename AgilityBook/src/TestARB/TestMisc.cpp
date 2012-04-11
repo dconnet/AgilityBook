@@ -33,14 +33,14 @@ SUITE(TestMisc)
 	{
 		if (!g_bMicroTest)
 		{
-			wxString s(wxT("<&amp>"));
-			wxString s2 = SanitizeStringForHTML(s);
-			CHECK(wxT("&lt;&amp;amp&gt;") == s2);
-			s = wxT("1\r\n2\n3");
+			std::wstring s(wxT("<&amp>"));
+			std::wstring s2 = SanitizeStringForHTML(s);
+			CHECK(L"&lt;&amp;amp&gt;" == s2);
+			s = L"1\r\n2\n3";
 			s2 = SanitizeStringForHTML(s, true);
-			CHECK(wxT("1<br/>2<br/>3") == s2);
+			CHECK(L"1<br/>2<br/>3" == s2);
 			s2 = SanitizeStringForHTML(s, false);
-			CHECK(wxT("1\r\n2\n3") == s2);
+			CHECK(L"1\r\n2\n3" == s2);
 		}
 	}
 

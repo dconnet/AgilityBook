@@ -229,7 +229,7 @@ bool CClipboardDataWriter::AddData(
 	{
 		wxMemoryOutputStream out;
 		inTree->SaveXML(out);
-		data = tstringUtil::WXString(tstringUtil::tstringA(out));
+		data = StringUtil::stringWX(StringUtil::stringA(out));
 	}
 	return AddData(clpFmt, data);
 }
@@ -241,7 +241,7 @@ bool CClipboardDataWriter::AddData(
 {
 	if (eFormatHtml == clpFmt)
 	{
-		std::string data = tstringUtil::tstringA(inData);
+		std::string data = StringUtil::stringA(inData);
 		{
 			std::string startHtml("<html><body>\r\n");
 			std::string endHtml("</body>\r\n</html>\r\n");

@@ -855,7 +855,7 @@ bool CWizardImport::DoWizardFinish()
 							entry[idxEvent[i]],
 							entry[idxDiv[i]],
 							entry[idxLevel[i]],
-							ARBDate::FromString(entry[idxDate[i]], format),
+							ARBDate::FromString(entry[idxDate[i]].wx_str(), format),
 							NULL,
 							&pScoring);
 					}
@@ -907,7 +907,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_RUNS_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
 							if (!date.IsValid()
 							&& (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 							|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle()))
@@ -988,68 +988,68 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_RUNS_COURSE_FAULTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetCourseFaults(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetCourseFaults(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_TIME:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetTime(tstringUtil::ToDouble(entry[iCol]));
+						pRun->GetScoring().SetTime(StringUtil::ToDouble(entry[iCol]));
 						break;
 					case IO_RUNS_YARDS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetYards(tstringUtil::ToDouble(entry[iCol]));
+						pRun->GetScoring().SetYards(StringUtil::ToDouble(entry[iCol]));
 						break;
 					case IO_RUNS_YPS:
 						// Computed
 						break;
 					case IO_RUNS_OBSTACLES:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetObstacles(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetObstacles(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_OPS:
 						// Computed
 						break;
 					case IO_RUNS_SCT:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetSCT(tstringUtil::ToDouble(entry[iCol]));
+						pRun->GetScoring().SetSCT(StringUtil::ToDouble(entry[iCol]));
 						break;
 					case IO_RUNS_TOTAL_FAULTS:
 						// Computed.
 						break;
 					case IO_RUNS_REQ_OPENING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_REQ_CLOSING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedClosePts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetNeedClosePts(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_OPENING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetOpenPts(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_CLOSING:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetClosePts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetClosePts(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_REQ_POINTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetNeedOpenPts(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_POINTS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->GetScoring().SetOpenPts(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->GetScoring().SetOpenPts(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_PLACE:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetPlace(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->SetPlace(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_IN_CLASS:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetInClass(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->SetInClass(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_DOGSQD:
 						pRun = CreateRun(pRun, pScoring);
-						pRun->SetDogsQd(static_cast<short>(tstringUtil::ToLong(entry[iCol])));
+						pRun->SetDogsQd(static_cast<short>(StringUtil::ToLong(entry[iCol])));
 						break;
 					case IO_RUNS_Q:
 						{
@@ -1262,7 +1262,7 @@ bool CWizardImport::DoWizardFinish()
 					{
 					case IO_CAL_START_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1284,7 +1284,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_CAL_END_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1356,7 +1356,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_CAL_OPENS:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1378,7 +1378,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_CAL_CLOSES:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1437,7 +1437,7 @@ bool CWizardImport::DoWizardFinish()
 					{
 					case IO_LOG_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol], format);
+							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
 							if (date.IsValid())
 							{
 								pLog = CreateLog(pLog);

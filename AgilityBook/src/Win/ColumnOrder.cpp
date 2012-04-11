@@ -75,7 +75,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_order[i] = tstringUtil::ToCLong(str);
+		m_order[i] = StringUtil::ToCLong(str);
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);
@@ -86,7 +86,7 @@ bool CColumnOrder::Initialize(int nColumns)
 	for (i = 0; i < m_nColumns && !str.IsEmpty(); ++i)
 	{
 		rc = true;
-		m_bDescending[i] = tstringUtil::ToCLong(str) == 0 ? false : true;
+		m_bDescending[i] = StringUtil::ToCLong(str) == 0 ? false : true;
 		int n = str.Find(',');
 		if (n > 0)
 			str = str.Mid(n+1);

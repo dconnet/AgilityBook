@@ -14,7 +14,7 @@
  * @li 2010-12-30 DRC Fix a memory leak when transforming a stream.
  * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
- * @li 2009-03-30 DRC Remove Convert and replaced with tstringA/etc
+ * @li 2009-03-30 DRC Remove Convert and replaced with stringA/etc
  * @li 2008-06-29 DRC Moved string stuff out of ARBTypes.
  */
 
@@ -38,31 +38,34 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxString tstringUtil::WXString(wchar_t const* const inStr, size_t inLen)
+namespace StringUtil
+{
+
+wxString stringWX(wchar_t const* const inStr, size_t inLen)
 {
 	return wxString(inStr, wxConvUTF8, inLen);
 }
 
 
-wxString tstringUtil::WXString(std::wstring const& inStr)
+wxString stringWX(std::wstring const& inStr)
 {
 	return wxString(inStr.c_str(), wxConvUTF8, inStr.length());
 }
 
 
-wxString tstringUtil::WXString(char const* const inStr, size_t inLen)
+wxString stringWX(char const* const inStr, size_t inLen)
 {
 	return wxString(inStr, wxConvUTF8, inLen);
 }
 
 
-wxString tstringUtil::WXString(std::string const& inStr)
+wxString stringWX(std::string const& inStr)
 {
 	return wxString(inStr.c_str(), wxConvUTF8, inStr.length());
 }
 
 
-std::string tstringUtil::tstringA(wxMemoryOutputStream const& inStr)
+std::string stringA(wxMemoryOutputStream const& inStr)
 {
 	std::string str;
 	if (inStr.IsOk())
@@ -78,19 +81,19 @@ std::string tstringUtil::tstringA(wxMemoryOutputStream const& inStr)
 }
 
 
-std::string tstringUtil::tstringA(wxString const& inStr)
+std::string stringA(wxString const& inStr)
 {
 	return std::string(inStr.ToUTF8());
 }
 
 
-bool tstringUtil::ToLong(wxString const& inStr, long& outValue)
+bool ToLong(wxString const& inStr, long& outValue)
 {
 	return inStr.ToLong(&outValue);
 }
 
 
-long tstringUtil::ToLong(wxString const& inStr)
+long ToLong(wxString const& inStr)
 {
 	long val = 0;
 	ToLong(inStr, val);
@@ -98,7 +101,7 @@ long tstringUtil::ToLong(wxString const& inStr)
 }
 
 
-bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
+bool ToDouble(wxString const& inStr, double& outValue)
 {
 	bool rc = inStr.ToDouble(&outValue);
 	if (!rc)
@@ -126,7 +129,7 @@ bool tstringUtil::ToDouble(wxString const& inStr, double& outValue)
 }
 
 
-double tstringUtil::ToDouble(wxString const& inStr)
+double ToDouble(wxString const& inStr)
 {
 	double val = 0.0;
 	ToDouble(inStr, val);
@@ -134,7 +137,7 @@ double tstringUtil::ToDouble(wxString const& inStr)
 }
 
 
-bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
+bool ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 {
 #if wxCHECK_VERSION(2, 9, 3)
 	bool bOk = inStr.ToCLong(&outValue);
@@ -142,7 +145,7 @@ bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 	// That's the behavior I'm relying on. (Needed when reading dates)
 	if (!bOk && bRetry)
 	{
-		std::string tmp(tstringUtil::tstringA(inStr.wx_str()));
+		std::string tmp(StringUtil::stringA(inStr.wx_str()));
 		std::istringstream str(tmp);
 		str >> outValue;
 	}
@@ -154,7 +157,7 @@ bool tstringUtil::ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 }
 
 
-long tstringUtil::ToCLong(wxString const& inStr)
+long ToCLong(wxString const& inStr)
 {
 	long val = 0;
 	ToCLong(inStr, val, true);
@@ -162,7 +165,7 @@ long tstringUtil::ToCLong(wxString const& inStr)
 }
 
 
-bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
+bool ToCDouble(wxString const& inStr, double& outValue)
 {
 #if wxCHECK_VERSION(2, 9, 3)
 	// This will fail on "1.2-3". That's ok. The only time this is used
@@ -175,7 +178,7 @@ bool tstringUtil::ToCDouble(wxString const& inStr, double& outValue)
 }
 
 
-double tstringUtil::ToCDouble(wxString const& inStr)
+double ToCDouble(wxString const& inStr)
 {
 	double val = 0.0;
 	ToCDouble(inStr, val);
@@ -215,7 +218,7 @@ template <typename T, typename S> T ReplaceImpl(
 }
 
 
-wxString tstringUtil::Trim(wxString const& inStr)
+wxString Trim(wxString const& inStr)
 {
 	wxString str(inStr);
 	str.Trim(true);
@@ -224,7 +227,7 @@ wxString tstringUtil::Trim(wxString const& inStr)
 }
 
 
-std::string tstringUtil::Replace(
+std::string Replace(
 		std::string const& inStr,
 		std::string const& inReplace,
 		std::string const& inReplaceWith)
@@ -233,10 +236,12 @@ std::string tstringUtil::Replace(
 }
 
 
-std::wstring tstringUtil::Replace(
+std::wstring Replace(
 		std::wstring const& inStr,
 		std::wstring const& inReplace,
 		std::wstring const& inReplaceWith)
 {
 	return ReplaceImpl<std::wstring, std::wostringstream>(inStr, inReplace, inReplaceWith);
 }
+
+};

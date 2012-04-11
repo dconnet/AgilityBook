@@ -274,7 +274,7 @@ bool CUpdateInfo::ReadVersionFile(
 		if (bVerbose)
 		{
 			data = wxString(_("IDS_UPDATE_UNKNOWN")).mb_str(wxMBConvUTF8());
-			wxString tmp = tstringUtil::WXString(data);
+			wxString tmp = StringUtil::stringWX(data);
 			if (!errMsg.IsEmpty())
 				tmp += errMsg;
 			wxMessageBox(tmp, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
@@ -448,7 +448,7 @@ bool CUpdateInfo::CheckProgram(
 			// Return that it needs updating, but don't record that we checked.
 			return bNeedsUpdating;
 		}
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO).c_str());
 		wxString msg = wxString::Format(_("IDS_VERSION_AVAILABLE"), m_VersionNum.GetVersionString().c_str());
 		if (wxYES == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_QUESTION))
 		{
@@ -677,7 +677,7 @@ bool CUpdateInfo::CheckProgram(
 		}
 	}
 	else
-		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO));
+		wxConfig::Get()->Write(CFG_SETTINGS_LASTVERCHECK, today.GetString(ARBDate::eISO).c_str());
 	return bNeedsUpdating;
 }
 

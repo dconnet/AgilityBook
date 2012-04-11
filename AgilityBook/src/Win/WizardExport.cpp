@@ -1507,7 +1507,7 @@ bool CWizardExport::DoWizardFinish()
 				{
 					wxString line = GetListColumnText(m_ctrlPreview, i, 0);
 					line << wxT("\n");
-					std::string utf8(tstringUtil::tstringA(line));
+					std::string utf8(StringUtil::stringA(line));
 					output.Write(utf8.c_str(), utf8.length());
 				}
 				output.Close();

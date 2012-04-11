@@ -31,10 +31,10 @@ SUITE(TestString)
 		{
 			std::string s("narrow");
 			/*
-			std::wstring s2 = tstringUtil::tstringW(s);
+			std::wstring s2 = StringUtil::tstringW(s);
 			CHECK(L"narrow" == s2);
 			*/
-			wxString s2 = tstringUtil::WXString(s);
+			wxString s2 = StringUtil::stringWX(s);
 			CHECK(wxT("narrow") == s2);
 		}
 	}
@@ -46,10 +46,10 @@ SUITE(TestString)
 		{
 			std::wstring s(L"wide");
 			/*
-			std::string s2 = tstringUtil::tstringA(s);
+			std::string s2 = StringUtil::stringA(s);
 			CHECK("wide" == s2);
 			*/
-			wxString s2 = tstringUtil::WXString(s);
+			wxString s2 = StringUtil::stringWX(s);
 			CHECK(wxT("wide") == s2);
 		}
 	}
@@ -62,9 +62,9 @@ SUITE(TestString)
 		{
 			wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
 			std::wstring s(1, w);
-			//std::string s2 = tstringUtil::tstringA(s);
-			wxString s2 = tstringUtil::WXString(s);
-			std::string s3 = tstringUtil::tstringA(s2);
+			//std::string s2 = StringUtil::stringA(s);
+			wxString s2 = StringUtil::stringWX(s);
+			std::string s3 = StringUtil::stringA(s2);
 			CHECK(s.length() == 1);
 			CHECK(s3.length() == 3);
 		}
@@ -76,14 +76,14 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			wxString s1(wxT("123"));
-			long a1 = tstringUtil::ToCLong(s1);
+			long a1 = StringUtil::ToCLong(s1);
 			CHECK(a1 == 123);
 			wxString s2(wxT("12-3"));
-			long a2 = tstringUtil::ToCLong(s2);
+			long a2 = StringUtil::ToCLong(s2);
 			CHECK(a2 == 12);
-			CHECK(!tstringUtil::ToCLong(s2, a2));
+			CHECK(!StringUtil::ToCLong(s2, a2));
 			CHECK(a2 == 12);
-			CHECK(!tstringUtil::ToCLong(s2, a2, true));
+			CHECK(!StringUtil::ToCLong(s2, a2, true));
 			CHECK(a2 == 12);
 		}
 	}
@@ -94,11 +94,11 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			wxString s1(wxT("12.3"));
-			double a1 = tstringUtil::ToCDouble(s1);
+			double a1 = StringUtil::ToCDouble(s1);
 			CHECK(a1 == 12.3);
 			wxString s2(wxT("1.3-12"));
 			double a2;
-			CHECK(!tstringUtil::ToCDouble(s2, a2));
+			CHECK(!StringUtil::ToCDouble(s2, a2));
 			CHECK(a2 == 1.3);
 		}
 	}
@@ -110,11 +110,11 @@ SUITE(TestString)
 		{
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
 			wxString s1(wxT("12.3"));
-			double a1 = tstringUtil::ToDouble(s1);
+			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
 			wxString s2(wxT("1.3-12"));
 			double a2;
-			bool bParsed = tstringUtil::ToDouble(s2, a2);
+			bool bParsed = StringUtil::ToDouble(s2, a2);
 			CHECK(a2 == 1.3);
 			CHECK(!bParsed);
 		}
@@ -127,11 +127,11 @@ SUITE(TestString)
 		{
 			wxLocale locale(wxLANGUAGE_FRENCH);
 			wxString s1(wxT("12,3"));
-			double a1 = tstringUtil::ToDouble(s1);
+			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
 			wxString s2(wxT("1,3-12"));
 			double a2;
-			bool bParsed = tstringUtil::ToDouble(s2, a2);
+			bool bParsed = StringUtil::ToDouble(s2, a2);
 			CHECK(a2 == 1.3);
 			CHECK(!bParsed);
 		}
@@ -145,7 +145,7 @@ SUITE(TestString)
 			// Even in French, I want to have "." separators parse properly.
 			wxLocale locale(wxLANGUAGE_FRENCH);
 			wxString s1(wxT("12.3"));
-			double a1 = tstringUtil::ToDouble(s1);
+			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
 		}
 	}
@@ -156,9 +156,9 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			std::string s("This is a test");
-			std::string s2 = tstringUtil::Replace(s, "is a", "");
+			std::string s2 = StringUtil::Replace(s, "is a", "");
 			CHECK("This  test" == s2);
-			s2 = tstringUtil::Replace(s2, " test", "good");
+			s2 = StringUtil::Replace(s2, " test", "good");
 			CHECK("This good" == s2);
 		}
 	}
@@ -169,9 +169,9 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			std::wstring s(L"This is a test");
-			std::wstring s2 = tstringUtil::Replace(s, L"is a", L"");
+			std::wstring s2 = StringUtil::Replace(s, L"is a", L"");
 			CHECK(L"This  test" == s2);
-			s2 = tstringUtil::Replace(s2, L" test", L"good");
+			s2 = StringUtil::Replace(s2, L" test", L"good");
 			CHECK(L"This good" == s2);
 		}
 	}

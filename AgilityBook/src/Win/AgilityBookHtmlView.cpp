@@ -250,7 +250,7 @@ void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
 		if (!index.empty())
 		{
 			long nItem;
-			if (tstringUtil::ToCLong(index, nItem) && nItem < static_cast<long>(m_Items->NumLines()))
+			if (StringUtil::ToCLong(index, nItem) && nItem < static_cast<long>(m_Items->NumLines()))
 			{
 				bDidIt = true;
 				CPointsDataBasePtr item = m_Items->GetLine(nItem);

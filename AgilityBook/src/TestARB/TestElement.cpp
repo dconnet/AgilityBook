@@ -318,8 +318,8 @@ SUITE(TestElement)
 			wxMemoryOutputStream tmp2;
 			CHECK(tree2->SaveXML(tmp2));
 
-			std::string tmp1data = tstringUtil::tstringA(tmp1);
-			std::string tmp2data = tstringUtil::tstringA(tmp2);
+			std::string tmp1data = StringUtil::stringA(tmp1);
+			std::string tmp2data = StringUtil::stringA(tmp2);
 			CHECK(tmp1data == tmp2data);
 		}
 	}

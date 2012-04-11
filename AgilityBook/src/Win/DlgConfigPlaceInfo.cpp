@@ -97,7 +97,7 @@ bool CValueValidator::Validate(wxWindow* parent)
 {
 	// We know...
 	CTextCtrl* pControl = (CTextCtrl*)m_validatorWindow;
-	double val = tstringUtil::ToDouble(pControl->GetValue(), val);
+	double val = StringUtil::ToDouble(pControl->GetValue(), val);
 
 	if (0.0 > val)
 	{
