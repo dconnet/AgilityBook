@@ -349,13 +349,13 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 		wxString::size_type pos = value.find('.');
 		if (wxString::npos != pos)
 		{
-			major = static_cast<unsigned short>(tstringUtil::ToCLong(value));
+			major = static_cast<unsigned short>(StringUtil::ToCLong(value));
 			value = value.substr(pos+1);
-			minor = static_cast<unsigned short>(tstringUtil::ToCLong(value));
+			minor = static_cast<unsigned short>(StringUtil::ToCLong(value));
 		}
 		else
 		{
-			major = static_cast<unsigned short>(tstringUtil::ToCLong(value));
+			major = static_cast<unsigned short>(StringUtil::ToCLong(value));
 		}
 		outValue = ARBVersion(major, minor);
 	}
@@ -371,7 +371,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		ARBDate date = ARBDate::FromString(value, ARBDate::eDashYMD);
+		ARBDate date = ARBDate::FromString(value.wx_str(), ARBDate::eDashYMD);
 		if (date.IsValid())
 			outValue = date;
 		else
@@ -409,7 +409,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	if (eFound == rc)
 	{
 		if (0 < value.length())
-			outValue = static_cast<short>(tstringUtil::ToCLong(value));
+			outValue = static_cast<short>(StringUtil::ToCLong(value));
 		else
 			rc = eInvalidValue;
 	}
@@ -427,7 +427,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	{
 		if (0 < value.length())
 		{
-			if (!tstringUtil::ToCLong(value, outValue))
+			if (!StringUtil::ToCLong(value, outValue))
 				rc = eInvalidValue;
 		}
 		else
@@ -447,7 +447,7 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	{
 		if (0 < value.length())
 		{
-			if (!tstringUtil::ToCDouble(value, outValue))
+			if (!StringUtil::ToCDouble(value, outValue))
 				rc = eInvalidValue;
 		}
 		else

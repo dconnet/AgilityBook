@@ -58,10 +58,10 @@ static const wxString s_TableHeader(wxT("<table border=\"2\" cellspacing=\"0\" c
 
 static wxString Sanitize(wxString const& inRawData, bool nbsp = false)
 {
-	wxString data = SanitizeStringForHTML(inRawData);
+	std::wstring data = SanitizeStringForHTML(inRawData.wx_str());
 	if (nbsp && data.empty())
-		data = wxT("&nbsp;");
-	return data;
+		data = L"&nbsp;";
+	return data.c_str();
 }
 
 /////////////////////////////////////////////////////////////////////////////

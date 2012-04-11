@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-11-24 DRC Optimize locale usage when reading/writing the ARB file.
  * @li 2009-09-28 DRC Fix abs() on Mac.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
@@ -31,6 +32,7 @@
 #include <wx/log.h>
 
 #include "ARBLocalization.h"
+#include "ARBString.h"
 #include "ARBStructure.h"
 #include "Element.h"
 
@@ -38,55 +40,45 @@
 #include <wx/msw/msvcrt.h>
 #endif
 
-#ifdef UNICODE
-#define TCERR std::wcerr
-#else
-#define TCERR std::cerr
-#endif
-
 /////////////////////////////////////////////////////////////////////////////
 
-wxString SanitizeStringForHTML(
-		wxString const& inRawData,
+std::wstring SanitizeStringForHTML(
+		std::wstring const& inRawData,
 		bool bConvertCR)
 {
-	wxString::size_type pos = inRawData.find_first_of(wxT("&<>"));
-	if (wxString::npos == pos && bConvertCR)
-		pos = inRawData.find_first_of(wxT("\r\n"));
-	if (wxString::npos == pos)
+	std::wstring::size_type pos = inRawData.find_first_of(L"&<>");
+	if (std::wstring::npos == pos && bConvertCR)
+		pos = inRawData.find_first_of(L"\r\n");
+	if (std::wstring::npos == pos)
 		return inRawData;
-	wxString data;
+	std::wostringstream data;
 	for (size_t nChar = 0; nChar < inRawData.length(); ++nChar)
 	{
-#if wxCHECK_VERSION(2, 9, 3)
-		switch (inRawData[nChar].GetValue())
-#else
 		switch (inRawData[nChar])
-#endif
 		{
-		case wxT('&'):
-			data << wxT("&amp;");
+		case L'&':
+			data << L"&amp;";
 			break;
-		case wxT('<'):
-			data << wxT("&lt;");
+		case L'<':
+			data << L"&lt;";
 			break;
-		case wxT('>'):
-			data << wxT("&gt;");
+		case L'>':
+			data << L"&gt;";
 			break;
-		case wxT('\r'):
+		case L'\r':
 			if (bConvertCR)
 			{
 				if (nChar + 1 < inRawData.length() && '\n' == inRawData[nChar+1])
 					continue;
 				else
-					data << wxT("<br/>");
+					data << L"<br/>";
 			}
 			else
 				data << inRawData[nChar];
 			break;
 		case '\n':
 			if (bConvertCR)
-				data << wxT("<br/>");
+				data << L"<br/>";
 			else
 				data << inRawData[nChar];
 			break;
@@ -95,16 +87,16 @@ wxString SanitizeStringForHTML(
 			break;
 		}
 	}
-	return data;
+	return data.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-wxString ARBVersion::str() const
+std::wstring ARBVersion::str() const
 {
-	wxString buffer;
-	buffer << Major() << wxT(".") << Minor();
-	return buffer;
+	std::wostringstream buffer;
+	buffer << Major() << L"." << Minor();
+	return buffer.str();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -225,25 +217,21 @@ bool ARB_Q::Save(
 
 // Trailing zeros are trimmed unless inPrec=2.
 // Then they are only trimmed if all zero (and inPrec=2).
-wxString ARBDouble::ToString(
+std::wstring ARBDouble::ToString(
 		double inValue,
 		int inPrec,
 		LocaleType eUseDefaultLocale)
 {
-	wxString retVal;
-#if wxCHECK_VERSION(2, 9, 3)
-	wxUniChar pt = '.';
-#else
-	wxChar pt = '.';
-#endif
+	std::wstring retVal;
+	wchar_t pt = '.';
 	if (eNone == eUseDefaultLocale)
 	{
 		// When we don't want locales, avoid the wx functions as they use them.
-		std::basic_ostringstream<wxChar> str;
+		std::wostringstream str;
 		if (0 < inPrec)
 			str.precision(inPrec);
 		str << std::fixed << inValue;
-		retVal = str.str().c_str();
+		retVal = str.str();
 	}
 	else
 	{
@@ -253,25 +241,28 @@ wxString ARBDouble::ToString(
 		wxString decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
 		if (0 < decimalPt.length())
 			pt = decimalPt.GetChar(0);
+		wxString tmp;
 		if (0 < inPrec)
-			retVal = wxString::Format(wxT("%.*f"), inPrec, inValue);
+			tmp = wxString::Format(wxT("%.*f"), inPrec, inValue);
 		else
-			retVal = wxString::Format(wxT("%g"), inValue);
+			tmp = wxString::Format(wxT("%g"), inValue);
+		retVal = tmp.wx_str();
 		delete locale;
 	}
-	wxString::size_type pos = retVal.find(pt);
-	if (wxString::npos != pos)
+	std::wstring::size_type pos = retVal.find(pt);
+	if (std::wstring::npos != pos)
 	{
 		// Strip trailing zeros iff they are all 0.
 		if (2 == inPrec)
 		{
-			wxString twoZeros(pt);
-			twoZeros += wxT("00");
+			std::wstring twoZeros;
+			twoZeros = pt;
+			twoZeros += L"00";
 			if (retVal.substr(pos) == twoZeros)
 			{
 				// Input is ".00", so simplify
 				if (0 == pos)
-					retVal = wxT("0");
+					retVal = L"0";
 				// Strip the ".00".
 				else
 					retVal = retVal.substr(0, pos);

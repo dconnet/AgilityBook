@@ -1114,7 +1114,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 
 				clpData.AddData(eFormatCalendar, tree);
 				clpData.AddData(table);
-				clpData.AddData(eFormatiCalendar, tstringUtil::WXString(tstringUtil::tstringA(iCal)));
+				clpData.AddData(eFormatiCalendar, StringUtil::stringWX(StringUtil::stringA(iCal)));
 				clpData.CommitData();
 			}
 		}

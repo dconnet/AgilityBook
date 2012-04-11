@@ -199,7 +199,7 @@ void ARBiCal::Write(
 			Write(";VALUE=DATE");
 		Write(':');
 	}
-	Write(inDate.GetString(ARBDate::eYYYYMMDD).mb_str());
+	Write(StringUtil::stringA(inDate.GetString(ARBDate::eYYYYMMDD)));
 	if (1 == m_Version)
 	{
 		if (inStartOfDay)

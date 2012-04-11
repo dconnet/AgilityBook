@@ -230,7 +230,7 @@ void CProgressMeter::SetMessage(char const* pMessage)
 	{
 		wxString msg;
 		if (pMessage)
-			msg = tstringUtil::WXString(pMessage, strlen(pMessage));
+			msg = StringUtil::stringWX(pMessage, strlen(pMessage));
 		m_pProgress->SetMessage(msg);
 	}
 }

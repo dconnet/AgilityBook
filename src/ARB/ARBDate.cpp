@@ -11,6 +11,8 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
+ * @li 2011-12-30 DRC Added eVerbose to GetString.
  * @li 2010-09-06 DRC Fix a bug when adjusting for DST.
  * @li 2010-07-17 DRC When returning time_t, adjust for DST.
  * @li 2009-10-30 DRC Add support for localized dates.
@@ -25,8 +27,10 @@
 
 #include "stdafx.h"
 #include "ARBDate.h"
+#include <sstream>
 #include <time.h>
 
+#include "ARBString.h"
 #include <wx/datetime.h>
 #include <wx/intl.h>
 
@@ -169,26 +173,26 @@ ARBDate ARBDate::Today()
 
 
 static int ParseFields(
-		wxString inDate,
+		std::wstring inDate,
 		char sep,
 		unsigned short& val1,
 		unsigned short& val2,
 		unsigned short& val3)
 {
 	int nVals = 0;
-	wxString::size_type pos = inDate.find(sep);
-	if (wxString::npos != pos)
+	std::wstring::size_type pos = inDate.find(sep);
+	if (std::wstring::npos != pos)
 	{
-		val1 = static_cast<unsigned short>(tstringUtil::ToCLong(inDate));
+		val1 = static_cast<unsigned short>(StringUtil::ToCLong(inDate));
 		++nVals;
 		inDate = inDate.substr(pos+1);
 		pos = inDate.find(sep);
-		if (wxString::npos != pos)
+		if (std::wstring::npos != pos)
 		{
-			val2 = static_cast<unsigned short>(tstringUtil::ToCLong(inDate));
+			val2 = static_cast<unsigned short>(StringUtil::ToCLong(inDate));
 			++nVals;
 			inDate = inDate.substr(pos+1);
-			val3 = static_cast<unsigned short>(tstringUtil::ToCLong(inDate));
+			val3 = static_cast<unsigned short>(StringUtil::ToCLong(inDate));
 			++nVals;
 		}
 	}
@@ -198,7 +202,7 @@ static int ParseFields(
 
 // static
 ARBDate ARBDate::FromString(
-		wxString const& inDate,
+		std::wstring const& inDate,
 		ARBDate::DateFormat inFormat)
 {
 	ARBDate date;
@@ -208,7 +212,7 @@ ARBDate ARBDate::FromString(
 		if (eLocale == inFormat)
 			locale = new wxLocale(wxLANGUAGE_DEFAULT, 0);
 		wxDateTime dt;
-		if (dt.ParseDate(inDate))
+		if (dt.ParseDate(inDate.c_str()))
 			date.SetDate(dt.GetYear(), static_cast<int>(dt.GetMonth())+1, dt.GetDay());
 		delete locale;
 	}
@@ -267,12 +271,12 @@ ARBDate ARBDate::FromString(
 
 
 // static
-wxString ARBDate::GetValidDateString(
+std::wstring ARBDate::GetValidDateString(
 		ARBDate const& inFrom,
 		ARBDate const& inTo,
 		DateFormat inFormat)
 {
-	wxString str;
+	std::wstring str;
 	if (inFrom.IsValid() || inTo.IsValid())
 	{
 		str += wxT("[");
@@ -367,13 +371,13 @@ bool ARBDate::SetDate(
 }
 
 
-wxString ARBDate::GetString(
+std::wstring ARBDate::GetString(
 		DateFormat inFormat,
 		bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
 		return wxT("");
-	wxString date;
+	std::wstring date;
 	int yr = 0;
 	int mon = 0;
 	int day = 0;
@@ -395,44 +399,144 @@ wxString ARBDate::GetString(
 		}
 		break;
 	case eDashMMDDYYYY:		///< MM-DD-YYYY
-		date = wxString::Format(wxT("%02d-%02d-%04d"), mon, day, yr);
+		{
+			std::wostringstream buf;
+			buf.fill(L'0');
+			buf.width(2);
+			buf << mon << L'-';
+			buf.width(2);
+			buf << day << L'-';
+			buf.width(4);
+			buf << yr;
+			date = buf.str();
+		}
 		break;
 	case eYYYYMMDD:
-		date = wxString::Format(wxT("%04d%02d%02d"), yr, mon, day);
+		{
+			std::wostringstream buf;
+			buf.fill(L'0');
+			buf.width(4);
+			buf << yr;
+			buf.width(2);
+			buf << mon;
+			buf.width(2);
+			buf << day;
+			date = buf.str();
+		}
+		break;
+	case eVerbose:
+		{
+			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
+			date = dt.Format(wxT("%A, %B %d, %Y")).wx_str();
+		}
 		break;
 	default:				///< YYYY-MM-DD or MM/DD/YYYY
 	case eSlashMMDDYYYY:	///< MM/DD/YYYY
-		date = wxString::Format(wxT("%02d/%02d/%04d"), mon, day, yr);
+		{
+			std::wostringstream buf;
+			buf.fill(L'0');
+			buf.width(2);
+			buf << mon << L'/';
+			buf.width(2);
+			buf << day << L'/';
+			buf.width(4);
+			buf << yr;
+			date = buf.str();
+		}
 		break;
 	case eDashYYYYMMDD:		///< YYYY-MM-DD
-		date = wxString::Format(wxT("%04d-%02d-%02d"), yr, mon, day);
+		{
+			std::wostringstream buf;
+			buf.fill(L'0');
+			buf.width(4);
+			buf << yr << L'-';
+			buf.width(2);
+			buf << mon << L'-';
+			buf.width(2);
+			buf << day;
+			date = buf.str();
+		}
 		break;
 	case eSlashYYYYMMDD:	///< YYYY/MM/DD
-		date = wxString::Format(wxT("%04d/%02d/%02d"), yr, mon, day);
+		{
+			std::wostringstream buf;
+			buf.fill(L'0');
+			buf.width(4);
+			buf << yr << L'/';
+			buf.width(2);
+			buf << mon << L'/';
+			buf.width(2);
+			buf << day;
+			date = buf.str();
+		}
 		break;
 	case eDashDDMMYYYY:		///< DD-MM-YYYY
-		date = wxString::Format(wxT("%02d-%02d-%04d"), day, mon, yr);
+		{
+			std::wostringstream buf;
+			buf.fill(L'0');
+			buf.width(2);
+			buf << day << L'-';
+			buf.width(2);
+			buf << mon << L'-';
+			buf.width(4);
+			buf << yr;
+			date = buf.str();
+		}
 		break;
 	case eSlashDDMMYYYY:	///< DD/MM/YYYY
-		date = wxString::Format(wxT("%02d/%02d/%04d"), day, mon, yr);
+		{
+			std::wostringstream buf;
+			buf.fill(L'0');
+			buf.width(2);
+			buf << day << L'/';
+			buf.width(2);
+			buf << mon << L'/';
+			buf.width(4);
+			buf << yr;
+			date = buf.str();
+		}
 		break;
 	case eDashMDY:	///< M-D-Y
-		date = wxString::Format(wxT("%d-%d-%d"), mon, day, yr);
+		{
+			std::wostringstream buf;
+			buf << mon << L'-' << day << L'-' << yr;
+			date = buf.str();
+		}
 		break;
 	case eSlashMDY:	///< M/D/Y
-		date = wxString::Format(wxT("%d/%d/%d"), mon, day, yr);
+		{
+			std::wostringstream buf;
+			buf << mon << L'/' << day << L'/' << yr;
+			date = buf.str();
+		}
 		break;
 	case eDashYMD:	///< Y-M-D
-		date = wxString::Format(wxT("%d-%d-%d"), yr, mon, day);
+		{
+			std::wostringstream buf;
+			buf << yr << L'-' << mon << L'-' << day;
+			date = buf.str();
+		}
 		break;
 	case eSlashYMD:	///< Y/M/D
-		date = wxString::Format(wxT("%d/%d/%d"), yr, mon, day);
+		{
+			std::wostringstream buf;
+			buf << yr << L'/' << mon << L'/' << day;
+			date = buf.str();
+		}
 		break;
 	case eDashDMY:	///< D-M-Y
-		date = wxString::Format(wxT("%d-%d-%d"), day, mon, yr);
+		{
+			std::wostringstream buf;
+			buf << day << L'-' << mon << L'-' << yr;
+			date = buf.str();
+		}
 		break;
 	case eSlashDMY:	///< D/M/Y
-		date = wxString::Format(wxT("%d/%d/%d"), day, mon, yr);
+		{
+			std::wostringstream buf;
+			buf << day << L'/' << mon << L'/' << yr;
+			date = buf.str();
+		}
 		break;
 	}
 	return date;
@@ -534,4 +638,11 @@ int ARBDate::GetYear() const
 	int yr, mon, day;
 	SdnToGregorian(m_Julian, &yr, &mon, &day);
 	return yr;
+}
+
+
+int ARBDate::GetDayOfYear() const
+{
+	ARBDate d(GetYear(), 1, 1);
+	return *this - d + 1;
 }

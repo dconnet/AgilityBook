@@ -2777,7 +2777,7 @@ void CDlgRun::OnSelchangeQ(wxCommandEvent& evt)
 void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 {
 	// See DlgCalendar.cpp on why TransferDataFromWindow is bad here!
-	tstringUtil::ToDouble(m_ctrlSCT->GetValue(), m_SCT);
+	StringUtil::ToDouble(m_ctrlSCT->GetValue(), m_SCT);
 	m_Run->GetScoring().SetSCT(m_SCT);
 	SetMinYPS();
 	SetObstacles();
@@ -2788,7 +2788,7 @@ void CDlgRun::OnSCTChange(wxCommandEvent& evt)
 
 void CDlgRun::OnClosingTimeChange(wxCommandEvent& evt)
 {
-	tstringUtil::ToDouble(m_ctrlMinYPSClosingTime->GetValue(), m_SCT2);
+	StringUtil::ToDouble(m_ctrlMinYPSClosingTime->GetValue(), m_SCT2);
 	m_Run->GetScoring().SetSCT2(m_SCT2);
 	SetObstacles();
 }
@@ -2838,7 +2838,7 @@ void CDlgRun::OnReqClosingChange(wxCommandEvent& evt)
 
 void CDlgRun::OnTimeChange(wxCommandEvent& evt)
 {
-	tstringUtil::ToDouble(m_ctrlTime->GetValue(), m_Time);
+	StringUtil::ToDouble(m_ctrlTime->GetValue(), m_Time);
 	m_Run->GetScoring().SetTime(m_Time);
 	SetYPS();
 	SetObstacles();

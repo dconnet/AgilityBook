@@ -135,7 +135,7 @@ bool CGenericValidator::TransferFromWindow()
 			else
 			{
 				long val = 0;
-				if (!tstringUtil::ToLong(textVal, val))
+				if (!StringUtil::ToLong(textVal, val))
 					return false;
 				*m_pShort = static_cast<short>(val);
 				return true;
@@ -149,7 +149,7 @@ bool CGenericValidator::TransferFromWindow()
 				return true;
 			}
 			else
-				return tstringUtil::ToDouble(textVal, *m_pDouble);
+				return StringUtil::ToDouble(textVal, *m_pDouble);
 		}
 	}
 	else if (m_validatorWindow->IsKindOf(CLASSINFO(wxDatePickerCtrlBase)))
@@ -240,7 +240,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 					str.Printf(wxT("%hd"), m_Default.s);
 					pTextControl->ChangeValue(str);
 				}
-				else if (!tstringUtil::ToLong(textVal, val))
+				else if (!StringUtil::ToLong(textVal, val))
 				{
 					ok = false;
 					if (errormsg.empty())
@@ -254,7 +254,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				{
 					pTextControl->ChangeValue(ARBDouble::ToString(m_Default.dbl, m_Prec));
 				}
-				else if (!tstringUtil::ToDouble(textVal, dbl))
+				else if (!StringUtil::ToDouble(textVal, dbl))
 				{
 					ok = false;
 					if (errormsg.empty())

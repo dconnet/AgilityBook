@@ -171,7 +171,7 @@ static ElementNodePtr ReadData(
 		fclose(fp);
 	}
 #else
-	wxString url(tstringUtil::WXString(inAddress));
+	wxString url(StringUtil::stringWX(inAddress));
 	CReadHttp http(url, &data);
 #endif
 
@@ -187,7 +187,7 @@ static ElementNodePtr ReadData(
 	{
 #if GENERATE_TESTDATA
 {
-wxFFile raw(tstringUtil::WXString(outTestData), wxT("wb"));
+wxFFile raw(StringUtil::stringWX(outTestData), wxT("wb"));
 raw.Write(data.c_str(), data.length());
 }
 #endif
@@ -228,7 +228,7 @@ raw.Write(data.c_str(), data.length());
 //{
 //std::string out(inAddress);
 //out += ".out";
-//wxFFile raw(tstringUtil::WXString(out), wxT("wb"));
+//wxFFile raw(StringUtil::stringWX(out), wxT("wb"));
 //raw.Write(pData, strlen(pData));
 //}
 #endif
@@ -246,7 +246,7 @@ raw.Write(data.c_str(), data.length());
 //{
 //std::string out(inAddress);
 //out += ".tree";
-//wxFFileOutputStream raw(tstringUtil::WXString(out), wxT("wb"));
+//wxFFileOutputStream raw(StringUtil::stringWX(out), wxT("wb"));
 //tree->SaveXML(raw);
 //}
 #endif
@@ -344,7 +344,7 @@ std::string CCalendarSiteUSDAA::Process(
 							}
 							break;
 						case 2:
-							location = tstringUtil::Trim(tr->GetElement(td)->GetValue());
+							location = StringUtil::Trim(tr->GetElement(td)->GetValue());
 							StripNewlines(location);
 							// Cleanup location
 							{
@@ -357,7 +357,7 @@ std::string CCalendarSiteUSDAA::Process(
 									{
 										if (0 < iFld)
 											location << wxT(", ");
-										location << tstringUtil::Trim(fields[iFld]);
+										location << StringUtil::Trim(fields[iFld]);
 									}
 								}
 							}
@@ -587,7 +587,7 @@ std::string CCalendarSiteUSDAA::Process(
 #endif
 		wxMemoryOutputStream s;
 		calTree->SaveXML(s);
-		return tstringUtil::tstringA(s);
+		return StringUtil::stringA(s);
 	}
 	return std::string();
 }

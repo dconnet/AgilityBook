@@ -12,6 +12,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-10-30 DRC Add support for localized dates.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-08-25 DRC Make time_t ctors explicit to prevent casts from bools.
@@ -58,6 +59,7 @@ public:
 		// New formats...
 		eYYYYMMDD		= 13,	///< YYYYMMDD (output only)
 		eCurrentLocale	= 14,	///< Current locale (output only)
+		eVerbose		= 15,	///< "%A, %B %d, %Y" (output only)
 	} DateFormat;
 
 	/**
@@ -67,7 +69,7 @@ public:
 	 * @return Parsed date, if parse fails, date is invalid.
 	 */
 	static ARBDate FromString(
-			wxString const& inDate,
+			std::wstring const& inDate,
 			DateFormat inFormat);
 
 	/**
@@ -77,7 +79,7 @@ public:
 	 * @param inFormat Date format.
 	 * @return Date range string
 	 */
-	static wxString GetValidDateString(
+	static std::wstring GetValidDateString(
 			ARBDate const& inFrom,
 			ARBDate const& inTo,
 			DateFormat inFormat = eDashYMD);
@@ -98,6 +100,13 @@ public:
 	explicit ARBDate(time_t inTime);
 #if defined(ARB_HAS_32_AND_64_BIT_TIMET)
 	explicit ARBDate(__time64_t inTime);
+#endif
+#if defined(__WXWINDOWS__)
+	ARBDate(wxDateTime const& inTime)
+	{
+		ARBDate date(inTime.GetYear(), inTime.GetMonth()+1, inTime.GetDay());
+		*this = date;
+	}
 #endif
 	ARBDate(
 			int inYr,
@@ -269,7 +278,7 @@ public:
 	 * @param inForceOutput Always return a string, even if the date is not valid.
 	 * @return Date in the format defined by inFormat.
 	 */
-	wxString GetString(
+	std::wstring GetString(
 			DateFormat inFormat = eLocale,
 			bool inForceOutput = false) const;
 
@@ -302,6 +311,11 @@ public:
 	int GetDay() const;		///< Get the current day.
 	int GetMonth() const;	///< Get the current month.
 	int GetYear() const;	///< Get the current year.
+
+	/**
+	 * Day of year (1-366)
+	 */
+	int GetDayOfYear() const;
 
 	/**
 	 * Days of the week (do not change the values!)

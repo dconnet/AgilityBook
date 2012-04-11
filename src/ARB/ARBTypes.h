@@ -97,8 +97,8 @@ ARB_TYPEDEF2(ElementText)
  * @param inRawData String to sanitize
  * @param bConvertCR Convert \n to html-breaks.
  */
-wxString SanitizeStringForHTML(
-		wxString const& inRawData,
+std::wstring SanitizeStringForHTML(
+		std::wstring const& inRawData,
 		bool bConvertCR = true);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -333,7 +333,7 @@ public:
 	{
 		return static_cast<unsigned short>(m_Version & 0xffff);
 	}
-	wxString str() const;
+	std::wstring str() const;
 
 private:
 	unsigned long m_Version;
@@ -510,7 +510,7 @@ public:
 		eCurrent,	///< Use current locale.
 		eDefault	///< Use default (system) locale.
 	};
-	static wxString ToString(
+	static std::wstring ToString(
 			double inValue,
 			int inPrec = 2,
 			LocaleType eUseDefaultLocale = eDefault);

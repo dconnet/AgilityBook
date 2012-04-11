@@ -200,7 +200,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				{
 					std::string tmp(reinterpret_cast<char*>(binData), nBytes);
 					editData << STREAM_FILE_BEGIN << wxT("\n")
-						<< tstringUtil::WXString(tmp)
+						<< StringUtil::stringWX(tmp)
 						<< STREAM_FILE_END << wxT("\n\n");
 				}
 				BinaryData::Release(binData);

@@ -62,7 +62,7 @@ bool CLongValidator::TransferFromWindow()
 		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
 		if (m_pLong)
 		{
-			if (!tstringUtil::ToLong(pControl->GetValue(), *m_pLong))
+			if (!StringUtil::ToLong(pControl->GetValue(), *m_pLong))
 				return false;
 			return true;
 		}
@@ -98,7 +98,7 @@ bool CLongValidator::Validate(wxWindow* parent)
 		if (m_pLong)
 		{
 			long val;
-			if (!tstringUtil::ToLong(pControl->GetValue(), val))
+			if (!StringUtil::ToLong(pControl->GetValue(), val))
 				return false;
 		}
 	}

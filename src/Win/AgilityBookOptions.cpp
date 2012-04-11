@@ -1254,7 +1254,7 @@ void CAgilityBookOptions::GetColumnOrder(
 		while (0 <= idx)
 		{
 			long val;
-			tstringUtil::ToCLong(data, val, true);
+			StringUtil::ToCLong(data, val, true);
 			outValues.push_back(val);
 			data = data.Mid(idx+1);
 			idx = data.Find(',');
@@ -1262,7 +1262,7 @@ void CAgilityBookOptions::GetColumnOrder(
 		if (0 < data.length())
 		{
 			long val;
-			tstringUtil::ToCLong(data, val, true);
+			StringUtil::ToCLong(data, val, true);
 			outValues.push_back(val);
 		}
 	}
