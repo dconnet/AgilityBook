@@ -16,6 +16,7 @@
  * Note: The original code wrote lines with "\r\n". We don't.
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-02-12 DRC Encoding/decoding 0 bytes should fail.
  * @li 2004-04-27 DRC Decoding: Did not properly compute the data length.
@@ -92,7 +93,7 @@ ARBBase64::ARBBase64()
 
 
 bool ARBBase64::Decode(
-		wxString const& inBase64,
+		std::wstring const& inBase64,
 		unsigned char*& outBinData,
 		size_t& outBytes)
 {
@@ -112,11 +113,7 @@ bool ARBBase64::Decode(
 	while (count <= bufsize && inBase64[nChar] != '=')
 	{
 		//check to see if it's a legal base64 char...
-#if wxCHECK_VERSION(2, 9, 3)
-		while (SKIP == base64map[inBase64[nChar].GetValue()])
-#else
 		while (SKIP == base64map[inBase64[nChar]])
-#endif
 		{
 			if (inBase64[nChar] != '\r' && inBase64[nChar] != '\n')
 			{
@@ -132,11 +129,7 @@ bool ARBBase64::Decode(
 		}
 
 		//add the base64 char to std...
-#if wxCHECK_VERSION(2, 9, 3)
-		std |= base64map[inBase64[nChar++].GetValue() & 0xFF];
-#else
 		std |= base64map[inBase64[nChar++] & 0xFF];
-#endif
 		std <<= 6;
 		if (count % 4 == 0) //we have 3 more real chars...
 		{
@@ -197,7 +190,7 @@ void ARBBase64::Release(unsigned char*& inBinData)
 bool ARBBase64::Encode(
 		unsigned char const* inBinData,
 		size_t inBytes,
-		wxString& outData)
+		std::wstring& outData)
 {
 	outData.erase();
 	if (0 == inBytes || !inBinData || !*inBinData)
@@ -315,7 +308,7 @@ bool ARBBase64::Encode(
 	if (encoded)
 	{
 		bOk = true;
-		outData = StringUtil::stringWX(reinterpret_cast<char*>(encoded));
+		outData = StringUtil::stringW(reinterpret_cast<char*>(encoded));
 		delete [] encoded;
 	}
 	return bOk;

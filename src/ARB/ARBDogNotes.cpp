@@ -154,7 +154,7 @@ bool ARBDogNotes::Load(
 		else if (element->GetName() == TREE_CRCD_META)
 		{
 			// Replaced by TREE_CRCD_META2, this translates.
-			wxString tmp = element->GetValue();
+			std::wstring tmp = element->GetValue().wx_str();
 			unsigned char* data;
 			size_t bytes;
 			if (ARBBase64::Decode(tmp, data, bytes))

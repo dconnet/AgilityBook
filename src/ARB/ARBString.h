@@ -34,6 +34,14 @@ namespace StringUtil
 	wxString stringWX(std::string const& inStr);
 	std::string stringA(wxMemoryOutputStream const& inStr);
 	std::string stringA(wxString const& inStr);
+ 
+	// String conversion
+	std::string stringA(wchar_t const* const inStr, size_t inLen);
+	std::string stringA(std::wstring const& inStr);
+	std::wstring stringW(char const* const inStr, size_t inLen);
+	std::wstring stringW(std::string const& inStr);
+
+	// Some wxString-style functions
 
 	// For consistency with "ToC" routines
 	bool ToLong(wxString const& inStr, long& outValue);

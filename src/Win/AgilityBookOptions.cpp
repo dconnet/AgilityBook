@@ -1705,8 +1705,8 @@ CVersionNum CAgilityBookOptions::GetCalSitePermanentStatus(wxString const& filen
 	{
 		wxString section(CFG_KEY_CALSITES2);
 		section += filename;
-		wxString str = wxConfig::Get()->Read(section, wxString());
-		if (!str.IsEmpty())
+		std::wstring str = wxConfig::Get()->Read(section, wxString()).wx_str();
+		if (!str.empty())
 			ver.Parse(str);
 	}
 	return ver;
@@ -1723,13 +1723,13 @@ void CAgilityBookOptions::SuppressCalSitePermanently(
 	wxString section(CFG_KEY_CALSITES2);
 	section += filename;
 	if (bSuppress)
-		wxConfig::Get()->Write(section, inVer.GetVersionString());
+		wxConfig::Get()->Write(section, inVer.GetVersionString().c_str());
 	else
 	{
 		// If we're clearing one, make sure we haven't written a different version
 		CVersionNum ver(false);
-		wxString str = wxConfig::Get()->Read(section, wxString());
-		if (!str.IsEmpty())
+		std::wstring str = wxConfig::Get()->Read(section, wxString()).wx_str();
+		if (!str.empty())
 			ver.Parse(str);
 		if (ver == inVer)
 			wxConfig::Get()->DeleteEntry(section);

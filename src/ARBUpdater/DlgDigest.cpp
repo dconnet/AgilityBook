@@ -123,7 +123,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	{
 		wxBusyCursor wait;
 		size_t size;
-		m_MD5 = ARBMsgDigest::ComputeFile(m_File, &size);
+		m_MD5 = ARBMsgDigest::ComputeFile(m_File.wx_str(), &size);
 		if (m_MD5.empty())
 			m_File.erase();
 		else

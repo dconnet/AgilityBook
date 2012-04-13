@@ -26,13 +26,15 @@
  * @param inSep Separator character
  * @param inStr String to separate
  * @param outFields Separated pieces
- * @return Number of fields
- * @note In Globals.cpp
+ * @param inRemoveEmpties Remove any empty subfields
+ * @return Number of fields parsed.
+ * @note Return value may be larger than vector size due to removed entries.
  */
 extern size_t BreakLine(
-		wxChar inSep,
-		wxString inStr,
-		std::vector<wxString>& outFields);
+		wchar_t inSep,
+		std::wstring const& inStr,
+		std::vector<std::wstring>& outFields,
+		bool inRemoveEmpties = false);
 
 
 typedef enum
@@ -56,11 +58,11 @@ typedef enum
  * By default, this only uses \\n.
  */
 extern ReadStatus ReadCSV(
-		wxChar const inSep,
-		wxString inRecord,
-		std::vector<wxString>& ioFields,
+		wchar_t inSep,
+		std::wstring inRecord,
+		std::vector<std::wstring>& ioFields,
 		bool bContinuation = false,
-		wxString newLine = wxT("\n"));
+		std::wstring newLine = L"\n");
 
 
 /**
@@ -72,9 +74,9 @@ extern ReadStatus ReadCSV(
  * The RFC actually specifies \\r\\n as the newline in a continued field.
  * This code makes no checks. It simply writes out the data found.
  */
-extern wxString WriteCSV(
-		wxChar const inSep,
-		std::vector<wxString> const& inFields);
+extern std::wstring WriteCSV(
+		wchar_t inSep,
+		std::vector<std::wstring> const& inFields);
 
 
 /**
@@ -83,6 +85,6 @@ extern wxString WriteCSV(
  * @param inField Fields to write
  * @return A string that can be written to a file. (not newline terminated)
  */
-extern wxString WriteCSVField(
-		wxChar const inSep,
-		wxString const& inField);
+extern std::wstring WriteCSVField(
+		wchar_t inSep,
+		std::wstring const& inField);

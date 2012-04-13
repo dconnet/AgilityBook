@@ -546,12 +546,12 @@ void CWizardImport::UpdatePreview()
 			iFileLine < static_cast<long>(m_FileData.size());
 			++iLine, ++iFileLine)
 		{
-			std::vector<wxString> fields;
-			ReadStatus status = ReadCSV(delim, m_FileData[iFileLine], fields);
+			std::vector<std::wstring> fields;
+			ReadStatus status = ReadCSV(delim, m_FileData[iFileLine].wx_str(), fields);
 			while (DataNeedMore == status && iFileLine + 1 < static_cast<long>(m_FileData.size()))
 			{
 				++iFileLine;
-				status = ReadCSV(delim, m_FileData[iFileLine], fields, true);
+				status = ReadCSV(delim, m_FileData[iFileLine].wx_str(), fields, true);
 			}
 			if (DataOk == status && 0 < fields.size())
 			{
@@ -1163,12 +1163,12 @@ bool CWizardImport::DoWizardFinish()
 					assert(pDog);
 
 					// Find the trial
-					std::vector<wxString> venues;
-					std::vector<wxString> clubs;
+					std::vector<std::wstring> venues;
+					std::vector<std::wstring> clubs;
 					if (0 < trialVenue.length())
-						BreakLine('/', trialVenue, venues);
+						BreakLine('/', trialVenue.wx_str(), venues);
 					if (0 < trialClub.length())
-						BreakLine('/', trialClub, clubs);
+						BreakLine('/', trialClub.wx_str(), clubs);
 					if (clubs.size() < venues.size())
 					{
 						// Clubs and venues now agree so we can use them together easily.

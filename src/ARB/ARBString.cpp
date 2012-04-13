@@ -22,18 +22,13 @@
 #include "ARBString.h"
 
 #include <algorithm>
+#include <locale>
 #include <sstream>
 #include <wx/mstream.h>
 #include <wx/strconv.h>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
-#endif
-
-#ifdef UNICODE
-#define TCERR std::wcerr
-#else
-#define TCERR std::cerr
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,6 +79,157 @@ std::string stringA(wxMemoryOutputStream const& inStr)
 std::string stringA(wxString const& inStr)
 {
 	return std::string(inStr.ToUTF8());
+}
+
+// Note, if not on Windows (HAS_WIDECHARTOMULTIBYTE not set) and not using
+// wxWidgets, MBCS/Unicode conversions won't necessarily work right.
+
+std::string stringA(wchar_t const* const inStr, size_t inLen)
+{
+#if defined(__WXWINDOWS__)
+	return std::string(stringWX(inStr, inLen).ToUTF8());
+#else // __WXWINDOWS__
+	std::string str;
+	if (inStr && *inStr)
+	{
+#if defined(HAS_WIDECHARTOMULTIBYTE)
+		int bytes = ::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0, NULL, NULL);
+		if (bytes > 0)
+		{
+			char* ansistr = new char[bytes + 1];
+			::WideCharToMultiByte(CP_UTF8, 0, inStr, static_cast<int>(inLen), ansistr, bytes, NULL, NULL);
+			ansistr[bytes] = 0;
+			str = std::string(ansistr, bytes);
+			delete [] ansistr;
+		}
+		else
+		{
+			// handle the error
+			//DWORD dwErr = GetLastError();
+		}
+#else
+		// Create a copy because wcstombs doesn't use length.
+		str = tstringA(std::wstring(inStr, inLen));
+#endif
+	}
+	return str;
+#endif // __WXWINDOWS__
+}
+
+
+std::string stringA(std::wstring const& inStr)
+{
+#if defined(__WXWINDOWS__)
+	return std::string(stringWX(inStr).ToUTF8());
+#else // __WXWINDOWS__
+	std::string str;
+	if (!inStr.empty())
+	{
+#if defined(HAS_WIDECHARTOMULTIBYTE)
+		str = tstringA(inStr.c_str(), inStr.length());
+#else
+		size_t nNeeded;
+#if defined(__WXWINDOWS__)
+		wxMBConvUTF8 converter(wxMBConvUTF8::MAP_INVALID_UTF8_TO_PUA);
+		nNeeded = converter.FromWChar(NULL, 0, inStr.c_str());
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+		wcstombs_s(&nNeeded, (char*)NULL, 0, inStr.c_str(), 0);
+#else
+		nNeeded = wcstombs((char*)NULL, inStr.c_str(), 0);
+#endif
+		if (0 < nNeeded)
+		{
+			char *ansistr = new char[nNeeded+1];
+#if defined(__WXWINDOWS__)
+			converter.FromWChar(ansistr, nNeeded+1, inStr.c_str());
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+			wcstombs_s(NULL, ansistr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+#else
+			wcstombs(ansistr, inStr.c_str(), nNeeded);
+#endif
+			ansistr[nNeeded] = NULL;
+			str = ansistr;
+			delete [] ansistr;
+		}
+#endif
+	}
+	return str;
+#endif // __WXWINDOWS__
+}
+
+
+std::wstring stringW(char const* const inStr, size_t inLen)
+{
+#if defined(__WXWINDOWS__)
+	return std::wstring(stringWX(inStr, inLen).wx_str());
+#else // __WXWINDOWS__
+	std::wstring str;
+	if (inStr && *inStr)
+	{
+#if defined(HAS_WIDECHARTOMULTIBYTE)
+		int chars = ::MultiByteToWideChar(CP_UTF8, 0, inStr, static_cast<int>(inLen), 0, 0);
+		if (chars > 0)
+		{
+			// Check whether conversion was successful
+			wchar_t* unicodestr = new wchar_t[chars + 1];
+			::MultiByteToWideChar(CP_UTF8, 0, inStr, static_cast<int>(inLen), unicodestr, chars);
+			unicodestr[chars] = 0;
+			str = unicodestr;
+			delete [] unicodestr;
+		}
+		else
+		{
+			// handle the error
+			//DWORD dwErr = GetLastError();
+		}
+#else
+		// Create a copy because mbstowcs doesn't use length.
+		str = tstringW(std::string(inStr, inLen));
+#endif
+	}
+	return str;
+#endif // __WXWINDOWS__
+}
+
+
+std::wstring stringW(std::string const& inStr)
+{
+#if defined(__WXWINDOWS__)
+	return std::wstring(stringWX(inStr).wx_str());
+#else // __WXWINDOWS__
+	std::wstring str;
+	if (!inStr.empty())
+	{
+#if defined(HAS_WIDECHARTOMULTIBYTE)
+		str = tstringW(inStr.c_str(), inStr.length());
+#else
+		size_t nNeeded;
+#if defined(__WXWINDOWS__)
+		wxMBConvUTF8 converter(wxMBConvUTF8::MAP_INVALID_UTF8_TO_PUA);
+		nNeeded = converter.ToWChar(NULL, 0, inStr.c_str());
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+		mbstowcs_s(&nNeeded, (wchar_t*)NULL, 0, inStr.c_str(), 0);
+#else
+		nNeeded = mbstowcs((wchar_t*)NULL, inStr.c_str(), 0);
+#endif
+		if (0 < nNeeded)
+		{
+			wchar_t *unicodestr = new wchar_t[nNeeded+1];
+#if defined(__WXWINDOWS__)
+			converter.ToWChar(unicodestr, nNeeded+1, inStr.c_str());
+#elif defined(ARB_HAS_SECURE_MBS_WCS)
+			mbstowcs_s(NULL, unicodestr, nNeeded+1, inStr.c_str(), _TRUNCATE);
+#else
+			mbstowcs(unicodestr, inStr.c_str(), nNeeded);
+#endif
+			unicodestr[nNeeded] = NULL;
+			str = unicodestr;
+			delete [] unicodestr;
+		}
+#endif
+	}
+	return str;
+#endif // __WXWINDOWS__
 }
 
 
@@ -145,7 +291,7 @@ bool ToCLong(wxString const& inStr, long& outValue, bool bRetry)
 	// That's the behavior I'm relying on. (Needed when reading dates)
 	if (!bOk && bRetry)
 	{
-		std::string tmp(StringUtil::stringA(inStr.wx_str()));
+		std::string tmp(StringUtil::stringA(inStr.ToStdWstring()));
 		std::istringstream str(tmp);
 		str >> outValue;
 	}
