@@ -16,12 +16,14 @@
  * the original external interfaces are]
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2010-02-07 DRC Created
  */
 
 #include "stdafx.h"
 #include "ARBMsgDigest.h"
 
+#include <sstream>
 #include <wx/file.h> 
 
 #ifdef __WXMSW__
@@ -378,17 +380,19 @@ static void MD5Final(
 
 /////////////////////////////////////////////////////////////////////////////
 
-static wxString ConvertBuffer(const unsigned char digest[16])
+static std::wstring ConvertBuffer(const unsigned char digest[16])
 {
-	wxString str;
+	std::wostringstream str;
 	for (int i = 0; i < 16; ++i)
 	{
-		str += wxString::Format(wxT("%02x"), static_cast<int>(digest[i]));
+		str.fill(L'0');
+		str.width(2);
+		str << std::hex << digest[i];
 	}
-	return str;
+	return str.str();
 }
 
-wxString ARBMsgDigest::ComputeBuffer(
+std::wstring ARBMsgDigest::ComputeBuffer(
 		char const* inData,
 		size_t nData)
 {
@@ -401,15 +405,15 @@ wxString ARBMsgDigest::ComputeBuffer(
 }
 
 
-wxString ARBMsgDigest::ComputeFile(
-		wxString const& inFileName,
+std::wstring ARBMsgDigest::ComputeFile(
+		wchar_t const* const inFileName,
 		size_t* outSize)
 {
 	if (outSize)
 		*outSize = 0;
 	wxFile file;
 	if (!file.Open(inFileName))
-		return wxEmptyString;
+		return std::wstring();
 	MD5_CTX context;
 	MD5Init(&context); 
 	ssize_t bytes;
@@ -423,4 +427,12 @@ wxString ARBMsgDigest::ComputeFile(
 	unsigned char digest[16];
 	MD5Final(digest, &context);
 	return ConvertBuffer(digest);
+}
+
+
+std::wstring ARBMsgDigest::ComputeFile(
+		std::wstring const& inFileName,
+		size_t* outSize)
+{
+	return ComputeFile(inFileName.c_str(), outSize);
 }

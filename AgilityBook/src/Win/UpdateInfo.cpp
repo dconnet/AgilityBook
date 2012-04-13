@@ -359,7 +359,7 @@ bool CUpdateInfo::ReadVersionFile(
 						continue;
 					if (ElementNode::eFound == node->GetAttrib(wxT("ver"), value))
 					{
-						m_VersionNum.Parse(value);
+						m_VersionNum.Parse(value.wx_str());
 						if (m_VersionNum.Valid())
 							bLoadedVersion = true;
 					}
@@ -415,7 +415,7 @@ bool CUpdateInfo::ReadVersionFile(
 					bool bEnable = false;
 					node->GetAttrib(wxT("enable"), bEnable);
 					CVersionNum vernum(false);
-					vernum.Parse(ver);
+					vernum.Parse(ver.wx_str());
 					if (vernum.Valid())
 					{
 						CAgilityBookOptions::SuppressCalSitePermanently(filename, vernum, !bEnable);

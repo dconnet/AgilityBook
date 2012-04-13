@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
  * @li 2009-01-01 DRC Ported to wxWidgets.
@@ -23,7 +24,9 @@
 #include "VersionNum.h"
 
 #include "ARBTypes.h"
+#include "BreakLine.h"
 #include "VersionNumber.h"
+#include <sstream>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -63,28 +66,21 @@ CVersionNum& CVersionNum::operator=(CVersionNum const& rhs)
 }
 
 
-bool CVersionNum::Parse(wxString inVer)
+bool CVersionNum::Parse(std::wstring inVer)
 {
 	clear();
-	int pos = inVer.Find('.');
-	if (0 <= pos)
+	std::vector<std::wstring> fields;
+	if (4 == BreakLine(L'.', inVer, fields))
+		m_Valid = true;
+	unsigned short* parts[4] = {
+		&m_Version.part1,
+		&m_Version.part2,
+		&m_Version.part3,
+		&m_Version.part4
+	};
+	for (size_t i = 0; i < fields[4].size(); ++i)
 	{
-		m_Version.part1 = static_cast<unsigned short>(StringUtil::ToCLong(inVer));
-		inVer = inVer.Mid(pos+1);
-		pos = inVer.Find('.');
-		if (0 <= pos)
-		{
-			m_Version.part2 = static_cast<unsigned short>(StringUtil::ToCLong(inVer));
-			inVer = inVer.Mid(pos+1);
-			pos = inVer.Find('.');
-			if (0 <= pos)
-			{
-				m_Version.part3 = static_cast<unsigned short>(StringUtil::ToCLong(inVer));
-				inVer = inVer.Mid(pos+1);
-				m_Version.part4 = static_cast<unsigned short>(StringUtil::ToCLong(inVer));
-				m_Valid = true;
-			}
-		}
+		*(parts[i]) = static_cast<unsigned short>(StringUtil::ToCLong(fields[i]));
 	}
 	return m_Valid;
 }
@@ -171,14 +167,14 @@ void CVersionNum::clear()
 }
 
 
-wxString CVersionNum::GetVersionString() const
+std::wstring CVersionNum::GetVersionString() const
 {
-	wxString str;
+	std::wostringstream str;
 	str << m_Version.part1
-		<< wxT(".") << m_Version.part2
-		<< wxT(".") << m_Version.part3
-		<< wxT(".") << m_Version.part4;
-	return str;
+		<< L"." << m_Version.part2
+		<< L"." << m_Version.part3
+		<< L"." << m_Version.part4;
+	return str.str();
 }
 
 

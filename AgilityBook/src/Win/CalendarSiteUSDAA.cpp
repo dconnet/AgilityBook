@@ -348,8 +348,8 @@ std::string CCalendarSiteUSDAA::Process(
 							StripNewlines(location);
 							// Cleanup location
 							{
-								std::vector<wxString> fields;
-								size_t n = BreakLine(wxT(','), location, fields);
+								std::vector<std::wstring> fields;
+								size_t n = BreakLine(wxT(','), location.wx_str(), fields);
 								if (0 < n)
 								{
 									location.clear();

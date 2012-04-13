@@ -17,7 +17,7 @@
 #include "stdafx.h"
 #include "BreakLine.h"
 
-#include <wx/tokenzr.h>
+#include <sstream>
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -25,20 +25,36 @@
 
 
 size_t BreakLine(
-		wxChar inSep,
-		wxString inStr,
-		std::vector<wxString>& outFields)
+		wchar_t inSep,
+		std::wstring const& inStr,
+		std::vector<std::wstring>& outFields,
+		bool inRemoveEmpties)
 {
 	outFields.clear();
-	wxString::size_type pos = inStr.find(inSep);
-	while (wxString::npos != pos)
+
+	if (inStr.empty())
+		return 0;
+
+	size_t fld = 0;
+	wchar_t const* pos = inStr.c_str();
+	wchar_t const* npos = wcschr(pos, inSep);
+	while (npos)
 	{
-		outFields.push_back(inStr.substr(0, pos));
-		inStr = inStr.substr(pos+1);
-		pos = inStr.find(inSep);
+		std::wstring str(pos, npos - pos);
+		if (!(inRemoveEmpties && str.empty()))
+			outFields.push_back(str);
+		++fld;
+		pos = npos + 1;
+		npos = wcschr(pos, inSep);
 	}
-	outFields.push_back(inStr);
-	return outFields.size();
+	if (pos)
+	{
+		std::wstring str(pos);
+		if (!(inRemoveEmpties && str.empty()))
+			outFields.push_back(str);
+	}
+	++fld;
+	return fld;
 }
 
 
@@ -62,11 +78,11 @@ size_t BreakLine(
  */
 
 ReadStatus ReadCSV(
-		wxChar const inSep,
-		wxString inRecord,
-		std::vector<wxString>& ioFields,
+		wchar_t inSep,
+		std::wstring inRecord,
+		std::vector<std::wstring>& ioFields,
 		bool bContinuation,
-		wxString newLine)
+		std::wstring newLine)
 {
 	if (!bContinuation)
 		ioFields.clear();
@@ -74,12 +90,12 @@ ReadStatus ReadCSV(
 	bool bAddEmpty = false;
 	while (!inRecord.empty())
 	{
-		wxString str;
-		wxString::size_type posSep = inRecord.find(inSep);
-		if (bContinuation || wxT('"') == inRecord[0])
+		std::wstring str;
+		std::wstring::size_type posSep = inRecord.find(inSep);
+		if (bContinuation || L'"' == inRecord[0])
 		{
-			wxString::size_type posQuote = inRecord.find(wxT('"'), bContinuation ? 0 : 1);
-			if (wxString::npos == posQuote)
+			std::wstring::size_type posQuote = inRecord.find(L'"', bContinuation ? 0 : 1);
+			if (std::wstring::npos == posQuote)
 			{
 				if (bContinuation)
 					str = inRecord;
@@ -90,7 +106,8 @@ ReadStatus ReadCSV(
 			}
 			else
 			{
-				wxString::iterator iStr = inRecord.begin();
+				std::wostringstream data;
+				std::wstring::iterator iStr = inRecord.begin();
 				if (!bContinuation)
 					++iStr;
 				bool bInQuote = true;
@@ -101,7 +118,7 @@ ReadStatus ReadCSV(
 						++iStr;
 						break;
 					}
-					else if (*iStr == wxT('"'))
+					else if (*iStr == L'"')
 					{
 						// This is the last char.
 						if (iStr + 1 == inRecord.end())
@@ -113,9 +130,9 @@ ReadStatus ReadCSV(
 						}
 						else
 						{
-							if (*(iStr + 1) == wxT('"'))
+							if (*(iStr + 1) == L'"')
 							{
-								str << *iStr;
+								data << *iStr;
 								++iStr;
 							}
 							else if (*(iStr + 1) == inSep)
@@ -124,22 +141,23 @@ ReadStatus ReadCSV(
 							{
 								if (bInQuote)
 									return DataError;
-								str << *iStr;
+								data << *iStr;
 							}
 						}
 					}
 					else
-						str << *iStr;
+						data << *iStr;
 				}
+				str = data.str();
 				if (iStr == inRecord.end())
 					inRecord.clear();
 				else
-					inRecord = wxString(iStr, inRecord.end());
+					inRecord = std::wstring(iStr, inRecord.end());
 			}
 		}
 		else
 		{
-			if (wxString::npos == posSep)
+			if (std::wstring::npos == posSep)
 			{
 				str = inRecord;
 				inRecord.clear();
@@ -153,7 +171,7 @@ ReadStatus ReadCSV(
 			}
 			// If there is a quote in the string,
 			// the field itself must be quoted.
-			if (wxString::npos != str.find(wxT('"')))
+			if (std::wstring::npos != str.find(L'"'))
 				return DataError;
 		}
 		if (bContinuation && 0 < ioFields.size())
@@ -163,18 +181,18 @@ ReadStatus ReadCSV(
 		bContinuation = false;
 	}
 	if (bAddEmpty)
-		ioFields.push_back(wxString());
+		ioFields.push_back(std::wstring());
 	return status;
 }
 
 
-wxString WriteCSV(
-		wxChar const inSep,
-		std::vector<wxString> const& inFields)
+std::wstring WriteCSV(
+		wchar_t inSep,
+		std::vector<std::wstring> const& inFields)
 {
 	size_t fld = 0;
-	wxString val;
-	for (std::vector<wxString>::const_iterator i = inFields.begin();
+	std::wostringstream val;
+	for (std::vector<std::wstring>::const_iterator i = inFields.begin();
 		i != inFields.end();
 		++i, ++fld)
 	{
@@ -182,25 +200,25 @@ wxString WriteCSV(
 			val << inSep;
 		val << WriteCSVField(inSep, *i);
 	}
-	return val;
+	return val.str();
 }
 
 
-wxString WriteCSVField(
-		wxChar const inSep,
-		wxString const& inField)
+std::wstring WriteCSVField(
+		wchar_t inSep,
+		std::wstring const& inField)
 {
-	wxString val;
-	if (wxString::npos != inField.find(wxT('"'))
-	|| wxString::npos != inField.find(wxT('\n'))
-	|| wxString::npos != inField.find(inSep))
+	std::wostringstream val;
+	if (std::wstring::npos != inField.find(L'"')
+	|| std::wstring::npos != inField.find(L'\n')
+	|| std::wstring::npos != inField.find(inSep))
 	{
-		wxString str(inField);
-		val << wxT('"');
+		std::wstring str(inField);
+		val << L'"';
 		while (!str.empty())
 		{
-			wxString::size_type pos = str.find(wxT('"'));
-			if (wxString::npos == pos)
+			std::wstring::size_type pos = str.find(L'"');
+			if (std::wstring::npos == pos)
 			{
 				val << str;
 				str.clear();
@@ -208,13 +226,13 @@ wxString WriteCSVField(
 			else
 			{
 				val << str.substr(0, pos);
-				val << wxT("\"\"");
+				val << L"\"\"";
 				str = str.substr(pos + 1);
 			}
 		}
-		val << wxT('"');
+		val << L'"';
 	}
 	else
 		val << inField;
-	return val;
+	return val.str();
 }

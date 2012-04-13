@@ -47,7 +47,7 @@ bool BinaryData::Decode(
 
 	unsigned char* pData;
 	size_t len;
-	if (!ARBBase64::Decode(inBase64, pData, len))
+	if (!ARBBase64::Decode(inBase64.wx_str(), pData, len))
 		return false;
 
 	wxMemoryOutputStream output;
@@ -94,7 +94,9 @@ bool BinaryData::Encode(
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);
 
-	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
+	std::wstring tmp;
+	bool bOk = ARBBase64::Encode(pData, nData, tmp);
+	outBase64 = tmp;
 	delete [] pData;
 
 	return bOk;
@@ -124,7 +126,9 @@ bool BinaryData::Encode(
 	pData = new unsigned char[nData];
 	output.CopyTo(pData, nData);
 
-	bool bOk = ARBBase64::Encode(pData, nData, outBase64);
+	std::wstring tmp;
+	bool bOk = ARBBase64::Encode(pData, nData, tmp);
+	outBase64 = tmp;
 	delete [] pData;
 
 	return bOk;

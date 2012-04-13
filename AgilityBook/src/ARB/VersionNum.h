@@ -13,6 +13,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2009-01-28 DRC Removed Windows VERSIONNUM support (use VersionNumber.h)
  * @li 2009-01-01 DRC Ported to wxWidgets.
  * @li 2007-10-24 DRC Changed ctor and added <= operators
@@ -38,7 +39,7 @@ public:
 	/**
 	 * Parse a version number, must be in form "n.n.n.n".
 	 */
-	bool Parse(wxString inVer);
+	bool Parse(std::wstring inVer);
 
 	void Assign(
 			unsigned short inMajor,
@@ -57,7 +58,7 @@ public:
 
 	void clear();
 	bool Valid() const						{return m_Valid;}
-	wxString GetVersionString() const;
+	std::wstring GetVersionString() const;
 	void GetVersion(VERSION_NUMBER& outVer) const;
 
 private:

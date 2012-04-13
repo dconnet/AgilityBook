@@ -390,7 +390,7 @@ wxString CWizardExport::AddPreviewData(
 	{
 		if (0 < inCol)
 			data += GetDelim();
-		data += WriteCSVField(GetDelim(), inData);
+		data += WriteCSVField(GetDelim(), inData.wx_str());
 	}
 	return data;
 }
@@ -516,7 +516,7 @@ void CWizardExport::UpdatePreview()
 		{
 			if (0 < iCol)
 				data += delim;
-			data += WriteCSVField(delim, cols[iCol]);
+			data += WriteCSVField(delim, cols[iCol].wx_str());
 		}
 		m_ctrlPreview->InsertItem(iLine, data);
 		++iLine;
