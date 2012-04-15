@@ -119,9 +119,9 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 
 
 void CDlgPageEncode::DumpGroup(
-		wxString* data,
+		std::wostringstream* data,
 		wxString const& group,
-		std::vector<wxString>* items)
+		std::vector<std::wstring>* items)
 {
 	if (!group.empty())
 		wxConfig::Get()->SetPath(group);
@@ -136,21 +136,21 @@ void CDlgPageEncode::DumpGroup(
 			{
 			default:
 				if (data)
-					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" unknown\n");
+					*data << wxConfig::Get()->GetPath().wx_str() << wxT('/') << str << wxT(" unknown\n");
 				break;
 			case wxConfigBase::Type_String:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" string\n");
-					*data << wxConfig::Get()->Read(str, wxEmptyString) << wxT("\n");
+					*data << wxConfig::Get()->GetPath().wx_str() << wxT('/') << str << wxT(" string\n");
+					*data << wxConfig::Get()->Read(str, wxEmptyString).wx_str() << wxT("\n");
 				}
 				else if (items)
-					items->push_back(wxConfig::Get()->Read(str, wxEmptyString));
+					items->push_back(StringUtil::stringW(wxConfig::Get()->Read(str, wxEmptyString)));
 				break;
 			case wxConfigBase::Type_Boolean:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" bool\n");
+					*data << wxConfig::Get()->GetPath().wx_str() << wxT('/') << str << wxT(" bool\n");
 					bool b;
 					wxConfig::Get()->Read(str, &b);
 					*data << b << wxT("\n");
@@ -239,9 +239,9 @@ bool CDlgPageEncode::TransferDataFromWindow()
 		m_Parent->AddSysInfo(StringUtil::stringW(str));
 	}
 
-	wxString data;
+	std::wostringstream data;
 	DumpGroup(&data, wxEmptyString, NULL);
-	m_Parent->AddRegistryInfo(data);
+	m_Parent->AddRegistryInfo(data.str().c_str());
 
 	std::set<wxString> directories;
 	// exe
@@ -254,11 +254,11 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	directories.insert(wxStandardPaths::Get().GetUserConfigDir());
 	// C:\Documents and Settings\username\Local Settings\Application Data\appname
 	directories.insert(wxStandardPaths::Get().GetUserLocalDataDir());
-	std::vector<wxString> items;
+	std::vector<std::wstring> items;
 	DumpGroup(NULL, wxT("Recent File List"), &items);
-	for (std::vector<wxString>::iterator iter = items.begin(); iter != items.end(); ++iter)
+	for (std::vector<std::wstring>::iterator iter = items.begin(); iter != items.end(); ++iter)
 	{
-		wxString path = *iter;
+		std::wstring path = *iter;
 		if (path.empty())
 			continue;
 		wxFileName name(path);

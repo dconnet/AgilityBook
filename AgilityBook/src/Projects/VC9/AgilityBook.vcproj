@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -124,7 +124,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -190,7 +190,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -256,7 +256,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -321,7 +321,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -386,7 +386,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -453,7 +453,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_lib_VC90;$(WXWIN)\lib\vc90_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -519,7 +519,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(WXWIN)\lib\vc_amd64_lib_VC90;$(WXWIN)\lib\vc90_amd64_lib"
+				AdditionalLibraryDirectories="$(WXBASE)\wxWidgets-2.8.12\lib\vc_amd64_lib_VC90;$(WXBASE)\wxWidgets-2.8.12\lib\vc90_amd64_lib"
 				TargetMachine="17"
 			/>
 			<Tool

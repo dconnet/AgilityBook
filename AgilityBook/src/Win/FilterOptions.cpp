@@ -27,6 +27,7 @@
 #include "ARBDate.h"
 #include "ARBDogTitle.h"
 #include "ARBDogTrial.h"
+#include "ARBString.h"
 #include "AgilityBookOptions.h"
 #include "RegItems.h"
 #include <algorithm>
@@ -102,14 +103,14 @@ static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 }
 
 
-static void TrainingNames(wxString inNames, std::set<std::wstring>& outNames)
+static void TrainingNames(std::wstring inNames, std::set<std::wstring>& outNames)
 {
-	if (!inNames.IsEmpty())
+	if (!inNames.empty())
 	{
 		std::wstring::size_type pos;
 		while (std::wstring::npos != (pos = inNames.find(':')))
 		{
-			outNames.insert(inNames.Left(pos));
+			outNames.insert(StringUtil::stringW(inNames.substr(0, pos)));
 			inNames = inNames.substr(pos+1);
 		}
 		outNames.insert(inNames);
@@ -168,7 +169,7 @@ void CFilterOptions::Load()
 	wxConfig::Get()->Read(CFG_COMMON_VIEWALLNAMES, &m_bViewAllNames, true);
 	val = wxConfig::Get()->Read(CFG_COMMON_FILTERTRAININGNAMES, wxEmptyString);
 	m_nameFilter.clear();
-	TrainingNames(val, m_nameFilter);
+	TrainingNames(StringUtil::stringW(val), m_nameFilter);
 
 	m_curFilter = wxConfig::Get()->Read(CFG_COMMON_CURRENTFILTER, wxEmptyString);
 	m_nFilters = wxConfig::Get()->Read(CFG_COMMON_NUMFILTERS, 0L);
@@ -743,7 +744,7 @@ CFilterOptions::CFilterOptionData::CFilterOptionData(int index)
 	wxConfig::Get()->Read(section + CFG_FILTER_ITEM_ALLNAMES, &bViewAllNames, bViewAllNames);
 	names = wxConfig::Get()->Read(section + CFG_FILTER_ITEM_FILTERNAMES, wxEmptyString);
 	nameFilter.clear();
-	TrainingNames(names, nameFilter);
+	TrainingNames(StringUtil::stringW(names), nameFilter);
 }
 
 

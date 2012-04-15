@@ -133,7 +133,7 @@ std::wstring CDlgARBHelp::GetEncodedData()
 		if ((*iFile).second)
 		{
 			wxFFile file;
-			if (file.Open((*iFile).first, wxT("rb")))
+			if (file.Open((*iFile).first.c_str(), wxT("rb")))
 			{
 				std::wstring data;
 				BinaryData::Encode(file, data);

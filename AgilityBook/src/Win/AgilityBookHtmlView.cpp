@@ -225,23 +225,23 @@ void CAgilityBookHtmlView::LoadData()
 
 void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
 {
-	static const wxString ProtocolABOUT(wxT("about:"));
-	static const wxString ProtocolHTTP(wxT("http:"));
-	static const wxString ProtocolHTTPS(wxT("https:"));
-	static const wxString ProtocolARB(ARB_PROTOCOL);
+	static const std::wstring ProtocolABOUT(L"about:");
+	static const std::wstring ProtocolHTTP(L"http:");
+	static const std::wstring ProtocolHTTPS(L"https:");
+	static const std::wstring ProtocolARB(ARB_PROTOCOL);
 
-	wxString url = evt.GetLinkInfo().GetHref();
+	std::wstring url = StringUtil::stringW(evt.GetLinkInfo().GetHref());
 
 	bool bOpen = false;
 
 	if (url.length() > ProtocolABOUT.length()
-	&& 0 == ProtocolABOUT.CmpNoCase(url.substr(0, ProtocolABOUT.length())))
+	&& 0 == _wcsicmp(ProtocolABOUT.c_str(), url.substr(0, ProtocolABOUT.length()).c_str()))
 	{
 		// Let About thru (for "about:blank")
 		bOpen = true;
 	}
 	else if (url.length() > ProtocolARB.length()
-	&& 0 == ProtocolARB.CmpNoCase(url.substr(0, ProtocolARB.length())))
+	&& 0 == _wcsicmp(ProtocolARB.c_str(), url.substr(0, ProtocolARB.length()).c_str()))
 	{
 		// Our special internal link
 		// Remember, spaces are now %20. Other special chars may
@@ -264,9 +264,9 @@ void CAgilityBookHtmlView::OnCtrlLinkClicked(wxHtmlLinkEvent& evt)
 		}
 	}
 	else if ((url.length() > ProtocolHTTP.length()
-	&& 0 == ProtocolHTTP.CmpNoCase(url.substr(0, ProtocolHTTP.length())))
+	&& 0 == _wcsicmp(ProtocolHTTP.c_str(), url.substr(0, ProtocolHTTP.length()).c_str()))
 	|| (url.length() > ProtocolHTTPS.length()
-	&& 0 == ProtocolHTTPS.CmpNoCase(url.substr(0, ProtocolHTTPS.length()))))
+	&& 0 == _wcsicmp(ProtocolHTTPS.c_str(), url.substr(0, ProtocolHTTPS.length()).c_str())))
 	{
 		// Don't allow links to replace us.
 		wxLaunchDefaultBrowser(url);

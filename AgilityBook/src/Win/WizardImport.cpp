@@ -922,7 +922,7 @@ bool CWizardImport::DoWizardFinish()
 								wxString::const_iterator end;
 								if (d.ParseDateTime(entry[iCol], &end))
 #else
-								if (d.ParseDateTime(entry[iCol]))
+								if (d.ParseDateTime(entry[iCol].c_str()))
 #endif
 									date.SetDate(d.GetYear(), d.GetMonth() + 1, d.GetDay());
 							}

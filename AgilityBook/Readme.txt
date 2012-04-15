@@ -28,6 +28,9 @@ Also, kept current with development trunk of 2.9.x.
 Make sure WXWIN is set to wxWidgets root directory.
 -- Note, when changing version used during release, update fr.po (see Readme
    in src/Win/res/fr_FR)
+-- Note: VC9 is hardcoded to use 2.8.12. Set WXBASE to point to the directory
+   just above 'wxWidgets-2.8.12'. (VC10 uses WXWIN which can point to any
+   supported wx version.)
 
 === Changes to <trunk> [2.9.4]:
 -[all]- in include/wx/msw/setup.h, enable everything to compile, plus:

@@ -229,7 +229,7 @@ void CDlgListCtrlDataFaults::GetAllFaults(
 		wxListItem info;
 		info.SetMask(wxLIST_MASK_TEXT);
 		ctrl->GetColumn(index, info);
-		faults.insert(info.GetText());
+		faults.insert(StringUtil::stringW(info.GetText()));
 	}
 }
 
