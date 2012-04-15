@@ -409,9 +409,9 @@ static void RefRunHelper(wxString& text, ARBDogReferenceRunPtr ref, int code)
 	case CODE_REF4:
 		text << ref->GetName();
 		if (!ref->GetBreed().empty())
-			text << wxT("/") << ref->GetBreed();
+			text << L"/" << ref->GetBreed();
 		if (!ref->GetNote().empty())
-			text << wxT("/") << ref->GetNote();
+			text << L"/" << ref->GetNote();
 		break;
 	}
 }
@@ -441,7 +441,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << wxT("/");
+					text << L"/";
 				text << (*iter)->GetVenue();
 			}
 			break;
@@ -455,7 +455,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << wxT("/");
+					text << L"/";
 				text << (*iter)->GetName();
 			}
 			break;
@@ -464,8 +464,8 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 		if (run)
 		{
 			text << run->GetDivision()
-				<< wxT("/") << run->GetLevel()
-				<< wxT("/") << run->GetEvent();
+				<< L"/" << run->GetLevel()
+				<< L"/" << run->GetEvent();
 		}
 		break;
 	case CODE_LOCATION:
@@ -519,7 +519,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < run->GetScoring().GetNeedOpenPts())
 					text << run->GetScoring().GetNeedOpenPts();
-				text << wxT(" / ");
+				text << L" / ";
 				if (0 < run->GetScoring().GetNeedClosePts())
 					text << run->GetScoring().GetNeedClosePts();
 				break;
@@ -557,7 +557,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 			{
 				text << run->GetScoring().GetCourseFaults();
 				if (0.0 < timeFaults)
-					text << wxT("+") << ARBDouble::ToString(timeFaults, 0);
+					text << L"+" << ARBDouble::ToString(timeFaults, 0);
 			}
 		}
 		break;
@@ -569,7 +569,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 			case ARBDogRunScoring::eTypeByOpenClose:
 				if (0 < run->GetScoring().GetOpenPts())
 					text << run->GetScoring().GetOpenPts();
-				text << wxT(" / ");
+				text << L" / ";
 				if (0 < run->GetScoring().GetClosePts())
 					text << run->GetScoring().GetClosePts();
 				break;
@@ -605,8 +605,8 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 				++iter, ++i)
 			{
 				if (0 < i)
-					text << wxT(" ");
-				text << (*iter)->GetName() << wxT(":") << (*iter)->GetPoints();
+					text << L" ";
+				text << (*iter)->GetName() << L":" << (*iter)->GetPoints();
 			}
 		}
 		break;
@@ -930,7 +930,7 @@ bool CPrintRuns::OnPrintPage(int pageNum)
 CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
 	: wxHtmlEasyPrinting(wxEmptyString, parent)
 {
-	//SetFooter(wxT("<hr/><p align=\"right\">@TITLE@ (@PAGENUM@/@PAGESCNT@)</p>"), wxPAGE_ALL);
+	//SetFooter(L"<hr/><p align=\"right\">@TITLE@ (@PAGENUM@/@PAGESCNT@)</p>", wxPAGE_ALL);
 
 	long leftMargin, rightMargin, topMargin, bottomMargin;
 	CAgilityBookOptions::GetPrinterMargins(true, leftMargin, rightMargin, topMargin, bottomMargin, NULL);

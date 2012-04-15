@@ -141,7 +141,7 @@ void CHyperlinkCtrl::OnKeyDown(wxKeyEvent& evt)
 			{
 				if (!wxLaunchDefaultBrowser(url))
 				{
-					wxLogWarning(wxT("Could not launch the default browser with url '%s' !"), url.c_str());
+					wxLogWarning(L"Could not launch the default browser with url '%s' !", url.c_str());
 				}
 			}
 		}
@@ -271,8 +271,8 @@ void CDlgAbout::OnHelpEmail(wxHyperlinkEvent& evt)
 {
 	wxString url = evt.GetURL();
 	wxString str;
-	str << ARB_VER_MAJOR << wxT(".") << ARB_VER_MINOR << wxT(".") << ARB_VER_DOT;
-	url.Replace(wxT("%VERSION%"), str);
+	str << ARB_VER_MAJOR << L"." << ARB_VER_MINOR << L"." << ARB_VER_DOT;
+	url.Replace(L"%VERSION%", str);
 	wxLaunchDefaultBrowser(url);
 }
 

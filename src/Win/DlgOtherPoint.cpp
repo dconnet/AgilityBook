@@ -140,7 +140,7 @@ DEFINE_ON_INIT(CDlgOtherPoint)
 void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
 {
 	m_ctrlOtherPoints->Clear();
-	m_ctrlDesc->SetValue(wxT(""));
+	m_ctrlDesc->SetValue(L"");
 	for (ARBConfigOtherPointsList::const_iterator iterOther = m_Config.GetOtherPoints().begin();
 		iterOther != m_Config.GetOtherPoints().end();
 		++iterOther)

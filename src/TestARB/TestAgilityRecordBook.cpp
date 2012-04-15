@@ -247,11 +247,11 @@ SUITE(TestHttp)
 		if (g_bMicroTest)
 		{
 #if CHECK_LEAK
-			wxURL::SetDefaultProxy(wxT("proxy.eng.vmware.com:3128"));
+			wxURL::SetDefaultProxy(L"proxy.eng.vmware.com:3128");
 #endif
-			wxURL url(wxT("http://www.agilityrecordbook.com/version.txt"));
+			wxURL url(L"http://www.agilityrecordbook.com/version.txt");
 #if !CHECK_LEAK
-			url.SetProxy(wxT("proxy.eng.vmware.com:3128"));
+			url.SetProxy(L"proxy.eng.vmware.com:3128");
 #endif
 			wxInputStream* stream = url.GetInputStream();
 			CHECK(stream && stream->IsOk());

@@ -74,7 +74,7 @@ CWizardImport::CWizardImport(
 	, m_Row(CAgilityBookOptions::GetImportStartRow())
 	, m_ctrlRow(NULL)
 	, m_Delim(-1)
-	, m_Delimiter(wxT(":"))
+	, m_Delimiter(L":")
 	, m_boxDelimiters(NULL)
 	, m_ctrlTab(NULL)
 	, m_ctrlColon(NULL)
@@ -489,7 +489,7 @@ void CWizardImport::UpdatePreview()
 				else
 				{
 					if (cols[iCol] != str && 0 < str.length())
-						cols[iCol] += wxT("/") + str;
+						cols[iCol] += L"/" + str;
 				}
 			}
 		}
@@ -865,7 +865,7 @@ bool CWizardImport::DoWizardFinish()
 				if (!pScoring)
 				{
 					loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1));
-					errLog << loadstr << wxT("\n");
+					errLog << loadstr << L"\n";
 					++nSkipped;
 					continue;
 				}
@@ -938,7 +938,7 @@ bool CWizardImport::DoWizardFinish()
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr << wxT("\n");
+								errLog << loadstr << L"\n";
 								if (pRun)
 									pRun.reset();
 								iCol = columns[i].size();
@@ -1054,8 +1054,8 @@ bool CWizardImport::DoWizardFinish()
 						{
 							pRun = CreateRun(pRun, pScoring);
 							ARB_Q q;
-							if (wxT("QQ") == entry[iCol])
-								entry[iCol] = wxT("Q");
+							if (L"QQ" == entry[iCol])
+								entry[iCol] = L"Q";
 							CErrorCallback err;
 							q.Load(entry[iCol], ARBAgilityRecordBook::GetCurrentDocVersion(), err);
 							pRun->SetQ(q);
@@ -1096,7 +1096,7 @@ bool CWizardImport::DoWizardFinish()
 							_("IDS_IMPORT_BAD_VENUE"),
 							static_cast<int>(nItem + 1),
 							trialVenue.c_str());
-						errLog << loadstr << wxT("\n");
+						errLog << loadstr << L"\n";
 						pRun.reset();
 					}
 					else if (!m_pDoc->Book().GetConfig().GetVenues().FindEvent(
@@ -1107,7 +1107,7 @@ bool CWizardImport::DoWizardFinish()
 						pRun->GetDate()))
 					{
 						loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1));
-						errLog << loadstr << wxT("\n");
+						errLog << loadstr << L"\n";
 						pRun.reset();
 					}
 				}
@@ -1153,7 +1153,7 @@ bool CWizardImport::DoWizardFinish()
 						if (m_pDoc->Book().GetDogs().begin() == m_pDoc->Book().GetDogs().end())
 						{
 							pDog = ARBDogPtr(ARBDog::New());
-							pDog->SetCallName(wxT("?"));
+							pDog->SetCallName(L"?");
 							m_pDoc->Book().GetDogs().AddDog(pDog);
 						}
 						else
@@ -1172,7 +1172,7 @@ bool CWizardImport::DoWizardFinish()
 					{
 						// Clubs and venues now agree so we can use them together easily.
 						if (0 == clubs.size())
-							clubs.push_back(wxT("?"));
+							clubs.push_back(L"?");
 						while (clubs.size() < venues.size())
 							clubs.push_back(clubs[clubs.size()-1]);
 					}
@@ -1274,7 +1274,7 @@ bool CWizardImport::DoWizardFinish()
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr << wxT("\n");
+								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1296,7 +1296,7 @@ bool CWizardImport::DoWizardFinish()
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr << wxT("\n");
+								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1305,25 +1305,25 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_CAL_TENTATIVE:
 						pCal = CreateCal(pCal);
-						pCal->SetIsTentative((wxT("?") == entry[iCol] || wxT("y") == entry[iCol] || wxT("Y") == entry[iCol]));
+						pCal->SetIsTentative((L"?" == entry[iCol] || L"y" == entry[iCol] || L"Y" == entry[iCol]));
 						break;
 					case IO_CAL_ENTERED:
-						if (wxT("N") == entry[iCol])
+						if (L"N" == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eNot);
 						}
-						else if (wxT("P") == entry[iCol] || _("IDS_CALENDAR_PLANNING") == entry[iCol])
+						else if (L"P" == entry[iCol] || _("IDS_CALENDAR_PLANNING") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::ePlanning);
 						}
-						else if (wxT("O") == entry[iCol] || _("IDS_CALENDAR_PENDING") == entry[iCol])
+						else if (L"O" == entry[iCol] || _("IDS_CALENDAR_PENDING") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::ePending);
 						}
-						else if (wxT("E") == entry[iCol] || _("IDS_CALENDAR_ENTERED") == entry[iCol])
+						else if (L"E" == entry[iCol] || _("IDS_CALENDAR_ENTERED") == entry[iCol])
 						{
 							pCal = CreateCal(pCal);
 							pCal->SetEntered(ARBCalendar::eEntered);
@@ -1335,7 +1335,7 @@ bool CWizardImport::DoWizardFinish()
 								static_cast<int>(nItem + 1),
 								static_cast<int>(iCol + 1),
 								entry[iCol].c_str());
-							errLog << loadstr << wxT("\n");
+							errLog << loadstr << L"\n";
 							if (pCal)
 								pCal.reset();
 							iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1368,7 +1368,7 @@ bool CWizardImport::DoWizardFinish()
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr << wxT("\n");
+								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1390,7 +1390,7 @@ bool CWizardImport::DoWizardFinish()
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr << wxT("\n");
+								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
 								iCol = columns[IO_TYPE_CALENDAR].size();
@@ -1449,7 +1449,7 @@ bool CWizardImport::DoWizardFinish()
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
 									entry[iCol].c_str());
-								errLog << loadstr << wxT("\n");
+								errLog << loadstr << L"\n";
 								if (pLog)
 									pLog.reset();
 								iCol = columns[IO_TYPE_TRAINING].size();
@@ -1498,7 +1498,7 @@ bool CWizardImport::DoWizardFinish()
 	if (bSortLog)
 		m_pDoc->Book().GetTraining().sort();
 	if (!errLog.str().empty())
-		errLog << wxT("\n");
+		errLog << L"\n";
 	loadstr = wxString::Format(_("IDS_IMPORT_STATS"),
 		static_cast<int>(nAdded),
 		static_cast<int>(nUpdated),

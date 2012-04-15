@@ -120,7 +120,7 @@ CDlgInfoNote::CDlgInfoNote(
 	, m_Added(NoteAdded_xpm)
 	, m_NoteAdded(NoteNoteAdded_xpm)
 {
-	std::wstring caption = wxT("?");
+	std::wstring caption = L"?";
 	std::set<std::wstring> names;
 	switch (m_Type)
 	{
@@ -382,7 +382,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 				index = m_ctrlNames->Append(m_Names[idx].m_Name);
 				m_ctrlNames->SetClientData(index, (void*)idx);
 				m_ctrlVisible->SetValue(true);
-				m_ctrlNotes->SetValue(wxT(""));
+				m_ctrlNotes->SetValue(L"");
 				m_Info.AddItem(m_Names[idx].m_Name);
 			}
 			else
@@ -398,7 +398,7 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 			index = m_ctrlNames->Append(m_Names[idx].m_Name);
 			m_ctrlNames->SetClientData(index, (void*)idx);
 			m_ctrlVisible->SetValue(true);
-			m_ctrlNotes->SetValue(wxT(""));
+			m_ctrlNotes->SetValue(L"");
 			m_Info.AddItem(m_Names[idx].m_Name);
 		}
 		UpdateImage(index);

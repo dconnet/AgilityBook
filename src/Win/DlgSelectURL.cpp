@@ -92,8 +92,8 @@ std::wstring CDlgSelectURL::Name() const
 void CDlgSelectURL::OnFilename(wxCommandEvent& evt)
 {
 	wxFileDialog file(this,
-			wxT(""), // caption
-			wxT(""), // default dir
+			L"", // caption
+			L"", // default dir
 			m_textCtrl->GetValue(),
 			_("IDS_FILEEXT_FILTER_ALL"),
 			wxFD_OPEN | wxFD_FILE_MUST_EXIST);

@@ -71,35 +71,35 @@ static void ExportConfigItem(wxString const& entry, ElementNodePtr tree)
 	case wxConfigBase::Type_String:
 		{
 			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(wxT("type"), wxT("s"));
+			item->AddAttrib(L"type", L"s");
 			item->SetValue(wxConfig::Get()->Read(entry, wxEmptyString));
 		}
 		break;
 	case wxConfigBase::Type_Boolean:
 		{
 			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(wxT("type"), wxT("b"));
+			item->AddAttrib(L"type", L"b");
 			bool val;
 			wxConfig::Get()->Read(entry, &val);
-			item->AddAttrib(wxT("val"), val);
+			item->AddAttrib(L"val", val);
 		}
 		break;
 	case wxConfigBase::Type_Integer:
 		{
 			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(wxT("type"), wxT("i"));
+			item->AddAttrib(L"type", L"i");
 			long val;
 			wxConfig::Get()->Read(entry, &val);
-			item->AddAttrib(wxT("val"), val);
+			item->AddAttrib(L"val", val);
 		}
 		break;
 	case wxConfigBase::Type_Float:
 		{
 			ElementNodePtr item = tree->AddElementNode(StringUtil::stringW(entry));
-			item->AddAttrib(wxT("type"), wxT("f"));
+			item->AddAttrib(L"type", L"f");
 			double val;
 			wxConfig::Get()->Read(entry, &val);
-			item->AddAttrib(wxT("val"), val);
+			item->AddAttrib(L"val", val);
 		}
 		break;
 	}
@@ -112,7 +112,7 @@ static void ExportConfig(wxString const& key, ElementNodePtr root)
 		return;
 
 	ElementNodePtr tree = root->AddElementNode(StringUtil::stringW(key));
-	tree->AddAttrib(wxT("type"), wxT("g"));
+	tree->AddAttrib(L"type", L"g");
 
 	wxString path = wxConfig::Get()->GetPath();
 	wxConfig::Get()->SetPath(key);
@@ -147,13 +147,13 @@ static ElementNodePtr FindElementName(
 {
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		std::wstring configName = wxString::Format(wxT("%s%ld"), eleItem, i);
+		std::wstring configName = wxString::Format(L"%s%ld", eleItem, i);
 		int idxConfig = tree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
 		{
 			ElementNodePtr nodeConfig = tree->GetElementNode(idxConfig);
-			int idxName = nodeConfig->FindElement(wxT("name"));
+			int idxName = nodeConfig->FindElement(L"name");
 			if (0 <= idxName
 			&& name == nodeConfig->GetElementNode(idxName)->GetValue())
 			{
@@ -172,47 +172,47 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters);
 static bool ImportColumnInfo(ElementNodePtr tree)
 {
 	// Only "Config#" are merged (unless we clobber).
-	int idxNum = tree->FindElement(wxT("numConfigs"));
+	int idxNum = tree->FindElement(L"numConfigs");
 	if (0 > idxNum)
 		return false;
 	long numConfigs = 0;
-	tree->GetElementNode(idxNum)->GetAttrib(wxT("val"), numConfigs);
+	tree->GetElementNode(idxNum)->GetAttrib(L"val", numConfigs);
 	if (0 >= numConfigs)
 		return false;
 
 	// If there are no existing configs, just bail and clobber.
-	ElementNodePtr root(ElementNode::New(wxT("Top")));
+	ElementNodePtr root(ElementNode::New(L"Top"));
 	wxString path = wxConfig::Get()->GetPath();
-	wxConfig::Get()->SetPath(wxT("/"));
-	ExportConfig(wxT("ColumnInfo"), root);
+	wxConfig::Get()->SetPath(L"/");
+	ExportConfig(L"ColumnInfo", root);
 	wxConfig::Get()->SetPath(path);
 	if (1 != root->GetElementCount())
 		return true;
 	ElementNodePtr existing = root->GetElementNode(0);
 	if (!existing)
 		return true;
-	idxNum = existing->FindElement(wxT("numConfigs"));
+	idxNum = existing->FindElement(L"numConfigs");
 	if (0 > idxNum)
 		return true;
 	long numExistingConfigs = 0;
-	existing->GetElementNode(idxNum)->GetAttrib(wxT("val"), numExistingConfigs);
+	existing->GetElementNode(idxNum)->GetAttrib(L"val", numExistingConfigs);
 	if (0 >= numExistingConfigs)
 		return true;
 
 	long added = 0;
 	for (long i = 0; i < numConfigs; ++i)
 	{
-		std::wstring configName = wxString::Format(wxT("Config%ld"), i);
+		std::wstring configName = wxString::Format(L"Config%ld", i);
 		int idxConfig = tree->FindElement(configName);
 		if (0 <= idxConfig
 		&& Element::Element_Node == tree->GetElement(idxConfig)->GetType())
 		{
 			ElementNodePtr nodeConfig = tree->GetElementNode(idxConfig);
-			int idxName = nodeConfig->FindElement(wxT("name"));
+			int idxName = nodeConfig->FindElement(L"name");
 			if (0 > idxName)
 				continue; // Ignore no-name configs.
 			std::wstring name = nodeConfig->GetElementNode(idxName)->GetValue();
-			ElementNodePtr existingConfig = FindElementName(existing, numExistingConfigs, name, wxT("Config"), wxT("name"));
+			ElementNodePtr existingConfig = FindElementName(existing, numExistingConfigs, name, L"Config", L"name");
 			if (existingConfig)
 			{
 				path = wxConfig::Get()->GetPath();
@@ -222,7 +222,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 					ElementNodePtr node = nodeConfig->GetElementNode(iCfg);
 					if (!node)
 						continue;
-					if (node->GetName() != wxT("name"))
+					if (node->GetName() != L"name")
 					{
 						ImportConfig(node, false);
 					}
@@ -232,7 +232,7 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 			else
 			{
 				name = nodeConfig->GetName();
-				std::wstring newName = wxString::Format(wxT("Config%ld"), numExistingConfigs + added);
+				std::wstring newName = wxString::Format(L"Config%ld", numExistingConfigs + added);
 				++added;
 				nodeConfig->SetName(newName);
 				ImportConfig(nodeConfig, false);
@@ -249,17 +249,17 @@ static bool ImportColumnInfo(ElementNodePtr tree)
 // We will not merge the current named filter selection
 static bool MergeFilters(ElementNodePtr tree)
 {
-	int idx = tree->FindElement(wxT("Common"));
+	int idx = tree->FindElement(L"Common");
 	if (0 > idx)
 		return false;
 	ElementNodePtr nodeCommon = tree->GetElementNode(idx);
 	if (!nodeCommon)
 		return false;
-	idx = nodeCommon->FindElement(wxT("numFilters"));
+	idx = nodeCommon->FindElement(L"numFilters");
 	if (0 > idx)
 		return false;
 	long numFilters = 0;
-	nodeCommon->GetElementNode(idx)->GetAttrib(wxT("val"), numFilters);
+	nodeCommon->GetElementNode(idx)->GetAttrib(L"val", numFilters);
 	if (0 >= numFilters)
 		return false;
 
@@ -268,9 +268,9 @@ static bool MergeFilters(ElementNodePtr tree)
 	if (0 > numExistingFilters)
 		return true;
 	// If there are no existing configs, just bail and clobber.
-	ElementNodePtr root(ElementNode::New(wxT("Top")));
+	ElementNodePtr root(ElementNode::New(L"Top"));
 	wxString path = wxConfig::Get()->GetPath();
-	wxConfig::Get()->SetPath(wxT("/"));
+	wxConfig::Get()->SetPath(L"/");
 	for (int i = 0; i < numExistingFilters; ++i)
 	{
 		ExportConfig(CFG_KEY_FILTER(i, false), root);
@@ -282,17 +282,17 @@ static bool MergeFilters(ElementNodePtr tree)
 	long added = 0;
 	for (long i = 0; i < numFilters; ++i)
 	{
-		std::wstring configName = wxString::Format(wxT("Filter%ld"), i);
+		std::wstring configName = wxString::Format(L"Filter%ld", i);
 		int idxFilter = tree->FindElement(configName);
 		if (0 <= idxFilter
 		&& Element::Element_Node == tree->GetElement(idxFilter)->GetType())
 		{
 			ElementNodePtr nodeFilter = tree->GetElementNode(idxFilter);
-			int idxName = nodeFilter->FindElement(wxT("Name"));
+			int idxName = nodeFilter->FindElement(L"Name");
 			if (0 > idxName)
 				continue; // Ignore no-name filters.
 			std::wstring name = nodeFilter->GetElementNode(idxName)->GetValue();
-			ElementNodePtr existingFilter = FindElementName(root, numExistingFilters, name, wxT("Filter"), wxT("Name"));
+			ElementNodePtr existingFilter = FindElementName(root, numExistingFilters, name, L"Filter", L"Name");
 			if (existingFilter)
 			{
 				path = wxConfig::Get()->GetPath();
@@ -302,7 +302,7 @@ static bool MergeFilters(ElementNodePtr tree)
 					ElementNodePtr node = nodeFilter->GetElementNode(iCfg);
 					if (!node)
 						continue;
-					if (node->GetName() != wxT("Name"))
+					if (node->GetName() != L"Name")
 					{
 						ImportConfig(node, true);
 					}
@@ -312,7 +312,7 @@ static bool MergeFilters(ElementNodePtr tree)
 			else
 			{
 				name = nodeFilter->GetName();
-				std::wstring newName = wxString::Format(wxT("Filter%ld"), numExistingFilters + added);
+				std::wstring newName = wxString::Format(L"Filter%ld", numExistingFilters + added);
 				++added;
 				nodeFilter->SetName(newName);
 				ImportConfig(nodeFilter, true);
@@ -329,9 +329,9 @@ static bool MergeFilters(ElementNodePtr tree)
 static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 {
 	std::wstring type;
-	if (ElementNode::eFound != tree->GetAttrib(wxT("type"), type))
+	if (ElementNode::eFound != tree->GetAttrib(L"type", type))
 		return;
-	if (wxT("g") == type)
+	if (L"g" == type)
 	{
 		wxString path = wxConfig::Get()->GetPath();
 		wxConfig::Get()->SetPath(tree->GetName());
@@ -342,17 +342,17 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 		// import only "Import" data and not touch "Export" (depending on
 		// what's in the file we're reading, of course!)
 		bool bClobber = true;
-		if (tree->GetName() == wxT("ColumnInfo"))
+		if (tree->GetName() == L"ColumnInfo")
 		{
 			bClobber = ImportColumnInfo(tree);
 		}
-		else if (!bClobberFilters && tree->GetName().substr(0, 6) == wxT("Filter"))
+		else if (!bClobberFilters && tree->GetName().substr(0, 6) == L"Filter")
 		{
 			bClobber = false;
 		}
 		if (bClobber)
 		{
-			bool bCommon = (tree->GetName() == wxT("Common"));
+			bool bCommon = (tree->GetName() == L"Common");
 			for (int i = 0; i < tree->GetElementCount(); ++i)
 			{
 				ElementNodePtr node = tree->GetElementNode(i);
@@ -360,8 +360,8 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 					continue;
 				bool bSkip = false;
 				if (!bClobberFilters && bCommon
-				&& (node->GetName() == wxT("numFilters")
-				|| node->GetName() == wxT("CurrentFilter")))
+				&& (node->GetName() == L"numFilters"
+				|| node->GetName() == L"CurrentFilter"))
 				{
 					bSkip = true;
 				}
@@ -371,26 +371,26 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 		}
 		wxConfig::Get()->SetPath(path);
 	}
-	else if (wxT("s") == type)
+	else if (L"s" == type)
 	{
 		wxConfig::Get()->Write(tree->GetName(), tree->GetValue().c_str());
 	}
-	else if (wxT("b") == type)
+	else if (L"b" == type)
 	{
 		bool val;
-		tree->GetAttrib(wxT("val"), val);
+		tree->GetAttrib(L"val", val);
 		wxConfig::Get()->Write(tree->GetName(), val);
 	}
-	else if (wxT("i") == type)
+	else if (L"i" == type)
 	{
 		long val;
-		tree->GetAttrib(wxT("val"), val);
+		tree->GetAttrib(L"val", val);
 		wxConfig::Get()->Write(tree->GetName(), val);
 	}
-	else if (wxT("f") == type)
+	else if (L"f" == type)
 	{
 		double val;
-		tree->GetAttrib(wxT("val"), val);
+		tree->GetAttrib(L"val", val);
 		wxConfig::Get()->Write(tree->GetName(), val);
 	}
 }
@@ -398,7 +398,7 @@ static void ImportConfig(ElementNodePtr tree, bool bClobberFilters)
 
 bool CAgilityBookOptions::ImportSettings(ElementNodePtr tree)
 {
-	if (!tree || tree->GetName() != wxT("AgilityBookSettings"))
+	if (!tree || tree->GetName() != L"AgilityBookSettings")
 		return false;
 	// Version numbers aren't needed yet.
 	ARBVersion version;
@@ -424,25 +424,25 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	wxBusyCursor wait;
 	CVersionNum ver(true);
 	std::wstring verstr = ver.GetVersionString();
-	ElementNodePtr tree(ElementNode::New(wxT("AgilityBookSettings")));
+	ElementNodePtr tree(ElementNode::New(L"AgilityBookSettings"));
 	tree->AddAttrib(ATTRIB_BOOK_VERSION, ARBAgilityRecordBook::GetCurrentDocVersion());
 	tree->AddAttrib(ATTRIB_BOOK_PGM_VERSION, verstr);
 
 	// These sections are copied complete.
 	static wchar_t const* const sections[] = {
-		wxT("Calendar"),
-		wxT("Columns"),
-		wxT("ColumnInfo"),
-		wxT("Common"),
-		wxT("Export"),
-		wxT("ExportCal"),
-		wxT("ExportCalAppt"),
-		wxT("ExportCalTask"),
-		wxT("ExportLog"),
-		wxT("Import"),
-		wxT("ImportCal"),
-		wxT("ImportLog"),
-		wxT("Sorting"),
+		L"Calendar",
+		L"Columns",
+		L"ColumnInfo",
+		L"Common",
+		L"Export",
+		L"ExportCal",
+		L"ExportCalAppt",
+		L"ExportCalTask",
+		L"ExportLog",
+		L"Import",
+		L"ImportCal",
+		L"ImportLog",
+		L"Sorting",
 		NULL
 	};
 	for (int i = 0; sections[i]; ++i)
@@ -458,20 +458,20 @@ ElementNodePtr CAgilityBookOptions::ExportSettings()
 	}
 
 	// And pick/choose in Settings.
-	ElementNodePtr settings = tree->AddElementNode(wxT("Settings"));
-	settings->AddAttrib(wxT("type"), wxT("g"));
+	ElementNodePtr settings = tree->AddElementNode(L"Settings");
+	settings->AddAttrib(L"type", L"g");
 	wxString path = wxConfig::Get()->GetPath();
-	wxConfig::Get()->SetPath(wxT("Settings"));
+	wxConfig::Get()->SetPath(L"Settings");
 	static wchar_t const* const items[] = {
-		wxT("autoCheck"),
-		wxT("autoShowTitle"),
-		wxT("printLand"),
-		wxT("proxy"),
-		wxT("showHtml"),
-		wxT("useproxy"),
-		wxT("View"),
-		wxT("ViewOrient"),
-		wxT("ViewType"),
+		L"autoCheck",
+		L"autoShowTitle",
+		L"printLand",
+		L"proxy",
+		L"showHtml",
+		L"useproxy",
+		L"View",
+		L"ViewOrient",
+		L"ViewType",
 		NULL
 	};
 	for (int i = 0; items[i]; ++i)
@@ -619,7 +619,7 @@ static wchar_t const* CalItemName(CAgilityBookOptions::CalendarColorItem inItem)
 		return CFG_CAL_ITEM_CLOSECOLOR;
 	}
 	assert(0);
-	return wxT("");
+	return L"";
 }
 
 
@@ -867,7 +867,7 @@ void CAgilityBookOptions::SetIncludeCRCDImage(bool bSet)
 
 void CAgilityBookOptions::GetPrinterFontInfo(CFontInfo& info)
 {
-	info.name = wxT("Times New Roman");
+	info.name = L"Times New Roman";
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
@@ -1018,7 +1018,7 @@ void CAgilityBookOptions::SetRunPageSize(
 
 void CAgilityBookOptions::GetCalendarFontInfo(CFontInfo& info)
 {
-	info.name = wxT("Times New Roman");
+	info.name = L"Times New Roman";
 	info.size = 80;
 	info.italic = false;
 	info.bold = false;
@@ -1248,7 +1248,7 @@ void CAgilityBookOptions::GetColumnOrder(
 	{
 		wxString item;
 		if (!namedColumn.empty())
-			item << wxT('/') << namedColumn;
+			item << L'/' << namedColumn;
 		item << GetColumnName(eOrder) << CFG_COL_BASENAME(idxColumn);
 		std::wstring data = wxConfig::Get()->Read(item, wxEmptyString);
 		std::wstring::size_type idx = data.find(',');
@@ -1524,12 +1524,12 @@ void CAgilityBookOptions::SetColumnOrder(
 	for (size_t i = 0; i < inValues.size(); ++i)
 	{
 		if (0 < i)
-			data << wxT(",");
+			data << L",";
 		data << inValues[i];
 	}
 	wxString item;
 	if (!namedColumn.empty())
-		item << wxT('/') << namedColumn;
+		item << L'/' << namedColumn;
 	item << GetColumnName(eOrder) << CFG_COL_BASENAME(idxColumn);
 	wxConfig::Get()->Write(item, data);
 }
@@ -1538,13 +1538,13 @@ void CAgilityBookOptions::SetColumnOrder(
 
 long CAgilityBookOptions::GetMRUFileCount()
 {
-	return wxConfig::Get()->Read(wxT("Settings/MRUsize"), 4L);
+	return wxConfig::Get()->Read(L"Settings/MRUsize", 4L);
 }
 
 
 void CAgilityBookOptions::SetMRUFileCount(long nFiles)
 {
-	wxConfig::Get()->Write(wxT("Settings/MRUsize"), nFiles);
+	wxConfig::Get()->Write(L"Settings/MRUsize", nFiles);
 }
 
 

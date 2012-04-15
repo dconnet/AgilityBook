@@ -369,7 +369,7 @@ CDlgConfigVenue::CDlgConfigVenue(
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
-	wxTreeItemId root = m_ctrlItems->AddRoot(wxT("Root"));
+	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 
 	wxTreeItemId divs = m_ctrlItems->AppendItem(root, _("IDC_CONFIG_VENUE_DIVISION"), -1, -1, new CDlgConfigVenueDataRoot(this, eDivisions));
 	for (ARBConfigDivisionList::iterator iterDiv = m_pVenue->GetDivisions().begin(); iterDiv != m_pVenue->GetDivisions().end(); ++iterDiv)
@@ -606,7 +606,7 @@ void CDlgConfigVenue::OnOk(wxCommandEvent& evt)
 {
 	if (!Validate() || !TransferDataFromWindow())
 		return;
-	m_URL.Replace(wxT("\""), wxT(""));
+	m_URL.Replace(L"\"", L"");
 
 	std::wstring name(m_Name);
 	std::wstring oldName = m_pVenue->GetName();

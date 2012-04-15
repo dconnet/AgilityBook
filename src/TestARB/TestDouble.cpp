@@ -40,25 +40,25 @@ static void RunDblTests()
 	// ARBDouble always strips 0s unless prec ==2, unless =".00"
 	double p = 3.14159265358979323846;
 	std::wstring s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
-	CHECK(FormNumber(wxT("3"), decimalPt, wxT("14")) == s);
+	CHECK(FormNumber(L"3", decimalPt, L"14") == s);
 	s = ARBDouble::ToString(p, 4, ARBDouble::eCurrent);
-	CHECK(FormNumber(wxT("3"), decimalPt, wxT("1416")) == s);
+	CHECK(FormNumber(L"3", decimalPt, L"1416") == s);
 
 	p = 2.1;
 	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent);
-	CHECK(FormNumber(wxT("2"), decimalPt, wxT("1")) == s);
+	CHECK(FormNumber(L"2", decimalPt, L"1") == s);
 	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
-	CHECK(FormNumber(wxT("2"), decimalPt, wxT("10")) == s);
+	CHECK(FormNumber(L"2", decimalPt, L"10") == s);
 	s = ARBDouble::ToString(p, 3, ARBDouble::eCurrent);
-	CHECK(FormNumber(wxT("2"), decimalPt, wxT("1")) == s);
+	CHECK(FormNumber(L"2", decimalPt, L"1") == s);
 
 	p = 2;
 	s = ARBDouble::ToString(p, 0, ARBDouble::eCurrent);
-	CHECK(wxT("2") == s);
+	CHECK(L"2" == s);
 	s = ARBDouble::ToString(p, 1, ARBDouble::eCurrent);
-	CHECK(wxT("2") == s);
+	CHECK(L"2" == s);
 	s = ARBDouble::ToString(p, 2, ARBDouble::eCurrent);
-	CHECK(wxT("2") == s);
+	CHECK(L"2" == s);
 }
 
 

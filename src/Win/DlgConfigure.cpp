@@ -206,7 +206,7 @@ CDlgConfigure::CDlgConfigure(
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
-	wxTreeItemId root = m_ctrlItems->AddRoot(wxT("Root"));
+	wxTreeItemId root = m_ctrlItems->AddRoot(L"Root");
 
 	m_hItemVenues = m_ctrlItems->AppendItem(root, _("IDS_COL_VENUES"), m_ImageList.ARB(), m_ImageList.ARB(), new CDlgConfigureDataRoot(eVenues));
 	LoadData(eVenues);

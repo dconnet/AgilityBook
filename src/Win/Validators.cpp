@@ -199,7 +199,7 @@ bool CGenericValidator::Copy(CGenericValidator const& val)
 	return true;
 }
 
-static const wxChar* s_TimeFormat = wxT("%I:%M:%S %p");
+static const wxChar* s_TimeFormat = L"%I:%M:%S %p";
 
 bool CGenericValidator::TransferFromWindow()
 {
@@ -296,21 +296,21 @@ bool CGenericValidator::TransferToWindow()
 		if (m_pUShort)
 		{
 			wxString str;
-			str.Printf(wxT("%hu"), *m_pUShort);
+			str.Printf(L"%hu", *m_pUShort);
 			pTextControl->ChangeValue(str);
 			return true;
 		}
 		else if (m_pShort)
 		{
 			wxString str;
-			str.Printf(wxT("%hd"), *m_pShort);
+			str.Printf(L"%hd", *m_pShort);
 			pTextControl->ChangeValue(str);
 			return true;
 		}
 		else if (m_pLong)
 		{
 			wxString str;
-			str.Printf(wxT("%ld"), *m_pLong);
+			str.Printf(L"%ld", *m_pLong);
 			pTextControl->ChangeValue(str);
 			return true;
 		}
@@ -380,7 +380,7 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				if (textVal.empty() && m_bUseDefOnEmpty)
 				{
 					wxString str;
-					str.Printf(wxT("%hu"), m_Default.us);
+					str.Printf(L"%hu", m_Default.us);
 					pTextControl->ChangeValue(str);
 				}
 				else if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
@@ -397,9 +397,9 @@ bool CGenericValidator::Validate(wxWindow* parent)
 				{
 					wxString str;
 					if (m_pShort)
-						str.Printf(wxT("%hd"), m_Default.s);
+						str.Printf(L"%hd", m_Default.s);
 					else
-						str.Printf(wxT("%ld"), m_Default.l);
+						str.Printf(L"%ld", m_Default.l);
 					pTextControl->ChangeValue(str);
 				}
 				else if (!StringUtil::ToLong(StringUtil::stringW(textVal), val))
@@ -614,7 +614,7 @@ bool CQualifyingValidator::Validate(wxWindow* parent)
 	if (!m_validatorWindow->IsKindOf(CLASSINFO(CQualifyingComboBox)))
 	{
 		m_validatorWindow->SetFocus();
-		wxMessageBox(wxT("ERROR: Invalid control"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
+		wxMessageBox(L"ERROR: Invalid control", _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
 		return false;
 	}
 	if (!m_bAllowNoSel)

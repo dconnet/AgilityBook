@@ -287,7 +287,7 @@ bool ToDouble(std::wstring const& inStr, double& outValue)
 			pt = decimalPt.GetChar(0);
 		// So we only reparse if the incoming string does not contain
 		// the locale's decimal point.
-		if (pt != wxT('.') && wxString::npos == inStr.find(pt))
+		if (pt != L'.' && wxString::npos == inStr.find(pt))
 		{
 			wxLocale locale(wxLANGUAGE_ENGLISH_US, 0);
 			rc = s.ToDouble(&outValue);

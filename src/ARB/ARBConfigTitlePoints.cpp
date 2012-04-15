@@ -184,7 +184,7 @@ bool ARBConfigTitlePoints::Load(
 		if (inVersion < ARBVersion(10,0))
 		{
 			bool bLifetime;
-			if (ElementNode::eFound == inTree->GetAttrib(wxT("LifeTime"), bLifetime))
+			if (ElementNode::eFound == inTree->GetAttrib(L"LifeTime", bLifetime))
 			{
 				if (bLifetime)
 				{

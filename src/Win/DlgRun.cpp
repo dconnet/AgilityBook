@@ -273,7 +273,7 @@ std::wstring CDlgDogRefRunData::OnNeedText(long iCol) const
 		str << m_RefRun->GetBreed();
 		break;
 	case 7: // Note
-		str << StringUtil::Replace(m_RefRun->GetNote(), wxT("\n"), wxT(" "));
+		str << StringUtil::Replace(m_RefRun->GetNote(), L"\n", L" ");
 		break;
 	}
 	return str.str();
@@ -514,7 +514,7 @@ void CMetaDataDisplay::OnCopy()
 			CClipboardDataReader clpData;
 			if (clpData.Open())
 			{
-				SetLabel(wxT(""));
+				SetLabel(L"");
 				DeleteMetaFile();
 				if (bText)
 				{
@@ -524,7 +524,7 @@ void CMetaDataDisplay::OnCopy()
 					str = StringUtil::Trim(str);
 					// We do the replace since CRCD3 has "\n\nhdrs\r\netc"
 					// Standardize to \n.
-					str = StringUtil::Replace(str, wxT("\r\n"), wxT("\n"));
+					str = StringUtil::Replace(str, L"\r\n", L"\n");
 					m_Run->SetCRCD(str);
 					SetLabel(str);
 					if (0 < str.length())
@@ -555,9 +555,9 @@ void CMetaDataDisplay::OnCopy()
 	{
 		m_Insert = true;
 		m_ViewText = true;
-		SetLabel(wxT(""));
+		SetLabel(L"");
 		DeleteMetaFile();
-		m_Run->SetCRCD(wxT(""));
+		m_Run->SetCRCD(L"");
 		m_Run->SetCRCDMetaData(NULL, 0);
 	}
 	Enable(m_ViewText);
@@ -635,9 +635,9 @@ void CMetaDataDisplay::OnPaint(wxPaintEvent& evt)
 // This is just to get the text in a sunken static control to look better
 static std::wstring Pad(std::wstring const& val)
 {
-	std::wstring padded(wxT(" "));
+	std::wstring padded(L" ");
 	padded += val;
-	padded += wxT(" ");
+	padded += L" ";
 	return padded;
 }
 
@@ -727,7 +727,7 @@ CDlgRun::CDlgRun(
 	, m_ctrlTitlePoints(NULL)
 	, m_ctrlScore(NULL)
 	, m_Comments(pRun->GetNote())
-	, m_sortRefRuns(wxT("RefRuns"))
+	, m_sortRefRuns(L"RefRuns")
 	, m_idxRefRunPage(-1)
 	, m_ctrlFaultsList(NULL)
 	, m_ctrlRefRuns(NULL)
@@ -1354,7 +1354,7 @@ CDlgRun::CDlgRun(
 	BIND_OR_CONNECT_CTRL(m_ctrlLinks, wxEVT_KEY_DOWN, wxKeyEventHandler, CDlgRun::OnLinksKeyDown);
 	m_ctrlLinks->SetHelpText(_("HIDC_RUNLINK_LIST"));
 	m_ctrlLinks->SetToolTip(_("HIDC_RUNLINK_LIST"));
-	m_ctrlLinks->InsertColumn(0, wxT(""));
+	m_ctrlLinks->InsertColumn(0, L"");
 	m_ctrlLinks->SetDropTarget(new CLinkDropTarget(this));
 
 	wxButton* btnLinkNew = new wxButton(panelLinks, wxID_ANY,
@@ -1969,7 +1969,7 @@ void CDlgRun::SetEventDesc(ARBConfigEventPtr inEvent)
 	{
 		std::wstring const& note = pScoring->GetNote();
 		if (!desc.empty() && 0 < note.length())
-			desc += wxT("\n==========\n");
+			desc += L"\n==========\n";
 		desc += note;
 	}
 	m_ctrlDesc->ChangeValue(desc);
@@ -1987,9 +1987,9 @@ void CDlgRun::SetPartnerText()
 			for (ARBDogRunPartnerList::const_iterator iter = m_Run->GetPartners().begin(); iter != m_Run->GetPartners().end(); ++iter)
 			{
 				if (!partners.empty())
-					partners += wxT(", ");
+					partners += L", ";
 				partners += (*iter)->GetHandler();
-				partners += wxT("/");
+				partners += L"/";
 				partners += (*iter)->GetDog();
 			}
 		}
@@ -2064,10 +2064,10 @@ void CDlgRun::SetTitlePoints()
 	}
 	ARB_Q q = m_ctrlQ->GetQ(index);
 
-	wxString strBonus(wxT("0"));
-	wxString strSpeed(wxT("0"));
-	wxString strTitle(wxT("0"));
-	wxString strScore(wxT(""));
+	wxString strBonus(L"0");
+	wxString strSpeed(L"0");
+	wxString strTitle(L"0");
+	wxString strScore(L"");
 	ARBConfigScoringPtr pScoring;
 	if (GetScoring(&pScoring))
 	{
@@ -2276,7 +2276,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_textYardsReqOpeningPts->Show(true);
 		m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPENING_PTS"));
 		m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPENING_PTS"));
-		str.Printf(wxT("%hd"), m_Opening);
+		str.Printf(L"%hd", m_Opening);
 		m_ctrlYardsReqOpeningPts->ChangeValue(str);
 		m_ctrlYardsReqOpeningPts->Show(true);
 		m_textMinYPSClosingTime->SetLabel(_("IDC_RUNSCORE_SCT2"));
@@ -2287,7 +2287,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_ctrlMinYPSClosingTime->ChangeValue(ARBDouble::ToString(m_SCT2));
 		SetReadOnlyFlag(m_ctrlMinYPSClosingTime, false);
 		m_ctrlClosingText->Show(true);
-		str.Printf(wxT("%hd"), m_Closing);
+		str.Printf(L"%hd", m_Closing);
 		m_ctrlClosing->ChangeValue(str);
 		m_ctrlClosing->Show(true);
 		m_ctrlTimeText->Show(true);
@@ -2298,7 +2298,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_textYPSOpeningPts->Show(true);
 		m_ctrlYPSOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPEN_PTS"));
 		m_ctrlYPSOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPEN_PTS"));
-		str.Printf(wxT("%hd"), m_Open);
+		str.Printf(L"%hd", m_Open);
 		m_ctrlYPSOpeningPts->ChangeValue(str);
 		m_ctrlYPSOpeningPts->Show(true);
 		SetReadOnlyFlag(m_ctrlYPSOpeningPts, false);
@@ -2306,7 +2306,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_textClosingPtsTotalFaults->Show(true);
 		m_ctrlClosingPtsTotalFaults->SetHelpText(_("HIDC_RUNSCORE_CLOSE_PTS"));
 		m_ctrlClosingPtsTotalFaults->SetToolTip(_("HIDC_RUNSCORE_CLOSE_PTS"));
-		str.Printf(wxT("%hd"), m_Close);
+		str.Printf(L"%hd", m_Close);
 		m_ctrlClosingPtsTotalFaults->ChangeValue(str);
 		m_ctrlClosingPtsTotalFaults->Show(true);
 		SetReadOnlyFlag(m_ctrlClosingPtsTotalFaults, false);
@@ -2327,7 +2327,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_textYardsReqOpeningPts->Show(true);
 		m_ctrlYardsReqOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPENING_PTS"));
 		m_ctrlYardsReqOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPENING_PTS"));
-		str.Printf(wxT("%hd"), m_Opening);
+		str.Printf(L"%hd", m_Opening);
 		m_ctrlYardsReqOpeningPts->ChangeValue(str);
 		m_ctrlYardsReqOpeningPts->Show(true);
 		m_ctrlTimeText->Show(true);
@@ -2338,7 +2338,7 @@ void CDlgRun::UpdateControls(bool bOnEventChange)
 		m_textYPSOpeningPts->Show(true);
 		m_ctrlYPSOpeningPts->SetHelpText(_("HIDC_RUNSCORE_OPEN_PTS"));
 		m_ctrlYPSOpeningPts->SetToolTip(_("HIDC_RUNSCORE_OPEN_PTS"));
-		str.Printf(wxT("%hd"), m_Open);
+		str.Printf(L"%hd", m_Open);
 		m_ctrlYPSOpeningPts->ChangeValue(str);
 		m_ctrlYPSOpeningPts->Show(true);
 		SetReadOnlyFlag(m_ctrlYPSOpeningPts, false);
@@ -2482,7 +2482,7 @@ void CDlgRun::SetRefRunColumnHeaders()
 	{
 		wxString str;
 		str << wxGetTranslation(scRefRunColumns[i].idText)
-			<< wxT(" (") << m_sortRefRuns.FindColumnOrder(i) + 1 << wxT(")");
+			<< L" (" << m_sortRefRuns.FindColumnOrder(i) + 1 << L")";
 		wxListItem item;
 		item.SetMask(wxLIST_MASK_TEXT);
 		item.SetText(str);
@@ -2953,13 +2953,13 @@ void CDlgRun::OnRefRunNew(wxCommandEvent& evt)
 			switch (pScoring->GetScoringStyle())
 			{
 			default:
-				nScore = wxT("0");
+				nScore = L"0";
 				break;
 			case ARBConfigScoring::eFaults100ThenTime:
-				nScore = wxT("100");
+				nScore = L"100";
 				break;
 			case ARBConfigScoring::eFaults200ThenTime:
-				nScore = wxT("200");
+				nScore = L"200";
 				break;
 			}
 			ref->SetScore(nScore);
@@ -3083,7 +3083,7 @@ void CDlgRun::OnLinksKeyDown(wxKeyEvent& evt)
 
 void CDlgRun::OnLinksNew(wxCommandEvent& evt)
 {
-	CDlgSelectURL dlg(wxT(""), this);
+	CDlgSelectURL dlg(L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		std::wstring newName = dlg.Name();
@@ -3230,7 +3230,7 @@ void CDlgRun::OnOk(wxCommandEvent& evt)
 		assert(NULL != pEvent.get());
 		if (!pEvent->HasTable())
 			if (m_Run->GetScoring().HasTable())
-				wxMessageBox(wxT("Poof!"), wxMessageBoxCaptionStr, wxOK | wxCENTRE);
+				wxMessageBox(L"Poof!", wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 	}
 #endif
 	//End TODO

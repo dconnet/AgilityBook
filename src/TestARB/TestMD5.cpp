@@ -27,7 +27,7 @@ SUITE(TestMsgDigest)
 {
 	// String
 	static char const* RawString = "This is a test of a string";
-	static std::wstring DigestString(wxT("b36b52c4835d88fdb548087b9a829bf1"));
+	static std::wstring DigestString(L"b36b52c4835d88fdb548087b9a829bf1");
 
 
 	TEST(RawDecode)

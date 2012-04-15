@@ -41,11 +41,11 @@ SUITE(TestBinaryData)
 		186,  35,   0,  59
 	};
 	// compressed, encoded gif file (Note, '\n' is just formatting - but needed to check for equality)
-	static const std::wstring EncodedData(wxT("eJxz93SzsExkZWBl2MwAAg1g3ACmGsCsAwcONDQ0/AcK/Gf4D6b+g1lAoAPSAdLLwMIpcOK7ygKx\n87uUGawBGnIbbQ=="));
+	static const std::wstring EncodedData(L"eJxz93SzsExkZWBl2MwAAg1g3ACmGsCsAwcONDQ0/AcK/Gf4D6b+g1lAoAPSAdLLwMIpcOK7ygKx\n87uUGawBGnIbbQ==");
 	// String
-	static const std::wstring RawString(wxT("This is a test of a string"));
+	static const std::wstring RawString(L"This is a test of a string");
 	// compressed, encoded string
-	static const std::wstring EncodedString(wxT("eJwLycgsVgCiRIWS1OIShfw0IKu4pCgzLx0AeIAJIw=="));
+	static const std::wstring EncodedString(L"eJwLycgsVgCiRIWS1OIShfw0IKu4pCgzLx0AeIAJIw==");
 
 
 	TEST(RawDecode)

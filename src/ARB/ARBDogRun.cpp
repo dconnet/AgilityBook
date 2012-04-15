@@ -174,11 +174,11 @@ bool ARBDogRun::operator==(ARBDogRun const& rhs) const
 
 std::wstring ARBDogRun::GetGenericName() const
 {
-	std::wstring name = m_Date.GetString(ARBDate::eDashYMD) + wxT(" ");
-	name += m_Division + wxT(" ") + m_Level + wxT(" ") + m_Event;
+	std::wstring name = m_Date.GetString(ARBDate::eDashYMD) + L" ";
+	name += m_Division + L" " + m_Level + L" " + m_Event;
 	if (0 < m_SubName.length())
 	{
-		name += wxT(" ") + m_SubName;
+		name += L" " + m_SubName;
 	}
 	return name;
 }

@@ -38,7 +38,7 @@ bool CConfigHandler::LoadWxFile(
 {
 	outData.erase();
 	wxString zipfile = wxFileSystem::FileNameToURL(wxString(zipFile.c_str()));
-	zipfile += wxT("#zip:") + StringUtil::stringWX(archiveFile);
+	zipfile += L"#zip:" + StringUtil::stringWX(archiveFile);
 	wxFileSystem filesys;
 	wxFSFile* file = filesys.OpenFile(zipfile);
 	if (file)
@@ -80,13 +80,13 @@ ElementNodePtr CConfigHandler::LoadDefaultConfig() const
 #ifdef __WXMAC__
 	// Command line programs on Mac are acting like unix. GetResourcesDir
 	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	wxString datafile = wxT("./testarb.dat");
+	wxString datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 #endif
 	std::string data;
-	if (LoadWxFile(StringUtil::stringW(datafile), wxT("DefaultConfig.xml"), data))
+	if (LoadWxFile(StringUtil::stringW(datafile), L"DefaultConfig.xml", data))
 		bOk = tree->LoadXML(data.c_str(), data.length(), errMsg);
 
 	return bOk ? tree : ElementNodePtr();
@@ -98,14 +98,14 @@ std::string CConfigHandler::LoadDTD(bool bNormalizeCRNL) const
 #ifdef __WXMAC__
 	// Command line programs on Mac are acting like unix. GetResourcesDir
 	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	wxString datafile = wxT("./testarb.dat");
+	wxString datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
+	wxString datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 #endif
 
 	std::string dtd;
-	LoadWxFile(StringUtil::stringW(datafile), wxT("AgilityRecordBook.dtd"), dtd);
+	LoadWxFile(StringUtil::stringW(datafile), L"AgilityRecordBook.dtd", dtd);
 
 	if (bNormalizeCRNL)
 		dtd = StringUtil::Replace(dtd, "\r\n", "\n");

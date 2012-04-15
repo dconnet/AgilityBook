@@ -67,7 +67,7 @@ CWizardExport::CWizardExport(
 	, m_pSheet(pSheet)
 	, m_pDoc(pDoc)
 	, m_Delim(CAgilityBookOptions::eDelimTab)
-	, m_Delimiter(wxT(":"))
+	, m_Delimiter(L":")
 	, m_boxDelimiters(NULL)
 	, m_ctrlTab(NULL)
 	, m_ctrlColon(NULL)
@@ -307,11 +307,11 @@ wchar_t CWizardExport::GetDelim() const
 	switch (m_Delim)
 	{
 	default:
-	case CAgilityBookOptions::eDelimTab:       return wxT('\t');
-	case CAgilityBookOptions::eDelimSpace:     return wxT(' ');
-	case CAgilityBookOptions::eDelimColon:     return wxT(':');
-	case CAgilityBookOptions::eDelimSemicolon: return wxT(';');
-	case CAgilityBookOptions::eDelimComma:     return wxT(',');
+	case CAgilityBookOptions::eDelimTab:       return L'\t';
+	case CAgilityBookOptions::eDelimSpace:     return L' ';
+	case CAgilityBookOptions::eDelimColon:     return L':';
+	case CAgilityBookOptions::eDelimSemicolon: return L';';
+	case CAgilityBookOptions::eDelimComma:     return L',';
 	case CAgilityBookOptions::eDelimOther:
 		if (1 == m_Delimiter.length())
 			return m_Delimiter[0];
@@ -422,7 +422,7 @@ void CWizardExport::UpdatePreview()
 	&& 0 == delim)
 	{
 		wxString nodelim(_("IDS_NO_DELIM_SPECIFIED"));
-		m_ctrlPreview->InsertColumn(0, wxT(""));
+		m_ctrlPreview->InsertColumn(0, L"");
 		m_ctrlPreview->InsertItem(0, nodelim);
 		m_ctrlPreview->SetColumnWidth(0, wxLIST_AUTOSIZE_USEHEADER);
 		m_ctrlPreview->Thaw();
@@ -504,7 +504,7 @@ void CWizardExport::UpdatePreview()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
-			m_ctrlPreview->InsertColumn(iCol, wxT(""));
+			m_ctrlPreview->InsertColumn(iCol, L"");
 		m_ctrlPreview->InsertItem(iLine, cols[0]);
 		for (iCol = 1; iCol < static_cast<long>(cols.size()); ++iCol)
 			SetListColumnText(m_ctrlPreview, iLine, iCol, cols[iCol]);
@@ -512,7 +512,7 @@ void CWizardExport::UpdatePreview()
 	}
 	else
 	{
-		m_ctrlPreview->InsertColumn(0, wxT(""));
+		m_ctrlPreview->InsertColumn(0, L"");
 		std::wstring data;
 		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
 		{
@@ -602,7 +602,7 @@ void CWizardExport::UpdatePreview()
 												++iter, ++i)
 											{
 												if (0 < i)
-													fld += wxT("/");
+													fld += L"/";
 												fld += (*iter)->GetVenue();
 											}
 											data += AddPreviewData(iLine, idx, fld);
@@ -617,7 +617,7 @@ void CWizardExport::UpdatePreview()
 												++iter, ++i)
 											{
 												if (0 < i)
-													fld += wxT("/");
+													fld += L"/";
 												fld += (*iter)->GetName();
 											}
 											data += AddPreviewData(iLine, idx, fld);
@@ -780,9 +780,9 @@ void CWizardExport::UpdatePreview()
 											std::wostringstream str;
 											short place = pRun->GetPlace();
 											if (0 > place)
-												str << wxT("?");
+												str << L"?";
 											else if (0 == place)
-												str << wxT("-");
+												str << L"-";
 											else
 												str << place;
 											data += AddPreviewData(iLine, idx, str.str());
@@ -793,7 +793,7 @@ void CWizardExport::UpdatePreview()
 											std::wostringstream str;
 											short inClass = pRun->GetInClass();
 											if (0 >= inClass)
-												str << wxT("?");
+												str << L"?";
 											else
 												str << inClass;
 											data += AddPreviewData(iLine, idx, str.str());
@@ -804,7 +804,7 @@ void CWizardExport::UpdatePreview()
 											std::wostringstream str;
 											short qd = pRun->GetDogsQd();
 											if (0 > qd)
-												str << wxT("?");
+												str << L"?";
 											else
 												str << qd;
 											data += AddPreviewData(iLine, idx, str.str());
@@ -821,14 +821,14 @@ void CWizardExport::UpdatePreview()
 													for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 													{
 														if (!q.empty())
-															q += wxT("/");
+															q += L"/";
 														q += (*iMultiQ)->GetShortName();
 													}
 												}
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
 												{
 													if (!q.empty())
-														q += wxT("/");
+														q += L"/";
 													q += _("IDS_SQ");
 												}
 											}
@@ -870,7 +870,7 @@ void CWizardExport::UpdatePreview()
 												++iter)
 											{
 												if (0 < i)
-													fld += wxT("/");
+													fld += L"/";
 												fld += *iter;
 											}
 											data += AddPreviewData(iLine, idx, fld);
@@ -909,7 +909,7 @@ void CWizardExport::UpdatePreview()
 						break;
 					case IO_CAL_TENTATIVE:
 						if (pCal->IsTentative())
-							data += AddPreviewData(iLine, idx, wxT("?"));
+							data += AddPreviewData(iLine, idx, L"?");
 						break;
 					case IO_CAL_ENTERED:
 						switch (pCal->GetEntered())
@@ -989,43 +989,43 @@ void CWizardExport::UpdatePreview()
 						data += AddPreviewData(iLine, idx, pCal->GetStartDate().GetString(format));
 						break;
 					case IO_CAL_APPT_START_TIME:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_END_DATE:
 						data += AddPreviewData(iLine, idx, pCal->GetEndDate().GetString(format));
 						break;
 					case IO_CAL_APPT_END_TIME:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_ALLDAY:
-						data += AddPreviewData(iLine, idx, wxT("1"));
+						data += AddPreviewData(iLine, idx, L"1");
 						break;
 					case IO_CAL_APPT_REMINDER:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_REMINDER_DATE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_REMINDER_TIME:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_ORGANIZER:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_REQ_ATTENDEES:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_OPT_ATTENDEES:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_RESOURCES:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_BILLING:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_CATEGORIES:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_DESCRIPTION:
 						{
@@ -1033,43 +1033,43 @@ void CWizardExport::UpdatePreview()
 							if (pCal->IsTentative())
 							{
 								tmp += Localization()->CalendarTentative();
-								tmp += wxT(" ");
+								tmp += L" ";
 							}
 							switch (pCal->GetEntered())
 							{
 							default:
 							case ARBCalendar::eNot:
 								tmp += Localization()->CalendarStatusN();
-								tmp += wxT(" ");
+								tmp += L" ";
 								break;
 							case ARBCalendar::eEntered:
 								tmp += Localization()->CalendarStatusE();
-								tmp += wxT(" ");
+								tmp += L" ";
 								break;
 							case ARBCalendar::ePending:
 								tmp += Localization()->CalendarStatusO();
-								tmp += wxT(" ");
+								tmp += L" ";
 								break;
 							case ARBCalendar::ePlanning:
 								tmp += Localization()->CalendarStatusP();
-								tmp += wxT(" ");
+								tmp += L" ";
 								break;
 							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
 								tmp += Localization()->CalendarOpens();
-								tmp += wxT(" ");
+								tmp += L" ";
 								tmp += date.GetString(format);
-								tmp += wxT(" ");
+								tmp += L" ";
 							}
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
 								tmp += Localization()->CalendarCloses();
-								tmp += wxT(" ");
+								tmp += L" ";
 								tmp += date.GetString(format);
-								tmp += wxT(" ");
+								tmp += L" ";
 							}
 							tmp += pCal->GetNote();
 							data += AddPreviewData(iLine, idx, tmp);
@@ -1079,19 +1079,19 @@ void CWizardExport::UpdatePreview()
 						data += AddPreviewData(iLine, idx, pCal->GetLocation());
 						break;
 					case IO_CAL_APPT_MILEAGE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_PRIORITY:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_PRIVATE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_SENSITIVITY:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_APPT_SHOW_TIME_AS:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					}
 				}
@@ -1146,40 +1146,40 @@ void CWizardExport::UpdatePreview()
 						data += AddPreviewData(iLine, idx, dateDue.GetString(format));
 						break;
 					case IO_CAL_TASK_REMINDER:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_REMINDER_DATE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_REMINDER_TIME:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_COMPLETED_DATE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_COMPLETE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_TOTAL_WORK:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_ACTUAL_WORK:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_BILLING:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_CATEGORIES:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_COMPANIES:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_CONTACTS:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_MILEAGE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_NOTES:
 						{
@@ -1187,49 +1187,49 @@ void CWizardExport::UpdatePreview()
 							if (pCal->IsTentative())
 							{
 								tmp += Localization()->CalendarTentative();
-								tmp += wxT(" ");
+								tmp += L" ";
 							}
 							date = pCal->GetOpeningDate();
 							if (date.IsValid())
 							{
 								tmp += Localization()->CalendarOpens();
-								tmp += wxT(" ");
+								tmp += L" ";
 								tmp += date.GetString(format);
-								tmp += wxT(" ");
+								tmp += L" ";
 							}
 							date = pCal->GetClosingDate();
 							if (date.IsValid())
 							{
 								tmp += Localization()->CalendarCloses();
-								tmp += wxT(" ");
+								tmp += L" ";
 								tmp += date.GetString(format);
-								tmp += wxT(" ");
+								tmp += L" ";
 							}
 							tmp += wxString::Format(_("IDS_TRIAL_DATES"),
 								pCal->GetStartDate().GetString(format).c_str(),
 								pCal->GetEndDate().GetString(format).c_str());
-							tmp += wxT(" ");
+							tmp += L" ";
 							tmp += pCal->GetNote();
 							data += AddPreviewData(iLine, idx, tmp);
 						}
 						break;
 					case IO_CAL_TASK_PRIORITY:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_PRIVATE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_ROLE:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_SCH_PRIORITY:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_SENSITIVITY:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					case IO_CAL_TASK_STATUS:
-						data += AddPreviewData(iLine, idx, wxT(""));
+						data += AddPreviewData(iLine, idx, L"");
 						break;
 					}
 				}
@@ -1504,7 +1504,7 @@ bool CWizardExport::DoWizardFinish()
 		if (wxID_OK == file.ShowModal())
 		{
 			wxBusyCursor wait;
-			wxFFileOutputStream output(file.GetPath(), wxT("wb"));
+			wxFFileOutputStream output(file.GetPath(), L"wb");
 			if (output.IsOk())
 			{
 				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)

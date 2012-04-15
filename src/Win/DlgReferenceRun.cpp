@@ -72,7 +72,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	Create(pParent, wxID_ANY, _("IDD_REF_RUN"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	if (m_Points.empty())
-		m_Points = wxT("0");
+		m_Points = L"0";
 	if (m_Height.empty())
 		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
 

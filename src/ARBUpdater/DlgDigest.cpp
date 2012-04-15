@@ -80,7 +80,7 @@ bool CLongValidator::TransferToWindow()
 		if (m_pLong)
 		{
 			wxString str;
-			str.Printf(wxT("%ld"), *m_pLong);
+			str.Printf(L"%ld", *m_pLong);
 			pControl->SetValue(str);
 			return true;
 		}
@@ -118,7 +118,7 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 	, m_MD5()
 	, m_Size(0)
 {
-	Create(NULL, wxID_ANY, wxT("MD5 Checksum"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	Create(NULL, wxID_ANY, L"MD5 Checksum", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	if (!m_File.empty())
 	{
@@ -155,9 +155,9 @@ CDlgDigest::CDlgDigest(wxString const& inFile)
 
 	wxSizer* sdbSizer = CreateSeparatedButtonSizer(wxOK|wxCANCEL);
 	wxButton* ok = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_OK), wxButton);
-	ok->SetLabel(wxT("Find..."));
+	ok->SetLabel(L"Find...");
 	wxButton* cancel = wxDynamicCast(FindWindowInSizer(sdbSizer, wxID_CANCEL), wxButton);
-	cancel->SetLabel(wxT("Close"));
+	cancel->SetLabel(L"Close");
 	bSizer->Add(sdbSizer, 0, wxALL|wxEXPAND, 5);
 
 	SetSizer(bSizer);

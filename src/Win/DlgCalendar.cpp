@@ -740,8 +740,8 @@ void CDlgCalendar::OnEmailSec(wxCommandEvent& evt)
 {
 	TransferDataFromWindow();
 	wxString s(m_EMailSecAddr);
-	if (0 != m_EMailSecAddr.Find(wxT("mailto:")))
-		s = wxT("mailto:") + m_EMailSecAddr;
+	if (0 != m_EMailSecAddr.Find(L"mailto:"))
+		s = L"mailto:" + m_EMailSecAddr;
 	wxLaunchDefaultBrowser(s);
 }
 

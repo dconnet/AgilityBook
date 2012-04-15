@@ -173,7 +173,7 @@ void CDlgReorder::Init(wxWindow* pParent)
 	}
 	else if (m_Trial && m_ctrlTree)
 	{
-		wxTreeItemId root = m_ctrlTree->AddRoot(wxT("Root"));
+		wxTreeItemId root = m_ctrlTree->AddRoot(L"Root");
 		std::map<ARBDate, wxTreeItemId> dates;
 		for (ARBDogRunList::iterator iter = m_Trial->GetRuns().begin();
 			iter != m_Trial->GetRuns().end();

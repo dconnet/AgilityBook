@@ -116,29 +116,29 @@ SUITE(TestDate)
 			ARBDate d(1999, 3, 2);
 			{
 				wxLocale locale(wxLANGUAGE_ENGLISH_UK);
-				CHECK(wxT("02/03/1999") == d.GetString(ARBDate::eCurrentLocale));
+				CHECK(L"02/03/1999" == d.GetString(ARBDate::eCurrentLocale));
 			}
 			{
 				wxLocale locale(wxLANGUAGE_ENGLISH_US);
 #ifdef __WXMAC__
-				CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eCurrentLocale));
+				CHECK(L"03/02/1999" == d.GetString(ARBDate::eCurrentLocale));
 #else
-				CHECK(wxT("3/2/1999") == d.GetString(ARBDate::eCurrentLocale));
+				CHECK(L"3/2/1999" == d.GetString(ARBDate::eCurrentLocale));
 #endif
 			}
-			CHECK(wxT("03-02-1999") == d.GetString(ARBDate::eDashMMDDYYYY));
-			CHECK(wxT("03/02/1999") == d.GetString(ARBDate::eSlashMMDDYYYY));
-			CHECK(wxT("1999-03-02") == d.GetString(ARBDate::eDashYYYYMMDD));
-			CHECK(wxT("1999/03/02") == d.GetString(ARBDate::eSlashYYYYMMDD));
-			CHECK(wxT("02-03-1999") == d.GetString(ARBDate::eDashDDMMYYYY));
-			CHECK(wxT("02/03/1999") == d.GetString(ARBDate::eSlashDDMMYYYY));
-			CHECK(wxT("3-2-1999") == d.GetString(ARBDate::eDashMDY));
-			CHECK(wxT("3/2/1999") == d.GetString(ARBDate::eSlashMDY));
-			CHECK(wxT("1999-3-2") == d.GetString(ARBDate::eDashYMD));
-			CHECK(wxT("1999/3/2") == d.GetString(ARBDate::eSlashYMD));
-			CHECK(wxT("2-3-1999") == d.GetString(ARBDate::eDashDMY));
-			CHECK(wxT("2/3/1999") == d.GetString(ARBDate::eSlashDMY));
-			CHECK(wxT("19990302") == d.GetString(ARBDate::eYYYYMMDD));
+			CHECK(L"03-02-1999" == d.GetString(ARBDate::eDashMMDDYYYY));
+			CHECK(L"03/02/1999" == d.GetString(ARBDate::eSlashMMDDYYYY));
+			CHECK(L"1999-03-02" == d.GetString(ARBDate::eDashYYYYMMDD));
+			CHECK(L"1999/03/02" == d.GetString(ARBDate::eSlashYYYYMMDD));
+			CHECK(L"02-03-1999" == d.GetString(ARBDate::eDashDDMMYYYY));
+			CHECK(L"02/03/1999" == d.GetString(ARBDate::eSlashDDMMYYYY));
+			CHECK(L"3-2-1999" == d.GetString(ARBDate::eDashMDY));
+			CHECK(L"3/2/1999" == d.GetString(ARBDate::eSlashMDY));
+			CHECK(L"1999-3-2" == d.GetString(ARBDate::eDashYMD));
+			CHECK(L"1999/3/2" == d.GetString(ARBDate::eSlashYMD));
+			CHECK(L"2-3-1999" == d.GetString(ARBDate::eDashDMY));
+			CHECK(L"2/3/1999" == d.GetString(ARBDate::eSlashDMY));
+			CHECK(L"19990302" == d.GetString(ARBDate::eYYYYMMDD));
 		}
 	}
 
@@ -181,11 +181,11 @@ SUITE(TestDate)
 	{
 		if (!g_bMicroTest)
 		{
-			ARBDate d = ARBDate::FromString(wxT("1999-3-27"), ARBDate::eDashYYYYMMDD);
+			ARBDate d = ARBDate::FromString(L"1999-3-27", ARBDate::eDashYYYYMMDD);
 			CHECK(d.IsValid());
 			ARBDate d2(1999, 3, 27);
 			CHECK(d == d2);
-			d = ARBDate::FromString(wxT("1999-3-27"), ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
+			d = ARBDate::FromString(L"1999-3-27", ARBDate::eSlashYYYYMMDD); // Reading does not enforce 0-padding
 			CHECK(!d.IsValid());
 			//TODO: Add more complete tests (test each format, bad formats, etc)
 		}
@@ -198,7 +198,7 @@ SUITE(TestDate)
 		{
 			ARBDate d2(1999, 3, 27);
 			wxLocale locale(wxLANGUAGE_ENGLISH_UK);
-			ARBDate d = ARBDate::FromString(wxT("27/3/1999"), ARBDate::eCurrentLocale);
+			ARBDate d = ARBDate::FromString(L"27/3/1999", ARBDate::eCurrentLocale);
 			CHECK(d.IsValid());
 			CHECK(d == d2);
 		}
@@ -211,7 +211,7 @@ SUITE(TestDate)
 		{
 			ARBDate d2(1999, 3, 27);
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
-			ARBDate d = ARBDate::FromString(wxT("3/27/1999"), ARBDate::eCurrentLocale);
+			ARBDate d = ARBDate::FromString(L"3/27/1999", ARBDate::eCurrentLocale);
 			CHECK(d.IsValid());
 			CHECK(d == d2);
 		}
@@ -225,12 +225,12 @@ SUITE(TestDate)
 			ARBDate d1(1999, 3, 30);
 			ARBDate d2(1999, 3, 27);
 			std::wstring s = ARBDate::GetValidDateString(d1, d2);
-			CHECK(wxT("[1999-3-30-1999-3-27]") == s);
+			CHECK(L"[1999-3-30-1999-3-27]" == s);
 			d1.clear();
 			s = ARBDate::GetValidDateString(d1, d2);
-			CHECK(wxT("[*-1999-3-27]") == s);
+			CHECK(L"[*-1999-3-27]" == s);
 			s = ARBDate::GetValidDateString(d2, d1);
-			CHECK(wxT("[1999-3-27-*]") == s);
+			CHECK(L"[1999-3-27-*]" == s);
 		}
 	}
 

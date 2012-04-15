@@ -35,7 +35,7 @@ SUITE(TestString)
 			CHECK(L"narrow" == s2);
 			*/
 			std::wstring s2 = StringUtil::stringW(s);
-			CHECK(wxT("narrow") == s2);
+			CHECK(L"narrow" == s2);
 		}
 	}
 
@@ -50,7 +50,7 @@ SUITE(TestString)
 			CHECK("wide" == s2);
 			*/
 			wxString s2 = StringUtil::stringWX(s);
-			CHECK(wxT("wide") == s2);
+			CHECK(L"wide" == s2);
 		}
 	}
 
@@ -74,10 +74,10 @@ SUITE(TestString)
 	{
 		if (!g_bMicroTest)
 		{
-			std::wstring s1(wxT("123"));
+			std::wstring s1(L"123");
 			long a1 = StringUtil::ToCLong(s1);
 			CHECK(a1 == 123);
-			std::wstring s2(wxT("12-3"));
+			std::wstring s2(L"12-3");
 			long a2 = StringUtil::ToCLong(s2);
 			CHECK(a2 == 12);
 			CHECK(!StringUtil::ToCLong(s2, a2));
@@ -92,10 +92,10 @@ SUITE(TestString)
 	{
 		if (!g_bMicroTest)
 		{
-			std::wstring s1(wxT("12.3"));
+			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToCDouble(s1);
 			CHECK(a1 == 12.3);
-			std::wstring s2(wxT("1.3-12"));
+			std::wstring s2(L"1.3-12");
 			double a2;
 			CHECK(!StringUtil::ToCDouble(s2, a2));
 			CHECK(a2 == 1.3);
@@ -108,10 +108,10 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			wxLocale locale(wxLANGUAGE_ENGLISH_US);
-			std::wstring s1(wxT("12.3"));
+			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
-			std::wstring s2(wxT("1.3-12"));
+			std::wstring s2(L"1.3-12");
 			double a2;
 			bool bParsed = StringUtil::ToDouble(s2, a2);
 			CHECK(a2 == 1.3);
@@ -125,10 +125,10 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			wxLocale locale(wxLANGUAGE_FRENCH);
-			std::wstring s1(wxT("12,3"));
+			std::wstring s1(L"12,3");
 			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
-			std::wstring s2(wxT("1,3-12"));
+			std::wstring s2(L"1,3-12");
 			double a2;
 			bool bParsed = StringUtil::ToDouble(s2, a2);
 			CHECK(a2 == 1.3);
@@ -143,7 +143,7 @@ SUITE(TestString)
 		{
 			// Even in French, I want to have "." separators parse properly.
 			wxLocale locale(wxLANGUAGE_FRENCH);
-			std::wstring s1(wxT("12.3"));
+			std::wstring s1(L"12.3");
 			double a1 = StringUtil::ToDouble(s1);
 			CHECK(a1 == 12.3);
 		}
@@ -181,12 +181,12 @@ SUITE(TestString)
 		if (!g_bMicroTest)
 		{
 			/*
-			std::wstring one(wxT("one"));
-			std::wstring two(wxT("two"));
-			std::wstring fmt = std::wstring::Format(wxT("%2$s %1$s"), one.c_str(), two.c_str());
-			CHECK(fmt == wxT("two one"));
+			std::wstring one(L"one");
+			std::wstring two(L"two");
+			std::wstring fmt = std::wstring::Format(L"%2$s %1$s", one.c_str(), two.c_str());
+			CHECK(fmt == L"two one");
 			*/
-			CHECK(wxT("two one") == wxString::Format(wxT("%2$s %1$s"), wxT("one"), wxT("two")));
+			CHECK(L"two one" == wxString::Format(L"%2$s %1$s", L"one", L"two"));
 		}
 	}
 }

@@ -735,7 +735,7 @@ std::wstring CAgilityBookTreeDataDog::OnNeedText() const
 	for (size_t idx = 0; idx < GetDogColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			str << wxT(" ");
+			str << L" ";
 		switch (GetDogColumns()[idx])
 		{
 		case IO_TREE_DOG_REGNAME:
@@ -1024,9 +1024,9 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_END == GetTrialColumns()[idx-1])
-						str << wxT("-");
+						str << L"-";
 					else
-						str << wxT(" ");
+						str << L" ";
 				}
 				str << m_pTrial->GetRuns().GetStartDate().GetString();
 				bNeedSpace = true;
@@ -1038,9 +1038,9 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 				if (bNeedSpace)
 				{
 					if (IO_TREE_TRIAL_START == GetTrialColumns()[idx-1])
-						str << wxT("-");
+						str << L"-";
 					else
-						str << wxT(" ");
+						str << L" ";
 				}
 				str << m_pTrial->GetRuns().GetEndDate().GetString();
 				bNeedSpace = true;
@@ -1048,24 +1048,24 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			break;
 		case IO_TREE_TRIAL_VERIFIED:
 			if (bNeedSpace)
-				str << wxT(" ");
+				str << L" ";
 			if (m_pTrial->IsVerified())
-				str << wxT("*");
+				str << L"*";
 			else
-				str << wxT("  "); // 2 spaces due to font (variable spacing)
+				str << L"  "; // 2 spaces due to font (variable spacing)
 			bNeedSpace = true;
 			break;
 		case IO_TREE_TRIAL_CLUB:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str << wxT(" ");
+					str << L" ";
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << wxT("/");
+						str << L"/";
 					str << (*iter)->GetName();
 					bNeedSpace = true;
 				}
@@ -1074,14 +1074,14 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 		case IO_TREE_TRIAL_VENUE:
 			{
 				if (bNeedSpace && 0 < m_pTrial->GetClubs().size())
-					str << wxT(" ");
+					str << L" ";
 				int i = 0;
 				for (ARBDogClubList::const_iterator iter = m_pTrial->GetClubs().begin();
 					iter != m_pTrial->GetClubs().end();
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << wxT("/");
+						str << L"/";
 					str << (*iter)->GetVenue();
 					bNeedSpace = true;
 				}
@@ -1091,7 +1091,7 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetLocation().empty())
 			{
 				if (bNeedSpace)
-					str << wxT(" ");
+					str << L" ";
 				str << m_pTrial->GetLocation();
 				bNeedSpace = true;
 			}
@@ -1100,7 +1100,7 @@ std::wstring CAgilityBookTreeDataTrial::OnNeedText() const
 			if (!m_pTrial->GetNote().empty())
 			{
 				if (bNeedSpace)
-					str << wxT(" ");
+					str << L" ";
 				str << StringUtil::Replace(m_pTrial->GetNote(), L"\n", L" ");
 				bNeedSpace = true;
 			}
@@ -1384,7 +1384,7 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 	for (size_t idx = 0; idx < GetRunColumns().size(); ++idx)
 	{
 		if (0 < idx)
-			str << wxT(" ");
+			str << L" ";
 		switch (GetRunColumns()[idx])
 		{
 		case IO_TREE_RUN_DATE:
@@ -1401,7 +1401,7 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 						{
 							if (!q.empty())
-								q += wxT("/");
+								q += L"/";
 							q += (*iMultiQ)->GetShortName();
 						}
 					}
@@ -1409,7 +1409,7 @@ std::wstring CAgilityBookTreeDataRun::OnNeedText() const
 					{
 						wxString tmp(_("IDS_SQ"));
 						if (!q.empty())
-							q += wxT("/");
+							q += L"/";
 						q += tmp;
 					}
 				}

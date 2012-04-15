@@ -66,7 +66,7 @@ std::wstring CListTrialData::OnNeedText(long iCol) const
 	{
 	default:
 		assert(0);
-		return wxT("");
+		return std::wstring();
 	case 0:
 		return m_Club->GetName();
 	case 1:

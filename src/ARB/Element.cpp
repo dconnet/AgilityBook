@@ -195,7 +195,7 @@ void ElementNode::Dump(int inLevel) const
 {
 	int i;
 	std::wostringstream msg;
-	msg << StringUtil::stringW(wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), m_Name.c_str()));
+	msg << StringUtil::stringW(wxString::Format(L"%*s%s", inLevel, L" ", m_Name.c_str()));
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		std::wstring name, value;
@@ -206,7 +206,7 @@ void ElementNode::Dump(int inLevel) const
 			<< value
 			<< L"\"";
 	}
-	wxLogMessage(wxT("%s"), msg.str().c_str());
+	wxLogMessage(L"%s", msg.str().c_str());
 	for (i = 0; i < GetElementCount(); ++i)
 	{
 		GetElement(i)->Dump(inLevel+1);
@@ -411,9 +411,9 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		if (value == wxT("y"))
+		if (value == L"y")
 			outValue = true;
-		else if (value == wxT("n"))
+		else if (value == L"n")
 			outValue = false;
 		else
 			rc = eInvalidValue;
@@ -536,7 +536,7 @@ bool ElementNode::AddAttrib(
 	if (inValue)
 		m_Attribs[inName] = inValue;
 	else
-		m_Attribs[inName] = wxT("");
+		m_Attribs[inName] = std::wstring();
 	return true;
 }
 
@@ -566,9 +566,9 @@ bool ElementNode::AddAttrib(
 	if (inName.empty())
 		return false;
 	if (inValue)
-		m_Attribs[inName] = wxT("y");
+		m_Attribs[inName] = L"y";
 	else
-		m_Attribs[inName] = wxT("n");
+		m_Attribs[inName] = L"n";
 	return true;
 }
 
@@ -929,7 +929,7 @@ bool ElementNode::SaveXML(
 	bool bOk = false;
 	if (outFile.empty())
 		return bOk;
-	wxFFileOutputStream output(outFile.c_str(), wxT("wb"));
+	wxFFileOutputStream output(outFile.c_str(), L"wb");
 	if (output.IsOk())
 	{
 		bOk = SaveXML(output, inDTD);
@@ -971,12 +971,12 @@ ElementText::ElementText(std::wstring const& inText)
 void ElementText::Dump(int inLevel) const
 {
 	std::wostringstream msg;
-	msg << StringUtil::stringW(wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), GetName().c_str()));
+	msg << StringUtil::stringW(wxString::Format(L"%*s%s", inLevel, L" ", GetName().c_str()));
 	if (0 < m_Value.length())
 	{
 		msg << L": " << m_Value;
 	}
-	wxLogMessage(wxT("%s"), msg.str().c_str());
+	wxLogMessage(L"%s", msg.str().c_str());
 }
 
 
@@ -988,7 +988,7 @@ Element::ElementType ElementText::GetType() const
 
 std::wstring const& ElementText::GetName() const
 {
-	static const std::wstring name(wxT("#text"));
+	static const std::wstring name(L"#text");
 	return name;
 }
 

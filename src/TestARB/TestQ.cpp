@@ -34,10 +34,10 @@ SUITE(TestARBQ)
 		if (!g_bMicroTest)
 		{
 			ARB_Q q;
-			CHECK(wxT("NA") == q.str());
+			CHECK(L"NA" == q.str());
 
 			ARB_Q q1(ARB_Q::eQ_Q);
-			CHECK(wxT("Q") == q1.str());
+			CHECK(L"Q" == q1.str());
 		}
 	}
 
@@ -47,7 +47,7 @@ SUITE(TestARBQ)
 		if (!g_bMicroTest)
 		{
 			CHECK_EQUAL(6, ARB_Q::GetNumValidTypes());
-			CHECK(wxT("NA, Q, NQ, E, DNR, SQ") == ARB_Q::GetValidTypes());
+			CHECK(L"NA, Q, NQ, E, DNR, SQ" == ARB_Q::GetValidTypes());
 			CHECK(ARB_Q(ARB_Q::eQ_NA) == ARB_Q::GetValidType(0));
 			CHECK(ARB_Q(ARB_Q::eQ_Q) == ARB_Q::GetValidType(1));
 			CHECK(ARB_Q(ARB_Q::eQ_NQ) == ARB_Q::GetValidType(2));
@@ -125,8 +125,8 @@ SUITE(TestARBQ)
 			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
-			CHECK(q.Load(wxT("SQ"), ver, callback));
-			CHECK(wxT("SQ") == q.str());
+			CHECK(q.Load(L"SQ", ver, callback));
+			CHECK(L"SQ" == q.str());
 		}
 	}
 
@@ -139,8 +139,8 @@ SUITE(TestARBQ)
 			std::wostringstream errmsg;
 			ARBErrorCallback callback(errmsg);
 			ARBVersion ver(1, 0);
-			CHECK(!q.Load(wxT("attrib"), ver, callback));
-			CHECK(wxT("NA") == q.str());
+			CHECK(!q.Load(L"attrib", ver, callback));
+			CHECK(L"NA" == q.str());
 		}
 	}
 
@@ -150,11 +150,11 @@ SUITE(TestARBQ)
 		if (!g_bMicroTest)
 		{
 			ARB_Q q;
-			ElementNodePtr ele = ElementNode::New(wxT("test"));
-			CHECK(q.Save(ele, wxT("attrib")));
+			ElementNodePtr ele = ElementNode::New(L"test");
+			CHECK(q.Save(ele, L"attrib"));
 			std::wstring str;
-			CHECK(ElementNode::eFound == ele->GetAttrib(wxT("attrib"), str));
-			CHECK(wxT("NA") == str);
+			CHECK(ElementNode::eFound == ele->GetAttrib(L"attrib", str));
+			CHECK(L"NA" == str);
 		}
 	}
 }

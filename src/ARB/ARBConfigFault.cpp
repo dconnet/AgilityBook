@@ -84,10 +84,10 @@ bool ARBConfigFault::Load(
 		return false;
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(wxT("Name"), m_Name)
+		if (ElementNode::eFound != inTree->GetAttrib(L"Name", m_Name)
 		|| 0 == m_Name.length())
 		{
-			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_FAULTTYPE, wxT("Name")));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_FAULTTYPE, L"Name"));
 			return false;
 		}
 	}

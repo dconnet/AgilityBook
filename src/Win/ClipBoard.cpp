@@ -43,15 +43,15 @@ static wxDataFormat GetClipboardFormat(eClipFormat fmt)
 	switch (fmt)
 	{
 	default:				return wxDataFormat(wxDF_INVALID);
-	case eFormatDog:		return wxDataFormat(wxT("ARB-Dog"));
-	case eFormatTrial:		return wxDataFormat(wxT("ARB-Trial"));
-	case eFormatRun:		return wxDataFormat(wxT("ARB-Run"));
-	case eFormatCalendar:	return wxDataFormat(wxT("ARB-Cal"));
-	case eFormatiCalendar:	return wxDataFormat(wxT("+//ISBN 1-887687-00-9::versit::PDI//vCalendar"));
-	case eFormatLog:		return wxDataFormat(wxT("ARB-Log"));
+	case eFormatDog:		return wxDataFormat(L"ARB-Dog");
+	case eFormatTrial:		return wxDataFormat(L"ARB-Trial");
+	case eFormatRun:		return wxDataFormat(L"ARB-Run");
+	case eFormatCalendar:	return wxDataFormat(L"ARB-Cal");
+	case eFormatiCalendar:	return wxDataFormat(L"+//ISBN 1-887687-00-9::versit::PDI//vCalendar");
+	case eFormatLog:		return wxDataFormat(L"ARB-Log");
 	// Not using wxDT_HTML aince OLE is defined which causes the wx code that
 	// "supports" html copying to not be invoked. So we do it.
-	case eFormatHtml:		return wxDataFormat(wxT("HTML Format"));
+	case eFormatHtml:		return wxDataFormat(L"HTML Format");
 	}
 }
 
@@ -154,7 +154,7 @@ CClipboardDataTable::CClipboardDataTable(std::wstring& ioText, std::wstring& ioH
 
 void CClipboardDataTable::Reset()
 {
-	m_ioHtml = wxT("<table border=\"1\">");
+	m_ioHtml = L"<table border=\"1\">";
 	m_ioText.clear();
 	m_Closed = false;
 }
@@ -162,25 +162,25 @@ void CClipboardDataTable::Reset()
 
 void CClipboardDataTable::StartLine()
 {
-	m_ioHtml += wxT("<TR>");
+	m_ioHtml += L"<TR>";
 }
 
 
 void CClipboardDataTable::EndLine()
 {
-	m_ioText += wxT("\r\n");
-	m_ioHtml += wxT("</TR>");
+	m_ioText += L"\r\n";
+	m_ioHtml += L"</TR>";
 }
 
 
 void CClipboardDataTable::Cell(int iCol, std::wstring const& inData)
 {
 	if (0 < iCol)
-		m_ioText += wxT("\t");
+		m_ioText += L"\t";
 	m_ioText += inData;
-	m_ioHtml += wxT("<TD>");
+	m_ioHtml += L"<TD>";
 	m_ioHtml += inData;
-	m_ioHtml += wxT("</TD>");
+	m_ioHtml += L"</TD>";
 }
 
 
@@ -189,7 +189,7 @@ bool CClipboardDataTable::Write(CClipboardDataWriter& writer, bool bCommit)
 	bool rc = false;
 	if (!m_Closed)
 	{
-		m_ioHtml += wxT("</table>");
+		m_ioHtml += L"</table>";
 		m_Closed = true;
 	}
 	rc |= writer.AddData(eFormatHtml, m_ioHtml);
@@ -285,7 +285,7 @@ bool CClipboardDataWriter::AddData(
 				<< endFragment << endHtml;
 			data = out.str();
 		}
-		wxCustomDataObject* dataObj = new wxCustomDataObject(wxDataFormat(wxT("HTML Format")));
+		wxCustomDataObject* dataObj = new wxCustomDataObject(wxDataFormat(L"HTML Format"));
 		dataObj->SetData(data.length() + 1, data.c_str());
 		if (!m_Object)
 			m_Object = new wxDataObjectComposite();

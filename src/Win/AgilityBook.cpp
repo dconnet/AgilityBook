@@ -249,8 +249,8 @@ bool CAgilityBookApp::OnInit()
 			return false;
 	}
 
-	SetAppName(wxT("Agility Record Book"));
-	wxConfig::Set(new wxConfig(wxT("Agility Record Book"), wxT("dcon Software")));
+	SetAppName(L"Agility Record Book");
+	wxConfig::Set(new wxConfig(L"Agility Record Book", L"dcon Software"));
 
 	wxImage::AddHandler(new wxGIFHandler);
 	wxFileSystem::AddHandler(new wxZipFSHandler);
@@ -263,7 +263,7 @@ bool CAgilityBookApp::OnInit()
 #if wxCHECK_VERSION(2, 9, 3)
 		{wxCMD_LINE_PARAM, NULL, NULL, "input file", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
 #else
-		{wxCMD_LINE_PARAM, NULL, NULL, wxT("input file"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
+		{wxCMD_LINE_PARAM, NULL, NULL, L"input file", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
 #endif
 		{wxCMD_LINE_NONE}
 	};
@@ -287,17 +287,17 @@ bool CAgilityBookApp::OnInit()
 
 	m_manager = new CAgilityBookDocManager(CAgilityBookOptions::GetMRUFileCount());
 	m_manager->SetMaxDocsOpen(1);
-	wxConfig::Get()->SetPath(wxT("Recent File List")); // Named this way for compatibility with existing MFC app
+	wxConfig::Get()->SetPath(L"Recent File List"); // Named this way for compatibility with existing MFC app
 	m_manager->FileHistoryLoad(*wxConfig::Get());
-	wxConfig::Get()->SetPath(wxT(".."));
+	wxConfig::Get()->SetPath(L"..");
 
-	(void)new wxDocTemplate(m_manager, wxT("ARB"), wxT("*.arb"), wxT(""), wxT("arb"), wxT("ARB Doc"), wxT("ARB View"),
+	(void)new wxDocTemplate(m_manager, L"ARB", L"*.arb", L"", L"arb", L"ARB Doc", L"ARB View",
 		CLASSINFO(CAgilityBookDoc), CLASSINFO(CTabView));
 #ifdef __WXMAC__
-	wxFileName::MacRegisterDefaultTypeAndCreator(wxT("arb"), 'ARBB', 'ARBA');
+	wxFileName::MacRegisterDefaultTypeAndCreator(L"arb", 'ARBB', 'ARBA');
 	wxSystemOptions::SetOption(wxMAC_TEXTCONTROL_USE_SPELL_CHECKER, 1);
 	// Sorting is broken in the native sorting in wx 2.8.10 and earlier
-	wxSystemOptions::SetOption(wxT("mac.listctrl.always_use_generic"), 1);
+	wxSystemOptions::SetOption(L"mac.listctrl.always_use_generic", 1);
 #endif
 
 	CMainFrame *frame = new CMainFrame(m_manager);
@@ -382,7 +382,7 @@ bool CAgilityBookApp::OnInit()
 		// Don't open it if the shift key is down.
 		if (!::wxGetKeyState(WXK_SHIFT))
 		{
-			filename = wxConfig::Get()->Read(CFG_SETTINGS_LASTFILE, wxT(""));
+			filename = wxConfig::Get()->Read(CFG_SETTINGS_LASTFILE, L"");
 		}
 	}
 	// If a file is being opened, verify it exists first!
@@ -416,7 +416,7 @@ bool CAgilityBookApp::OnInit()
 	// Check for updates every 30 days.
 	if (CAgilityBookOptions::GetAutoUpdateCheck())
 	{
-		std::wstring ver = wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, wxT("")).wx_str();
+		std::wstring ver = wxConfig::Get()->Read(CFG_SETTINGS_LASTVERCHECK, L"").wx_str();
 		ARBDate date = ARBDate::FromString(ver, ARBDate::eISO);
 		if (date.IsValid())
 		{
@@ -442,9 +442,9 @@ bool CAgilityBookApp::OnInit()
 
 int CAgilityBookApp::OnExit()
 {
-	wxConfig::Get()->SetPath(wxT("Recent File List"));
+	wxConfig::Get()->SetPath(L"Recent File List");
 	m_manager->FileHistorySave(*wxConfig::Get());
-	wxConfig::Get()->SetPath(wxT(".."));
+	wxConfig::Get()->SetPath(L"..");
 	delete m_LangMgr;
 	m_LangMgr = NULL;
 	delete m_manager;

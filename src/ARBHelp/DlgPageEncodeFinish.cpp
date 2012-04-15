@@ -31,7 +31,7 @@ CDlgPageEncodeFinish::CDlgPageEncodeFinish(CDlgARBHelp* pParent)
 	, m_Parent(pParent)
 {
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
-		wxT("Now that the information is gathered, send an email to help@agilityrecordbook.com with this data."),
+		L"Now that the information is gathered, send an email to help@agilityrecordbook.com with this data.",
 		wxDefaultPosition, wxDefaultSize, 0);
 #pragma PRAGMA_TODO("Add option to create a compressed file")
 #ifndef __WXMAC__

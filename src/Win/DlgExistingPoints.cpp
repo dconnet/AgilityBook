@@ -249,7 +249,7 @@ CDlgExistingPoints::CDlgExistingPoints(
 	m_ctrlVenues->SetHelpText(_("HIDC_EXISTING_VENUES"));
 	m_ctrlVenues->SetToolTip(_("HIDC_EXISTING_VENUES"));
 
-	m_textDivMultiQs = new wxStaticText(this, wxID_ANY, wxT(""),
+	m_textDivMultiQs = new wxStaticText(this, wxID_ANY, L"",
 		wxDefaultPosition, wxDefaultSize, 0);
 	m_textDivMultiQs->Wrap(-1);
 

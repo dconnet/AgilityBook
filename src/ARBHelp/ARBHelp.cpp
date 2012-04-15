@@ -47,15 +47,15 @@ CARBHelpApp::CARBHelpApp()
 
 bool CARBHelpApp::OnInit()
 {
-	SetAppName(wxT("Agility Record Book"));
-	wxConfig::Set(new wxConfig(wxT("Agility Record Book"), wxT("dcon Software")));
+	SetAppName(L"Agility Record Book");
+	wxConfig::Set(new wxConfig(L"Agility Record Book", L"dcon Software"));
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
 #if wxCHECK_VERSION(2, 9, 3)
 		{wxCMD_LINE_SWITCH, "decode", NULL, "Decode ARBHelp data from clipboard"},
 #else
-		{wxCMD_LINE_SWITCH, wxT("decode"), NULL, wxT("Decode ARBHelp data from clipboard")},
+		{wxCMD_LINE_SWITCH, L"decode", NULL, L"Decode ARBHelp data from clipboard"),
 #endif
 		{wxCMD_LINE_NONE}
 	};
@@ -63,7 +63,7 @@ bool CARBHelpApp::OnInit()
 	if (0 != cmdline.Parse(true))
 		return false;
 
-	if (cmdline.Found(wxT("decode")))
+	if (cmdline.Found(L"decode"))
 	{
 		CDlgPageDecode* dlg = new CDlgPageDecode();
 		dlg->Show();

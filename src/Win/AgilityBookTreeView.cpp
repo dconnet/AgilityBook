@@ -831,7 +831,7 @@ void CAgilityBookTreeView::LoadData()
 	m_Ctrl->DeleteAllItems();
 
 	// Load the data
-	m_Ctrl->AddRoot(wxT("Root"));
+	m_Ctrl->AddRoot(L"Root");
 	wxTreeItemId hItem = NULL;
 	for (ARBDogList::const_iterator iterDog = GetDocument()->Book().GetDogs().begin();
 		iterDog != GetDocument()->Book().GetDogs().end();
@@ -883,12 +883,12 @@ void CAgilityBookTreeView::PrintLine(
 		wxTreeItemId id,
 		int indent) const
 {
-	static std::wstring const spaces(wxT("&nbsp;&nbsp;&nbsp;"));
+	static std::wstring const spaces(L"&nbsp;&nbsp;&nbsp;");
 	if (id.IsOk() && id != m_Ctrl->GetRootItem())
 	{
 		for (int idx = 0; idx < indent; ++idx)
 			data << spaces;
-		data << m_Ctrl->GetItemText(id) << wxT("<br />\n"); // Note, wxWidgets needs the space before the slash
+		data << m_Ctrl->GetItemText(id) << L"<br />\n"; // Note, wxWidgets needs the space before the slash
 	}
 	wxTreeItemIdValue cookie;
 	wxTreeItemId hChildItem = m_Ctrl->GetFirstChild(id, cookie);
@@ -903,9 +903,9 @@ void CAgilityBookTreeView::PrintLine(
 std::wstring CAgilityBookTreeView::GetPrintDataAsHtmlTable() const
 {
 	std::wostringstream data;
-	data << wxT("<html><body><p>\n");
+	data << L"<html><body><p>\n";
 	PrintLine(data, m_Ctrl->GetRootItem(), -1);
-	data << wxT("</p></body></html>\n");
+	data << L"</p></body></html>\n";
 	return data.str();
 }
 

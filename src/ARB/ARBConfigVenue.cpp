@@ -241,8 +241,8 @@ bool ARBConfigVenue::Load(
 				{
 					if (!pMulti)
 						pMulti = ARBConfigMultiQPtr(ARBConfigMultiQ::New());
-					pMulti->SetName(wxT("Double Q"));
-					pMulti->SetShortName(wxT("QQ"));
+					pMulti->SetName(L"Double Q");
+					pMulti->SetShortName(L"QQ");
 					pMulti->AddItem((*iterS)->GetDivision(), (*iterS)->GetLevel(), (*iter)->GetName());
 				}
 			}
@@ -297,9 +297,9 @@ bool ARBConfigVenue::Update(
 
 	std::wstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += wxT("   ");
-	indentBuffer = indentName + wxT("   ");
-	indentName += wxT("-");
+		indentName += L"   ";
+	indentBuffer = indentName + L"   ";
+	indentName += L"-";
 
 	bool bChanges = false;
 	if (GetLongName() != inVenueNew->GetLongName())
@@ -370,13 +370,13 @@ bool ARBConfigVenue::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateTitles(nAdded, nChanged, nSkipped);
-			info += wxT("\n");
+			info += L"\n";
 		}
 		else
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateTitlesReordered();
-			info += wxT("\n");
+			info += L"\n";
 		}
 	}
 
@@ -406,9 +406,9 @@ bool ARBConfigVenue::Update(
 				++nAdded;
 				GetDivisions().AddDivision((*iterDiv));
 				info2 += indentBuffer;
-				info2 += wxT("+");
+				info2 += L"+";
 				info2 += (*iterDiv)->GetName();
-				info2 += wxT("\n");
+				info2 += L"\n";
 			}
 		}
 		GetDivisions().ReorderBy(inVenueNew->GetDivisions());
@@ -417,14 +417,14 @@ bool ARBConfigVenue::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateDivisions(nAdded, nChanged, nSkipped);
-			info += wxT("\n");
+			info += L"\n";
 			info += info2;
 		}
 		else
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateDivisionsReordered();
-			info += wxT("\n");
+			info += L"\n";
 		}
 	}
 
@@ -454,9 +454,9 @@ bool ARBConfigVenue::Update(
 				++nAdded;
 				GetEvents().AddEvent((*iterEvent));
 				info2 += indentBuffer;
-				info2 += wxT("+");
+				info2 += L"+";
 				info2 += (*iterEvent)->GetName();
-				info2 += wxT("\n");
+				info2 += L"\n";
 			}
 		}
 		GetEvents().ReorderBy(inVenueNew->GetEvents());
@@ -465,14 +465,14 @@ bool ARBConfigVenue::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateEvents(nAdded, nChanged, nSkipped);
-			info += wxT("\n");
+			info += L"\n";
 			info += info2;
 		}
 		else
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateEventsReordered();
-			info += wxT("\n");
+			info += L"\n";
 		}
 	}
 
@@ -520,20 +520,20 @@ bool ARBConfigVenue::Update(
 			info += indentBuffer;
 			info += GetName();
 			info += Localization()->UpdateMultiqs(nAdded, nDeleted, nSkipped);
-			info += wxT("\n");
+			info += L"\n";
 		}
 		else
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateMultiqsReordered();
-			info += wxT("\n");
+			info += L"\n";
 		}
 	}
 
 	if (0 < info.length())
 	{
 		bChanges = true;
-		ioInfo += indentName + GetName() + wxT("\n") + info;
+		ioInfo += indentName + GetName() + L"\n" + info;
 	}
 	return bChanges;
 }
