@@ -91,7 +91,7 @@ static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 		tree->AddAttrib(StringUtil::stringW(attribs->GetName()), StringUtil::stringW(attribs->GetValue()));
 		attribs = attribs->GetNext();
 	}
-	std::wstring content = node->GetNodeContent();
+	std::wstring content = StringUtil::stringW(node->GetNodeContent());
 	if (!content.empty())
 		tree->SetValue(content);
 	wxXmlNode* child = node->GetChildren();
@@ -117,7 +117,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 #if wxCHECK_VERSION(2, 9, 3)
 		node->AddAttribute(name, value);
 #else
-		node->AddProperty(name, value);
+		node->AddProperty(StringUtil::stringWX(name), StringUtil::stringWX(value));
 #endif
 	}
 	int count = toWrite.GetElementCount();
@@ -129,7 +129,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 		{
 		case Element::Element_Node:
 			{
-				wxXmlNode* child = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, element->GetName());
+				wxXmlNode* child = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, StringUtil::stringWX(element->GetName()));
 				if (lastChild)
 					lastChild->SetNext(child);
 				else
@@ -140,7 +140,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 			break;
 		case Element::Element_Text:
 			{
-				wxXmlNode* child = new wxXmlNode(NULL, wxXML_TEXT_NODE, element->GetName(), element->GetValue());
+				wxXmlNode* child = new wxXmlNode(NULL, wxXML_TEXT_NODE, StringUtil::stringWX(element->GetName()), StringUtil::stringWX(element->GetValue()));
 				node->AddChild(child);
 			}
 			break;
@@ -194,18 +194,19 @@ void ElementNode::RemoveAllTextNodes()
 void ElementNode::Dump(int inLevel) const
 {
 	int i;
-	wxString msg = wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), m_Name.c_str());
+	std::wostringstream msg;
+	msg << StringUtil::stringW(wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), m_Name.c_str()));
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
 		std::wstring name, value;
 		GetNthAttrib(i, name, value);
-		msg << wxT(" ")
+		msg << L" "
 			<< name
-			<< wxT("=\"")
+			<< L"=\""
 			<< value
-			<< wxT("\"");
+			<< L"\"";
 	}
-	wxLogMessage(wxT("%s"), msg.c_str());
+	wxLogMessage(wxT("%s"), msg.str().c_str());
 	for (i = 0; i < GetElementCount(); ++i)
 	{
 		GetElement(i)->Dump(inLevel+1);
@@ -904,9 +905,9 @@ bool ElementNode::SaveXML(
 		std::string const& inDTD) const
 {
 	wxXmlDocument doc;
-	doc.SetVersion(wxT("1.0"));
-	doc.SetFileEncoding(wxT("utf-8"));
-	wxXmlNode* root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, GetName());
+	doc.SetVersion(L"1.0");
+	doc.SetFileEncoding(L"utf-8");
+	wxXmlNode* root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, StringUtil::stringWX(GetName()));
 	doc.SetRoot(root);
 	// TODO: Insert DTD
 	CreateDoc(root, *this);
@@ -928,7 +929,7 @@ bool ElementNode::SaveXML(
 	bool bOk = false;
 	if (outFile.empty())
 		return bOk;
-	wxFFileOutputStream output(outFile, wxT("wb"));
+	wxFFileOutputStream output(outFile.c_str(), wxT("wb"));
 	if (output.IsOk())
 	{
 		bOk = SaveXML(output, inDTD);
@@ -969,12 +970,13 @@ ElementText::ElementText(std::wstring const& inText)
 
 void ElementText::Dump(int inLevel) const
 {
-	wxString msg = wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), GetName().c_str());
+	std::wostringstream msg;
+	msg << StringUtil::stringW(wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), GetName().c_str()));
 	if (0 < m_Value.length())
 	{
-		msg << wxT(": ") << m_Value;
+		msg << L": " << m_Value;
 	}
-	wxLogMessage(wxT("%s"), msg.c_str());
+	wxLogMessage(wxT("%s"), msg.str().c_str());
 }
 
 
