@@ -336,7 +336,7 @@ void CDlgCalendarQueryDetail::OnVenuesItemActivated(wxListEvent& evt)
 
 void CDlgCalendarQueryDetail::OnNewLocationCode(wxCommandEvent& evt)
 {
-	CDlgQueryDetail dlg(!m_EditCodes, wxT(""), wxT(""), this);
+	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		long idx = m_ctrlLocations->InsertItem(m_ctrlLocations->GetItemCount(), dlg.GetDetailCode());
@@ -365,7 +365,7 @@ void CDlgCalendarQueryDetail::OnDeleteLocationCode(wxCommandEvent& evt)
 
 void CDlgCalendarQueryDetail::OnNewVenueCode(wxCommandEvent& evt)
 {
-	CDlgQueryDetail dlg(!m_EditCodes, wxT(""), wxT(""), this, &m_Config);
+	CDlgQueryDetail dlg(!m_EditCodes, L"", L"", this, &m_Config);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		std::wstring code = dlg.GetDetailCode();

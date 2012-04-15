@@ -54,8 +54,8 @@
 
 
 // Registry settings in "Last"
-#define LAST_STYLE		wxT("Last/WizStyle")
-#define LAST_STYLEITEM	wxT("Last/WizSubStyle") // A number will be appended
+#define LAST_STYLE		L"Last/WizStyle"
+#define LAST_STYLEITEM	L"Last/WizSubStyle" // A number will be appended
 // Note: LAST_STYLE is a fixed number, regardless of UI order.
 // LAST_STYLEITEM actually uses the UI order (as of v1.10). If items are
 // reordered, this _will_ cause a problem. As of v2.0, this will change to
@@ -71,10 +71,10 @@ static struct
 	wchar_t const* id;
 } s_ImportExportChoices[] =
 {
-	{WIZARD_RADIO_EXCEL, wxT("IDC_WIZARD_START_EXCEL")},
-	{WIZARD_RADIO_CALC, wxT("IDC_WIZARD_START_CALC")},
-	{WIZARD_RADIO_SPREADSHEET, wxT("IDC_WIZARD_START_SPREADSHEET")},
-	{WIZARD_RADIO_ARB, wxT("IDC_WIZARD_START_ARB")}
+	{WIZARD_RADIO_EXCEL, L"IDC_WIZARD_START_EXCEL"},
+	{WIZARD_RADIO_CALC, L"IDC_WIZARD_START_CALC"},
+	{WIZARD_RADIO_SPREADSHEET, L"IDC_WIZARD_START_SPREADSHEET"},
+	{WIZARD_RADIO_ARB, L"IDC_WIZARD_START_ARB"}
 };
 static const long s_numImportExportChoices = sizeof(s_ImportExportChoices) / sizeof(s_ImportExportChoices[0]);
 
@@ -523,7 +523,7 @@ bool CWizardStart::DoWizardFinish()
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
 						{
-							msg << wxT("\n\n") << errMsg.str().c_str();
+							msg << L"\n\n" << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -551,7 +551,7 @@ bool CWizardStart::DoWizardFinish()
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
 						{
-							msg << wxT("\n\n") << errMsg.str().c_str();
+							msg << L"\n\n" << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -618,7 +618,7 @@ bool CWizardStart::DoWizardFinish()
 						}
 						entries = &allEntries;
 					}
-					wxFFileOutputStream output(file.GetPath(), wxT("wb"));
+					wxFFileOutputStream output(file.GetPath(), L"wb");
 					if (output.IsOk())
 					{
 						int nWarning = CAgilityBookOptions::CalendarOpeningNear();
@@ -654,7 +654,7 @@ bool CWizardStart::DoWizardFinish()
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
 						{
-							msg << wxT("\n\n") << errMsg.str().c_str();
+							msg << L"\n\n" << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -721,13 +721,13 @@ bool CWizardStart::DoWizardFinish()
 				wxFileDialog file(this,
 					wxEmptyString, // caption
 					wxEmptyString, // def dir
-					wxT("AgilityRecordBook.dtd"),
+					L"AgilityRecordBook.dtd",
 					_("IDS_FILEEXT_FILTER_DTD"),
 					wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 				if (wxID_OK == file.ShowModal())
 				{
 					wxBusyCursor wait;
-					wxFFileOutputStream output(file.GetPath(), wxT("wb"));
+					wxFFileOutputStream output(file.GetPath(), L"wb");
 					if (output.IsOk())
 					{
 						CConfigHandler handler;
@@ -745,7 +745,7 @@ bool CWizardStart::DoWizardFinish()
 				wxString name = m_pDoc->GetFilename();
 				if (name.empty())
 				{
-					name = wxT("AgilityRecordBook.");
+					name = L"AgilityRecordBook.";
 					name += _("IDS_FILEEXT_DEF_XML");
 				}
 				else
@@ -755,7 +755,7 @@ bool CWizardStart::DoWizardFinish()
 						name = name.Left(iDot+1) + _("IDS_FILEEXT_DEF_XML");
 					else
 					{
-						name += wxT(".");
+						name += L".";
 						name += _("IDS_FILEEXT_DEF_XML");
 					}
 				}
@@ -783,7 +783,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_IMPORT_SETTINGS:
 			{
-				wxString name = wxT("AgilityRecordBook.");
+				wxString name = L"AgilityRecordBook.";
 				name += _("IDS_FILEEXT_DEF_SETTINGS");
 				wxFileDialog file(this,
 					wxEmptyString, // caption
@@ -806,7 +806,7 @@ bool CWizardStart::DoWizardFinish()
 						wxString msg(_("AFX_IDP_FAILED_TO_OPEN_DOC"));
 						if (0 < errMsg.str().length())
 						{
-							msg << wxT("\n\n") << errMsg.str().c_str();
+							msg << L"\n\n" << errMsg.str().c_str();
 						}
 						wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 					}
@@ -816,7 +816,7 @@ bool CWizardStart::DoWizardFinish()
 
 		case WIZ_EXPORT_SETTINGS:
 			{
-				wxString name = wxT("AgilityRecordBook.");
+				wxString name = L"AgilityRecordBook.";
 				name += _("IDS_FILEEXT_DEF_SETTINGS");
 				wxFileDialog file(this,
 					wxEmptyString, // caption

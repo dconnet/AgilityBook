@@ -215,9 +215,9 @@ bool ARBConfigEvent::Update(
 
 	std::wstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += wxT("   ");
-	indentBuffer = indentName + wxT("   ");
-	indentName += wxT("-");
+		indentName += L"   ";
+	indentBuffer = indentName + L"   ";
+	indentName += L"-";
 
 	bool bChanges = false;
 	if (GetDesc() != inEventNew->GetDesc())
@@ -300,7 +300,7 @@ bool ARBConfigEvent::Update(
 			info += indentBuffer;
 			info += GetName();
 			info += Localization()->UpdateRules(nAdded, nDeleted, nChanged, nSkipped);
-			info += wxT("\n");
+			info += L"\n";
 		}
 	}
 	if (0 < info.length())

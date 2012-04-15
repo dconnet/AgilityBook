@@ -115,10 +115,10 @@ bool ARBDogClub::Load(
 		return false;
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(wxT("Name"), m_Name)
+		if (ElementNode::eFound != inTree->GetAttrib(L"Name", m_Name)
 		|| 0 == m_Name.length())
 		{
-			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CLUB, wxT("Name")));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_CLUB, L"Name"));
 			return false;
 		}
 	}
@@ -196,7 +196,7 @@ std::wstring ARBDogClubList::GetPrimaryClubName() const
 		return (*begin())->GetName();
 	}
 	else
-		return wxT("");
+		return std::wstring();
 }
 
 
@@ -208,7 +208,7 @@ std::wstring ARBDogClubList::GetPrimaryClubVenue() const
 		return (*begin())->GetVenue();
 	}
 	else
-		return wxT("");
+		return std::wstring();
 }
 
 
@@ -245,18 +245,18 @@ bool ARBDogClubList::FindEvent(
 	{
 		std::wstring msg(Localization()->InvalidEvent());
 		msg += inEvent;
-		msg += wxT(" (");
+		msg += L" (";
 		msg += inDivision;
-		msg += wxT("/");
+		msg += L"/";
 		msg += inLevel;
-		msg += wxT(")");
+		msg += L")";
 		for (const_iterator iter = begin(); !pScoring && iter != end(); ++iter)
 		{
-			msg += wxT("\n");
+			msg += L"\n";
 			msg += (*iter)->GetName();
-			msg += wxT(" [");
+			msg += L" [";
 			msg += (*iter)->GetVenue();
-			msg += wxT("]");
+			msg += L"]";
 		}
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_RUN, ATTRIB_RUN_EVENT, msg.c_str()));
 	}

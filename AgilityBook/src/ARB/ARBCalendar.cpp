@@ -45,14 +45,14 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define ENTRY_NOT		wxT("N")
-#define ENTRY_ENTERED	wxT("E")
-#define ENTRY_PENDING	wxT("O")
-#define ENTRY_PLANNING	wxT("P")
+#define ENTRY_NOT		L"N"
+#define ENTRY_ENTERED	L"E"
+#define ENTRY_PENDING	L"O"
+#define ENTRY_PLANNING	L"P"
 
-#define ACCOM_NONE		wxT("N")
-#define ACCOM_TODO		wxT("T")
-#define ACCOM_CONFIRMED	wxT("C")
+#define ACCOM_NONE		L"N"
+#define ACCOM_TODO		L"T"
+#define ACCOM_CONFIRMED	L"C"
 
 /////////////////////////////////////////////////////////////////////////////
 // Static functions (for iCalendar/vCalender)
@@ -622,9 +622,9 @@ bool ARBCalendar::Load(
 	if (inVersion == ARBVersion(1,0))
 	{
 		std::wstring attrib;
-		if (ElementNode::eFound == inTree->GetAttrib(wxT("PlanOn"), attrib))
+		if (ElementNode::eFound == inTree->GetAttrib(L"PlanOn", attrib))
 		{
-			if (attrib == wxT("y"))
+			if (attrib == L"y")
 				m_eEntered = ePlanning;
 			else
 				m_eEntered = eNot;
@@ -647,9 +647,9 @@ bool ARBCalendar::Load(
 			{
 				std::wstring msg(Localization()->ValidValues());
 				msg += ENTRY_ENTERED;
-				msg += wxT(", ");
+				msg += L", ";
 				msg += ENTRY_PLANNING;
-				msg += wxT(", ");
+				msg += L", ";
 				msg += ENTRY_NOT;
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ENTERED, msg.c_str()));
 				return false;
@@ -668,9 +668,9 @@ bool ARBCalendar::Load(
 			{
 				std::wstring msg(Localization()->ValidValues());
 				msg += ACCOM_NONE;
-				msg += wxT(", ");
+				msg += L", ";
 				msg += ACCOM_TODO;
-				msg += wxT(", ");
+				msg += L", ";
 				msg += ACCOM_CONFIRMED;
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_CALENDAR, ATTRIB_CAL_ACCOMMODATION, msg.c_str()));
 				return false;

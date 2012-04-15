@@ -183,8 +183,8 @@ void CDlgConfigUpdate::OnUpdateExisting(wxCommandEvent& evt)
 void CDlgConfigUpdate::OnName(wxCommandEvent& evt)
 {
 	wxFileDialog file(this,
-			wxT(""), // caption
-			wxT(""), // default dir
+			L"", // caption
+			L"", // default dir
 			m_FileName->GetValue(),
 			_("IDS_FILEEXT_FILTER_ARB"),
 			wxFD_OPEN | wxFD_FILE_MUST_EXIST);

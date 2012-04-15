@@ -92,11 +92,11 @@ static wxString FilterVenue(std::vector<CVenueFilter> const& venues)
 		++iter)
 	{
 		if (!venue.IsEmpty())
-			venue += wxT(":");
+			venue += L":";
 		venue += (*iter).venue;
-		venue += wxT("/");
+		venue += L"/";
 		venue += (*iter).division;
-		venue += wxT("/");
+		venue += L"/";
 		venue += (*iter).level;
 	}
 	return venue;
@@ -124,7 +124,7 @@ static std::wstring TrainingNames(std::set<std::wstring> const& inNames)
 	for (std::set<std::wstring>::const_iterator iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
 		if (!names.str().empty())
-			names << wxT(":");
+			names << L":";
 		names << *iter;
 	}
 	return names.str();

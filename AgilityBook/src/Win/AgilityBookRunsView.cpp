@@ -137,7 +137,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << wxT("/");
+						str << L"/";
 					str << (*iter)->GetVenue();
 				}
 			}
@@ -150,7 +150,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					++iter, ++i)
 				{
 					if (0 < i)
-						str << wxT("/");
+						str << L"/";
 					str << (*iter)->GetName();
 				}
 			}
@@ -292,23 +292,23 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 		case IO_RUNS_PLACE:
 			val = m_pRun->GetPlace();
 			if (0 > val)
-				str << wxT("?");
+				str << L"?";
 			else if (0 == val)
-				str << wxT("-");
+				str << L"-";
 			else
 				str << val;
 			break;
 		case IO_RUNS_IN_CLASS:
 			val = m_pRun->GetInClass();
 			if (0 >= val)
-				str << wxT("?");
+				str << L"?";
 			else
 				str << val;
 			break;
 		case IO_RUNS_DOGSQD:
 			val = m_pRun->GetDogsQd();
 			if (0 > val)
-				str << wxT("?");
+				str << L"?";
 			else
 				str << m_pRun->GetDogsQd();
 			break;
@@ -324,7 +324,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 						for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 						{
 							if (!q.empty())
-								q += wxT("/");
+								q += L"/";
 							q += (*iMultiQ)->GetShortName();
 						}
 					}
@@ -332,7 +332,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					{
 						bSet = true;
 						if (!q.empty())
-							str << q << wxT("/");
+							str << q << L"/";
 						str << _("IDS_SQ");
 					}
 					else
@@ -394,7 +394,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 		case IO_RUNS_COMMENTS:
 			{
 				wxString str2(m_pRun->GetNote());
-				str2.Replace(wxT("\n"), wxT(" "));
+				str2.Replace(L"\n", L" ");
 				str << str2;
 			}
 			break;
@@ -406,7 +406,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 					++i, ++iter)
 				{
 					if (0 < i)
-						str << wxT(", ");
+						str << L", ";
 					str << (*iter);
 				}
 			}
@@ -574,7 +574,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 				++iter, ++i)
 			{
 				if (0 < i)
-					str1 += wxT("/");
+					str1 += L"/";
 				str1 += (*iter)->GetVenue();
 			}
 			for (i = 0, iter = pRun2->GetTrial()->GetClubs().begin();
@@ -582,7 +582,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 				++iter, ++i)
 			{
 				if (0 < i)
-					str2 += wxT("/");
+					str2 += L"/";
 				str2 += (*iter)->GetVenue();
 			}
 			if (str1 < str2)
@@ -601,7 +601,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 				++iter, ++i)
 			{
 				if (0 < i)
-					str1 += wxT("/");
+					str1 += L"/";
 				str1 += (*iter)->GetName();
 			}
 			for (i = 0, iter = pRun2->GetTrial()->GetClubs().begin();
@@ -609,7 +609,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 				++iter, ++i)
 			{
 				if (0 < i)
-					str2 += wxT("/");
+					str2 += L"/";
 				str2 += (*iter)->GetName();
 			}
 			if (str1 < str2)
@@ -1073,7 +1073,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 				++i, ++iter)
 			{
 				if (0 < i)
-					str1 += wxT(", ");
+					str1 += L", ";
 				str1 += *iter;
 			}
 			for (i = 0, iter = pRun2->GetRun()->GetFaults().begin();
@@ -1081,7 +1081,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 				++i, ++iter)
 			{
 				if (0 < i)
-					str2 += wxT(", ");
+					str2 += L", ";
 				str2 += *iter;
 			}
 			if (str1 < str2)
@@ -1498,7 +1498,7 @@ void CAgilityBookRunsView::SetupColumns()
 	{
 		for (size_t iCol = 0; iCol <= m_Columns.size(); ++iCol)
 		{
-			wxString str(wxT(""));
+			wxString str(L"");
 			int fmt = 0;
 			if (0 < iCol)
 			{

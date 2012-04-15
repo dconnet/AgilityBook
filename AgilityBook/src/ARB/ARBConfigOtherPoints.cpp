@@ -31,10 +31,10 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-#define OTHERPTS_COUNT_ALL			wxT("All")
-#define OTHERPTS_COUNT_ALLBYEVENT	wxT("AllByEvent")
-#define OTHERPTS_COUNT_LEVEL		wxT("Level")
-#define OTHERPTS_COUNT_LEVELBYEVENT	wxT("LevelByEvent")
+#define OTHERPTS_COUNT_ALL			L"All"
+#define OTHERPTS_COUNT_ALLBYEVENT	L"AllByEvent"
+#define OTHERPTS_COUNT_LEVEL		L"Level"
+#define OTHERPTS_COUNT_LEVELBYEVENT	L"LevelByEvent"
 
 void ARBConfigOtherPoints::GetTallyValidValues(std::vector<std::wstring>& outValues)
 {
@@ -147,11 +147,11 @@ bool ARBConfigOtherPoints::Load(
 	{
 		std::wstring msg(Localization()->ValidValues());
 		msg += OTHERPTS_COUNT_ALL;
-		msg += wxT(", ");
+		msg += L", ";
 		msg += OTHERPTS_COUNT_ALLBYEVENT;
-		msg += wxT(", ");
+		msg += L", ";
 		msg += OTHERPTS_COUNT_LEVEL;
-		msg += wxT(", ");
+		msg += L", ";
 		msg += OTHERPTS_COUNT_LEVELBYEVENT;
 		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_OTHERPTS, ATTRIB_OTHERPTS_COUNT, msg.c_str()));
 		return false;

@@ -603,7 +603,7 @@ public:
 	{
 		m_CalData->Unload(true);
 		wxString disabled(_("IDS_DISABLED"));
-		m_Name = wxString::Format(wxT("%s [%s]"), m_Filename.c_str(), disabled.c_str());
+		m_Name = wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str());
 	}
 
 private:
@@ -617,8 +617,8 @@ private:
 		else
 		{
 			wxString disabled(_("IDS_DISABLED"));
-			m_Name = wxString::Format(wxT("%s [%s]"), m_Filename.c_str(), disabled.c_str());
-			m_Desc = wxT("");
+			m_Name = wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str());
+			m_Desc = L"";
 		}
 	}
 
@@ -636,41 +636,41 @@ public:
 		{
 			std::wostringstream str;
 			str << m_Cal->GetStartDate().GetString()
-				<< wxT(" ")
+				<< L" "
 				<< m_Cal->GetEndDate().GetString()
-				<< wxT(": ")
+				<< L": "
 				<< m_Cal->GetVenue()
-				<< wxT(" ")
+				<< L" "
 				<< m_Cal->GetLocation()
-				<< wxT(" ")
+				<< L" "
 				<< m_Cal->GetClub();
 			m_Name = str.str();
 		}
 		std::wostringstream desc;
-		desc << m_Cal->GetSecEmail() << wxT("\n");
+		desc << m_Cal->GetSecEmail() << L"\n";
 		if (m_Cal->GetOpeningDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_OPENS);
 			desc << str
-				<< wxT(" ")
+				<< L" "
 				<< m_Cal->GetOpeningDate().GetString()
-				<< wxT("\n");
+				<< L"\n";
 		}
 		if (m_Cal->GetDrawDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_DRAWS);
 			desc << str
-				<< wxT(" ")
+				<< L" "
 				<< m_Cal->GetDrawDate().GetString()
-				<< wxT("\n");
+				<< L"\n";
 		}
 		if (m_Cal->GetClosingDate().IsValid())
 		{
 			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(IO_CAL_CLOSES);
 			desc << str
-				<< wxT(" ")
+				<< L" "
 				<< m_Cal->GetClosingDate().GetString()
-				<< wxT("\n");
+				<< L"\n";
 		}
 		m_Desc = desc.str();
 	}
@@ -805,7 +805,7 @@ CDlgCalendarPlugins::CDlgCalendarPlugins(
 		_("IDC_PLUGIN_CLOSE"),
 		wxDefaultPosition, wxDefaultSize, 0);
 
-	wxTreeItemId root = m_ctrlPlugins->AddRoot(wxT("root"));
+	wxTreeItemId root = m_ctrlPlugins->AddRoot(L"root");
 	for (ARBConfigCalSiteList::const_iterator iConfig = m_pDoc->Book().GetConfig().GetCalSites().begin();
 		iConfig != m_pDoc->Book().GetConfig().GetCalSites().end();
 		++iConfig)
@@ -1027,7 +1027,7 @@ void CDlgCalendarPlugins::OnPluginRead(wxCommandEvent& evt)
 						if (pData->CanDisable())
 						{
 							flags |= wxYES_NO | wxNO_DEFAULT;
-							err += wxT("\n\n");
+							err += L"\n\n";
 							err += _("IDS_USE_PLUGIN");
 						}
 						else

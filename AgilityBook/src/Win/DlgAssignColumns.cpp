@@ -942,7 +942,7 @@ CDlgAssignColumns::CDlgAssignColumns(
 	m_ctrlAvailable->SetHelpText(_("HIDC_ASSIGN_AVAILABLE"));
 	m_ctrlAvailable->SetToolTip(_("HIDC_ASSIGN_AVAILABLE"));
 
-	wxStaticText* textSpacer = new wxStaticText(this, wxID_ANY, wxT(""),
+	wxStaticText* textSpacer = new wxStaticText(this, wxID_ANY, L"",
 		wxDefaultPosition, wxDefaultSize, 0);
 	textSpacer->Wrap(-1);
 

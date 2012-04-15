@@ -41,7 +41,7 @@
 
 
 CDlgARBHelp::CDlgARBHelp()
-	: wxWizard(NULL, wxID_ANY, wxT("Agility Record Book Helper"), wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+	: wxWizard(NULL, wxID_ANY, L"Agility Record Book Helper", wxNullBitmap, wxDefaultPosition, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
 	wxIconBundle icons;
 	icons.AddIcon(wxIcon(AgilityBook16_xpm));
@@ -133,7 +133,7 @@ std::wstring CDlgARBHelp::GetEncodedData()
 		if ((*iFile).second)
 		{
 			wxFFile file;
-			if (file.Open((*iFile).first.c_str(), wxT("rb")))
+			if (file.Open((*iFile).first.c_str(), L"rb"))
 			{
 				std::wstring data;
 				BinaryData::Encode(file, data);

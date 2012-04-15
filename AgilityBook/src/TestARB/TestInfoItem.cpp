@@ -39,23 +39,23 @@ TestInfoItemData::TestInfoItemData()
 {
 	tree = ElementNode::New(TREE_INFO);
 	data = tree->AddElementNode(TREE_CLUBINFO);
-	data->AddAttrib(ATTRIB_INFO_NAME, wxT("Club1"));
-	data->SetValue(wxT("Club 1 info"));
+	data->AddAttrib(ATTRIB_INFO_NAME, L"Club1");
+	data->SetValue(L"Club 1 info");
 	ElementNodePtr club = tree->AddElementNode(TREE_CLUBINFO);
-	club->AddAttrib(ATTRIB_INFO_NAME, wxT("Club2"));
-	club->SetValue(wxT("Club 2 info"));
+	club->AddAttrib(ATTRIB_INFO_NAME, L"Club2");
+	club->SetValue(L"Club 2 info");
 	club = tree->AddElementNode(TREE_CLUBINFO);
-	club->AddAttrib(ATTRIB_INFO_NAME, wxT("Club3"));
+	club->AddAttrib(ATTRIB_INFO_NAME, L"Club3");
 	club = tree->AddElementNode(TREE_CLUBINFO);
-	club->AddAttrib(ATTRIB_INFO_NAME, wxT("Club4"));
+	club->AddAttrib(ATTRIB_INFO_NAME, L"Club4");
 	ElementNodePtr judge = tree->AddElementNode(TREE_JUDGEINFO);
-	judge->AddAttrib(ATTRIB_INFO_NAME, wxT("Judge One"));
-	judge->SetValue(wxT("Judge 1 info"));
+	judge->AddAttrib(ATTRIB_INFO_NAME, L"Judge One");
+	judge->SetValue(L"Judge 1 info");
 	judge = tree->AddElementNode(TREE_JUDGEINFO);
-	judge->AddAttrib(ATTRIB_INFO_NAME, wxT("Judge Two"));
-	judge->SetValue(wxT("Judge 2 info"));
+	judge->AddAttrib(ATTRIB_INFO_NAME, L"Judge Two");
+	judge->SetValue(L"Judge 2 info");
 	ElementNodePtr loc = tree->AddElementNode(TREE_LOCATIONINFO);
-	loc->AddAttrib(ATTRIB_INFO_NAME, wxT("Sunnyvale"));
+	loc->AddAttrib(ATTRIB_INFO_NAME, L"Sunnyvale");
 }
 
 
@@ -76,12 +76,12 @@ SUITE(TestInfoItem)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
-			info->SetName(wxT("Testing"));
+			info->SetName(L"Testing");
 			ARBInfoItemPtr info2 = info->Clone();
 			CHECK(NULL != info2.get());
 			CHECK(info.get() != info2.get());
 			CHECK(*info == *info2);
-			info->SetName(wxT("Test2"));
+			info->SetName(L"Test2");
 			CHECK(info->GetName() != info2->GetName());
 		}
 	}
@@ -92,7 +92,7 @@ SUITE(TestInfoItem)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info1 = ARBInfoItem::New();
-			info1->SetName(wxT("Testing"));
+			info1->SetName(L"Testing");
 			ARBInfoItemPtr info2 = ARBInfoItem::New();
 			CHECK(*info1 != *info2);
 			*info1 = *info2;
@@ -106,9 +106,9 @@ SUITE(TestInfoItem)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info1 = ARBInfoItem::New();
-			info1->SetName(wxT("A"));
+			info1->SetName(L"A");
 			ARBInfoItemPtr info2 = ARBInfoItem::New();
-			info2->SetName(wxT("B"));
+			info2->SetName(L"B");
 			CHECK(*info1 < *info2);
 			CHECK(!(*info1 > *info2));
 		}
@@ -120,8 +120,8 @@ SUITE(TestInfoItem)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info1 = ARBInfoItem::New();
-			info1->SetName(wxT("A"));
-			CHECK(info1->GetGenericName() == wxT("A"));
+			info1->SetName(L"A");
+			CHECK(info1->GetGenericName() == L"A");
 		}
 	}
 
@@ -165,9 +165,9 @@ SUITE(TestInfoItemList)
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(infolist.Load(data, ARBVersion(2, 0), callback));
-			ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
-			ele->SetValue(wxT("These are some notes"));
-			ele->AddAttrib(wxT("Name"), wxT("PASA"));
+			ElementNodePtr ele = ElementNode::New(L"Doesnt matter");
+			ele->SetValue(L"These are some notes");
+			ele->AddAttrib(L"Name", L"PASA");
 			CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
 			CHECK_EQUAL(1u, infolist.size());
 		}
@@ -178,8 +178,8 @@ SUITE(TestInfoItemList)
 	{
 		if (!g_bMicroTest)
 		{
-			ElementNodePtr ele = ElementNode::New(wxT("InfoItem"));
-			ele->SetValue(wxT("These are some notes"));
+			ElementNodePtr ele = ElementNode::New(L"InfoItem");
+			ele->SetValue(L"These are some notes");
 			ARBInfoItemList infolist(TREE_CLUBINFO);
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
@@ -194,10 +194,10 @@ SUITE(TestInfoItemList)
 		{
 			ARBInfoItemList infolist(TREE_CLUBINFO);
 			ARBInfoItemPtr info1 = ARBInfoItem::New();
-			info1->SetName(wxT("Test2"));
-			info1->SetComment(wxT("A note"));
+			info1->SetName(L"Test2");
+			info1->SetComment(L"A note");
 			ARBInfoItemPtr info2 = info1->Clone();
-			info2->SetName(wxT("Test1"));
+			info2->SetName(L"Test1");
 			CHECK(infolist.AddItem(info1));
 			CHECK(infolist.AddItem(info2));
 
@@ -233,8 +233,8 @@ SUITE(TestInfoItemList)
 			ARBErrorCallback callback(errs);
 			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
 			std::set<std::wstring> items;
-			items.insert(wxT("Club1"));
-			items.insert(wxT("Club3"));
+			items.insert(L"Club1");
+			items.insert(L"Club3");
 			info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
 			items.clear();
 			CHECK_EQUAL(3u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
@@ -250,8 +250,8 @@ SUITE(TestInfoItemList)
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-			CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(wxT("Club3")));
-			CHECK(!info.GetInfo(ARBInfo::eClubInfo).FindItem(wxT("Club3xc")));
+			CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3"));
+			CHECK(!info.GetInfo(ARBInfo::eClubInfo).FindItem(L"Club3xc"));
 		}
 	}
 
@@ -262,20 +262,20 @@ SUITE(TestInfoItemList)
 		{
 			ARBInfoItemList infolist(TREE_CLUBINFO);
 			ARBInfoItemPtr info1 = ARBInfoItem::New();
-			info1->SetName(wxT("Test2"));
-			info1->SetComment(wxT("A note"));
+			info1->SetName(L"Test2");
+			info1->SetComment(L"A note");
 			ARBInfoItemPtr info2 = info1->Clone();
-			info2->SetName(wxT("Test1"));
+			info2->SetName(L"Test1");
 			CHECK(infolist.AddItem(info1));
 			CHECK(infolist.AddItem(info2));
 			infolist.sort();
 			ARBInfoItemPtr info3 = infolist[0]->Clone();
 			CHECK(*info2 == *info3);
-			info3->SetComment(wxT("Test comments"));
+			info3->SetComment(L"Test comments");
 			CHECK(*info2 != *info3);
 			CHECK(!infolist.AddItem(info3));
 			CHECK(!infolist.AddItem(info1->Clone()));
-			info3->SetName(wxT("Test3"));
+			info3->SetName(L"Test3");
 			CHECK(infolist.AddItem(info3));
 			infolist.sort();
 			CHECK_EQUAL(3u, infolist.size());

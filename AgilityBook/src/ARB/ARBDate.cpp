@@ -279,17 +279,17 @@ std::wstring ARBDate::GetValidDateString(
 	std::wstring str;
 	if (inFrom.IsValid() || inTo.IsValid())
 	{
-		str += wxT("[");
+		str += L"[";
 		if (inFrom.IsValid())
 			str += inFrom.GetString(inFormat);
 		else
-			str += wxT("*");
-		str += wxT("-");
+			str += L"*";
+		str += L"-";
 		if (inTo.IsValid())
 			str += inTo.GetString(inFormat);
 		else
-			str += wxT("*");
-		str += wxT("]");
+			str += L"*";
+		str += L"]";
 	}
 	return str;
 }
@@ -376,7 +376,7 @@ std::wstring ARBDate::GetString(
 		bool inForceOutput) const
 {
 	if (!inForceOutput && !IsValid())
-		return wxT("");
+		return std::wstring();
 	std::wstring date;
 	int yr = 0;
 	int mon = 0;
@@ -427,7 +427,7 @@ std::wstring ARBDate::GetString(
 	case eVerbose:
 		{
 			wxDateTime dt(static_cast<wxDateTime::wxDateTime_t>(day), static_cast<wxDateTime::Month>(mon-1), yr);
-			date = StringUtil::stringW(dt.Format(wxT("%A, %B %d, %Y")));
+			date = StringUtil::stringW(dt.Format(L"%A, %B %d, %Y"));
 		}
 		break;
 	default:				///< YYYY-MM-DD or MM/DD/YYYY

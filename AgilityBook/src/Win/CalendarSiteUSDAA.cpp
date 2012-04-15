@@ -75,11 +75,11 @@ static wxString mdy2ymd(wxString const& inDate)
 
 static void StripNewlines(std::wstring& inStr)
 {
-	std::wstring::size_type pos = inStr.find_first_of(wxT("\n"));
+	std::wstring::size_type pos = inStr.find_first_of(L"\n");
 	while (std::wstring::npos != pos)
 	{
 		inStr.replace(pos, 1, 1, L' ');
-		pos = inStr.find_first_of(wxT("\n"));
+		pos = inStr.find_first_of(L"\n");
 	}
 }
 
@@ -182,7 +182,7 @@ static ElementNodePtr ReadData(
 	{
 #if GENERATE_TESTDATA
 {
-wxFFile raw(outTestData.c_str(), wxT("wb"));
+wxFFile raw(outTestData.c_str(), L"wb");
 raw.Write(data.c_str(), data.length());
 }
 #endif
@@ -223,7 +223,7 @@ raw.Write(data.c_str(), data.length());
 //{
 //std::string out(inAddress);
 //out += ".out";
-//wxFFile raw(StringUtil::stringWX(out), wxT("wb"));
+//wxFFile raw(StringUtil::stringWX(out), L"wb");
 //raw.Write(pData, strlen(pData));
 //}
 #endif
@@ -241,7 +241,7 @@ raw.Write(data.c_str(), data.length());
 //{
 //std::string out(inAddress);
 //out += ".tree";
-//wxFFileOutputStream raw(StringUtil::stringWX(out), wxT("wb"));
+//wxFFileOutputStream raw(StringUtil::stringWX(out), L"wb");
 //tree->SaveXML(raw);
 //}
 #endif
@@ -286,7 +286,7 @@ std::string CCalendarSiteUSDAA::Process(
 
 	bool bOk = false;
 	ElementNodePtr calTree(ElementNode::New(TREE_BOOK));
-	calTree->AddAttrib(ATTRIB_BOOK_VERSION, wxT("12.6"));
+	calTree->AddAttrib(ATTRIB_BOOK_VERSION, L"12.6");
 
 	// Ok, now we get to parse the raw html from USDAA. As of Aug 2007,
 	// we want to look for a Level4 Header containing "Event Calendar"
@@ -294,11 +294,11 @@ std::string CCalendarSiteUSDAA::Process(
 	int nEntries = 0;
 	ElementNodePtr parentElement;
 	int idxEventCalH4tag = -1;
-	static const std::wstring tag(wxT("h4"));
-	static const std::wstring name(wxT("Event Calendar"));
+	static const std::wstring tag(L"h4");
+	static const std::wstring name(L"Event Calendar");
 	if (tree->FindElementDeep(parentElement, idxEventCalH4tag, tag, &name))
 	{
-		int idxTable = parentElement->FindElement(wxT("table"), idxEventCalH4tag+1);
+		int idxTable = parentElement->FindElement(L"table", idxEventCalH4tag+1);
 		if (0 <= idxTable)
 		{
 			ElementNodePtr table = parentElement->GetElementNode(idxTable);
@@ -326,11 +326,11 @@ std::string CCalendarSiteUSDAA::Process(
 							break;
 						case 1:
 							{
-								int idxA = tr->GetElementNode(td)->FindElement(wxT("a"));
+								int idxA = tr->GetElementNode(td)->FindElement(L"a");
 								if (0 <= idxA)
 								{
 									club = tr->GetElementNode(td)->GetElement(idxA)->GetValue();
-									tr->GetElementNode(td)->GetElementNode(idxA)->GetAttrib(wxT("href"), detail);
+									tr->GetElementNode(td)->GetElementNode(idxA)->GetAttrib(L"href", detail);
 								}
 								else
 									club = tr->GetElement(td)->GetValue();
@@ -343,14 +343,14 @@ std::string CCalendarSiteUSDAA::Process(
 							// Cleanup location
 							{
 								std::vector<std::wstring> fields;
-								size_t n = BreakLine(wxT(','), location, fields);
+								size_t n = BreakLine(L',', location, fields);
 								if (0 < n)
 								{
 									location.clear();
 									for (size_t iFld = 0; iFld < n; ++iFld)
 									{
 										if (0 < iFld)
-											location += wxT(", ");
+											location += L", ";
 										location += StringUtil::Trim(fields[iFld]);
 									}
 								}
@@ -363,14 +363,14 @@ std::string CCalendarSiteUSDAA::Process(
 						}
 						++idx;
 					}
-					wxString::size_type pos = dates.find(wxT("-"));
+					wxString::size_type pos = dates.find(L"-");
 					if (wxString::npos == pos)
 						continue;
 					bOk = true;
 					ElementNodePtr cal = calTree->AddElementNode(TREE_CALENDAR);
 					cal->AddAttrib(ATTRIB_CAL_START, mdy2ymd(dates.substr(0, pos)));
 					cal->AddAttrib(ATTRIB_CAL_END, mdy2ymd(dates.substr(pos+1)));
-					cal->AddAttrib(ATTRIB_CAL_VENUE, wxT("USDAA"));
+					cal->AddAttrib(ATTRIB_CAL_VENUE, L"USDAA");
 					cal->AddAttrib(ATTRIB_CAL_CLUB, club);
 					cal->AddAttrib(ATTRIB_CAL_LOCATION, location);
 					cal->SetValue(detail);
@@ -400,7 +400,7 @@ std::string CCalendarSiteUSDAA::Process(
 		std::wstring detail = cal->GetValue();
 		if (detail.empty())
 			continue;
-		cal->SetValue(wxT(""));
+		cal->SetValue(L"");
 		std::wstring address(L"http://www.usdaa.com/");
 		address += detail;
 		if (progress)
@@ -426,15 +426,15 @@ std::string CCalendarSiteUSDAA::Process(
 #endif
 		if (treeDetail)
 		{
-			static const std::wstring tag2(wxT("h3"));
-			static const std::wstring name2(wxT("General Event Information"));
+			static const std::wstring tag2(L"h3");
+			static const std::wstring name2(L"General Event Information");
 			ElementNodePtr parent;
 			int idxEventCalH3tag = -1;
 			if (treeDetail->FindElementDeep(parent, idxEventCalH3tag, tag2, &name2))
 			{
 				int idxFieldset;
 				ElementNodePtr parentFieldset;
-				if (parent->FindElementDeep(parentFieldset, idxFieldset, wxT("fieldset")))
+				if (parent->FindElementDeep(parentFieldset, idxFieldset, L"fieldset"))
 				{
 					ElementNodePtr fieldset = parentFieldset->GetElementNode(idxFieldset);
 					// Newlines have been compressed, along with some attributes
@@ -465,7 +465,7 @@ std::string CCalendarSiteUSDAA::Process(
 								{
 									int idxDate;
 									ElementNodePtr parentCloseDate;
-									if (div->FindElementDeep(parentCloseDate, idxDate, wxT("span")))
+									if (div->FindElementDeep(parentCloseDate, idxDate, L"span"))
 									{
 										ElementNodePtr closeDate = parentCloseDate->GetElementNode(idxDate);
 										wxString date = closeDate->GetValue();
@@ -479,11 +479,11 @@ std::string CCalendarSiteUSDAA::Process(
 								{
 									int idxHref;
 									ElementNodePtr parentTagA;
-									if (div->FindElementDeep(parentTagA, idxHref, wxT("a")))
+									if (div->FindElementDeep(parentTagA, idxHref, L"a"))
 									{
 										ElementNodePtr tagA = parentTagA->GetElementNode(idxHref);
 										std::wstring email;
-										tagA->GetAttrib(wxT("href"), email);
+										tagA->GetAttrib(L"href", email);
 										cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 									}
 								}
@@ -494,7 +494,7 @@ std::string CCalendarSiteUSDAA::Process(
 					}
 				}
 #if OLD_USDAA_FORMAT // Changed Late-Oct 2010
-				int idxTable = parent->FindElement(wxT("table"), idxEventCalH3tag+1);
+				int idxTable = parent->FindElement(L"table", idxEventCalH3tag+1);
 				if (0 <= idxTable)
 				{
 					ElementNodePtr table = parent->GetElementNode(idxTable);
@@ -527,8 +527,8 @@ std::string CCalendarSiteUSDAA::Process(
 								//   <td><b>Closing Date</b></td>
 								//   <td>mm/dd/yyyy</td>
 								{
-									int iTD = table->GetElementNode(i)->FindElement(wxT("td"), 0);
-									iTD = table->GetElementNode(i)->FindElement(wxT("td"), iTD+1);
+									int iTD = table->GetElementNode(i)->FindElement(L"td", 0);
+									iTD = table->GetElementNode(i)->FindElement(L"td", iTD+1);
 									if (0 <= iTD)
 									{
 										wxString date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
@@ -546,16 +546,16 @@ std::string CCalendarSiteUSDAA::Process(
 								//   <td><b>Event Secretary</b></td>
 								//   <td><a href="mailto...">name</a><br/>addr<br/></td>
 								{
-									int iTD = table->GetElementNode(i)->FindElement(wxT("td"), 0);
-									iTD = table->GetElementNode(i)->FindElement(wxT("td"), iTD+1);
+									int iTD = table->GetElementNode(i)->FindElement(L"td", 0);
+									iTD = table->GetElementNode(i)->FindElement(L"td", iTD+1);
 									ElementNodePtr td = table->GetElementNode(i)->GetElementNode(iTD);
 									if (td)
 									{
-										iTD = td->FindElement(wxT("a"));
+										iTD = td->FindElement(L"a");
 										if (0 <= iTD)
 										{
 											wxString email;
-											td->GetElementNode(iTD)->GetAttrib(wxT("href"), email);
+											td->GetElementNode(iTD)->GetAttrib(L"href", email);
 											cal->AddAttrib(ATTRIB_CAL_SECEMAIL, email);
 										}
 									}
@@ -575,7 +575,7 @@ std::string CCalendarSiteUSDAA::Process(
 #ifdef _DEBUG
 //Test code to look at generated calendar data
 //{
-//wxFFileOutputStream raw(wxT("c:\\events-caltree.xml"), wxT("wb"));
+//wxFFileOutputStream raw(L"c:\\events-caltree.xml", L"wb");
 //calTree->SaveXML(raw);
 //}
 #endif

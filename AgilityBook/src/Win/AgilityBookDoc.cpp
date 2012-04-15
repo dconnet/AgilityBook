@@ -257,7 +257,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 				for (iDog = m_Records.GetDogs().begin(); iDog != m_Records.GetDogs().end(); ++iDog, ++menuId)
 				{
 					BIND_OR_CONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusDog);
-					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), wxT("&"), wxT("&&"));
+					std::wstring item = StringUtil::Replace((*iDog)->GetGenericName(), L"&", L"&&");
 					wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
 					if (*(*iDog) == *curDog)
 						menuitem->Check(true);
@@ -291,7 +291,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 						++iFilter, ++menuId)
 					{
 						BIND_OR_CONNECT_ID(parent, menuId, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler, CAgilityBookDoc::OnStatusFilter);
-						std::wstring item = StringUtil::Replace(*iFilter, wxT("&"), wxT("&&"));
+						std::wstring item = StringUtil::Replace(*iFilter, L"&", L"&&");
 						wxMenuItem* menuitem = menu->AppendCheckItem(menuId, item);
 						if (*iFilter == filterName)
 							menuitem->Check(true);
@@ -319,7 +319,7 @@ bool CAgilityBookDoc::StatusBarContextMenu(
 std::wstring CAgilityBookDoc::AddDogToCaption(std::wstring const& caption) const
 {
 	if (GetCurrentDog())
-		return GetCurrentDog()->GetCallName() + wxT(": ") + caption;
+		return GetCurrentDog()->GetCallName() + L": " + caption;
 	else
 		return caption;
 }
@@ -520,7 +520,7 @@ public:
 void CConfigActionCallback::PreDelete(std::wstring const& inMsg)
 {
 	std::wstring msg(inMsg);
-	msg += wxT("\n\n");
+	msg += L"\n\n";
 	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
 	if (wxID_NO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_WARNING))
 	{
@@ -784,56 +784,56 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 		if (0 < countDog)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_DOGS"), countDog);
 		}
 		if (0 < countRegNumsAdded)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_REGNUMS"), countRegNumsAdded);
 		}
 		if (0 < countExistingPts)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_EXISTINGPTS"), countExistingPts);
 		}
 		if (0 < countTitlesAdded)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_TITLES"), countTitlesAdded);
 		}
 		if (0 < countTrials)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_TRIALS"), countTrials);
 		}
 		if (0 < countClubs)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_CLUBS"), countClubs);
 		}
 		if (0 < countJudges)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_JUDGES"), countJudges);
 		}
 		if (0 < countLocations)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			bAdded = true;
 			str += wxString::Format(_("IDS_ADDED_LOCATIONS"), countLocations);
 		}
@@ -841,10 +841,10 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 		if (0 < countRegNumsUpdated)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			else
 			{
-				str += wxT("\n");
+				str += L"\n";
 				str += _("IDS_UPDATED");
 			}
 			bAdded = true;
@@ -853,10 +853,10 @@ bool CAgilityBookDoc::ImportARBRunData(ElementNodePtr inTree, wxWindow* pParent)
 		if (0 < countTitlesUpdated)
 		{
 			if (bAdded)
-				str += wxT(", ");
+				str += L", ";
 			else
 			{
-				str += wxT("\n");
+				str += L"\n";
 				str += _("IDS_UPDATED");
 			}
 			bAdded = true;
@@ -1188,7 +1188,7 @@ void CAgilityBookDoc::BackupFile(wxString const& lpszPathName)
 		int i;
 		for (i = 1; i <= nBackups; ++i)
 		{
-			wxString backup = wxString::Format(wxT("%s.bck%d"), lpszPathName.c_str(), i);
+			wxString backup = wxString::Format(L"%s.bck%d", lpszPathName.c_str(), i);
 			if (!wxFile::Exists(backup))
 			{
 				nHole = i;
@@ -1200,13 +1200,13 @@ void CAgilityBookDoc::BackupFile(wxString const& lpszPathName)
 		// Then shift all the files into the hole.
 		for (i = nHole; i > 1; --i)
 		{
-			wxString backup = wxString::Format(wxT("%s.bck%d"), lpszPathName.c_str(), i);
+			wxString backup = wxString::Format(L"%s.bck%d", lpszPathName.c_str(), i);
 			if (wxFile::Exists(backup))
 				wxRemoveFile(backup);
-			wxString filename = wxString::Format(wxT("%s.bck%d"), lpszPathName.c_str(), i-1);
+			wxString filename = wxString::Format(L"%s.bck%d", lpszPathName.c_str(), i-1);
 			wxRenameFile(filename, backup);
 		}
-		wxString backup = lpszPathName + wxT(".bck1");
+		wxString backup = lpszPathName + L".bck1";
 		// File may not exist if doing a 'save as'
 		if (wxFile::Exists(lpszPathName))
 			wxCopyFile(lpszPathName, backup, false);
@@ -1290,7 +1290,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
 		if (0 < err.str().length())
 		{
-			msg << wxT("\n\n") << err.str();
+			msg << L"\n\n" << err.str();
 		}
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		return false;
@@ -1303,7 +1303,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 		wxString msg = wxString::Format(_("Cannot open file '%s'."), filename.c_str());
 		if (0 < callback.m_ErrMsg.str().length())
 		{
-			msg << wxT("\n\n") << callback.m_ErrMsg.str();
+			msg << L"\n\n" << callback.m_ErrMsg.str();
 		}
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 		return false;
@@ -1311,7 +1311,7 @@ bool CAgilityBookDoc::OnOpenDocument(const wxString& filename)
 	else if (0 < callback.m_ErrMsg.str().length())
 	{
 		wxString msg(_("IDS_NONFATAL_MSGS"));
-		msg << wxT("\n\n") << callback.m_ErrMsg.str();
+		msg << L"\n\n" << callback.m_ErrMsg.str();
 		wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_INFORMATION);
 	}
 	SortDates();
@@ -1638,13 +1638,13 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 								if ((*iTitle)->GetPrefix())
 								{
 									if (!preTitles2.empty())
-										preTitles2 += wxT(" ");
+										preTitles2 += L" ";
 									preTitles2 += pTitle->GetGenericName();
 								}
 								else
 								{
 									if (!postTitles2.empty())
-										postTitles2 += wxT(" ");
+										postTitles2 += L" ";
 									postTitles2 += pTitle->GetGenericName();
 								}
 							}
@@ -1653,24 +1653,24 @@ void CAgilityBookDoc::OnCmd(wxCommandEvent& evt)
 					if (!preTitles2.empty())
 					{
 						if (!preTitles.empty())
-							preTitles += wxT(" ");
+							preTitles += L" ";
 						preTitles += preTitles2;
 					}
 					if (!postTitles2.empty())
 					{
 						if (!postTitles.empty())
-							postTitles += wxT("; ");
+							postTitles += L"; ";
 						postTitles += postTitles2;
 					}
 				}
 
 				std::wstring data(preTitles);
 				if (!data.empty())
-					data += wxT(" ");
+					data += L" ";
 				data += pDog->GetCallName();
 				if (!postTitles.empty())
 				{
-					data += wxT(": ");
+					data += L": ";
 					data += postTitles;
 				}
 				CClipboardDataWriter clpData;

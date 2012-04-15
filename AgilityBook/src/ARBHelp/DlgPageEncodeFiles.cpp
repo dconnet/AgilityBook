@@ -31,7 +31,7 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 	, m_ctrlList(NULL)
 {
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
-		wxT("Check the files you would like to be sent"),
+		L"Check the files you would like to be sent",
 		wxDefaultPosition, wxDefaultSize, 0);
 	text1->Wrap(-1);
 
@@ -39,11 +39,11 @@ CDlgPageEncodeFiles::CDlgPageEncodeFiles(CDlgARBHelp* pParent)
 		wxDefaultPosition, wxDefaultSize,
 		0, NULL, 0);
 
-	wxButton* btnAll = new wxButton(this, wxID_ANY, wxT("Check All"),
+	wxButton* btnAll = new wxButton(this, wxID_ANY, L"Check All",
 		wxDefaultPosition, wxDefaultSize, 0);
 	BIND_OR_CONNECT_CTRL(btnAll, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageEncodeFiles::OnCheckAll);
 
-	wxButton* btnNone = new wxButton(this, wxID_ANY, wxT("Uncheck All"),
+	wxButton* btnNone = new wxButton(this, wxID_ANY, L"Uncheck All",
 		wxDefaultPosition, wxDefaultSize, 0);
 	BIND_OR_CONNECT_CTRL(btnNone, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageEncodeFiles::OnCheckNone);
 

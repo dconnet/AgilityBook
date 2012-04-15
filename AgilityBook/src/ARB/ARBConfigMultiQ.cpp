@@ -173,7 +173,7 @@ bool ARBConfigMultiQ::Load(
 			{
 				std::wstring msg(Localization()->InvalidDivLevel());
 				msg += item.m_Div;
-				msg += wxT("/");
+				msg += L"/";
 				msg += item.m_Level;
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_LEVEL, msg.c_str()));
 				return false;
@@ -187,9 +187,9 @@ bool ARBConfigMultiQ::Load(
 			{
 				std::wstring msg(Localization()->InvalidEventName());
 				msg += item.m_Div;
-				msg += wxT("/");
+				msg += L"/";
 				msg += item.m_Level;
-				msg += wxT("/");
+				msg += L"/";
 				msg += item.m_Event;
 				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_MULTIQ_ITEM, ATTRIB_MULTIQ_ITEM_EVENT, msg.c_str()));
 				return false;

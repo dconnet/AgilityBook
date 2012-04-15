@@ -179,7 +179,7 @@ std::wstring CPointsDataText::OnNeedText(int inCol) const
 	switch (inCol)
 	{
 	default:
-		return wxT("");
+		return std::wstring();
 	case 0:
 		return m_Col1;
 	case 1:
@@ -319,7 +319,7 @@ std::wstring CPointsDataVenue::OnNeedText(int inCol) const
 				ARBDogRegNumPtr pRegNum;
 				if (m_pDog->GetRegNums().FindRegNum(m_pVenue->GetName(), &pRegNum))
 				{
-					str = wxT("[") + pRegNum->GetNumber() + wxT("]");
+					str = L"[" + pRegNum->GetNumber() + L"]";
 				}
 			}
 			break;
@@ -426,7 +426,7 @@ std::wstring CPointsDataTitle::OnNeedText(int inCol) const
 		case 2:
 			str = m_pDoc->Book().GetConfig().GetTitleCompleteName(m_pTitle, false);
 			if (m_pTitle->GetReceived())
-				str += wxT("*");
+				str += L"*";
 			break;
 		}
 	}
@@ -1331,9 +1331,9 @@ void CPointsDataItems::LoadData(
 				{
 					bHeaderInserted = true;
 					InsertVenueHeader(pDoc, inDog, pVenue);
-					std::wstring data(wxT("<h3>"));
+					std::wstring data(L"<h3>");
 					data += _("IDS_TITLES");
-					data += wxT("</h3>");
+					data += L"</h3>";
 					data += s_TableHeader;
 					m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, data)));
 				}
@@ -1341,7 +1341,7 @@ void CPointsDataItems::LoadData(
 			}
 		}
 		if (bHeaderInserted)
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table>"))));
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, L"</table>")));
 
 		bool bRunsInserted = false;
 		LifeTimePointsList lifetime;
@@ -1369,9 +1369,9 @@ void CPointsDataItems::LoadData(
 				InsertVenueHeader(pDoc, inDog, pVenue);
 			}
 			bRunsInserted = true;
-			std::wstring data(wxT("<h3>"));
+			std::wstring data(L"<h3>");
 			data += _("IDS_RUNS");
-			data += wxT("</h3>");
+			data += L"</h3>";
 			data += s_TableHeader;
 			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, data)));
 			std::vector<CPointsDataBasePtr> speedPtsData;
@@ -1869,7 +1869,7 @@ void CPointsDataItems::LoadData(
 			}
 		}
 		if (bRunsInserted)
-			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table>"))));
+			m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, L"</table>")));
 	}
 
 	// After all the venues, we do 'other points'.
@@ -1878,9 +1878,9 @@ void CPointsDataItems::LoadData(
 	{
 		std::wstring str(_("IDS_OTHERPOINTS"));
 		std::wstring table;
-		table = wxT("<h2>");
+		table = L"<h2>";
 		table += str;
-		table += wxT("</h2>");
+		table += L"</h2>";
 		table += s_TableHeader;
 
 		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, table)));
@@ -1964,7 +1964,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyAllByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, L"", pOther->GetName().c_str())));
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -1988,7 +1988,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevel:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, L"", pOther->GetName().c_str())));
 				{
 					std::set<std::wstring> tally;
 					std::list<OtherPtInfo>::iterator iter;
@@ -2012,7 +2012,7 @@ void CPointsDataItems::LoadData(
 				break;
 
 			case ARBConfigOtherPoints::eTallyLevelByEvent:
-				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, wxT(""), pOther->GetName().c_str())));
+				m_Lines.push_back(CPointsDataBasePtr(new CPointsDataText(pDoc, true, L"", pOther->GetName().c_str())));
 				{
 					typedef std::pair<std::wstring, std::wstring> LevelEvent;
 					std::set<LevelEvent> tally;
@@ -2038,7 +2038,7 @@ void CPointsDataItems::LoadData(
 				break;
 			}
 		}
-		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, wxT("</table></html>"))));
+		m_Lines.push_back(CPointsDataBasePtr(new CPointsDataSeparator(pDoc, L"</table></html>")));
 	}
 }
 

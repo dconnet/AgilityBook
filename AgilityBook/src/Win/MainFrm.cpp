@@ -241,7 +241,7 @@ CMainFrame::CMainFrame(wxDocManager* manager)
 				break;
 #if !wxCHECK_VERSION(2, 9, 3)
 			case STATUS_FILLER:
-				str = wxT("   "); // Filler for where the grabber is
+				str = L"   "; // Filler for where the grabber is
 				break;
 #endif
 			}
@@ -535,42 +535,42 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 
 	// OS version
 	wxPlatformInfo info;
-	str << wxT("OS: ")
+	str << L"OS: "
 		<< info.GetOperatingSystemIdName()
-		<< wxT(" ")
+		<< L" "
 		<< info.GetOSMajorVersion()
-		<< wxT(".")
+		<< L"."
 		<< info.GetOSMinorVersion()
-		<< wxT("\n");
+		<< L"\n";
 	if (wxPORT_BASE != info.GetPortId())
 	{
-		str << wxT("Port: ")
+		str << L"Port: "
 			<< info.GetPortIdName()
-			<< wxT(" ")
+			<< L" "
 			<< info.GetToolkitMajorVersion()
-			<< wxT(".")
+			<< L"."
 			<< info.GetToolkitMinorVersion()
-			<< wxT("\n");
+			<< L"\n";
 	}
-	str << wxT("Architecture: ")
+	str << L"Architecture: "
 		<< info.GetArchName()
-		<< wxT(", ")
+		<< L", "
 		<< info.GetEndiannessName()
-		<< wxT("\n");
+		<< L"\n";
 
 	// Me.
 	{
 		CVersionNum ver(true);
-		str << wxStandardPaths::Get().GetExecutablePath() << wxT(": ");
+		str << wxStandardPaths::Get().GetExecutablePath() << L": ";
 		if (ver.Valid())
 			str << ver.GetVersionString();
 		else
 			str << _("IDS_BAD_VERSION");
-		str << wxT("\n");
+		str << L"\n";
 	}
 
 	// wxWidgets
-	str << wxVERSION_STRING << wxT("\n");
+	str << wxVERSION_STRING << L"\n";
 
 	CDlgMessage dlg(StringUtil::stringW(str), this);
 	dlg.ShowModal();

@@ -46,7 +46,7 @@ CLanguageManager::CLanguageManager()
 	//wxHelpProvider::Set(new wxHelpControllerHelpProvider);
 	wxHelpProvider::Set(new wxSimpleHelpProvider);
 
-	m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+	m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + L"lang";
 
 	int lang = m_CurLang;
 	// Introduced in 2.1.
@@ -60,17 +60,17 @@ CLanguageManager::CLanguageManager()
 		{
 			// As of 2.0, we only supported 2 languages, so remapping is easy (whew!)
 			if (58 == lastLang)
-				langStr = wxT("en_US");
+				langStr = L"en_US";
 			else if (78 == lastLang)
-				langStr = wxT("fr_FR");
+				langStr = L"fr_FR";
 		}
 		else if (wxConfig::Get()->Read(CFG_SETTINGS_LANG, &lastLang, 0) && 0 != lastLang)
 		{
 			// Translates v1.10 registry
 			if (0x0409 == lastLang)
-				langStr = wxT("en_US");
+				langStr = L"en_US";
 			else if (0x040c == lastLang)
-				langStr = wxT("fr_FR");
+				langStr = L"fr_FR";
 		}
 	}
 	if (!langStr.empty())
@@ -88,7 +88,7 @@ CLanguageManager::CLanguageManager()
 		// Set the initial language to the system default.
 		SetLang(lang);
 		// If we don't support that language (lookup fails)...
-		if (wxString(wxT("IDD_LANGUAGE")) == _("IDD_LANGUAGE"))
+		if (wxString(L"IDD_LANGUAGE") == _("IDD_LANGUAGE"))
 		{
 			// ... force English.
 			SetLang(wxLANGUAGE_ENGLISH_US);

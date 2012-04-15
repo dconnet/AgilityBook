@@ -151,7 +151,7 @@ std::wstring CDlgListCtrlDataCalendar::OnNeedText(long iCol) const
 		str = m_pCal->GetVenue();
 		break;
 	case 6: // Notes
-		str = StringUtil::Replace(m_pCal->GetNote(), wxT("\n"), wxT(" "));
+		str = StringUtil::Replace(m_pCal->GetNote(), L"\n", L" ");
 		break;
 	}
 	return str;
@@ -415,7 +415,7 @@ CDlgListCtrl::CDlgListCtrl(
 	m_ctrlCreateTrial->Show();
 
 	int nCols = 0;
-	m_ctrlList->InsertColumn(nCols++, wxT(""));
+	m_ctrlList->InsertColumn(nCols++, L"");
 	m_ctrlList->InsertColumn(nCols++, _("IDS_COL_START_DATE"));
 	m_ctrlList->InsertColumn(nCols++, _("IDS_COL_END_DATE"));
 	m_ctrlList->InsertColumn(nCols++, _("IDS_COL_LOCATION"));

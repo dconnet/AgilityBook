@@ -46,8 +46,8 @@ CARBUpdaterApp::CARBUpdaterApp()
 
 bool CARBUpdaterApp::OnInit()
 {
-	SetAppName(wxT("Agility Record Book"));
-	wxConfig::Set(new wxConfig(wxT("Agility Record Book"), wxT("dcon Software")));
+	SetAppName(L"Agility Record Book");
+	wxConfig::Set(new wxConfig(L"Agility Record Book", L"dcon Software"));
 
 	static const wxCmdLineEntryDesc cmdLineDesc[] =
 	{
@@ -57,10 +57,10 @@ bool CARBUpdaterApp::OnInit()
 		{wxCMD_LINE_OPTION, "f", "file",
 			"Downloaded file"},
 #else
-		{wxCMD_LINE_SWITCH, wxT("g"), wxT("generate"),
-			wxT("Ignore all other options and display a dialog allowing MD5 generation")},
-		{wxCMD_LINE_OPTION, wxT("f"), wxT("file"),
-			wxT("Downloaded file")},
+		{wxCMD_LINE_SWITCH, L"g", L"generate",
+			L"Ignore all other options and display a dialog allowing MD5 generation"},
+		{wxCMD_LINE_OPTION, L"f", L"file",
+			L"Downloaded file"},
 #endif
 		{wxCMD_LINE_NONE}
 	};
@@ -71,7 +71,7 @@ bool CARBUpdaterApp::OnInit()
 	}
 
 	wxString file;
-	bool bHasFile = cmdline.Found(wxT("file"), &file);
+	bool bHasFile = cmdline.Found(L"file", &file);
 	if (bHasFile)
 	{
 		if (file.length() > 1 && file[0] == '"')
@@ -81,7 +81,7 @@ bool CARBUpdaterApp::OnInit()
 		file.Trim(true);
 	}
 
-	if (cmdline.Found(wxT("generate")) || !bHasFile)
+	if (cmdline.Found(L"generate") || !bHasFile)
 	{
 		CDlgDigest dlg(file);
 		dlg.ShowModal();
@@ -104,7 +104,7 @@ bool CARBUpdaterApp::OnInit()
 		else
 		{
 			DWORD x = GetLastError();
-			wxMessageBox(wxString::Format(wxT("\"%s\" failed: %08x"), file.wx_str(), x));
+			wxMessageBox(wxString::Format(L"\"%s\" failed: %08x", file.wx_str(), x));
 		}
 		// In theory, there could be timing issue here - if ARB starts really
 		// quickly, it could try deleting the file before we exit. ARB will

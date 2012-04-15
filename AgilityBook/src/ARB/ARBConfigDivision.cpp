@@ -155,9 +155,9 @@ bool ARBConfigDivision::Update(
 
 	std::wstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
-		indentName += wxT("   ");
-	indentBuffer = indentName + wxT("   ");
-	indentName += wxT("-");
+		indentName += L"   ";
+	indentBuffer = indentName + L"   ";
+	indentName += L"-";
 
 	// If the order is different, we will fall into this...
 	if (GetLevels() != inDivNew->GetLevels())
@@ -185,9 +185,9 @@ bool ARBConfigDivision::Update(
 				++nAdded;
 				GetLevels().AddLevel(*iterLevel);
 				info2 += indentBuffer;
-				info2 += wxT("+");
+				info2 += L"+";
 				info2 += (*iterLevel)->GetName();
-				info2 += wxT("\n");
+				info2 += L"\n";
 			}
 		}
 		GetLevels().ReorderBy(inDivNew->GetLevels());
@@ -196,7 +196,7 @@ bool ARBConfigDivision::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateLevels(nAdded, nChanged, nSkipped);
-			info += wxT("\n");
+			info += L"\n";
 			info += info2;
 		}
 		// Reordered
@@ -204,7 +204,7 @@ bool ARBConfigDivision::Update(
 		{
 			info += indentBuffer;
 			info += Localization()->UpdateLevelsReordered();
-			info += wxT("\n");
+			info += L"\n";
 		}
 	}
 
@@ -212,7 +212,7 @@ bool ARBConfigDivision::Update(
 	if (0 < info.length())
 	{
 		bChanges = true;
-		ioInfo += indentName + GetName() + wxT("\n") + info;
+		ioInfo += indentName + GetName() + L"\n" + info;
 	}
 	return bChanges;
 }

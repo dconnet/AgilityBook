@@ -122,10 +122,10 @@ bool ARBDogRegNum::Load(
 
 	if (inVersion == ARBVersion(1,0))
 	{
-		if (ElementNode::eFound != inTree->GetAttrib(wxT("Number"), m_Number)
+		if (ElementNode::eFound != inTree->GetAttrib(L"Number", m_Number)
 		|| 0 == m_Number.length())
 		{
-			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, wxT("Number")));
+			ioCallback.LogMessage(Localization()->ErrorMissingAttribute(TREE_REG_NUM, L"Number"));
 			return false;
 		}
 	}

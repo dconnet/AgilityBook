@@ -174,7 +174,7 @@ CDlgFindLinks::CDlgFindLinks(
 	, m_ctrlLinks(NULL)
 	, m_ctrlEdit(NULL)
 	, m_ctrlOpen(NULL)
-	, m_sortLinks(wxT("Links"))
+	, m_sortLinks(L"Links")
 	, m_imgEmpty(-1)
 	, m_imgOk(-1)
 	, m_imgMissing(-1)
@@ -340,7 +340,7 @@ void CDlgFindLinks::SetColumnHeaders()
 	{
 		wxString str;
 		str << wxGetTranslation(colLinkInfo[i].info)
-			<< wxT(" (") << m_sortLinks.FindColumnOrder(i) + 1 << wxT(")");
+			<< L" (" << m_sortLinks.FindColumnOrder(i) + 1 << L")";
 		wxListItem item;
 		item.SetMask(wxLIST_MASK_TEXT);
 		item.SetText(str);
@@ -430,7 +430,7 @@ void CDlgFindLinks::OnCopy(wxCommandEvent& evt)
 		for (size_t i = 0; i < m_Data.size(); ++i)
 		{
 			data += m_Data[i]->m_OldLink;
-			data += wxT("\r\n");
+			data += L"\r\n";
 		}
 
 		clpData.AddData(data);

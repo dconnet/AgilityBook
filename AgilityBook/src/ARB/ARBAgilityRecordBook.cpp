@@ -412,16 +412,16 @@ bool ARBAgilityRecordBook::Update(
 	if (curConfigVersion <= 23 && inConfigNew.GetVersion() >= 24)
 	{
 		ARBConfigVenuePtr venue, venueNew;
-		if (m_Config.GetVenues().FindVenue(wxT("USDAA"), &venue) && inConfigNew.GetVenues().FindVenue(wxT("USDAA"), &venueNew))
+		if (m_Config.GetVenues().FindVenue(L"USDAA", &venue) && inConfigNew.GetVenues().FindVenue(L"USDAA", &venueNew))
 		{
 			ARBConfigEventPtr event, eventNew;
-			if (venue->GetEvents().FindEvent(wxT("Pairs"), &event) && venueNew->GetEvents().FindEvent(wxT("Team"), &eventNew))
+			if (venue->GetEvents().FindEvent(L"Pairs", &event) && venueNew->GetEvents().FindEvent(L"Team", &eventNew))
 			{
 				ARBDate d;
-				if (event->VerifyEvent(WILDCARD_DIVISION, wxT("Nationals"), d)
-				|| event->VerifyEvent(WILDCARD_DIVISION, wxT("Tournament"), d)
-				|| eventNew->VerifyEvent(WILDCARD_DIVISION, wxT("Nationals"), d)
-				|| eventNew->VerifyEvent(WILDCARD_DIVISION, wxT("Tournament"), d))
+				if (event->VerifyEvent(WILDCARD_DIVISION, L"Nationals", d)
+				|| event->VerifyEvent(WILDCARD_DIVISION, L"Tournament", d)
+				|| eventNew->VerifyEvent(WILDCARD_DIVISION, L"Nationals", d)
+				|| eventNew->VerifyEvent(WILDCARD_DIVISION, L"Tournament", d))
 				{
 					// Ok, the configuration passes...
 					bFixUSDAAPairs = true;
@@ -471,22 +471,22 @@ bool ARBAgilityRecordBook::Update(
 				)
 			{
 				ARBDogRunPtr pRun = *iterRun;
-				if (bFixUSDAAPairs && venue == wxT("USDAA") && pRun->GetEvent() == wxT("Pairs")
-				&& (pRun->GetLevel() == wxT("Tournament") || pRun->GetLevel() == wxT("Nationals")))
+				if (bFixUSDAAPairs && venue == L"USDAA" && pRun->GetEvent() == L"Pairs"
+				&& (pRun->GetLevel() == L"Tournament" || pRun->GetLevel() == L"Nationals"))
 				{
 					// Move pairs run to new team
-					pRun->SetEvent(wxT("Team"));
-					msgPairsRuns << wxT("   ")
+					pRun->SetEvent(L"Team");
+					msgPairsRuns << L"   "
 						<< pRun->GetDate().GetString(ARBDate::eISO)
-						<< wxT(" ")
+						<< L" "
 						<< venue
-						<< wxT(" ")
+						<< L" "
 						<< pRun->GetEvent()
-						<< wxT(" ")
+						<< L" "
 						<< pRun->GetDivision()
-						<< wxT("/")
+						<< L"/"
 						<< pRun->GetLevel()
-						<< wxT("\n");
+						<< L"\n";
 					++nUpdatedPairsRuns;
 				}
 				ARBConfigScoringPtr pScoring;
@@ -508,17 +508,17 @@ bool ARBAgilityRecordBook::Update(
 				}
 				else
 				{
-					msgDelRuns << wxT("   ")
+					msgDelRuns << L"   "
 						<< pRun->GetDate().GetString(ARBDate::eISO)
-						<< wxT(" ")
+						<< L" "
 						<< venue
-						<< wxT(" ")
+						<< L" "
 						<< pRun->GetEvent()
-						<< wxT(" ")
+						<< L" "
 						<< pRun->GetDivision()
-						<< wxT("/")
+						<< L"/"
 						<< pRun->GetLevel()
-						<< wxT("\n");
+						<< L"\n";
 					++nDeletedRuns;
 					iterRun = pTrial->GetRuns().erase(iterRun);
 				}
@@ -529,14 +529,14 @@ bool ARBAgilityRecordBook::Update(
 	{
 		nChanges += nUpdatedPairsRuns;
 		std::wstring msg = Localization()->UpdateTeamRuns(nUpdatedPairsRuns, msgPairsRuns.str());
-		ioInfo << wxT("\n") << msg << wxT("\n");
+		ioInfo << L"\n" << msg << L"\n";
 	}
 	if (0 < nDeletedRuns)
 	{
 		nChanges += nDeletedRuns;
 		std::wstring msg = Localization()->WarnDeletedRuns(nDeletedRuns, msgDelRuns.str());
 		ioCallBack.PostDelete(msg);
-		ioInfo << wxT("\n") << msg << wxT("\n");
+		ioInfo << L"\n" << msg << L"\n";
 	}
 
 	// This fixup is only done when upgrading from Config version 2 to 3.

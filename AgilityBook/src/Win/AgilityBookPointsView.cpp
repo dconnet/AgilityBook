@@ -320,7 +320,7 @@ void CAgilityBookPointsView::SetupColumns()
 
 	for (long iCol = 0; iCol < MAX_COLUMNS; ++iCol)
 	{
-		wxString str = wxT("");
+		wxString str = L"";
 		if (1 == iCol)
 			str = _("IDS_TITLING_POINTS");
 		int fmt = wxLIST_FORMAT_LEFT;

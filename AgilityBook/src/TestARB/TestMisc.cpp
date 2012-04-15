@@ -33,7 +33,7 @@ SUITE(TestMisc)
 	{
 		if (!g_bMicroTest)
 		{
-			std::wstring s(wxT("<&amp>"));
+			std::wstring s(L"<&amp>");
 			std::wstring s2 = SanitizeStringForHTML(s);
 			CHECK(L"&lt;&amp;amp&gt;" == s2);
 			s = L"1\r\n2\n3";
@@ -49,7 +49,7 @@ SUITE(TestMisc)
 	{
 		if (!g_bMicroTest)
 		{
-			std::wstring s1(wxT("IDS_ARB_UNKNOWN_VERSION"));
+			std::wstring s1(L"IDS_ARB_UNKNOWN_VERSION");
 			std::wstring s2(_("IDS_ARB_UNKNOWN_VERSION"));
 			CHECK(s1 != s2);
 		}
@@ -65,8 +65,8 @@ SUITE(TestMisc)
 				wxChar const* lang;
 				int langid;
 			} langs[MAX_LANGS] = {
-				{wxT("en_US"), wxLANGUAGE_FRENCH},
-				{wxT("fr_FR"), wxLANGUAGE_ENGLISH_US}
+				{L"en_US", wxLANGUAGE_FRENCH},
+				{L"fr_FR", wxLANGUAGE_ENGLISH_US}
 			};
 			struct
 			{
@@ -85,8 +85,8 @@ SUITE(TestMisc)
 					{
 						langdata[i].Desc[j] = info->Description;
 						langdata[i].ArbDesc[j] = wxGetTranslation(info->Description);
-						out << i << wxT(" ") << j << wxT(" ")
-							<< langdata[i].Desc[j] << wxT(" ") << langdata[i].ArbDesc[j] << wxT("\n");
+						out << i << L" " << j << L" "
+							<< langdata[i].Desc[j] << L" " << langdata[i].ArbDesc[j] << L"\n";
 					}
 				}
 			}

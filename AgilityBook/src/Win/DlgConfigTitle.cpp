@@ -62,7 +62,7 @@ bool CMultipleValidator::Validate(wxWindow* parent)
 	if (m_ctrlAllowMany->GetValue() && 1 > val)
 	{
 		wxBell();
-		pControl->SetValue(wxT("2"));
+		pControl->SetValue(L"2");
 		return false;
 	}
 	return true;

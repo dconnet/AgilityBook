@@ -549,7 +549,7 @@ std::wstring CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 		str = all;
 	else
 		str = pScoring->GetDivision();
-	str += wxT(" / ");
+	str += L" / ";
 	if (pScoring->GetLevel() == WILDCARD_LEVEL)
 		str += all;
 	else
@@ -557,7 +557,7 @@ std::wstring CDlgConfigEvent::GetListName(ARBConfigScoringPtr pScoring) const
 	std::wstring validStr = ARBDate::GetValidDateString(pScoring->GetValidFrom(), pScoring->GetValidTo());
 	if (0 < validStr.length())
 	{
-		str += wxT(" ");
+		str += L" ";
 		str += validStr;
 	}
 	return str;
@@ -606,9 +606,9 @@ void CDlgConfigEvent::FillControls()
 {
 	bool bEnable = false;
 	int idxMethod = m_ctrlMethods->GetSelection();
-	m_ctrlInfo->SetLabel(wxT(""));
+	m_ctrlInfo->SetLabel(L"");
 	m_ctrlPointsList->Clear();
-	m_ctrlNote->SetValue(wxT(""));
+	m_ctrlNote->SetValue(L"");
 	if (wxNOT_FOUND != idxMethod)
 	{
 		CConfigEventDataScoring* pScoringData = GetScoringData(idxMethod);
@@ -791,7 +791,7 @@ void CDlgConfigEvent::FillMethodList()
 			if (!m_Scorings.FindEvent((*iterDiv)->GetName(), (*iterLevel)->GetName(), ARBDate::Today()))
 			{
 				str = (*iterDiv)->GetName();
-				str += wxT(" / ");
+				str += L" / ";
 				str += (*iterLevel)->GetName();
 				m_ctrlUnused->Append(str);
 			}
@@ -1049,7 +1049,7 @@ void CDlgConfigEvent::OnLbnDblclkSubnames(wxCommandEvent& evt)
 
 void CDlgConfigEvent::OnBnClickedSubNamesNew(wxCommandEvent& evt)
 {
-	CDlgName dlg(wxT(""), this);
+	CDlgName dlg(L"", this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		int idx = m_ctrlSubNames->Append(dlg.Name());

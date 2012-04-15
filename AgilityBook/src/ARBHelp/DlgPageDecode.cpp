@@ -43,15 +43,15 @@ END_EVENT_TABLE()
 
 
 CDlgPageDecode::CDlgPageDecode()
-	: wxDialog(NULL, wxID_ANY, wxT("Decode"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+	: wxDialog(NULL, wxID_ANY, L"Decode", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
 {
 	// Controls (these are done first to control tab order)
 
-	wxString str(wxT("In order to decode the gathered information, first select all the text from '"));
+	wxString str(L"In order to decode the gathered information, first select all the text from '");
 	str += STREAM_DATA_BEGIN;
-	str += wxT("' to '");
+	str += L"' to '";
 	str += STREAM_DATA_END;
-	str += wxT("' and copy here. Make sure to include those strings! Then press 'Decode'.");
+	str += L"' and copy here. Make sure to include those strings! Then press 'Decode'.";
 
 	wxStaticText* staticText = new wxStaticText(this, wxID_ANY, str,
 		wxDefaultPosition, wxDefaultSize, 0);
@@ -70,11 +70,11 @@ CDlgPageDecode::CDlgPageDecode()
 	font = m_ctrlDecoded->GetFont();
 	m_ctrlDecoded->SetFont(wxFont(font.GetPointSize(), wxFONTFAMILY_MODERN, font.GetStyle(), font.GetWeight()));
 
-	wxButton* btnDecode = new wxButton(this, wxID_ANY, wxT("Decode"),
+	wxButton* btnDecode = new wxButton(this, wxID_ANY, L"Decode",
 		wxDefaultPosition, wxDefaultSize, 0);
 	BIND_OR_CONNECT_CTRL(btnDecode, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler, CDlgPageDecode::OnDecode);
 
-	wxButton* btnClose = new wxButton(this, wxID_CANCEL, wxT("Close"),
+	wxButton* btnClose = new wxButton(this, wxID_CANCEL, L"Close",
 		wxDefaultPosition, wxDefaultSize, 0);
 
 	// Sizers (sizer creation is in same order as wxFormBuilder)
@@ -122,7 +122,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		dataIn.clear();
 		data = StringUtil::Trim(data);
 
-		editData << wxT("Any temporary files created will be deleted upon closing this window.\n\n");
+		editData << L"Any temporary files created will be deleted upon closing this window.\n\n";
 
 		static const struct
 		{
@@ -186,21 +186,21 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 				BinaryData::Decode(dataIn, binData, nBytes);
 				dataIn.clear();
 				// Generate a temp file name
-				wxString tempname = wxFileName::CreateTempFileName(wxT("arb"));
+				wxString tempname = wxFileName::CreateTempFileName(L"arb");
 				m_TmpFiles.push_back(tempname);
 				wxFFile output;
-				if (output.Open(tempname, wxT("wb")))
+				if (output.Open(tempname, L"wb"))
 				{
 					output.Write(binData, nBytes);
 					output.Close();
-					editData << wxT("File written to: ") << tempname << wxT("\n\n");
+					editData << L"File written to: " << tempname << L"\n\n";
 				}
 				else
 				{
 					std::string tmp(reinterpret_cast<char*>(binData), nBytes);
-					editData << STREAM_FILE_BEGIN << wxT("\n")
+					editData << STREAM_FILE_BEGIN << L"\n"
 						<< StringUtil::stringWX(tmp)
-						<< STREAM_FILE_END << wxT("\n\n");
+						<< STREAM_FILE_END << L"\n\n";
 				}
 				BinaryData::Release(binData);
 			}
@@ -210,7 +210,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 
 	else
 	{
-		editData << wxT("Error in data: Unable to find ") << STREAM_DATA_BEGIN;
+		editData << L"Error in data: Unable to find " << STREAM_DATA_BEGIN;
 	}
 
 	m_ctrlDecoded->SetValue(editData.str().c_str());

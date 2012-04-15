@@ -430,7 +430,7 @@ void CDlgOptionsFilter::FillControls()
 	m_ctrlVenue->DeleteAllItems();
 	if (0 < m_pDoc->Book().GetConfig().GetVenues().size())
 	{
-		wxTreeItemId root = m_ctrlVenue->AddRoot(wxT("root"));
+		wxTreeItemId root = m_ctrlVenue->AddRoot(L"root");
 		for (ARBConfigVenueList::const_iterator iVenue = m_pDoc->Book().GetConfig().GetVenues().begin();
 			iVenue != m_pDoc->Book().GetConfig().GetVenues().end();
 			++iVenue)
@@ -438,7 +438,7 @@ void CDlgOptionsFilter::FillControls()
 			ARBConfigVenuePtr pVenue = (*iVenue);
 			wxTreeItemId hVenue = m_ctrlVenue->AppendItem(root, pVenue->GetName());
 			m_ctrlVenue->ShowCheckbox(hVenue, true);
-			if (m_FilterOptions.FilterExists(pVenue->GetName(), wxT(""), wxT("")))
+			if (m_FilterOptions.FilterExists(pVenue->GetName(), L"", L""))
 				m_ctrlVenue->SetChecked(hVenue, true);
 			for (ARBConfigDivisionList::const_iterator iterDiv = pVenue->GetDivisions().begin();
 				iterDiv != pVenue->GetDivisions().end();
@@ -447,7 +447,7 @@ void CDlgOptionsFilter::FillControls()
 				ARBConfigDivisionPtr pDiv = *iterDiv;
 				wxTreeItemId hDiv = m_ctrlVenue->AppendItem(hVenue, pDiv->GetName());
 				m_ctrlVenue->ShowCheckbox(hDiv, true);
-				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), wxT("")))
+				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), L""))
 				{
 					m_ctrlVenue->SetChecked(hDiv, true);
 					m_ctrlVenue->EnsureVisible(hDiv);
@@ -535,7 +535,7 @@ void CDlgOptionsFilter::FillFilter(
 			if (!m_ctrlVenue->GetChecked(hItem))
 				return;
 			if (!path.empty())
-				path += wxT("/");
+				path += L"/";
 			path += m_ctrlVenue->GetItemText(hItem);
 		}
 	}
@@ -713,6 +713,6 @@ void CDlgOptionsFilter::OnFilterVenueCheck(wxEvent& evt)
 	// We could probably do this by just watching what changed. but this
 	// is way easier - no state to keep track of!
 	std::vector<CVenueFilter> venues;
-	FillFilter(m_ctrlVenue->GetRootItem(), wxT(""), venues);
+	FillFilter(m_ctrlVenue->GetRootItem(), L"", venues);
 	m_FilterOptions.SetFilterVenue(venues);
 }

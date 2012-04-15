@@ -37,9 +37,9 @@ struct ConfigFaultData
 ConfigFaultData::ConfigFaultData()
 {
 	ConfigFault1 = ElementNode::New(TREE_FAULTTYPE);
-	ConfigFault1->AddAttrib(wxT("Name"), wxT("Refusal"));
+	ConfigFault1->AddAttrib(L"Name", L"Refusal");
 	ConfigFault2 = ElementNode::New(TREE_FAULTTYPE);
-	ConfigFault2->SetValue(wxT("Bar Down"));
+	ConfigFault2->SetValue(L"Bar Down");
 }
 
 
@@ -60,12 +60,12 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			fault1->SetName(wxT("Fault!"));
+			fault1->SetName(L"Fault!");
 			ARBConfigFaultPtr fault2 = fault1->Clone();
 			CHECK(NULL != fault2.get());
 			CHECK(fault1.get() != fault2.get());
 			CHECK(*fault1 == *fault2);
-			fault1->SetName(wxT("Here"));
+			fault1->SetName(L"Here");
 			CHECK(fault1->GetName() != fault2->GetName());
 		}
 	}
@@ -76,7 +76,7 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			fault1->SetName(wxT("Fault!"));
+			fault1->SetName(L"Fault!");
 			ARBConfigFaultPtr fault2 = ARBConfigFault::New();
 			CHECK(*fault1 != *fault2);
 			*fault1 = *fault2;
@@ -90,8 +90,8 @@ SUITE(TestConfigFault)
 		if (!g_bMicroTest)
 		{
 			ARBConfigFaultPtr fault1 = ARBConfigFault::New();
-			fault1->SetName(wxT("Fault!"));
-			CHECK(wxT("Fault!") == fault1->GetGenericName());
+			fault1->SetName(L"Fault!");
+			CHECK(L"Fault!" == fault1->GetGenericName());
 		}
 	}
 
@@ -164,8 +164,8 @@ SUITE(TestConfigFaultList)
 			ARBErrorCallback callback(errs);
 			CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 			CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
-			ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
-			ele->SetValue(wxT("a fault"));
+			ElementNodePtr ele = ElementNode::New(L"Doesnt matter");
+			ele->SetValue(L"a fault");
 			CHECK(!faultlist.Load(ele, ARBVersion(2, 0), callback));
 			CHECK_EQUAL(2u, faultlist.size());
 		}
@@ -181,8 +181,8 @@ SUITE(TestConfigFaultList)
 			ARBErrorCallback callback(errs);
 			CHECK(faultlist.Load(ConfigFault1, ARBVersion(1, 0), callback));
 			CHECK(faultlist.Load(ConfigFault2, ARBVersion(2, 0), callback));
-			CHECK(faultlist.FindFault(wxT("Refusal")));
-			CHECK(!faultlist.FindFault(wxT("refusal")));
+			CHECK(faultlist.FindFault(L"Refusal"));
+			CHECK(!faultlist.FindFault(L"refusal"));
 		}
 	}
 
@@ -194,13 +194,13 @@ SUITE(TestConfigFaultList)
 			ARBConfigFaultList faultlist;
 			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
-			CHECK(faultlist.AddFault(wxT("fault")));
+			CHECK(faultlist.AddFault(L"fault"));
 			CHECK_EQUAL(1u, faultlist.size());
-			CHECK(faultlist.AddFault(wxT("fault2")));
+			CHECK(faultlist.AddFault(L"fault2"));
 			CHECK_EQUAL(2u, faultlist.size());
-			CHECK(faultlist.AddFault(wxT("fault")));
+			CHECK(faultlist.AddFault(L"fault"));
 			CHECK_EQUAL(3u, faultlist.size());
-			CHECK(faultlist.DeleteFault(wxT("fault")));
+			CHECK(faultlist.DeleteFault(L"fault"));
 			CHECK_EQUAL(2u, faultlist.size());
 		}
 	}

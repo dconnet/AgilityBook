@@ -115,9 +115,9 @@ public:
 #ifdef __WXMAC__
 		// Command line programs on Mac are acting like unix. GetResourcesDir
 		// returns /usr/local/share. And GetExecutablePath is returning nothing.
-		m_dirLang = wxT("./lang");
+		m_dirLang = L"./lang";
 #else
-		m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + wxT("lang");
+		m_dirLang = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + L"lang";
 #endif
 	}
 	~CLanguageManager()
@@ -238,10 +238,10 @@ ElementNodePtr LoadXMLData(size_t id)
 #ifdef __WXMAC__
 	// Command line programs on Mac are acting like unix. GetResourcesDir
 	// returns /usr/local/share. And GetExecutablePath is returning nothing.
-	std::wstring datafile = wxT("./testarb.dat");
+	std::wstring datafile = L"./testarb.dat";
 #else
 	wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-	std::wstring datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat");
+	std::wstring datafile = wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat";
 #endif
 	assert(id < gc_NumConfigs);
 	std::string data;
@@ -249,7 +249,7 @@ ElementNodePtr LoadXMLData(size_t id)
 	assert(bOk);
 	if (!bOk || !tree->LoadXML(data.c_str(), data.length(), errMsg))
 	{
-		wxLogError(wxT("%s"), errMsg.str().c_str());
+		wxLogError(L"%s", errMsg.str().c_str());
 		tree.reset();
 	}
 	return tree;
@@ -261,8 +261,8 @@ bool LoadConfigFromTree(ElementNodePtr tree, ARBConfig& config)
 	assert(tree);
 	if (!tree)
 		return false;
-	assert(tree->GetName() == wxT("DefaultConfig"));
-	if (tree->GetName() != wxT("DefaultConfig"))
+	assert(tree->GetName() == L"DefaultConfig");
+	if (tree->GetName() != L"DefaultConfig")
 		return false;
 	ARBVersion version;
 	tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
@@ -365,7 +365,7 @@ ElementNodePtr CreateActionList()
 	bool bParse = actions->LoadXML(configData, static_cast<unsigned int>(strlen(configData)), errmsg);
 	if (!bParse)
 	{
-		wxLogError(wxT("%s"), errmsg.str().c_str());
+		wxLogError(L"%s", errmsg.str().c_str());
 	}
 	assert(bParse);
 	return actions;

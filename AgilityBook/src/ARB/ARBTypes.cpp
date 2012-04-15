@@ -251,9 +251,9 @@ std::wstring ARBDouble::ToString(
 			pt = decimalPt.GetChar(0);
 		wxString tmp;
 		if (0 < inPrec)
-			tmp = wxString::Format(wxT("%.*f"), inPrec, inValue);
+			tmp = wxString::Format(L"%.*f", inPrec, inValue);
 		else
-			tmp = wxString::Format(wxT("%g"), inValue);
+			tmp = wxString::Format(L"%g", inValue);
 		retVal = StringUtil::stringW(tmp);
 		delete locale;
 	}

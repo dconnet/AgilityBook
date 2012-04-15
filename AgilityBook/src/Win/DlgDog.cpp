@@ -328,10 +328,10 @@ std::wstring CDlgDogDataRegNum::OnNeedText(long iCol) const
 		text = m_RegNum->GetHeight();
 		break;
 	case 3:
-		text = m_RegNum->GetReceived() ? wxT("x") : wxT("");
+		text = m_RegNum->GetReceived() ? L"x" : L"";
 		break;
 	case 4:
-		text = StringUtil::Replace(m_RegNum->GetNote(), wxT("\n"), wxT(" "));
+		text = StringUtil::Replace(m_RegNum->GetNote(), L"\n", L" ");
 		break;
 	}
 	return text;
@@ -452,7 +452,7 @@ std::wstring CDlgDogDataPoint::OnNeedText(long iCol) const
 		text << m_Pts->GetSubName();
 		break;
 	case 10: // Comment
-		text << StringUtil::Replace(m_Pts->GetComment(), wxT("\n"), wxT(" "));
+		text << StringUtil::Replace(m_Pts->GetComment(), L"\n", L" ");
 		break;
 	}
 	return text.str();
@@ -596,11 +596,11 @@ CDlgDog::CDlgDog(
 	, m_ctrlPointsDelete(NULL)
 	, m_ctrlSelectedPts(NULL)
 	, m_Titles()
-	, m_sortTitles(wxT("Titles"))
+	, m_sortTitles(L"Titles")
 	, m_ViewHiddenTitles(CAgilityBookOptions::GetViewHiddenTitles())
-	, m_sortPoints(wxT("ExistingPoints"))
+	, m_sortPoints(L"ExistingPoints")
 	, m_RegNums()
-	, m_sortRegNums(wxT("RegNums"))
+	, m_sortRegNums(L"RegNums")
 	, m_ExistingPoints()
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | wxWS_EX_VALIDATE_RECURSIVELY | GetExtraStyle());
@@ -1051,8 +1051,8 @@ void CDlgDog::SetColumnTitleHeaders()
 	{
 		wxString tmp;
 		if (colTitleInfo[i].idText)
-			tmp << wxGetTranslation(colTitleInfo[i].idText) << wxT(" ");
-		tmp << wxT("(") << m_sortTitles.FindColumnOrder(i) + 1 << wxT(")");
+			tmp << wxGetTranslation(colTitleInfo[i].idText) << L" ";
+		tmp << L"(" << m_sortTitles.FindColumnOrder(i) + 1 << L")";
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
@@ -1145,8 +1145,8 @@ void CDlgDog::SetColumnRegNumHeaders()
 	{
 		wxString tmp;
 		if (colRegNumInfo[i].idText)
-			tmp << wxGetTranslation(colRegNumInfo[i].idText) << wxT(" ");
-		tmp << wxT("(") << m_sortRegNums.FindColumnOrder(i) + 1 << wxT(")");
+			tmp << wxGetTranslation(colRegNumInfo[i].idText) << L" ";
+		tmp << L"(" << m_sortRegNums.FindColumnOrder(i) + 1 << L")";
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);
@@ -1235,8 +1235,8 @@ void CDlgDog::SetColumnPointsHeaders()
 	{
 		wxString tmp;
 		if (colExistingPointsInfo[i].idText)
-			tmp << wxGetTranslation(colExistingPointsInfo[i].idText) << wxT(" ");
-		tmp << wxT("(") << m_sortPoints.FindColumnOrder(i) + 1 << wxT(")");
+			tmp << wxGetTranslation(colExistingPointsInfo[i].idText) << L" ";
+		tmp << L"(" << m_sortPoints.FindColumnOrder(i) + 1 << L")";
 		wxListItem col;
 		col.SetMask(wxLIST_MASK_TEXT);
 		col.SetColumn(i);

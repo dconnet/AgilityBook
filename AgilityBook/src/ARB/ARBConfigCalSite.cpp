@@ -195,7 +195,7 @@ std::wstring ARBConfigCalSite::GetFormattedURL(
 		std::vector<std::wstring> const& inVenueCodes) const
 {
 	std::wstring url(m_urlSearch);
-	std::wstring::size_type pos = url.find(wxT("!L!"));
+	std::wstring::size_type pos = url.find(L"!L!");
 	if (pos != std::wstring::npos)
 	{
 		std::wstring codes;
@@ -204,12 +204,12 @@ std::wstring ARBConfigCalSite::GetFormattedURL(
 			++i)
 		{
 			if (!codes.empty())
-				codes += wxT("+");
+				codes += L"+";
 			codes += *i;
 		}
 		url.replace(pos, 3, codes);
 	}
-	pos = url.find(wxT("!V!"));
+	pos = url.find(L"!V!");
 	if (pos != std::wstring::npos)
 	{
 		std::wstring codes;
@@ -218,7 +218,7 @@ std::wstring ARBConfigCalSite::GetFormattedURL(
 			++i)
 		{
 			if (!codes.empty())
-				codes += wxT("+");
+				codes += L"+";
 			codes += *i;
 		}
 		url.replace(pos, 3, codes);

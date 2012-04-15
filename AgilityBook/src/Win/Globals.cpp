@@ -176,14 +176,14 @@ void DrawBetterLabel(
 	wxCoord y = rect.y;
 	rect.height = 0;
 
-	wxArrayString lines = wxStringTokenize(inStr, wxT("\n"));
+	wxArrayString lines = wxStringTokenize(inStr, L"\n");
 	for (size_t i = 0; i < lines.GetCount(); ++i)
 	{
 		wxString line;
 		wxCoord width = 0;
 		wxSize szLine;
 
-		wxArrayString words = wxStringTokenize(lines[i], wxT(" "), wxTOKEN_RET_DELIMS);
+		wxArrayString words = wxStringTokenize(lines[i], L" ", wxTOKEN_RET_DELIMS);
 		for (size_t k = 0; k < words.GetCount(); ++k)
 		{
 			szLine = pDC->GetTextExtent(words[k]);
@@ -193,7 +193,7 @@ void DrawBetterLabel(
 					pDC->DrawText(line, x, y);
 				y += szLine.y;
 				rect.height += szLine.y;
-				line = wxT("");
+				line = L"";
 				width = szLine.x;
 			}
 			if (szLine.x > rect.width)
@@ -211,7 +211,7 @@ void DrawBetterLabel(
 							pDC->DrawText(s, x, y);
 						y += szChar.y;
 						rect.height += szChar.y;
-						s = wxT("");
+						s = L"";
 						a = szChar.x;
 					}
 					s << words[k][iWord];

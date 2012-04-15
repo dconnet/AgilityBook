@@ -99,7 +99,7 @@ std::wstring CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 			str = m_pTraining->GetSubName();
 			break;
 		case IO_LOG_NOTES:
-			str = StringUtil::Replace(m_pTraining->GetNote(), wxT("\n"), wxT(" "));
+			str = StringUtil::Replace(m_pTraining->GetNote(), L"\n", L" ");
 			break;
 		}
 	}

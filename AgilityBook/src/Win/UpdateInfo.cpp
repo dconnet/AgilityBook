@@ -129,14 +129,14 @@
 
 static wxString VersionFile()
 {
-	return wxT("version2.xml");
+	return L"version2.xml";
 }
 
 
 #if defined(__WXMSW__)
 static wxString ARBUpdater()
 {
-	return wxT("ARBUpdater.exe");
+	return L"ARBUpdater.exe";
 }
 
 
@@ -152,7 +152,7 @@ static wxString FILENAME()
 {
 #ifdef __WXMSW__
 	// Why this? Just cause that's how my local system is setup.
-	return wxT("c:/dcon/www/agilityrecordbook/") + VersionFile();
+	return L"c:/dcon/www/agilityrecordbook/" + VersionFile();
 #else
 	return wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + VersionFile();
 #endif
@@ -168,7 +168,7 @@ bool CUpdateInfo::UpdateConfig(
 	wxString msg(_("IDS_UPDATED_CONFIG"));
 	if (inMsg && *inMsg)
 	{
-		msg += wxT("\n\n");
+		msg += L"\n\n";
 		msg += inMsg;
 	}
 
@@ -216,7 +216,7 @@ CUpdateInfo::CUpdateInfo()
 	, m_ConfigFileName()
 	, m_InfoMsg()
 	, m_UpdateDownload()
-	, m_usernameHint(wxT("default"))
+	, m_usernameHint(L"default")
 	, m_CalSiteSuppression()
 {
 }
@@ -241,7 +241,7 @@ bool CUpdateInfo::ReadVersionFile(
 	m_ConfigFileName.erase();
 	m_InfoMsg.clear();
 	m_UpdateDownload.clear();
-	m_usernameHint = wxT("default");
+	m_usernameHint = L"default";
 	m_CalSiteSuppression.clear();
 
 	// Set the default values.
@@ -249,7 +249,7 @@ bool CUpdateInfo::ReadVersionFile(
 
 	// Read the file.
 	wxString url(_("IDS_HELP_UPDATE"));
-	url += wxT("/") + VersionFile();
+	url += L"/" + VersionFile();
 	std::string data; // must be 'char' for XML parsing
 	wxString errMsg;
 
@@ -329,13 +329,13 @@ bool CUpdateInfo::ReadVersionFile(
 				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile().c_str());
 				if (0 < errMsg2.str().length())
 				{
-					msg += wxT("\n\n");
+					msg += L"\n\n";
 					msg += errMsg2.str();
 				}
 				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
 		}
-		else if (tree->GetName() == wxT("Data"))
+		else if (tree->GetName() == L"Data")
 		{
 			bool bConfigLoaded = false;
 			for (int nIndex = 0; nIndex < tree->GetElementCount(); ++nIndex)
@@ -343,11 +343,11 @@ bool CUpdateInfo::ReadVersionFile(
 				ElementNodePtr node = tree->GetElementNode(nIndex);
 				if (!node)
 					continue;
-				if (!bLoadedVersion && node->GetName() == wxT("Platform"))
+				if (!bLoadedVersion && node->GetName() == L"Platform")
 				{
 					bool bSkip = true;
 					std::wstring value;
-					if (ElementNode::eFound == node->GetAttrib(wxT("arch"), value))
+					if (ElementNode::eFound == node->GetAttrib(L"arch", value))
 					{
 						if (ARBAgilityRecordBook::GetArch() == value)
 						{
@@ -357,16 +357,16 @@ bool CUpdateInfo::ReadVersionFile(
 					// Wrong architecture
 					if (bSkip)
 						continue;
-					if (ElementNode::eFound == node->GetAttrib(wxT("ver"), value))
+					if (ElementNode::eFound == node->GetAttrib(L"ver", value))
 					{
 						m_VersionNum.Parse(value);
 						if (m_VersionNum.Valid())
 							bLoadedVersion = true;
 					}
-					if (ElementNode::eFound != node->GetAttrib(wxT("config"), m_VerConfig)
-					|| ElementNode::eFound != node->GetAttrib(wxT("size"), m_size)
-					|| ElementNode::eFound != node->GetAttrib(wxT("md5"), m_md5)
-					|| ElementNode::eFound != node->GetAttrib(wxT("file"), m_NewFile))
+					if (ElementNode::eFound != node->GetAttrib(L"config", m_VerConfig)
+					|| ElementNode::eFound != node->GetAttrib(L"size", m_size)
+					|| ElementNode::eFound != node->GetAttrib(L"md5", m_md5)
+					|| ElementNode::eFound != node->GetAttrib(L"file", m_NewFile))
 					{
 						bLoadedVersion = false;
 					}
@@ -379,41 +379,41 @@ bool CUpdateInfo::ReadVersionFile(
 						return false;
 					}
 				}
-				else if (!bConfigLoaded && node->GetName() == wxT("Config"))
+				else if (!bConfigLoaded && node->GetName() == L"Config")
 				{
 					short config;
-					node->GetAttrib(wxT("ver"), config);
+					node->GetAttrib(L"ver", config);
 					if (config == m_VerConfig)
 					{
 						wxString value;
 						bConfigLoaded = true;
-						node->GetAttrib(wxT("file"), m_ConfigFileName);
+						node->GetAttrib(L"file", m_ConfigFileName);
 						for (int nLang = 0; nLang < node->GetElementCount(); ++nLang)
 						{
 							ElementNodePtr lang = node->GetElementNode(nLang);
 							if (!lang)
 								continue;
-							if (lang->GetName() == wxT("Lang"))
+							if (lang->GetName() == L"Lang")
 							{
 								std::wstring langIdStr;
-								lang->GetAttrib(wxT("id2"), langIdStr);
+								lang->GetAttrib(L"id2", langIdStr);
 								m_InfoMsg[langIdStr] = lang->GetValue();
 							}
 						}
 					}
 				}
-				else if (node->GetName() == wxT("Download"))
+				else if (node->GetName() == L"Download")
 				{
 					m_UpdateDownload = node->GetValue();
 				}
-				else if (node->GetName() == wxT("DisableCalPlugin"))
+				else if (node->GetName() == L"DisableCalPlugin")
 				{
 					std::wstring filename, ver;
-					node->GetAttrib(wxT("file"), filename);
-					node->GetAttrib(wxT("ver"), ver);
+					node->GetAttrib(L"file", filename);
+					node->GetAttrib(L"ver", ver);
 					// The 'enable' attribute is in case we prematurely disable
 					bool bEnable = false;
-					node->GetAttrib(wxT("enable"), bEnable);
+					node->GetAttrib(L"enable", bEnable);
 					CVersionNum vernum(false);
 					vernum.Parse(ver);
 					if (vernum.Valid())
@@ -503,7 +503,7 @@ bool CUpdateInfo::CheckProgram(
 							if (!err.empty())
 							{
 								if (!errMsg.empty())
-									errMsg += wxT("\n\n");
+									errMsg += L"\n\n";
 								errMsg += err;
 							}
 						}
@@ -515,7 +515,7 @@ bool CUpdateInfo::CheckProgram(
 							{
 								bGotoWeb = true;
 								if (!errMsg.empty())
-									errMsg += wxT("\n\n");
+									errMsg += L"\n\n";
 								errMsg += _("IDS_ERROR_DOWNLOAD");
 							}
 						}
@@ -561,7 +561,7 @@ bool CUpdateInfo::CheckProgram(
 								else
 								{
 									wxFileName msiName(entry->GetName());
-									if (msiName.GetExt().Upper() != wxT("MSI"))
+									if (msiName.GetExt().Upper() != L"MSI")
 									{
 										bGotoWeb = true;
 										wxMessageBox(_("IDS_ERROR_UNEXPECTED"));
@@ -585,8 +585,8 @@ bool CUpdateInfo::CheckProgram(
 						{
 							wxFileOutputStream output(updater);
 							wxFileName fileName(wxStandardPaths::Get().GetExecutablePath());
-							wxString zipfile = wxFileSystem::FileNameToURL(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + wxT(".dat"));
-							zipfile += wxT("#zip:") + ARBUpdater();
+							wxString zipfile = wxFileSystem::FileNameToURL(wxStandardPaths::Get().GetResourcesDir() + wxFileName::GetPathSeparator() + fileName.GetName() + L".dat");
+							zipfile += L"#zip:" + ARBUpdater();
 							wxFileSystem filesys;
 							wxFSFile* file = filesys.OpenFile(zipfile);
 							if (file)
@@ -603,7 +603,7 @@ bool CUpdateInfo::CheckProgram(
 						}
 						if (!bGotoWeb)
 						{
-							wxString args = wxString::Format(wxT("-f \"%s\""), msiFilename.c_str());
+							wxString args = wxString::Format(L"-f \"%s\"", msiFilename.c_str());
 							SHELLEXECUTEINFO info;
 							ZeroMemory(&info, sizeof(info));
 							info.cbSize = sizeof(info);
@@ -628,7 +628,7 @@ bool CUpdateInfo::CheckProgram(
 				wxString url(m_UpdateDownload);
 				wxString suffix = url.Right(4);
 				suffix.MakeUpper();
-				if (suffix == wxT(".PHP"))
+				if (suffix == L".PHP")
 				{
 #ifdef __WXMSW__
 					OSVERSIONINFO os;
@@ -643,13 +643,13 @@ bool CUpdateInfo::CheckProgram(
 							SYSTEM_INFO info;
 							GetSystemInfo(&info);
 							if (PROCESSOR_ARCHITECTURE_AMD64 == info.wProcessorArchitecture)
-								url += wxT("?os=x64");
+								url += L"?os=x64";
 							else
 #endif
-								url += wxT("?os=win");
+								url += L"?os=win";
 							if (!lang.empty())
 							{
-								url += wxT("-");
+								url += L"-";
 								url += lang;
 							}
 						}
@@ -665,7 +665,7 @@ bool CUpdateInfo::CheckProgram(
 //__WXOSX__ is a common define to wxMac (Carbon) and wxCocoa ports under OS X.
 					// We currently compile for Universal OSX 10.4. At this time,
 					// there's no need to further determine the OS.
-					url += wxT("?os=mac");
+					url += L"?os=mac";
 #else
 #pragma PRAGMA_TODO("Add 'os' tag for URL download")
 					// @todo Add appropriate 'os' tag for other OS's
@@ -731,7 +731,7 @@ void CUpdateInfo::CheckConfig(
 		{
 			// Load the config.
 			std::wstring url = _("IDS_HELP_UPDATE");
-			url += wxT("/");
+			url += L"/";
 			url += m_ConfigFileName;
 			std::string strConfig;
 			std::wstring errMsg;
@@ -747,12 +747,12 @@ void CUpdateInfo::CheckConfig(
 					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
 					if (0 < errMsg2.str().length())
 					{
-						msg2 += wxT("\n\n");
+						msg2 += L"\n\n";
 						msg2 += errMsg2.str();
 					}
 					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
-				else if (tree->GetName() == wxT("DefaultConfig"))
+				else if (tree->GetName() == L"DefaultConfig")
 				{
 					strConfig.erase();
 					ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();

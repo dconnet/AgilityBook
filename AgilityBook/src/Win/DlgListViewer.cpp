@@ -279,7 +279,7 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 		if (m_Run->GetQ().Qualified() && m_Scoring)
 			str << m_Run->GetTitlePoints(m_Scoring);
 		else
-			str << wxT("0");
+			str << L"0";
 		break;
 	case COL_RUN_MQ_VENUE:
 		str << m_Trial->GetClubs().GetPrimaryClubVenue();
@@ -325,9 +325,9 @@ std::wstring CDlgListViewerDataRun::OnNeedText(long iCol) const
 			++iter2)
 		{
 			if (iter2 != m_Run->GetPartners().begin())
-				str << wxT(", ");
+				str << L", ";
 			str << (*iter2)->GetHandler();
-			str << wxT("/");
+			str << L"/";
 			str << (*iter2)->GetDog();
 		}
 		break;
@@ -373,7 +373,7 @@ std::wstring CDlgListViewerDataMultiQ::OnNeedText(long iCol) const
 		str = m_Date.GetString();
 		break;
 	case COL_RUN_MQ_TITLE_PTS:
-		str = wxT("1");
+		str = L"1";
 		break;
 	case COL_RUN_MQ_LOCATION:
 		str = m_Trial->GetLocation();
@@ -700,7 +700,7 @@ std::wstring CDlgListViewerDataLifetime::OnNeedText(long iCol) const
 			break;
 		case COL_OTHER_PTS:
 			if (0 < m_info->filtered)
-				str << m_info->points - m_info->filtered << wxT(" (") << m_info->points << wxT(")");
+				str << m_info->points - m_info->filtered << L" (" << m_info->points << L")";
 			else
 				str << m_info->points;
 			break;
@@ -789,7 +789,7 @@ std::wstring CDlgListViewerDataOther::OnNeedText(long iCol) const
 		break;
 	case COL_OTHER_CLUB:
 		if (m_info.m_pExisting)
-			str << wxT("[") << _("IDS_EXISTING_POINTS") << wxT("]");
+			str << L"[" << _("IDS_EXISTING_POINTS") << L"]";
 		else if (m_info.m_pTrial->GetClubs().GetPrimaryClub())
 			str << m_info.m_pTrial->GetClubs().GetPrimaryClubName();
 		break;

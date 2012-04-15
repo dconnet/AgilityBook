@@ -68,7 +68,7 @@ std::wstring CDlgConfigureDataVenue::OnNeedText() const
 		std::wstring s(OnNeedText(i));
 		if (!s.empty())
 		{
-			str += wxT("  ") + s;
+			str += L"  " + s;
 		}
 	}
 	return str;
@@ -87,7 +87,7 @@ std::wstring CDlgConfigureDataVenue::OnNeedText(int iColumn) const
 		str = m_Venue->GetURL();
 		break;
 	case 2:
-		str = StringUtil::Replace(m_Venue->GetDesc(), wxT("\n"), wxT(" "));
+		str = StringUtil::Replace(m_Venue->GetDesc(), L"\n", L" ");
 		break;
 	}
 	return str;

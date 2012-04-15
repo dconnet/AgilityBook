@@ -87,7 +87,7 @@ static void SearchFor(
 	wxArrayString files;
 	if (wxDir::Exists(inFullPath))
 	{
-		wxDir::GetAllFiles(inFullPath, &files, wxT("*.arb*"), wxDIR_DIRS|wxDIR_FILES);
+		wxDir::GetAllFiles(inFullPath, &files, L"*.arb*", wxDIR_DIRS|wxDIR_FILES);
 		for (size_t n = 0; n < files.GetCount(); ++n)
 			pParent->SetARBFileStatus(StringUtil::stringW(files[n]));
 	}
@@ -102,13 +102,13 @@ CDlgPageEncode::CDlgPageEncode(CDlgARBHelp* pParent)
 	wxBoxSizer* bSizer = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticText* text1 = new wxStaticText(this, wxID_ANY,
-		wxT("When Agility Record Book has a problem, this program helps by gathering information that may be useful in determining what when wrong.\n"),
+		L"When Agility Record Book has a problem, this program helps by gathering information that may be useful in determining what when wrong.\n",
 		wxDefaultPosition, wxDefaultSize, 0);
 	text1->Wrap(600);
 	bSizer->Add(text1, 0, wxALL|wxEXPAND, 5);
 
 	wxStaticText* text2 = new wxStaticText(this, wxID_ANY,
-		wxT("In addition to any ARB files you select in the following dialog, basic system information from the registry will be included."),
+		L"In addition to any ARB files you select in the following dialog, basic system information from the registry will be included.",
 		wxDefaultPosition, wxDefaultSize, 0);
 	text2->Wrap(600);
 	bSizer->Add(text2, 0, wxALL, 5);
@@ -136,13 +136,13 @@ void CDlgPageEncode::DumpGroup(
 			{
 			default:
 				if (data)
-					*data << wxConfig::Get()->GetPath().wx_str() << wxT('/') << str << wxT(" unknown\n");
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str << L" unknown\n";
 				break;
 			case wxConfigBase::Type_String:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().wx_str() << wxT('/') << str << wxT(" string\n");
-					*data << wxConfig::Get()->Read(str, wxEmptyString).wx_str() << wxT("\n");
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str << L" string\n";
+					*data << wxConfig::Get()->Read(str, wxEmptyString).wx_str() << L"\n";
 				}
 				else if (items)
 					items->push_back(StringUtil::stringW(wxConfig::Get()->Read(str, wxEmptyString)));
@@ -150,26 +150,26 @@ void CDlgPageEncode::DumpGroup(
 			case wxConfigBase::Type_Boolean:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath().wx_str() << wxT('/') << str << wxT(" bool\n");
+					*data << wxConfig::Get()->GetPath().wx_str() << L'/' << str << L" bool\n";
 					bool b;
 					wxConfig::Get()->Read(str, &b);
-					*data << b << wxT("\n");
+					*data << b << L"\n";
 				}
 				break;
 			case wxConfigBase::Type_Integer:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" int\n");
-					*data << wxConfig::Get()->Read(str, 0L) << wxT("\n");
+					*data << wxConfig::Get()->GetPath() << L'/' << str << L" int\n";
+					*data << wxConfig::Get()->Read(str, 0L) << L"\n";
 				}
 				break;
 			case wxConfigBase::Type_Float:
 				if (data)
 				{
-					*data << wxConfig::Get()->GetPath() << wxT('/') << str << wxT(" float\n");
+					*data << wxConfig::Get()->GetPath() << L'/' << str << L" float\n";
 					double d;
 					wxConfig::Get()->Read(str, &d);
-					*data << d << wxT("\n");
+					*data << d << L"\n";
 				}
 				break;
 			}
@@ -185,7 +185,7 @@ void CDlgPageEncode::DumpGroup(
 	}
 
 	if (!group.empty())
-		wxConfig::Get()->SetPath(wxT(".."));
+		wxConfig::Get()->SetPath(L"..");
 }
 
 
@@ -199,42 +199,42 @@ bool CDlgPageEncode::TransferDataFromWindow()
 
 		// OS version
 		wxPlatformInfo info;
-		str << wxT("OS: ")
+		str << L"OS: "
 			<< info.GetOperatingSystemIdName()
 			<< ' '
 			<< info.GetOSMajorVersion()
 			<< '.'
 			<< info.GetOSMinorVersion()
-			<< wxT("\n");
+			<< L"\n";
 		if (wxPORT_BASE != info.GetPortId())
 		{
-			str << wxT("Port: ")
+			str << L"Port: "
 				<< info.GetPortIdName()
 				<< ' '
 				<< info.GetToolkitMajorVersion()
 				<< '.'
 				<< info.GetToolkitMinorVersion()
-				<< wxT("\n");
+				<< L"\n";
 		}
-		str << wxT("Architecture: ")
+		str << L"Architecture: "
 			<< info.GetArchName()
-			<< wxT(", ")
+			<< L", "
 			<< info.GetEndiannessName()
-			<< wxT("\n");
+			<< L"\n";
 
 		// Me.
 		{
 			CVersionNum ver(true);
-			str << wxStandardPaths::Get().GetExecutablePath() << wxT(": ");
+			str << wxStandardPaths::Get().GetExecutablePath() << L": ";
 			if (ver.Valid())
 				str << ver.GetVersionString();
 			else
 				str << _("IDS_BAD_VERSION");
-			str << wxT("\n");
+			str << L"\n";
 		}
 
 		// wxWidgets
-		str << wxVERSION_STRING << wxT("\n");
+		str << wxVERSION_STRING << L"\n";
 
 		m_Parent->AddSysInfo(StringUtil::stringW(str));
 	}
@@ -255,7 +255,7 @@ bool CDlgPageEncode::TransferDataFromWindow()
 	// C:\Documents and Settings\username\Local Settings\Application Data\appname
 	directories.insert(wxStandardPaths::Get().GetUserLocalDataDir());
 	std::vector<std::wstring> items;
-	DumpGroup(NULL, wxT("Recent File List"), &items);
+	DumpGroup(NULL, L"Recent File List", &items);
 	for (std::vector<std::wstring>::iterator iter = items.begin(); iter != items.end(); ++iter)
 	{
 		std::wstring path = *iter;

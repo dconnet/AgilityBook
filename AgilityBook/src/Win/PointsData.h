@@ -132,7 +132,7 @@ public:
 			CAgilityBookDoc* pDoc,
 			std::wstring const& inHtml);
 
-	virtual std::wstring OnNeedText(int inCol) const	{return wxT("");}
+	virtual std::wstring OnNeedText(int inCol) const	{return std::wstring();}
 	virtual std::wstring GetHtml(size_t nCurLine, bool bNoInternalLinks) const
 	{
 		return m_Html;

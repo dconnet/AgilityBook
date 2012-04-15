@@ -49,7 +49,7 @@ SUITE(TestVersion)
 		if (!g_bMicroTest)
 		{
 			ARBVersion v(1, 2);
-			CHECK(wxT("1.2") == v.str());
+			CHECK(L"1.2" == v.str());
 		}
 	}
 

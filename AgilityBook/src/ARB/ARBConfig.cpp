@@ -232,7 +232,7 @@ void ARBConfig::Default(IARBConfigHandler* inHandler)
 	if (inHandler)
 	{
 		ElementNodePtr tree = inHandler->LoadDefaultConfig();
-		if (tree && tree->GetName() == wxT("DefaultConfig"))
+		if (tree && tree->GetName() == L"DefaultConfig")
 		{
 			ARBVersion version = ARBAgilityRecordBook::GetCurrentDocVersion();
 			tree->GetAttrib(ATTRIB_BOOK_VERSION, version);
@@ -279,7 +279,7 @@ std::wstring ARBConfig::GetTitleCompleteName(
 		bool bAbbrevFirst) const
 {
 	if (!inTitle)
-		return wxT("");
+		return std::wstring();
 	ARBConfigTitlePtr pTitle;
 	if (m_Venues.FindTitle(inTitle->GetVenue(), inTitle->GetRawName(), &pTitle))
 		return pTitle->GetCompleteName(inTitle->GetInstance(), inTitle->ShowInstanceOne(), bAbbrevFirst);
@@ -323,7 +323,7 @@ bool ARBConfig::Update(
 		}
 		if (0 < nNew || 0 < nUpdated)
 		{
-			ioInfo << Localization()->UpdateCalSites(nNew, nUpdated, nSkipped) << wxT("\n");
+			ioInfo << Localization()->UpdateCalSites(nNew, nUpdated, nSkipped) << L"\n";
 		}
 	}
 
@@ -348,7 +348,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateFaults(nNew, nSkipped) << wxT("\n");
+		ioInfo << Localization()->UpdateFaults(nNew, nSkipped) << L"\n";
 	}
 
 	// Update OtherPoints.
@@ -383,7 +383,7 @@ bool ARBConfig::Update(
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped) << wxT("\n");
+		ioInfo << Localization()->UpdateOtherPts(nNew, nUpdated, nSkipped) << L"\n";
 	}
 
 	// Update Venues.
@@ -415,14 +415,14 @@ bool ARBConfig::Update(
 			++nNew;
 			++nChanges;
 			GetVenues().AddVenue((*iterVenue));
-			venueInfo += wxT("+");
+			venueInfo += L"+";
 			venueInfo += (*iterVenue)->GetName();
-			venueInfo += wxT("\n");
+			venueInfo += L"\n";
 		}
 	}
 	if (0 < nNew || 0 < nChanges)
 	{
-		ioInfo << Localization()->UpdateVenues(nNew, nUpdated, nSkipped) << wxT("\n");
+		ioInfo << Localization()->UpdateVenues(nNew, nUpdated, nSkipped) << L"\n";
 	}
 	if (0 < venueInfo.length())
 	{

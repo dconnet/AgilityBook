@@ -184,12 +184,12 @@ std::wstring CAgilityBookHtmlView::RawHtml(
 
 	std::wstring title = _("IDS_TITLING_POINTS");
 
-	data << wxT("<html>\n");
+	data << L"<html>\n";
 	if (!bFragment)
-		data << wxT("<head><title>") << title << wxT(" ")
+		data << L"<head><title>" << title << L" "
 			<< today.GetString()
-			<< wxT("</title></head>\n")
-			<< wxT("<body>\n");
+			<< L"</title></head>\n"
+			<< L"<body>\n";
 
 	size_t nItems = m_Items->NumLines();
 	if (0 < nItems)
@@ -203,8 +203,8 @@ std::wstring CAgilityBookHtmlView::RawHtml(
 		data << item->GetHtml(nItem, bNoInternalLinks);
 	}
 	if (!bFragment)
-		data << wxT("</body></html>");
-	data << wxT("\n");
+		data << L"</body></html>";
+	data << L"\n";
 
 	return data.str();
 }
