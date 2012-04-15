@@ -25,6 +25,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
+#include "ARBString.h"
 #include "DlgAuthenticate.h"
 #include "DlgProgress.h"
 #include <wx/sstream.h>
@@ -52,10 +53,10 @@ CReadHttp::CReadHttp(
 	if (!proxy.empty())
 		wxURL::SetDefaultProxy(wxEmptyString);
 #endif
-	m_URL = new wxURL(inURL);
+	m_URL = new wxURL(StringUtil::stringWX(inURL));
 #if !wxCHECK_VERSION(2, 9, 3)
 	if (!proxy.empty())
-		m_URL->SetProxy(proxy);
+		m_URL->SetProxy(StringUtil::stringWX(proxy));
 #endif
 }
 
@@ -75,10 +76,10 @@ CReadHttp::CReadHttp(
 	if (!proxy.empty())
 		wxURL::SetDefaultProxy(wxEmptyString);
 #endif
-	m_URL = new wxURL(inURL);
+	m_URL = new wxURL(StringUtil::stringWX(inURL));
 #if !wxCHECK_VERSION(2, 9, 3)
 	if (!proxy.empty())
-		m_URL->SetProxy(proxy);
+		m_URL->SetProxy(StringUtil::stringWX(proxy));
 #endif
 }
 

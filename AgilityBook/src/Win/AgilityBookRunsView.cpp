@@ -317,7 +317,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 				bool bSet = false;
 				if (m_pRun->GetQ().Qualified())
 				{
-					wxString q;
+					std::wstring q;
 					std::vector<ARBConfigMultiQPtr> multiQs;
 					if (0 < m_pRun->GetMultiQs(multiQs))
 					{
@@ -392,11 +392,7 @@ std::wstring CAgilityBookRunsViewData::OnNeedText(long iCol) const
 			}
 			break;
 		case IO_RUNS_COMMENTS:
-			{
-				wxString str2(m_pRun->GetNote());
-				str2.Replace(L"\n", L" ");
-				str << str2;
-			}
+			str << StringUtil::Replace(m_pRun->GetNote(), L"\n", L" ");
 			break;
 		case IO_RUNS_FAULTS:
 			{
@@ -443,7 +439,7 @@ void CAgilityBookRunsViewData::OnNeedListItem(long iCol, wxListItem& info) const
 	if (m_pRun)
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-		info.SetText(OnNeedText(iCol));
+		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
 		if (0 == iCol)
 		{
 			int iImage = -1;
@@ -566,7 +562,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 		break;
 	case IO_RUNS_VENUE:
 		{
-			wxString str1, str2;
+			std::wstring str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->GetTrial()->GetClubs().begin();
@@ -593,7 +589,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 		break;
 	case IO_RUNS_CLUB:
 		{
-			wxString str1, str2;
+			std::wstring str1, str2;
 			int i = 0;
 			ARBDogClubList::const_iterator iter;
 			for (iter = pRun1->GetTrial()->GetClubs().begin();
@@ -1065,7 +1061,7 @@ int wxCALLBACK CompareRuns(long item1, long item2, long sortData)
 		break;
 	case IO_RUNS_FAULTS:
 		{
-			wxString str1, str2;
+			std::wstring str1, str2;
 			ARBDogFaultList::const_iterator iter;
 			int i = 0;
 			for (iter = pRun1->GetRun()->GetFaults().begin();
@@ -1498,14 +1494,14 @@ void CAgilityBookRunsView::SetupColumns()
 	{
 		for (size_t iCol = 0; iCol <= m_Columns.size(); ++iCol)
 		{
-			wxString str(L"");
+			std::wstring str;
 			int fmt = 0;
 			if (0 < iCol)
 			{
 				str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol-1]);
 				fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol-1]);
 			}
-			m_Ctrl->InsertColumn(static_cast<long>(iCol), str, fmt);
+			m_Ctrl->InsertColumn(static_cast<long>(iCol), StringUtil::stringWX(str), fmt);
 		}
 		m_SortColumn.Initialize();
 	}
@@ -1974,11 +1970,11 @@ void CAgilityBookRunsView::OnViewCmd(wxCommandEvent& evt)
 
 void CAgilityBookRunsView::OnPrint(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PrintText(m_Ctrl->GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PrintText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }
 
 
 void CAgilityBookRunsView::OnPreview(wxCommandEvent& evt)
 {
-	wxGetApp().GetHtmlPrinter()->PreviewText(m_Ctrl->GetPrintDataAsHtmlTable());
+	wxGetApp().GetHtmlPrinter()->PreviewText(StringUtil::stringWX(m_Ctrl->GetPrintDataAsHtmlTable()));
 }

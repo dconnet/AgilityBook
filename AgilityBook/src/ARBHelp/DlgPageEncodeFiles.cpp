@@ -18,6 +18,7 @@
 #include "stdafx.h"
 #include "DlgPageEncodeFiles.h"
 
+#include "ARBString.h"
 #include "DlgARBHelp.h"
 
 #ifdef __WXMSW__
@@ -91,7 +92,7 @@ bool CDlgPageEncodeFiles::TransferDataToWindow()
 		i != m_Parent->GetARBFiles().end();
 		++i)
 	{
-		int idx = m_ctrlList->Append((*i).first);
+		int idx = m_ctrlList->Append((*i).first.c_str());
 		m_ctrlList->Check(idx, (*i).second);
 	}
 	return true;
@@ -102,7 +103,7 @@ bool CDlgPageEncodeFiles::TransferDataFromWindow()
 {
 	for (unsigned int i = 0; i < m_ctrlList->GetCount(); ++i)
 	{
-		std::wstring filename = m_ctrlList->GetString(i);
+		std::wstring filename = StringUtil::stringW(m_ctrlList->GetString(i));
 		m_Parent->SetARBFileStatus(filename, m_ctrlList->IsChecked(i));
 	}
 	return true;

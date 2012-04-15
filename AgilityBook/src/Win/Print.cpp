@@ -84,7 +84,7 @@ public:
 	virtual bool OnPrintPage(int pageNum);
 
 private:
-	wxString GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
+	std::wstring GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code);
 	void PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect);
 
 	double m_OneInch;
@@ -363,7 +363,7 @@ static const struct
 static const int sc_nLines = sizeof(sc_lines) / sizeof(sc_lines[0]);
 
 
-static void RefRunHelper(wxString& text, ARBDogReferenceRunPtr ref, int code)
+static void RefRunHelper(std::wostringstream& text, ARBDogReferenceRunPtr ref, int code)
 {
 	switch (code)
 	{
@@ -417,9 +417,9 @@ static void RefRunHelper(wxString& text, ARBDogReferenceRunPtr ref, int code)
 }
 
 
-wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code)
+std::wstring CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int code)
 {
-	wxString text;
+	std::wostringstream text;
 	switch (code)
 	{
 	default:
@@ -647,7 +647,7 @@ wxString CPrintRuns::GetFieldText(ARBDogTrialPtr trial, ARBDogRunPtr run, int co
 			RefRunHelper(text, run->GetReferenceRuns()[3], code);
 		break;
 	}
-	return text;
+	return text.str();
 }
 
 
@@ -723,7 +723,7 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 					pDC->DrawLine(rect.x, rect.y, rect.x, rect.GetBottom());
 				}
 
-				wxString str = GetFieldText(trial, run, sc_lines[j].code);
+				std::wstring str = GetFieldText(trial, run, sc_lines[j].code);
 
 				// Draw horizontal separator lines (on top)
 				if (0 < sc_lines[j].line && (str.empty() || !sc_lines[j].bContinuation))
@@ -759,12 +759,12 @@ void CPrintRuns::PrintPage(int nCurPage, size_t curRun, wxDC* pDC, wxRect inRect
 					{
 						rect.y += textHeight;
 						rect.height -= textHeight;
-						DrawBetterLabel(pDC, str, rect, sc_lines[j].fmt, false);
+						DrawBetterLabel(pDC, StringUtil::stringWX(str), rect, sc_lines[j].fmt, false);
 					}
 					else
 					{
 						wxDCClipper clip(*pDC, rect);
-						pDC->DrawLabel(str, rect, sc_lines[j].fmt);
+						pDC->DrawLabel(StringUtil::stringWX(str), rect, sc_lines[j].fmt);
 					}
 					pDC->SetFont(fontText);
 				}
@@ -940,7 +940,7 @@ CHtmlEasyPrinting::CHtmlEasyPrinting(wxWindow* parent)
 
 	CFontInfo info;
 	CAgilityBookOptions::GetPrinterFontInfo(info);
-	SetStandardFonts(info.size, info.name);
+	SetStandardFonts(info.size, StringUtil::stringWX(info.name));
 }
 
 

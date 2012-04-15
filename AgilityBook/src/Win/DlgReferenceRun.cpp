@@ -60,11 +60,11 @@ CDlgReferenceRun::CDlgReferenceRun(
 	, m_Q(ref->GetQ())
 	, m_Time(ref->GetTime())
 	, m_ctrlYPS(NULL)
-	, m_Points(ref->GetScore())
-	, m_Height(ref->GetHeight())
-	, m_Name(ref->GetName())
-	, m_Breed(ref->GetBreed())
-	, m_Notes(ref->GetNote())
+	, m_Points(StringUtil::stringWX(ref->GetScore()))
+	, m_Height(StringUtil::stringWX(ref->GetHeight()))
+	, m_Name(StringUtil::stringWX(ref->GetName()))
+	, m_Breed(StringUtil::stringWX(ref->GetBreed()))
+	, m_Notes(StringUtil::stringWX(ref->GetNote()))
 {
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
@@ -74,7 +74,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	if (m_Points.empty())
 		m_Points = L"0";
 	if (m_Height.empty())
-		m_Height = CAgilityBookOptions::GetLastEnteredRefHeight();
+		m_Height = StringUtil::stringWX(CAgilityBookOptions::GetLastEnteredRefHeight());
 
 	std::wstring strYPS;
 	double yps;
@@ -123,7 +123,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	textYPS->Wrap(-1);
 
 	m_ctrlYPS = new wxStaticText(this, wxID_ANY,
-		strYPS, wxDefaultPosition, wxSize(40, -1),
+		strYPS.c_str(), wxDefaultPosition, wxSize(40, -1),
 		wxALIGN_CENTRE|wxSTATIC_BORDER);
 	m_ctrlYPS->Wrap(-1);
 
@@ -132,7 +132,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textScore->Wrap(-1);
 
-	CTextCtrl* ctrlScore = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlScore = new CTextCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(40, -1), 0,
 		CTrimValidator(&m_Points, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlScore->SetHelpText(_("HIDC_REFRUN_POINTS"));
@@ -147,7 +147,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	std::set<std::wstring>::const_iterator iter;
 	for (iter = inHeights.begin(); iter != inHeights.end(); ++iter)
 	{
-		choices.Add((*iter));
+		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
 	wxComboBox* ctrlHt = new wxComboBox(this, wxID_ANY, wxEmptyString,
@@ -165,7 +165,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 	choices.Clear();
 	for (iter = inNames.begin(); iter != inNames.end(); ++iter)
 	{
-		choices.Add((*iter));
+		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
 	wxComboBox* ctrlName = new wxComboBox(this, wxID_ANY,
@@ -183,10 +183,10 @@ CDlgReferenceRun::CDlgReferenceRun(
 	choices.Clear();
 	for (iter = inBreeds.begin(); iter != inBreeds.end(); ++iter)
 	{
-		choices.Add((*iter));
+		choices.Add(StringUtil::stringWX(*iter));
 	}
 	choices.Sort();
-	wxComboBox* ctrlBreed = new wxComboBox(this, wxID_ANY, wxEmptyString,
+	wxComboBox* ctrlBreed = new wxComboBox(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxDefaultSize,
 		choices, wxCB_DROPDOWN|wxCB_SORT,
 		CTrimValidator(&m_Breed, TRIMVALIDATOR_TRIM_BOTH));
@@ -198,7 +198,7 @@ CDlgReferenceRun::CDlgReferenceRun(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textNotes->Wrap(-1);
 
-	CTextCtrl* ctrlNotes = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlNotes = new CTextCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(-1, 70), 0,
 		CTrimValidator(&m_Notes, TRIMVALIDATOR_TRIM_BOTH));
 	ctrlNotes->SetHelpText(_("HIDC_REFRUN_NOTES"));
@@ -274,7 +274,7 @@ void CDlgReferenceRun::OnKillfocusRefRunTime(wxFocusEvent& evt)
 	{
 		strYPS.clear();
 	}
-	m_ctrlYPS->SetLabel(strYPS);
+	m_ctrlYPS->SetLabel(StringUtil::stringWX(strYPS));
 	evt.Skip();
 }
 

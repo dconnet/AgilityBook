@@ -25,6 +25,7 @@
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
 #include "ARBDogRunOtherPoints.h"
+#include "ARBString.h"
 #include "DlgConfigOtherPoints.h"
 #include "RichEditCtrl2.h"
 #include "Validators.h"
@@ -146,13 +147,13 @@ void CDlgOtherPoint::LoadPoints(ARBConfigOtherPointsPtr inOther)
 		++iterOther)
 	{
 		ARBConfigOtherPointsPtr pOther = (*iterOther);
-		int index = m_ctrlOtherPoints->Append(pOther->GetName());
+		int index = m_ctrlOtherPoints->Append(StringUtil::stringWX(pOther->GetName()));
 		m_ctrlOtherPoints->SetClientObject(index, new COtherPointData(pOther));
 		if ((!inOther && pOther->GetName() == m_pRunOther->GetName())
 		|| (inOther && *inOther == *pOther))
 		{
 			m_ctrlOtherPoints->SetSelection(index);
-			m_ctrlDesc->SetValue(pOther->GetDescription());
+			m_ctrlDesc->SetValue(StringUtil::stringWX(pOther->GetDescription()));
 			m_Points = pOther->GetDefault();
 			TransferDataToWindow();
 		}
@@ -166,7 +167,7 @@ void CDlgOtherPoint::OnSelchangeOtherpoints(wxCommandEvent& evt)
 	if (wxNOT_FOUND != index)
 	{
 		COtherPointData* pData = dynamic_cast<COtherPointData*>(m_ctrlOtherPoints->GetClientObject(index));
-		m_ctrlDesc->SetValue(pData->pOther->GetDescription());
+		m_ctrlDesc->SetValue(StringUtil::stringWX(pData->pOther->GetDescription()));
 		m_Points = pData->pOther->GetDefault();
 		TransferDataToWindow();
 	}

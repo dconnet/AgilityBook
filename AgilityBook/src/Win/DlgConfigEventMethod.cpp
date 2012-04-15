@@ -195,7 +195,7 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 		++iterDiv)
 	{
 		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		index = m_ctrlDivision->Append(pDiv->GetName());
+		index = m_ctrlDivision->Append(StringUtil::stringWX(pDiv->GetName()));
 		m_ctrlDivision->SetClientObject(index, new CDlgConfigureMethodDataDivision(pDiv));
 		if (m_pScoring->GetDivision() == pDiv->GetName())
 			m_ctrlDivision->SetSelection(index);
@@ -291,8 +291,8 @@ CDlgConfigEventMethod::CDlgConfigEventMethod(
 	static int const nStyles = sizeof(Styles) / sizeof(Styles[0]);
 	for (index = 0; index < nStyles; ++index)
 	{
-		wxString str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
-		int idx = m_ctrlType->Append(str);
+		std::wstring str = ARBConfigScoring::GetScoringStyleStr(Styles[index]);
+		int idx = m_ctrlType->Append(StringUtil::stringWX(str));
 		m_ctrlType->SetClientData(idx, reinterpret_cast<void*>(Styles[index]));
 	}
 
@@ -694,9 +694,10 @@ void CDlgConfigEventMethod::FillLevelList()
 				iterLevel != pDiv->GetLevels().end();
 				++iterLevel)
 			{
-				if (wxNOT_FOUND == m_ctrlLevel->FindString((*iterLevel)->GetName(), true))
+				wxString wxName(StringUtil::stringWX((*iterLevel)->GetName()));
+				if (wxNOT_FOUND == m_ctrlLevel->FindString(wxName, true))
 				{
-					index = m_ctrlLevel->Append((*iterLevel)->GetName());
+					index = m_ctrlLevel->Append(wxName);
 					if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
 						m_ctrlLevel->SetSelection(index);
 				}
@@ -710,7 +711,7 @@ void CDlgConfigEventMethod::FillLevelList()
 			iterLevel != pDiv->m_Div->GetLevels().end();
 			++iterLevel)
 		{
-			index = m_ctrlLevel->Append((*iterLevel)->GetName());
+			index = m_ctrlLevel->Append(StringUtil::stringWX((*iterLevel)->GetName()));
 			if (m_pScoring->GetLevel() == (*iterLevel)->GetName())
 				m_ctrlLevel->SetSelection(index);
 		}

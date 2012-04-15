@@ -25,6 +25,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBDate.h"
 #include "ARBDog.h"
+#include "ARBString.h"
 #include "Widgets.h"
 
 #ifdef __WXMSW__
@@ -168,7 +169,7 @@ void CDlgReorder::Init(wxWindow* pParent)
 			iter != m_Dogs->end();
 			++iter)
 		{
-			m_ctrlList->Append((*iter)->GetGenericName(), new CReorderListData((*iter)));
+			m_ctrlList->Append(StringUtil::stringWX((*iter)->GetGenericName()), new CReorderListData((*iter)));
 		}
 	}
 	else if (m_Trial && m_ctrlTree)
@@ -181,8 +182,8 @@ void CDlgReorder::Init(wxWindow* pParent)
 		{
 			ARBDogRunPtr pRun = *iter;
 			if (dates.end() == dates.find(pRun->GetDate()))
-				dates[pRun->GetDate()] = m_ctrlTree->AppendItem(root, pRun->GetDate().GetString());
-			m_ctrlTree->AppendItem(dates[pRun->GetDate()], pRun->GetGenericName(), -1, 1, new CReorderTreeData(pRun));
+				dates[pRun->GetDate()] = m_ctrlTree->AppendItem(root, StringUtil::stringWX(pRun->GetDate().GetString()));
+			m_ctrlTree->AppendItem(dates[pRun->GetDate()], StringUtil::stringWX(pRun->GetGenericName()), -1, 1, new CReorderTreeData(pRun));
 		}
 		for (std::map<ARBDate, wxTreeItemId>::iterator i = dates.begin();
 			i != dates.end();

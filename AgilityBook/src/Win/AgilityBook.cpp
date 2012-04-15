@@ -238,7 +238,7 @@ bool CAgilityBookApp::OnInit()
 	std::wstring errMsg;
 	if (!Element::Initialize(errMsg))
 	{
-		wxMessageBox(errMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);
+		wxMessageBox(errMsg.c_str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_ERROR);
 		return false;
 	}
 
@@ -409,9 +409,9 @@ bool CAgilityBookApp::OnInit()
 		frame->Maximize();
 	frame->Show(true);
 
-	wxString proxy = CAgilityBookOptions::GetProxy();
+	std::wstring proxy = CAgilityBookOptions::GetProxy();
 	if (!proxy.empty())
-		wxURL::SetDefaultProxy(proxy);
+		wxURL::SetDefaultProxy(proxy.c_str());
 
 	// Check for updates every 30 days.
 	if (CAgilityBookOptions::GetAutoUpdateCheck())

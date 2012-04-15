@@ -159,13 +159,14 @@ void CDlgQueryDetail::OnSelchangeVenues(wxCommandEvent& evt)
 		ARBConfigVenuePtr pVenue = m_ctrlVenues->GetVenue(idx);
 		if (pVenue)
 		{
-			if (m_strCode != pVenue->GetName())
+			wxString wxName(StringUtil::stringWX(pVenue->GetName()));
+			if (m_strCode != wxName)
 			{
 				TransferDataFromWindow();
 				// Yes, this will kill the existing code. In general, most
 				// sites will probably use the same acronyms I am. So I'm
 				// just not going to worry about this.
-				m_strCode = pVenue->GetName();
+				m_strCode = wxName;
 				TransferDataToWindow();
 			}
 		}

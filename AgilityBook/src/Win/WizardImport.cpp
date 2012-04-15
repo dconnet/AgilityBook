@@ -421,7 +421,7 @@ bool CWizardImport::DoImportFile()
 		else
 		{
 			wxTextFile file;
-			if (file.Open(m_FileName))
+			if (file.Open(m_FileName.c_str()))
 			{
 				for (str = file.GetFirstLine(); !file.Eof(); str = file.GetNextLine())
 				{
@@ -509,7 +509,7 @@ void CWizardImport::UpdatePreview()
 	}
 	for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
 	{
-		m_ctrlPreview->InsertColumn(iCol, cols[iCol]);
+		m_ctrlPreview->InsertColumn(iCol, StringUtil::stringWX(cols[iCol]));
 	}
 
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
@@ -531,7 +531,7 @@ void CWizardImport::UpdatePreview()
 				{
 					std::wstring const& str = *iter2;
 					if (0 == iCol)
-						iCurLine = m_ctrlPreview->InsertItem(iLine, str);
+						iCurLine = m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(str));
 					else
 						SetListColumnText(m_ctrlPreview, iCurLine, iCol, str);
 				}
@@ -554,7 +554,7 @@ void CWizardImport::UpdatePreview()
 			}
 			if (DataOk == status && 0 < fields.size())
 			{
-				m_ctrlPreview->InsertItem(iLine, fields[0]);
+				m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(fields[0]));
 				for (iCol = 1;
 					iCol < static_cast<long>(fields.size()) && iCol < static_cast<long>(cols.size());
 					++iCol)
@@ -564,7 +564,7 @@ void CWizardImport::UpdatePreview()
 			}
 			// Failed - means a blank row
 			else
-				m_ctrlPreview->InsertItem(iLine, std::wstring());
+				m_ctrlPreview->InsertItem(iLine, wxString());
 		}
 	}
 	for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)

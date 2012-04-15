@@ -604,7 +604,7 @@ wxTreeItemId CAgilityBookTreeView::InsertDog(
 		int idxImage = pDataDog->OnNeedIcon();
 		hItem = m_Ctrl->AppendItem(
 			m_Ctrl->GetRootItem(),
-			pDataDog->OnNeedText(),
+			StringUtil::stringWX(pDataDog->OnNeedText()),
 			idxImage, idxImage,
 			pDataDog);
 		for (ARBDogTrialList::const_iterator iterTrial = pDog->GetTrials().begin();
@@ -633,7 +633,7 @@ wxTreeItemId CAgilityBookTreeView::InsertTrial(
 		int idxImage = pDataTrial->OnNeedIcon();
 		hTrial = m_Ctrl->AppendItem(
 			hParent,
-			pDataTrial->OnNeedText(),
+			StringUtil::stringWX(pDataTrial->OnNeedText()),
 			idxImage, idxImage,
 			pDataTrial);
 #ifdef WX_TREE_HAS_STATE
@@ -663,7 +663,7 @@ wxTreeItemId CAgilityBookTreeView::InsertRun(
 		int idxImage = pDataRun->OnNeedIcon();
 		hRun = m_Ctrl->AppendItem(
 			hParent,
-			pDataRun->OnNeedText(),
+			StringUtil::stringWX(pDataRun->OnNeedText()),
 			idxImage, idxImage,
 			pDataRun);
 	}
@@ -709,7 +709,7 @@ bool CAgilityBookTreeView::PasteDog(bool& bLoaded)
 					}
 				}
 				else if (0 < err.m_ErrMsg.str().length())
-					wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+					wxMessageBox(StringUtil::stringWX(err.m_ErrMsg.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 			}
 		}
 		return true;
@@ -733,7 +733,7 @@ void CAgilityBookTreeView::UpdateData(wxTreeItemId hItem)
 		CAgilityBookTreeData* pData = dynamic_cast<CAgilityBookTreeData*>(m_Ctrl->GetItemData(hItem));
 		if (pData && pData->GetId().IsOk())
 		{
-			m_Ctrl->SetItemText(pData->GetId(), pData->OnNeedText());
+			m_Ctrl->SetItemText(pData->GetId(), StringUtil::stringWX(pData->OnNeedText()));
 		}
 	}
 	wxTreeItemIdValue cookie;

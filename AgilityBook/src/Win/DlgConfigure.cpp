@@ -321,7 +321,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 				CDlgConfigureDataVenue* pData = new CDlgConfigureDataVenue(*iterVenue);
 				m_ctrlItems->AppendItem(
 					hParent,
-					pData->OnNeedText(),
+					StringUtil::stringWX(pData->OnNeedText()),
 					idx, idx,
 					pData);
 			}
@@ -334,7 +334,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 				CDlgConfigureDataFault* pData = new CDlgConfigureDataFault(*iterFault);
 				m_ctrlItems->AppendItem(
 					hParent,
-					pData->OnNeedText(),
+					StringUtil::stringWX(pData->OnNeedText()),
 					m_idxFaults, m_idxFaults,
 					pData);
 			}
@@ -347,7 +347,7 @@ void CDlgConfigure::LoadData(eAction dataToLoad)
 				CDlgConfigureDataOtherPoints* pData = new CDlgConfigureDataOtherPoints(*iterOther);
 				m_ctrlItems->AppendItem(
 					hParent,
-					pData->OnNeedText(),
+					StringUtil::stringWX(pData->OnNeedText()),
 					m_ImageList.Run(), m_ImageList.Run(),
 					pData);
 			}
@@ -541,7 +541,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 					CDlgConfigureDataVenue* pData = new CDlgConfigureDataVenue(pVenue);
 					m_ctrlItems->AppendItem(
 						m_hItemVenues,
-						pData->OnNeedText(),
+						StringUtil::stringWX(pData->OnNeedText()),
 						m_ImageList.ARB(), m_ImageList.ARB(),
 						pData);
 					m_ctrlItems->SortChildren(m_hItemVenues);
@@ -568,7 +568,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 						CDlgConfigureDataFault* pData = new CDlgConfigureDataFault(pNewFault);
 						m_ctrlItems->AppendItem(
 							m_hItemFaults,
-							pData->OnNeedText(),
+							StringUtil::stringWX(pData->OnNeedText()),
 							m_idxFaults, m_idxFaults,
 							pData);
 						m_ctrlItems->SortChildren(m_hItemFaults);
@@ -591,7 +591,7 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 					CDlgConfigureDataOtherPoints* pData = new CDlgConfigureDataOtherPoints(pOther);
 					m_ctrlItems->AppendItem(
 						m_hItemOtherPts,
-						pData->OnNeedText(),
+						StringUtil::stringWX(pData->OnNeedText()),
 						m_ImageList.Run(), m_ImageList.Run(),
 						pData);
 					m_ctrlItems->SortChildren(m_hItemOtherPts);
@@ -683,7 +683,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 				CDlgConfigureDataBase* pNewData = new CDlgConfigureDataVenue(pNewVenue);
 				m_ctrlItems->AppendItem(
 					m_hItemVenues,
-					pData->OnNeedText(),
+					StringUtil::stringWX(pData->OnNeedText()),
 					m_ImageList.ARB(), m_ImageList.ARB(),
 					pNewData);
 				m_ctrlItems->SortChildren(m_hItemVenues);
@@ -702,7 +702,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 				CDlgConfigureDataBase* pNewData = new CDlgConfigureDataFault(pNewFault);
 				m_ctrlItems->AppendItem(
 					m_hItemFaults,
-					pData->OnNeedText(),
+					StringUtil::stringWX(pData->OnNeedText()),
 					m_idxFaults, m_idxFaults,
 					pNewData);
 				m_ctrlItems->SortChildren(m_hItemFaults);
@@ -726,7 +726,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 				CDlgConfigureDataBase* pNewData = new CDlgConfigureDataOtherPoints(pOther);
 				m_ctrlItems->AppendItem(
 					m_hItemOtherPts,
-					pData->OnNeedText(),
+					StringUtil::stringWX(pData->OnNeedText()),
 					m_ImageList.Run(), m_ImageList.Run(),
 					pNewData);
 				m_ctrlItems->SortChildren(m_hItemOtherPts);

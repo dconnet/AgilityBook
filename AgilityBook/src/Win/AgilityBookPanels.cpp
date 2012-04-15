@@ -53,7 +53,7 @@ CBasePanel::CBasePanel(wxWindow* parent, std::wstring const& helpText)
 {
 #if wxUSE_HELP
 	if (!helpText.empty())
-		SetHelpText(helpText);
+		SetHelpText(helpText.c_str());
 #endif
 }
 

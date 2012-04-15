@@ -142,7 +142,7 @@ void RefreshTreeItem(
 			CTreeData* pData = dynamic_cast<CTreeData*>(tree->GetItemData(item));
 			if (pData)
 			{
-				tree->SetItemText(item, pData->OnNeedText());
+				tree->SetItemText(item, StringUtil::stringWX(pData->OnNeedText()));
 			}
 			if (bRecurse)
 			{

@@ -85,7 +85,7 @@ CWizardExport::CWizardExport(
 
 	std::wstring tmp;
 	CAgilityBookOptions::GetImportExportDelimiters(false, m_Delim, tmp);
-	m_Delimiter = tmp;
+	m_Delimiter = StringUtil::stringWX(tmp);
 
 	// Controls (these are done first to control tab order)
 
@@ -384,7 +384,7 @@ std::wstring CWizardExport::AddPreviewData(
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 		if (0 == inCol)
-			m_ctrlPreview->InsertItem(inLine, inData);
+			m_ctrlPreview->InsertItem(inLine, StringUtil::stringWX(inData));
 		else
 			SetListColumnText(m_ctrlPreview, inLine, inCol, inData);
 	}
@@ -505,7 +505,7 @@ void CWizardExport::UpdatePreview()
 	{
 		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
 			m_ctrlPreview->InsertColumn(iCol, L"");
-		m_ctrlPreview->InsertItem(iLine, cols[0]);
+		m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(cols[0]));
 		for (iCol = 1; iCol < static_cast<long>(cols.size()); ++iCol)
 			SetListColumnText(m_ctrlPreview, iLine, iCol, cols[iCol]);
 		++iLine;
@@ -520,7 +520,7 @@ void CWizardExport::UpdatePreview()
 				data += delim;
 			data += WriteCSVField(delim, cols[iCol]);
 		}
-		m_ctrlPreview->InsertItem(iLine, data);
+		m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(data));
 		++iLine;
 	}
 
@@ -574,7 +574,7 @@ void CWizardExport::UpdatePreview()
 							assert(-1 != idxType);
 							if (0 <= idxType)
 							{
-								wxString data;
+								std::wstring data;
 								for (long idx = 0; idx < static_cast<long>(columns[idxType].size()); ++idx)
 								{
 									// Note: All columns must have data written
@@ -880,7 +880,7 @@ void CWizardExport::UpdatePreview()
 								}
 								if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 								&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-									m_ctrlPreview->InsertItem(iLine, data);
+									m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(data));
 								++iLine;
 							}
 						}
@@ -894,7 +894,7 @@ void CWizardExport::UpdatePreview()
 		{
 			for (ARBCalendarList::const_iterator iterCal = m_pDoc->Book().GetCalendar().begin(); iterCal != m_pDoc->Book().GetCalendar().end(); ++iterCal)
 			{
-				wxString data;
+				std::wstring data;
 				ARBCalendarPtr pCal = *iterCal;
 				for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_CALENDAR].size()); ++idx)
 				{
@@ -954,7 +954,7 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview->InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(data));
 				++iLine;
 			}
 		}
@@ -975,7 +975,7 @@ void CWizardExport::UpdatePreview()
 			}
 			for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 			{
-				wxString data;
+				std::wstring data;
 				ARBCalendarPtr pCal = *iterCal;
 				for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_CALENDAR_APPT].size()); ++idx)
 				{
@@ -1097,7 +1097,7 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview->InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(data));
 				++iLine;
 			}
 		}
@@ -1118,7 +1118,7 @@ void CWizardExport::UpdatePreview()
 			}
 			for (std::vector<ARBCalendarPtr>::const_iterator iterCal = entries->begin(); iterCal != entries->end(); ++iterCal)
 			{
-				wxString data;
+				std::wstring data;
 				ARBCalendarPtr pCal = *iterCal;
 				if (ARBCalendar::ePlanning != pCal->GetEntered())
 					continue;
@@ -1235,7 +1235,7 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview->InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(data));
 				++iLine;
 			}
 		}
@@ -1245,7 +1245,7 @@ void CWizardExport::UpdatePreview()
 		{
 			for (ARBTrainingList::const_iterator iterLog = m_pDoc->Book().GetTraining().begin(); iterLog != m_pDoc->Book().GetTraining().end(); ++iterLog)
 			{
-				wxString data;
+				std::wstring data;
 				ARBTrainingPtr pLog = *iterLog;
 				for (long idx = 0; idx < static_cast<long>(columns[IO_TYPE_TRAINING].size()); ++idx)
 				{
@@ -1267,7 +1267,7 @@ void CWizardExport::UpdatePreview()
 				}
 				if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 				&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
-					m_ctrlPreview->InsertItem(iLine, data);
+					m_ctrlPreview->InsertItem(iLine, StringUtil::stringWX(data));
 				++iLine;
 			}
 		}
@@ -1438,7 +1438,7 @@ bool CWizardExport::DoWizardFinish()
 	{
 		std::wstring tmp;
 		CAgilityBookOptions::SetImportExportDelimiters(false, m_Delim, tmp);
-		m_Delimiter = tmp;
+		m_Delimiter = StringUtil::stringWX(tmp);
 	}
 	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(index));
 	CAgilityBookOptions::SetImportExportDateFormat(false, format);

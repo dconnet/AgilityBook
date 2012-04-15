@@ -20,6 +20,7 @@
 #include "stdafx.h"
 #include "DlgProgress.h"
 
+#include "ARBString.h"
 #include "Globals.h"
 #include <vector>
 #include <wx/utils.h>
@@ -183,15 +184,16 @@ void CDlgProgress::OnCancel(wxCommandEvent& evt)
 
 void CDlgProgress::SetCaption(std::wstring const& inCaption)
 {
-	SetLabel(inCaption);
+	SetLabel(StringUtil::stringWX(inCaption));
 }
 
 
 void CDlgProgress::SetMessage(std::wstring const& inMessage)
 {
-	if (!inMessage.empty() && inMessage != m_ctrlMessage->GetLabel())
+	wxString msg(StringUtil::stringWX(inMessage));
+	if (!inMessage.empty() && msg != m_ctrlMessage->GetLabel())
 	{
-		m_ctrlMessage->SetLabel(inMessage);
+		m_ctrlMessage->SetLabel(msg);
 		wxYieldIfNeeded();
 	}
 }

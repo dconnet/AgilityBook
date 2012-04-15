@@ -872,10 +872,10 @@ CDlgAssignColumns::CDlgAssignColumns(
 		iterName != configNames.end();
 		++iterName)
 	{
-		int idx = m_ctrlConfig->Append((*iterName));
+		int idx = m_ctrlConfig->Append(StringUtil::stringWX((*iterName)));
 		if ((*iterName) == m_Configs.GetCurrentConfig())
 		{
-			m_ConfigName = m_Configs.GetCurrentConfig();
+			m_ConfigName = StringUtil::stringWX(m_Configs.GetCurrentConfig());
 			m_ctrlConfig->SetSelection(idx);
 		}
 	}
@@ -1066,7 +1066,7 @@ void CDlgAssignColumns::FillColumns()
 		idxType = static_cast<long>(m_ctrlType->GetItemData(index));
 	if (0 <= idxType)
 	{
-		std::wstring blank(_("IDS_BLANK_COLUMN"));
+		wxString blank(_("IDS_BLANK_COLUMN"));
 		size_t i;
 		bool bInUse[IO_MAX];
 		for (i = 0; i < IO_MAX; ++i)
@@ -1077,7 +1077,7 @@ void CDlgAssignColumns::FillColumns()
 			{
 				bInUse[m_Configs.Columns(idxType)[i]] = true;
 				std::wstring name = GetNameFromColumnID(m_Configs.Columns(idxType)[i]);
-				int idx = m_ctrlColumns->Append(name);
+				int idx = m_ctrlColumns->Append(StringUtil::stringWX(name));
 				if (0 <= idx)
 					m_ctrlColumns->SetClientObject(idx, new ColumnData(i, m_Configs.Columns(idxType)[i]));
 			}
@@ -1108,7 +1108,7 @@ void CDlgAssignColumns::FillColumns()
 			|| bInUse[sc_Fields[idxType][i]])
 				continue;
 			std::wstring name = GetNameFromColumnID(sc_Fields[idxType][i]);
-			int idx = m_ctrlAvailable->Append(name);
+			int idx = m_ctrlAvailable->Append(StringUtil::stringWX(name));
 			if (0 <= idx)
 				m_ctrlAvailable->SetClientObject(idx, new ColumnData(i, sc_Fields[idxType][i]));
 		}
@@ -1185,8 +1185,7 @@ void CDlgAssignColumns::OnClickedOptNamesDelete(wxCommandEvent& evt)
 		int idx = m_ctrlConfig->FindString(m_ConfigName, true);
 		if (0 <= idx)
 		{
-			std::wstring name = m_ConfigName;
-			m_Configs.DeleteConfig(name);
+			m_Configs.DeleteConfig(StringUtil::stringW(m_ConfigName));
 			m_ctrlConfig->Delete(idx);
 			m_ConfigName.clear();
 			m_ctrlConfig->SetSelection(wxNOT_FOUND);
@@ -1218,7 +1217,7 @@ void CDlgAssignColumns::OnAdd(wxCommandEvent& evt)
 	int idxAvail = m_ctrlAvailable->GetSelection();
 	if (0 <= idxAvail)
 	{
-		std::wstring str = m_ctrlAvailable->GetString(idxAvail);
+		wxString str = m_ctrlAvailable->GetString(idxAvail);
 		ColumnData* pData = GetAvailableData(idxAvail);
 		int idxCol = -1;
 		int idxCur = m_ctrlColumns->GetSelection();
@@ -1255,7 +1254,7 @@ void CDlgAssignColumns::OnRemove(wxCommandEvent& evt)
 	unsigned int idxCol = m_ctrlColumns->GetSelection();
 	if (0 <= idxCol)
 	{
-		std::wstring str = m_ctrlColumns->GetString(idxCol);
+		wxString str = m_ctrlColumns->GetString(idxCol);
 		ColumnData* pData = GetInUseData(idxCol);
 		if (pData->m_Data >= 0)
 		{
@@ -1304,7 +1303,7 @@ void CDlgAssignColumns::OnMoveUp(wxCommandEvent& evt)
 	int idxCol = m_ctrlColumns->GetSelection();
 	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount() && 0 != idxCol)
 	{
-		std::wstring str = m_ctrlColumns->GetString(idxCol);
+		wxString str = m_ctrlColumns->GetString(idxCol);
 		ColumnData* pData = new ColumnData(*GetInUseData(idxCol));
 		m_ctrlColumns->Delete(idxCol);
 		m_ctrlColumns->Insert(str, --idxCol);
@@ -1321,7 +1320,7 @@ void CDlgAssignColumns::OnMoveDown(wxCommandEvent& evt)
 	unsigned int idxCol = m_ctrlColumns->GetSelection();
 	if (0 <= idxCol && 1 < m_ctrlColumns->GetCount() && m_ctrlColumns->GetCount() - 1 != idxCol)
 	{
-		std::wstring str = m_ctrlColumns->GetString(idxCol);
+		wxString str = m_ctrlColumns->GetString(idxCol);
 		ColumnData* pData = new ColumnData(*GetInUseData(idxCol));
 		m_ctrlColumns->Delete(idxCol);
 		m_ctrlColumns->Insert(str, ++idxCol);

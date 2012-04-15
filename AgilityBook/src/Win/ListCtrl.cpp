@@ -319,7 +319,7 @@ void CReportListCtrl::GetPrintLine(
 			if (0 > item)
 				line.push_back(GetListColumnText(this, item, iCol));
 			else
-				line.push_back(StringUtil::stringW(data->OnNeedText(iCol)));
+				line.push_back(data->OnNeedText(iCol));
 		}
 	}
 }

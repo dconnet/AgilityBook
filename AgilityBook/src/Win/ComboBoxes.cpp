@@ -24,6 +24,7 @@
 #include "ARBConfigVenue.h"
 #include "ARBDogReferenceRun.h"
 #include "ARBDogRun.h"
+#include "ARBString.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -70,13 +71,14 @@ CVenueComboBox::CVenueComboBox(
 		++iterVenue)
 	{
 		ARBConfigVenuePtr pVenue = (*iterVenue);
+		wxString wxName = StringUtil::stringWX(pVenue->GetName());
 		int index;
 		if (useLongName)
-			index = Append(pVenue->GetLongName());
+			index = Append(StringUtil::stringWX(pVenue->GetLongName()));
 		else
-			index = Append(pVenue->GetName());
+			index = Append(wxName);
 		SetClientObject(index, new CVenueComboData(pVenue));
-		if (!inSelectVenue.empty() && pVenue->GetName() == inSelectVenue)
+		if (!inSelectVenue.empty() && wxName == inSelectVenue)
 			SetSelection(index);
 	}
 }
@@ -167,7 +169,7 @@ void CQualifyingComboBox::ResetContent(ARBConfigScoringPtr scoring)
 		// Allow non-titling runs to only have certain types.
 		if (!bHasTitling && !q.AllowForNonTitling())
 			continue;
-		int idx = Append(q.str());
+		int idx = Append(StringUtil::stringWX(q.str()));
 		SetClientObject(idx, new CQualifyingComboData(q));
 		if (curQ == q)
 			SetSelection(idx);

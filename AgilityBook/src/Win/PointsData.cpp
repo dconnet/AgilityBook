@@ -1566,7 +1566,7 @@ void CPointsDataItems::LoadData(
 						// Now we deal with the visible runs.
 						if (0 < points || 0 < allmatching.size())
 						{
-							std::wstring strRunCount = wxString::Format(_("IDS_POINTS_RUNS_JUDGES"),
+							wxString strRunCount = wxString::Format(_("IDS_POINTS_RUNS_JUDGES"),
 								static_cast<int>(allmatching.size()),
 								static_cast<int>(judges.size()));
 							if (pEvent->HasPartner() && 0 < partners.size())
@@ -1577,7 +1577,7 @@ void CPointsDataItems::LoadData(
 							double percentQs = 0.0;
 							if (0 < allmatching.size())
 								percentQs = (static_cast<double>(nCleanQ + nNotCleanQ) / static_cast<double>(allmatching.size())) * 100;
-							std::wstring strQcount = wxString::Format(_("IDS_POINTS_QS"),
+							wxString strQcount = wxString::Format(_("IDS_POINTS_QS"),
 								nCleanQ + nNotCleanQ,
 								static_cast<int>(percentQs));
 							if (0 < nCleanQ)
@@ -1614,8 +1614,8 @@ void CPointsDataItems::LoadData(
 								pDiv, idxDiv,
 								pLevel, idxLevel,
 								pEvent, idxEvent,
-								strRunCount,
-								strQcount,
+								StringUtil::stringW(strRunCount),
+								StringUtil::stringW(strQcount),
 								strPts.str(),
 								strSuperQ,
 								strSpeed));

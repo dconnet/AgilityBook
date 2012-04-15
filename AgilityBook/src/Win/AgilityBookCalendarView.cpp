@@ -220,7 +220,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 		// Figure out which month we're on.
 		ARBDate curMonth = FirstDayOfVisibleMonth();
 		curMonth = LastDayOfWeek(curMonth);
-		wxString str = wxString::Format(L"%s %d", m_Months[curMonth.GetMonth()-1].c_str(), curMonth.GetYear());
+		std::wstring str = StringUtil::stringW(wxString::Format(L"%s %d", m_Months[curMonth.GetMonth()-1].c_str(), curMonth.GetYear()));
 
 		wxRect rHeader;
 		wxRect rWeekDays;
@@ -237,7 +237,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 			pDC->SetFont(m_fontMonth);
 		{
 			wxDCClipper clip(*pDC, rHeader);
-			pDC->DrawLabel(str, rHeader, wxALIGN_TOP|wxALIGN_CENTRE_HORIZONTAL);
+			pDC->DrawLabel(StringUtil::stringWX(str), rHeader, wxALIGN_TOP|wxALIGN_CENTRE_HORIZONTAL);
 		}
 
 		if (bIsPrinting)
@@ -333,7 +333,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 				str = wxString::Format(L"%d", day.GetDay());
 				{
 					wxDCClipper clip(*pDC, rect);
-					pDC->DrawLabel(str, rect, wxALIGN_TOP|wxALIGN_RIGHT);
+					pDC->DrawLabel(StringUtil::stringWX(str), rect, wxALIGN_TOP|wxALIGN_RIGHT);
 				}
 
 				// Display entries
@@ -419,7 +419,7 @@ void CAgilityBookCalendar::OnDraw(wxDC* pDC)
 							}
 						}
 						wxDCClipper clip(*pDC, r);
-						pDC->DrawLabel(str, r, wxALIGN_LEFT);
+						pDC->DrawLabel(StringUtil::stringWX(str), r, wxALIGN_LEFT);
 						if (bReset)
 							pDC->SetTextForeground(oldText);
 					}
@@ -631,7 +631,7 @@ void CAgilityBookCalendar::OnCopy()
 
 	int index;
 	size_t maxLen[scNumColumns];
-	wxString columns[scNumColumns];
+	std::wstring columns[scNumColumns];
 	for (index = 0; index < scNumColumns; ++index)
 	{
 		wxString str = wxGetTranslation(scColumns[index]);
@@ -668,7 +668,7 @@ void CAgilityBookCalendar::OnCopy()
 			maxLen[COL_NOTES] = len;
 	}
 	// The header
-	std::wstring data = wxString::Format(L" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
+	std::wstring data = StringUtil::stringW(wxString::Format(L" %*s - %-*s %-*s %-*s %-*s %*s - %-*s %-*s",
 		maxLen[COL_START_DATE], columns[COL_START_DATE].c_str(),
 		maxLen[COL_END_DATE], columns[COL_END_DATE].c_str(),
 		maxLen[COL_VENUE], columns[COL_VENUE].c_str(),
@@ -676,7 +676,7 @@ void CAgilityBookCalendar::OnCopy()
 		maxLen[COL_CLUB], columns[COL_CLUB].c_str(),
 		maxLen[COL_OPENS], columns[COL_OPENS].c_str(),
 		maxLen[COL_CLOSES], columns[COL_CLOSES].c_str(),
-		maxLen[COL_NOTES], columns[COL_NOTES].c_str());
+		maxLen[COL_NOTES], columns[COL_NOTES].c_str()));
 	data = StringUtil::Trim(data);
 	data += L"\n";
 
@@ -684,7 +684,7 @@ void CAgilityBookCalendar::OnCopy()
 	for (iter = m_Calendar.begin(); iter != m_Calendar.end(); ++iter)
 	{
 		ARBCalendarPtr cal = *iter;
-		wxString items[scNumColumns];
+		std::wstring items[scNumColumns];
 		items[COL_START_DATE] = cal->GetStartDate().GetString();
 		items[COL_END_DATE] = cal->GetEndDate().GetString();
 		items[COL_LOCATION] = cal->GetLocation();
@@ -692,9 +692,7 @@ void CAgilityBookCalendar::OnCopy()
 		items[COL_VENUE] = cal->GetVenue();
 		items[COL_OPENS] = cal->GetOpeningDate().GetString();
 		items[COL_CLOSES] = cal->GetClosingDate().GetString();
-		wxString tmp = cal->GetNote();
-		tmp.Replace(L"\n", L" ");
-		items[COL_NOTES] = tmp;
+		items[COL_NOTES] = StringUtil::Replace(cal->GetNote(), L"\n", L" ");
 		wxString tentative(L"  ");
 		if (cal->IsTentative())
 			tentative = L"? ";

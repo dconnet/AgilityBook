@@ -23,6 +23,7 @@
 #include "CalendarSiteUSDAA.h"
 
 #include "../tidy/include/tidy.h"
+#include "ARBString.h"
 #include "ARBStructure.h"
 #include "BreakLine.h"
 #include "Element.h"
@@ -52,20 +53,20 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-static wxString mdy2ymd(wxString const& inDate)
+static std::wstring mdy2ymd(std::wstring const& inDate)
 {
-	wxString date;
-	wxString::size_type pos = 0;
-	while (pos < inDate.length() && inDate[pos] == ' ')
+	std::wstring date;
+	std::wstring::size_type pos = 0;
+	while (pos < inDate.length() && inDate[pos] == L' ')
 		++pos;
 	if (pos + 10 <= inDate.length())
 	{
-		if (inDate[pos + 2] == '/' && inDate[pos + 5] == '/')
+		if (inDate[pos + 2] == L'/' && inDate[pos + 5] == L'/')
 		{
 			date = inDate.substr(pos + 6, 4);
-			date += '-';
+			date += L'-';
 			date += inDate.substr(pos + 0, 2);
-			date += '-';
+			date += L'-';
 			date += inDate.substr(pos + 3, 2);
 		}
 	}
@@ -232,7 +233,7 @@ raw.Write(data.c_str(), data.length());
 		if (!tree->LoadXML(pData, len, err))
 		{
 			tree.reset();
-			wxMessageBox(err.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE);
+			wxMessageBox(StringUtil::stringWX(err.str()), wxMessageBoxCaptionStr, wxOK | wxCENTRE);
 		}
 		else
 		{
@@ -363,8 +364,8 @@ std::string CCalendarSiteUSDAA::Process(
 						}
 						++idx;
 					}
-					wxString::size_type pos = dates.find(L"-");
-					if (wxString::npos == pos)
+					std::wstring::size_type pos = dates.find(L"-");
+					if (std::wstring::npos == pos)
 						continue;
 					bOk = true;
 					ElementNodePtr cal = calTree->AddElementNode(TREE_CALENDAR);
@@ -468,7 +469,7 @@ std::string CCalendarSiteUSDAA::Process(
 									if (div->FindElementDeep(parentCloseDate, idxDate, L"span"))
 									{
 										ElementNodePtr closeDate = parentCloseDate->GetElementNode(idxDate);
-										wxString date = closeDate->GetValue();
+										std::wstring date = closeDate->GetValue();
 										cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
 									}
 								}
@@ -531,7 +532,7 @@ std::string CCalendarSiteUSDAA::Process(
 									iTD = table->GetElementNode(i)->FindElement(L"td", iTD+1);
 									if (0 <= iTD)
 									{
-										wxString date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
+										std::wstring date = table->GetElementNode(i)->GetElement(iTD)->GetValue();
 										cal->AddAttrib(ATTRIB_CAL_CLOSING, mdy2ymd(date));
 									}
 								}

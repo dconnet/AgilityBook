@@ -39,10 +39,10 @@ CDlgFind::CDlgFind(
 	, m_radioBoxDir(NULL)
 	, m_btnFind(NULL)
 {
-	wxString caption = m_Callback.GetCaption();
+	wxString caption = StringUtil::stringWX(m_Callback.GetCaption());
 	if (caption.empty())
 		caption = _("IDD_FIND");
-	wxString text = m_Callback.Text();
+	wxString text = StringUtil::stringWX(m_Callback.Text());
 
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)

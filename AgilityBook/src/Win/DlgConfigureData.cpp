@@ -163,7 +163,7 @@ void CDlgConfigureDataDivision::AddSubItems()
 		++iterLevel)
 	{
 		CDlgConfigureDataLevel* pLevData = new CDlgConfigureDataLevel(m_pDlg, m_Div, *iterLevel);
-		m_pDlg->m_ctrlItems->AppendItem(GetId(), pLevData->OnNeedText(), -1, -1, pLevData);
+		m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pLevData->OnNeedText()), -1, -1, pLevData);
 		pLevData->AddSubItems();
 	}
 }
@@ -191,7 +191,7 @@ bool CDlgConfigureDataDivision::DoAdd()
 			if (m_Div->GetLevels().AddLevel(name, &pNewLevel))
 			{
 				CDlgConfigureDataLevel* pData = new CDlgConfigureDataLevel(m_pDlg, m_Div, pNewLevel);
-				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 				m_pDlg->m_ctrlItems->SelectItem(level);
 				added = true;
 			}
@@ -295,7 +295,7 @@ void CDlgConfigureDataLevel::AddSubItems()
 			++iterSubLevel)
 		{
 			CDlgConfigureDataSubLevel* pSubLevelData = new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, *iterSubLevel);
-			m_pDlg->m_ctrlItems->AppendItem(GetId(), pSubLevelData->OnNeedText(), -1, -1, pSubLevelData);
+			m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pSubLevelData->OnNeedText()), -1, -1, pSubLevelData);
 			pSubLevelData->AddSubItems();
 		}
 	}
@@ -324,7 +324,7 @@ bool CDlgConfigureDataLevel::DoAdd()
 			if (m_Level->GetSubLevels().AddSubLevel(name, &pNewSubLevel))
 			{
 				CDlgConfigureDataSubLevel* pData = new CDlgConfigureDataSubLevel(m_pDlg, m_Division, m_Level, pNewSubLevel);
-				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), pData->OnNeedText(), -1, -1, pData);
+				wxTreeItemId level = m_pDlg->m_ctrlItems->AppendItem(GetId(), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 				pData->AddSubItems();
 				m_pDlg->m_ctrlItems->SelectItem(level);
 				added = true;
@@ -638,7 +638,7 @@ bool CDlgConfigureDataTitle::DoCopy()
 	if (m_pDlg->m_pVenue->GetTitles().AddTitle(title))
 	{
 		CDlgConfigureDataTitle* pData = new CDlgConfigureDataTitle(m_pDlg, title);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -720,7 +720,7 @@ bool CDlgConfigureDataEvent::DoCopy()
 	if (m_pDlg->m_pVenue->GetEvents().AddEvent(pEvent))
 	{
 		CDlgConfigureDataEvent* pData = new CDlgConfigureDataEvent(m_pDlg, pEvent);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;
@@ -807,7 +807,7 @@ bool CDlgConfigureDataMultiQ::DoCopy()
 	if (m_pDlg->m_pVenue->GetMultiQs().AddMultiQ(multiq))
 	{
 		CDlgConfigureDataMultiQ* pData = new CDlgConfigureDataMultiQ(m_pDlg, multiq);
-		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), pData->OnNeedText(), -1, -1, pData);
+		wxTreeItemId id = m_pDlg->m_ctrlItems->AppendItem(m_pDlg->m_ctrlItems->GetItemParent(GetId()), StringUtil::stringWX(pData->OnNeedText()), -1, -1, pData);
 		pData->AddSubItems();
 		m_pDlg->m_ctrlItems->SelectItem(id);
 		bAdded = true;

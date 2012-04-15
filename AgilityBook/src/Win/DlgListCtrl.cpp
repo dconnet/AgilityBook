@@ -80,7 +80,7 @@ protected:
 void CDlgListCtrlData::OnNeedListItem(long iCol, wxListItem& info) const
 {
 	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-	info.SetText(OnNeedText(iCol));
+	info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
 	if (0 == iCol && HasIcon())
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
@@ -532,7 +532,7 @@ bool CDlgListCtrl::Create(
 	SetExtraStyle(wxDIALOG_EX_CONTEXTHELP | GetExtraStyle());
 	if (!pParent)
 		pParent = wxGetApp().GetTopWindow();
-	if (!wxDialog::Create(pParent, wxID_ANY, inCaption, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
+	if (!wxDialog::Create(pParent, wxID_ANY, inCaption.c_str(), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER))
 		return false;
 
 	// Controls (these are done first to control tab order)

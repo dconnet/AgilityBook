@@ -98,7 +98,7 @@ std::wstring CDlgFindLinksData::OnNeedText(long iCol) const
 void CDlgFindLinksData::OnNeedListItem(long iCol, wxListItem& info) const
 {
 	info.SetMask(info.GetMask() | wxLIST_MASK_TEXT);
-	info.SetText(OnNeedText(iCol));
+	info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
 	if (0 == iCol && 0 <= m_Image)
 	{
 		info.SetMask(info.GetMask() | wxLIST_MASK_IMAGE);
@@ -452,7 +452,7 @@ void CDlgFindLinks::OnOpen(wxCommandEvent& evt)
 	{
 		CDlgFindLinksDataPtr data = GetItemLinkData(nItem);
 		if (data)
-			wxLaunchDefaultBrowser(data->m_Link);
+			wxLaunchDefaultBrowser(StringUtil::stringWX(data->m_Link));
 	}
 }
 

@@ -92,10 +92,10 @@ CDlgOptionsFilter::CDlgOptionsFilter(
 		iterName != filterNames.end();
 		++iterName)
 	{
-		int idx = m_ctrlFilters->Append((*iterName));
+		int idx = m_ctrlFilters->Append(StringUtil::stringWX(*iterName));
 		if ((*iterName) == m_FilterOptions.GetCurrentFilter())
 		{
-			m_FilterName = m_FilterOptions.GetCurrentFilter();
+			m_FilterName = StringUtil::stringWX(m_FilterOptions.GetCurrentFilter());
 			m_ctrlFilters->SetSelection(idx);
 		}
 	}
@@ -404,7 +404,7 @@ void CDlgOptionsFilter::FillControls()
 		iterLog != allLogNames.end();
 		++iterLog)
 	{
-		int item = m_ctrlNames->Append((*iterLog));
+		int item = m_ctrlNames->Append(StringUtil::stringWX(*iterLog));
 		if (names.end() != names.find((*iterLog)))
 			m_ctrlNames->Check(item, true);
 	}
@@ -436,7 +436,7 @@ void CDlgOptionsFilter::FillControls()
 			++iVenue)
 		{
 			ARBConfigVenuePtr pVenue = (*iVenue);
-			wxTreeItemId hVenue = m_ctrlVenue->AppendItem(root, pVenue->GetName());
+			wxTreeItemId hVenue = m_ctrlVenue->AppendItem(root, StringUtil::stringWX(pVenue->GetName()));
 			m_ctrlVenue->ShowCheckbox(hVenue, true);
 			if (m_FilterOptions.FilterExists(pVenue->GetName(), L"", L""))
 				m_ctrlVenue->SetChecked(hVenue, true);
@@ -445,7 +445,7 @@ void CDlgOptionsFilter::FillControls()
 				++iterDiv)
 			{
 				ARBConfigDivisionPtr pDiv = *iterDiv;
-				wxTreeItemId hDiv = m_ctrlVenue->AppendItem(hVenue, pDiv->GetName());
+				wxTreeItemId hDiv = m_ctrlVenue->AppendItem(hVenue, StringUtil::stringWX(pDiv->GetName()));
 				m_ctrlVenue->ShowCheckbox(hDiv, true);
 				if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), L""))
 				{
@@ -457,7 +457,7 @@ void CDlgOptionsFilter::FillControls()
 					++iterLevel)
 				{
 					ARBConfigLevelPtr pLevel = *iterLevel;
-					wxTreeItemId hLevel = m_ctrlVenue->AppendItem(hDiv, pLevel->GetName());
+					wxTreeItemId hLevel = m_ctrlVenue->AppendItem(hDiv, StringUtil::stringWX(pLevel->GetName()));
 					if (0 < pLevel->GetSubLevels().size())
 					{
 						m_ctrlVenue->ShowCheckbox(hLevel, false);
@@ -466,7 +466,7 @@ void CDlgOptionsFilter::FillControls()
 							++iterSubLevel)
 						{
 							ARBConfigSubLevelPtr pSubLevel = *iterSubLevel;
-							wxTreeItemId hSubLevel = m_ctrlVenue->AppendItem(hLevel, pSubLevel->GetName());
+							wxTreeItemId hSubLevel = m_ctrlVenue->AppendItem(hLevel, StringUtil::stringWX(pSubLevel->GetName()));
 							m_ctrlVenue->ShowCheckbox(hSubLevel, true);
 							if (m_FilterOptions.FilterExists(pVenue->GetName(), pDiv->GetName(), pSubLevel->GetName()))
 							{
@@ -635,7 +635,7 @@ void CDlgOptionsFilter::OnClickedOptFilterNamesDelete(wxCommandEvent& evt)
 		int idx = m_ctrlFilters->FindString(m_FilterName, true);
 		if (0 <= idx)
 		{
-			std::wstring name = m_FilterName;
+			std::wstring name = StringUtil::stringW(m_FilterName);
 			m_FilterOptions.DeleteFilter(name);
 			m_ctrlFilters->Delete(idx);
 			m_FilterName.clear();

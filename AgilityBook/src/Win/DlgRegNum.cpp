@@ -62,11 +62,11 @@ CDlgRegNum::CDlgRegNum(
 
 	if (m_pRegNum)
 	{
-		m_Venue = m_pRegNum->GetVenue();
-		m_RegNum = m_pRegNum->GetNumber();
-		m_Height = m_pRegNum->GetHeight();
+		m_Venue = StringUtil::stringWX(m_pRegNum->GetVenue());
+		m_RegNum = StringUtil::stringWX(m_pRegNum->GetNumber());
+		m_Height = StringUtil::stringWX(m_pRegNum->GetHeight());
 		m_bReceived = m_pRegNum->GetReceived();
-		m_Note = m_pRegNum->GetNote();
+		m_Note = StringUtil::stringWX(m_pRegNum->GetNote());
 	}
 
 	// Controls (these are done first to control tab order)

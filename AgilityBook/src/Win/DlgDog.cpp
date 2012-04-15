@@ -218,7 +218,7 @@ void CDlgDogDataTitle::OnNeedListItem(long iCol, wxListItem& info) const
 		}
 		break;
 	default:
-		info.SetText(OnNeedText(iCol));
+		info.SetText(StringUtil::stringWX(OnNeedText(iCol)));
 		break;
 	}
 }
@@ -576,13 +576,13 @@ CDlgDog::CDlgDog(
 	, m_imgTitlesHidden(-1)
 	, m_imgTitlesTitledHidden(-1)
 	, m_imgTitlesTitledHiddenReceived(-1)
-	, m_CallName(pDog->GetCallName())
-	, m_Breed(pDog->GetBreed())
-	, m_RegName(pDog->GetRegisteredName())
+	, m_CallName(StringUtil::stringWX(pDog->GetCallName()))
+	, m_Breed(StringUtil::stringWX(pDog->GetBreed()))
+	, m_RegName(StringUtil::stringWX(pDog->GetRegisteredName()))
 	, m_DOB(pDog->GetDOB())
 	, m_IsDeceased(pDog->GetDeceased().IsValid())
 	, m_Deceased(pDog->GetDeceased())
-	, m_Notes(pDog->GetNote())
+	, m_Notes(StringUtil::stringWX(pDog->GetNote()))
 	, m_ctrlAge(NULL)
 	, m_ctrlDDay(NULL)
 	, m_ctrlTitles(NULL)
@@ -1034,7 +1034,7 @@ void CDlgDog::UpdateAge()
 			current = m_Deceased;
 		ageDays = current - m_DOB;
 	}
-	m_ctrlAge->SetLabel(ARBDouble::ToString(ageDays/365.0, 1));
+	m_ctrlAge->SetLabel(StringUtil::stringWX(ARBDouble::ToString(ageDays/365.0, 1)));
 }
 
 
@@ -1583,7 +1583,7 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 	bool bModified = false;
 	unsigned int hint = 0;
 
-	if (m_pDog->GetCallName() != m_CallName)
+	if (m_pDog->GetCallName() != StringUtil::stringW(m_CallName))
 	{
 		hint |= UPDATE_TREE_VIEW | UPDATE_RUNS_VIEW | UPDATE_POINTS_VIEW;
 		m_pDog->SetCallName(StringUtil::stringW(m_CallName));
@@ -1601,17 +1601,17 @@ void CDlgDog::OnOk(wxCommandEvent& evt)
 		hint |= UPDATE_TREE_VIEW;
 		m_pDog->SetDeceased(m_Deceased);
 	}
-	if (m_pDog->GetBreed() != m_Breed)
+	if (m_pDog->GetBreed() != StringUtil::stringW(m_Breed))
 	{
 		bModified = true;
 		m_pDog->SetBreed(StringUtil::stringW(m_Breed));
 	}
-	if (m_pDog->GetRegisteredName() != m_RegName)
+	if (m_pDog->GetRegisteredName() != StringUtil::stringW(m_RegName))
 	{
 		hint |= UPDATE_POINTS_VIEW;
 		m_pDog->SetRegisteredName(StringUtil::stringW(m_RegName));
 	}
-	if (m_pDog->GetNote() != m_Notes)
+	if (m_pDog->GetNote() != StringUtil::stringW(m_Notes))
 	{
 		bModified = true;
 		m_pDog->SetNote(StringUtil::stringW(m_Notes));

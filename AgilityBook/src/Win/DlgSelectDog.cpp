@@ -22,6 +22,7 @@
 
 #include "AgilityBook.h"
 #include "ARBDog.h"
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "AgilityBookDoc.h"
 #include "RegItems.h"
@@ -59,7 +60,7 @@ CDlgSelectDog::CDlgSelectDog(
 	long nDogs = wxConfig::Get()->Read(CFG_SELECTION_NDOGS, 0L);
 	for (long iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		std::wstring dog = wxConfig::Get()->Read(CFG_SELECTION_DOG(iDog), wxEmptyString);
+		std::wstring dog = StringUtil::stringW(wxConfig::Get()->Read(CFG_SELECTION_DOG(iDog), wxString()));
 		if (!dog.empty())
 			selection.insert(dog);
 	}
@@ -69,7 +70,7 @@ CDlgSelectDog::CDlgSelectDog(
 	wxArrayString checkListChoices;
 	for (ARBDogList::const_iterator iter = m_Dogs.begin(); iter != m_Dogs.end(); ++iter)
 	{
-		checkListChoices.Add((*iter)->GetCallName());
+		checkListChoices.Add(StringUtil::stringWX((*iter)->GetCallName()));
 	}
 	m_checkList = new wxCheckListBox(this, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize,

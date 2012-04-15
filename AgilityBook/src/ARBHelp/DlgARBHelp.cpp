@@ -117,7 +117,7 @@ std::wstring CDlgARBHelp::GetEncodedData()
 	for (FileMap::iterator iFile = m_IncFile.begin(); iFile != m_IncFile.end(); ++iFile)
 	{
 		rawdata << L"\n" << (*iFile).first;
-		wxFileName fileName((*iFile).first);
+		wxFileName fileName((*iFile).first.c_str());
 		wxDateTime dtMod, dtCreate;
 		if (!(*iFile).second)
 			rawdata << L": Skipped";

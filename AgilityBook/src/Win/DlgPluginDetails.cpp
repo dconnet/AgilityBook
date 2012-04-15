@@ -61,10 +61,10 @@ CDlgPluginDetails::CDlgPluginDetails(
 	if (calSite)
 	{
 		m_CalSite = calSite->Clone();
-		m_strName = calSite->GetName();
-		m_strDesc = calSite->GetDescription();
-		m_strSearch = calSite->GetSearchURL();
-		m_strHelp = calSite->GetHelpURL();
+		m_strName = StringUtil::stringWX(calSite->GetName());
+		m_strDesc = StringUtil::stringWX(calSite->GetDescription());
+		m_strSearch = StringUtil::stringWX(calSite->GetSearchURL());
+		m_strHelp = StringUtil::stringWX(calSite->GetHelpURL());
 	}
 	else
 		m_CalSite = ARBConfigCalSite::New();

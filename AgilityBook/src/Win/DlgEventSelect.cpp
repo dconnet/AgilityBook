@@ -90,8 +90,8 @@ CDlgEventSelect::CDlgEventSelect(
 	, m_Division()
 	, m_Level()
 	, m_Event()
-	, m_inLevel(inLevel)
-	, m_inEvent(inEvent)
+	, m_inLevel(StringUtil::stringWX(inLevel))
+	, m_inEvent(StringUtil::stringWX(inEvent))
 	, m_pVenue(inVenue)
 	, m_Date(inDate)
 {
@@ -174,7 +174,7 @@ CDlgEventSelect::CDlgEventSelect(
 		++iterDiv)
 	{
 		ARBConfigDivisionPtr pDiv = (*iterDiv);
-		int index = m_ctrlDivisions->Append(pDiv->GetName());
+		int index = m_ctrlDivisions->Append(StringUtil::stringWX(pDiv->GetName()));
 		m_ctrlDivisions->SetClientObject(index,
 			new CDlgDivSelectData(pDiv));
 		if (pDiv->GetName() == inDivision)
@@ -258,7 +258,7 @@ void CDlgEventSelect::FillLevels()
 					++iterSub)
 				{
 					ARBConfigSubLevelPtr pSubLevel = (*iterSub);
-					int idx = m_ctrlLevels->Append(pSubLevel->GetName());
+					int idx = m_ctrlLevels->Append(StringUtil::stringWX(pSubLevel->GetName()));
 					m_ctrlLevels->SetClientObject(idx,
 						new CDlgEventSelectData(pLevel, pSubLevel));
 					if (level == pSubLevel->GetName())
@@ -267,7 +267,7 @@ void CDlgEventSelect::FillLevels()
 			}
 			else
 			{
-				int idx = m_ctrlLevels->Append(pLevel->GetName());
+				int idx = m_ctrlLevels->Append(StringUtil::stringWX(pLevel->GetName()));
 				m_ctrlLevels->SetClientObject(idx,
 					new CDlgEventSelectData(pLevel));
 				if (level == pLevel->GetName())
@@ -309,7 +309,7 @@ void CDlgEventSelect::FillEvents()
 				ARBConfigEventPtr pEvent = (*iter);
 				if (pEvent->FindEvent(pData->m_pDiv->GetName(), pEvtData->m_pLevel->GetName(), m_Date))
 				{
-					int idx = m_ctrlEvents->Append(pEvent->GetName());
+					int idx = m_ctrlEvents->Append(StringUtil::stringWX(pEvent->GetName()));
 					if (evt == pEvent->GetName())
 					{
 						m_ctrlEvents->SetSelection(idx);

@@ -24,6 +24,7 @@
 
 #include "AgilityBook.h"
 #include "ARBConfigVenue.h"
+#include "ARBString.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -101,7 +102,7 @@ CDlgConfigTitlePoints::CDlgConfigTitlePoints(
 	wxArrayString types;
 	types.Add(_("IDS_TITLEPOINT_NORMAL"));
 	if (m_Venue->HasLifetimeName())
-		types.Add(m_Venue->GetLifetimeName());
+		types.Add(StringUtil::stringWX(m_Venue->GetLifetimeName()));
 	else
 		types.Add(_("IDS_TITLEPOINT_LIFETIME"));
 	types.Add(_("IDS_TITLEPOINT_PLACEMENT"));

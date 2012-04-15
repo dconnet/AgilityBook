@@ -828,7 +828,7 @@ bool CWizardStart::DoWizardFinish()
 				{
 					wxBusyCursor wait;
 					CVersionNum ver(true);
-					wxString verstr = ver.GetVersionString();
+					std::wstring verstr = ver.GetVersionString();
 					ElementNodePtr settings = CAgilityBookOptions::ExportSettings();
 					if (settings)
 					{

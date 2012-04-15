@@ -60,8 +60,8 @@ CDlgClub::CDlgClub(
 
 	if (m_pClub)
 	{
-		m_Club = m_pClub->GetName();
-		m_Venue = m_pClub->GetVenue();
+		m_Club = StringUtil::stringWX(m_pClub->GetName());
+		m_Venue = StringUtil::stringWX(m_pClub->GetVenue());
 	}
 	std::set<std::wstring> clubnames;
 	for (ARBDogClubList::const_iterator iClub = inClubs.begin(); iClub != inClubs.end(); ++iClub)
@@ -73,7 +73,7 @@ CDlgClub::CDlgClub(
 	wxArrayString clubs;
 	for (std::set<std::wstring>::const_iterator iter = clubnames.begin(); iter != clubnames.end(); ++iter)
 	{
-		clubs.Add((*iter));
+		clubs.Add(StringUtil::stringWX(*iter));
 	}
 	clubs.Sort();
 

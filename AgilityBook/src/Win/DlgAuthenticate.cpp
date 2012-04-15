@@ -39,13 +39,13 @@ CDlgAuthenticate::CDlgAuthenticate(
 {
 	if (caption.empty())
 		caption = StringUtil::stringW(_("IDD_AUTHENTICATE"));
-	Create(parent, wxID_ANY, caption, wxDefaultPosition, wxDefaultSize);
+	Create(parent, wxID_ANY, caption.c_str(), wxDefaultPosition, wxDefaultSize);
 	// Controls (these are done first to control tab order)
 
 	wxStaticText* textMsg = NULL;
 	if (!message.empty())
 	{
-		textMsg = new wxStaticText(this, wxID_ANY, message, wxDefaultPosition, wxDefaultSize, 0);
+		textMsg = new wxStaticText(this, wxID_ANY, message.c_str(), wxDefaultPosition, wxDefaultSize, 0);
 		textMsg->Wrap(-1);
 	}
 
@@ -53,7 +53,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textUserName->Wrap(-1);
 
-	CTextCtrl* ctrlUsername = new CTextCtrl(this, wxID_ANY, userName,
+	CTextCtrl* ctrlUsername = new CTextCtrl(this, wxID_ANY, userName.c_str(),
 		wxDefaultPosition, wxSize(180, -1), 0,
 		wxGenericValidator(&m_Name));
 
@@ -61,7 +61,7 @@ CDlgAuthenticate::CDlgAuthenticate(
 		wxDefaultPosition, wxDefaultSize, 0);
 	textPassword->Wrap(-1);
 
-	CTextCtrl* ctrlPassword = new CTextCtrl(this, wxID_ANY, wxEmptyString,
+	CTextCtrl* ctrlPassword = new CTextCtrl(this, wxID_ANY, wxString(),
 		wxDefaultPosition, wxSize(180, -1), wxTE_PASSWORD,
 		wxGenericValidator(&m_Password));
 

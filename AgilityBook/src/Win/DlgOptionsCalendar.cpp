@@ -30,6 +30,7 @@
 
 #include "ARBAgilityRecordBook.h"
 #include "ARBLocalization.h"
+#include "ARBString.h"
 #include "Widgets.h"
 #include <wx/colordlg.h>
 #include <wx/valgen.h>
@@ -248,7 +249,7 @@ CDlgOptionsCalendar::CDlgOptionsCalendar(wxWindow* parent)
 	m_ctrlCalEntries->SetToolTip(_("HIDC_OPT_CAL_ENTRIES"));
 	for (iColor = m_CalColors.begin(); iColor != m_CalColors.end(); ++iColor)
 	{
-		m_ctrlCalEntries->Append(GetCalText((*iColor).first, false));
+		m_ctrlCalEntries->Append(StringUtil::stringWX(GetCalText((*iColor).first, false)));
 	}
 	m_ctrlCalEntries->SetSelection(0);
 
@@ -489,7 +490,7 @@ void CDlgOptionsCalendar::SetRichText()
 		endLines.push_back(static_cast<long>(data.length()));
 	}
 
-	m_ctrlCalView->ChangeValue(data);
+	m_ctrlCalView->ChangeValue(StringUtil::stringWX(data));
 
 	for (size_t i = 1; i < endLines.size(); ++i)
 	{

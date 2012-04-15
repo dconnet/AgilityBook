@@ -47,7 +47,7 @@ public:
 	}
 
 private:
-	std::wstring m_Item;
+	wxString m_Item;
 	int m_nColumns;
 	bool m_bDefaultDescending;
 	int* m_order;
