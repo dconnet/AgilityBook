@@ -810,7 +810,7 @@ bool CFilterOptions::CFilterOptionData::Save(int index)
 {
 	wxString section = CFG_KEY_FILTER(index);
 
-	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_NAME, filterName.c_str());
+	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_NAME, filterName);
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_CAL, static_cast<long>(calView.m_Filter));
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_ALLDATES, bAllDates);
 	wxConfig::Get()->Write(section + CFG_FILTER_ITEM_START, bStartDate);
