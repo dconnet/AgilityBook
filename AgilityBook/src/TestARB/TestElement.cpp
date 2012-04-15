@@ -305,9 +305,9 @@ SUITE(TestElement)
 		{
 			ElementNodePtr tree = LoadXMLData();
 
-			std::wstring tmpFile(wxT("data.tmp"));
+			wxString tmpFile(wxT("data.tmp"));
 			wxMemoryOutputStream tmp1;
-			CHECK(tree->SaveXML(tmpFile));
+			CHECK(tree->SaveXML(tmpFile.wx_str()));
 			CHECK(tree->SaveXML(tmp1));
 
 			ElementNodePtr tree2(ElementNode::New());

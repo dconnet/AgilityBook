@@ -34,7 +34,7 @@ SUITE(TestString)
 			std::wstring s2 = StringUtil::tstringW(s);
 			CHECK(L"narrow" == s2);
 			*/
-			std::wstring s2 = StringUtil::stringWX(s);
+			std::wstring s2 = StringUtil::stringW(s);
 			CHECK(wxT("narrow") == s2);
 		}
 	}
@@ -49,7 +49,7 @@ SUITE(TestString)
 			std::string s2 = StringUtil::stringA(s);
 			CHECK("wide" == s2);
 			*/
-			std::wstring s2 = StringUtil::stringWX(s);
+			wxString s2 = StringUtil::stringWX(s);
 			CHECK(wxT("wide") == s2);
 		}
 	}
@@ -63,10 +63,9 @@ SUITE(TestString)
 			wchar_t w = 0xFEFB; // In courier new, Arabic Ligature Lam With Alef Isolated Form (see 'Character Map' program)
 			std::wstring s(1, w);
 			//std::string s2 = StringUtil::stringA(s);
-			std::wstring s2 = StringUtil::stringWX(s);
-			std::string s3 = StringUtil::stringA(s2);
+			std::string s2 = StringUtil::stringA(s);
 			CHECK(s.length() == 1);
-			CHECK(s3.length() == 3);
+			CHECK(s2.length() == 3);
 		}
 	}
 

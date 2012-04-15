@@ -18,6 +18,7 @@
 #include "TestARB.h"
 
 #include "ARBTypes.h"
+#include "ARBString.h"
 
 #ifdef __WXMSW__
 #include <wx/msw/msvcrt.h>
@@ -34,7 +35,7 @@ static std::wstring FormNumber(std::wstring const& d1, std::wstring const& dec, 
 
 static void RunDblTests()
 {
-	std::wstring decimalPt = wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER);
+	std::wstring decimalPt = StringUtil::stringW(wxLocale::GetInfo(wxLOCALE_DECIMAL_POINT, wxLOCALE_CAT_NUMBER));
 
 	// ARBDouble always strips 0s unless prec ==2, unless =".00"
 	double p = 3.14159265358979323846;
