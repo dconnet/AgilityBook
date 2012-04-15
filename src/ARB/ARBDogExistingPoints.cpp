@@ -41,9 +41,9 @@
 #define EXISTING_PTS_TYPE_MQ	wxT("MQ")
 #define EXISTING_PTS_TYPE_SQ	wxT("SQ")
 
-wxString ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
+std::wstring ARBDogExistingPoints::GetPointTypeName(ARBDogExistingPoints::PointType inType)
 {
-	wxString str;
+	std::wstring str;
 	switch (inType)
 	{
 	case eOtherPoints:
@@ -162,14 +162,14 @@ bool ARBDogExistingPoints::Load(
 	if (!inTree || inTree->GetName() != TREE_EXISTING_PTS)
 		return false;
 
-	wxString attrib;
+	std::wstring attrib;
 
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, m_Date))
 	{
 		inTree->GetAttrib(ATTRIB_EXISTING_PTS_DATE, attrib);
-		wxString msg(Localization()->InvalidDate());
+		std::wstring msg(Localization()->InvalidDate());
 		msg += attrib;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_DATE, msg.c_str()));
 		return false;
 	}
 
@@ -201,7 +201,7 @@ bool ARBDogExistingPoints::Load(
 	}
 	else
 	{
-		wxString msg(Localization()->ValidValues());
+		std::wstring msg(Localization()->ValidValues());
 		msg += EXISTING_PTS_TYPE_OTHER;
 		msg += wxT(", ");
 		msg += EXISTING_PTS_TYPE_RUNS;
@@ -211,7 +211,7 @@ bool ARBDogExistingPoints::Load(
 		msg += EXISTING_PTS_TYPE_MQ;
 		msg += wxT(", ");
 		msg += EXISTING_PTS_TYPE_SQ;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_TYPE, msg.c_str()));
 		return false;
 	}
 
@@ -222,9 +222,9 @@ bool ARBDogExistingPoints::Load(
 		{
 			if (!inConfig.GetOtherPoints().VerifyOtherPoints(m_Other))
 			{
-				wxString msg(Localization()->InvalidOtherPtsName());
+				std::wstring msg(Localization()->InvalidOtherPtsName());
 				msg += m_Other;
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_OTHER, msg.c_str()));
 				return false;
 			}
 		}
@@ -240,9 +240,9 @@ bool ARBDogExistingPoints::Load(
 	{
 		if (!inConfig.GetVenues().VerifyVenue(m_Venue))
 		{
-			wxString msg(Localization()->InvalidVenueName());
+			std::wstring msg(Localization()->InvalidVenueName());
 			msg += m_Venue;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
 		}
 	}
@@ -282,7 +282,7 @@ bool ARBDogExistingPoints::Load(
 			}
 			if (!bConvertedQQ)
 			{
-				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, Localization()->InvalidMultiqConversion()));
+				ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, Localization()->InvalidMultiqConversion().c_str()));
 				return false;
 			}
 		}
@@ -293,11 +293,11 @@ bool ARBDogExistingPoints::Load(
 			{
 				if (!inConfig.GetVenues().VerifyMultiQ(m_Venue, m_MultiQ))
 				{
-					wxString msg(Localization()->InvalidMultiqName());
+					std::wstring msg(Localization()->InvalidMultiqName());
 					msg += m_Venue;
 					msg += wxT("/");
 					msg += m_MultiQ;
-					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, msg));
+					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_MULTIQ, msg.c_str()));
 					return false;
 				}
 			}
@@ -343,7 +343,7 @@ bool ARBDogExistingPoints::Load(
 		}
 		if (!inConfig.GetVenues().VerifyEvent(m_Venue, m_Div, m_Level, m_Event, m_Date))
 		{
-			wxString msg(Localization()->InvalidEventName());
+			std::wstring msg(Localization()->InvalidEventName());
 			msg += m_Venue;
 			msg += wxT("/");
 			msg += m_Div;
@@ -351,7 +351,7 @@ bool ARBDogExistingPoints::Load(
 			msg += m_Level;
 			msg += wxT("/");
 			msg += m_Event;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT, msg));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_EVENT, msg.c_str()));
 			return false;
 		}
 		// Only used in eRuns.
@@ -360,13 +360,13 @@ bool ARBDogExistingPoints::Load(
 	default:
 		if (!inConfig.GetVenues().VerifyLevel(m_Venue, m_Div, m_Level))
 		{
-			wxString msg(Localization()->InvalidVenueName());
+			std::wstring msg(Localization()->InvalidVenueName());
 			msg += m_Venue;
 			msg += wxT("/");
 			msg += m_Div;
 			msg += wxT("/");
 			msg += m_Level;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_EXISTING_PTS, ATTRIB_EXISTING_PTS_VENUE, msg.c_str()));
 			return false;
 		}
 		break;
@@ -491,7 +491,7 @@ void ARBDogExistingPointsList::sort()
 }
 
 
-bool ARBDogExistingPointsList::HasPoints(wxString const& inVenue) const
+bool ARBDogExistingPointsList::HasPoints(std::wstring const& inVenue) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
 	{
@@ -587,7 +587,7 @@ double ARBDogExistingPointsList::ExistingPoints(
 }
 
 
-int ARBDogExistingPointsList::NumExistingPointsInVenue(wxString const& inVenue) const
+int ARBDogExistingPointsList::NumExistingPointsInVenue(std::wstring const& inVenue) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -600,8 +600,8 @@ int ARBDogExistingPointsList::NumExistingPointsInVenue(wxString const& inVenue) 
 
 
 int ARBDogExistingPointsList::RenameVenue(
-		wxString const& inOldVenue,
-		wxString const& inNewVenue)
+		std::wstring const& inOldVenue,
+		std::wstring const& inNewVenue)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -616,9 +616,9 @@ int ARBDogExistingPointsList::RenameVenue(
 }
 
 
-int ARBDogExistingPointsList::DeleteVenue(wxString const& inVenue)
+int ARBDogExistingPointsList::DeleteVenue(std::wstring const& inVenue)
 {
-	wxString venue(inVenue);
+	std::wstring venue(inVenue);
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
 	{
@@ -636,7 +636,7 @@ int ARBDogExistingPointsList::DeleteVenue(wxString const& inVenue)
 
 int ARBDogExistingPointsList::NumExistingPointsInDivision(
 		ARBConfigVenuePtr inVenue,
-		wxString const& inDiv) const
+		std::wstring const& inDiv) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -650,9 +650,9 @@ int ARBDogExistingPointsList::NumExistingPointsInDivision(
 
 
 int ARBDogExistingPointsList::RenameDivision(
-		wxString const& inVenue,
-		wxString const& inOldDiv,
-		wxString const& inNewDiv)
+		std::wstring const& inVenue,
+		std::wstring const& inOldDiv,
+		std::wstring const& inNewDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -668,8 +668,8 @@ int ARBDogExistingPointsList::RenameDivision(
 
 
 int ARBDogExistingPointsList::DeleteDivision(
-		wxString const& inVenue,
-		wxString const& inDiv)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -687,9 +687,9 @@ int ARBDogExistingPointsList::DeleteDivision(
 
 
 int ARBDogExistingPointsList::NumLevelsInUse(
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inLevel) const
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -704,10 +704,10 @@ int ARBDogExistingPointsList::NumLevelsInUse(
 
 
 int ARBDogExistingPointsList::RenameLevel(
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inOldLevel,
-		wxString const& inNewLevel)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldLevel,
+		std::wstring const& inNewLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -725,9 +725,9 @@ int ARBDogExistingPointsList::RenameLevel(
 
 
 int ARBDogExistingPointsList::DeleteLevel(
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inLevel)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -747,8 +747,8 @@ int ARBDogExistingPointsList::DeleteLevel(
 
 
 int ARBDogExistingPointsList::NumEventsInUse(
-		wxString const& inVenue,
-		wxString const& inEvent) const
+		std::wstring const& inVenue,
+		std::wstring const& inEvent) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -762,9 +762,9 @@ int ARBDogExistingPointsList::NumEventsInUse(
 
 
 int ARBDogExistingPointsList::RenameEvent(
-		wxString const& inVenue,
-		wxString const& inOldEvent,
-		wxString const& inNewEvent)
+		std::wstring const& inVenue,
+		std::wstring const& inOldEvent,
+		std::wstring const& inNewEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -781,8 +781,8 @@ int ARBDogExistingPointsList::RenameEvent(
 
 
 int ARBDogExistingPointsList::DeleteEvent(
-		wxString const& inVenue,
-		wxString const& inEvent)
+		std::wstring const& inVenue,
+		std::wstring const& inEvent)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -800,7 +800,7 @@ int ARBDogExistingPointsList::DeleteEvent(
 }
 
 
-int ARBDogExistingPointsList::NumOtherPointsInUse(wxString const& inOther) const
+int ARBDogExistingPointsList::NumOtherPointsInUse(std::wstring const& inOther) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -814,8 +814,8 @@ int ARBDogExistingPointsList::NumOtherPointsInUse(wxString const& inOther) const
 
 
 int ARBDogExistingPointsList::RenameOtherPoints(
-		wxString const& inOldOther,
-		wxString const& inNewOther)
+		std::wstring const& inOldOther,
+		std::wstring const& inNewOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -831,7 +831,7 @@ int ARBDogExistingPointsList::RenameOtherPoints(
 }
 
 
-int ARBDogExistingPointsList::DeleteOtherPoints(wxString const& inOther)
+int ARBDogExistingPointsList::DeleteOtherPoints(std::wstring const& inOther)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); )
@@ -850,8 +850,8 @@ int ARBDogExistingPointsList::DeleteOtherPoints(wxString const& inOther)
 
 
 int ARBDogExistingPointsList::NumMultiQsInUse(
-		wxString const& inVenue,
-		wxString const& inMultiQ) const
+		std::wstring const& inVenue,
+		std::wstring const& inMultiQ) const
 {
 	int count = 0;
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -866,9 +866,9 @@ int ARBDogExistingPointsList::NumMultiQsInUse(
 
 
 int ARBDogExistingPointsList::RenameMultiQs(
-		wxString const& inVenue,
-		wxString const& inOldMultiQ,
-		wxString const& inNewMultiQ)
+		std::wstring const& inVenue,
+		std::wstring const& inOldMultiQ,
+		std::wstring const& inNewMultiQ)
 {
 	int count = 0;
 	for (iterator iter = begin(); iter != end(); ++iter)
@@ -887,7 +887,7 @@ int ARBDogExistingPointsList::RenameMultiQs(
 
 int ARBDogExistingPointsList::DeleteMultiQs(
 		ARBConfig const& inConfig,
-		wxString const& inVenue)
+		std::wstring const& inVenue)
 {
 	int count = 0;
 	ARBConfigVenuePtr pVenue;

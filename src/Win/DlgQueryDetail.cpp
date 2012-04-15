@@ -23,6 +23,7 @@
 
 #include "AgilityBook.h"
 #include "ARBConfig.h"
+#include "ARBString.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
@@ -39,8 +40,8 @@ END_EVENT_TABLE()
 
 CDlgQueryDetail::CDlgQueryDetail(
 		bool bReadOnly,
-		const wxChar* inCode,
-		const wxChar* inName,
+		const wchar_t* inCode,
+		const wchar_t* inName,
 		wxWindow* pParent,
 		ARBConfig const* inConfig)
 	: wxDialog()
@@ -136,6 +137,18 @@ CDlgQueryDetail::CDlgQueryDetail(
 
 
 DEFINE_ON_INIT(CDlgQueryDetail)
+
+
+std::wstring CDlgQueryDetail::GetDetailCode() const
+{
+	return StringUtil::stringW(m_Code);
+}
+
+
+std::wstring CDlgQueryDetail::GetDetailName() const
+{
+	return StringUtil::stringW(m_Name);
+}
 
 
 void CDlgQueryDetail::OnSelchangeVenues(wxCommandEvent& evt)

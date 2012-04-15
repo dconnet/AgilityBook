@@ -51,7 +51,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -61,7 +61,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
 
 	/**
 	 * Load a club.
@@ -89,26 +89,26 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
-	wxString const& GetVenue() const
+	std::wstring const& GetVenue() const
 	{
 		return m_Venue;
 	}
-	void SetVenue(wxString const& inVenue)
+	void SetVenue(std::wstring const& inVenue)
 	{
 		m_Venue = inVenue;
 	}
 
 private:
-	wxString m_Name;
-	wxString m_Venue;
+	std::wstring m_Name;
+	std::wstring m_Venue;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -148,13 +148,13 @@ public:
 	 * Get the primary club's name.
 	 * @return Name of primary club, empty is none.
 	 */
-	wxString GetPrimaryClubName() const;
+	std::wstring GetPrimaryClubName() const;
 
 	/**
 	 * Get the primary club's venue.
 	 * @return Venue of primary club, empty is none.
 	 */
-	wxString GetPrimaryClubVenue() const;
+	std::wstring GetPrimaryClubVenue() const;
 
 	/**
 	 * Find the first scoring style to match.
@@ -171,9 +171,9 @@ public:
 	 */
 	bool FindEvent(
 			ARBConfig const& inConfig,
-			wxString const& inEvent,
-			wxString const& inDivision,
-			wxString const& inLevel,
+			std::wstring const& inEvent,
+			std::wstring const& inDivision,
+			std::wstring const& inLevel,
 			ARBDate const& inDate,
 			ARBErrorCallback& ioCallback,
 			ARBConfigEventPtr* outEvent = NULL,
@@ -186,7 +186,7 @@ public:
 	 * @return Whether the club was found.
 	 */
 	bool FindVenue(
-			wxString const& inVenue,
+			std::wstring const& inVenue,
 			ARBDogClubPtr* outClub = NULL) const;
 
 	/**
@@ -197,8 +197,8 @@ public:
 	 * @return Whether the club was added.
 	 */
 	bool AddClub(
-			wxString const& inName,
-			wxString const& inVenue,
+			std::wstring const& inName,
+			std::wstring const& inVenue,
 			ARBDogClubPtr* outClub = NULL);
 
 	/**
@@ -208,6 +208,6 @@ public:
 	 * @return Whether club was deleted.
 	 */
 	bool DeleteClub(
-			wxString const& inName,
-			wxString const& inVenue);
+			std::wstring const& inName,
+			std::wstring const& inVenue);
 };

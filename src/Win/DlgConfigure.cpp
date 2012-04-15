@@ -35,6 +35,7 @@
 #include "ARBAgilityRecordBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigVenue.h"
+#include "ARBString.h"
 #include "DlgConfigOtherPoints.h"
 #include "DlgConfigUpdate.h"
 #include "DlgConfigureData.h"
@@ -61,7 +62,7 @@ public:
 		, m_Action(action)
 	{
 	}
-	virtual wxString OnNeedText() const	{return wxEmptyString;}
+	virtual std::wstring OnNeedText() const	{return std::wstring();}
 	CDlgConfigure::eAction GetAction() const
 	{
 		return m_Action;
@@ -93,7 +94,7 @@ protected:
 
 void CDetails::OnDetails(wxWindow* pParent)
 {
-	wxString str = _("IDS_AFFECTED_RUNS");
+	std::wstring str = StringUtil::stringW(_("IDS_AFFECTED_RUNS"));
 	CDlgListViewer dlg(m_pDoc, str, m_ScoringRuns, pParent);
 	dlg.ShowModal();
 }
@@ -383,12 +384,12 @@ void CDlgConfigure::DoEdit()
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
 			bool done = false;
-			wxString oldName = pFaultData->GetFault()->GetName();
-			wxString name(oldName);
+			std::wstring oldName = pFaultData->GetFault()->GetName();
+			std::wstring name(oldName);
 			while (!done)
 			{
 				done = true;
-				CDlgName dlg(name, _("IDS_FAULT_TYPE_NAME"), this);
+				CDlgName dlg(name, StringUtil::stringW(_("IDS_FAULT_TYPE_NAME")), this);
 				if (wxID_OK == dlg.ShowModal())
 				{
 					name = dlg.Name();
@@ -413,7 +414,7 @@ void CDlgConfigure::DoEdit()
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			wxString oldName = pOtherData->GetOtherPoints()->GetName();
+			std::wstring oldName = pOtherData->GetOtherPoints()->GetName();
 			CDlgConfigOtherPoints dlg(m_Config, pOtherData->GetOtherPoints(), this);
 			if (wxID_OK == dlg.ShowModal())
 			{
@@ -552,10 +553,10 @@ void CDlgConfigure::OnNew(wxCommandEvent& evt)
 
 	case eFaults:
 		{
-			CDlgName dlg(wxEmptyString, _("IDS_FAULT_TYPE_NAME"), this);
+			CDlgName dlg(std::wstring(), StringUtil::stringW(_("IDS_FAULT_TYPE_NAME")), this);
 			if (wxID_OK == dlg.ShowModal())
 			{
-				wxString name = dlg.Name();
+				std::wstring name = dlg.Name();
 				// We could check for uniqueness, but if the user wants 2
 				// strings the same, why argue! Afterall, these strings
 				// are only "helper" items to fill in other data.
@@ -615,7 +616,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			wxString venue = pVenueData->GetVenue()->GetName();
+			std::wstring venue = pVenueData->GetVenue()->GetName();
 			// If we were able to delete it...
 			if (m_Config.GetVenues().DeleteVenue(venue))
 			{
@@ -639,7 +640,7 @@ void CDlgConfigure::OnDelete(wxCommandEvent& evt)
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			wxString otherPoints = pOtherData->GetOtherPoints()->GetName();
+			std::wstring otherPoints = pOtherData->GetOtherPoints()->GetName();
 			if (m_Config.GetOtherPoints().DeleteOtherPoints(otherPoints))
 			{
 				m_Config.GetActions().push_back(ARBConfigActionDeleteOtherPoints::New(0, otherPoints));
@@ -669,7 +670,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case eVenues:
 		{
 			CDlgConfigureDataVenue* pVenueData = dynamic_cast<CDlgConfigureDataVenue*>(pData);
-			wxString name(pVenueData->GetVenue()->GetName());
+			std::wstring name(pVenueData->GetVenue()->GetName());
 			while (m_Config.GetVenues().FindVenue(name))
 			{
 				name = wxString::Format(_("IDS_COPYOF"), name.c_str());
@@ -694,7 +695,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case eFaults:
 		{
 			CDlgConfigureDataFault* pFaultData = dynamic_cast<CDlgConfigureDataFault*>(pData);
-			wxString name(pFaultData->GetFault()->GetName());
+			std::wstring name(pFaultData->GetFault()->GetName());
 			ARBConfigFaultPtr pNewFault;
 			if (m_Config.GetFaults().AddFault(name, &pNewFault))
 			{
@@ -713,7 +714,7 @@ void CDlgConfigure::OnCopy(wxCommandEvent& evt)
 	case eOtherPoints:
 		{
 			CDlgConfigureDataOtherPoints* pOtherData = dynamic_cast<CDlgConfigureDataOtherPoints*>(pData);
-			wxString name(pOtherData->GetOtherPoints()->GetName());
+			std::wstring name(pOtherData->GetOtherPoints()->GetName());
 			while (m_Config.GetOtherPoints().FindOtherPoints(name))
 			{
 				name = wxString::Format(_("IDS_COPYOF"), name.c_str());
@@ -742,8 +743,8 @@ class CDlgConfigCallback : public IConfigActionCallback
 {
 public:
 	CDlgConfigCallback() {}
-	virtual void PreDelete(wxString const& inMsg) {}
-	void PostDelete(wxString const& inMsg) const {}
+	virtual void PreDelete(std::wstring const& inMsg) {}
+	void PostDelete(std::wstring const& inMsg) const {}
 };
 
 
@@ -756,7 +757,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		ARBConfig& update = dlg.GetConfig();
 		// Update our current config (not runs, later)
 		bool bUpdated = false;
-		wxString info;
+		std::wostringstream info;
 		CDlgConfigCallback callback;
 		if (0 < update.GetActions().Apply(m_Config, NULL, info, callback))
 		{
@@ -769,7 +770,7 @@ void CDlgConfigure::OnUpdate(wxCommandEvent& evt)
 		// Update the config.
 		if (m_Config.Update(0, update, info) || bUpdated)
 		{
-			CDlgMessage dlgMsg(info, this);
+			CDlgMessage dlgMsg(info.str(), this);
 			dlgMsg.ShowModal();
 			LoadData(eVenues);
 			LoadData(eFaults);

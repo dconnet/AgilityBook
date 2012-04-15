@@ -38,7 +38,7 @@
 
 static struct PointsEnum
 {
-	wxChar const* pPoints;	///< Actual text in file
+	wchar_t const* pPoints;	///< Actual text in file
 	ARBPointsType type;		///< Enum type
 } const sc_Points[] =
 {
@@ -49,7 +49,7 @@ static struct PointsEnum
 static size_t const sc_nPoints = sizeof(sc_Points) / sizeof(sc_Points[0]);
 
 
-static ARBPointsType PointsToType(wxString const& str)
+static ARBPointsType PointsToType(std::wstring const& str)
 {
 	for (size_t n = 0; n < sc_nPoints; ++n)
 	{
@@ -61,7 +61,7 @@ static ARBPointsType PointsToType(wxString const& str)
 }
 
 
-static wxString TypeToPoints(ARBPointsType type)
+static std::wstring TypeToPoints(ARBPointsType type)
 {
 	for (size_t n = 0; n < sc_nPoints; ++n)
 	{
@@ -69,7 +69,7 @@ static wxString TypeToPoints(ARBPointsType type)
 			return sc_Points[n].pPoints;
 	}
 	assert(0);
-	return wxString();
+	return std::wstring();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ bool ARBConfigTitlePoints::operator==(ARBConfigTitlePoints const& rhs) const
 }
 
 
-wxString ARBConfigTitlePoints::GetGenericName() const
+std::wstring ARBConfigTitlePoints::GetGenericName() const
 {
 	return m_Calc->GetGenericName(m_Points, m_Faults);
 }
@@ -164,7 +164,7 @@ bool ARBConfigTitlePoints::Load(
 		return false;
 	// Added in ARBVersion 13.1. Made this a backwards incompatible change
 	// as the configuration will be damaged if this were saved in a 12.x form.
-	wxString type;
+	std::wstring type;
 	if (ElementNode::eFound == inTree->GetAttrib(ATTRIB_TITLE_POINTS_TYPE, type))
 	{
 		m_Calc = ARBCalcPoints::New(PointsToType(type));

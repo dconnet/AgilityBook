@@ -96,7 +96,7 @@ bool ARBConfigLifetimePoints::operator==(ARBConfigLifetimePoints const& rhs) con
 }
 
 
-wxString ARBConfigLifetimePoints::GetGenericName() const
+std::wstring ARBConfigLifetimePoints::GetGenericName() const
 {
 	return Localization()->LifetimePointsNameFormat(m_Points, m_Faults);
 }

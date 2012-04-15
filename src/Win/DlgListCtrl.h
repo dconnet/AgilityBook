@@ -62,12 +62,12 @@ public:
 			wxWindow* pParent = NULL);
 
 	void GetAllPartners(
-			std::set<wxString>& ioPartners,
-			std::set<wxString>& ioDogs) const;
+			std::set<std::wstring>& ioPartners,
+			std::set<std::wstring>& ioDogs) const;
 
 private:
 	bool Create(
-			wxString const& inCaption,
+			std::wstring const& inCaption,
 			wxWindow* pParent,
 			bool bHasImageList);
 	void FinishCreate(

@@ -85,8 +85,8 @@ public:
 	virtual void DetachView();
 
 	virtual bool IsFiltered() const;
-	virtual bool GetMessage(wxString& msg) const;
-	virtual bool GetMessage2(wxString& msg) const;
+	virtual bool GetMessage(std::wstring& msg) const;
+	virtual bool GetMessage2(std::wstring& msg) const;
 	virtual bool AllowStatusContext(int field) const;
 
 	virtual bool OnCreate(
@@ -166,7 +166,7 @@ public:
 	bool PasteDog(bool& bLoaded);
 	void SuppressSelect(bool bSuppress)		{m_bSuppressSelect = bSuppress;}
 
-	wxString GetPrintLine(wxTreeItemId hItem) const;
+	std::wstring GetPrintLine(wxTreeItemId hItem) const;
 
 private:
 	void UpdateData(wxTreeItemId hItem);
@@ -176,10 +176,10 @@ private:
 	void DoSelectionChange(wxTreeItemId hItem);
 	void LoadData();
 	void PrintLine(
-			wxString& data,
+			std::wostringstream& data,
 			wxTreeItemId id,
 			int indent) const;
-	wxString GetPrintDataAsHtmlTable() const;
+	std::wstring GetPrintDataAsHtmlTable() const;
 	bool OnCmd(int id);
 	//void PrintLine(
 	//		CDC* pDC,

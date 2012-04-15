@@ -131,10 +131,10 @@ SUITE(TestInfoItem)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(info->Load(data, ARBVersion(1, 0), callback, TREE_CLUBINFO));
-			wxString name = info->GetGenericName();
+			std::wstring name = info->GetGenericName();
 			CHECK(!name.empty());
 		}
 	}
@@ -145,7 +145,7 @@ SUITE(TestInfoItem)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemPtr info = ARBInfoItem::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(info->Load(data, ARBVersion(2, 0), callback, TREE_CLUBINFO));
 			ElementNodePtr ele = ElementNode::New();
@@ -162,7 +162,7 @@ SUITE(TestInfoItemList)
 		if (!g_bMicroTest)
 		{
 			ARBInfoItemList infolist(TREE_CLUBINFO);
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(infolist.Load(data, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New(wxT("Doesnt matter"));
@@ -181,7 +181,7 @@ SUITE(TestInfoItemList)
 			ElementNodePtr ele = ElementNode::New(wxT("InfoItem"));
 			ele->SetValue(wxT("These are some notes"));
 			ARBInfoItemList infolist(TREE_CLUBINFO);
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(!infolist.Load(ele, ARBVersion(2, 0), callback));
 		}
@@ -215,10 +215,10 @@ SUITE(TestInfoItemList)
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-			std::set<wxString> items;
+			std::set<std::wstring> items;
 			CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).GetAllItems(items, false));
 		}
 	}
@@ -229,10 +229,10 @@ SUITE(TestInfoItemList)
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
-			std::set<wxString> items;
+			std::set<std::wstring> items;
 			items.insert(wxT("Club1"));
 			items.insert(wxT("Club3"));
 			info.GetInfo(ARBInfo::eClubInfo).CondenseContent(items);
@@ -247,7 +247,7 @@ SUITE(TestInfoItemList)
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
 			CHECK(info.GetInfo(ARBInfo::eClubInfo).FindItem(wxT("Club3")));
@@ -301,7 +301,7 @@ SUITE(TestInfo)
 		if (!g_bMicroTest)
 		{
 			ARBInfo info;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(info.Load(tree, ARBVersion(1, 0), callback));
 			CHECK_EQUAL(4u, info.GetInfo(ARBInfo::eClubInfo).size());

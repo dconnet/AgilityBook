@@ -110,7 +110,7 @@ SUITE(TestTraining)
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(train->Load(TrainingData, ARBVersion(2, 0), callback));
 			ARBTrainingPtr train2 = train->Clone();
@@ -141,10 +141,10 @@ SUITE(TestTraining)
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(train->Load(TrainingData, ARBVersion(1, 0), callback));
-			wxString name = train->GetGenericName();
+			std::wstring name = train->GetGenericName();
 			CHECK(!name.empty());
 		}
 	}
@@ -155,7 +155,7 @@ SUITE(TestTraining)
 		if (!g_bMicroTest)
 		{
 			ARBTrainingPtr train = ARBTraining::New();
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(train->Load(TrainingData, ARBVersion(2, 0), callback));
 			ElementNodePtr ele = ElementNode::New();
@@ -172,7 +172,7 @@ SUITE(TestTrainingList)
 		if (!g_bMicroTest)
 		{
 			ARBTrainingList train;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(train.Load(TrainingData, ARBVersion(1, 0), callback));
 			CHECK(train.Load(TrainingData, ARBVersion(2, 0), callback));
@@ -196,7 +196,7 @@ SUITE(TestTrainingList)
 			ele->AddAttrib(ATTRIB_TRAINING_NAME, wxT("Hollister, CA"));
 			ele->AddAttrib(ATTRIB_TRAINING_SUBNAME, wxT("PASA"));
 			ARBTrainingList train;
-			wxString errs;
+			std::wostringstream errs;
 			ARBErrorCallback callback(errs);
 			CHECK(!train.Load(ele, ARBVersion(2, 0), callback));
 			ele->AddAttrib(ATTRIB_TRAINING_DATE, wxT("2008-1-13"));
@@ -237,7 +237,7 @@ SUITE(TestTrainingList)
 		{
 			ARBTrainingList trainlist;
 			CreateTrainingList(trainlist);
-			std::set<wxString> names;
+			std::set<std::wstring> names;
 			CHECK_EQUAL(2u, trainlist.GetAllNames(names));
 		}
 	}
@@ -249,7 +249,7 @@ SUITE(TestTrainingList)
 		{
 			ARBTrainingList trainlist;
 			CreateTrainingList(trainlist);
-			std::set<wxString> names;
+			std::set<std::wstring> names;
 			CHECK_EQUAL(3u, trainlist.GetAllSubNames(names));
 		}
 	}

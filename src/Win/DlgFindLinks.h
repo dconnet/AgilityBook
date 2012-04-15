@@ -47,7 +47,7 @@ public:
 private:
 	CDlgFindLinksDataPtr GetItemLinkData(long item);
 	CDlgFindLinksDataPtr GetItemLinkDataByData(long data);
-	int GetImageIndex(wxString const& inLink);
+	int GetImageIndex(std::wstring const& inLink);
 	void SetColumnHeaders();
 	void UpdateButtons();
 	void Edit();

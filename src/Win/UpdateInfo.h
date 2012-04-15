@@ -44,7 +44,7 @@ protected:
 	bool IsOutOfDate();
 	bool CheckProgram(
 			CAgilityBookDoc* pDoc,
-			wxString const& lang,
+			std::wstring const& lang,
 			bool& outClose);
 	void CheckConfig(
 			CAgilityBookDoc* pDoc,
@@ -61,7 +61,7 @@ public:
 	 */
 	static bool UpdateConfig(
 			CAgilityBookDoc* ioDoc,
-			wxChar const* inMsg = NULL);
+			wchar_t const* inMsg = NULL);
 
 	/**
 	 * Cleanup after auto-update.
@@ -106,11 +106,11 @@ private:
 	CVersionNum m_VersionNum;
 	short m_VerConfig;
 	long m_size;
-	wxString m_md5;
-	wxString m_NewFile;
-	wxString m_ConfigFileName;
-	std::map<wxString, wxString> m_InfoMsg;
-	wxString m_UpdateDownload;
-	wxString m_usernameHint;
+	std::wstring m_md5;
+	std::wstring m_NewFile;
+	std::wstring m_ConfigFileName;
+	std::map<std::wstring, std::wstring> m_InfoMsg;
+	std::wstring m_UpdateDownload;
+	std::wstring m_usernameHint;
 	std::vector<CVersionNum> m_CalSiteSuppression;
 };

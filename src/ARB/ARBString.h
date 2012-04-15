@@ -28,12 +28,14 @@ class wxMemoryOutputStream;
  */
 namespace StringUtil
 {
+	// Some explicit conversion between wxString and std.
+	// In general, we want to always work in std (based on discussion on list)
 	wxString stringWX(wchar_t const* const inStr, size_t inLen);
 	wxString stringWX(std::wstring const& inStr);
 	wxString stringWX(char const* const inStr, size_t inLen);
 	wxString stringWX(std::string const& inStr);
+	std::wstring stringW(wxString const& inStr);
 	std::string stringA(wxMemoryOutputStream const& inStr);
-	std::string stringA(wxString const& inStr);
  
 	// String conversion
 	std::string stringA(wchar_t const* const inStr, size_t inLen);
@@ -44,24 +46,48 @@ namespace StringUtil
 	// Some wxString-style functions
 
 	// For consistency with "ToC" routines
-	bool ToLong(wxString const& inStr, long& outValue);
-	long ToLong(wxString const& inStr);
+	bool ToLong(std::wstring const& inStr, long& outValue);
+	long ToLong(std::wstring const& inStr);
+	bool ToULong(std::wstring const& inStr, unsigned long& outValue);
+	unsigned long ToULong(std::wstring const& inStr);
 	/// @note This function differs from the others - instead of only
 	/// parsing in the current locale, this will also fall back to English
 	/// ('.' for decimal)
-	bool ToDouble(wxString const& inStr, double& outValue);
-	double ToDouble(wxString const& inStr);
+	bool ToDouble(std::wstring const& inStr, double& outValue);
+	double ToDouble(std::wstring const& inStr);
 
 	// These functions mimic wx2.9.x. They allow wx2.8 usage.
 	// The ToC<type> use the "C" locale.
 	// Typically, the "ToC" routines are only used in Element.
 	// bRetry is for wx2.9+: It fails on "123-23" now. Old behavior returned "123".
-	bool ToCLong(wxString const& inStr, long& outValue, bool bRetry = false);
-	long ToCLong(wxString const& inStr);
-	bool ToCDouble(wxString const& inStr, double& outValue);
-	double ToCDouble(wxString const& inStr);
+	bool ToCLong(std::wstring const& inStr, long& outValue, bool bRetry = false);
+	long ToCLong(std::wstring const& inStr);
+	bool ToCULong(std::wstring const& inStr, unsigned long& outValue, bool bRetry = false);
+	unsigned long ToCULong(std::wstring const& inStr);
+	bool ToCDouble(std::wstring const& inStr, double& outValue);
+	double ToCDouble(std::wstring const& inStr);
 
-	wxString Trim(wxString const& inStr);
+	// Some CString-style functions
+
+	std::string Trim(std::string const& inStr);
+	std::wstring Trim(std::wstring const& inStr);
+	std::string Trim(std::string const& inStr, char toTrim);
+	std::wstring Trim(std::wstring const& inStr, wchar_t toTrim);
+
+	std::string TrimLeft(std::string const& inStr);
+	std::wstring TrimLeft(std::wstring const& inStr);
+	std::string TrimLeft(std::string const& inStr, char toTrim);
+	std::wstring TrimLeft(std::wstring const& inStr, wchar_t toTrim);
+
+	std::string TrimRight(std::string const& inStr);
+	std::wstring TrimRight(std::wstring const& inStr);
+	std::string TrimRight(std::string const& inStr, char toTrim);
+	std::wstring TrimRight(std::wstring const& inStr, wchar_t toTrim);
+
+	std::string ToLower(std::string const& inStr);
+	std::wstring ToLower(std::wstring const& inStr);
+	std::string ToUpper(std::string const& inStr);
+	std::wstring ToUpper(std::wstring const& inStr);
 
 	std::string Replace(
 			std::string const& inStr,

@@ -21,6 +21,7 @@
 #include "DlgFault.h"
 
 #include "AgilityBook.h"
+#include "ARBString.h"
 #include "Validators.h"
 
 #ifdef __WXMSW__
@@ -29,8 +30,8 @@
 
 
 CDlgFault::CDlgFault(
-		std::set<wxString>& inFaults,
-		wxString const& fault,
+		std::set<std::wstring>& inFaults,
+		std::wstring const& fault,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_Fault(fault)
@@ -41,7 +42,7 @@ CDlgFault::CDlgFault(
 	Create(pParent, wxID_ANY, _("IDD_FAULT"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER);
 
 	wxArrayString faults;
-	for (std::set<wxString>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)
+	for (std::set<std::wstring>::const_iterator iter = inFaults.begin(); iter != inFaults.end(); ++iter)
 	{
 		faults.Add((*iter));
 	}
@@ -77,3 +78,9 @@ CDlgFault::CDlgFault(
 
 
 DEFINE_ON_INIT(CDlgFault)
+
+
+std::wstring CDlgFault::GetFault() const
+{
+	return StringUtil::stringW(m_Fault);
+}

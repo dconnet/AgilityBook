@@ -50,14 +50,14 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const;
+	virtual std::wstring GetGenericName() const;
 
 	/**
 	 * Get all the strings to search in this object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}

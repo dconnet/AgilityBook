@@ -30,6 +30,7 @@
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
 #include "ARBDogExistingPoints.h"
+#include "ARBString.h"
 #include "Globals.h"
 #include "Validators.h"
 #include "Widgets.h"
@@ -572,7 +573,7 @@ void CDlgExistingPoints::UpdateControls()
 
 void CDlgExistingPoints::FillVenues()
 {
-	wxString venue;
+	std::wstring venue;
 	int index = m_ctrlVenues->GetSelection();
 	if (wxNOT_FOUND != index)
 		venue = m_ctrlVenues->GetString(index);
@@ -602,7 +603,7 @@ void CDlgExistingPoints::FillVenues()
 void CDlgExistingPoints::FillDivMultiQ()
 {
 	ARBDogExistingPoints::PointType type = GetCurrentType();
-	wxString divMultiQ;
+	std::wstring divMultiQ;
 	int index = m_ctrlDivMultiQs->GetSelection();
 	if (wxNOT_FOUND != index)
 		divMultiQ = m_ctrlDivMultiQs->GetString(index);
@@ -654,7 +655,7 @@ void CDlgExistingPoints::FillDivMultiQ()
 
 void CDlgExistingPoints::FillLevels()
 {
-	wxString level;
+	std::wstring level;
 	int index = m_ctrlLevels->GetSelection();
 	if (wxNOT_FOUND != index)
 		level = m_ctrlLevels->GetString(index);
@@ -701,7 +702,7 @@ void CDlgExistingPoints::FillLevels()
 
 void CDlgExistingPoints::FillEvents()
 {
-	wxString evt;
+	std::wstring evt;
 	int index = m_ctrlEvents->GetSelection();
 	if (wxNOT_FOUND != index)
 		evt = m_ctrlEvents->GetString(index);
@@ -759,9 +760,9 @@ void CDlgExistingPoints::FillSubNames()
 	if (pEvent->HasSubNames())
 	{
 		m_ctrlSubNames->Enable(true);
-		std::set<wxString> names;
+		std::set<std::wstring> names;
 		m_pDoc->Book().GetAllEventSubNames(pVenue->GetName(), pEvent, names);
-		for (std::set<wxString>::const_iterator iter = names.begin();
+		for (std::set<std::wstring>::const_iterator iter = names.begin();
 			iter != names.end();
 			++iter)
 		{
@@ -819,13 +820,13 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		return;
 
 	ARBDogExistingPoints::PointType type = GetCurrentType();
-	wxString other;
-	wxString venue;
-	wxString div;
-	wxString level;
-	wxString eventName;
-	wxString subName;
-	wxString multiQ;
+	std::wstring other;
+	std::wstring venue;
+	std::wstring div;
+	std::wstring level;
+	std::wstring eventName;
+	std::wstring subName;
+	std::wstring multiQ;
 	switch (type)
 	{
 	//  OtherPts Venue    Division Level Event
@@ -875,7 +876,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 		m_pExistingPoints->SetLevel(level);
 		m_pExistingPoints->SetEvent(eventName);
 		m_pExistingPoints->SetSubName(subName);
-		m_pExistingPoints->SetComment(m_Comments);
+		m_pExistingPoints->SetComment(StringUtil::stringW(m_Comments));
 		m_pExistingPoints->SetPoints(m_Points);
 	}
 	else
@@ -892,7 +893,7 @@ void CDlgExistingPoints::OnOk(wxCommandEvent& evt)
 			pPoints->SetLevel(level);
 			pPoints->SetEvent(eventName);
 			pPoints->SetSubName(subName);
-			pPoints->SetComment(m_Comments);
+			pPoints->SetComment(StringUtil::stringW(m_Comments));
 			pPoints->SetPoints(m_Points);
 		}
 	}

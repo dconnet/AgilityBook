@@ -32,8 +32,8 @@ public:
 			ARBDogClubPtr pClub,
 			wxWindow* pParent = NULL);
 
-	wxString Club() const	{return m_Club;}
-	wxString Venue() const	{return m_Venue;}
+	std::wstring Club() const;
+	std::wstring Venue() const;
 
 private:
 	CAgilityBookDoc* m_pDoc;

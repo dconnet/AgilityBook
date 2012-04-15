@@ -21,9 +21,10 @@
 #include "DlgProgress.h"
 
 #include "Globals.h"
+#include <vector>
 #include <wx/utils.h>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
@@ -38,8 +39,8 @@ public:
 
 	virtual bool Show(bool show = true);
 
-	virtual void SetCaption(wxString const& inCaption);
-	virtual void SetMessage(wxString const& inMessage);
+	virtual void SetCaption(std::wstring const& inCaption);
+	virtual void SetMessage(std::wstring const& inMessage);
 	virtual void SetRange(
 			short inBar,
 			int inRange);
@@ -99,7 +100,7 @@ CDlgProgress::CDlgProgress(short nBars, wxWindow* parent)
 {
 	if (1 > nBars)
 		nBars = 1;
-	SetExtraStyle(wxWS_EX_TRANSIENT | GetExtraStyle());
+	SetExtraStyle(GetExtraStyle() | wxWS_EX_TRANSIENT);
 	Create(parent, wxID_ANY, _("IDD_PROGRESS_DLG"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	// Controls (these are done first to control tab order)
@@ -180,13 +181,13 @@ void CDlgProgress::OnCancel(wxCommandEvent& evt)
 }
 
 
-void CDlgProgress::SetCaption(wxString const& inCaption)
+void CDlgProgress::SetCaption(std::wstring const& inCaption)
 {
 	SetLabel(inCaption);
 }
 
 
-void CDlgProgress::SetMessage(wxString const& inMessage)
+void CDlgProgress::SetMessage(std::wstring const& inMessage)
 {
 	if (!inMessage.empty() && inMessage != m_ctrlMessage->GetLabel())
 	{

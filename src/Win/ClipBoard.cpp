@@ -22,6 +22,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookOptions.h"
+#include "ARBString.h"
 #include "Element.h"
 #include <sstream>
 #include <wx/mstream.h>
@@ -119,19 +120,19 @@ bool CClipboardDataReader::GetData(
 		wxTheClipboard->GetData(txtData);
 		data = txtData.GetText().ToUTF8();
 	}
-	wxString err;
+	std::wostringstream err;
 	bool bOk = outTree->LoadXML(data.c_str(), data.length(), err);
-	if (!bOk && 0 < err.length())
+	if (!bOk && 0 < err.str().length())
 	{
-		wxMessageBox(err, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
+		wxMessageBox(err.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 	}
 	return bOk;
 }
 
 
-bool CClipboardDataReader::GetData(wxString& outData)
+bool CClipboardDataReader::GetData(std::wstring& outData)
 {
-	outData.Empty();
+	outData.clear();
 	if (!wxTheClipboard->IsSupported(wxDF_TEXT) || !Open())
 		return false;
 	wxTextDataObject data;
@@ -142,7 +143,7 @@ bool CClipboardDataReader::GetData(wxString& outData)
 
 ////////////////////////////////////////////////////////////////////////////
 
-CClipboardDataTable::CClipboardDataTable(wxString& ioText, wxString& ioHtml)
+CClipboardDataTable::CClipboardDataTable(std::wstring& ioText, std::wstring& ioHtml)
 	: m_ioText(ioText)
 	, m_ioHtml(ioHtml)
 	, m_Closed(false)
@@ -154,7 +155,7 @@ CClipboardDataTable::CClipboardDataTable(wxString& ioText, wxString& ioHtml)
 void CClipboardDataTable::Reset()
 {
 	m_ioHtml = wxT("<table border=\"1\">");
-	m_ioText.Empty();
+	m_ioText.clear();
 	m_Closed = false;
 }
 
@@ -172,7 +173,7 @@ void CClipboardDataTable::EndLine()
 }
 
 
-void CClipboardDataTable::Cell(int iCol, wxString const& inData)
+void CClipboardDataTable::Cell(int iCol, std::wstring const& inData)
 {
 	if (0 < iCol)
 		m_ioText += wxT("\t");
@@ -225,11 +226,11 @@ bool CClipboardDataWriter::AddData(
 	if (!m_bOkay)
 		return false;
 
-	wxString data;
+	std::wstring data;
 	{
 		wxMemoryOutputStream out;
 		inTree->SaveXML(out);
-		data = StringUtil::stringWX(StringUtil::stringA(out));
+		data = StringUtil::stringW(StringUtil::stringA(out));
 	}
 	return AddData(clpFmt, data);
 }
@@ -237,7 +238,7 @@ bool CClipboardDataWriter::AddData(
 
 bool CClipboardDataWriter::AddData(
 		eClipFormat clpFmt,
-		wxString const& inData)
+		std::wstring const& inData)
 {
 	if (eFormatHtml == clpFmt)
 	{
@@ -303,7 +304,7 @@ bool CClipboardDataWriter::AddData(
 }
 
 
-bool CClipboardDataWriter::AddData(wxString const& inData)
+bool CClipboardDataWriter::AddData(std::wstring const& inData)
 {
 	if (!m_Object)
 		m_Object = new wxDataObjectComposite();

@@ -94,7 +94,7 @@ bool ARBTraining::operator==(ARBTraining const& rhs) const
 }
 
 
-size_t ARBTraining::GetSearchStrings(std::set<wxString>& ioStrings) const
+size_t ARBTraining::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -138,11 +138,11 @@ bool ARBTraining::Load(
 		return false;
 	case ElementNode::eInvalidValue:
 		{
-			wxString attrib;
+			std::wstring attrib;
 			inTree->GetAttrib(ATTRIB_TRAINING_DATE, attrib);
-			wxString msg(Localization()->InvalidDate());
+			std::wstring msg(Localization()->InvalidDate());
 			msg += attrib;
-			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg));
+			ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_TRAINING, ATTRIB_TRAINING_DATE, msg.c_str()));
 		}
 		return false;
 	}
@@ -205,7 +205,7 @@ void ARBTrainingList::sort()
 }
 
 
-size_t ARBTrainingList::GetAllNames(std::set<wxString>& outNames) const
+size_t ARBTrainingList::GetAllNames(std::set<std::wstring>& outNames) const
 {
 	outNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -218,7 +218,7 @@ size_t ARBTrainingList::GetAllNames(std::set<wxString>& outNames) const
 }
 
 
-size_t ARBTrainingList::GetAllSubNames(std::set<wxString>& outSubNames) const
+size_t ARBTrainingList::GetAllSubNames(std::set<std::wstring>& outSubNames) const
 {
 	outSubNames.clear();
 	for (const_iterator iter = begin(); iter != end(); ++iter)

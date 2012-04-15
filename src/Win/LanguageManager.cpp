@@ -130,7 +130,7 @@ bool CLanguageManager::SetLang(int langId)
 
 	m_dirLoadedLang = m_locale->GetCanonicalName();
 	if (2 < m_dirLoadedLang.length())
-		m_dirLoadedLang = m_dirLoadedLang.Left(2);
+		m_dirLoadedLang = m_dirLoadedLang.substr(0, 2);
 
 	m_Localization.Load();
 
@@ -159,8 +159,8 @@ int CLanguageManager::SelectLang(wxWindow* parent)
 				// Trigger poedit to capture these.
 				// These are the strings wx returns.
 #if 0
-				wxChar* x1 = _("English (U.S.)");
-				wxChar* x1 = _("French");
+				wchar_t* x1 = _("English (U.S.)");
+				wchar_t* x1 = _("French");
 #endif
 				choices.Add(wxGetTranslation(info->Description));
 				langId.push_back(info->Language);

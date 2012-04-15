@@ -27,6 +27,7 @@
 
 #include "AgilityBook.h"
 #include "ARBConfigTitle.h"
+#include "ARBString.h"
 #include "Validators.h"
 #include "Widgets.h"
 #include <wx/datectrl.h>
@@ -200,7 +201,7 @@ CDlgConfigTitle::CDlgConfigTitle(
 	m_ctrlStyle->SetToolTip(_("HIDC_CONFIG_TITLE_STYLE"));
 	static struct
 	{
-		wxChar const* idRes;
+		wchar_t const* idRes;
 		ARBTitleStyle style;
 	} styles[] = {
 		{arbT("IDS_CONFIG_TITLE_NUMBER"), eTitleNumber},
@@ -322,9 +323,9 @@ void CDlgConfigTitle::OnOk(wxCommandEvent& evt)
 		m_Multiple = 0;
 	}
 
-	m_Title->SetName(m_Name);
-	m_Title->SetLongName(m_LongName);
-	m_Title->SetDescription(m_Desc);
+	m_Title->SetName(StringUtil::stringW(m_Name));
+	m_Title->SetLongName(StringUtil::stringW(m_LongName));
+	m_Title->SetDescription(StringUtil::stringW(m_Desc));
 	m_Title->SetPrefix(m_Prefix);
 	m_Title->SetMultiple(m_Multiple);
 	if (0 <= m_ctrlStyle->GetSelection())

@@ -74,7 +74,7 @@ SUITE(TestConfigEvent)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual wxString GetGenericName() const
+		//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -111,7 +111,7 @@ SUITE(TestConfigEvent)
 		//	bool Update(
 		//			int indent,
 		//			ARBConfigEventPtr inEventNew,
-		//			wxString& ioInfo);
+		//			std::wstring& ioInfo);
 		}
 	}
 
@@ -122,8 +122,8 @@ SUITE(TestConfigEvent)
 		{
 			TODO_TEST
 		//	size_t FindAllEvents(
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
 		//			bool inTitlePoints,
 		//			ARBVector<ARBConfigScoringPtr>& outList) const
@@ -137,8 +137,8 @@ SUITE(TestConfigEvent)
 		{
 			TODO_TEST
 		//	bool VerifyEvent(
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate) const
 		}
 	}
@@ -150,8 +150,8 @@ SUITE(TestConfigEvent)
 		{
 			TODO_TEST
 		//	bool FindEvent(
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
 		//			ARBConfigScoringPtr* outScoring = NULL) const
 		}
@@ -192,9 +192,9 @@ SUITE(TestConfigEventList)
 		{
 			TODO_TEST
 		//	bool VerifyEvent(
-		//			wxString const& inEvent,
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inEvent,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate) const;
 		}
 	}
@@ -206,14 +206,14 @@ SUITE(TestConfigEventList)
 		{
 			TODO_TEST
 		//	 bool FindEvent(
-		//			wxString const& inEvent,
-		//			wxString const& inDivision,
-		//			wxString const& inLevel,
+		//			std::wstring const& inEvent,
+		//			std::wstring const& inDivision,
+		//			std::wstring const& inLevel,
 		//			ARBDate const& inDate,
 		//			ARBConfigEventPtr* outEvent = NULL,
 		//			ARBConfigScoringPtr* outScoring = NULL) const;
 		//	bool FindEvent(
-		//			wxString const& inEvent,
+		//			std::wstring const& inEvent,
 		//			ARBConfigEventPtr* outEvent = NULL) const;
 		}
 	}
@@ -225,8 +225,8 @@ SUITE(TestConfigEventList)
 		{
 			TODO_TEST
 		//	int RenameDivision(
-		//			wxString const& inOldDiv,
-		//			wxString const& inNewDiv);
+		//			std::wstring const& inOldDiv,
+		//			std::wstring const& inNewDiv);
 		}
 	}
 
@@ -236,7 +236,7 @@ SUITE(TestConfigEventList)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteDivision(wxString const& inDiv);
+		//	int DeleteDivision(std::wstring const& inDiv);
 		}
 	}
 
@@ -247,9 +247,9 @@ SUITE(TestConfigEventList)
 		{
 			TODO_TEST
 		//	int RenameLevel(
-		//			wxString const& inOldDiv,
-		//			wxString const& inOldLevel,
-		//			wxString const& inNewLevel);
+		//			std::wstring const& inOldDiv,
+		//			std::wstring const& inOldLevel,
+		//			std::wstring const& inNewLevel);
 		}
 	}
 
@@ -260,8 +260,8 @@ SUITE(TestConfigEventList)
 		{
 			TODO_TEST
 		//	int DeleteLevel(
-		//			wxString const& inDiv,
-		//			wxString const& inLevel);
+		//			std::wstring const& inDiv,
+		//			std::wstring const& inLevel);
 		}
 	}
 
@@ -272,7 +272,7 @@ SUITE(TestConfigEventList)
 		{
 			TODO_TEST
 		//	bool AddEvent(ARBConfigEventPtr inEvent);
-		//	bool DeleteEvent(wxString const& inEvent);
+		//	bool DeleteEvent(std::wstring const& inEvent);
 		}
 	}
 }

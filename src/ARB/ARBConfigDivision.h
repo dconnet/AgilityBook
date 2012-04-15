@@ -57,7 +57,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -67,7 +67,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -105,16 +105,16 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigDivisionPtr inDivNew,
-			wxString& ioInfo);
+			std::wstring& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
@@ -128,7 +128,7 @@ public:
 	}
 
 private:
-	wxString m_Name;
+	std::wstring m_Name;
 	ARBConfigLevelList m_Levels;
 };
 
@@ -168,8 +168,8 @@ public:
 	 * @return Level exists.
 	 */
 	bool VerifyLevel(
-			wxString const& inDiv,
-			wxString const& inLevel) const;
+			std::wstring const& inDiv,
+			std::wstring const& inLevel) const;
 
 	/**
 	 * Find the named division.
@@ -178,7 +178,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindDivision(
-			wxString const& inDiv,
+			std::wstring const& inDiv,
 			ARBConfigDivisionPtr* outDiv = NULL) const;
 
 	/**
@@ -188,7 +188,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddDivision(
-			wxString const& inDiv,
+			std::wstring const& inDiv,
 			ARBConfigDivisionPtr* outDiv = NULL);
 
 	/**
@@ -205,6 +205,6 @@ public:
 	 * @return Number of divisions deleted (0 or 1).
 	 */
 	int DeleteDivision(
-			wxString const& inDiv,
+			std::wstring const& inDiv,
 			ARBConfigEventList& ioEvents);
 };

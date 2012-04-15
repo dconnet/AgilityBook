@@ -241,7 +241,7 @@ void CPrintRuns::GetPageInfo(int *minPage, int *maxPage, int *pageFrom, int *pag
 #define CODE_REF4		46
 
 // Make sure these are ordered by the aboves codes
-static const wxChar* sc_codes[] =
+static const wchar_t* sc_codes[] =
 {
 	arbT("IDS_COL_DOG"),
 	arbT("IDS_COL_DATE"),

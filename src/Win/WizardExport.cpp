@@ -83,7 +83,9 @@ CWizardExport::CWizardExport(
 	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGING, wxWizardEventHandler, CWizardExport::OnWizardChanging);
 	BIND_OR_CONNECT(wxEVT_WIZARD_PAGE_CHANGED, wxWizardEventHandler, CWizardExport::OnWizardChanged);
 
-	CAgilityBookOptions::GetImportExportDelimiters(false, m_Delim, m_Delimiter);
+	std::wstring tmp;
+	CAgilityBookOptions::GetImportExportDelimiters(false, m_Delim, tmp);
+	m_Delimiter = tmp;
 
 	// Controls (these are done first to control tab order)
 
@@ -179,7 +181,7 @@ CWizardExport::CWizardExport(
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
 	static struct
 	{
-		wxChar const* uFormat;
+		wchar_t const* uFormat;
 		ARBDate::DateFormat format;
 		ARBDate::DateFormat extendedFormat;
 	} const sc_Dates[] =
@@ -297,7 +299,7 @@ CAgilityBookOptions::ColumnOrder CWizardExport::GetColumnInfo() const
 }
 
 
-wxChar CWizardExport::GetDelim() const
+wchar_t CWizardExport::GetDelim() const
 {
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
@@ -372,12 +374,12 @@ void CWizardExport::UpdateButtons()
 }
 
 
-wxString CWizardExport::AddPreviewData(
+std::wstring CWizardExport::AddPreviewData(
 		long inLine,
 		long inCol,
-		wxString inData)
+		std::wstring inData)
 {
-	wxString data;
+	std::wstring data;
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
@@ -390,7 +392,7 @@ wxString CWizardExport::AddPreviewData(
 	{
 		if (0 < inCol)
 			data += GetDelim();
-		data += WriteCSVField(GetDelim(), inData.wx_str());
+		data += WriteCSVField(GetDelim(), inData);
 	}
 	return data;
 }
@@ -414,7 +416,7 @@ void CWizardExport::UpdatePreview()
 	long idxDateFormat = m_ctrlDateFormat->GetSelection();
 	if (wxNOT_FOUND != idxDateFormat)
 		format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(idxDateFormat));
-	wxChar delim = GetDelim();
+	wchar_t delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle()
 	&& 0 == delim)
@@ -438,11 +440,11 @@ void CWizardExport::UpdatePreview()
 	}
 
 	// Now generate the header information.
-	wxString hdrSep(wxT("/"));
+	std::wstring hdrSep(L"/");
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
-		hdrSep = wxT("\n");
-	std::vector<wxString> cols;
+		hdrSep = L"\n";
+	std::vector<std::wstring> cols;
 
 	switch (m_pSheet->GetImportExportItem())
 	{
@@ -455,7 +457,7 @@ void CWizardExport::UpdatePreview()
 				continue;
 			for (iCol = 0; iCol < static_cast<long>(columns[index].size()); ++iCol)
 			{
-				wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
+				std::wstring str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
 				if (iCol >= static_cast<long>(cols.size()))
 					cols.push_back(str);
 				else
@@ -469,21 +471,21 @@ void CWizardExport::UpdatePreview()
 	case WIZ_EXPORT_CALENDAR:
 		for (index = 0; index < columns[IO_TYPE_CALENDAR].size(); ++index)
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][index]);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR][index]);
 			cols.push_back(str);
 		}
 		break;
 	case WIZ_EXPORT_CALENDAR_APPT:
 		for (index = 0; index < columns[IO_TYPE_CALENDAR_APPT].size(); ++index)
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_APPT][index]);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_APPT][index]);
 			cols.push_back(str);
 		}
 		break;
 	case WIZ_EXPORT_CALENDAR_TASK:
 		for (index = 0; index < columns[IO_TYPE_CALENDAR_TASK].size(); ++index)
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_TASK][index]);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_CALENDAR_TASK][index]);
 			cols.push_back(str);
 		}
 		break;
@@ -491,7 +493,7 @@ void CWizardExport::UpdatePreview()
 	case WIZ_EXPORT_LOG:
 		for (index = 0; index < columns[IO_TYPE_TRAINING].size(); ++index)
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][index]);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(columns[IO_TYPE_TRAINING][index]);
 			cols.push_back(str);
 		}
 	}
@@ -511,12 +513,12 @@ void CWizardExport::UpdatePreview()
 	else
 	{
 		m_ctrlPreview->InsertColumn(0, wxT(""));
-		wxString data;
+		std::wstring data;
 		for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
 		{
 			if (0 < iCol)
 				data += delim;
-			data += WriteCSVField(delim, cols[iCol].wx_str());
+			data += WriteCSVField(delim, cols[iCol]);
 		}
 		m_ctrlPreview->InsertItem(iLine, data);
 		++iLine;
@@ -580,7 +582,7 @@ void CWizardExport::UpdatePreview()
 									switch (columns[idxType][idx])
 									{
 									default:
-										data += AddPreviewData(iLine, idx, wxString());
+										data += AddPreviewData(iLine, idx, std::wstring());
 										break;
 									case IO_RUNS_REG_NAME:
 										data += AddPreviewData(iLine, idx, pDog->GetRegisteredName());
@@ -593,7 +595,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_VENUE:
 										{
-											wxString fld;
+											std::wstring fld;
 											long i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 												iter != pTrial->GetClubs().end();
@@ -608,7 +610,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_CLUB:
 										{
-											wxString fld;
+											std::wstring fld;
 											long i = 0;
 											for (ARBDogClubList::const_iterator iter = pTrial->GetClubs().begin();
 												iter != pTrial->GetClubs().end();
@@ -650,9 +652,9 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_COURSE_FAULTS:
 										{
-											wxString str;
+											std::wostringstream str;
 											str << pRun->GetScoring().GetCourseFaults();
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_TIME:
@@ -670,7 +672,7 @@ void CWizardExport::UpdatePreview()
 											}
 											else
 											{
-												data += AddPreviewData(iLine, idx, wxString());
+												data += AddPreviewData(iLine, idx, std::wstring());
 											}
 										}
 										break;
@@ -683,7 +685,7 @@ void CWizardExport::UpdatePreview()
 											}
 											else
 											{
-												data += AddPreviewData(iLine, idx, wxString());
+												data += AddPreviewData(iLine, idx, std::wstring());
 											}
 										}
 										break;
@@ -692,13 +694,13 @@ void CWizardExport::UpdatePreview()
 											short ob = pRun->GetScoring().GetObstacles();
 											if (0 < ob)
 											{
-												wxString str;
+												std::wostringstream str;
 												str << ob;
-												data += AddPreviewData(iLine, idx, str);
+												data += AddPreviewData(iLine, idx, str.str());
 											}
 											else
 											{
-												data += AddPreviewData(iLine, idx, wxString());
+												data += AddPreviewData(iLine, idx, std::wstring());
 											}
 										}
 										break;
@@ -711,7 +713,7 @@ void CWizardExport::UpdatePreview()
 											}
 											else
 											{
-												data += AddPreviewData(iLine, idx, wxString());
+												data += AddPreviewData(iLine, idx, std::wstring());
 											}
 										}
 										break;
@@ -727,55 +729,55 @@ void CWizardExport::UpdatePreview()
 											}
 											else
 											{
-												data += AddPreviewData(iLine, idx, wxString());
+												data += AddPreviewData(iLine, idx, std::wstring());
 											}
 										}
 										break;
 									case IO_RUNS_REQ_OPENING:
 										{
-											wxString str;
+											std::wostringstream str;
 											str << pRun->GetScoring().GetNeedOpenPts();
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_REQ_CLOSING:
 										{
-											wxString str;
+											std::wostringstream str;
 											str << pRun->GetScoring().GetNeedClosePts();
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_OPENING:
 										{
-											wxString str;
+											std::wostringstream str;
 											str << pRun->GetScoring().GetOpenPts();
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_CLOSING:
 										{
-											wxString str;
+											std::wostringstream str;
 											str << pRun->GetScoring().GetClosePts();
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_REQ_POINTS:
 										{
-											wxString str;
+											std::wostringstream str;
 											str << pRun->GetScoring().GetNeedOpenPts();
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_POINTS:
 										{
-											wxString str;
+											std::wostringstream str;
 											str << pRun->GetScoring().GetOpenPts();
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_PLACE:
 										{
-											wxString str;
+											std::wostringstream str;
 											short place = pRun->GetPlace();
 											if (0 > place)
 												str << wxT("?");
@@ -783,34 +785,34 @@ void CWizardExport::UpdatePreview()
 												str << wxT("-");
 											else
 												str << place;
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_IN_CLASS:
 										{
-											wxString str;
+											std::wostringstream str;
 											short inClass = pRun->GetInClass();
 											if (0 >= inClass)
 												str << wxT("?");
 											else
 												str << inClass;
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_DOGSQD:
 										{
-											wxString str;
+											std::wostringstream str;
 											short qd = pRun->GetDogsQd();
 											if (0 > qd)
 												str << wxT("?");
 											else
 												str << qd;
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_Q:
 										{
-											wxString q;
+											std::wstring q;
 											if (pRun->GetQ().Qualified())
 											{
 												std::vector<ARBConfigMultiQPtr> multiQs;
@@ -818,19 +820,19 @@ void CWizardExport::UpdatePreview()
 												{
 													for (std::vector<ARBConfigMultiQPtr>::iterator iMultiQ = multiQs.begin(); iMultiQ != multiQs.end(); ++iMultiQ)
 													{
-														if (!q.IsEmpty())
+														if (!q.empty())
 															q += wxT("/");
 														q += (*iMultiQ)->GetShortName();
 													}
 												}
 												if (ARB_Q::eQ_SuperQ == pRun->GetQ())
 												{
-													if (!q.IsEmpty())
+													if (!q.empty())
 														q += wxT("/");
 													q += _("IDS_SQ");
 												}
 											}
-											if (q.IsEmpty())
+											if (q.empty())
 												q = pRun->GetQ().str();
 											data += AddPreviewData(iLine, idx, q);
 										}
@@ -843,17 +845,17 @@ void CWizardExport::UpdatePreview()
 										}
 										else
 										{
-											data += AddPreviewData(iLine, idx, wxString());
+											data += AddPreviewData(iLine, idx, std::wstring());
 										}
 										break;
 									case IO_RUNS_TITLE_POINTS:
 										{
-											wxString str;
+											std::wostringstream str;
 											double pts = 0.0;
 											if (pRun->GetQ().Qualified())
 												pts = pRun->GetTitlePoints(pScoring);
 											str << pts;
-											data += AddPreviewData(iLine, idx, str);
+											data += AddPreviewData(iLine, idx, str.str());
 										}
 										break;
 									case IO_RUNS_COMMENTS:
@@ -861,7 +863,7 @@ void CWizardExport::UpdatePreview()
 										break;
 									case IO_RUNS_FAULTS:
 										{
-											wxString fld;
+											std::wstring fld;
 											long i = 0;
 											for (ARBDogFaultList::const_iterator iter = pRun->GetFaults().begin();
 												iter != pRun->GetFaults().end();
@@ -1027,7 +1029,7 @@ void CWizardExport::UpdatePreview()
 						break;
 					case IO_CAL_APPT_DESCRIPTION:
 						{
-							wxString tmp;
+							std::wstring tmp;
 							if (pCal->IsTentative())
 							{
 								tmp += Localization()->CalendarTentative();
@@ -1181,7 +1183,7 @@ void CWizardExport::UpdatePreview()
 						break;
 					case IO_CAL_TASK_NOTES:
 						{
-							wxString tmp;
+							std::wstring tmp;
 							if (pCal->IsTentative())
 							{
 								tmp += Localization()->CalendarTentative();
@@ -1434,7 +1436,9 @@ bool CWizardExport::DoWizardFinish()
 	if (WIZARD_RADIO_EXCEL != m_pSheet->GetImportExportStyle()
 	&& WIZARD_RADIO_CALC != m_pSheet->GetImportExportStyle())
 	{
-		CAgilityBookOptions::SetImportExportDelimiters(false, m_Delim, m_Delimiter);
+		std::wstring tmp;
+		CAgilityBookOptions::SetImportExportDelimiters(false, m_Delim, tmp);
+		m_Delimiter = tmp;
 	}
 	ARBDate::DateFormat format = static_cast<ARBDate::DateFormat>((int)m_ctrlDateFormat->GetClientData(index));
 	CAgilityBookOptions::SetImportExportDateFormat(false, format);
@@ -1456,7 +1460,7 @@ bool CWizardExport::DoWizardFinish()
 			long nColumnCount = m_ctrlPreview->GetColumnCount();
 			IDlgProgress* pProgress = IDlgProgress::CreateProgress(1, this);
 			pProgress->EnableCancel(false);
-			pProgress->SetMessage(_("IDS_EXPORTING"));
+			pProgress->SetMessage(StringUtil::stringW(_("IDS_EXPORTING")));
 			pProgress->SetRange(1, m_ctrlPreview->GetItemCount() * nColumnCount);
 			pProgress->ShowProgress();
 
@@ -1465,7 +1469,7 @@ bool CWizardExport::DoWizardFinish()
 			{
 				for (long iCol = 0; !bFailed && iCol < nColumnCount; ++iCol)
 				{
-					wxString line = GetListColumnText(m_ctrlPreview, i, iCol);
+					std::wstring line = GetListColumnText(m_ctrlPreview, i, iCol);
 					bFailed = !pExporter->InsertData(i, iCol, line);
 					// Calc is started visibly, so steal focus back.
 					if (0 == i && 0 == iCol)
@@ -1505,8 +1509,8 @@ bool CWizardExport::DoWizardFinish()
 			{
 				for (long i = 0; i < m_ctrlPreview->GetItemCount(); ++i)
 				{
-					wxString line = GetListColumnText(m_ctrlPreview, i, 0);
-					line << wxT("\n");
+					std::wstring line = GetListColumnText(m_ctrlPreview, i, 0);
+					line += L"\n";
 					std::string utf8(StringUtil::stringA(line));
 					output.Write(utf8.c_str(), utf8.length());
 				}

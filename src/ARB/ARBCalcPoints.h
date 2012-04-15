@@ -49,7 +49,7 @@ public:
 	 */
 	virtual ARBPointsType GetType() const = 0;
 
-	virtual wxString GetGenericName(double points, double faults) const = 0;
+	virtual std::wstring GetGenericName(double points, double faults) const = 0;
 
 	/**
 	 * Allow ARBConfigTitlePoints to create items.
@@ -75,7 +75,7 @@ protected:
 public:
 	static ARBCalcPointsNormalPtr New();
 	virtual ARBPointsType GetType() const	{return ePointsTypeNormal;}
-	virtual wxString GetGenericName(double points, double faults) const;
+	virtual std::wstring GetGenericName(double points, double faults) const;
 	virtual bool AllowConfiguration() const	{return true;}
 	virtual double GetPoints(
 			double inPoints,
@@ -96,7 +96,7 @@ protected:
 public:
 	static ARBCalcPointsT2BPtr New();
 	virtual ARBPointsType GetType() const	{return ePointsTypeT2B;}
-	virtual wxString GetGenericName(double points, double faults) const;
+	virtual std::wstring GetGenericName(double points, double faults) const;
 	virtual double GetPoints(
 			double inPoints,
 			double inTime,
@@ -116,7 +116,7 @@ protected:
 public:
 	static ARBCalcPointsUKIPtr New();
 	virtual ARBPointsType GetType() const	{return ePointsTypeUKI;}
-	virtual wxString GetGenericName(double points, double faults) const;
+	virtual std::wstring GetGenericName(double points, double faults) const;
 	virtual double GetPoints(
 			double inPoints,
 			double inTime,

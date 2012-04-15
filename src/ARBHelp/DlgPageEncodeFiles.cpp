@@ -102,7 +102,7 @@ bool CDlgPageEncodeFiles::TransferDataFromWindow()
 {
 	for (unsigned int i = 0; i < m_ctrlList->GetCount(); ++i)
 	{
-		wxString filename = m_ctrlList->GetString(i);
+		std::wstring filename = m_ctrlList->GetString(i);
 		m_Parent->SetARBFileStatus(filename, m_ctrlList->IsChecked(i));
 	}
 	return true;

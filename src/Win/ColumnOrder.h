@@ -17,10 +17,14 @@
  * @li 2006-02-16 DRC Cleaned up memory usage with smart pointers.
  */
 
+#include <assert.h>
+#include <string>
+
+
 class CColumnOrder
 {
 public:
-	CColumnOrder(wxString const& pItem);
+	CColumnOrder(std::wstring const& pItem);
 	~CColumnOrder();
 	bool Initialize(int nColumns); // Returns true if saved settings restored
 	void Save();
@@ -43,7 +47,7 @@ public:
 	}
 
 private:
-	wxString m_Item;
+	std::wstring m_Item;
 	int m_nColumns;
 	bool m_bDefaultDescending;
 	int* m_order;

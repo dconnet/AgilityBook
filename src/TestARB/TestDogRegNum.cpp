@@ -74,7 +74,7 @@ SUITE(TestDogRegNum)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual wxString GetGenericName() const
+		//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -135,7 +135,7 @@ SUITE(TestDogRegNumList)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int NumRegNumsInVenue(wxString const& inVenue) const;
+		//	int NumRegNumsInVenue(std::wstring const& inVenue) const;
 		}
 	}
 
@@ -146,8 +146,8 @@ SUITE(TestDogRegNumList)
 		{
 			TODO_TEST
 		//	int RenameVenue(
-		//			wxString const& inOldVenue,
-		//			wxString const& inNewVenue);
+		//			std::wstring const& inOldVenue,
+		//			std::wstring const& inNewVenue);
 		}
 	}
 
@@ -157,7 +157,7 @@ SUITE(TestDogRegNumList)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	int DeleteVenue(wxString const& inVenue);
+		//	int DeleteVenue(std::wstring const& inVenue);
 		}
 	}
 
@@ -168,7 +168,7 @@ SUITE(TestDogRegNumList)
 		{
 			TODO_TEST
 		//	bool FindRegNum(
-		//			wxString const& inVenue,
+		//			std::wstring const& inVenue,
 		//			ARBDogRegNumPtr* outRegNum = NULL) const;
 		}
 	}
@@ -180,13 +180,13 @@ SUITE(TestDogRegNumList)
 		{
 			TODO_TEST
 		//	bool AddRegNum(
-		//			wxString const& inVenue,
-		//			wxString const& inNumber,
+		//			std::wstring const& inVenue,
+		//			std::wstring const& inNumber,
 		//			ARBDogRegNumPtr* outRegNum = NULL);
 		//	bool AddRegNum(ARBDogRegNumPtr inRegNum);
 		//	int DeleteRegNum(
-		//			wxString const& inVenue,
-		//			wxString const& inNumber);
+		//			std::wstring const& inVenue,
+		//			std::wstring const& inNumber);
 		}
 	}
 }

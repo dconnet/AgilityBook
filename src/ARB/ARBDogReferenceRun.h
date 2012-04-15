@@ -49,7 +49,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -59,7 +59,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -103,27 +103,27 @@ public:
 	{
 		m_Place = inPlace;
 	}
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
-	wxString const& GetHeight() const
+	std::wstring const& GetHeight() const
 	{
 		return m_Height;
 	}
-	void SetHeight(wxString const& inHeight)
+	void SetHeight(std::wstring const& inHeight)
 	{
 		m_Height = inHeight;
 	}
-	wxString const& GetBreed() const
+	std::wstring const& GetBreed() const
 	{
 		return m_Breed;
 	}
-	void SetBreed(wxString const& inBreed)
+	void SetBreed(std::wstring const& inBreed)
 	{
 		m_Breed = inBreed;
 	}
@@ -135,19 +135,19 @@ public:
 	{
 		m_Time = inTime;
 	}
-	wxString const& GetScore() const
+	std::wstring const& GetScore() const
 	{
 		return m_Score;
 	}
-	void SetScore(wxString const& inScore)
+	void SetScore(std::wstring const& inScore)
 	{
 		m_Score = inScore;
 	}
-	wxString const& GetNote() const
+	std::wstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(wxString const& inNote)
+	void SetNote(std::wstring const& inNote)
 	{
 		m_Note = inNote;
 	}
@@ -155,12 +155,12 @@ public:
 private:
 	ARB_Q m_Q;
 	short m_Place;
-	wxString m_Name;
-	wxString m_Height;
-	wxString m_Breed;
+	std::wstring m_Name;
+	std::wstring m_Height;
+	std::wstring m_Breed;
 	double m_Time;
-	wxString m_Score;
-	wxString m_Note;
+	std::wstring m_Score;
+	std::wstring m_Note;
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -91,7 +91,7 @@ public:
 	bool CanDelete() const			{return true;}
 
 	ARBCalendarPtr GetCalendar()	{return m_pCal;}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 
 private:
@@ -102,9 +102,9 @@ private:
 };
 
 
-wxString CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
+std::wstring CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wstring str;
 	if (m_pCal)
 	{
 		switch (m_pView->m_Columns[iCol])
@@ -137,8 +137,7 @@ wxString CAgilityBookCalendarListViewData::OnNeedText(long iCol) const
 				str = m_pCal->GetClosingDate().GetString();
 			break;
 		case IO_CAL_NOTES:
-			str = m_pCal->GetNote();
-			str.Replace(wxT("\n"), wxT(" "));
+			str = StringUtil::Replace(m_pCal->GetNote(), L"\n", L" ");
 			break;
 		}
 	}
@@ -438,12 +437,12 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 		index = 0;
 	else if (index >= m_pView->m_Ctrl->GetItemCount() && !SearchDown())
 		index = m_pView->m_Ctrl->GetItemCount() - 1;
-	wxString search = Text();
+	std::wstring search = Text();
 	if (!MatchCase())
-		search.MakeLower();
+		search = StringUtil::ToLower(search);
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<wxString> strings;
+		std::set<std::wstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookCalendarListViewDataPtr pData = m_pView->GetItemCalData(index);
@@ -463,12 +462,12 @@ bool CFindCalendar::Search(CDlgFind* pDlg) const
 				strings.insert(info.GetText());
 			}
 		}
-		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter));
+			std::wstring str((*iter));
 			if (!MatchCase())
-				str.MakeLower();
-			if (0 <= str.Find(search))
+				str = StringUtil::ToLower(str);
+			if (std::string::npos != str.find(search))
 			{
 				m_pView->m_Ctrl->SetSelection(index, true);
 				bFound = true;
@@ -635,7 +634,7 @@ bool CAgilityBookCalendarListView::IsFiltered() const
 }
 
 
-bool CAgilityBookCalendarListView::GetMessage(wxString& msg) const
+bool CAgilityBookCalendarListView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
@@ -644,7 +643,7 @@ bool CAgilityBookCalendarListView::GetMessage(wxString& msg) const
 }
 
 
-bool CAgilityBookCalendarListView::GetMessage2(wxString& msg) const
+bool CAgilityBookCalendarListView::GetMessage2(std::wstring& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
@@ -703,7 +702,7 @@ void CAgilityBookCalendarListView::OnUpdate(
 
 void CAgilityBookCalendarListView::GetPrintLine(
 		long item,
-		std::vector<wxString>& line) const
+		std::vector<std::wstring>& line) const
 {
 	if (m_Ctrl)
 		m_Ctrl->GetPrintLine(item, line);
@@ -737,7 +736,7 @@ void CAgilityBookCalendarListView::SetupColumns()
 	{
 		for (size_t iCol = 0; iCol < m_Columns.size(); ++iCol)
 		{
-			wxString str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
+			std::wstring str = CDlgAssignColumns::GetNameFromColumnID(m_Columns[iCol]);
 			int fmt = CDlgAssignColumns::GetFormatFromColumnID(m_Columns[iCol]);
 			m_Ctrl->InsertColumn(static_cast<long>(iCol), str, fmt);
 		}
@@ -1069,15 +1068,15 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 				if (!clpData.isOkay())
 					return true;
 
-				wxString data;
-				wxString html;
+				std::wstring data;
+				std::wstring html;
 				CClipboardDataTable table(data, html);
 
 				// Take care of the header, but only if more than one line is selected.
 				if (1 < indices.size()
 				|| indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 				{
-					std::vector<wxString> line;
+					std::vector<std::wstring> line;
 					GetPrintLine(-1, line);
 					table.StartLine();
 					for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -1101,7 +1100,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 						pData->GetCalendar()->Save(tree);
 						pData->GetCalendar()->iCalendar(iCalendar, nWarning);
 					}
-					std::vector<wxString> line;
+					std::vector<std::wstring> line;
 					GetPrintLine((*iter), line);
 					table.StartLine();
 					for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -1114,7 +1113,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 
 				clpData.AddData(eFormatCalendar, tree);
 				clpData.AddData(table);
-				clpData.AddData(eFormatiCalendar, StringUtil::stringWX(StringUtil::stringA(iCal)));
+				clpData.AddData(eFormatiCalendar, StringUtil::stringW(StringUtil::stringA(iCal)));
 				clpData.CommitData();
 			}
 		}
@@ -1173,7 +1172,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 	case ID_EDIT_FIND_NEXT:
 		{
 			m_Callback.SearchDown(true);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);
@@ -1183,7 +1182,7 @@ bool CAgilityBookCalendarListView::OnCmd(int id)
 	case ID_EDIT_FIND_PREVIOUS:
 		{
 			m_Callback.SearchDown(false);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);

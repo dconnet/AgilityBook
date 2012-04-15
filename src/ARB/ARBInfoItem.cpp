@@ -87,7 +87,7 @@ bool ARBInfoItem::operator==(ARBInfoItem const& rhs) const
 }
 
 
-size_t ARBInfoItem::GetSearchStrings(std::set<wxString>& ioStrings) const
+size_t ARBInfoItem::GetSearchStrings(std::set<std::wstring>& ioStrings) const
 {
 	size_t nItems = 0;
 
@@ -108,19 +108,19 @@ bool ARBInfoItem::Load(
 		ElementNodePtr inTree,
 		ARBVersion const& inVersion,
 		ARBErrorCallback& ioCallback,
-		wxString const& inItemName)
+		std::wstring const& inItemName)
 {
 	assert(inTree);
 	if (!inTree || inTree->GetName() != inItemName)
 		return false;
 	if (ElementNode::eNotFound == inTree->GetAttrib(ATTRIB_INFO_NAME, m_Name))
 	{
-		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(inItemName, ATTRIB_INFO_NAME));
+		ioCallback.LogMessage(Localization()->ErrorMissingAttribute(inItemName.c_str(), ATTRIB_INFO_NAME).c_str());
 		return false;
 	}
 	if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_INFO_VISIBLE, m_Visible))
 	{
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(inItemName, ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool()));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(inItemName.c_str(), ATTRIB_INFO_VISIBLE, Localization()->ValidValuesBool().c_str()));
 		return false;
 	}
 	m_Comment = inTree->GetValue();
@@ -130,7 +130,7 @@ bool ARBInfoItem::Load(
 
 bool ARBInfoItem::Save(
 		ElementNodePtr ioTree,
-		wxString const& inItemName) const
+		std::wstring const& inItemName) const
 {
 	assert(ioTree);
 	if (!ioTree)
@@ -146,7 +146,7 @@ bool ARBInfoItem::Save(
 
 /////////////////////////////////////////////////////////////////////////////
 
-ARBInfoItemList::ARBInfoItemList(wxString const& inItemName)
+ARBInfoItemList::ARBInfoItemList(std::wstring const& inItemName)
 	: m_ItemName(inItemName)
 {
 }
@@ -217,7 +217,7 @@ void ARBInfoItemList::sort()
 
 
 size_t ARBInfoItemList::GetAllItems(
-		std::set<wxString>& outNames,
+		std::set<std::wstring>& outNames,
 		bool inVisibleOnly) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -227,7 +227,7 @@ size_t ARBInfoItemList::GetAllItems(
 			outNames.insert(info->GetName());
 		else if (inVisibleOnly && !info->IsVisible())
 		{
-			std::set<wxString>::iterator i = outNames.find(info->GetName());
+			std::set<std::wstring>::iterator i = outNames.find(info->GetName());
 			if (i != outNames.end())
 				outNames.erase(i);
 		}
@@ -236,7 +236,7 @@ size_t ARBInfoItemList::GetAllItems(
 }
 
 
-void ARBInfoItemList::CondenseContent(std::set<wxString> const& inNamesInUse)
+void ARBInfoItemList::CondenseContent(std::set<std::wstring> const& inNamesInUse)
 {
 	// Remove any entries that have empty comments for items that we have
 	// shown under. This is simply to keep the file size down.
@@ -257,7 +257,7 @@ void ARBInfoItemList::CondenseContent(std::set<wxString> const& inNamesInUse)
 
 
 bool ARBInfoItemList::FindItem(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBInfoItemPtr* outItem) const
 {
 	if (outItem)
@@ -277,7 +277,7 @@ bool ARBInfoItemList::FindItem(
 
 
 bool ARBInfoItemList::AddItem(
-		wxString const& inItem,
+		std::wstring const& inItem,
 		ARBInfoItemPtr* outItem)
 {
 	if (outItem)

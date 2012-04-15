@@ -73,7 +73,7 @@ public:
 	bool CanDelete() const				{return true;}
 
 	ARBTrainingPtr GetTraining()		{return m_pTraining;}
-	virtual wxString OnNeedText(long iCol) const;
+	virtual std::wstring OnNeedText(long iCol) const;
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 
 private:
@@ -82,9 +82,9 @@ private:
 };
 
 
-wxString CAgilityBookTrainingViewData::OnNeedText(long iCol) const
+std::wstring CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 {
-	wxString str;
+	std::wstring str;
 	if (m_pTraining)
 	{
 		switch (m_pView->m_Columns[iCol])
@@ -99,8 +99,7 @@ wxString CAgilityBookTrainingViewData::OnNeedText(long iCol) const
 			str = m_pTraining->GetSubName();
 			break;
 		case IO_LOG_NOTES:
-			str = m_pTraining->GetNote();
-			str.Replace(wxT("\n"), wxT(" "));
+			str = StringUtil::Replace(m_pTraining->GetNote(), wxT("\n"), wxT(" "));
 			break;
 		}
 	}
@@ -254,12 +253,12 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 		index = 0;
 	else if (index >= m_pView->m_Ctrl->GetItemCount() && !SearchDown())
 		index = m_pView->m_Ctrl->GetItemCount() - 1;
-	wxString search = Text();
+	std::wstring search = Text();
 	if (!MatchCase())
-		search.MakeLower();
+		search = StringUtil::ToLower(search);
 	for (; !bFound && 0 <= index && index < m_pView->m_Ctrl->GetItemCount(); index += inc)
 	{
-		std::set<wxString> strings;
+		std::set<std::wstring> strings;
 		if (SearchAll())
 		{
 			CAgilityBookTrainingViewDataPtr pData = m_pView->GetItemTrainingData(index);
@@ -279,12 +278,12 @@ bool CFindTraining::Search(CDlgFind* pDlg) const
 				strings.insert(info.GetText());
 			}
 		}
-		for (std::set<wxString>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
+		for (std::set<std::wstring>::iterator iter = strings.begin(); iter != strings.end(); ++iter)
 		{
-			wxString str((*iter));
+			std::wstring str((*iter));
 			if (!MatchCase())
-				str.MakeLower();
-			if (0 <= str.Find(search))
+				str = StringUtil::ToLower(str);
+			if (std::wstring::npos != str.find(search))
 			{
 				m_pView->m_Ctrl->Select(index, true);
 				m_pView->m_Ctrl->Focus(index);
@@ -420,7 +419,7 @@ bool CAgilityBookTrainingView::IsFiltered() const
 }
 
 
-bool CAgilityBookTrainingView::GetMessage(wxString& msg) const
+bool CAgilityBookTrainingView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
@@ -429,7 +428,7 @@ bool CAgilityBookTrainingView::GetMessage(wxString& msg) const
 }
 
 
-bool CAgilityBookTrainingView::GetMessage2(wxString& msg) const
+bool CAgilityBookTrainingView::GetMessage2(std::wstring& msg) const
 {
 	msg = _("IDS_INDICATOR_BLANK");
 	return true;
@@ -490,7 +489,7 @@ void CAgilityBookTrainingView::OnUpdate(
 
 void CAgilityBookTrainingView::GetPrintLine(
 		long item,
-		std::vector<wxString>& line) const
+		std::vector<std::wstring>& line) const
 {
 	if (m_Ctrl)
 		m_Ctrl->GetPrintLine(item, line);
@@ -749,15 +748,15 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 				if (!clpData.isOkay())
 					return true;
 
-				wxString data;
-				wxString html;
+				std::wstring data;
+				std::wstring html;
 				CClipboardDataTable table(data, html);
 
 				// Take care of the header, but only if more than one line is selected.
 				if (1 < indices.size()
 				|| indices.size() == static_cast<size_t>(m_Ctrl->GetItemCount()))
 				{
-					std::vector<wxString> line;
+					std::vector<std::wstring> line;
 					m_Ctrl->GetPrintLine(-1, line);
 					table.StartLine();
 					for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -775,7 +774,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 					CAgilityBookTrainingViewDataPtr pData = GetItemTrainingData(*iter);
 					if (pData)
 						pData->GetTraining()->Save(tree);
-					std::vector<wxString> line;
+					std::vector<std::wstring> line;
 					m_Ctrl->GetPrintLine((*iter), line);
 					table.StartLine();
 					for (int i = 0; i < static_cast<int>(line.size()); ++i)
@@ -845,7 +844,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 	case ID_EDIT_FIND_NEXT:
 		{
 			m_Callback.SearchDown(true);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);
@@ -855,7 +854,7 @@ bool CAgilityBookTrainingView::OnCmd(int id)
 	case ID_EDIT_FIND_PREVIOUS:
 		{
 			m_Callback.SearchDown(false);
-			if (m_Callback.Text().IsEmpty())
+			if (m_Callback.Text().empty())
 				OnCmd(wxID_FIND);
 			else
 				m_Callback.Search(NULL);

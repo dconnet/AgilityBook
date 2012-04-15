@@ -149,11 +149,11 @@ bool ARBConfigDivision::Save(ElementNodePtr ioTree) const
 bool ARBConfigDivision::Update(
 		int indent,
 		ARBConfigDivisionPtr inDivNew,
-		wxString& ioInfo)
+		std::wstring& ioInfo)
 {
-	wxString info;
+	std::wstring info;
 
-	wxString indentBuffer, indentName;
+	std::wstring indentBuffer, indentName;
 	for (int i = 0; i < indent-1; ++i)
 		indentName += wxT("   ");
 	indentBuffer = indentName + wxT("   ");
@@ -162,7 +162,7 @@ bool ARBConfigDivision::Update(
 	// If the order is different, we will fall into this...
 	if (GetLevels() != inDivNew->GetLevels())
 	{
-		wxString info2;
+		std::wstring info2;
 		int nChanged, nAdded, nSkipped;
 		nChanged = nAdded = nSkipped = 0;
 		for (ARBConfigLevelList::const_iterator iterLevel = inDivNew->GetLevels().begin();
@@ -260,8 +260,8 @@ void ARBConfigDivisionList::ReorderBy(ARBConfigDivisionList const& inList)
 
 
 bool ARBConfigDivisionList::VerifyLevel(
-		wxString const& inDiv,
-		wxString const& inLevel) const
+		std::wstring const& inDiv,
+		std::wstring const& inLevel) const
 {
 	// Wildcards are only used in the ARBConfigScoring object.
 	bool bWildCard = (inDiv == WILDCARD_DIVISION);
@@ -280,7 +280,7 @@ bool ARBConfigDivisionList::VerifyLevel(
 
 
 bool ARBConfigDivisionList::FindDivision(
-		wxString const& inDiv,
+		std::wstring const& inDiv,
 		ARBConfigDivisionPtr* outDiv) const
 {
 	if (outDiv)
@@ -299,7 +299,7 @@ bool ARBConfigDivisionList::FindDivision(
 
 
 bool ARBConfigDivisionList::AddDivision(
-		wxString const& inDiv,
+		std::wstring const& inDiv,
 		ARBConfigDivisionPtr* outDiv)
 {
 	if (outDiv)
@@ -329,10 +329,10 @@ bool ARBConfigDivisionList::AddDivision(ARBConfigDivisionPtr inDiv)
 
 
 int ARBConfigDivisionList::DeleteDivision(
-		wxString const& inDiv,
+		std::wstring const& inDiv,
 		ARBConfigEventList& ioEvents)
 {
-	wxString div(inDiv);
+	std::wstring div(inDiv);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == div)

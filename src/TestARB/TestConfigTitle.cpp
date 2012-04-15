@@ -84,7 +84,7 @@ SUITE(TestConfigTitle)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual wxString GetGenericName() const
+		//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -127,7 +127,7 @@ SUITE(TestConfigTitle)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	wxString const& GetNiceName() const
+		//	std::wstring const& GetNiceName() const
 		}
 	}
 
@@ -137,7 +137,7 @@ SUITE(TestConfigTitle)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	wxString GetCompleteName(
+		//	std::wstring GetCompleteName(
 		//			short inInstance = 0,
 		//			bool bShowInstance = false,
 		//			bool bAbbrevFirst = true,
@@ -180,7 +180,7 @@ SUITE(TestConfigTitleList)
 		{
 			TODO_TEST
 		//	bool FindTitleCompleteName(
-		//			wxString const& inName,
+		//			std::wstring const& inName,
 		//			short inInstance,
 		//			bool bShowInstance,
 		//			bool bAbbrevFirst = true,
@@ -195,7 +195,7 @@ SUITE(TestConfigTitleList)
 		{
 			TODO_TEST
 		//	bool FindTitle(
-		//			wxString const& inName,
+		//			std::wstring const& inName,
 		//			ARBConfigTitlePtr* outTitle = NULL) const;
 		}
 	}
@@ -207,10 +207,10 @@ SUITE(TestConfigTitleList)
 		{
 			TODO_TEST
 		//	bool AddTitle(
-		//			wxString const& inName,
+		//			std::wstring const& inName,
 		//			ARBConfigTitlePtr* outTitle = NULL);
 		//	bool AddTitle(ARBConfigTitlePtr inTitle);
-		//	bool DeleteTitle(wxString const& inName);
+		//	bool DeleteTitle(std::wstring const& inName);
 		}
 	}
 }

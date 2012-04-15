@@ -61,7 +61,7 @@ public:
 		, m_Value(inVal)
 	{
 	}
-	virtual wxString OnNeedText(long iColumn) const;
+	virtual std::wstring OnNeedText(long iColumn) const;
 	short Place() const					{return m_Place;}
 	void Place(short place)				{m_Place = place;}
 	double Value() const				{return m_Value;}
@@ -72,9 +72,9 @@ protected:
 };
 
 
-wxString CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
+std::wstring CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 {
-	wxString str;
+	std::wostringstream str;
 	switch (iColumn)
 	{
 	default:
@@ -86,7 +86,7 @@ wxString CDlgConfigureDataPlacement::OnNeedText(long iColumn) const
 		str << m_Value;
 		break;
 	}
-	return str;
+	return str.str();
 }
 
 
@@ -909,7 +909,7 @@ void CDlgConfigEventMethod::OnOk(wxCommandEvent& evt)
 	}
 
 	// Save it.
-	wxString str;
+	std::wstring str;
 	m_pScoring->SetValidFrom(m_dateFrom);
 	m_pScoring->SetValidTo(m_dateTo);
 	if (0 == idxDiv)

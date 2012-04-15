@@ -24,6 +24,7 @@
 #include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigCalSite.h"
+#include "ARBString.h"
 #include "DlgCalendarQueryDetail.h"
 #include "Validators.h"
 #include "Widgets.h"
@@ -177,7 +178,7 @@ void CDlgPluginDetails::OnPluginDetailCodes(wxCommandEvent& evt)
 	if (wxID_OK == dlg.ShowModal())
 	{
 		m_CalSite->RemoveAllLocationCodes();
-		std::map<wxString, wxString>::const_iterator i;
+		std::map<std::wstring, std::wstring>::const_iterator i;
 		for (i = dlg.GetLocationCodes().begin(); i != dlg.GetLocationCodes().end(); ++i)
 		{
 			m_CalSite->AddLocationCode(i->first, i->second);
@@ -197,10 +198,10 @@ void CDlgPluginDetails::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_CalSite->SetName(m_strName);
-	m_CalSite->SetDescription(m_strDesc);
-	m_CalSite->SetSearchURL(m_strSearch);
-	m_CalSite->SetHelpURL(m_strHelp);
+	m_CalSite->SetName(StringUtil::stringW(m_strName));
+	m_CalSite->SetDescription(StringUtil::stringW(m_strDesc));
+	m_CalSite->SetSearchURL(StringUtil::stringW(m_strSearch));
+	m_CalSite->SetHelpURL(StringUtil::stringW(m_strHelp));
 
 	if ((!m_OrigCalSite || m_OrigCalSite->GetName() != m_CalSite->GetName())
 	&& m_Config.GetCalSites().FindSite(m_CalSite->GetName()))

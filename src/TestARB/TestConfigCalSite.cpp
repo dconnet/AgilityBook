@@ -97,9 +97,9 @@ SUITE(TestConfigCalSite)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//wxString GetFormattedURL(
-			//		std::vector<wxString> const& inLocCodes,
-			//		std::vector<wxString> const& inVenueCodes) const;
+			//std::wstring GetFormattedURL(
+			//		std::vector<std::wstring> const& inLocCodes,
+			//		std::vector<std::wstring> const& inVenueCodes) const;
 		}
 	}
 
@@ -109,9 +109,9 @@ SUITE(TestConfigCalSite)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool HasLocationCode(wxString const& inCode) const;
-			//bool AddLocationCode(wxString const& inCode, wxString const& inName);
-			//bool RemoveLocationCode(wxString const& inCode);
+			//bool HasLocationCode(std::wstring const& inCode) const;
+			//bool AddLocationCode(std::wstring const& inCode, std::wstring const& inName);
+			//bool RemoveLocationCode(std::wstring const& inCode);
 			//bool RemoveAllLocationCodes();
 		}
 	}
@@ -122,9 +122,9 @@ SUITE(TestConfigCalSite)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-			//bool HasVenueCode(wxString const& inCode) const;
-			//bool AddVenueCode(wxString const& inCode, wxString const& inVenue);
-			//bool RemoveVenueCode(wxString const& inCode);
+			//bool HasVenueCode(std::wstring const& inCode) const;
+			//bool AddVenueCode(std::wstring const& inCode, std::wstring const& inVenue);
+			//bool RemoveVenueCode(std::wstring const& inCode);
 			//bool RemoveAllVenueCodes();
 		}
 	}
@@ -162,7 +162,7 @@ SUITE(TestConfigCalSiteList)
 		{
 			TODO_TEST
 			//bool FindSite(
-			//		wxString const& inSite,
+			//		std::wstring const& inSite,
 			//		ARBConfigCalSitePtr* outSite = NULL) const;
 		}
 	}
@@ -174,10 +174,10 @@ SUITE(TestConfigCalSiteList)
 		{
 			TODO_TEST
 			//bool AddSite(
-			//		wxString const& inSite,
+			//		std::wstring const& inSite,
 			//		ARBConfigCalSitePtr* outSite = NULL);
 			//bool AddSite(ARBConfigCalSitePtr inSite);
-			//int DeleteSite(wxString const& inSite);
+			//int DeleteSite(std::wstring const& inSite);
 		}
 	}
 }

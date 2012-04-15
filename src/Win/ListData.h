@@ -30,7 +30,7 @@ public:
 	CListData();
 	virtual ~CListData();
 	/// If iCol == -1, return all columns
-	virtual wxString OnNeedText(long iCol) const = 0;
+	virtual std::wstring OnNeedText(long iCol) const = 0;
 	/// By default, just uses OnNeedText to fill in text.
 	virtual void OnNeedListItem(long iCol, wxListItem& info) const;
 };
@@ -43,5 +43,5 @@ class CTreeData : public wxTreeItemData
 public:
 	CTreeData();
 	virtual ~CTreeData();
-	virtual wxString OnNeedText() const = 0;
+	virtual std::wstring OnNeedText() const = 0;
 };

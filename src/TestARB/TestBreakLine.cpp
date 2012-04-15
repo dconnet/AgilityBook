@@ -122,7 +122,7 @@ SUITE(TestBreakLine)
 	{
 		std::vector<std::wstring> fields;
 		GetFields(fields);
-		wxString data = WriteCSV(';', fields);
+		std::wstring data = WriteCSV(';', fields);
 		CHECK(data == record5);
 	}
 }

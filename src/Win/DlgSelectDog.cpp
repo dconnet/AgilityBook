@@ -55,11 +55,11 @@ CDlgSelectDog::CDlgSelectDog(
 
 	m_Dogs.insert(m_Dogs.end(), pDoc->Book().GetDogs().begin(), pDoc->Book().GetDogs().end());
 
-	std::set<wxString> selection;
+	std::set<std::wstring> selection;
 	long nDogs = wxConfig::Get()->Read(CFG_SELECTION_NDOGS, 0L);
 	for (long iDog = 1; iDog <= nDogs; ++iDog)
 	{
-		wxString dog = wxConfig::Get()->Read(CFG_SELECTION_DOG(iDog), wxEmptyString);
+		std::wstring dog = wxConfig::Get()->Read(CFG_SELECTION_DOG(iDog), wxEmptyString);
 		if (!dog.empty())
 			selection.insert(dog);
 	}
@@ -131,7 +131,7 @@ void CDlgSelectDog::OnOk(wxCommandEvent& evt)
 		{
 			m_outDogs.push_back(m_Dogs[index]);
 			++nDogs;
-			wxConfig::Get()->Write(CFG_SELECTION_DOG(nDogs), m_Dogs[index]->GetCallName());
+			wxConfig::Get()->Write(CFG_SELECTION_DOG(nDogs), m_Dogs[index]->GetCallName().c_str());
 		}
 	}
 	wxConfig::Get()->Write(CFG_SELECTION_NDOGS, nDogs);

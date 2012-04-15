@@ -27,7 +27,7 @@
 
 #include "ARBTypes.h"
 
-/////////////////////////////////////////////////////////////////////////////
+
 /**
  * Date class.
  * In XML/Element, this class is only used as an attribute, never an element.

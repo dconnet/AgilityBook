@@ -20,7 +20,7 @@ class CDlgMessage : public wxDialog
 {
 public:
 	CDlgMessage(
-			wxString const& msg,
+			std::wstring const& msg,
 			wxWindow* pParent = NULL,
-			wxString const& caption = _("IDD_MESSAGE"));
+			std::wstring caption = std::wstring());
 };

@@ -59,12 +59,12 @@ public:
 	~CMainFrame();
 
 	void SetMessageText(
-			wxString const& msg,
+			std::wstring const& msg,
 			bool bFiltered);
-	void SetMessageText2(wxString const& msg);
+	void SetMessageText2(std::wstring const& msg);
 
 private:
-	void SetMessage(wxString const& msg, int index, bool bResize);
+	void SetMessage(std::wstring const& msg, int index, bool bResize);
 
 	wxDocManager* m_manager;
 	CAgilityBookMenu m_MenuBar;

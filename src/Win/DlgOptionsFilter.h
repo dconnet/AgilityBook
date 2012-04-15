@@ -38,7 +38,7 @@ private:
 	void FillControls();
 	void FillFilter(
 			wxTreeItemId hItem,
-			wxString path,
+			std::wstring path,
 			std::vector<CVenueFilter>& outVenues);
 	void UpdateControls();
 	void CommitChanges();

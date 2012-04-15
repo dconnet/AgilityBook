@@ -49,7 +49,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -59,7 +59,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
 
 	/**
 	 * Load an other point.
@@ -87,11 +87,11 @@ public:
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
@@ -105,7 +105,7 @@ public:
 	}
 
 private:
-	wxString m_Name;
+	std::wstring m_Name;
 	double m_Points;
 };
 

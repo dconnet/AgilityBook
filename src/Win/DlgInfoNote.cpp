@@ -42,6 +42,7 @@
 
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
+#include "ARBString.h"
 #include "DlgName.h"
 #include "Widgets.h"
 #include <algorithm>
@@ -66,7 +67,7 @@ CDlgInfoNote::NameInfo::NameInfo()
 }
 
 
-CDlgInfoNote::NameInfo::NameInfo(wxString const& inName)
+CDlgInfoNote::NameInfo::NameInfo(std::wstring const& inName)
 	: m_Name(inName)
 	, m_eInUse(eNotInUse)
 	, m_bHasData(false)
@@ -98,7 +99,7 @@ END_EVENT_TABLE()
 CDlgInfoNote::CDlgInfoNote(
 		CAgilityBookDoc* pDoc,
 		ARBInfo::eInfoType inType,
-		wxString const& inSelect,
+		std::wstring const& inSelect,
 		wxWindow* pParent)
 	: wxDialog()
 	, m_pDoc(pDoc)
@@ -119,8 +120,8 @@ CDlgInfoNote::CDlgInfoNote(
 	, m_Added(NoteAdded_xpm)
 	, m_NoteAdded(NoteNoteAdded_xpm)
 {
-	wxString caption = wxT("?");
-	std::set<wxString> names;
+	std::wstring caption = wxT("?");
+	std::set<std::wstring> names;
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
@@ -142,7 +143,7 @@ CDlgInfoNote::CDlgInfoNote(
 	m_InfoOrig.Clone(m_Info);
 
 	m_Names.reserve(names.size());
-	for (std::set<wxString>::iterator iter = names.begin(); iter != names.end(); ++iter)
+	for (std::set<std::wstring>::iterator iter = names.begin(); iter != names.end(); ++iter)
 	{
 		NameInfo data(*iter);
 		ARBInfoItemPtr item;
@@ -251,6 +252,12 @@ CDlgInfoNote::CDlgInfoNote(
 DEFINE_ON_INIT(CDlgInfoNote)
 
 
+std::wstring CDlgInfoNote::CurrentSelection() const
+{
+	return StringUtil::stringW(m_CurSel);
+}
+
+
 void CDlgInfoNote::UpdateImage(int index)
 {
 	size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
@@ -275,7 +282,7 @@ void CDlgInfoNote::UpdateImage(int index)
 void CDlgInfoNote::UpdateData()
 {
 	bool bEnable = false;
-	wxString data;
+	std::wstring data;
 	bool checked = true;
 	int index = m_ctrlNames->GetSelection();
 	if (wxNOT_FOUND != index)
@@ -326,8 +333,7 @@ void CDlgInfoNote::OnKillfocusComments(wxFocusEvent& evt)
 	if (wxNOT_FOUND != index)
 	{
 		size_t idx = reinterpret_cast<size_t>(m_ctrlNames->GetClientData(index));
-		wxString data = m_ctrlNotes->GetValue();
-		data.Trim();
+		std::wstring data = StringUtil::TrimRight(StringUtil::stringW(m_ctrlNotes->GetValue()));
 		ARBInfoItemPtr item;
 		if (!m_Info.FindItem(m_Names[idx].m_Name, &item))
 			m_Info.AddItem(m_Names[idx].m_Name, &item);
@@ -343,7 +349,7 @@ void CDlgInfoNote::OnKillfocusComments(wxFocusEvent& evt)
 
 void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 {
-	wxString caption;
+	std::wstring caption;
 	switch (m_Type)
 	{
 	case ARBInfo::eClubInfo:
@@ -356,12 +362,12 @@ void CDlgInfoNote::OnNewItem(wxCommandEvent& evt)
 		caption = _("IDS_COL_LOCATION");
 		break;
 	}
-	CDlgName dlg(m_Select, caption, this);
+	CDlgName dlg(StringUtil::stringW(m_Select), caption, this);
 	if (wxID_OK == dlg.ShowModal())
 	{
 		int index = -1;
 		m_Select.erase();
-		wxString name = dlg.Name();
+		std::wstring name = dlg.Name();
 		// First, check if the item exists.
 		std::vector<NameInfo>::iterator iter = std::find(m_Names.begin(), m_Names.end(), name);
 		if (iter != m_Names.end())

@@ -101,7 +101,7 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet) = 0; // Returns true if data modified
-	virtual wxString OnNeedText() const = 0;
+	virtual std::wstring OnNeedText() const = 0;
 	virtual int OnNeedIcon() const = 0;
 
 	virtual void Properties() = 0;
@@ -165,7 +165,7 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual wxString OnNeedText() const;
+	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
@@ -226,7 +226,7 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual wxString OnNeedText() const;
+	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();
@@ -293,7 +293,7 @@ public:
 			int id,
 			bool& bModified,
 			bool* bTreeSelectionSet);
-	virtual wxString OnNeedText() const;
+	virtual std::wstring OnNeedText() const;
 	virtual int OnNeedIcon() const;
 
 	virtual void Properties();

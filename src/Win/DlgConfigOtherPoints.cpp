@@ -24,6 +24,7 @@
 #include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBConfigOtherPoints.h"
+#include "ARBString.h"
 #include "Validators.h"
 #include "Widgets.h"
 
@@ -62,7 +63,7 @@ bool CNameValidator::Validate(wxWindow* parent)
 	TransferFromWindow();
 	m_pString = tmpString;
 
-	if (!m_Dlg->IsNameOkay(tmp))
+	if (!m_Dlg->IsNameOkay(StringUtil::stringW(tmp)))
 	{
 		m_validatorWindow->SetFocus();
 		wxMessageBox(_("IDS_NAME_IN_USE"), _("Validation conflict"), wxOK | wxICON_EXCLAMATION, parent);
@@ -75,7 +76,7 @@ bool CNameValidator::Validate(wxWindow* parent)
 
 static struct
 {
-	wxChar const* idDesc;
+	wchar_t const* idDesc;
 	ARBConfigOtherPoints::eOtherPointsTally tally;
 } const sc_Tally[] =
 {
@@ -217,7 +218,7 @@ CDlgConfigOtherPoints::CDlgConfigOtherPoints(
 DEFINE_ON_INIT(CDlgConfigOtherPoints)
 
 
-bool CDlgConfigOtherPoints::IsNameOkay(wxString const& name) const
+bool CDlgConfigOtherPoints::IsNameOkay(std::wstring const& name) const
 {
 	if (m_pOther->GetName() != name
 	&& m_Config.GetOtherPoints().FindOtherPoints(name))
@@ -233,13 +234,13 @@ void CDlgConfigOtherPoints::OnOk(wxCommandEvent& evt)
 	if (!Validate() || !TransferDataFromWindow())
 		return;
 
-	m_pOther->SetName(m_Name);
+	m_pOther->SetName(StringUtil::stringW(m_Name));
 	m_pOther->SetDefault(m_Default);
 	int index = m_ctrlTally->GetSelection();
 	if (index != wxNOT_FOUND)
 	{
 		m_pOther->SetTally(dynamic_cast<DlgConfigOtherPointData*>(m_ctrlTally->GetClientObject(index))->m_Tally);
 	}
-	m_pOther->SetDescription(m_Desc);
+	m_pOther->SetDescription(StringUtil::stringW(m_Desc));
 	EndDialog(wxID_OK);
 }

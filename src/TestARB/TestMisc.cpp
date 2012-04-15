@@ -49,8 +49,8 @@ SUITE(TestMisc)
 	{
 		if (!g_bMicroTest)
 		{
-			wxString s1(wxT("IDS_ARB_UNKNOWN_VERSION"));
-			wxString s2(_("IDS_ARB_UNKNOWN_VERSION"));
+			std::wstring s1(wxT("IDS_ARB_UNKNOWN_VERSION"));
+			std::wstring s2(_("IDS_ARB_UNKNOWN_VERSION"));
 			CHECK(s1 != s2);
 		}
 	}
@@ -70,10 +70,10 @@ SUITE(TestMisc)
 			};
 			struct
 			{
-				wxString Desc[MAX_LANGS];
-				wxString ArbDesc[MAX_LANGS];
+				std::wstring Desc[MAX_LANGS];
+				std::wstring ArbDesc[MAX_LANGS];
 			} langdata[MAX_LANGS];
-			wxString out;
+			std::wostringstream out;
 			for (size_t i = 0; i < MAX_LANGS; ++i)
 			{
 				SetLang(langs[i].langid);

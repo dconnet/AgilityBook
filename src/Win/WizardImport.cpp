@@ -116,7 +116,7 @@ CWizardImport::CWizardImport(
 		0, NULL, wxCB_DROPDOWN|wxCB_READONLY); 
 	static struct
 	{
-		wxChar const* uFormat;
+		wchar_t const* uFormat;
 		ARBDate::DateFormat format;
 		ARBDate::DateFormat extendedFormat;
 	} const sc_Dates[] =
@@ -320,16 +320,16 @@ CAgilityBookOptions::ColumnOrder CWizardImport::GetColumnInfo() const
 }
 
 
-wxChar CWizardImport::GetDelim() const
+wchar_t CWizardImport::GetDelim() const
 {
 	switch (m_Delim)
 	{
 	default:
-	case CAgilityBookOptions::eDelimTab:       return wxT('\t');
-	case CAgilityBookOptions::eDelimSpace:     return wxT(' ');
-	case CAgilityBookOptions::eDelimColon:     return wxT(':');
-	case CAgilityBookOptions::eDelimSemicolon: return wxT(';');
-	case CAgilityBookOptions::eDelimComma:     return wxT(',');
+	case CAgilityBookOptions::eDelimTab:       return L'\t';
+	case CAgilityBookOptions::eDelimSpace:     return L' ';
+	case CAgilityBookOptions::eDelimColon:     return L':';
+	case CAgilityBookOptions::eDelimSemicolon: return L';';
+	case CAgilityBookOptions::eDelimComma:     return L',';
 	case CAgilityBookOptions::eDelimOther:
 		if (1 == m_Delimiter.length())
 			return m_Delimiter[0];
@@ -425,8 +425,7 @@ bool CWizardImport::DoImportFile()
 			{
 				for (str = file.GetFirstLine(); !file.Eof(); str = file.GetNextLine())
 				{
-					str.Trim(true);
-					m_FileData.push_back(str);
+					m_FileData.push_back(StringUtil::TrimRight(StringUtil::stringW(str)));
 				}
 				file.Close();
 			}
@@ -451,7 +450,7 @@ void CWizardImport::UpdatePreview()
 	for (iCol = 0; iCol < nColumnCount; ++iCol)
 		m_ctrlPreview->DeleteColumn(0);
 
-	wxChar delim = GetDelim();
+	wchar_t delim = GetDelim();
 	if (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
@@ -473,7 +472,7 @@ void CWizardImport::UpdatePreview()
 	}
 
 	// Now generate the header information.
-	std::vector<wxString> cols;
+	std::vector<std::wstring> cols;
 	switch (m_pSheet->GetImportExportItem())
 	{
 	default: break;
@@ -484,7 +483,7 @@ void CWizardImport::UpdatePreview()
 				continue;
 			for (iCol = 0; iCol < static_cast<long>(columns[index].size()); ++iCol)
 			{
-				wxString str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
+				std::wstring str = CDlgAssignColumns::GetNameFromColumnID(columns[index][iCol]);
 				if (iCol >= static_cast<long>(cols.size()))
 					cols.push_back(str);
 				else
@@ -517,20 +516,20 @@ void CWizardImport::UpdatePreview()
 	|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle())
 	{
 		long iLine = 0;
-		for (std::vector< std::vector<wxString> >::const_iterator iter = m_ExcelData.begin();
+		for (std::vector< std::vector<std::wstring> >::const_iterator iter = m_ExcelData.begin();
 			iter != m_ExcelData.end();
 			++iter, ++iLine)
 		{
 			if (iLine >= m_Row - 1)
 			{
-				std::vector<wxString> const& rowData = *iter;
+				std::vector<std::wstring> const& rowData = *iter;
 				iCol = 0;
 				long iCurLine = -1;
-				for (std::vector<wxString>::const_iterator iter2 = rowData.begin();
+				for (std::vector<std::wstring>::const_iterator iter2 = rowData.begin();
 					iter2 != rowData.end() && iCol < static_cast<long>(cols.size());
 					++iter2, ++iCol)
 				{
-					wxString const& str = *iter2;
+					std::wstring const& str = *iter2;
 					if (0 == iCol)
 						iCurLine = m_ctrlPreview->InsertItem(iLine, str);
 					else
@@ -547,11 +546,11 @@ void CWizardImport::UpdatePreview()
 			++iLine, ++iFileLine)
 		{
 			std::vector<std::wstring> fields;
-			ReadStatus status = ReadCSV(delim, m_FileData[iFileLine].wx_str(), fields);
+			ReadStatus status = ReadCSV(delim, m_FileData[iFileLine], fields);
 			while (DataNeedMore == status && iFileLine + 1 < static_cast<long>(m_FileData.size()))
 			{
 				++iFileLine;
-				status = ReadCSV(delim, m_FileData[iFileLine].wx_str(), fields, true);
+				status = ReadCSV(delim, m_FileData[iFileLine], fields, true);
 			}
 			if (DataOk == status && 0 < fields.size())
 			{
@@ -565,7 +564,7 @@ void CWizardImport::UpdatePreview()
 			}
 			// Failed - means a blank row
 			else
-				m_ctrlPreview->InsertItem(iLine, wxString());
+				m_ctrlPreview->InsertItem(iLine, std::wstring());
 		}
 	}
 	for (iCol = 0; iCol < static_cast<long>(cols.size()); ++iCol)
@@ -589,11 +588,11 @@ static ARBDogRunPtr CreateRun(
 }
 
 
-static wxString GetPrimaryVenue(wxString const& venues)
+static std::wstring GetPrimaryVenue(std::wstring const& venues)
 {
-	wxString venue;
-	wxString::size_type pos = venues.find('/');
-	if (wxString::npos != pos)
+	std::wstring venue;
+	std::wstring::size_type pos = venues.find('/');
+	if (std::wstring::npos != pos)
 		venue = venues.substr(0, pos);
 	else
 		venue = venues;
@@ -749,7 +748,7 @@ void CWizardImport::OnWizardChanged(wxWizardEvent& evt)
 		}
 
 		UpdateButtons();
-		if (m_FileName.IsEmpty())
+		if (m_FileName.empty())
 		{
 			if (!DoImportFile())
 				UpdatePreview();
@@ -785,8 +784,8 @@ bool CWizardImport::DoWizardFinish()
 	{
 		CDlgAssignColumns::GetColumnOrder(order, iCol, columns[iCol]);
 	}
-	wxString loadstr;
-	wxString errLog;
+	std::wstring loadstr;
+	std::wostringstream errLog;
 	long nAdded = 0;
 	long nUpdated = 0;
 	long nDuplicate = 0;
@@ -797,7 +796,7 @@ bool CWizardImport::DoWizardFinish()
 	bool bSortLog = false;
 	for (long nItem = 0; nItem < m_ctrlPreview->GetItemCount(); ++nItem)
 	{
-		std::vector<wxString> entry;
+		std::vector<std::wstring> entry;
 		entry.reserve(nColumns);
 		for (long i = 0; i < nColumns; ++i)
 		{
@@ -855,7 +854,7 @@ bool CWizardImport::DoWizardFinish()
 							entry[idxEvent[i]],
 							entry[idxDiv[i]],
 							entry[idxLevel[i]],
-							ARBDate::FromString(entry[idxDate[i]].wx_str(), format),
+							ARBDate::FromString(entry[idxDate[i]], format),
 							NULL,
 							&pScoring);
 					}
@@ -890,8 +889,8 @@ bool CWizardImport::DoWizardFinish()
 				}
 				assert(0 <= i);
 
-				wxString nameReg, nameCall;
-				wxString trialVenue, trialClub, trialLocation, trialNotes;
+				std::wstring nameReg, nameCall;
+				std::wstring trialVenue, trialClub, trialLocation, trialNotes;
 				ARBDogRunPtr pRun;
 				for (iCol = 0; iCol < entry.size() && iCol < columns[i].size(); ++iCol)
 				{
@@ -907,7 +906,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_RUNS_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (!date.IsValid()
 							&& (WIZARD_RADIO_EXCEL == m_pSheet->GetImportExportStyle()
 							|| WIZARD_RADIO_CALC == m_pSheet->GetImportExportStyle()))
@@ -1072,9 +1071,9 @@ bool CWizardImport::DoWizardFinish()
 					case IO_RUNS_FAULTS:
 						{
 							pRun = CreateRun(pRun, pScoring);
-							wxString str = pRun->GetNote();
+							std::wstring str = pRun->GetNote();
 							if (0 < str.length())
-								str += wxT("\n");
+								str += L"\n";
 							str += entry[iCol];
 							pRun->SetNote(str);
 						}
@@ -1166,9 +1165,9 @@ bool CWizardImport::DoWizardFinish()
 					std::vector<std::wstring> venues;
 					std::vector<std::wstring> clubs;
 					if (0 < trialVenue.length())
-						BreakLine('/', trialVenue.wx_str(), venues);
+						BreakLine('/', trialVenue, venues);
 					if (0 < trialClub.length())
-						BreakLine('/', trialClub.wx_str(), clubs);
+						BreakLine('/', trialClub, clubs);
 					if (clubs.size() < venues.size())
 					{
 						// Clubs and venues now agree so we can use them together easily.
@@ -1262,7 +1261,7 @@ bool CWizardImport::DoWizardFinish()
 					{
 					case IO_CAL_START_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1284,7 +1283,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_CAL_END_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1356,7 +1355,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_CAL_OPENS:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1378,7 +1377,7 @@ bool CWizardImport::DoWizardFinish()
 						break;
 					case IO_CAL_CLOSES:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pCal = CreateCal(pCal);
@@ -1437,7 +1436,7 @@ bool CWizardImport::DoWizardFinish()
 					{
 					case IO_LOG_DATE:
 						{
-							ARBDate date = ARBDate::FromString(entry[iCol].wx_str(), format);
+							ARBDate date = ARBDate::FromString(entry[iCol], format);
 							if (date.IsValid())
 							{
 								pLog = CreateLog(pLog);
@@ -1498,7 +1497,7 @@ bool CWizardImport::DoWizardFinish()
 		m_pDoc->Book().GetCalendar().sort();
 	if (bSortLog)
 		m_pDoc->Book().GetTraining().sort();
-	if (!errLog.empty())
+	if (!errLog.str().empty())
 		errLog << wxT("\n");
 	loadstr = wxString::Format(_("IDS_IMPORT_STATS"),
 		static_cast<int>(nAdded),
@@ -1506,7 +1505,7 @@ bool CWizardImport::DoWizardFinish()
 		static_cast<int>(nDuplicate),
 		static_cast<int>(nSkipped));
 	errLog << loadstr;
-	CDlgMessage dlg(errLog, this);
+	CDlgMessage dlg(errLog.str(), this);
 	dlg.ShowModal();
 	if (0 < nAdded)
 	{

@@ -43,7 +43,7 @@ class CVersionNum;
 
 struct CFontInfo
 {
-	wxString name;
+	std::wstring name;
 	int size;
 	bool italic;
 	bool bold;
@@ -159,18 +159,18 @@ public:
 	static void GetCalendarFontInfo(CFontInfo& info);
 	static void SetCalendarFontInfo(CFontInfo const& info);
 	// Last entered options
-	static wxString GetLastEnteredDivision();
-	static void SetLastEnteredDivision(wxChar const* inLast);
-	static wxString GetLastEnteredLevel();
-	static void SetLastEnteredLevel(wxChar const* inLast);
-	static wxString GetLastEnteredHeight();
-	static void SetLastEnteredHeight(wxChar const* inLast);
-	static wxString GetLastEnteredRefHeight();
-	static void SetLastEnteredRefHeight(wxChar const* inLast);
-	static wxString GetLastEnteredJudge();
-	static void SetLastEnteredJudge(wxChar const* inLast);
-	static wxString GetLastEnteredHandler();
-	static void SetLastEnteredHandler(wxChar const* inLast);
+	static std::wstring GetLastEnteredDivision();
+	static void SetLastEnteredDivision(wchar_t const* inLast);
+	static std::wstring GetLastEnteredLevel();
+	static void SetLastEnteredLevel(wchar_t const* inLast);
+	static std::wstring GetLastEnteredHeight();
+	static void SetLastEnteredHeight(wchar_t const* inLast);
+	static std::wstring GetLastEnteredRefHeight();
+	static void SetLastEnteredRefHeight(wchar_t const* inLast);
+	static std::wstring GetLastEnteredJudge();
+	static void SetLastEnteredJudge(wchar_t const* inLast);
+	static std::wstring GetLastEnteredHandler();
+	static void SetLastEnteredHandler(wchar_t const* inLast);
 	// Import/Export options
 	enum
 	{
@@ -186,11 +186,11 @@ public:
 	static void GetImportExportDelimiters(
 			bool bImport,
 			long& delim,
-			wxString& delimiter);
+			std::wstring& delimiter);
 	static void SetImportExportDelimiters(
 			bool bImport,
 			long delim,
-			wxString const& delimiter);
+			std::wstring const& delimiter);
 	static void GetImportExportDateFormat(
 			bool bImport,
 			ARBDate::DateFormat& outFormat);
@@ -224,23 +224,23 @@ public:
 	static void SetShowHtmlPoints(bool bSet);
 	// Internet things
 	// -username/pw for accessing URLs thru ReadHTTP.cpp
-	static wxString GetUserName(wxString const& hint);
-	static void SetUserName(wxString const& hint, wxString const& userName);
+	static std::wstring GetUserName(std::wstring const& hint);
+	static void SetUserName(std::wstring const& hint, std::wstring const& userName);
 	static bool GetUseProxy();
 	static void SetUseProxy(bool inUseProxy);
-	static wxString GetProxyServer();
-	static void SetProxyServer(wxString const& inProxy);
-	static wxString GetProxy();
+	static std::wstring GetProxyServer();
+	static void SetProxyServer(std::wstring const& inProxy);
+	static std::wstring GetProxy();
 	// -CalSite suppression options
 	static bool IsCalSiteVisible(
-			wxString const& filename,
+			std::wstring const& filename,
 			CVersionNum const& inVer); // Version number of current calsite
 	static void SuppressCalSite(
-			wxString const& filename,
+			std::wstring const& filename,
 			bool bSuppress);
-	static CVersionNum GetCalSitePermanentStatus(wxString const& filename);
+	static CVersionNum GetCalSitePermanentStatus(std::wstring const& filename);
 	static void SuppressCalSitePermanently(
-			wxString const& filename,
+			std::wstring const& filename,
 			CVersionNum const& inVer,
 			bool bSuppress = true);
 
@@ -250,12 +250,12 @@ protected:
 	static void GetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,
-			wxString const& namedColumn,
+			std::wstring const& namedColumn,
 			std::vector<long>& outValues,
 			bool bDefaultValues = false);
 	static void SetColumnOrder(
 			ColumnOrder eOrder,
 			size_t idxColumn,
-			wxString const& namedColumn,
+			std::wstring const& namedColumn,
 			std::vector<long> const& inValues);
 };

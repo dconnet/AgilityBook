@@ -55,7 +55,7 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
 		return m_Name;
 	}
@@ -65,7 +65,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -101,16 +101,16 @@ public:
 	bool Update(
 			int indent,
 			ARBConfigLevelPtr inLevelNew,
-			wxString& ioInfo);
+			std::wstring& ioInfo);
 
 	/*
 	 * Getters/setters.
 	 */
-	wxString const& GetName() const
+	std::wstring const& GetName() const
 	{
 		return m_Name;
 	}
-	void SetName(wxString const& inName)
+	void SetName(std::wstring const& inName)
 	{
 		m_Name = inName;
 	}
@@ -124,7 +124,7 @@ public:
 	}
 
 private:
-	wxString m_Name;
+	std::wstring m_Name;
 	ARBConfigSubLevelList m_SubLevels;
 };
 
@@ -163,7 +163,7 @@ public:
 	 * @return Whether there is a level that matches.
 	 */
 	bool VerifyLevel(
-			wxString const& inName,
+			std::wstring const& inName,
 			bool inAllowWildCard = true) const;
 
 	/**
@@ -173,7 +173,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindLevel(
-			wxString const& inName,
+			std::wstring const& inName,
 			ARBConfigLevelPtr* outLevel = NULL) const;
 
 	/**
@@ -184,7 +184,7 @@ public:
 	 * @return Whether the object was found.
 	 */
 	bool FindSubLevel(
-			wxString const& inName,
+			std::wstring const& inName,
 			ARBConfigLevelPtr* outLevel = NULL) const;
 
 	/**
@@ -194,7 +194,7 @@ public:
 	 * @return Whether the object was added.
 	 */
 	bool AddLevel(
-			wxString const& inName,
+			std::wstring const& inName,
 			ARBConfigLevelPtr* outLevel = NULL);
 
 	/**
@@ -212,8 +212,8 @@ public:
 	 * @return Whether level was deleted or not.
 	 */
 	bool DeleteLevel(
-			wxString const& inDiv,
-			wxString const& inName,
+			std::wstring const& inDiv,
+			std::wstring const& inName,
 			ARBConfigEventList& ioEvents);
 
 	/**
@@ -224,6 +224,6 @@ public:
 	 * @post Deleting a sublevel may cause the parent level name to change.
 	 */
 	bool DeleteSubLevel(
-			wxString const& inName,
+			std::wstring const& inName,
 			bool& outLevelModified);
 };

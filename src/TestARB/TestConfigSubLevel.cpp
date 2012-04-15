@@ -74,7 +74,7 @@ SUITE(TestConfigSubLevel)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	virtual wxString GetGenericName() const
+		//	virtual std::wstring GetGenericName() const
 		}
 	}
 
@@ -123,7 +123,7 @@ SUITE(TestConfigSubLevelList)
 		if (!g_bMicroTest)
 		{
 			TODO_TEST
-		//	bool FindSubLevel(wxString const& inName) const;
+		//	bool FindSubLevel(std::wstring const& inName) const;
 		}
 	}
 
@@ -134,9 +134,9 @@ SUITE(TestConfigSubLevelList)
 		{
 			TODO_TEST
 		//	bool AddSubLevel(
-		//			wxString const& inName,
+		//			std::wstring const& inName,
 		//			ARBConfigSubLevelPtr* outLevel = NULL);
-		//	bool DeleteSubLevel(wxString const& inName);
+		//	bool DeleteSubLevel(std::wstring const& inName);
 		}
 	}
 }

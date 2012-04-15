@@ -28,6 +28,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "AgilityBookMenu.h"
+#include "ARBString.h"
 #include "CommonView.h"
 #include "DlgMessage.h"
 #include "Globals.h"
@@ -120,8 +121,8 @@ END_EVENT_TABLE()
 static const struct
 {
 	int id;
-	wxChar const* label;
-	wxChar const* shortHelp;
+	wchar_t const* label;
+	wchar_t const* shortHelp;
 	const char** bitmap;
 } sc_Toolbar[] =
 {
@@ -266,24 +267,24 @@ CMainFrame::~CMainFrame()
 
 
 void CMainFrame::SetMessageText(
-		wxString const& msg,
+		std::wstring const& msg,
 		bool bFiltered)
 {
 	SetMessage(msg, STATUS_STATUS, true);
-	wxString filtered;
+	std::wstring filtered;
 	if (bFiltered)
 		filtered = _("ID_INDICATOR_FILTERED");
 	SetMessage(filtered, STATUS_FILTERED, false);
 }
 
 
-void CMainFrame::SetMessageText2(wxString const& msg)
+void CMainFrame::SetMessageText2(std::wstring const& msg)
 {
 	SetMessage(msg, STATUS_DOG, true);
 }
 
 
-void CMainFrame::SetMessage(wxString const& msg, int index, bool bResize)
+void CMainFrame::SetMessage(std::wstring const& msg, int index, bool bResize)
 {
 	wxStatusBar* statusbar = GetStatusBar();
 	if (!statusbar)
@@ -459,7 +460,7 @@ void CMainFrame::OnFileLanguageChoose(wxCommandEvent& evt)
 		}
 
 		CAgilityBookBaseView* pView = wxDynamicCast(GetDocumentManager()->GetCurrentView(), CAgilityBookBaseView);
-		wxString msg;
+		std::wstring msg;
 		bool bFiltered = false;
 		if (pView && pView->GetMessage(msg))
 			bFiltered = pView->IsFiltered();
@@ -571,7 +572,6 @@ void CMainFrame::OnHelpSysinfo(wxCommandEvent& evt)
 	// wxWidgets
 	str << wxVERSION_STRING << wxT("\n");
 
-	wxString msg(str);
-	CDlgMessage dlg(msg, this);
+	CDlgMessage dlg(StringUtil::stringW(str), this);
 	dlg.ShowModal();
 }

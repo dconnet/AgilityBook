@@ -145,7 +145,7 @@ void ARBConfigSubLevelList::ReorderBy(ARBConfigSubLevelList const& inList)
 
 
 bool ARBConfigSubLevelList::FindSubLevel(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBConfigSubLevelPtr* outLevel) const
 {
 	for (const_iterator iter = begin(); iter != end(); ++iter)
@@ -162,7 +162,7 @@ bool ARBConfigSubLevelList::FindSubLevel(
 
 
 bool ARBConfigSubLevelList::AddSubLevel(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBConfigSubLevelPtr* outLevel)
 {
 	if (outLevel)
@@ -179,9 +179,9 @@ bool ARBConfigSubLevelList::AddSubLevel(
 }
 
 
-bool ARBConfigSubLevelList::DeleteSubLevel(wxString const& inName)
+bool ARBConfigSubLevelList::DeleteSubLevel(std::wstring const& inName)
 {
-	wxString name(inName);
+	std::wstring name(inName);
 	for (iterator iter = begin(); iter != end(); ++iter)
 	{
 		if ((*iter)->GetName() == name)

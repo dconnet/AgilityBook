@@ -224,7 +224,7 @@ SUITE(TestDate)
 		{
 			ARBDate d1(1999, 3, 30);
 			ARBDate d2(1999, 3, 27);
-			wxString s = ARBDate::GetValidDateString(d1, d2);
+			std::wstring s = ARBDate::GetValidDateString(d1, d2);
 			CHECK(wxT("[1999-3-30-1999-3-27]") == s);
 			d1.clear();
 			s = ARBDate::GetValidDateString(d1, d2);

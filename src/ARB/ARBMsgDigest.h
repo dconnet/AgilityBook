@@ -15,6 +15,9 @@
  * @li 2010-02-07 DRC Created
  */
 
+#include <string>
+
+
 class ARBMsgDigest
 {
 	ARBMsgDigest();

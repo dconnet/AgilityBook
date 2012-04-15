@@ -24,7 +24,7 @@
 #include <vector>
 #include "ARBTypes.h"
 
-typedef std::vector<wxString> ARBDogFaultList;
+typedef std::vector<std::wstring> ARBDogFaultList;
 
 class ARBMetaData;
 typedef std::tr1::shared_ptr<ARBMetaData> ARBMetaDataPtr;
@@ -66,7 +66,7 @@ public:
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const;
 
 	/**
 	 * Load an existing point.
@@ -102,32 +102,32 @@ public:
 	{
 		return m_Faults;
 	}
-	wxString const& GetCRCD() const
+	std::wstring const& GetCRCD() const
 	{
 		return m_CRCD;
 	}
-	void SetCRCD(wxString const& inCRCD)
+	void SetCRCD(std::wstring const& inCRCD)
 	{
 		m_CRCD = inCRCD;
 	}
-	wxString const& GetCRCDRawMetaData() const
+	std::wstring const& GetCRCDRawMetaData() const
 	{
 		return m_CRCDMeta;
 	}
 	ARBMetaDataPtr GetCRCDMetaData() const;
 	void SetCRCDMetaData(unsigned char const* inCRCDMeta, size_t inBytes);
-	wxString const& GetNote() const
+	std::wstring const& GetNote() const
 	{
 		return m_Note;
 	}
-	void SetNote(wxString const& inNote)
+	void SetNote(std::wstring const& inNote)
 	{
 		m_Note = inNote;
 	}
 
 private:
 	ARBDogFaultList m_Faults;
-	wxString m_CRCD;
-	wxString m_CRCDMeta;
-	wxString m_Note;
+	std::wstring m_CRCD;
+	std::wstring m_CRCDMeta;
+	std::wstring m_Note;
 };

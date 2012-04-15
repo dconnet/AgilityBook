@@ -25,13 +25,12 @@ class CDlgSelectURL : public wxDialog
 {
 public:
 	CDlgSelectURL(
-			wxString const& name,
+			std::wstring const& name,
 			wxWindow* pParent = NULL);
 
-	wxString Name() const	{return m_Name;}
+	std::wstring Name() const;
 
 private:
-	wxString GetName() const	{return m_Name;}
 	wxString m_Name;
 	CTextCtrl* m_textCtrl;
 

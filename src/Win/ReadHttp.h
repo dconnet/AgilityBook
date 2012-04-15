@@ -24,6 +24,13 @@ class IDlgProgress;
 class wxOutputStream;
 class wxURL;
 
+
+inline bool GotoURL(std::wstring const& inLink)
+{
+	return wxLaunchDefaultBrowser(inLink.c_str());
+}
+
+
 /**
  * Read data from the internet
  */
@@ -37,10 +44,10 @@ public:
 	 * @note If outData is NULL, ReadHttpFile will only check for connectivity.
 	 */
 	CReadHttp(
-			wxString const& inURL,
+			std::wstring const& inURL,
 			std::string* outData);
 	CReadHttp(
-			wxString const& inURL,
+			std::wstring const& inURL,
 			wxOutputStream& outStream,
 			IDlgProgress* pProgress = NULL);
 
@@ -55,20 +62,20 @@ public:
 	 * @return Success
 	 */
 	bool ReadHttpFile(
-			wxString& userName,
-			wxString& outErrMsg,
+			std::wstring& userName,
+			std::wstring& outErrMsg,
 			wxWindow* pParent = NULL,
 			bool bCheckOnly = false);
 
 	bool ReadHttpFile(
-			wxString& outErrMsg,
+			std::wstring& outErrMsg,
 			wxWindow* pParent = NULL,
 			bool bCheckOnly = false);
 
 	bool CheckHttpFile(wxWindow* pParent = NULL);
 
 private:
-	wxString m_address;
+	std::wstring m_address;
 	wxURL* m_URL;
 	std::string* m_Data;
 	wxOutputStream* m_Stream;

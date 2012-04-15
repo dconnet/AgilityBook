@@ -39,14 +39,14 @@ public:
 	 * without knowing what the objects actually are.
 	 * @return Name of the object.
 	 */
-	virtual wxString GetGenericName() const = 0;
+	virtual std::wstring GetGenericName() const = 0;
 
 	/**
 	 * Get all the strings to search in an object.
 	 * @param ioStrings Accumulated list of strings to be used during a search.
 	 * @return Number of strings accumulated.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const = 0;
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const = 0;
 
 	// Filtered state
 	typedef enum

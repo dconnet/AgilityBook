@@ -13,6 +13,7 @@
  * Actual reading and writing of XML is done using Xerces (or wxWidgets)
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2012-03-16 DRC Renamed LoadXML functions, added stream version.
  * @li 2009-09-13 DRC Add support for wxWidgets 2.9, deprecate tstring.
  * @li 2009-03-12 DRC Converting all TCHAR stuff to wxWidgets
@@ -35,8 +36,10 @@
 #include "Element.h"
 #include <list>
 #include <map>
+#include <sstream>
 
 #include "ARBDate.h"
+#include "ARBString.h"
 #include "ARBStructure.h"
 #include "ARBTypes.h"
 
@@ -46,13 +49,13 @@
 #include <wx/xml/xml.h>
 #pragma message ( "Compiling with wxWidgets " wxVERSION_NUM_DOT_STRING )
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 
 ////////////////////////////////////////////////////////////////////////////
 
-bool Element::Initialize(wxString& outMsg)
+bool Element::Initialize(std::wstring& outMsg)
 {
 	outMsg.erase();
 	return true;
@@ -85,10 +88,10 @@ static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 #endif
 	while (attribs)
 	{
-		tree->AddAttrib(attribs->GetName(), attribs->GetValue());
+		tree->AddAttrib(StringUtil::stringW(attribs->GetName()), StringUtil::stringW(attribs->GetValue()));
 		attribs = attribs->GetNext();
 	}
-	wxString content = node->GetNodeContent();
+	std::wstring content = node->GetNodeContent();
 	if (!content.empty())
 		tree->SetValue(content);
 	wxXmlNode* child = node->GetChildren();
@@ -96,7 +99,7 @@ static void ReadDoc(wxXmlNode* node, ElementNodePtr tree)
 	{
 		if (wxXML_ELEMENT_NODE == child->GetType())
 		{
-			ElementNodePtr subtree = tree->AddElementNode(child->GetName());
+			ElementNodePtr subtree = tree->AddElementNode(StringUtil::stringW(child->GetName()));
 			ReadDoc(child, subtree);
 		}
 		child = child->GetNext();
@@ -109,7 +112,7 @@ static void CreateDoc(wxXmlNode* node, ElementNode const& toWrite)
 	int i;
 	for (i = 0; i < toWrite.GetAttribCount(); ++i)
 	{
-		wxString name, value;
+		std::wstring name, value;
 		toWrite.GetNthAttrib(i, name, value);
 #if wxCHECK_VERSION(2, 9, 3)
 		node->AddAttribute(name, value);
@@ -155,7 +158,7 @@ ElementNodePtr ElementNode::New()
 }
 
 
-ElementNodePtr ElementNode::New(wxString const& inText)
+ElementNodePtr ElementNode::New(std::wstring const& inText)
 {
 	ElementNodePtr pNode(new ElementNode(inText));
 	pNode->m_Me = pNode;
@@ -168,7 +171,7 @@ ElementNode::ElementNode()
 }
 
 
-ElementNode::ElementNode(wxString const& inName)
+ElementNode::ElementNode(std::wstring const& inName)
 	: m_Name(inName)
 {
 }
@@ -194,7 +197,7 @@ void ElementNode::Dump(int inLevel) const
 	wxString msg = wxString::Format(wxT("%*s%s"), inLevel, wxT(" "), m_Name.c_str());
 	for (i = 0; i < GetAttribCount(); ++i)
 	{
-		wxString name, value;
+		std::wstring name, value;
 		GetNthAttrib(i, name, value);
 		msg << wxT(" ")
 			<< name
@@ -216,21 +219,21 @@ Element::ElementType ElementNode::GetType() const
 }
 
 
-wxString const& ElementNode::GetName() const
+std::wstring const& ElementNode::GetName() const
 {
 	return m_Name;
 }
 
 
-void ElementNode::SetName(wxString const& inName)
+void ElementNode::SetName(std::wstring const& inName)
 {
 	m_Name = inName;
 }
 
 
-wxString ElementNode::GetValue() const
+std::wstring ElementNode::GetValue() const
 {
-	wxString value;
+	std::wstring value;
 	for (int i = 0; i < GetElementCount(); ++i)
 	{
 		if (Element::Element_Text == GetElement(i)->GetType())
@@ -240,7 +243,7 @@ wxString ElementNode::GetValue() const
 }
 
 
-void ElementNode::SetValue(wxString const& inValue)
+void ElementNode::SetValue(std::wstring const& inValue)
 {
 	RemoveAllTextNodes();
 	ElementTextPtr pText = ElementText::New();
@@ -249,7 +252,7 @@ void ElementNode::SetValue(wxString const& inValue)
 }
 
 
-void ElementNode::SetValue(wxChar const* const inValue)
+void ElementNode::SetValue(wchar_t const* const inValue)
 {
 	RemoveAllTextNodes();
 	ElementTextPtr pText = ElementText::New();
@@ -267,7 +270,25 @@ void ElementNode::SetValue(short inValue)
 }
 
 
+void ElementNode::SetValue(unsigned short inValue)
+{
+	RemoveAllTextNodes();
+	ElementTextPtr pText = ElementText::New();
+	pText->SetValue(inValue);
+	m_Elements.push_back(pText);
+}
+
+
 void ElementNode::SetValue(long inValue)
+{
+	RemoveAllTextNodes();
+	ElementTextPtr pText = ElementText::New();
+	pText->SetValue(inValue);
+	m_Elements.push_back(pText);
+}
+
+
+void ElementNode::SetValue(unsigned long inValue)
 {
 	RemoveAllTextNodes();
 	ElementTextPtr pText = ElementText::New();
@@ -301,8 +322,8 @@ int ElementNode::GetAttribCount() const
 
 ElementNode::AttribLookup ElementNode::GetNthAttrib(
 		int inIndex,
-		wxString& outName,
-		wxString& outValue) const
+		std::wstring& outName,
+		std::wstring& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.begin();
 	while (0 < inIndex)
@@ -322,8 +343,8 @@ ElementNode::AttribLookup ElementNode::GetNthAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		wxString const& inName,
-		wxString& outValue) const
+		std::wstring const& inName,
+		std::wstring& outValue) const
 {
 	MyAttributes::const_iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -337,17 +358,17 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBVersion& outValue) const
 {
-	wxString value;
+	std::wstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
 		unsigned short major = 0;
 		unsigned short minor = 0;
-		wxString::size_type pos = value.find('.');
-		if (wxString::npos != pos)
+		std::wstring::size_type pos = value.find('.');
+		if (std::wstring::npos != pos)
 		{
 			major = static_cast<unsigned short>(StringUtil::ToCLong(value));
 			value = value.substr(pos+1);
@@ -364,14 +385,14 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBDate& outValue) const
 {
-	wxString value;
+	std::wstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
-		ARBDate date = ARBDate::FromString(value.wx_str(), ARBDate::eDashYMD);
+		ARBDate date = ARBDate::FromString(value, ARBDate::eDashYMD);
 		if (date.IsValid())
 			outValue = date;
 		else
@@ -382,10 +403,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		bool& outValue) const
 {
-	wxString value;
+	std::wstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -401,10 +422,10 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		short& outValue) const
 {
-	wxString value;
+	std::wstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -418,10 +439,27 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
+		unsigned short& outValue) const
+{
+	std::wstring value;
+	AttribLookup rc = GetAttrib(inName, value);
+	if (eFound == rc)
+	{
+		if (0 < value.length())
+			outValue = static_cast<unsigned short>(StringUtil::ToCULong(value));
+		else
+			rc = eInvalidValue;
+	}
+	return rc;
+}
+
+
+ElementNode::AttribLookup ElementNode::GetAttrib(
+		std::wstring const& inName,
 		long& outValue) const
 {
-	wxString value;
+	std::wstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -438,10 +476,30 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 ElementNode::AttribLookup ElementNode::GetAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
+		unsigned long& outValue) const
+{
+	std::wstring value;
+	AttribLookup rc = GetAttrib(inName, value);
+	if (eFound == rc)
+	{
+		if (0 < value.length())
+		{
+			if (!StringUtil::ToCULong(value, outValue))
+				rc = eInvalidValue;
+		}
+		else
+			rc = eInvalidValue;
+	}
+	return rc;
+}
+
+
+ElementNode::AttribLookup ElementNode::GetAttrib(
+		std::wstring const& inName,
 		double& outValue) const
 {
-	wxString value;
+	std::wstring value;
 	AttribLookup rc = GetAttrib(inName, value);
 	if (eFound == rc)
 	{
@@ -458,8 +516,8 @@ ElementNode::AttribLookup ElementNode::GetAttrib(
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
-		wxString const& inValue)
+		std::wstring const& inName,
+		std::wstring const& inValue)
 {
 	if (inName.empty())
 		return false;
@@ -469,8 +527,8 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
-		wxChar const* const inValue)
+		std::wstring const& inName,
+		wchar_t const* const inValue)
 {
 	if (inName.empty())
 		return false;
@@ -483,7 +541,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBVersion const& inValue)
 {
 	return AddAttrib(inName, inValue.str());
@@ -491,7 +549,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		ARBDate const& inValue)
 {
 	if (inValue.IsValid())
@@ -501,7 +559,7 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		bool inValue)
 {
 	if (inName.empty())
@@ -515,29 +573,59 @@ bool ElementNode::AddAttrib(
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
 		short inValue)
 {
 	if (inName.empty())
 		return false;
-	m_Attribs[inName] << inValue;
+	std::wostringstream str;
+	str << inValue;
+	m_Attribs[inName] = str.str();
 	return true;
 }
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
+		unsigned short inValue)
+{
+	if (inName.empty())
+		return false;
+	std::wostringstream str;
+	str << inValue;
+	m_Attribs[inName] = str.str();
+	return true;
+}
+
+
+bool ElementNode::AddAttrib(
+		std::wstring const& inName,
 		long inValue)
 {
 	if (inName.empty())
 		return false;
-	m_Attribs[inName] << inValue;
+	std::wostringstream str;
+	str << inValue;
+	m_Attribs[inName] = str.str();
 	return true;
 }
 
 
 bool ElementNode::AddAttrib(
-		wxString const& inName,
+		std::wstring const& inName,
+		unsigned long inValue)
+{
+	if (inName.empty())
+		return false;
+	std::wostringstream str;
+	str << inValue;
+	m_Attribs[inName] = str.str();
+	return true;
+}
+
+
+bool ElementNode::AddAttrib(
+		std::wstring const& inName,
 		double inValue,
 		int inPrec)
 {
@@ -548,7 +636,7 @@ bool ElementNode::AddAttrib(
 }
 
 
-bool ElementNode::RemoveAttrib(wxString const& inName)
+bool ElementNode::RemoveAttrib(std::wstring const& inName)
 {
 	MyAttributes::iterator iter = m_Attribs.find(inName);
 	if (iter != m_Attribs.end())
@@ -648,7 +736,7 @@ ElementNodePtr ElementNode::GetNthElementNode(int inIndex)
 
 
 ElementNodePtr ElementNode::AddElementNode(
-		wxString const& inName,
+		std::wstring const& inName,
 		int inAt)
 {
 	size_t index;
@@ -671,7 +759,7 @@ ElementNodePtr ElementNode::AddElementNode(
 
 
 ElementTextPtr ElementNode::AddElementText(
-		wxString const& inText,
+		std::wstring const& inText,
 		int inAt)
 {
 	assert(0 == m_Value.length());
@@ -715,7 +803,7 @@ void ElementNode::RemoveAllElements()
 
 
 int ElementNode::FindElement(
-		wxString const& inName,
+		std::wstring const& inName,
 		int inStartFrom) const
 {
 	if (0 > inStartFrom)
@@ -732,8 +820,8 @@ int ElementNode::FindElement(
 bool ElementNode::FindElementDeep(
 		ElementNodePtr& outParentNode,
 		int& outElementIndex,
-		wxString const& inName,
-		wxString const* inValue) const
+		std::wstring const& inName,
+		std::wstring const* inValue) const
 {
 	int nCount = GetElementCount();
 	for (int i = 0; i < nCount; ++i)
@@ -758,13 +846,13 @@ bool ElementNode::FindElementDeep(
 static bool LoadXMLNode(
 		ElementNodePtr node,
 		wxXmlDocument& inSource,
-		wxString& ioErrMsg)
+		std::wostringstream& ioErrMsg)
 {
 	node->clear();
 
 	if (!inSource.GetRoot())
 		return false;
-	node->SetName(inSource.GetRoot()->GetName());
+	node->SetName(StringUtil::stringW(inSource.GetRoot()->GetName()));
 	ReadDoc(inSource.GetRoot(), node);
 	return true;
 }
@@ -772,7 +860,7 @@ static bool LoadXMLNode(
 
 bool ElementNode::LoadXML(
 		wxInputStream& inStream,
-		wxString& ioErrMsg)
+		std::wostringstream& ioErrMsg)
 {
 	wxXmlDocument source;
 	if (!source.Load(inStream))
@@ -784,7 +872,7 @@ bool ElementNode::LoadXML(
 bool ElementNode::LoadXML(
 		char const* inData,
 		size_t nData,
-		wxString& ioErrMsg)
+		std::wostringstream& ioErrMsg)
 {
 	wxXmlDocument source;
 	wxMemoryInputStream input(inData, nData);
@@ -793,8 +881,8 @@ bool ElementNode::LoadXML(
 
 
 bool ElementNode::LoadXML(
-		wxChar const* inFileName,
-		wxString& ioErrMsg)
+		wchar_t const* inFileName,
+		std::wostringstream& ioErrMsg)
 {
 	wxXmlDocument source;
 	wxFileInputStream stream(inFileName);
@@ -826,7 +914,7 @@ bool ElementNode::SaveXML(
 }
 
 
-bool ElementNode::SaveXML(wxString const& outFile) const
+bool ElementNode::SaveXML(std::wstring const& outFile) const
 {
 	std::string dtd;
 	return SaveXML(outFile, dtd);
@@ -834,7 +922,7 @@ bool ElementNode::SaveXML(wxString const& outFile) const
 
 
 bool ElementNode::SaveXML(
-		wxString const& outFile,
+		std::wstring const& outFile,
 		std::string const& inDTD) const
 {
 	bool bOk = false;
@@ -859,7 +947,7 @@ ElementTextPtr ElementText::New()
 }
 
 
-ElementTextPtr ElementText::New(wxString const& inText)
+ElementTextPtr ElementText::New(std::wstring const& inText)
 {
 	ElementTextPtr pText(new ElementText(inText));
 	pText->m_Me = pText;
@@ -873,7 +961,7 @@ ElementText::ElementText()
 }
 
 
-ElementText::ElementText(wxString const& inText)
+ElementText::ElementText(std::wstring const& inText)
 	: m_Value(inText)
 {
 }
@@ -896,31 +984,31 @@ Element::ElementType ElementText::GetType() const
 }
 
 
-wxString const& ElementText::GetName() const
+std::wstring const& ElementText::GetName() const
 {
-	static const wxString name(wxT("#text"));
+	static const std::wstring name(wxT("#text"));
 	return name;
 }
 
 
-void ElementText::SetName(wxString const& /*inName*/)
+void ElementText::SetName(std::wstring const& /*inName*/)
 {
 }
 
 
-wxString ElementText::GetValue() const
+std::wstring ElementText::GetValue() const
 {
 	return m_Value;
 }
 
 
-void ElementText::SetValue(wxString const& inValue)
+void ElementText::SetValue(std::wstring const& inValue)
 {
 	m_Value = inValue;
 }
 
 
-void ElementText::SetValue(wxChar const* const inValue)
+void ElementText::SetValue(wchar_t const* const inValue)
 {
 	if (inValue)
 		m_Value = inValue;
@@ -931,13 +1019,33 @@ void ElementText::SetValue(wxChar const* const inValue)
 
 void ElementText::SetValue(short inValue)
 {
-	m_Value << inValue;
+	std::wostringstream str;
+	str << inValue;
+	m_Value = str.str();
+}
+
+
+void ElementText::SetValue(unsigned short inValue)
+{
+	std::wostringstream str;
+	str << inValue;
+	m_Value = str.str();
 }
 
 
 void ElementText::SetValue(long inValue)
 {
-	m_Value << inValue;
+	std::wostringstream str;
+	str << inValue;
+	m_Value = str.str();
+}
+
+
+void ElementText::SetValue(unsigned long inValue)
+{
+	std::wostringstream str;
+	str << inValue;
+	m_Value = str.str();
 }
 
 

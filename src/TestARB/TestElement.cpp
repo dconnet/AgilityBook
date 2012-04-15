@@ -20,6 +20,7 @@
 #include "TestARB.h"
 
 #include "ARBDate.h"
+#include "ARBString.h"
 #include "ARBStructure.h"
 #include "Element.h"
 #include <wx/filefn.h>
@@ -47,7 +48,7 @@ SUITE(TestElement)
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(wxT("name"));
-			wxString str = wxT("This random & text @#$@()<>");
+			std::wstring str = wxT("This random & text @#$@()<>");
 			ele->SetValue(str);
 			CHECK(str == ele->GetValue());
 		}
@@ -64,7 +65,7 @@ SUITE(TestElement)
 			ElementNode::AttribLookup rc = ele->GetAttrib(wxT("name"), b);
 			CHECK_EQUAL(ElementNode::eFound, rc);
 			CHECK(b);
-			wxString s;
+			std::wstring s;
 			rc = ele->GetAttrib(wxT("name"), s);
 			CHECK_EQUAL(ElementNode::eFound, rc);
 			CHECK(wxT("y") == s);
@@ -79,7 +80,7 @@ SUITE(TestElement)
 			ElementNodePtr ele = ElementNode::New(wxT("name"));
 			short i = 42;
 			ele->AddAttrib(wxT("test"), i);
-			wxString s;
+			std::wstring s;
 			ele->GetAttrib(wxT("test"), s);
 			CHECK(wxT("42") == s);
 			i = 0;
@@ -96,7 +97,7 @@ SUITE(TestElement)
 			ElementNodePtr ele = ElementNode::New(wxT("name"));
 			long i = 42;
 			ele->AddAttrib(wxT("test"), i);
-			wxString s;
+			std::wstring s;
 			ele->GetAttrib(wxT("test"), s);
 			CHECK(wxT("42") == s);
 			i = 0;
@@ -113,7 +114,7 @@ SUITE(TestElement)
 			ElementNodePtr ele = ElementNode::New(wxT("name"));
 			double i = 42.446;
 			ele->AddAttrib(wxT("test"), i);
-			wxString s;
+			std::wstring s;
 			ele->GetAttrib(wxT("test"), s);
 			CHECK(wxT("42.45") == s);
 			i = 0.0;
@@ -177,7 +178,7 @@ SUITE(TestElement)
 		if (!g_bMicroTest)
 		{
 			ElementNodePtr ele = ElementNode::New(wxT("name"));
-			wxString attrib;
+			std::wstring attrib;
 			CHECK(!ele->AddAttrib(attrib, wxT("test")));
 		}
 	}
@@ -304,14 +305,14 @@ SUITE(TestElement)
 		{
 			ElementNodePtr tree = LoadXMLData();
 
-			wxString tmpFile(wxT("data.tmp"));
+			std::wstring tmpFile(wxT("data.tmp"));
 			wxMemoryOutputStream tmp1;
 			CHECK(tree->SaveXML(tmpFile));
 			CHECK(tree->SaveXML(tmp1));
 
 			ElementNodePtr tree2(ElementNode::New());
-			wxString errs;
-			CHECK(tree2->LoadXML(tmpFile, errs));
+			std::wostringstream errs;
+			CHECK(tree2->LoadXML(tmpFile.c_str(), errs));
 
 			wxRemoveFile(tmpFile);
 

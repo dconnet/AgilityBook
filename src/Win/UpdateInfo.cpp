@@ -163,7 +163,7 @@ static wxString FILENAME()
 
 bool CUpdateInfo::UpdateConfig(
 		CAgilityBookDoc* ioDoc,
-		wxChar const* inMsg)
+		wchar_t const* inMsg)
 {
 	wxString msg(_("IDS_UPDATED_CONFIG"));
 	if (inMsg && *inMsg)
@@ -240,7 +240,7 @@ bool CUpdateInfo::ReadVersionFile(
 	m_NewFile.erase();
 	m_ConfigFileName.erase();
 	m_InfoMsg.clear();
-	m_UpdateDownload.Empty();
+	m_UpdateDownload.clear();
 	m_usernameHint = wxT("default");
 	m_CalSiteSuppression.clear();
 
@@ -320,17 +320,17 @@ bool CUpdateInfo::ReadVersionFile(
 		 *      enable (0|1) '1'
 		 *      >
 		 */
-		wxString errMsg2;
+		std::wostringstream errMsg2;
 		ElementNodePtr tree(ElementNode::New());
 		if (!tree->LoadXML(data.c_str(), data.length(), errMsg2))
 		{
 			if (bVerbose)
 			{
 				wxString msg = wxString::Format(_("IDS_LOAD_FAILED"), VersionFile().c_str());
-				if (0 < errMsg2.length())
+				if (0 < errMsg2.str().length())
 				{
 					msg += wxT("\n\n");
-					msg += errMsg2;
+					msg += errMsg2.str();
 				}
 				wxMessageBox(msg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 			}
@@ -346,7 +346,7 @@ bool CUpdateInfo::ReadVersionFile(
 				if (!bLoadedVersion && node->GetName() == wxT("Platform"))
 				{
 					bool bSkip = true;
-					wxString value;
+					std::wstring value;
 					if (ElementNode::eFound == node->GetAttrib(wxT("arch"), value))
 					{
 						if (ARBAgilityRecordBook::GetArch() == value)
@@ -359,7 +359,7 @@ bool CUpdateInfo::ReadVersionFile(
 						continue;
 					if (ElementNode::eFound == node->GetAttrib(wxT("ver"), value))
 					{
-						m_VersionNum.Parse(value.wx_str());
+						m_VersionNum.Parse(value);
 						if (m_VersionNum.Valid())
 							bLoadedVersion = true;
 					}
@@ -395,7 +395,7 @@ bool CUpdateInfo::ReadVersionFile(
 								continue;
 							if (lang->GetName() == wxT("Lang"))
 							{
-								wxString langIdStr;
+								std::wstring langIdStr;
 								lang->GetAttrib(wxT("id2"), langIdStr);
 								m_InfoMsg[langIdStr] = lang->GetValue();
 							}
@@ -408,14 +408,14 @@ bool CUpdateInfo::ReadVersionFile(
 				}
 				else if (node->GetName() == wxT("DisableCalPlugin"))
 				{
-					wxString filename, ver;
+					std::wstring filename, ver;
 					node->GetAttrib(wxT("file"), filename);
 					node->GetAttrib(wxT("ver"), ver);
 					// The 'enable' attribute is in case we prematurely disable
 					bool bEnable = false;
 					node->GetAttrib(wxT("enable"), bEnable);
 					CVersionNum vernum(false);
-					vernum.Parse(ver.wx_str());
+					vernum.Parse(ver);
 					if (vernum.Valid())
 					{
 						CAgilityBookOptions::SuppressCalSitePermanently(filename, vernum, !bEnable);
@@ -434,7 +434,7 @@ bool CUpdateInfo::ReadVersionFile(
  */
 bool CUpdateInfo::CheckProgram(
 		CAgilityBookDoc* pDoc,
-		wxString const& lang,
+		std::wstring const& lang,
 		bool& outClose)
 {
 	outClose = false;
@@ -489,13 +489,13 @@ bool CUpdateInfo::CheckProgram(
 					else
 					{
 						IDlgProgress* progress = IDlgProgress::CreateProgress(1, wxGetApp().GetTopWindow());
-						progress->SetCaption(_("IDS_DOWNLOADING"));
+						progress->SetCaption(StringUtil::stringW(_("IDS_DOWNLOADING")));
 						progress->SetRange(1, m_size);
-						progress->SetMessage(name.GetFullName());
+						progress->SetMessage(StringUtil::stringW(name.GetFullName()));
 						progress->ShowProgress();
 						progress->SetForegroundWindow();
 						CReadHttp http(m_NewFile, output, progress);
-						wxString err;
+						std::wstring err;
 						if (!http.ReadHttpFile(err))
 						{
 							bGotoWeb = true;
@@ -510,7 +510,7 @@ bool CUpdateInfo::CheckProgram(
 						output.Close();
 						if (!bGotoWeb && !m_md5.empty())
 						{
-							progress->SetCaption(_("IDS_VALIDATING"));
+							progress->SetCaption(StringUtil::stringW(_("IDS_VALIDATING")));
 							if (ARBMsgDigest::ComputeFile(filename) != m_md5)
 							{
 								bGotoWeb = true;
@@ -710,10 +710,10 @@ void CUpdateInfo::CheckConfig(
 	if (0 < m_ConfigFileName.length() && m_VerConfig > pDoc->Book().GetConfig().GetVersion())
 	{
 		bUpToDate = false;
-		wxString msg;
+		std::wstring msg;
 		if (0 < m_InfoMsg.size())
 		{
-			std::map<wxString, wxString>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
+			std::map<std::wstring, std::wstring>::iterator iMsg = m_InfoMsg.find(langMgr.CurrentLanguage());
 			if (iMsg == m_InfoMsg.end())
 				iMsg = m_InfoMsg.begin();
 			if (iMsg != m_InfoMsg.end() && 0 < iMsg->second.length())
@@ -727,28 +727,28 @@ void CUpdateInfo::CheckConfig(
 				msg += iMsg->second;
 			}
 		}
-		if (UpdateConfig(pDoc, msg))
+		if (UpdateConfig(pDoc, msg.c_str()))
 		{
 			// Load the config.
-			wxString url = _("IDS_HELP_UPDATE");
+			std::wstring url = _("IDS_HELP_UPDATE");
 			url += wxT("/");
 			url += m_ConfigFileName;
 			std::string strConfig;
-			wxString errMsg;
+			std::wstring errMsg;
 			CReadHttp file(url, &strConfig);
-			wxString userName = CAgilityBookOptions::GetUserName(m_usernameHint);
+			std::wstring userName = CAgilityBookOptions::GetUserName(m_usernameHint);
 			if (file.ReadHttpFile(m_usernameHint, errMsg, wxGetApp().GetTopWindow()))
 			{
 				CAgilityBookOptions::SetUserName(m_usernameHint, userName);
 				ElementNodePtr tree(ElementNode::New());
-				wxString errMsg2;
+				std::wostringstream errMsg2;
 				if (!tree->LoadXML(strConfig.c_str(), strConfig.length(), errMsg2))
 				{
 					wxString msg2 = wxString::Format(_("IDS_LOAD_FAILED"), url.c_str());
-					if (0 < errMsg2.length())
+					if (0 < errMsg2.str().length())
 					{
 						msg2 += wxT("\n\n");
-						msg2 += errMsg2;
+						msg2 += errMsg2.str();
 					}
 					wxMessageBox(msg2, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_EXCLAMATION);
 				}
@@ -764,8 +764,8 @@ void CUpdateInfo::CheckConfig(
 						ARBAgilityRecordBook book;
 						if (!book.GetConfig().Load(tree->GetElementNode(nConfig), version, err))
 						{
-							if (0 < err.m_ErrMsg.length())
-								wxMessageBox(err.m_ErrMsg, wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
+							if (0 < err.m_ErrMsg.str().length())
+								wxMessageBox(err.m_ErrMsg.str(), wxMessageBoxCaptionStr, wxOK | wxCENTRE | wxICON_WARNING);
 						}
 						else
 						{

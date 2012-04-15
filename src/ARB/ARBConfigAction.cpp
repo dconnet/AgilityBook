@@ -78,14 +78,14 @@ ARBConfigAction::~ARBConfigAction()
 /////////////////////////////////////////////////////////////////////////////
 
 ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::New(
-		wxString const& inName)
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteCalPlugin(inName));
 }
 
 
 ARBConfigActionDeleteCalPlugin::ARBConfigActionDeleteCalPlugin(
-		wxString const& inName)
+		std::wstring const& inName)
 	: ARBConfigAction(0)
 	, m_Name(inName)
 {
@@ -108,14 +108,14 @@ ARBConfigActionPtr ARBConfigActionDeleteCalPlugin::Clone() const
 bool ARBConfigActionDeleteCalPlugin::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
 	if (ioConfig.GetCalSites().DeleteSite(m_Name))
 	{
 		bChanged = true;
-		ioInfo << Localization()->ActionDeleteCalPlugin(m_Name) << wxT("\n");
+		ioInfo << Localization()->ActionDeleteCalPlugin(m_Name) << L"\n";
 	}
 	return bChanged;
 }
@@ -124,8 +124,8 @@ bool ARBConfigActionDeleteCalPlugin::Apply(
 
 ARBConfigActionPtr ARBConfigActionRenameOtherPoints::New(
 		short configVersion,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameOtherPoints(
 		configVersion,
@@ -136,8 +136,8 @@ ARBConfigActionPtr ARBConfigActionRenameOtherPoints::New(
 
 ARBConfigActionRenameOtherPoints::ARBConfigActionRenameOtherPoints(
 		short configVersion,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
@@ -165,7 +165,7 @@ ARBConfigActionPtr ARBConfigActionRenameOtherPoints::Clone() const
 bool ARBConfigActionRenameOtherPoints::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -195,7 +195,7 @@ bool ARBConfigActionRenameOtherPoints::Apply(
 
 ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(
 		short configVersion,
-		wxString const& inName)
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteOtherPoints(
 		configVersion,
@@ -205,7 +205,7 @@ ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::New(
 
 ARBConfigActionDeleteOtherPoints::ARBConfigActionDeleteOtherPoints(
 		short configVersion,
-		wxString const& inName)
+		std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Name(inName)
 {
@@ -230,7 +230,7 @@ ARBConfigActionPtr ARBConfigActionDeleteOtherPoints::Clone() const
 bool ARBConfigActionDeleteOtherPoints::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -242,7 +242,7 @@ bool ARBConfigActionDeleteOtherPoints::Apply(
 			nPoints = ioDogs->NumOtherPointsInUse(m_Name);
 		if (0 < nPoints && ioDogs)
 		{
-			wxString msg = Localization()->ActionPreDeleteOtherPoints(m_Name, nPoints);
+			std::wstring msg = Localization()->ActionPreDeleteOtherPoints(m_Name, nPoints);
 			ioCallBack.PreDelete(msg);
 			if (!ioCallBack.CanContinue())
 				return bChanged;
@@ -261,8 +261,8 @@ bool ARBConfigActionDeleteOtherPoints::Apply(
 
 ARBConfigActionPtr ARBConfigActionRenameVenue::New(
 		short configVersion,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameVenue(
 		configVersion,
@@ -273,8 +273,8 @@ ARBConfigActionPtr ARBConfigActionRenameVenue::New(
 
 ARBConfigActionRenameVenue::ARBConfigActionRenameVenue(
 		short configVersion,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_OldName(inOldName)
 	, m_NewName(inNewName)
@@ -302,7 +302,7 @@ ARBConfigActionPtr ARBConfigActionRenameVenue::Clone() const
 bool ARBConfigActionRenameVenue::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -337,7 +337,7 @@ bool ARBConfigActionRenameVenue::Apply(
 
 ARBConfigActionPtr ARBConfigActionDeleteVenue::New(
 		short configVersion,
-		wxString const& inName)
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteVenue(
 		configVersion,
@@ -347,7 +347,7 @@ ARBConfigActionPtr ARBConfigActionDeleteVenue::New(
 
 ARBConfigActionDeleteVenue::ARBConfigActionDeleteVenue(
 		short configVersion,
-		wxString const& inName)
+		std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Name(inName)
 {
@@ -372,7 +372,7 @@ ARBConfigActionPtr ARBConfigActionDeleteVenue::Clone() const
 bool ARBConfigActionDeleteVenue::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -389,7 +389,7 @@ bool ARBConfigActionDeleteVenue::Apply(
 		}
 		if (0 < nVenues && ioDogs)
 		{
-			wxString msg = Localization()->ActionPreDeleteVenue(m_Name, nVenues);
+			std::wstring msg = Localization()->ActionPreDeleteVenue(m_Name, nVenues);
 			ioCallBack.PreDelete(msg);
 			if (!ioCallBack.CanContinue())
 				return bChanged;
@@ -407,9 +407,9 @@ bool ARBConfigActionDeleteVenue::Apply(
 
 ARBConfigActionPtr ARBConfigActionRenameMultiQ::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameMultiQ(
 		configVersion,
@@ -421,9 +421,9 @@ ARBConfigActionPtr ARBConfigActionRenameMultiQ::New(
 
 ARBConfigActionRenameMultiQ::ARBConfigActionRenameMultiQ(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -454,7 +454,7 @@ ARBConfigActionPtr ARBConfigActionRenameMultiQ::Clone() const
 bool ARBConfigActionRenameMultiQ::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -489,8 +489,8 @@ bool ARBConfigActionRenameMultiQ::Apply(
 
 ARBConfigActionPtr ARBConfigActionDeleteMultiQ::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteMultiQ(
 		configVersion,
@@ -501,8 +501,8 @@ ARBConfigActionPtr ARBConfigActionDeleteMultiQ::New(
 
 ARBConfigActionDeleteMultiQ::ARBConfigActionDeleteMultiQ(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Name(inName)
@@ -530,7 +530,7 @@ ARBConfigActionPtr ARBConfigActionDeleteMultiQ::Clone() const
 bool ARBConfigActionDeleteMultiQ::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -545,7 +545,7 @@ bool ARBConfigActionDeleteMultiQ::Apply(
 				nMultiQs = ioDogs->NumMultiQsInUse(m_Venue, m_Name);
 			if (0 < nMultiQs && ioDogs)
 			{
-				wxString msg = Localization()->ActionPreDeleteMultiQ(m_Venue, m_Name, nMultiQs);
+				std::wstring msg = Localization()->ActionPreDeleteMultiQ(m_Venue, m_Name, nMultiQs);
 				ioCallBack.PreDelete(msg);
 				if (!ioCallBack.CanContinue())
 					return bChanged;
@@ -565,9 +565,9 @@ bool ARBConfigActionDeleteMultiQ::Apply(
 
 ARBConfigActionPtr ARBConfigActionRenameDivision::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameDivision(
 		configVersion,
@@ -579,9 +579,9 @@ ARBConfigActionPtr ARBConfigActionRenameDivision::New(
 
 ARBConfigActionRenameDivision::ARBConfigActionRenameDivision(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -612,7 +612,7 @@ ARBConfigActionPtr ARBConfigActionRenameDivision::Clone() const
 bool ARBConfigActionRenameDivision::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -650,8 +650,8 @@ bool ARBConfigActionRenameDivision::Apply(
 
 ARBConfigActionPtr ARBConfigActionDeleteDivision::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteDivision(
 		configVersion,
@@ -662,8 +662,8 @@ ARBConfigActionPtr ARBConfigActionDeleteDivision::New(
 
 ARBConfigActionDeleteDivision::ARBConfigActionDeleteDivision(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Name(inName)
@@ -691,7 +691,7 @@ ARBConfigActionPtr ARBConfigActionDeleteDivision::Clone() const
 bool ARBConfigActionDeleteDivision::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -710,7 +710,7 @@ bool ARBConfigActionDeleteDivision::Apply(
 			}
 			if (0 < nRuns + nPoints && ioDogs)
 			{
-				wxString msg = Localization()->ActionPreDeleteDivision(m_Venue, m_Name, nRuns + nPoints);
+				std::wstring msg = Localization()->ActionPreDeleteDivision(m_Venue, m_Name, nRuns + nPoints);
 				ioCallBack.PreDelete(msg);
 				if (!ioCallBack.CanContinue())
 					return bChanged;
@@ -730,16 +730,16 @@ bool ARBConfigActionDeleteDivision::Apply(
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
 		configVersion,
 		inVenue,
 		inDiv,
-		wxString(),
+		std::wstring(),
 		inOldName,
 		inNewName));
 }
@@ -747,11 +747,11 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewLevel(
 
 ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inLevel,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameLevel(
 		configVersion,
@@ -765,11 +765,11 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::NewSubLevel(
 
 ARBConfigActionRenameLevel::ARBConfigActionRenameLevel(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inLevel,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -805,7 +805,7 @@ ARBConfigActionPtr ARBConfigActionRenameLevel::Clone() const
 bool ARBConfigActionRenameLevel::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -871,25 +871,25 @@ bool ARBConfigActionRenameLevel::Apply(
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewLevel(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
 		configVersion,
 		inVenue,
 		inDiv,
-		wxString(),
+		std::wstring(),
 		inName));
 }
 
 
 ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inLevel,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteLevel(
 		configVersion,
@@ -902,10 +902,10 @@ ARBConfigActionPtr ARBConfigActionDeleteLevel::NewSubLevel(
 
 ARBConfigActionDeleteLevel::ARBConfigActionDeleteLevel(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inLevel,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inLevel,
+		std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -939,7 +939,7 @@ ARBConfigActionPtr ARBConfigActionDeleteLevel::Clone() const
 bool ARBConfigActionDeleteLevel::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -951,7 +951,7 @@ bool ARBConfigActionDeleteLevel::Apply(
 		{
 			// Accumulate all sublevels that will be deleted
 			ARBConfigLevelPtr level;
-			std::vector<wxString> sublevels;
+			std::vector<std::wstring> sublevels;
 			if (m_Level.empty())
 			{
 				if (div->GetLevels().FindLevel(m_Name, &level))
@@ -977,7 +977,7 @@ bool ARBConfigActionDeleteLevel::Apply(
 			int nRuns = 0;
 			if (ioDogs)
 			{
-				for (std::vector<wxString>::iterator i = sublevels.begin();
+				for (std::vector<std::wstring>::iterator i = sublevels.begin();
 					i != sublevels.end();
 					++i)
 				{
@@ -986,12 +986,12 @@ bool ARBConfigActionDeleteLevel::Apply(
 			}
 			if (0 < nRuns && ioDogs)
 			{
-				wxString msg = Localization()->ActionPreDeleteLevel(m_Venue, m_Name, nRuns);
+				std::wstring msg = Localization()->ActionPreDeleteLevel(m_Venue, m_Name, nRuns);
 				ioCallBack.PreDelete(msg);
 				if (!ioCallBack.CanContinue())
 					return bChanged;
 				ioInfo << msg << wxT("\n");
-				for (std::vector<wxString>::iterator i = sublevels.begin();
+				for (std::vector<std::wstring>::iterator i = sublevels.begin();
 					i != sublevels.end();
 					++i)
 				{
@@ -1027,9 +1027,9 @@ bool ARBConfigActionDeleteLevel::Apply(
 
 ARBConfigActionPtr ARBConfigActionRenameTitle::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameTitle(
 		configVersion,
@@ -1041,9 +1041,9 @@ ARBConfigActionPtr ARBConfigActionRenameTitle::New(
 
 ARBConfigActionRenameTitle::ARBConfigActionRenameTitle(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -1074,7 +1074,7 @@ ARBConfigActionPtr ARBConfigActionRenameTitle::Clone() const
 bool ARBConfigActionRenameTitle::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -1118,10 +1118,10 @@ bool ARBConfigActionRenameTitle::Apply(
 
 ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteTitle(
 		configVersion,
@@ -1134,10 +1134,10 @@ ARBConfigActionPtr ARBConfigActionDeleteTitle::New(
 
 ARBConfigActionDeleteTitle::ARBConfigActionDeleteTitle(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inDiv,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inDiv,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Div(inDiv)
@@ -1171,7 +1171,7 @@ ARBConfigActionPtr ARBConfigActionDeleteTitle::Clone() const
 bool ARBConfigActionDeleteTitle::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -1201,7 +1201,7 @@ bool ARBConfigActionDeleteTitle::Apply(
 				}
 				else
 				{
-					wxString msg = Localization()->ActionPreDeleteTitle(m_Venue, m_OldName, nTitles);
+					std::wstring msg = Localization()->ActionPreDeleteTitle(m_Venue, m_OldName, nTitles);
 					ioCallBack.PreDelete(msg);
 					if (!ioCallBack.CanContinue())
 						return bChanged;
@@ -1222,9 +1222,9 @@ bool ARBConfigActionDeleteTitle::Apply(
 
 ARBConfigActionPtr ARBConfigActionRenameEvent::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionRenameEvent(
 		configVersion,
@@ -1236,9 +1236,9 @@ ARBConfigActionPtr ARBConfigActionRenameEvent::New(
 
 ARBConfigActionRenameEvent::ARBConfigActionRenameEvent(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inOldName,
-		wxString const& inNewName)
+		std::wstring const& inVenue,
+		std::wstring const& inOldName,
+		std::wstring const& inNewName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_OldName(inOldName)
@@ -1269,7 +1269,7 @@ ARBConfigActionPtr ARBConfigActionRenameEvent::Clone() const
 bool ARBConfigActionRenameEvent::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -1306,8 +1306,8 @@ bool ARBConfigActionRenameEvent::Apply(
 
 ARBConfigActionPtr ARBConfigActionDeleteEvent::New(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 {
 	return ARBConfigActionPtr(new ARBConfigActionDeleteEvent(
 		configVersion,
@@ -1318,8 +1318,8 @@ ARBConfigActionPtr ARBConfigActionDeleteEvent::New(
 
 ARBConfigActionDeleteEvent::ARBConfigActionDeleteEvent(
 		short configVersion,
-		wxString const& inVenue,
-		wxString const& inName)
+		std::wstring const& inVenue,
+		std::wstring const& inName)
 	: ARBConfigAction(configVersion)
 	, m_Venue(inVenue)
 	, m_Name(inName)
@@ -1347,7 +1347,7 @@ ARBConfigActionPtr ARBConfigActionDeleteEvent::Clone() const
 bool ARBConfigActionDeleteEvent::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	bool bChanged = false;
@@ -1365,7 +1365,7 @@ bool ARBConfigActionDeleteEvent::Apply(
 			// If any events are in use, create a fixup action.
 			if (0 < nEvents && ioDogs)
 			{
-				wxString msg = Localization()->ActionPreDeleteEvent(m_Venue, m_Name, nEvents);
+				std::wstring msg = Localization()->ActionPreDeleteEvent(m_Venue, m_Name, nEvents);
 				ioCallBack.PreDelete(msg);
 				if (!ioCallBack.CanContinue())
 					return bChanged;
@@ -1391,7 +1391,7 @@ bool ARBConfigActionList::Load(
 	assert(inTree);
 	if (!inTree || inTree->GetName() != TREE_ACTION)
 		return false;
-	wxString verb;
+	std::wstring verb;
 	if (ElementNode::eFound != inTree->GetAttrib(ATTRIB_ACTION_VERB, verb)
 	|| 0 == verb.length())
 	{
@@ -1411,7 +1411,7 @@ bool ARBConfigActionList::Load(
 			return false;
 		}
 	}
-	wxString venue, div, oldName, newName;
+	std::wstring venue, div, oldName, newName;
 	inTree->GetAttrib(ATTRIB_ACTION_VENUE, venue);
 	inTree->GetAttrib(ATTRIB_ACTION_DIVISION, div);
 	inTree->GetAttrib(ATTRIB_ACTION_OLDNAME, oldName);
@@ -1448,7 +1448,7 @@ bool ARBConfigActionList::Load(
 	}
 	else
 	{
-		wxString msg(Localization()->ValidValues());
+		std::wstring msg(Localization()->ValidValues());
 		msg += ACTION_VERB_DELETE_CALPLUGIN;
 		msg += wxT(", ");
 		msg += ACTION_VERB_DELETE_TITLE;
@@ -1462,7 +1462,7 @@ bool ARBConfigActionList::Load(
 		msg += ACTION_VERB_RENAME_DIV;
 		msg += wxT(", ");
 		msg += ACTION_VERB_RENAME_VENUE;
-		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_ACTION, ATTRIB_ACTION_VERB, msg));
+		ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_ACTION, ATTRIB_ACTION_VERB, msg.c_str()));
 	}
 	bool bOk = false;
 	if (item)
@@ -1477,7 +1477,7 @@ bool ARBConfigActionList::Load(
 int ARBConfigActionList::Apply(
 		ARBConfig& ioConfig,
 		ARBDogList* ioDogs,
-		wxString& ioInfo,
+		std::wostringstream& ioInfo,
 		IConfigActionCallback& ioCallBack) const
 {
 	int nChanges = 0;
@@ -1493,6 +1493,6 @@ int ARBConfigActionList::Apply(
 			break;
 	}
 	if (0 < nChanges)
-		ioInfo << wxT("\n");
+		ioInfo << L"\n";
 	return nChanges;
 }

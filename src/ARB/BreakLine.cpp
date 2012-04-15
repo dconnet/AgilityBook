@@ -11,6 +11,7 @@
  * @author David Connet
  *
  * Revision History
+ * @li 2012-04-10 DRC Based on wx-group thread, use std::string for internal use
  * @li 2010-10-30 DRC Moved BreakLine from Globals.cpp, added CSV routines.
  */
 
@@ -19,7 +20,7 @@
 
 #include <sstream>
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
 #include <wx/msw/msvcrt.h>
 #endif
 

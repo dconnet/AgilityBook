@@ -23,6 +23,7 @@
 #include "stdafx.h"
 #include "VersionNum.h"
 
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "BreakLine.h"
 #include "VersionNumber.h"

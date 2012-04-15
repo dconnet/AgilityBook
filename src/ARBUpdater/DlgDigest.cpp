@@ -18,6 +18,7 @@
 #include "DlgDigest.h"
 
 #include "ARBMsgDigest.h"
+#include "ARBString.h"
 #include "../Win/Globals.h"
 #include <wx/filedlg.h>
 #include <wx/valgen.h>
@@ -62,7 +63,7 @@ bool CLongValidator::TransferFromWindow()
 		wxTextCtrl* pControl = (wxTextCtrl*)m_validatorWindow;
 		if (m_pLong)
 		{
-			if (!StringUtil::ToLong(pControl->GetValue(), *m_pLong))
+			if (!StringUtil::ToLong(StringUtil::stringW(pControl->GetValue()), *m_pLong))
 				return false;
 			return true;
 		}
@@ -98,7 +99,7 @@ bool CLongValidator::Validate(wxWindow* parent)
 		if (m_pLong)
 		{
 			long val;
-			if (!StringUtil::ToLong(pControl->GetValue(), val))
+			if (!StringUtil::ToLong(StringUtil::stringW(pControl->GetValue()), val))
 				return false;
 		}
 	}

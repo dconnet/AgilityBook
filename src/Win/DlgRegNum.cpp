@@ -25,6 +25,7 @@
 #include "AgilityBook.h"
 #include "ARBConfig.h"
 #include "ARBDogRegNum.h"
+#include "ARBString.h"
 #include "ComboBoxes.h"
 #include "Validators.h"
 #include "Widgets.h"
@@ -164,20 +165,20 @@ void CDlgRegNum::OnOk(wxCommandEvent& evt)
 
 	if (m_pRegNum)
 	{
-		m_pRegNum->SetNumber(m_RegNum);
-		m_pRegNum->SetVenue(m_Venue);
-		m_pRegNum->SetHeight(m_Height);
+		m_pRegNum->SetNumber(StringUtil::stringW(m_RegNum));
+		m_pRegNum->SetVenue(StringUtil::stringW(m_Venue));
+		m_pRegNum->SetHeight(StringUtil::stringW(m_Height));
 		m_pRegNum->SetReceived(m_bReceived);
-		m_pRegNum->SetNote(m_Note);
+		m_pRegNum->SetNote(StringUtil::stringW(m_Note));
 	}
 	else
 	{
 		ARBDogRegNumPtr pRegNum;
-		if (m_RegNums.AddRegNum(m_Venue, m_RegNum, &pRegNum))
+		if (m_RegNums.AddRegNum(StringUtil::stringW(m_Venue), StringUtil::stringW(m_RegNum), &pRegNum))
 		{
-			pRegNum->SetHeight(m_Height);
+			pRegNum->SetHeight(StringUtil::stringW(m_Height));
 			pRegNum->SetReceived(m_bReceived);
-			pRegNum->SetNote(m_Note);
+			pRegNum->SetNote(StringUtil::stringW(m_Note));
 		}
 	}
 	EndDialog(wxID_OK);

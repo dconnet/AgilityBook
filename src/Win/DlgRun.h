@@ -102,14 +102,14 @@ private:
 	void UpdateRefRunButtons();
 	void SetRefRunColumnHeaders();
 	void ListRefRuns();
-	void GetAllHeights(std::set<wxString>& outNames);
-	void GetAllCallNames(std::set<wxString>& outNames);
-	void GetAllBreeds(std::set<wxString>& outNames);
+	void GetAllHeights(std::set<std::wstring>& outNames);
+	void GetAllCallNames(std::set<std::wstring>& outNames);
+	void GetAllBreeds(std::set<std::wstring>& outNames);
 	void EditRefRun();
 	void UpdateCRCDButtons();
 	void UpdateLinksButtons();
-	void ListLinkFiles(wxChar const* pItem);
-	int GetImageIndex(wxString const& inLink);
+	void ListLinkFiles(wchar_t const* pItem);
+	int GetImageIndex(std::wstring const& inLink);
 	void EditLink();
 
 	CAgilityBookDoc* m_pDoc;

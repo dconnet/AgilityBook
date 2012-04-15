@@ -23,6 +23,7 @@
 #include "AgilityBook.h"
 #include "AgilityBookDoc.h"
 #include "ARBConfig.h"
+#include "ARBString.h"
 #include "ARBTraining.h"
 #include "Validators.h"
 #include "Widgets.h"
@@ -61,9 +62,9 @@ CDlgTraining::CDlgTraining(
 
 	wxArrayString names, subnames;
 
-	std::set<wxString> items;
+	std::set<std::wstring> items;
 	m_pDoc->Book().GetTraining().GetAllNames(items);
-	std::set<wxString>::iterator iter;
+	std::set<std::wstring>::iterator iter;
 	for (iter = items.begin(); iter != items.end(); ++iter)
 	{
 		names.Add(*iter);
@@ -164,9 +165,9 @@ void CDlgTraining::OnOk(wxCommandEvent& evt)
 	wxDateTime date = m_datePicker->GetValue();
 
 	m_pTraining->SetDate(ARBDate(date.GetYear(), date.GetMonth() + 1, date.GetDay()));
-	m_pTraining->SetName(m_Name);
-	m_pTraining->SetSubName(m_SubName);
-	m_pTraining->SetNote(m_Notes);
+	m_pTraining->SetName(StringUtil::stringW(m_Name));
+	m_pTraining->SetSubName(StringUtil::stringW(m_SubName));
+	m_pTraining->SetNote(StringUtil::stringW(m_Notes));
 
 	EndDialog(wxID_OK);
 }

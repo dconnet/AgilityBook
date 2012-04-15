@@ -21,13 +21,13 @@ class CDlgAuthenticate : public wxDialog
 {
 public:
 	CDlgAuthenticate(
-			wxString const& userName,
+			std::wstring const& userName,
 			wxWindow* parent,
-			wxString const& caption = _("IDD_AUTHENTICATE"),
-			wxString const& message = wxEmptyString);
+			std::wstring caption = std::wstring(),
+			std::wstring message = std::wstring());
 
-	wxString GetUserName() const	{return m_Name;}
-	wxString GetPassword() const	{return m_Password;}
+	std::wstring GetUserName() const;
+	std::wstring GetPassword() const;
 
 private:
 	wxString m_Name;

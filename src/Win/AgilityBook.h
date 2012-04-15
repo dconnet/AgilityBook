@@ -37,9 +37,9 @@ public:
 	void UpdateConfiguration(CAgilityBookDoc* pDoc, bool& outClose);
 
 	void SetMessageText(
-			wxString const& msg,
+			std::wstring const& msg,
 			bool bFiltered);
-	void SetMessageText2(wxString const& msg);
+	void SetMessageText2(std::wstring const& msg);
 
 	wxPrintDialogData* GetPrintData();
 	void SavePrintData(wxPrintDialogData const& data);

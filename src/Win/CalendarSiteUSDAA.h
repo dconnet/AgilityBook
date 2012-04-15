@@ -27,16 +27,16 @@ public:
 	CCalendarSiteUSDAA();
 	virtual void Release();
 
-	virtual wxString GetID() const;
+	virtual std::wstring GetID() const;
 	virtual bool GetVersion(CVersionNum& outVer) const;
-	virtual wxString GetName() const;
-	virtual wxString GetDescription() const;
+	virtual std::wstring GetName() const;
+	virtual std::wstring GetDescription() const;
 	virtual size_t GetLocationCodes(
-			std::map<wxString, wxString>& locCodes) const;
+			std::map<std::wstring, std::wstring>& locCodes) const;
 	virtual size_t GetVenueCodes(
-			std::map<wxString, wxString>& venueCodes) const;
+			std::map<std::wstring, std::wstring>& venueCodes) const;
 	virtual std::string Process(
-			std::vector<wxString> const& inLocCodes,
-			std::vector<wxString> const& inVenueCodes,
+			std::vector<std::wstring> const& inLocCodes,
+			std::vector<std::wstring> const& inVenueCodes,
 			IProgressMeter* progress) const;
 };

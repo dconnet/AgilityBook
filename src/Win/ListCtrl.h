@@ -22,6 +22,7 @@
 #include "ARBTypes.h"
 #include "Widgets.h"
 #include <map>
+#include <vector>
 #include <wx/imaglist.h>
 
 ARB_TYPEDEF(CListData)
@@ -111,16 +112,29 @@ public:
 			long item,
 			CListDataPtr inData);
 
-	wxString GetPrintDataAsHtmlTable() const;
+	std::wstring GetPrintDataAsHtmlTable() const;
 
 	/**
 	 * Returns the data required to print/copy a line.
 	 */
 	void GetPrintLine(
 			long item,
-			std::vector<wxString>& line) const;
+			std::vector<std::wstring>& line) const;
 
 	void RefreshItem(long item);
+
+	void SwapEntries(
+			long oldIndex,
+			long newIndex)
+	{
+		long data1 = static_cast<long>(GetItemData(oldIndex));
+		long data2 = static_cast<long>(GetItemData(newIndex));
+		SetItemData(oldIndex, data2);
+		SetItemData(newIndex, data1);
+		SetSelection(newIndex);
+		RefreshItem(oldIndex);
+		RefreshItem(newIndex);
+	}
 
 protected:
 	bool Create(

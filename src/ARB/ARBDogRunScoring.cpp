@@ -163,10 +163,10 @@ bool ARBDogRunScoring::Load(
 	|| inTree->GetName() == TREE_BY_POINTS))
 		return false;
 
-	wxString attrib;
+	std::wstring attrib;
 
 	m_bRoundTimeFaults = inEventScoring->DropFractions();
-	wxString const& name = inTree->GetName();
+	std::wstring const& name = inTree->GetName();
 	inTree->GetAttrib(ATTRIB_SCORING_TIME, m_Time);
 	inTree->GetAttrib(ATTRIB_SCORING_FAULTS, m_CourseFaults);
 	inTree->GetAttrib(ATTRIB_SCORING_BONUSPTS, m_BonusPts);
@@ -205,7 +205,7 @@ bool ARBDogRunScoring::Load(
 			{
 				if (ElementNode::eInvalidValue == inTree->GetAttrib(ATTRIB_SCORING_HAS_TABLE, m_Table))
 				{
-					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool()));
+					ioCallback.LogMessage(Localization()->ErrorInvalidAttributeValue(TREE_SCORING, ATTRIB_SCORING_HAS_TABLE, Localization()->ValidValuesBool().c_str()));
 					// Report the error, but keep going.
 					m_Table = false;
 				}

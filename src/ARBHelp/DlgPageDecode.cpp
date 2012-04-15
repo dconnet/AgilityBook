@@ -24,6 +24,7 @@
 #include "../ARB/VersionNum.h"
 #include "../Win/Widgets.h"
 #include "ARBHelp.h"
+#include "ARBString.h"
 #include "ARBTypes.h"
 #include "BinaryData.h"
 #include "DlgARBHelp.h"
@@ -101,86 +102,84 @@ CDlgPageDecode::CDlgPageDecode()
 void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 {
 	wxBusyCursor wait;
-	wxString editData;
-	wxString data = m_ctrlEncoded->GetValue();
+	std::wostringstream editData;
+	std::wstring data = StringUtil::stringW(m_ctrlEncoded->GetValue());
 
 	// Make sure this is synchronized (order of decoding) with
 	// DlgARBHelp (encoder)
-	int pos = data.Find(STREAM_DATA_BEGIN);
-	if (0 <= pos)
+	std::wstring::size_type pos = data.find(STREAM_DATA_BEGIN);
+	if (std::wstring::npos != pos)
 	{
-		data = data.Mid(pos + wxString(STREAM_DATA_BEGIN).length());
-		pos = data.Find(STREAM_DATA_END);
+		data = data.substr(pos + wxString(STREAM_DATA_BEGIN).length());
+		pos = data.find(STREAM_DATA_END);
 		if (0 <= pos)
-			data = data.Left(pos);
-		data.Trim(true);
-		data.Trim(false);
+			data = data.substr(0, pos);
+		data = StringUtil::Trim(data);
 
-		wxString dataIn(data);
-		data.Empty();
+		std::wstring dataIn(data);
+		data.clear();
 		BinaryData::DecodeString(dataIn, data);
 		dataIn.clear();
-		data.Trim(true);
-		data.Trim(false);
+		data = StringUtil::Trim(data);
 
 		editData << wxT("Any temporary files created will be deleted upon closing this window.\n\n");
 
 		static const struct
 		{
-			wxString begin;
-			wxString end;
+			std::wstring begin;
+			std::wstring end;
 		} sc_sections[] = {
 			{STREAM_SYSTEM_BEGIN, STREAM_SYSTEM_END},
 			{STREAM_REGISTRY_BEGIN, STREAM_REGISTRY_END},
-			{wxT(""), wxT("")}
+			{L"", L""}
 		};
 		for (int idx = 0; !sc_sections[idx].begin.empty(); ++idx)
 		{
-			pos = data.Find(sc_sections[idx].begin);
+			pos = data.find(sc_sections[idx].begin);
 			if (0 <= pos)
 			{
-				int posEnd = data.Find(sc_sections[idx].end);
+				int posEnd = data.find(sc_sections[idx].end);
 				if (pos < posEnd)
 				{
-					size_t posData = pos + static_cast<int>(sc_sections[idx].begin.Length());
+					size_t posData = pos + static_cast<int>(sc_sections[idx].begin.length());
 					// Dump the preceding data.
-					editData << data.Left(posData) << wxT("\n");
+					editData << data.substr(0, posData) << L"\n";
 					// Trim preceding
-					data = data.Mid(posData);
-					data.Trim(false);
+					data = data.substr(0, posData);
+					data = StringUtil::TrimLeft(data);
 					// Get the data to decode
-					posEnd = data.Find(sc_sections[idx].end); // Recompute - we just changed the string
-					dataIn = data.Left(posEnd);
+					posEnd = data.find(sc_sections[idx].end); // Recompute - we just changed the string
+					dataIn = data.substr(0, posEnd);
 					// Strip that from main data.
-					data = data.Mid(posEnd + sc_sections[idx].end.Length());
-					data.Trim(false);
+					data = data.substr(posEnd + sc_sections[idx].end.length());
+					data = StringUtil::TrimLeft(data);
 					// Now decode
-					wxString dataOut;
+					std::wstring dataOut;
 					BinaryData::DecodeString(dataIn, dataOut);
 					dataIn.clear();
-					editData << dataOut << sc_sections[idx].end << wxT("\n\n");
+					editData << dataOut << sc_sections[idx].end << L"\n\n";
 					dataOut.clear();
 				}
 			}
 		}
 
-		while ((0 <= (pos = data.Find(STREAM_FILE_BEGIN))))
+		while ((std::wstring::npos != (pos = data.find(STREAM_FILE_BEGIN))))
 		{
-			int posEnd = data.Find(STREAM_FILE_END);
+			std::wstring::size_type posEnd = data.find(STREAM_FILE_END);
 			if (0 < posEnd && posEnd > pos)
 			{
 				int posData = pos + static_cast<int>(wxString(STREAM_FILE_BEGIN).length());
 				// Dump the preceding data (but not identifier.
-				editData << data.Left(pos); // New line included
+				editData << data.substr(0, pos); // New line included
 				// Trim preceding
-				data = data.Mid(posData);
-				data.Trim(false);
+				data = data.substr(posData);
+				data = StringUtil::TrimLeft(data);
 				// Get the data to decode
-				posEnd = data.Find(STREAM_FILE_END); // Recompute - we just changed the string
-				dataIn = data.Left(posEnd);
+				posEnd = data.find(STREAM_FILE_END); // Recompute - we just changed the string
+				dataIn = data.substr(0, posEnd);
 				// Strip that from main data.
-				data = data.Mid(posEnd + wxString(STREAM_FILE_END).length());
-				data.Trim(false);
+				data = data.substr(posEnd + wxString(STREAM_FILE_END).length());
+				data = StringUtil::TrimLeft(data);
 				// Now decode
 				unsigned char* binData = NULL;
 				size_t nBytes = 0;
@@ -214,7 +213,7 @@ void CDlgPageDecode::OnDecode(wxCommandEvent& evt)
 		editData << wxT("Error in data: Unable to find ") << STREAM_DATA_BEGIN;
 	}
 
-	m_ctrlDecoded->SetValue(editData);
+	m_ctrlDecoded->SetValue(editData.str().c_str());
 }
 
 

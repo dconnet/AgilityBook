@@ -34,7 +34,7 @@ public:
 	 * Gives the user a chance to abort by setting m_bContinue to false.
 	 * @param inMsg Message generated in Apply about what is being deleted.
 	 */
-	virtual void PreDelete(wxString const& inMsg) = 0;
+	virtual void PreDelete(std::wstring const& inMsg) = 0;
 
 	/**
 	 * Callback made during Update after data loss. This can occur when
@@ -43,7 +43,7 @@ public:
 	 * config has been merged.
 	 * @param inMsg Message generated in Apply about what is being deleted.
 	 */
-	virtual void PostDelete(wxString const& inMsg) const = 0;
+	virtual void PostDelete(std::wstring const& inMsg) const = 0;
 
 	/**
 	 * Should we continue processing?
@@ -87,9 +87,9 @@ public:
 	 * Get the generic name of this object.
 	 * @return The generic name of this object.
 	 */
-	virtual wxString GetGenericName() const
+	virtual std::wstring GetGenericName() const
 	{
-		return wxT("");
+		return std::wstring();
 	}
 
 	/**
@@ -98,7 +98,7 @@ public:
 	 * @return Number of strings accumulated in this object.
 	 * @note There are no strings to search in this object.
 	 */
-	virtual size_t GetSearchStrings(std::set<wxString>& ioStrings) const
+	virtual size_t GetSearchStrings(std::set<std::wstring>& ioStrings) const
 	{
 		return 0;
 	}
@@ -114,7 +114,7 @@ public:
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const = 0;
 
 protected:
@@ -130,23 +130,23 @@ class ARBConfigActionDeleteCalPlugin : public ARBConfigAction
 { 
 protected:
 	ARBConfigActionDeleteCalPlugin(
-			wxString const& inName);
+			std::wstring const& inName);
 	ARBConfigActionDeleteCalPlugin(ARBConfigActionDeleteCalPlugin const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
-			wxString const& inName);
+			std::wstring const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Name;
+	std::wstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -156,27 +156,27 @@ class ARBConfigActionRenameOtherPoints : public ARBConfigAction
 protected:
 	ARBConfigActionRenameOtherPoints(
 			short configVersion,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionRenameOtherPoints(ARBConfigActionRenameOtherPoints const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 
@@ -185,24 +185,24 @@ class ARBConfigActionDeleteOtherPoints : public ARBConfigAction
 protected:
 	ARBConfigActionDeleteOtherPoints(
 			short configVersion,
-			wxString const& inName);
+			std::wstring const& inName);
 	ARBConfigActionDeleteOtherPoints(ARBConfigActionDeleteOtherPoints const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inName);
+			std::wstring const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Name;
+	std::wstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -212,27 +212,27 @@ class ARBConfigActionRenameVenue : public ARBConfigAction
 protected:
 	ARBConfigActionRenameVenue(
 			short configVersion,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionRenameVenue(ARBConfigActionRenameVenue const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 private:
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 
@@ -241,24 +241,24 @@ class ARBConfigActionDeleteVenue : public ARBConfigAction
 protected:
 	ARBConfigActionDeleteVenue(
 			short configVersion,
-			wxString const& inName);
+			std::wstring const& inName);
 	ARBConfigActionDeleteVenue(ARBConfigActionDeleteVenue const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inName);
+			std::wstring const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 private:
-	wxString m_Name;
+	std::wstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -268,30 +268,30 @@ class ARBConfigActionRenameMultiQ : public ARBConfigAction
 protected:
 	ARBConfigActionRenameMultiQ(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionRenameMultiQ(ARBConfigActionRenameMultiQ const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_Venue;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 
@@ -300,27 +300,27 @@ class ARBConfigActionDeleteMultiQ : public ARBConfigAction
 protected:
 	ARBConfigActionDeleteMultiQ(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 	ARBConfigActionDeleteMultiQ(ARBConfigActionDeleteMultiQ const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_Name;
+	std::wstring m_Venue;
+	std::wstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -330,30 +330,30 @@ class ARBConfigActionRenameDivision : public ARBConfigAction
 protected:
 	ARBConfigActionRenameDivision(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionRenameDivision(ARBConfigActionRenameDivision const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_Venue;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 
@@ -362,27 +362,27 @@ class ARBConfigActionDeleteDivision : public ARBConfigAction
 protected:
 	ARBConfigActionDeleteDivision(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 	ARBConfigActionDeleteDivision(ARBConfigActionDeleteDivision const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_Name;
+	std::wstring m_Venue;
+	std::wstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -392,43 +392,43 @@ class ARBConfigActionRenameLevel : public ARBConfigAction
 protected:
 	ARBConfigActionRenameLevel(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inLevel,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inLevel,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionRenameLevel(ARBConfigActionRenameLevel const& rhs);
 
 public:
 	static ARBConfigActionPtr NewLevel(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	static ARBConfigActionPtr NewSubLevel(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inLevel,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inLevel,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_Div;
-	wxString m_Level; ///< Only used on sublevels.
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_Venue;
+	std::wstring m_Div;
+	std::wstring m_Level; ///< Only used on sublevels.
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 
@@ -437,39 +437,39 @@ class ARBConfigActionDeleteLevel : public ARBConfigAction
 protected:
 	ARBConfigActionDeleteLevel(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inLevel,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inLevel,
+			std::wstring const& inName);
 	ARBConfigActionDeleteLevel(ARBConfigActionDeleteLevel const& rhs);
 
 public:
 	static ARBConfigActionPtr NewLevel(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inName);
 
 	static ARBConfigActionPtr NewSubLevel(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inLevel,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inLevel,
+			std::wstring const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_Div;
-	wxString m_Level; ///< Only used on sublevels.
-	wxString m_Name;
+	std::wstring m_Venue;
+	std::wstring m_Div;
+	std::wstring m_Level; ///< Only used on sublevels.
+	std::wstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -479,30 +479,30 @@ class ARBConfigActionRenameTitle : public ARBConfigAction
 protected:
 	ARBConfigActionRenameTitle(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionRenameTitle(ARBConfigActionRenameTitle const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_Venue;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 
@@ -511,33 +511,33 @@ class ARBConfigActionDeleteTitle : public ARBConfigAction
 protected:
 	ARBConfigActionDeleteTitle(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionDeleteTitle(ARBConfigActionDeleteTitle const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inDiv,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inDiv,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_Div;
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_Venue;
+	std::wstring m_Div;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -547,30 +547,30 @@ class ARBConfigActionRenameEvent : public ARBConfigAction
 protected:
 	ARBConfigActionRenameEvent(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 	ARBConfigActionRenameEvent(ARBConfigActionRenameEvent const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inOldName,
-			wxString const& inNewName);
+			std::wstring const& inVenue,
+			std::wstring const& inOldName,
+			std::wstring const& inNewName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_OldName;
-	wxString m_NewName;
+	std::wstring m_Venue;
+	std::wstring m_OldName;
+	std::wstring m_NewName;
 };
 
 
@@ -579,27 +579,27 @@ class ARBConfigActionDeleteEvent : public ARBConfigAction
 protected:
 	ARBConfigActionDeleteEvent(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 	ARBConfigActionDeleteEvent(ARBConfigActionDeleteEvent const& rhs);
 
 public:
 	static ARBConfigActionPtr New(
 			short configVersion,
-			wxString const& inVenue,
-			wxString const& inName);
+			std::wstring const& inVenue,
+			std::wstring const& inName);
 
 	virtual ARBConfigActionPtr Clone() const;
 
 	virtual bool Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 
 protected:
-	wxString m_Venue;
-	wxString m_Name;
+	std::wstring m_Venue;
+	std::wstring m_Name;
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -626,6 +626,6 @@ public:
 	int Apply(
 			ARBConfig& ioConfig,
 			ARBDogList* ioDogs,
-			wxString& ioInfo,
+			std::wostringstream& ioInfo,
 			IConfigActionCallback& ioCallBack) const;
 };
