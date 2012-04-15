@@ -118,6 +118,7 @@ public:
 			int inPrec = 2) = 0;
 };
 
+
 class ElementNode : public Element
 {
 private:
@@ -456,6 +457,7 @@ protected:
 	MyAttributes m_Attribs;
 	std::vector<ElementPtr> m_Elements;
 };
+
 
 class ElementText : public Element
 {
