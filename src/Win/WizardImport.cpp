@@ -864,7 +864,7 @@ bool CWizardImport::DoWizardFinish()
 				// rows/cols has that much overlap, it's just not worth it.
 				if (!pScoring)
 				{
-					loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1));
+					loadstr = StringUtil::stringW(wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1)));
 					errLog << loadstr << L"\n";
 					++nSkipped;
 					continue;
@@ -933,11 +933,11 @@ bool CWizardImport::DoWizardFinish()
 							}
 							else
 							{
-								loadstr = wxString::Format(
+								loadstr = StringUtil::stringW(wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_RUN"),
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
-									entry[iCol].c_str());
+									entry[iCol].c_str()));
 								errLog << loadstr << L"\n";
 								if (pRun)
 									pRun.reset();
@@ -1092,10 +1092,10 @@ bool CWizardImport::DoWizardFinish()
 				{
 					if (!m_pDoc->Book().GetConfig().GetVenues().FindVenue(trialVenue))
 					{
-						loadstr = wxString::Format(
+						loadstr = StringUtil::stringW(wxString::Format(
 							_("IDS_IMPORT_BAD_VENUE"),
 							static_cast<int>(nItem + 1),
-							trialVenue.c_str());
+							trialVenue.c_str()));
 						errLog << loadstr << L"\n";
 						pRun.reset();
 					}
@@ -1106,7 +1106,7 @@ bool CWizardImport::DoWizardFinish()
 						pRun->GetLevel(),
 						pRun->GetDate()))
 					{
-						loadstr = wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1));
+						loadstr = StringUtil::stringW(wxString::Format(_("IDS_IMPORT_SKIP_NOCONFIG"), static_cast<int>(nItem + 1)));
 						errLog << loadstr << L"\n";
 						pRun.reset();
 					}
@@ -1269,11 +1269,11 @@ bool CWizardImport::DoWizardFinish()
 							}
 							else
 							{
-								loadstr = wxString::Format(
+								loadstr = StringUtil::stringW(wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALSTART"),
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
-									entry[iCol].c_str());
+									entry[iCol].c_str()));
 								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
@@ -1291,11 +1291,11 @@ bool CWizardImport::DoWizardFinish()
 							}
 							else
 							{
-								loadstr = wxString::Format(
+								loadstr = StringUtil::stringW(wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALEND"),
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
-									entry[iCol].c_str());
+									entry[iCol].c_str()));
 								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
@@ -1330,11 +1330,11 @@ bool CWizardImport::DoWizardFinish()
 						}
 						else
 						{
-							loadstr = wxString::Format(
+							loadstr = StringUtil::stringW(wxString::Format(
 								_("IDS_IMPORT_BAD_CAL_VALUE"),
 								static_cast<int>(nItem + 1),
 								static_cast<int>(iCol + 1),
-								entry[iCol].c_str());
+								entry[iCol].c_str()));
 							errLog << loadstr << L"\n";
 							if (pCal)
 								pCal.reset();
@@ -1363,11 +1363,11 @@ bool CWizardImport::DoWizardFinish()
 							}
 							else
 							{
-								loadstr = wxString::Format(
+								loadstr = StringUtil::stringW(wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALOPEN"),
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
-									entry[iCol].c_str());
+									entry[iCol].c_str()));
 								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
@@ -1385,11 +1385,11 @@ bool CWizardImport::DoWizardFinish()
 							}
 							else
 							{
-								loadstr = wxString::Format(
+								loadstr = StringUtil::stringW(wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_CALCLOSE"),
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
-									entry[iCol].c_str());
+									entry[iCol].c_str()));
 								errLog << loadstr << L"\n";
 								if (pCal)
 									pCal.reset();
@@ -1444,11 +1444,11 @@ bool CWizardImport::DoWizardFinish()
 							}
 							else
 							{
-								loadstr = wxString::Format(
+								loadstr = StringUtil::stringW(wxString::Format(
 									_("IDS_IMPORT_BAD_DATE_LOG"),
 									static_cast<int>(nItem + 1),
 									static_cast<int>(iCol + 1),
-									entry[iCol].c_str());
+									entry[iCol].c_str()));
 								errLog << loadstr << L"\n";
 								if (pLog)
 									pLog.reset();
@@ -1499,11 +1499,11 @@ bool CWizardImport::DoWizardFinish()
 		m_pDoc->Book().GetTraining().sort();
 	if (!errLog.str().empty())
 		errLog << L"\n";
-	loadstr = wxString::Format(_("IDS_IMPORT_STATS"),
+	loadstr = StringUtil::stringW(wxString::Format(_("IDS_IMPORT_STATS"),
 		static_cast<int>(nAdded),
 		static_cast<int>(nUpdated),
 		static_cast<int>(nDuplicate),
-		static_cast<int>(nSkipped));
+		static_cast<int>(nSkipped)));
 	errLog << loadstr;
 	CDlgMessage dlg(errLog.str(), this);
 	dlg.ShowModal();

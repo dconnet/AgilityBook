@@ -1336,7 +1336,7 @@ bool CAgilityBookRunsView::GetMessage(std::wstring& msg) const
 		if (pData && pData->GetRun() && pData->GetRun()->GetQ().Qualified())
 			++nQs;
 	}
-	msg = wxString::Format(_("IDS_NUM_RUNS_QS"), m_Ctrl->GetItemCount(), nQs);
+	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_RUNS_QS"), m_Ctrl->GetItemCount(), nQs));
 	return true;
 }
 

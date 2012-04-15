@@ -603,7 +603,7 @@ public:
 	{
 		m_CalData->Unload(true);
 		wxString disabled(_("IDS_DISABLED"));
-		m_Name = wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str());
+		m_Name = StringUtil::stringW(wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str()));
 	}
 
 private:
@@ -617,7 +617,7 @@ private:
 		else
 		{
 			wxString disabled(_("IDS_DISABLED"));
-			m_Name = wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str());
+			m_Name = StringUtil::stringW(wxString::Format(L"%s [%s]", m_Filename.c_str(), disabled.c_str()));
 			m_Desc = L"";
 		}
 	}

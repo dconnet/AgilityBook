@@ -519,7 +519,7 @@ public:
 
 void CConfigActionCallback::PreDelete(std::wstring const& inMsg)
 {
-	wxString msg(inMsg.c_str());
+	wxString msg(StringUtil::stringWX(inMsg));
 	msg += L"\n\n";
 	msg += _("IDS_ARE_YOU_SURE_CONTINUE");
 	if (wxID_NO == wxMessageBox(msg, wxMessageBoxCaptionStr, wxYES_NO | wxCENTRE | wxICON_WARNING))

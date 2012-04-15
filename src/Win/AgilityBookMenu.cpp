@@ -110,7 +110,13 @@ enum eMenuType
 };
 
 
-static void DoMenu(wxMenu* menu, bool bCreate, int id, wxString const& label, wxString const& desc, eMenuType eType = eMenuNormal)
+static void DoMenu(
+		wxMenu* menu,
+		bool bCreate,
+		int id,
+		wxString const& label,
+		wxString const& desc,
+		eMenuType eType = eMenuNormal)
 {
 	if (bCreate)
 	{

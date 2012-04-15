@@ -638,7 +638,7 @@ bool CAgilityBookCalendarListView::GetMessage(std::wstring& msg) const
 {
 	if (!m_Ctrl)
 		return false;
-	msg = wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->GetItemCount());
+	msg = StringUtil::stringW(wxString::Format(_("IDS_NUM_EVENTS"), m_Ctrl->GetItemCount()));
 	return true;
 }
 

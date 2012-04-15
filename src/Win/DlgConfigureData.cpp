@@ -629,8 +629,8 @@ bool CDlgConfigureDataTitle::DoCopy()
 	std::wstring longname(m_Title->GetLongName());
 	while (m_pDlg->m_pVenue->GetTitles().FindTitle(name))
 	{
-		name = wxString::Format(_("IDS_COPYOF"), name.c_str());
-		longname = wxString::Format(_("IDS_COPYOF"), longname.c_str());
+		name = StringUtil::stringW(wxString::Format(_("IDS_COPYOF"), name.c_str()));
+		longname = StringUtil::stringW(wxString::Format(_("IDS_COPYOF"), longname.c_str()));
 	}
 	ARBConfigTitlePtr title = m_Title->Clone();
 	title->SetName(name);
@@ -713,7 +713,7 @@ bool CDlgConfigureDataEvent::DoCopy()
 	std::wstring name(m_Event->GetName());
 	while (m_pDlg->m_pVenue->GetEvents().FindEvent(name))
 	{
-		name = wxString::Format(_("IDS_COPYOF"), name.c_str());
+		name = StringUtil::stringW(wxString::Format(_("IDS_COPYOF"), name.c_str()));
 	}
 	ARBConfigEventPtr pEvent = m_Event->Clone();
 	pEvent->SetName(name);
@@ -800,7 +800,7 @@ bool CDlgConfigureDataMultiQ::DoCopy()
 	std::wstring name(m_MultiQ->GetName());
 	while (m_pDlg->m_pVenue->GetMultiQs().FindMultiQ(name))
 	{
-		name = wxString::Format(_("IDS_COPYOF"), name.c_str());
+		name = StringUtil::stringW(wxString::Format(_("IDS_COPYOF"), name.c_str()));
 	}
 	ARBConfigMultiQPtr multiq = m_MultiQ->Clone();
 	multiq->SetName(name);
